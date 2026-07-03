@@ -1,2 +1,28 @@
+# Dependencies
 node_modules/
+
+# Build output
+dist/
+main.js
+
+# IDE
+.vscode/
+.idea/
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Testing
+coverage/
+
+# TypeScript
+*.tsbuildinfo

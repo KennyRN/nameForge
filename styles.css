@@ -1,0 +1,14 @@
+/* NameWright Plugin Styles */
+
+.namewright-modal {
+  padding: 20px;
+}
+
+.namewright-modal h2 {
+  margin-bottom: 15px;
+  color: var(--text-normal);
+}
+
+.namewright-modal p {
+  color: var(--text-muted);
+}
