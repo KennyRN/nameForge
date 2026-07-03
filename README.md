@@ -4,10 +4,14 @@ Break a list of names into a schema and generate new names, inside Obsidian.
 
 ## Installation
 
-1. Copy this repository to your Obsidian vault's `.obsidian/plugins/namewright/` folder
+1. Clone or copy this repository to your development folder
 2. Run `npm install` to install dependencies
-3. Run `npm run build` to build the plugin
-4. Enable the plugin in Obsidian Settings → Community plugins
+3. Run `npm run build` to build the plugin (creates `main.js`)
+4. Copy the following files to your Obsidian vault's `.obsidian/plugins/namewright/` folder:
+   - `main.js`
+   - `manifest.json`
+   - `styles.css`
+5. Enable the plugin in Obsidian Settings → Community plugins
 
 ## Development
 
