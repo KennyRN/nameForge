@@ -24,14 +24,14 @@ export function parseSchemaNote(content: string): NameSchema | null {
     return null;
   }
 
-  const frontmatter: Partial<SchemaFrontmatter> = {};
+  const frontmatter: Record<string, string> = {};
   const lines = frontmatterMatch[1].split('\n');
   
   for (const line of lines) {
     const [key, ...valueParts] = line.split(':');
     if (key && valueParts.length) {
       const value = valueParts.join(':').trim();
-      frontmatter[key.trim() as keyof SchemaFrontmatter] = value;
+      frontmatter[key.trim()] = value;
     }
   }
 
@@ -53,7 +53,7 @@ export function parseSchemaNote(content: string): NameSchema | null {
     name: frontmatter.name || 'Unnamed',
     type: frontmatter.type || 'breakdown',
     created: frontmatter.created || new Date().toISOString().split('T')[0],
-    count: parseInt(frontmatter.count || '0'),
+    count: parseInt(frontmatter.count || '0', 10),
     names
   };
 }

@@ -5,10 +5,143 @@
 }
 
 .namewright-modal h2 {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   color: var(--text-normal);
 }
 
 .namewright-modal p {
   color: var(--text-muted);
+}
+
+.namewright-modal__textarea {
+  width: 100%;
+  min-height: 120px;
+  margin: 12px 0 6px;
+  resize: vertical;
+}
+
+.namewright-modal__type-toggle {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+
+.namewright-modal__type-button {
+  padding: 6px 12px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  background-color: var(--background-secondary);
+  color: var(--text-normal);
+  cursor: pointer;
+}
+
+.namewright-modal__type-button.is-active {
+  background-color: var(--interactive-accent);
+  border-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.namewright-modal__helper-text {
+  margin: 0 0 12px;
+  font-size: 0.9em;
+}
+
+.namewright-modal__controls {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.namewright-modal__options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.namewright-modal__option-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.namewright-modal__option-label {
+  color: var(--text-normal);
+}
+
+.namewright-modal__buttons-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.namewright-modal__icon-button,
+.namewright-settings__icon-button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--text-normal);
+  border-radius: 6px;
+  color: var(--text-normal);
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.namewright-modal__icon-button svg,
+.namewright-settings__icon-button svg {
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
+
+.namewright-modal__icon-button:hover,
+.namewright-settings__icon-button:hover {
+  background-color: var(--background-secondary-alt);
+}
+
+.namewright-modal__folder-label {
+  font-size: 0.95em;
+  color: var(--text-normal);
+  line-height: 1.4;
+}
+
+.namewright-modal__status {
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  color: var(--text-muted);
+}
+
+.namewright-modal__pack-list {
+  margin: 12px 0;
+}
+
+.namewright-modal__pack-list button {
+  margin: 4px 0;
+}
+
+.namewright-modal__results {
+  margin-top: 16px;
+}
+
+.namewright-modal__results ul {
+  padding-left: 20px;
+}
+
+.namewright-editor-modal .namewright-modal__controls {
+  margin-top: 12px;
+}
+
+.namewright-modal__count-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+
+.namewright-modal__count-select {
+  min-width: 72px;
 }

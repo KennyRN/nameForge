@@ -5,6 +5,31 @@ export interface MarkovChain {
   startTokens: string[];
 }
 
+export class ListGenerator {
+  private names: string[] = [];
+
+  train(names: string[]): void {
+    this.names = names.filter((name) => name.trim().length > 0);
+  }
+
+  generateMultiple(count: number): string[] {
+    const uniqueNames = Array.from(new Set(this.names));
+    if (uniqueNames.length === 0) {
+      return [];
+    }
+
+    const generated: string[] = [];
+    while (generated.length < count) {
+      const name = uniqueNames[Math.floor(Math.random() * uniqueNames.length)];
+      if (!generated.includes(name)) {
+        generated.push(name);
+      }
+    }
+
+    return generated;
+  }
+}
+
 export class MarkovGenerator {
   private chain: MarkovChain;
   private order: number;
