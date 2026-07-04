@@ -11,7 +11,13 @@ export interface ParsedName {
 export interface NamesFileData {
   packName: string;
   names: string[];
-  packType: "breakdownPack" | "listPack" | "compoundBreakdownPack" | "compoundListPack";
+  packType: "breakdownPack" | "listPack" | "compoundPack";
+  compoundParts?: 2 | 3;
+  compoundGenerator?: "breakdown" | "list";
+  compoundJoining?: "joined" | "spaced";
+  parts?: string[][];
+  /** The fictional world/setting this pack belongs to. Reserved for future use; blank by default. */
+  setting: string;
 }
 
 export function parseName(name: string): ParsedName {
@@ -51,6 +57,7 @@ export function parseNamesFileContent(content: string): NamesFileData {
   let packName = "NameWright";
   let body = content;
   let packType: NamesFileData["packType"] = "breakdownPack";
+  let setting = "";
 
   if (frontmatterMatch) {
     const frontmatter = frontmatterMatch[1];
@@ -62,24 +69,87 @@ export function parseNamesFileContent(content: string): NamesFileData {
     const packTypeMatch = frontmatter.match(/^packType:\s*(.+)$/m);
     if (packTypeMatch) {
       const rawPackType = packTypeMatch[1].trim().replace(/^['"]|['"]$/g, "");
-      if (["breakdownPack", "listPack", "compoundBreakdownPack", "compoundListPack"].includes(rawPackType)) {
+      if (["breakdownPack", "listPack", "compoundPack"].includes(rawPackType)) {
         packType = rawPackType as NamesFileData["packType"];
       }
     }
 
+    const settingMatch = frontmatter.match(/^setting:\s*(.*)$/m);
+    if (settingMatch) {
+      setting = settingMatch[1].trim().replace(/^['"]|['"]$/g, "");
+    }
+
     body = content.slice(frontmatterMatch[0].length);
+
+    if (packType === "compoundPack") {
+      const compoundPartsMatch = frontmatter.match(/^compoundParts:\s*(.+)$/m);
+      const compoundParts = compoundPartsMatch && compoundPartsMatch[1].trim() === "3" ? 3 : 2;
+
+      const compoundGeneratorMatch = frontmatter.match(/^compoundGenerator:\s*(.+)$/m);
+      const compoundGenerator = compoundGeneratorMatch && compoundGeneratorMatch[1].trim().replace(/^['"]|['"]$/g, "") === "list" ? "list" : "breakdown";
+
+      const compoundJoiningMatch = frontmatter.match(/^compoundJoining:\s*(.+)$/m);
+      const compoundJoining = compoundJoiningMatch && compoundJoiningMatch[1].trim().replace(/^['"]|['"]$/g, "") === "spaced" ? "spaced" : "joined";
+
+      const parts = splitCompoundPartSections(body, compoundParts).map((section) => extractNamesFromMarkdown(section));
+
+      return {
+        packName,
+        names: [],
+        packType,
+        compoundParts,
+        compoundGenerator,
+        compoundJoining,
+        parts,
+        setting,
+      };
+    }
   }
 
   return {
     packName,
     names: extractNamesFromMarkdown(body),
     packType,
+    setting,
   };
+}
+
+function splitCompoundPartSections(body: string, partCount: 2 | 3): string[] {
+  const sections: string[] = [];
+  const headingRegex = /^##\s*Part\s*[123]\s*$/gm;
+  const matches = Array.from(body.matchAll(headingRegex));
+
+  for (let i = 0; i < partCount; i++) {
+    const match = matches[i];
+    if (!match) {
+      sections.push("");
+      continue;
+    }
+    const start = match.index! + match[0].length;
+    const end = matches[i + 1]?.index ?? body.length;
+    sections.push(body.slice(start, end));
+  }
+
+  return sections;
 }
 
 export function createNamesFileContent(packName: string, names: string[], packType: NamesFileData["packType"] = "breakdownPack"): string {
   const safePackName = (packName || "NameWright").trim().replace(/\s+/g, " ");
-  return `---\ntype: namePack\npackType: ${packType}\npackName: ${safePackName}\n---\n\n${names.join("\n")}\n`;
+  return `---\ntype: namePack\npackType: ${packType}\npackName: ${safePackName}\nsetting: \n---\n\n${names.join("\n")}\n`;
+}
+
+export function createCompoundNamesFileContent(
+  packName: string,
+  parts: string[][],
+  generator: "breakdown" | "list",
+  joining: "joined" | "spaced"
+): string {
+  const safePackName = (packName || "NameWright").trim().replace(/\s+/g, " ");
+  const partsSections = parts
+    .map((partNames, index) => `## Part ${index + 1}\n\n${partNames.join("\n")}`)
+    .join("\n\n");
+
+  return `---\ntype: namePack\npackType: compoundPack\ncompoundParts: ${parts.length}\ncompoundGenerator: ${generator}\ncompoundJoining: ${joining}\npackName: ${safePackName}\nsetting: \n---\n\n${partsSections}\n`;
 }
 
 const INVALID_FILENAME_CHARS = /[\\/:*?"<>|]/g;

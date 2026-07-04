@@ -303,7 +303,7 @@ function clampInt(x: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, r));
 }
 
-function capitaliseFirst(w: string): string {
+export function capitaliseFirst(w: string): string {
   const arr = Array.from(w);
   if (arr.length === 0) return w;
   return arr[0].toUpperCase() + arr.slice(1).join("");
@@ -532,4 +532,69 @@ export class ListGenerator {
     }
     return generated;
   }
+}
+
+// ===========================================================================
+// Compound names — 2 or 3 independently-generated parts, joined either fused
+// into one word ("joined") or kept as separate words ("spaced").
+// ===========================================================================
+export interface CompoundGenerateOptions {
+  count: number;
+  generator: "breakdown" | "list";
+  joining: "joined" | "spaced";
+  faithfulness?: number;
+  strictness?: number;
+}
+
+function joinCompoundParts(fragments: string[], joining: "joined" | "spaced"): string {
+  if (joining === "spaced") {
+    return fragments.map((f) => capitaliseFirst(f)).join(" ");
+  }
+  return fragments
+    .map((f, i) => (i === 0 ? capitaliseFirst(f.toLowerCase()) : f.toLowerCase()))
+    .join("");
+}
+
+/**
+ * Build a compound-name generator from 2 or 3 lists of name fragments (one
+ * list per "part"/column), and return `count` unique joined results.
+ */
+export function generateCompoundNames(parts: string[][], options: CompoundGenerateOptions): string[] {
+  const count = Math.max(0, Math.floor(options.count));
+  if (count === 0 || parts.length < 2) return [];
+
+  const poolSize = Math.max(count, 30);
+  const pools: string[][] = parts.map((part) => {
+    if (part.length === 0) return [];
+    if (options.generator === "list") {
+      const generator = new ListGenerator();
+      generator.train(part);
+      return generator.generateMultiple(poolSize);
+    }
+    const model = MarkovModel.build(part);
+    return model.generate({
+      count: poolSize,
+      faithfulness: options.faithfulness ?? 2,
+      strictness: options.strictness ?? 3,
+    });
+  });
+
+  if (pools.some((pool) => pool.length === 0)) return [];
+
+  const result: string[] = [];
+  const seen = new Set<string>();
+  let tries = 0;
+  const maxTries = count * 300;
+
+  while (result.length < count && tries < maxTries) {
+    tries++;
+    const fragments = pools.map((pool) => pool[Math.floor(Math.random() * pool.length)]);
+    const name = joinCompoundParts(fragments, options.joining);
+    const key = name.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    result.push(name);
+  }
+
+  return result;
 }

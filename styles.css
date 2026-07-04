@@ -1,3 +1,18 @@
+/* @settings
+
+name: NameWright
+id: namewright
+settings:
+    -
+        id: namewright-accent-color
+        title: Accent color
+        description: Color used for active/selected states in NameWright (toggle buttons, selected results).
+        type: variable-color
+        format: hex
+        default: '#7c3aed'
+
+*/
+
 /* NameWright Plugin Styles */
 
 .namewright-modal {
@@ -19,6 +34,17 @@
   resize: vertical;
 }
 
+.namewright-modal__pack-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.namewright-modal__pack-name-input {
+  flex: 1;
+}
+
 .namewright-modal__toggle-panel {
   display: flex;
   gap: 4px;
@@ -38,8 +64,20 @@
 }
 
 .namewright-modal__toggle-button.is-active {
-  background-color: var(--interactive-accent);
+  background-color: var(--namewright-accent-color, var(--interactive-accent));
   color: var(--text-on-accent);
+}
+
+.namewright-modal__quantity-toggle {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.namewright-modal__quantity-toggle .namewright-modal__toggle-button {
+  width: 44px;
+  padding: 8px 0;
+  text-align: center;
 }
 
 .namewright-modal__controls {
@@ -76,7 +114,7 @@
   width: 32px;
   height: 32px;
   padding: 0;
-  border: 1px solid var(--text-normal);
+  border: none;
   border-radius: 6px;
   color: var(--text-normal);
   background-color: transparent;
@@ -93,6 +131,11 @@
   color: inherit;
 }
 
+.namewright-modal__icon-button--lg svg {
+  width: 24px;
+  height: 24px;
+}
+
 .namewright-modal__icon-button:hover,
 .namewright-settings__icon-button:hover {
   background-color: var(--background-secondary-alt);
@@ -101,6 +144,16 @@
 .namewright-modal__generate-button {
   width: 100%;
   height: 48px;
+}
+
+.namewright-modal__icon-button.namewright-modal__generate-button {
+  background-color: var(--namewright-accent-color, var(--interactive-accent));
+  color: var(--text-on-accent);
+}
+
+.namewright-modal__icon-button.namewright-modal__generate-button:hover {
+  background-color: var(--namewright-accent-color, var(--interactive-accent));
+  filter: brightness(1.1);
 }
 
 .namewright-modal__generate-button svg {
@@ -154,7 +207,7 @@
 }
 
 .namewright-modal__results-list li.is-selected {
-  background-color: var(--interactive-accent);
+  background-color: var(--namewright-accent-color, var(--interactive-accent));
   color: var(--text-on-accent);
 }
 
@@ -176,7 +229,7 @@
 
 .namewright-modal__text-button {
   padding: 6px 12px;
-  border: 1px solid var(--text-normal);
+  border: none;
   border-radius: 6px;
   background: transparent;
   color: var(--text-normal);
@@ -204,6 +257,71 @@
 .namewright-editor-modal .namewright-modal__controls {
   margin-top: 12px;
   justify-content: flex-end;
+}
+
+.namewright-modal__pack-type-toggle {
+  width: 100%;
+}
+
+.namewright-modal__pack-type-toggle .namewright-modal__toggle-button {
+  flex: 1 1 0;
+  text-align: center;
+}
+
+.namewright-modal__compound-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.namewright-modal__compound-options-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.namewright-modal__compound-option-column {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.namewright-modal__compound-option-column .namewright-modal__toggle-panel {
+  width: 100%;
+  justify-content: center;
+  margin: 0;
+}
+
+.namewright-modal__compound-option-column .namewright-modal__toggle-button {
+  flex: 1 1 0;
+  text-align: center;
+}
+
+.namewright-modal__compound-example {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.namewright-modal__part-boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.namewright-modal__part-box .namewright-modal__textarea {
+  margin: 4px 0 0;
+  min-height: 60px;
+}
+
+.namewright-modal__part-label {
+  font-size: 0.9em;
+  color: var(--text-muted);
 }
 
 .namewright-modal__pack-dropdown {
