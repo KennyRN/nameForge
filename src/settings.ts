@@ -201,14 +201,29 @@ export class NameWrightSettingTab extends PluginSettingTab {
     });
 
     new Setting(containerEl)
-      .setName("Pack name")
-      .setDesc("The name written into the YAML header of the markdown file.")
-      .addText((text) =>
-        text
-          .setPlaceholder("NameWright Pack")
-          .setValue(this.plugin.settings.packName || "")
+      .setName("Faithfulness")
+      .setDesc("How closely generated names stick to your source list's letter patterns. Lower = more novel, higher = more true to source.")
+      .addSlider((slider) =>
+        slider
+          .setLimits(1, 3, 1)
+          .setValue(this.plugin.settings.faithfulness ?? 2)
+          .setDynamicTooltip()
           .onChange(async (value) => {
-            this.plugin.settings.packName = value.trim();
+            this.plugin.settings.faithfulness = value;
+            await this.plugin.saveSettings();
+          })
+      );
+
+    new Setting(containerEl)
+      .setName("Strictness")
+      .setDesc("How fussy the generator is about accepting a candidate name. Lower = more variety (including odd results), higher = only clean, plausible names.")
+      .addSlider((slider) =>
+        slider
+          .setLimits(1, 5, 1)
+          .setValue(this.plugin.settings.strictness ?? 3)
+          .setDynamicTooltip()
+          .onChange(async (value) => {
+            this.plugin.settings.strictness = value;
             await this.plugin.saveSettings();
           })
       );

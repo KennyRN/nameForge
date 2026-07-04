@@ -1,5 +1,7 @@
 // Name parser utilities
 
+import { extractNamesFromMarkdown } from "./markov";
+
 export interface ParsedName {
   original: string;
   parts: string[];
@@ -9,7 +11,7 @@ export interface ParsedName {
 export interface NamesFileData {
   packName: string;
   names: string[];
-  type: "breakdownPack" | "listPack" | "compoundBreakdownPack" | "compoundListPack";
+  packType: "breakdownPack" | "listPack" | "compoundBreakdownPack" | "compoundListPack";
 }
 
 export function parseName(name: string): ParsedName {
@@ -34,20 +36,6 @@ export function namesToPattern(names: string[]): string[] {
   return names.map((name) => parseName(name).pattern);
 }
 
-export function normalizeNamesInput(input: string): string[] {
-  const rawSegments = input
-    .replace(/\r/g, "")
-    .split(/\n+/)
-    .flatMap((line) => line.split(/\s*(?:,|;|\||\/)\s*/))
-    .flatMap((line) => line.split(/\s+(?:and|&)\s+/i))
-    .map((segment) => segment.trim())
-    .filter(Boolean)
-    .filter((segment) => !/^(and|&)$/i.test(segment))
-    .map((segment) => segment.replace(/^[-*•\s"'`]+|[-*•\s"'`]+$/g, ""));
-
-  return rawSegments.filter(Boolean);
-}
-
 export function isValidNamePackContent(content: string): boolean {
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   if (!frontmatterMatch) {
@@ -55,27 +43,27 @@ export function isValidNamePackContent(content: string): boolean {
   }
 
   const frontmatter = frontmatterMatch[1];
-  return /^name:\s*(.+)$/m.test(frontmatter);
+  return /^type:\s*namePack\s*$/m.test(frontmatter) && /^packName:\s*(.+)$/m.test(frontmatter);
 }
 
 export function parseNamesFileContent(content: string): NamesFileData {
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   let packName = "NameWright";
   let body = content;
-  let type: NamesFileData["type"] = "breakdownPack";
+  let packType: NamesFileData["packType"] = "breakdownPack";
 
   if (frontmatterMatch) {
     const frontmatter = frontmatterMatch[1];
-    const packMatch = frontmatter.match(/^name:\s*(.+)$/m);
+    const packMatch = frontmatter.match(/^packName:\s*(.+)$/m);
     if (packMatch) {
       packName = packMatch[1].trim().replace(/^['"]|['"]$/g, "");
     }
 
-    const typeMatch = frontmatter.match(/^type:\s*(.+)$/m);
-    if (typeMatch) {
-      const rawType = typeMatch[1].trim().replace(/^['"]|['"]$/g, "");
-      if (["breakdownPack", "listPack", "compoundBreakdownPack", "compoundListPack"].includes(rawType)) {
-        type = rawType as NamesFileData["type"];
+    const packTypeMatch = frontmatter.match(/^packType:\s*(.+)$/m);
+    if (packTypeMatch) {
+      const rawPackType = packTypeMatch[1].trim().replace(/^['"]|['"]$/g, "");
+      if (["breakdownPack", "listPack", "compoundBreakdownPack", "compoundListPack"].includes(rawPackType)) {
+        packType = rawPackType as NamesFileData["packType"];
       }
     }
 
@@ -84,12 +72,20 @@ export function parseNamesFileContent(content: string): NamesFileData {
 
   return {
     packName,
-    names: normalizeNamesInput(body),
-    type,
+    names: extractNamesFromMarkdown(body),
+    packType,
   };
 }
 
-export function createNamesFileContent(packName: string, names: string[], type: NamesFileData["type"] = "breakdownPack"): string {
+export function createNamesFileContent(packName: string, names: string[], packType: NamesFileData["packType"] = "breakdownPack"): string {
   const safePackName = (packName || "NameWright").trim().replace(/\s+/g, " ");
-  return `---\ntype: ${type}\nname: ${safePackName}\n---\n\n${names.join("\n")}\n`;
+  return `---\ntype: namePack\npackType: ${packType}\npackName: ${safePackName}\n---\n\n${names.join("\n")}\n`;
+}
+
+const INVALID_FILENAME_CHARS = /[\\/:*?"<>|]/g;
+
+export function sanitizePackNameForFilename(packName: string): string {
+  const trimmed = (packName || "NameWright").trim().replace(/\s+/g, " ");
+  const cleaned = trimmed.replace(INVALID_FILENAME_CHARS, "-").trim();
+  return cleaned || "NameWright";
 }

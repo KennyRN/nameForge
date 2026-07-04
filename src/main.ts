@@ -1,11 +1,17 @@
-import { normalizePath, Plugin } from "obsidian";
+import { addIcon, normalizePath, Plugin } from "obsidian";
 import { NameWrightSettingTab } from "./settings";
 import { NameWrightModal, NameWrightSettings } from "./modal";
+
+const NAMEWRIGHT_ICON_ID = "namewright-meeple";
+// Obsidian wraps this in its own viewBox="0 0 100 100", so scale the 24-unit icon up to fill it.
+const NAMEWRIGHT_ICON_SVG = '<g transform="scale(4.16667)"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20H4a1 1 0 0 1-1-1c0-2 3.378-4.907 4-6c-1 0-4-.5-4-2c0-2 4-3.5 6-4c0-1.5.5-4 3-4s3 2.5 3 4c2 .5 6 2 6 4c0 1.5-3 2-4 2c.622 1.093 4 4 4 6a1 1 0 0 1-1 1h-5c-1 0-2-4-3-4s-2 4-3 4" /></g>';
 
 const DEFAULT_SETTINGS: NameWrightSettings = {
   namesFilePath: "",
   packName: "",
   folderPath: "",
+  faithfulness: 2,
+  strictness: 3,
 };
 
 function getSettingsFolderPath(namesFilePath?: string, folderPath?: string): string {
@@ -49,6 +55,16 @@ function parseSettingsMarkdownContent(content: string): Partial<NameWrightSettin
       parsed.namesFilePath = trimmedValue;
     } else if (key === "packName") {
       parsed.packName = trimmedValue;
+    } else if (key === "faithfulness") {
+      const value = Number(trimmedValue);
+      if (!Number.isNaN(value)) {
+        parsed.faithfulness = value;
+      }
+    } else if (key === "strictness") {
+      const value = Number(trimmedValue);
+      if (!Number.isNaN(value)) {
+        parsed.strictness = value;
+      }
     }
   }
 
@@ -63,6 +79,9 @@ function createSettingsMarkdownContent(settings: NameWrightSettings): string {
   if (trimmedPackName) {
     lines.push(`packName: ${trimmedPackName}`);
   }
+
+  lines.push(`faithfulness: ${settings.faithfulness ?? DEFAULT_SETTINGS.faithfulness}`);
+  lines.push(`strictness: ${settings.strictness ?? DEFAULT_SETTINGS.strictness}`);
 
   return `---\ntype: configurationFile\n${lines.join("\n")}\n---\n`;
 }
@@ -88,8 +107,10 @@ export default class NameWrightPlugin extends Plugin {
   async onload() {
     await this.loadSettings();
 
+    addIcon(NAMEWRIGHT_ICON_ID, NAMEWRIGHT_ICON_SVG);
+
     // Add ribbon icon
-    this.addRibbonIcon("dice", "NameWright", () => {
+    this.addRibbonIcon(NAMEWRIGHT_ICON_ID, "NameWright", () => {
       new NameWrightModal(this.app, this, this.settings).open();
     });
 

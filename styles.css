@@ -4,9 +4,8 @@
   padding: 20px;
 }
 
-.namewright-modal h2 {
-  margin-bottom: 10px;
-  color: var(--text-normal);
+.namewright-editor-modal {
+  padding: 20px;
 }
 
 .namewright-modal p {
@@ -20,30 +19,27 @@
   resize: vertical;
 }
 
-.namewright-modal__type-toggle {
+.namewright-modal__toggle-panel {
   display: flex;
-  gap: 8px;
+  gap: 4px;
+  padding: 4px;
   margin: 8px 0 12px;
+  background-color: var(--background-secondary);
+  border-radius: 8px;
 }
 
-.namewright-modal__type-button {
+.namewright-modal__toggle-button {
   padding: 6px 12px;
-  border: 1px solid var(--background-modifier-border);
+  border: none;
   border-radius: 6px;
-  background-color: var(--background-secondary);
+  background: transparent;
   color: var(--text-normal);
   cursor: pointer;
 }
 
-.namewright-modal__type-button.is-active {
+.namewright-modal__toggle-button.is-active {
   background-color: var(--interactive-accent);
-  border-color: var(--interactive-accent);
   color: var(--text-on-accent);
-}
-
-.namewright-modal__helper-text {
-  margin: 0 0 12px;
-  font-size: 0.9em;
 }
 
 .namewright-modal__controls {
@@ -57,7 +53,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 8px;
 }
 
 .namewright-modal__option-row {
@@ -103,6 +98,16 @@
   background-color: var(--background-secondary-alt);
 }
 
+.namewright-modal__generate-button {
+  width: 100%;
+  height: 48px;
+}
+
+.namewright-modal__generate-button svg {
+  width: 32px;
+  height: 32px;
+}
+
 .namewright-modal__folder-label {
   font-size: 0.95em;
   color: var(--text-normal);
@@ -127,21 +132,158 @@
   margin-top: 16px;
 }
 
-.namewright-modal__results ul {
-  padding-left: 20px;
+.namewright-modal__results-list {
+  height: 260px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 8px 10px;
+  list-style: none;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  background-color: var(--background-secondary);
+}
+
+.namewright-modal__results-list li {
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.namewright-modal__results-list li:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.namewright-modal__results-list li.is-selected {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.namewright-modal__results-list li.namewright-modal__placeholder {
+  cursor: default;
+  color: var(--text-muted);
+}
+
+.namewright-modal__results-list li.namewright-modal__placeholder:hover {
+  background-color: transparent;
+}
+
+.namewright-modal__results-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.namewright-modal__text-button {
+  padding: 6px 12px;
+  border: 1px solid var(--text-normal);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-normal);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.namewright-modal__text-button svg {
+  width: 24px;
+  height: 24px;
+  color: inherit;
+}
+
+.namewright-modal__text-button:hover:not(:disabled) {
+  background-color: var(--background-secondary-alt);
+}
+
+.namewright-modal__text-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .namewright-editor-modal .namewright-modal__controls {
   margin-top: 12px;
+  justify-content: flex-end;
 }
 
-.namewright-modal__count-row {
+.namewright-modal__pack-dropdown {
+  position: relative;
+  flex: 1;
+  min-width: 120px;
+}
+
+.namewright-modal__pack-dropdown-trigger {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 8px 0 12px;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  background-color: var(--background-secondary);
+  color: var(--text-normal);
+  cursor: pointer;
+  text-align: left;
 }
 
-.namewright-modal__count-select {
-  min-width: 72px;
+.namewright-modal__pack-dropdown-trigger:hover {
+  background-color: var(--background-secondary-alt);
+}
+
+.namewright-modal__pack-dropdown-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.namewright-modal__pack-dropdown-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.namewright-modal__pack-dropdown-icon svg {
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
+
+.namewright-modal__pack-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  max-height: 220px;
+  overflow-y: auto;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  box-shadow: var(--shadow-s);
+  padding: 4px;
+}
+
+.namewright-modal__pack-dropdown-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-normal);
+  cursor: pointer;
+  text-align: left;
+}
+
+.namewright-modal__pack-dropdown-item:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.namewright-modal__pack-dropdown-empty {
+  padding: 6px 8px;
+  color: var(--text-muted);
 }
