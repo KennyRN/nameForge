@@ -139,25 +139,6 @@ function createSettingsMarkdownContent(settings: NameForgeSettings): string {
 export default class NameForgePlugin extends Plugin {
   settings: NameForgeSettings = {};
 
-  private async discoverSettingsFromConfigurationFile(): Promise<Partial<NameForgeSettings> | null> {
-    const markdownFiles = this.app.vault.getMarkdownFiles();
-    const configFiles = markdownFiles.filter((file) => file.basename === "nameForgeConfiguration");
-
-    for (const file of configFiles) {
-      try {
-        const content = await this.app.vault.cachedRead(file);
-        const parsed = parseSettingsMarkdownContent(content);
-        if (parsed.folderPath || parsed.namesFilePath || parsed.packName) {
-          return parsed;
-        }
-      } catch {
-        continue;
-      }
-    }
-
-    return null;
-  }
-
   async onload() {
     await this.loadSettings();
 
@@ -188,19 +169,6 @@ export default class NameForgePlugin extends Plugin {
   async loadSettings() {
     const legacySettings = (await this.loadData()) as Partial<NameForgeSettings> | null;
     this.settings = { ...DEFAULT_SETTINGS, ...legacySettings };
-
-    const hasConfiguredLocation = Boolean(this.settings.namesFilePath || this.settings.folderPath);
-    if (!hasConfiguredLocation) {
-      const discoveredSettings = await this.discoverSettingsFromConfigurationFile();
-      if (discoveredSettings) {
-        this.settings = {
-          ...this.settings,
-          ...discoveredSettings,
-          namesFilePath: discoveredSettings.namesFilePath || this.settings.namesFilePath,
-          folderPath: discoveredSettings.folderPath || this.settings.folderPath,
-        };
-      }
-    }
 
     const settingsFilePath = getSettingsFilePath(this.settings);
     if (!settingsFilePath) {

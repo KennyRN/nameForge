@@ -135,9 +135,8 @@ class FolderPickerModal extends Modal {
       });
     }
 
-    const folders = this.app.vault.getAllLoadedFiles()
+    const folders = this.currentFolder.children
       .filter((file): file is TFolder => file instanceof TFolder)
-      .filter((folder) => folder.parent?.path === this.currentFolder.path)
       .sort((a, b) => a.path.localeCompare(b.path));
 
     const listContainer = contentEl.createEl("div", { cls: "nameforge-modal__pack-list" });
