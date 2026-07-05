@@ -1,51 +1,51 @@
 /* @settings
 
-name: NameWright
-id: namewright
+name: NameForge
+id: nameforge
 settings:
     -
-        id: namewright-accent-color
+        id: nameforge-accent-color
         title: Accent color
-        description: Color used for active/selected states in NameWright (toggle buttons, selected results).
+        description: Color used for active/selected states in NameForge (toggle buttons, selected results).
         type: variable-color
         format: hex
         default: '#7c3aed'
 
 */
 
-/* NameWright Plugin Styles */
+/* NameForge Plugin Styles */
 
-.namewright-modal {
+.nameforge-modal {
   padding: 20px;
 }
 
-.namewright-editor-modal {
+.nameforge-editor-modal {
   padding: 20px;
 }
 
-.namewright-modal p {
+.nameforge-modal p {
   color: var(--text-muted);
 }
 
-.namewright-modal__textarea {
+.nameforge-modal__textarea {
   width: 100%;
   min-height: 120px;
   margin: 12px 0 6px;
   resize: vertical;
 }
 
-.namewright-modal__pack-name-row {
+.nameforge-modal__pack-name-row {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
 }
 
-.namewright-modal__pack-name-input {
+.nameforge-modal__pack-name-input {
   flex: 1;
 }
 
-.namewright-modal__toggle-panel {
+.nameforge-modal__toggle-panel {
   display: flex;
   gap: 4px;
   padding: 4px;
@@ -54,7 +54,7 @@ settings:
   border-radius: 8px;
 }
 
-.namewright-modal__toggle-button {
+.nameforge-modal__toggle-button {
   padding: 6px 12px;
   border: none;
   border-radius: 6px;
@@ -63,54 +63,54 @@ settings:
   cursor: pointer;
 }
 
-.namewright-modal__toggle-button.is-active {
-  background-color: var(--namewright-accent-color, var(--interactive-accent));
+.nameforge-modal__toggle-button.is-active {
+  background-color: var(--nameforge-accent-color, var(--interactive-accent));
   color: var(--text-on-accent);
 }
 
-.namewright-modal__quantity-toggle {
+.nameforge-modal__quantity-toggle {
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
 }
 
-.namewright-modal__quantity-toggle .namewright-modal__toggle-button {
+.nameforge-modal__quantity-toggle .nameforge-modal__toggle-button {
   width: 44px;
   padding: 8px 0;
   text-align: center;
 }
 
-.namewright-modal__controls {
+.nameforge-modal__controls {
   display: flex;
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 12px;
 }
 
-.namewright-modal__options-list {
+.nameforge-modal__options-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.namewright-modal__option-row {
+.nameforge-modal__option-row {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.namewright-modal__option-label {
+.nameforge-modal__option-label {
   color: var(--text-normal);
 }
 
-.namewright-modal__buttons-column {
+.nameforge-modal__buttons-column {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.namewright-modal__icon-button,
-.namewright-settings__icon-button {
+.nameforge-modal__icon-button,
+.nameforge-settings__icon-button {
   width: 32px;
   height: 32px;
   padding: 0;
@@ -124,68 +124,68 @@ settings:
   cursor: pointer;
 }
 
-.namewright-modal__icon-button svg,
-.namewright-settings__icon-button svg {
+.nameforge-modal__icon-button svg,
+.nameforge-settings__icon-button svg {
   width: 16px;
   height: 16px;
   color: inherit;
 }
 
-.namewright-modal__icon-button--lg svg {
+.nameforge-modal__icon-button--lg svg {
   width: 24px;
   height: 24px;
 }
 
-.namewright-modal__icon-button:hover,
-.namewright-settings__icon-button:hover {
+.nameforge-modal__icon-button:hover,
+.nameforge-settings__icon-button:hover {
   background-color: var(--background-secondary-alt);
 }
 
-.namewright-modal__generate-button {
+.nameforge-modal__generate-button {
   width: 100%;
   height: 48px;
 }
 
-.namewright-modal__icon-button.namewright-modal__generate-button {
-  background-color: var(--namewright-accent-color, var(--interactive-accent));
+.nameforge-modal__icon-button.nameforge-modal__generate-button {
+  background-color: var(--nameforge-accent-color, var(--interactive-accent));
   color: var(--text-on-accent);
 }
 
-.namewright-modal__icon-button.namewright-modal__generate-button:hover {
-  background-color: var(--namewright-accent-color, var(--interactive-accent));
+.nameforge-modal__icon-button.nameforge-modal__generate-button:hover {
+  background-color: var(--nameforge-accent-color, var(--interactive-accent));
   filter: brightness(1.1);
 }
 
-.namewright-modal__generate-button svg {
+.nameforge-modal__generate-button svg {
   width: 32px;
   height: 32px;
 }
 
-.namewright-modal__folder-label {
+.nameforge-modal__folder-label {
   font-size: 0.95em;
   color: var(--text-normal);
   line-height: 1.4;
 }
 
-.namewright-modal__status {
+.nameforge-modal__status {
   margin-bottom: 10px;
   font-size: 0.9em;
   color: var(--text-muted);
 }
 
-.namewright-modal__pack-list {
+.nameforge-modal__pack-list {
   margin: 12px 0;
 }
 
-.namewright-modal__pack-list button {
+.nameforge-modal__pack-list button {
   margin: 4px 0;
 }
 
-.namewright-modal__results {
+.nameforge-modal__results {
   margin-top: 16px;
 }
 
-.namewright-modal__results-list {
+.nameforge-modal__results-list {
   height: 260px;
   overflow-y: auto;
   margin: 0;
@@ -196,31 +196,31 @@ settings:
   background-color: var(--background-secondary);
 }
 
-.namewright-modal__results-list li {
+.nameforge-modal__results-list li {
   padding: 4px 8px;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.namewright-modal__results-list li:hover {
+.nameforge-modal__results-list li:hover {
   background-color: var(--background-modifier-hover);
 }
 
-.namewright-modal__results-list li.is-selected {
-  background-color: var(--namewright-accent-color, var(--interactive-accent));
+.nameforge-modal__results-list li.is-selected {
+  background-color: var(--nameforge-accent-color, var(--interactive-accent));
   color: var(--text-on-accent);
 }
 
-.namewright-modal__results-list li.namewright-modal__placeholder {
+.nameforge-modal__results-list li.nameforge-modal__placeholder {
   cursor: default;
   color: var(--text-muted);
 }
 
-.namewright-modal__results-list li.namewright-modal__placeholder:hover {
+.nameforge-modal__results-list li.nameforge-modal__placeholder:hover {
   background-color: transparent;
 }
 
-.namewright-modal__results-actions {
+.nameforge-modal__results-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -228,18 +228,18 @@ settings:
   margin-top: 8px;
 }
 
-.namewright-modal__results-buttons {
+.nameforge-modal__results-buttons {
   display: flex;
   gap: 8px;
 }
 
-.namewright-modal__seed-group {
+.nameforge-modal__seed-group {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.namewright-modal__seed-input {
+.nameforge-modal__seed-input {
   width: 110px;
   padding: 4px 8px;
   border: 1px solid var(--background-modifier-border);
@@ -249,23 +249,23 @@ settings:
   font-size: var(--font-ui-small);
 }
 
-.namewright-modal__seed-group .namewright-modal__icon-button {
+.nameforge-modal__seed-group .nameforge-modal__icon-button {
   width: 28px;
   height: 28px;
 }
 
-.namewright-modal__seed-group .namewright-modal__icon-button.is-active {
-  color: var(--namewright-accent-color, var(--interactive-accent));
+.nameforge-modal__seed-group .nameforge-modal__icon-button.is-active {
+  color: var(--nameforge-accent-color, var(--interactive-accent));
 }
 
-.namewright-modal__endings-row {
+.nameforge-modal__endings-row {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 8px;
 }
 
-.namewright-modal__ending-chip {
+.nameforge-modal__ending-chip {
   padding: 2px 8px;
   border-radius: 999px;
   background-color: var(--background-secondary-alt);
@@ -273,7 +273,7 @@ settings:
   font-size: var(--font-ui-smaller);
 }
 
-.namewright-modal__text-button {
+.nameforge-modal__text-button {
   padding: 6px 12px;
   border: none;
   border-radius: 6px;
@@ -285,22 +285,22 @@ settings:
   justify-content: center;
 }
 
-.namewright-modal__text-button svg {
+.nameforge-modal__text-button svg {
   width: 24px;
   height: 24px;
   color: inherit;
 }
 
-.namewright-modal__text-button:hover:not(:disabled) {
+.nameforge-modal__text-button:hover:not(:disabled) {
   background-color: var(--background-secondary-alt);
 }
 
-.namewright-modal__text-button:disabled {
+.nameforge-modal__text-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.namewright-editor-modal__stage {
+.nameforge-editor-modal__stage {
   position: relative;
   /* Fixed-ish, but capped relative to the viewport so it doesn't push the
      save/cancel row off the bottom of shorter windows — 420px was too tall
@@ -320,7 +320,7 @@ settings:
  * chain to get wrong. If the active pane's content is taller than the
  * stage, it scrolls within itself only.
  */
-.namewright-editor-modal__stage-pane {
+.nameforge-editor-modal__stage-pane {
   position: absolute;
   inset: 0;
   overflow-y: auto;
@@ -328,34 +328,34 @@ settings:
   resize: none;
 }
 
-.namewright-editor-modal .namewright-modal__controls {
+.nameforge-editor-modal .nameforge-modal__controls {
   margin-top: 12px;
   justify-content: flex-end;
 }
 
-.namewright-modal__pack-type-toggle {
+.nameforge-modal__pack-type-toggle {
   width: 100%;
 }
 
-.namewright-modal__pack-type-toggle .namewright-modal__toggle-button {
+.nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button {
   flex: 1 1 0;
   text-align: center;
 }
 
-.namewright-modal__compound-section {
+.nameforge-modal__compound-section {
   display: flex;
   flex-direction: column;
   gap: 4px;
   margin-bottom: 6px;
 }
 
-.namewright-modal__compound-options-row {
+.nameforge-modal__compound-options-row {
   display: flex;
   gap: 12px;
   align-items: flex-start;
 }
 
-.namewright-modal__compound-option-column {
+.nameforge-modal__compound-option-column {
   flex: 1 1 0;
   min-width: 0;
   display: flex;
@@ -364,47 +364,47 @@ settings:
   gap: 10px;
 }
 
-.namewright-modal__compound-option-column .namewright-modal__toggle-panel {
+.nameforge-modal__compound-option-column .nameforge-modal__toggle-panel {
   width: 100%;
   justify-content: center;
   margin: 0;
 }
 
-.namewright-modal__compound-option-column .namewright-modal__toggle-button {
+.nameforge-modal__compound-option-column .nameforge-modal__toggle-button {
   flex: 1 1 0;
   text-align: center;
 }
 
-.namewright-modal__compound-example {
+.nameforge-modal__compound-example {
   font-size: 0.85em;
   color: var(--text-muted);
   text-align: center;
 }
 
-.namewright-modal__part-boxes {
+.nameforge-modal__part-boxes {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-top: 8px;
 }
 
-.namewright-modal__part-box .namewright-modal__textarea {
+.nameforge-modal__part-box .nameforge-modal__textarea {
   margin: 4px 0 0;
   min-height: 60px;
 }
 
-.namewright-modal__part-label {
+.nameforge-modal__part-label {
   font-size: 0.9em;
   color: var(--text-muted);
 }
 
-.namewright-modal__pack-dropdown {
+.nameforge-modal__pack-dropdown {
   position: relative;
   flex: 1;
   min-width: 120px;
 }
 
-.namewright-modal__pack-dropdown-trigger {
+.nameforge-modal__pack-dropdown-trigger {
   width: 100%;
   display: flex;
   align-items: center;
@@ -418,31 +418,31 @@ settings:
   text-align: left;
 }
 
-.namewright-modal__pack-dropdown-trigger:hover {
+.nameforge-modal__pack-dropdown-trigger:hover {
   background-color: var(--background-secondary-alt);
 }
 
-.namewright-modal__pack-dropdown-label {
+.nameforge-modal__pack-dropdown-label {
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.namewright-modal__pack-dropdown-icon {
+.nameforge-modal__pack-dropdown-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.namewright-modal__pack-dropdown-icon svg {
+.nameforge-modal__pack-dropdown-icon svg {
   width: 16px;
   height: 16px;
   color: inherit;
 }
 
-.namewright-modal__pack-dropdown-menu {
+.nameforge-modal__pack-dropdown-menu {
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
@@ -457,7 +457,7 @@ settings:
   padding: 4px;
 }
 
-.namewright-modal__pack-dropdown-item {
+.nameforge-modal__pack-dropdown-item {
   width: 100%;
   display: flex;
   align-items: center;
@@ -471,11 +471,11 @@ settings:
   text-align: left;
 }
 
-.namewright-modal__pack-dropdown-item:hover {
+.nameforge-modal__pack-dropdown-item:hover {
   background-color: var(--background-modifier-hover);
 }
 
-.namewright-modal__pack-dropdown-empty {
+.nameforge-modal__pack-dropdown-empty {
   padding: 6px 8px;
   color: var(--text-muted);
 }

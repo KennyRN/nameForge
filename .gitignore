@@ -26,3 +26,6 @@ coverage/
 
 # TypeScript
 *.tsbuildinfo
+
+# Local machine settings (not for public release)
+.claude/

@@ -1,7 +1,6 @@
-import { App, Modal, normalizePath, PluginSettingTab, Setting, TFolder } from "obsidian";
-import NameWrightPlugin from "./main";
-
-const FOLDER_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMTYgMTYiPgoJPHBhdGggZD0iTTAgMGgxNnYxNkgweiIgZmlsbD0ibm9uZSIgLz4KCTxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0iTTExIDVhMyAzIDAgMSAxLTYgMGEzIDMgMCAwIDEgNiAwTTggN2EyIDIgMCAxIDAgMC00YTIgMiAwIDAgMCAwIDRtLjI1NiA3YTQuNSA0LjUgMCAwIDEtLjIyOS0xLjAwNEgzYy4wMDEtLjI0Ni4xNTQtLjk4Ni44MzItMS42NjRDNC40ODQgMTAuNjggNS43MTEgMTAgOCAxMHEuMzkgMCAuNzQuMDI1Yy4yMjYtLjM0MS40OTYtLjY1LjgwNC0uOTE4UTguODQ0IDkuMDAyIDggOWMtNSAwLTYgMy02IDRzMSAxIDEgMXptMy42My00LjU0Yy4xOC0uNjEzIDEuMDQ4LS42MTMgMS4yMjkgMGwuMDQzLjE0OGEuNjQuNjQgMCAwIDAgLjkyMS4zODJsLjEzNi0uMDc0Yy41NjEtLjMwNiAxLjE3NS4zMDguODcuODY5bC0uMDc1LjEzNmEuNjQuNjQgMCAwIDAgLjM4Mi45MmwuMTQ5LjA0NWMuNjEyLjE4LjYxMiAxLjA0OCAwIDEuMjI5bC0uMTUuMDQzYS42NC42NCAwIDAgMC0uMzguOTIxbC4wNzQuMTM2Yy4zMDUuNTYxLS4zMDkgMS4xNzUtLjg3Ljg3bC0uMTM2LS4wNzVhLjY0LjY0IDAgMCAwLS45Mi4zODJsLS4wNDUuMTQ5Yy0uMTguNjEyLTEuMDQ4LjYxMi0xLjIyOSAwbC0uMDQzLS4xNWEuNjQuNjQgMCAwIDAtLjkyMS0uMzhsLS4xMzYuMDc0Yy0uNTYxLjMwNS0xLjE3NS0uMzA5LS44Ny0uODdsLjA3NS0uMTM2YS42NC42NCAwIDAgMCAuOTItLjM4MnpNMTQgMTIuNWExLjUgMS41IDAgMSAwLTMgMGExLjUgMS41IDAgMCAwIDMgMCIgLz4KPC9zdmc+Cg==";
+import { App, Modal, normalizePath, PluginSettingTab, setIcon, Setting, TFolder } from "obsidian";
+import NameForgePlugin from "./main";
+import { ICON_FOLDER } from "./icons";
 
 class CreateFolderModal extends Modal {
   private parentFolder: TFolder;
@@ -17,17 +16,17 @@ class CreateFolderModal extends Modal {
   onOpen() {
     const { contentEl } = this;
     contentEl.empty();
-    contentEl.addClass("namewright-create-folder-modal");
+    contentEl.addClass("nameforge-create-folder-modal");
 
     contentEl.createEl("h2", { text: "Create new folder" });
     contentEl.createEl("p", {
       text: `Create a folder inside the vault root${this.parentFolder.path === "/" ? "" : ` under ${this.parentFolder.path}`}.`,
     });
 
-    const row = contentEl.createEl("div", { cls: "namewright-modal__pack-name-row" });
+    const row = contentEl.createEl("div", { cls: "nameforge-modal__pack-name-row" });
     row.createEl("label", { text: "Folder path" });
     this.inputEl = row.createEl("input", {
-      cls: "namewright-modal__pack-name-input",
+      cls: "nameforge-modal__pack-name-input",
       attr: {
         type: "text",
         placeholder: "namepacks",
@@ -35,7 +34,7 @@ class CreateFolderModal extends Modal {
       },
     }) as HTMLInputElement;
 
-    const controls = contentEl.createEl("div", { cls: "namewright-modal__controls" });
+    const controls = contentEl.createEl("div", { cls: "nameforge-modal__controls" });
     const createButton = controls.createEl("button", { text: "Create folder" });
     createButton.addEventListener("click", () => {
       void this.createFolder();
@@ -99,7 +98,7 @@ class FolderPickerModal extends Modal {
   private render() {
     const { contentEl } = this;
     contentEl.empty();
-    contentEl.addClass("namewright-folder-picker-modal");
+    contentEl.addClass("nameforge-folder-picker-modal");
 
     contentEl.createEl("h2", { text: "Choose a folder" });
     contentEl.createEl("p", {
@@ -107,11 +106,11 @@ class FolderPickerModal extends Modal {
     });
 
     contentEl.createEl("div", {
-      cls: "namewright-modal__folder-label",
+      cls: "nameforge-modal__folder-label",
       text: `Current folder: ${this.currentFolder.path === "/" ? "Vault root" : this.currentFolder.path}`,
     });
 
-    const controls = contentEl.createEl("div", { cls: "namewright-modal__controls" });
+    const controls = contentEl.createEl("div", { cls: "nameforge-modal__controls" });
     const chooseButton = controls.createEl("button", { text: "Use this folder" });
     chooseButton.addEventListener("click", () => {
       this.onChooseFolder(this.currentFolder);
@@ -139,7 +138,7 @@ class FolderPickerModal extends Modal {
       .filter((folder) => folder.parent?.path === this.currentFolder.path)
       .sort((a, b) => a.path.localeCompare(b.path));
 
-    const listContainer = contentEl.createEl("div", { cls: "namewright-modal__pack-list" });
+    const listContainer = contentEl.createEl("div", { cls: "nameforge-modal__pack-list" });
     if (folders.length === 0) {
       listContainer.createEl("p", { text: "No subfolders found in this location." });
       return;
@@ -159,10 +158,10 @@ class FolderPickerModal extends Modal {
   }
 }
 
-export class NameWrightSettingTab extends PluginSettingTab {
-  plugin: NameWrightPlugin;
+export class NameForgeSettingTab extends PluginSettingTab {
+  plugin: NameForgePlugin;
 
-  constructor(app: App, plugin: NameWrightPlugin) {
+  constructor(app: App, plugin: NameForgePlugin) {
     super(app, plugin);
     this.plugin = plugin;
   }
@@ -172,14 +171,12 @@ export class NameWrightSettingTab extends PluginSettingTab {
 
     containerEl.empty();
 
-    containerEl.createEl("h2", { text: "NameWright Settings" });
-
     const namesFileSetting = new Setting(containerEl)
       .setName("Names file")
       .setDesc("Markdown file to save and load names from, relative to the vault root.")
       .addText((text) =>
         text
-          .setPlaceholder("namewright/names.md")
+          .setPlaceholder("nameforge/names.md")
           .setValue(this.plugin.settings.namesFilePath || "")
           .onChange(async (value) => {
             this.plugin.settings.namesFilePath = value.trim();
@@ -188,10 +185,10 @@ export class NameWrightSettingTab extends PluginSettingTab {
       );
 
     const folderButton = namesFileSetting.controlEl.createEl("button", {
-      cls: "namewright-settings__icon-button",
+      cls: "nameforge-settings__icon-button",
       attr: { title: "Choose a names folder" },
     }) as HTMLButtonElement;
-    folderButton.style.backgroundImage = `url("${FOLDER_ICON}")`;
+    setIcon(folderButton, ICON_FOLDER);
     folderButton.addEventListener("click", () => {
       new FolderPickerModal(this.app, async (folder) => {
         this.plugin.settings.namesFilePath = folder.path;

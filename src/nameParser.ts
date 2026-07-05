@@ -54,7 +54,7 @@ export function isValidNamePackContent(content: string): boolean {
 
 export function parseNamesFileContent(content: string): NamesFileData {
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
-  let packName = "NameWright";
+  let packName = "nameForge";
   let body = content;
   let packType: NamesFileData["packType"] = "breakdownPack";
   let setting = "";
@@ -134,7 +134,7 @@ function splitCompoundPartSections(body: string, partCount: 2 | 3): string[] {
 }
 
 export function createNamesFileContent(packName: string, names: string[], packType: NamesFileData["packType"] = "breakdownPack"): string {
-  const safePackName = (packName || "NameWright").trim().replace(/\s+/g, " ");
+  const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
   return `---\ntype: namePack\npackType: ${packType}\npackName: ${safePackName}\nsetting: \n---\n\n${names.join("\n")}\n`;
 }
 
@@ -144,7 +144,7 @@ export function createCompoundNamesFileContent(
   generator: "breakdown" | "list",
   joining: "joined" | "spaced"
 ): string {
-  const safePackName = (packName || "NameWright").trim().replace(/\s+/g, " ");
+  const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
   const partsSections = parts
     .map((partNames, index) => `## Part ${index + 1}\n\n${partNames.join("\n")}`)
     .join("\n\n");
@@ -155,7 +155,7 @@ export function createCompoundNamesFileContent(
 const INVALID_FILENAME_CHARS = /[\\/:*?"<>|]/g;
 
 export function sanitizePackNameForFilename(packName: string): string {
-  const trimmed = (packName || "NameWright").trim().replace(/\s+/g, " ");
+  const trimmed = (packName || "nameForge").trim().replace(/\s+/g, " ");
   const cleaned = trimmed.replace(INVALID_FILENAME_CHARS, "-").trim();
-  return cleaned || "NameWright";
+  return cleaned || "nameForge";
 }

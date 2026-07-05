@@ -1,12 +1,9 @@
-import { addIcon, normalizePath, Plugin } from "obsidian";
-import { NameWrightSettingTab } from "./settings";
-import { GenerationHistoryEntry, MAX_HISTORY_ENTRIES, NameWrightModal, NameWrightSettings } from "./modal";
+import { normalizePath, Plugin, TFile } from "obsidian";
+import { NameForgeSettingTab } from "./settings";
+import { GenerationHistoryEntry, MAX_HISTORY_ENTRIES, NameForgeModal, NameForgeSettings } from "./modal";
+import { ICON_MEEPLE, registerNameForgeIcons } from "./icons";
 
-const NAMEWRIGHT_ICON_ID = "namewright-meeple";
-// Obsidian wraps this in its own viewBox="0 0 100 100", so scale the 24-unit icon up to fill it.
-const NAMEWRIGHT_ICON_SVG = '<g transform="scale(4.16667)"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20H4a1 1 0 0 1-1-1c0-2 3.378-4.907 4-6c-1 0-4-.5-4-2c0-2 4-3.5 6-4c0-1.5.5-4 3-4s3 2.5 3 4c2 .5 6 2 6 4c0 1.5-3 2-4 2c.622 1.093 4 4 4 6a1 1 0 0 1-1 1h-5c-1 0-2-4-3-4s-2 4-3 4" /></g>';
-
-const DEFAULT_SETTINGS: NameWrightSettings = {
+const DEFAULT_SETTINGS: NameForgeSettings = {
   namesFilePath: "",
   packName: "",
   folderPath: "",
@@ -28,9 +25,9 @@ function getSettingsFolderPath(namesFilePath?: string, folderPath?: string): str
   return configured.replace(/\/+$/, "");
 }
 
-function getSettingsFilePath(settings: NameWrightSettings): string {
+function getSettingsFilePath(settings: NameForgeSettings): string {
   const folderPath = getSettingsFolderPath(settings.namesFilePath, settings.folderPath);
-  return folderPath ? normalizePath(`${folderPath}/NameWright-Configuration.md`) : "";
+  return folderPath ? normalizePath(`${folderPath}/nameForgeConfiguration.md`) : "";
 }
 
 /**
@@ -75,13 +72,13 @@ function createGenerationHistorySection(history?: GenerationHistoryEntry[]): str
   return `\n## Generation History\n\n${lines.join("\n")}\n`;
 }
 
-function parseSettingsMarkdownContent(content: string): Partial<NameWrightSettings> {
+function parseSettingsMarkdownContent(content: string): Partial<NameForgeSettings> {
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   if (!frontmatterMatch) {
     return {};
   }
 
-  const parsed: Partial<NameWrightSettings> = {};
+  const parsed: Partial<NameForgeSettings> = {};
   for (const line of frontmatterMatch[1].split("\n")) {
     const match = line.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
     if (!match) {
@@ -118,7 +115,7 @@ function parseSettingsMarkdownContent(content: string): Partial<NameWrightSettin
   return parsed;
 }
 
-function createSettingsMarkdownContent(settings: NameWrightSettings): string {
+function createSettingsMarkdownContent(settings: NameForgeSettings): string {
   const folderPath = getSettingsFolderPath(settings.namesFilePath, settings.folderPath);
   const lines = [`folder: ${folderPath || ""}`, `namesFilePath: ${settings.namesFilePath || ""}`];
 
@@ -134,18 +131,22 @@ function createSettingsMarkdownContent(settings: NameWrightSettings): string {
   return frontmatter + createGenerationHistorySection(settings.previousGenerations);
 }
 
-export default class NameWrightPlugin extends Plugin {
-  settings: NameWrightSettings = {};
+export default class NameForgePlugin extends Plugin {
+  settings: NameForgeSettings = {};
 
-  private async discoverSettingsFromConfigurationFile(): Promise<Partial<NameWrightSettings> | null> {
+  private async discoverSettingsFromConfigurationFile(): Promise<Partial<NameForgeSettings> | null> {
     const markdownFiles = this.app.vault.getMarkdownFiles();
-    const configFiles = markdownFiles.filter((file) => file.basename === "NameWright-Configuration");
+    const configFiles = markdownFiles.filter((file) => file.basename === "nameForgeConfiguration");
 
     for (const file of configFiles) {
-      const content = await this.app.vault.adapter.read(file.path);
-      const parsed = parseSettingsMarkdownContent(content);
-      if (parsed.folderPath || parsed.namesFilePath || parsed.packName) {
-        return parsed;
+      try {
+        const content = await this.app.vault.cachedRead(file);
+        const parsed = parseSettingsMarkdownContent(content);
+        if (parsed.folderPath || parsed.namesFilePath || parsed.packName) {
+          return parsed;
+        }
+      } catch {
+        continue;
       }
     }
 
@@ -155,24 +156,24 @@ export default class NameWrightPlugin extends Plugin {
   async onload() {
     await this.loadSettings();
 
-    addIcon(NAMEWRIGHT_ICON_ID, NAMEWRIGHT_ICON_SVG);
+    registerNameForgeIcons();
 
     // Add ribbon icon
-    this.addRibbonIcon(NAMEWRIGHT_ICON_ID, "NameWright", () => {
-      new NameWrightModal(this.app, this, this.settings).open();
+    this.addRibbonIcon(ICON_MEEPLE, "nameForge", () => {
+      new NameForgeModal(this.app, this, this.settings).open();
     });
 
     // Add commands
     this.addCommand({
-      id: "open-namewright",
-      name: "Open NameWright",
+      id: "open-nameforge",
+      name: "Open name generator",
       callback: () => {
-        new NameWrightModal(this.app, this, this.settings).open();
+        new NameForgeModal(this.app, this, this.settings).open();
       },
     });
 
     // Add settings tab
-    this.addSettingTab(new NameWrightSettingTab(this.app, this));
+    this.addSettingTab(new NameForgeSettingTab(this.app, this));
   }
 
   onunload() {
@@ -201,12 +202,18 @@ export default class NameWrightPlugin extends Plugin {
       return;
     }
 
-    const settingsFileExists = await this.app.vault.adapter.exists(settingsFilePath);
-    if (!settingsFileExists) {
+    const settingsFile = this.app.vault.getFileByPath(normalizePath(settingsFilePath));
+    if (!(settingsFile instanceof TFile)) {
       return;
     }
 
-    const content = await this.app.vault.adapter.read(settingsFilePath);
+    let content: string;
+    try {
+      content = await this.app.vault.cachedRead(settingsFile);
+    } catch {
+      return;
+    }
+
     const parsed = parseSettingsMarkdownContent(content);
     this.settings = {
       ...this.settings,
@@ -232,6 +239,13 @@ export default class NameWrightPlugin extends Plugin {
     }
 
     this.settings.folderPath = getSettingsFolderPath(this.settings.namesFilePath, this.settings.folderPath);
-    await this.app.vault.adapter.write(settingsFilePath, createSettingsMarkdownContent(this.settings));
+    const normalizedPath = normalizePath(settingsFilePath);
+    const content = createSettingsMarkdownContent(this.settings);
+    const existingFile = this.app.vault.getFileByPath(normalizedPath);
+    if (existingFile instanceof TFile) {
+      await this.app.vault.modify(existingFile, content);
+    } else {
+      await this.app.vault.create(normalizedPath, content);
+    }
   }
 }

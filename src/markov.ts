@@ -130,6 +130,12 @@ export class MarkovModel {
   private readonly sourceByLength: Map<number, string[]>;
   readonly minLength: number;
   readonly maxLength: number;
+  /** First characters of source names — phonotactic gate. */
+  private readonly initials: Set<string>;
+  /** First-two-character sequences of source names — phonotactic gate. */
+  private readonly startBigrams: Set<string>;
+  /** Character bigrams seen anywhere inside source names — phonotactic gate. */
+  private readonly bigrams: Set<string>;
 
   /** Blended-distribution cache. Valid only for `cacheWbase`. */
   private distCache = new Map<string, Dist | null>();
@@ -139,13 +145,19 @@ export class MarkovModel {
     tables: Array<Map<string, Map<string, number>>>,
     sourceSet: Set<string>,
     minLength: number,
-    maxLength: number
+    maxLength: number,
+    initials: Set<string>,
+    startBigrams: Set<string>,
+    bigrams: Set<string>
   ) {
     this.tables = tables;
     this.sourceSet = sourceSet;
     this.minLength = minLength;
     this.maxLength = maxLength;
     this.sourceByLength = bucketByLength(sourceSet);
+    this.initials = initials;
+    this.startBigrams = startBigrams;
+    this.bigrams = bigrams;
   }
 
   /**
@@ -169,10 +181,20 @@ export class MarkovModel {
     let minL = Number.POSITIVE_INFINITY;
     let maxL = 0;
 
+    const initials = new Set<string>();
+    const startBigrams = new Set<string>();
+    const bigrams = new Set<string>();
+
     for (const name of lowerNames) {
       const chars = Array.from(name); // code-point safe
       minL = Math.min(minL, chars.length);
       maxL = Math.max(maxL, chars.length);
+
+      initials.add(chars[0]);
+      if (chars.length >= 2) startBigrams.add(chars[0] + chars[1]);
+      for (let i = 1; i < chars.length; i++) {
+        bigrams.add(chars[i - 1] + chars[i]);
+      }
 
       // Bracketed sequence: ^ + name + $  (as an array of single chars).
       const s = [START, ...chars, END];
@@ -197,7 +219,15 @@ export class MarkovModel {
     if (!isFinite(minL)) minL = 3; // empty input — harmless defaults
     const minLength = Math.max(2, minL);
     const maxLength = Math.min(15, maxL + 1);
-    return new MarkovModel(tables, sourceSet, minLength, maxLength);
+    return new MarkovModel(
+      tables,
+      sourceSet,
+      minLength,
+      maxLength,
+      initials,
+      startBigrams,
+      bigrams
+    );
   }
 
   /**
@@ -239,6 +269,7 @@ export class MarkovModel {
       tries++;
       const w = this.trySampleWord(rng, wbase, minP, maxP);
       if (w === null) continue;
+      if (!this.validPhonotactics(w)) continue;
 
       if (!allowCopies && this.sourceSet.has(w)) continue;
       if (seen.has(w)) continue;
@@ -323,6 +354,26 @@ export class MarkovModel {
     if (!(perp <= maxP && perp >= minP)) return null;
 
     return w;
+  }
+
+  /**
+   * Corpus phonotactics for a whole generated word: valid initial letter,
+   * valid initial digraph (guards against order-1 evidence overriding the
+   * order-2 start context, e.g. "^l" + "l->f" producing "Lfstan"), and every
+   * adjacent character pair attested somewhere in a source name. Mirrors
+   * `PlaceNameModel.validBigrams` but additionally gates the start bigram,
+   * since whole-word generation (unlike stem generation) needs the start of
+   * the word to be corpus-authentic too.
+   */
+  private validPhonotactics(w: string): boolean {
+    const chars = Array.from(w);
+    if (chars.length === 0 || !this.initials.has(chars[0])) return false;
+    if (chars.length >= 2 && !this.startBigrams.has(chars[0] + chars[1]))
+      return false;
+    for (let i = 1; i < chars.length; i++) {
+      if (!this.bigrams.has(chars[i - 1] + chars[i])) return false;
+    }
+    return true;
   }
 
   /**

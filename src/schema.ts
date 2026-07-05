@@ -9,7 +9,7 @@ export interface NameSchema {
 }
 
 export interface SchemaFrontmatter {
-  namewright: string;
+  nameforge: string;
   type: string;
   name: string;
   created: string;
@@ -60,7 +60,7 @@ export function parseSchemaNote(content: string): NameSchema | null {
 
 export function createSchemaNote(schema: NameSchema): string {
   return `---
-namewright: schema
+nameforge: schema
 type: ${schema.type}
 name: ${schema.name}
 created: ${schema.created}
