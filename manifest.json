@@ -1,7 +1,7 @@
 {
   "id": "namewright",
   "name": "NameWright",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "minAppVersion": "1.5.0",
   "description": "Break a list of names into a reusable schema, then generate new names in the same style and drop the ones you like into a note.",
   "author": "Kenny",
