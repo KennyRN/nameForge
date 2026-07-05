@@ -2,7 +2,7 @@
 
 Feed it a list of names you love, let it work out the Markov Magic, and generate fresh names right inside Obsidian in that *very same style*. (Offline, no AI, no internet connection, so you'll not end up getting distracted and start hoovering the dogs...)
 
-Feed NameWright a list of source names (characters, places, clans—anything), and it learns the letter patterns of that list and generates new names in the same style. Names for an Anglo-Saxon village produce more Anglo-Saxon-sounding villages; names from your own invented culture produce more of *that*. Everything runs locally using the statistical Markov Magic Model built fresh from your list each time: your names never leave your vault.
+Feed nameForge a list of source names (characters, places, clans—anything), and it learns the letter patterns of that list and generates new names in the same style. Names for an Anglo-Saxon village produce more Anglo-Saxon-sounding villages; names from your own invented culture produce more of *that*. Everything runs locally using its statistical Markov Magic Model built fresh from your list each time: your names never leave your vault.
 
 Built by a worldbuilder, for worldbuilders.
 
