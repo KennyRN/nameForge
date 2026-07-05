@@ -170,7 +170,7 @@ export default class NameForgePlugin extends Plugin {
 
     // Add commands
     this.addCommand({
-      id: "open-nameforge",
+      id: "open-name-generator",
       name: "Open name generator",
       callback: () => {
         new NameForgeModal(this.app, this, this.settings).open();
@@ -186,7 +186,7 @@ export default class NameForgePlugin extends Plugin {
   }
 
   async loadSettings() {
-    const legacySettings = await this.loadData();
+    const legacySettings = (await this.loadData()) as Partial<NameForgeSettings> | null;
     this.settings = { ...DEFAULT_SETTINGS, ...legacySettings };
 
     const hasConfiguredLocation = Boolean(this.settings.namesFilePath || this.settings.folderPath);

@@ -1,5 +1,5 @@
 import esbuild from "esbuild";
-import builtins from "builtin-modules";
+import { builtinModules } from "node:module";
 
 const banner =
 `/*
@@ -31,7 +31,7 @@ async function build() {
       "@lezer/common",
       "@lezer/highlight",
       "@lezer/lr",
-      ...builtins,
+      ...builtinModules,
     ],
     format: "cjs",
     target: "es2018",

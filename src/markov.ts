@@ -166,10 +166,10 @@ export class MarkovModel {
    */
   static build(names: string[]): MarkovModel {
     const tables: Array<Map<string, Map<string, number>>> = [
-      new Map(),
-      new Map(),
-      new Map(),
-      new Map(),
+      new Map<string, Map<string, number>>(),
+      new Map<string, Map<string, number>>(),
+      new Map<string, Map<string, number>>(),
+      new Map<string, Map<string, number>>(),
     ];
 
     const lowerNames = names
@@ -657,7 +657,7 @@ function extractFromSingle(markdown: string): string[] {
 
     if (/^#{1,6}\s/.test(line)) continue; // heading
     if (/^([-*_])(\s*\1){2,}$/.test(line)) continue; // horizontal rule
-    if (/^[\s|:\-]+$/.test(line) && line.includes("-")) continue; // table separator
+    if (/^[\s|:-]+$/.test(line) && line.includes("-")) continue; // table separator
 
     line = line.replace(/^>+\s?/, ""); // blockquote
     line = line.replace(/^(?:[-*+]|\d+[.)])\s+/, ""); // list bullet / number
@@ -672,7 +672,7 @@ function extractFromSingle(markdown: string): string[] {
 }
 
 function stripFrontmatter(md: string): string {
-  const m = md.match(/^﻿?---\r?\n[\s\S]*?\r?\n---\r?\n?/);
+  const m = md.match(/^\uFEFF?---\r?\n[\s\S]*?\r?\n---\r?\n?/);
   return m ? md.slice(m[0].length) : md;
 }
 
@@ -1201,7 +1201,7 @@ function normalisePlaceName(
   };
 
   // Words in order, with their separators preserved for the template.
-  const parts = lower.split(/([\s\-]+)/); // words at even indices
+  const parts = lower.split(/([\s-]+)/); // words at even indices
   let coreIdx = -1;
   let coreHasEnding = false;
   for (let i = 0; i < parts.length; i += 2) {
@@ -1241,7 +1241,7 @@ const PLACE_CONNECTIVES = new Set([
  * "great snoring" → "Great Snoring"), and the first word always capitalised.
  */
 function renderPlaceName(lower: string): string {
-  const parts = lower.split(/([\s\-]+)/);
+  const parts = lower.split(/([\s-]+)/);
   let firstWord = true;
   return parts
     .map((p, i) => {

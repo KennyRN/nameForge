@@ -32,7 +32,7 @@ class CreateFolderModal extends Modal {
         placeholder: "namepacks",
         value: "namepacks",
       },
-    }) as HTMLInputElement;
+    });
 
     const controls = contentEl.createEl("div", { cls: "nameforge-modal__controls" });
     const createButton = controls.createEl("button", { text: "Create folder" });
@@ -128,8 +128,10 @@ class FolderPickerModal extends Modal {
     if (this.currentFolder.parent instanceof TFolder) {
       const upButton = controls.createEl("button", { text: "Up a level" });
       upButton.addEventListener("click", () => {
-        this.currentFolder = this.currentFolder.parent as TFolder;
-        this.render();
+        if (this.currentFolder.parent instanceof TFolder) {
+          this.currentFolder = this.currentFolder.parent;
+          this.render();
+        }
       });
     }
 
@@ -166,6 +168,12 @@ export class NameForgeSettingTab extends PluginSettingTab {
     this.plugin = plugin;
   }
 
+  private async applyChosenFolder(folder: TFolder): Promise<void> {
+    this.plugin.settings.namesFilePath = folder.path;
+    await this.plugin.saveSettings();
+    this.display();
+  }
+
   display(): void {
     const { containerEl } = this;
 
@@ -187,13 +195,11 @@ export class NameForgeSettingTab extends PluginSettingTab {
     const folderButton = namesFileSetting.controlEl.createEl("button", {
       cls: "nameforge-settings__icon-button",
       attr: { title: "Choose a names folder" },
-    }) as HTMLButtonElement;
+    });
     setIcon(folderButton, ICON_FOLDER);
     folderButton.addEventListener("click", () => {
-      new FolderPickerModal(this.app, async (folder) => {
-        this.plugin.settings.namesFilePath = folder.path;
-        await this.plugin.saveSettings();
-        this.display();
+      new FolderPickerModal(this.app, (folder) => {
+        void this.applyChosenFolder(folder);
       }).open();
     });
 
@@ -204,7 +210,6 @@ export class NameForgeSettingTab extends PluginSettingTab {
         slider
           .setLimits(1, 3, 1)
           .setValue(this.plugin.settings.faithfulness ?? 2)
-          .setDynamicTooltip()
           .onChange(async (value) => {
             this.plugin.settings.faithfulness = value;
             await this.plugin.saveSettings();
@@ -218,7 +223,6 @@ export class NameForgeSettingTab extends PluginSettingTab {
         slider
           .setLimits(1, 5, 1)
           .setValue(this.plugin.settings.strictness ?? 3)
-          .setDynamicTooltip()
           .onChange(async (value) => {
             this.plugin.settings.strictness = value;
             await this.plugin.saveSettings();

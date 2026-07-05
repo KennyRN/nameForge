@@ -125,7 +125,7 @@ function splitCompoundPartSections(body: string, partCount: 2 | 3): string[] {
       sections.push("");
       continue;
     }
-    const start = match.index! + match[0].length;
+    const start = match.index + match[0].length;
     const end = matches[i + 1]?.index ?? body.length;
     sections.push(body.slice(start, end));
   }
