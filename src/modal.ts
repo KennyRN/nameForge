@@ -1,5 +1,13 @@
 import { App, Editor, Modal, normalizePath, TFolder } from "obsidian";
-import { generateCompoundNames, ListGenerator, MarkovModel, extractNamesFromMarkdown } from "./markov";
+import {
+  generateCompoundNamesDetailed,
+  ListGenerator,
+  MarkovModel,
+  PlaceNameModel,
+  PlaceEnding,
+  extractNamesFromMarkdown,
+  mulberry32,
+} from "./markov";
 import {
   createCompoundNamesFileContent,
   createNamesFileContent,
@@ -20,30 +28,95 @@ const BREAKDOWN_PACK_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="1em"
 const LIST_PACK_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M11 15c0-.35.06-.687.171-1H4.253a2.25 2.25 0 0 0-2.25 2.25v.919c0 .572.18 1.13.511 1.596C4.056 20.929 6.58 22 10 22q.596 0 1.157-.043A3 3 0 0 1 11 21zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10M12 15a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0 1h6a.5.5 0 1 0 0-1zm0 3a.5.5 0 1 0 0 1h6a.5.5 0 1 0 0-1z" /></svg>';
 const COMPOUND_BREAKDOWN_PACK_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M20.5 12a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5h-4a2.5 2.5 0 0 1-2.5-2.5v-6a2.5 2.5 0 0 1 2.5-2.5zm-7.464 2q-.035.245-.036.5v6c0 .393.065.77.185 1.122q-1.434.377-3.185.379c-3.42 0-5.943-1.072-7.485-3.236a2.75 2.75 0 0 1-.511-1.596v-.92A2.25 2.25 0 0 1 4.253 14zM17 14a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10" /></svg>';
 const COMPOUND_LIST_PACK_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M20.5 12a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5h-4a2.5 2.5 0 0 1-2.5-2.5v-6a2.5 2.5 0 0 1 2.5-2.5zm-7.464 2q-.035.245-.036.5v1H4.253a.75.75 0 0 0-.75.749v.578c.001.536.192 1.054.54 1.461c1.253 1.468 3.219 2.213 5.957 2.213q1.694-.002 3-.382v.381c0 .394.066.772.185 1.125Q11.752 22 10 22.001c-3.146 0-5.531-.905-7.098-2.74a3.75 3.75 0 0 1-.898-2.434v-.578A2.25 2.25 0 0 1 4.253 14zM17 14a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10m0 1.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" /></svg>';
+const PLACE_PACK_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7" /></svg>';
+const SEED_LOCK_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 17a2 2 0 0 0 2-2a2 2 0 0 0-2-2a2 2 0 0 0-2 2a2 2 0 0 0 2 2m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h1V6a5 5 0 0 1 10 0v2zm-6-4a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3" /></svg>';
+const SEED_COPY_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m0 16H8V7h11z" /></svg>';
 
-type NamePackType = "breakdownPack" | "listPack" | "compoundPack";
+type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack";
 
 function packTypeIcon(packType: NamePackType, compoundGenerator?: "breakdown" | "list"): string {
   if (packType === "compoundPack") {
     return compoundGenerator === "list" ? COMPOUND_LIST_PACK_ICON : COMPOUND_BREAKDOWN_PACK_ICON;
   }
+  if (packType === "placePack") {
+    return PLACE_PACK_ICON;
+  }
   return packType === "listPack" ? LIST_PACK_ICON : BREAKDOWN_PACK_ICON;
 }
 
-function generateNamesFromSource(namesText: string, packType: NamePackType, count: number = 6, settings: NameWrightSettings = {}): string[] {
+interface SourceGenerationResult {
+  names: string[];
+  seed: number;
+  /** Discovered place-name endings, present only for placePack generations. */
+  endings?: PlaceEnding[];
+}
+
+function resolveSeed(seed?: number): number {
+  return seed !== undefined && Number.isFinite(seed)
+    ? Math.floor(seed) >>> 0
+    : (Math.random() * 0xffffffff) >>> 0;
+}
+
+function generateNamesFromSource(
+  namesText: string,
+  packType: NamePackType,
+  count: number = 6,
+  settings: NameWrightSettings = {},
+  seed?: number
+): SourceGenerationResult {
   const names = extractNamesFromMarkdown(namesText);
+  const resolvedSeed = resolveSeed(seed);
   if (names.length === 0) {
-    return [];
+    return { names: [], seed: resolvedSeed };
   }
 
   if (packType === "listPack") {
     const generator = new ListGenerator();
     generator.train(names);
-    return generator.generateMultiple(count);
+    return { names: generator.generateMultiple(count, mulberry32(resolvedSeed)), seed: resolvedSeed };
+  }
+
+  if (packType === "placePack") {
+    const model = PlaceNameModel.build(names);
+    const result = model.generateDetailed({
+      count,
+      faithfulness: settings.faithfulness ?? 2,
+      strictness: settings.strictness ?? 3,
+      seed: resolvedSeed,
+    });
+    return { names: result.names, seed: result.seed, endings: model.endings };
   }
 
   const model = MarkovModel.build(names);
-  return model.generate({ count, faithfulness: settings.faithfulness ?? 2, strictness: settings.strictness ?? 3 });
+  const result = model.generateDetailed({
+    count,
+    faithfulness: settings.faithfulness ?? 2,
+    strictness: settings.strictness ?? 3,
+    seed: resolvedSeed,
+  });
+  return { names: result.names, seed: result.seed };
+}
+
+function parseSeedInput(value?: string): number | undefined {
+  if (!value || !value.trim()) return undefined;
+  const parsed = Number(value.trim());
+  return Number.isFinite(parsed) ? Math.floor(parsed) >>> 0 : undefined;
+}
+
+function formatHistoryTimestamp(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return (
+    `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}` +
+    `-${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`
+  );
+}
+
+export const MAX_HISTORY_ENTRIES = 50;
+
+export interface GenerationHistoryEntry {
+  packName: string;
+  timestamp: string;
+  seed: number;
 }
 
 export interface NameWrightSettings {
@@ -52,6 +125,7 @@ export interface NameWrightSettings {
   folderPath?: string;
   faithfulness?: number;
   strictness?: number;
+  previousGenerations?: GenerationHistoryEntry[];
 }
 
 interface NameWrightPluginLike {
@@ -78,6 +152,10 @@ export class NameWrightModal extends Modal {
   private currentCompoundGenerator: "breakdown" | "list" = "breakdown";
   private currentCompoundJoining: "joined" | "spaced" = "joined";
   private generationCount = 25;
+  private currentSeed: number | null = null;
+  private seedLocked = false;
+  private seedInputEl: HTMLInputElement | null = null;
+  private seedLockButton: HTMLButtonElement | null = null;
 
   constructor(app: App, plugin: NameWrightPluginLike, settings: NameWrightSettings = {}) {
     super(app);
@@ -406,54 +484,153 @@ export class NameWrightModal extends Modal {
   }
 
   private async generateSelectedCount() {
+    const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+
     if (this.currentPackType === "compoundPack") {
-      const generated = generateCompoundNames(this.currentCompoundParts, {
+      const result = generateCompoundNamesDetailed(this.currentCompoundParts, {
         count: this.generationCount,
         generator: this.currentCompoundGenerator,
         joining: this.currentCompoundJoining,
         faithfulness: this.plugin.settings.faithfulness,
         strictness: this.plugin.settings.strictness,
+        seed: seedOverride,
       });
 
-      if (generated.length === 0) {
+      if (result.names.length === 0) {
         this.renderResults([], "Select a pack with names to generate from.");
         this.setStatus("No names available to generate from.");
         return;
       }
 
+      this.currentSeed = result.seed;
       const totalSource = this.currentCompoundParts.reduce((sum, part) => sum + part.length, 0);
-      this.renderResults(generated);
-      this.setStatus(`Generated ${generated.length} name(s) from ${totalSource} source name element(s).`);
+      this.renderResults(result.names);
+      await this.recordGenerationHistory();
+      this.setStatus(`Generated ${result.names.length} name(s) from ${totalSource} source name element(s).`);
       return;
     }
 
-    const generated = generateNamesFromSource(this.currentNamesText, this.currentPackType, this.generationCount, this.plugin.settings);
+    const result = generateNamesFromSource(
+      this.currentNamesText,
+      this.currentPackType,
+      this.generationCount,
+      this.plugin.settings,
+      seedOverride
+    );
 
-    if (generated.length === 0) {
+    if (result.names.length === 0) {
       this.renderResults([], "Select a pack with names to generate from.");
       this.setStatus("No names available to generate from.");
       return;
     }
 
-    this.renderResults(generated);
-    this.setStatus(`Generated ${generated.length} name(s) from ${extractNamesFromMarkdown(this.currentNamesText).length} source name(s).`);
+    this.currentSeed = result.seed;
+    this.renderResults(result.names, undefined, result.endings);
+    await this.recordGenerationHistory();
+    this.setStatus(`Generated ${result.names.length} name(s) from ${extractNamesFromMarkdown(this.currentNamesText).length} source name(s).`);
   }
 
-  private renderResults(names: string[], placeholderMessage?: string) {
+  /**
+   * Appends the just-used seed to the config file's generation history,
+   * most-recent first, capped at MAX_HISTORY_ENTRIES.
+   */
+  private async recordGenerationHistory() {
+    if (this.currentSeed === null) return;
+    const entry: GenerationHistoryEntry = {
+      packName: this.plugin.settings.packName || "NameWright",
+      timestamp: formatHistoryTimestamp(new Date()),
+      seed: this.currentSeed,
+    };
+    this.plugin.settings.previousGenerations = [
+      entry,
+      ...(this.plugin.settings.previousGenerations ?? []),
+    ].slice(0, MAX_HISTORY_ENTRIES);
+    await this.plugin.saveSettings();
+  }
+
+  private async copySeedToClipboard() {
+    const value = this.seedInputEl?.value?.trim();
+    if (!value) {
+      this.setStatus("No seed to copy yet.");
+      return;
+    }
+    await navigator.clipboard.writeText(value);
+    this.setStatus(`Copied seed ${value}.`);
+  }
+
+  private updateSeedLockButton() {
+    if (!this.seedLockButton) return;
+    this.seedLockButton.classList.toggle("is-active", this.seedLocked);
+    this.seedLockButton.setAttribute("aria-pressed", String(this.seedLocked));
+    this.seedLockButton.setAttribute(
+      "title",
+      this.seedLocked ? "Seed locked — Generate will reuse it" : "Seed unlocked — Generate will randomize"
+    );
+  }
+
+  private buildSeedControls(container: HTMLElement) {
+    this.seedInputEl = container.createEl("input", {
+      cls: "namewright-modal__seed-input",
+      attr: {
+        type: "text",
+        placeholder: "Seed",
+        title: "Seed used for the last generation. Lock it, then Generate again to reproduce that batch.",
+      },
+    }) as HTMLInputElement;
+    this.seedInputEl.value = this.currentSeed !== null ? String(this.currentSeed) : "";
+
+    this.seedLockButton = container.createEl("button", {
+      cls: "namewright-modal__icon-button",
+      attr: { type: "button", "aria-pressed": String(this.seedLocked) },
+    }) as HTMLButtonElement;
+    this.seedLockButton.innerHTML = SEED_LOCK_ICON;
+    this.seedLockButton.addEventListener("click", () => {
+      this.seedLocked = !this.seedLocked;
+      this.updateSeedLockButton();
+    });
+    this.updateSeedLockButton();
+
+    const copyButton = container.createEl("button", {
+      cls: "namewright-modal__icon-button",
+      attr: { type: "button", title: "Copy seed" },
+    }) as HTMLButtonElement;
+    copyButton.innerHTML = SEED_COPY_ICON;
+    copyButton.addEventListener("click", () => {
+      void this.copySeedToClipboard();
+    });
+  }
+
+  private renderResults(names: string[], placeholderMessage?: string, endings?: PlaceEnding[]) {
     if (!this.resultsEl) {
       return;
     }
 
     this.resultsEl.empty();
 
+    if (endings && endings.length > 0) {
+      const endingsRow = this.resultsEl.createEl("div", { cls: "namewright-modal__endings-row" });
+      endings.forEach((ending) => {
+        const label = ending.suffix === "" ? "(none)" : `-${ending.suffix}`;
+        endingsRow.createEl("span", {
+          cls: "namewright-modal__ending-chip",
+          text: `${label} (${ending.count})`,
+        });
+      });
+    }
+
     const list = this.resultsEl.createEl("ul", { cls: "namewright-modal__results-list" });
 
     const actions = this.resultsEl.createEl("div", { cls: "namewright-modal__results-actions" });
-    const insertButton = actions.createEl("button", { cls: "namewright-modal__text-button", attr: { title: "Insert" } }) as HTMLButtonElement;
+
+    const seedGroup = actions.createEl("div", { cls: "namewright-modal__seed-group" });
+    this.buildSeedControls(seedGroup);
+
+    const buttonsGroup = actions.createEl("div", { cls: "namewright-modal__results-buttons" });
+    const insertButton = buttonsGroup.createEl("button", { cls: "namewright-modal__text-button", attr: { title: "Insert" } }) as HTMLButtonElement;
     insertButton.innerHTML = TEXT_INSERT_ICON;
-    const checklistButton = actions.createEl("button", { cls: "namewright-modal__text-button", attr: { title: "Insert checklist" } }) as HTMLButtonElement;
+    const checklistButton = buttonsGroup.createEl("button", { cls: "namewright-modal__text-button", attr: { title: "Insert checklist" } }) as HTMLButtonElement;
     checklistButton.innerHTML = CHECKLIST_INSERT_ICON;
-    const bulletButton = actions.createEl("button", { cls: "namewright-modal__text-button", attr: { title: "Insert bullet list" } }) as HTMLButtonElement;
+    const bulletButton = buttonsGroup.createEl("button", { cls: "namewright-modal__text-button", attr: { title: "Insert bullet list" } }) as HTMLButtonElement;
     bulletButton.innerHTML = BULLET_INSERT_ICON;
 
     const getSelectedNames = (): string[] =>
@@ -720,6 +897,11 @@ class FolderPickerModal extends Modal {
   }
 }
 
+const NAME_TEXTAREA_PLACEHOLDER =
+  "Paste names as CSV or one per line; or a mix of both. NameWright tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa";
+const PLACE_TEXTAREA_PLACEHOLDER =
+  "Paste names as CSV or one per line; or a mix of both. NameWright tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
+
 class NameWrightEditorModal extends Modal {
   private parent: NameWrightModal;
   private inputEl: HTMLTextAreaElement | null = null;
@@ -727,6 +909,7 @@ class NameWrightEditorModal extends Modal {
   private breakdownButton: HTMLButtonElement | null = null;
   private listButton: HTMLButtonElement | null = null;
   private compoundButton: HTMLButtonElement | null = null;
+  private placeButton: HTMLButtonElement | null = null;
   private selectedPackType: NamePackType = "breakdownPack";
   private initialText: string;
   private initialPackName: string;
@@ -795,16 +978,34 @@ class NameWrightEditorModal extends Modal {
       this.setPackType("compoundPack");
     });
 
-    this.inputEl = contentEl.createEl("textarea", {
-      cls: "namewright-modal__textarea",
+    this.placeButton = typeToggle.createEl("button", {
+      cls: "namewright-modal__toggle-button",
+      text: "Place",
+    }) as HTMLButtonElement;
+    this.placeButton.addEventListener("click", () => {
+      this.setPackType("placePack");
+    });
+
+    // Fixed-height stage: the plain textarea and the compound section
+    // (options row + up to 3 part textareas) are both absolutely positioned
+    // to fill it and shown/hidden as alternates, so neither one can ever
+    // affect the stage's own box size — the stage's height is a hard
+    // constant no matter which pack type is active. If the active content
+    // (e.g. a 3-part compound) is taller than the stage, only that pane
+    // scrolls internally. Save/cancel sit below the stage in normal flow,
+    // always visible, never needing to be scrolled to.
+    const stage = contentEl.createEl("div", { cls: "namewright-editor-modal__stage" });
+
+    this.inputEl = stage.createEl("textarea", {
+      cls: "namewright-modal__textarea namewright-editor-modal__stage-pane",
       attr: {
-        placeholder: "Paste names as CSV or one per line; or a mix of both. NameWright tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa",
+        placeholder: NAME_TEXTAREA_PLACEHOLDER,
         rows: "12",
       },
     });
     this.inputEl.value = this.initialText;
 
-    this.buildCompoundSection(contentEl);
+    this.buildCompoundSection(stage);
 
     this.selectedPackType = this.parent.currentPackType;
     this.updateTypeButtons();
@@ -822,8 +1023,10 @@ class NameWrightEditorModal extends Modal {
     cancelButton.addEventListener("click", () => this.close());
   }
 
-  private buildCompoundSection(contentEl: HTMLElement) {
-    this.compoundSectionEl = contentEl.createEl("div", { cls: "namewright-modal__compound-section" });
+  private buildCompoundSection(container: HTMLElement) {
+    this.compoundSectionEl = container.createEl("div", {
+      cls: "namewright-modal__compound-section namewright-editor-modal__stage-pane",
+    });
 
     const optionsRow = this.compoundSectionEl.createEl("div", { cls: "namewright-modal__compound-options-row" });
 
@@ -890,12 +1093,19 @@ class NameWrightEditorModal extends Modal {
     const isBreakdown = this.selectedPackType === "breakdownPack";
     const isList = this.selectedPackType === "listPack";
     const isCompound = this.selectedPackType === "compoundPack";
+    const isPlace = this.selectedPackType === "placePack";
     this.breakdownButton?.classList.toggle("is-active", isBreakdown);
     this.listButton?.classList.toggle("is-active", isList);
     this.compoundButton?.classList.toggle("is-active", isCompound);
+    this.placeButton?.classList.toggle("is-active", isPlace);
     this.breakdownButton?.setAttribute("aria-pressed", String(isBreakdown));
     this.listButton?.setAttribute("aria-pressed", String(isList));
     this.compoundButton?.setAttribute("aria-pressed", String(isCompound));
+    this.placeButton?.setAttribute("aria-pressed", String(isPlace));
+
+    if (this.inputEl) {
+      this.inputEl.placeholder = isPlace ? PLACE_TEXTAREA_PLACEHOLDER : NAME_TEXTAREA_PLACEHOLDER;
+    }
 
     if (isCompound) {
       this.inputEl?.hide();

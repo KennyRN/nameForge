@@ -1,6 +1,6 @@
 import { addIcon, normalizePath, Plugin } from "obsidian";
 import { NameWrightSettingTab } from "./settings";
-import { NameWrightModal, NameWrightSettings } from "./modal";
+import { GenerationHistoryEntry, MAX_HISTORY_ENTRIES, NameWrightModal, NameWrightSettings } from "./modal";
 
 const NAMEWRIGHT_ICON_ID = "namewright-meeple";
 // Obsidian wraps this in its own viewBox="0 0 100 100", so scale the 24-unit icon up to fill it.
@@ -31,6 +31,48 @@ function getSettingsFolderPath(namesFilePath?: string, folderPath?: string): str
 function getSettingsFilePath(settings: NameWrightSettings): string {
   const folderPath = getSettingsFolderPath(settings.namesFilePath, settings.folderPath);
   return folderPath ? normalizePath(`${folderPath}/NameWright-Configuration.md`) : "";
+}
+
+/**
+ * The history line format is `- {timestamp} | {seed} | {packName}` — the
+ * timestamp and seed are fixed-format tokens matched before the free-text
+ * packName, so a pack name containing "|" still parses correctly (it's
+ * always "everything after the second pipe").
+ */
+const HISTORY_LINE_PATTERN = /^-\s*(\d{8}-\d{6})\s*\|\s*(-?\d+)\s*\|\s*(.*)$/;
+
+function parseGenerationHistory(body: string): GenerationHistoryEntry[] {
+  const headingIndex = body.indexOf("## Generation History");
+  if (headingIndex === -1) {
+    return [];
+  }
+
+  const entries: GenerationHistoryEntry[] = [];
+  for (const line of body.slice(headingIndex).split(/\r?\n/)) {
+    const match = line.match(HISTORY_LINE_PATTERN);
+    if (!match) {
+      continue;
+    }
+    const [, timestamp, seedText, packName] = match;
+    const seed = Number(seedText);
+    if (!Number.isFinite(seed)) {
+      continue;
+    }
+    entries.push({ timestamp, seed, packName: packName.trim() });
+  }
+
+  return entries;
+}
+
+function createGenerationHistorySection(history?: GenerationHistoryEntry[]): string {
+  if (!history || history.length === 0) {
+    return "";
+  }
+
+  const lines = history
+    .slice(0, MAX_HISTORY_ENTRIES)
+    .map((entry) => `- ${entry.timestamp} | ${entry.seed} | ${entry.packName}`);
+  return `\n## Generation History\n\n${lines.join("\n")}\n`;
 }
 
 function parseSettingsMarkdownContent(content: string): Partial<NameWrightSettings> {
@@ -68,6 +110,11 @@ function parseSettingsMarkdownContent(content: string): Partial<NameWrightSettin
     }
   }
 
+  const history = parseGenerationHistory(content.slice(frontmatterMatch[0].length));
+  if (history.length > 0) {
+    parsed.previousGenerations = history;
+  }
+
   return parsed;
 }
 
@@ -83,7 +130,8 @@ function createSettingsMarkdownContent(settings: NameWrightSettings): string {
   lines.push(`faithfulness: ${settings.faithfulness ?? DEFAULT_SETTINGS.faithfulness}`);
   lines.push(`strictness: ${settings.strictness ?? DEFAULT_SETTINGS.strictness}`);
 
-  return `---\ntype: configurationFile\n${lines.join("\n")}\n---\n`;
+  const frontmatter = `---\ntype: configurationFile\n${lines.join("\n")}\n---\n`;
+  return frontmatter + createGenerationHistorySection(settings.previousGenerations);
 }
 
 export default class NameWrightPlugin extends Plugin {

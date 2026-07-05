@@ -11,7 +11,7 @@ export interface ParsedName {
 export interface NamesFileData {
   packName: string;
   names: string[];
-  packType: "breakdownPack" | "listPack" | "compoundPack";
+  packType: "breakdownPack" | "listPack" | "compoundPack" | "placePack";
   compoundParts?: 2 | 3;
   compoundGenerator?: "breakdown" | "list";
   compoundJoining?: "joined" | "spaced";
@@ -69,7 +69,7 @@ export function parseNamesFileContent(content: string): NamesFileData {
     const packTypeMatch = frontmatter.match(/^packType:\s*(.+)$/m);
     if (packTypeMatch) {
       const rawPackType = packTypeMatch[1].trim().replace(/^['"]|['"]$/g, "");
-      if (["breakdownPack", "listPack", "compoundPack"].includes(rawPackType)) {
+      if (["breakdownPack", "listPack", "compoundPack", "placePack"].includes(rawPackType)) {
         packType = rawPackType as NamesFileData["packType"];
       }
     }

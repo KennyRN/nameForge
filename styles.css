@@ -222,9 +222,55 @@ settings:
 
 .namewright-modal__results-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   gap: 8px;
   margin-top: 8px;
+}
+
+.namewright-modal__results-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.namewright-modal__seed-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.namewright-modal__seed-input {
+  width: 110px;
+  padding: 4px 8px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+}
+
+.namewright-modal__seed-group .namewright-modal__icon-button {
+  width: 28px;
+  height: 28px;
+}
+
+.namewright-modal__seed-group .namewright-modal__icon-button.is-active {
+  color: var(--namewright-accent-color, var(--interactive-accent));
+}
+
+.namewright-modal__endings-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.namewright-modal__ending-chip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: var(--background-secondary-alt);
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
 }
 
 .namewright-modal__text-button {
@@ -252,6 +298,34 @@ settings:
 .namewright-modal__text-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.namewright-editor-modal__stage {
+  position: relative;
+  /* Fixed-ish, but capped relative to the viewport so it doesn't push the
+     save/cancel row off the bottom of shorter windows — 420px was too tall
+     on smaller screens, clipping the controls below it with no scrollbar. */
+  height: clamp(200px, 45vh, 420px);
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+/*
+ * The plain textarea and the compound section both get this class. Only one
+ * is ever visible (the other is display:none via .hide()/.show()), and each
+ * is absolutely positioned to exactly fill the stage. Absolutely positioned
+ * elements are taken out of normal flow entirely, so neither one can ever
+ * affect the stage's own box size — that's what makes the stage's height a
+ * true constant regardless of pack type, with no flexbox min-height/percent
+ * chain to get wrong. If the active pane's content is taller than the
+ * stage, it scrolls within itself only.
+ */
+.namewright-editor-modal__stage-pane {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  margin: 0;
+  resize: none;
 }
 
 .namewright-editor-modal .namewright-modal__controls {
