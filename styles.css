@@ -258,21 +258,6 @@ settings:
   color: var(--nameforge-accent-color, var(--interactive-accent));
 }
 
-.nameforge-modal__endings-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 8px;
-}
-
-.nameforge-modal__ending-chip {
-  padding: 2px 8px;
-  border-radius: 999px;
-  background-color: var(--background-secondary-alt);
-  color: var(--text-muted);
-  font-size: var(--font-ui-smaller);
-}
-
 .nameforge-modal__text-button {
   padding: 6px 12px;
   border: none;

@@ -31,12 +31,14 @@ function getSettingsFilePath(settings: NameForgeSettings): string {
 }
 
 /**
- * The history line format is `- {timestamp} | {seed} | {packName}` — the
- * timestamp and seed are fixed-format tokens matched before the free-text
+ * The history line format is `- {timestamp} | {seed} | {packName} ({count})` —
+ * the timestamp and seed are fixed-format tokens matched before the free-text
  * packName, so a pack name containing "|" still parses correctly (it's
- * always "everything after the second pipe").
+ * always "everything after the second pipe"). The trailing "(count)" is
+ * optional so lines written before this field existed still parse.
  */
 const HISTORY_LINE_PATTERN = /^-\s*(\d{8}-\d{6})\s*\|\s*(-?\d+)\s*\|\s*(.*)$/;
+const HISTORY_COUNT_SUFFIX_PATTERN = /^(.*)\s\((\d+)\)$/;
 
 function parseGenerationHistory(body: string): GenerationHistoryEntry[] {
   const headingIndex = body.indexOf("## Generation History");
@@ -50,12 +52,15 @@ function parseGenerationHistory(body: string): GenerationHistoryEntry[] {
     if (!match) {
       continue;
     }
-    const [, timestamp, seedText, packName] = match;
+    const [, timestamp, seedText, rest] = match;
     const seed = Number(seedText);
     if (!Number.isFinite(seed)) {
       continue;
     }
-    entries.push({ timestamp, seed, packName: packName.trim() });
+    const countMatch = rest.match(HISTORY_COUNT_SUFFIX_PATTERN);
+    const packName = (countMatch ? countMatch[1] : rest).trim();
+    const count = countMatch ? Number(countMatch[2]) : undefined;
+    entries.push({ timestamp, seed, packName, count });
   }
 
   return entries;
@@ -68,7 +73,7 @@ function createGenerationHistorySection(history?: GenerationHistoryEntry[]): str
 
   const lines = history
     .slice(0, MAX_HISTORY_ENTRIES)
-    .map((entry) => `- ${entry.timestamp} | ${entry.seed} | ${entry.packName}`);
+    .map((entry) => `- ${entry.timestamp} | ${entry.seed} | ${entry.packName}${entry.count !== undefined ? ` (${entry.count})` : ""}`);
   return `\n## Generation History\n\n${lines.join("\n")}\n`;
 }
 

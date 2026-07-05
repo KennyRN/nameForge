@@ -118,6 +118,7 @@ export interface GenerationHistoryEntry {
   packName: string;
   timestamp: string;
   seed: number;
+  count?: number;
 }
 
 export interface NameForgeSettings {
@@ -545,7 +546,7 @@ export class NameForgeModal extends Modal {
       this.currentSeed = result.seed;
       const totalSource = this.currentCompoundParts.reduce((sum, part) => sum + part.length, 0);
       this.renderResults(result.names);
-      await this.recordGenerationHistory();
+      await this.recordGenerationHistory(result.names.length);
       this.setStatus(`Generated ${result.names.length} name(s) from ${totalSource} source name element(s).`);
       return;
     }
@@ -565,8 +566,8 @@ export class NameForgeModal extends Modal {
     }
 
     this.currentSeed = result.seed;
-    this.renderResults(result.names, undefined, result.endings);
-    await this.recordGenerationHistory();
+    this.renderResults(result.names);
+    await this.recordGenerationHistory(result.names.length);
     this.setStatus(`Generated ${result.names.length} name(s) from ${extractNamesFromMarkdown(this.currentNamesText).length} source name(s).`);
   }
 
@@ -574,12 +575,13 @@ export class NameForgeModal extends Modal {
    * Appends the just-used seed to the config file's generation history,
    * most-recent first, capped at MAX_HISTORY_ENTRIES.
    */
-  private async recordGenerationHistory() {
+  private async recordGenerationHistory(count: number) {
     if (this.currentSeed === null) return;
     const entry: GenerationHistoryEntry = {
       packName: this.plugin.settings.packName || "nameForge",
       timestamp: formatHistoryTimestamp(new Date()),
       seed: this.currentSeed,
+      count,
     };
     this.plugin.settings.previousGenerations = [
       entry,
@@ -640,23 +642,12 @@ export class NameForgeModal extends Modal {
     });
   }
 
-  private renderResults(names: string[], placeholderMessage?: string, endings?: PlaceEnding[]) {
+  private renderResults(names: string[], placeholderMessage?: string) {
     if (!this.resultsEl) {
       return;
     }
 
     this.resultsEl.empty();
-
-    if (endings && endings.length > 0) {
-      const endingsRow = this.resultsEl.createEl("div", { cls: "nameforge-modal__endings-row" });
-      endings.forEach((ending) => {
-        const label = ending.suffix === "" ? "(none)" : `-${ending.suffix}`;
-        endingsRow.createEl("span", {
-          cls: "nameforge-modal__ending-chip",
-          text: `${label} (${ending.count})`,
-        });
-      });
-    }
 
     const list = this.resultsEl.createEl("ul", { cls: "nameforge-modal__results-list" });
 
