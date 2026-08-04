@@ -19,6 +19,183 @@ settings:
   padding: 20px;
 }
 
+/* Compact layout for storyForge Forge companion panel (no Modal chrome). */
+.nameforge-modal--panel {
+  --nf-panel-inline: 4px;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.nameforge-modal--panel .nameforge-modal__options-list {
+  flex-shrink: 0;
+  /* Match panel-action horizontal inset (create / previous generations). */
+  padding-inline: var(--nf-panel-inline);
+  box-sizing: border-box;
+}
+
+.nameforge-modal--panel .nameforge-modal__status {
+  flex-shrink: 0;
+  margin: 6px 0 0;
+  padding-inline: var(--nf-panel-inline);
+  box-sizing: border-box;
+}
+
+.nameforge-modal--panel .nameforge-modal__results {
+  flex: 1;
+  min-height: 0;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.nameforge-modal--panel .nameforge-modal__results-list {
+  flex: 1;
+  height: auto;
+  min-height: 280px;
+  max-height: none;
+}
+
+.nameforge-modal--panel .nameforge-modal__quantity-toggle {
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nameforge-modal--panel .nameforge-modal__option-row {
+  flex-wrap: wrap;
+}
+
+.nameforge-modal--panel .nameforge-modal__pack-dropdown {
+  flex: 1;
+  min-width: 0;
+}
+
+.nameforge-modal--panel .nameforge-modal__results-actions {
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-inline: var(--nf-panel-inline);
+  box-sizing: border-box;
+}
+
+/* Forge panel only: actions under the results footer. */
+.nameforge-modal--panel .nameforge-modal__panel-action {
+  flex-shrink: 0;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  width: auto;
+  max-width: 100%;
+  margin-top: 8px;
+  margin-right: auto;
+  padding: 6px var(--nf-panel-inline);
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: left;
+  box-shadow: none;
+}
+
+.nameforge-modal--panel .nameforge-modal__panel-action:hover,
+.nameforge-modal--panel .nameforge-modal__panel-action:focus-visible {
+  color: var(--text-normal);
+  background: transparent;
+  outline: none;
+}
+
+.nameforge-modal--panel .nameforge-modal__panel-action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nameforge-modal--panel .nameforge-modal__panel-action-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.nameforge-modal--panel .nameforge-modal__panel-action-label {
+  font-size: var(--font-ui-small);
+  line-height: 1.2;
+}
+
+/* Headerless previous-generations modal (Forge panel). */
+.modal.nameforge-history-modal .modal-header,
+.modal.nameforge-history-modal .modal-title,
+.modal.nameforge-history-modal .modal-close-button {
+  display: none;
+}
+
+.nameforge-history-modal__content {
+  padding: 12px 14px;
+}
+
+.nameforge-history-modal__empty {
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  padding: 4px 0;
+}
+
+.nameforge-history-modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
+}
+
+.nameforge-history-modal__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  border-radius: 4px;
+}
+
+.nameforge-history-modal__row:hover {
+  background: var(--background-modifier-hover);
+}
+
+.nameforge-history-modal__pack-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.nameforge-history-modal__pack-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.nameforge-history-modal__pack-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+}
+
+.nameforge-history-modal__seed {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
 .nameforge-editor-modal {
   padding: 20px;
 }
@@ -141,6 +318,135 @@ settings:
   background-color: var(--background-secondary-alt);
 }
 
+/* Interactive icon controls: no button chrome — only icon color changes on hover. */
+body .nameforge-modal button.nameforge-modal__icon-action,
+body .nameforge-modal .nameforge-modal__icon-action {
+  appearance: none;
+  -webkit-appearance: none;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  background-color: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.nameforge-modal__icon-action svg {
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
+
+.nameforge-modal__icon-action--lg svg {
+  width: 24px;
+  height: 24px;
+}
+
+body .nameforge-modal button.nameforge-modal__icon-action:hover,
+body .nameforge-modal button.nameforge-modal__icon-action:focus-visible,
+body .nameforge-modal .nameforge-modal__icon-action:hover,
+body .nameforge-modal .nameforge-modal__icon-action:focus-visible {
+  background: transparent;
+  background-color: transparent;
+  box-shadow: none;
+  color: var(--nameforge-accent-color, var(--interactive-accent));
+}
+
+body .nameforge-modal button.nameforge-modal__icon-action:active,
+body .nameforge-modal .nameforge-modal__icon-action:active {
+  background: transparent;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.nameforge-modal__icon-action.is-active {
+  color: var(--nameforge-accent-color, var(--interactive-accent));
+}
+
+body .nameforge-modal button.nameforge-modal__icon-action:disabled,
+body .nameforge-modal .nameforge-modal__icon-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: var(--text-muted);
+}
+
+body .nameforge-modal button.nameforge-modal__icon-action:disabled:hover,
+body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* Decorative icon beside the pack selector — not interactive. */
+.nameforge-modal__icon-decoration {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  line-height: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.nameforge-modal__icon-decoration svg {
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
+
+.nameforge-modal__icon-decoration--lg svg {
+  width: 24px;
+  height: 24px;
+}
+
+.nameforge-settings__folder-path {
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-small);
+  color: var(--text-muted);
+  padding: 4px 0;
+  user-select: text;
+}
+
+/* Settings folder changer: icon-only, highlighted on hover — no button chrome. */
+.nameforge-settings__icon-action {
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.nameforge-settings__icon-action svg {
+  width: 18px;
+  height: 18px;
+  color: inherit;
+}
+
+.nameforge-settings__icon-action:hover,
+.nameforge-settings__icon-action:focus-visible {
+  background: transparent;
+  color: var(--text-accent);
+}
+
 .nameforge-modal__generate-button {
   width: 100%;
   height: 48px;
@@ -228,15 +534,23 @@ settings:
   margin-top: 8px;
 }
 
+/* Results footer icon controls: no button hover chrome (background), just color. */
+body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:disabled) {
+  background: transparent;
+  background-color: transparent;
+  color: var(--nameforge-accent-color, var(--interactive-accent));
+}
+
 .nameforge-modal__results-buttons {
   display: flex;
   gap: 8px;
+  align-items: center;
 }
 
 .nameforge-modal__seed-group {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
 }
 
 .nameforge-modal__seed-input {
@@ -249,12 +563,7 @@ settings:
   font-size: var(--font-ui-small);
 }
 
-.nameforge-modal__seed-group .nameforge-modal__icon-button {
-  width: 28px;
-  height: 28px;
-}
-
-.nameforge-modal__seed-group .nameforge-modal__icon-button.is-active {
+.nameforge-modal__seed-group .nameforge-modal__icon-action.is-active {
   color: var(--nameforge-accent-color, var(--interactive-accent));
 }
 
@@ -277,7 +586,8 @@ settings:
 }
 
 .nameforge-modal__text-button:hover:not(:disabled) {
-  background-color: var(--background-secondary-alt);
+  background-color: transparent;
+  color: var(--nameforge-accent-color, var(--interactive-accent));
 }
 
 .nameforge-modal__text-button:disabled {
@@ -404,7 +714,8 @@ settings:
 }
 
 .nameforge-modal__pack-dropdown-trigger:hover {
-  background-color: var(--background-secondary-alt);
+  background-color: var(--background-secondary);
+  color: var(--nameforge-accent-color, var(--interactive-accent));
 }
 
 .nameforge-modal__pack-dropdown-label {
