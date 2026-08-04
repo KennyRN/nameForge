@@ -17,13 +17,14 @@ import {
 } from "./nameParser";
 import {
   ICON_BREAKDOWN_PACK,
-  ICON_BROWSE_PACKS,
+  ICON_PACKS,
   ICON_BULLET_INSERT,
   ICON_CANCEL,
   ICON_CHECKLIST_INSERT,
   ICON_COMPOUND_BREAKDOWN_PACK,
   ICON_COMPOUND_LIST_PACK,
   ICON_CREATE_PACKS,
+  ICON_PREVIOUS_GENERATIONS,
   ICON_DICE,
   ICON_LIST_PACK,
   ICON_PLACE_PACK,
@@ -32,6 +33,8 @@ import {
   ICON_SEED_LOCK,
   ICON_TEXT_INSERT,
 } from "./icons";
+import { EnterFolderPathModal } from "./folderModal";
+import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from "./paths";
 
 type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack";
 
@@ -158,6 +161,9 @@ export class NameForgeModal extends Modal {
   private seedLocked = false;
   private seedInputEl: HTMLInputElement | null = null;
   private seedLockButton: HTMLButtonElement | null = null;
+  /** True when mounted into a host panel (Forge) rather than opened as a Modal. */
+  private panelMode = false;
+  private rootEl: HTMLElement | null = null;
 
   constructor(app: App, plugin: NameForgePluginLike, settings: NameForgeSettings = {}) {
     super(app);
@@ -165,19 +171,41 @@ export class NameForgeModal extends Modal {
     this.plugin.settings = { ...this.plugin.settings, ...settings };
   }
 
-  onOpen() {
-    const { contentEl } = this;
-    contentEl.empty();
-    contentEl.addClass("nameforge-modal");
+  /**
+   * Mount the nameForge UI into a host container (storyForge Forge panel).
+   * No Modal chrome / overlay — returns a disposer for the host.
+   */
+  static mountPanel(containerEl: HTMLElement, app: App, plugin: NameForgePluginLike): () => void {
+    const ui = new NameForgeModal(app, plugin);
+    ui.panelMode = true;
+    ui.mount(containerEl);
+    return () => ui.unmount();
+  }
 
-    const optionsList = contentEl.createEl("div", { cls: "nameforge-modal__options-list" });
+  onOpen() {
+    this.mount(this.contentEl);
+  }
+
+  onClose() {
+    this.unmount();
+  }
+
+  private mount(root: HTMLElement) {
+    this.rootEl = root;
+    root.empty();
+    root.addClass("nameforge-modal");
+    if (this.panelMode) {
+      root.addClass("nameforge-modal--panel");
+    }
+
+    const optionsList = root.createEl("div", { cls: "nameforge-modal__options-list" });
 
     const createPacksRow = optionsList.createEl("div", { cls: "nameforge-modal__option-row" });
-    const browsePacksButton = this.createIconButton(createPacksRow, ICON_BROWSE_PACKS, "Refresh pack list");
-    browsePacksButton.addClass("nameforge-modal__icon-button--lg");
-    browsePacksButton.addEventListener("click", () => {
-      void this.refreshPackDropdown();
+    const folderDecoration = createPacksRow.createEl("span", {
+      cls: "nameforge-modal__icon-decoration nameforge-modal__icon-decoration--lg",
+      attr: { "aria-hidden": "true" },
     });
+    setIcon(folderDecoration, ICON_PACKS);
     this.packDropdownEl = createPacksRow.createEl("div", { cls: "nameforge-modal__pack-dropdown" });
     this.packDropdownTrigger = this.packDropdownEl.createEl("button", {
       cls: "nameforge-modal__pack-dropdown-trigger",
@@ -190,18 +218,23 @@ export class NameForgeModal extends Modal {
     });
     this.packDropdownTrigger.addEventListener("click", (evt) => {
       evt.stopPropagation();
-      this.togglePackDropdown();
+      void this.togglePackDropdown();
     });
 
     this.packDropdownMenuEl = this.packDropdownEl.createEl("div", { cls: "nameforge-modal__pack-dropdown-menu" });
     this.packDropdownMenuEl.hide();
 
     activeDocument.addEventListener("click", this.handlePackDropdownOutsideClick);
-    const createPacksButton = this.createIconButton(createPacksRow, ICON_CREATE_PACKS, "Create name packs");
-    createPacksButton.addClass("nameforge-modal__icon-button--lg");
-    createPacksButton.addEventListener("click", () => {
-      new NameForgeEditorModal(this.app, this, "", "").open();
-    });
+    if (!this.panelMode) {
+      const createPacksButton = createPacksRow.createEl("button", {
+        cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+        attr: { type: "button", title: "Create name packs" },
+      });
+      setIcon(createPacksButton, ICON_CREATE_PACKS);
+      createPacksButton.addEventListener("click", () => {
+        new NameForgeEditorModal(this.app, this, "", "").open();
+      });
+    }
 
     const quantityToggle = optionsList.createEl("div", { cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
@@ -223,16 +256,35 @@ export class NameForgeModal extends Modal {
       void this.generateSelectedCount();
     });
 
-    this.resultsEl = contentEl.createEl("div", { cls: "nameforge-modal__results" });
+    this.resultsEl = root.createEl("div", { cls: "nameforge-modal__results" });
+    this.statusEl = root.createEl("div", { cls: "nameforge-modal__status" });
     this.renderResults([]);
 
     void this.refreshPackDropdown();
   }
 
-  onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
+  private unmount() {
     activeDocument.removeEventListener("click", this.handlePackDropdownOutsideClick);
+    this.closePackDropdown();
+    this.rootEl?.empty();
+    this.rootEl = null;
+    this.resultsEl = null;
+    this.statusEl = null;
+    this.packDropdownEl = null;
+    this.packDropdownTrigger = null;
+    this.packDropdownIconEl = null;
+    this.packDropdownLabelEl = null;
+    this.packDropdownMenuEl = null;
+    this.quantityButtons = [];
+    this.seedInputEl = null;
+    this.seedLockButton = null;
+  }
+
+  /** Close the Modal after insert; no-op in Forge panel mode (stay mounted). */
+  private dismissAfterInsert() {
+    if (!this.panelMode) {
+      this.close();
+    }
   }
 
   private handlePackDropdownOutsideClick = (evt: MouseEvent) => {
@@ -241,10 +293,11 @@ export class NameForgeModal extends Modal {
     }
   };
 
-  private togglePackDropdown() {
+  private async togglePackDropdown() {
     if (this.isPackDropdownOpen) {
       this.closePackDropdown();
     } else {
+      await this.refreshPackDropdown({ preserveSelection: true });
       this.openPackDropdown();
     }
   }
@@ -318,42 +371,38 @@ export class NameForgeModal extends Modal {
   }
 
   public getFolderPath(): string {
-    const configured = this.plugin.settings.namesFilePath?.trim() || "";
-    if (!configured) {
-      return "";
-    }
-
-    if (configured.endsWith(".md")) {
-      return configured.substring(0, configured.lastIndexOf("/"));
-    }
-
-    return configured;
+    return resolveNamesFolderPath(this.plugin.settings.folderPath, this.plugin.settings.namesFilePath);
   }
 
   private getResolvedFilePath(): string | null {
     const configured = this.plugin.settings.namesFilePath?.trim();
-    if (!configured) {
-      return null;
-    }
-
-    if (configured.endsWith(".md")) {
+    if (configured?.toLowerCase().endsWith(".md")) {
       return configured;
     }
 
-    return `${configured.replace(/\/$/, "")}/names.md`;
+    const folderPath = this.getFolderPath();
+    if (!folderPath) {
+      return null;
+    }
+
+    return `${folderPath.replace(/\/$/, "")}/names.md`;
   }
 
   public async promptForFolderSelection(): Promise<TFolder | null> {
     return new Promise((resolve) => {
-      const picker = new FolderPickerModal(
-        this.app,
-        (folder) => {
-          resolve(folder);
-          picker.close();
-        },
-        () => resolve(null)
-      );
-      picker.open();
+      let settled = false;
+      const modal = new EnterFolderPathModal(this.app, this.getFolderPath(), (folder) => {
+        settled = true;
+        resolve(folder);
+      });
+      const originalClose = modal.close.bind(modal);
+      modal.close = () => {
+        originalClose();
+        if (!settled) {
+          resolve(null);
+        }
+      };
+      modal.open();
     });
   }
 
@@ -439,7 +488,7 @@ export class NameForgeModal extends Modal {
     this.setStatus(`Saved ${total} name element(s) to ${filePath}.`);
   }
 
-  private async refreshPackDropdown() {
+  private async refreshPackDropdown(options: { preserveSelection?: boolean } = {}) {
     if (!this.packDropdownMenuEl) {
       return;
     }
@@ -451,11 +500,15 @@ export class NameForgeModal extends Modal {
       return;
     }
 
-    const folder = this.app.vault.getFolderByPath(normalizePath(folderPath));
+    let folder = this.app.vault.getFolderByPath(normalizePath(folderPath));
     if (!folder) {
-      this.renderPackDropdownMenu([]);
-      this.setStatus(`Folder not found at ${folderPath}.`);
-      return;
+      try {
+        folder = await ensureVaultFolder(this.app, folderPath);
+      } catch {
+        this.renderPackDropdownMenu([]);
+        this.setStatus(`Folder not found at ${folderPath}.`);
+        return;
+      }
     }
 
     const packs: { path: string; packType: NamePackType; compoundGenerator?: "breakdown" | "list" }[] = [];
@@ -479,13 +532,21 @@ export class NameForgeModal extends Modal {
     this.renderPackDropdownMenu(packs);
 
     if (packs.length === 0) {
-      this.setStatus(`No packs found in ${folderPath}.`);
       return;
     }
 
     const paths = packs.map((pack) => pack.path);
     const lastUsed = this.plugin.settings.namesFilePath;
     const defaultPack = lastUsed && paths.includes(lastUsed) ? lastUsed : paths[0];
+
+    if (options.preserveSelection && lastUsed && paths.includes(lastUsed)) {
+      const selected = packs.find((pack) => pack.path === lastUsed);
+      if (selected) {
+        this.updatePackDropdownTrigger(selected.path, selected.packType, selected.compoundGenerator);
+      }
+      return;
+    }
+
     await this.loadPack(defaultPack);
   }
 
@@ -519,6 +580,7 @@ export class NameForgeModal extends Modal {
       this.currentNamesText = parsed.names.join("\n");
     }
     this.plugin.settings.namesFilePath = packPath;
+    this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
     this.updatePackDropdownTrigger(packPath, parsed.packType, parsed.compoundGenerator);
     this.setStatus(`Loaded pack ${packPath}.`);
@@ -622,7 +684,7 @@ export class NameForgeModal extends Modal {
     this.seedInputEl.value = this.currentSeed !== null ? String(this.currentSeed) : "";
 
     this.seedLockButton = container.createEl("button", {
-      cls: "nameforge-modal__icon-button",
+      cls: "nameforge-modal__icon-action",
       attr: { type: "button", "aria-pressed": String(this.seedLocked) },
     });
     setIcon(this.seedLockButton, ICON_SEED_LOCK);
@@ -633,7 +695,7 @@ export class NameForgeModal extends Modal {
     this.updateSeedLockButton();
 
     const copyButton = container.createEl("button", {
-      cls: "nameforge-modal__icon-button",
+      cls: "nameforge-modal__icon-action",
       attr: { type: "button", title: "Copy seed" },
     });
     setIcon(copyButton, ICON_SEED_COPY);
@@ -657,11 +719,20 @@ export class NameForgeModal extends Modal {
     this.buildSeedControls(seedGroup);
 
     const buttonsGroup = actions.createEl("div", { cls: "nameforge-modal__results-buttons" });
-    const insertButton = buttonsGroup.createEl("button", { cls: "nameforge-modal__text-button", attr: { title: "Insert" } });
+    const insertButton = buttonsGroup.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Insert" },
+    });
     setIcon(insertButton, ICON_TEXT_INSERT);
-    const checklistButton = buttonsGroup.createEl("button", { cls: "nameforge-modal__text-button", attr: { title: "Insert checklist" } });
+    const checklistButton = buttonsGroup.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Insert checklist" },
+    });
     setIcon(checklistButton, ICON_CHECKLIST_INSERT);
-    const bulletButton = buttonsGroup.createEl("button", { cls: "nameforge-modal__text-button", attr: { title: "Insert bullet list" } });
+    const bulletButton = buttonsGroup.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Insert bullet list" },
+    });
     setIcon(bulletButton, ICON_BULLET_INSERT);
 
     const getSelectedNames = (): string[] =>
@@ -704,6 +775,37 @@ export class NameForgeModal extends Modal {
       if (selected.length > 0) this.insertNamesAsList(selected, "bullet");
     });
 
+    if (this.panelMode) {
+      const createPack = this.resultsEl.createEl("button", {
+        cls: "nameforge-modal__panel-action",
+        attr: { type: "button" },
+      });
+      setIcon(createPack.createEl("span", { cls: "nameforge-modal__panel-action-icon" }), ICON_CREATE_PACKS);
+      createPack.createEl("span", {
+        cls: "nameforge-modal__panel-action-label",
+        text: "create name pack",
+      });
+      createPack.addEventListener("click", () => {
+        new NameForgeEditorModal(this.app, this, "", "").open();
+      });
+
+      const previousGenerations = this.resultsEl.createEl("button", {
+        cls: "nameforge-modal__panel-action",
+        attr: { type: "button" },
+      });
+      setIcon(
+        previousGenerations.createEl("span", { cls: "nameforge-modal__panel-action-icon" }),
+        ICON_PREVIOUS_GENERATIONS,
+      );
+      previousGenerations.createEl("span", {
+        cls: "nameforge-modal__panel-action-label",
+        text: "previous generations",
+      });
+      previousGenerations.addEventListener("click", () => {
+        new PreviousGenerationsModal(this.app, this).open();
+      });
+    }
+
     updateInsertButtons();
   }
 
@@ -720,7 +822,7 @@ export class NameForgeModal extends Modal {
 
     editor.replaceSelection(name);
     editor.focus();
-    this.close();
+    this.dismissAfterInsert();
   }
 
   private insertNamesAsList(names: string[], listType: "bullet" | "checklist") {
@@ -770,162 +872,87 @@ export class NameForgeModal extends Modal {
       this.statusEl.textContent = message;
     }
   }
-}
 
-class CreateFolderModal extends Modal {
-  private parentFolder: TFolder;
-  private onCreate: (folder: TFolder) => void;
-  private inputEl: HTMLInputElement | null = null;
+  /** Map packName → selector-style icon id from packs currently in the folder. */
+  public async buildPackIconByName(): Promise<Map<string, string>> {
+    const iconsByName = new Map<string, string>();
+    const folderPath = this.getFolderPath();
+    if (!folderPath) return iconsByName;
 
-  constructor(app: App, parentFolder: TFolder, onCreate: (folder: TFolder) => void) {
-    super(app);
-    this.parentFolder = parentFolder;
-    this.onCreate = onCreate;
-  }
+    const folder = this.app.vault.getFolderByPath(normalizePath(folderPath));
+    if (!folder) return iconsByName;
 
-  onOpen() {
-    const { contentEl } = this;
-    contentEl.empty();
-    contentEl.addClass("nameforge-create-folder-modal");
-
-    contentEl.createEl("h2", { text: "Create new folder" });
-    contentEl.createEl("p", {
-      text: `Create a folder inside the vault root${this.parentFolder.path === "/" ? "" : ` under ${this.parentFolder.path}`}.`,
-    });
-
-    const row = contentEl.createEl("div", { cls: "nameforge-modal__pack-name-row" });
-    row.createEl("label", { text: "Folder path" });
-    this.inputEl = row.createEl("input", {
-      cls: "nameforge-modal__pack-name-input",
-      attr: {
-        type: "text",
-        placeholder: "namepacks",
-        value: "namepacks",
-      },
-    });
-
-    const controls = contentEl.createEl("div", { cls: "nameforge-modal__controls" });
-    const createButton = controls.createEl("button", { text: "Create folder" });
-    createButton.addEventListener("click", () => {
-      void this.createFolder();
-    });
-
-    const cancelButton = controls.createEl("button", { text: "Cancel" });
-    cancelButton.addEventListener("click", () => this.close());
-  }
-
-  private async createFolder() {
-    const rawValue = this.inputEl?.value?.trim() || "";
-    if (!rawValue) {
-      return;
+    for (const child of folder.children) {
+      if (!(child instanceof TFile) || child.extension !== "md") continue;
+      try {
+        const content = await this.app.vault.cachedRead(child);
+        if (!isValidNamePackContent(content)) continue;
+        const parsed = parseNamesFileContent(content);
+        if (!parsed.packName) continue;
+        iconsByName.set(
+          parsed.packName,
+          packTypeIconId(parsed.packType, parsed.compoundGenerator),
+        );
+      } catch {
+        continue;
+      }
     }
 
-    const cleaned = rawValue.replace(/^\/+|\/+$/g, "");
-    if (!cleaned) {
-      return;
-    }
-
-    const basePath = this.parentFolder.path === "/" ? "" : this.parentFolder.path;
-    const targetPath = normalizePath(basePath ? `${basePath}/${cleaned}` : cleaned);
-    const existing = this.app.vault.getAbstractFileByPath(targetPath);
-
-    if (existing instanceof TFolder) {
-      this.onCreate(existing);
-      this.close();
-      return;
-    }
-
-    await this.app.vault.createFolder(targetPath);
-    const created = this.app.vault.getAbstractFileByPath(targetPath);
-    if (created instanceof TFolder) {
-      this.onCreate(created);
-      this.close();
-    }
+    return iconsByName;
   }
 }
 
-class FolderPickerModal extends Modal {
-  private onChooseFolder: (folder: TFolder) => void;
-  private onCancel: () => void;
-  private currentFolder: TFolder;
-
-  constructor(app: App, onChooseFolder: (folder: TFolder) => void, onCancel: () => void = () => undefined) {
+/** Headerless list of prior generations (Forge panel only). */
+class PreviousGenerationsModal extends Modal {
+  constructor(
+    app: App,
+    private parent: NameForgeModal,
+  ) {
     super(app);
-    this.onChooseFolder = onChooseFolder;
-    this.onCancel = onCancel;
-    this.currentFolder = this.app.vault.getRoot();
   }
 
   onOpen() {
-    this.render();
-  }
+    this.titleEl.empty();
+    this.titleEl.hide();
+    this.modalEl.addClass("nameforge-history-modal");
 
-  onClose(): void {
-    super.onClose();
-    this.onCancel();
-  }
-
-  private render() {
     const { contentEl } = this;
     contentEl.empty();
-    contentEl.addClass("nameforge-folder-picker-modal");
+    contentEl.addClass("nameforge-history-modal__content");
 
-    contentEl.createEl("h2", { text: "Choose a folder" });
-    contentEl.createEl("p", {
-      text: "Select an existing folder or create a new one inside the current location.",
-    });
+    void this.renderList(contentEl);
+  }
 
-    contentEl.createEl("div", {
-      cls: "nameforge-modal__folder-label",
-      text: `Current folder: ${this.currentFolder.path === "/" ? "Vault root" : this.currentFolder.path}`,
-    });
+  onClose() {
+    this.contentEl.empty();
+  }
 
-    const controls = contentEl.createEl("div", { cls: "nameforge-modal__controls" });
-    const chooseButton = controls.createEl("button", { text: "Use this folder" });
-    chooseButton.addEventListener("click", () => {
-      this.onChooseFolder(this.currentFolder);
-      this.close();
-    });
-
-    const createButton = controls.createEl("button", { text: "Create folder here" });
-    createButton.addEventListener("click", () => {
-      new CreateFolderModal(this.app, this.currentFolder, (folder) => {
-        this.onChooseFolder(folder);
-        this.close();
-      }).open();
-    });
-
-    if (this.currentFolder.parent instanceof TFolder) {
-      const upButton = controls.createEl("button", { text: "Up a level" });
-      upButton.addEventListener("click", () => {
-        if (this.currentFolder.parent instanceof TFolder) {
-          this.currentFolder = this.currentFolder.parent;
-          this.render();
-        }
+  private async renderList(container: HTMLElement) {
+    const history = this.parent.plugin.settings.previousGenerations ?? [];
+    if (history.length === 0) {
+      container.createEl("div", {
+        cls: "nameforge-history-modal__empty",
+        text: "No previous generations yet.",
       });
-    }
-
-    const folders = this.currentFolder.children
-      .filter((file): file is TFolder => file instanceof TFolder)
-      .sort((a, b) => a.path.localeCompare(b.path));
-
-    const listContainer = contentEl.createEl("div", { cls: "nameforge-modal__pack-list" });
-    if (folders.length === 0) {
-      listContainer.createEl("p", { text: "No subfolders found in this location." });
       return;
     }
 
-    const list = listContainer.createEl("ul");
-    folders.forEach((folder) => {
-      const item = list.createEl("li");
-      const button = item.createEl("button", {
-        text: folder.path.split("/").pop() || folder.path,
+    const iconsByName = await this.parent.buildPackIconByName();
+    const list = container.createEl("div", { cls: "nameforge-history-modal__list" });
+
+    for (const entry of history) {
+      const row = list.createEl("div", { cls: "nameforge-history-modal__row" });
+      const iconEl = row.createEl("span", { cls: "nameforge-history-modal__pack-icon" });
+      setIcon(iconEl, iconsByName.get(entry.packName) ?? ICON_BREAKDOWN_PACK);
+      row.createEl("span", {
+        cls: "nameforge-history-modal__pack-name",
+        text: entry.packName || "nameForge",
       });
-      button.addEventListener("click", () => {
-        this.currentFolder = folder;
-        this.render();
+      row.createEl("span", {
+        cls: "nameforge-history-modal__seed",
+        text: String(entry.seed),
       });
-    });
+    }
   }
 }
 
@@ -1044,13 +1071,19 @@ class NameForgeEditorModal extends Modal {
     this.updateCompoundControls();
 
     const controls = contentEl.createEl("div", { cls: "nameforge-modal__controls" });
-    const saveButton = controls.createEl("button", { cls: "nameforge-modal__text-button", attr: { title: "Save names" } });
+    const saveButton = controls.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Save names" },
+    });
     setIcon(saveButton, ICON_SAVE);
     saveButton.addEventListener("click", () => {
       void this.saveNames();
     });
 
-    const cancelButton = controls.createEl("button", { cls: "nameforge-modal__text-button", attr: { title: "Cancel" } });
+    const cancelButton = controls.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Cancel" },
+    });
     setIcon(cancelButton, ICON_CANCEL);
     cancelButton.addEventListener("click", () => this.close());
   }
@@ -1204,6 +1237,8 @@ class NameForgeEditorModal extends Modal {
         folderPath = folder.path;
       }
 
+      this.parent.plugin.settings.folderPath = folderPath;
+      this.parent.plugin.settings.folderPath = folderPath;
       const fileName = sanitizePackNameForFilename(packName);
       this.parent.plugin.settings.namesFilePath = normalizePath(`${folderPath}/${fileName}.md`);
       await this.parent.plugin.saveSettings();
@@ -1232,6 +1267,8 @@ class NameForgeEditorModal extends Modal {
       folderPath = folder.path;
     }
 
+    this.parent.plugin.settings.folderPath = folderPath;
+    this.parent.plugin.settings.folderPath = folderPath;
     const fileName = sanitizePackNameForFilename(packName);
     this.parent.plugin.settings.namesFilePath = normalizePath(`${folderPath}/${fileName}.md`);
     await this.parent.plugin.saveSettings();

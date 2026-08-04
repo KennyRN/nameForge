@@ -2,31 +2,21 @@ import { normalizePath, Plugin, TFile } from "obsidian";
 import { NameForgeSettingTab } from "./settings";
 import { GenerationHistoryEntry, MAX_HISTORY_ENTRIES, NameForgeModal, NameForgeSettings } from "./modal";
 import { ICON_MEEPLE, registerNameForgeIcons } from "./icons";
+import { ensureDefaultNamesFolder, legacySettingsFileCandidates, normalizeSettingsFolder } from "./migration";
+import { DEFAULT_NAMES_FOLDER, resolveNamesFolderPath } from "./paths";
+import { softConnectWithRetry } from "./hostConnectRetry";
+import { getStoryForgeHostApi } from "./storyforgeBridge";
 
 const DEFAULT_SETTINGS: NameForgeSettings = {
   namesFilePath: "",
   packName: "",
-  folderPath: "",
+  folderPath: DEFAULT_NAMES_FOLDER,
   faithfulness: 2,
   strictness: 3,
 };
 
-function getSettingsFolderPath(namesFilePath?: string, folderPath?: string): string {
-  const configured = (folderPath || namesFilePath || "").trim();
-  if (!configured) {
-    return "";
-  }
-
-  if (configured.endsWith(".md")) {
-    const lastSlash = configured.lastIndexOf("/");
-    return lastSlash > 0 ? configured.substring(0, lastSlash) : "";
-  }
-
-  return configured.replace(/\/+$/, "");
-}
-
 function getSettingsFilePath(settings: NameForgeSettings): string {
-  const folderPath = getSettingsFolderPath(settings.namesFilePath, settings.folderPath);
+  const folderPath = resolveNamesFolderPath(settings.folderPath, settings.namesFilePath);
   return folderPath ? normalizePath(`${folderPath}/nameForgeConfiguration.md`) : "";
 }
 
@@ -100,14 +90,14 @@ function parseSettingsMarkdownContent(content: string): Partial<NameForgeSetting
     } else if (key === "packName") {
       parsed.packName = trimmedValue;
     } else if (key === "faithfulness") {
-      const value = Number(trimmedValue);
-      if (!Number.isNaN(value)) {
-        parsed.faithfulness = value;
+      const numeric = Number(trimmedValue);
+      if (!Number.isNaN(numeric)) {
+        parsed.faithfulness = numeric;
       }
     } else if (key === "strictness") {
-      const value = Number(trimmedValue);
-      if (!Number.isNaN(value)) {
-        parsed.strictness = value;
+      const numeric = Number(trimmedValue);
+      if (!Number.isNaN(numeric)) {
+        parsed.strictness = numeric;
       }
     }
   }
@@ -121,8 +111,8 @@ function parseSettingsMarkdownContent(content: string): Partial<NameForgeSetting
 }
 
 function createSettingsMarkdownContent(settings: NameForgeSettings): string {
-  const folderPath = getSettingsFolderPath(settings.namesFilePath, settings.folderPath);
-  const lines = [`folder: ${folderPath || ""}`, `namesFilePath: ${settings.namesFilePath || ""}`];
+  const folderPath = resolveNamesFolderPath(settings.folderPath, settings.namesFilePath);
+  const lines = [`folder: ${folderPath || DEFAULT_NAMES_FOLDER}`, `namesFilePath: ${settings.namesFilePath || ""}`];
 
   const trimmedPackName = (settings.packName || "").trim().replace(/\s+/g, " ");
   if (trimmedPackName) {
@@ -138,86 +128,145 @@ function createSettingsMarkdownContent(settings: NameForgeSettings): string {
 
 export default class NameForgePlugin extends Plugin {
   settings: NameForgeSettings = {};
+  private unregisterCompanionPanel: (() => void) | null = null;
+  /** Identity of the storyForge `api` object we last registered with (detects host hot-reload). */
+  private storyForgeApiRef: object | null = null;
 
   async onload() {
     await this.loadSettings();
 
     registerNameForgeIcons();
 
-    // Add ribbon icon
     this.addRibbonIcon(ICON_MEEPLE, "nameForge", () => {
-      new NameForgeModal(this.app, this, this.settings).open();
+      this.openNameGenerator();
     });
 
-    // Add commands
     this.addCommand({
       id: "open-name-generator",
       name: "Open name generator",
       callback: () => {
-        new NameForgeModal(this.app, this, this.settings).open();
+        this.openNameGenerator();
       },
     });
 
-    // Add settings tab
     this.addSettingTab(new NameForgeSettingTab(this.app, this));
+    this.connectToStoryForge();
   }
 
   onunload() {
-    // Cleanup if needed
+    try {
+      this.unregisterCompanionPanel?.();
+    } catch {
+      /* host may already be gone */
+    }
+    this.unregisterCompanionPanel = null;
+    this.storyForgeApiRef = null;
+  }
+
+  openNameGenerator(): void {
+    new NameForgeModal(this.app, this, this.settings).open();
+  }
+
+  /**
+   * Soft-connect: register the nameForge companion panel on storyForge Forge
+   * when host API version >= 3 is available. Rebinds when the host hot-reloads
+   * (new `api` object identity).
+   */
+  private connectToStoryForge(): void {
+    const tryConnect = (): boolean => {
+      const api = getStoryForgeHostApi(this.app);
+      if (!api?.registerCompanionPanel) {
+        this.unregisterCompanionPanel = null;
+        this.storyForgeApiRef = null;
+        return false;
+      }
+
+      if (this.unregisterCompanionPanel && this.storyForgeApiRef === api) {
+        return true;
+      }
+
+      try {
+        this.unregisterCompanionPanel?.();
+      } catch {
+        /* old host may already be dead */
+      }
+
+      registerNameForgeIcons();
+      this.unregisterCompanionPanel = api.registerCompanionPanel({
+        id: "nameforge",
+        orderHint: 100,
+        icon: ICON_MEEPLE,
+        label: "nameForge",
+        renderPanel: (containerEl) => NameForgeModal.mountPanel(containerEl, this.app, this),
+      });
+      this.storyForgeApiRef = api;
+      return true;
+    };
+
+    softConnectWithRetry(tryConnect, {
+      registerInterval: (id) => this.registerInterval(id),
+      onLayoutChange: (cb) => {
+        this.registerEvent(this.app.workspace.on("layout-change", cb));
+      },
+    });
   }
 
   async loadSettings() {
     const legacySettings = (await this.loadData()) as Partial<NameForgeSettings> | null;
     this.settings = { ...DEFAULT_SETTINGS, ...legacySettings };
+    this.settings = normalizeSettingsFolder(this.settings);
 
-    const settingsFilePath = getSettingsFilePath(this.settings);
-    if (!settingsFilePath) {
-      return;
+    const candidates = legacySettingsFileCandidates(this.settings);
+    const seen = new Set<string>();
+    for (const settingsFilePath of candidates) {
+      if (seen.has(settingsFilePath)) {
+        continue;
+      }
+      seen.add(settingsFilePath);
+
+      const settingsFile = this.app.vault.getFileByPath(normalizePath(settingsFilePath));
+      if (!(settingsFile instanceof TFile)) {
+        continue;
+      }
+
+      let content: string;
+      try {
+        content = await this.app.vault.cachedRead(settingsFile);
+      } catch {
+        continue;
+      }
+
+      const parsed = parseSettingsMarkdownContent(content);
+      this.settings = normalizeSettingsFolder({
+        ...this.settings,
+        ...parsed,
+        namesFilePath: parsed.namesFilePath || this.settings.namesFilePath,
+        folderPath: parsed.folderPath || this.settings.folderPath,
+      });
+      break;
     }
 
-    const settingsFile = this.app.vault.getFileByPath(normalizePath(settingsFilePath));
-    if (!(settingsFile instanceof TFile)) {
-      return;
-    }
-
-    let content: string;
-    try {
-      content = await this.app.vault.cachedRead(settingsFile);
-    } catch {
-      return;
-    }
-
-    const parsed = parseSettingsMarkdownContent(content);
-    this.settings = {
-      ...this.settings,
-      ...parsed,
-      namesFilePath: parsed.namesFilePath || this.settings.namesFilePath,
-      folderPath: parsed.folderPath || this.settings.folderPath,
-    };
-
-    if (!this.settings.namesFilePath) {
-      this.settings.namesFilePath = DEFAULT_SETTINGS.namesFilePath;
-    }
-
-    if (!this.settings.folderPath) {
-      this.settings.folderPath = getSettingsFolderPath(this.settings.namesFilePath);
-    }
+    this.settings = await ensureDefaultNamesFolder(this.app, this.settings);
   }
 
   async saveSettings() {
+    this.settings = normalizeSettingsFolder(this.settings);
     const settingsFilePath = getSettingsFilePath(this.settings);
     if (!settingsFilePath) {
       await this.saveData(this.settings);
       return;
     }
 
-    this.settings.folderPath = getSettingsFolderPath(this.settings.namesFilePath, this.settings.folderPath);
     const normalizedPath = normalizePath(settingsFilePath);
     const content = createSettingsMarkdownContent(this.settings);
     const existingFile = this.app.vault.getFileByPath(normalizedPath);
     if (existingFile instanceof TFile) {
       await this.app.vault.modify(existingFile, content);
     } else {
+      const folderPath = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath);
+      if (folderPath && !this.app.vault.getFolderByPath(normalizePath(folderPath))) {
+        await this.app.vault.createFolder(normalizePath(folderPath));
+      }
       await this.app.vault.create(normalizedPath, content);
     }
   }
