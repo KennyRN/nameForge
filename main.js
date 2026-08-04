@@ -31,159 +31,10 @@ module.exports = __toCommonJS(main_exports);
 var import_obsidian7 = require("obsidian");
 
 // src/settings.ts
-var import_obsidian5 = require("obsidian");
-
-// src/folderModal.ts
-var import_obsidian2 = require("obsidian");
-
-// src/paths.ts
-var import_obsidian = require("obsidian");
-var DEFAULT_NAMES_FOLDER = "_nf-backstage";
-function normalizeFolderPath(path) {
-  const configured = (path || "").trim();
-  if (!configured) {
-    return "";
-  }
-  if (configured.toLowerCase().endsWith(".md")) {
-    const lastSlash = configured.lastIndexOf("/");
-    return lastSlash > 0 ? configured.substring(0, lastSlash) : "";
-  }
-  return configured.replace(/\/+$/, "");
-}
-function resolveNamesFolderPath(folderPath, namesFilePath) {
-  return normalizeFolderPath(folderPath) || normalizeFolderPath(namesFilePath) || DEFAULT_NAMES_FOLDER;
-}
-async function ensureVaultFolder(app, folderPath) {
-  const normalized = (0, import_obsidian.normalizePath)(folderPath);
-  const existing = app.vault.getAbstractFileByPath(normalized);
-  if (existing instanceof import_obsidian.TFolder) {
-    return existing;
-  }
-  await app.vault.createFolder(normalized);
-  const created = app.vault.getAbstractFileByPath(normalized);
-  if (!(created instanceof import_obsidian.TFolder)) {
-    throw new Error(`Failed to create folder at ${normalized}`);
-  }
-  return created;
-}
-
-// src/folderModal.ts
-var EnterFolderPathModal = class extends import_obsidian2.Modal {
-  constructor(app, currentPath, onSubmit) {
-    super(app);
-    this.inputEl = null;
-    this.currentPath = currentPath;
-    this.onSubmit = onSubmit;
-  }
-  onOpen() {
-    const { contentEl } = this;
-    contentEl.empty();
-    contentEl.addClass("nameforge-enter-folder-modal");
-    contentEl.createEl("p", {
-      text: "Enter a vault-relative folder path. Packs will be read from and saved to this folder."
-    });
-    const row = contentEl.createEl("div", { cls: "nameforge-modal__pack-name-row" });
-    row.createEl("label", { text: "Folder" });
-    this.inputEl = row.createEl("input", {
-      cls: "nameforge-modal__pack-name-input",
-      attr: {
-        type: "text",
-        placeholder: DEFAULT_NAMES_FOLDER,
-        value: this.currentPath || DEFAULT_NAMES_FOLDER
-      }
-    });
-    this.inputEl.focus();
-    this.inputEl.select();
-    this.inputEl.addEventListener("keydown", (evt) => {
-      if (evt.key === "Enter") {
-        evt.preventDefault();
-        void this.submit();
-      }
-    });
-    const controls = contentEl.createEl("div", { cls: "nameforge-modal__controls" });
-    const saveButton = controls.createEl("button", { text: "Use folder", cls: "mod-cta" });
-    saveButton.addEventListener("click", () => {
-      void this.submit();
-    });
-    const cancelButton = controls.createEl("button", { text: "Cancel" });
-    cancelButton.addEventListener("click", () => this.close());
-  }
-  async submit() {
-    var _a, _b;
-    const rawValue = ((_b = (_a = this.inputEl) == null ? void 0 : _a.value) == null ? void 0 : _b.trim()) || "";
-    const cleaned = rawValue.replace(/^\/+|\/+$/g, "");
-    const targetPath = (0, import_obsidian2.normalizePath)(cleaned || DEFAULT_NAMES_FOLDER);
-    try {
-      const folder = await ensureVaultFolder(this.app, targetPath);
-      this.onSubmit(folder);
-      this.close();
-    } catch (e) {
-      new import_obsidian2.Notice(`nameForge: could not use folder ${targetPath}`);
-    }
-  }
-};
-
-// src/icons.ts
 var import_obsidian3 = require("obsidian");
-var ICON_MEEPLE = "nameforge-meeple";
-var MEEPLE_SVG = '<g transform="scale(4.16667)"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20H4a1 1 0 0 1-1-1c0-2 3.378-4.907 4-6c-1 0-4-.5-4-2c0-2 4-3.5 6-4c0-1.5.5-4 3-4s3 2.5 3 4c2 .5 6 2 6 4c0 1.5-3 2-4 2c.622 1.093 4 4 4 6a1 1 0 0 1-1 1h-5c-1 0-2-4-3-4s-2 4-3 4" /></g>';
-var ICON_CREATE_PACKS = "nameforge-create-packs";
-var ICON_CREATE_PACKS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="M14.186 2.753v3.596c0 .487.194.955.54 1.3a1.85 1.85 0 0 0 1.306.539h4.125" /><path stroke-linejoin="round" d="M20.25 8.568v8.568a4.25 4.25 0 0 1-1.362 2.97a4.28 4.28 0 0 1-3.072 1.14h-7.59a4.3 4.3 0 0 1-3.1-1.124a4.26 4.26 0 0 1-1.376-2.986V6.862a4.25 4.25 0 0 1 1.362-2.97a4.28 4.28 0 0 1 3.072-1.14h5.714a3.5 3.5 0 0 1 2.361.905l2.96 2.722a2.97 2.97 0 0 1 1.031 2.189" /><path stroke-miterlimit="10" d="M11.57 10.424v7.116m-3.55-3.55h7.117" /></g></g>';
-var ICON_PREVIOUS_GENERATIONS = "nameforge-previous-generations";
-var ICON_PREVIOUS_GENERATIONS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="M14.186 2.753v3.596c0 .487.194.955.54 1.3a1.85 1.85 0 0 0 1.306.539h4.125" /><path stroke-linejoin="round" d="M20.25 8.568v8.568a4.25 4.25 0 0 1-1.362 2.97a4.28 4.28 0 0 1-3.072 1.14h-7.59a4.3 4.3 0 0 1-3.1-1.124a4.26 4.26 0 0 1-1.376-2.986V6.862a4.25 4.25 0 0 1 1.362-2.97a4.28 4.28 0 0 1 3.072-1.14h5.714a3.5 3.5 0 0 1 2.361.905l2.96 2.722a2.97 2.97 0 0 1 1.031 2.189" /><path stroke-miterlimit="10" d="M9.862 11.48a1.834 1.834 0 0 1 2-1.04a1.78 1.78 0 0 1 1.304.93a1.544 1.544 0 0 1-.9 2.124a1.14 1.14 0 0 0-.734 1.03v.425" /><path stroke-linejoin="round" d="M11.499 17.295h.004" /></g></g>';
-var ICON_PACKS = "nameforge-packs";
-var ICON_PACKS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M8.593 3.217H4.698A1.95 1.95 0 0 0 2.75 5.164v13.633c0 1.075.872 1.947 1.948 1.947h3.895a1.95 1.95 0 0 0 1.947-1.947V5.164a1.95 1.95 0 0 0-1.947-1.947" /><path d="M6.645 17.379a1.503 1.503 0 1 0 0-3.007a1.503 1.503 0 0 0 0 3.007M10.54 7.93l3.116 11.685a1.95 1.95 0 0 0 2.386 1.373l3.768-.974a1.947 1.947 0 0 0 1.373-2.386L17.658 4.385a1.947 1.947 0 0 0-2.386-1.373l-3.758 1.003c-.406.111-.764.35-1.023.682" /><path d="M16.665 17.241a1.502 1.502 0 1 0 0-3.004a1.502 1.502 0 0 0 0 3.004" /></g></g>';
-var ICON_DICE = "nameforge-dice";
-var ICON_DICE_SVG = '<g transform="scale(6.66667)"><path d="M0 0h15v15H0z" fill="none" /><path fill="currentColor" d="M4.14 1.14c-.68.05-1.33.43-1.7 1.07L.29 5.93c-.59 1.03-.26 2.32.77 2.91l3.72 2.14c.15.09.31.19.47.24V7.47c0-1.76 1.45-3.22 3.21-3.22h1.31c-.18-.26-.41-.5-.7-.67L5.35 1.44c-.39-.22-.8-.33-1.21-.3m.33.76c.6 0 1.12.41 1.28.99c.19.72-.23 1.45-.95 1.64c-.71.19-1.44-.23-1.64-.94c-.19-.72.24-1.45.95-1.64c.12-.04.24-.05.36-.05M2.2 5.84c.6 0 1.12.41 1.28.99c.19.71-.24 1.45-.95 1.64S1.08 8.23.89 7.52s.23-1.45.95-1.64c.11-.03.24-.05.36-.04m6.26-.52c-1.18 0-2.14.96-2.14 2.15v4.28c0 1.19.96 2.15 2.14 2.15h4.29c1.19 0 2.14-.96 2.14-2.15V7.47c0-1.19-.95-2.15-2.14-2.15zm4.29.81c.35 0 .69.14.95.39a1.34 1.34 0 0 1 0 1.89c-.26.26-.6.4-.95.4a1.34 1.34 0 0 1 0-2.68m-4.29 4.28c.36 0 .7.14.95.4c.25.25.39.59.39.94a1.34 1.34 0 0 1-2.68 0c0-.35.14-.69.4-.94c.25-.26.59-.4.94-.4" /></g>';
-var ICON_TEXT_INSERT = "nameforge-text-insert";
-var ICON_TEXT_INSERT_SVG = '<g transform="scale(1.78571)"><path d="M0 0h56v56H0z" fill="none" /><path fill="currentColor" d="M33.8 11.36h16.01c1.008 0 1.804-.774 1.804-1.782c0-.984-.797-1.758-1.804-1.758H33.8c-1.008 0-1.782.774-1.782 1.758c0 1.008.774 1.781 1.782 1.781M7.083 26.944c1.71 0 2.695-1.195 2.695-3.093v-4.477c0-.516.235-.82.797-.82h6.375v2.343c0 1.852 1.875 2.555 3.281 1.43l6.352-5.062c.96-.774.96-2.11 0-2.86L20.23 9.32c-1.453-1.195-3.28-.469-3.28 1.43v2.438h-6.891c-3.305 0-5.672 2.039-5.672 5.367v5.297c0 1.898.984 3.093 2.695 3.093m26.719-3.304h16.008c1.008 0 1.804-.774 1.804-1.782c0-.984-.797-1.758-1.804-1.758H33.8c-1.008 0-1.782.774-1.782 1.758c0 1.008.774 1.782 1.782 1.782M6.168 35.92h43.64a1.786 1.786 0 0 0 1.805-1.78c0-.985-.797-1.758-1.804-1.758H6.168c-1.008 0-1.781.773-1.781 1.758c0 .984.773 1.78 1.78 1.78m0 12.259h43.64c1.008 0 1.805-.774 1.805-1.758s-.797-1.781-1.804-1.781H6.168a1.766 1.766 0 0 0-1.781 1.78c0 .985.773 1.759 1.78 1.759" /></g>';
-var ICON_CHECKLIST_INSERT = "nameforge-checklist-insert";
-var ICON_CHECKLIST_INSERT_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M7.135 3.76a.75.75 0 0 0-.49.299L4.969 6.357l-.694-.68a.75.75 0 0 0-1.06.012a.75.75 0 0 0 .01 1.061l1.312 1.285a.75.75 0 0 0 1.131-.094l2.187-3a.75.75 0 0 0-.164-1.046a.75.75 0 0 0-.556-.135M10 5.25a.75.75 0 0 0-.75.75a.75.75 0 0 0 .75.75h10.25A.75.75 0 0 0 21 6a.75.75 0 0 0-.75-.75ZM3.75 9.5a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 .75.75h3.5a.75.75 0 0 0 .75-.75v-3.5a.75.75 0 0 0-.75-.75ZM4.5 11h2v2h-2zm5.5.25a.75.75 0 0 0-.75.75a.75.75 0 0 0 .75.75h10.25A.75.75 0 0 0 21 12a.75.75 0 0 0-.75-.75ZM3.75 15.5a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 .75.75h3.5a.75.75 0 0 0 .75-.75v-3.5a.75.75 0 0 0-.75-.75ZM4.5 17h2v2h-2zm5.5.25a.75.75 0 0 0-.75.75a.75.75 0 0 0 .75.75h10.25A.75.75 0 0 0 21 18a.75.75 0 0 0-.75-.75Z" /></g>';
-var ICON_BULLET_INSERT = "nameforge-bullet-insert";
-var ICON_BULLET_INSERT_SVG = '<g transform="scale(1.78571)"><path d="M0 0h56v56H0z" fill="none" /><path fill="currentColor" d="M7.34 16.762a2.936 2.936 0 0 0 2.953-2.93a2.94 2.94 0 0 0-2.953-2.953a2.956 2.956 0 0 0-2.953 2.953c0 1.617 1.336 2.93 2.953 2.93m10.36-1.055h32.015c1.078 0 1.898-.82 1.898-1.875c0-1.078-.82-1.898-1.898-1.898H17.699c-1.055 0-1.875.82-1.875 1.898a1.85 1.85 0 0 0 1.875 1.875M7.34 30.941a2.94 2.94 0 0 0 2.953-2.953a2.94 2.94 0 0 0-2.953-2.953a2.956 2.956 0 0 0-2.953 2.953a2.956 2.956 0 0 0 2.953 2.953m10.36-1.054h32.015a1.876 1.876 0 0 0 1.898-1.899c0-1.054-.82-1.875-1.898-1.875H17.699c-1.055 0-1.875.82-1.875 1.875s.82 1.899 1.875 1.899M7.34 45.12a2.956 2.956 0 0 0 2.953-2.953a2.94 2.94 0 0 0-2.953-2.953a2.956 2.956 0 0 0-2.953 2.953A2.97 2.97 0 0 0 7.34 45.12m10.36-1.078h32.015c1.078 0 1.898-.82 1.898-1.875c0-1.078-.82-1.898-1.898-1.898H17.699c-1.055 0-1.875.82-1.875 1.898a1.85 1.85 0 0 0 1.875 1.875" /></g>';
-var ICON_CANCEL = "nameforge-cancel";
-var ICON_CANCEL_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="M14.186 2.753v3.596c0 .487.194.955.54 1.3a1.85 1.85 0 0 0 1.306.539h4.125" /><path stroke-linejoin="round" d="M20.25 8.568v8.568a4.25 4.25 0 0 1-1.362 2.97a4.28 4.28 0 0 1-3.072 1.14h-7.59a4.3 4.3 0 0 1-3.1-1.124a4.26 4.26 0 0 1-1.376-2.986V6.862a4.25 4.25 0 0 1 1.362-2.97a4.28 4.28 0 0 1 3.072-1.14h5.714a3.5 3.5 0 0 1 2.361.905l2.96 2.722a2.97 2.97 0 0 1 1.031 2.189" /><path stroke-miterlimit="10" d="m14.51 11.513l-5.03 5.032m-.001-5.021l5.032 5.032" /></g></g>';
-var ICON_SAVE = "nameforge-save";
-var ICON_SAVE_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M14.186 2.753v3.596c0 .487.194.955.54 1.3a1.85 1.85 0 0 0 1.306.539h4.125" /><path d="M20.25 8.568v8.568a4.25 4.25 0 0 1-1.362 2.97a4.28 4.28 0 0 1-3.072 1.14h-7.59a4.3 4.3 0 0 1-3.1-1.124a4.26 4.26 0 0 1-1.376-2.986V6.862a4.25 4.25 0 0 1 1.362-2.97a4.28 4.28 0 0 1 3.072-1.14h5.714a3.5 3.5 0 0 1 2.361.905l2.96 2.722a2.97 2.97 0 0 1 1.031 2.189" /><path d="m8.36 13.682l1.879 1.88a.71.71 0 0 0 1.01 0l3.787-3.787" /></g></g>';
-var ICON_BREAKDOWN_PACK = "nameforge-breakdown-pack";
-var ICON_BREAKDOWN_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M17.755 14a2.25 2.25 0 0 1 2.248 2.25v.918a2.75 2.75 0 0 1-.512 1.598c-1.546 2.164-4.07 3.235-7.49 3.235c-3.422 0-5.945-1.072-7.487-3.236a2.75 2.75 0 0 1-.51-1.596v-.92A2.25 2.25 0 0 1 6.253 14zM12 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10" /></g>';
-var ICON_LIST_PACK = "nameforge-list-pack";
-var ICON_LIST_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M11 15c0-.35.06-.687.171-1H4.253a2.25 2.25 0 0 0-2.25 2.25v.919c0 .572.18 1.13.511 1.596C4.056 20.929 6.58 22 10 22q.596 0 1.157-.043A3 3 0 0 1 11 21zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10M12 15a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0 1h6a.5.5 0 1 0 0-1zm0 3a.5.5 0 1 0 0 1h6a.5.5 0 1 0 0-1z" /></g>';
-var ICON_COMPOUND_BREAKDOWN_PACK = "nameforge-compound-breakdown-pack";
-var ICON_COMPOUND_BREAKDOWN_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M20.5 12a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5h-4a2.5 2.5 0 0 1-2.5-2.5v-6a2.5 2.5 0 0 1 2.5-2.5zm-7.464 2q-.035.245-.036.5v6c0 .393.065.77.185 1.122q-1.434.377-3.185.379c-3.42 0-5.943-1.072-7.485-3.236a2.75 2.75 0 0 1-.511-1.596v-.92A2.25 2.25 0 0 1 4.253 14zM17 14a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10" /></g>';
-var ICON_COMPOUND_LIST_PACK = "nameforge-compound-list-pack";
-var ICON_COMPOUND_LIST_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M20.5 12a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5h-4a2.5 2.5 0 0 1-2.5-2.5v-6a2.5 2.5 0 0 1 2.5-2.5zm-7.464 2q-.035.245-.036.5v1H4.253a.75.75 0 0 0-.75.749v.578c.001.536.192 1.054.54 1.461c1.253 1.468 3.219 2.213 5.957 2.213q1.694-.002 3-.382v.381c0 .394.066.772.185 1.125Q11.752 22 10 22.001c-3.146 0-5.531-.905-7.098-2.74a3.75 3.75 0 0 1-.898-2.434v-.578A2.25 2.25 0 0 1 4.253 14zM17 14a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10m0 1.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" /></g>';
-var ICON_PLACE_PACK = "nameforge-place-pack";
-var ICON_PLACE_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7" /></g>';
-var ICON_SEED_LOCK = "nameforge-seed-lock";
-var ICON_SEED_LOCK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 17a2 2 0 0 0 2-2a2 2 0 0 0-2-2a2 2 0 0 0-2 2a2 2 0 0 0 2 2m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h1V6a5 5 0 0 1 10 0v2zm-6-4a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3" /></g>';
-var ICON_SEED_COPY = "nameforge-seed-copy";
-var ICON_SEED_COPY_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m0 16H8V7h11z" /></g>';
-var ICON_FOLDER = "nameforge-folder";
-var ICON_FOLDER_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
-function registerNameForgeIcons() {
-  (0, import_obsidian3.addIcon)(ICON_MEEPLE, MEEPLE_SVG);
-  (0, import_obsidian3.addIcon)(ICON_CREATE_PACKS, ICON_CREATE_PACKS_SVG);
-  (0, import_obsidian3.addIcon)(ICON_PREVIOUS_GENERATIONS, ICON_PREVIOUS_GENERATIONS_SVG);
-  (0, import_obsidian3.addIcon)(ICON_PACKS, ICON_PACKS_SVG);
-  (0, import_obsidian3.addIcon)(ICON_DICE, ICON_DICE_SVG);
-  (0, import_obsidian3.addIcon)(ICON_TEXT_INSERT, ICON_TEXT_INSERT_SVG);
-  (0, import_obsidian3.addIcon)(ICON_CHECKLIST_INSERT, ICON_CHECKLIST_INSERT_SVG);
-  (0, import_obsidian3.addIcon)(ICON_BULLET_INSERT, ICON_BULLET_INSERT_SVG);
-  (0, import_obsidian3.addIcon)(ICON_CANCEL, ICON_CANCEL_SVG);
-  (0, import_obsidian3.addIcon)(ICON_SAVE, ICON_SAVE_SVG);
-  (0, import_obsidian3.addIcon)(ICON_BREAKDOWN_PACK, ICON_BREAKDOWN_PACK_SVG);
-  (0, import_obsidian3.addIcon)(ICON_LIST_PACK, ICON_LIST_PACK_SVG);
-  (0, import_obsidian3.addIcon)(ICON_COMPOUND_BREAKDOWN_PACK, ICON_COMPOUND_BREAKDOWN_PACK_SVG);
-  (0, import_obsidian3.addIcon)(ICON_COMPOUND_LIST_PACK, ICON_COMPOUND_LIST_PACK_SVG);
-  (0, import_obsidian3.addIcon)(ICON_PLACE_PACK, ICON_PLACE_PACK_SVG);
-  (0, import_obsidian3.addIcon)(ICON_SEED_LOCK, ICON_SEED_LOCK_SVG);
-  (0, import_obsidian3.addIcon)(ICON_SEED_COPY, ICON_SEED_COPY_SVG);
-  (0, import_obsidian3.addIcon)(ICON_FOLDER, ICON_FOLDER_SVG);
-}
 
 // src/migration.ts
-var import_obsidian4 = require("obsidian");
+var import_obsidian2 = require("obsidian");
 
 // src/markov.ts
 var START = "^";
@@ -1113,6 +964,10 @@ function generateCompoundNamesDetailed(parts, options) {
 }
 
 // src/nameParser.ts
+var PACK_TYPES = ["breakdownPack", "listPack", "compoundPack", "placePack"];
+function isPackType(value) {
+  return PACK_TYPES.includes(value);
+}
 function isValidNamePackContent(content) {
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   if (!frontmatterMatch) {
@@ -1136,7 +991,7 @@ function parseNamesFileContent(content) {
     const packTypeMatch = frontmatter.match(/^packType:\s*(.+)$/m);
     if (packTypeMatch) {
       const rawPackType = packTypeMatch[1].trim().replace(/^['"]|['"]$/g, "");
-      if (["breakdownPack", "listPack", "compoundPack", "placePack"].includes(rawPackType)) {
+      if (isPackType(rawPackType)) {
         packType = rawPackType;
       }
     }
@@ -1173,18 +1028,19 @@ function parseNamesFileContent(content) {
   };
 }
 function splitCompoundPartSections(body, partCount) {
-  var _a, _b;
+  var _a;
   const sections = [];
   const headingRegex = /^##\s*Part\s*[123]\s*$/gm;
-  const matches = Array.from(body.matchAll(headingRegex));
+  const matches = [...body.matchAll(headingRegex)];
   for (let i = 0; i < partCount; i++) {
     const match = matches[i];
-    if (!match) {
+    if (!match || match.index === void 0) {
       sections.push("");
       continue;
     }
     const start = match.index + match[0].length;
-    const end = (_b = (_a = matches[i + 1]) == null ? void 0 : _a.index) != null ? _b : body.length;
+    const nextIndex = (_a = matches[i + 1]) == null ? void 0 : _a.index;
+    const end = nextIndex === void 0 ? body.length : nextIndex;
     sections.push(body.slice(start, end));
   }
   return sections;
@@ -1226,6 +1082,37 @@ function sanitizePackNameForFilename(packName) {
   return cleaned || "nameForge";
 }
 
+// src/paths.ts
+var import_obsidian = require("obsidian");
+var DEFAULT_NAMES_FOLDER = "_nf-backstage";
+function normalizeFolderPath(path) {
+  const configured = (path || "").trim();
+  if (!configured) {
+    return "";
+  }
+  if (configured.toLowerCase().endsWith(".md")) {
+    const lastSlash = configured.lastIndexOf("/");
+    return lastSlash > 0 ? configured.substring(0, lastSlash) : "";
+  }
+  return configured.replace(/\/+$/, "");
+}
+function resolveNamesFolderPath(folderPath, namesFilePath) {
+  return normalizeFolderPath(folderPath) || normalizeFolderPath(namesFilePath) || DEFAULT_NAMES_FOLDER;
+}
+async function ensureVaultFolder(app, folderPath) {
+  const normalized = (0, import_obsidian.normalizePath)(folderPath);
+  const existing = app.vault.getAbstractFileByPath(normalized);
+  if (existing instanceof import_obsidian.TFolder) {
+    return existing;
+  }
+  await app.vault.createFolder(normalized);
+  const created = app.vault.getAbstractFileByPath(normalized);
+  if (!(created instanceof import_obsidian.TFolder)) {
+    throw new Error(`Failed to create folder at ${normalized}`);
+  }
+  return created;
+}
+
 // src/migration.ts
 var CONFIG_FILENAME = "nameForgeConfiguration.md";
 var LEGACY_FOLDER_CANDIDATES = ["Settings/Name Packs", "namepacks", "nameForge", "Name Packs"];
@@ -1245,7 +1132,7 @@ async function ensureDefaultNamesFolder(app, settings) {
 async function countPacksInFolder(app, folder) {
   let packCount = 0;
   for (const child of folder.children) {
-    if (!(child instanceof import_obsidian4.TFile) || child.extension !== "md") {
+    if (!(child instanceof import_obsidian2.TFile) || child.extension !== "md") {
       continue;
     }
     if (child.name === CONFIG_FILENAME) {
@@ -1274,8 +1161,8 @@ async function findLegacyPackFolder(app, settings) {
       continue;
     }
     seen.add(path);
-    const folder = app.vault.getFolderByPath((0, import_obsidian4.normalizePath)(path));
-    if (!(folder instanceof import_obsidian4.TFolder)) {
+    const folder = app.vault.getFolderByPath((0, import_obsidian2.normalizePath)(path));
+    if (!(folder instanceof import_obsidian2.TFolder)) {
       continue;
     }
     const packCount = await countPacksInFolder(app, folder);
@@ -1286,7 +1173,7 @@ async function findLegacyPackFolder(app, settings) {
   return null;
 }
 function uniqueDestinationPath(app, folderPath, fileName) {
-  const base = (0, import_obsidian4.normalizePath)(`${folderPath}/${fileName}`);
+  const base = (0, import_obsidian2.normalizePath)(`${folderPath}/${fileName}`);
   if (!app.vault.getAbstractFileByPath(base)) {
     return base;
   }
@@ -1294,26 +1181,26 @@ function uniqueDestinationPath(app, folderPath, fileName) {
   const stem = dot > 0 ? fileName.slice(0, dot) : fileName;
   const ext = dot > 0 ? fileName.slice(dot) : "";
   let n = 2;
-  while (app.vault.getAbstractFileByPath((0, import_obsidian4.normalizePath)(`${folderPath}/${stem} ${n}${ext}`))) {
+  while (app.vault.getAbstractFileByPath((0, import_obsidian2.normalizePath)(`${folderPath}/${stem} ${n}${ext}`))) {
     n += 1;
   }
-  return (0, import_obsidian4.normalizePath)(`${folderPath}/${stem} ${n}${ext}`);
+  return (0, import_obsidian2.normalizePath)(`${folderPath}/${stem} ${n}${ext}`);
 }
 async function migratePacksToDefaultFolder(app, settings, fromFolderPath) {
   const sourcePath = normalizeFolderPath(fromFolderPath);
   if (!sourcePath || sourcePath === DEFAULT_NAMES_FOLDER) {
     return { moved: 0, settings };
   }
-  const source = app.vault.getFolderByPath((0, import_obsidian4.normalizePath)(sourcePath));
-  if (!(source instanceof import_obsidian4.TFolder)) {
-    new import_obsidian4.Notice(`nameForge: folder not found at ${sourcePath}`);
+  const source = app.vault.getFolderByPath((0, import_obsidian2.normalizePath)(sourcePath));
+  if (!(source instanceof import_obsidian2.TFolder)) {
+    new import_obsidian2.Notice(`nameForge: folder not found at ${sourcePath}`);
     return { moved: 0, settings };
   }
   await ensureVaultFolder(app, DEFAULT_NAMES_FOLDER);
   let moved = 0;
   const children = [...source.children];
   for (const child of children) {
-    if (!(child instanceof import_obsidian4.TFile) || child.extension !== "md") {
+    if (!(child instanceof import_obsidian2.TFile) || child.extension !== "md") {
       continue;
     }
     const isConfig = child.name === CONFIG_FILENAME;
@@ -1329,17 +1216,17 @@ async function migratePacksToDefaultFolder(app, settings, fromFolderPath) {
       }
     }
     const destination = uniqueDestinationPath(app, DEFAULT_NAMES_FOLDER, child.name);
-    if ((0, import_obsidian4.normalizePath)(previousPath) === destination) {
+    if ((0, import_obsidian2.normalizePath)(previousPath) === destination) {
       continue;
     }
     await app.fileManager.renameFile(child, destination);
     moved += 1;
-    if (!isConfig && settings.namesFilePath && (0, import_obsidian4.normalizePath)(settings.namesFilePath) === (0, import_obsidian4.normalizePath)(previousPath)) {
+    if (!isConfig && settings.namesFilePath && (0, import_obsidian2.normalizePath)(settings.namesFilePath) === (0, import_obsidian2.normalizePath)(previousPath)) {
       settings.namesFilePath = destination;
     }
   }
   settings.folderPath = DEFAULT_NAMES_FOLDER;
-  new import_obsidian4.Notice(
+  new import_obsidian2.Notice(
     moved > 0 ? `nameForge: moved ${moved} file(s) to ${DEFAULT_NAMES_FOLDER}` : `nameForge: nothing to move into ${DEFAULT_NAMES_FOLDER}`
   );
   return { moved, settings };
@@ -1358,106 +1245,233 @@ function legacySettingsFileCandidates(settings) {
       continue;
     }
     seen.add(normalized);
-    paths.push((0, import_obsidian4.normalizePath)(`${normalized}/${CONFIG_FILENAME}`));
+    paths.push((0, import_obsidian2.normalizePath)(`${normalized}/${CONFIG_FILENAME}`));
   }
   return paths;
 }
 
 // src/settings.ts
-var NameForgeSettingTab = class extends import_obsidian5.PluginSettingTab {
+var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
+    this.legacyFolder = null;
     this.plugin = plugin;
+    void this.refreshLegacyFolder();
   }
-  display() {
-    const { containerEl } = this;
-    containerEl.empty();
-    void this.renderAsync(containerEl);
-  }
-  async renderAsync(containerEl) {
-    containerEl.empty();
-    const folderPath = resolveNamesFolderPath(
-      this.plugin.settings.folderPath,
-      this.plugin.settings.namesFilePath
-    );
-    const namesFolderCard = new import_obsidian5.SettingGroup(containerEl);
-    namesFolderCard.addSetting((setting) => {
-      setting.setName("Names folder").setDesc("Home for name packs. Use the icon to enter a different folder path.");
-      setting.controlEl.createEl("div", {
-        cls: "nameforge-settings__folder-path",
-        text: folderPath || DEFAULT_NAMES_FOLDER
-      });
-      setting.addExtraButton((button) => {
-        button.setIcon(ICON_PACKS).setTooltip("Change names folder").onClick(() => {
-          new EnterFolderPathModal(this.app, folderPath || DEFAULT_NAMES_FOLDER, (folder) => {
-            void (async () => {
-              this.plugin.settings.folderPath = folder.path;
-              await this.plugin.saveSettings();
-              this.display();
-            })();
-          }).open();
-        });
-        button.extraSettingsEl.addClass("nameforge-settings__icon-action");
-      });
-    });
-    const tuningCard = new import_obsidian5.SettingGroup(containerEl);
-    tuningCard.addSetting((setting) => {
-      setting.setName("Faithfulness").setDesc(
-        "How closely generated names stick to your source list's letter patterns. Lower = more novel, higher = more true to source."
-      ).addSlider(
-        (slider) => {
-          var _a;
-          return slider.setLimits(1, 3, 1).setValue((_a = this.plugin.settings.faithfulness) != null ? _a : 2).setDynamicTooltip().onChange(async (value) => {
-            this.plugin.settings.faithfulness = value;
-            await this.plugin.saveSettings();
-          });
-        }
-      );
-    });
-    tuningCard.addSetting((setting) => {
-      setting.setName("Strictness").setDesc(
-        "How fussy the generator is about accepting a candidate name. Lower = more variety (including odd results), higher = only clean, plausible names."
-      ).addSlider(
-        (slider) => {
-          var _a;
-          return slider.setLimits(1, 5, 1).setValue((_a = this.plugin.settings.strictness) != null ? _a : 3).setDynamicTooltip().onChange(async (value) => {
-            this.plugin.settings.strictness = value;
-            await this.plugin.saveSettings();
-          });
-        }
-      );
-    });
-    const legacyFolder = await findLegacyPackFolder(this.app, this.plugin.settings);
-    if (!legacyFolder) {
+  /**
+   * Persist through the plugin's markdown config writer rather than raw saveData().
+   */
+  async setControlValue(key, value) {
+    if (key === "folderPath" && typeof value === "string") {
+      this.plugin.settings.folderPath = value;
+      if (value.trim()) {
+        await ensureVaultFolder(this.app, value.trim());
+        void this.refreshLegacyFolder();
+      }
+    } else if (key === "faithfulness" && typeof value === "number") {
+      this.plugin.settings.faithfulness = value;
+    } else if (key === "strictness" && typeof value === "number") {
+      this.plugin.settings.strictness = value;
+    } else {
       return;
     }
-    const migrationCard = new import_obsidian5.SettingGroup(containerEl);
-    migrationCard.addSetting((setting) => {
-      setting.setName(`Move packs to ${DEFAULT_NAMES_FOLDER}`).setDesc(
-        `${legacyFolder.packCount} name pack(s) are still in \u201C${legacyFolder.path}\u201D. Move them into the Forge-family default folder.`
-      ).addButton(
-        (button) => button.setButtonText("Migrate").setCta().onClick(async () => {
-          try {
-            const result = await migratePacksToDefaultFolder(
-              this.app,
-              this.plugin.settings,
-              legacyFolder.path
-            );
-            this.plugin.settings = result.settings;
-            await this.plugin.saveSettings();
-            this.display();
-          } catch (error) {
-            const message = error instanceof Error ? error.message : "Migration failed";
-            new import_obsidian5.Notice(`nameForge: ${message}`);
+    await this.plugin.saveSettings();
+  }
+  getSettingDefinitions() {
+    return [
+      {
+        name: "Names folder",
+        desc: "Home for name packs.",
+        control: {
+          type: "folder",
+          key: "folderPath",
+          placeholder: DEFAULT_NAMES_FOLDER,
+          includeRoot: true,
+          defaultValue: DEFAULT_NAMES_FOLDER
+        }
+      },
+      {
+        name: "Faithfulness",
+        desc: "How closely generated names stick to your source list's letter patterns. Lower = more novel, higher = more true to source.",
+        control: {
+          type: "slider",
+          key: "faithfulness",
+          min: 1,
+          max: 3,
+          step: 1,
+          defaultValue: 2
+        }
+      },
+      {
+        name: "Strictness",
+        desc: "How fussy the generator is about accepting a candidate name. Lower = more variety (including odd results), higher = only clean, plausible names.",
+        control: {
+          type: "slider",
+          key: "strictness",
+          min: 1,
+          max: 5,
+          step: 1,
+          defaultValue: 3
+        }
+      },
+      {
+        name: `Move packs to ${DEFAULT_NAMES_FOLDER}`,
+        desc: this.legacyFolder ? `${this.legacyFolder.packCount} name pack(s) are still in \u201C${this.legacyFolder.path}\u201D. Move them into the Forge-family default folder.` : `Move name packs into the Forge-family default folder (${DEFAULT_NAMES_FOLDER}).`,
+        visible: () => this.legacyFolder != null,
+        searchable: false,
+        render: (setting) => {
+          const legacy = this.legacyFolder;
+          if (!legacy) {
+            return;
           }
-        })
-      );
-    });
+          setting.addButton(
+            (button) => button.setButtonText("Migrate").setCta().onClick(async () => {
+              try {
+                const result = await migratePacksToDefaultFolder(
+                  this.app,
+                  this.plugin.settings,
+                  legacy.path
+                );
+                this.plugin.settings = result.settings;
+                await this.plugin.saveSettings();
+                this.legacyFolder = null;
+                this.update();
+              } catch (error) {
+                const message = error instanceof Error ? error.message : "Migration failed";
+                new import_obsidian3.Notice(`nameForge: ${message}`);
+              }
+            })
+          );
+        }
+      }
+    ];
+  }
+  async refreshLegacyFolder() {
+    this.legacyFolder = await findLegacyPackFolder(this.app, this.plugin.settings);
+    this.update();
   }
 };
 
 // src/modal.ts
 var import_obsidian6 = require("obsidian");
+
+// src/icons.ts
+var import_obsidian4 = require("obsidian");
+var ICON_MEEPLE = "nameforge-meeple";
+var MEEPLE_SVG = '<g transform="scale(4.16667)"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20H4a1 1 0 0 1-1-1c0-2 3.378-4.907 4-6c-1 0-4-.5-4-2c0-2 4-3.5 6-4c0-1.5.5-4 3-4s3 2.5 3 4c2 .5 6 2 6 4c0 1.5-3 2-4 2c.622 1.093 4 4 4 6a1 1 0 0 1-1 1h-5c-1 0-2-4-3-4s-2 4-3 4" /></g>';
+var ICON_CREATE_PACKS = "nameforge-create-packs";
+var ICON_CREATE_PACKS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="M14.186 2.753v3.596c0 .487.194.955.54 1.3a1.85 1.85 0 0 0 1.306.539h4.125" /><path stroke-linejoin="round" d="M20.25 8.568v8.568a4.25 4.25 0 0 1-1.362 2.97a4.28 4.28 0 0 1-3.072 1.14h-7.59a4.3 4.3 0 0 1-3.1-1.124a4.26 4.26 0 0 1-1.376-2.986V6.862a4.25 4.25 0 0 1 1.362-2.97a4.28 4.28 0 0 1 3.072-1.14h5.714a3.5 3.5 0 0 1 2.361.905l2.96 2.722a2.97 2.97 0 0 1 1.031 2.189" /><path stroke-miterlimit="10" d="M11.57 10.424v7.116m-3.55-3.55h7.117" /></g></g>';
+var ICON_PREVIOUS_GENERATIONS = "nameforge-previous-generations";
+var ICON_PREVIOUS_GENERATIONS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="M14.186 2.753v3.596c0 .487.194.955.54 1.3a1.85 1.85 0 0 0 1.306.539h4.125" /><path stroke-linejoin="round" d="M20.25 8.568v8.568a4.25 4.25 0 0 1-1.362 2.97a4.28 4.28 0 0 1-3.072 1.14h-7.59a4.3 4.3 0 0 1-3.1-1.124a4.26 4.26 0 0 1-1.376-2.986V6.862a4.25 4.25 0 0 1 1.362-2.97a4.28 4.28 0 0 1 3.072-1.14h5.714a3.5 3.5 0 0 1 2.361.905l2.96 2.722a2.97 2.97 0 0 1 1.031 2.189" /><path stroke-miterlimit="10" d="M9.862 11.48a1.834 1.834 0 0 1 2-1.04a1.78 1.78 0 0 1 1.304.93a1.544 1.544 0 0 1-.9 2.124a1.14 1.14 0 0 0-.734 1.03v.425" /><path stroke-linejoin="round" d="M11.499 17.295h.004" /></g></g>';
+var ICON_PACKS = "nameforge-packs";
+var ICON_PACKS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M8.593 3.217H4.698A1.95 1.95 0 0 0 2.75 5.164v13.633c0 1.075.872 1.947 1.948 1.947h3.895a1.95 1.95 0 0 0 1.947-1.947V5.164a1.95 1.95 0 0 0-1.947-1.947" /><path d="M6.645 17.379a1.503 1.503 0 1 0 0-3.007a1.503 1.503 0 0 0 0 3.007M10.54 7.93l3.116 11.685a1.95 1.95 0 0 0 2.386 1.373l3.768-.974a1.947 1.947 0 0 0 1.373-2.386L17.658 4.385a1.947 1.947 0 0 0-2.386-1.373l-3.758 1.003c-.406.111-.764.35-1.023.682" /><path d="M16.665 17.241a1.502 1.502 0 1 0 0-3.004a1.502 1.502 0 0 0 0 3.004" /></g></g>';
+var ICON_DICE = "nameforge-dice";
+var ICON_DICE_SVG = '<g transform="scale(6.66667)"><path d="M0 0h15v15H0z" fill="none" /><path fill="currentColor" d="M4.14 1.14c-.68.05-1.33.43-1.7 1.07L.29 5.93c-.59 1.03-.26 2.32.77 2.91l3.72 2.14c.15.09.31.19.47.24V7.47c0-1.76 1.45-3.22 3.21-3.22h1.31c-.18-.26-.41-.5-.7-.67L5.35 1.44c-.39-.22-.8-.33-1.21-.3m.33.76c.6 0 1.12.41 1.28.99c.19.72-.23 1.45-.95 1.64c-.71.19-1.44-.23-1.64-.94c-.19-.72.24-1.45.95-1.64c.12-.04.24-.05.36-.05M2.2 5.84c.6 0 1.12.41 1.28.99c.19.71-.24 1.45-.95 1.64S1.08 8.23.89 7.52s.23-1.45.95-1.64c.11-.03.24-.05.36-.04m6.26-.52c-1.18 0-2.14.96-2.14 2.15v4.28c0 1.19.96 2.15 2.14 2.15h4.29c1.19 0 2.14-.96 2.14-2.15V7.47c0-1.19-.95-2.15-2.14-2.15zm4.29.81c.35 0 .69.14.95.39a1.34 1.34 0 0 1 0 1.89c-.26.26-.6.4-.95.4a1.34 1.34 0 0 1 0-2.68m-4.29 4.28c.36 0 .7.14.95.4c.25.25.39.59.39.94a1.34 1.34 0 0 1-2.68 0c0-.35.14-.69.4-.94c.25-.26.59-.4.94-.4" /></g>';
+var ICON_TEXT_INSERT = "nameforge-text-insert";
+var ICON_TEXT_INSERT_SVG = '<g transform="scale(1.78571)"><path d="M0 0h56v56H0z" fill="none" /><path fill="currentColor" d="M33.8 11.36h16.01c1.008 0 1.804-.774 1.804-1.782c0-.984-.797-1.758-1.804-1.758H33.8c-1.008 0-1.782.774-1.782 1.758c0 1.008.774 1.781 1.782 1.781M7.083 26.944c1.71 0 2.695-1.195 2.695-3.093v-4.477c0-.516.235-.82.797-.82h6.375v2.343c0 1.852 1.875 2.555 3.281 1.43l6.352-5.062c.96-.774.96-2.11 0-2.86L20.23 9.32c-1.453-1.195-3.28-.469-3.28 1.43v2.438h-6.891c-3.305 0-5.672 2.039-5.672 5.367v5.297c0 1.898.984 3.093 2.695 3.093m26.719-3.304h16.008c1.008 0 1.804-.774 1.804-1.782c0-.984-.797-1.758-1.804-1.758H33.8c-1.008 0-1.782.774-1.782 1.758c0 1.008.774 1.782 1.782 1.782M6.168 35.92h43.64a1.786 1.786 0 0 0 1.805-1.78c0-.985-.797-1.758-1.804-1.758H6.168c-1.008 0-1.781.773-1.781 1.758c0 .984.773 1.78 1.78 1.78m0 12.259h43.64c1.008 0 1.805-.774 1.805-1.758s-.797-1.781-1.804-1.781H6.168a1.766 1.766 0 0 0-1.781 1.78c0 .985.773 1.759 1.78 1.759" /></g>';
+var ICON_CHECKLIST_INSERT = "nameforge-checklist-insert";
+var ICON_CHECKLIST_INSERT_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M7.135 3.76a.75.75 0 0 0-.49.299L4.969 6.357l-.694-.68a.75.75 0 0 0-1.06.012a.75.75 0 0 0 .01 1.061l1.312 1.285a.75.75 0 0 0 1.131-.094l2.187-3a.75.75 0 0 0-.164-1.046a.75.75 0 0 0-.556-.135M10 5.25a.75.75 0 0 0-.75.75a.75.75 0 0 0 .75.75h10.25A.75.75 0 0 0 21 6a.75.75 0 0 0-.75-.75ZM3.75 9.5a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 .75.75h3.5a.75.75 0 0 0 .75-.75v-3.5a.75.75 0 0 0-.75-.75ZM4.5 11h2v2h-2zm5.5.25a.75.75 0 0 0-.75.75a.75.75 0 0 0 .75.75h10.25A.75.75 0 0 0 21 12a.75.75 0 0 0-.75-.75ZM3.75 15.5a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 .75.75h3.5a.75.75 0 0 0 .75-.75v-3.5a.75.75 0 0 0-.75-.75ZM4.5 17h2v2h-2zm5.5.25a.75.75 0 0 0-.75.75a.75.75 0 0 0 .75.75h10.25A.75.75 0 0 0 21 18a.75.75 0 0 0-.75-.75Z" /></g>';
+var ICON_BULLET_INSERT = "nameforge-bullet-insert";
+var ICON_BULLET_INSERT_SVG = '<g transform="scale(1.78571)"><path d="M0 0h56v56H0z" fill="none" /><path fill="currentColor" d="M7.34 16.762a2.936 2.936 0 0 0 2.953-2.93a2.94 2.94 0 0 0-2.953-2.953a2.956 2.956 0 0 0-2.953 2.953c0 1.617 1.336 2.93 2.953 2.93m10.36-1.055h32.015c1.078 0 1.898-.82 1.898-1.875c0-1.078-.82-1.898-1.898-1.898H17.699c-1.055 0-1.875.82-1.875 1.898a1.85 1.85 0 0 0 1.875 1.875M7.34 30.941a2.94 2.94 0 0 0 2.953-2.953a2.94 2.94 0 0 0-2.953-2.953a2.956 2.956 0 0 0-2.953 2.953a2.956 2.956 0 0 0 2.953 2.953m10.36-1.054h32.015a1.876 1.876 0 0 0 1.898-1.899c0-1.054-.82-1.875-1.898-1.875H17.699c-1.055 0-1.875.82-1.875 1.875s.82 1.899 1.875 1.899M7.34 45.12a2.956 2.956 0 0 0 2.953-2.953a2.94 2.94 0 0 0-2.953-2.953a2.956 2.956 0 0 0-2.953 2.953A2.97 2.97 0 0 0 7.34 45.12m10.36-1.078h32.015c1.078 0 1.898-.82 1.898-1.875c0-1.078-.82-1.898-1.898-1.898H17.699c-1.055 0-1.875.82-1.875 1.898a1.85 1.85 0 0 0 1.875 1.875" /></g>';
+var ICON_CANCEL = "nameforge-cancel";
+var ICON_CANCEL_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="M14.186 2.753v3.596c0 .487.194.955.54 1.3a1.85 1.85 0 0 0 1.306.539h4.125" /><path stroke-linejoin="round" d="M20.25 8.568v8.568a4.25 4.25 0 0 1-1.362 2.97a4.28 4.28 0 0 1-3.072 1.14h-7.59a4.3 4.3 0 0 1-3.1-1.124a4.26 4.26 0 0 1-1.376-2.986V6.862a4.25 4.25 0 0 1 1.362-2.97a4.28 4.28 0 0 1 3.072-1.14h5.714a3.5 3.5 0 0 1 2.361.905l2.96 2.722a2.97 2.97 0 0 1 1.031 2.189" /><path stroke-miterlimit="10" d="m14.51 11.513l-5.03 5.032m-.001-5.021l5.032 5.032" /></g></g>';
+var ICON_SAVE = "nameforge-save";
+var ICON_SAVE_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M14.186 2.753v3.596c0 .487.194.955.54 1.3a1.85 1.85 0 0 0 1.306.539h4.125" /><path d="M20.25 8.568v8.568a4.25 4.25 0 0 1-1.362 2.97a4.28 4.28 0 0 1-3.072 1.14h-7.59a4.3 4.3 0 0 1-3.1-1.124a4.26 4.26 0 0 1-1.376-2.986V6.862a4.25 4.25 0 0 1 1.362-2.97a4.28 4.28 0 0 1 3.072-1.14h5.714a3.5 3.5 0 0 1 2.361.905l2.96 2.722a2.97 2.97 0 0 1 1.031 2.189" /><path d="m8.36 13.682l1.879 1.88a.71.71 0 0 0 1.01 0l3.787-3.787" /></g></g>';
+var ICON_BREAKDOWN_PACK = "nameforge-breakdown-pack";
+var ICON_BREAKDOWN_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M17.755 14a2.25 2.25 0 0 1 2.248 2.25v.918a2.75 2.75 0 0 1-.512 1.598c-1.546 2.164-4.07 3.235-7.49 3.235c-3.422 0-5.945-1.072-7.487-3.236a2.75 2.75 0 0 1-.51-1.596v-.92A2.25 2.25 0 0 1 6.253 14zM12 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10" /></g>';
+var ICON_LIST_PACK = "nameforge-list-pack";
+var ICON_LIST_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M11 15c0-.35.06-.687.171-1H4.253a2.25 2.25 0 0 0-2.25 2.25v.919c0 .572.18 1.13.511 1.596C4.056 20.929 6.58 22 10 22q.596 0 1.157-.043A3 3 0 0 1 11 21zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10M12 15a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0 1h6a.5.5 0 1 0 0-1zm0 3a.5.5 0 1 0 0 1h6a.5.5 0 1 0 0-1z" /></g>';
+var ICON_COMPOUND_BREAKDOWN_PACK = "nameforge-compound-breakdown-pack";
+var ICON_COMPOUND_BREAKDOWN_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M20.5 12a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5h-4a2.5 2.5 0 0 1-2.5-2.5v-6a2.5 2.5 0 0 1 2.5-2.5zm-7.464 2q-.035.245-.036.5v6c0 .393.065.77.185 1.122q-1.434.377-3.185.379c-3.42 0-5.943-1.072-7.485-3.236a2.75 2.75 0 0 1-.511-1.596v-.92A2.25 2.25 0 0 1 4.253 14zM17 14a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10" /></g>';
+var ICON_COMPOUND_LIST_PACK = "nameforge-compound-list-pack";
+var ICON_COMPOUND_LIST_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M20.5 12a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5h-4a2.5 2.5 0 0 1-2.5-2.5v-6a2.5 2.5 0 0 1 2.5-2.5zm-7.464 2q-.035.245-.036.5v1H4.253a.75.75 0 0 0-.75.749v.578c.001.536.192 1.054.54 1.461c1.253 1.468 3.219 2.213 5.957 2.213q1.694-.002 3-.382v.381c0 .394.066.772.185 1.125Q11.752 22 10 22.001c-3.146 0-5.531-.905-7.098-2.74a3.75 3.75 0 0 1-.898-2.434v-.578A2.25 2.25 0 0 1 4.253 14zM17 14a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10m0 1.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" /></g>';
+var ICON_PLACE_PACK = "nameforge-place-pack";
+var ICON_PLACE_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7" /></g>';
+var ICON_SEED_LOCK = "nameforge-seed-lock";
+var ICON_SEED_LOCK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 17a2 2 0 0 0 2-2a2 2 0 0 0-2-2a2 2 0 0 0-2 2a2 2 0 0 0 2 2m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h1V6a5 5 0 0 1 10 0v2zm-6-4a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3" /></g>';
+var ICON_SEED_COPY = "nameforge-seed-copy";
+var ICON_SEED_COPY_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m0 16H8V7h11z" /></g>';
+var ICON_FOLDER = "nameforge-folder";
+var ICON_FOLDER_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
+function registerNameForgeIcons() {
+  (0, import_obsidian4.addIcon)(ICON_MEEPLE, MEEPLE_SVG);
+  (0, import_obsidian4.addIcon)(ICON_CREATE_PACKS, ICON_CREATE_PACKS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_PREVIOUS_GENERATIONS, ICON_PREVIOUS_GENERATIONS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_PACKS, ICON_PACKS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_DICE, ICON_DICE_SVG);
+  (0, import_obsidian4.addIcon)(ICON_TEXT_INSERT, ICON_TEXT_INSERT_SVG);
+  (0, import_obsidian4.addIcon)(ICON_CHECKLIST_INSERT, ICON_CHECKLIST_INSERT_SVG);
+  (0, import_obsidian4.addIcon)(ICON_BULLET_INSERT, ICON_BULLET_INSERT_SVG);
+  (0, import_obsidian4.addIcon)(ICON_CANCEL, ICON_CANCEL_SVG);
+  (0, import_obsidian4.addIcon)(ICON_SAVE, ICON_SAVE_SVG);
+  (0, import_obsidian4.addIcon)(ICON_BREAKDOWN_PACK, ICON_BREAKDOWN_PACK_SVG);
+  (0, import_obsidian4.addIcon)(ICON_LIST_PACK, ICON_LIST_PACK_SVG);
+  (0, import_obsidian4.addIcon)(ICON_COMPOUND_BREAKDOWN_PACK, ICON_COMPOUND_BREAKDOWN_PACK_SVG);
+  (0, import_obsidian4.addIcon)(ICON_COMPOUND_LIST_PACK, ICON_COMPOUND_LIST_PACK_SVG);
+  (0, import_obsidian4.addIcon)(ICON_PLACE_PACK, ICON_PLACE_PACK_SVG);
+  (0, import_obsidian4.addIcon)(ICON_SEED_LOCK, ICON_SEED_LOCK_SVG);
+  (0, import_obsidian4.addIcon)(ICON_SEED_COPY, ICON_SEED_COPY_SVG);
+  (0, import_obsidian4.addIcon)(ICON_FOLDER, ICON_FOLDER_SVG);
+}
+
+// src/folderModal.ts
+var import_obsidian5 = require("obsidian");
+var EnterFolderPathModal = class extends import_obsidian5.Modal {
+  constructor(app, currentPath, onSubmit) {
+    super(app);
+    this.inputEl = null;
+    this.currentPath = currentPath;
+    this.onSubmit = onSubmit;
+  }
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.empty();
+    contentEl.addClass("nameforge-enter-folder-modal");
+    contentEl.createEl("p", {
+      text: "Enter a vault-relative folder path. Packs will be read from and saved to this folder."
+    });
+    const row = contentEl.createDiv({ cls: "nameforge-modal__pack-name-row" });
+    row.createEl("label", { text: "Folder" });
+    this.inputEl = row.createEl("input", {
+      cls: "nameforge-modal__pack-name-input",
+      attr: {
+        type: "text",
+        placeholder: DEFAULT_NAMES_FOLDER,
+        value: this.currentPath || DEFAULT_NAMES_FOLDER
+      }
+    });
+    this.inputEl.focus();
+    this.inputEl.select();
+    this.inputEl.addEventListener("keydown", (evt) => {
+      if (evt.key === "Enter") {
+        evt.preventDefault();
+        void this.submit();
+      }
+    });
+    const controls = contentEl.createDiv({ cls: "nameforge-modal__controls" });
+    const saveButton = controls.createEl("button", { text: "Use folder", cls: "mod-cta" });
+    saveButton.addEventListener("click", () => {
+      void this.submit();
+    });
+    const cancelButton = controls.createEl("button", { text: "Cancel" });
+    cancelButton.addEventListener("click", () => this.close());
+  }
+  async submit() {
+    var _a, _b;
+    const rawValue = ((_b = (_a = this.inputEl) == null ? void 0 : _a.value) == null ? void 0 : _b.trim()) || "";
+    const cleaned = rawValue.replace(/^\/+|\/+$/g, "");
+    const targetPath = (0, import_obsidian5.normalizePath)(cleaned || DEFAULT_NAMES_FOLDER);
+    try {
+      const folder = await ensureVaultFolder(this.app, targetPath);
+      this.onSubmit(folder);
+      this.close();
+    } catch (e) {
+      new import_obsidian5.Notice(`nameForge: could not use folder ${targetPath}`);
+    }
+  }
+};
+
+// src/modal.ts
 function packTypeIconId(packType, compoundGenerator) {
   if (packType === "compoundPack") {
     return compoundGenerator === "list" ? ICON_COMPOUND_LIST_PACK : ICON_COMPOUND_BREAKDOWN_PACK;
@@ -1569,20 +1583,20 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     if (this.panelMode) {
       root.addClass("nameforge-modal--panel");
     }
-    const optionsList = root.createEl("div", { cls: "nameforge-modal__options-list" });
-    const createPacksRow = optionsList.createEl("div", { cls: "nameforge-modal__option-row" });
-    const folderDecoration = createPacksRow.createEl("span", {
+    const optionsList = root.createDiv({ cls: "nameforge-modal__options-list" });
+    const createPacksRow = optionsList.createDiv({ cls: "nameforge-modal__option-row" });
+    const folderDecoration = createPacksRow.createSpan({
       cls: "nameforge-modal__icon-decoration nameforge-modal__icon-decoration--lg",
       attr: { "aria-hidden": "true" }
     });
     (0, import_obsidian6.setIcon)(folderDecoration, ICON_PACKS);
-    this.packDropdownEl = createPacksRow.createEl("div", { cls: "nameforge-modal__pack-dropdown" });
+    this.packDropdownEl = createPacksRow.createDiv({ cls: "nameforge-modal__pack-dropdown" });
     this.packDropdownTrigger = this.packDropdownEl.createEl("button", {
       cls: "nameforge-modal__pack-dropdown-trigger",
       attr: { type: "button", "aria-haspopup": "listbox", "aria-expanded": "false" }
     });
-    this.packDropdownIconEl = this.packDropdownTrigger.createEl("span", { cls: "nameforge-modal__pack-dropdown-icon" });
-    this.packDropdownLabelEl = this.packDropdownTrigger.createEl("span", {
+    this.packDropdownIconEl = this.packDropdownTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" });
+    this.packDropdownLabelEl = this.packDropdownTrigger.createSpan({
       cls: "nameforge-modal__pack-dropdown-label",
       text: "No packs found"
     });
@@ -1590,7 +1604,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       evt.stopPropagation();
       void this.togglePackDropdown();
     });
-    this.packDropdownMenuEl = this.packDropdownEl.createEl("div", { cls: "nameforge-modal__pack-dropdown-menu" });
+    this.packDropdownMenuEl = this.packDropdownEl.createDiv({ cls: "nameforge-modal__pack-dropdown-menu" });
     this.packDropdownMenuEl.hide();
     activeDocument.addEventListener("click", this.handlePackDropdownOutsideClick);
     if (!this.panelMode) {
@@ -1603,7 +1617,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         new NameForgeEditorModal(this.app, this, "", "").open();
       });
     }
-    const quantityToggle = optionsList.createEl("div", { cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
+    const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
       const button = quantityToggle.createEl("button", {
         cls: "nameforge-modal__toggle-button" + (value === this.generationCount ? " is-active" : ""),
@@ -1621,8 +1635,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     generateButton.addEventListener("click", () => {
       void this.generateSelectedCount();
     });
-    this.resultsEl = root.createEl("div", { cls: "nameforge-modal__results" });
-    this.statusEl = root.createEl("div", { cls: "nameforge-modal__status" });
+    this.resultsEl = root.createDiv({ cls: "nameforge-modal__results" });
+    this.statusEl = root.createDiv({ cls: "nameforge-modal__status" });
     this.renderResults([]);
     void this.refreshPackDropdown();
   }
@@ -1684,7 +1698,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     }
     this.packDropdownMenuEl.empty();
     if (packs.length === 0) {
-      this.packDropdownMenuEl.createEl("div", {
+      this.packDropdownMenuEl.createDiv({
         cls: "nameforge-modal__pack-dropdown-empty",
         text: "No packs found"
       });
@@ -1697,8 +1711,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         cls: "nameforge-modal__pack-dropdown-item",
         attr: { type: "button" }
       });
-      (0, import_obsidian6.setIcon)(item.createEl("span", { cls: "nameforge-modal__pack-dropdown-icon" }), packTypeIconId(packType, compoundGenerator));
-      item.createEl("span", { cls: "nameforge-modal__pack-dropdown-label", text: label });
+      (0, import_obsidian6.setIcon)(item.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }), packTypeIconId(packType, compoundGenerator));
+      item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
       item.addEventListener("click", () => {
         this.closePackDropdown();
         void this.loadPack(path);
@@ -2017,10 +2031,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     }
     this.resultsEl.empty();
     const list = this.resultsEl.createEl("ul", { cls: "nameforge-modal__results-list" });
-    const actions = this.resultsEl.createEl("div", { cls: "nameforge-modal__results-actions" });
-    const seedGroup = actions.createEl("div", { cls: "nameforge-modal__seed-group" });
+    const actions = this.resultsEl.createDiv({ cls: "nameforge-modal__results-actions" });
+    const seedGroup = actions.createDiv({ cls: "nameforge-modal__seed-group" });
     this.buildSeedControls(seedGroup);
-    const buttonsGroup = actions.createEl("div", { cls: "nameforge-modal__results-buttons" });
+    const buttonsGroup = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
     const insertButton = buttonsGroup.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Insert" }
@@ -2078,8 +2092,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         cls: "nameforge-modal__panel-action",
         attr: { type: "button" }
       });
-      (0, import_obsidian6.setIcon)(createPack.createEl("span", { cls: "nameforge-modal__panel-action-icon" }), ICON_CREATE_PACKS);
-      createPack.createEl("span", {
+      (0, import_obsidian6.setIcon)(createPack.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_CREATE_PACKS);
+      createPack.createSpan({
         cls: "nameforge-modal__panel-action-label",
         text: "create name pack"
       });
@@ -2091,10 +2105,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         attr: { type: "button" }
       });
       (0, import_obsidian6.setIcon)(
-        previousGenerations.createEl("span", { cls: "nameforge-modal__panel-action-icon" }),
+        previousGenerations.createSpan({ cls: "nameforge-modal__panel-action-icon" }),
         ICON_PREVIOUS_GENERATIONS
       );
-      previousGenerations.createEl("span", {
+      previousGenerations.createSpan({
         cls: "nameforge-modal__panel-action-label",
         text: "previous generations"
       });
@@ -2200,23 +2214,23 @@ var PreviousGenerationsModal = class extends import_obsidian6.Modal {
     var _a, _b;
     const history = (_a = this.parent.plugin.settings.previousGenerations) != null ? _a : [];
     if (history.length === 0) {
-      container.createEl("div", {
+      container.createDiv({
         cls: "nameforge-history-modal__empty",
         text: "No previous generations yet."
       });
       return;
     }
     const iconsByName = await this.parent.buildPackIconByName();
-    const list = container.createEl("div", { cls: "nameforge-history-modal__list" });
+    const list = container.createDiv({ cls: "nameforge-history-modal__list" });
     for (const entry of history) {
-      const row = list.createEl("div", { cls: "nameforge-history-modal__row" });
-      const iconEl = row.createEl("span", { cls: "nameforge-history-modal__pack-icon" });
+      const row = list.createDiv({ cls: "nameforge-history-modal__row" });
+      const iconEl = row.createSpan({ cls: "nameforge-history-modal__pack-icon" });
       (0, import_obsidian6.setIcon)(iconEl, (_b = iconsByName.get(entry.packName)) != null ? _b : ICON_BREAKDOWN_PACK);
-      row.createEl("span", {
+      row.createSpan({
         cls: "nameforge-history-modal__pack-name",
         text: entry.packName || "nameForge"
       });
-      row.createEl("span", {
+      row.createSpan({
         cls: "nameforge-history-modal__seed",
         text: String(entry.seed)
       });
@@ -2257,7 +2271,7 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     const { contentEl } = this;
     contentEl.empty();
     contentEl.addClass("nameforge-editor-modal");
-    const packNameRow = contentEl.createEl("div", { cls: "nameforge-modal__pack-name-row" });
+    const packNameRow = contentEl.createDiv({ cls: "nameforge-modal__pack-name-row" });
     packNameRow.createEl("label", { text: "Pack Name" });
     this.packNameInput = packNameRow.createEl("input", {
       cls: "nameforge-modal__pack-name-input",
@@ -2268,7 +2282,7 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
       }
     });
     this.packNameInput.value = this.initialPackName;
-    const typeToggle = contentEl.createEl("div", { cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle" });
+    const typeToggle = contentEl.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle" });
     this.breakdownButton = typeToggle.createEl("button", {
       cls: "nameforge-modal__toggle-button is-active",
       text: "Breakdown"
@@ -2297,7 +2311,7 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     this.placeButton.addEventListener("click", () => {
       this.setPackType("placePack");
     });
-    const stage = contentEl.createEl("div", { cls: "nameforge-editor-modal__stage" });
+    const stage = contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
     this.inputEl = stage.createEl("textarea", {
       cls: "nameforge-modal__textarea nameforge-editor-modal__stage-pane",
       attr: {
@@ -2310,7 +2324,7 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     this.selectedPackType = this.parent.currentPackType;
     this.updateTypeButtons();
     this.updateCompoundControls();
-    const controls = contentEl.createEl("div", { cls: "nameforge-modal__controls" });
+    const controls = contentEl.createDiv({ cls: "nameforge-modal__controls" });
     const saveButton = controls.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Save names" }
@@ -2327,33 +2341,33 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     cancelButton.addEventListener("click", () => this.close());
   }
   buildCompoundSection(container) {
-    this.compoundSectionEl = container.createEl("div", {
+    this.compoundSectionEl = container.createDiv({
       cls: "nameforge-modal__compound-section nameforge-editor-modal__stage-pane"
     });
-    const optionsRow = this.compoundSectionEl.createEl("div", { cls: "nameforge-modal__compound-options-row" });
-    const partsColumn = optionsRow.createEl("div", { cls: "nameforge-modal__compound-option-column" });
-    const partsToggle = partsColumn.createEl("div", { cls: "nameforge-modal__toggle-panel" });
+    const optionsRow = this.compoundSectionEl.createDiv({ cls: "nameforge-modal__compound-options-row" });
+    const partsColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
+    const partsToggle = partsColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
     this.twoPartsButton = partsToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "2 parts" });
     this.twoPartsButton.addEventListener("click", () => this.setCompoundParts(2));
     this.threePartsButton = partsToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "3 parts" });
     this.threePartsButton.addEventListener("click", () => this.setCompoundParts(3));
-    this.partsExampleEl = partsColumn.createEl("div", { cls: "nameforge-modal__compound-example" });
-    const generatorColumn = optionsRow.createEl("div", { cls: "nameforge-modal__compound-option-column" });
-    const generatorToggle = generatorColumn.createEl("div", { cls: "nameforge-modal__toggle-panel" });
+    this.partsExampleEl = partsColumn.createDiv({ cls: "nameforge-modal__compound-example" });
+    const generatorColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
+    const generatorToggle = generatorColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
     this.compoundBreakdownButton = generatorToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Breakdown" });
     this.compoundBreakdownButton.addEventListener("click", () => this.setCompoundGenerator("breakdown"));
     this.compoundListButton = generatorToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "List" });
     this.compoundListButton.addEventListener("click", () => this.setCompoundGenerator("list"));
-    const joiningColumn = optionsRow.createEl("div", { cls: "nameforge-modal__compound-option-column" });
-    const joiningToggle = joiningColumn.createEl("div", { cls: "nameforge-modal__toggle-panel" });
+    const joiningColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
+    const joiningToggle = joiningColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
     this.joinedButton = joiningToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Joined" });
     this.joinedButton.addEventListener("click", () => this.setCompoundJoining("joined"));
     this.spacedButton = joiningToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Spaced" });
     this.spacedButton.addEventListener("click", () => this.setCompoundJoining("spaced"));
-    this.joiningExampleEl = joiningColumn.createEl("div", { cls: "nameforge-modal__compound-example" });
-    const partBoxesEl = this.compoundSectionEl.createEl("div", { cls: "nameforge-modal__part-boxes" });
+    this.joiningExampleEl = joiningColumn.createDiv({ cls: "nameforge-modal__compound-example" });
+    const partBoxesEl = this.compoundSectionEl.createDiv({ cls: "nameforge-modal__part-boxes" });
     for (let i = 0; i < 3; i++) {
-      const wrapper = partBoxesEl.createEl("div", { cls: "nameforge-modal__part-box" });
+      const wrapper = partBoxesEl.createDiv({ cls: "nameforge-modal__part-box" });
       wrapper.createEl("label", { cls: "nameforge-modal__part-label", text: `Part ${i + 1}` });
       const textarea = wrapper.createEl("textarea", {
         cls: "nameforge-modal__textarea",
@@ -2493,7 +2507,7 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
 function softConnectWithRetry(tryConnect, opts) {
   var _a, _b;
   const intervalMs = (_a = opts.intervalMs) != null ? _a : 1e3;
-  const setIntervalFn = (_b = opts.setIntervalFn) != null ? _b : window.setInterval.bind(window);
+  const setIntervalFn = (_b = opts.setIntervalFn) != null ? _b : (handler, timeout) => window.setInterval(handler, timeout);
   tryConnect();
   const handle = setIntervalFn(() => {
     tryConnect();

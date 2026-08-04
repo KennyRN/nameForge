@@ -10,19 +10,20 @@ export function softConnectWithRetry(
     onLayoutChange: (cb: () => void) => void;
     /** Keepalive / hunt interval. Default 1000ms. */
     intervalMs?: number;
-    setIntervalFn?: typeof setInterval;
-    clearIntervalFn?: typeof clearInterval;
+    setIntervalFn?: (handler: () => void, timeout?: number) => number;
+    clearIntervalFn?: (id: number) => void;
   },
 ): void {
   const intervalMs = opts.intervalMs ?? 1000;
-  const setIntervalFn = opts.setIntervalFn ?? window.setInterval.bind(window);
+  const setIntervalFn =
+    opts.setIntervalFn ?? ((handler, timeout) => window.setInterval(handler, timeout));
 
   tryConnect();
 
   const handle = setIntervalFn(() => {
     tryConnect();
   }, intervalMs);
-  opts.registerInterval(handle as unknown as number);
+  opts.registerInterval(handle);
 
   opts.onLayoutChange(() => {
     tryConnect();

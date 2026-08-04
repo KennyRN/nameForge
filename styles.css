@@ -319,8 +319,8 @@ settings:
 }
 
 /* Interactive icon controls: no button chrome — only icon color changes on hover. */
-.nameforge-modal button.nameforge-modal__icon-action,
-.nameforge-modal__icon-action {
+body .nameforge-modal button.nameforge-modal__icon-action,
+body .nameforge-modal .nameforge-modal__icon-action {
   appearance: none;
   -webkit-appearance: none;
   width: auto;
@@ -329,10 +329,11 @@ settings:
   min-height: 0;
   padding: 0;
   margin: 0;
-  border: none !important;
+  border: none;
   border-radius: 0;
-  background: transparent !important;
-  box-shadow: none !important;
+  background: transparent;
+  background-color: transparent;
+  box-shadow: none;
   color: var(--text-muted);
   display: inline-flex;
   align-items: center;
@@ -352,34 +353,36 @@ settings:
   height: 24px;
 }
 
-.nameforge-modal button.nameforge-modal__icon-action:hover,
-.nameforge-modal button.nameforge-modal__icon-action:focus-visible,
-.nameforge-modal__icon-action:hover,
-.nameforge-modal__icon-action:focus-visible {
-  background: transparent !important;
-  box-shadow: none !important;
+body .nameforge-modal button.nameforge-modal__icon-action:hover,
+body .nameforge-modal button.nameforge-modal__icon-action:focus-visible,
+body .nameforge-modal .nameforge-modal__icon-action:hover,
+body .nameforge-modal .nameforge-modal__icon-action:focus-visible {
+  background: transparent;
+  background-color: transparent;
+  box-shadow: none;
   color: var(--nameforge-accent-color, var(--interactive-accent));
 }
 
-.nameforge-modal button.nameforge-modal__icon-action:active,
-.nameforge-modal__icon-action:active {
-  background: transparent !important;
-  box-shadow: none !important;
+body .nameforge-modal button.nameforge-modal__icon-action:active,
+body .nameforge-modal .nameforge-modal__icon-action:active {
+  background: transparent;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 .nameforge-modal__icon-action.is-active {
   color: var(--nameforge-accent-color, var(--interactive-accent));
 }
 
-.nameforge-modal button.nameforge-modal__icon-action:disabled,
-.nameforge-modal__icon-action:disabled {
+body .nameforge-modal button.nameforge-modal__icon-action:disabled,
+body .nameforge-modal .nameforge-modal__icon-action:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   color: var(--text-muted);
 }
 
-.nameforge-modal button.nameforge-modal__icon-action:disabled:hover,
-.nameforge-modal__icon-action:disabled:hover {
+body .nameforge-modal button.nameforge-modal__icon-action:disabled:hover,
+body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
   color: var(--text-muted);
   cursor: not-allowed;
 }
@@ -532,8 +535,9 @@ settings:
 }
 
 /* Results footer icon controls: no button hover chrome (background), just color. */
-.nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:disabled) {
-  background: transparent !important;
+body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:disabled) {
+  background: transparent;
+  background-color: transparent;
   color: var(--nameforge-accent-color, var(--interactive-accent));
 }
 

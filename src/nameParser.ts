@@ -20,6 +20,12 @@ export interface NamesFileData {
   setting: string;
 }
 
+const PACK_TYPES = ["breakdownPack", "listPack", "compoundPack", "placePack"] as const;
+
+function isPackType(value: string): value is NamesFileData["packType"] {
+  return (PACK_TYPES as readonly string[]).includes(value);
+}
+
 export function parseName(name: string): ParsedName {
   const normalized = name.trim();
   const parts = normalized.split(/\s+/);
@@ -69,8 +75,8 @@ export function parseNamesFileContent(content: string): NamesFileData {
     const packTypeMatch = frontmatter.match(/^packType:\s*(.+)$/m);
     if (packTypeMatch) {
       const rawPackType = packTypeMatch[1].trim().replace(/^['"]|['"]$/g, "");
-      if (["breakdownPack", "listPack", "compoundPack", "placePack"].includes(rawPackType)) {
-        packType = rawPackType as NamesFileData["packType"];
+      if (isPackType(rawPackType)) {
+        packType = rawPackType;
       }
     }
 
@@ -117,16 +123,17 @@ export function parseNamesFileContent(content: string): NamesFileData {
 function splitCompoundPartSections(body: string, partCount: 2 | 3): string[] {
   const sections: string[] = [];
   const headingRegex = /^##\s*Part\s*[123]\s*$/gm;
-  const matches = Array.from(body.matchAll(headingRegex));
+  const matches = [...body.matchAll(headingRegex)];
 
   for (let i = 0; i < partCount; i++) {
     const match = matches[i];
-    if (!match) {
+    if (!match || match.index === undefined) {
       sections.push("");
       continue;
     }
     const start = match.index + match[0].length;
-    const end = matches[i + 1]?.index ?? body.length;
+    const nextIndex = matches[i + 1]?.index;
+    const end = nextIndex === undefined ? body.length : nextIndex;
     sections.push(body.slice(start, end));
   }
 

@@ -198,21 +198,21 @@ export class NameForgeModal extends Modal {
       root.addClass("nameforge-modal--panel");
     }
 
-    const optionsList = root.createEl("div", { cls: "nameforge-modal__options-list" });
+    const optionsList = root.createDiv({ cls: "nameforge-modal__options-list" });
 
-    const createPacksRow = optionsList.createEl("div", { cls: "nameforge-modal__option-row" });
-    const folderDecoration = createPacksRow.createEl("span", {
+    const createPacksRow = optionsList.createDiv({ cls: "nameforge-modal__option-row" });
+    const folderDecoration = createPacksRow.createSpan({
       cls: "nameforge-modal__icon-decoration nameforge-modal__icon-decoration--lg",
       attr: { "aria-hidden": "true" },
     });
     setIcon(folderDecoration, ICON_PACKS);
-    this.packDropdownEl = createPacksRow.createEl("div", { cls: "nameforge-modal__pack-dropdown" });
+    this.packDropdownEl = createPacksRow.createDiv({ cls: "nameforge-modal__pack-dropdown" });
     this.packDropdownTrigger = this.packDropdownEl.createEl("button", {
       cls: "nameforge-modal__pack-dropdown-trigger",
       attr: { type: "button", "aria-haspopup": "listbox", "aria-expanded": "false" },
     });
-    this.packDropdownIconEl = this.packDropdownTrigger.createEl("span", { cls: "nameforge-modal__pack-dropdown-icon" });
-    this.packDropdownLabelEl = this.packDropdownTrigger.createEl("span", {
+    this.packDropdownIconEl = this.packDropdownTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" });
+    this.packDropdownLabelEl = this.packDropdownTrigger.createSpan({
       cls: "nameforge-modal__pack-dropdown-label",
       text: "No packs found",
     });
@@ -221,7 +221,7 @@ export class NameForgeModal extends Modal {
       void this.togglePackDropdown();
     });
 
-    this.packDropdownMenuEl = this.packDropdownEl.createEl("div", { cls: "nameforge-modal__pack-dropdown-menu" });
+    this.packDropdownMenuEl = this.packDropdownEl.createDiv({ cls: "nameforge-modal__pack-dropdown-menu" });
     this.packDropdownMenuEl.hide();
 
     activeDocument.addEventListener("click", this.handlePackDropdownOutsideClick);
@@ -236,7 +236,7 @@ export class NameForgeModal extends Modal {
       });
     }
 
-    const quantityToggle = optionsList.createEl("div", { cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
+    const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
       const button = quantityToggle.createEl("button", {
         cls: "nameforge-modal__toggle-button" + (value === this.generationCount ? " is-active" : ""),
@@ -256,8 +256,8 @@ export class NameForgeModal extends Modal {
       void this.generateSelectedCount();
     });
 
-    this.resultsEl = root.createEl("div", { cls: "nameforge-modal__results" });
-    this.statusEl = root.createEl("div", { cls: "nameforge-modal__status" });
+    this.resultsEl = root.createDiv({ cls: "nameforge-modal__results" });
+    this.statusEl = root.createDiv({ cls: "nameforge-modal__status" });
     this.renderResults([]);
 
     void this.refreshPackDropdown();
@@ -331,7 +331,7 @@ export class NameForgeModal extends Modal {
     this.packDropdownMenuEl.empty();
 
     if (packs.length === 0) {
-      this.packDropdownMenuEl.createEl("div", {
+      this.packDropdownMenuEl.createDiv({
         cls: "nameforge-modal__pack-dropdown-empty",
         text: "No packs found",
       });
@@ -344,8 +344,8 @@ export class NameForgeModal extends Modal {
         cls: "nameforge-modal__pack-dropdown-item",
         attr: { type: "button" },
       });
-      setIcon(item.createEl("span", { cls: "nameforge-modal__pack-dropdown-icon" }), packTypeIconId(packType, compoundGenerator));
-      item.createEl("span", { cls: "nameforge-modal__pack-dropdown-label", text: label });
+      setIcon(item.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }), packTypeIconId(packType, compoundGenerator));
+      item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
       item.addEventListener("click", () => {
         this.closePackDropdown();
         void this.loadPack(path);
@@ -713,12 +713,12 @@ export class NameForgeModal extends Modal {
 
     const list = this.resultsEl.createEl("ul", { cls: "nameforge-modal__results-list" });
 
-    const actions = this.resultsEl.createEl("div", { cls: "nameforge-modal__results-actions" });
+    const actions = this.resultsEl.createDiv({ cls: "nameforge-modal__results-actions" });
 
-    const seedGroup = actions.createEl("div", { cls: "nameforge-modal__seed-group" });
+    const seedGroup = actions.createDiv({ cls: "nameforge-modal__seed-group" });
     this.buildSeedControls(seedGroup);
 
-    const buttonsGroup = actions.createEl("div", { cls: "nameforge-modal__results-buttons" });
+    const buttonsGroup = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
     const insertButton = buttonsGroup.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Insert" },
@@ -780,8 +780,8 @@ export class NameForgeModal extends Modal {
         cls: "nameforge-modal__panel-action",
         attr: { type: "button" },
       });
-      setIcon(createPack.createEl("span", { cls: "nameforge-modal__panel-action-icon" }), ICON_CREATE_PACKS);
-      createPack.createEl("span", {
+      setIcon(createPack.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_CREATE_PACKS);
+      createPack.createSpan({
         cls: "nameforge-modal__panel-action-label",
         text: "create name pack",
       });
@@ -794,10 +794,10 @@ export class NameForgeModal extends Modal {
         attr: { type: "button" },
       });
       setIcon(
-        previousGenerations.createEl("span", { cls: "nameforge-modal__panel-action-icon" }),
+        previousGenerations.createSpan({ cls: "nameforge-modal__panel-action-icon" }),
         ICON_PREVIOUS_GENERATIONS,
       );
-      previousGenerations.createEl("span", {
+      previousGenerations.createSpan({
         cls: "nameforge-modal__panel-action-label",
         text: "previous generations",
       });
@@ -930,7 +930,7 @@ class PreviousGenerationsModal extends Modal {
   private async renderList(container: HTMLElement) {
     const history = this.parent.plugin.settings.previousGenerations ?? [];
     if (history.length === 0) {
-      container.createEl("div", {
+      container.createDiv({
         cls: "nameforge-history-modal__empty",
         text: "No previous generations yet.",
       });
@@ -938,17 +938,17 @@ class PreviousGenerationsModal extends Modal {
     }
 
     const iconsByName = await this.parent.buildPackIconByName();
-    const list = container.createEl("div", { cls: "nameforge-history-modal__list" });
+    const list = container.createDiv({ cls: "nameforge-history-modal__list" });
 
     for (const entry of history) {
-      const row = list.createEl("div", { cls: "nameforge-history-modal__row" });
-      const iconEl = row.createEl("span", { cls: "nameforge-history-modal__pack-icon" });
+      const row = list.createDiv({ cls: "nameforge-history-modal__row" });
+      const iconEl = row.createSpan({ cls: "nameforge-history-modal__pack-icon" });
       setIcon(iconEl, iconsByName.get(entry.packName) ?? ICON_BREAKDOWN_PACK);
-      row.createEl("span", {
+      row.createSpan({
         cls: "nameforge-history-modal__pack-name",
         text: entry.packName || "nameForge",
       });
-      row.createEl("span", {
+      row.createSpan({
         cls: "nameforge-history-modal__seed",
         text: String(entry.seed),
       });
@@ -1000,7 +1000,7 @@ class NameForgeEditorModal extends Modal {
     contentEl.empty();
     contentEl.addClass("nameforge-editor-modal");
 
-    const packNameRow = contentEl.createEl("div", { cls: "nameforge-modal__pack-name-row" });
+    const packNameRow = contentEl.createDiv({ cls: "nameforge-modal__pack-name-row" });
     packNameRow.createEl("label", { text: "Pack Name" });
     this.packNameInput = packNameRow.createEl("input", {
       cls: "nameforge-modal__pack-name-input",
@@ -1012,7 +1012,7 @@ class NameForgeEditorModal extends Modal {
     });
     this.packNameInput.value = this.initialPackName;
 
-    const typeToggle = contentEl.createEl("div", { cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle" });
+    const typeToggle = contentEl.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle" });
     this.breakdownButton = typeToggle.createEl("button", {
       cls: "nameforge-modal__toggle-button is-active",
       text: "Breakdown",
@@ -1053,7 +1053,7 @@ class NameForgeEditorModal extends Modal {
     // (e.g. a 3-part compound) is taller than the stage, only that pane
     // scrolls internally. Save/cancel sit below the stage in normal flow,
     // always visible, never needing to be scrolled to.
-    const stage = contentEl.createEl("div", { cls: "nameforge-editor-modal__stage" });
+    const stage = contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
 
     this.inputEl = stage.createEl("textarea", {
       cls: "nameforge-modal__textarea nameforge-editor-modal__stage-pane",
@@ -1070,7 +1070,7 @@ class NameForgeEditorModal extends Modal {
     this.updateTypeButtons();
     this.updateCompoundControls();
 
-    const controls = contentEl.createEl("div", { cls: "nameforge-modal__controls" });
+    const controls = contentEl.createDiv({ cls: "nameforge-modal__controls" });
     const saveButton = controls.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Save names" },
@@ -1089,38 +1089,38 @@ class NameForgeEditorModal extends Modal {
   }
 
   private buildCompoundSection(container: HTMLElement) {
-    this.compoundSectionEl = container.createEl("div", {
+    this.compoundSectionEl = container.createDiv({
       cls: "nameforge-modal__compound-section nameforge-editor-modal__stage-pane",
     });
 
-    const optionsRow = this.compoundSectionEl.createEl("div", { cls: "nameforge-modal__compound-options-row" });
+    const optionsRow = this.compoundSectionEl.createDiv({ cls: "nameforge-modal__compound-options-row" });
 
-    const partsColumn = optionsRow.createEl("div", { cls: "nameforge-modal__compound-option-column" });
-    const partsToggle = partsColumn.createEl("div", { cls: "nameforge-modal__toggle-panel" });
+    const partsColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
+    const partsToggle = partsColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
     this.twoPartsButton = partsToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "2 parts" });
     this.twoPartsButton.addEventListener("click", () => this.setCompoundParts(2));
     this.threePartsButton = partsToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "3 parts" });
     this.threePartsButton.addEventListener("click", () => this.setCompoundParts(3));
-    this.partsExampleEl = partsColumn.createEl("div", { cls: "nameforge-modal__compound-example" });
+    this.partsExampleEl = partsColumn.createDiv({ cls: "nameforge-modal__compound-example" });
 
-    const generatorColumn = optionsRow.createEl("div", { cls: "nameforge-modal__compound-option-column" });
-    const generatorToggle = generatorColumn.createEl("div", { cls: "nameforge-modal__toggle-panel" });
+    const generatorColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
+    const generatorToggle = generatorColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
     this.compoundBreakdownButton = generatorToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Breakdown" });
     this.compoundBreakdownButton.addEventListener("click", () => this.setCompoundGenerator("breakdown"));
     this.compoundListButton = generatorToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "List" });
     this.compoundListButton.addEventListener("click", () => this.setCompoundGenerator("list"));
 
-    const joiningColumn = optionsRow.createEl("div", { cls: "nameforge-modal__compound-option-column" });
-    const joiningToggle = joiningColumn.createEl("div", { cls: "nameforge-modal__toggle-panel" });
+    const joiningColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
+    const joiningToggle = joiningColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
     this.joinedButton = joiningToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Joined" });
     this.joinedButton.addEventListener("click", () => this.setCompoundJoining("joined"));
     this.spacedButton = joiningToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Spaced" });
     this.spacedButton.addEventListener("click", () => this.setCompoundJoining("spaced"));
-    this.joiningExampleEl = joiningColumn.createEl("div", { cls: "nameforge-modal__compound-example" });
+    this.joiningExampleEl = joiningColumn.createDiv({ cls: "nameforge-modal__compound-example" });
 
-    const partBoxesEl = this.compoundSectionEl.createEl("div", { cls: "nameforge-modal__part-boxes" });
+    const partBoxesEl = this.compoundSectionEl.createDiv({ cls: "nameforge-modal__part-boxes" });
     for (let i = 0; i < 3; i++) {
-      const wrapper = partBoxesEl.createEl("div", { cls: "nameforge-modal__part-box" });
+      const wrapper = partBoxesEl.createDiv({ cls: "nameforge-modal__part-box" });
       wrapper.createEl("label", { cls: "nameforge-modal__part-label", text: `Part ${i + 1}` });
       const textarea = wrapper.createEl("textarea", {
         cls: "nameforge-modal__textarea",

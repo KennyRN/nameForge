@@ -22,7 +22,7 @@ export class EnterFolderPathModal extends Modal {
       text: "Enter a vault-relative folder path. Packs will be read from and saved to this folder.",
     });
 
-    const row = contentEl.createEl("div", { cls: "nameforge-modal__pack-name-row" });
+    const row = contentEl.createDiv({ cls: "nameforge-modal__pack-name-row" });
     row.createEl("label", { text: "Folder" });
     this.inputEl = row.createEl("input", {
       cls: "nameforge-modal__pack-name-input",
@@ -41,7 +41,7 @@ export class EnterFolderPathModal extends Modal {
       }
     });
 
-    const controls = contentEl.createEl("div", { cls: "nameforge-modal__controls" });
+    const controls = contentEl.createDiv({ cls: "nameforge-modal__controls" });
     const saveButton = controls.createEl("button", { text: "Use folder", cls: "mod-cta" });
     saveButton.addEventListener("click", () => {
       void this.submit();
