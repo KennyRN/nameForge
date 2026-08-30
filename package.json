@@ -1,6 +1,6 @@
 {
   "name": "nameforge-obsidian",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Break a list of names into a schema and generate new names, inside Obsidian.",
   "main": "main.js",
   "scripts": {
