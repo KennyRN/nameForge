@@ -606,13 +606,15 @@ export function capitaliseFirst(w: string): string {
 //   * one name per line
 //   * bullet / numbered / checklist items:  - Name   * Name   1. Name   - [ ] Name
 //   * comma-separated lists on a line (Oxford and non-Oxford: "A, B, and C" / "A, B and C")
+//   * space-separated lists of 3+ names on a line (Harold Heafoc Heahbeorth …)
 //   * Obsidian wikilinks and markdown links:  [[Aelfric]]  [[target|Display]]  [text](url)
 //
 // It strips: YAML frontmatter, fenced code blocks, headings, horizontal rules,
 // blockquote/list markers, emphasis/inline-code markup, Obsidian %%comments%%,
 // and trailing list conjunctions ("and"/"or"/"&"/"etc"). Prose paragraphs with
 // commas will be split on those commas — keep source files as name lists, not
-// running prose.
+// running prose. One or two words on a line stay as a single name (Mary Jane,
+// Great Stowe); three or more space-separated tokens are treated as a list.
 
 const NOISE = new Set([
   "and",
@@ -699,13 +701,15 @@ function stripInlineMarkup(s: string): string {
 
 /**
  * Split a cleaned block into individual names. Commas and newlines always
- * separate; a trailing non-Oxford conjunction ("Bob and Carol") is split; noise
- * tokens ("and", "&", "etc") are dropped.
+ * separate; a trailing non-Oxford conjunction ("Bob and Carol") is split;
+ * a run of 3+ space-separated tokens on one line is split (short quoted
+ * phrases stay together); noise tokens ("and", "&", "etc") are dropped.
  */
 function parseNameTokens(text: string): string[] {
   const tokens = text
-    .split(/[\n,]/)
+    .split(/[\n,;]/)
     .flatMap((t) => splitOnJoiners(t))
+    .flatMap((t) => splitSpaceSeparatedList(t))
     .map((t) => t.trim())
     .filter((t) => t.length > 0);
 
@@ -716,6 +720,76 @@ function parseNameTokens(text: string): string[] {
     names.push(cleaned);
   }
   return dedupe(names);
+}
+
+/**
+ * A line (or comma-chunk) with 3+ space-separated tokens is a pasted name
+ * dump, not one multi-word name. One or two words stay intact so "Mary Jane"
+ * and "Great Stowe" on their own line are preserved.
+ *
+ * If quote-aware splitting still yields one blob, fall back to a raw
+ * whitespace split so a dump wrapped in quotes (or with a stray apostrophe)
+ * is not kept as a single name.
+ */
+function splitSpaceSeparatedList(token: string): string[] {
+  const parts = splitOnUnquotedWhitespace(token);
+  if (parts.length >= 3) return parts;
+
+  const loose = unwrapOuterQuotes(token.trim()).split(/\s+/).filter((p) => p.length > 0);
+  if (loose.length >= 3) return loose;
+  return [token];
+}
+
+function unwrapOuterQuotes(s: string): string {
+  const pairs: Array<[string, string]> = [
+    ['"', '"'],
+    ["\u201C", "\u201D"],
+    ["'", "'"],
+    ["\u2018", "\u2019"],
+  ];
+  for (const [open, close] of pairs) {
+    if (s.length >= 2 && s.startsWith(open) && s.endsWith(close)) {
+      return s.slice(open.length, s.length - close.length).trim();
+    }
+  }
+  return s;
+}
+
+/**
+ * Split on whitespace, but keep short "quoted phrases" as a single token.
+ * Apostrophes are not quote openers (O'Donovan, stray ' from copy-paste).
+ */
+function splitOnUnquotedWhitespace(token: string): string[] {
+  const parts: string[] = [];
+  let current = "";
+  let quote: string | null = null;
+
+  for (const char of token) {
+    if (quote) {
+      current += char;
+      if (char === matchingQuote(quote)) quote = null;
+      continue;
+    }
+    if (char === '"' || char === "\u201C") {
+      quote = char;
+      current += char;
+      continue;
+    }
+    if (/\s/.test(char)) {
+      if (current.trim()) parts.push(current.trim());
+      current = "";
+      continue;
+    }
+    current += char;
+  }
+  if (current.trim()) parts.push(current.trim());
+  return parts;
+}
+
+function matchingQuote(open: string): string {
+  if (open === "\u201C") return "\u201D";
+  if (open === "\u2018") return "\u2019";
+  return open;
 }
 
 /** Split "Cutha and Dunstan" → ["Cutha", "Dunstan"] wherever a joiner occurs. */
@@ -1397,4 +1471,83 @@ export function generateCompoundNamesDetailed(
 /** Convenience wrapper — use `generateCompoundNamesDetailed` when the UI needs the seed. */
 export function generateCompoundNames(parts: string[][], options: CompoundGenerateOptions): string[] {
   return generateCompoundNamesDetailed(parts, options).names;
+}
+
+// ===========================================================================
+// Mix packs — weighted virtual list from 2+ source packs, then Breakdown or
+// List on that combined pool. Weights are relative shares of training/pick
+// mass, not file size, so a short list at 60% is not drowned by a long list
+// at 40%.
+// ===========================================================================
+export interface MixSourceCorpus {
+  names: string[];
+  weight: number;
+}
+
+export interface MixGenerateOptions {
+  count: number;
+  faithfulness?: number;
+  strictness?: number;
+  /**
+   * RNG seed. Same seed + same sources + same weights + same options =
+   * identical output. Omit for a random seed — the seed actually used is
+   * always returned by `generateMixNamesDetailed`.
+   */
+  seed?: number;
+}
+
+/**
+ * Expand each source by cycling its names so the source occupies
+ * `weight / totalWeight` of the bag. Deterministic — no RNG — so Breakdown
+ * Mix packs only consume the seed inside Markov generation.
+ */
+export function buildWeightedCorpus(sources: MixSourceCorpus[]): string[] {
+  const filtered = sources.filter((source) => source.names.length > 0 && source.weight > 0);
+  if (filtered.length === 0) return [];
+
+  const totalWeight = filtered.reduce((sum, source) => sum + source.weight, 0);
+  if (totalWeight <= 0) return [];
+
+  const uniqueTotal = filtered.reduce((sum, source) => sum + source.names.length, 0);
+  const target = Math.max(200, uniqueTotal);
+  const out: string[] = [];
+
+  for (const source of filtered) {
+    const n = Math.max(1, Math.round((source.weight / totalWeight) * target));
+    for (let i = 0; i < n; i++) {
+      out.push(source.names[i % source.names.length]);
+    }
+  }
+
+  return out;
+}
+
+/**
+ * Generate from a Mix pack's resolved source corpora. Trains Breakdown on
+ * the weighted blend of source names.
+ */
+export function generateMixNamesDetailed(
+  sources: MixSourceCorpus[],
+  options: MixGenerateOptions
+): GenerateResult {
+  const count = Math.max(0, Math.floor(options.count));
+  const seed =
+    options.seed !== undefined && Number.isFinite(options.seed)
+      ? options.seed >>> 0
+      : (Math.random() * 0xffffffff) >>> 0;
+
+  const viable = sources.filter((source) => source.names.length > 0 && source.weight > 0);
+  if (count === 0 || viable.length === 0) return { names: [], seed };
+
+  const corpus = buildWeightedCorpus(viable);
+  if (corpus.length === 0) return { names: [], seed };
+
+  const model = MarkovModel.build(corpus);
+  const result = model.generateDetailed({
+    count,
+    faithfulness: options.faithfulness ?? 2,
+    strictness: options.strictness ?? 3,
+    seed,
+  });
+  return { names: result.names, seed };
 }

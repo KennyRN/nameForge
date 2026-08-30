@@ -436,7 +436,7 @@ function stripInlineMarkup(s) {
   return t;
 }
 function parseNameTokens(text) {
-  const tokens = text.split(/[\n,]/).flatMap((t) => splitOnJoiners(t)).map((t) => t.trim()).filter((t) => t.length > 0);
+  const tokens = text.split(/[\n,;]/).flatMap((t) => splitOnJoiners(t)).flatMap((t) => splitSpaceSeparatedList(t)).map((t) => t.trim()).filter((t) => t.length > 0);
   const names = [];
   for (const token of tokens) {
     const cleaned = cleanToken(stripLeadingConjunction(token));
@@ -444,6 +444,57 @@ function parseNameTokens(text) {
     names.push(cleaned);
   }
   return dedupe(names);
+}
+function splitSpaceSeparatedList(token) {
+  const parts = splitOnUnquotedWhitespace(token);
+  if (parts.length >= 3) return parts;
+  const loose = unwrapOuterQuotes(token.trim()).split(/\s+/).filter((p) => p.length > 0);
+  if (loose.length >= 3) return loose;
+  return [token];
+}
+function unwrapOuterQuotes(s) {
+  const pairs = [
+    ['"', '"'],
+    ["\u201C", "\u201D"],
+    ["'", "'"],
+    ["\u2018", "\u2019"]
+  ];
+  for (const [open, close] of pairs) {
+    if (s.length >= 2 && s.startsWith(open) && s.endsWith(close)) {
+      return s.slice(open.length, s.length - close.length).trim();
+    }
+  }
+  return s;
+}
+function splitOnUnquotedWhitespace(token) {
+  const parts = [];
+  let current = "";
+  let quote = null;
+  for (const char of token) {
+    if (quote) {
+      current += char;
+      if (char === matchingQuote(quote)) quote = null;
+      continue;
+    }
+    if (char === '"' || char === "\u201C") {
+      quote = char;
+      current += char;
+      continue;
+    }
+    if (/\s/.test(char)) {
+      if (current.trim()) parts.push(current.trim());
+      current = "";
+      continue;
+    }
+    current += char;
+  }
+  if (current.trim()) parts.push(current.trim());
+  return parts;
+}
+function matchingQuote(open) {
+  if (open === "\u201C") return "\u201D";
+  if (open === "\u2018") return "\u2019";
+  return open;
 }
 function splitOnJoiners(token) {
   let parts = [token];
@@ -962,9 +1013,42 @@ function generateCompoundNamesDetailed(parts, options) {
   }
   return { names: result, seed };
 }
+function buildWeightedCorpus(sources) {
+  const filtered = sources.filter((source) => source.names.length > 0 && source.weight > 0);
+  if (filtered.length === 0) return [];
+  const totalWeight = filtered.reduce((sum, source) => sum + source.weight, 0);
+  if (totalWeight <= 0) return [];
+  const uniqueTotal = filtered.reduce((sum, source) => sum + source.names.length, 0);
+  const target = Math.max(200, uniqueTotal);
+  const out = [];
+  for (const source of filtered) {
+    const n = Math.max(1, Math.round(source.weight / totalWeight * target));
+    for (let i = 0; i < n; i++) {
+      out.push(source.names[i % source.names.length]);
+    }
+  }
+  return out;
+}
+function generateMixNamesDetailed(sources, options) {
+  var _a, _b;
+  const count = Math.max(0, Math.floor(options.count));
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const viable = sources.filter((source) => source.names.length > 0 && source.weight > 0);
+  if (count === 0 || viable.length === 0) return { names: [], seed };
+  const corpus = buildWeightedCorpus(viable);
+  if (corpus.length === 0) return { names: [], seed };
+  const model = MarkovModel.build(corpus);
+  const result = model.generateDetailed({
+    count,
+    faithfulness: (_a = options.faithfulness) != null ? _a : 2,
+    strictness: (_b = options.strictness) != null ? _b : 3,
+    seed
+  });
+  return { names: result.names, seed };
+}
 
 // src/nameParser.ts
-var PACK_TYPES = ["breakdownPack", "listPack", "compoundPack", "placePack"];
+var PACK_TYPES = ["breakdownPack", "listPack", "compoundPack", "placePack", "mixPack"];
 function isPackType(value) {
   return PACK_TYPES.includes(value);
 }
@@ -1016,6 +1100,15 @@ function parseNamesFileContent(content) {
         compoundGenerator,
         compoundJoining,
         parts,
+        setting
+      };
+    }
+    if (packType === "mixPack") {
+      return {
+        packName,
+        names: [],
+        packType,
+        mixSources: parseMixSourceLines(body),
         setting
       };
     }
@@ -1075,6 +1168,142 @@ setting:
 ${partsSections}
 `;
 }
+function createMixNamesFileContent(packName, sources) {
+  const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const sourceLines = sources.map((source) => `- [[${source.packName}]] ${formatMixWeight(source.weight)}`).join("\n");
+  return `---
+type: namePack
+packType: mixPack
+packName: ${safePackName}
+setting: 
+---
+
+## Sources
+
+${sourceLines}
+`;
+}
+function formatMixWeight(weight) {
+  if (!Number.isFinite(weight) || weight <= 0) return "1";
+  return Number.isInteger(weight) ? String(weight) : String(weight);
+}
+function parseMixSourceLines(body) {
+  const headingMatch = body.match(/^##\s*Sources\s*$/im);
+  if (!headingMatch || headingMatch.index === void 0) {
+    return [];
+  }
+  const afterHeading = body.slice(headingMatch.index + headingMatch[0].length);
+  const nextHeading = afterHeading.search(/^##\s+/m);
+  const section = nextHeading >= 0 ? afterHeading.slice(0, nextHeading) : afterHeading;
+  const sources = [];
+  for (const line of section.split(/\r?\n/)) {
+    const parsed = parseMixSourceLine(line);
+    if (parsed) sources.push(parsed);
+  }
+  return sources;
+}
+function parseMixSourceLine(line) {
+  const trimmed = line.trim().replace(/^[-*+]\s+/, "").replace(/^\d+[.)]\s+/, "").trim();
+  if (!trimmed || trimmed.startsWith("#")) return null;
+  const wikiMatch = trimmed.match(/^\[\[([^\]]+)\]\]\s*(.*)$/);
+  if (wikiMatch) {
+    return {
+      packName: mixLinkTargetToPackName(wikiMatch[1]),
+      weight: parseMixWeightTail(wikiMatch[2])
+    };
+  }
+  const pipeMatch = trimmed.match(/^(.+?)\s*\|\s*(.*)$/);
+  if (pipeMatch && pipeMatch[1].trim()) {
+    return {
+      packName: stripMixPackSuffix(pipeMatch[1].trim()),
+      weight: parseMixWeightTail(pipeMatch[2])
+    };
+  }
+  const trailingNum = trimmed.match(/^(.*?)\s+(\d+(?:\.\d+)?)\s*%?\s*$/);
+  if (trailingNum && trailingNum[1].trim()) {
+    return {
+      packName: stripMixPackSuffix(trailingNum[1].trim()),
+      weight: parseMixWeightTail(trailingNum[2])
+    };
+  }
+  return { packName: stripMixPackSuffix(trimmed), weight: 1 };
+}
+function mixLinkTargetToPackName(target) {
+  const pipe = target.indexOf("|");
+  const raw = (pipe >= 0 ? target.slice(0, pipe) : target).split("#")[0].trim();
+  return stripMixPackSuffix(raw.split("/").pop() || raw);
+}
+function stripMixPackSuffix(value) {
+  return value.replace(/\.md$/i, "").trim();
+}
+function parseMixWeightTail(tail) {
+  const match = tail.trim().match(/^(\d+(?:\.\d+)?)\s*%?$/);
+  if (!match) return 1;
+  const value = Number(match[1]);
+  return Number.isFinite(value) && value > 0 ? value : 1;
+}
+function findPackInIndex(index, ref) {
+  const normalized = stripMixPackSuffix(ref.trim());
+  if (!normalized) return void 0;
+  const fileName = normalized.split("/").pop() || normalized;
+  return index.find((entry) => {
+    var _a;
+    if (entry.parsed.packName === normalized || entry.parsed.packName === fileName) {
+      return true;
+    }
+    const entryFile = ((_a = entry.path.split("/").pop()) == null ? void 0 : _a.replace(/\.md$/i, "")) || "";
+    if (entryFile === fileName || entryFile === normalized) {
+      return true;
+    }
+    return entry.path === normalized || entry.path.endsWith(`/${fileName}.md`);
+  });
+}
+function namesFromParsedPack(parsed) {
+  var _a;
+  if (parsed.packType === "compoundPack") {
+    return ((_a = parsed.parts) != null ? _a : []).flat().filter((name) => name.trim().length > 0);
+  }
+  return parsed.names.filter((name) => name.trim().length > 0);
+}
+function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ new Set()) {
+  var _a;
+  if (visiting.has(mixPath)) {
+    return { sources: [], error: `Mix pack cycle involving ${mixData.packName || mixPath}.` };
+  }
+  visiting.add(mixPath);
+  const sources = [];
+  const refs = (_a = mixData.mixSources) != null ? _a : [];
+  for (const ref of refs) {
+    const found = findPackInIndex(index, ref.packName);
+    if (!found) {
+      visiting.delete(mixPath);
+      return { sources: [], error: `Mix source pack not found: ${ref.packName}.` };
+    }
+    if (found.path === mixPath) {
+      visiting.delete(mixPath);
+      return { sources: [], error: `Mix pack cannot include itself.` };
+    }
+    const nested = resolvePackToCorpus(found, index, visiting);
+    if (nested.error) {
+      visiting.delete(mixPath);
+      return { sources: [], error: nested.error };
+    }
+    sources.push({ names: nested.names, weight: ref.weight });
+  }
+  visiting.delete(mixPath);
+  if (sources.length < 2) {
+    return { sources: [], error: "Mix pack needs at least two source packs." };
+  }
+  return { sources };
+}
+function resolvePackToCorpus(entry, index, visiting) {
+  if (entry.parsed.packType !== "mixPack") {
+    return { names: namesFromParsedPack(entry.parsed) };
+  }
+  const nested = resolveMixSources(entry.path, entry.parsed, index, visiting);
+  if (nested.error) return { names: [], error: nested.error };
+  return { names: buildWeightedCorpus(nested.sources) };
+}
 var INVALID_FILENAME_CHARS = /[\\/:*?"<>|]/g;
 function sanitizePackNameForFilename(packName) {
   const trimmed = (packName || "nameForge").trim().replace(/\s+/g, " ");
@@ -1084,7 +1313,8 @@ function sanitizePackNameForFilename(packName) {
 
 // src/paths.ts
 var import_obsidian = require("obsidian");
-var DEFAULT_NAMES_FOLDER = "_nf-backstage";
+var DEFAULT_NAMES_FOLDER = "_backstage/nameforge";
+var LEGACY_NAMES_FOLDER = "_nf-backstage";
 function normalizeFolderPath(path) {
   const configured = (path || "").trim();
   if (!configured) {
@@ -1099,23 +1329,62 @@ function normalizeFolderPath(path) {
 function resolveNamesFolderPath(folderPath, namesFilePath) {
   return normalizeFolderPath(folderPath) || normalizeFolderPath(namesFilePath) || DEFAULT_NAMES_FOLDER;
 }
-async function ensureVaultFolder(app, folderPath) {
-  const normalized = (0, import_obsidian.normalizePath)(folderPath);
-  const existing = app.vault.getAbstractFileByPath(normalized);
-  if (existing instanceof import_obsidian.TFolder) {
+function isAlreadyExistsError(error) {
+  const message = error instanceof Error ? error.message : String(error);
+  return /already exists/i.test(message);
+}
+async function ensureSingleFolder(app, normalized) {
+  const existing = app.vault.getFolderByPath(normalized);
+  if (existing) {
     return existing;
   }
-  await app.vault.createFolder(normalized);
-  const created = app.vault.getAbstractFileByPath(normalized);
-  if (!(created instanceof import_obsidian.TFolder)) {
-    throw new Error(`Failed to create folder at ${normalized}`);
+  const occupied = app.vault.getAbstractFileByPath(normalized);
+  if (occupied) {
+    throw new Error(`A file already exists at ${normalized}`);
   }
-  return created;
+  let existsOnDisk = false;
+  try {
+    existsOnDisk = await app.vault.adapter.exists(normalized);
+  } catch (e) {
+    existsOnDisk = false;
+  }
+  if (!existsOnDisk) {
+    try {
+      await app.vault.createFolder(normalized);
+    } catch (error) {
+      if (!isAlreadyExistsError(error)) {
+        throw error;
+      }
+    }
+  }
+  return app.vault.getFolderByPath(normalized);
+}
+async function ensureVaultFolder(app, folderPath) {
+  const normalized = (0, import_obsidian.normalizePath)(folderPath);
+  if (!normalized) {
+    return null;
+  }
+  const existing = app.vault.getFolderByPath(normalized);
+  if (existing) {
+    return existing;
+  }
+  let built = "";
+  for (const part of normalized.split("/").filter(Boolean)) {
+    built = built ? `${built}/${part}` : part;
+    await ensureSingleFolder(app, built);
+  }
+  return app.vault.getFolderByPath(normalized);
 }
 
 // src/migration.ts
 var CONFIG_FILENAME = "nameForgeConfiguration.md";
-var LEGACY_FOLDER_CANDIDATES = ["Settings/Name Packs", "namepacks", "nameForge", "Name Packs"];
+var LEGACY_FOLDER_CANDIDATES = [
+  LEGACY_NAMES_FOLDER,
+  "Settings/Name Packs",
+  "namepacks",
+  "nameForge",
+  "Name Packs"
+];
 function normalizeSettingsFolder(settings) {
   const folderPath = resolveNamesFolderPath(settings.folderPath, settings.namesFilePath);
   return {
@@ -1361,8 +1630,10 @@ var ICON_MEEPLE = "nameforge-meeple";
 var MEEPLE_SVG = '<g transform="scale(4.16667)"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20H4a1 1 0 0 1-1-1c0-2 3.378-4.907 4-6c-1 0-4-.5-4-2c0-2 4-3.5 6-4c0-1.5.5-4 3-4s3 2.5 3 4c2 .5 6 2 6 4c0 1.5-3 2-4 2c.622 1.093 4 4 4 6a1 1 0 0 1-1 1h-5c-1 0-2-4-3-4s-2 4-3 4" /></g>';
 var ICON_CREATE_PACKS = "nameforge-create-packs";
 var ICON_CREATE_PACKS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="M14.186 2.753v3.596c0 .487.194.955.54 1.3a1.85 1.85 0 0 0 1.306.539h4.125" /><path stroke-linejoin="round" d="M20.25 8.568v8.568a4.25 4.25 0 0 1-1.362 2.97a4.28 4.28 0 0 1-3.072 1.14h-7.59a4.3 4.3 0 0 1-3.1-1.124a4.26 4.26 0 0 1-1.376-2.986V6.862a4.25 4.25 0 0 1 1.362-2.97a4.28 4.28 0 0 1 3.072-1.14h5.714a3.5 3.5 0 0 1 2.361.905l2.96 2.722a2.97 2.97 0 0 1 1.031 2.189" /><path stroke-miterlimit="10" d="M11.57 10.424v7.116m-3.55-3.55h7.117" /></g></g>';
+var ICON_PLUS_SQUARE = "nameforge-plus-square";
+var ICON_PLUS_SQUARE_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.861V17.14M17.14 12H6.86" /><rect width="18.5" height="18.5" x="2.75" y="2.75" rx="6" /></g></g>';
 var ICON_PREVIOUS_GENERATIONS = "nameforge-previous-generations";
-var ICON_PREVIOUS_GENERATIONS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="M14.186 2.753v3.596c0 .487.194.955.54 1.3a1.85 1.85 0 0 0 1.306.539h4.125" /><path stroke-linejoin="round" d="M20.25 8.568v8.568a4.25 4.25 0 0 1-1.362 2.97a4.28 4.28 0 0 1-3.072 1.14h-7.59a4.3 4.3 0 0 1-3.1-1.124a4.26 4.26 0 0 1-1.376-2.986V6.862a4.25 4.25 0 0 1 1.362-2.97a4.28 4.28 0 0 1 3.072-1.14h5.714a3.5 3.5 0 0 1 2.361.905l2.96 2.722a2.97 2.97 0 0 1 1.031 2.189" /><path stroke-miterlimit="10" d="M9.862 11.48a1.834 1.834 0 0 1 2-1.04a1.78 1.78 0 0 1 1.304.93a1.544 1.544 0 0 1-.9 2.124a1.14 1.14 0 0 0-.734 1.03v.425" /><path stroke-linejoin="round" d="M11.499 17.295h.004" /></g></g>';
+var ICON_PREVIOUS_GENERATIONS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M16.94 4.697H17c.796 0 1.559.308 2.121.856S20 6.843 20 7.618v9.737a3.84 3.84 0 0 1-1.172 2.754A4.06 4.06 0 0 1 16 21.25H8c-1.06 0-2.078-.41-2.828-1.14A3.84 3.84 0 0 1 4 17.354V7.618c0-.764.308-1.499.857-2.045a3.04 3.04 0 0 1 2.083-.876" /><path d="M15.94 2.75h-8c-.552 0-1 .436-1 .974V5.67c0 .538.448.974 1 .974h8c.552 0 1-.436 1-.974V3.724a.987.987 0 0 0-1-.974m-7.787 8.71h7.694m-7.694 4.398h7.694" /></g></g>';
 var ICON_PACKS = "nameforge-packs";
 var ICON_PACKS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M8.593 3.217H4.698A1.95 1.95 0 0 0 2.75 5.164v13.633c0 1.075.872 1.947 1.948 1.947h3.895a1.95 1.95 0 0 0 1.947-1.947V5.164a1.95 1.95 0 0 0-1.947-1.947" /><path d="M6.645 17.379a1.503 1.503 0 1 0 0-3.007a1.503 1.503 0 0 0 0 3.007M10.54 7.93l3.116 11.685a1.95 1.95 0 0 0 2.386 1.373l3.768-.974a1.947 1.947 0 0 0 1.373-2.386L17.658 4.385a1.947 1.947 0 0 0-2.386-1.373l-3.758 1.003c-.406.111-.764.35-1.023.682" /><path d="M16.665 17.241a1.502 1.502 0 1 0 0-3.004a1.502 1.502 0 0 0 0 3.004" /></g></g>';
 var ICON_DICE = "nameforge-dice";
@@ -1387,15 +1658,18 @@ var ICON_COMPOUND_LIST_PACK = "nameforge-compound-list-pack";
 var ICON_COMPOUND_LIST_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M20.5 12a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5h-4a2.5 2.5 0 0 1-2.5-2.5v-6a2.5 2.5 0 0 1 2.5-2.5zm-7.464 2q-.035.245-.036.5v1H4.253a.75.75 0 0 0-.75.749v.578c.001.536.192 1.054.54 1.461c1.253 1.468 3.219 2.213 5.957 2.213q1.694-.002 3-.382v.381c0 .394.066.772.185 1.125Q11.752 22 10 22.001c-3.146 0-5.531-.905-7.098-2.74a3.75 3.75 0 0 1-.898-2.434v-.578A2.25 2.25 0 0 1 4.253 14zM17 14a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10m0 1.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" /></g>';
 var ICON_PLACE_PACK = "nameforge-place-pack";
 var ICON_PLACE_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7" /></g>';
+var ICON_MIX_PACK = "nameforge-mix-pack";
+var ICON_MIX_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M11 17.5c0-1.29.376-2.49 1.023-3.501h-7.77a2.25 2.25 0 0 0-2.25 2.25v.908a3.75 3.75 0 0 0 1.306 2.844c1.563 1.343 3.802 2 6.691 2q1.414 0 2.617-.211A6.48 6.48 0 0 1 11 17.5m4-10.495a5 5 0 1 0-10 0a5 5 0 0 0 10 0M17.44 12A5.5 5.5 0 0 0 12 17.44zm-4.322 8.823a5.5 5.5 0 0 1-.826-1.553l6.979-6.979a5.5 5.5 0 0 1 1.553.826zm1.06 1.06a5.5 5.5 0 0 0 1.553.826l6.979-6.978a5.5 5.5 0 0 0-.826-1.553zM23 17.562A5.5 5.5 0 0 1 17.561 23z" /></g>';
 var ICON_SEED_LOCK = "nameforge-seed-lock";
-var ICON_SEED_LOCK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 17a2 2 0 0 0 2-2a2 2 0 0 0-2-2a2 2 0 0 0-2 2a2 2 0 0 0 2 2m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h1V6a5 5 0 0 1 10 0v2zm-6-4a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3" /></g>';
+var ICON_SEED_LOCK_SVG = '<g transform="scale(4.16667)"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9.688H7c-1.38 0-2.5 1.035-2.5 2.312v6.938c0 1.277 1.12 2.312 2.5 2.312h10c1.38 0 2.5-1.035 2.5-2.312V12c0-1.277-1.12-2.312-2.5-2.312m-9.625 0V7.374a4.625 4.625 0 0 1 9.25 0v2.313m-8.094 8.094h6.938" /></g>';
 var ICON_SEED_COPY = "nameforge-seed-copy";
-var ICON_SEED_COPY_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m0 16H8V7h11z" /></g>';
+var ICON_SEED_COPY_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M18.327 7.286h-8.044a1.93 1.93 0 0 0-1.925 1.938v10.088c0 1.07.862 1.938 1.925 1.938h8.044a1.93 1.93 0 0 0 1.925-1.938V9.224c0-1.07-.862-1.938-1.925-1.938" /><path d="M15.642 7.286V4.688c0-.514-.203-1.007-.564-1.37a1.92 1.92 0 0 0-1.361-.568H5.673c-.51 0-1 .204-1.36.568a1.95 1.95 0 0 0-.565 1.37v10.088c0 .514.203 1.007.564 1.37s.85.568 1.361.568h2.685" /></g></g>';
 var ICON_FOLDER = "nameforge-folder";
 var ICON_FOLDER_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
 function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_MEEPLE, MEEPLE_SVG);
   (0, import_obsidian4.addIcon)(ICON_CREATE_PACKS, ICON_CREATE_PACKS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_PLUS_SQUARE, ICON_PLUS_SQUARE_SVG);
   (0, import_obsidian4.addIcon)(ICON_PREVIOUS_GENERATIONS, ICON_PREVIOUS_GENERATIONS_SVG);
   (0, import_obsidian4.addIcon)(ICON_PACKS, ICON_PACKS_SVG);
   (0, import_obsidian4.addIcon)(ICON_DICE, ICON_DICE_SVG);
@@ -1409,6 +1683,7 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_COMPOUND_BREAKDOWN_PACK, ICON_COMPOUND_BREAKDOWN_PACK_SVG);
   (0, import_obsidian4.addIcon)(ICON_COMPOUND_LIST_PACK, ICON_COMPOUND_LIST_PACK_SVG);
   (0, import_obsidian4.addIcon)(ICON_PLACE_PACK, ICON_PLACE_PACK_SVG);
+  (0, import_obsidian4.addIcon)(ICON_MIX_PACK, ICON_MIX_PACK_SVG);
   (0, import_obsidian4.addIcon)(ICON_SEED_LOCK, ICON_SEED_LOCK_SVG);
   (0, import_obsidian4.addIcon)(ICON_SEED_COPY, ICON_SEED_COPY_SVG);
   (0, import_obsidian4.addIcon)(ICON_FOLDER, ICON_FOLDER_SVG);
@@ -1463,6 +1738,10 @@ var EnterFolderPathModal = class extends import_obsidian5.Modal {
     const targetPath = (0, import_obsidian5.normalizePath)(cleaned || DEFAULT_NAMES_FOLDER);
     try {
       const folder = await ensureVaultFolder(this.app, targetPath);
+      if (!folder) {
+        new import_obsidian5.Notice(`nameForge: could not use folder ${targetPath}`);
+        return;
+      }
       this.onSubmit(folder);
       this.close();
     } catch (e) {
@@ -1472,14 +1751,21 @@ var EnterFolderPathModal = class extends import_obsidian5.Modal {
 };
 
 // src/modal.ts
-function packTypeIconId(packType, compoundGenerator) {
+function packTypeIconId(packType, subGenerator) {
   if (packType === "compoundPack") {
-    return compoundGenerator === "list" ? ICON_COMPOUND_LIST_PACK : ICON_COMPOUND_BREAKDOWN_PACK;
+    return subGenerator === "list" ? ICON_COMPOUND_LIST_PACK : ICON_COMPOUND_BREAKDOWN_PACK;
+  }
+  if (packType === "mixPack") {
+    return ICON_MIX_PACK;
   }
   if (packType === "placePack") {
     return ICON_PLACE_PACK;
   }
   return packType === "listPack" ? ICON_LIST_PACK : ICON_BREAKDOWN_PACK;
+}
+function packSubGenerator(packType, compoundGenerator) {
+  if (packType === "compoundPack") return compoundGenerator;
+  return void 0;
 }
 function resolveSeed(seed) {
   return seed !== void 0 && Number.isFinite(seed) ? Math.floor(seed) >>> 0 : Math.random() * 4294967295 >>> 0;
@@ -1544,6 +1830,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.currentCompoundParts = [];
     this.currentCompoundGenerator = "breakdown";
     this.currentCompoundJoining = "joined";
+    this.currentMixSources = [];
     this.generationCount = 25;
     this.currentSeed = null;
     this.seedLocked = false;
@@ -1683,10 +1970,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     (_a = this.packDropdownMenuEl) == null ? void 0 : _a.hide();
     (_b = this.packDropdownTrigger) == null ? void 0 : _b.setAttribute("aria-expanded", "false");
   }
-  updatePackDropdownTrigger(packPath, packType, compoundGenerator) {
+  updatePackDropdownTrigger(packPath, packType, subGenerator) {
     var _a;
     if (this.packDropdownIconEl) {
-      (0, import_obsidian6.setIcon)(this.packDropdownIconEl, packTypeIconId(packType, compoundGenerator));
+      (0, import_obsidian6.setIcon)(this.packDropdownIconEl, packTypeIconId(packType, subGenerator));
     }
     if (this.packDropdownLabelEl) {
       this.packDropdownLabelEl.textContent = ((_a = packPath.split("/").pop()) == null ? void 0 : _a.replace(/\.md$/i, "")) || packPath;
@@ -1711,7 +1998,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         cls: "nameforge-modal__pack-dropdown-item",
         attr: { type: "button" }
       });
-      (0, import_obsidian6.setIcon)(item.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }), packTypeIconId(packType, compoundGenerator));
+      (0, import_obsidian6.setIcon)(
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }),
+        packTypeIconId(packType, packSubGenerator(packType, compoundGenerator))
+      );
       item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
       item.addEventListener("click", () => {
         this.closePackDropdown();
@@ -1796,7 +2086,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       return;
     }
     this.currentNamesText = names.join("\n");
-    this.setStatus(`Saved ${names.length} name(s) to ${filePath}.`);
+    this.setStatus("");
   }
   async saveCompoundToConfiguredFile(parts, generator, joining) {
     const filePath = this.getResolvedFilePath();
@@ -1829,8 +2119,38 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.currentCompoundParts = parts;
     this.currentCompoundGenerator = generator;
     this.currentCompoundJoining = joining;
-    const total = parts.reduce((sum, part) => sum + part.length, 0);
-    this.setStatus(`Saved ${total} name element(s) to ${filePath}.`);
+    this.setStatus("");
+  }
+  async saveMixToConfiguredFile(sources) {
+    const filePath = this.getResolvedFilePath();
+    if (!filePath) {
+      this.setStatus("No folder set for name packs. Set one first.");
+      return;
+    }
+    if (sources.length < 2) {
+      this.setStatus("A mix pack needs at least two source packs.");
+      return;
+    }
+    const normalizedFilePath = (0, import_obsidian6.normalizePath)(filePath);
+    const folderPath = normalizedFilePath.includes("/") ? normalizedFilePath.substring(0, normalizedFilePath.lastIndexOf("/")) : "";
+    if (folderPath && !this.app.vault.getFolderByPath(folderPath)) {
+      this.setStatus(`Folder not found at ${folderPath}. Select or create it first.`);
+      return;
+    }
+    const content = createMixNamesFileContent(this.plugin.settings.packName || "nameForge", sources);
+    try {
+      const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
+      if (existingFile instanceof import_obsidian6.TFile) {
+        await this.app.vault.modify(existingFile, content);
+      } else {
+        await this.app.vault.create(normalizedFilePath, content);
+      }
+    } catch (e) {
+      this.setStatus(`Failed to save mix pack to ${filePath}.`);
+      return;
+    }
+    this.currentMixSources = sources;
+    this.setStatus("");
   }
   async refreshPackDropdown(options = {}) {
     if (!this.packDropdownMenuEl) {
@@ -1847,10 +2167,13 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       try {
         folder = await ensureVaultFolder(this.app, folderPath);
       } catch (e) {
-        this.renderPackDropdownMenu([]);
-        this.setStatus(`Folder not found at ${folderPath}.`);
-        return;
+        folder = null;
       }
+    }
+    if (!folder) {
+      this.renderPackDropdownMenu([]);
+      this.setStatus(`Folder not found at ${folderPath}.`);
+      return;
     }
     const packs = [];
     for (const child of folder.children) {
@@ -1861,7 +2184,11 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         const content = await this.app.vault.cachedRead(child);
         if (isValidNamePackContent(content)) {
           const parsed = parseNamesFileContent(content);
-          packs.push({ path: child.path, packType: parsed.packType, compoundGenerator: parsed.compoundGenerator });
+          packs.push({
+            path: child.path,
+            packType: parsed.packType,
+            compoundGenerator: parsed.compoundGenerator
+          });
         }
       } catch (e) {
         continue;
@@ -1878,14 +2205,18 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     if (options.preserveSelection && lastUsed && paths.includes(lastUsed)) {
       const selected = packs.find((pack) => pack.path === lastUsed);
       if (selected) {
-        this.updatePackDropdownTrigger(selected.path, selected.packType, selected.compoundGenerator);
+        this.updatePackDropdownTrigger(
+          selected.path,
+          selected.packType,
+          packSubGenerator(selected.packType, selected.compoundGenerator)
+        );
       }
       return;
     }
     await this.loadPack(defaultPack);
   }
   async loadPack(packPath) {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     const file = this.app.vault.getFileByPath((0, import_obsidian6.normalizePath)(packPath));
     if (!(file instanceof import_obsidian6.TFile)) {
       this.setStatus(`Pack not found at ${packPath}.`);
@@ -1907,15 +2238,26 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       this.currentCompoundParts = (_a = parsed.parts) != null ? _a : [];
       this.currentCompoundGenerator = (_b = parsed.compoundGenerator) != null ? _b : "breakdown";
       this.currentCompoundJoining = (_c = parsed.compoundJoining) != null ? _c : "joined";
+      this.currentMixSources = [];
+      this.currentNamesText = "";
+    } else if (parsed.packType === "mixPack") {
+      this.currentMixSources = (_d = parsed.mixSources) != null ? _d : [];
+      this.currentCompoundParts = [];
       this.currentNamesText = "";
     } else {
       this.currentNamesText = parsed.names.join("\n");
+      this.currentMixSources = [];
+      this.currentCompoundParts = [];
     }
     this.plugin.settings.namesFilePath = packPath;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
-    this.updatePackDropdownTrigger(packPath, parsed.packType, parsed.compoundGenerator);
-    this.setStatus(`Loaded pack ${packPath}.`);
+    this.updatePackDropdownTrigger(
+      packPath,
+      parsed.packType,
+      packSubGenerator(parsed.packType, parsed.compoundGenerator)
+    );
+    this.setStatus("");
   }
   async generateSelectedCount() {
     var _a;
@@ -1935,10 +2277,47 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         return;
       }
       this.currentSeed = result2.seed;
-      const totalSource = this.currentCompoundParts.reduce((sum, part) => sum + part.length, 0);
       this.renderResults(result2.names);
       await this.recordGenerationHistory(result2.names.length);
-      this.setStatus(`Generated ${result2.names.length} name(s) from ${totalSource} source name element(s).`);
+      this.setStatus("");
+      return;
+    }
+    if (this.currentPackType === "mixPack") {
+      const mixPath = this.plugin.settings.namesFilePath;
+      if (!mixPath) {
+        this.renderResults([], "Select a mix pack to generate from.");
+        this.setStatus("No mix pack selected.");
+        return;
+      }
+      const index = await this.scanFolderPacks();
+      const mixEntry = index.find((entry) => entry.path === (0, import_obsidian6.normalizePath)(mixPath));
+      if (!mixEntry || mixEntry.parsed.packType !== "mixPack") {
+        this.renderResults([], "Select a mix pack to generate from.");
+        this.setStatus("Mix pack not found. Reselect it from the pack list.");
+        return;
+      }
+      const mixData = mixEntry.parsed;
+      const resolved = resolveMixSources((0, import_obsidian6.normalizePath)(mixPath), mixData, index);
+      if (resolved.error) {
+        this.renderResults([], resolved.error);
+        this.setStatus(resolved.error);
+        return;
+      }
+      const result2 = generateMixNamesDetailed(resolved.sources, {
+        count: this.generationCount,
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness,
+        seed: seedOverride
+      });
+      if (result2.names.length === 0) {
+        this.renderResults([], "Select a pack with names to generate from.");
+        this.setStatus("No names available to generate from the mix sources.");
+        return;
+      }
+      this.currentSeed = result2.seed;
+      this.renderResults(result2.names);
+      await this.recordGenerationHistory(result2.names.length);
+      this.setStatus("");
       return;
     }
     const result = generateNamesFromSource(
@@ -1956,7 +2335,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.currentSeed = result.seed;
     this.renderResults(result.names);
     await this.recordGenerationHistory(result.names.length);
-    this.setStatus(`Generated ${result.names.length} name(s) from ${extractNamesFromMarkdown(this.currentNamesText).length} source name(s).`);
+    this.setStatus("");
   }
   /**
    * Appends the just-used seed to the config file's generation history,
@@ -1985,7 +2364,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       return;
     }
     await navigator.clipboard.writeText(value);
-    this.setStatus(`Copied seed ${value}.`);
+    this.setStatus("");
   }
   updateSeedLockButton() {
     if (!this.seedLockButton) return;
@@ -2023,6 +2402,14 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     (0, import_obsidian6.setIcon)(copyButton, ICON_SEED_COPY);
     copyButton.addEventListener("click", () => {
       void this.copySeedToClipboard();
+    });
+    const historyButton = container.createEl("button", {
+      cls: "nameforge-modal__icon-action",
+      attr: { type: "button", title: "Previous generations" }
+    });
+    (0, import_obsidian6.setIcon)(historyButton, ICON_PREVIOUS_GENERATIONS);
+    historyButton.addEventListener("click", () => {
+      new PreviousGenerationsModal(this.app, this).open();
     });
   }
   renderResults(names, placeholderMessage) {
@@ -2160,7 +2547,7 @@ ${indent}${marker}${name}`).join("");
       insertion = "\n" + names.map((name) => `${marker}${name}`).join("\n");
     }
     editor.replaceRange(insertion, from);
-    this.setStatus(`Inserted ${names.length} name(s) as a ${listType}.`);
+    this.setStatus("");
     this.clearResultsSelection();
   }
   setStatus(message) {
@@ -2184,13 +2571,43 @@ ${indent}${marker}${name}`).join("");
         if (!parsed.packName) continue;
         iconsByName.set(
           parsed.packName,
-          packTypeIconId(parsed.packType, parsed.compoundGenerator)
+          packTypeIconId(parsed.packType, packSubGenerator(parsed.packType, parsed.compoundGenerator))
         );
       } catch (e) {
         continue;
       }
     }
     return iconsByName;
+  }
+  async scanFolderPacks() {
+    const index = [];
+    const folderPath = this.getFolderPath();
+    if (!folderPath) return index;
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian6.normalizePath)(folderPath));
+    if (!folder) return index;
+    for (const child of folder.children) {
+      if (!(child instanceof import_obsidian6.TFile) || child.extension !== "md") continue;
+      try {
+        const content = await this.app.vault.cachedRead(child);
+        if (!isValidNamePackContent(content)) continue;
+        index.push({ path: child.path, parsed: parseNamesFileContent(content) });
+      } catch (e) {
+        continue;
+      }
+    }
+    return index;
+  }
+  async listFolderPacks() {
+    const index = await this.scanFolderPacks();
+    return index.map((entry) => {
+      var _a;
+      return {
+        path: entry.path,
+        packName: entry.parsed.packName || ((_a = entry.path.split("/").pop()) == null ? void 0 : _a.replace(/\.md$/i, "")) || entry.path,
+        packType: entry.parsed.packType,
+        compoundGenerator: entry.parsed.compoundGenerator
+      };
+    });
   }
 };
 var PreviousGenerationsModal = class extends import_obsidian6.Modal {
@@ -2234,11 +2651,20 @@ var PreviousGenerationsModal = class extends import_obsidian6.Modal {
         cls: "nameforge-history-modal__seed",
         text: String(entry.seed)
       });
+      const copyButton = row.createEl("button", {
+        cls: "nameforge-history-modal__copy",
+        attr: { type: "button", title: "Copy seed" }
+      });
+      (0, import_obsidian6.setIcon)(copyButton, ICON_SEED_COPY);
+      copyButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        void navigator.clipboard.writeText(String(entry.seed));
+      });
     }
   }
 };
-var NAME_TEXTAREA_PLACEHOLDER = "Paste names as CSV or one per line; or a mix of both. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa";
-var PLACE_TEXTAREA_PLACEHOLDER = "Paste names as CSV or one per line; or a mix of both. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
+var NAME_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa";
+var PLACE_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
 var NameForgeEditorModal = class extends import_obsidian6.Modal {
   constructor(app, parent, initialText, initialPackName) {
     super(app);
@@ -2248,6 +2674,7 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     this.listButton = null;
     this.compoundButton = null;
     this.placeButton = null;
+    this.mixButton = null;
     this.selectedPackType = "breakdownPack";
     this.compoundSectionEl = null;
     this.compoundPartsCount = 2;
@@ -2263,6 +2690,14 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     this.joiningExampleEl = null;
     this.partTextareas = [];
     this.partWrapperEls = [];
+    this.mixSectionEl = null;
+    this.mixSourcesEl = null;
+    this.mixHintEl = null;
+    this.mixSources = [
+      { packName: "", weight: 50 },
+      { packName: "", weight: 50 }
+    ];
+    this.mixAvailablePacks = [];
     this.parent = parent;
     this.initialText = initialText;
     this.initialPackName = initialPackName;
@@ -2311,6 +2746,13 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     this.placeButton.addEventListener("click", () => {
       this.setPackType("placePack");
     });
+    this.mixButton = typeToggle.createEl("button", {
+      cls: "nameforge-modal__toggle-button",
+      text: "Mix"
+    });
+    this.mixButton.addEventListener("click", () => {
+      this.setPackType("mixPack");
+    });
     const stage = contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
     this.inputEl = stage.createEl("textarea", {
       cls: "nameforge-modal__textarea nameforge-editor-modal__stage-pane",
@@ -2321,9 +2763,11 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     });
     this.inputEl.value = this.initialText;
     this.buildCompoundSection(stage);
+    this.buildMixSection(stage);
     this.selectedPackType = this.parent.currentPackType;
     this.updateTypeButtons();
     this.updateCompoundControls();
+    void this.loadMixPackOptions();
     const controls = contentEl.createDiv({ cls: "nameforge-modal__controls" });
     const saveButton = controls.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
@@ -2372,13 +2816,119 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
       const textarea = wrapper.createEl("textarea", {
         cls: "nameforge-modal__textarea",
         attr: {
-          placeholder: "Paste name elements as CSV or one per line.\n\nWulf\nBeorht\nEad",
+          placeholder: "Paste name elements as CSV, one per line, or space-separated.\n\nWulf\nBeorht\nEad",
           rows: "6"
         }
       });
       this.partTextareas.push(textarea);
       this.partWrapperEls.push(wrapper);
     }
+  }
+  buildMixSection(container) {
+    this.mixSectionEl = container.createDiv({
+      cls: "nameforge-modal__mix-section nameforge-editor-modal__stage-pane"
+    });
+    this.mixHintEl = this.mixSectionEl.createDiv({
+      cls: "nameforge-modal__mix-hint",
+      text: "Weights are relative. 10, 40, 50 is the same as 10%, 40%, 50%."
+    });
+    this.mixSourcesEl = this.mixSectionEl.createDiv({ cls: "nameforge-modal__mix-sources" });
+    const addButton = this.mixSectionEl.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg nameforge-modal__mix-add",
+      attr: { type: "button", title: "Add source" }
+    });
+    (0, import_obsidian6.setIcon)(addButton, ICON_PLUS_SQUARE);
+    addButton.addEventListener("click", () => {
+      this.mixSources.push({ packName: "", weight: 50 });
+      this.renderMixSourceRows();
+    });
+    this.renderMixSourceRows();
+    this.mixSectionEl.hide();
+  }
+  async loadMixPackOptions() {
+    this.mixAvailablePacks = await this.parent.listFolderPacks();
+    this.renderMixSourceRows();
+    this.updateMixHint();
+  }
+  updateMixHint() {
+    if (!this.mixHintEl) return;
+    if (this.mixAvailablePacks.length < 2) {
+      this.mixHintEl.textContent = "Create at least two other packs first, then mix them here.";
+      return;
+    }
+    this.mixHintEl.textContent = "Weights are relative. 10, 40, 50 is the same as 10%, 40%, 50%.";
+  }
+  mixPercents() {
+    const total = this.mixSources.reduce((sum, source) => sum + Math.max(0, source.weight), 0);
+    if (total <= 0) return this.mixSources.map(() => 0);
+    return this.mixSources.map((source) => Math.round(Math.max(0, source.weight) / total * 100));
+  }
+  renderMixSourceRows() {
+    if (!this.mixSourcesEl) return;
+    this.mixSourcesEl.empty();
+    const percents = this.mixPercents();
+    const selectedNames = this.mixSources.map((source) => source.packName).filter(Boolean);
+    this.mixSources.forEach((source, index) => {
+      var _a;
+      const row = this.mixSourcesEl.createDiv({ cls: "nameforge-modal__mix-source-row" });
+      const select = row.createEl("select", { cls: "nameforge-modal__mix-source-select" });
+      select.createEl("option", { text: "Select a pack\u2026", attr: { value: "" } });
+      for (const pack of this.mixAvailablePacks) {
+        if (pack.packName !== source.packName && selectedNames.includes(pack.packName)) {
+          continue;
+        }
+        const option = select.createEl("option", {
+          text: pack.packName,
+          attr: { value: pack.packName }
+        });
+        if (pack.packName === source.packName) {
+          option.selected = true;
+        }
+      }
+      select.addEventListener("change", () => {
+        this.mixSources[index].packName = select.value;
+        this.renderMixSourceRows();
+      });
+      const weightInput = row.createEl("input", {
+        cls: "nameforge-modal__mix-weight",
+        attr: {
+          type: "number",
+          min: "1",
+          step: "1",
+          title: "Relative weight"
+        }
+      });
+      weightInput.value = String(source.weight > 0 ? source.weight : 1);
+      weightInput.addEventListener("input", () => {
+        const parsed = Number(weightInput.value);
+        this.mixSources[index].weight = Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
+        this.updateMixPercentLabels();
+      });
+      row.createSpan({
+        cls: "nameforge-modal__mix-percent",
+        text: `${(_a = percents[index]) != null ? _a : 0}%`
+      });
+      const removeButton = row.createEl("button", {
+        cls: "nameforge-modal__mix-remove",
+        attr: { type: "button", title: "Remove source" }
+      });
+      (0, import_obsidian6.setIcon)(removeButton, ICON_CANCEL);
+      removeButton.disabled = this.mixSources.length <= 2;
+      removeButton.addEventListener("click", () => {
+        if (this.mixSources.length <= 2) return;
+        this.mixSources.splice(index, 1);
+        this.renderMixSourceRows();
+      });
+    });
+  }
+  updateMixPercentLabels() {
+    if (!this.mixSourcesEl) return;
+    const percents = this.mixPercents();
+    const labels = this.mixSourcesEl.querySelectorAll(".nameforge-modal__mix-percent");
+    labels.forEach((label, index) => {
+      var _a;
+      label.textContent = `${(_a = percents[index]) != null ? _a : 0}%`;
+    });
   }
   setPackType(type) {
     this.selectedPackType = type;
@@ -2397,28 +2947,37 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     this.updateCompoundControls();
   }
   updateTypeButtons() {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
     const isBreakdown = this.selectedPackType === "breakdownPack";
     const isList = this.selectedPackType === "listPack";
     const isCompound = this.selectedPackType === "compoundPack";
     const isPlace = this.selectedPackType === "placePack";
+    const isMix = this.selectedPackType === "mixPack";
     (_a = this.breakdownButton) == null ? void 0 : _a.classList.toggle("is-active", isBreakdown);
     (_b = this.listButton) == null ? void 0 : _b.classList.toggle("is-active", isList);
     (_c = this.compoundButton) == null ? void 0 : _c.classList.toggle("is-active", isCompound);
     (_d = this.placeButton) == null ? void 0 : _d.classList.toggle("is-active", isPlace);
-    (_e = this.breakdownButton) == null ? void 0 : _e.setAttribute("aria-pressed", String(isBreakdown));
-    (_f = this.listButton) == null ? void 0 : _f.setAttribute("aria-pressed", String(isList));
-    (_g = this.compoundButton) == null ? void 0 : _g.setAttribute("aria-pressed", String(isCompound));
-    (_h = this.placeButton) == null ? void 0 : _h.setAttribute("aria-pressed", String(isPlace));
+    (_e = this.mixButton) == null ? void 0 : _e.classList.toggle("is-active", isMix);
+    (_f = this.breakdownButton) == null ? void 0 : _f.setAttribute("aria-pressed", String(isBreakdown));
+    (_g = this.listButton) == null ? void 0 : _g.setAttribute("aria-pressed", String(isList));
+    (_h = this.compoundButton) == null ? void 0 : _h.setAttribute("aria-pressed", String(isCompound));
+    (_i = this.placeButton) == null ? void 0 : _i.setAttribute("aria-pressed", String(isPlace));
+    (_j = this.mixButton) == null ? void 0 : _j.setAttribute("aria-pressed", String(isMix));
     if (this.inputEl) {
       this.inputEl.placeholder = isPlace ? PLACE_TEXTAREA_PLACEHOLDER : NAME_TEXTAREA_PLACEHOLDER;
     }
     if (isCompound) {
-      (_i = this.inputEl) == null ? void 0 : _i.hide();
-      (_j = this.compoundSectionEl) == null ? void 0 : _j.show();
+      (_k = this.inputEl) == null ? void 0 : _k.hide();
+      (_l = this.compoundSectionEl) == null ? void 0 : _l.show();
+      (_m = this.mixSectionEl) == null ? void 0 : _m.hide();
+    } else if (isMix) {
+      (_n = this.inputEl) == null ? void 0 : _n.hide();
+      (_o = this.compoundSectionEl) == null ? void 0 : _o.hide();
+      (_p = this.mixSectionEl) == null ? void 0 : _p.show();
     } else {
-      (_k = this.inputEl) == null ? void 0 : _k.show();
-      (_l = this.compoundSectionEl) == null ? void 0 : _l.hide();
+      (_q = this.inputEl) == null ? void 0 : _q.show();
+      (_r = this.compoundSectionEl) == null ? void 0 : _r.hide();
+      (_s = this.mixSectionEl) == null ? void 0 : _s.hide();
     }
   }
   updateCompoundControls() {
@@ -2474,6 +3033,35 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
       this.parent.plugin.settings.namesFilePath = (0, import_obsidian6.normalizePath)(`${folderPath2}/${fileName2}.md`);
       await this.parent.plugin.saveSettings();
       await this.parent.saveCompoundToConfiguredFile(parts, this.compoundGenerator, this.compoundJoining);
+      this.close();
+      return;
+    }
+    if (this.selectedPackType === "mixPack") {
+      const sources = this.mixSources.map((source) => ({
+        packName: source.packName.trim(),
+        weight: source.weight > 0 ? source.weight : 1
+      })).filter((source) => source.packName.length > 0);
+      const unique = new Set(sources.map((source) => source.packName));
+      if (sources.length < 2 || unique.size < 2) {
+        this.parent.setStatus("A mix pack needs at least two different source packs.");
+        return;
+      }
+      this.parent.plugin.settings.packName = packName;
+      this.parent.currentPackType = "mixPack";
+      await this.parent.plugin.saveSettings();
+      let folderPath2 = this.parent.getFolderPath();
+      if (!folderPath2) {
+        const folder = await this.parent.promptForFolderSelection();
+        if (!folder) {
+          return;
+        }
+        folderPath2 = folder.path;
+      }
+      this.parent.plugin.settings.folderPath = folderPath2;
+      const fileName2 = sanitizePackNameForFilename(packName);
+      this.parent.plugin.settings.namesFilePath = (0, import_obsidian6.normalizePath)(`${folderPath2}/${fileName2}.md`);
+      await this.parent.plugin.saveSettings();
+      await this.parent.saveMixToConfiguredFile(sources);
       this.close();
       return;
     }
@@ -2639,7 +3227,6 @@ var NameForgePlugin = class extends import_obsidian7.Plugin {
     this.storyForgeApiRef = null;
   }
   async onload() {
-    await this.loadSettings();
     registerNameForgeIcons();
     this.addRibbonIcon(ICON_MEEPLE, "nameForge", () => {
       this.openNameGenerator();
@@ -2651,6 +3238,11 @@ var NameForgePlugin = class extends import_obsidian7.Plugin {
         this.openNameGenerator();
       }
     });
+    try {
+      await this.loadSettings();
+    } catch (error) {
+      console.error("nameForge: failed to load settings", error);
+    }
     this.addSettingTab(new NameForgeSettingTab(this.app, this));
     this.connectToStoryForge();
   }
@@ -2751,8 +3343,8 @@ var NameForgePlugin = class extends import_obsidian7.Plugin {
       await this.app.vault.modify(existingFile, content);
     } else {
       const folderPath = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath);
-      if (folderPath && !this.app.vault.getFolderByPath((0, import_obsidian7.normalizePath)(folderPath))) {
-        await this.app.vault.createFolder((0, import_obsidian7.normalizePath)(folderPath));
+      if (folderPath) {
+        await ensureVaultFolder(this.app, folderPath);
       }
       await this.app.vault.create(normalizedPath, content);
     }

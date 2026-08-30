@@ -1,6 +1,6 @@
 // Name parser utilities
 
-import { extractNamesFromMarkdown } from "./markov";
+import { buildWeightedCorpus, extractNamesFromMarkdown, MixSourceCorpus } from "./markov";
 
 export interface ParsedName {
   original: string;
@@ -8,19 +8,30 @@ export interface ParsedName {
   pattern: string;
 }
 
+export interface MixSourceRef {
+  packName: string;
+  weight: number;
+}
+
 export interface NamesFileData {
   packName: string;
   names: string[];
-  packType: "breakdownPack" | "listPack" | "compoundPack" | "placePack";
+  packType: "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack";
   compoundParts?: 2 | 3;
   compoundGenerator?: "breakdown" | "list";
   compoundJoining?: "joined" | "spaced";
   parts?: string[][];
+  mixSources?: MixSourceRef[];
   /** The fictional world/setting this pack belongs to. Reserved for future use; blank by default. */
   setting: string;
 }
 
-const PACK_TYPES = ["breakdownPack", "listPack", "compoundPack", "placePack"] as const;
+export interface MixPackIndexEntry {
+  path: string;
+  parsed: NamesFileData;
+}
+
+const PACK_TYPES = ["breakdownPack", "listPack", "compoundPack", "placePack", "mixPack"] as const;
 
 function isPackType(value: string): value is NamesFileData["packType"] {
   return (PACK_TYPES as readonly string[]).includes(value);
@@ -110,6 +121,16 @@ export function parseNamesFileContent(content: string): NamesFileData {
         setting,
       };
     }
+
+    if (packType === "mixPack") {
+      return {
+        packName,
+        names: [],
+        packType,
+        mixSources: parseMixSourceLines(body),
+        setting,
+      };
+    }
   }
 
   return {
@@ -157,6 +178,176 @@ export function createCompoundNamesFileContent(
     .join("\n\n");
 
   return `---\ntype: namePack\npackType: compoundPack\ncompoundParts: ${parts.length}\ncompoundGenerator: ${generator}\ncompoundJoining: ${joining}\npackName: ${safePackName}\nsetting: \n---\n\n${partsSections}\n`;
+}
+
+export function createMixNamesFileContent(packName: string, sources: MixSourceRef[]): string {
+  const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const sourceLines = sources
+    .map((source) => `- [[${source.packName}]] ${formatMixWeight(source.weight)}`)
+    .join("\n");
+
+  return `---\ntype: namePack\npackType: mixPack\npackName: ${safePackName}\nsetting: \n---\n\n## Sources\n\n${sourceLines}\n`;
+}
+
+function formatMixWeight(weight: number): string {
+  if (!Number.isFinite(weight) || weight <= 0) return "1";
+  return Number.isInteger(weight) ? String(weight) : String(weight);
+}
+
+function parseMixSourceLines(body: string): MixSourceRef[] {
+  const headingMatch = body.match(/^##\s*Sources\s*$/im);
+  if (!headingMatch || headingMatch.index === undefined) {
+    return [];
+  }
+
+  const afterHeading = body.slice(headingMatch.index + headingMatch[0].length);
+  const nextHeading = afterHeading.search(/^##\s+/m);
+  const section = nextHeading >= 0 ? afterHeading.slice(0, nextHeading) : afterHeading;
+  const sources: MixSourceRef[] = [];
+
+  for (const line of section.split(/\r?\n/)) {
+    const parsed = parseMixSourceLine(line);
+    if (parsed) sources.push(parsed);
+  }
+
+  return sources;
+}
+
+export function parseMixSourceLine(line: string): MixSourceRef | null {
+  const trimmed = line
+    .trim()
+    .replace(/^[-*+]\s+/, "")
+    .replace(/^\d+[.)]\s+/, "")
+    .trim();
+  if (!trimmed || trimmed.startsWith("#")) return null;
+
+  const wikiMatch = trimmed.match(/^\[\[([^\]]+)\]\]\s*(.*)$/);
+  if (wikiMatch) {
+    return {
+      packName: mixLinkTargetToPackName(wikiMatch[1]),
+      weight: parseMixWeightTail(wikiMatch[2]),
+    };
+  }
+
+  const pipeMatch = trimmed.match(/^(.+?)\s*\|\s*(.*)$/);
+  if (pipeMatch && pipeMatch[1].trim()) {
+    return {
+      packName: stripMixPackSuffix(pipeMatch[1].trim()),
+      weight: parseMixWeightTail(pipeMatch[2]),
+    };
+  }
+
+  const trailingNum = trimmed.match(/^(.*?)\s+(\d+(?:\.\d+)?)\s*%?\s*$/);
+  if (trailingNum && trailingNum[1].trim()) {
+    return {
+      packName: stripMixPackSuffix(trailingNum[1].trim()),
+      weight: parseMixWeightTail(trailingNum[2]),
+    };
+  }
+
+  return { packName: stripMixPackSuffix(trimmed), weight: 1 };
+}
+
+function mixLinkTargetToPackName(target: string): string {
+  const pipe = target.indexOf("|");
+  const raw = (pipe >= 0 ? target.slice(0, pipe) : target).split("#")[0].trim();
+  return stripMixPackSuffix(raw.split("/").pop() || raw);
+}
+
+function stripMixPackSuffix(value: string): string {
+  return value.replace(/\.md$/i, "").trim();
+}
+
+function parseMixWeightTail(tail: string): number {
+  const match = tail.trim().match(/^(\d+(?:\.\d+)?)\s*%?$/);
+  if (!match) return 1;
+  const value = Number(match[1]);
+  return Number.isFinite(value) && value > 0 ? value : 1;
+}
+
+export function findPackInIndex(index: MixPackIndexEntry[], ref: string): MixPackIndexEntry | undefined {
+  const normalized = stripMixPackSuffix(ref.trim());
+  if (!normalized) return undefined;
+  const fileName = normalized.split("/").pop() || normalized;
+
+  return index.find((entry) => {
+    if (entry.parsed.packName === normalized || entry.parsed.packName === fileName) {
+      return true;
+    }
+    const entryFile = entry.path.split("/").pop()?.replace(/\.md$/i, "") || "";
+    if (entryFile === fileName || entryFile === normalized) {
+      return true;
+    }
+    return entry.path === normalized || entry.path.endsWith(`/${fileName}.md`);
+  });
+}
+
+function namesFromParsedPack(parsed: NamesFileData): string[] {
+  if (parsed.packType === "compoundPack") {
+    return (parsed.parts ?? []).flat().filter((name) => name.trim().length > 0);
+  }
+  return parsed.names.filter((name) => name.trim().length > 0);
+}
+
+/**
+ * Resolve a Mix pack's source refs into weighted name lists.
+ * Nested Mix packs flatten to their weighted corpus. Cycles and missing
+ * sources return `error` instead of a partial result.
+ */
+export function resolveMixSources(
+  mixPath: string,
+  mixData: NamesFileData,
+  index: MixPackIndexEntry[],
+  visiting: Set<string> = new Set()
+): { sources: MixSourceCorpus[]; error?: string } {
+  if (visiting.has(mixPath)) {
+    return { sources: [], error: `Mix pack cycle involving ${mixData.packName || mixPath}.` };
+  }
+
+  visiting.add(mixPath);
+  const sources: MixSourceCorpus[] = [];
+  const refs = mixData.mixSources ?? [];
+
+  for (const ref of refs) {
+    const found = findPackInIndex(index, ref.packName);
+    if (!found) {
+      visiting.delete(mixPath);
+      return { sources: [], error: `Mix source pack not found: ${ref.packName}.` };
+    }
+    if (found.path === mixPath) {
+      visiting.delete(mixPath);
+      return { sources: [], error: `Mix pack cannot include itself.` };
+    }
+
+    const nested = resolvePackToCorpus(found, index, visiting);
+    if (nested.error) {
+      visiting.delete(mixPath);
+      return { sources: [], error: nested.error };
+    }
+    sources.push({ names: nested.names, weight: ref.weight });
+  }
+
+  visiting.delete(mixPath);
+
+  if (sources.length < 2) {
+    return { sources: [], error: "Mix pack needs at least two source packs." };
+  }
+
+  return { sources };
+}
+
+function resolvePackToCorpus(
+  entry: MixPackIndexEntry,
+  index: MixPackIndexEntry[],
+  visiting: Set<string>
+): { names: string[]; error?: string } {
+  if (entry.parsed.packType !== "mixPack") {
+    return { names: namesFromParsedPack(entry.parsed) };
+  }
+
+  const nested = resolveMixSources(entry.path, entry.parsed, index, visiting);
+  if (nested.error) return { names: [], error: nested.error };
+  return { names: buildWeightedCorpus(nested.sources) };
 }
 
 const INVALID_FILENAME_CHARS = /[\\/:*?"<>|]/g;

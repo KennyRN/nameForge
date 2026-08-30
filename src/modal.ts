@@ -1,6 +1,7 @@
 import { App, Editor, Modal, normalizePath, setIcon, TFile, TFolder } from "obsidian";
 import {
   generateCompoundNamesDetailed,
+  generateMixNamesDetailed,
   ListGenerator,
   MarkovModel,
   PlaceNameModel,
@@ -10,9 +11,13 @@ import {
 } from "./markov";
 import {
   createCompoundNamesFileContent,
+  createMixNamesFileContent,
   createNamesFileContent,
   isValidNamePackContent,
+  MixPackIndexEntry,
+  MixSourceRef,
   parseNamesFileContent,
+  resolveMixSources,
   sanitizePackNameForFilename,
 } from "./nameParser";
 import {
@@ -27,7 +32,9 @@ import {
   ICON_PREVIOUS_GENERATIONS,
   ICON_DICE,
   ICON_LIST_PACK,
+  ICON_MIX_PACK,
   ICON_PLACE_PACK,
+  ICON_PLUS_SQUARE,
   ICON_SAVE,
   ICON_SEED_COPY,
   ICON_SEED_LOCK,
@@ -36,16 +43,24 @@ import {
 import { EnterFolderPathModal } from "./folderModal";
 import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from "./paths";
 
-type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack";
+type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack";
 
-function packTypeIconId(packType: NamePackType, compoundGenerator?: "breakdown" | "list"): string {
+function packTypeIconId(packType: NamePackType, subGenerator?: "breakdown" | "list"): string {
   if (packType === "compoundPack") {
-    return compoundGenerator === "list" ? ICON_COMPOUND_LIST_PACK : ICON_COMPOUND_BREAKDOWN_PACK;
+    return subGenerator === "list" ? ICON_COMPOUND_LIST_PACK : ICON_COMPOUND_BREAKDOWN_PACK;
+  }
+  if (packType === "mixPack") {
+    return ICON_MIX_PACK;
   }
   if (packType === "placePack") {
     return ICON_PLACE_PACK;
   }
   return packType === "listPack" ? ICON_LIST_PACK : ICON_BREAKDOWN_PACK;
+}
+
+function packSubGenerator(packType: NamePackType, compoundGenerator?: "breakdown" | "list"): "breakdown" | "list" | undefined {
+  if (packType === "compoundPack") return compoundGenerator;
+  return undefined;
 }
 
 interface SourceGenerationResult {
@@ -156,6 +171,7 @@ export class NameForgeModal extends Modal {
   private currentCompoundParts: string[][] = [];
   private currentCompoundGenerator: "breakdown" | "list" = "breakdown";
   private currentCompoundJoining: "joined" | "spaced" = "joined";
+  private currentMixSources: MixSourceRef[] = [];
   private generationCount = 25;
   private currentSeed: number | null = null;
   private seedLocked = false;
@@ -314,9 +330,9 @@ export class NameForgeModal extends Modal {
     this.packDropdownTrigger?.setAttribute("aria-expanded", "false");
   }
 
-  private updatePackDropdownTrigger(packPath: string, packType: NamePackType, compoundGenerator?: "breakdown" | "list") {
+  private updatePackDropdownTrigger(packPath: string, packType: NamePackType, subGenerator?: "breakdown" | "list") {
     if (this.packDropdownIconEl) {
-      setIcon(this.packDropdownIconEl, packTypeIconId(packType, compoundGenerator));
+      setIcon(this.packDropdownIconEl, packTypeIconId(packType, subGenerator));
     }
     if (this.packDropdownLabelEl) {
       this.packDropdownLabelEl.textContent = packPath.split("/").pop()?.replace(/\.md$/i, "") || packPath;
@@ -344,7 +360,10 @@ export class NameForgeModal extends Modal {
         cls: "nameforge-modal__pack-dropdown-item",
         attr: { type: "button" },
       });
-      setIcon(item.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }), packTypeIconId(packType, compoundGenerator));
+      setIcon(
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }),
+        packTypeIconId(packType, packSubGenerator(packType, compoundGenerator))
+      );
       item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
       item.addEventListener("click", () => {
         this.closePackDropdown();
@@ -441,7 +460,7 @@ export class NameForgeModal extends Modal {
       return;
     }
     this.currentNamesText = names.join("\n");
-    this.setStatus(`Saved ${names.length} name(s) to ${filePath}.`);
+    this.setStatus("");
   }
 
   public async saveCompoundToConfiguredFile(
@@ -484,8 +503,44 @@ export class NameForgeModal extends Modal {
     this.currentCompoundParts = parts;
     this.currentCompoundGenerator = generator;
     this.currentCompoundJoining = joining;
-    const total = parts.reduce((sum, part) => sum + part.length, 0);
-    this.setStatus(`Saved ${total} name element(s) to ${filePath}.`);
+    this.setStatus("");
+  }
+
+  public async saveMixToConfiguredFile(sources: MixSourceRef[]) {
+    const filePath = this.getResolvedFilePath();
+    if (!filePath) {
+      this.setStatus("No folder set for name packs. Set one first.");
+      return;
+    }
+
+    if (sources.length < 2) {
+      this.setStatus("A mix pack needs at least two source packs.");
+      return;
+    }
+
+    const normalizedFilePath = normalizePath(filePath);
+    const folderPath = normalizedFilePath.includes("/")
+      ? normalizedFilePath.substring(0, normalizedFilePath.lastIndexOf("/"))
+      : "";
+    if (folderPath && !this.app.vault.getFolderByPath(folderPath)) {
+      this.setStatus(`Folder not found at ${folderPath}. Select or create it first.`);
+      return;
+    }
+
+    const content = createMixNamesFileContent(this.plugin.settings.packName || "nameForge", sources);
+    try {
+      const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
+      if (existingFile instanceof TFile) {
+        await this.app.vault.modify(existingFile, content);
+      } else {
+        await this.app.vault.create(normalizedFilePath, content);
+      }
+    } catch {
+      this.setStatus(`Failed to save mix pack to ${filePath}.`);
+      return;
+    }
+    this.currentMixSources = sources;
+    this.setStatus("");
   }
 
   private async refreshPackDropdown(options: { preserveSelection?: boolean } = {}) {
@@ -524,7 +579,11 @@ export class NameForgeModal extends Modal {
         const content = await this.app.vault.cachedRead(child);
         if (isValidNamePackContent(content)) {
           const parsed = parseNamesFileContent(content);
-          packs.push({ path: child.path, packType: parsed.packType, compoundGenerator: parsed.compoundGenerator });
+          packs.push({
+            path: child.path,
+            packType: parsed.packType,
+            compoundGenerator: parsed.compoundGenerator,
+          });
         }
       } catch {
         continue;
@@ -545,7 +604,11 @@ export class NameForgeModal extends Modal {
     if (options.preserveSelection && lastUsed && paths.includes(lastUsed)) {
       const selected = packs.find((pack) => pack.path === lastUsed);
       if (selected) {
-        this.updatePackDropdownTrigger(selected.path, selected.packType, selected.compoundGenerator);
+        this.updatePackDropdownTrigger(
+          selected.path,
+          selected.packType,
+          packSubGenerator(selected.packType, selected.compoundGenerator)
+        );
       }
       return;
     }
@@ -578,15 +641,26 @@ export class NameForgeModal extends Modal {
       this.currentCompoundParts = parsed.parts ?? [];
       this.currentCompoundGenerator = parsed.compoundGenerator ?? "breakdown";
       this.currentCompoundJoining = parsed.compoundJoining ?? "joined";
+      this.currentMixSources = [];
+      this.currentNamesText = "";
+    } else if (parsed.packType === "mixPack") {
+      this.currentMixSources = parsed.mixSources ?? [];
+      this.currentCompoundParts = [];
       this.currentNamesText = "";
     } else {
       this.currentNamesText = parsed.names.join("\n");
+      this.currentMixSources = [];
+      this.currentCompoundParts = [];
     }
     this.plugin.settings.namesFilePath = packPath;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
-    this.updatePackDropdownTrigger(packPath, parsed.packType, parsed.compoundGenerator);
-    this.setStatus(`Loaded pack ${packPath}.`);
+    this.updatePackDropdownTrigger(
+      packPath,
+      parsed.packType,
+      packSubGenerator(parsed.packType, parsed.compoundGenerator)
+    );
+    this.setStatus("");
   }
 
   private async generateSelectedCount() {
@@ -609,10 +683,54 @@ export class NameForgeModal extends Modal {
       }
 
       this.currentSeed = result.seed;
-      const totalSource = this.currentCompoundParts.reduce((sum, part) => sum + part.length, 0);
       this.renderResults(result.names);
       await this.recordGenerationHistory(result.names.length);
-      this.setStatus(`Generated ${result.names.length} name(s) from ${totalSource} source name element(s).`);
+      this.setStatus("");
+      return;
+    }
+
+    if (this.currentPackType === "mixPack") {
+      const mixPath = this.plugin.settings.namesFilePath;
+      if (!mixPath) {
+        this.renderResults([], "Select a mix pack to generate from.");
+        this.setStatus("No mix pack selected.");
+        return;
+      }
+
+      const index = await this.scanFolderPacks();
+      const mixEntry = index.find((entry) => entry.path === normalizePath(mixPath));
+      if (!mixEntry || mixEntry.parsed.packType !== "mixPack") {
+        this.renderResults([], "Select a mix pack to generate from.");
+        this.setStatus("Mix pack not found. Reselect it from the pack list.");
+        return;
+      }
+
+      const mixData = mixEntry.parsed;
+      const resolved = resolveMixSources(normalizePath(mixPath), mixData, index);
+
+      if (resolved.error) {
+        this.renderResults([], resolved.error);
+        this.setStatus(resolved.error);
+        return;
+      }
+
+      const result = generateMixNamesDetailed(resolved.sources, {
+        count: this.generationCount,
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness,
+        seed: seedOverride,
+      });
+
+      if (result.names.length === 0) {
+        this.renderResults([], "Select a pack with names to generate from.");
+        this.setStatus("No names available to generate from the mix sources.");
+        return;
+      }
+
+      this.currentSeed = result.seed;
+      this.renderResults(result.names);
+      await this.recordGenerationHistory(result.names.length);
+      this.setStatus("");
       return;
     }
 
@@ -633,7 +751,7 @@ export class NameForgeModal extends Modal {
     this.currentSeed = result.seed;
     this.renderResults(result.names);
     await this.recordGenerationHistory(result.names.length);
-    this.setStatus(`Generated ${result.names.length} name(s) from ${extractNamesFromMarkdown(this.currentNamesText).length} source name(s).`);
+    this.setStatus("");
   }
 
   /**
@@ -662,7 +780,7 @@ export class NameForgeModal extends Modal {
       return;
     }
     await navigator.clipboard.writeText(value);
-    this.setStatus(`Copied seed ${value}.`);
+    this.setStatus("");
   }
 
   private updateSeedLockButton() {
@@ -704,6 +822,15 @@ export class NameForgeModal extends Modal {
     setIcon(copyButton, ICON_SEED_COPY);
     copyButton.addEventListener("click", () => {
       void this.copySeedToClipboard();
+    });
+
+    const historyButton = container.createEl("button", {
+      cls: "nameforge-modal__icon-action",
+      attr: { type: "button", title: "Previous generations" },
+    });
+    setIcon(historyButton, ICON_PREVIOUS_GENERATIONS);
+    historyButton.addEventListener("click", () => {
+      new PreviousGenerationsModal(this.app, this).open();
     });
   }
 
@@ -866,7 +993,7 @@ export class NameForgeModal extends Modal {
     }
 
     editor.replaceRange(insertion, from);
-    this.setStatus(`Inserted ${names.length} name(s) as a ${listType}.`);
+    this.setStatus("");
     this.clearResultsSelection();
   }
 
@@ -894,7 +1021,7 @@ export class NameForgeModal extends Modal {
         if (!parsed.packName) continue;
         iconsByName.set(
           parsed.packName,
-          packTypeIconId(parsed.packType, parsed.compoundGenerator),
+          packTypeIconId(parsed.packType, packSubGenerator(parsed.packType, parsed.compoundGenerator)),
         );
       } catch {
         continue;
@@ -902,6 +1029,43 @@ export class NameForgeModal extends Modal {
     }
 
     return iconsByName;
+  }
+
+  public async scanFolderPacks(): Promise<MixPackIndexEntry[]> {
+    const index: MixPackIndexEntry[] = [];
+    const folderPath = this.getFolderPath();
+    if (!folderPath) return index;
+
+    const folder = this.app.vault.getFolderByPath(normalizePath(folderPath));
+    if (!folder) return index;
+
+    for (const child of folder.children) {
+      if (!(child instanceof TFile) || child.extension !== "md") continue;
+      try {
+        const content = await this.app.vault.cachedRead(child);
+        if (!isValidNamePackContent(content)) continue;
+        index.push({ path: child.path, parsed: parseNamesFileContent(content) });
+      } catch {
+        continue;
+      }
+    }
+
+    return index;
+  }
+
+  public async listFolderPacks(): Promise<{
+    path: string;
+    packName: string;
+    packType: NamePackType;
+    compoundGenerator?: "breakdown" | "list";
+  }[]> {
+    const index = await this.scanFolderPacks();
+    return index.map((entry) => ({
+      path: entry.path,
+      packName: entry.parsed.packName || entry.path.split("/").pop()?.replace(/\.md$/i, "") || entry.path,
+      packType: entry.parsed.packType,
+      compoundGenerator: entry.parsed.compoundGenerator,
+    }));
   }
 }
 
@@ -955,14 +1119,23 @@ class PreviousGenerationsModal extends Modal {
         cls: "nameforge-history-modal__seed",
         text: String(entry.seed),
       });
+      const copyButton = row.createEl("button", {
+        cls: "nameforge-history-modal__copy",
+        attr: { type: "button", title: "Copy seed" },
+      });
+      setIcon(copyButton, ICON_SEED_COPY);
+      copyButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        void navigator.clipboard.writeText(String(entry.seed));
+      });
     }
   }
 }
 
 const NAME_TEXTAREA_PLACEHOLDER =
-  "Paste names as CSV or one per line; or a mix of both. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa";
+  "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa";
 const PLACE_TEXTAREA_PLACEHOLDER =
-  "Paste names as CSV or one per line; or a mix of both. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
+  "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
 
 class NameForgeEditorModal extends Modal {
   private parent: NameForgeModal;
@@ -972,6 +1145,7 @@ class NameForgeEditorModal extends Modal {
   private listButton: HTMLButtonElement | null = null;
   private compoundButton: HTMLButtonElement | null = null;
   private placeButton: HTMLButtonElement | null = null;
+  private mixButton: HTMLButtonElement | null = null;
   private selectedPackType: NamePackType = "breakdownPack";
   private initialText: string;
   private initialPackName: string;
@@ -990,6 +1164,15 @@ class NameForgeEditorModal extends Modal {
   private joiningExampleEl: HTMLElement | null = null;
   private partTextareas: HTMLTextAreaElement[] = [];
   private partWrapperEls: HTMLElement[] = [];
+
+  private mixSectionEl: HTMLElement | null = null;
+  private mixSourcesEl: HTMLElement | null = null;
+  private mixHintEl: HTMLElement | null = null;
+  private mixSources: MixSourceRef[] = [
+    { packName: "", weight: 50 },
+    { packName: "", weight: 50 },
+  ];
+  private mixAvailablePacks: { path: string; packName: string; packType: NamePackType }[] = [];
 
   constructor(app: App, parent: NameForgeModal, initialText: string, initialPackName: string) {
     super(app);
@@ -1048,14 +1231,17 @@ class NameForgeEditorModal extends Modal {
       this.setPackType("placePack");
     });
 
-    // Fixed-height stage: the plain textarea and the compound section
-    // (options row + up to 3 part textareas) are both absolutely positioned
-    // to fill it and shown/hidden as alternates, so neither one can ever
-    // affect the stage's own box size — the stage's height is a hard
-    // constant no matter which pack type is active. If the active content
-    // (e.g. a 3-part compound) is taller than the stage, only that pane
-    // scrolls internally. Save/cancel sit below the stage in normal flow,
-    // always visible, never needing to be scrolled to.
+    this.mixButton = typeToggle.createEl("button", {
+      cls: "nameforge-modal__toggle-button",
+      text: "Mix",
+    });
+    this.mixButton.addEventListener("click", () => {
+      this.setPackType("mixPack");
+    });
+
+    // Fixed-height stage: the plain textarea, the compound section, and the mix
+    // section are all absolutely positioned to fill it and shown/hidden as
+    // alternates, so none of them can ever affect the stage's own box size.
     const stage = contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
 
     this.inputEl = stage.createEl("textarea", {
@@ -1068,10 +1254,12 @@ class NameForgeEditorModal extends Modal {
     this.inputEl.value = this.initialText;
 
     this.buildCompoundSection(stage);
+    this.buildMixSection(stage);
 
     this.selectedPackType = this.parent.currentPackType;
     this.updateTypeButtons();
     this.updateCompoundControls();
+    void this.loadMixPackOptions();
 
     const controls = contentEl.createDiv({ cls: "nameforge-modal__controls" });
     const saveButton = controls.createEl("button", {
@@ -1128,13 +1316,133 @@ class NameForgeEditorModal extends Modal {
       const textarea = wrapper.createEl("textarea", {
         cls: "nameforge-modal__textarea",
         attr: {
-          placeholder: "Paste name elements as CSV or one per line.\n\nWulf\nBeorht\nEad",
+          placeholder: "Paste name elements as CSV, one per line, or space-separated.\n\nWulf\nBeorht\nEad",
           rows: "6",
         },
       });
       this.partTextareas.push(textarea);
       this.partWrapperEls.push(wrapper);
     }
+  }
+
+  private buildMixSection(container: HTMLElement) {
+    this.mixSectionEl = container.createDiv({
+      cls: "nameforge-modal__mix-section nameforge-editor-modal__stage-pane",
+    });
+
+    this.mixHintEl = this.mixSectionEl.createDiv({
+      cls: "nameforge-modal__mix-hint",
+      text: "Weights are relative. 10, 40, 50 is the same as 10%, 40%, 50%.",
+    });
+
+    this.mixSourcesEl = this.mixSectionEl.createDiv({ cls: "nameforge-modal__mix-sources" });
+
+    const addButton = this.mixSectionEl.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg nameforge-modal__mix-add",
+      attr: { type: "button", title: "Add source" },
+    });
+    setIcon(addButton, ICON_PLUS_SQUARE);
+    addButton.addEventListener("click", () => {
+      this.mixSources.push({ packName: "", weight: 50 });
+      this.renderMixSourceRows();
+    });
+
+    this.renderMixSourceRows();
+    this.mixSectionEl.hide();
+  }
+
+  private async loadMixPackOptions() {
+    this.mixAvailablePacks = await this.parent.listFolderPacks();
+    this.renderMixSourceRows();
+    this.updateMixHint();
+  }
+
+  private updateMixHint() {
+    if (!this.mixHintEl) return;
+    if (this.mixAvailablePacks.length < 2) {
+      this.mixHintEl.textContent = "Create at least two other packs first, then mix them here.";
+      return;
+    }
+    this.mixHintEl.textContent = "Weights are relative. 10, 40, 50 is the same as 10%, 40%, 50%.";
+  }
+
+  private mixPercents(): number[] {
+    const total = this.mixSources.reduce((sum, source) => sum + Math.max(0, source.weight), 0);
+    if (total <= 0) return this.mixSources.map(() => 0);
+    return this.mixSources.map((source) => Math.round((Math.max(0, source.weight) / total) * 100));
+  }
+
+  private renderMixSourceRows() {
+    if (!this.mixSourcesEl) return;
+    this.mixSourcesEl.empty();
+
+    const percents = this.mixPercents();
+    const selectedNames = this.mixSources.map((source) => source.packName).filter(Boolean);
+
+    this.mixSources.forEach((source, index) => {
+      const row = this.mixSourcesEl!.createDiv({ cls: "nameforge-modal__mix-source-row" });
+
+      const select = row.createEl("select", { cls: "nameforge-modal__mix-source-select" });
+      select.createEl("option", { text: "Select a pack…", attr: { value: "" } });
+      for (const pack of this.mixAvailablePacks) {
+        if (pack.packName !== source.packName && selectedNames.includes(pack.packName)) {
+          continue;
+        }
+        const option = select.createEl("option", {
+          text: pack.packName,
+          attr: { value: pack.packName },
+        });
+        if (pack.packName === source.packName) {
+          option.selected = true;
+        }
+      }
+      select.addEventListener("change", () => {
+        this.mixSources[index].packName = select.value;
+        this.renderMixSourceRows();
+      });
+
+      const weightInput = row.createEl("input", {
+        cls: "nameforge-modal__mix-weight",
+        attr: {
+          type: "number",
+          min: "1",
+          step: "1",
+          title: "Relative weight",
+        },
+      });
+      weightInput.value = String(source.weight > 0 ? source.weight : 1);
+      weightInput.addEventListener("input", () => {
+        const parsed = Number(weightInput.value);
+        this.mixSources[index].weight = Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
+        this.updateMixPercentLabels();
+      });
+
+      row.createSpan({
+        cls: "nameforge-modal__mix-percent",
+        text: `${percents[index] ?? 0}%`,
+      });
+
+      const removeButton = row.createEl("button", {
+        cls: "nameforge-modal__mix-remove",
+        attr: { type: "button", title: "Remove source" },
+      });
+      setIcon(removeButton, ICON_CANCEL);
+      removeButton.disabled = this.mixSources.length <= 2;
+      removeButton.addEventListener("click", () => {
+        if (this.mixSources.length <= 2) return;
+        this.mixSources.splice(index, 1);
+        this.renderMixSourceRows();
+      });
+    });
+  }
+
+  private updateMixPercentLabels() {
+    if (!this.mixSourcesEl) return;
+    const percents = this.mixPercents();
+    const labels = this.mixSourcesEl.querySelectorAll(".nameforge-modal__mix-percent");
+    labels.forEach((label, index) => {
+      label.textContent = `${percents[index] ?? 0}%`;
+    });
   }
 
   private setPackType(type: NamePackType) {
@@ -1162,14 +1470,17 @@ class NameForgeEditorModal extends Modal {
     const isList = this.selectedPackType === "listPack";
     const isCompound = this.selectedPackType === "compoundPack";
     const isPlace = this.selectedPackType === "placePack";
+    const isMix = this.selectedPackType === "mixPack";
     this.breakdownButton?.classList.toggle("is-active", isBreakdown);
     this.listButton?.classList.toggle("is-active", isList);
     this.compoundButton?.classList.toggle("is-active", isCompound);
     this.placeButton?.classList.toggle("is-active", isPlace);
+    this.mixButton?.classList.toggle("is-active", isMix);
     this.breakdownButton?.setAttribute("aria-pressed", String(isBreakdown));
     this.listButton?.setAttribute("aria-pressed", String(isList));
     this.compoundButton?.setAttribute("aria-pressed", String(isCompound));
     this.placeButton?.setAttribute("aria-pressed", String(isPlace));
+    this.mixButton?.setAttribute("aria-pressed", String(isMix));
 
     if (this.inputEl) {
       this.inputEl.placeholder = isPlace ? PLACE_TEXTAREA_PLACEHOLDER : NAME_TEXTAREA_PLACEHOLDER;
@@ -1178,9 +1489,15 @@ class NameForgeEditorModal extends Modal {
     if (isCompound) {
       this.inputEl?.hide();
       this.compoundSectionEl?.show();
+      this.mixSectionEl?.hide();
+    } else if (isMix) {
+      this.inputEl?.hide();
+      this.compoundSectionEl?.hide();
+      this.mixSectionEl?.show();
     } else {
       this.inputEl?.show();
       this.compoundSectionEl?.hide();
+      this.mixSectionEl?.hide();
     }
   }
 
@@ -1247,6 +1564,42 @@ class NameForgeEditorModal extends Modal {
       await this.parent.plugin.saveSettings();
 
       await this.parent.saveCompoundToConfiguredFile(parts, this.compoundGenerator, this.compoundJoining);
+      this.close();
+      return;
+    }
+
+    if (this.selectedPackType === "mixPack") {
+      const sources = this.mixSources
+        .map((source) => ({
+          packName: source.packName.trim(),
+          weight: source.weight > 0 ? source.weight : 1,
+        }))
+        .filter((source) => source.packName.length > 0);
+      const unique = new Set(sources.map((source) => source.packName));
+      if (sources.length < 2 || unique.size < 2) {
+        this.parent.setStatus("A mix pack needs at least two different source packs.");
+        return;
+      }
+
+      this.parent.plugin.settings.packName = packName;
+      this.parent.currentPackType = "mixPack";
+      await this.parent.plugin.saveSettings();
+
+      let folderPath = this.parent.getFolderPath();
+      if (!folderPath) {
+        const folder = await this.parent.promptForFolderSelection();
+        if (!folder) {
+          return;
+        }
+        folderPath = folder.path;
+      }
+
+      this.parent.plugin.settings.folderPath = folderPath;
+      const fileName = sanitizePackNameForFilename(packName);
+      this.parent.plugin.settings.namesFilePath = normalizePath(`${folderPath}/${fileName}.md`);
+      await this.parent.plugin.saveSettings();
+
+      await this.parent.saveMixToConfiguredFile(sources);
       this.close();
       return;
     }
