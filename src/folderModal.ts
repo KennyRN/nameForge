@@ -58,6 +58,10 @@ export class EnterFolderPathModal extends Modal {
 
     try {
       const folder = await ensureVaultFolder(this.app, targetPath);
+      if (!folder) {
+        new Notice(`nameForge: could not use folder ${targetPath}`);
+        return;
+      }
       this.onSubmit(folder);
       this.close();
     } catch {

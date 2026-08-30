@@ -3,7 +3,7 @@ import { NameForgeSettingTab } from "./settings";
 import { GenerationHistoryEntry, MAX_HISTORY_ENTRIES, NameForgeModal, NameForgeSettings } from "./modal";
 import { ICON_MEEPLE, registerNameForgeIcons } from "./icons";
 import { ensureDefaultNamesFolder, legacySettingsFileCandidates, normalizeSettingsFolder } from "./migration";
-import { DEFAULT_NAMES_FOLDER, resolveNamesFolderPath } from "./paths";
+import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from "./paths";
 import { softConnectWithRetry } from "./hostConnectRetry";
 import { getStoryForgeHostApi } from "./storyforgeBridge";
 
@@ -133,10 +133,7 @@ export default class NameForgePlugin extends Plugin {
   private storyForgeApiRef: object | null = null;
 
   async onload() {
-    await this.loadSettings();
-
     registerNameForgeIcons();
-
     this.addRibbonIcon(ICON_MEEPLE, "nameForge", () => {
       this.openNameGenerator();
     });
@@ -148,6 +145,12 @@ export default class NameForgePlugin extends Plugin {
         this.openNameGenerator();
       },
     });
+
+    try {
+      await this.loadSettings();
+    } catch (error) {
+      console.error("nameForge: failed to load settings", error);
+    }
 
     this.addSettingTab(new NameForgeSettingTab(this.app, this));
     this.connectToStoryForge();
@@ -264,8 +267,8 @@ export default class NameForgePlugin extends Plugin {
       await this.app.vault.modify(existingFile, content);
     } else {
       const folderPath = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath);
-      if (folderPath && !this.app.vault.getFolderByPath(normalizePath(folderPath))) {
-        await this.app.vault.createFolder(normalizePath(folderPath));
+      if (folderPath) {
+        await ensureVaultFolder(this.app, folderPath);
       }
       await this.app.vault.create(normalizedPath, content);
     }

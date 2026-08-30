@@ -1,12 +1,24 @@
 import { App, normalizePath, Notice, TFile, TFolder } from "obsidian";
 import { isValidNamePackContent } from "./nameParser";
-import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, normalizeFolderPath, resolveNamesFolderPath } from "./paths";
+import {
+  DEFAULT_NAMES_FOLDER,
+  ensureVaultFolder,
+  LEGACY_NAMES_FOLDER,
+  normalizeFolderPath,
+  resolveNamesFolderPath,
+} from "./paths";
 import type { NameForgeSettings } from "./modal";
 
 const CONFIG_FILENAME = "nameForgeConfiguration.md";
 
 /** Older pack homes we still look for when offering migration. */
-const LEGACY_FOLDER_CANDIDATES = ["Settings/Name Packs", "namepacks", "nameForge", "Name Packs"];
+const LEGACY_FOLDER_CANDIDATES = [
+  LEGACY_NAMES_FOLDER,
+  "Settings/Name Packs",
+  "namepacks",
+  "nameForge",
+  "Name Packs",
+];
 
 export interface LegacyPackFolderInfo {
   path: string;
@@ -15,7 +27,7 @@ export interface LegacyPackFolderInfo {
 
 /**
  * Normalize legacy settings that stored a pack .md path in `namesFilePath`
- * into an explicit `folderPath`, defaulting to `_nf-backstage`.
+ * into an explicit `folderPath`, defaulting to `_backstage/nameforge`.
  */
 export function normalizeSettingsFolder(settings: NameForgeSettings): NameForgeSettings {
   const folderPath = resolveNamesFolderPath(settings.folderPath, settings.namesFilePath);
@@ -54,9 +66,9 @@ async function countPacksInFolder(app: App, folder: TFolder): Promise<number> {
 }
 
 /**
- * Detect a pack folder that still lives outside `_nf-backstage` so settings
- * can offer a one-click move. Checks the configured folder first, then known
- * legacy locations from earlier nameForge layouts.
+ * Detect a pack folder that still lives outside `_backstage/nameforge` so
+ * settings can offer a one-click move. Checks the configured folder first,
+ * then known legacy locations from earlier nameForge layouts.
  */
 export async function findLegacyPackFolder(
   app: App,
@@ -107,8 +119,9 @@ function uniqueDestinationPath(app: App, folderPath: string, fileName: string): 
 
 /**
  * Move name packs (and the configuration note, if present) from a legacy
- * folder into `_nf-backstage`. Safe to re-run: skips files that would collide
- * by choosing a unique name, and no-ops when the source is already the default.
+ * folder into `_backstage/nameforge`. Safe to re-run: skips files that would
+ * collide by choosing a unique name, and no-ops when the source is already
+ * the default.
  */
 export async function migratePacksToDefaultFolder(
   app: App,

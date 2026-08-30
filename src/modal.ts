@@ -505,10 +505,13 @@ export class NameForgeModal extends Modal {
       try {
         folder = await ensureVaultFolder(this.app, folderPath);
       } catch {
-        this.renderPackDropdownMenu([]);
-        this.setStatus(`Folder not found at ${folderPath}.`);
-        return;
+        folder = null;
       }
+    }
+    if (!folder) {
+      this.renderPackDropdownMenu([]);
+      this.setStatus(`Folder not found at ${folderPath}.`);
+      return;
     }
 
     const packs: { path: string; packType: NamePackType; compoundGenerator?: "breakdown" | "list" }[] = [];
