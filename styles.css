@@ -17,10 +17,12 @@ settings:
 
 .nameforge-modal {
   padding: 20px;
-  /* Shared Forge-family accent — storyForge's titleForge companion reads its own
-     copy of this same fallback chain under its own custom-property name, so the
-     two stay in lockstep without either repo importing the other's CSS. */
-  --forge-accent: var(--nameforge-accent-color, var(--interactive-accent));
+  /* Shared Forge-family accent — storyForge's titleForge companion reads its own copy of this same
+     fallback chain under its own custom-property name, so the two stay in lockstep without either
+     repo importing the other's CSS. Falls back to this same vivid purple (this plugin's own Style
+     Settings default, above) rather than the theme accent, so the family reads as intentionally
+     branded/highlighted even without Style Settings installed, on any theme. */
+  --forge-accent: var(--nameforge-accent-color, #7c3aed);
 }
 
 /* Compact layout for storyForge Forge companion panel (no Modal chrome). */
