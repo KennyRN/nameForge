@@ -17,12 +17,17 @@ settings:
 
 .nameforge-modal {
   padding: 20px;
-  /* Shared Forge-family accent — storyForge's titleForge companion reads its own copy of this same
-     fallback chain under its own custom-property name, so the two stay in lockstep without either
-     repo importing the other's CSS. Falls back to this same vivid purple (this plugin's own Style
-     Settings default, above) rather than the theme accent, so the family reads as intentionally
-     branded/highlighted even without Style Settings installed, on any theme. */
-  --forge-accent: var(--nameforge-accent-color, #7c3aed);
+  /* Shared Forge-family accent — the plain Obsidian theme accent, same value storyForge's
+     titleForge companion now resolves --forge-accent to. Previously chained through
+     --nameforge-accent-color (this plugin's own Style Settings entry, above) so a configured
+     accent would carry over to titleForge too — dropped after that chain turned out to resolve
+     inconsistently between the two plugins' own DOM subtrees in practice (titleForge and this
+     plugin visibly different colours, not the intended lockstep). Reading the theme accent
+     directly, with no indirection through a plugin-specific custom property, is the one thing
+     guaranteed identical for both — the Style Settings entry above still exists but no longer
+     drives anything; TODO remove it, and this plugin's own --nameforge-accent-color references
+     elsewhere, in a follow-up sweep once titleForge's parity is confirmed solid. */
+  --forge-accent: var(--interactive-accent);
 }
 
 /* Compact layout for storyForge Forge companion panel (no Modal chrome). */
