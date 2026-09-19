@@ -17,6 +17,10 @@ settings:
 
 .nameforge-modal {
   padding: 20px;
+  /* Shared Forge-family accent — storyForge's titleForge companion reads its own
+     copy of this same fallback chain under its own custom-property name, so the
+     two stay in lockstep without either repo importing the other's CSS. */
+  --forge-accent: var(--nameforge-accent-color, var(--interactive-accent));
 }
 
 /* Compact layout for storyForge Forge companion panel (no Modal chrome). */
@@ -35,6 +39,9 @@ settings:
   /* Match panel-action horizontal inset (create / previous generations). */
   padding-inline: var(--nf-panel-inline);
   box-sizing: border-box;
+  /* Overrides the base rule's uniform 8px gap — spacing between the three rows
+     below is explicit margins instead, matching titleForge's 16/4/16 rhythm. */
+  gap: 0;
 }
 
 .nameforge-modal--panel .nameforge-modal__status {
@@ -47,7 +54,9 @@ settings:
 .nameforge-modal--panel .nameforge-modal__results {
   flex: 1;
   min-height: 0;
-  margin-top: 10px;
+  /* 16px gap from the generate button above — titleForge's own .titleforge-actions
+     bottom margin. */
+  margin-top: 16px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -64,10 +73,20 @@ settings:
   width: 100%;
   flex-wrap: wrap;
   justify-content: center;
+  /* Overrides the base rule's 8px 0 12px — 4px bottom only, titleForge's rhythm. */
+  margin: 0 0 4px;
+}
+
+/* Equal-segment quantity buttons spanning the panel's full width, replacing the
+   fixed 44px cluster below — matches titleForge's .titleforge-quantity-button. */
+.nameforge-modal--panel .nameforge-modal__quantity-toggle .nameforge-modal__toggle-button {
+  flex: 1 1 0;
+  width: auto;
 }
 
 .nameforge-modal--panel .nameforge-modal__option-row {
   flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
 .nameforge-modal--panel .nameforge-modal__pack-dropdown {
@@ -159,7 +178,7 @@ settings:
   align-items: center;
   gap: 8px;
   padding: 6px 4px;
-  border-radius: 4px;
+  border-radius: var(--radius-s, 4px);
 }
 
 .nameforge-history-modal__row:hover {
@@ -229,7 +248,7 @@ body .nameforge-history-modal button.nameforge-history-modal__copy:focus-visible
   background: transparent;
   background-color: transparent;
   box-shadow: none;
-  color: var(--nameforge-accent-color, var(--interactive-accent));
+  color: var(--forge-accent);
 }
 
 .nameforge-editor-modal {
@@ -264,20 +283,20 @@ body .nameforge-history-modal button.nameforge-history-modal__copy:focus-visible
   padding: 4px;
   margin: 8px 0 12px;
   background-color: var(--background-secondary);
-  border-radius: 8px;
+  border-radius: var(--radius-m, 8px);
 }
 
 .nameforge-modal__toggle-button {
   padding: 6px 12px;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-m, 6px);
   background: transparent;
-  color: var(--text-normal);
+  color: var(--text-muted);
   cursor: pointer;
 }
 
 .nameforge-modal__toggle-button.is-active {
-  background-color: var(--nameforge-accent-color, var(--interactive-accent));
+  background-color: var(--forge-accent);
   color: var(--text-on-accent);
 }
 
@@ -328,7 +347,7 @@ body .nameforge-history-modal button.nameforge-history-modal__copy:focus-visible
   height: 32px;
   padding: 0;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-m, 6px);
   color: var(--text-normal);
   background-color: transparent;
   display: inline-flex;
@@ -396,7 +415,9 @@ body .nameforge-modal .nameforge-modal__icon-action:focus-visible {
   background: transparent;
   background-color: transparent;
   box-shadow: none;
-  color: var(--nameforge-accent-color, var(--interactive-accent));
+  /* House rule shared with titleForge: hover brightens to text-normal, the
+     accent is reserved for genuine selection/active state (see .is-active below). */
+  color: var(--text-normal);
 }
 
 body .nameforge-modal button.nameforge-modal__icon-action:active,
@@ -407,7 +428,7 @@ body .nameforge-modal .nameforge-modal__icon-action:active {
 }
 
 .nameforge-modal__icon-action.is-active {
-  color: var(--nameforge-accent-color, var(--interactive-accent));
+  color: var(--forge-accent);
 }
 
 body .nameforge-modal button.nameforge-modal__icon-action:disabled,
@@ -489,12 +510,12 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
 }
 
 .nameforge-modal__icon-button.nameforge-modal__generate-button {
-  background-color: var(--nameforge-accent-color, var(--interactive-accent));
+  background-color: var(--forge-accent);
   color: var(--text-on-accent);
 }
 
 .nameforge-modal__icon-button.nameforge-modal__generate-button:hover {
-  background-color: var(--nameforge-accent-color, var(--interactive-accent));
+  background-color: var(--forge-accent);
   filter: brightness(1.1);
 }
 
@@ -534,13 +555,13 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
   padding: 8px 10px;
   list-style: none;
   border: 1px solid var(--background-modifier-border);
-  border-radius: 6px;
+  border-radius: var(--radius-m, 6px);
   background-color: var(--background-secondary);
 }
 
 .nameforge-modal__results-list li {
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-s, 4px);
   cursor: pointer;
 }
 
@@ -549,7 +570,7 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
 }
 
 .nameforge-modal__results-list li.is-selected {
-  background-color: var(--nameforge-accent-color, var(--interactive-accent));
+  background-color: var(--forge-accent);
   color: var(--text-on-accent);
 }
 
@@ -574,7 +595,7 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
 body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:disabled) {
   background: transparent;
   background-color: transparent;
-  color: var(--nameforge-accent-color, var(--interactive-accent));
+  color: var(--text-normal);
 }
 
 .nameforge-modal__results-buttons {
@@ -593,20 +614,20 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   width: 110px;
   padding: 4px 8px;
   border: 1px solid var(--background-modifier-border);
-  border-radius: 6px;
+  border-radius: var(--radius-m, 6px);
   background-color: var(--background-primary);
   color: var(--text-normal);
   font-size: var(--font-ui-small);
 }
 
 .nameforge-modal__seed-group .nameforge-modal__icon-action.is-active {
-  color: var(--nameforge-accent-color, var(--interactive-accent));
+  color: var(--forge-accent);
 }
 
 .nameforge-modal__text-button {
   padding: 6px 12px;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-m, 6px);
   background: transparent;
   color: var(--text-normal);
   cursor: pointer;
@@ -623,7 +644,7 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 
 .nameforge-modal__text-button:hover:not(:disabled) {
   background-color: transparent;
-  color: var(--nameforge-accent-color, var(--interactive-accent));
+  color: var(--forge-accent);
 }
 
 .nameforge-modal__text-button:disabled {
@@ -798,7 +819,7 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   height: 28px;
   padding: 0;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-m, 6px);
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
@@ -833,7 +854,7 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   gap: 6px;
   padding: 4px 8px;
   border: 1px solid var(--background-modifier-border);
-  border-radius: 6px;
+  border-radius: var(--radius-m, 6px);
   background-color: var(--background-secondary);
   color: var(--text-normal);
   cursor: pointer;
@@ -842,7 +863,7 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 
 .nameforge-modal__pack-dropdown-trigger:hover {
   background-color: var(--background-secondary);
-  color: var(--nameforge-accent-color, var(--interactive-accent));
+  color: var(--forge-accent);
 }
 
 .nameforge-modal__pack-dropdown-label {
@@ -875,7 +896,7 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   overflow-y: auto;
   background-color: var(--background-primary);
   border: 1px solid var(--background-modifier-border);
-  border-radius: 6px;
+  border-radius: var(--radius-m, 6px);
   box-shadow: var(--shadow-s);
   padding: 4px;
 }
@@ -887,7 +908,7 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   gap: 6px;
   padding: 6px 8px;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-s, 4px);
   background: transparent;
   color: var(--text-normal);
   cursor: pointer;
