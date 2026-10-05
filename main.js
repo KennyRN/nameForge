@@ -1638,6 +1638,8 @@ var ICON_PACKS = "nameforge-packs";
 var ICON_PACKS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M8.593 3.217H4.698A1.95 1.95 0 0 0 2.75 5.164v13.633c0 1.075.872 1.947 1.948 1.947h3.895a1.95 1.95 0 0 0 1.947-1.947V5.164a1.95 1.95 0 0 0-1.947-1.947" /><path d="M6.645 17.379a1.503 1.503 0 1 0 0-3.007a1.503 1.503 0 0 0 0 3.007M10.54 7.93l3.116 11.685a1.95 1.95 0 0 0 2.386 1.373l3.768-.974a1.947 1.947 0 0 0 1.373-2.386L17.658 4.385a1.947 1.947 0 0 0-2.386-1.373l-3.758 1.003c-.406.111-.764.35-1.023.682" /><path d="M16.665 17.241a1.502 1.502 0 1 0 0-3.004a1.502 1.502 0 0 0 0 3.004" /></g></g>';
 var ICON_PLACE_SHAPES = "nameforge-place-shapes";
 var ICON_PLACE_SHAPES_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path d="M17 8.444C17 11.537 12 17 12 17s-5-5.463-5-8.556S9.239 3 12 3s5 2.352 5 5.444" /><circle cx="12" cy="8" r="1" /></g></g>';
+var ICON_GENERIC_PLACE_NAMES = "nameforge-generic-place-names";
+var ICON_GENERIC_PLACE_NAMES_SVG = '<g transform="scale(4.16667)"><g fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path fill="currentColor" fill-rule="evenodd" d="M11.262 17.675L12 17zm1.476 0l.005-.005l.012-.014l.045-.05l.166-.186a38 38 0 0 0 2.348-2.957c.642-.9 1.3-1.92 1.801-2.933c.49-.99.885-2.079.885-3.086C18 4.871 15.382 2 12 2S6 4.87 6 8.444c0 1.007.395 2.096.885 3.086c.501 1.013 1.16 2.033 1.8 2.933a38 38 0 0 0 2.515 3.143l.045.05l.012.014l.005.005a1 1 0 0 0 1.476 0M12 17l.738.674zm0-11a2 2 0 1 0 0 4a2 2 0 0 0 0-4" clip-rule="evenodd" /></g></g>';
 var ICON_DICE = "nameforge-dice";
 var ICON_DICE_SVG = '<g transform="scale(6.66667)"><path d="M0 0h15v15H0z" fill="none" /><path fill="currentColor" d="M4.14 1.14c-.68.05-1.33.43-1.7 1.07L.29 5.93c-.59 1.03-.26 2.32.77 2.91l3.72 2.14c.15.09.31.19.47.24V7.47c0-1.76 1.45-3.22 3.21-3.22h1.31c-.18-.26-.41-.5-.7-.67L5.35 1.44c-.39-.22-.8-.33-1.21-.3m.33.76c.6 0 1.12.41 1.28.99c.19.72-.23 1.45-.95 1.64c-.71.19-1.44-.23-1.64-.94c-.19-.72.24-1.45.95-1.64c.12-.04.24-.05.36-.05M2.2 5.84c.6 0 1.12.41 1.28.99c.19.71-.24 1.45-.95 1.64S1.08 8.23.89 7.52s.23-1.45.95-1.64c.11-.03.24-.05.36-.04m6.26-.52c-1.18 0-2.14.96-2.14 2.15v4.28c0 1.19.96 2.15 2.14 2.15h4.29c1.19 0 2.14-.96 2.14-2.15V7.47c0-1.19-.95-2.15-2.14-2.15zm4.29.81c.35 0 .69.14.95.39a1.34 1.34 0 0 1 0 1.89c-.26.26-.6.4-.95.4a1.34 1.34 0 0 1 0-2.68m-4.29 4.28c.36 0 .7.14.95.4c.25.25.39.59.39.94a1.34 1.34 0 0 1-2.68 0c0-.35.14-.69.4-.94c.25-.26.59-.4.94-.4" /></g>';
 var ICON_TEXT_INSERT = "nameforge-text-insert";
@@ -1675,6 +1677,7 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_PREVIOUS_GENERATIONS, ICON_PREVIOUS_GENERATIONS_SVG);
   (0, import_obsidian4.addIcon)(ICON_PACKS, ICON_PACKS_SVG);
   (0, import_obsidian4.addIcon)(ICON_PLACE_SHAPES, ICON_PLACE_SHAPES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_GENERIC_PLACE_NAMES, ICON_GENERIC_PLACE_NAMES_SVG);
   (0, import_obsidian4.addIcon)(ICON_DICE, ICON_DICE_SVG);
   (0, import_obsidian4.addIcon)(ICON_TEXT_INSERT, ICON_TEXT_INSERT_SVG);
   (0, import_obsidian4.addIcon)(ICON_CHECKLIST_INSERT, ICON_CHECKLIST_INSERT_SVG);
@@ -5047,6 +5050,15 @@ var place_shapes_default = {
           sourceElements: [
             "OE sl\u01E3d"
           ]
+        },
+        {
+          id: "river-cut-gorge",
+          meaning: "River-cut gorge",
+          sense: "Deep, steep-sided channel cut by a river, often through limestone; larger than a ravine",
+          sourceElements: [
+            "ME, modern gorge (French loan)",
+            "no historic place-name element"
+          ]
         }
       ],
       profile: {
@@ -5086,7 +5098,58 @@ var place_shapes_default = {
           rare: "Glen Shee; Coire Gabhail"
         }
       },
-      overrides: [],
+      overrides: [
+        {
+          generics: [
+            "river-cut-gorge"
+          ],
+          note: "River-cut gorge: per-generic profile (part 1a amendment).",
+          replace: {
+            common: [
+              "river-or-stream-name",
+              "earlier-or-district-name"
+            ],
+            occasional: [
+              "colour",
+              "size",
+              "shape"
+            ],
+            rare: [
+              "personal-name",
+              "supernatural-being"
+            ],
+            unlikely: [
+              "folk-group",
+              "status-or-role",
+              "ethnic-or-cultural-group",
+              "saint-or-holy-person",
+              "deity",
+              "domestic-animal",
+              "wild-animal",
+              "bird",
+              "fish-and-other-creatures",
+              "tree",
+              "wild-plant",
+              "crop",
+              "landform",
+              "water-or-wetland-feature",
+              "soil-or-ground",
+              "built-feature",
+              "age",
+              "position-or-direction",
+              "quality-or-condition",
+              "number",
+              "activity",
+              "produce",
+              "religious-association",
+              "assembly-or-law",
+              "season",
+              "empty-slot"
+            ],
+            examples: {}
+          }
+        }
+      ],
       notes: []
     },
     {
@@ -5595,6 +5658,11 @@ var place_shape_regions_default = {
       counties: "Herefordshire, Shropshire, Worcestershire, Staffordshire, Warwickshire, Cheshire"
     },
     {
+      code: "WAL",
+      label: "Wales",
+      counties: "All thirteen historic Welsh counties"
+    },
+    {
       code: "EMD",
       label: "East Midlands",
       counties: "Lincolnshire, Nottinghamshire, Derbyshire, Leicestershire, Rutland, Northamptonshire"
@@ -5608,11 +5676,6 @@ var place_shape_regions_default = {
       code: "SBL",
       label: "Scottish Borderlands",
       counties: "Northumberland, northern Cumberland, Berwickshire, Roxburghshire, Selkirkshire, Peeblesshire, Dumfriesshire"
-    },
-    {
-      code: "WAL",
-      label: "Wales",
-      counties: "All thirteen historic Welsh counties"
     },
     {
       code: "SLO",
@@ -5766,7 +5829,7 @@ var place_shape_regions_default = {
       "hollows-and-corners": 1.25,
       "open-and-farmed-land": 1
     },
-    EMD: {
+    WAL: {
       "settlement-farms-and-estates": 2,
       "settlement-status-and-relationship": 2,
       "dwellings-and-buildings": 1,
@@ -5793,7 +5856,7 @@ var place_shape_regions_default = {
       "hollows-and-corners": 0.75,
       "open-and-farmed-land": 1
     },
-    NTH: {
+    EMD: {
       "settlement-farms-and-estates": 1.5,
       "settlement-status-and-relationship": 1.25,
       "dwellings-and-buildings": 1,
@@ -5820,7 +5883,7 @@ var place_shape_regions_default = {
       "hollows-and-corners": 0.75,
       "open-and-farmed-land": 1
     },
-    SBL: {
+    NTH: {
       "settlement-farms-and-estates": 1.25,
       "settlement-status-and-relationship": 0.75,
       "dwellings-and-buildings": 1,
@@ -5847,7 +5910,7 @@ var place_shape_regions_default = {
       "hollows-and-corners": 0.75,
       "open-and-farmed-land": 0.75
     },
-    WAL: {
+    SBL: {
       "settlement-farms-and-estates": 1.25,
       "settlement-status-and-relationship": 0.25,
       "dwellings-and-buildings": 1.25,
@@ -6564,6 +6627,18 @@ var place_shape_regions_default = {
         "SLO",
         "NTH"
       ]
+    },
+    {
+      generic: "river-cut-gorge",
+      home: [
+        "WCY"
+      ],
+      present: [
+        "NTH",
+        "EMD",
+        "WAL",
+        "SHH"
+      ]
     }
   ],
   categoryMultipliers: {
@@ -6895,6 +6970,1880 @@ var place_shape_regions_default = {
   }
 };
 
+// src/data/place-shape-words.json
+var place_shape_words_default = {
+  $comment: "Plain-word rendering (part 1a) of place-shapes.json generics. An empty plural means no usable plural: plural simplex falls back to the singular.",
+  version: 1,
+  words: {
+    "enclosed-farmstead": {
+      words: [
+        "farmstead"
+      ],
+      plurals: [
+        "farmsteads"
+      ]
+    },
+    "estate-manor-centre": {
+      words: [
+        "estate"
+      ],
+      plurals: [
+        "estates"
+      ]
+    },
+    village: {
+      words: [
+        "village"
+      ],
+      plurals: [
+        "villages"
+      ]
+    },
+    "early-homestead-or-village": {
+      words: [
+        "homestead"
+      ],
+      plurals: [
+        "homesteads"
+      ]
+    },
+    "homestead-site": {
+      words: [
+        "homestead"
+      ],
+      plurals: [
+        "homesteads"
+      ]
+    },
+    "norse-farm": {
+      words: [
+        "farm"
+      ],
+      plurals: [
+        "farms"
+      ]
+    },
+    "enclosed-farm-garth": {
+      words: [
+        "farm"
+      ],
+      plurals: [
+        "farms"
+      ]
+    },
+    "enclosed-settlement": {
+      words: [
+        "enclosure"
+      ],
+      plurals: [
+        "enclosures"
+      ]
+    },
+    "farm-township": {
+      words: [
+        "township"
+      ],
+      plurals: [
+        "townships"
+      ]
+    },
+    "home-farm-of-an-estate": {
+      words: [
+        "home farm"
+      ],
+      plurals: [
+        "home farms"
+      ]
+    },
+    "land-holding-share-of-land": {
+      words: [
+        "holding"
+      ],
+      plurals: [
+        "holdings"
+      ]
+    },
+    "folk-group-territory": {
+      words: [
+        "people"
+      ],
+      plurals: [
+        ""
+      ]
+    },
+    "dependent-or-secondary-settlement": {
+      words: [
+        "hamlet"
+      ],
+      plurals: [
+        "hamlets"
+      ]
+    },
+    "outlying-place-dependent-site": {
+      words: [
+        "outlying farm"
+      ],
+      plurals: [
+        "outlying farms"
+      ]
+    },
+    "outlying-grain-farm": {
+      words: [
+        "outlying farm"
+      ],
+      plurals: [
+        "outlying farms"
+      ]
+    },
+    "specialised-farm": {
+      words: [
+        "dairy farm"
+      ],
+      plurals: [
+        "dairy farms"
+      ]
+    },
+    "monastic-outlying-farm": {
+      words: [
+        "grange"
+      ],
+      plurals: [
+        "granges"
+      ]
+    },
+    "cattle-farm": {
+      words: [
+        "cattle farm"
+      ],
+      plurals: [
+        "cattle farms"
+      ]
+    },
+    "cottars-settlement": {
+      words: [
+        "cottages"
+      ],
+      plurals: [
+        ""
+      ]
+    },
+    house: {
+      words: [
+        "house"
+      ],
+      plurals: [
+        "houses"
+      ]
+    },
+    dwelling: {
+      words: [
+        "house"
+      ],
+      plurals: [
+        "houses"
+      ]
+    },
+    "building-dwelling": {
+      words: [
+        "building"
+      ],
+      plurals: [
+        "buildings"
+      ]
+    },
+    hall: {
+      words: [
+        "hall"
+      ],
+      plurals: [
+        "halls"
+      ]
+    },
+    "house-plot": {
+      words: [
+        "plot"
+      ],
+      plurals: [
+        "plots"
+      ]
+    },
+    "small-enclosed-field-by-a-house": {
+      words: [
+        "croft"
+      ],
+      plurals: [
+        "crofts"
+      ]
+    },
+    cottage: {
+      words: [
+        "cottage"
+      ],
+      plurals: [
+        "cottages"
+      ]
+    },
+    "hut-temporary-shelter": {
+      words: [
+        "hut"
+      ],
+      plurals: [
+        "huts"
+      ]
+    },
+    "workshop-or-store-building": {
+      words: [
+        "workshop"
+      ],
+      plurals: [
+        "workshops"
+      ]
+    },
+    "summer-upland-dwelling": {
+      words: [
+        "summer farm"
+      ],
+      plurals: [
+        "summer farms"
+      ]
+    },
+    "permanent-or-winter-lowland-dwelling": {
+      words: [
+        "winter farm"
+      ],
+      plurals: [
+        "winter farms"
+      ]
+    },
+    "shieling-summer-pasture-hut": {
+      words: [
+        "summer hut"
+      ],
+      plurals: [
+        "summer huts"
+      ]
+    },
+    "hut-at-summer-pasture": {
+      words: [
+        "summer hut"
+      ],
+      plurals: [
+        "summer huts"
+      ]
+    },
+    "salt-works": {
+      words: [
+        "saltworks"
+      ],
+      plurals: [
+        ""
+      ]
+    },
+    "salt-house": {
+      words: [
+        "saltworks"
+      ],
+      plurals: [
+        ""
+      ]
+    },
+    mill: {
+      words: [
+        "mill"
+      ],
+      plurals: [
+        "mills"
+      ]
+    },
+    kiln: {
+      words: [
+        "kiln"
+      ],
+      plurals: [
+        "kilns"
+      ]
+    },
+    "pit-quarry": {
+      words: [
+        "pit",
+        "quarry"
+      ],
+      plurals: [
+        "pits",
+        "quarries"
+      ]
+    },
+    "fish-weir": {
+      words: [
+        "weir"
+      ],
+      plurals: [
+        "weirs"
+      ]
+    },
+    "trading-place": {
+      words: [
+        "market"
+      ],
+      plurals: [
+        "markets"
+      ]
+    },
+    market: {
+      words: [
+        "market"
+      ],
+      plurals: [
+        "markets"
+      ]
+    },
+    "market-town-harbour": {
+      words: [
+        "port"
+      ],
+      plurals: [
+        "ports"
+      ]
+    },
+    "landing-place": {
+      words: [
+        "landing"
+      ],
+      plurals: [
+        "landings"
+      ]
+    },
+    haven: {
+      words: [
+        "haven"
+      ],
+      plurals: [
+        "havens"
+      ]
+    },
+    "british-church-community": {
+      words: [
+        "church"
+      ],
+      plurals: [
+        "churches"
+      ]
+    },
+    church: {
+      words: [
+        "church"
+      ],
+      plurals: [
+        "churches"
+      ]
+    },
+    "minster-mother-church": {
+      words: [
+        "minster"
+      ],
+      plurals: [
+        "minsters"
+      ]
+    },
+    "saints-church-enclosure": {
+      words: [
+        "church"
+      ],
+      plurals: [
+        "churches"
+      ]
+    },
+    "hermitage-retreat": {
+      words: [
+        "hermitage"
+      ],
+      plurals: [
+        "hermitages"
+      ]
+    },
+    chapel: {
+      words: [
+        "chapel"
+      ],
+      plurals: [
+        "chapels"
+      ]
+    },
+    "holy-place": {
+      words: [
+        "holy place"
+      ],
+      plurals: [
+        "holy places"
+      ]
+    },
+    "standing-cross": {
+      words: [
+        "cross"
+      ],
+      plurals: [
+        "crosses"
+      ]
+    },
+    "heathen-temple": {
+      words: [
+        "temple"
+      ],
+      plurals: [
+        "temples"
+      ]
+    },
+    "shrine-idol": {
+      words: [
+        "shrine"
+      ],
+      plurals: [
+        "shrines"
+      ]
+    },
+    "sacred-grove": {
+      words: [
+        "sacred grove"
+      ],
+      plurals: [
+        "sacred groves"
+      ]
+    },
+    "holy-spring": {
+      words: [
+        "holy well"
+      ],
+      plurals: [
+        "holy wells"
+      ]
+    },
+    grave: {
+      words: [
+        "grave"
+      ],
+      plurals: [
+        "graves"
+      ]
+    },
+    "burial-ground-churchyard": {
+      words: [
+        "graveyard"
+      ],
+      plurals: [
+        "graveyards"
+      ]
+    },
+    "burial-mound": {
+      words: [
+        "barrow"
+      ],
+      plurals: [
+        "barrows"
+      ]
+    },
+    cairn: {
+      words: [
+        "cairn"
+      ],
+      plurals: [
+        "cairns"
+      ]
+    },
+    "fortified-place-stronghold": {
+      words: [
+        "fort"
+      ],
+      plurals: [
+        "forts"
+      ]
+    },
+    "earthen-ringfort": {
+      words: [
+        "ringfort"
+      ],
+      plurals: [
+        "ringforts"
+      ]
+    },
+    fort: {
+      words: [
+        "fort"
+      ],
+      plurals: [
+        "forts"
+      ]
+    },
+    "roman-walled-town-or-fort": {
+      words: [
+        "walled town"
+      ],
+      plurals: [
+        "walled towns"
+      ]
+    },
+    castle: {
+      words: [
+        "castle"
+      ],
+      plurals: [
+        "castles"
+      ]
+    },
+    "tower-house": {
+      words: [
+        "tower"
+      ],
+      plurals: [
+        "towers"
+      ]
+    },
+    "fortified-farmhouse": {
+      words: [
+        "fortified farm"
+      ],
+      plurals: [
+        "fortified farms"
+      ]
+    },
+    "lookout-hill": {
+      words: [
+        "lookout"
+      ],
+      plurals: [
+        "lookouts"
+      ]
+    },
+    beacon: {
+      words: [
+        "beacon"
+      ],
+      plurals: [
+        "beacons"
+      ]
+    },
+    "dyke-boundary-earthwork": {
+      words: [
+        "dyke",
+        "earthwork"
+      ],
+      plurals: [
+        "dykes",
+        "earthworks"
+      ]
+    },
+    wall: {
+      words: [
+        "wall"
+      ],
+      plurals: [
+        "walls"
+      ]
+    },
+    "ship-camp-fortified-anchorage": {
+      words: [
+        "ship camp"
+      ],
+      plurals: [
+        "ship camps"
+      ]
+    },
+    "royal-or-lordly-court": {
+      words: [
+        "court"
+      ],
+      plurals: [
+        "courts"
+      ]
+    },
+    "lords-hall": {
+      words: [
+        "hall"
+      ],
+      plurals: [
+        "halls"
+      ]
+    },
+    "manor-house": {
+      words: [
+        "manor"
+      ],
+      plurals: [
+        "manors"
+      ]
+    },
+    "welsh-administrative-manor": {
+      words: [
+        "manor"
+      ],
+      plurals: [
+        "manors"
+      ]
+    },
+    "assembly-field": {
+      words: [
+        "moot field"
+      ],
+      plurals: [
+        "moot fields"
+      ]
+    },
+    "assembly-mound": {
+      words: [
+        "moot hill"
+      ],
+      plurals: [
+        "moot hills"
+      ]
+    },
+    "speech-place": {
+      words: [
+        "moot"
+      ],
+      plurals: [
+        "moots"
+      ]
+    },
+    "meeting-place": {
+      words: [
+        "moot"
+      ],
+      plurals: [
+        "moots"
+      ]
+    },
+    boundary: {
+      words: [
+        "boundary"
+      ],
+      plurals: [
+        "boundaries"
+      ]
+    },
+    "execution-site": {
+      words: [
+        "gallows"
+      ],
+      plurals: [
+        ""
+      ]
+    },
+    "place-for-games-or-sport": {
+      words: [
+        "games field"
+      ],
+      plurals: [
+        "games fields"
+      ]
+    },
+    "bath-spa": {
+      words: [
+        "bath"
+      ],
+      plurals: [
+        "baths"
+      ]
+    },
+    river: {
+      words: [
+        "river"
+      ],
+      plurals: [
+        "rivers"
+      ]
+    },
+    "clear-stream": {
+      words: [
+        "stream"
+      ],
+      plurals: [
+        "streams"
+      ]
+    },
+    "sluggish-or-muddy-stream": {
+      words: [
+        "brook"
+      ],
+      plurals: [
+        "brooks"
+      ]
+    },
+    "mountain-stream": {
+      words: [
+        "stream"
+      ],
+      plurals: [
+        "streams"
+      ]
+    },
+    "stream-with-its-valley": {
+      words: [
+        "stream"
+      ],
+      plurals: [
+        "streams"
+      ]
+    },
+    "river-source-spring-head": {
+      words: [
+        "spring"
+      ],
+      plurals: [
+        "springs"
+      ]
+    },
+    "river-mouth": {
+      words: [
+        "mouth"
+      ],
+      plurals: [
+        "mouths"
+      ]
+    },
+    confluence: {
+      words: [
+        "watersmeet"
+      ],
+      plurals: [
+        ""
+      ]
+    },
+    waterfall: {
+      words: [
+        "waterfall",
+        "falls"
+      ],
+      plurals: [
+        "waterfalls",
+        ""
+      ]
+    },
+    "spring-well": {
+      words: [
+        "spring",
+        "well"
+      ],
+      plurals: [
+        "springs",
+        "wells"
+      ]
+    },
+    "spring-with-roman-association": {
+      words: [
+        "well"
+      ],
+      plurals: [
+        "wells"
+      ]
+    },
+    pool: {
+      words: [
+        "pool"
+      ],
+      plurals: [
+        "pools"
+      ]
+    },
+    "mere-shallow-lake": {
+      words: [
+        "mere"
+      ],
+      plurals: [
+        "meres"
+      ]
+    },
+    lake: {
+      words: [
+        "lake"
+      ],
+      plurals: [
+        "lakes"
+      ]
+    },
+    "small-mountain-lake": {
+      words: [
+        "tarn"
+      ],
+      plurals: [
+        "tarns"
+      ]
+    },
+    marsh: {
+      words: [
+        "marsh"
+      ],
+      plurals: [
+        "marshes"
+      ]
+    },
+    fen: {
+      words: [
+        "fen"
+      ],
+      plurals: [
+        "fens"
+      ]
+    },
+    "lowland-marsh": {
+      words: [
+        "marsh"
+      ],
+      plurals: [
+        "marshes"
+      ]
+    },
+    "brushwood-marsh-carr": {
+      words: [
+        "marsh"
+      ],
+      plurals: [
+        "marshes"
+      ]
+    },
+    mire: {
+      words: [
+        "mire"
+      ],
+      plurals: [
+        "mires"
+      ]
+    },
+    "miry-pool-wallowing-place": {
+      words: [
+        "wallow"
+      ],
+      plurals: [
+        "wallows"
+      ]
+    },
+    "peat-bog-moss": {
+      words: [
+        "bog"
+      ],
+      plurals: [
+        "bogs"
+      ]
+    },
+    bog: {
+      words: [
+        "bog"
+      ],
+      plurals: [
+        "bogs"
+      ]
+    },
+    "flood-prone-land-by-a-river": {
+      words: [
+        "wash"
+      ],
+      plurals: [
+        "washes"
+      ]
+    },
+    island: {
+      words: [
+        "island"
+      ],
+      plurals: [
+        "islands"
+      ]
+    },
+    "dry-ground-in-wet-land": {
+      words: [
+        "island"
+      ],
+      plurals: [
+        "islands"
+      ]
+    },
+    "land-in-a-river-bend": {
+      words: [
+        "river bend"
+      ],
+      plurals: [
+        "river bends"
+      ]
+    },
+    "water-meadow": {
+      words: [
+        "water meadow"
+      ],
+      plurals: [
+        "water meadows"
+      ]
+    },
+    "skerry-rock-islet": {
+      words: [
+        "islet",
+        "skerry"
+      ],
+      plurals: [
+        "islets",
+        "skerries"
+      ]
+    },
+    headland: {
+      words: [
+        "headland"
+      ],
+      plurals: [
+        "headlands"
+      ]
+    },
+    "point-nose": {
+      words: [
+        "point"
+      ],
+      plurals: [
+        "points"
+      ]
+    },
+    promontory: {
+      words: [
+        "headland"
+      ],
+      plurals: [
+        "headlands"
+      ]
+    },
+    "sea-inlet-firth": {
+      words: [
+        "firth"
+      ],
+      plurals: [
+        "firths"
+      ]
+    },
+    bay: {
+      words: [
+        "bay"
+      ],
+      plurals: [
+        "bays"
+      ]
+    },
+    "small-bay-creek": {
+      words: [
+        "creek"
+      ],
+      plurals: [
+        "creeks"
+      ]
+    },
+    cove: {
+      words: [
+        "cove"
+      ],
+      plurals: [
+        "coves"
+      ]
+    },
+    "strait-sound": {
+      words: [
+        "strait",
+        "sound"
+      ],
+      plurals: [
+        "straits",
+        "sounds"
+      ]
+    },
+    estuary: {
+      words: [
+        "estuary"
+      ],
+      plurals: [
+        "estuaries"
+      ]
+    },
+    "beach-strand": {
+      words: [
+        "beach"
+      ],
+      plurals: [
+        "beaches"
+      ]
+    },
+    "sand-dunes-sandy-shore": {
+      words: [
+        "sands"
+      ],
+      plurals: [
+        ""
+      ]
+    },
+    "shingle-bank": {
+      words: [
+        "shingle"
+      ],
+      plurals: [
+        ""
+      ]
+    },
+    "sea-cliff": {
+      words: [
+        "cliff"
+      ],
+      plurals: [
+        "cliffs"
+      ]
+    },
+    "coastal-chasm-geo": {
+      words: [
+        "geo"
+      ],
+      plurals: [
+        "geos"
+      ]
+    },
+    "river-crossing": {
+      words: [
+        "ford"
+      ],
+      plurals: [
+        "fords"
+      ]
+    },
+    causeway: {
+      words: [
+        "causeway"
+      ],
+      plurals: [
+        "causeways"
+      ]
+    },
+    bridge: {
+      words: [
+        "bridge"
+      ],
+      plurals: [
+        "bridges"
+      ]
+    },
+    ferry: {
+      words: [
+        "ferry"
+      ],
+      plurals: [
+        "ferries"
+      ]
+    },
+    "paved-or-roman-road": {
+      words: [
+        "street"
+      ],
+      plurals: [
+        "streets"
+      ]
+    },
+    "way-track": {
+      words: [
+        "way"
+      ],
+      plurals: [
+        "ways"
+      ]
+    },
+    lane: {
+      words: [
+        "lane"
+      ],
+      plurals: [
+        "lanes"
+      ]
+    },
+    pass: {
+      words: [
+        "pass"
+      ],
+      plurals: [
+        "passes"
+      ]
+    },
+    "gap-notch": {
+      words: [
+        "gap"
+      ],
+      plurals: [
+        "gaps"
+      ]
+    },
+    "swing-gate": {
+      words: [
+        "gate"
+      ],
+      plurals: [
+        "gates"
+      ]
+    },
+    "isthmus-portage": {
+      words: [
+        "isthmus"
+      ],
+      plurals: [
+        "isthmuses"
+      ]
+    },
+    wood: {
+      words: [
+        "wood"
+      ],
+      plurals: [
+        "woods"
+      ]
+    },
+    "single-species-wood": {
+      words: [
+        "wood"
+      ],
+      plurals: [
+        "woods"
+      ]
+    },
+    "great-woodland": {
+      words: [
+        "forest"
+      ],
+      plurals: [
+        "forests"
+      ]
+    },
+    "royal-hunting-ground": {
+      words: [
+        "chase"
+      ],
+      plurals: [
+        "chases"
+      ]
+    },
+    park: {
+      words: [
+        "park"
+      ],
+      plurals: [
+        "parks"
+      ]
+    },
+    grove: {
+      words: [
+        "grove"
+      ],
+      plurals: [
+        "groves"
+      ]
+    },
+    "grove-small-wood": {
+      words: [
+        "grove"
+      ],
+      plurals: [
+        "groves"
+      ]
+    },
+    "grove-possibly-sacred": {
+      words: [
+        "grove"
+      ],
+      plurals: [
+        "groves"
+      ]
+    },
+    "strip-of-woodland-shaw": {
+      words: [
+        "copse"
+      ],
+      plurals: [
+        "copses"
+      ]
+    },
+    "wood-on-a-steep-slope": {
+      words: [
+        "wood"
+      ],
+      plurals: [
+        "woods"
+      ]
+    },
+    "wooded-hill": {
+      words: [
+        "wooded hill"
+      ],
+      plurals: [
+        "wooded hills"
+      ]
+    },
+    scrubland: {
+      words: [
+        "scrub"
+      ],
+      plurals: [
+        ""
+      ]
+    },
+    thicket: {
+      words: [
+        "thicket"
+      ],
+      plurals: [
+        "thickets"
+      ]
+    },
+    "woodland-then-clearing": {
+      words: [
+        "clearing"
+      ],
+      plurals: [
+        "clearings"
+      ]
+    },
+    "newly-cleared-land-assart": {
+      words: [
+        "assart"
+      ],
+      plurals: [
+        "assarts"
+      ]
+    },
+    "clearing-paddock": {
+      words: [
+        "clearing"
+      ],
+      plurals: [
+        "clearings"
+      ]
+    },
+    "woodland-swine-pasture": {
+      words: [
+        "swine pasture"
+      ],
+      plurals: [
+        "swine pastures"
+      ]
+    },
+    "low-level-topped-hill": {
+      words: [
+        "down"
+      ],
+      plurals: [
+        "downs"
+      ]
+    },
+    hill: {
+      words: [
+        "hill"
+      ],
+      plurals: [
+        "hills"
+      ]
+    },
+    "heel-shaped-spur": {
+      words: [
+        "spur"
+      ],
+      plurals: [
+        "spurs"
+      ]
+    },
+    "flat-topped-ridge": {
+      words: [
+        "ridge"
+      ],
+      plurals: [
+        "ridges"
+      ]
+    },
+    ridge: {
+      words: [
+        "ridge"
+      ],
+      plurals: [
+        "ridges"
+      ]
+    },
+    "back-low-ridge": {
+      words: [
+        "ridge"
+      ],
+      plurals: [
+        "ridges"
+      ]
+    },
+    "edge-escarpment": {
+      words: [
+        "edge"
+      ],
+      plurals: [
+        "edges"
+      ]
+    },
+    "steep-slope-bank": {
+      words: [
+        "bank"
+      ],
+      plurals: [
+        "banks"
+      ]
+    },
+    slope: {
+      words: [
+        "slope"
+      ],
+      plurals: [
+        "slopes"
+      ]
+    },
+    "terrace-lynchet": {
+      words: [
+        "terrace"
+      ],
+      plurals: [
+        "terraces"
+      ]
+    },
+    knoll: {
+      words: [
+        "knoll"
+      ],
+      plurals: [
+        "knolls"
+      ]
+    },
+    "rounded-hill-mound": {
+      words: [
+        "mound"
+      ],
+      plurals: [
+        "mounds"
+      ]
+    },
+    "summit-top": {
+      words: [
+        "top"
+      ],
+      plurals: [
+        "tops"
+      ]
+    },
+    "upper-end-head": {
+      words: [
+        "head"
+      ],
+      plurals: [
+        "heads"
+      ]
+    },
+    mountain: {
+      words: [
+        "mountain"
+      ],
+      plurals: [
+        "mountains"
+      ]
+    },
+    fell: {
+      words: [
+        "fell"
+      ],
+      plurals: [
+        "fells"
+      ]
+    },
+    "pointed-hill": {
+      words: [
+        "peak"
+      ],
+      plurals: [
+        "peaks"
+      ]
+    },
+    "sharp-peak": {
+      words: [
+        "peak"
+      ],
+      plurals: [
+        "peaks"
+      ]
+    },
+    tor: {
+      words: [
+        "tor"
+      ],
+      plurals: [
+        "tors"
+      ]
+    },
+    crag: {
+      words: [
+        "crag"
+      ],
+      plurals: [
+        "crags"
+      ]
+    },
+    stone: {
+      words: [
+        "stone"
+      ],
+      plurals: [
+        "stones"
+      ]
+    },
+    cave: {
+      words: [
+        "cave"
+      ],
+      plurals: [
+        "caves"
+      ]
+    },
+    "upland-moor": {
+      words: [
+        "moor"
+      ],
+      plurals: [
+        "moors"
+      ]
+    },
+    heath: {
+      words: [
+        "heath"
+      ],
+      plurals: [
+        "heaths"
+      ]
+    },
+    wold: {
+      words: [
+        "wold"
+      ],
+      plurals: [
+        "wolds"
+      ]
+    },
+    "long-valley": {
+      words: [
+        "valley"
+      ],
+      plurals: [
+        "valleys"
+      ]
+    },
+    dale: {
+      words: [
+        "valley"
+      ],
+      plurals: [
+        "valleys"
+      ]
+    },
+    "broad-valley": {
+      words: [
+        "valley"
+      ],
+      plurals: [
+        "valleys"
+      ]
+    },
+    "short-bowl-shaped-valley": {
+      words: [
+        "valley"
+      ],
+      plurals: [
+        "valleys"
+      ]
+    },
+    "narrow-valley-glen": {
+      words: [
+        "glen"
+      ],
+      plurals: [
+        "glens"
+      ]
+    },
+    "small-enclosed-side-valley": {
+      words: [
+        "valley"
+      ],
+      plurals: [
+        "valleys"
+      ]
+    },
+    corrie: {
+      words: [
+        "hollow"
+      ],
+      plurals: [
+        "hollows"
+      ]
+    },
+    ravine: {
+      words: [
+        "ravine"
+      ],
+      plurals: [
+        "ravines"
+      ]
+    },
+    "steep-bank-ravine-side": {
+      words: [
+        "bank"
+      ],
+      plurals: [
+        "banks"
+      ]
+    },
+    "shallow-damp-valley": {
+      words: [
+        "valley"
+      ],
+      plurals: [
+        "valleys"
+      ]
+    },
+    "river-cut-gorge": {
+      words: [
+        "gorge"
+      ],
+      plurals: [
+        "gorges"
+      ]
+    },
+    hollow: {
+      words: [
+        "hollow"
+      ],
+      plurals: [
+        "hollows"
+      ]
+    },
+    "valley-bottom": {
+      words: [
+        "bottom"
+      ],
+      plurals: [
+        "bottoms"
+      ]
+    },
+    "valley-head": {
+      words: [
+        "head"
+      ],
+      plurals: [
+        "heads"
+      ]
+    },
+    nook: {
+      words: [
+        "nook"
+      ],
+      plurals: [
+        "nooks"
+      ]
+    },
+    "corner-projecting-piece-of-land": {
+      words: [
+        "corner"
+      ],
+      plurals: [
+        "corners"
+      ]
+    },
+    "corner-angle": {
+      words: [
+        "corner"
+      ],
+      plurals: [
+        "corners"
+      ]
+    },
+    "bend-crook": {
+      words: [
+        "bend"
+      ],
+      plurals: [
+        "bends"
+      ]
+    },
+    "open-country": {
+      words: [
+        "field"
+      ],
+      plurals: [
+        "fields"
+      ]
+    },
+    "level-field": {
+      words: [
+        "field"
+      ],
+      plurals: [
+        "fields"
+      ]
+    },
+    "hay-meadow": {
+      words: [
+        "meadow"
+      ],
+      plurals: [
+        "meadows"
+      ]
+    },
+    pasture: {
+      words: [
+        "pasture"
+      ],
+      plurals: [
+        "pastures"
+      ]
+    },
+    "arable-field": {
+      words: [
+        "farmland"
+      ],
+      plurals: [
+        ""
+      ]
+    },
+    "arable-unit": {
+      words: [
+        "farmland"
+      ],
+      plurals: [
+        ""
+      ]
+    },
+    furlong: {
+      words: [
+        "furlong"
+      ],
+      plurals: [
+        "furlongs"
+      ]
+    },
+    "animal-fold": {
+      words: [
+        "fold"
+      ],
+      plurals: [
+        "folds"
+      ]
+    },
+    "hedged-enclosure": {
+      words: [
+        "close"
+      ],
+      plurals: [
+        "closes"
+      ]
+    },
+    orchard: {
+      words: [
+        "orchard"
+      ],
+      plurals: [
+        "orchards"
+      ]
+    }
+  },
+  rewrites: [
+    {
+      generic: "folk-group-homestead",
+      structure: "folk-connective",
+      category: "personal-name",
+      word: "homestead",
+      plural: "homesteads"
+    },
+    {
+      generic: "settlement-by-a-roman-site",
+      category: "built-feature",
+      word: "homestead",
+      plural: "homesteads"
+    },
+    {
+      generic: "island-of-irish-monks",
+      category: "status-or-role",
+      word: "island",
+      plural: "islands"
+    }
+  ],
+  variants: [
+    {
+      generic: "enclosed-farm-garth",
+      variant: "garth",
+      plural: "garths",
+      regions: [
+        "NSI",
+        "NTH",
+        "SBL"
+      ]
+    },
+    {
+      generic: "house-plot",
+      variant: "toft",
+      plural: "tofts",
+      regions: [
+        "NTH",
+        "EMD",
+        "EAN",
+        "NSI"
+      ]
+    },
+    {
+      generic: "landing-place",
+      variant: "hithe",
+      plural: "hithes",
+      regions: [
+        "SEA"
+      ]
+    },
+    {
+      generic: "clear-stream",
+      variant: "bourne",
+      plural: "bournes",
+      regions: [
+        "SEA",
+        "WCY"
+      ]
+    },
+    {
+      generic: "mountain-stream",
+      variant: "beck",
+      plural: "becks",
+      regions: [
+        "NTH",
+        "EMD"
+      ]
+    },
+    {
+      generic: "mountain-stream",
+      variant: "burn",
+      plural: "burns",
+      regions: [
+        "SBL",
+        "SLO"
+      ]
+    },
+    {
+      generic: "waterfall",
+      variant: "force",
+      plural: "forces",
+      regions: [
+        "NTH"
+      ]
+    },
+    {
+      generic: "brushwood-marsh-carr",
+      variant: "carr",
+      plural: "carrs",
+      regions: [
+        "NTH",
+        "EMD",
+        "EAN"
+      ]
+    },
+    {
+      generic: "peat-bog-moss",
+      variant: "moss",
+      plural: "mosses",
+      regions: [
+        "NTH",
+        "SBL",
+        "SLO"
+      ]
+    },
+    {
+      generic: "dry-ground-in-wet-land",
+      variant: "holm",
+      plural: "holms",
+      regions: [
+        "NTH",
+        "EMD",
+        "NSI"
+      ]
+    },
+    {
+      generic: "single-species-wood",
+      variant: "holt",
+      plural: "holts",
+      regions: [
+        "SEA",
+        "EAN"
+      ]
+    },
+    {
+      generic: "strip-of-woodland-shaw",
+      variant: "shaw",
+      plural: "shaws",
+      regions: [
+        "NTH",
+        "WMM"
+      ]
+    },
+    {
+      generic: "wooded-hill",
+      variant: "hurst",
+      plural: "hursts",
+      regions: [
+        "SEA"
+      ]
+    },
+    {
+      generic: "clearing-paddock",
+      variant: "thwaite",
+      plural: "thwaites",
+      regions: [
+        "NTH",
+        "SBL"
+      ]
+    },
+    {
+      generic: "dale",
+      variant: "dale",
+      plural: "dales",
+      regions: [
+        "NTH",
+        "EMD",
+        "SBL"
+      ]
+    },
+    {
+      generic: "broad-valley",
+      variant: "strath",
+      plural: "straths",
+      regions: [
+        "SLO",
+        "SHH"
+      ]
+    },
+    {
+      generic: "short-bowl-shaped-valley",
+      variant: "combe",
+      plural: "combes",
+      regions: [
+        "WCY",
+        "SEA"
+      ]
+    },
+    {
+      generic: "small-enclosed-side-valley",
+      variant: "hope",
+      plural: "hopes",
+      regions: [
+        "SBL",
+        "WMM"
+      ]
+    },
+    {
+      generic: "ravine",
+      variant: "gill",
+      plural: "gills",
+      regions: [
+        "NTH",
+        "SBL"
+      ]
+    }
+  ]
+};
+
 // src/placeShapes.ts
 var PLACE_SHAPE_WEIGHTS = {
   /** Relative weight of each affinity tier when picking a slot category for a generic. */
@@ -6927,10 +8876,13 @@ var STACK_SOURCE_GROUP = "settlement-farms-and-estates";
 var EMPTY_SLOT = "empty-slot";
 var PERSONAL_NAME = "personal-name";
 var PLACE_SHAPES_HISTORY_NAME = "place name shapes";
-function placeShapesHistoryLabel(regionCode) {
+var GENERIC_PLACE_NAMES_HISTORY_NAME = "generic place name generator";
+function placeShapesHistoryLabel(regionCode, wording = "meaning") {
+  const name = wording === "plain" ? GENERIC_PLACE_NAMES_HISTORY_NAME : PLACE_SHAPES_HISTORY_NAME;
   const region = regionCode ? findRegion(regionCode) : void 0;
-  return region ? `${PLACE_SHAPES_HISTORY_NAME} \xB7 ${region.label}` : PLACE_SHAPES_HISTORY_NAME;
+  return region ? `${name} \xB7 ${region.label}` : name;
 }
+var PLAIN_WORDING_SALT = 437918234;
 var PLACE_SHAPE_DATA = place_shapes_default;
 var TIER_ORDER = ["dominant", "common", "occasional", "rare", "unlikely"];
 function resolveProfile(group, genericId, source = PLACE_SHAPE_DATA) {
@@ -7087,20 +9039,28 @@ function generatePlaceShapesDetailed(options, source = PLACE_SHAPE_DATA) {
   const formatter = new PlaceShapeFormatter(source);
   const count = Math.max(0, Math.floor(options.count));
   const shapes = [];
-  const names = [];
   const seen = /* @__PURE__ */ new Set();
-  for (let attempt = 0; names.length < count && attempt < count * 50; attempt++) {
+  for (let attempt = 0; shapes.length < count && attempt < count * 50; attempt++) {
     const shape = generator.next(rng);
     const text = formatter.format(shape);
     if (seen.has(text)) continue;
     seen.add(text);
     shapes.push(shape);
-    names.push(text);
   }
-  return { shapes, names, seed };
+  let names;
+  if (options.wording === "plain") {
+    const pick = mulberry32((seed ^ PLAIN_WORDING_SALT) >>> 0);
+    names = shapes.map((shape) => formatter.formatPlain(shape, options.region, pick));
+  } else {
+    names = shapes.map((shape) => formatter.format(shape));
+  }
+  return { shapes, names, seed, mainRngNext: rng() };
 }
+var PLACE_SHAPE_WORD_DATA = place_shape_words_default;
+var bracket = (label) => `[${(label != null ? label : "?").toLowerCase()}]`;
 var PlaceShapeFormatter = class {
-  constructor(source = PLACE_SHAPE_DATA) {
+  constructor(source = PLACE_SHAPE_DATA, words = PLACE_SHAPE_WORD_DATA) {
+    this.words = words;
     this.generics = /* @__PURE__ */ new Map();
     this.categories = /* @__PURE__ */ new Map();
     for (const group of source.groups) {
@@ -7108,30 +9068,59 @@ var PlaceShapeFormatter = class {
     }
     for (const category of source.categories) this.categories.set(category.id, category.label);
   }
+  /** Part 1 wording: every generic as its bracketed Meaning. */
   format(shape) {
+    return this.layout(shape, (id, plural) => `${bracket(this.generics.get(id))}${plural ? " (plural)" : ""}`);
+  }
+  /**
+   * Part 1a wording: generics as plain words, with dropped generics rewritten and regional
+   * variants added. `pick` is the secondary RNG; it is only drawn when a generic has two words.
+   */
+  formatPlain(shape, region, pick) {
     var _a;
-    const bracket = (label) => `[${(label != null ? label : "?").toLowerCase()}]`;
-    const generic = bracket(this.generics.get(shape.genericId));
+    const rewrite = this.words.rewrites.find((r) => r.generic === shape.genericId);
+    const effective = rewrite ? {
+      ...shape,
+      categoryId: rewrite.category,
+      structure: (_a = rewrite.structure) != null ? _a : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
+    } : shape;
+    return this.layout(effective, (id, plural) => {
+      if (rewrite && id === shape.genericId) return plural ? rewrite.plural || rewrite.word : rewrite.word;
+      const entry = this.words.words[id];
+      if (!entry) return bracket(this.generics.get(id));
+      const i = entry.words.length > 1 ? Math.floor(pick() * entry.words.length) : 0;
+      const usePlural = plural && entry.plurals[i] !== "";
+      const word = usePlural ? entry.plurals[i] : entry.words[i];
+      const variant = region ? this.words.variants.find((v) => v.generic === id && v.regions.includes(region)) : void 0;
+      return variant ? `${word} (${usePlural ? variant.plural : variant.variant})` : word;
+    });
+  }
+  layout(shape, genericText) {
+    var _a;
     const specific = bracket(this.categories.get(shape.categoryId));
     let text;
     switch (shape.structure) {
       case "simplex":
-        text = generic;
+        text = genericText(shape.genericId, false);
         break;
       case "plural-simplex":
-        text = `${generic} (plural)`;
+        text = genericText(shape.genericId, true);
         break;
       case "folk-connective":
-        text = `${specific} + [people of] + ${generic}`;
+        text = `${specific} + [people of] + ${genericText(shape.genericId, false)}`;
         break;
       case "associative-connective":
-        text = `${specific} + [associated with] + ${generic}`;
+        text = `${specific} + [associated with] + ${genericText(shape.genericId, false)}`;
         break;
-      case "stacked-generic":
-        text = `${specific} + ${generic} + ${bracket(this.generics.get((_a = shape.stackedGenericId) != null ? _a : ""))}`;
+      case "stacked-generic": {
+        const generic = genericText(shape.genericId, false);
+        text = `${specific} + ${generic} + ${genericText((_a = shape.stackedGenericId) != null ? _a : "", false)}`;
         break;
-      default:
+      }
+      default: {
+        const generic = genericText(shape.genericId, false);
         text = shape.wordOrder === "celtic-direct" ? `${generic} + ${specific}` : shape.wordOrder === "celtic-linked" ? `${generic} of the ${specific}` : `${specific} + ${generic}`;
+      }
     }
     if (shape.affix) {
       const { form } = shape.affix;
@@ -7143,15 +9132,21 @@ var PlaceShapeFormatter = class {
 };
 
 // src/modal.ts
-var SECTION_ORDER = ["markov", "placeShapes", "explorationPlaceShapes"];
+var SECTION_ORDER = ["markov", "placeShapes", "genericPlaceNames", "explorationPlaceShapes"];
+var SHAPE_SECTION_WORDING = {
+  placeShapes: "meaning",
+  genericPlaceNames: "plain"
+};
 var SECTION_LABELS = {
   markov: "markov generator",
   placeShapes: "place name shapes",
+  genericPlaceNames: "generic place name generator",
   explorationPlaceShapes: "exploration place name shapes"
 };
 var SECTION_ICONS = {
   markov: ICON_PACKS,
   placeShapes: ICON_PLACE_SHAPES,
+  genericPlaceNames: ICON_GENERIC_PLACE_NAMES,
   explorationPlaceShapes: ICON_PACKS
 };
 function packTypeIconId(packType, subGenerator) {
@@ -7234,7 +9229,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
      * active — the only thing a section switch changes. */
     this.sectionStubEl = null;
     this.sectionStubLabelEl = null;
-    /** The region dropdown shown beside the trigger in the place-shapes section. */
+    /** The region dropdown shown beside the trigger in both shape sections. */
     this.regionDropdownEl = null;
     this.regionTriggerEl = null;
     this.regionLabelEl = null;
@@ -7429,14 +9424,14 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     }
   }
   /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
-   * dropdown on "placeShapes", the placeholder box otherwise. Everything else is left as it is. */
+   * dropdown on the shape sections, the placeholder box otherwise. Everything else is left as it is. */
   switchSection(section) {
     var _a, _b, _c;
     this.setSectionMenuOpen(false);
     this.setRegionMenuOpen(false);
     this.activeSection = section;
     (_a = this.packDropdownEl) == null ? void 0 : _a.toggle(section === "markov");
-    (_b = this.regionDropdownEl) == null ? void 0 : _b.toggle(section === "placeShapes");
+    (_b = this.regionDropdownEl) == null ? void 0 : _b.toggle(SHAPE_SECTION_WORDING[section] !== void 0);
     if (this.sectionTriggerEl) (0, import_obsidian6.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
     (_c = this.sectionStubEl) == null ? void 0 : _c.toggle(section === "explorationPlaceShapes");
@@ -7823,16 +9818,18 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
   }
   async generateSelectedCount() {
     var _a, _b;
-    if (this.activeSection === "placeShapes") {
+    const wording = SHAPE_SECTION_WORDING[this.activeSection];
+    if (wording) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_a = this.seedInputEl) == null ? void 0 : _a.value) : void 0;
       const result2 = generatePlaceShapesDetailed({
         count: this.generationCount,
         seed: seedOverride2,
-        region: this.selectedRegion
+        region: this.selectedRegion,
+        wording
       });
       this.currentSeed = result2.seed;
       this.renderResults(result2.names);
-      await this.recordGenerationHistory(result2.names.length, placeShapesHistoryLabel(this.selectedRegion));
+      await this.recordGenerationHistory(result2.names.length, placeShapesHistoryLabel(this.selectedRegion, wording));
       this.setStatus("");
       return;
     }
@@ -8223,7 +10220,7 @@ var PreviousGenerationsModal = class extends import_obsidian6.Modal {
       const iconEl = row.createSpan({ cls: "nameforge-history-modal__pack-icon" });
       (0, import_obsidian6.setIcon)(
         iconEl,
-        entry.packName.startsWith(PLACE_SHAPES_HISTORY_NAME) ? SECTION_ICONS.placeShapes : (_b = iconsByName.get(entry.packName)) != null ? _b : ICON_BREAKDOWN_PACK
+        entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME) ? SECTION_ICONS.genericPlaceNames : entry.packName.startsWith(PLACE_SHAPES_HISTORY_NAME) ? SECTION_ICONS.placeShapes : (_b = iconsByName.get(entry.packName)) != null ? _b : ICON_BREAKDOWN_PACK
       );
       row.createSpan({
         cls: "nameforge-history-modal__pack-name",

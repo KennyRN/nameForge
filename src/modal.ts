@@ -35,6 +35,7 @@ import {
   ICON_MIX_PACK,
   ICON_PLACE_PACK,
   ICON_PLACE_SHAPES,
+  ICON_GENERIC_PLACE_NAMES,
   ICON_PLUS_SQUARE,
   ICON_SAVE,
   ICON_SEED_COPY,
@@ -43,6 +44,7 @@ import {
 } from "./icons";
 import { EnterFolderPathModal } from "./folderModal";
 import {
+  GENERIC_PLACE_NAMES_HISTORY_NAME,
   generatePlaceShapesDetailed,
   PLACE_SHAPE_REGIONS,
   PLACE_SHAPES_HISTORY_NAME,
@@ -54,16 +56,23 @@ type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" 
 
 /** The sections reachable from the binder icon's switcher menu (renderSectionMenu) — mirrors
  * titleForge's own section switcher. "markov" is today's whole pack-driven generator and the
- * default on every open; "placeShapes" runs the built-in shape generator (placeShapes.ts);
- * "explorationPlaceShapes" is still a placeholder. */
-type NameForgeSection = "markov" | "placeShapes" | "explorationPlaceShapes";
+ * default on every open; "placeShapes" and "genericPlaceNames" run the built-in shape generator
+ * (placeShapes.ts) in its two wordings; "explorationPlaceShapes" is still a placeholder. */
+type NameForgeSection = "markov" | "placeShapes" | "genericPlaceNames" | "explorationPlaceShapes";
 
-const SECTION_ORDER: NameForgeSection[] = ["markov", "placeShapes", "explorationPlaceShapes"];
+const SECTION_ORDER: NameForgeSection[] = ["markov", "placeShapes", "genericPlaceNames", "explorationPlaceShapes"];
+
+/** The two built-in shape generators: same shapes, different wording of the generic. */
+const SHAPE_SECTION_WORDING: Partial<Record<NameForgeSection, "meaning" | "plain">> = {
+  placeShapes: "meaning",
+  genericPlaceNames: "plain",
+};
 
 // Section names are deliberately lowercase, matching titleForge's section-switcher menu.
 const SECTION_LABELS: Record<NameForgeSection, string> = {
   markov: "markov generator",
   placeShapes: "place name shapes",
+  genericPlaceNames: "generic place name generator",
   explorationPlaceShapes: "exploration place name shapes",
 };
 
@@ -71,6 +80,7 @@ const SECTION_LABELS: Record<NameForgeSection, string> = {
 const SECTION_ICONS: Record<NameForgeSection, string> = {
   markov: ICON_PACKS,
   placeShapes: ICON_PLACE_SHAPES,
+  genericPlaceNames: ICON_GENERIC_PLACE_NAMES,
   explorationPlaceShapes: ICON_PACKS,
 };
 
@@ -202,7 +212,7 @@ export class NameForgeModal extends Modal {
    * active — the only thing a section switch changes. */
   private sectionStubEl: HTMLElement | null = null;
   private sectionStubLabelEl: HTMLElement | null = null;
-  /** The region dropdown shown beside the trigger in the place-shapes section. */
+  /** The region dropdown shown beside the trigger in both shape sections. */
   private regionDropdownEl: HTMLElement | null = null;
   private regionTriggerEl: HTMLButtonElement | null = null;
   private regionLabelEl: HTMLElement | null = null;
@@ -295,7 +305,7 @@ export class NameForgeModal extends Modal {
     this.packDropdownMenuEl = this.packDropdownEl.createDiv({ cls: "nameforge-modal__pack-dropdown-menu" });
     this.packDropdownMenuEl.hide();
 
-    // The place-shapes section's region picker — the pack dropdown's own box and menu.
+    // The shape sections' region picker — the pack dropdown's own box and menu.
     this.regionDropdownEl = createPacksRow.createDiv({ cls: "nameforge-modal__pack-dropdown" });
     this.regionTriggerEl = this.regionDropdownEl.createEl("button", {
       cls: "nameforge-modal__pack-dropdown-trigger",
@@ -413,13 +423,13 @@ export class NameForgeModal extends Modal {
   }
 
   /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
-   * dropdown on "placeShapes", the placeholder box otherwise. Everything else is left as it is. */
+   * dropdown on the shape sections, the placeholder box otherwise. Everything else is left as it is. */
   private switchSection(section: NameForgeSection) {
     this.setSectionMenuOpen(false);
     this.setRegionMenuOpen(false);
     this.activeSection = section;
     this.packDropdownEl?.toggle(section === "markov");
-    this.regionDropdownEl?.toggle(section === "placeShapes");
+    this.regionDropdownEl?.toggle(SHAPE_SECTION_WORDING[section] !== undefined);
     // The trigger wears the active section's icon, as titleForge's leading icon does.
     if (this.sectionTriggerEl) setIcon(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} — no packs yet`;
@@ -863,16 +873,18 @@ export class NameForgeModal extends Modal {
   }
 
   private async generateSelectedCount() {
-    if (this.activeSection === "placeShapes") {
+    const wording = SHAPE_SECTION_WORDING[this.activeSection];
+    if (wording) {
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
       const result = generatePlaceShapesDetailed({
         count: this.generationCount,
         seed: seedOverride,
         region: this.selectedRegion,
+        wording,
       });
       this.currentSeed = result.seed;
       this.renderResults(result.names);
-      await this.recordGenerationHistory(result.names.length, placeShapesHistoryLabel(this.selectedRegion));
+      await this.recordGenerationHistory(result.names.length, placeShapesHistoryLabel(this.selectedRegion, wording));
       this.setStatus("");
       return;
     }
@@ -1329,7 +1341,9 @@ class PreviousGenerationsModal extends Modal {
       const iconEl = row.createSpan({ cls: "nameforge-history-modal__pack-icon" });
       setIcon(
         iconEl,
-        entry.packName.startsWith(PLACE_SHAPES_HISTORY_NAME)
+        entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME)
+          ? SECTION_ICONS.genericPlaceNames
+          : entry.packName.startsWith(PLACE_SHAPES_HISTORY_NAME)
           ? SECTION_ICONS.placeShapes
           : iconsByName.get(entry.packName) ?? ICON_BREAKDOWN_PACK,
       );

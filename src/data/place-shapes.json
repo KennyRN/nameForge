@@ -3291,6 +3291,15 @@
           "sourceElements": [
             "OE slǣd"
           ]
+        },
+        {
+          "id": "river-cut-gorge",
+          "meaning": "River-cut gorge",
+          "sense": "Deep, steep-sided channel cut by a river, often through limestone; larger than a ravine",
+          "sourceElements": [
+            "ME, modern gorge (French loan)",
+            "no historic place-name element"
+          ]
         }
       ],
       "profile": {
@@ -3330,7 +3339,58 @@
           "rare": "Glen Shee; Coire Gabhail"
         }
       },
-      "overrides": [],
+      "overrides": [
+        {
+          "generics": [
+            "river-cut-gorge"
+          ],
+          "note": "River-cut gorge: per-generic profile (part 1a amendment).",
+          "replace": {
+            "common": [
+              "river-or-stream-name",
+              "earlier-or-district-name"
+            ],
+            "occasional": [
+              "colour",
+              "size",
+              "shape"
+            ],
+            "rare": [
+              "personal-name",
+              "supernatural-being"
+            ],
+            "unlikely": [
+              "folk-group",
+              "status-or-role",
+              "ethnic-or-cultural-group",
+              "saint-or-holy-person",
+              "deity",
+              "domestic-animal",
+              "wild-animal",
+              "bird",
+              "fish-and-other-creatures",
+              "tree",
+              "wild-plant",
+              "crop",
+              "landform",
+              "water-or-wetland-feature",
+              "soil-or-ground",
+              "built-feature",
+              "age",
+              "position-or-direction",
+              "quality-or-condition",
+              "number",
+              "activity",
+              "produce",
+              "religious-association",
+              "assembly-or-law",
+              "season",
+              "empty-slot"
+            ],
+            "examples": {}
+          }
+        }
+      ],
       "notes": []
     },
     {

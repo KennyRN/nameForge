@@ -1,0 +1,1872 @@
+{
+  "$comment": "Plain-word rendering (part 1a) of place-shapes.json generics. An empty plural means no usable plural: plural simplex falls back to the singular.",
+  "version": 1,
+  "words": {
+    "enclosed-farmstead": {
+      "words": [
+        "farmstead"
+      ],
+      "plurals": [
+        "farmsteads"
+      ]
+    },
+    "estate-manor-centre": {
+      "words": [
+        "estate"
+      ],
+      "plurals": [
+        "estates"
+      ]
+    },
+    "village": {
+      "words": [
+        "village"
+      ],
+      "plurals": [
+        "villages"
+      ]
+    },
+    "early-homestead-or-village": {
+      "words": [
+        "homestead"
+      ],
+      "plurals": [
+        "homesteads"
+      ]
+    },
+    "homestead-site": {
+      "words": [
+        "homestead"
+      ],
+      "plurals": [
+        "homesteads"
+      ]
+    },
+    "norse-farm": {
+      "words": [
+        "farm"
+      ],
+      "plurals": [
+        "farms"
+      ]
+    },
+    "enclosed-farm-garth": {
+      "words": [
+        "farm"
+      ],
+      "plurals": [
+        "farms"
+      ]
+    },
+    "enclosed-settlement": {
+      "words": [
+        "enclosure"
+      ],
+      "plurals": [
+        "enclosures"
+      ]
+    },
+    "farm-township": {
+      "words": [
+        "township"
+      ],
+      "plurals": [
+        "townships"
+      ]
+    },
+    "home-farm-of-an-estate": {
+      "words": [
+        "home farm"
+      ],
+      "plurals": [
+        "home farms"
+      ]
+    },
+    "land-holding-share-of-land": {
+      "words": [
+        "holding"
+      ],
+      "plurals": [
+        "holdings"
+      ]
+    },
+    "folk-group-territory": {
+      "words": [
+        "people"
+      ],
+      "plurals": [
+        ""
+      ]
+    },
+    "dependent-or-secondary-settlement": {
+      "words": [
+        "hamlet"
+      ],
+      "plurals": [
+        "hamlets"
+      ]
+    },
+    "outlying-place-dependent-site": {
+      "words": [
+        "outlying farm"
+      ],
+      "plurals": [
+        "outlying farms"
+      ]
+    },
+    "outlying-grain-farm": {
+      "words": [
+        "outlying farm"
+      ],
+      "plurals": [
+        "outlying farms"
+      ]
+    },
+    "specialised-farm": {
+      "words": [
+        "dairy farm"
+      ],
+      "plurals": [
+        "dairy farms"
+      ]
+    },
+    "monastic-outlying-farm": {
+      "words": [
+        "grange"
+      ],
+      "plurals": [
+        "granges"
+      ]
+    },
+    "cattle-farm": {
+      "words": [
+        "cattle farm"
+      ],
+      "plurals": [
+        "cattle farms"
+      ]
+    },
+    "cottars-settlement": {
+      "words": [
+        "cottages"
+      ],
+      "plurals": [
+        ""
+      ]
+    },
+    "house": {
+      "words": [
+        "house"
+      ],
+      "plurals": [
+        "houses"
+      ]
+    },
+    "dwelling": {
+      "words": [
+        "house"
+      ],
+      "plurals": [
+        "houses"
+      ]
+    },
+    "building-dwelling": {
+      "words": [
+        "building"
+      ],
+      "plurals": [
+        "buildings"
+      ]
+    },
+    "hall": {
+      "words": [
+        "hall"
+      ],
+      "plurals": [
+        "halls"
+      ]
+    },
+    "house-plot": {
+      "words": [
+        "plot"
+      ],
+      "plurals": [
+        "plots"
+      ]
+    },
+    "small-enclosed-field-by-a-house": {
+      "words": [
+        "croft"
+      ],
+      "plurals": [
+        "crofts"
+      ]
+    },
+    "cottage": {
+      "words": [
+        "cottage"
+      ],
+      "plurals": [
+        "cottages"
+      ]
+    },
+    "hut-temporary-shelter": {
+      "words": [
+        "hut"
+      ],
+      "plurals": [
+        "huts"
+      ]
+    },
+    "workshop-or-store-building": {
+      "words": [
+        "workshop"
+      ],
+      "plurals": [
+        "workshops"
+      ]
+    },
+    "summer-upland-dwelling": {
+      "words": [
+        "summer farm"
+      ],
+      "plurals": [
+        "summer farms"
+      ]
+    },
+    "permanent-or-winter-lowland-dwelling": {
+      "words": [
+        "winter farm"
+      ],
+      "plurals": [
+        "winter farms"
+      ]
+    },
+    "shieling-summer-pasture-hut": {
+      "words": [
+        "summer hut"
+      ],
+      "plurals": [
+        "summer huts"
+      ]
+    },
+    "hut-at-summer-pasture": {
+      "words": [
+        "summer hut"
+      ],
+      "plurals": [
+        "summer huts"
+      ]
+    },
+    "salt-works": {
+      "words": [
+        "saltworks"
+      ],
+      "plurals": [
+        ""
+      ]
+    },
+    "salt-house": {
+      "words": [
+        "saltworks"
+      ],
+      "plurals": [
+        ""
+      ]
+    },
+    "mill": {
+      "words": [
+        "mill"
+      ],
+      "plurals": [
+        "mills"
+      ]
+    },
+    "kiln": {
+      "words": [
+        "kiln"
+      ],
+      "plurals": [
+        "kilns"
+      ]
+    },
+    "pit-quarry": {
+      "words": [
+        "pit",
+        "quarry"
+      ],
+      "plurals": [
+        "pits",
+        "quarries"
+      ]
+    },
+    "fish-weir": {
+      "words": [
+        "weir"
+      ],
+      "plurals": [
+        "weirs"
+      ]
+    },
+    "trading-place": {
+      "words": [
+        "market"
+      ],
+      "plurals": [
+        "markets"
+      ]
+    },
+    "market": {
+      "words": [
+        "market"
+      ],
+      "plurals": [
+        "markets"
+      ]
+    },
+    "market-town-harbour": {
+      "words": [
+        "port"
+      ],
+      "plurals": [
+        "ports"
+      ]
+    },
+    "landing-place": {
+      "words": [
+        "landing"
+      ],
+      "plurals": [
+        "landings"
+      ]
+    },
+    "haven": {
+      "words": [
+        "haven"
+      ],
+      "plurals": [
+        "havens"
+      ]
+    },
+    "british-church-community": {
+      "words": [
+        "church"
+      ],
+      "plurals": [
+        "churches"
+      ]
+    },
+    "church": {
+      "words": [
+        "church"
+      ],
+      "plurals": [
+        "churches"
+      ]
+    },
+    "minster-mother-church": {
+      "words": [
+        "minster"
+      ],
+      "plurals": [
+        "minsters"
+      ]
+    },
+    "saints-church-enclosure": {
+      "words": [
+        "church"
+      ],
+      "plurals": [
+        "churches"
+      ]
+    },
+    "hermitage-retreat": {
+      "words": [
+        "hermitage"
+      ],
+      "plurals": [
+        "hermitages"
+      ]
+    },
+    "chapel": {
+      "words": [
+        "chapel"
+      ],
+      "plurals": [
+        "chapels"
+      ]
+    },
+    "holy-place": {
+      "words": [
+        "holy place"
+      ],
+      "plurals": [
+        "holy places"
+      ]
+    },
+    "standing-cross": {
+      "words": [
+        "cross"
+      ],
+      "plurals": [
+        "crosses"
+      ]
+    },
+    "heathen-temple": {
+      "words": [
+        "temple"
+      ],
+      "plurals": [
+        "temples"
+      ]
+    },
+    "shrine-idol": {
+      "words": [
+        "shrine"
+      ],
+      "plurals": [
+        "shrines"
+      ]
+    },
+    "sacred-grove": {
+      "words": [
+        "sacred grove"
+      ],
+      "plurals": [
+        "sacred groves"
+      ]
+    },
+    "holy-spring": {
+      "words": [
+        "holy well"
+      ],
+      "plurals": [
+        "holy wells"
+      ]
+    },
+    "grave": {
+      "words": [
+        "grave"
+      ],
+      "plurals": [
+        "graves"
+      ]
+    },
+    "burial-ground-churchyard": {
+      "words": [
+        "graveyard"
+      ],
+      "plurals": [
+        "graveyards"
+      ]
+    },
+    "burial-mound": {
+      "words": [
+        "barrow"
+      ],
+      "plurals": [
+        "barrows"
+      ]
+    },
+    "cairn": {
+      "words": [
+        "cairn"
+      ],
+      "plurals": [
+        "cairns"
+      ]
+    },
+    "fortified-place-stronghold": {
+      "words": [
+        "fort"
+      ],
+      "plurals": [
+        "forts"
+      ]
+    },
+    "earthen-ringfort": {
+      "words": [
+        "ringfort"
+      ],
+      "plurals": [
+        "ringforts"
+      ]
+    },
+    "fort": {
+      "words": [
+        "fort"
+      ],
+      "plurals": [
+        "forts"
+      ]
+    },
+    "roman-walled-town-or-fort": {
+      "words": [
+        "walled town"
+      ],
+      "plurals": [
+        "walled towns"
+      ]
+    },
+    "castle": {
+      "words": [
+        "castle"
+      ],
+      "plurals": [
+        "castles"
+      ]
+    },
+    "tower-house": {
+      "words": [
+        "tower"
+      ],
+      "plurals": [
+        "towers"
+      ]
+    },
+    "fortified-farmhouse": {
+      "words": [
+        "fortified farm"
+      ],
+      "plurals": [
+        "fortified farms"
+      ]
+    },
+    "lookout-hill": {
+      "words": [
+        "lookout"
+      ],
+      "plurals": [
+        "lookouts"
+      ]
+    },
+    "beacon": {
+      "words": [
+        "beacon"
+      ],
+      "plurals": [
+        "beacons"
+      ]
+    },
+    "dyke-boundary-earthwork": {
+      "words": [
+        "dyke",
+        "earthwork"
+      ],
+      "plurals": [
+        "dykes",
+        "earthworks"
+      ]
+    },
+    "wall": {
+      "words": [
+        "wall"
+      ],
+      "plurals": [
+        "walls"
+      ]
+    },
+    "ship-camp-fortified-anchorage": {
+      "words": [
+        "ship camp"
+      ],
+      "plurals": [
+        "ship camps"
+      ]
+    },
+    "royal-or-lordly-court": {
+      "words": [
+        "court"
+      ],
+      "plurals": [
+        "courts"
+      ]
+    },
+    "lords-hall": {
+      "words": [
+        "hall"
+      ],
+      "plurals": [
+        "halls"
+      ]
+    },
+    "manor-house": {
+      "words": [
+        "manor"
+      ],
+      "plurals": [
+        "manors"
+      ]
+    },
+    "welsh-administrative-manor": {
+      "words": [
+        "manor"
+      ],
+      "plurals": [
+        "manors"
+      ]
+    },
+    "assembly-field": {
+      "words": [
+        "moot field"
+      ],
+      "plurals": [
+        "moot fields"
+      ]
+    },
+    "assembly-mound": {
+      "words": [
+        "moot hill"
+      ],
+      "plurals": [
+        "moot hills"
+      ]
+    },
+    "speech-place": {
+      "words": [
+        "moot"
+      ],
+      "plurals": [
+        "moots"
+      ]
+    },
+    "meeting-place": {
+      "words": [
+        "moot"
+      ],
+      "plurals": [
+        "moots"
+      ]
+    },
+    "boundary": {
+      "words": [
+        "boundary"
+      ],
+      "plurals": [
+        "boundaries"
+      ]
+    },
+    "execution-site": {
+      "words": [
+        "gallows"
+      ],
+      "plurals": [
+        ""
+      ]
+    },
+    "place-for-games-or-sport": {
+      "words": [
+        "games field"
+      ],
+      "plurals": [
+        "games fields"
+      ]
+    },
+    "bath-spa": {
+      "words": [
+        "bath"
+      ],
+      "plurals": [
+        "baths"
+      ]
+    },
+    "river": {
+      "words": [
+        "river"
+      ],
+      "plurals": [
+        "rivers"
+      ]
+    },
+    "clear-stream": {
+      "words": [
+        "stream"
+      ],
+      "plurals": [
+        "streams"
+      ]
+    },
+    "sluggish-or-muddy-stream": {
+      "words": [
+        "brook"
+      ],
+      "plurals": [
+        "brooks"
+      ]
+    },
+    "mountain-stream": {
+      "words": [
+        "stream"
+      ],
+      "plurals": [
+        "streams"
+      ]
+    },
+    "stream-with-its-valley": {
+      "words": [
+        "stream"
+      ],
+      "plurals": [
+        "streams"
+      ]
+    },
+    "river-source-spring-head": {
+      "words": [
+        "spring"
+      ],
+      "plurals": [
+        "springs"
+      ]
+    },
+    "river-mouth": {
+      "words": [
+        "mouth"
+      ],
+      "plurals": [
+        "mouths"
+      ]
+    },
+    "confluence": {
+      "words": [
+        "watersmeet"
+      ],
+      "plurals": [
+        ""
+      ]
+    },
+    "waterfall": {
+      "words": [
+        "waterfall",
+        "falls"
+      ],
+      "plurals": [
+        "waterfalls",
+        ""
+      ]
+    },
+    "spring-well": {
+      "words": [
+        "spring",
+        "well"
+      ],
+      "plurals": [
+        "springs",
+        "wells"
+      ]
+    },
+    "spring-with-roman-association": {
+      "words": [
+        "well"
+      ],
+      "plurals": [
+        "wells"
+      ]
+    },
+    "pool": {
+      "words": [
+        "pool"
+      ],
+      "plurals": [
+        "pools"
+      ]
+    },
+    "mere-shallow-lake": {
+      "words": [
+        "mere"
+      ],
+      "plurals": [
+        "meres"
+      ]
+    },
+    "lake": {
+      "words": [
+        "lake"
+      ],
+      "plurals": [
+        "lakes"
+      ]
+    },
+    "small-mountain-lake": {
+      "words": [
+        "tarn"
+      ],
+      "plurals": [
+        "tarns"
+      ]
+    },
+    "marsh": {
+      "words": [
+        "marsh"
+      ],
+      "plurals": [
+        "marshes"
+      ]
+    },
+    "fen": {
+      "words": [
+        "fen"
+      ],
+      "plurals": [
+        "fens"
+      ]
+    },
+    "lowland-marsh": {
+      "words": [
+        "marsh"
+      ],
+      "plurals": [
+        "marshes"
+      ]
+    },
+    "brushwood-marsh-carr": {
+      "words": [
+        "marsh"
+      ],
+      "plurals": [
+        "marshes"
+      ]
+    },
+    "mire": {
+      "words": [
+        "mire"
+      ],
+      "plurals": [
+        "mires"
+      ]
+    },
+    "miry-pool-wallowing-place": {
+      "words": [
+        "wallow"
+      ],
+      "plurals": [
+        "wallows"
+      ]
+    },
+    "peat-bog-moss": {
+      "words": [
+        "bog"
+      ],
+      "plurals": [
+        "bogs"
+      ]
+    },
+    "bog": {
+      "words": [
+        "bog"
+      ],
+      "plurals": [
+        "bogs"
+      ]
+    },
+    "flood-prone-land-by-a-river": {
+      "words": [
+        "wash"
+      ],
+      "plurals": [
+        "washes"
+      ]
+    },
+    "island": {
+      "words": [
+        "island"
+      ],
+      "plurals": [
+        "islands"
+      ]
+    },
+    "dry-ground-in-wet-land": {
+      "words": [
+        "island"
+      ],
+      "plurals": [
+        "islands"
+      ]
+    },
+    "land-in-a-river-bend": {
+      "words": [
+        "river bend"
+      ],
+      "plurals": [
+        "river bends"
+      ]
+    },
+    "water-meadow": {
+      "words": [
+        "water meadow"
+      ],
+      "plurals": [
+        "water meadows"
+      ]
+    },
+    "skerry-rock-islet": {
+      "words": [
+        "islet",
+        "skerry"
+      ],
+      "plurals": [
+        "islets",
+        "skerries"
+      ]
+    },
+    "headland": {
+      "words": [
+        "headland"
+      ],
+      "plurals": [
+        "headlands"
+      ]
+    },
+    "point-nose": {
+      "words": [
+        "point"
+      ],
+      "plurals": [
+        "points"
+      ]
+    },
+    "promontory": {
+      "words": [
+        "headland"
+      ],
+      "plurals": [
+        "headlands"
+      ]
+    },
+    "sea-inlet-firth": {
+      "words": [
+        "firth"
+      ],
+      "plurals": [
+        "firths"
+      ]
+    },
+    "bay": {
+      "words": [
+        "bay"
+      ],
+      "plurals": [
+        "bays"
+      ]
+    },
+    "small-bay-creek": {
+      "words": [
+        "creek"
+      ],
+      "plurals": [
+        "creeks"
+      ]
+    },
+    "cove": {
+      "words": [
+        "cove"
+      ],
+      "plurals": [
+        "coves"
+      ]
+    },
+    "strait-sound": {
+      "words": [
+        "strait",
+        "sound"
+      ],
+      "plurals": [
+        "straits",
+        "sounds"
+      ]
+    },
+    "estuary": {
+      "words": [
+        "estuary"
+      ],
+      "plurals": [
+        "estuaries"
+      ]
+    },
+    "beach-strand": {
+      "words": [
+        "beach"
+      ],
+      "plurals": [
+        "beaches"
+      ]
+    },
+    "sand-dunes-sandy-shore": {
+      "words": [
+        "sands"
+      ],
+      "plurals": [
+        ""
+      ]
+    },
+    "shingle-bank": {
+      "words": [
+        "shingle"
+      ],
+      "plurals": [
+        ""
+      ]
+    },
+    "sea-cliff": {
+      "words": [
+        "cliff"
+      ],
+      "plurals": [
+        "cliffs"
+      ]
+    },
+    "coastal-chasm-geo": {
+      "words": [
+        "geo"
+      ],
+      "plurals": [
+        "geos"
+      ]
+    },
+    "river-crossing": {
+      "words": [
+        "ford"
+      ],
+      "plurals": [
+        "fords"
+      ]
+    },
+    "causeway": {
+      "words": [
+        "causeway"
+      ],
+      "plurals": [
+        "causeways"
+      ]
+    },
+    "bridge": {
+      "words": [
+        "bridge"
+      ],
+      "plurals": [
+        "bridges"
+      ]
+    },
+    "ferry": {
+      "words": [
+        "ferry"
+      ],
+      "plurals": [
+        "ferries"
+      ]
+    },
+    "paved-or-roman-road": {
+      "words": [
+        "street"
+      ],
+      "plurals": [
+        "streets"
+      ]
+    },
+    "way-track": {
+      "words": [
+        "way"
+      ],
+      "plurals": [
+        "ways"
+      ]
+    },
+    "lane": {
+      "words": [
+        "lane"
+      ],
+      "plurals": [
+        "lanes"
+      ]
+    },
+    "pass": {
+      "words": [
+        "pass"
+      ],
+      "plurals": [
+        "passes"
+      ]
+    },
+    "gap-notch": {
+      "words": [
+        "gap"
+      ],
+      "plurals": [
+        "gaps"
+      ]
+    },
+    "swing-gate": {
+      "words": [
+        "gate"
+      ],
+      "plurals": [
+        "gates"
+      ]
+    },
+    "isthmus-portage": {
+      "words": [
+        "isthmus"
+      ],
+      "plurals": [
+        "isthmuses"
+      ]
+    },
+    "wood": {
+      "words": [
+        "wood"
+      ],
+      "plurals": [
+        "woods"
+      ]
+    },
+    "single-species-wood": {
+      "words": [
+        "wood"
+      ],
+      "plurals": [
+        "woods"
+      ]
+    },
+    "great-woodland": {
+      "words": [
+        "forest"
+      ],
+      "plurals": [
+        "forests"
+      ]
+    },
+    "royal-hunting-ground": {
+      "words": [
+        "chase"
+      ],
+      "plurals": [
+        "chases"
+      ]
+    },
+    "park": {
+      "words": [
+        "park"
+      ],
+      "plurals": [
+        "parks"
+      ]
+    },
+    "grove": {
+      "words": [
+        "grove"
+      ],
+      "plurals": [
+        "groves"
+      ]
+    },
+    "grove-small-wood": {
+      "words": [
+        "grove"
+      ],
+      "plurals": [
+        "groves"
+      ]
+    },
+    "grove-possibly-sacred": {
+      "words": [
+        "grove"
+      ],
+      "plurals": [
+        "groves"
+      ]
+    },
+    "strip-of-woodland-shaw": {
+      "words": [
+        "copse"
+      ],
+      "plurals": [
+        "copses"
+      ]
+    },
+    "wood-on-a-steep-slope": {
+      "words": [
+        "wood"
+      ],
+      "plurals": [
+        "woods"
+      ]
+    },
+    "wooded-hill": {
+      "words": [
+        "wooded hill"
+      ],
+      "plurals": [
+        "wooded hills"
+      ]
+    },
+    "scrubland": {
+      "words": [
+        "scrub"
+      ],
+      "plurals": [
+        ""
+      ]
+    },
+    "thicket": {
+      "words": [
+        "thicket"
+      ],
+      "plurals": [
+        "thickets"
+      ]
+    },
+    "woodland-then-clearing": {
+      "words": [
+        "clearing"
+      ],
+      "plurals": [
+        "clearings"
+      ]
+    },
+    "newly-cleared-land-assart": {
+      "words": [
+        "assart"
+      ],
+      "plurals": [
+        "assarts"
+      ]
+    },
+    "clearing-paddock": {
+      "words": [
+        "clearing"
+      ],
+      "plurals": [
+        "clearings"
+      ]
+    },
+    "woodland-swine-pasture": {
+      "words": [
+        "swine pasture"
+      ],
+      "plurals": [
+        "swine pastures"
+      ]
+    },
+    "low-level-topped-hill": {
+      "words": [
+        "down"
+      ],
+      "plurals": [
+        "downs"
+      ]
+    },
+    "hill": {
+      "words": [
+        "hill"
+      ],
+      "plurals": [
+        "hills"
+      ]
+    },
+    "heel-shaped-spur": {
+      "words": [
+        "spur"
+      ],
+      "plurals": [
+        "spurs"
+      ]
+    },
+    "flat-topped-ridge": {
+      "words": [
+        "ridge"
+      ],
+      "plurals": [
+        "ridges"
+      ]
+    },
+    "ridge": {
+      "words": [
+        "ridge"
+      ],
+      "plurals": [
+        "ridges"
+      ]
+    },
+    "back-low-ridge": {
+      "words": [
+        "ridge"
+      ],
+      "plurals": [
+        "ridges"
+      ]
+    },
+    "edge-escarpment": {
+      "words": [
+        "edge"
+      ],
+      "plurals": [
+        "edges"
+      ]
+    },
+    "steep-slope-bank": {
+      "words": [
+        "bank"
+      ],
+      "plurals": [
+        "banks"
+      ]
+    },
+    "slope": {
+      "words": [
+        "slope"
+      ],
+      "plurals": [
+        "slopes"
+      ]
+    },
+    "terrace-lynchet": {
+      "words": [
+        "terrace"
+      ],
+      "plurals": [
+        "terraces"
+      ]
+    },
+    "knoll": {
+      "words": [
+        "knoll"
+      ],
+      "plurals": [
+        "knolls"
+      ]
+    },
+    "rounded-hill-mound": {
+      "words": [
+        "mound"
+      ],
+      "plurals": [
+        "mounds"
+      ]
+    },
+    "summit-top": {
+      "words": [
+        "top"
+      ],
+      "plurals": [
+        "tops"
+      ]
+    },
+    "upper-end-head": {
+      "words": [
+        "head"
+      ],
+      "plurals": [
+        "heads"
+      ]
+    },
+    "mountain": {
+      "words": [
+        "mountain"
+      ],
+      "plurals": [
+        "mountains"
+      ]
+    },
+    "fell": {
+      "words": [
+        "fell"
+      ],
+      "plurals": [
+        "fells"
+      ]
+    },
+    "pointed-hill": {
+      "words": [
+        "peak"
+      ],
+      "plurals": [
+        "peaks"
+      ]
+    },
+    "sharp-peak": {
+      "words": [
+        "peak"
+      ],
+      "plurals": [
+        "peaks"
+      ]
+    },
+    "tor": {
+      "words": [
+        "tor"
+      ],
+      "plurals": [
+        "tors"
+      ]
+    },
+    "crag": {
+      "words": [
+        "crag"
+      ],
+      "plurals": [
+        "crags"
+      ]
+    },
+    "stone": {
+      "words": [
+        "stone"
+      ],
+      "plurals": [
+        "stones"
+      ]
+    },
+    "cave": {
+      "words": [
+        "cave"
+      ],
+      "plurals": [
+        "caves"
+      ]
+    },
+    "upland-moor": {
+      "words": [
+        "moor"
+      ],
+      "plurals": [
+        "moors"
+      ]
+    },
+    "heath": {
+      "words": [
+        "heath"
+      ],
+      "plurals": [
+        "heaths"
+      ]
+    },
+    "wold": {
+      "words": [
+        "wold"
+      ],
+      "plurals": [
+        "wolds"
+      ]
+    },
+    "long-valley": {
+      "words": [
+        "valley"
+      ],
+      "plurals": [
+        "valleys"
+      ]
+    },
+    "dale": {
+      "words": [
+        "valley"
+      ],
+      "plurals": [
+        "valleys"
+      ]
+    },
+    "broad-valley": {
+      "words": [
+        "valley"
+      ],
+      "plurals": [
+        "valleys"
+      ]
+    },
+    "short-bowl-shaped-valley": {
+      "words": [
+        "valley"
+      ],
+      "plurals": [
+        "valleys"
+      ]
+    },
+    "narrow-valley-glen": {
+      "words": [
+        "glen"
+      ],
+      "plurals": [
+        "glens"
+      ]
+    },
+    "small-enclosed-side-valley": {
+      "words": [
+        "valley"
+      ],
+      "plurals": [
+        "valleys"
+      ]
+    },
+    "corrie": {
+      "words": [
+        "hollow"
+      ],
+      "plurals": [
+        "hollows"
+      ]
+    },
+    "ravine": {
+      "words": [
+        "ravine"
+      ],
+      "plurals": [
+        "ravines"
+      ]
+    },
+    "steep-bank-ravine-side": {
+      "words": [
+        "bank"
+      ],
+      "plurals": [
+        "banks"
+      ]
+    },
+    "shallow-damp-valley": {
+      "words": [
+        "valley"
+      ],
+      "plurals": [
+        "valleys"
+      ]
+    },
+    "river-cut-gorge": {
+      "words": [
+        "gorge"
+      ],
+      "plurals": [
+        "gorges"
+      ]
+    },
+    "hollow": {
+      "words": [
+        "hollow"
+      ],
+      "plurals": [
+        "hollows"
+      ]
+    },
+    "valley-bottom": {
+      "words": [
+        "bottom"
+      ],
+      "plurals": [
+        "bottoms"
+      ]
+    },
+    "valley-head": {
+      "words": [
+        "head"
+      ],
+      "plurals": [
+        "heads"
+      ]
+    },
+    "nook": {
+      "words": [
+        "nook"
+      ],
+      "plurals": [
+        "nooks"
+      ]
+    },
+    "corner-projecting-piece-of-land": {
+      "words": [
+        "corner"
+      ],
+      "plurals": [
+        "corners"
+      ]
+    },
+    "corner-angle": {
+      "words": [
+        "corner"
+      ],
+      "plurals": [
+        "corners"
+      ]
+    },
+    "bend-crook": {
+      "words": [
+        "bend"
+      ],
+      "plurals": [
+        "bends"
+      ]
+    },
+    "open-country": {
+      "words": [
+        "field"
+      ],
+      "plurals": [
+        "fields"
+      ]
+    },
+    "level-field": {
+      "words": [
+        "field"
+      ],
+      "plurals": [
+        "fields"
+      ]
+    },
+    "hay-meadow": {
+      "words": [
+        "meadow"
+      ],
+      "plurals": [
+        "meadows"
+      ]
+    },
+    "pasture": {
+      "words": [
+        "pasture"
+      ],
+      "plurals": [
+        "pastures"
+      ]
+    },
+    "arable-field": {
+      "words": [
+        "farmland"
+      ],
+      "plurals": [
+        ""
+      ]
+    },
+    "arable-unit": {
+      "words": [
+        "farmland"
+      ],
+      "plurals": [
+        ""
+      ]
+    },
+    "furlong": {
+      "words": [
+        "furlong"
+      ],
+      "plurals": [
+        "furlongs"
+      ]
+    },
+    "animal-fold": {
+      "words": [
+        "fold"
+      ],
+      "plurals": [
+        "folds"
+      ]
+    },
+    "hedged-enclosure": {
+      "words": [
+        "close"
+      ],
+      "plurals": [
+        "closes"
+      ]
+    },
+    "orchard": {
+      "words": [
+        "orchard"
+      ],
+      "plurals": [
+        "orchards"
+      ]
+    }
+  },
+  "rewrites": [
+    {
+      "generic": "folk-group-homestead",
+      "structure": "folk-connective",
+      "category": "personal-name",
+      "word": "homestead",
+      "plural": "homesteads"
+    },
+    {
+      "generic": "settlement-by-a-roman-site",
+      "category": "built-feature",
+      "word": "homestead",
+      "plural": "homesteads"
+    },
+    {
+      "generic": "island-of-irish-monks",
+      "category": "status-or-role",
+      "word": "island",
+      "plural": "islands"
+    }
+  ],
+  "variants": [
+    {
+      "generic": "enclosed-farm-garth",
+      "variant": "garth",
+      "plural": "garths",
+      "regions": [
+        "NSI",
+        "NTH",
+        "SBL"
+      ]
+    },
+    {
+      "generic": "house-plot",
+      "variant": "toft",
+      "plural": "tofts",
+      "regions": [
+        "NTH",
+        "EMD",
+        "EAN",
+        "NSI"
+      ]
+    },
+    {
+      "generic": "landing-place",
+      "variant": "hithe",
+      "plural": "hithes",
+      "regions": [
+        "SEA"
+      ]
+    },
+    {
+      "generic": "clear-stream",
+      "variant": "bourne",
+      "plural": "bournes",
+      "regions": [
+        "SEA",
+        "WCY"
+      ]
+    },
+    {
+      "generic": "mountain-stream",
+      "variant": "beck",
+      "plural": "becks",
+      "regions": [
+        "NTH",
+        "EMD"
+      ]
+    },
+    {
+      "generic": "mountain-stream",
+      "variant": "burn",
+      "plural": "burns",
+      "regions": [
+        "SBL",
+        "SLO"
+      ]
+    },
+    {
+      "generic": "waterfall",
+      "variant": "force",
+      "plural": "forces",
+      "regions": [
+        "NTH"
+      ]
+    },
+    {
+      "generic": "brushwood-marsh-carr",
+      "variant": "carr",
+      "plural": "carrs",
+      "regions": [
+        "NTH",
+        "EMD",
+        "EAN"
+      ]
+    },
+    {
+      "generic": "peat-bog-moss",
+      "variant": "moss",
+      "plural": "mosses",
+      "regions": [
+        "NTH",
+        "SBL",
+        "SLO"
+      ]
+    },
+    {
+      "generic": "dry-ground-in-wet-land",
+      "variant": "holm",
+      "plural": "holms",
+      "regions": [
+        "NTH",
+        "EMD",
+        "NSI"
+      ]
+    },
+    {
+      "generic": "single-species-wood",
+      "variant": "holt",
+      "plural": "holts",
+      "regions": [
+        "SEA",
+        "EAN"
+      ]
+    },
+    {
+      "generic": "strip-of-woodland-shaw",
+      "variant": "shaw",
+      "plural": "shaws",
+      "regions": [
+        "NTH",
+        "WMM"
+      ]
+    },
+    {
+      "generic": "wooded-hill",
+      "variant": "hurst",
+      "plural": "hursts",
+      "regions": [
+        "SEA"
+      ]
+    },
+    {
+      "generic": "clearing-paddock",
+      "variant": "thwaite",
+      "plural": "thwaites",
+      "regions": [
+        "NTH",
+        "SBL"
+      ]
+    },
+    {
+      "generic": "dale",
+      "variant": "dale",
+      "plural": "dales",
+      "regions": [
+        "NTH",
+        "EMD",
+        "SBL"
+      ]
+    },
+    {
+      "generic": "broad-valley",
+      "variant": "strath",
+      "plural": "straths",
+      "regions": [
+        "SLO",
+        "SHH"
+      ]
+    },
+    {
+      "generic": "short-bowl-shaped-valley",
+      "variant": "combe",
+      "plural": "combes",
+      "regions": [
+        "WCY",
+        "SEA"
+      ]
+    },
+    {
+      "generic": "small-enclosed-side-valley",
+      "variant": "hope",
+      "plural": "hopes",
+      "regions": [
+        "SBL",
+        "WMM"
+      ]
+    },
+    {
+      "generic": "ravine",
+      "variant": "gill",
+      "plural": "gills",
+      "regions": [
+        "NTH",
+        "SBL"
+      ]
+    }
+  ]
+}

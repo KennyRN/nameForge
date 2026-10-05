@@ -8,6 +8,7 @@
 
 import data from "./data/place-shapes.json";
 import regionData from "./data/place-shape-regions.json";
+import wordData from "./data/place-shape-words.json";
 import { mulberry32 } from "./markov";
 
 // ── Weights and probabilities ───────────────────────────────────────────────
@@ -45,14 +46,22 @@ const STACK_SOURCE_GROUP = "settlement-farms-and-estates";
 const EMPTY_SLOT = "empty-slot";
 const PERSONAL_NAME = "personal-name";
 
-/** The label recorded in generation history for place-shape batches. */
+/** How generics are written: their bracketed Meaning (part 1) or a plain English word (part 1a). */
+export type ShapeWording = "meaning" | "plain";
+
+/** The labels recorded in generation history, one per generator. */
 export const PLACE_SHAPES_HISTORY_NAME = "place name shapes";
+export const GENERIC_PLACE_NAMES_HISTORY_NAME = "generic place name generator";
 
 /** History label for a batch: the region is part of what reproduces it, so it travels with the seed. */
-export function placeShapesHistoryLabel(regionCode?: string): string {
+export function placeShapesHistoryLabel(regionCode?: string, wording: ShapeWording = "meaning"): string {
+  const name = wording === "plain" ? GENERIC_PLACE_NAMES_HISTORY_NAME : PLACE_SHAPES_HISTORY_NAME;
   const region = regionCode ? findRegion(regionCode) : undefined;
-  return region ? `${PLACE_SHAPES_HISTORY_NAME} · ${region.label}` : PLACE_SHAPES_HISTORY_NAME;
+  return region ? `${name} · ${region.label}` : name;
 }
+
+/** Salt for the secondary RNG used only by plain-word choices, so the main stream is never touched. */
+const PLAIN_WORDING_SALT = 0x1a1a1a1a;
 
 // ── Data types ──────────────────────────────────────────────────────────────
 
@@ -259,12 +268,16 @@ export interface PlaceShapeGenerateOptions {
   region?: string;
   /** Restricts which generic groups are eligible. Not exposed in the UI; used by tests. */
   groupIds?: string[];
+  /** Output wording; shapes are chosen identically either way. Defaults to "meaning". */
+  wording?: ShapeWording;
 }
 
 export interface PlaceShapeGenerateResult {
   shapes: PlaceShape[];
   names: string[];
   seed: number;
+  /** The main RNG's next draw after the batch — lets tests confirm wording never touches it. */
+  mainRngNext: number;
 }
 
 function pickUniform<T>(items: readonly T[], rng: () => number): T {
@@ -405,19 +418,27 @@ export function generatePlaceShapesDetailed(
   const generator = createGenerator(options, source);
   const formatter = new PlaceShapeFormatter(source);
 
+  // Duplicates are judged on the Meaning text in every wording, so a plain-word batch is the
+  // same batch of shapes, position by position (plain words can therefore repeat a line).
   const count = Math.max(0, Math.floor(options.count));
   const shapes: PlaceShape[] = [];
-  const names: string[] = [];
   const seen = new Set<string>();
-  for (let attempt = 0; names.length < count && attempt < count * 50; attempt++) {
+  for (let attempt = 0; shapes.length < count && attempt < count * 50; attempt++) {
     const shape = generator.next(rng);
     const text = formatter.format(shape);
     if (seen.has(text)) continue;
     seen.add(text);
     shapes.push(shape);
-    names.push(text);
   }
-  return { shapes, names, seed };
+
+  let names: string[];
+  if (options.wording === "plain") {
+    const pick = mulberry32((seed ^ PLAIN_WORDING_SALT) >>> 0);
+    names = shapes.map((shape) => formatter.formatPlain(shape, options.region, pick));
+  } else {
+    names = shapes.map((shape) => formatter.format(shape));
+  }
+  return { shapes, names, seed, mainRngNext: rng() };
 }
 
 /** `count` raw shapes, duplicates kept — for measuring the distribution itself. */
@@ -432,46 +453,102 @@ export function samplePlaceShapes(
 
 // ── Output ──────────────────────────────────────────────────────────────────
 
+export interface PlaceShapeWordData {
+  version: number;
+  /** Per generic: alternative words (picked evenly) and their plurals ("" = no usable plural). */
+  words: Record<string, { words: string[]; plurals: string[] }>;
+  /** Generics with no plain word: the drawn category is replaced and a fixed word used. */
+  rewrites: { generic: string; structure?: ShapeStructure; category: string; word: string; plural: string }[];
+  /** Dialect word shown in brackets after the plain word, in the listed regions only. */
+  variants: { generic: string; variant: string; plural: string; regions: string[] }[];
+}
+
+export const PLACE_SHAPE_WORD_DATA = wordData as unknown as PlaceShapeWordData;
+
+const bracket = (label: string | undefined) => `[${(label ?? "?").toLowerCase()}]`;
+
 export class PlaceShapeFormatter {
   private readonly generics = new Map<string, string>();
   private readonly categories = new Map<string, string>();
 
-  constructor(source: PlaceShapeData = PLACE_SHAPE_DATA) {
+  constructor(
+    source: PlaceShapeData = PLACE_SHAPE_DATA,
+    private readonly words: PlaceShapeWordData = PLACE_SHAPE_WORD_DATA,
+  ) {
     for (const group of source.groups) {
       for (const generic of group.generics) this.generics.set(generic.id, generic.meaning);
     }
     for (const category of source.categories) this.categories.set(category.id, category.label);
   }
 
+  /** Part 1 wording: every generic as its bracketed Meaning. */
   format(shape: PlaceShape): string {
-    const bracket = (label: string | undefined) => `[${(label ?? "?").toLowerCase()}]`;
-    const generic = bracket(this.generics.get(shape.genericId));
+    return this.layout(shape, (id, plural) => `${bracket(this.generics.get(id))}${plural ? " (plural)" : ""}`);
+  }
+
+  /**
+   * Part 1a wording: generics as plain words, with dropped generics rewritten and regional
+   * variants added. `pick` is the secondary RNG; it is only drawn when a generic has two words.
+   */
+  formatPlain(shape: PlaceShape, region: string | undefined, pick: () => number): string {
+    const rewrite = this.words.rewrites.find((r) => r.generic === shape.genericId);
+    const effective: PlaceShape = rewrite
+      ? {
+          ...shape,
+          categoryId: rewrite.category,
+          structure:
+            rewrite.structure ??
+            (shape.structure === "folk-connective" || shape.structure === "associative-connective"
+              ? "two-part-compound"
+              : shape.structure),
+        }
+      : shape;
+
+    return this.layout(effective, (id, plural) => {
+      if (rewrite && id === shape.genericId) return plural ? rewrite.plural || rewrite.word : rewrite.word;
+      const entry = this.words.words[id];
+      if (!entry) return bracket(this.generics.get(id));
+      const i = entry.words.length > 1 ? Math.floor(pick() * entry.words.length) : 0;
+      const usePlural = plural && entry.plurals[i] !== "";
+      const word = usePlural ? entry.plurals[i] : entry.words[i];
+      const variant = region
+        ? this.words.variants.find((v) => v.generic === id && v.regions.includes(region))
+        : undefined;
+      return variant ? `${word} (${usePlural ? variant.plural : variant.variant})` : word;
+    });
+  }
+
+  private layout(shape: PlaceShape, genericText: (id: string, plural: boolean) => string): string {
     const specific = bracket(this.categories.get(shape.categoryId));
 
     let text: string;
     switch (shape.structure) {
       case "simplex":
-        text = generic;
+        text = genericText(shape.genericId, false);
         break;
       case "plural-simplex":
-        text = `${generic} (plural)`;
+        text = genericText(shape.genericId, true);
         break;
       case "folk-connective":
-        text = `${specific} + [people of] + ${generic}`;
+        text = `${specific} + [people of] + ${genericText(shape.genericId, false)}`;
         break;
       case "associative-connective":
-        text = `${specific} + [associated with] + ${generic}`;
+        text = `${specific} + [associated with] + ${genericText(shape.genericId, false)}`;
         break;
-      case "stacked-generic":
-        text = `${specific} + ${generic} + ${bracket(this.generics.get(shape.stackedGenericId ?? ""))}`;
+      case "stacked-generic": {
+        const generic = genericText(shape.genericId, false);
+        text = `${specific} + ${generic} + ${genericText(shape.stackedGenericId ?? "", false)}`;
         break;
-      default:
+      }
+      default: {
+        const generic = genericText(shape.genericId, false);
         text =
           shape.wordOrder === "celtic-direct"
             ? `${generic} + ${specific}`
             : shape.wordOrder === "celtic-linked"
               ? `${generic} of the ${specific}`
               : `${specific} + ${generic}`;
+      }
     }
 
     if (shape.affix) {

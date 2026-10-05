@@ -28,6 +28,11 @@
       "counties": "Herefordshire, Shropshire, Worcestershire, Staffordshire, Warwickshire, Cheshire"
     },
     {
+      "code": "WAL",
+      "label": "Wales",
+      "counties": "All thirteen historic Welsh counties"
+    },
+    {
       "code": "EMD",
       "label": "East Midlands",
       "counties": "Lincolnshire, Nottinghamshire, Derbyshire, Leicestershire, Rutland, Northamptonshire"
@@ -41,11 +46,6 @@
       "code": "SBL",
       "label": "Scottish Borderlands",
       "counties": "Northumberland, northern Cumberland, Berwickshire, Roxburghshire, Selkirkshire, Peeblesshire, Dumfriesshire"
-    },
-    {
-      "code": "WAL",
-      "label": "Wales",
-      "counties": "All thirteen historic Welsh counties"
     },
     {
       "code": "SLO",
@@ -199,7 +199,7 @@
       "hollows-and-corners": 1.25,
       "open-and-farmed-land": 1
     },
-    "EMD": {
+    "WAL": {
       "settlement-farms-and-estates": 2,
       "settlement-status-and-relationship": 2,
       "dwellings-and-buildings": 1,
@@ -226,7 +226,7 @@
       "hollows-and-corners": 0.75,
       "open-and-farmed-land": 1
     },
-    "NTH": {
+    "EMD": {
       "settlement-farms-and-estates": 1.5,
       "settlement-status-and-relationship": 1.25,
       "dwellings-and-buildings": 1,
@@ -253,7 +253,7 @@
       "hollows-and-corners": 0.75,
       "open-and-farmed-land": 1
     },
-    "SBL": {
+    "NTH": {
       "settlement-farms-and-estates": 1.25,
       "settlement-status-and-relationship": 0.75,
       "dwellings-and-buildings": 1,
@@ -280,7 +280,7 @@
       "hollows-and-corners": 0.75,
       "open-and-farmed-land": 0.75
     },
-    "WAL": {
+    "SBL": {
       "settlement-farms-and-estates": 1.25,
       "settlement-status-and-relationship": 0.25,
       "dwellings-and-buildings": 1.25,
@@ -996,6 +996,18 @@
       "present": [
         "SLO",
         "NTH"
+      ]
+    },
+    {
+      "generic": "river-cut-gorge",
+      "home": [
+        "WCY"
+      ],
+      "present": [
+        "NTH",
+        "EMD",
+        "WAL",
+        "SHH"
       ]
     }
   ],
