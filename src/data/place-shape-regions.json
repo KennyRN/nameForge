@@ -1,0 +1,1329 @@
+{
+  "$comment": "Regional weighting for place-name shapes. Data only: multiplies part 1 weights in place-shapes.json, keyed by its ids. Counties are for documentation and tooltips; landscapeShareSettlement is recorded but unused (no feature filter).",
+  "version": 1,
+  "regions": [
+    {
+      "code": "COR",
+      "label": "Cornwall",
+      "counties": "Cornwall, Isles of Scilly"
+    },
+    {
+      "code": "WCY",
+      "label": "West Country",
+      "counties": "Devon, Somerset, Dorset, Wiltshire, Gloucestershire"
+    },
+    {
+      "code": "SEA",
+      "label": "South East",
+      "counties": "Kent, Sussex, Surrey, Hampshire, Berkshire, Oxfordshire, Buckinghamshire, Bedfordshire, Hertfordshire, Middlesex, Essex"
+    },
+    {
+      "code": "EAN",
+      "label": "East Anglia",
+      "counties": "Norfolk, Suffolk, Cambridgeshire, Huntingdonshire"
+    },
+    {
+      "code": "WMM",
+      "label": "West Midlands and Marches",
+      "counties": "Herefordshire, Shropshire, Worcestershire, Staffordshire, Warwickshire, Cheshire"
+    },
+    {
+      "code": "EMD",
+      "label": "East Midlands",
+      "counties": "Lincolnshire, Nottinghamshire, Derbyshire, Leicestershire, Rutland, Northamptonshire"
+    },
+    {
+      "code": "NTH",
+      "label": "North",
+      "counties": "Yorkshire, Durham, Lancashire, Westmorland, southern Cumberland"
+    },
+    {
+      "code": "SBL",
+      "label": "Scottish Borderlands",
+      "counties": "Northumberland, northern Cumberland, Berwickshire, Roxburghshire, Selkirkshire, Peeblesshire, Dumfriesshire"
+    },
+    {
+      "code": "WAL",
+      "label": "Wales",
+      "counties": "All thirteen historic Welsh counties"
+    },
+    {
+      "code": "SLO",
+      "label": "Scottish Lowlands",
+      "counties": "East, Mid and West Lothian, Lanarkshire, Renfrewshire, Ayrshire, Wigtownshire, Kirkcudbrightshire, Stirlingshire, Clackmannanshire, Kinross-shire, Fife, Angus, Kincardineshire, Aberdeenshire, Banffshire, Moray, Nairnshire"
+    },
+    {
+      "code": "SHH",
+      "label": "Scottish Highlands and Hebrides",
+      "counties": "Argyll, Bute, Dunbartonshire, Perthshire, Inverness-shire, Ross and Cromarty, Sutherland, Inner and Outer Hebrides"
+    },
+    {
+      "code": "NSI",
+      "label": "Northern Scottish Isles",
+      "counties": "Orkney, Shetland, Caithness"
+    }
+  ],
+  "groupMultipliers": {
+    "COR": {
+      "settlement-farms-and-estates": 1.5,
+      "settlement-status-and-relationship": 0.5,
+      "dwellings-and-buildings": 1.5,
+      "seasonal-and-upland-settlement": 1,
+      "industry-and-trade": 0.75,
+      "religious-christian": 2,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1,
+      "defensive": 1.5,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 0.5,
+      "rivers-and-streams": 1,
+      "springs-pools-and-lakes": 0.75,
+      "wetland": 0.5,
+      "islands-and-river-land": 0.75,
+      "coast-and-sea": 2,
+      "crossings-and-routes": 0.75,
+      "woodland": 0.75,
+      "clearings": 0.5,
+      "hills-and-slopes": 1.25,
+      "mountains-and-rock": 1.25,
+      "upland-and-open-ground": 1.5,
+      "valleys": 1.25,
+      "hollows-and-corners": 0.5,
+      "open-and-farmed-land": 0.75
+    },
+    "WCY": {
+      "settlement-farms-and-estates": 1.25,
+      "settlement-status-and-relationship": 1,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.5,
+      "industry-and-trade": 0.75,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.75,
+      "religious-burial-and-memorial": 1.25,
+      "defensive": 1.25,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 0.75,
+      "rivers-and-streams": 1.25,
+      "springs-pools-and-lakes": 1,
+      "wetland": 1,
+      "islands-and-river-land": 1,
+      "coast-and-sea": 1,
+      "crossings-and-routes": 1,
+      "woodland": 1,
+      "clearings": 1,
+      "hills-and-slopes": 1.5,
+      "mountains-and-rock": 0.75,
+      "upland-and-open-ground": 1,
+      "valleys": 2,
+      "hollows-and-corners": 1,
+      "open-and-farmed-land": 1
+    },
+    "SEA": {
+      "settlement-farms-and-estates": 1.5,
+      "settlement-status-and-relationship": 1,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.25,
+      "industry-and-trade": 1.5,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 1.25,
+      "religious-burial-and-memorial": 0.75,
+      "defensive": 1,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 1,
+      "rivers-and-streams": 1,
+      "springs-pools-and-lakes": 0.75,
+      "wetland": 0.75,
+      "islands-and-river-land": 1,
+      "coast-and-sea": 1,
+      "crossings-and-routes": 1,
+      "woodland": 2,
+      "clearings": 1.5,
+      "hills-and-slopes": 1,
+      "mountains-and-rock": 0.25,
+      "upland-and-open-ground": 1,
+      "valleys": 1,
+      "hollows-and-corners": 1.25,
+      "open-and-farmed-land": 1.25
+    },
+    "EAN": {
+      "settlement-farms-and-estates": 1.5,
+      "settlement-status-and-relationship": 1.25,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.25,
+      "industry-and-trade": 1,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.75,
+      "religious-burial-and-memorial": 0.75,
+      "defensive": 0.75,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 1,
+      "rivers-and-streams": 0.75,
+      "springs-pools-and-lakes": 1.25,
+      "wetland": 2,
+      "islands-and-river-land": 2,
+      "coast-and-sea": 1,
+      "crossings-and-routes": 1,
+      "woodland": 0.75,
+      "clearings": 1,
+      "hills-and-slopes": 0.25,
+      "mountains-and-rock": 0.1,
+      "upland-and-open-ground": 1.25,
+      "valleys": 0.5,
+      "hollows-and-corners": 1,
+      "open-and-farmed-land": 1.5
+    },
+    "WMM": {
+      "settlement-farms-and-estates": 1.25,
+      "settlement-status-and-relationship": 0.75,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.5,
+      "industry-and-trade": 1.25,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 0.75,
+      "defensive": 1.25,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 0.75,
+      "rivers-and-streams": 1,
+      "springs-pools-and-lakes": 1,
+      "wetland": 0.75,
+      "islands-and-river-land": 0.75,
+      "coast-and-sea": 0.1,
+      "crossings-and-routes": 1,
+      "woodland": 1.5,
+      "clearings": 2,
+      "hills-and-slopes": 1.5,
+      "mountains-and-rock": 0.75,
+      "upland-and-open-ground": 1,
+      "valleys": 1.25,
+      "hollows-and-corners": 1.25,
+      "open-and-farmed-land": 1
+    },
+    "EMD": {
+      "settlement-farms-and-estates": 2,
+      "settlement-status-and-relationship": 2,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.25,
+      "industry-and-trade": 0.75,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1,
+      "defensive": 0.75,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 1.5,
+      "rivers-and-streams": 1,
+      "springs-pools-and-lakes": 0.75,
+      "wetland": 1,
+      "islands-and-river-land": 1,
+      "coast-and-sea": 0.75,
+      "crossings-and-routes": 1,
+      "woodland": 1,
+      "clearings": 1,
+      "hills-and-slopes": 1,
+      "mountains-and-rock": 0.5,
+      "upland-and-open-ground": 1,
+      "valleys": 1,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 1
+    },
+    "NTH": {
+      "settlement-farms-and-estates": 1.5,
+      "settlement-status-and-relationship": 1.25,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 1.5,
+      "industry-and-trade": 0.75,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1,
+      "defensive": 1,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 1,
+      "rivers-and-streams": 1.5,
+      "springs-pools-and-lakes": 1,
+      "wetland": 1,
+      "islands-and-river-land": 0.75,
+      "coast-and-sea": 0.75,
+      "crossings-and-routes": 1,
+      "woodland": 0.75,
+      "clearings": 1.5,
+      "hills-and-slopes": 1.25,
+      "mountains-and-rock": 1.5,
+      "upland-and-open-ground": 1.75,
+      "valleys": 2,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 1
+    },
+    "SBL": {
+      "settlement-farms-and-estates": 1.25,
+      "settlement-status-and-relationship": 0.75,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 1.5,
+      "industry-and-trade": 0.5,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.25,
+      "religious-burial-and-memorial": 0.75,
+      "defensive": 2,
+      "lordship-and-authority": 0.75,
+      "communal-and-legal": 0.5,
+      "rivers-and-streams": 1.5,
+      "springs-pools-and-lakes": 0.75,
+      "wetland": 1,
+      "islands-and-river-land": 1,
+      "coast-and-sea": 0.5,
+      "crossings-and-routes": 1,
+      "woodland": 0.75,
+      "clearings": 0.5,
+      "hills-and-slopes": 2,
+      "mountains-and-rock": 1,
+      "upland-and-open-ground": 1.5,
+      "valleys": 2,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 0.75
+    },
+    "WAL": {
+      "settlement-farms-and-estates": 1.25,
+      "settlement-status-and-relationship": 0.25,
+      "dwellings-and-buildings": 1.25,
+      "seasonal-and-upland-settlement": 2,
+      "industry-and-trade": 0.5,
+      "religious-christian": 2.5,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1,
+      "defensive": 1.5,
+      "lordship-and-authority": 1.25,
+      "communal-and-legal": 0.25,
+      "rivers-and-streams": 1.5,
+      "springs-pools-and-lakes": 1.25,
+      "wetland": 1,
+      "islands-and-river-land": 1,
+      "coast-and-sea": 1.25,
+      "crossings-and-routes": 1.25,
+      "woodland": 1,
+      "clearings": 0.25,
+      "hills-and-slopes": 1.5,
+      "mountains-and-rock": 1.75,
+      "upland-and-open-ground": 1.25,
+      "valleys": 2,
+      "hollows-and-corners": 1,
+      "open-and-farmed-land": 0.75
+    },
+    "SLO": {
+      "settlement-farms-and-estates": 1.5,
+      "settlement-status-and-relationship": 0.5,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.75,
+      "industry-and-trade": 0.75,
+      "religious-christian": 1.25,
+      "religious-pre-christian-and-sacred": 0.25,
+      "religious-burial-and-memorial": 0.75,
+      "defensive": 1.25,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 0.75,
+      "rivers-and-streams": 1.5,
+      "springs-pools-and-lakes": 1,
+      "wetland": 1,
+      "islands-and-river-land": 0.75,
+      "coast-and-sea": 1,
+      "crossings-and-routes": 1,
+      "woodland": 0.75,
+      "clearings": 0.5,
+      "hills-and-slopes": 1.5,
+      "mountains-and-rock": 0.75,
+      "upland-and-open-ground": 1,
+      "valleys": 1.5,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 1
+    },
+    "SHH": {
+      "settlement-farms-and-estates": 1,
+      "settlement-status-and-relationship": 0.1,
+      "dwellings-and-buildings": 0.75,
+      "seasonal-and-upland-settlement": 1.75,
+      "industry-and-trade": 0.25,
+      "religious-christian": 1.25,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1,
+      "defensive": 1,
+      "lordship-and-authority": 0.5,
+      "communal-and-legal": 0.5,
+      "rivers-and-streams": 1.75,
+      "springs-pools-and-lakes": 2,
+      "wetland": 1,
+      "islands-and-river-land": 1.75,
+      "coast-and-sea": 2,
+      "crossings-and-routes": 0.75,
+      "woodland": 0.75,
+      "clearings": 0.1,
+      "hills-and-slopes": 1.5,
+      "mountains-and-rock": 2.5,
+      "upland-and-open-ground": 1,
+      "valleys": 2,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 0.5
+    },
+    "NSI": {
+      "settlement-farms-and-estates": 2,
+      "settlement-status-and-relationship": 0.25,
+      "dwellings-and-buildings": 1.5,
+      "seasonal-and-upland-settlement": 0.75,
+      "industry-and-trade": 0.25,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1.25,
+      "defensive": 0.75,
+      "lordship-and-authority": 0.5,
+      "communal-and-legal": 1.5,
+      "rivers-and-streams": 0.5,
+      "springs-pools-and-lakes": 1.25,
+      "wetland": 0.75,
+      "islands-and-river-land": 2,
+      "coast-and-sea": 2.5,
+      "crossings-and-routes": 0.5,
+      "woodland": 0.1,
+      "clearings": 0.25,
+      "hills-and-slopes": 1.25,
+      "mountains-and-rock": 0.75,
+      "upland-and-open-ground": 1,
+      "valleys": 0.75,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 1.25
+    }
+  },
+  "tiedMultipliers": {
+    "home": 2,
+    "present": 1,
+    "other": 0.1
+  },
+  "tiedGenerics": [
+    {
+      "generic": "norse-farm",
+      "home": [
+        "NSI",
+        "SHH"
+      ],
+      "present": [
+        "NTH"
+      ]
+    },
+    {
+      "generic": "enclosed-farm-garth",
+      "home": [
+        "NSI",
+        "NTH"
+      ],
+      "present": [
+        "SBL",
+        "SHH"
+      ]
+    },
+    {
+      "generic": "farm-township",
+      "home": [
+        "SLO",
+        "SHH"
+      ],
+      "present": [
+        "SBL"
+      ]
+    },
+    {
+      "generic": "home-farm-of-an-estate",
+      "home": [
+        "SLO"
+      ],
+      "present": [
+        "SBL"
+      ]
+    },
+    {
+      "generic": "land-holding-share-of-land",
+      "home": [
+        "SLO"
+      ],
+      "present": [
+        "SHH"
+      ]
+    },
+    {
+      "generic": "folk-group-territory",
+      "home": [
+        "SEA",
+        "EAN"
+      ],
+      "present": [
+        "WCY",
+        "WMM",
+        "EMD"
+      ]
+    },
+    {
+      "generic": "folk-group-homestead",
+      "home": [
+        "SEA",
+        "EAN"
+      ],
+      "present": [
+        "WCY",
+        "WMM",
+        "EMD"
+      ]
+    },
+    {
+      "generic": "dependent-or-secondary-settlement",
+      "home": [
+        "EMD",
+        "NTH",
+        "EAN"
+      ],
+      "present": [
+        "SEA",
+        "WMM",
+        "SBL"
+      ]
+    },
+    {
+      "generic": "settlement-by-a-roman-site",
+      "home": [
+        "SEA"
+      ],
+      "present": [
+        "WCY",
+        "EAN",
+        "WMM",
+        "EMD"
+      ]
+    },
+    {
+      "generic": "cattle-farm",
+      "home": [
+        "NTH"
+      ],
+      "present": [
+        "SBL"
+      ]
+    },
+    {
+      "generic": "cottars-settlement",
+      "home": [
+        "SLO"
+      ],
+      "present": [
+        "SBL",
+        "SHH"
+      ]
+    },
+    {
+      "generic": "summer-upland-dwelling",
+      "home": [
+        "WAL"
+      ],
+      "present": [
+        "WMM"
+      ]
+    },
+    {
+      "generic": "permanent-or-winter-lowland-dwelling",
+      "home": [
+        "WAL"
+      ],
+      "present": [
+        "COR",
+        "WMM"
+      ]
+    },
+    {
+      "generic": "shieling-summer-pasture-hut",
+      "home": [
+        "NTH",
+        "SBL",
+        "SHH"
+      ],
+      "present": [
+        "SLO",
+        "NSI"
+      ]
+    },
+    {
+      "generic": "hut-at-summer-pasture",
+      "home": [
+        "NTH"
+      ],
+      "present": [
+        "SBL",
+        "NSI"
+      ]
+    },
+    {
+      "generic": "salt-works",
+      "home": [
+        "WMM"
+      ],
+      "present": [
+        "SEA",
+        "EAN",
+        "EMD"
+      ]
+    },
+    {
+      "generic": "island-of-irish-monks",
+      "home": [
+        "NSI",
+        "SHH"
+      ],
+      "present": []
+    },
+    {
+      "generic": "british-church-community",
+      "home": [],
+      "present": [
+        "SEA",
+        "EAN",
+        "WMM",
+        "NTH",
+        "SBL",
+        "SLO"
+      ]
+    },
+    {
+      "generic": "saints-church-enclosure",
+      "home": [
+        "WAL",
+        "COR",
+        "SHH"
+      ],
+      "present": [
+        "SLO",
+        "SBL"
+      ]
+    },
+    {
+      "generic": "hermitage-retreat",
+      "home": [],
+      "present": [
+        "WAL",
+        "SLO",
+        "SHH"
+      ]
+    },
+    {
+      "generic": "earthen-ringfort",
+      "home": [],
+      "present": [
+        "SLO",
+        "SHH"
+      ]
+    },
+    {
+      "generic": "tower-house",
+      "home": [
+        "SBL"
+      ],
+      "present": [
+        "NTH",
+        "SLO"
+      ]
+    },
+    {
+      "generic": "fortified-farmhouse",
+      "home": [
+        "SBL"
+      ],
+      "present": [
+        "NTH"
+      ]
+    },
+    {
+      "generic": "ship-camp-fortified-anchorage",
+      "home": [],
+      "present": [
+        "SHH"
+      ]
+    },
+    {
+      "generic": "royal-or-lordly-court",
+      "home": [
+        "WAL"
+      ],
+      "present": [
+        "COR"
+      ]
+    },
+    {
+      "generic": "welsh-administrative-manor",
+      "home": [
+        "WAL"
+      ],
+      "present": []
+    },
+    {
+      "generic": "assembly-field",
+      "home": [
+        "NSI"
+      ],
+      "present": [
+        "NTH",
+        "WMM",
+        "SHH"
+      ]
+    },
+    {
+      "generic": "lowland-marsh",
+      "home": [
+        "WCY"
+      ],
+      "present": [
+        "SEA",
+        "EAN",
+        "WMM",
+        "EMD"
+      ]
+    },
+    {
+      "generic": "fen",
+      "home": [
+        "EAN"
+      ],
+      "present": [
+        "EMD",
+        "WCY"
+      ]
+    },
+    {
+      "generic": "brushwood-marsh-carr",
+      "home": [
+        "NTH",
+        "EMD"
+      ],
+      "present": [
+        "EAN"
+      ]
+    },
+    {
+      "generic": "peat-bog-moss",
+      "home": [
+        "NTH",
+        "SBL"
+      ],
+      "present": [
+        "SLO",
+        "WMM"
+      ]
+    },
+    {
+      "generic": "bog",
+      "home": [
+        "WAL"
+      ],
+      "present": [
+        "COR"
+      ]
+    },
+    {
+      "generic": "flood-prone-land-by-a-river",
+      "home": [
+        "WMM"
+      ],
+      "present": []
+    },
+    {
+      "generic": "skerry-rock-islet",
+      "home": [
+        "NSI",
+        "SHH"
+      ],
+      "present": [
+        "SLO"
+      ]
+    },
+    {
+      "generic": "coastal-chasm-geo",
+      "home": [
+        "NSI"
+      ],
+      "present": [
+        "SHH"
+      ]
+    },
+    {
+      "generic": "sea-inlet-firth",
+      "home": [
+        "NSI",
+        "SHH",
+        "SLO"
+      ],
+      "present": [
+        "SBL"
+      ]
+    },
+    {
+      "generic": "small-bay-creek",
+      "home": [
+        "NSI",
+        "SHH"
+      ],
+      "present": []
+    },
+    {
+      "generic": "point-nose",
+      "home": [
+        "WAL",
+        "SHH"
+      ],
+      "present": [
+        "COR"
+      ]
+    },
+    {
+      "generic": "isthmus-portage",
+      "home": [
+        "SHH"
+      ],
+      "present": [
+        "NSI",
+        "SLO"
+      ]
+    },
+    {
+      "generic": "great-woodland",
+      "home": [
+        "SEA"
+      ],
+      "present": [
+        "WMM"
+      ]
+    },
+    {
+      "generic": "woodland-swine-pasture",
+      "home": [
+        "SEA"
+      ],
+      "present": []
+    },
+    {
+      "generic": "clearing-paddock",
+      "home": [
+        "NTH"
+      ],
+      "present": [
+        "SBL",
+        "EMD"
+      ]
+    },
+    {
+      "generic": "wold",
+      "home": [
+        "EMD",
+        "WCY"
+      ],
+      "present": [
+        "NTH",
+        "EAN"
+      ]
+    },
+    {
+      "generic": "upland-moor",
+      "home": [
+        "NTH",
+        "SBL"
+      ],
+      "present": [
+        "EMD",
+        "WCY",
+        "WAL"
+      ]
+    },
+    {
+      "generic": "fell",
+      "home": [
+        "NTH"
+      ],
+      "present": [
+        "SBL"
+      ]
+    },
+    {
+      "generic": "tor",
+      "home": [
+        "WCY",
+        "COR"
+      ],
+      "present": [
+        "EMD"
+      ]
+    },
+    {
+      "generic": "mountain",
+      "home": [
+        "WAL",
+        "SHH"
+      ],
+      "present": [
+        "NTH",
+        "SLO"
+      ]
+    },
+    {
+      "generic": "sharp-peak",
+      "home": [
+        "SHH"
+      ],
+      "present": [
+        "NTH",
+        "WAL"
+      ]
+    },
+    {
+      "generic": "mountain-stream",
+      "home": [
+        "NTH",
+        "SBL",
+        "SHH"
+      ],
+      "present": [
+        "SLO"
+      ]
+    },
+    {
+      "generic": "stream-with-its-valley",
+      "home": [
+        "WAL"
+      ],
+      "present": [
+        "COR"
+      ]
+    },
+    {
+      "generic": "waterfall",
+      "home": [
+        "NTH",
+        "SHH",
+        "WAL"
+      ],
+      "present": [
+        "SLO",
+        "SBL"
+      ]
+    },
+    {
+      "generic": "small-mountain-lake",
+      "home": [
+        "NTH",
+        "SHH",
+        "WAL"
+      ],
+      "present": [
+        "SBL"
+      ]
+    },
+    {
+      "generic": "dale",
+      "home": [
+        "NTH"
+      ],
+      "present": [
+        "EMD",
+        "SBL",
+        "NSI"
+      ]
+    },
+    {
+      "generic": "broad-valley",
+      "home": [
+        "SHH",
+        "SLO",
+        "WAL"
+      ],
+      "present": []
+    },
+    {
+      "generic": "short-bowl-shaped-valley",
+      "home": [
+        "WCY",
+        "WAL"
+      ],
+      "present": [
+        "SEA",
+        "WMM",
+        "COR"
+      ]
+    },
+    {
+      "generic": "narrow-valley-glen",
+      "home": [
+        "SHH"
+      ],
+      "present": [
+        "SLO",
+        "SBL",
+        "WAL"
+      ]
+    },
+    {
+      "generic": "small-enclosed-side-valley",
+      "home": [
+        "SBL",
+        "WMM"
+      ],
+      "present": [
+        "NTH"
+      ]
+    },
+    {
+      "generic": "corrie",
+      "home": [
+        "SHH"
+      ],
+      "present": [
+        "WAL",
+        "SLO"
+      ]
+    },
+    {
+      "generic": "ravine",
+      "home": [
+        "NTH",
+        "SBL"
+      ],
+      "present": [
+        "SLO"
+      ]
+    },
+    {
+      "generic": "steep-bank-ravine-side",
+      "home": [
+        "SBL"
+      ],
+      "present": [
+        "SLO",
+        "NTH"
+      ]
+    }
+  ],
+  "categoryMultipliers": {
+    "COR": {
+      "saint-or-holy-person": 2.5,
+      "personal-name": 1.5,
+      "colour": 1.5,
+      "size": 1.5,
+      "position-or-direction": 0.75,
+      "ethnic-or-cultural-group": 0.5,
+      "deity": 0.5,
+      "crop": 0.5,
+      "status-or-role": 0.5,
+      "folk-group": 0.1
+    },
+    "WCY": {
+      "river-or-stream-name": 1.5,
+      "landform": 1.5,
+      "tree": 1.25,
+      "ethnic-or-cultural-group": 0.75,
+      "folk-group": 0.5
+    },
+    "SEA": {
+      "folk-group": 2.5,
+      "personal-name": 1.5,
+      "tree": 1.5,
+      "deity": 1.5,
+      "produce": 1.5,
+      "domestic-animal": 1.25,
+      "earlier-or-district-name": 0.75,
+      "saint-or-holy-person": 0.5
+    },
+    "EAN": {
+      "folk-group": 2,
+      "personal-name": 1.5,
+      "wild-plant": 1.5,
+      "fish-and-other-creatures": 1.5,
+      "bird": 1.25,
+      "saint-or-holy-person": 0.5,
+      "landform": 0.5
+    },
+    "WMM": {
+      "tree": 1.75,
+      "personal-name": 1.5,
+      "produce": 1.5,
+      "ethnic-or-cultural-group": 1.5,
+      "saint-or-holy-person": 1.25
+    },
+    "EMD": {
+      "personal-name": 2,
+      "ethnic-or-cultural-group": 2,
+      "assembly-or-law": 1.5,
+      "folk-group": 0.75,
+      "saint-or-holy-person": 0.5
+    },
+    "NTH": {
+      "personal-name": 1.75,
+      "river-or-stream-name": 1.75,
+      "tree": 1.25,
+      "domestic-animal": 1.25,
+      "ethnic-or-cultural-group": 1.25,
+      "saint-or-holy-person": 0.75,
+      "folk-group": 0.5
+    },
+    "SBL": {
+      "river-or-stream-name": 2,
+      "earlier-or-district-name": 1.75,
+      "personal-name": 1.25,
+      "domestic-animal": 1.25,
+      "folk-group": 0.5,
+      "deity": 0.5
+    },
+    "WAL": {
+      "saint-or-holy-person": 3,
+      "river-or-stream-name": 2,
+      "colour": 1.75,
+      "size": 1.5,
+      "shape": 1.25,
+      "ethnic-or-cultural-group": 0.5,
+      "crop": 0.5,
+      "deity": 0.25,
+      "folk-group": 0.1
+    },
+    "SLO": {
+      "saint-or-holy-person": 1.75,
+      "river-or-stream-name": 1.75,
+      "personal-name": 1.25,
+      "earlier-or-district-name": 1.25,
+      "colour": 1.25,
+      "position-or-direction": 1.25,
+      "deity": 0.5,
+      "folk-group": 0.25
+    },
+    "SHH": {
+      "colour": 2.5,
+      "size": 2,
+      "supernatural-being": 2,
+      "shape": 1.75,
+      "saint-or-holy-person": 1.75,
+      "domestic-animal": 1.5,
+      "wild-animal": 1.25,
+      "bird": 1.25,
+      "ethnic-or-cultural-group": 0.75,
+      "status-or-role": 0.5,
+      "built-feature": 0.5,
+      "crop": 0.25,
+      "folk-group": 0.1
+    },
+    "NSI": {
+      "personal-name": 2.5,
+      "shape": 1.5,
+      "size": 1.5,
+      "position-or-direction": 1.5,
+      "bird": 1.5,
+      "soil-or-ground": 1.25,
+      "domestic-animal": 1.25,
+      "deity": 0.75,
+      "crop": 0.75,
+      "saint-or-holy-person": 0.5,
+      "tree": 0.25,
+      "folk-group": 0.1
+    }
+  },
+  "wordOrder": {
+    "COR": {
+      "germanic": 10,
+      "celtic-direct": 70,
+      "celtic-linked": 20
+    },
+    "WCY": {
+      "germanic": 95,
+      "celtic-direct": 5,
+      "celtic-linked": 0
+    },
+    "SEA": {
+      "germanic": 100,
+      "celtic-direct": 0,
+      "celtic-linked": 0
+    },
+    "EAN": {
+      "germanic": 100,
+      "celtic-direct": 0,
+      "celtic-linked": 0
+    },
+    "WMM": {
+      "germanic": 85,
+      "celtic-direct": 12,
+      "celtic-linked": 3
+    },
+    "EMD": {
+      "germanic": 100,
+      "celtic-direct": 0,
+      "celtic-linked": 0
+    },
+    "NTH": {
+      "germanic": 92,
+      "celtic-direct": 8,
+      "celtic-linked": 0
+    },
+    "SBL": {
+      "germanic": 80,
+      "celtic-direct": 17,
+      "celtic-linked": 3
+    },
+    "WAL": {
+      "germanic": 5,
+      "celtic-direct": 65,
+      "celtic-linked": 30
+    },
+    "SLO": {
+      "germanic": 55,
+      "celtic-direct": 35,
+      "celtic-linked": 10
+    },
+    "SHH": {
+      "germanic": 10,
+      "celtic-direct": 55,
+      "celtic-linked": 35
+    },
+    "NSI": {
+      "germanic": 90,
+      "celtic-direct": 8,
+      "celtic-linked": 2
+    }
+  },
+  "structure": {
+    "COR": {
+      "connectiveChance": 0,
+      "stackedGenericChance": 0.02,
+      "affixChance": 0.05,
+      "landscapeShareSettlement": 0.4
+    },
+    "WCY": {
+      "connectiveChance": 0.1,
+      "stackedGenericChance": 0.06,
+      "affixChance": 0.2,
+      "landscapeShareSettlement": 0.35
+    },
+    "SEA": {
+      "connectiveChance": 0.3,
+      "stackedGenericChance": 0.08,
+      "affixChance": 0.18,
+      "landscapeShareSettlement": 0.35
+    },
+    "EAN": {
+      "connectiveChance": 0.25,
+      "stackedGenericChance": 0.05,
+      "affixChance": 0.18,
+      "landscapeShareSettlement": 0.35
+    },
+    "WMM": {
+      "connectiveChance": 0.15,
+      "stackedGenericChance": 0.05,
+      "affixChance": 0.15,
+      "landscapeShareSettlement": 0.35
+    },
+    "EMD": {
+      "connectiveChance": 0.15,
+      "stackedGenericChance": 0.05,
+      "affixChance": 0.15,
+      "landscapeShareSettlement": 0.25
+    },
+    "NTH": {
+      "connectiveChance": 0.08,
+      "stackedGenericChance": 0.05,
+      "affixChance": 0.12,
+      "landscapeShareSettlement": 0.4
+    },
+    "SBL": {
+      "connectiveChance": 0.05,
+      "stackedGenericChance": 0.05,
+      "affixChance": 0.08,
+      "landscapeShareSettlement": 0.4
+    },
+    "WAL": {
+      "connectiveChance": 0,
+      "stackedGenericChance": 0.02,
+      "affixChance": 0.05,
+      "landscapeShareSettlement": 0.45
+    },
+    "SLO": {
+      "connectiveChance": 0.02,
+      "stackedGenericChance": 0.03,
+      "affixChance": 0.08,
+      "landscapeShareSettlement": 0.4
+    },
+    "SHH": {
+      "connectiveChance": 0,
+      "stackedGenericChance": 0.02,
+      "affixChance": 0.03,
+      "landscapeShareSettlement": 0.5
+    },
+    "NSI": {
+      "connectiveChance": 0,
+      "stackedGenericChance": 0.02,
+      "affixChance": 0.03,
+      "landscapeShareSettlement": 0.3
+    }
+  },
+  "connectiveSplit": {
+    "folk": 0.6,
+    "associative": 0.4
+  },
+  "affixBaseline": {
+    "size": 25,
+    "position": 25,
+    "age": 10,
+    "function": 10,
+    "owner-by-status": 10,
+    "owner-by-family": 10,
+    "dedication": 3,
+    "location": 7
+  },
+  "affixMultipliers": {
+    "COR": {
+      "owner-by-family": 0.25,
+      "function": 0.5
+    },
+    "WCY": {
+      "owner-by-family": 2,
+      "owner-by-status": 1.5,
+      "location": 1.25
+    },
+    "SEA": {
+      "owner-by-family": 1.5,
+      "owner-by-status": 1.5,
+      "location": 1.5
+    },
+    "EAN": {
+      "size": 1.5,
+      "dedication": 2
+    },
+    "WMM": {
+      "owner-by-family": 1.5,
+      "location": 1.25
+    },
+    "EMD": {
+      "owner-by-family": 1.25,
+      "size": 1.25
+    },
+    "NTH": {
+      "location": 1.5,
+      "owner-by-family": 0.75
+    },
+    "SBL": {
+      "position": 1.5,
+      "owner-by-family": 0.5
+    },
+    "WAL": {
+      "position": 2,
+      "size": 1.5,
+      "owner-by-family": 0.25
+    },
+    "SLO": {
+      "position": 2,
+      "owner-by-family": 0.5
+    },
+    "SHH": {
+      "position": 2,
+      "size": 1.5,
+      "owner-by-status": 0.5,
+      "owner-by-family": 0.1
+    },
+    "NSI": {
+      "position": 1.5,
+      "size": 1.25,
+      "owner-by-family": 0.1
+    }
+  }
+}

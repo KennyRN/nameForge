@@ -34,6 +34,7 @@ import {
   ICON_LIST_PACK,
   ICON_MIX_PACK,
   ICON_PLACE_PACK,
+  ICON_PLACE_SHAPES,
   ICON_PLUS_SQUARE,
   ICON_SAVE,
   ICON_SEED_COPY,
@@ -41,9 +42,37 @@ import {
   ICON_TEXT_INSERT,
 } from "./icons";
 import { EnterFolderPathModal } from "./folderModal";
+import {
+  generatePlaceShapesDetailed,
+  PLACE_SHAPE_REGIONS,
+  PLACE_SHAPES_HISTORY_NAME,
+  placeShapesHistoryLabel,
+} from "./placeShapes";
 import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from "./paths";
 
 type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack";
+
+/** The sections reachable from the binder icon's switcher menu (renderSectionMenu) — mirrors
+ * titleForge's own section switcher. "markov" is today's whole pack-driven generator and the
+ * default on every open; "placeShapes" runs the built-in shape generator (placeShapes.ts);
+ * "explorationPlaceShapes" is still a placeholder. */
+type NameForgeSection = "markov" | "placeShapes" | "explorationPlaceShapes";
+
+const SECTION_ORDER: NameForgeSection[] = ["markov", "placeShapes", "explorationPlaceShapes"];
+
+// Section names are deliberately lowercase, matching titleForge's section-switcher menu.
+const SECTION_LABELS: Record<NameForgeSection, string> = {
+  markov: "markov generator",
+  placeShapes: "place name shapes",
+  explorationPlaceShapes: "exploration place name shapes",
+};
+
+// The exploration section keeps the binder glyph until it gets its own.
+const SECTION_ICONS: Record<NameForgeSection, string> = {
+  markov: ICON_PACKS,
+  placeShapes: ICON_PLACE_SHAPES,
+  explorationPlaceShapes: ICON_PACKS,
+};
 
 function packTypeIconId(packType: NamePackType, subGenerator?: "breakdown" | "list"): string {
   if (packType === "compoundPack") {
@@ -164,6 +193,23 @@ export class NameForgeModal extends Modal {
   private packDropdownLabelEl: HTMLElement | null = null;
   private packDropdownMenuEl: HTMLElement | null = null;
   private isPackDropdownOpen = false;
+  /** Never persisted — every open starts on the markov generator. */
+  private activeSection: NameForgeSection = "markov";
+  private sectionTriggerEl: HTMLElement | null = null;
+  private sectionMenuEl: HTMLElement | null = null;
+  private isSectionMenuOpen = false;
+  /** The pack box shown in place of the markov pack dropdown while a placeholder section is
+   * active — the only thing a section switch changes. */
+  private sectionStubEl: HTMLElement | null = null;
+  private sectionStubLabelEl: HTMLElement | null = null;
+  /** The region dropdown shown beside the trigger in the place-shapes section. */
+  private regionDropdownEl: HTMLElement | null = null;
+  private regionTriggerEl: HTMLButtonElement | null = null;
+  private regionLabelEl: HTMLElement | null = null;
+  private regionMenuEl: HTMLElement | null = null;
+  private isRegionMenuOpen = false;
+  /** Region code, or undefined for All Britain. Session only — never persisted. */
+  private selectedRegion: string | undefined = undefined;
   private quantityButtons: HTMLButtonElement[] = [];
   private clearResultsSelection: () => void = () => {};
   private currentNamesText = "";
@@ -217,11 +263,20 @@ export class NameForgeModal extends Modal {
     const optionsList = root.createDiv({ cls: "nameforge-modal__options-list" });
 
     const createPacksRow = optionsList.createDiv({ cls: "nameforge-modal__option-row" });
-    const folderDecoration = createPacksRow.createSpan({
-      cls: "nameforge-modal__icon-decoration nameforge-modal__icon-decoration--lg",
-      attr: { "aria-hidden": "true" },
+    // The binder icon doubles as the section switcher's trigger, as in titleForge.
+    const sectionTrigger = createPacksRow.createSpan({
+      cls: "nameforge-modal__icon-decoration nameforge-modal__icon-decoration--lg nameforge-modal__icon-decoration--clickable",
+      attr: { role: "button", tabindex: "0", "aria-label": "change section", title: "change section", "aria-expanded": "false" },
     });
-    setIcon(folderDecoration, ICON_PACKS);
+    setIcon(sectionTrigger, SECTION_ICONS[this.activeSection]);
+    sectionTrigger.addEventListener("click", () => this.toggleSectionMenu());
+    sectionTrigger.addEventListener("keydown", (evt) => {
+      if (evt.key === "Enter" || evt.key === " ") {
+        evt.preventDefault();
+        this.toggleSectionMenu();
+      }
+    });
+    this.sectionTriggerEl = sectionTrigger;
     this.packDropdownEl = createPacksRow.createDiv({ cls: "nameforge-modal__pack-dropdown" });
     this.packDropdownTrigger = this.packDropdownEl.createEl("button", {
       cls: "nameforge-modal__pack-dropdown-trigger",
@@ -240,6 +295,32 @@ export class NameForgeModal extends Modal {
     this.packDropdownMenuEl = this.packDropdownEl.createDiv({ cls: "nameforge-modal__pack-dropdown-menu" });
     this.packDropdownMenuEl.hide();
 
+    // The place-shapes section's region picker — the pack dropdown's own box and menu.
+    this.regionDropdownEl = createPacksRow.createDiv({ cls: "nameforge-modal__pack-dropdown" });
+    this.regionTriggerEl = this.regionDropdownEl.createEl("button", {
+      cls: "nameforge-modal__pack-dropdown-trigger",
+      attr: { type: "button", "aria-haspopup": "listbox", "aria-expanded": "false" },
+    });
+    this.regionLabelEl = this.regionTriggerEl.createSpan({ cls: "nameforge-modal__pack-dropdown-label" });
+    this.regionTriggerEl.addEventListener("click", (evt) => {
+      evt.stopPropagation();
+      this.setRegionMenuOpen(!this.isRegionMenuOpen);
+    });
+    this.regionMenuEl = this.regionDropdownEl.createDiv({ cls: "nameforge-modal__pack-dropdown-menu" });
+    this.regionMenuEl.hide();
+    this.regionDropdownEl.hide();
+    this.updateRegionLabel();
+
+    // Stands in for the pack dropdown while a placeholder section is active — same box, no packs yet.
+    this.sectionStubEl = createPacksRow.createDiv({ cls: "nameforge-modal__pack-dropdown nameforge-modal__section-stub" });
+    const stubTrigger = this.sectionStubEl.createEl("button", {
+      cls: "nameforge-modal__pack-dropdown-trigger",
+      attr: { type: "button", "aria-disabled": "true" },
+    });
+    setIcon(stubTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }), ICON_PACKS);
+    this.sectionStubLabelEl = stubTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-label" });
+    this.sectionStubEl.hide();
+
     activeDocument.addEventListener("click", this.handlePackDropdownOutsideClick);
     if (!this.panelMode) {
       const createPacksButton = createPacksRow.createEl("button", {
@@ -251,6 +332,10 @@ export class NameForgeModal extends Modal {
         new NameForgeEditorModal(this.app, this, "", "").open();
       });
     }
+
+    // A plain flow block under the pack row, not a floating overlay — same as titleForge's.
+    this.sectionMenuEl = optionsList.createDiv({ cls: "nameforge-modal__section-menu" });
+    this.sectionMenuEl.hide();
 
     const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
@@ -279,6 +364,107 @@ export class NameForgeModal extends Modal {
     void this.refreshPackDropdown();
   }
 
+  private toggleSectionMenu() {
+    this.setSectionMenuOpen(!this.isSectionMenuOpen);
+  }
+
+  /** Opens/closes the section switcher. While open, the results box gives up exactly the height
+   * the menu adds (measured, so gaps/margins in modal vs panel mode are included) via
+   * --nf-section-menu-height, so the modal itself doesn't grow. */
+  private setSectionMenuOpen(open: boolean) {
+    const menu = this.sectionMenuEl;
+    if (!menu) return;
+    this.isSectionMenuOpen = open;
+    const optionsList = menu.parentElement;
+    const before = optionsList?.offsetHeight ?? 0;
+    if (open) {
+      this.closePackDropdown();
+      this.setRegionMenuOpen(false);
+      this.renderSectionMenu();
+    }
+    menu.toggle(open);
+    const added = open ? Math.max(0, (optionsList?.offsetHeight ?? 0) - before) : 0;
+    this.rootEl?.style.setProperty("--nf-section-menu-height", `${added}px`);
+    this.rootEl?.toggleClass("is-section-menu-open", open);
+    this.sectionTriggerEl?.setAttribute("aria-expanded", String(open));
+  }
+
+  /** The section switcher, opened by clicking the binder icon — a port of titleForge's
+   * renderSectionPicker. Rebuilt on each open so the active item's highlight is current. */
+  private renderSectionMenu() {
+    const menu = this.sectionMenuEl;
+    if (!menu) return;
+    menu.empty();
+    for (const section of SECTION_ORDER) {
+      const item = menu.createDiv({
+        cls: "nameforge-modal__section-menu-item" + (section === this.activeSection ? " is-active" : ""),
+        attr: { role: "button", tabindex: "0", "aria-label": SECTION_LABELS[section] },
+      });
+      setIcon(item.createSpan({ cls: "nameforge-modal__section-menu-icon" }), SECTION_ICONS[section]);
+      item.createSpan({ text: SECTION_LABELS[section] });
+      item.addEventListener("click", () => this.switchSection(section));
+      item.addEventListener("keydown", (evt) => {
+        if (evt.key === "Enter" || evt.key === " ") {
+          evt.preventDefault();
+          this.switchSection(section);
+        }
+      });
+    }
+  }
+
+  /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
+   * dropdown on "placeShapes", the placeholder box otherwise. Everything else is left as it is. */
+  private switchSection(section: NameForgeSection) {
+    this.setSectionMenuOpen(false);
+    this.setRegionMenuOpen(false);
+    this.activeSection = section;
+    this.packDropdownEl?.toggle(section === "markov");
+    this.regionDropdownEl?.toggle(section === "placeShapes");
+    // The trigger wears the active section's icon, as titleForge's leading icon does.
+    if (this.sectionTriggerEl) setIcon(this.sectionTriggerEl, SECTION_ICONS[section]);
+    if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} — no packs yet`;
+    this.sectionStubEl?.toggle(section === "explorationPlaceShapes");
+  }
+
+  private setRegionMenuOpen(open: boolean) {
+    this.isRegionMenuOpen = open;
+    if (open) {
+      this.closePackDropdown();
+      this.renderRegionMenu();
+    }
+    this.regionMenuEl?.toggle(open);
+    this.regionTriggerEl?.setAttribute("aria-expanded", String(open));
+  }
+
+  /** All Britain first, then the regions in reference order; historic counties as tooltips. */
+  private renderRegionMenu() {
+    const menu = this.regionMenuEl;
+    if (!menu) return;
+    menu.empty();
+    const options: { code: string | undefined; label: string; counties?: string }[] = [
+      { code: undefined, label: "All Britain" },
+      ...PLACE_SHAPE_REGIONS,
+    ];
+    for (const { code, label, counties } of options) {
+      const item = menu.createEl("button", {
+        cls: "nameforge-modal__pack-dropdown-item" + (code === this.selectedRegion ? " is-active" : ""),
+        attr: { type: "button", title: counties ?? "No regional weighting" },
+      });
+      item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
+      item.addEventListener("click", () => {
+        this.selectedRegion = code;
+        this.updateRegionLabel();
+        this.setRegionMenuOpen(false);
+      });
+    }
+  }
+
+  private updateRegionLabel() {
+    const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.selectedRegion);
+    if (this.regionLabelEl) this.regionLabelEl.textContent = region?.label ?? "All Britain";
+    this.regionTriggerEl?.setAttribute("title", region?.counties ?? "No regional weighting");
+  }
+
   private unmount() {
     activeDocument.removeEventListener("click", this.handlePackDropdownOutsideClick);
     this.closePackDropdown();
@@ -291,6 +477,16 @@ export class NameForgeModal extends Modal {
     this.packDropdownIconEl = null;
     this.packDropdownLabelEl = null;
     this.packDropdownMenuEl = null;
+    this.sectionTriggerEl = null;
+    this.sectionMenuEl = null;
+    this.isSectionMenuOpen = false;
+    this.sectionStubEl = null;
+    this.sectionStubLabelEl = null;
+    this.regionDropdownEl = null;
+    this.regionTriggerEl = null;
+    this.regionLabelEl = null;
+    this.regionMenuEl = null;
+    this.isRegionMenuOpen = false;
     this.quantityButtons = [];
     this.seedInputEl = null;
     this.seedLockButton = null;
@@ -304,6 +500,9 @@ export class NameForgeModal extends Modal {
   }
 
   private handlePackDropdownOutsideClick = (evt: MouseEvent) => {
+    if (this.isRegionMenuOpen && this.regionDropdownEl && !this.regionDropdownEl.contains(evt.target as Node)) {
+      this.setRegionMenuOpen(false);
+    }
     if (this.isPackDropdownOpen && this.packDropdownEl && !this.packDropdownEl.contains(evt.target as Node)) {
       this.closePackDropdown();
     }
@@ -664,6 +863,24 @@ export class NameForgeModal extends Modal {
   }
 
   private async generateSelectedCount() {
+    if (this.activeSection === "placeShapes") {
+      const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+      const result = generatePlaceShapesDetailed({
+        count: this.generationCount,
+        seed: seedOverride,
+        region: this.selectedRegion,
+      });
+      this.currentSeed = result.seed;
+      this.renderResults(result.names);
+      await this.recordGenerationHistory(result.names.length, placeShapesHistoryLabel(this.selectedRegion));
+      this.setStatus("");
+      return;
+    }
+    if (this.activeSection !== "markov") {
+      // Placeholder sections have no packs yet — leave the current results untouched.
+      this.setStatus(`${SECTION_LABELS[this.activeSection]} has no packs yet.`);
+      return;
+    }
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
 
     if (this.currentPackType === "compoundPack") {
@@ -758,10 +975,10 @@ export class NameForgeModal extends Modal {
    * Appends the just-used seed to the config file's generation history,
    * most-recent first, capped at MAX_HISTORY_ENTRIES.
    */
-  private async recordGenerationHistory(count: number) {
+  private async recordGenerationHistory(count: number, packName?: string) {
     if (this.currentSeed === null) return;
     const entry: GenerationHistoryEntry = {
-      packName: this.plugin.settings.packName || "nameForge",
+      packName: packName ?? (this.plugin.settings.packName || "nameForge"),
       timestamp: formatHistoryTimestamp(new Date()),
       seed: this.currentSeed,
       count,
@@ -1110,7 +1327,12 @@ class PreviousGenerationsModal extends Modal {
     for (const entry of history) {
       const row = list.createDiv({ cls: "nameforge-history-modal__row" });
       const iconEl = row.createSpan({ cls: "nameforge-history-modal__pack-icon" });
-      setIcon(iconEl, iconsByName.get(entry.packName) ?? ICON_BREAKDOWN_PACK);
+      setIcon(
+        iconEl,
+        entry.packName.startsWith(PLACE_SHAPES_HISTORY_NAME)
+          ? SECTION_ICONS.placeShapes
+          : iconsByName.get(entry.packName) ?? ICON_BREAKDOWN_PACK,
+      );
       row.createSpan({
         cls: "nameforge-history-modal__pack-name",
         text: entry.packName || "nameForge",

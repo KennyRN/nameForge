@@ -1636,6 +1636,8 @@ var ICON_PREVIOUS_GENERATIONS = "nameforge-previous-generations";
 var ICON_PREVIOUS_GENERATIONS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M16.94 4.697H17c.796 0 1.559.308 2.121.856S20 6.843 20 7.618v9.737a3.84 3.84 0 0 1-1.172 2.754A4.06 4.06 0 0 1 16 21.25H8c-1.06 0-2.078-.41-2.828-1.14A3.84 3.84 0 0 1 4 17.354V7.618c0-.764.308-1.499.857-2.045a3.04 3.04 0 0 1 2.083-.876" /><path d="M15.94 2.75h-8c-.552 0-1 .436-1 .974V5.67c0 .538.448.974 1 .974h8c.552 0 1-.436 1-.974V3.724a.987.987 0 0 0-1-.974m-7.787 8.71h7.694m-7.694 4.398h7.694" /></g></g>';
 var ICON_PACKS = "nameforge-packs";
 var ICON_PACKS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M8.593 3.217H4.698A1.95 1.95 0 0 0 2.75 5.164v13.633c0 1.075.872 1.947 1.948 1.947h3.895a1.95 1.95 0 0 0 1.947-1.947V5.164a1.95 1.95 0 0 0-1.947-1.947" /><path d="M6.645 17.379a1.503 1.503 0 1 0 0-3.007a1.503 1.503 0 0 0 0 3.007M10.54 7.93l3.116 11.685a1.95 1.95 0 0 0 2.386 1.373l3.768-.974a1.947 1.947 0 0 0 1.373-2.386L17.658 4.385a1.947 1.947 0 0 0-2.386-1.373l-3.758 1.003c-.406.111-.764.35-1.023.682" /><path d="M16.665 17.241a1.502 1.502 0 1 0 0-3.004a1.502 1.502 0 0 0 0 3.004" /></g></g>';
+var ICON_PLACE_SHAPES = "nameforge-place-shapes";
+var ICON_PLACE_SHAPES_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path d="M17 8.444C17 11.537 12 17 12 17s-5-5.463-5-8.556S9.239 3 12 3s5 2.352 5 5.444" /><circle cx="12" cy="8" r="1" /></g></g>';
 var ICON_DICE = "nameforge-dice";
 var ICON_DICE_SVG = '<g transform="scale(6.66667)"><path d="M0 0h15v15H0z" fill="none" /><path fill="currentColor" d="M4.14 1.14c-.68.05-1.33.43-1.7 1.07L.29 5.93c-.59 1.03-.26 2.32.77 2.91l3.72 2.14c.15.09.31.19.47.24V7.47c0-1.76 1.45-3.22 3.21-3.22h1.31c-.18-.26-.41-.5-.7-.67L5.35 1.44c-.39-.22-.8-.33-1.21-.3m.33.76c.6 0 1.12.41 1.28.99c.19.72-.23 1.45-.95 1.64c-.71.19-1.44-.23-1.64-.94c-.19-.72.24-1.45.95-1.64c.12-.04.24-.05.36-.05M2.2 5.84c.6 0 1.12.41 1.28.99c.19.71-.24 1.45-.95 1.64S1.08 8.23.89 7.52s.23-1.45.95-1.64c.11-.03.24-.05.36-.04m6.26-.52c-1.18 0-2.14.96-2.14 2.15v4.28c0 1.19.96 2.15 2.14 2.15h4.29c1.19 0 2.14-.96 2.14-2.15V7.47c0-1.19-.95-2.15-2.14-2.15zm4.29.81c.35 0 .69.14.95.39a1.34 1.34 0 0 1 0 1.89c-.26.26-.6.4-.95.4a1.34 1.34 0 0 1 0-2.68m-4.29 4.28c.36 0 .7.14.95.4c.25.25.39.59.39.94a1.34 1.34 0 0 1-2.68 0c0-.35.14-.69.4-.94c.25-.26.59-.4.94-.4" /></g>';
 var ICON_TEXT_INSERT = "nameforge-text-insert";
@@ -1672,6 +1674,7 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_PLUS_SQUARE, ICON_PLUS_SQUARE_SVG);
   (0, import_obsidian4.addIcon)(ICON_PREVIOUS_GENERATIONS, ICON_PREVIOUS_GENERATIONS_SVG);
   (0, import_obsidian4.addIcon)(ICON_PACKS, ICON_PACKS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_PLACE_SHAPES, ICON_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_DICE, ICON_DICE_SVG);
   (0, import_obsidian4.addIcon)(ICON_TEXT_INSERT, ICON_TEXT_INSERT_SVG);
   (0, import_obsidian4.addIcon)(ICON_CHECKLIST_INSERT, ICON_CHECKLIST_INSERT_SVG);
@@ -1750,7 +1753,5407 @@ var EnterFolderPathModal = class extends import_obsidian5.Modal {
   }
 };
 
+// src/data/place-shapes.json
+var place_shapes_default = {
+  $comment: "Transcribed from place-name-shapes-reference.md (part 1). Data only: no plugin logic. Source elements and examples are kept for reference and never output.",
+  version: 1,
+  tiers: [
+    "dominant",
+    "common",
+    "occasional",
+    "rare",
+    "unlikely"
+  ],
+  categoryFamilies: [
+    {
+      id: "people",
+      label: "People"
+    },
+    {
+      id: "spiritual-and-fantastical",
+      label: "Spiritual and fantastical"
+    },
+    {
+      id: "living-things",
+      label: "Living things"
+    },
+    {
+      id: "landscape-and-setting",
+      label: "Landscape and setting"
+    },
+    {
+      id: "description",
+      label: "Description"
+    },
+    {
+      id: "use-and-activity",
+      label: "Use and activity"
+    },
+    {
+      id: "pseudo-category",
+      label: "Pseudo-category"
+    }
+  ],
+  categories: [
+    {
+      id: "personal-name",
+      label: "Personal name",
+      family: "people",
+      covers: "A named individual, usually an owner or founder",
+      examples: [
+        "Grimsby",
+        "Wolverhampton"
+      ]
+    },
+    {
+      id: "folk-group",
+      label: "Folk group",
+      family: "people",
+      covers: "\u201CThe people of X\u201D",
+      examples: [
+        "Hastings",
+        "Reading"
+      ]
+    },
+    {
+      id: "status-or-role",
+      label: "Status or role",
+      family: "people",
+      covers: "A rank, office or class",
+      examples: [
+        "Kingston",
+        "Preston",
+        "Charlton",
+        "Knighton"
+      ]
+    },
+    {
+      id: "ethnic-or-cultural-group",
+      label: "Ethnic or cultural group",
+      family: "people",
+      covers: "A people distinct from the namers",
+      examples: [
+        "Walcot",
+        "Denby",
+        "Normanby",
+        "Ingleby"
+      ]
+    },
+    {
+      id: "saint-or-holy-person",
+      label: "Saint or holy person",
+      family: "spiritual-and-fantastical",
+      covers: "A dedicatee or revered figure",
+      examples: [
+        "Llanfair",
+        "Kirkoswald",
+        "Llandeilo"
+      ]
+    },
+    {
+      id: "deity",
+      label: "Deity",
+      family: "spiritual-and-fantastical",
+      covers: "A named god",
+      examples: [
+        "Wednesbury",
+        "Thursley",
+        "Tysoe"
+      ]
+    },
+    {
+      id: "supernatural-being",
+      label: "Supernatural being",
+      family: "spiritual-and-fantastical",
+      covers: "Demons, dragons, goblins and similar beings",
+      examples: [
+        "Shuckburgh",
+        "Drakelow"
+      ]
+    },
+    {
+      id: "domestic-animal",
+      label: "Domestic animal",
+      family: "living-things",
+      covers: "Livestock",
+      examples: [
+        "Oxford",
+        "Swindon",
+        "Shipton"
+      ]
+    },
+    {
+      id: "wild-animal",
+      label: "Wild animal",
+      family: "living-things",
+      covers: "Game and wild beasts",
+      examples: [
+        "Hertford",
+        "Eversley",
+        "Brockley"
+      ]
+    },
+    {
+      id: "bird",
+      label: "Bird",
+      family: "living-things",
+      covers: "Wild birds",
+      examples: [
+        "Cranbrook",
+        "Crawley",
+        "Arncliffe"
+      ]
+    },
+    {
+      id: "fish-and-other-creatures",
+      label: "Fish and other creatures",
+      family: "living-things",
+      covers: "Fish, eels, bees",
+      examples: [
+        "Fishwick",
+        "Beoley"
+      ]
+    },
+    {
+      id: "tree",
+      label: "Tree",
+      family: "living-things",
+      covers: "Particular trees or species",
+      examples: [
+        "Ashford",
+        "Oakley",
+        "Aldershot"
+      ]
+    },
+    {
+      id: "wild-plant",
+      label: "Wild plant",
+      family: "living-things",
+      covers: "Non-tree vegetation",
+      examples: [
+        "Bromley",
+        "Farnham"
+      ]
+    },
+    {
+      id: "crop",
+      label: "Crop",
+      family: "living-things",
+      covers: "Cultivated plants",
+      examples: [
+        "Wheatley",
+        "Flaxley",
+        "Barton"
+      ]
+    },
+    {
+      id: "river-or-stream-name",
+      label: "River or stream name",
+      family: "landscape-and-setting",
+      covers: "A named watercourse",
+      examples: [
+        "Luton",
+        "Doncaster"
+      ]
+    },
+    {
+      id: "landform",
+      label: "Landform",
+      family: "landscape-and-setting",
+      covers: "A nearby hill, slope or spur",
+      examples: [
+        "Clifton",
+        "Hutton"
+      ]
+    },
+    {
+      id: "water-or-wetland-feature",
+      label: "Water or wetland feature",
+      family: "landscape-and-setting",
+      covers: "Marsh, ford, spring",
+      examples: [
+        "Marston",
+        "Fordham"
+      ]
+    },
+    {
+      id: "soil-or-ground",
+      label: "Soil or ground",
+      family: "landscape-and-setting",
+      covers: "What the ground is like",
+      examples: [
+        "Clayton",
+        "Sandon",
+        "Stanton"
+      ]
+    },
+    {
+      id: "built-feature",
+      label: "Built feature",
+      family: "landscape-and-setting",
+      covers: "A road, mill, fort or other structure",
+      examples: [
+        "Stratford",
+        "Milford",
+        "Chesterton",
+        "Burton"
+      ]
+    },
+    {
+      id: "earlier-or-district-name",
+      label: "Earlier or district name",
+      family: "landscape-and-setting",
+      covers: "An older place name or a territory name used as the specific",
+      examples: [
+        "Gloucester",
+        "Manchester",
+        "Caernarfon",
+        "Leominster"
+      ]
+    },
+    {
+      id: "colour",
+      label: "Colour",
+      family: "description",
+      covers: "Colour of water, soil or vegetation",
+      examples: [
+        "Blackburn",
+        "Redbourn",
+        "Whitwell",
+        "Greenwich"
+      ]
+    },
+    {
+      id: "size",
+      label: "Size",
+      family: "description",
+      covers: "Large or small",
+      examples: [
+        "Littleton",
+        "Mickleham"
+      ]
+    },
+    {
+      id: "age",
+      label: "Age",
+      family: "description",
+      covers: "Old or new",
+      examples: [
+        "Newton",
+        "Aldborough"
+      ]
+    },
+    {
+      id: "position-or-direction",
+      label: "Position or direction",
+      family: "description",
+      covers: "Compass point, upper or lower, middle",
+      examples: [
+        "Norton",
+        "Sutton",
+        "Upton",
+        "Netherton",
+        "Middleton"
+      ]
+    },
+    {
+      id: "shape",
+      label: "Shape",
+      family: "description",
+      covers: "Broad, long, crooked",
+      examples: [
+        "Bradford",
+        "Langley"
+      ]
+    },
+    {
+      id: "quality-or-condition",
+      label: "Quality or condition",
+      family: "description",
+      covers: "Clean, foul, fair, cold",
+      examples: [
+        "Fairford",
+        "Fulbrook"
+      ]
+    },
+    {
+      id: "number",
+      label: "Number",
+      family: "description",
+      covers: "Counted features",
+      examples: [
+        "Twyford",
+        "Sevenoaks"
+      ]
+    },
+    {
+      id: "activity",
+      label: "Activity",
+      family: "use-and-activity",
+      covers: "What people did there",
+      examples: [
+        "Huntingdon"
+      ]
+    },
+    {
+      id: "produce",
+      label: "Produce",
+      family: "use-and-activity",
+      covers: "What the place yielded",
+      examples: [
+        "Butterwick",
+        "Chiswick"
+      ]
+    },
+    {
+      id: "religious-association",
+      label: "Religious association",
+      family: "use-and-activity",
+      covers: "Church or holiness",
+      examples: [
+        "Kirkby",
+        "Halliwell"
+      ]
+    },
+    {
+      id: "assembly-or-law",
+      label: "Assembly or law",
+      family: "use-and-activity",
+      covers: "Moots and courts",
+      examples: [
+        "Mottisfont"
+      ]
+    },
+    {
+      id: "season",
+      label: "Season",
+      family: "use-and-activity",
+      covers: "When the place was used",
+      examples: [
+        "Somerton",
+        "Winterbourne"
+      ]
+    },
+    {
+      id: "empty-slot",
+      label: "Empty slot",
+      family: "pseudo-category",
+      covers: "No specific; the generic stands alone",
+      examples: [
+        "Stoke",
+        "Hope",
+        "Eccles",
+        "Harrow",
+        "Tarbert"
+      ]
+    }
+  ],
+  groups: [
+    {
+      id: "settlement-farms-and-estates",
+      section: "3.1",
+      side: "settlement",
+      label: "Settlement: farms and estates",
+      generics: [
+        {
+          id: "enclosed-farmstead",
+          meaning: "Enclosed farmstead",
+          sense: "Early sense: an enclosure with dwelling",
+          sourceElements: [
+            "OE t\u016Bn (early)"
+          ]
+        },
+        {
+          id: "estate-manor-centre",
+          meaning: "Estate, manor centre",
+          sense: "Later sense: an administrative or lordly unit",
+          sourceElements: [
+            "OE t\u016Bn (later)",
+            "W tref",
+            "Co tre"
+          ]
+        },
+        {
+          id: "village",
+          meaning: "Village",
+          sense: "Nucleated settlement, latest sense",
+          sourceElements: [
+            "OE t\u016Bn (late)",
+            "ON b\xFD"
+          ]
+        },
+        {
+          id: "early-homestead-or-village",
+          meaning: "Early homestead or village",
+          sense: "Very early English settlement, often near Roman roads",
+          sourceElements: [
+            "OE h\u0101m"
+          ]
+        },
+        {
+          id: "homestead-site",
+          meaning: "Homestead site",
+          sense: "Site of a homestead",
+          sourceElements: [
+            "OE h\u0101m-stede, stede"
+          ]
+        },
+        {
+          id: "norse-farm",
+          meaning: "Norse farm",
+          sense: "Farm, often prominent or long-lived",
+          sourceElements: [
+            "ON b\xF3lsta\xF0r, sta\xF0ir"
+          ]
+        },
+        {
+          id: "enclosed-farm-garth",
+          meaning: "Enclosed farm, garth",
+          sense: "Farm defined by its enclosure",
+          sourceElements: [
+            "ON gar\xF0r"
+          ]
+        },
+        {
+          id: "enclosed-settlement",
+          meaning: "Enclosed settlement",
+          sense: "Hedged or fenced holding",
+          sourceElements: [
+            "OE wor\xFE, wor\xFEig (South West), wor\xFEign (West Midlands)"
+          ]
+        },
+        {
+          id: "farm-township",
+          meaning: "Farm township",
+          sense: "Cluster of farms worked together",
+          sourceElements: [
+            "G baile",
+            "Scots toun, fermtoun"
+          ]
+        },
+        {
+          id: "home-farm-of-an-estate",
+          meaning: "Home farm of an estate",
+          sense: "Lord\u2019s own farm",
+          sourceElements: [
+            "Scots mains (from demesne)"
+          ]
+        },
+        {
+          id: "land-holding-share-of-land",
+          meaning: "Land-holding, share of land",
+          sense: "Unit of allotted land",
+          sourceElements: [
+            "Pict pett"
+          ]
+        },
+        {
+          id: "folk-group-territory",
+          meaning: "Folk-group territory",
+          sense: "Land of \u201Cthe people of X\u201D",
+          sourceElements: [
+            "OE -ingas"
+          ]
+        },
+        {
+          id: "folk-group-homestead",
+          meaning: "Folk-group homestead",
+          sense: "Homestead of \u201Cthe people of X\u201D",
+          sourceElements: [
+            "OE -inga-h\u0101m"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "personal-name",
+          "position-or-direction",
+          "age",
+          "landform",
+          "water-or-wetland-feature",
+          "tree",
+          "built-feature",
+          "status-or-role",
+          "river-or-stream-name",
+          "crop"
+        ],
+        occasional: [
+          "domestic-animal",
+          "ethnic-or-cultural-group",
+          "soil-or-ground",
+          "religious-association",
+          "size",
+          "shape",
+          "wild-plant",
+          "season",
+          "folk-group"
+        ],
+        rare: [
+          "wild-animal",
+          "bird",
+          "colour",
+          "saint-or-holy-person"
+        ],
+        unlikely: [
+          "deity",
+          "supernatural-being",
+          "assembly-or-law",
+          "activity"
+        ],
+        examples: {
+          common: "Edgbaston, Kettleby; Norton, Westby; Newton; Hilton; Marston, Fordham; Ashton, Ashby; Stratton, Chesterton; Kingston, Charlton; Luton, Tamworth; Barton",
+          occasional: "Shipton, Swinton; Denby, Ingleby; Clayton, Stanton; Kirkby; Mickleton; Langton; Brampton; Somerton; Birmingham",
+          rare: "Everton"
+        }
+      },
+      overrides: [
+        {
+          generics: [
+            "folk-group-territory"
+          ],
+          note: "Folk-group territory (-ingas): takes only personal name (Hastings, Reading).",
+          replace: {
+            common: [
+              "personal-name"
+            ],
+            occasional: [],
+            rare: [],
+            unlikely: [],
+            examples: {
+              common: "Hastings, Reading"
+            }
+          }
+        },
+        {
+          generics: [
+            "village"
+          ],
+          note: "Village where Norse (b\xFD): personal name and ethnic or cultural group are both strongly Common (Grimsby, Normanby, Irby).",
+          set: {
+            "personal-name": "dominant",
+            "ethnic-or-cultural-group": "dominant"
+          }
+        },
+        {
+          generics: [
+            "home-farm-of-an-estate"
+          ],
+          note: "Home farm of an estate (mains): takes earlier or district name (Mains of X).",
+          set: {
+            "earlier-or-district-name": "dominant"
+          }
+        }
+      ],
+      notes: []
+    },
+    {
+      id: "settlement-status-and-relationship",
+      section: "3.2",
+      side: "settlement",
+      label: "Settlement: status and relationship",
+      generics: [
+        {
+          id: "dependent-or-secondary-settlement",
+          meaning: "Dependent or secondary settlement",
+          sense: "Daughter settlement of a larger one",
+          sourceElements: [
+            "ON \xFEorp",
+            "OE \xFErop"
+          ]
+        },
+        {
+          id: "outlying-place-dependent-site",
+          meaning: "Outlying place, dependent site",
+          sense: "Often a special-purpose or outlying site",
+          sourceElements: [
+            "OE stoc"
+          ]
+        },
+        {
+          id: "outlying-grain-farm",
+          meaning: "Outlying grain farm",
+          sense: "Specialised outlier of an estate",
+          sourceElements: [
+            "OE bere-w\u012Bc"
+          ]
+        },
+        {
+          id: "specialised-farm",
+          meaning: "Specialised farm",
+          sense: "Often dairy or another single product",
+          sourceElements: [
+            "OE w\u012Bc"
+          ]
+        },
+        {
+          id: "monastic-outlying-farm",
+          meaning: "Monastic outlying farm",
+          sense: "Farm worked for a religious house",
+          sourceElements: [
+            "ME grange"
+          ]
+        },
+        {
+          id: "cattle-farm",
+          meaning: "Cattle farm",
+          sense: "Medieval lordly or forest stock farm",
+          sourceElements: [
+            "ME vaccary"
+          ]
+        },
+        {
+          id: "cottars-settlement",
+          meaning: "Cottars\u2019 settlement",
+          sense: "Smallholders dependent on a larger farm",
+          sourceElements: [
+            "Scots cottoun",
+            "OE cot (plural)"
+          ]
+        },
+        {
+          id: "settlement-by-a-roman-site",
+          meaning: "Settlement by a Roman site",
+          sense: "English settlement beside a Roman vicus",
+          sourceElements: [
+            "OE w\u012Bc-h\u0101m"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "personal-name",
+          "position-or-direction",
+          "produce",
+          "domestic-animal"
+        ],
+        occasional: [
+          "age",
+          "folk-group",
+          "river-or-stream-name",
+          "status-or-role",
+          "landform",
+          "colour",
+          "crop"
+        ],
+        rare: [
+          "ethnic-or-cultural-group",
+          "soil-or-ground",
+          "size"
+        ],
+        unlikely: [
+          "saint-or-holy-person",
+          "deity",
+          "supernatural-being",
+          "wild-animal",
+          "bird"
+        ],
+        examples: {
+          common: "Scunthorpe; Northwich, Middlewich; Butterwick, Chiswick; Gatwick",
+          occasional: "Newthorpe; Basingstoke; Tavistock; Bishopstoke; Woodthorpe; Greenwich; Berwick"
+        }
+      },
+      overrides: [
+        {
+          generics: [
+            "dependent-or-secondary-settlement"
+          ],
+          note: "Dependent or secondary settlement (\xFEorp): dominated by personal name.",
+          set: {
+            "personal-name": "dominant"
+          }
+        },
+        {
+          generics: [
+            "specialised-farm"
+          ],
+          note: "Specialised farm (w\u012Bc): produce and domestic animal are its strongest pairings.",
+          set: {
+            produce: "dominant",
+            "domestic-animal": "dominant"
+          }
+        },
+        {
+          generics: [
+            "outlying-place-dependent-site"
+          ],
+          note: "Outlying place (stoc): Empty slot is Common, usually with a later affix (Stoke Mandeville, Stoke-on-Trent).",
+          set: {
+            "empty-slot": "common"
+          }
+        },
+        {
+          generics: [
+            "monastic-outlying-farm"
+          ],
+          note: "Monastic outlying farm (grange): usually takes the owning house; treat as status or role. Regional: status or role keeps its group tier."
+        }
+      ],
+      notes: []
+    },
+    {
+      id: "dwellings-and-buildings",
+      section: "3.3",
+      side: "settlement",
+      label: "Dwellings and buildings",
+      generics: [
+        {
+          id: "house",
+          meaning: "House",
+          sense: "Plain dwelling",
+          sourceElements: [
+            "OE, ON h\u016Bs",
+            "W t\u0177",
+            "G tigh"
+          ]
+        },
+        {
+          id: "dwelling",
+          meaning: "Dwelling",
+          sense: "Lived-in place, often a single holding",
+          sourceElements: [
+            "W, Co bod",
+            "ON setr"
+          ]
+        },
+        {
+          id: "building-dwelling",
+          meaning: "Building, dwelling",
+          sense: "A substantial building",
+          sourceElements: [
+            "OE b\u014Dtl, b\u014D\xFEl"
+          ]
+        },
+        {
+          id: "hall",
+          meaning: "Hall",
+          sense: "Large communal or lordly building",
+          sourceElements: [
+            "OE heall, sele"
+          ]
+        },
+        {
+          id: "house-plot",
+          meaning: "House plot",
+          sense: "Site of a house and its yard",
+          sourceElements: [
+            "ON toft"
+          ]
+        },
+        {
+          id: "small-enclosed-field-by-a-house",
+          meaning: "Small enclosed field by a house",
+          sense: "Croft",
+          sourceElements: [
+            "OE, Scots croft"
+          ]
+        },
+        {
+          id: "cottage",
+          meaning: "Cottage",
+          sense: "Small or humble dwelling",
+          sourceElements: [
+            "OE cot"
+          ]
+        },
+        {
+          id: "hut-temporary-shelter",
+          meaning: "Hut, temporary shelter",
+          sense: "Booth or bothy",
+          sourceElements: [
+            "ON b\xFA\xF0",
+            "G bothan"
+          ]
+        },
+        {
+          id: "workshop-or-store-building",
+          meaning: "Workshop or store building",
+          sense: "Building for a purpose",
+          sourceElements: [
+            "OE \xE6rn"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "personal-name",
+          "position-or-direction",
+          "quality-or-condition",
+          "age"
+        ],
+        occasional: [
+          "ethnic-or-cultural-group",
+          "shape",
+          "landform",
+          "produce",
+          "crop"
+        ],
+        rare: [
+          "status-or-role",
+          "domestic-animal",
+          "size"
+        ],
+        unlikely: [
+          "saint-or-holy-person",
+          "deity",
+          "supernatural-being",
+          "wild-animal",
+          "bird",
+          "season"
+        ],
+        examples: {
+          common: "Didcot, Lowestoft; Northcote, Westcott; Caldecote; Newbold, Newbottle",
+          occasional: "Walcot; Langtoft; Woodhall; Colerne; Ryecroft"
+        }
+      },
+      overrides: [
+        {
+          generics: [
+            "cottage"
+          ],
+          note: "Cottage (cot): unusually strong pull towards quality or condition (\u201Ccold cottages\u201D: Caldecote, Calcot).",
+          set: {
+            "quality-or-condition": "dominant"
+          }
+        },
+        {
+          generics: [
+            "dwelling"
+          ],
+          note: "Dwelling (W bod): same pattern, generic-first (Bodedern).",
+          set: {
+            "quality-or-condition": "dominant"
+          }
+        }
+      ],
+      notes: []
+    },
+    {
+      id: "seasonal-and-upland-settlement",
+      section: "3.4",
+      side: "settlement",
+      label: "Seasonal and upland settlement",
+      generics: [
+        {
+          id: "summer-upland-dwelling",
+          meaning: "Summer upland dwelling",
+          sense: "Transhumance summer house",
+          sourceElements: [
+            "W hafod"
+          ]
+        },
+        {
+          id: "permanent-or-winter-lowland-dwelling",
+          meaning: "Permanent or winter lowland dwelling",
+          sense: "The \u201Cold home\u201D lower down",
+          sourceElements: [
+            "W hendre(f)"
+          ]
+        },
+        {
+          id: "shieling-summer-pasture-hut",
+          meaning: "Shieling, summer pasture hut",
+          sense: "Herders\u2019 seasonal hut",
+          sourceElements: [
+            "ON s\xE6tr, erg",
+            "G \xE0irigh",
+            "Scots shiel"
+          ]
+        },
+        {
+          id: "hut-at-summer-pasture",
+          meaning: "Hut at summer pasture",
+          sense: "Shelter on upland grazing",
+          sourceElements: [
+            "ON sk\xE1li"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "personal-name",
+          "position-or-direction"
+        ],
+        occasional: [
+          "domestic-animal",
+          "landform",
+          "water-or-wetland-feature",
+          "status-or-role"
+        ],
+        rare: [
+          "tree",
+          "wild-plant",
+          "built-feature"
+        ],
+        unlikely: [
+          "season",
+          "crop",
+          "saint-or-holy-person",
+          "deity",
+          "supernatural-being"
+        ],
+        examples: {
+          common: "Hawkshead, Anglezarke, Grimsargh; Hafod Uchaf",
+          occasional: "Seascale; Portinscale"
+        }
+      },
+      overrides: [],
+      notes: [
+        "Season is Unlikely because it is redundant."
+      ]
+    },
+    {
+      id: "industry-and-trade",
+      section: "3.5",
+      side: "settlement",
+      label: "Industry and trade",
+      generics: [
+        {
+          id: "salt-works",
+          meaning: "Salt-works",
+          sense: "Brine-boiling centre",
+          sourceElements: [
+            "OE w\u012Bc (as -wich)"
+          ]
+        },
+        {
+          id: "salt-house",
+          meaning: "Salt-house",
+          sense: "Building for salt-making",
+          sourceElements: [
+            "OE salt-\xE6rn"
+          ]
+        },
+        {
+          id: "mill",
+          meaning: "Mill",
+          sense: "Water or grain mill",
+          sourceElements: [
+            "OE myln"
+          ]
+        },
+        {
+          id: "kiln",
+          meaning: "Kiln",
+          sense: "Lime, pottery or drying kiln",
+          sourceElements: [
+            "OE cyln"
+          ]
+        },
+        {
+          id: "pit-quarry",
+          meaning: "Pit, quarry",
+          sense: "Dug source of clay, stone or chalk",
+          sourceElements: [
+            "OE pytt, (ge)delf"
+          ]
+        },
+        {
+          id: "fish-weir",
+          meaning: "Fish-weir",
+          sense: "Fixed fish trap",
+          sourceElements: [
+            "OE wer"
+          ]
+        },
+        {
+          id: "trading-place",
+          meaning: "Trading place",
+          sense: "Early commercial settlement",
+          sourceElements: [
+            "OE w\u012Bc (from Latin vicus)"
+          ]
+        },
+        {
+          id: "market",
+          meaning: "Market",
+          sense: "Market place",
+          sourceElements: [
+            "OE c\u0113ping",
+            "ME market"
+          ]
+        },
+        {
+          id: "market-town-harbour",
+          meaning: "Market town, harbour",
+          sense: "Chartered or trading town",
+          sourceElements: [
+            "OE port"
+          ]
+        },
+        {
+          id: "landing-place",
+          meaning: "Landing place",
+          sense: "Riverside or shore landing",
+          sourceElements: [
+            "OE h\u0233\xFE"
+          ]
+        },
+        {
+          id: "haven",
+          meaning: "Haven",
+          sense: "Sheltered harbour",
+          sourceElements: [
+            "ON h\u01EBfn"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "position-or-direction",
+          "personal-name",
+          "age",
+          "produce",
+          "domestic-animal"
+        ],
+        occasional: [
+          "status-or-role",
+          "soil-or-ground",
+          "quality-or-condition",
+          "shape",
+          "colour",
+          "river-or-stream-name",
+          "earlier-or-district-name"
+        ],
+        rare: [
+          "tree",
+          "crop",
+          "landform"
+        ],
+        unlikely: [
+          "saint-or-holy-person",
+          "deity",
+          "supernatural-being",
+          "season",
+          "wild-animal"
+        ],
+        examples: {
+          common: "Northwich, Westmill; Putney; Newport; Chelsea; Lambeth, Rotherhithe",
+          occasional: "Maidenhead; Erith; Droitwich; Langport; Whitehaven; Bridport"
+        }
+      },
+      overrides: [
+        {
+          generics: [
+            "landing-place"
+          ],
+          note: "Landing place (h\u0233\xFE): named after what came ashore, so produce and domestic animal are especially strong.",
+          set: {
+            produce: "dominant",
+            "domestic-animal": "dominant"
+          }
+        },
+        {
+          generics: [
+            "market"
+          ],
+          note: "Market (c\u0113ping): mostly survives as an affix rather than a generic (see \xA77). Kept as a generic with the group profile."
+        }
+      ],
+      notes: []
+    },
+    {
+      id: "religious-christian",
+      section: "3.6",
+      side: "settlement",
+      label: "Religious: Christian",
+      generics: [
+        {
+          id: "british-church-community",
+          meaning: "British church community",
+          sense: "Early Brittonic Christian site",
+          sourceElements: [
+            "Brit egl\u0113s (\u2192 Eccles)",
+            "W eglwys"
+          ]
+        },
+        {
+          id: "church",
+          meaning: "Church",
+          sense: "Parish or local church",
+          sourceElements: [
+            "OE cirice",
+            "ON kirkja"
+          ]
+        },
+        {
+          id: "minster-mother-church",
+          meaning: "Minster, mother church",
+          sense: "Senior church serving a wide area",
+          sourceElements: [
+            "OE mynster",
+            "G annaid"
+          ]
+        },
+        {
+          id: "saints-church-enclosure",
+          meaning: "Saint\u2019s church enclosure",
+          sense: "Consecrated enclosure named for a saint",
+          sourceElements: [
+            "W llan",
+            "Co lan",
+            "G cill"
+          ]
+        },
+        {
+          id: "hermitage-retreat",
+          meaning: "Hermitage, retreat",
+          sense: "Remote cell for a hermit",
+          sourceElements: [
+            "G disert",
+            "W dyserth"
+          ]
+        },
+        {
+          id: "island-of-irish-monks",
+          meaning: "Island of Irish monks",
+          sense: "Norse name for places of the papar",
+          sourceElements: [
+            "ON papi"
+          ]
+        },
+        {
+          id: "chapel",
+          meaning: "Chapel",
+          sense: "Lesser place of worship",
+          sourceElements: [
+            "W capel",
+            "ME chapel"
+          ]
+        },
+        {
+          id: "holy-place",
+          meaning: "Holy place",
+          sense: "Sanctified or assembly site",
+          sourceElements: [
+            "OE st\u014Dw"
+          ]
+        },
+        {
+          id: "standing-cross",
+          meaning: "Standing cross",
+          sense: "Preaching or boundary cross",
+          sourceElements: [
+            "ON kross",
+            "OE r\u014Dd"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "saint-or-holy-person",
+          "personal-name",
+          "position-or-direction",
+          "river-or-stream-name"
+        ],
+        occasional: [
+          "colour",
+          "age",
+          "size",
+          "built-feature",
+          "activity",
+          "earlier-or-district-name"
+        ],
+        rare: [
+          "status-or-role",
+          "landform"
+        ],
+        unlikely: [
+          "deity",
+          "supernatural-being",
+          "domestic-animal",
+          "wild-animal",
+          "bird",
+          "crop",
+          "season"
+        ],
+        examples: {
+          common: "Kilbride, Felixkirk, Padstow; Ormskirk, Kidderminster; Westminster, Upchurch; Axminster, Llandaff",
+          occasional: "Whitchurch; Newchurch; Kilmore, Papa Stour; Bristol; Chepstow; Leominster"
+        }
+      },
+      overrides: [
+        {
+          generics: [
+            "saints-church-enclosure"
+          ],
+          note: "Saint\u2019s church enclosure (llan, lan, cill): dominated by saint or holy person, generic-first.",
+          set: {
+            "saint-or-holy-person": "dominant"
+          }
+        },
+        {
+          generics: [
+            "british-church-community",
+            "hermitage-retreat"
+          ],
+          note: "British church community and Hermitage: Empty slot is Common (Eccles, Dysart).",
+          set: {
+            "empty-slot": "common"
+          }
+        }
+      ],
+      notes: [
+        "Deity + church is unattested but is an obvious lever for syncretic religions in fantasy settings."
+      ]
+    },
+    {
+      id: "religious-pre-christian-and-sacred",
+      section: "3.7",
+      side: "settlement",
+      label: "Religious: pre-Christian and sacred",
+      generics: [
+        {
+          id: "heathen-temple",
+          meaning: "Heathen temple",
+          sense: "Major cult centre",
+          sourceElements: [
+            "OE hearg",
+            "ON hof"
+          ]
+        },
+        {
+          id: "shrine-idol",
+          meaning: "Shrine, idol",
+          sense: "Small sacred site",
+          sourceElements: [
+            "OE w\u0113oh, w\u012Bg"
+          ]
+        },
+        {
+          id: "sacred-grove",
+          meaning: "Sacred grove",
+          sense: "Grove with cult significance",
+          sourceElements: [
+            "ON lundr (sometimes)"
+          ]
+        },
+        {
+          id: "holy-spring",
+          meaning: "Holy spring",
+          sense: "Spring with sacred or healing status",
+          sourceElements: [
+            "OE h\u0101lig wella",
+            "W ffynnon + saint"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "empty-slot",
+          "personal-name"
+        ],
+        occasional: [
+          "folk-group"
+        ],
+        rare: [
+          "deity",
+          "landform",
+          "tree"
+        ],
+        unlikely: [
+          "produce",
+          "crop",
+          "domestic-animal",
+          "built-feature",
+          "season"
+        ],
+        examples: {
+          common: "Harrow, Wye; Peper Harow, Snelland",
+          occasional: "Holywell"
+        }
+      },
+      overrides: [
+        {
+          generics: [
+            "holy-spring"
+          ],
+          note: "Saint or holy person is Occasional for holy springs only.",
+          set: {
+            "saint-or-holy-person": "occasional"
+          }
+        }
+      ],
+      notes: [
+        "In real names, deity names attach more often to landscape generics (clearings, hill-spurs) than to shrine generics."
+      ]
+    },
+    {
+      id: "religious-burial-and-memorial",
+      section: "3.8",
+      side: "settlement",
+      label: "Religious: burial and memorial",
+      generics: [
+        {
+          id: "grave",
+          meaning: "Grave",
+          sense: "An individual\u2019s grave",
+          sourceElements: [
+            "W bedd"
+          ]
+        },
+        {
+          id: "burial-ground-churchyard",
+          meaning: "Burial ground, churchyard",
+          sense: "Communal burial place",
+          sourceElements: [
+            "G cladh",
+            "W mynwent",
+            "OE byrgels"
+          ]
+        },
+        {
+          id: "burial-mound",
+          meaning: "Burial mound",
+          sense: "Barrow over a burial",
+          sourceElements: [
+            "OE beorg, hl\u0101w",
+            "ON haugr"
+          ]
+        },
+        {
+          id: "cairn",
+          meaning: "Cairn",
+          sense: "Stone heap, often funerary",
+          sourceElements: [
+            "G c\xE0rn",
+            "W carn"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "personal-name"
+        ],
+        occasional: [
+          "deity",
+          "supernatural-being",
+          "assembly-or-law",
+          "colour",
+          "quality-or-condition",
+          "saint-or-holy-person"
+        ],
+        rare: [
+          "size",
+          "number",
+          "tree"
+        ],
+        unlikely: [
+          "produce",
+          "crop",
+          "domestic-animal",
+          "season"
+        ],
+        examples: {
+          common: "Taplow, Hounslow, Bledlow",
+          occasional: "Wodnesbeorg; Drakelow; Thingoe, Mutlow; Cairngorm; Ludlow; Beddgelert"
+        }
+      },
+      overrides: [],
+      notes: [
+        "Burial mounds are the strongest real-world home of the spiritual and fantastical categories."
+      ]
+    },
+    {
+      id: "defensive",
+      section: "3.9",
+      side: "settlement",
+      label: "Defensive",
+      generics: [
+        {
+          id: "fortified-place-stronghold",
+          meaning: "Fortified place, stronghold",
+          sense: "Generic fortification, including hillforts",
+          sourceElements: [
+            "OE burh",
+            "W, Co dinas",
+            "G d\xF9n"
+          ]
+        },
+        {
+          id: "earthen-ringfort",
+          meaning: "Earthen ringfort",
+          sense: "Circular banked enclosure",
+          sourceElements: [
+            "G r\xE0th"
+          ]
+        },
+        {
+          id: "fort",
+          meaning: "Fort",
+          sense: "Fort, often but not always Roman",
+          sourceElements: [
+            "W caer",
+            "Co ker"
+          ]
+        },
+        {
+          id: "roman-walled-town-or-fort",
+          meaning: "Roman walled town or fort",
+          sense: "Specifically Roman remains",
+          sourceElements: [
+            "OE ceaster"
+          ]
+        },
+        {
+          id: "castle",
+          meaning: "Castle",
+          sense: "Post-Conquest stone fortification",
+          sourceElements: [
+            "ME castel",
+            "G caisteal"
+          ]
+        },
+        {
+          id: "tower-house",
+          meaning: "Tower house",
+          sense: "Defensive tower, especially in the Border",
+          sourceElements: [
+            "Scots peel"
+          ]
+        },
+        {
+          id: "fortified-farmhouse",
+          meaning: "Fortified farmhouse",
+          sense: "Defended farm, Border reiving country",
+          sourceElements: [
+            "Scots bastle"
+          ]
+        },
+        {
+          id: "lookout-hill",
+          meaning: "Lookout hill",
+          sense: "Watch-point",
+          sourceElements: [
+            "OE t\u014Dt, t\u014Dt-hyll"
+          ]
+        },
+        {
+          id: "beacon",
+          meaning: "Beacon",
+          sense: "Signal fire site",
+          sourceElements: [
+            "OE b\u0113acen",
+            "ON var\xF0a"
+          ]
+        },
+        {
+          id: "dyke-boundary-earthwork",
+          meaning: "Dyke, boundary earthwork",
+          sense: "Linear bank and ditch",
+          sourceElements: [
+            "OE d\u012Bc"
+          ]
+        },
+        {
+          id: "wall",
+          meaning: "Wall",
+          sense: "Built defensive or boundary wall",
+          sourceElements: [
+            "OE wall"
+          ]
+        },
+        {
+          id: "ship-camp-fortified-anchorage",
+          meaning: "Ship-camp, fortified anchorage",
+          sense: "Viking-age shore base",
+          sourceElements: [
+            "G longphort"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "personal-name",
+          "position-or-direction",
+          "age",
+          "river-or-stream-name",
+          "folk-group",
+          "earlier-or-district-name"
+        ],
+        occasional: [
+          "deity",
+          "supernatural-being",
+          "landform",
+          "wild-plant"
+        ],
+        rare: [
+          "ethnic-or-cultural-group",
+          "size",
+          "colour",
+          "tree"
+        ],
+        unlikely: [
+          "produce",
+          "crop",
+          "domestic-animal",
+          "season"
+        ],
+        examples: {
+          common: "Banbury, Bewcastle; Westbury, Sudbury; Aldbury, Newcastle; Doncaster, Lancaster, Exeter, Cardiff; Canterbury, Worcester; Gloucester, Winchester, Carlisle, Caernarfon",
+          occasional: "Wednesbury, Wansdyke; Grim\u2019s Ditch, Devil\u2019s Dyke; Shrewsbury"
+        }
+      },
+      overrides: [
+        {
+          generics: [
+            "dyke-boundary-earthwork"
+          ],
+          note: "Dyke, boundary earthwork (d\u012Bc): deity and supernatural being rise to Common (earthworks credited to gods, devils and giants).",
+          set: {
+            deity: "common",
+            "supernatural-being": "common"
+          }
+        },
+        {
+          generics: [
+            "beacon"
+          ],
+          note: "Beacon: usually takes the hill\u2019s own name; treat as earlier or district name. Regional: earlier or district name keeps its group tier."
+        }
+      ],
+      notes: []
+    },
+    {
+      id: "lordship-and-authority",
+      section: "3.10",
+      side: "settlement",
+      label: "Lordship and authority",
+      generics: [
+        {
+          id: "royal-or-lordly-court",
+          meaning: "Royal or lordly court",
+          sense: "Seat of a ruler",
+          sourceElements: [
+            "W llys",
+            "Co lys"
+          ]
+        },
+        {
+          id: "lords-hall",
+          meaning: "Lord\u2019s hall",
+          sense: "Hall of a local lord",
+          sourceElements: [
+            "OE heall"
+          ]
+        },
+        {
+          id: "manor-house",
+          meaning: "Manor house",
+          sense: "Later sense of burh in the south",
+          sourceElements: [
+            "ME -bury"
+          ]
+        },
+        {
+          id: "welsh-administrative-manor",
+          meaning: "Welsh administrative manor",
+          sense: "Territorial unit of lordship",
+          sourceElements: [
+            "W maenor"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "status-or-role",
+          "personal-name"
+        ],
+        occasional: [
+          "colour",
+          "position-or-direction",
+          "landform"
+        ],
+        rare: [
+          "age",
+          "size"
+        ],
+        unlikely: [
+          "saint-or-holy-person",
+          "deity",
+          "supernatural-being",
+          "domestic-animal",
+          "wild-animal",
+          "bird",
+          "crop",
+          "season"
+        ],
+        examples: {
+          common: "Kingsbury, Abbotsbury",
+          occasional: "Llyswen; Woodhall"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "communal-and-legal",
+      section: "3.11",
+      side: "settlement",
+      label: "Communal and legal",
+      generics: [
+        {
+          id: "assembly-field",
+          meaning: "Assembly field",
+          sense: "Open-air law assembly",
+          sourceElements: [
+            "ON \xFEing-v\u01EBllr"
+          ]
+        },
+        {
+          id: "assembly-mound",
+          meaning: "Assembly mound",
+          sense: "Mound where a court met",
+          sourceElements: [
+            "ON \xFEing-haugr",
+            "OE m\u014Dt-hl\u0101w"
+          ]
+        },
+        {
+          id: "speech-place",
+          meaning: "Speech place",
+          sense: "Where declarations were made",
+          sourceElements: [
+            "OE spell"
+          ]
+        },
+        {
+          id: "meeting-place",
+          meaning: "Meeting place",
+          sense: "Generic moot site",
+          sourceElements: [
+            "OE m\u014Dt, m\u014Dt-st\u014Dw"
+          ]
+        },
+        {
+          id: "boundary",
+          meaning: "Boundary",
+          sense: "Border between territories",
+          sourceElements: [
+            "OE (ge)m\u01E3re"
+          ]
+        },
+        {
+          id: "execution-site",
+          meaning: "Execution site",
+          sense: "Gallows hill",
+          sourceElements: [
+            "OE galga"
+          ]
+        },
+        {
+          id: "place-for-games-or-sport",
+          meaning: "Place for games or sport",
+          sense: "Play-place",
+          sourceElements: [
+            "OE plega-st\u014Dw"
+          ]
+        },
+        {
+          id: "bath-spa",
+          meaning: "Bath, spa",
+          sense: "Communal or healing waters",
+          sourceElements: [
+            "OE b\xE6\xFE"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "empty-slot"
+        ],
+        occasional: [
+          "personal-name",
+          "position-or-direction"
+        ],
+        rare: [
+          "landform",
+          "river-or-stream-name"
+        ],
+        unlikely: [
+          "folk-group",
+          "status-or-role",
+          "ethnic-or-cultural-group",
+          "saint-or-holy-person",
+          "deity",
+          "supernatural-being",
+          "domestic-animal",
+          "wild-animal",
+          "bird",
+          "fish-and-other-creatures",
+          "tree",
+          "wild-plant",
+          "crop",
+          "water-or-wetland-feature",
+          "soil-or-ground",
+          "built-feature",
+          "earlier-or-district-name",
+          "colour",
+          "size",
+          "age",
+          "shape",
+          "quality-or-condition",
+          "number",
+          "activity",
+          "produce",
+          "religious-association",
+          "assembly-or-law",
+          "season"
+        ],
+        examples: {
+          common: "Tynwald, Dingwall, Thingwall, Spellow, Plaistow, Bath"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "rivers-and-streams",
+      section: "3.12",
+      side: "landscape",
+      label: "Rivers and streams",
+      generics: [
+        {
+          id: "river",
+          meaning: "River",
+          sense: "Major watercourse",
+          sourceElements: [
+            "OE \u0113a",
+            "ON \xE1",
+            "W afon",
+            "G abhainn"
+          ]
+        },
+        {
+          id: "clear-stream",
+          meaning: "Clear stream",
+          sense: "Spring-fed, often on chalk; sometimes seasonal",
+          sourceElements: [
+            "OE burna"
+          ]
+        },
+        {
+          id: "sluggish-or-muddy-stream",
+          meaning: "Sluggish or muddy stream",
+          sense: "Slow lowland stream",
+          sourceElements: [
+            "OE br\u014Dc"
+          ]
+        },
+        {
+          id: "mountain-stream",
+          meaning: "Mountain stream",
+          sense: "Fast upland stream",
+          sourceElements: [
+            "ON bekkr",
+            "Scots burn",
+            "G allt"
+          ]
+        },
+        {
+          id: "stream-with-its-valley",
+          meaning: "Stream with its valley",
+          sense: "Stream and the valley it runs in",
+          sourceElements: [
+            "W nant"
+          ]
+        },
+        {
+          id: "river-source-spring-head",
+          meaning: "River source, spring-head",
+          sense: "Where a stream rises",
+          sourceElements: [
+            "OE \u01E3wiell, \u01E3wielm"
+          ]
+        },
+        {
+          id: "river-mouth",
+          meaning: "River mouth",
+          sense: "Where a river meets sea or lake",
+          sourceElements: [
+            "OE m\u016B\xFEa",
+            "ON \xF3s",
+            "Brit aber",
+            "G inbhir"
+          ]
+        },
+        {
+          id: "confluence",
+          meaning: "Confluence",
+          sense: "Where two streams join",
+          sourceElements: [
+            "OE (ge)m\u0233\xFEe",
+            "W cymer",
+            "G comar"
+          ]
+        },
+        {
+          id: "waterfall",
+          meaning: "Waterfall",
+          sense: "Falls or cascade",
+          sourceElements: [
+            "ON fors",
+            "G eas",
+            "W rhaeadr, sgwd"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "colour",
+          "quality-or-condition",
+          "tree",
+          "season",
+          "river-or-stream-name"
+        ],
+        occasional: [
+          "wild-animal",
+          "bird",
+          "wild-plant",
+          "shape",
+          "position-or-direction",
+          "built-feature",
+          "deity"
+        ],
+        rare: [
+          "personal-name",
+          "domestic-animal",
+          "crop"
+        ],
+        unlikely: [
+          "status-or-role",
+          "folk-group",
+          "ethnic-or-cultural-group",
+          "assembly-or-law",
+          "produce"
+        ],
+        examples: {
+          common: "Blackburn, Redbourn; Sherborne, Fulbrook; Ashbourne; Winterbourne; Exmouth, Aberystwyth, Inverness",
+          occasional: "Otterburn; Cranbrook; Rushbrooke; Bradbourne; Westbrook; Millbrook"
+        }
+      },
+      overrides: [
+        {
+          generics: [
+            "river-mouth",
+            "confluence",
+            "waterfall"
+          ],
+          note: "River mouth, Confluence and Waterfall take river or stream name almost by default.",
+          set: {
+            "river-or-stream-name": "dominant"
+          }
+        }
+      ],
+      notes: []
+    },
+    {
+      id: "springs-pools-and-lakes",
+      section: "3.13",
+      side: "landscape",
+      label: "Springs, pools and lakes",
+      generics: [
+        {
+          id: "spring-well",
+          meaning: "Spring, well",
+          sense: "Natural spring",
+          sourceElements: [
+            "OE wella",
+            "ON kelda",
+            "W ffynnon",
+            "G tobar"
+          ]
+        },
+        {
+          id: "spring-with-roman-association",
+          meaning: "Spring with Roman association",
+          sense: "Spring possibly with Roman stonework",
+          sourceElements: [
+            "OE funta (Latin loan)"
+          ]
+        },
+        {
+          id: "pool",
+          meaning: "Pool",
+          sense: "Pool, often in a river",
+          sourceElements: [
+            "OE p\u014Dl",
+            "W pwll",
+            "G poll"
+          ]
+        },
+        {
+          id: "mere-shallow-lake",
+          meaning: "Mere, shallow lake",
+          sense: "Lowland lake or pond",
+          sourceElements: [
+            "OE mere"
+          ]
+        },
+        {
+          id: "lake",
+          meaning: "Lake",
+          sense: "Larger body of water",
+          sourceElements: [
+            "ON vatn",
+            "W llyn",
+            "G loch"
+          ]
+        },
+        {
+          id: "small-mountain-lake",
+          meaning: "Small mountain lake",
+          sense: "Tarn or lochan",
+          sourceElements: [
+            "ON tj\u01EBrn",
+            "G lochan"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "colour",
+          "quality-or-condition",
+          "personal-name",
+          "tree",
+          "bird",
+          "wild-plant"
+        ],
+        occasional: [
+          "domestic-animal",
+          "religious-association",
+          "saint-or-holy-person",
+          "produce",
+          "river-or-stream-name",
+          "earlier-or-district-name",
+          "shape"
+        ],
+        rare: [
+          "supernatural-being",
+          "size"
+        ],
+        unlikely: [
+          "status-or-role",
+          "folk-group",
+          "assembly-or-law",
+          "built-feature",
+          "crop"
+        ],
+        examples: {
+          common: "Whitwell, Blackwell; Caldwell; Bakewell, Windermere; Ashwell, Haslemere; Cranwell; Grasmere",
+          occasional: "Chalfont; Halliwell; Holywell; Buttermere; Loch Ness; Langmere",
+          rare: "Grendles mere"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "wetland",
+      section: "3.14",
+      side: "landscape",
+      label: "Wetland",
+      generics: [
+        {
+          id: "marsh",
+          meaning: "Marsh",
+          sense: "General marsh, often coastal",
+          sourceElements: [
+            "OE mersc"
+          ]
+        },
+        {
+          id: "fen",
+          meaning: "Fen",
+          sense: "Low-lying peat wetland",
+          sourceElements: [
+            "OE fenn"
+          ]
+        },
+        {
+          id: "lowland-marsh",
+          meaning: "Lowland marsh",
+          sense: "Southern and Midland sense",
+          sourceElements: [
+            "OE m\u014Dr (south)"
+          ]
+        },
+        {
+          id: "brushwood-marsh-carr",
+          meaning: "Brushwood marsh, carr",
+          sense: "Wet ground with scrub",
+          sourceElements: [
+            "ON kjarr"
+          ]
+        },
+        {
+          id: "mire",
+          meaning: "Mire",
+          sense: "Boggy ground",
+          sourceElements: [
+            "ON m\xFDrr",
+            "OE sl\u014Dh"
+          ]
+        },
+        {
+          id: "miry-pool-wallowing-place",
+          meaning: "Miry pool, wallowing place",
+          sense: "Muddy hollow",
+          sourceElements: [
+            "OE sol"
+          ]
+        },
+        {
+          id: "peat-bog-moss",
+          meaning: "Peat bog, moss",
+          sense: "Raised bog",
+          sourceElements: [
+            "ON mosi"
+          ]
+        },
+        {
+          id: "bog",
+          meaning: "Bog",
+          sense: "Wet moorland",
+          sourceElements: [
+            "W cors"
+          ]
+        },
+        {
+          id: "flood-prone-land-by-a-river",
+          meaning: "Flood-prone land by a river",
+          sense: "Alluvial land that floods",
+          sourceElements: [
+            "OE w\xE6sse"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "wild-plant",
+          "tree",
+          "colour"
+        ],
+        occasional: [
+          "personal-name",
+          "earlier-or-district-name",
+          "river-or-stream-name",
+          "position-or-direction",
+          "bird",
+          "domestic-animal"
+        ],
+        rare: [
+          "soil-or-ground",
+          "produce",
+          "built-feature"
+        ],
+        unlikely: [
+          "saint-or-holy-person",
+          "deity",
+          "supernatural-being",
+          "status-or-role",
+          "folk-group",
+          "assembly-or-law",
+          "crop",
+          "season"
+        ],
+        examples: {
+          common: "Sedgemoor; Alrewas, Ellerker; Blackmore",
+          occasional: "Chat Moss; Romney Marsh"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "islands-and-river-land",
+      section: "3.15",
+      side: "landscape",
+      label: "Islands and river land",
+      generics: [
+        {
+          id: "island",
+          meaning: "Island",
+          sense: "True island",
+          sourceElements: [
+            "ON ey",
+            "W ynys",
+            "G eilean, innis"
+          ]
+        },
+        {
+          id: "dry-ground-in-wet-land",
+          meaning: "Dry ground in wet land",
+          sense: "Raised ground in marsh",
+          sourceElements: [
+            "OE \u0113g",
+            "ON h\xF3lmr"
+          ]
+        },
+        {
+          id: "land-in-a-river-bend",
+          meaning: "Land in a river bend",
+          sense: "Hemmed-in land beside water",
+          sourceElements: [
+            "OE hamm"
+          ]
+        },
+        {
+          id: "water-meadow",
+          meaning: "Water meadow",
+          sense: "Flat riverside grassland",
+          sourceElements: [
+            "OE hamm",
+            "ON h\xF3lmr",
+            "northern haugh"
+          ]
+        },
+        {
+          id: "skerry-rock-islet",
+          meaning: "Skerry, rock islet",
+          sense: "Small rocky island",
+          sourceElements: [
+            "ON sker",
+            "G sgeir"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "personal-name",
+          "position-or-direction",
+          "wild-plant",
+          "tree",
+          "domestic-animal",
+          "shape",
+          "size"
+        ],
+        occasional: [
+          "fish-and-other-creatures",
+          "bird",
+          "status-or-role",
+          "soil-or-ground",
+          "saint-or-holy-person",
+          "folk-group"
+        ],
+        rare: [
+          "deity",
+          "colour",
+          "river-or-stream-name"
+        ],
+        unlikely: [
+          "season",
+          "assembly-or-law",
+          "crop",
+          "produce"
+        ],
+        examples: {
+          common: "Anglesey, Romsey, Evesham; Westray, West Ham; Farnham, Ramsey; Thorney, Lindholme; Sheppey; Steep Holm; Muchelney, Hoy",
+          occasional: "Ely; Lundy; Athelney; Sanday; Iona, Ynys Seiriol; Buckingham"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "coast-and-sea",
+      section: "3.16",
+      side: "landscape",
+      label: "Coast and sea",
+      generics: [
+        {
+          id: "headland",
+          meaning: "Headland",
+          sense: "Projecting coastal land",
+          sourceElements: [
+            "OE n\xE6ss",
+            "ON nes"
+          ]
+        },
+        {
+          id: "point-nose",
+          meaning: "Point, nose",
+          sense: "Narrow tip of land",
+          sourceElements: [
+            "W trwyn",
+            "G rubha"
+          ]
+        },
+        {
+          id: "promontory",
+          meaning: "Promontory",
+          sense: "Larger headland",
+          sourceElements: [
+            "W penrhyn",
+            "OE h\u0113afod"
+          ]
+        },
+        {
+          id: "sea-inlet-firth",
+          meaning: "Sea inlet, firth",
+          sense: "Long arm of the sea",
+          sourceElements: [
+            "ON fj\u01EBr\xF0r"
+          ]
+        },
+        {
+          id: "bay",
+          meaning: "Bay",
+          sense: "Open bay",
+          sourceElements: [
+            "ON v\xEDk",
+            "G camas",
+            "W, Co porth"
+          ]
+        },
+        {
+          id: "small-bay-creek",
+          meaning: "Small bay, creek",
+          sense: "Enclosed inlet",
+          sourceElements: [
+            "ON h\xF3p",
+            "G \xF2b"
+          ]
+        },
+        {
+          id: "cove",
+          meaning: "Cove",
+          sense: "Small sheltered bay",
+          sourceElements: [
+            "OE cofa"
+          ]
+        },
+        {
+          id: "strait-sound",
+          meaning: "Strait, sound",
+          sense: "Channel between lands",
+          sourceElements: [
+            "ON sund",
+            "G caol"
+          ]
+        },
+        {
+          id: "estuary",
+          meaning: "Estuary",
+          sense: "Tidal river mouth",
+          sourceElements: [
+            "OE m\u016B\xFEa"
+          ]
+        },
+        {
+          id: "beach-strand",
+          meaning: "Beach, strand",
+          sense: "Shore",
+          sourceElements: [
+            "OE strand",
+            "ON str\u01EBnd",
+            "W traeth",
+            "G tr\xE0igh"
+          ]
+        },
+        {
+          id: "sand-dunes-sandy-shore",
+          meaning: "Sand dunes, sandy shore",
+          sense: "Dune coast",
+          sourceElements: [
+            "W tywyn",
+            "OE sand"
+          ]
+        },
+        {
+          id: "shingle-bank",
+          meaning: "Shingle bank",
+          sense: "Gravel ridge",
+          sourceElements: [
+            "OE cisel"
+          ]
+        },
+        {
+          id: "sea-cliff",
+          meaning: "Sea cliff",
+          sense: "Coastal cliff",
+          sourceElements: [
+            "OE clif",
+            "W clogwyn"
+          ]
+        },
+        {
+          id: "coastal-chasm-geo",
+          meaning: "Coastal chasm, geo",
+          sense: "Narrow sea-cut gully",
+          sourceElements: [
+            "ON gj\xE1"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "personal-name",
+          "colour",
+          "shape",
+          "size",
+          "quality-or-condition",
+          "soil-or-ground"
+        ],
+        occasional: [
+          "bird",
+          "wild-animal",
+          "ethnic-or-cultural-group",
+          "folk-group",
+          "earlier-or-district-name"
+        ],
+        rare: [
+          "saint-or-holy-person",
+          "built-feature",
+          "domestic-animal"
+        ],
+        unlikely: [
+          "crop",
+          "season",
+          "assembly-or-law",
+          "produce"
+        ],
+        examples: {
+          common: "Skegness, Rousay; Trwyn Du, Radcliffe; Bowness, Brodick; Tr\xE0igh Mh\xF2r; Sheerness, Rubha Reidh; Sandwick, Lerwick",
+          occasional: "Foulness, Arncliffe; Durness; Rubha nan Gall; Caithness; Solway Firth, Moray Firth"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "crossings-and-routes",
+      section: "3.17",
+      side: "landscape",
+      label: "Crossings and routes",
+      generics: [
+        {
+          id: "river-crossing",
+          meaning: "River crossing",
+          sense: "Ford",
+          sourceElements: [
+            "OE ford",
+            "ON va\xF0",
+            "W rhyd",
+            "G \xE0th"
+          ]
+        },
+        {
+          id: "causeway",
+          meaning: "Causeway",
+          sense: "Raised path across wet ground",
+          sourceElements: [
+            "W sarn",
+            "ME causey"
+          ]
+        },
+        {
+          id: "bridge",
+          meaning: "Bridge",
+          sense: "Bridge",
+          sourceElements: [
+            "OE brycg",
+            "W pont",
+            "G drochaid"
+          ]
+        },
+        {
+          id: "ferry",
+          meaning: "Ferry",
+          sense: "Boat crossing",
+          sourceElements: [
+            "ON ferja"
+          ]
+        },
+        {
+          id: "paved-or-roman-road",
+          meaning: "Paved or Roman road",
+          sense: "Made road",
+          sourceElements: [
+            "OE str\u01E3t",
+            "W sarn"
+          ]
+        },
+        {
+          id: "way-track",
+          meaning: "Way, track",
+          sense: "Ordinary route",
+          sourceElements: [
+            "OE weg",
+            "ON gata",
+            "W ffordd"
+          ]
+        },
+        {
+          id: "lane",
+          meaning: "Lane",
+          sense: "Narrow road",
+          sourceElements: [
+            "OE lane"
+          ]
+        },
+        {
+          id: "pass",
+          meaning: "Pass",
+          sense: "Mountain pass",
+          sourceElements: [
+            "ON skar\xF0",
+            "W bwlch",
+            "G bealach"
+          ]
+        },
+        {
+          id: "gap-notch",
+          meaning: "Gap, notch",
+          sense: "Cleft in a ridge",
+          sourceElements: [
+            "OE geat, sceard"
+          ]
+        },
+        {
+          id: "swing-gate",
+          meaning: "Swing gate",
+          sense: "Gate across a way",
+          sourceElements: [
+            "OE hlid-geat"
+          ]
+        },
+        {
+          id: "isthmus-portage",
+          meaning: "Isthmus, portage",
+          sense: "Neck of land where boats were dragged",
+          sourceElements: [
+            "G tairbeart",
+            "ON ei\xF0"
+          ]
+        }
+      ],
+      profile: null,
+      overrides: [
+        {
+          generics: [
+            "river-crossing"
+          ],
+          note: "River crossing (ford): the broadest profile in the inventory.",
+          replace: {
+            common: [
+              "domestic-animal",
+              "tree",
+              "soil-or-ground",
+              "shape",
+              "quality-or-condition",
+              "river-or-stream-name",
+              "personal-name",
+              "built-feature"
+            ],
+            occasional: [
+              "wild-animal",
+              "bird",
+              "wild-plant",
+              "colour",
+              "number",
+              "position-or-direction",
+              "folk-group"
+            ],
+            rare: [
+              "supernatural-being",
+              "religious-association",
+              "status-or-role"
+            ],
+            unlikely: [
+              "deity",
+              "assembly-or-law",
+              "crop",
+              "season"
+            ],
+            examples: {
+              common: "Oxford, Shefford, Swinford; Ashford, Oakford; Stanford, Sandford, Chalford; Bradford, Langford; Fairford, Fulford; Ammanford; Bedford; Stratford, Milford",
+              occasional: "Hertford; Cranford; Bramford; Blackford; Twyford",
+              rare: "Thursford"
+            }
+          }
+        },
+        {
+          generics: [
+            "bridge",
+            "causeway",
+            "ferry"
+          ],
+          note: "Bridge, causeway, ferry.",
+          replace: {
+            common: [
+              "river-or-stream-name"
+            ],
+            occasional: [
+              "folk-group",
+              "tree",
+              "built-feature"
+            ],
+            rare: [],
+            unlikely: [],
+            examples: {
+              common: "Weybridge; Uxbridge; Trowbridge, Stockbridge"
+            }
+          }
+        },
+        {
+          generics: [
+            "paved-or-roman-road",
+            "way-track",
+            "lane"
+          ],
+          note: "Paved or Roman road, way or track, lane.",
+          replace: {
+            common: [
+              "folk-group",
+              "personal-name"
+            ],
+            occasional: [
+              "soil-or-ground"
+            ],
+            rare: [],
+            unlikely: [],
+            examples: {
+              common: "Watling Street, Ermine Street; Stane Street"
+            }
+          }
+        },
+        {
+          generics: [
+            "pass",
+            "gap-notch",
+            "swing-gate"
+          ],
+          note: "Pass, gap or notch, swing gate.",
+          replace: {
+            common: [
+              "domestic-animal",
+              "religious-association"
+            ],
+            occasional: [
+              "colour",
+              "shape"
+            ],
+            rare: [],
+            unlikely: [],
+            examples: {
+              common: "Bealach na B\xE0; Bwlch y Groes"
+            }
+          }
+        },
+        {
+          generics: [
+            "isthmus-portage"
+          ],
+          note: "Isthmus, portage.",
+          replace: {
+            common: [
+              "empty-slot"
+            ],
+            occasional: [],
+            rare: [],
+            unlikely: [],
+            examples: {
+              common: "Tarbert"
+            }
+          }
+        }
+      ],
+      notes: [
+        "Assumption: causeway, ferry, lane, gap and swing gate were assigned to these profiles by analogy and should be reviewed."
+      ]
+    },
+    {
+      id: "woodland",
+      section: "3.18",
+      side: "landscape",
+      label: "Woodland",
+      generics: [
+        {
+          id: "wood",
+          meaning: "Wood",
+          sense: "General woodland",
+          sourceElements: [
+            "OE wudu",
+            "ON sk\xF3gr",
+            "W coed",
+            "G coille"
+          ]
+        },
+        {
+          id: "single-species-wood",
+          meaning: "Single-species wood",
+          sense: "Often named by its tree",
+          sourceElements: [
+            "OE holt"
+          ]
+        },
+        {
+          id: "great-woodland",
+          meaning: "Great woodland",
+          sense: "Extensive high forest",
+          sourceElements: [
+            "OE weald, wald (early)"
+          ]
+        },
+        {
+          id: "royal-hunting-ground",
+          meaning: "Royal hunting ground",
+          sense: "Legal forest, not necessarily wooded",
+          sourceElements: [
+            "ME forest, chase"
+          ]
+        },
+        {
+          id: "park",
+          meaning: "Park",
+          sense: "Enclosed hunting or deer park",
+          sourceElements: [
+            "OE pearroc"
+          ]
+        },
+        {
+          id: "grove",
+          meaning: "Grove",
+          sense: "Small managed wood",
+          sourceElements: [
+            "OE gr\u0101f"
+          ]
+        },
+        {
+          id: "grove-small-wood",
+          meaning: "Grove, small wood",
+          sense: "South-western usage",
+          sourceElements: [
+            "OE bearu"
+          ]
+        },
+        {
+          id: "grove-possibly-sacred",
+          meaning: "Grove, possibly sacred",
+          sense: "Norse grove",
+          sourceElements: [
+            "ON lundr"
+          ]
+        },
+        {
+          id: "strip-of-woodland-shaw",
+          meaning: "Strip of woodland, shaw",
+          sense: "Narrow wood or copse",
+          sourceElements: [
+            "OE sceaga"
+          ]
+        },
+        {
+          id: "wood-on-a-steep-slope",
+          meaning: "Wood on a steep slope",
+          sense: "Hanging wood",
+          sourceElements: [
+            "OE hangra"
+          ]
+        },
+        {
+          id: "wooded-hill",
+          meaning: "Wooded hill",
+          sense: "Wooded knoll",
+          sourceElements: [
+            "OE hyrst"
+          ]
+        },
+        {
+          id: "scrubland",
+          meaning: "Scrubland",
+          sense: "Scrubby edge of forest",
+          sourceElements: [
+            "OE fyrh\xFE"
+          ]
+        },
+        {
+          id: "thicket",
+          meaning: "Thicket",
+          sense: "Dense scrub",
+          sourceElements: [
+            "OE \xFEyfel"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "tree",
+          "personal-name",
+          "position-or-direction",
+          "soil-or-ground"
+        ],
+        occasional: [
+          "bird",
+          "wild-animal",
+          "folk-group",
+          "earlier-or-district-name",
+          "age",
+          "status-or-role",
+          "quality-or-condition"
+        ],
+        rare: [
+          "domestic-animal",
+          "religious-association",
+          "colour"
+        ],
+        unlikely: [
+          "crop",
+          "season",
+          "produce",
+          "assembly-or-law"
+        ],
+        examples: {
+          common: "Lyndhurst, Oakhanger, Birkenshaw, Selwood; Penshurst, Bromsgrove, Cotswolds; Midhurst, Northwood; Sandhurst, Clehonger",
+          occasional: "Hawkhurst; Wychwood; Sherwood, Forest of Dean; New Forest; Kingswood; Brentwood"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "clearings",
+      section: "3.19",
+      side: "landscape",
+      label: "Clearings",
+      generics: [
+        {
+          id: "woodland-then-clearing",
+          meaning: "Woodland, then clearing",
+          sense: "Early \u201Cwood\u201D, later \u201Cclearing\u201D, latest \u201Cmeadow\u201D",
+          sourceElements: [
+            "OE l\u0113ah"
+          ]
+        },
+        {
+          id: "newly-cleared-land-assart",
+          meaning: "Newly cleared land, assart",
+          sense: "Land cleared for cultivation",
+          sourceElements: [
+            "OE ryding, rod"
+          ]
+        },
+        {
+          id: "clearing-paddock",
+          meaning: "Clearing, paddock",
+          sense: "Norse clearing",
+          sourceElements: [
+            "ON \xFEveit"
+          ]
+        },
+        {
+          id: "woodland-swine-pasture",
+          meaning: "Woodland swine pasture",
+          sense: "Seasonal pig pasture",
+          sourceElements: [
+            "OE denn"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "tree",
+          "wild-plant",
+          "domestic-animal",
+          "wild-animal",
+          "bird",
+          "personal-name",
+          "shape",
+          "soil-or-ground",
+          "crop"
+        ],
+        occasional: [
+          "deity",
+          "colour",
+          "position-or-direction",
+          "size",
+          "quality-or-condition",
+          "status-or-role",
+          "folk-group"
+        ],
+        rare: [
+          "supernatural-being",
+          "age",
+          "religious-association"
+        ],
+        unlikely: [
+          "saint-or-holy-person",
+          "assembly-or-law",
+          "season",
+          "produce"
+        ],
+        examples: {
+          common: "Oakley, Berkeley, Ackroyd; Bromley, Thornthwaite; Shipley, Horsley; Brockley, Eversley, Hartley; Crawley; Bassenthwaite, Biddenden; Langley, Bradley, Braithwaite; Stanley; Wheatley, Flaxley",
+          occasional: "Thursley, Tuesley, Wensley; Blackley; Eastleigh; Kingsley; Tenterden"
+        }
+      },
+      overrides: [
+        {
+          generics: [
+            "woodland-then-clearing"
+          ],
+          note: "Woodland, then clearing (l\u0113ah): the strongest home of deity names in England. Regional: deity keeps its group tier."
+        },
+        {
+          generics: [
+            "woodland-swine-pasture"
+          ],
+          note: "Woodland swine pasture (denn): domestic animal is Unlikely (redundant).",
+          set: {
+            "domestic-animal": "unlikely"
+          }
+        }
+      ],
+      notes: []
+    },
+    {
+      id: "hills-and-slopes",
+      section: "3.20",
+      side: "landscape",
+      label: "Hills and slopes",
+      generics: [
+        {
+          id: "low-level-topped-hill",
+          meaning: "Low level-topped hill",
+          sense: "Good settlement site",
+          sourceElements: [
+            "OE d\u016Bn"
+          ]
+        },
+        {
+          id: "hill",
+          meaning: "Hill",
+          sense: "General hill",
+          sourceElements: [
+            "OE hyll",
+            "W bryn",
+            "G cnoc"
+          ]
+        },
+        {
+          id: "heel-shaped-spur",
+          meaning: "Heel-shaped spur",
+          sense: "Spur with a concave end",
+          sourceElements: [
+            "OE h\u014Dh"
+          ]
+        },
+        {
+          id: "flat-topped-ridge",
+          meaning: "Flat-topped ridge",
+          sense: "Ridge with a convex shoulder",
+          sourceElements: [
+            "OE ofer, \u014Dra"
+          ]
+        },
+        {
+          id: "ridge",
+          meaning: "Ridge",
+          sense: "Long ridge",
+          sourceElements: [
+            "OE hrycg",
+            "ON hryggr"
+          ]
+        },
+        {
+          id: "back-low-ridge",
+          meaning: "Back, low ridge",
+          sense: "Rounded ridge",
+          sourceElements: [
+            "OE b\xE6c"
+          ]
+        },
+        {
+          id: "edge-escarpment",
+          meaning: "Edge, escarpment",
+          sense: "Steep scarp",
+          sourceElements: [
+            "OE ecg"
+          ]
+        },
+        {
+          id: "steep-slope-bank",
+          meaning: "Steep slope, bank",
+          sense: "Not necessarily a cliff",
+          sourceElements: [
+            "OE clif"
+          ]
+        },
+        {
+          id: "slope",
+          meaning: "Slope",
+          sense: "Gentler slope",
+          sourceElements: [
+            "OE helde",
+            "ON brekka"
+          ]
+        },
+        {
+          id: "terrace-lynchet",
+          meaning: "Terrace, lynchet",
+          sense: "Bank on a hillside",
+          sourceElements: [
+            "OE hlinc"
+          ]
+        },
+        {
+          id: "knoll",
+          meaning: "Knoll",
+          sense: "Small rounded hill",
+          sourceElements: [
+            "OE cnoll",
+            "W twyn",
+            "G tom"
+          ]
+        },
+        {
+          id: "rounded-hill-mound",
+          meaning: "Rounded hill, mound",
+          sense: "Natural mound",
+          sourceElements: [
+            "OE hl\u0101w",
+            "ON haugr"
+          ]
+        },
+        {
+          id: "summit-top",
+          meaning: "Summit, top",
+          sense: "Highest point",
+          sourceElements: [
+            "OE copp",
+            "W pen",
+            "G ceann"
+          ]
+        },
+        {
+          id: "upper-end-head",
+          meaning: "Upper end, head",
+          sense: "Head of a feature",
+          sourceElements: [
+            "OE h\u0113afod"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "personal-name",
+          "domestic-animal",
+          "tree",
+          "wild-plant",
+          "shape",
+          "size",
+          "colour",
+          "position-or-direction"
+        ],
+        occasional: [
+          "deity",
+          "folk-group",
+          "activity",
+          "soil-or-ground",
+          "quality-or-condition",
+          "built-feature",
+          "bird",
+          "wild-animal",
+          "earlier-or-district-name",
+          "assembly-or-law"
+        ],
+        rare: [
+          "supernatural-being",
+          "saint-or-holy-person",
+          "religious-association"
+        ],
+        unlikely: [
+          "crop",
+          "produce",
+          "season"
+        ],
+        examples: {
+          common: "Wimbledon, Edensor; Swindon; Ashover, Lindridge; Farndon, Brandon; Longdon; Brynmawr; Bryn Glas; Hendon",
+          occasional: "Tysoe; Ivinghoe; Huntingdon; Stanage; Clandon, Snowdon; Windsor; Hawkridge; Bredon"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "mountains-and-rock",
+      section: "3.21",
+      side: "landscape",
+      label: "Mountains and rock",
+      generics: [
+        {
+          id: "mountain",
+          meaning: "Mountain",
+          sense: "Large upland mass",
+          sourceElements: [
+            "W mynydd",
+            "G beinn"
+          ]
+        },
+        {
+          id: "fell",
+          meaning: "Fell",
+          sense: "Mountain and upland pasture",
+          sourceElements: [
+            "ON fjall"
+          ]
+        },
+        {
+          id: "pointed-hill",
+          meaning: "Pointed hill",
+          sense: "Peak with a point",
+          sourceElements: [
+            "OE p\u012Bc"
+          ]
+        },
+        {
+          id: "sharp-peak",
+          meaning: "Sharp peak",
+          sense: "Pinnacle",
+          sourceElements: [
+            "ON tindr",
+            "G sg\xF9rr, st\xF9c"
+          ]
+        },
+        {
+          id: "tor",
+          meaning: "Tor",
+          sense: "Rocky outcrop on a hilltop",
+          sourceElements: [
+            "OE torr (Brit loan)"
+          ]
+        },
+        {
+          id: "crag",
+          meaning: "Crag",
+          sense: "Rock face",
+          sourceElements: [
+            "W craig",
+            "G creag",
+            "ON klettr"
+          ]
+        },
+        {
+          id: "stone",
+          meaning: "Stone",
+          sense: "Notable stone",
+          sourceElements: [
+            "OE st\u0101n",
+            "W maen",
+            "G clach"
+          ]
+        },
+        {
+          id: "cave",
+          meaning: "Cave",
+          sense: "Cave",
+          sourceElements: [
+            "ON hellir",
+            "W ogof",
+            "G uamh"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "colour",
+          "size",
+          "shape"
+        ],
+        occasional: [
+          "personal-name",
+          "bird",
+          "domestic-animal",
+          "wild-plant",
+          "earlier-or-district-name",
+          "religious-association",
+          "supernatural-being"
+        ],
+        rare: [
+          "wild-animal",
+          "saint-or-holy-person",
+          "quality-or-condition",
+          "deity"
+        ],
+        unlikely: [
+          "crop",
+          "produce",
+          "status-or-role",
+          "folk-group",
+          "built-feature",
+          "season"
+        ],
+        examples: {
+          common: "Beinn Dearg, Mynydd Du, Craig Goch; Ben More, Mynydd Mawr; Scafell, Bowfell",
+          occasional: "Ben Macdui; Yes Tor; Hound Tor; Whinfell; Ben Nevis, Mynydd Preseli; Cross Fell; Fingal\u2019s Cave"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "upland-and-open-ground",
+      section: "3.22",
+      side: "landscape",
+      label: "Upland and open ground",
+      generics: [
+        {
+          id: "upland-moor",
+          meaning: "Upland moor",
+          sense: "Northern sense",
+          sourceElements: [
+            "OE m\u014Dr (north)"
+          ]
+        },
+        {
+          id: "heath",
+          meaning: "Heath",
+          sense: "Lowland or upland heath",
+          sourceElements: [
+            "OE h\u01E3\xFE",
+            "ON hei\xF0r",
+            "W rhos",
+            "Co ros"
+          ]
+        },
+        {
+          id: "wold",
+          meaning: "Wold",
+          sense: "Open high ground (later sense of weald)",
+          sourceElements: [
+            "OE wald (later)"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "earlier-or-district-name",
+          "river-or-stream-name",
+          "colour"
+        ],
+        occasional: [
+          "personal-name",
+          "position-or-direction",
+          "size"
+        ],
+        rare: [
+          "wild-plant",
+          "wild-animal",
+          "supernatural-being"
+        ],
+        unlikely: [
+          "crop",
+          "produce",
+          "built-feature",
+          "status-or-role",
+          "folk-group"
+        ],
+        examples: {
+          common: "Bodmin Moor, Ilkley Moor; Dartmoor, Exmoor; Blackheath",
+          occasional: "Cotswolds; Southwold"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "valleys",
+      section: "3.23",
+      side: "landscape",
+      label: "Valleys",
+      generics: [
+        {
+          id: "long-valley",
+          meaning: "Long valley",
+          sense: "Long, gently sloping valley",
+          sourceElements: [
+            "OE denu"
+          ]
+        },
+        {
+          id: "dale",
+          meaning: "Dale",
+          sense: "Main valley",
+          sourceElements: [
+            "ON dalr"
+          ]
+        },
+        {
+          id: "broad-valley",
+          meaning: "Broad valley",
+          sense: "Wide flat-floored valley",
+          sourceElements: [
+            "W dyffryn",
+            "G srath"
+          ]
+        },
+        {
+          id: "short-bowl-shaped-valley",
+          meaning: "Short bowl-shaped valley",
+          sense: "Combe",
+          sourceElements: [
+            "OE cumb",
+            "W cwm"
+          ]
+        },
+        {
+          id: "narrow-valley-glen",
+          meaning: "Narrow valley, glen",
+          sense: "Steep-sided valley",
+          sourceElements: [
+            "G gleann",
+            "W glyn"
+          ]
+        },
+        {
+          id: "small-enclosed-side-valley",
+          meaning: "Small enclosed side valley",
+          sense: "Remote valley",
+          sourceElements: [
+            "OE hop"
+          ]
+        },
+        {
+          id: "corrie",
+          meaning: "Corrie",
+          sense: "Cauldron-shaped mountain hollow",
+          sourceElements: [
+            "G coire",
+            "W cwm"
+          ]
+        },
+        {
+          id: "ravine",
+          meaning: "Ravine",
+          sense: "Steep stream gully",
+          sourceElements: [
+            "ON gil",
+            "OE cl\u014Dh",
+            "Scots cleuch"
+          ]
+        },
+        {
+          id: "steep-bank-ravine-side",
+          meaning: "Steep bank, ravine side",
+          sense: "Scots usage",
+          sourceElements: [
+            "Scots heugh"
+          ]
+        },
+        {
+          id: "shallow-damp-valley",
+          meaning: "Shallow damp valley",
+          sense: "Low wet valley",
+          sourceElements: [
+            "OE sl\u01E3d"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "river-or-stream-name",
+          "personal-name",
+          "shape",
+          "tree",
+          "wild-plant"
+        ],
+        occasional: [
+          "domestic-animal",
+          "bird",
+          "fish-and-other-creatures",
+          "folk-group",
+          "soil-or-ground",
+          "size",
+          "saint-or-holy-person",
+          "produce",
+          "quality-or-condition"
+        ],
+        rare: [
+          "supernatural-being",
+          "activity",
+          "deity",
+          "crop"
+        ],
+        unlikely: [
+          "status-or-role",
+          "assembly-or-law",
+          "built-feature",
+          "season"
+        ],
+        examples: {
+          common: "Swaledale, Strathspey, Cwm Rhondda; Glossop, Babbacombe; Langdale, Holcombe; Ogden; Croydon",
+          occasional: "Grisedale; Cwmbran; Troutdale; Ilfracombe, Rottingdean; Stanhope; Strathmore; Patterdale; Salcombe; Ryhope",
+          rare: "Glen Shee; Coire Gabhail"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "hollows-and-corners",
+      section: "3.24",
+      side: "landscape",
+      label: "Hollows and corners",
+      generics: [
+        {
+          id: "hollow",
+          meaning: "Hollow",
+          sense: "Depression",
+          sourceElements: [
+            "OE hol",
+            "ON d\xE6ld",
+            "W pant",
+            "G lag"
+          ]
+        },
+        {
+          id: "valley-bottom",
+          meaning: "Valley bottom",
+          sense: "Flat floor of a valley",
+          sourceElements: [
+            "OE botm"
+          ]
+        },
+        {
+          id: "valley-head",
+          meaning: "Valley head",
+          sense: "Upper end of a valley",
+          sourceElements: [
+            "ON botn"
+          ]
+        },
+        {
+          id: "nook",
+          meaning: "Nook",
+          sense: "Secluded corner of land",
+          sourceElements: [
+            "OE halh"
+          ]
+        },
+        {
+          id: "corner-projecting-piece-of-land",
+          meaning: "Corner, projecting piece of land",
+          sense: "Angle of land",
+          sourceElements: [
+            "OE sc\u0113at"
+          ]
+        },
+        {
+          id: "corner-angle",
+          meaning: "Corner, angle",
+          sense: "Corner of land",
+          sourceElements: [
+            "OE hyrne"
+          ]
+        },
+        {
+          id: "bend-crook",
+          meaning: "Bend, crook",
+          sense: "Curved piece of land",
+          sourceElements: [
+            "ON kr\xF3kr"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "personal-name",
+          "tree",
+          "wild-plant"
+        ],
+        occasional: [
+          "empty-slot",
+          "domestic-animal",
+          "shape",
+          "folk-group",
+          "saint-or-holy-person"
+        ],
+        rare: [
+          "colour",
+          "wild-animal"
+        ],
+        unlikely: [
+          "status-or-role",
+          "deity",
+          "supernatural-being",
+          "assembly-or-law",
+          "built-feature",
+          "produce",
+          "season"
+        ],
+        examples: {
+          common: "Willenhall, Coggeshall; Aldershot, Oakshott; Bramhall, Rushall",
+          occasional: "Hurn, Crook, Hale; Ramsbottom; Longbottom; Mildenhall; Pantasaph"
+        }
+      },
+      overrides: [],
+      notes: []
+    },
+    {
+      id: "open-and-farmed-land",
+      section: "3.25",
+      side: "landscape",
+      label: "Open and farmed land",
+      generics: [
+        {
+          id: "open-country",
+          meaning: "Open country",
+          sense: "Open land, unwooded or cleared",
+          sourceElements: [
+            "OE feld"
+          ]
+        },
+        {
+          id: "level-field",
+          meaning: "Level field",
+          sense: "Flat open ground",
+          sourceElements: [
+            "ON v\u01EBllr"
+          ]
+        },
+        {
+          id: "hay-meadow",
+          meaning: "Hay meadow",
+          sense: "Meadow mown for hay",
+          sourceElements: [
+            "OE m\u01E3d",
+            "ON eng"
+          ]
+        },
+        {
+          id: "pasture",
+          meaning: "Pasture",
+          sense: "Grazing land",
+          sourceElements: [
+            "OE l\u01E3s",
+            "ON hagi"
+          ]
+        },
+        {
+          id: "arable-field",
+          meaning: "Arable field",
+          sense: "Ploughed land",
+          sourceElements: [
+            "OE \xE6cer",
+            "ON akr"
+          ]
+        },
+        {
+          id: "arable-unit",
+          meaning: "Arable unit",
+          sense: "Larger tract of arable",
+          sourceElements: [
+            "OE land"
+          ]
+        },
+        {
+          id: "furlong",
+          meaning: "Furlong",
+          sense: "Block of open-field strips",
+          sourceElements: [
+            "OE furlang"
+          ]
+        },
+        {
+          id: "animal-fold",
+          meaning: "Animal fold",
+          sense: "Pen for stock",
+          sourceElements: [
+            "OE fald",
+            "ON kv\xED (Orkney quoy)"
+          ]
+        },
+        {
+          id: "hedged-enclosure",
+          meaning: "Hedged enclosure",
+          sense: "Hedge or hedged land",
+          sourceElements: [
+            "OE haga, hecg"
+          ]
+        },
+        {
+          id: "orchard",
+          meaning: "Orchard",
+          sense: "Fruit garden",
+          sourceElements: [
+            "OE ortgeard"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "personal-name",
+          "river-or-stream-name",
+          "wild-plant",
+          "tree",
+          "domestic-animal",
+          "shape",
+          "earlier-or-district-name"
+        ],
+        occasional: [
+          "deity",
+          "ethnic-or-cultural-group",
+          "activity",
+          "assembly-or-law",
+          "crop",
+          "position-or-direction",
+          "quality-or-condition",
+          "colour"
+        ],
+        rare: [
+          "status-or-role",
+          "supernatural-being",
+          "saint-or-holy-person",
+          "built-feature"
+        ],
+        unlikely: [
+          "season",
+          "produce"
+        ],
+        examples: {
+          common: "Macclesfield, Enfield, Alfold; Sheffield; Hatfield; Lindfield; Cowfold; Bradfield; Lichfield, Mansfield",
+          occasional: "Wednesfield; Englefield; Wakefield; Runnymede; Wheatacre; Driffield"
+        }
+      },
+      overrides: [],
+      notes: []
+    }
+  ],
+  structures: [
+    {
+      id: "two-part-compound",
+      label: "Two-part compound",
+      semanticForm: "[specific] + [generic]",
+      examples: [
+        "Oxford",
+        "Ashley",
+        "Grimsby"
+      ],
+      frequency: "The default; the large majority"
+    },
+    {
+      id: "simplex",
+      label: "Simplex",
+      semanticForm: "[generic] alone",
+      examples: [
+        "Stoke",
+        "Hope",
+        "Eccles",
+        "Harrow"
+      ],
+      frequency: "Governed by the Empty slot tier in \xA75"
+    },
+    {
+      id: "plural-simplex",
+      label: "Plural simplex",
+      semanticForm: "[generic, plural]",
+      examples: [
+        "Coates",
+        "Stowe"
+      ],
+      frequency: "Occasional"
+    },
+    {
+      id: "folk-connective",
+      label: "Folk connective",
+      semanticForm: "[personal name] + [people of] + [generic]",
+      examples: [
+        "Birmingham",
+        "Buckingham",
+        "Basingstoke"
+      ],
+      frequency: "Common in early English areas"
+    },
+    {
+      id: "associative-connective",
+      label: "Associative connective",
+      semanticForm: "[personal name] + [associated with] + [generic]",
+      examples: [
+        "Paddington",
+        "Kensington"
+      ],
+      frequency: "Common in early English areas"
+    },
+    {
+      id: "stacked-generic",
+      label: "Stacked generic",
+      semanticForm: "[specific] + [generic] + [generic]",
+      examples: [
+        "Brockhampton",
+        "Wickham",
+        "Hampstead"
+      ],
+      frequency: "Occasional"
+    },
+    {
+      id: "transferred-feature-name",
+      label: "Transferred feature name",
+      semanticForm: "A landscape shape used for a settlement",
+      examples: [
+        "Oxford",
+        "Bradford",
+        "Ashbourne"
+      ],
+      frequency: "Very common"
+    }
+  ],
+  wordOrders: [
+    {
+      id: "germanic",
+      label: "Germanic",
+      semanticForm: "[specific] + [generic]",
+      examples: [
+        "Ashford",
+        "Kirkby"
+      ]
+    },
+    {
+      id: "celtic-direct",
+      label: "Celtic, direct",
+      semanticForm: "[generic] + [specific]",
+      examples: [
+        "Llandaff",
+        "Aberystwyth",
+        "Inverness",
+        "Ben More"
+      ]
+    },
+    {
+      id: "celtic-linked",
+      label: "Celtic, linked",
+      semanticForm: "[generic] of the [specific]",
+      examples: [
+        "Bwlch y Groes",
+        "Rubha nan Gall",
+        "Pen-y-bont"
+      ]
+    },
+    {
+      id: "inversion-compound",
+      label: "Inversion compound",
+      semanticForm: "Norse words in Celtic order",
+      examples: [
+        "Kirkoswald",
+        "Aspatria",
+        "Setmurthy"
+      ],
+      sameOutputAs: "celtic-direct"
+    }
+  ],
+  affixes: [
+    {
+      id: "size",
+      label: "Size",
+      slotCategories: [
+        "size"
+      ],
+      examples: [
+        "Great Missenden",
+        "Little Missenden"
+      ],
+      forms: [
+        {
+          text: "Great",
+          position: "before"
+        },
+        {
+          text: "Little",
+          position: "before"
+        }
+      ]
+    },
+    {
+      id: "position",
+      label: "Position",
+      slotCategories: [
+        "position-or-direction"
+      ],
+      examples: [
+        "East Grinstead",
+        "Upper Slaughter"
+      ],
+      forms: [],
+      formsPending: true
+    },
+    {
+      id: "age",
+      label: "Age",
+      slotCategories: [
+        "age"
+      ],
+      examples: [
+        "Old Sarum",
+        "New Romney"
+      ],
+      forms: [],
+      formsPending: true
+    },
+    {
+      id: "function",
+      label: "Function",
+      slotCategories: [
+        "activity",
+        "built-feature",
+        "religious-association"
+      ],
+      examples: [
+        "Market Harborough",
+        "Castle Acre",
+        "Church Stretton"
+      ],
+      forms: [],
+      formsPending: true
+    },
+    {
+      id: "owner-by-status",
+      label: "Owner by status",
+      slotCategories: [
+        "status-or-role"
+      ],
+      examples: [
+        "Bishop\u2019s Stortford",
+        "Abbots Langley",
+        "Kings Langley",
+        "Monks Eleigh"
+      ],
+      forms: [],
+      formsPending: true
+    },
+    {
+      id: "owner-by-family",
+      label: "Owner by family",
+      slotCategories: [
+        "personal-name"
+      ],
+      examples: [
+        "Stoke Mandeville",
+        "Bovey Tracey",
+        "Hurstpierpoint"
+      ],
+      forms: [],
+      formsPending: true
+    },
+    {
+      id: "dedication",
+      label: "Dedication",
+      slotCategories: [
+        "saint-or-holy-person"
+      ],
+      examples: [
+        "Stratford St Mary"
+      ],
+      forms: [],
+      formsPending: true
+    },
+    {
+      id: "location",
+      label: "Location",
+      slotCategories: [
+        "river-or-stream-name",
+        "landform",
+        "earlier-or-district-name"
+      ],
+      examples: [
+        "Stratford-upon-Avon",
+        "Henley-on-Thames",
+        "Stow-on-the-Wold"
+      ],
+      forms: [],
+      formsPending: true
+    }
+  ]
+};
+
+// src/data/place-shape-regions.json
+var place_shape_regions_default = {
+  $comment: "Regional weighting for place-name shapes. Data only: multiplies part 1 weights in place-shapes.json, keyed by its ids. Counties are for documentation and tooltips; landscapeShareSettlement is recorded but unused (no feature filter).",
+  version: 1,
+  regions: [
+    {
+      code: "COR",
+      label: "Cornwall",
+      counties: "Cornwall, Isles of Scilly"
+    },
+    {
+      code: "WCY",
+      label: "West Country",
+      counties: "Devon, Somerset, Dorset, Wiltshire, Gloucestershire"
+    },
+    {
+      code: "SEA",
+      label: "South East",
+      counties: "Kent, Sussex, Surrey, Hampshire, Berkshire, Oxfordshire, Buckinghamshire, Bedfordshire, Hertfordshire, Middlesex, Essex"
+    },
+    {
+      code: "EAN",
+      label: "East Anglia",
+      counties: "Norfolk, Suffolk, Cambridgeshire, Huntingdonshire"
+    },
+    {
+      code: "WMM",
+      label: "West Midlands and Marches",
+      counties: "Herefordshire, Shropshire, Worcestershire, Staffordshire, Warwickshire, Cheshire"
+    },
+    {
+      code: "EMD",
+      label: "East Midlands",
+      counties: "Lincolnshire, Nottinghamshire, Derbyshire, Leicestershire, Rutland, Northamptonshire"
+    },
+    {
+      code: "NTH",
+      label: "North",
+      counties: "Yorkshire, Durham, Lancashire, Westmorland, southern Cumberland"
+    },
+    {
+      code: "SBL",
+      label: "Scottish Borderlands",
+      counties: "Northumberland, northern Cumberland, Berwickshire, Roxburghshire, Selkirkshire, Peeblesshire, Dumfriesshire"
+    },
+    {
+      code: "WAL",
+      label: "Wales",
+      counties: "All thirteen historic Welsh counties"
+    },
+    {
+      code: "SLO",
+      label: "Scottish Lowlands",
+      counties: "East, Mid and West Lothian, Lanarkshire, Renfrewshire, Ayrshire, Wigtownshire, Kirkcudbrightshire, Stirlingshire, Clackmannanshire, Kinross-shire, Fife, Angus, Kincardineshire, Aberdeenshire, Banffshire, Moray, Nairnshire"
+    },
+    {
+      code: "SHH",
+      label: "Scottish Highlands and Hebrides",
+      counties: "Argyll, Bute, Dunbartonshire, Perthshire, Inverness-shire, Ross and Cromarty, Sutherland, Inner and Outer Hebrides"
+    },
+    {
+      code: "NSI",
+      label: "Northern Scottish Isles",
+      counties: "Orkney, Shetland, Caithness"
+    }
+  ],
+  groupMultipliers: {
+    COR: {
+      "settlement-farms-and-estates": 1.5,
+      "settlement-status-and-relationship": 0.5,
+      "dwellings-and-buildings": 1.5,
+      "seasonal-and-upland-settlement": 1,
+      "industry-and-trade": 0.75,
+      "religious-christian": 2,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1,
+      defensive: 1.5,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 0.5,
+      "rivers-and-streams": 1,
+      "springs-pools-and-lakes": 0.75,
+      wetland: 0.5,
+      "islands-and-river-land": 0.75,
+      "coast-and-sea": 2,
+      "crossings-and-routes": 0.75,
+      woodland: 0.75,
+      clearings: 0.5,
+      "hills-and-slopes": 1.25,
+      "mountains-and-rock": 1.25,
+      "upland-and-open-ground": 1.5,
+      valleys: 1.25,
+      "hollows-and-corners": 0.5,
+      "open-and-farmed-land": 0.75
+    },
+    WCY: {
+      "settlement-farms-and-estates": 1.25,
+      "settlement-status-and-relationship": 1,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.5,
+      "industry-and-trade": 0.75,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.75,
+      "religious-burial-and-memorial": 1.25,
+      defensive: 1.25,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 0.75,
+      "rivers-and-streams": 1.25,
+      "springs-pools-and-lakes": 1,
+      wetland: 1,
+      "islands-and-river-land": 1,
+      "coast-and-sea": 1,
+      "crossings-and-routes": 1,
+      woodland: 1,
+      clearings: 1,
+      "hills-and-slopes": 1.5,
+      "mountains-and-rock": 0.75,
+      "upland-and-open-ground": 1,
+      valleys: 2,
+      "hollows-and-corners": 1,
+      "open-and-farmed-land": 1
+    },
+    SEA: {
+      "settlement-farms-and-estates": 1.5,
+      "settlement-status-and-relationship": 1,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.25,
+      "industry-and-trade": 1.5,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 1.25,
+      "religious-burial-and-memorial": 0.75,
+      defensive: 1,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 1,
+      "rivers-and-streams": 1,
+      "springs-pools-and-lakes": 0.75,
+      wetland: 0.75,
+      "islands-and-river-land": 1,
+      "coast-and-sea": 1,
+      "crossings-and-routes": 1,
+      woodland: 2,
+      clearings: 1.5,
+      "hills-and-slopes": 1,
+      "mountains-and-rock": 0.25,
+      "upland-and-open-ground": 1,
+      valleys: 1,
+      "hollows-and-corners": 1.25,
+      "open-and-farmed-land": 1.25
+    },
+    EAN: {
+      "settlement-farms-and-estates": 1.5,
+      "settlement-status-and-relationship": 1.25,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.25,
+      "industry-and-trade": 1,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.75,
+      "religious-burial-and-memorial": 0.75,
+      defensive: 0.75,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 1,
+      "rivers-and-streams": 0.75,
+      "springs-pools-and-lakes": 1.25,
+      wetland: 2,
+      "islands-and-river-land": 2,
+      "coast-and-sea": 1,
+      "crossings-and-routes": 1,
+      woodland: 0.75,
+      clearings: 1,
+      "hills-and-slopes": 0.25,
+      "mountains-and-rock": 0.1,
+      "upland-and-open-ground": 1.25,
+      valleys: 0.5,
+      "hollows-and-corners": 1,
+      "open-and-farmed-land": 1.5
+    },
+    WMM: {
+      "settlement-farms-and-estates": 1.25,
+      "settlement-status-and-relationship": 0.75,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.5,
+      "industry-and-trade": 1.25,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 0.75,
+      defensive: 1.25,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 0.75,
+      "rivers-and-streams": 1,
+      "springs-pools-and-lakes": 1,
+      wetland: 0.75,
+      "islands-and-river-land": 0.75,
+      "coast-and-sea": 0.1,
+      "crossings-and-routes": 1,
+      woodland: 1.5,
+      clearings: 2,
+      "hills-and-slopes": 1.5,
+      "mountains-and-rock": 0.75,
+      "upland-and-open-ground": 1,
+      valleys: 1.25,
+      "hollows-and-corners": 1.25,
+      "open-and-farmed-land": 1
+    },
+    EMD: {
+      "settlement-farms-and-estates": 2,
+      "settlement-status-and-relationship": 2,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.25,
+      "industry-and-trade": 0.75,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1,
+      defensive: 0.75,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 1.5,
+      "rivers-and-streams": 1,
+      "springs-pools-and-lakes": 0.75,
+      wetland: 1,
+      "islands-and-river-land": 1,
+      "coast-and-sea": 0.75,
+      "crossings-and-routes": 1,
+      woodland: 1,
+      clearings: 1,
+      "hills-and-slopes": 1,
+      "mountains-and-rock": 0.5,
+      "upland-and-open-ground": 1,
+      valleys: 1,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 1
+    },
+    NTH: {
+      "settlement-farms-and-estates": 1.5,
+      "settlement-status-and-relationship": 1.25,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 1.5,
+      "industry-and-trade": 0.75,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1,
+      defensive: 1,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 1,
+      "rivers-and-streams": 1.5,
+      "springs-pools-and-lakes": 1,
+      wetland: 1,
+      "islands-and-river-land": 0.75,
+      "coast-and-sea": 0.75,
+      "crossings-and-routes": 1,
+      woodland: 0.75,
+      clearings: 1.5,
+      "hills-and-slopes": 1.25,
+      "mountains-and-rock": 1.5,
+      "upland-and-open-ground": 1.75,
+      valleys: 2,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 1
+    },
+    SBL: {
+      "settlement-farms-and-estates": 1.25,
+      "settlement-status-and-relationship": 0.75,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 1.5,
+      "industry-and-trade": 0.5,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.25,
+      "religious-burial-and-memorial": 0.75,
+      defensive: 2,
+      "lordship-and-authority": 0.75,
+      "communal-and-legal": 0.5,
+      "rivers-and-streams": 1.5,
+      "springs-pools-and-lakes": 0.75,
+      wetland: 1,
+      "islands-and-river-land": 1,
+      "coast-and-sea": 0.5,
+      "crossings-and-routes": 1,
+      woodland: 0.75,
+      clearings: 0.5,
+      "hills-and-slopes": 2,
+      "mountains-and-rock": 1,
+      "upland-and-open-ground": 1.5,
+      valleys: 2,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 0.75
+    },
+    WAL: {
+      "settlement-farms-and-estates": 1.25,
+      "settlement-status-and-relationship": 0.25,
+      "dwellings-and-buildings": 1.25,
+      "seasonal-and-upland-settlement": 2,
+      "industry-and-trade": 0.5,
+      "religious-christian": 2.5,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1,
+      defensive: 1.5,
+      "lordship-and-authority": 1.25,
+      "communal-and-legal": 0.25,
+      "rivers-and-streams": 1.5,
+      "springs-pools-and-lakes": 1.25,
+      wetland: 1,
+      "islands-and-river-land": 1,
+      "coast-and-sea": 1.25,
+      "crossings-and-routes": 1.25,
+      woodland: 1,
+      clearings: 0.25,
+      "hills-and-slopes": 1.5,
+      "mountains-and-rock": 1.75,
+      "upland-and-open-ground": 1.25,
+      valleys: 2,
+      "hollows-and-corners": 1,
+      "open-and-farmed-land": 0.75
+    },
+    SLO: {
+      "settlement-farms-and-estates": 1.5,
+      "settlement-status-and-relationship": 0.5,
+      "dwellings-and-buildings": 1,
+      "seasonal-and-upland-settlement": 0.75,
+      "industry-and-trade": 0.75,
+      "religious-christian": 1.25,
+      "religious-pre-christian-and-sacred": 0.25,
+      "religious-burial-and-memorial": 0.75,
+      defensive: 1.25,
+      "lordship-and-authority": 1,
+      "communal-and-legal": 0.75,
+      "rivers-and-streams": 1.5,
+      "springs-pools-and-lakes": 1,
+      wetland: 1,
+      "islands-and-river-land": 0.75,
+      "coast-and-sea": 1,
+      "crossings-and-routes": 1,
+      woodland: 0.75,
+      clearings: 0.5,
+      "hills-and-slopes": 1.5,
+      "mountains-and-rock": 0.75,
+      "upland-and-open-ground": 1,
+      valleys: 1.5,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 1
+    },
+    SHH: {
+      "settlement-farms-and-estates": 1,
+      "settlement-status-and-relationship": 0.1,
+      "dwellings-and-buildings": 0.75,
+      "seasonal-and-upland-settlement": 1.75,
+      "industry-and-trade": 0.25,
+      "religious-christian": 1.25,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1,
+      defensive: 1,
+      "lordship-and-authority": 0.5,
+      "communal-and-legal": 0.5,
+      "rivers-and-streams": 1.75,
+      "springs-pools-and-lakes": 2,
+      wetland: 1,
+      "islands-and-river-land": 1.75,
+      "coast-and-sea": 2,
+      "crossings-and-routes": 0.75,
+      woodland: 0.75,
+      clearings: 0.1,
+      "hills-and-slopes": 1.5,
+      "mountains-and-rock": 2.5,
+      "upland-and-open-ground": 1,
+      valleys: 2,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 0.5
+    },
+    NSI: {
+      "settlement-farms-and-estates": 2,
+      "settlement-status-and-relationship": 0.25,
+      "dwellings-and-buildings": 1.5,
+      "seasonal-and-upland-settlement": 0.75,
+      "industry-and-trade": 0.25,
+      "religious-christian": 1,
+      "religious-pre-christian-and-sacred": 0.5,
+      "religious-burial-and-memorial": 1.25,
+      defensive: 0.75,
+      "lordship-and-authority": 0.5,
+      "communal-and-legal": 1.5,
+      "rivers-and-streams": 0.5,
+      "springs-pools-and-lakes": 1.25,
+      wetland: 0.75,
+      "islands-and-river-land": 2,
+      "coast-and-sea": 2.5,
+      "crossings-and-routes": 0.5,
+      woodland: 0.1,
+      clearings: 0.25,
+      "hills-and-slopes": 1.25,
+      "mountains-and-rock": 0.75,
+      "upland-and-open-ground": 1,
+      valleys: 0.75,
+      "hollows-and-corners": 0.75,
+      "open-and-farmed-land": 1.25
+    }
+  },
+  tiedMultipliers: {
+    home: 2,
+    present: 1,
+    other: 0.1
+  },
+  tiedGenerics: [
+    {
+      generic: "norse-farm",
+      home: [
+        "NSI",
+        "SHH"
+      ],
+      present: [
+        "NTH"
+      ]
+    },
+    {
+      generic: "enclosed-farm-garth",
+      home: [
+        "NSI",
+        "NTH"
+      ],
+      present: [
+        "SBL",
+        "SHH"
+      ]
+    },
+    {
+      generic: "farm-township",
+      home: [
+        "SLO",
+        "SHH"
+      ],
+      present: [
+        "SBL"
+      ]
+    },
+    {
+      generic: "home-farm-of-an-estate",
+      home: [
+        "SLO"
+      ],
+      present: [
+        "SBL"
+      ]
+    },
+    {
+      generic: "land-holding-share-of-land",
+      home: [
+        "SLO"
+      ],
+      present: [
+        "SHH"
+      ]
+    },
+    {
+      generic: "folk-group-territory",
+      home: [
+        "SEA",
+        "EAN"
+      ],
+      present: [
+        "WCY",
+        "WMM",
+        "EMD"
+      ]
+    },
+    {
+      generic: "folk-group-homestead",
+      home: [
+        "SEA",
+        "EAN"
+      ],
+      present: [
+        "WCY",
+        "WMM",
+        "EMD"
+      ]
+    },
+    {
+      generic: "dependent-or-secondary-settlement",
+      home: [
+        "EMD",
+        "NTH",
+        "EAN"
+      ],
+      present: [
+        "SEA",
+        "WMM",
+        "SBL"
+      ]
+    },
+    {
+      generic: "settlement-by-a-roman-site",
+      home: [
+        "SEA"
+      ],
+      present: [
+        "WCY",
+        "EAN",
+        "WMM",
+        "EMD"
+      ]
+    },
+    {
+      generic: "cattle-farm",
+      home: [
+        "NTH"
+      ],
+      present: [
+        "SBL"
+      ]
+    },
+    {
+      generic: "cottars-settlement",
+      home: [
+        "SLO"
+      ],
+      present: [
+        "SBL",
+        "SHH"
+      ]
+    },
+    {
+      generic: "summer-upland-dwelling",
+      home: [
+        "WAL"
+      ],
+      present: [
+        "WMM"
+      ]
+    },
+    {
+      generic: "permanent-or-winter-lowland-dwelling",
+      home: [
+        "WAL"
+      ],
+      present: [
+        "COR",
+        "WMM"
+      ]
+    },
+    {
+      generic: "shieling-summer-pasture-hut",
+      home: [
+        "NTH",
+        "SBL",
+        "SHH"
+      ],
+      present: [
+        "SLO",
+        "NSI"
+      ]
+    },
+    {
+      generic: "hut-at-summer-pasture",
+      home: [
+        "NTH"
+      ],
+      present: [
+        "SBL",
+        "NSI"
+      ]
+    },
+    {
+      generic: "salt-works",
+      home: [
+        "WMM"
+      ],
+      present: [
+        "SEA",
+        "EAN",
+        "EMD"
+      ]
+    },
+    {
+      generic: "island-of-irish-monks",
+      home: [
+        "NSI",
+        "SHH"
+      ],
+      present: []
+    },
+    {
+      generic: "british-church-community",
+      home: [],
+      present: [
+        "SEA",
+        "EAN",
+        "WMM",
+        "NTH",
+        "SBL",
+        "SLO"
+      ]
+    },
+    {
+      generic: "saints-church-enclosure",
+      home: [
+        "WAL",
+        "COR",
+        "SHH"
+      ],
+      present: [
+        "SLO",
+        "SBL"
+      ]
+    },
+    {
+      generic: "hermitage-retreat",
+      home: [],
+      present: [
+        "WAL",
+        "SLO",
+        "SHH"
+      ]
+    },
+    {
+      generic: "earthen-ringfort",
+      home: [],
+      present: [
+        "SLO",
+        "SHH"
+      ]
+    },
+    {
+      generic: "tower-house",
+      home: [
+        "SBL"
+      ],
+      present: [
+        "NTH",
+        "SLO"
+      ]
+    },
+    {
+      generic: "fortified-farmhouse",
+      home: [
+        "SBL"
+      ],
+      present: [
+        "NTH"
+      ]
+    },
+    {
+      generic: "ship-camp-fortified-anchorage",
+      home: [],
+      present: [
+        "SHH"
+      ]
+    },
+    {
+      generic: "royal-or-lordly-court",
+      home: [
+        "WAL"
+      ],
+      present: [
+        "COR"
+      ]
+    },
+    {
+      generic: "welsh-administrative-manor",
+      home: [
+        "WAL"
+      ],
+      present: []
+    },
+    {
+      generic: "assembly-field",
+      home: [
+        "NSI"
+      ],
+      present: [
+        "NTH",
+        "WMM",
+        "SHH"
+      ]
+    },
+    {
+      generic: "lowland-marsh",
+      home: [
+        "WCY"
+      ],
+      present: [
+        "SEA",
+        "EAN",
+        "WMM",
+        "EMD"
+      ]
+    },
+    {
+      generic: "fen",
+      home: [
+        "EAN"
+      ],
+      present: [
+        "EMD",
+        "WCY"
+      ]
+    },
+    {
+      generic: "brushwood-marsh-carr",
+      home: [
+        "NTH",
+        "EMD"
+      ],
+      present: [
+        "EAN"
+      ]
+    },
+    {
+      generic: "peat-bog-moss",
+      home: [
+        "NTH",
+        "SBL"
+      ],
+      present: [
+        "SLO",
+        "WMM"
+      ]
+    },
+    {
+      generic: "bog",
+      home: [
+        "WAL"
+      ],
+      present: [
+        "COR"
+      ]
+    },
+    {
+      generic: "flood-prone-land-by-a-river",
+      home: [
+        "WMM"
+      ],
+      present: []
+    },
+    {
+      generic: "skerry-rock-islet",
+      home: [
+        "NSI",
+        "SHH"
+      ],
+      present: [
+        "SLO"
+      ]
+    },
+    {
+      generic: "coastal-chasm-geo",
+      home: [
+        "NSI"
+      ],
+      present: [
+        "SHH"
+      ]
+    },
+    {
+      generic: "sea-inlet-firth",
+      home: [
+        "NSI",
+        "SHH",
+        "SLO"
+      ],
+      present: [
+        "SBL"
+      ]
+    },
+    {
+      generic: "small-bay-creek",
+      home: [
+        "NSI",
+        "SHH"
+      ],
+      present: []
+    },
+    {
+      generic: "point-nose",
+      home: [
+        "WAL",
+        "SHH"
+      ],
+      present: [
+        "COR"
+      ]
+    },
+    {
+      generic: "isthmus-portage",
+      home: [
+        "SHH"
+      ],
+      present: [
+        "NSI",
+        "SLO"
+      ]
+    },
+    {
+      generic: "great-woodland",
+      home: [
+        "SEA"
+      ],
+      present: [
+        "WMM"
+      ]
+    },
+    {
+      generic: "woodland-swine-pasture",
+      home: [
+        "SEA"
+      ],
+      present: []
+    },
+    {
+      generic: "clearing-paddock",
+      home: [
+        "NTH"
+      ],
+      present: [
+        "SBL",
+        "EMD"
+      ]
+    },
+    {
+      generic: "wold",
+      home: [
+        "EMD",
+        "WCY"
+      ],
+      present: [
+        "NTH",
+        "EAN"
+      ]
+    },
+    {
+      generic: "upland-moor",
+      home: [
+        "NTH",
+        "SBL"
+      ],
+      present: [
+        "EMD",
+        "WCY",
+        "WAL"
+      ]
+    },
+    {
+      generic: "fell",
+      home: [
+        "NTH"
+      ],
+      present: [
+        "SBL"
+      ]
+    },
+    {
+      generic: "tor",
+      home: [
+        "WCY",
+        "COR"
+      ],
+      present: [
+        "EMD"
+      ]
+    },
+    {
+      generic: "mountain",
+      home: [
+        "WAL",
+        "SHH"
+      ],
+      present: [
+        "NTH",
+        "SLO"
+      ]
+    },
+    {
+      generic: "sharp-peak",
+      home: [
+        "SHH"
+      ],
+      present: [
+        "NTH",
+        "WAL"
+      ]
+    },
+    {
+      generic: "mountain-stream",
+      home: [
+        "NTH",
+        "SBL",
+        "SHH"
+      ],
+      present: [
+        "SLO"
+      ]
+    },
+    {
+      generic: "stream-with-its-valley",
+      home: [
+        "WAL"
+      ],
+      present: [
+        "COR"
+      ]
+    },
+    {
+      generic: "waterfall",
+      home: [
+        "NTH",
+        "SHH",
+        "WAL"
+      ],
+      present: [
+        "SLO",
+        "SBL"
+      ]
+    },
+    {
+      generic: "small-mountain-lake",
+      home: [
+        "NTH",
+        "SHH",
+        "WAL"
+      ],
+      present: [
+        "SBL"
+      ]
+    },
+    {
+      generic: "dale",
+      home: [
+        "NTH"
+      ],
+      present: [
+        "EMD",
+        "SBL",
+        "NSI"
+      ]
+    },
+    {
+      generic: "broad-valley",
+      home: [
+        "SHH",
+        "SLO",
+        "WAL"
+      ],
+      present: []
+    },
+    {
+      generic: "short-bowl-shaped-valley",
+      home: [
+        "WCY",
+        "WAL"
+      ],
+      present: [
+        "SEA",
+        "WMM",
+        "COR"
+      ]
+    },
+    {
+      generic: "narrow-valley-glen",
+      home: [
+        "SHH"
+      ],
+      present: [
+        "SLO",
+        "SBL",
+        "WAL"
+      ]
+    },
+    {
+      generic: "small-enclosed-side-valley",
+      home: [
+        "SBL",
+        "WMM"
+      ],
+      present: [
+        "NTH"
+      ]
+    },
+    {
+      generic: "corrie",
+      home: [
+        "SHH"
+      ],
+      present: [
+        "WAL",
+        "SLO"
+      ]
+    },
+    {
+      generic: "ravine",
+      home: [
+        "NTH",
+        "SBL"
+      ],
+      present: [
+        "SLO"
+      ]
+    },
+    {
+      generic: "steep-bank-ravine-side",
+      home: [
+        "SBL"
+      ],
+      present: [
+        "SLO",
+        "NTH"
+      ]
+    }
+  ],
+  categoryMultipliers: {
+    COR: {
+      "saint-or-holy-person": 2.5,
+      "personal-name": 1.5,
+      colour: 1.5,
+      size: 1.5,
+      "position-or-direction": 0.75,
+      "ethnic-or-cultural-group": 0.5,
+      deity: 0.5,
+      crop: 0.5,
+      "status-or-role": 0.5,
+      "folk-group": 0.1
+    },
+    WCY: {
+      "river-or-stream-name": 1.5,
+      landform: 1.5,
+      tree: 1.25,
+      "ethnic-or-cultural-group": 0.75,
+      "folk-group": 0.5
+    },
+    SEA: {
+      "folk-group": 2.5,
+      "personal-name": 1.5,
+      tree: 1.5,
+      deity: 1.5,
+      produce: 1.5,
+      "domestic-animal": 1.25,
+      "earlier-or-district-name": 0.75,
+      "saint-or-holy-person": 0.5
+    },
+    EAN: {
+      "folk-group": 2,
+      "personal-name": 1.5,
+      "wild-plant": 1.5,
+      "fish-and-other-creatures": 1.5,
+      bird: 1.25,
+      "saint-or-holy-person": 0.5,
+      landform: 0.5
+    },
+    WMM: {
+      tree: 1.75,
+      "personal-name": 1.5,
+      produce: 1.5,
+      "ethnic-or-cultural-group": 1.5,
+      "saint-or-holy-person": 1.25
+    },
+    EMD: {
+      "personal-name": 2,
+      "ethnic-or-cultural-group": 2,
+      "assembly-or-law": 1.5,
+      "folk-group": 0.75,
+      "saint-or-holy-person": 0.5
+    },
+    NTH: {
+      "personal-name": 1.75,
+      "river-or-stream-name": 1.75,
+      tree: 1.25,
+      "domestic-animal": 1.25,
+      "ethnic-or-cultural-group": 1.25,
+      "saint-or-holy-person": 0.75,
+      "folk-group": 0.5
+    },
+    SBL: {
+      "river-or-stream-name": 2,
+      "earlier-or-district-name": 1.75,
+      "personal-name": 1.25,
+      "domestic-animal": 1.25,
+      "folk-group": 0.5,
+      deity: 0.5
+    },
+    WAL: {
+      "saint-or-holy-person": 3,
+      "river-or-stream-name": 2,
+      colour: 1.75,
+      size: 1.5,
+      shape: 1.25,
+      "ethnic-or-cultural-group": 0.5,
+      crop: 0.5,
+      deity: 0.25,
+      "folk-group": 0.1
+    },
+    SLO: {
+      "saint-or-holy-person": 1.75,
+      "river-or-stream-name": 1.75,
+      "personal-name": 1.25,
+      "earlier-or-district-name": 1.25,
+      colour: 1.25,
+      "position-or-direction": 1.25,
+      deity: 0.5,
+      "folk-group": 0.25
+    },
+    SHH: {
+      colour: 2.5,
+      size: 2,
+      "supernatural-being": 2,
+      shape: 1.75,
+      "saint-or-holy-person": 1.75,
+      "domestic-animal": 1.5,
+      "wild-animal": 1.25,
+      bird: 1.25,
+      "ethnic-or-cultural-group": 0.75,
+      "status-or-role": 0.5,
+      "built-feature": 0.5,
+      crop: 0.25,
+      "folk-group": 0.1
+    },
+    NSI: {
+      "personal-name": 2.5,
+      shape: 1.5,
+      size: 1.5,
+      "position-or-direction": 1.5,
+      bird: 1.5,
+      "soil-or-ground": 1.25,
+      "domestic-animal": 1.25,
+      deity: 0.75,
+      crop: 0.75,
+      "saint-or-holy-person": 0.5,
+      tree: 0.25,
+      "folk-group": 0.1
+    }
+  },
+  wordOrder: {
+    COR: {
+      germanic: 10,
+      "celtic-direct": 70,
+      "celtic-linked": 20
+    },
+    WCY: {
+      germanic: 95,
+      "celtic-direct": 5,
+      "celtic-linked": 0
+    },
+    SEA: {
+      germanic: 100,
+      "celtic-direct": 0,
+      "celtic-linked": 0
+    },
+    EAN: {
+      germanic: 100,
+      "celtic-direct": 0,
+      "celtic-linked": 0
+    },
+    WMM: {
+      germanic: 85,
+      "celtic-direct": 12,
+      "celtic-linked": 3
+    },
+    EMD: {
+      germanic: 100,
+      "celtic-direct": 0,
+      "celtic-linked": 0
+    },
+    NTH: {
+      germanic: 92,
+      "celtic-direct": 8,
+      "celtic-linked": 0
+    },
+    SBL: {
+      germanic: 80,
+      "celtic-direct": 17,
+      "celtic-linked": 3
+    },
+    WAL: {
+      germanic: 5,
+      "celtic-direct": 65,
+      "celtic-linked": 30
+    },
+    SLO: {
+      germanic: 55,
+      "celtic-direct": 35,
+      "celtic-linked": 10
+    },
+    SHH: {
+      germanic: 10,
+      "celtic-direct": 55,
+      "celtic-linked": 35
+    },
+    NSI: {
+      germanic: 90,
+      "celtic-direct": 8,
+      "celtic-linked": 2
+    }
+  },
+  structure: {
+    COR: {
+      connectiveChance: 0,
+      stackedGenericChance: 0.02,
+      affixChance: 0.05,
+      landscapeShareSettlement: 0.4
+    },
+    WCY: {
+      connectiveChance: 0.1,
+      stackedGenericChance: 0.06,
+      affixChance: 0.2,
+      landscapeShareSettlement: 0.35
+    },
+    SEA: {
+      connectiveChance: 0.3,
+      stackedGenericChance: 0.08,
+      affixChance: 0.18,
+      landscapeShareSettlement: 0.35
+    },
+    EAN: {
+      connectiveChance: 0.25,
+      stackedGenericChance: 0.05,
+      affixChance: 0.18,
+      landscapeShareSettlement: 0.35
+    },
+    WMM: {
+      connectiveChance: 0.15,
+      stackedGenericChance: 0.05,
+      affixChance: 0.15,
+      landscapeShareSettlement: 0.35
+    },
+    EMD: {
+      connectiveChance: 0.15,
+      stackedGenericChance: 0.05,
+      affixChance: 0.15,
+      landscapeShareSettlement: 0.25
+    },
+    NTH: {
+      connectiveChance: 0.08,
+      stackedGenericChance: 0.05,
+      affixChance: 0.12,
+      landscapeShareSettlement: 0.4
+    },
+    SBL: {
+      connectiveChance: 0.05,
+      stackedGenericChance: 0.05,
+      affixChance: 0.08,
+      landscapeShareSettlement: 0.4
+    },
+    WAL: {
+      connectiveChance: 0,
+      stackedGenericChance: 0.02,
+      affixChance: 0.05,
+      landscapeShareSettlement: 0.45
+    },
+    SLO: {
+      connectiveChance: 0.02,
+      stackedGenericChance: 0.03,
+      affixChance: 0.08,
+      landscapeShareSettlement: 0.4
+    },
+    SHH: {
+      connectiveChance: 0,
+      stackedGenericChance: 0.02,
+      affixChance: 0.03,
+      landscapeShareSettlement: 0.5
+    },
+    NSI: {
+      connectiveChance: 0,
+      stackedGenericChance: 0.02,
+      affixChance: 0.03,
+      landscapeShareSettlement: 0.3
+    }
+  },
+  connectiveSplit: {
+    folk: 0.6,
+    associative: 0.4
+  },
+  affixBaseline: {
+    size: 25,
+    position: 25,
+    age: 10,
+    function: 10,
+    "owner-by-status": 10,
+    "owner-by-family": 10,
+    dedication: 3,
+    location: 7
+  },
+  affixMultipliers: {
+    COR: {
+      "owner-by-family": 0.25,
+      function: 0.5
+    },
+    WCY: {
+      "owner-by-family": 2,
+      "owner-by-status": 1.5,
+      location: 1.25
+    },
+    SEA: {
+      "owner-by-family": 1.5,
+      "owner-by-status": 1.5,
+      location: 1.5
+    },
+    EAN: {
+      size: 1.5,
+      dedication: 2
+    },
+    WMM: {
+      "owner-by-family": 1.5,
+      location: 1.25
+    },
+    EMD: {
+      "owner-by-family": 1.25,
+      size: 1.25
+    },
+    NTH: {
+      location: 1.5,
+      "owner-by-family": 0.75
+    },
+    SBL: {
+      position: 1.5,
+      "owner-by-family": 0.5
+    },
+    WAL: {
+      position: 2,
+      size: 1.5,
+      "owner-by-family": 0.25
+    },
+    SLO: {
+      position: 2,
+      "owner-by-family": 0.5
+    },
+    SHH: {
+      position: 2,
+      size: 1.5,
+      "owner-by-status": 0.5,
+      "owner-by-family": 0.1
+    },
+    NSI: {
+      position: 1.5,
+      size: 1.25,
+      "owner-by-family": 0.1
+    }
+  }
+};
+
+// src/placeShapes.ts
+var PLACE_SHAPE_WEIGHTS = {
+  /** Relative weight of each affinity tier when picking a slot category for a generic. */
+  tier: {
+    dominant: 25,
+    common: 10,
+    occasional: 4,
+    rare: 1,
+    unlikely: 0
+  },
+  /** Chance a simplex (Empty slot) shape is the plural simplex. */
+  pluralSimplexChance: 0.15,
+  /** Chance a personal-name shape becomes the folk or associative connective. */
+  connectiveChance: 0.15,
+  /** Share of connectives that are folk rather than associative. */
+  folkConnectiveShare: 0.5,
+  /** Chance a landscape shape gains a stacked Farms-and-estates generic. */
+  stackedGenericChance: 0.05,
+  /** Chance any shape gains an affix. */
+  affixChance: 0.15,
+  /** Relative weight of each word order for two-part compounds. */
+  wordOrder: {
+    germanic: 1,
+    "celtic-direct": 1,
+    "celtic-linked": 1
+  }
+};
+var FOLK_GROUP_GENERICS = /* @__PURE__ */ new Set(["folk-group-territory", "folk-group-homestead"]);
+var STACK_SOURCE_GROUP = "settlement-farms-and-estates";
+var EMPTY_SLOT = "empty-slot";
+var PERSONAL_NAME = "personal-name";
+var PLACE_SHAPES_HISTORY_NAME = "place name shapes";
+function placeShapesHistoryLabel(regionCode) {
+  const region = regionCode ? findRegion(regionCode) : void 0;
+  return region ? `${PLACE_SHAPES_HISTORY_NAME} \xB7 ${region.label}` : PLACE_SHAPES_HISTORY_NAME;
+}
+var PLACE_SHAPE_DATA = place_shapes_default;
+var TIER_ORDER = ["dominant", "common", "occasional", "rare", "unlikely"];
+function resolveProfile(group, genericId, source = PLACE_SHAPE_DATA) {
+  var _a;
+  const tiers = new Map(source.categories.map((c) => [c.id, "unlikely"]));
+  const apply = (profile) => {
+    var _a2;
+    for (const tier of TIER_ORDER) {
+      for (const id of (_a2 = profile[tier]) != null ? _a2 : []) tiers.set(id, tier);
+    }
+  };
+  if (group.profile) apply(group.profile);
+  for (const override of group.overrides) {
+    if (!override.generics.includes(genericId)) continue;
+    if (override.replace) {
+      for (const id of tiers.keys()) tiers.set(id, "unlikely");
+      apply(override.replace);
+    }
+    for (const [id, tier] of Object.entries((_a = override.set) != null ? _a : {})) tiers.set(id, tier);
+  }
+  return tiers;
+}
+var PLACE_SHAPE_REGION_DATA = place_shape_regions_default;
+var PLACE_SHAPE_REGIONS = PLACE_SHAPE_REGION_DATA.regions;
+function findRegion(code) {
+  return PLACE_SHAPE_REGIONS.find((r) => r.code === code);
+}
+function resolveRegion(code, regions) {
+  var _a, _b, _c;
+  if (!regions.regions.some((r) => r.code === code)) throw new Error(`Unknown place-shape region: ${code}`);
+  const genericMultiplier = /* @__PURE__ */ new Map();
+  for (const tied of regions.tiedGenerics) {
+    const m = tied.home.includes(code) ? regions.tiedMultipliers.home : tied.present.includes(code) ? regions.tiedMultipliers.present : regions.tiedMultipliers.other;
+    genericMultiplier.set(tied.generic, m);
+  }
+  const structure = regions.structure[code];
+  return {
+    groupMultiplier: (_a = regions.groupMultipliers[code]) != null ? _a : {},
+    genericMultiplier,
+    categoryMultiplier: (_b = regions.categoryMultipliers[code]) != null ? _b : {},
+    wordOrder: Object.entries(regions.wordOrder[code]).filter(([, w]) => w > 0),
+    connectiveChance: structure.connectiveChance,
+    folkConnectiveShare: regions.connectiveSplit.folk,
+    stackedGenericChance: structure.stackedGenericChance,
+    affixChance: structure.affixChance,
+    affixMultiplier: (_c = regions.affixMultipliers[code]) != null ? _c : {}
+  };
+}
+function pickUniform(items, rng) {
+  return items[Math.floor(rng() * items.length)];
+}
+function pickWeighted(entries, rng) {
+  const total = entries.reduce((sum, [, w]) => sum + w, 0);
+  let r = rng() * total;
+  for (const [item, weight] of entries) {
+    r -= weight;
+    if (r < 0) return item;
+  }
+  return entries[entries.length - 1][0];
+}
+var PlaceShapeGenerator = class {
+  constructor(source, region, groupIds, regions = PLACE_SHAPE_REGION_DATA) {
+    this.source = source;
+    this.region = region;
+    this.profiles = /* @__PURE__ */ new Map();
+    this.groupWeights = [];
+    this.genericWeights = /* @__PURE__ */ new Map();
+    var _a, _b;
+    this.groups = groupIds ? source.groups.filter((g) => groupIds.includes(g.id)) : source.groups;
+    if (this.groups.length === 0) throw new Error("No eligible place-shape groups");
+    if (region) {
+      for (const group of this.groups) {
+        this.groupWeights.push([group, (_a = region.groupMultiplier[group.id]) != null ? _a : 1]);
+        this.genericWeights.set(
+          group.id,
+          group.generics.map((g) => {
+            var _a2;
+            return [g, (_a2 = region.genericMultiplier.get(g.id)) != null ? _a2 : 1];
+          })
+        );
+      }
+    }
+    const stackGroup = source.groups.find((g) => g.id === STACK_SOURCE_GROUP);
+    this.stackGenerics = ((_b = stackGroup == null ? void 0 : stackGroup.generics) != null ? _b : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id));
+    this.affixWeights = source.affixes.filter((a) => a.forms.length > 0).map((a) => {
+      var _a2, _b2;
+      return [a, ((_a2 = regions.affixBaseline[a.id]) != null ? _a2 : 0) * ((_b2 = region == null ? void 0 : region.affixMultiplier[a.id]) != null ? _b2 : 1)];
+    }).filter(([, w]) => w > 0);
+  }
+  /** Tier weight × regional category multiplier. Unlikely is 0 and stays 0. */
+  categoryWeights(group, genericId) {
+    const key = `${group.id}/${genericId}`;
+    let weights = this.profiles.get(key);
+    if (!weights) {
+      weights = [...resolveProfile(group, genericId, this.source)].map(([id, tier]) => {
+        var _a, _b;
+        return [
+          id,
+          PLACE_SHAPE_WEIGHTS.tier[tier] * ((_b = (_a = this.region) == null ? void 0 : _a.categoryMultiplier[id]) != null ? _b : 1)
+        ];
+      }).filter(([, w]) => w > 0);
+      this.profiles.set(key, weights);
+    }
+    return weights;
+  }
+  next(rng) {
+    var _a, _b, _c, _d, _e;
+    const region = this.region;
+    const group = region ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
+    const generic = region ? pickWeighted(this.genericWeights.get(group.id), rng) : pickUniform(group.generics, rng);
+    const categoryId = pickWeighted(this.categoryWeights(group, generic.id), rng);
+    const shape = {
+      groupId: group.id,
+      genericId: generic.id,
+      categoryId,
+      structure: "two-part-compound",
+      wordOrder: "germanic"
+    };
+    const connectiveChance = (_a = region == null ? void 0 : region.connectiveChance) != null ? _a : PLACE_SHAPE_WEIGHTS.connectiveChance;
+    const stackedGenericChance = (_b = region == null ? void 0 : region.stackedGenericChance) != null ? _b : PLACE_SHAPE_WEIGHTS.stackedGenericChance;
+    const affixChance = (_c = region == null ? void 0 : region.affixChance) != null ? _c : PLACE_SHAPE_WEIGHTS.affixChance;
+    if (categoryId === EMPTY_SLOT) {
+      shape.structure = rng() < PLACE_SHAPE_WEIGHTS.pluralSimplexChance ? "plural-simplex" : "simplex";
+    } else if (categoryId === PERSONAL_NAME && !FOLK_GROUP_GENERICS.has(generic.id) && rng() < connectiveChance) {
+      const folkShare = (_d = region == null ? void 0 : region.folkConnectiveShare) != null ? _d : PLACE_SHAPE_WEIGHTS.folkConnectiveShare;
+      shape.structure = rng() < folkShare ? "folk-connective" : "associative-connective";
+    } else if (group.side === "landscape" && this.stackGenerics.length > 0 && rng() < stackedGenericChance) {
+      shape.structure = "stacked-generic";
+      shape.stackedGenericId = pickUniform(this.stackGenerics, rng);
+    } else {
+      shape.wordOrder = pickWeighted(
+        (_e = region == null ? void 0 : region.wordOrder) != null ? _e : Object.entries(PLACE_SHAPE_WEIGHTS.wordOrder),
+        rng
+      );
+    }
+    if (this.affixWeights.length > 0 && rng() < affixChance) {
+      const type = pickWeighted(this.affixWeights, rng);
+      shape.affix = { typeId: type.id, form: pickUniform(type.forms, rng) };
+    }
+    return shape;
+  }
+};
+function resolveSeed(seed) {
+  return seed !== void 0 && Number.isFinite(seed) ? seed >>> 0 : Math.random() * 4294967295 >>> 0;
+}
+function createGenerator(options, source) {
+  const region = options.region ? resolveRegion(options.region, PLACE_SHAPE_REGION_DATA) : null;
+  return new PlaceShapeGenerator(source, region, options.groupIds);
+}
+function generatePlaceShapesDetailed(options, source = PLACE_SHAPE_DATA) {
+  const seed = resolveSeed(options.seed);
+  const rng = mulberry32(seed);
+  const generator = createGenerator(options, source);
+  const formatter = new PlaceShapeFormatter(source);
+  const count = Math.max(0, Math.floor(options.count));
+  const shapes = [];
+  const names = [];
+  const seen = /* @__PURE__ */ new Set();
+  for (let attempt = 0; names.length < count && attempt < count * 50; attempt++) {
+    const shape = generator.next(rng);
+    const text = formatter.format(shape);
+    if (seen.has(text)) continue;
+    seen.add(text);
+    shapes.push(shape);
+    names.push(text);
+  }
+  return { shapes, names, seed };
+}
+var PlaceShapeFormatter = class {
+  constructor(source = PLACE_SHAPE_DATA) {
+    this.generics = /* @__PURE__ */ new Map();
+    this.categories = /* @__PURE__ */ new Map();
+    for (const group of source.groups) {
+      for (const generic of group.generics) this.generics.set(generic.id, generic.meaning);
+    }
+    for (const category of source.categories) this.categories.set(category.id, category.label);
+  }
+  format(shape) {
+    var _a;
+    const bracket = (label) => `[${(label != null ? label : "?").toLowerCase()}]`;
+    const generic = bracket(this.generics.get(shape.genericId));
+    const specific = bracket(this.categories.get(shape.categoryId));
+    let text;
+    switch (shape.structure) {
+      case "simplex":
+        text = generic;
+        break;
+      case "plural-simplex":
+        text = `${generic} (plural)`;
+        break;
+      case "folk-connective":
+        text = `${specific} + [people of] + ${generic}`;
+        break;
+      case "associative-connective":
+        text = `${specific} + [associated with] + ${generic}`;
+        break;
+      case "stacked-generic":
+        text = `${specific} + ${generic} + ${bracket(this.generics.get((_a = shape.stackedGenericId) != null ? _a : ""))}`;
+        break;
+      default:
+        text = shape.wordOrder === "celtic-direct" ? `${generic} + ${specific}` : shape.wordOrder === "celtic-linked" ? `${generic} of the ${specific}` : `${specific} + ${generic}`;
+    }
+    if (shape.affix) {
+      const { form } = shape.affix;
+      const affix = form.slotCategory ? `${form.text} ${bracket(this.categories.get(form.slotCategory))}` : form.text;
+      text = form.position === "after" ? `${text} ${affix}` : `${affix} ${text}`;
+    }
+    return text;
+  }
+};
+
 // src/modal.ts
+var SECTION_ORDER = ["markov", "placeShapes", "explorationPlaceShapes"];
+var SECTION_LABELS = {
+  markov: "markov generator",
+  placeShapes: "place name shapes",
+  explorationPlaceShapes: "exploration place name shapes"
+};
+var SECTION_ICONS = {
+  markov: ICON_PACKS,
+  placeShapes: ICON_PLACE_SHAPES,
+  explorationPlaceShapes: ICON_PACKS
+};
 function packTypeIconId(packType, subGenerator) {
   if (packType === "compoundPack") {
     return subGenerator === "list" ? ICON_COMPOUND_LIST_PACK : ICON_COMPOUND_BREAKDOWN_PACK;
@@ -1767,13 +7170,13 @@ function packSubGenerator(packType, compoundGenerator) {
   if (packType === "compoundPack") return compoundGenerator;
   return void 0;
 }
-function resolveSeed(seed) {
+function resolveSeed2(seed) {
   return seed !== void 0 && Number.isFinite(seed) ? Math.floor(seed) >>> 0 : Math.random() * 4294967295 >>> 0;
 }
 function generateNamesFromSource(namesText, packType, count = 6, settings = {}, seed) {
   var _a, _b, _c, _d;
   const names = extractNamesFromMarkdown(namesText);
-  const resolvedSeed = resolveSeed(seed);
+  const resolvedSeed = resolveSeed2(seed);
   if (names.length === 0) {
     return { names: [], seed: resolvedSeed };
   }
@@ -1822,6 +7225,23 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.packDropdownLabelEl = null;
     this.packDropdownMenuEl = null;
     this.isPackDropdownOpen = false;
+    /** Never persisted — every open starts on the markov generator. */
+    this.activeSection = "markov";
+    this.sectionTriggerEl = null;
+    this.sectionMenuEl = null;
+    this.isSectionMenuOpen = false;
+    /** The pack box shown in place of the markov pack dropdown while a placeholder section is
+     * active — the only thing a section switch changes. */
+    this.sectionStubEl = null;
+    this.sectionStubLabelEl = null;
+    /** The region dropdown shown beside the trigger in the place-shapes section. */
+    this.regionDropdownEl = null;
+    this.regionTriggerEl = null;
+    this.regionLabelEl = null;
+    this.regionMenuEl = null;
+    this.isRegionMenuOpen = false;
+    /** Region code, or undefined for All Britain. Session only — never persisted. */
+    this.selectedRegion = void 0;
     this.quantityButtons = [];
     this.clearResultsSelection = () => {
     };
@@ -1840,6 +7260,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.panelMode = false;
     this.rootEl = null;
     this.handlePackDropdownOutsideClick = (evt) => {
+      if (this.isRegionMenuOpen && this.regionDropdownEl && !this.regionDropdownEl.contains(evt.target)) {
+        this.setRegionMenuOpen(false);
+      }
       if (this.isPackDropdownOpen && this.packDropdownEl && !this.packDropdownEl.contains(evt.target)) {
         this.closePackDropdown();
       }
@@ -1872,11 +7295,19 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     }
     const optionsList = root.createDiv({ cls: "nameforge-modal__options-list" });
     const createPacksRow = optionsList.createDiv({ cls: "nameforge-modal__option-row" });
-    const folderDecoration = createPacksRow.createSpan({
-      cls: "nameforge-modal__icon-decoration nameforge-modal__icon-decoration--lg",
-      attr: { "aria-hidden": "true" }
+    const sectionTrigger = createPacksRow.createSpan({
+      cls: "nameforge-modal__icon-decoration nameforge-modal__icon-decoration--lg nameforge-modal__icon-decoration--clickable",
+      attr: { role: "button", tabindex: "0", "aria-label": "change section", title: "change section", "aria-expanded": "false" }
     });
-    (0, import_obsidian6.setIcon)(folderDecoration, ICON_PACKS);
+    (0, import_obsidian6.setIcon)(sectionTrigger, SECTION_ICONS[this.activeSection]);
+    sectionTrigger.addEventListener("click", () => this.toggleSectionMenu());
+    sectionTrigger.addEventListener("keydown", (evt) => {
+      if (evt.key === "Enter" || evt.key === " ") {
+        evt.preventDefault();
+        this.toggleSectionMenu();
+      }
+    });
+    this.sectionTriggerEl = sectionTrigger;
     this.packDropdownEl = createPacksRow.createDiv({ cls: "nameforge-modal__pack-dropdown" });
     this.packDropdownTrigger = this.packDropdownEl.createEl("button", {
       cls: "nameforge-modal__pack-dropdown-trigger",
@@ -1893,6 +7324,28 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     });
     this.packDropdownMenuEl = this.packDropdownEl.createDiv({ cls: "nameforge-modal__pack-dropdown-menu" });
     this.packDropdownMenuEl.hide();
+    this.regionDropdownEl = createPacksRow.createDiv({ cls: "nameforge-modal__pack-dropdown" });
+    this.regionTriggerEl = this.regionDropdownEl.createEl("button", {
+      cls: "nameforge-modal__pack-dropdown-trigger",
+      attr: { type: "button", "aria-haspopup": "listbox", "aria-expanded": "false" }
+    });
+    this.regionLabelEl = this.regionTriggerEl.createSpan({ cls: "nameforge-modal__pack-dropdown-label" });
+    this.regionTriggerEl.addEventListener("click", (evt) => {
+      evt.stopPropagation();
+      this.setRegionMenuOpen(!this.isRegionMenuOpen);
+    });
+    this.regionMenuEl = this.regionDropdownEl.createDiv({ cls: "nameforge-modal__pack-dropdown-menu" });
+    this.regionMenuEl.hide();
+    this.regionDropdownEl.hide();
+    this.updateRegionLabel();
+    this.sectionStubEl = createPacksRow.createDiv({ cls: "nameforge-modal__pack-dropdown nameforge-modal__section-stub" });
+    const stubTrigger = this.sectionStubEl.createEl("button", {
+      cls: "nameforge-modal__pack-dropdown-trigger",
+      attr: { type: "button", "aria-disabled": "true" }
+    });
+    (0, import_obsidian6.setIcon)(stubTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }), ICON_PACKS);
+    this.sectionStubLabelEl = stubTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-label" });
+    this.sectionStubEl.hide();
     activeDocument.addEventListener("click", this.handlePackDropdownOutsideClick);
     if (!this.panelMode) {
       const createPacksButton = createPacksRow.createEl("button", {
@@ -1904,6 +7357,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         new NameForgeEditorModal(this.app, this, "", "").open();
       });
     }
+    this.sectionMenuEl = optionsList.createDiv({ cls: "nameforge-modal__section-menu" });
+    this.sectionMenuEl.hide();
     const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
       const button = quantityToggle.createEl("button", {
@@ -1927,6 +7382,103 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.renderResults([]);
     void this.refreshPackDropdown();
   }
+  toggleSectionMenu() {
+    this.setSectionMenuOpen(!this.isSectionMenuOpen);
+  }
+  /** Opens/closes the section switcher. While open, the results box gives up exactly the height
+   * the menu adds (measured, so gaps/margins in modal vs panel mode are included) via
+   * --nf-section-menu-height, so the modal itself doesn't grow. */
+  setSectionMenuOpen(open) {
+    var _a, _b, _c, _d, _e;
+    const menu = this.sectionMenuEl;
+    if (!menu) return;
+    this.isSectionMenuOpen = open;
+    const optionsList = menu.parentElement;
+    const before = (_a = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _a : 0;
+    if (open) {
+      this.closePackDropdown();
+      this.setRegionMenuOpen(false);
+      this.renderSectionMenu();
+    }
+    menu.toggle(open);
+    const added = open ? Math.max(0, ((_b = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _b : 0) - before) : 0;
+    (_c = this.rootEl) == null ? void 0 : _c.style.setProperty("--nf-section-menu-height", `${added}px`);
+    (_d = this.rootEl) == null ? void 0 : _d.toggleClass("is-section-menu-open", open);
+    (_e = this.sectionTriggerEl) == null ? void 0 : _e.setAttribute("aria-expanded", String(open));
+  }
+  /** The section switcher, opened by clicking the binder icon — a port of titleForge's
+   * renderSectionPicker. Rebuilt on each open so the active item's highlight is current. */
+  renderSectionMenu() {
+    const menu = this.sectionMenuEl;
+    if (!menu) return;
+    menu.empty();
+    for (const section of SECTION_ORDER) {
+      const item = menu.createDiv({
+        cls: "nameforge-modal__section-menu-item" + (section === this.activeSection ? " is-active" : ""),
+        attr: { role: "button", tabindex: "0", "aria-label": SECTION_LABELS[section] }
+      });
+      (0, import_obsidian6.setIcon)(item.createSpan({ cls: "nameforge-modal__section-menu-icon" }), SECTION_ICONS[section]);
+      item.createSpan({ text: SECTION_LABELS[section] });
+      item.addEventListener("click", () => this.switchSection(section));
+      item.addEventListener("keydown", (evt) => {
+        if (evt.key === "Enter" || evt.key === " ") {
+          evt.preventDefault();
+          this.switchSection(section);
+        }
+      });
+    }
+  }
+  /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
+   * dropdown on "placeShapes", the placeholder box otherwise. Everything else is left as it is. */
+  switchSection(section) {
+    var _a, _b, _c;
+    this.setSectionMenuOpen(false);
+    this.setRegionMenuOpen(false);
+    this.activeSection = section;
+    (_a = this.packDropdownEl) == null ? void 0 : _a.toggle(section === "markov");
+    (_b = this.regionDropdownEl) == null ? void 0 : _b.toggle(section === "placeShapes");
+    if (this.sectionTriggerEl) (0, import_obsidian6.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
+    if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
+    (_c = this.sectionStubEl) == null ? void 0 : _c.toggle(section === "explorationPlaceShapes");
+  }
+  setRegionMenuOpen(open) {
+    var _a, _b;
+    this.isRegionMenuOpen = open;
+    if (open) {
+      this.closePackDropdown();
+      this.renderRegionMenu();
+    }
+    (_a = this.regionMenuEl) == null ? void 0 : _a.toggle(open);
+    (_b = this.regionTriggerEl) == null ? void 0 : _b.setAttribute("aria-expanded", String(open));
+  }
+  /** All Britain first, then the regions in reference order; historic counties as tooltips. */
+  renderRegionMenu() {
+    const menu = this.regionMenuEl;
+    if (!menu) return;
+    menu.empty();
+    const options = [
+      { code: void 0, label: "All Britain" },
+      ...PLACE_SHAPE_REGIONS
+    ];
+    for (const { code, label, counties } of options) {
+      const item = menu.createEl("button", {
+        cls: "nameforge-modal__pack-dropdown-item" + (code === this.selectedRegion ? " is-active" : ""),
+        attr: { type: "button", title: counties != null ? counties : "No regional weighting" }
+      });
+      item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
+      item.addEventListener("click", () => {
+        this.selectedRegion = code;
+        this.updateRegionLabel();
+        this.setRegionMenuOpen(false);
+      });
+    }
+  }
+  updateRegionLabel() {
+    var _a, _b, _c;
+    const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.selectedRegion);
+    if (this.regionLabelEl) this.regionLabelEl.textContent = (_a = region == null ? void 0 : region.label) != null ? _a : "All Britain";
+    (_c = this.regionTriggerEl) == null ? void 0 : _c.setAttribute("title", (_b = region == null ? void 0 : region.counties) != null ? _b : "No regional weighting");
+  }
   unmount() {
     var _a;
     activeDocument.removeEventListener("click", this.handlePackDropdownOutsideClick);
@@ -1940,6 +7492,16 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.packDropdownIconEl = null;
     this.packDropdownLabelEl = null;
     this.packDropdownMenuEl = null;
+    this.sectionTriggerEl = null;
+    this.sectionMenuEl = null;
+    this.isSectionMenuOpen = false;
+    this.sectionStubEl = null;
+    this.sectionStubLabelEl = null;
+    this.regionDropdownEl = null;
+    this.regionTriggerEl = null;
+    this.regionLabelEl = null;
+    this.regionMenuEl = null;
+    this.isRegionMenuOpen = false;
     this.quantityButtons = [];
     this.seedInputEl = null;
     this.seedLockButton = null;
@@ -2260,8 +7822,25 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.setStatus("");
   }
   async generateSelectedCount() {
-    var _a;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a = this.seedInputEl) == null ? void 0 : _a.value) : void 0;
+    var _a, _b;
+    if (this.activeSection === "placeShapes") {
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_a = this.seedInputEl) == null ? void 0 : _a.value) : void 0;
+      const result2 = generatePlaceShapesDetailed({
+        count: this.generationCount,
+        seed: seedOverride2,
+        region: this.selectedRegion
+      });
+      this.currentSeed = result2.seed;
+      this.renderResults(result2.names);
+      await this.recordGenerationHistory(result2.names.length, placeShapesHistoryLabel(this.selectedRegion));
+      this.setStatus("");
+      return;
+    }
+    if (this.activeSection !== "markov") {
+      this.setStatus(`${SECTION_LABELS[this.activeSection]} has no packs yet.`);
+      return;
+    }
+    const seedOverride = this.seedLocked ? parseSeedInput((_b = this.seedInputEl) == null ? void 0 : _b.value) : void 0;
     if (this.currentPackType === "compoundPack") {
       const result2 = generateCompoundNamesDetailed(this.currentCompoundParts, {
         count: this.generationCount,
@@ -2341,11 +7920,11 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
    * Appends the just-used seed to the config file's generation history,
    * most-recent first, capped at MAX_HISTORY_ENTRIES.
    */
-  async recordGenerationHistory(count) {
+  async recordGenerationHistory(count, packName) {
     var _a;
     if (this.currentSeed === null) return;
     const entry = {
-      packName: this.plugin.settings.packName || "nameForge",
+      packName: packName != null ? packName : this.plugin.settings.packName || "nameForge",
       timestamp: formatHistoryTimestamp(/* @__PURE__ */ new Date()),
       seed: this.currentSeed,
       count
@@ -2642,7 +8221,10 @@ var PreviousGenerationsModal = class extends import_obsidian6.Modal {
     for (const entry of history) {
       const row = list.createDiv({ cls: "nameforge-history-modal__row" });
       const iconEl = row.createSpan({ cls: "nameforge-history-modal__pack-icon" });
-      (0, import_obsidian6.setIcon)(iconEl, (_b = iconsByName.get(entry.packName)) != null ? _b : ICON_BREAKDOWN_PACK);
+      (0, import_obsidian6.setIcon)(
+        iconEl,
+        entry.packName.startsWith(PLACE_SHAPES_HISTORY_NAME) ? SECTION_ICONS.placeShapes : (_b = iconsByName.get(entry.packName)) != null ? _b : ICON_BREAKDOWN_PACK
+      );
       row.createSpan({
         cls: "nameforge-history-modal__pack-name",
         text: entry.packName || "nameForge"

@@ -473,6 +473,82 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
   height: 24px;
 }
 
+/* The pack row's binder icon doubles as the section switcher's trigger (renderSectionMenu) —
+   matches titleForge's .titleforge-field-icon--clickable. */
+.nameforge-modal__icon-decoration--clickable {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.nameforge-modal__icon-decoration--clickable:hover,
+.nameforge-modal__icon-decoration--clickable:focus-visible {
+  color: var(--text-normal);
+}
+
+/* The section switcher itself — values ported from titleForge's .titleforge-section-menu. A
+   plain flow block under the pack row, not a floating overlay. */
+.nameforge-modal__section-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px;
+  border-radius: var(--radius-m, 8px);
+}
+
+/* While the section menu is open the results box shrinks by the menu's own measured height
+   (setSectionMenuOpen), so the modal keeps its size rather than growing to fit the menu. */
+.nameforge-modal.is-section-menu-open .nameforge-modal__results-list {
+  height: calc(260px - var(--nf-section-menu-height, 0px));
+}
+
+.nameforge-modal--panel.is-section-menu-open .nameforge-modal__results-list {
+  height: auto;
+  min-height: calc(280px - var(--nf-section-menu-height, 0px));
+}
+
+.nameforge-modal--panel .nameforge-modal__section-menu {
+  margin-bottom: 16px;
+}
+
+.nameforge-modal__section-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--radius-s, 6px);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.nameforge-modal__section-menu-item:hover,
+.nameforge-modal__section-menu-item:focus-visible {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.nameforge-modal__section-menu-item.is-active {
+  color: var(--forge-accent);
+}
+
+.nameforge-modal__section-menu-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.nameforge-modal__section-menu-icon svg,
+.nameforge-modal__section-menu-icon svg.svg-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* The placeholder pack box (a section with no packs yet) — the pack dropdown's own box, inert. */
+.nameforge-modal__section-stub .nameforge-modal__pack-dropdown-trigger,
+.nameforge-modal__section-stub .nameforge-modal__pack-dropdown-trigger:hover {
+  cursor: default;
+  color: var(--text-muted);
+}
+
 .nameforge-settings__folder-path {
   font-family: var(--font-monospace);
   font-size: var(--font-ui-small);
@@ -924,6 +1000,11 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 
 .nameforge-modal__pack-dropdown-item:hover {
   background-color: var(--background-modifier-hover);
+}
+
+/* The selected region in the place-shapes region menu — same accent as the active section. */
+.nameforge-modal__pack-dropdown-item.is-active {
+  color: var(--forge-accent);
 }
 
 .nameforge-modal__pack-dropdown-empty {
