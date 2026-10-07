@@ -1011,3 +1011,233 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   padding: 6px 8px;
   color: var(--text-muted);
 }
+/* The create-pack button outside the markov generator: hidden, but still holding its space. */
+.nameforge-modal__icon-action.is-placeholder {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Traditions not available in the current colonial part: greyed and inert, with a part note. */
+.nameforge-modal__pack-dropdown-item.is-unavailable {
+  color: var(--text-faint);
+  cursor: default;
+}
+
+.nameforge-modal__pack-dropdown-item.is-unavailable:hover {
+  background-color: transparent;
+}
+
+.nameforge-modal__pack-dropdown-note {
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+/* The colonial tradition guide. */
+.nameforge-guide-modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nameforge-guide-modal__entry {
+  padding: 8px 10px;
+  border-radius: var(--radius-m, 6px);
+  cursor: pointer;
+}
+
+.nameforge-guide-modal__entry:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.nameforge-guide-modal__entry.is-unavailable {
+  color: var(--text-faint);
+  cursor: default;
+}
+
+.nameforge-guide-modal__entry.is-unavailable:hover {
+  background-color: transparent;
+}
+
+.nameforge-guide-modal__heading {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.nameforge-guide-modal__name {
+  font-weight: var(--font-semibold);
+}
+
+.nameforge-guide-modal__parts {
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+}
+
+.nameforge-guide-modal__entry.is-unavailable .nameforge-guide-modal__parts {
+  color: var(--text-faint);
+}
+
+.nameforge-guide-modal__text {
+  margin-top: 2px;
+  font-size: var(--font-ui-small);
+  line-height: var(--line-height-tight, 1.4);
+}
+
+/* Colonial context row: centred under the quantity row, like it. */
+.nameforge-modal__context-toggle {
+  width: fit-content;
+  max-width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.nameforge-modal__context-toggle .nameforge-modal__toggle-button {
+  padding: 6px 10px;
+}
+
+.nameforge-modal--panel .nameforge-modal__context-toggle {
+  width: 100%;
+  margin: 0 0 4px;
+}
+
+/* Name ageing: source field, depth and count rows, and two-line results (name over trail). */
+.nameforge-modal__ageing-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.nameforge-modal__ageing-source-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 8px 0 4px;
+}
+
+.nameforge-modal__ageing-source {
+  flex: 1;
+  min-width: 0;
+}
+
+.nameforge-modal__ageing-source-row .nameforge-modal__ageing-toggle {
+  flex-wrap: nowrap;
+  margin: 0;
+}
+
+.nameforge-modal__ageing-toggle {
+  width: fit-content;
+  max-width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 4px auto;
+}
+
+.nameforge-modal__ageing-toggle .nameforge-modal__toggle-button {
+  min-width: 44px;
+  padding: 6px 8px;
+}
+
+.nameforge-modal__ageing-results li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nameforge-modal__ageing-name {
+  font-weight: var(--font-semibold);
+}
+
+.nameforge-modal__ageing-trail {
+  font-size: var(--font-ui-small);
+  color: var(--text-muted);
+}
+
+.nameforge-modal__ageing-format {
+  max-width: 11em;
+}
+
+.nameforge-modal--panel .nameforge-modal__ageing-toggle {
+  width: 100%;
+}
+
+.nameforge-modal--panel .nameforge-modal__ageing-source-row .nameforge-modal__ageing-toggle {
+  width: auto;
+}
+
+/* §10 Section selector under the pack row (markov generator, packs with sections). */
+.nameforge-modal__pack-section-select {
+  align-self: center;
+  max-width: 100%;
+}
+
+/* §7 "Start from template" in the pack editor. */
+.nameforge-editor-modal__template-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 4px;
+}
+
+.nameforge-editor-modal__template-label {
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  white-space: nowrap;
+}
+
+.nameforge-editor-modal__template-row select {
+  flex: 1;
+  min-width: 0;
+}
+
+.nameforge-editor-modal__template-hint {
+  margin: 0 0 8px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+/* Recipe results (names-reference §4.9, §8): placeholders muted; etymology beneath each name. */
+.nameforge-modal__recipe-results li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nameforge-modal__placeholder-part {
+  color: var(--text-faint);
+}
+
+.nameforge-modal__recipe-etymology {
+  font-size: var(--font-ui-small);
+  color: var(--text-muted);
+}
+
+.nameforge-modal__recipe-results.is-etymology-hidden .nameforge-modal__recipe-etymology {
+  display: none;
+}
+
+/* The recipe editor. */
+.nameforge-recipe-editor .modal-content h3 {
+  margin: 16px 0 4px;
+  font-size: var(--font-ui-medium);
+}
+
+.nameforge-recipe-editor__sources {
+  margin: 0 0 8px 16px;
+  padding-left: 8px;
+  border-left: 2px solid var(--background-modifier-border);
+}
+
+.nameforge-recipe-editor__weight {
+  width: 5em;
+}
+
+.nameforge-recipe-editor__buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}

@@ -1,4 +1,4 @@
-import { App, Editor, Modal, normalizePath, setIcon, TFile, TFolder } from "obsidian";
+import { App, Editor, Modal, normalizePath, Notice, setIcon, TFile, TFolder } from "obsidian";
 import {
   generateCompoundNamesDetailed,
   generateMixNamesDetailed,
@@ -7,16 +7,24 @@ import {
   PlaceNameModel,
   PlaceEnding,
   extractNamesFromMarkdown,
+  buildWeightedCorpus,
   mulberry32,
 } from "./markov";
 import {
   createCompoundNamesFileContent,
   createMixNamesFileContent,
   createNamesFileContent,
+  createWordListFileContent,
+  isWordListContent,
+  applyTemplate,
+  parseTemplateFields,
+  parseWordListFileContent,
+  type NamesFileData,
   isValidNamePackContent,
   MixPackIndexEntry,
   MixSourceRef,
   parseNamesFileContent,
+  findPackInIndex,
   resolveMixSources,
   sanitizePackNameForFilename,
 } from "./nameParser";
@@ -36,6 +44,9 @@ import {
   ICON_PLACE_PACK,
   ICON_PLACE_SHAPES,
   ICON_GENERIC_PLACE_NAMES,
+  ICON_EXPLORATION_PLACE_SHAPES,
+  ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
+  ICON_NAME_AGEING,
   ICON_PLUS_SQUARE,
   ICON_SAVE,
   ICON_SEED_COPY,
@@ -43,6 +54,19 @@ import {
   ICON_TEXT_INSERT,
 } from "./icons";
 import { EnterFolderPathModal } from "./folderModal";
+import { generatePlaceNames, type GeneratedName } from "./names/engine";
+import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
+import { RecipeEditorModal } from "./recipeEditor";
+import {
+  parseNameSections,
+  type SectionedNames,
+  sectionOptions,
+  type SectionRequest,
+  selectSectionNames,
+} from "./packs/sections";
+import { parseWordList } from "./packs/wordList";
+import { AGEING, type AgeingCandidate, ageName, validateSource } from "./ageing/engine";
+import { AGEING_INSERT_FORMATS, type AgeingInsertFormat, DEFAULT_AGEING_INSERT_FORMAT, formatAgedName, TRAIL_SEPARATOR } from "./ageing/format";
 import {
   GENERIC_PLACE_NAMES_HISTORY_NAME,
   generatePlaceShapesDetailed,
@@ -50,17 +74,40 @@ import {
   PLACE_SHAPES_HISTORY_NAME,
   placeShapesHistoryLabel,
 } from "./placeShapes";
+import {
+  type ColonialPart,
+  colonialContexts,
+  colonialHistoryLabel,
+  COLONIAL_TRADITIONS,
+  generateColonialShapesDetailed,
+  isTraditionAvailable,
+} from "./colonialShapes";
 import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from "./paths";
 
-type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack";
+type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack";
 
 /** The sections reachable from the binder icon's switcher menu (renderSectionMenu) — mirrors
  * titleForge's own section switcher. "markov" is today's whole pack-driven generator and the
- * default on every open; "placeShapes" and "genericPlaceNames" run the built-in shape generator
- * (placeShapes.ts) in its two wordings; "explorationPlaceShapes" is still a placeholder. */
-type NameForgeSection = "markov" | "placeShapes" | "genericPlaceNames" | "explorationPlaceShapes";
+ * default on every open; "placeShapes" and "genericPlaceNames" run the part 1 shape generator
+ * (placeShapes.ts) in its two wordings; "explorationPlaceShapes" and "empireExpansionPlaceShapes"
+ * run the colonial generator (colonialShapes.ts) for parts 2 and 2a; "nameAgeing" ages a name
+ * towards a target pack (ageing/engine.ts). */
+type NameForgeSection =
+  | "markov"
+  | "placeShapes"
+  | "genericPlaceNames"
+  | "explorationPlaceShapes"
+  | "empireExpansionPlaceShapes"
+  | "nameAgeing";
 
-const SECTION_ORDER: NameForgeSection[] = ["markov", "placeShapes", "genericPlaceNames", "explorationPlaceShapes"];
+const SECTION_ORDER: NameForgeSection[] = [
+  "markov",
+  "placeShapes",
+  "genericPlaceNames",
+  "explorationPlaceShapes",
+  "empireExpansionPlaceShapes",
+  "nameAgeing",
+];
 
 /** The two built-in shape generators: same shapes, different wording of the generic. */
 const SHAPE_SECTION_WORDING: Partial<Record<NameForgeSection, "meaning" | "plain">> = {
@@ -68,23 +115,44 @@ const SHAPE_SECTION_WORDING: Partial<Record<NameForgeSection, "meaning" | "plain
   genericPlaceNames: "plain",
 };
 
+/** The colonial shape generators (colonialShapes.ts): part 2 and part 2a. */
+const COLONIAL_SECTION_PART: Partial<Record<NameForgeSection, ColonialPart>> = {
+  explorationPlaceShapes: "2",
+  empireExpansionPlaceShapes: "2a",
+};
+
+const partNote = (parts: ColonialPart[]) =>
+  parts.length === 2 ? "parts 2 and 2a" : `part ${parts[0]} only`;
+
 // Section names are deliberately lowercase, matching titleForge's section-switcher menu.
 const SECTION_LABELS: Record<NameForgeSection, string> = {
   markov: "markov generator",
   placeShapes: "place name shapes",
   genericPlaceNames: "generic place name generator",
   explorationPlaceShapes: "exploration place name shapes",
+  empireExpansionPlaceShapes: "empire expansion place name shapes",
+  nameAgeing: "name ageing",
 };
 
-// The exploration section keeps the binder glyph until it gets its own.
+// Each section's icon, shown on the section trigger and in the switcher menu.
 const SECTION_ICONS: Record<NameForgeSection, string> = {
   markov: ICON_PACKS,
   placeShapes: ICON_PLACE_SHAPES,
   genericPlaceNames: ICON_GENERIC_PLACE_NAMES,
-  explorationPlaceShapes: ICON_PACKS,
+  explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
+  empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
+  nameAgeing: ICON_NAME_AGEING,
 };
 
+/** Shown in the pack box on the first open of each Obsidian session; the arrow points at the
+ * section trigger. */
+const SESSION_HINT = "← click here for specialist packs, or here for your name packs";
+let sessionHintShown = false;
+
 function packTypeIconId(packType: NamePackType, subGenerator?: "breakdown" | "list"): string {
+  if (packType === "recipePack") {
+    return "scroll-text";
+  }
   if (packType === "compoundPack") {
     return subGenerator === "list" ? ICON_COMPOUND_LIST_PACK : ICON_COMPOUND_BREAKDOWN_PACK;
   }
@@ -178,6 +246,14 @@ export interface GenerationHistoryEntry {
   count?: number;
 }
 
+/** One name-ageing run, kept in its own history (never in generation history). */
+export interface AgeingHistoryEntry {
+  timestamp: string;
+  seed: number;
+  /** e.g. "Londinium → Old English (depth 3, count 5)". */
+  label: string;
+}
+
 export interface NameForgeSettings {
   namesFilePath?: string;
   packName?: string;
@@ -185,6 +261,7 @@ export interface NameForgeSettings {
   faithfulness?: number;
   strictness?: number;
   previousGenerations?: GenerationHistoryEntry[];
+  ageingHistory?: AgeingHistoryEntry[];
 }
 
 interface NameForgePluginLike {
@@ -220,7 +297,26 @@ export class NameForgeModal extends Modal {
   private isRegionMenuOpen = false;
   /** Region code, or undefined for All Britain. Session only — never persisted. */
   private selectedRegion: string | undefined = undefined;
+  /** Colonial tradition and context per part; undefined = General / None. Session only. */
+  private selectedTradition: Record<ColonialPart, string | undefined> = { "2": undefined, "2a": undefined };
+  private selectedContext: Record<ColonialPart, string | undefined> = { "2": undefined, "2a": undefined };
+  private contextRowEl: HTMLElement | null = null;
+  private quantityToggleEl: HTMLElement | null = null;
+  private generateButtonEl: HTMLButtonElement | null = null;
+  /** Name ageing controls and state. Session only. */
+  private ageingControlsEl: HTMLElement | null = null;
+  private ageingSourceInput: HTMLInputElement | null = null;
+  private ageingDepth: number = AGEING.depth.default;
+  private ageingCount: number = AGEING.count.default;
+  private ageingFormat: AgeingInsertFormat = DEFAULT_AGEING_INSERT_FORMAT;
+  private ageingTargetPath: string | undefined = undefined;
+  private ageingPacks: { path: string; label: string; reason?: string }[] = [];
+  private guideButton: HTMLButtonElement | null = null;
   private quantityButtons: HTMLButtonElement[] = [];
+  private createPacksButton: HTMLButtonElement | null = null;
+  /** True while the once-per-session hint covers the pack box label. */
+  private showSessionHint = false;
+  private packTrigger: { path: string; type: NamePackType; sub?: "breakdown" | "list" } | null = null;
   private clearResultsSelection: () => void = () => {};
   private currentNamesText = "";
   public currentPackType: NamePackType = "breakdownPack";
@@ -228,6 +324,17 @@ export class NameForgeModal extends Modal {
   private currentCompoundGenerator: "breakdown" | "list" = "breakdown";
   private currentCompoundJoining: "joined" | "spaced" = "joined";
   private currentMixSources: MixSourceRef[] = [];
+  /** §10: the loaded pack's sections (List/Breakdown), section options, and the chosen section. */
+  private currentSectioned: SectionedNames | undefined = undefined;
+  private sectionChoices: { label: string; request: SectionRequest }[] = [];
+  private currentSectionRequest: SectionRequest | undefined = undefined;
+  private sectionSelectEl: HTMLSelectElement | null = null;
+  /** §7: set when the loaded pack's template couldn't be applied. */
+  private currentTemplateError: string | undefined = undefined;
+  /** Recipe packs: the loaded recipe, the session's etymology toggle, and the edit button. */
+  private currentRecipePath: string | undefined = undefined;
+  private recipeEtymology: boolean | undefined = undefined;
+  private editRecipeButton: HTMLButtonElement | null = null;
   private generationCount = 25;
   private currentSeed: number | null = null;
   private seedLocked = false;
@@ -304,8 +411,14 @@ export class NameForgeModal extends Modal {
 
     this.packDropdownMenuEl = this.packDropdownEl.createDiv({ cls: "nameforge-modal__pack-dropdown-menu" });
     this.packDropdownMenuEl.hide();
+    if (!sessionHintShown) {
+      sessionHintShown = true;
+      this.showSessionHint = true;
+      this.renderPackTrigger();
+    }
 
-    // The shape sections' region picker — the pack dropdown's own box and menu.
+    // The shape sections' option picker — regions for part 1, traditions for the colonial
+    // sections — built from the pack dropdown's own box and menu.
     this.regionDropdownEl = createPacksRow.createDiv({ cls: "nameforge-modal__pack-dropdown" });
     this.regionTriggerEl = this.regionDropdownEl.createEl("button", {
       cls: "nameforge-modal__pack-dropdown-trigger",
@@ -333,21 +446,57 @@ export class NameForgeModal extends Modal {
 
     activeDocument.addEventListener("click", this.handlePackDropdownOutsideClick);
     if (!this.panelMode) {
-      const createPacksButton = createPacksRow.createEl("button", {
+      const createPacksButton = (this.createPacksButton = createPacksRow.createEl("button", {
         cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
         attr: { type: "button", title: "Create name packs" },
-      });
+      }));
       setIcon(createPacksButton, ICON_CREATE_PACKS);
       createPacksButton.addEventListener("click", () => {
         new NameForgeEditorModal(this.app, this, "", "").open();
       });
     }
+    // Recipe packs: edit the loaded recipe.
+    this.editRecipeButton = createPacksRow.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Edit recipe" },
+    });
+    setIcon(this.editRecipeButton, "pencil");
+    this.editRecipeButton.addEventListener("click", () => void this.openRecipeEditor(this.currentRecipePath));
+    this.editRecipeButton.hide();
+
+    // The colonial sections' tradition guide, in the slot the create-pack button keeps.
+    this.guideButton = createPacksRow.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Tradition guide" },
+    });
+    setIcon(this.guideButton, "book-open");
+    this.guideButton.addEventListener("click", () => {
+      const part = COLONIAL_SECTION_PART[this.activeSection];
+      if (!part) return;
+      new TraditionGuideModal(this.app, part, (id) => {
+        this.selectedTradition[part] = id;
+        this.updateRegionLabel();
+      }).open();
+    });
+    this.guideButton.hide();
 
     // A plain flow block under the pack row, not a floating overlay — same as titleForge's.
     this.sectionMenuEl = optionsList.createDiv({ cls: "nameforge-modal__section-menu" });
     this.sectionMenuEl.hide();
 
+    // §10: the pack's sections, for List, Breakdown and Mix packs that have them.
+    this.sectionSelectEl = optionsList.createEl("select", {
+      cls: "dropdown nameforge-modal__pack-section-select",
+      attr: { "aria-label": "Section", title: "Section" },
+    });
+    this.sectionSelectEl.addEventListener("change", () => {
+      const i = Number(this.sectionSelectEl?.value ?? -1);
+      this.currentSectionRequest = i >= 0 ? this.sectionChoices[i]?.request : undefined;
+    });
+    this.sectionSelectEl.hide();
+
     const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
+    this.quantityToggleEl = quantityToggle;
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
       const button = quantityToggle.createEl("button", {
         cls: "nameforge-modal__toggle-button" + (value === this.generationCount ? " is-active" : ""),
@@ -361,7 +510,14 @@ export class NameForgeModal extends Modal {
       return button;
     });
 
+    // Colonial context (frontier type or accommodation level), filled per section.
+    this.contextRowEl = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__context-toggle" });
+    this.contextRowEl.hide();
+
+    this.buildAgeingControls(optionsList);
+
     const generateButton = this.createIconButton(optionsList, ICON_DICE, "Generate names");
+    this.generateButtonEl = generateButton;
     generateButton.addClass("nameforge-modal__generate-button");
     generateButton.addEventListener("click", () => {
       void this.generateSelectedCount();
@@ -425,15 +581,42 @@ export class NameForgeModal extends Modal {
   /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
    * dropdown on the shape sections, the placeholder box otherwise. Everything else is left as it is. */
   private switchSection(section: NameForgeSection) {
+    // Prefill: leaving the markov generator with exactly one result selected carries it over.
+    if (section === "nameAgeing" && this.activeSection === "markov") {
+      const selected = this.resultsEl?.querySelectorAll("li.is-selected") ?? [];
+      if (selected.length === 1 && this.ageingSourceInput) {
+        this.ageingSourceInput.value = selected[0].textContent ?? "";
+      }
+    }
     this.setSectionMenuOpen(false);
     this.setRegionMenuOpen(false);
     this.activeSection = section;
     this.packDropdownEl?.toggle(section === "markov");
-    this.regionDropdownEl?.toggle(SHAPE_SECTION_WORDING[section] !== undefined);
+    this.sectionSelectEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
+    this.editRecipeButton?.toggle(section === "markov" && this.currentPackType === "recipePack");
+    // Pack creation belongs to the markov generator; elsewhere the button keeps its space so the
+    // box beside the trigger stays the same size.
+    const colonialPart = COLONIAL_SECTION_PART[section];
+    this.createPacksButton?.toggleClass("is-placeholder", section !== "markov");
+    // In the colonial sections the guide button takes the create button's slot instead.
+    this.createPacksButton?.toggle(!colonialPart);
+    this.guideButton?.toggle(!!colonialPart);
+    this.clearSessionHint();
+    this.regionDropdownEl?.toggle(SHAPE_SECTION_WORDING[section] !== undefined || !!colonialPart || section === "nameAgeing");
+    this.updateRegionLabel();
+    this.renderContextRow();
+    const ageing = section === "nameAgeing";
+    this.quantityToggleEl?.toggle(!ageing);
+    this.ageingControlsEl?.toggle(ageing);
+    this.generateButtonEl?.setAttribute("title", ageing ? "Age" : "Generate names");
+    this.generateButtonEl?.setAttribute("aria-label", ageing ? "Age" : "Generate names");
+    if (ageing) void this.enterAgeingSection();
     // The trigger wears the active section's icon, as titleForge's leading icon does.
     if (this.sectionTriggerEl) setIcon(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} — no packs yet`;
-    this.sectionStubEl?.toggle(section === "explorationPlaceShapes");
+    this.sectionStubEl?.toggle(
+      section !== "markov" && SHAPE_SECTION_WORDING[section] === undefined && !colonialPart && section !== "nameAgeing",
+    );
   }
 
   private setRegionMenuOpen(open: boolean) {
@@ -446,11 +629,61 @@ export class NameForgeModal extends Modal {
     this.regionTriggerEl?.setAttribute("aria-expanded", String(open));
   }
 
-  /** All Britain first, then the regions in reference order; historic counties as tooltips. */
+  /** Part 1 sections: All Britain, then the regions, with historic counties as tooltips.
+   * Colonial sections: General, then every tradition; ones not in this part are greyed out. */
   private renderRegionMenu() {
     const menu = this.regionMenuEl;
     if (!menu) return;
     menu.empty();
+    if (this.activeSection === "nameAgeing") {
+      if (this.ageingPacks.length === 0) {
+        menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
+      }
+      for (const pack of this.ageingPacks) {
+        const item = menu.createEl("button", {
+          cls:
+            "nameforge-modal__pack-dropdown-item" +
+            (pack.path === this.ageingTargetPath ? " is-active" : "") +
+            (pack.reason ? " is-unavailable" : ""),
+          attr: { type: "button", "aria-disabled": String(!!pack.reason), ...(pack.reason ? { title: pack.reason } : {}) },
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: pack.label });
+        if (pack.reason) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: pack.reason });
+        item.addEventListener("click", () => {
+          if (pack.reason) {
+            new Notice(`nameForge: ${pack.label} can't be a target — ${pack.reason}.`);
+            return;
+          }
+          this.ageingTargetPath = pack.path;
+          this.updateRegionLabel();
+          this.setRegionMenuOpen(false);
+        });
+      }
+      return;
+    }
+    const part = COLONIAL_SECTION_PART[this.activeSection];
+    if (part) {
+      for (const tradition of COLONIAL_TRADITIONS) {
+        const id = tradition.id === "general" ? undefined : tradition.id;
+        const available = isTraditionAvailable(tradition.id, part);
+        const item = menu.createEl("button", {
+          cls:
+            "nameforge-modal__pack-dropdown-item" +
+            (id === this.selectedTradition[part] ? " is-active" : "") +
+            (available ? "" : " is-unavailable"),
+          attr: { type: "button", title: tradition.guide, "aria-disabled": String(!available) },
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: tradition.label });
+        if (!available) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: partNote(tradition.parts) });
+        item.addEventListener("click", () => {
+          if (!available) return;
+          this.selectedTradition[part] = id;
+          this.updateRegionLabel();
+          this.setRegionMenuOpen(false);
+        });
+      }
+      return;
+    }
     const options: { code: string | undefined; label: string; counties?: string }[] = [
       { code: undefined, label: "All Britain" },
       ...PLACE_SHAPE_REGIONS,
@@ -470,9 +703,286 @@ export class NameForgeModal extends Modal {
   }
 
   private updateRegionLabel() {
+    if (this.activeSection === "nameAgeing") {
+      const pack = this.ageingPacks.find((p) => p.path === this.ageingTargetPath);
+      if (this.regionLabelEl) this.regionLabelEl.textContent = pack ? pack.label : "choose a target pack";
+      this.regionTriggerEl?.setAttribute("title", "Target pack: the language the name ages towards");
+      return;
+    }
+    const part = COLONIAL_SECTION_PART[this.activeSection];
+    if (part) {
+      const tradition = COLONIAL_TRADITIONS.find((t) => t.id === (this.selectedTradition[part] ?? "general"))!;
+      if (this.regionLabelEl) this.regionLabelEl.textContent = tradition.label;
+      this.regionTriggerEl?.setAttribute("title", tradition.guide);
+      return;
+    }
     const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.selectedRegion);
     if (this.regionLabelEl) this.regionLabelEl.textContent = region?.label ?? "All Britain";
     this.regionTriggerEl?.setAttribute("title", region?.counties ?? "No regional weighting");
+  }
+
+  /** The context toggle row: None plus the part's frontier types or accommodation levels. */
+  private renderContextRow() {
+    const row = this.contextRowEl;
+    if (!row) return;
+    const part = COLONIAL_SECTION_PART[this.activeSection];
+    row.empty();
+    row.toggle(!!part);
+    if (!part) return;
+    const options = [{ id: undefined as string | undefined, label: "none" }, ...colonialContexts(part)];
+    for (const option of options) {
+      const active = option.id === this.selectedContext[part];
+      const button = row.createEl("button", {
+        cls: "nameforge-modal__toggle-button" + (active ? " is-active" : ""),
+        text: CONTEXT_SHORT_LABELS[option.id ?? "none"] ?? option.label.toLowerCase(),
+        attr: { type: "button", title: option.label, "aria-pressed": String(active) },
+      });
+      button.addEventListener("click", () => {
+        this.selectedContext[part] = option.id;
+        this.renderContextRow();
+      });
+    }
+  }
+
+  /** Source field with the depth buttons (new 1, moderate 3, ancient 5) beside it, then the count row. */
+  private buildAgeingControls(container: HTMLElement) {
+    const controls = (this.ageingControlsEl = container.createDiv({ cls: "nameforge-modal__ageing-controls" }));
+    // The source field and the depth buttons share one row.
+    const sourceRow = controls.createDiv({ cls: "nameforge-modal__ageing-source-row" });
+    this.ageingSourceInput = sourceRow.createEl("input", {
+      cls: "nameforge-modal__ageing-source",
+      attr: { type: "text", placeholder: "Old name, e.g. Londinium", "aria-label": "Source name", spellcheck: "false" },
+    });
+
+    // Three depths only: 1, 3 and 5 eras.
+    const depthRow = sourceRow.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__ageing-toggle" });
+    const depthOptions: [number, string][] = [
+      [1, "new"],
+      [3, "moderate"],
+      [5, "ancient"],
+    ];
+    const depthButtons = depthOptions.map(([d, label]) => {
+      const button = depthRow.createEl("button", {
+        cls: "nameforge-modal__toggle-button",
+        text: label,
+        attr: { type: "button", title: `${d} era${d === 1 ? "" : "s"}` },
+      });
+      button.addEventListener("click", () => {
+        this.ageingDepth = d;
+        sync();
+      });
+      return button;
+    });
+
+    const countRow = controls.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__ageing-toggle" });
+    const countButtons = AGEING.count.options.map((c) => {
+      const button = countRow.createEl("button", {
+        cls: "nameforge-modal__toggle-button",
+        text: String(c),
+        attr: { type: "button", title: `${c} candidates` },
+      });
+      button.addEventListener("click", () => {
+        this.ageingCount = c;
+        sync();
+      });
+      return button;
+    });
+
+    const sync = () => {
+      depthButtons.forEach((b, i) => {
+        const on = depthOptions[i][0] === this.ageingDepth;
+        b.toggleClass("is-active", on);
+        b.setAttribute("aria-pressed", String(on));
+      });
+      countButtons.forEach((b, i) => {
+        const on = AGEING.count.options[i] === this.ageingCount;
+        b.toggleClass("is-active", on);
+        b.setAttribute("aria-pressed", String(on));
+      });
+    };
+    sync();
+    controls.hide();
+  }
+
+  /** Lists the folder's packs for the target dropdown, marking ineligible ones with a reason. */
+  private async enterAgeingSection() {
+    const index = await this.scanFolderPacks();
+    this.ageingPacks = index
+      .filter((entry) => !entry.parsed.template)
+      .map((entry) => {
+        const label = entry.parsed.packName || entry.path.split("/").pop()?.replace(/\.md$/i, "") || entry.path;
+        let reason: string | undefined;
+        if (entry.templateError) {
+          reason = entry.templateError.replace(/\.$/, "");
+        } else if (entry.parsed.packType === "compoundPack") {
+          reason = "compound packs hold name parts, not whole names";
+        } else {
+          const names = this.ageingTargetNames(entry, index);
+          if (typeof names === "string") reason = names;
+          else if (new Set(names.names.map((n) => n.toLowerCase())).size < AGEING.minTargetNames) {
+            reason = `fewer than ${AGEING.minTargetNames} names`;
+          }
+        }
+        return { path: entry.path, label, reason };
+      })
+      .sort((a, b) => a.label.localeCompare(b.label));
+    if (this.ageingTargetPath && !this.ageingPacks.some((p) => p.path === this.ageingTargetPath && !p.reason)) {
+      this.ageingTargetPath = undefined;
+    }
+    this.updateRegionLabel();
+  }
+
+  /**
+   * The names a target pack contributes, built as the Generate view builds that pack: the pack's
+   * names for Breakdown, List and Place; the weighted blend for Mix. Returns a reason on failure.
+   */
+  private ageingTargetNames(
+    entry: MixPackIndexEntry,
+    index: MixPackIndexEntry[],
+  ): { names: string[]; corpus: string[]; endings: string[] } | string {
+    const { parsed } = entry;
+    if (parsed.packType === "mixPack") {
+      const resolved = resolveMixSources(normalizePath(entry.path), parsed, index);
+      if (resolved.error) return resolved.error;
+      const distinct = [...new Set(resolved.sources.flatMap((source) => source.names))];
+      return { names: distinct, corpus: buildWeightedCorpus(resolved.sources), endings: [] };
+    }
+    const names = extractNamesFromMarkdown(parsed.names.join("\n"));
+    const endings =
+      parsed.packType === "placePack" ? PlaceNameModel.build(names).endings.map((e) => e.suffix).filter((x) => x) : [];
+    return { names, corpus: names, endings };
+  }
+
+  private async runAgeing() {
+    const source = this.ageingSourceInput?.value.trim() ?? "";
+    const problem = validateSource(source);
+    if (problem) {
+      new Notice(`nameForge: ${problem}`);
+      return;
+    }
+    if (!this.ageingTargetPath) {
+      new Notice("nameForge: choose a target pack to age the name towards.");
+      return;
+    }
+    const index = await this.scanFolderPacks();
+    const entry = index.find((e) => e.path === this.ageingTargetPath);
+    const target = entry ? this.ageingTargetNames(entry, index) : "the target pack was not found";
+    if (typeof target === "string") {
+      new Notice(`nameForge: ${target}.`);
+      return;
+    }
+    if (new Set(target.names.map((n) => n.toLowerCase())).size < AGEING.minTargetNames) {
+      new Notice(`nameForge: the target pack needs at least ${AGEING.minTargetNames} names.`);
+      return;
+    }
+
+    const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+    const seed = resolveSeed(seedOverride);
+    const faithfulness = this.plugin.settings.faithfulness ?? 2;
+    const result = ageName({
+      source,
+      targetNames: target.corpus,
+      extraEndings: target.endings,
+      buildScorer: (names) => {
+        const model = MarkovModel.build(names);
+        return (word) => model.scoreWord(word, faithfulness);
+      },
+      depth: this.ageingDepth,
+      count: this.ageingCount,
+      rng: mulberry32(seed),
+    });
+
+    this.currentSeed = seed;
+    this.renderAgeingResults(result.candidates);
+    const packLabel = this.ageingPacks.find((p) => p.path === this.ageingTargetPath)?.label ?? "target pack";
+    await this.recordAgeingHistory(`${source} → ${packLabel} (depth ${this.ageingDepth}, count ${this.ageingCount})`);
+    this.setStatus(result.notice ?? "");
+  }
+
+  private async recordAgeingHistory(label: string) {
+    if (this.currentSeed === null) return;
+    const entry: AgeingHistoryEntry = { timestamp: formatHistoryTimestamp(new Date()), seed: this.currentSeed, label };
+    this.plugin.settings.ageingHistory = [entry, ...(this.plugin.settings.ageingHistory ?? [])].slice(0, MAX_HISTORY_ENTRIES);
+    await this.plugin.saveSettings();
+  }
+
+  /** Ageing results: final name with its trail beneath, selectable and insertable like Generate's. */
+  private renderAgeingResults(candidates: AgeingCandidate[]) {
+    if (!this.resultsEl) return;
+    this.resultsEl.empty();
+    const list = this.resultsEl.createEl("ul", { cls: "nameforge-modal__results-list nameforge-modal__ageing-results" });
+    const actions = this.resultsEl.createDiv({ cls: "nameforge-modal__results-actions" });
+    this.buildSeedControls(actions.createDiv({ cls: "nameforge-modal__seed-group" }));
+
+    const buttonsGroup = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
+    const formatSelect = buttonsGroup.createEl("select", {
+      cls: "dropdown nameforge-modal__ageing-format",
+      attr: { "aria-label": "Insert as", title: "Insert as" },
+    });
+    for (const f of AGEING_INSERT_FORMATS) {
+      const option = formatSelect.createEl("option", { text: f.label, value: f.id });
+      option.selected = f.id === this.ageingFormat;
+    }
+    formatSelect.addEventListener("change", () => {
+      this.ageingFormat = formatSelect.value as AgeingInsertFormat;
+    });
+    const button = (icon: string, title: string) => {
+      const b = buttonsGroup.createEl("button", {
+        cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+        attr: { type: "button", title },
+      });
+      setIcon(b, icon);
+      return b;
+    };
+    const insertButton = button(ICON_TEXT_INSERT, "Insert");
+    const checklistButton = button(ICON_CHECKLIST_INSERT, "Insert checklist");
+    const bulletButton = button(ICON_BULLET_INSERT, "Insert bullet list");
+
+    const selectedTrails = (): string[][] =>
+      Array.from(list.querySelectorAll("li.is-selected")).map((el) => candidates[Number((el as HTMLElement).dataset.index)].trail);
+    const update = () => {
+      const n = selectedTrails().length;
+      insertButton.disabled = n !== 1;
+      checklistButton.disabled = n === 0;
+      bulletButton.disabled = n === 0;
+    };
+    this.clearResultsSelection = () => {
+      list.querySelectorAll("li.is-selected").forEach((el) => el.classList.remove("is-selected"));
+      update();
+    };
+
+    candidates.forEach((c, i) => {
+      const item = list.createEl("li", { attr: { "data-index": String(i) } });
+      item.createDiv({ cls: "nameforge-modal__ageing-name", text: c.name });
+      item.createDiv({ cls: "nameforge-modal__ageing-trail", text: c.trail.join(TRAIL_SEPARATOR) });
+      item.addEventListener("click", () => {
+        item.classList.toggle("is-selected");
+        update();
+      });
+    });
+    if (candidates.length === 0) list.createEl("li", { cls: "nameforge-modal__placeholder", text: "No candidates survived." });
+
+    const formatted = () => selectedTrails().map((t) => formatAgedName(t, this.ageingFormat));
+    insertButton.addEventListener("click", () => {
+      const [text] = formatted();
+      if (text) this.insertPlainText(text);
+    });
+    checklistButton.addEventListener("click", () => {
+      const lines = formatted();
+      if (lines.length > 0) this.insertNamesAsList(lines, "checklist");
+    });
+    bulletButton.addEventListener("click", () => {
+      const lines = formatted();
+      if (lines.length > 0) this.insertNamesAsList(lines, "bullet");
+    });
+
+    if (this.panelMode) {
+      const history = this.resultsEl.createEl("button", { cls: "nameforge-modal__panel-action", attr: { type: "button" } });
+      setIcon(history.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
+      history.createSpan({ cls: "nameforge-modal__panel-action-label", text: "ageing history" });
+      history.addEventListener("click", () => new AgeingHistoryModal(this.app, this).open());
+    }
+    update();
   }
 
   private unmount() {
@@ -498,6 +1008,15 @@ export class NameForgeModal extends Modal {
     this.regionMenuEl = null;
     this.isRegionMenuOpen = false;
     this.quantityButtons = [];
+    this.createPacksButton = null;
+    this.sectionSelectEl = null;
+    this.editRecipeButton = null;
+    this.guideButton = null;
+    this.contextRowEl = null;
+    this.quantityToggleEl = null;
+    this.generateButtonEl = null;
+    this.ageingControlsEl = null;
+    this.ageingSourceInput = null;
     this.seedInputEl = null;
     this.seedLockButton = null;
   }
@@ -540,12 +1059,29 @@ export class NameForgeModal extends Modal {
   }
 
   private updatePackDropdownTrigger(packPath: string, packType: NamePackType, subGenerator?: "breakdown" | "list") {
-    if (this.packDropdownIconEl) {
-      setIcon(this.packDropdownIconEl, packTypeIconId(packType, subGenerator));
+    this.packTrigger = { path: packPath, type: packType, sub: subGenerator };
+    this.renderPackTrigger();
+  }
+
+  /** The pack box label: the session hint while it is showing, otherwise the loaded pack. */
+  private renderPackTrigger() {
+    this.packDropdownIconEl?.toggle(!this.showSessionHint);
+    if (this.showSessionHint) {
+      if (this.packDropdownLabelEl) this.packDropdownLabelEl.textContent = SESSION_HINT;
+      return;
     }
+    const pack = this.packTrigger;
+    if (!pack) return;
+    if (this.packDropdownIconEl) setIcon(this.packDropdownIconEl, packTypeIconId(pack.type, pack.sub));
     if (this.packDropdownLabelEl) {
-      this.packDropdownLabelEl.textContent = packPath.split("/").pop()?.replace(/\.md$/i, "") || packPath;
+      this.packDropdownLabelEl.textContent = pack.path.split("/").pop()?.replace(/\.md$/i, "") || pack.path;
     }
+  }
+
+  private clearSessionHint() {
+    if (!this.showSessionHint) return;
+    this.showSessionHint = false;
+    this.renderPackTrigger();
   }
 
   private renderPackDropdownMenu(packs: { path: string; packType: NamePackType; compoundGenerator?: "breakdown" | "list" }[]) {
@@ -576,6 +1112,7 @@ export class NameForgeModal extends Modal {
       item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
       item.addEventListener("click", () => {
         this.closePackDropdown();
+        this.clearSessionHint();
         void this.loadPack(path);
       });
     });
@@ -634,7 +1171,7 @@ export class NameForgeModal extends Modal {
     });
   }
 
-  public async saveToConfiguredFile(namesText: string) {
+  public async saveToConfiguredFile(namesText: string, templateOf?: string) {
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
@@ -642,10 +1179,15 @@ export class NameForgeModal extends Modal {
     }
 
     const names = extractNamesFromMarkdown(namesText);
-    if (names.length === 0) {
+    if (names.length === 0 && !templateOf) {
       this.setStatus("No names to save. Enter at least one name.");
       return;
     }
+    // §10: List and Breakdown packs keep their ## sections; packs without headings save as before.
+    const sectioned =
+      this.currentPackType === "listPack" || this.currentPackType === "breakdownPack"
+        ? parseNameSections(namesText) ?? undefined
+        : undefined;
 
     const normalizedFilePath = normalizePath(filePath);
     const folderPath = normalizedFilePath.includes("/")
@@ -656,10 +1198,22 @@ export class NameForgeModal extends Modal {
       return;
     }
 
-    const content = createNamesFileContent(this.plugin.settings.packName || "nameForge", names, this.currentPackType);
+    const packType = this.currentPackType;
+    if (packType === "recipePack") {
+      this.setStatus("Recipes are saved from the recipe editor.");
+      return;
+    }
+    const content = createNamesFileContent(this.plugin.settings.packName || "nameForge", names, packType, {
+      templateOf,
+      sectioned,
+    });
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
       if (existingFile instanceof TFile) {
+        if (await this.isTemplateFile(existingFile)) {
+          this.setStatus("A template already has that name. Choose another pack name.");
+          return;
+        }
         await this.app.vault.modify(existingFile, content);
       } else {
         await this.app.vault.create(normalizedFilePath, content);
@@ -675,7 +1229,8 @@ export class NameForgeModal extends Modal {
   public async saveCompoundToConfiguredFile(
     parts: string[][],
     generator: "breakdown" | "list",
-    joining: "joined" | "spaced"
+    joining: "joined" | "spaced",
+    templateOf?: string,
   ) {
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
@@ -683,7 +1238,7 @@ export class NameForgeModal extends Modal {
       return;
     }
 
-    if (parts.some((part) => part.length === 0)) {
+    if (!templateOf && parts.some((part) => part.length === 0)) {
       this.setStatus("No names to save. Enter at least one name for each part.");
       return;
     }
@@ -697,10 +1252,14 @@ export class NameForgeModal extends Modal {
       return;
     }
 
-    const content = createCompoundNamesFileContent(this.plugin.settings.packName || "nameForge", parts, generator, joining);
+    const content = createCompoundNamesFileContent(this.plugin.settings.packName || "nameForge", parts, generator, joining, templateOf);
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
       if (existingFile instanceof TFile) {
+        if (await this.isTemplateFile(existingFile)) {
+          this.setStatus("A template already has that name. Choose another pack name.");
+          return;
+        }
         await this.app.vault.modify(existingFile, content);
       } else {
         await this.app.vault.create(normalizedFilePath, content);
@@ -715,14 +1274,14 @@ export class NameForgeModal extends Modal {
     this.setStatus("");
   }
 
-  public async saveMixToConfiguredFile(sources: MixSourceRef[]) {
+  public async saveMixToConfiguredFile(sources: MixSourceRef[], templateOf?: string) {
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
       return;
     }
 
-    if (sources.length < 2) {
+    if (!templateOf && sources.length < 2) {
       this.setStatus("A mix pack needs at least two source packs.");
       return;
     }
@@ -736,10 +1295,14 @@ export class NameForgeModal extends Modal {
       return;
     }
 
-    const content = createMixNamesFileContent(this.plugin.settings.packName || "nameForge", sources);
+    const content = createMixNamesFileContent(this.plugin.settings.packName || "nameForge", sources, templateOf);
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
       if (existingFile instanceof TFile) {
+        if (await this.isTemplateFile(existingFile)) {
+          this.setStatus("A template already has that name. Choose another pack name.");
+          return;
+        }
         await this.app.vault.modify(existingFile, content);
       } else {
         await this.app.vault.create(normalizedFilePath, content);
@@ -786,8 +1349,13 @@ export class NameForgeModal extends Modal {
       }
       try {
         const content = await this.app.vault.cachedRead(child);
+        if (isRecipeContent(content)) {
+          if (!parseRecipeContent(content).recipe.template) packs.push({ path: child.path, packType: "recipePack" });
+          continue;
+        }
         if (isValidNamePackContent(content)) {
           const parsed = parseNamesFileContent(content);
+          if (parsed.template) continue; // §7: templates never appear in the generate view
           packs.push({
             path: child.path,
             packType: parsed.packType,
@@ -840,12 +1408,23 @@ export class NameForgeModal extends Modal {
       return;
     }
 
-    const parsed = parseNamesFileContent(content);
+    if (isRecipeContent(content)) {
+      await this.loadRecipePack(file);
+      return;
+    }
+    this.currentRecipePath = undefined;
+    this.editRecipeButton?.hide();
+
+    const resolved = await this.resolvePackTemplate(packPath, parseNamesFileContent(content));
+    const parsed = resolved.parsed;
+    this.currentTemplateError = resolved.error;
     if (parsed.packName) {
       this.plugin.settings.packName = parsed.packName;
     }
 
     this.currentPackType = parsed.packType;
+    this.currentSectioned = parsed.sectioned;
+    await this.updateSectionChoices(parsed);
     if (parsed.packType === "compoundPack") {
       this.currentCompoundParts = parsed.parts ?? [];
       this.currentCompoundGenerator = parsed.compoundGenerator ?? "breakdown";
@@ -869,7 +1448,222 @@ export class NameForgeModal extends Modal {
       parsed.packType,
       packSubGenerator(parsed.packType, parsed.compoundGenerator)
     );
-    this.setStatus("");
+    this.setStatus(resolved.error ?? "");
+  }
+
+  /**
+   * §7: applies a pack's template. A missing template, a template that itself has a template, or
+   * one of a different pack type stops generation with a message naming the template.
+   */
+  /** §7: saving never overwrites a template (e.g. a derived pack given its template's name). */
+  public async isTemplateFile(file: TFile): Promise<boolean> {
+    try {
+      const frontmatter = (await this.app.vault.cachedRead(file)).match(/^---\s*\n([\s\S]*?)\n---/);
+      return !!frontmatter && !!parseTemplateFields(frontmatter[1]).template;
+    } catch {
+      return false;
+    }
+  }
+
+  public async resolvePackTemplate(path: string, parsed: NamesFileData): Promise<{ parsed: NamesFileData; error?: string }> {
+    if (!parsed.templateOf) return { parsed };
+    const file = this.app.metadataCache.getFirstLinkpathDest(parsed.templateOf, path);
+    let template: NamesFileData | undefined;
+    if (file instanceof TFile) {
+      try {
+        template = parseNamesFileContent(await this.app.vault.cachedRead(file));
+      } catch {
+        template = undefined;
+      }
+    }
+    return applyTemplate(parsed, template);
+  }
+
+  /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
+  private async loadRecipePack(file: TFile) {
+    this.currentPackType = "recipePack";
+    this.currentRecipePath = file.path;
+    this.recipeEtymology = undefined;
+    this.currentNamesText = "";
+    this.currentSectioned = undefined;
+    this.currentTemplateError = undefined;
+    this.sectionChoices = [];
+    this.sectionSelectEl?.hide();
+    this.editRecipeButton?.toggle(this.activeSection === "markov");
+    this.plugin.settings.packName = file.basename;
+    this.plugin.settings.namesFilePath = file.path;
+    this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
+    await this.plugin.saveSettings();
+    this.updatePackDropdownTrigger(file.path, "recipePack");
+    const { problems } = parseRecipeContent(await this.app.vault.cachedRead(file));
+    this.setStatus(problems.join(" "));
+  }
+
+  private async runRecipe() {
+    const file = this.currentRecipePath ? this.app.vault.getFileByPath(this.currentRecipePath) : null;
+    if (!(file instanceof TFile)) {
+      this.setStatus("Recipe not found. Reselect it from the pack list.");
+      return;
+    }
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const loaded = await host.loadRecipe(file);
+    if (loaded.error) {
+      this.setStatus(loaded.error);
+      return;
+    }
+    const slots = await host.resolveSlots(loaded.recipe, file.path);
+    const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+    let result;
+    try {
+      result = generatePlaceNames({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride });
+    } catch (error) {
+      this.setStatus(error instanceof Error ? error.message : "Couldn't generate names from this recipe.");
+      return;
+    }
+    if (this.recipeEtymology === undefined) this.recipeEtymology = loaded.recipe.render.etymology;
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(result.names);
+    await this.recordGenerationHistory(result.names.length);
+    this.setStatus([...loaded.problems, ...result.notices, ...host.getNotices()].join(" "));
+  }
+
+  /** Recipe results: placeholders muted, etymology beneath each name when the toggle is on. */
+  private renderRecipeResults(names: GeneratedName[]) {
+    if (!this.resultsEl) return;
+    this.resultsEl.empty();
+    const list = this.resultsEl.createEl("ul", { cls: "nameforge-modal__results-list nameforge-modal__recipe-results" });
+    list.toggleClass("is-etymology-hidden", !this.recipeEtymology);
+    const actions = this.resultsEl.createDiv({ cls: "nameforge-modal__results-actions" });
+    this.buildSeedControls(actions.createDiv({ cls: "nameforge-modal__seed-group" }));
+    const buttonsGroup = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
+    const button = (icon: string, title: string) => {
+      const b = buttonsGroup.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title } });
+      setIcon(b, icon);
+      return b;
+    };
+    const etymologyButton = button("list-tree", "Etymology");
+    const updateEtymology = () => {
+      etymologyButton.toggleClass("is-active", !!this.recipeEtymology);
+      etymologyButton.setAttribute("aria-pressed", String(!!this.recipeEtymology));
+      list.toggleClass("is-etymology-hidden", !this.recipeEtymology);
+    };
+    etymologyButton.addEventListener("click", () => {
+      this.recipeEtymology = !this.recipeEtymology;
+      updateEtymology();
+    });
+    updateEtymology();
+    const insertButton = button(ICON_TEXT_INSERT, "Insert");
+    const checklistButton = button(ICON_CHECKLIST_INSERT, "Insert checklist");
+    const bulletButton = button(ICON_BULLET_INSERT, "Insert bullet list");
+
+    const selected = (): string[] =>
+      Array.from(list.querySelectorAll("li.is-selected")).map((el) => names[Number((el as HTMLElement).dataset.index)].text);
+    const update = () => {
+      const n = selected().length;
+      insertButton.disabled = n !== 1;
+      checklistButton.disabled = n === 0;
+      bulletButton.disabled = n === 0;
+    };
+    this.clearResultsSelection = () => {
+      list.querySelectorAll("li.is-selected").forEach((el) => el.classList.remove("is-selected"));
+      update();
+    };
+    names.forEach((n, i) => {
+      const item = list.createEl("li", { attr: { "data-index": String(i) } });
+      const nameEl = item.createDiv({ cls: "nameforge-modal__recipe-name" });
+      // Placeholders are shown muted (§8).
+      for (const part of n.text.split(/(\[[^\]]+\])/)) {
+        if (!part) continue;
+        if (part.startsWith("[")) nameEl.createSpan({ cls: "nameforge-modal__placeholder-part", text: part });
+        else nameEl.appendText(part);
+      }
+      item.createDiv({ cls: "nameforge-modal__recipe-etymology", text: n.etymology });
+      item.addEventListener("click", () => {
+        item.classList.toggle("is-selected");
+        update();
+      });
+    });
+    if (names.length === 0) list.createEl("li", { cls: "nameforge-modal__placeholder", text: "No names generated." });
+    insertButton.addEventListener("click", () => {
+      const [text] = selected();
+      if (text) this.insertPlainText(text);
+    });
+    checklistButton.addEventListener("click", () => {
+      const lines = selected();
+      if (lines.length > 0) this.insertNamesAsList(lines, "checklist");
+    });
+    bulletButton.addEventListener("click", () => {
+      const lines = selected();
+      if (lines.length > 0) this.insertNamesAsList(lines, "bullet");
+    });
+    if (this.panelMode) {
+      const history = this.resultsEl.createEl("button", { cls: "nameforge-modal__panel-action", attr: { type: "button" } });
+      setIcon(history.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
+      history.createSpan({ cls: "nameforge-modal__panel-action-label", text: "previous generations" });
+      history.addEventListener("click", () => new PreviousGenerationsModal(this.app, this).open());
+    }
+    update();
+  }
+
+  /** Opens the recipe editor for a new recipe, or for the recipe at `path`. */
+  public async openRecipeEditor(path?: string) {
+    const folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
+    const folder = this.app.vault.getFolderByPath(normalizePath(folderPath));
+    const packs: string[] = [];
+    const lists: string[] = [];
+    const templates: { name: string; description: string }[] = [];
+    for (const child of folder?.children ?? []) {
+      if (!(child instanceof TFile) || child.extension !== "md") continue;
+      const content = await this.app.vault.cachedRead(child);
+      if (isRecipeContent(content)) {
+        const parsed = parseRecipeContent(content);
+        if (parsed.recipe.template) templates.push({ name: child.basename, description: parsed.body.trim().split("\n")[0] || "No description" });
+      } else if (isWordListContent(content)) {
+        lists.push(child.basename);
+      } else if (isValidNamePackContent(content) && !parseNamesFileContent(content).template) {
+        packs.push(child.basename);
+      }
+    }
+    const file = path ? this.app.vault.getFileByPath(path) : null;
+    new RecipeEditorModal(this.app, {
+      folderPath,
+      file: file instanceof TFile ? file : undefined,
+      packs: packs.sort(),
+      lists: lists.sort(),
+      templates: templates.sort((a, b) => a.name.localeCompare(b.name)),
+      onSaved: (saved) => {
+        this.plugin.settings.namesFilePath = saved;
+        void this.refreshPackDropdown().then(() => this.loadPack(saved));
+      },
+    }).open();
+  }
+
+  /** Fills the Section selector for List and Breakdown packs with sections, and Mix packs whose sources have them. */
+  private async updateSectionChoices(parsed: NamesFileData) {
+    let choices: { label: string; request: SectionRequest }[] = [];
+    if (parsed.sectioned) {
+      choices = sectionOptions(parsed.sectioned);
+    } else if (parsed.packType === "mixPack") {
+      const index = await this.scanFolderPacks();
+      const seen = new Set<string>();
+      for (const ref of parsed.mixSources ?? []) {
+        const source = findPackInIndex(index, ref.packName);
+        for (const option of source?.parsed.sectioned ? sectionOptions(source.parsed.sectioned) : []) {
+          if (seen.has(option.label.toLowerCase())) continue;
+          seen.add(option.label.toLowerCase());
+          choices.push(option);
+        }
+      }
+    }
+    this.sectionChoices = choices;
+    this.currentSectionRequest = undefined;
+    const select = this.sectionSelectEl;
+    if (!select) return;
+    select.empty();
+    select.createEl("option", { text: "whole pack", value: "-1" });
+    choices.forEach((c, i) => select.createEl("option", { text: c.label, value: String(i) }));
+    select.value = "-1";
+    select.toggle(this.activeSection === "markov" && choices.length > 0);
   }
 
   private async generateSelectedCount() {
@@ -888,9 +1682,42 @@ export class NameForgeModal extends Modal {
       this.setStatus("");
       return;
     }
+    if (this.activeSection === "nameAgeing") {
+      await this.runAgeing();
+      return;
+    }
+    const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
+    if (colonialPart) {
+      const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+      const tradition = this.selectedTradition[colonialPart];
+      const context = this.selectedContext[colonialPart];
+      const result = generateColonialShapesDetailed({
+        count: this.generationCount,
+        seed: seedOverride,
+        part: colonialPart,
+        tradition,
+        context,
+      });
+      this.currentSeed = result.seed;
+      this.renderResults(result.names);
+      await this.recordGenerationHistory(
+        result.names.length,
+        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context),
+      );
+      this.setStatus("");
+      return;
+    }
     if (this.activeSection !== "markov") {
       // Placeholder sections have no packs yet — leave the current results untouched.
       this.setStatus(`${SECTION_LABELS[this.activeSection]} has no packs yet.`);
+      return;
+    }
+    if (this.currentPackType === "recipePack") {
+      await this.runRecipe();
+      return;
+    }
+    if (this.currentTemplateError) {
+      this.setStatus(this.currentTemplateError);
       return;
     }
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
@@ -935,7 +1762,12 @@ export class NameForgeModal extends Modal {
       }
 
       const mixData = mixEntry.parsed;
-      const resolved = resolveMixSources(normalizePath(mixPath), mixData, index);
+      if (mixEntry.templateError) {
+        this.renderResults([], mixEntry.templateError);
+        this.setStatus(mixEntry.templateError);
+        return;
+      }
+      const resolved = resolveMixSources(normalizePath(mixPath), mixData, index, undefined, this.currentSectionRequest);
 
       if (resolved.error) {
         this.renderResults([], resolved.error);
@@ -963,8 +1795,20 @@ export class NameForgeModal extends Modal {
       return;
     }
 
+    // §10: a chosen section narrows the names; Breakdown sections under 20 names fall back.
+    let namesText = this.currentNamesText;
+    let sectionNotices: string[] = [];
+    if (this.currentSectionRequest && this.currentSectioned) {
+      const selection = selectSectionNames(
+        this.currentSectioned,
+        this.currentSectionRequest,
+        this.currentPackType === "breakdownPack" ? 20 : 0,
+      );
+      namesText = selection.names.join("\n");
+      sectionNotices = selection.notices;
+    }
     const result = generateNamesFromSource(
-      this.currentNamesText,
+      namesText,
       this.currentPackType,
       this.generationCount,
       this.plugin.settings,
@@ -980,7 +1824,7 @@ export class NameForgeModal extends Modal {
     this.currentSeed = result.seed;
     this.renderResults(result.names);
     await this.recordGenerationHistory(result.names.length);
-    this.setStatus("");
+    this.setStatus(sectionNotices.join(" "));
   }
 
   /**
@@ -1059,7 +1903,8 @@ export class NameForgeModal extends Modal {
     });
     setIcon(historyButton, ICON_PREVIOUS_GENERATIONS);
     historyButton.addEventListener("click", () => {
-      new PreviousGenerationsModal(this.app, this).open();
+      if (this.activeSection === "nameAgeing") new AgeingHistoryModal(this.app, this).open();
+      else new PreviousGenerationsModal(this.app, this).open();
     });
   }
 
@@ -1245,6 +2090,10 @@ export class NameForgeModal extends Modal {
       if (!(child instanceof TFile) || child.extension !== "md") continue;
       try {
         const content = await this.app.vault.cachedRead(child);
+        if (isRecipeContent(content)) {
+          iconsByName.set(child.basename, packTypeIconId("recipePack"));
+          continue;
+        }
         if (!isValidNamePackContent(content)) continue;
         const parsed = parseNamesFileContent(content);
         if (!parsed.packName) continue;
@@ -1279,7 +2128,44 @@ export class NameForgeModal extends Modal {
       }
     }
 
+    for (const entry of index) {
+      if (!entry.parsed.templateOf) continue;
+      const resolved = await this.resolvePackTemplate(entry.path, entry.parsed);
+      entry.parsed = resolved.parsed;
+      if (resolved.error) entry.templateError = resolved.error;
+    }
     return index;
+  }
+
+  /** Template packs of one type (or word lists), for "Start from template" in the editor. */
+  public async listTemplates(kind: NamePackType | "wordList"): Promise<{ name: string; description: string }[]> {
+    const folderPath = this.getFolderPath();
+    const folder = folderPath ? this.app.vault.getFolderByPath(normalizePath(folderPath)) : null;
+    if (!folder) return [];
+    const out: { name: string; description: string }[] = [];
+    for (const child of folder.children) {
+      if (!(child instanceof TFile) || child.extension !== "md") continue;
+      try {
+        const content = await this.app.vault.cachedRead(child);
+        if (kind === "wordList") {
+          if (!isWordListContent(content)) continue;
+          const parsed = parseWordListFileContent(content, child.basename);
+          if (!parsed.template) continue;
+          const sections = parsed.list.sections.map((s) => s.name);
+          out.push({ name: child.basename, description: sections.length > 0 ? sections.join(", ") : "No sections" });
+        } else {
+          if (!isValidNamePackContent(content)) continue;
+          const parsed = parseNamesFileContent(content);
+          if (!parsed.template || parsed.packType !== kind) continue;
+          const sections = parsed.sectioned?.sections.map((s) => s.name) ?? [];
+          const count = parsed.packType === "mixPack" ? `${parsed.mixSources?.length ?? 0} sources` : `${parsed.names.length} names`;
+          out.push({ name: child.basename, description: sections.length > 0 ? `${count}; sections: ${sections.join(", ")}` : count });
+        }
+      } catch {
+        continue;
+      }
+    }
+    return out.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   public async listFolderPacks(): Promise<{
@@ -1289,12 +2175,100 @@ export class NameForgeModal extends Modal {
     compoundGenerator?: "breakdown" | "list";
   }[]> {
     const index = await this.scanFolderPacks();
-    return index.map((entry) => ({
+    return index.filter((entry) => !entry.parsed.template).map((entry) => ({
       path: entry.path,
       packName: entry.parsed.packName || entry.path.split("/").pop()?.replace(/\.md$/i, "") || entry.path,
       packType: entry.parsed.packType,
       compoundGenerator: entry.parsed.compoundGenerator,
     }));
+  }
+}
+
+/** Short labels for the context toggle row; the full label is the button's tooltip. */
+const CONTEXT_SHORT_LABELS: Record<string, string> = {
+  none: "none",
+  "sparse-or-weak-native-presence": "sparse",
+  "contested-frontier": "contested",
+  "wild-and-unsettled": "wild",
+  imposition: "imposition",
+  accommodation: "accommodation",
+  adoption: "adoption",
+};
+
+/** Read-only guide to the colonial traditions; clicking an available one selects it. */
+class TraditionGuideModal extends Modal {
+  constructor(
+    app: App,
+    private readonly part: ColonialPart,
+    private readonly onSelect: (traditionId: string | undefined) => void,
+  ) {
+    super(app);
+  }
+
+  onOpen() {
+    this.titleEl.setText("Tradition guide");
+    this.modalEl.addClass("nameforge-guide-modal");
+    const list = this.contentEl.createDiv({ cls: "nameforge-guide-modal__list" });
+    for (const tradition of COLONIAL_TRADITIONS) {
+      const available = tradition.parts.includes(this.part);
+      const entry = list.createDiv({
+        cls: "nameforge-guide-modal__entry" + (available ? "" : " is-unavailable"),
+        attr: available ? { role: "button", tabindex: "0" } : {},
+      });
+      const heading = entry.createDiv({ cls: "nameforge-guide-modal__heading" });
+      heading.createSpan({ cls: "nameforge-guide-modal__name", text: tradition.label });
+      heading.createSpan({ cls: "nameforge-guide-modal__parts", text: partNote(tradition.parts).replace(" only", "") });
+      entry.createDiv({ cls: "nameforge-guide-modal__text", text: tradition.guide });
+      if (available) {
+        entry.addEventListener("click", () => {
+          this.onSelect(tradition.id === "general" ? undefined : tradition.id);
+          this.close();
+        });
+      }
+    }
+  }
+
+  onClose() {
+    this.contentEl.empty();
+  }
+}
+
+/** The ageing run history — separate from generation history, reached from the ageing section. */
+class AgeingHistoryModal extends Modal {
+  constructor(
+    app: App,
+    private parent: NameForgeModal,
+  ) {
+    super(app);
+  }
+
+  onOpen() {
+    this.titleEl.setText("Ageing history");
+    this.modalEl.addClass("nameforge-history-modal");
+    const { contentEl } = this;
+    contentEl.addClass("nameforge-history-modal__content");
+    const history = this.parent.plugin.settings.ageingHistory ?? [];
+    if (history.length === 0) {
+      contentEl.createDiv({ cls: "nameforge-history-modal__empty", text: "No ageing runs yet." });
+      return;
+    }
+    const list = contentEl.createDiv({ cls: "nameforge-history-modal__list" });
+    for (const entry of history) {
+      const row = list.createDiv({ cls: "nameforge-history-modal__row" });
+      setIcon(row.createSpan({ cls: "nameforge-history-modal__pack-icon" }), SECTION_ICONS.nameAgeing);
+      row.createSpan({ cls: "nameforge-history-modal__pack-name", text: entry.label });
+      row.createSpan({ cls: "nameforge-history-modal__seed", text: String(entry.seed) });
+      const copy = row.createEl("button", { cls: "nameforge-history-modal__copy", attr: { type: "button", title: "Copy seed" } });
+      setIcon(copy, ICON_SEED_COPY);
+      copy.addEventListener("click", (event) => {
+        event.stopPropagation();
+        void navigator.clipboard.writeText(String(entry.seed));
+      });
+    }
+  }
+
+  onClose() {
+    this.contentEl.empty();
   }
 }
 
@@ -1341,7 +2315,11 @@ class PreviousGenerationsModal extends Modal {
       const iconEl = row.createSpan({ cls: "nameforge-history-modal__pack-icon" });
       setIcon(
         iconEl,
-        entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME)
+        entry.packName.startsWith(SECTION_LABELS.explorationPlaceShapes)
+          ? SECTION_ICONS.explorationPlaceShapes
+          : entry.packName.startsWith(SECTION_LABELS.empireExpansionPlaceShapes)
+          ? SECTION_ICONS.empireExpansionPlaceShapes
+          : entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME)
           ? SECTION_ICONS.genericPlaceNames
           : entry.packName.startsWith(PLACE_SHAPES_HISTORY_NAME)
           ? SECTION_ICONS.placeShapes
@@ -1370,6 +2348,8 @@ class PreviousGenerationsModal extends Modal {
 
 const NAME_TEXTAREA_PLACEHOLDER =
   "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa";
+const WORD_LIST_TEXTAREA_PLACEHOLDER =
+  "One ## section per slot category, each with a table.\n\n## Wild animal\n| Modern | Traditional | Plural | Combining forms | Fuses |\n|---|---|---|---|---|\n| kangaroo | — | kangaroos | Kangaroo- | No |\n| emu | — | emus | Emu- | Yes |";
 const PLACE_TEXTAREA_PLACEHOLDER =
   "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
 
@@ -1382,6 +2362,14 @@ class NameForgeEditorModal extends Modal {
   private compoundButton: HTMLButtonElement | null = null;
   private placeButton: HTMLButtonElement | null = null;
   private mixButton: HTMLButtonElement | null = null;
+  private wordListButton: HTMLButtonElement | null = null;
+  /** §9: the editor is creating a word list rather than a name pack. */
+  private wordListMode = false;
+  /** §7: "Start from template" — the chosen template's note name, if any. */
+  private templateOf: string | undefined = undefined;
+  private templateSelectEl: HTMLSelectElement | null = null;
+  private templateHintEl: HTMLElement | null = null;
+  private templateOptions: { name: string; description: string }[] = [];
   private selectedPackType: NamePackType = "breakdownPack";
   private initialText: string;
   private initialPackName: string;
@@ -1474,6 +2462,31 @@ class NameForgeEditorModal extends Modal {
     this.mixButton.addEventListener("click", () => {
       this.setPackType("mixPack");
     });
+    this.wordListButton = typeToggle.createEl("button", {
+      cls: "nameforge-modal__toggle-button",
+      text: "Word list",
+    });
+    this.wordListButton.addEventListener("click", () => {
+      this.wordListMode = true;
+      this.updateTypeButtons();
+      void this.loadTemplateOptions();
+    });
+    const recipeButton = typeToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Recipe" });
+    recipeButton.addEventListener("click", () => {
+      this.close();
+      void this.parent.openRecipeEditor();
+    });
+
+    // §7: start from a template of the chosen type; the new pack stores only its differences.
+    const templateRow = contentEl.createDiv({ cls: "nameforge-editor-modal__template-row" });
+    templateRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from template" });
+    this.templateSelectEl = templateRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from template" } });
+    this.templateSelectEl.addEventListener("change", () => {
+      const value = this.templateSelectEl?.value ?? "";
+      this.templateOf = value || undefined;
+      this.updateTemplateHint();
+    });
+    this.templateHintEl = contentEl.createDiv({ cls: "nameforge-editor-modal__template-hint" });
 
     // Fixed-height stage: the plain textarea, the compound section, and the mix
     // section are all absolutely positioned to fill it and shown/hidden as
@@ -1496,6 +2509,7 @@ class NameForgeEditorModal extends Modal {
     this.updateTypeButtons();
     this.updateCompoundControls();
     void this.loadMixPackOptions();
+    void this.loadTemplateOptions();
 
     const controls = contentEl.createDiv({ cls: "nameforge-modal__controls" });
     const saveButton = controls.createEl("button", {
@@ -1683,7 +2697,65 @@ class NameForgeEditorModal extends Modal {
 
   private setPackType(type: NamePackType) {
     this.selectedPackType = type;
+    this.wordListMode = false;
     this.updateTypeButtons();
+    void this.loadTemplateOptions();
+  }
+
+  /** Lists templates of the chosen type, each with a short description. */
+  private async loadTemplateOptions() {
+    this.templateOptions = await this.parent.listTemplates(this.wordListMode ? "wordList" : this.selectedPackType);
+    const select = this.templateSelectEl;
+    if (!select) return;
+    select.empty();
+    select.createEl("option", { text: this.templateOptions.length > 0 ? "None" : "No templates of this type", value: "" });
+    for (const t of this.templateOptions) select.createEl("option", { text: t.name, value: t.name });
+    if (!this.templateOptions.some((t) => t.name === this.templateOf)) this.templateOf = undefined;
+    select.value = this.templateOf ?? "";
+    select.disabled = this.templateOptions.length === 0;
+    this.updateTemplateHint();
+  }
+
+  private updateTemplateHint() {
+    const chosen = this.templateOptions.find((t) => t.name === this.templateOf);
+    if (!this.templateHintEl) return;
+    this.templateHintEl.setText(
+      chosen ? `${chosen.description}. Anything you leave empty comes from the template.` : "",
+    );
+    this.templateHintEl.toggle(!!chosen);
+  }
+
+  /** §9: saves the textarea as a word-list pack (tables under ## sections). */
+  private async saveWordList(packName: string) {
+    const body = this.inputEl?.value ?? "";
+    const list = parseWordList(body);
+    const entries = list.unsectioned.length + list.sections.reduce((n, s) => n + s.entries.length, 0);
+    if (entries === 0 && !this.templateOf) {
+      this.parent.setStatus("No words to save. Add a table with a Modern column.");
+      return;
+    }
+    let folderPath = this.parent.getFolderPath();
+    if (!folderPath) {
+      const folder = await this.parent.promptForFolderSelection();
+      if (!folder) return;
+      folderPath = folder.path;
+    }
+    const path = normalizePath(`${folderPath}/${sanitizePackNameForFilename(packName)}.md`);
+    const content = createWordListFileContent(packName, body, this.templateOf);
+    try {
+      const existing = this.app.vault.getFileByPath(path);
+      if (existing instanceof TFile && (await this.parent.isTemplateFile(existing))) {
+        this.parent.setStatus("A template already has that name. Choose another name.");
+        return;
+      }
+      if (existing instanceof TFile) await this.app.vault.modify(existing, content);
+      else await this.app.vault.create(path, content);
+    } catch {
+      this.parent.setStatus(`Failed to save the word list to ${path}.`);
+      return;
+    }
+    new Notice(`nameForge: word list “${packName}” saved.`);
+    this.close();
   }
 
   private setCompoundParts(count: 2 | 3) {
@@ -1702,11 +2774,14 @@ class NameForgeEditorModal extends Modal {
   }
 
   private updateTypeButtons() {
-    const isBreakdown = this.selectedPackType === "breakdownPack";
-    const isList = this.selectedPackType === "listPack";
-    const isCompound = this.selectedPackType === "compoundPack";
-    const isPlace = this.selectedPackType === "placePack";
-    const isMix = this.selectedPackType === "mixPack";
+    const isWordList = this.wordListMode;
+    const isBreakdown = !isWordList && this.selectedPackType === "breakdownPack";
+    const isList = !isWordList && this.selectedPackType === "listPack";
+    const isCompound = !isWordList && this.selectedPackType === "compoundPack";
+    const isPlace = !isWordList && this.selectedPackType === "placePack";
+    const isMix = !isWordList && this.selectedPackType === "mixPack";
+    this.wordListButton?.classList.toggle("is-active", isWordList);
+    this.wordListButton?.setAttribute("aria-pressed", String(isWordList));
     this.breakdownButton?.classList.toggle("is-active", isBreakdown);
     this.listButton?.classList.toggle("is-active", isList);
     this.compoundButton?.classList.toggle("is-active", isCompound);
@@ -1719,7 +2794,11 @@ class NameForgeEditorModal extends Modal {
     this.mixButton?.setAttribute("aria-pressed", String(isMix));
 
     if (this.inputEl) {
-      this.inputEl.placeholder = isPlace ? PLACE_TEXTAREA_PLACEHOLDER : NAME_TEXTAREA_PLACEHOLDER;
+      this.inputEl.placeholder = isWordList
+        ? WORD_LIST_TEXTAREA_PLACEHOLDER
+        : isPlace
+          ? PLACE_TEXTAREA_PLACEHOLDER
+          : NAME_TEXTAREA_PLACEHOLDER;
     }
 
     if (isCompound) {
@@ -1769,13 +2848,18 @@ class NameForgeEditorModal extends Modal {
 
   private async saveNames() {
     const packName = this.packNameInput?.value?.trim() || "nameForge";
+    const templateOf = this.templateOf;
+    if (this.wordListMode) {
+      await this.saveWordList(packName);
+      return;
+    }
 
     if (this.selectedPackType === "compoundPack") {
       const parts = this.partTextareas
         .slice(0, this.compoundPartsCount)
         .map((textarea) => extractNamesFromMarkdown(textarea.value || ""));
 
-      if (parts.some((part) => part.length === 0)) {
+      if (!templateOf && parts.some((part) => part.length === 0)) {
         this.parent.setStatus("No names to save. Enter at least one name for each part.");
         return;
       }
@@ -1799,7 +2883,7 @@ class NameForgeEditorModal extends Modal {
       this.parent.plugin.settings.namesFilePath = normalizePath(`${folderPath}/${fileName}.md`);
       await this.parent.plugin.saveSettings();
 
-      await this.parent.saveCompoundToConfiguredFile(parts, this.compoundGenerator, this.compoundJoining);
+      await this.parent.saveCompoundToConfiguredFile(parts, this.compoundGenerator, this.compoundJoining, templateOf);
       this.close();
       return;
     }
@@ -1812,7 +2896,7 @@ class NameForgeEditorModal extends Modal {
         }))
         .filter((source) => source.packName.length > 0);
       const unique = new Set(sources.map((source) => source.packName));
-      if (sources.length < 2 || unique.size < 2) {
+      if (!templateOf && (sources.length < 2 || unique.size < 2)) {
         this.parent.setStatus("A mix pack needs at least two different source packs.");
         return;
       }
@@ -1835,13 +2919,13 @@ class NameForgeEditorModal extends Modal {
       this.parent.plugin.settings.namesFilePath = normalizePath(`${folderPath}/${fileName}.md`);
       await this.parent.plugin.saveSettings();
 
-      await this.parent.saveMixToConfiguredFile(sources);
+      await this.parent.saveMixToConfiguredFile(sources, templateOf);
       this.close();
       return;
     }
 
     const namesText = this.inputEl?.value || "";
-    if (!namesText.trim()) {
+    if (!namesText.trim() && !templateOf) {
       this.parent.setStatus("No names to save. Enter at least one name.");
       return;
     }
@@ -1865,7 +2949,7 @@ class NameForgeEditorModal extends Modal {
     this.parent.plugin.settings.namesFilePath = normalizePath(`${folderPath}/${fileName}.md`);
     await this.parent.plugin.saveSettings();
 
-    await this.parent.saveToConfiguredFile(namesText);
+    await this.parent.saveToConfiguredFile(namesText, templateOf);
     this.close();
   }
 }

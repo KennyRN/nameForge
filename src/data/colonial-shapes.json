@@ -1,0 +1,3969 @@
+{
+  "$comment": "Colonial place-name shapes (parts 2 and 2a). Data only. Inherited part 1 generics and categories are referenced by part 1 id from place-shapes.json, never copied.",
+  "version": 1,
+  "excludedCategories": [
+    "folk-group",
+    "earlier-or-district-name",
+    "deity",
+    "assembly-or-law"
+  ],
+  "inheritedCategories": [
+    {
+      "id": "personal-name",
+      "parts": [
+        "2"
+      ]
+    },
+    {
+      "id": "status-or-role",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "ethnic-or-cultural-group",
+      "parts": [
+        "2"
+      ]
+    },
+    {
+      "id": "saint-or-holy-person",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "supernatural-being",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "domestic-animal",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "wild-animal",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "bird",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "fish-and-other-creatures",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "tree",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "wild-plant",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "crop",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "river-or-stream-name",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "landform",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "water-or-wetland-feature",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "soil-or-ground",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "built-feature",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "colour",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "size",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "age",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "position-or-direction",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "shape",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "quality-or-condition",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "number",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "activity",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "produce",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "religious-association",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "season",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "empty-slot",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": "monarch-ruler-or-dynasty",
+      "label": "Monarch, ruler or dynasty",
+      "family": "colonisers",
+      "covers": "Reigning sovereigns and royal houses",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "royal-woman",
+      "label": "Royal woman",
+      "family": "colonisers",
+      "covers": "Queens, princesses, consorts",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "honorific-title",
+      "label": "Honorific title",
+      "family": "colonisers",
+      "covers": "A title rather than a person",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "official-patron-or-sponsor",
+      "label": "Official, patron or sponsor",
+      "family": "colonisers",
+      "covers": "Governors, ministers, company directors",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "commander-or-conqueror",
+      "label": "Commander or conqueror",
+      "family": "colonisers",
+      "covers": "Military leaders",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "explorer-or-founder",
+      "label": "Explorer or founder",
+      "family": "colonisers",
+      "covers": "Discoverers and founding settlers",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "settler-group",
+      "label": "Settler group",
+      "family": "colonisers",
+      "covers": "The colonisers' own people or a migrant group",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "native-place-name",
+      "label": "Native place name",
+      "family": "native-world",
+      "covers": "An existing local name",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "native-people-or-tribe",
+      "label": "Native people or tribe",
+      "family": "native-world",
+      "covers": "A named local people",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "calendar-date-or-feast",
+      "label": "Calendar date or feast",
+      "family": "spiritual-and-fantastical",
+      "covers": "A feast day or date of discovery",
+      "parts": [
+        "2"
+      ]
+    },
+    {
+      "id": "colonial-deity",
+      "label": "Colonial deity",
+      "family": "spiritual-and-fantastical",
+      "covers": "A god of the colonisers",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "local-deity",
+      "label": "Local deity",
+      "family": "spiritual-and-fantastical",
+      "covers": "A god of the colonised",
+      "parts": [
+        "2a"
+      ]
+    },
+    {
+      "id": "homeland-place-name",
+      "label": "Homeland place name",
+      "family": "transfer-and-memory",
+      "covers": "A place or region from the homeland",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "classical-biblical-or-legendary-name",
+      "label": "Classical, biblical or legendary name",
+      "family": "transfer-and-memory",
+      "covers": "A name from learning or scripture",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "ship",
+      "label": "Ship",
+      "family": "transfer-and-memory",
+      "covers": "The vessel of discovery",
+      "parts": [
+        "2"
+      ]
+    },
+    {
+      "id": "event-or-incident",
+      "label": "Event or incident",
+      "family": "experience-and-claim",
+      "covers": "Something that happened there",
+      "parts": [
+        "2"
+      ]
+    },
+    {
+      "id": "emotion-or-aspiration",
+      "label": "Emotion or aspiration",
+      "family": "experience-and-claim",
+      "covers": "Hope, despair, peace, plenty",
+      "parts": [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      "id": "imperial-claim",
+      "label": "Imperial claim",
+      "family": "experience-and-claim",
+      "covers": "Dominion, pacification, civilising or victory",
+      "parts": [
+        "2a"
+      ]
+    },
+    {
+      "id": "resource",
+      "label": "Resource",
+      "family": "survey-and-exploitation",
+      "covers": "Mineral or natural wealth",
+      "parts": [
+        "2"
+      ]
+    },
+    {
+      "id": "distance-or-survey-mark",
+      "label": "Distance or survey mark",
+      "family": "survey-and-exploitation",
+      "covers": "Measured position",
+      "parts": [
+        "2"
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "id": "settlement-farms-and-estates",
+      "inherited": true,
+      "generics": [
+        "enclosed-farmstead",
+        "estate-manor-centre",
+        "village"
+      ],
+      "set": {
+        "homeland-place-name": "common",
+        "official-patron-or-sponsor": "common",
+        "explorer-or-founder": "common",
+        "native-place-name": "common",
+        "monarch-ruler-or-dynasty": "occasional",
+        "royal-woman": "occasional",
+        "settler-group": "occasional",
+        "classical-biblical-or-legendary-name": "occasional",
+        "saint-or-holy-person": "occasional",
+        "resource": "rare",
+        "event-or-incident": "rare",
+        "emotion-or-aspiration": "rare",
+        "distance-or-survey-mark": "rare"
+      },
+      "raised": [
+        "saint-or-holy-person"
+      ],
+      "overrides": []
+    },
+    {
+      "id": "dwellings-and-buildings",
+      "inherited": true,
+      "generics": [
+        "house",
+        "dwelling",
+        "hall",
+        "cottage",
+        "hut-temporary-shelter"
+      ],
+      "set": {
+        "official-patron-or-sponsor": "occasional",
+        "explorer-or-founder": "occasional",
+        "native-place-name": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        "homeland-place-name": "rare",
+        "event-or-incident": "rare"
+      },
+      "raised": [],
+      "overrides": []
+    },
+    {
+      "id": "industry-and-trade",
+      "inherited": true,
+      "generics": [
+        "salt-works",
+        "salt-house",
+        "mill",
+        "kiln",
+        "pit-quarry",
+        "fish-weir",
+        "market",
+        "market-town-harbour",
+        "landing-place",
+        "haven"
+      ],
+      "set": {
+        "monarch-ruler-or-dynasty": "common",
+        "royal-woman": "common",
+        "official-patron-or-sponsor": "common",
+        "explorer-or-founder": "common",
+        "native-place-name": "common",
+        "honorific-title": "occasional",
+        "ship": "occasional",
+        "saint-or-holy-person": "occasional",
+        "emotion-or-aspiration": "occasional",
+        "resource": "occasional",
+        "settler-group": "occasional",
+        "homeland-place-name": "occasional",
+        "event-or-incident": "rare",
+        "calendar-date-or-feast": "rare",
+        "imperial-claim": "rare",
+        "commander-or-conqueror": "rare"
+      },
+      "raised": [
+        "saint-or-holy-person"
+      ],
+      "overrides": [
+        {
+          "generics": [
+            "haven"
+          ],
+          "set": {
+            "emotion-or-aspiration": "common"
+          }
+        }
+      ]
+    },
+    {
+      "id": "religious-christian",
+      "inherited": true,
+      "generics": [
+        "church",
+        "minster-mother-church",
+        "hermitage-retreat",
+        "chapel",
+        "holy-place",
+        "standing-cross"
+      ],
+      "set": {
+        "calendar-date-or-feast": "common",
+        "saint-or-holy-person": "common",
+        "religious-association": "common",
+        "explorer-or-founder": "occasional",
+        "settler-group": "occasional",
+        "native-place-name": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        "official-patron-or-sponsor": "rare"
+      },
+      "raised": [
+        "saint-or-holy-person",
+        "religious-association"
+      ],
+      "overrides": []
+    },
+    {
+      "id": "religious-pre-christian-and-sacred",
+      "inherited": true,
+      "generics": [
+        "heathen-temple",
+        "shrine-idol",
+        "sacred-grove",
+        "holy-spring"
+      ],
+      "set": {
+        "local-deity": "common",
+        "colonial-deity": "common",
+        "native-place-name": "occasional",
+        "monarch-ruler-or-dynasty": "occasional",
+        "honorific-title": "rare",
+        "imperial-claim": "rare"
+      },
+      "raised": [],
+      "overrides": []
+    },
+    {
+      "id": "religious-burial-and-memorial",
+      "inherited": true,
+      "generics": [
+        "grave",
+        "burial-ground-churchyard",
+        "burial-mound",
+        "cairn"
+      ],
+      "set": {
+        "explorer-or-founder": "occasional",
+        "commander-or-conqueror": "occasional",
+        "event-or-incident": "occasional",
+        "monarch-ruler-or-dynasty": "occasional",
+        "native-people-or-tribe": "rare",
+        "official-patron-or-sponsor": "rare"
+      },
+      "raised": [],
+      "overrides": []
+    },
+    {
+      "id": "defensive",
+      "inherited": true,
+      "generics": [
+        "fortified-place-stronghold",
+        "fort",
+        "roman-walled-town-or-fort",
+        "castle",
+        "lookout-hill",
+        "beacon",
+        "dyke-boundary-earthwork",
+        "wall"
+      ],
+      "set": {
+        "monarch-ruler-or-dynasty": "common",
+        "royal-woman": "common",
+        "official-patron-or-sponsor": "common",
+        "commander-or-conqueror": "common",
+        "native-place-name": "common",
+        "saint-or-holy-person": "common",
+        "honorific-title": "occasional",
+        "explorer-or-founder": "occasional",
+        "homeland-place-name": "occasional",
+        "religious-association": "occasional",
+        "settler-group": "occasional",
+        "native-people-or-tribe": "occasional",
+        "emotion-or-aspiration": "occasional",
+        "imperial-claim": "occasional",
+        "event-or-incident": "rare",
+        "calendar-date-or-feast": "rare",
+        "classical-biblical-or-legendary-name": "rare",
+        "ship": "rare"
+      },
+      "raised": [
+        "saint-or-holy-person",
+        "religious-association"
+      ],
+      "overrides": []
+    },
+    {
+      "id": "lordship-and-authority",
+      "inherited": true,
+      "generics": [
+        "royal-or-lordly-court",
+        "lords-hall",
+        "manor-house"
+      ],
+      "set": {
+        "monarch-ruler-or-dynasty": "common",
+        "official-patron-or-sponsor": "common",
+        "honorific-title": "occasional",
+        "commander-or-conqueror": "rare",
+        "native-place-name": "rare"
+      },
+      "raised": [],
+      "overrides": []
+    },
+    {
+      "id": "communal-and-legal",
+      "inherited": true,
+      "generics": [
+        "meeting-place",
+        "boundary",
+        "execution-site",
+        "bath-spa"
+      ],
+      "set": {
+        "local-deity": "occasional",
+        "native-place-name": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        "official-patron-or-sponsor": "rare",
+        "event-or-incident": "rare"
+      },
+      "raised": [],
+      "overrides": [
+        {
+          "generics": [
+            "bath-spa"
+          ],
+          "set": {
+            "local-deity": "common"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rivers-and-streams",
+      "inherited": true,
+      "generics": [
+        "river",
+        "clear-stream",
+        "sluggish-or-muddy-stream",
+        "mountain-stream",
+        "stream-with-its-valley",
+        "river-source-spring-head",
+        "river-mouth",
+        "confluence",
+        "waterfall"
+      ],
+      "set": {
+        "native-place-name": "common",
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "monarch-ruler-or-dynasty": "occasional",
+        "royal-woman": "occasional",
+        "ship": "occasional",
+        "event-or-incident": "occasional",
+        "calendar-date-or-feast": "occasional",
+        "saint-or-holy-person": "occasional",
+        "resource": "occasional",
+        "homeland-place-name": "rare",
+        "classical-biblical-or-legendary-name": "rare",
+        "emotion-or-aspiration": "rare",
+        "distance-or-survey-mark": "rare",
+        "settler-group": "rare"
+      },
+      "raised": [
+        "saint-or-holy-person"
+      ],
+      "overrides": []
+    },
+    {
+      "id": "springs-pools-and-lakes",
+      "inherited": true,
+      "generics": [
+        "spring-well",
+        "spring-with-roman-association",
+        "pool",
+        "mere-shallow-lake",
+        "lake",
+        "small-mountain-lake"
+      ],
+      "set": {
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "native-place-name": "common",
+        "monarch-ruler-or-dynasty": "occasional",
+        "royal-woman": "occasional",
+        "event-or-incident": "occasional",
+        "saint-or-holy-person": "occasional",
+        "homeland-place-name": "occasional",
+        "emotion-or-aspiration": "occasional",
+        "ship": "rare",
+        "calendar-date-or-feast": "rare",
+        "classical-biblical-or-legendary-name": "rare",
+        "resource": "rare"
+      },
+      "raised": [
+        "saint-or-holy-person"
+      ],
+      "overrides": []
+    },
+    {
+      "id": "wetland",
+      "inherited": true,
+      "generics": [
+        "marsh",
+        "fen",
+        "lowland-marsh",
+        "brushwood-marsh-carr",
+        "mire",
+        "miry-pool-wallowing-place",
+        "peat-bog-moss",
+        "bog",
+        "flood-prone-land-by-a-river"
+      ],
+      "set": {
+        "native-place-name": "common",
+        "explorer-or-founder": "occasional",
+        "official-patron-or-sponsor": "occasional",
+        "event-or-incident": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        "resource": "rare"
+      },
+      "raised": [],
+      "overrides": []
+    },
+    {
+      "id": "islands-and-river-land",
+      "inherited": true,
+      "generics": [
+        "island",
+        "dry-ground-in-wet-land",
+        "land-in-a-river-bend",
+        "water-meadow",
+        "skerry-rock-islet"
+      ],
+      "set": {
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "monarch-ruler-or-dynasty": "common",
+        "native-place-name": "common",
+        "calendar-date-or-feast": "common",
+        "saint-or-holy-person": "common",
+        "royal-woman": "occasional",
+        "ship": "occasional",
+        "event-or-incident": "occasional",
+        "emotion-or-aspiration": "occasional",
+        "resource": "occasional",
+        "homeland-place-name": "occasional",
+        "classical-biblical-or-legendary-name": "rare",
+        "honorific-title": "rare",
+        "commander-or-conqueror": "rare"
+      },
+      "raised": [
+        "saint-or-holy-person"
+      ],
+      "overrides": []
+    },
+    {
+      "id": "coast-and-sea",
+      "inherited": true,
+      "generics": [
+        "headland",
+        "point-nose",
+        "promontory",
+        "sea-inlet-firth",
+        "bay",
+        "small-bay-creek",
+        "cove",
+        "strait-sound",
+        "estuary",
+        "beach-strand",
+        "sand-dunes-sandy-shore",
+        "shingle-bank",
+        "sea-cliff",
+        "coastal-chasm-geo"
+      ],
+      "set": {
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "monarch-ruler-or-dynasty": "common",
+        "event-or-incident": "common",
+        "emotion-or-aspiration": "common",
+        "native-place-name": "common",
+        "royal-woman": "occasional",
+        "ship": "occasional",
+        "calendar-date-or-feast": "occasional",
+        "saint-or-holy-person": "occasional",
+        "homeland-place-name": "occasional",
+        "resource": "occasional",
+        "produce": "occasional",
+        "commander-or-conqueror": "occasional",
+        "distance-or-survey-mark": "occasional",
+        "classical-biblical-or-legendary-name": "rare",
+        "honorific-title": "rare",
+        "settler-group": "rare"
+      },
+      "raised": [
+        "saint-or-holy-person",
+        "produce"
+      ],
+      "overrides": []
+    },
+    {
+      "id": "crossings-and-routes",
+      "inherited": true,
+      "generics": [
+        "river-crossing",
+        "causeway",
+        "bridge",
+        "ferry",
+        "paved-or-roman-road",
+        "way-track",
+        "lane",
+        "pass",
+        "gap-notch",
+        "swing-gate",
+        "isthmus-portage"
+      ],
+      "set": {
+        "official-patron-or-sponsor": "common",
+        "native-place-name": "common",
+        "explorer-or-founder": "occasional",
+        "monarch-ruler-or-dynasty": "occasional",
+        "commander-or-conqueror": "occasional",
+        "honorific-title": "occasional",
+        "distance-or-survey-mark": "occasional",
+        "event-or-incident": "rare"
+      },
+      "raised": [],
+      "overrides": []
+    },
+    {
+      "id": "woodland",
+      "inherited": true,
+      "generics": [
+        "wood",
+        "single-species-wood",
+        "great-woodland",
+        "royal-hunting-ground",
+        "park",
+        "grove",
+        "grove-small-wood",
+        "grove-possibly-sacred",
+        "strip-of-woodland-shaw",
+        "wood-on-a-steep-slope",
+        "wooded-hill",
+        "scrubland",
+        "thicket"
+      ],
+      "set": {
+        "native-place-name": "common",
+        "explorer-or-founder": "occasional",
+        "official-patron-or-sponsor": "occasional",
+        "monarch-ruler-or-dynasty": "occasional",
+        "settler-group": "occasional",
+        "event-or-incident": "rare",
+        "emotion-or-aspiration": "rare"
+      },
+      "raised": [],
+      "overrides": []
+    },
+    {
+      "id": "clearings",
+      "inherited": true,
+      "generics": [
+        "woodland-then-clearing",
+        "newly-cleared-land-assart",
+        "clearing-paddock",
+        "woodland-swine-pasture"
+      ],
+      "set": {
+        "official-patron-or-sponsor": "occasional",
+        "native-place-name": "rare",
+        "settler-group": "rare"
+      },
+      "raised": [],
+      "overrides": []
+    },
+    {
+      "id": "hills-and-slopes",
+      "inherited": true,
+      "generics": [
+        "low-level-topped-hill",
+        "hill",
+        "heel-shaped-spur",
+        "flat-topped-ridge",
+        "ridge",
+        "back-low-ridge",
+        "edge-escarpment",
+        "steep-slope-bank",
+        "slope",
+        "terrace-lynchet",
+        "knoll",
+        "rounded-hill-mound",
+        "summit-top",
+        "upper-end-head"
+      ],
+      "set": {
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "native-place-name": "common",
+        "monarch-ruler-or-dynasty": "occasional",
+        "royal-woman": "occasional",
+        "event-or-incident": "occasional",
+        "emotion-or-aspiration": "occasional",
+        "classical-biblical-or-legendary-name": "occasional",
+        "saint-or-holy-person": "occasional",
+        "commander-or-conqueror": "occasional",
+        "ship": "rare",
+        "calendar-date-or-feast": "rare",
+        "homeland-place-name": "rare",
+        "resource": "rare"
+      },
+      "raised": [
+        "saint-or-holy-person"
+      ],
+      "overrides": []
+    },
+    {
+      "id": "mountains-and-rock",
+      "inherited": true,
+      "generics": [
+        "mountain",
+        "fell",
+        "pointed-hill",
+        "sharp-peak",
+        "tor",
+        "crag",
+        "stone",
+        "cave"
+      ],
+      "set": {
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "monarch-ruler-or-dynasty": "common",
+        "native-place-name": "common",
+        "royal-woman": "occasional",
+        "commander-or-conqueror": "occasional",
+        "event-or-incident": "occasional",
+        "emotion-or-aspiration": "occasional",
+        "saint-or-holy-person": "occasional",
+        "classical-biblical-or-legendary-name": "occasional",
+        "ship": "rare",
+        "calendar-date-or-feast": "rare",
+        "resource": "rare",
+        "homeland-place-name": "rare",
+        "imperial-claim": "rare"
+      },
+      "raised": [
+        "saint-or-holy-person"
+      ],
+      "overrides": []
+    },
+    {
+      "id": "upland-and-open-ground",
+      "inherited": true,
+      "generics": [
+        "upland-moor",
+        "heath",
+        "wold"
+      ],
+      "set": {
+        "native-place-name": "common",
+        "explorer-or-founder": "occasional",
+        "official-patron-or-sponsor": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        "event-or-incident": "rare"
+      },
+      "raised": [],
+      "overrides": []
+    },
+    {
+      "id": "valleys",
+      "inherited": true,
+      "generics": [
+        "long-valley",
+        "dale",
+        "broad-valley",
+        "short-bowl-shaped-valley",
+        "narrow-valley-glen",
+        "small-enclosed-side-valley",
+        "corrie",
+        "ravine",
+        "steep-bank-ravine-side",
+        "shallow-damp-valley",
+        "river-cut-gorge"
+      ],
+      "set": {
+        "native-place-name": "common",
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "occasional",
+        "monarch-ruler-or-dynasty": "occasional",
+        "event-or-incident": "occasional",
+        "emotion-or-aspiration": "occasional",
+        "homeland-place-name": "occasional",
+        "saint-or-holy-person": "occasional",
+        "resource": "rare",
+        "royal-woman": "rare",
+        "classical-biblical-or-legendary-name": "rare",
+        "settler-group": "rare"
+      },
+      "raised": [
+        "saint-or-holy-person"
+      ],
+      "overrides": []
+    },
+    {
+      "id": "hollows-and-corners",
+      "inherited": true,
+      "generics": [
+        "hollow",
+        "valley-bottom",
+        "valley-head",
+        "nook",
+        "corner-projecting-piece-of-land",
+        "corner-angle",
+        "bend-crook"
+      ],
+      "set": {
+        "event-or-incident": "occasional",
+        "native-place-name": "rare",
+        "official-patron-or-sponsor": "rare"
+      },
+      "raised": [],
+      "overrides": []
+    },
+    {
+      "id": "open-and-farmed-land",
+      "inherited": true,
+      "generics": [
+        "open-country",
+        "level-field",
+        "hay-meadow",
+        "pasture",
+        "arable-field",
+        "arable-unit",
+        "furlong",
+        "animal-fold",
+        "hedged-enclosure",
+        "orchard"
+      ],
+      "set": {
+        "native-place-name": "common",
+        "official-patron-or-sponsor": "occasional",
+        "explorer-or-founder": "occasional",
+        "settler-group": "occasional",
+        "homeland-place-name": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        "emotion-or-aspiration": "rare"
+      },
+      "raised": [],
+      "overrides": []
+    },
+    {
+      "id": "colonial-settlement",
+      "label": "Colonial settlement",
+      "side": "settlement",
+      "generics": [
+        {
+          "id": "town",
+          "meaning": "Town",
+          "sense": "Planned or chartered colonial town",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "city",
+          "meaning": "City",
+          "sense": "Major colonial city",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "capital",
+          "meaning": "Capital",
+          "sense": "Seat of government",
+          "parts": [
+            "2a"
+          ]
+        },
+        {
+          "id": "colony",
+          "meaning": "Colony",
+          "sense": "Formal chartered foundation",
+          "parts": [
+            "2a"
+          ]
+        },
+        {
+          "id": "planned-village",
+          "meaning": "Planned village",
+          "sense": "Agricultural settler village",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "trading-post",
+          "meaning": "Trading post",
+          "sense": "Coastal factory or emporium",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "mission",
+          "meaning": "Mission",
+          "sense": "Religious foundation for conversion",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "pastoral-station",
+          "meaning": "Pastoral station",
+          "sense": "Sheep or cattle run",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "mining-camp",
+          "meaning": "Mining camp",
+          "sense": "Diggings or gold-rush settlement",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "junction",
+          "meaning": "Junction",
+          "sense": "Railway or road junction",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "crossing",
+          "meaning": "Crossing",
+          "sense": "Settlement at a crossing point",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "heights",
+          "meaning": "Heights",
+          "sense": "Settlement on high ground",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "hope",
+          "meaning": "Hope",
+          "sense": "Settlement named as a hope",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "memorial",
+          "meaning": "Memorial",
+          "sense": "Settlement commemorating a person",
+          "parts": [
+            "2"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "monarch-ruler-or-dynasty",
+          "royal-woman",
+          "official-patron-or-sponsor",
+          "explorer-or-founder",
+          "homeland-place-name",
+          "native-place-name",
+          "saint-or-holy-person"
+        ],
+        "occasional": [
+          "honorific-title",
+          "commander-or-conqueror",
+          "settler-group",
+          "classical-biblical-or-legendary-name",
+          "native-people-or-tribe",
+          "personal-name",
+          "river-or-stream-name",
+          "status-or-role",
+          "religious-association",
+          "emotion-or-aspiration",
+          "resource",
+          "age",
+          "position-or-direction",
+          "colour"
+        ],
+        "rare": [
+          "calendar-date-or-feast",
+          "event-or-incident",
+          "ship",
+          "distance-or-survey-mark",
+          "colonial-deity",
+          "size",
+          "quality-or-condition",
+          "landform",
+          "water-or-wetland-feature",
+          "tree",
+          "wild-animal",
+          "produce"
+        ]
+      },
+      "overrides": [
+        {
+          "generics": [
+            "city"
+          ],
+          "set": {
+            "honorific-title": "common",
+            "imperial-claim": "common",
+            "colonial-deity": "occasional",
+            "classical-biblical-or-legendary-name": "occasional"
+          }
+        },
+        {
+          "generics": [
+            "capital"
+          ],
+          "set": {
+            "empty-slot": "common",
+            "imperial-claim": "occasional"
+          }
+        },
+        {
+          "generics": [
+            "colony"
+          ],
+          "set": {
+            "monarch-ruler-or-dynasty": "common",
+            "honorific-title": "common",
+            "native-people-or-tribe": "common"
+          },
+          "others": "rare"
+        },
+        {
+          "generics": [
+            "planned-village"
+          ],
+          "set": {
+            "official-patron-or-sponsor": "common",
+            "personal-name": "common",
+            "settler-group": "common",
+            "homeland-place-name": "occasional"
+          }
+        },
+        {
+          "generics": [
+            "trading-post"
+          ],
+          "set": {
+            "native-place-name": "common",
+            "empty-slot": "common",
+            "resource": "occasional",
+            "produce": "occasional"
+          }
+        },
+        {
+          "generics": [
+            "mission"
+          ],
+          "set": {
+            "saint-or-holy-person": "common",
+            "religious-association": "common",
+            "calendar-date-or-feast": "occasional",
+            "native-place-name": "occasional"
+          }
+        },
+        {
+          "generics": [
+            "pastoral-station"
+          ],
+          "set": {
+            "personal-name": "common",
+            "native-place-name": "common",
+            "landform": "occasional",
+            "water-or-wetland-feature": "occasional",
+            "distance-or-survey-mark": "occasional"
+          }
+        },
+        {
+          "generics": [
+            "mining-camp"
+          ],
+          "set": {
+            "resource": "common",
+            "personal-name": "common",
+            "event-or-incident": "occasional",
+            "emotion-or-aspiration": "occasional",
+            "distance-or-survey-mark": "occasional"
+          }
+        },
+        {
+          "generics": [
+            "junction",
+            "crossing"
+          ],
+          "set": {
+            "personal-name": "common",
+            "native-place-name": "common",
+            "river-or-stream-name": "common",
+            "distance-or-survey-mark": "occasional",
+            "official-patron-or-sponsor": "occasional"
+          }
+        },
+        {
+          "generics": [
+            "heights"
+          ],
+          "set": {
+            "official-patron-or-sponsor": "common",
+            "explorer-or-founder": "common",
+            "position-or-direction": "occasional",
+            "colour": "occasional"
+          }
+        },
+        {
+          "generics": [
+            "hope"
+          ],
+          "set": {
+            "monarch-ruler-or-dynasty": "common",
+            "royal-woman": "common",
+            "quality-or-condition": "common"
+          }
+        },
+        {
+          "generics": [
+            "memorial"
+          ],
+          "set": {
+            "explorer-or-founder": "common",
+            "official-patron-or-sponsor": "common",
+            "saint-or-holy-person": "common"
+          }
+        }
+      ],
+      "inherited": false
+    },
+    {
+      "id": "military-and-administrative",
+      "label": "Military and administrative",
+      "side": "settlement",
+      "generics": [
+        {
+          "id": "garrison-camp",
+          "meaning": "Garrison camp",
+          "sense": "Planned military camp, later a city",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "frontier-post",
+          "meaning": "Frontier post",
+          "sense": "Fortified outpost on a frontier",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "cantonment",
+          "meaning": "Cantonment",
+          "sense": "Military quarter beside a native town",
+          "parts": [
+            "2a"
+          ]
+        },
+        {
+          "id": "civil-lines",
+          "meaning": "Civil lines",
+          "sense": "European administrative quarter",
+          "parts": [
+            "2a"
+          ]
+        },
+        {
+          "id": "administrative-station",
+          "meaning": "Administrative station",
+          "sense": "District headquarters",
+          "parts": [
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "native-place-name",
+          "river-or-stream-name",
+          "monarch-ruler-or-dynasty",
+          "official-patron-or-sponsor",
+          "commander-or-conqueror"
+        ],
+        "occasional": [
+          "honorific-title",
+          "native-people-or-tribe",
+          "position-or-direction",
+          "imperial-claim",
+          "saint-or-holy-person",
+          "empty-slot"
+        ],
+        "rare": [
+          "explorer-or-founder",
+          "age",
+          "colour",
+          "event-or-incident",
+          "religious-association",
+          "landform"
+        ]
+      },
+      "overrides": [
+        {
+          "generics": [
+            "garrison-camp"
+          ],
+          "set": {
+            "empty-slot": "common"
+          }
+        },
+        {
+          "generics": [
+            "cantonment"
+          ],
+          "set": {
+            "native-place-name": "common"
+          },
+          "others": "rare"
+        },
+        {
+          "generics": [
+            "civil-lines"
+          ],
+          "set": {
+            "empty-slot": "common",
+            "native-place-name": "common"
+          },
+          "others": "unlikely"
+        }
+      ],
+      "inherited": false
+    },
+    {
+      "id": "territories",
+      "label": "Territories",
+      "side": "settlement",
+      "generics": [
+        {
+          "id": "land-territory",
+          "meaning": "Land, territory",
+          "sense": "A claimed region",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "frontier-march",
+          "meaning": "Frontier, march",
+          "sense": "Border zone of expansion",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "province-kingdom",
+          "meaning": "Province, kingdom",
+          "sense": "Formal colonial province",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "monarch-ruler-or-dynasty",
+          "royal-woman",
+          "homeland-place-name",
+          "explorer-or-founder",
+          "official-patron-or-sponsor",
+          "native-people-or-tribe",
+          "native-place-name"
+        ],
+        "occasional": [
+          "age",
+          "position-or-direction",
+          "imperial-claim",
+          "colour",
+          "wild-plant",
+          "resource",
+          "produce",
+          "settler-group"
+        ],
+        "rare": [
+          "river-or-stream-name",
+          "honorific-title",
+          "religious-association",
+          "calendar-date-or-feast",
+          "commander-or-conqueror"
+        ]
+      },
+      "overrides": [
+        {
+          "generics": [
+            "frontier-march"
+          ],
+          "set": {
+            "age": "common",
+            "position-or-direction": "common",
+            "imperial-claim": "common",
+            "monarch-ruler-or-dynasty": "rare",
+            "royal-woman": "rare",
+            "explorer-or-founder": "rare",
+            "official-patron-or-sponsor": "rare"
+          }
+        }
+      ],
+      "inherited": false
+    },
+    {
+      "id": "new-landscapes",
+      "label": "New landscapes",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "creek",
+          "meaning": "Creek",
+          "sense": "Inland stream (American and Australian sense)",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "plain-grassland",
+          "meaning": "Plain, grassland",
+          "sense": "Prairie, steppe, veld, pampas",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "desert",
+          "meaning": "Desert",
+          "sense": "Arid land",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "oasis",
+          "meaning": "Oasis",
+          "sense": "Watered place in a desert",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "dry-riverbed",
+          "meaning": "Dry riverbed",
+          "sense": "Wadi or arroyo",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "mountain-range",
+          "meaning": "Mountain range",
+          "sense": "Chain of mountains",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "volcano",
+          "meaning": "Volcano",
+          "sense": "Volcanic peak",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "glacier",
+          "meaning": "Glacier",
+          "sense": "Ice field or glacier",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "island-group",
+          "meaning": "Island group",
+          "sense": "Archipelago",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "reef",
+          "meaning": "Reef",
+          "sense": "Coral or rock reef",
+          "parts": [
+            "2"
+          ]
+        },
+        {
+          "id": "lagoon",
+          "meaning": "Lagoon",
+          "sense": "Coastal lagoon",
+          "parts": [
+            "2"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "official-patron-or-sponsor",
+          "native-place-name",
+          "monarch-ruler-or-dynasty",
+          "colour",
+          "size"
+        ],
+        "occasional": [
+          "royal-woman",
+          "ship",
+          "event-or-incident",
+          "emotion-or-aspiration",
+          "saint-or-holy-person",
+          "wild-animal",
+          "bird",
+          "tree",
+          "wild-plant",
+          "resource",
+          "distance-or-survey-mark",
+          "personal-name",
+          "homeland-place-name",
+          "quality-or-condition",
+          "shape",
+          "position-or-direction"
+        ],
+        "rare": [
+          "calendar-date-or-feast",
+          "classical-biblical-or-legendary-name",
+          "religious-association",
+          "supernatural-being",
+          "settler-group",
+          "commander-or-conqueror",
+          "honorific-title",
+          "colonial-deity"
+        ]
+      },
+      "overrides": [
+        {
+          "generics": [
+            "creek"
+          ],
+          "set": {
+            "personal-name": "common",
+            "distance-or-survey-mark": "common",
+            "resource": "common",
+            "wild-animal": "common",
+            "bird": "common",
+            "tree": "common",
+            "monarch-ruler-or-dynasty": "rare"
+          }
+        },
+        {
+          "generics": [
+            "dry-riverbed"
+          ],
+          "set": {
+            "soil-or-ground": "common",
+            "size": "common",
+            "quality-or-condition": "common"
+          }
+        },
+        {
+          "generics": [
+            "oasis"
+          ],
+          "set": {
+            "native-place-name": "common",
+            "empty-slot": "occasional"
+          }
+        },
+        {
+          "generics": [
+            "mountain-range",
+            "island-group",
+            "reef"
+          ],
+          "set": {
+            "ship": "common"
+          }
+        },
+        {
+          "generics": [
+            "lagoon"
+          ],
+          "set": {
+            "saint-or-holy-person": "common",
+            "religious-association": "common"
+          }
+        }
+      ],
+      "inherited": false
+    },
+    {
+      "id": "local-generics",
+      "label": "Local generics",
+      "side": "settlement",
+      "generics": [
+        {
+          "id": "local-settlement-word",
+          "meaning": "Local settlement word",
+          "sense": "The native word for town or settlement",
+          "parts": [
+            "2a"
+          ]
+        },
+        {
+          "id": "local-market-word",
+          "meaning": "Local market word",
+          "sense": "The native word for market",
+          "parts": [
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "official-patron-or-sponsor",
+          "commander-or-conqueror",
+          "monarch-ruler-or-dynasty",
+          "explorer-or-founder"
+        ],
+        "occasional": [
+          "royal-woman",
+          "honorific-title",
+          "emotion-or-aspiration",
+          "colonial-deity",
+          "personal-name"
+        ],
+        "rare": [
+          "native-place-name",
+          "settler-group"
+        ]
+      },
+      "overrides": [],
+      "inherited": false
+    },
+    {
+      "id": "religious-islamic",
+      "label": "Religious: Islamic",
+      "side": "settlement",
+      "generics": [
+        {
+          "id": "mosque",
+          "meaning": "Mosque",
+          "sense": "Place of worship",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "saints-tomb-or-shrine",
+          "meaning": "Saint's tomb or shrine",
+          "sense": "Tomb of a holy man",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "religious-lodge",
+          "meaning": "Religious lodge",
+          "sense": "Sufi lodge or zāwiya",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "saint-or-holy-person",
+          "religious-association"
+        ],
+        "occasional": [
+          "personal-name",
+          "native-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "age"
+        ],
+        "rare": [
+          "colour",
+          "size"
+        ]
+      },
+      "overrides": [],
+      "inherited": false
+    }
+  ],
+  "structures": {
+    "bareSpecific": {
+      "categories": [
+        "monarch-ruler-or-dynasty",
+        "royal-woman",
+        "official-patron-or-sponsor",
+        "explorer-or-founder",
+        "commander-or-conqueror",
+        "homeland-place-name",
+        "classical-biblical-or-legendary-name",
+        "calendar-date-or-feast",
+        "native-place-name",
+        "native-people-or-tribe",
+        "religious-association",
+        "saint-or-holy-person",
+        "emotion-or-aspiration",
+        "imperial-claim"
+      ],
+      "chanceInGroups": {
+        "groups": [
+          "colonial-settlement",
+          "territories"
+        ],
+        "chance": 0.3
+      },
+      "chance": 0.05
+    },
+    "definiteForm": {
+      "chance": 0.03
+    },
+    "possessive": {
+      "categories": [
+        "monarch-ruler-or-dynasty",
+        "royal-woman",
+        "official-patron-or-sponsor",
+        "commander-or-conqueror",
+        "explorer-or-founder",
+        "personal-name"
+      ],
+      "chance": 0.15
+    },
+    "newTransfer": {
+      "categories": [
+        "homeland-place-name"
+      ],
+      "chance": 0.35
+    },
+    "twin": {
+      "categories": [
+        "native-place-name"
+      ],
+      "groups": [
+        "colonial-settlement"
+      ],
+      "parts": [
+        "2a"
+      ],
+      "chance": 0.08
+    },
+    "doubleSpecific": {
+      "categories": [
+        "saint-or-holy-person",
+        "honorific-title",
+        "imperial-claim",
+        "monarch-ruler-or-dynasty"
+      ],
+      "chance": 0.1,
+      "secondSpecifics": [
+        "native-place-name",
+        "native-people-or-tribe",
+        "river-or-stream-name",
+        "position-or-direction"
+      ],
+      "fallback": "native-place-name"
+    },
+    "positionOfLandmark": {
+      "categories": [
+        "position-or-direction"
+      ],
+      "chance": 0.15,
+      "landmarks": [
+        "river-or-stream-name",
+        "landform",
+        "native-place-name"
+      ],
+      "fallback": "river-or-stream-name"
+    },
+    "locative": {
+      "parts": [
+        "2"
+      ],
+      "chance": 0
+    },
+    "translationTag": {
+      "categoryFamilies": [
+        "description",
+        "living-things"
+      ],
+      "chanceByPart": {
+        "2": 0.1,
+        "2a": 0.15
+      }
+    },
+    "nativeTreatment": {
+      "categories": [
+        "native-place-name",
+        "native-people-or-tribe",
+        "river-or-stream-name"
+      ],
+      "split": {
+        "adopted": 0.5,
+        "adapted": 0.5
+      }
+    },
+    "affix": {
+      "chance": 0.1
+    },
+    "pluralSimplex": {
+      "chance": 0.15
+    },
+    "stackedGeneric": {
+      "chance": 0.05,
+      "sourceGroup": "colonial-settlement"
+    }
+  },
+  "prefixOrders": {
+    "fort": {
+      "prefix": "Fort",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    "market-town-harbour": {
+      "prefix": "Port",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    "headland": {
+      "prefix": "Cape",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    "hill": {
+      "prefix": "Mount",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    "mountain": {
+      "prefix": "Mount",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    "lake": {
+      "prefix": "Lake",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    "point-nose": {
+      "prefix": "Point",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    "island": {
+      "prefix": "Isle of",
+      "specific-first": 50,
+      "generic-first-direct": 0,
+      "generic-first-linked": 50
+    }
+  },
+  "affixTypes": {
+    "city": {
+      "label": "City",
+      "weight": 5,
+      "forms": [
+        {
+          "text": "City",
+          "position": "after"
+        }
+      ]
+    }
+  },
+  "contexts": {
+    "2": [
+      {
+        "id": "sparse-or-weak-native-presence",
+        "label": "Sparse or weak native presence",
+        "groupMultipliers": {
+          "colonial-settlement": 1.5,
+          "settlement-farms-and-estates": 1.5,
+          "open-and-farmed-land": 1.25,
+          "military-and-administrative": 0.5,
+          "defensive": 0.5
+        },
+        "categoryMultipliers": {
+          "homeland-place-name": 1.5,
+          "personal-name": 1.5,
+          "settler-group": 1.5,
+          "official-patron-or-sponsor": 1.25,
+          "emotion-or-aspiration": 1.25,
+          "classical-biblical-or-legendary-name": 1.25,
+          "native-place-name": 0.75,
+          "event-or-incident": 0.75,
+          "ship": 0.75,
+          "native-people-or-tribe": 0.5,
+          "commander-or-conqueror": 0.5
+        },
+        "structureMultipliers": {}
+      },
+      {
+        "id": "contested-frontier",
+        "label": "Contested frontier",
+        "groupMultipliers": {
+          "military-and-administrative": 2,
+          "defensive": 2,
+          "settlement-farms-and-estates": 0.75,
+          "new-landscapes": 0.75
+        },
+        "categoryMultipliers": {
+          "commander-or-conqueror": 2,
+          "event-or-incident": 1.5,
+          "native-people-or-tribe": 1.5,
+          "ethnic-or-cultural-group": 1.5,
+          "native-place-name": 1.25,
+          "saint-or-holy-person": 1.25,
+          "emotion-or-aspiration": 0.75,
+          "homeland-place-name": 0.75,
+          "ship": 0.5
+        },
+        "structureMultipliers": {}
+      },
+      {
+        "id": "wild-and-unsettled",
+        "label": "Wild and unsettled",
+        "groupMultipliers": {
+          "new-landscapes": 2,
+          "coast-and-sea": 2,
+          "mountains-and-rock": 2,
+          "colonial-settlement": 0.25,
+          "dwellings-and-buildings": 0.25,
+          "industry-and-trade": 0.25,
+          "religious-christian": 0.25,
+          "religious-pre-christian-and-sacred": 0.25,
+          "religious-burial-and-memorial": 0.25,
+          "religious-islamic": 0.25,
+          "defensive": 0.25,
+          "military-and-administrative": 0.25,
+          "settlement-farms-and-estates": 0.1,
+          "lordship-and-authority": 0.1,
+          "communal-and-legal": 0.1,
+          "rivers-and-streams": 1.5,
+          "springs-pools-and-lakes": 1.5,
+          "wetland": 1.5,
+          "islands-and-river-land": 1.5,
+          "crossings-and-routes": 1.5,
+          "woodland": 1.5,
+          "clearings": 1.5,
+          "hills-and-slopes": 1.5,
+          "upland-and-open-ground": 1.5,
+          "valleys": 1.5,
+          "hollows-and-corners": 1.5,
+          "open-and-farmed-land": 1.5
+        },
+        "categoryMultipliers": {
+          "explorer-or-founder": 2,
+          "ship": 2,
+          "event-or-incident": 2,
+          "emotion-or-aspiration": 1.5,
+          "calendar-date-or-feast": 1.5,
+          "monarch-ruler-or-dynasty": 1.25,
+          "official-patron-or-sponsor": 1.25,
+          "colour": 1.25,
+          "size": 1.25,
+          "shape": 1.25,
+          "native-place-name": 0.75,
+          "resource": 0.75,
+          "homeland-place-name": 0.5,
+          "personal-name": 0.25,
+          "settler-group": 0.1
+        },
+        "structureMultipliers": {
+          "bareSpecific": 0.5,
+          "possessive": 1.5
+        }
+      }
+    ],
+    "2a": [
+      {
+        "id": "imposition",
+        "label": "Imposition",
+        "groupMultipliers": {
+          "military-and-administrative": 1.5,
+          "local-generics": 0.25
+        },
+        "categoryMultipliers": {
+          "imperial-claim": 2,
+          "monarch-ruler-or-dynasty": 1.5,
+          "honorific-title": 1.5,
+          "colonial-deity": 1.5,
+          "official-patron-or-sponsor": 1.25,
+          "homeland-place-name": 1.25,
+          "native-place-name": 0.5,
+          "native-people-or-tribe": 0.5,
+          "local-deity": 0.25
+        },
+        "structureMultipliers": {
+          "twin": 0.5,
+          "translationTag": 0.5
+        },
+        "nativeTreatment": {
+          "adopted": 0.3,
+          "adapted": 0.7
+        }
+      },
+      {
+        "id": "accommodation",
+        "label": "Accommodation",
+        "groupMultipliers": {
+          "local-generics": 1.25
+        },
+        "categoryMultipliers": {
+          "local-deity": 1.5,
+          "native-people-or-tribe": 1.25
+        },
+        "structureMultipliers": {
+          "doubleSpecific": 1.5,
+          "twin": 1.5
+        }
+      },
+      {
+        "id": "adoption",
+        "label": "Adoption",
+        "groupMultipliers": {
+          "local-generics": 1.5,
+          "colonial-settlement": 0.75
+        },
+        "categoryMultipliers": {
+          "native-place-name": 2,
+          "native-people-or-tribe": 1.5,
+          "local-deity": 1.5,
+          "river-or-stream-name": 1.5,
+          "official-patron-or-sponsor": 0.75,
+          "monarch-ruler-or-dynasty": 0.5,
+          "honorific-title": 0.5,
+          "homeland-place-name": 0.5,
+          "imperial-claim": 0.25
+        },
+        "structureMultipliers": {
+          "bareSpecific": 1.25,
+          "translationTag": 2
+        },
+        "nativeTreatment": {
+          "adopted": 0.6,
+          "adapted": 0.4
+        }
+      }
+    ]
+  },
+  "general": {
+    "id": "general",
+    "label": "General",
+    "parts": [
+      "2",
+      "2a"
+    ],
+    "guide": "The patterns shared by a majority of colonial traditions: commemorating rulers and royalty, adopting or adapting native names, building forts and castles, and naming new places after the homeland, often with \"New\".",
+    "categoryMultipliers": {
+      "monarch-ruler-or-dynasty": 1.5,
+      "royal-woman": 1.5,
+      "native-place-name": 1.5,
+      "homeland-place-name": 1.5,
+      "native-people-or-tribe": 1.25,
+      "imperial-claim": 0.5,
+      "colonial-deity": 0.5,
+      "calendar-date-or-feast": 0.5,
+      "distance-or-survey-mark": 0.5,
+      "saint-or-holy-person": 0.75,
+      "ship": 0.75,
+      "local-deity": 0.75
+    },
+    "groupMultipliers": {
+      "defensive": 1.5,
+      "military-and-administrative": 1.25,
+      "religious-islamic": 0
+    },
+    "genericMultipliers": {
+      "hope": 0.25,
+      "memorial": 0.25,
+      "local-market-word": 0.5
+    },
+    "structureMultipliers": {
+      "newTransfer": 1.25,
+      "positionOfLandmark": 0.5
+    },
+    "affixTypeMultipliers": {},
+    "locative": 0,
+    "nativeTreatment": {
+      "adopted": 0.5,
+      "adapted": 0.5
+    },
+    "wordOrder": {
+      "specific-first": 60,
+      "generic-first-direct": 25,
+      "generic-first-linked": 15
+    }
+  },
+  "traditions": [
+    {
+      "id": "roman",
+      "label": "Roman",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Leans towards rulers and dynasties, honorific titles, native peoples and local gods, auspicious names such as \"Peace\" or \"Flourishing\", and military and civic foundations. Names usually put the generic first, joined with \"of\": Colony of [ruler], Waters of [local deity]. Native names are almost always Latinised, and road stations can be named by milestone: At the Fifth.",
+      "categoryMultipliers": {
+        "honorific-title": 2.5,
+        "monarch-ruler-or-dynasty": 2,
+        "native-people-or-tribe": 2,
+        "local-deity": 2,
+        "emotion-or-aspiration": 2,
+        "native-place-name": 1.5,
+        "river-or-stream-name": 1.5,
+        "colonial-deity": 1.5,
+        "distance-or-survey-mark": 1.5,
+        "imperial-claim": 0.75,
+        "resource": 0.75,
+        "homeland-place-name": 0.5,
+        "classical-biblical-or-legendary-name": 0.5,
+        "explorer-or-founder": 0.5,
+        "settler-group": 0.5,
+        "religious-association": 0.25,
+        "personal-name": 0.25,
+        "event-or-incident": 0.25,
+        "calendar-date-or-feast": 0.1,
+        "saint-or-holy-person": 0,
+        "ship": 0
+      },
+      "groupMultipliers": {
+        "military-and-administrative": 2,
+        "local-generics": 2,
+        "colonial-settlement": 1.5,
+        "industry-and-trade": 1.5,
+        "crossings-and-routes": 1.5,
+        "communal-and-legal": 1.5,
+        "defensive": 1.25,
+        "religious-pre-christian-and-sacred": 1.25,
+        "territories": 0.75,
+        "new-landscapes": 0.5,
+        "religious-christian": 0.1,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "colony": 2,
+        "garrison-camp": 2,
+        "bath-spa": 2,
+        "bridge": 1.5,
+        "market": 1.5,
+        "capital": 0.5,
+        "trading-post": 0.5,
+        "mining-camp": 0.25,
+        "crossing": 0.25,
+        "heights": 0.25,
+        "hope": 0,
+        "memorial": 0,
+        "mission": 0,
+        "pastoral-station": 0,
+        "junction": 0,
+        "cantonment": 0,
+        "civil-lines": 0,
+        "administrative-station": 0
+      },
+      "structureMultipliers": {
+        "doubleSpecific": 2,
+        "affix": 1.25,
+        "positionOfLandmark": 1,
+        "bareSpecific": 0.75,
+        "newTransfer": 0.5,
+        "translationTag": 0.5,
+        "twin": 0.25,
+        "possessive": 0.1,
+        "definiteForm": 0
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0.1,
+      "nativeTreatment": {
+        "adopted": 0.2,
+        "adapted": 0.8
+      },
+      "wordOrder": {
+        "specific-first": 10,
+        "generic-first-direct": 30,
+        "generic-first-linked": 60
+      }
+    },
+    {
+      "id": "hellenistic",
+      "label": "Hellenistic (Greek and Macedonian)",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Leans towards kings and queens, with whole cities named after them, royal epithets such as \"Brother-loving\" replacing older names, victory names, and \"city\" as the dominant generic. Earlier Greek colonies among native peoples favour new-city names, homeland names, river names and plants. Cities are often told apart by their river: Antioch on the Orontes.",
+      "categoryMultipliers": {
+        "monarch-ruler-or-dynasty": 3,
+        "royal-woman": 3,
+        "honorific-title": 2,
+        "colonial-deity": 2,
+        "age": 1.5,
+        "imperial-claim": 1.5,
+        "religious-association": 1.5,
+        "river-or-stream-name": 1.5,
+        "commander-or-conqueror": 1.25,
+        "homeland-place-name": 1.25,
+        "wild-plant": 1.25,
+        "local-deity": 0.75,
+        "settler-group": 0.75,
+        "native-place-name": 0.5,
+        "native-people-or-tribe": 0.5,
+        "official-patron-or-sponsor": 0.5,
+        "resource": 0.5,
+        "explorer-or-founder": 0.25,
+        "personal-name": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "saint-or-holy-person": 0,
+        "calendar-date-or-feast": 0,
+        "ship": 0
+      },
+      "groupMultipliers": {
+        "colonial-settlement": 2,
+        "coast-and-sea": 1.5,
+        "industry-and-trade": 1.25,
+        "religious-pre-christian-and-sacred": 1.25,
+        "military-and-administrative": 0.5,
+        "territories": 0.5,
+        "new-landscapes": 0.5,
+        "local-generics": 0.25,
+        "religious-christian": 0,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "city": 3,
+        "trading-post": 1.5,
+        "colony": 0.5,
+        "garrison-camp": 0.5,
+        "capital": 0.25,
+        "heights": 0.25,
+        "hope": 0,
+        "memorial": 0,
+        "mission": 0,
+        "pastoral-station": 0,
+        "mining-camp": 0,
+        "junction": 0,
+        "crossing": 0,
+        "cantonment": 0,
+        "civil-lines": 0,
+        "administrative-station": 0
+      },
+      "structureMultipliers": {
+        "bareSpecific": 2,
+        "possessive": 1.5,
+        "affix": 1.5,
+        "positionOfLandmark": 0.75,
+        "newTransfer": 0.75,
+        "doubleSpecific": 0.5,
+        "translationTag": 0.5,
+        "definiteForm": 0
+      },
+      "affixTypeMultipliers": {
+        "location": 3
+      },
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.3,
+        "adapted": 0.7
+      },
+      "wordOrder": {
+        "specific-first": 70,
+        "generic-first-direct": 20,
+        "generic-first-linked": 10
+      }
+    },
+    {
+      "id": "phoenician",
+      "label": "Phoenician (and Carthaginian)",
+      "parts": [
+        "2"
+      ],
+      "guide": "Leans towards coastal trading posts: capes, islands and harbours, usually generic first, as in Cape of [x] and Island of [deity]. Pairs new cities with old towns, honours its gods, and readily takes over native names along the coasts it trades with. Rarely commemorates people.",
+      "categoryMultipliers": {
+        "age": 2.5,
+        "colonial-deity": 2,
+        "native-place-name": 1.5,
+        "produce": 1.5,
+        "resource": 1.25,
+        "homeland-place-name": 1,
+        "explorer-or-founder": 0.5,
+        "royal-woman": 0.5,
+        "emotion-or-aspiration": 0.5,
+        "settler-group": 0.5,
+        "monarch-ruler-or-dynasty": 0.25,
+        "honorific-title": 0.25,
+        "official-patron-or-sponsor": 0.25,
+        "commander-or-conqueror": 0.25,
+        "ship": 0.25,
+        "imperial-claim": 0.25,
+        "saint-or-holy-person": 0,
+        "calendar-date-or-feast": 0
+      },
+      "groupMultipliers": {
+        "coast-and-sea": 3,
+        "islands-and-river-land": 2.5,
+        "industry-and-trade": 2,
+        "religious-pre-christian-and-sacred": 1.5,
+        "colonial-settlement": 1.25,
+        "defensive": 1.25,
+        "local-generics": 0.5,
+        "new-landscapes": 0.5,
+        "mountains-and-rock": 0.5,
+        "valleys": 0.5,
+        "woodland": 0.5,
+        "military-and-administrative": 0.25,
+        "territories": 0.25,
+        "clearings": 0.25,
+        "upland-and-open-ground": 0.25,
+        "religious-christian": 0,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "trading-post": 2.5,
+        "headland": 2,
+        "island": 2,
+        "city": 1.5,
+        "roman-walled-town-or-fort": 1.5,
+        "colony": 0.25,
+        "garrison-camp": 0.25,
+        "hope": 0,
+        "memorial": 0,
+        "mission": 0,
+        "pastoral-station": 0,
+        "mining-camp": 0,
+        "junction": 0,
+        "crossing": 0,
+        "heights": 0,
+        "capital": 0,
+        "cantonment": 0,
+        "civil-lines": 0,
+        "administrative-station": 0
+      },
+      "structureMultipliers": {
+        "affix": 0.5,
+        "bareSpecific": 0.5,
+        "doubleSpecific": 0.5,
+        "positionOfLandmark": 0.5,
+        "newTransfer": 0.5,
+        "possessive": 0.25
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.5,
+        "adapted": 0.5
+      },
+      "wordOrder": {
+        "specific-first": 20,
+        "generic-first-direct": 50,
+        "generic-first-linked": 30
+      }
+    },
+    {
+      "id": "spanish",
+      "label": "Spanish",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Leans towards saints, feast days and holy names; \"New\" plus a homeland name; royal titles such as Royal; and long linked names that join a saint to a native place, as in Saint James of [native place]. Keeps very many native names, respelt in Spanish fashion, and often describes the land by colour or quality: Red, Snowy, Good Airs.",
+      "categoryMultipliers": {
+        "saint-or-holy-person": 3,
+        "calendar-date-or-feast": 2.5,
+        "religious-association": 2.5,
+        "homeland-place-name": 2,
+        "native-place-name": 1.5,
+        "honorific-title": 1.5,
+        "colour": 1.5,
+        "resource": 1.5,
+        "quality-or-condition": 1.25,
+        "emotion-or-aspiration": 1.25,
+        "monarch-ruler-or-dynasty": 1,
+        "royal-woman": 0.75,
+        "explorer-or-founder": 0.5,
+        "official-patron-or-sponsor": 0.5,
+        "commander-or-conqueror": 0.5,
+        "classical-biblical-or-legendary-name": 0.5,
+        "settler-group": 0.5,
+        "imperial-claim": 0.25,
+        "ship": 0.25,
+        "personal-name": 0.25,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "religious-christian": 2,
+        "colonial-settlement": 1.5,
+        "military-and-administrative": 1.25,
+        "territories": 1.25,
+        "new-landscapes": 1.25,
+        "rivers-and-streams": 1.25,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "mission": 3,
+        "frontier-post": 2,
+        "lagoon": 2,
+        "city": 1.5,
+        "volcano": 1.5,
+        "dry-riverbed": 1.5,
+        "town": 1.25,
+        "mining-camp": 1,
+        "garrison-camp": 0.5,
+        "pastoral-station": 0.25,
+        "colony": 0.25,
+        "heights": 0.25,
+        "hope": 0.1,
+        "memorial": 0.1,
+        "junction": 0,
+        "cantonment": 0,
+        "civil-lines": 0,
+        "local-market-word": 0
+      },
+      "structureMultipliers": {
+        "doubleSpecific": 3,
+        "definiteForm": 3,
+        "newTransfer": 2,
+        "bareSpecific": 1.25,
+        "affix": 1,
+        "translationTag": 0.75,
+        "positionOfLandmark": 0.5,
+        "twin": 0.5,
+        "possessive": 0.1
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.4,
+        "adapted": 0.6
+      },
+      "wordOrder": {
+        "specific-first": 10,
+        "generic-first-direct": 35,
+        "generic-first-linked": 55
+      }
+    },
+    {
+      "id": "portuguese",
+      "label": "Portuguese",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Leans towards saints, feasts and calendar dates (River of January); hope and safety (Cape of Good Hope, Safe Harbour); and forts and trading factories strung along coasts and islands. Explorers name islands after themselves, and later African towns become Town of [official].",
+      "categoryMultipliers": {
+        "saint-or-holy-person": 2.5,
+        "calendar-date-or-feast": 2.5,
+        "emotion-or-aspiration": 2,
+        "religious-association": 2,
+        "quality-or-condition": 1.5,
+        "resource": 1.5,
+        "explorer-or-founder": 1.25,
+        "produce": 1.25,
+        "native-place-name": 1.25,
+        "official-patron-or-sponsor": 1,
+        "honorific-title": 1,
+        "homeland-place-name": 1,
+        "event-or-incident": 1,
+        "monarch-ruler-or-dynasty": 0.75,
+        "royal-woman": 0.75,
+        "ship": 0.25,
+        "personal-name": 0.25,
+        "imperial-claim": 0.25,
+        "classical-biblical-or-legendary-name": 0.25,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "coast-and-sea": 2,
+        "islands-and-river-land": 2,
+        "religious-christian": 1.75,
+        "industry-and-trade": 1.5,
+        "defensive": 1.5,
+        "colonial-settlement": 1.25,
+        "rivers-and-streams": 1.25,
+        "military-and-administrative": 0.75,
+        "clearings": 0.5,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "trading-post": 2.5,
+        "fort": 1.5,
+        "headland": 1.5,
+        "island": 1.5,
+        "market-town-harbour": 1.5,
+        "mission": 1.5,
+        "town": 1.25,
+        "mining-camp": 0.5,
+        "pastoral-station": 0.25,
+        "hope": 0.25,
+        "colony": 0.25,
+        "garrison-camp": 0.25,
+        "memorial": 0.1,
+        "junction": 0,
+        "cantonment": 0,
+        "civil-lines": 0
+      },
+      "structureMultipliers": {
+        "doubleSpecific": 2,
+        "definiteForm": 1.5,
+        "newTransfer": 1.25,
+        "bareSpecific": 1.25,
+        "affix": 1,
+        "positionOfLandmark": 0.5,
+        "twin": 0.5,
+        "translationTag": 0.5,
+        "possessive": 0.1
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.4,
+        "adapted": 0.6
+      },
+      "wordOrder": {
+        "specific-first": 10,
+        "generic-first-direct": 30,
+        "generic-first-linked": 60
+      }
+    },
+    {
+      "id": "french",
+      "label": "French",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Leans towards the king and royal family (Louis, Dauphin, Royal); forts and ports as prefixes; founders and patrons with \"town\" (-ville); \"New\" plus a homeland name; and saints. In North America it readily adopts native names and is the tradition most given to translating them: Red Stick.",
+      "categoryMultipliers": {
+        "monarch-ruler-or-dynasty": 2,
+        "saint-or-holy-person": 1.75,
+        "royal-woman": 1.5,
+        "honorific-title": 1.5,
+        "explorer-or-founder": 1.5,
+        "native-place-name": 1.5,
+        "native-people-or-tribe": 1.5,
+        "homeland-place-name": 1.25,
+        "official-patron-or-sponsor": 1.25,
+        "colour": 1.25,
+        "ship": 1,
+        "commander-or-conqueror": 1,
+        "religious-association": 1,
+        "calendar-date-or-feast": 0.75,
+        "emotion-or-aspiration": 0.75,
+        "settler-group": 0.75,
+        "resource": 0.75,
+        "imperial-claim": 0.5,
+        "classical-biblical-or-legendary-name": 0.5,
+        "personal-name": 0.5,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "defensive": 1.75,
+        "industry-and-trade": 1.5,
+        "colonial-settlement": 1.25,
+        "religious-christian": 1.25,
+        "rivers-and-streams": 1.25,
+        "springs-pools-and-lakes": 1.25,
+        "territories": 1.25,
+        "military-and-administrative": 1,
+        "local-generics": 0.5,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "town": 2,
+        "trading-post": 1.5,
+        "fort": 1.5,
+        "market-town-harbour": 1.5,
+        "mission": 1.25,
+        "administrative-station": 1.25,
+        "colony": 0.5,
+        "capital": 0.5,
+        "cantonment": 0.5,
+        "pastoral-station": 0.25,
+        "junction": 0.25,
+        "hope": 0.1,
+        "memorial": 0.1,
+        "civil-lines": 0
+      },
+      "structureMultipliers": {
+        "translationTag": 2,
+        "definiteForm": 2,
+        "doubleSpecific": 1.5,
+        "newTransfer": 1.5,
+        "bareSpecific": 1,
+        "twin": 1,
+        "affix": 1,
+        "positionOfLandmark": 0.5,
+        "possessive": 0.25
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.6,
+        "adapted": 0.4
+      },
+      "wordOrder": {
+        "specific-first": 35,
+        "generic-first-direct": 30,
+        "generic-first-linked": 35
+      }
+    },
+    {
+      "id": "italian",
+      "label": "Italian",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Modern Italian colonisation leans towards officials and national heroes, given to planned farm villages as Village of [person], along with royal titles and a revival of Roman and classical names. The medieval Venetian and Genoese empires reshaped native names by folk etymology into Italian-sounding words: Negroponte, \"black bridge\".",
+      "categoryMultipliers": {
+        "official-patron-or-sponsor": 2.5,
+        "commander-or-conqueror": 1.5,
+        "honorific-title": 1.5,
+        "classical-biblical-or-legendary-name": 1.5,
+        "native-place-name": 1.5,
+        "royal-woman": 1.25,
+        "personal-name": 1.25,
+        "monarch-ruler-or-dynasty": 1,
+        "explorer-or-founder": 1,
+        "saint-or-holy-person": 1,
+        "homeland-place-name": 0.75,
+        "emotion-or-aspiration": 0.75,
+        "religious-association": 0.75,
+        "settler-group": 0.75,
+        "imperial-claim": 0.5,
+        "calendar-date-or-feast": 0.5,
+        "ship": 0.25,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "colonial-settlement": 1.5,
+        "settlement-farms-and-estates": 1.25,
+        "industry-and-trade": 1.25,
+        "military-and-administrative": 0.75,
+        "territories": 0.75,
+        "new-landscapes": 0.75,
+        "religious-christian": 0.75,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "planned-village": 3,
+        "market-town-harbour": 1.5,
+        "trading-post": 1.25,
+        "fort": 1,
+        "mission": 0.5,
+        "colony": 0.5,
+        "memorial": 0.25,
+        "pastoral-station": 0.25,
+        "mining-camp": 0.25,
+        "junction": 0.25,
+        "hope": 0,
+        "cantonment": 0,
+        "civil-lines": 0
+      },
+      "structureMultipliers": {
+        "doubleSpecific": 1,
+        "affix": 1,
+        "bareSpecific": 0.75,
+        "newTransfer": 0.75,
+        "twin": 0.75,
+        "definiteForm": 0.5,
+        "positionOfLandmark": 0.5,
+        "translationTag": 0.5,
+        "possessive": 0.1
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.2,
+        "adapted": 0.8
+      },
+      "wordOrder": {
+        "specific-first": 10,
+        "generic-first-direct": 25,
+        "generic-first-linked": 65
+      }
+    },
+    {
+      "id": "belgian",
+      "label": "Belgian",
+      "parts": [
+        "2a"
+      ],
+      "guide": "Leans almost entirely towards [person] + town: kings, queens, explorers and officials, with the occasional Port [official]. Native names were largely set aside while Belgian rule lasted, and were restored afterwards.",
+      "categoryMultipliers": {
+        "monarch-ruler-or-dynasty": 3,
+        "royal-woman": 2.5,
+        "explorer-or-founder": 2.5,
+        "official-patron-or-sponsor": 2.5,
+        "commander-or-conqueror": 1.5,
+        "native-place-name": 0.5,
+        "saint-or-holy-person": 0.5,
+        "homeland-place-name": 0.5,
+        "honorific-title": 0.5,
+        "religious-association": 0.5,
+        "personal-name": 0.5,
+        "resource": 0.5,
+        "colour": 0.5,
+        "native-people-or-tribe": 0.25,
+        "emotion-or-aspiration": 0.25,
+        "imperial-claim": 0.25,
+        "settler-group": 0.25,
+        "classical-biblical-or-legendary-name": 0.1,
+        "ship": 0.1,
+        "calendar-date-or-feast": 0.1,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "colonial-settlement": 3,
+        "industry-and-trade": 1,
+        "military-and-administrative": 1,
+        "religious-christian": 0.75,
+        "territories": 0.5,
+        "defensive": 0.5,
+        "local-generics": 0.1,
+        "religious-pre-christian-and-sacred": 0.1,
+        "rivers-and-streams": 0.5,
+        "springs-pools-and-lakes": 0.5,
+        "wetland": 0.5,
+        "islands-and-river-land": 0.5,
+        "coast-and-sea": 0.5,
+        "crossings-and-routes": 0.5,
+        "woodland": 0.5,
+        "clearings": 0.5,
+        "hills-and-slopes": 0.5,
+        "mountains-and-rock": 0.5,
+        "upland-and-open-ground": 0.5,
+        "valleys": 0.5,
+        "hollows-and-corners": 0.5,
+        "open-and-farmed-land": 0.5,
+        "new-landscapes": 0.5,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "town": 4,
+        "administrative-station": 1.5,
+        "market-town-harbour": 1.5,
+        "mission": 1,
+        "trading-post": 1,
+        "garrison-camp": 0.5,
+        "frontier-post": 0.5,
+        "city": 0.25,
+        "capital": 0.25,
+        "planned-village": 0.25,
+        "memorial": 0.25,
+        "junction": 0.25,
+        "crossing": 0.25,
+        "colony": 0,
+        "hope": 0,
+        "pastoral-station": 0,
+        "cantonment": 0,
+        "civil-lines": 0
+      },
+      "structureMultipliers": {
+        "affix": 0.5,
+        "bareSpecific": 0.25,
+        "doubleSpecific": 0.25,
+        "newTransfer": 0.25,
+        "twin": 0.25,
+        "positionOfLandmark": 0.25,
+        "translationTag": 0.25,
+        "possessive": 0.1,
+        "definiteForm": 0
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.5,
+        "adapted": 0.5
+      },
+      "wordOrder": {
+        "specific-first": 85,
+        "generic-first-direct": 15,
+        "generic-first-linked": 0
+      }
+    },
+    {
+      "id": "dutch",
+      "label": "Dutch",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Leans above all towards homeland names, both bare (Haarlem, Breukelen) and with \"New\" (New Amsterdam, New Holland, New Zealand). Commemorates officials and patrons, often as [official]'s Land; honours the House of Orange; names coasts after ships; and builds forts and trading posts. In southern Africa, founders join with \"wood\" or \"village\", and the land is described by its shape: Table Mountain. In the East Indies, classical and ancestral names appear: Batavia.",
+      "categoryMultipliers": {
+        "homeland-place-name": 3,
+        "official-patron-or-sponsor": 2,
+        "monarch-ruler-or-dynasty": 1.5,
+        "explorer-or-founder": 1.5,
+        "classical-biblical-or-legendary-name": 1.5,
+        "shape": 1.5,
+        "native-place-name": 1,
+        "ship": 1,
+        "event-or-incident": 1,
+        "settler-group": 1,
+        "produce": 1,
+        "personal-name": 1,
+        "royal-woman": 0.75,
+        "commander-or-conqueror": 0.75,
+        "native-people-or-tribe": 0.75,
+        "emotion-or-aspiration": 0.75,
+        "resource": 0.75,
+        "honorific-title": 0.5,
+        "saint-or-holy-person": 0.25,
+        "religious-association": 0.25,
+        "imperial-claim": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "calendar-date-or-feast": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "territories": 1.75,
+        "coast-and-sea": 1.5,
+        "islands-and-river-land": 1.5,
+        "industry-and-trade": 1.5,
+        "defensive": 1.25,
+        "colonial-settlement": 1.25,
+        "settlement-farms-and-estates": 1.25,
+        "woodland": 1.25,
+        "military-and-administrative": 0.75,
+        "religious-christian": 0.5,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.1,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "land-territory": 3,
+        "trading-post": 2,
+        "fort": 1.5,
+        "planned-village": 1.5,
+        "town": 1,
+        "pastoral-station": 0.75,
+        "capital": 0.5,
+        "mining-camp": 0.5,
+        "mission": 0.25,
+        "hope": 0.25,
+        "memorial": 0.25,
+        "colony": 0.25,
+        "junction": 0.25,
+        "cantonment": 0,
+        "civil-lines": 0
+      },
+      "structureMultipliers": {
+        "possessive": 2.5,
+        "newTransfer": 2.5,
+        "bareSpecific": 1.5,
+        "affix": 1,
+        "doubleSpecific": 0.5,
+        "positionOfLandmark": 0.5,
+        "twin": 0.5,
+        "translationTag": 0.5,
+        "definiteForm": 0.25
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.5,
+        "adapted": 0.5
+      },
+      "wordOrder": {
+        "specific-first": 80,
+        "generic-first-direct": 15,
+        "generic-first-linked": 5
+      }
+    },
+    {
+      "id": "british-imperial",
+      "label": "British Imperial",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Naming by the empire's officials, navy and explorers. Leans towards governors, ministers and patrons (Melbourne, Wellington); the monarch and royal family (Victoria, Adelaide, Queensland); explorers, their ships and their experiences (Cook Strait, Endeavour River, Cape Tribulation); and commanders. In India and other ruled lands it builds cantonments, civil lines, administrative stations and twin cities (New Delhi), forms hybrids with local generics (Abbottabad), and respells native names: Cawnpore.",
+      "categoryMultipliers": {
+        "official-patron-or-sponsor": 3,
+        "monarch-ruler-or-dynasty": 2.5,
+        "royal-woman": 2.5,
+        "explorer-or-founder": 2,
+        "ship": 2,
+        "event-or-incident": 2,
+        "commander-or-conqueror": 2,
+        "native-place-name": 1.75,
+        "emotion-or-aspiration": 1.5,
+        "native-people-or-tribe": 1,
+        "homeland-place-name": 1,
+        "honorific-title": 0.75,
+        "calendar-date-or-feast": 0.75,
+        "resource": 0.75,
+        "personal-name": 0.5,
+        "settler-group": 0.5,
+        "distance-or-survey-mark": 0.5,
+        "classical-biblical-or-legendary-name": 0.5,
+        "saint-or-holy-person": 0.5,
+        "religious-association": 0.5,
+        "imperial-claim": 0.25,
+        "local-deity": 0.25,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "military-and-administrative": 2,
+        "local-generics": 2,
+        "coast-and-sea": 1.5,
+        "colonial-settlement": 1.25,
+        "islands-and-river-land": 1.25,
+        "territories": 1.25,
+        "mountains-and-rock": 1.25,
+        "defensive": 1.25,
+        "settlement-farms-and-estates": 0.5,
+        "open-and-farmed-land": 0.5,
+        "religious-christian": 0.5,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "cantonment": 3,
+        "civil-lines": 3,
+        "administrative-station": 2,
+        "trading-post": 1.5,
+        "fort": 1.5,
+        "town": 1.25,
+        "capital": 1,
+        "frontier-post": 0.75,
+        "junction": 0.5,
+        "crossing": 0.5,
+        "creek": 0.5,
+        "garrison-camp": 0.5,
+        "pastoral-station": 0.25,
+        "mining-camp": 0.25,
+        "mission": 0.25,
+        "hope": 0.25,
+        "memorial": 0.25,
+        "colony": 0.25
+      },
+      "structureMultipliers": {
+        "twin": 2.5,
+        "bareSpecific": 2,
+        "possessive": 1.5,
+        "newTransfer": 1,
+        "affix": 1,
+        "translationTag": 0.5,
+        "positionOfLandmark": 0.5,
+        "doubleSpecific": 0.25,
+        "definiteForm": 0.1
+      },
+      "affixTypeMultipliers": {
+        "city": 0.5
+      },
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.3,
+        "adapted": 0.7
+      },
+      "wordOrder": {
+        "specific-first": 85,
+        "generic-first-direct": 13,
+        "generic-first-linked": 2
+      }
+    },
+    {
+      "id": "english-speaking-settler",
+      "label": "English-speaking Settler",
+      "parts": [
+        "2"
+      ],
+      "guide": "Naming by the settlers of the United States, Canada, Australia and New Zealand themselves. Leans towards homeland names, bare or with \"New\"; classical and biblical names (Troy, Ithaca, Bethlehem); ordinary settlers and landowners; survey and distance names (Twelve Mile Creek); resources and gold-rush camps; stations, junctions, crossings and creeks; hopeful names (Pleasant Valley); and the City suffix. Adopts native names freely (Ottawa, Wagga Wagga), and translates them: Rocky Mountains.",
+      "categoryMultipliers": {
+        "homeland-place-name": 3,
+        "classical-biblical-or-legendary-name": 2.5,
+        "personal-name": 2.5,
+        "distance-or-survey-mark": 2.5,
+        "resource": 2,
+        "native-place-name": 2,
+        "emotion-or-aspiration": 2,
+        "native-people-or-tribe": 1.75,
+        "settler-group": 1.5,
+        "official-patron-or-sponsor": 1.25,
+        "commander-or-conqueror": 1.25,
+        "event-or-incident": 1.25,
+        "wild-animal": 1.25,
+        "tree": 1.25,
+        "colour": 1.25,
+        "explorer-or-founder": 1,
+        "monarch-ruler-or-dynasty": 0.75,
+        "royal-woman": 0.75,
+        "religious-association": 0.75,
+        "saint-or-holy-person": 0.5,
+        "ship": 0.25,
+        "honorific-title": 0.25,
+        "calendar-date-or-feast": 0.25,
+        "imperial-claim": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "colonial-settlement": 1.75,
+        "new-landscapes": 1.5,
+        "settlement-farms-and-estates": 1.25,
+        "open-and-farmed-land": 1.25,
+        "rivers-and-streams": 1.25,
+        "valleys": 1.25,
+        "territories": 1,
+        "military-and-administrative": 0.5,
+        "religious-christian": 0.5,
+        "religious-pre-christian-and-sacred": 0.1,
+        "local-generics": 0,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "pastoral-station": 2.5,
+        "mining-camp": 2.5,
+        "junction": 2.5,
+        "crossing": 2.5,
+        "creek": 2.5,
+        "heights": 1.5,
+        "town": 1.5,
+        "city": 1.25,
+        "trading-post": 1,
+        "frontier-post": 0.75,
+        "capital": 0.5,
+        "administrative-station": 0.25,
+        "mission": 0.25,
+        "hope": 0.25,
+        "memorial": 0.25,
+        "colony": 0.1,
+        "cantonment": 0,
+        "civil-lines": 0
+      },
+      "structureMultipliers": {
+        "bareSpecific": 2,
+        "affix": 1.5,
+        "newTransfer": 1.5,
+        "possessive": 1.5,
+        "translationTag": 1.5,
+        "positionOfLandmark": 0.5,
+        "doubleSpecific": 0.1,
+        "definiteForm": 0.1
+      },
+      "affixTypeMultipliers": {
+        "city": 3
+      },
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.6,
+        "adapted": 0.4
+      },
+      "wordOrder": {
+        "specific-first": 88,
+        "generic-first-direct": 10,
+        "generic-first-linked": 2
+      }
+    },
+    {
+      "id": "german",
+      "label": "German",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Two strands. Medieval eastward settlement built castles named after kings and holy figures (King's Mountain, Mary's Castle), founded new villages, and reshaped Slavic names into German forms. Overseas colonies (1884–1919) honoured the Kaiser, the Empress and officials (Kaiser-Wilhelmsland, the Bismarck Archipelago), used \"New\" with homeland regions (New Pomerania), and named river mouths, bays and heights after founders.",
+      "categoryMultipliers": {
+        "monarch-ruler-or-dynasty": 2.5,
+        "official-patron-or-sponsor": 2,
+        "homeland-place-name": 2,
+        "explorer-or-founder": 1.5,
+        "native-place-name": 1.5,
+        "river-or-stream-name": 1.5,
+        "status-or-role": 1.5,
+        "saint-or-holy-person": 1.25,
+        "religious-association": 1.25,
+        "royal-woman": 1.25,
+        "honorific-title": 1,
+        "personal-name": 1,
+        "settler-group": 1,
+        "commander-or-conqueror": 1,
+        "emotion-or-aspiration": 0.75,
+        "resource": 0.75,
+        "ship": 0.5,
+        "event-or-incident": 0.5,
+        "imperial-claim": 0.25,
+        "calendar-date-or-feast": 0.25,
+        "classical-biblical-or-legendary-name": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "defensive": 2,
+        "settlement-farms-and-estates": 1.5,
+        "territories": 1.5,
+        "colonial-settlement": 1.25,
+        "islands-and-river-land": 1.25,
+        "rivers-and-streams": 1.25,
+        "hills-and-slopes": 1.25,
+        "religious-christian": 1,
+        "coast-and-sea": 1,
+        "military-and-administrative": 0.75,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "castle": 2.5,
+        "planned-village": 2,
+        "land-territory": 2,
+        "heights": 2,
+        "island-group": 2,
+        "river-mouth": 2,
+        "bay": 1.5,
+        "market-town-harbour": 1.5,
+        "mission": 0.75,
+        "trading-post": 0.75,
+        "memorial": 0.25,
+        "pastoral-station": 0.25,
+        "junction": 0.25,
+        "colony": 0.25,
+        "hope": 0.1,
+        "cantonment": 0,
+        "civil-lines": 0
+      },
+      "structureMultipliers": {
+        "newTransfer": 2,
+        "possessive": 1.5,
+        "affix": 1,
+        "bareSpecific": 0.5,
+        "positionOfLandmark": 0.5,
+        "twin": 0.5,
+        "translationTag": 0.5,
+        "doubleSpecific": 0.25,
+        "definiteForm": 0.1
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.3,
+        "adapted": 0.7
+      },
+      "wordOrder": {
+        "specific-first": 90,
+        "generic-first-direct": 8,
+        "generic-first-linked": 2
+      }
+    },
+    {
+      "id": "danish",
+      "label": "Danish",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "The narrowest Northern tradition. Leans above all towards the king and queens, joined to a distinctive \"hope\": Christian's Hope, Juliane's Hope, and plain Good Hope. Also builds royal towns and castles, raises memorials to missionaries, and names castles after homeland regions or the Danes themselves.",
+      "categoryMultipliers": {
+        "monarch-ruler-or-dynasty": 3,
+        "royal-woman": 2.5,
+        "emotion-or-aspiration": 2,
+        "homeland-place-name": 1.25,
+        "settler-group": 1.25,
+        "explorer-or-founder": 1,
+        "official-patron-or-sponsor": 1,
+        "native-place-name": 1,
+        "religious-association": 0.75,
+        "saint-or-holy-person": 0.5,
+        "native-people-or-tribe": 0.5,
+        "honorific-title": 0.5,
+        "commander-or-conqueror": 0.5,
+        "personal-name": 0.5,
+        "event-or-incident": 0.5,
+        "resource": 0.5,
+        "ship": 0.25,
+        "imperial-claim": 0.25,
+        "classical-biblical-or-legendary-name": 0.25,
+        "calendar-date-or-feast": 0.25,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "colonial-settlement": 2,
+        "defensive": 1.5,
+        "coast-and-sea": 1.5,
+        "islands-and-river-land": 1.25,
+        "industry-and-trade": 1.25,
+        "new-landscapes": 1,
+        "religious-christian": 0.75,
+        "military-and-administrative": 0.5,
+        "territories": 0.5,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.1,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "hope": 4,
+        "memorial": 2.5,
+        "castle": 2,
+        "town": 1.5,
+        "trading-post": 1.5,
+        "glacier": 1.5,
+        "market-town-harbour": 1.25,
+        "mission": 1,
+        "planned-village": 0.5,
+        "mining-camp": 0.25,
+        "colony": 0.25,
+        "pastoral-station": 0,
+        "junction": 0,
+        "cantonment": 0,
+        "civil-lines": 0
+      },
+      "structureMultipliers": {
+        "possessive": 2.5,
+        "bareSpecific": 1,
+        "affix": 0.5,
+        "newTransfer": 0.5,
+        "doubleSpecific": 0.25,
+        "twin": 0.25,
+        "positionOfLandmark": 0.25,
+        "translationTag": 0.25,
+        "definiteForm": 0.1
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.5,
+        "adapted": 0.5
+      },
+      "wordOrder": {
+        "specific-first": 95,
+        "generic-first-direct": 5,
+        "generic-first-linked": 0
+      }
+    },
+    {
+      "id": "swedish",
+      "label": "Swedish",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "A small, fort-dominated tradition. Leans towards forts named after the queen, kings and homeland places (Fort Christina, Fort Elfsborg), \"New\" plus a homeland name (New Gothenburg, New Sweden), and holy names: Fort Trinity.",
+      "categoryMultipliers": {
+        "royal-woman": 2.5,
+        "monarch-ruler-or-dynasty": 2.5,
+        "homeland-place-name": 2,
+        "religious-association": 1.5,
+        "settler-group": 1,
+        "native-place-name": 1,
+        "official-patron-or-sponsor": 0.75,
+        "native-people-or-tribe": 0.75,
+        "explorer-or-founder": 0.5,
+        "saint-or-holy-person": 0.5,
+        "honorific-title": 0.5,
+        "commander-or-conqueror": 0.5,
+        "emotion-or-aspiration": 0.5,
+        "personal-name": 0.5,
+        "ship": 0.5,
+        "resource": 0.5,
+        "event-or-incident": 0.25,
+        "imperial-claim": 0.25,
+        "classical-biblical-or-legendary-name": 0.25,
+        "calendar-date-or-feast": 0.25,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "defensive": 3,
+        "rivers-and-streams": 1.25,
+        "colonial-settlement": 1,
+        "industry-and-trade": 1,
+        "military-and-administrative": 1,
+        "territories": 0.75,
+        "religious-christian": 0.75,
+        "new-landscapes": 0.5,
+        "local-generics": 0.1,
+        "religious-pre-christian-and-sacred": 0.1,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "fort": 3,
+        "castle": 1.5,
+        "trading-post": 1.5,
+        "province-kingdom": 1.5,
+        "town": 1,
+        "colony": 0.5,
+        "planned-village": 0.5,
+        "mission": 0.25,
+        "hope": 0.25,
+        "memorial": 0.25,
+        "mining-camp": 0.25,
+        "pastoral-station": 0,
+        "junction": 0,
+        "cantonment": 0,
+        "civil-lines": 0
+      },
+      "structureMultipliers": {
+        "newTransfer": 2,
+        "possessive": 1.5,
+        "bareSpecific": 1,
+        "affix": 0.5,
+        "doubleSpecific": 0.25,
+        "twin": 0.25,
+        "positionOfLandmark": 0.25,
+        "translationTag": 0.25,
+        "definiteForm": 0.1
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.5,
+        "adapted": 0.5
+      },
+      "wordOrder": {
+        "specific-first": 85,
+        "generic-first-direct": 13,
+        "generic-first-linked": 2
+      }
+    },
+    {
+      "id": "russian",
+      "label": "Russian",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Leans towards native river names turned into towns (Town on the Irkut); saints and feasts of the Orthodox calendar; tsars and tsaritsas; explorers; \"New\" with a region name; places described by their position beyond a landmark; and colour. In the Caucasus and the Far East it adds imperial-claim names (Ruler of the East) and loyalty names (Faithful).",
+      "categoryMultipliers": {
+        "river-or-stream-name": 3,
+        "saint-or-holy-person": 2,
+        "calendar-date-or-feast": 2,
+        "monarch-ruler-or-dynasty": 2,
+        "royal-woman": 2,
+        "explorer-or-founder": 2,
+        "imperial-claim": 2,
+        "colour": 1.5,
+        "native-place-name": 1.5,
+        "official-patron-or-sponsor": 1.25,
+        "commander-or-conqueror": 1.25,
+        "religious-association": 1.25,
+        "homeland-place-name": 1,
+        "emotion-or-aspiration": 1,
+        "native-people-or-tribe": 1,
+        "resource": 1,
+        "settler-group": 0.75,
+        "event-or-incident": 0.75,
+        "ship": 0.75,
+        "personal-name": 0.5,
+        "honorific-title": 0.5,
+        "classical-biblical-or-legendary-name": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "colonial-settlement": 2,
+        "military-and-administrative": 1.5,
+        "rivers-and-streams": 1.5,
+        "defensive": 1.25,
+        "territories": 1.25,
+        "religious-christian": 1,
+        "new-landscapes": 1,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.1,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "town": 3,
+        "frontier-post": 2.5,
+        "fort": 1.25,
+        "trading-post": 1.25,
+        "city": 1,
+        "mining-camp": 0.75,
+        "mission": 0.5,
+        "junction": 0.5,
+        "memorial": 0.25,
+        "pastoral-station": 0.25,
+        "colony": 0.25,
+        "hope": 0.1,
+        "cantonment": 0,
+        "civil-lines": 0
+      },
+      "structureMultipliers": {
+        "positionOfLandmark": 1.5,
+        "doubleSpecific": 1.5,
+        "newTransfer": 1.25,
+        "bareSpecific": 1,
+        "possessive": 1,
+        "affix": 1,
+        "twin": 0.5,
+        "translationTag": 0.5,
+        "definiteForm": 0
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.4,
+        "adapted": 0.6
+      },
+      "wordOrder": {
+        "specific-first": 90,
+        "generic-first-direct": 5,
+        "generic-first-linked": 5
+      }
+    },
+    {
+      "id": "arab",
+      "label": "Arab",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Puts the generic first, joined with \"of\": Mountain of [commander], Castle of [person], River of [description], City of [aspiration]. Leans towards commanders and conquerors; peace and victory names (City of Peace, The Victorious); garrison camps that grew into cities; frontier posts and watchtowers; the tombs of holy men; tribal settler groups; and the definite article: The Island.",
+      "categoryMultipliers": {
+        "commander-or-conqueror": 3,
+        "emotion-or-aspiration": 2.5,
+        "imperial-claim": 2,
+        "quality-or-condition": 1.5,
+        "size": 1.5,
+        "soil-or-ground": 1.5,
+        "royal-woman": 1.5,
+        "monarch-ruler-or-dynasty": 1.5,
+        "native-place-name": 1.5,
+        "settler-group": 1.5,
+        "saint-or-holy-person": 1.5,
+        "personal-name": 1,
+        "honorific-title": 1,
+        "religious-association": 1,
+        "official-patron-or-sponsor": 0.75,
+        "homeland-place-name": 0.75,
+        "native-people-or-tribe": 0.5,
+        "explorer-or-founder": 0.5,
+        "calendar-date-or-feast": 0.1,
+        "distance-or-survey-mark": 0.1,
+        "classical-biblical-or-legendary-name": 0.1,
+        "ship": 0,
+        "local-deity": 0,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "military-and-administrative": 2,
+        "defensive": 2,
+        "religious-islamic": 2,
+        "rivers-and-streams": 1.75,
+        "new-landscapes": 1.5,
+        "mountains-and-rock": 1.5,
+        "colonial-settlement": 1.5,
+        "islands-and-river-land": 1.25,
+        "territories": 0.75,
+        "local-generics": 0.5,
+        "religious-christian": 0,
+        "religious-pre-christian-and-sacred": 0
+      },
+      "genericMultipliers": {
+        "garrison-camp": 3,
+        "frontier-post": 2.5,
+        "city": 2,
+        "lookout-hill": 2,
+        "castle": 2,
+        "oasis": 2,
+        "dry-riverbed": 2,
+        "river": 1.5,
+        "haven": 1.5,
+        "market": 1.25,
+        "pastoral-station": 0.25,
+        "mining-camp": 0.25,
+        "crossing": 0.25,
+        "planned-village": 0.25,
+        "heights": 0.25,
+        "mission": 0,
+        "hope": 0,
+        "memorial": 0,
+        "junction": 0,
+        "cantonment": 0,
+        "civil-lines": 0,
+        "colony": 0
+      },
+      "structureMultipliers": {
+        "definiteForm": 3,
+        "doubleSpecific": 1.5,
+        "bareSpecific": 1,
+        "affix": 0.75,
+        "positionOfLandmark": 0.5,
+        "translationTag": 0.5,
+        "twin": 0.5,
+        "newTransfer": 0.25,
+        "possessive": 0.1
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.3,
+        "adapted": 0.7
+      },
+      "wordOrder": {
+        "specific-first": 5,
+        "generic-first-direct": 25,
+        "generic-first-linked": 70
+      }
+    },
+    {
+      "id": "ottoman",
+      "label": "Ottoman",
+      "parts": [
+        "2a"
+      ],
+      "guide": "Leans above all towards colour: White Castle, Black Cape, Red River. Sultans are honoured in new towns named of [sultan]; new cities sit beside old ones; and the landscape fills with castles, markets, bridges and villages, many named by size or shape. Turkic settler tribes and dervish saints leave their names too, and native names are Turkified.",
+      "categoryMultipliers": {
+        "colour": 4,
+        "monarch-ruler-or-dynasty": 3,
+        "age": 2.5,
+        "size": 1.5,
+        "shape": 1.5,
+        "native-place-name": 1.5,
+        "status-or-role": 1.5,
+        "honorific-title": 1.5,
+        "quality-or-condition": 1.25,
+        "commander-or-conqueror": 1.25,
+        "settler-group": 1.25,
+        "position-or-direction": 1,
+        "royal-woman": 1,
+        "saint-or-holy-person": 1,
+        "religious-association": 1,
+        "personal-name": 1,
+        "official-patron-or-sponsor": 0.75,
+        "imperial-claim": 0.75,
+        "emotion-or-aspiration": 0.75,
+        "homeland-place-name": 0.5,
+        "explorer-or-founder": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "calendar-date-or-feast": 0.1,
+        "ship": 0.1,
+        "classical-biblical-or-legendary-name": 0.1,
+        "local-deity": 0,
+        "colonial-deity": 0
+      },
+      "groupMultipliers": {
+        "defensive": 2,
+        "industry-and-trade": 1.75,
+        "settlement-farms-and-estates": 1.5,
+        "colonial-settlement": 1.5,
+        "religious-islamic": 1.5,
+        "crossings-and-routes": 1.25,
+        "coast-and-sea": 1,
+        "military-and-administrative": 1,
+        "territories": 0.5,
+        "local-generics": 0.25,
+        "religious-christian": 0,
+        "religious-pre-christian-and-sacred": 0
+      },
+      "genericMultipliers": {
+        "castle": 3,
+        "market": 2.5,
+        "village": 2,
+        "city": 2,
+        "bridge": 1.5,
+        "planned-village": 1.5,
+        "headland": 1.25,
+        "river": 1.25,
+        "trading-post": 0.5,
+        "mining-camp": 0.25,
+        "heights": 0.25,
+        "hope": 0,
+        "memorial": 0,
+        "mission": 0,
+        "pastoral-station": 0,
+        "junction": 0,
+        "cantonment": 0,
+        "civil-lines": 0,
+        "colony": 0
+      },
+      "structureMultipliers": {
+        "possessive": 2,
+        "twin": 1.5,
+        "affix": 1.25,
+        "bareSpecific": 1,
+        "newTransfer": 0.75,
+        "translationTag": 0.75,
+        "positionOfLandmark": 0.5,
+        "doubleSpecific": 0.25,
+        "definiteForm": 0
+      },
+      "affixTypeMultipliers": {
+        "age": 2,
+        "size": 1.5
+      },
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.3,
+        "adapted": 0.7
+      },
+      "wordOrder": {
+        "specific-first": 95,
+        "generic-first-direct": 3,
+        "generic-first-linked": 2
+      }
+    },
+    {
+      "id": "chinese",
+      "label": "Chinese",
+      "parts": [
+        "2a"
+      ],
+      "guide": "Leans above all towards imperial claim: places pacified, garrisoned, civilised or at peace. Names places by their position relative to a river or mountain (East of the Liao, North of the River), declares new frontiers and provinces, revives ancient state names, and fills frontiers with garrisons, walls and passes. Capitals are named by direction: Northern Capital. Local names are transliterated.",
+      "categoryMultipliers": {
+        "imperial-claim": 4,
+        "position-or-direction": 3,
+        "river-or-stream-name": 2,
+        "emotion-or-aspiration": 2,
+        "native-place-name": 1.5,
+        "native-people-or-tribe": 1.5,
+        "age": 1.5,
+        "landform": 1.5,
+        "classical-biblical-or-legendary-name": 1.5,
+        "colour": 1.5,
+        "resource": 0.75,
+        "commander-or-conqueror": 0.5,
+        "honorific-title": 0.5,
+        "settler-group": 0.5,
+        "monarch-ruler-or-dynasty": 0.25,
+        "official-patron-or-sponsor": 0.25,
+        "homeland-place-name": 0.25,
+        "religious-association": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "royal-woman": 0.1,
+        "explorer-or-founder": 0.1,
+        "personal-name": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0.1,
+        "saint-or-holy-person": 0,
+        "calendar-date-or-feast": 0,
+        "ship": 0
+      },
+      "groupMultipliers": {
+        "military-and-administrative": 2.5,
+        "territories": 2.5,
+        "defensive": 1.5,
+        "rivers-and-streams": 1.5,
+        "mountains-and-rock": 1.25,
+        "new-landscapes": 1.25,
+        "colonial-settlement": 1,
+        "religious-pre-christian-and-sacred": 0.5,
+        "local-generics": 0.25,
+        "religious-christian": 0,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "frontier-march": 3,
+        "garrison-camp": 3,
+        "province-kingdom": 2.5,
+        "frontier-post": 2,
+        "wall": 2,
+        "capital": 1.5,
+        "pass": 1.5,
+        "city": 1.5,
+        "town": 1,
+        "trading-post": 0.5,
+        "mining-camp": 0.25,
+        "heights": 0.25,
+        "hope": 0,
+        "memorial": 0,
+        "mission": 0,
+        "pastoral-station": 0,
+        "junction": 0,
+        "cantonment": 0,
+        "civil-lines": 0,
+        "colony": 0
+      },
+      "structureMultipliers": {
+        "positionOfLandmark": 4,
+        "translationTag": 1,
+        "bareSpecific": 0.5,
+        "doubleSpecific": 0.5,
+        "affix": 0.5,
+        "newTransfer": 0.25,
+        "twin": 0.25,
+        "possessive": 0.1,
+        "definiteForm": 0
+      },
+      "affixTypeMultipliers": {},
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.5,
+        "adapted": 0.5
+      },
+      "wordOrder": {
+        "specific-first": 95,
+        "generic-first-direct": 5,
+        "generic-first-linked": 0
+      }
+    },
+    {
+      "id": "japanese",
+      "label": "Japanese",
+      "parts": [
+        "2",
+        "2a"
+      ],
+      "guide": "Leans towards keeping native names but writing them with carefully chosen characters, which reshapes them (Sapporo, Otaru). Settlers bring homeland names, often with a direction or \"New\" (North Hiroshima, New Totsukawa), and name places after their domain or clan. Auspicious words are favoured (Abundant Plain), and soldier-farmer villages guard the frontier. In ruled lands, it renames capitals and re-reads local names in Japanese.",
+      "categoryMultipliers": {
+        "native-place-name": 3,
+        "homeland-place-name": 2.5,
+        "emotion-or-aspiration": 2.5,
+        "position-or-direction": 2,
+        "settler-group": 2,
+        "quality-or-condition": 1.5,
+        "river-or-stream-name": 1.5,
+        "tree": 1.25,
+        "wild-plant": 1.25,
+        "personal-name": 1,
+        "resource": 1,
+        "explorer-or-founder": 1,
+        "official-patron-or-sponsor": 0.75,
+        "imperial-claim": 0.75,
+        "native-people-or-tribe": 0.5,
+        "monarch-ruler-or-dynasty": 0.5,
+        "commander-or-conqueror": 0.5,
+        "religious-association": 0.5,
+        "colonial-deity": 0.5,
+        "royal-woman": 0.25,
+        "calendar-date-or-feast": 0.25,
+        "classical-biblical-or-legendary-name": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "ship": 0.1,
+        "local-deity": 0.1,
+        "saint-or-holy-person": 0
+      },
+      "groupMultipliers": {
+        "settlement-farms-and-estates": 1.5,
+        "colonial-settlement": 1.5,
+        "open-and-farmed-land": 1.5,
+        "military-and-administrative": 1.25,
+        "new-landscapes": 1.25,
+        "religious-pre-christian-and-sacred": 1,
+        "territories": 1,
+        "coast-and-sea": 1,
+        "local-generics": 0.5,
+        "religious-christian": 0,
+        "religious-islamic": 0
+      },
+      "genericMultipliers": {
+        "plain-grassland": 2.5,
+        "capital": 2,
+        "planned-village": 2,
+        "village": 1.5,
+        "shrine-idol": 1.5,
+        "town": 1.25,
+        "garrison-camp": 1,
+        "mining-camp": 0.75,
+        "pastoral-station": 0.5,
+        "junction": 0.5,
+        "crossing": 0.5,
+        "colony": 0.25,
+        "hope": 0,
+        "memorial": 0,
+        "mission": 0,
+        "cantonment": 0,
+        "civil-lines": 0
+      },
+      "structureMultipliers": {
+        "positionOfLandmark": 1.5,
+        "newTransfer": 1.5,
+        "bareSpecific": 1.5,
+        "translationTag": 1.5,
+        "affix": 1,
+        "twin": 0.5,
+        "doubleSpecific": 0.25,
+        "possessive": 0.1,
+        "definiteForm": 0
+      },
+      "affixTypeMultipliers": {
+        "position": 2
+      },
+      "locative": 0,
+      "nativeTreatment": {
+        "adopted": 0.2,
+        "adapted": 0.8
+      },
+      "wordOrder": {
+        "specific-first": 98,
+        "generic-first-direct": 2,
+        "generic-first-linked": 0
+      }
+    }
+  ]
+}

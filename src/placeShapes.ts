@@ -32,6 +32,8 @@ export const PLACE_SHAPE_WEIGHTS = {
   stackedGenericChance: 0.05,
   /** Chance any shape gains an affix. */
   affixChance: 0.15,
+  /** Feature filter "Settlement": share of landscape groups drawn (transferred feature names, §2.4). */
+  landscapeShareSettlement: 0.35,
   /** Relative weight of each word order for two-part compounds. */
   wordOrder: {
     germanic: 1,
@@ -220,6 +222,7 @@ interface RegionWeighting {
   stackedGenericChance: number;
   affixChance: number;
   affixMultiplier: Record<string, number>;
+  landscapeShareSettlement: number;
 }
 
 function resolveRegion(code: string, regions: PlaceShapeRegionData): RegionWeighting {
@@ -244,6 +247,7 @@ function resolveRegion(code: string, regions: PlaceShapeRegionData): RegionWeigh
     stackedGenericChance: structure.stackedGenericChance,
     affixChance: structure.affixChance,
     affixMultiplier: regions.affixMultipliers[code] ?? {},
+    landscapeShareSettlement: structure.landscapeShareSettlement,
   };
 }
 
@@ -268,6 +272,13 @@ export interface PlaceShapeGenerateOptions {
   region?: string;
   /** Restricts which generic groups are eligible. Not exposed in the UI; used by tests. */
   groupIds?: string[];
+  /**
+   * Feature filter (recipes): "any" (default), "settlement" (settlement groups, with landscape
+   * groups drawn at the landscape share), "landscape", or a single group id.
+   */
+  feature?: string;
+  /** Categories set to `ignore` by a recipe: weight 0 at the shape stage. */
+  excludedCategories?: string[];
   /** Output wording; shapes are chosen identically either way. Defaults to "meaning". */
   wording?: ShapeWording;
 }
@@ -280,11 +291,11 @@ export interface PlaceShapeGenerateResult {
   mainRngNext: number;
 }
 
-function pickUniform<T>(items: readonly T[], rng: () => number): T {
+export function pickUniform<T>(items: readonly T[], rng: () => number): T {
   return items[Math.floor(rng() * items.length)];
 }
 
-function pickWeighted<T>(entries: readonly [T, number][], rng: () => number): T {
+export function pickWeighted<T>(entries: readonly [T, number][], rng: () => number): T {
   const total = entries.reduce((sum, [, w]) => sum + w, 0);
   let r = rng() * total;
   for (const [item, weight] of entries) {
@@ -305,15 +316,36 @@ class PlaceShapeGenerator {
   private readonly genericWeights = new Map<string, [ShapeGeneric, number][]>();
   private readonly stackGenerics: string[];
   private readonly affixWeights: [AffixType, number][];
+  private readonly excluded: Set<string>;
+  /** Feature filter "settlement": the two sides and the landscape share. */
+  private readonly sides: { settlement: ShapeGroup[]; landscape: ShapeGroup[]; landscapeShare: number } | null = null;
 
   constructor(
     private readonly source: PlaceShapeData,
     private readonly region: RegionWeighting | null,
-    groupIds?: string[],
+    filters: { groupIds?: string[]; feature?: string; excludedCategories?: string[] } = {},
     regions: PlaceShapeRegionData = PLACE_SHAPE_REGION_DATA,
   ) {
-    this.groups = groupIds ? source.groups.filter((g) => groupIds.includes(g.id)) : source.groups;
+    this.excluded = new Set(filters.excludedCategories ?? []);
+    let groups = filters.groupIds ? source.groups.filter((g) => filters.groupIds!.includes(g.id)) : source.groups;
+    const feature = filters.feature && filters.feature !== "any" ? filters.feature : undefined;
+    if (feature === "landscape") groups = groups.filter((g) => g.side === "landscape");
+    else if (feature && feature !== "settlement") groups = groups.filter((g) => g.id === feature);
+    if (this.excluded.size > 0) {
+      // Generics whose every pairing is ignored drop out, and so do groups left empty.
+      groups = groups
+        .map((g) => ({ ...g, generics: g.generics.filter((x) => this.categoryWeights(g, x.id).length > 0) }))
+        .filter((g) => g.generics.length > 0);
+    }
+    this.groups = groups;
     if (this.groups.length === 0) throw new Error("No eligible place-shape groups");
+    if (feature === "settlement") {
+      this.sides = {
+        settlement: groups.filter((g) => g.side === "settlement"),
+        landscape: groups.filter((g) => g.side === "landscape"),
+        landscapeShare: region?.landscapeShareSettlement ?? PLACE_SHAPE_WEIGHTS.landscapeShareSettlement,
+      };
+    }
     if (region) {
       for (const group of this.groups) {
         this.groupWeights.push([group, region.groupMultiplier[group.id] ?? 1]);
@@ -339,7 +371,7 @@ class PlaceShapeGenerator {
       weights = [...resolveProfile(group, genericId, this.source)]
         .map(([id, tier]): [string, number] => [
           id,
-          PLACE_SHAPE_WEIGHTS.tier[tier] * (this.region?.categoryMultiplier[id] ?? 1),
+          this.excluded.has(id) ? 0 : PLACE_SHAPE_WEIGHTS.tier[tier] * (this.region?.categoryMultiplier[id] ?? 1),
         ])
         .filter(([, w]) => w > 0);
       this.profiles.set(key, weights);
@@ -347,9 +379,22 @@ class PlaceShapeGenerator {
     return weights;
   }
 
+  private pickGroup(rng: () => number): ShapeGroup {
+    const region = this.region;
+    if (this.sides) {
+      const { settlement, landscape, landscapeShare } = this.sides;
+      let pool = rng() < landscapeShare ? landscape : settlement;
+      if (pool.length === 0) pool = pool === landscape ? settlement : landscape;
+      return region
+        ? pickWeighted(pool.map((g): [ShapeGroup, number] => [g, region.groupMultiplier[g.id] ?? 1]), rng)
+        : pickUniform(pool, rng);
+    }
+    return region ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
+  }
+
   next(rng: () => number): PlaceShape {
     const region = this.region;
-    const group = region ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
+    const group = this.pickGroup(rng);
     const generic = region ? pickWeighted(this.genericWeights.get(group.id)!, rng) : pickUniform(group.generics, rng);
     const categoryId = pickWeighted(this.categoryWeights(group, generic.id), rng);
     const shape: PlaceShape = {
@@ -402,7 +447,11 @@ function resolveSeed(seed?: number): number {
 
 function createGenerator(options: PlaceShapeGenerateOptions, source: PlaceShapeData): PlaceShapeGenerator {
   const region = options.region ? resolveRegion(options.region, PLACE_SHAPE_REGION_DATA) : null;
-  return new PlaceShapeGenerator(source, region, options.groupIds);
+  return new PlaceShapeGenerator(source, region, {
+    groupIds: options.groupIds,
+    feature: options.feature,
+    excludedCategories: options.excludedCategories,
+  });
 }
 
 /**
@@ -518,8 +567,28 @@ export class PlaceShapeFormatter {
     });
   }
 
-  private layout(shape: PlaceShape, genericText: (id: string, plural: boolean) => string): string {
-    const specific = bracket(this.categories.get(shape.categoryId));
+  /**
+   * Etymology view (names-reference §4.9): the Meaning shape with each fill shown after a colon
+   * inside its brackets, e.g. "[domestic animal: ox] + [river crossing]".
+   */
+  formatEtymology(shape: PlaceShape, specificFill?: string, affixFill?: string): string {
+    const withFill = (id: string, fill?: string) =>
+      fill ? `[${(this.categories.get(id) ?? "?").toLowerCase()}: ${fill}]` : bracket(this.categories.get(id));
+    return this.layout(
+      shape,
+      (id, plural) => `${bracket(this.generics.get(id))}${plural ? " (plural)" : ""}`,
+      withFill(shape.categoryId, specificFill),
+      shape.affix?.form.slotCategory ? withFill(shape.affix.form.slotCategory, affixFill) : undefined,
+    );
+  }
+
+  private layout(
+    shape: PlaceShape,
+    genericText: (id: string, plural: boolean) => string,
+    specificOverride?: string,
+    affixCategoryOverride?: string,
+  ): string {
+    const specific = specificOverride ?? bracket(this.categories.get(shape.categoryId));
 
     let text: string;
     switch (shape.structure) {
@@ -553,7 +622,9 @@ export class PlaceShapeFormatter {
 
     if (shape.affix) {
       const { form } = shape.affix;
-      const affix = form.slotCategory ? `${form.text} ${bracket(this.categories.get(form.slotCategory))}` : form.text;
+      const affix = [form.text, form.slotCategory ? affixCategoryOverride ?? bracket(this.categories.get(form.slotCategory)) : ""]
+        .filter((part) => part.length > 0)
+        .join(" ");
       text = form.position === "after" ? `${text} ${affix}` : `${affix} ${text}`;
     }
     return text;

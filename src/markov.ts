@@ -301,6 +301,30 @@ export class MarkovModel {
   }
 
   /**
+   * Mean per-character log-probability of one lowercase word under the model, including the end
+   * token — the same blended distributions sampling uses. Read-only: used by name ageing to judge
+   * how plausible a string is. Probabilities are floored at 0.0001, as in `trySampleWord`.
+   */
+  scoreWord(word: string, faithfulness = 2): number {
+    const wbase = [2.5, 4.0, 7.0][clampInt(faithfulness, 1, 3) - 1];
+    this.ensureCache(wbase);
+    const context: string[] = [START];
+    let logp = 0;
+    const steps = [...Array.from(word), END];
+    for (const ch of steps) {
+      const dist = this.getDist(context, wbase);
+      let p = 0;
+      if (dist) {
+        const i = dist.chars.indexOf(ch);
+        if (i >= 0) p = (dist.cum[i] - (i > 0 ? dist.cum[i - 1] : 0)) / dist.tot;
+      }
+      logp += Math.log(Math.max(p, 0.0001));
+      context.push(ch);
+    }
+    return logp / steps.length;
+  }
+
+  /**
    * @internal One sampling attempt. Returns a lowercase word that ended
    * naturally and passed the length / repeat / perplexity gates, or null.
    * Copy-rejection, batch dedupe, novelty, and capitalisation are the
@@ -1140,6 +1164,22 @@ export class PlaceNameModel {
    * core name, and affixed results are additionally checked against the raw
    * multi-word source names.
    */
+  /**
+   * One stem — the first element of a place name, without its learned ending — capitalised, or
+   * null if no stem passed the gates within a few tries. Read-only: used by place-name recipes in
+   * stem mode. Draws from `rng` only; `generateDetailed` is unaffected.
+   */
+  sampleStem(rng: () => number, faithfulness = 2, strictness = 3): string | null {
+    const wbase = [2.5, 4.0, 7.0][clampInt(faithfulness, 1, 3) - 1];
+    const [minP, maxP] = strictnessBounds(clampInt(strictness, 1, 5));
+    this.stemModel.ensureCache(wbase);
+    for (let i = 0; i < 200; i++) {
+      const stem = this.stemModel.trySampleWord(rng, wbase, minP, maxP);
+      if (stem !== null && !hasRepeat(stem)) return capitaliseFirst(stem);
+    }
+    return null;
+  }
+
   generateDetailed(options: PlaceGenerateOptions): GenerateResult {
     const count = Math.max(0, Math.floor(options.count));
     const faithfulness = clampInt(options.faithfulness ?? 2, 1, 3);

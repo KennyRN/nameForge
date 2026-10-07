@@ -31,6 +31,21 @@ export const ICON_GENERIC_PLACE_NAMES = "nameforge-generic-place-names";
 const ICON_GENERIC_PLACE_NAMES_SVG =
   '<g transform="scale(4.16667)"><g fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path fill="currentColor" fill-rule="evenodd" d="M11.262 17.675L12 17zm1.476 0l.005-.005l.012-.014l.045-.05l.166-.186a38 38 0 0 0 2.348-2.957c.642-.9 1.3-1.92 1.801-2.933c.49-.99.885-2.079.885-3.086C18 4.871 15.382 2 12 2S6 4.87 6 8.444c0 1.007.395 2.096.885 3.086c.501 1.013 1.16 2.033 1.8 2.933a38 38 0 0 0 2.515 3.143l.045.05l.012.014l.005.005a1 1 0 0 0 1.476 0M12 17l.738.674zm0-11a2 2 0 1 0 0 4a2 2 0 0 0 0-4" clip-rule="evenodd" /></g></g>';
 
+export const ICON_EXPLORATION_PLACE_SHAPES = "nameforge-exploration-place-shapes";
+// Ant Design Icons — compass-twotone (MIT). Scaled for Obsidian's 100×100 viewBox.
+const ICON_EXPLORATION_PLACE_SHAPES_SVG =
+  '<g transform="scale(0.0976563)"><path fill="currentColor" fill-opacity=".15" d="M512 140c-205.4 0-372 166.6-372 372s166.6 372 372 372s372-166.6 372-372s-166.6-372-372-372M327.6 701.7c-2 .9-4.4 0-5.3-2.1c-.4-1-.4-2.2 0-3.2L421 470.9L553.1 603zm375.1-375.1L604 552.1L471.9 420l225.5-98.7c2-.9 4.4 0 5.3 2.1c.4 1 .4 2.1 0 3.2" /><path fill="currentColor" d="M322.3 696.4c-.4 1-.4 2.2 0 3.2c.9 2.1 3.3 3 5.3 2.1L553.1 603L421 470.9zm375.1-375.1L471.9 420L604 552.1l98.7-225.5c.4-1.1.4-2.2 0-3.2c-.9-2.1-3.3-3-5.3-2.1" /><path fill="currentColor" d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448s448-200.6 448-448S759.4 64 512 64m0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372s372 166.6 372 372s-166.6 372-372 372" /></g>';
+
+export const ICON_EMPIRE_EXPANSION_PLACE_SHAPES = "nameforge-empire-expansion-place-shapes";
+// Fluent UI System Icons — building-bank-28-filled (MIT). Scaled for Obsidian's 100×100 viewBox.
+const ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG =
+  '<g transform="scale(3.57143)"><path fill="currentColor" d="M13.11 2.293a1.5 1.5 0 0 1 1.78 0l9.497 7.005c1.124.83.598 2.578-.74 2.7H4.353c-1.338-.122-1.863-1.87-.74-2.7zM14 8.999a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3m5.5 4h2.499v6h-2.5zm-2 6v-6H15v6zM13 19v-6h-2.5v6zm-4.499 0v-6h-2.5v6zm-2.25 1a3.25 3.25 0 0 0-3.25 3.25v.5a.75.75 0 0 0 .75.751h20.497a.75.75 0 0 0 .75-.75v-.5a3.25 3.25 0 0 0-3.25-3.25z" /></g>';
+
+export const ICON_NAME_AGEING = "nameforge-name-ageing";
+// Akar Icons — calendar (MIT). Scaled for Obsidian's 100×100 viewBox.
+const ICON_NAME_AGEING_SVG =
+  '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="20" height="18" x="2" y="4" rx="4" /><path d="M8 2v4m8-4v4M2 10h20" /></g></g>';
+
 export const ICON_DICE = "nameforge-dice";
 const ICON_DICE_SVG = '<g transform="scale(6.66667)"><path d="M0 0h15v15H0z" fill="none" /><path fill="currentColor" d="M4.14 1.14c-.68.05-1.33.43-1.7 1.07L.29 5.93c-.59 1.03-.26 2.32.77 2.91l3.72 2.14c.15.09.31.19.47.24V7.47c0-1.76 1.45-3.22 3.21-3.22h1.31c-.18-.26-.41-.5-.7-.67L5.35 1.44c-.39-.22-.8-.33-1.21-.3m.33.76c.6 0 1.12.41 1.28.99c.19.72-.23 1.45-.95 1.64c-.71.19-1.44-.23-1.64-.94c-.19-.72.24-1.45.95-1.64c.12-.04.24-.05.36-.05M2.2 5.84c.6 0 1.12.41 1.28.99c.19.71-.24 1.45-.95 1.64S1.08 8.23.89 7.52s.23-1.45.95-1.64c.11-.03.24-.05.36-.04m6.26-.52c-1.18 0-2.14.96-2.14 2.15v4.28c0 1.19.96 2.15 2.14 2.15h4.29c1.19 0 2.14-.96 2.14-2.15V7.47c0-1.19-.95-2.15-2.14-2.15zm4.29.81c.35 0 .69.14.95.39a1.34 1.34 0 0 1 0 1.89c-.26.26-.6.4-.95.4a1.34 1.34 0 0 1 0-2.68m-4.29 4.28c.36 0 .7.14.95.4c.25.25.39.59.39.94a1.34 1.34 0 0 1-2.68 0c0-.35.14-.69.4-.94c.25-.26.59-.4.94-.4" /></g>';
 
@@ -90,6 +105,9 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_PACKS, ICON_PACKS_SVG);
   addIcon(ICON_PLACE_SHAPES, ICON_PLACE_SHAPES_SVG);
   addIcon(ICON_GENERIC_PLACE_NAMES, ICON_GENERIC_PLACE_NAMES_SVG);
+  addIcon(ICON_EXPLORATION_PLACE_SHAPES, ICON_EXPLORATION_PLACE_SHAPES_SVG);
+  addIcon(ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG);
+  addIcon(ICON_NAME_AGEING, ICON_NAME_AGEING_SVG);
   addIcon(ICON_DICE, ICON_DICE_SVG);
   addIcon(ICON_TEXT_INSERT, ICON_TEXT_INSERT_SVG);
   addIcon(ICON_CHECKLIST_INSERT, ICON_CHECKLIST_INSERT_SVG);

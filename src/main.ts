@@ -1,11 +1,12 @@
 import { normalizePath, Plugin, TFile } from "obsidian";
 import { NameForgeSettingTab } from "./settings";
-import { GenerationHistoryEntry, MAX_HISTORY_ENTRIES, NameForgeModal, NameForgeSettings } from "./modal";
+import { AgeingHistoryEntry, GenerationHistoryEntry, MAX_HISTORY_ENTRIES, NameForgeModal, NameForgeSettings } from "./modal";
 import { ICON_MEEPLE, registerNameForgeIcons } from "./icons";
 import { ensureDefaultNamesFolder, legacySettingsFileCandidates, normalizeSettingsFolder } from "./migration";
 import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from "./paths";
 import { softConnectWithRetry } from "./hostConnectRetry";
 import { getStoryForgeHostApi } from "./storyforgeBridge";
+import { promptInstallStarterTemplates } from "./starterInstall";
 
 const DEFAULT_SETTINGS: NameForgeSettings = {
   namesFilePath: "",
@@ -30,14 +31,25 @@ function getSettingsFilePath(settings: NameForgeSettings): string {
 const HISTORY_LINE_PATTERN = /^-\s*(\d{8}-\d{6})\s*\|\s*(-?\d+)\s*\|\s*(.*)$/;
 const HISTORY_COUNT_SUFFIX_PATTERN = /^(.*)\s\((\d+)\)$/;
 
-function parseGenerationHistory(body: string): GenerationHistoryEntry[] {
-  const headingIndex = body.indexOf("## Generation History");
+/** The lines of one `## Heading` section, up to the next `## ` heading or the end. */
+function sectionLines(body: string, heading: string): string[] | null {
+  const headingIndex = body.indexOf(heading);
   if (headingIndex === -1) {
+    return null;
+  }
+  const rest = body.slice(headingIndex + heading.length);
+  const next = rest.search(/\n## /);
+  return (next === -1 ? rest : rest.slice(0, next)).split(/\r?\n/);
+}
+
+function parseGenerationHistory(body: string): GenerationHistoryEntry[] {
+  const lines = sectionLines(body, "## Generation History");
+  if (!lines) {
     return [];
   }
 
   const entries: GenerationHistoryEntry[] = [];
-  for (const line of body.slice(headingIndex).split(/\r?\n/)) {
+  for (const line of lines) {
     const match = line.match(HISTORY_LINE_PATTERN);
     if (!match) {
       continue;
@@ -54,6 +66,34 @@ function parseGenerationHistory(body: string): GenerationHistoryEntry[] {
   }
 
   return entries;
+}
+
+/** Ageing history lines share the generation history's `- {timestamp} | {seed} | {label}` shape. */
+function parseAgeingHistory(body: string): AgeingHistoryEntry[] {
+  const lines = sectionLines(body, "## Ageing History");
+  if (!lines) {
+    return [];
+  }
+  const entries: AgeingHistoryEntry[] = [];
+  for (const line of lines) {
+    const match = line.match(HISTORY_LINE_PATTERN);
+    if (!match) {
+      continue;
+    }
+    const seed = Number(match[2]);
+    if (Number.isFinite(seed)) {
+      entries.push({ timestamp: match[1], seed, label: match[3].trim() });
+    }
+  }
+  return entries;
+}
+
+function createAgeingHistorySection(history?: AgeingHistoryEntry[]): string {
+  if (!history || history.length === 0) {
+    return "";
+  }
+  const lines = history.slice(0, MAX_HISTORY_ENTRIES).map((entry) => `- ${entry.timestamp} | ${entry.seed} | ${entry.label}`);
+  return `\n## Ageing History\n\n${lines.join("\n")}\n`;
 }
 
 function createGenerationHistorySection(history?: GenerationHistoryEntry[]): string {
@@ -102,9 +142,14 @@ function parseSettingsMarkdownContent(content: string): Partial<NameForgeSetting
     }
   }
 
-  const history = parseGenerationHistory(content.slice(frontmatterMatch[0].length));
+  const body = content.slice(frontmatterMatch[0].length);
+  const history = parseGenerationHistory(body);
   if (history.length > 0) {
     parsed.previousGenerations = history;
+  }
+  const ageing = parseAgeingHistory(body);
+  if (ageing.length > 0) {
+    parsed.ageingHistory = ageing;
   }
 
   return parsed;
@@ -123,7 +168,11 @@ function createSettingsMarkdownContent(settings: NameForgeSettings): string {
   lines.push(`strictness: ${settings.strictness ?? DEFAULT_SETTINGS.strictness}`);
 
   const frontmatter = `---\ntype: configurationFile\n${lines.join("\n")}\n---\n`;
-  return frontmatter + createGenerationHistorySection(settings.previousGenerations);
+  return (
+    frontmatter +
+    createGenerationHistorySection(settings.previousGenerations) +
+    createAgeingHistorySection(settings.ageingHistory)
+  );
 }
 
 export default class NameForgePlugin extends Plugin {
@@ -143,6 +192,17 @@ export default class NameForgePlugin extends Plugin {
       name: "Open name generator",
       callback: () => {
         this.openNameGenerator();
+      },
+    });
+
+    this.addCommand({
+      id: "install-starter-templates",
+      name: "Install starter templates",
+      callback: () => {
+        promptInstallStarterTemplates(
+          this.app,
+          resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER,
+        );
       },
     });
 

@@ -1,6 +1,16 @@
 // Name parser utilities
 
 import { buildWeightedCorpus, extractNamesFromMarkdown, MixSourceCorpus } from "./markov";
+import {
+  allSectionedNames,
+  mergeSectionedNames,
+  parseNameSections,
+  type SectionedNames,
+  type SectionRequest,
+  selectSectionNames,
+  serialiseNameSections,
+} from "./packs/sections";
+import { mergeWordLists, parseWordList, type WordList } from "./packs/wordList";
 
 export interface ParsedName {
   original: string;
@@ -24,11 +34,19 @@ export interface NamesFileData {
   mixSources?: MixSourceRef[];
   /** The fictional world/setting this pack belongs to. Reserved for future use; blank by default. */
   setting: string;
+  /** List and Breakdown packs with `##` headings (§10); absent for packs without headings. */
+  sectioned?: SectionedNames;
+  /** `template: true` — hidden from the generate view, offered when creating packs (§7). */
+  template?: boolean;
+  /** `template-of: "[[Template]]"` — the link target, without brackets. */
+  templateOf?: string;
 }
 
 export interface MixPackIndexEntry {
   path: string;
   parsed: NamesFileData;
+  /** Set when the pack's template couldn't be applied (§7); generation stops with this message. */
+  templateError?: string;
 }
 
 const PACK_TYPES = ["breakdownPack", "listPack", "compoundPack", "placePack", "mixPack"] as const;
@@ -75,6 +93,7 @@ export function parseNamesFileContent(content: string): NamesFileData {
   let body = content;
   let packType: NamesFileData["packType"] = "breakdownPack";
   let setting = "";
+  let templateFields: { template?: boolean; templateOf?: string } = {};
 
   if (frontmatterMatch) {
     const frontmatter = frontmatterMatch[1];
@@ -95,6 +114,7 @@ export function parseNamesFileContent(content: string): NamesFileData {
     if (settingMatch) {
       setting = settingMatch[1].trim().replace(/^['"]|['"]$/g, "");
     }
+    templateFields = parseTemplateFields(frontmatter);
 
     body = content.slice(frontmatterMatch[0].length);
 
@@ -119,6 +139,7 @@ export function parseNamesFileContent(content: string): NamesFileData {
         compoundJoining,
         parts,
         setting,
+        ...templateFields,
       };
     }
 
@@ -129,16 +150,76 @@ export function parseNamesFileContent(content: string): NamesFileData {
         packType,
         mixSources: parseMixSourceLines(body),
         setting,
+        ...templateFields,
       };
     }
   }
 
+  const sectioned = packType === "listPack" || packType === "breakdownPack" ? parseNameSections(body) : null;
   return {
     packName,
     names: extractNamesFromMarkdown(body),
     packType,
     setting,
+    ...(sectioned ? { sectioned } : {}),
+    ...templateFields,
   };
+}
+
+/** Reads `template:` and `template-of:` from frontmatter text (any pack type). */
+export function parseTemplateFields(frontmatter: string): { template?: boolean; templateOf?: string } {
+  const out: { template?: boolean; templateOf?: string } = {};
+  if (/^template:\s*["']?true["']?\s*$/im.test(frontmatter)) out.template = true;
+  const link = frontmatter.match(/^template-of:\s*(.*)$/m);
+  if (link) {
+    const target = link[1].trim().replace(/^['"]|['"]$/g, "").replace(/^\[\[|\]\]$/g, "").split("|")[0].trim();
+    if (target) out.templateOf = target;
+  }
+  return out;
+}
+
+/**
+ * §7 checks, then the merge. `template` is undefined when the link didn't resolve. A missing
+ * template, a template that itself has a template, a derived pack marked as a template, or a
+ * different pack type stops generation with a message naming the template.
+ */
+export function applyTemplate(
+  derived: NamesFileData,
+  template: NamesFileData | undefined,
+): { parsed: NamesFileData; error?: string } {
+  if (!derived.templateOf) return { parsed: derived };
+  const name = derived.templateOf;
+  if (derived.template) return { parsed: derived, error: `“${derived.packName}” is a template, so it can't use template-of.` };
+  if (!template) return { parsed: derived, error: `Template “${name}” is missing.` };
+  if (template.templateOf) return { parsed: derived, error: `Template “${name}” has its own template; only one level is allowed.` };
+  if (template.packType !== derived.packType) return { parsed: derived, error: `Template “${name}” is a different pack type.` };
+  return { parsed: mergeWithTemplate(derived, template) };
+}
+
+/**
+ * Applies a template to a derived pack (§7). Each list, section or subsection the derived pack
+ * leaves empty comes from the template; anything it has replaces the template's whole.
+ */
+export function mergeWithTemplate(derived: NamesFileData, template: NamesFileData): NamesFileData {
+  const merged: NamesFileData = { ...derived };
+  if (derived.packType === "compoundPack") {
+    const count = derived.compoundParts ?? template.compoundParts ?? 2;
+    merged.parts = Array.from({ length: count }, (_, i) => {
+      const own = derived.parts?.[i] ?? [];
+      return own.length > 0 ? own : template.parts?.[i] ?? [];
+    });
+    return merged;
+  }
+  if (derived.packType === "mixPack") {
+    merged.mixSources = (derived.mixSources ?? []).length > 0 ? derived.mixSources : template.mixSources;
+    return merged;
+  }
+  const asSections = (p: NamesFileData): SectionedNames => p.sectioned ?? { unsectioned: p.names, sections: [] };
+  const sectioned = mergeSectionedNames(asSections(derived), asSections(template));
+  merged.names = allSectionedNames(sectioned);
+  if (sectioned.sections.length > 0) merged.sectioned = sectioned;
+  else delete merged.sectioned;
+  return merged;
 }
 
 function splitCompoundPartSections(body: string, partCount: 2 | 3): string[] {
@@ -161,32 +242,42 @@ function splitCompoundPartSections(body: string, partCount: 2 | 3): string[] {
   return sections;
 }
 
-export function createNamesFileContent(packName: string, names: string[], packType: NamesFileData["packType"] = "breakdownPack"): string {
+export function createNamesFileContent(
+  packName: string,
+  names: string[],
+  packType: NamesFileData["packType"] = "breakdownPack",
+  options: { templateOf?: string; sectioned?: SectionedNames } = {},
+): string {
   const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
-  return `---\ntype: namePack\npackType: ${packType}\npackName: ${safePackName}\nsetting: \n---\n\n${names.join("\n")}\n`;
+  const templateLine = options.templateOf ? `template-of: "[[${options.templateOf}]]"\n` : "";
+  const body = options.sectioned ? serialiseNameSections(options.sectioned) : names.join("\n");
+  return `---\ntype: namePack\npackType: ${packType}\npackName: ${safePackName}\nsetting: \n${templateLine}---\n\n${body}\n`;
 }
 
 export function createCompoundNamesFileContent(
   packName: string,
   parts: string[][],
   generator: "breakdown" | "list",
-  joining: "joined" | "spaced"
+  joining: "joined" | "spaced",
+  templateOf?: string,
 ): string {
   const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const templateLine = templateOf ? `template-of: "[[${templateOf}]]"\n` : "";
   const partsSections = parts
     .map((partNames, index) => `## Part ${index + 1}\n\n${partNames.join("\n")}`)
     .join("\n\n");
 
-  return `---\ntype: namePack\npackType: compoundPack\ncompoundParts: ${parts.length}\ncompoundGenerator: ${generator}\ncompoundJoining: ${joining}\npackName: ${safePackName}\nsetting: \n---\n\n${partsSections}\n`;
+  return `---\ntype: namePack\npackType: compoundPack\ncompoundParts: ${parts.length}\ncompoundGenerator: ${generator}\ncompoundJoining: ${joining}\npackName: ${safePackName}\nsetting: \n${templateLine}---\n\n${partsSections}\n`;
 }
 
-export function createMixNamesFileContent(packName: string, sources: MixSourceRef[]): string {
+export function createMixNamesFileContent(packName: string, sources: MixSourceRef[], templateOf?: string): string {
   const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const templateLine = templateOf ? `template-of: "[[${templateOf}]]"\n` : "";
   const sourceLines = sources
     .map((source) => `- [[${source.packName}]] ${formatMixWeight(source.weight)}`)
     .join("\n");
 
-  return `---\ntype: namePack\npackType: mixPack\npackName: ${safePackName}\nsetting: \n---\n\n## Sources\n\n${sourceLines}\n`;
+  return `---\ntype: namePack\npackType: mixPack\npackName: ${safePackName}\nsetting: \n${templateLine}---\n\n## Sources\n\n${sourceLines}\n`;
 }
 
 function formatMixWeight(weight: number): string {
@@ -298,7 +389,9 @@ export function resolveMixSources(
   mixPath: string,
   mixData: NamesFileData,
   index: MixPackIndexEntry[],
-  visiting: Set<string> = new Set()
+  visiting: Set<string> = new Set(),
+  /** §10: passed to each source; a source without that section gives its whole list. */
+  sectionRequest?: SectionRequest,
 ): { sources: MixSourceCorpus[]; error?: string } {
   if (visiting.has(mixPath)) {
     return { sources: [], error: `Mix pack cycle involving ${mixData.packName || mixPath}.` };
@@ -319,7 +412,7 @@ export function resolveMixSources(
       return { sources: [], error: `Mix pack cannot include itself.` };
     }
 
-    const nested = resolvePackToCorpus(found, index, visiting);
+    const nested = resolvePackToCorpus(found, index, visiting, sectionRequest);
     if (nested.error) {
       visiting.delete(mixPath);
       return { sources: [], error: nested.error };
@@ -339,13 +432,16 @@ export function resolveMixSources(
 function resolvePackToCorpus(
   entry: MixPackIndexEntry,
   index: MixPackIndexEntry[],
-  visiting: Set<string>
+  visiting: Set<string>,
+  sectionRequest?: SectionRequest,
 ): { names: string[]; error?: string } {
   if (entry.parsed.packType !== "mixPack") {
+    const sectioned = entry.parsed.sectioned;
+    if (sectionRequest && sectioned) return { names: selectSectionNames(sectioned, sectionRequest).names };
     return { names: namesFromParsedPack(entry.parsed) };
   }
 
-  const nested = resolveMixSources(entry.path, entry.parsed, index, visiting);
+  const nested = resolveMixSources(entry.path, entry.parsed, index, visiting, sectionRequest);
   if (nested.error) return { names: [], error: nested.error };
   return { names: buildWeightedCorpus(nested.sources) };
 }
@@ -356,4 +452,41 @@ export function sanitizePackNameForFilename(packName: string): string {
   const trimmed = (packName || "nameForge").trim().replace(/\s+/g, " ");
   const cleaned = trimmed.replace(INVALID_FILENAME_CHARS, "-").trim();
   return cleaned || "nameForge";
+}
+// ── Word list packs (§9) ────────────────────────────────────────────────────
+
+export interface WordListFileData {
+  packName: string;
+  /** The pack's world, stored as `setting:` like every other pack. */
+  setting: string;
+  list: WordList;
+  template?: boolean;
+  templateOf?: string;
+}
+
+export function isWordListContent(content: string): boolean {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  return !!fm && /^type:\s*["']?word-list["']?\s*$/m.test(fm[1]);
+}
+
+export function parseWordListFileContent(content: string, fallbackName = "Word list"): WordListFileData {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  const frontmatter = fm ? fm[1] : "";
+  const field = (key: string) => frontmatter.match(new RegExp(`^${key}:\\s*(.*)$`, "m"))?.[1].trim().replace(/^['"]|['"]$/g, "") ?? "";
+  return {
+    packName: field("packName") || fallbackName,
+    setting: field("setting"),
+    list: parseWordList(fm ? content.slice(fm[0].length) : content),
+    ...parseTemplateFields(frontmatter),
+  };
+}
+
+export function mergeWordListWithTemplate(derived: WordListFileData, template: WordListFileData): WordListFileData {
+  return { ...derived, list: mergeWordLists(derived.list, template.list) };
+}
+
+export function createWordListFileContent(packName: string, body: string, templateOf?: string, template = false): string {
+  const safePackName = (packName || "Word list").trim().replace(/\s+/g, " ");
+  const templateLine = (template ? "template: true\n" : "") + (templateOf ? `template-of: "[[${templateOf}]]"\n` : "");
+  return `---\ntype: word-list\npackName: ${safePackName}\nsetting: \n${templateLine}---\n\n${body.trim()}\n`;
 }

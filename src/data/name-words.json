@@ -1,0 +1,2648 @@
+{
+  "$comment": "Built-in word lists (names-reference §11.1–11.12), fusion classes (§3.3) and prefix forms (§4.4). Data only.",
+  "version": 1,
+  "categories": {
+    "domestic-animal": [
+      {
+        "modern": "ox",
+        "plural": "oxen",
+        "forms": [
+          "Ox",
+          "Oxen"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "cow",
+        "plural": "cows",
+        "forms": [
+          "Cow",
+          "Kine"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "cattle",
+        "plural": "cattle",
+        "forms": [
+          "Rother"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "rother"
+      },
+      {
+        "modern": "sheep",
+        "plural": "sheep",
+        "forms": [
+          "Sheep",
+          "Ship"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "pig",
+        "plural": "swine",
+        "forms": [
+          "Swin"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "swine"
+      },
+      {
+        "modern": "goat",
+        "plural": "goats",
+        "forms": [
+          "Goat"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "horse",
+        "plural": "horses",
+        "forms": [
+          "Horse",
+          "Hors"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "calf",
+        "plural": "calves",
+        "forms": [
+          "Calf",
+          "Calver"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "lamb",
+        "plural": "lambs",
+        "forms": [
+          "Lamb"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "bull",
+        "plural": "bulls",
+        "forms": [
+          "Bull",
+          "Bul"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "goose",
+        "plural": "geese",
+        "forms": [
+          "Goose",
+          "Gos"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "dog",
+        "plural": "hounds",
+        "forms": [
+          "Hound"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "hound"
+      }
+    ],
+    "wild-animal": [
+      {
+        "modern": "wolf",
+        "plural": "wolves",
+        "forms": [
+          "Wolf",
+          "Wool"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "badger",
+        "plural": "brocks",
+        "forms": [
+          "Brock"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "brock"
+      },
+      {
+        "modern": "wild boar",
+        "plural": "boars",
+        "forms": [
+          "Boar",
+          "Ever"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "boar"
+      },
+      {
+        "modern": "deer",
+        "plural": "harts",
+        "forms": [
+          "Hart"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "hart"
+      },
+      {
+        "modern": "deer",
+        "plural": "hinds",
+        "forms": [
+          "Hind"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "hind"
+      },
+      {
+        "modern": "deer",
+        "plural": "roe",
+        "forms": [
+          "Roe"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "roe"
+      },
+      {
+        "modern": "fox",
+        "plural": "foxes",
+        "forms": [
+          "Fox"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "otter",
+        "plural": "otters",
+        "forms": [
+          "Otter"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "beaver",
+        "plural": "beavers",
+        "forms": [
+          "Bever"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "hare",
+        "plural": "hares",
+        "forms": [
+          "Hare"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "wildcat",
+        "plural": "wildcats",
+        "forms": [
+          "Cat"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "bird": [
+      {
+        "modern": "eagle",
+        "plural": "erns",
+        "forms": [
+          "Arn",
+          "Ern"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "ern"
+      },
+      {
+        "modern": "crane",
+        "plural": "cranes",
+        "forms": [
+          "Cran"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "crow",
+        "plural": "crows",
+        "forms": [
+          "Crow",
+          "Craw"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "raven",
+        "plural": "ravens",
+        "forms": [
+          "Raven",
+          "Ravens"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "hawk",
+        "plural": "hawks",
+        "forms": [
+          "Hawk",
+          "Hawks"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "swan",
+        "plural": "swans",
+        "forms": [
+          "Swan"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "owl",
+        "plural": "owls",
+        "forms": [
+          "Owl"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "heron",
+        "plural": "herons",
+        "forms": [
+          "Heron"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "cuckoo",
+        "plural": "cuckoos",
+        "forms": [
+          "Cuck"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "lark",
+        "plural": "laverocks",
+        "forms": [
+          "Laver"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "laverock"
+      },
+      {
+        "modern": "dove",
+        "plural": "culvers",
+        "forms": [
+          "Culver"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "culver"
+      },
+      {
+        "modern": "finch",
+        "plural": "finches",
+        "forms": [
+          "Finch"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "fish-and-other-creatures": [
+      {
+        "modern": "eel",
+        "plural": "eels",
+        "forms": [
+          "Eel",
+          "El"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "salmon",
+        "plural": "salmon",
+        "forms": [
+          "Salmon"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "trout",
+        "plural": "trout",
+        "forms": [
+          "Trout"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "fish",
+        "plural": "fish",
+        "forms": [
+          "Fish"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "bee",
+        "plural": "bees",
+        "forms": [
+          "Bee",
+          "Beo"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "tree": [
+      {
+        "modern": "ash",
+        "plural": "ashes",
+        "forms": [
+          "Ash",
+          "Ashen"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "oak",
+        "plural": "oaks",
+        "forms": [
+          "Oak",
+          "Ac"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "alder",
+        "plural": "alders",
+        "forms": [
+          "Alder",
+          "Aller"
+        ],
+        "fuses": "yes",
+        "traditional": "aller"
+      },
+      {
+        "modern": "elm",
+        "plural": "elms",
+        "forms": [
+          "Elm"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "birch",
+        "plural": "birks",
+        "forms": [
+          "Birk",
+          "Birken"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "birk"
+      },
+      {
+        "modern": "thorn",
+        "plural": "thorns",
+        "forms": [
+          "Thorn"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "hazel",
+        "plural": "hazels",
+        "forms": [
+          "Hazel",
+          "Hasel"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "willow",
+        "plural": "withies",
+        "forms": [
+          "Withy",
+          "With"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "withy"
+      },
+      {
+        "modern": "willow",
+        "plural": "sallows",
+        "forms": [
+          "Sal"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "sallow"
+      },
+      {
+        "modern": "yew",
+        "plural": "yews",
+        "forms": [
+          "Yew"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "lime",
+        "plural": "lindens",
+        "forms": [
+          "Lin",
+          "Lind"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "linden"
+      },
+      {
+        "modern": "maple",
+        "plural": "maples",
+        "forms": [
+          "Maple",
+          "Mapel"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "holly",
+        "plural": "holms",
+        "forms": [
+          "Holm"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "holm"
+      },
+      {
+        "modern": "apple",
+        "plural": "apples",
+        "forms": [
+          "Apple",
+          "Apel"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "wild-plant": [
+      {
+        "modern": "fern",
+        "plural": "ferns",
+        "forms": [
+          "Fern",
+          "Farn"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "broom",
+        "plural": "broom",
+        "forms": [
+          "Broom",
+          "Brom"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "heather",
+        "plural": "ling",
+        "forms": [
+          "Ling"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "ling"
+      },
+      {
+        "modern": "rush",
+        "plural": "rushes",
+        "forms": [
+          "Rush"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "reed",
+        "plural": "reeds",
+        "forms": [
+          "Reed",
+          "Red"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "sedge",
+        "plural": "sedge",
+        "forms": [
+          "Sedge",
+          "Seg"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "clover",
+        "plural": "clover",
+        "forms": [
+          "Claver"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "nettle",
+        "plural": "nettles",
+        "forms": [
+          "Nettle"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "gorse",
+        "plural": "furze",
+        "forms": [
+          "Furze"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "furze"
+      },
+      {
+        "modern": "gorse",
+        "plural": "whins",
+        "forms": [
+          "Whin"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "whin"
+      }
+    ],
+    "crop": [
+      {
+        "modern": "wheat",
+        "plural": "wheat",
+        "forms": [
+          "Wheat",
+          "Whit"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "barley",
+        "plural": "bere",
+        "forms": [
+          "Bar",
+          "Bere"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "bere"
+      },
+      {
+        "modern": "rye",
+        "plural": "rye",
+        "forms": [
+          "Rye"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "oats",
+        "plural": "oats",
+        "forms": [
+          "Oat"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "flax",
+        "plural": "lin",
+        "forms": [
+          "Lin"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "lin"
+      },
+      {
+        "modern": "bean",
+        "plural": "beans",
+        "forms": [
+          "Bean"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "colour": [
+      {
+        "modern": "black",
+        "forms": [
+          "Black",
+          "Blake"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "white",
+        "forms": [
+          "White",
+          "Whit"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "red",
+        "forms": [
+          "Red",
+          "Rad"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "green",
+        "forms": [
+          "Green"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "grey",
+        "forms": [
+          "Hoar",
+          "Har"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "hoar"
+      },
+      {
+        "modern": "grey-brown",
+        "forms": [
+          "Dun"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "dun"
+      },
+      {
+        "modern": "brown",
+        "forms": [
+          "Brown"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "blue",
+        "forms": [
+          "Blae"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "blae"
+      },
+      {
+        "modern": "golden",
+        "forms": [
+          "Gold"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "size": [
+      {
+        "modern": "great",
+        "forms": [
+          "Mickle",
+          "Much"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "mickle"
+      },
+      {
+        "modern": "little",
+        "forms": [
+          "Little",
+          "Lit"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "big",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "small",
+        "forms": [
+          "Small"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "age": [
+      {
+        "modern": "new",
+        "forms": [
+          "New"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "old",
+        "forms": [
+          "Old",
+          "Ald"
+        ],
+        "fuses": "yes",
+        "traditional": "eald"
+      }
+    ],
+    "position-or-direction": [
+      {
+        "modern": "north",
+        "forms": [
+          "North",
+          "Nor"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "south",
+        "forms": [
+          "South",
+          "Sut",
+          "Sud"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "east",
+        "forms": [
+          "East",
+          "Eas"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "west",
+        "forms": [
+          "West",
+          "Wes"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "upper",
+        "forms": [
+          "Up",
+          "Over"
+        ],
+        "fuses": "yes",
+        "traditional": "over"
+      },
+      {
+        "modern": "lower",
+        "forms": [
+          "Nether"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "nether"
+      },
+      {
+        "modern": "middle",
+        "forms": [
+          "Middle",
+          "Mid"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "far",
+        "forms": [
+          "Far"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "shape": [
+      {
+        "modern": "long",
+        "forms": [
+          "Long",
+          "Lang"
+        ],
+        "fuses": "yes",
+        "traditional": "lang"
+      },
+      {
+        "modern": "broad",
+        "forms": [
+          "Broad",
+          "Brad"
+        ],
+        "fuses": "yes",
+        "traditional": "brad"
+      },
+      {
+        "modern": "round",
+        "forms": [
+          "Round"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "crooked",
+        "forms": [
+          "Crook"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "crook"
+      },
+      {
+        "modern": "high",
+        "forms": [
+          "High",
+          "Hen"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "quality-or-condition": [
+      {
+        "modern": "cold",
+        "forms": [
+          "Cold",
+          "Cald",
+          "Chil"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "warm",
+        "forms": [
+          "Warm"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "fair",
+        "forms": [
+          "Fair"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "foul",
+        "forms": [
+          "Foul",
+          "Ful"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "clean",
+        "forms": [
+          "Clan"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "bright",
+        "forms": [
+          "Sher",
+          "Shir"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "sheer"
+      },
+      {
+        "modern": "dry",
+        "forms": [
+          "Dry"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "rough",
+        "forms": [
+          "Rough",
+          "Ry"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "sweet",
+        "forms": [
+          "Sweet"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "deep",
+        "forms": [
+          "Deep",
+          "Dep"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "number": [
+      {
+        "modern": "two",
+        "forms": [
+          "Twy"
+        ],
+        "fuses": "number-fused"
+      },
+      {
+        "modern": "three",
+        "forms": [
+          "Thri"
+        ],
+        "fuses": "number-fused"
+      },
+      {
+        "modern": "five",
+        "forms": [],
+        "fuses": "number-spaced"
+      },
+      {
+        "modern": "seven",
+        "forms": [],
+        "fuses": "number-spaced"
+      },
+      {
+        "modern": "nine",
+        "forms": [],
+        "fuses": "number-spaced"
+      }
+    ],
+    "landform": [
+      {
+        "modern": "hill",
+        "traditional": "law",
+        "forms": [
+          "Hill"
+        ],
+        "traditionalForms": [
+          "Law"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "ridge",
+        "forms": [
+          "Ridge"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "spur",
+        "traditional": "hoe",
+        "forms": [
+          "Spur"
+        ],
+        "traditionalForms": [
+          "Hoe"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "edge",
+        "forms": [
+          "Edge"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "bank",
+        "forms": [
+          "Bank"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "slope",
+        "forms": [
+          "Slope"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "knoll",
+        "forms": [
+          "Knoll"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "mound",
+        "traditional": "how",
+        "forms": [
+          "Mound"
+        ],
+        "traditionalForms": [
+          "How"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "down",
+        "traditional": "dun",
+        "forms": [
+          "Down"
+        ],
+        "traditionalForms": [
+          "Dun"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "crag",
+        "forms": [
+          "Crag"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "top",
+        "forms": [
+          "Top"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "head",
+        "forms": [
+          "Head"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "water-or-wetland-feature": [
+      {
+        "modern": "marsh",
+        "forms": [
+          "Marsh"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "ford",
+        "forms": [
+          "Ford"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "well",
+        "traditional": "wel",
+        "forms": [
+          "Well"
+        ],
+        "traditionalForms": [
+          "Wel"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "spring",
+        "forms": [
+          "Spring"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "pool",
+        "forms": [
+          "Pool"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "mere",
+        "traditional": "mer",
+        "forms": [
+          "Mere"
+        ],
+        "traditionalForms": [
+          "Mer"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "brook",
+        "traditional": "brock",
+        "forms": [
+          "Brook"
+        ],
+        "traditionalForms": [
+          "Brock"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "stream",
+        "traditional": "burn",
+        "forms": [
+          "Stream"
+        ],
+        "traditionalForms": [
+          "Burn"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "stream",
+        "traditional": "beck",
+        "forms": [
+          "Stream"
+        ],
+        "traditionalForms": [
+          "Beck"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "moss",
+        "forms": [
+          "Moss"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "soil-or-ground": [
+      {
+        "modern": "sand",
+        "forms": [
+          "Sand"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "clay",
+        "forms": [
+          "Clay"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "stone",
+        "traditional": "stan",
+        "forms": [
+          "Stone"
+        ],
+        "traditionalForms": [
+          "Stan"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "chalk",
+        "traditional": "chal",
+        "forms": [
+          "Chalk"
+        ],
+        "traditionalForms": [
+          "Chal"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "gravel",
+        "traditional": "grit",
+        "forms": [
+          "Gravel"
+        ],
+        "traditionalForms": [
+          "Grit"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "flint",
+        "forms": [
+          "Flint"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "marl",
+        "forms": [
+          "Marl"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "built-feature": [
+      {
+        "modern": "mill",
+        "forms": [
+          "Mill"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "bridge",
+        "forms": [
+          "Bridge"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "street",
+        "traditional": "strat",
+        "forms": [
+          "Street"
+        ],
+        "traditionalForms": [
+          "Strat"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "church",
+        "traditional": "kirk",
+        "forms": [
+          "Church"
+        ],
+        "traditionalForms": [
+          "Kirk"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "cross",
+        "forms": [
+          "Cross"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "castle",
+        "forms": [
+          "Castle"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "fort",
+        "traditional": "chester",
+        "forms": [
+          "Fort"
+        ],
+        "traditionalForms": [
+          "Chester"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "fort",
+        "traditional": "bur",
+        "forms": [
+          "Fort"
+        ],
+        "traditionalForms": [
+          "Bur"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "wall",
+        "forms": [
+          "Wall"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "dyke",
+        "forms": [
+          "Dyke"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "gate",
+        "forms": [
+          "Gate"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "activity": [
+      {
+        "modern": "hunter",
+        "forms": [
+          "Hunting"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "fisher",
+        "forms": [
+          "Fisher"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "smith",
+        "forms": [
+          "Smeth"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "potter",
+        "forms": [
+          "Potter"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "player",
+        "forms": [
+          "Play"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "produce": [
+      {
+        "modern": "butter",
+        "forms": [
+          "Butter"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "cheese",
+        "forms": [
+          "Chis"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "salt",
+        "forms": [
+          "Salt"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "honey",
+        "forms": [
+          "Honey"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "coal",
+        "forms": [
+          "Col"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "wool",
+        "forms": [
+          "Wool"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "religious-association": [
+      {
+        "modern": "holy",
+        "traditional": "hali",
+        "forms": [
+          "Holy"
+        ],
+        "traditionalForms": [
+          "Hali"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "church",
+        "traditional": "kirk",
+        "forms": [
+          "Church"
+        ],
+        "traditionalForms": [
+          "Kirk"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "cross",
+        "forms": [
+          "Cross"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "chapel",
+        "forms": [
+          "Chapel"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "minster",
+        "forms": [
+          "Minster"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "temple",
+        "forms": [
+          "Temple"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "season": [
+      {
+        "modern": "summer",
+        "forms": [
+          "Summer",
+          "Somer"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "winter",
+        "forms": [
+          "Winter"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "assembly-or-law": [
+      {
+        "modern": "moot",
+        "traditional": "spell",
+        "forms": [
+          "Moot",
+          "Mot"
+        ],
+        "traditionalForms": [
+          "Spel"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "thing",
+        "forms": [
+          "Thing",
+          "Ting"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "gallows",
+        "forms": [
+          "Gallow"
+        ],
+        "fuses": "yes"
+      }
+    ],
+    "status-or-role": [
+      {
+        "modern": "king",
+        "forms": [
+          "King",
+          "Kings"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "queen",
+        "forms": [
+          "Queen"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "prince",
+        "forms": [
+          "Prince"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "earl",
+        "forms": [
+          "Earl",
+          "Erl"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "knight",
+        "forms": [
+          "Knigh"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "free peasant",
+        "forms": [
+          "Charl",
+          "Chorl"
+        ],
+        "fuses": "yes",
+        "traditional": "churl"
+      },
+      {
+        "modern": "priest",
+        "forms": [
+          "Pres",
+          "Priest"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "monk",
+        "forms": [
+          "Monk"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "nun",
+        "forms": [
+          "Nun"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "bishop",
+        "forms": [
+          "Bishop",
+          "Bishops"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "abbot",
+        "forms": [
+          "Abbots"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "lord",
+        "forms": [
+          "Lord"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "lady",
+        "forms": [
+          "Lady"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "herdsman",
+        "forms": [
+          "Hard"
+        ],
+        "fuses": "yes",
+        "traditional": "herd"
+      }
+    ],
+    "ethnic-or-cultural-group": [
+      {
+        "modern": "Welsh",
+        "forms": [
+          "Wal"
+        ],
+        "fuses": "yes",
+        "traditional": "wealh"
+      },
+      {
+        "modern": "British",
+        "forms": [
+          "Wal"
+        ],
+        "fuses": "yes",
+        "traditional": "wealh"
+      },
+      {
+        "modern": "Dane",
+        "forms": [
+          "Den"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "English",
+        "forms": [
+          "Ingle"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "Norse",
+        "forms": [
+          "Norman"
+        ],
+        "fuses": "yes",
+        "traditional": "Northman"
+      },
+      {
+        "modern": "Irish",
+        "forms": [
+          "Ir"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "Scot",
+        "forms": [
+          "Scot"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "Saxon",
+        "forms": [
+          "Sax"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "Fleming",
+        "forms": [
+          "Flem"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "stranger",
+        "forms": [
+          "Gall"
+        ],
+        "fuses": "yes",
+        "traditional": "gall"
+      }
+    ],
+    "supernatural-being": [
+      {
+        "modern": "dragon",
+        "forms": [
+          "Drake"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "drake"
+      },
+      {
+        "modern": "dragon",
+        "forms": [
+          "Worm"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "wyrm"
+      },
+      {
+        "modern": "giant",
+        "forms": [
+          "Thurs"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "thurse"
+      },
+      {
+        "modern": "elf",
+        "forms": [
+          "Elf",
+          "Elve"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "goblin",
+        "forms": [
+          "Puck"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "puck"
+      },
+      {
+        "modern": "devil",
+        "forms": [
+          "Shuck"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "shuck"
+      },
+      {
+        "modern": "witch",
+        "forms": [
+          "Witch"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "hobgoblin",
+        "forms": [
+          "Hob"
+        ],
+        "fuses": "traditional-only",
+        "traditional": "hob"
+      },
+      {
+        "modern": "fairy",
+        "forms": [],
+        "fuses": "no"
+      }
+    ],
+    "resource": [
+      {
+        "modern": "gold",
+        "forms": [],
+        "fuses": "yes"
+      },
+      {
+        "modern": "silver",
+        "forms": [],
+        "fuses": "yes"
+      },
+      {
+        "modern": "copper",
+        "forms": [],
+        "fuses": "yes"
+      },
+      {
+        "modern": "iron",
+        "forms": [],
+        "fuses": "yes"
+      },
+      {
+        "modern": "tin",
+        "forms": [],
+        "fuses": "yes"
+      },
+      {
+        "modern": "lead",
+        "forms": [],
+        "fuses": "yes"
+      },
+      {
+        "modern": "coal",
+        "forms": [],
+        "fuses": "yes"
+      },
+      {
+        "modern": "salt",
+        "forms": [],
+        "fuses": "yes"
+      },
+      {
+        "modern": "timber",
+        "forms": [],
+        "fuses": "yes"
+      }
+    ],
+    "emotion-or-aspiration": [
+      {
+        "modern": "hope",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "good hope",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "hopeless",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "pleasant",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "providence",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "plenty",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "peace",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "liberty",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "prosperity",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "desolation",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "disappointment",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "contentment",
+        "forms": [],
+        "fuses": "no"
+      }
+    ],
+    "event-or-incident": [
+      {
+        "modern": "tribulation",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "catastrophe",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "danger",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "lost",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "wreck",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "battle",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "mutiny",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "discovery",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "deliverance",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "despair",
+        "forms": [],
+        "fuses": "no"
+      }
+    ],
+    "calendar-date-or-feast": [
+      {
+        "modern": "Christmas",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Easter",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Whitsun",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Epiphany",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Michaelmas",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Candlemas",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Lammas",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Ascension",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Corpus Christi",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Assumption",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Annunciation",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "All Saints",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "New Year",
+        "forms": [],
+        "fuses": "no"
+      }
+    ],
+    "imperial-claim": [
+      {
+        "modern": "victory",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "triumph",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "dominion",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "conquest",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "pacified",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "concord",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "faithful",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "ruler of the [direction]",
+        "forms": [],
+        "fuses": "no"
+      }
+    ],
+    "classical-biblical-or-legendary-name": [
+      {
+        "modern": "Troy",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Ithaca",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Athens",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Sparta",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Rome",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Carthage",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Corinth",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Syracuse",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Arcadia",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Elysium",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Bethlehem",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Salem",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Zion",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Canaan",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Goshen",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Eden",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Jericho",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Hebron",
+        "forms": [],
+        "fuses": "no"
+      }
+    ],
+    "ship": [
+      {
+        "modern": "Endeavour",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Resolution",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Discovery",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Adventure",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Investigator",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Beagle",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Bounty",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Mayflower",
+        "forms": [],
+        "fuses": "no"
+      }
+    ],
+    "honorific-title": [
+      {
+        "modern": "Royal",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Imperial",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Grand",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "Regal",
+        "forms": [],
+        "fuses": "no"
+      },
+      {
+        "modern": "August",
+        "forms": [],
+        "fuses": "no"
+      }
+    ],
+    "settler-group": [
+      {
+        "modern": "German",
+        "forms": [],
+        "fuses": "town-only"
+      },
+      {
+        "modern": "Swede",
+        "forms": [],
+        "fuses": "town-only"
+      },
+      {
+        "modern": "Irish",
+        "forms": [],
+        "fuses": "town-only"
+      },
+      {
+        "modern": "Dutch",
+        "forms": [],
+        "fuses": "town-only"
+      },
+      {
+        "modern": "Welsh",
+        "forms": [],
+        "fuses": "town-only"
+      },
+      {
+        "modern": "Scots",
+        "forms": [],
+        "fuses": "town-only"
+      },
+      {
+        "modern": "Danish",
+        "forms": [],
+        "fuses": "town-only"
+      }
+    ],
+    "distance-or-survey-mark": [
+      {
+        "modern": "Two",
+        "forms": [],
+        "fuses": "mile"
+      },
+      {
+        "modern": "Four",
+        "forms": [],
+        "fuses": "mile"
+      },
+      {
+        "modern": "Five",
+        "forms": [],
+        "fuses": "mile"
+      },
+      {
+        "modern": "Six",
+        "forms": [],
+        "fuses": "mile"
+      },
+      {
+        "modern": "Ten",
+        "forms": [],
+        "fuses": "mile"
+      },
+      {
+        "modern": "Twelve",
+        "forms": [],
+        "fuses": "mile"
+      },
+      {
+        "modern": "Fifteen",
+        "forms": [],
+        "fuses": "mile"
+      },
+      {
+        "modern": "Twenty",
+        "forms": [],
+        "fuses": "mile"
+      },
+      {
+        "modern": "Forty",
+        "forms": [],
+        "fuses": "mile"
+      },
+      {
+        "modern": "Fifty",
+        "forms": [],
+        "fuses": "mile"
+      },
+      {
+        "modern": "Ninety",
+        "forms": [],
+        "fuses": "mile"
+      }
+    ]
+  },
+  "fusion": {
+    "river": 0,
+    "lake": 0,
+    "island": 0,
+    "islet": 0,
+    "skerry": 0,
+    "mountain": 0,
+    "valley": 0,
+    "sound": 0,
+    "strait": 0,
+    "bay": 0,
+    "point": 0,
+    "estuary": 0,
+    "isthmus": 0,
+    "people": 0,
+    "ford": 0.85,
+    "field": 0.85,
+    "wood": 0.85,
+    "well": 0.85,
+    "mere": 0.85,
+    "moor": 0.85,
+    "minster": 0.85,
+    "church": 0.85,
+    "port": 0.85,
+    "mouth": 0.85,
+    "head": 0.85,
+    "stone": 0.85,
+    "town": 0.85,
+    "ferry": 0.85,
+    "brook": 0.85,
+    "house": 0.85,
+    "heath": 0.85,
+    "wold": 0.85,
+    "down": 0.85,
+    "ridge": 0.85,
+    "bottom": 0.85,
+    "fold": 0.85,
+    "croft": 0.85,
+    "haven": 0.85,
+    "market": 0.85,
+    "land": 0.85,
+    "dale": 0.85,
+    "combe": 0.85,
+    "holt": 0.85,
+    "hurst": 0.85,
+    "thwaite": 0.85,
+    "burn": 0.85,
+    "beck": 0.85,
+    "bourne": 0.85,
+    "hithe": 0.85,
+    "garth": 0.85,
+    "toft": 0.85,
+    "carr": 0.85,
+    "holm": 0.85,
+    "shaw": 0.85,
+    "hope": 0.85,
+    "strath": 0.85,
+    "hill": 0.5,
+    "bridge": 0.5,
+    "gate": 0.5,
+    "cross": 0.5,
+    "mill": 0.5,
+    "hall": 0.5,
+    "castle": 0.5,
+    "grange": 0.5,
+    "chapel": 0.5,
+    "bank": 0.5,
+    "edge": 0.5,
+    "fell": 0.5,
+    "pool": 0.5,
+    "cliff": 0.5,
+    "wall": 0.5,
+    "tor": 0.5,
+    "top": 0.5,
+    "way": 0.5,
+    "street": 0.5,
+    "close": 0.5,
+    "moss": 0.5,
+    "gill": 0.5,
+    "farm": 0.15,
+    "village": 0.15,
+    "hamlet": 0.15,
+    "estate": 0.15,
+    "township": 0.15,
+    "holding": 0.15,
+    "enclosure": 0.15,
+    "dairy": 0.15,
+    "homestead": 0.15,
+    "cottage": 0.15,
+    "hut": 0.15,
+    "building": 0.15,
+    "workshop": 0.15,
+    "plot": 0.15,
+    "kiln": 0.15,
+    "pit": 0.15,
+    "quarry": 0.15,
+    "weir": 0.15,
+    "landing": 0.15,
+    "saltworks": 0.15,
+    "temple": 0.15,
+    "shrine": 0.15,
+    "sanctuary": 0.15,
+    "hermitage": 0.15,
+    "grove": 0.15,
+    "grave": 0.15,
+    "graveyard": 0.15,
+    "barrow": 0.15,
+    "cairn": 0.15,
+    "ringfort": 0.15,
+    "fort": 0.15,
+    "tower": 0.15,
+    "lookout": 0.15,
+    "beacon": 0.15,
+    "dyke": 0.15,
+    "earthwork": 0.15,
+    "camp": 0.15,
+    "court": 0.15,
+    "manor": 0.15,
+    "moot": 0.15,
+    "boundary": 0.15,
+    "gallows": 0.15,
+    "bath": 0.15,
+    "stream": 0.15,
+    "spring": 0.15,
+    "tarn": 0.15,
+    "marsh": 0.15,
+    "fen": 0.15,
+    "mire": 0.15,
+    "wallow": 0.15,
+    "bog": 0.15,
+    "wash": 0.15,
+    "meadow": 0.15,
+    "pasture": 0.15,
+    "copse": 0.15,
+    "scrub": 0.15,
+    "thicket": 0.15,
+    "clearing": 0.15,
+    "assart": 0.15,
+    "spur": 0.15,
+    "slope": 0.15,
+    "terrace": 0.15,
+    "knoll": 0.15,
+    "mound": 0.15,
+    "crag": 0.15,
+    "peak": 0.15,
+    "cave": 0.15,
+    "glen": 0.15,
+    "ravine": 0.15,
+    "gorge": 0.15,
+    "hollow": 0.15,
+    "nook": 0.15,
+    "corner": 0.15,
+    "bend": 0.15,
+    "farmland": 0.15,
+    "furlong": 0.15,
+    "orchard": 0.15,
+    "chase": 0.15,
+    "park": 0.15,
+    "forest": 0.15,
+    "firth": 0.15,
+    "creek": 0.15,
+    "cove": 0.15,
+    "beach": 0.15,
+    "sands": 0.15,
+    "shingle": 0.15,
+    "geo": 0.15,
+    "headland": 0.15,
+    "causeway": 0.15,
+    "gap": 0.15,
+    "lane": 0.15,
+    "falls": 0.15,
+    "waterfall": 0.15,
+    "watersmeet": 0.15,
+    "force": 0.15,
+    "city": 0.15,
+    "capital": 0.15,
+    "colony": 0.15,
+    "post": 0.15,
+    "mission": 0.15,
+    "station": 0.15,
+    "diggings": 0.15,
+    "junction": 0.15,
+    "crossing": 0.15,
+    "heights": 0.15,
+    "memorial": 0.15,
+    "garrison": 0.15,
+    "outpost": 0.15,
+    "territory": 0.15,
+    "frontier": 0.15,
+    "march": 0.15,
+    "province": 0.15,
+    "kingdom": 0.15,
+    "plain": 0.15,
+    "plains": 0.15,
+    "grassland": 0.15,
+    "dry creek": 0.15,
+    "range": 0.15,
+    "reef": 0.15,
+    "lagoon": 0.15,
+    "mosque": 0.15,
+    "tomb": 0.15,
+    "lodge": 0.15,
+    "cantonment": 0,
+    "civil lines": 0,
+    "desert": 0,
+    "oasis": 0,
+    "volcano": 0,
+    "glacier": 0,
+    "islands": 0,
+    "archipelago": 0
+  },
+  "multiWordNeverFuse": true,
+  "genericFusion": {
+    "hope": 0.5
+  },
+  "colonialGenerics": {
+    "town": [
+      "town"
+    ],
+    "city": [
+      "city"
+    ],
+    "capital": [
+      "capital"
+    ],
+    "colony": [
+      "colony"
+    ],
+    "planned-village": [
+      "village"
+    ],
+    "trading-post": [
+      "post",
+      "trading post"
+    ],
+    "mission": [
+      "mission"
+    ],
+    "pastoral-station": [
+      "station",
+      "pastoral station"
+    ],
+    "mining-camp": [
+      "camp",
+      "diggings",
+      "mining camp"
+    ],
+    "junction": [
+      "junction"
+    ],
+    "crossing": [
+      "crossing"
+    ],
+    "heights": [
+      "heights"
+    ],
+    "hope": [
+      "hope"
+    ],
+    "memorial": [
+      "memorial"
+    ],
+    "garrison-camp": [
+      "camp",
+      "garrison"
+    ],
+    "frontier-post": [
+      "post",
+      "outpost"
+    ],
+    "cantonment": [
+      "cantonment"
+    ],
+    "civil-lines": [
+      "Civil Lines"
+    ],
+    "administrative-station": [
+      "station",
+      "administrative station"
+    ],
+    "land-territory": [
+      "land",
+      "territory"
+    ],
+    "frontier-march": [
+      "frontier",
+      "march"
+    ],
+    "province-kingdom": [
+      "province",
+      "kingdom"
+    ],
+    "creek": [
+      "creek"
+    ],
+    "plain-grassland": [
+      "plain",
+      "plains",
+      "grassland"
+    ],
+    "desert": [
+      "desert"
+    ],
+    "oasis": [
+      "oasis"
+    ],
+    "dry-riverbed": [
+      "dry creek"
+    ],
+    "mountain-range": [
+      "range"
+    ],
+    "volcano": [
+      "volcano"
+    ],
+    "glacier": [
+      "glacier"
+    ],
+    "island-group": [
+      "islands",
+      "archipelago"
+    ],
+    "reef": [
+      "reef"
+    ],
+    "lagoon": [
+      "lagoon"
+    ],
+    "mosque": [
+      "mosque"
+    ],
+    "saints-tomb-or-shrine": [
+      "tomb",
+      "shrine"
+    ],
+    "religious-lodge": [
+      "lodge"
+    ]
+  },
+  "prefixForms": {
+    "river": "River",
+    "mountain": "Mount",
+    "hill": "Mount",
+    "headland": "Cape",
+    "point-nose": "Point",
+    "lake": "Lake",
+    "island": "Isle of",
+    "fort": "Fort",
+    "market-town-harbour": "Port",
+    "narrow-valley-glen": "Glen"
+  },
+  "prefixVariantForms": {
+    "broad-valley": {
+      "variant": "strath",
+      "prefix": "Strath"
+    }
+  },
+  "linkingWords": [
+    "of",
+    "the",
+    "upon",
+    "on",
+    "in",
+    "by",
+    "with"
+  ]
+}

@@ -3776,8 +3776,36 @@
         "East Grinstead",
         "Upper Slaughter"
       ],
-      "forms": [],
-      "formsPending": true
+      "forms": [
+        {
+          "text": "East",
+          "position": "before"
+        },
+        {
+          "text": "West",
+          "position": "before"
+        },
+        {
+          "text": "North",
+          "position": "before"
+        },
+        {
+          "text": "South",
+          "position": "before"
+        },
+        {
+          "text": "Upper",
+          "position": "before"
+        },
+        {
+          "text": "Lower",
+          "position": "before"
+        },
+        {
+          "text": "Inner",
+          "position": "before"
+        }
+      ]
     },
     {
       "id": "age",
@@ -3789,8 +3817,16 @@
         "Old Sarum",
         "New Romney"
       ],
-      "forms": [],
-      "formsPending": true
+      "forms": [
+        {
+          "text": "Old",
+          "position": "before"
+        },
+        {
+          "text": "New",
+          "position": "before"
+        }
+      ]
     },
     {
       "id": "function",
@@ -3805,8 +3841,20 @@
         "Castle Acre",
         "Church Stretton"
       ],
-      "forms": [],
-      "formsPending": true
+      "forms": [
+        {
+          "text": "Market",
+          "position": "before"
+        },
+        {
+          "text": "Castle",
+          "position": "before"
+        },
+        {
+          "text": "Church",
+          "position": "before"
+        }
+      ]
     },
     {
       "id": "owner-by-status",
@@ -3820,8 +3868,13 @@
         "Kings Langley",
         "Monks Eleigh"
       ],
-      "forms": [],
-      "formsPending": true
+      "forms": [
+        {
+          "text": "",
+          "position": "before",
+          "slotCategory": "status-or-role"
+        }
+      ]
     },
     {
       "id": "owner-by-family",
@@ -3834,8 +3887,13 @@
         "Bovey Tracey",
         "Hurstpierpoint"
       ],
-      "forms": [],
-      "formsPending": true
+      "forms": [
+        {
+          "text": "",
+          "position": "after",
+          "slotCategory": "personal-name"
+        }
+      ]
     },
     {
       "id": "dedication",
@@ -3846,8 +3904,13 @@
       "examples": [
         "Stratford St Mary"
       ],
-      "forms": [],
-      "formsPending": true
+      "forms": [
+        {
+          "text": "",
+          "position": "after",
+          "slotCategory": "saint-or-holy-person"
+        }
+      ]
     },
     {
       "id": "location",
@@ -3862,8 +3925,98 @@
         "Henley-on-Thames",
         "Stow-on-the-Wold"
       ],
-      "forms": [],
-      "formsPending": true
+      "forms": [
+        {
+          "text": "upon",
+          "position": "after",
+          "slotCategory": "river-or-stream-name"
+        },
+        {
+          "text": "upon",
+          "position": "after",
+          "slotCategory": "landform"
+        },
+        {
+          "text": "upon",
+          "position": "after",
+          "slotCategory": "earlier-or-district-name"
+        },
+        {
+          "text": "on the",
+          "position": "after",
+          "slotCategory": "river-or-stream-name"
+        },
+        {
+          "text": "on the",
+          "position": "after",
+          "slotCategory": "landform"
+        },
+        {
+          "text": "on the",
+          "position": "after",
+          "slotCategory": "earlier-or-district-name"
+        },
+        {
+          "text": "by",
+          "position": "after",
+          "slotCategory": "river-or-stream-name"
+        },
+        {
+          "text": "by",
+          "position": "after",
+          "slotCategory": "landform"
+        },
+        {
+          "text": "by",
+          "position": "after",
+          "slotCategory": "earlier-or-district-name"
+        },
+        {
+          "text": "in the",
+          "position": "after",
+          "slotCategory": "river-or-stream-name"
+        },
+        {
+          "text": "in the",
+          "position": "after",
+          "slotCategory": "landform"
+        },
+        {
+          "text": "in the",
+          "position": "after",
+          "slotCategory": "earlier-or-district-name"
+        },
+        {
+          "text": "of the",
+          "position": "after",
+          "slotCategory": "river-or-stream-name"
+        },
+        {
+          "text": "of the",
+          "position": "after",
+          "slotCategory": "landform"
+        },
+        {
+          "text": "of the",
+          "position": "after",
+          "slotCategory": "earlier-or-district-name"
+        },
+        {
+          "text": "with",
+          "position": "after",
+          "slotCategory": "river-or-stream-name"
+        },
+        {
+          "text": "with",
+          "position": "after",
+          "slotCategory": "landform"
+        },
+        {
+          "text": "with",
+          "position": "after",
+          "slotCategory": "earlier-or-district-name"
+        }
+      ]
     }
   ]
 }

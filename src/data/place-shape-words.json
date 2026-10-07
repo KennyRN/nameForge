@@ -76,10 +76,10 @@
     },
     "home-farm-of-an-estate": {
       "words": [
-        "home farm"
+        "farm"
       ],
       "plurals": [
-        "home farms"
+        "farms"
       ]
     },
     "land-holding-share-of-land": {
@@ -108,26 +108,26 @@
     },
     "outlying-place-dependent-site": {
       "words": [
-        "outlying farm"
+        "farm"
       ],
       "plurals": [
-        "outlying farms"
+        "farms"
       ]
     },
     "outlying-grain-farm": {
       "words": [
-        "outlying farm"
+        "farm"
       ],
       "plurals": [
-        "outlying farms"
+        "farms"
       ]
     },
     "specialised-farm": {
       "words": [
-        "dairy farm"
+        "dairy"
       ],
       "plurals": [
-        "dairy farms"
+        "dairies"
       ]
     },
     "monastic-outlying-farm": {
@@ -140,10 +140,10 @@
     },
     "cattle-farm": {
       "words": [
-        "cattle farm"
+        "farm"
       ],
       "plurals": [
-        "cattle farms"
+        "farms"
       ]
     },
     "cottars-settlement": {
@@ -228,34 +228,34 @@
     },
     "summer-upland-dwelling": {
       "words": [
-        "summer farm"
+        "farm"
       ],
       "plurals": [
-        "summer farms"
+        "farms"
       ]
     },
     "permanent-or-winter-lowland-dwelling": {
       "words": [
-        "winter farm"
+        "farm"
       ],
       "plurals": [
-        "winter farms"
+        "farms"
       ]
     },
     "shieling-summer-pasture-hut": {
       "words": [
-        "summer hut"
+        "hut"
       ],
       "plurals": [
-        "summer huts"
+        "huts"
       ]
     },
     "hut-at-summer-pasture": {
       "words": [
-        "summer hut"
+        "hut"
       ],
       "plurals": [
-        "summer huts"
+        "huts"
       ]
     },
     "salt-works": {
@@ -398,10 +398,10 @@
     },
     "holy-place": {
       "words": [
-        "holy place"
+        "sanctuary"
       ],
       "plurals": [
-        "holy places"
+        "sanctuaries"
       ]
     },
     "standing-cross": {
@@ -430,18 +430,18 @@
     },
     "sacred-grove": {
       "words": [
-        "sacred grove"
+        "grove"
       ],
       "plurals": [
-        "sacred groves"
+        "groves"
       ]
     },
     "holy-spring": {
       "words": [
-        "holy well"
+        "well"
       ],
       "plurals": [
-        "holy wells"
+        "wells"
       ]
     },
     "grave": {
@@ -502,10 +502,10 @@
     },
     "roman-walled-town-or-fort": {
       "words": [
-        "walled town"
+        "town"
       ],
       "plurals": [
-        "walled towns"
+        "towns"
       ]
     },
     "castle": {
@@ -526,10 +526,10 @@
     },
     "fortified-farmhouse": {
       "words": [
-        "fortified farm"
+        "farm"
       ],
       "plurals": [
-        "fortified farms"
+        "farms"
       ]
     },
     "lookout-hill": {
@@ -568,10 +568,10 @@
     },
     "ship-camp-fortified-anchorage": {
       "words": [
-        "ship camp"
+        "camp"
       ],
       "plurals": [
-        "ship camps"
+        "camps"
       ]
     },
     "royal-or-lordly-court": {
@@ -608,18 +608,18 @@
     },
     "assembly-field": {
       "words": [
-        "moot field"
+        "moot"
       ],
       "plurals": [
-        "moot fields"
+        "moots"
       ]
     },
     "assembly-mound": {
       "words": [
-        "moot hill"
+        "moot"
       ],
       "plurals": [
-        "moot hills"
+        "moots"
       ]
     },
     "speech-place": {
@@ -656,10 +656,10 @@
     },
     "place-for-games-or-sport": {
       "words": [
-        "games field"
+        "field"
       ],
       "plurals": [
-        "games fields"
+        "fields"
       ]
     },
     "bath-spa": {
@@ -884,18 +884,18 @@
     },
     "land-in-a-river-bend": {
       "words": [
-        "river bend"
+        "river"
       ],
       "plurals": [
-        "river bends"
+        "rivers"
       ]
     },
     "water-meadow": {
       "words": [
-        "water meadow"
+        "meadow"
       ],
       "plurals": [
-        "water meadows"
+        "meadows"
       ]
     },
     "skerry-rock-islet": {
@@ -1192,10 +1192,10 @@
     },
     "wooded-hill": {
       "words": [
-        "wooded hill"
+        "hill"
       ],
       "plurals": [
-        "wooded hills"
+        "hills"
       ]
     },
     "scrubland": {
@@ -1240,10 +1240,10 @@
     },
     "woodland-swine-pasture": {
       "words": [
-        "swine pasture"
+        "pasture"
       ],
       "plurals": [
-        "swine pastures"
+        "pastures"
       ]
     },
     "low-level-topped-hill": {

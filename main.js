@@ -28,7 +28,7 @@ __export(main_exports, {
   default: () => NameForgePlugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian7 = require("obsidian");
+var import_obsidian10 = require("obsidian");
 
 // src/settings.ts
 var import_obsidian3 = require("obsidian");
@@ -89,12 +89,12 @@ var MarkovModel = class _MarkovModel {
         for (let k = 0; k <= KMAX; k++) {
           if (i - k < 0) continue;
           const ctx = k === 0 ? UNIGRAM_KEY : s.slice(i - k, i).join("");
-          let table = tables[k].get(ctx);
-          if (!table) {
-            table = /* @__PURE__ */ new Map();
-            tables[k].set(ctx, table);
+          let table2 = tables[k].get(ctx);
+          if (!table2) {
+            table2 = /* @__PURE__ */ new Map();
+            tables[k].set(ctx, table2);
           }
-          table.set(ch, ((_a = table.get(ch)) != null ? _a : 0) + 1);
+          table2.set(ch, ((_a = table2.get(ch)) != null ? _a : 0) + 1);
         }
       }
     }
@@ -163,6 +163,29 @@ var MarkovModel = class _MarkovModel {
       this.distCache.clear();
       this.cacheWbase = wbase;
     }
+  }
+  /**
+   * Mean per-character log-probability of one lowercase word under the model, including the end
+   * token — the same blended distributions sampling uses. Read-only: used by name ageing to judge
+   * how plausible a string is. Probabilities are floored at 0.0001, as in `trySampleWord`.
+   */
+  scoreWord(word, faithfulness = 2) {
+    const wbase = [2.5, 4, 7][clampInt(faithfulness, 1, 3) - 1];
+    this.ensureCache(wbase);
+    const context = [START];
+    let logp = 0;
+    const steps = [...Array.from(word), END];
+    for (const ch of steps) {
+      const dist = this.getDist(context, wbase);
+      let p = 0;
+      if (dist) {
+        const i = dist.chars.indexOf(ch);
+        if (i >= 0) p = (dist.cum[i] - (i > 0 ? dist.cum[i - 1] : 0)) / dist.tot;
+      }
+      logp += Math.log(Math.max(p, 1e-4));
+      context.push(ch);
+    }
+    return logp / steps.length;
   }
   /**
    * @internal One sampling attempt. Returns a lowercase word that ended
@@ -469,15 +492,15 @@ function unwrapOuterQuotes(s) {
 function splitOnUnquotedWhitespace(token) {
   const parts = [];
   let current = "";
-  let quote = null;
+  let quote2 = null;
   for (const char of token) {
-    if (quote) {
+    if (quote2) {
       current += char;
-      if (char === matchingQuote(quote)) quote = null;
+      if (char === matchingQuote(quote2)) quote2 = null;
       continue;
     }
     if (char === '"' || char === "\u201C") {
-      quote = char;
+      quote2 = char;
       current += char;
       continue;
     }
@@ -805,6 +828,21 @@ var PlaceNameModel = class _PlaceNameModel {
    * core name, and affixed results are additionally checked against the raw
    * multi-word source names.
    */
+  /**
+   * One stem — the first element of a place name, without its learned ending — capitalised, or
+   * null if no stem passed the gates within a few tries. Read-only: used by place-name recipes in
+   * stem mode. Draws from `rng` only; `generateDetailed` is unaffected.
+   */
+  sampleStem(rng, faithfulness = 2, strictness = 3) {
+    const wbase = [2.5, 4, 7][clampInt(faithfulness, 1, 3) - 1];
+    const [minP, maxP] = strictnessBounds(clampInt(strictness, 1, 5));
+    this.stemModel.ensureCache(wbase);
+    for (let i = 0; i < 200; i++) {
+      const stem = this.stemModel.trySampleWord(rng, wbase, minP, maxP);
+      if (stem !== null && !hasRepeat(stem)) return capitaliseFirst(stem);
+    }
+    return null;
+  }
   generateDetailed(options) {
     var _a, _b, _c, _d, _e;
     const count = Math.max(0, Math.floor(options.count));
@@ -929,9 +967,9 @@ function renderPlaceName(lower) {
   let firstWord = true;
   return parts.map((p, i) => {
     if (i % 2 === 1 || p.length === 0) return p;
-    const cap = firstWord || !PLACE_CONNECTIVES.has(p);
+    const cap2 = firstWord || !PLACE_CONNECTIVES.has(p);
     firstWord = false;
-    return cap ? capitaliseFirst(p) : p;
+    return cap2 ? capitaliseFirst(p) : p;
   }).join("");
 }
 var VOWELS = /* @__PURE__ */ new Set(["a", "e", "i", "o", "u", "y"]);
@@ -1047,6 +1085,235 @@ function generateMixNamesDetailed(sources, options) {
   return { names: result.names, seed };
 }
 
+// src/packs/sections.ts
+var same = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
+var isGender = (heading, gender) => same(heading, gender);
+function parseNameSections(body) {
+  const lines = body.split(/\r?\n/);
+  if (!lines.some((l) => /^#{2,3}\s+\S/.test(l.trim()))) return null;
+  const result = { unsectioned: [], sections: [] };
+  let chunk = [];
+  let section = null;
+  let subsection = null;
+  const flush = () => {
+    const names = extractNamesFromMarkdown(chunk.join("\n"));
+    chunk = [];
+    if (subsection) subsection.names.push(...names);
+    else if (section) section.names.push(...names);
+    else result.unsectioned.push(...names);
+  };
+  for (const raw of lines) {
+    const line = raw.trim();
+    const h2 = line.match(/^##\s+(.+?)\s*#*$/);
+    const h3 = line.match(/^###\s+(.+?)\s*#*$/);
+    if (h2 && !h3) {
+      flush();
+      section = { name: h2[1], names: [], subsections: [] };
+      subsection = null;
+      result.sections.push(section);
+    } else if (h3) {
+      flush();
+      if (!section) {
+        section = { name: h3[1], names: [], subsections: [] };
+        subsection = null;
+        result.sections.push(section);
+      } else {
+        subsection = { name: h3[1], names: [] };
+        section.subsections.push(subsection);
+      }
+    } else {
+      chunk.push(raw);
+    }
+  }
+  flush();
+  return result;
+}
+function dedupe2(names) {
+  const seen = /* @__PURE__ */ new Set();
+  return names.filter((n) => {
+    const key = n.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+function sectionNames(section) {
+  return dedupe2([...section.names, ...section.subsections.flatMap((s) => s.names)]);
+}
+function allSectionedNames(s) {
+  return dedupe2([...s.unsectioned, ...s.sections.flatMap(sectionNames)]);
+}
+function sectionOptions(s) {
+  const options = [];
+  for (const section of s.sections) {
+    options.push({ label: section.name, request: { section: section.name } });
+    for (const gender of ["male", "female"]) {
+      const sub = section.subsections.find((x) => isGender(x.name, gender));
+      if (sub) options.push({ label: `${section.name} \xB7 ${sub.name}`, request: { section: section.name, gender } });
+    }
+  }
+  return options;
+}
+var labelOf = (r, s) => {
+  var _a, _b;
+  if (!r.section && !r.gender) return "the whole pack";
+  const section = r.section ? (_b = (_a = s.sections.find((x) => same(x.name, r.section))) == null ? void 0 : _a.name) != null ? _b : r.section : void 0;
+  const gender = r.gender ? r.gender.charAt(0).toUpperCase() + r.gender.slice(1) : void 0;
+  return [section, gender].filter(Boolean).join(" \xB7 ");
+};
+function namesFor(s, r) {
+  if (r.section) {
+    const section = s.sections.find((x) => same(x.name, r.section));
+    if (!section) return null;
+    if (!r.gender) return sectionNames(section);
+    const sub = section.subsections.find((x) => isGender(x.name, r.gender));
+    if (!sub) return null;
+    return dedupe2([...sub.names, ...section.names]);
+  }
+  if (r.gender) {
+    const genderSection = s.sections.find((x) => isGender(x.name, r.gender));
+    const genderSubs = s.sections.flatMap((x) => x.subsections.filter((sub) => isGender(sub.name, r.gender)));
+    if (!genderSection && genderSubs.length === 0) return null;
+    const names = [...s.unsectioned];
+    for (const section of s.sections) {
+      if (isGender(section.name, "male") || isGender(section.name, "female")) {
+        if (isGender(section.name, r.gender)) names.push(...sectionNames(section));
+        continue;
+      }
+      names.push(...section.names);
+      for (const sub of section.subsections) {
+        const otherGender = (isGender(sub.name, "male") || isGender(sub.name, "female")) && !isGender(sub.name, r.gender);
+        if (!otherGender) names.push(...sub.names);
+      }
+    }
+    return dedupe2(names);
+  }
+  return allSectionedNames(s);
+}
+function selectSectionNames(s, request, minNames = 0) {
+  const steps = [];
+  if (request.section && request.gender) steps.push({ section: request.section, gender: request.gender });
+  if (request.section) steps.push({ section: request.section });
+  if (!request.section && request.gender) steps.push({ gender: request.gender });
+  steps.push({});
+  const notices = [];
+  for (let i = 0; i < steps.length; i++) {
+    const step = steps[i];
+    const names = namesFor(s, step);
+    const last = i === steps.length - 1;
+    const next = last ? "" : labelOf(steps[i + 1], s);
+    if (names === null && !last) {
+      notices.push(`\u201C${labelOf(step, s)}\u201D not found \u2014 using ${quote(next)}.`);
+      continue;
+    }
+    if (names !== null && names.length < minNames && !last) {
+      notices.push(`\u201C${labelOf(step, s)}\u201D has only ${names.length} names \u2014 using ${quote(next)}.`);
+      continue;
+    }
+    return { names: names != null ? names : allSectionedNames(s), used: labelOf(step, s), notices };
+  }
+  return { names: allSectionedNames(s), used: "the whole pack", notices };
+}
+var quote = (label) => label === "the whole pack" ? label : `\u201C${label}\u201D`;
+function serialiseNameSections(s) {
+  const blocks = [];
+  if (s.unsectioned.length > 0) blocks.push(s.unsectioned.join("\n"));
+  for (const section of s.sections) {
+    const parts = [`## ${section.name}`];
+    if (section.names.length > 0) parts.push(section.names.join("\n"));
+    for (const sub of section.subsections) parts.push(`### ${sub.name}`, sub.names.join("\n"));
+    blocks.push(parts.join("\n\n"));
+  }
+  return blocks.join("\n\n");
+}
+function mergeSectionedNames(derived, template) {
+  const sections = template.sections.map((t) => {
+    const d = derived.sections.find((x) => same(x.name, t.name));
+    if (!d) return t;
+    const subsections = t.subsections.map((ts) => {
+      var _a;
+      return (_a = d.subsections.find((ds) => same(ds.name, ts.name))) != null ? _a : ts;
+    });
+    for (const ds of d.subsections) if (!t.subsections.some((ts) => same(ts.name, ds.name))) subsections.push(ds);
+    return { name: t.name, names: d.names.length > 0 ? d.names : t.names, subsections };
+  });
+  for (const d of derived.sections) if (!template.sections.some((t) => same(t.name, d.name))) sections.push(d);
+  return {
+    unsectioned: derived.unsectioned.length > 0 ? derived.unsectioned : template.unsectioned,
+    sections
+  };
+}
+
+// src/packs/wordList.ts
+var BLANK = /* @__PURE__ */ new Set(["", "\u2014", "\u2013", "-"]);
+var blank = (v) => v === void 0 || BLANK.has(v.trim());
+var same2 = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
+function cells(line) {
+  return line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+}
+function parseFuses(value) {
+  if (blank(value)) return "yes";
+  const v = value.trim().toLowerCase();
+  if (v.startsWith("no")) return "no";
+  if (v.startsWith("traditional")) return "traditional-only";
+  return "yes";
+}
+function toEntry(header, row) {
+  const col = (name) => {
+    const i = header.findIndex((h) => same2(h, name));
+    return i >= 0 ? row[i] : void 0;
+  };
+  const modern = col("modern");
+  if (blank(modern)) return null;
+  const traditional = blank(col("traditional")) ? void 0 : col("traditional");
+  const plural = blank(col("plural")) ? `${modern}s` : col("plural");
+  const forms = blank(col("combining forms")) ? [modern] : col("combining forms").split(",").map((f) => f.trim().replace(/-$/, "")).filter((f) => f.length > 0);
+  return { modern, ...traditional ? { traditional } : {}, plural, combiningForms: forms, fuses: parseFuses(col("fuses")) };
+}
+function parseWordList(body) {
+  const list = { unsectioned: [], sections: [] };
+  let target = list.unsectioned;
+  let header = null;
+  for (const raw of body.split(/\r?\n/)) {
+    const line = raw.trim();
+    const heading = line.match(/^##\s+(.+?)\s*#*$/);
+    if (heading) {
+      const section = { name: heading[1], entries: [] };
+      list.sections.push(section);
+      target = section.entries;
+      header = null;
+      continue;
+    }
+    if (!line.startsWith("|")) {
+      if (line === "") header = null;
+      continue;
+    }
+    const row = cells(line);
+    if (row.every((c) => /^:?-{2,}:?$/.test(c))) continue;
+    if (!header) {
+      header = row;
+      continue;
+    }
+    const entry = toEntry(header, row);
+    if (entry) target.push(entry);
+  }
+  return list;
+}
+function wordListEntries(list, categoryLabel) {
+  const section = list.sections.find((s) => same2(s.name, categoryLabel));
+  if (section) return section.entries;
+  if (list.sections.length === 0) return list.unsectioned;
+  return null;
+}
+function mergeWordLists(derived, template) {
+  const sections = template.sections.map((t) => {
+    var _a;
+    return (_a = derived.sections.find((d) => same2(d.name, t.name))) != null ? _a : t;
+  });
+  for (const d of derived.sections) if (!template.sections.some((t) => same2(t.name, d.name))) sections.push(d);
+  return { unsectioned: derived.unsectioned.length > 0 ? derived.unsectioned : template.unsectioned, sections };
+}
+
 // src/nameParser.ts
 var PACK_TYPES = ["breakdownPack", "listPack", "compoundPack", "placePack", "mixPack"];
 function isPackType(value) {
@@ -1066,6 +1333,7 @@ function parseNamesFileContent(content) {
   let body = content;
   let packType = "breakdownPack";
   let setting = "";
+  let templateFields = {};
   if (frontmatterMatch) {
     const frontmatter = frontmatterMatch[1];
     const packMatch = frontmatter.match(/^packName:\s*(.+)$/m);
@@ -1083,6 +1351,7 @@ function parseNamesFileContent(content) {
     if (settingMatch) {
       setting = settingMatch[1].trim().replace(/^['"]|['"]$/g, "");
     }
+    templateFields = parseTemplateFields(frontmatter);
     body = content.slice(frontmatterMatch[0].length);
     if (packType === "compoundPack") {
       const compoundPartsMatch = frontmatter.match(/^compoundParts:\s*(.+)$/m);
@@ -1100,7 +1369,8 @@ function parseNamesFileContent(content) {
         compoundGenerator,
         compoundJoining,
         parts,
-        setting
+        setting,
+        ...templateFields
       };
     }
     if (packType === "mixPack") {
@@ -1109,16 +1379,65 @@ function parseNamesFileContent(content) {
         names: [],
         packType,
         mixSources: parseMixSourceLines(body),
-        setting
+        setting,
+        ...templateFields
       };
     }
   }
+  const sectioned = packType === "listPack" || packType === "breakdownPack" ? parseNameSections(body) : null;
   return {
     packName,
     names: extractNamesFromMarkdown(body),
     packType,
-    setting
+    setting,
+    ...sectioned ? { sectioned } : {},
+    ...templateFields
   };
+}
+function parseTemplateFields(frontmatter) {
+  const out = {};
+  if (/^template:\s*["']?true["']?\s*$/im.test(frontmatter)) out.template = true;
+  const link = frontmatter.match(/^template-of:\s*(.*)$/m);
+  if (link) {
+    const target = link[1].trim().replace(/^['"]|['"]$/g, "").replace(/^\[\[|\]\]$/g, "").split("|")[0].trim();
+    if (target) out.templateOf = target;
+  }
+  return out;
+}
+function applyTemplate(derived, template) {
+  if (!derived.templateOf) return { parsed: derived };
+  const name = derived.templateOf;
+  if (derived.template) return { parsed: derived, error: `\u201C${derived.packName}\u201D is a template, so it can't use template-of.` };
+  if (!template) return { parsed: derived, error: `Template \u201C${name}\u201D is missing.` };
+  if (template.templateOf) return { parsed: derived, error: `Template \u201C${name}\u201D has its own template; only one level is allowed.` };
+  if (template.packType !== derived.packType) return { parsed: derived, error: `Template \u201C${name}\u201D is a different pack type.` };
+  return { parsed: mergeWithTemplate(derived, template) };
+}
+function mergeWithTemplate(derived, template) {
+  var _a, _b, _c;
+  const merged = { ...derived };
+  if (derived.packType === "compoundPack") {
+    const count = (_b = (_a = derived.compoundParts) != null ? _a : template.compoundParts) != null ? _b : 2;
+    merged.parts = Array.from({ length: count }, (_, i) => {
+      var _a2, _b2, _c2, _d;
+      const own = (_b2 = (_a2 = derived.parts) == null ? void 0 : _a2[i]) != null ? _b2 : [];
+      return own.length > 0 ? own : (_d = (_c2 = template.parts) == null ? void 0 : _c2[i]) != null ? _d : [];
+    });
+    return merged;
+  }
+  if (derived.packType === "mixPack") {
+    merged.mixSources = ((_c = derived.mixSources) != null ? _c : []).length > 0 ? derived.mixSources : template.mixSources;
+    return merged;
+  }
+  const asSections = (p) => {
+    var _a2;
+    return (_a2 = p.sectioned) != null ? _a2 : { unsectioned: p.names, sections: [] };
+  };
+  const sectioned = mergeSectionedNames(asSections(derived), asSections(template));
+  merged.names = allSectionedNames(sectioned);
+  if (sectioned.sections.length > 0) merged.sectioned = sectioned;
+  else delete merged.sectioned;
+  return merged;
 }
 function splitCompoundPartSections(body, partCount) {
   var _a;
@@ -1138,20 +1457,25 @@ function splitCompoundPartSections(body, partCount) {
   }
   return sections;
 }
-function createNamesFileContent(packName, names, packType = "breakdownPack") {
+function createNamesFileContent(packName, names, packType = "breakdownPack", options = {}) {
   const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const templateLine = options.templateOf ? `template-of: "[[${options.templateOf}]]"
+` : "";
+  const body = options.sectioned ? serialiseNameSections(options.sectioned) : names.join("\n");
   return `---
 type: namePack
 packType: ${packType}
 packName: ${safePackName}
 setting: 
----
+${templateLine}---
 
-${names.join("\n")}
+${body}
 `;
 }
-function createCompoundNamesFileContent(packName, parts, generator, joining) {
+function createCompoundNamesFileContent(packName, parts, generator, joining, templateOf) {
   const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const templateLine = templateOf ? `template-of: "[[${templateOf}]]"
+` : "";
   const partsSections = parts.map((partNames, index) => `## Part ${index + 1}
 
 ${partNames.join("\n")}`).join("\n\n");
@@ -1163,20 +1487,22 @@ compoundGenerator: ${generator}
 compoundJoining: ${joining}
 packName: ${safePackName}
 setting: 
----
+${templateLine}---
 
 ${partsSections}
 `;
 }
-function createMixNamesFileContent(packName, sources) {
+function createMixNamesFileContent(packName, sources, templateOf) {
   const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const templateLine = templateOf ? `template-of: "[[${templateOf}]]"
+` : "";
   const sourceLines = sources.map((source) => `- [[${source.packName}]] ${formatMixWeight(source.weight)}`).join("\n");
   return `---
 type: namePack
 packType: mixPack
 packName: ${safePackName}
 setting: 
----
+${templateLine}---
 
 ## Sources
 
@@ -1265,7 +1591,7 @@ function namesFromParsedPack(parsed) {
   }
   return parsed.names.filter((name) => name.trim().length > 0);
 }
-function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ new Set()) {
+function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ new Set(), sectionRequest) {
   var _a;
   if (visiting.has(mixPath)) {
     return { sources: [], error: `Mix pack cycle involving ${mixData.packName || mixPath}.` };
@@ -1283,7 +1609,7 @@ function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ n
       visiting.delete(mixPath);
       return { sources: [], error: `Mix pack cannot include itself.` };
     }
-    const nested = resolvePackToCorpus(found, index, visiting);
+    const nested = resolvePackToCorpus(found, index, visiting, sectionRequest);
     if (nested.error) {
       visiting.delete(mixPath);
       return { sources: [], error: nested.error };
@@ -1296,11 +1622,13 @@ function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ n
   }
   return { sources };
 }
-function resolvePackToCorpus(entry, index, visiting) {
+function resolvePackToCorpus(entry, index, visiting, sectionRequest) {
   if (entry.parsed.packType !== "mixPack") {
+    const sectioned = entry.parsed.sectioned;
+    if (sectionRequest && sectioned) return { names: selectSectionNames(sectioned, sectionRequest).names };
     return { names: namesFromParsedPack(entry.parsed) };
   }
-  const nested = resolveMixSources(entry.path, entry.parsed, index, visiting);
+  const nested = resolveMixSources(entry.path, entry.parsed, index, visiting, sectionRequest);
   if (nested.error) return { names: [], error: nested.error };
   return { names: buildWeightedCorpus(nested.sources) };
 }
@@ -1309,6 +1637,40 @@ function sanitizePackNameForFilename(packName) {
   const trimmed = (packName || "nameForge").trim().replace(/\s+/g, " ");
   const cleaned = trimmed.replace(INVALID_FILENAME_CHARS, "-").trim();
   return cleaned || "nameForge";
+}
+function isWordListContent(content) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  return !!fm && /^type:\s*["']?word-list["']?\s*$/m.test(fm[1]);
+}
+function parseWordListFileContent(content, fallbackName = "Word list") {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  const frontmatter = fm ? fm[1] : "";
+  const field = (key) => {
+    var _a, _b;
+    return (_b = (_a = frontmatter.match(new RegExp(`^${key}:\\s*(.*)$`, "m"))) == null ? void 0 : _a[1].trim().replace(/^['"]|['"]$/g, "")) != null ? _b : "";
+  };
+  return {
+    packName: field("packName") || fallbackName,
+    setting: field("setting"),
+    list: parseWordList(fm ? content.slice(fm[0].length) : content),
+    ...parseTemplateFields(frontmatter)
+  };
+}
+function mergeWordListWithTemplate(derived, template) {
+  return { ...derived, list: mergeWordLists(derived.list, template.list) };
+}
+function createWordListFileContent(packName, body, templateOf, template = false) {
+  const safePackName = (packName || "Word list").trim().replace(/\s+/g, " ");
+  const templateLine = (template ? "template: true\n" : "") + (templateOf ? `template-of: "[[${templateOf}]]"
+` : "");
+  return `---
+type: word-list
+packName: ${safePackName}
+setting: 
+${templateLine}---
+
+${body.trim()}
+`;
 }
 
 // src/paths.ts
@@ -1622,7 +1984,7 @@ var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
 };
 
 // src/modal.ts
-var import_obsidian6 = require("obsidian");
+var import_obsidian8 = require("obsidian");
 
 // src/icons.ts
 var import_obsidian4 = require("obsidian");
@@ -1640,6 +2002,12 @@ var ICON_PLACE_SHAPES = "nameforge-place-shapes";
 var ICON_PLACE_SHAPES_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path d="M17 8.444C17 11.537 12 17 12 17s-5-5.463-5-8.556S9.239 3 12 3s5 2.352 5 5.444" /><circle cx="12" cy="8" r="1" /></g></g>';
 var ICON_GENERIC_PLACE_NAMES = "nameforge-generic-place-names";
 var ICON_GENERIC_PLACE_NAMES_SVG = '<g transform="scale(4.16667)"><g fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path fill="currentColor" fill-rule="evenodd" d="M11.262 17.675L12 17zm1.476 0l.005-.005l.012-.014l.045-.05l.166-.186a38 38 0 0 0 2.348-2.957c.642-.9 1.3-1.92 1.801-2.933c.49-.99.885-2.079.885-3.086C18 4.871 15.382 2 12 2S6 4.87 6 8.444c0 1.007.395 2.096.885 3.086c.501 1.013 1.16 2.033 1.8 2.933a38 38 0 0 0 2.515 3.143l.045.05l.012.014l.005.005a1 1 0 0 0 1.476 0M12 17l.738.674zm0-11a2 2 0 1 0 0 4a2 2 0 0 0 0-4" clip-rule="evenodd" /></g></g>';
+var ICON_EXPLORATION_PLACE_SHAPES = "nameforge-exploration-place-shapes";
+var ICON_EXPLORATION_PLACE_SHAPES_SVG = '<g transform="scale(0.0976563)"><path fill="currentColor" fill-opacity=".15" d="M512 140c-205.4 0-372 166.6-372 372s166.6 372 372 372s372-166.6 372-372s-166.6-372-372-372M327.6 701.7c-2 .9-4.4 0-5.3-2.1c-.4-1-.4-2.2 0-3.2L421 470.9L553.1 603zm375.1-375.1L604 552.1L471.9 420l225.5-98.7c2-.9 4.4 0 5.3 2.1c.4 1 .4 2.1 0 3.2" /><path fill="currentColor" d="M322.3 696.4c-.4 1-.4 2.2 0 3.2c.9 2.1 3.3 3 5.3 2.1L553.1 603L421 470.9zm375.1-375.1L471.9 420L604 552.1l98.7-225.5c.4-1.1.4-2.2 0-3.2c-.9-2.1-3.3-3-5.3-2.1" /><path fill="currentColor" d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448s448-200.6 448-448S759.4 64 512 64m0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372s372 166.6 372 372s-166.6 372-372 372" /></g>';
+var ICON_EMPIRE_EXPANSION_PLACE_SHAPES = "nameforge-empire-expansion-place-shapes";
+var ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG = '<g transform="scale(3.57143)"><path fill="currentColor" d="M13.11 2.293a1.5 1.5 0 0 1 1.78 0l9.497 7.005c1.124.83.598 2.578-.74 2.7H4.353c-1.338-.122-1.863-1.87-.74-2.7zM14 8.999a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3m5.5 4h2.499v6h-2.5zm-2 6v-6H15v6zM13 19v-6h-2.5v6zm-4.499 0v-6h-2.5v6zm-2.25 1a3.25 3.25 0 0 0-3.25 3.25v.5a.75.75 0 0 0 .75.751h20.497a.75.75 0 0 0 .75-.75v-.5a3.25 3.25 0 0 0-3.25-3.25z" /></g>';
+var ICON_NAME_AGEING = "nameforge-name-ageing";
+var ICON_NAME_AGEING_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="20" height="18" x="2" y="4" rx="4" /><path d="M8 2v4m8-4v4M2 10h20" /></g></g>';
 var ICON_DICE = "nameforge-dice";
 var ICON_DICE_SVG = '<g transform="scale(6.66667)"><path d="M0 0h15v15H0z" fill="none" /><path fill="currentColor" d="M4.14 1.14c-.68.05-1.33.43-1.7 1.07L.29 5.93c-.59 1.03-.26 2.32.77 2.91l3.72 2.14c.15.09.31.19.47.24V7.47c0-1.76 1.45-3.22 3.21-3.22h1.31c-.18-.26-.41-.5-.7-.67L5.35 1.44c-.39-.22-.8-.33-1.21-.3m.33.76c.6 0 1.12.41 1.28.99c.19.72-.23 1.45-.95 1.64c-.71.19-1.44-.23-1.64-.94c-.19-.72.24-1.45.95-1.64c.12-.04.24-.05.36-.05M2.2 5.84c.6 0 1.12.41 1.28.99c.19.71-.24 1.45-.95 1.64S1.08 8.23.89 7.52s.23-1.45.95-1.64c.11-.03.24-.05.36-.04m6.26-.52c-1.18 0-2.14.96-2.14 2.15v4.28c0 1.19.96 2.15 2.14 2.15h4.29c1.19 0 2.14-.96 2.14-2.15V7.47c0-1.19-.95-2.15-2.14-2.15zm4.29.81c.35 0 .69.14.95.39a1.34 1.34 0 0 1 0 1.89c-.26.26-.6.4-.95.4a1.34 1.34 0 0 1 0-2.68m-4.29 4.28c.36 0 .7.14.95.4c.25.25.39.59.39.94a1.34 1.34 0 0 1-2.68 0c0-.35.14-.69.4-.94c.25-.26.59-.4.94-.4" /></g>';
 var ICON_TEXT_INSERT = "nameforge-text-insert";
@@ -1678,6 +2046,9 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_PACKS, ICON_PACKS_SVG);
   (0, import_obsidian4.addIcon)(ICON_PLACE_SHAPES, ICON_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_GENERIC_PLACE_NAMES, ICON_GENERIC_PLACE_NAMES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_EXPLORATION_PLACE_SHAPES, ICON_EXPLORATION_PLACE_SHAPES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_NAME_AGEING, ICON_NAME_AGEING_SVG);
   (0, import_obsidian4.addIcon)(ICON_DICE, ICON_DICE_SVG);
   (0, import_obsidian4.addIcon)(ICON_TEXT_INSERT, ICON_TEXT_INSERT_SVG);
   (0, import_obsidian4.addIcon)(ICON_CHECKLIST_INSERT, ICON_CHECKLIST_INSERT_SVG);
@@ -1698,8 +2069,9 @@ function registerNameForgeIcons() {
 // src/folderModal.ts
 var import_obsidian5 = require("obsidian");
 var EnterFolderPathModal = class extends import_obsidian5.Modal {
-  constructor(app, currentPath, onSubmit) {
+  constructor(app, currentPath, onSubmit, message = "Enter a vault-relative folder path. Packs will be read from and saved to this folder.") {
     super(app);
+    this.message = message;
     this.inputEl = null;
     this.currentPath = currentPath;
     this.onSubmit = onSubmit;
@@ -1708,9 +2080,7 @@ var EnterFolderPathModal = class extends import_obsidian5.Modal {
     const { contentEl } = this;
     contentEl.empty();
     contentEl.addClass("nameforge-enter-folder-modal");
-    contentEl.createEl("p", {
-      text: "Enter a vault-relative folder path. Packs will be read from and saved to this folder."
-    });
+    contentEl.createEl("p", { text: this.message });
     const row = contentEl.createDiv({ cls: "nameforge-modal__pack-name-row" });
     row.createEl("label", { text: "Folder" });
     this.inputEl = row.createEl("input", {
@@ -1754,6 +2124,2656 @@ var EnterFolderPathModal = class extends import_obsidian5.Modal {
       new import_obsidian5.Notice(`nameForge: could not use folder ${targetPath}`);
     }
   }
+};
+
+// src/data/name-words.json
+var name_words_default = {
+  $comment: "Built-in word lists (names-reference \xA711.1\u201311.12), fusion classes (\xA73.3) and prefix forms (\xA74.4). Data only.",
+  version: 1,
+  categories: {
+    "domestic-animal": [
+      {
+        modern: "ox",
+        plural: "oxen",
+        forms: [
+          "Ox",
+          "Oxen"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "cow",
+        plural: "cows",
+        forms: [
+          "Cow",
+          "Kine"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "cattle",
+        plural: "cattle",
+        forms: [
+          "Rother"
+        ],
+        fuses: "traditional-only",
+        traditional: "rother"
+      },
+      {
+        modern: "sheep",
+        plural: "sheep",
+        forms: [
+          "Sheep",
+          "Ship"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "pig",
+        plural: "swine",
+        forms: [
+          "Swin"
+        ],
+        fuses: "traditional-only",
+        traditional: "swine"
+      },
+      {
+        modern: "goat",
+        plural: "goats",
+        forms: [
+          "Goat"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "horse",
+        plural: "horses",
+        forms: [
+          "Horse",
+          "Hors"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "calf",
+        plural: "calves",
+        forms: [
+          "Calf",
+          "Calver"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "lamb",
+        plural: "lambs",
+        forms: [
+          "Lamb"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "bull",
+        plural: "bulls",
+        forms: [
+          "Bull",
+          "Bul"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "goose",
+        plural: "geese",
+        forms: [
+          "Goose",
+          "Gos"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "dog",
+        plural: "hounds",
+        forms: [
+          "Hound"
+        ],
+        fuses: "traditional-only",
+        traditional: "hound"
+      }
+    ],
+    "wild-animal": [
+      {
+        modern: "wolf",
+        plural: "wolves",
+        forms: [
+          "Wolf",
+          "Wool"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "badger",
+        plural: "brocks",
+        forms: [
+          "Brock"
+        ],
+        fuses: "traditional-only",
+        traditional: "brock"
+      },
+      {
+        modern: "wild boar",
+        plural: "boars",
+        forms: [
+          "Boar",
+          "Ever"
+        ],
+        fuses: "traditional-only",
+        traditional: "boar"
+      },
+      {
+        modern: "deer",
+        plural: "harts",
+        forms: [
+          "Hart"
+        ],
+        fuses: "traditional-only",
+        traditional: "hart"
+      },
+      {
+        modern: "deer",
+        plural: "hinds",
+        forms: [
+          "Hind"
+        ],
+        fuses: "traditional-only",
+        traditional: "hind"
+      },
+      {
+        modern: "deer",
+        plural: "roe",
+        forms: [
+          "Roe"
+        ],
+        fuses: "traditional-only",
+        traditional: "roe"
+      },
+      {
+        modern: "fox",
+        plural: "foxes",
+        forms: [
+          "Fox"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "otter",
+        plural: "otters",
+        forms: [
+          "Otter"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "beaver",
+        plural: "beavers",
+        forms: [
+          "Bever"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "hare",
+        plural: "hares",
+        forms: [
+          "Hare"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "wildcat",
+        plural: "wildcats",
+        forms: [
+          "Cat"
+        ],
+        fuses: "yes"
+      }
+    ],
+    bird: [
+      {
+        modern: "eagle",
+        plural: "erns",
+        forms: [
+          "Arn",
+          "Ern"
+        ],
+        fuses: "traditional-only",
+        traditional: "ern"
+      },
+      {
+        modern: "crane",
+        plural: "cranes",
+        forms: [
+          "Cran"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "crow",
+        plural: "crows",
+        forms: [
+          "Crow",
+          "Craw"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "raven",
+        plural: "ravens",
+        forms: [
+          "Raven",
+          "Ravens"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "hawk",
+        plural: "hawks",
+        forms: [
+          "Hawk",
+          "Hawks"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "swan",
+        plural: "swans",
+        forms: [
+          "Swan"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "owl",
+        plural: "owls",
+        forms: [
+          "Owl"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "heron",
+        plural: "herons",
+        forms: [
+          "Heron"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "cuckoo",
+        plural: "cuckoos",
+        forms: [
+          "Cuck"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "lark",
+        plural: "laverocks",
+        forms: [
+          "Laver"
+        ],
+        fuses: "traditional-only",
+        traditional: "laverock"
+      },
+      {
+        modern: "dove",
+        plural: "culvers",
+        forms: [
+          "Culver"
+        ],
+        fuses: "traditional-only",
+        traditional: "culver"
+      },
+      {
+        modern: "finch",
+        plural: "finches",
+        forms: [
+          "Finch"
+        ],
+        fuses: "yes"
+      }
+    ],
+    "fish-and-other-creatures": [
+      {
+        modern: "eel",
+        plural: "eels",
+        forms: [
+          "Eel",
+          "El"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "salmon",
+        plural: "salmon",
+        forms: [
+          "Salmon"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "trout",
+        plural: "trout",
+        forms: [
+          "Trout"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "fish",
+        plural: "fish",
+        forms: [
+          "Fish"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "bee",
+        plural: "bees",
+        forms: [
+          "Bee",
+          "Beo"
+        ],
+        fuses: "yes"
+      }
+    ],
+    tree: [
+      {
+        modern: "ash",
+        plural: "ashes",
+        forms: [
+          "Ash",
+          "Ashen"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "oak",
+        plural: "oaks",
+        forms: [
+          "Oak",
+          "Ac"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "alder",
+        plural: "alders",
+        forms: [
+          "Alder",
+          "Aller"
+        ],
+        fuses: "yes",
+        traditional: "aller"
+      },
+      {
+        modern: "elm",
+        plural: "elms",
+        forms: [
+          "Elm"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "birch",
+        plural: "birks",
+        forms: [
+          "Birk",
+          "Birken"
+        ],
+        fuses: "traditional-only",
+        traditional: "birk"
+      },
+      {
+        modern: "thorn",
+        plural: "thorns",
+        forms: [
+          "Thorn"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "hazel",
+        plural: "hazels",
+        forms: [
+          "Hazel",
+          "Hasel"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "willow",
+        plural: "withies",
+        forms: [
+          "Withy",
+          "With"
+        ],
+        fuses: "traditional-only",
+        traditional: "withy"
+      },
+      {
+        modern: "willow",
+        plural: "sallows",
+        forms: [
+          "Sal"
+        ],
+        fuses: "traditional-only",
+        traditional: "sallow"
+      },
+      {
+        modern: "yew",
+        plural: "yews",
+        forms: [
+          "Yew"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "lime",
+        plural: "lindens",
+        forms: [
+          "Lin",
+          "Lind"
+        ],
+        fuses: "traditional-only",
+        traditional: "linden"
+      },
+      {
+        modern: "maple",
+        plural: "maples",
+        forms: [
+          "Maple",
+          "Mapel"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "holly",
+        plural: "holms",
+        forms: [
+          "Holm"
+        ],
+        fuses: "traditional-only",
+        traditional: "holm"
+      },
+      {
+        modern: "apple",
+        plural: "apples",
+        forms: [
+          "Apple",
+          "Apel"
+        ],
+        fuses: "yes"
+      }
+    ],
+    "wild-plant": [
+      {
+        modern: "fern",
+        plural: "ferns",
+        forms: [
+          "Fern",
+          "Farn"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "broom",
+        plural: "broom",
+        forms: [
+          "Broom",
+          "Brom"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "heather",
+        plural: "ling",
+        forms: [
+          "Ling"
+        ],
+        fuses: "traditional-only",
+        traditional: "ling"
+      },
+      {
+        modern: "rush",
+        plural: "rushes",
+        forms: [
+          "Rush"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "reed",
+        plural: "reeds",
+        forms: [
+          "Reed",
+          "Red"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "sedge",
+        plural: "sedge",
+        forms: [
+          "Sedge",
+          "Seg"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "clover",
+        plural: "clover",
+        forms: [
+          "Claver"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "nettle",
+        plural: "nettles",
+        forms: [
+          "Nettle"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "gorse",
+        plural: "furze",
+        forms: [
+          "Furze"
+        ],
+        fuses: "traditional-only",
+        traditional: "furze"
+      },
+      {
+        modern: "gorse",
+        plural: "whins",
+        forms: [
+          "Whin"
+        ],
+        fuses: "traditional-only",
+        traditional: "whin"
+      }
+    ],
+    crop: [
+      {
+        modern: "wheat",
+        plural: "wheat",
+        forms: [
+          "Wheat",
+          "Whit"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "barley",
+        plural: "bere",
+        forms: [
+          "Bar",
+          "Bere"
+        ],
+        fuses: "traditional-only",
+        traditional: "bere"
+      },
+      {
+        modern: "rye",
+        plural: "rye",
+        forms: [
+          "Rye"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "oats",
+        plural: "oats",
+        forms: [
+          "Oat"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "flax",
+        plural: "lin",
+        forms: [
+          "Lin"
+        ],
+        fuses: "traditional-only",
+        traditional: "lin"
+      },
+      {
+        modern: "bean",
+        plural: "beans",
+        forms: [
+          "Bean"
+        ],
+        fuses: "yes"
+      }
+    ],
+    colour: [
+      {
+        modern: "black",
+        forms: [
+          "Black",
+          "Blake"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "white",
+        forms: [
+          "White",
+          "Whit"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "red",
+        forms: [
+          "Red",
+          "Rad"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "green",
+        forms: [
+          "Green"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "grey",
+        forms: [
+          "Hoar",
+          "Har"
+        ],
+        fuses: "traditional-only",
+        traditional: "hoar"
+      },
+      {
+        modern: "grey-brown",
+        forms: [
+          "Dun"
+        ],
+        fuses: "traditional-only",
+        traditional: "dun"
+      },
+      {
+        modern: "brown",
+        forms: [
+          "Brown"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "blue",
+        forms: [
+          "Blae"
+        ],
+        fuses: "traditional-only",
+        traditional: "blae"
+      },
+      {
+        modern: "golden",
+        forms: [
+          "Gold"
+        ],
+        fuses: "yes"
+      }
+    ],
+    size: [
+      {
+        modern: "great",
+        forms: [
+          "Mickle",
+          "Much"
+        ],
+        fuses: "traditional-only",
+        traditional: "mickle"
+      },
+      {
+        modern: "little",
+        forms: [
+          "Little",
+          "Lit"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "big",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "small",
+        forms: [
+          "Small"
+        ],
+        fuses: "yes"
+      }
+    ],
+    age: [
+      {
+        modern: "new",
+        forms: [
+          "New"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "old",
+        forms: [
+          "Old",
+          "Ald"
+        ],
+        fuses: "yes",
+        traditional: "eald"
+      }
+    ],
+    "position-or-direction": [
+      {
+        modern: "north",
+        forms: [
+          "North",
+          "Nor"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "south",
+        forms: [
+          "South",
+          "Sut",
+          "Sud"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "east",
+        forms: [
+          "East",
+          "Eas"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "west",
+        forms: [
+          "West",
+          "Wes"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "upper",
+        forms: [
+          "Up",
+          "Over"
+        ],
+        fuses: "yes",
+        traditional: "over"
+      },
+      {
+        modern: "lower",
+        forms: [
+          "Nether"
+        ],
+        fuses: "traditional-only",
+        traditional: "nether"
+      },
+      {
+        modern: "middle",
+        forms: [
+          "Middle",
+          "Mid"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "far",
+        forms: [
+          "Far"
+        ],
+        fuses: "yes"
+      }
+    ],
+    shape: [
+      {
+        modern: "long",
+        forms: [
+          "Long",
+          "Lang"
+        ],
+        fuses: "yes",
+        traditional: "lang"
+      },
+      {
+        modern: "broad",
+        forms: [
+          "Broad",
+          "Brad"
+        ],
+        fuses: "yes",
+        traditional: "brad"
+      },
+      {
+        modern: "round",
+        forms: [
+          "Round"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "crooked",
+        forms: [
+          "Crook"
+        ],
+        fuses: "traditional-only",
+        traditional: "crook"
+      },
+      {
+        modern: "high",
+        forms: [
+          "High",
+          "Hen"
+        ],
+        fuses: "yes"
+      }
+    ],
+    "quality-or-condition": [
+      {
+        modern: "cold",
+        forms: [
+          "Cold",
+          "Cald",
+          "Chil"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "warm",
+        forms: [
+          "Warm"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "fair",
+        forms: [
+          "Fair"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "foul",
+        forms: [
+          "Foul",
+          "Ful"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "clean",
+        forms: [
+          "Clan"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "bright",
+        forms: [
+          "Sher",
+          "Shir"
+        ],
+        fuses: "traditional-only",
+        traditional: "sheer"
+      },
+      {
+        modern: "dry",
+        forms: [
+          "Dry"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "rough",
+        forms: [
+          "Rough",
+          "Ry"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "sweet",
+        forms: [
+          "Sweet"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "deep",
+        forms: [
+          "Deep",
+          "Dep"
+        ],
+        fuses: "yes"
+      }
+    ],
+    number: [
+      {
+        modern: "two",
+        forms: [
+          "Twy"
+        ],
+        fuses: "number-fused"
+      },
+      {
+        modern: "three",
+        forms: [
+          "Thri"
+        ],
+        fuses: "number-fused"
+      },
+      {
+        modern: "five",
+        forms: [],
+        fuses: "number-spaced"
+      },
+      {
+        modern: "seven",
+        forms: [],
+        fuses: "number-spaced"
+      },
+      {
+        modern: "nine",
+        forms: [],
+        fuses: "number-spaced"
+      }
+    ],
+    landform: [
+      {
+        modern: "hill",
+        traditional: "law",
+        forms: [
+          "Hill"
+        ],
+        traditionalForms: [
+          "Law"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "ridge",
+        forms: [
+          "Ridge"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "spur",
+        traditional: "hoe",
+        forms: [
+          "Spur"
+        ],
+        traditionalForms: [
+          "Hoe"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "edge",
+        forms: [
+          "Edge"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "bank",
+        forms: [
+          "Bank"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "slope",
+        forms: [
+          "Slope"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "knoll",
+        forms: [
+          "Knoll"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "mound",
+        traditional: "how",
+        forms: [
+          "Mound"
+        ],
+        traditionalForms: [
+          "How"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "down",
+        traditional: "dun",
+        forms: [
+          "Down"
+        ],
+        traditionalForms: [
+          "Dun"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "crag",
+        forms: [
+          "Crag"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "top",
+        forms: [
+          "Top"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "head",
+        forms: [
+          "Head"
+        ],
+        fuses: "yes"
+      }
+    ],
+    "water-or-wetland-feature": [
+      {
+        modern: "marsh",
+        forms: [
+          "Marsh"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "ford",
+        forms: [
+          "Ford"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "well",
+        traditional: "wel",
+        forms: [
+          "Well"
+        ],
+        traditionalForms: [
+          "Wel"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "spring",
+        forms: [
+          "Spring"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "pool",
+        forms: [
+          "Pool"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "mere",
+        traditional: "mer",
+        forms: [
+          "Mere"
+        ],
+        traditionalForms: [
+          "Mer"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "brook",
+        traditional: "brock",
+        forms: [
+          "Brook"
+        ],
+        traditionalForms: [
+          "Brock"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "stream",
+        traditional: "burn",
+        forms: [
+          "Stream"
+        ],
+        traditionalForms: [
+          "Burn"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "stream",
+        traditional: "beck",
+        forms: [
+          "Stream"
+        ],
+        traditionalForms: [
+          "Beck"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "moss",
+        forms: [
+          "Moss"
+        ],
+        fuses: "yes"
+      }
+    ],
+    "soil-or-ground": [
+      {
+        modern: "sand",
+        forms: [
+          "Sand"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "clay",
+        forms: [
+          "Clay"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "stone",
+        traditional: "stan",
+        forms: [
+          "Stone"
+        ],
+        traditionalForms: [
+          "Stan"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "chalk",
+        traditional: "chal",
+        forms: [
+          "Chalk"
+        ],
+        traditionalForms: [
+          "Chal"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "gravel",
+        traditional: "grit",
+        forms: [
+          "Gravel"
+        ],
+        traditionalForms: [
+          "Grit"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "flint",
+        forms: [
+          "Flint"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "marl",
+        forms: [
+          "Marl"
+        ],
+        fuses: "yes"
+      }
+    ],
+    "built-feature": [
+      {
+        modern: "mill",
+        forms: [
+          "Mill"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "bridge",
+        forms: [
+          "Bridge"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "street",
+        traditional: "strat",
+        forms: [
+          "Street"
+        ],
+        traditionalForms: [
+          "Strat"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "church",
+        traditional: "kirk",
+        forms: [
+          "Church"
+        ],
+        traditionalForms: [
+          "Kirk"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "cross",
+        forms: [
+          "Cross"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "castle",
+        forms: [
+          "Castle"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "fort",
+        traditional: "chester",
+        forms: [
+          "Fort"
+        ],
+        traditionalForms: [
+          "Chester"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "fort",
+        traditional: "bur",
+        forms: [
+          "Fort"
+        ],
+        traditionalForms: [
+          "Bur"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "wall",
+        forms: [
+          "Wall"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "dyke",
+        forms: [
+          "Dyke"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "gate",
+        forms: [
+          "Gate"
+        ],
+        fuses: "yes"
+      }
+    ],
+    activity: [
+      {
+        modern: "hunter",
+        forms: [
+          "Hunting"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "fisher",
+        forms: [
+          "Fisher"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "smith",
+        forms: [
+          "Smeth"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "potter",
+        forms: [
+          "Potter"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "player",
+        forms: [
+          "Play"
+        ],
+        fuses: "yes"
+      }
+    ],
+    produce: [
+      {
+        modern: "butter",
+        forms: [
+          "Butter"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "cheese",
+        forms: [
+          "Chis"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "salt",
+        forms: [
+          "Salt"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "honey",
+        forms: [
+          "Honey"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "coal",
+        forms: [
+          "Col"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "wool",
+        forms: [
+          "Wool"
+        ],
+        fuses: "yes"
+      }
+    ],
+    "religious-association": [
+      {
+        modern: "holy",
+        traditional: "hali",
+        forms: [
+          "Holy"
+        ],
+        traditionalForms: [
+          "Hali"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "church",
+        traditional: "kirk",
+        forms: [
+          "Church"
+        ],
+        traditionalForms: [
+          "Kirk"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "cross",
+        forms: [
+          "Cross"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "chapel",
+        forms: [
+          "Chapel"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "minster",
+        forms: [
+          "Minster"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "temple",
+        forms: [
+          "Temple"
+        ],
+        fuses: "yes"
+      }
+    ],
+    season: [
+      {
+        modern: "summer",
+        forms: [
+          "Summer",
+          "Somer"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "winter",
+        forms: [
+          "Winter"
+        ],
+        fuses: "yes"
+      }
+    ],
+    "assembly-or-law": [
+      {
+        modern: "moot",
+        traditional: "spell",
+        forms: [
+          "Moot",
+          "Mot"
+        ],
+        traditionalForms: [
+          "Spel"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "thing",
+        forms: [
+          "Thing",
+          "Ting"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "gallows",
+        forms: [
+          "Gallow"
+        ],
+        fuses: "yes"
+      }
+    ],
+    "status-or-role": [
+      {
+        modern: "king",
+        forms: [
+          "King",
+          "Kings"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "queen",
+        forms: [
+          "Queen"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "prince",
+        forms: [
+          "Prince"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "earl",
+        forms: [
+          "Earl",
+          "Erl"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "knight",
+        forms: [
+          "Knigh"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "free peasant",
+        forms: [
+          "Charl",
+          "Chorl"
+        ],
+        fuses: "yes",
+        traditional: "churl"
+      },
+      {
+        modern: "priest",
+        forms: [
+          "Pres",
+          "Priest"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "monk",
+        forms: [
+          "Monk"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "nun",
+        forms: [
+          "Nun"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "bishop",
+        forms: [
+          "Bishop",
+          "Bishops"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "abbot",
+        forms: [
+          "Abbots"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "lord",
+        forms: [
+          "Lord"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "lady",
+        forms: [
+          "Lady"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "herdsman",
+        forms: [
+          "Hard"
+        ],
+        fuses: "yes",
+        traditional: "herd"
+      }
+    ],
+    "ethnic-or-cultural-group": [
+      {
+        modern: "Welsh",
+        forms: [
+          "Wal"
+        ],
+        fuses: "yes",
+        traditional: "wealh"
+      },
+      {
+        modern: "British",
+        forms: [
+          "Wal"
+        ],
+        fuses: "yes",
+        traditional: "wealh"
+      },
+      {
+        modern: "Dane",
+        forms: [
+          "Den"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "English",
+        forms: [
+          "Ingle"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "Norse",
+        forms: [
+          "Norman"
+        ],
+        fuses: "yes",
+        traditional: "Northman"
+      },
+      {
+        modern: "Irish",
+        forms: [
+          "Ir"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "Scot",
+        forms: [
+          "Scot"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "Saxon",
+        forms: [
+          "Sax"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "Fleming",
+        forms: [
+          "Flem"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "stranger",
+        forms: [
+          "Gall"
+        ],
+        fuses: "yes",
+        traditional: "gall"
+      }
+    ],
+    "supernatural-being": [
+      {
+        modern: "dragon",
+        forms: [
+          "Drake"
+        ],
+        fuses: "traditional-only",
+        traditional: "drake"
+      },
+      {
+        modern: "dragon",
+        forms: [
+          "Worm"
+        ],
+        fuses: "traditional-only",
+        traditional: "wyrm"
+      },
+      {
+        modern: "giant",
+        forms: [
+          "Thurs"
+        ],
+        fuses: "traditional-only",
+        traditional: "thurse"
+      },
+      {
+        modern: "elf",
+        forms: [
+          "Elf",
+          "Elve"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "goblin",
+        forms: [
+          "Puck"
+        ],
+        fuses: "traditional-only",
+        traditional: "puck"
+      },
+      {
+        modern: "devil",
+        forms: [
+          "Shuck"
+        ],
+        fuses: "traditional-only",
+        traditional: "shuck"
+      },
+      {
+        modern: "witch",
+        forms: [
+          "Witch"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "hobgoblin",
+        forms: [
+          "Hob"
+        ],
+        fuses: "traditional-only",
+        traditional: "hob"
+      },
+      {
+        modern: "fairy",
+        forms: [],
+        fuses: "no"
+      }
+    ],
+    resource: [
+      {
+        modern: "gold",
+        forms: [],
+        fuses: "yes"
+      },
+      {
+        modern: "silver",
+        forms: [],
+        fuses: "yes"
+      },
+      {
+        modern: "copper",
+        forms: [],
+        fuses: "yes"
+      },
+      {
+        modern: "iron",
+        forms: [],
+        fuses: "yes"
+      },
+      {
+        modern: "tin",
+        forms: [],
+        fuses: "yes"
+      },
+      {
+        modern: "lead",
+        forms: [],
+        fuses: "yes"
+      },
+      {
+        modern: "coal",
+        forms: [],
+        fuses: "yes"
+      },
+      {
+        modern: "salt",
+        forms: [],
+        fuses: "yes"
+      },
+      {
+        modern: "timber",
+        forms: [],
+        fuses: "yes"
+      }
+    ],
+    "emotion-or-aspiration": [
+      {
+        modern: "hope",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "good hope",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "hopeless",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "pleasant",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "providence",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "plenty",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "peace",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "liberty",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "prosperity",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "desolation",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "disappointment",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "contentment",
+        forms: [],
+        fuses: "no"
+      }
+    ],
+    "event-or-incident": [
+      {
+        modern: "tribulation",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "catastrophe",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "danger",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "lost",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "wreck",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "battle",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "mutiny",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "discovery",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "deliverance",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "despair",
+        forms: [],
+        fuses: "no"
+      }
+    ],
+    "calendar-date-or-feast": [
+      {
+        modern: "Christmas",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Easter",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Whitsun",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Epiphany",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Michaelmas",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Candlemas",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Lammas",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Ascension",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Corpus Christi",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Assumption",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Annunciation",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "All Saints",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "New Year",
+        forms: [],
+        fuses: "no"
+      }
+    ],
+    "imperial-claim": [
+      {
+        modern: "victory",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "triumph",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "dominion",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "conquest",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "pacified",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "concord",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "faithful",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "ruler of the [direction]",
+        forms: [],
+        fuses: "no"
+      }
+    ],
+    "classical-biblical-or-legendary-name": [
+      {
+        modern: "Troy",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Ithaca",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Athens",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Sparta",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Rome",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Carthage",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Corinth",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Syracuse",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Arcadia",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Elysium",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Bethlehem",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Salem",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Zion",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Canaan",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Goshen",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Eden",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Jericho",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Hebron",
+        forms: [],
+        fuses: "no"
+      }
+    ],
+    ship: [
+      {
+        modern: "Endeavour",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Resolution",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Discovery",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Adventure",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Investigator",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Beagle",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Bounty",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Mayflower",
+        forms: [],
+        fuses: "no"
+      }
+    ],
+    "honorific-title": [
+      {
+        modern: "Royal",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Imperial",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Grand",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "Regal",
+        forms: [],
+        fuses: "no"
+      },
+      {
+        modern: "August",
+        forms: [],
+        fuses: "no"
+      }
+    ],
+    "settler-group": [
+      {
+        modern: "German",
+        forms: [],
+        fuses: "town-only"
+      },
+      {
+        modern: "Swede",
+        forms: [],
+        fuses: "town-only"
+      },
+      {
+        modern: "Irish",
+        forms: [],
+        fuses: "town-only"
+      },
+      {
+        modern: "Dutch",
+        forms: [],
+        fuses: "town-only"
+      },
+      {
+        modern: "Welsh",
+        forms: [],
+        fuses: "town-only"
+      },
+      {
+        modern: "Scots",
+        forms: [],
+        fuses: "town-only"
+      },
+      {
+        modern: "Danish",
+        forms: [],
+        fuses: "town-only"
+      }
+    ],
+    "distance-or-survey-mark": [
+      {
+        modern: "Two",
+        forms: [],
+        fuses: "mile"
+      },
+      {
+        modern: "Four",
+        forms: [],
+        fuses: "mile"
+      },
+      {
+        modern: "Five",
+        forms: [],
+        fuses: "mile"
+      },
+      {
+        modern: "Six",
+        forms: [],
+        fuses: "mile"
+      },
+      {
+        modern: "Ten",
+        forms: [],
+        fuses: "mile"
+      },
+      {
+        modern: "Twelve",
+        forms: [],
+        fuses: "mile"
+      },
+      {
+        modern: "Fifteen",
+        forms: [],
+        fuses: "mile"
+      },
+      {
+        modern: "Twenty",
+        forms: [],
+        fuses: "mile"
+      },
+      {
+        modern: "Forty",
+        forms: [],
+        fuses: "mile"
+      },
+      {
+        modern: "Fifty",
+        forms: [],
+        fuses: "mile"
+      },
+      {
+        modern: "Ninety",
+        forms: [],
+        fuses: "mile"
+      }
+    ]
+  },
+  fusion: {
+    river: 0,
+    lake: 0,
+    island: 0,
+    islet: 0,
+    skerry: 0,
+    mountain: 0,
+    valley: 0,
+    sound: 0,
+    strait: 0,
+    bay: 0,
+    point: 0,
+    estuary: 0,
+    isthmus: 0,
+    people: 0,
+    ford: 0.85,
+    field: 0.85,
+    wood: 0.85,
+    well: 0.85,
+    mere: 0.85,
+    moor: 0.85,
+    minster: 0.85,
+    church: 0.85,
+    port: 0.85,
+    mouth: 0.85,
+    head: 0.85,
+    stone: 0.85,
+    town: 0.85,
+    ferry: 0.85,
+    brook: 0.85,
+    house: 0.85,
+    heath: 0.85,
+    wold: 0.85,
+    down: 0.85,
+    ridge: 0.85,
+    bottom: 0.85,
+    fold: 0.85,
+    croft: 0.85,
+    haven: 0.85,
+    market: 0.85,
+    land: 0.85,
+    dale: 0.85,
+    combe: 0.85,
+    holt: 0.85,
+    hurst: 0.85,
+    thwaite: 0.85,
+    burn: 0.85,
+    beck: 0.85,
+    bourne: 0.85,
+    hithe: 0.85,
+    garth: 0.85,
+    toft: 0.85,
+    carr: 0.85,
+    holm: 0.85,
+    shaw: 0.85,
+    hope: 0.85,
+    strath: 0.85,
+    hill: 0.5,
+    bridge: 0.5,
+    gate: 0.5,
+    cross: 0.5,
+    mill: 0.5,
+    hall: 0.5,
+    castle: 0.5,
+    grange: 0.5,
+    chapel: 0.5,
+    bank: 0.5,
+    edge: 0.5,
+    fell: 0.5,
+    pool: 0.5,
+    cliff: 0.5,
+    wall: 0.5,
+    tor: 0.5,
+    top: 0.5,
+    way: 0.5,
+    street: 0.5,
+    close: 0.5,
+    moss: 0.5,
+    gill: 0.5,
+    farm: 0.15,
+    village: 0.15,
+    hamlet: 0.15,
+    estate: 0.15,
+    township: 0.15,
+    holding: 0.15,
+    enclosure: 0.15,
+    dairy: 0.15,
+    homestead: 0.15,
+    cottage: 0.15,
+    hut: 0.15,
+    building: 0.15,
+    workshop: 0.15,
+    plot: 0.15,
+    kiln: 0.15,
+    pit: 0.15,
+    quarry: 0.15,
+    weir: 0.15,
+    landing: 0.15,
+    saltworks: 0.15,
+    temple: 0.15,
+    shrine: 0.15,
+    sanctuary: 0.15,
+    hermitage: 0.15,
+    grove: 0.15,
+    grave: 0.15,
+    graveyard: 0.15,
+    barrow: 0.15,
+    cairn: 0.15,
+    ringfort: 0.15,
+    fort: 0.15,
+    tower: 0.15,
+    lookout: 0.15,
+    beacon: 0.15,
+    dyke: 0.15,
+    earthwork: 0.15,
+    camp: 0.15,
+    court: 0.15,
+    manor: 0.15,
+    moot: 0.15,
+    boundary: 0.15,
+    gallows: 0.15,
+    bath: 0.15,
+    stream: 0.15,
+    spring: 0.15,
+    tarn: 0.15,
+    marsh: 0.15,
+    fen: 0.15,
+    mire: 0.15,
+    wallow: 0.15,
+    bog: 0.15,
+    wash: 0.15,
+    meadow: 0.15,
+    pasture: 0.15,
+    copse: 0.15,
+    scrub: 0.15,
+    thicket: 0.15,
+    clearing: 0.15,
+    assart: 0.15,
+    spur: 0.15,
+    slope: 0.15,
+    terrace: 0.15,
+    knoll: 0.15,
+    mound: 0.15,
+    crag: 0.15,
+    peak: 0.15,
+    cave: 0.15,
+    glen: 0.15,
+    ravine: 0.15,
+    gorge: 0.15,
+    hollow: 0.15,
+    nook: 0.15,
+    corner: 0.15,
+    bend: 0.15,
+    farmland: 0.15,
+    furlong: 0.15,
+    orchard: 0.15,
+    chase: 0.15,
+    park: 0.15,
+    forest: 0.15,
+    firth: 0.15,
+    creek: 0.15,
+    cove: 0.15,
+    beach: 0.15,
+    sands: 0.15,
+    shingle: 0.15,
+    geo: 0.15,
+    headland: 0.15,
+    causeway: 0.15,
+    gap: 0.15,
+    lane: 0.15,
+    falls: 0.15,
+    waterfall: 0.15,
+    watersmeet: 0.15,
+    force: 0.15,
+    city: 0.15,
+    capital: 0.15,
+    colony: 0.15,
+    post: 0.15,
+    mission: 0.15,
+    station: 0.15,
+    diggings: 0.15,
+    junction: 0.15,
+    crossing: 0.15,
+    heights: 0.15,
+    memorial: 0.15,
+    garrison: 0.15,
+    outpost: 0.15,
+    territory: 0.15,
+    frontier: 0.15,
+    march: 0.15,
+    province: 0.15,
+    kingdom: 0.15,
+    plain: 0.15,
+    plains: 0.15,
+    grassland: 0.15,
+    "dry creek": 0.15,
+    range: 0.15,
+    reef: 0.15,
+    lagoon: 0.15,
+    mosque: 0.15,
+    tomb: 0.15,
+    lodge: 0.15,
+    cantonment: 0,
+    "civil lines": 0,
+    desert: 0,
+    oasis: 0,
+    volcano: 0,
+    glacier: 0,
+    islands: 0,
+    archipelago: 0
+  },
+  multiWordNeverFuse: true,
+  genericFusion: {
+    hope: 0.5
+  },
+  colonialGenerics: {
+    town: [
+      "town"
+    ],
+    city: [
+      "city"
+    ],
+    capital: [
+      "capital"
+    ],
+    colony: [
+      "colony"
+    ],
+    "planned-village": [
+      "village"
+    ],
+    "trading-post": [
+      "post",
+      "trading post"
+    ],
+    mission: [
+      "mission"
+    ],
+    "pastoral-station": [
+      "station",
+      "pastoral station"
+    ],
+    "mining-camp": [
+      "camp",
+      "diggings",
+      "mining camp"
+    ],
+    junction: [
+      "junction"
+    ],
+    crossing: [
+      "crossing"
+    ],
+    heights: [
+      "heights"
+    ],
+    hope: [
+      "hope"
+    ],
+    memorial: [
+      "memorial"
+    ],
+    "garrison-camp": [
+      "camp",
+      "garrison"
+    ],
+    "frontier-post": [
+      "post",
+      "outpost"
+    ],
+    cantonment: [
+      "cantonment"
+    ],
+    "civil-lines": [
+      "Civil Lines"
+    ],
+    "administrative-station": [
+      "station",
+      "administrative station"
+    ],
+    "land-territory": [
+      "land",
+      "territory"
+    ],
+    "frontier-march": [
+      "frontier",
+      "march"
+    ],
+    "province-kingdom": [
+      "province",
+      "kingdom"
+    ],
+    creek: [
+      "creek"
+    ],
+    "plain-grassland": [
+      "plain",
+      "plains",
+      "grassland"
+    ],
+    desert: [
+      "desert"
+    ],
+    oasis: [
+      "oasis"
+    ],
+    "dry-riverbed": [
+      "dry creek"
+    ],
+    "mountain-range": [
+      "range"
+    ],
+    volcano: [
+      "volcano"
+    ],
+    glacier: [
+      "glacier"
+    ],
+    "island-group": [
+      "islands",
+      "archipelago"
+    ],
+    reef: [
+      "reef"
+    ],
+    lagoon: [
+      "lagoon"
+    ],
+    mosque: [
+      "mosque"
+    ],
+    "saints-tomb-or-shrine": [
+      "tomb",
+      "shrine"
+    ],
+    "religious-lodge": [
+      "lodge"
+    ]
+  },
+  prefixForms: {
+    river: "River",
+    mountain: "Mount",
+    hill: "Mount",
+    headland: "Cape",
+    "point-nose": "Point",
+    lake: "Lake",
+    island: "Isle of",
+    fort: "Fort",
+    "market-town-harbour": "Port",
+    "narrow-valley-glen": "Glen"
+  },
+  prefixVariantForms: {
+    "broad-valley": {
+      variant: "strath",
+      prefix: "Strath"
+    }
+  },
+  linkingWords: [
+    "of",
+    "the",
+    "upon",
+    "on",
+    "in",
+    "by",
+    "with"
+  ]
 };
 
 // src/data/place-shapes.json
@@ -5535,8 +8555,36 @@ var place_shapes_default = {
         "East Grinstead",
         "Upper Slaughter"
       ],
-      forms: [],
-      formsPending: true
+      forms: [
+        {
+          text: "East",
+          position: "before"
+        },
+        {
+          text: "West",
+          position: "before"
+        },
+        {
+          text: "North",
+          position: "before"
+        },
+        {
+          text: "South",
+          position: "before"
+        },
+        {
+          text: "Upper",
+          position: "before"
+        },
+        {
+          text: "Lower",
+          position: "before"
+        },
+        {
+          text: "Inner",
+          position: "before"
+        }
+      ]
     },
     {
       id: "age",
@@ -5548,8 +8596,16 @@ var place_shapes_default = {
         "Old Sarum",
         "New Romney"
       ],
-      forms: [],
-      formsPending: true
+      forms: [
+        {
+          text: "Old",
+          position: "before"
+        },
+        {
+          text: "New",
+          position: "before"
+        }
+      ]
     },
     {
       id: "function",
@@ -5564,8 +8620,20 @@ var place_shapes_default = {
         "Castle Acre",
         "Church Stretton"
       ],
-      forms: [],
-      formsPending: true
+      forms: [
+        {
+          text: "Market",
+          position: "before"
+        },
+        {
+          text: "Castle",
+          position: "before"
+        },
+        {
+          text: "Church",
+          position: "before"
+        }
+      ]
     },
     {
       id: "owner-by-status",
@@ -5579,8 +8647,13 @@ var place_shapes_default = {
         "Kings Langley",
         "Monks Eleigh"
       ],
-      forms: [],
-      formsPending: true
+      forms: [
+        {
+          text: "",
+          position: "before",
+          slotCategory: "status-or-role"
+        }
+      ]
     },
     {
       id: "owner-by-family",
@@ -5593,8 +8666,13 @@ var place_shapes_default = {
         "Bovey Tracey",
         "Hurstpierpoint"
       ],
-      forms: [],
-      formsPending: true
+      forms: [
+        {
+          text: "",
+          position: "after",
+          slotCategory: "personal-name"
+        }
+      ]
     },
     {
       id: "dedication",
@@ -5605,8 +8683,13 @@ var place_shapes_default = {
       examples: [
         "Stratford St Mary"
       ],
-      forms: [],
-      formsPending: true
+      forms: [
+        {
+          text: "",
+          position: "after",
+          slotCategory: "saint-or-holy-person"
+        }
+      ]
     },
     {
       id: "location",
@@ -5621,8 +8704,98 @@ var place_shapes_default = {
         "Henley-on-Thames",
         "Stow-on-the-Wold"
       ],
-      forms: [],
-      formsPending: true
+      forms: [
+        {
+          text: "upon",
+          position: "after",
+          slotCategory: "river-or-stream-name"
+        },
+        {
+          text: "upon",
+          position: "after",
+          slotCategory: "landform"
+        },
+        {
+          text: "upon",
+          position: "after",
+          slotCategory: "earlier-or-district-name"
+        },
+        {
+          text: "on the",
+          position: "after",
+          slotCategory: "river-or-stream-name"
+        },
+        {
+          text: "on the",
+          position: "after",
+          slotCategory: "landform"
+        },
+        {
+          text: "on the",
+          position: "after",
+          slotCategory: "earlier-or-district-name"
+        },
+        {
+          text: "by",
+          position: "after",
+          slotCategory: "river-or-stream-name"
+        },
+        {
+          text: "by",
+          position: "after",
+          slotCategory: "landform"
+        },
+        {
+          text: "by",
+          position: "after",
+          slotCategory: "earlier-or-district-name"
+        },
+        {
+          text: "in the",
+          position: "after",
+          slotCategory: "river-or-stream-name"
+        },
+        {
+          text: "in the",
+          position: "after",
+          slotCategory: "landform"
+        },
+        {
+          text: "in the",
+          position: "after",
+          slotCategory: "earlier-or-district-name"
+        },
+        {
+          text: "of the",
+          position: "after",
+          slotCategory: "river-or-stream-name"
+        },
+        {
+          text: "of the",
+          position: "after",
+          slotCategory: "landform"
+        },
+        {
+          text: "of the",
+          position: "after",
+          slotCategory: "earlier-or-district-name"
+        },
+        {
+          text: "with",
+          position: "after",
+          slotCategory: "river-or-stream-name"
+        },
+        {
+          text: "with",
+          position: "after",
+          slotCategory: "landform"
+        },
+        {
+          text: "with",
+          position: "after",
+          slotCategory: "earlier-or-district-name"
+        }
+      ]
     }
   ]
 };
@@ -7049,10 +10222,10 @@ var place_shape_words_default = {
     },
     "home-farm-of-an-estate": {
       words: [
-        "home farm"
+        "farm"
       ],
       plurals: [
-        "home farms"
+        "farms"
       ]
     },
     "land-holding-share-of-land": {
@@ -7081,26 +10254,26 @@ var place_shape_words_default = {
     },
     "outlying-place-dependent-site": {
       words: [
-        "outlying farm"
+        "farm"
       ],
       plurals: [
-        "outlying farms"
+        "farms"
       ]
     },
     "outlying-grain-farm": {
       words: [
-        "outlying farm"
+        "farm"
       ],
       plurals: [
-        "outlying farms"
+        "farms"
       ]
     },
     "specialised-farm": {
       words: [
-        "dairy farm"
+        "dairy"
       ],
       plurals: [
-        "dairy farms"
+        "dairies"
       ]
     },
     "monastic-outlying-farm": {
@@ -7113,10 +10286,10 @@ var place_shape_words_default = {
     },
     "cattle-farm": {
       words: [
-        "cattle farm"
+        "farm"
       ],
       plurals: [
-        "cattle farms"
+        "farms"
       ]
     },
     "cottars-settlement": {
@@ -7201,34 +10374,34 @@ var place_shape_words_default = {
     },
     "summer-upland-dwelling": {
       words: [
-        "summer farm"
+        "farm"
       ],
       plurals: [
-        "summer farms"
+        "farms"
       ]
     },
     "permanent-or-winter-lowland-dwelling": {
       words: [
-        "winter farm"
+        "farm"
       ],
       plurals: [
-        "winter farms"
+        "farms"
       ]
     },
     "shieling-summer-pasture-hut": {
       words: [
-        "summer hut"
+        "hut"
       ],
       plurals: [
-        "summer huts"
+        "huts"
       ]
     },
     "hut-at-summer-pasture": {
       words: [
-        "summer hut"
+        "hut"
       ],
       plurals: [
-        "summer huts"
+        "huts"
       ]
     },
     "salt-works": {
@@ -7371,10 +10544,10 @@ var place_shape_words_default = {
     },
     "holy-place": {
       words: [
-        "holy place"
+        "sanctuary"
       ],
       plurals: [
-        "holy places"
+        "sanctuaries"
       ]
     },
     "standing-cross": {
@@ -7403,18 +10576,18 @@ var place_shape_words_default = {
     },
     "sacred-grove": {
       words: [
-        "sacred grove"
+        "grove"
       ],
       plurals: [
-        "sacred groves"
+        "groves"
       ]
     },
     "holy-spring": {
       words: [
-        "holy well"
+        "well"
       ],
       plurals: [
-        "holy wells"
+        "wells"
       ]
     },
     grave: {
@@ -7475,10 +10648,10 @@ var place_shape_words_default = {
     },
     "roman-walled-town-or-fort": {
       words: [
-        "walled town"
+        "town"
       ],
       plurals: [
-        "walled towns"
+        "towns"
       ]
     },
     castle: {
@@ -7499,10 +10672,10 @@ var place_shape_words_default = {
     },
     "fortified-farmhouse": {
       words: [
-        "fortified farm"
+        "farm"
       ],
       plurals: [
-        "fortified farms"
+        "farms"
       ]
     },
     "lookout-hill": {
@@ -7541,10 +10714,10 @@ var place_shape_words_default = {
     },
     "ship-camp-fortified-anchorage": {
       words: [
-        "ship camp"
+        "camp"
       ],
       plurals: [
-        "ship camps"
+        "camps"
       ]
     },
     "royal-or-lordly-court": {
@@ -7581,18 +10754,18 @@ var place_shape_words_default = {
     },
     "assembly-field": {
       words: [
-        "moot field"
+        "moot"
       ],
       plurals: [
-        "moot fields"
+        "moots"
       ]
     },
     "assembly-mound": {
       words: [
-        "moot hill"
+        "moot"
       ],
       plurals: [
-        "moot hills"
+        "moots"
       ]
     },
     "speech-place": {
@@ -7629,10 +10802,10 @@ var place_shape_words_default = {
     },
     "place-for-games-or-sport": {
       words: [
-        "games field"
+        "field"
       ],
       plurals: [
-        "games fields"
+        "fields"
       ]
     },
     "bath-spa": {
@@ -7857,18 +11030,18 @@ var place_shape_words_default = {
     },
     "land-in-a-river-bend": {
       words: [
-        "river bend"
+        "river"
       ],
       plurals: [
-        "river bends"
+        "rivers"
       ]
     },
     "water-meadow": {
       words: [
-        "water meadow"
+        "meadow"
       ],
       plurals: [
-        "water meadows"
+        "meadows"
       ]
     },
     "skerry-rock-islet": {
@@ -8165,10 +11338,10 @@ var place_shape_words_default = {
     },
     "wooded-hill": {
       words: [
-        "wooded hill"
+        "hill"
       ],
       plurals: [
-        "wooded hills"
+        "hills"
       ]
     },
     scrubland: {
@@ -8213,10 +11386,10 @@ var place_shape_words_default = {
     },
     "woodland-swine-pasture": {
       words: [
-        "swine pasture"
+        "pasture"
       ],
       plurals: [
-        "swine pastures"
+        "pastures"
       ]
     },
     "low-level-topped-hill": {
@@ -8864,6 +12037,8 @@ var PLACE_SHAPE_WEIGHTS = {
   stackedGenericChance: 0.05,
   /** Chance any shape gains an affix. */
   affixChance: 0.15,
+  /** Feature filter "Settlement": share of landscape groups drawn (transferred feature names, §2.4). */
+  landscapeShareSettlement: 0.35,
   /** Relative weight of each word order for two-part compounds. */
   wordOrder: {
     germanic: 1,
@@ -8928,7 +12103,8 @@ function resolveRegion(code, regions) {
     folkConnectiveShare: regions.connectiveSplit.folk,
     stackedGenericChance: structure.stackedGenericChance,
     affixChance: structure.affixChance,
-    affixMultiplier: (_c = regions.affixMultipliers[code]) != null ? _c : {}
+    affixMultiplier: (_c = regions.affixMultipliers[code]) != null ? _c : {},
+    landscapeShareSettlement: structure.landscapeShareSettlement
   };
 }
 function pickUniform(items, rng) {
@@ -8944,18 +12120,35 @@ function pickWeighted(entries, rng) {
   return entries[entries.length - 1][0];
 }
 var PlaceShapeGenerator = class {
-  constructor(source, region, groupIds, regions = PLACE_SHAPE_REGION_DATA) {
+  constructor(source, region, filters = {}, regions = PLACE_SHAPE_REGION_DATA) {
     this.source = source;
     this.region = region;
     this.profiles = /* @__PURE__ */ new Map();
     this.groupWeights = [];
     this.genericWeights = /* @__PURE__ */ new Map();
-    var _a, _b;
-    this.groups = groupIds ? source.groups.filter((g) => groupIds.includes(g.id)) : source.groups;
+    /** Feature filter "settlement": the two sides and the landscape share. */
+    this.sides = null;
+    var _a, _b, _c, _d;
+    this.excluded = new Set((_a = filters.excludedCategories) != null ? _a : []);
+    let groups = filters.groupIds ? source.groups.filter((g) => filters.groupIds.includes(g.id)) : source.groups;
+    const feature = filters.feature && filters.feature !== "any" ? filters.feature : void 0;
+    if (feature === "landscape") groups = groups.filter((g) => g.side === "landscape");
+    else if (feature && feature !== "settlement") groups = groups.filter((g) => g.id === feature);
+    if (this.excluded.size > 0) {
+      groups = groups.map((g) => ({ ...g, generics: g.generics.filter((x) => this.categoryWeights(g, x.id).length > 0) })).filter((g) => g.generics.length > 0);
+    }
+    this.groups = groups;
     if (this.groups.length === 0) throw new Error("No eligible place-shape groups");
+    if (feature === "settlement") {
+      this.sides = {
+        settlement: groups.filter((g) => g.side === "settlement"),
+        landscape: groups.filter((g) => g.side === "landscape"),
+        landscapeShare: (_b = region == null ? void 0 : region.landscapeShareSettlement) != null ? _b : PLACE_SHAPE_WEIGHTS.landscapeShareSettlement
+      };
+    }
     if (region) {
       for (const group of this.groups) {
-        this.groupWeights.push([group, (_a = region.groupMultiplier[group.id]) != null ? _a : 1]);
+        this.groupWeights.push([group, (_c = region.groupMultiplier[group.id]) != null ? _c : 1]);
         this.genericWeights.set(
           group.id,
           group.generics.map((g) => {
@@ -8966,7 +12159,7 @@ var PlaceShapeGenerator = class {
       }
     }
     const stackGroup = source.groups.find((g) => g.id === STACK_SOURCE_GROUP);
-    this.stackGenerics = ((_b = stackGroup == null ? void 0 : stackGroup.generics) != null ? _b : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id));
+    this.stackGenerics = ((_d = stackGroup == null ? void 0 : stackGroup.generics) != null ? _d : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id));
     this.affixWeights = source.affixes.filter((a) => a.forms.length > 0).map((a) => {
       var _a2, _b2;
       return [a, ((_a2 = regions.affixBaseline[a.id]) != null ? _a2 : 0) * ((_b2 = region == null ? void 0 : region.affixMultiplier[a.id]) != null ? _b2 : 1)];
@@ -8981,17 +12174,30 @@ var PlaceShapeGenerator = class {
         var _a, _b;
         return [
           id,
-          PLACE_SHAPE_WEIGHTS.tier[tier] * ((_b = (_a = this.region) == null ? void 0 : _a.categoryMultiplier[id]) != null ? _b : 1)
+          this.excluded.has(id) ? 0 : PLACE_SHAPE_WEIGHTS.tier[tier] * ((_b = (_a = this.region) == null ? void 0 : _a.categoryMultiplier[id]) != null ? _b : 1)
         ];
       }).filter(([, w]) => w > 0);
       this.profiles.set(key, weights);
     }
     return weights;
   }
+  pickGroup(rng) {
+    const region = this.region;
+    if (this.sides) {
+      const { settlement, landscape, landscapeShare } = this.sides;
+      let pool = rng() < landscapeShare ? landscape : settlement;
+      if (pool.length === 0) pool = pool === landscape ? settlement : landscape;
+      return region ? pickWeighted(pool.map((g) => {
+        var _a;
+        return [g, (_a = region.groupMultiplier[g.id]) != null ? _a : 1];
+      }), rng) : pickUniform(pool, rng);
+    }
+    return region ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
+  }
   next(rng) {
     var _a, _b, _c, _d, _e;
     const region = this.region;
-    const group = region ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
+    const group = this.pickGroup(rng);
     const generic = region ? pickWeighted(this.genericWeights.get(group.id), rng) : pickUniform(group.generics, rng);
     const categoryId = pickWeighted(this.categoryWeights(group, generic.id), rng);
     const shape = {
@@ -9030,7 +12236,11 @@ function resolveSeed(seed) {
 }
 function createGenerator(options, source) {
   const region = options.region ? resolveRegion(options.region, PLACE_SHAPE_REGION_DATA) : null;
-  return new PlaceShapeGenerator(source, region, options.groupIds);
+  return new PlaceShapeGenerator(source, region, {
+    groupIds: options.groupIds,
+    feature: options.feature,
+    excludedCategories: options.excludedCategories
+  });
 }
 function generatePlaceShapesDetailed(options, source = PLACE_SHAPE_DATA) {
   const seed = resolveSeed(options.seed);
@@ -9095,9 +12305,26 @@ var PlaceShapeFormatter = class {
       return variant ? `${word} (${usePlural ? variant.plural : variant.variant})` : word;
     });
   }
-  layout(shape, genericText) {
+  /**
+   * Etymology view (names-reference §4.9): the Meaning shape with each fill shown after a colon
+   * inside its brackets, e.g. "[domestic animal: ox] + [river crossing]".
+   */
+  formatEtymology(shape, specificFill, affixFill) {
     var _a;
-    const specific = bracket(this.categories.get(shape.categoryId));
+    const withFill = (id, fill) => {
+      var _a2;
+      return fill ? `[${((_a2 = this.categories.get(id)) != null ? _a2 : "?").toLowerCase()}: ${fill}]` : bracket(this.categories.get(id));
+    };
+    return this.layout(
+      shape,
+      (id, plural) => `${bracket(this.generics.get(id))}${plural ? " (plural)" : ""}`,
+      withFill(shape.categoryId, specificFill),
+      ((_a = shape.affix) == null ? void 0 : _a.form.slotCategory) ? withFill(shape.affix.form.slotCategory, affixFill) : void 0
+    );
+  }
+  layout(shape, genericText, specificOverride, affixCategoryOverride) {
+    var _a;
+    const specific = specificOverride != null ? specificOverride : bracket(this.categories.get(shape.categoryId));
     let text;
     switch (shape.structure) {
       case "simplex":
@@ -9124,32 +12351,6043 @@ var PlaceShapeFormatter = class {
     }
     if (shape.affix) {
       const { form } = shape.affix;
-      const affix = form.slotCategory ? `${form.text} ${bracket(this.categories.get(form.slotCategory))}` : form.text;
+      const affix = [form.text, form.slotCategory ? affixCategoryOverride != null ? affixCategoryOverride : bracket(this.categories.get(form.slotCategory)) : ""].filter((part) => part.length > 0).join(" ");
       text = form.position === "after" ? `${text} ${affix}` : `${affix} ${text}`;
     }
     return text;
   }
 };
 
+// src/data/colonial-shapes.json
+var colonial_shapes_default = {
+  $comment: "Colonial place-name shapes (parts 2 and 2a). Data only. Inherited part 1 generics and categories are referenced by part 1 id from place-shapes.json, never copied.",
+  version: 1,
+  excludedCategories: [
+    "folk-group",
+    "earlier-or-district-name",
+    "deity",
+    "assembly-or-law"
+  ],
+  inheritedCategories: [
+    {
+      id: "personal-name",
+      parts: [
+        "2"
+      ]
+    },
+    {
+      id: "status-or-role",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "ethnic-or-cultural-group",
+      parts: [
+        "2"
+      ]
+    },
+    {
+      id: "saint-or-holy-person",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "supernatural-being",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "domestic-animal",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "wild-animal",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "bird",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "fish-and-other-creatures",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "tree",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "wild-plant",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "crop",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "river-or-stream-name",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "landform",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "water-or-wetland-feature",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "soil-or-ground",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "built-feature",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "colour",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "size",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "age",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "position-or-direction",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "shape",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "quality-or-condition",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "number",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "activity",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "produce",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "religious-association",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "season",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "empty-slot",
+      parts: [
+        "2",
+        "2a"
+      ]
+    }
+  ],
+  categories: [
+    {
+      id: "monarch-ruler-or-dynasty",
+      label: "Monarch, ruler or dynasty",
+      family: "colonisers",
+      covers: "Reigning sovereigns and royal houses",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "royal-woman",
+      label: "Royal woman",
+      family: "colonisers",
+      covers: "Queens, princesses, consorts",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "honorific-title",
+      label: "Honorific title",
+      family: "colonisers",
+      covers: "A title rather than a person",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "official-patron-or-sponsor",
+      label: "Official, patron or sponsor",
+      family: "colonisers",
+      covers: "Governors, ministers, company directors",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "commander-or-conqueror",
+      label: "Commander or conqueror",
+      family: "colonisers",
+      covers: "Military leaders",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "explorer-or-founder",
+      label: "Explorer or founder",
+      family: "colonisers",
+      covers: "Discoverers and founding settlers",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "settler-group",
+      label: "Settler group",
+      family: "colonisers",
+      covers: "The colonisers' own people or a migrant group",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "native-place-name",
+      label: "Native place name",
+      family: "native-world",
+      covers: "An existing local name",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "native-people-or-tribe",
+      label: "Native people or tribe",
+      family: "native-world",
+      covers: "A named local people",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "calendar-date-or-feast",
+      label: "Calendar date or feast",
+      family: "spiritual-and-fantastical",
+      covers: "A feast day or date of discovery",
+      parts: [
+        "2"
+      ]
+    },
+    {
+      id: "colonial-deity",
+      label: "Colonial deity",
+      family: "spiritual-and-fantastical",
+      covers: "A god of the colonisers",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "local-deity",
+      label: "Local deity",
+      family: "spiritual-and-fantastical",
+      covers: "A god of the colonised",
+      parts: [
+        "2a"
+      ]
+    },
+    {
+      id: "homeland-place-name",
+      label: "Homeland place name",
+      family: "transfer-and-memory",
+      covers: "A place or region from the homeland",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "classical-biblical-or-legendary-name",
+      label: "Classical, biblical or legendary name",
+      family: "transfer-and-memory",
+      covers: "A name from learning or scripture",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "ship",
+      label: "Ship",
+      family: "transfer-and-memory",
+      covers: "The vessel of discovery",
+      parts: [
+        "2"
+      ]
+    },
+    {
+      id: "event-or-incident",
+      label: "Event or incident",
+      family: "experience-and-claim",
+      covers: "Something that happened there",
+      parts: [
+        "2"
+      ]
+    },
+    {
+      id: "emotion-or-aspiration",
+      label: "Emotion or aspiration",
+      family: "experience-and-claim",
+      covers: "Hope, despair, peace, plenty",
+      parts: [
+        "2",
+        "2a"
+      ]
+    },
+    {
+      id: "imperial-claim",
+      label: "Imperial claim",
+      family: "experience-and-claim",
+      covers: "Dominion, pacification, civilising or victory",
+      parts: [
+        "2a"
+      ]
+    },
+    {
+      id: "resource",
+      label: "Resource",
+      family: "survey-and-exploitation",
+      covers: "Mineral or natural wealth",
+      parts: [
+        "2"
+      ]
+    },
+    {
+      id: "distance-or-survey-mark",
+      label: "Distance or survey mark",
+      family: "survey-and-exploitation",
+      covers: "Measured position",
+      parts: [
+        "2"
+      ]
+    }
+  ],
+  groups: [
+    {
+      id: "settlement-farms-and-estates",
+      inherited: true,
+      generics: [
+        "enclosed-farmstead",
+        "estate-manor-centre",
+        "village"
+      ],
+      set: {
+        "homeland-place-name": "common",
+        "official-patron-or-sponsor": "common",
+        "explorer-or-founder": "common",
+        "native-place-name": "common",
+        "monarch-ruler-or-dynasty": "occasional",
+        "royal-woman": "occasional",
+        "settler-group": "occasional",
+        "classical-biblical-or-legendary-name": "occasional",
+        "saint-or-holy-person": "occasional",
+        resource: "rare",
+        "event-or-incident": "rare",
+        "emotion-or-aspiration": "rare",
+        "distance-or-survey-mark": "rare"
+      },
+      raised: [
+        "saint-or-holy-person"
+      ],
+      overrides: []
+    },
+    {
+      id: "dwellings-and-buildings",
+      inherited: true,
+      generics: [
+        "house",
+        "dwelling",
+        "hall",
+        "cottage",
+        "hut-temporary-shelter"
+      ],
+      set: {
+        "official-patron-or-sponsor": "occasional",
+        "explorer-or-founder": "occasional",
+        "native-place-name": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        "homeland-place-name": "rare",
+        "event-or-incident": "rare"
+      },
+      raised: [],
+      overrides: []
+    },
+    {
+      id: "industry-and-trade",
+      inherited: true,
+      generics: [
+        "salt-works",
+        "salt-house",
+        "mill",
+        "kiln",
+        "pit-quarry",
+        "fish-weir",
+        "market",
+        "market-town-harbour",
+        "landing-place",
+        "haven"
+      ],
+      set: {
+        "monarch-ruler-or-dynasty": "common",
+        "royal-woman": "common",
+        "official-patron-or-sponsor": "common",
+        "explorer-or-founder": "common",
+        "native-place-name": "common",
+        "honorific-title": "occasional",
+        ship: "occasional",
+        "saint-or-holy-person": "occasional",
+        "emotion-or-aspiration": "occasional",
+        resource: "occasional",
+        "settler-group": "occasional",
+        "homeland-place-name": "occasional",
+        "event-or-incident": "rare",
+        "calendar-date-or-feast": "rare",
+        "imperial-claim": "rare",
+        "commander-or-conqueror": "rare"
+      },
+      raised: [
+        "saint-or-holy-person"
+      ],
+      overrides: [
+        {
+          generics: [
+            "haven"
+          ],
+          set: {
+            "emotion-or-aspiration": "common"
+          }
+        }
+      ]
+    },
+    {
+      id: "religious-christian",
+      inherited: true,
+      generics: [
+        "church",
+        "minster-mother-church",
+        "hermitage-retreat",
+        "chapel",
+        "holy-place",
+        "standing-cross"
+      ],
+      set: {
+        "calendar-date-or-feast": "common",
+        "saint-or-holy-person": "common",
+        "religious-association": "common",
+        "explorer-or-founder": "occasional",
+        "settler-group": "occasional",
+        "native-place-name": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        "official-patron-or-sponsor": "rare"
+      },
+      raised: [
+        "saint-or-holy-person",
+        "religious-association"
+      ],
+      overrides: []
+    },
+    {
+      id: "religious-pre-christian-and-sacred",
+      inherited: true,
+      generics: [
+        "heathen-temple",
+        "shrine-idol",
+        "sacred-grove",
+        "holy-spring"
+      ],
+      set: {
+        "local-deity": "common",
+        "colonial-deity": "common",
+        "native-place-name": "occasional",
+        "monarch-ruler-or-dynasty": "occasional",
+        "honorific-title": "rare",
+        "imperial-claim": "rare"
+      },
+      raised: [],
+      overrides: []
+    },
+    {
+      id: "religious-burial-and-memorial",
+      inherited: true,
+      generics: [
+        "grave",
+        "burial-ground-churchyard",
+        "burial-mound",
+        "cairn"
+      ],
+      set: {
+        "explorer-or-founder": "occasional",
+        "commander-or-conqueror": "occasional",
+        "event-or-incident": "occasional",
+        "monarch-ruler-or-dynasty": "occasional",
+        "native-people-or-tribe": "rare",
+        "official-patron-or-sponsor": "rare"
+      },
+      raised: [],
+      overrides: []
+    },
+    {
+      id: "defensive",
+      inherited: true,
+      generics: [
+        "fortified-place-stronghold",
+        "fort",
+        "roman-walled-town-or-fort",
+        "castle",
+        "lookout-hill",
+        "beacon",
+        "dyke-boundary-earthwork",
+        "wall"
+      ],
+      set: {
+        "monarch-ruler-or-dynasty": "common",
+        "royal-woman": "common",
+        "official-patron-or-sponsor": "common",
+        "commander-or-conqueror": "common",
+        "native-place-name": "common",
+        "saint-or-holy-person": "common",
+        "honorific-title": "occasional",
+        "explorer-or-founder": "occasional",
+        "homeland-place-name": "occasional",
+        "religious-association": "occasional",
+        "settler-group": "occasional",
+        "native-people-or-tribe": "occasional",
+        "emotion-or-aspiration": "occasional",
+        "imperial-claim": "occasional",
+        "event-or-incident": "rare",
+        "calendar-date-or-feast": "rare",
+        "classical-biblical-or-legendary-name": "rare",
+        ship: "rare"
+      },
+      raised: [
+        "saint-or-holy-person",
+        "religious-association"
+      ],
+      overrides: []
+    },
+    {
+      id: "lordship-and-authority",
+      inherited: true,
+      generics: [
+        "royal-or-lordly-court",
+        "lords-hall",
+        "manor-house"
+      ],
+      set: {
+        "monarch-ruler-or-dynasty": "common",
+        "official-patron-or-sponsor": "common",
+        "honorific-title": "occasional",
+        "commander-or-conqueror": "rare",
+        "native-place-name": "rare"
+      },
+      raised: [],
+      overrides: []
+    },
+    {
+      id: "communal-and-legal",
+      inherited: true,
+      generics: [
+        "meeting-place",
+        "boundary",
+        "execution-site",
+        "bath-spa"
+      ],
+      set: {
+        "local-deity": "occasional",
+        "native-place-name": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        "official-patron-or-sponsor": "rare",
+        "event-or-incident": "rare"
+      },
+      raised: [],
+      overrides: [
+        {
+          generics: [
+            "bath-spa"
+          ],
+          set: {
+            "local-deity": "common"
+          }
+        }
+      ]
+    },
+    {
+      id: "rivers-and-streams",
+      inherited: true,
+      generics: [
+        "river",
+        "clear-stream",
+        "sluggish-or-muddy-stream",
+        "mountain-stream",
+        "stream-with-its-valley",
+        "river-source-spring-head",
+        "river-mouth",
+        "confluence",
+        "waterfall"
+      ],
+      set: {
+        "native-place-name": "common",
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "monarch-ruler-or-dynasty": "occasional",
+        "royal-woman": "occasional",
+        ship: "occasional",
+        "event-or-incident": "occasional",
+        "calendar-date-or-feast": "occasional",
+        "saint-or-holy-person": "occasional",
+        resource: "occasional",
+        "homeland-place-name": "rare",
+        "classical-biblical-or-legendary-name": "rare",
+        "emotion-or-aspiration": "rare",
+        "distance-or-survey-mark": "rare",
+        "settler-group": "rare"
+      },
+      raised: [
+        "saint-or-holy-person"
+      ],
+      overrides: []
+    },
+    {
+      id: "springs-pools-and-lakes",
+      inherited: true,
+      generics: [
+        "spring-well",
+        "spring-with-roman-association",
+        "pool",
+        "mere-shallow-lake",
+        "lake",
+        "small-mountain-lake"
+      ],
+      set: {
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "native-place-name": "common",
+        "monarch-ruler-or-dynasty": "occasional",
+        "royal-woman": "occasional",
+        "event-or-incident": "occasional",
+        "saint-or-holy-person": "occasional",
+        "homeland-place-name": "occasional",
+        "emotion-or-aspiration": "occasional",
+        ship: "rare",
+        "calendar-date-or-feast": "rare",
+        "classical-biblical-or-legendary-name": "rare",
+        resource: "rare"
+      },
+      raised: [
+        "saint-or-holy-person"
+      ],
+      overrides: []
+    },
+    {
+      id: "wetland",
+      inherited: true,
+      generics: [
+        "marsh",
+        "fen",
+        "lowland-marsh",
+        "brushwood-marsh-carr",
+        "mire",
+        "miry-pool-wallowing-place",
+        "peat-bog-moss",
+        "bog",
+        "flood-prone-land-by-a-river"
+      ],
+      set: {
+        "native-place-name": "common",
+        "explorer-or-founder": "occasional",
+        "official-patron-or-sponsor": "occasional",
+        "event-or-incident": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        resource: "rare"
+      },
+      raised: [],
+      overrides: []
+    },
+    {
+      id: "islands-and-river-land",
+      inherited: true,
+      generics: [
+        "island",
+        "dry-ground-in-wet-land",
+        "land-in-a-river-bend",
+        "water-meadow",
+        "skerry-rock-islet"
+      ],
+      set: {
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "monarch-ruler-or-dynasty": "common",
+        "native-place-name": "common",
+        "calendar-date-or-feast": "common",
+        "saint-or-holy-person": "common",
+        "royal-woman": "occasional",
+        ship: "occasional",
+        "event-or-incident": "occasional",
+        "emotion-or-aspiration": "occasional",
+        resource: "occasional",
+        "homeland-place-name": "occasional",
+        "classical-biblical-or-legendary-name": "rare",
+        "honorific-title": "rare",
+        "commander-or-conqueror": "rare"
+      },
+      raised: [
+        "saint-or-holy-person"
+      ],
+      overrides: []
+    },
+    {
+      id: "coast-and-sea",
+      inherited: true,
+      generics: [
+        "headland",
+        "point-nose",
+        "promontory",
+        "sea-inlet-firth",
+        "bay",
+        "small-bay-creek",
+        "cove",
+        "strait-sound",
+        "estuary",
+        "beach-strand",
+        "sand-dunes-sandy-shore",
+        "shingle-bank",
+        "sea-cliff",
+        "coastal-chasm-geo"
+      ],
+      set: {
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "monarch-ruler-or-dynasty": "common",
+        "event-or-incident": "common",
+        "emotion-or-aspiration": "common",
+        "native-place-name": "common",
+        "royal-woman": "occasional",
+        ship: "occasional",
+        "calendar-date-or-feast": "occasional",
+        "saint-or-holy-person": "occasional",
+        "homeland-place-name": "occasional",
+        resource: "occasional",
+        produce: "occasional",
+        "commander-or-conqueror": "occasional",
+        "distance-or-survey-mark": "occasional",
+        "classical-biblical-or-legendary-name": "rare",
+        "honorific-title": "rare",
+        "settler-group": "rare"
+      },
+      raised: [
+        "saint-or-holy-person",
+        "produce"
+      ],
+      overrides: []
+    },
+    {
+      id: "crossings-and-routes",
+      inherited: true,
+      generics: [
+        "river-crossing",
+        "causeway",
+        "bridge",
+        "ferry",
+        "paved-or-roman-road",
+        "way-track",
+        "lane",
+        "pass",
+        "gap-notch",
+        "swing-gate",
+        "isthmus-portage"
+      ],
+      set: {
+        "official-patron-or-sponsor": "common",
+        "native-place-name": "common",
+        "explorer-or-founder": "occasional",
+        "monarch-ruler-or-dynasty": "occasional",
+        "commander-or-conqueror": "occasional",
+        "honorific-title": "occasional",
+        "distance-or-survey-mark": "occasional",
+        "event-or-incident": "rare"
+      },
+      raised: [],
+      overrides: []
+    },
+    {
+      id: "woodland",
+      inherited: true,
+      generics: [
+        "wood",
+        "single-species-wood",
+        "great-woodland",
+        "royal-hunting-ground",
+        "park",
+        "grove",
+        "grove-small-wood",
+        "grove-possibly-sacred",
+        "strip-of-woodland-shaw",
+        "wood-on-a-steep-slope",
+        "wooded-hill",
+        "scrubland",
+        "thicket"
+      ],
+      set: {
+        "native-place-name": "common",
+        "explorer-or-founder": "occasional",
+        "official-patron-or-sponsor": "occasional",
+        "monarch-ruler-or-dynasty": "occasional",
+        "settler-group": "occasional",
+        "event-or-incident": "rare",
+        "emotion-or-aspiration": "rare"
+      },
+      raised: [],
+      overrides: []
+    },
+    {
+      id: "clearings",
+      inherited: true,
+      generics: [
+        "woodland-then-clearing",
+        "newly-cleared-land-assart",
+        "clearing-paddock",
+        "woodland-swine-pasture"
+      ],
+      set: {
+        "official-patron-or-sponsor": "occasional",
+        "native-place-name": "rare",
+        "settler-group": "rare"
+      },
+      raised: [],
+      overrides: []
+    },
+    {
+      id: "hills-and-slopes",
+      inherited: true,
+      generics: [
+        "low-level-topped-hill",
+        "hill",
+        "heel-shaped-spur",
+        "flat-topped-ridge",
+        "ridge",
+        "back-low-ridge",
+        "edge-escarpment",
+        "steep-slope-bank",
+        "slope",
+        "terrace-lynchet",
+        "knoll",
+        "rounded-hill-mound",
+        "summit-top",
+        "upper-end-head"
+      ],
+      set: {
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "native-place-name": "common",
+        "monarch-ruler-or-dynasty": "occasional",
+        "royal-woman": "occasional",
+        "event-or-incident": "occasional",
+        "emotion-or-aspiration": "occasional",
+        "classical-biblical-or-legendary-name": "occasional",
+        "saint-or-holy-person": "occasional",
+        "commander-or-conqueror": "occasional",
+        ship: "rare",
+        "calendar-date-or-feast": "rare",
+        "homeland-place-name": "rare",
+        resource: "rare"
+      },
+      raised: [
+        "saint-or-holy-person"
+      ],
+      overrides: []
+    },
+    {
+      id: "mountains-and-rock",
+      inherited: true,
+      generics: [
+        "mountain",
+        "fell",
+        "pointed-hill",
+        "sharp-peak",
+        "tor",
+        "crag",
+        "stone",
+        "cave"
+      ],
+      set: {
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "common",
+        "monarch-ruler-or-dynasty": "common",
+        "native-place-name": "common",
+        "royal-woman": "occasional",
+        "commander-or-conqueror": "occasional",
+        "event-or-incident": "occasional",
+        "emotion-or-aspiration": "occasional",
+        "saint-or-holy-person": "occasional",
+        "classical-biblical-or-legendary-name": "occasional",
+        ship: "rare",
+        "calendar-date-or-feast": "rare",
+        resource: "rare",
+        "homeland-place-name": "rare",
+        "imperial-claim": "rare"
+      },
+      raised: [
+        "saint-or-holy-person"
+      ],
+      overrides: []
+    },
+    {
+      id: "upland-and-open-ground",
+      inherited: true,
+      generics: [
+        "upland-moor",
+        "heath",
+        "wold"
+      ],
+      set: {
+        "native-place-name": "common",
+        "explorer-or-founder": "occasional",
+        "official-patron-or-sponsor": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        "event-or-incident": "rare"
+      },
+      raised: [],
+      overrides: []
+    },
+    {
+      id: "valleys",
+      inherited: true,
+      generics: [
+        "long-valley",
+        "dale",
+        "broad-valley",
+        "short-bowl-shaped-valley",
+        "narrow-valley-glen",
+        "small-enclosed-side-valley",
+        "corrie",
+        "ravine",
+        "steep-bank-ravine-side",
+        "shallow-damp-valley",
+        "river-cut-gorge"
+      ],
+      set: {
+        "native-place-name": "common",
+        "explorer-or-founder": "common",
+        "official-patron-or-sponsor": "occasional",
+        "monarch-ruler-or-dynasty": "occasional",
+        "event-or-incident": "occasional",
+        "emotion-or-aspiration": "occasional",
+        "homeland-place-name": "occasional",
+        "saint-or-holy-person": "occasional",
+        resource: "rare",
+        "royal-woman": "rare",
+        "classical-biblical-or-legendary-name": "rare",
+        "settler-group": "rare"
+      },
+      raised: [
+        "saint-or-holy-person"
+      ],
+      overrides: []
+    },
+    {
+      id: "hollows-and-corners",
+      inherited: true,
+      generics: [
+        "hollow",
+        "valley-bottom",
+        "valley-head",
+        "nook",
+        "corner-projecting-piece-of-land",
+        "corner-angle",
+        "bend-crook"
+      ],
+      set: {
+        "event-or-incident": "occasional",
+        "native-place-name": "rare",
+        "official-patron-or-sponsor": "rare"
+      },
+      raised: [],
+      overrides: []
+    },
+    {
+      id: "open-and-farmed-land",
+      inherited: true,
+      generics: [
+        "open-country",
+        "level-field",
+        "hay-meadow",
+        "pasture",
+        "arable-field",
+        "arable-unit",
+        "furlong",
+        "animal-fold",
+        "hedged-enclosure",
+        "orchard"
+      ],
+      set: {
+        "native-place-name": "common",
+        "official-patron-or-sponsor": "occasional",
+        "explorer-or-founder": "occasional",
+        "settler-group": "occasional",
+        "homeland-place-name": "occasional",
+        "monarch-ruler-or-dynasty": "rare",
+        "emotion-or-aspiration": "rare"
+      },
+      raised: [],
+      overrides: []
+    },
+    {
+      id: "colonial-settlement",
+      label: "Colonial settlement",
+      side: "settlement",
+      generics: [
+        {
+          id: "town",
+          meaning: "Town",
+          sense: "Planned or chartered colonial town",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "city",
+          meaning: "City",
+          sense: "Major colonial city",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "capital",
+          meaning: "Capital",
+          sense: "Seat of government",
+          parts: [
+            "2a"
+          ]
+        },
+        {
+          id: "colony",
+          meaning: "Colony",
+          sense: "Formal chartered foundation",
+          parts: [
+            "2a"
+          ]
+        },
+        {
+          id: "planned-village",
+          meaning: "Planned village",
+          sense: "Agricultural settler village",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "trading-post",
+          meaning: "Trading post",
+          sense: "Coastal factory or emporium",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "mission",
+          meaning: "Mission",
+          sense: "Religious foundation for conversion",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "pastoral-station",
+          meaning: "Pastoral station",
+          sense: "Sheep or cattle run",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "mining-camp",
+          meaning: "Mining camp",
+          sense: "Diggings or gold-rush settlement",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "junction",
+          meaning: "Junction",
+          sense: "Railway or road junction",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "crossing",
+          meaning: "Crossing",
+          sense: "Settlement at a crossing point",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "heights",
+          meaning: "Heights",
+          sense: "Settlement on high ground",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "hope",
+          meaning: "Hope",
+          sense: "Settlement named as a hope",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "memorial",
+          meaning: "Memorial",
+          sense: "Settlement commemorating a person",
+          parts: [
+            "2"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "monarch-ruler-or-dynasty",
+          "royal-woman",
+          "official-patron-or-sponsor",
+          "explorer-or-founder",
+          "homeland-place-name",
+          "native-place-name",
+          "saint-or-holy-person"
+        ],
+        occasional: [
+          "honorific-title",
+          "commander-or-conqueror",
+          "settler-group",
+          "classical-biblical-or-legendary-name",
+          "native-people-or-tribe",
+          "personal-name",
+          "river-or-stream-name",
+          "status-or-role",
+          "religious-association",
+          "emotion-or-aspiration",
+          "resource",
+          "age",
+          "position-or-direction",
+          "colour"
+        ],
+        rare: [
+          "calendar-date-or-feast",
+          "event-or-incident",
+          "ship",
+          "distance-or-survey-mark",
+          "colonial-deity",
+          "size",
+          "quality-or-condition",
+          "landform",
+          "water-or-wetland-feature",
+          "tree",
+          "wild-animal",
+          "produce"
+        ]
+      },
+      overrides: [
+        {
+          generics: [
+            "city"
+          ],
+          set: {
+            "honorific-title": "common",
+            "imperial-claim": "common",
+            "colonial-deity": "occasional",
+            "classical-biblical-or-legendary-name": "occasional"
+          }
+        },
+        {
+          generics: [
+            "capital"
+          ],
+          set: {
+            "empty-slot": "common",
+            "imperial-claim": "occasional"
+          }
+        },
+        {
+          generics: [
+            "colony"
+          ],
+          set: {
+            "monarch-ruler-or-dynasty": "common",
+            "honorific-title": "common",
+            "native-people-or-tribe": "common"
+          },
+          others: "rare"
+        },
+        {
+          generics: [
+            "planned-village"
+          ],
+          set: {
+            "official-patron-or-sponsor": "common",
+            "personal-name": "common",
+            "settler-group": "common",
+            "homeland-place-name": "occasional"
+          }
+        },
+        {
+          generics: [
+            "trading-post"
+          ],
+          set: {
+            "native-place-name": "common",
+            "empty-slot": "common",
+            resource: "occasional",
+            produce: "occasional"
+          }
+        },
+        {
+          generics: [
+            "mission"
+          ],
+          set: {
+            "saint-or-holy-person": "common",
+            "religious-association": "common",
+            "calendar-date-or-feast": "occasional",
+            "native-place-name": "occasional"
+          }
+        },
+        {
+          generics: [
+            "pastoral-station"
+          ],
+          set: {
+            "personal-name": "common",
+            "native-place-name": "common",
+            landform: "occasional",
+            "water-or-wetland-feature": "occasional",
+            "distance-or-survey-mark": "occasional"
+          }
+        },
+        {
+          generics: [
+            "mining-camp"
+          ],
+          set: {
+            resource: "common",
+            "personal-name": "common",
+            "event-or-incident": "occasional",
+            "emotion-or-aspiration": "occasional",
+            "distance-or-survey-mark": "occasional"
+          }
+        },
+        {
+          generics: [
+            "junction",
+            "crossing"
+          ],
+          set: {
+            "personal-name": "common",
+            "native-place-name": "common",
+            "river-or-stream-name": "common",
+            "distance-or-survey-mark": "occasional",
+            "official-patron-or-sponsor": "occasional"
+          }
+        },
+        {
+          generics: [
+            "heights"
+          ],
+          set: {
+            "official-patron-or-sponsor": "common",
+            "explorer-or-founder": "common",
+            "position-or-direction": "occasional",
+            colour: "occasional"
+          }
+        },
+        {
+          generics: [
+            "hope"
+          ],
+          set: {
+            "monarch-ruler-or-dynasty": "common",
+            "royal-woman": "common",
+            "quality-or-condition": "common"
+          }
+        },
+        {
+          generics: [
+            "memorial"
+          ],
+          set: {
+            "explorer-or-founder": "common",
+            "official-patron-or-sponsor": "common",
+            "saint-or-holy-person": "common"
+          }
+        }
+      ],
+      inherited: false
+    },
+    {
+      id: "military-and-administrative",
+      label: "Military and administrative",
+      side: "settlement",
+      generics: [
+        {
+          id: "garrison-camp",
+          meaning: "Garrison camp",
+          sense: "Planned military camp, later a city",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "frontier-post",
+          meaning: "Frontier post",
+          sense: "Fortified outpost on a frontier",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "cantonment",
+          meaning: "Cantonment",
+          sense: "Military quarter beside a native town",
+          parts: [
+            "2a"
+          ]
+        },
+        {
+          id: "civil-lines",
+          meaning: "Civil lines",
+          sense: "European administrative quarter",
+          parts: [
+            "2a"
+          ]
+        },
+        {
+          id: "administrative-station",
+          meaning: "Administrative station",
+          sense: "District headquarters",
+          parts: [
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "native-place-name",
+          "river-or-stream-name",
+          "monarch-ruler-or-dynasty",
+          "official-patron-or-sponsor",
+          "commander-or-conqueror"
+        ],
+        occasional: [
+          "honorific-title",
+          "native-people-or-tribe",
+          "position-or-direction",
+          "imperial-claim",
+          "saint-or-holy-person",
+          "empty-slot"
+        ],
+        rare: [
+          "explorer-or-founder",
+          "age",
+          "colour",
+          "event-or-incident",
+          "religious-association",
+          "landform"
+        ]
+      },
+      overrides: [
+        {
+          generics: [
+            "garrison-camp"
+          ],
+          set: {
+            "empty-slot": "common"
+          }
+        },
+        {
+          generics: [
+            "cantonment"
+          ],
+          set: {
+            "native-place-name": "common"
+          },
+          others: "rare"
+        },
+        {
+          generics: [
+            "civil-lines"
+          ],
+          set: {
+            "empty-slot": "common",
+            "native-place-name": "common"
+          },
+          others: "unlikely"
+        }
+      ],
+      inherited: false
+    },
+    {
+      id: "territories",
+      label: "Territories",
+      side: "settlement",
+      generics: [
+        {
+          id: "land-territory",
+          meaning: "Land, territory",
+          sense: "A claimed region",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "frontier-march",
+          meaning: "Frontier, march",
+          sense: "Border zone of expansion",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "province-kingdom",
+          meaning: "Province, kingdom",
+          sense: "Formal colonial province",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "monarch-ruler-or-dynasty",
+          "royal-woman",
+          "homeland-place-name",
+          "explorer-or-founder",
+          "official-patron-or-sponsor",
+          "native-people-or-tribe",
+          "native-place-name"
+        ],
+        occasional: [
+          "age",
+          "position-or-direction",
+          "imperial-claim",
+          "colour",
+          "wild-plant",
+          "resource",
+          "produce",
+          "settler-group"
+        ],
+        rare: [
+          "river-or-stream-name",
+          "honorific-title",
+          "religious-association",
+          "calendar-date-or-feast",
+          "commander-or-conqueror"
+        ]
+      },
+      overrides: [
+        {
+          generics: [
+            "frontier-march"
+          ],
+          set: {
+            age: "common",
+            "position-or-direction": "common",
+            "imperial-claim": "common",
+            "monarch-ruler-or-dynasty": "rare",
+            "royal-woman": "rare",
+            "explorer-or-founder": "rare",
+            "official-patron-or-sponsor": "rare"
+          }
+        }
+      ],
+      inherited: false
+    },
+    {
+      id: "new-landscapes",
+      label: "New landscapes",
+      side: "landscape",
+      generics: [
+        {
+          id: "creek",
+          meaning: "Creek",
+          sense: "Inland stream (American and Australian sense)",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "plain-grassland",
+          meaning: "Plain, grassland",
+          sense: "Prairie, steppe, veld, pampas",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "desert",
+          meaning: "Desert",
+          sense: "Arid land",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "oasis",
+          meaning: "Oasis",
+          sense: "Watered place in a desert",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "dry-riverbed",
+          meaning: "Dry riverbed",
+          sense: "Wadi or arroyo",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "mountain-range",
+          meaning: "Mountain range",
+          sense: "Chain of mountains",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "volcano",
+          meaning: "Volcano",
+          sense: "Volcanic peak",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "glacier",
+          meaning: "Glacier",
+          sense: "Ice field or glacier",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "island-group",
+          meaning: "Island group",
+          sense: "Archipelago",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "reef",
+          meaning: "Reef",
+          sense: "Coral or rock reef",
+          parts: [
+            "2"
+          ]
+        },
+        {
+          id: "lagoon",
+          meaning: "Lagoon",
+          sense: "Coastal lagoon",
+          parts: [
+            "2"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "official-patron-or-sponsor",
+          "native-place-name",
+          "monarch-ruler-or-dynasty",
+          "colour",
+          "size"
+        ],
+        occasional: [
+          "royal-woman",
+          "ship",
+          "event-or-incident",
+          "emotion-or-aspiration",
+          "saint-or-holy-person",
+          "wild-animal",
+          "bird",
+          "tree",
+          "wild-plant",
+          "resource",
+          "distance-or-survey-mark",
+          "personal-name",
+          "homeland-place-name",
+          "quality-or-condition",
+          "shape",
+          "position-or-direction"
+        ],
+        rare: [
+          "calendar-date-or-feast",
+          "classical-biblical-or-legendary-name",
+          "religious-association",
+          "supernatural-being",
+          "settler-group",
+          "commander-or-conqueror",
+          "honorific-title",
+          "colonial-deity"
+        ]
+      },
+      overrides: [
+        {
+          generics: [
+            "creek"
+          ],
+          set: {
+            "personal-name": "common",
+            "distance-or-survey-mark": "common",
+            resource: "common",
+            "wild-animal": "common",
+            bird: "common",
+            tree: "common",
+            "monarch-ruler-or-dynasty": "rare"
+          }
+        },
+        {
+          generics: [
+            "dry-riverbed"
+          ],
+          set: {
+            "soil-or-ground": "common",
+            size: "common",
+            "quality-or-condition": "common"
+          }
+        },
+        {
+          generics: [
+            "oasis"
+          ],
+          set: {
+            "native-place-name": "common",
+            "empty-slot": "occasional"
+          }
+        },
+        {
+          generics: [
+            "mountain-range",
+            "island-group",
+            "reef"
+          ],
+          set: {
+            ship: "common"
+          }
+        },
+        {
+          generics: [
+            "lagoon"
+          ],
+          set: {
+            "saint-or-holy-person": "common",
+            "religious-association": "common"
+          }
+        }
+      ],
+      inherited: false
+    },
+    {
+      id: "local-generics",
+      label: "Local generics",
+      side: "settlement",
+      generics: [
+        {
+          id: "local-settlement-word",
+          meaning: "Local settlement word",
+          sense: "The native word for town or settlement",
+          parts: [
+            "2a"
+          ]
+        },
+        {
+          id: "local-market-word",
+          meaning: "Local market word",
+          sense: "The native word for market",
+          parts: [
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "official-patron-or-sponsor",
+          "commander-or-conqueror",
+          "monarch-ruler-or-dynasty",
+          "explorer-or-founder"
+        ],
+        occasional: [
+          "royal-woman",
+          "honorific-title",
+          "emotion-or-aspiration",
+          "colonial-deity",
+          "personal-name"
+        ],
+        rare: [
+          "native-place-name",
+          "settler-group"
+        ]
+      },
+      overrides: [],
+      inherited: false
+    },
+    {
+      id: "religious-islamic",
+      label: "Religious: Islamic",
+      side: "settlement",
+      generics: [
+        {
+          id: "mosque",
+          meaning: "Mosque",
+          sense: "Place of worship",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "saints-tomb-or-shrine",
+          meaning: "Saint's tomb or shrine",
+          sense: "Tomb of a holy man",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "religious-lodge",
+          meaning: "Religious lodge",
+          sense: "Sufi lodge or z\u0101wiya",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "saint-or-holy-person",
+          "religious-association"
+        ],
+        occasional: [
+          "personal-name",
+          "native-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "age"
+        ],
+        rare: [
+          "colour",
+          "size"
+        ]
+      },
+      overrides: [],
+      inherited: false
+    }
+  ],
+  structures: {
+    bareSpecific: {
+      categories: [
+        "monarch-ruler-or-dynasty",
+        "royal-woman",
+        "official-patron-or-sponsor",
+        "explorer-or-founder",
+        "commander-or-conqueror",
+        "homeland-place-name",
+        "classical-biblical-or-legendary-name",
+        "calendar-date-or-feast",
+        "native-place-name",
+        "native-people-or-tribe",
+        "religious-association",
+        "saint-or-holy-person",
+        "emotion-or-aspiration",
+        "imperial-claim"
+      ],
+      chanceInGroups: {
+        groups: [
+          "colonial-settlement",
+          "territories"
+        ],
+        chance: 0.3
+      },
+      chance: 0.05
+    },
+    definiteForm: {
+      chance: 0.03
+    },
+    possessive: {
+      categories: [
+        "monarch-ruler-or-dynasty",
+        "royal-woman",
+        "official-patron-or-sponsor",
+        "commander-or-conqueror",
+        "explorer-or-founder",
+        "personal-name"
+      ],
+      chance: 0.15
+    },
+    newTransfer: {
+      categories: [
+        "homeland-place-name"
+      ],
+      chance: 0.35
+    },
+    twin: {
+      categories: [
+        "native-place-name"
+      ],
+      groups: [
+        "colonial-settlement"
+      ],
+      parts: [
+        "2a"
+      ],
+      chance: 0.08
+    },
+    doubleSpecific: {
+      categories: [
+        "saint-or-holy-person",
+        "honorific-title",
+        "imperial-claim",
+        "monarch-ruler-or-dynasty"
+      ],
+      chance: 0.1,
+      secondSpecifics: [
+        "native-place-name",
+        "native-people-or-tribe",
+        "river-or-stream-name",
+        "position-or-direction"
+      ],
+      fallback: "native-place-name"
+    },
+    positionOfLandmark: {
+      categories: [
+        "position-or-direction"
+      ],
+      chance: 0.15,
+      landmarks: [
+        "river-or-stream-name",
+        "landform",
+        "native-place-name"
+      ],
+      fallback: "river-or-stream-name"
+    },
+    locative: {
+      parts: [
+        "2"
+      ],
+      chance: 0
+    },
+    translationTag: {
+      categoryFamilies: [
+        "description",
+        "living-things"
+      ],
+      chanceByPart: {
+        "2": 0.1,
+        "2a": 0.15
+      }
+    },
+    nativeTreatment: {
+      categories: [
+        "native-place-name",
+        "native-people-or-tribe",
+        "river-or-stream-name"
+      ],
+      split: {
+        adopted: 0.5,
+        adapted: 0.5
+      }
+    },
+    affix: {
+      chance: 0.1
+    },
+    pluralSimplex: {
+      chance: 0.15
+    },
+    stackedGeneric: {
+      chance: 0.05,
+      sourceGroup: "colonial-settlement"
+    }
+  },
+  prefixOrders: {
+    fort: {
+      prefix: "Fort",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    "market-town-harbour": {
+      prefix: "Port",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    headland: {
+      prefix: "Cape",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    hill: {
+      prefix: "Mount",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    mountain: {
+      prefix: "Mount",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    lake: {
+      prefix: "Lake",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    "point-nose": {
+      prefix: "Point",
+      "specific-first": 5,
+      "generic-first-direct": 80,
+      "generic-first-linked": 15
+    },
+    island: {
+      prefix: "Isle of",
+      "specific-first": 50,
+      "generic-first-direct": 0,
+      "generic-first-linked": 50
+    }
+  },
+  affixTypes: {
+    city: {
+      label: "City",
+      weight: 5,
+      forms: [
+        {
+          text: "City",
+          position: "after"
+        }
+      ]
+    }
+  },
+  contexts: {
+    "2": [
+      {
+        id: "sparse-or-weak-native-presence",
+        label: "Sparse or weak native presence",
+        groupMultipliers: {
+          "colonial-settlement": 1.5,
+          "settlement-farms-and-estates": 1.5,
+          "open-and-farmed-land": 1.25,
+          "military-and-administrative": 0.5,
+          defensive: 0.5
+        },
+        categoryMultipliers: {
+          "homeland-place-name": 1.5,
+          "personal-name": 1.5,
+          "settler-group": 1.5,
+          "official-patron-or-sponsor": 1.25,
+          "emotion-or-aspiration": 1.25,
+          "classical-biblical-or-legendary-name": 1.25,
+          "native-place-name": 0.75,
+          "event-or-incident": 0.75,
+          ship: 0.75,
+          "native-people-or-tribe": 0.5,
+          "commander-or-conqueror": 0.5
+        },
+        structureMultipliers: {}
+      },
+      {
+        id: "contested-frontier",
+        label: "Contested frontier",
+        groupMultipliers: {
+          "military-and-administrative": 2,
+          defensive: 2,
+          "settlement-farms-and-estates": 0.75,
+          "new-landscapes": 0.75
+        },
+        categoryMultipliers: {
+          "commander-or-conqueror": 2,
+          "event-or-incident": 1.5,
+          "native-people-or-tribe": 1.5,
+          "ethnic-or-cultural-group": 1.5,
+          "native-place-name": 1.25,
+          "saint-or-holy-person": 1.25,
+          "emotion-or-aspiration": 0.75,
+          "homeland-place-name": 0.75,
+          ship: 0.5
+        },
+        structureMultipliers: {}
+      },
+      {
+        id: "wild-and-unsettled",
+        label: "Wild and unsettled",
+        groupMultipliers: {
+          "new-landscapes": 2,
+          "coast-and-sea": 2,
+          "mountains-and-rock": 2,
+          "colonial-settlement": 0.25,
+          "dwellings-and-buildings": 0.25,
+          "industry-and-trade": 0.25,
+          "religious-christian": 0.25,
+          "religious-pre-christian-and-sacred": 0.25,
+          "religious-burial-and-memorial": 0.25,
+          "religious-islamic": 0.25,
+          defensive: 0.25,
+          "military-and-administrative": 0.25,
+          "settlement-farms-and-estates": 0.1,
+          "lordship-and-authority": 0.1,
+          "communal-and-legal": 0.1,
+          "rivers-and-streams": 1.5,
+          "springs-pools-and-lakes": 1.5,
+          wetland: 1.5,
+          "islands-and-river-land": 1.5,
+          "crossings-and-routes": 1.5,
+          woodland: 1.5,
+          clearings: 1.5,
+          "hills-and-slopes": 1.5,
+          "upland-and-open-ground": 1.5,
+          valleys: 1.5,
+          "hollows-and-corners": 1.5,
+          "open-and-farmed-land": 1.5
+        },
+        categoryMultipliers: {
+          "explorer-or-founder": 2,
+          ship: 2,
+          "event-or-incident": 2,
+          "emotion-or-aspiration": 1.5,
+          "calendar-date-or-feast": 1.5,
+          "monarch-ruler-or-dynasty": 1.25,
+          "official-patron-or-sponsor": 1.25,
+          colour: 1.25,
+          size: 1.25,
+          shape: 1.25,
+          "native-place-name": 0.75,
+          resource: 0.75,
+          "homeland-place-name": 0.5,
+          "personal-name": 0.25,
+          "settler-group": 0.1
+        },
+        structureMultipliers: {
+          bareSpecific: 0.5,
+          possessive: 1.5
+        }
+      }
+    ],
+    "2a": [
+      {
+        id: "imposition",
+        label: "Imposition",
+        groupMultipliers: {
+          "military-and-administrative": 1.5,
+          "local-generics": 0.25
+        },
+        categoryMultipliers: {
+          "imperial-claim": 2,
+          "monarch-ruler-or-dynasty": 1.5,
+          "honorific-title": 1.5,
+          "colonial-deity": 1.5,
+          "official-patron-or-sponsor": 1.25,
+          "homeland-place-name": 1.25,
+          "native-place-name": 0.5,
+          "native-people-or-tribe": 0.5,
+          "local-deity": 0.25
+        },
+        structureMultipliers: {
+          twin: 0.5,
+          translationTag: 0.5
+        },
+        nativeTreatment: {
+          adopted: 0.3,
+          adapted: 0.7
+        }
+      },
+      {
+        id: "accommodation",
+        label: "Accommodation",
+        groupMultipliers: {
+          "local-generics": 1.25
+        },
+        categoryMultipliers: {
+          "local-deity": 1.5,
+          "native-people-or-tribe": 1.25
+        },
+        structureMultipliers: {
+          doubleSpecific: 1.5,
+          twin: 1.5
+        }
+      },
+      {
+        id: "adoption",
+        label: "Adoption",
+        groupMultipliers: {
+          "local-generics": 1.5,
+          "colonial-settlement": 0.75
+        },
+        categoryMultipliers: {
+          "native-place-name": 2,
+          "native-people-or-tribe": 1.5,
+          "local-deity": 1.5,
+          "river-or-stream-name": 1.5,
+          "official-patron-or-sponsor": 0.75,
+          "monarch-ruler-or-dynasty": 0.5,
+          "honorific-title": 0.5,
+          "homeland-place-name": 0.5,
+          "imperial-claim": 0.25
+        },
+        structureMultipliers: {
+          bareSpecific: 1.25,
+          translationTag: 2
+        },
+        nativeTreatment: {
+          adopted: 0.6,
+          adapted: 0.4
+        }
+      }
+    ]
+  },
+  general: {
+    id: "general",
+    label: "General",
+    parts: [
+      "2",
+      "2a"
+    ],
+    guide: 'The patterns shared by a majority of colonial traditions: commemorating rulers and royalty, adopting or adapting native names, building forts and castles, and naming new places after the homeland, often with "New".',
+    categoryMultipliers: {
+      "monarch-ruler-or-dynasty": 1.5,
+      "royal-woman": 1.5,
+      "native-place-name": 1.5,
+      "homeland-place-name": 1.5,
+      "native-people-or-tribe": 1.25,
+      "imperial-claim": 0.5,
+      "colonial-deity": 0.5,
+      "calendar-date-or-feast": 0.5,
+      "distance-or-survey-mark": 0.5,
+      "saint-or-holy-person": 0.75,
+      ship: 0.75,
+      "local-deity": 0.75
+    },
+    groupMultipliers: {
+      defensive: 1.5,
+      "military-and-administrative": 1.25,
+      "religious-islamic": 0
+    },
+    genericMultipliers: {
+      hope: 0.25,
+      memorial: 0.25,
+      "local-market-word": 0.5
+    },
+    structureMultipliers: {
+      newTransfer: 1.25,
+      positionOfLandmark: 0.5
+    },
+    affixTypeMultipliers: {},
+    locative: 0,
+    nativeTreatment: {
+      adopted: 0.5,
+      adapted: 0.5
+    },
+    wordOrder: {
+      "specific-first": 60,
+      "generic-first-direct": 25,
+      "generic-first-linked": 15
+    }
+  },
+  traditions: [
+    {
+      id: "roman",
+      label: "Roman",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: 'Leans towards rulers and dynasties, honorific titles, native peoples and local gods, auspicious names such as "Peace" or "Flourishing", and military and civic foundations. Names usually put the generic first, joined with "of": Colony of [ruler], Waters of [local deity]. Native names are almost always Latinised, and road stations can be named by milestone: At the Fifth.',
+      categoryMultipliers: {
+        "honorific-title": 2.5,
+        "monarch-ruler-or-dynasty": 2,
+        "native-people-or-tribe": 2,
+        "local-deity": 2,
+        "emotion-or-aspiration": 2,
+        "native-place-name": 1.5,
+        "river-or-stream-name": 1.5,
+        "colonial-deity": 1.5,
+        "distance-or-survey-mark": 1.5,
+        "imperial-claim": 0.75,
+        resource: 0.75,
+        "homeland-place-name": 0.5,
+        "classical-biblical-or-legendary-name": 0.5,
+        "explorer-or-founder": 0.5,
+        "settler-group": 0.5,
+        "religious-association": 0.25,
+        "personal-name": 0.25,
+        "event-or-incident": 0.25,
+        "calendar-date-or-feast": 0.1,
+        "saint-or-holy-person": 0,
+        ship: 0
+      },
+      groupMultipliers: {
+        "military-and-administrative": 2,
+        "local-generics": 2,
+        "colonial-settlement": 1.5,
+        "industry-and-trade": 1.5,
+        "crossings-and-routes": 1.5,
+        "communal-and-legal": 1.5,
+        defensive: 1.25,
+        "religious-pre-christian-and-sacred": 1.25,
+        territories: 0.75,
+        "new-landscapes": 0.5,
+        "religious-christian": 0.1,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        colony: 2,
+        "garrison-camp": 2,
+        "bath-spa": 2,
+        bridge: 1.5,
+        market: 1.5,
+        capital: 0.5,
+        "trading-post": 0.5,
+        "mining-camp": 0.25,
+        crossing: 0.25,
+        heights: 0.25,
+        hope: 0,
+        memorial: 0,
+        mission: 0,
+        "pastoral-station": 0,
+        junction: 0,
+        cantonment: 0,
+        "civil-lines": 0,
+        "administrative-station": 0
+      },
+      structureMultipliers: {
+        doubleSpecific: 2,
+        affix: 1.25,
+        positionOfLandmark: 1,
+        bareSpecific: 0.75,
+        newTransfer: 0.5,
+        translationTag: 0.5,
+        twin: 0.25,
+        possessive: 0.1,
+        definiteForm: 0
+      },
+      affixTypeMultipliers: {},
+      locative: 0.1,
+      nativeTreatment: {
+        adopted: 0.2,
+        adapted: 0.8
+      },
+      wordOrder: {
+        "specific-first": 10,
+        "generic-first-direct": 30,
+        "generic-first-linked": 60
+      }
+    },
+    {
+      id: "hellenistic",
+      label: "Hellenistic (Greek and Macedonian)",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: 'Leans towards kings and queens, with whole cities named after them, royal epithets such as "Brother-loving" replacing older names, victory names, and "city" as the dominant generic. Earlier Greek colonies among native peoples favour new-city names, homeland names, river names and plants. Cities are often told apart by their river: Antioch on the Orontes.',
+      categoryMultipliers: {
+        "monarch-ruler-or-dynasty": 3,
+        "royal-woman": 3,
+        "honorific-title": 2,
+        "colonial-deity": 2,
+        age: 1.5,
+        "imperial-claim": 1.5,
+        "religious-association": 1.5,
+        "river-or-stream-name": 1.5,
+        "commander-or-conqueror": 1.25,
+        "homeland-place-name": 1.25,
+        "wild-plant": 1.25,
+        "local-deity": 0.75,
+        "settler-group": 0.75,
+        "native-place-name": 0.5,
+        "native-people-or-tribe": 0.5,
+        "official-patron-or-sponsor": 0.5,
+        resource: 0.5,
+        "explorer-or-founder": 0.25,
+        "personal-name": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "saint-or-holy-person": 0,
+        "calendar-date-or-feast": 0,
+        ship: 0
+      },
+      groupMultipliers: {
+        "colonial-settlement": 2,
+        "coast-and-sea": 1.5,
+        "industry-and-trade": 1.25,
+        "religious-pre-christian-and-sacred": 1.25,
+        "military-and-administrative": 0.5,
+        territories: 0.5,
+        "new-landscapes": 0.5,
+        "local-generics": 0.25,
+        "religious-christian": 0,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        city: 3,
+        "trading-post": 1.5,
+        colony: 0.5,
+        "garrison-camp": 0.5,
+        capital: 0.25,
+        heights: 0.25,
+        hope: 0,
+        memorial: 0,
+        mission: 0,
+        "pastoral-station": 0,
+        "mining-camp": 0,
+        junction: 0,
+        crossing: 0,
+        cantonment: 0,
+        "civil-lines": 0,
+        "administrative-station": 0
+      },
+      structureMultipliers: {
+        bareSpecific: 2,
+        possessive: 1.5,
+        affix: 1.5,
+        positionOfLandmark: 0.75,
+        newTransfer: 0.75,
+        doubleSpecific: 0.5,
+        translationTag: 0.5,
+        definiteForm: 0
+      },
+      affixTypeMultipliers: {
+        location: 3
+      },
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.3,
+        adapted: 0.7
+      },
+      wordOrder: {
+        "specific-first": 70,
+        "generic-first-direct": 20,
+        "generic-first-linked": 10
+      }
+    },
+    {
+      id: "phoenician",
+      label: "Phoenician (and Carthaginian)",
+      parts: [
+        "2"
+      ],
+      guide: "Leans towards coastal trading posts: capes, islands and harbours, usually generic first, as in Cape of [x] and Island of [deity]. Pairs new cities with old towns, honours its gods, and readily takes over native names along the coasts it trades with. Rarely commemorates people.",
+      categoryMultipliers: {
+        age: 2.5,
+        "colonial-deity": 2,
+        "native-place-name": 1.5,
+        produce: 1.5,
+        resource: 1.25,
+        "homeland-place-name": 1,
+        "explorer-or-founder": 0.5,
+        "royal-woman": 0.5,
+        "emotion-or-aspiration": 0.5,
+        "settler-group": 0.5,
+        "monarch-ruler-or-dynasty": 0.25,
+        "honorific-title": 0.25,
+        "official-patron-or-sponsor": 0.25,
+        "commander-or-conqueror": 0.25,
+        ship: 0.25,
+        "imperial-claim": 0.25,
+        "saint-or-holy-person": 0,
+        "calendar-date-or-feast": 0
+      },
+      groupMultipliers: {
+        "coast-and-sea": 3,
+        "islands-and-river-land": 2.5,
+        "industry-and-trade": 2,
+        "religious-pre-christian-and-sacred": 1.5,
+        "colonial-settlement": 1.25,
+        defensive: 1.25,
+        "local-generics": 0.5,
+        "new-landscapes": 0.5,
+        "mountains-and-rock": 0.5,
+        valleys: 0.5,
+        woodland: 0.5,
+        "military-and-administrative": 0.25,
+        territories: 0.25,
+        clearings: 0.25,
+        "upland-and-open-ground": 0.25,
+        "religious-christian": 0,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        "trading-post": 2.5,
+        headland: 2,
+        island: 2,
+        city: 1.5,
+        "roman-walled-town-or-fort": 1.5,
+        colony: 0.25,
+        "garrison-camp": 0.25,
+        hope: 0,
+        memorial: 0,
+        mission: 0,
+        "pastoral-station": 0,
+        "mining-camp": 0,
+        junction: 0,
+        crossing: 0,
+        heights: 0,
+        capital: 0,
+        cantonment: 0,
+        "civil-lines": 0,
+        "administrative-station": 0
+      },
+      structureMultipliers: {
+        affix: 0.5,
+        bareSpecific: 0.5,
+        doubleSpecific: 0.5,
+        positionOfLandmark: 0.5,
+        newTransfer: 0.5,
+        possessive: 0.25
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.5,
+        adapted: 0.5
+      },
+      wordOrder: {
+        "specific-first": 20,
+        "generic-first-direct": 50,
+        "generic-first-linked": 30
+      }
+    },
+    {
+      id: "spanish",
+      label: "Spanish",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: 'Leans towards saints, feast days and holy names; "New" plus a homeland name; royal titles such as Royal; and long linked names that join a saint to a native place, as in Saint James of [native place]. Keeps very many native names, respelt in Spanish fashion, and often describes the land by colour or quality: Red, Snowy, Good Airs.',
+      categoryMultipliers: {
+        "saint-or-holy-person": 3,
+        "calendar-date-or-feast": 2.5,
+        "religious-association": 2.5,
+        "homeland-place-name": 2,
+        "native-place-name": 1.5,
+        "honorific-title": 1.5,
+        colour: 1.5,
+        resource: 1.5,
+        "quality-or-condition": 1.25,
+        "emotion-or-aspiration": 1.25,
+        "monarch-ruler-or-dynasty": 1,
+        "royal-woman": 0.75,
+        "explorer-or-founder": 0.5,
+        "official-patron-or-sponsor": 0.5,
+        "commander-or-conqueror": 0.5,
+        "classical-biblical-or-legendary-name": 0.5,
+        "settler-group": 0.5,
+        "imperial-claim": 0.25,
+        ship: 0.25,
+        "personal-name": 0.25,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        "religious-christian": 2,
+        "colonial-settlement": 1.5,
+        "military-and-administrative": 1.25,
+        territories: 1.25,
+        "new-landscapes": 1.25,
+        "rivers-and-streams": 1.25,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        mission: 3,
+        "frontier-post": 2,
+        lagoon: 2,
+        city: 1.5,
+        volcano: 1.5,
+        "dry-riverbed": 1.5,
+        town: 1.25,
+        "mining-camp": 1,
+        "garrison-camp": 0.5,
+        "pastoral-station": 0.25,
+        colony: 0.25,
+        heights: 0.25,
+        hope: 0.1,
+        memorial: 0.1,
+        junction: 0,
+        cantonment: 0,
+        "civil-lines": 0,
+        "local-market-word": 0
+      },
+      structureMultipliers: {
+        doubleSpecific: 3,
+        definiteForm: 3,
+        newTransfer: 2,
+        bareSpecific: 1.25,
+        affix: 1,
+        translationTag: 0.75,
+        positionOfLandmark: 0.5,
+        twin: 0.5,
+        possessive: 0.1
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.4,
+        adapted: 0.6
+      },
+      wordOrder: {
+        "specific-first": 10,
+        "generic-first-direct": 35,
+        "generic-first-linked": 55
+      }
+    },
+    {
+      id: "portuguese",
+      label: "Portuguese",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: "Leans towards saints, feasts and calendar dates (River of January); hope and safety (Cape of Good Hope, Safe Harbour); and forts and trading factories strung along coasts and islands. Explorers name islands after themselves, and later African towns become Town of [official].",
+      categoryMultipliers: {
+        "saint-or-holy-person": 2.5,
+        "calendar-date-or-feast": 2.5,
+        "emotion-or-aspiration": 2,
+        "religious-association": 2,
+        "quality-or-condition": 1.5,
+        resource: 1.5,
+        "explorer-or-founder": 1.25,
+        produce: 1.25,
+        "native-place-name": 1.25,
+        "official-patron-or-sponsor": 1,
+        "honorific-title": 1,
+        "homeland-place-name": 1,
+        "event-or-incident": 1,
+        "monarch-ruler-or-dynasty": 0.75,
+        "royal-woman": 0.75,
+        ship: 0.25,
+        "personal-name": 0.25,
+        "imperial-claim": 0.25,
+        "classical-biblical-or-legendary-name": 0.25,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        "coast-and-sea": 2,
+        "islands-and-river-land": 2,
+        "religious-christian": 1.75,
+        "industry-and-trade": 1.5,
+        defensive: 1.5,
+        "colonial-settlement": 1.25,
+        "rivers-and-streams": 1.25,
+        "military-and-administrative": 0.75,
+        clearings: 0.5,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        "trading-post": 2.5,
+        fort: 1.5,
+        headland: 1.5,
+        island: 1.5,
+        "market-town-harbour": 1.5,
+        mission: 1.5,
+        town: 1.25,
+        "mining-camp": 0.5,
+        "pastoral-station": 0.25,
+        hope: 0.25,
+        colony: 0.25,
+        "garrison-camp": 0.25,
+        memorial: 0.1,
+        junction: 0,
+        cantonment: 0,
+        "civil-lines": 0
+      },
+      structureMultipliers: {
+        doubleSpecific: 2,
+        definiteForm: 1.5,
+        newTransfer: 1.25,
+        bareSpecific: 1.25,
+        affix: 1,
+        positionOfLandmark: 0.5,
+        twin: 0.5,
+        translationTag: 0.5,
+        possessive: 0.1
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.4,
+        adapted: 0.6
+      },
+      wordOrder: {
+        "specific-first": 10,
+        "generic-first-direct": 30,
+        "generic-first-linked": 60
+      }
+    },
+    {
+      id: "french",
+      label: "French",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: 'Leans towards the king and royal family (Louis, Dauphin, Royal); forts and ports as prefixes; founders and patrons with "town" (-ville); "New" plus a homeland name; and saints. In North America it readily adopts native names and is the tradition most given to translating them: Red Stick.',
+      categoryMultipliers: {
+        "monarch-ruler-or-dynasty": 2,
+        "saint-or-holy-person": 1.75,
+        "royal-woman": 1.5,
+        "honorific-title": 1.5,
+        "explorer-or-founder": 1.5,
+        "native-place-name": 1.5,
+        "native-people-or-tribe": 1.5,
+        "homeland-place-name": 1.25,
+        "official-patron-or-sponsor": 1.25,
+        colour: 1.25,
+        ship: 1,
+        "commander-or-conqueror": 1,
+        "religious-association": 1,
+        "calendar-date-or-feast": 0.75,
+        "emotion-or-aspiration": 0.75,
+        "settler-group": 0.75,
+        resource: 0.75,
+        "imperial-claim": 0.5,
+        "classical-biblical-or-legendary-name": 0.5,
+        "personal-name": 0.5,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        defensive: 1.75,
+        "industry-and-trade": 1.5,
+        "colonial-settlement": 1.25,
+        "religious-christian": 1.25,
+        "rivers-and-streams": 1.25,
+        "springs-pools-and-lakes": 1.25,
+        territories: 1.25,
+        "military-and-administrative": 1,
+        "local-generics": 0.5,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        town: 2,
+        "trading-post": 1.5,
+        fort: 1.5,
+        "market-town-harbour": 1.5,
+        mission: 1.25,
+        "administrative-station": 1.25,
+        colony: 0.5,
+        capital: 0.5,
+        cantonment: 0.5,
+        "pastoral-station": 0.25,
+        junction: 0.25,
+        hope: 0.1,
+        memorial: 0.1,
+        "civil-lines": 0
+      },
+      structureMultipliers: {
+        translationTag: 2,
+        definiteForm: 2,
+        doubleSpecific: 1.5,
+        newTransfer: 1.5,
+        bareSpecific: 1,
+        twin: 1,
+        affix: 1,
+        positionOfLandmark: 0.5,
+        possessive: 0.25
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.6,
+        adapted: 0.4
+      },
+      wordOrder: {
+        "specific-first": 35,
+        "generic-first-direct": 30,
+        "generic-first-linked": 35
+      }
+    },
+    {
+      id: "italian",
+      label: "Italian",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: 'Modern Italian colonisation leans towards officials and national heroes, given to planned farm villages as Village of [person], along with royal titles and a revival of Roman and classical names. The medieval Venetian and Genoese empires reshaped native names by folk etymology into Italian-sounding words: Negroponte, "black bridge".',
+      categoryMultipliers: {
+        "official-patron-or-sponsor": 2.5,
+        "commander-or-conqueror": 1.5,
+        "honorific-title": 1.5,
+        "classical-biblical-or-legendary-name": 1.5,
+        "native-place-name": 1.5,
+        "royal-woman": 1.25,
+        "personal-name": 1.25,
+        "monarch-ruler-or-dynasty": 1,
+        "explorer-or-founder": 1,
+        "saint-or-holy-person": 1,
+        "homeland-place-name": 0.75,
+        "emotion-or-aspiration": 0.75,
+        "religious-association": 0.75,
+        "settler-group": 0.75,
+        "imperial-claim": 0.5,
+        "calendar-date-or-feast": 0.5,
+        ship: 0.25,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        "colonial-settlement": 1.5,
+        "settlement-farms-and-estates": 1.25,
+        "industry-and-trade": 1.25,
+        "military-and-administrative": 0.75,
+        territories: 0.75,
+        "new-landscapes": 0.75,
+        "religious-christian": 0.75,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        "planned-village": 3,
+        "market-town-harbour": 1.5,
+        "trading-post": 1.25,
+        fort: 1,
+        mission: 0.5,
+        colony: 0.5,
+        memorial: 0.25,
+        "pastoral-station": 0.25,
+        "mining-camp": 0.25,
+        junction: 0.25,
+        hope: 0,
+        cantonment: 0,
+        "civil-lines": 0
+      },
+      structureMultipliers: {
+        doubleSpecific: 1,
+        affix: 1,
+        bareSpecific: 0.75,
+        newTransfer: 0.75,
+        twin: 0.75,
+        definiteForm: 0.5,
+        positionOfLandmark: 0.5,
+        translationTag: 0.5,
+        possessive: 0.1
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.2,
+        adapted: 0.8
+      },
+      wordOrder: {
+        "specific-first": 10,
+        "generic-first-direct": 25,
+        "generic-first-linked": 65
+      }
+    },
+    {
+      id: "belgian",
+      label: "Belgian",
+      parts: [
+        "2a"
+      ],
+      guide: "Leans almost entirely towards [person] + town: kings, queens, explorers and officials, with the occasional Port [official]. Native names were largely set aside while Belgian rule lasted, and were restored afterwards.",
+      categoryMultipliers: {
+        "monarch-ruler-or-dynasty": 3,
+        "royal-woman": 2.5,
+        "explorer-or-founder": 2.5,
+        "official-patron-or-sponsor": 2.5,
+        "commander-or-conqueror": 1.5,
+        "native-place-name": 0.5,
+        "saint-or-holy-person": 0.5,
+        "homeland-place-name": 0.5,
+        "honorific-title": 0.5,
+        "religious-association": 0.5,
+        "personal-name": 0.5,
+        resource: 0.5,
+        colour: 0.5,
+        "native-people-or-tribe": 0.25,
+        "emotion-or-aspiration": 0.25,
+        "imperial-claim": 0.25,
+        "settler-group": 0.25,
+        "classical-biblical-or-legendary-name": 0.1,
+        ship: 0.1,
+        "calendar-date-or-feast": 0.1,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        "colonial-settlement": 3,
+        "industry-and-trade": 1,
+        "military-and-administrative": 1,
+        "religious-christian": 0.75,
+        territories: 0.5,
+        defensive: 0.5,
+        "local-generics": 0.1,
+        "religious-pre-christian-and-sacred": 0.1,
+        "rivers-and-streams": 0.5,
+        "springs-pools-and-lakes": 0.5,
+        wetland: 0.5,
+        "islands-and-river-land": 0.5,
+        "coast-and-sea": 0.5,
+        "crossings-and-routes": 0.5,
+        woodland: 0.5,
+        clearings: 0.5,
+        "hills-and-slopes": 0.5,
+        "mountains-and-rock": 0.5,
+        "upland-and-open-ground": 0.5,
+        valleys: 0.5,
+        "hollows-and-corners": 0.5,
+        "open-and-farmed-land": 0.5,
+        "new-landscapes": 0.5,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        town: 4,
+        "administrative-station": 1.5,
+        "market-town-harbour": 1.5,
+        mission: 1,
+        "trading-post": 1,
+        "garrison-camp": 0.5,
+        "frontier-post": 0.5,
+        city: 0.25,
+        capital: 0.25,
+        "planned-village": 0.25,
+        memorial: 0.25,
+        junction: 0.25,
+        crossing: 0.25,
+        colony: 0,
+        hope: 0,
+        "pastoral-station": 0,
+        cantonment: 0,
+        "civil-lines": 0
+      },
+      structureMultipliers: {
+        affix: 0.5,
+        bareSpecific: 0.25,
+        doubleSpecific: 0.25,
+        newTransfer: 0.25,
+        twin: 0.25,
+        positionOfLandmark: 0.25,
+        translationTag: 0.25,
+        possessive: 0.1,
+        definiteForm: 0
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.5,
+        adapted: 0.5
+      },
+      wordOrder: {
+        "specific-first": 85,
+        "generic-first-direct": 15,
+        "generic-first-linked": 0
+      }
+    },
+    {
+      id: "dutch",
+      label: "Dutch",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: `Leans above all towards homeland names, both bare (Haarlem, Breukelen) and with "New" (New Amsterdam, New Holland, New Zealand). Commemorates officials and patrons, often as [official]'s Land; honours the House of Orange; names coasts after ships; and builds forts and trading posts. In southern Africa, founders join with "wood" or "village", and the land is described by its shape: Table Mountain. In the East Indies, classical and ancestral names appear: Batavia.`,
+      categoryMultipliers: {
+        "homeland-place-name": 3,
+        "official-patron-or-sponsor": 2,
+        "monarch-ruler-or-dynasty": 1.5,
+        "explorer-or-founder": 1.5,
+        "classical-biblical-or-legendary-name": 1.5,
+        shape: 1.5,
+        "native-place-name": 1,
+        ship: 1,
+        "event-or-incident": 1,
+        "settler-group": 1,
+        produce: 1,
+        "personal-name": 1,
+        "royal-woman": 0.75,
+        "commander-or-conqueror": 0.75,
+        "native-people-or-tribe": 0.75,
+        "emotion-or-aspiration": 0.75,
+        resource: 0.75,
+        "honorific-title": 0.5,
+        "saint-or-holy-person": 0.25,
+        "religious-association": 0.25,
+        "imperial-claim": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "calendar-date-or-feast": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        territories: 1.75,
+        "coast-and-sea": 1.5,
+        "islands-and-river-land": 1.5,
+        "industry-and-trade": 1.5,
+        defensive: 1.25,
+        "colonial-settlement": 1.25,
+        "settlement-farms-and-estates": 1.25,
+        woodland: 1.25,
+        "military-and-administrative": 0.75,
+        "religious-christian": 0.5,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.1,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        "land-territory": 3,
+        "trading-post": 2,
+        fort: 1.5,
+        "planned-village": 1.5,
+        town: 1,
+        "pastoral-station": 0.75,
+        capital: 0.5,
+        "mining-camp": 0.5,
+        mission: 0.25,
+        hope: 0.25,
+        memorial: 0.25,
+        colony: 0.25,
+        junction: 0.25,
+        cantonment: 0,
+        "civil-lines": 0
+      },
+      structureMultipliers: {
+        possessive: 2.5,
+        newTransfer: 2.5,
+        bareSpecific: 1.5,
+        affix: 1,
+        doubleSpecific: 0.5,
+        positionOfLandmark: 0.5,
+        twin: 0.5,
+        translationTag: 0.5,
+        definiteForm: 0.25
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.5,
+        adapted: 0.5
+      },
+      wordOrder: {
+        "specific-first": 80,
+        "generic-first-direct": 15,
+        "generic-first-linked": 5
+      }
+    },
+    {
+      id: "british-imperial",
+      label: "British Imperial",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: "Naming by the empire's officials, navy and explorers. Leans towards governors, ministers and patrons (Melbourne, Wellington); the monarch and royal family (Victoria, Adelaide, Queensland); explorers, their ships and their experiences (Cook Strait, Endeavour River, Cape Tribulation); and commanders. In India and other ruled lands it builds cantonments, civil lines, administrative stations and twin cities (New Delhi), forms hybrids with local generics (Abbottabad), and respells native names: Cawnpore.",
+      categoryMultipliers: {
+        "official-patron-or-sponsor": 3,
+        "monarch-ruler-or-dynasty": 2.5,
+        "royal-woman": 2.5,
+        "explorer-or-founder": 2,
+        ship: 2,
+        "event-or-incident": 2,
+        "commander-or-conqueror": 2,
+        "native-place-name": 1.75,
+        "emotion-or-aspiration": 1.5,
+        "native-people-or-tribe": 1,
+        "homeland-place-name": 1,
+        "honorific-title": 0.75,
+        "calendar-date-or-feast": 0.75,
+        resource: 0.75,
+        "personal-name": 0.5,
+        "settler-group": 0.5,
+        "distance-or-survey-mark": 0.5,
+        "classical-biblical-or-legendary-name": 0.5,
+        "saint-or-holy-person": 0.5,
+        "religious-association": 0.5,
+        "imperial-claim": 0.25,
+        "local-deity": 0.25,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        "military-and-administrative": 2,
+        "local-generics": 2,
+        "coast-and-sea": 1.5,
+        "colonial-settlement": 1.25,
+        "islands-and-river-land": 1.25,
+        territories: 1.25,
+        "mountains-and-rock": 1.25,
+        defensive: 1.25,
+        "settlement-farms-and-estates": 0.5,
+        "open-and-farmed-land": 0.5,
+        "religious-christian": 0.5,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        cantonment: 3,
+        "civil-lines": 3,
+        "administrative-station": 2,
+        "trading-post": 1.5,
+        fort: 1.5,
+        town: 1.25,
+        capital: 1,
+        "frontier-post": 0.75,
+        junction: 0.5,
+        crossing: 0.5,
+        creek: 0.5,
+        "garrison-camp": 0.5,
+        "pastoral-station": 0.25,
+        "mining-camp": 0.25,
+        mission: 0.25,
+        hope: 0.25,
+        memorial: 0.25,
+        colony: 0.25
+      },
+      structureMultipliers: {
+        twin: 2.5,
+        bareSpecific: 2,
+        possessive: 1.5,
+        newTransfer: 1,
+        affix: 1,
+        translationTag: 0.5,
+        positionOfLandmark: 0.5,
+        doubleSpecific: 0.25,
+        definiteForm: 0.1
+      },
+      affixTypeMultipliers: {
+        city: 0.5
+      },
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.3,
+        adapted: 0.7
+      },
+      wordOrder: {
+        "specific-first": 85,
+        "generic-first-direct": 13,
+        "generic-first-linked": 2
+      }
+    },
+    {
+      id: "english-speaking-settler",
+      label: "English-speaking Settler",
+      parts: [
+        "2"
+      ],
+      guide: 'Naming by the settlers of the United States, Canada, Australia and New Zealand themselves. Leans towards homeland names, bare or with "New"; classical and biblical names (Troy, Ithaca, Bethlehem); ordinary settlers and landowners; survey and distance names (Twelve Mile Creek); resources and gold-rush camps; stations, junctions, crossings and creeks; hopeful names (Pleasant Valley); and the City suffix. Adopts native names freely (Ottawa, Wagga Wagga), and translates them: Rocky Mountains.',
+      categoryMultipliers: {
+        "homeland-place-name": 3,
+        "classical-biblical-or-legendary-name": 2.5,
+        "personal-name": 2.5,
+        "distance-or-survey-mark": 2.5,
+        resource: 2,
+        "native-place-name": 2,
+        "emotion-or-aspiration": 2,
+        "native-people-or-tribe": 1.75,
+        "settler-group": 1.5,
+        "official-patron-or-sponsor": 1.25,
+        "commander-or-conqueror": 1.25,
+        "event-or-incident": 1.25,
+        "wild-animal": 1.25,
+        tree: 1.25,
+        colour: 1.25,
+        "explorer-or-founder": 1,
+        "monarch-ruler-or-dynasty": 0.75,
+        "royal-woman": 0.75,
+        "religious-association": 0.75,
+        "saint-or-holy-person": 0.5,
+        ship: 0.25,
+        "honorific-title": 0.25,
+        "calendar-date-or-feast": 0.25,
+        "imperial-claim": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        "colonial-settlement": 1.75,
+        "new-landscapes": 1.5,
+        "settlement-farms-and-estates": 1.25,
+        "open-and-farmed-land": 1.25,
+        "rivers-and-streams": 1.25,
+        valleys: 1.25,
+        territories: 1,
+        "military-and-administrative": 0.5,
+        "religious-christian": 0.5,
+        "religious-pre-christian-and-sacred": 0.1,
+        "local-generics": 0,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        "pastoral-station": 2.5,
+        "mining-camp": 2.5,
+        junction: 2.5,
+        crossing: 2.5,
+        creek: 2.5,
+        heights: 1.5,
+        town: 1.5,
+        city: 1.25,
+        "trading-post": 1,
+        "frontier-post": 0.75,
+        capital: 0.5,
+        "administrative-station": 0.25,
+        mission: 0.25,
+        hope: 0.25,
+        memorial: 0.25,
+        colony: 0.1,
+        cantonment: 0,
+        "civil-lines": 0
+      },
+      structureMultipliers: {
+        bareSpecific: 2,
+        affix: 1.5,
+        newTransfer: 1.5,
+        possessive: 1.5,
+        translationTag: 1.5,
+        positionOfLandmark: 0.5,
+        doubleSpecific: 0.1,
+        definiteForm: 0.1
+      },
+      affixTypeMultipliers: {
+        city: 3
+      },
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.6,
+        adapted: 0.4
+      },
+      wordOrder: {
+        "specific-first": 88,
+        "generic-first-direct": 10,
+        "generic-first-linked": 2
+      }
+    },
+    {
+      id: "german",
+      label: "German",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: `Two strands. Medieval eastward settlement built castles named after kings and holy figures (King's Mountain, Mary's Castle), founded new villages, and reshaped Slavic names into German forms. Overseas colonies (1884\u20131919) honoured the Kaiser, the Empress and officials (Kaiser-Wilhelmsland, the Bismarck Archipelago), used "New" with homeland regions (New Pomerania), and named river mouths, bays and heights after founders.`,
+      categoryMultipliers: {
+        "monarch-ruler-or-dynasty": 2.5,
+        "official-patron-or-sponsor": 2,
+        "homeland-place-name": 2,
+        "explorer-or-founder": 1.5,
+        "native-place-name": 1.5,
+        "river-or-stream-name": 1.5,
+        "status-or-role": 1.5,
+        "saint-or-holy-person": 1.25,
+        "religious-association": 1.25,
+        "royal-woman": 1.25,
+        "honorific-title": 1,
+        "personal-name": 1,
+        "settler-group": 1,
+        "commander-or-conqueror": 1,
+        "emotion-or-aspiration": 0.75,
+        resource: 0.75,
+        ship: 0.5,
+        "event-or-incident": 0.5,
+        "imperial-claim": 0.25,
+        "calendar-date-or-feast": 0.25,
+        "classical-biblical-or-legendary-name": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        defensive: 2,
+        "settlement-farms-and-estates": 1.5,
+        territories: 1.5,
+        "colonial-settlement": 1.25,
+        "islands-and-river-land": 1.25,
+        "rivers-and-streams": 1.25,
+        "hills-and-slopes": 1.25,
+        "religious-christian": 1,
+        "coast-and-sea": 1,
+        "military-and-administrative": 0.75,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.25,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        castle: 2.5,
+        "planned-village": 2,
+        "land-territory": 2,
+        heights: 2,
+        "island-group": 2,
+        "river-mouth": 2,
+        bay: 1.5,
+        "market-town-harbour": 1.5,
+        mission: 0.75,
+        "trading-post": 0.75,
+        memorial: 0.25,
+        "pastoral-station": 0.25,
+        junction: 0.25,
+        colony: 0.25,
+        hope: 0.1,
+        cantonment: 0,
+        "civil-lines": 0
+      },
+      structureMultipliers: {
+        newTransfer: 2,
+        possessive: 1.5,
+        affix: 1,
+        bareSpecific: 0.5,
+        positionOfLandmark: 0.5,
+        twin: 0.5,
+        translationTag: 0.5,
+        doubleSpecific: 0.25,
+        definiteForm: 0.1
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.3,
+        adapted: 0.7
+      },
+      wordOrder: {
+        "specific-first": 90,
+        "generic-first-direct": 8,
+        "generic-first-linked": 2
+      }
+    },
+    {
+      id: "danish",
+      label: "Danish",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: `The narrowest Northern tradition. Leans above all towards the king and queens, joined to a distinctive "hope": Christian's Hope, Juliane's Hope, and plain Good Hope. Also builds royal towns and castles, raises memorials to missionaries, and names castles after homeland regions or the Danes themselves.`,
+      categoryMultipliers: {
+        "monarch-ruler-or-dynasty": 3,
+        "royal-woman": 2.5,
+        "emotion-or-aspiration": 2,
+        "homeland-place-name": 1.25,
+        "settler-group": 1.25,
+        "explorer-or-founder": 1,
+        "official-patron-or-sponsor": 1,
+        "native-place-name": 1,
+        "religious-association": 0.75,
+        "saint-or-holy-person": 0.5,
+        "native-people-or-tribe": 0.5,
+        "honorific-title": 0.5,
+        "commander-or-conqueror": 0.5,
+        "personal-name": 0.5,
+        "event-or-incident": 0.5,
+        resource: 0.5,
+        ship: 0.25,
+        "imperial-claim": 0.25,
+        "classical-biblical-or-legendary-name": 0.25,
+        "calendar-date-or-feast": 0.25,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        "colonial-settlement": 2,
+        defensive: 1.5,
+        "coast-and-sea": 1.5,
+        "islands-and-river-land": 1.25,
+        "industry-and-trade": 1.25,
+        "new-landscapes": 1,
+        "religious-christian": 0.75,
+        "military-and-administrative": 0.5,
+        territories: 0.5,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.1,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        hope: 4,
+        memorial: 2.5,
+        castle: 2,
+        town: 1.5,
+        "trading-post": 1.5,
+        glacier: 1.5,
+        "market-town-harbour": 1.25,
+        mission: 1,
+        "planned-village": 0.5,
+        "mining-camp": 0.25,
+        colony: 0.25,
+        "pastoral-station": 0,
+        junction: 0,
+        cantonment: 0,
+        "civil-lines": 0
+      },
+      structureMultipliers: {
+        possessive: 2.5,
+        bareSpecific: 1,
+        affix: 0.5,
+        newTransfer: 0.5,
+        doubleSpecific: 0.25,
+        twin: 0.25,
+        positionOfLandmark: 0.25,
+        translationTag: 0.25,
+        definiteForm: 0.1
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.5,
+        adapted: 0.5
+      },
+      wordOrder: {
+        "specific-first": 95,
+        "generic-first-direct": 5,
+        "generic-first-linked": 0
+      }
+    },
+    {
+      id: "swedish",
+      label: "Swedish",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: 'A small, fort-dominated tradition. Leans towards forts named after the queen, kings and homeland places (Fort Christina, Fort Elfsborg), "New" plus a homeland name (New Gothenburg, New Sweden), and holy names: Fort Trinity.',
+      categoryMultipliers: {
+        "royal-woman": 2.5,
+        "monarch-ruler-or-dynasty": 2.5,
+        "homeland-place-name": 2,
+        "religious-association": 1.5,
+        "settler-group": 1,
+        "native-place-name": 1,
+        "official-patron-or-sponsor": 0.75,
+        "native-people-or-tribe": 0.75,
+        "explorer-or-founder": 0.5,
+        "saint-or-holy-person": 0.5,
+        "honorific-title": 0.5,
+        "commander-or-conqueror": 0.5,
+        "emotion-or-aspiration": 0.5,
+        "personal-name": 0.5,
+        ship: 0.5,
+        resource: 0.5,
+        "event-or-incident": 0.25,
+        "imperial-claim": 0.25,
+        "classical-biblical-or-legendary-name": 0.25,
+        "calendar-date-or-feast": 0.25,
+        "distance-or-survey-mark": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        defensive: 3,
+        "rivers-and-streams": 1.25,
+        "colonial-settlement": 1,
+        "industry-and-trade": 1,
+        "military-and-administrative": 1,
+        territories: 0.75,
+        "religious-christian": 0.75,
+        "new-landscapes": 0.5,
+        "local-generics": 0.1,
+        "religious-pre-christian-and-sacred": 0.1,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        fort: 3,
+        castle: 1.5,
+        "trading-post": 1.5,
+        "province-kingdom": 1.5,
+        town: 1,
+        colony: 0.5,
+        "planned-village": 0.5,
+        mission: 0.25,
+        hope: 0.25,
+        memorial: 0.25,
+        "mining-camp": 0.25,
+        "pastoral-station": 0,
+        junction: 0,
+        cantonment: 0,
+        "civil-lines": 0
+      },
+      structureMultipliers: {
+        newTransfer: 2,
+        possessive: 1.5,
+        bareSpecific: 1,
+        affix: 0.5,
+        doubleSpecific: 0.25,
+        twin: 0.25,
+        positionOfLandmark: 0.25,
+        translationTag: 0.25,
+        definiteForm: 0.1
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.5,
+        adapted: 0.5
+      },
+      wordOrder: {
+        "specific-first": 85,
+        "generic-first-direct": 13,
+        "generic-first-linked": 2
+      }
+    },
+    {
+      id: "russian",
+      label: "Russian",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: 'Leans towards native river names turned into towns (Town on the Irkut); saints and feasts of the Orthodox calendar; tsars and tsaritsas; explorers; "New" with a region name; places described by their position beyond a landmark; and colour. In the Caucasus and the Far East it adds imperial-claim names (Ruler of the East) and loyalty names (Faithful).',
+      categoryMultipliers: {
+        "river-or-stream-name": 3,
+        "saint-or-holy-person": 2,
+        "calendar-date-or-feast": 2,
+        "monarch-ruler-or-dynasty": 2,
+        "royal-woman": 2,
+        "explorer-or-founder": 2,
+        "imperial-claim": 2,
+        colour: 1.5,
+        "native-place-name": 1.5,
+        "official-patron-or-sponsor": 1.25,
+        "commander-or-conqueror": 1.25,
+        "religious-association": 1.25,
+        "homeland-place-name": 1,
+        "emotion-or-aspiration": 1,
+        "native-people-or-tribe": 1,
+        resource: 1,
+        "settler-group": 0.75,
+        "event-or-incident": 0.75,
+        ship: 0.75,
+        "personal-name": 0.5,
+        "honorific-title": 0.5,
+        "classical-biblical-or-legendary-name": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "local-deity": 0.1,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        "colonial-settlement": 2,
+        "military-and-administrative": 1.5,
+        "rivers-and-streams": 1.5,
+        defensive: 1.25,
+        territories: 1.25,
+        "religious-christian": 1,
+        "new-landscapes": 1,
+        "local-generics": 0.25,
+        "religious-pre-christian-and-sacred": 0.1,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        town: 3,
+        "frontier-post": 2.5,
+        fort: 1.25,
+        "trading-post": 1.25,
+        city: 1,
+        "mining-camp": 0.75,
+        mission: 0.5,
+        junction: 0.5,
+        memorial: 0.25,
+        "pastoral-station": 0.25,
+        colony: 0.25,
+        hope: 0.1,
+        cantonment: 0,
+        "civil-lines": 0
+      },
+      structureMultipliers: {
+        positionOfLandmark: 1.5,
+        doubleSpecific: 1.5,
+        newTransfer: 1.25,
+        bareSpecific: 1,
+        possessive: 1,
+        affix: 1,
+        twin: 0.5,
+        translationTag: 0.5,
+        definiteForm: 0
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.4,
+        adapted: 0.6
+      },
+      wordOrder: {
+        "specific-first": 90,
+        "generic-first-direct": 5,
+        "generic-first-linked": 5
+      }
+    },
+    {
+      id: "arab",
+      label: "Arab",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: 'Puts the generic first, joined with "of": Mountain of [commander], Castle of [person], River of [description], City of [aspiration]. Leans towards commanders and conquerors; peace and victory names (City of Peace, The Victorious); garrison camps that grew into cities; frontier posts and watchtowers; the tombs of holy men; tribal settler groups; and the definite article: The Island.',
+      categoryMultipliers: {
+        "commander-or-conqueror": 3,
+        "emotion-or-aspiration": 2.5,
+        "imperial-claim": 2,
+        "quality-or-condition": 1.5,
+        size: 1.5,
+        "soil-or-ground": 1.5,
+        "royal-woman": 1.5,
+        "monarch-ruler-or-dynasty": 1.5,
+        "native-place-name": 1.5,
+        "settler-group": 1.5,
+        "saint-or-holy-person": 1.5,
+        "personal-name": 1,
+        "honorific-title": 1,
+        "religious-association": 1,
+        "official-patron-or-sponsor": 0.75,
+        "homeland-place-name": 0.75,
+        "native-people-or-tribe": 0.5,
+        "explorer-or-founder": 0.5,
+        "calendar-date-or-feast": 0.1,
+        "distance-or-survey-mark": 0.1,
+        "classical-biblical-or-legendary-name": 0.1,
+        ship: 0,
+        "local-deity": 0,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        "military-and-administrative": 2,
+        defensive: 2,
+        "religious-islamic": 2,
+        "rivers-and-streams": 1.75,
+        "new-landscapes": 1.5,
+        "mountains-and-rock": 1.5,
+        "colonial-settlement": 1.5,
+        "islands-and-river-land": 1.25,
+        territories: 0.75,
+        "local-generics": 0.5,
+        "religious-christian": 0,
+        "religious-pre-christian-and-sacred": 0
+      },
+      genericMultipliers: {
+        "garrison-camp": 3,
+        "frontier-post": 2.5,
+        city: 2,
+        "lookout-hill": 2,
+        castle: 2,
+        oasis: 2,
+        "dry-riverbed": 2,
+        river: 1.5,
+        haven: 1.5,
+        market: 1.25,
+        "pastoral-station": 0.25,
+        "mining-camp": 0.25,
+        crossing: 0.25,
+        "planned-village": 0.25,
+        heights: 0.25,
+        mission: 0,
+        hope: 0,
+        memorial: 0,
+        junction: 0,
+        cantonment: 0,
+        "civil-lines": 0,
+        colony: 0
+      },
+      structureMultipliers: {
+        definiteForm: 3,
+        doubleSpecific: 1.5,
+        bareSpecific: 1,
+        affix: 0.75,
+        positionOfLandmark: 0.5,
+        translationTag: 0.5,
+        twin: 0.5,
+        newTransfer: 0.25,
+        possessive: 0.1
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.3,
+        adapted: 0.7
+      },
+      wordOrder: {
+        "specific-first": 5,
+        "generic-first-direct": 25,
+        "generic-first-linked": 70
+      }
+    },
+    {
+      id: "ottoman",
+      label: "Ottoman",
+      parts: [
+        "2a"
+      ],
+      guide: "Leans above all towards colour: White Castle, Black Cape, Red River. Sultans are honoured in new towns named of [sultan]; new cities sit beside old ones; and the landscape fills with castles, markets, bridges and villages, many named by size or shape. Turkic settler tribes and dervish saints leave their names too, and native names are Turkified.",
+      categoryMultipliers: {
+        colour: 4,
+        "monarch-ruler-or-dynasty": 3,
+        age: 2.5,
+        size: 1.5,
+        shape: 1.5,
+        "native-place-name": 1.5,
+        "status-or-role": 1.5,
+        "honorific-title": 1.5,
+        "quality-or-condition": 1.25,
+        "commander-or-conqueror": 1.25,
+        "settler-group": 1.25,
+        "position-or-direction": 1,
+        "royal-woman": 1,
+        "saint-or-holy-person": 1,
+        "religious-association": 1,
+        "personal-name": 1,
+        "official-patron-or-sponsor": 0.75,
+        "imperial-claim": 0.75,
+        "emotion-or-aspiration": 0.75,
+        "homeland-place-name": 0.5,
+        "explorer-or-founder": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "calendar-date-or-feast": 0.1,
+        ship: 0.1,
+        "classical-biblical-or-legendary-name": 0.1,
+        "local-deity": 0,
+        "colonial-deity": 0
+      },
+      groupMultipliers: {
+        defensive: 2,
+        "industry-and-trade": 1.75,
+        "settlement-farms-and-estates": 1.5,
+        "colonial-settlement": 1.5,
+        "religious-islamic": 1.5,
+        "crossings-and-routes": 1.25,
+        "coast-and-sea": 1,
+        "military-and-administrative": 1,
+        territories: 0.5,
+        "local-generics": 0.25,
+        "religious-christian": 0,
+        "religious-pre-christian-and-sacred": 0
+      },
+      genericMultipliers: {
+        castle: 3,
+        market: 2.5,
+        village: 2,
+        city: 2,
+        bridge: 1.5,
+        "planned-village": 1.5,
+        headland: 1.25,
+        river: 1.25,
+        "trading-post": 0.5,
+        "mining-camp": 0.25,
+        heights: 0.25,
+        hope: 0,
+        memorial: 0,
+        mission: 0,
+        "pastoral-station": 0,
+        junction: 0,
+        cantonment: 0,
+        "civil-lines": 0,
+        colony: 0
+      },
+      structureMultipliers: {
+        possessive: 2,
+        twin: 1.5,
+        affix: 1.25,
+        bareSpecific: 1,
+        newTransfer: 0.75,
+        translationTag: 0.75,
+        positionOfLandmark: 0.5,
+        doubleSpecific: 0.25,
+        definiteForm: 0
+      },
+      affixTypeMultipliers: {
+        age: 2,
+        size: 1.5
+      },
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.3,
+        adapted: 0.7
+      },
+      wordOrder: {
+        "specific-first": 95,
+        "generic-first-direct": 3,
+        "generic-first-linked": 2
+      }
+    },
+    {
+      id: "chinese",
+      label: "Chinese",
+      parts: [
+        "2a"
+      ],
+      guide: "Leans above all towards imperial claim: places pacified, garrisoned, civilised or at peace. Names places by their position relative to a river or mountain (East of the Liao, North of the River), declares new frontiers and provinces, revives ancient state names, and fills frontiers with garrisons, walls and passes. Capitals are named by direction: Northern Capital. Local names are transliterated.",
+      categoryMultipliers: {
+        "imperial-claim": 4,
+        "position-or-direction": 3,
+        "river-or-stream-name": 2,
+        "emotion-or-aspiration": 2,
+        "native-place-name": 1.5,
+        "native-people-or-tribe": 1.5,
+        age: 1.5,
+        landform: 1.5,
+        "classical-biblical-or-legendary-name": 1.5,
+        colour: 1.5,
+        resource: 0.75,
+        "commander-or-conqueror": 0.5,
+        "honorific-title": 0.5,
+        "settler-group": 0.5,
+        "monarch-ruler-or-dynasty": 0.25,
+        "official-patron-or-sponsor": 0.25,
+        "homeland-place-name": 0.25,
+        "religious-association": 0.25,
+        "distance-or-survey-mark": 0.25,
+        "royal-woman": 0.1,
+        "explorer-or-founder": 0.1,
+        "personal-name": 0.1,
+        "local-deity": 0.1,
+        "colonial-deity": 0.1,
+        "saint-or-holy-person": 0,
+        "calendar-date-or-feast": 0,
+        ship: 0
+      },
+      groupMultipliers: {
+        "military-and-administrative": 2.5,
+        territories: 2.5,
+        defensive: 1.5,
+        "rivers-and-streams": 1.5,
+        "mountains-and-rock": 1.25,
+        "new-landscapes": 1.25,
+        "colonial-settlement": 1,
+        "religious-pre-christian-and-sacred": 0.5,
+        "local-generics": 0.25,
+        "religious-christian": 0,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        "frontier-march": 3,
+        "garrison-camp": 3,
+        "province-kingdom": 2.5,
+        "frontier-post": 2,
+        wall: 2,
+        capital: 1.5,
+        pass: 1.5,
+        city: 1.5,
+        town: 1,
+        "trading-post": 0.5,
+        "mining-camp": 0.25,
+        heights: 0.25,
+        hope: 0,
+        memorial: 0,
+        mission: 0,
+        "pastoral-station": 0,
+        junction: 0,
+        cantonment: 0,
+        "civil-lines": 0,
+        colony: 0
+      },
+      structureMultipliers: {
+        positionOfLandmark: 4,
+        translationTag: 1,
+        bareSpecific: 0.5,
+        doubleSpecific: 0.5,
+        affix: 0.5,
+        newTransfer: 0.25,
+        twin: 0.25,
+        possessive: 0.1,
+        definiteForm: 0
+      },
+      affixTypeMultipliers: {},
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.5,
+        adapted: 0.5
+      },
+      wordOrder: {
+        "specific-first": 95,
+        "generic-first-direct": 5,
+        "generic-first-linked": 0
+      }
+    },
+    {
+      id: "japanese",
+      label: "Japanese",
+      parts: [
+        "2",
+        "2a"
+      ],
+      guide: 'Leans towards keeping native names but writing them with carefully chosen characters, which reshapes them (Sapporo, Otaru). Settlers bring homeland names, often with a direction or "New" (North Hiroshima, New Totsukawa), and name places after their domain or clan. Auspicious words are favoured (Abundant Plain), and soldier-farmer villages guard the frontier. In ruled lands, it renames capitals and re-reads local names in Japanese.',
+      categoryMultipliers: {
+        "native-place-name": 3,
+        "homeland-place-name": 2.5,
+        "emotion-or-aspiration": 2.5,
+        "position-or-direction": 2,
+        "settler-group": 2,
+        "quality-or-condition": 1.5,
+        "river-or-stream-name": 1.5,
+        tree: 1.25,
+        "wild-plant": 1.25,
+        "personal-name": 1,
+        resource: 1,
+        "explorer-or-founder": 1,
+        "official-patron-or-sponsor": 0.75,
+        "imperial-claim": 0.75,
+        "native-people-or-tribe": 0.5,
+        "monarch-ruler-or-dynasty": 0.5,
+        "commander-or-conqueror": 0.5,
+        "religious-association": 0.5,
+        "colonial-deity": 0.5,
+        "royal-woman": 0.25,
+        "calendar-date-or-feast": 0.25,
+        "classical-biblical-or-legendary-name": 0.25,
+        "distance-or-survey-mark": 0.25,
+        ship: 0.1,
+        "local-deity": 0.1,
+        "saint-or-holy-person": 0
+      },
+      groupMultipliers: {
+        "settlement-farms-and-estates": 1.5,
+        "colonial-settlement": 1.5,
+        "open-and-farmed-land": 1.5,
+        "military-and-administrative": 1.25,
+        "new-landscapes": 1.25,
+        "religious-pre-christian-and-sacred": 1,
+        territories: 1,
+        "coast-and-sea": 1,
+        "local-generics": 0.5,
+        "religious-christian": 0,
+        "religious-islamic": 0
+      },
+      genericMultipliers: {
+        "plain-grassland": 2.5,
+        capital: 2,
+        "planned-village": 2,
+        village: 1.5,
+        "shrine-idol": 1.5,
+        town: 1.25,
+        "garrison-camp": 1,
+        "mining-camp": 0.75,
+        "pastoral-station": 0.5,
+        junction: 0.5,
+        crossing: 0.5,
+        colony: 0.25,
+        hope: 0,
+        memorial: 0,
+        mission: 0,
+        cantonment: 0,
+        "civil-lines": 0
+      },
+      structureMultipliers: {
+        positionOfLandmark: 1.5,
+        newTransfer: 1.5,
+        bareSpecific: 1.5,
+        translationTag: 1.5,
+        affix: 1,
+        twin: 0.5,
+        doubleSpecific: 0.25,
+        possessive: 0.1,
+        definiteForm: 0
+      },
+      affixTypeMultipliers: {
+        position: 2
+      },
+      locative: 0,
+      nativeTreatment: {
+        adopted: 0.2,
+        adapted: 0.8
+      },
+      wordOrder: {
+        "specific-first": 98,
+        "generic-first-direct": 2,
+        "generic-first-linked": 0
+      }
+    }
+  ]
+};
+
+// src/colonialShapes.ts
+var COLONIAL_DATA = colonial_shapes_default;
+var COLONIAL_TRADITIONS = [COLONIAL_DATA.general, ...COLONIAL_DATA.traditions];
+function colonialContexts(part) {
+  return COLONIAL_DATA.contexts[part];
+}
+function isTraditionAvailable(traditionId, part) {
+  var _a, _b;
+  return (_b = (_a = COLONIAL_TRADITIONS.find((t) => t.id === traditionId)) == null ? void 0 : _a.parts.includes(part)) != null ? _b : false;
+}
+var NEW_GROUP_SIDES = new Map(
+  COLONIAL_DATA.groups.filter((g) => !g.inherited).map((g) => {
+    var _a;
+    return [g.id, (_a = g.side) != null ? _a : "settlement"];
+  })
+);
+var PART1_GROUPS = new Map(PLACE_SHAPE_DATA.groups.map((g) => [g.id, g]));
+function genericIdOf(entry) {
+  return typeof entry === "string" ? entry : entry.id;
+}
+function groupSide(group) {
+  return group.inherited ? PART1_GROUPS.get(group.id).side : NEW_GROUP_SIDES.get(group.id);
+}
+function resolveColonialProfile(group, genericId, data = COLONIAL_DATA) {
+  var _a;
+  const tiers = /* @__PURE__ */ new Map();
+  for (const c of data.inheritedCategories) tiers.set(c.id, "unlikely");
+  for (const c of data.categories) tiers.set(c.id, "unlikely");
+  if (group.inherited) {
+    const part1 = resolveProfile(PART1_GROUPS.get(group.id), genericId);
+    for (const [id, tier] of part1) if (tiers.has(id)) tiers.set(id, tier);
+    for (const [id, tier] of Object.entries((_a = group.set) != null ? _a : {})) tiers.set(id, tier);
+  } else if (group.profile) {
+    for (const tier of ["common", "occasional", "rare"]) {
+      for (const id of group.profile[tier]) tiers.set(id, tier);
+    }
+  }
+  for (const override of group.overrides) {
+    if (!override.generics.includes(genericId)) continue;
+    if (override.others) {
+      for (const [id, tier] of tiers) {
+        if (id in override.set) continue;
+        if (tier !== "unlikely" || override.others === "unlikely") tiers.set(id, override.others);
+      }
+    }
+    for (const [id, tier] of Object.entries(override.set)) tiers.set(id, tier);
+  }
+  return tiers;
+}
+var LANDSCAPE_SHARE_SETTLEMENT = 0.35;
+var OVERLAY_CATEGORIES = /* @__PURE__ */ new Set(["monarch-ruler-or-dynasty", "royal-woman", "honorific-title"]);
+var COLONIAL_SPECIFIC_FAMILIES = /* @__PURE__ */ new Set(["colonisers", "transfer-and-memory", "experience-and-claim"]);
+var COLONIAL_GENERIC_GROUPS = /* @__PURE__ */ new Set(["colonial-settlement", "military-and-administrative", "territories"]);
+var LOCAL_GENERIC_GROUP = "local-generics";
+var EMPTY_SLOT2 = "empty-slot";
+var categoryFamily = new Map([
+  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.family]),
+  ...COLONIAL_DATA.categories.map((c) => [c.id, c.family])
+]);
+var colonialCategoryIds = new Set(COLONIAL_DATA.categories.map((c) => c.id));
+function deriveRenamingType(shape, data = COLONIAL_DATA) {
+  const used = [shape.categoryId, shape.secondCategoryId].filter((c) => !!c && c !== EMPTY_SLOT2);
+  const native = new Set(data.structures.nativeTreatment.categories);
+  const hasNative = used.some((c) => native.has(c));
+  const colonialSpecific = used.some(
+    (c) => {
+      var _a;
+      return colonialCategoryIds.has(c) && COLONIAL_SPECIFIC_FAMILIES.has((_a = categoryFamily.get(c)) != null ? _a : "") || c === "colonial-deity";
+    }
+  );
+  const colonialGeneric = COLONIAL_GENERIC_GROUPS.has(shape.groupId);
+  const localGeneric = shape.groupId === LOCAL_GENERIC_GROUP;
+  if (shape.structure === "twin") return "twin";
+  if (shape.translated) return "translated";
+  if (hasNative && used.some((c) => OVERLAY_CATEGORIES.has(c))) return "honorific-overlay";
+  if (colonialSpecific && localGeneric || hasNative && colonialGeneric) return "hybrid";
+  if (!hasNative) return "replacement";
+  if (!colonialSpecific) return "adapted";
+  return "hybrid";
+}
+var cap = (x) => Math.min(1, x);
+var ColonialShapeGenerator = class {
+  constructor(options, data = COLONIAL_DATA) {
+    this.options = options;
+    this.data = data;
+    this.groups = [];
+    this.sides = null;
+    var _a, _b;
+    const { part } = options;
+    const tradition = options.tradition ? data.traditions.find((t) => t.id === options.tradition) : data.general;
+    if (!tradition) throw new Error(`Unknown colonial tradition: ${options.tradition}`);
+    if (!tradition.parts.includes(part)) throw new Error(`${tradition.label} is not available in part ${part}`);
+    this.profile = tradition;
+    this.context = options.context ? data.contexts[part].find((c) => c.id === options.context) : void 0;
+    if (options.context && !this.context) throw new Error(`Unknown context for part ${part}: ${options.context}`);
+    const categoryParts = new Map([
+      ...data.inheritedCategories.map((c) => [c.id, c.parts]),
+      ...data.categories.map((c) => [c.id, c.parts])
+    ]);
+    const inPart = (parts) => (parts != null ? parts : ["2", "2a"]).includes(part);
+    const excluded = new Set((_a = options.excludedCategories) != null ? _a : []);
+    const feature = options.feature && options.feature !== "any" ? options.feature : void 0;
+    const eligibleByGroup = /* @__PURE__ */ new Map();
+    for (const group of data.groups) {
+      if (options.groupIds && !options.groupIds.includes(group.id)) continue;
+      if (feature === "landscape" && groupSide(group) !== "landscape") continue;
+      if (feature && feature !== "landscape" && feature !== "settlement" && group.id !== feature) continue;
+      const groupWeight = this.groupMultiplier(group.id);
+      const generics = [];
+      for (const entry of group.generics) {
+        const id = genericIdOf(entry);
+        if (typeof entry !== "string" && !inPart(entry.parts)) continue;
+        const genericWeight = (_b = this.profile.genericMultipliers[id]) != null ? _b : 1;
+        if (genericWeight <= 0) continue;
+        const categories = [...resolveColonialProfile(group, id, data)].filter(([c]) => inPart(categoryParts.get(c)) && !excluded.has(c)).map(([c, tier]) => [c, PLACE_SHAPE_WEIGHTS.tier[tier] * this.categoryMultiplier(c)]).filter(([, w]) => w > 0);
+        if (categories.length === 0) continue;
+        generics.push([{ id, categories, categoryWeight: new Map(categories) }, genericWeight]);
+      }
+      const eligible = { group, side: groupSide(group), generics };
+      eligibleByGroup.set(group.id, eligible);
+      if (groupWeight > 0 && generics.length > 0) this.groups.push([eligible, groupWeight]);
+    }
+    if (this.groups.length === 0) throw new Error("No eligible colonial groups for these settings");
+    if (feature === "settlement") {
+      this.sides = {
+        settlement: this.groups.filter(([g]) => g.side === "settlement"),
+        landscape: this.groups.filter(([g]) => g.side === "landscape")
+      };
+    }
+    const source = data.groups.find((g) => g.id === data.structures.stackedGeneric.sourceGroup);
+    this.stackSource = source.generics.filter((entry) => typeof entry === "string" || inPart(entry.parts)).map((entry) => {
+      var _a2;
+      return [genericIdOf(entry), (_a2 = this.profile.genericMultipliers[genericIdOf(entry)]) != null ? _a2 : 1];
+    }).filter(([, w]) => w > 0);
+    const formFits = (f) => {
+      var _a2;
+      return !f.slotCategory || inPart((_a2 = categoryParts.get(f.slotCategory)) != null ? _a2 : []);
+    };
+    const types = [
+      ...PLACE_SHAPE_DATA.affixes.map((a) => {
+        var _a2;
+        return {
+          id: a.id,
+          forms: a.forms.filter(formFits),
+          weight: (_a2 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a2 : 0
+        };
+      }),
+      ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms, weight: a.weight }))
+    ];
+    this.affixWeights = types.filter((t) => t.forms.length > 0).map((t) => {
+      var _a2;
+      return [t, t.weight * ((_a2 = this.profile.affixTypeMultipliers[t.id]) != null ? _a2 : 1)];
+    }).filter(([, w]) => w > 0);
+  }
+  groupMultiplier(id) {
+    var _a, _b, _c;
+    return ((_a = this.profile.groupMultipliers[id]) != null ? _a : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.groupMultipliers[id]) != null ? _c : 1);
+  }
+  categoryMultiplier(id) {
+    var _a, _b, _c;
+    return ((_a = this.profile.categoryMultipliers[id]) != null ? _a : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.categoryMultipliers[id]) != null ? _c : 1);
+  }
+  /** §7 base chance × tradition × context structure multipliers, capped at 1.0. */
+  chance(key, base) {
+    var _a, _b, _c;
+    return cap(base * ((_a = this.profile.structureMultipliers[key]) != null ? _a : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.structureMultipliers[key]) != null ? _c : 1));
+  }
+  next(rng) {
+    var _a, _b, _c;
+    const s = this.data.structures;
+    const { part } = this.options;
+    let pool = this.groups;
+    if (this.sides) {
+      pool = rng() < LANDSCAPE_SHARE_SETTLEMENT ? this.sides.landscape : this.sides.settlement;
+      if (pool.length === 0) pool = this.groups;
+    }
+    const eligible = pickWeighted(pool, rng);
+    const generic = pickWeighted(eligible.generics, rng);
+    const categoryId = pickWeighted(generic.categories, rng);
+    const shape = {
+      part,
+      groupId: eligible.group.id,
+      genericId: generic.id,
+      categoryId,
+      structure: "two-part-compound",
+      treatments: {}
+    };
+    const pickFrom = (candidates, fallback) => {
+      const weighted = candidates.map((c) => {
+        var _a2;
+        return [c, (_a2 = generic.categoryWeight.get(c)) != null ? _a2 : 0];
+      }).filter(([, w]) => w > 0);
+      return weighted.length > 0 ? pickWeighted(weighted, rng) : fallback;
+    };
+    if (categoryId === EMPTY_SLOT2) {
+      shape.structure = "simplex";
+      shape.plural = rng() < s.pluralSimplex.chance;
+      shape.definite = rng() < this.chance("definiteForm", s.definiteForm.chance);
+    } else if (s.newTransfer.categories.includes(categoryId) && rng() < this.chance("newTransfer", s.newTransfer.chance)) {
+      shape.structure = "new-transfer";
+    } else if (s.bareSpecific.categories.includes(categoryId) && rng() < this.chance(
+      "bareSpecific",
+      s.bareSpecific.chanceInGroups.groups.includes(eligible.group.id) ? s.bareSpecific.chanceInGroups.chance : s.bareSpecific.chance
+    )) {
+      shape.structure = "bare-specific";
+      shape.definite = rng() < this.chance("definiteForm", s.definiteForm.chance);
+    } else if (s.possessive.categories.includes(categoryId) && rng() < this.chance("possessive", s.possessive.chance)) {
+      shape.structure = "possessive";
+    } else if (s.doubleSpecific.categories.includes(categoryId) && rng() < this.chance("doubleSpecific", s.doubleSpecific.chance)) {
+      shape.structure = "double-specific";
+      shape.secondCategoryId = pickFrom(s.doubleSpecific.secondSpecifics, s.doubleSpecific.fallback);
+    } else if (s.positionOfLandmark.categories.includes(categoryId) && rng() < this.chance("positionOfLandmark", s.positionOfLandmark.chance)) {
+      shape.structure = "position-of-landmark";
+      shape.secondCategoryId = pickFrom(s.positionOfLandmark.landmarks, s.positionOfLandmark.fallback);
+    } else if (s.twin.parts.includes(part) && s.twin.categories.includes(categoryId) && s.twin.groups.includes(eligible.group.id) && rng() < this.chance("twin", s.twin.chance)) {
+      shape.structure = "twin";
+      shape.twin = rng() < 0.5 ? "new" : "old";
+    } else if (s.locative.parts.includes(part) && this.profile.locative > 0 && rng() < this.profile.locative) {
+      shape.structure = "locative";
+    } else if (eligible.side === "landscape" && this.stackSource.length > 0 && rng() < s.stackedGeneric.chance) {
+      shape.structure = "stacked-generic";
+      shape.stackedGenericId = pickWeighted(this.stackSource, rng);
+    }
+    if (shape.structure === "two-part-compound" || shape.structure === "stacked-generic") {
+      const prefix = this.data.prefixOrders[shape.genericId];
+      const distribution = prefix != null ? prefix : this.profile.wordOrder;
+      const orders = ["specific-first", "generic-first-direct", "generic-first-linked"].map((o) => [o, distribution[o]]).filter(([, w]) => w > 0);
+      shape.wordOrder = pickWeighted(orders, rng);
+    }
+    const split = (_b = (_a = this.context) == null ? void 0 : _a.nativeTreatment) != null ? _b : this.profile.nativeTreatment;
+    const native = s.nativeTreatment.categories;
+    const usesSpecific = shape.structure !== "locative" && shape.structure !== "simplex";
+    if (usesSpecific && native.includes(shape.categoryId)) shape.treatments.specific = rng() < split.adopted ? "adopted" : "adapted";
+    if (shape.secondCategoryId && native.includes(shape.secondCategoryId)) {
+      shape.treatments.second = rng() < split.adopted ? "adopted" : "adapted";
+    }
+    if (usesSpecific && s.translationTag.categoryFamilies.includes((_c = categoryFamily.get(shape.categoryId)) != null ? _c : "")) {
+      shape.translated = rng() < this.chance("translationTag", s.translationTag.chanceByPart[part]);
+    }
+    if (this.affixWeights.length > 0 && rng() < this.chance("affix", s.affix.chance)) {
+      const type = pickWeighted(this.affixWeights, rng);
+      shape.affix = { typeId: type.id, form: pickUniform(type.forms, rng) };
+    }
+    if (part === "2a") shape.renamingType = deriveRenamingType(shape, this.data);
+    return shape;
+  }
+};
+var labels = new Map([
+  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]),
+  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label])
+]);
+var genericLabels = new Map([
+  ...PLACE_SHAPE_DATA.groups.flatMap((g) => g.generics.map((x) => [x.id, x.meaning])),
+  ...COLONIAL_DATA.groups.flatMap(
+    (g) => g.generics.filter((x) => typeof x !== "string").map((x) => [x.id, x.meaning])
+  )
+]);
+function formatColonialShape(shape, fills = {}) {
+  const fillFor = (id) => id === shape.categoryId ? fills.specific : id === shape.secondCategoryId ? fills.second : void 0;
+  const category = (id, treatment, fill = fillFor(id)) => {
+    var _a;
+    return `[${((_a = labels.get(id)) != null ? _a : "?").toLowerCase()}${treatment ? `, ${treatment}` : ""}${fill ? `: ${fill}` : ""}]`;
+  };
+  const generic = (id) => {
+    var _a;
+    return `[${((_a = genericLabels.get(id)) != null ? _a : "?").toLowerCase()}]`;
+  };
+  const specific = category(shape.categoryId, shape.treatments.specific);
+  const the = (text2) => shape.definite ? `The ${text2}` : text2;
+  let text;
+  switch (shape.structure) {
+    case "simplex":
+      text = the(`${generic(shape.genericId)}${shape.plural ? " (plural)" : ""}`);
+      break;
+    case "bare-specific":
+      text = the(specific);
+      break;
+    case "possessive":
+      text = `${specific}'s + ${generic(shape.genericId)}`;
+      break;
+    case "new-transfer":
+      text = `New ${specific}`;
+      break;
+    case "twin":
+      text = `${shape.twin === "old" ? "Old" : "New"} ${specific}`;
+      break;
+    case "double-specific":
+      text = `${specific} of ${category(shape.secondCategoryId, shape.treatments.second)}`;
+      break;
+    case "position-of-landmark":
+      text = `${specific} of the ${category(shape.secondCategoryId, shape.treatments.second)}`;
+      break;
+    case "locative":
+      text = `At the ${generic(shape.genericId)}`;
+      break;
+    default: {
+      const generics = shape.structure === "stacked-generic" ? `${generic(shape.genericId)} + ${generic(shape.stackedGenericId)}` : generic(shape.genericId);
+      text = shape.wordOrder === "generic-first-direct" ? `${generics} + ${specific}` : shape.wordOrder === "generic-first-linked" ? `${generics} of ${specific}` : `${specific} + ${generics}`;
+    }
+  }
+  if (shape.affix) {
+    const { form } = shape.affix;
+    const affix = [form.text, form.slotCategory ? category(form.slotCategory, void 0, fills.affix) : ""].filter((p) => p.length > 0).join(" ");
+    text = form.position === "after" ? `${text} ${affix}` : `${affix} ${text}`;
+  }
+  if (shape.translated) text = `${text} (translated native name)`;
+  return text;
+}
+function resolveSeed2(seed) {
+  return seed !== void 0 && Number.isFinite(seed) ? seed >>> 0 : Math.random() * 4294967295 >>> 0;
+}
+function generateColonialShapesDetailed(options) {
+  const seed = resolveSeed2(options.seed);
+  const rng = mulberry32(seed);
+  const generator = new ColonialShapeGenerator(options);
+  const count = Math.max(0, Math.floor(options.count));
+  const shapes = [];
+  const names = [];
+  const seen = /* @__PURE__ */ new Set();
+  for (let attempt = 0; names.length < count && attempt < count * 50; attempt++) {
+    const shape = generator.next(rng);
+    const text = formatColonialShape(shape);
+    if (seen.has(text)) continue;
+    seen.add(text);
+    shapes.push(shape);
+    names.push(text);
+  }
+  return { shapes, names, seed };
+}
+function colonialHistoryLabel(sectionLabel, part, tradition, context) {
+  const parts = [sectionLabel];
+  const t = tradition ? COLONIAL_DATA.traditions.find((x) => x.id === tradition) : void 0;
+  if (t) parts.push(t.label);
+  const c = context ? COLONIAL_DATA.contexts[part].find((x) => x.id === context) : void 0;
+  if (c) parts.push(c.label.toLowerCase());
+  return parts.join(" \xB7 ");
+}
+
+// src/names/engine.ts
+var NAMES = {
+  /** §4.1 fuse-chance modifiers and cap. */
+  traditionalWord: 1.5,
+  modernWord: 0.6,
+  packStem: 1,
+  joining: { fused: 1.5, balanced: 1, spaced: 0.5 },
+  fuseCap: 0.95,
+  maxFusedLetters: 13,
+  /** §4.2 linking -s- for person names. */
+  linkingS: 0.5,
+  /** §4.3 rule 3: this many consonants at the join falls back to spaced. */
+  maxJoinConsonants: 4,
+  /** §6.5 mixed register. */
+  mixedTraditional: 0.5,
+  /** §13 attempts to avoid a duplicate name before allowing it. */
+  duplicateAttempts: 20,
+  /** Default fusion class for a generic word §3.3 doesn't list (usually spaced). */
+  unlistedFusion: 0.15
+};
+var FILL_SALT = 1514052375;
+var WHOLE_BY_DEFAULT = /* @__PURE__ */ new Set(["native-place-name", "native-people-or-tribe", "homeland-place-name"]);
+var PERSON_CATEGORIES = /* @__PURE__ */ new Set([
+  "personal-name",
+  "monarch-ruler-or-dynasty",
+  "royal-woman",
+  "official-patron-or-sponsor",
+  "commander-or-conqueror",
+  "explorer-or-founder"
+]);
+var DEFAULT_GENDER = {
+  "royal-woman": { male: 0, female: 100 },
+  "monarch-ruler-or-dynasty": { male: 85, female: 15 },
+  "personal-name": { male: 75, female: 25 },
+  "saint-or-holy-person": { male: 70, female: 30 },
+  deity: { male: 50, female: 50 },
+  "colonial-deity": { male: 50, female: 50 },
+  "local-deity": { male: 50, female: 50 },
+  "official-patron-or-sponsor": { male: 95, female: 5 },
+  "commander-or-conqueror": { male: 95, female: 5 },
+  "explorer-or-founder": { male: 95, female: 5 }
+};
+var NAME_WORDS = name_words_default;
+function hasBuiltInList(categoryId) {
+  var _a, _b;
+  return ((_b = (_a = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a.length) != null ? _b : 0) > 0;
+}
+var categoryLabels = new Map([
+  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label.toLowerCase()]),
+  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label.toLowerCase()]),
+  ["local-settlement-word", "local settlement word"],
+  ["local-market-word", "local market word"]
+]);
+var LOCAL_GENERICS = /* @__PURE__ */ new Set(["local-settlement-word", "local-market-word"]);
+var DIRECTIONS = ["north", "south", "east", "west"];
+function pluralise(word) {
+  const parts = word.split(" ");
+  const last = parts.pop();
+  const plural = /s$/i.test(last) ? last : /[^aeiou]y$/i.test(last) ? `${last.slice(0, -1)}ies` : `${last}s`;
+  return [...parts, plural].join(" ");
+}
+var placeholderText = (categoryId) => {
+  var _a;
+  return `[${(_a = categoryLabels.get(categoryId)) != null ? _a : categoryId}]`;
+};
+function pickWeighted2(items, rng) {
+  const total = items.reduce((n, [, w]) => n + w, 0);
+  let r = rng() * total;
+  for (const [item, w] of items) {
+    r -= w;
+    if (r < 0) return item;
+  }
+  return items[items.length - 1][0];
+}
+var pickUniform2 = (items, rng) => items[Math.floor(rng() * items.length)];
+function fillWord(fill) {
+  if (fill.kind === "placeholder") return placeholderText(fill.categoryId);
+  if (fill.kind === "name") return fill.text;
+  return fill.traditional && fill.entry.traditional ? fill.entry.traditional : fill.entry.modern;
+}
+function fillEtymology(fill) {
+  if (fill.kind === "placeholder") return void 0;
+  return fill.kind === "name" ? fill.text : fill.entry.modern;
+}
+var VOWELS2 = /[aeiouy]/i;
+var isConsonant = (ch) => /[a-z]/i.test(ch) && !VOWELS2.test(ch);
+var titleWord = (w) => w.startsWith("[") ? w : w.charAt(0).toUpperCase() + w.slice(1);
+function capitaliseSpaced(text) {
+  const linking = new Set(NAME_WORDS.linkingWords);
+  let inPlaceholder = false;
+  return text.split(" ").map((word, i) => {
+    if (word.startsWith("[")) inPlaceholder = true;
+    const out = inPlaceholder ? word : i > 0 && linking.has(word.toLowerCase()) ? word.toLowerCase() : titleWord(word);
+    if (word.includes("]")) inPlaceholder = false;
+    return out;
+  }).join(" ");
+}
+function smoothJoin(specific, generic) {
+  var _a, _b, _c, _d;
+  let a = specific;
+  let b = generic.toLowerCase();
+  if (a.length > 0 && b.length > 0 && a.slice(-1).toLowerCase() === b.charAt(0)) b = b.slice(1);
+  if (/e$/i.test(a) && VOWELS2.test(b.charAt(0))) a = a.slice(0, -1);
+  const tail = (_b = (_a = a.match(/[^aeiouy]*$/i)) == null ? void 0 : _a[0]) != null ? _b : "";
+  const head = (_d = (_c = b.match(/^[^aeiouy]*/i)) == null ? void 0 : _c[0]) != null ? _d : "";
+  if (Array.from(tail + head).filter(isConsonant).length >= NAMES.maxJoinConsonants) return null;
+  return (a + b).replace(/(.)\1{2,}/gi, "$1$1");
+}
+var fusedCase = (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+var letterCount = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
+var NameRenderer = class {
+  constructor(recipe, slots, regionCode) {
+    this.recipe = recipe;
+    this.slots = slots;
+    this.formatter = new PlaceShapeFormatter();
+    this.notices = /* @__PURE__ */ new Set();
+    this.region = regionCode;
+  }
+  getNotices() {
+    return [...this.notices];
+  }
+  /** §6.3: unmapped categories use their built-in list, else a placeholder. */
+  slotFor(categoryId) {
+    const slot = this.slots[categoryId];
+    if (slot) return slot;
+    return hasBuiltInList(categoryId) ? { kind: "built-in" } : { kind: "placeholder" };
+  }
+  chooseRegister(entry, rng) {
+    if (!entry.traditional) return false;
+    if (this.recipe.register === "modern") return false;
+    if (this.recipe.register === "traditional") return true;
+    return rng() < NAMES.mixedTraditional;
+  }
+  /** Stage 2: fill one slot. `whole` forces whole names for pack sources (§5.3). */
+  fill(categoryId, rng, whole = false) {
+    var _a, _b;
+    const slot = this.slotFor(categoryId);
+    const wordFill = (entries) => {
+      if (!entries || entries.length === 0) return { kind: "placeholder", categoryId };
+      let entry = pickUniform2(entries, rng);
+      if (entry.modern.includes("[direction]")) entry = { ...entry, modern: entry.modern.replace("[direction]", pickUniform2(DIRECTIONS, rng)) };
+      return { kind: "word", entry, traditional: this.chooseRegister(entry, rng) };
+    };
+    if (slot.kind === "placeholder" || slot.kind === "ignore") return { kind: "placeholder", categoryId };
+    if (slot.kind === "built-in") return wordFill(NAME_WORDS.categories[categoryId]);
+    const source = pickWeighted2(slot.sources.map((s) => [s, s.weight]), rng);
+    if (source.entries) return wordFill(source.entries);
+    if (!source.draw) return { kind: "placeholder", categoryId };
+    const mode = whole ? "whole" : (_a = slot.mode) != null ? _a : WHOLE_BY_DEFAULT.has(categoryId) ? "whole" : "stem";
+    const ratio = (_b = slot.gender) != null ? _b : DEFAULT_GENDER[categoryId];
+    const request = {};
+    if (slot.section) request.section = slot.section;
+    if (ratio) request.gender = rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female";
+    const text = source.draw(request, mode, rng);
+    return text ? { kind: "name", text, mode } : { kind: "placeholder", categoryId };
+  }
+  /** The generic's word (§3.1): variant replaces the plain word in its regions; recipe overrides last. */
+  genericWord(genericId, plural, rng) {
+    var _a, _b, _c;
+    if (LOCAL_GENERICS.has(genericId)) return this.localGeneric(genericId, rng);
+    const colonial = NAME_WORDS.colonialGenerics[genericId];
+    if (colonial) {
+      const word2 = pickUniform2(colonial, rng);
+      const chosen = plural ? pluralise(word2) : word2;
+      return (_a = this.recipe.generics[chosen.toLowerCase()]) != null ? _a : chosen;
+    }
+    const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === genericId);
+    let word;
+    if (rewrite) {
+      word = plural ? rewrite.plural || rewrite.word : rewrite.word;
+    } else {
+      const entry = PLACE_SHAPE_WORD_DATA.words[genericId];
+      const i = entry && entry.words.length > 1 ? Math.floor(rng() * entry.words.length) : 0;
+      word = entry ? plural && entry.plurals[i] ? entry.plurals[i] : entry.words[i] : genericId;
+      const variant = this.region ? PLACE_SHAPE_WORD_DATA.variants.find((v) => v.generic === genericId && v.regions.includes(this.region)) : void 0;
+      if (variant) word = plural && ((_b = entry == null ? void 0 : entry.plurals[i]) != null ? _b : "") !== "" ? variant.plural : variant.variant;
+    }
+    return (_c = this.recipe.generics[word.toLowerCase()]) != null ? _c : word;
+  }
+  /** §9.3: the local word from the recipe's linked word list (Modern column only), or a placeholder. */
+  localGeneric(genericId, rng) {
+    const slot = this.slots[genericId];
+    const sources = (slot == null ? void 0 : slot.kind) === "sources" ? slot.sources.filter((s) => s.entries && s.entries.length > 0) : [];
+    if (sources.length === 0) return placeholderText(genericId);
+    const source = pickWeighted2(sources.map((s) => [s, s.weight]), rng);
+    return pickUniform2(source.entries, rng).modern;
+  }
+  fusionClass(word, genericId) {
+    if (genericId && NAME_WORDS.genericFusion[genericId] !== void 0 && NAME_WORDS.colonialGenerics[genericId]) {
+      return NAME_WORDS.genericFusion[genericId];
+    }
+    if (word.includes(" ")) return 0;
+    const known = NAME_WORDS.fusion[word.toLowerCase()];
+    if (known !== void 0) return known;
+    this.notices.add(`\u201C${word}\u201D has no fusion class; it is treated as usually spaced.`);
+    return NAMES.unlistedFusion;
+  }
+  /** The combining form used when a word fill fuses. */
+  combiningForm(fill, rng) {
+    const forms = fill.traditional && fill.entry.traditionalForms ? fill.entry.traditionalForms : fill.entry.forms;
+    return forms.length > 0 ? pickUniform2(forms, rng) : fillWord(fill);
+  }
+  /**
+   * §4.1–§4.3, §4.6: specific + generic, fused or spaced. Returns the joined text and whether it
+   * fused (stacked generics only fuse onto an already fused name).
+   */
+  join(fill, categoryId, genericId, rng) {
+    var _a;
+    let plural = false;
+    let forceFuse = false;
+    let neverFuse = false;
+    let modifier = NAMES.packStem;
+    if (fill.kind === "placeholder") neverFuse = true;
+    else if (fill.kind === "name") neverFuse = fill.mode === "whole";
+    else {
+      const f = fill.entry.fuses;
+      if (f === "no" || f === "traditional-only" && !fill.traditional) neverFuse = true;
+      const word = fill.entry.modern.toLowerCase();
+      const fusedNumber = f === "number-fused" || categoryId === "number" && ["two", "three"].includes(word);
+      const spacedNumber = f === "number-spaced" || categoryId === "number" && ["five", "seven", "nine"].includes(word);
+      if (fusedNumber) {
+        forceFuse = true;
+        neverFuse = false;
+      }
+      if (spacedNumber) {
+        neverFuse = true;
+        plural = true;
+      }
+      if (f === "mile") {
+        const generic2 = this.genericWord(genericId, false, rng);
+        return { text: capitaliseSpaced(`${fillWord(fill)} Mile ${generic2}`), fused: false };
+      }
+      modifier = fill.traditional ? NAMES.traditionalWord : NAMES.modernWord;
+    }
+    const generic = this.genericWord(genericId, plural, rng);
+    const spaced = { text: capitaliseSpaced(`${fillWord(fill)} ${generic}`), fused: false };
+    if (LOCAL_GENERICS.has(genericId) && fill.kind !== "placeholder" && !generic.startsWith("[")) {
+      const specific2 = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
+      return { text: fusedCase((_a = smoothJoin(specific2, generic)) != null ? _a : `${specific2}${generic.toLowerCase()}`), fused: true };
+    }
+    if (fill.kind === "word" && fill.entry.fuses === "town-only" && generic.toLowerCase() !== "town") return spaced;
+    if (neverFuse && !forceFuse) return spaced;
+    if (!forceFuse) {
+      const chance = Math.min(NAMES.fuseCap, this.fusionClass(generic, genericId) * modifier * NAMES.joining[this.recipe.render.joining]);
+      if (!(rng() < chance)) return spaced;
+    }
+    if (generic.includes(" ")) return spaced;
+    let specific = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
+    if (fill.kind === "name" && PERSON_CATEGORIES.has(categoryId) && rng() < NAMES.linkingS && !/s$/i.test(specific)) {
+      specific += "s";
+    }
+    const joined = smoothJoin(specific, generic);
+    if (joined === null || letterCount(joined) > NAMES.maxFusedLetters) return spaced;
+    return { text: fusedCase(joined), fused: true };
+  }
+  /** §4.4: a name or placeholder with a generic-first order stays generic first. */
+  genericFirst(fill, genericId, linked, rng) {
+    var _a;
+    const generic = this.genericWord(genericId, false, rng);
+    const variantPrefix = NAME_WORDS.prefixVariantForms[genericId];
+    const prefix = (_a = NAME_WORDS.prefixForms[genericId]) != null ? _a : variantPrefix && generic.toLowerCase() === variantPrefix.variant ? variantPrefix.prefix : void 0;
+    const name = fillWord(fill);
+    if (prefix) return `${prefix} ${titleWord(name)}`;
+    return capitaliseSpaced(`${generic} of ${name}`);
+  }
+  /** §4.5: -ing- connectives, fused to the name; the generic joins if its class allows. */
+  connective(fill, genericId, rng) {
+    const generic = this.genericWord(genericId, false, rng);
+    const base = fill.kind === "placeholder" ? `${placeholderText(fill.categoryId)}ing` : `${fusedCase(fillWord(fill))}ing`;
+    if (fill.kind !== "placeholder" && this.fusionClass(generic) >= 0.5 && !generic.includes(" ")) {
+      const joined = smoothJoin(base, generic);
+      if (joined && letterCount(joined) <= NAMES.maxFusedLetters) return fusedCase(joined);
+    }
+    return `${base} ${titleWord(generic)}`;
+  }
+  /** §4.8: the shape's affix, with its slot filled; an ignored category redraws the affix type. */
+  affix(shape, rng) {
+    if (!shape.affix) return void 0;
+    const ignored = (form2) => !!form2.slotCategory && this.slotFor(form2.slotCategory).kind === "ignore";
+    let { typeId, form } = shape.affix;
+    if (ignored(form)) {
+      const options = PLACE_SHAPE_DATA.affixes.map((a) => {
+        var _a;
+        return [
+          { id: a.id, forms: a.forms.filter((f) => !ignored(f)) },
+          (_a = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a : 0
+        ];
+      }).filter(([a, w]) => a.forms.length > 0 && w > 0);
+      if (options.length === 0) return void 0;
+      const type = pickWeighted2(options, rng);
+      typeId = type.id;
+      form = pickUniform2(type.forms, rng);
+    }
+    const fill = form.slotCategory ? this.fill(form.slotCategory, rng, true) : void 0;
+    return { typeId, form, fill };
+  }
+  /** Colonial shapes (parts 2 and 2a): the structures of colonial-shapes §6, rendered by §4. */
+  renderColonial(shape, rng) {
+    const whole = (categoryId) => this.fill(categoryId, rng, true);
+    const named = (fill2) => titleWord(fillWord(fill2));
+    const the = (text2) => shape.definite ? `The ${text2}` : text2;
+    let fill;
+    let second;
+    let text;
+    switch (shape.structure) {
+      case "simplex":
+        text = the(capitaliseSpaced(this.genericWord(shape.genericId, !!shape.plural, rng)));
+        break;
+      case "bare-specific":
+        fill = whole(shape.categoryId);
+        text = the(capitaliseSpaced(fillWord(fill)));
+        break;
+      case "possessive":
+        fill = whole(shape.categoryId);
+        text = capitaliseSpaced(`${fillWord(fill)}'s ${this.genericWord(shape.genericId, false, rng)}`);
+        break;
+      case "new-transfer":
+        fill = whole(shape.categoryId);
+        text = `New ${named(fill)}`;
+        break;
+      case "twin":
+        fill = whole(shape.categoryId);
+        text = `${shape.twin === "old" ? "Old" : "New"} ${named(fill)}`;
+        break;
+      case "double-specific":
+        fill = whole(shape.categoryId);
+        second = whole(shape.secondCategoryId);
+        text = capitaliseSpaced(`${fillWord(fill)} of ${fillWord(second)}`);
+        break;
+      case "position-of-landmark":
+        fill = this.fill(shape.categoryId, rng);
+        second = whole(shape.secondCategoryId);
+        text = capitaliseSpaced(`${fillWord(fill)} of the ${fillWord(second)}`);
+        break;
+      case "locative":
+        text = capitaliseSpaced(`at the ${this.genericWord(shape.genericId, false, rng)}`);
+        break;
+      default: {
+        const genericFirst = shape.wordOrder === "generic-first-direct" || shape.wordOrder === "generic-first-linked";
+        const slot = this.slotFor(shape.categoryId);
+        const mayBeName = slot.kind === "sources" && slot.sources.some((s) => s.draw);
+        fill = this.fill(shape.categoryId, rng, genericFirst && mayBeName);
+        if (genericFirst && fill.kind !== "word" && !LOCAL_GENERICS.has(shape.genericId)) {
+          text = this.genericFirst(fill, shape.genericId, shape.wordOrder === "generic-first-linked", rng);
+          break;
+        }
+        const first = this.join(fill, shape.categoryId, shape.genericId, rng);
+        text = first.text;
+        if (shape.structure === "stacked-generic" && shape.stackedGenericId) {
+          const nextWord = this.genericWord(shape.stackedGenericId, false, rng);
+          const chance = Math.min(
+            NAMES.fuseCap,
+            this.fusionClass(nextWord, shape.stackedGenericId) * NAMES.joining[this.recipe.render.joining]
+          );
+          const fused = first.fused && rng() < chance ? smoothJoin(text, nextWord) : null;
+          text = fused && letterCount(fused) <= NAMES.maxFusedLetters ? fusedCase(fused) : capitaliseSpaced(`${text} ${nextWord}`);
+        }
+      }
+    }
+    const affix = this.affix(shape, rng);
+    let affixFill;
+    if (affix) {
+      const { form } = affix;
+      const filledText = affix.fill ? titleWord(fillWord(affix.fill)) : "";
+      affixFill = affix.fill ? fillEtymology(affix.fill) : void 0;
+      const words = [form.text, filledText].filter((w) => w.length > 0).join(" ");
+      if (form.position === "before") text = `${titleWord(words)} ${text}`;
+      else if (form.text && form.slotCategory && this.recipe.render.linkingHyphens) text = `${text}-${form.text.replace(/ /g, "-")}-${filledText}`;
+      else text = `${text} ${words}`;
+    }
+    const shown = { ...shape, affix: affix ? { typeId: affix.typeId, form: affix.form } : void 0 };
+    if (!affix) delete shown.affix;
+    return {
+      text,
+      hasPlaceholder: /\[[^\]]+\]/.test(text),
+      etymology: formatColonialShape(shown, {
+        specific: fill ? fillEtymology(fill) : void 0,
+        second: second ? fillEtymology(second) : void 0,
+        affix: affixFill
+      }),
+      shape
+    };
+  }
+  /** Stage 3: one shape → one name. */
+  render(shape, rng) {
+    var _a;
+    const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === shape.genericId);
+    const effective = rewrite ? {
+      ...shape,
+      categoryId: rewrite.category,
+      structure: (_a = rewrite.structure) != null ? _a : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
+    } : shape;
+    const { categoryId, genericId } = effective;
+    let text;
+    let fill;
+    switch (effective.structure) {
+      case "simplex":
+        text = titleWord(this.genericWord(genericId, false, rng));
+        text = capitaliseSpaced(text);
+        break;
+      case "plural-simplex":
+        text = capitaliseSpaced(this.genericWord(genericId, true, rng));
+        break;
+      case "folk-connective":
+      case "associative-connective":
+        fill = this.fill(categoryId, rng);
+        text = this.connective(fill, genericId, rng);
+        break;
+      default: {
+        if (genericId === "folk-group-territory") {
+          fill = this.fill(categoryId, rng);
+          text = fill.kind === "placeholder" ? `${placeholderText(categoryId)}ings` : `${fusedCase(fillWord(fill))}ings`;
+          break;
+        }
+        const genericFirst = effective.wordOrder !== "germanic" && effective.structure === "two-part-compound";
+        const slot = this.slotFor(categoryId);
+        const mayBeName = slot.kind === "sources" && slot.sources.some((s) => s.draw);
+        fill = this.fill(categoryId, rng, genericFirst && mayBeName);
+        if (genericFirst && fill.kind !== "word") {
+          text = this.genericFirst(fill, genericId, effective.wordOrder === "celtic-linked", rng);
+          break;
+        }
+        const first = this.join(fill, categoryId, genericId, rng);
+        text = first.text;
+        if (effective.structure === "stacked-generic" && effective.stackedGenericId) {
+          const second = this.genericWord(effective.stackedGenericId, false, rng);
+          const chance = Math.min(NAMES.fuseCap, this.fusionClass(second) * NAMES.joining[this.recipe.render.joining]);
+          const fused = first.fused && rng() < chance ? smoothJoin(text, second) : null;
+          text = fused && letterCount(fused) <= NAMES.maxFusedLetters ? fusedCase(fused) : capitaliseSpaced(`${text} ${second}`);
+        }
+      }
+    }
+    const affix = this.affix(effective, rng);
+    let affixFill;
+    if (affix) {
+      const { form } = affix;
+      const filled = affix.fill ? titleWord(fillWord(affix.fill)) : "";
+      affixFill = affix.fill ? fillEtymology(affix.fill) : void 0;
+      const words = [form.text, filled].filter((w) => w.length > 0).join(" ");
+      if (form.position === "before") text = `${titleWord(words)} ${text}`;
+      else if (form.text && form.slotCategory && this.recipe.render.linkingHyphens) {
+        text = `${text}-${form.text.replace(/ /g, "-")}-${filled}`;
+      } else text = `${text} ${words}`;
+    }
+    const shown = { ...effective, affix: affix ? { typeId: affix.typeId, form: affix.form } : void 0 };
+    if (!affix) delete shown.affix;
+    return {
+      text,
+      hasPlaceholder: /\[[^\]]+\]/.test(text),
+      etymology: this.formatter.formatEtymology(shown, fill ? fillEtymology(fill) : void 0, affixFill),
+      shape: effective
+    };
+  }
+};
+function resolveRegionSetting(value) {
+  if (!value || value === "all-britain") return void 0;
+  const kebab2 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const region = PLACE_SHAPE_REGIONS.find((r) => r.code === value.toUpperCase() || kebab2(r.label) === kebab2(value));
+  return region == null ? void 0 : region.code;
+}
+function generatePlaceNames(options) {
+  const { recipe } = options;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const organic = recipe.shape.part === "organic";
+  const region = organic ? resolveRegionSetting(recipe.shape.region) : void 0;
+  const notices = [];
+  if (organic && recipe.shape.region !== "all-britain" && !region) {
+    notices.push(`Unknown region \u201C${recipe.shape.region}\u201D; using all Britain.`);
+  }
+  const excludedCategories = Object.entries(options.slots).filter(([, slot]) => slot.kind === "ignore").map(([id]) => id);
+  const rng = mulberry32((seed ^ FILL_SALT) >>> 0);
+  const renderer = new NameRenderer(recipe, options.slots, region);
+  let renderOne;
+  let shapeCount;
+  if (organic) {
+    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories });
+    renderOne = (i) => renderer.render(shapes[i], rng);
+    shapeCount = shapes.length;
+  } else {
+    const { shapes } = generateColonialShapesDetailed({
+      count: options.count,
+      seed,
+      part: recipe.shape.part === "new-land" ? "2" : "2a",
+      tradition: recipe.shape.tradition === "general" ? void 0 : recipe.shape.tradition,
+      context: recipe.shape.context === "none" ? void 0 : recipe.shape.context,
+      feature: recipe.shape.feature,
+      excludedCategories
+    });
+    renderOne = (i) => renderer.renderColonial(shapes[i], rng);
+    shapeCount = shapes.length;
+  }
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  for (let i = 0; i < shapeCount; i++) {
+    let name = renderOne(i);
+    for (let attempt = 1; seen.has(name.text.toLowerCase()) && attempt < NAMES.duplicateAttempts; attempt++) {
+      name = renderOne(i);
+    }
+    seen.add(name.text.toLowerCase());
+    names.push(name);
+  }
+  return { names, seed, notices: [...notices, ...renderer.getNotices()] };
+}
+
+// src/recipeHost.ts
+var import_obsidian6 = require("obsidian");
+
+// src/names/recipe.ts
+var RECIPE_DEFAULTS = {
+  setting: "",
+  template: false,
+  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", feature: "any" },
+  slots: {},
+  generics: {},
+  register: "mixed",
+  render: { joining: "balanced", linkingHyphens: true, etymology: false }
+};
+var PARTS = ["organic", "new-land", "established"];
+var REGISTERS = ["modern", "mixed", "traditional"];
+var JOININGS = ["fused", "balanced", "spaced"];
+var isObject = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
+var str = (v) => typeof v === "string" ? v.trim() : typeof v === "number" ? String(v) : void 0;
+var bool = (v) => typeof v === "boolean" ? v : v === "true" ? true : v === "false" ? false : void 0;
+function linkTarget(v) {
+  const s = str(v);
+  if (!s) return void 0;
+  const target = s.replace(/^\[\[|\]\]$/g, "").split("|")[0].trim();
+  return target || void 0;
+}
+function readSlot(v, problems, id) {
+  if (v === "built-in" || v === "ignore" || v === "placeholder") return { kind: v };
+  if (!isObject(v)) {
+    problems.push(`Slot \u201C${id}\u201D isn't built-in, ignore, placeholder or a list of sources.`);
+    return void 0;
+  }
+  const raw = Array.isArray(v.sources) ? v.sources : [];
+  const sources = [];
+  for (const item of raw) {
+    if (!isObject(item)) continue;
+    const pack = linkTarget(item.pack);
+    const list = linkTarget(item.list);
+    if (!pack && !list) continue;
+    const weight = Number(item.weight);
+    sources.push({ ...pack ? { pack } : {}, ...list ? { list } : {}, weight: Number.isFinite(weight) && weight > 0 ? weight : 1 });
+  }
+  if (sources.length === 0) {
+    problems.push(`Slot \u201C${id}\u201D has no usable sources.`);
+    return void 0;
+  }
+  const slot = { kind: "sources", sources };
+  if (v.mode === "stem" || v.mode === "whole") slot.mode = v.mode;
+  if (isObject(v.gender)) {
+    const male = Number(v.gender.male);
+    const female = Number(v.gender.female);
+    if (Number.isFinite(male) && Number.isFinite(female) && male + female > 0) slot.gender = { male, female };
+  }
+  const section = str(v.section);
+  if (section) slot.section = section;
+  return slot;
+}
+function readRecipe(fm) {
+  const problems = [];
+  const recipe = {};
+  const setting = str(fm.setting);
+  if (setting !== void 0) recipe.setting = setting;
+  const template = bool(fm.template);
+  if (template !== void 0) recipe.template = template;
+  const templateOf = linkTarget(fm["template-of"]);
+  if (templateOf) recipe.templateOf = templateOf;
+  if (isObject(fm.shape)) {
+    const shape = {};
+    const part = str(fm.shape.part);
+    if (part && PARTS.includes(part)) shape.part = part;
+    else if (part) problems.push(`Unknown shape part \u201C${part}\u201D.`);
+    for (const key of ["region", "tradition", "context", "feature"]) {
+      const value = str(fm.shape[key]);
+      if (value) shape[key] = value;
+    }
+    recipe.shape = shape;
+  }
+  if (isObject(fm.slots)) {
+    recipe.slots = {};
+    for (const [id, value] of Object.entries(fm.slots)) {
+      const slot = readSlot(value, problems, id);
+      if (slot) recipe.slots[id] = slot;
+    }
+  }
+  if (isObject(fm.generics)) {
+    recipe.generics = {};
+    for (const [word, replacement] of Object.entries(fm.generics)) {
+      const r = str(replacement);
+      if (r) recipe.generics[word.trim().toLowerCase()] = r;
+    }
+  }
+  const register = str(fm.register);
+  if (register && REGISTERS.includes(register)) recipe.register = register;
+  else if (register) problems.push(`Unknown register \u201C${register}\u201D.`);
+  if (isObject(fm.render)) {
+    const render = {};
+    const joining = str(fm.render.joining);
+    if (joining && JOININGS.includes(joining)) render.joining = joining;
+    else if (joining) problems.push(`Unknown joining \u201C${joining}\u201D.`);
+    const hyphens = bool(fm.render["linking-hyphens"]);
+    if (hyphens !== void 0) render.linkingHyphens = hyphens;
+    const etymology = bool(fm.render.etymology);
+    if (etymology !== void 0) render.etymology = etymology;
+    recipe.render = render;
+  }
+  return { recipe, problems };
+}
+function mergeRecipe(derived, template) {
+  var _a, _b;
+  return {
+    setting: (_a = derived.setting) != null ? _a : template.setting,
+    template: derived.template,
+    templateOf: derived.templateOf,
+    shape: { ...template.shape, ...derived.shape },
+    slots: { ...template.slots, ...derived.slots },
+    generics: { ...template.generics, ...derived.generics },
+    register: (_b = derived.register) != null ? _b : template.register,
+    render: { ...template.render, ...derived.render }
+  };
+}
+function withDefaults(r) {
+  var _a, _b, _c;
+  return {
+    setting: (_a = r.setting) != null ? _a : RECIPE_DEFAULTS.setting,
+    template: (_b = r.template) != null ? _b : false,
+    ...r.templateOf ? { templateOf: r.templateOf } : {},
+    shape: { ...RECIPE_DEFAULTS.shape, ...r.shape },
+    slots: { ...r.slots },
+    generics: { ...r.generics },
+    register: (_c = r.register) != null ? _c : RECIPE_DEFAULTS.register,
+    render: { ...RECIPE_DEFAULTS.render, ...r.render }
+  };
+}
+function applyRecipeTemplate(derived, template, name) {
+  if (!derived.templateOf) return { recipe: derived };
+  if (derived.template) return { recipe: derived, error: `\u201C${name}\u201D is a template, so it can't use template-of.` };
+  if (!template) return { recipe: derived, error: `Template \u201C${derived.templateOf}\u201D is missing.` };
+  if (template.templateOf) {
+    return { recipe: derived, error: `Template \u201C${derived.templateOf}\u201D has its own template; only one level is allowed.` };
+  }
+  return { recipe: mergeRecipe(derived, template) };
+}
+function recipeToFrontmatter(r) {
+  var _a;
+  const out = { type: "recipe", setting: (_a = r.setting) != null ? _a : "" };
+  if (r.template) out.template = true;
+  if (r.templateOf) out["template-of"] = `[[${r.templateOf}]]`;
+  if (r.shape && Object.keys(r.shape).length > 0) out.shape = { ...r.shape };
+  if (r.slots && Object.keys(r.slots).length > 0) {
+    out.slots = Object.fromEntries(
+      Object.entries(r.slots).map(([id, slot]) => {
+        if (slot.kind !== "sources") return [id, slot.kind];
+        const value = {
+          sources: slot.sources.map((s) => ({
+            ...s.pack ? { pack: `[[${s.pack}]]` } : {},
+            ...s.list ? { list: `[[${s.list}]]` } : {},
+            weight: s.weight
+          }))
+        };
+        if (slot.mode) value.mode = slot.mode;
+        if (slot.section) value.section = slot.section;
+        if (slot.gender) value.gender = { ...slot.gender };
+        return [id, value];
+      })
+    );
+  }
+  if (r.generics && Object.keys(r.generics).length > 0) out.generics = { ...r.generics };
+  if (r.register) out.register = r.register;
+  if (r.render && Object.keys(r.render).length > 0) {
+    const render = {};
+    if (r.render.joining) render.joining = r.render.joining;
+    if (r.render.linkingHyphens !== void 0) render["linking-hyphens"] = r.render.linkingHyphens;
+    if (r.render.etymology !== void 0) render.etymology = r.render.etymology;
+    out.render = render;
+  }
+  return out;
+}
+
+// src/recipeHost.ts
+var FRONTMATTER = /^---\s*\n([\s\S]*?)\n---\s*\n?/;
+function isRecipeContent(content) {
+  const fm = content.match(FRONTMATTER);
+  return !!fm && /^type:\s*["']?recipe["']?\s*$/m.test(fm[1]);
+}
+function parseRecipeContent(content) {
+  const fm = content.match(FRONTMATTER);
+  if (!fm) return { recipe: {}, body: content, problems: ["The recipe has no properties."] };
+  let raw;
+  try {
+    raw = (0, import_obsidian6.parseYaml)(fm[1]);
+  } catch (e) {
+    return { recipe: {}, body: content.slice(fm[0].length), problems: ["The recipe's properties aren't valid YAML."] };
+  }
+  const { recipe, problems } = readRecipe(raw != null ? raw : {});
+  return { recipe, body: content.slice(fm[0].length), problems };
+}
+var categoryLabels2 = new Map([
+  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]),
+  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label]),
+  ["local-settlement-word", "Local settlement word"],
+  ["local-market-word", "Local market word"]
+]);
+var RecipeHost = class {
+  constructor(app, settings, index) {
+    this.app = app;
+    this.settings = settings;
+    this.index = index;
+    this.notices = /* @__PURE__ */ new Set();
+  }
+  getNotices() {
+    return [...this.notices];
+  }
+  async read(file) {
+    try {
+      return await this.app.vault.cachedRead(file);
+    } catch (e) {
+      return null;
+    }
+  }
+  resolveLink(target, from) {
+    const file = this.app.metadataCache.getFirstLinkpathDest(target, from);
+    return file instanceof import_obsidian6.TFile ? file : null;
+  }
+  /** Reads a recipe and applies its template (§7). */
+  async loadRecipe(file) {
+    const content = await this.read(file);
+    if (content === null) return { recipe: withDefaults({}), own: {}, error: `Couldn't read \u201C${file.basename}\u201D.`, problems: [] };
+    const { recipe: own, problems } = parseRecipeContent(content);
+    let template;
+    if (own.templateOf) {
+      const templateFile = this.resolveLink(own.templateOf, file.path);
+      const templateContent = templateFile ? await this.read(templateFile) : null;
+      if (templateContent !== null && isRecipeContent(templateContent)) template = parseRecipeContent(templateContent).recipe;
+    }
+    const applied = applyRecipeTemplate(own, template, file.basename);
+    return { recipe: withDefaults(applied.recipe), own, template, error: applied.error, problems };
+  }
+  /** Resolves every slot setting to engine-ready sources (§6.2). */
+  async resolveSlots(recipe, recipePath) {
+    var _a;
+    const out = {};
+    for (const [categoryId, slot] of Object.entries(recipe.slots)) {
+      if (slot.kind !== "sources") {
+        out[categoryId] = { kind: slot.kind };
+        continue;
+      }
+      const sources = [];
+      for (const ref of slot.sources) {
+        if (ref.list) {
+          const entries = await this.wordListSource(ref.list, recipePath, categoryId);
+          if (entries) sources.push({ weight: ref.weight, entries });
+        } else if (ref.pack) {
+          const draw = await this.packSource(ref.pack, recipePath);
+          if (draw) sources.push({ weight: ref.weight, draw });
+        }
+      }
+      out[categoryId] = sources.length > 0 ? { kind: "sources", sources, mode: slot.mode, gender: slot.gender, section: slot.section } : ((_a = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a.length) ? { kind: "built-in" } : { kind: "placeholder" };
+    }
+    return out;
+  }
+  /** §9.2: the matching section, the whole list if it has none, else the built-in list with a notice. */
+  async wordListSource(target, from, categoryId) {
+    var _a, _b;
+    const file = this.resolveLink(target, from);
+    const content = file ? await this.read(file) : null;
+    if (!file || content === null || !isWordListContent(content)) {
+      this.notices.add(`Word list \u201C${target}\u201D wasn't found.`);
+      return null;
+    }
+    let list = parseWordListFileContent(content, file.basename);
+    if (list.templateOf) {
+      const templateFile = this.resolveLink(list.templateOf, file.path);
+      const templateContent = templateFile ? await this.read(templateFile) : null;
+      if (templateContent !== null && isWordListContent(templateContent)) {
+        list = mergeWordListWithTemplate(list, parseWordListFileContent(templateContent));
+      } else {
+        this.notices.add(`Template \u201C${list.templateOf}\u201D for word list \u201C${target}\u201D is missing.`);
+      }
+    }
+    const label = (_a = categoryLabels2.get(categoryId)) != null ? _a : categoryId;
+    const entries = wordListEntries(list.list, label);
+    if (entries === null) {
+      this.notices.add(`\u201C${target}\u201D has no \u201C${label}\u201D section; using the built-in list.`);
+      return (_b = NAME_WORDS.categories[categoryId]) != null ? _b : null;
+    }
+    return entries.map((e) => ({
+      modern: e.modern,
+      ...e.traditional ? { traditional: e.traditional } : {},
+      plural: e.plural,
+      forms: e.combiningForms,
+      fuses: e.fuses
+    }));
+  }
+  /** A drawer for one name pack: stem or whole names (§5), honouring section and gender (§10). */
+  async packSource(target, from) {
+    var _a, _b, _c;
+    const file = this.resolveLink(target, from);
+    const content = file ? await this.read(file) : null;
+    if (!file || content === null) {
+      this.notices.add(`Pack \u201C${target}\u201D wasn't found.`);
+      return null;
+    }
+    let parsed = parseNamesFileContent(content);
+    if (parsed.templateOf) {
+      const templateFile = this.resolveLink(parsed.templateOf, file.path);
+      const templateContent = templateFile ? await this.read(templateFile) : null;
+      const applied = applyTemplate(parsed, templateContent !== null ? parseNamesFileContent(templateContent) : void 0);
+      if (applied.error) {
+        this.notices.add(applied.error);
+        return null;
+      }
+      parsed = applied.parsed;
+    }
+    const faithfulness = (_a = this.settings.faithfulness) != null ? _a : 2;
+    const strictness = (_b = this.settings.strictness) != null ? _b : 3;
+    const seedFrom = (rng) => Math.floor(rng() * 4294967296) >>> 0;
+    const pick = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
+    const cache = /* @__PURE__ */ new Map();
+    const cached = (key, build) => {
+      if (!cache.has(key)) cache.set(key, build());
+      return cache.get(key);
+    };
+    const namesFor2 = (request) => {
+      if (parsed.sectioned && (request.section || request.gender)) {
+        const selection = selectSectionNames(parsed.sectioned, request, parsed.packType === "breakdownPack" ? 20 : 0);
+        for (const n of selection.notices) this.notices.add(`${parsed.packName}: ${n}`);
+        return selection.names;
+      }
+      return parsed.names;
+    };
+    const markovName = (names, key, rng) => {
+      var _a2;
+      if (names.length === 0) return null;
+      const model = cached(key, () => MarkovModel.build(names));
+      return (_a2 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: seedFrom(rng) }).names[0]) != null ? _a2 : pick(names, rng);
+    };
+    const requestKey = (r) => {
+      var _a2, _b2;
+      return `${(_a2 = r.section) != null ? _a2 : ""}|${(_b2 = r.gender) != null ? _b2 : ""}`;
+    };
+    switch (parsed.packType) {
+      case "listPack":
+        return (request, _mode, rng) => pick(namesFor2(request), rng);
+      case "breakdownPack":
+        return (request, _mode, rng) => markovName(namesFor2(request), requestKey(request), rng);
+      case "placePack": {
+        const names = extractNamesFromMarkdown(parsed.names.join("\n"));
+        return (_request, mode, rng) => {
+          var _a2;
+          const model = cached("place", () => PlaceNameModel.build(names));
+          if (mode === "stem") return model.sampleStem(rng, faithfulness, strictness);
+          return (_a2 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: seedFrom(rng) }).names[0]) != null ? _a2 : null;
+        };
+      }
+      case "compoundPack": {
+        const parts = (_c = parsed.parts) != null ? _c : [];
+        return (_request, mode, rng) => {
+          var _a2, _b2, _c2, _d;
+          if (mode === "stem") {
+            const first = (_a2 = parts[0]) != null ? _a2 : [];
+            return parsed.compoundGenerator === "list" ? pick(first, rng) : markovName(first, "part1", rng);
+          }
+          return (_d = generateCompoundNamesDetailed(parts, {
+            count: 1,
+            generator: (_b2 = parsed.compoundGenerator) != null ? _b2 : "breakdown",
+            joining: (_c2 = parsed.compoundJoining) != null ? _c2 : "joined",
+            faithfulness,
+            strictness,
+            seed: seedFrom(rng)
+          }).names[0]) != null ? _d : null;
+        };
+      }
+      case "mixPack":
+        return (request, _mode, rng) => {
+          const resolved = resolveMixSources(file.path, parsed, this.index, void 0, request);
+          if (resolved.error) {
+            this.notices.add(resolved.error);
+            return null;
+          }
+          return markovName(buildWeightedCorpus(resolved.sources), `mix|${requestKey(request)}`, rng);
+        };
+    }
+  }
+};
+
+// src/recipeEditor.ts
+var import_obsidian7 = require("obsidian");
+function slotCategories(part) {
+  const part1 = new Map(PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]));
+  if (part === "organic") return PLACE_SHAPE_DATA.categories.filter((c) => c.id !== "empty-slot");
+  const code = part === "new-land" ? "2" : "2a";
+  const out = [
+    ...COLONIAL_DATA.inheritedCategories.filter((c) => c.parts.includes(code) && c.id !== "empty-slot").map((c) => {
+      var _a;
+      return { id: c.id, label: (_a = part1.get(c.id)) != null ? _a : c.id };
+    }),
+    ...COLONIAL_DATA.categories.filter((c) => c.parts.includes(code)).map((c) => ({ id: c.id, label: c.label }))
+  ];
+  if (code === "2a") out.push({ id: "local-settlement-word", label: "Local settlement word" }, { id: "local-market-word", label: "Local market word" });
+  return out;
+}
+var same3 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+var RecipeEditorModal = class extends import_obsidian7.Modal {
+  constructor(app, options) {
+    super(app);
+    this.options = options;
+    this.name = "";
+    this.body = "";
+    this.own = {};
+    /** The working values shown in the form. */
+    this.working = withDefaults({});
+    /** Slots the user has set explicitly (others use §6.3 defaults or the template). */
+    this.explicitSlots = /* @__PURE__ */ new Set();
+  }
+  async onOpen() {
+    this.titleEl.setText(this.options.file ? "Edit recipe" : "New recipe");
+    this.modalEl.addClass("nameforge-recipe-editor");
+    if (this.options.file) {
+      this.name = this.options.file.basename;
+      const content = await this.app.vault.cachedRead(this.options.file);
+      const parsed = parseRecipeContent(content);
+      this.own = parsed.recipe;
+      this.body = parsed.body.trim();
+      if (this.own.templateOf) await this.loadTemplate(this.own.templateOf);
+    }
+    this.rebuildWorking();
+    this.render();
+  }
+  onClose() {
+    this.contentEl.empty();
+  }
+  async loadTemplate(name) {
+    var _a, _b;
+    this.template = void 0;
+    if (!name) return;
+    const file = this.app.metadataCache.getFirstLinkpathDest(name, (_b = (_a = this.options.file) == null ? void 0 : _a.path) != null ? _b : this.options.folderPath);
+    if (!(file instanceof import_obsidian7.TFile)) return;
+    const content = await this.app.vault.cachedRead(file);
+    if (isRecipeContent(content)) this.template = parseRecipeContent(content).recipe;
+  }
+  rebuildWorking() {
+    var _a;
+    this.working = withDefaults(this.template ? mergeRecipe(this.own, this.template) : this.own);
+    this.explicitSlots = new Set(Object.keys((_a = this.own.slots) != null ? _a : {}));
+  }
+  /** Everything in the form, rebuilt after each change. */
+  render() {
+    var _a, _b;
+    const el = this.contentEl;
+    el.empty();
+    const w = this.working;
+    new import_obsidian7.Setting(el).setName("Name").addText(
+      (t) => t.setValue(this.name).onChange((v) => {
+        this.name = v;
+      })
+    );
+    new import_obsidian7.Setting(el).setName("Template").setDesc("Templates are hidden from the generate view and offered when creating recipes.").addToggle(
+      (t) => t.setValue(w.template).onChange((v) => {
+        w.template = v;
+        if (v) w.templateOf = void 0;
+        this.render();
+      })
+    );
+    if (!w.template) {
+      new import_obsidian7.Setting(el).setName("Start from template").setDesc((_b = (_a = this.options.templates.find((t) => t.name === w.templateOf)) == null ? void 0 : _a.description) != null ? _b : "Settings you leave alone come from the template.").addDropdown((d) => {
+        var _a2;
+        d.addOption("", "None");
+        for (const t of this.options.templates) d.addOption(t.name, t.name);
+        d.setValue((_a2 = w.templateOf) != null ? _a2 : "").onChange(async (v) => {
+          this.own = { ...this.collect(), templateOf: v || void 0 };
+          await this.loadTemplate(v || void 0);
+          this.rebuildWorking();
+          this.render();
+        });
+      });
+    }
+    el.createEl("h3", { text: "Shape" });
+    new import_obsidian7.Setting(el).setName("Part").addDropdown((d) => {
+      d.addOption("organic", "Organic (part 1)").addOption("new-land", "New land (part 2)").addOption("established", "Established culture (part 2a)");
+      d.setValue(w.shape.part).onChange((v) => {
+        w.shape.part = v;
+        this.render();
+      });
+    });
+    if (w.shape.part === "organic") {
+      new import_obsidian7.Setting(el).setName("Region").addDropdown((d) => {
+        d.addOption("all-britain", "All Britain");
+        for (const r of PLACE_SHAPE_REGIONS) d.addOption(kebab(r.label), r.label);
+        d.setValue(kebab(w.shape.region) === "all-britain" ? "all-britain" : this.regionValue(w.shape.region)).onChange((v) => {
+          w.shape.region = v;
+        });
+      });
+    } else {
+      const part = w.shape.part === "new-land" ? "2" : "2a";
+      new import_obsidian7.Setting(el).setName("Tradition").addDropdown((d) => {
+        for (const t of COLONIAL_TRADITIONS) if (t.parts.includes(part)) d.addOption(t.id, t.label);
+        d.setValue(w.shape.tradition).onChange((v) => {
+          w.shape.tradition = v;
+        });
+      });
+      new import_obsidian7.Setting(el).setName("Context").addDropdown((d) => {
+        d.addOption("none", "None");
+        for (const c of colonialContexts(part)) d.addOption(c.id, c.label);
+        d.setValue(w.shape.context).onChange((v) => {
+          w.shape.context = v;
+        });
+      });
+    }
+    new import_obsidian7.Setting(el).setName("Feature").addDropdown((d) => {
+      d.addOption("any", "Any").addOption("settlement", "Settlement").addOption("landscape", "Landscape");
+      for (const g of PLACE_SHAPE_DATA.groups) d.addOption(g.id, g.label);
+      d.setValue(w.shape.feature).onChange((v) => {
+        w.shape.feature = v;
+      });
+    });
+    el.createEl("h3", { text: "Words and rendering" });
+    new import_obsidian7.Setting(el).setName("Register").setDesc("Balance of modern and traditional words.").addDropdown(
+      (d) => d.addOption("modern", "Modern").addOption("mixed", "Mixed").addOption("traditional", "Traditional").setValue(w.register).onChange((v) => {
+        w.register = v;
+      })
+    );
+    new import_obsidian7.Setting(el).setName("Joining").setDesc("How readily parts fuse into one word.").addDropdown(
+      (d) => d.addOption("fused", "Fused").addOption("balanced", "Balanced").addOption("spaced", "Spaced").setValue(w.render.joining).onChange((v) => {
+        w.render.joining = v;
+      })
+    );
+    new import_obsidian7.Setting(el).setName("Hyphenate linking affixes").setDesc("Ashford-upon-Severn rather than Ashford upon Severn.").addToggle(
+      (t) => t.setValue(w.render.linkingHyphens).onChange((v) => {
+        w.render.linkingHyphens = v;
+      })
+    );
+    new import_obsidian7.Setting(el).setName("Show etymology").setDesc("Show the shape beside each name by default.").addToggle(
+      (t) => t.setValue(w.render.etymology).onChange((v) => {
+        w.render.etymology = v;
+      })
+    );
+    new import_obsidian7.Setting(el).setName("Generic words").setDesc("One per line, e.g. \u201Cchurch: kirk\u201D.").addTextArea((t) => {
+      t.setValue(Object.entries(w.generics).map(([k, v]) => `${k}: ${v}`).join("\n")).onChange((v) => {
+        w.generics = Object.fromEntries(
+          v.split("\n").map((line) => line.split(":").map((x) => x.trim())).filter(([k, r]) => k && r).map(([k, r]) => [k.toLowerCase(), r])
+        );
+      });
+      t.inputEl.rows = 3;
+    });
+    el.createEl("h3", { text: "Slots" });
+    el.createEl("p", {
+      cls: "setting-item-description",
+      text: "Where each category's words come from. Unset categories use their built-in list, or a placeholder if there isn't one."
+    });
+    for (const category of slotCategories(w.shape.part)) this.renderSlot(el, category.id, category.label);
+    el.createEl("h3", { text: "Description" });
+    new import_obsidian7.Setting(el).setDesc("Shown when choosing this recipe as a template.").addTextArea((t) => {
+      t.setValue(this.body).onChange((v) => {
+        this.body = v;
+      });
+      t.inputEl.rows = 3;
+    });
+    const buttons = el.createDiv({ cls: "nameforge-recipe-editor__buttons" });
+    buttons.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
+    const save = buttons.createEl("button", { cls: "mod-cta", text: "Save" });
+    save.addEventListener("click", () => void this.save());
+  }
+  regionValue(value) {
+    const r = PLACE_SHAPE_REGIONS.find((x) => x.code === value.toUpperCase() || kebab(x.label) === kebab(value));
+    return r ? kebab(r.label) : "all-britain";
+  }
+  renderSlot(el, id, label) {
+    var _a, _b;
+    const w = this.working;
+    const explicit = this.explicitSlots.has(id) || ((_b = (_a = this.template) == null ? void 0 : _a.slots) == null ? void 0 : _b[id]) !== void 0;
+    const slot = explicit ? w.slots[id] : void 0;
+    const fallback = hasBuiltInList(id) ? "built-in list" : "placeholder";
+    const setting = new import_obsidian7.Setting(el).setName(label).addDropdown((d) => {
+      d.addOption("default", `Default (${fallback})`);
+      if (hasBuiltInList(id)) d.addOption("built-in", "Built-in list");
+      d.addOption("sources", "Packs or word lists").addOption("placeholder", "Placeholder").addOption("ignore", "Ignore");
+      d.setValue(slot ? slot.kind : "default").onChange((v) => {
+        if (v === "default") {
+          delete w.slots[id];
+          this.explicitSlots.delete(id);
+        } else if (v === "sources") {
+          w.slots[id] = { kind: "sources", sources: [{ pack: this.options.packs[0], weight: 1 }] };
+          this.explicitSlots.add(id);
+        } else {
+          w.slots[id] = { kind: v };
+          this.explicitSlots.add(id);
+        }
+        this.render();
+      });
+    });
+    setting.settingEl.addClass("nameforge-recipe-editor__slot");
+    if (!slot || slot.kind !== "sources") return;
+    const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
+    slot.sources.forEach((source, i) => {
+      new import_obsidian7.Setting(box).addDropdown(
+        (d) => d.addOption("pack", "Name pack").addOption("list", "Word list").setValue(source.list ? "list" : "pack").onChange((v) => {
+          slot.sources[i] = v === "list" ? { list: this.options.lists[0], weight: source.weight } : { pack: this.options.packs[0], weight: source.weight };
+          this.render();
+        })
+      ).addDropdown((d) => {
+        var _a2, _b2;
+        const options = source.list !== void 0 ? this.options.lists : this.options.packs;
+        for (const o of options) d.addOption(o, o);
+        const current = (_b2 = (_a2 = source.list) != null ? _a2 : source.pack) != null ? _b2 : "";
+        if (current && !options.includes(current)) d.addOption(current, `${current} (missing)`);
+        d.setValue(current).onChange((v) => {
+          if (source.list !== void 0) source.list = v;
+          else source.pack = v;
+        });
+      }).addText((t) => {
+        t.setPlaceholder("weight").setValue(String(source.weight)).onChange((v) => {
+          const n = Number(v);
+          source.weight = Number.isFinite(n) && n > 0 ? n : 1;
+        });
+        t.inputEl.type = "number";
+        t.inputEl.addClass("nameforge-recipe-editor__weight");
+      }).addExtraButton(
+        (b) => b.setIcon("x").setTooltip("Remove source").onClick(() => {
+          slot.sources.splice(i, 1);
+          if (slot.sources.length === 0) {
+            delete w.slots[id];
+            this.explicitSlots.delete(id);
+          }
+          this.render();
+        })
+      );
+    });
+    new import_obsidian7.Setting(box).addButton(
+      (b) => b.setButtonText("Add source").onClick(() => {
+        slot.sources.push({ pack: this.options.packs[0], weight: 1 });
+        this.render();
+      })
+    ).addDropdown(
+      (d) => {
+        var _a2;
+        return d.addOption("", "Mode: default").addOption("stem", "Mode: stem").addOption("whole", "Mode: whole").setValue((_a2 = slot.mode) != null ? _a2 : "").onChange((v) => {
+          slot.mode = v === "stem" || v === "whole" ? v : void 0;
+        });
+      }
+    ).addText(
+      (t) => {
+        var _a2;
+        return t.setPlaceholder("Section").setValue((_a2 = slot.section) != null ? _a2 : "").onChange((v) => {
+          slot.section = v.trim() || void 0;
+        });
+      }
+    ).addText((t) => {
+      t.setPlaceholder("Male %").setValue(slot.gender ? String(slot.gender.male) : "").onChange((v) => {
+        const male = Number(v);
+        slot.gender = v.trim() && Number.isFinite(male) ? { male, female: Math.max(0, 100 - male) } : void 0;
+      });
+      t.inputEl.type = "number";
+      t.inputEl.addClass("nameforge-recipe-editor__weight");
+    });
+  }
+  /**
+   * The settings to write: everything for a standalone recipe; only differences from the
+   * template for a derived one (§7).
+   */
+  collect() {
+    var _a;
+    const w = this.working;
+    const slots = {};
+    for (const id of this.explicitSlots) if (w.slots[id]) slots[id] = w.slots[id];
+    const full = {
+      setting: w.setting,
+      template: w.template || void 0,
+      templateOf: w.template ? void 0 : (_a = this.own.templateOf) != null ? _a : w.templateOf,
+      shape: { ...w.shape },
+      slots,
+      generics: { ...w.generics },
+      register: w.register,
+      render: { ...w.render }
+    };
+    if (!full.templateOf || !this.template) return full;
+    const base = withDefaults(this.template);
+    const diff = (mine, theirs) => Object.fromEntries(Object.entries(mine).filter(([k, v]) => !same3(v, theirs[k])));
+    return {
+      setting: w.setting !== base.setting ? w.setting : void 0,
+      templateOf: full.templateOf,
+      shape: diff(w.shape, base.shape),
+      slots: diff(slots, base.slots),
+      generics: diff(w.generics, base.generics),
+      register: w.register !== base.register ? w.register : void 0,
+      render: diff(w.render, base.render)
+    };
+  }
+  async save() {
+    const name = this.name.trim();
+    if (!name) {
+      new import_obsidian7.Notice("nameForge: give the recipe a name.");
+      return;
+    }
+    const frontmatter = recipeToFrontmatter(this.collect());
+    const content = `---
+${(0, import_obsidian7.stringifyYaml)(frontmatter)}---
+
+${this.body.trim()}
+`;
+    const path = (0, import_obsidian7.normalizePath)(`${this.options.folderPath}/${sanitizePackNameForFilename(name)}.md`);
+    try {
+      const existing = this.app.vault.getFileByPath(path);
+      if (this.options.file) {
+        if (this.options.file.path !== path) {
+          if (existing) {
+            new import_obsidian7.Notice("nameForge: a file with that name already exists.");
+            return;
+          }
+          await this.app.fileManager.renameFile(this.options.file, path);
+        }
+        await this.app.vault.modify(this.options.file, content);
+      } else {
+        if (existing) {
+          new import_obsidian7.Notice("nameForge: a file with that name already exists.");
+          return;
+        }
+        await this.app.vault.create(path, content);
+      }
+    } catch (e) {
+      new import_obsidian7.Notice(`nameForge: couldn't save the recipe to ${path}.`);
+      return;
+    }
+    this.options.onSaved(path);
+    this.close();
+  }
+};
+
+// src/ageing/engine.ts
+var AGEING = {
+  /** §1: minimum names in a target pack. */
+  minTargetNames: 30,
+  /** §1: minimum letters per source word. */
+  minWordLetters: 3,
+  /** §1: depth range and default; count options and default. */
+  depth: { min: 1, max: 5, default: 3 },
+  count: { options: [3, 4, 5], default: 5 },
+  /** §2.2: multi-letter consonant units, longest match first. */
+  consonantUnits: ["sch", "th", "sh", "ch", "gh", "ph", "wh", "ck", "ng", "qu"],
+  /** §2.4: target inventories. */
+  vowelRunInventorySize: 20,
+  endingLengths: [2, 3, 4],
+  endingMinNames: 3,
+  endingMinShare: 0.02,
+  endingInventorySize: 30,
+  /** §4: every move leaves at least this many vowel runs and letters. */
+  minVowelRuns: 1,
+  minLetters: 3,
+  /** §4.1 M9: maximum weighted distance between replaced letters and the ending. */
+  endingSnapMaxDistance: 1.5,
+  /** §5.2: weighted Levenshtein costs. */
+  cost: { insertDelete: 1, deleteDoubled: 0.2, vowelVowel: 0.5, consonantSameClass: 0.4, other: 1 },
+  /** §5.3: w(e) = base + span × (e ÷ D). */
+  eraWeight: { base: 0.2, span: 0.6 },
+  /** §5.4: step limit against the previous era's form; R floor per depth at final filtering. */
+  stepLimit: 0.5,
+  depthFloor: { 1: 0.7, 2: 0.55, 3: 0.4, 4: 0.3, 5: 0.15 },
+  /** §5.1 (deviation, approved): target names are scored by models that did not see them, in
+   *  this many held-out folds, so the reference reflects how a new name scores. */
+  heldOutFolds: 10,
+  /** §6: search. */
+  runs: 4,
+  beamWidth: 12,
+  stepsPerEra: 2,
+  temperature: 0.05,
+  /** §7.1: minimum plausibility of a final candidate. */
+  minPlausibility: 0.15,
+  /** §7.2: diversity thresholds (normalised distance), first pass then fallback. */
+  diversity: [0.25, 0.15],
+  /** §7.2: fewer survivors than this triggers the notice. */
+  noticeBelow: 3
+};
+var VOWELS3 = new Set(Array.from("aeiouy\xE1\xE0\xE2\xE4\xE3\xE5\xE6\xE9\xE8\xEA\xEB\xED\xEC\xEE\xEF\xF3\xF2\xF4\xF6\xF5\xF8\u0153\xFA\xF9\xFB\xFC\xFD\xFF"));
+var CONSONANT_CLASSES = [
+  ["p", "b", "f", "v", "m", "w", "ph"],
+  ["t", "d", "th", "n", "l", "r", "s", "z"],
+  ["s", "z", "sh", "ch", "j", "x", "sch"],
+  ["c", "k", "g", "q", "ck", "gh", "ch", "qu", "x", "ng"],
+  ["w", "y", "h", "wh"]
+];
+var ALPHABET_FIT = {
+  \u00F0: "th",
+  \u00FE: "th",
+  \u00E6: "a",
+  \u0153: "e",
+  \u00F8: "o",
+  \u00F6: "o",
+  \u00E5: "a",
+  \u00E4: "a",
+  \u00E1: "a",
+  \u00E0: "a",
+  \u00E2: "a",
+  \u00E3: "a",
+  \u00E9: "e",
+  \u00E8: "e",
+  \u00EA: "e",
+  \u00EB: "e",
+  \u00ED: "i",
+  \u00EC: "i",
+  \u00EE: "i",
+  \u00EF: "i",
+  \u00F3: "o",
+  \u00F2: "o",
+  \u00F4: "o",
+  \u00F5: "o",
+  \u00FA: "u",
+  \u00F9: "u",
+  \u00FB: "u",
+  \u00FC: "u",
+  \u00FD: "y",
+  \u00FF: "y"
+};
+var SEPARATOR = /[ \-']/;
+function sameClass(a, b) {
+  return CONSONANT_CLASSES.some((c) => c.includes(a) && c.includes(b));
+}
+function isVowelAt(chars, i) {
+  const ch = chars[i];
+  if (!VOWELS3.has(ch)) return false;
+  if (ch === "y" && i === 0 && i + 1 < chars.length && VOWELS3.has(chars[i + 1])) return false;
+  return true;
+}
+function segment(word) {
+  const chars = Array.from(word);
+  const segments = [];
+  const push = (vowel, unit) => {
+    const last = segments[segments.length - 1];
+    if (last && last.vowel === vowel) last.units.push(unit);
+    else segments.push({ vowel, units: [unit] });
+  };
+  for (let i = 0; i < chars.length; ) {
+    if (isVowelAt(chars, i)) {
+      push(true, chars[i]);
+      i++;
+      continue;
+    }
+    const multi = AGEING.consonantUnits.find((u) => chars.slice(i, i + u.length).join("") === u);
+    const unit = multi != null ? multi : chars[i];
+    push(false, unit);
+    i += Array.from(unit).length;
+  }
+  return segments;
+}
+var join = (segments) => segments.map((s) => s.units.join("")).join("");
+var letterCount2 = (s) => Array.from(s.replace(/[ \-']/g, "")).length;
+function splitForm(form) {
+  return form.split(/([ \-'])/).filter((p) => p.length > 0);
+}
+var isVowelLetter = (ch) => VOWELS3.has(ch);
+function weightedDistance(a, b) {
+  const x = Array.from(a.replace(/[ \-']/g, ""));
+  const y = Array.from(b.replace(/[ \-']/g, ""));
+  const c = AGEING.cost;
+  const del = (i) => i > 0 && x[i - 1] === x[i] || i + 1 < x.length && x[i + 1] === x[i] ? c.deleteDoubled : c.insertDelete;
+  const sub = (p, q) => {
+    if (p === q) return 0;
+    if (isVowelLetter(p) && isVowelLetter(q)) return c.vowelVowel;
+    if (!isVowelLetter(p) && !isVowelLetter(q) && sameClass(p, q)) return c.consonantSameClass;
+    return c.other;
+  };
+  let prev = new Array(y.length + 1);
+  prev[0] = 0;
+  for (let j = 1; j <= y.length; j++) prev[j] = prev[j - 1] + c.insertDelete;
+  for (let i = 1; i <= x.length; i++) {
+    const row = new Array(y.length + 1);
+    row[0] = prev[0] + del(i - 1);
+    for (let j = 1; j <= y.length; j++) {
+      row[j] = Math.min(prev[j] + del(i - 1), row[j - 1] + c.insertDelete, prev[j - 1] + sub(x[i - 1], y[j - 1]));
+    }
+    prev = row;
+  }
+  return prev[y.length];
+}
+function normalisedDistance(a, b) {
+  const longer = Math.max(letterCount2(a), letterCount2(b));
+  return longer === 0 ? 0 : weightedDistance(a, b) / longer;
+}
+function recognisability(a, b) {
+  return Math.max(0, 1 - normalisedDistance(a, b));
+}
+function buildInventory(targetNames, extraEndings = []) {
+  var _a, _b, _c;
+  const names = targetNames.map((n) => n.trim().toLowerCase()).filter((n) => n.length > 0);
+  const vowelCounts = /* @__PURE__ */ new Map();
+  const consonantUnits = /* @__PURE__ */ new Set();
+  const letters = /* @__PURE__ */ new Set();
+  const endingCounts = /* @__PURE__ */ new Map();
+  for (const name of names) {
+    for (const ch of Array.from(name)) if (!SEPARATOR.test(ch)) letters.add(ch);
+    const words = splitForm(name).filter((p) => !SEPARATOR.test(p));
+    for (const word of words) {
+      for (const seg of segment(word)) {
+        if (seg.vowel) {
+          const run = seg.units.join("");
+          vowelCounts.set(run, ((_a = vowelCounts.get(run)) != null ? _a : 0) + 1);
+        } else {
+          for (const u of seg.units) consonantUnits.add(u);
+        }
+      }
+    }
+    const last = Array.from((_b = words[words.length - 1]) != null ? _b : "");
+    const seen = /* @__PURE__ */ new Set();
+    for (const len of AGEING.endingLengths) {
+      if (last.length < len) continue;
+      const ending = last.slice(-len).join("");
+      if (seen.has(ending)) continue;
+      seen.add(ending);
+      endingCounts.set(ending, ((_c = endingCounts.get(ending)) != null ? _c : 0) + 1);
+    }
+  }
+  const byCount = (m) => [...m].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  const vowelRuns = byCount(vowelCounts).slice(0, AGEING.vowelRunInventorySize).map(([r]) => r);
+  const minNames = Math.max(AGEING.endingMinNames, AGEING.endingMinShare * names.length);
+  const endings = byCount(endingCounts).filter(([, n]) => n >= minNames).slice(0, AGEING.endingInventorySize).map(([e]) => e);
+  for (const e of extraEndings.map((x) => x.toLowerCase())) if (!endings.includes(e)) endings.push(e);
+  return { vowelRuns, consonantUnits, letters, endings };
+}
+function firstUnit(segments) {
+  var _a, _b;
+  return (_b = (_a = segments[0]) == null ? void 0 : _a.units[0]) != null ? _b : "";
+}
+function valid(before, after, firstMayChange) {
+  if (Array.from(after).length < AGEING.minLetters) return false;
+  const segs = segment(after);
+  if (segs.filter((s) => s.vowel).length < AGEING.minVowelRuns) return false;
+  return firstMayChange || firstUnit(segs) === firstUnit(before);
+}
+var clone = (segments) => segments.map((s) => ({ vowel: s.vowel, units: [...s.units] }));
+function wordVariants(word, inv) {
+  const segs = segment(word);
+  const out = /* @__PURE__ */ new Map();
+  const add = (move, result, firstMayChange = false) => {
+    if (result !== word && !out.has(result) && valid(segs, result, firstMayChange)) out.set(result, move);
+  };
+  const vowelIdx = segs.map((s, i) => s.vowel ? i : -1).filter((i) => i >= 0);
+  add("M1", join(segs.slice(0, -1)));
+  add("M2", join(segs.slice(0, -2)));
+  for (const i of vowelIdx.slice(1, -1)) add("M3", join(segs.filter((_, j) => j !== i)));
+  for (const i of vowelIdx) {
+    const run = segs[i].units.join("");
+    for (const r of inv.vowelRuns) {
+      if (r === run) continue;
+      const next = clone(segs);
+      next[i].units = Array.from(r);
+      add("M4", join(next), i === 0);
+    }
+  }
+  for (const i of vowelIdx) {
+    if (segs[i].units.length < 2) continue;
+    for (let k = 0; k < segs[i].units.length; k++) {
+      const next = clone(segs);
+      next[i].units.splice(k, 1);
+      add("M5", join(next));
+    }
+  }
+  segs.forEach((s, i) => {
+    if (s.vowel) return;
+    s.units.forEach((unit, k) => {
+      for (const other of inv.consonantUnits) {
+        if (other === unit || !sameClass(unit, other)) continue;
+        const next = clone(segs);
+        next[i].units[k] = other;
+        add("M6", join(next), i === 0 && k === 0);
+      }
+      if (s.units.length >= 2) {
+        const next = clone(segs);
+        next[i].units.splice(k, 1);
+        add("M7", join(next), i === 0 && k === 0);
+      }
+    });
+  });
+  const chars = Array.from(word);
+  for (let i = 1; i < chars.length; i++) {
+    if (chars[i] === chars[i - 1] && !isVowelAt(chars, i)) add("M8", [...chars.slice(0, i), ...chars.slice(i + 1)].join(""));
+  }
+  for (let n = 1; n <= 3 && n <= segs.length; n++) {
+    const replaced = join(segs.slice(-n));
+    const stem = join(segs.slice(0, -n));
+    for (const ending of inv.endings) {
+      if (ending === replaced) continue;
+      if (weightedDistance(replaced, ending) <= AGEING.endingSnapMaxDistance) add("M9", stem + ending);
+    }
+  }
+  return out;
+}
+function formVariants(form, inv) {
+  const parts = splitForm(form);
+  const out = /* @__PURE__ */ new Set();
+  parts.forEach((part, i) => {
+    if (SEPARATOR.test(part)) return;
+    for (const variant of wordVariants(part, inv).keys()) {
+      const next = [...parts];
+      next[i] = variant;
+      out.add(next.join(""));
+    }
+  });
+  return [...out];
+}
+function alphabetFit(form, letters) {
+  return Array.from(form).map((ch) => {
+    if (SEPARATOR.test(ch) || letters.has(ch)) return ch;
+    const to = ALPHABET_FIT[ch];
+    return to && Array.from(to).every((t) => letters.has(t)) ? to : ch;
+  }).join("");
+}
+function validateSource(source) {
+  const s = source.trim();
+  if (!s) return "Enter a name to age.";
+  if (!/^[\p{L} \-']+$/u.test(s)) return "Use letters, spaces, hyphens and apostrophes only.";
+  const words = s.split(/[ \-']+/).filter((w) => w.length > 0);
+  if (words.some((w) => Array.from(w).length < AGEING.minWordLetters)) {
+    return `Each word needs at least ${AGEING.minWordLetters} letters.`;
+  }
+  return null;
+}
+function titleCase(form) {
+  return splitForm(form).map((p) => SEPARATOR.test(p) ? p : p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join("");
+}
+function eraWeight(era, depth) {
+  return AGEING.eraWeight.base + AGEING.eraWeight.span * (era / depth);
+}
+function sampleBeam(items, k, rng) {
+  if (items.length <= k) return items.map(([t]) => t);
+  const max = Math.max(...items.map(([, s]) => s));
+  const pool = items.map(([t, s]) => [t, Math.exp((s - max) / AGEING.temperature)]);
+  const chosen = [];
+  for (let n = 0; n < k; n++) {
+    const total = pool.reduce((sum, [, w]) => sum + w, 0);
+    let r = rng() * total;
+    let idx = pool.length - 1;
+    for (let i = 0; i < pool.length; i++) {
+      r -= pool[i][1];
+      if (r < 0) {
+        idx = i;
+        break;
+      }
+    }
+    chosen.push(pool[idx][0]);
+    pool.splice(idx, 1);
+  }
+  return chosen;
+}
+function ageName(input) {
+  const sourceError = validateSource(input.source);
+  if (sourceError) throw new Error(sourceError);
+  if (input.targetNames.length < AGEING.minTargetNames) {
+    throw new Error(`A target pack needs at least ${AGEING.minTargetNames} names.`);
+  }
+  const depth = Math.min(AGEING.depth.max, Math.max(AGEING.depth.min, Math.floor(input.depth)));
+  const count = Math.floor(input.count);
+  const source = input.source.trim().toLowerCase().replace(/\s+/g, " ");
+  const inv = buildInventory(input.targetNames, input.extraEndings);
+  const meanScore = (scoreWord, form) => {
+    const words = splitForm(form).filter((p) => !SEPARATOR.test(p));
+    return words.reduce((sum, w) => sum + scoreWord(w), 0) / Math.max(1, words.length);
+  };
+  const fullScorer = input.buildScorer(input.targetNames);
+  const formScore = (form) => meanScore(fullScorer, form);
+  const lowerTargets = input.targetNames.map((n) => n.trim().toLowerCase());
+  const targetScores = [];
+  for (let fold = 0; fold < AGEING.heldOutFolds; fold++) {
+    const held = lowerTargets.filter((_, i) => i % AGEING.heldOutFolds === fold);
+    if (held.length === 0) continue;
+    const scorer = input.buildScorer(input.targetNames.filter((_, i) => i % AGEING.heldOutFolds !== fold));
+    for (const name of held) targetScores.push(meanScore(scorer, name));
+  }
+  targetScores.sort((a, b) => a - b);
+  const pCache = /* @__PURE__ */ new Map();
+  const plausibility = (form) => {
+    let p = pCache.get(form);
+    if (p === void 0) {
+      const s = formScore(form);
+      let lo = 0;
+      let hi = targetScores.length;
+      while (lo < hi) {
+        const mid = lo + hi >> 1;
+        if (targetScores[mid] <= s) lo = mid + 1;
+        else hi = mid;
+      }
+      p = lo / targetScores.length;
+      pCache.set(form, p);
+    }
+    return p;
+  };
+  const rCache = /* @__PURE__ */ new Map();
+  const rSource = (form) => {
+    let r = rCache.get(form);
+    if (r === void 0) {
+      r = recognisability(source, form);
+      rCache.set(form, r);
+    }
+    return r;
+  };
+  const score = (form, w) => w * plausibility(form) + (1 - w) * rSource(form);
+  const variantCache = /* @__PURE__ */ new Map();
+  const variants = (form) => {
+    let v = variantCache.get(form);
+    if (!v) {
+      v = formVariants(form, inv);
+      variantCache.set(form, v);
+    }
+    return v;
+  };
+  const pool = [];
+  for (let run = 0; run < AGEING.runs; run++) {
+    const rng = mulberry32(Math.floor(input.rng() * 4294967296) >>> 0);
+    let beam = [{ form: source, trail: [source] }];
+    for (let era = 1; era <= depth && beam.length > 0; era++) {
+      const w = eraWeight(era, depth);
+      const eraStart = new Map(beam.map((b) => [b, b.form]));
+      let working = beam.map((b) => ({ item: b, form: era === 1 ? alphabetFit(b.form, inv.letters) : b.form }));
+      for (let step = 0; step < AGEING.stepsPerEra; step++) {
+        const seen = /* @__PURE__ */ new Map();
+        for (const entry of working) {
+          for (const form of [entry.form, ...variants(entry.form)]) {
+            if (!seen.has(form)) seen.set(form, { item: entry.item, form });
+          }
+        }
+        const scored = [...seen.values()].map((e) => [e, score(e.form, w)]);
+        working = sampleBeam(scored, AGEING.beamWidth, rng);
+      }
+      beam = working.filter((e) => recognisability(eraStart.get(e.item), e.form) >= AGEING.stepLimit).map((e) => ({ form: e.form, trail: [...e.item.trail, e.form] }));
+    }
+    pool.push(...beam);
+  }
+  const finalW = eraWeight(depth, depth);
+  const floor = AGEING.depthFloor[depth];
+  const best = /* @__PURE__ */ new Map();
+  for (const item of pool) {
+    if (item.form === source) continue;
+    if (rSource(item.form) < floor) continue;
+    if (plausibility(item.form) < AGEING.minPlausibility) continue;
+    if (Array.from(item.form).some((ch) => !SEPARATOR.test(ch) && !inv.letters.has(ch))) continue;
+    const s = score(item.form, finalW);
+    const existing = best.get(item.form);
+    if (!existing || s > existing.score) best.set(item.form, { ...item, score: s });
+  }
+  const ranked = [...best.values()].sort((a, b) => b.score - a.score || a.form.localeCompare(b.form));
+  const selected = [];
+  for (const threshold of AGEING.diversity) {
+    for (const c of ranked) {
+      if (selected.length >= count) break;
+      if (selected.includes(c)) continue;
+      if (selected.every((s) => normalisedDistance(s.form, c.form) >= threshold)) selected.push(c);
+    }
+  }
+  for (const c of ranked) {
+    if (selected.length >= count) break;
+    if (!selected.includes(c)) selected.push(c);
+  }
+  const candidates = selected.map((c) => ({
+    name: titleCase(c.form),
+    trail: c.trail.filter((f, i) => i === 0 || f !== c.trail[i - 1]).map(titleCase),
+    score: c.score,
+    plausibility: plausibility(c.form),
+    recognisability: rSource(c.form)
+  }));
+  const notice = candidates.length < AGEING.noticeBelow ? `Only ${candidates.length} candidates survived. Try a lower depth or a different target pack.` : void 0;
+  return { candidates, notice };
+}
+
+// src/ageing/format.ts
+var AGEING_INSERT_FORMATS = [
+  { id: "name", label: "Name only" },
+  { id: "history", label: "Name with history" },
+  { id: "trail", label: "Trail" }
+];
+var DEFAULT_AGEING_INSERT_FORMAT = "history";
+var TRAIL_SEPARATOR = " \u2192 ";
+function formatAgedName(trail, format) {
+  const name = trail[trail.length - 1];
+  if (format === "name") return name;
+  if (format === "trail") return trail.join(TRAIL_SEPARATOR);
+  const original = trail[0];
+  const earlier = trail.slice(1, -1).reverse();
+  return earlier.length > 0 ? `${name} (earlier ${earlier.join(", ")}; originally ${original})` : `${name} (originally ${original})`;
+}
+
 // src/modal.ts
-var SECTION_ORDER = ["markov", "placeShapes", "genericPlaceNames", "explorationPlaceShapes"];
+var SECTION_ORDER = [
+  "markov",
+  "placeShapes",
+  "genericPlaceNames",
+  "explorationPlaceShapes",
+  "empireExpansionPlaceShapes",
+  "nameAgeing"
+];
 var SHAPE_SECTION_WORDING = {
   placeShapes: "meaning",
   genericPlaceNames: "plain"
 };
+var COLONIAL_SECTION_PART = {
+  explorationPlaceShapes: "2",
+  empireExpansionPlaceShapes: "2a"
+};
+var partNote = (parts) => parts.length === 2 ? "parts 2 and 2a" : `part ${parts[0]} only`;
 var SECTION_LABELS = {
   markov: "markov generator",
   placeShapes: "place name shapes",
   genericPlaceNames: "generic place name generator",
-  explorationPlaceShapes: "exploration place name shapes"
+  explorationPlaceShapes: "exploration place name shapes",
+  empireExpansionPlaceShapes: "empire expansion place name shapes",
+  nameAgeing: "name ageing"
 };
 var SECTION_ICONS = {
   markov: ICON_PACKS,
   placeShapes: ICON_PLACE_SHAPES,
   genericPlaceNames: ICON_GENERIC_PLACE_NAMES,
-  explorationPlaceShapes: ICON_PACKS
+  explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
+  empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
+  nameAgeing: ICON_NAME_AGEING
 };
+var SESSION_HINT = "\u2190 click here for specialist packs, or here for your name packs";
+var sessionHintShown = false;
 function packTypeIconId(packType, subGenerator) {
+  if (packType === "recipePack") {
+    return "scroll-text";
+  }
   if (packType === "compoundPack") {
     return subGenerator === "list" ? ICON_COMPOUND_LIST_PACK : ICON_COMPOUND_BREAKDOWN_PACK;
   }
@@ -9165,13 +18403,13 @@ function packSubGenerator(packType, compoundGenerator) {
   if (packType === "compoundPack") return compoundGenerator;
   return void 0;
 }
-function resolveSeed2(seed) {
+function resolveSeed3(seed) {
   return seed !== void 0 && Number.isFinite(seed) ? Math.floor(seed) >>> 0 : Math.random() * 4294967295 >>> 0;
 }
 function generateNamesFromSource(namesText, packType, count = 6, settings = {}, seed) {
   var _a, _b, _c, _d;
   const names = extractNamesFromMarkdown(namesText);
-  const resolvedSeed = resolveSeed2(seed);
+  const resolvedSeed = resolveSeed3(seed);
   if (names.length === 0) {
     return { names: [], seed: resolvedSeed };
   }
@@ -9209,7 +18447,7 @@ function formatHistoryTimestamp(date) {
   return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}-${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
 }
 var MAX_HISTORY_ENTRIES = 50;
-var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
+var NameForgeModal = class _NameForgeModal extends import_obsidian8.Modal {
   constructor(app, plugin, settings = {}) {
     super(app);
     this.resultsEl = null;
@@ -9237,7 +18475,26 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.isRegionMenuOpen = false;
     /** Region code, or undefined for All Britain. Session only — never persisted. */
     this.selectedRegion = void 0;
+    /** Colonial tradition and context per part; undefined = General / None. Session only. */
+    this.selectedTradition = { "2": void 0, "2a": void 0 };
+    this.selectedContext = { "2": void 0, "2a": void 0 };
+    this.contextRowEl = null;
+    this.quantityToggleEl = null;
+    this.generateButtonEl = null;
+    /** Name ageing controls and state. Session only. */
+    this.ageingControlsEl = null;
+    this.ageingSourceInput = null;
+    this.ageingDepth = AGEING.depth.default;
+    this.ageingCount = AGEING.count.default;
+    this.ageingFormat = DEFAULT_AGEING_INSERT_FORMAT;
+    this.ageingTargetPath = void 0;
+    this.ageingPacks = [];
+    this.guideButton = null;
     this.quantityButtons = [];
+    this.createPacksButton = null;
+    /** True while the once-per-session hint covers the pack box label. */
+    this.showSessionHint = false;
+    this.packTrigger = null;
     this.clearResultsSelection = () => {
     };
     this.currentNamesText = "";
@@ -9246,6 +18503,17 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.currentCompoundGenerator = "breakdown";
     this.currentCompoundJoining = "joined";
     this.currentMixSources = [];
+    /** §10: the loaded pack's sections (List/Breakdown), section options, and the chosen section. */
+    this.currentSectioned = void 0;
+    this.sectionChoices = [];
+    this.currentSectionRequest = void 0;
+    this.sectionSelectEl = null;
+    /** §7: set when the loaded pack's template couldn't be applied. */
+    this.currentTemplateError = void 0;
+    /** Recipe packs: the loaded recipe, the session's etymology toggle, and the edit button. */
+    this.currentRecipePath = void 0;
+    this.recipeEtymology = void 0;
+    this.editRecipeButton = null;
     this.generationCount = 25;
     this.currentSeed = null;
     this.seedLocked = false;
@@ -9294,7 +18562,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       cls: "nameforge-modal__icon-decoration nameforge-modal__icon-decoration--lg nameforge-modal__icon-decoration--clickable",
       attr: { role: "button", tabindex: "0", "aria-label": "change section", title: "change section", "aria-expanded": "false" }
     });
-    (0, import_obsidian6.setIcon)(sectionTrigger, SECTION_ICONS[this.activeSection]);
+    (0, import_obsidian8.setIcon)(sectionTrigger, SECTION_ICONS[this.activeSection]);
     sectionTrigger.addEventListener("click", () => this.toggleSectionMenu());
     sectionTrigger.addEventListener("keydown", (evt) => {
       if (evt.key === "Enter" || evt.key === " ") {
@@ -9319,6 +18587,11 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     });
     this.packDropdownMenuEl = this.packDropdownEl.createDiv({ cls: "nameforge-modal__pack-dropdown-menu" });
     this.packDropdownMenuEl.hide();
+    if (!sessionHintShown) {
+      sessionHintShown = true;
+      this.showSessionHint = true;
+      this.renderPackTrigger();
+    }
     this.regionDropdownEl = createPacksRow.createDiv({ cls: "nameforge-modal__pack-dropdown" });
     this.regionTriggerEl = this.regionDropdownEl.createEl("button", {
       cls: "nameforge-modal__pack-dropdown-trigger",
@@ -9338,23 +18611,55 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       cls: "nameforge-modal__pack-dropdown-trigger",
       attr: { type: "button", "aria-disabled": "true" }
     });
-    (0, import_obsidian6.setIcon)(stubTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }), ICON_PACKS);
+    (0, import_obsidian8.setIcon)(stubTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }), ICON_PACKS);
     this.sectionStubLabelEl = stubTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-label" });
     this.sectionStubEl.hide();
     activeDocument.addEventListener("click", this.handlePackDropdownOutsideClick);
     if (!this.panelMode) {
-      const createPacksButton = createPacksRow.createEl("button", {
+      const createPacksButton = this.createPacksButton = createPacksRow.createEl("button", {
         cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
         attr: { type: "button", title: "Create name packs" }
       });
-      (0, import_obsidian6.setIcon)(createPacksButton, ICON_CREATE_PACKS);
+      (0, import_obsidian8.setIcon)(createPacksButton, ICON_CREATE_PACKS);
       createPacksButton.addEventListener("click", () => {
         new NameForgeEditorModal(this.app, this, "", "").open();
       });
     }
+    this.editRecipeButton = createPacksRow.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Edit recipe" }
+    });
+    (0, import_obsidian8.setIcon)(this.editRecipeButton, "pencil");
+    this.editRecipeButton.addEventListener("click", () => void this.openRecipeEditor(this.currentRecipePath));
+    this.editRecipeButton.hide();
+    this.guideButton = createPacksRow.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Tradition guide" }
+    });
+    (0, import_obsidian8.setIcon)(this.guideButton, "book-open");
+    this.guideButton.addEventListener("click", () => {
+      const part = COLONIAL_SECTION_PART[this.activeSection];
+      if (!part) return;
+      new TraditionGuideModal(this.app, part, (id) => {
+        this.selectedTradition[part] = id;
+        this.updateRegionLabel();
+      }).open();
+    });
+    this.guideButton.hide();
     this.sectionMenuEl = optionsList.createDiv({ cls: "nameforge-modal__section-menu" });
     this.sectionMenuEl.hide();
+    this.sectionSelectEl = optionsList.createEl("select", {
+      cls: "dropdown nameforge-modal__pack-section-select",
+      attr: { "aria-label": "Section", title: "Section" }
+    });
+    this.sectionSelectEl.addEventListener("change", () => {
+      var _a, _b, _c;
+      const i = Number((_b = (_a = this.sectionSelectEl) == null ? void 0 : _a.value) != null ? _b : -1);
+      this.currentSectionRequest = i >= 0 ? (_c = this.sectionChoices[i]) == null ? void 0 : _c.request : void 0;
+    });
+    this.sectionSelectEl.hide();
     const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
+    this.quantityToggleEl = quantityToggle;
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
       const button = quantityToggle.createEl("button", {
         cls: "nameforge-modal__toggle-button" + (value === this.generationCount ? " is-active" : ""),
@@ -9367,7 +18672,11 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       });
       return button;
     });
+    this.contextRowEl = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__context-toggle" });
+    this.contextRowEl.hide();
+    this.buildAgeingControls(optionsList);
     const generateButton = this.createIconButton(optionsList, ICON_DICE, "Generate names");
+    this.generateButtonEl = generateButton;
     generateButton.addClass("nameforge-modal__generate-button");
     generateButton.addEventListener("click", () => {
       void this.generateSelectedCount();
@@ -9412,7 +18721,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         cls: "nameforge-modal__section-menu-item" + (section === this.activeSection ? " is-active" : ""),
         attr: { role: "button", tabindex: "0", "aria-label": SECTION_LABELS[section] }
       });
-      (0, import_obsidian6.setIcon)(item.createSpan({ cls: "nameforge-modal__section-menu-icon" }), SECTION_ICONS[section]);
+      (0, import_obsidian8.setIcon)(item.createSpan({ cls: "nameforge-modal__section-menu-icon" }), SECTION_ICONS[section]);
       item.createSpan({ text: SECTION_LABELS[section] });
       item.addEventListener("click", () => this.switchSection(section));
       item.addEventListener("keydown", (evt) => {
@@ -9426,15 +18735,38 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
   /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
    * dropdown on the shape sections, the placeholder box otherwise. Everything else is left as it is. */
   switchSection(section) {
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
+    if (section === "nameAgeing" && this.activeSection === "markov") {
+      const selected = (_b = (_a = this.resultsEl) == null ? void 0 : _a.querySelectorAll("li.is-selected")) != null ? _b : [];
+      if (selected.length === 1 && this.ageingSourceInput) {
+        this.ageingSourceInput.value = (_c = selected[0].textContent) != null ? _c : "";
+      }
+    }
     this.setSectionMenuOpen(false);
     this.setRegionMenuOpen(false);
     this.activeSection = section;
-    (_a = this.packDropdownEl) == null ? void 0 : _a.toggle(section === "markov");
-    (_b = this.regionDropdownEl) == null ? void 0 : _b.toggle(SHAPE_SECTION_WORDING[section] !== void 0);
-    if (this.sectionTriggerEl) (0, import_obsidian6.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
+    (_d = this.packDropdownEl) == null ? void 0 : _d.toggle(section === "markov");
+    (_e = this.sectionSelectEl) == null ? void 0 : _e.toggle(section === "markov" && this.sectionChoices.length > 0);
+    (_f = this.editRecipeButton) == null ? void 0 : _f.toggle(section === "markov" && this.currentPackType === "recipePack");
+    const colonialPart = COLONIAL_SECTION_PART[section];
+    (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
+    (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart);
+    (_i = this.guideButton) == null ? void 0 : _i.toggle(!!colonialPart);
+    this.clearSessionHint();
+    (_j = this.regionDropdownEl) == null ? void 0 : _j.toggle(SHAPE_SECTION_WORDING[section] !== void 0 || !!colonialPart || section === "nameAgeing");
+    this.updateRegionLabel();
+    this.renderContextRow();
+    const ageing = section === "nameAgeing";
+    (_k = this.quantityToggleEl) == null ? void 0 : _k.toggle(!ageing);
+    (_l = this.ageingControlsEl) == null ? void 0 : _l.toggle(ageing);
+    (_m = this.generateButtonEl) == null ? void 0 : _m.setAttribute("title", ageing ? "Age" : "Generate names");
+    (_n = this.generateButtonEl) == null ? void 0 : _n.setAttribute("aria-label", ageing ? "Age" : "Generate names");
+    if (ageing) void this.enterAgeingSection();
+    if (this.sectionTriggerEl) (0, import_obsidian8.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
-    (_c = this.sectionStubEl) == null ? void 0 : _c.toggle(section === "explorationPlaceShapes");
+    (_o = this.sectionStubEl) == null ? void 0 : _o.toggle(
+      section !== "markov" && SHAPE_SECTION_WORDING[section] === void 0 && !colonialPart && section !== "nameAgeing"
+    );
   }
   setRegionMenuOpen(open) {
     var _a, _b;
@@ -9446,11 +18778,55 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     (_a = this.regionMenuEl) == null ? void 0 : _a.toggle(open);
     (_b = this.regionTriggerEl) == null ? void 0 : _b.setAttribute("aria-expanded", String(open));
   }
-  /** All Britain first, then the regions in reference order; historic counties as tooltips. */
+  /** Part 1 sections: All Britain, then the regions, with historic counties as tooltips.
+   * Colonial sections: General, then every tradition; ones not in this part are greyed out. */
   renderRegionMenu() {
     const menu = this.regionMenuEl;
     if (!menu) return;
     menu.empty();
+    if (this.activeSection === "nameAgeing") {
+      if (this.ageingPacks.length === 0) {
+        menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
+      }
+      for (const pack of this.ageingPacks) {
+        const item = menu.createEl("button", {
+          cls: "nameforge-modal__pack-dropdown-item" + (pack.path === this.ageingTargetPath ? " is-active" : "") + (pack.reason ? " is-unavailable" : ""),
+          attr: { type: "button", "aria-disabled": String(!!pack.reason), ...pack.reason ? { title: pack.reason } : {} }
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: pack.label });
+        if (pack.reason) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: pack.reason });
+        item.addEventListener("click", () => {
+          if (pack.reason) {
+            new import_obsidian8.Notice(`nameForge: ${pack.label} can't be a target \u2014 ${pack.reason}.`);
+            return;
+          }
+          this.ageingTargetPath = pack.path;
+          this.updateRegionLabel();
+          this.setRegionMenuOpen(false);
+        });
+      }
+      return;
+    }
+    const part = COLONIAL_SECTION_PART[this.activeSection];
+    if (part) {
+      for (const tradition of COLONIAL_TRADITIONS) {
+        const id = tradition.id === "general" ? void 0 : tradition.id;
+        const available = isTraditionAvailable(tradition.id, part);
+        const item = menu.createEl("button", {
+          cls: "nameforge-modal__pack-dropdown-item" + (id === this.selectedTradition[part] ? " is-active" : "") + (available ? "" : " is-unavailable"),
+          attr: { type: "button", title: tradition.guide, "aria-disabled": String(!available) }
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: tradition.label });
+        if (!available) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: partNote(tradition.parts) });
+        item.addEventListener("click", () => {
+          if (!available) return;
+          this.selectedTradition[part] = id;
+          this.updateRegionLabel();
+          this.setRegionMenuOpen(false);
+        });
+      }
+      return;
+    }
     const options = [
       { code: void 0, label: "All Britain" },
       ...PLACE_SHAPE_REGIONS
@@ -9469,10 +18845,267 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     }
   }
   updateRegionLabel() {
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e;
+    if (this.activeSection === "nameAgeing") {
+      const pack = this.ageingPacks.find((p) => p.path === this.ageingTargetPath);
+      if (this.regionLabelEl) this.regionLabelEl.textContent = pack ? pack.label : "choose a target pack";
+      (_a = this.regionTriggerEl) == null ? void 0 : _a.setAttribute("title", "Target pack: the language the name ages towards");
+      return;
+    }
+    const part = COLONIAL_SECTION_PART[this.activeSection];
+    if (part) {
+      const tradition = COLONIAL_TRADITIONS.find((t) => {
+        var _a2;
+        return t.id === ((_a2 = this.selectedTradition[part]) != null ? _a2 : "general");
+      });
+      if (this.regionLabelEl) this.regionLabelEl.textContent = tradition.label;
+      (_b = this.regionTriggerEl) == null ? void 0 : _b.setAttribute("title", tradition.guide);
+      return;
+    }
     const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.selectedRegion);
-    if (this.regionLabelEl) this.regionLabelEl.textContent = (_a = region == null ? void 0 : region.label) != null ? _a : "All Britain";
-    (_c = this.regionTriggerEl) == null ? void 0 : _c.setAttribute("title", (_b = region == null ? void 0 : region.counties) != null ? _b : "No regional weighting");
+    if (this.regionLabelEl) this.regionLabelEl.textContent = (_c = region == null ? void 0 : region.label) != null ? _c : "All Britain";
+    (_e = this.regionTriggerEl) == null ? void 0 : _e.setAttribute("title", (_d = region == null ? void 0 : region.counties) != null ? _d : "No regional weighting");
+  }
+  /** The context toggle row: None plus the part's frontier types or accommodation levels. */
+  renderContextRow() {
+    var _a, _b;
+    const row = this.contextRowEl;
+    if (!row) return;
+    const part = COLONIAL_SECTION_PART[this.activeSection];
+    row.empty();
+    row.toggle(!!part);
+    if (!part) return;
+    const options = [{ id: void 0, label: "none" }, ...colonialContexts(part)];
+    for (const option of options) {
+      const active = option.id === this.selectedContext[part];
+      const button = row.createEl("button", {
+        cls: "nameforge-modal__toggle-button" + (active ? " is-active" : ""),
+        text: (_b = CONTEXT_SHORT_LABELS[(_a = option.id) != null ? _a : "none"]) != null ? _b : option.label.toLowerCase(),
+        attr: { type: "button", title: option.label, "aria-pressed": String(active) }
+      });
+      button.addEventListener("click", () => {
+        this.selectedContext[part] = option.id;
+        this.renderContextRow();
+      });
+    }
+  }
+  /** Source field with the depth buttons (new 1, moderate 3, ancient 5) beside it, then the count row. */
+  buildAgeingControls(container) {
+    const controls = this.ageingControlsEl = container.createDiv({ cls: "nameforge-modal__ageing-controls" });
+    const sourceRow = controls.createDiv({ cls: "nameforge-modal__ageing-source-row" });
+    this.ageingSourceInput = sourceRow.createEl("input", {
+      cls: "nameforge-modal__ageing-source",
+      attr: { type: "text", placeholder: "Old name, e.g. Londinium", "aria-label": "Source name", spellcheck: "false" }
+    });
+    const depthRow = sourceRow.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__ageing-toggle" });
+    const depthOptions = [
+      [1, "new"],
+      [3, "moderate"],
+      [5, "ancient"]
+    ];
+    const depthButtons = depthOptions.map(([d, label]) => {
+      const button = depthRow.createEl("button", {
+        cls: "nameforge-modal__toggle-button",
+        text: label,
+        attr: { type: "button", title: `${d} era${d === 1 ? "" : "s"}` }
+      });
+      button.addEventListener("click", () => {
+        this.ageingDepth = d;
+        sync();
+      });
+      return button;
+    });
+    const countRow = controls.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__ageing-toggle" });
+    const countButtons = AGEING.count.options.map((c) => {
+      const button = countRow.createEl("button", {
+        cls: "nameforge-modal__toggle-button",
+        text: String(c),
+        attr: { type: "button", title: `${c} candidates` }
+      });
+      button.addEventListener("click", () => {
+        this.ageingCount = c;
+        sync();
+      });
+      return button;
+    });
+    const sync = () => {
+      depthButtons.forEach((b, i) => {
+        const on = depthOptions[i][0] === this.ageingDepth;
+        b.toggleClass("is-active", on);
+        b.setAttribute("aria-pressed", String(on));
+      });
+      countButtons.forEach((b, i) => {
+        const on = AGEING.count.options[i] === this.ageingCount;
+        b.toggleClass("is-active", on);
+        b.setAttribute("aria-pressed", String(on));
+      });
+    };
+    sync();
+    controls.hide();
+  }
+  /** Lists the folder's packs for the target dropdown, marking ineligible ones with a reason. */
+  async enterAgeingSection() {
+    const index = await this.scanFolderPacks();
+    this.ageingPacks = index.filter((entry) => !entry.parsed.template).map((entry) => {
+      var _a;
+      const label = entry.parsed.packName || ((_a = entry.path.split("/").pop()) == null ? void 0 : _a.replace(/\.md$/i, "")) || entry.path;
+      let reason;
+      if (entry.templateError) {
+        reason = entry.templateError.replace(/\.$/, "");
+      } else if (entry.parsed.packType === "compoundPack") {
+        reason = "compound packs hold name parts, not whole names";
+      } else {
+        const names = this.ageingTargetNames(entry, index);
+        if (typeof names === "string") reason = names;
+        else if (new Set(names.names.map((n) => n.toLowerCase())).size < AGEING.minTargetNames) {
+          reason = `fewer than ${AGEING.minTargetNames} names`;
+        }
+      }
+      return { path: entry.path, label, reason };
+    }).sort((a, b) => a.label.localeCompare(b.label));
+    if (this.ageingTargetPath && !this.ageingPacks.some((p) => p.path === this.ageingTargetPath && !p.reason)) {
+      this.ageingTargetPath = void 0;
+    }
+    this.updateRegionLabel();
+  }
+  /**
+   * The names a target pack contributes, built as the Generate view builds that pack: the pack's
+   * names for Breakdown, List and Place; the weighted blend for Mix. Returns a reason on failure.
+   */
+  ageingTargetNames(entry, index) {
+    const { parsed } = entry;
+    if (parsed.packType === "mixPack") {
+      const resolved = resolveMixSources((0, import_obsidian8.normalizePath)(entry.path), parsed, index);
+      if (resolved.error) return resolved.error;
+      const distinct = [...new Set(resolved.sources.flatMap((source) => source.names))];
+      return { names: distinct, corpus: buildWeightedCorpus(resolved.sources), endings: [] };
+    }
+    const names = extractNamesFromMarkdown(parsed.names.join("\n"));
+    const endings = parsed.packType === "placePack" ? PlaceNameModel.build(names).endings.map((e) => e.suffix).filter((x) => x) : [];
+    return { names, corpus: names, endings };
+  }
+  async runAgeing() {
+    var _a, _b, _c, _d, _e, _f, _g;
+    const source = (_b = (_a = this.ageingSourceInput) == null ? void 0 : _a.value.trim()) != null ? _b : "";
+    const problem = validateSource(source);
+    if (problem) {
+      new import_obsidian8.Notice(`nameForge: ${problem}`);
+      return;
+    }
+    if (!this.ageingTargetPath) {
+      new import_obsidian8.Notice("nameForge: choose a target pack to age the name towards.");
+      return;
+    }
+    const index = await this.scanFolderPacks();
+    const entry = index.find((e) => e.path === this.ageingTargetPath);
+    const target = entry ? this.ageingTargetNames(entry, index) : "the target pack was not found";
+    if (typeof target === "string") {
+      new import_obsidian8.Notice(`nameForge: ${target}.`);
+      return;
+    }
+    if (new Set(target.names.map((n) => n.toLowerCase())).size < AGEING.minTargetNames) {
+      new import_obsidian8.Notice(`nameForge: the target pack needs at least ${AGEING.minTargetNames} names.`);
+      return;
+    }
+    const seedOverride = this.seedLocked ? parseSeedInput((_c = this.seedInputEl) == null ? void 0 : _c.value) : void 0;
+    const seed = resolveSeed3(seedOverride);
+    const faithfulness = (_d = this.plugin.settings.faithfulness) != null ? _d : 2;
+    const result = ageName({
+      source,
+      targetNames: target.corpus,
+      extraEndings: target.endings,
+      buildScorer: (names) => {
+        const model = MarkovModel.build(names);
+        return (word) => model.scoreWord(word, faithfulness);
+      },
+      depth: this.ageingDepth,
+      count: this.ageingCount,
+      rng: mulberry32(seed)
+    });
+    this.currentSeed = seed;
+    this.renderAgeingResults(result.candidates);
+    const packLabel = (_f = (_e = this.ageingPacks.find((p) => p.path === this.ageingTargetPath)) == null ? void 0 : _e.label) != null ? _f : "target pack";
+    await this.recordAgeingHistory(`${source} \u2192 ${packLabel} (depth ${this.ageingDepth}, count ${this.ageingCount})`);
+    this.setStatus((_g = result.notice) != null ? _g : "");
+  }
+  async recordAgeingHistory(label) {
+    var _a;
+    if (this.currentSeed === null) return;
+    const entry = { timestamp: formatHistoryTimestamp(/* @__PURE__ */ new Date()), seed: this.currentSeed, label };
+    this.plugin.settings.ageingHistory = [entry, ...(_a = this.plugin.settings.ageingHistory) != null ? _a : []].slice(0, MAX_HISTORY_ENTRIES);
+    await this.plugin.saveSettings();
+  }
+  /** Ageing results: final name with its trail beneath, selectable and insertable like Generate's. */
+  renderAgeingResults(candidates) {
+    if (!this.resultsEl) return;
+    this.resultsEl.empty();
+    const list = this.resultsEl.createEl("ul", { cls: "nameforge-modal__results-list nameforge-modal__ageing-results" });
+    const actions = this.resultsEl.createDiv({ cls: "nameforge-modal__results-actions" });
+    this.buildSeedControls(actions.createDiv({ cls: "nameforge-modal__seed-group" }));
+    const buttonsGroup = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
+    const formatSelect = buttonsGroup.createEl("select", {
+      cls: "dropdown nameforge-modal__ageing-format",
+      attr: { "aria-label": "Insert as", title: "Insert as" }
+    });
+    for (const f of AGEING_INSERT_FORMATS) {
+      const option = formatSelect.createEl("option", { text: f.label, value: f.id });
+      option.selected = f.id === this.ageingFormat;
+    }
+    formatSelect.addEventListener("change", () => {
+      this.ageingFormat = formatSelect.value;
+    });
+    const button = (icon, title) => {
+      const b = buttonsGroup.createEl("button", {
+        cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+        attr: { type: "button", title }
+      });
+      (0, import_obsidian8.setIcon)(b, icon);
+      return b;
+    };
+    const insertButton = button(ICON_TEXT_INSERT, "Insert");
+    const checklistButton = button(ICON_CHECKLIST_INSERT, "Insert checklist");
+    const bulletButton = button(ICON_BULLET_INSERT, "Insert bullet list");
+    const selectedTrails = () => Array.from(list.querySelectorAll("li.is-selected")).map((el) => candidates[Number(el.dataset.index)].trail);
+    const update = () => {
+      const n = selectedTrails().length;
+      insertButton.disabled = n !== 1;
+      checklistButton.disabled = n === 0;
+      bulletButton.disabled = n === 0;
+    };
+    this.clearResultsSelection = () => {
+      list.querySelectorAll("li.is-selected").forEach((el) => el.classList.remove("is-selected"));
+      update();
+    };
+    candidates.forEach((c, i) => {
+      const item = list.createEl("li", { attr: { "data-index": String(i) } });
+      item.createDiv({ cls: "nameforge-modal__ageing-name", text: c.name });
+      item.createDiv({ cls: "nameforge-modal__ageing-trail", text: c.trail.join(TRAIL_SEPARATOR) });
+      item.addEventListener("click", () => {
+        item.classList.toggle("is-selected");
+        update();
+      });
+    });
+    if (candidates.length === 0) list.createEl("li", { cls: "nameforge-modal__placeholder", text: "No candidates survived." });
+    const formatted = () => selectedTrails().map((t) => formatAgedName(t, this.ageingFormat));
+    insertButton.addEventListener("click", () => {
+      const [text] = formatted();
+      if (text) this.insertPlainText(text);
+    });
+    checklistButton.addEventListener("click", () => {
+      const lines = formatted();
+      if (lines.length > 0) this.insertNamesAsList(lines, "checklist");
+    });
+    bulletButton.addEventListener("click", () => {
+      const lines = formatted();
+      if (lines.length > 0) this.insertNamesAsList(lines, "bullet");
+    });
+    if (this.panelMode) {
+      const history = this.resultsEl.createEl("button", { cls: "nameforge-modal__panel-action", attr: { type: "button" } });
+      (0, import_obsidian8.setIcon)(history.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
+      history.createSpan({ cls: "nameforge-modal__panel-action-label", text: "ageing history" });
+      history.addEventListener("click", () => new AgeingHistoryModal(this.app, this).open());
+    }
+    update();
   }
   unmount() {
     var _a;
@@ -9498,6 +19131,15 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.regionMenuEl = null;
     this.isRegionMenuOpen = false;
     this.quantityButtons = [];
+    this.createPacksButton = null;
+    this.sectionSelectEl = null;
+    this.editRecipeButton = null;
+    this.guideButton = null;
+    this.contextRowEl = null;
+    this.quantityToggleEl = null;
+    this.generateButtonEl = null;
+    this.ageingControlsEl = null;
+    this.ageingSourceInput = null;
     this.seedInputEl = null;
     this.seedLockButton = null;
   }
@@ -9528,13 +19170,28 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     (_b = this.packDropdownTrigger) == null ? void 0 : _b.setAttribute("aria-expanded", "false");
   }
   updatePackDropdownTrigger(packPath, packType, subGenerator) {
-    var _a;
-    if (this.packDropdownIconEl) {
-      (0, import_obsidian6.setIcon)(this.packDropdownIconEl, packTypeIconId(packType, subGenerator));
+    this.packTrigger = { path: packPath, type: packType, sub: subGenerator };
+    this.renderPackTrigger();
+  }
+  /** The pack box label: the session hint while it is showing, otherwise the loaded pack. */
+  renderPackTrigger() {
+    var _a, _b;
+    (_a = this.packDropdownIconEl) == null ? void 0 : _a.toggle(!this.showSessionHint);
+    if (this.showSessionHint) {
+      if (this.packDropdownLabelEl) this.packDropdownLabelEl.textContent = SESSION_HINT;
+      return;
     }
+    const pack = this.packTrigger;
+    if (!pack) return;
+    if (this.packDropdownIconEl) (0, import_obsidian8.setIcon)(this.packDropdownIconEl, packTypeIconId(pack.type, pack.sub));
     if (this.packDropdownLabelEl) {
-      this.packDropdownLabelEl.textContent = ((_a = packPath.split("/").pop()) == null ? void 0 : _a.replace(/\.md$/i, "")) || packPath;
+      this.packDropdownLabelEl.textContent = ((_b = pack.path.split("/").pop()) == null ? void 0 : _b.replace(/\.md$/i, "")) || pack.path;
     }
+  }
+  clearSessionHint() {
+    if (!this.showSessionHint) return;
+    this.showSessionHint = false;
+    this.renderPackTrigger();
   }
   renderPackDropdownMenu(packs) {
     if (!this.packDropdownMenuEl) {
@@ -9555,13 +19212,14 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         cls: "nameforge-modal__pack-dropdown-item",
         attr: { type: "button" }
       });
-      (0, import_obsidian6.setIcon)(
+      (0, import_obsidian8.setIcon)(
         item.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }),
         packTypeIconId(packType, packSubGenerator(packType, compoundGenerator))
       );
       item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
       item.addEventListener("click", () => {
         this.closePackDropdown();
+        this.clearSessionHint();
         void this.loadPack(path);
       });
     });
@@ -9571,7 +19229,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       cls: "nameforge-modal__icon-button",
       attr: { title }
     });
-    (0, import_obsidian6.setIcon)(button, iconId);
+    (0, import_obsidian8.setIcon)(button, iconId);
     return button;
   }
   updateQuantityButtons() {
@@ -9613,27 +19271,41 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       modal.open();
     });
   }
-  async saveToConfiguredFile(namesText) {
+  async saveToConfiguredFile(namesText, templateOf) {
+    var _a;
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
       return;
     }
     const names = extractNamesFromMarkdown(namesText);
-    if (names.length === 0) {
+    if (names.length === 0 && !templateOf) {
       this.setStatus("No names to save. Enter at least one name.");
       return;
     }
-    const normalizedFilePath = (0, import_obsidian6.normalizePath)(filePath);
+    const sectioned = this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" ? (_a = parseNameSections(namesText)) != null ? _a : void 0 : void 0;
+    const normalizedFilePath = (0, import_obsidian8.normalizePath)(filePath);
     const folderPath = normalizedFilePath.includes("/") ? normalizedFilePath.substring(0, normalizedFilePath.lastIndexOf("/")) : "";
     if (folderPath && !this.app.vault.getFolderByPath(folderPath)) {
       this.setStatus(`Folder not found at ${folderPath}. Select or create it first.`);
       return;
     }
-    const content = createNamesFileContent(this.plugin.settings.packName || "nameForge", names, this.currentPackType);
+    const packType = this.currentPackType;
+    if (packType === "recipePack") {
+      this.setStatus("Recipes are saved from the recipe editor.");
+      return;
+    }
+    const content = createNamesFileContent(this.plugin.settings.packName || "nameForge", names, packType, {
+      templateOf,
+      sectioned
+    });
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
-      if (existingFile instanceof import_obsidian6.TFile) {
+      if (existingFile instanceof import_obsidian8.TFile) {
+        if (await this.isTemplateFile(existingFile)) {
+          this.setStatus("A template already has that name. Choose another pack name.");
+          return;
+        }
         await this.app.vault.modify(existingFile, content);
       } else {
         await this.app.vault.create(normalizedFilePath, content);
@@ -9645,26 +19317,30 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.currentNamesText = names.join("\n");
     this.setStatus("");
   }
-  async saveCompoundToConfiguredFile(parts, generator, joining) {
+  async saveCompoundToConfiguredFile(parts, generator, joining, templateOf) {
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
       return;
     }
-    if (parts.some((part) => part.length === 0)) {
+    if (!templateOf && parts.some((part) => part.length === 0)) {
       this.setStatus("No names to save. Enter at least one name for each part.");
       return;
     }
-    const normalizedFilePath = (0, import_obsidian6.normalizePath)(filePath);
+    const normalizedFilePath = (0, import_obsidian8.normalizePath)(filePath);
     const folderPath = normalizedFilePath.includes("/") ? normalizedFilePath.substring(0, normalizedFilePath.lastIndexOf("/")) : "";
     if (folderPath && !this.app.vault.getFolderByPath(folderPath)) {
       this.setStatus(`Folder not found at ${folderPath}. Select or create it first.`);
       return;
     }
-    const content = createCompoundNamesFileContent(this.plugin.settings.packName || "nameForge", parts, generator, joining);
+    const content = createCompoundNamesFileContent(this.plugin.settings.packName || "nameForge", parts, generator, joining, templateOf);
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
-      if (existingFile instanceof import_obsidian6.TFile) {
+      if (existingFile instanceof import_obsidian8.TFile) {
+        if (await this.isTemplateFile(existingFile)) {
+          this.setStatus("A template already has that name. Choose another pack name.");
+          return;
+        }
         await this.app.vault.modify(existingFile, content);
       } else {
         await this.app.vault.create(normalizedFilePath, content);
@@ -9678,26 +19354,30 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.currentCompoundJoining = joining;
     this.setStatus("");
   }
-  async saveMixToConfiguredFile(sources) {
+  async saveMixToConfiguredFile(sources, templateOf) {
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
       return;
     }
-    if (sources.length < 2) {
+    if (!templateOf && sources.length < 2) {
       this.setStatus("A mix pack needs at least two source packs.");
       return;
     }
-    const normalizedFilePath = (0, import_obsidian6.normalizePath)(filePath);
+    const normalizedFilePath = (0, import_obsidian8.normalizePath)(filePath);
     const folderPath = normalizedFilePath.includes("/") ? normalizedFilePath.substring(0, normalizedFilePath.lastIndexOf("/")) : "";
     if (folderPath && !this.app.vault.getFolderByPath(folderPath)) {
       this.setStatus(`Folder not found at ${folderPath}. Select or create it first.`);
       return;
     }
-    const content = createMixNamesFileContent(this.plugin.settings.packName || "nameForge", sources);
+    const content = createMixNamesFileContent(this.plugin.settings.packName || "nameForge", sources, templateOf);
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
-      if (existingFile instanceof import_obsidian6.TFile) {
+      if (existingFile instanceof import_obsidian8.TFile) {
+        if (await this.isTemplateFile(existingFile)) {
+          this.setStatus("A template already has that name. Choose another pack name.");
+          return;
+        }
         await this.app.vault.modify(existingFile, content);
       } else {
         await this.app.vault.create(normalizedFilePath, content);
@@ -9719,7 +19399,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       this.setStatus("Set a folder to store name packs before browsing them.");
       return;
     }
-    let folder = this.app.vault.getFolderByPath((0, import_obsidian6.normalizePath)(folderPath));
+    let folder = this.app.vault.getFolderByPath((0, import_obsidian8.normalizePath)(folderPath));
     if (!folder) {
       try {
         folder = await ensureVaultFolder(this.app, folderPath);
@@ -9734,13 +19414,18 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     }
     const packs = [];
     for (const child of folder.children) {
-      if (!(child instanceof import_obsidian6.TFile) || child.extension !== "md") {
+      if (!(child instanceof import_obsidian8.TFile) || child.extension !== "md") {
         continue;
       }
       try {
         const content = await this.app.vault.cachedRead(child);
+        if (isRecipeContent(content)) {
+          if (!parseRecipeContent(content).recipe.template) packs.push({ path: child.path, packType: "recipePack" });
+          continue;
+        }
         if (isValidNamePackContent(content)) {
           const parsed = parseNamesFileContent(content);
+          if (parsed.template) continue;
           packs.push({
             path: child.path,
             packType: parsed.packType,
@@ -9773,9 +19458,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     await this.loadPack(defaultPack);
   }
   async loadPack(packPath) {
-    var _a, _b, _c, _d;
-    const file = this.app.vault.getFileByPath((0, import_obsidian6.normalizePath)(packPath));
-    if (!(file instanceof import_obsidian6.TFile)) {
+    var _a, _b, _c, _d, _e, _f;
+    const file = this.app.vault.getFileByPath((0, import_obsidian8.normalizePath)(packPath));
+    if (!(file instanceof import_obsidian8.TFile)) {
       this.setStatus(`Pack not found at ${packPath}.`);
       return;
     }
@@ -9786,19 +19471,29 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       this.setStatus(`Failed to load pack ${packPath}.`);
       return;
     }
-    const parsed = parseNamesFileContent(content);
+    if (isRecipeContent(content)) {
+      await this.loadRecipePack(file);
+      return;
+    }
+    this.currentRecipePath = void 0;
+    (_a = this.editRecipeButton) == null ? void 0 : _a.hide();
+    const resolved = await this.resolvePackTemplate(packPath, parseNamesFileContent(content));
+    const parsed = resolved.parsed;
+    this.currentTemplateError = resolved.error;
     if (parsed.packName) {
       this.plugin.settings.packName = parsed.packName;
     }
     this.currentPackType = parsed.packType;
+    this.currentSectioned = parsed.sectioned;
+    await this.updateSectionChoices(parsed);
     if (parsed.packType === "compoundPack") {
-      this.currentCompoundParts = (_a = parsed.parts) != null ? _a : [];
-      this.currentCompoundGenerator = (_b = parsed.compoundGenerator) != null ? _b : "breakdown";
-      this.currentCompoundJoining = (_c = parsed.compoundJoining) != null ? _c : "joined";
+      this.currentCompoundParts = (_b = parsed.parts) != null ? _b : [];
+      this.currentCompoundGenerator = (_c = parsed.compoundGenerator) != null ? _c : "breakdown";
+      this.currentCompoundJoining = (_d = parsed.compoundJoining) != null ? _d : "joined";
       this.currentMixSources = [];
       this.currentNamesText = "";
     } else if (parsed.packType === "mixPack") {
-      this.currentMixSources = (_d = parsed.mixSources) != null ? _d : [];
+      this.currentMixSources = (_e = parsed.mixSources) != null ? _e : [];
       this.currentCompoundParts = [];
       this.currentNamesText = "";
     } else {
@@ -9814,10 +19509,219 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       parsed.packType,
       packSubGenerator(parsed.packType, parsed.compoundGenerator)
     );
-    this.setStatus("");
+    this.setStatus((_f = resolved.error) != null ? _f : "");
+  }
+  /**
+   * §7: applies a pack's template. A missing template, a template that itself has a template, or
+   * one of a different pack type stops generation with a message naming the template.
+   */
+  /** §7: saving never overwrites a template (e.g. a derived pack given its template's name). */
+  async isTemplateFile(file) {
+    try {
+      const frontmatter = (await this.app.vault.cachedRead(file)).match(/^---\s*\n([\s\S]*?)\n---/);
+      return !!frontmatter && !!parseTemplateFields(frontmatter[1]).template;
+    } catch (e) {
+      return false;
+    }
+  }
+  async resolvePackTemplate(path, parsed) {
+    if (!parsed.templateOf) return { parsed };
+    const file = this.app.metadataCache.getFirstLinkpathDest(parsed.templateOf, path);
+    let template;
+    if (file instanceof import_obsidian8.TFile) {
+      try {
+        template = parseNamesFileContent(await this.app.vault.cachedRead(file));
+      } catch (e) {
+        template = void 0;
+      }
+    }
+    return applyTemplate(parsed, template);
+  }
+  /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
+  async loadRecipePack(file) {
+    var _a, _b;
+    this.currentPackType = "recipePack";
+    this.currentRecipePath = file.path;
+    this.recipeEtymology = void 0;
+    this.currentNamesText = "";
+    this.currentSectioned = void 0;
+    this.currentTemplateError = void 0;
+    this.sectionChoices = [];
+    (_a = this.sectionSelectEl) == null ? void 0 : _a.hide();
+    (_b = this.editRecipeButton) == null ? void 0 : _b.toggle(this.activeSection === "markov");
+    this.plugin.settings.packName = file.basename;
+    this.plugin.settings.namesFilePath = file.path;
+    this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
+    await this.plugin.saveSettings();
+    this.updatePackDropdownTrigger(file.path, "recipePack");
+    const { problems } = parseRecipeContent(await this.app.vault.cachedRead(file));
+    this.setStatus(problems.join(" "));
+  }
+  async runRecipe() {
+    var _a;
+    const file = this.currentRecipePath ? this.app.vault.getFileByPath(this.currentRecipePath) : null;
+    if (!(file instanceof import_obsidian8.TFile)) {
+      this.setStatus("Recipe not found. Reselect it from the pack list.");
+      return;
+    }
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const loaded = await host.loadRecipe(file);
+    if (loaded.error) {
+      this.setStatus(loaded.error);
+      return;
+    }
+    const slots = await host.resolveSlots(loaded.recipe, file.path);
+    const seedOverride = this.seedLocked ? parseSeedInput((_a = this.seedInputEl) == null ? void 0 : _a.value) : void 0;
+    let result;
+    try {
+      result = generatePlaceNames({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride });
+    } catch (error) {
+      this.setStatus(error instanceof Error ? error.message : "Couldn't generate names from this recipe.");
+      return;
+    }
+    if (this.recipeEtymology === void 0) this.recipeEtymology = loaded.recipe.render.etymology;
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(result.names);
+    await this.recordGenerationHistory(result.names.length);
+    this.setStatus([...loaded.problems, ...result.notices, ...host.getNotices()].join(" "));
+  }
+  /** Recipe results: placeholders muted, etymology beneath each name when the toggle is on. */
+  renderRecipeResults(names) {
+    if (!this.resultsEl) return;
+    this.resultsEl.empty();
+    const list = this.resultsEl.createEl("ul", { cls: "nameforge-modal__results-list nameforge-modal__recipe-results" });
+    list.toggleClass("is-etymology-hidden", !this.recipeEtymology);
+    const actions = this.resultsEl.createDiv({ cls: "nameforge-modal__results-actions" });
+    this.buildSeedControls(actions.createDiv({ cls: "nameforge-modal__seed-group" }));
+    const buttonsGroup = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
+    const button = (icon, title) => {
+      const b = buttonsGroup.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title } });
+      (0, import_obsidian8.setIcon)(b, icon);
+      return b;
+    };
+    const etymologyButton = button("list-tree", "Etymology");
+    const updateEtymology = () => {
+      etymologyButton.toggleClass("is-active", !!this.recipeEtymology);
+      etymologyButton.setAttribute("aria-pressed", String(!!this.recipeEtymology));
+      list.toggleClass("is-etymology-hidden", !this.recipeEtymology);
+    };
+    etymologyButton.addEventListener("click", () => {
+      this.recipeEtymology = !this.recipeEtymology;
+      updateEtymology();
+    });
+    updateEtymology();
+    const insertButton = button(ICON_TEXT_INSERT, "Insert");
+    const checklistButton = button(ICON_CHECKLIST_INSERT, "Insert checklist");
+    const bulletButton = button(ICON_BULLET_INSERT, "Insert bullet list");
+    const selected = () => Array.from(list.querySelectorAll("li.is-selected")).map((el) => names[Number(el.dataset.index)].text);
+    const update = () => {
+      const n = selected().length;
+      insertButton.disabled = n !== 1;
+      checklistButton.disabled = n === 0;
+      bulletButton.disabled = n === 0;
+    };
+    this.clearResultsSelection = () => {
+      list.querySelectorAll("li.is-selected").forEach((el) => el.classList.remove("is-selected"));
+      update();
+    };
+    names.forEach((n, i) => {
+      const item = list.createEl("li", { attr: { "data-index": String(i) } });
+      const nameEl = item.createDiv({ cls: "nameforge-modal__recipe-name" });
+      for (const part of n.text.split(/(\[[^\]]+\])/)) {
+        if (!part) continue;
+        if (part.startsWith("[")) nameEl.createSpan({ cls: "nameforge-modal__placeholder-part", text: part });
+        else nameEl.appendText(part);
+      }
+      item.createDiv({ cls: "nameforge-modal__recipe-etymology", text: n.etymology });
+      item.addEventListener("click", () => {
+        item.classList.toggle("is-selected");
+        update();
+      });
+    });
+    if (names.length === 0) list.createEl("li", { cls: "nameforge-modal__placeholder", text: "No names generated." });
+    insertButton.addEventListener("click", () => {
+      const [text] = selected();
+      if (text) this.insertPlainText(text);
+    });
+    checklistButton.addEventListener("click", () => {
+      const lines = selected();
+      if (lines.length > 0) this.insertNamesAsList(lines, "checklist");
+    });
+    bulletButton.addEventListener("click", () => {
+      const lines = selected();
+      if (lines.length > 0) this.insertNamesAsList(lines, "bullet");
+    });
+    if (this.panelMode) {
+      const history = this.resultsEl.createEl("button", { cls: "nameforge-modal__panel-action", attr: { type: "button" } });
+      (0, import_obsidian8.setIcon)(history.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
+      history.createSpan({ cls: "nameforge-modal__panel-action-label", text: "previous generations" });
+      history.addEventListener("click", () => new PreviousGenerationsModal(this.app, this).open());
+    }
+    update();
+  }
+  /** Opens the recipe editor for a new recipe, or for the recipe at `path`. */
+  async openRecipeEditor(path) {
+    var _a;
+    const folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian8.normalizePath)(folderPath));
+    const packs = [];
+    const lists = [];
+    const templates = [];
+    for (const child of (_a = folder == null ? void 0 : folder.children) != null ? _a : []) {
+      if (!(child instanceof import_obsidian8.TFile) || child.extension !== "md") continue;
+      const content = await this.app.vault.cachedRead(child);
+      if (isRecipeContent(content)) {
+        const parsed = parseRecipeContent(content);
+        if (parsed.recipe.template) templates.push({ name: child.basename, description: parsed.body.trim().split("\n")[0] || "No description" });
+      } else if (isWordListContent(content)) {
+        lists.push(child.basename);
+      } else if (isValidNamePackContent(content) && !parseNamesFileContent(content).template) {
+        packs.push(child.basename);
+      }
+    }
+    const file = path ? this.app.vault.getFileByPath(path) : null;
+    new RecipeEditorModal(this.app, {
+      folderPath,
+      file: file instanceof import_obsidian8.TFile ? file : void 0,
+      packs: packs.sort(),
+      lists: lists.sort(),
+      templates: templates.sort((a, b) => a.name.localeCompare(b.name)),
+      onSaved: (saved) => {
+        this.plugin.settings.namesFilePath = saved;
+        void this.refreshPackDropdown().then(() => this.loadPack(saved));
+      }
+    }).open();
+  }
+  /** Fills the Section selector for List and Breakdown packs with sections, and Mix packs whose sources have them. */
+  async updateSectionChoices(parsed) {
+    var _a;
+    let choices = [];
+    if (parsed.sectioned) {
+      choices = sectionOptions(parsed.sectioned);
+    } else if (parsed.packType === "mixPack") {
+      const index = await this.scanFolderPacks();
+      const seen = /* @__PURE__ */ new Set();
+      for (const ref of (_a = parsed.mixSources) != null ? _a : []) {
+        const source = findPackInIndex(index, ref.packName);
+        for (const option of (source == null ? void 0 : source.parsed.sectioned) ? sectionOptions(source.parsed.sectioned) : []) {
+          if (seen.has(option.label.toLowerCase())) continue;
+          seen.add(option.label.toLowerCase());
+          choices.push(option);
+        }
+      }
+    }
+    this.sectionChoices = choices;
+    this.currentSectionRequest = void 0;
+    const select = this.sectionSelectEl;
+    if (!select) return;
+    select.empty();
+    select.createEl("option", { text: "whole pack", value: "-1" });
+    choices.forEach((c, i) => select.createEl("option", { text: c.label, value: String(i) }));
+    select.value = "-1";
+    select.toggle(this.activeSection === "markov" && choices.length > 0);
   }
   async generateSelectedCount() {
-    var _a, _b;
+    var _a, _b, _c;
     const wording = SHAPE_SECTION_WORDING[this.activeSection];
     if (wording) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_a = this.seedInputEl) == null ? void 0 : _a.value) : void 0;
@@ -9833,11 +19737,44 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       this.setStatus("");
       return;
     }
+    if (this.activeSection === "nameAgeing") {
+      await this.runAgeing();
+      return;
+    }
+    const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
+    if (colonialPart) {
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_b = this.seedInputEl) == null ? void 0 : _b.value) : void 0;
+      const tradition = this.selectedTradition[colonialPart];
+      const context = this.selectedContext[colonialPart];
+      const result2 = generateColonialShapesDetailed({
+        count: this.generationCount,
+        seed: seedOverride2,
+        part: colonialPart,
+        tradition,
+        context
+      });
+      this.currentSeed = result2.seed;
+      this.renderResults(result2.names);
+      await this.recordGenerationHistory(
+        result2.names.length,
+        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context)
+      );
+      this.setStatus("");
+      return;
+    }
     if (this.activeSection !== "markov") {
       this.setStatus(`${SECTION_LABELS[this.activeSection]} has no packs yet.`);
       return;
     }
-    const seedOverride = this.seedLocked ? parseSeedInput((_b = this.seedInputEl) == null ? void 0 : _b.value) : void 0;
+    if (this.currentPackType === "recipePack") {
+      await this.runRecipe();
+      return;
+    }
+    if (this.currentTemplateError) {
+      this.setStatus(this.currentTemplateError);
+      return;
+    }
+    const seedOverride = this.seedLocked ? parseSeedInput((_c = this.seedInputEl) == null ? void 0 : _c.value) : void 0;
     if (this.currentPackType === "compoundPack") {
       const result2 = generateCompoundNamesDetailed(this.currentCompoundParts, {
         count: this.generationCount,
@@ -9866,14 +19803,19 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         return;
       }
       const index = await this.scanFolderPacks();
-      const mixEntry = index.find((entry) => entry.path === (0, import_obsidian6.normalizePath)(mixPath));
+      const mixEntry = index.find((entry) => entry.path === (0, import_obsidian8.normalizePath)(mixPath));
       if (!mixEntry || mixEntry.parsed.packType !== "mixPack") {
         this.renderResults([], "Select a mix pack to generate from.");
         this.setStatus("Mix pack not found. Reselect it from the pack list.");
         return;
       }
       const mixData = mixEntry.parsed;
-      const resolved = resolveMixSources((0, import_obsidian6.normalizePath)(mixPath), mixData, index);
+      if (mixEntry.templateError) {
+        this.renderResults([], mixEntry.templateError);
+        this.setStatus(mixEntry.templateError);
+        return;
+      }
+      const resolved = resolveMixSources((0, import_obsidian8.normalizePath)(mixPath), mixData, index, void 0, this.currentSectionRequest);
       if (resolved.error) {
         this.renderResults([], resolved.error);
         this.setStatus(resolved.error);
@@ -9896,8 +19838,19 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       this.setStatus("");
       return;
     }
+    let namesText = this.currentNamesText;
+    let sectionNotices = [];
+    if (this.currentSectionRequest && this.currentSectioned) {
+      const selection = selectSectionNames(
+        this.currentSectioned,
+        this.currentSectionRequest,
+        this.currentPackType === "breakdownPack" ? 20 : 0
+      );
+      namesText = selection.names.join("\n");
+      sectionNotices = selection.notices;
+    }
     const result = generateNamesFromSource(
-      this.currentNamesText,
+      namesText,
       this.currentPackType,
       this.generationCount,
       this.plugin.settings,
@@ -9911,7 +19864,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
     this.currentSeed = result.seed;
     this.renderResults(result.names);
     await this.recordGenerationHistory(result.names.length);
-    this.setStatus("");
+    this.setStatus(sectionNotices.join(" "));
   }
   /**
    * Appends the just-used seed to the config file's generation history,
@@ -9965,7 +19918,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       cls: "nameforge-modal__icon-action",
       attr: { type: "button", "aria-pressed": String(this.seedLocked) }
     });
-    (0, import_obsidian6.setIcon)(this.seedLockButton, ICON_SEED_LOCK);
+    (0, import_obsidian8.setIcon)(this.seedLockButton, ICON_SEED_LOCK);
     this.seedLockButton.addEventListener("click", () => {
       this.seedLocked = !this.seedLocked;
       this.updateSeedLockButton();
@@ -9975,7 +19928,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       cls: "nameforge-modal__icon-action",
       attr: { type: "button", title: "Copy seed" }
     });
-    (0, import_obsidian6.setIcon)(copyButton, ICON_SEED_COPY);
+    (0, import_obsidian8.setIcon)(copyButton, ICON_SEED_COPY);
     copyButton.addEventListener("click", () => {
       void this.copySeedToClipboard();
     });
@@ -9983,9 +19936,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       cls: "nameforge-modal__icon-action",
       attr: { type: "button", title: "Previous generations" }
     });
-    (0, import_obsidian6.setIcon)(historyButton, ICON_PREVIOUS_GENERATIONS);
+    (0, import_obsidian8.setIcon)(historyButton, ICON_PREVIOUS_GENERATIONS);
     historyButton.addEventListener("click", () => {
-      new PreviousGenerationsModal(this.app, this).open();
+      if (this.activeSection === "nameAgeing") new AgeingHistoryModal(this.app, this).open();
+      else new PreviousGenerationsModal(this.app, this).open();
     });
   }
   renderResults(names, placeholderMessage) {
@@ -10002,17 +19956,17 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Insert" }
     });
-    (0, import_obsidian6.setIcon)(insertButton, ICON_TEXT_INSERT);
+    (0, import_obsidian8.setIcon)(insertButton, ICON_TEXT_INSERT);
     const checklistButton = buttonsGroup.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Insert checklist" }
     });
-    (0, import_obsidian6.setIcon)(checklistButton, ICON_CHECKLIST_INSERT);
+    (0, import_obsidian8.setIcon)(checklistButton, ICON_CHECKLIST_INSERT);
     const bulletButton = buttonsGroup.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Insert bullet list" }
     });
-    (0, import_obsidian6.setIcon)(bulletButton, ICON_BULLET_INSERT);
+    (0, import_obsidian8.setIcon)(bulletButton, ICON_BULLET_INSERT);
     const getSelectedNames = () => Array.from(list.querySelectorAll("li.is-selected")).map((el) => {
       var _a;
       return (_a = el.textContent) != null ? _a : "";
@@ -10055,7 +20009,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         cls: "nameforge-modal__panel-action",
         attr: { type: "button" }
       });
-      (0, import_obsidian6.setIcon)(createPack.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_CREATE_PACKS);
+      (0, import_obsidian8.setIcon)(createPack.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_CREATE_PACKS);
       createPack.createSpan({
         cls: "nameforge-modal__panel-action-label",
         text: "create name pack"
@@ -10067,7 +20021,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian6.Modal {
         cls: "nameforge-modal__panel-action",
         attr: { type: "button" }
       });
-      (0, import_obsidian6.setIcon)(
+      (0, import_obsidian8.setIcon)(
         previousGenerations.createSpan({ cls: "nameforge-modal__panel-action-icon" }),
         ICON_PREVIOUS_GENERATIONS
       );
@@ -10136,12 +20090,16 @@ ${indent}${marker}${name}`).join("");
     const iconsByName = /* @__PURE__ */ new Map();
     const folderPath = this.getFolderPath();
     if (!folderPath) return iconsByName;
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian6.normalizePath)(folderPath));
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian8.normalizePath)(folderPath));
     if (!folder) return iconsByName;
     for (const child of folder.children) {
-      if (!(child instanceof import_obsidian6.TFile) || child.extension !== "md") continue;
+      if (!(child instanceof import_obsidian8.TFile) || child.extension !== "md") continue;
       try {
         const content = await this.app.vault.cachedRead(child);
+        if (isRecipeContent(content)) {
+          iconsByName.set(child.basename, packTypeIconId("recipePack"));
+          continue;
+        }
         if (!isValidNamePackContent(content)) continue;
         const parsed = parseNamesFileContent(content);
         if (!parsed.packName) continue;
@@ -10159,10 +20117,10 @@ ${indent}${marker}${name}`).join("");
     const index = [];
     const folderPath = this.getFolderPath();
     if (!folderPath) return index;
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian6.normalizePath)(folderPath));
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian8.normalizePath)(folderPath));
     if (!folder) return index;
     for (const child of folder.children) {
-      if (!(child instanceof import_obsidian6.TFile) || child.extension !== "md") continue;
+      if (!(child instanceof import_obsidian8.TFile) || child.extension !== "md") continue;
       try {
         const content = await this.app.vault.cachedRead(child);
         if (!isValidNamePackContent(content)) continue;
@@ -10171,11 +20129,48 @@ ${indent}${marker}${name}`).join("");
         continue;
       }
     }
+    for (const entry of index) {
+      if (!entry.parsed.templateOf) continue;
+      const resolved = await this.resolvePackTemplate(entry.path, entry.parsed);
+      entry.parsed = resolved.parsed;
+      if (resolved.error) entry.templateError = resolved.error;
+    }
     return index;
+  }
+  /** Template packs of one type (or word lists), for "Start from template" in the editor. */
+  async listTemplates(kind) {
+    var _a, _b, _c, _d;
+    const folderPath = this.getFolderPath();
+    const folder = folderPath ? this.app.vault.getFolderByPath((0, import_obsidian8.normalizePath)(folderPath)) : null;
+    if (!folder) return [];
+    const out = [];
+    for (const child of folder.children) {
+      if (!(child instanceof import_obsidian8.TFile) || child.extension !== "md") continue;
+      try {
+        const content = await this.app.vault.cachedRead(child);
+        if (kind === "wordList") {
+          if (!isWordListContent(content)) continue;
+          const parsed = parseWordListFileContent(content, child.basename);
+          if (!parsed.template) continue;
+          const sections = parsed.list.sections.map((s) => s.name);
+          out.push({ name: child.basename, description: sections.length > 0 ? sections.join(", ") : "No sections" });
+        } else {
+          if (!isValidNamePackContent(content)) continue;
+          const parsed = parseNamesFileContent(content);
+          if (!parsed.template || parsed.packType !== kind) continue;
+          const sections = (_b = (_a = parsed.sectioned) == null ? void 0 : _a.sections.map((s) => s.name)) != null ? _b : [];
+          const count = parsed.packType === "mixPack" ? `${(_d = (_c = parsed.mixSources) == null ? void 0 : _c.length) != null ? _d : 0} sources` : `${parsed.names.length} names`;
+          out.push({ name: child.basename, description: sections.length > 0 ? `${count}; sections: ${sections.join(", ")}` : count });
+        }
+      } catch (e) {
+        continue;
+      }
+    }
+    return out.sort((a, b) => a.name.localeCompare(b.name));
   }
   async listFolderPacks() {
     const index = await this.scanFolderPacks();
-    return index.map((entry) => {
+    return index.filter((entry) => !entry.parsed.template).map((entry) => {
       var _a;
       return {
         path: entry.path,
@@ -10186,7 +20181,82 @@ ${indent}${marker}${name}`).join("");
     });
   }
 };
-var PreviousGenerationsModal = class extends import_obsidian6.Modal {
+var CONTEXT_SHORT_LABELS = {
+  none: "none",
+  "sparse-or-weak-native-presence": "sparse",
+  "contested-frontier": "contested",
+  "wild-and-unsettled": "wild",
+  imposition: "imposition",
+  accommodation: "accommodation",
+  adoption: "adoption"
+};
+var TraditionGuideModal = class extends import_obsidian8.Modal {
+  constructor(app, part, onSelect) {
+    super(app);
+    this.part = part;
+    this.onSelect = onSelect;
+  }
+  onOpen() {
+    this.titleEl.setText("Tradition guide");
+    this.modalEl.addClass("nameforge-guide-modal");
+    const list = this.contentEl.createDiv({ cls: "nameforge-guide-modal__list" });
+    for (const tradition of COLONIAL_TRADITIONS) {
+      const available = tradition.parts.includes(this.part);
+      const entry = list.createDiv({
+        cls: "nameforge-guide-modal__entry" + (available ? "" : " is-unavailable"),
+        attr: available ? { role: "button", tabindex: "0" } : {}
+      });
+      const heading = entry.createDiv({ cls: "nameforge-guide-modal__heading" });
+      heading.createSpan({ cls: "nameforge-guide-modal__name", text: tradition.label });
+      heading.createSpan({ cls: "nameforge-guide-modal__parts", text: partNote(tradition.parts).replace(" only", "") });
+      entry.createDiv({ cls: "nameforge-guide-modal__text", text: tradition.guide });
+      if (available) {
+        entry.addEventListener("click", () => {
+          this.onSelect(tradition.id === "general" ? void 0 : tradition.id);
+          this.close();
+        });
+      }
+    }
+  }
+  onClose() {
+    this.contentEl.empty();
+  }
+};
+var AgeingHistoryModal = class extends import_obsidian8.Modal {
+  constructor(app, parent) {
+    super(app);
+    this.parent = parent;
+  }
+  onOpen() {
+    var _a;
+    this.titleEl.setText("Ageing history");
+    this.modalEl.addClass("nameforge-history-modal");
+    const { contentEl } = this;
+    contentEl.addClass("nameforge-history-modal__content");
+    const history = (_a = this.parent.plugin.settings.ageingHistory) != null ? _a : [];
+    if (history.length === 0) {
+      contentEl.createDiv({ cls: "nameforge-history-modal__empty", text: "No ageing runs yet." });
+      return;
+    }
+    const list = contentEl.createDiv({ cls: "nameforge-history-modal__list" });
+    for (const entry of history) {
+      const row = list.createDiv({ cls: "nameforge-history-modal__row" });
+      (0, import_obsidian8.setIcon)(row.createSpan({ cls: "nameforge-history-modal__pack-icon" }), SECTION_ICONS.nameAgeing);
+      row.createSpan({ cls: "nameforge-history-modal__pack-name", text: entry.label });
+      row.createSpan({ cls: "nameforge-history-modal__seed", text: String(entry.seed) });
+      const copy = row.createEl("button", { cls: "nameforge-history-modal__copy", attr: { type: "button", title: "Copy seed" } });
+      (0, import_obsidian8.setIcon)(copy, ICON_SEED_COPY);
+      copy.addEventListener("click", (event) => {
+        event.stopPropagation();
+        void navigator.clipboard.writeText(String(entry.seed));
+      });
+    }
+  }
+  onClose() {
+    this.contentEl.empty();
+  }
+};
+var PreviousGenerationsModal = class extends import_obsidian8.Modal {
   constructor(app, parent) {
     super(app);
     this.parent = parent;
@@ -10218,9 +20288,9 @@ var PreviousGenerationsModal = class extends import_obsidian6.Modal {
     for (const entry of history) {
       const row = list.createDiv({ cls: "nameforge-history-modal__row" });
       const iconEl = row.createSpan({ cls: "nameforge-history-modal__pack-icon" });
-      (0, import_obsidian6.setIcon)(
+      (0, import_obsidian8.setIcon)(
         iconEl,
-        entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME) ? SECTION_ICONS.genericPlaceNames : entry.packName.startsWith(PLACE_SHAPES_HISTORY_NAME) ? SECTION_ICONS.placeShapes : (_b = iconsByName.get(entry.packName)) != null ? _b : ICON_BREAKDOWN_PACK
+        entry.packName.startsWith(SECTION_LABELS.explorationPlaceShapes) ? SECTION_ICONS.explorationPlaceShapes : entry.packName.startsWith(SECTION_LABELS.empireExpansionPlaceShapes) ? SECTION_ICONS.empireExpansionPlaceShapes : entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME) ? SECTION_ICONS.genericPlaceNames : entry.packName.startsWith(PLACE_SHAPES_HISTORY_NAME) ? SECTION_ICONS.placeShapes : (_b = iconsByName.get(entry.packName)) != null ? _b : ICON_BREAKDOWN_PACK
       );
       row.createSpan({
         cls: "nameforge-history-modal__pack-name",
@@ -10234,7 +20304,7 @@ var PreviousGenerationsModal = class extends import_obsidian6.Modal {
         cls: "nameforge-history-modal__copy",
         attr: { type: "button", title: "Copy seed" }
       });
-      (0, import_obsidian6.setIcon)(copyButton, ICON_SEED_COPY);
+      (0, import_obsidian8.setIcon)(copyButton, ICON_SEED_COPY);
       copyButton.addEventListener("click", (event) => {
         event.stopPropagation();
         void navigator.clipboard.writeText(String(entry.seed));
@@ -10243,8 +20313,9 @@ var PreviousGenerationsModal = class extends import_obsidian6.Modal {
   }
 };
 var NAME_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa";
+var WORD_LIST_TEXTAREA_PLACEHOLDER = "One ## section per slot category, each with a table.\n\n## Wild animal\n| Modern | Traditional | Plural | Combining forms | Fuses |\n|---|---|---|---|---|\n| kangaroo | \u2014 | kangaroos | Kangaroo- | No |\n| emu | \u2014 | emus | Emu- | Yes |";
 var PLACE_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
-var NameForgeEditorModal = class extends import_obsidian6.Modal {
+var NameForgeEditorModal = class extends import_obsidian8.Modal {
   constructor(app, parent, initialText, initialPackName) {
     super(app);
     this.inputEl = null;
@@ -10254,6 +20325,14 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     this.compoundButton = null;
     this.placeButton = null;
     this.mixButton = null;
+    this.wordListButton = null;
+    /** §9: the editor is creating a word list rather than a name pack. */
+    this.wordListMode = false;
+    /** §7: "Start from template" — the chosen template's note name, if any. */
+    this.templateOf = void 0;
+    this.templateSelectEl = null;
+    this.templateHintEl = null;
+    this.templateOptions = [];
     this.selectedPackType = "breakdownPack";
     this.compoundSectionEl = null;
     this.compoundPartsCount = 2;
@@ -10332,6 +20411,30 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     this.mixButton.addEventListener("click", () => {
       this.setPackType("mixPack");
     });
+    this.wordListButton = typeToggle.createEl("button", {
+      cls: "nameforge-modal__toggle-button",
+      text: "Word list"
+    });
+    this.wordListButton.addEventListener("click", () => {
+      this.wordListMode = true;
+      this.updateTypeButtons();
+      void this.loadTemplateOptions();
+    });
+    const recipeButton = typeToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Recipe" });
+    recipeButton.addEventListener("click", () => {
+      this.close();
+      void this.parent.openRecipeEditor();
+    });
+    const templateRow = contentEl.createDiv({ cls: "nameforge-editor-modal__template-row" });
+    templateRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from template" });
+    this.templateSelectEl = templateRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from template" } });
+    this.templateSelectEl.addEventListener("change", () => {
+      var _a, _b;
+      const value = (_b = (_a = this.templateSelectEl) == null ? void 0 : _a.value) != null ? _b : "";
+      this.templateOf = value || void 0;
+      this.updateTemplateHint();
+    });
+    this.templateHintEl = contentEl.createDiv({ cls: "nameforge-editor-modal__template-hint" });
     const stage = contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
     this.inputEl = stage.createEl("textarea", {
       cls: "nameforge-modal__textarea nameforge-editor-modal__stage-pane",
@@ -10347,12 +20450,13 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     this.updateTypeButtons();
     this.updateCompoundControls();
     void this.loadMixPackOptions();
+    void this.loadTemplateOptions();
     const controls = contentEl.createDiv({ cls: "nameforge-modal__controls" });
     const saveButton = controls.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Save names" }
     });
-    (0, import_obsidian6.setIcon)(saveButton, ICON_SAVE);
+    (0, import_obsidian8.setIcon)(saveButton, ICON_SAVE);
     saveButton.addEventListener("click", () => {
       void this.saveNames();
     });
@@ -10360,7 +20464,7 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Cancel" }
     });
-    (0, import_obsidian6.setIcon)(cancelButton, ICON_CANCEL);
+    (0, import_obsidian8.setIcon)(cancelButton, ICON_CANCEL);
     cancelButton.addEventListener("click", () => this.close());
   }
   buildCompoundSection(container) {
@@ -10416,7 +20520,7 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg nameforge-modal__mix-add",
       attr: { type: "button", title: "Add source" }
     });
-    (0, import_obsidian6.setIcon)(addButton, ICON_PLUS_SQUARE);
+    (0, import_obsidian8.setIcon)(addButton, ICON_PLUS_SQUARE);
     addButton.addEventListener("click", () => {
       this.mixSources.push({ packName: "", weight: 50 });
       this.renderMixSourceRows();
@@ -10491,7 +20595,7 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
         cls: "nameforge-modal__mix-remove",
         attr: { type: "button", title: "Remove source" }
       });
-      (0, import_obsidian6.setIcon)(removeButton, ICON_CANCEL);
+      (0, import_obsidian8.setIcon)(removeButton, ICON_CANCEL);
       removeButton.disabled = this.mixSources.length <= 2;
       removeButton.addEventListener("click", () => {
         if (this.mixSources.length <= 2) return;
@@ -10503,15 +20607,72 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
   updateMixPercentLabels() {
     if (!this.mixSourcesEl) return;
     const percents = this.mixPercents();
-    const labels = this.mixSourcesEl.querySelectorAll(".nameforge-modal__mix-percent");
-    labels.forEach((label, index) => {
+    const labels2 = this.mixSourcesEl.querySelectorAll(".nameforge-modal__mix-percent");
+    labels2.forEach((label, index) => {
       var _a;
       label.textContent = `${(_a = percents[index]) != null ? _a : 0}%`;
     });
   }
   setPackType(type) {
     this.selectedPackType = type;
+    this.wordListMode = false;
     this.updateTypeButtons();
+    void this.loadTemplateOptions();
+  }
+  /** Lists templates of the chosen type, each with a short description. */
+  async loadTemplateOptions() {
+    var _a;
+    this.templateOptions = await this.parent.listTemplates(this.wordListMode ? "wordList" : this.selectedPackType);
+    const select = this.templateSelectEl;
+    if (!select) return;
+    select.empty();
+    select.createEl("option", { text: this.templateOptions.length > 0 ? "None" : "No templates of this type", value: "" });
+    for (const t of this.templateOptions) select.createEl("option", { text: t.name, value: t.name });
+    if (!this.templateOptions.some((t) => t.name === this.templateOf)) this.templateOf = void 0;
+    select.value = (_a = this.templateOf) != null ? _a : "";
+    select.disabled = this.templateOptions.length === 0;
+    this.updateTemplateHint();
+  }
+  updateTemplateHint() {
+    const chosen = this.templateOptions.find((t) => t.name === this.templateOf);
+    if (!this.templateHintEl) return;
+    this.templateHintEl.setText(
+      chosen ? `${chosen.description}. Anything you leave empty comes from the template.` : ""
+    );
+    this.templateHintEl.toggle(!!chosen);
+  }
+  /** §9: saves the textarea as a word-list pack (tables under ## sections). */
+  async saveWordList(packName) {
+    var _a, _b;
+    const body = (_b = (_a = this.inputEl) == null ? void 0 : _a.value) != null ? _b : "";
+    const list = parseWordList(body);
+    const entries = list.unsectioned.length + list.sections.reduce((n, s) => n + s.entries.length, 0);
+    if (entries === 0 && !this.templateOf) {
+      this.parent.setStatus("No words to save. Add a table with a Modern column.");
+      return;
+    }
+    let folderPath = this.parent.getFolderPath();
+    if (!folderPath) {
+      const folder = await this.parent.promptForFolderSelection();
+      if (!folder) return;
+      folderPath = folder.path;
+    }
+    const path = (0, import_obsidian8.normalizePath)(`${folderPath}/${sanitizePackNameForFilename(packName)}.md`);
+    const content = createWordListFileContent(packName, body, this.templateOf);
+    try {
+      const existing = this.app.vault.getFileByPath(path);
+      if (existing instanceof import_obsidian8.TFile && await this.parent.isTemplateFile(existing)) {
+        this.parent.setStatus("A template already has that name. Choose another name.");
+        return;
+      }
+      if (existing instanceof import_obsidian8.TFile) await this.app.vault.modify(existing, content);
+      else await this.app.vault.create(path, content);
+    } catch (e) {
+      this.parent.setStatus(`Failed to save the word list to ${path}.`);
+      return;
+    }
+    new import_obsidian8.Notice(`nameForge: word list \u201C${packName}\u201D saved.`);
+    this.close();
   }
   setCompoundParts(count) {
     this.compoundPartsCount = count;
@@ -10526,37 +20687,40 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     this.updateCompoundControls();
   }
   updateTypeButtons() {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
-    const isBreakdown = this.selectedPackType === "breakdownPack";
-    const isList = this.selectedPackType === "listPack";
-    const isCompound = this.selectedPackType === "compoundPack";
-    const isPlace = this.selectedPackType === "placePack";
-    const isMix = this.selectedPackType === "mixPack";
-    (_a = this.breakdownButton) == null ? void 0 : _a.classList.toggle("is-active", isBreakdown);
-    (_b = this.listButton) == null ? void 0 : _b.classList.toggle("is-active", isList);
-    (_c = this.compoundButton) == null ? void 0 : _c.classList.toggle("is-active", isCompound);
-    (_d = this.placeButton) == null ? void 0 : _d.classList.toggle("is-active", isPlace);
-    (_e = this.mixButton) == null ? void 0 : _e.classList.toggle("is-active", isMix);
-    (_f = this.breakdownButton) == null ? void 0 : _f.setAttribute("aria-pressed", String(isBreakdown));
-    (_g = this.listButton) == null ? void 0 : _g.setAttribute("aria-pressed", String(isList));
-    (_h = this.compoundButton) == null ? void 0 : _h.setAttribute("aria-pressed", String(isCompound));
-    (_i = this.placeButton) == null ? void 0 : _i.setAttribute("aria-pressed", String(isPlace));
-    (_j = this.mixButton) == null ? void 0 : _j.setAttribute("aria-pressed", String(isMix));
+    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
+    const isWordList = this.wordListMode;
+    const isBreakdown = !isWordList && this.selectedPackType === "breakdownPack";
+    const isList = !isWordList && this.selectedPackType === "listPack";
+    const isCompound = !isWordList && this.selectedPackType === "compoundPack";
+    const isPlace = !isWordList && this.selectedPackType === "placePack";
+    const isMix = !isWordList && this.selectedPackType === "mixPack";
+    (_a = this.wordListButton) == null ? void 0 : _a.classList.toggle("is-active", isWordList);
+    (_b = this.wordListButton) == null ? void 0 : _b.setAttribute("aria-pressed", String(isWordList));
+    (_c = this.breakdownButton) == null ? void 0 : _c.classList.toggle("is-active", isBreakdown);
+    (_d = this.listButton) == null ? void 0 : _d.classList.toggle("is-active", isList);
+    (_e = this.compoundButton) == null ? void 0 : _e.classList.toggle("is-active", isCompound);
+    (_f = this.placeButton) == null ? void 0 : _f.classList.toggle("is-active", isPlace);
+    (_g = this.mixButton) == null ? void 0 : _g.classList.toggle("is-active", isMix);
+    (_h = this.breakdownButton) == null ? void 0 : _h.setAttribute("aria-pressed", String(isBreakdown));
+    (_i = this.listButton) == null ? void 0 : _i.setAttribute("aria-pressed", String(isList));
+    (_j = this.compoundButton) == null ? void 0 : _j.setAttribute("aria-pressed", String(isCompound));
+    (_k = this.placeButton) == null ? void 0 : _k.setAttribute("aria-pressed", String(isPlace));
+    (_l = this.mixButton) == null ? void 0 : _l.setAttribute("aria-pressed", String(isMix));
     if (this.inputEl) {
-      this.inputEl.placeholder = isPlace ? PLACE_TEXTAREA_PLACEHOLDER : NAME_TEXTAREA_PLACEHOLDER;
+      this.inputEl.placeholder = isWordList ? WORD_LIST_TEXTAREA_PLACEHOLDER : isPlace ? PLACE_TEXTAREA_PLACEHOLDER : NAME_TEXTAREA_PLACEHOLDER;
     }
     if (isCompound) {
-      (_k = this.inputEl) == null ? void 0 : _k.hide();
-      (_l = this.compoundSectionEl) == null ? void 0 : _l.show();
-      (_m = this.mixSectionEl) == null ? void 0 : _m.hide();
+      (_m = this.inputEl) == null ? void 0 : _m.hide();
+      (_n = this.compoundSectionEl) == null ? void 0 : _n.show();
+      (_o = this.mixSectionEl) == null ? void 0 : _o.hide();
     } else if (isMix) {
-      (_n = this.inputEl) == null ? void 0 : _n.hide();
-      (_o = this.compoundSectionEl) == null ? void 0 : _o.hide();
-      (_p = this.mixSectionEl) == null ? void 0 : _p.show();
+      (_p = this.inputEl) == null ? void 0 : _p.hide();
+      (_q = this.compoundSectionEl) == null ? void 0 : _q.hide();
+      (_r = this.mixSectionEl) == null ? void 0 : _r.show();
     } else {
-      (_q = this.inputEl) == null ? void 0 : _q.show();
-      (_r = this.compoundSectionEl) == null ? void 0 : _r.hide();
-      (_s = this.mixSectionEl) == null ? void 0 : _s.hide();
+      (_s = this.inputEl) == null ? void 0 : _s.show();
+      (_t = this.compoundSectionEl) == null ? void 0 : _t.hide();
+      (_u = this.mixSectionEl) == null ? void 0 : _u.hide();
     }
   }
   updateCompoundControls() {
@@ -10589,9 +20753,14 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
   async saveNames() {
     var _a, _b, _c;
     const packName = ((_b = (_a = this.packNameInput) == null ? void 0 : _a.value) == null ? void 0 : _b.trim()) || "nameForge";
+    const templateOf = this.templateOf;
+    if (this.wordListMode) {
+      await this.saveWordList(packName);
+      return;
+    }
     if (this.selectedPackType === "compoundPack") {
       const parts = this.partTextareas.slice(0, this.compoundPartsCount).map((textarea) => extractNamesFromMarkdown(textarea.value || ""));
-      if (parts.some((part) => part.length === 0)) {
+      if (!templateOf && parts.some((part) => part.length === 0)) {
         this.parent.setStatus("No names to save. Enter at least one name for each part.");
         return;
       }
@@ -10609,9 +20778,9 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
       this.parent.plugin.settings.folderPath = folderPath2;
       this.parent.plugin.settings.folderPath = folderPath2;
       const fileName2 = sanitizePackNameForFilename(packName);
-      this.parent.plugin.settings.namesFilePath = (0, import_obsidian6.normalizePath)(`${folderPath2}/${fileName2}.md`);
+      this.parent.plugin.settings.namesFilePath = (0, import_obsidian8.normalizePath)(`${folderPath2}/${fileName2}.md`);
       await this.parent.plugin.saveSettings();
-      await this.parent.saveCompoundToConfiguredFile(parts, this.compoundGenerator, this.compoundJoining);
+      await this.parent.saveCompoundToConfiguredFile(parts, this.compoundGenerator, this.compoundJoining, templateOf);
       this.close();
       return;
     }
@@ -10621,7 +20790,7 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
         weight: source.weight > 0 ? source.weight : 1
       })).filter((source) => source.packName.length > 0);
       const unique = new Set(sources.map((source) => source.packName));
-      if (sources.length < 2 || unique.size < 2) {
+      if (!templateOf && (sources.length < 2 || unique.size < 2)) {
         this.parent.setStatus("A mix pack needs at least two different source packs.");
         return;
       }
@@ -10638,14 +20807,14 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
       }
       this.parent.plugin.settings.folderPath = folderPath2;
       const fileName2 = sanitizePackNameForFilename(packName);
-      this.parent.plugin.settings.namesFilePath = (0, import_obsidian6.normalizePath)(`${folderPath2}/${fileName2}.md`);
+      this.parent.plugin.settings.namesFilePath = (0, import_obsidian8.normalizePath)(`${folderPath2}/${fileName2}.md`);
       await this.parent.plugin.saveSettings();
-      await this.parent.saveMixToConfiguredFile(sources);
+      await this.parent.saveMixToConfiguredFile(sources, templateOf);
       this.close();
       return;
     }
     const namesText = ((_c = this.inputEl) == null ? void 0 : _c.value) || "";
-    if (!namesText.trim()) {
+    if (!namesText.trim() && !templateOf) {
       this.parent.setStatus("No names to save. Enter at least one name.");
       return;
     }
@@ -10663,9 +20832,9 @@ var NameForgeEditorModal = class extends import_obsidian6.Modal {
     this.parent.plugin.settings.folderPath = folderPath;
     this.parent.plugin.settings.folderPath = folderPath;
     const fileName = sanitizePackNameForFilename(packName);
-    this.parent.plugin.settings.namesFilePath = (0, import_obsidian6.normalizePath)(`${folderPath}/${fileName}.md`);
+    this.parent.plugin.settings.namesFilePath = (0, import_obsidian8.normalizePath)(`${folderPath}/${fileName}.md`);
     await this.parent.plugin.saveSettings();
-    await this.parent.saveToConfiguredFile(namesText);
+    await this.parent.saveToConfiguredFile(namesText, templateOf);
     this.close();
   }
 };
@@ -10695,6 +20864,227 @@ function getStoryForgeHostApi(app) {
   return sf.api;
 }
 
+// src/starterInstall.ts
+var import_obsidian9 = require("obsidian");
+
+// src/names/starterTemplates.ts
+var STARTER_RECIPES = [
+  {
+    name: "Organic Britain",
+    recipe: { shape: { part: "organic", region: "all-britain" }, register: "mixed", render: { joining: "balanced" } },
+    description: "Organic British place names drawn from all of Britain, with a mix of modern and traditional words."
+  },
+  {
+    name: "Old English Shire",
+    recipe: { shape: { part: "organic", region: "south-east" }, register: "traditional", render: { joining: "fused" } },
+    description: "South East England in traditional words, with parts readily fused into single names."
+  },
+  {
+    name: "Danelaw",
+    recipe: {
+      shape: { part: "organic", region: "east-midlands" },
+      register: "traditional",
+      slots: {
+        "personal-name": {
+          kind: "sources",
+          sources: [
+            { pack: "Saxon names", weight: 70 },
+            { pack: "Norse names", weight: 30 }
+          ]
+        }
+      }
+    },
+    description: "The East Midlands in traditional words. The personal-name slot draws 70% from \u201CSaxon names\u201D and 30% from \u201CNorse names\u201D: replace these with your own packs. Until they exist, personal names stay as placeholders."
+  },
+  {
+    name: "Northern Dales",
+    recipe: { shape: { part: "organic", region: "north" }, register: "mixed" },
+    description: "The North of England, with a mix of modern and traditional words."
+  },
+  {
+    name: "Highland Glens",
+    recipe: { shape: { part: "organic", region: "scottish-highlands-and-hebrides" }, register: "modern" },
+    description: "The Scottish Highlands and Hebrides, in modern words."
+  },
+  {
+    name: "Welsh Hills",
+    recipe: { shape: { part: "organic", region: "wales" }, register: "modern" },
+    description: "Wales, in modern words."
+  },
+  {
+    name: "Settler Frontier",
+    recipe: {
+      shape: { part: "new-land", tradition: "english-speaking-settler", context: "sparse-or-weak-native-presence" },
+      register: "modern"
+    },
+    description: "New land settled by English-speaking settlers, with a sparse or weak native presence, in modern words."
+  },
+  {
+    name: "Imperial Survey",
+    recipe: { shape: { part: "new-land", tradition: "british-imperial", context: "wild-and-unsettled" } },
+    description: "Wild and unsettled new land named by British imperial officials, navy and explorers."
+  },
+  {
+    name: "Mission Lands",
+    recipe: { shape: { part: "new-land", tradition: "spanish", context: "contested-frontier" } },
+    description: "A contested frontier named in the Spanish tradition: saints, feasts and missions."
+  },
+  {
+    name: "Roman Province",
+    recipe: { shape: { part: "established", tradition: "roman", context: "accommodation" } },
+    description: "A Roman province within an established culture, accommodating local peoples and gods."
+  },
+  {
+    name: "Company Rule",
+    recipe: { shape: { part: "established", tradition: "british-imperial", context: "imposition" } },
+    description: "British imperial rule imposed on an established culture: cantonments, civil lines and twin cities."
+  },
+  {
+    name: "Invented World",
+    recipe: {
+      shape: { part: "organic", region: "all-britain" },
+      register: "mixed",
+      slots: {
+        "calendar-date-or-feast": { kind: "placeholder" },
+        "classical-biblical-or-legendary-name": { kind: "placeholder" },
+        "settler-group": { kind: "placeholder" },
+        "ethnic-or-cultural-group": { kind: "placeholder" }
+      }
+    },
+    description: "Organic shapes for an invented world: calendar dates, classical names, settler groups and ethnic or cultural groups are left as placeholders for your own world's words."
+  }
+];
+var STARTER_WORD_LISTS = [
+  {
+    name: "European Fauna",
+    categories: ["domestic-animal", "wild-animal", "bird", "fish-and-other-creatures"],
+    description: "The built-in animal lists, ready to edit."
+  },
+  { name: "European Flora", categories: ["tree", "wild-plant", "crop"], description: "The built-in plant lists, ready to edit." },
+  {
+    name: "Landscape and Description",
+    categories: [
+      "colour",
+      "size",
+      "age",
+      "position-or-direction",
+      "shape",
+      "quality-or-condition",
+      "number",
+      "landform",
+      "water-or-wetland-feature",
+      "soil-or-ground",
+      "built-feature"
+    ],
+    description: "The built-in description and landscape lists, ready to edit."
+  },
+  {
+    name: "Life and Belief",
+    categories: [
+      "activity",
+      "produce",
+      "religious-association",
+      "season",
+      "assembly-or-law",
+      "status-or-role",
+      "ethnic-or-cultural-group",
+      "supernatural-being"
+    ],
+    description: "The built-in lists for activity, belief and people, ready to edit."
+  },
+  {
+    name: "Colonial Words",
+    categories: [
+      "resource",
+      "emotion-or-aspiration",
+      "event-or-incident",
+      "calendar-date-or-feast",
+      "imperial-claim",
+      "classical-biblical-or-legendary-name",
+      "ship",
+      "honorific-title",
+      "settler-group",
+      "distance-or-survey-mark"
+    ],
+    description: "The built-in colonial lists, ready to edit."
+  }
+];
+var LABELS = new Map([
+  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]),
+  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label])
+]);
+var FUSES_COLUMN = {
+  yes: "Yes",
+  no: "No",
+  "traditional-only": "Traditional only",
+  "number-fused": "Yes",
+  "number-spaced": "No",
+  "town-only": "Yes",
+  mile: "No"
+};
+function table(entries) {
+  const rows = entries.map((e) => {
+    var _a, _b, _c;
+    const forms = [...e.forms, ...(_a = e.traditionalForms) != null ? _a : []].map((f) => `${f}-`).join(", ");
+    return `| ${e.modern} | ${(_b = e.traditional) != null ? _b : "\u2014"} | ${(_c = e.plural) != null ? _c : "\u2014"} | ${forms || "\u2014"} | ${FUSES_COLUMN[e.fuses]} |`;
+  });
+  return ["| Modern | Traditional | Plural | Combining forms | Fuses |", "|---|---|---|---|---|", ...rows].join("\n");
+}
+function starterWordListBody(list) {
+  const sections = list.categories.map((id) => {
+    var _a, _b;
+    return `## ${(_a = LABELS.get(id)) != null ? _a : id}
+
+${table((_b = NAME_WORDS.categories[id]) != null ? _b : [])}`;
+  });
+  return `${list.description}
+
+${sections.join("\n\n")}`;
+}
+
+// src/starterInstall.ts
+function promptInstallStarterTemplates(app, defaultFolder) {
+  new EnterFolderPathModal(
+    app,
+    defaultFolder,
+    (folder) => void installStarterTemplates(app, folder),
+    "Choose a folder for the starter templates. Templates in your names folder are offered when creating packs; existing files are never replaced."
+  ).open();
+}
+async function installStarterTemplates(app, folder) {
+  const files = [
+    ...STARTER_RECIPES.map((t) => ({
+      name: t.name,
+      content: `---
+${(0, import_obsidian9.stringifyYaml)(recipeToFrontmatter({ ...t.recipe, template: true }))}---
+
+${t.description}
+`
+    })),
+    ...STARTER_WORD_LISTS.map((t) => ({
+      name: t.name,
+      content: createWordListFileContent(t.name, starterWordListBody(t), void 0, true)
+    }))
+  ];
+  let installed = 0;
+  const skipped = [];
+  for (const file of files) {
+    const path = (0, import_obsidian9.normalizePath)(`${folder.path}/${sanitizePackNameForFilename(file.name)}.md`);
+    if (app.vault.getAbstractFileByPath(path)) {
+      skipped.push(file.name);
+      continue;
+    }
+    try {
+      await app.vault.create(path, file.content);
+      installed++;
+    } catch (e) {
+      skipped.push(file.name);
+    }
+  }
+  const note = skipped.length > 0 ? ` Skipped ${skipped.length} that already exist: ${skipped.join(", ")}.` : "";
+  new import_obsidian9.Notice(`nameForge: installed ${installed} starter templates in ${folder.path || "the vault root"}.${note}`);
+}
+
 // src/main.ts
 var DEFAULT_SETTINGS = {
   namesFilePath: "",
@@ -10705,17 +21095,26 @@ var DEFAULT_SETTINGS = {
 };
 function getSettingsFilePath(settings) {
   const folderPath = resolveNamesFolderPath(settings.folderPath, settings.namesFilePath);
-  return folderPath ? (0, import_obsidian7.normalizePath)(`${folderPath}/nameForgeConfiguration.md`) : "";
+  return folderPath ? (0, import_obsidian10.normalizePath)(`${folderPath}/nameForgeConfiguration.md`) : "";
 }
 var HISTORY_LINE_PATTERN = /^-\s*(\d{8}-\d{6})\s*\|\s*(-?\d+)\s*\|\s*(.*)$/;
 var HISTORY_COUNT_SUFFIX_PATTERN = /^(.*)\s\((\d+)\)$/;
-function parseGenerationHistory(body) {
-  const headingIndex = body.indexOf("## Generation History");
+function sectionLines(body, heading) {
+  const headingIndex = body.indexOf(heading);
   if (headingIndex === -1) {
+    return null;
+  }
+  const rest = body.slice(headingIndex + heading.length);
+  const next = rest.search(/\n## /);
+  return (next === -1 ? rest : rest.slice(0, next)).split(/\r?\n/);
+}
+function parseGenerationHistory(body) {
+  const lines = sectionLines(body, "## Generation History");
+  if (!lines) {
     return [];
   }
   const entries = [];
-  for (const line of body.slice(headingIndex).split(/\r?\n/)) {
+  for (const line of lines) {
     const match = line.match(HISTORY_LINE_PATTERN);
     if (!match) {
       continue;
@@ -10731,6 +21130,35 @@ function parseGenerationHistory(body) {
     entries.push({ timestamp, seed, packName, count });
   }
   return entries;
+}
+function parseAgeingHistory(body) {
+  const lines = sectionLines(body, "## Ageing History");
+  if (!lines) {
+    return [];
+  }
+  const entries = [];
+  for (const line of lines) {
+    const match = line.match(HISTORY_LINE_PATTERN);
+    if (!match) {
+      continue;
+    }
+    const seed = Number(match[2]);
+    if (Number.isFinite(seed)) {
+      entries.push({ timestamp: match[1], seed, label: match[3].trim() });
+    }
+  }
+  return entries;
+}
+function createAgeingHistorySection(history) {
+  if (!history || history.length === 0) {
+    return "";
+  }
+  const lines = history.slice(0, MAX_HISTORY_ENTRIES).map((entry) => `- ${entry.timestamp} | ${entry.seed} | ${entry.label}`);
+  return `
+## Ageing History
+
+${lines.join("\n")}
+`;
 }
 function createGenerationHistorySection(history) {
   if (!history || history.length === 0) {
@@ -10774,9 +21202,14 @@ function parseSettingsMarkdownContent(content) {
       }
     }
   }
-  const history = parseGenerationHistory(content.slice(frontmatterMatch[0].length));
+  const body = content.slice(frontmatterMatch[0].length);
+  const history = parseGenerationHistory(body);
   if (history.length > 0) {
     parsed.previousGenerations = history;
+  }
+  const ageing = parseAgeingHistory(body);
+  if (ageing.length > 0) {
+    parsed.ageingHistory = ageing;
   }
   return parsed;
 }
@@ -10795,9 +21228,9 @@ type: configurationFile
 ${lines.join("\n")}
 ---
 `;
-  return frontmatter + createGenerationHistorySection(settings.previousGenerations);
+  return frontmatter + createGenerationHistorySection(settings.previousGenerations) + createAgeingHistorySection(settings.ageingHistory);
 }
-var NameForgePlugin = class extends import_obsidian7.Plugin {
+var NameForgePlugin = class extends import_obsidian10.Plugin {
   constructor() {
     super(...arguments);
     this.settings = {};
@@ -10815,6 +21248,16 @@ var NameForgePlugin = class extends import_obsidian7.Plugin {
       name: "Open name generator",
       callback: () => {
         this.openNameGenerator();
+      }
+    });
+    this.addCommand({
+      id: "install-starter-templates",
+      name: "Install starter templates",
+      callback: () => {
+        promptInstallStarterTemplates(
+          this.app,
+          resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER
+        );
       }
     });
     try {
@@ -10887,8 +21330,8 @@ var NameForgePlugin = class extends import_obsidian7.Plugin {
         continue;
       }
       seen.add(settingsFilePath);
-      const settingsFile = this.app.vault.getFileByPath((0, import_obsidian7.normalizePath)(settingsFilePath));
-      if (!(settingsFile instanceof import_obsidian7.TFile)) {
+      const settingsFile = this.app.vault.getFileByPath((0, import_obsidian10.normalizePath)(settingsFilePath));
+      if (!(settingsFile instanceof import_obsidian10.TFile)) {
         continue;
       }
       let content;
@@ -10915,10 +21358,10 @@ var NameForgePlugin = class extends import_obsidian7.Plugin {
       await this.saveData(this.settings);
       return;
     }
-    const normalizedPath = (0, import_obsidian7.normalizePath)(settingsFilePath);
+    const normalizedPath = (0, import_obsidian10.normalizePath)(settingsFilePath);
     const content = createSettingsMarkdownContent(this.settings);
     const existingFile = this.app.vault.getFileByPath(normalizedPath);
-    if (existingFile instanceof import_obsidian7.TFile) {
+    if (existingFile instanceof import_obsidian10.TFile) {
       await this.app.vault.modify(existingFile, content);
     } else {
       const folderPath = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath);

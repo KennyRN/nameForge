@@ -7,7 +7,12 @@ export class EnterFolderPathModal extends Modal {
   private onSubmit: (folder: TFolder) => void;
   private inputEl: HTMLInputElement | null = null;
 
-  constructor(app: App, currentPath: string, onSubmit: (folder: TFolder) => void) {
+  constructor(
+    app: App,
+    currentPath: string,
+    onSubmit: (folder: TFolder) => void,
+    private readonly message = "Enter a vault-relative folder path. Packs will be read from and saved to this folder.",
+  ) {
     super(app);
     this.currentPath = currentPath;
     this.onSubmit = onSubmit;
@@ -18,9 +23,7 @@ export class EnterFolderPathModal extends Modal {
     contentEl.empty();
     contentEl.addClass("nameforge-enter-folder-modal");
 
-    contentEl.createEl("p", {
-      text: "Enter a vault-relative folder path. Packs will be read from and saved to this folder.",
-    });
+    contentEl.createEl("p", { text: this.message });
 
     const row = contentEl.createDiv({ cls: "nameforge-modal__pack-name-row" });
     row.createEl("label", { text: "Folder" });
