@@ -1,0 +1,846 @@
+[
+  {
+    "seed": 1,
+    "source": "Londinium",
+    "pack": "english",
+    "depth": 1,
+    "result": {
+      "candidates": [
+        {
+          "name": "Londonam",
+          "trail": [
+            "Londinium",
+            "Londonam"
+          ],
+          "score": 0.8955555555555557,
+          "plausibility": 0.925,
+          "recognisability": 0.7777777777777778
+        },
+        {
+          "name": "Londneam",
+          "trail": [
+            "Londinium",
+            "Londneam"
+          ],
+          "score": 0.7355555555555555,
+          "plausibility": 0.725,
+          "recognisability": 0.7777777777777778
+        },
+        {
+          "name": "Londineeby",
+          "trail": [
+            "Londinium",
+            "Londineeby"
+          ],
+          "score": 0.732,
+          "plausibility": 0.725,
+          "recognisability": 0.76
+        },
+        {
+          "name": "Londouneim",
+          "trail": [
+            "Londinium",
+            "Londouneim"
+          ],
+          "score": 0.6699999999999999,
+          "plausibility": 0.65,
+          "recognisability": 0.75
+        },
+        {
+          "name": "Londonuim",
+          "trail": [
+            "Londinium",
+            "Londonuim"
+          ],
+          "score": 0.7866666666666667,
+          "plausibility": 0.775,
+          "recognisability": 0.8333333333333334
+        }
+      ]
+    }
+  },
+  {
+    "seed": 2,
+    "source": "Londinium",
+    "pack": "english",
+    "depth": 3,
+    "result": {
+      "candidates": [
+        {
+          "name": "London",
+          "trail": [
+            "Londinium",
+            "Londoneam",
+            "London"
+          ],
+          "score": 0.9222222222222223,
+          "plausibility": 1,
+          "recognisability": 0.6111111111111112
+        },
+        {
+          "name": "Londonon",
+          "trail": [
+            "Londinium",
+            "Londeinim",
+            "Londonon"
+          ],
+          "score": 0.9133333333333333,
+          "plausibility": 0.975,
+          "recognisability": 0.6666666666666667
+        },
+        {
+          "name": "Londonry",
+          "trail": [
+            "Londinium",
+            "Londoniup",
+            "Londonuby",
+            "Londonry"
+          ],
+          "score": 0.8933333333333333,
+          "plausibility": 0.95,
+          "recognisability": 0.6666666666666667
+        },
+        {
+          "name": "Londford",
+          "trail": [
+            "Londinium",
+            "Londonoum",
+            "Londos",
+            "Londford"
+          ],
+          "score": 0.88,
+          "plausibility": 0.975,
+          "recognisability": 0.5
+        },
+        {
+          "name": "Londorouy",
+          "trail": [
+            "Londinium",
+            "Londonoum",
+            "Londorouw",
+            "Londorouy"
+          ],
+          "score": 0.8466666666666667,
+          "plausibility": 0.875,
+          "recognisability": 0.7333333333333334
+        }
+      ]
+    }
+  },
+  {
+    "seed": 3,
+    "source": "Eboracum",
+    "pack": "english",
+    "depth": 5,
+    "result": {
+      "candidates": [
+        {
+          "name": "Eborougham",
+          "trail": [
+            "Eboracum",
+            "Eborouciem",
+            "Eborougham",
+            "Eaborougham",
+            "Aborougham",
+            "Eborougham"
+          ],
+          "score": 0.912,
+          "plausibility": 0.975,
+          "recognisability": 0.66
+        },
+        {
+          "name": "Uborough",
+          "trail": [
+            "Eboracum",
+            "Eborouciem",
+            "Eborougham",
+            "Ieborough",
+            "Iborough",
+            "Uborough"
+          ],
+          "score": 0.88,
+          "plausibility": 0.975,
+          "recognisability": 0.5
+        },
+        {
+          "name": "Ipongham",
+          "trail": [
+            "Eboracum",
+            "Eboroucum",
+            "Eforoucam",
+            "Eporougham",
+            "Iponougham",
+            "Ipongham"
+          ],
+          "score": 0.865,
+          "plausibility": 0.95,
+          "recognisability": 0.525
+        },
+        {
+          "name": "Iboroughord",
+          "trail": [
+            "Eboracum",
+            "Evoracam",
+            "Eforeacam",
+            "Eboroucam",
+            "Eborougher",
+            "Iboroughord"
+          ],
+          "score": 0.8127272727272727,
+          "plausibility": 0.9,
+          "recognisability": 0.4636363636363636
+        },
+        {
+          "name": "Eiborough",
+          "trail": [
+            "Eboracum",
+            "Eborouciem",
+            "Eborougham",
+            "Ieborough",
+            "Iborough",
+            "Eiborough"
+          ],
+          "score": 0.8400000000000001,
+          "plausibility": 0.925,
+          "recognisability": 0.5
+        }
+      ]
+    }
+  },
+  {
+    "seed": 4,
+    "source": "Aquae Sulis",
+    "pack": "english",
+    "depth": 3,
+    "result": {
+      "candidates": [
+        {
+          "name": "Eford Salis",
+          "trail": [
+            "Aquae Sulis",
+            "Acae Salis",
+            "Acord Salis",
+            "Eford Salis"
+          ],
+          "score": 0.89,
+          "plausibility": 0.975,
+          "recognisability": 0.55
+        },
+        {
+          "name": "Ely Salis",
+          "trail": [
+            "Aquae Sulis",
+            "Aqury Sylis",
+            "Ary Salis",
+            "Ely Salis"
+          ],
+          "score": 0.89,
+          "plausibility": 0.975,
+          "recognisability": 0.55
+        },
+        {
+          "name": "Ough Salis",
+          "trail": [
+            "Aquae Sulis",
+            "Aquie Salis",
+            "Agher Salis",
+            "Ough Salis"
+          ],
+          "score": 0.88,
+          "plausibility": 0.95,
+          "recognisability": 0.6
+        },
+        {
+          "name": "Eeter Salis",
+          "trail": [
+            "Aquae Sulis",
+            "Yquae Salis",
+            "Ycer Salis",
+            "Eeter Salis"
+          ],
+          "score": 0.8300000000000001,
+          "plausibility": 0.9,
+          "recognisability": 0.55
+        },
+        {
+          "name": "Ury Seeter",
+          "trail": [
+            "Aquae Sulis",
+            "Uiquae Suter",
+            "Uqury Suter",
+            "Ury Seeter"
+          ],
+          "score": 0.764,
+          "plausibility": 0.85,
+          "recognisability": 0.41999999999999993
+        }
+      ]
+    }
+  },
+  {
+    "seed": 5,
+    "source": "Burh-Stede",
+    "pack": "english",
+    "depth": 5,
+    "result": {
+      "candidates": [
+        {
+          "name": "Bury-Ster",
+          "trail": [
+            "Burh-Stede",
+            "Bury-Stere",
+            "Bury-Steren",
+            "Bury-Stereid",
+            "Burer-Ster",
+            "Bury-Ster"
+          ],
+          "score": 0.9266666666666666,
+          "plausibility": 0.975,
+          "recognisability": 0.7333333333333334
+        },
+        {
+          "name": "Bury-Sterter",
+          "trail": [
+            "Burh-Stede",
+            "Burh-Stele",
+            "Burh-Stelee",
+            "Burh-Sterer",
+            "Buth-Sterer",
+            "Bury-Sterter"
+          ],
+          "score": 0.9181818181818182,
+          "plausibility": 0.975,
+          "recognisability": 0.6909090909090909
+        },
+        {
+          "name": "Word-Rseter",
+          "trail": [
+            "Burh-Stede",
+            "Burh-Stele",
+            "Burh-Stelee",
+            "Burh-Steter",
+            "Bord-Rteter",
+            "Word-Rseter"
+          ],
+          "score": 0.8380000000000001,
+          "plausibility": 0.9,
+          "recognisability": 0.5900000000000001
+        },
+        {
+          "name": "Bury-Dleterd",
+          "trail": [
+            "Burh-Stede",
+            "Burh-Sterei",
+            "Bury-Steter",
+            "Bury-Dleter",
+            "Bury-Dleterd"
+          ],
+          "score": 0.8236363636363637,
+          "plausibility": 0.875,
+          "recognisability": 0.6181818181818182
+        },
+        {
+          "name": "Beerer-Ster",
+          "trail": [
+            "Burh-Stede",
+            "Budh-Steede",
+            "Bury-Steere",
+            "Bury-Ster",
+            "Beeron-Ster",
+            "Beerer-Ster"
+          ],
+          "score": 0.782,
+          "plausibility": 0.85,
+          "recognisability": 0.51
+        }
+      ]
+    }
+  },
+  {
+    "seed": 6,
+    "source": "Þórsmörk",
+    "pack": "english",
+    "depth": 3,
+    "result": {
+      "candidates": [
+        {
+          "name": "Londfork",
+          "trail": [
+            "Þórsmörk",
+            "Nordmork",
+            "Lordfork",
+            "Londfork"
+          ],
+          "score": 0.9,
+          "plausibility": 0.975,
+          "recognisability": 0.6000000000000001
+        },
+        {
+          "name": "Derdford",
+          "trail": [
+            "Þórsmörk",
+            "Dorsmord",
+            "Dordford",
+            "Derdford"
+          ],
+          "score": 0.885,
+          "plausibility": 0.975,
+          "recognisability": 0.525
+        },
+        {
+          "name": "Nuildford",
+          "trail": [
+            "Þórsmörk",
+            "Norsfork",
+            "Noldfork",
+            "Nuildford"
+          ],
+          "score": 0.8644444444444445,
+          "plausibility": 0.975,
+          "recognisability": 0.4222222222222223
+        },
+        {
+          "name": "Norwork",
+          "trail": [
+            "Þórsmörk",
+            "Norsfork",
+            "Norwork"
+          ],
+          "score": 0.8350000000000001,
+          "plausibility": 0.9,
+          "recognisability": 0.575
+        },
+        {
+          "name": "Nothdford",
+          "trail": [
+            "Þórsmörk",
+            "Norsfork",
+            "Nordfory",
+            "Nothdford"
+          ],
+          "score": 0.8044444444444445,
+          "plausibility": 0.9,
+          "recognisability": 0.4222222222222223
+        }
+      ]
+    }
+  },
+  {
+    "seed": 7,
+    "source": "Breukelen",
+    "pack": "latin",
+    "depth": 1,
+    "result": {
+      "candidates": [
+        {
+          "name": "Breugelia",
+          "trail": [
+            "Breukelen",
+            "Breugelia"
+          ],
+          "score": 0.49777777777777776,
+          "plausibility": 0.425,
+          "recognisability": 0.7888888888888889
+        },
+        {
+          "name": "Breuciulen",
+          "trail": [
+            "Breukelen",
+            "Breuciulen"
+          ],
+          "score": 0.44199999999999995,
+          "plausibility": 0.35,
+          "recognisability": 0.81
+        },
+        {
+          "name": "Breucelum",
+          "trail": [
+            "Breukelen",
+            "Breucelum"
+          ],
+          "score": 0.4777777777777778,
+          "plausibility": 0.4,
+          "recognisability": 0.7888888888888889
+        },
+        {
+          "name": "Breugeten",
+          "trail": [
+            "Breukelen",
+            "Breugeten"
+          ],
+          "score": 0.46222222222222215,
+          "plausibility": 0.35,
+          "recognisability": 0.9111111111111111
+        },
+        {
+          "name": "Breugeliun",
+          "trail": [
+            "Breukelen",
+            "Breugeliun"
+          ],
+          "score": 0.40199999999999997,
+          "plausibility": 0.3,
+          "recognisability": 0.81
+        }
+      ]
+    }
+  },
+  {
+    "seed": 8,
+    "source": "Stockholm",
+    "pack": "latin",
+    "depth": 3,
+    "result": {
+      "candidates": [
+        {
+          "name": "Sroconum",
+          "trail": [
+            "Stockholm",
+            "Srockhiulm",
+            "Srochiunum",
+            "Sroconum"
+          ],
+          "score": 0.8155555555555556,
+          "plausibility": 0.875,
+          "recognisability": 0.5777777777777777
+        },
+        {
+          "name": "Rociunum",
+          "trail": [
+            "Stockholm",
+            "Srockhiulm",
+            "Srochiunum",
+            "Rociunum"
+          ],
+          "score": 0.7022222222222223,
+          "plausibility": 0.775,
+          "recognisability": 0.4111111111111111
+        },
+        {
+          "name": "Slacium",
+          "trail": [
+            "Stockholm",
+            "Slackholm",
+            "Slackhium",
+            "Slacium"
+          ],
+          "score": 0.6422222222222222,
+          "plausibility": 0.675,
+          "recognisability": 0.5111111111111111
+        },
+        {
+          "name": "Sriuciunum",
+          "trail": [
+            "Stockholm",
+            "Srockhiulm",
+            "Srochiunum",
+            "Sriuciunum"
+          ],
+          "score": 0.636,
+          "plausibility": 0.675,
+          "recognisability": 0.48
+        },
+        {
+          "name": "Lachium",
+          "trail": [
+            "Stockholm",
+            "Slackholm",
+            "Slackhium",
+            "Lachium"
+          ],
+          "score": 0.6022222222222222,
+          "plausibility": 0.625,
+          "recognisability": 0.5111111111111111
+        }
+      ]
+    }
+  },
+  {
+    "seed": 9,
+    "source": "Canterbury",
+    "pack": "latin",
+    "depth": 5,
+    "result": {
+      "candidates": [
+        {
+          "name": "Callervernum",
+          "trail": [
+            "Canterbury",
+            "Canderburio",
+            "Canderberium",
+            "Canderveria",
+            "Calderverium",
+            "Callervernum"
+          ],
+          "score": 0.9299999999999999,
+          "plausibility": 1,
+          "recognisability": 0.6499999999999999
+        },
+        {
+          "name": "Callerbeia",
+          "trail": [
+            "Canterbury",
+            "Canterbura",
+            "Callerbura",
+            "Callerberia",
+            "Callerbeia"
+          ],
+          "score": 0.9039999999999999,
+          "plausibility": 0.95,
+          "recognisability": 0.72
+        },
+        {
+          "name": "Cataervaria",
+          "trail": [
+            "Canterbury",
+            "Canterbunum",
+            "Catiurbunum",
+            "Cataerbenum",
+            "Cataervenia",
+            "Cataervaria"
+          ],
+          "score": 0.8909090909090909,
+          "plausibility": 0.95,
+          "recognisability": 0.6545454545454545
+        },
+        {
+          "name": "Cataervum",
+          "trail": [
+            "Canterbury",
+            "Canterburum",
+            "Canarburum",
+            "Catarborum",
+            "Cataervorum",
+            "Cataervum"
+          ],
+          "score": 0.884,
+          "plausibility": 0.95,
+          "recognisability": 0.62
+        },
+        {
+          "name": "Catarbeum",
+          "trail": [
+            "Canterbury",
+            "Canterburum",
+            "Canarburum",
+            "Catarborum",
+            "Catarboum",
+            "Catarbeum"
+          ],
+          "score": 0.88,
+          "plausibility": 0.95,
+          "recognisability": 0.6
+        }
+      ]
+    }
+  },
+  {
+    "seed": 10,
+    "source": "Old Stede",
+    "pack": "latin",
+    "depth": 3,
+    "result": {
+      "candidates": [
+        {
+          "name": "Ons Ntium",
+          "trail": [
+            "Old Stede",
+            "Old Nteia",
+            "Old Ntium",
+            "Ons Ntium"
+          ],
+          "score": 0.7275,
+          "plausibility": 0.775,
+          "recognisability": 0.5375
+        },
+        {
+          "name": "Ons Tuaria",
+          "trail": [
+            "Old Stede",
+            "Ols Steia",
+            "Ons Staria",
+            "Ons Tuaria"
+          ],
+          "score": 0.7177777777777778,
+          "plausibility": 0.775,
+          "recognisability": 0.48888888888888893
+        },
+        {
+          "name": "Ius Setae",
+          "trail": [
+            "Old Stede",
+            "Ols Stedae",
+            "Ols Setae",
+            "Ius Setae"
+          ],
+          "score": 0.7125000000000001,
+          "plausibility": 0.775,
+          "recognisability": 0.4625
+        },
+        {
+          "name": "Ols Deia",
+          "trail": [
+            "Old Stede",
+            "Ols Steia",
+            "Ols Deia"
+          ],
+          "score": 0.5675,
+          "plausibility": 0.55,
+          "recognisability": 0.6375
+        },
+        {
+          "name": "Ols Todum",
+          "trail": [
+            "Old Stede",
+            "Old Ntode",
+            "Old Ntodum",
+            "Ols Todum"
+          ],
+          "score": 0.5650000000000001,
+          "plausibility": 0.55,
+          "recognisability": 0.625
+        }
+      ]
+    }
+  },
+  {
+    "seed": 11,
+    "source": "Caer'Luel",
+    "pack": "latin",
+    "depth": 5,
+    "result": {
+      "candidates": [
+        {
+          "name": "Cia'Lius",
+          "trail": [
+            "Caer'Luel",
+            "Caer'Lues",
+            "Car'Lius",
+            "Cum'Lius",
+            "Ciom'Lius",
+            "Cia'Lius"
+          ],
+          "score": 0.875,
+          "plausibility": 0.95,
+          "recognisability": 0.575
+        },
+        {
+          "name": "Cae'Lium",
+          "trail": [
+            "Caer'Luel",
+            "Caer'Lon",
+            "Cae'Lum",
+            "Cia'Lium",
+            "Cia'Sium",
+            "Cae'Lium"
+          ],
+          "score": 0.8650000000000001,
+          "plausibility": 0.925,
+          "recognisability": 0.625
+        },
+        {
+          "name": "Cia'Lnium",
+          "trail": [
+            "Caer'Luel",
+            "Caer'Lon",
+            "Cae'Lum",
+            "Cia'Lium",
+            "Cia'Tnium",
+            "Cia'Lnium"
+          ],
+          "score": 0.865,
+          "plausibility": 0.95,
+          "recognisability": 0.525
+        },
+        {
+          "name": "Catae'Tius",
+          "trail": [
+            "Caer'Luel",
+            "Caer'Luas",
+            "Cael'Lius",
+            "Ceia'Lius",
+            "Catia'Lius",
+            "Catae'Tius"
+          ],
+          "score": 0.8644444444444445,
+          "plausibility": 0.95,
+          "recognisability": 0.5222222222222223
+        },
+        {
+          "name": "Caenum'Lius",
+          "trail": [
+            "Caer'Luel",
+            "Caer'Lues",
+            "Car'Lius",
+            "Cum'Lius",
+            "Cium'Lius",
+            "Caenum'Lius"
+          ],
+          "score": 0.8640000000000001,
+          "plausibility": 0.925,
+          "recognisability": 0.62
+        }
+      ]
+    }
+  },
+  {
+    "seed": 2026,
+    "source": "Manchester",
+    "pack": "latin",
+    "depth": 1,
+    "result": {
+      "candidates": [
+        {
+          "name": "Manchenium",
+          "trail": [
+            "Manchester",
+            "Manchenium"
+          ],
+          "score": 0.482,
+          "plausibility": 0.425,
+          "recognisability": 0.71
+        },
+        {
+          "name": "Manciuster",
+          "trail": [
+            "Manchester",
+            "Manciuster"
+          ],
+          "score": 0.39,
+          "plausibility": 0.275,
+          "recognisability": 0.85
+        },
+        {
+          "name": "Mancheunum",
+          "trail": [
+            "Manchester",
+            "Mancheunum"
+          ],
+          "score": 0.462,
+          "plausibility": 0.4,
+          "recognisability": 0.71
+        },
+        {
+          "name": "Manchiustum",
+          "trail": [
+            "Manchester",
+            "Manchiustum"
+          ],
+          "score": 0.2854545454545454,
+          "plausibility": 0.175,
+          "recognisability": 0.7272727272727273
+        },
+        {
+          "name": "Manchenum",
+          "trail": [
+            "Manchester",
+            "Manchenum"
+          ],
+          "score": 0.40199999999999997,
+          "plausibility": 0.325,
+          "recognisability": 0.71
+        }
+      ]
+    }
+  }
+]
