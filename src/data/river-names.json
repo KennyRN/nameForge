@@ -1,0 +1,608 @@
+{
+  "$comment": "River names module (river brief §6). Corpora are real river names used only to train the ancient-name Markov model; a generated name identical to any of them is rejected.",
+  "corpora": {
+    "england": [
+      "Thames",
+      "Severn",
+      "Trent",
+      "Avon",
+      "Ouse",
+      "Tyne",
+      "Tees",
+      "Wear",
+      "Swale",
+      "Ure",
+      "Nidd",
+      "Wharfe",
+      "Aire",
+      "Calder",
+      "Don",
+      "Derwent",
+      "Hull",
+      "Humber",
+      "Witham",
+      "Welland",
+      "Nene",
+      "Cam",
+      "Granta",
+      "Lark",
+      "Wensum",
+      "Yare",
+      "Waveney",
+      "Bure",
+      "Stour",
+      "Orwell",
+      "Deben",
+      "Gipping",
+      "Colne",
+      "Chelmer",
+      "Lea",
+      "Roding",
+      "Medway",
+      "Wey",
+      "Mole",
+      "Arun",
+      "Adur",
+      "Rother",
+      "Test",
+      "Itchen",
+      "Frome",
+      "Piddle",
+      "Axe",
+      "Exe",
+      "Teign",
+      "Dart",
+      "Tamar",
+      "Fowey",
+      "Fal",
+      "Camel",
+      "Taw",
+      "Torridge",
+      "Parrett",
+      "Tone",
+      "Brue",
+      "Yeo",
+      "Lugg",
+      "Teme",
+      "Mersey",
+      "Ribble",
+      "Lune",
+      "Kent",
+      "Eden",
+      "Esk",
+      "Irwell",
+      "Weaver",
+      "Dane",
+      "Tame",
+      "Rea",
+      "Sow",
+      "Penk",
+      "Dove",
+      "Churnet",
+      "Soar",
+      "Wreake",
+      "Idle",
+      "Rye",
+      "Leven",
+      "Coquet",
+      "Aln",
+      "Wansbeck",
+      "Blyth",
+      "Till",
+      "Glen",
+      "Tweed",
+      "Kennet",
+      "Thame",
+      "Cherwell",
+      "Evenlode",
+      "Windrush",
+      "Coln",
+      "Churn",
+      "Ock",
+      "Pang",
+      "Loddon",
+      "Wylye",
+      "Nadder",
+      "Ebble",
+      "Sid",
+      "Yealm",
+      "Erme",
+      "Plym",
+      "Tavy",
+      "Lyn",
+      "Barle",
+      "Arrow",
+      "Wyre",
+      "Hodder"
+    ],
+    "wales": [
+      "Teifi",
+      "Tywi",
+      "Taf",
+      "Tawe",
+      "Nedd",
+      "Afan",
+      "Ogwr",
+      "Rhondda",
+      "Rhymni",
+      "Ebwy",
+      "Sirhywi",
+      "Cynon",
+      "Llwyd",
+      "Mynwy",
+      "Honddu",
+      "Irfon",
+      "Ieithon",
+      "Elan",
+      "Claerwen",
+      "Rheidol",
+      "Ystwyth",
+      "Aeron",
+      "Arth",
+      "Dyfi",
+      "Dulas",
+      "Mawddach",
+      "Wnion",
+      "Dysynni",
+      "Dwyryd",
+      "Glaslyn",
+      "Dwyfor",
+      "Erch",
+      "Seiont",
+      "Ogwen",
+      "Conwy",
+      "Lledr",
+      "Llugwy",
+      "Elwy",
+      "Clwyd",
+      "Alun",
+      "Dyfrdwy",
+      "Ceiriog",
+      "Tanad",
+      "Efyrnwy",
+      "Banw",
+      "Hafren",
+      "Cleddau",
+      "Gwaun",
+      "Nyfer",
+      "Cothi",
+      "Gwili",
+      "Gwendraeth",
+      "Llwchwr",
+      "Aman",
+      "Twrch",
+      "Senni",
+      "Tarell",
+      "Grwyne",
+      "Gefenni",
+      "Troddi",
+      "Aled",
+      "Alaw",
+      "Cefni",
+      "Braint",
+      "Gwy",
+      "Wysg"
+    ],
+    "scotland": [
+      "Clyde",
+      "Forth",
+      "Tay",
+      "Spey",
+      "Dee",
+      "Don",
+      "Deveron",
+      "Ythan",
+      "Ugie",
+      "Findhorn",
+      "Nairn",
+      "Ness",
+      "Beauly",
+      "Conon",
+      "Oykel",
+      "Carron",
+      "Shin",
+      "Naver",
+      "Halladale",
+      "Thurso",
+      "Wick",
+      "Helmsdale",
+      "Brora",
+      "Fleet",
+      "Earn",
+      "Almond",
+      "Isla",
+      "Ericht",
+      "Tummel",
+      "Garry",
+      "Lyon",
+      "Lochay",
+      "Dochart",
+      "Teith",
+      "Allan",
+      "Devon",
+      "Leven",
+      "Eden",
+      "Annan",
+      "Nith",
+      "Esk",
+      "Liddel",
+      "Ken",
+      "Cree",
+      "Bladnoch",
+      "Urr",
+      "Doon",
+      "Ayr",
+      "Irvine",
+      "Garnock",
+      "Girvan",
+      "Stinchar",
+      "Teviot",
+      "Ettrick",
+      "Yarrow",
+      "Tweed",
+      "Gala",
+      "Leader",
+      "Tyne",
+      "Lossie",
+      "Bervie",
+      "Avon",
+      "Livet",
+      "Feshie",
+      "Truim",
+      "Spean",
+      "Lochy",
+      "Nevis",
+      "Orchy",
+      "Awe",
+      "Etive",
+      "Shiel",
+      "Morar",
+      "Lyne",
+      "Kelvin",
+      "Cart",
+      "Calder"
+    ]
+  },
+  "regionCorpora": {
+    "all": [
+      "england",
+      "wales",
+      "scotland"
+    ],
+    "COR": [
+      "england"
+    ],
+    "WCY": [
+      "england"
+    ],
+    "SEA": [
+      "england"
+    ],
+    "EAN": [
+      "england"
+    ],
+    "EMD": [
+      "england"
+    ],
+    "NTH": [
+      "england"
+    ],
+    "WMM": [
+      "england",
+      "wales"
+    ],
+    "WAL": [
+      "wales"
+    ],
+    "SBL": [
+      "scotland",
+      "england"
+    ],
+    "SLO": [
+      "scotland"
+    ],
+    "SHH": [
+      "scotland"
+    ],
+    "NSI": [
+      "scotland"
+    ]
+  },
+  "ancient": {
+    "minLetters": 3,
+    "maxLetters": 8,
+    "draws": 20
+  },
+  "kindWeights": {
+    "british": {
+      "ancient": 40,
+      "descriptive": 45,
+      "pattern": 15
+    },
+    "new-land": {
+      "ancient": 0,
+      "descriptive": 60,
+      "pattern": 40
+    },
+    "established": {
+      "ancient": 0,
+      "descriptive": 35,
+      "pattern": 65
+    }
+  },
+  "waterWords": {
+    "british": {
+      "all": {
+        "brook": 30,
+        "water": 20,
+        "burn": 15,
+        "beck": 15,
+        "bourne": 10,
+        "stream": 5,
+        "fleet": 5
+      },
+      "COR": {
+        "brook": 35,
+        "water": 35,
+        "bourne": 10,
+        "stream": 15,
+        "fleet": 5
+      },
+      "WCY": {
+        "brook": 35,
+        "water": 25,
+        "bourne": 20,
+        "stream": 10,
+        "fleet": 10
+      },
+      "SEA": {
+        "brook": 30,
+        "water": 15,
+        "bourne": 35,
+        "stream": 10,
+        "fleet": 10
+      },
+      "EAN": {
+        "brook": 30,
+        "water": 25,
+        "beck": 15,
+        "bourne": 5,
+        "stream": 10,
+        "fleet": 15
+      },
+      "WMM": {
+        "brook": 50,
+        "water": 25,
+        "bourne": 10,
+        "stream": 15
+      },
+      "WAL": {
+        "brook": 40,
+        "water": 40,
+        "stream": 20
+      },
+      "EMD": {
+        "brook": 40,
+        "water": 20,
+        "beck": 20,
+        "bourne": 10,
+        "stream": 10
+      },
+      "NTH": {
+        "brook": 15,
+        "water": 20,
+        "burn": 15,
+        "beck": 45,
+        "stream": 5
+      },
+      "SBL": {
+        "water": 30,
+        "burn": 50,
+        "beck": 10,
+        "stream": 10
+      },
+      "SLO": {
+        "water": 35,
+        "burn": 50,
+        "stream": 15
+      },
+      "SHH": {
+        "water": 35,
+        "burn": 50,
+        "stream": 15
+      },
+      "NSI": {
+        "water": 40,
+        "burn": 45,
+        "stream": 15
+      }
+    },
+    "new-land": {
+      "river": 40,
+      "creek": 30,
+      "run": 10,
+      "fork": 10,
+      "branch": 10
+    },
+    "established": {
+      "river": 75,
+      "creek": 15,
+      "stream": 10
+    }
+  },
+  "descriptiveCategories": {
+    "british": {
+      "colour": 20,
+      "tree": 15,
+      "bird": 12,
+      "wild-animal": 10,
+      "wild-plant": 10,
+      "soil-or-ground": 10,
+      "quality-or-condition": 10,
+      "fish-and-other-creatures": 8,
+      "season": 5
+    },
+    "colonial": {
+      "colour": 50,
+      "quality-or-condition": 30,
+      "shape": 20
+    }
+  },
+  "britishFuseChance": 0.75,
+  "forms": {
+    "ancient": {
+      "scottishRegions": [
+        "SBL",
+        "SLO",
+        "SHH",
+        "NSI"
+      ],
+      "scottish": {
+        "river-x": 45,
+        "x-water": 25,
+        "water-of-x": 15,
+        "bare": 15
+      },
+      "other": {
+        "river-x": 85,
+        "bare": 15
+      }
+    },
+    "britishDescriptive": {
+      "bare": 80,
+      "river-x": 20
+    },
+    "colonialDescriptive": {
+      "x-water": 80,
+      "bare": 20
+    }
+  },
+  "patterns": {
+    "british": [
+      {
+        "pattern": "[personal name]'s {water}",
+        "weight": 25
+      },
+      {
+        "pattern": "River [deity]",
+        "weight": 20
+      },
+      {
+        "pattern": "[tribal name] River",
+        "weight": 20
+      },
+      {
+        "pattern": "[earlier or district name] Water",
+        "weight": 15
+      },
+      {
+        "pattern": "[tribal name] Water",
+        "weight": 10
+      },
+      {
+        "pattern": "River of the [tribal name]",
+        "weight": 10
+      }
+    ],
+    "new-land": [
+      {
+        "pattern": "[native people] River",
+        "weight": 18
+      },
+      {
+        "pattern": "[explorer] River",
+        "weight": 12
+      },
+      {
+        "pattern": "[personal name]'s Creek",
+        "weight": 10
+      },
+      {
+        "pattern": "[personal name] River",
+        "weight": 8
+      },
+      {
+        "pattern": "[holy person] River",
+        "weight": 8
+      },
+      {
+        "pattern": "River of the [native people]",
+        "weight": 8
+      },
+      {
+        "pattern": "[monarch] River",
+        "weight": 7
+      },
+      {
+        "pattern": "[native people] Creek",
+        "weight": 7
+      },
+      {
+        "pattern": "[native bird] River",
+        "weight": 7
+      },
+      {
+        "pattern": "[native wild animal] Creek",
+        "weight": 6
+      },
+      {
+        "pattern": "[native fish or creature] River",
+        "weight": 3
+      },
+      {
+        "pattern": "[native tree] Creek",
+        "weight": 3
+      },
+      {
+        "pattern": "[native plant] Creek",
+        "weight": 3
+      }
+    ],
+    "established": [
+      {
+        "pattern": "[native people] River",
+        "weight": 30
+      },
+      {
+        "pattern": "River of the [native people]",
+        "weight": 12
+      },
+      {
+        "pattern": "[monarch] River",
+        "weight": 12
+      },
+      {
+        "pattern": "[personal name] River",
+        "weight": 10
+      },
+      {
+        "pattern": "[holy person] River",
+        "weight": 8
+      },
+      {
+        "pattern": "[personal name]'s Creek",
+        "weight": 8
+      },
+      {
+        "pattern": "[native bird] River",
+        "weight": 6
+      },
+      {
+        "pattern": "[native wild animal] River",
+        "weight": 6
+      },
+      {
+        "pattern": "[native tree] River",
+        "weight": 4
+      },
+      {
+        "pattern": "[native fish or creature] River",
+        "weight": 2
+      },
+      {
+        "pattern": "[native plant] River",
+        "weight": 2
+      }
+    ]
+  }
+}

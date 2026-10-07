@@ -497,13 +497,15 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
 
 /* While the section menu is open the results box shrinks by the menu's own measured height
    (setSectionMenuOpen), so the modal keeps its size rather than growing to fit the menu. */
-.nameforge-modal.is-section-menu-open .nameforge-modal__results-list {
-  height: calc(260px - var(--nf-section-menu-height, 0px));
+.nameforge-modal.is-section-menu-open .nameforge-modal__results-list,
+.nameforge-modal.is-second-box-open .nameforge-modal__results-list {
+  height: calc(var(--nf-results-height) - var(--nf-section-menu-height, 0px) - var(--nf-second-box-height, 0px));
 }
 
-.nameforge-modal--panel.is-section-menu-open .nameforge-modal__results-list {
+.nameforge-modal--panel.is-section-menu-open .nameforge-modal__results-list,
+.nameforge-modal--panel.is-second-box-open .nameforge-modal__results-list {
   height: auto;
-  min-height: calc(280px - var(--nf-section-menu-height, 0px));
+  min-height: calc(280px - var(--nf-section-menu-height, 0px) - var(--nf-second-box-height, 0px));
 }
 
 .nameforge-modal--panel .nameforge-modal__section-menu {
@@ -613,7 +615,9 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
   line-height: 1.4;
 }
 
+/* Always one line tall, even when empty, so a message appearing or clearing never resizes the modal. */
 .nameforge-modal__status {
+  min-height: 1lh;
   margin-bottom: 10px;
   font-size: 0.9em;
   color: var(--text-muted);
@@ -631,8 +635,13 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
   margin-top: 16px;
 }
 
+/* One result row (its line plus 4px top and bottom padding) on top of the original 260px. */
+.nameforge-modal {
+  --nf-results-height: calc(260px + 1lh + 8px);
+}
+
 .nameforge-modal__results-list {
-  height: 260px;
+  height: var(--nf-results-height);
   overflow-y: auto;
   margin: 0;
   padding: 8px 10px;
@@ -1242,18 +1251,24 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   margin-top: 16px;
 }
 
-/* Name takeover: the takeover pack row, and one-line results (native → adopted). */
-.nameforge-modal__takeover-controls {
-  display: flex;
-  width: 100%;
-  margin: 8px 0 4px;
+/* The second box (river names' region, name takeover's takeover pack): exactly beneath the box above
+   it (its left edge and width are set from that box in alignSecondBox) and 4px below it. */
+.nameforge-modal__second-box {
+  display: block;
+  margin-top: -4px;
 }
 
-.nameforge-modal__takeover-pack {
-  flex: 1;
+.nameforge-modal--panel .nameforge-modal__second-box {
+  margin-top: -12px;
+  margin-bottom: 16px;
+}
+
+.nameforge-modal__second-box .nameforge-modal__pack-dropdown {
+  box-sizing: border-box;
   min-width: 0;
 }
 
+/* Name takeover: one-line results (native → adopted). */
 .nameforge-modal__takeover-native,
 .nameforge-modal__takeover-arrow {
   color: var(--text-muted);
@@ -1263,7 +1278,9 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   font-weight: var(--font-semibold);
 }
 
-/* Loading: the animated dots and a short label, shown while results are worked out. */
+/* Loading (src/loading.ts): three CSS dots and an optional label, shown while results are worked
+   out. Only opacity is animated, so the dots keep moving while the engines block the main thread.
+   The whole block appears after 200 ms, so fast runs never flash it. */
 .nameforge-modal__loading {
   display: flex;
   align-items: center;
@@ -1271,14 +1288,71 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   gap: 8px;
   padding: 24px 0;
   color: var(--text-muted);
+  opacity: 0;
+  animation: nameforge-loading-appear 1ms 200ms forwards;
 }
 
-.nameforge-modal__loading-icon {
+.nameforge-modal__loading-dots {
   display: inline-flex;
-  color: var(--forge-accent, var(--interactive-accent));
+  align-items: center;
+  gap: 3px;
 }
 
-.nameforge-modal__loading-icon svg {
-  width: 28px;
-  height: 28px;
+.nameforge-modal__loading-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--forge-accent, var(--interactive-accent));
+  will-change: opacity;
+  animation: nameforge-loading-dot 0.8s linear infinite;
+  animation-fill-mode: both;
+}
+
+.nameforge-modal__loading-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.nameforge-modal__loading-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.nameforge-modal__loading-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes nameforge-loading-appear {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes nameforge-loading-dot {
+  0% {
+    opacity: 1;
+  }
+  93.75% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+/* Reduced motion: static dots; the 200 ms appearance delay still applies. */
+@media (prefers-reduced-motion: reduce) {
+  .nameforge-modal__loading-dot {
+    animation: none;
+  }
+
+  .nameforge-modal__loading-dot:nth-child(1) {
+    opacity: 1;
+  }
+
+  .nameforge-modal__loading-dot:nth-child(2) {
+    opacity: 0.6;
+  }
+
+  .nameforge-modal__loading-dot:nth-child(3) {
+    opacity: 0.3;
+  }
 }

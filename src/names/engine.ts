@@ -23,7 +23,10 @@ import {
   type ColonialShape,
   formatColonialShape,
   generateColonialShapesDetailed,
+  type NativeTreatment,
 } from "../colonialShapes";
+import { adoptionRng } from "../takeover/batch";
+import { riverFill, type RiverSetting } from "../rivers/engine";
 
 // ── Fixed values (names-reference) ──────────────────────────────────────────
 
@@ -49,6 +52,54 @@ export const NAMES = {
 
 /** Salt for the fill-and-render stream (§13). */
 const FILL_SALT = 0x5a3e9b17;
+/** Salt for the redraw stream used when an adapted native name can't be adopted (recipe takeover §A4). */
+const REDRAW_SALT = 0x3c91d2a5;
+/** Recipe takeover §A3.2: draws per adapted slot, the first draw included. */
+const ADAPT_ATTEMPTS = 5;
+/** Salt for the "of the" stream (river brief §3.3); consumed only by that decision. */
+const OF_THE_SALT = 0x51f0c3e7;
+/** River brief §3.2: chance of keeping "{Generic} of the {Word}". */
+const OF_THE_KEEP = 0.65;
+/** River brief §3.1: word categories that may keep the "of the" order. */
+const OF_THE_KEEP_SET = new Set([
+  "bird",
+  "wild-animal",
+  "domestic-animal",
+  "fish-and-other-creatures",
+  "tree",
+  "wild-plant",
+  "supernatural-being",
+  "status-or-role",
+  "activity",
+]);
+/** River brief §6.9: unmapped river slots are filled by the river engine. */
+const RIVER_CATEGORY = "river-or-stream-name";
+/** River brief §4: placeholder wording in rendered names only (shape data and etymology keep theirs). */
+const RENDER_LABELS: Record<string, string> = {
+  "saint-or-holy-person": "holy person",
+  "native-people-or-tribe": "native people",
+  "native-place-name": "native place",
+};
+/** River brief §5.2: these placeholders render as one component label, chosen with equal chance. */
+const SPLIT_LABELS: Record<string, string[]> = {
+  "monarch-ruler-or-dynasty": ["monarch", "ruler", "dynasty"],
+  "official-patron-or-sponsor": ["official", "patron", "sponsor"],
+  "explorer-or-founder": ["explorer", "founder"],
+  "commander-or-conqueror": ["commander", "conqueror"],
+};
+/** Salt for the split-label stream (river brief §5.2); consumed only by those choices. */
+const SPLIT_SALT = 0x2b7d94c1;
+/** River brief §6: unmapped native flora and fauna in colonial rendering. */
+const NATIVE_LABELS: Record<string, string> = {
+  bird: "native bird",
+  "wild-animal": "native wild animal",
+  "fish-and-other-creatures": "native fish or creature",
+  tree: "native tree",
+  "wild-plant": "native plant",
+};
+
+/** The native categories a takeover pack can adapt (recipe takeover §A1). */
+const NATIVE_CATEGORIES = new Set(["native-place-name", "native-people-or-tribe", "river-or-stream-name"]);
 
 /** §5.2: default mode per category for pack sources; anything else defaults to stem. */
 const WHOLE_BY_DEFAULT = new Set(["native-place-name", "native-people-or-tribe", "homeland-place-name"]);
@@ -128,12 +179,41 @@ export type ResolvedSlot =
   | { kind: "ignore" }
   | { kind: "sources"; sources: ResolvedSource[]; mode?: NameMode; gender?: { male: number; female: number }; section?: string };
 
+/** Adopts one native name into the takeover pack's language; null when the adoption fails. */
+export type NativeAdapter = (native: string, rng: () => number) => string | null;
+
 export interface NameGenerateOptions {
   recipe: RecipeSettings;
   /** Slot settings resolved to sources; categories not present use §6.3. */
   slots: Record<string, ResolvedSlot>;
   count: number;
   seed?: number;
+  /** Markov settings for river fills (river brief §6.9); defaults 2 and 3. */
+  faithfulness?: number;
+  strictness?: number;
+  /** The recipe's takeover pack, as an adopter (recipe takeover §A6). Colonial recipes only. */
+  adapt?: NativeAdapter;
+}
+
+/** Optional renderer streams and settings; a renderer built without them behaves as before. */
+export interface NameRendererOptions {
+  adaptation?: NameAdaptation;
+  /** The batch's "of the" stream (river brief §4.3); without it the order always flips. */
+  ofTheRng?: () => number;
+  /** The batch's split-label stream (river brief §5.2); a renderer without one makes its own. */
+  labelRng?: () => number;
+  /** Markov settings for river fills (river brief §6.9). */
+  faithfulness?: number;
+  strictness?: number;
+}
+
+/** What the renderer needs to adapt native slots (recipe takeover §A3–§A4). */
+export interface NameAdaptation {
+  adapt: NativeAdapter;
+  /** The batch seed, for each name's adoption RNG. */
+  seed: number;
+  /** The batch's redraw stream; consumed only by redraws. */
+  redrawRng: () => number;
 }
 
 export interface GeneratedName {
@@ -155,8 +235,10 @@ export interface NameGenerateResult {
 
 type Fill =
   | { kind: "word"; entry: NameWordEntry; traditional: boolean }
-  | { kind: "name"; text: string; mode: NameMode }
-  | { kind: "placeholder"; categoryId: string };
+  /** `native`: the native name as drawn, where `text` is its adapted form (recipe takeover §A5). */
+  | { kind: "name"; text: string; mode: NameMode; native?: string }
+  /** `label`: the rendered placeholder text, chosen once (§5); `native`: a native flora or fauna placeholder (§6). */
+  | { kind: "placeholder"; categoryId: string; label: string; native?: boolean };
 
 const categoryLabels = new Map([
   ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label.toLowerCase()] as const),
@@ -175,7 +257,8 @@ function pluralise(word: string): string {
   const plural = /s$/i.test(last) ? last : /[^aeiou]y$/i.test(last) ? `${last.slice(0, -1)}ies` : `${last}s`;
   return [...parts, plural].join(" ");
 }
-const placeholderText = (categoryId: string) => `[${categoryLabels.get(categoryId) ?? categoryId}]`;
+/** A placeholder's rendered text for categories that are never split (local generics, §5.1 renames). */
+const placeholderText = (categoryId: string) => `[${RENDER_LABELS[categoryId] ?? categoryLabels.get(categoryId) ?? categoryId}]`;
 
 function pickWeighted<T>(items: [T, number][], rng: () => number): T {
   const total = items.reduce((n, [, w]) => n + w, 0);
@@ -190,15 +273,15 @@ const pickUniform = <T>(items: readonly T[], rng: () => number): T => items[Math
 
 /** The spaced form of a filled specific: the word (or name) as written. */
 function fillWord(fill: Fill): string {
-  if (fill.kind === "placeholder") return placeholderText(fill.categoryId);
+  if (fill.kind === "placeholder") return fill.label;
   if (fill.kind === "name") return fill.text;
   return fill.traditional && fill.entry.traditional ? fill.entry.traditional : fill.entry.modern;
 }
 
-/** §4.9: etymology shows names as drawn and words as their paired modern word. */
+/** §4.9: etymology shows names as drawn (native names before adaptation) and words as their paired modern word. */
 function fillEtymology(fill: Fill): string | undefined {
   if (fill.kind === "placeholder") return undefined;
-  return fill.kind === "name" ? fill.text : fill.entry.modern;
+  return fill.kind === "name" ? fill.native ?? fill.text : fill.entry.modern;
 }
 
 // ── Rendering helpers ───────────────────────────────────────────────────────
@@ -256,8 +339,25 @@ export class NameRenderer {
     private readonly recipe: RecipeSettings,
     private readonly slots: Record<string, ResolvedSlot>,
     regionCode: string | undefined,
+    private readonly options: NameRendererOptions = {},
   ) {
     this.region = regionCode;
+  }
+
+  private get adaptation(): NameAdaptation | undefined {
+    return this.options.adaptation;
+  }
+
+  /** Split-label choices (§5.2) never touch the fill stream. */
+  private readonly labelRng: () => number = this.options.labelRng ?? mulberry32(SPLIT_SALT);
+  /** True while a colonial shape renders: unmapped flora and fauna become native placeholders (§6). */
+  private colonial = false;
+
+  /** A placeholder fill with its rendered label: one component for split categories (§5.2). */
+  private placeholder(categoryId: string): Fill {
+    const split = SPLIT_LABELS[categoryId];
+    const label = split ? `[${split[Math.floor(this.labelRng() * split.length)]}]` : placeholderText(categoryId);
+    return { kind: "placeholder", categoryId, label };
   }
 
   getNotices(): string[] {
@@ -278,29 +378,92 @@ export class NameRenderer {
     return rng() < NAMES.mixedTraditional;
   }
 
+  /**
+   * River brief §6.9: an unmapped (or built-in) river slot is a bare river from the river engine,
+   * drawn on the fill stream as a spaced word fill — British (with the region) for organic shapes,
+   * New Land or Established for colonial ones.
+   */
+  private riverWordFill(rng: () => number): Fill {
+    const part = this.recipe.shape.part;
+    const setting: RiverSetting = part === "new-land" ? "new-land" : part === "established" ? "established" : "british";
+    const text = riverFill(
+      {
+        setting,
+        region: setting === "british" ? this.region : undefined,
+        faithfulness: this.options.faithfulness,
+        strictness: this.options.strictness,
+      },
+      rng,
+    );
+    return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
+  }
+
+  /**
+   * River brief §3: a keep-set word in a linked generic-first order keeps "{Generic} of the {Word}"
+   * with probability 0.65 on its own stream; null means flip and join as before.
+   */
+  private ofThe(fill: Fill, categoryId: string, genericId: string, rng: () => number): string | null {
+    const ofTheRng = this.options.ofTheRng;
+    const eligible = (fill.kind === "word" && OF_THE_KEEP_SET.has(categoryId)) || (fill.kind === "placeholder" && fill.native);
+    if (!ofTheRng || !eligible) return null;
+    if (!(ofTheRng() < OF_THE_KEEP)) return null;
+    return capitaliseSpaced(`${this.genericWord(genericId, false, rng)} of the ${fillWord(fill)}`);
+  }
+
   /** Stage 2: fill one slot. `whole` forces whole names for pack sources (§5.3). */
   fill(categoryId: string, rng: () => number, whole = false): Fill {
+    const mapped = this.slots[categoryId];
+    if (categoryId === RIVER_CATEGORY && (!mapped || mapped.kind === "built-in")) return this.riverWordFill(rng);
+    // §6.1: in colonial rendering, unmapped native flora and fauna never draw the British lists.
+    // An explicit built-in mapping still does; domestic animals and crops are not in the set.
+    if (this.colonial && !mapped && NATIVE_LABELS[categoryId]) {
+      return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
+    }
     const slot = this.slotFor(categoryId);
     const wordFill = (entries: NameWordEntry[] | undefined): Fill => {
-      if (!entries || entries.length === 0) return { kind: "placeholder", categoryId };
+      if (!entries || entries.length === 0) return this.placeholder(categoryId);
       let entry = pickUniform(entries, rng);
       // §11.13: "ruler of the [direction]" takes its direction from the position list.
       if (entry.modern.includes("[direction]")) entry = { ...entry, modern: entry.modern.replace("[direction]", pickUniform(DIRECTIONS, rng)) };
       return { kind: "word", entry, traditional: this.chooseRegister(entry, rng) };
     };
-    if (slot.kind === "placeholder" || slot.kind === "ignore") return { kind: "placeholder", categoryId };
+    if (slot.kind === "placeholder" || slot.kind === "ignore") return this.placeholder(categoryId);
     if (slot.kind === "built-in") return wordFill(NAME_WORDS.categories[categoryId]);
 
     const source = pickWeighted(slot.sources.map((s): [ResolvedSource, number] => [s, s.weight]), rng);
     if (source.entries) return wordFill(source.entries);
-    if (!source.draw) return { kind: "placeholder", categoryId };
+    if (!source.draw) return this.placeholder(categoryId);
     const mode: NameMode = whole ? "whole" : slot.mode ?? (WHOLE_BY_DEFAULT.has(categoryId) ? "whole" : "stem");
     const ratio = slot.gender ?? DEFAULT_GENDER[categoryId];
     const request: SectionRequest = {};
     if (slot.section) request.section = slot.section;
     if (ratio) request.gender = rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female";
     const text = source.draw(request, mode, rng);
-    return text ? { kind: "name", text, mode } : { kind: "placeholder", categoryId };
+    return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
+  }
+
+  /**
+   * Recipe takeover §A3: an adapted native name fill is adopted into the takeover pack's language.
+   * A failed adoption redraws the slot on the redraw stream, up to five draws in all; after that the
+   * last native name is used unchanged. Word fills and placeholders pass through untouched.
+   */
+  private adaptFill(
+    fill: Fill,
+    categoryId: string,
+    treatment: NativeTreatment | undefined,
+    whole: boolean,
+    shape: ColonialShape,
+  ): Fill {
+    const adaptation = this.adaptation;
+    if (!adaptation || treatment !== "adapted" || shape.translated || !NATIVE_CATEGORIES.has(categoryId)) return fill;
+    let current = fill;
+    for (let draw = 1; ; draw++) {
+      if (current.kind !== "name") return current;
+      const adopted = adaptation.adapt(current.text, adoptionRng(adaptation.seed, current.text));
+      if (adopted !== null) return { ...current, text: adopted, native: current.text };
+      if (draw >= ADAPT_ATTEMPTS) return current;
+      current = this.fill(categoryId, adaptation.redrawRng, whole);
+    }
   }
 
   /** The generic's word (§3.1): variant replaces the plain word in its regions; recipe overrides last. */
@@ -426,7 +589,7 @@ export class NameRenderer {
   /** §4.5: -ing- connectives, fused to the name; the generic joins if its class allows. */
   private connective(fill: Fill, genericId: string, rng: () => number): string {
     const generic = this.genericWord(genericId, false, rng);
-    const base = fill.kind === "placeholder" ? `${placeholderText(fill.categoryId)}ing` : `${fusedCase(fillWord(fill))}ing`;
+    const base = fill.kind === "placeholder" ? `${fill.label}ing` : `${fusedCase(fillWord(fill))}ing`;
     if (fill.kind !== "placeholder" && this.fusionClass(generic) >= 0.5 && !generic.includes(" ")) {
       const joined = smoothJoin(base, generic);
       if (joined && letterCount(joined) <= NAMES.maxFusedLetters) return fusedCase(joined);
@@ -457,7 +620,19 @@ export class NameRenderer {
 
   /** Colonial shapes (parts 2 and 2a): the structures of colonial-shapes §6, rendered by §4. */
   renderColonial(shape: ColonialShape, rng: () => number): GeneratedName {
+    this.colonial = true;
+    try {
+      return this.renderColonialShape(shape, rng);
+    } finally {
+      this.colonial = false;
+    }
+  }
+
+  private renderColonialShape(shape: ColonialShape, rng: () => number): GeneratedName {
     const whole = (categoryId: string) => this.fill(categoryId, rng, true);
+    // Native slots are adapted straight after drawing, before any join, possessive or linking word.
+    const specific = (f: Fill, isWhole: boolean) => this.adaptFill(f, shape.categoryId, shape.treatments.specific, isWhole, shape);
+    const secondOf = (f: Fill) => this.adaptFill(f, shape.secondCategoryId!, shape.treatments.second, true, shape);
     const named = (fill: Fill) => titleWord(fillWord(fill));
     const the = (text: string) => (shape.definite ? `The ${text}` : text);
     let fill: Fill | undefined;
@@ -468,29 +643,29 @@ export class NameRenderer {
         text = the(capitaliseSpaced(this.genericWord(shape.genericId, !!shape.plural, rng)));
         break;
       case "bare-specific":
-        fill = whole(shape.categoryId);
+        fill = specific(whole(shape.categoryId), true);
         text = the(capitaliseSpaced(fillWord(fill)));
         break;
       case "possessive":
-        fill = whole(shape.categoryId);
+        fill = specific(whole(shape.categoryId), true);
         text = capitaliseSpaced(`${fillWord(fill)}'s ${this.genericWord(shape.genericId, false, rng)}`);
         break;
       case "new-transfer":
-        fill = whole(shape.categoryId);
+        fill = specific(whole(shape.categoryId), true);
         text = `New ${named(fill)}`;
         break;
       case "twin":
-        fill = whole(shape.categoryId);
+        fill = specific(whole(shape.categoryId), true);
         text = `${shape.twin === "old" ? "Old" : "New"} ${named(fill)}`;
         break;
       case "double-specific":
-        fill = whole(shape.categoryId);
-        second = whole(shape.secondCategoryId!);
+        fill = specific(whole(shape.categoryId), true);
+        second = secondOf(whole(shape.secondCategoryId!));
         text = capitaliseSpaced(`${fillWord(fill)} of ${fillWord(second)}`);
         break;
       case "position-of-landmark":
-        fill = this.fill(shape.categoryId, rng);
-        second = whole(shape.secondCategoryId!);
+        fill = specific(this.fill(shape.categoryId, rng), false);
+        second = secondOf(whole(shape.secondCategoryId!));
         text = capitaliseSpaced(`${fillWord(fill)} of the ${fillWord(second)}`);
         break;
       case "locative":
@@ -500,9 +675,21 @@ export class NameRenderer {
         const genericFirst = shape.wordOrder === "generic-first-direct" || shape.wordOrder === "generic-first-linked";
         const slot = this.slotFor(shape.categoryId);
         const mayBeName = slot.kind === "sources" && slot.sources.some((s) => s.draw);
-        fill = this.fill(shape.categoryId, rng, genericFirst && mayBeName);
-        if (genericFirst && fill.kind !== "word" && !LOCAL_GENERICS.has(shape.genericId)) {
+        const drawWhole = genericFirst && mayBeName;
+        fill = specific(this.fill(shape.categoryId, rng, drawWhole), drawWhole);
+        // §6.3: a native placeholder never takes the name-style generic-first form.
+        const native = fill.kind === "placeholder" && !!fill.native;
+        if (genericFirst && fill.kind !== "word" && !native && !LOCAL_GENERICS.has(shape.genericId)) {
           text = this.genericFirst(fill, shape.genericId, shape.wordOrder === "generic-first-linked", rng);
+          break;
+        }
+        // River brief §3: a keep-set word may keep its linked order (two-part compounds only).
+        const kept =
+          shape.wordOrder === "generic-first-linked" && shape.structure === "two-part-compound"
+            ? this.ofThe(fill, shape.categoryId, shape.genericId, rng)
+            : null;
+        if (kept) {
+          text = kept;
           break;
         }
         const first = this.join(fill, shape.categoryId, shape.genericId, rng);
@@ -580,7 +767,7 @@ export class NameRenderer {
         if (genericId === "folk-group-territory") {
           // §4.5: [personal name] + people → Grimings.
           fill = this.fill(categoryId, rng);
-          text = fill.kind === "placeholder" ? `${placeholderText(categoryId)}ings` : `${fusedCase(fillWord(fill))}ings`;
+          text = fill.kind === "placeholder" ? `${fill.label}ings` : `${fusedCase(fillWord(fill))}ings`;
           break;
         }
         const genericFirst = effective.wordOrder !== "germanic" && effective.structure === "two-part-compound";
@@ -590,6 +777,15 @@ export class NameRenderer {
         fill = this.fill(categoryId, rng, genericFirst && mayBeName);
         if (genericFirst && fill.kind !== "word") {
           text = this.genericFirst(fill, genericId, effective.wordOrder === "celtic-linked", rng);
+          break;
+        }
+        // River brief §3: a keep-set word may keep its linked order; otherwise it flips as before.
+        const kept =
+          effective.wordOrder === "celtic-linked" && effective.structure === "two-part-compound"
+            ? this.ofThe(fill, categoryId, genericId, rng)
+            : null;
+        if (kept) {
+          text = kept;
           break;
         }
         // Words flip to English order and join normally.
@@ -645,6 +841,18 @@ export function resolveRegionSetting(value: string | undefined): string | undefi
  * same shape, up to 20 attempts, after which it is allowed (§13).
  */
 export function generatePlaceNames(options: NameGenerateOptions): NameGenerateResult {
+  const steps = generatePlaceNamesSteps(options);
+  for (;;) {
+    const next = steps.next();
+    if (next.done) return next.value;
+  }
+}
+
+/**
+ * Generates names one at a time, pausing after each with the number done so far, so a host can let
+ * the page repaint while adoptions run (recipe takeover §A6). Same result as `generatePlaceNames`.
+ */
+export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generator<number, NameGenerateResult> {
   const { recipe } = options;
   const seed =
     options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
@@ -660,7 +868,16 @@ export function generatePlaceNames(options: NameGenerateOptions): NameGenerateRe
 
   // Stage 1: shapes on the main stream, exactly as the shape generator makes them.
   const rng = mulberry32((seed ^ FILL_SALT) >>> 0);
-  const renderer = new NameRenderer(recipe, options.slots, region);
+  // Recipe takeover §A4: a takeover pack only adapts colonial recipes; organic ones ignore it.
+  const adaptation: NameAdaptation | undefined =
+    options.adapt && !organic ? { adapt: options.adapt, seed, redrawRng: mulberry32((seed ^ REDRAW_SALT) >>> 0) } : undefined;
+  const renderer = new NameRenderer(recipe, options.slots, region, {
+    adaptation,
+    ofTheRng: mulberry32((seed ^ OF_THE_SALT) >>> 0),
+    labelRng: mulberry32((seed ^ SPLIT_SALT) >>> 0),
+    faithfulness: options.faithfulness,
+    strictness: options.strictness,
+  });
   let renderOne: (i: number) => GeneratedName;
   let shapeCount: number;
   if (organic) {
@@ -691,6 +908,7 @@ export function generatePlaceNames(options: NameGenerateOptions): NameGenerateRe
     }
     seen.add(name.text.toLowerCase());
     names.push(name);
+    yield names.length;
   }
   return { names, seed, notices: [...notices, ...renderer.getNotices()] };
 }

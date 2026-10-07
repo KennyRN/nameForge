@@ -60,7 +60,7 @@ var MarkovModel = class _MarkovModel {
    * casing is reapplied (first letter only) at generation time.
    */
   static build(names) {
-    var _a;
+    var _a2;
     const tables = [
       /* @__PURE__ */ new Map(),
       /* @__PURE__ */ new Map(),
@@ -94,7 +94,7 @@ var MarkovModel = class _MarkovModel {
             table2 = /* @__PURE__ */ new Map();
             tables[k].set(ctx, table2);
           }
-          table2.set(ch, ((_a = table2.get(ch)) != null ? _a : 0) + 1);
+          table2.set(ch, ((_a2 = table2.get(ch)) != null ? _a2 : 0) + 1);
         }
       }
     }
@@ -125,9 +125,9 @@ var MarkovModel = class _MarkovModel {
    * reproduced later by passing the same seed back in.
    */
   generateDetailed(options) {
-    var _a, _b, _c, _d;
+    var _a2, _b, _c, _d;
     const count = Math.max(0, Math.floor(options.count));
-    const faithfulness = clampInt((_a = options.faithfulness) != null ? _a : 2, 1, 3);
+    const faithfulness = clampInt((_a2 = options.faithfulness) != null ? _a2 : 2, 1, 3);
     const strictness = clampInt((_b = options.strictness) != null ? _b : 3, 1, 5);
     const allowCopies = (_c = options.allowSourceCopies) != null ? _c : false;
     const novelty = clampInt((_d = options.novelty) != null ? _d : 0, 0, 3);
@@ -251,7 +251,7 @@ var MarkovModel = class _MarkovModel {
    * blend (the main cause of verbatim source copies).
    */
   getDist(context, wbase) {
-    var _a;
+    var _a2;
     const key = context.length <= KMAX ? context.join("") : context.slice(-KMAX).join("");
     const cached = this.distCache.get(key);
     if (cached !== void 0) return cached;
@@ -267,7 +267,7 @@ var MarkovModel = class _MarkovModel {
       const confidence = tot / (tot + d.size);
       const w = Math.pow(wbase, k) * confidence;
       for (const [ch, cnt] of d) {
-        scores.set(ch, ((_a = scores.get(ch)) != null ? _a : 0) + w * cnt / tot);
+        scores.set(ch, ((_a2 = scores.get(ch)) != null ? _a2 : 0) + w * cnt / tot);
       }
     }
     let dist = null;
@@ -735,8 +735,8 @@ var PlaceNameModel = class _PlaceNameModel {
     this.templateTot = trun;
   }
   static build(names, options) {
-    var _a, _b, _c, _d, _e, _f;
-    const minSuffixCount = Math.max(1, (_a = options == null ? void 0 : options.minSuffixCount) != null ? _a : 2);
+    var _a2, _b, _c, _d, _e, _f;
+    const minSuffixCount = Math.max(1, (_a2 = options == null ? void 0 : options.minSuffixCount) != null ? _a2 : 2);
     const minStemLength = Math.max(1, (_b = options == null ? void 0 : options.minStemLength) != null ? _b : 2);
     const gazetteer = new Set(PLACE_SUFFIX_GAZETTEER);
     for (const s of (_c = options == null ? void 0 : options.knownSuffixes) != null ? _c : []) {
@@ -782,8 +782,8 @@ var PlaceNameModel = class _PlaceNameModel {
       }
     }
     const qualifies = (suffix) => {
-      var _a2;
-      return gazetteer.has(suffix) || ((_a2 = endingCounts.get(suffix)) != null ? _a2 : 0) >= minSuffixCount;
+      var _a3;
+      return gazetteer.has(suffix) || ((_a3 = endingCounts.get(suffix)) != null ? _a3 : 0) >= minSuffixCount;
     };
     const stems = [];
     const chosen = /* @__PURE__ */ new Map();
@@ -844,9 +844,9 @@ var PlaceNameModel = class _PlaceNameModel {
     return null;
   }
   generateDetailed(options) {
-    var _a, _b, _c, _d, _e;
+    var _a2, _b, _c, _d, _e;
     const count = Math.max(0, Math.floor(options.count));
-    const faithfulness = clampInt((_a = options.faithfulness) != null ? _a : 2, 1, 3);
+    const faithfulness = clampInt((_a2 = options.faithfulness) != null ? _a2 : 2, 1, 3);
     const strictness = clampInt((_b = options.strictness) != null ? _b : 3, 1, 5);
     const allowCopies = (_c = options.allowSourceCopies) != null ? _c : false;
     const novelty = clampInt((_d = options.novelty) != null ? _d : 0, 0, 3);
@@ -908,13 +908,13 @@ var PlaceNameModel = class _PlaceNameModel {
   }
   /** Seeded weighted pick over the discovered endings ("" possible). */
   pickEnding(rng) {
-    var _a;
+    var _a2;
     if (this.endingTot <= 0) return "";
     const r = rng() * this.endingTot;
     for (let i = 0; i < this.endingCum.length; i++) {
       if (r < this.endingCum[i]) return this.endingChars[i];
     }
-    return (_a = this.endingChars[this.endingChars.length - 1]) != null ? _a : "";
+    return (_a2 = this.endingChars[this.endingChars.length - 1]) != null ? _a2 : "";
   }
 };
 function normalisePlaceName(raw, gazetteer) {
@@ -1020,7 +1020,7 @@ function generateCompoundNamesDetailed(parts, options) {
   const nextSubSeed = () => Math.floor(masterRng() * 4294967295) >>> 0;
   const poolSize = Math.max(count, 30);
   const pools = parts.map((part) => {
-    var _a, _b;
+    var _a2, _b;
     if (part.length === 0) return [];
     if (options.generator === "list") {
       const generator = new ListGenerator();
@@ -1030,7 +1030,7 @@ function generateCompoundNamesDetailed(parts, options) {
     const model = MarkovModel.build(part);
     return model.generateDetailed({
       count: poolSize,
-      faithfulness: (_a = options.faithfulness) != null ? _a : 2,
+      faithfulness: (_a2 = options.faithfulness) != null ? _a2 : 2,
       strictness: (_b = options.strictness) != null ? _b : 3,
       seed: nextSubSeed()
     }).names;
@@ -1068,7 +1068,7 @@ function buildWeightedCorpus(sources) {
   return out;
 }
 function generateMixNamesDetailed(sources, options) {
-  var _a, _b;
+  var _a2, _b;
   const count = Math.max(0, Math.floor(options.count));
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const viable = sources.filter((source) => source.names.length > 0 && source.weight > 0);
@@ -1078,7 +1078,7 @@ function generateMixNamesDetailed(sources, options) {
   const model = MarkovModel.build(corpus);
   const result = model.generateDetailed({
     count,
-    faithfulness: (_a = options.faithfulness) != null ? _a : 2,
+    faithfulness: (_a2 = options.faithfulness) != null ? _a2 : 2,
     strictness: (_b = options.strictness) != null ? _b : 3,
     seed
   });
@@ -1155,9 +1155,9 @@ function sectionOptions(s) {
   return options;
 }
 var labelOf = (r, s) => {
-  var _a, _b;
+  var _a2, _b;
   if (!r.section && !r.gender) return "the whole pack";
-  const section = r.section ? (_b = (_a = s.sections.find((x) => same(x.name, r.section))) == null ? void 0 : _a.name) != null ? _b : r.section : void 0;
+  const section = r.section ? (_b = (_a2 = s.sections.find((x) => same(x.name, r.section))) == null ? void 0 : _a2.name) != null ? _b : r.section : void 0;
   const gender = r.gender ? r.gender.charAt(0).toUpperCase() + r.gender.slice(1) : void 0;
   return [section, gender].filter(Boolean).join(" \xB7 ");
 };
@@ -1231,8 +1231,8 @@ function mergeSectionedNames(derived, template) {
     const d = derived.sections.find((x) => same(x.name, t.name));
     if (!d) return t;
     const subsections = t.subsections.map((ts) => {
-      var _a;
-      return (_a = d.subsections.find((ds) => same(ds.name, ts.name))) != null ? _a : ts;
+      var _a2;
+      return (_a2 = d.subsections.find((ds) => same(ds.name, ts.name))) != null ? _a2 : ts;
     });
     for (const ds of d.subsections) if (!t.subsections.some((ts) => same(ts.name, ds.name))) subsections.push(ds);
     return { name: t.name, names: d.names.length > 0 ? d.names : t.names, subsections };
@@ -1307,8 +1307,8 @@ function wordListEntries(list, categoryLabel) {
 }
 function mergeWordLists(derived, template) {
   const sections = template.sections.map((t) => {
-    var _a;
-    return (_a = derived.sections.find((d) => same2(d.name, t.name))) != null ? _a : t;
+    var _a2;
+    return (_a2 = derived.sections.find((d) => same2(d.name, t.name))) != null ? _a2 : t;
   });
   for (const d of derived.sections) if (!template.sections.some((t) => same2(t.name, d.name))) sections.push(d);
   return { unsectioned: derived.unsectioned.length > 0 ? derived.unsectioned : template.unsectioned, sections };
@@ -1414,13 +1414,13 @@ function applyTemplate(derived, template) {
   return { parsed: mergeWithTemplate(derived, template) };
 }
 function mergeWithTemplate(derived, template) {
-  var _a, _b, _c;
+  var _a2, _b, _c;
   const merged = { ...derived };
   if (derived.packType === "compoundPack") {
-    const count = (_b = (_a = derived.compoundParts) != null ? _a : template.compoundParts) != null ? _b : 2;
+    const count = (_b = (_a2 = derived.compoundParts) != null ? _a2 : template.compoundParts) != null ? _b : 2;
     merged.parts = Array.from({ length: count }, (_, i) => {
-      var _a2, _b2, _c2, _d;
-      const own = (_b2 = (_a2 = derived.parts) == null ? void 0 : _a2[i]) != null ? _b2 : [];
+      var _a3, _b2, _c2, _d;
+      const own = (_b2 = (_a3 = derived.parts) == null ? void 0 : _a3[i]) != null ? _b2 : [];
       return own.length > 0 ? own : (_d = (_c2 = template.parts) == null ? void 0 : _c2[i]) != null ? _d : [];
     });
     return merged;
@@ -1430,8 +1430,8 @@ function mergeWithTemplate(derived, template) {
     return merged;
   }
   const asSections = (p) => {
-    var _a2;
-    return (_a2 = p.sectioned) != null ? _a2 : { unsectioned: p.names, sections: [] };
+    var _a3;
+    return (_a3 = p.sectioned) != null ? _a3 : { unsectioned: p.names, sections: [] };
   };
   const sectioned = mergeSectionedNames(asSections(derived), asSections(template));
   merged.names = allSectionedNames(sectioned);
@@ -1440,7 +1440,7 @@ function mergeWithTemplate(derived, template) {
   return merged;
 }
 function splitCompoundPartSections(body, partCount) {
-  var _a;
+  var _a2;
   const sections = [];
   const headingRegex = /^##\s*Part\s*[123]\s*$/gm;
   const matches = [...body.matchAll(headingRegex)];
@@ -1451,7 +1451,7 @@ function splitCompoundPartSections(body, partCount) {
       continue;
     }
     const start = match.index + match[0].length;
-    const nextIndex = (_a = matches[i + 1]) == null ? void 0 : _a.index;
+    const nextIndex = (_a2 = matches[i + 1]) == null ? void 0 : _a2.index;
     const end = nextIndex === void 0 ? body.length : nextIndex;
     sections.push(body.slice(start, end));
   }
@@ -1573,11 +1573,11 @@ function findPackInIndex(index, ref) {
   if (!normalized) return void 0;
   const fileName = normalized.split("/").pop() || normalized;
   return index.find((entry) => {
-    var _a;
+    var _a2;
     if (entry.parsed.packName === normalized || entry.parsed.packName === fileName) {
       return true;
     }
-    const entryFile = ((_a = entry.path.split("/").pop()) == null ? void 0 : _a.replace(/\.md$/i, "")) || "";
+    const entryFile = ((_a2 = entry.path.split("/").pop()) == null ? void 0 : _a2.replace(/\.md$/i, "")) || "";
     if (entryFile === fileName || entryFile === normalized) {
       return true;
     }
@@ -1585,20 +1585,20 @@ function findPackInIndex(index, ref) {
   });
 }
 function namesFromParsedPack(parsed) {
-  var _a;
+  var _a2;
   if (parsed.packType === "compoundPack") {
-    return ((_a = parsed.parts) != null ? _a : []).flat().filter((name) => name.trim().length > 0);
+    return ((_a2 = parsed.parts) != null ? _a2 : []).flat().filter((name) => name.trim().length > 0);
   }
   return parsed.names.filter((name) => name.trim().length > 0);
 }
 function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ new Set(), sectionRequest) {
-  var _a;
+  var _a2;
   if (visiting.has(mixPath)) {
     return { sources: [], error: `Mix pack cycle involving ${mixData.packName || mixPath}.` };
   }
   visiting.add(mixPath);
   const sources = [];
-  const refs = (_a = mixData.mixSources) != null ? _a : [];
+  const refs = (_a2 = mixData.mixSources) != null ? _a2 : [];
   for (const ref of refs) {
     const found = findPackInIndex(index, ref.packName);
     if (!found) {
@@ -1646,8 +1646,8 @@ function parseWordListFileContent(content, fallbackName = "Word list") {
   const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   const frontmatter = fm ? fm[1] : "";
   const field = (key) => {
-    var _a, _b;
-    return (_b = (_a = frontmatter.match(new RegExp(`^${key}:\\s*(.*)$`, "m"))) == null ? void 0 : _a[1].trim().replace(/^['"]|['"]$/g, "")) != null ? _b : "";
+    var _a2, _b;
+    return (_b = (_a2 = frontmatter.match(new RegExp(`^${key}:\\s*(.*)$`, "m"))) == null ? void 0 : _a2[1].trim().replace(/^['"]|['"]$/g, "")) != null ? _b : "";
   };
   return {
     packName: field("packName") || fallbackName,
@@ -2010,8 +2010,6 @@ var ICON_NAME_AGEING = "nameforge-name-ageing";
 var ICON_NAME_AGEING_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="20" height="18" x="2" y="4" rx="4" /><path d="M8 2v4m8-4v4M2 10h20" /></g></g>';
 var ICON_NAME_TAKEOVER = "nameforge-name-takeover";
 var ICON_NAME_TAKEOVER_SVG = '<g transform="scale(4.16667)"><path fill="currentColor" d="M12.002 1.999c5.523 0 10.001 4.478 10.001 10.002q0 .395-.03.783a6.5 6.5 0 0 0-1.474-1.052a8.5 8.5 0 0 0-.233-1.733h-3.358q.048.504.073 1.021a6.5 6.5 0 0 0-1.49.296A19 19 0 0 0 15.4 10H8.605a19 19 0 0 0 .135 5h2.758q-.298.714-.422 1.5H9.063c.598 2.215 1.601 3.735 2.654 3.97a6.5 6.5 0 0 0 1.066 1.502q-.387.03-.781.03C6.478 22.002 2 17.524 2 12.001C2 6.477 6.478 1.999 12.002 1.999M7.51 16.501H4.787a8.53 8.53 0 0 0 4.095 3.41c-.523-.82-.954-1.846-1.27-3.015zM7.095 10H3.737l-.004.017a8.5 8.5 0 0 0-.233 1.984c0 1.056.193 2.067.545 3h3.173a21 21 0 0 1-.123-5m1.788-5.910l-.023.008A8.53 8.53 0 0 0 4.252 8.5H7.3c.313-1.752.86-3.278 1.583-4.41m3.119-.591l-.116.005C10.62 3.62 9.398 5.622 8.830 8.5h6.343c-.566-2.870-1.783-4.869-3.045-4.995zm3.120.59l.106.175c.67 1.112 1.178 2.572 1.475 4.237h3.048a8.53 8.53 0 0 0-4.338-4.290zM12 17.5a5.5 5.5 0 1 0 11 0a5.5 5.5 0 0 0-11 0m8.5-3.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h1a2.5 2.5 0 0 0-2-1c-.833 0-1.572.407-2.027 1.036a.5.5 0 0 1-.81-.586A3.5 3.5 0 0 1 17.5 14c.98 0 1.865.403 2.5 1.05v-.55a.5.5 0 0 1 .5-.5M15 19.95v.55a.5.5 0 0 1-1 0v-2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-1c.456.608 1.183 1 2 1c.766 0 1.452-.344 1.911-.888a.5.5 0 0 1 .764.645A3.5 3.5 0 0 1 17.5 21a3.5 3.5 0 0 1-2.5-1.05" /></g>';
-var ICON_LOADING = "nameforge-loading";
-var ICON_LOADING_SVG = '<g transform="scale(4.16667)"><circle cx="4" cy="12" r="3" fill="currentColor"><animate id="nameforgeLoadingA" fill="freeze" attributeName="opacity" begin="0;nameforgeLoadingC.end-0.25s" dur="0.75s" values="1;.2" /></circle><circle cx="12" cy="12" r="3" fill="currentColor" opacity=".4"><animate fill="freeze" attributeName="opacity" begin="nameforgeLoadingA.begin+0.15s" dur="0.75s" values="1;.2" /></circle><circle cx="20" cy="12" r="3" fill="currentColor" opacity=".3"><animate id="nameforgeLoadingC" fill="freeze" attributeName="opacity" begin="nameforgeLoadingA.begin+0.3s" dur="0.75s" values="1;.2" /></circle></g>';
 var ICON_DICE = "nameforge-dice";
 var ICON_DICE_SVG = '<g transform="scale(6.66667)"><path d="M0 0h15v15H0z" fill="none" /><path fill="currentColor" d="M4.14 1.14c-.68.05-1.33.43-1.7 1.07L.29 5.93c-.59 1.03-.26 2.32.77 2.91l3.72 2.14c.15.09.31.19.47.24V7.47c0-1.76 1.45-3.22 3.21-3.22h1.31c-.18-.26-.41-.5-.7-.67L5.35 1.44c-.39-.22-.8-.33-1.21-.3m.33.76c.6 0 1.12.41 1.28.99c.19.72-.23 1.45-.95 1.64c-.71.19-1.44-.23-1.64-.94c-.19-.72.24-1.45.95-1.64c.12-.04.24-.05.36-.05M2.2 5.84c.6 0 1.12.41 1.28.99c.19.71-.24 1.45-.95 1.64S1.08 8.23.89 7.52s.23-1.45.95-1.64c.11-.03.24-.05.36-.04m6.26-.52c-1.18 0-2.14.96-2.14 2.15v4.28c0 1.19.96 2.15 2.14 2.15h4.29c1.19 0 2.14-.96 2.14-2.15V7.47c0-1.19-.95-2.15-2.14-2.15zm4.29.81c.35 0 .69.14.95.39a1.34 1.34 0 0 1 0 1.89c-.26.26-.6.4-.95.4a1.34 1.34 0 0 1 0-2.68m-4.29 4.28c.36 0 .7.14.95.4c.25.25.39.59.39.94a1.34 1.34 0 0 1-2.68 0c0-.35.14-.69.4-.94c.25-.26.59-.4.94-.4" /></g>';
 var ICON_TEXT_INSERT = "nameforge-text-insert";
@@ -2040,6 +2038,8 @@ var ICON_SEED_LOCK = "nameforge-seed-lock";
 var ICON_SEED_LOCK_SVG = '<g transform="scale(4.16667)"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9.688H7c-1.38 0-2.5 1.035-2.5 2.312v6.938c0 1.277 1.12 2.312 2.5 2.312h10c1.38 0 2.5-1.035 2.5-2.312V12c0-1.277-1.12-2.312-2.5-2.312m-9.625 0V7.374a4.625 4.625 0 0 1 9.25 0v2.313m-8.094 8.094h6.938" /></g>';
 var ICON_SEED_COPY = "nameforge-seed-copy";
 var ICON_SEED_COPY_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M18.327 7.286h-8.044a1.93 1.93 0 0 0-1.925 1.938v10.088c0 1.07.862 1.938 1.925 1.938h8.044a1.93 1.93 0 0 0 1.925-1.938V9.224c0-1.07-.862-1.938-1.925-1.938" /><path d="M15.642 7.286V4.688c0-.514-.203-1.007-.564-1.37a1.92 1.92 0 0 0-1.361-.568H5.673c-.51 0-1 .204-1.36.568a1.95 1.95 0 0 0-.565 1.37v10.088c0 .514.203 1.007.564 1.37s.85.568 1.361.568h2.685" /></g></g>';
+var ICON_RIVER_NAMES = "nameforge-river-names";
+var ICON_RIVER_NAMES_SVG = '<g transform="scale(6.66667)"><path fill="currentColor" d="M12 9c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14q-1.245 0-2.25-1.5Q10.995 13 9.75 13T7.5 11.5Q6.495 13 5.25 13T3 11.5Q1.995 13 .75 13c-.26 0-.51-.05-.75-.14v-2.05c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2m0-4c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14Q13.005 9 12 7.5Q10.995 9 9.75 9T7.5 7.5Q6.495 9 5.25 9T3 7.5Q1.995 9 .75 9C.49 9 .24 8.95 0 8.86V6.81c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2m0-4c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14Q13.005 5 12 3.5Q10.995 5 9.75 5T7.5 3.5Q6.495 5 5.25 5T3 3.5Q1.995 5 .75 5C.49 5 .24 4.95 0 4.86V2.81c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2" /></g>';
 var ICON_FOLDER = "nameforge-folder";
 var ICON_FOLDER_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
 function registerNameForgeIcons() {
@@ -2054,7 +2054,6 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_NAME_AGEING, ICON_NAME_AGEING_SVG);
   (0, import_obsidian4.addIcon)(ICON_NAME_TAKEOVER, ICON_NAME_TAKEOVER_SVG);
-  (0, import_obsidian4.addIcon)(ICON_LOADING, ICON_LOADING_SVG);
   (0, import_obsidian4.addIcon)(ICON_DICE, ICON_DICE_SVG);
   (0, import_obsidian4.addIcon)(ICON_TEXT_INSERT, ICON_TEXT_INSERT_SVG);
   (0, import_obsidian4.addIcon)(ICON_CHECKLIST_INSERT, ICON_CHECKLIST_INSERT_SVG);
@@ -2070,6 +2069,7 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_SEED_LOCK, ICON_SEED_LOCK_SVG);
   (0, import_obsidian4.addIcon)(ICON_SEED_COPY, ICON_SEED_COPY_SVG);
   (0, import_obsidian4.addIcon)(ICON_FOLDER, ICON_FOLDER_SVG);
+  (0, import_obsidian4.addIcon)(ICON_RIVER_NAMES, ICON_RIVER_NAMES_SVG);
 }
 
 // src/folderModal.ts
@@ -2114,8 +2114,8 @@ var EnterFolderPathModal = class extends import_obsidian5.Modal {
     cancelButton.addEventListener("click", () => this.close());
   }
   async submit() {
-    var _a, _b;
-    const rawValue = ((_b = (_a = this.inputEl) == null ? void 0 : _a.value) == null ? void 0 : _b.trim()) || "";
+    var _a2, _b;
+    const rawValue = ((_b = (_a2 = this.inputEl) == null ? void 0 : _a2.value) == null ? void 0 : _b.trim()) || "";
     const cleaned = rawValue.replace(/^\/+|\/+$/g, "");
     const targetPath = (0, import_obsidian5.normalizePath)(cleaned || DEFAULT_NAMES_FOLDER);
     try {
@@ -2340,6 +2340,98 @@ var name_words_default = {
           "Cat"
         ],
         fuses: "yes"
+      },
+      {
+        modern: "stag",
+        plural: "stags",
+        forms: [
+          "Stag"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "hedgehog",
+        traditional: "urchin",
+        plural: "urchins",
+        forms: [
+          "Hedgehog"
+        ],
+        traditionalForms: [
+          "Urchin"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "squirrel",
+        plural: "squirrels",
+        forms: [
+          "Squirrel"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "rabbit",
+        traditional: "coney",
+        plural: "coneys",
+        forms: [
+          "Rabbit"
+        ],
+        traditionalForms: [
+          "Coney"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "weasel",
+        plural: "weasels",
+        forms: [
+          "Weasel"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "stoat",
+        plural: "stoats",
+        forms: [
+          "Stoat"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "polecat",
+        plural: "polecats",
+        forms: [
+          "Polecat"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "mole",
+        traditional: "mouldwarp",
+        plural: "mouldwarps",
+        forms: [
+          "Mole"
+        ],
+        traditionalForms: [
+          "Mouldwarp"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "seal",
+        plural: "seals",
+        forms: [
+          "Seal"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "bear",
+        plural: "bears",
+        forms: [
+          "Bear"
+        ],
+        fuses: "yes"
       }
     ],
     bird: [
@@ -2445,6 +2537,166 @@ var name_words_default = {
           "Finch"
         ],
         fuses: "yes"
+      },
+      {
+        modern: "kingfisher",
+        plural: "kingfishers",
+        forms: [
+          "Kingfisher"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "wren",
+        plural: "wrens",
+        forms: [
+          "Wren"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "robin",
+        plural: "robins",
+        forms: [
+          "Robin"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "blackbird",
+        plural: "blackbirds",
+        forms: [
+          "Blackbird"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "thrush",
+        traditional: "throstle",
+        plural: "throstles",
+        forms: [
+          "Thrush"
+        ],
+        traditionalForms: [
+          "Throstle"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "sparrow",
+        plural: "sparrows",
+        forms: [
+          "Sparrow"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "rook",
+        plural: "rooks",
+        forms: [
+          "Rook"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "jackdaw",
+        plural: "jackdaws",
+        forms: [
+          "Jackdaw"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "magpie",
+        plural: "magpies",
+        forms: [
+          "Magpie"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "kite",
+        traditional: "glede",
+        plural: "gledes",
+        forms: [
+          "Kite"
+        ],
+        traditionalForms: [
+          "Glede"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "buzzard",
+        plural: "buzzards",
+        forms: [
+          "Buzzard"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "falcon",
+        plural: "falcons",
+        forms: [
+          "Falcon"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "gull",
+        plural: "gulls",
+        forms: [
+          "Gull"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "curlew",
+        plural: "curlews",
+        forms: [
+          "Curlew"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "lapwing",
+        traditional: "peewit",
+        plural: "peewits",
+        forms: [
+          "Lapwing"
+        ],
+        traditionalForms: [
+          "Peewit"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "woodpecker",
+        traditional: "yaffle",
+        plural: "yaffles",
+        forms: [
+          "Woodpecker"
+        ],
+        traditionalForms: [
+          "Yaffle"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "swallow",
+        plural: "swallows",
+        forms: [
+          "Swallow"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "goose",
+        plural: "geese",
+        forms: [
+          "Goose"
+        ],
+        fuses: "yes"
       }
     ],
     "fish-and-other-creatures": [
@@ -2487,6 +2739,162 @@ var name_words_default = {
         forms: [
           "Bee",
           "Beo"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "pike",
+        traditional: "luce",
+        plural: "luces",
+        forms: [
+          "Pike"
+        ],
+        traditionalForms: [
+          "Luce"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "perch",
+        plural: "perch",
+        forms: [
+          "Perch"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "carp",
+        plural: "carp",
+        forms: [
+          "Carp"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "roach",
+        plural: "roach",
+        forms: [
+          "Roach"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "minnow",
+        plural: "minnows",
+        forms: [
+          "Minnow"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "herring",
+        plural: "herring",
+        forms: [
+          "Herring"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "crab",
+        plural: "crabs",
+        forms: [
+          "Crab"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "oyster",
+        plural: "oysters",
+        forms: [
+          "Oyster"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "mussel",
+        plural: "mussels",
+        forms: [
+          "Mussel"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "frog",
+        traditional: "paddock",
+        plural: "paddocks",
+        forms: [
+          "Frog"
+        ],
+        traditionalForms: [
+          "Paddock"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "toad",
+        plural: "toads",
+        forms: [
+          "Toad"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "newt",
+        traditional: "eft",
+        plural: "efts",
+        forms: [
+          "Newt"
+        ],
+        traditionalForms: [
+          "Eft"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "adder",
+        plural: "adders",
+        forms: [
+          "Adder"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "snail",
+        plural: "snails",
+        forms: [
+          "Snail"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "butterfly",
+        plural: "butterflies",
+        forms: [
+          "Butterfly"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "beetle",
+        plural: "beetles",
+        forms: [
+          "Beetle"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "wasp",
+        plural: "wasps",
+        forms: [
+          "Wasp"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "moth",
+        plural: "moths",
+        forms: [
+          "Moth"
         ],
         fuses: "yes"
       }
@@ -2618,6 +3026,134 @@ var name_words_default = {
           "Apel"
         ],
         fuses: "yes"
+      },
+      {
+        modern: "rowan",
+        traditional: "quicken",
+        plural: "quickens",
+        forms: [
+          "Rowan"
+        ],
+        traditionalForms: [
+          "Quicken"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "beech",
+        plural: "beeches",
+        forms: [
+          "Beech"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "hawthorn",
+        plural: "hawthorns",
+        forms: [
+          "Hawthorn"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "blackthorn",
+        plural: "blackthorns",
+        forms: [
+          "Blackthorn"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "chestnut",
+        plural: "chestnuts",
+        forms: [
+          "Chestnut"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "cherry",
+        traditional: "gean",
+        plural: "geans",
+        forms: [
+          "Cherry"
+        ],
+        traditionalForms: [
+          "Gean"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "pear",
+        plural: "pears",
+        forms: [
+          "Pear"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "plum",
+        plural: "plums",
+        forms: [
+          "Plum"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "poplar",
+        plural: "poplars",
+        forms: [
+          "Poplar"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "aspen",
+        traditional: "asp",
+        plural: "asps",
+        forms: [
+          "Aspen"
+        ],
+        traditionalForms: [
+          "Asp"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "juniper",
+        plural: "junipers",
+        forms: [
+          "Juniper"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "pine",
+        plural: "pines",
+        forms: [
+          "Pine"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "elder",
+        traditional: "bourtree",
+        plural: "bourtrees",
+        forms: [
+          "Elder"
+        ],
+        traditionalForms: [
+          "Bourtree"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "box",
+        plural: "box",
+        forms: [
+          "Box"
+        ],
+        fuses: "yes"
       }
     ],
     "wild-plant": [
@@ -2707,6 +3243,122 @@ var name_words_default = {
         ],
         fuses: "traditional-only",
         traditional: "whin"
+      },
+      {
+        modern: "bracken",
+        plural: "bracken",
+        forms: [
+          "Bracken"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "bramble",
+        plural: "brambles",
+        forms: [
+          "Bramble"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "briar",
+        plural: "briars",
+        forms: [
+          "Briar"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "primrose",
+        plural: "primroses",
+        forms: [
+          "Primrose"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "bluebell",
+        plural: "bluebells",
+        forms: [
+          "Bluebell"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "foxglove",
+        plural: "foxgloves",
+        forms: [
+          "Foxglove"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "cowslip",
+        plural: "cowslips",
+        forms: [
+          "Cowslip"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "daisy",
+        plural: "daisies",
+        forms: [
+          "Daisy"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "thistle",
+        plural: "thistles",
+        forms: [
+          "Thistle"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "ivy",
+        plural: "ivy",
+        forms: [
+          "Ivy"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "moss",
+        plural: "moss",
+        forms: [
+          "Moss"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "mint",
+        plural: "mint",
+        forms: [
+          "Mint"
+        ],
+        fuses: "yes"
+      },
+      {
+        modern: "honeysuckle",
+        traditional: "woodbine",
+        plural: "woodbine",
+        forms: [
+          "Honeysuckle"
+        ],
+        traditionalForms: [
+          "Woodbine"
+        ],
+        fuses: "no"
+      },
+      {
+        modern: "cress",
+        plural: "cress",
+        forms: [
+          "Cress"
+        ],
+        fuses: "yes"
       }
     ],
     crop: [
@@ -12058,21 +12710,16 @@ var EMPTY_SLOT = "empty-slot";
 var PERSONAL_NAME = "personal-name";
 var PLACE_SHAPES_HISTORY_NAME = "place name shapes";
 var GENERIC_PLACE_NAMES_HISTORY_NAME = "generic place name generator";
-function placeShapesHistoryLabel(regionCode, wording = "meaning") {
-  const name = wording === "plain" ? GENERIC_PLACE_NAMES_HISTORY_NAME : PLACE_SHAPES_HISTORY_NAME;
-  const region = regionCode ? findRegion(regionCode) : void 0;
-  return region ? `${name} \xB7 ${region.label}` : name;
-}
 var PLAIN_WORDING_SALT = 437918234;
 var PLACE_SHAPE_DATA = place_shapes_default;
 var TIER_ORDER = ["dominant", "common", "occasional", "rare", "unlikely"];
 function resolveProfile(group, genericId, source = PLACE_SHAPE_DATA) {
-  var _a;
+  var _a2;
   const tiers = new Map(source.categories.map((c) => [c.id, "unlikely"]));
   const apply = (profile) => {
-    var _a2;
+    var _a3;
     for (const tier of TIER_ORDER) {
-      for (const id of (_a2 = profile[tier]) != null ? _a2 : []) tiers.set(id, tier);
+      for (const id of (_a3 = profile[tier]) != null ? _a3 : []) tiers.set(id, tier);
     }
   };
   if (group.profile) apply(group.profile);
@@ -12082,17 +12729,14 @@ function resolveProfile(group, genericId, source = PLACE_SHAPE_DATA) {
       for (const id of tiers.keys()) tiers.set(id, "unlikely");
       apply(override.replace);
     }
-    for (const [id, tier] of Object.entries((_a = override.set) != null ? _a : {})) tiers.set(id, tier);
+    for (const [id, tier] of Object.entries((_a2 = override.set) != null ? _a2 : {})) tiers.set(id, tier);
   }
   return tiers;
 }
 var PLACE_SHAPE_REGION_DATA = place_shape_regions_default;
 var PLACE_SHAPE_REGIONS = PLACE_SHAPE_REGION_DATA.regions;
-function findRegion(code) {
-  return PLACE_SHAPE_REGIONS.find((r) => r.code === code);
-}
 function resolveRegion(code, regions) {
-  var _a, _b, _c;
+  var _a2, _b, _c;
   if (!regions.regions.some((r) => r.code === code)) throw new Error(`Unknown place-shape region: ${code}`);
   const genericMultiplier = /* @__PURE__ */ new Map();
   for (const tied of regions.tiedGenerics) {
@@ -12101,7 +12745,7 @@ function resolveRegion(code, regions) {
   }
   const structure = regions.structure[code];
   return {
-    groupMultiplier: (_a = regions.groupMultipliers[code]) != null ? _a : {},
+    groupMultiplier: (_a2 = regions.groupMultipliers[code]) != null ? _a2 : {},
     genericMultiplier,
     categoryMultiplier: (_b = regions.categoryMultipliers[code]) != null ? _b : {},
     wordOrder: Object.entries(regions.wordOrder[code]).filter(([, w]) => w > 0),
@@ -12134,8 +12778,8 @@ var PlaceShapeGenerator = class {
     this.genericWeights = /* @__PURE__ */ new Map();
     /** Feature filter "settlement": the two sides and the landscape share. */
     this.sides = null;
-    var _a, _b, _c, _d;
-    this.excluded = new Set((_a = filters.excludedCategories) != null ? _a : []);
+    var _a2, _b, _c, _d;
+    this.excluded = new Set((_a2 = filters.excludedCategories) != null ? _a2 : []);
     let groups = filters.groupIds ? source.groups.filter((g) => filters.groupIds.includes(g.id)) : source.groups;
     const feature = filters.feature && filters.feature !== "any" ? filters.feature : void 0;
     if (feature === "landscape") groups = groups.filter((g) => g.side === "landscape");
@@ -12158,8 +12802,8 @@ var PlaceShapeGenerator = class {
         this.genericWeights.set(
           group.id,
           group.generics.map((g) => {
-            var _a2;
-            return [g, (_a2 = region.genericMultiplier.get(g.id)) != null ? _a2 : 1];
+            var _a3;
+            return [g, (_a3 = region.genericMultiplier.get(g.id)) != null ? _a3 : 1];
           })
         );
       }
@@ -12167,8 +12811,8 @@ var PlaceShapeGenerator = class {
     const stackGroup = source.groups.find((g) => g.id === STACK_SOURCE_GROUP);
     this.stackGenerics = ((_d = stackGroup == null ? void 0 : stackGroup.generics) != null ? _d : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id));
     this.affixWeights = source.affixes.filter((a) => a.forms.length > 0).map((a) => {
-      var _a2, _b2;
-      return [a, ((_a2 = regions.affixBaseline[a.id]) != null ? _a2 : 0) * ((_b2 = region == null ? void 0 : region.affixMultiplier[a.id]) != null ? _b2 : 1)];
+      var _a3, _b2;
+      return [a, ((_a3 = regions.affixBaseline[a.id]) != null ? _a3 : 0) * ((_b2 = region == null ? void 0 : region.affixMultiplier[a.id]) != null ? _b2 : 1)];
     }).filter(([, w]) => w > 0);
   }
   /** Tier weight × regional category multiplier. Unlikely is 0 and stays 0. */
@@ -12177,10 +12821,10 @@ var PlaceShapeGenerator = class {
     let weights = this.profiles.get(key);
     if (!weights) {
       weights = [...resolveProfile(group, genericId, this.source)].map(([id, tier]) => {
-        var _a, _b;
+        var _a2, _b;
         return [
           id,
-          this.excluded.has(id) ? 0 : PLACE_SHAPE_WEIGHTS.tier[tier] * ((_b = (_a = this.region) == null ? void 0 : _a.categoryMultiplier[id]) != null ? _b : 1)
+          this.excluded.has(id) ? 0 : PLACE_SHAPE_WEIGHTS.tier[tier] * ((_b = (_a2 = this.region) == null ? void 0 : _a2.categoryMultiplier[id]) != null ? _b : 1)
         ];
       }).filter(([, w]) => w > 0);
       this.profiles.set(key, weights);
@@ -12194,14 +12838,14 @@ var PlaceShapeGenerator = class {
       let pool = rng() < landscapeShare ? landscape : settlement;
       if (pool.length === 0) pool = pool === landscape ? settlement : landscape;
       return region ? pickWeighted(pool.map((g) => {
-        var _a;
-        return [g, (_a = region.groupMultiplier[g.id]) != null ? _a : 1];
+        var _a2;
+        return [g, (_a2 = region.groupMultiplier[g.id]) != null ? _a2 : 1];
       }), rng) : pickUniform(pool, rng);
     }
     return region ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
   }
   next(rng) {
-    var _a, _b, _c, _d, _e;
+    var _a2, _b, _c, _d, _e;
     const region = this.region;
     const group = this.pickGroup(rng);
     const generic = region ? pickWeighted(this.genericWeights.get(group.id), rng) : pickUniform(group.generics, rng);
@@ -12213,7 +12857,7 @@ var PlaceShapeGenerator = class {
       structure: "two-part-compound",
       wordOrder: "germanic"
     };
-    const connectiveChance = (_a = region == null ? void 0 : region.connectiveChance) != null ? _a : PLACE_SHAPE_WEIGHTS.connectiveChance;
+    const connectiveChance = (_a2 = region == null ? void 0 : region.connectiveChance) != null ? _a2 : PLACE_SHAPE_WEIGHTS.connectiveChance;
     const stackedGenericChance = (_b = region == null ? void 0 : region.stackedGenericChance) != null ? _b : PLACE_SHAPE_WEIGHTS.stackedGenericChance;
     const affixChance = (_c = region == null ? void 0 : region.affixChance) != null ? _c : PLACE_SHAPE_WEIGHTS.affixChance;
     if (categoryId === EMPTY_SLOT) {
@@ -12293,12 +12937,12 @@ var PlaceShapeFormatter = class {
    * variants added. `pick` is the secondary RNG; it is only drawn when a generic has two words.
    */
   formatPlain(shape, region, pick) {
-    var _a;
+    var _a2;
     const rewrite = this.words.rewrites.find((r) => r.generic === shape.genericId);
     const effective = rewrite ? {
       ...shape,
       categoryId: rewrite.category,
-      structure: (_a = rewrite.structure) != null ? _a : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
+      structure: (_a2 = rewrite.structure) != null ? _a2 : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
     } : shape;
     return this.layout(effective, (id, plural) => {
       if (rewrite && id === shape.genericId) return plural ? rewrite.plural || rewrite.word : rewrite.word;
@@ -12316,20 +12960,20 @@ var PlaceShapeFormatter = class {
    * inside its brackets, e.g. "[domestic animal: ox] + [river crossing]".
    */
   formatEtymology(shape, specificFill, affixFill) {
-    var _a;
+    var _a2;
     const withFill = (id, fill) => {
-      var _a2;
-      return fill ? `[${((_a2 = this.categories.get(id)) != null ? _a2 : "?").toLowerCase()}: ${fill}]` : bracket(this.categories.get(id));
+      var _a3;
+      return fill ? `[${((_a3 = this.categories.get(id)) != null ? _a3 : "?").toLowerCase()}: ${fill}]` : bracket(this.categories.get(id));
     };
     return this.layout(
       shape,
       (id, plural) => `${bracket(this.generics.get(id))}${plural ? " (plural)" : ""}`,
       withFill(shape.categoryId, specificFill),
-      ((_a = shape.affix) == null ? void 0 : _a.form.slotCategory) ? withFill(shape.affix.form.slotCategory, affixFill) : void 0
+      ((_a2 = shape.affix) == null ? void 0 : _a2.form.slotCategory) ? withFill(shape.affix.form.slotCategory, affixFill) : void 0
     );
   }
   layout(shape, genericText, specificOverride, affixCategoryOverride) {
-    var _a;
+    var _a2;
     const specific = specificOverride != null ? specificOverride : bracket(this.categories.get(shape.categoryId));
     let text;
     switch (shape.structure) {
@@ -12347,7 +12991,7 @@ var PlaceShapeFormatter = class {
         break;
       case "stacked-generic": {
         const generic = genericText(shape.genericId, false);
-        text = `${specific} + ${generic} + ${genericText((_a = shape.stackedGenericId) != null ? _a : "", false)}`;
+        text = `${specific} + ${generic} + ${genericText((_a2 = shape.stackedGenericId) != null ? _a2 : "", false)}`;
         break;
       }
       default: {
@@ -16342,13 +16986,13 @@ function colonialContexts(part) {
   return COLONIAL_DATA.contexts[part];
 }
 function isTraditionAvailable(traditionId, part) {
-  var _a, _b;
-  return (_b = (_a = COLONIAL_TRADITIONS.find((t) => t.id === traditionId)) == null ? void 0 : _a.parts.includes(part)) != null ? _b : false;
+  var _a2, _b;
+  return (_b = (_a2 = COLONIAL_TRADITIONS.find((t) => t.id === traditionId)) == null ? void 0 : _a2.parts.includes(part)) != null ? _b : false;
 }
 var NEW_GROUP_SIDES = new Map(
   COLONIAL_DATA.groups.filter((g) => !g.inherited).map((g) => {
-    var _a;
-    return [g.id, (_a = g.side) != null ? _a : "settlement"];
+    var _a2;
+    return [g.id, (_a2 = g.side) != null ? _a2 : "settlement"];
   })
 );
 var PART1_GROUPS = new Map(PLACE_SHAPE_DATA.groups.map((g) => [g.id, g]));
@@ -16359,14 +17003,14 @@ function groupSide(group) {
   return group.inherited ? PART1_GROUPS.get(group.id).side : NEW_GROUP_SIDES.get(group.id);
 }
 function resolveColonialProfile(group, genericId, data = COLONIAL_DATA) {
-  var _a;
+  var _a2;
   const tiers = /* @__PURE__ */ new Map();
   for (const c of data.inheritedCategories) tiers.set(c.id, "unlikely");
   for (const c of data.categories) tiers.set(c.id, "unlikely");
   if (group.inherited) {
     const part1 = resolveProfile(PART1_GROUPS.get(group.id), genericId);
     for (const [id, tier] of part1) if (tiers.has(id)) tiers.set(id, tier);
-    for (const [id, tier] of Object.entries((_a = group.set) != null ? _a : {})) tiers.set(id, tier);
+    for (const [id, tier] of Object.entries((_a2 = group.set) != null ? _a2 : {})) tiers.set(id, tier);
   } else if (group.profile) {
     for (const tier of ["common", "occasional", "rare"]) {
       for (const id of group.profile[tier]) tiers.set(id, tier);
@@ -16401,8 +17045,8 @@ function deriveRenamingType(shape, data = COLONIAL_DATA) {
   const hasNative = used.some((c) => native.has(c));
   const colonialSpecific = used.some(
     (c) => {
-      var _a;
-      return colonialCategoryIds.has(c) && COLONIAL_SPECIFIC_FAMILIES.has((_a = categoryFamily.get(c)) != null ? _a : "") || c === "colonial-deity";
+      var _a2;
+      return colonialCategoryIds.has(c) && COLONIAL_SPECIFIC_FAMILIES.has((_a2 = categoryFamily.get(c)) != null ? _a2 : "") || c === "colonial-deity";
     }
   );
   const colonialGeneric = COLONIAL_GENERIC_GROUPS.has(shape.groupId);
@@ -16422,7 +17066,7 @@ var ColonialShapeGenerator = class {
     this.data = data;
     this.groups = [];
     this.sides = null;
-    var _a, _b;
+    var _a2, _b;
     const { part } = options;
     const tradition = options.tradition ? data.traditions.find((t) => t.id === options.tradition) : data.general;
     if (!tradition) throw new Error(`Unknown colonial tradition: ${options.tradition}`);
@@ -16435,7 +17079,7 @@ var ColonialShapeGenerator = class {
       ...data.categories.map((c) => [c.id, c.parts])
     ]);
     const inPart = (parts) => (parts != null ? parts : ["2", "2a"]).includes(part);
-    const excluded = new Set((_a = options.excludedCategories) != null ? _a : []);
+    const excluded = new Set((_a2 = options.excludedCategories) != null ? _a2 : []);
     const feature = options.feature && options.feature !== "any" ? options.feature : void 0;
     const eligibleByGroup = /* @__PURE__ */ new Map();
     for (const group of data.groups) {
@@ -16466,44 +17110,44 @@ var ColonialShapeGenerator = class {
     }
     const source = data.groups.find((g) => g.id === data.structures.stackedGeneric.sourceGroup);
     this.stackSource = source.generics.filter((entry) => typeof entry === "string" || inPart(entry.parts)).map((entry) => {
-      var _a2;
-      return [genericIdOf(entry), (_a2 = this.profile.genericMultipliers[genericIdOf(entry)]) != null ? _a2 : 1];
+      var _a3;
+      return [genericIdOf(entry), (_a3 = this.profile.genericMultipliers[genericIdOf(entry)]) != null ? _a3 : 1];
     }).filter(([, w]) => w > 0);
     const formFits = (f) => {
-      var _a2;
-      return !f.slotCategory || inPart((_a2 = categoryParts.get(f.slotCategory)) != null ? _a2 : []);
+      var _a3;
+      return !f.slotCategory || inPart((_a3 = categoryParts.get(f.slotCategory)) != null ? _a3 : []);
     };
     const types = [
       ...PLACE_SHAPE_DATA.affixes.map((a) => {
-        var _a2;
+        var _a3;
         return {
           id: a.id,
           forms: a.forms.filter(formFits),
-          weight: (_a2 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a2 : 0
+          weight: (_a3 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a3 : 0
         };
       }),
       ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms, weight: a.weight }))
     ];
     this.affixWeights = types.filter((t) => t.forms.length > 0).map((t) => {
-      var _a2;
-      return [t, t.weight * ((_a2 = this.profile.affixTypeMultipliers[t.id]) != null ? _a2 : 1)];
+      var _a3;
+      return [t, t.weight * ((_a3 = this.profile.affixTypeMultipliers[t.id]) != null ? _a3 : 1)];
     }).filter(([, w]) => w > 0);
   }
   groupMultiplier(id) {
-    var _a, _b, _c;
-    return ((_a = this.profile.groupMultipliers[id]) != null ? _a : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.groupMultipliers[id]) != null ? _c : 1);
+    var _a2, _b, _c;
+    return ((_a2 = this.profile.groupMultipliers[id]) != null ? _a2 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.groupMultipliers[id]) != null ? _c : 1);
   }
   categoryMultiplier(id) {
-    var _a, _b, _c;
-    return ((_a = this.profile.categoryMultipliers[id]) != null ? _a : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.categoryMultipliers[id]) != null ? _c : 1);
+    var _a2, _b, _c;
+    return ((_a2 = this.profile.categoryMultipliers[id]) != null ? _a2 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.categoryMultipliers[id]) != null ? _c : 1);
   }
   /** §7 base chance × tradition × context structure multipliers, capped at 1.0. */
   chance(key, base) {
-    var _a, _b, _c;
-    return cap(base * ((_a = this.profile.structureMultipliers[key]) != null ? _a : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.structureMultipliers[key]) != null ? _c : 1));
+    var _a2, _b, _c;
+    return cap(base * ((_a2 = this.profile.structureMultipliers[key]) != null ? _a2 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.structureMultipliers[key]) != null ? _c : 1));
   }
   next(rng) {
-    var _a, _b, _c;
+    var _a2, _b, _c;
     const s = this.data.structures;
     const { part } = this.options;
     let pool = this.groups;
@@ -16524,8 +17168,8 @@ var ColonialShapeGenerator = class {
     };
     const pickFrom = (candidates, fallback) => {
       const weighted = candidates.map((c) => {
-        var _a2;
-        return [c, (_a2 = generic.categoryWeight.get(c)) != null ? _a2 : 0];
+        var _a3;
+        return [c, (_a3 = generic.categoryWeight.get(c)) != null ? _a3 : 0];
       }).filter(([, w]) => w > 0);
       return weighted.length > 0 ? pickWeighted(weighted, rng) : fallback;
     };
@@ -16564,7 +17208,7 @@ var ColonialShapeGenerator = class {
       const orders = ["specific-first", "generic-first-direct", "generic-first-linked"].map((o) => [o, distribution[o]]).filter(([, w]) => w > 0);
       shape.wordOrder = pickWeighted(orders, rng);
     }
-    const split = (_b = (_a = this.context) == null ? void 0 : _a.nativeTreatment) != null ? _b : this.profile.nativeTreatment;
+    const split = (_b = (_a2 = this.context) == null ? void 0 : _a2.nativeTreatment) != null ? _b : this.profile.nativeTreatment;
     const native = s.nativeTreatment.categories;
     const usesSpecific = shape.structure !== "locative" && shape.structure !== "simplex";
     if (usesSpecific && native.includes(shape.categoryId)) shape.treatments.specific = rng() < split.adopted ? "adopted" : "adapted";
@@ -16595,12 +17239,12 @@ var genericLabels = new Map([
 function formatColonialShape(shape, fills = {}) {
   const fillFor = (id) => id === shape.categoryId ? fills.specific : id === shape.secondCategoryId ? fills.second : void 0;
   const category = (id, treatment, fill = fillFor(id)) => {
-    var _a;
-    return `[${((_a = labels.get(id)) != null ? _a : "?").toLowerCase()}${treatment ? `, ${treatment}` : ""}${fill ? `: ${fill}` : ""}]`;
+    var _a2;
+    return `[${((_a2 = labels.get(id)) != null ? _a2 : "?").toLowerCase()}${treatment ? `, ${treatment}` : ""}${fill ? `: ${fill}` : ""}]`;
   };
   const generic = (id) => {
-    var _a;
-    return `[${((_a = genericLabels.get(id)) != null ? _a : "?").toLowerCase()}]`;
+    var _a2;
+    return `[${((_a2 = genericLabels.get(id)) != null ? _a2 : "?").toLowerCase()}]`;
   };
   const specific = category(shape.categoryId, shape.treatments.specific);
   const the = (text2) => shape.definite ? `The ${text2}` : text2;
@@ -16673,1237 +17317,6 @@ function colonialHistoryLabel(sectionLabel, part, tradition, context) {
   return parts.join(" \xB7 ");
 }
 
-// src/names/engine.ts
-var NAMES = {
-  /** §4.1 fuse-chance modifiers and cap. */
-  traditionalWord: 1.5,
-  modernWord: 0.6,
-  packStem: 1,
-  joining: { fused: 1.5, balanced: 1, spaced: 0.5 },
-  fuseCap: 0.95,
-  maxFusedLetters: 13,
-  /** §4.2 linking -s- for person names. */
-  linkingS: 0.5,
-  /** §4.3 rule 3: this many consonants at the join falls back to spaced. */
-  maxJoinConsonants: 4,
-  /** §6.5 mixed register. */
-  mixedTraditional: 0.5,
-  /** §13 attempts to avoid a duplicate name before allowing it. */
-  duplicateAttempts: 20,
-  /** Default fusion class for a generic word §3.3 doesn't list (usually spaced). */
-  unlistedFusion: 0.15
-};
-var FILL_SALT = 1514052375;
-var WHOLE_BY_DEFAULT = /* @__PURE__ */ new Set(["native-place-name", "native-people-or-tribe", "homeland-place-name"]);
-var PERSON_CATEGORIES = /* @__PURE__ */ new Set([
-  "personal-name",
-  "monarch-ruler-or-dynasty",
-  "royal-woman",
-  "official-patron-or-sponsor",
-  "commander-or-conqueror",
-  "explorer-or-founder"
-]);
-var DEFAULT_GENDER = {
-  "royal-woman": { male: 0, female: 100 },
-  "monarch-ruler-or-dynasty": { male: 85, female: 15 },
-  "personal-name": { male: 75, female: 25 },
-  "saint-or-holy-person": { male: 70, female: 30 },
-  deity: { male: 50, female: 50 },
-  "colonial-deity": { male: 50, female: 50 },
-  "local-deity": { male: 50, female: 50 },
-  "official-patron-or-sponsor": { male: 95, female: 5 },
-  "commander-or-conqueror": { male: 95, female: 5 },
-  "explorer-or-founder": { male: 95, female: 5 }
-};
-var NAME_WORDS = name_words_default;
-function hasBuiltInList(categoryId) {
-  var _a, _b;
-  return ((_b = (_a = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a.length) != null ? _b : 0) > 0;
-}
-var categoryLabels = new Map([
-  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label.toLowerCase()]),
-  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label.toLowerCase()]),
-  ["local-settlement-word", "local settlement word"],
-  ["local-market-word", "local market word"]
-]);
-var LOCAL_GENERICS = /* @__PURE__ */ new Set(["local-settlement-word", "local-market-word"]);
-var DIRECTIONS = ["north", "south", "east", "west"];
-function pluralise(word) {
-  const parts = word.split(" ");
-  const last = parts.pop();
-  const plural = /s$/i.test(last) ? last : /[^aeiou]y$/i.test(last) ? `${last.slice(0, -1)}ies` : `${last}s`;
-  return [...parts, plural].join(" ");
-}
-var placeholderText = (categoryId) => {
-  var _a;
-  return `[${(_a = categoryLabels.get(categoryId)) != null ? _a : categoryId}]`;
-};
-function pickWeighted2(items, rng) {
-  const total = items.reduce((n, [, w]) => n + w, 0);
-  let r = rng() * total;
-  for (const [item, w] of items) {
-    r -= w;
-    if (r < 0) return item;
-  }
-  return items[items.length - 1][0];
-}
-var pickUniform2 = (items, rng) => items[Math.floor(rng() * items.length)];
-function fillWord(fill) {
-  if (fill.kind === "placeholder") return placeholderText(fill.categoryId);
-  if (fill.kind === "name") return fill.text;
-  return fill.traditional && fill.entry.traditional ? fill.entry.traditional : fill.entry.modern;
-}
-function fillEtymology(fill) {
-  if (fill.kind === "placeholder") return void 0;
-  return fill.kind === "name" ? fill.text : fill.entry.modern;
-}
-var VOWELS2 = /[aeiouy]/i;
-var isConsonant = (ch) => /[a-z]/i.test(ch) && !VOWELS2.test(ch);
-var titleWord = (w) => w.startsWith("[") ? w : w.charAt(0).toUpperCase() + w.slice(1);
-function capitaliseSpaced(text) {
-  const linking = new Set(NAME_WORDS.linkingWords);
-  let inPlaceholder = false;
-  return text.split(" ").map((word, i) => {
-    if (word.startsWith("[")) inPlaceholder = true;
-    const out = inPlaceholder ? word : i > 0 && linking.has(word.toLowerCase()) ? word.toLowerCase() : titleWord(word);
-    if (word.includes("]")) inPlaceholder = false;
-    return out;
-  }).join(" ");
-}
-function smoothJoin(specific, generic) {
-  var _a, _b, _c, _d;
-  let a = specific;
-  let b = generic.toLowerCase();
-  if (a.length > 0 && b.length > 0 && a.slice(-1).toLowerCase() === b.charAt(0)) b = b.slice(1);
-  if (/e$/i.test(a) && VOWELS2.test(b.charAt(0))) a = a.slice(0, -1);
-  const tail = (_b = (_a = a.match(/[^aeiouy]*$/i)) == null ? void 0 : _a[0]) != null ? _b : "";
-  const head = (_d = (_c = b.match(/^[^aeiouy]*/i)) == null ? void 0 : _c[0]) != null ? _d : "";
-  if (Array.from(tail + head).filter(isConsonant).length >= NAMES.maxJoinConsonants) return null;
-  return (a + b).replace(/(.)\1{2,}/gi, "$1$1");
-}
-var fusedCase = (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
-var letterCount = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
-var NameRenderer = class {
-  constructor(recipe, slots, regionCode) {
-    this.recipe = recipe;
-    this.slots = slots;
-    this.formatter = new PlaceShapeFormatter();
-    this.notices = /* @__PURE__ */ new Set();
-    this.region = regionCode;
-  }
-  getNotices() {
-    return [...this.notices];
-  }
-  /** §6.3: unmapped categories use their built-in list, else a placeholder. */
-  slotFor(categoryId) {
-    const slot = this.slots[categoryId];
-    if (slot) return slot;
-    return hasBuiltInList(categoryId) ? { kind: "built-in" } : { kind: "placeholder" };
-  }
-  chooseRegister(entry, rng) {
-    if (!entry.traditional) return false;
-    if (this.recipe.register === "modern") return false;
-    if (this.recipe.register === "traditional") return true;
-    return rng() < NAMES.mixedTraditional;
-  }
-  /** Stage 2: fill one slot. `whole` forces whole names for pack sources (§5.3). */
-  fill(categoryId, rng, whole = false) {
-    var _a, _b;
-    const slot = this.slotFor(categoryId);
-    const wordFill = (entries) => {
-      if (!entries || entries.length === 0) return { kind: "placeholder", categoryId };
-      let entry = pickUniform2(entries, rng);
-      if (entry.modern.includes("[direction]")) entry = { ...entry, modern: entry.modern.replace("[direction]", pickUniform2(DIRECTIONS, rng)) };
-      return { kind: "word", entry, traditional: this.chooseRegister(entry, rng) };
-    };
-    if (slot.kind === "placeholder" || slot.kind === "ignore") return { kind: "placeholder", categoryId };
-    if (slot.kind === "built-in") return wordFill(NAME_WORDS.categories[categoryId]);
-    const source = pickWeighted2(slot.sources.map((s) => [s, s.weight]), rng);
-    if (source.entries) return wordFill(source.entries);
-    if (!source.draw) return { kind: "placeholder", categoryId };
-    const mode = whole ? "whole" : (_a = slot.mode) != null ? _a : WHOLE_BY_DEFAULT.has(categoryId) ? "whole" : "stem";
-    const ratio = (_b = slot.gender) != null ? _b : DEFAULT_GENDER[categoryId];
-    const request = {};
-    if (slot.section) request.section = slot.section;
-    if (ratio) request.gender = rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female";
-    const text = source.draw(request, mode, rng);
-    return text ? { kind: "name", text, mode } : { kind: "placeholder", categoryId };
-  }
-  /** The generic's word (§3.1): variant replaces the plain word in its regions; recipe overrides last. */
-  genericWord(genericId, plural, rng) {
-    var _a, _b, _c;
-    if (LOCAL_GENERICS.has(genericId)) return this.localGeneric(genericId, rng);
-    const colonial = NAME_WORDS.colonialGenerics[genericId];
-    if (colonial) {
-      const word2 = pickUniform2(colonial, rng);
-      const chosen = plural ? pluralise(word2) : word2;
-      return (_a = this.recipe.generics[chosen.toLowerCase()]) != null ? _a : chosen;
-    }
-    const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === genericId);
-    let word;
-    if (rewrite) {
-      word = plural ? rewrite.plural || rewrite.word : rewrite.word;
-    } else {
-      const entry = PLACE_SHAPE_WORD_DATA.words[genericId];
-      const i = entry && entry.words.length > 1 ? Math.floor(rng() * entry.words.length) : 0;
-      word = entry ? plural && entry.plurals[i] ? entry.plurals[i] : entry.words[i] : genericId;
-      const variant = this.region ? PLACE_SHAPE_WORD_DATA.variants.find((v) => v.generic === genericId && v.regions.includes(this.region)) : void 0;
-      if (variant) word = plural && ((_b = entry == null ? void 0 : entry.plurals[i]) != null ? _b : "") !== "" ? variant.plural : variant.variant;
-    }
-    return (_c = this.recipe.generics[word.toLowerCase()]) != null ? _c : word;
-  }
-  /** §9.3: the local word from the recipe's linked word list (Modern column only), or a placeholder. */
-  localGeneric(genericId, rng) {
-    const slot = this.slots[genericId];
-    const sources = (slot == null ? void 0 : slot.kind) === "sources" ? slot.sources.filter((s) => s.entries && s.entries.length > 0) : [];
-    if (sources.length === 0) return placeholderText(genericId);
-    const source = pickWeighted2(sources.map((s) => [s, s.weight]), rng);
-    return pickUniform2(source.entries, rng).modern;
-  }
-  fusionClass(word, genericId) {
-    if (genericId && NAME_WORDS.genericFusion[genericId] !== void 0 && NAME_WORDS.colonialGenerics[genericId]) {
-      return NAME_WORDS.genericFusion[genericId];
-    }
-    if (word.includes(" ")) return 0;
-    const known = NAME_WORDS.fusion[word.toLowerCase()];
-    if (known !== void 0) return known;
-    this.notices.add(`\u201C${word}\u201D has no fusion class; it is treated as usually spaced.`);
-    return NAMES.unlistedFusion;
-  }
-  /** The combining form used when a word fill fuses. */
-  combiningForm(fill, rng) {
-    const forms = fill.traditional && fill.entry.traditionalForms ? fill.entry.traditionalForms : fill.entry.forms;
-    return forms.length > 0 ? pickUniform2(forms, rng) : fillWord(fill);
-  }
-  /**
-   * §4.1–§4.3, §4.6: specific + generic, fused or spaced. Returns the joined text and whether it
-   * fused (stacked generics only fuse onto an already fused name).
-   */
-  join(fill, categoryId, genericId, rng) {
-    var _a;
-    let plural = false;
-    let forceFuse = false;
-    let neverFuse = false;
-    let modifier = NAMES.packStem;
-    if (fill.kind === "placeholder") neverFuse = true;
-    else if (fill.kind === "name") neverFuse = fill.mode === "whole";
-    else {
-      const f = fill.entry.fuses;
-      if (f === "no" || f === "traditional-only" && !fill.traditional) neverFuse = true;
-      const word = fill.entry.modern.toLowerCase();
-      const fusedNumber = f === "number-fused" || categoryId === "number" && ["two", "three"].includes(word);
-      const spacedNumber = f === "number-spaced" || categoryId === "number" && ["five", "seven", "nine"].includes(word);
-      if (fusedNumber) {
-        forceFuse = true;
-        neverFuse = false;
-      }
-      if (spacedNumber) {
-        neverFuse = true;
-        plural = true;
-      }
-      if (f === "mile") {
-        const generic2 = this.genericWord(genericId, false, rng);
-        return { text: capitaliseSpaced(`${fillWord(fill)} Mile ${generic2}`), fused: false };
-      }
-      modifier = fill.traditional ? NAMES.traditionalWord : NAMES.modernWord;
-    }
-    const generic = this.genericWord(genericId, plural, rng);
-    const spaced = { text: capitaliseSpaced(`${fillWord(fill)} ${generic}`), fused: false };
-    if (LOCAL_GENERICS.has(genericId) && fill.kind !== "placeholder" && !generic.startsWith("[")) {
-      const specific2 = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
-      return { text: fusedCase((_a = smoothJoin(specific2, generic)) != null ? _a : `${specific2}${generic.toLowerCase()}`), fused: true };
-    }
-    if (fill.kind === "word" && fill.entry.fuses === "town-only" && generic.toLowerCase() !== "town") return spaced;
-    if (neverFuse && !forceFuse) return spaced;
-    if (!forceFuse) {
-      const chance = Math.min(NAMES.fuseCap, this.fusionClass(generic, genericId) * modifier * NAMES.joining[this.recipe.render.joining]);
-      if (!(rng() < chance)) return spaced;
-    }
-    if (generic.includes(" ")) return spaced;
-    let specific = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
-    if (fill.kind === "name" && PERSON_CATEGORIES.has(categoryId) && rng() < NAMES.linkingS && !/s$/i.test(specific)) {
-      specific += "s";
-    }
-    const joined = smoothJoin(specific, generic);
-    if (joined === null || letterCount(joined) > NAMES.maxFusedLetters) return spaced;
-    return { text: fusedCase(joined), fused: true };
-  }
-  /** §4.4: a name or placeholder with a generic-first order stays generic first. */
-  genericFirst(fill, genericId, linked, rng) {
-    var _a;
-    const generic = this.genericWord(genericId, false, rng);
-    const variantPrefix = NAME_WORDS.prefixVariantForms[genericId];
-    const prefix = (_a = NAME_WORDS.prefixForms[genericId]) != null ? _a : variantPrefix && generic.toLowerCase() === variantPrefix.variant ? variantPrefix.prefix : void 0;
-    const name = fillWord(fill);
-    if (prefix) return `${prefix} ${titleWord(name)}`;
-    return capitaliseSpaced(`${generic} of ${name}`);
-  }
-  /** §4.5: -ing- connectives, fused to the name; the generic joins if its class allows. */
-  connective(fill, genericId, rng) {
-    const generic = this.genericWord(genericId, false, rng);
-    const base = fill.kind === "placeholder" ? `${placeholderText(fill.categoryId)}ing` : `${fusedCase(fillWord(fill))}ing`;
-    if (fill.kind !== "placeholder" && this.fusionClass(generic) >= 0.5 && !generic.includes(" ")) {
-      const joined = smoothJoin(base, generic);
-      if (joined && letterCount(joined) <= NAMES.maxFusedLetters) return fusedCase(joined);
-    }
-    return `${base} ${titleWord(generic)}`;
-  }
-  /** §4.8: the shape's affix, with its slot filled; an ignored category redraws the affix type. */
-  affix(shape, rng) {
-    if (!shape.affix) return void 0;
-    const ignored = (form2) => !!form2.slotCategory && this.slotFor(form2.slotCategory).kind === "ignore";
-    let { typeId, form } = shape.affix;
-    if (ignored(form)) {
-      const options = PLACE_SHAPE_DATA.affixes.map((a) => {
-        var _a;
-        return [
-          { id: a.id, forms: a.forms.filter((f) => !ignored(f)) },
-          (_a = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a : 0
-        ];
-      }).filter(([a, w]) => a.forms.length > 0 && w > 0);
-      if (options.length === 0) return void 0;
-      const type = pickWeighted2(options, rng);
-      typeId = type.id;
-      form = pickUniform2(type.forms, rng);
-    }
-    const fill = form.slotCategory ? this.fill(form.slotCategory, rng, true) : void 0;
-    return { typeId, form, fill };
-  }
-  /** Colonial shapes (parts 2 and 2a): the structures of colonial-shapes §6, rendered by §4. */
-  renderColonial(shape, rng) {
-    const whole = (categoryId) => this.fill(categoryId, rng, true);
-    const named = (fill2) => titleWord(fillWord(fill2));
-    const the = (text2) => shape.definite ? `The ${text2}` : text2;
-    let fill;
-    let second;
-    let text;
-    switch (shape.structure) {
-      case "simplex":
-        text = the(capitaliseSpaced(this.genericWord(shape.genericId, !!shape.plural, rng)));
-        break;
-      case "bare-specific":
-        fill = whole(shape.categoryId);
-        text = the(capitaliseSpaced(fillWord(fill)));
-        break;
-      case "possessive":
-        fill = whole(shape.categoryId);
-        text = capitaliseSpaced(`${fillWord(fill)}'s ${this.genericWord(shape.genericId, false, rng)}`);
-        break;
-      case "new-transfer":
-        fill = whole(shape.categoryId);
-        text = `New ${named(fill)}`;
-        break;
-      case "twin":
-        fill = whole(shape.categoryId);
-        text = `${shape.twin === "old" ? "Old" : "New"} ${named(fill)}`;
-        break;
-      case "double-specific":
-        fill = whole(shape.categoryId);
-        second = whole(shape.secondCategoryId);
-        text = capitaliseSpaced(`${fillWord(fill)} of ${fillWord(second)}`);
-        break;
-      case "position-of-landmark":
-        fill = this.fill(shape.categoryId, rng);
-        second = whole(shape.secondCategoryId);
-        text = capitaliseSpaced(`${fillWord(fill)} of the ${fillWord(second)}`);
-        break;
-      case "locative":
-        text = capitaliseSpaced(`at the ${this.genericWord(shape.genericId, false, rng)}`);
-        break;
-      default: {
-        const genericFirst = shape.wordOrder === "generic-first-direct" || shape.wordOrder === "generic-first-linked";
-        const slot = this.slotFor(shape.categoryId);
-        const mayBeName = slot.kind === "sources" && slot.sources.some((s) => s.draw);
-        fill = this.fill(shape.categoryId, rng, genericFirst && mayBeName);
-        if (genericFirst && fill.kind !== "word" && !LOCAL_GENERICS.has(shape.genericId)) {
-          text = this.genericFirst(fill, shape.genericId, shape.wordOrder === "generic-first-linked", rng);
-          break;
-        }
-        const first = this.join(fill, shape.categoryId, shape.genericId, rng);
-        text = first.text;
-        if (shape.structure === "stacked-generic" && shape.stackedGenericId) {
-          const nextWord = this.genericWord(shape.stackedGenericId, false, rng);
-          const chance = Math.min(
-            NAMES.fuseCap,
-            this.fusionClass(nextWord, shape.stackedGenericId) * NAMES.joining[this.recipe.render.joining]
-          );
-          const fused = first.fused && rng() < chance ? smoothJoin(text, nextWord) : null;
-          text = fused && letterCount(fused) <= NAMES.maxFusedLetters ? fusedCase(fused) : capitaliseSpaced(`${text} ${nextWord}`);
-        }
-      }
-    }
-    const affix = this.affix(shape, rng);
-    let affixFill;
-    if (affix) {
-      const { form } = affix;
-      const filledText = affix.fill ? titleWord(fillWord(affix.fill)) : "";
-      affixFill = affix.fill ? fillEtymology(affix.fill) : void 0;
-      const words = [form.text, filledText].filter((w) => w.length > 0).join(" ");
-      if (form.position === "before") text = `${titleWord(words)} ${text}`;
-      else if (form.text && form.slotCategory && this.recipe.render.linkingHyphens) text = `${text}-${form.text.replace(/ /g, "-")}-${filledText}`;
-      else text = `${text} ${words}`;
-    }
-    const shown = { ...shape, affix: affix ? { typeId: affix.typeId, form: affix.form } : void 0 };
-    if (!affix) delete shown.affix;
-    return {
-      text,
-      hasPlaceholder: /\[[^\]]+\]/.test(text),
-      etymology: formatColonialShape(shown, {
-        specific: fill ? fillEtymology(fill) : void 0,
-        second: second ? fillEtymology(second) : void 0,
-        affix: affixFill
-      }),
-      shape
-    };
-  }
-  /** Stage 3: one shape → one name. */
-  render(shape, rng) {
-    var _a;
-    const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === shape.genericId);
-    const effective = rewrite ? {
-      ...shape,
-      categoryId: rewrite.category,
-      structure: (_a = rewrite.structure) != null ? _a : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
-    } : shape;
-    const { categoryId, genericId } = effective;
-    let text;
-    let fill;
-    switch (effective.structure) {
-      case "simplex":
-        text = titleWord(this.genericWord(genericId, false, rng));
-        text = capitaliseSpaced(text);
-        break;
-      case "plural-simplex":
-        text = capitaliseSpaced(this.genericWord(genericId, true, rng));
-        break;
-      case "folk-connective":
-      case "associative-connective":
-        fill = this.fill(categoryId, rng);
-        text = this.connective(fill, genericId, rng);
-        break;
-      default: {
-        if (genericId === "folk-group-territory") {
-          fill = this.fill(categoryId, rng);
-          text = fill.kind === "placeholder" ? `${placeholderText(categoryId)}ings` : `${fusedCase(fillWord(fill))}ings`;
-          break;
-        }
-        const genericFirst = effective.wordOrder !== "germanic" && effective.structure === "two-part-compound";
-        const slot = this.slotFor(categoryId);
-        const mayBeName = slot.kind === "sources" && slot.sources.some((s) => s.draw);
-        fill = this.fill(categoryId, rng, genericFirst && mayBeName);
-        if (genericFirst && fill.kind !== "word") {
-          text = this.genericFirst(fill, genericId, effective.wordOrder === "celtic-linked", rng);
-          break;
-        }
-        const first = this.join(fill, categoryId, genericId, rng);
-        text = first.text;
-        if (effective.structure === "stacked-generic" && effective.stackedGenericId) {
-          const second = this.genericWord(effective.stackedGenericId, false, rng);
-          const chance = Math.min(NAMES.fuseCap, this.fusionClass(second) * NAMES.joining[this.recipe.render.joining]);
-          const fused = first.fused && rng() < chance ? smoothJoin(text, second) : null;
-          text = fused && letterCount(fused) <= NAMES.maxFusedLetters ? fusedCase(fused) : capitaliseSpaced(`${text} ${second}`);
-        }
-      }
-    }
-    const affix = this.affix(effective, rng);
-    let affixFill;
-    if (affix) {
-      const { form } = affix;
-      const filled = affix.fill ? titleWord(fillWord(affix.fill)) : "";
-      affixFill = affix.fill ? fillEtymology(affix.fill) : void 0;
-      const words = [form.text, filled].filter((w) => w.length > 0).join(" ");
-      if (form.position === "before") text = `${titleWord(words)} ${text}`;
-      else if (form.text && form.slotCategory && this.recipe.render.linkingHyphens) {
-        text = `${text}-${form.text.replace(/ /g, "-")}-${filled}`;
-      } else text = `${text} ${words}`;
-    }
-    const shown = { ...effective, affix: affix ? { typeId: affix.typeId, form: affix.form } : void 0 };
-    if (!affix) delete shown.affix;
-    return {
-      text,
-      hasPlaceholder: /\[[^\]]+\]/.test(text),
-      etymology: this.formatter.formatEtymology(shown, fill ? fillEtymology(fill) : void 0, affixFill),
-      shape: effective
-    };
-  }
-};
-function resolveRegionSetting(value) {
-  if (!value || value === "all-britain") return void 0;
-  const kebab2 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  const region = PLACE_SHAPE_REGIONS.find((r) => r.code === value.toUpperCase() || kebab2(r.label) === kebab2(value));
-  return region == null ? void 0 : region.code;
-}
-function generatePlaceNames(options) {
-  const { recipe } = options;
-  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
-  const organic = recipe.shape.part === "organic";
-  const region = organic ? resolveRegionSetting(recipe.shape.region) : void 0;
-  const notices = [];
-  if (organic && recipe.shape.region !== "all-britain" && !region) {
-    notices.push(`Unknown region \u201C${recipe.shape.region}\u201D; using all Britain.`);
-  }
-  const excludedCategories = Object.entries(options.slots).filter(([, slot]) => slot.kind === "ignore").map(([id]) => id);
-  const rng = mulberry32((seed ^ FILL_SALT) >>> 0);
-  const renderer = new NameRenderer(recipe, options.slots, region);
-  let renderOne;
-  let shapeCount;
-  if (organic) {
-    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories });
-    renderOne = (i) => renderer.render(shapes[i], rng);
-    shapeCount = shapes.length;
-  } else {
-    const { shapes } = generateColonialShapesDetailed({
-      count: options.count,
-      seed,
-      part: recipe.shape.part === "new-land" ? "2" : "2a",
-      tradition: recipe.shape.tradition === "general" ? void 0 : recipe.shape.tradition,
-      context: recipe.shape.context === "none" ? void 0 : recipe.shape.context,
-      feature: recipe.shape.feature,
-      excludedCategories
-    });
-    renderOne = (i) => renderer.renderColonial(shapes[i], rng);
-    shapeCount = shapes.length;
-  }
-  const seen = /* @__PURE__ */ new Set();
-  const names = [];
-  for (let i = 0; i < shapeCount; i++) {
-    let name = renderOne(i);
-    for (let attempt = 1; seen.has(name.text.toLowerCase()) && attempt < NAMES.duplicateAttempts; attempt++) {
-      name = renderOne(i);
-    }
-    seen.add(name.text.toLowerCase());
-    names.push(name);
-  }
-  return { names, seed, notices: [...notices, ...renderer.getNotices()] };
-}
-
-// src/recipeHost.ts
-var import_obsidian6 = require("obsidian");
-
-// src/names/recipe.ts
-var RECIPE_DEFAULTS = {
-  setting: "",
-  template: false,
-  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", feature: "any" },
-  slots: {},
-  generics: {},
-  register: "mixed",
-  render: { joining: "balanced", linkingHyphens: true, etymology: false }
-};
-var PARTS = ["organic", "new-land", "established"];
-var REGISTERS = ["modern", "mixed", "traditional"];
-var JOININGS = ["fused", "balanced", "spaced"];
-var isObject = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
-var str = (v) => typeof v === "string" ? v.trim() : typeof v === "number" ? String(v) : void 0;
-var bool = (v) => typeof v === "boolean" ? v : v === "true" ? true : v === "false" ? false : void 0;
-function linkTarget(v) {
-  const s = str(v);
-  if (!s) return void 0;
-  const target = s.replace(/^\[\[|\]\]$/g, "").split("|")[0].trim();
-  return target || void 0;
-}
-function readSlot(v, problems, id) {
-  if (v === "built-in" || v === "ignore" || v === "placeholder") return { kind: v };
-  if (!isObject(v)) {
-    problems.push(`Slot \u201C${id}\u201D isn't built-in, ignore, placeholder or a list of sources.`);
-    return void 0;
-  }
-  const raw = Array.isArray(v.sources) ? v.sources : [];
-  const sources = [];
-  for (const item of raw) {
-    if (!isObject(item)) continue;
-    const pack = linkTarget(item.pack);
-    const list = linkTarget(item.list);
-    if (!pack && !list) continue;
-    const weight = Number(item.weight);
-    sources.push({ ...pack ? { pack } : {}, ...list ? { list } : {}, weight: Number.isFinite(weight) && weight > 0 ? weight : 1 });
-  }
-  if (sources.length === 0) {
-    problems.push(`Slot \u201C${id}\u201D has no usable sources.`);
-    return void 0;
-  }
-  const slot = { kind: "sources", sources };
-  if (v.mode === "stem" || v.mode === "whole") slot.mode = v.mode;
-  if (isObject(v.gender)) {
-    const male = Number(v.gender.male);
-    const female = Number(v.gender.female);
-    if (Number.isFinite(male) && Number.isFinite(female) && male + female > 0) slot.gender = { male, female };
-  }
-  const section = str(v.section);
-  if (section) slot.section = section;
-  return slot;
-}
-function readRecipe(fm) {
-  const problems = [];
-  const recipe = {};
-  const setting = str(fm.setting);
-  if (setting !== void 0) recipe.setting = setting;
-  const template = bool(fm.template);
-  if (template !== void 0) recipe.template = template;
-  const templateOf = linkTarget(fm["template-of"]);
-  if (templateOf) recipe.templateOf = templateOf;
-  if (isObject(fm.shape)) {
-    const shape = {};
-    const part = str(fm.shape.part);
-    if (part && PARTS.includes(part)) shape.part = part;
-    else if (part) problems.push(`Unknown shape part \u201C${part}\u201D.`);
-    for (const key of ["region", "tradition", "context", "feature"]) {
-      const value = str(fm.shape[key]);
-      if (value) shape[key] = value;
-    }
-    recipe.shape = shape;
-  }
-  if (isObject(fm.slots)) {
-    recipe.slots = {};
-    for (const [id, value] of Object.entries(fm.slots)) {
-      const slot = readSlot(value, problems, id);
-      if (slot) recipe.slots[id] = slot;
-    }
-  }
-  if (isObject(fm.generics)) {
-    recipe.generics = {};
-    for (const [word, replacement] of Object.entries(fm.generics)) {
-      const r = str(replacement);
-      if (r) recipe.generics[word.trim().toLowerCase()] = r;
-    }
-  }
-  const register = str(fm.register);
-  if (register && REGISTERS.includes(register)) recipe.register = register;
-  else if (register) problems.push(`Unknown register \u201C${register}\u201D.`);
-  if (isObject(fm.render)) {
-    const render = {};
-    const joining = str(fm.render.joining);
-    if (joining && JOININGS.includes(joining)) render.joining = joining;
-    else if (joining) problems.push(`Unknown joining \u201C${joining}\u201D.`);
-    const hyphens = bool(fm.render["linking-hyphens"]);
-    if (hyphens !== void 0) render.linkingHyphens = hyphens;
-    const etymology = bool(fm.render.etymology);
-    if (etymology !== void 0) render.etymology = etymology;
-    recipe.render = render;
-  }
-  return { recipe, problems };
-}
-function mergeRecipe(derived, template) {
-  var _a, _b;
-  return {
-    setting: (_a = derived.setting) != null ? _a : template.setting,
-    template: derived.template,
-    templateOf: derived.templateOf,
-    shape: { ...template.shape, ...derived.shape },
-    slots: { ...template.slots, ...derived.slots },
-    generics: { ...template.generics, ...derived.generics },
-    register: (_b = derived.register) != null ? _b : template.register,
-    render: { ...template.render, ...derived.render }
-  };
-}
-function withDefaults(r) {
-  var _a, _b, _c;
-  return {
-    setting: (_a = r.setting) != null ? _a : RECIPE_DEFAULTS.setting,
-    template: (_b = r.template) != null ? _b : false,
-    ...r.templateOf ? { templateOf: r.templateOf } : {},
-    shape: { ...RECIPE_DEFAULTS.shape, ...r.shape },
-    slots: { ...r.slots },
-    generics: { ...r.generics },
-    register: (_c = r.register) != null ? _c : RECIPE_DEFAULTS.register,
-    render: { ...RECIPE_DEFAULTS.render, ...r.render }
-  };
-}
-function applyRecipeTemplate(derived, template, name) {
-  if (!derived.templateOf) return { recipe: derived };
-  if (derived.template) return { recipe: derived, error: `\u201C${name}\u201D is a template, so it can't use template-of.` };
-  if (!template) return { recipe: derived, error: `Template \u201C${derived.templateOf}\u201D is missing.` };
-  if (template.templateOf) {
-    return { recipe: derived, error: `Template \u201C${derived.templateOf}\u201D has its own template; only one level is allowed.` };
-  }
-  return { recipe: mergeRecipe(derived, template) };
-}
-function recipeToFrontmatter(r) {
-  var _a;
-  const out = { type: "recipe", setting: (_a = r.setting) != null ? _a : "" };
-  if (r.template) out.template = true;
-  if (r.templateOf) out["template-of"] = `[[${r.templateOf}]]`;
-  if (r.shape && Object.keys(r.shape).length > 0) out.shape = { ...r.shape };
-  if (r.slots && Object.keys(r.slots).length > 0) {
-    out.slots = Object.fromEntries(
-      Object.entries(r.slots).map(([id, slot]) => {
-        if (slot.kind !== "sources") return [id, slot.kind];
-        const value = {
-          sources: slot.sources.map((s) => ({
-            ...s.pack ? { pack: `[[${s.pack}]]` } : {},
-            ...s.list ? { list: `[[${s.list}]]` } : {},
-            weight: s.weight
-          }))
-        };
-        if (slot.mode) value.mode = slot.mode;
-        if (slot.section) value.section = slot.section;
-        if (slot.gender) value.gender = { ...slot.gender };
-        return [id, value];
-      })
-    );
-  }
-  if (r.generics && Object.keys(r.generics).length > 0) out.generics = { ...r.generics };
-  if (r.register) out.register = r.register;
-  if (r.render && Object.keys(r.render).length > 0) {
-    const render = {};
-    if (r.render.joining) render.joining = r.render.joining;
-    if (r.render.linkingHyphens !== void 0) render["linking-hyphens"] = r.render.linkingHyphens;
-    if (r.render.etymology !== void 0) render.etymology = r.render.etymology;
-    out.render = render;
-  }
-  return out;
-}
-
-// src/recipeHost.ts
-var FRONTMATTER = /^---\s*\n([\s\S]*?)\n---\s*\n?/;
-function isRecipeContent(content) {
-  const fm = content.match(FRONTMATTER);
-  return !!fm && /^type:\s*["']?recipe["']?\s*$/m.test(fm[1]);
-}
-function parseRecipeContent(content) {
-  const fm = content.match(FRONTMATTER);
-  if (!fm) return { recipe: {}, body: content, problems: ["The recipe has no properties."] };
-  let raw;
-  try {
-    raw = (0, import_obsidian6.parseYaml)(fm[1]);
-  } catch (e) {
-    return { recipe: {}, body: content.slice(fm[0].length), problems: ["The recipe's properties aren't valid YAML."] };
-  }
-  const { recipe, problems } = readRecipe(raw != null ? raw : {});
-  return { recipe, body: content.slice(fm[0].length), problems };
-}
-var categoryLabels2 = new Map([
-  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]),
-  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label]),
-  ["local-settlement-word", "Local settlement word"],
-  ["local-market-word", "Local market word"]
-]);
-var RecipeHost = class {
-  constructor(app, settings, index) {
-    this.app = app;
-    this.settings = settings;
-    this.index = index;
-    this.notices = /* @__PURE__ */ new Set();
-  }
-  getNotices() {
-    return [...this.notices];
-  }
-  async read(file) {
-    try {
-      return await this.app.vault.cachedRead(file);
-    } catch (e) {
-      return null;
-    }
-  }
-  resolveLink(target, from) {
-    const file = this.app.metadataCache.getFirstLinkpathDest(target, from);
-    return file instanceof import_obsidian6.TFile ? file : null;
-  }
-  /** Reads a recipe and applies its template (§7). */
-  async loadRecipe(file) {
-    const content = await this.read(file);
-    if (content === null) return { recipe: withDefaults({}), own: {}, error: `Couldn't read \u201C${file.basename}\u201D.`, problems: [] };
-    const { recipe: own, problems } = parseRecipeContent(content);
-    let template;
-    if (own.templateOf) {
-      const templateFile = this.resolveLink(own.templateOf, file.path);
-      const templateContent = templateFile ? await this.read(templateFile) : null;
-      if (templateContent !== null && isRecipeContent(templateContent)) template = parseRecipeContent(templateContent).recipe;
-    }
-    const applied = applyRecipeTemplate(own, template, file.basename);
-    return { recipe: withDefaults(applied.recipe), own, template, error: applied.error, problems };
-  }
-  /** Resolves every slot setting to engine-ready sources (§6.2). */
-  async resolveSlots(recipe, recipePath) {
-    var _a;
-    const out = {};
-    for (const [categoryId, slot] of Object.entries(recipe.slots)) {
-      if (slot.kind !== "sources") {
-        out[categoryId] = { kind: slot.kind };
-        continue;
-      }
-      const sources = [];
-      for (const ref of slot.sources) {
-        if (ref.list) {
-          const entries = await this.wordListSource(ref.list, recipePath, categoryId);
-          if (entries) sources.push({ weight: ref.weight, entries });
-        } else if (ref.pack) {
-          const draw = await this.packSource(ref.pack, recipePath);
-          if (draw) sources.push({ weight: ref.weight, draw });
-        }
-      }
-      out[categoryId] = sources.length > 0 ? { kind: "sources", sources, mode: slot.mode, gender: slot.gender, section: slot.section } : ((_a = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a.length) ? { kind: "built-in" } : { kind: "placeholder" };
-    }
-    return out;
-  }
-  /** §9.2: the matching section, the whole list if it has none, else the built-in list with a notice. */
-  async wordListSource(target, from, categoryId) {
-    var _a, _b;
-    const file = this.resolveLink(target, from);
-    const content = file ? await this.read(file) : null;
-    if (!file || content === null || !isWordListContent(content)) {
-      this.notices.add(`Word list \u201C${target}\u201D wasn't found.`);
-      return null;
-    }
-    let list = parseWordListFileContent(content, file.basename);
-    if (list.templateOf) {
-      const templateFile = this.resolveLink(list.templateOf, file.path);
-      const templateContent = templateFile ? await this.read(templateFile) : null;
-      if (templateContent !== null && isWordListContent(templateContent)) {
-        list = mergeWordListWithTemplate(list, parseWordListFileContent(templateContent));
-      } else {
-        this.notices.add(`Template \u201C${list.templateOf}\u201D for word list \u201C${target}\u201D is missing.`);
-      }
-    }
-    const label = (_a = categoryLabels2.get(categoryId)) != null ? _a : categoryId;
-    const entries = wordListEntries(list.list, label);
-    if (entries === null) {
-      this.notices.add(`\u201C${target}\u201D has no \u201C${label}\u201D section; using the built-in list.`);
-      return (_b = NAME_WORDS.categories[categoryId]) != null ? _b : null;
-    }
-    return entries.map((e) => ({
-      modern: e.modern,
-      ...e.traditional ? { traditional: e.traditional } : {},
-      plural: e.plural,
-      forms: e.combiningForms,
-      fuses: e.fuses
-    }));
-  }
-  /** A drawer for one name pack: stem or whole names (§5), honouring section and gender (§10). */
-  async packSource(target, from) {
-    var _a, _b, _c;
-    const file = this.resolveLink(target, from);
-    const content = file ? await this.read(file) : null;
-    if (!file || content === null) {
-      this.notices.add(`Pack \u201C${target}\u201D wasn't found.`);
-      return null;
-    }
-    let parsed = parseNamesFileContent(content);
-    if (parsed.templateOf) {
-      const templateFile = this.resolveLink(parsed.templateOf, file.path);
-      const templateContent = templateFile ? await this.read(templateFile) : null;
-      const applied = applyTemplate(parsed, templateContent !== null ? parseNamesFileContent(templateContent) : void 0);
-      if (applied.error) {
-        this.notices.add(applied.error);
-        return null;
-      }
-      parsed = applied.parsed;
-    }
-    const faithfulness = (_a = this.settings.faithfulness) != null ? _a : 2;
-    const strictness = (_b = this.settings.strictness) != null ? _b : 3;
-    const seedFrom = (rng) => Math.floor(rng() * 4294967296) >>> 0;
-    const pick = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
-    const cache = /* @__PURE__ */ new Map();
-    const cached = (key, build) => {
-      if (!cache.has(key)) cache.set(key, build());
-      return cache.get(key);
-    };
-    const namesFor2 = (request) => {
-      if (parsed.sectioned && (request.section || request.gender)) {
-        const selection = selectSectionNames(parsed.sectioned, request, parsed.packType === "breakdownPack" ? 20 : 0);
-        for (const n of selection.notices) this.notices.add(`${parsed.packName}: ${n}`);
-        return selection.names;
-      }
-      return parsed.names;
-    };
-    const markovName = (names, key, rng) => {
-      var _a2;
-      if (names.length === 0) return null;
-      const model = cached(key, () => MarkovModel.build(names));
-      return (_a2 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: seedFrom(rng) }).names[0]) != null ? _a2 : pick(names, rng);
-    };
-    const requestKey = (r) => {
-      var _a2, _b2;
-      return `${(_a2 = r.section) != null ? _a2 : ""}|${(_b2 = r.gender) != null ? _b2 : ""}`;
-    };
-    switch (parsed.packType) {
-      case "listPack":
-        return (request, _mode, rng) => pick(namesFor2(request), rng);
-      case "breakdownPack":
-        return (request, _mode, rng) => markovName(namesFor2(request), requestKey(request), rng);
-      case "placePack": {
-        const names = extractNamesFromMarkdown(parsed.names.join("\n"));
-        return (_request, mode, rng) => {
-          var _a2;
-          const model = cached("place", () => PlaceNameModel.build(names));
-          if (mode === "stem") return model.sampleStem(rng, faithfulness, strictness);
-          return (_a2 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: seedFrom(rng) }).names[0]) != null ? _a2 : null;
-        };
-      }
-      case "compoundPack": {
-        const parts = (_c = parsed.parts) != null ? _c : [];
-        return (_request, mode, rng) => {
-          var _a2, _b2, _c2, _d;
-          if (mode === "stem") {
-            const first = (_a2 = parts[0]) != null ? _a2 : [];
-            return parsed.compoundGenerator === "list" ? pick(first, rng) : markovName(first, "part1", rng);
-          }
-          return (_d = generateCompoundNamesDetailed(parts, {
-            count: 1,
-            generator: (_b2 = parsed.compoundGenerator) != null ? _b2 : "breakdown",
-            joining: (_c2 = parsed.compoundJoining) != null ? _c2 : "joined",
-            faithfulness,
-            strictness,
-            seed: seedFrom(rng)
-          }).names[0]) != null ? _d : null;
-        };
-      }
-      case "mixPack":
-        return (request, _mode, rng) => {
-          const resolved = resolveMixSources(file.path, parsed, this.index, void 0, request);
-          if (resolved.error) {
-            this.notices.add(resolved.error);
-            return null;
-          }
-          return markovName(buildWeightedCorpus(resolved.sources), `mix|${requestKey(request)}`, rng);
-        };
-    }
-  }
-};
-
-// src/recipeEditor.ts
-var import_obsidian7 = require("obsidian");
-function slotCategories(part) {
-  const part1 = new Map(PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]));
-  if (part === "organic") return PLACE_SHAPE_DATA.categories.filter((c) => c.id !== "empty-slot");
-  const code = part === "new-land" ? "2" : "2a";
-  const out = [
-    ...COLONIAL_DATA.inheritedCategories.filter((c) => c.parts.includes(code) && c.id !== "empty-slot").map((c) => {
-      var _a;
-      return { id: c.id, label: (_a = part1.get(c.id)) != null ? _a : c.id };
-    }),
-    ...COLONIAL_DATA.categories.filter((c) => c.parts.includes(code)).map((c) => ({ id: c.id, label: c.label }))
-  ];
-  if (code === "2a") out.push({ id: "local-settlement-word", label: "Local settlement word" }, { id: "local-market-word", label: "Local market word" });
-  return out;
-}
-var same3 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-var RecipeEditorModal = class extends import_obsidian7.Modal {
-  constructor(app, options) {
-    super(app);
-    this.options = options;
-    this.name = "";
-    this.body = "";
-    this.own = {};
-    /** The working values shown in the form. */
-    this.working = withDefaults({});
-    /** Slots the user has set explicitly (others use §6.3 defaults or the template). */
-    this.explicitSlots = /* @__PURE__ */ new Set();
-  }
-  async onOpen() {
-    this.titleEl.setText(this.options.file ? "Edit recipe" : "New recipe");
-    this.modalEl.addClass("nameforge-recipe-editor");
-    if (this.options.file) {
-      this.name = this.options.file.basename;
-      const content = await this.app.vault.cachedRead(this.options.file);
-      const parsed = parseRecipeContent(content);
-      this.own = parsed.recipe;
-      this.body = parsed.body.trim();
-      if (this.own.templateOf) await this.loadTemplate(this.own.templateOf);
-    }
-    this.rebuildWorking();
-    this.render();
-  }
-  onClose() {
-    this.contentEl.empty();
-  }
-  async loadTemplate(name) {
-    var _a, _b;
-    this.template = void 0;
-    if (!name) return;
-    const file = this.app.metadataCache.getFirstLinkpathDest(name, (_b = (_a = this.options.file) == null ? void 0 : _a.path) != null ? _b : this.options.folderPath);
-    if (!(file instanceof import_obsidian7.TFile)) return;
-    const content = await this.app.vault.cachedRead(file);
-    if (isRecipeContent(content)) this.template = parseRecipeContent(content).recipe;
-  }
-  rebuildWorking() {
-    var _a;
-    this.working = withDefaults(this.template ? mergeRecipe(this.own, this.template) : this.own);
-    this.explicitSlots = new Set(Object.keys((_a = this.own.slots) != null ? _a : {}));
-  }
-  /** Everything in the form, rebuilt after each change. */
-  render() {
-    var _a, _b;
-    const el = this.contentEl;
-    el.empty();
-    const w = this.working;
-    new import_obsidian7.Setting(el).setName("Name").addText(
-      (t) => t.setValue(this.name).onChange((v) => {
-        this.name = v;
-      })
-    );
-    new import_obsidian7.Setting(el).setName("Template").setDesc("Templates are hidden from the generate view and offered when creating recipes.").addToggle(
-      (t) => t.setValue(w.template).onChange((v) => {
-        w.template = v;
-        if (v) w.templateOf = void 0;
-        this.render();
-      })
-    );
-    if (!w.template) {
-      new import_obsidian7.Setting(el).setName("Start from template").setDesc((_b = (_a = this.options.templates.find((t) => t.name === w.templateOf)) == null ? void 0 : _a.description) != null ? _b : "Settings you leave alone come from the template.").addDropdown((d) => {
-        var _a2;
-        d.addOption("", "None");
-        for (const t of this.options.templates) d.addOption(t.name, t.name);
-        d.setValue((_a2 = w.templateOf) != null ? _a2 : "").onChange(async (v) => {
-          this.own = { ...this.collect(), templateOf: v || void 0 };
-          await this.loadTemplate(v || void 0);
-          this.rebuildWorking();
-          this.render();
-        });
-      });
-    }
-    el.createEl("h3", { text: "Shape" });
-    new import_obsidian7.Setting(el).setName("Part").addDropdown((d) => {
-      d.addOption("organic", "Organic (part 1)").addOption("new-land", "New land (part 2)").addOption("established", "Established culture (part 2a)");
-      d.setValue(w.shape.part).onChange((v) => {
-        w.shape.part = v;
-        this.render();
-      });
-    });
-    if (w.shape.part === "organic") {
-      new import_obsidian7.Setting(el).setName("Region").addDropdown((d) => {
-        d.addOption("all-britain", "All Britain");
-        for (const r of PLACE_SHAPE_REGIONS) d.addOption(kebab(r.label), r.label);
-        d.setValue(kebab(w.shape.region) === "all-britain" ? "all-britain" : this.regionValue(w.shape.region)).onChange((v) => {
-          w.shape.region = v;
-        });
-      });
-    } else {
-      const part = w.shape.part === "new-land" ? "2" : "2a";
-      new import_obsidian7.Setting(el).setName("Tradition").addDropdown((d) => {
-        for (const t of COLONIAL_TRADITIONS) if (t.parts.includes(part)) d.addOption(t.id, t.label);
-        d.setValue(w.shape.tradition).onChange((v) => {
-          w.shape.tradition = v;
-        });
-      });
-      new import_obsidian7.Setting(el).setName("Context").addDropdown((d) => {
-        d.addOption("none", "None");
-        for (const c of colonialContexts(part)) d.addOption(c.id, c.label);
-        d.setValue(w.shape.context).onChange((v) => {
-          w.shape.context = v;
-        });
-      });
-    }
-    new import_obsidian7.Setting(el).setName("Feature").addDropdown((d) => {
-      d.addOption("any", "Any").addOption("settlement", "Settlement").addOption("landscape", "Landscape");
-      for (const g of PLACE_SHAPE_DATA.groups) d.addOption(g.id, g.label);
-      d.setValue(w.shape.feature).onChange((v) => {
-        w.shape.feature = v;
-      });
-    });
-    el.createEl("h3", { text: "Words and rendering" });
-    new import_obsidian7.Setting(el).setName("Register").setDesc("Balance of modern and traditional words.").addDropdown(
-      (d) => d.addOption("modern", "Modern").addOption("mixed", "Mixed").addOption("traditional", "Traditional").setValue(w.register).onChange((v) => {
-        w.register = v;
-      })
-    );
-    new import_obsidian7.Setting(el).setName("Joining").setDesc("How readily parts fuse into one word.").addDropdown(
-      (d) => d.addOption("fused", "Fused").addOption("balanced", "Balanced").addOption("spaced", "Spaced").setValue(w.render.joining).onChange((v) => {
-        w.render.joining = v;
-      })
-    );
-    new import_obsidian7.Setting(el).setName("Hyphenate linking affixes").setDesc("Ashford-upon-Severn rather than Ashford upon Severn.").addToggle(
-      (t) => t.setValue(w.render.linkingHyphens).onChange((v) => {
-        w.render.linkingHyphens = v;
-      })
-    );
-    new import_obsidian7.Setting(el).setName("Show etymology").setDesc("Show the shape beside each name by default.").addToggle(
-      (t) => t.setValue(w.render.etymology).onChange((v) => {
-        w.render.etymology = v;
-      })
-    );
-    new import_obsidian7.Setting(el).setName("Generic words").setDesc("One per line, e.g. \u201Cchurch: kirk\u201D.").addTextArea((t) => {
-      t.setValue(Object.entries(w.generics).map(([k, v]) => `${k}: ${v}`).join("\n")).onChange((v) => {
-        w.generics = Object.fromEntries(
-          v.split("\n").map((line) => line.split(":").map((x) => x.trim())).filter(([k, r]) => k && r).map(([k, r]) => [k.toLowerCase(), r])
-        );
-      });
-      t.inputEl.rows = 3;
-    });
-    el.createEl("h3", { text: "Slots" });
-    el.createEl("p", {
-      cls: "setting-item-description",
-      text: "Where each category's words come from. Unset categories use their built-in list, or a placeholder if there isn't one."
-    });
-    for (const category of slotCategories(w.shape.part)) this.renderSlot(el, category.id, category.label);
-    el.createEl("h3", { text: "Description" });
-    new import_obsidian7.Setting(el).setDesc("Shown when choosing this recipe as a template.").addTextArea((t) => {
-      t.setValue(this.body).onChange((v) => {
-        this.body = v;
-      });
-      t.inputEl.rows = 3;
-    });
-    const buttons = el.createDiv({ cls: "nameforge-recipe-editor__buttons" });
-    buttons.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
-    const save = buttons.createEl("button", { cls: "mod-cta", text: "Save" });
-    save.addEventListener("click", () => void this.save());
-  }
-  regionValue(value) {
-    const r = PLACE_SHAPE_REGIONS.find((x) => x.code === value.toUpperCase() || kebab(x.label) === kebab(value));
-    return r ? kebab(r.label) : "all-britain";
-  }
-  renderSlot(el, id, label) {
-    var _a, _b;
-    const w = this.working;
-    const explicit = this.explicitSlots.has(id) || ((_b = (_a = this.template) == null ? void 0 : _a.slots) == null ? void 0 : _b[id]) !== void 0;
-    const slot = explicit ? w.slots[id] : void 0;
-    const fallback = hasBuiltInList(id) ? "built-in list" : "placeholder";
-    const setting = new import_obsidian7.Setting(el).setName(label).addDropdown((d) => {
-      d.addOption("default", `Default (${fallback})`);
-      if (hasBuiltInList(id)) d.addOption("built-in", "Built-in list");
-      d.addOption("sources", "Packs or word lists").addOption("placeholder", "Placeholder").addOption("ignore", "Ignore");
-      d.setValue(slot ? slot.kind : "default").onChange((v) => {
-        if (v === "default") {
-          delete w.slots[id];
-          this.explicitSlots.delete(id);
-        } else if (v === "sources") {
-          w.slots[id] = { kind: "sources", sources: [{ pack: this.options.packs[0], weight: 1 }] };
-          this.explicitSlots.add(id);
-        } else {
-          w.slots[id] = { kind: v };
-          this.explicitSlots.add(id);
-        }
-        this.render();
-      });
-    });
-    setting.settingEl.addClass("nameforge-recipe-editor__slot");
-    if (!slot || slot.kind !== "sources") return;
-    const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
-    slot.sources.forEach((source, i) => {
-      new import_obsidian7.Setting(box).addDropdown(
-        (d) => d.addOption("pack", "Name pack").addOption("list", "Word list").setValue(source.list ? "list" : "pack").onChange((v) => {
-          slot.sources[i] = v === "list" ? { list: this.options.lists[0], weight: source.weight } : { pack: this.options.packs[0], weight: source.weight };
-          this.render();
-        })
-      ).addDropdown((d) => {
-        var _a2, _b2;
-        const options = source.list !== void 0 ? this.options.lists : this.options.packs;
-        for (const o of options) d.addOption(o, o);
-        const current = (_b2 = (_a2 = source.list) != null ? _a2 : source.pack) != null ? _b2 : "";
-        if (current && !options.includes(current)) d.addOption(current, `${current} (missing)`);
-        d.setValue(current).onChange((v) => {
-          if (source.list !== void 0) source.list = v;
-          else source.pack = v;
-        });
-      }).addText((t) => {
-        t.setPlaceholder("weight").setValue(String(source.weight)).onChange((v) => {
-          const n = Number(v);
-          source.weight = Number.isFinite(n) && n > 0 ? n : 1;
-        });
-        t.inputEl.type = "number";
-        t.inputEl.addClass("nameforge-recipe-editor__weight");
-      }).addExtraButton(
-        (b) => b.setIcon("x").setTooltip("Remove source").onClick(() => {
-          slot.sources.splice(i, 1);
-          if (slot.sources.length === 0) {
-            delete w.slots[id];
-            this.explicitSlots.delete(id);
-          }
-          this.render();
-        })
-      );
-    });
-    new import_obsidian7.Setting(box).addButton(
-      (b) => b.setButtonText("Add source").onClick(() => {
-        slot.sources.push({ pack: this.options.packs[0], weight: 1 });
-        this.render();
-      })
-    ).addDropdown(
-      (d) => {
-        var _a2;
-        return d.addOption("", "Mode: default").addOption("stem", "Mode: stem").addOption("whole", "Mode: whole").setValue((_a2 = slot.mode) != null ? _a2 : "").onChange((v) => {
-          slot.mode = v === "stem" || v === "whole" ? v : void 0;
-        });
-      }
-    ).addText(
-      (t) => {
-        var _a2;
-        return t.setPlaceholder("Section").setValue((_a2 = slot.section) != null ? _a2 : "").onChange((v) => {
-          slot.section = v.trim() || void 0;
-        });
-      }
-    ).addText((t) => {
-      t.setPlaceholder("Male %").setValue(slot.gender ? String(slot.gender.male) : "").onChange((v) => {
-        const male = Number(v);
-        slot.gender = v.trim() && Number.isFinite(male) ? { male, female: Math.max(0, 100 - male) } : void 0;
-      });
-      t.inputEl.type = "number";
-      t.inputEl.addClass("nameforge-recipe-editor__weight");
-    });
-  }
-  /**
-   * The settings to write: everything for a standalone recipe; only differences from the
-   * template for a derived one (§7).
-   */
-  collect() {
-    var _a;
-    const w = this.working;
-    const slots = {};
-    for (const id of this.explicitSlots) if (w.slots[id]) slots[id] = w.slots[id];
-    const full = {
-      setting: w.setting,
-      template: w.template || void 0,
-      templateOf: w.template ? void 0 : (_a = this.own.templateOf) != null ? _a : w.templateOf,
-      shape: { ...w.shape },
-      slots,
-      generics: { ...w.generics },
-      register: w.register,
-      render: { ...w.render }
-    };
-    if (!full.templateOf || !this.template) return full;
-    const base = withDefaults(this.template);
-    const diff = (mine, theirs) => Object.fromEntries(Object.entries(mine).filter(([k, v]) => !same3(v, theirs[k])));
-    return {
-      setting: w.setting !== base.setting ? w.setting : void 0,
-      templateOf: full.templateOf,
-      shape: diff(w.shape, base.shape),
-      slots: diff(slots, base.slots),
-      generics: diff(w.generics, base.generics),
-      register: w.register !== base.register ? w.register : void 0,
-      render: diff(w.render, base.render)
-    };
-  }
-  async save() {
-    const name = this.name.trim();
-    if (!name) {
-      new import_obsidian7.Notice("nameForge: give the recipe a name.");
-      return;
-    }
-    const frontmatter = recipeToFrontmatter(this.collect());
-    const content = `---
-${(0, import_obsidian7.stringifyYaml)(frontmatter)}---
-
-${this.body.trim()}
-`;
-    const path = (0, import_obsidian7.normalizePath)(`${this.options.folderPath}/${sanitizePackNameForFilename(name)}.md`);
-    try {
-      const existing = this.app.vault.getFileByPath(path);
-      if (this.options.file) {
-        if (this.options.file.path !== path) {
-          if (existing) {
-            new import_obsidian7.Notice("nameForge: a file with that name already exists.");
-            return;
-          }
-          await this.app.fileManager.renameFile(this.options.file, path);
-        }
-        await this.app.vault.modify(this.options.file, content);
-      } else {
-        if (existing) {
-          new import_obsidian7.Notice("nameForge: a file with that name already exists.");
-          return;
-        }
-        await this.app.vault.create(path, content);
-      }
-    } catch (e) {
-      new import_obsidian7.Notice(`nameForge: couldn't save the recipe to ${path}.`);
-      return;
-    }
-    this.options.onSaved(path);
-    this.close();
-  }
-};
-
 // src/ageing/engine.ts
 var AGEING = {
   /** §1: minimum names in a target pack. */
@@ -17968,7 +17381,7 @@ var TAKEOVER = {
   /** §2.1: native names generated at most this many times the batch size. */
   nativeCapFactor: 3
 };
-var VOWELS3 = new Set(Array.from("aeiouy\xE1\xE0\xE2\xE4\xE3\xE5\xE6\xE9\xE8\xEA\xEB\xED\xEC\xEE\xEF\xF3\xF2\xF4\xF6\xF5\xF8\u0153\xFA\xF9\xFB\xFC\xFD\xFF"));
+var VOWELS2 = new Set(Array.from("aeiouy\xE1\xE0\xE2\xE4\xE3\xE5\xE6\xE9\xE8\xEA\xEB\xED\xEC\xEE\xEF\xF3\xF2\xF4\xF6\xF5\xF8\u0153\xFA\xF9\xFB\xFC\xFD\xFF"));
 var CONSONANT_CLASSES = [
   ["p", "b", "f", "v", "m", "w", "ph"],
   ["t", "d", "th", "n", "l", "r", "s", "z"],
@@ -18014,8 +17427,8 @@ function sameClass(a, b) {
 }
 function isVowelAt(chars, i) {
   const ch = chars[i];
-  if (!VOWELS3.has(ch)) return false;
-  if (ch === "y" && i === 0 && i + 1 < chars.length && VOWELS3.has(chars[i + 1])) return false;
+  if (!VOWELS2.has(ch)) return false;
+  if (ch === "y" && i === 0 && i + 1 < chars.length && VOWELS2.has(chars[i + 1])) return false;
   return true;
 }
 function segment(word) {
@@ -18040,11 +17453,11 @@ function segment(word) {
   return segments;
 }
 var join = (segments) => segments.map((s) => s.units.join("")).join("");
-var letterCount2 = (s) => Array.from(s.replace(/[ \-']/g, "")).length;
+var letterCount = (s) => Array.from(s.replace(/[ \-']/g, "")).length;
 function splitForm(form) {
   return form.split(/([ \-'])/).filter((p) => p.length > 0);
 }
-var isVowelLetter = (ch) => VOWELS3.has(ch);
+var isVowelLetter = (ch) => VOWELS2.has(ch);
 function weightedDistance(a, b) {
   const x = Array.from(a.replace(/[ \-']/g, ""));
   const y = Array.from(b.replace(/[ \-']/g, ""));
@@ -18070,14 +17483,14 @@ function weightedDistance(a, b) {
   return prev[y.length];
 }
 function normalisedDistance(a, b) {
-  const longer = Math.max(letterCount2(a), letterCount2(b));
+  const longer = Math.max(letterCount(a), letterCount(b));
   return longer === 0 ? 0 : weightedDistance(a, b) / longer;
 }
 function recognisability(a, b) {
   return Math.max(0, 1 - normalisedDistance(a, b));
 }
 function buildInventory(targetNames, extraEndings = []) {
-  var _a, _b, _c;
+  var _a2, _b, _c;
   const names = targetNames.map((n) => n.trim().toLowerCase()).filter((n) => n.length > 0);
   const vowelCounts = /* @__PURE__ */ new Map();
   const consonantUnits = /* @__PURE__ */ new Set();
@@ -18090,7 +17503,7 @@ function buildInventory(targetNames, extraEndings = []) {
       for (const seg of segment(word)) {
         if (seg.vowel) {
           const run = seg.units.join("");
-          vowelCounts.set(run, ((_a = vowelCounts.get(run)) != null ? _a : 0) + 1);
+          vowelCounts.set(run, ((_a2 = vowelCounts.get(run)) != null ? _a2 : 0) + 1);
         } else {
           for (const u of seg.units) consonantUnits.add(u);
         }
@@ -18116,8 +17529,8 @@ function buildInventory(targetNames, extraEndings = []) {
 var AGEING_MOVES = /* @__PURE__ */ new Set(["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9"]);
 var TAKEOVER_MOVES = /* @__PURE__ */ new Set(["M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11"]);
 function firstUnit(segments) {
-  var _a, _b;
-  return (_b = (_a = segments[0]) == null ? void 0 : _a.units[0]) != null ? _b : "";
+  var _a2, _b;
+  return (_b = (_a2 = segments[0]) == null ? void 0 : _a2.units[0]) != null ? _b : "";
 }
 function valid(before, after, firstMayChange) {
   if (Array.from(after).length < AGEING.minLetters) return false;
@@ -18503,9 +17916,6 @@ function adoptName(input) {
   };
 }
 
-// src/takeoverView.ts
-var import_obsidian8 = require("obsidian");
-
 // src/takeover/batch.ts
 var ADOPTION_SALT = 2054033201;
 function hashName(name) {
@@ -18523,8 +17933,8 @@ function samePackNotice(nativePath, takeoverPath) {
   return nativePath && nativePath === takeoverPath ? "Choose a different takeover pack." : null;
 }
 function* takeOverSteps(input) {
-  var _a;
-  const seed = ((_a = input.seed) != null ? _a : Math.floor(Math.random() * 4294967296)) >>> 0;
+  var _a2;
+  const seed = ((_a2 = input.seed) != null ? _a2 : Math.floor(Math.random() * 4294967296)) >>> 0;
   const batchSize = Math.max(0, Math.floor(input.batchSize));
   const nativeRng = mulberry32(seed);
   const cap2 = TAKEOVER.nativeCapFactor * batchSize;
@@ -18546,6 +17956,2201 @@ function* takeOverSteps(input) {
   return { rows, seed, notice };
 }
 
+// src/data/river-names.json
+var river_names_default = {
+  $comment: "River names module (river brief \xA76). Corpora are real river names used only to train the ancient-name Markov model; a generated name identical to any of them is rejected.",
+  corpora: {
+    england: [
+      "Thames",
+      "Severn",
+      "Trent",
+      "Avon",
+      "Ouse",
+      "Tyne",
+      "Tees",
+      "Wear",
+      "Swale",
+      "Ure",
+      "Nidd",
+      "Wharfe",
+      "Aire",
+      "Calder",
+      "Don",
+      "Derwent",
+      "Hull",
+      "Humber",
+      "Witham",
+      "Welland",
+      "Nene",
+      "Cam",
+      "Granta",
+      "Lark",
+      "Wensum",
+      "Yare",
+      "Waveney",
+      "Bure",
+      "Stour",
+      "Orwell",
+      "Deben",
+      "Gipping",
+      "Colne",
+      "Chelmer",
+      "Lea",
+      "Roding",
+      "Medway",
+      "Wey",
+      "Mole",
+      "Arun",
+      "Adur",
+      "Rother",
+      "Test",
+      "Itchen",
+      "Frome",
+      "Piddle",
+      "Axe",
+      "Exe",
+      "Teign",
+      "Dart",
+      "Tamar",
+      "Fowey",
+      "Fal",
+      "Camel",
+      "Taw",
+      "Torridge",
+      "Parrett",
+      "Tone",
+      "Brue",
+      "Yeo",
+      "Lugg",
+      "Teme",
+      "Mersey",
+      "Ribble",
+      "Lune",
+      "Kent",
+      "Eden",
+      "Esk",
+      "Irwell",
+      "Weaver",
+      "Dane",
+      "Tame",
+      "Rea",
+      "Sow",
+      "Penk",
+      "Dove",
+      "Churnet",
+      "Soar",
+      "Wreake",
+      "Idle",
+      "Rye",
+      "Leven",
+      "Coquet",
+      "Aln",
+      "Wansbeck",
+      "Blyth",
+      "Till",
+      "Glen",
+      "Tweed",
+      "Kennet",
+      "Thame",
+      "Cherwell",
+      "Evenlode",
+      "Windrush",
+      "Coln",
+      "Churn",
+      "Ock",
+      "Pang",
+      "Loddon",
+      "Wylye",
+      "Nadder",
+      "Ebble",
+      "Sid",
+      "Yealm",
+      "Erme",
+      "Plym",
+      "Tavy",
+      "Lyn",
+      "Barle",
+      "Arrow",
+      "Wyre",
+      "Hodder"
+    ],
+    wales: [
+      "Teifi",
+      "Tywi",
+      "Taf",
+      "Tawe",
+      "Nedd",
+      "Afan",
+      "Ogwr",
+      "Rhondda",
+      "Rhymni",
+      "Ebwy",
+      "Sirhywi",
+      "Cynon",
+      "Llwyd",
+      "Mynwy",
+      "Honddu",
+      "Irfon",
+      "Ieithon",
+      "Elan",
+      "Claerwen",
+      "Rheidol",
+      "Ystwyth",
+      "Aeron",
+      "Arth",
+      "Dyfi",
+      "Dulas",
+      "Mawddach",
+      "Wnion",
+      "Dysynni",
+      "Dwyryd",
+      "Glaslyn",
+      "Dwyfor",
+      "Erch",
+      "Seiont",
+      "Ogwen",
+      "Conwy",
+      "Lledr",
+      "Llugwy",
+      "Elwy",
+      "Clwyd",
+      "Alun",
+      "Dyfrdwy",
+      "Ceiriog",
+      "Tanad",
+      "Efyrnwy",
+      "Banw",
+      "Hafren",
+      "Cleddau",
+      "Gwaun",
+      "Nyfer",
+      "Cothi",
+      "Gwili",
+      "Gwendraeth",
+      "Llwchwr",
+      "Aman",
+      "Twrch",
+      "Senni",
+      "Tarell",
+      "Grwyne",
+      "Gefenni",
+      "Troddi",
+      "Aled",
+      "Alaw",
+      "Cefni",
+      "Braint",
+      "Gwy",
+      "Wysg"
+    ],
+    scotland: [
+      "Clyde",
+      "Forth",
+      "Tay",
+      "Spey",
+      "Dee",
+      "Don",
+      "Deveron",
+      "Ythan",
+      "Ugie",
+      "Findhorn",
+      "Nairn",
+      "Ness",
+      "Beauly",
+      "Conon",
+      "Oykel",
+      "Carron",
+      "Shin",
+      "Naver",
+      "Halladale",
+      "Thurso",
+      "Wick",
+      "Helmsdale",
+      "Brora",
+      "Fleet",
+      "Earn",
+      "Almond",
+      "Isla",
+      "Ericht",
+      "Tummel",
+      "Garry",
+      "Lyon",
+      "Lochay",
+      "Dochart",
+      "Teith",
+      "Allan",
+      "Devon",
+      "Leven",
+      "Eden",
+      "Annan",
+      "Nith",
+      "Esk",
+      "Liddel",
+      "Ken",
+      "Cree",
+      "Bladnoch",
+      "Urr",
+      "Doon",
+      "Ayr",
+      "Irvine",
+      "Garnock",
+      "Girvan",
+      "Stinchar",
+      "Teviot",
+      "Ettrick",
+      "Yarrow",
+      "Tweed",
+      "Gala",
+      "Leader",
+      "Tyne",
+      "Lossie",
+      "Bervie",
+      "Avon",
+      "Livet",
+      "Feshie",
+      "Truim",
+      "Spean",
+      "Lochy",
+      "Nevis",
+      "Orchy",
+      "Awe",
+      "Etive",
+      "Shiel",
+      "Morar",
+      "Lyne",
+      "Kelvin",
+      "Cart",
+      "Calder"
+    ]
+  },
+  regionCorpora: {
+    all: [
+      "england",
+      "wales",
+      "scotland"
+    ],
+    COR: [
+      "england"
+    ],
+    WCY: [
+      "england"
+    ],
+    SEA: [
+      "england"
+    ],
+    EAN: [
+      "england"
+    ],
+    EMD: [
+      "england"
+    ],
+    NTH: [
+      "england"
+    ],
+    WMM: [
+      "england",
+      "wales"
+    ],
+    WAL: [
+      "wales"
+    ],
+    SBL: [
+      "scotland",
+      "england"
+    ],
+    SLO: [
+      "scotland"
+    ],
+    SHH: [
+      "scotland"
+    ],
+    NSI: [
+      "scotland"
+    ]
+  },
+  ancient: {
+    minLetters: 3,
+    maxLetters: 8,
+    draws: 20
+  },
+  kindWeights: {
+    british: {
+      ancient: 40,
+      descriptive: 45,
+      pattern: 15
+    },
+    "new-land": {
+      ancient: 0,
+      descriptive: 60,
+      pattern: 40
+    },
+    established: {
+      ancient: 0,
+      descriptive: 35,
+      pattern: 65
+    }
+  },
+  waterWords: {
+    british: {
+      all: {
+        brook: 30,
+        water: 20,
+        burn: 15,
+        beck: 15,
+        bourne: 10,
+        stream: 5,
+        fleet: 5
+      },
+      COR: {
+        brook: 35,
+        water: 35,
+        bourne: 10,
+        stream: 15,
+        fleet: 5
+      },
+      WCY: {
+        brook: 35,
+        water: 25,
+        bourne: 20,
+        stream: 10,
+        fleet: 10
+      },
+      SEA: {
+        brook: 30,
+        water: 15,
+        bourne: 35,
+        stream: 10,
+        fleet: 10
+      },
+      EAN: {
+        brook: 30,
+        water: 25,
+        beck: 15,
+        bourne: 5,
+        stream: 10,
+        fleet: 15
+      },
+      WMM: {
+        brook: 50,
+        water: 25,
+        bourne: 10,
+        stream: 15
+      },
+      WAL: {
+        brook: 40,
+        water: 40,
+        stream: 20
+      },
+      EMD: {
+        brook: 40,
+        water: 20,
+        beck: 20,
+        bourne: 10,
+        stream: 10
+      },
+      NTH: {
+        brook: 15,
+        water: 20,
+        burn: 15,
+        beck: 45,
+        stream: 5
+      },
+      SBL: {
+        water: 30,
+        burn: 50,
+        beck: 10,
+        stream: 10
+      },
+      SLO: {
+        water: 35,
+        burn: 50,
+        stream: 15
+      },
+      SHH: {
+        water: 35,
+        burn: 50,
+        stream: 15
+      },
+      NSI: {
+        water: 40,
+        burn: 45,
+        stream: 15
+      }
+    },
+    "new-land": {
+      river: 40,
+      creek: 30,
+      run: 10,
+      fork: 10,
+      branch: 10
+    },
+    established: {
+      river: 75,
+      creek: 15,
+      stream: 10
+    }
+  },
+  descriptiveCategories: {
+    british: {
+      colour: 20,
+      tree: 15,
+      bird: 12,
+      "wild-animal": 10,
+      "wild-plant": 10,
+      "soil-or-ground": 10,
+      "quality-or-condition": 10,
+      "fish-and-other-creatures": 8,
+      season: 5
+    },
+    colonial: {
+      colour: 50,
+      "quality-or-condition": 30,
+      shape: 20
+    }
+  },
+  britishFuseChance: 0.75,
+  forms: {
+    ancient: {
+      scottishRegions: [
+        "SBL",
+        "SLO",
+        "SHH",
+        "NSI"
+      ],
+      scottish: {
+        "river-x": 45,
+        "x-water": 25,
+        "water-of-x": 15,
+        bare: 15
+      },
+      other: {
+        "river-x": 85,
+        bare: 15
+      }
+    },
+    britishDescriptive: {
+      bare: 80,
+      "river-x": 20
+    },
+    colonialDescriptive: {
+      "x-water": 80,
+      bare: 20
+    }
+  },
+  patterns: {
+    british: [
+      {
+        pattern: "[personal name]'s {water}",
+        weight: 25
+      },
+      {
+        pattern: "River [deity]",
+        weight: 20
+      },
+      {
+        pattern: "[tribal name] River",
+        weight: 20
+      },
+      {
+        pattern: "[earlier or district name] Water",
+        weight: 15
+      },
+      {
+        pattern: "[tribal name] Water",
+        weight: 10
+      },
+      {
+        pattern: "River of the [tribal name]",
+        weight: 10
+      }
+    ],
+    "new-land": [
+      {
+        pattern: "[native people] River",
+        weight: 18
+      },
+      {
+        pattern: "[explorer] River",
+        weight: 12
+      },
+      {
+        pattern: "[personal name]'s Creek",
+        weight: 10
+      },
+      {
+        pattern: "[personal name] River",
+        weight: 8
+      },
+      {
+        pattern: "[holy person] River",
+        weight: 8
+      },
+      {
+        pattern: "River of the [native people]",
+        weight: 8
+      },
+      {
+        pattern: "[monarch] River",
+        weight: 7
+      },
+      {
+        pattern: "[native people] Creek",
+        weight: 7
+      },
+      {
+        pattern: "[native bird] River",
+        weight: 7
+      },
+      {
+        pattern: "[native wild animal] Creek",
+        weight: 6
+      },
+      {
+        pattern: "[native fish or creature] River",
+        weight: 3
+      },
+      {
+        pattern: "[native tree] Creek",
+        weight: 3
+      },
+      {
+        pattern: "[native plant] Creek",
+        weight: 3
+      }
+    ],
+    established: [
+      {
+        pattern: "[native people] River",
+        weight: 30
+      },
+      {
+        pattern: "River of the [native people]",
+        weight: 12
+      },
+      {
+        pattern: "[monarch] River",
+        weight: 12
+      },
+      {
+        pattern: "[personal name] River",
+        weight: 10
+      },
+      {
+        pattern: "[holy person] River",
+        weight: 8
+      },
+      {
+        pattern: "[personal name]'s Creek",
+        weight: 8
+      },
+      {
+        pattern: "[native bird] River",
+        weight: 6
+      },
+      {
+        pattern: "[native wild animal] River",
+        weight: 6
+      },
+      {
+        pattern: "[native tree] River",
+        weight: 4
+      },
+      {
+        pattern: "[native fish or creature] River",
+        weight: 2
+      },
+      {
+        pattern: "[native plant] River",
+        weight: 2
+      }
+    ]
+  }
+};
+
+// src/rivers/engine.ts
+var RIVER_SETTINGS = [
+  { id: "british", label: "British River Names" },
+  { id: "new-land", label: "New Land" },
+  { id: "established", label: "Established" }
+];
+var RIVER_DATA = river_names_default;
+var REAL_NAMES = new Set(Object.values(RIVER_DATA.corpora).flat().map((n) => n.toLowerCase()));
+function pickWeighted2(weights, rng) {
+  const items = Object.entries(weights).filter(([, w]) => w > 0);
+  const total = items.reduce((n, [, w]) => n + w, 0);
+  let r = rng() * total;
+  for (const [item, w] of items) {
+    r -= w;
+    if (r < 0) return item;
+  }
+  return items[items.length - 1][0];
+}
+var pickUniform2 = (items, rng) => items[Math.floor(rng() * items.length)];
+var titleCase2 = (text) => text.replace(/(^|[\s-])(\p{L})/gu, (_, sep, ch) => sep + ch.toUpperCase());
+var letterCount2 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
+var regionKey = (region) => region && RIVER_DATA.regionCorpora[region] ? region : "all";
+function waterWordWeights(setting, region) {
+  return setting === "british" ? RIVER_DATA.waterWords.british[regionKey(region)] : RIVER_DATA.waterWords[setting];
+}
+var modelCache = /* @__PURE__ */ new Map();
+function ancientModel(region) {
+  const corpora = RIVER_DATA.regionCorpora[regionKey(region)];
+  const key = corpora.join("+");
+  let model = modelCache.get(key);
+  if (!model) {
+    model = MarkovModel.build(corpora.flatMap((c) => RIVER_DATA.corpora[c]));
+    modelCache.set(key, model);
+  }
+  return model;
+}
+function ancientName(options, rng) {
+  var _a2, _b;
+  const model = ancientModel(options.region);
+  const { minLetters, maxLetters, draws } = RIVER_DATA.ancient;
+  for (let i = 0; i < draws; i++) {
+    const seed = Math.floor(rng() * 4294967296) >>> 0;
+    const name = model.generateDetailed({
+      count: 1,
+      faithfulness: (_a2 = options.faithfulness) != null ? _a2 : 2,
+      strictness: (_b = options.strictness) != null ? _b : 3,
+      seed
+    }).names[0];
+    if (!name) continue;
+    const letters = letterCount2(name);
+    if (letters < minLetters || letters > maxLetters || REAL_NAMES.has(name.trim().toLowerCase())) continue;
+    return titleCase2(name.trim().toLowerCase());
+  }
+  return null;
+}
+function ancientForm(name, region, rng) {
+  const { scottishRegions, scottish, other } = RIVER_DATA.forms.ancient;
+  const form = pickWeighted2(region && scottishRegions.includes(region) ? scottish : other, rng);
+  if (form === "river-x") return { text: `River ${name}`, form };
+  if (form === "x-water") return { text: `${name} Water`, form };
+  if (form === "water-of-x") return { text: `Water of ${name}`, form };
+  return { text: name, form };
+}
+function descriptiveName(options, rng, bare) {
+  const british = options.setting === "british";
+  const category = pickWeighted2(RIVER_DATA.descriptiveCategories[british ? "british" : "colonial"], rng);
+  const entry = pickUniform2(NAME_WORDS.categories[category], rng);
+  const word = entry.modern;
+  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
+  if (british) {
+    const joined = entry.fuses === "yes" ? smoothJoin(word, water) : null;
+    const fuses = joined !== null && letterCount2(joined) <= NAMES.maxFusedLetters && rng() < RIVER_DATA.britishFuseChance;
+    const name = fuses ? titleCase2(joined.toLowerCase()) : titleCase2(`${word} ${water}`);
+    if (bare) return { text: name, water, form: "bare" };
+    const form2 = pickWeighted2(RIVER_DATA.forms.britishDescriptive, rng);
+    return { text: form2 === "river-x" ? `River ${name}` : name, water, form: form2 };
+  }
+  if (bare) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
+  const form = pickWeighted2(RIVER_DATA.forms.colonialDescriptive, rng);
+  return form === "bare" && water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
+}
+function patternName(options, rng) {
+  const items = RIVER_DATA.patterns[options.setting];
+  const pattern = pickWeighted2(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
+  if (!pattern.includes("{water}")) return { text: pattern, form: pattern };
+  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
+  return { text: pattern.replace("{water}", titleCase2(water)), water, form: pattern };
+}
+function riverName(options, rng) {
+  const kind = pickWeighted2(RIVER_DATA.kindWeights[options.setting], rng);
+  if (kind === "pattern") {
+    const built = patternName(options, rng);
+    return { ...built, hasPlaceholder: /\[[^\]]+\]/.test(built.text), kind };
+  }
+  if (kind === "ancient") {
+    const name = ancientName(options, rng);
+    if (name) return { ...ancientForm(name, options.region, rng), hasPlaceholder: false, kind, ancient: name };
+  }
+  return { ...descriptiveName(options, rng, false), hasPlaceholder: false, kind };
+}
+function riverFill(options, rng) {
+  const { pattern: _pattern, ...weights } = RIVER_DATA.kindWeights[options.setting];
+  const kind = pickWeighted2(weights, rng);
+  if (kind === "ancient") {
+    const name = ancientName(options, rng);
+    if (name) return name;
+  }
+  return descriptiveName(options, rng, true).text;
+}
+function generateRiverNames(options) {
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const count = Math.max(0, Math.floor(options.count));
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  for (let attempt = 0; attempt < count * 50 && names.length < count; attempt++) {
+    const name = riverName(options, rng);
+    const key = name.text.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    names.push(name);
+  }
+  const notice = names.length < count ? `Only ${names.length} river names could be generated.` : void 0;
+  return { names, seed, notice };
+}
+
+// src/names/engine.ts
+var NAMES = {
+  /** §4.1 fuse-chance modifiers and cap. */
+  traditionalWord: 1.5,
+  modernWord: 0.6,
+  packStem: 1,
+  joining: { fused: 1.5, balanced: 1, spaced: 0.5 },
+  fuseCap: 0.95,
+  maxFusedLetters: 13,
+  /** §4.2 linking -s- for person names. */
+  linkingS: 0.5,
+  /** §4.3 rule 3: this many consonants at the join falls back to spaced. */
+  maxJoinConsonants: 4,
+  /** §6.5 mixed register. */
+  mixedTraditional: 0.5,
+  /** §13 attempts to avoid a duplicate name before allowing it. */
+  duplicateAttempts: 20,
+  /** Default fusion class for a generic word §3.3 doesn't list (usually spaced). */
+  unlistedFusion: 0.15
+};
+var FILL_SALT = 1514052375;
+var REDRAW_SALT = 1016189605;
+var ADAPT_ATTEMPTS = 5;
+var OF_THE_SALT = 1374733287;
+var OF_THE_KEEP = 0.65;
+var OF_THE_KEEP_SET = /* @__PURE__ */ new Set([
+  "bird",
+  "wild-animal",
+  "domestic-animal",
+  "fish-and-other-creatures",
+  "tree",
+  "wild-plant",
+  "supernatural-being",
+  "status-or-role",
+  "activity"
+]);
+var RIVER_CATEGORY = "river-or-stream-name";
+var RENDER_LABELS = {
+  "saint-or-holy-person": "holy person",
+  "native-people-or-tribe": "native people",
+  "native-place-name": "native place"
+};
+var SPLIT_LABELS = {
+  "monarch-ruler-or-dynasty": ["monarch", "ruler", "dynasty"],
+  "official-patron-or-sponsor": ["official", "patron", "sponsor"],
+  "explorer-or-founder": ["explorer", "founder"],
+  "commander-or-conqueror": ["commander", "conqueror"]
+};
+var SPLIT_SALT = 729650369;
+var NATIVE_LABELS = {
+  bird: "native bird",
+  "wild-animal": "native wild animal",
+  "fish-and-other-creatures": "native fish or creature",
+  tree: "native tree",
+  "wild-plant": "native plant"
+};
+var NATIVE_CATEGORIES = /* @__PURE__ */ new Set(["native-place-name", "native-people-or-tribe", "river-or-stream-name"]);
+var WHOLE_BY_DEFAULT = /* @__PURE__ */ new Set(["native-place-name", "native-people-or-tribe", "homeland-place-name"]);
+var PERSON_CATEGORIES = /* @__PURE__ */ new Set([
+  "personal-name",
+  "monarch-ruler-or-dynasty",
+  "royal-woman",
+  "official-patron-or-sponsor",
+  "commander-or-conqueror",
+  "explorer-or-founder"
+]);
+var DEFAULT_GENDER = {
+  "royal-woman": { male: 0, female: 100 },
+  "monarch-ruler-or-dynasty": { male: 85, female: 15 },
+  "personal-name": { male: 75, female: 25 },
+  "saint-or-holy-person": { male: 70, female: 30 },
+  deity: { male: 50, female: 50 },
+  "colonial-deity": { male: 50, female: 50 },
+  "local-deity": { male: 50, female: 50 },
+  "official-patron-or-sponsor": { male: 95, female: 5 },
+  "commander-or-conqueror": { male: 95, female: 5 },
+  "explorer-or-founder": { male: 95, female: 5 }
+};
+var NAME_WORDS = name_words_default;
+function hasBuiltInList(categoryId) {
+  var _a2, _b;
+  return ((_b = (_a2 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a2.length) != null ? _b : 0) > 0;
+}
+var categoryLabels = new Map([
+  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label.toLowerCase()]),
+  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label.toLowerCase()]),
+  ["local-settlement-word", "local settlement word"],
+  ["local-market-word", "local market word"]
+]);
+var LOCAL_GENERICS = /* @__PURE__ */ new Set(["local-settlement-word", "local-market-word"]);
+var DIRECTIONS = ["north", "south", "east", "west"];
+function pluralise(word) {
+  const parts = word.split(" ");
+  const last = parts.pop();
+  const plural = /s$/i.test(last) ? last : /[^aeiou]y$/i.test(last) ? `${last.slice(0, -1)}ies` : `${last}s`;
+  return [...parts, plural].join(" ");
+}
+var placeholderText = (categoryId) => {
+  var _a2, _b;
+  return `[${(_b = (_a2 = RENDER_LABELS[categoryId]) != null ? _a2 : categoryLabels.get(categoryId)) != null ? _b : categoryId}]`;
+};
+function pickWeighted3(items, rng) {
+  const total = items.reduce((n, [, w]) => n + w, 0);
+  let r = rng() * total;
+  for (const [item, w] of items) {
+    r -= w;
+    if (r < 0) return item;
+  }
+  return items[items.length - 1][0];
+}
+var pickUniform3 = (items, rng) => items[Math.floor(rng() * items.length)];
+function fillWord(fill) {
+  if (fill.kind === "placeholder") return fill.label;
+  if (fill.kind === "name") return fill.text;
+  return fill.traditional && fill.entry.traditional ? fill.entry.traditional : fill.entry.modern;
+}
+function fillEtymology(fill) {
+  var _a2;
+  if (fill.kind === "placeholder") return void 0;
+  return fill.kind === "name" ? (_a2 = fill.native) != null ? _a2 : fill.text : fill.entry.modern;
+}
+var VOWELS3 = /[aeiouy]/i;
+var isConsonant = (ch) => /[a-z]/i.test(ch) && !VOWELS3.test(ch);
+var titleWord = (w) => w.startsWith("[") ? w : w.charAt(0).toUpperCase() + w.slice(1);
+function capitaliseSpaced(text) {
+  const linking = new Set(NAME_WORDS.linkingWords);
+  let inPlaceholder = false;
+  return text.split(" ").map((word, i) => {
+    if (word.startsWith("[")) inPlaceholder = true;
+    const out = inPlaceholder ? word : i > 0 && linking.has(word.toLowerCase()) ? word.toLowerCase() : titleWord(word);
+    if (word.includes("]")) inPlaceholder = false;
+    return out;
+  }).join(" ");
+}
+function smoothJoin(specific, generic) {
+  var _a2, _b, _c, _d;
+  let a = specific;
+  let b = generic.toLowerCase();
+  if (a.length > 0 && b.length > 0 && a.slice(-1).toLowerCase() === b.charAt(0)) b = b.slice(1);
+  if (/e$/i.test(a) && VOWELS3.test(b.charAt(0))) a = a.slice(0, -1);
+  const tail = (_b = (_a2 = a.match(/[^aeiouy]*$/i)) == null ? void 0 : _a2[0]) != null ? _b : "";
+  const head = (_d = (_c = b.match(/^[^aeiouy]*/i)) == null ? void 0 : _c[0]) != null ? _d : "";
+  if (Array.from(tail + head).filter(isConsonant).length >= NAMES.maxJoinConsonants) return null;
+  return (a + b).replace(/(.)\1{2,}/gi, "$1$1");
+}
+var fusedCase = (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+var letterCount3 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
+var _a;
+var NameRenderer = class {
+  constructor(recipe, slots, regionCode, options = {}) {
+    this.recipe = recipe;
+    this.slots = slots;
+    this.options = options;
+    this.formatter = new PlaceShapeFormatter();
+    this.notices = /* @__PURE__ */ new Set();
+    /** Split-label choices (§5.2) never touch the fill stream. */
+    this.labelRng = (_a = this.options.labelRng) != null ? _a : mulberry32(SPLIT_SALT);
+    /** True while a colonial shape renders: unmapped flora and fauna become native placeholders (§6). */
+    this.colonial = false;
+    this.region = regionCode;
+  }
+  get adaptation() {
+    return this.options.adaptation;
+  }
+  /** A placeholder fill with its rendered label: one component for split categories (§5.2). */
+  placeholder(categoryId) {
+    const split = SPLIT_LABELS[categoryId];
+    const label = split ? `[${split[Math.floor(this.labelRng() * split.length)]}]` : placeholderText(categoryId);
+    return { kind: "placeholder", categoryId, label };
+  }
+  getNotices() {
+    return [...this.notices];
+  }
+  /** §6.3: unmapped categories use their built-in list, else a placeholder. */
+  slotFor(categoryId) {
+    const slot = this.slots[categoryId];
+    if (slot) return slot;
+    return hasBuiltInList(categoryId) ? { kind: "built-in" } : { kind: "placeholder" };
+  }
+  chooseRegister(entry, rng) {
+    if (!entry.traditional) return false;
+    if (this.recipe.register === "modern") return false;
+    if (this.recipe.register === "traditional") return true;
+    return rng() < NAMES.mixedTraditional;
+  }
+  /**
+   * River brief §6.9: an unmapped (or built-in) river slot is a bare river from the river engine,
+   * drawn on the fill stream as a spaced word fill — British (with the region) for organic shapes,
+   * New Land or Established for colonial ones.
+   */
+  riverWordFill(rng) {
+    const part = this.recipe.shape.part;
+    const setting = part === "new-land" ? "new-land" : part === "established" ? "established" : "british";
+    const text = riverFill(
+      {
+        setting,
+        region: setting === "british" ? this.region : void 0,
+        faithfulness: this.options.faithfulness,
+        strictness: this.options.strictness
+      },
+      rng
+    );
+    return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
+  }
+  /**
+   * River brief §3: a keep-set word in a linked generic-first order keeps "{Generic} of the {Word}"
+   * with probability 0.65 on its own stream; null means flip and join as before.
+   */
+  ofThe(fill, categoryId, genericId, rng) {
+    const ofTheRng = this.options.ofTheRng;
+    const eligible = fill.kind === "word" && OF_THE_KEEP_SET.has(categoryId) || fill.kind === "placeholder" && fill.native;
+    if (!ofTheRng || !eligible) return null;
+    if (!(ofTheRng() < OF_THE_KEEP)) return null;
+    return capitaliseSpaced(`${this.genericWord(genericId, false, rng)} of the ${fillWord(fill)}`);
+  }
+  /** Stage 2: fill one slot. `whole` forces whole names for pack sources (§5.3). */
+  fill(categoryId, rng, whole = false) {
+    var _a2, _b;
+    const mapped = this.slots[categoryId];
+    if (categoryId === RIVER_CATEGORY && (!mapped || mapped.kind === "built-in")) return this.riverWordFill(rng);
+    if (this.colonial && !mapped && NATIVE_LABELS[categoryId]) {
+      return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
+    }
+    const slot = this.slotFor(categoryId);
+    const wordFill = (entries) => {
+      if (!entries || entries.length === 0) return this.placeholder(categoryId);
+      let entry = pickUniform3(entries, rng);
+      if (entry.modern.includes("[direction]")) entry = { ...entry, modern: entry.modern.replace("[direction]", pickUniform3(DIRECTIONS, rng)) };
+      return { kind: "word", entry, traditional: this.chooseRegister(entry, rng) };
+    };
+    if (slot.kind === "placeholder" || slot.kind === "ignore") return this.placeholder(categoryId);
+    if (slot.kind === "built-in") return wordFill(NAME_WORDS.categories[categoryId]);
+    const source = pickWeighted3(slot.sources.map((s) => [s, s.weight]), rng);
+    if (source.entries) return wordFill(source.entries);
+    if (!source.draw) return this.placeholder(categoryId);
+    const mode = whole ? "whole" : (_a2 = slot.mode) != null ? _a2 : WHOLE_BY_DEFAULT.has(categoryId) ? "whole" : "stem";
+    const ratio = (_b = slot.gender) != null ? _b : DEFAULT_GENDER[categoryId];
+    const request = {};
+    if (slot.section) request.section = slot.section;
+    if (ratio) request.gender = rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female";
+    const text = source.draw(request, mode, rng);
+    return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
+  }
+  /**
+   * Recipe takeover §A3: an adapted native name fill is adopted into the takeover pack's language.
+   * A failed adoption redraws the slot on the redraw stream, up to five draws in all; after that the
+   * last native name is used unchanged. Word fills and placeholders pass through untouched.
+   */
+  adaptFill(fill, categoryId, treatment, whole, shape) {
+    const adaptation = this.adaptation;
+    if (!adaptation || treatment !== "adapted" || shape.translated || !NATIVE_CATEGORIES.has(categoryId)) return fill;
+    let current = fill;
+    for (let draw = 1; ; draw++) {
+      if (current.kind !== "name") return current;
+      const adopted = adaptation.adapt(current.text, adoptionRng(adaptation.seed, current.text));
+      if (adopted !== null) return { ...current, text: adopted, native: current.text };
+      if (draw >= ADAPT_ATTEMPTS) return current;
+      current = this.fill(categoryId, adaptation.redrawRng, whole);
+    }
+  }
+  /** The generic's word (§3.1): variant replaces the plain word in its regions; recipe overrides last. */
+  genericWord(genericId, plural, rng) {
+    var _a2, _b, _c;
+    if (LOCAL_GENERICS.has(genericId)) return this.localGeneric(genericId, rng);
+    const colonial = NAME_WORDS.colonialGenerics[genericId];
+    if (colonial) {
+      const word2 = pickUniform3(colonial, rng);
+      const chosen = plural ? pluralise(word2) : word2;
+      return (_a2 = this.recipe.generics[chosen.toLowerCase()]) != null ? _a2 : chosen;
+    }
+    const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === genericId);
+    let word;
+    if (rewrite) {
+      word = plural ? rewrite.plural || rewrite.word : rewrite.word;
+    } else {
+      const entry = PLACE_SHAPE_WORD_DATA.words[genericId];
+      const i = entry && entry.words.length > 1 ? Math.floor(rng() * entry.words.length) : 0;
+      word = entry ? plural && entry.plurals[i] ? entry.plurals[i] : entry.words[i] : genericId;
+      const variant = this.region ? PLACE_SHAPE_WORD_DATA.variants.find((v) => v.generic === genericId && v.regions.includes(this.region)) : void 0;
+      if (variant) word = plural && ((_b = entry == null ? void 0 : entry.plurals[i]) != null ? _b : "") !== "" ? variant.plural : variant.variant;
+    }
+    return (_c = this.recipe.generics[word.toLowerCase()]) != null ? _c : word;
+  }
+  /** §9.3: the local word from the recipe's linked word list (Modern column only), or a placeholder. */
+  localGeneric(genericId, rng) {
+    const slot = this.slots[genericId];
+    const sources = (slot == null ? void 0 : slot.kind) === "sources" ? slot.sources.filter((s) => s.entries && s.entries.length > 0) : [];
+    if (sources.length === 0) return placeholderText(genericId);
+    const source = pickWeighted3(sources.map((s) => [s, s.weight]), rng);
+    return pickUniform3(source.entries, rng).modern;
+  }
+  fusionClass(word, genericId) {
+    if (genericId && NAME_WORDS.genericFusion[genericId] !== void 0 && NAME_WORDS.colonialGenerics[genericId]) {
+      return NAME_WORDS.genericFusion[genericId];
+    }
+    if (word.includes(" ")) return 0;
+    const known = NAME_WORDS.fusion[word.toLowerCase()];
+    if (known !== void 0) return known;
+    this.notices.add(`\u201C${word}\u201D has no fusion class; it is treated as usually spaced.`);
+    return NAMES.unlistedFusion;
+  }
+  /** The combining form used when a word fill fuses. */
+  combiningForm(fill, rng) {
+    const forms = fill.traditional && fill.entry.traditionalForms ? fill.entry.traditionalForms : fill.entry.forms;
+    return forms.length > 0 ? pickUniform3(forms, rng) : fillWord(fill);
+  }
+  /**
+   * §4.1–§4.3, §4.6: specific + generic, fused or spaced. Returns the joined text and whether it
+   * fused (stacked generics only fuse onto an already fused name).
+   */
+  join(fill, categoryId, genericId, rng) {
+    var _a2;
+    let plural = false;
+    let forceFuse = false;
+    let neverFuse = false;
+    let modifier = NAMES.packStem;
+    if (fill.kind === "placeholder") neverFuse = true;
+    else if (fill.kind === "name") neverFuse = fill.mode === "whole";
+    else {
+      const f = fill.entry.fuses;
+      if (f === "no" || f === "traditional-only" && !fill.traditional) neverFuse = true;
+      const word = fill.entry.modern.toLowerCase();
+      const fusedNumber = f === "number-fused" || categoryId === "number" && ["two", "three"].includes(word);
+      const spacedNumber = f === "number-spaced" || categoryId === "number" && ["five", "seven", "nine"].includes(word);
+      if (fusedNumber) {
+        forceFuse = true;
+        neverFuse = false;
+      }
+      if (spacedNumber) {
+        neverFuse = true;
+        plural = true;
+      }
+      if (f === "mile") {
+        const generic2 = this.genericWord(genericId, false, rng);
+        return { text: capitaliseSpaced(`${fillWord(fill)} Mile ${generic2}`), fused: false };
+      }
+      modifier = fill.traditional ? NAMES.traditionalWord : NAMES.modernWord;
+    }
+    const generic = this.genericWord(genericId, plural, rng);
+    const spaced = { text: capitaliseSpaced(`${fillWord(fill)} ${generic}`), fused: false };
+    if (LOCAL_GENERICS.has(genericId) && fill.kind !== "placeholder" && !generic.startsWith("[")) {
+      const specific2 = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
+      return { text: fusedCase((_a2 = smoothJoin(specific2, generic)) != null ? _a2 : `${specific2}${generic.toLowerCase()}`), fused: true };
+    }
+    if (fill.kind === "word" && fill.entry.fuses === "town-only" && generic.toLowerCase() !== "town") return spaced;
+    if (neverFuse && !forceFuse) return spaced;
+    if (!forceFuse) {
+      const chance = Math.min(NAMES.fuseCap, this.fusionClass(generic, genericId) * modifier * NAMES.joining[this.recipe.render.joining]);
+      if (!(rng() < chance)) return spaced;
+    }
+    if (generic.includes(" ")) return spaced;
+    let specific = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
+    if (fill.kind === "name" && PERSON_CATEGORIES.has(categoryId) && rng() < NAMES.linkingS && !/s$/i.test(specific)) {
+      specific += "s";
+    }
+    const joined = smoothJoin(specific, generic);
+    if (joined === null || letterCount3(joined) > NAMES.maxFusedLetters) return spaced;
+    return { text: fusedCase(joined), fused: true };
+  }
+  /** §4.4: a name or placeholder with a generic-first order stays generic first. */
+  genericFirst(fill, genericId, linked, rng) {
+    var _a2;
+    const generic = this.genericWord(genericId, false, rng);
+    const variantPrefix = NAME_WORDS.prefixVariantForms[genericId];
+    const prefix = (_a2 = NAME_WORDS.prefixForms[genericId]) != null ? _a2 : variantPrefix && generic.toLowerCase() === variantPrefix.variant ? variantPrefix.prefix : void 0;
+    const name = fillWord(fill);
+    if (prefix) return `${prefix} ${titleWord(name)}`;
+    return capitaliseSpaced(`${generic} of ${name}`);
+  }
+  /** §4.5: -ing- connectives, fused to the name; the generic joins if its class allows. */
+  connective(fill, genericId, rng) {
+    const generic = this.genericWord(genericId, false, rng);
+    const base = fill.kind === "placeholder" ? `${fill.label}ing` : `${fusedCase(fillWord(fill))}ing`;
+    if (fill.kind !== "placeholder" && this.fusionClass(generic) >= 0.5 && !generic.includes(" ")) {
+      const joined = smoothJoin(base, generic);
+      if (joined && letterCount3(joined) <= NAMES.maxFusedLetters) return fusedCase(joined);
+    }
+    return `${base} ${titleWord(generic)}`;
+  }
+  /** §4.8: the shape's affix, with its slot filled; an ignored category redraws the affix type. */
+  affix(shape, rng) {
+    if (!shape.affix) return void 0;
+    const ignored = (form2) => !!form2.slotCategory && this.slotFor(form2.slotCategory).kind === "ignore";
+    let { typeId, form } = shape.affix;
+    if (ignored(form)) {
+      const options = PLACE_SHAPE_DATA.affixes.map((a) => {
+        var _a2;
+        return [
+          { id: a.id, forms: a.forms.filter((f) => !ignored(f)) },
+          (_a2 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a2 : 0
+        ];
+      }).filter(([a, w]) => a.forms.length > 0 && w > 0);
+      if (options.length === 0) return void 0;
+      const type = pickWeighted3(options, rng);
+      typeId = type.id;
+      form = pickUniform3(type.forms, rng);
+    }
+    const fill = form.slotCategory ? this.fill(form.slotCategory, rng, true) : void 0;
+    return { typeId, form, fill };
+  }
+  /** Colonial shapes (parts 2 and 2a): the structures of colonial-shapes §6, rendered by §4. */
+  renderColonial(shape, rng) {
+    this.colonial = true;
+    try {
+      return this.renderColonialShape(shape, rng);
+    } finally {
+      this.colonial = false;
+    }
+  }
+  renderColonialShape(shape, rng) {
+    const whole = (categoryId) => this.fill(categoryId, rng, true);
+    const specific = (f, isWhole) => this.adaptFill(f, shape.categoryId, shape.treatments.specific, isWhole, shape);
+    const secondOf = (f) => this.adaptFill(f, shape.secondCategoryId, shape.treatments.second, true, shape);
+    const named = (fill2) => titleWord(fillWord(fill2));
+    const the = (text2) => shape.definite ? `The ${text2}` : text2;
+    let fill;
+    let second;
+    let text;
+    switch (shape.structure) {
+      case "simplex":
+        text = the(capitaliseSpaced(this.genericWord(shape.genericId, !!shape.plural, rng)));
+        break;
+      case "bare-specific":
+        fill = specific(whole(shape.categoryId), true);
+        text = the(capitaliseSpaced(fillWord(fill)));
+        break;
+      case "possessive":
+        fill = specific(whole(shape.categoryId), true);
+        text = capitaliseSpaced(`${fillWord(fill)}'s ${this.genericWord(shape.genericId, false, rng)}`);
+        break;
+      case "new-transfer":
+        fill = specific(whole(shape.categoryId), true);
+        text = `New ${named(fill)}`;
+        break;
+      case "twin":
+        fill = specific(whole(shape.categoryId), true);
+        text = `${shape.twin === "old" ? "Old" : "New"} ${named(fill)}`;
+        break;
+      case "double-specific":
+        fill = specific(whole(shape.categoryId), true);
+        second = secondOf(whole(shape.secondCategoryId));
+        text = capitaliseSpaced(`${fillWord(fill)} of ${fillWord(second)}`);
+        break;
+      case "position-of-landmark":
+        fill = specific(this.fill(shape.categoryId, rng), false);
+        second = secondOf(whole(shape.secondCategoryId));
+        text = capitaliseSpaced(`${fillWord(fill)} of the ${fillWord(second)}`);
+        break;
+      case "locative":
+        text = capitaliseSpaced(`at the ${this.genericWord(shape.genericId, false, rng)}`);
+        break;
+      default: {
+        const genericFirst = shape.wordOrder === "generic-first-direct" || shape.wordOrder === "generic-first-linked";
+        const slot = this.slotFor(shape.categoryId);
+        const mayBeName = slot.kind === "sources" && slot.sources.some((s) => s.draw);
+        const drawWhole = genericFirst && mayBeName;
+        fill = specific(this.fill(shape.categoryId, rng, drawWhole), drawWhole);
+        const native = fill.kind === "placeholder" && !!fill.native;
+        if (genericFirst && fill.kind !== "word" && !native && !LOCAL_GENERICS.has(shape.genericId)) {
+          text = this.genericFirst(fill, shape.genericId, shape.wordOrder === "generic-first-linked", rng);
+          break;
+        }
+        const kept = shape.wordOrder === "generic-first-linked" && shape.structure === "two-part-compound" ? this.ofThe(fill, shape.categoryId, shape.genericId, rng) : null;
+        if (kept) {
+          text = kept;
+          break;
+        }
+        const first = this.join(fill, shape.categoryId, shape.genericId, rng);
+        text = first.text;
+        if (shape.structure === "stacked-generic" && shape.stackedGenericId) {
+          const nextWord = this.genericWord(shape.stackedGenericId, false, rng);
+          const chance = Math.min(
+            NAMES.fuseCap,
+            this.fusionClass(nextWord, shape.stackedGenericId) * NAMES.joining[this.recipe.render.joining]
+          );
+          const fused = first.fused && rng() < chance ? smoothJoin(text, nextWord) : null;
+          text = fused && letterCount3(fused) <= NAMES.maxFusedLetters ? fusedCase(fused) : capitaliseSpaced(`${text} ${nextWord}`);
+        }
+      }
+    }
+    const affix = this.affix(shape, rng);
+    let affixFill;
+    if (affix) {
+      const { form } = affix;
+      const filledText = affix.fill ? titleWord(fillWord(affix.fill)) : "";
+      affixFill = affix.fill ? fillEtymology(affix.fill) : void 0;
+      const words = [form.text, filledText].filter((w) => w.length > 0).join(" ");
+      if (form.position === "before") text = `${titleWord(words)} ${text}`;
+      else if (form.text && form.slotCategory && this.recipe.render.linkingHyphens) text = `${text}-${form.text.replace(/ /g, "-")}-${filledText}`;
+      else text = `${text} ${words}`;
+    }
+    const shown = { ...shape, affix: affix ? { typeId: affix.typeId, form: affix.form } : void 0 };
+    if (!affix) delete shown.affix;
+    return {
+      text,
+      hasPlaceholder: /\[[^\]]+\]/.test(text),
+      etymology: formatColonialShape(shown, {
+        specific: fill ? fillEtymology(fill) : void 0,
+        second: second ? fillEtymology(second) : void 0,
+        affix: affixFill
+      }),
+      shape
+    };
+  }
+  /** Stage 3: one shape → one name. */
+  render(shape, rng) {
+    var _a2;
+    const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === shape.genericId);
+    const effective = rewrite ? {
+      ...shape,
+      categoryId: rewrite.category,
+      structure: (_a2 = rewrite.structure) != null ? _a2 : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
+    } : shape;
+    const { categoryId, genericId } = effective;
+    let text;
+    let fill;
+    switch (effective.structure) {
+      case "simplex":
+        text = titleWord(this.genericWord(genericId, false, rng));
+        text = capitaliseSpaced(text);
+        break;
+      case "plural-simplex":
+        text = capitaliseSpaced(this.genericWord(genericId, true, rng));
+        break;
+      case "folk-connective":
+      case "associative-connective":
+        fill = this.fill(categoryId, rng);
+        text = this.connective(fill, genericId, rng);
+        break;
+      default: {
+        if (genericId === "folk-group-territory") {
+          fill = this.fill(categoryId, rng);
+          text = fill.kind === "placeholder" ? `${fill.label}ings` : `${fusedCase(fillWord(fill))}ings`;
+          break;
+        }
+        const genericFirst = effective.wordOrder !== "germanic" && effective.structure === "two-part-compound";
+        const slot = this.slotFor(categoryId);
+        const mayBeName = slot.kind === "sources" && slot.sources.some((s) => s.draw);
+        fill = this.fill(categoryId, rng, genericFirst && mayBeName);
+        if (genericFirst && fill.kind !== "word") {
+          text = this.genericFirst(fill, genericId, effective.wordOrder === "celtic-linked", rng);
+          break;
+        }
+        const kept = effective.wordOrder === "celtic-linked" && effective.structure === "two-part-compound" ? this.ofThe(fill, categoryId, genericId, rng) : null;
+        if (kept) {
+          text = kept;
+          break;
+        }
+        const first = this.join(fill, categoryId, genericId, rng);
+        text = first.text;
+        if (effective.structure === "stacked-generic" && effective.stackedGenericId) {
+          const second = this.genericWord(effective.stackedGenericId, false, rng);
+          const chance = Math.min(NAMES.fuseCap, this.fusionClass(second) * NAMES.joining[this.recipe.render.joining]);
+          const fused = first.fused && rng() < chance ? smoothJoin(text, second) : null;
+          text = fused && letterCount3(fused) <= NAMES.maxFusedLetters ? fusedCase(fused) : capitaliseSpaced(`${text} ${second}`);
+        }
+      }
+    }
+    const affix = this.affix(effective, rng);
+    let affixFill;
+    if (affix) {
+      const { form } = affix;
+      const filled = affix.fill ? titleWord(fillWord(affix.fill)) : "";
+      affixFill = affix.fill ? fillEtymology(affix.fill) : void 0;
+      const words = [form.text, filled].filter((w) => w.length > 0).join(" ");
+      if (form.position === "before") text = `${titleWord(words)} ${text}`;
+      else if (form.text && form.slotCategory && this.recipe.render.linkingHyphens) {
+        text = `${text}-${form.text.replace(/ /g, "-")}-${filled}`;
+      } else text = `${text} ${words}`;
+    }
+    const shown = { ...effective, affix: affix ? { typeId: affix.typeId, form: affix.form } : void 0 };
+    if (!affix) delete shown.affix;
+    return {
+      text,
+      hasPlaceholder: /\[[^\]]+\]/.test(text),
+      etymology: this.formatter.formatEtymology(shown, fill ? fillEtymology(fill) : void 0, affixFill),
+      shape: effective
+    };
+  }
+};
+function resolveRegionSetting(value) {
+  if (!value || value === "all-britain") return void 0;
+  const kebab2 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const region = PLACE_SHAPE_REGIONS.find((r) => r.code === value.toUpperCase() || kebab2(r.label) === kebab2(value));
+  return region == null ? void 0 : region.code;
+}
+function generatePlaceNames(options) {
+  const steps = generatePlaceNamesSteps(options);
+  for (; ; ) {
+    const next = steps.next();
+    if (next.done) return next.value;
+  }
+}
+function* generatePlaceNamesSteps(options) {
+  const { recipe } = options;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const organic = recipe.shape.part === "organic";
+  const region = organic ? resolveRegionSetting(recipe.shape.region) : void 0;
+  const notices = [];
+  if (organic && recipe.shape.region !== "all-britain" && !region) {
+    notices.push(`Unknown region \u201C${recipe.shape.region}\u201D; using all Britain.`);
+  }
+  const excludedCategories = Object.entries(options.slots).filter(([, slot]) => slot.kind === "ignore").map(([id]) => id);
+  const rng = mulberry32((seed ^ FILL_SALT) >>> 0);
+  const adaptation = options.adapt && !organic ? { adapt: options.adapt, seed, redrawRng: mulberry32((seed ^ REDRAW_SALT) >>> 0) } : void 0;
+  const renderer = new NameRenderer(recipe, options.slots, region, {
+    adaptation,
+    ofTheRng: mulberry32((seed ^ OF_THE_SALT) >>> 0),
+    labelRng: mulberry32((seed ^ SPLIT_SALT) >>> 0),
+    faithfulness: options.faithfulness,
+    strictness: options.strictness
+  });
+  let renderOne;
+  let shapeCount;
+  if (organic) {
+    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories });
+    renderOne = (i) => renderer.render(shapes[i], rng);
+    shapeCount = shapes.length;
+  } else {
+    const { shapes } = generateColonialShapesDetailed({
+      count: options.count,
+      seed,
+      part: recipe.shape.part === "new-land" ? "2" : "2a",
+      tradition: recipe.shape.tradition === "general" ? void 0 : recipe.shape.tradition,
+      context: recipe.shape.context === "none" ? void 0 : recipe.shape.context,
+      feature: recipe.shape.feature,
+      excludedCategories
+    });
+    renderOne = (i) => renderer.renderColonial(shapes[i], rng);
+    shapeCount = shapes.length;
+  }
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  for (let i = 0; i < shapeCount; i++) {
+    let name = renderOne(i);
+    for (let attempt = 1; seen.has(name.text.toLowerCase()) && attempt < NAMES.duplicateAttempts; attempt++) {
+      name = renderOne(i);
+    }
+    seen.add(name.text.toLowerCase());
+    names.push(name);
+    yield names.length;
+  }
+  return { names, seed, notices: [...notices, ...renderer.getNotices()] };
+}
+
+// src/names/recipe.ts
+var RECIPE_DEFAULTS = {
+  setting: "",
+  template: false,
+  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", feature: "any" },
+  slots: {},
+  generics: {},
+  register: "mixed",
+  render: { joining: "balanced", linkingHyphens: true, etymology: false }
+};
+var PARTS = ["organic", "new-land", "established"];
+var REGISTERS = ["modern", "mixed", "traditional"];
+var JOININGS = ["fused", "balanced", "spaced"];
+var isObject = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
+var str = (v) => typeof v === "string" ? v.trim() : typeof v === "number" ? String(v) : void 0;
+var bool = (v) => typeof v === "boolean" ? v : v === "true" ? true : v === "false" ? false : void 0;
+function linkTarget(v) {
+  const s = str(v);
+  if (!s) return void 0;
+  const target = s.replace(/^\[\[|\]\]$/g, "").split("|")[0].trim();
+  return target || void 0;
+}
+function readSlot(v, problems, id) {
+  if (v === "built-in" || v === "ignore" || v === "placeholder") return { kind: v };
+  if (!isObject(v)) {
+    problems.push(`Slot \u201C${id}\u201D isn't built-in, ignore, placeholder or a list of sources.`);
+    return void 0;
+  }
+  const raw = Array.isArray(v.sources) ? v.sources : [];
+  const sources = [];
+  for (const item of raw) {
+    if (!isObject(item)) continue;
+    const pack = linkTarget(item.pack);
+    const list = linkTarget(item.list);
+    if (!pack && !list) continue;
+    const weight = Number(item.weight);
+    sources.push({ ...pack ? { pack } : {}, ...list ? { list } : {}, weight: Number.isFinite(weight) && weight > 0 ? weight : 1 });
+  }
+  if (sources.length === 0) {
+    problems.push(`Slot \u201C${id}\u201D has no usable sources.`);
+    return void 0;
+  }
+  const slot = { kind: "sources", sources };
+  if (v.mode === "stem" || v.mode === "whole") slot.mode = v.mode;
+  if (isObject(v.gender)) {
+    const male = Number(v.gender.male);
+    const female = Number(v.gender.female);
+    if (Number.isFinite(male) && Number.isFinite(female) && male + female > 0) slot.gender = { male, female };
+  }
+  const section = str(v.section);
+  if (section) slot.section = section;
+  return slot;
+}
+function readRecipe(fm) {
+  const problems = [];
+  const recipe = {};
+  const setting = str(fm.setting);
+  if (setting !== void 0) recipe.setting = setting;
+  const template = bool(fm.template);
+  if (template !== void 0) recipe.template = template;
+  const templateOf = linkTarget(fm["template-of"]);
+  if (templateOf) recipe.templateOf = templateOf;
+  if (isObject(fm.shape)) {
+    const shape = {};
+    const part = str(fm.shape.part);
+    if (part && PARTS.includes(part)) shape.part = part;
+    else if (part) problems.push(`Unknown shape part \u201C${part}\u201D.`);
+    for (const key of ["region", "tradition", "context", "feature"]) {
+      const value = str(fm.shape[key]);
+      if (value) shape[key] = value;
+    }
+    recipe.shape = shape;
+  }
+  if (isObject(fm.slots)) {
+    recipe.slots = {};
+    for (const [id, value] of Object.entries(fm.slots)) {
+      const slot = readSlot(value, problems, id);
+      if (slot) recipe.slots[id] = slot;
+    }
+  }
+  if (isObject(fm.generics)) {
+    recipe.generics = {};
+    for (const [word, replacement] of Object.entries(fm.generics)) {
+      const r = str(replacement);
+      if (r) recipe.generics[word.trim().toLowerCase()] = r;
+    }
+  }
+  const takeover = linkTarget(fm.takeover);
+  if (takeover) recipe.takeover = takeover;
+  const register = str(fm.register);
+  if (register && REGISTERS.includes(register)) recipe.register = register;
+  else if (register) problems.push(`Unknown register \u201C${register}\u201D.`);
+  if (isObject(fm.render)) {
+    const render = {};
+    const joining = str(fm.render.joining);
+    if (joining && JOININGS.includes(joining)) render.joining = joining;
+    else if (joining) problems.push(`Unknown joining \u201C${joining}\u201D.`);
+    const hyphens = bool(fm.render["linking-hyphens"]);
+    if (hyphens !== void 0) render.linkingHyphens = hyphens;
+    const etymology = bool(fm.render.etymology);
+    if (etymology !== void 0) render.etymology = etymology;
+    recipe.render = render;
+  }
+  return { recipe, problems };
+}
+function mergeRecipe(derived, template) {
+  var _a2, _b, _c;
+  return {
+    setting: (_a2 = derived.setting) != null ? _a2 : template.setting,
+    template: derived.template,
+    templateOf: derived.templateOf,
+    shape: { ...template.shape, ...derived.shape },
+    slots: { ...template.slots, ...derived.slots },
+    generics: { ...template.generics, ...derived.generics },
+    register: (_b = derived.register) != null ? _b : template.register,
+    render: { ...template.render, ...derived.render },
+    takeover: (_c = derived.takeover) != null ? _c : template.takeover
+  };
+}
+function withDefaults(r) {
+  var _a2, _b, _c;
+  return {
+    setting: (_a2 = r.setting) != null ? _a2 : RECIPE_DEFAULTS.setting,
+    template: (_b = r.template) != null ? _b : false,
+    ...r.templateOf ? { templateOf: r.templateOf } : {},
+    shape: { ...RECIPE_DEFAULTS.shape, ...r.shape },
+    slots: { ...r.slots },
+    generics: { ...r.generics },
+    register: (_c = r.register) != null ? _c : RECIPE_DEFAULTS.register,
+    render: { ...RECIPE_DEFAULTS.render, ...r.render },
+    ...r.takeover ? { takeover: r.takeover } : {}
+  };
+}
+function applyRecipeTemplate(derived, template, name) {
+  if (!derived.templateOf) return { recipe: derived };
+  if (derived.template) return { recipe: derived, error: `\u201C${name}\u201D is a template, so it can't use template-of.` };
+  if (!template) return { recipe: derived, error: `Template \u201C${derived.templateOf}\u201D is missing.` };
+  if (template.templateOf) {
+    return { recipe: derived, error: `Template \u201C${derived.templateOf}\u201D has its own template; only one level is allowed.` };
+  }
+  return { recipe: mergeRecipe(derived, template) };
+}
+function recipeToFrontmatter(r) {
+  var _a2;
+  const out = { type: "recipe", setting: (_a2 = r.setting) != null ? _a2 : "" };
+  if (r.template) out.template = true;
+  if (r.templateOf) out["template-of"] = `[[${r.templateOf}]]`;
+  if (r.shape && Object.keys(r.shape).length > 0) out.shape = { ...r.shape };
+  if (r.slots && Object.keys(r.slots).length > 0) {
+    out.slots = Object.fromEntries(
+      Object.entries(r.slots).map(([id, slot]) => {
+        if (slot.kind !== "sources") return [id, slot.kind];
+        const value = {
+          sources: slot.sources.map((s) => ({
+            ...s.pack ? { pack: `[[${s.pack}]]` } : {},
+            ...s.list ? { list: `[[${s.list}]]` } : {},
+            weight: s.weight
+          }))
+        };
+        if (slot.mode) value.mode = slot.mode;
+        if (slot.section) value.section = slot.section;
+        if (slot.gender) value.gender = { ...slot.gender };
+        return [id, value];
+      })
+    );
+  }
+  if (r.generics && Object.keys(r.generics).length > 0) out.generics = { ...r.generics };
+  if (r.register) out.register = r.register;
+  if (r.render && Object.keys(r.render).length > 0) {
+    const render = {};
+    if (r.render.joining) render.joining = r.render.joining;
+    if (r.render.linkingHyphens !== void 0) render["linking-hyphens"] = r.render.linkingHyphens;
+    if (r.render.etymology !== void 0) render.etymology = r.render.etymology;
+    out.render = render;
+  }
+  if (r.takeover) out.takeover = `[[${r.takeover}]]`;
+  return out;
+}
+function britishPlaceNamesRecipe(region) {
+  return withDefaults({
+    shape: { part: "organic", region: region != null ? region : "all-britain", feature: "any" },
+    register: "modern",
+    render: { joining: "balanced", linkingHyphens: true, etymology: false }
+  });
+}
+function colonialPlaceNamesRecipe(part, tradition, context) {
+  return withDefaults({
+    shape: { part, tradition: tradition != null ? tradition : "general", context: context != null ? context : "none", feature: "any" },
+    register: "modern",
+    render: { joining: "balanced", linkingHyphens: true, etymology: false }
+  });
+}
+
+// src/recipeHost.ts
+var import_obsidian6 = require("obsidian");
+
+// src/takeover/recipe.ts
+function takeoverScorer(faithfulness) {
+  return (names) => {
+    const model = MarkovModel.build(names);
+    return (word) => model.scoreWord(word, faithfulness);
+  };
+}
+function takeoverPackNotice(name, reason) {
+  return `Takeover pack \u201C${name}\u201D can't be used: ${reason}. Native names were left unchanged.`;
+}
+function resolveRecipeTakeover(input) {
+  const { entry, index } = input;
+  const reason = entry ? input.targetReason(entry, index) : "it wasn't found";
+  const target = entry && !reason ? input.targetNames(entry, index) : reason;
+  if (typeof target === "string" || target === void 0) {
+    return { notice: takeoverPackNotice(input.name, target != null ? target : "it isn't eligible") };
+  }
+  const prepared = prepareTakeoverTarget(target.corpus, takeoverScorer(input.faithfulness), target.endings);
+  return { adapt: (native, rng) => {
+    var _a2, _b;
+    return (_b = (_a2 = adoptName({ native, target: prepared, rng })) == null ? void 0 : _a2.adopted) != null ? _b : null;
+  } };
+}
+
+// src/recipeHost.ts
+var FRONTMATTER = /^---\s*\n([\s\S]*?)\n---\s*\n?/;
+function isRecipeContent(content) {
+  const fm = content.match(FRONTMATTER);
+  return !!fm && /^type:\s*["']?recipe["']?\s*$/m.test(fm[1]);
+}
+function parseRecipeContent(content) {
+  const fm = content.match(FRONTMATTER);
+  if (!fm) return { recipe: {}, body: content, problems: ["The recipe has no properties."] };
+  let raw;
+  try {
+    raw = (0, import_obsidian6.parseYaml)(fm[1]);
+  } catch (e) {
+    return { recipe: {}, body: content.slice(fm[0].length), problems: ["The recipe's properties aren't valid YAML."] };
+  }
+  const { recipe, problems } = readRecipe(raw != null ? raw : {});
+  return { recipe, body: content.slice(fm[0].length), problems };
+}
+var categoryLabels2 = new Map([
+  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]),
+  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label]),
+  ["local-settlement-word", "Local settlement word"],
+  ["local-market-word", "Local market word"]
+]);
+var RecipeHost = class {
+  constructor(app, settings, index, targets) {
+    this.app = app;
+    this.settings = settings;
+    this.index = index;
+    this.targets = targets;
+    this.notices = /* @__PURE__ */ new Set();
+  }
+  getNotices() {
+    return [...this.notices];
+  }
+  async read(file) {
+    try {
+      return await this.app.vault.cachedRead(file);
+    } catch (e) {
+      return null;
+    }
+  }
+  resolveLink(target, from) {
+    const file = this.app.metadataCache.getFirstLinkpathDest(target, from);
+    return file instanceof import_obsidian6.TFile ? file : null;
+  }
+  /** Reads a recipe and applies its template (§7). */
+  async loadRecipe(file) {
+    const content = await this.read(file);
+    if (content === null) return { recipe: withDefaults({}), own: {}, error: `Couldn't read \u201C${file.basename}\u201D.`, problems: [] };
+    const { recipe: own, problems } = parseRecipeContent(content);
+    let template;
+    if (own.templateOf) {
+      const templateFile = this.resolveLink(own.templateOf, file.path);
+      const templateContent = templateFile ? await this.read(templateFile) : null;
+      if (templateContent !== null && isRecipeContent(templateContent)) template = parseRecipeContent(templateContent).recipe;
+    }
+    const applied = applyRecipeTemplate(own, template, file.basename);
+    return { recipe: withDefaults(applied.recipe), own, template, error: applied.error, problems };
+  }
+  /**
+   * Recipe takeover §A2: the recipe's takeover pack, prepared once for this run, as an adopter.
+   * Undefined for organic recipes (the setting is ignored) and when none is set; a missing or
+   * ineligible pack adds a notice and generation goes ahead as if none were set.
+   */
+  resolveTakeover(recipe, recipePath) {
+    var _a2;
+    if (!recipe.takeover || recipe.shape.part === "organic" || !this.targets) return void 0;
+    const file = this.resolveLink(recipe.takeover, recipePath);
+    const resolved = resolveRecipeTakeover({
+      name: recipe.takeover,
+      entry: file ? this.index.find((e) => e.path === file.path) : void 0,
+      index: this.index,
+      ...this.targets,
+      faithfulness: (_a2 = this.settings.faithfulness) != null ? _a2 : 2
+    });
+    if ("notice" in resolved) {
+      this.notices.add(resolved.notice);
+      return void 0;
+    }
+    return resolved.adapt;
+  }
+  /** Resolves every slot setting to engine-ready sources (§6.2). */
+  async resolveSlots(recipe, recipePath) {
+    var _a2;
+    const out = {};
+    for (const [categoryId, slot] of Object.entries(recipe.slots)) {
+      if (slot.kind !== "sources") {
+        out[categoryId] = { kind: slot.kind };
+        continue;
+      }
+      const sources = [];
+      for (const ref of slot.sources) {
+        if (ref.list) {
+          const entries = await this.wordListSource(ref.list, recipePath, categoryId);
+          if (entries) sources.push({ weight: ref.weight, entries });
+        } else if (ref.pack) {
+          const draw = await this.packSource(ref.pack, recipePath);
+          if (draw) sources.push({ weight: ref.weight, draw });
+        }
+      }
+      out[categoryId] = sources.length > 0 ? { kind: "sources", sources, mode: slot.mode, gender: slot.gender, section: slot.section } : ((_a2 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a2.length) ? { kind: "built-in" } : { kind: "placeholder" };
+    }
+    return out;
+  }
+  /** §9.2: the matching section, the whole list if it has none, else the built-in list with a notice. */
+  async wordListSource(target, from, categoryId) {
+    var _a2, _b;
+    const file = this.resolveLink(target, from);
+    const content = file ? await this.read(file) : null;
+    if (!file || content === null || !isWordListContent(content)) {
+      this.notices.add(`Word list \u201C${target}\u201D wasn't found.`);
+      return null;
+    }
+    let list = parseWordListFileContent(content, file.basename);
+    if (list.templateOf) {
+      const templateFile = this.resolveLink(list.templateOf, file.path);
+      const templateContent = templateFile ? await this.read(templateFile) : null;
+      if (templateContent !== null && isWordListContent(templateContent)) {
+        list = mergeWordListWithTemplate(list, parseWordListFileContent(templateContent));
+      } else {
+        this.notices.add(`Template \u201C${list.templateOf}\u201D for word list \u201C${target}\u201D is missing.`);
+      }
+    }
+    const label = (_a2 = categoryLabels2.get(categoryId)) != null ? _a2 : categoryId;
+    const entries = wordListEntries(list.list, label);
+    if (entries === null) {
+      this.notices.add(`\u201C${target}\u201D has no \u201C${label}\u201D section; using the built-in list.`);
+      return (_b = NAME_WORDS.categories[categoryId]) != null ? _b : null;
+    }
+    return entries.map((e) => ({
+      modern: e.modern,
+      ...e.traditional ? { traditional: e.traditional } : {},
+      plural: e.plural,
+      forms: e.combiningForms,
+      fuses: e.fuses
+    }));
+  }
+  /** A drawer for one name pack: stem or whole names (§5), honouring section and gender (§10). */
+  async packSource(target, from) {
+    var _a2, _b, _c;
+    const file = this.resolveLink(target, from);
+    const content = file ? await this.read(file) : null;
+    if (!file || content === null) {
+      this.notices.add(`Pack \u201C${target}\u201D wasn't found.`);
+      return null;
+    }
+    let parsed = parseNamesFileContent(content);
+    if (parsed.templateOf) {
+      const templateFile = this.resolveLink(parsed.templateOf, file.path);
+      const templateContent = templateFile ? await this.read(templateFile) : null;
+      const applied = applyTemplate(parsed, templateContent !== null ? parseNamesFileContent(templateContent) : void 0);
+      if (applied.error) {
+        this.notices.add(applied.error);
+        return null;
+      }
+      parsed = applied.parsed;
+    }
+    const faithfulness = (_a2 = this.settings.faithfulness) != null ? _a2 : 2;
+    const strictness = (_b = this.settings.strictness) != null ? _b : 3;
+    const seedFrom = (rng) => Math.floor(rng() * 4294967296) >>> 0;
+    const pick = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
+    const cache = /* @__PURE__ */ new Map();
+    const cached = (key, build) => {
+      if (!cache.has(key)) cache.set(key, build());
+      return cache.get(key);
+    };
+    const namesFor2 = (request) => {
+      if (parsed.sectioned && (request.section || request.gender)) {
+        const selection = selectSectionNames(parsed.sectioned, request, parsed.packType === "breakdownPack" ? 20 : 0);
+        for (const n of selection.notices) this.notices.add(`${parsed.packName}: ${n}`);
+        return selection.names;
+      }
+      return parsed.names;
+    };
+    const markovName = (names, key, rng) => {
+      var _a3;
+      if (names.length === 0) return null;
+      const model = cached(key, () => MarkovModel.build(names));
+      return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: seedFrom(rng) }).names[0]) != null ? _a3 : pick(names, rng);
+    };
+    const requestKey = (r) => {
+      var _a3, _b2;
+      return `${(_a3 = r.section) != null ? _a3 : ""}|${(_b2 = r.gender) != null ? _b2 : ""}`;
+    };
+    switch (parsed.packType) {
+      case "listPack":
+        return (request, _mode, rng) => pick(namesFor2(request), rng);
+      case "breakdownPack":
+        return (request, _mode, rng) => markovName(namesFor2(request), requestKey(request), rng);
+      case "placePack": {
+        const names = extractNamesFromMarkdown(parsed.names.join("\n"));
+        return (_request, mode, rng) => {
+          var _a3;
+          const model = cached("place", () => PlaceNameModel.build(names));
+          if (mode === "stem") return model.sampleStem(rng, faithfulness, strictness);
+          return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: seedFrom(rng) }).names[0]) != null ? _a3 : null;
+        };
+      }
+      case "compoundPack": {
+        const parts = (_c = parsed.parts) != null ? _c : [];
+        return (_request, mode, rng) => {
+          var _a3, _b2, _c2, _d;
+          if (mode === "stem") {
+            const first = (_a3 = parts[0]) != null ? _a3 : [];
+            return parsed.compoundGenerator === "list" ? pick(first, rng) : markovName(first, "part1", rng);
+          }
+          return (_d = generateCompoundNamesDetailed(parts, {
+            count: 1,
+            generator: (_b2 = parsed.compoundGenerator) != null ? _b2 : "breakdown",
+            joining: (_c2 = parsed.compoundJoining) != null ? _c2 : "joined",
+            faithfulness,
+            strictness,
+            seed: seedFrom(rng)
+          }).names[0]) != null ? _d : null;
+        };
+      }
+      case "mixPack":
+        return (request, _mode, rng) => {
+          const resolved = resolveMixSources(file.path, parsed, this.index, void 0, request);
+          if (resolved.error) {
+            this.notices.add(resolved.error);
+            return null;
+          }
+          return markovName(buildWeightedCorpus(resolved.sources), `mix|${requestKey(request)}`, rng);
+        };
+    }
+  }
+};
+
+// src/recipeEditor.ts
+var import_obsidian7 = require("obsidian");
+function slotCategories(part) {
+  const part1 = new Map(PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]));
+  if (part === "organic") return PLACE_SHAPE_DATA.categories.filter((c) => c.id !== "empty-slot");
+  const code = part === "new-land" ? "2" : "2a";
+  const out = [
+    ...COLONIAL_DATA.inheritedCategories.filter((c) => c.parts.includes(code) && c.id !== "empty-slot").map((c) => {
+      var _a2;
+      return { id: c.id, label: (_a2 = part1.get(c.id)) != null ? _a2 : c.id };
+    }),
+    ...COLONIAL_DATA.categories.filter((c) => c.parts.includes(code)).map((c) => ({ id: c.id, label: c.label }))
+  ];
+  if (code === "2a") out.push({ id: "local-settlement-word", label: "Local settlement word" }, { id: "local-market-word", label: "Local market word" });
+  return out;
+}
+var same3 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+var RecipeEditorModal = class extends import_obsidian7.Modal {
+  constructor(app, options) {
+    super(app);
+    this.options = options;
+    this.name = "";
+    this.body = "";
+    this.own = {};
+    /** The working values shown in the form. */
+    this.working = withDefaults({});
+    /** Slots the user has set explicitly (others use §6.3 defaults or the template). */
+    this.explicitSlots = /* @__PURE__ */ new Set();
+  }
+  async onOpen() {
+    this.titleEl.setText(this.options.file ? "Edit recipe" : "New recipe");
+    this.modalEl.addClass("nameforge-recipe-editor");
+    if (this.options.file) {
+      this.name = this.options.file.basename;
+      const content = await this.app.vault.cachedRead(this.options.file);
+      const parsed = parseRecipeContent(content);
+      this.own = parsed.recipe;
+      this.body = parsed.body.trim();
+      if (this.own.templateOf) await this.loadTemplate(this.own.templateOf);
+    }
+    this.rebuildWorking();
+    this.render();
+  }
+  onClose() {
+    this.contentEl.empty();
+  }
+  async loadTemplate(name) {
+    var _a2, _b;
+    this.template = void 0;
+    if (!name) return;
+    const file = this.app.metadataCache.getFirstLinkpathDest(name, (_b = (_a2 = this.options.file) == null ? void 0 : _a2.path) != null ? _b : this.options.folderPath);
+    if (!(file instanceof import_obsidian7.TFile)) return;
+    const content = await this.app.vault.cachedRead(file);
+    if (isRecipeContent(content)) this.template = parseRecipeContent(content).recipe;
+  }
+  rebuildWorking() {
+    var _a2;
+    this.working = withDefaults(this.template ? mergeRecipe(this.own, this.template) : this.own);
+    this.explicitSlots = new Set(Object.keys((_a2 = this.own.slots) != null ? _a2 : {}));
+  }
+  /** Everything in the form, rebuilt after each change. */
+  render() {
+    var _a2, _b;
+    const el = this.contentEl;
+    el.empty();
+    const w = this.working;
+    new import_obsidian7.Setting(el).setName("Name").addText(
+      (t) => t.setValue(this.name).onChange((v) => {
+        this.name = v;
+      })
+    );
+    new import_obsidian7.Setting(el).setName("Template").setDesc("Templates are hidden from the generate view and offered when creating recipes.").addToggle(
+      (t) => t.setValue(w.template).onChange((v) => {
+        w.template = v;
+        if (v) w.templateOf = void 0;
+        this.render();
+      })
+    );
+    if (!w.template) {
+      new import_obsidian7.Setting(el).setName("Start from template").setDesc((_b = (_a2 = this.options.templates.find((t) => t.name === w.templateOf)) == null ? void 0 : _a2.description) != null ? _b : "Settings you leave alone come from the template.").addDropdown((d) => {
+        var _a3;
+        d.addOption("", "None");
+        for (const t of this.options.templates) d.addOption(t.name, t.name);
+        d.setValue((_a3 = w.templateOf) != null ? _a3 : "").onChange(async (v) => {
+          this.own = { ...this.collect(), templateOf: v || void 0 };
+          await this.loadTemplate(v || void 0);
+          this.rebuildWorking();
+          this.render();
+        });
+      });
+    }
+    el.createEl("h3", { text: "Shape" });
+    new import_obsidian7.Setting(el).setName("Part").addDropdown((d) => {
+      d.addOption("organic", "Organic (part 1)").addOption("new-land", "New land (part 2)").addOption("established", "Established culture (part 2a)");
+      d.setValue(w.shape.part).onChange((v) => {
+        w.shape.part = v;
+        this.render();
+      });
+    });
+    if (w.shape.part === "organic") {
+      new import_obsidian7.Setting(el).setName("Region").addDropdown((d) => {
+        d.addOption("all-britain", "All Britain");
+        for (const r of PLACE_SHAPE_REGIONS) d.addOption(kebab(r.label), r.label);
+        d.setValue(kebab(w.shape.region) === "all-britain" ? "all-britain" : this.regionValue(w.shape.region)).onChange((v) => {
+          w.shape.region = v;
+        });
+      });
+    } else {
+      const part = w.shape.part === "new-land" ? "2" : "2a";
+      new import_obsidian7.Setting(el).setName("Tradition").addDropdown((d) => {
+        for (const t of COLONIAL_TRADITIONS) if (t.parts.includes(part)) d.addOption(t.id, t.label);
+        d.setValue(w.shape.tradition).onChange((v) => {
+          w.shape.tradition = v;
+        });
+      });
+      new import_obsidian7.Setting(el).setName("Context").addDropdown((d) => {
+        d.addOption("none", "None");
+        for (const c of colonialContexts(part)) d.addOption(c.id, c.label);
+        d.setValue(w.shape.context).onChange((v) => {
+          w.shape.context = v;
+        });
+      });
+      new import_obsidian7.Setting(el).setName("Takeover pack").setDesc("Adapted native names are reshaped into this pack's language.").addDropdown((d) => {
+        var _a3;
+        d.addOption("", "None");
+        for (const pack of this.options.takeoverPacks) {
+          d.addOption(pack.name, pack.reason ? `${pack.name} \u2014 ${pack.reason}` : pack.name);
+          const option = d.selectEl.options[d.selectEl.options.length - 1];
+          if (pack.reason) {
+            option.disabled = true;
+            option.title = pack.reason;
+          }
+        }
+        if (w.takeover && !this.options.takeoverPacks.some((p) => p.name === w.takeover)) d.addOption(w.takeover, w.takeover);
+        d.setValue((_a3 = w.takeover) != null ? _a3 : "").onChange((v) => {
+          w.takeover = v || void 0;
+        });
+      });
+    }
+    new import_obsidian7.Setting(el).setName("Feature").addDropdown((d) => {
+      d.addOption("any", "Any").addOption("settlement", "Settlement").addOption("landscape", "Landscape");
+      for (const g of PLACE_SHAPE_DATA.groups) d.addOption(g.id, g.label);
+      d.setValue(w.shape.feature).onChange((v) => {
+        w.shape.feature = v;
+      });
+    });
+    el.createEl("h3", { text: "Words and rendering" });
+    new import_obsidian7.Setting(el).setName("Register").setDesc("Balance of modern and traditional words.").addDropdown(
+      (d) => d.addOption("modern", "Modern").addOption("mixed", "Mixed").addOption("traditional", "Traditional").setValue(w.register).onChange((v) => {
+        w.register = v;
+      })
+    );
+    new import_obsidian7.Setting(el).setName("Joining").setDesc("How readily parts fuse into one word.").addDropdown(
+      (d) => d.addOption("fused", "Fused").addOption("balanced", "Balanced").addOption("spaced", "Spaced").setValue(w.render.joining).onChange((v) => {
+        w.render.joining = v;
+      })
+    );
+    new import_obsidian7.Setting(el).setName("Hyphenate linking affixes").setDesc("Ashford-upon-Severn rather than Ashford upon Severn.").addToggle(
+      (t) => t.setValue(w.render.linkingHyphens).onChange((v) => {
+        w.render.linkingHyphens = v;
+      })
+    );
+    new import_obsidian7.Setting(el).setName("Show etymology").setDesc("Show the shape beside each name by default.").addToggle(
+      (t) => t.setValue(w.render.etymology).onChange((v) => {
+        w.render.etymology = v;
+      })
+    );
+    new import_obsidian7.Setting(el).setName("Generic words").setDesc("One per line, e.g. \u201Cchurch: kirk\u201D.").addTextArea((t) => {
+      t.setValue(Object.entries(w.generics).map(([k, v]) => `${k}: ${v}`).join("\n")).onChange((v) => {
+        w.generics = Object.fromEntries(
+          v.split("\n").map((line) => line.split(":").map((x) => x.trim())).filter(([k, r]) => k && r).map(([k, r]) => [k.toLowerCase(), r])
+        );
+      });
+      t.inputEl.rows = 3;
+    });
+    el.createEl("h3", { text: "Slots" });
+    el.createEl("p", {
+      cls: "setting-item-description",
+      text: "Where each category's words come from. Unset categories use their built-in list, or a placeholder if there isn't one."
+    });
+    for (const category of slotCategories(w.shape.part)) this.renderSlot(el, category.id, category.label);
+    el.createEl("h3", { text: "Description" });
+    new import_obsidian7.Setting(el).setDesc("Shown when choosing this recipe as a template.").addTextArea((t) => {
+      t.setValue(this.body).onChange((v) => {
+        this.body = v;
+      });
+      t.inputEl.rows = 3;
+    });
+    const buttons = el.createDiv({ cls: "nameforge-recipe-editor__buttons" });
+    buttons.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
+    const save = buttons.createEl("button", { cls: "mod-cta", text: "Save" });
+    save.addEventListener("click", () => void this.save());
+  }
+  regionValue(value) {
+    const r = PLACE_SHAPE_REGIONS.find((x) => x.code === value.toUpperCase() || kebab(x.label) === kebab(value));
+    return r ? kebab(r.label) : "all-britain";
+  }
+  renderSlot(el, id, label) {
+    var _a2, _b;
+    const w = this.working;
+    const explicit = this.explicitSlots.has(id) || ((_b = (_a2 = this.template) == null ? void 0 : _a2.slots) == null ? void 0 : _b[id]) !== void 0;
+    const slot = explicit ? w.slots[id] : void 0;
+    const fallback = hasBuiltInList(id) ? "built-in list" : "placeholder";
+    const setting = new import_obsidian7.Setting(el).setName(label).addDropdown((d) => {
+      d.addOption("default", `Default (${fallback})`);
+      if (hasBuiltInList(id)) d.addOption("built-in", "Built-in list");
+      d.addOption("sources", "Packs or word lists").addOption("placeholder", "Placeholder").addOption("ignore", "Ignore");
+      d.setValue(slot ? slot.kind : "default").onChange((v) => {
+        if (v === "default") {
+          delete w.slots[id];
+          this.explicitSlots.delete(id);
+        } else if (v === "sources") {
+          w.slots[id] = { kind: "sources", sources: [{ pack: this.options.packs[0], weight: 1 }] };
+          this.explicitSlots.add(id);
+        } else {
+          w.slots[id] = { kind: v };
+          this.explicitSlots.add(id);
+        }
+        this.render();
+      });
+    });
+    setting.settingEl.addClass("nameforge-recipe-editor__slot");
+    if (!slot || slot.kind !== "sources") return;
+    const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
+    slot.sources.forEach((source, i) => {
+      new import_obsidian7.Setting(box).addDropdown(
+        (d) => d.addOption("pack", "Name pack").addOption("list", "Word list").setValue(source.list ? "list" : "pack").onChange((v) => {
+          slot.sources[i] = v === "list" ? { list: this.options.lists[0], weight: source.weight } : { pack: this.options.packs[0], weight: source.weight };
+          this.render();
+        })
+      ).addDropdown((d) => {
+        var _a3, _b2;
+        const options = source.list !== void 0 ? this.options.lists : this.options.packs;
+        for (const o of options) d.addOption(o, o);
+        const current = (_b2 = (_a3 = source.list) != null ? _a3 : source.pack) != null ? _b2 : "";
+        if (current && !options.includes(current)) d.addOption(current, `${current} (missing)`);
+        d.setValue(current).onChange((v) => {
+          if (source.list !== void 0) source.list = v;
+          else source.pack = v;
+        });
+      }).addText((t) => {
+        t.setPlaceholder("weight").setValue(String(source.weight)).onChange((v) => {
+          const n = Number(v);
+          source.weight = Number.isFinite(n) && n > 0 ? n : 1;
+        });
+        t.inputEl.type = "number";
+        t.inputEl.addClass("nameforge-recipe-editor__weight");
+      }).addExtraButton(
+        (b) => b.setIcon("x").setTooltip("Remove source").onClick(() => {
+          slot.sources.splice(i, 1);
+          if (slot.sources.length === 0) {
+            delete w.slots[id];
+            this.explicitSlots.delete(id);
+          }
+          this.render();
+        })
+      );
+    });
+    new import_obsidian7.Setting(box).addButton(
+      (b) => b.setButtonText("Add source").onClick(() => {
+        slot.sources.push({ pack: this.options.packs[0], weight: 1 });
+        this.render();
+      })
+    ).addDropdown(
+      (d) => {
+        var _a3;
+        return d.addOption("", "Mode: default").addOption("stem", "Mode: stem").addOption("whole", "Mode: whole").setValue((_a3 = slot.mode) != null ? _a3 : "").onChange((v) => {
+          slot.mode = v === "stem" || v === "whole" ? v : void 0;
+        });
+      }
+    ).addText(
+      (t) => {
+        var _a3;
+        return t.setPlaceholder("Section").setValue((_a3 = slot.section) != null ? _a3 : "").onChange((v) => {
+          slot.section = v.trim() || void 0;
+        });
+      }
+    ).addText((t) => {
+      t.setPlaceholder("Male %").setValue(slot.gender ? String(slot.gender.male) : "").onChange((v) => {
+        const male = Number(v);
+        slot.gender = v.trim() && Number.isFinite(male) ? { male, female: Math.max(0, 100 - male) } : void 0;
+      });
+      t.inputEl.type = "number";
+      t.inputEl.addClass("nameforge-recipe-editor__weight");
+    });
+  }
+  /**
+   * The settings to write: everything for a standalone recipe; only differences from the
+   * template for a derived one (§7).
+   */
+  collect() {
+    var _a2;
+    const w = this.working;
+    const slots = {};
+    for (const id of this.explicitSlots) if (w.slots[id]) slots[id] = w.slots[id];
+    const full = {
+      setting: w.setting,
+      template: w.template || void 0,
+      templateOf: w.template ? void 0 : (_a2 = this.own.templateOf) != null ? _a2 : w.templateOf,
+      shape: { ...w.shape },
+      slots,
+      generics: { ...w.generics },
+      register: w.register,
+      render: { ...w.render },
+      takeover: w.takeover
+    };
+    if (!full.templateOf || !this.template) return full;
+    const base = withDefaults(this.template);
+    const diff = (mine, theirs) => Object.fromEntries(Object.entries(mine).filter(([k, v]) => !same3(v, theirs[k])));
+    return {
+      setting: w.setting !== base.setting ? w.setting : void 0,
+      templateOf: full.templateOf,
+      shape: diff(w.shape, base.shape),
+      slots: diff(slots, base.slots),
+      generics: diff(w.generics, base.generics),
+      register: w.register !== base.register ? w.register : void 0,
+      render: diff(w.render, base.render),
+      takeover: w.takeover !== base.takeover ? w.takeover : void 0
+    };
+  }
+  async save() {
+    const name = this.name.trim();
+    if (!name) {
+      new import_obsidian7.Notice("nameForge: give the recipe a name.");
+      return;
+    }
+    const frontmatter = recipeToFrontmatter(this.collect());
+    const content = `---
+${(0, import_obsidian7.stringifyYaml)(frontmatter)}---
+
+${this.body.trim()}
+`;
+    const path = (0, import_obsidian7.normalizePath)(`${this.options.folderPath}/${sanitizePackNameForFilename(name)}.md`);
+    try {
+      const existing = this.app.vault.getFileByPath(path);
+      if (this.options.file) {
+        if (this.options.file.path !== path) {
+          if (existing) {
+            new import_obsidian7.Notice("nameForge: a file with that name already exists.");
+            return;
+          }
+          await this.app.fileManager.renameFile(this.options.file, path);
+        }
+        await this.app.vault.modify(this.options.file, content);
+      } else {
+        if (existing) {
+          new import_obsidian7.Notice("nameForge: a file with that name already exists.");
+          return;
+        }
+        await this.app.vault.create(path, content);
+      }
+    } catch (e) {
+      new import_obsidian7.Notice(`nameForge: couldn't save the recipe to ${path}.`);
+      return;
+    }
+    this.options.onSaved(path);
+    this.close();
+  }
+};
+
+// src/takeoverView.ts
+var import_obsidian8 = require("obsidian");
+
 // src/takeover/format.ts
 var TAKEOVER_INSERT_FORMATS = [
   { id: "adopted", label: "Adopted only" },
@@ -18560,45 +20165,56 @@ function formatAdoptedName(native, adopted, format) {
   return `${adopted} (from ${native})`;
 }
 
-// src/takeoverView.ts
+// src/loading.ts
 function renderLoading(container, text) {
   if (!container) return;
   container.empty();
-  const loading = container.createDiv({ cls: "nameforge-modal__loading", attr: { role: "status" } });
-  (0, import_obsidian8.setIcon)(loading.createSpan({ cls: "nameforge-modal__loading-icon" }), ICON_LOADING);
-  loading.createSpan({ cls: "nameforge-modal__loading-text", text });
+  const loading = container.createDiv({
+    cls: "nameforge-modal__loading",
+    attr: text ? { role: "status" } : { role: "status", "aria-label": "Working" }
+  });
+  const dots = loading.createSpan({ cls: "nameforge-modal__loading-dots" });
+  for (let i = 0; i < 3; i++) dots.createSpan({ cls: "nameforge-modal__loading-dot" });
+  if (text) loading.createSpan({ cls: "nameforge-modal__loading-text", text });
 }
-var nextFrame = () => new Promise((resolve) => window.setTimeout(resolve, 0));
+function waitForPaint() {
+  return new Promise((resolve) => window.requestAnimationFrame(() => window.setTimeout(resolve, 0)));
+}
+function waitForTask() {
+  return new Promise((resolve) => window.setTimeout(resolve, 0));
+}
+
+// src/takeoverView.ts
 var SEED_MASK = 4294967296;
 var subSeed = (rng) => Math.floor(rng() * SEED_MASK) >>> 0;
 function nativeDrawer(entry, index, settings) {
-  var _a, _b, _c;
+  var _a2, _b, _c;
   const { parsed } = entry;
-  const faithfulness = (_a = settings.faithfulness) != null ? _a : 2;
+  const faithfulness = (_a2 = settings.faithfulness) != null ? _a2 : 2;
   const strictness = (_b = settings.strictness) != null ? _b : 3;
   switch (parsed.packType) {
     case "listPack": {
       const generator = new ListGenerator();
       generator.train(extractNamesFromMarkdown(parsed.names.join("\n")));
       return (rng) => {
-        var _a2;
-        return (_a2 = generator.generateMultiple(1, mulberry32(subSeed(rng)))[0]) != null ? _a2 : null;
+        var _a3;
+        return (_a3 = generator.generateMultiple(1, mulberry32(subSeed(rng)))[0]) != null ? _a3 : null;
       };
     }
     case "placePack": {
       const model = PlaceNameModel.build(extractNamesFromMarkdown(parsed.names.join("\n")));
       return (rng) => {
-        var _a2;
-        return (_a2 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed(rng) }).names[0]) != null ? _a2 : null;
+        var _a3;
+        return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed(rng) }).names[0]) != null ? _a3 : null;
       };
     }
     case "compoundPack": {
       const parts = (_c = parsed.parts) != null ? _c : [];
       return (rng) => {
-        var _a2, _b2, _c2;
+        var _a3, _b2, _c2;
         return (_c2 = generateCompoundNamesDetailed(parts, {
           count: 1,
-          generator: (_a2 = parsed.compoundGenerator) != null ? _a2 : "breakdown",
+          generator: (_a3 = parsed.compoundGenerator) != null ? _a3 : "breakdown",
           joining: (_b2 = parsed.compoundJoining) != null ? _b2 : "joined",
           faithfulness,
           strictness,
@@ -18613,8 +20229,8 @@ function nativeDrawer(entry, index, settings) {
       if (corpus.length === 0) return "the mix pack has no names";
       const model = MarkovModel.build(corpus);
       return (rng) => {
-        var _a2;
-        return (_a2 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed(rng) }).names[0]) != null ? _a2 : null;
+        var _a3;
+        return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed(rng) }).names[0]) != null ? _a3 : null;
       };
     }
     default: {
@@ -18622,44 +20238,24 @@ function nativeDrawer(entry, index, settings) {
       if (names.length === 0) return "the pack has no names";
       const model = MarkovModel.build(names);
       return (rng) => {
-        var _a2;
-        return (_a2 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed(rng) }).names[0]) != null ? _a2 : null;
+        var _a3;
+        return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed(rng) }).names[0]) != null ? _a3 : null;
       };
     }
   }
 }
 var packLabel = (entry) => {
-  var _a;
-  return entry.parsed.packName || ((_a = entry.path.split("/").pop()) == null ? void 0 : _a.replace(/\.md$/i, "")) || entry.path;
+  var _a2;
+  return entry.parsed.packName || ((_a2 = entry.path.split("/").pop()) == null ? void 0 : _a2.replace(/\.md$/i, "")) || entry.path;
 };
 var TakeoverView = class {
   constructor(host) {
     this.host = host;
     this.nativePacks = [];
+    /** Takeover pack options; the modal shows them in the box beneath the native pack box. */
     this.takeoverPacks = [];
     this.format = DEFAULT_TAKEOVER_INSERT_FORMAT;
-    this.controlsEl = null;
-    this.takeoverSelect = null;
     this.resultsEl = null;
-  }
-  /** The takeover pack row; the native pack lives in the box beside the section trigger. */
-  buildControls(container) {
-    const controls = this.controlsEl = container.createDiv({ cls: "nameforge-modal__takeover-controls" });
-    this.takeoverSelect = controls.createEl("select", {
-      cls: "dropdown nameforge-modal__takeover-pack",
-      attr: { "aria-label": "Takeover pack", title: "Takeover pack: the language that adopts the names" }
-    });
-    this.takeoverSelect.addEventListener("change", () => {
-      var _a;
-      this.takeoverPath = ((_a = this.takeoverSelect) == null ? void 0 : _a.value) || void 0;
-      this.showSamePackNotice();
-    });
-    controls.hide();
-    return controls;
-  }
-  toggle(show) {
-    var _a;
-    (_a = this.controlsEl) == null ? void 0 : _a.toggle(show);
   }
   /** Lists every pack as a native option, and marks takeover packs that fail the ageing target rules. */
   async refresh() {
@@ -18667,32 +20263,24 @@ var TakeoverView = class {
     const usable = index.filter((entry) => !entry.parsed.template);
     const byLabel = (a, b) => a.label.localeCompare(b.label);
     this.nativePacks = usable.map((entry) => {
-      var _a;
-      return { path: entry.path, label: packLabel(entry), reason: (_a = entry.templateError) == null ? void 0 : _a.replace(/\.$/, "") };
+      var _a2;
+      return { path: entry.path, label: packLabel(entry), reason: (_a2 = entry.templateError) == null ? void 0 : _a2.replace(/\.$/, "") };
     }).sort(byLabel);
     this.takeoverPacks = usable.map((entry) => ({ path: entry.path, label: packLabel(entry), reason: this.host.targetReason(entry, index) })).sort(byLabel);
     if (this.nativePath && !this.nativePacks.some((p) => p.path === this.nativePath && !p.reason)) this.nativePath = void 0;
     if (this.takeoverPath && !this.takeoverPacks.some((p) => p.path === this.takeoverPath && !p.reason)) {
       this.takeoverPath = void 0;
     }
-    this.renderTakeoverSelect();
     this.host.onNativeLabelChange();
   }
-  renderTakeoverSelect() {
-    const select = this.takeoverSelect;
-    if (!select) return;
-    select.empty();
-    const prompt = select.createEl("option", { text: "choose a takeover pack", value: "" });
-    prompt.disabled = true;
-    prompt.selected = !this.takeoverPath;
-    for (const pack of this.takeoverPacks) {
-      const option = select.createEl("option", {
-        text: pack.reason ? `${pack.label} \u2014 ${pack.reason}` : pack.label,
-        value: pack.path
-      });
-      option.disabled = !!pack.reason;
-      option.selected = pack.path === this.takeoverPath;
-    }
+  selectTakeover(path) {
+    this.takeoverPath = path;
+    this.host.onNativeLabelChange();
+    this.showSamePackNotice();
+  }
+  takeoverLabel() {
+    var _a2, _b;
+    return (_b = (_a2 = this.takeoverPacks.find((p) => p.path === this.takeoverPath)) == null ? void 0 : _a2.label) != null ? _b : "choose a takeover pack";
   }
   selectNative(path) {
     this.nativePath = path;
@@ -18700,15 +20288,15 @@ var TakeoverView = class {
     this.showSamePackNotice();
   }
   nativeLabel() {
-    var _a, _b;
-    return (_b = (_a = this.nativePacks.find((p) => p.path === this.nativePath)) == null ? void 0 : _a.label) != null ? _b : "choose a native pack";
+    var _a2, _b;
+    return (_b = (_a2 = this.nativePacks.find((p) => p.path === this.nativePath)) == null ? void 0 : _a2.label) != null ? _b : "choose a native pack";
   }
   showSamePackNotice() {
-    var _a;
-    this.host.setStatus((_a = samePackNotice(this.nativePath, this.takeoverPath)) != null ? _a : "");
+    var _a2;
+    this.host.setStatus((_a2 = samePackNotice(this.nativePath, this.takeoverPath)) != null ? _a2 : "");
   }
   async run(batchSize) {
-    var _a, _b, _c;
+    var _a2, _b, _c;
     if (!this.nativePath) {
       new import_obsidian8.Notice("nameForge: choose a native pack to generate names from.");
       return;
@@ -18739,17 +20327,9 @@ var TakeoverView = class {
     }
     this.host.setStatus("");
     renderLoading(this.resultsEl, `Taking over 0 of ${batchSize}\u2026`);
-    const loadingText = (_a = this.resultsEl) == null ? void 0 : _a.querySelector(".nameforge-modal__loading-text");
-    await nextFrame();
-    const faithfulness = (_b = this.host.settings().faithfulness) != null ? _b : 2;
-    const prepared = prepareTakeoverTarget(
-      target.corpus,
-      (names) => {
-        const model = MarkovModel.build(names);
-        return (word) => model.scoreWord(word, faithfulness);
-      },
-      target.endings
-    );
+    const loadingText = (_a2 = this.resultsEl) == null ? void 0 : _a2.querySelector(".nameforge-modal__loading-text");
+    await waitForPaint();
+    const prepared = prepareTakeoverTarget(target.corpus, takeoverScorer((_b = this.host.settings().faithfulness) != null ? _b : 2), target.endings);
     const steps = takeOverSteps({
       drawNative: draw,
       adopt: (native, rng) => adoptName({ native, target: prepared, rng }),
@@ -18764,7 +20344,7 @@ var TakeoverView = class {
         break;
       }
       if (loadingText) loadingText.textContent = `Taking over ${next.value} of ${batchSize}\u2026`;
-      await nextFrame();
+      await waitForTask();
     }
     this.host.setCurrentSeed(result.seed);
     this.renderResults(this.resultsEl, result.rows);
@@ -18856,44 +20436,66 @@ function formatAgedName(trail, format) {
   return earlier.length > 0 ? `${name} (earlier ${earlier.join(", ")}; originally ${original})` : `${name} (originally ${original})`;
 }
 
-// src/modal.ts
+// src/sections.ts
+var OLD_HISTORY_PREFIXES = {
+  explorationPlaceShapes: "exploration place name shapes",
+  empireExpansionPlaceShapes: "empire expansion place name shapes"
+};
 var SECTION_ORDER = [
   "markov",
   "placeShapes",
-  "genericPlaceNames",
+  "riverNames",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "nameAgeing",
   "nameTakeover"
 ];
-var SHAPE_SECTION_WORDING = {
-  placeShapes: "meaning",
-  genericPlaceNames: "plain"
+var SECTION_LABELS = {
+  markov: "markov generator",
+  placeShapes: "british place names",
+  riverNames: "river names",
+  explorationPlaceShapes: "exploration place names",
+  empireExpansionPlaceShapes: "empire expansion place names",
+  nameAgeing: "name ageing",
+  nameTakeover: "name takeover"
 };
+var BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
+var RIVER_NAMES_HISTORY_NAME = "river names";
+function historySection(packName) {
+  const starts = (prefix) => packName.startsWith(prefix);
+  if (starts(RIVER_NAMES_HISTORY_NAME)) return "riverNames";
+  if (starts(SECTION_LABELS.explorationPlaceShapes) || starts(OLD_HISTORY_PREFIXES.explorationPlaceShapes)) {
+    return "explorationPlaceShapes";
+  }
+  if (starts(SECTION_LABELS.empireExpansionPlaceShapes) || starts(OLD_HISTORY_PREFIXES.empireExpansionPlaceShapes)) {
+    return "empireExpansionPlaceShapes";
+  }
+  if (starts(BRITISH_PLACE_NAMES_HISTORY_NAME) || starts(PLACE_SHAPES_HISTORY_NAME) || starts(GENERIC_PLACE_NAMES_HISTORY_NAME)) {
+    return "placeShapes";
+  }
+  return "markov";
+}
+
+// src/modal.ts
 var COLONIAL_SECTION_PART = {
   explorationPlaceShapes: "2",
   empireExpansionPlaceShapes: "2a"
 };
-var partNote = (parts) => parts.length === 2 ? "parts 2 and 2a" : `part ${parts[0]} only`;
-var SECTION_LABELS = {
-  markov: "markov generator",
-  placeShapes: "place name shapes",
-  genericPlaceNames: "generic place name generator",
-  explorationPlaceShapes: "exploration place name shapes",
-  empireExpansionPlaceShapes: "empire expansion place name shapes",
-  nameAgeing: "name ageing",
-  nameTakeover: "name takeover"
+var withRegion = (label, regionCode) => {
+  const region = PLACE_SHAPE_REGIONS.find((r) => r.code === regionCode);
+  return region ? `${label} \xB7 ${region.label}` : label;
 };
+var partNote = (parts) => parts.length === 2 ? "parts 2 and 2a" : `part ${parts[0]} only`;
 var SECTION_ICONS = {
   markov: ICON_PACKS,
   placeShapes: ICON_PLACE_SHAPES,
-  genericPlaceNames: ICON_GENERIC_PLACE_NAMES,
+  riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   nameAgeing: ICON_NAME_AGEING,
   nameTakeover: ICON_NAME_TAKEOVER
 };
-var SESSION_HINT = "\u2190 click here for specialist packs, or here for your name packs";
+var SESSION_HINT = "\u2190 click here for specialist modules, or here for your name packs";
 var sessionHintShown = false;
 function packTypeIconId(packType, subGenerator) {
   if (packType === "recipePack") {
@@ -18918,7 +20520,7 @@ function resolveSeed3(seed) {
   return seed !== void 0 && Number.isFinite(seed) ? Math.floor(seed) >>> 0 : Math.random() * 4294967295 >>> 0;
 }
 function generateNamesFromSource(namesText, packType, count = 6, settings = {}, seed) {
-  var _a, _b, _c, _d;
+  var _a2, _b, _c, _d;
   const names = extractNamesFromMarkdown(namesText);
   const resolvedSeed = resolveSeed3(seed);
   if (names.length === 0) {
@@ -18933,7 +20535,7 @@ function generateNamesFromSource(namesText, packType, count = 6, settings = {}, 
     const model2 = PlaceNameModel.build(names);
     const result2 = model2.generateDetailed({
       count,
-      faithfulness: (_a = settings.faithfulness) != null ? _a : 2,
+      faithfulness: (_a2 = settings.faithfulness) != null ? _a2 : 2,
       strictness: (_b = settings.strictness) != null ? _b : 3,
       seed: resolvedSeed
     });
@@ -18986,6 +20588,19 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.isRegionMenuOpen = false;
     /** Region code, or undefined for All Britain. Session only — never persisted. */
     this.selectedRegion = void 0;
+    /** River names (river brief §6.8): setting and, for British, region. Session only. */
+    this.riverSetting = "british";
+    this.riverRegion = void 0;
+    this.secondBoxRowEl = null;
+    this.secondBoxDropdownEl = null;
+    this.secondBoxTriggerEl = null;
+    this.secondBoxLabelEl = null;
+    this.isSecondBoxMenuOpen = false;
+    this.setSecondBoxMenuOpen = () => {
+    };
+    this.secondBoxObserver = null;
+    /** The place-name modules' etymology toggle: off by default (river brief §2, §3). Session only. */
+    this.moduleEtymology = false;
     /** Colonial tradition and context per part; undefined = General / None. Session only. */
     this.selectedTradition = { "2": void 0, "2a": void 0 };
     this.selectedContext = { "2": void 0, "2a": void 0 };
@@ -19007,8 +20622,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       targetNames: (entry, index) => this.ageingTargetNames(entry, index),
       targetReason: (entry, index) => this.targetPackReason(entry, index),
       lockedSeed: () => {
-        var _a;
-        return this.seedLocked ? parseSeedInput((_a = this.seedInputEl) == null ? void 0 : _a.value) : void 0;
+        var _a2;
+        return this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
       },
       setCurrentSeed: (seed) => {
         this.currentSeed = seed;
@@ -19020,7 +20635,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
         this.clearResultsSelection = clear;
       },
       setStatus: (text) => this.setStatus(text),
-      onNativeLabelChange: () => this.updateRegionLabel()
+      onNativeLabelChange: () => {
+        this.updateRegionLabel();
+        this.updateSecondBoxLabel();
+      }
     });
     this.guideButton = null;
     this.quantityButtons = [];
@@ -19056,6 +20674,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.panelMode = false;
     this.rootEl = null;
     this.handlePackDropdownOutsideClick = (evt) => {
+      if (this.isSecondBoxMenuOpen && this.secondBoxDropdownEl && !this.secondBoxDropdownEl.contains(evt.target)) {
+        this.setSecondBoxMenuOpen(false);
+      }
       if (this.isRegionMenuOpen && this.regionDropdownEl && !this.regionDropdownEl.contains(evt.target)) {
         this.setRegionMenuOpen(false);
       }
@@ -19186,12 +20807,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       attr: { "aria-label": "Section", title: "Section" }
     });
     this.sectionSelectEl.addEventListener("change", () => {
-      var _a, _b, _c;
-      const i = Number((_b = (_a = this.sectionSelectEl) == null ? void 0 : _a.value) != null ? _b : -1);
+      var _a2, _b, _c;
+      const i = Number((_b = (_a2 = this.sectionSelectEl) == null ? void 0 : _a2.value) != null ? _b : -1);
       this.currentSectionRequest = i >= 0 ? (_c = this.sectionChoices[i]) == null ? void 0 : _c.request : void 0;
     });
     this.sectionSelectEl.hide();
-    this.takeoverView.buildControls(optionsList);
+    this.buildSecondBox(optionsList);
     const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityToggleEl = quantityToggle;
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
@@ -19227,12 +20848,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
    * the menu adds (measured, so gaps/margins in modal vs panel mode are included) via
    * --nf-section-menu-height, so the modal itself doesn't grow. */
   setSectionMenuOpen(open) {
-    var _a, _b, _c, _d, _e;
+    var _a2, _b, _c, _d, _e;
     const menu = this.sectionMenuEl;
     if (!menu) return;
     this.isSectionMenuOpen = open;
     const optionsList = menu.parentElement;
-    const before = (_a = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _a : 0;
+    const before = (_a2 = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _a2 : 0;
     if (open) {
       this.closePackDropdown();
       this.setRegionMenuOpen(false);
@@ -19269,15 +20890,16 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
   /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
    * dropdown on the shape sections, the placeholder box otherwise. Everything else is left as it is. */
   switchSection(section) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
     if (section === "nameAgeing" && this.activeSection === "markov") {
-      const selected = (_b = (_a = this.resultsEl) == null ? void 0 : _a.querySelectorAll("li.is-selected")) != null ? _b : [];
+      const selected = (_b = (_a2 = this.resultsEl) == null ? void 0 : _a2.querySelectorAll("li.is-selected")) != null ? _b : [];
       if (selected.length === 1 && this.ageingSourceInput) {
         this.ageingSourceInput.value = (_c = selected[0].textContent) != null ? _c : "";
       }
     }
     this.setSectionMenuOpen(false);
     this.setRegionMenuOpen(false);
+    this.setSecondBoxMenuOpen(false);
     this.activeSection = section;
     (_d = this.packDropdownEl) == null ? void 0 : _d.toggle(section === "markov");
     (_e = this.sectionSelectEl) == null ? void 0 : _e.toggle(section === "markov" && this.sectionChoices.length > 0);
@@ -19288,15 +20910,15 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     (_i = this.guideButton) == null ? void 0 : _i.toggle(!!colonialPart);
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
-    (_j = this.regionDropdownEl) == null ? void 0 : _j.toggle(
-      SHAPE_SECTION_WORDING[section] !== void 0 || !!colonialPart || section === "nameAgeing" || takeover
-    );
+    const river = section === "riverNames";
+    (_j = this.regionDropdownEl) == null ? void 0 : _j.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover);
+    this.showSecondBox(river && this.riverSetting === "british" || takeover);
+    this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
     const ageing = section === "nameAgeing";
     (_k = this.quantityToggleEl) == null ? void 0 : _k.toggle(!ageing);
     (_l = this.ageingControlsEl) == null ? void 0 : _l.toggle(ageing);
-    this.takeoverView.toggle(takeover);
     const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
     (_m = this.generateButtonEl) == null ? void 0 : _m.setAttribute("title", action);
     (_n = this.generateButtonEl) == null ? void 0 : _n.setAttribute("aria-label", action);
@@ -19305,17 +20927,142 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     if (this.sectionTriggerEl) (0, import_obsidian9.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
     (_o = this.sectionStubEl) == null ? void 0 : _o.toggle(
-      section !== "markov" && SHAPE_SECTION_WORDING[section] === void 0 && !colonialPart && section !== "nameAgeing" && !takeover
+      section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover
     );
   }
+  /**
+   * The box beneath the box beside the section trigger: the region for river names' British setting
+   * (river brief §6.8), the takeover pack for name takeover. The same dropdown box as the one above,
+   * given that box's measured left edge and width (alignSecondBox) so it sits exactly beneath it, 4px
+   * below; the results box gives up its height so the modal keeps its size (showSecondBox).
+   */
+  buildSecondBox(container) {
+    var _a2;
+    const row = this.secondBoxRowEl = container.createDiv({ cls: "nameforge-modal__second-box" });
+    const dropdown = this.secondBoxDropdownEl = row.createDiv({ cls: "nameforge-modal__pack-dropdown" });
+    const trigger = this.secondBoxTriggerEl = dropdown.createEl("button", {
+      cls: "nameforge-modal__pack-dropdown-trigger",
+      attr: { type: "button", "aria-haspopup": "listbox", "aria-expanded": "false" }
+    });
+    this.secondBoxLabelEl = trigger.createSpan({ cls: "nameforge-modal__pack-dropdown-label" });
+    const menu = dropdown.createDiv({ cls: "nameforge-modal__pack-dropdown-menu" });
+    menu.hide();
+    this.setSecondBoxMenuOpen = (open) => {
+      this.isSecondBoxMenuOpen = open;
+      if (open) {
+        this.setRegionMenuOpen(false);
+        this.renderSecondBoxMenu(menu);
+      }
+      menu.toggle(open);
+      trigger.setAttribute("aria-expanded", String(open));
+    };
+    trigger.addEventListener("click", (evt) => {
+      evt.stopPropagation();
+      this.setSecondBoxMenuOpen(!this.isSecondBoxMenuOpen);
+    });
+    this.updateSecondBoxLabel();
+    row.hide();
+    (_a2 = this.secondBoxObserver) == null ? void 0 : _a2.disconnect();
+    this.secondBoxObserver = new ResizeObserver(() => this.alignSecondBox());
+    if (this.regionDropdownEl) this.secondBoxObserver.observe(this.regionDropdownEl);
+    this.secondBoxObserver.observe(row);
+  }
+  /** The second box's label and tooltip for the active module. */
+  updateSecondBoxLabel() {
+    var _a2, _b;
+    const label = this.secondBoxLabelEl;
+    const trigger = this.secondBoxTriggerEl;
+    if (!label || !trigger) return;
+    if (this.activeSection === "nameTakeover") {
+      label.textContent = this.takeoverView.takeoverLabel();
+      trigger.setAttribute("title", "Takeover pack: the language that adopts the names");
+      return;
+    }
+    const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.riverRegion);
+    label.textContent = (_a2 = region == null ? void 0 : region.label) != null ? _a2 : "All Britain";
+    trigger.setAttribute("title", `Region: ${(_b = region == null ? void 0 : region.counties) != null ? _b : "no regional weighting"}`);
+  }
+  /** River names: All Britain, then the regions. Name takeover: the takeover packs, ineligible ones greyed out. */
+  renderSecondBoxMenu(menu) {
+    menu.empty();
+    const choose = () => {
+      this.updateSecondBoxLabel();
+      this.setSecondBoxMenuOpen(false);
+    };
+    if (this.activeSection === "nameTakeover") {
+      const packs = this.takeoverView.takeoverPacks;
+      if (packs.length === 0) menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
+      for (const pack of packs) {
+        const item = menu.createEl("button", {
+          cls: "nameforge-modal__pack-dropdown-item" + (pack.path === this.takeoverView.takeoverPath ? " is-active" : "") + (pack.reason ? " is-unavailable" : ""),
+          attr: { type: "button", "aria-disabled": String(!!pack.reason), ...pack.reason ? { title: pack.reason } : {} }
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: pack.label });
+        if (pack.reason) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: pack.reason });
+        item.addEventListener("click", () => {
+          if (pack.reason) return;
+          this.takeoverView.selectTakeover(pack.path);
+          choose();
+        });
+      }
+      return;
+    }
+    const options = [
+      { code: void 0, label: "All Britain" },
+      ...PLACE_SHAPE_REGIONS
+    ];
+    for (const { code, label: text, counties } of options) {
+      const item = menu.createEl("button", {
+        cls: "nameforge-modal__pack-dropdown-item" + (code === this.riverRegion ? " is-active" : ""),
+        attr: { type: "button", title: counties != null ? counties : "No regional weighting" }
+      });
+      item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text });
+      item.addEventListener("click", () => {
+        this.riverRegion = code;
+        choose();
+      });
+    }
+  }
+  /** Gives the region box the setting box's exact left edge and width. */
+  alignSecondBox() {
+    const row = this.secondBoxRowEl;
+    const box = this.secondBoxDropdownEl;
+    const setting = this.regionDropdownEl;
+    if (!row || !box || !setting || !row.isShown() || !setting.isShown()) return;
+    const rowRect = row.getBoundingClientRect();
+    const settingRect = setting.getBoundingClientRect();
+    box.style.marginLeft = `${settingRect.left - rowRect.left}px`;
+    box.style.width = `${settingRect.width}px`;
+  }
+  /**
+   * Shows the region row (British setting only) and aligns it. The modal keeps its size: the results
+   * box gives up exactly the height the row adds (measured), via --nf-second-box-height.
+   */
+  showSecondBox(show) {
+    var _a2, _b, _c, _d, _e;
+    const row = this.secondBoxRowEl;
+    if (!row) return;
+    const optionsList = row.parentElement;
+    const wasShown = row.isShown();
+    const before = (_a2 = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _a2 : 0;
+    row.toggle(show);
+    if (show && !wasShown) {
+      const added = Math.max(0, ((_b = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _b : 0) - before);
+      (_c = this.rootEl) == null ? void 0 : _c.style.setProperty("--nf-second-box-height", `${added}px`);
+    }
+    if (!show) (_d = this.rootEl) == null ? void 0 : _d.style.setProperty("--nf-second-box-height", "0px");
+    (_e = this.rootEl) == null ? void 0 : _e.toggleClass("is-second-box-open", show);
+    if (show) this.alignSecondBox();
+  }
   setRegionMenuOpen(open) {
-    var _a, _b;
+    var _a2, _b;
     this.isRegionMenuOpen = open;
     if (open) {
+      this.setSecondBoxMenuOpen(false);
       this.closePackDropdown();
       this.renderRegionMenu();
     }
-    (_a = this.regionMenuEl) == null ? void 0 : _a.toggle(open);
+    (_a2 = this.regionMenuEl) == null ? void 0 : _a2.toggle(open);
     (_b = this.regionTriggerEl) == null ? void 0 : _b.setAttribute("aria-expanded", String(open));
   }
   /** Part 1 sections: All Britain, then the regions, with historic counties as tooltips.
@@ -19365,6 +21112,22 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       }
       return;
     }
+    if (this.activeSection === "riverNames") {
+      for (const setting of RIVER_SETTINGS) {
+        const item = menu.createEl("button", {
+          cls: "nameforge-modal__pack-dropdown-item" + (setting.id === this.riverSetting ? " is-active" : ""),
+          attr: { type: "button" }
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: setting.label });
+        item.addEventListener("click", () => {
+          this.riverSetting = setting.id;
+          this.showSecondBox(setting.id === "british");
+          this.updateRegionLabel();
+          this.setRegionMenuOpen(false);
+        });
+      }
+      return;
+    }
     const part = COLONIAL_SECTION_PART[this.activeSection];
     if (part) {
       for (const tradition of COLONIAL_TRADITIONS) {
@@ -19403,10 +21166,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     }
   }
   updateRegionLabel() {
-    var _a, _b, _c, _d, _e, _f;
+    var _a2, _b, _c, _d, _e, _f, _g;
     if (this.activeSection === "nameTakeover") {
       if (this.regionLabelEl) this.regionLabelEl.textContent = this.takeoverView.nativeLabel();
-      (_a = this.regionTriggerEl) == null ? void 0 : _a.setAttribute("title", "Native pack: the names to be taken over");
+      (_a2 = this.regionTriggerEl) == null ? void 0 : _a2.setAttribute("title", "Native pack: the names to be taken over");
       return;
     }
     if (this.activeSection === "nameAgeing") {
@@ -19415,23 +21178,28 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       (_b = this.regionTriggerEl) == null ? void 0 : _b.setAttribute("title", "Target pack: the language the name ages towards");
       return;
     }
+    if (this.activeSection === "riverNames") {
+      if (this.regionLabelEl) this.regionLabelEl.textContent = RIVER_SETTINGS.find((s) => s.id === this.riverSetting).label;
+      (_c = this.regionTriggerEl) == null ? void 0 : _c.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
+      return;
+    }
     const part = COLONIAL_SECTION_PART[this.activeSection];
     if (part) {
       const tradition = COLONIAL_TRADITIONS.find((t) => {
-        var _a2;
-        return t.id === ((_a2 = this.selectedTradition[part]) != null ? _a2 : "general");
+        var _a3;
+        return t.id === ((_a3 = this.selectedTradition[part]) != null ? _a3 : "general");
       });
       if (this.regionLabelEl) this.regionLabelEl.textContent = tradition.label;
-      (_c = this.regionTriggerEl) == null ? void 0 : _c.setAttribute("title", tradition.guide);
+      (_d = this.regionTriggerEl) == null ? void 0 : _d.setAttribute("title", tradition.guide);
       return;
     }
     const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.selectedRegion);
-    if (this.regionLabelEl) this.regionLabelEl.textContent = (_d = region == null ? void 0 : region.label) != null ? _d : "All Britain";
-    (_f = this.regionTriggerEl) == null ? void 0 : _f.setAttribute("title", (_e = region == null ? void 0 : region.counties) != null ? _e : "No regional weighting");
+    if (this.regionLabelEl) this.regionLabelEl.textContent = (_e = region == null ? void 0 : region.label) != null ? _e : "All Britain";
+    (_g = this.regionTriggerEl) == null ? void 0 : _g.setAttribute("title", (_f = region == null ? void 0 : region.counties) != null ? _f : "No regional weighting");
   }
   /** The context toggle row: None plus the part's frontier types or accommodation levels. */
   renderContextRow() {
-    var _a, _b;
+    var _a2, _b;
     const row = this.contextRowEl;
     if (!row) return;
     const part = COLONIAL_SECTION_PART[this.activeSection];
@@ -19443,7 +21211,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       const active = option.id === this.selectedContext[part];
       const button = row.createEl("button", {
         cls: "nameforge-modal__toggle-button" + (active ? " is-active" : ""),
-        text: (_b = CONTEXT_SHORT_LABELS[(_a = option.id) != null ? _a : "none"]) != null ? _b : option.label.toLowerCase(),
+        text: (_b = CONTEXT_SHORT_LABELS[(_a2 = option.id) != null ? _a2 : "none"]) != null ? _b : option.label.toLowerCase(),
         attr: { type: "button", title: option.label, "aria-pressed": String(active) }
       });
       button.addEventListener("click", () => {
@@ -19510,8 +21278,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
   async enterAgeingSection() {
     const index = await this.scanFolderPacks();
     this.ageingPacks = index.filter((entry) => !entry.parsed.template).map((entry) => {
-      var _a;
-      const label = entry.parsed.packName || ((_a = entry.path.split("/").pop()) == null ? void 0 : _a.replace(/\.md$/i, "")) || entry.path;
+      var _a2;
+      const label = entry.parsed.packName || ((_a2 = entry.path.split("/").pop()) == null ? void 0 : _a2.replace(/\.md$/i, "")) || entry.path;
       return { path: entry.path, label, reason: this.targetPackReason(entry, index) };
     }).sort((a, b) => a.label.localeCompare(b.label));
     if (this.ageingTargetPath && !this.ageingPacks.some((p) => p.path === this.ageingTargetPath && !p.reason)) {
@@ -19547,8 +21315,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     return { names, corpus: names, endings };
   }
   async runAgeing() {
-    var _a, _b, _c, _d, _e, _f, _g;
-    const source = (_b = (_a = this.ageingSourceInput) == null ? void 0 : _a.value.trim()) != null ? _b : "";
+    var _a2, _b, _c, _d, _e, _f, _g;
+    const source = (_b = (_a2 = this.ageingSourceInput) == null ? void 0 : _a2.value.trim()) != null ? _b : "";
     const problem = validateSource(source);
     if (problem) {
       new import_obsidian9.Notice(`nameForge: ${problem}`);
@@ -19573,7 +21341,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     const seed = resolveSeed3(seedOverride);
     const faithfulness = (_d = this.plugin.settings.faithfulness) != null ? _d : 2;
     renderLoading(this.resultsEl, "Ageing\u2026");
-    await new Promise((resolve) => window.setTimeout(resolve, 0));
+    await waitForPaint();
     const result = ageName({
       source,
       targetNames: target.corpus,
@@ -19593,10 +21361,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.setStatus((_g = result.notice) != null ? _g : "");
   }
   async recordAgeingHistory(label) {
-    var _a;
+    var _a2;
     if (this.currentSeed === null) return;
     const entry = { timestamp: formatHistoryTimestamp(/* @__PURE__ */ new Date()), seed: this.currentSeed, label };
-    this.plugin.settings.ageingHistory = [entry, ...(_a = this.plugin.settings.ageingHistory) != null ? _a : []].slice(0, MAX_HISTORY_ENTRIES);
+    this.plugin.settings.ageingHistory = [entry, ...(_a2 = this.plugin.settings.ageingHistory) != null ? _a2 : []].slice(0, MAX_HISTORY_ENTRIES);
     await this.plugin.saveSettings();
   }
   /** Ageing results: final name with its trail beneath, selectable and insertable like Generate's. */
@@ -19672,10 +21440,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     update();
   }
   unmount() {
-    var _a;
+    var _a2, _b;
     activeDocument.removeEventListener("click", this.handlePackDropdownOutsideClick);
     this.closePackDropdown();
-    (_a = this.rootEl) == null ? void 0 : _a.empty();
+    (_a2 = this.rootEl) == null ? void 0 : _a2.empty();
     this.rootEl = null;
     this.resultsEl = null;
     this.statusEl = null;
@@ -19700,6 +21468,15 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.editRecipeButton = null;
     this.guideButton = null;
     this.contextRowEl = null;
+    this.secondBoxRowEl = null;
+    this.secondBoxDropdownEl = null;
+    this.secondBoxTriggerEl = null;
+    this.secondBoxLabelEl = null;
+    this.isSecondBoxMenuOpen = false;
+    this.setSecondBoxMenuOpen = () => {
+    };
+    (_b = this.secondBoxObserver) == null ? void 0 : _b.disconnect();
+    this.secondBoxObserver = null;
     this.quantityToggleEl = null;
     this.generateButtonEl = null;
     this.ageingControlsEl = null;
@@ -19722,15 +21499,15 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     }
   }
   openPackDropdown() {
-    var _a, _b;
+    var _a2, _b;
     this.isPackDropdownOpen = true;
-    (_a = this.packDropdownMenuEl) == null ? void 0 : _a.show();
+    (_a2 = this.packDropdownMenuEl) == null ? void 0 : _a2.show();
     (_b = this.packDropdownTrigger) == null ? void 0 : _b.setAttribute("aria-expanded", "true");
   }
   closePackDropdown() {
-    var _a, _b;
+    var _a2, _b;
     this.isPackDropdownOpen = false;
-    (_a = this.packDropdownMenuEl) == null ? void 0 : _a.hide();
+    (_a2 = this.packDropdownMenuEl) == null ? void 0 : _a2.hide();
     (_b = this.packDropdownTrigger) == null ? void 0 : _b.setAttribute("aria-expanded", "false");
   }
   updatePackDropdownTrigger(packPath, packType, subGenerator) {
@@ -19739,8 +21516,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
   }
   /** The pack box label: the session hint while it is showing, otherwise the loaded pack. */
   renderPackTrigger() {
-    var _a, _b;
-    (_a = this.packDropdownIconEl) == null ? void 0 : _a.toggle(!this.showSessionHint);
+    var _a2, _b;
+    (_a2 = this.packDropdownIconEl) == null ? void 0 : _a2.toggle(!this.showSessionHint);
     if (this.showSessionHint) {
       if (this.packDropdownLabelEl) this.packDropdownLabelEl.textContent = SESSION_HINT;
       return;
@@ -19770,8 +21547,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       return;
     }
     packs.forEach(({ path, packType, compoundGenerator }) => {
-      var _a;
-      const label = ((_a = path.split("/").pop()) == null ? void 0 : _a.replace(/\.md$/i, "")) || path;
+      var _a2;
+      const label = ((_a2 = path.split("/").pop()) == null ? void 0 : _a2.replace(/\.md$/i, "")) || path;
       const item = this.packDropdownMenuEl.createEl("button", {
         cls: "nameforge-modal__pack-dropdown-item",
         attr: { type: "button" }
@@ -19807,8 +21584,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     return resolveNamesFolderPath(this.plugin.settings.folderPath, this.plugin.settings.namesFilePath);
   }
   getResolvedFilePath() {
-    var _a;
-    const configured = (_a = this.plugin.settings.namesFilePath) == null ? void 0 : _a.trim();
+    var _a2;
+    const configured = (_a2 = this.plugin.settings.namesFilePath) == null ? void 0 : _a2.trim();
     if (configured == null ? void 0 : configured.toLowerCase().endsWith(".md")) {
       return configured;
     }
@@ -19836,7 +21613,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     });
   }
   async saveToConfiguredFile(namesText, templateOf) {
-    var _a;
+    var _a2;
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
@@ -19847,7 +21624,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       this.setStatus("No names to save. Enter at least one name.");
       return;
     }
-    const sectioned = this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" ? (_a = parseNameSections(namesText)) != null ? _a : void 0 : void 0;
+    const sectioned = this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" ? (_a2 = parseNameSections(namesText)) != null ? _a2 : void 0 : void 0;
     const normalizedFilePath = (0, import_obsidian9.normalizePath)(filePath);
     const folderPath = normalizedFilePath.includes("/") ? normalizedFilePath.substring(0, normalizedFilePath.lastIndexOf("/")) : "";
     if (folderPath && !this.app.vault.getFolderByPath(folderPath)) {
@@ -20022,7 +21799,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     await this.loadPack(defaultPack);
   }
   async loadPack(packPath) {
-    var _a, _b, _c, _d, _e, _f;
+    var _a2, _b, _c, _d, _e, _f;
     const file = this.app.vault.getFileByPath((0, import_obsidian9.normalizePath)(packPath));
     if (!(file instanceof import_obsidian9.TFile)) {
       this.setStatus(`Pack not found at ${packPath}.`);
@@ -20040,7 +21817,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       return;
     }
     this.currentRecipePath = void 0;
-    (_a = this.editRecipeButton) == null ? void 0 : _a.hide();
+    (_a2 = this.editRecipeButton) == null ? void 0 : _a2.hide();
     const resolved = await this.resolvePackTemplate(packPath, parseNamesFileContent(content));
     const parsed = resolved.parsed;
     this.currentTemplateError = resolved.error;
@@ -20103,7 +21880,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
   }
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   async loadRecipePack(file) {
-    var _a, _b;
+    var _a2, _b;
     this.currentPackType = "recipePack";
     this.currentRecipePath = file.path;
     this.recipeEtymology = void 0;
@@ -20111,7 +21888,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.currentSectioned = void 0;
     this.currentTemplateError = void 0;
     this.sectionChoices = [];
-    (_a = this.sectionSelectEl) == null ? void 0 : _a.hide();
+    (_a2 = this.sectionSelectEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.toggle(this.activeSection === "markov");
     this.plugin.settings.packName = file.basename;
     this.plugin.settings.namesFilePath = file.path;
@@ -20122,24 +21899,39 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.setStatus(problems.join(" "));
   }
   async runRecipe() {
-    var _a;
+    var _a2;
     const file = this.currentRecipePath ? this.app.vault.getFileByPath(this.currentRecipePath) : null;
     if (!(file instanceof import_obsidian9.TFile)) {
       this.setStatus("Recipe not found. Reselect it from the pack list.");
       return;
     }
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), {
+      targetReason: (entry, index) => this.targetPackReason(entry, index),
+      targetNames: (entry, index) => this.ageingTargetNames(entry, index)
+    });
     const loaded = await host.loadRecipe(file);
     if (loaded.error) {
       this.setStatus(loaded.error);
       return;
     }
     const slots = await host.resolveSlots(loaded.recipe, file.path);
-    const seedOverride = this.seedLocked ? parseSeedInput((_a = this.seedInputEl) == null ? void 0 : _a.value) : void 0;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
+    renderLoading(this.resultsEl);
+    await waitForPaint();
     let result;
     try {
-      result = generatePlaceNames({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride });
+      const adapt = host.resolveTakeover(loaded.recipe, file.path);
+      const steps = generatePlaceNamesSteps({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride, adapt });
+      for (; ; ) {
+        const next = steps.next();
+        if (next.done) {
+          result = next.value;
+          break;
+        }
+        await waitForTask();
+      }
     } catch (error) {
+      this.renderResults([]);
       this.setStatus(error instanceof Error ? error.message : "Couldn't generate names from this recipe.");
       return;
     }
@@ -20150,11 +21942,17 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.setStatus([...loaded.problems, ...result.notices, ...host.getNotices()].join(" "));
   }
   /** Recipe results: placeholders muted, etymology beneath each name when the toggle is on. */
-  renderRecipeResults(names) {
+  /**
+   * Recipe-style results: placeholders muted, etymology beneath each name when its toggle is on.
+   * `etymology` picks whose toggle: recipe packs, the place-name modules (off by default), or none
+   * (river names: no etymology button at all).
+   */
+  renderRecipeResults(names, etymology = "recipe") {
     if (!this.resultsEl) return;
     this.resultsEl.empty();
+    const shown = () => etymology === "module" ? this.moduleEtymology : etymology === "recipe" ? !!this.recipeEtymology : false;
     const list = this.resultsEl.createEl("ul", { cls: "nameforge-modal__results-list nameforge-modal__recipe-results" });
-    list.toggleClass("is-etymology-hidden", !this.recipeEtymology);
+    list.toggleClass("is-etymology-hidden", !shown());
     const actions = this.resultsEl.createDiv({ cls: "nameforge-modal__results-actions" });
     this.buildSeedControls(actions.createDiv({ cls: "nameforge-modal__seed-group" }));
     const buttonsGroup = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
@@ -20163,17 +21961,20 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       (0, import_obsidian9.setIcon)(b, icon);
       return b;
     };
-    const etymologyButton = button("list-tree", "Etymology");
-    const updateEtymology = () => {
-      etymologyButton.toggleClass("is-active", !!this.recipeEtymology);
-      etymologyButton.setAttribute("aria-pressed", String(!!this.recipeEtymology));
-      list.toggleClass("is-etymology-hidden", !this.recipeEtymology);
-    };
-    etymologyButton.addEventListener("click", () => {
-      this.recipeEtymology = !this.recipeEtymology;
+    if (etymology !== "none") {
+      const etymologyButton = button("list-tree", "Etymology");
+      const updateEtymology = () => {
+        etymologyButton.toggleClass("is-active", shown());
+        etymologyButton.setAttribute("aria-pressed", String(shown()));
+        list.toggleClass("is-etymology-hidden", !shown());
+      };
+      etymologyButton.addEventListener("click", () => {
+        if (etymology === "module") this.moduleEtymology = !this.moduleEtymology;
+        else this.recipeEtymology = !this.recipeEtymology;
+        updateEtymology();
+      });
       updateEtymology();
-    });
-    updateEtymology();
+    }
     const insertButton = button(ICON_TEXT_INSERT, "Insert");
     const checklistButton = button(ICON_CHECKLIST_INSERT, "Insert checklist");
     const bulletButton = button(ICON_BULLET_INSERT, "Insert bullet list");
@@ -20196,7 +21997,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
         if (part.startsWith("[")) nameEl.createSpan({ cls: "nameforge-modal__placeholder-part", text: part });
         else nameEl.appendText(part);
       }
-      item.createDiv({ cls: "nameforge-modal__recipe-etymology", text: n.etymology });
+      if (etymology !== "none") item.createDiv({ cls: "nameforge-modal__recipe-etymology", text: n.etymology });
       item.addEventListener("click", () => {
         item.classList.toggle("is-selected");
         update();
@@ -20225,13 +22026,21 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
   }
   /** Opens the recipe editor for a new recipe, or for the recipe at `path`. */
   async openRecipeEditor(path) {
-    var _a;
+    var _a2;
     const folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const folder = this.app.vault.getFolderByPath((0, import_obsidian9.normalizePath)(folderPath));
     const packs = [];
     const lists = [];
     const templates = [];
-    for (const child of (_a = folder == null ? void 0 : folder.children) != null ? _a : []) {
+    const index = await this.scanFolderPacks();
+    const takeoverPacks = index.filter((entry) => !entry.parsed.template).map((entry) => {
+      var _a3;
+      return {
+        name: ((_a3 = entry.path.split("/").pop()) == null ? void 0 : _a3.replace(/\.md$/i, "")) || entry.path,
+        reason: this.targetPackReason(entry, index)
+      };
+    }).sort((a, b) => a.name.localeCompare(b.name));
+    for (const child of (_a2 = folder == null ? void 0 : folder.children) != null ? _a2 : []) {
       if (!(child instanceof import_obsidian9.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isRecipeContent(content)) {
@@ -20250,6 +22059,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       packs: packs.sort(),
       lists: lists.sort(),
       templates: templates.sort((a, b) => a.name.localeCompare(b.name)),
+      takeoverPacks,
       onSaved: (saved) => {
         this.plugin.settings.namesFilePath = saved;
         void this.refreshPackDropdown().then(() => this.loadPack(saved));
@@ -20258,14 +22068,14 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
   }
   /** Fills the Section selector for List and Breakdown packs with sections, and Mix packs whose sources have them. */
   async updateSectionChoices(parsed) {
-    var _a;
+    var _a2;
     let choices = [];
     if (parsed.sectioned) {
       choices = sectionOptions(parsed.sectioned);
     } else if (parsed.packType === "mixPack") {
       const index = await this.scanFolderPacks();
       const seen = /* @__PURE__ */ new Set();
-      for (const ref of (_a = parsed.mixSources) != null ? _a : []) {
+      for (const ref of (_a2 = parsed.mixSources) != null ? _a2 : []) {
         const source = findPackInIndex(index, ref.packName);
         for (const option of (source == null ? void 0 : source.parsed.sectioned) ? sectionOptions(source.parsed.sectioned) : []) {
           if (seen.has(option.label.toLowerCase())) continue;
@@ -20285,20 +22095,43 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     select.toggle(this.activeSection === "markov" && choices.length > 0);
   }
   async generateSelectedCount() {
-    var _a, _b, _c;
-    const wording = SHAPE_SECTION_WORDING[this.activeSection];
-    if (wording) {
-      const seedOverride2 = this.seedLocked ? parseSeedInput((_a = this.seedInputEl) == null ? void 0 : _a.value) : void 0;
-      const result2 = generatePlaceShapesDetailed({
+    var _a2, _b, _c, _d, _e;
+    if (this.activeSection === "placeShapes") {
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
+      const result2 = generatePlaceNames({
+        recipe: britishPlaceNamesRecipe(this.selectedRegion),
+        slots: {},
         count: this.generationCount,
         seed: seedOverride2,
-        region: this.selectedRegion,
-        wording
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness
       });
       this.currentSeed = result2.seed;
-      this.renderResults(result2.names);
-      await this.recordGenerationHistory(result2.names.length, placeShapesHistoryLabel(this.selectedRegion, wording));
-      this.setStatus("");
+      this.renderRecipeResults(result2.names, "module");
+      await this.recordGenerationHistory(result2.names.length, withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, this.selectedRegion));
+      this.setStatus(result2.notices.join(" "));
+      return;
+    }
+    if (this.activeSection === "riverNames") {
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_b = this.seedInputEl) == null ? void 0 : _b.value) : void 0;
+      const british = this.riverSetting === "british";
+      const result2 = generateRiverNames({
+        setting: this.riverSetting,
+        region: british ? this.riverRegion : void 0,
+        count: this.generationCount,
+        seed: seedOverride2,
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness
+      });
+      this.currentSeed = result2.seed;
+      this.renderRecipeResults(
+        result2.names.map((n) => ({ text: n.text, hasPlaceholder: n.hasPlaceholder, etymology: "" })),
+        "none"
+      );
+      const settingLabel = british ? "British" : RIVER_SETTINGS.find((s) => s.id === this.riverSetting).label;
+      const label = `${RIVER_NAMES_HISTORY_NAME} \xB7 ${settingLabel}`;
+      await this.recordGenerationHistory(result2.names.length, british ? withRegion(label, this.riverRegion) : label);
+      this.setStatus((_c = result2.notice) != null ? _c : "");
       return;
     }
     if (this.activeSection === "nameAgeing") {
@@ -20312,18 +22145,19 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
-      const seedOverride2 = this.seedLocked ? parseSeedInput((_b = this.seedInputEl) == null ? void 0 : _b.value) : void 0;
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_d = this.seedInputEl) == null ? void 0 : _d.value) : void 0;
       const tradition = this.selectedTradition[colonialPart];
       const context = this.selectedContext[colonialPart];
-      const result2 = generateColonialShapesDetailed({
+      const result2 = generatePlaceNames({
+        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context),
+        slots: {},
         count: this.generationCount,
         seed: seedOverride2,
-        part: colonialPart,
-        tradition,
-        context
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness
       });
       this.currentSeed = result2.seed;
-      this.renderResults(result2.names);
+      this.renderRecipeResults(result2.names, "module");
       await this.recordGenerationHistory(
         result2.names.length,
         colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context)
@@ -20343,7 +22177,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       this.setStatus(this.currentTemplateError);
       return;
     }
-    const seedOverride = this.seedLocked ? parseSeedInput((_c = this.seedInputEl) == null ? void 0 : _c.value) : void 0;
+    const seedOverride = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
     if (this.currentPackType === "compoundPack") {
       const result2 = generateCompoundNamesDetailed(this.currentCompoundParts, {
         count: this.generationCount,
@@ -20439,8 +22273,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
    * Appends the just-used seed to the config file's generation history,
    * most-recent first, capped at MAX_HISTORY_ENTRIES.
    */
+  /** The module whose history the previous generations list shows: the active one. */
+  historySectionShown() {
+    return this.activeSection;
+  }
   async recordGenerationHistory(count, packName) {
-    var _a;
+    var _a2;
     if (this.currentSeed === null) return;
     const entry = {
       packName: packName != null ? packName : this.plugin.settings.packName || "nameForge",
@@ -20450,13 +22288,13 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     };
     this.plugin.settings.previousGenerations = [
       entry,
-      ...(_a = this.plugin.settings.previousGenerations) != null ? _a : []
+      ...(_a2 = this.plugin.settings.previousGenerations) != null ? _a2 : []
     ].slice(0, MAX_HISTORY_ENTRIES);
     await this.plugin.saveSettings();
   }
   async copySeedToClipboard() {
-    var _a, _b;
-    const value = (_b = (_a = this.seedInputEl) == null ? void 0 : _a.value) == null ? void 0 : _b.trim();
+    var _a2, _b;
+    const value = (_b = (_a2 = this.seedInputEl) == null ? void 0 : _a2.value) == null ? void 0 : _b.trim();
     if (!value) {
       this.setStatus("No seed to copy yet.");
       return;
@@ -20537,8 +22375,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     });
     (0, import_obsidian9.setIcon)(bulletButton, ICON_BULLET_INSERT);
     const getSelectedNames = () => Array.from(list.querySelectorAll("li.is-selected")).map((el) => {
-      var _a;
-      return (_a = el.textContent) != null ? _a : "";
+      var _a2;
+      return (_a2 = el.textContent) != null ? _a2 : "";
     });
     const updateInsertButtons = () => {
       const selected = getSelectedNames();
@@ -20605,8 +22443,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     updateInsertButtons();
   }
   getActiveEditor() {
-    var _a;
-    return (_a = this.app.workspace.activeEditor) == null ? void 0 : _a.editor;
+    var _a2;
+    return (_a2 = this.app.workspace.activeEditor) == null ? void 0 : _a2.editor;
   }
   insertPlainText(name) {
     const editor = this.getActiveEditor();
@@ -20619,7 +22457,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.dismissAfterInsert();
   }
   insertNamesAsList(names, listType) {
-    var _a, _b;
+    var _a2, _b;
     if (names.length === 0) {
       return;
     }
@@ -20637,7 +22475,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     if (/^\s*$/.test(lineText)) {
       insertion = names.map((name) => `${marker}${name}`).join("\n");
     } else if (cursor.ch === lineText.length && emptyMarkerPattern.test(lineText)) {
-      const indent = (_b = (_a = lineText.match(emptyMarkerPattern)) == null ? void 0 : _a[1]) != null ? _b : "";
+      const indent = (_b = (_a2 = lineText.match(emptyMarkerPattern)) == null ? void 0 : _a2[1]) != null ? _b : "";
       const [first, ...rest] = names;
       insertion = first + rest.map((name) => `
 ${indent}${marker}${name}`).join("");
@@ -20708,7 +22546,7 @@ ${indent}${marker}${name}`).join("");
   }
   /** Template packs of one type (or word lists), for "Start from template" in the editor. */
   async listTemplates(kind) {
-    var _a, _b, _c, _d;
+    var _a2, _b, _c, _d;
     const folderPath = this.getFolderPath();
     const folder = folderPath ? this.app.vault.getFolderByPath((0, import_obsidian9.normalizePath)(folderPath)) : null;
     if (!folder) return [];
@@ -20727,7 +22565,7 @@ ${indent}${marker}${name}`).join("");
           if (!isValidNamePackContent(content)) continue;
           const parsed = parseNamesFileContent(content);
           if (!parsed.template || parsed.packType !== kind) continue;
-          const sections = (_b = (_a = parsed.sectioned) == null ? void 0 : _a.sections.map((s) => s.name)) != null ? _b : [];
+          const sections = (_b = (_a2 = parsed.sectioned) == null ? void 0 : _a2.sections.map((s) => s.name)) != null ? _b : [];
           const count = parsed.packType === "mixPack" ? `${(_d = (_c = parsed.mixSources) == null ? void 0 : _c.length) != null ? _d : 0} sources` : `${parsed.names.length} names`;
           out.push({ name: child.basename, description: sections.length > 0 ? `${count}; sections: ${sections.join(", ")}` : count });
         }
@@ -20740,10 +22578,10 @@ ${indent}${marker}${name}`).join("");
   async listFolderPacks() {
     const index = await this.scanFolderPacks();
     return index.filter((entry) => !entry.parsed.template).map((entry) => {
-      var _a;
+      var _a2;
       return {
         path: entry.path,
-        packName: entry.parsed.packName || ((_a = entry.path.split("/").pop()) == null ? void 0 : _a.replace(/\.md$/i, "")) || entry.path,
+        packName: entry.parsed.packName || ((_a2 = entry.path.split("/").pop()) == null ? void 0 : _a2.replace(/\.md$/i, "")) || entry.path,
         packType: entry.parsed.packType,
         compoundGenerator: entry.parsed.compoundGenerator
       };
@@ -20797,12 +22635,12 @@ var AgeingHistoryModal = class extends import_obsidian9.Modal {
     this.parent = parent;
   }
   onOpen() {
-    var _a;
+    var _a2;
     this.titleEl.setText("Ageing history");
     this.modalEl.addClass("nameforge-history-modal");
     const { contentEl } = this;
     contentEl.addClass("nameforge-history-modal__content");
-    const history = (_a = this.parent.plugin.settings.ageingHistory) != null ? _a : [];
+    const history = (_a2 = this.parent.plugin.settings.ageingHistory) != null ? _a2 : [];
     if (history.length === 0) {
       contentEl.createDiv({ cls: "nameforge-history-modal__empty", text: "No ageing runs yet." });
       return;
@@ -20843,8 +22681,11 @@ var PreviousGenerationsModal = class extends import_obsidian9.Modal {
     this.contentEl.empty();
   }
   async renderList(container) {
-    var _a, _b;
-    const history = (_a = this.parent.plugin.settings.previousGenerations) != null ? _a : [];
+    var _a2, _b;
+    const section = this.parent.historySectionShown();
+    const history = ((_a2 = this.parent.plugin.settings.previousGenerations) != null ? _a2 : []).filter(
+      (entry) => historySection(entry.packName) === section
+    );
     if (history.length === 0) {
       container.createDiv({
         cls: "nameforge-history-modal__empty",
@@ -20857,9 +22698,10 @@ var PreviousGenerationsModal = class extends import_obsidian9.Modal {
     for (const entry of history) {
       const row = list.createDiv({ cls: "nameforge-history-modal__row" });
       const iconEl = row.createSpan({ cls: "nameforge-history-modal__pack-icon" });
+      const entrySection = historySection(entry.packName);
       (0, import_obsidian9.setIcon)(
         iconEl,
-        entry.packName.startsWith(SECTION_LABELS.explorationPlaceShapes) ? SECTION_ICONS.explorationPlaceShapes : entry.packName.startsWith(SECTION_LABELS.empireExpansionPlaceShapes) ? SECTION_ICONS.empireExpansionPlaceShapes : entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME) ? SECTION_ICONS.genericPlaceNames : entry.packName.startsWith(PLACE_SHAPES_HISTORY_NAME) ? SECTION_ICONS.placeShapes : (_b = iconsByName.get(entry.packName)) != null ? _b : ICON_BREAKDOWN_PACK
+        entrySection === "markov" ? (_b = iconsByName.get(entry.packName)) != null ? _b : ICON_BREAKDOWN_PACK : entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME) ? ICON_GENERIC_PLACE_NAMES : SECTION_ICONS[entrySection]
       );
       row.createSpan({
         cls: "nameforge-history-modal__pack-name",
@@ -20998,8 +22840,8 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     templateRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from template" });
     this.templateSelectEl = templateRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from template" } });
     this.templateSelectEl.addEventListener("change", () => {
-      var _a, _b;
-      const value = (_b = (_a = this.templateSelectEl) == null ? void 0 : _a.value) != null ? _b : "";
+      var _a2, _b;
+      const value = (_b = (_a2 = this.templateSelectEl) == null ? void 0 : _a2.value) != null ? _b : "";
       this.templateOf = value || void 0;
       this.updateTemplateHint();
     });
@@ -21121,7 +22963,7 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     const percents = this.mixPercents();
     const selectedNames = this.mixSources.map((source) => source.packName).filter(Boolean);
     this.mixSources.forEach((source, index) => {
-      var _a;
+      var _a2;
       const row = this.mixSourcesEl.createDiv({ cls: "nameforge-modal__mix-source-row" });
       const select = row.createEl("select", { cls: "nameforge-modal__mix-source-select" });
       select.createEl("option", { text: "Select a pack\u2026", attr: { value: "" } });
@@ -21158,7 +23000,7 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
       });
       row.createSpan({
         cls: "nameforge-modal__mix-percent",
-        text: `${(_a = percents[index]) != null ? _a : 0}%`
+        text: `${(_a2 = percents[index]) != null ? _a2 : 0}%`
       });
       const removeButton = row.createEl("button", {
         cls: "nameforge-modal__mix-remove",
@@ -21178,8 +23020,8 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     const percents = this.mixPercents();
     const labels2 = this.mixSourcesEl.querySelectorAll(".nameforge-modal__mix-percent");
     labels2.forEach((label, index) => {
-      var _a;
-      label.textContent = `${(_a = percents[index]) != null ? _a : 0}%`;
+      var _a2;
+      label.textContent = `${(_a2 = percents[index]) != null ? _a2 : 0}%`;
     });
   }
   setPackType(type) {
@@ -21190,7 +23032,7 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
   }
   /** Lists templates of the chosen type, each with a short description. */
   async loadTemplateOptions() {
-    var _a;
+    var _a2;
     this.templateOptions = await this.parent.listTemplates(this.wordListMode ? "wordList" : this.selectedPackType);
     const select = this.templateSelectEl;
     if (!select) return;
@@ -21198,7 +23040,7 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     select.createEl("option", { text: this.templateOptions.length > 0 ? "None" : "No templates of this type", value: "" });
     for (const t of this.templateOptions) select.createEl("option", { text: t.name, value: t.name });
     if (!this.templateOptions.some((t) => t.name === this.templateOf)) this.templateOf = void 0;
-    select.value = (_a = this.templateOf) != null ? _a : "";
+    select.value = (_a2 = this.templateOf) != null ? _a2 : "";
     select.disabled = this.templateOptions.length === 0;
     this.updateTemplateHint();
   }
@@ -21212,8 +23054,8 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
   }
   /** §9: saves the textarea as a word-list pack (tables under ## sections). */
   async saveWordList(packName) {
-    var _a, _b;
-    const body = (_b = (_a = this.inputEl) == null ? void 0 : _a.value) != null ? _b : "";
+    var _a2, _b;
+    const body = (_b = (_a2 = this.inputEl) == null ? void 0 : _a2.value) != null ? _b : "";
     const list = parseWordList(body);
     const entries = list.unsectioned.length + list.sections.reduce((n, s) => n + s.entries.length, 0);
     if (entries === 0 && !this.templateOf) {
@@ -21256,14 +23098,14 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     this.updateCompoundControls();
   }
   updateTypeButtons() {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
     const isWordList = this.wordListMode;
     const isBreakdown = !isWordList && this.selectedPackType === "breakdownPack";
     const isList = !isWordList && this.selectedPackType === "listPack";
     const isCompound = !isWordList && this.selectedPackType === "compoundPack";
     const isPlace = !isWordList && this.selectedPackType === "placePack";
     const isMix = !isWordList && this.selectedPackType === "mixPack";
-    (_a = this.wordListButton) == null ? void 0 : _a.classList.toggle("is-active", isWordList);
+    (_a2 = this.wordListButton) == null ? void 0 : _a2.classList.toggle("is-active", isWordList);
     (_b = this.wordListButton) == null ? void 0 : _b.setAttribute("aria-pressed", String(isWordList));
     (_c = this.breakdownButton) == null ? void 0 : _c.classList.toggle("is-active", isBreakdown);
     (_d = this.listButton) == null ? void 0 : _d.classList.toggle("is-active", isList);
@@ -21293,8 +23135,8 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     }
   }
   updateCompoundControls() {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
-    (_a = this.twoPartsButton) == null ? void 0 : _a.classList.toggle("is-active", this.compoundPartsCount === 2);
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
+    (_a2 = this.twoPartsButton) == null ? void 0 : _a2.classList.toggle("is-active", this.compoundPartsCount === 2);
     (_b = this.threePartsButton) == null ? void 0 : _b.classList.toggle("is-active", this.compoundPartsCount === 3);
     (_c = this.twoPartsButton) == null ? void 0 : _c.setAttribute("aria-pressed", String(this.compoundPartsCount === 2));
     (_d = this.threePartsButton) == null ? void 0 : _d.setAttribute("aria-pressed", String(this.compoundPartsCount === 3));
@@ -21320,8 +23162,8 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     }
   }
   async saveNames() {
-    var _a, _b, _c;
-    const packName = ((_b = (_a = this.packNameInput) == null ? void 0 : _a.value) == null ? void 0 : _b.trim()) || "nameForge";
+    var _a2, _b, _c;
+    const packName = ((_b = (_a2 = this.packNameInput) == null ? void 0 : _a2.value) == null ? void 0 : _b.trim()) || "nameForge";
     const templateOf = this.templateOf;
     if (this.wordListMode) {
       await this.saveWordList(packName);
@@ -21410,8 +23252,8 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
 
 // src/hostConnectRetry.ts
 function softConnectWithRetry(tryConnect, opts) {
-  var _a, _b;
-  const intervalMs = (_a = opts.intervalMs) != null ? _a : 1e3;
+  var _a2, _b;
+  const intervalMs = (_a2 = opts.intervalMs) != null ? _a2 : 1e3;
   const setIntervalFn = (_b = opts.setIntervalFn) != null ? _b : (handler, timeout) => window.setInterval(handler, timeout);
   tryConnect();
   const handle = setIntervalFn(() => {
@@ -21593,16 +23435,16 @@ var FUSES_COLUMN = {
 };
 function table(entries) {
   const rows = entries.map((e) => {
-    var _a, _b, _c;
-    const forms = [...e.forms, ...(_a = e.traditionalForms) != null ? _a : []].map((f) => `${f}-`).join(", ");
+    var _a2, _b, _c;
+    const forms = [...e.forms, ...(_a2 = e.traditionalForms) != null ? _a2 : []].map((f) => `${f}-`).join(", ");
     return `| ${e.modern} | ${(_b = e.traditional) != null ? _b : "\u2014"} | ${(_c = e.plural) != null ? _c : "\u2014"} | ${forms || "\u2014"} | ${FUSES_COLUMN[e.fuses]} |`;
   });
   return ["| Modern | Traditional | Plural | Combining forms | Fuses |", "|---|---|---|---|---|", ...rows].join("\n");
 }
 function starterWordListBody(list) {
   const sections = list.categories.map((id) => {
-    var _a, _b;
-    return `## ${(_a = LABELS.get(id)) != null ? _a : id}
+    var _a2, _b;
+    return `## ${(_a2 = LABELS.get(id)) != null ? _a2 : id}
 
 ${table((_b = NAME_WORDS.categories[id]) != null ? _b : [])}`;
   });
@@ -21783,14 +23625,14 @@ function parseSettingsMarkdownContent(content) {
   return parsed;
 }
 function createSettingsMarkdownContent(settings) {
-  var _a, _b;
+  var _a2, _b;
   const folderPath = resolveNamesFolderPath(settings.folderPath, settings.namesFilePath);
   const lines = [`folder: ${folderPath || DEFAULT_NAMES_FOLDER}`, `namesFilePath: ${settings.namesFilePath || ""}`];
   const trimmedPackName = (settings.packName || "").trim().replace(/\s+/g, " ");
   if (trimmedPackName) {
     lines.push(`packName: ${trimmedPackName}`);
   }
-  lines.push(`faithfulness: ${(_a = settings.faithfulness) != null ? _a : DEFAULT_SETTINGS.faithfulness}`);
+  lines.push(`faithfulness: ${(_a2 = settings.faithfulness) != null ? _a2 : DEFAULT_SETTINGS.faithfulness}`);
   lines.push(`strictness: ${(_b = settings.strictness) != null ? _b : DEFAULT_SETTINGS.strictness}`);
   const frontmatter = `---
 type: configurationFile
@@ -21838,9 +23680,9 @@ var NameForgePlugin = class extends import_obsidian11.Plugin {
     this.connectToStoryForge();
   }
   onunload() {
-    var _a;
+    var _a2;
     try {
-      (_a = this.unregisterCompanionPanel) == null ? void 0 : _a.call(this);
+      (_a2 = this.unregisterCompanionPanel) == null ? void 0 : _a2.call(this);
     } catch (e) {
     }
     this.unregisterCompanionPanel = null;
@@ -21856,7 +23698,7 @@ var NameForgePlugin = class extends import_obsidian11.Plugin {
    */
   connectToStoryForge() {
     const tryConnect = () => {
-      var _a;
+      var _a2;
       const api = getStoryForgeHostApi(this.app);
       if (!(api == null ? void 0 : api.registerCompanionPanel)) {
         this.unregisterCompanionPanel = null;
@@ -21867,7 +23709,7 @@ var NameForgePlugin = class extends import_obsidian11.Plugin {
         return true;
       }
       try {
-        (_a = this.unregisterCompanionPanel) == null ? void 0 : _a.call(this);
+        (_a2 = this.unregisterCompanionPanel) == null ? void 0 : _a2.call(this);
       } catch (e) {
       }
       registerNameForgeIcons();

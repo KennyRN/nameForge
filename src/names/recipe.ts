@@ -35,6 +35,8 @@ export interface RecipeSettings {
   generics: Record<string, string>;
   register: Register;
   render: { joining: Joining; linkingHyphens: boolean; etymology: boolean };
+  /** The takeover pack (link target): the coloniser's language that adapts native names. Colonial parts only. */
+  takeover?: string;
 }
 
 /** A recipe as written: every setting optional, so a derived recipe can inherit per setting. */
@@ -47,6 +49,7 @@ export interface RecipePartial {
   generics?: Record<string, string>;
   register?: Register;
   render?: Partial<RecipeSettings["render"]>;
+  takeover?: string;
 }
 
 export const RECIPE_DEFAULTS: RecipeSettings = {
@@ -143,6 +146,8 @@ export function readRecipe(fm: Record<string, unknown>): { recipe: RecipePartial
       if (r) recipe.generics[word.trim().toLowerCase()] = r;
     }
   }
+  const takeover = linkTarget(fm.takeover);
+  if (takeover) recipe.takeover = takeover;
   const register = str(fm.register);
   if (register && REGISTERS.includes(register as Register)) recipe.register = register as Register;
   else if (register) problems.push(`Unknown register “${register}”.`);
@@ -174,6 +179,7 @@ export function mergeRecipe(derived: RecipePartial, template: RecipePartial): Re
     generics: { ...template.generics, ...derived.generics },
     register: derived.register ?? template.register,
     render: { ...template.render, ...derived.render },
+    takeover: derived.takeover ?? template.takeover,
   };
 }
 
@@ -187,6 +193,7 @@ export function withDefaults(r: RecipePartial): RecipeSettings {
     generics: { ...r.generics },
     register: r.register ?? RECIPE_DEFAULTS.register,
     render: { ...RECIPE_DEFAULTS.render, ...r.render },
+    ...(r.takeover ? { takeover: r.takeover } : {}),
   };
 }
 
@@ -238,5 +245,36 @@ export function recipeToFrontmatter(r: RecipePartial): Record<string, unknown> {
     if (r.render.etymology !== undefined) render.etymology = r.render.etymology;
     out.render = render;
   }
+  if (r.takeover) out.takeover = `[[${r.takeover}]]`;
   return out;
+}
+
+/**
+ * The british place names module's fixed built-in recipe (river brief §2): organic shapes in the
+ * chosen region (a region code, or undefined for All Britain), modern words, balanced joining,
+ * linking hyphens, no slots mapped.
+ */
+export function britishPlaceNamesRecipe(region: string | undefined): RecipeSettings {
+  return withDefaults({
+    shape: { part: "organic", region: region ?? "all-britain", feature: "any" },
+    register: "modern",
+    render: { joining: "balanced", linkingHyphens: true, etymology: false },
+  });
+}
+
+/**
+ * The exploration and empire expansion place names modules' fixed built-in recipe (river brief §3):
+ * colonial part 2 (`new-land`) or 2a (`established`) with the module's tradition and context
+ * (undefined for General and none), modern words, balanced joining, linking hyphens, no slots.
+ */
+export function colonialPlaceNamesRecipe(
+  part: "new-land" | "established",
+  tradition: string | undefined,
+  context: string | undefined,
+): RecipeSettings {
+  return withDefaults({
+    shape: { part, tradition: tradition ?? "general", context: context ?? "none", feature: "any" },
+    register: "modern",
+    render: { joining: "balanced", linkingHyphens: true, etymology: false },
+  });
 }

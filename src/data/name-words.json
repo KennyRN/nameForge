@@ -205,6 +205,98 @@
           "Cat"
         ],
         "fuses": "yes"
+      },
+      {
+        "modern": "stag",
+        "plural": "stags",
+        "forms": [
+          "Stag"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "hedgehog",
+        "traditional": "urchin",
+        "plural": "urchins",
+        "forms": [
+          "Hedgehog"
+        ],
+        "traditionalForms": [
+          "Urchin"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "squirrel",
+        "plural": "squirrels",
+        "forms": [
+          "Squirrel"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "rabbit",
+        "traditional": "coney",
+        "plural": "coneys",
+        "forms": [
+          "Rabbit"
+        ],
+        "traditionalForms": [
+          "Coney"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "weasel",
+        "plural": "weasels",
+        "forms": [
+          "Weasel"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "stoat",
+        "plural": "stoats",
+        "forms": [
+          "Stoat"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "polecat",
+        "plural": "polecats",
+        "forms": [
+          "Polecat"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "mole",
+        "traditional": "mouldwarp",
+        "plural": "mouldwarps",
+        "forms": [
+          "Mole"
+        ],
+        "traditionalForms": [
+          "Mouldwarp"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "seal",
+        "plural": "seals",
+        "forms": [
+          "Seal"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "bear",
+        "plural": "bears",
+        "forms": [
+          "Bear"
+        ],
+        "fuses": "yes"
       }
     ],
     "bird": [
@@ -310,6 +402,166 @@
           "Finch"
         ],
         "fuses": "yes"
+      },
+      {
+        "modern": "kingfisher",
+        "plural": "kingfishers",
+        "forms": [
+          "Kingfisher"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "wren",
+        "plural": "wrens",
+        "forms": [
+          "Wren"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "robin",
+        "plural": "robins",
+        "forms": [
+          "Robin"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "blackbird",
+        "plural": "blackbirds",
+        "forms": [
+          "Blackbird"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "thrush",
+        "traditional": "throstle",
+        "plural": "throstles",
+        "forms": [
+          "Thrush"
+        ],
+        "traditionalForms": [
+          "Throstle"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "sparrow",
+        "plural": "sparrows",
+        "forms": [
+          "Sparrow"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "rook",
+        "plural": "rooks",
+        "forms": [
+          "Rook"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "jackdaw",
+        "plural": "jackdaws",
+        "forms": [
+          "Jackdaw"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "magpie",
+        "plural": "magpies",
+        "forms": [
+          "Magpie"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "kite",
+        "traditional": "glede",
+        "plural": "gledes",
+        "forms": [
+          "Kite"
+        ],
+        "traditionalForms": [
+          "Glede"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "buzzard",
+        "plural": "buzzards",
+        "forms": [
+          "Buzzard"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "falcon",
+        "plural": "falcons",
+        "forms": [
+          "Falcon"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "gull",
+        "plural": "gulls",
+        "forms": [
+          "Gull"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "curlew",
+        "plural": "curlews",
+        "forms": [
+          "Curlew"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "lapwing",
+        "traditional": "peewit",
+        "plural": "peewits",
+        "forms": [
+          "Lapwing"
+        ],
+        "traditionalForms": [
+          "Peewit"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "woodpecker",
+        "traditional": "yaffle",
+        "plural": "yaffles",
+        "forms": [
+          "Woodpecker"
+        ],
+        "traditionalForms": [
+          "Yaffle"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "swallow",
+        "plural": "swallows",
+        "forms": [
+          "Swallow"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "goose",
+        "plural": "geese",
+        "forms": [
+          "Goose"
+        ],
+        "fuses": "yes"
       }
     ],
     "fish-and-other-creatures": [
@@ -352,6 +604,162 @@
         "forms": [
           "Bee",
           "Beo"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "pike",
+        "traditional": "luce",
+        "plural": "luces",
+        "forms": [
+          "Pike"
+        ],
+        "traditionalForms": [
+          "Luce"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "perch",
+        "plural": "perch",
+        "forms": [
+          "Perch"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "carp",
+        "plural": "carp",
+        "forms": [
+          "Carp"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "roach",
+        "plural": "roach",
+        "forms": [
+          "Roach"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "minnow",
+        "plural": "minnows",
+        "forms": [
+          "Minnow"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "herring",
+        "plural": "herring",
+        "forms": [
+          "Herring"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "crab",
+        "plural": "crabs",
+        "forms": [
+          "Crab"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "oyster",
+        "plural": "oysters",
+        "forms": [
+          "Oyster"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "mussel",
+        "plural": "mussels",
+        "forms": [
+          "Mussel"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "frog",
+        "traditional": "paddock",
+        "plural": "paddocks",
+        "forms": [
+          "Frog"
+        ],
+        "traditionalForms": [
+          "Paddock"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "toad",
+        "plural": "toads",
+        "forms": [
+          "Toad"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "newt",
+        "traditional": "eft",
+        "plural": "efts",
+        "forms": [
+          "Newt"
+        ],
+        "traditionalForms": [
+          "Eft"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "adder",
+        "plural": "adders",
+        "forms": [
+          "Adder"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "snail",
+        "plural": "snails",
+        "forms": [
+          "Snail"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "butterfly",
+        "plural": "butterflies",
+        "forms": [
+          "Butterfly"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "beetle",
+        "plural": "beetles",
+        "forms": [
+          "Beetle"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "wasp",
+        "plural": "wasps",
+        "forms": [
+          "Wasp"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "moth",
+        "plural": "moths",
+        "forms": [
+          "Moth"
         ],
         "fuses": "yes"
       }
@@ -483,6 +891,134 @@
           "Apel"
         ],
         "fuses": "yes"
+      },
+      {
+        "modern": "rowan",
+        "traditional": "quicken",
+        "plural": "quickens",
+        "forms": [
+          "Rowan"
+        ],
+        "traditionalForms": [
+          "Quicken"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "beech",
+        "plural": "beeches",
+        "forms": [
+          "Beech"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "hawthorn",
+        "plural": "hawthorns",
+        "forms": [
+          "Hawthorn"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "blackthorn",
+        "plural": "blackthorns",
+        "forms": [
+          "Blackthorn"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "chestnut",
+        "plural": "chestnuts",
+        "forms": [
+          "Chestnut"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "cherry",
+        "traditional": "gean",
+        "plural": "geans",
+        "forms": [
+          "Cherry"
+        ],
+        "traditionalForms": [
+          "Gean"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "pear",
+        "plural": "pears",
+        "forms": [
+          "Pear"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "plum",
+        "plural": "plums",
+        "forms": [
+          "Plum"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "poplar",
+        "plural": "poplars",
+        "forms": [
+          "Poplar"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "aspen",
+        "traditional": "asp",
+        "plural": "asps",
+        "forms": [
+          "Aspen"
+        ],
+        "traditionalForms": [
+          "Asp"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "juniper",
+        "plural": "junipers",
+        "forms": [
+          "Juniper"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "pine",
+        "plural": "pines",
+        "forms": [
+          "Pine"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "elder",
+        "traditional": "bourtree",
+        "plural": "bourtrees",
+        "forms": [
+          "Elder"
+        ],
+        "traditionalForms": [
+          "Bourtree"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "box",
+        "plural": "box",
+        "forms": [
+          "Box"
+        ],
+        "fuses": "yes"
       }
     ],
     "wild-plant": [
@@ -572,6 +1108,122 @@
         ],
         "fuses": "traditional-only",
         "traditional": "whin"
+      },
+      {
+        "modern": "bracken",
+        "plural": "bracken",
+        "forms": [
+          "Bracken"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "bramble",
+        "plural": "brambles",
+        "forms": [
+          "Bramble"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "briar",
+        "plural": "briars",
+        "forms": [
+          "Briar"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "primrose",
+        "plural": "primroses",
+        "forms": [
+          "Primrose"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "bluebell",
+        "plural": "bluebells",
+        "forms": [
+          "Bluebell"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "foxglove",
+        "plural": "foxgloves",
+        "forms": [
+          "Foxglove"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "cowslip",
+        "plural": "cowslips",
+        "forms": [
+          "Cowslip"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "daisy",
+        "plural": "daisies",
+        "forms": [
+          "Daisy"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "thistle",
+        "plural": "thistles",
+        "forms": [
+          "Thistle"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "ivy",
+        "plural": "ivy",
+        "forms": [
+          "Ivy"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "moss",
+        "plural": "moss",
+        "forms": [
+          "Moss"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "mint",
+        "plural": "mint",
+        "forms": [
+          "Mint"
+        ],
+        "fuses": "yes"
+      },
+      {
+        "modern": "honeysuckle",
+        "traditional": "woodbine",
+        "plural": "woodbine",
+        "forms": [
+          "Honeysuckle"
+        ],
+        "traditionalForms": [
+          "Woodbine"
+        ],
+        "fuses": "no"
+      },
+      {
+        "modern": "cress",
+        "plural": "cress",
+        "forms": [
+          "Cress"
+        ],
+        "fuses": "yes"
       }
     ],
     "crop": [

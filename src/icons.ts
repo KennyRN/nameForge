@@ -51,15 +51,6 @@ export const ICON_NAME_TAKEOVER = "nameforge-name-takeover";
 const ICON_NAME_TAKEOVER_SVG =
   '<g transform="scale(4.16667)"><path fill="currentColor" d="M12.002 1.999c5.523 0 10.001 4.478 10.001 10.002q0 .395-.03.783a6.5 6.5 0 0 0-1.474-1.052a8.5 8.5 0 0 0-.233-1.733h-3.358q.048.504.073 1.021a6.5 6.5 0 0 0-1.49.296A19 19 0 0 0 15.4 10H8.605a19 19 0 0 0 .135 5h2.758q-.298.714-.422 1.5H9.063c.598 2.215 1.601 3.735 2.654 3.97a6.5 6.5 0 0 0 1.066 1.502q-.387.03-.781.03C6.478 22.002 2 17.524 2 12.001C2 6.477 6.478 1.999 12.002 1.999M7.51 16.501H4.787a8.53 8.53 0 0 0 4.095 3.41c-.523-.82-.954-1.846-1.27-3.015zM7.095 10H3.737l-.004.017a8.5 8.5 0 0 0-.233 1.984c0 1.056.193 2.067.545 3h3.173a21 21 0 0 1-.123-5m1.788-5.910l-.023.008A8.53 8.53 0 0 0 4.252 8.5H7.3c.313-1.752.86-3.278 1.583-4.41m3.119-.591l-.116.005C10.62 3.62 9.398 5.622 8.830 8.5h6.343c-.566-2.870-1.783-4.869-3.045-4.995zm3.120.59l.106.175c.67 1.112 1.178 2.572 1.475 4.237h3.048a8.53 8.53 0 0 0-4.338-4.290zM12 17.5a5.5 5.5 0 1 0 11 0a5.5 5.5 0 0 0-11 0m8.5-3.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h1a2.5 2.5 0 0 0-2-1c-.833 0-1.572.407-2.027 1.036a.5.5 0 0 1-.81-.586A3.5 3.5 0 0 1 17.5 14c.98 0 1.865.403 2.5 1.05v-.55a.5.5 0 0 1 .5-.5M15 19.95v.55a.5.5 0 0 1-1 0v-2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-1c.456.608 1.183 1 2 1c.766 0 1.452-.344 1.911-.888a.5.5 0 0 1 .764.645A3.5 3.5 0 0 1 17.5 21a3.5 3.5 0 0 1-2.5-1.05" /></g>';
 
-export const ICON_LOADING = "nameforge-loading";
-// SVG Spinners — 3 dots fade (MIT). Animated; shown while results are being worked out. Scaled
-// for Obsidian's 100×100 viewBox; animation ids prefixed to stay unique in the vault.
-const ICON_LOADING_SVG =
-  '<g transform="scale(4.16667)">' +
-  '<circle cx="4" cy="12" r="3" fill="currentColor"><animate id="nameforgeLoadingA" fill="freeze" attributeName="opacity" begin="0;nameforgeLoadingC.end-0.25s" dur="0.75s" values="1;.2" /></circle>' +
-  '<circle cx="12" cy="12" r="3" fill="currentColor" opacity=".4"><animate fill="freeze" attributeName="opacity" begin="nameforgeLoadingA.begin+0.15s" dur="0.75s" values="1;.2" /></circle>' +
-  '<circle cx="20" cy="12" r="3" fill="currentColor" opacity=".3"><animate id="nameforgeLoadingC" fill="freeze" attributeName="opacity" begin="nameforgeLoadingA.begin+0.3s" dur="0.75s" values="1;.2" /></circle>' +
-  "</g>";
 
 export const ICON_DICE = "nameforge-dice";
 const ICON_DICE_SVG = '<g transform="scale(6.66667)"><path d="M0 0h15v15H0z" fill="none" /><path fill="currentColor" d="M4.14 1.14c-.68.05-1.33.43-1.7 1.07L.29 5.93c-.59 1.03-.26 2.32.77 2.91l3.72 2.14c.15.09.31.19.47.24V7.47c0-1.76 1.45-3.22 3.21-3.22h1.31c-.18-.26-.41-.5-.7-.67L5.35 1.44c-.39-.22-.8-.33-1.21-.3m.33.76c.6 0 1.12.41 1.28.99c.19.72-.23 1.45-.95 1.64c-.71.19-1.44-.23-1.64-.94c-.19-.72.24-1.45.95-1.64c.12-.04.24-.05.36-.05M2.2 5.84c.6 0 1.12.41 1.28.99c.19.71-.24 1.45-.95 1.64S1.08 8.23.89 7.52s.23-1.45.95-1.64c.11-.03.24-.05.36-.04m6.26-.52c-1.18 0-2.14.96-2.14 2.15v4.28c0 1.19.96 2.15 2.14 2.15h4.29c1.19 0 2.14-.96 2.14-2.15V7.47c0-1.19-.95-2.15-2.14-2.15zm4.29.81c.35 0 .69.14.95.39a1.34 1.34 0 0 1 0 1.89c-.26.26-.6.4-.95.4a1.34 1.34 0 0 1 0-2.68m-4.29 4.28c.36 0 .7.14.95.4c.25.25.39.59.39.94a1.34 1.34 0 0 1-2.68 0c0-.35.14-.69.4-.94c.25-.26.59-.4.94-.4" /></g>';
@@ -108,6 +99,11 @@ export const ICON_SEED_COPY = "nameforge-seed-copy";
 const ICON_SEED_COPY_SVG =
   '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M18.327 7.286h-8.044a1.93 1.93 0 0 0-1.925 1.938v10.088c0 1.07.862 1.938 1.925 1.938h8.044a1.93 1.93 0 0 0 1.925-1.938V9.224c0-1.07-.862-1.938-1.925-1.938" /><path d="M15.642 7.286V4.688c0-.514-.203-1.007-.564-1.37a1.92 1.92 0 0 0-1.361-.568H5.673c-.51 0-1 .204-1.36.568a1.95 1.95 0 0 0-.565 1.37v10.088c0 .514.203 1.007.564 1.37s.85.568 1.361.568h2.685" /></g></g>';
 
+export const ICON_RIVER_NAMES = "nameforge-river-names";
+// Pinhead Icons — waters (CC0). Scaled for Obsidian's 100×100 viewBox from its 15×15 one.
+const ICON_RIVER_NAMES_SVG =
+  '<g transform="scale(6.66667)"><path fill="currentColor" d="M12 9c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14q-1.245 0-2.25-1.5Q10.995 13 9.75 13T7.5 11.5Q6.495 13 5.25 13T3 11.5Q1.995 13 .75 13c-.26 0-.51-.05-.75-.14v-2.05c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2m0-4c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14Q13.005 9 12 7.5Q10.995 9 9.75 9T7.5 7.5Q6.495 9 5.25 9T3 7.5Q1.995 9 .75 9C.49 9 .24 8.95 0 8.86V6.81c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2m0-4c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14Q13.005 5 12 3.5Q10.995 5 9.75 5T7.5 3.5Q6.495 5 5.25 5T3 3.5Q1.995 5 .75 5C.49 5 .24 4.95 0 4.86V2.81c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2" /></g>';
+
 export const ICON_FOLDER = "nameforge-folder";
 const ICON_FOLDER_SVG =
   '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
@@ -124,7 +120,6 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG);
   addIcon(ICON_NAME_AGEING, ICON_NAME_AGEING_SVG);
   addIcon(ICON_NAME_TAKEOVER, ICON_NAME_TAKEOVER_SVG);
-  addIcon(ICON_LOADING, ICON_LOADING_SVG);
   addIcon(ICON_DICE, ICON_DICE_SVG);
   addIcon(ICON_TEXT_INSERT, ICON_TEXT_INSERT_SVG);
   addIcon(ICON_CHECKLIST_INSERT, ICON_CHECKLIST_INSERT_SVG);
@@ -140,4 +135,5 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_SEED_LOCK, ICON_SEED_LOCK_SVG);
   addIcon(ICON_SEED_COPY, ICON_SEED_COPY_SVG);
   addIcon(ICON_FOLDER, ICON_FOLDER_SVG);
+  addIcon(ICON_RIVER_NAMES, ICON_RIVER_NAMES_SVG);
 }

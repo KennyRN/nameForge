@@ -1,11 +1,12 @@
 // Recipe regression (recipe takeover brief §A7): place names from recipes must stay byte-identical
-// to the fixtures captured before takeover was added to colonial recipes. Run with
+// to the fixtures. First captured before takeover was added to colonial recipes; re-captured after
+// the rendering overlay (river brief), which changes recipe output on purpose. Run with
 // CAPTURE_RECIPES=1 to record.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync } from "node:fs";
 import { MarkovModel } from "../src/markov";
-import { generatePlaceNames, type ResolvedSlot } from "../src/names/engine";
+import { generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult, type ResolvedSlot } from "../src/names/engine";
 import { type RecipePartial, withDefaults } from "../src/names/recipe";
 
 const FIXTURE = "tests/fixtures/recipe-regression.json";
@@ -85,17 +86,37 @@ export function slotsFor(c: RecipeCase): Record<string, ResolvedSlot> {
 
 const shapeOf = (n: { text: string; etymology: string }) => ({ text: n.text, etymology: n.etymology });
 
-export const runCase = (c: RecipeCase) => {
-  const result = generatePlaceNames({ recipe: withDefaults(c.recipe), slots: slotsFor(c), count: c.count, seed: c.seed });
-  return { seed: result.seed, names: result.names.map(shapeOf), notices: result.notices };
+const summarise = (result: NameGenerateResult) => ({ seed: result.seed, names: result.names.map(shapeOf), notices: result.notices });
+
+export const runCase = (c: RecipeCase) =>
+  summarise(generatePlaceNames({ recipe: withDefaults(c.recipe), slots: slotsFor(c), count: c.count, seed: c.seed }));
+
+/** The stepped generator, run to completion; also checks it yields once per name, counting up. */
+const runCaseStepped = (c: RecipeCase) => {
+  const steps = generatePlaceNamesSteps({ recipe: withDefaults(c.recipe), slots: slotsFor(c), count: c.count, seed: c.seed });
+  const yielded: number[] = [];
+  for (;;) {
+    const next = steps.next();
+    if (next.done) {
+      assert.deepEqual(yielded, next.value.names.map((_, i) => i + 1));
+      return summarise(next.value);
+    }
+    yielded.push(next.value);
+  }
 };
 
-test("recipe regression: output matches the pre-takeover fixtures exactly", () => {
+test("recipe regression: output matches the fixtures exactly", () => {
   const actual = RECIPE_CASES.map((c) => ({ case: c, result: runCase(c) }));
   if (process.env.CAPTURE_RECIPES) {
     writeFileSync(FIXTURE, JSON.stringify(actual, null, 2) + "\n");
     return;
   }
   const expected = JSON.parse(readFileSync(FIXTURE, "utf8"));
+  assert.deepEqual(JSON.parse(JSON.stringify(actual)), expected);
+});
+
+test("recipe regression: the stepped generator reproduces the fixtures exactly", () => {
+  const expected = JSON.parse(readFileSync(FIXTURE, "utf8"));
+  const actual = RECIPE_CASES.map((c) => ({ case: c, result: runCaseStepped(c) }));
   assert.deepEqual(JSON.parse(JSON.stringify(actual)), expected);
 });

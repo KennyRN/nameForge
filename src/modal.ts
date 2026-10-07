@@ -31,6 +31,7 @@ import {
 import {
   ICON_BREAKDOWN_PACK,
   ICON_PACKS,
+  ICON_RIVER_NAMES,
   ICON_BULLET_INSERT,
   ICON_CANCEL,
   ICON_CHECKLIST_INSERT,
@@ -55,7 +56,9 @@ import {
   ICON_TEXT_INSERT,
 } from "./icons";
 import { EnterFolderPathModal } from "./folderModal";
-import { generatePlaceNames, type GeneratedName } from "./names/engine";
+import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
+import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recipe";
+import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
 import { RecipeEditorModal } from "./recipeEditor";
 import {
@@ -67,58 +70,34 @@ import {
 } from "./packs/sections";
 import { parseWordList } from "./packs/wordList";
 import { AGEING, type AgeingCandidate, ageName, validateSource } from "./ageing/engine";
-import { renderLoading, TakeoverView } from "./takeoverView";
+import { TakeoverView } from "./takeoverView";
+import { renderLoading, waitForPaint, waitForTask } from "./loading";
 import { AGEING_INSERT_FORMATS, type AgeingInsertFormat, DEFAULT_AGEING_INSERT_FORMAT, formatAgedName, TRAIL_SEPARATOR } from "./ageing/format";
 import {
   GENERIC_PLACE_NAMES_HISTORY_NAME,
-  generatePlaceShapesDetailed,
   PLACE_SHAPE_REGIONS,
-  PLACE_SHAPES_HISTORY_NAME,
-  placeShapesHistoryLabel,
 } from "./placeShapes";
 import {
   type ColonialPart,
   colonialContexts,
   colonialHistoryLabel,
   COLONIAL_TRADITIONS,
-  generateColonialShapesDetailed,
   isTraditionAvailable,
 } from "./colonialShapes";
 import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from "./paths";
 
 type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack";
 
-/** The sections reachable from the binder icon's switcher menu (renderSectionMenu) — mirrors
- * titleForge's own section switcher. "markov" is today's whole pack-driven generator and the
- * default on every open; "placeShapes" and "genericPlaceNames" run the part 1 shape generator
- * (placeShapes.ts) in its two wordings; "explorationPlaceShapes" and "empireExpansionPlaceShapes"
- * run the colonial generator (colonialShapes.ts) for parts 2 and 2a; "nameAgeing" ages a name
- * towards a target pack (ageing/engine.ts); "nameTakeover" adopts generated native names into a
- * takeover pack's language (the engine's takeover profile, via takeoverView.ts). */
-type NameForgeSection =
-  | "markov"
-  | "placeShapes"
-  | "genericPlaceNames"
-  | "explorationPlaceShapes"
-  | "empireExpansionPlaceShapes"
-  | "nameAgeing"
-  | "nameTakeover";
+import {
+  BRITISH_PLACE_NAMES_HISTORY_NAME,
+  historySection,
+  type NameForgeSection,
+  RIVER_NAMES_HISTORY_NAME,
+  SECTION_LABELS,
+  SECTION_ORDER,
+} from "./sections";
 
-const SECTION_ORDER: NameForgeSection[] = [
-  "markov",
-  "placeShapes",
-  "genericPlaceNames",
-  "explorationPlaceShapes",
-  "empireExpansionPlaceShapes",
-  "nameAgeing",
-  "nameTakeover",
-];
-
-/** The two built-in shape generators: same shapes, different wording of the generic. */
-const SHAPE_SECTION_WORDING: Partial<Record<NameForgeSection, "meaning" | "plain">> = {
-  placeShapes: "meaning",
-  genericPlaceNames: "plain",
-};
+/** History label for british place names runs; older "place name shapes" entries keep theirs. */
 
 /** The colonial shape generators (colonialShapes.ts): part 2 and part 2a. */
 const COLONIAL_SECTION_PART: Partial<Record<NameForgeSection, ColonialPart>> = {
@@ -126,25 +105,21 @@ const COLONIAL_SECTION_PART: Partial<Record<NameForgeSection, ColonialPart>> = {
   empireExpansionPlaceShapes: "2a",
 };
 
+/** "label · Region label" when a region is chosen; the label alone for All Britain. */
+const withRegion = (label: string, regionCode: string | undefined) => {
+  const region = PLACE_SHAPE_REGIONS.find((r) => r.code === regionCode);
+  return region ? `${label} · ${region.label}` : label;
+};
+
 const partNote = (parts: ColonialPart[]) =>
   parts.length === 2 ? "parts 2 and 2a" : `part ${parts[0]} only`;
 
-// Section names are deliberately lowercase, matching titleForge's section-switcher menu.
-const SECTION_LABELS: Record<NameForgeSection, string> = {
-  markov: "markov generator",
-  placeShapes: "place name shapes",
-  genericPlaceNames: "generic place name generator",
-  explorationPlaceShapes: "exploration place name shapes",
-  empireExpansionPlaceShapes: "empire expansion place name shapes",
-  nameAgeing: "name ageing",
-  nameTakeover: "name takeover",
-};
 
 // Each section's icon, shown on the section trigger and in the switcher menu.
 const SECTION_ICONS: Record<NameForgeSection, string> = {
   markov: ICON_PACKS,
   placeShapes: ICON_PLACE_SHAPES,
-  genericPlaceNames: ICON_GENERIC_PLACE_NAMES,
+  riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   nameAgeing: ICON_NAME_AGEING,
@@ -153,7 +128,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
 
 /** Shown in the pack box on the first open of each Obsidian session; the arrow points at the
  * section trigger. */
-const SESSION_HINT = "← click here for specialist packs, or here for your name packs";
+const SESSION_HINT = "← click here for specialist modules, or here for your name packs";
 let sessionHintShown = false;
 
 function packTypeIconId(packType: NamePackType, subGenerator?: "breakdown" | "list"): string {
@@ -304,6 +279,18 @@ export class NameForgeModal extends Modal {
   private isRegionMenuOpen = false;
   /** Region code, or undefined for All Britain. Session only — never persisted. */
   private selectedRegion: string | undefined = undefined;
+  /** River names (river brief §6.8): setting and, for British, region. Session only. */
+  private riverSetting: RiverSetting = "british";
+  private riverRegion: string | undefined = undefined;
+  private secondBoxRowEl: HTMLElement | null = null;
+  private secondBoxDropdownEl: HTMLElement | null = null;
+  private secondBoxTriggerEl: HTMLElement | null = null;
+  private secondBoxLabelEl: HTMLElement | null = null;
+  private isSecondBoxMenuOpen = false;
+  private setSecondBoxMenuOpen: (open: boolean) => void = () => {};
+  private secondBoxObserver: ResizeObserver | null = null;
+  /** The place-name modules' etymology toggle: off by default (river brief §2, §3). Session only. */
+  private moduleEtymology = false;
   /** Colonial tradition and context per part; undefined = General / None. Session only. */
   private selectedTradition: Record<ColonialPart, string | undefined> = { "2": undefined, "2a": undefined };
   private selectedContext: Record<ColonialPart, string | undefined> = { "2": undefined, "2a": undefined };
@@ -335,7 +322,10 @@ export class NameForgeModal extends Modal {
       this.clearResultsSelection = clear;
     },
     setStatus: (text) => this.setStatus(text),
-    onNativeLabelChange: () => this.updateRegionLabel(),
+    onNativeLabelChange: () => {
+      this.updateRegionLabel();
+      this.updateSecondBoxLabel();
+    },
   });
   private guideButton: HTMLButtonElement | null = null;
   private quantityButtons: HTMLButtonElement[] = [];
@@ -521,7 +511,7 @@ export class NameForgeModal extends Modal {
     });
     this.sectionSelectEl.hide();
 
-    this.takeoverView.buildControls(optionsList);
+    this.buildSecondBox(optionsList);
 
     const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityToggleEl = quantityToggle;
@@ -618,6 +608,7 @@ export class NameForgeModal extends Modal {
     }
     this.setSectionMenuOpen(false);
     this.setRegionMenuOpen(false);
+    this.setSecondBoxMenuOpen(false);
     this.activeSection = section;
     this.packDropdownEl?.toggle(section === "markov");
     this.sectionSelectEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
@@ -631,15 +622,15 @@ export class NameForgeModal extends Modal {
     this.guideButton?.toggle(!!colonialPart);
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
-    this.regionDropdownEl?.toggle(
-      SHAPE_SECTION_WORDING[section] !== undefined || !!colonialPart || section === "nameAgeing" || takeover,
-    );
+    const river = section === "riverNames";
+    this.regionDropdownEl?.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover);
+    this.showSecondBox((river && this.riverSetting === "british") || takeover);
+    this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
     const ageing = section === "nameAgeing";
     this.quantityToggleEl?.toggle(!ageing);
     this.ageingControlsEl?.toggle(ageing);
-    this.takeoverView.toggle(takeover);
     const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
     this.generateButtonEl?.setAttribute("title", action);
     this.generateButtonEl?.setAttribute("aria-label", action);
@@ -649,13 +640,144 @@ export class NameForgeModal extends Modal {
     if (this.sectionTriggerEl) setIcon(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} — no packs yet`;
     this.sectionStubEl?.toggle(
-      section !== "markov" && SHAPE_SECTION_WORDING[section] === undefined && !colonialPart && section !== "nameAgeing" && !takeover,
+      section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover,
     );
+  }
+
+  /**
+   * The box beneath the box beside the section trigger: the region for river names' British setting
+   * (river brief §6.8), the takeover pack for name takeover. The same dropdown box as the one above,
+   * given that box's measured left edge and width (alignSecondBox) so it sits exactly beneath it, 4px
+   * below; the results box gives up its height so the modal keeps its size (showSecondBox).
+   */
+  private buildSecondBox(container: HTMLElement) {
+    const row = (this.secondBoxRowEl = container.createDiv({ cls: "nameforge-modal__second-box" }));
+    const dropdown = (this.secondBoxDropdownEl = row.createDiv({ cls: "nameforge-modal__pack-dropdown" }));
+    const trigger = (this.secondBoxTriggerEl = dropdown.createEl("button", {
+      cls: "nameforge-modal__pack-dropdown-trigger",
+      attr: { type: "button", "aria-haspopup": "listbox", "aria-expanded": "false" },
+    }));
+    this.secondBoxLabelEl = trigger.createSpan({ cls: "nameforge-modal__pack-dropdown-label" });
+    const menu = dropdown.createDiv({ cls: "nameforge-modal__pack-dropdown-menu" });
+    menu.hide();
+    this.setSecondBoxMenuOpen = (open: boolean) => {
+      this.isSecondBoxMenuOpen = open;
+      if (open) {
+        this.setRegionMenuOpen(false);
+        this.renderSecondBoxMenu(menu);
+      }
+      menu.toggle(open);
+      trigger.setAttribute("aria-expanded", String(open));
+    };
+    trigger.addEventListener("click", (evt) => {
+      evt.stopPropagation();
+      this.setSecondBoxMenuOpen(!this.isSecondBoxMenuOpen);
+    });
+    this.updateSecondBoxLabel();
+    row.hide();
+    // Re-align whenever the box above changes size (window resize, sidebar width).
+    this.secondBoxObserver?.disconnect();
+    this.secondBoxObserver = new ResizeObserver(() => this.alignSecondBox());
+    if (this.regionDropdownEl) this.secondBoxObserver.observe(this.regionDropdownEl);
+    this.secondBoxObserver.observe(row);
+  }
+
+  /** The second box's label and tooltip for the active module. */
+  private updateSecondBoxLabel() {
+    const label = this.secondBoxLabelEl;
+    const trigger = this.secondBoxTriggerEl;
+    if (!label || !trigger) return;
+    if (this.activeSection === "nameTakeover") {
+      label.textContent = this.takeoverView.takeoverLabel();
+      trigger.setAttribute("title", "Takeover pack: the language that adopts the names");
+      return;
+    }
+    const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.riverRegion);
+    label.textContent = region?.label ?? "All Britain";
+    trigger.setAttribute("title", `Region: ${region?.counties ?? "no regional weighting"}`);
+  }
+
+  /** River names: All Britain, then the regions. Name takeover: the takeover packs, ineligible ones greyed out. */
+  private renderSecondBoxMenu(menu: HTMLElement) {
+    menu.empty();
+    const choose = () => {
+      this.updateSecondBoxLabel();
+      this.setSecondBoxMenuOpen(false);
+    };
+    if (this.activeSection === "nameTakeover") {
+      const packs = this.takeoverView.takeoverPacks;
+      if (packs.length === 0) menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
+      for (const pack of packs) {
+        const item = menu.createEl("button", {
+          cls:
+            "nameforge-modal__pack-dropdown-item" +
+            (pack.path === this.takeoverView.takeoverPath ? " is-active" : "") +
+            (pack.reason ? " is-unavailable" : ""),
+          attr: { type: "button", "aria-disabled": String(!!pack.reason), ...(pack.reason ? { title: pack.reason } : {}) },
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: pack.label });
+        if (pack.reason) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: pack.reason });
+        item.addEventListener("click", () => {
+          if (pack.reason) return;
+          this.takeoverView.selectTakeover(pack.path);
+          choose();
+        });
+      }
+      return;
+    }
+    const options: { code: string | undefined; label: string; counties?: string }[] = [
+      { code: undefined, label: "All Britain" },
+      ...PLACE_SHAPE_REGIONS,
+    ];
+    for (const { code, label: text, counties } of options) {
+      const item = menu.createEl("button", {
+        cls: "nameforge-modal__pack-dropdown-item" + (code === this.riverRegion ? " is-active" : ""),
+        attr: { type: "button", title: counties ?? "No regional weighting" },
+      });
+      item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text });
+      item.addEventListener("click", () => {
+        this.riverRegion = code;
+        choose();
+      });
+    }
+  }
+
+  /** Gives the region box the setting box's exact left edge and width. */
+  private alignSecondBox() {
+    const row = this.secondBoxRowEl;
+    const box = this.secondBoxDropdownEl;
+    const setting = this.regionDropdownEl;
+    if (!row || !box || !setting || !row.isShown() || !setting.isShown()) return;
+    const rowRect = row.getBoundingClientRect();
+    const settingRect = setting.getBoundingClientRect();
+    box.style.marginLeft = `${settingRect.left - rowRect.left}px`;
+    box.style.width = `${settingRect.width}px`;
+  }
+
+  /**
+   * Shows the region row (British setting only) and aligns it. The modal keeps its size: the results
+   * box gives up exactly the height the row adds (measured), via --nf-second-box-height.
+   */
+  private showSecondBox(show: boolean) {
+    const row = this.secondBoxRowEl;
+    if (!row) return;
+    const optionsList = row.parentElement;
+    const wasShown = row.isShown();
+    const before = optionsList?.offsetHeight ?? 0;
+    row.toggle(show);
+    if (show && !wasShown) {
+      const added = Math.max(0, (optionsList?.offsetHeight ?? 0) - before);
+      this.rootEl?.style.setProperty("--nf-second-box-height", `${added}px`);
+    }
+    if (!show) this.rootEl?.style.setProperty("--nf-second-box-height", "0px");
+    this.rootEl?.toggleClass("is-second-box-open", show);
+    if (show) this.alignSecondBox();
   }
 
   private setRegionMenuOpen(open: boolean) {
     this.isRegionMenuOpen = open;
     if (open) {
+      this.setSecondBoxMenuOpen(false);
       this.closePackDropdown();
       this.renderRegionMenu();
     }
@@ -716,6 +838,22 @@ export class NameForgeModal extends Modal {
       }
       return;
     }
+    if (this.activeSection === "riverNames") {
+      for (const setting of RIVER_SETTINGS) {
+        const item = menu.createEl("button", {
+          cls: "nameforge-modal__pack-dropdown-item" + (setting.id === this.riverSetting ? " is-active" : ""),
+          attr: { type: "button" },
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: setting.label });
+        item.addEventListener("click", () => {
+          this.riverSetting = setting.id;
+          this.showSecondBox(setting.id === "british");
+          this.updateRegionLabel();
+          this.setRegionMenuOpen(false);
+        });
+      }
+      return;
+    }
     const part = COLONIAL_SECTION_PART[this.activeSection];
     if (part) {
       for (const tradition of COLONIAL_TRADITIONS) {
@@ -767,6 +905,11 @@ export class NameForgeModal extends Modal {
       const pack = this.ageingPacks.find((p) => p.path === this.ageingTargetPath);
       if (this.regionLabelEl) this.regionLabelEl.textContent = pack ? pack.label : "choose a target pack";
       this.regionTriggerEl?.setAttribute("title", "Target pack: the language the name ages towards");
+      return;
+    }
+    if (this.activeSection === "riverNames") {
+      if (this.regionLabelEl) this.regionLabelEl.textContent = RIVER_SETTINGS.find((s) => s.id === this.riverSetting)!.label;
+      this.regionTriggerEl?.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
       return;
     }
     const part = COLONIAL_SECTION_PART[this.activeSection];
@@ -939,9 +1082,9 @@ export class NameForgeModal extends Modal {
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
     const seed = resolveSeed(seedOverride);
     const faithfulness = this.plugin.settings.faithfulness ?? 2;
-    // Let the loading icon paint before the search starts.
+    // Let the loading dots paint before the search starts.
     renderLoading(this.resultsEl, "Ageing…");
-    await new Promise((resolve) => window.setTimeout(resolve, 0));
+    await waitForPaint();
     const result = ageName({
       source,
       targetNames: target.corpus,
@@ -1076,6 +1219,14 @@ export class NameForgeModal extends Modal {
     this.editRecipeButton = null;
     this.guideButton = null;
     this.contextRowEl = null;
+    this.secondBoxRowEl = null;
+    this.secondBoxDropdownEl = null;
+    this.secondBoxTriggerEl = null;
+    this.secondBoxLabelEl = null;
+    this.isSecondBoxMenuOpen = false;
+    this.setSecondBoxMenuOpen = () => {};
+    this.secondBoxObserver?.disconnect();
+    this.secondBoxObserver = null;
     this.quantityToggleEl = null;
     this.generateButtonEl = null;
     this.ageingControlsEl = null;
@@ -1092,6 +1243,9 @@ export class NameForgeModal extends Modal {
   }
 
   private handlePackDropdownOutsideClick = (evt: MouseEvent) => {
+    if (this.isSecondBoxMenuOpen && this.secondBoxDropdownEl && !this.secondBoxDropdownEl.contains(evt.target as Node)) {
+      this.setSecondBoxMenuOpen(false);
+    }
     if (this.isRegionMenuOpen && this.regionDropdownEl && !this.regionDropdownEl.contains(evt.target as Node)) {
       this.setRegionMenuOpen(false);
     }
@@ -1568,7 +1722,10 @@ export class NameForgeModal extends Modal {
       this.setStatus("Recipe not found. Reselect it from the pack list.");
       return;
     }
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), {
+      targetReason: (entry, index) => this.targetPackReason(entry, index),
+      targetNames: (entry, index) => this.ageingTargetNames(entry, index),
+    });
     const loaded = await host.loadRecipe(file);
     if (loaded.error) {
       this.setStatus(loaded.error);
@@ -1576,10 +1733,24 @@ export class NameForgeModal extends Modal {
     }
     const slots = await host.resolveSlots(loaded.recipe, file.path);
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
-    let result;
+    // A takeover pack makes each adapted native name take a fraction of a second: show the dots
+    // (no text) and yield between names so they keep moving (recipe takeover §A6).
+    renderLoading(this.resultsEl);
+    await waitForPaint();
+    let result: NameGenerateResult;
     try {
-      result = generatePlaceNames({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride });
+      const adapt = host.resolveTakeover(loaded.recipe, file.path);
+      const steps = generatePlaceNamesSteps({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride, adapt });
+      for (;;) {
+        const next = steps.next();
+        if (next.done) {
+          result = next.value;
+          break;
+        }
+        await waitForTask();
+      }
     } catch (error) {
+      this.renderResults([]);
       this.setStatus(error instanceof Error ? error.message : "Couldn't generate names from this recipe.");
       return;
     }
@@ -1591,11 +1762,17 @@ export class NameForgeModal extends Modal {
   }
 
   /** Recipe results: placeholders muted, etymology beneath each name when the toggle is on. */
-  private renderRecipeResults(names: GeneratedName[]) {
+  /**
+   * Recipe-style results: placeholders muted, etymology beneath each name when its toggle is on.
+   * `etymology` picks whose toggle: recipe packs, the place-name modules (off by default), or none
+   * (river names: no etymology button at all).
+   */
+  private renderRecipeResults(names: GeneratedName[], etymology: "recipe" | "module" | "none" = "recipe") {
     if (!this.resultsEl) return;
     this.resultsEl.empty();
+    const shown = () => (etymology === "module" ? this.moduleEtymology : etymology === "recipe" ? !!this.recipeEtymology : false);
     const list = this.resultsEl.createEl("ul", { cls: "nameforge-modal__results-list nameforge-modal__recipe-results" });
-    list.toggleClass("is-etymology-hidden", !this.recipeEtymology);
+    list.toggleClass("is-etymology-hidden", !shown());
     const actions = this.resultsEl.createDiv({ cls: "nameforge-modal__results-actions" });
     this.buildSeedControls(actions.createDiv({ cls: "nameforge-modal__seed-group" }));
     const buttonsGroup = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
@@ -1604,17 +1781,20 @@ export class NameForgeModal extends Modal {
       setIcon(b, icon);
       return b;
     };
-    const etymologyButton = button("list-tree", "Etymology");
-    const updateEtymology = () => {
-      etymologyButton.toggleClass("is-active", !!this.recipeEtymology);
-      etymologyButton.setAttribute("aria-pressed", String(!!this.recipeEtymology));
-      list.toggleClass("is-etymology-hidden", !this.recipeEtymology);
-    };
-    etymologyButton.addEventListener("click", () => {
-      this.recipeEtymology = !this.recipeEtymology;
+    if (etymology !== "none") {
+      const etymologyButton = button("list-tree", "Etymology");
+      const updateEtymology = () => {
+        etymologyButton.toggleClass("is-active", shown());
+        etymologyButton.setAttribute("aria-pressed", String(shown()));
+        list.toggleClass("is-etymology-hidden", !shown());
+      };
+      etymologyButton.addEventListener("click", () => {
+        if (etymology === "module") this.moduleEtymology = !this.moduleEtymology;
+        else this.recipeEtymology = !this.recipeEtymology;
+        updateEtymology();
+      });
       updateEtymology();
-    });
-    updateEtymology();
+    }
     const insertButton = button(ICON_TEXT_INSERT, "Insert");
     const checklistButton = button(ICON_CHECKLIST_INSERT, "Insert checklist");
     const bulletButton = button(ICON_BULLET_INSERT, "Insert bullet list");
@@ -1640,7 +1820,7 @@ export class NameForgeModal extends Modal {
         if (part.startsWith("[")) nameEl.createSpan({ cls: "nameforge-modal__placeholder-part", text: part });
         else nameEl.appendText(part);
       }
-      item.createDiv({ cls: "nameforge-modal__recipe-etymology", text: n.etymology });
+      if (etymology !== "none") item.createDiv({ cls: "nameforge-modal__recipe-etymology", text: n.etymology });
       item.addEventListener("click", () => {
         item.classList.toggle("is-selected");
         update();
@@ -1675,6 +1855,15 @@ export class NameForgeModal extends Modal {
     const packs: string[] = [];
     const lists: string[] = [];
     const templates: { name: string; description: string }[] = [];
+    // Takeover packs for colonial recipes: the takeover section's own eligibility rules (ageing §1).
+    const index = await this.scanFolderPacks();
+    const takeoverPacks = index
+      .filter((entry) => !entry.parsed.template)
+      .map((entry) => ({
+        name: entry.path.split("/").pop()?.replace(/\.md$/i, "") || entry.path,
+        reason: this.targetPackReason(entry, index),
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
     for (const child of folder?.children ?? []) {
       if (!(child instanceof TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
@@ -1694,6 +1883,7 @@ export class NameForgeModal extends Modal {
       packs: packs.sort(),
       lists: lists.sort(),
       templates: templates.sort((a, b) => a.name.localeCompare(b.name)),
+      takeoverPacks,
       onSaved: (saved) => {
         this.plugin.settings.namesFilePath = saved;
         void this.refreshPackDropdown().then(() => this.loadPack(saved));
@@ -1730,19 +1920,44 @@ export class NameForgeModal extends Modal {
   }
 
   private async generateSelectedCount() {
-    const wording = SHAPE_SECTION_WORDING[this.activeSection];
-    if (wording) {
+    if (this.activeSection === "placeShapes") {
+      // River brief §2: rendered names from the fixed built-in recipe, shown as recipe results.
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
-      const result = generatePlaceShapesDetailed({
+      const result = generatePlaceNames({
+        recipe: britishPlaceNamesRecipe(this.selectedRegion),
+        slots: {},
         count: this.generationCount,
         seed: seedOverride,
-        region: this.selectedRegion,
-        wording,
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness,
       });
       this.currentSeed = result.seed;
-      this.renderResults(result.names);
-      await this.recordGenerationHistory(result.names.length, placeShapesHistoryLabel(this.selectedRegion, wording));
-      this.setStatus("");
+      this.renderRecipeResults(result.names, "module");
+      await this.recordGenerationHistory(result.names.length, withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, this.selectedRegion));
+      this.setStatus(result.notices.join(" "));
+      return;
+    }
+    if (this.activeSection === "riverNames") {
+      const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+      const british = this.riverSetting === "british";
+      const result = generateRiverNames({
+        setting: this.riverSetting,
+        region: british ? this.riverRegion : undefined,
+        count: this.generationCount,
+        seed: seedOverride,
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness,
+      });
+      this.currentSeed = result.seed;
+      this.renderRecipeResults(
+        result.names.map((n) => ({ text: n.text, hasPlaceholder: n.hasPlaceholder, etymology: "" }) as GeneratedName),
+        "none",
+      );
+      // History keeps the brief's short setting names ("river names · British"), not the menu label.
+      const settingLabel = british ? "British" : RIVER_SETTINGS.find((s) => s.id === this.riverSetting)!.label;
+      const label = `${RIVER_NAMES_HISTORY_NAME} · ${settingLabel}`;
+      await this.recordGenerationHistory(result.names.length, british ? withRegion(label, this.riverRegion) : label);
+      this.setStatus(result.notice ?? "");
       return;
     }
     if (this.activeSection === "nameAgeing") {
@@ -1759,15 +1974,17 @@ export class NameForgeModal extends Modal {
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
       const tradition = this.selectedTradition[colonialPart];
       const context = this.selectedContext[colonialPart];
-      const result = generateColonialShapesDetailed({
+      // River brief §3: rendered names from the fixed built-in recipe, shown as recipe results.
+      const result = generatePlaceNames({
+        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context),
+        slots: {},
         count: this.generationCount,
         seed: seedOverride,
-        part: colonialPart,
-        tradition,
-        context,
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness,
       });
       this.currentSeed = result.seed;
-      this.renderResults(result.names);
+      this.renderRecipeResults(result.names, "module");
       await this.recordGenerationHistory(
         result.names.length,
         colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context),
@@ -1899,6 +2116,11 @@ export class NameForgeModal extends Modal {
    * Appends the just-used seed to the config file's generation history,
    * most-recent first, capped at MAX_HISTORY_ENTRIES.
    */
+  /** The module whose history the previous generations list shows: the active one. */
+  public historySectionShown(): NameForgeSection {
+    return this.activeSection;
+  }
+
   private async recordGenerationHistory(count: number, packName?: string) {
     if (this.currentSeed === null) return;
     const entry: GenerationHistoryEntry = {
@@ -2366,7 +2588,11 @@ class PreviousGenerationsModal extends Modal {
   }
 
   private async renderList(container: HTMLElement) {
-    const history = this.parent.plugin.settings.previousGenerations ?? [];
+    // Each module shows only its own history (river names only in river names, and so on).
+    const section = this.parent.historySectionShown();
+    const history = (this.parent.plugin.settings.previousGenerations ?? []).filter(
+      (entry) => historySection(entry.packName) === section,
+    );
     if (history.length === 0) {
       container.createDiv({
         cls: "nameforge-history-modal__empty",
@@ -2381,17 +2607,14 @@ class PreviousGenerationsModal extends Modal {
     for (const entry of history) {
       const row = list.createDiv({ cls: "nameforge-history-modal__row" });
       const iconEl = row.createSpan({ cls: "nameforge-history-modal__pack-icon" });
+      const entrySection = historySection(entry.packName);
       setIcon(
         iconEl,
-        entry.packName.startsWith(SECTION_LABELS.explorationPlaceShapes)
-          ? SECTION_ICONS.explorationPlaceShapes
-          : entry.packName.startsWith(SECTION_LABELS.empireExpansionPlaceShapes)
-          ? SECTION_ICONS.empireExpansionPlaceShapes
+        entrySection === "markov"
+          ? iconsByName.get(entry.packName) ?? ICON_BREAKDOWN_PACK
           : entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME)
-          ? SECTION_ICONS.genericPlaceNames
-          : entry.packName.startsWith(PLACE_SHAPES_HISTORY_NAME)
-          ? SECTION_ICONS.placeShapes
-          : iconsByName.get(entry.packName) ?? ICON_BREAKDOWN_PACK,
+          ? ICON_GENERIC_PLACE_NAMES
+          : SECTION_ICONS[entrySection],
       );
       row.createSpan({
         cls: "nameforge-history-modal__pack-name",

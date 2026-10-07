@@ -20,18 +20,9 @@ import {
   TAKEOVER_INSERT_FORMATS,
   type TakeoverInsertFormat,
 } from "./takeover/format";
-import { ICON_BULLET_INSERT, ICON_CHECKLIST_INSERT, ICON_LOADING, ICON_TEXT_INSERT } from "./icons";
-
-/** Results-area placeholder with the animated loading icon, shown while results are worked out. */
-export function renderLoading(container: HTMLElement | null, text: string) {
-  if (!container) return;
-  container.empty();
-  const loading = container.createDiv({ cls: "nameforge-modal__loading", attr: { role: "status" } });
-  setIcon(loading.createSpan({ cls: "nameforge-modal__loading-icon" }), ICON_LOADING);
-  loading.createSpan({ cls: "nameforge-modal__loading-text", text });
-}
-
-const nextFrame = () => new Promise((resolve) => window.setTimeout(resolve, 0));
+import { ICON_BULLET_INSERT, ICON_CHECKLIST_INSERT, ICON_TEXT_INSERT } from "./icons";
+import { renderLoading, waitForPaint, waitForTask } from "./loading";
+import { takeoverScorer } from "./takeover/recipe";
 
 export interface TakeoverPackOption {
   path: string;
@@ -118,32 +109,12 @@ const packLabel = (entry: MixPackIndexEntry) =>
 export class TakeoverView {
   nativePacks: TakeoverPackOption[] = [];
   nativePath: string | undefined;
-  private takeoverPacks: TakeoverPackOption[] = [];
-  private takeoverPath: string | undefined;
+  /** Takeover pack options; the modal shows them in the box beneath the native pack box. */
+  takeoverPacks: TakeoverPackOption[] = [];
+  takeoverPath: string | undefined;
   private format: TakeoverInsertFormat = DEFAULT_TAKEOVER_INSERT_FORMAT;
-  private controlsEl: HTMLElement | null = null;
-  private takeoverSelect: HTMLSelectElement | null = null;
 
   constructor(private readonly host: TakeoverHost) {}
-
-  /** The takeover pack row; the native pack lives in the box beside the section trigger. */
-  buildControls(container: HTMLElement): HTMLElement {
-    const controls = (this.controlsEl = container.createDiv({ cls: "nameforge-modal__takeover-controls" }));
-    this.takeoverSelect = controls.createEl("select", {
-      cls: "dropdown nameforge-modal__takeover-pack",
-      attr: { "aria-label": "Takeover pack", title: "Takeover pack: the language that adopts the names" },
-    });
-    this.takeoverSelect.addEventListener("change", () => {
-      this.takeoverPath = this.takeoverSelect?.value || undefined;
-      this.showSamePackNotice();
-    });
-    controls.hide();
-    return controls;
-  }
-
-  toggle(show: boolean) {
-    this.controlsEl?.toggle(show);
-  }
 
   /** Lists every pack as a native option, and marks takeover packs that fail the ageing target rules. */
   async refresh() {
@@ -160,25 +131,17 @@ export class TakeoverView {
     if (this.takeoverPath && !this.takeoverPacks.some((p) => p.path === this.takeoverPath && !p.reason)) {
       this.takeoverPath = undefined;
     }
-    this.renderTakeoverSelect();
     this.host.onNativeLabelChange();
   }
 
-  private renderTakeoverSelect() {
-    const select = this.takeoverSelect;
-    if (!select) return;
-    select.empty();
-    const prompt = select.createEl("option", { text: "choose a takeover pack", value: "" });
-    prompt.disabled = true;
-    prompt.selected = !this.takeoverPath;
-    for (const pack of this.takeoverPacks) {
-      const option = select.createEl("option", {
-        text: pack.reason ? `${pack.label} — ${pack.reason}` : pack.label,
-        value: pack.path,
-      });
-      option.disabled = !!pack.reason;
-      option.selected = pack.path === this.takeoverPath;
-    }
+  selectTakeover(path: string) {
+    this.takeoverPath = path;
+    this.host.onNativeLabelChange();
+    this.showSamePackNotice();
+  }
+
+  takeoverLabel(): string {
+    return this.takeoverPacks.find((p) => p.path === this.takeoverPath)?.label ?? "choose a takeover pack";
   }
 
   selectNative(path: string) {
@@ -225,20 +188,12 @@ export class TakeoverView {
       return;
     }
 
-    // A large batch takes seconds: show the loading icon, and yield between names so it animates.
+    // A large batch takes seconds: show the loading dots, and yield between names so the count updates.
     this.host.setStatus("");
     renderLoading(this.resultsEl, `Taking over 0 of ${batchSize}…`);
     const loadingText = this.resultsEl?.querySelector(".nameforge-modal__loading-text");
-    await nextFrame();
-    const faithfulness = this.host.settings().faithfulness ?? 2;
-    const prepared = prepareTakeoverTarget(
-      target.corpus,
-      (names) => {
-        const model = MarkovModel.build(names);
-        return (word) => model.scoreWord(word, faithfulness);
-      },
-      target.endings,
-    );
+    await waitForPaint();
+    const prepared = prepareTakeoverTarget(target.corpus, takeoverScorer(this.host.settings().faithfulness ?? 2), target.endings);
     const steps = takeOverSteps({
       drawNative: draw,
       adopt: (native, rng) => adoptName({ native, target: prepared, rng }),
@@ -253,7 +208,7 @@ export class TakeoverView {
         break;
       }
       if (loadingText) loadingText.textContent = `Taking over ${next.value} of ${batchSize}…`;
-      await nextFrame();
+      await waitForTask();
     }
     this.host.setCurrentSeed(result.seed);
     this.renderResults(this.resultsEl, result.rows);

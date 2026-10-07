@@ -25,6 +25,8 @@ export interface RecipeEditorOptions {
   lists: string[];
   /** Recipe templates for "Start from template". */
   templates: { name: string; description: string }[];
+  /** Packs offered as the takeover pack (basenames), with why each ineligible one can't be used. */
+  takeoverPacks: { name: string; reason?: string }[];
   onSaved: (path: string) => void;
 }
 
@@ -163,6 +165,26 @@ export class RecipeEditorModal extends Modal {
           w.shape.context = v;
         });
       });
+      // Recipe takeover §A2: the coloniser's language, which reshapes adapted native names.
+      new Setting(el)
+        .setName("Takeover pack")
+        .setDesc("Adapted native names are reshaped into this pack's language.")
+        .addDropdown((d) => {
+          d.addOption("", "None");
+          for (const pack of this.options.takeoverPacks) {
+            d.addOption(pack.name, pack.reason ? `${pack.name} — ${pack.reason}` : pack.name);
+            const option = d.selectEl.options[d.selectEl.options.length - 1];
+            if (pack.reason) {
+              option.disabled = true;
+              option.title = pack.reason;
+            }
+          }
+          // A recipe may name a pack this folder doesn't list; keep it rather than dropping it silently.
+          if (w.takeover && !this.options.takeoverPacks.some((p) => p.name === w.takeover)) d.addOption(w.takeover, w.takeover);
+          d.setValue(w.takeover ?? "").onChange((v) => {
+            w.takeover = v || undefined;
+          });
+        });
     }
     new Setting(el).setName("Feature").addDropdown((d) => {
       d.addOption("any", "Any").addOption("settlement", "Settlement").addOption("landscape", "Landscape");
@@ -367,6 +389,7 @@ export class RecipeEditorModal extends Modal {
       generics: { ...w.generics },
       register: w.register,
       render: { ...w.render },
+      takeover: w.takeover,
     };
     if (!full.templateOf || !this.template) return full;
 
@@ -381,6 +404,7 @@ export class RecipeEditorModal extends Modal {
       generics: diff(w.generics, base.generics) as Record<string, string>,
       register: w.register !== base.register ? w.register : undefined,
       render: diff(w.render, base.render),
+      takeover: w.takeover !== base.takeover ? w.takeover : undefined,
     };
   }
 

@@ -17,10 +17,14 @@ import {
 } from "./nameParser";
 import { selectSectionNames, type SectionRequest } from "./packs/sections";
 import { wordListEntries } from "./packs/wordList";
-import { NAME_WORDS, type NameWordEntry, type ResolvedSlot, type ResolvedSource } from "./names/engine";
+import { NAME_WORDS, type NameWordEntry, type NativeAdapter, type ResolvedSlot, type ResolvedSource } from "./names/engine";
 import { applyRecipeTemplate, type NameMode, readRecipe, type RecipePartial, type RecipeSettings, withDefaults } from "./names/recipe";
 import { PLACE_SHAPE_DATA } from "./placeShapes";
 import { COLONIAL_DATA } from "./colonialShapes";
+import { type RecipeTakeoverInput, resolveRecipeTakeover } from "./takeover/recipe";
+
+/** The takeover module's target rules, supplied by the modal (the same ones the takeover section uses). */
+export type TakeoverTargets = Pick<RecipeTakeoverInput, "targetReason" | "targetNames">;
 
 const FRONTMATTER = /^---\s*\n([\s\S]*?)\n---\s*\n?/;
 
@@ -68,6 +72,7 @@ export class RecipeHost {
     private readonly app: App,
     private readonly settings: { faithfulness?: number; strictness?: number },
     private readonly index: MixPackIndexEntry[],
+    private readonly targets?: TakeoverTargets,
   ) {}
 
   getNotices(): string[] {
@@ -100,6 +105,28 @@ export class RecipeHost {
     }
     const applied = applyRecipeTemplate(own, template, file.basename);
     return { recipe: withDefaults(applied.recipe), own, template, error: applied.error, problems };
+  }
+
+  /**
+   * Recipe takeover §A2: the recipe's takeover pack, prepared once for this run, as an adopter.
+   * Undefined for organic recipes (the setting is ignored) and when none is set; a missing or
+   * ineligible pack adds a notice and generation goes ahead as if none were set.
+   */
+  resolveTakeover(recipe: RecipeSettings, recipePath: string): NativeAdapter | undefined {
+    if (!recipe.takeover || recipe.shape.part === "organic" || !this.targets) return undefined;
+    const file = this.resolveLink(recipe.takeover, recipePath);
+    const resolved = resolveRecipeTakeover({
+      name: recipe.takeover,
+      entry: file ? this.index.find((e) => e.path === file.path) : undefined,
+      index: this.index,
+      ...this.targets,
+      faithfulness: this.settings.faithfulness ?? 2,
+    });
+    if ("notice" in resolved) {
+      this.notices.add(resolved.notice);
+      return undefined;
+    }
+    return resolved.adapt;
   }
 
   /** Resolves every slot setting to engine-ready sources (§6.2). */
