@@ -13,14 +13,25 @@ import {
   extractNamesFromMarkdown,
 } from "./markov";
 import { type MixPackIndexEntry, resolveMixSources } from "./nameParser";
-import { samePackNotice, takeOver } from "./takeover/batch";
+import { samePackNotice, type TakeoverBatchResult, takeOverSteps } from "./takeover/batch";
 import {
   DEFAULT_TAKEOVER_INSERT_FORMAT,
   formatAdoptedName,
   TAKEOVER_INSERT_FORMATS,
   type TakeoverInsertFormat,
 } from "./takeover/format";
-import { ICON_BULLET_INSERT, ICON_CHECKLIST_INSERT, ICON_TEXT_INSERT } from "./icons";
+import { ICON_BULLET_INSERT, ICON_CHECKLIST_INSERT, ICON_LOADING, ICON_TEXT_INSERT } from "./icons";
+
+/** Results-area placeholder with the animated loading icon, shown while results are worked out. */
+export function renderLoading(container: HTMLElement | null, text: string) {
+  if (!container) return;
+  container.empty();
+  const loading = container.createDiv({ cls: "nameforge-modal__loading", attr: { role: "status" } });
+  setIcon(loading.createSpan({ cls: "nameforge-modal__loading-icon" }), ICON_LOADING);
+  loading.createSpan({ cls: "nameforge-modal__loading-text", text });
+}
+
+const nextFrame = () => new Promise((resolve) => window.setTimeout(resolve, 0));
 
 export interface TakeoverPackOption {
   path: string;
@@ -214,9 +225,11 @@ export class TakeoverView {
       return;
     }
 
-    // A large batch takes seconds; let the status paint before the work starts.
-    this.host.setStatus("Taking over…");
-    await new Promise((resolve) => window.setTimeout(resolve, 0));
+    // A large batch takes seconds: show the loading icon, and yield between names so it animates.
+    this.host.setStatus("");
+    renderLoading(this.resultsEl, `Taking over 0 of ${batchSize}…`);
+    const loadingText = this.resultsEl?.querySelector(".nameforge-modal__loading-text");
+    await nextFrame();
     const faithfulness = this.host.settings().faithfulness ?? 2;
     const prepared = prepareTakeoverTarget(
       target.corpus,
@@ -226,12 +239,22 @@ export class TakeoverView {
       },
       target.endings,
     );
-    const result = takeOver({
+    const steps = takeOverSteps({
       drawNative: draw,
       adopt: (native, rng) => adoptName({ native, target: prepared, rng }),
       batchSize,
       seed: this.host.lockedSeed(),
     });
+    let result: TakeoverBatchResult;
+    for (;;) {
+      const next = steps.next();
+      if (next.done) {
+        result = next.value;
+        break;
+      }
+      if (loadingText) loadingText.textContent = `Taking over ${next.value} of ${batchSize}…`;
+      await nextFrame();
+    }
     this.host.setCurrentSeed(result.seed);
     this.renderResults(this.resultsEl, result.rows);
     this.host.setStatus(result.notice ?? "");

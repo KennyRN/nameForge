@@ -1262,3 +1262,23 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 .nameforge-modal__takeover-adopted {
   font-weight: var(--font-semibold);
 }
+
+/* Loading: the animated dots and a short label, shown while results are worked out. */
+.nameforge-modal__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px 0;
+  color: var(--text-muted);
+}
+
+.nameforge-modal__loading-icon {
+  display: inline-flex;
+  color: var(--forge-accent, var(--interactive-accent));
+}
+
+.nameforge-modal__loading-icon svg {
+  width: 28px;
+  height: 28px;
+}

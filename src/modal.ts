@@ -67,7 +67,7 @@ import {
 } from "./packs/sections";
 import { parseWordList } from "./packs/wordList";
 import { AGEING, type AgeingCandidate, ageName, validateSource } from "./ageing/engine";
-import { TakeoverView } from "./takeoverView";
+import { renderLoading, TakeoverView } from "./takeoverView";
 import { AGEING_INSERT_FORMATS, type AgeingInsertFormat, DEFAULT_AGEING_INSERT_FORMAT, formatAgedName, TRAIL_SEPARATOR } from "./ageing/format";
 import {
   GENERIC_PLACE_NAMES_HISTORY_NAME,
@@ -939,6 +939,9 @@ export class NameForgeModal extends Modal {
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
     const seed = resolveSeed(seedOverride);
     const faithfulness = this.plugin.settings.faithfulness ?? 2;
+    // Let the loading icon paint before the search starts.
+    renderLoading(this.resultsEl, "Ageing…");
+    await new Promise((resolve) => window.setTimeout(resolve, 0));
     const result = ageName({
       source,
       targetNames: target.corpus,

@@ -45,7 +45,20 @@ export function samePackNotice(nativePath: string | undefined, takeoverPath: str
   return nativePath && nativePath === takeoverPath ? "Choose a different takeover pack." : null;
 }
 
+/** Fills the batch in one go. */
 export function takeOver(input: TakeoverBatchInput): TakeoverBatchResult {
+  const steps = takeOverSteps(input);
+  for (;;) {
+    const next = steps.next();
+    if (next.done) return next.value;
+  }
+}
+
+/**
+ * Fills the batch one native name at a time, pausing after each so a host can let the page
+ * repaint (and a loading spinner keep moving). Same result as `takeOver`.
+ */
+export function* takeOverSteps(input: TakeoverBatchInput): Generator<number, TakeoverBatchResult> {
   const seed = (input.seed ?? Math.floor(Math.random() * 0x100000000)) >>> 0;
   const batchSize = Math.max(0, Math.floor(input.batchSize));
   const nativeRng = mulberry32(seed);
@@ -62,6 +75,7 @@ export function takeOver(input: TakeoverBatchInput): TakeoverBatchResult {
     seen.add(key);
     const adoption = input.adopt(native, adoptionRng(seed, native));
     if (adoption) rows.push(adoption);
+    yield rows.length;
   }
   const notice =
     rows.length < batchSize ? `Only ${rows.length} names could be adopted. Try a different takeover pack.` : undefined;

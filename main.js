@@ -2010,6 +2010,8 @@ var ICON_NAME_AGEING = "nameforge-name-ageing";
 var ICON_NAME_AGEING_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="20" height="18" x="2" y="4" rx="4" /><path d="M8 2v4m8-4v4M2 10h20" /></g></g>';
 var ICON_NAME_TAKEOVER = "nameforge-name-takeover";
 var ICON_NAME_TAKEOVER_SVG = '<g transform="scale(4.16667)"><path fill="currentColor" d="M12.002 1.999c5.523 0 10.001 4.478 10.001 10.002q0 .395-.03.783a6.5 6.5 0 0 0-1.474-1.052a8.5 8.5 0 0 0-.233-1.733h-3.358q.048.504.073 1.021a6.5 6.5 0 0 0-1.49.296A19 19 0 0 0 15.4 10H8.605a19 19 0 0 0 .135 5h2.758q-.298.714-.422 1.5H9.063c.598 2.215 1.601 3.735 2.654 3.97a6.5 6.5 0 0 0 1.066 1.502q-.387.03-.781.03C6.478 22.002 2 17.524 2 12.001C2 6.477 6.478 1.999 12.002 1.999M7.51 16.501H4.787a8.53 8.53 0 0 0 4.095 3.41c-.523-.82-.954-1.846-1.27-3.015zM7.095 10H3.737l-.004.017a8.5 8.5 0 0 0-.233 1.984c0 1.056.193 2.067.545 3h3.173a21 21 0 0 1-.123-5m1.788-5.910l-.023.008A8.53 8.53 0 0 0 4.252 8.5H7.3c.313-1.752.86-3.278 1.583-4.41m3.119-.591l-.116.005C10.62 3.62 9.398 5.622 8.830 8.5h6.343c-.566-2.870-1.783-4.869-3.045-4.995zm3.120.59l.106.175c.67 1.112 1.178 2.572 1.475 4.237h3.048a8.53 8.53 0 0 0-4.338-4.290zM12 17.5a5.5 5.5 0 1 0 11 0a5.5 5.5 0 0 0-11 0m8.5-3.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h1a2.5 2.5 0 0 0-2-1c-.833 0-1.572.407-2.027 1.036a.5.5 0 0 1-.81-.586A3.5 3.5 0 0 1 17.5 14c.98 0 1.865.403 2.5 1.05v-.55a.5.5 0 0 1 .5-.5M15 19.95v.55a.5.5 0 0 1-1 0v-2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-1c.456.608 1.183 1 2 1c.766 0 1.452-.344 1.911-.888a.5.5 0 0 1 .764.645A3.5 3.5 0 0 1 17.5 21a3.5 3.5 0 0 1-2.5-1.05" /></g>';
+var ICON_LOADING = "nameforge-loading";
+var ICON_LOADING_SVG = '<g transform="scale(4.16667)"><circle cx="4" cy="12" r="3" fill="currentColor"><animate id="nameforgeLoadingA" fill="freeze" attributeName="opacity" begin="0;nameforgeLoadingC.end-0.25s" dur="0.75s" values="1;.2" /></circle><circle cx="12" cy="12" r="3" fill="currentColor" opacity=".4"><animate fill="freeze" attributeName="opacity" begin="nameforgeLoadingA.begin+0.15s" dur="0.75s" values="1;.2" /></circle><circle cx="20" cy="12" r="3" fill="currentColor" opacity=".3"><animate id="nameforgeLoadingC" fill="freeze" attributeName="opacity" begin="nameforgeLoadingA.begin+0.3s" dur="0.75s" values="1;.2" /></circle></g>';
 var ICON_DICE = "nameforge-dice";
 var ICON_DICE_SVG = '<g transform="scale(6.66667)"><path d="M0 0h15v15H0z" fill="none" /><path fill="currentColor" d="M4.14 1.14c-.68.05-1.33.43-1.7 1.07L.29 5.93c-.59 1.03-.26 2.32.77 2.91l3.72 2.14c.15.09.31.19.47.24V7.47c0-1.76 1.45-3.22 3.21-3.22h1.31c-.18-.26-.41-.5-.7-.67L5.35 1.44c-.39-.22-.8-.33-1.21-.3m.33.76c.6 0 1.12.41 1.28.99c.19.72-.23 1.45-.95 1.64c-.71.19-1.44-.23-1.64-.94c-.19-.72.24-1.45.95-1.64c.12-.04.24-.05.36-.05M2.2 5.84c.6 0 1.12.41 1.28.99c.19.71-.24 1.45-.95 1.64S1.08 8.23.89 7.52s.23-1.45.95-1.64c.11-.03.24-.05.36-.04m6.26-.52c-1.18 0-2.14.96-2.14 2.15v4.28c0 1.19.96 2.15 2.14 2.15h4.29c1.19 0 2.14-.96 2.14-2.15V7.47c0-1.19-.95-2.15-2.14-2.15zm4.29.81c.35 0 .69.14.95.39a1.34 1.34 0 0 1 0 1.89c-.26.26-.6.4-.95.4a1.34 1.34 0 0 1 0-2.68m-4.29 4.28c.36 0 .7.14.95.4c.25.25.39.59.39.94a1.34 1.34 0 0 1-2.68 0c0-.35.14-.69.4-.94c.25-.26.59-.4.94-.4" /></g>';
 var ICON_TEXT_INSERT = "nameforge-text-insert";
@@ -2052,6 +2054,7 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_NAME_AGEING, ICON_NAME_AGEING_SVG);
   (0, import_obsidian4.addIcon)(ICON_NAME_TAKEOVER, ICON_NAME_TAKEOVER_SVG);
+  (0, import_obsidian4.addIcon)(ICON_LOADING, ICON_LOADING_SVG);
   (0, import_obsidian4.addIcon)(ICON_DICE, ICON_DICE_SVG);
   (0, import_obsidian4.addIcon)(ICON_TEXT_INSERT, ICON_TEXT_INSERT_SVG);
   (0, import_obsidian4.addIcon)(ICON_CHECKLIST_INSERT, ICON_CHECKLIST_INSERT_SVG);
@@ -18519,7 +18522,7 @@ function adoptionRng(seed, native) {
 function samePackNotice(nativePath, takeoverPath) {
   return nativePath && nativePath === takeoverPath ? "Choose a different takeover pack." : null;
 }
-function takeOver(input) {
+function* takeOverSteps(input) {
   var _a;
   const seed = ((_a = input.seed) != null ? _a : Math.floor(Math.random() * 4294967296)) >>> 0;
   const batchSize = Math.max(0, Math.floor(input.batchSize));
@@ -18537,6 +18540,7 @@ function takeOver(input) {
     seen.add(key);
     const adoption = input.adopt(native, adoptionRng(seed, native));
     if (adoption) rows.push(adoption);
+    yield rows.length;
   }
   const notice = rows.length < batchSize ? `Only ${rows.length} names could be adopted. Try a different takeover pack.` : void 0;
   return { rows, seed, notice };
@@ -18557,6 +18561,14 @@ function formatAdoptedName(native, adopted, format) {
 }
 
 // src/takeoverView.ts
+function renderLoading(container, text) {
+  if (!container) return;
+  container.empty();
+  const loading = container.createDiv({ cls: "nameforge-modal__loading", attr: { role: "status" } });
+  (0, import_obsidian8.setIcon)(loading.createSpan({ cls: "nameforge-modal__loading-icon" }), ICON_LOADING);
+  loading.createSpan({ cls: "nameforge-modal__loading-text", text });
+}
+var nextFrame = () => new Promise((resolve) => window.setTimeout(resolve, 0));
 var SEED_MASK = 4294967296;
 var subSeed = (rng) => Math.floor(rng() * SEED_MASK) >>> 0;
 function nativeDrawer(entry, index, settings) {
@@ -18696,7 +18708,7 @@ var TakeoverView = class {
     this.host.setStatus((_a = samePackNotice(this.nativePath, this.takeoverPath)) != null ? _a : "");
   }
   async run(batchSize) {
-    var _a, _b;
+    var _a, _b, _c;
     if (!this.nativePath) {
       new import_obsidian8.Notice("nameForge: choose a native pack to generate names from.");
       return;
@@ -18725,9 +18737,11 @@ var TakeoverView = class {
       new import_obsidian8.Notice(`nameForge: ${target != null ? target : "the takeover pack can't be used"}.`);
       return;
     }
-    this.host.setStatus("Taking over\u2026");
-    await new Promise((resolve) => window.setTimeout(resolve, 0));
-    const faithfulness = (_a = this.host.settings().faithfulness) != null ? _a : 2;
+    this.host.setStatus("");
+    renderLoading(this.resultsEl, `Taking over 0 of ${batchSize}\u2026`);
+    const loadingText = (_a = this.resultsEl) == null ? void 0 : _a.querySelector(".nameforge-modal__loading-text");
+    await nextFrame();
+    const faithfulness = (_b = this.host.settings().faithfulness) != null ? _b : 2;
     const prepared = prepareTakeoverTarget(
       target.corpus,
       (names) => {
@@ -18736,15 +18750,25 @@ var TakeoverView = class {
       },
       target.endings
     );
-    const result = takeOver({
+    const steps = takeOverSteps({
       drawNative: draw,
       adopt: (native, rng) => adoptName({ native, target: prepared, rng }),
       batchSize,
       seed: this.host.lockedSeed()
     });
+    let result;
+    for (; ; ) {
+      const next = steps.next();
+      if (next.done) {
+        result = next.value;
+        break;
+      }
+      if (loadingText) loadingText.textContent = `Taking over ${next.value} of ${batchSize}\u2026`;
+      await nextFrame();
+    }
     this.host.setCurrentSeed(result.seed);
     this.renderResults(this.resultsEl, result.rows);
-    this.host.setStatus((_b = result.notice) != null ? _b : "");
+    this.host.setStatus((_c = result.notice) != null ? _c : "");
   }
   /** One row per adoption: native muted, then →, then the adopted name; selectable and insertable. */
   renderResults(container, rows) {
@@ -19548,6 +19572,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     const seedOverride = this.seedLocked ? parseSeedInput((_c = this.seedInputEl) == null ? void 0 : _c.value) : void 0;
     const seed = resolveSeed3(seedOverride);
     const faithfulness = (_d = this.plugin.settings.faithfulness) != null ? _d : 2;
+    renderLoading(this.resultsEl, "Ageing\u2026");
+    await new Promise((resolve) => window.setTimeout(resolve, 0));
     const result = ageName({
       source,
       targetNames: target.corpus,
