@@ -1,0 +1,1680 @@
+[
+  {
+    "case": {
+      "seed": 1,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "organic"
+        }
+      },
+      "slots": "none"
+    },
+    "result": {
+      "seed": 1,
+      "names": [
+        {
+          "text": "Dun Headland",
+          "etymology": "[headland] of the [colour: grey-brown]"
+        },
+        {
+          "text": "Sand Sands",
+          "etymology": "[sand dunes, sandy shore] + [soil or ground: sand]"
+        },
+        {
+          "text": "Lower Farm of [personal name]",
+          "etymology": "Lower [permanent or winter lowland dwelling] + [personal name]"
+        },
+        {
+          "text": "Grave of [personal name]",
+          "etymology": "[grave] + [personal name]"
+        },
+        {
+          "text": "Grey-brown Grave",
+          "etymology": "[grave] + [colour: grey-brown]"
+        },
+        {
+          "text": "Market of [earlier or district name]",
+          "etymology": "[market] of the [earlier or district name]"
+        },
+        {
+          "text": "Free Peasant Chapel",
+          "etymology": "[status or role: free peasant] + [chapel]"
+        },
+        {
+          "text": "East Temple",
+          "etymology": "East [heathen temple]"
+        },
+        {
+          "text": "Oxcliff",
+          "etymology": "[sea cliff] of the [domestic animal: ox]"
+        },
+        {
+          "text": "Thing Barrow",
+          "etymology": "[burial mound] of the [assembly or law: thing]"
+        },
+        {
+          "text": "Warm Valley",
+          "etymology": "[quality or condition: warm] + [shallow damp valley]"
+        },
+        {
+          "text": "Witch Cairn",
+          "etymology": "[cairn] of the [supernatural being: witch]"
+        },
+        {
+          "text": "Salt Market",
+          "etymology": "[produce: salt] + [market]"
+        },
+        {
+          "text": "[personal name] Pit",
+          "etymology": "[personal name] + [pit, quarry]"
+        },
+        {
+          "text": "[personal name] Mere",
+          "etymology": "[personal name] + [mere, shallow lake]"
+        },
+        {
+          "text": "[saint or holy person] Cairn",
+          "etymology": "[saint or holy person] + [cairn]"
+        },
+        {
+          "text": "Horse Marsh",
+          "etymology": "[domestic animal: horse] + [lowland marsh]"
+        },
+        {
+          "text": "Rother Pass",
+          "etymology": "[pass] + [domestic animal: cattle]"
+        },
+        {
+          "text": "Great Mootridge",
+          "etymology": "Great [flat-topped ridge] of the [assembly or law: moot]"
+        },
+        {
+          "text": "Hoar Pasture",
+          "etymology": "[colour: grey] + [pasture]"
+        },
+        {
+          "text": "South Black Wold",
+          "etymology": "South [colour: black] + [wold]"
+        },
+        {
+          "text": "Cairn of [saint or holy person]",
+          "etymology": "[cairn] of the [saint or holy person]"
+        },
+        {
+          "text": "Rother Beach",
+          "etymology": "[domestic animal: cattle] + [beach, strand]"
+        },
+        {
+          "text": "Well",
+          "etymology": "[holy spring]"
+        },
+        {
+          "text": "West Hamlet",
+          "etymology": "[dependent or secondary settlement] + [position or direction: west]"
+        }
+      ],
+      "notices": [
+        "“pass” has no fusion class; it is treated as usually spaced."
+      ]
+    }
+  },
+  {
+    "case": {
+      "seed": 2,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "organic",
+          "region": "east-midlands",
+          "feature": "settlement"
+        }
+      },
+      "slots": "organic"
+    },
+    "result": {
+      "seed": 2,
+      "names": [
+        {
+          "text": "Newbuilding",
+          "etymology": "[age: new] + [building, dwelling]"
+        },
+        {
+          "text": "Chesterboroug Hut",
+          "etymology": "[personal name: Chesterboroug] + [hut at summer pasture]"
+        },
+        {
+          "text": "White Church",
+          "etymology": "[colour: white] + [church]"
+        },
+        {
+          "text": "Gloucerd Hollow Holding",
+          "etymology": "[personal name: Gloucerd] + [hollow] + [land-holding, share of land]"
+        },
+        {
+          "text": "Old Middle Moot",
+          "etymology": "Old [position or direction: middle] + [speech place]"
+        },
+        {
+          "text": "Cheffield Close",
+          "etymology": "[personal name: Cheffield] + [hedged enclosure]"
+        },
+        {
+          "text": "White Moor",
+          "etymology": "[colour: white] + [upland moor]"
+        },
+        {
+          "text": "Summer Enclosure",
+          "etymology": "[season: summer] + [enclosed settlement]"
+        },
+        {
+          "text": "Bradinghamings",
+          "etymology": "[personal name: Bradingham] + [folk-group territory]"
+        },
+        {
+          "text": "[river or stream name] Boundary",
+          "etymology": "[river or stream name] + [boundary]"
+        },
+        {
+          "text": "West Hut",
+          "etymology": "[position or direction: west] + [hut at summer pasture]"
+        },
+        {
+          "text": "Big Stone",
+          "etymology": "[size: big] + [stone]"
+        },
+        {
+          "text": "Herdsman Church",
+          "etymology": "[status or role: herdsman] + [church]"
+        },
+        {
+          "text": "Hulls Farm",
+          "etymology": "[personal name: Hulls] + [permanent or winter lowland dwelling]"
+        },
+        {
+          "text": "Glondoventry Enclosure",
+          "etymology": "[personal name: Glondoventry] + [enclosed settlement]"
+        },
+        {
+          "text": "Cambrefordexe Hut",
+          "etymology": "[personal name: Cambrefordexe] + [shieling, summer pasture hut]"
+        },
+        {
+          "text": "Round Homestead",
+          "etymology": "[shape: round] + [homestead site]"
+        },
+        {
+          "text": "Durycairn",
+          "etymology": "[personal name: Dury] + [cairn]"
+        },
+        {
+          "text": "Swine Dairy",
+          "etymology": "[domestic animal: pig] + [specialised farm]"
+        },
+        {
+          "text": "Cross Homestead",
+          "etymology": "[built feature: cross] + [settlement by a roman site]"
+        },
+        {
+          "text": "Winchesburham Meadow",
+          "etymology": "[personal name: Winchesburham] + [water meadow]"
+        },
+        {
+          "text": "[deity] Wall",
+          "etymology": "[deity] + [wall]"
+        },
+        {
+          "text": "East Farm",
+          "etymology": "[position or direction: east] + [permanent or winter lowland dwelling]"
+        },
+        {
+          "text": "Irish Farm",
+          "etymology": "[ethnic or cultural group: Irish] + [outlying place, dependent site]"
+        },
+        {
+          "text": "Warm Building",
+          "etymology": "[quality or condition: warm] + [building, dwelling]"
+        }
+      ],
+      "notices": []
+    }
+  },
+  {
+    "case": {
+      "seed": 3,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "organic",
+          "feature": "landscape"
+        },
+        "register": "traditional"
+      },
+      "slots": "organic"
+    },
+    "result": {
+      "seed": 3,
+      "names": [
+        {
+          "text": "Moor of [earlier or district name]",
+          "etymology": "[upland moor] of the [earlier or district name]"
+        },
+        {
+          "text": "Abbot Hound Forest",
+          "etymology": "[status or role: abbot] [domestic animal: dog] + [great woodland]"
+        },
+        {
+          "text": "Salmon Valley",
+          "etymology": "[fish and other creatures: salmon] + [shallow damp valley]"
+        },
+        {
+          "text": "Nettle Pasture Farm",
+          "etymology": "[wild plant: nettle] + [woodland swine pasture] + [home farm of an estate]"
+        },
+        {
+          "text": "Broomfold",
+          "etymology": "[wild plant: broom] + [animal fold]"
+        },
+        {
+          "text": "Moor of Carlicesterbu",
+          "etymology": "[upland moor] + [personal name: Carlicesterbu]"
+        },
+        {
+          "text": "Lin Hollow",
+          "etymology": "[corrie] + [crop: flax]"
+        },
+        {
+          "text": "Ash Glen",
+          "etymology": "[narrow valley, glen] + [tree: ash]"
+        },
+        {
+          "text": "Thorn Ravine",
+          "etymology": "[ravine] of the [tree: thorn]"
+        },
+        {
+          "text": "Close of [earlier or district name]",
+          "etymology": "[hedged enclosure] of the [earlier or district name]"
+        },
+        {
+          "text": "Black River",
+          "etymology": "[river] + [colour: black]"
+        },
+        {
+          "text": "Red Cove",
+          "etymology": "[cove] + [colour: red]"
+        },
+        {
+          "text": "West Claywash",
+          "etymology": "West [flood-prone land by a river] of the [soil or ground: clay]"
+        },
+        {
+          "text": "Litstone",
+          "etymology": "[stone] of the [size: little]"
+        },
+        {
+          "text": "Playtop",
+          "etymology": "[activity: player] + [summit, top]"
+        },
+        {
+          "text": "Pasture of [river or stream name]",
+          "etymology": "[pasture] + [river or stream name]"
+        },
+        {
+          "text": "Islet of Nottingh",
+          "etymology": "[skerry, rock islet] + [personal name: Nottingh]"
+        },
+        {
+          "text": "Fox Mouth",
+          "etymology": "[river mouth] of the [wild animal: fox]"
+        },
+        {
+          "text": "Ern Marsh",
+          "etymology": "[marsh] + [bird: eagle]"
+        },
+        {
+          "text": "Hobstone",
+          "etymology": "[supernatural being: hobgoblin] + [stone]"
+        },
+        {
+          "text": "Mickletor-on-the-[river or stream name]",
+          "etymology": "[tor] of the [size: great] on the [river or stream name]"
+        },
+        {
+          "text": "[folk group] Way",
+          "etymology": "[folk group] + [way, track]"
+        },
+        {
+          "text": "Clean Stream",
+          "etymology": "[stream with its valley] + [quality or condition: clean]"
+        },
+        {
+          "text": "Lady Field",
+          "etymology": "[status or role: lady] + [open country]"
+        },
+        {
+          "text": "Wold of [earlier or district name]",
+          "etymology": "[wold] + [earlier or district name]"
+        }
+      ],
+      "notices": []
+    }
+  },
+  {
+    "case": {
+      "seed": 4,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "organic"
+        },
+        "render": {
+          "joining": "fused"
+        }
+      },
+      "slots": "organic-ignore"
+    },
+    "result": {
+      "seed": 4,
+      "names": [
+        {
+          "text": "[folk group] Head",
+          "etymology": "[folk group] + [valley head]"
+        },
+        {
+          "text": "Strat Homestead",
+          "etymology": "[settlement by a roman site] of the [built feature: street]"
+        },
+        {
+          "text": "New Manor",
+          "etymology": "[manor house] + [age: new]"
+        },
+        {
+          "text": "Moot",
+          "etymology": "[meeting place]"
+        },
+        {
+          "text": "Foul Stream",
+          "etymology": "[mountain stream] of the [quality or condition: foul]"
+        },
+        {
+          "text": "Tower of Sheffield",
+          "etymology": "[tower house] + [personal name: Sheffield]"
+        },
+        {
+          "text": "Old Hut",
+          "etymology": "[age: old] + [hut, temporary shelter]"
+        },
+        {
+          "text": "Queen Grange-with-[river or stream name]",
+          "etymology": "[monastic outlying farm] + [status or role: queen] with [river or stream name]"
+        },
+        {
+          "text": "Canterbury Head",
+          "etymology": "[personal name: Canterbury] + [valley head]"
+        },
+        {
+          "text": "Yew Hollow",
+          "etymology": "[hollow] of the [tree: yew]"
+        },
+        {
+          "text": "Upper Meadow",
+          "etymology": "[hay meadow] + [position or direction: upper]"
+        },
+        {
+          "text": "Edge Homestead",
+          "etymology": "[early homestead or village] of the [landform: edge]"
+        },
+        {
+          "text": "Nether Dairy",
+          "etymology": "[specialised farm] of the [position or direction: lower]"
+        },
+        {
+          "text": "Clean Barrow",
+          "etymology": "[quality or condition: clean] + [burial mound]"
+        },
+        {
+          "text": "Motspur",
+          "etymology": "[heel-shaped spur] of the [assembly or law: moot]"
+        },
+        {
+          "text": "Deer Stream Estate",
+          "etymology": "[wild animal: deer] + [clear stream] + [estate, manor centre]"
+        },
+        {
+          "text": "Butter Workshop",
+          "etymology": "[workshop or store building] of the [produce: butter]"
+        },
+        {
+          "text": "Far Manor",
+          "etymology": "[position or direction: far] + [manor house]"
+        },
+        {
+          "text": "Church South Clearing",
+          "etymology": "Church [clearing, paddock] of the [position or direction: south]"
+        },
+        {
+          "text": "North Farm",
+          "etymology": "[permanent or winter lowland dwelling] + [position or direction: north]"
+        },
+        {
+          "text": "Mickle Valley",
+          "etymology": "[long valley] of the [size: great]"
+        },
+        {
+          "text": "Farm of Ripon",
+          "etymology": "[cattle farm] + [personal name: Ripon]"
+        },
+        {
+          "text": "Southfield",
+          "etymology": "[position or direction: south] + [place for games or sport]"
+        },
+        {
+          "text": "Pasture of Salisbury",
+          "etymology": "[pasture] of the [personal name: Salisbury]"
+        },
+        {
+          "text": "Cuckoo Spring",
+          "etymology": "[river source, spring-head] + [bird: cuckoo]"
+        }
+      ],
+      "notices": []
+    }
+  },
+  {
+    "case": {
+      "seed": 5,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "new-land"
+        }
+      },
+      "slots": "colonial"
+    },
+    "result": {
+      "seed": 5,
+      "names": [
+        {
+          "text": "Harstone",
+          "etymology": "[colour: grey] + [stone]"
+        },
+        {
+          "text": "North Aller Islet",
+          "etymology": "North [skerry, rock islet] + [tree: alder]"
+        },
+        {
+          "text": "[commander or conqueror] Camp",
+          "etymology": "[commander or conqueror] + [garrison camp]"
+        },
+        {
+          "text": "Graveyard of Lindola",
+          "etymology": "[burial ground, churchyard] of [personal name: Lindola]"
+        },
+        {
+          "text": "Old Landing",
+          "etymology": "[age: old] + [landing place]"
+        },
+        {
+          "text": "Ramoketuk Well",
+          "etymology": "[native place name, adapted: Ramoketuk] + [spring with roman association]"
+        },
+        {
+          "text": "Midchapel-by-Mannaponaha",
+          "etymology": "[chapel] + [position or direction: middle] by [river or stream name: Mannaponaha]"
+        },
+        {
+          "text": "Watersmeet of Mannaka",
+          "etymology": "[confluence] + [river or stream name, adopted: Mannaka]"
+        },
+        {
+          "text": "Earl [explorer or founder] Estate",
+          "etymology": "[status or role: earl] [explorer or founder] + [estate, manor centre]"
+        },
+        {
+          "text": "Wall of Camucium",
+          "etymology": "[wall] of [personal name: Camucium]"
+        },
+        {
+          "text": "Gate of Hiawasa",
+          "etymology": "[swing gate] + [native place name, adapted: Hiawasa]"
+        },
+        {
+          "text": "Prince Hall",
+          "etymology": "[status or role: prince] + [lord’s hall]"
+        },
+        {
+          "text": "Wall Church",
+          "etymology": "[church] + [built feature: wall]"
+        },
+        {
+          "text": "Rush Spring",
+          "etymology": "[wild plant: rush] + [spring, well]"
+        },
+        {
+          "text": "Bounty Port",
+          "etymology": "[market town, harbour] + [ship: Bounty]"
+        },
+        {
+          "text": "Beaver Stream",
+          "etymology": "[mountain stream] of [wild animal: beaver]"
+        },
+        {
+          "text": "Hut of Ventium",
+          "etymology": "[hut, temporary shelter] + [personal name: Ventium]"
+        },
+        {
+          "text": "Raven Clearing",
+          "etymology": "[bird: raven] + [woodland, then clearing]"
+        },
+        {
+          "text": "[official, patron or sponsor] Wall",
+          "etymology": "[official, patron or sponsor] + [wall]"
+        },
+        {
+          "text": "Otter Down",
+          "etymology": "[wild animal: otter] + [low level-topped hill]"
+        },
+        {
+          "text": "[explorer or founder]'s Scrub",
+          "etymology": "[explorer or founder]'s + [scrubland]"
+        },
+        {
+          "text": "[explorer or founder]'s House",
+          "etymology": "[explorer or founder]'s + [dwelling]"
+        },
+        {
+          "text": "Pemmakannas Chase",
+          "etymology": "[native place name, adopted: Pemmakannas] + [royal hunting ground]"
+        },
+        {
+          "text": "Imperial of South",
+          "etymology": "[honorific title: Imperial] of [position or direction: south]"
+        },
+        {
+          "text": "Court of [monarch, ruler or dynasty]",
+          "etymology": "[royal or lordly court] + [monarch, ruler or dynasty]"
+        }
+      ],
+      "notices": []
+    }
+  },
+  {
+    "case": {
+      "seed": 6,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "new-land",
+          "tradition": "british-imperial"
+        }
+      },
+      "slots": "colonial"
+    },
+    "result": {
+      "seed": 6,
+      "names": [
+        {
+          "text": "[official, patron or sponsor] Wood",
+          "etymology": "[official, patron or sponsor] + [wood]"
+        },
+        {
+          "text": "Lower Despair Desert",
+          "etymology": "Lower [event or incident: despair] + [desert]"
+        },
+        {
+          "text": "Peak of [monarch, ruler or dynasty]",
+          "etymology": "[sharp peak] + [monarch, ruler or dynasty]"
+        },
+        {
+          "text": "Plenty Glacier",
+          "etymology": "[emotion or aspiration: plenty] + [glacier]"
+        },
+        {
+          "text": "Dun Court",
+          "etymology": "[colour: grey-brown] + [royal or lordly court]"
+        },
+        {
+          "text": "Clay Pasture",
+          "etymology": "[soil or ground: clay] + [woodland swine pasture]"
+        },
+        {
+          "text": "Musquodaug Bath",
+          "etymology": "[native place name, adapted: Musquodaug] + [bath, spa]"
+        },
+        {
+          "text": "Far House",
+          "etymology": "[position or direction: far] + [dwelling]"
+        },
+        {
+          "text": "Sheep Kiln",
+          "etymology": "[kiln] + [domestic animal: sheep]"
+        },
+        {
+          "text": "Coridunumway",
+          "etymology": "[personal name: Coridunum] + [way, track]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty]",
+          "etymology": "[monarch, ruler or dynasty]"
+        },
+        {
+          "text": "[official, patron or sponsor] Camp",
+          "etymology": "[official, patron or sponsor] + [garrison camp]"
+        },
+        {
+          "text": "Blue Town",
+          "etymology": "[colour: blue] + [town]"
+        },
+        {
+          "text": "[explorer or founder] Gate",
+          "etymology": "[explorer or founder] + [swing gate]"
+        },
+        {
+          "text": "Old Fort",
+          "etymology": "[fort] + [age: old]"
+        },
+        {
+          "text": "[official, patron or sponsor]",
+          "etymology": "[official, patron or sponsor]"
+        },
+        {
+          "text": "Investigator Heights",
+          "etymology": "[ship: Investigator] + [heights]"
+        },
+        {
+          "text": "[explorer or founder] House",
+          "etymology": "[explorer or founder] + [dwelling]"
+        },
+        {
+          "text": "[explorer or founder] Saltworks",
+          "etymology": "[explorer or founder] + [salt-house]"
+        },
+        {
+          "text": "Penowee Frontier",
+          "etymology": "[native place name, adopted: Penowee] + [frontier, march]"
+        },
+        {
+          "text": "Wood of Sapokaweena",
+          "etymology": "[wood on a steep slope] + [native place name, adopted: Sapokaweena]"
+        },
+        {
+          "text": "Battle Valley",
+          "etymology": "[small enclosed side valley] + [event or incident: battle]"
+        },
+        {
+          "text": "[official, patron or sponsor] Way",
+          "etymology": "[official, patron or sponsor] + [way, track]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty] Top Post",
+          "etymology": "[monarch, ruler or dynasty] + [summit, top] + [trading post]"
+        },
+        {
+          "text": "Wreck Point Town",
+          "etymology": "[point, nose] + [town] + [event or incident: wreck]"
+        }
+      ],
+      "notices": []
+    }
+  },
+  {
+    "case": {
+      "seed": 7,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "new-land",
+          "tradition": "spanish",
+          "context": "contested-frontier"
+        }
+      },
+      "slots": "colonial"
+    },
+    "result": {
+      "seed": 7,
+      "names": [
+        {
+          "text": "Salem Farmstead",
+          "etymology": "[enclosed farmstead] of [classical, biblical or legendary name: Salem]"
+        },
+        {
+          "text": "Broad Island",
+          "etymology": "[dry ground in wet land] + [shape: broad]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty] of Ninawee",
+          "etymology": "[monarch, ruler or dynasty] of [river or stream name, adopted: Ninawee]"
+        },
+        {
+          "text": "Grave of [saint or holy person]-in-the-Quannakitt",
+          "etymology": "[grave] of [saint or holy person] in the [river or stream name: Quannakitt]"
+        },
+        {
+          "text": "Danger Terrace",
+          "etymology": "[terrace, lynchet] of [event or incident: danger]"
+        },
+        {
+          "text": "Newhouse Bremetentium",
+          "etymology": "[house] + [age: new] [personal name: Bremetentium] (translated native name)"
+        },
+        {
+          "text": "Catastrophe Mire",
+          "etymology": "[mire] of [event or incident: catastrophe]"
+        },
+        {
+          "text": "Crane Stream",
+          "etymology": "[clear stream] + [bird: crane]"
+        },
+        {
+          "text": "River [official, patron or sponsor]",
+          "etymology": "[river] of [official, patron or sponsor]"
+        },
+        {
+          "text": "Cross Chapel",
+          "etymology": "[chapel] of [religious association: cross]"
+        },
+        {
+          "text": "Pasture of [official, patron or sponsor]",
+          "etymology": "[woodland swine pasture] + [mission] + [official, patron or sponsor]"
+        },
+        {
+          "text": "Battle Wood",
+          "etymology": "[wood on a steep slope] of [event or incident: battle]"
+        },
+        {
+          "text": "Temple Crag-with-Akannamuck",
+          "etymology": "[religious association: temple] + [crag] with [river or stream name: Akannamuck]"
+        },
+        {
+          "text": "Dry Down",
+          "etymology": "[low level-topped hill] of [quality or condition: dry]"
+        },
+        {
+          "text": "Glacier of Hiawinnakit",
+          "etymology": "[glacier] + [native place name, adapted: Hiawinnakit]"
+        },
+        {
+          "text": "Yew Clearing",
+          "etymology": "[woodland, then clearing] of [tree: yew]"
+        },
+        {
+          "text": "Cave of [monarch, ruler or dynasty]",
+          "etymology": "[cave] of [monarch, ruler or dynasty]"
+        },
+        {
+          "text": "August Camp",
+          "etymology": "[garrison camp] of [honorific title: August]"
+        },
+        {
+          "text": "Little Midcastle",
+          "etymology": "Little [position or direction: middle] + [castle]"
+        },
+        {
+          "text": "Crane Creek",
+          "etymology": "[creek] of [bird: crane]"
+        },
+        {
+          "text": "Watersmeet of [official, patron or sponsor]",
+          "etymology": "[confluence] + [official, patron or sponsor]"
+        },
+        {
+          "text": "Regal of Tokomahemak",
+          "etymology": "[honorific title: Regal] of [native place name, adapted: Tokomahemak]"
+        },
+        {
+          "text": "Clover Farmland",
+          "etymology": "[arable field] + [wild plant: clover]"
+        },
+        {
+          "text": "Coalpost",
+          "etymology": "[trading post] of [resource: coal]"
+        },
+        {
+          "text": "Stream of Ponetannapa",
+          "etymology": "[stream with its valley] of [river or stream name, adapted: Ponetannapa]"
+        }
+      ],
+      "notices": []
+    }
+  },
+  {
+    "case": {
+      "seed": 8,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "new-land",
+          "tradition": "english-speaking-settler",
+          "context": "wild-and-unsettled"
+        }
+      },
+      "slots": "colonial"
+    },
+    "result": {
+      "seed": 8,
+      "names": [
+        {
+          "text": "Red Mere",
+          "etymology": "[colour: red] + [mere, shallow lake]"
+        },
+        {
+          "text": "[saint or holy person] River",
+          "etymology": "[saint or holy person] + [land in a river bend]"
+        },
+        {
+          "text": "Maple Glacier",
+          "etymology": "[tree: maple] + [glacier]"
+        },
+        {
+          "text": "Bregulbium Corner",
+          "etymology": "[personal name: Bregulbium] + [corner, angle]"
+        },
+        {
+          "text": "Salem Hill",
+          "etymology": "[hill] of [classical, biblical or legendary name: Salem]"
+        },
+        {
+          "text": "Inner [explorer or founder]'s Bank",
+          "etymology": "Inner [explorer or founder]'s + [steep bank, ravine side]"
+        },
+        {
+          "text": "Giant Peak",
+          "etymology": "[supernatural being: giant] + [sharp peak]"
+        },
+        {
+          "text": "Little [saint or holy person] Islet",
+          "etymology": "Little [saint or holy person] + [skerry, rock islet]"
+        },
+        {
+          "text": "Segosfield",
+          "etymology": "[personal name: Sego] + [level field]"
+        },
+        {
+          "text": "Maple Clearing",
+          "etymology": "[tree: maple] + [woodland, then clearing] (translated native name)"
+        },
+        {
+          "text": "Forty Mile Bridge",
+          "etymology": "[distance or survey mark: Forty] + [bridge]"
+        },
+        {
+          "text": "Gorge of [monarch, ruler or dynasty]",
+          "etymology": "[river-cut gorge] + [monarch, ruler or dynasty]"
+        },
+        {
+          "text": "Makeenawake Peak",
+          "etymology": "[native place name, adopted: Makeenawake] + [pointed hill]"
+        },
+        {
+          "text": "Yewpasture",
+          "etymology": "[tree: yew] + [pasture] (translated native name)"
+        },
+        {
+          "text": "Welsh Geo",
+          "etymology": "[ethnic or cultural group: Welsh] + [coastal chasm, geo]"
+        },
+        {
+          "text": "Quinnapotaw Well",
+          "etymology": "[river or stream name, adopted: Quinnapotaw] + [spring with roman association]"
+        },
+        {
+          "text": "Old Hazel Grove",
+          "etymology": "Old [tree: hazel] + [grove, possibly sacred]"
+        },
+        {
+          "text": "Mount Eborinium",
+          "etymology": "[hill] + [personal name: Eborinium]"
+        },
+        {
+          "text": "[official, patron or sponsor]'s Heath",
+          "etymology": "[official, patron or sponsor]'s + [heath]"
+        },
+        {
+          "text": "Appletop",
+          "etymology": "[tree: apple] + [summit, top]"
+        },
+        {
+          "text": "Ottowennapo Moor",
+          "etymology": "[river or stream name, adapted: Ottowennapo] + [upland moor]"
+        },
+        {
+          "text": "Old Crooked Geo",
+          "etymology": "Old [shape: crooked] + [coastal chasm, geo]"
+        },
+        {
+          "text": "Catae's Shingle",
+          "etymology": "[personal name: Catae]'s + [shingle bank]"
+        },
+        {
+          "text": "Corinth",
+          "etymology": "[classical, biblical or legendary name: Corinth]"
+        },
+        {
+          "text": "Pleasant Beach",
+          "etymology": "[beach, strand] + [emotion or aspiration: pleasant]"
+        }
+      ],
+      "notices": []
+    }
+  },
+  {
+    "case": {
+      "seed": 9,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "new-land",
+          "tradition": "french",
+          "context": "sparse-or-weak-native-presence"
+        }
+      },
+      "slots": "none"
+    },
+    "result": {
+      "seed": 9,
+      "names": [
+        {
+          "text": "Cairn of [personal name]",
+          "etymology": "[cairn] of [personal name]"
+        },
+        {
+          "text": "Monk Manor",
+          "etymology": "[manor house] + [status or role: monk]"
+        },
+        {
+          "text": "Assart of [official, patron or sponsor]",
+          "etymology": "[newly cleared land, assart] + [official, patron or sponsor]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty] Crossing [saint or holy person]",
+          "etymology": "[monarch, ruler or dynasty] + [crossing] [saint or holy person]"
+        },
+        {
+          "text": "Old [personal name] Way",
+          "etymology": "Old [personal name] + [way, track]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty] Peak",
+          "etymology": "[monarch, ruler or dynasty] + [pointed hill]"
+        },
+        {
+          "text": "Crook Farmland",
+          "etymology": "[arable unit] of [shape: crooked]"
+        },
+        {
+          "text": "March of [native place name]",
+          "etymology": "[frontier, march] of [native place name, adapted]"
+        },
+        {
+          "text": "Monk Village",
+          "etymology": "[village] of [status or role: monk]"
+        },
+        {
+          "text": "Adventure Islands",
+          "etymology": "[ship: Adventure] + [island group]"
+        },
+        {
+          "text": "[homeland place name] Land",
+          "etymology": "[homeland place name] + [land, territory]"
+        },
+        {
+          "text": "Gallows of [native place name]",
+          "etymology": "[execution site] + [native place name, adopted]"
+        },
+        {
+          "text": "Ferry of [official, patron or sponsor]",
+          "etymology": "[ferry] + [official, patron or sponsor]"
+        },
+        {
+          "text": "Great Town",
+          "etymology": "[town] + [size: great]"
+        },
+        {
+          "text": "Great [monarch, ruler or dynasty]",
+          "etymology": "Great [monarch, ruler or dynasty]"
+        },
+        {
+          "text": "Minster of [river or stream name]",
+          "etymology": "[minster, mother church] of [river or stream name, adopted]"
+        },
+        {
+          "text": "Lang Stone",
+          "etymology": "[stone] + [shape: long]"
+        },
+        {
+          "text": "[homeland place name] Island",
+          "etymology": "[homeland place name] + [dry ground in wet land]"
+        },
+        {
+          "text": "[explorer or founder] Marsh-with-[river or stream name]",
+          "etymology": "[explorer or founder] + [brushwood marsh, carr] with [river or stream name]"
+        },
+        {
+          "text": "Post of [native place name]",
+          "etymology": "[frontier post] of [native place name, adopted]"
+        },
+        {
+          "text": "Old Field of [river or stream name]",
+          "etymology": "Old [level field] + [river or stream name, adapted]"
+        },
+        {
+          "text": "Heath of [official, patron or sponsor]",
+          "etymology": "[heath] of [official, patron or sponsor]"
+        },
+        {
+          "text": "[official, patron or sponsor]'s Town",
+          "etymology": "[official, patron or sponsor]'s + [town]"
+        },
+        {
+          "text": "Candlemas Chapel",
+          "etymology": "[calendar date or feast: Candlemas] + [chapel]"
+        },
+        {
+          "text": "New [homeland place name]",
+          "etymology": "New [homeland place name]"
+        }
+      ],
+      "notices": []
+    }
+  },
+  {
+    "case": {
+      "seed": 10,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "established"
+        }
+      },
+      "slots": "colonial"
+    },
+    "result": {
+      "seed": 10,
+      "names": [
+        {
+          "text": "Little [commander or conqueror] Cliff",
+          "etymology": "Little [commander or conqueror] + [sea cliff]"
+        },
+        {
+          "text": "Land of [royal woman]",
+          "etymology": "[land, territory] of [royal woman]"
+        },
+        {
+          "text": "Oak Orchard",
+          "etymology": "[orchard] + [tree: oak]"
+        },
+        {
+          "text": "Great Far Hall",
+          "etymology": "Great [position or direction: far] + [lord’s hall]"
+        },
+        {
+          "text": "Temple",
+          "etymology": "[heathen temple]"
+        },
+        {
+          "text": "Maple Mound",
+          "etymology": "[rounded hill, mound] of [tree: maple]"
+        },
+        {
+          "text": "Moor of [official, patron or sponsor]",
+          "etymology": "[upland moor] + [trading post] + [official, patron or sponsor]"
+        },
+        {
+          "text": "Farmland of Winnaki",
+          "etymology": "[arable unit] + [river or stream name, adopted: Winnaki]"
+        },
+        {
+          "text": "Senawokawen Fort",
+          "etymology": "[native place name, adopted: Senawokawen] + [fortified place, stronghold]"
+        },
+        {
+          "text": "Eluwassuk Bog",
+          "etymology": "[native place name, adapted: Eluwassuk] + [bog]"
+        },
+        {
+          "text": "Maple Wood",
+          "etymology": "[wood] + [tree: maple]"
+        },
+        {
+          "text": "West Capital",
+          "etymology": "[capital] of [position or direction: west]"
+        },
+        {
+          "text": "Birch Nook",
+          "etymology": "[tree: birch] + [nook]"
+        },
+        {
+          "text": "Ling Hollow",
+          "etymology": "[hollow] + [wild plant: heather]"
+        },
+        {
+          "text": "South Close",
+          "etymology": "[position or direction: south] + [hedged enclosure]"
+        },
+        {
+          "text": "North Heath",
+          "etymology": "[position or direction: north] + [heath]"
+        },
+        {
+          "text": "Ishawee Moor",
+          "etymology": "[native place name, adopted: Ishawee] + [upland moor]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty] of Winnamahaki",
+          "etymology": "[monarch, ruler or dynasty] of [river or stream name, adopted: Winnamahaki]"
+        },
+        {
+          "text": "Dun Mill",
+          "etymology": "[mill] of [colour: grey-brown]"
+        },
+        {
+          "text": "Dunwell",
+          "etymology": "[spring with roman association] of [colour: grey-brown]"
+        },
+        {
+          "text": "[explorer or founder] Bay",
+          "etymology": "[explorer or founder] + [bay]"
+        },
+        {
+          "text": "Oasis of Nokomakwena",
+          "etymology": "[oasis] + [native place name, adapted: Nokomakwena]"
+        },
+        {
+          "text": "Moot",
+          "etymology": "[meeting place]"
+        },
+        {
+          "text": "Marl Lane Colony",
+          "etymology": "[soil or ground: marl] + [lane] + [colony]"
+        },
+        {
+          "text": "Pool of Manatawa",
+          "etymology": "[pool] of [native place name, adopted: Manatawa]"
+        }
+      ],
+      "notices": []
+    }
+  },
+  {
+    "case": {
+      "seed": 11,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "established",
+          "tradition": "british-imperial",
+          "context": "adoption"
+        }
+      },
+      "slots": "colonial"
+    },
+    "result": {
+      "seed": 11,
+      "names": [
+        {
+          "text": "Flint Clearing",
+          "etymology": "[clearing, paddock] + [soil or ground: flint]"
+        },
+        {
+          "text": "[official, patron or sponsor] Weir",
+          "etymology": "[official, patron or sponsor] + [fish-weir]"
+        },
+        {
+          "text": "Gorse Ravine",
+          "etymology": "[wild plant: gorse] + [ravine]"
+        },
+        {
+          "text": "[commander or conqueror] Fell",
+          "etymology": "[commander or conqueror] + [fell]"
+        },
+        {
+          "text": "Reed Wallow",
+          "etymology": "[wild plant: reed] + [miry pool, wallowing place]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty] Beacon",
+          "etymology": "[monarch, ruler or dynasty] + [beacon]"
+        },
+        {
+          "text": "Taluwahkkit Cantonment",
+          "etymology": "[river or stream name, adapted: Taluwahkkit] + [cantonment]"
+        },
+        {
+          "text": "Upper Bean Assart",
+          "etymology": "Upper [crop: bean] + [newly cleared land, assart]"
+        },
+        {
+          "text": "[official, patron or sponsor]'s [local settlement word]",
+          "etymology": "[official, patron or sponsor]'s + [local settlement word]"
+        },
+        {
+          "text": "Foul Sands",
+          "etymology": "[quality or condition: foul] + [sand dunes, sandy shore]"
+        },
+        {
+          "text": "[commander or conqueror] Barrow",
+          "etymology": "[commander or conqueror] + [burial mound]"
+        },
+        {
+          "text": "[commander or conqueror] March",
+          "etymology": "[commander or conqueror] + [frontier, march]"
+        },
+        {
+          "text": "Castle Fair Clearing",
+          "etymology": "Castle [quality or condition: fair] + [woodland, then clearing] (translated native name)"
+        },
+        {
+          "text": "Rye Clearing",
+          "etymology": "[woodland, then clearing] + [crop: rye]"
+        },
+        {
+          "text": "[official, patron or sponsor]",
+          "etymology": "[official, patron or sponsor]"
+        },
+        {
+          "text": "[royal woman] [local market word]",
+          "etymology": "[local market word] + [royal woman]"
+        },
+        {
+          "text": "[explorer or founder]'s [local settlement word]",
+          "etymology": "[explorer or founder]'s + [local settlement word]"
+        },
+        {
+          "text": "[explorer or founder] Valley",
+          "etymology": "[explorer or founder] + [small enclosed side valley]"
+        },
+        {
+          "text": "Usquoda Island",
+          "etymology": "[native place name, adopted: Usquoda] + [island]"
+        },
+        {
+          "text": "Fairy Dyke",
+          "etymology": "[supernatural being: fairy] + [dyke, boundary earthwork]"
+        },
+        {
+          "text": "Makwenawoka Crag",
+          "etymology": "[native place name, adopted: Makwenawoka] + [crag]"
+        },
+        {
+          "text": "[explorer or founder] Stream",
+          "etymology": "[explorer or founder] + [mountain stream]"
+        },
+        {
+          "text": "Quannapaug Pool",
+          "etymology": "[river or stream name, adopted: Quannapaug] + [pool]"
+        },
+        {
+          "text": "Wheat Farmstead",
+          "etymology": "[crop: wheat] + [enclosed farmstead] (translated native name)"
+        },
+        {
+          "text": "Market [official, patron or sponsor] Hall",
+          "etymology": "Market [official, patron or sponsor] + [lord’s hall]"
+        }
+      ],
+      "notices": [
+        "“farmstead” has no fusion class; it is treated as usually spaced."
+      ]
+    }
+  },
+  {
+    "case": {
+      "seed": 12,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "established",
+          "tradition": "dutch",
+          "context": "accommodation"
+        }
+      },
+      "slots": "colonial"
+    },
+    "result": {
+      "seed": 12,
+      "names": [
+        {
+          "text": "Castle Moot",
+          "etymology": "Castle [meeting place]"
+        },
+        {
+          "text": "Monkwood",
+          "etymology": "[status or role: monk] + [wood on a steep slope]"
+        },
+        {
+          "text": "Warm Ravine",
+          "etymology": "[ravine] of [quality or condition: warm]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty]'s Camp",
+          "etymology": "[monarch, ruler or dynasty]'s + [garrison camp]"
+        },
+        {
+          "text": "Overhouse",
+          "etymology": "[position or direction: upper] + [dwelling]"
+        },
+        {
+          "text": "Gallows",
+          "etymology": "[execution site]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty]'s Grave",
+          "etymology": "[monarch, ruler or dynasty]'s + [grave]"
+        },
+        {
+          "text": "Prince Wiramauetuk Heath",
+          "etymology": "[status or role: prince] [river or stream name, adapted: Wiramauetuk] + [heath]"
+        },
+        {
+          "text": "New Furzecastle",
+          "etymology": "New [wild plant: gorse] + [castle] (translated native name)"
+        },
+        {
+          "text": "Maple River Village",
+          "etymology": "[tree: maple] + [land in a river bend] + [planned village]"
+        },
+        {
+          "text": "[official, patron or sponsor] Hall",
+          "etymology": "[official, patron or sponsor] + [lord’s hall]"
+        },
+        {
+          "text": "Kittanaki Cross",
+          "etymology": "[river or stream name, adapted: Kittanaki] + [standing cross]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty] Bay",
+          "etymology": "[monarch, ruler or dynasty] + [bay]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty]'s Plains",
+          "etymology": "[monarch, ruler or dynasty]'s + [plain, grassland]"
+        },
+        {
+          "text": "East Court",
+          "etymology": "[royal or lordly court] + [position or direction: east]"
+        },
+        {
+          "text": "[official, patron or sponsor] Court",
+          "etymology": "[official, patron or sponsor] + [royal or lordly court]"
+        },
+        {
+          "text": "White Moor",
+          "etymology": "[colour: white] + [upland moor]"
+        },
+        {
+          "text": "Inner Taluwassuk Chapel",
+          "etymology": "Inner [river or stream name, adapted: Taluwassuk] + [chapel]"
+        },
+        {
+          "text": "Great Fort [commander or conqueror]",
+          "etymology": "Great [fort] of [commander or conqueror]"
+        },
+        {
+          "text": "Flint Pit",
+          "etymology": "[soil or ground: flint] + [pit, quarry]"
+        },
+        {
+          "text": "Rother Nook Trading Post",
+          "etymology": "[domestic animal: cattle] + [nook] + [trading post]"
+        },
+        {
+          "text": "Great High Saltworks",
+          "etymology": "Great [shape: high] + [salt-house]"
+        },
+        {
+          "text": "[explorer or founder] Beach",
+          "etymology": "[explorer or founder] + [beach, strand]"
+        },
+        {
+          "text": "Micklewold",
+          "etymology": "[size: great] + [wold]"
+        },
+        {
+          "text": "Pool of Quineta",
+          "etymology": "[pool] + [native place name, adopted: Quineta]"
+        }
+      ],
+      "notices": []
+    }
+  },
+  {
+    "case": {
+      "seed": 13,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "established",
+          "tradition": "russian",
+          "context": "imposition"
+        }
+      },
+      "slots": "colonial"
+    },
+    "result": {
+      "seed": 13,
+      "names": [
+        {
+          "text": "Horse Assart Town",
+          "etymology": "[domestic animal: horse] + [newly cleared land, assart] + [town]"
+        },
+        {
+          "text": "Brown Pasture",
+          "etymology": "[colour: brown] + [woodland swine pasture]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty] Mere",
+          "etymology": "[monarch, ruler or dynasty] + [mere, shallow lake]"
+        },
+        {
+          "text": "Bull Farmland",
+          "etymology": "[domestic animal: bull] + [arable field]"
+        },
+        {
+          "text": "[commander or conqueror] Camp",
+          "etymology": "[commander or conqueror] + [garrison camp]"
+        },
+        {
+          "text": "Houndestate",
+          "etymology": "[domestic animal: dog] + [estate, manor centre]"
+        },
+        {
+          "text": "[explorer or founder] Graveyard",
+          "etymology": "[explorer or founder] + [burial ground, churchyard]"
+        },
+        {
+          "text": "[explorer or founder] Minster",
+          "etymology": "[explorer or founder] + [minster, mother church]"
+        },
+        {
+          "text": "Oldcottage",
+          "etymology": "[age: old] + [cottage]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty] Heights",
+          "etymology": "[monarch, ruler or dynasty] + [heights]"
+        },
+        {
+          "text": "Whin Bend",
+          "etymology": "[wild plant: gorse] + [bend, crook]"
+        },
+        {
+          "text": "Knight Kessapok Moor",
+          "etymology": "[status or role: knight] [river or stream name, adopted: Kessapok] + [upland moor]"
+        },
+        {
+          "text": "[royal woman] Province",
+          "etymology": "[royal woman] + [province, kingdom]"
+        },
+        {
+          "text": "Tokonahoret Hermitage",
+          "etymology": "[river or stream name, adopted: Tokonahoret] + [hermitage, retreat]"
+        },
+        {
+          "text": "[explorer or founder] Pasture Town",
+          "etymology": "[explorer or founder] + [pasture] + [town]"
+        },
+        {
+          "text": "Leeds Capital-of-the-Akkasse",
+          "etymology": "[homeland place name: Leeds] + [capital] of the [river or stream name: Akkasse]"
+        },
+        {
+          "text": "Wheat House",
+          "etymology": "[crop: wheat] + [house]"
+        },
+        {
+          "text": "Graveyard of [saint or holy person]",
+          "etymology": "[burial ground, churchyard] of [saint or holy person]"
+        },
+        {
+          "text": "[saint or holy person] Mound",
+          "etymology": "[saint or holy person] + [rounded hill, mound]"
+        },
+        {
+          "text": "Hoarstone",
+          "etymology": "[colour: grey] + [stone]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty] Wood",
+          "etymology": "[monarch, ruler or dynasty] + [single-species wood]"
+        },
+        {
+          "text": "Calf Bend",
+          "etymology": "[domestic animal: calf] + [bend, crook]"
+        },
+        {
+          "text": "West Church [saint or holy person]",
+          "etymology": "[position or direction: west] + [church] [saint or holy person]"
+        },
+        {
+          "text": "Deer Assart",
+          "etymology": "[wild animal: deer] + [newly cleared land, assart]"
+        },
+        {
+          "text": "Dun Hall",
+          "etymology": "[landform: down] + [lord’s hall]"
+        }
+      ],
+      "notices": []
+    }
+  },
+  {
+    "case": {
+      "seed": 2026,
+      "count": 25,
+      "recipe": {
+        "shape": {
+          "part": "established",
+          "tradition": "arab"
+        },
+        "register": "modern"
+      },
+      "slots": "colonial"
+    },
+    "result": {
+      "seed": 2026,
+      "names": [
+        {
+          "text": "Ferry of [commander or conqueror]",
+          "etymology": "[ferry] of [commander or conqueror]"
+        },
+        {
+          "text": "Hare River",
+          "etymology": "[river] of [wild animal: hare]"
+        },
+        {
+          "text": "Nottingham",
+          "etymology": "[homeland place name: Nottingham]"
+        },
+        {
+          "text": "Desolation Trading Post",
+          "etymology": "[trading post] + [emotion or aspiration: desolation]"
+        },
+        {
+          "text": "Lower Bay of [commander or conqueror]",
+          "etymology": "Lower [bay] + [commander or conqueror]"
+        },
+        {
+          "text": "Ruler of the North City City",
+          "etymology": "[city] of [imperial claim: ruler of the north] City"
+        },
+        {
+          "text": "Blue Lodge",
+          "etymology": "[religious lodge] of [colour: blue]"
+        },
+        {
+          "text": "Stone of [explorer or founder]",
+          "etymology": "[stone] of [explorer or founder]"
+        },
+        {
+          "text": "Liberty Crag Town",
+          "etymology": "[crag] + [town] + [emotion or aspiration: liberty]"
+        },
+        {
+          "text": "[monarch, ruler or dynasty] [local settlement word]",
+          "etymology": "[local settlement word] of [monarch, ruler or dynasty]"
+        },
+        {
+          "text": "West Village",
+          "etymology": "[village] + [position or direction: west]"
+        },
+        {
+          "text": "Village of Tuwassu",
+          "etymology": "[village] of [native place name, adopted: Tuwassu]"
+        },
+        {
+          "text": "[commander or conqueror]",
+          "etymology": "[commander or conqueror]"
+        },
+        {
+          "text": "Grey-brown Oasis",
+          "etymology": "[oasis] of [colour: grey-brown]"
+        },
+        {
+          "text": "Old Boundary of [monarch, ruler or dynasty]",
+          "etymology": "Old [boundary] of [monarch, ruler or dynasty]"
+        },
+        {
+          "text": "Heath of Elaweenawak",
+          "etymology": "[heath] of [river or stream name, adopted: Elaweenawak]"
+        },
+        {
+          "text": "Marsh of Shennakotol",
+          "etymology": "[marsh] of [river or stream name, adapted: Shennakotol]"
+        },
+        {
+          "text": "Butter City",
+          "etymology": "[city] of [produce: butter]"
+        },
+        {
+          "text": "House of Ottolumakea",
+          "etymology": "[house] of [native place name, adapted: Ottolumakea]"
+        },
+        {
+          "text": "New West Fort",
+          "etymology": "New [fort] + [position or direction: west]"
+        },
+        {
+          "text": "Minster Shrine",
+          "etymology": "[saint's tomb or shrine] of [religious association: minster]"
+        },
+        {
+          "text": "Stone Assart",
+          "etymology": "[newly cleared land, assart] + [soil or ground: stone]"
+        },
+        {
+          "text": "South Sand Creek",
+          "etymology": "South [small bay, creek] of [soil or ground: sand]"
+        },
+        {
+          "text": "Newtown",
+          "etymology": "[roman walled town or fort] of [age: new]"
+        },
+        {
+          "text": "Grave of [commander or conqueror]",
+          "etymology": "[grave] of [commander or conqueror]"
+        }
+      ],
+      "notices": []
+    }
+  }
+]
