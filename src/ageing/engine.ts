@@ -53,6 +53,28 @@ export const AGEING = {
   noticeBelow: 3,
 } as const;
 
+/** Takeover profile (takeover brief). A second profile of this engine; no ageing value changes. */
+export const TAKEOVER = {
+  /** §3: words with fewer letters than this pass through unchanged. */
+  passthroughBelow: 3,
+  /** §4.2: search — one era, no step limit. */
+  eras: 1,
+  stepsPerEra: 3,
+  runs: 4,
+  beamWidth: 12,
+  temperature: 0.05,
+  /** §4.3: score = pWeight × P + (1 − pWeight) × R. */
+  pWeight: 0.7,
+  /** §4.4: filters. */
+  minRecognisability: 0.6,
+  minPlausibility: 0.15,
+  /** §5: per-word limits for M10 and M11 in one adoption. */
+  maxEndingAdditions: 1,
+  maxVowelInsertions: 2,
+  /** §2.1: native names generated at most this many times the batch size. */
+  nativeCapFactor: 3,
+} as const;
+
 /** §2.1: vowel letters. */
 const VOWELS = new Set(Array.from("aeiouyáàâäãåæéèêëíìîïóòôöõøœúùûüýÿ"));
 
@@ -219,7 +241,12 @@ export function buildInventory(targetNames: string[], extraEndings: string[] = [
 
 // ── Moves (§4) ──────────────────────────────────────────────────────────────
 
-type MoveId = "M1" | "M2" | "M3" | "M4" | "M5" | "M6" | "M7" | "M8" | "M9";
+export type MoveId = "M1" | "M2" | "M3" | "M4" | "M5" | "M6" | "M7" | "M8" | "M9" | "M10" | "M11";
+
+/** The ageing profile's moves (ageing §4.1). Never includes M10 or M11. */
+export const AGEING_MOVES: ReadonlySet<MoveId> = new Set<MoveId>(["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9"]);
+/** The takeover profile's moves (takeover §4.1): no erosion (M1–M3), plus M10 and M11. */
+export const TAKEOVER_MOVES: ReadonlySet<MoveId> = new Set<MoveId>(["M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11"]);
 
 function firstUnit(segments: Segment[]): string {
   return segments[0]?.units[0] ?? "";
@@ -236,10 +263,11 @@ function valid(before: Segment[], after: string, firstMayChange: boolean): boole
 const clone = (segments: Segment[]) => segments.map((s) => ({ vowel: s.vowel, units: [...s.units] }));
 
 /** All single-move variants of one word, constraint-checked and distinct. */
-export function wordVariants(word: string, inv: TargetInventory): Map<string, MoveId> {
+export function wordVariants(word: string, inv: TargetInventory, moves: ReadonlySet<MoveId> = AGEING_MOVES): Map<string, MoveId> {
   const segs = segment(word);
   const out = new Map<string, MoveId>();
   const add = (move: MoveId, result: string, firstMayChange = false) => {
+    if (!moves.has(move)) return;
     if (result !== word && !out.has(result) && valid(segs, result, firstMayChange)) out.set(result, move);
   };
   const vowelIdx = segs.map((s, i) => (s.vowel ? i : -1)).filter((i) => i >= 0);
@@ -305,22 +333,68 @@ export function wordVariants(word: string, inv: TargetInventory): Map<string, Mo
       if (weightedDistance(replaced, ending) <= AGEING.endingSnapMaxDistance) add("M9", stem + ending);
     }
   }
+
+  // M10 ending addition (takeover §5): a shared boundary letter appears once.
+  if (moves.has("M10")) {
+    for (const ending of inv.endings) {
+      if (word.endsWith(ending)) continue;
+      const last = chars[chars.length - 1];
+      add("M10", last === Array.from(ending)[0] ? word + Array.from(ending).slice(1).join("") : word + ending);
+    }
+  }
+
+  // M11 vowel insertion (takeover §5): (a) inside a cluster of 2+ units; (b) before a word-initial
+  // cluster of 2+ units — the one exception to the first-unit rule.
+  if (moves.has("M11")) {
+    segs.forEach((s, i) => {
+      if (s.vowel || s.units.length < 2) return;
+      for (let k = 1; k < s.units.length; k++) {
+        for (const run of inv.vowelRuns) {
+          add("M11", join(segs.slice(0, i)) + s.units.slice(0, k).join("") + run + s.units.slice(k).join("") + join(segs.slice(i + 1)));
+        }
+      }
+    });
+    if (segs.length > 0 && !segs[0].vowel && segs[0].units.length >= 2) {
+      for (const run of inv.vowelRuns) add("M11", run + word, true);
+    }
+  }
   return out;
 }
 
-/** Every single-move variant of a whole form: one move applied to one word. */
-function formVariants(form: string, inv: TargetInventory): string[] {
+interface FormVariant {
+  form: string;
+  /** Index of the changed word in `splitForm(form)`. */
+  part: number;
+  move: MoveId;
+}
+
+/** Every single-move variant of a whole form: one move applied to one word, first move kept. */
+function formVariantsDetailed(
+  form: string,
+  inv: TargetInventory,
+  moves: ReadonlySet<MoveId>,
+  skipWord?: (word: string) => boolean,
+  allow?: (part: number, move: MoveId) => boolean,
+  variantsOf: (word: string) => Map<string, MoveId> = (word) => wordVariants(word, inv, moves),
+): FormVariant[] {
   const parts = splitForm(form);
-  const out = new Set<string>();
+  const out = new Map<string, FormVariant>();
   parts.forEach((part, i) => {
-    if (SEPARATOR.test(part)) return;
-    for (const variant of wordVariants(part, inv).keys()) {
+    if (SEPARATOR.test(part) || skipWord?.(part)) return;
+    for (const [variant, move] of variantsOf(part)) {
+      if (allow && !allow(i, move)) continue;
       const next = [...parts];
       next[i] = variant;
-      out.add(next.join(""));
+      const joined = next.join("");
+      if (!out.has(joined)) out.set(joined, { form: joined, part: i, move });
     }
   });
-  return [...out];
+  return [...out.values()];
+}
+
+/** The ageing profile's variants of a whole form. */
+function formVariants(form: string, inv: TargetInventory): string[] {
+  return formVariantsDetailed(form, inv, AGEING_MOVES).map((v) => v.form);
 }
 
 /** §4.2: replace letters missing from the target set, where the replacement letters are present. */
@@ -399,10 +473,10 @@ export function eraWeight(era: number, depth: number): number {
 }
 
 /** Samples `k` items without replacement, with probability ∝ exp(score ÷ τ). */
-function sampleBeam<T>(items: [T, number][], k: number, rng: () => number): T[] {
+function sampleBeam<T>(items: [T, number][], k: number, rng: () => number, temperature: number): T[] {
   if (items.length <= k) return items.map(([t]) => t);
   const max = Math.max(...items.map(([, s]) => s));
-  const pool = items.map(([t, s]): [T, number] => [t, Math.exp((s - max) / AGEING.temperature)]);
+  const pool = items.map(([t, s]): [T, number] => [t, Math.exp((s - max) / temperature)]);
   const chosen: T[] = [];
   for (let n = 0; n < k; n++) {
     const total = pool.reduce((sum, [, w]) => sum + w, 0);
@@ -421,36 +495,28 @@ function sampleBeam<T>(items: [T, number][], k: number, rng: () => number): T[] 
   return chosen;
 }
 
-export function ageName(input: AgeingInput): AgeingResult {
-  const sourceError = validateSource(input.source);
-  if (sourceError) throw new Error(sourceError);
-  if (input.targetNames.length < AGEING.minTargetNames) {
-    throw new Error(`A target pack needs at least ${AGEING.minTargetNames} names.`);
-  }
-  const depth = Math.min(AGEING.depth.max, Math.max(AGEING.depth.min, Math.floor(input.depth)));
-  const count = Math.floor(input.count);
-  const source = input.source.trim().toLowerCase().replace(/\s+/g, " ");
-  const inv = buildInventory(input.targetNames, input.extraEndings);
-
-  // §5.1: plausibility is the share of target names scoring no higher than the candidate. Each
-  // target name is scored by a model built without its fold, so memorised names don't set the bar.
+/**
+ * §5.1: plausibility is the share of target names scoring no higher than a form. Each target name
+ * is scored by a model built without its fold, so memorised names don't set the bar.
+ */
+function plausibilityScorer(targetNames: string[], buildScorer: AgeingInput["buildScorer"]): (form: string) => number {
   const meanScore = (scoreWord: (w: string) => number, form: string) => {
     const words = splitForm(form).filter((p) => !SEPARATOR.test(p));
     return words.reduce((sum, w) => sum + scoreWord(w), 0) / Math.max(1, words.length);
   };
-  const fullScorer = input.buildScorer(input.targetNames);
+  const fullScorer = buildScorer(targetNames);
   const formScore = (form: string) => meanScore(fullScorer, form);
-  const lowerTargets = input.targetNames.map((n) => n.trim().toLowerCase());
+  const lowerTargets = targetNames.map((n) => n.trim().toLowerCase());
   const targetScores: number[] = [];
   for (let fold = 0; fold < AGEING.heldOutFolds; fold++) {
     const held = lowerTargets.filter((_, i) => i % AGEING.heldOutFolds === fold);
     if (held.length === 0) continue;
-    const scorer = input.buildScorer(input.targetNames.filter((_, i) => i % AGEING.heldOutFolds !== fold));
+    const scorer = buildScorer(targetNames.filter((_, i) => i % AGEING.heldOutFolds !== fold));
     for (const name of held) targetScores.push(meanScore(scorer, name));
   }
   targetScores.sort((a, b) => a - b);
   const pCache = new Map<string, number>();
-  const plausibility = (form: string) => {
+  return (form: string) => {
     let p = pCache.get(form);
     if (p === undefined) {
       const s = formScore(form);
@@ -466,6 +532,76 @@ export function ageName(input: AgeingInput): AgeingResult {
     }
     return p;
   };
+}
+
+// ── Shared search (ageing §6) ───────────────────────────────────────────────
+
+interface SearchItem<S> {
+  form: string;
+  trail: string[];
+  state: S;
+}
+
+/** The profile-specific parts of the search. */
+interface SearchProfile<S> {
+  eras: number;
+  stepsPerEra: number;
+  runs: number;
+  beamWidth: number;
+  temperature: number;
+  /** Score weight w for an era: score = w × P + (1 − w) × R. */
+  weight: (era: number) => number;
+  /** Minimum R between an era's start and end forms; undefined applies none. */
+  stepLimit?: number;
+  /** Applied to each beam form at the start of era 1 (alphabet fit). */
+  startForm: (form: string) => string;
+  /** Single-move successors of a form, with their search state. */
+  expand: (form: string, state: S) => { form: string; state: S }[];
+  score: (form: string, w: number) => number;
+}
+
+/** Independent stochastic beam searches; returns every surviving end-of-search item. */
+function beamSearch<S>(source: string, initial: S, profile: SearchProfile<S>, inputRng: () => number): SearchItem<S>[] {
+  const pool: SearchItem<S>[] = [];
+  for (let run = 0; run < profile.runs; run++) {
+    const rng = mulberry32(Math.floor(inputRng() * 0x100000000) >>> 0);
+    let beam: SearchItem<S>[] = [{ form: source, trail: [source], state: initial }];
+    for (let era = 1; era <= profile.eras && beam.length > 0; era++) {
+      const w = profile.weight(era);
+      type Entry = { item: SearchItem<S>; form: string; state: S };
+      let working: Entry[] = beam.map((b) => ({ item: b, form: era === 1 ? profile.startForm(b.form) : b.form, state: b.state }));
+      for (let step = 0; step < profile.stepsPerEra; step++) {
+        const seen = new Map<string, Entry>();
+        for (const entry of working) {
+          for (const next of [{ form: entry.form, state: entry.state }, ...profile.expand(entry.form, entry.state)]) {
+            if (!seen.has(next.form)) seen.set(next.form, { item: entry.item, form: next.form, state: next.state });
+          }
+        }
+        const scored = [...seen.values()].map((e): [Entry, number] => [e, profile.score(e.form, w)]);
+        working = sampleBeam(scored, profile.beamWidth, rng, profile.temperature);
+      }
+      // Ageing §5.4 step limit, then record each survivor's era-end form.
+      const limit = profile.stepLimit;
+      beam = working
+        .filter((e) => limit === undefined || recognisability(e.item.form, e.form) >= limit)
+        .map((e) => ({ form: e.form, trail: [...e.item.trail, e.form], state: e.state }));
+    }
+    pool.push(...beam);
+  }
+  return pool;
+}
+
+export function ageName(input: AgeingInput): AgeingResult {
+  const sourceError = validateSource(input.source);
+  if (sourceError) throw new Error(sourceError);
+  if (input.targetNames.length < AGEING.minTargetNames) {
+    throw new Error(`A target pack needs at least ${AGEING.minTargetNames} names.`);
+  }
+  const depth = Math.min(AGEING.depth.max, Math.max(AGEING.depth.min, Math.floor(input.depth)));
+  const count = Math.floor(input.count);
+  const source = input.source.trim().toLowerCase().replace(/\s+/g, " ");
+  const inv = buildInventory(input.targetNames, input.extraEndings);
+  const plausibility = plausibilityScorer(input.targetNames, input.buildScorer);
   const rCache = new Map<string, number>();
   const rSource = (form: string) => {
     let r = rCache.get(form);
@@ -487,31 +623,23 @@ export function ageName(input: AgeingInput): AgeingResult {
   };
 
   // §6: four independent stochastic beam searches.
-  const pool: BeamItem[] = [];
-  for (let run = 0; run < AGEING.runs; run++) {
-    const rng = mulberry32(Math.floor(input.rng() * 0x100000000) >>> 0);
-    let beam: BeamItem[] = [{ form: source, trail: [source] }];
-    for (let era = 1; era <= depth && beam.length > 0; era++) {
-      const w = eraWeight(era, depth);
-      const eraStart = new Map(beam.map((b) => [b, b.form]));
-      let working = beam.map((b) => ({ item: b, form: era === 1 ? alphabetFit(b.form, inv.letters) : b.form }));
-      for (let step = 0; step < AGEING.stepsPerEra; step++) {
-        const seen = new Map<string, { item: BeamItem; form: string }>();
-        for (const entry of working) {
-          for (const form of [entry.form, ...variants(entry.form)]) {
-            if (!seen.has(form)) seen.set(form, { item: entry.item, form });
-          }
-        }
-        const scored = [...seen.values()].map((e): [typeof e, number] => [e, score(e.form, w)]);
-        working = sampleBeam(scored, AGEING.beamWidth, rng);
-      }
-      // §5.4 step limit, then record each survivor's era-end form.
-      beam = working
-        .filter((e) => recognisability(eraStart.get(e.item)!, e.form) >= AGEING.stepLimit)
-        .map((e) => ({ form: e.form, trail: [...e.item.trail, e.form] }));
-    }
-    pool.push(...beam);
-  }
+  const pool: BeamItem[] = beamSearch<undefined>(
+    source,
+    undefined,
+    {
+      eras: depth,
+      stepsPerEra: AGEING.stepsPerEra,
+      runs: AGEING.runs,
+      beamWidth: AGEING.beamWidth,
+      temperature: AGEING.temperature,
+      weight: (era) => eraWeight(era, depth),
+      stepLimit: AGEING.stepLimit,
+      startForm: (form) => alphabetFit(form, inv.letters),
+      expand: (form) => variants(form).map((f) => ({ form: f, state: undefined })),
+      score,
+    },
+    input.rng,
+  );
 
   // §7.1 filtering.
   const finalW = eraWeight(depth, depth);
@@ -555,4 +683,163 @@ export function ageName(input: AgeingInput): AgeingResult {
       ? `Only ${candidates.length} candidates survived. Try a lower depth or a different target pack.`
       : undefined;
   return { candidates, notice };
+}
+
+// ── Takeover profile (takeover brief) ───────────────────────────────────────
+
+/** The takeover pack's inventories and plausibility reference, built once and shared by a batch. */
+export interface TakeoverTarget {
+  inv: TargetInventory;
+  plausibility: (form: string) => number;
+  /** Takeover-profile variants of one word, cached for the batch. */
+  wordVariants: (word: string) => Map<string, MoveId>;
+}
+
+export function prepareTakeoverTarget(
+  targetNames: string[],
+  buildScorer: AgeingInput["buildScorer"],
+  extraEndings?: string[],
+): TakeoverTarget {
+  if (targetNames.length < AGEING.minTargetNames) {
+    throw new Error(`A takeover pack needs at least ${AGEING.minTargetNames} names.`);
+  }
+  const inv = buildInventory(targetNames, extraEndings);
+  const cache = new Map<string, Map<string, MoveId>>();
+  const variantsOf = (word: string) => {
+    let v = cache.get(word);
+    if (!v) {
+      v = wordVariants(word, inv, TAKEOVER_MOVES);
+      cache.set(word, v);
+    }
+    return v;
+  };
+  return { inv, plausibility: plausibilityScorer(targetNames, buildScorer), wordVariants: variantsOf };
+}
+
+export interface AdoptionInput {
+  /** The generated native name. */
+  native: string;
+  /** From prepareTakeoverTarget, or the pack itself (prepared on each call). */
+  target: TakeoverTarget | { targetNames: string[]; extraEndings?: string[]; buildScorer: AgeingInput["buildScorer"] };
+  /** This adoption's RNG; four independent search streams are drawn from it. */
+  rng: () => number;
+}
+
+export interface Adoption {
+  native: string;
+  adopted: string;
+  score: number;
+  plausibility: number;
+  recognisability: number;
+  /** Moves applied, in order (alphabet fit not included). */
+  moves: MoveId[];
+}
+
+interface TakeoverState {
+  /** M10 and M11 counts per word, indexed by `splitForm` part. */
+  added: number[];
+  inserted: number[];
+  moves: MoveId[];
+}
+
+/** §3: a word under three letters passes through untouched (de, Ó, ibn). */
+export function isPassthroughWord(word: string): boolean {
+  return !SEPARATOR.test(word) && Array.from(word).length < TAKEOVER.passthroughBelow;
+}
+
+/**
+ * Adopts one native name into the takeover pack's language in a single event (§4): the best
+ * candidate passing every §4.4 filter, or null if none does (or the name has no word of 3+ letters).
+ */
+export function adoptName(input: AdoptionInput): Adoption | null {
+  const target =
+    "inv" in input.target
+      ? input.target
+      : prepareTakeoverTarget(input.target.targetNames, input.target.buildScorer, input.target.extraEndings);
+  const native = input.native.trim().replace(/\s+/g, " ");
+  if (!/^[\p{L} \-']+$/u.test(native)) return null;
+  const nativeParts = splitForm(native);
+  const isContent = (p: string) => !SEPARATOR.test(p) && !isPassthroughWord(p);
+  if (!nativeParts.some(isContent)) return null;
+
+  const source = native.toLowerCase();
+  const { inv, plausibility: plausibilityOf } = target;
+  // §4.3: P and R are taken over the words that aren't passthrough.
+  const content = (form: string) => splitForm(form).filter(isContent).join(" ");
+  const sourceContent = content(source);
+  const P = (form: string) => plausibilityOf(content(form));
+  const rCache = new Map<string, number>();
+  const R = (form: string) => {
+    let r = rCache.get(form);
+    if (r === undefined) {
+      r = recognisability(sourceContent, content(form));
+      rCache.set(form, r);
+    }
+    return r;
+  };
+  const score = (form: string, w: number) => w * P(form) + (1 - w) * R(form);
+
+  const zeros = () => nativeParts.map(() => 0);
+  const pool = beamSearch<TakeoverState>(
+    source,
+    { added: zeros(), inserted: zeros(), moves: [] },
+    {
+      eras: TAKEOVER.eras,
+      stepsPerEra: TAKEOVER.stepsPerEra,
+      runs: TAKEOVER.runs,
+      beamWidth: TAKEOVER.beamWidth,
+      temperature: TAKEOVER.temperature,
+      weight: () => TAKEOVER.pWeight,
+      stepLimit: undefined,
+      // §4.1: alphabet fit once, before the first move step; passthrough words untouched.
+      startForm: (form) =>
+        splitForm(form)
+          .map((p) => (isContent(p) ? alphabetFit(p, inv.letters) : p))
+          .join(""),
+      expand: (form, state) =>
+        formVariantsDetailed(form, inv, TAKEOVER_MOVES, isPassthroughWord, (part, move) =>
+          move === "M10"
+            ? state.added[part] < TAKEOVER.maxEndingAdditions
+            : move === "M11"
+              ? state.inserted[part] < TAKEOVER.maxVowelInsertions
+              : true,
+          target.wordVariants,
+        ).map((v) => {
+          const added = v.move === "M10" ? state.added.map((n, i) => (i === v.part ? n + 1 : n)) : state.added;
+          const inserted = v.move === "M11" ? state.inserted.map((n, i) => (i === v.part ? n + 1 : n)) : state.inserted;
+          return { form: v.form, state: { added, inserted, moves: [...state.moves, v.move] } };
+        }),
+      score,
+    },
+    input.rng,
+  );
+
+  // §4.4 filtering, then the single highest-scoring candidate.
+  let best: SearchItem<TakeoverState> | null = null;
+  let bestScore = -Infinity;
+  for (const item of pool) {
+    if (item.form === source) continue;
+    if (R(item.form) < TAKEOVER.minRecognisability) continue;
+    if (P(item.form) < TAKEOVER.minPlausibility) continue;
+    if (Array.from(content(item.form)).some((ch) => !SEPARATOR.test(ch) && !inv.letters.has(ch))) continue;
+    const s = score(item.form, TAKEOVER.pWeight);
+    if (s > bestScore || (s === bestScore && best && item.form.localeCompare(best.form) < 0)) {
+      best = item;
+      bestScore = s;
+    }
+  }
+  if (!best) return null;
+
+  // Ageing §7.3 casing; passthrough words keep their generated casing.
+  const adopted = splitForm(best.form)
+    .map((p, i) => (SEPARATOR.test(p) ? p : isPassthroughWord(p) ? nativeParts[i] : titleCase(p)))
+    .join("");
+  return {
+    native,
+    adopted,
+    score: bestScore,
+    plausibility: P(best.form),
+    recognisability: R(best.form),
+    moves: best.state.moves,
+  };
 }

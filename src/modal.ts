@@ -47,6 +47,7 @@ import {
   ICON_EXPLORATION_PLACE_SHAPES,
   ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   ICON_NAME_AGEING,
+  ICON_NAME_TAKEOVER,
   ICON_PLUS_SQUARE,
   ICON_SAVE,
   ICON_SEED_COPY,
@@ -66,6 +67,7 @@ import {
 } from "./packs/sections";
 import { parseWordList } from "./packs/wordList";
 import { AGEING, type AgeingCandidate, ageName, validateSource } from "./ageing/engine";
+import { TakeoverView } from "./takeoverView";
 import { AGEING_INSERT_FORMATS, type AgeingInsertFormat, DEFAULT_AGEING_INSERT_FORMAT, formatAgedName, TRAIL_SEPARATOR } from "./ageing/format";
 import {
   GENERIC_PLACE_NAMES_HISTORY_NAME,
@@ -91,14 +93,16 @@ type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" 
  * default on every open; "placeShapes" and "genericPlaceNames" run the part 1 shape generator
  * (placeShapes.ts) in its two wordings; "explorationPlaceShapes" and "empireExpansionPlaceShapes"
  * run the colonial generator (colonialShapes.ts) for parts 2 and 2a; "nameAgeing" ages a name
- * towards a target pack (ageing/engine.ts). */
+ * towards a target pack (ageing/engine.ts); "nameTakeover" adopts generated native names into a
+ * takeover pack's language (the engine's takeover profile, via takeoverView.ts). */
 type NameForgeSection =
   | "markov"
   | "placeShapes"
   | "genericPlaceNames"
   | "explorationPlaceShapes"
   | "empireExpansionPlaceShapes"
-  | "nameAgeing";
+  | "nameAgeing"
+  | "nameTakeover";
 
 const SECTION_ORDER: NameForgeSection[] = [
   "markov",
@@ -107,6 +111,7 @@ const SECTION_ORDER: NameForgeSection[] = [
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "nameAgeing",
+  "nameTakeover",
 ];
 
 /** The two built-in shape generators: same shapes, different wording of the generic. */
@@ -132,6 +137,7 @@ const SECTION_LABELS: Record<NameForgeSection, string> = {
   explorationPlaceShapes: "exploration place name shapes",
   empireExpansionPlaceShapes: "empire expansion place name shapes",
   nameAgeing: "name ageing",
+  nameTakeover: "name takeover",
 };
 
 // Each section's icon, shown on the section trigger and in the switcher menu.
@@ -142,6 +148,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   nameAgeing: ICON_NAME_AGEING,
+  nameTakeover: ICON_NAME_TAKEOVER,
 };
 
 /** Shown in the pack box on the first open of each Obsidian session; the arrow points at the
@@ -311,6 +318,25 @@ export class NameForgeModal extends Modal {
   private ageingFormat: AgeingInsertFormat = DEFAULT_AGEING_INSERT_FORMAT;
   private ageingTargetPath: string | undefined = undefined;
   private ageingPacks: { path: string; label: string; reason?: string }[] = [];
+  /** Name takeover section (takeoverView.ts). Session only. */
+  private readonly takeoverView = new TakeoverView({
+    settings: () => this.plugin.settings,
+    scanFolderPacks: () => this.scanFolderPacks(),
+    targetNames: (entry, index) => this.ageingTargetNames(entry, index),
+    targetReason: (entry, index) => this.targetPackReason(entry, index),
+    lockedSeed: () => (this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined),
+    setCurrentSeed: (seed) => {
+      this.currentSeed = seed;
+    },
+    buildSeedControls: (container) => this.buildSeedControls(container),
+    insertPlainText: (text) => this.insertPlainText(text),
+    insertNamesAsList: (lines, listType) => this.insertNamesAsList(lines, listType),
+    setClearSelection: (clear) => {
+      this.clearResultsSelection = clear;
+    },
+    setStatus: (text) => this.setStatus(text),
+    onNativeLabelChange: () => this.updateRegionLabel(),
+  });
   private guideButton: HTMLButtonElement | null = null;
   private quantityButtons: HTMLButtonElement[] = [];
   private createPacksButton: HTMLButtonElement | null = null;
@@ -495,6 +521,8 @@ export class NameForgeModal extends Modal {
     });
     this.sectionSelectEl.hide();
 
+    this.takeoverView.buildControls(optionsList);
+
     const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityToggleEl = quantityToggle;
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
@@ -602,20 +630,26 @@ export class NameForgeModal extends Modal {
     this.createPacksButton?.toggle(!colonialPart);
     this.guideButton?.toggle(!!colonialPart);
     this.clearSessionHint();
-    this.regionDropdownEl?.toggle(SHAPE_SECTION_WORDING[section] !== undefined || !!colonialPart || section === "nameAgeing");
+    const takeover = section === "nameTakeover";
+    this.regionDropdownEl?.toggle(
+      SHAPE_SECTION_WORDING[section] !== undefined || !!colonialPart || section === "nameAgeing" || takeover,
+    );
     this.updateRegionLabel();
     this.renderContextRow();
     const ageing = section === "nameAgeing";
     this.quantityToggleEl?.toggle(!ageing);
     this.ageingControlsEl?.toggle(ageing);
-    this.generateButtonEl?.setAttribute("title", ageing ? "Age" : "Generate names");
-    this.generateButtonEl?.setAttribute("aria-label", ageing ? "Age" : "Generate names");
+    this.takeoverView.toggle(takeover);
+    const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
+    this.generateButtonEl?.setAttribute("title", action);
+    this.generateButtonEl?.setAttribute("aria-label", action);
     if (ageing) void this.enterAgeingSection();
+    if (takeover) void this.takeoverView.refresh();
     // The trigger wears the active section's icon, as titleForge's leading icon does.
     if (this.sectionTriggerEl) setIcon(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} — no packs yet`;
     this.sectionStubEl?.toggle(
-      section !== "markov" && SHAPE_SECTION_WORDING[section] === undefined && !colonialPart && section !== "nameAgeing",
+      section !== "markov" && SHAPE_SECTION_WORDING[section] === undefined && !colonialPart && section !== "nameAgeing" && !takeover,
     );
   }
 
@@ -635,6 +669,27 @@ export class NameForgeModal extends Modal {
     const menu = this.regionMenuEl;
     if (!menu) return;
     menu.empty();
+    if (this.activeSection === "nameTakeover") {
+      const packs = this.takeoverView.nativePacks;
+      if (packs.length === 0) menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
+      for (const pack of packs) {
+        const item = menu.createEl("button", {
+          cls:
+            "nameforge-modal__pack-dropdown-item" +
+            (pack.path === this.takeoverView.nativePath ? " is-active" : "") +
+            (pack.reason ? " is-unavailable" : ""),
+          attr: { type: "button", "aria-disabled": String(!!pack.reason), ...(pack.reason ? { title: pack.reason } : {}) },
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: pack.label });
+        if (pack.reason) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: pack.reason });
+        item.addEventListener("click", () => {
+          if (pack.reason) return;
+          this.takeoverView.selectNative(pack.path);
+          this.setRegionMenuOpen(false);
+        });
+      }
+      return;
+    }
     if (this.activeSection === "nameAgeing") {
       if (this.ageingPacks.length === 0) {
         menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
@@ -703,6 +758,11 @@ export class NameForgeModal extends Modal {
   }
 
   private updateRegionLabel() {
+    if (this.activeSection === "nameTakeover") {
+      if (this.regionLabelEl) this.regionLabelEl.textContent = this.takeoverView.nativeLabel();
+      this.regionTriggerEl?.setAttribute("title", "Native pack: the names to be taken over");
+      return;
+    }
     if (this.activeSection === "nameAgeing") {
       const pack = this.ageingPacks.find((p) => p.path === this.ageingTargetPath);
       if (this.regionLabelEl) this.regionLabelEl.textContent = pack ? pack.label : "choose a target pack";
@@ -811,25 +871,25 @@ export class NameForgeModal extends Modal {
       .filter((entry) => !entry.parsed.template)
       .map((entry) => {
         const label = entry.parsed.packName || entry.path.split("/").pop()?.replace(/\.md$/i, "") || entry.path;
-        let reason: string | undefined;
-        if (entry.templateError) {
-          reason = entry.templateError.replace(/\.$/, "");
-        } else if (entry.parsed.packType === "compoundPack") {
-          reason = "compound packs hold name parts, not whole names";
-        } else {
-          const names = this.ageingTargetNames(entry, index);
-          if (typeof names === "string") reason = names;
-          else if (new Set(names.names.map((n) => n.toLowerCase())).size < AGEING.minTargetNames) {
-            reason = `fewer than ${AGEING.minTargetNames} names`;
-          }
-        }
-        return { path: entry.path, label, reason };
+        return { path: entry.path, label, reason: this.targetPackReason(entry, index) };
       })
       .sort((a, b) => a.label.localeCompare(b.label));
     if (this.ageingTargetPath && !this.ageingPacks.some((p) => p.path === this.ageingTargetPath && !p.reason)) {
       this.ageingTargetPath = undefined;
     }
     this.updateRegionLabel();
+  }
+
+  /** Why a pack can't be an ageing target or a takeover pack (ageing §1), or undefined if it can. */
+  private targetPackReason(entry: MixPackIndexEntry, index: MixPackIndexEntry[]): string | undefined {
+    if (entry.templateError) return entry.templateError.replace(/\.$/, "");
+    if (entry.parsed.packType === "compoundPack") return "compound packs hold name parts, not whole names";
+    const names = this.ageingTargetNames(entry, index);
+    if (typeof names === "string") return names;
+    if (new Set(names.names.map((n) => n.toLowerCase())).size < AGEING.minTargetNames) {
+      return `fewer than ${AGEING.minTargetNames} names`;
+    }
+    return undefined;
   }
 
   /**
@@ -1684,6 +1744,11 @@ export class NameForgeModal extends Modal {
     }
     if (this.activeSection === "nameAgeing") {
       await this.runAgeing();
+      return;
+    }
+    if (this.activeSection === "nameTakeover") {
+      this.takeoverView.resultsEl = this.resultsEl;
+      await this.takeoverView.run(this.generationCount);
       return;
     }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];

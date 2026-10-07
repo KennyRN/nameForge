@@ -1241,3 +1241,24 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   gap: 8px;
   margin-top: 16px;
 }
+
+/* Name takeover: the takeover pack row, and one-line results (native → adopted). */
+.nameforge-modal__takeover-controls {
+  display: flex;
+  width: 100%;
+  margin: 8px 0 4px;
+}
+
+.nameforge-modal__takeover-pack {
+  flex: 1;
+  min-width: 0;
+}
+
+.nameforge-modal__takeover-native,
+.nameforge-modal__takeover-arrow {
+  color: var(--text-muted);
+}
+
+.nameforge-modal__takeover-adopted {
+  font-weight: var(--font-semibold);
+}
