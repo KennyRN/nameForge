@@ -281,15 +281,17 @@ export class RecipeEditorModal extends Modal {
       // The unset choice leads, labelled as what it resolves to, with a separator before the rest.
       d.addOption("default", river ? "River name module" : fallback === "built-in" ? "Built-in list" : "Placeholder");
       d.selectEl.appendChild(createEl("hr"));
-      d.addOption("sources", "Packs or word lists");
+      d.addOption("packs", "Name packs").addOption("lists", "Word lists");
       if (fallback !== "placeholder") d.addOption("placeholder", "Placeholder");
       d.addOption("ignore", "Ignore");
-      d.setValue(slot && slot.kind !== fallback ? slot.kind : "default").onChange((v) => {
+      // A slot mixing packs and lists (written by hand) shows as whichever its first source is.
+      const shown = !slot || slot.kind === fallback ? "default" : slot.kind === "sources" ? (slot.sources[0]?.list !== undefined ? "lists" : "packs") : slot.kind;
+      d.setValue(shown).onChange((v) => {
         if (v === "default") {
           delete w.slots[id];
           this.explicitSlots.delete(id);
-        } else if (v === "sources") {
-          w.slots[id] = { kind: "sources", sources: [{ pack: this.options.packs[0], weight: 1 }] };
+        } else if (v === "packs" || v === "lists") {
+          w.slots[id] = { kind: "sources", sources: [this.newSource(v === "lists")] };
           this.explicitSlots.add(id);
         } else {
           w.slots[id] = { kind: v as "built-in" | "placeholder" | "ignore" };
@@ -302,18 +304,24 @@ export class RecipeEditorModal extends Modal {
     if (!slot || slot.kind !== "sources") return;
 
     const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
+    const lists = slot.sources[0]?.list !== undefined;
+    const mixed = slot.sources.some((source) => (source.list !== undefined) !== lists);
     slot.sources.forEach((source, i) => {
-      new Setting(box)
-        .addDropdown((d) =>
+      const row = new Setting(box);
+      // Only a hand-written mixed slot keeps the per-source type choice, so it can be tidied up.
+      if (mixed) {
+        row.addDropdown((d) =>
           d
             .addOption("pack", "Name pack")
             .addOption("list", "Word list")
-            .setValue(source.list ? "list" : "pack")
+            .setValue(source.list !== undefined ? "list" : "pack")
             .onChange((v) => {
-              slot.sources[i] = v === "list" ? { list: this.options.lists[0], weight: source.weight } : { pack: this.options.packs[0], weight: source.weight };
+              slot.sources[i] = { ...this.newSource(v === "list"), weight: source.weight };
               this.render();
             }),
-        )
+        );
+      }
+      row
         .addDropdown((d) => {
           const options = source.list !== undefined ? this.options.lists : this.options.packs;
           for (const o of options) d.addOption(o, o);
@@ -343,13 +351,15 @@ export class RecipeEditorModal extends Modal {
           }),
         );
     });
-    new Setting(box)
-      .addButton((b) =>
-        b.setButtonText("Add source").onClick(() => {
-          slot.sources.push({ pack: this.options.packs[0], weight: 1 });
-          this.render();
-        }),
-      )
+    const footer = new Setting(box).addButton((b) =>
+      b.setButtonText(lists ? "Add word list" : "Add name pack").onClick(() => {
+        slot.sources.push(this.newSource(lists));
+        this.render();
+      }),
+    );
+    // Mode, section and gender only shape names drawn from packs.
+    if (lists && !mixed) return;
+    footer
       .addDropdown((d) => {
         const unset = defaultNameMode(id);
         const other = unset === "stem" ? "whole" : "stem";
@@ -379,6 +389,11 @@ export class RecipeEditorModal extends Modal {
         t.inputEl.type = "number";
         t.inputEl.addClass("nameforge-recipe-editor__weight");
       });
+  }
+
+  /** A new source of the given type, starting on the first available pack or list. */
+  private newSource(list: boolean) {
+    return list ? { list: this.options.lists[0], weight: 1 } : { pack: this.options.packs[0], weight: 1 };
   }
 
   /**

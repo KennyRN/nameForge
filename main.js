@@ -20825,24 +20825,26 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
     return r ? kebab(r.label) : "all-britain";
   }
   renderSlot(el, id, label) {
-    var _a2, _b;
+    var _a2, _b, _c;
     const w = this.working;
     const explicit = this.explicitSlots.has(id) || ((_b = (_a2 = this.template) == null ? void 0 : _a2.slots) == null ? void 0 : _b[id]) !== void 0;
     const slot = explicit ? w.slots[id] : void 0;
     const river = id === "river-or-stream-name";
     const fallback = river || hasBuiltInList(id) ? "built-in" : "placeholder";
     const setting = new import_obsidian7.Setting(el).setName(label).addDropdown((d) => {
+      var _a3;
       d.addOption("default", river ? "River name module" : fallback === "built-in" ? "Built-in list" : "Placeholder");
       d.selectEl.appendChild(createEl("hr"));
-      d.addOption("sources", "Packs or word lists");
+      d.addOption("packs", "Name packs").addOption("lists", "Word lists");
       if (fallback !== "placeholder") d.addOption("placeholder", "Placeholder");
       d.addOption("ignore", "Ignore");
-      d.setValue(slot && slot.kind !== fallback ? slot.kind : "default").onChange((v) => {
+      const shown = !slot || slot.kind === fallback ? "default" : slot.kind === "sources" ? ((_a3 = slot.sources[0]) == null ? void 0 : _a3.list) !== void 0 ? "lists" : "packs" : slot.kind;
+      d.setValue(shown).onChange((v) => {
         if (v === "default") {
           delete w.slots[id];
           this.explicitSlots.delete(id);
-        } else if (v === "sources") {
-          w.slots[id] = { kind: "sources", sources: [{ pack: this.options.packs[0], weight: 1 }] };
+        } else if (v === "packs" || v === "lists") {
+          w.slots[id] = { kind: "sources", sources: [this.newSource(v === "lists")] };
           this.explicitSlots.add(id);
         } else {
           w.slots[id] = { kind: v };
@@ -20854,13 +20856,19 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
     setting.settingEl.addClass("nameforge-recipe-editor__slot");
     if (!slot || slot.kind !== "sources") return;
     const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
+    const lists = ((_c = slot.sources[0]) == null ? void 0 : _c.list) !== void 0;
+    const mixed = slot.sources.some((source) => source.list !== void 0 !== lists);
     slot.sources.forEach((source, i) => {
-      new import_obsidian7.Setting(box).addDropdown(
-        (d) => d.addOption("pack", "Name pack").addOption("list", "Word list").setValue(source.list ? "list" : "pack").onChange((v) => {
-          slot.sources[i] = v === "list" ? { list: this.options.lists[0], weight: source.weight } : { pack: this.options.packs[0], weight: source.weight };
-          this.render();
-        })
-      ).addDropdown((d) => {
+      const row = new import_obsidian7.Setting(box);
+      if (mixed) {
+        row.addDropdown(
+          (d) => d.addOption("pack", "Name pack").addOption("list", "Word list").setValue(source.list !== void 0 ? "list" : "pack").onChange((v) => {
+            slot.sources[i] = { ...this.newSource(v === "list"), weight: source.weight };
+            this.render();
+          })
+        );
+      }
+      row.addDropdown((d) => {
         var _a3, _b2;
         const options = source.list !== void 0 ? this.options.lists : this.options.packs;
         for (const o of options) d.addOption(o, o);
@@ -20888,12 +20896,14 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
         })
       );
     });
-    new import_obsidian7.Setting(box).addButton(
-      (b) => b.setButtonText("Add source").onClick(() => {
-        slot.sources.push({ pack: this.options.packs[0], weight: 1 });
+    const footer = new import_obsidian7.Setting(box).addButton(
+      (b) => b.setButtonText(lists ? "Add word list" : "Add name pack").onClick(() => {
+        slot.sources.push(this.newSource(lists));
         this.render();
       })
-    ).addDropdown((d) => {
+    );
+    if (lists && !mixed) return;
+    footer.addDropdown((d) => {
       const unset = defaultNameMode(id);
       const other = unset === "stem" ? "whole" : "stem";
       d.addOption("", `Mode: ${unset}`);
@@ -20916,6 +20926,10 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
       t.inputEl.type = "number";
       t.inputEl.addClass("nameforge-recipe-editor__weight");
     });
+  }
+  /** A new source of the given type, starting on the first available pack or list. */
+  newSource(list) {
+    return list ? { list: this.options.lists[0], weight: 1 } : { pack: this.options.packs[0], weight: 1 };
   }
   /**
    * The settings to write: everything for a standalone recipe; only differences from the
