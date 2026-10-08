@@ -19646,7 +19646,12 @@ var world_place_names_default = {
     valley: "valley of",
     closed: "town",
     red: "red thing",
-    mouth: "mouth of"
+    mouth: "mouth of",
+    bend: "river word",
+    colourdir: "colour",
+    holyword: "holy word",
+    new: "new thing",
+    shape: "shape"
   },
   cultures: [
     {
@@ -20462,6 +20467,158 @@ var world_place_names_default = {
             ["{place} {future}", 2],
             ["New {place}", 1],
             ["{kami} {feature}", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "west-african",
+      label: "West African",
+      guide: "Under the Kum Tree, Crocodile River, Buktu's Well, Grove of Osun; towns of invented peoples, a batch at a time.",
+      fuseChance: 0,
+      lists: {
+        tree: ["Kum", "Baobab", "Kapok", "Shea", "Kola", "Tamarind", "Silk-cotton", "Iroko", "Palm", "Fig", "Ebony", "Mahogany"],
+        animal: ["Crocodile", "Python", "Hippopotamus|Hippopotamuses", "Lion", "Elephant", "Leopard", "Antelope", "Buffalo|Buffalo", "Hyena", "Vulture", "Monitor Lizard", "Catfish|Catfish", "Hornbill", "Ant"],
+        person: ["Buktu", "Sundiata", "Sumanguru", "Osei", "Tutu", "Askia", "Sonni", "Oduduwa", "Bayajidda", "Daura", "Amina", "Yaa", "Ofori", "Tenkamenin", "Kankan", "Moussa", "Nana", "Kwaku", "Oranmiyan", "Agaja"],
+        spirit: ["Osun", "Ogun", "Shango", "Yemoja", "Faro", "Nyame", "Asase Yaa", "Tano", "Bia", "Mami Wata", "Olokun", "Oya", "Sakpata", "Dan"],
+        feature: ["River", "Hill", "Rock", "Pool", "Lake", "Ford", "Spring", "Marsh", "Crossing", "Dune", "Cliff", "Waterfall"],
+        bend: ["Bends", "Widens", "Divides", "Meets the Sea", "Runs Shallow", "Floods"],
+        market: ["Salt", "Gold", "Kola", "Cloth", "Horse", "Night", "Women's", "Thursday", "Great"],
+        adj: ["Red", "White", "Black", "Old", "New", "Great", "Sweet", "Sacred"]
+      },
+      markov: {
+        people: { corpus: ["Mandinka", "Bambara", "Soninke", "Wolof", "Serer", "Fula", "Songhai", "Dogon", "Mossi", "Akan", "Asante", "Fante", "Ewe", "Fon", "Yoruba", "Hausa", "Kanuri", "Igbo", "Edo", "Nupe", "Tiv", "Dagomba", "Gonja", "Mende", "Temne", "Kru", "Baule", "Senufo", "Bozo", "Malinke", "Dyula", "Susu", "Kissi", "Bariba", "Gurma", "Dendi", "Zarma", "Ijaw", "Efik", "Ibibio", "Jukun", "Kpelle", "Vai", "Gola", "Nzema", "Guang", "Ga", "Adangbe"], min: 3, max: 8, batch: 2, label: "people" }
+      },
+      eras: [
+        {
+          id: "sahel-and-forest",
+          label: "Sahel & Forest",
+          templates: [
+            ["Under the {tree} Tree", 4],
+            ["{animal} River", 3],
+            ["{person:pos} Well", 3],
+            ["Grove of {spirit}", 3],
+            ["Town of the {#people}", 3],
+            ["Land of the {#people}", 2],
+            ["Place of the {animal:pl}", 2],
+            ["Where the River {bend}", 2],
+            ["{market} Market", 2],
+            ["Beside the {feature}", 2],
+            ["Hill of {spirit}", 1],
+            ["{adj} {feature}", 2],
+            ["Among the {tree} Trees", 1],
+            ["{person:pos} Camp", 1],
+            ["Mosque of {person}", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "maya",
+      label: "Maya",
+      guide: "Big Water, Mouth of the Well of the Itza, Snake Kingdom, Three Stones; colours that are also directions.",
+      fuseChance: 0,
+      lists: {
+        animal: ["Jaguar", "Quetzal", "Monkey", "Turtle", "Peccary", "Macaw", "Snake", "Bat", "Deer|Deer", "Owl", "Caiman", "Tapir", "Hummingbird", "Heron"],
+        emblem: ["Snake", "Bat", "Jaguar", "Water-Lily", "Turtle", "Deer", "Smoke", "Sky", "Bone", "Mat"],
+        god: ["Itzamna", "K'awiil", "Chaak", "K'inich Ajaw", "Ixchel", "Hun Hunahpu", "the Maize God", "Bolon Yokte'", "Ix Chel", "Kukulkan"],
+        people: ["Itza", "Xiu", "Kokom", "Kaqchikel", "K'iche'", "Tz'utujil", "Ch'orti'", "Lakandon", "Chontal", "Kejache", "Kowoj", "Chel"],
+        colourdir: ["Red", "White", "Black", "Yellow", "Green", "Blue-Green"],
+        feature: ["Water", "Stone", "Cave", "Hill", "Well", "Spring", "Lake", "Island", "Mountain", "Plaza", "Ballcourt", "Causeway"],
+        number: ["Three", "Four", "Seven", "Nine", "Thirteen", "Twenty"],
+        holyword: ["Holy", "Shining", "Smoking", "First", "Sky", "Great"]
+      },
+      eras: [
+        {
+          id: "classic",
+          label: "Classic",
+          templates: [
+            ["Big Water", 1],
+            ["Mouth of the Well of the {people}", 3],
+            ["Well of the {people}", 1],
+            ["{emblem} Kingdom", 3],
+            ["{colourdir} {feature}", 4],
+            ["{holyword} {feature}", 2],
+            ["{animal} Cave", 2],
+            ["Place of the {animal:pl}", 2],
+            ["{number} Stones", 2],
+            ["Seat of {god}", 2],
+            ["{number} {animal:pl}", 1],
+            ["{god:pos} Mountain", 1],
+            ["Sky Place", 1],
+            ["Where the {animal} Rises", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "korean",
+      label: "Korean",
+      guide: "Big Hill, Cauldron Mountain, Water Source; district names of virtue, and provinces that blend two districts.",
+      fuseChance: 0,
+      lists: {
+        adj: ["Big", "Clear", "Bright", "Long", "Green", "Golden", "Peaceful", "Great", "High", "Deep", "White", "Pine", "Blue", "Red"],
+        feature: ["Hill", "Mountain", "Field", "Island", "River", "Gate", "Peak", "Valley", "Pass", "Bay", "Spring", "Ridge", "Ford", "Plain"],
+        shape: ["Cauldron", "Saddle", "Dragon", "Phoenix", "Lotus", "Bell", "Brush", "Crown", "Turtle", "Rooster"],
+        animal: ["Tiger", "Magpie", "Crane", "Bear", "Deer|Deer", "Carp|Carp", "Pheasant", "Dragon", "Boar", "Horse", "Swallow"],
+        jvirtue: ["Celebration", "Esteem", "Complete", "Silk", "Light", "Loyalty", "Clear", "Peace", "Glory", "Joy", "River", "Spring", "Wealth", "Great"],
+        direction: ["East", "West", "South", "North"],
+        buddhist: ["the Buddha Land", "the Sea Seal", "Spreading Pines", "the Floating Stone", "the Pure Land", "the Golden Mountain", "the Lotus", "Clear Water"],
+        virtue: ["Radiant Transformation", "Exalted Ceremonies", "Rising Benevolence", "Great Peace", "Bright Virtue", "Lasting Wisdom", "Gathered Blessings"]
+      },
+      eras: [
+        {
+          id: "joseon",
+          label: "Joseon",
+          templates: [
+            ["{adj} {feature}", 6],
+            ["{shape} Mountain", 3],
+            ["{jvirtue} District", 4],
+            ["{jvirtue}\u2013{jvirtue} Province", 3],
+            ["{animal} {feature}", 2],
+            ["{direction} Sea", 1],
+            ["South of the River", 1],
+            ["Water Source", 1],
+            ["{adj} Source", 1],
+            ["Temple of {buddhist}", 2],
+            ["Gate of {virtue}", 2],
+            ["{adj} Fortress", 1],
+            ["Fortress of {virtue}", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "ethiopian",
+      label: "Ethiopian",
+      guide: "Mount of Light, Mount of Mark, New Flower, Hot Spring; royal camps and churches cut from the rock.",
+      fuseChance: 0,
+      lists: {
+        saint: ["Mark", "Libanos", "Michael", "George", "Gabriel", "Mary", "Yared", "Tekle Haymanot", "Gebre Menfes Kidus", "Aregawi", "Pantelewon", "Garima", "Aftse", "Guba", "Alef", "Yemata", "Liqanos", "Sehma", "Abuna Salama"],
+        holy: ["Light", "Olives", "Grace", "Peace", "Mercy", "Wisdom", "Tabor", "Zion", "the Cross", "Salvation"],
+        king: ["Ezana", "Kaleb", "Gebre Meskel", "Lalibela", "Zara Yaqob", "Fasilides", "Tewodros", "Menelik", "Iyasu", "Yekuno Amlak", "Amda Seyon", "Dawit", "Sarsa Dengel", "Susenyos"],
+        animal: ["Lion", "Hyena", "Eagle", "Ibex|Ibex", "Gelada|Geladas", "Leopard", "Elephant", "Crane", "Ox|Oxen", "Wolf|Wolves"],
+        adj: ["Hot", "Cold", "Sweet", "Bitter", "Red", "White", "Black", "High", "New", "Old"],
+        feature: ["Spring", "Water", "Rock", "Mountain", "Plateau", "Lake", "Gorge", "Pass", "Field", "Market"],
+        new: ["Flower", "Spring", "Town", "Light", "Field", "Market"]
+      },
+      eras: [
+        {
+          id: "aksum-and-abyssinia",
+          label: "Aksum & Abyssinia",
+          templates: [
+            ["Mount of {holy}", 4],
+            ["Mount of {saint}", 4],
+            ["Monastery of {saint}", 2],
+            ["Church of {saint} in the Rock", 2],
+            ["New {new}", 2],
+            ["{adj} {feature}", 3],
+            ["Royal Camp of {king}", 2],
+            ["{king:pos} Town", 2],
+            ["{king:pos} Churches", 1],
+            ["Place of the {animal:pl}", 2],
+            ["Throne of {king}", 1],
+            ["Gate of {holy}", 1]
           ]
         }
       ]

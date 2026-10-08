@@ -14,15 +14,16 @@ import {
 
 const ERAS = WORLD_CULTURES.flatMap((c) => c.eras.map((e) => ({ culture: c, era: e })));
 
-test("world: first and second releases: twelve cultures", () => {
+test("world: first and second releases plus the expansion pool: sixteen cultures", () => {
   assert.deepEqual(
     WORLD_CULTURES.map((c) => c.id),
     [
       "anglo-saxon", "norse", "celtic", "roman", "chinese", "egyptian", "aztec", "bantu",
       "slavic", "arabic-persian", "indian", "japanese",
+      "west-african", "maya", "korean", "ethiopian",
     ],
   );
-  assert.equal(ERAS.length, 23);
+  assert.equal(ERAS.length, 27);
 });
 
 test("world: every slot in every template and list entry resolves for its era", () => {
@@ -79,10 +80,11 @@ test("world: Anglo-Saxon fuses compounds; head-first cultures never do", () => {
 });
 
 test("world: Markov names are new, and a batch's peoples are shared", () => {
-  const bantu = findCulture("bantu");
-  const real = new Set(bantu.markov!.people.corpus.map((n) => n.toLowerCase()));
+  for (const id of ["bantu", "west-african"]) {
+  const culture = findCulture(id);
+  const real = new Set(culture.markov!.people.corpus.map((n) => n.toLowerCase()));
   for (const seed of [1, 2, 3, 4, 5]) {
-    const result = generateWorldPlaceNames({ culture: "bantu", count: 40, seed });
+    const result = generateWorldPlaceNames({ culture: id, count: 40, seed });
     const peoples = new Set<string>();
     for (const n of result.names) {
       const m = n.etymology.match(/\[people: ([^\]]+)\]/);
@@ -90,6 +92,7 @@ test("world: Markov names are new, and a batch's peoples are shared", () => {
     }
     assert.ok(peoples.size >= 1 && peoples.size <= 2, `seed ${seed}: ${[...peoples].join(", ")}`);
     for (const p of peoples) assert.ok(!real.has(p.toLowerCase()), `real people name used: ${p}`);
+  }
   }
 });
 
