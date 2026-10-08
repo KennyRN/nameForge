@@ -60,6 +60,7 @@ import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recipe";
 import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/engine";
+import { findCulture, findEra, generateWorldPlaceNames, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
 import { RecipeEditorModal } from "./recipeEditor";
 import {
@@ -95,6 +96,7 @@ import {
   type NameForgeSection,
   RIVER_NAMES_HISTORY_NAME,
   SECTION_LABELS,
+  WORLD_PLACE_NAMES_HISTORY_NAME,
   SECTION_ORDER,
 } from "./sections";
 
@@ -121,6 +123,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   markov: ICON_PACKS,
   placeShapes: ICON_PLACE_SHAPES,
   riverNames: ICON_RIVER_NAMES,
+  worldPlaceNames: "globe",
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   nameAgeing: ICON_NAME_AGEING,
@@ -286,6 +289,9 @@ export class NameForgeModal extends Modal {
   /** River names (river brief §6.8): setting and, for British, region. Session only. */
   private riverSetting: RiverSetting = "british";
   private riverRegion: string | undefined = undefined;
+  /** World place names: culture, and the era chosen for each culture. Session only. */
+  private worldCulture: string = WORLD_CULTURES[0].id;
+  private worldEras: Record<string, string> = {};
   private secondBoxRowEl: HTMLElement | null = null;
   private secondBoxDropdownEl: HTMLElement | null = null;
   private secondBoxTriggerEl: HTMLElement | null = null;
@@ -627,8 +633,9 @@ export class NameForgeModal extends Modal {
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
-    this.regionDropdownEl?.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover);
-    this.showSecondBox((river && this.riverSetting === "british") || takeover);
+    const world = section === "worldPlaceNames";
+    this.regionDropdownEl?.toggle(section === "placeShapes" || river || world || !!colonialPart || section === "nameAgeing" || takeover);
+    this.showSecondBox((river && this.riverSetting === "british") || (world && this.worldHasEras()) || takeover);
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
@@ -644,8 +651,13 @@ export class NameForgeModal extends Modal {
     if (this.sectionTriggerEl) setIcon(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} — no packs yet`;
     this.sectionStubEl?.toggle(
-      section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover,
+      section !== "markov" && section !== "placeShapes" && !river && !world && !colonialPart && section !== "nameAgeing" && !takeover,
     );
+  }
+
+  /** World place names: whether the chosen culture has more than one era (the era box shows). */
+  private worldHasEras(): boolean {
+    return findCulture(this.worldCulture).eras.length > 1;
   }
 
   /**
@@ -696,6 +708,12 @@ export class NameForgeModal extends Modal {
       trigger.setAttribute("title", "Takeover pack: the language that adopts the names");
       return;
     }
+    if (this.activeSection === "worldPlaceNames") {
+      const era = findEra(findCulture(this.worldCulture), this.worldEras[this.worldCulture]);
+      label.textContent = era.label;
+      trigger.setAttribute("title", `Era: ${era.guide ?? era.label}`);
+      return;
+    }
     const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.riverRegion);
     label.textContent = region?.label ?? "All Britain";
     trigger.setAttribute("title", `Region: ${region?.counties ?? "no regional weighting"}`);
@@ -724,6 +742,22 @@ export class NameForgeModal extends Modal {
         item.addEventListener("click", () => {
           if (pack.reason) return;
           this.takeoverView.selectTakeover(pack.path);
+          choose();
+        });
+      }
+      return;
+    }
+    if (this.activeSection === "worldPlaceNames") {
+      const culture = findCulture(this.worldCulture);
+      const current = findEra(culture, this.worldEras[culture.id]);
+      for (const era of culture.eras) {
+        const item = menu.createEl("button", {
+          cls: "nameforge-modal__pack-dropdown-item" + (era.id === current.id ? " is-active" : ""),
+          attr: { type: "button", title: era.guide ?? era.label },
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: era.label });
+        item.addEventListener("click", () => {
+          this.worldEras[culture.id] = era.id;
           choose();
         });
       }
@@ -859,6 +893,23 @@ export class NameForgeModal extends Modal {
       }
       return;
     }
+    if (this.activeSection === "worldPlaceNames") {
+      for (const culture of WORLD_CULTURES) {
+        const item = menu.createEl("button", {
+          cls: "nameforge-modal__pack-dropdown-item" + (culture.id === this.worldCulture ? " is-active" : ""),
+          attr: { type: "button", title: culture.guide },
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: culture.label });
+        item.addEventListener("click", () => {
+          this.worldCulture = culture.id;
+          this.showSecondBox(this.worldHasEras());
+          this.updateSecondBoxLabel();
+          this.updateRegionLabel();
+          this.setRegionMenuOpen(false);
+        });
+      }
+      return;
+    }
     const part = COLONIAL_SECTION_PART[this.activeSection];
     if (part) {
       for (const tradition of COLONIAL_TRADITIONS) {
@@ -916,6 +967,12 @@ export class NameForgeModal extends Modal {
     if (this.activeSection === "riverNames") {
       if (this.regionLabelEl) this.regionLabelEl.textContent = RIVER_SETTINGS.find((s) => s.id === this.riverSetting)!.label;
       this.regionTriggerEl?.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
+      return;
+    }
+    if (this.activeSection === "worldPlaceNames") {
+      const culture = findCulture(this.worldCulture);
+      if (this.regionLabelEl) this.regionLabelEl.textContent = culture.label;
+      this.regionTriggerEl?.setAttribute("title", `Culture: ${culture.guide}`);
       return;
     }
     const part = COLONIAL_SECTION_PART[this.activeSection];
@@ -1964,6 +2021,29 @@ export class NameForgeModal extends Modal {
       const label = `${RIVER_NAMES_HISTORY_NAME} · ${settingLabel}`;
       await this.recordGenerationHistory(result.names.length, british ? withRegion(label, this.riverRegion) : label);
       this.setStatus(result.notice ?? "");
+      return;
+    }
+    if (this.activeSection === "worldPlaceNames") {
+      const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+      const era = this.worldEras[this.worldCulture];
+      const result = generateWorldPlaceNames({
+        culture: this.worldCulture,
+        era,
+        count: this.generationCount,
+        seed: seedOverride,
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness,
+      });
+      this.currentSeed = result.seed;
+      this.renderRecipeResults(
+        result.names.map((n) => ({ text: n.text, hasPlaceholder: false, etymology: n.etymology }) as GeneratedName),
+        "module",
+      );
+      await this.recordGenerationHistory(
+        result.names.length,
+        worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, this.worldCulture, era),
+      );
+      this.setStatus(result.notices.join(" "));
       return;
     }
     if (this.activeSection === "nameAgeing") {

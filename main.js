@@ -19536,6 +19536,840 @@ function colonialPlaceNamesRecipe(part, tradition, context) {
   });
 }
 
+// src/data/world-place-names.json
+var world_place_names_default = {
+  $comment: "World place names, first release: eight cultures, each building names in its own way and writing them in modern English. Template syntax: {list} draws a word, {list:pl} its plural, {list:pos} its possessive, {#source} a new proper name from a Markov corpus, + between parts marks a fusable compound. List entries may hold their own templates. 'Word|plural' gives an irregular plural; a trailing ~ marks a word that never fuses. Data only.",
+  version: 1,
+  labels: {
+    animal: "animal",
+    domestic: "domestic animal",
+    wild: "wild animal",
+    bird: "bird",
+    tree: "tree",
+    plant: "plant",
+    adj: "quality",
+    colour: "colour",
+    size: "size or position",
+    gen: "generic",
+    spec: "specific",
+    name: "personal name",
+    god: "deity",
+    holy: "holy place",
+    saint: "holy person",
+    church: "church word",
+    water: "water word",
+    surname: "family",
+    resource: "resource",
+    rgen: "generic",
+    aspiration: "aspiration",
+    place: "older place",
+    farm: "farm word",
+    land: "landscape word",
+    status: "status",
+    meet: "assembly word",
+    landpl: "landscape word",
+    fort: "fort word",
+    grove: "sacred place",
+    feature: "feature",
+    person: "personal name",
+    prep: "position",
+    emperor: "emperor",
+    tribe: "tribe",
+    ordinal: "milestone",
+    at: "landmark",
+    waters: "waters",
+    town: "settlement word",
+    lord: "lord",
+    holyname: "holy name",
+    direction: "direction",
+    adv: "auspicious word",
+    quality: "auspicious word",
+    far: "frontier",
+    slogan: "imperial slogan",
+    side: "bank",
+    river: "river",
+    mountain: "mountain",
+    material: "material",
+    beast: "beast",
+    slot: "slogan",
+    settle: "settlement word",
+    pharaoh: "pharaoh",
+    sacred: "sacred animal",
+    pair: "epithet",
+    ggod: "Greek god",
+    founder: "founder",
+    harbour: "harbour word",
+    near: "surroundings",
+    verb: "action",
+    celestial: "celestial",
+    peak: "mountain word",
+    native: "native name",
+    homeland: "homeland",
+    holy2: "holy company",
+    event: "event",
+    noun: "thing",
+    people: "people",
+    ruler: "ruler",
+    where: "dedication",
+    fuse: "landscape word"
+  },
+  cultures: [
+    {
+      id: "anglo-saxon",
+      label: "Anglo-Saxon",
+      guide: "Fused compounds, specific first and generic last: the baseline for every other set.",
+      fuseChance: 0.8,
+      lists: {
+        domestic: ["Ox|Oxen", "Cow", "Swine|Swine", "Sheep|Sheep", "Goat", "Horse", "Colt", "Calf|Calves", "Lamb", "Bull", "Hound", "Hen", "Goose|Geese", "Ewe"],
+        wild: ["Hart", "Hind", "Wolf|Wolves", "Fox", "Badger", "Hare", "Beaver", "Otter", "Boar", "Deer|Deer", "Roe|Roe", "Buck"],
+        bird: ["Crane", "Crow", "Raven", "Hawk", "Eagle", "Swan", "Finch", "Owl", "Lark", "Heron", "Kite", "Dove", "Duck"],
+        tree: ["Oak", "Ash", "Elm", "Thorn", "Birch", "Alder", "Hazel", "Willow", "Lime", "Yew", "Apple", "Holly", "Beech", "Maple"],
+        plant: ["Reed", "Rush", "Bramble", "Broom", "Fern", "Nettle", "Cress", "Sedge", "Heather", "Flax", "Wheat", "Barley", "Oat", "Rye", "Bean"],
+        adj: ["Broad", "Long", "High", "Low", "New", "Old", "Fair", "Cold", "Deep", "Foul", "Clear", "Sand", "Stone", "Mill", "Middle", "Hollow"],
+        colour: ["White", "Black", "Red", "Green", "Grey", "Brown", "Dark"],
+        size: ["Great", "Little", "Upper", "Lower", "Nether", "Long", "East", "West", "North", "South", "Old"],
+        animal: ["{domestic}", "{domestic}", "{wild}"],
+        spec: ["{domestic}", "{wild}", "{bird}", "{tree}", "{tree}", "{plant}", "{adj}", "{adj}", "{colour}"],
+        gen: ["Ford", "Field", "Wood", "Well", "Brook", "Hill", "Bridge", "Town", "Farm", "Fort", "Moor", "Marsh", "Mere", "Stone", "Dale", "Bank", "Clearing~", "Island~", "Hollow~", "Meadow~"],
+        name: ["Beorma", "H\xE6sta", "Cola", "Dudda", "Tota", "Wulfric", "Eadric", "Godwine", "Leofric", "Osric", "Cyneburg", "\xC6thelfl\xE6d", "Hild", "Eadgifu", "Brihtwine", "S\xE6wine", "Ceolmund", "Wigheard", "Ecgbert", "Tidda", "Babba", "Pymma", "Cufa", "Sigeric"],
+        god: ["Woden", "Woden", "Thunor", "Tiw", "Frige", "Grim"],
+        holy: ["Fort", "Barrow", "Dyke", "Grove", "Hill", "Field", "Clearing", "Shrine", "Ley", "Way"],
+        saint: ["Alban", "Edmund", "Cuthbert", "Neot", "Ives", "Botolph", "Osyth", "Edith", "Wilfrid", "Chad", "Guthlac", "Etheldreda", "Werburgh", "Swithun", "Aldhelm"],
+        church: ["Minster", "Stone", "Church", "Well", "Holy Place"],
+        water: ["Water", "Pool", "Mere", "Well", "Spring", "Brook"]
+      },
+      markov: {
+        river: { corpus: ["Thames", "Severn", "Trent", "Avon", "Ouse", "Tyne", "Tees", "Wear", "Swale", "Ure", "Nidd", "Wharfe", "Aire", "Calder", "Derwent", "Witham", "Welland", "Nene", "Cam", "Granta", "Lark", "Wensum", "Yare", "Waveney", "Bure", "Stour", "Orwell", "Deben", "Gipping", "Colne", "Chelmer", "Roding", "Medway", "Arun", "Adur", "Rother", "Itchen", "Frome", "Teign", "Tamar", "Torridge", "Parrett", "Lugg", "Teme", "Mersey", "Ribble", "Lune", "Eden", "Irwell", "Weaver", "Churnet", "Soar", "Wreake", "Leven", "Coquet", "Wansbeck", "Kennet", "Cherwell", "Evenlode", "Windrush", "Loddon", "Wylye", "Nadder", "Hodder"], min: 3, max: 8, label: "river" }
+      },
+      eras: [
+        {
+          id: "old-english",
+          label: "Old English",
+          guide: "Fords, farms and clearings; owners' names; a few old gods.",
+          templates: [
+            ["{spec}+{gen}", 12],
+            ["{animal}+Ford", 4],
+            ["{size} {spec}+{gen}", 3],
+            ["{name:pos} {gen}", 4],
+            ["Home of {name:pos} People", 3],
+            ["{name:pos} People", 1],
+            ["{god:pos} {holy}", 3],
+            ["{spec}+{gen} upon {#river}", 2],
+            ["{colour} {water}", 2],
+            ["{saint:pos} {church}", 2]
+          ]
+        },
+        {
+          id: "modern",
+          label: "Modern",
+          guide: "Old cores with new tags: junctions, spas, seaside towns, estates and aspirations.",
+          lists: {
+            place: ["{spec}+{gen}", "{spec}+{gen}", "{colour}+{gen}"],
+            surname: ["Keynes", "Talbot", "Sutherland", "Grosvenor", "Lever", "Pemberton", "Fitzroy", "Ashworth", "Holloway", "Clifford", "Mortimer", "Wellesley", "Howard", "Russell", "Bentley", "Courtenay"],
+            resource: ["Iron", "Coal", "Salt", "Lime", "Copper", "Clay", "Brick", "Mill", "Steel", "Tin"],
+            aspiration: ["Mount Pleasant", "Prospect Hill", "Paradise", "Sunnybank", "Hope Vale", "Freehold", "Fairview", "Bellevue", "Bonnyrigg", "Sunlight"],
+            rgen: ["Ford", "Field", "Bridge", "Town", "Port", "Dale", "Mouth", "Brook"]
+          },
+          templates: [
+            ["{place}-on-Sea", 3],
+            ["{place} Junction", 2],
+            ["{place} Spa", 2],
+            ["{place} New Town", 1],
+            ["New {place}", 2],
+            ["{place} Green", 2],
+            ["{place} Heath", 1],
+            ["{place} Vale", 1],
+            ["{place} Gardens", 1],
+            ["{place} {surname}", 3],
+            ["Upper {place}", 1],
+            ["King's {place}", 1],
+            ["Port {surname}", 2],
+            ["{surname} Park", 2],
+            ["{resource}+{rgen}", 2],
+            ["{resource}ville", 1],
+            ["{aspiration}", 1],
+            ["{place} Garden Village", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "norse",
+      label: "Norse",
+      guide: "Owners' farms, god-shrines and blunt landscape words: dale, fell, ness, holm.",
+      fuseChance: 0.5,
+      lists: {
+        name: ["Grim", "Ketil", "Thorkel", "Ulf", "Bjorn", "Hrafn", "Thord", "Skeggi", "Asgeir", "Gunnar", "Hakon", "Orm", "Sigurd", "Thorstein", "Kolbein", "Ragnhild", "Thora", "Gudrun", "Asa", "Sigrid", "Frida", "Halfdan", "Toki", "Ingjald", "Eyvind", "Hallgerd"],
+        god: ["Odin", "Thor", "Thor", "Frey", "Freyja", "Ull", "Njord", "Tyr", "Balder", "Heimdall"],
+        holy: ["Grove", "Shrine", "Temple", "Hill", "Field", "Island", "Spring", "Acre", "Rock"],
+        farm: ["Farm", "Farm", "Homestead", "Clearing", "Shieling", "Steading", "Toft"],
+        land: ["Bay", "Fjord", "Ness", "Dale", "Fell", "Island", "Holm", "Beck", "Force", "Skerry", "Strand", "Sound", "Haven", "Mire", "Tarn", "Howe", "Ridge", "Scar"],
+        landpl: ["Skerries", "Holms", "Fells", "Howes", "Scars", "Islands", "Sounds"],
+        animal: ["Bear", "Wolf|Wolves", "Raven", "Eagle", "Seal", "Whale", "Horse", "Ox|Oxen", "Goat", "Swan", "Salmon|Salmon", "Otter", "Elk|Elk", "Hart", "Sheep|Sheep", "Boar", "Gull"],
+        adj: ["Smoky", "Black", "White", "Red", "Long", "Broad", "Cold", "High", "Deep", "Steep", "Sandy", "Stony", "Salt", "Green", "Bright", "Windy", "Narrow", "Calm"],
+        tree: ["Birch", "Ash", "Pine", "Rowan", "Alder", "Juniper", "Willow", "Oak", "Aspen"],
+        fuse: ["Dale", "Fell", "Beck", "Ness", "Holm", "Scar"],
+        status: ["King's", "Earl's", "Priests'", "Church", "Monks'", "Women's", "Thralls'", "Old"],
+        meet: ["Plain", "Field", "Hill", "Holm", "Ness", "Mound"]
+      },
+      eras: [
+        {
+          id: "viking",
+          label: "Viking",
+          templates: [
+            ["{name:pos} {farm}", 8],
+            ["{god:pos} {holy}", 5],
+            ["{adj} {land}", 6],
+            ["{animal} {land}", 6],
+            ["{tree} {land}", 3],
+            ["{animal}+{fuse}", 3],
+            ["{adj}+{fuse}", 2],
+            ["Assembly {meet}", 2],
+            ["{name:pos} {land}", 2],
+            ["{status} {farm}", 2],
+            ["The {landpl}", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "celtic",
+      label: "Celtic",
+      guide: "Head-first naming in the saints' era: Mouth of, Church of, Fort of, Head of.",
+      fuseChance: 0,
+      lists: {
+        animal: ["Bear", "Boar", "Horse", "Hound", "Raven", "Salmon|Salmon", "Bull", "Deer|Deer", "Crane", "Wolf|Wolves", "Hawk", "Eagle", "Swan", "Pig", "Ox|Oxen", "Cat"],
+        adj: ["Great", "White", "High", "Holy", "Bright", "Dark", "New", "Old", "Black", "Grey", "Red", "Green", "Little", "Far"],
+        tree: ["Oak", "Yew", "Alder", "Rowan", "Hazel", "Birch", "Elm", "Apple", "Willow", "Ash", "Thorn"],
+        colour: ["Black", "White", "Grey", "Red", "Green", "Bright"]
+      },
+      markov: {
+        river: { corpus: ["Teifi", "Tywi", "Taf", "Tawe", "Nedd", "Afan", "Ogwr", "Rhymni", "Ebwy", "Cynon", "Llwyd", "Mynwy", "Honddu", "Irfon", "Elan", "Rheidol", "Ystwyth", "Aeron", "Dyfi", "Dulas", "Mawddach", "Dysynni", "Dwyryd", "Glaslyn", "Dwyfor", "Seiont", "Ogwen", "Conwy", "Lledr", "Elwy", "Clwyd", "Alun", "Ceiriog", "Tanad", "Cleddau", "Gwaun", "Nyfer", "Cothi", "Gwili", "Aman", "Senni", "Grwyne", "Aled", "Alaw", "Cefni", "Clyde", "Forth", "Tay", "Spey", "Deveron", "Ythan", "Findhorn", "Nairn", "Ness", "Beauly", "Conon", "Oykel", "Carron", "Naver", "Brora", "Earn", "Ericht", "Tummel", "Garry", "Lyon", "Lochay", "Dochart", "Teith", "Leven", "Etive", "Awe", "Orchy", "Lochy", "Nevis", "Shiel"], min: 3, max: 8, label: "river" }
+      },
+      eras: [
+        {
+          id: "pagan",
+          label: "Pagan",
+          guide: "Forts, plains and sacred groves of the old gods.",
+          lists: {
+            god: ["Lugus", "Belenus", "Brigantia", "Taranis", "Epona", "Sulis", "Nodens", "Maponos", "Camulos", "Toutatis", "Andarta", "Coventina", "Cernunnos", "Arduinna", "Nemetona", "Ogmios", "Rosmerta", "Esus"],
+            grove: ["Sacred Grove", "Grove", "Holy Place", "Spring", "Well"]
+          },
+          templates: [
+            ["Fort of {god}", 4],
+            ["{adj} Fort", 4],
+            ["Fort of the {animal:pl}", 2],
+            ["{adj} Sacred Grove", 2],
+            ["{grove} of {god}", 3],
+            ["Plain of {god}", 2],
+            ["{adj} Plain", 3],
+            ["{tree} Plain", 2],
+            ["Ford of the {animal:pl}", 2],
+            ["Mouth of the {#river}", 2],
+            ["Confluence of the {#river}", 1],
+            ["{animal} Hill", 1]
+          ]
+        },
+        {
+          id: "saints",
+          label: "Saints",
+          guide: "Churches and cells of the saints, river mouths, forts and headlands.",
+          lists: {
+            saint: ["Mary", "David", "Patrick", "Columba", "Brigid", "Kentigern", "Ninian", "Teilo", "Cadoc", "Illtud", "Dyfrig", "Piran", "Petroc", "Ciar\xE1n", "Brendan", "Kevin", "Aidan", "Winifred", "Non", "Deiniol", "Beuno", "Tysilio", "Mungo", "Maelrubha", "Fillan", "Moluag", "Cybi", "Seiriol"],
+            person: ["Cadwal", "Cynan", "Brude", "Fergus", "Conall", "Aed", "Niall", "Bran", "Owain", "Rhodri", "Cunedda", "Eidyn", "Luan", "Cormac", "Maelgwn", "Urien"],
+            prep: ["in the", "by the", "beside the", "above the", "under the", "across the"],
+            feature: ["Pool", "Hollow", "White Hazel", "Ford", "Stream", "Valley", "Wood", "Rock", "Marsh", "Meadow", "Waterfall", "Hill", "Grove", "Strand"]
+          },
+          templates: [
+            ["Church of {saint}", 6],
+            ["Church of {saint} {prep} {feature}", 2],
+            ["Cell of {saint}", 3],
+            ["Mouth of the {#river}", 5],
+            ["Fort of the {animal:pl}", 2],
+            ["Fort of {person}", 2],
+            ["{adj} Fort", 1],
+            ["Head of the {feature}", 3],
+            ["Headland of the {animal}", 1],
+            ["{adj} Headland", 1],
+            ["Valley of the {#river}", 2],
+            ["Valley of the {animal:pl}", 1],
+            ["{adj} Valley", 1],
+            ["Island of {saint}", 2],
+            ["Hill of the {animal:pl}", 2],
+            ["{tree} Wood", 2],
+            ["Ford of the {animal:pl}", 1],
+            ["Ford of {person}", 1],
+            ["Meadow of the Sons of {person}", 1],
+            ["{saint:pos} Well", 1],
+            ["{colour} Pool", 2]
+          ]
+        }
+      ]
+    },
+    {
+      id: "roman",
+      label: "Roman / Italian",
+      guide: "Imperial: gods and emperors as founders, forums, milestones. Medieval: saints, castles, towers and boroughs.",
+      fuseChance: 0,
+      lists: {
+        animal: ["Wolf|Wolves", "Boar", "Eagle", "Falcon", "Bear", "Stag", "Fox", "Crow", "Lion", "Ox|Oxen", "Horse", "Bull"]
+      },
+      eras: [
+        {
+          id: "imperial",
+          label: "Imperial",
+          guide: "Shrines, harbours and waters of the gods; forums and colonies of great men.",
+          lists: {
+            god: ["Jupiter", "Juno", "Minerva", "Mars", "Venus", "Mercury", "Apollo", "Diana", "Hercules", "Fortune", "Neptune", "Janus", "Vesta", "Ceres", "Bacchus", "Saturn", "Victory", "Feronia", "Sol", "Silvanus", "Faunus", "Sulis"],
+            person: ["Julius", "Claudius", "Flavius", "Livius", "Cornelius", "Sempronius", "Appius", "Aurelius", "Popilius", "Cassius", "Domitius", "Sulla", "Aelius", "Fulvius", "Licinius", "Valerius"],
+            emperor: ["Augustus", "Tiberius", "Claudius", "Vespasian", "Trajan", "Hadrian", "Antoninus", "Severus", "Constantine", "Aurelian", "Diocletian", "Julius", "Nerva", "Valentinian"],
+            tribe: ["Treveri", "Taurini", "Vindelici", "Suessiones", "Rauraci", "Silures", "Iceni", "Belgae", "Atrebates", "Parisii", "Turones", "Lingones", "Helvetii", "Senones"],
+            ordinal: ["Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Twelfth", "Twentieth"],
+            at: ["Pear Tree", "Boundaries", "Bridge", "Waters", "Pines", "Wolves", "Eagles", "Oaks", "Statues", "Horses", "Two Trees", "Rock", "Shrine", "Ford"],
+            waters: ["Hot Waters", "Healing Waters", "Warm Waters", "Sulphur Waters", "Sweet Waters"]
+          },
+          markov: {
+            river: { corpus: ["Tiberis", "Padus", "Arnus", "Rhenus", "Danuvius", "Rhodanus", "Mosella", "Sequana", "Liger", "Garumna", "Tamesis", "Sabrina", "Isca", "Ticinus", "Athesis", "Aufidus", "Volturnus", "Liris", "Metaurus", "Rubico", "Trebia", "Mincius", "Addua", "Sarnus", "Anio", "Arar", "Mosa", "Scaldis", "Visurgis", "Albis", "Dravus", "Savus", "Iberus", "Tagus", "Durius", "Anas", "Baetis", "Oenus", "Isara", "Druentia"], min: 3, max: 9, label: "river" }
+          },
+          templates: [
+            ["Shrine of {god}", 3],
+            ["Harbour of {god}", 3],
+            ["Forum of {person}", 4],
+            ["Colony of {emperor}", 2],
+            ["{emperor:pos} City of the {tribe}", 2],
+            ["Market of the {tribe}", 2],
+            ["Waters of {god}", 2],
+            ["Grove of {god}", 1],
+            ["Temple of {god}", 1],
+            ["Field of {god}", 1],
+            ["Bridge of {person}", 2],
+            ["Camp on the {#river}", 2],
+            ["Mouth of the {#river}", 2],
+            ["At the {ordinal} Milestone", 2],
+            ["At the {at}", 3],
+            ["The Three Taverns", 1],
+            ["{emperor:pos} Peace", 1],
+            ["New City", 1],
+            ["Victory City", 1],
+            ["{waters}", 1],
+            ["Colony of {emperor} at the Altar of {god}", 1]
+          ]
+        },
+        {
+          id: "medieval",
+          label: "Medieval",
+          guide: "Saints and castles; towers, rocks and boroughs; new villages on the hills.",
+          lists: {
+            saint: ["Lawrence", "John", "Mark", "Peter", "Paul", "Michael", "Angelo", "Benedict", "Francis", "Clare", "Agatha", "Lucy", "Gimignano", "Miniato", "Severino", "Martino", "Leo", "Donato", "Vitale", "Romano", "Felice", "Giorgio", "Ambrose", "Zeno", "Prospero", "Quirico"],
+            where: ["in the Fields", "in the Ford", "in the Wood", "on the Mountain", "by the Sea", "of the Hills", "outside the Walls", "on the Hill", "in the Valley", "of the Bridge"],
+            town: ["Village", "Castle", "Borough", "Town", "Tower", "Hamlet", "Rock"],
+            adj: ["Free", "New", "Fair", "High", "Old", "Great", "Black", "White", "Strong", "Royal", "Good", "Beautiful", "Red"],
+            status: ["Counts", "Bishop", "Abbot", "Marquis", "Lords", "Monks", "Knights", "Duke", "Prior"],
+            holyname: ["Sepulchre", "Cross", "Spirit", "Trinity", "Saviour", "Angels"],
+            peak: ["Mount", "Hill", "Rock"]
+          },
+          markov: {
+            river: { corpus: ["Arno", "Tevere", "Adige", "Brenta", "Piave", "Tagliamento", "Ticino", "Adda", "Oglio", "Mincio", "Reno", "Serchio", "Ombrone", "Volturno", "Garigliano", "Sele", "Ofanto", "Bradano", "Basento", "Crati", "Simeto", "Tirso", "Metauro", "Esino", "Tronto", "Pescara", "Sangro", "Liri", "Aniene", "Nera", "Chiana", "Secchia", "Panaro", "Taro", "Trebbia", "Scrivia", "Tanaro", "Stura", "Sesia", "Toce", "Isonzo", "Livenza", "Sile"], min: 3, max: 9, label: "river" }
+          },
+          templates: [
+            ["Saint {saint}", 5],
+            ["Saint {saint} {where}", 3],
+            ["Borough of Saint {saint}", 2],
+            ["Borough of the Holy {holyname}", 1],
+            ["{adj} {town}", 5],
+            ["New {town}", 2],
+            ["{town} of the {animal:pl}", 2],
+            ["{adj} {peak}", 3],
+            ["Tower of the {status}", 2],
+            ["Castle of the {status}", 1],
+            ["{town} on the {#river}", 2],
+            ["Valley of the {#river}", 1],
+            ["{adj} Water", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "chinese",
+      label: "Chinese",
+      guide: "Places named by position (north of the river, sunny bank), and in imperial times by slogan and virtue.",
+      fuseChance: 0,
+      lists: {
+        direction: ["Northern", "Southern", "Eastern", "Western", "Central"],
+        side: ["North", "South", "East", "West"],
+        river: ["Luo", "Han", "Wei", "Fen", "Jing", "Ying", "Bian", "Si", "Yi", "Huai", "Ru", "Qi", "Zhang", "Shu", "Min", "Gan", "Xiang", "Yuan", "Li", "Lu", "Yellow River", "Pearl River", "Clear River", "Black Dragon River", "Golden Sands River", "Jade River", "Willow River"],
+        mountain: ["Hua", "Tai", "Song", "Heng", "Lu", "Wu", "Qi", "Shou", "Dan", "Jiu"],
+        beast: ["Tiger", "Dragon", "Phoenix", "Crane", "Carp|Carp", "Tortoise", "White Horse", "Deer|Deer", "Ox|Oxen", "Golden Rooster", "Monkey", "Qilin|Qilin"],
+        material: ["Jade", "Golden", "Iron", "Stone", "Silver", "Copper", "Bronze"],
+        quality: ["Peace", "Prosperity", "Harmony", "Tranquillity", "Fortune", "Virtue", "Glory", "Order", "Longevity", "Abundance"]
+      },
+      eras: [
+        {
+          id: "imperial",
+          label: "Imperial",
+          guide: "Capitals by direction, cities named for peace and virtue, frontier towns named as orders.",
+          lists: {
+            adv: ["Long", "Eternal", "Lasting", "Great", "Universal", "Continuing", "Restored", "Everlasting", "Prosperous", "Peaceful"],
+            far: ["Distant", "West", "North", "South", "East", "Frontier", "Far West", "Borderlands", "Rivers", "Sea", "Desert", "Steppe"],
+            slogan: ["Enlighten and Transform", "Cherish the Distant", "Proclaim Virtue", "Spread Civilisation", "Inherit Virtue", "Uphold Righteousness", "Revere Heaven", "Restore Order"],
+            verb: ["Pacify", "Pacify", "Guard", "Subdue", "Calm", "Secure", "Hold"]
+          },
+          templates: [
+            ["{direction} Peace", 3],
+            ["{direction} Capital", 2],
+            ["{adv} {quality}", 4],
+            ["{verb} the {far}", 4],
+            ["{slogan}", 2],
+            ["{side} of the {river}", 3],
+            ["{side} of the Lake", 1],
+            ["Sunny Bank of the {river}", 2],
+            ["Shady Side of Mount {mountain}", 1],
+            ["{quality} Prefecture", 2],
+            ["{quality} County", 1],
+            ["{material} Gate Pass", 1],
+            ["{beast} Gate", 1],
+            ["{beast} Hill", 1],
+            ["{beast} Pass", 1]
+          ]
+        },
+        {
+          id: "modern",
+          label: "Modern",
+          guide: "Positional names, plain descriptions of islands, harbours and fords, and socialist slogans.",
+          lists: {
+            adj: ["Green", "Fragrant", "Heavenly", "Golden", "Great", "Clear", "Long", "Yellow", "White", "Red", "Stone", "Peaceful", "Pearl", "Jade", "Bright", "Deep"],
+            water: ["Sea", "River", "Lake", "Shore"],
+            feature: ["Hill", "Rock", "Ridge", "Gorge", "Spring", "Pool", "Gate", "Bay", "Bridge"],
+            slot: ["Red Flag", "Red Star", "Liberation", "Victory", "Friendship", "Unity", "Vanguard", "New Life", "East Wind", "Bright Future", "Great Leap", "Sunrise"],
+            settle: ["Village", "Commune", "Town", "Farm", "Road", "Street", "District"]
+          },
+          templates: [
+            ["{side} of the {river}", 4],
+            ["{side} of the Lake", 1],
+            ["Sunny Bank of the {river}", 2],
+            ["{side} of the {river} New Area", 1],
+            ["{direction} Capital", 1],
+            ["{adj} Island", 2],
+            ["{adj} Harbour", 2],
+            ["{adj} Ford", 2],
+            ["{adj} Port", 1],
+            ["Upon the {water}", 1],
+            ["{beast} {feature}", 2],
+            ["{slot} {settle}", 2],
+            ["{quality} {settle}", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "egyptian",
+      label: "Egyptian",
+      guide: "Animal gods and theology: houses, horizons and seats of the gods; under the Greeks, cities of gods and beasts.",
+      fuseChance: 0,
+      lists: {
+        god: ["Ra", "Ptah", "Amun", "Bastet", "Sobek", "Thoth", "Osiris", "Isis", "Horus", "Hathor", "Anubis", "Khnum", "Neith", "Min", "Montu", "Sekhmet", "Wadjet", "Nekhbet", "Set", "Atum", "Khonsu", "Aten", "Mut", "Wepwawet"]
+      },
+      eras: [
+        {
+          id: "pharaonic",
+          label: "Pharaonic",
+          guide: "House of Bastet, Horizon of the Aten, Enduring and Beautiful, the White Walls.",
+          lists: {
+            pharaoh: ["Ramesses", "Amenemhat", "Senusret", "Thutmose", "Amenhotep", "Sneferu", "Khufu", "Seti", "Merenptah", "Hatshepsut", "Mentuhotep", "Pepi", "Teti", "Sahure", "Khasekhemwy"],
+            lord: ["{god}", "{god}", "{god}", "{pharaoh}"],
+            sacred: ["Crocodile", "Ibis", "Falcon", "Cat", "Cobra", "Hippopotamus|Hippopotamuses", "Jackal", "Ram", "Bull", "Hare", "Oryx|Oryxes", "Vulture", "Scarab", "Lion", "Baboon", "Cow", "Ox|Oxen"],
+            pair: ["Enduring", "Beautiful", "Mighty", "Pure", "Gleaming", "Great", "Established", "Shining", "Holy", "Exalted"],
+            colour: ["White", "Black", "Red", "Gleaming", "Golden"]
+          },
+          templates: [
+            ["House of {lord}", 5],
+            ["Estate of {god}", 2],
+            ["Temple of the Spirit of {god}", 1],
+            ["Horizon of {god}", 2],
+            ["Mound of {god}", 1],
+            ["Seat of {god}", 2],
+            ["Island of {god}", 1],
+            ["Lake of {god}", 1],
+            ["{god:pos} City", 3],
+            ["Mansion of {pharaoh}", 1],
+            ["Nome of the {sacred}", 2],
+            ["{pair} and {pair}", 1],
+            ["The {colour} Walls", 1],
+            ["Mound of the {sacred}", 1],
+            ["Field of the {sacred:pl}", 1]
+          ]
+        },
+        {
+          id: "graeco-roman",
+          label: "Graeco-Roman",
+          guide: "City of Zeus, City of the Crocodiles, Ptolemy's City, Mouse Harbour.",
+          lists: {
+            ggod: ["Zeus", "Hermes", "Apollo", "Aphrodite", "Pan", "Herakles", "Dionysus", "Athena", "Hera", "Helios", "the Sun"],
+            sacred: ["Crocodile", "Wolf|Wolves", "Lion", "Dog", "Perch|Perch", "Sharp-nosed Fish|Sharp-nosed Fish", "Ibis|Ibises", "Falcon", "Cat", "Ram", "Bull"],
+            founder: ["Alexander", "Ptolemy", "Berenice", "Arsinoe", "Cleopatra", "Philadelphus", "Antinous", "Hadrian", "Philotera", "Theodosius"],
+            harbour: ["Mouse", "White", "Fair", "Deep", "Sacred", "Old"]
+          },
+          templates: [
+            ["City of {ggod}", 4],
+            ["Great City of {ggod}", 1],
+            ["City of the {sacred:pl}", 4],
+            ["{founder:pos} City", 3],
+            ["City of {founder}", 2],
+            ["{harbour} Harbour", 2],
+            ["{founder:pos} City of the Hunts", 1],
+            ["Oasis of {god}", 1],
+            ["Little City of {ggod}", 1],
+            ["Upper City of the {sacred:pl}", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "aztec",
+      label: "Aztec",
+      guide: "Locative compounds: place of deer, grasshopper hill, near the trees. Colonial: saints joined to native names.",
+      fuseChance: 0,
+      lists: {
+        animal: ["Deer|Deer", "Coyote", "Jaguar", "Eagle", "Serpent", "Rabbit", "Grasshopper", "Heron", "Hummingbird", "Turkey", "Ocelot", "Dog", "Butterfly|Butterflies", "Fish|Fish", "Frog", "Duck", "Quail|Quail", "Snail", "Owl"],
+        plant: ["Reed", "Avocado", "Cactus|Cacti", "Maguey", "Cypress", "Flower", "Maize Plant", "Cacao Tree", "Chilli|Chillies", "Copal Tree", "Pine", "Willow", "Amaranth", "Squash", "Bean", "Prickly Pear"],
+        god: ["Tlaloc", "Huitzilopochtli", "Quetzalcoatl", "Tezcatlipoca", "Xipe Totec", "Chalchiuhtlicue", "Coatlicue", "Xochiquetzal", "Mictlantecuhtli", "Tonatiuh", "Mixcoatl", "Xiuhtecuhtli", "Tlazolteotl", "Centeotl", "Chicomecoatl"]
+      },
+      eras: [
+        {
+          id: "mexica",
+          label: "Mexica",
+          guide: "Place of coyotes, grasshopper hill, where flowers abound, Tlaloc's mountain.",
+          lists: {
+            near: ["Trees", "Water", "Mountains", "Woods", "Springs", "Reeds", "Rocks", "Lake"],
+            feature: ["Water", "Stone", "Hill", "Ridge", "Sand", "Island", "Lake", "Marsh"],
+            celestial: ["Moon", "Sun", "Lake", "Mountain", "Sky"],
+            verb: ["Drinks", "Sings", "Rests", "Hunts", "Stands", "Cries", "Bathes", "Nests"],
+            peak: ["Smoking", "Shining", "Sleeping", "Speaking", "Snowy", "Starry"]
+          },
+          templates: [
+            ["Place of {animal:pl}", 5],
+            ["Place of the {animal:pl}", 2],
+            ["Place of {plant:pl}", 4],
+            ["{animal} Hill", 4],
+            ["{plant} Hill", 1],
+            ["Near the {near}", 2],
+            ["Where {plant:pl} Abound", 2],
+            ["On the {feature}", 2],
+            ["In the Navel of the {celestial}", 1],
+            ["Where the {animal} {verb}", 1],
+            ["{god:pos} Mountain", 2],
+            ["{peak} Mountain", 1],
+            ["Where {god} Was Born", 1],
+            ["Among the {plant:pl}", 1]
+          ]
+        },
+        {
+          id: "colonial",
+          label: "Colonial",
+          guide: "Saint plus native name, Our Lady, royal mines, missions and new homelands.",
+          lists: {
+            saint: ["John", "Francis", "Michael", "James", "Peter", "Paul", "Anthony", "Augustine", "Dominic", "Bartholomew", "Matthew", "Andrew", "Lucy", "Martha", "Clare", "Catherine", "Isabel", "Joseph", "Lawrence", "Nicholas", "Christopher", "Sebastian", "Thomas", "Gabriel"],
+            native: ["{animal} Hill", "{animal} Hill", "the {plant:pl}", "the {animal:pl}", "{god:pos} Mountain", "the Waters", "the {plant} Fields"],
+            homeland: ["Spain", "Galicia", "Le\xF3n", "Castile", "Biscay", "Navarre", "Andalusia", "Estremadura"],
+            holyname: ["True Cross", "Holy Spirit", "Holy Faith", "Holy Trinity", "Conception", "Assumption"],
+            holy2: ["Angels", "Kings", "Apostles", "Martyrs"]
+          },
+          templates: [
+            ["Saint {saint} of {native}", 7],
+            ["Our Lady of {native}", 2],
+            ["Royal Mines of Saint {saint}", 1],
+            ["Rich Town of the {holyname}", 1],
+            ["New {homeland}", 2],
+            ["Mission of Saint {saint}", 2],
+            ["City of the {holy2}", 1],
+            ["Town of the {holyname}", 1],
+            ["Saint {saint} of the {animal:pl}", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "bantu",
+      label: "Bantu",
+      guide: "One invented people-name per batch feeds land, place and royal-town names, so a batch reads as one region.",
+      fuseChance: 0,
+      lists: {
+        animal: ["Lion", "Elephant", "Leopard", "Buffalo|Buffalo", "Crocodile", "Hippopotamus|Hippopotamuses", "Impala|Impala", "Eland|Eland", "Python", "Hyena", "Zebra", "Giraffe", "Kudu|Kudu", "Rhinoceros|Rhinoceroses", "Baboon", "Fish Eagle", "Antelope", "Hornbill"],
+        feature: ["River", "Rock", "Hill", "Bay", "Pool", "Lake", "Ford", "Spring", "Gorge", "Waterfall", "Marsh", "Forest"],
+        event: ["Killing", "Gathering", "Weeping", "Rejoicing", "the Great Hunt", "Thunder", "Feasting", "Battle", "Peace", "Return", "Hunger", "Rain", "Meeting"],
+        material: ["Stone", "Iron", "Grass", "Clay", "Reeds", "Copper", "Ivory"],
+        noun: ["Smoke", "Water", "Rock", "Mist", "River"],
+        verb: ["Thunders", "Sings", "Roars", "Shines", "Speaks", "Weeps"],
+        adj: ["Cool", "Sweet", "Bitter", "Red", "White", "Deep", "Clear", "Warm"]
+      },
+      markov: {
+        people: { corpus: ["Ganda", "Soga", "Nyoro", "Toro", "Nkore", "Zulu", "Xhosa", "Swazi", "Sotho", "Tswana", "Shona", "Ndebele", "Kongo", "Luba", "Lunda", "Kuba", "Lozi", "Bemba", "Chewa", "Yao", "Makua", "Hehe", "Nyamwezi", "Sukuma", "Kamba", "Kikuyu", "Meru", "Chagga", "Haya", "Rundi", "Tonga", "Venda", "Tsonga", "Herero", "Ovambo", "Mbundu", "Teke", "Duala", "Kaonde", "Lamba", "Ila", "Ngoni", "Pedi", "Ndau", "Manyika", "Zezuru", "Karanga", "Luhya", "Gisu", "Nyakyusa", "Kimbu", "Fipa", "Bena", "Pogoro", "Zigua", "Shambaa"], min: 3, max: 7, batch: 2, label: "people" },
+        ruler: { corpus: ["Mutesa", "Mwanga", "Suna", "Kamanya", "Kyabaggu", "Junju", "Shaka", "Dingane", "Mpande", "Cetshwayo", "Dinuzulu", "Mzilikazi", "Lobengula", "Moshoeshoe", "Sekhukhune", "Khama", "Sebetwane", "Lewanika", "Kazembe", "Ilunga", "Kalala", "Mbidi", "Kongolo", "Nyatsimba", "Mutota", "Matope", "Changamire", "Dombo", "Nzinga", "Mbande", "Mvemba", "Nkuwu", "Kinguri", "Msiri", "Mirambo", "Nyungu", "Kabarega", "Rumanyika", "Ndahiro", "Ruganzu", "Mwambutsa", "Ntare", "Mwezi", "Lusaaka", "Mpezeni", "Zwangendaba"], min: 4, max: 9, batch: 3, label: "ruler" }
+      },
+      eras: [
+        {
+          id: "kingdoms",
+          label: "Kingdoms",
+          templates: [
+            ["Land of the {#people}", 5],
+            ["Place of the {#people}", 3],
+            ["Royal Enclosure of {#ruler}", 2],
+            ["{#ruler:pos} Town", 2],
+            ["Grave of {#ruler}", 1],
+            ["Houses of {material}", 2],
+            ["Place of {event}", 3],
+            ["Hill of the {animal:pl}", 3],
+            ["At the {feature}", 2],
+            ["Where the {animal:pl} Drink", 1],
+            ["The {noun} That {verb}", 1],
+            ["{adj} Water", 1],
+            ["River of the {animal:pl}", 2],
+            ["{animal} River", 2]
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+// src/world/engine.ts
+var WORLD_DATA = world_place_names_default;
+var WORLD_CULTURES = WORLD_DATA.cultures;
+var WORLD_PLACE_NAMES = {
+  /** Longest fused compound, in letters (matches the names engine). */
+  maxFusedLetters: 13,
+  /** Draws before a Markov slot gives up on a new name. */
+  markovDraws: 20,
+  /** Nested list templates deeper than this are not expanded. */
+  maxDepth: 4
+};
+function findCulture(id) {
+  var _a2;
+  return (_a2 = WORLD_CULTURES.find((c) => c.id === id)) != null ? _a2 : WORLD_CULTURES[0];
+}
+function findEra(culture, eraId) {
+  var _a2;
+  return (_a2 = culture.eras.find((e) => e.id === eraId)) != null ? _a2 : culture.eras[0];
+}
+var pickUniform4 = (items, rng) => items[Math.floor(rng() * items.length)];
+function pickWeighted4(entries, rng) {
+  const live = entries.filter(([, w]) => w > 0);
+  const total = live.reduce((n, [, w]) => n + w, 0);
+  let r = rng() * total;
+  for (const [item, w] of live) {
+    r -= w;
+    if (r < 0) return item;
+  }
+  return live[live.length - 1][0];
+}
+var letterCount4 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
+function parseEntry(raw) {
+  const noFuse = raw.endsWith("~");
+  const body = noFuse ? raw.slice(0, -1) : raw;
+  const [word, plural] = body.split("|");
+  return { word, plural, noFuse };
+}
+function pluralise2(word) {
+  if (/(s|x|z|ch|sh)$/i.test(word)) return `${word}es`;
+  if (/[^aeiou]y$/i.test(word)) return `${word.slice(0, -1)}ies`;
+  return `${word}s`;
+}
+function possessive(word) {
+  if (/'s?$/.test(word)) return word;
+  return /es$/.test(word) && /^\p{Lu}/u.test(word) ? `${word}'` : `${word}'s`;
+}
+var templateCache = /* @__PURE__ */ new Map();
+function parseTemplate(template) {
+  let tokens = templateCache.get(template);
+  if (tokens) return tokens;
+  tokens = [];
+  for (const m of template.matchAll(/\{(#?)([\w-]+)(?::(pl|pos))?\}|\+|[^{+]+/g)) {
+    if (m[0] === "+") tokens.push({ kind: "fuse" });
+    else if (m[2] !== void 0) {
+      tokens.push({ kind: "slot", key: m[2], form: m[3], markov: m[1] === "#" });
+    } else tokens.push({ kind: "text", text: m[0] });
+  }
+  templateCache.set(template, tokens);
+  return tokens;
+}
+var modelCache2 = /* @__PURE__ */ new Map();
+function modelFor(source) {
+  const key = source.corpus.join("|");
+  let model = modelCache2.get(key);
+  if (!model) {
+    model = MarkovModel.build(source.corpus);
+    modelCache2.set(key, model);
+  }
+  return model;
+}
+var titleWord2 = (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+var WorldRenderer = class {
+  constructor(options) {
+    this.options = options;
+    this.pools = /* @__PURE__ */ new Map();
+    this.notices = /* @__PURE__ */ new Set();
+    var _a2, _b, _c;
+    this.culture = findCulture(options.culture);
+    this.era = findEra(this.culture, options.era);
+    this.lists = { ...this.culture.lists, ...(_a2 = this.era.lists) != null ? _a2 : {} };
+    this.markov = { ...(_b = this.culture.markov) != null ? _b : {}, ...(_c = this.era.markov) != null ? _c : {} };
+  }
+  getNotices() {
+    return [...this.notices];
+  }
+  /** One name: a template by weight, rendered. */
+  name(rng) {
+    const template = pickWeighted4(this.era.templates, rng);
+    const piece = this.render(template, rng, 0);
+    const text = piece.text.charAt(0).toUpperCase() + piece.text.slice(1);
+    return { text, etymology: piece.etym, template };
+  }
+  label(key) {
+    var _a2, _b, _c;
+    return ((_c = (_b = (_a2 = this.markov[key]) == null ? void 0 : _a2.label) != null ? _b : WORLD_DATA.labels[key]) != null ? _c : key).toLowerCase();
+  }
+  /** A new proper name from a Markov corpus, never one of the corpus's own names. */
+  markovName(key, rng) {
+    const source = this.markov[key];
+    if (!source) {
+      this.notices.add(`No name source "${key}" for ${this.culture.label}.`);
+      return `[${key}]`;
+    }
+    if (source.batch) {
+      let pool = this.pools.get(key);
+      if (!pool) {
+        pool = [];
+        for (let i = 0; i < source.batch; i++) pool.push(this.drawMarkov(source, rng, pool));
+        this.pools.set(key, pool);
+      }
+      return pickUniform4(pool, rng);
+    }
+    return this.drawMarkov(source, rng, []);
+  }
+  drawMarkov(source, rng, avoid) {
+    var _a2, _b;
+    const real = new Set(source.corpus.map((n) => n.toLowerCase()));
+    const model = modelFor(source);
+    for (let i = 0; i < WORLD_PLACE_NAMES.markovDraws; i++) {
+      const seed = Math.floor(rng() * 4294967296) >>> 0;
+      const raw = model.generateDetailed({
+        count: 1,
+        faithfulness: (_a2 = this.options.faithfulness) != null ? _a2 : 2,
+        strictness: (_b = this.options.strictness) != null ? _b : 3,
+        seed
+      }).names[0];
+      if (!raw) continue;
+      const name = titleWord2(raw.trim());
+      const letters = letterCount4(name);
+      if (letters < source.min || letters > source.max) continue;
+      if (real.has(name.toLowerCase()) || avoid.includes(name)) continue;
+      return name;
+    }
+    return pickUniform4(source.corpus, rng);
+  }
+  /** A list word, expanding any template held in the entry. */
+  slot(token, rng, depth) {
+    var _a2;
+    if (token.markov) {
+      const name = this.markovName(token.key, rng);
+      const text2 = token.form === "pos" ? possessive(name) : name;
+      return { text: text2, etym: `[${this.label(token.key)}: ${name}]${token.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
+    }
+    const list = this.lists[token.key];
+    if (!list || list.length === 0) {
+      this.notices.add(`No word list "${token.key}" for ${this.culture.label}.`);
+      return { text: `[${token.key}]`, etym: `[${token.key}]`, fusable: false };
+    }
+    const entry = parseEntry(pickUniform4(list, rng));
+    if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
+      const inner = this.render(entry.word, rng, depth + 1);
+      const single = /^\{[^}]+\}$/.test(entry.word);
+      const text2 = token.form === "pos" ? possessive(inner.text) : inner.text;
+      const etym = single ? inner.etym : `[${this.label(token.key)}: ${inner.text}]`;
+      return { text: text2, etym: token.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
+    }
+    let text = entry.word;
+    if (token.form === "pl") text = (_a2 = entry.plural) != null ? _a2 : pluralise2(entry.word);
+    if (token.form === "pos") text = possessive(entry.word);
+    const shown = token.form === "pos" ? entry.word : text;
+    return {
+      text,
+      etym: `[${this.label(token.key)}: ${shown}]${token.form === "pos" ? possessiveTail(entry.word) : ""}`,
+      fusable: !entry.noFuse && token.form !== "pos"
+    };
+  }
+  /** Renders a template: slots filled, "+" groups fused or spaced. */
+  render(template, rng, depth) {
+    const tokens = parseTemplate(template);
+    const out = [];
+    let group = [];
+    let joinNext = false;
+    const flush = () => {
+      if (group.length === 0) return;
+      out.push(group.length === 1 ? group[0] : this.fuse(group, rng));
+      group = [];
+    };
+    for (const token of tokens) {
+      if (token.kind === "fuse") {
+        joinNext = true;
+        continue;
+      }
+      let piece;
+      if (token.kind === "text") piece = { text: token.text, etym: token.text.toLowerCase(), fusable: !/\s/.test(token.text) };
+      else piece = this.slot(token, rng, depth);
+      if (!joinNext) flush();
+      group.push(piece);
+      joinNext = false;
+    }
+    flush();
+    return {
+      text: out.map((p) => p.text).join(""),
+      etym: out.map((p) => p.etym).join(""),
+      fusable: out.length === 1 && out[0].fusable
+    };
+  }
+  /** "Ox" + "Ford" → "Oxford" when the culture fuses and the join is clean; otherwise "Ox Ford". */
+  fuse(group, rng) {
+    const etym = group.map((p) => p.etym).join(" + ");
+    const roll = rng();
+    const canFuse = roll < this.culture.fuseChance && group.every((p) => p.fusable && /^[\p{L}]+$/u.test(p.text));
+    if (canFuse) {
+      let joined = group[0].text;
+      for (const p of group.slice(1)) {
+        joined = joined === null ? null : smoothJoin(joined, p.text);
+      }
+      if (joined !== null && letterCount4(joined) <= WORLD_PLACE_NAMES.maxFusedLetters) {
+        return { text: joined.charAt(0).toUpperCase() + joined.slice(1).toLowerCase(), etym, fusable: false };
+      }
+    }
+    return { text: group.map((p) => p.text).join(" "), etym, fusable: false };
+  }
+};
+var possessiveTail = (word) => possessive(word).slice(word.length);
+function generateWorldPlaceNames(options) {
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const renderer = new WorldRenderer(options);
+  const count = Math.max(0, Math.floor(options.count));
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  for (let attempt = 0; attempt < count * 50 && names.length < count; attempt++) {
+    const name = renderer.name(rng);
+    const key = name.text.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    names.push(name);
+  }
+  const notices = renderer.getNotices();
+  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+  return { names, seed, notices };
+}
+function worldHistoryLabel(base, cultureId, eraId) {
+  const culture = findCulture(cultureId);
+  const era = findEra(culture, eraId);
+  return culture.eras.length > 1 ? `${base} \xB7 ${culture.label} \xB7 ${era.label}` : `${base} \xB7 ${culture.label}`;
+}
+
 // src/recipeHost.ts
 var import_obsidian6 = require("obsidian");
 
@@ -20454,6 +21288,7 @@ var SECTION_ORDER = [
   "markov",
   "placeShapes",
   "riverNames",
+  "worldPlaceNames",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "nameAgeing",
@@ -20463,6 +21298,7 @@ var SECTION_LABELS = {
   markov: "markov generator",
   placeShapes: "british place names",
   riverNames: "river names",
+  worldPlaceNames: "world place names",
   explorationPlaceShapes: "exploration place names",
   empireExpansionPlaceShapes: "empire expansion place names",
   nameAgeing: "name ageing",
@@ -20470,9 +21306,11 @@ var SECTION_LABELS = {
 };
 var BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
 var RIVER_NAMES_HISTORY_NAME = "river names";
+var WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
 function historySection(packName) {
   const starts = (prefix) => packName.startsWith(prefix);
   if (starts(RIVER_NAMES_HISTORY_NAME)) return "riverNames";
+  if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "worldPlaceNames";
   if (starts(SECTION_LABELS.explorationPlaceShapes) || starts(OLD_HISTORY_PREFIXES.explorationPlaceShapes)) {
     return "explorationPlaceShapes";
   }
@@ -20499,6 +21337,7 @@ var SECTION_ICONS = {
   markov: ICON_PACKS,
   placeShapes: ICON_PLACE_SHAPES,
   riverNames: ICON_RIVER_NAMES,
+  worldPlaceNames: "globe",
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   nameAgeing: ICON_NAME_AGEING,
@@ -20601,6 +21440,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     /** River names (river brief §6.8): setting and, for British, region. Session only. */
     this.riverSetting = "british";
     this.riverRegion = void 0;
+    /** World place names: culture, and the era chosen for each culture. Session only. */
+    this.worldCulture = WORLD_CULTURES[0].id;
+    this.worldEras = {};
     this.secondBoxRowEl = null;
     this.secondBoxDropdownEl = null;
     this.secondBoxTriggerEl = null;
@@ -20921,8 +21763,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
-    (_j = this.regionDropdownEl) == null ? void 0 : _j.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover);
-    this.showSecondBox(river && this.riverSetting === "british" || takeover);
+    const world = section === "worldPlaceNames";
+    (_j = this.regionDropdownEl) == null ? void 0 : _j.toggle(section === "placeShapes" || river || world || !!colonialPart || section === "nameAgeing" || takeover);
+    this.showSecondBox(river && this.riverSetting === "british" || world && this.worldHasEras() || takeover);
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
@@ -20937,8 +21780,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     if (this.sectionTriggerEl) (0, import_obsidian9.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
     (_o = this.sectionStubEl) == null ? void 0 : _o.toggle(
-      section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover
+      section !== "markov" && section !== "placeShapes" && !river && !world && !colonialPart && section !== "nameAgeing" && !takeover
     );
+  }
+  /** World place names: whether the chosen culture has more than one era (the era box shows). */
+  worldHasEras() {
+    return findCulture(this.worldCulture).eras.length > 1;
   }
   /**
    * The box beneath the box beside the section trigger: the region for river names' British setting
@@ -20979,7 +21826,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
   }
   /** The second box's label and tooltip for the active module. */
   updateSecondBoxLabel() {
-    var _a2, _b;
+    var _a2, _b, _c;
     const label = this.secondBoxLabelEl;
     const trigger = this.secondBoxTriggerEl;
     if (!label || !trigger) return;
@@ -20988,12 +21835,19 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       trigger.setAttribute("title", "Takeover pack: the language that adopts the names");
       return;
     }
+    if (this.activeSection === "worldPlaceNames") {
+      const era = findEra(findCulture(this.worldCulture), this.worldEras[this.worldCulture]);
+      label.textContent = era.label;
+      trigger.setAttribute("title", `Era: ${(_a2 = era.guide) != null ? _a2 : era.label}`);
+      return;
+    }
     const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.riverRegion);
-    label.textContent = (_a2 = region == null ? void 0 : region.label) != null ? _a2 : "All Britain";
-    trigger.setAttribute("title", `Region: ${(_b = region == null ? void 0 : region.counties) != null ? _b : "no regional weighting"}`);
+    label.textContent = (_b = region == null ? void 0 : region.label) != null ? _b : "All Britain";
+    trigger.setAttribute("title", `Region: ${(_c = region == null ? void 0 : region.counties) != null ? _c : "no regional weighting"}`);
   }
   /** River names: All Britain, then the regions. Name takeover: the eligible takeover packs. */
   renderSecondBoxMenu(menu) {
+    var _a2;
     menu.empty();
     const choose = () => {
       this.updateSecondBoxLabel();
@@ -21012,6 +21866,22 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
         item.addEventListener("click", () => {
           if (pack.reason) return;
           this.takeoverView.selectTakeover(pack.path);
+          choose();
+        });
+      }
+      return;
+    }
+    if (this.activeSection === "worldPlaceNames") {
+      const culture = findCulture(this.worldCulture);
+      const current = findEra(culture, this.worldEras[culture.id]);
+      for (const era of culture.eras) {
+        const item = menu.createEl("button", {
+          cls: "nameforge-modal__pack-dropdown-item" + (era.id === current.id ? " is-active" : ""),
+          attr: { type: "button", title: (_a2 = era.guide) != null ? _a2 : era.label }
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: era.label });
+        item.addEventListener("click", () => {
+          this.worldEras[culture.id] = era.id;
           choose();
         });
       }
@@ -21139,6 +22009,23 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       }
       return;
     }
+    if (this.activeSection === "worldPlaceNames") {
+      for (const culture of WORLD_CULTURES) {
+        const item = menu.createEl("button", {
+          cls: "nameforge-modal__pack-dropdown-item" + (culture.id === this.worldCulture ? " is-active" : ""),
+          attr: { type: "button", title: culture.guide }
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: culture.label });
+        item.addEventListener("click", () => {
+          this.worldCulture = culture.id;
+          this.showSecondBox(this.worldHasEras());
+          this.updateSecondBoxLabel();
+          this.updateRegionLabel();
+          this.setRegionMenuOpen(false);
+        });
+      }
+      return;
+    }
     const part = COLONIAL_SECTION_PART[this.activeSection];
     if (part) {
       for (const tradition of COLONIAL_TRADITIONS) {
@@ -21178,7 +22065,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     }
   }
   updateRegionLabel() {
-    var _a2, _b, _c, _d, _e, _f, _g;
+    var _a2, _b, _c, _d, _e, _f, _g, _h;
     if (this.activeSection === "nameTakeover") {
       if (this.regionLabelEl) this.regionLabelEl.textContent = this.takeoverView.nativeLabel();
       (_a2 = this.regionTriggerEl) == null ? void 0 : _a2.setAttribute("title", "Native pack: the names to be taken over");
@@ -21195,6 +22082,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       (_c = this.regionTriggerEl) == null ? void 0 : _c.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
       return;
     }
+    if (this.activeSection === "worldPlaceNames") {
+      const culture = findCulture(this.worldCulture);
+      if (this.regionLabelEl) this.regionLabelEl.textContent = culture.label;
+      (_d = this.regionTriggerEl) == null ? void 0 : _d.setAttribute("title", `Culture: ${culture.guide}`);
+      return;
+    }
     const part = COLONIAL_SECTION_PART[this.activeSection];
     if (part) {
       const tradition = COLONIAL_TRADITIONS.find((t) => {
@@ -21202,12 +22095,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
         return t.id === ((_a3 = this.selectedTradition[part]) != null ? _a3 : "general");
       });
       if (this.regionLabelEl) this.regionLabelEl.textContent = tradition.label;
-      (_d = this.regionTriggerEl) == null ? void 0 : _d.setAttribute("title", tradition.guide);
+      (_e = this.regionTriggerEl) == null ? void 0 : _e.setAttribute("title", tradition.guide);
       return;
     }
     const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.selectedRegion);
-    if (this.regionLabelEl) this.regionLabelEl.textContent = (_e = region == null ? void 0 : region.label) != null ? _e : "All Britain";
-    (_g = this.regionTriggerEl) == null ? void 0 : _g.setAttribute("title", (_f = region == null ? void 0 : region.counties) != null ? _f : "No regional weighting");
+    if (this.regionLabelEl) this.regionLabelEl.textContent = (_f = region == null ? void 0 : region.label) != null ? _f : "All Britain";
+    (_h = this.regionTriggerEl) == null ? void 0 : _h.setAttribute("title", (_g = region == null ? void 0 : region.counties) != null ? _g : "No regional weighting");
   }
   /** The context toggle row: None plus the part's frontier types or accommodation levels. */
   renderContextRow() {
@@ -22107,7 +23000,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     select.toggle(this.activeSection === "markov" && choices.length > 0);
   }
   async generateSelectedCount() {
-    var _a2, _b, _c, _d, _e;
+    var _a2, _b, _c, _d, _e, _f;
     if (this.activeSection === "placeShapes") {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
       const result2 = generatePlaceNames({
@@ -22146,6 +23039,29 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       this.setStatus((_c = result2.notice) != null ? _c : "");
       return;
     }
+    if (this.activeSection === "worldPlaceNames") {
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_d = this.seedInputEl) == null ? void 0 : _d.value) : void 0;
+      const era = this.worldEras[this.worldCulture];
+      const result2 = generateWorldPlaceNames({
+        culture: this.worldCulture,
+        era,
+        count: this.generationCount,
+        seed: seedOverride2,
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness
+      });
+      this.currentSeed = result2.seed;
+      this.renderRecipeResults(
+        result2.names.map((n) => ({ text: n.text, hasPlaceholder: false, etymology: n.etymology })),
+        "module"
+      );
+      await this.recordGenerationHistory(
+        result2.names.length,
+        worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, this.worldCulture, era)
+      );
+      this.setStatus(result2.notices.join(" "));
+      return;
+    }
     if (this.activeSection === "nameAgeing") {
       await this.runAgeing();
       return;
@@ -22157,7 +23073,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
-      const seedOverride2 = this.seedLocked ? parseSeedInput((_d = this.seedInputEl) == null ? void 0 : _d.value) : void 0;
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
       const tradition = this.selectedTradition[colonialPart];
       const context = this.selectedContext[colonialPart];
       const result2 = generatePlaceNames({
@@ -22189,7 +23105,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       this.setStatus(this.currentTemplateError);
       return;
     }
-    const seedOverride = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
+    const seedOverride = this.seedLocked ? parseSeedInput((_f = this.seedInputEl) == null ? void 0 : _f.value) : void 0;
     if (this.currentPackType === "compoundPack") {
       const result2 = generateCompoundNamesDetailed(this.currentCompoundParts, {
         count: this.generationCount,

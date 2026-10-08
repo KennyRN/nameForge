@@ -1,0 +1,594 @@
+{
+  "$comment": "World place names, first release: eight cultures, each building names in its own way and writing them in modern English. Template syntax: {list} draws a word, {list:pl} its plural, {list:pos} its possessive, {#source} a new proper name from a Markov corpus, + between parts marks a fusable compound. List entries may hold their own templates. 'Word|plural' gives an irregular plural; a trailing ~ marks a word that never fuses. Data only.",
+  "version": 1,
+  "labels": {
+    "animal": "animal",
+    "domestic": "domestic animal",
+    "wild": "wild animal",
+    "bird": "bird",
+    "tree": "tree",
+    "plant": "plant",
+    "adj": "quality",
+    "colour": "colour",
+    "size": "size or position",
+    "gen": "generic",
+    "spec": "specific",
+    "name": "personal name",
+    "god": "deity",
+    "holy": "holy place",
+    "saint": "holy person",
+    "church": "church word",
+    "water": "water word",
+    "surname": "family",
+    "resource": "resource",
+    "rgen": "generic",
+    "aspiration": "aspiration",
+    "place": "older place",
+    "farm": "farm word",
+    "land": "landscape word",
+    "status": "status",
+    "meet": "assembly word",
+    "landpl": "landscape word",
+    "fort": "fort word",
+    "grove": "sacred place",
+    "feature": "feature",
+    "person": "personal name",
+    "prep": "position",
+    "emperor": "emperor",
+    "tribe": "tribe",
+    "ordinal": "milestone",
+    "at": "landmark",
+    "waters": "waters",
+    "town": "settlement word",
+    "lord": "lord",
+    "holyname": "holy name",
+    "direction": "direction",
+    "adv": "auspicious word",
+    "quality": "auspicious word",
+    "far": "frontier",
+    "slogan": "imperial slogan",
+    "side": "bank",
+    "river": "river",
+    "mountain": "mountain",
+    "material": "material",
+    "beast": "beast",
+    "slot": "slogan",
+    "settle": "settlement word",
+    "pharaoh": "pharaoh",
+    "sacred": "sacred animal",
+    "pair": "epithet",
+    "ggod": "Greek god",
+    "founder": "founder",
+    "harbour": "harbour word",
+    "near": "surroundings",
+    "verb": "action",
+    "celestial": "celestial",
+    "peak": "mountain word",
+    "native": "native name",
+    "homeland": "homeland",
+    "holy2": "holy company",
+    "event": "event",
+    "noun": "thing",
+    "people": "people",
+    "ruler": "ruler",
+    "where": "dedication",
+    "fuse": "landscape word"
+  },
+  "cultures": [
+    {
+      "id": "anglo-saxon",
+      "label": "Anglo-Saxon",
+      "guide": "Fused compounds, specific first and generic last: the baseline for every other set.",
+      "fuseChance": 0.8,
+      "lists": {
+        "domestic": ["Ox|Oxen", "Cow", "Swine|Swine", "Sheep|Sheep", "Goat", "Horse", "Colt", "Calf|Calves", "Lamb", "Bull", "Hound", "Hen", "Goose|Geese", "Ewe"],
+        "wild": ["Hart", "Hind", "Wolf|Wolves", "Fox", "Badger", "Hare", "Beaver", "Otter", "Boar", "Deer|Deer", "Roe|Roe", "Buck"],
+        "bird": ["Crane", "Crow", "Raven", "Hawk", "Eagle", "Swan", "Finch", "Owl", "Lark", "Heron", "Kite", "Dove", "Duck"],
+        "tree": ["Oak", "Ash", "Elm", "Thorn", "Birch", "Alder", "Hazel", "Willow", "Lime", "Yew", "Apple", "Holly", "Beech", "Maple"],
+        "plant": ["Reed", "Rush", "Bramble", "Broom", "Fern", "Nettle", "Cress", "Sedge", "Heather", "Flax", "Wheat", "Barley", "Oat", "Rye", "Bean"],
+        "adj": ["Broad", "Long", "High", "Low", "New", "Old", "Fair", "Cold", "Deep", "Foul", "Clear", "Sand", "Stone", "Mill", "Middle", "Hollow"],
+        "colour": ["White", "Black", "Red", "Green", "Grey", "Brown", "Dark"],
+        "size": ["Great", "Little", "Upper", "Lower", "Nether", "Long", "East", "West", "North", "South", "Old"],
+        "animal": ["{domestic}", "{domestic}", "{wild}"],
+        "spec": ["{domestic}", "{wild}", "{bird}", "{tree}", "{tree}", "{plant}", "{adj}", "{adj}", "{colour}"],
+        "gen": ["Ford", "Field", "Wood", "Well", "Brook", "Hill", "Bridge", "Town", "Farm", "Fort", "Moor", "Marsh", "Mere", "Stone", "Dale", "Bank", "Clearing~", "Island~", "Hollow~", "Meadow~"],
+        "name": ["Beorma", "Hæsta", "Cola", "Dudda", "Tota", "Wulfric", "Eadric", "Godwine", "Leofric", "Osric", "Cyneburg", "Æthelflæd", "Hild", "Eadgifu", "Brihtwine", "Sæwine", "Ceolmund", "Wigheard", "Ecgbert", "Tidda", "Babba", "Pymma", "Cufa", "Sigeric"],
+        "god": ["Woden", "Woden", "Thunor", "Tiw", "Frige", "Grim"],
+        "holy": ["Fort", "Barrow", "Dyke", "Grove", "Hill", "Field", "Clearing", "Shrine", "Ley", "Way"],
+        "saint": ["Alban", "Edmund", "Cuthbert", "Neot", "Ives", "Botolph", "Osyth", "Edith", "Wilfrid", "Chad", "Guthlac", "Etheldreda", "Werburgh", "Swithun", "Aldhelm"],
+        "church": ["Minster", "Stone", "Church", "Well", "Holy Place"],
+        "water": ["Water", "Pool", "Mere", "Well", "Spring", "Brook"]
+      },
+      "markov": {
+        "river": { "corpus": ["Thames", "Severn", "Trent", "Avon", "Ouse", "Tyne", "Tees", "Wear", "Swale", "Ure", "Nidd", "Wharfe", "Aire", "Calder", "Derwent", "Witham", "Welland", "Nene", "Cam", "Granta", "Lark", "Wensum", "Yare", "Waveney", "Bure", "Stour", "Orwell", "Deben", "Gipping", "Colne", "Chelmer", "Roding", "Medway", "Arun", "Adur", "Rother", "Itchen", "Frome", "Teign", "Tamar", "Torridge", "Parrett", "Lugg", "Teme", "Mersey", "Ribble", "Lune", "Eden", "Irwell", "Weaver", "Churnet", "Soar", "Wreake", "Leven", "Coquet", "Wansbeck", "Kennet", "Cherwell", "Evenlode", "Windrush", "Loddon", "Wylye", "Nadder", "Hodder"], "min": 3, "max": 8, "label": "river" }
+      },
+      "eras": [
+        {
+          "id": "old-english",
+          "label": "Old English",
+          "guide": "Fords, farms and clearings; owners' names; a few old gods.",
+          "templates": [
+            ["{spec}+{gen}", 12],
+            ["{animal}+Ford", 4],
+            ["{size} {spec}+{gen}", 3],
+            ["{name:pos} {gen}", 4],
+            ["Home of {name:pos} People", 3],
+            ["{name:pos} People", 1],
+            ["{god:pos} {holy}", 3],
+            ["{spec}+{gen} upon {#river}", 2],
+            ["{colour} {water}", 2],
+            ["{saint:pos} {church}", 2]
+          ]
+        },
+        {
+          "id": "modern",
+          "label": "Modern",
+          "guide": "Old cores with new tags: junctions, spas, seaside towns, estates and aspirations.",
+          "lists": {
+            "place": ["{spec}+{gen}", "{spec}+{gen}", "{colour}+{gen}"],
+            "surname": ["Keynes", "Talbot", "Sutherland", "Grosvenor", "Lever", "Pemberton", "Fitzroy", "Ashworth", "Holloway", "Clifford", "Mortimer", "Wellesley", "Howard", "Russell", "Bentley", "Courtenay"],
+            "resource": ["Iron", "Coal", "Salt", "Lime", "Copper", "Clay", "Brick", "Mill", "Steel", "Tin"],
+            "aspiration": ["Mount Pleasant", "Prospect Hill", "Paradise", "Sunnybank", "Hope Vale", "Freehold", "Fairview", "Bellevue", "Bonnyrigg", "Sunlight"],
+            "rgen": ["Ford", "Field", "Bridge", "Town", "Port", "Dale", "Mouth", "Brook"]
+          },
+          "templates": [
+            ["{place}-on-Sea", 3],
+            ["{place} Junction", 2],
+            ["{place} Spa", 2],
+            ["{place} New Town", 1],
+            ["New {place}", 2],
+            ["{place} Green", 2],
+            ["{place} Heath", 1],
+            ["{place} Vale", 1],
+            ["{place} Gardens", 1],
+            ["{place} {surname}", 3],
+            ["Upper {place}", 1],
+            ["King's {place}", 1],
+            ["Port {surname}", 2],
+            ["{surname} Park", 2],
+            ["{resource}+{rgen}", 2],
+            ["{resource}ville", 1],
+            ["{aspiration}", 1],
+            ["{place} Garden Village", 1]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "norse",
+      "label": "Norse",
+      "guide": "Owners' farms, god-shrines and blunt landscape words: dale, fell, ness, holm.",
+      "fuseChance": 0.5,
+      "lists": {
+        "name": ["Grim", "Ketil", "Thorkel", "Ulf", "Bjorn", "Hrafn", "Thord", "Skeggi", "Asgeir", "Gunnar", "Hakon", "Orm", "Sigurd", "Thorstein", "Kolbein", "Ragnhild", "Thora", "Gudrun", "Asa", "Sigrid", "Frida", "Halfdan", "Toki", "Ingjald", "Eyvind", "Hallgerd"],
+        "god": ["Odin", "Thor", "Thor", "Frey", "Freyja", "Ull", "Njord", "Tyr", "Balder", "Heimdall"],
+        "holy": ["Grove", "Shrine", "Temple", "Hill", "Field", "Island", "Spring", "Acre", "Rock"],
+        "farm": ["Farm", "Farm", "Homestead", "Clearing", "Shieling", "Steading", "Toft"],
+        "land": ["Bay", "Fjord", "Ness", "Dale", "Fell", "Island", "Holm", "Beck", "Force", "Skerry", "Strand", "Sound", "Haven", "Mire", "Tarn", "Howe", "Ridge", "Scar"],
+        "landpl": ["Skerries", "Holms", "Fells", "Howes", "Scars", "Islands", "Sounds"],
+        "animal": ["Bear", "Wolf|Wolves", "Raven", "Eagle", "Seal", "Whale", "Horse", "Ox|Oxen", "Goat", "Swan", "Salmon|Salmon", "Otter", "Elk|Elk", "Hart", "Sheep|Sheep", "Boar", "Gull"],
+        "adj": ["Smoky", "Black", "White", "Red", "Long", "Broad", "Cold", "High", "Deep", "Steep", "Sandy", "Stony", "Salt", "Green", "Bright", "Windy", "Narrow", "Calm"],
+        "tree": ["Birch", "Ash", "Pine", "Rowan", "Alder", "Juniper", "Willow", "Oak", "Aspen"],
+        "fuse": ["Dale", "Fell", "Beck", "Ness", "Holm", "Scar"],
+        "status": ["King's", "Earl's", "Priests'", "Church", "Monks'", "Women's", "Thralls'", "Old"],
+        "meet": ["Plain", "Field", "Hill", "Holm", "Ness", "Mound"]
+      },
+      "eras": [
+        {
+          "id": "viking",
+          "label": "Viking",
+          "templates": [
+            ["{name:pos} {farm}", 8],
+            ["{god:pos} {holy}", 5],
+            ["{adj} {land}", 6],
+            ["{animal} {land}", 6],
+            ["{tree} {land}", 3],
+            ["{animal}+{fuse}", 3],
+            ["{adj}+{fuse}", 2],
+            ["Assembly {meet}", 2],
+            ["{name:pos} {land}", 2],
+            ["{status} {farm}", 2],
+            ["The {landpl}", 1]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "celtic",
+      "label": "Celtic",
+      "guide": "Head-first naming in the saints' era: Mouth of, Church of, Fort of, Head of.",
+      "fuseChance": 0,
+      "lists": {
+        "animal": ["Bear", "Boar", "Horse", "Hound", "Raven", "Salmon|Salmon", "Bull", "Deer|Deer", "Crane", "Wolf|Wolves", "Hawk", "Eagle", "Swan", "Pig", "Ox|Oxen", "Cat"],
+        "adj": ["Great", "White", "High", "Holy", "Bright", "Dark", "New", "Old", "Black", "Grey", "Red", "Green", "Little", "Far"],
+        "tree": ["Oak", "Yew", "Alder", "Rowan", "Hazel", "Birch", "Elm", "Apple", "Willow", "Ash", "Thorn"],
+        "colour": ["Black", "White", "Grey", "Red", "Green", "Bright"]
+      },
+      "markov": {
+        "river": { "corpus": ["Teifi", "Tywi", "Taf", "Tawe", "Nedd", "Afan", "Ogwr", "Rhymni", "Ebwy", "Cynon", "Llwyd", "Mynwy", "Honddu", "Irfon", "Elan", "Rheidol", "Ystwyth", "Aeron", "Dyfi", "Dulas", "Mawddach", "Dysynni", "Dwyryd", "Glaslyn", "Dwyfor", "Seiont", "Ogwen", "Conwy", "Lledr", "Elwy", "Clwyd", "Alun", "Ceiriog", "Tanad", "Cleddau", "Gwaun", "Nyfer", "Cothi", "Gwili", "Aman", "Senni", "Grwyne", "Aled", "Alaw", "Cefni", "Clyde", "Forth", "Tay", "Spey", "Deveron", "Ythan", "Findhorn", "Nairn", "Ness", "Beauly", "Conon", "Oykel", "Carron", "Naver", "Brora", "Earn", "Ericht", "Tummel", "Garry", "Lyon", "Lochay", "Dochart", "Teith", "Leven", "Etive", "Awe", "Orchy", "Lochy", "Nevis", "Shiel"], "min": 3, "max": 8, "label": "river" }
+      },
+      "eras": [
+        {
+          "id": "pagan",
+          "label": "Pagan",
+          "guide": "Forts, plains and sacred groves of the old gods.",
+          "lists": {
+            "god": ["Lugus", "Belenus", "Brigantia", "Taranis", "Epona", "Sulis", "Nodens", "Maponos", "Camulos", "Toutatis", "Andarta", "Coventina", "Cernunnos", "Arduinna", "Nemetona", "Ogmios", "Rosmerta", "Esus"],
+            "grove": ["Sacred Grove", "Grove", "Holy Place", "Spring", "Well"]
+          },
+          "templates": [
+            ["Fort of {god}", 4],
+            ["{adj} Fort", 4],
+            ["Fort of the {animal:pl}", 2],
+            ["{adj} Sacred Grove", 2],
+            ["{grove} of {god}", 3],
+            ["Plain of {god}", 2],
+            ["{adj} Plain", 3],
+            ["{tree} Plain", 2],
+            ["Ford of the {animal:pl}", 2],
+            ["Mouth of the {#river}", 2],
+            ["Confluence of the {#river}", 1],
+            ["{animal} Hill", 1]
+          ]
+        },
+        {
+          "id": "saints",
+          "label": "Saints",
+          "guide": "Churches and cells of the saints, river mouths, forts and headlands.",
+          "lists": {
+            "saint": ["Mary", "David", "Patrick", "Columba", "Brigid", "Kentigern", "Ninian", "Teilo", "Cadoc", "Illtud", "Dyfrig", "Piran", "Petroc", "Ciarán", "Brendan", "Kevin", "Aidan", "Winifred", "Non", "Deiniol", "Beuno", "Tysilio", "Mungo", "Maelrubha", "Fillan", "Moluag", "Cybi", "Seiriol"],
+            "person": ["Cadwal", "Cynan", "Brude", "Fergus", "Conall", "Aed", "Niall", "Bran", "Owain", "Rhodri", "Cunedda", "Eidyn", "Luan", "Cormac", "Maelgwn", "Urien"],
+            "prep": ["in the", "by the", "beside the", "above the", "under the", "across the"],
+            "feature": ["Pool", "Hollow", "White Hazel", "Ford", "Stream", "Valley", "Wood", "Rock", "Marsh", "Meadow", "Waterfall", "Hill", "Grove", "Strand"]
+          },
+          "templates": [
+            ["Church of {saint}", 6],
+            ["Church of {saint} {prep} {feature}", 2],
+            ["Cell of {saint}", 3],
+            ["Mouth of the {#river}", 5],
+            ["Fort of the {animal:pl}", 2],
+            ["Fort of {person}", 2],
+            ["{adj} Fort", 1],
+            ["Head of the {feature}", 3],
+            ["Headland of the {animal}", 1],
+            ["{adj} Headland", 1],
+            ["Valley of the {#river}", 2],
+            ["Valley of the {animal:pl}", 1],
+            ["{adj} Valley", 1],
+            ["Island of {saint}", 2],
+            ["Hill of the {animal:pl}", 2],
+            ["{tree} Wood", 2],
+            ["Ford of the {animal:pl}", 1],
+            ["Ford of {person}", 1],
+            ["Meadow of the Sons of {person}", 1],
+            ["{saint:pos} Well", 1],
+            ["{colour} Pool", 2]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "roman",
+      "label": "Roman / Italian",
+      "guide": "Imperial: gods and emperors as founders, forums, milestones. Medieval: saints, castles, towers and boroughs.",
+      "fuseChance": 0,
+      "lists": {
+        "animal": ["Wolf|Wolves", "Boar", "Eagle", "Falcon", "Bear", "Stag", "Fox", "Crow", "Lion", "Ox|Oxen", "Horse", "Bull"]
+      },
+      "eras": [
+        {
+          "id": "imperial",
+          "label": "Imperial",
+          "guide": "Shrines, harbours and waters of the gods; forums and colonies of great men.",
+          "lists": {
+            "god": ["Jupiter", "Juno", "Minerva", "Mars", "Venus", "Mercury", "Apollo", "Diana", "Hercules", "Fortune", "Neptune", "Janus", "Vesta", "Ceres", "Bacchus", "Saturn", "Victory", "Feronia", "Sol", "Silvanus", "Faunus", "Sulis"],
+            "person": ["Julius", "Claudius", "Flavius", "Livius", "Cornelius", "Sempronius", "Appius", "Aurelius", "Popilius", "Cassius", "Domitius", "Sulla", "Aelius", "Fulvius", "Licinius", "Valerius"],
+            "emperor": ["Augustus", "Tiberius", "Claudius", "Vespasian", "Trajan", "Hadrian", "Antoninus", "Severus", "Constantine", "Aurelian", "Diocletian", "Julius", "Nerva", "Valentinian"],
+            "tribe": ["Treveri", "Taurini", "Vindelici", "Suessiones", "Rauraci", "Silures", "Iceni", "Belgae", "Atrebates", "Parisii", "Turones", "Lingones", "Helvetii", "Senones"],
+            "ordinal": ["Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Twelfth", "Twentieth"],
+            "at": ["Pear Tree", "Boundaries", "Bridge", "Waters", "Pines", "Wolves", "Eagles", "Oaks", "Statues", "Horses", "Two Trees", "Rock", "Shrine", "Ford"],
+            "waters": ["Hot Waters", "Healing Waters", "Warm Waters", "Sulphur Waters", "Sweet Waters"]
+          },
+          "markov": {
+            "river": { "corpus": ["Tiberis", "Padus", "Arnus", "Rhenus", "Danuvius", "Rhodanus", "Mosella", "Sequana", "Liger", "Garumna", "Tamesis", "Sabrina", "Isca", "Ticinus", "Athesis", "Aufidus", "Volturnus", "Liris", "Metaurus", "Rubico", "Trebia", "Mincius", "Addua", "Sarnus", "Anio", "Arar", "Mosa", "Scaldis", "Visurgis", "Albis", "Dravus", "Savus", "Iberus", "Tagus", "Durius", "Anas", "Baetis", "Oenus", "Isara", "Druentia"], "min": 3, "max": 9, "label": "river" }
+          },
+          "templates": [
+            ["Shrine of {god}", 3],
+            ["Harbour of {god}", 3],
+            ["Forum of {person}", 4],
+            ["Colony of {emperor}", 2],
+            ["{emperor:pos} City of the {tribe}", 2],
+            ["Market of the {tribe}", 2],
+            ["Waters of {god}", 2],
+            ["Grove of {god}", 1],
+            ["Temple of {god}", 1],
+            ["Field of {god}", 1],
+            ["Bridge of {person}", 2],
+            ["Camp on the {#river}", 2],
+            ["Mouth of the {#river}", 2],
+            ["At the {ordinal} Milestone", 2],
+            ["At the {at}", 3],
+            ["The Three Taverns", 1],
+            ["{emperor:pos} Peace", 1],
+            ["New City", 1],
+            ["Victory City", 1],
+            ["{waters}", 1],
+            ["Colony of {emperor} at the Altar of {god}", 1]
+          ]
+        },
+        {
+          "id": "medieval",
+          "label": "Medieval",
+          "guide": "Saints and castles; towers, rocks and boroughs; new villages on the hills.",
+          "lists": {
+            "saint": ["Lawrence", "John", "Mark", "Peter", "Paul", "Michael", "Angelo", "Benedict", "Francis", "Clare", "Agatha", "Lucy", "Gimignano", "Miniato", "Severino", "Martino", "Leo", "Donato", "Vitale", "Romano", "Felice", "Giorgio", "Ambrose", "Zeno", "Prospero", "Quirico"],
+            "where": ["in the Fields", "in the Ford", "in the Wood", "on the Mountain", "by the Sea", "of the Hills", "outside the Walls", "on the Hill", "in the Valley", "of the Bridge"],
+            "town": ["Village", "Castle", "Borough", "Town", "Tower", "Hamlet", "Rock"],
+            "adj": ["Free", "New", "Fair", "High", "Old", "Great", "Black", "White", "Strong", "Royal", "Good", "Beautiful", "Red"],
+            "status": ["Counts", "Bishop", "Abbot", "Marquis", "Lords", "Monks", "Knights", "Duke", "Prior"],
+            "holyname": ["Sepulchre", "Cross", "Spirit", "Trinity", "Saviour", "Angels"],
+            "peak": ["Mount", "Hill", "Rock"]
+          },
+          "markov": {
+            "river": { "corpus": ["Arno", "Tevere", "Adige", "Brenta", "Piave", "Tagliamento", "Ticino", "Adda", "Oglio", "Mincio", "Reno", "Serchio", "Ombrone", "Volturno", "Garigliano", "Sele", "Ofanto", "Bradano", "Basento", "Crati", "Simeto", "Tirso", "Metauro", "Esino", "Tronto", "Pescara", "Sangro", "Liri", "Aniene", "Nera", "Chiana", "Secchia", "Panaro", "Taro", "Trebbia", "Scrivia", "Tanaro", "Stura", "Sesia", "Toce", "Isonzo", "Livenza", "Sile"], "min": 3, "max": 9, "label": "river" }
+          },
+          "templates": [
+            ["Saint {saint}", 5],
+            ["Saint {saint} {where}", 3],
+            ["Borough of Saint {saint}", 2],
+            ["Borough of the Holy {holyname}", 1],
+            ["{adj} {town}", 5],
+            ["New {town}", 2],
+            ["{town} of the {animal:pl}", 2],
+            ["{adj} {peak}", 3],
+            ["Tower of the {status}", 2],
+            ["Castle of the {status}", 1],
+            ["{town} on the {#river}", 2],
+            ["Valley of the {#river}", 1],
+            ["{adj} Water", 1]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chinese",
+      "label": "Chinese",
+      "guide": "Places named by position (north of the river, sunny bank), and in imperial times by slogan and virtue.",
+      "fuseChance": 0,
+      "lists": {
+        "direction": ["Northern", "Southern", "Eastern", "Western", "Central"],
+        "side": ["North", "South", "East", "West"],
+        "river": ["Luo", "Han", "Wei", "Fen", "Jing", "Ying", "Bian", "Si", "Yi", "Huai", "Ru", "Qi", "Zhang", "Shu", "Min", "Gan", "Xiang", "Yuan", "Li", "Lu", "Yellow River", "Pearl River", "Clear River", "Black Dragon River", "Golden Sands River", "Jade River", "Willow River"],
+        "mountain": ["Hua", "Tai", "Song", "Heng", "Lu", "Wu", "Qi", "Shou", "Dan", "Jiu"],
+        "beast": ["Tiger", "Dragon", "Phoenix", "Crane", "Carp|Carp", "Tortoise", "White Horse", "Deer|Deer", "Ox|Oxen", "Golden Rooster", "Monkey", "Qilin|Qilin"],
+        "material": ["Jade", "Golden", "Iron", "Stone", "Silver", "Copper", "Bronze"],
+        "quality": ["Peace", "Prosperity", "Harmony", "Tranquillity", "Fortune", "Virtue", "Glory", "Order", "Longevity", "Abundance"]
+      },
+      "eras": [
+        {
+          "id": "imperial",
+          "label": "Imperial",
+          "guide": "Capitals by direction, cities named for peace and virtue, frontier towns named as orders.",
+          "lists": {
+            "adv": ["Long", "Eternal", "Lasting", "Great", "Universal", "Continuing", "Restored", "Everlasting", "Prosperous", "Peaceful"],
+            "far": ["Distant", "West", "North", "South", "East", "Frontier", "Far West", "Borderlands", "Rivers", "Sea", "Desert", "Steppe"],
+            "slogan": ["Enlighten and Transform", "Cherish the Distant", "Proclaim Virtue", "Spread Civilisation", "Inherit Virtue", "Uphold Righteousness", "Revere Heaven", "Restore Order"],
+            "verb": ["Pacify", "Pacify", "Guard", "Subdue", "Calm", "Secure", "Hold"]
+          },
+          "templates": [
+            ["{direction} Peace", 3],
+            ["{direction} Capital", 2],
+            ["{adv} {quality}", 4],
+            ["{verb} the {far}", 4],
+            ["{slogan}", 2],
+            ["{side} of the {river}", 3],
+            ["{side} of the Lake", 1],
+            ["Sunny Bank of the {river}", 2],
+            ["Shady Side of Mount {mountain}", 1],
+            ["{quality} Prefecture", 2],
+            ["{quality} County", 1],
+            ["{material} Gate Pass", 1],
+            ["{beast} Gate", 1],
+            ["{beast} Hill", 1],
+            ["{beast} Pass", 1]
+          ]
+        },
+        {
+          "id": "modern",
+          "label": "Modern",
+          "guide": "Positional names, plain descriptions of islands, harbours and fords, and socialist slogans.",
+          "lists": {
+            "adj": ["Green", "Fragrant", "Heavenly", "Golden", "Great", "Clear", "Long", "Yellow", "White", "Red", "Stone", "Peaceful", "Pearl", "Jade", "Bright", "Deep"],
+            "water": ["Sea", "River", "Lake", "Shore"],
+            "feature": ["Hill", "Rock", "Ridge", "Gorge", "Spring", "Pool", "Gate", "Bay", "Bridge"],
+            "slot": ["Red Flag", "Red Star", "Liberation", "Victory", "Friendship", "Unity", "Vanguard", "New Life", "East Wind", "Bright Future", "Great Leap", "Sunrise"],
+            "settle": ["Village", "Commune", "Town", "Farm", "Road", "Street", "District"]
+          },
+          "templates": [
+            ["{side} of the {river}", 4],
+            ["{side} of the Lake", 1],
+            ["Sunny Bank of the {river}", 2],
+            ["{side} of the {river} New Area", 1],
+            ["{direction} Capital", 1],
+            ["{adj} Island", 2],
+            ["{adj} Harbour", 2],
+            ["{adj} Ford", 2],
+            ["{adj} Port", 1],
+            ["Upon the {water}", 1],
+            ["{beast} {feature}", 2],
+            ["{slot} {settle}", 2],
+            ["{quality} {settle}", 1]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "egyptian",
+      "label": "Egyptian",
+      "guide": "Animal gods and theology: houses, horizons and seats of the gods; under the Greeks, cities of gods and beasts.",
+      "fuseChance": 0,
+      "lists": {
+        "god": ["Ra", "Ptah", "Amun", "Bastet", "Sobek", "Thoth", "Osiris", "Isis", "Horus", "Hathor", "Anubis", "Khnum", "Neith", "Min", "Montu", "Sekhmet", "Wadjet", "Nekhbet", "Set", "Atum", "Khonsu", "Aten", "Mut", "Wepwawet"]
+      },
+      "eras": [
+        {
+          "id": "pharaonic",
+          "label": "Pharaonic",
+          "guide": "House of Bastet, Horizon of the Aten, Enduring and Beautiful, the White Walls.",
+          "lists": {
+            "pharaoh": ["Ramesses", "Amenemhat", "Senusret", "Thutmose", "Amenhotep", "Sneferu", "Khufu", "Seti", "Merenptah", "Hatshepsut", "Mentuhotep", "Pepi", "Teti", "Sahure", "Khasekhemwy"],
+            "lord": ["{god}", "{god}", "{god}", "{pharaoh}"],
+            "sacred": ["Crocodile", "Ibis", "Falcon", "Cat", "Cobra", "Hippopotamus|Hippopotamuses", "Jackal", "Ram", "Bull", "Hare", "Oryx|Oryxes", "Vulture", "Scarab", "Lion", "Baboon", "Cow", "Ox|Oxen"],
+            "pair": ["Enduring", "Beautiful", "Mighty", "Pure", "Gleaming", "Great", "Established", "Shining", "Holy", "Exalted"],
+            "colour": ["White", "Black", "Red", "Gleaming", "Golden"]
+          },
+          "templates": [
+            ["House of {lord}", 5],
+            ["Estate of {god}", 2],
+            ["Temple of the Spirit of {god}", 1],
+            ["Horizon of {god}", 2],
+            ["Mound of {god}", 1],
+            ["Seat of {god}", 2],
+            ["Island of {god}", 1],
+            ["Lake of {god}", 1],
+            ["{god:pos} City", 3],
+            ["Mansion of {pharaoh}", 1],
+            ["Nome of the {sacred}", 2],
+            ["{pair} and {pair}", 1],
+            ["The {colour} Walls", 1],
+            ["Mound of the {sacred}", 1],
+            ["Field of the {sacred:pl}", 1]
+          ]
+        },
+        {
+          "id": "graeco-roman",
+          "label": "Graeco-Roman",
+          "guide": "City of Zeus, City of the Crocodiles, Ptolemy's City, Mouse Harbour.",
+          "lists": {
+            "ggod": ["Zeus", "Hermes", "Apollo", "Aphrodite", "Pan", "Herakles", "Dionysus", "Athena", "Hera", "Helios", "the Sun"],
+            "sacred": ["Crocodile", "Wolf|Wolves", "Lion", "Dog", "Perch|Perch", "Sharp-nosed Fish|Sharp-nosed Fish", "Ibis|Ibises", "Falcon", "Cat", "Ram", "Bull"],
+            "founder": ["Alexander", "Ptolemy", "Berenice", "Arsinoe", "Cleopatra", "Philadelphus", "Antinous", "Hadrian", "Philotera", "Theodosius"],
+            "harbour": ["Mouse", "White", "Fair", "Deep", "Sacred", "Old"]
+          },
+          "templates": [
+            ["City of {ggod}", 4],
+            ["Great City of {ggod}", 1],
+            ["City of the {sacred:pl}", 4],
+            ["{founder:pos} City", 3],
+            ["City of {founder}", 2],
+            ["{harbour} Harbour", 2],
+            ["{founder:pos} City of the Hunts", 1],
+            ["Oasis of {god}", 1],
+            ["Little City of {ggod}", 1],
+            ["Upper City of the {sacred:pl}", 1]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aztec",
+      "label": "Aztec",
+      "guide": "Locative compounds: place of deer, grasshopper hill, near the trees. Colonial: saints joined to native names.",
+      "fuseChance": 0,
+      "lists": {
+        "animal": ["Deer|Deer", "Coyote", "Jaguar", "Eagle", "Serpent", "Rabbit", "Grasshopper", "Heron", "Hummingbird", "Turkey", "Ocelot", "Dog", "Butterfly|Butterflies", "Fish|Fish", "Frog", "Duck", "Quail|Quail", "Snail", "Owl"],
+        "plant": ["Reed", "Avocado", "Cactus|Cacti", "Maguey", "Cypress", "Flower", "Maize Plant", "Cacao Tree", "Chilli|Chillies", "Copal Tree", "Pine", "Willow", "Amaranth", "Squash", "Bean", "Prickly Pear"],
+        "god": ["Tlaloc", "Huitzilopochtli", "Quetzalcoatl", "Tezcatlipoca", "Xipe Totec", "Chalchiuhtlicue", "Coatlicue", "Xochiquetzal", "Mictlantecuhtli", "Tonatiuh", "Mixcoatl", "Xiuhtecuhtli", "Tlazolteotl", "Centeotl", "Chicomecoatl"]
+      },
+      "eras": [
+        {
+          "id": "mexica",
+          "label": "Mexica",
+          "guide": "Place of coyotes, grasshopper hill, where flowers abound, Tlaloc's mountain.",
+          "lists": {
+            "near": ["Trees", "Water", "Mountains", "Woods", "Springs", "Reeds", "Rocks", "Lake"],
+            "feature": ["Water", "Stone", "Hill", "Ridge", "Sand", "Island", "Lake", "Marsh"],
+            "celestial": ["Moon", "Sun", "Lake", "Mountain", "Sky"],
+            "verb": ["Drinks", "Sings", "Rests", "Hunts", "Stands", "Cries", "Bathes", "Nests"],
+            "peak": ["Smoking", "Shining", "Sleeping", "Speaking", "Snowy", "Starry"]
+          },
+          "templates": [
+            ["Place of {animal:pl}", 5],
+            ["Place of the {animal:pl}", 2],
+            ["Place of {plant:pl}", 4],
+            ["{animal} Hill", 4],
+            ["{plant} Hill", 1],
+            ["Near the {near}", 2],
+            ["Where {plant:pl} Abound", 2],
+            ["On the {feature}", 2],
+            ["In the Navel of the {celestial}", 1],
+            ["Where the {animal} {verb}", 1],
+            ["{god:pos} Mountain", 2],
+            ["{peak} Mountain", 1],
+            ["Where {god} Was Born", 1],
+            ["Among the {plant:pl}", 1]
+          ]
+        },
+        {
+          "id": "colonial",
+          "label": "Colonial",
+          "guide": "Saint plus native name, Our Lady, royal mines, missions and new homelands.",
+          "lists": {
+            "saint": ["John", "Francis", "Michael", "James", "Peter", "Paul", "Anthony", "Augustine", "Dominic", "Bartholomew", "Matthew", "Andrew", "Lucy", "Martha", "Clare", "Catherine", "Isabel", "Joseph", "Lawrence", "Nicholas", "Christopher", "Sebastian", "Thomas", "Gabriel"],
+            "native": ["{animal} Hill", "{animal} Hill", "the {plant:pl}", "the {animal:pl}", "{god:pos} Mountain", "the Waters", "the {plant} Fields"],
+            "homeland": ["Spain", "Galicia", "León", "Castile", "Biscay", "Navarre", "Andalusia", "Estremadura"],
+            "holyname": ["True Cross", "Holy Spirit", "Holy Faith", "Holy Trinity", "Conception", "Assumption"],
+            "holy2": ["Angels", "Kings", "Apostles", "Martyrs"]
+          },
+          "templates": [
+            ["Saint {saint} of {native}", 7],
+            ["Our Lady of {native}", 2],
+            ["Royal Mines of Saint {saint}", 1],
+            ["Rich Town of the {holyname}", 1],
+            ["New {homeland}", 2],
+            ["Mission of Saint {saint}", 2],
+            ["City of the {holy2}", 1],
+            ["Town of the {holyname}", 1],
+            ["Saint {saint} of the {animal:pl}", 1]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bantu",
+      "label": "Bantu",
+      "guide": "One invented people-name per batch feeds land, place and royal-town names, so a batch reads as one region.",
+      "fuseChance": 0,
+      "lists": {
+        "animal": ["Lion", "Elephant", "Leopard", "Buffalo|Buffalo", "Crocodile", "Hippopotamus|Hippopotamuses", "Impala|Impala", "Eland|Eland", "Python", "Hyena", "Zebra", "Giraffe", "Kudu|Kudu", "Rhinoceros|Rhinoceroses", "Baboon", "Fish Eagle", "Antelope", "Hornbill"],
+        "feature": ["River", "Rock", "Hill", "Bay", "Pool", "Lake", "Ford", "Spring", "Gorge", "Waterfall", "Marsh", "Forest"],
+        "event": ["Killing", "Gathering", "Weeping", "Rejoicing", "the Great Hunt", "Thunder", "Feasting", "Battle", "Peace", "Return", "Hunger", "Rain", "Meeting"],
+        "material": ["Stone", "Iron", "Grass", "Clay", "Reeds", "Copper", "Ivory"],
+        "noun": ["Smoke", "Water", "Rock", "Mist", "River"],
+        "verb": ["Thunders", "Sings", "Roars", "Shines", "Speaks", "Weeps"],
+        "adj": ["Cool", "Sweet", "Bitter", "Red", "White", "Deep", "Clear", "Warm"]
+      },
+      "markov": {
+        "people": { "corpus": ["Ganda", "Soga", "Nyoro", "Toro", "Nkore", "Zulu", "Xhosa", "Swazi", "Sotho", "Tswana", "Shona", "Ndebele", "Kongo", "Luba", "Lunda", "Kuba", "Lozi", "Bemba", "Chewa", "Yao", "Makua", "Hehe", "Nyamwezi", "Sukuma", "Kamba", "Kikuyu", "Meru", "Chagga", "Haya", "Rundi", "Tonga", "Venda", "Tsonga", "Herero", "Ovambo", "Mbundu", "Teke", "Duala", "Kaonde", "Lamba", "Ila", "Ngoni", "Pedi", "Ndau", "Manyika", "Zezuru", "Karanga", "Luhya", "Gisu", "Nyakyusa", "Kimbu", "Fipa", "Bena", "Pogoro", "Zigua", "Shambaa"], "min": 3, "max": 7, "batch": 2, "label": "people" },
+        "ruler": { "corpus": ["Mutesa", "Mwanga", "Suna", "Kamanya", "Kyabaggu", "Junju", "Shaka", "Dingane", "Mpande", "Cetshwayo", "Dinuzulu", "Mzilikazi", "Lobengula", "Moshoeshoe", "Sekhukhune", "Khama", "Sebetwane", "Lewanika", "Kazembe", "Ilunga", "Kalala", "Mbidi", "Kongolo", "Nyatsimba", "Mutota", "Matope", "Changamire", "Dombo", "Nzinga", "Mbande", "Mvemba", "Nkuwu", "Kinguri", "Msiri", "Mirambo", "Nyungu", "Kabarega", "Rumanyika", "Ndahiro", "Ruganzu", "Mwambutsa", "Ntare", "Mwezi", "Lusaaka", "Mpezeni", "Zwangendaba"], "min": 4, "max": 9, "batch": 3, "label": "ruler" }
+      },
+      "eras": [
+        {
+          "id": "kingdoms",
+          "label": "Kingdoms",
+          "templates": [
+            ["Land of the {#people}", 5],
+            ["Place of the {#people}", 3],
+            ["Royal Enclosure of {#ruler}", 2],
+            ["{#ruler:pos} Town", 2],
+            ["Grave of {#ruler}", 1],
+            ["Houses of {material}", 2],
+            ["Place of {event}", 3],
+            ["Hill of the {animal:pl}", 3],
+            ["At the {feature}", 2],
+            ["Where the {animal:pl} Drink", 1],
+            ["The {noun} That {verb}", 1],
+            ["{adj} Water", 1],
+            ["River of the {animal:pl}", 2],
+            ["{animal} River", 2]
+          ]
+        }
+      ]
+    }
+  ]
+}
