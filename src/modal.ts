@@ -2784,7 +2784,7 @@ class PreviousGenerationsModal extends Modal {
 const NAME_TEXTAREA_PLACEHOLDER =
   "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa";
 const WORD_LIST_TEXTAREA_PLACEHOLDER =
-  "One ## section per slot category, each with a table.\n\n## Wild animal\n| Modern | Traditional | Plural | Combining forms | Fuses |\n|---|---|---|---|---|\n| kangaroo | — | kangaroos | Kangaroo- | No |\n| emu | — | emus | Emu- | Yes |";
+  "One ## section per slot category, each with a table, - lines of words, and // lines naming packs.\n\n## Wild animal\n| Modern | Traditional | Plural | Combining forms | Fuses |\n|---|---|---|---|---|\n| kangaroo | — | kangaroos | Kangaroo- | No |\n| emu | — | emus | Emu- | Yes |\n\n## Status or role\n- Knight, Earl, Baron, King\n\n## Saint or holy person\n// Saxon Men (male)\n// Saxon Women (female)";
 const PLACE_TEXTAREA_PLACEHOLDER =
   "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
 
@@ -3171,9 +3171,11 @@ class NameForgeEditorModal extends Modal {
   private async saveWordList(packName: string) {
     const body = this.inputEl?.value ?? "";
     const list = parseWordList(body);
-    const entries = list.unsectioned.length + list.sections.reduce((n, s) => n + s.entries.length, 0);
+    // Table rows, `-` words and `//` pack lines all count.
+    const entries =
+      list.unsectioned.length + list.unsectionedPacks.length + list.sections.reduce((n, s) => n + s.entries.length + s.packs.length, 0);
     if (entries === 0 && !this.templateOf) {
-      this.parent.setStatus("No words to save. Add a table with a Modern column.");
+      this.parent.setStatus("No words to save. Add a table, a - list or a // pack line.");
       return;
     }
     let folderPath = this.parent.getFolderPath();

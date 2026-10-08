@@ -16,9 +16,10 @@ import {
   type WordListFileData,
 } from "./nameParser";
 import { selectSectionNames, type SectionRequest } from "./packs/sections";
-import { wordListEntries } from "./packs/wordList";
-import { NAME_WORDS, type NameWordEntry, type NativeAdapter, type ResolvedSlot, type ResolvedSource } from "./names/engine";
+import { wordListSection } from "./packs/wordList";
+import { NAME_SLOTS, NAME_WORDS, type NativeAdapter, type ResolvedSlot, type ResolvedSource } from "./names/engine";
 import { applyRecipeTemplate, type NameMode, readRecipe, type RecipePartial, type RecipeSettings, withDefaults } from "./names/recipe";
+import { needsItems, resolveWordListItems, toNameWordEntry } from "./names/wordListSource";
 import { PLACE_SHAPE_DATA } from "./placeShapes";
 import { COLONIAL_DATA } from "./colonialShapes";
 import { type RecipeTakeoverInput, resolveRecipeTakeover } from "./takeover/recipe";
@@ -143,8 +144,8 @@ export class RecipeHost {
       const sources: ResolvedSource[] = [];
       for (const ref of slot.sources) {
         if (ref.list) {
-          const entries = await this.wordListSource(ref.list, recipePath, categoryId);
-          if (entries) sources.push({ weight: ref.weight, entries });
+          const list = await this.wordListSource(ref.list, recipePath, categoryId);
+          if (list) sources.push({ weight: ref.weight, ...list });
         } else if (ref.pack) {
           const draw = await this.packSource(ref.pack, recipePath);
           if (draw) sources.push({ weight: ref.weight, draw });
@@ -169,7 +170,7 @@ export class RecipeHost {
   }
 
   /** §9.2: the matching section, the whole list if it has none, else the built-in list with a notice. */
-  private async wordListSource(target: string, from: string, categoryId: string): Promise<NameWordEntry[] | null> {
+  private async wordListSource(target: string, from: string, categoryId: string): Promise<Omit<ResolvedSource, "weight"> | null> {
     const file = this.resolveLink(target, from);
     const content = file ? await this.read(file) : null;
     if (!file || content === null || !isWordListContent(content)) {
@@ -187,18 +188,27 @@ export class RecipeHost {
       }
     }
     const label = categoryLabels.get(categoryId) ?? categoryId;
-    const entries = wordListEntries(list.list, label);
-    if (entries === null) {
+    const section = wordListSection(list.list, label);
+    if (section === null) {
       this.notices.add(`“${target}” has no “${label}” section; using the built-in list.`);
-      return NAME_WORDS.categories[categoryId] ?? null;
+      const builtIn = NAME_WORDS.categories[categoryId];
+      return builtIn ? { entries: builtIn } : null;
     }
-    return entries.map((e) => ({
-      modern: e.modern,
-      ...(e.traditional ? { traditional: e.traditional } : {}),
-      plural: e.plural,
-      forms: e.combiningForms,
-      fuses: e.fuses,
-    }));
+    // Plain word lists in word slots keep the entries path, so their output is unchanged. Packs, tags
+    // and name slots (where a listed word becomes a name) take the items path.
+    if (!needsItems(section) && !NAME_SLOTS.has(categoryId)) return { entries: section.entries.map(toNameWordEntry) };
+    const listFile = file;
+    const { items, notices } = await resolveWordListItems(section, list.packName || file.basename, async (pack) => {
+      const packFile = this.resolveLink(pack, listFile.path);
+      const packContent = packFile ? await this.read(packFile) : null;
+      if (!packFile || packContent === null) return { missing: true };
+      if (isWordListContent(packContent) || isRecipeContent(packContent)) return { notPack: true };
+      const draw = await this.packSource(pack, listFile.path);
+      return draw ? { draw } : { missing: true };
+    });
+    for (const n of notices) this.notices.add(n);
+    if (items.length === 0) return null;
+    return { items, itemsLabel: `“${list.packName || file.basename}” › “${section.name}”` };
   }
 
   /** A drawer for one name pack: stem or whole names (§5), honouring section and gender (§10). */

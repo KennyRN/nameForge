@@ -10,6 +10,7 @@ import {
   allowsLists,
   allowsPacks,
   allowsPlaceholderChoice,
+  NAME_SLOTS,
   showsGender,
   SLOT_TIERS,
   slotCategories,
@@ -579,10 +580,11 @@ export class RecipeWizard {
         this.render();
       }),
     );
-    // Mode, section and gender only shape names drawn from packs.
-    if (lists && !mixed) return;
-    footer
-      .addDropdown((d) => {
+    // Mode and gender shape names: drawn from packs, or listed in a word list on a name slot (whose
+    // words become names). Section is for packs only.
+    const listsOnly = lists && !mixed;
+    if (listsOnly && !NAME_SLOTS.has(id)) return;
+    footer.addDropdown((d) => {
         const unset = defaultNameMode(id);
         const other = unset === "stem" ? "whole" : "stem";
         d.addOption("", `Mode: ${unset}`);
@@ -592,8 +594,9 @@ export class RecipeWizard {
           .onChange((v) => {
             slot.mode = v === other ? other : undefined;
           });
-      })
-      .addText((t) =>
+      });
+    if (!listsOnly) {
+      footer.addText((t) =>
         t
           .setPlaceholder("Section")
           .setValue(slot.section ?? "")
@@ -601,6 +604,7 @@ export class RecipeWizard {
             slot.section = v.trim() || undefined;
           }),
       );
+    }
     // Male % only where gender means something; a saved ratio elsewhere still shows so it can be changed.
     if (showsGender(id) || slot.gender) {
       footer.addText((t) => {

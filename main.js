@@ -1270,17 +1270,63 @@ function toEntry(header, row) {
   const forms = blank(col("combining forms")) ? [modern] : col("combining forms").split(",").map((f) => f.trim().replace(/-$/, "")).filter((f) => f.length > 0);
   return { modern, ...traditional ? { traditional } : {}, plural, combiningForms: forms, fuses: parseFuses(col("fuses")) };
 }
+function splitTags(text) {
+  const match = text.match(/^(.*?)\s*\(([^()]*)\)\s*$/);
+  if (!match) return { text, weight: 1 };
+  let weight = 1;
+  let gender;
+  for (const raw of match[2].split(",")) {
+    const tag = raw.trim().toLowerCase();
+    if (tag === "male" || tag === "female") gender = tag;
+    else if (/^\d+(\.\d+)?$/.test(tag) && Number(tag) > 0) weight = Number(tag);
+    else return { text, weight: 1 };
+  }
+  return { text: match[1], weight, ...gender ? { gender } : {} };
+}
+function bulletEntries(text) {
+  const tags = splitTags(text);
+  return tags.text.split(",").map((w) => w.trim()).filter((w) => w.length > 0).map((modern) => ({
+    modern,
+    plural: `${modern}s`,
+    combiningForms: [modern],
+    fuses: "yes",
+    ...tags.weight !== 1 ? { weight: tags.weight } : {},
+    ...tags.gender ? { gender: tags.gender } : {}
+  }));
+}
+function packLine(text) {
+  const tags = splitTags(text);
+  const link = tags.text.match(/^\[\[([^\]|]+)(?:\|[^\]]*)?\]\]$/);
+  const pack = (link ? link[1] : tags.text).trim();
+  if (!pack) return null;
+  return { pack, weight: tags.weight, ...tags.gender ? { gender: tags.gender } : {} };
+}
 function parseWordList(body) {
-  const list = { unsectioned: [], sections: [] };
+  const list = { unsectioned: [], unsectionedPacks: [], sections: [] };
   let target = list.unsectioned;
+  let packs = list.unsectionedPacks;
   let header = null;
   for (const raw of body.split(/\r?\n/)) {
     const line = raw.trim();
     const heading = line.match(/^##\s+(.+?)\s*#*$/);
     if (heading) {
-      const section = { name: heading[1], entries: [] };
+      const section = { name: heading[1], entries: [], packs: [] };
       list.sections.push(section);
       target = section.entries;
+      packs = section.packs;
+      header = null;
+      continue;
+    }
+    const bullet = line.match(/^[-*+]\s+(.+)$/);
+    if (bullet) {
+      target.push(...bulletEntries(bullet[1]));
+      header = null;
+      continue;
+    }
+    const pack = line.match(/^\/\/\s*(.+)$/);
+    if (pack) {
+      const ref = packLine(pack[1]);
+      if (ref) packs.push(ref);
       header = null;
       continue;
     }
@@ -1299,10 +1345,10 @@ function parseWordList(body) {
   }
   return list;
 }
-function wordListEntries(list, categoryLabel) {
+function wordListSection(list, categoryLabel) {
   const section = list.sections.find((s) => same2(s.name, categoryLabel));
-  if (section) return section.entries;
-  if (list.sections.length === 0) return list.unsectioned;
+  if (section) return section;
+  if (list.sections.length === 0) return { name: categoryLabel, entries: list.unsectioned, packs: list.unsectionedPacks };
   return null;
 }
 function mergeWordLists(derived, template) {
@@ -1311,7 +1357,12 @@ function mergeWordLists(derived, template) {
     return (_a2 = derived.sections.find((d) => same2(d.name, t.name))) != null ? _a2 : t;
   });
   for (const d of derived.sections) if (!template.sections.some((t) => same2(t.name, d.name))) sections.push(d);
-  return { unsectioned: derived.unsectioned.length > 0 ? derived.unsectioned : template.unsectioned, sections };
+  const ownUnsectioned = derived.unsectioned.length > 0 || derived.unsectionedPacks.length > 0;
+  return {
+    unsectioned: ownUnsectioned ? derived.unsectioned : template.unsectioned,
+    unsectionedPacks: ownUnsectioned ? derived.unsectionedPacks : template.unsectionedPacks,
+    sections
+  };
 }
 
 // src/nameParser.ts
@@ -18781,6 +18832,24 @@ var DEFAULT_GENDER = {
   "commander-or-conqueror": { male: 95, female: 5 },
   "explorer-or-founder": { male: 95, female: 5 }
 };
+var NAME_SLOTS = /* @__PURE__ */ new Set([
+  "personal-name",
+  "folk-group",
+  "monarch-ruler-or-dynasty",
+  "royal-woman",
+  "official-patron-or-sponsor",
+  "commander-or-conqueror",
+  "explorer-or-founder",
+  "saint-or-holy-person",
+  "deity",
+  "colonial-deity",
+  "local-deity",
+  "native-place-name",
+  "native-people-or-tribe",
+  "homeland-place-name",
+  "earlier-or-district-name",
+  "river-or-stream-name"
+]);
 function hasGenderDefault(categoryId) {
   return categoryId in DEFAULT_GENDER;
 }
@@ -18817,6 +18886,9 @@ function pickWeighted3(items, rng) {
   return items[items.length - 1][0];
 }
 var pickUniform3 = (items, rng) => items[Math.floor(rng() * items.length)];
+function pickItem(items, rng) {
+  return items.every((i) => i.weight === items[0].weight) ? pickUniform3(items, rng) : pickWeighted3(items.map((i) => [i, i.weight]), rng);
+}
 function fillWord(fill) {
   if (fill.kind === "placeholder") return fill.label;
   if (fill.kind === "name") return fill.text;
@@ -18932,13 +19004,17 @@ var NameRenderer = class {
     const slot = this.slotFor(categoryId);
     const wordFill = (entries) => {
       if (!entries || entries.length === 0) return this.placeholder(categoryId);
-      let entry = pickUniform3(entries, rng);
+      return entryFill(pickUniform3(entries, rng));
+    };
+    const entryFill = (picked) => {
+      let entry = picked;
       if (entry.modern.includes("[direction]")) entry = { ...entry, modern: entry.modern.replace("[direction]", pickUniform3(DIRECTIONS, rng)) };
       return { kind: "word", entry, traditional: this.chooseRegister(entry, rng) };
     };
     if (slot.kind === "placeholder" || slot.kind === "ignore") return this.placeholder(categoryId);
     if (slot.kind === "built-in") return wordFill(NAME_WORDS.categories[categoryId]);
     const source = pickWeighted3(slot.sources.map((s) => [s, s.weight]), rng);
+    if (source.items) return this.itemFill(source, slot, categoryId, rng, whole, entryFill);
     if (source.entries) return wordFill(source.entries);
     if (!source.draw) return this.placeholder(categoryId);
     const mode = whole ? "whole" : (_a2 = slot.mode) != null ? _a2 : defaultNameMode(categoryId);
@@ -18948,6 +19024,31 @@ var NameRenderer = class {
     if (ratio) request.gender = rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female";
     const text = source.draw(request, mode, rng);
     return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
+  }
+  /**
+   * A word list section's weighted items: the gender (slot ratio, else the category default) is
+   * drawn first and filters tagged items; a pack item draws a name, a word is a name in a name slot
+   * and a word fill elsewhere.
+   */
+  itemFill(source, slot, categoryId, rng, whole, entryFill) {
+    var _a2, _b, _c;
+    const all = source.items;
+    if (all.length === 0) return this.placeholder(categoryId);
+    const ratio = (_a2 = slot.gender) != null ? _a2 : DEFAULT_GENDER[categoryId];
+    const gender = ratio ? rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female" : void 0;
+    let items = gender ? all.filter((i) => !i.gender || i.gender === gender) : all;
+    if (items.length === 0) {
+      this.notices.add(`${(_b = source.itemsLabel) != null ? _b : "Word list"} has no ${gender} entries; ignoring gender.`);
+      items = all;
+    }
+    const item = pickItem(items, rng);
+    const mode = whole ? "whole" : (_c = slot.mode) != null ? _c : defaultNameMode(categoryId);
+    if (item.draw) {
+      const text = item.draw(gender ? { gender } : {}, mode, rng);
+      return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
+    }
+    if (NAME_SLOTS.has(categoryId)) return { kind: "name", text: item.entry.modern, mode };
+    return entryFill(item.entry);
   }
   /**
    * Recipe takeover §A3: an adapted native name fill is adopted into the takeover pack's language.
@@ -18992,10 +19093,14 @@ var NameRenderer = class {
   /** §9.3: the local word from the recipe's linked word list (Modern column only), or a placeholder. */
   localGeneric(genericId, rng) {
     const slot = this.slots[genericId];
-    const sources = (slot == null ? void 0 : slot.kind) === "sources" ? slot.sources.filter((s) => s.entries && s.entries.length > 0) : [];
+    const wordsOf = (s) => {
+      var _a2;
+      return s.entries ? s.entries.map((entry) => ({ weight: 1, entry })) : ((_a2 = s.items) != null ? _a2 : []).filter((i) => i.entry);
+    };
+    const sources = (slot == null ? void 0 : slot.kind) === "sources" ? slot.sources.filter((s) => wordsOf(s).length > 0) : [];
     if (sources.length === 0) return placeholderText(genericId);
     const source = pickWeighted3(sources.map((s) => [s, s.weight]), rng);
-    return pickUniform3(source.entries, rng).modern;
+    return pickItem(wordsOf(source), rng).entry.modern;
   }
   fusionClass(word, genericId) {
     if (genericId && NAME_WORDS.genericFusion[genericId] !== void 0 && NAME_WORDS.colonialGenerics[genericId]) {
@@ -20880,6 +20985,44 @@ function worldHistoryLabel(base, cultureId, eraId) {
 // src/recipeHost.ts
 var import_obsidian6 = require("obsidian");
 
+// src/names/wordListSource.ts
+function toNameWordEntry(e) {
+  return {
+    modern: e.modern,
+    ...e.traditional ? { traditional: e.traditional } : {},
+    plural: e.plural,
+    forms: e.combiningForms,
+    fuses: e.fuses
+  };
+}
+function needsItems(section) {
+  return section.packs.length > 0 || section.entries.some((e) => e.weight !== void 0 || e.gender !== void 0);
+}
+async function resolveWordListItems(section, listName, resolvePack) {
+  const notices = [];
+  const items = section.entries.map((e) => {
+    var _a2;
+    return {
+      weight: (_a2 = e.weight) != null ? _a2 : 1,
+      ...e.gender ? { gender: e.gender } : {},
+      entry: toNameWordEntry(e)
+    };
+  });
+  for (const line of section.packs) {
+    const found = await resolvePack(line.pack);
+    if ("missing" in found) {
+      notices.push(`Pack \u201C${line.pack}\u201D in word list \u201C${listName}\u201D wasn't found.`);
+      continue;
+    }
+    if ("notPack" in found) {
+      notices.push(`\u201C${line.pack}\u201D in word list \u201C${listName}\u201D isn't a name pack.`);
+      continue;
+    }
+    items.push({ weight: line.weight, ...line.gender ? { gender: line.gender } : {}, draw: found.draw });
+  }
+  return { items, notices };
+}
+
 // src/takeover/recipe.ts
 function takeoverScorer(faithfulness) {
   return (names) => {
@@ -20999,8 +21142,8 @@ var RecipeHost = class {
       const sources = [];
       for (const ref of slot.sources) {
         if (ref.list) {
-          const entries = await this.wordListSource(ref.list, recipePath, categoryId);
-          if (entries) sources.push({ weight: ref.weight, entries });
+          const list = await this.wordListSource(ref.list, recipePath, categoryId);
+          if (list) sources.push({ weight: ref.weight, ...list });
         } else if (ref.pack) {
           const draw = await this.packSource(ref.pack, recipePath);
           if (draw) sources.push({ weight: ref.weight, draw });
@@ -21019,7 +21162,7 @@ var RecipeHost = class {
   }
   /** §9.2: the matching section, the whole list if it has none, else the built-in list with a notice. */
   async wordListSource(target, from, categoryId) {
-    var _a2, _b;
+    var _a2;
     const file = this.resolveLink(target, from);
     const content = file ? await this.read(file) : null;
     if (!file || content === null || !isWordListContent(content)) {
@@ -21037,18 +21180,25 @@ var RecipeHost = class {
       }
     }
     const label = (_a2 = categoryLabels2.get(categoryId)) != null ? _a2 : categoryId;
-    const entries = wordListEntries(list.list, label);
-    if (entries === null) {
+    const section = wordListSection(list.list, label);
+    if (section === null) {
       this.notices.add(`\u201C${target}\u201D has no \u201C${label}\u201D section; using the built-in list.`);
-      return (_b = NAME_WORDS.categories[categoryId]) != null ? _b : null;
+      const builtIn = NAME_WORDS.categories[categoryId];
+      return builtIn ? { entries: builtIn } : null;
     }
-    return entries.map((e) => ({
-      modern: e.modern,
-      ...e.traditional ? { traditional: e.traditional } : {},
-      plural: e.plural,
-      forms: e.combiningForms,
-      fuses: e.fuses
-    }));
+    if (!needsItems(section) && !NAME_SLOTS.has(categoryId)) return { entries: section.entries.map(toNameWordEntry) };
+    const listFile = file;
+    const { items, notices } = await resolveWordListItems(section, list.packName || file.basename, async (pack) => {
+      const packFile = this.resolveLink(pack, listFile.path);
+      const packContent = packFile ? await this.read(packFile) : null;
+      if (!packFile || packContent === null) return { missing: true };
+      if (isWordListContent(packContent) || isRecipeContent(packContent)) return { notPack: true };
+      const draw = await this.packSource(pack, listFile.path);
+      return draw ? { draw } : { missing: true };
+    });
+    for (const n of notices) this.notices.add(n);
+    if (items.length === 0) return null;
+    return { items, itemsLabel: `\u201C${list.packName || file.basename}\u201D \u203A \u201C${section.name}\u201D` };
   }
   /** A drawer for one name pack: stem or whole names (§5), honouring section and gender (§10). */
   async packSource(target, from) {
@@ -21301,31 +21451,13 @@ var WORD_ONLY = /* @__PURE__ */ new Set([
   "distance-or-survey-mark",
   "calendar-date-or-feast"
 ]);
-var NAMES_ONLY = /* @__PURE__ */ new Set([
-  "personal-name",
-  "folk-group",
-  "monarch-ruler-or-dynasty",
-  "royal-woman",
-  "official-patron-or-sponsor",
-  "commander-or-conqueror",
-  "explorer-or-founder",
-  "saint-or-holy-person",
-  "deity",
-  "colonial-deity",
-  "local-deity",
-  "native-place-name",
-  "native-people-or-tribe",
-  "homeland-place-name",
-  "earlier-or-district-name",
-  "river-or-stream-name"
-]);
 var NO_PLACEHOLDER = /* @__PURE__ */ new Set(["colour", "size", "age", "position-or-direction", "shape", "quality-or-condition", "number", "season"]);
 function allowsPacks(part, categoryId) {
   if (FLORA_AND_FAUNA.has(categoryId)) return part !== "organic";
   return !WORD_ONLY.has(categoryId);
 }
-function allowsLists(_part, categoryId) {
-  return !NAMES_ONLY.has(categoryId);
+function allowsLists(_part, _categoryId) {
+  return true;
 }
 function allowsPlaceholderChoice(_part, categoryId) {
   return !NO_PLACEHOLDER.has(categoryId);
@@ -21780,7 +21912,8 @@ var RecipeWizard = class {
         this.render();
       })
     );
-    if (lists && !mixed) return;
+    const listsOnly = lists && !mixed;
+    if (listsOnly && !NAME_SLOTS.has(id)) return;
     footer.addDropdown((d) => {
       const unset = defaultNameMode(id);
       const other = unset === "stem" ? "whole" : "stem";
@@ -21789,14 +21922,17 @@ var RecipeWizard = class {
       d.addOption(other, `Mode: ${other}`).setValue(slot.mode === other ? other : "").onChange((v) => {
         slot.mode = v === other ? other : void 0;
       });
-    }).addText(
-      (t) => {
-        var _a3;
-        return t.setPlaceholder("Section").setValue((_a3 = slot.section) != null ? _a3 : "").onChange((v) => {
-          slot.section = v.trim() || void 0;
-        });
-      }
-    );
+    });
+    if (!listsOnly) {
+      footer.addText(
+        (t) => {
+          var _a3;
+          return t.setPlaceholder("Section").setValue((_a3 = slot.section) != null ? _a3 : "").onChange((v) => {
+            slot.section = v.trim() || void 0;
+          });
+        }
+      );
+    }
     if (showsGender(id) || slot.gender) {
       footer.addText((t) => {
         t.setPlaceholder("Male %").setValue(slot.gender ? String(slot.gender.male) : "").onChange((v) => {
@@ -24624,7 +24760,7 @@ var PreviousGenerationsModal = class extends import_obsidian10.Modal {
   }
 };
 var NAME_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa";
-var WORD_LIST_TEXTAREA_PLACEHOLDER = "One ## section per slot category, each with a table.\n\n## Wild animal\n| Modern | Traditional | Plural | Combining forms | Fuses |\n|---|---|---|---|---|\n| kangaroo | \u2014 | kangaroos | Kangaroo- | No |\n| emu | \u2014 | emus | Emu- | Yes |";
+var WORD_LIST_TEXTAREA_PLACEHOLDER = "One ## section per slot category, each with a table, - lines of words, and // lines naming packs.\n\n## Wild animal\n| Modern | Traditional | Plural | Combining forms | Fuses |\n|---|---|---|---|---|\n| kangaroo | \u2014 | kangaroos | Kangaroo- | No |\n| emu | \u2014 | emus | Emu- | Yes |\n\n## Status or role\n- Knight, Earl, Baron, King\n\n## Saint or holy person\n// Saxon Men (male)\n// Saxon Women (female)";
 var PLACE_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
 var NameForgeEditorModal = class extends import_obsidian10.Modal {
   constructor(app, parent, initialText, initialPackName) {
@@ -24961,9 +25097,9 @@ var NameForgeEditorModal = class extends import_obsidian10.Modal {
     var _a2, _b;
     const body = (_b = (_a2 = this.inputEl) == null ? void 0 : _a2.value) != null ? _b : "";
     const list = parseWordList(body);
-    const entries = list.unsectioned.length + list.sections.reduce((n, s) => n + s.entries.length, 0);
+    const entries = list.unsectioned.length + list.unsectionedPacks.length + list.sections.reduce((n, s) => n + s.entries.length + s.packs.length, 0);
     if (entries === 0 && !this.templateOf) {
-      this.parent.setStatus("No words to save. Add a table with a Modern column.");
+      this.parent.setStatus("No words to save. Add a table, a - list or a // pack line.");
       return;
     }
     let folderPath = this.parent.getFolderPath();

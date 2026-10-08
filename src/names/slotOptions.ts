@@ -3,7 +3,7 @@
 
 import { COLONIAL_DATA } from "../colonialShapes";
 import { PLACE_SHAPE_DATA } from "../placeShapes";
-import { hasGenderDefault } from "./engine";
+import { hasGenderDefault, NAME_SLOTS } from "./engine";
 import { type RecipeSettings } from "./recipe";
 
 export type SlotPart = RecipeSettings["shape"]["part"];
@@ -126,25 +126,8 @@ const WORD_ONLY = new Set([
   "calendar-date-or-feast",
 ]);
 
-/** Slots that take proper names: no Word lists (a list-pick name pack covers fixed lists). */
-const NAMES_ONLY = new Set([
-  "personal-name",
-  "folk-group",
-  "monarch-ruler-or-dynasty",
-  "royal-woman",
-  "official-patron-or-sponsor",
-  "commander-or-conqueror",
-  "explorer-or-founder",
-  "saint-or-holy-person",
-  "deity",
-  "colonial-deity",
-  "local-deity",
-  "native-place-name",
-  "native-people-or-tribe",
-  "homeland-place-name",
-  "earlier-or-district-name",
-  "river-or-stream-name",
-]);
+/** Slots that take proper names (a listed word there becomes a name): the engine's set. */
+export { NAME_SLOTS };
 
 /** Bare descriptive slots: a bracketed adjective is never wanted, so no Placeholder choice. */
 const NO_PLACEHOLDER = new Set(["colour", "size", "age", "position-or-direction", "shape", "quality-or-condition", "number", "season"]);
@@ -155,9 +138,9 @@ export function allowsPacks(part: SlotPart, categoryId: string): boolean {
   return !WORD_ONLY.has(categoryId);
 }
 
-/** Whether a slot offers Word lists. */
-export function allowsLists(_part: SlotPart, categoryId: string): boolean {
-  return !NAMES_ONLY.has(categoryId);
+/** Whether a slot offers Word lists: every slot, now that lists can hold names and `//` pack lines. */
+export function allowsLists(_part: SlotPart, _categoryId: string): boolean {
+  return true;
 }
 
 /** Whether a slot offers an explicit Placeholder choice (still only when its default isn't one). */

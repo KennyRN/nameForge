@@ -131,6 +131,29 @@ const DEFAULT_GENDER: Record<string, { male: number; female: number }> = {
   "explorer-or-founder": { male: 95, female: 5 },
 };
 
+/**
+ * Slots that take proper names. A word-list word picked in one of these becomes a name fill (spaced
+ * in whole mode, fusing with the linking -s- in stem mode, adapted by a takeover pack where native).
+ */
+export const NAME_SLOTS = new Set([
+  "personal-name",
+  "folk-group",
+  "monarch-ruler-or-dynasty",
+  "royal-woman",
+  "official-patron-or-sponsor",
+  "commander-or-conqueror",
+  "explorer-or-founder",
+  "saint-or-holy-person",
+  "deity",
+  "colonial-deity",
+  "local-deity",
+  "native-place-name",
+  "native-people-or-tribe",
+  "homeland-place-name",
+  "earlier-or-district-name",
+  "river-or-stream-name",
+]);
+
 /** Whether a slot has a default gender ratio (and so a meaningful Male % setting). */
 export function hasGenderDefault(categoryId: string): boolean {
   return categoryId in DEFAULT_GENDER;
@@ -175,12 +198,27 @@ export function hasBuiltInList(categoryId: string): boolean {
 
 // ── Resolved slots (from the host) ──────────────────────────────────────────
 
+/** Draws one name from a name pack, or null if none could be drawn. */
+export type PackDraw = (request: SectionRequest, mode: NameMode, rng: () => number) => string | null;
+
+/** One weighted item in a word list section: a word (table row or `-` line) or a `//` pack draw. */
+export interface ResolvedListItem {
+  weight: number;
+  gender?: "male" | "female";
+  entry?: NameWordEntry;
+  draw?: PackDraw;
+}
+
 export interface ResolvedSource {
   weight: number;
   /** Name pack: draws one name, or null if none could be drawn. */
-  draw?: (request: SectionRequest, mode: NameMode, rng: () => number) => string | null;
+  draw?: PackDraw;
   /** Word list (or built-in): entries for this category. */
   entries?: NameWordEntry[];
+  /** Word list section with `-`/`//` lines or tags: weighted items, picked after any gender draw. */
+  items?: ResolvedListItem[];
+  /** "“List” › “Section”", for notices about the items. */
+  itemsLabel?: string;
 }
 
 export type ResolvedSlot =
@@ -280,6 +318,10 @@ function pickWeighted<T>(items: [T, number][], rng: () => number): T {
   return items[items.length - 1][0];
 }
 const pickUniform = <T>(items: readonly T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
+/** Weighted list items; equal weights pick exactly as pickUniform does (one draw, same index). */
+function pickItem(items: ResolvedListItem[], rng: () => number): ResolvedListItem {
+  return items.every((i) => i.weight === items[0].weight) ? pickUniform(items, rng) : pickWeighted(items.map((i): [ResolvedListItem, number] => [i, i.weight]), rng);
+}
 
 /** The spaced form of a filled specific: the word (or name) as written. */
 function fillWord(fill: Fill): string {
@@ -432,7 +474,10 @@ export class NameRenderer {
     const slot = this.slotFor(categoryId);
     const wordFill = (entries: NameWordEntry[] | undefined): Fill => {
       if (!entries || entries.length === 0) return this.placeholder(categoryId);
-      let entry = pickUniform(entries, rng);
+      return entryFill(pickUniform(entries, rng));
+    };
+    const entryFill = (picked: NameWordEntry): Fill => {
+      let entry = picked;
       // §11.13: "ruler of the [direction]" takes its direction from the position list.
       if (entry.modern.includes("[direction]")) entry = { ...entry, modern: entry.modern.replace("[direction]", pickUniform(DIRECTIONS, rng)) };
       return { kind: "word", entry, traditional: this.chooseRegister(entry, rng) };
@@ -441,6 +486,7 @@ export class NameRenderer {
     if (slot.kind === "built-in") return wordFill(NAME_WORDS.categories[categoryId]);
 
     const source = pickWeighted(slot.sources.map((s): [ResolvedSource, number] => [s, s.weight]), rng);
+    if (source.items) return this.itemFill(source, slot, categoryId, rng, whole, entryFill);
     if (source.entries) return wordFill(source.entries);
     if (!source.draw) return this.placeholder(categoryId);
     const mode: NameMode = whole ? "whole" : slot.mode ?? defaultNameMode(categoryId);
@@ -450,6 +496,38 @@ export class NameRenderer {
     if (ratio) request.gender = rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female";
     const text = source.draw(request, mode, rng);
     return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
+  }
+
+  /**
+   * A word list section's weighted items: the gender (slot ratio, else the category default) is
+   * drawn first and filters tagged items; a pack item draws a name, a word is a name in a name slot
+   * and a word fill elsewhere.
+   */
+  private itemFill(
+    source: ResolvedSource,
+    slot: Extract<ResolvedSlot, { kind: "sources" }>,
+    categoryId: string,
+    rng: () => number,
+    whole: boolean,
+    entryFill: (entry: NameWordEntry) => Fill,
+  ): Fill {
+    const all = source.items!;
+    if (all.length === 0) return this.placeholder(categoryId);
+    const ratio = slot.gender ?? DEFAULT_GENDER[categoryId];
+    const gender = ratio ? (rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female") : undefined;
+    let items = gender ? all.filter((i) => !i.gender || i.gender === gender) : all;
+    if (items.length === 0) {
+      this.notices.add(`${source.itemsLabel ?? "Word list"} has no ${gender} entries; ignoring gender.`);
+      items = all;
+    }
+    const item = pickItem(items, rng);
+    const mode: NameMode = whole ? "whole" : slot.mode ?? defaultNameMode(categoryId);
+    if (item.draw) {
+      const text = item.draw(gender ? { gender } : {}, mode, rng);
+      return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
+    }
+    if (NAME_SLOTS.has(categoryId)) return { kind: "name", text: item.entry!.modern, mode };
+    return entryFill(item.entry!);
   }
 
   /**
@@ -504,10 +582,13 @@ export class NameRenderer {
   /** §9.3: the local word from the recipe's linked word list (Modern column only), or a placeholder. */
   private localGeneric(genericId: string, rng: () => number): string {
     const slot = this.slots[genericId];
-    const sources = slot?.kind === "sources" ? slot.sources.filter((s) => s.entries && s.entries.length > 0) : [];
+    // Local generics take words only (weighted); a `//` pack line in their section is skipped.
+    const wordsOf = (s: ResolvedSource): ResolvedListItem[] =>
+      s.entries ? s.entries.map((entry) => ({ weight: 1, entry })) : (s.items ?? []).filter((i) => i.entry);
+    const sources = slot?.kind === "sources" ? slot.sources.filter((s) => wordsOf(s).length > 0) : [];
     if (sources.length === 0) return placeholderText(genericId);
     const source = pickWeighted(sources.map((s): [ResolvedSource, number] => [s, s.weight]), rng);
-    return pickUniform(source.entries!, rng).modern;
+    return pickItem(wordsOf(source), rng).entry!.modern;
   }
 
   private fusionClass(word: string, genericId?: string): number {

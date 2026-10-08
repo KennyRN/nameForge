@@ -5,6 +5,7 @@ import {
   allowsLists,
   allowsPacks,
   allowsPlaceholderChoice,
+  NAME_SLOTS,
   showsGender,
   type SlotPart,
   slotCategories,
@@ -61,14 +62,20 @@ const NAMES_ONLY = [
 ];
 const BOTH = ["classical-biblical-or-legendary-name", "ship", "local-settlement-word", "local-market-word"];
 
+test("options: the name-slot set is the proper-name slots", () => {
+  assert.deepEqual([...NAME_SLOTS].sort(), [...NAMES_ONLY].sort());
+});
+
 test("options: Name packs and Word lists per slot", () => {
   for (const part of PARTS) {
     for (const id of WORD_ONLY) assert.equal(allowsPacks(part, id), false, `${part} ${id} packs`);
     for (const id of FLORA_AND_FAUNA) assert.equal(allowsPacks(part, id), part !== "organic", `${part} ${id} packs`);
+    // Word lists can hold names and `//` pack lines, so every slot offers them.
     for (const id of NAMES_ONLY) {
-      assert.equal(allowsLists(part, id), false, `${part} ${id} lists`);
+      assert.equal(allowsLists(part, id), true, `${part} ${id} lists`);
       assert.equal(allowsPacks(part, id), true, `${part} ${id} packs`);
     }
+    for (const id of ids(part)) assert.equal(allowsLists(part, id), true, `${part} ${id} lists`);
     for (const id of BOTH) {
       assert.equal(allowsPacks(part, id), true, `${part} ${id} packs`);
       assert.equal(allowsLists(part, id), true, `${part} ${id} lists`);
