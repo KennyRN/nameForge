@@ -1419,3 +1419,52 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 .nameforge-recipe-editor__sentence-link:hover {
   text-decoration-style: solid;
 }
+
+/* The information icon after a wizard sentence. */
+.nameforge-recipe-editor__info {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 4px;
+  padding: 2px;
+}
+
+/* The expansion context guide. */
+.nameforge-context-guide h3 {
+  margin: 16px 0 4px;
+  font-size: var(--font-ui-medium);
+}
+.nameforge-context-guide h3:first-child {
+  margin-top: 0;
+}
+/* Imposition, Accommodation and Adoption: the whole line styled like a modal title. */
+.nameforge-context-guide h3.nameforge-context-guide__heading {
+  font-size: var(--font-ui-larger);
+  font-weight: var(--font-semibold);
+  line-height: var(--line-height-tight);
+}
+.nameforge-context-guide__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-ui-small);
+}
+.nameforge-context-guide__table th,
+.nameforge-context-guide__table td {
+  padding: 4px 8px;
+  border: 1px solid var(--background-modifier-border);
+  text-align: left;
+  vertical-align: top;
+}
+.nameforge-context-guide__table th {
+  background-color: var(--background-secondary);
+}
+/* The credit line at the foot of the guide windows. */
+.nameforge-guide-modal__credit {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Page 2 of the wizard: no dividing lines between its settings. Matches the specificity of
+   Obsidian's own ".modal:not(.mod-settings) .setting-item:not(.setting-item-heading)" divider. */
+.modal .nameforge-recipe-editor__page--shape .setting-item:not(.setting-item-heading) {
+  border-top: none;
+}

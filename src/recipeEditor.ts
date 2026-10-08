@@ -2,7 +2,8 @@
 // properties. Recipes that start from a template store only their differences (§7).
 
 import { App, Menu, Modal, normalizePath, Notice, Setting, setIcon, stringifyYaml, TFile } from "obsidian";
-import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
+import { ContextGuideModal } from "./contextGuide";
+import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
 import { sanitizePackNameForFilename } from "./nameParser";
 import { defaultNameMode, hasBuiltInList } from "./names/engine";
 import {
@@ -51,14 +52,14 @@ const NEW_LANDS_CONTEXTS: [string, string][] = [
 ];
 /** Expansion into settled lands' contexts, as they read in the wizard's sentence. */
 const EXPANSION_CONTEXTS: [string, string][] = [
-  ["imposition", "imposing"],
-  ["accommodation", "accommodating"],
-  ["adoption", "adopting"],
+  ["imposition", "ruling over the locals"],
+  ["accommodation", "living alongside the locals"],
+  ["adoption", "settling in amongst the locals"],
 ];
-/** "general empire", "Roman empire"; brackets and a trailing "Imperial" are dropped ("British empire"). */
-function empirePhrase(id: string, label: string): string {
-  if (id === "general") return "general empire";
-  return `${label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+Imperial$/, "").trim()} empire`;
+/** "General incomers", "Roman-themed incomers"; brackets and a trailing "Imperial" are dropped ("British-themed incomers"). */
+function incomersPhrase(id: string, label: string): string {
+  if (id === "general") return "General incomers";
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+Imperial$/, "").trim()}-themed incomers`;
 }
 /** The feature choices: any, the two sides, then each group. */
 const FEATURES: { id: string; label: string }[] = [
@@ -69,10 +70,10 @@ const FEATURES: { id: string; label: string }[] = [
 ];
 /** Regions that read without "the" in the place names sentence ("from Wales", but "from the North"). */
 const NO_THE_REGIONS = new Set(["Cornwall", "East Anglia", "Wales"]);
-/** "Roman themed explorers"; a bracketed note in the label is dropped ("Hellenistic themed explorers"). */
+/** "Roman-themed explorers"; a bracketed note in the label is dropped ("Hellenistic-themed explorers"). */
 function explorersPhrase(id: string, label: string): string {
   if (id === "general") return "General explorers";
-  return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()} themed explorers`;
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()}-themed explorers`;
 }
 const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 const kebab = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -141,7 +142,10 @@ export class RecipeWizard {
     if (this.page === 1) this.renderPartButtons(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
     this.pageEl = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__page" });
     if (this.page === 0) this.renderTemplatePage(this.pageEl);
-    else if (this.page === 1) this.renderShapePage(this.pageEl);
+    else if (this.page === 1) {
+      this.pageEl.addClass("nameforge-recipe-editor__page--shape");
+      this.renderShapePage(this.pageEl);
+    }
     else this.renderSlotsPage(this.pageEl);
     this.pageEl.scrollTop = scrollTop;
 
@@ -243,21 +247,9 @@ export class RecipeWizard {
       this.renderExpansionSentence(el);
     }
     if (w.shape.part !== "organic") {
-      // Native place and people slots left unset draw their names from this pack.
-      new Setting(el)
-        .setName("Native pack")
-        .setDesc("Native place and people names come from this pack, unless their slots are set below.")
-        .addDropdown((d) => {
-          d.addOption("", "None");
-          for (const pack of this.options.packs) d.addOption(pack, pack);
-          if (w.native && !this.options.packs.includes(w.native)) d.addOption(w.native, `${w.native} (missing)`);
-          d.setValue(w.native ?? "").onChange((v) => {
-            w.native = v || undefined;
-          });
-        });
       // Recipe takeover §A2: the coloniser's language, which reshapes adapted native names.
       new Setting(el)
-        .setName("Takeover pack")
+        .setName(w.shape.part === "new-land" ? "Explorers pack" : "Incomers pack")
         .setDesc("Adapted native names are reshaped into this pack's language.")
         .addDropdown((d) => {
           d.addOption("", "None");
@@ -275,6 +267,8 @@ export class RecipeWizard {
             w.takeover = v || undefined;
           });
         });
+      // Native names come from the native slots on the slots page.
+      new Setting(el).setName("Native packs should be chosen on the next page").settingEl.addClass("nameforge-recipe-editor__note");
     }
 
     el.createEl("h3", { text: "Rendering" });
@@ -411,7 +405,7 @@ export class RecipeWizard {
     this.featureLink(sentence, false);
   }
 
-  /** Expansion into settled lands: "A ‹general empire› who is ‹imposing›, naming ‹any feature›". */
+  /** Expansion into settled lands: "‹General incomers› who are ‹ruling over the locals›, naming ‹any feature›". */
   private renderExpansionSentence(el: HTMLElement) {
     const w = this.working;
     const traditions = COLONIAL_TRADITIONS.filter((t) => t.parts.includes("2a"));
@@ -421,16 +415,14 @@ export class RecipeWizard {
 
     const sentence = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
     const tradition = traditions.find((t) => t.id === w.shape.tradition)!;
-    const empire = empirePhrase(tradition.id, tradition.label);
-    sentence.appendText(/^[aeiou]/i.test(empire) ? "An " : "A ");
     this.sentenceLink(
       sentence,
-      empire,
-      traditions.map((t) => ({ id: t.id, label: t.id === "general" ? "General empire" : t.label })),
+      incomersPhrase(tradition.id, tradition.label),
+      traditions.map((t) => ({ id: t.id, label: t.id === "general" ? "General incomers" : t.label })),
       tradition.id,
       (id) => (w.shape.tradition = id),
     );
-    sentence.appendText(" who is ");
+    sentence.appendText(" who are ");
     this.sentenceLink(
       sentence,
       contexts.find(([id]) => id === w.shape.context)![1],
@@ -440,6 +432,10 @@ export class RecipeWizard {
     );
     sentence.appendText(", naming ");
     this.featureLink(sentence, false);
+    // The guide to the three contexts.
+    const info = sentence.createSpan({ cls: "clickable-icon nameforge-recipe-editor__info", attr: { role: "button", "aria-label": "Context guide" } });
+    setIcon(info, ICON_INFO);
+    info.addEventListener("click", () => new ContextGuideModal(this.app).open());
   }
 
   private regionValue(value: string): string {

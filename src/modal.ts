@@ -2659,6 +2659,7 @@ class TraditionGuideModal extends Modal {
         });
       }
     }
+    this.contentEl.createEl("p", { cls: "nameforge-guide-modal__credit", text: "Above text created by Claude.ai" });
   }
 
   onClose() {
