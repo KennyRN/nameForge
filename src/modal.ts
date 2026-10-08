@@ -44,8 +44,10 @@ import {
   ICON_LIST_PACK,
   ICON_MIX_PACK,
   ICON_PLACE_PACK,
+  ICON_WORD_LIST,
   ICON_PLACE_SHAPES,
   ICON_GENERIC_PLACE_NAMES,
+  ICON_RECIPE,
   ICON_EXPLORATION_PLACE_SHAPES,
   ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   ICON_NAME_AGEING,
@@ -62,7 +64,7 @@ import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recip
 import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/engine";
 import { findCulture, findEra, generateWorldPlaceNames, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
-import { RecipeEditorModal } from "./recipeEditor";
+import { RecipeEditorModal, type RecipeEditorOptions, RecipeWizard } from "./recipeEditor";
 import {
   parseNameSections,
   type SectionedNames,
@@ -123,7 +125,6 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   markov: ICON_PACKS,
   placeShapes: ICON_PLACE_SHAPES,
   riverNames: ICON_RIVER_NAMES,
-  worldPlaceNames: "globe",
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   nameAgeing: ICON_NAME_AGEING,
@@ -132,15 +133,16 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
 
 /** Shown in the pack box on the first open of each Obsidian session; the arrow points at the
  * section trigger. */
+/** Place names' first-box choice for the British generator; every other choice is a world culture id. */
+const PLACE_BRITAIN = "britain";
+
 const SESSION_HINT = "← click here for specialist modules, or here for your name packs";
 let sessionHintShown = false;
 
-/** Word lists have no custom icon yet; a built-in Lucide icon stands in. */
-const WORD_LIST_ICON = "whole-word";
 
 function packTypeIconId(packType: NamePackType, subGenerator?: "breakdown" | "list"): string {
   if (packType === "recipePack") {
-    return "scroll-text";
+    return ICON_RECIPE;
   }
   if (packType === "compoundPack") {
     return subGenerator === "list" ? ICON_COMPOUND_LIST_PACK : ICON_COMPOUND_BREAKDOWN_PACK;
@@ -259,6 +261,16 @@ interface NameForgePluginLike {
   saveSettings(): Promise<void>;
 }
 
+/** One module's own results area, seed state and status line (see NameForgeModal.sectionViews). */
+interface SectionView {
+  resultsEl: HTMLElement;
+  currentSeed: number | null;
+  seedLocked: boolean;
+  seedInputEl: HTMLInputElement | null;
+  seedLockButton: HTMLButtonElement | null;
+  status: string;
+}
+
 export class NameForgeModal extends Modal {
   public plugin: NameForgePluginLike;
   private resultsEl: HTMLElement | null = null;
@@ -289,8 +301,8 @@ export class NameForgeModal extends Modal {
   /** River names (river brief §6.8): setting and, for British, region. Session only. */
   private riverSetting: RiverSetting = "british";
   private riverRegion: string | undefined = undefined;
-  /** World place names: culture, and the era chosen for each culture. Session only. */
-  private worldCulture: string = WORLD_CULTURES[0].id;
+  /** Place names: Britain (PLACE_BRITAIN) or a world culture, and the era chosen for each culture. Session only. */
+  private worldCulture: string = PLACE_BRITAIN;
   private worldEras: Record<string, string> = {};
   private secondBoxRowEl: HTMLElement | null = null;
   private secondBoxDropdownEl: HTMLElement | null = null;
@@ -366,6 +378,11 @@ export class NameForgeModal extends Modal {
   private seedLocked = false;
   private seedInputEl: HTMLInputElement | null = null;
   private seedLockButton: HTMLButtonElement | null = null;
+  /**
+   * Each module keeps its own results, seed, seed lock and status line; switching modules parks the
+   * current set here and brings back the other module's. Session only.
+   */
+  private sectionViews = new Map<NameForgeSection, SectionView>();
   /** True when mounted into a host panel (Forge) rather than opened as a Modal. */
   private panelMode = false;
   private rootEl: HTMLElement | null = null;
@@ -619,6 +636,7 @@ export class NameForgeModal extends Modal {
     this.setSectionMenuOpen(false);
     this.setRegionMenuOpen(false);
     this.setSecondBoxMenuOpen(false);
+    this.swapSectionView(section);
     this.activeSection = section;
     this.packDropdownEl?.toggle(section === "markov");
     this.sectionSelectEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
@@ -633,9 +651,8 @@ export class NameForgeModal extends Modal {
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
-    const world = section === "worldPlaceNames";
-    this.regionDropdownEl?.toggle(section === "placeShapes" || river || world || !!colonialPart || section === "nameAgeing" || takeover);
-    this.showSecondBox((river && this.riverSetting === "british") || (world && this.worldHasEras()) || takeover);
+    this.regionDropdownEl?.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover);
+    this.showSecondBox((river && this.riverSetting === "british") || (section === "placeShapes" && this.placeHasSecondBox()) || takeover);
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
@@ -651,13 +668,18 @@ export class NameForgeModal extends Modal {
     if (this.sectionTriggerEl) setIcon(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} — no packs yet`;
     this.sectionStubEl?.toggle(
-      section !== "markov" && section !== "placeShapes" && !river && !world && !colonialPart && section !== "nameAgeing" && !takeover,
+      section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover,
     );
   }
 
-  /** World place names: whether the chosen culture has more than one era (the era box shows). */
-  private worldHasEras(): boolean {
-    return findCulture(this.worldCulture).eras.length > 1;
+  /** Place names: whether Britain is chosen rather than a world culture. */
+  private placeIsBritain(): boolean {
+    return this.worldCulture === PLACE_BRITAIN;
+  }
+
+  /** Place names: the second box shows Britain's regions, or a culture's eras when it has more than one. */
+  private placeHasSecondBox(): boolean {
+    return this.placeIsBritain() || findCulture(this.worldCulture).eras.length > 1;
   }
 
   /**
@@ -708,18 +730,22 @@ export class NameForgeModal extends Modal {
       trigger.setAttribute("title", "Takeover pack: the language that adopts the names");
       return;
     }
-    if (this.activeSection === "worldPlaceNames") {
+    if (this.activeSection === "placeShapes" && !this.placeIsBritain()) {
       const era = findEra(findCulture(this.worldCulture), this.worldEras[this.worldCulture]);
       label.textContent = era.label;
       trigger.setAttribute("title", `Era: ${era.guide ?? era.label}`);
       return;
     }
-    const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.riverRegion);
+    const regionCode = this.activeSection === "placeShapes" ? this.selectedRegion : this.riverRegion;
+    const region = PLACE_SHAPE_REGIONS.find((r) => r.code === regionCode);
     label.textContent = region?.label ?? "All Britain";
     trigger.setAttribute("title", `Region: ${region?.counties ?? "no regional weighting"}`);
   }
 
-  /** River names: All Britain, then the regions. Name takeover: the eligible takeover packs. */
+  /**
+   * River names and place names' Britain: All Britain, then the regions. Place names' world cultures:
+   * the culture's eras. Name takeover: the eligible takeover packs.
+   */
   private renderSecondBoxMenu(menu: HTMLElement) {
     menu.empty();
     const choose = () => {
@@ -747,7 +773,7 @@ export class NameForgeModal extends Modal {
       }
       return;
     }
-    if (this.activeSection === "worldPlaceNames") {
+    if (this.activeSection === "placeShapes" && !this.placeIsBritain()) {
       const culture = findCulture(this.worldCulture);
       const current = findEra(culture, this.worldEras[culture.id]);
       for (const era of culture.eras) {
@@ -767,14 +793,17 @@ export class NameForgeModal extends Modal {
       { code: undefined, label: "All Britain" },
       ...PLACE_SHAPE_REGIONS,
     ];
+    const place = this.activeSection === "placeShapes";
+    const current = place ? this.selectedRegion : this.riverRegion;
     for (const { code, label: text, counties } of options) {
       const item = menu.createEl("button", {
-        cls: "nameforge-modal__pack-dropdown-item" + (code === this.riverRegion ? " is-active" : ""),
+        cls: "nameforge-modal__pack-dropdown-item" + (code === current ? " is-active" : ""),
         attr: { type: "button", title: counties ?? "No regional weighting" },
       });
       item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text });
       item.addEventListener("click", () => {
-        this.riverRegion = code;
+        if (place) this.selectedRegion = code;
+        else this.riverRegion = code;
         choose();
       });
     }
@@ -893,8 +922,12 @@ export class NameForgeModal extends Modal {
       }
       return;
     }
-    if (this.activeSection === "worldPlaceNames") {
-      for (const culture of WORLD_CULTURES) {
+    if (this.activeSection === "placeShapes") {
+      const choices = [
+        { id: PLACE_BRITAIN, label: "Britain", guide: "British place names, weighted by region" },
+        ...WORLD_CULTURES,
+      ];
+      for (const culture of choices) {
         const item = menu.createEl("button", {
           cls: "nameforge-modal__pack-dropdown-item" + (culture.id === this.worldCulture ? " is-active" : ""),
           attr: { type: "button", title: culture.guide },
@@ -902,7 +935,7 @@ export class NameForgeModal extends Modal {
         item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: culture.label });
         item.addEventListener("click", () => {
           this.worldCulture = culture.id;
-          this.showSecondBox(this.worldHasEras());
+          this.showSecondBox(this.placeHasSecondBox());
           this.updateSecondBoxLabel();
           this.updateRegionLabel();
           this.setRegionMenuOpen(false);
@@ -934,22 +967,6 @@ export class NameForgeModal extends Modal {
       }
       return;
     }
-    const options: { code: string | undefined; label: string; counties?: string }[] = [
-      { code: undefined, label: "All Britain" },
-      ...PLACE_SHAPE_REGIONS,
-    ];
-    for (const { code, label, counties } of options) {
-      const item = menu.createEl("button", {
-        cls: "nameforge-modal__pack-dropdown-item" + (code === this.selectedRegion ? " is-active" : ""),
-        attr: { type: "button", title: counties ?? "No regional weighting" },
-      });
-      item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
-      item.addEventListener("click", () => {
-        this.selectedRegion = code;
-        this.updateRegionLabel();
-        this.setRegionMenuOpen(false);
-      });
-    }
   }
 
   private updateRegionLabel() {
@@ -969,7 +986,7 @@ export class NameForgeModal extends Modal {
       this.regionTriggerEl?.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
       return;
     }
-    if (this.activeSection === "worldPlaceNames") {
+    if (this.activeSection === "placeShapes" && !this.placeIsBritain()) {
       const culture = findCulture(this.worldCulture);
       if (this.regionLabelEl) this.regionLabelEl.textContent = culture.label;
       this.regionTriggerEl?.setAttribute("title", `Culture: ${culture.guide}`);
@@ -982,9 +999,8 @@ export class NameForgeModal extends Modal {
       this.regionTriggerEl?.setAttribute("title", tradition.guide);
       return;
     }
-    const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.selectedRegion);
-    if (this.regionLabelEl) this.regionLabelEl.textContent = region?.label ?? "All Britain";
-    this.regionTriggerEl?.setAttribute("title", region?.counties ?? "No regional weighting");
+    if (this.regionLabelEl) this.regionLabelEl.textContent = "Britain";
+    this.regionTriggerEl?.setAttribute("title", "Culture: British place names, weighted by region");
   }
 
   /** The context toggle row: None plus the part's frontier types or accommodation levels. */
@@ -1296,6 +1312,41 @@ export class NameForgeModal extends Modal {
     this.ageingSourceInput = null;
     this.seedInputEl = null;
     this.seedLockButton = null;
+    this.sectionViews.clear();
+  }
+
+  /** Parks the active module's results, seed and status, then shows `section`'s (empty the first time). */
+  private swapSectionView(section: NameForgeSection) {
+    if (!this.rootEl || !this.resultsEl || section === this.activeSection) return;
+    this.sectionViews.set(this.activeSection, {
+      resultsEl: this.resultsEl,
+      currentSeed: this.currentSeed,
+      seedLocked: this.seedLocked,
+      seedInputEl: this.seedInputEl,
+      seedLockButton: this.seedLockButton,
+      status: this.statusEl?.textContent ?? "",
+    });
+    this.resultsEl.hide();
+    const view = this.sectionViews.get(section);
+    if (view) {
+      this.resultsEl = view.resultsEl;
+      this.currentSeed = view.currentSeed;
+      this.seedLocked = view.seedLocked;
+      this.seedInputEl = view.seedInputEl;
+      this.seedLockButton = view.seedLockButton;
+      this.resultsEl.show();
+      this.setStatus(view.status);
+      return;
+    }
+    const resultsEl = createDiv({ cls: "nameforge-modal__results" });
+    this.rootEl.insertBefore(resultsEl, this.statusEl);
+    this.resultsEl = resultsEl;
+    this.currentSeed = null;
+    this.seedLocked = false;
+    this.seedInputEl = null;
+    this.seedLockButton = null;
+    this.setStatus("");
+    this.renderResults([]);
   }
 
   /** Close the Modal after insert; no-op in Forge panel mode (stay mounted). */
@@ -1911,8 +1962,13 @@ export class NameForgeModal extends Modal {
     update();
   }
 
-  /** Opens the recipe editor for a new recipe, or for the recipe at `path`. */
+  /** Opens the recipe editor for the recipe at `path` (new recipes are made in the pack editor's wizard). */
   public async openRecipeEditor(path?: string) {
+    new RecipeEditorModal(this.app, await this.recipeEditorOptions(path)).open();
+  }
+
+  /** What the place name wizard needs: this folder's packs, lists, recipe templates and takeover packs. */
+  public async recipeEditorOptions(path?: string): Promise<RecipeEditorOptions> {
     const folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const folder = this.app.vault.getFolderByPath(normalizePath(folderPath));
     const packs: string[] = [];
@@ -1940,7 +1996,7 @@ export class NameForgeModal extends Modal {
       }
     }
     const file = path ? this.app.vault.getFileByPath(path) : null;
-    new RecipeEditorModal(this.app, {
+    return {
       folderPath,
       file: file instanceof TFile ? file : undefined,
       packs: packs.sort(),
@@ -1951,7 +2007,7 @@ export class NameForgeModal extends Modal {
         this.plugin.settings.namesFilePath = saved;
         void this.refreshPackDropdown().then(() => this.loadPack(saved));
       },
-    }).open();
+    };
   }
 
   /** Fills the Section selector for List and Breakdown packs with sections, and Mix packs whose sources have them. */
@@ -1983,7 +2039,7 @@ export class NameForgeModal extends Modal {
   }
 
   private async generateSelectedCount() {
-    if (this.activeSection === "placeShapes") {
+    if (this.activeSection === "placeShapes" && this.placeIsBritain()) {
       // River brief §2: rendered names from the fixed built-in recipe, shown as recipe results.
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
       const result = generatePlaceNames({
@@ -2023,7 +2079,7 @@ export class NameForgeModal extends Modal {
       this.setStatus(result.notice ?? "");
       return;
     }
-    if (this.activeSection === "worldPlaceNames") {
+    if (this.activeSection === "placeShapes") {
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
       const era = this.worldEras[this.worldCulture];
       const result = generateWorldPlaceNames({
@@ -2743,6 +2799,13 @@ class NameForgeEditorModal extends Modal {
   private wordListButton: HTMLButtonElement | null = null;
   /** §9: the editor is creating a word list rather than a name pack. */
   private wordListMode = false;
+  /** The place name wizard replaces the stage's text box; it is built the first time it's chosen. */
+  private wizardMode = false;
+  private wizardButton: HTMLButtonElement | null = null;
+  private wizardPaneEl: HTMLElement | null = null;
+  private wizard: RecipeWizard | null = null;
+  private templateRowEl: HTMLElement | null = null;
+  private stageEl: HTMLElement | null = null;
   /** §7: "Start from template" — the chosen template's note name, if any. */
   private templateOf: string | undefined = undefined;
   private templateSelectEl: HTMLSelectElement | null = null;
@@ -2826,27 +2889,32 @@ class NameForgeEditorModal extends Modal {
     this.mixButton.addEventListener("click", () => {
       this.setPackType("mixPack");
     });
-    // Place, Word list and Recipe sit on a second line.
+    // Place, Recipe and Word list sit on a second line.
     typeToggle.createDiv({ cls: "nameforge-modal__toggle-break" });
     this.placeButton = addTypeButton("Place", ICON_PLACE_PACK);
     this.placeButton.addEventListener("click", () => {
       this.setPackType("placePack");
     });
 
-    this.wordListButton = addTypeButton("Word list", WORD_LIST_ICON);
+    this.wizardButton = addTypeButton("Place name wizard", packTypeIconId("recipePack"));
+    this.wizardButton.addEventListener("click", () => {
+      this.wizardMode = true;
+      this.wordListMode = false;
+      this.updateTypeButtons();
+      void this.openWizard();
+    });
+
+    this.wordListButton = addTypeButton("Word list", ICON_WORD_LIST);
     this.wordListButton.addEventListener("click", () => {
       this.wordListMode = true;
+      this.wizardMode = false;
       this.updateTypeButtons();
       void this.loadTemplateOptions();
-    });
-    const recipeButton = addTypeButton("Recipe", packTypeIconId("recipePack"));
-    recipeButton.addEventListener("click", () => {
-      this.close();
-      void this.parent.openRecipeEditor();
     });
 
     // §7: start from a template of the chosen type; the new pack stores only its differences.
     const templateRow = contentEl.createDiv({ cls: "nameforge-editor-modal__template-row" });
+    this.templateRowEl = templateRow;
     templateRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from template" });
     this.templateSelectEl = templateRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from template" } });
     this.templateSelectEl.addEventListener("change", () => {
@@ -2860,6 +2928,7 @@ class NameForgeEditorModal extends Modal {
     // section are all absolutely positioned to fill it and shown/hidden as
     // alternates, so none of them can ever affect the stage's own box size.
     const stage = contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
+    this.stageEl = stage;
 
     this.inputEl = stage.createEl("textarea", {
       cls: "nameforge-modal__textarea nameforge-editor-modal__stage-pane",
@@ -2872,6 +2941,9 @@ class NameForgeEditorModal extends Modal {
 
     this.buildCompoundSection(stage);
     this.buildMixSection(stage);
+    // The wizard's pane: its page scrolls inside the stage, so the modal keeps its size.
+    this.wizardPaneEl = stage.createDiv({ cls: "nameforge-editor-modal__stage-pane nameforge-editor-modal__wizard" });
+    this.wizardPaneEl.hide();
 
     this.selectedPackType = this.parent.currentPackType;
     this.updateTypeButtons();
@@ -3066,6 +3138,7 @@ class NameForgeEditorModal extends Modal {
   private setPackType(type: NamePackType) {
     this.selectedPackType = type;
     this.wordListMode = false;
+    this.wizardMode = false;
     this.updateTypeButtons();
     void this.loadTemplateOptions();
   }
@@ -3142,12 +3215,32 @@ class NameForgeEditorModal extends Modal {
   }
 
   private updateTypeButtons() {
-    const isWordList = this.wordListMode;
-    const isBreakdown = !isWordList && this.selectedPackType === "breakdownPack";
-    const isList = !isWordList && this.selectedPackType === "listPack";
-    const isCompound = !isWordList && this.selectedPackType === "compoundPack";
-    const isPlace = !isWordList && this.selectedPackType === "placePack";
-    const isMix = !isWordList && this.selectedPackType === "mixPack";
+    const isWizard = this.wizardMode;
+    const isWordList = !isWizard && this.wordListMode;
+    const other = isWizard || isWordList;
+    const isBreakdown = !other && this.selectedPackType === "breakdownPack";
+    const isList = !other && this.selectedPackType === "listPack";
+    const isCompound = !other && this.selectedPackType === "compoundPack";
+    const isPlace = !other && this.selectedPackType === "placePack";
+    const isMix = !other && this.selectedPackType === "mixPack";
+    this.wizardButton?.classList.toggle("is-active", isWizard);
+    this.wizardButton?.setAttribute("aria-pressed", String(isWizard));
+    // The wizard has its own template choice on its first page. Its pane takes over the template
+    // row's height as well, so the modal doesn't change size.
+    if (isWizard && this.stageEl && this.templateRowEl?.isShown()) {
+      const outer = (el: HTMLElement | null) => {
+        if (!el || !el.isShown()) return 0;
+        const style = getComputedStyle(el);
+        return el.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+      };
+      const extra = outer(this.templateRowEl) + outer(this.templateHintEl);
+      this.stageEl.style.setProperty("--nf-wizard-extra-height", `${extra}px`);
+    } else if (!isWizard) {
+      this.stageEl?.style.setProperty("--nf-wizard-extra-height", "0px");
+    }
+    this.templateRowEl?.toggle(!isWizard);
+    this.templateHintEl?.toggle(!isWizard);
+    this.wizardPaneEl?.toggle(isWizard);
     this.wordListButton?.classList.toggle("is-active", isWordList);
     this.wordListButton?.setAttribute("aria-pressed", String(isWordList));
     this.breakdownButton?.classList.toggle("is-active", isBreakdown);
@@ -3169,7 +3262,11 @@ class NameForgeEditorModal extends Modal {
           : NAME_TEXTAREA_PLACEHOLDER;
     }
 
-    if (isCompound) {
+    if (isWizard) {
+      this.inputEl?.hide();
+      this.compoundSectionEl?.hide();
+      this.mixSectionEl?.hide();
+    } else if (isCompound) {
       this.inputEl?.hide();
       this.compoundSectionEl?.show();
       this.mixSectionEl?.hide();
@@ -3214,7 +3311,19 @@ class NameForgeEditorModal extends Modal {
     }
   }
 
+  /** Builds the place name wizard in its pane the first time it's chosen; it keeps its answers after. */
+  private async openWizard() {
+    if (this.wizard || !this.wizardPaneEl) return;
+    const pane = this.wizardPaneEl;
+    this.wizard = new RecipeWizard(this.app, await this.parent.recipeEditorOptions(), pane, () => this.packNameInput?.value ?? "");
+    await this.wizard.load();
+  }
+
   private async saveNames() {
+    if (this.wizardMode) {
+      if (this.wizard && (await this.wizard.save())) this.close();
+      return;
+    }
     const packName = this.packNameInput?.value?.trim() || "nameForge";
     const templateOf = this.templateOf;
     if (this.wordListMode) {

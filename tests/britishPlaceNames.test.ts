@@ -219,14 +219,13 @@ test("lists: §5 entries exist with the §5.1 fields", () => {
 // ── Module line-up (§1) ─────────────────────────────────────────────────────
 
 
-test("line-up: eight modules in order, with their labels; no generic place name generator", () => {
+test("line-up: seven modules in order, with their labels; no generic place name generator", () => {
   assert.deepEqual(
     SECTION_ORDER.map((s) => SECTION_LABELS[s]),
     [
       "markov generator",
-      "british place names",
+      "place names",
       "river names",
-      "world place names",
       "exploration place names",
       "empire expansion place names",
       "name ageing",
@@ -378,8 +377,8 @@ test("history: each entry belongs to one module, old labels included", () => {
   const cases: [string, string][] = [
     ["river names · British", "riverNames"],
     ["river names · New Land", "riverNames"],
-    ["world place names · Egyptian · Pharaonic", "worldPlaceNames"],
-    ["world place names · Norse", "worldPlaceNames"],
+    ["world place names · Egyptian · Pharaonic", "placeShapes"],
+    ["world place names · Norse", "placeShapes"],
     ["british place names · North", "placeShapes"],
     ["place name shapes · Wales", "placeShapes"],
     ["generic place name generator", "placeShapes"],

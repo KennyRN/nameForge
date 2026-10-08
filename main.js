@@ -2002,6 +2002,7 @@ var ICON_PLACE_SHAPES = "nameforge-place-shapes";
 var ICON_PLACE_SHAPES_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path d="M17 8.444C17 11.537 12 17 12 17s-5-5.463-5-8.556S9.239 3 12 3s5 2.352 5 5.444" /><circle cx="12" cy="8" r="1" /></g></g>';
 var ICON_GENERIC_PLACE_NAMES = "nameforge-generic-place-names";
 var ICON_GENERIC_PLACE_NAMES_SVG = '<g transform="scale(4.16667)"><g fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path fill="currentColor" fill-rule="evenodd" d="M11.262 17.675L12 17zm1.476 0l.005-.005l.012-.014l.045-.05l.166-.186a38 38 0 0 0 2.348-2.957c.642-.9 1.3-1.92 1.801-2.933c.49-.99.885-2.079.885-3.086C18 4.871 15.382 2 12 2S6 4.87 6 8.444c0 1.007.395 2.096.885 3.086c.501 1.013 1.16 2.033 1.8 2.933a38 38 0 0 0 2.515 3.143l.045.05l.012.014l.005.005a1 1 0 0 0 1.476 0M12 17l.738.674zm0-11a2 2 0 1 0 0 4a2 2 0 0 0 0-4" clip-rule="evenodd" /></g></g>';
+var ICON_RECIPE = "nameforge-recipe";
 var ICON_EXPLORATION_PLACE_SHAPES = "nameforge-exploration-place-shapes";
 var ICON_EXPLORATION_PLACE_SHAPES_SVG = '<g transform="scale(0.0976563)"><path fill="currentColor" fill-opacity=".15" d="M512 140c-205.4 0-372 166.6-372 372s166.6 372 372 372s372-166.6 372-372s-166.6-372-372-372M327.6 701.7c-2 .9-4.4 0-5.3-2.1c-.4-1-.4-2.2 0-3.2L421 470.9L553.1 603zm375.1-375.1L604 552.1L471.9 420l225.5-98.7c2-.9 4.4 0 5.3 2.1c.4 1 .4 2.1 0 3.2" /><path fill="currentColor" d="M322.3 696.4c-.4 1-.4 2.2 0 3.2c.9 2.1 3.3 3 5.3 2.1L553.1 603L421 470.9zm375.1-375.1L471.9 420L604 552.1l98.7-225.5c.4-1.1.4-2.2 0-3.2c-.9-2.1-3.3-3-5.3-2.1" /><path fill="currentColor" d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448s448-200.6 448-448S759.4 64 512 64m0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372s372 166.6 372 372s-166.6 372-372 372" /></g>';
 var ICON_EMPIRE_EXPANSION_PLACE_SHAPES = "nameforge-empire-expansion-place-shapes";
@@ -2031,7 +2032,9 @@ var ICON_COMPOUND_BREAKDOWN_PACK_SVG = '<g transform="scale(4.16667)"><path d="M
 var ICON_COMPOUND_LIST_PACK = "nameforge-compound-list-pack";
 var ICON_COMPOUND_LIST_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M20.5 12a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5h-4a2.5 2.5 0 0 1-2.5-2.5v-6a2.5 2.5 0 0 1 2.5-2.5zm-7.464 2q-.035.245-.036.5v1H4.253a.75.75 0 0 0-.75.749v.578c.001.536.192 1.054.54 1.461c1.253 1.468 3.219 2.213 5.957 2.213q1.694-.002 3-.382v.381c0 .394.066.772.185 1.125Q11.752 22 10 22.001c-3.146 0-5.531-.905-7.098-2.74a3.75 3.75 0 0 1-.898-2.434v-.578A2.25 2.25 0 0 1 4.253 14zM17 14a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10m0 1.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" /></g>';
 var ICON_PLACE_PACK = "nameforge-place-pack";
-var ICON_PLACE_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7" /></g>';
+var ICON_PLACE_PACK_SVG = '<g transform="scale(0.390625)"><path fill="currentColor" d="M128 16a88.1 88.1 0 0 0-88 88c0 75.3 80 132.17 83.41 134.55a8 8 0 0 0 9.18 0C136 236.17 216 179.3 216 104a88.1 88.1 0 0 0-88-88m0 56a32 32 0 1 1-32 32a32 32 0 0 1 32-32" /></g>';
+var ICON_WORD_LIST = "nameforge-word-list";
+var ICON_WORD_LIST_SVG = '<g transform="scale(4.16667)"><path fill="currentColor" d="M4 10.2q0-3.75 2.413-5.975T12 2h.25q.425 0 .713.288T13.25 3t-.288.713T12.25 4H12Q9.475 4 7.738 5.738T6 10.2q0 1.775 1.475 4.063T12 19.35q3.05-2.8 4.525-5.087T18 10.2q0-.425.288-.712T19 9.2t.713.288t.287.712q0 2.35-1.7 5.038t-4.975 5.587q-.275.25-.625.375t-.7.125t-.7-.125t-.625-.375Q9.05 19.325 7.8 17.9t-2.087-2.762t-1.275-2.575T4 10.2m9.4.5l5.55-5.55q.15-.15.15-.35t-.15-.35l-1.4-1.4q-.15-.15-.35-.15t-.35.15L11.3 8.6q-.15.15-.225.338T11 9.325v.925q0 .325.213.538t.537.212h.925q.2 0 .388-.075t.337-.225m6.25-6.95q.15.15.35.15t.35-.15l.35-.35q.275-.275.275-.7T20.7 2l-.7-.7q-.275-.275-.7-.275t-.7.275l-.35.35q-.15.15-.15.35t.15.35z" /></g>';
 var ICON_MIX_PACK = "nameforge-mix-pack";
 var ICON_MIX_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M11 17.5c0-1.29.376-2.49 1.023-3.501h-7.77a2.25 2.25 0 0 0-2.25 2.25v.908a3.75 3.75 0 0 0 1.306 2.844c1.563 1.343 3.802 2 6.691 2q1.414 0 2.617-.211A6.48 6.48 0 0 1 11 17.5m4-10.495a5 5 0 1 0-10 0a5 5 0 0 0 10 0M17.44 12A5.5 5.5 0 0 0 12 17.44zm-4.322 8.823a5.5 5.5 0 0 1-.826-1.553l6.979-6.979a5.5 5.5 0 0 1 1.553.826zm1.06 1.06a5.5 5.5 0 0 0 1.553.826l6.979-6.978a5.5 5.5 0 0 0-.826-1.553zM23 17.562A5.5 5.5 0 0 1 17.561 23z" /></g>';
 var ICON_SEED_LOCK = "nameforge-seed-lock";
@@ -2053,6 +2056,7 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_PACKS, ICON_PACKS_SVG);
   (0, import_obsidian4.addIcon)(ICON_PLACE_SHAPES, ICON_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_GENERIC_PLACE_NAMES, ICON_GENERIC_PLACE_NAMES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_RECIPE, ICON_GENERIC_PLACE_NAMES_SVG);
   (0, import_obsidian4.addIcon)(ICON_EXPLORATION_PLACE_SHAPES, ICON_EXPLORATION_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_NAME_AGEING, ICON_NAME_AGEING_SVG);
@@ -2068,6 +2072,7 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_COMPOUND_BREAKDOWN_PACK, ICON_COMPOUND_BREAKDOWN_PACK_SVG);
   (0, import_obsidian4.addIcon)(ICON_COMPOUND_LIST_PACK, ICON_COMPOUND_LIST_PACK_SVG);
   (0, import_obsidian4.addIcon)(ICON_PLACE_PACK, ICON_PLACE_PACK_SVG);
+  (0, import_obsidian4.addIcon)(ICON_WORD_LIST, ICON_WORD_LIST_SVG);
   (0, import_obsidian4.addIcon)(ICON_MIX_PACK, ICON_MIX_PACK_SVG);
   (0, import_obsidian4.addIcon)(ICON_SEED_LOCK, ICON_SEED_LOCK_SVG);
   (0, import_obsidian4.addIcon)(ICON_SEED_COPY, ICON_SEED_COPY_SVG);
@@ -19432,6 +19437,8 @@ function readRecipe(fm) {
   }
   const takeover = linkTarget(fm.takeover);
   if (takeover) recipe.takeover = takeover;
+  const native = linkTarget(fm.native);
+  if (native) recipe.native = native;
   const register = str(fm.register);
   if (register && REGISTERS.includes(register)) recipe.register = register;
   else if (register) problems.push(`Unknown register \u201C${register}\u201D.`);
@@ -19449,7 +19456,7 @@ function readRecipe(fm) {
   return { recipe, problems };
 }
 function mergeRecipe(derived, template) {
-  var _a2, _b, _c;
+  var _a2, _b, _c, _d;
   return {
     setting: (_a2 = derived.setting) != null ? _a2 : template.setting,
     template: derived.template,
@@ -19459,7 +19466,8 @@ function mergeRecipe(derived, template) {
     generics: { ...template.generics, ...derived.generics },
     register: (_b = derived.register) != null ? _b : template.register,
     render: { ...template.render, ...derived.render },
-    takeover: (_c = derived.takeover) != null ? _c : template.takeover
+    takeover: (_c = derived.takeover) != null ? _c : template.takeover,
+    native: (_d = derived.native) != null ? _d : template.native
   };
 }
 function withDefaults(r) {
@@ -19473,7 +19481,8 @@ function withDefaults(r) {
     generics: { ...r.generics },
     register: (_c = r.register) != null ? _c : RECIPE_DEFAULTS.register,
     render: { ...RECIPE_DEFAULTS.render, ...r.render },
-    ...r.takeover ? { takeover: r.takeover } : {}
+    ...r.takeover ? { takeover: r.takeover } : {},
+    ...r.native ? { native: r.native } : {}
   };
 }
 function applyRecipeTemplate(derived, template, name) {
@@ -19519,6 +19528,7 @@ function recipeToFrontmatter(r) {
     out.render = render;
   }
   if (r.takeover) out.takeover = `[[${r.takeover}]]`;
+  if (r.native) out.native = `[[${r.native}]]`;
   return out;
 }
 function britishPlaceNamesRecipe(region) {
@@ -20909,6 +20919,7 @@ function parseRecipeContent(content) {
   const { recipe, problems } = readRecipe(raw != null ? raw : {});
   return { recipe, body: content.slice(fm[0].length), problems };
 }
+var NATIVE_PACK_CATEGORIES = ["native-place-name", "native-people-or-tribe"];
 var categoryLabels2 = new Map([
   ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]),
   ...COLONIAL_DATA.categories.map((c) => [c.id, c.label]),
@@ -20993,6 +21004,13 @@ var RecipeHost = class {
         }
       }
       out[categoryId] = sources.length > 0 ? { kind: "sources", sources, mode: slot.mode, gender: slot.gender, section: slot.section } : ((_a2 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a2.length) ? { kind: "built-in" } : { kind: "placeholder" };
+    }
+    if (recipe.native && recipe.shape.part !== "organic") {
+      for (const categoryId of NATIVE_PACK_CATEGORIES) {
+        if (recipe.slots[categoryId]) continue;
+        const draw = await this.packSource(recipe.native, recipePath);
+        if (draw) out[categoryId] = { kind: "sources", sources: [{ weight: 1, draw }] };
+      }
     }
     return out;
   }
@@ -21137,12 +21155,42 @@ function slotCategories(part) {
   if (code === "2a") out.push({ id: "local-settlement-word", label: "Local settlement word" }, { id: "local-market-word", label: "Local market word" });
   return out;
 }
+var NEW_LANDS_CONTEXTS = [
+  ["wild-and-unsettled", "wild and unsettled lands"],
+  ["sparse-or-weak-native-presence", "lands with a sparse, or weak, native presence"],
+  ["contested-frontier", "a contested frontier"]
+];
+var EXPANSION_CONTEXTS = [
+  ["imposition", "imposing"],
+  ["accommodation", "accommodating"],
+  ["adoption", "adopting"]
+];
+function empirePhrase(id, label) {
+  if (id === "general") return "general empire";
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+Imperial$/, "").trim()} empire`;
+}
+var FEATURES = [
+  { id: "any", label: "Any feature" },
+  { id: "settlement", label: "Settlement" },
+  { id: "landscape", label: "Landscape" },
+  ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label }))
+];
+var NO_THE_REGIONS = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
+function explorersPhrase(id, label) {
+  if (id === "general") return "General explorers";
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()} themed explorers`;
+}
 var same3 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-var RecipeEditorModal = class extends import_obsidian7.Modal {
-  constructor(app, options) {
-    super(app);
+var PAGES = ["Template", "Shape and rendering", "Slots and generic words"];
+var RecipeWizard = class {
+  constructor(app, options, hostEl, nameSource) {
+    this.app = app;
     this.options = options;
+    this.hostEl = hostEl;
+    this.nameSource = nameSource;
+    this.page = 0;
+    this.pageEl = null;
     this.name = "";
     this.body = "";
     this.own = {};
@@ -21150,10 +21198,9 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
     this.working = withDefaults({});
     /** Slots the user has set explicitly (others use §6.3 defaults or the template). */
     this.explicitSlots = /* @__PURE__ */ new Set();
+    hostEl.addClass("nameforge-recipe-editor");
   }
-  async onOpen() {
-    this.titleEl.setText(this.options.file ? "Edit recipe" : "New recipe");
-    this.modalEl.addClass("nameforge-recipe-editor");
+  async load() {
     if (this.options.file) {
       this.name = this.options.file.basename;
       const content = await this.app.vault.cachedRead(this.options.file);
@@ -21164,9 +21211,6 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
     }
     this.rebuildWorking();
     this.render();
-  }
-  onClose() {
-    this.contentEl.empty();
   }
   async loadTemplate(name) {
     var _a2, _b;
@@ -21182,17 +21226,42 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
     this.working = withDefaults(this.template ? mergeRecipe(this.own, this.template) : this.own);
     this.explicitSlots = new Set(Object.keys((_a2 = this.own.slots) != null ? _a2 : {}));
   }
-  /** Everything in the form, rebuilt after each change. */
+  /** The current page and the Back/Next row, rebuilt after each change (keeping the scroll position). */
   render() {
     var _a2, _b;
-    const el = this.contentEl;
-    el.empty();
+    const scrollTop = (_b = (_a2 = this.pageEl) == null ? void 0 : _a2.scrollTop) != null ? _b : 0;
+    this.hostEl.empty();
+    if (this.page === 1) this.renderPartButtons(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
+    this.pageEl = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__page" });
+    if (this.page === 0) this.renderTemplatePage(this.pageEl);
+    else if (this.page === 1) this.renderShapePage(this.pageEl);
+    else this.renderSlotsPage(this.pageEl);
+    this.pageEl.scrollTop = scrollTop;
+    const nav = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__nav" });
+    const back = nav.createEl("button", { text: "Back" });
+    back.disabled = this.page === 0;
+    back.addEventListener("click", () => this.goTo(this.page - 1));
+    nav.createSpan({ cls: "nameforge-recipe-editor__step", text: `${this.page + 1} of ${PAGES.length} \xB7 ${PAGES[this.page]}` });
+    const next = nav.createEl("button", { text: "Next" });
+    next.disabled = this.page === PAGES.length - 1;
+    next.addEventListener("click", () => this.goTo(this.page + 1));
+  }
+  goTo(page) {
+    this.page = Math.max(0, Math.min(PAGES.length - 1, page));
+    if (this.pageEl) this.pageEl.scrollTop = 0;
+    this.render();
+  }
+  /** Page 1: name (when the host has no name field), description, template and starting template. */
+  renderTemplatePage(el) {
+    var _a2, _b;
     const w = this.working;
-    new import_obsidian7.Setting(el).setName("Name").addText(
-      (t) => t.setValue(this.name).onChange((v) => {
-        this.name = v;
-      })
-    );
+    if (!this.nameSource) {
+      new import_obsidian7.Setting(el).setName("Name").addText(
+        (t) => t.setValue(this.name).onChange((v) => {
+          this.name = v;
+        })
+      );
+    }
     new import_obsidian7.Setting(el).setName("Description").setDesc("Shown when choosing this recipe as a template.").addTextArea((t) => {
       t.setValue(this.body).onChange((v) => {
         this.body = v;
@@ -21219,39 +21288,50 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
         });
       });
     }
-    el.createEl("h3", { text: "Shape" });
-    new import_obsidian7.Setting(el).setName("Part").addDropdown((d) => {
-      d.addOption("organic", "Organic (part 1)").addOption("new-land", "New land (part 2)").addOption("established", "Established culture (part 2a)");
-      d.setValue(w.shape.part).onChange((v) => {
-        w.shape.part = v;
+  }
+  /** Page 2: shape, then rendering. */
+  /** The part: one of three, each with its module's icon (place names use the wizard's own). */
+  renderPartButtons(header) {
+    const w = this.working;
+    const parts = header.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle" });
+    for (const [part, label, icon] of [
+      ["organic", "Place names", ICON_RECIPE],
+      ["new-land", "Exploration in new lands", ICON_EXPLORATION_PLACE_SHAPES],
+      ["established", "Expansion into settled lands", ICON_EMPIRE_EXPANSION_PLACE_SHAPES]
+    ]) {
+      const active = w.shape.part === part;
+      const button = parts.createEl("button", { cls: "nameforge-modal__toggle-button", attr: { type: "button", "aria-pressed": String(active) } });
+      button.toggleClass("is-active", active);
+      (0, import_obsidian7.setIcon)(button.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), icon);
+      button.createSpan({ text: label });
+      button.addEventListener("click", () => {
+        if (w.shape.part === part) return;
+        w.shape.part = part;
         this.render();
       });
-    });
+    }
+  }
+  renderShapePage(el) {
+    const w = this.working;
     if (w.shape.part === "organic") {
-      new import_obsidian7.Setting(el).setName("Region").addDropdown((d) => {
-        d.addOption("all-britain", "All Britain");
-        for (const r of PLACE_SHAPE_REGIONS) d.addOption(kebab(r.label), r.label);
-        d.setValue(kebab(w.shape.region) === "all-britain" ? "all-britain" : this.regionValue(w.shape.region)).onChange((v) => {
-          w.shape.region = v;
-        });
-      });
+      this.renderPlaceNamesSentence(el);
+    } else if (w.shape.part === "new-land") {
+      this.renderNewLandsSentence(el);
     } else {
-      const part = w.shape.part === "new-land" ? "2" : "2a";
-      new import_obsidian7.Setting(el).setName("Tradition").addDropdown((d) => {
-        for (const t of COLONIAL_TRADITIONS) if (t.parts.includes(part)) d.addOption(t.id, t.label);
-        d.setValue(w.shape.tradition).onChange((v) => {
-          w.shape.tradition = v;
-        });
-      });
-      new import_obsidian7.Setting(el).setName("Context").addDropdown((d) => {
-        d.addOption("none", "None");
-        for (const c of colonialContexts(part)) d.addOption(c.id, c.label);
-        d.setValue(w.shape.context).onChange((v) => {
-          w.shape.context = v;
+      this.renderExpansionSentence(el);
+    }
+    if (w.shape.part !== "organic") {
+      new import_obsidian7.Setting(el).setName("Native pack").setDesc("Native place and people names come from this pack, unless their slots are set below.").addDropdown((d) => {
+        var _a2;
+        d.addOption("", "None");
+        for (const pack of this.options.packs) d.addOption(pack, pack);
+        if (w.native && !this.options.packs.includes(w.native)) d.addOption(w.native, `${w.native} (missing)`);
+        d.setValue((_a2 = w.native) != null ? _a2 : "").onChange((v) => {
+          w.native = v || void 0;
         });
       });
       new import_obsidian7.Setting(el).setName("Takeover pack").setDesc("Adapted native names are reshaped into this pack's language.").addDropdown((d) => {
-        var _a3;
+        var _a2;
         d.addOption("", "None");
         for (const pack of this.options.takeoverPacks) {
           d.addOption(pack.name, pack.reason ? `${pack.name} \u2014 ${pack.reason}` : pack.name);
@@ -21262,19 +21342,12 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
           }
         }
         if (w.takeover && !this.options.takeoverPacks.some((p) => p.name === w.takeover)) d.addOption(w.takeover, w.takeover);
-        d.setValue((_a3 = w.takeover) != null ? _a3 : "").onChange((v) => {
+        d.setValue((_a2 = w.takeover) != null ? _a2 : "").onChange((v) => {
           w.takeover = v || void 0;
         });
       });
     }
-    new import_obsidian7.Setting(el).setName("Feature").addDropdown((d) => {
-      d.addOption("any", "Any").addOption("settlement", "Settlement").addOption("landscape", "Landscape");
-      for (const g of PLACE_SHAPE_DATA.groups) d.addOption(g.id, g.label);
-      d.setValue(w.shape.feature).onChange((v) => {
-        w.shape.feature = v;
-      });
-    });
-    el.createEl("h3", { text: "Words and rendering" });
+    el.createEl("h3", { text: "Rendering" });
     new import_obsidian7.Setting(el).setName("Register").setDesc("Balance of modern and traditional words.").addDropdown(
       (d) => d.addOption("modern", "Modern").addOption("mixed", "Mixed").addOption("traditional", "Traditional").setValue(w.register).onChange((v) => {
         w.register = v;
@@ -21295,7 +21368,18 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
         w.render.etymology = v;
       })
     );
-    new import_obsidian7.Setting(el).setName("Generic words").setDesc("One per line, e.g. \u201Cchurch: kirk\u201D.").addTextArea((t) => {
+  }
+  /** Page 3: slots, then generic words. */
+  renderSlotsPage(el) {
+    const w = this.working;
+    el.createEl("h3", { text: "Slots" });
+    el.createEl("p", {
+      cls: "setting-item-description",
+      text: "Where each category's words come from. Unset categories use their built-in list (river names use the river name module), or a placeholder if there isn't one."
+    });
+    for (const category of slotCategories(w.shape.part)) this.renderSlot(el, category.id, category.label);
+    el.createEl("h3", { text: "Generic words" });
+    new import_obsidian7.Setting(el).setDesc("One per line, e.g. \u201Cchurch: kirk\u201D.").addTextArea((t) => {
       t.setValue(Object.entries(w.generics).map(([k, v]) => `${k}: ${v}`).join("\n")).onChange((v) => {
         w.generics = Object.fromEntries(
           v.split("\n").map((line) => line.split(":").map((x) => x.trim())).filter(([k, r]) => k && r).map(([k, r]) => [k.toLowerCase(), r])
@@ -21303,16 +21387,103 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
       });
       t.inputEl.rows = 3;
     });
-    el.createEl("h3", { text: "Slots" });
-    el.createEl("p", {
-      cls: "setting-item-description",
-      text: "Where each category's words come from. Unset categories use their built-in list (river names use the river name module), or a placeholder if there isn't one."
+  }
+  /** One underlined phrase in a wizard sentence; clicking it opens a menu of `choices`. */
+  sentenceLink(sentence, text, choices, current, choose) {
+    const a = sentence.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button" } });
+    a.addEventListener("click", (event) => {
+      event.preventDefault();
+      const menu = new import_obsidian7.Menu();
+      for (const c of choices) {
+        menu.addItem(
+          (item) => item.setTitle(c.label).setChecked(c.id === current).onClick(() => {
+            choose(c.id);
+            this.render();
+          })
+        );
+      }
+      menu.showAtMouseEvent(event);
     });
-    for (const category of slotCategories(w.shape.part)) this.renderSlot(el, category.id, category.label);
-    const buttons = el.createDiv({ cls: "nameforge-recipe-editor__buttons" });
-    buttons.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
-    const save = buttons.createEl("button", { cls: "mod-cta", text: "Save" });
-    save.addEventListener("click", () => void this.save());
+  }
+  /** The feature phrase: "Any feature" at the start of a sentence, "any feature" within one. */
+  featureLink(sentence, start) {
+    var _a2;
+    const w = this.working;
+    const feature = (_a2 = FEATURES.find((f) => f.id === w.shape.feature)) != null ? _a2 : FEATURES[0];
+    const text = start ? feature.label : feature.label.charAt(0).toLowerCase() + feature.label.slice(1);
+    this.sentenceLink(sentence, text, FEATURES, feature.id, (id) => w.shape.feature = id);
+  }
+  /** Place names: "‹Any feature› from ‹all of Britain›" ("the" added where a region needs it). */
+  renderPlaceNamesSentence(el) {
+    var _a2;
+    const w = this.working;
+    const sentence = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
+    this.featureLink(sentence, true);
+    sentence.appendText(" from ");
+    const regions = [{ id: "all-britain", label: "All of Britain" }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: kebab(r.label), label: r.label }))];
+    const current = kebab(w.shape.region) === "all-britain" ? "all-britain" : this.regionValue(w.shape.region);
+    const region = (_a2 = regions.find((r) => r.id === current)) != null ? _a2 : regions[0];
+    const text = region.id === "all-britain" ? "all of Britain" : NO_THE_REGIONS.has(region.label) ? region.label : `the ${region.label}`;
+    this.sentenceLink(sentence, text, regions, region.id, (id) => w.shape.region = id);
+  }
+  /**
+   * Exploration in new lands: "‹General explorers› in ‹wild and unsettled lands›, naming ‹any feature›",
+   * each underlined phrase opening a menu of its choices.
+   */
+  renderNewLandsSentence(el) {
+    const w = this.working;
+    const traditions = COLONIAL_TRADITIONS.filter((t) => t.parts.includes("2"));
+    if (!traditions.some((t) => t.id === w.shape.tradition)) w.shape.tradition = traditions[0].id;
+    const contexts = NEW_LANDS_CONTEXTS.filter(([id]) => colonialContexts("2").some((c) => c.id === id));
+    if (!contexts.some(([id]) => id === w.shape.context)) w.shape.context = contexts[0][0];
+    const sentence = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
+    const tradition = traditions.find((t) => t.id === w.shape.tradition);
+    this.sentenceLink(
+      sentence,
+      explorersPhrase(tradition.id, tradition.label),
+      traditions.map((t) => ({ id: t.id, label: t.id === "general" ? "General explorers" : t.label })),
+      tradition.id,
+      (id) => w.shape.tradition = id
+    );
+    sentence.appendText(" in ");
+    this.sentenceLink(
+      sentence,
+      contexts.find(([id]) => id === w.shape.context)[1],
+      contexts.map(([id, label]) => ({ id, label })),
+      w.shape.context,
+      (id) => w.shape.context = id
+    );
+    sentence.appendText(", naming ");
+    this.featureLink(sentence, false);
+  }
+  /** Expansion into settled lands: "A ‹general empire› who is ‹imposing›, naming ‹any feature›". */
+  renderExpansionSentence(el) {
+    const w = this.working;
+    const traditions = COLONIAL_TRADITIONS.filter((t) => t.parts.includes("2a"));
+    if (!traditions.some((t) => t.id === w.shape.tradition)) w.shape.tradition = traditions[0].id;
+    const contexts = EXPANSION_CONTEXTS.filter(([id]) => colonialContexts("2a").some((c) => c.id === id));
+    if (!contexts.some(([id]) => id === w.shape.context)) w.shape.context = contexts[0][0];
+    const sentence = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
+    const tradition = traditions.find((t) => t.id === w.shape.tradition);
+    const empire = empirePhrase(tradition.id, tradition.label);
+    sentence.appendText(/^[aeiou]/i.test(empire) ? "An " : "A ");
+    this.sentenceLink(
+      sentence,
+      empire,
+      traditions.map((t) => ({ id: t.id, label: t.id === "general" ? "General empire" : t.label })),
+      tradition.id,
+      (id) => w.shape.tradition = id
+    );
+    sentence.appendText(" who is ");
+    this.sentenceLink(
+      sentence,
+      contexts.find(([id]) => id === w.shape.context)[1],
+      contexts.map(([id, label]) => ({ id, label })),
+      w.shape.context,
+      (id) => w.shape.context = id
+    );
+    sentence.appendText(", naming ");
+    this.featureLink(sentence, false);
   }
   regionValue(value) {
     const r = PLACE_SHAPE_REGIONS.find((x) => x.code === value.toUpperCase() || kebab(x.label) === kebab(value));
@@ -21443,7 +21614,8 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
       generics: { ...w.generics },
       register: w.register,
       render: { ...w.render },
-      takeover: w.takeover
+      takeover: w.takeover,
+      native: w.native
     };
     if (!full.templateOf || !this.template) return full;
     const base = withDefaults(this.template);
@@ -21456,14 +21628,16 @@ var RecipeEditorModal = class extends import_obsidian7.Modal {
       generics: diff(w.generics, base.generics),
       register: w.register !== base.register ? w.register : void 0,
       render: diff(w.render, base.render),
-      takeover: w.takeover !== base.takeover ? w.takeover : void 0
+      takeover: w.takeover !== base.takeover ? w.takeover : void 0,
+      native: w.native !== base.native ? w.native : void 0
     };
   }
+  /** Writes the recipe; the saved path, or null when it couldn't be saved (a notice says why). */
   async save() {
-    const name = this.name.trim();
+    const name = (this.nameSource ? this.nameSource() : this.name).trim();
     if (!name) {
       new import_obsidian7.Notice("nameForge: give the recipe a name.");
-      return;
+      return null;
     }
     const frontmatter = recipeToFrontmatter(this.collect());
     const content = `---
@@ -21478,7 +21652,7 @@ ${this.body.trim()}
         if (this.options.file.path !== path) {
           if (existing) {
             new import_obsidian7.Notice("nameForge: a file with that name already exists.");
-            return;
+            return null;
           }
           await this.app.fileManager.renameFile(this.options.file, path);
         }
@@ -21486,16 +21660,49 @@ ${this.body.trim()}
       } else {
         if (existing) {
           new import_obsidian7.Notice("nameForge: a file with that name already exists.");
-          return;
+          return null;
         }
         await this.app.vault.create(path, content);
       }
     } catch (e) {
       new import_obsidian7.Notice(`nameForge: couldn't save the recipe to ${path}.`);
-      return;
+      return null;
     }
     this.options.onSaved(path);
-    this.close();
+    return path;
+  }
+};
+var RecipeEditorModal = class extends import_obsidian7.Modal {
+  constructor(app, options) {
+    super(app);
+    this.options = options;
+  }
+  async onOpen() {
+    this.titleEl.setText(this.options.file ? "Edit place name wizard" : "Place name wizard");
+    this.contentEl.addClass("nameforge-editor-modal");
+    const stage = this.contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
+    const wizard = new RecipeWizard(this.app, this.options, stage.createDiv({ cls: "nameforge-editor-modal__stage-pane nameforge-editor-modal__wizard" }));
+    const controls = this.contentEl.createDiv({ cls: "nameforge-modal__controls" });
+    const save = controls.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Save recipe" }
+    });
+    (0, import_obsidian7.setIcon)(save, ICON_SAVE);
+    save.addEventListener("click", () => {
+      void wizard.save().then((path) => {
+        if (path) this.close();
+      });
+    });
+    const cancel = controls.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Cancel" }
+    });
+    (0, import_obsidian7.setIcon)(cancel, ICON_CANCEL);
+    cancel.addEventListener("click", () => this.close());
+    await wizard.load();
+  }
+  onClose() {
+    this.contentEl.empty();
   }
 };
 
@@ -21796,7 +22003,6 @@ var SECTION_ORDER = [
   "markov",
   "placeShapes",
   "riverNames",
-  "worldPlaceNames",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "nameAgeing",
@@ -21804,9 +22010,8 @@ var SECTION_ORDER = [
 ];
 var SECTION_LABELS = {
   markov: "markov generator",
-  placeShapes: "british place names",
+  placeShapes: "place names",
   riverNames: "river names",
-  worldPlaceNames: "world place names",
   explorationPlaceShapes: "exploration place names",
   empireExpansionPlaceShapes: "empire expansion place names",
   nameAgeing: "name ageing",
@@ -21818,7 +22023,7 @@ var WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
 function historySection(packName) {
   const starts = (prefix) => packName.startsWith(prefix);
   if (starts(RIVER_NAMES_HISTORY_NAME)) return "riverNames";
-  if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "worldPlaceNames";
+  if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(SECTION_LABELS.explorationPlaceShapes) || starts(OLD_HISTORY_PREFIXES.explorationPlaceShapes)) {
     return "explorationPlaceShapes";
   }
@@ -21845,18 +22050,17 @@ var SECTION_ICONS = {
   markov: ICON_PACKS,
   placeShapes: ICON_PLACE_SHAPES,
   riverNames: ICON_RIVER_NAMES,
-  worldPlaceNames: "globe",
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   nameAgeing: ICON_NAME_AGEING,
   nameTakeover: ICON_NAME_TAKEOVER
 };
+var PLACE_BRITAIN = "britain";
 var SESSION_HINT = "\u2190 click here for specialist modules, or here for your name packs";
 var sessionHintShown = false;
-var WORD_LIST_ICON = "whole-word";
 function packTypeIconId(packType, subGenerator) {
   if (packType === "recipePack") {
-    return "scroll-text";
+    return ICON_RECIPE;
   }
   if (packType === "compoundPack") {
     return subGenerator === "list" ? ICON_COMPOUND_LIST_PACK : ICON_COMPOUND_BREAKDOWN_PACK;
@@ -21948,8 +22152,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     /** River names (river brief §6.8): setting and, for British, region. Session only. */
     this.riverSetting = "british";
     this.riverRegion = void 0;
-    /** World place names: culture, and the era chosen for each culture. Session only. */
-    this.worldCulture = WORLD_CULTURES[0].id;
+    /** Place names: Britain (PLACE_BRITAIN) or a world culture, and the era chosen for each culture. Session only. */
+    this.worldCulture = PLACE_BRITAIN;
     this.worldEras = {};
     this.secondBoxRowEl = null;
     this.secondBoxDropdownEl = null;
@@ -22030,6 +22234,11 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.seedLocked = false;
     this.seedInputEl = null;
     this.seedLockButton = null;
+    /**
+     * Each module keeps its own results, seed, seed lock and status line; switching modules parks the
+     * current set here and brings back the other module's. Session only.
+     */
+    this.sectionViews = /* @__PURE__ */ new Map();
     /** True when mounted into a host panel (Forge) rather than opened as a Modal. */
     this.panelMode = false;
     this.rootEl = null;
@@ -22260,6 +22469,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.setSectionMenuOpen(false);
     this.setRegionMenuOpen(false);
     this.setSecondBoxMenuOpen(false);
+    this.swapSectionView(section);
     this.activeSection = section;
     (_d = this.packDropdownEl) == null ? void 0 : _d.toggle(section === "markov");
     (_e = this.sectionSelectEl) == null ? void 0 : _e.toggle(section === "markov" && this.sectionChoices.length > 0);
@@ -22271,9 +22481,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
-    const world = section === "worldPlaceNames";
-    (_j = this.regionDropdownEl) == null ? void 0 : _j.toggle(section === "placeShapes" || river || world || !!colonialPart || section === "nameAgeing" || takeover);
-    this.showSecondBox(river && this.riverSetting === "british" || world && this.worldHasEras() || takeover);
+    (_j = this.regionDropdownEl) == null ? void 0 : _j.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover);
+    this.showSecondBox(river && this.riverSetting === "british" || section === "placeShapes" && this.placeHasSecondBox() || takeover);
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
@@ -22288,12 +22497,16 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     if (this.sectionTriggerEl) (0, import_obsidian9.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
     (_o = this.sectionStubEl) == null ? void 0 : _o.toggle(
-      section !== "markov" && section !== "placeShapes" && !river && !world && !colonialPart && section !== "nameAgeing" && !takeover
+      section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover
     );
   }
-  /** World place names: whether the chosen culture has more than one era (the era box shows). */
-  worldHasEras() {
-    return findCulture(this.worldCulture).eras.length > 1;
+  /** Place names: whether Britain is chosen rather than a world culture. */
+  placeIsBritain() {
+    return this.worldCulture === PLACE_BRITAIN;
+  }
+  /** Place names: the second box shows Britain's regions, or a culture's eras when it has more than one. */
+  placeHasSecondBox() {
+    return this.placeIsBritain() || findCulture(this.worldCulture).eras.length > 1;
   }
   /**
    * The box beneath the box beside the section trigger: the region for river names' British setting
@@ -22343,17 +22556,21 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       trigger.setAttribute("title", "Takeover pack: the language that adopts the names");
       return;
     }
-    if (this.activeSection === "worldPlaceNames") {
+    if (this.activeSection === "placeShapes" && !this.placeIsBritain()) {
       const era = findEra(findCulture(this.worldCulture), this.worldEras[this.worldCulture]);
       label.textContent = era.label;
       trigger.setAttribute("title", `Era: ${(_a2 = era.guide) != null ? _a2 : era.label}`);
       return;
     }
-    const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.riverRegion);
+    const regionCode = this.activeSection === "placeShapes" ? this.selectedRegion : this.riverRegion;
+    const region = PLACE_SHAPE_REGIONS.find((r) => r.code === regionCode);
     label.textContent = (_b = region == null ? void 0 : region.label) != null ? _b : "All Britain";
     trigger.setAttribute("title", `Region: ${(_c = region == null ? void 0 : region.counties) != null ? _c : "no regional weighting"}`);
   }
-  /** River names: All Britain, then the regions. Name takeover: the eligible takeover packs. */
+  /**
+   * River names and place names' Britain: All Britain, then the regions. Place names' world cultures:
+   * the culture's eras. Name takeover: the eligible takeover packs.
+   */
   renderSecondBoxMenu(menu) {
     var _a2;
     menu.empty();
@@ -22379,12 +22596,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       }
       return;
     }
-    if (this.activeSection === "worldPlaceNames") {
+    if (this.activeSection === "placeShapes" && !this.placeIsBritain()) {
       const culture = findCulture(this.worldCulture);
-      const current = findEra(culture, this.worldEras[culture.id]);
+      const current2 = findEra(culture, this.worldEras[culture.id]);
       for (const era of culture.eras) {
         const item = menu.createEl("button", {
-          cls: "nameforge-modal__pack-dropdown-item" + (era.id === current.id ? " is-active" : ""),
+          cls: "nameforge-modal__pack-dropdown-item" + (era.id === current2.id ? " is-active" : ""),
           attr: { type: "button", title: (_a2 = era.guide) != null ? _a2 : era.label }
         });
         item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: era.label });
@@ -22399,14 +22616,17 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       { code: void 0, label: "All Britain" },
       ...PLACE_SHAPE_REGIONS
     ];
+    const place = this.activeSection === "placeShapes";
+    const current = place ? this.selectedRegion : this.riverRegion;
     for (const { code, label: text, counties } of options) {
       const item = menu.createEl("button", {
-        cls: "nameforge-modal__pack-dropdown-item" + (code === this.riverRegion ? " is-active" : ""),
+        cls: "nameforge-modal__pack-dropdown-item" + (code === current ? " is-active" : ""),
         attr: { type: "button", title: counties != null ? counties : "No regional weighting" }
       });
       item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text });
       item.addEventListener("click", () => {
-        this.riverRegion = code;
+        if (place) this.selectedRegion = code;
+        else this.riverRegion = code;
         choose();
       });
     }
@@ -22517,8 +22737,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       }
       return;
     }
-    if (this.activeSection === "worldPlaceNames") {
-      for (const culture of WORLD_CULTURES) {
+    if (this.activeSection === "placeShapes") {
+      const choices = [
+        { id: PLACE_BRITAIN, label: "Britain", guide: "British place names, weighted by region" },
+        ...WORLD_CULTURES
+      ];
+      for (const culture of choices) {
         const item = menu.createEl("button", {
           cls: "nameforge-modal__pack-dropdown-item" + (culture.id === this.worldCulture ? " is-active" : ""),
           attr: { type: "button", title: culture.guide }
@@ -22526,7 +22750,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
         item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: culture.label });
         item.addEventListener("click", () => {
           this.worldCulture = culture.id;
-          this.showSecondBox(this.worldHasEras());
+          this.showSecondBox(this.placeHasSecondBox());
           this.updateSecondBoxLabel();
           this.updateRegionLabel();
           this.setRegionMenuOpen(false);
@@ -22555,25 +22779,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       }
       return;
     }
-    const options = [
-      { code: void 0, label: "All Britain" },
-      ...PLACE_SHAPE_REGIONS
-    ];
-    for (const { code, label, counties } of options) {
-      const item = menu.createEl("button", {
-        cls: "nameforge-modal__pack-dropdown-item" + (code === this.selectedRegion ? " is-active" : ""),
-        attr: { type: "button", title: counties != null ? counties : "No regional weighting" }
-      });
-      item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
-      item.addEventListener("click", () => {
-        this.selectedRegion = code;
-        this.updateRegionLabel();
-        this.setRegionMenuOpen(false);
-      });
-    }
   }
   updateRegionLabel() {
-    var _a2, _b, _c, _d, _e, _f, _g, _h;
+    var _a2, _b, _c, _d, _e, _f;
     if (this.activeSection === "nameTakeover") {
       if (this.regionLabelEl) this.regionLabelEl.textContent = this.takeoverView.nativeLabel();
       (_a2 = this.regionTriggerEl) == null ? void 0 : _a2.setAttribute("title", "Native pack: the names to be taken over");
@@ -22590,7 +22798,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       (_c = this.regionTriggerEl) == null ? void 0 : _c.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
       return;
     }
-    if (this.activeSection === "worldPlaceNames") {
+    if (this.activeSection === "placeShapes" && !this.placeIsBritain()) {
       const culture = findCulture(this.worldCulture);
       if (this.regionLabelEl) this.regionLabelEl.textContent = culture.label;
       (_d = this.regionTriggerEl) == null ? void 0 : _d.setAttribute("title", `Culture: ${culture.guide}`);
@@ -22606,9 +22814,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       (_e = this.regionTriggerEl) == null ? void 0 : _e.setAttribute("title", tradition.guide);
       return;
     }
-    const region = PLACE_SHAPE_REGIONS.find((r) => r.code === this.selectedRegion);
-    if (this.regionLabelEl) this.regionLabelEl.textContent = (_f = region == null ? void 0 : region.label) != null ? _f : "All Britain";
-    (_h = this.regionTriggerEl) == null ? void 0 : _h.setAttribute("title", (_g = region == null ? void 0 : region.counties) != null ? _g : "No regional weighting");
+    if (this.regionLabelEl) this.regionLabelEl.textContent = "Britain";
+    (_f = this.regionTriggerEl) == null ? void 0 : _f.setAttribute("title", "Culture: British place names, weighted by region");
   }
   /** The context toggle row: None plus the part's frontier types or accommodation levels. */
   renderContextRow() {
@@ -22896,6 +23103,41 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     this.ageingSourceInput = null;
     this.seedInputEl = null;
     this.seedLockButton = null;
+    this.sectionViews.clear();
+  }
+  /** Parks the active module's results, seed and status, then shows `section`'s (empty the first time). */
+  swapSectionView(section) {
+    var _a2, _b;
+    if (!this.rootEl || !this.resultsEl || section === this.activeSection) return;
+    this.sectionViews.set(this.activeSection, {
+      resultsEl: this.resultsEl,
+      currentSeed: this.currentSeed,
+      seedLocked: this.seedLocked,
+      seedInputEl: this.seedInputEl,
+      seedLockButton: this.seedLockButton,
+      status: (_b = (_a2 = this.statusEl) == null ? void 0 : _a2.textContent) != null ? _b : ""
+    });
+    this.resultsEl.hide();
+    const view = this.sectionViews.get(section);
+    if (view) {
+      this.resultsEl = view.resultsEl;
+      this.currentSeed = view.currentSeed;
+      this.seedLocked = view.seedLocked;
+      this.seedInputEl = view.seedInputEl;
+      this.seedLockButton = view.seedLockButton;
+      this.resultsEl.show();
+      this.setStatus(view.status);
+      return;
+    }
+    const resultsEl = createDiv({ cls: "nameforge-modal__results" });
+    this.rootEl.insertBefore(resultsEl, this.statusEl);
+    this.resultsEl = resultsEl;
+    this.currentSeed = null;
+    this.seedLocked = false;
+    this.seedInputEl = null;
+    this.seedLockButton = null;
+    this.setStatus("");
+    this.renderResults([]);
   }
   /** Close the Modal after insert; no-op in Forge panel mode (stay mounted). */
   dismissAfterInsert() {
@@ -23437,8 +23679,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
     }
     update();
   }
-  /** Opens the recipe editor for a new recipe, or for the recipe at `path`. */
+  /** Opens the recipe editor for the recipe at `path` (new recipes are made in the pack editor's wizard). */
   async openRecipeEditor(path) {
+    new RecipeEditorModal(this.app, await this.recipeEditorOptions(path)).open();
+  }
+  /** What the place name wizard needs: this folder's packs, lists, recipe templates and takeover packs. */
+  async recipeEditorOptions(path) {
     var _a2;
     const folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const folder = this.app.vault.getFolderByPath((0, import_obsidian9.normalizePath)(folderPath));
@@ -23466,7 +23712,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       }
     }
     const file = path ? this.app.vault.getFileByPath(path) : null;
-    new RecipeEditorModal(this.app, {
+    return {
       folderPath,
       file: file instanceof import_obsidian9.TFile ? file : void 0,
       packs: packs.sort(),
@@ -23477,7 +23723,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
         this.plugin.settings.namesFilePath = saved;
         void this.refreshPackDropdown().then(() => this.loadPack(saved));
       }
-    }).open();
+    };
   }
   /** Fills the Section selector for List and Breakdown packs with sections, and Mix packs whose sources have them. */
   async updateSectionChoices(parsed) {
@@ -23509,7 +23755,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
   }
   async generateSelectedCount() {
     var _a2, _b, _c, _d, _e, _f;
-    if (this.activeSection === "placeShapes") {
+    if (this.activeSection === "placeShapes" && this.placeIsBritain()) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
       const result2 = generatePlaceNames({
         recipe: britishPlaceNamesRecipe(this.selectedRegion),
@@ -23547,7 +23793,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian9.Modal {
       this.setStatus((_c = result2.notice) != null ? _c : "");
       return;
     }
-    if (this.activeSection === "worldPlaceNames") {
+    if (this.activeSection === "placeShapes") {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_d = this.seedInputEl) == null ? void 0 : _d.value) : void 0;
       const era = this.worldEras[this.worldCulture];
       const result2 = generateWorldPlaceNames({
@@ -24176,6 +24422,13 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     this.wordListButton = null;
     /** §9: the editor is creating a word list rather than a name pack. */
     this.wordListMode = false;
+    /** The place name wizard replaces the stage's text box; it is built the first time it's chosen. */
+    this.wizardMode = false;
+    this.wizardButton = null;
+    this.wizardPaneEl = null;
+    this.wizard = null;
+    this.templateRowEl = null;
+    this.stageEl = null;
     /** §7: "Start from template" — the chosen template's note name, if any. */
     this.templateOf = void 0;
     this.templateSelectEl = null;
@@ -24251,18 +24504,22 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     this.placeButton.addEventListener("click", () => {
       this.setPackType("placePack");
     });
-    this.wordListButton = addTypeButton("Word list", WORD_LIST_ICON);
+    this.wizardButton = addTypeButton("Place name wizard", packTypeIconId("recipePack"));
+    this.wizardButton.addEventListener("click", () => {
+      this.wizardMode = true;
+      this.wordListMode = false;
+      this.updateTypeButtons();
+      void this.openWizard();
+    });
+    this.wordListButton = addTypeButton("Word list", ICON_WORD_LIST);
     this.wordListButton.addEventListener("click", () => {
       this.wordListMode = true;
+      this.wizardMode = false;
       this.updateTypeButtons();
       void this.loadTemplateOptions();
     });
-    const recipeButton = addTypeButton("Recipe", packTypeIconId("recipePack"));
-    recipeButton.addEventListener("click", () => {
-      this.close();
-      void this.parent.openRecipeEditor();
-    });
     const templateRow = contentEl.createDiv({ cls: "nameforge-editor-modal__template-row" });
+    this.templateRowEl = templateRow;
     templateRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from template" });
     this.templateSelectEl = templateRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from template" } });
     this.templateSelectEl.addEventListener("change", () => {
@@ -24273,6 +24530,7 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     });
     this.templateHintEl = contentEl.createDiv({ cls: "nameforge-editor-modal__template-hint" });
     const stage = contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
+    this.stageEl = stage;
     this.inputEl = stage.createEl("textarea", {
       cls: "nameforge-modal__textarea nameforge-editor-modal__stage-pane",
       attr: {
@@ -24283,6 +24541,8 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     this.inputEl.value = this.initialText;
     this.buildCompoundSection(stage);
     this.buildMixSection(stage);
+    this.wizardPaneEl = stage.createDiv({ cls: "nameforge-editor-modal__stage-pane nameforge-editor-modal__wizard" });
+    this.wizardPaneEl.hide();
     this.selectedPackType = this.parent.currentPackType;
     this.updateTypeButtons();
     this.updateCompoundControls();
@@ -24453,6 +24713,7 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
   setPackType(type) {
     this.selectedPackType = type;
     this.wordListMode = false;
+    this.wizardMode = false;
     this.updateTypeButtons();
     void this.loadTemplateOptions();
   }
@@ -24524,40 +24785,62 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
     this.updateCompoundControls();
   }
   updateTypeButtons() {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
-    const isWordList = this.wordListMode;
-    const isBreakdown = !isWordList && this.selectedPackType === "breakdownPack";
-    const isList = !isWordList && this.selectedPackType === "listPack";
-    const isCompound = !isWordList && this.selectedPackType === "compoundPack";
-    const isPlace = !isWordList && this.selectedPackType === "placePack";
-    const isMix = !isWordList && this.selectedPackType === "mixPack";
-    (_a2 = this.wordListButton) == null ? void 0 : _a2.classList.toggle("is-active", isWordList);
-    (_b = this.wordListButton) == null ? void 0 : _b.setAttribute("aria-pressed", String(isWordList));
-    (_c = this.breakdownButton) == null ? void 0 : _c.classList.toggle("is-active", isBreakdown);
-    (_d = this.listButton) == null ? void 0 : _d.classList.toggle("is-active", isList);
-    (_e = this.compoundButton) == null ? void 0 : _e.classList.toggle("is-active", isCompound);
-    (_f = this.placeButton) == null ? void 0 : _f.classList.toggle("is-active", isPlace);
-    (_g = this.mixButton) == null ? void 0 : _g.classList.toggle("is-active", isMix);
-    (_h = this.breakdownButton) == null ? void 0 : _h.setAttribute("aria-pressed", String(isBreakdown));
-    (_i = this.listButton) == null ? void 0 : _i.setAttribute("aria-pressed", String(isList));
-    (_j = this.compoundButton) == null ? void 0 : _j.setAttribute("aria-pressed", String(isCompound));
-    (_k = this.placeButton) == null ? void 0 : _k.setAttribute("aria-pressed", String(isPlace));
-    (_l = this.mixButton) == null ? void 0 : _l.setAttribute("aria-pressed", String(isMix));
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _A, _B, _C, _D, _E;
+    const isWizard = this.wizardMode;
+    const isWordList = !isWizard && this.wordListMode;
+    const other = isWizard || isWordList;
+    const isBreakdown = !other && this.selectedPackType === "breakdownPack";
+    const isList = !other && this.selectedPackType === "listPack";
+    const isCompound = !other && this.selectedPackType === "compoundPack";
+    const isPlace = !other && this.selectedPackType === "placePack";
+    const isMix = !other && this.selectedPackType === "mixPack";
+    (_a2 = this.wizardButton) == null ? void 0 : _a2.classList.toggle("is-active", isWizard);
+    (_b = this.wizardButton) == null ? void 0 : _b.setAttribute("aria-pressed", String(isWizard));
+    if (isWizard && this.stageEl && ((_c = this.templateRowEl) == null ? void 0 : _c.isShown())) {
+      const outer = (el) => {
+        if (!el || !el.isShown()) return 0;
+        const style = getComputedStyle(el);
+        return el.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+      };
+      const extra = outer(this.templateRowEl) + outer(this.templateHintEl);
+      this.stageEl.style.setProperty("--nf-wizard-extra-height", `${extra}px`);
+    } else if (!isWizard) {
+      (_d = this.stageEl) == null ? void 0 : _d.style.setProperty("--nf-wizard-extra-height", "0px");
+    }
+    (_e = this.templateRowEl) == null ? void 0 : _e.toggle(!isWizard);
+    (_f = this.templateHintEl) == null ? void 0 : _f.toggle(!isWizard);
+    (_g = this.wizardPaneEl) == null ? void 0 : _g.toggle(isWizard);
+    (_h = this.wordListButton) == null ? void 0 : _h.classList.toggle("is-active", isWordList);
+    (_i = this.wordListButton) == null ? void 0 : _i.setAttribute("aria-pressed", String(isWordList));
+    (_j = this.breakdownButton) == null ? void 0 : _j.classList.toggle("is-active", isBreakdown);
+    (_k = this.listButton) == null ? void 0 : _k.classList.toggle("is-active", isList);
+    (_l = this.compoundButton) == null ? void 0 : _l.classList.toggle("is-active", isCompound);
+    (_m = this.placeButton) == null ? void 0 : _m.classList.toggle("is-active", isPlace);
+    (_n = this.mixButton) == null ? void 0 : _n.classList.toggle("is-active", isMix);
+    (_o = this.breakdownButton) == null ? void 0 : _o.setAttribute("aria-pressed", String(isBreakdown));
+    (_p = this.listButton) == null ? void 0 : _p.setAttribute("aria-pressed", String(isList));
+    (_q = this.compoundButton) == null ? void 0 : _q.setAttribute("aria-pressed", String(isCompound));
+    (_r = this.placeButton) == null ? void 0 : _r.setAttribute("aria-pressed", String(isPlace));
+    (_s = this.mixButton) == null ? void 0 : _s.setAttribute("aria-pressed", String(isMix));
     if (this.inputEl) {
       this.inputEl.placeholder = isWordList ? WORD_LIST_TEXTAREA_PLACEHOLDER : isPlace ? PLACE_TEXTAREA_PLACEHOLDER : NAME_TEXTAREA_PLACEHOLDER;
     }
-    if (isCompound) {
-      (_m = this.inputEl) == null ? void 0 : _m.hide();
-      (_n = this.compoundSectionEl) == null ? void 0 : _n.show();
-      (_o = this.mixSectionEl) == null ? void 0 : _o.hide();
+    if (isWizard) {
+      (_t = this.inputEl) == null ? void 0 : _t.hide();
+      (_u = this.compoundSectionEl) == null ? void 0 : _u.hide();
+      (_v = this.mixSectionEl) == null ? void 0 : _v.hide();
+    } else if (isCompound) {
+      (_w = this.inputEl) == null ? void 0 : _w.hide();
+      (_x = this.compoundSectionEl) == null ? void 0 : _x.show();
+      (_y = this.mixSectionEl) == null ? void 0 : _y.hide();
     } else if (isMix) {
-      (_p = this.inputEl) == null ? void 0 : _p.hide();
-      (_q = this.compoundSectionEl) == null ? void 0 : _q.hide();
-      (_r = this.mixSectionEl) == null ? void 0 : _r.show();
+      (_z = this.inputEl) == null ? void 0 : _z.hide();
+      (_A = this.compoundSectionEl) == null ? void 0 : _A.hide();
+      (_B = this.mixSectionEl) == null ? void 0 : _B.show();
     } else {
-      (_s = this.inputEl) == null ? void 0 : _s.show();
-      (_t = this.compoundSectionEl) == null ? void 0 : _t.hide();
-      (_u = this.mixSectionEl) == null ? void 0 : _u.hide();
+      (_C = this.inputEl) == null ? void 0 : _C.show();
+      (_D = this.compoundSectionEl) == null ? void 0 : _D.hide();
+      (_E = this.mixSectionEl) == null ? void 0 : _E.hide();
     }
   }
   updateCompoundControls() {
@@ -24587,8 +24870,22 @@ var NameForgeEditorModal = class extends import_obsidian9.Modal {
       thirdWrapper == null ? void 0 : thirdWrapper.hide();
     }
   }
+  /** Builds the place name wizard in its pane the first time it's chosen; it keeps its answers after. */
+  async openWizard() {
+    if (this.wizard || !this.wizardPaneEl) return;
+    const pane = this.wizardPaneEl;
+    this.wizard = new RecipeWizard(this.app, await this.parent.recipeEditorOptions(), pane, () => {
+      var _a2, _b;
+      return (_b = (_a2 = this.packNameInput) == null ? void 0 : _a2.value) != null ? _b : "";
+    });
+    await this.wizard.load();
+  }
   async saveNames() {
     var _a2, _b, _c;
+    if (this.wizardMode) {
+      if (this.wizard && await this.wizard.save()) this.close();
+      return;
+    }
     const packName = ((_b = (_a2 = this.packNameInput) == null ? void 0 : _a2.value) == null ? void 0 : _b.trim()) || "nameForge";
     const templateOf = this.templateOf;
     if (this.wordListMode) {

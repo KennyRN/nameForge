@@ -749,7 +749,8 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   /* Fixed-ish, but capped relative to the viewport so it doesn't push the
      save/cancel row off the bottom of shorter windows — 420px was too tall
      on smaller screens, clipping the controls below it with no scrollbar. */
-  height: clamp(200px, 45vh, 420px);
+  /* The place name wizard adds the hidden template row's height (set in updateTypeButtons). */
+  height: calc(clamp(200px, 45vh, 420px) + var(--nf-wizard-extra-height, 0px));
   overflow: hidden;
   margin-bottom: 6px;
 }
@@ -1246,8 +1247,8 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   display: none;
 }
 
-/* The recipe editor. */
-.nameforge-recipe-editor .modal-content h3 {
+/* The recipe editor (place name wizard). */
+.nameforge-recipe-editor h3 {
   margin: 16px 0 4px;
   font-size: var(--font-ui-medium);
 }
@@ -1260,13 +1261,6 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 
 .nameforge-recipe-editor__weight {
   width: 5em;
-}
-
-.nameforge-recipe-editor__buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 16px;
 }
 
 /* The second box (river names' region, name takeover's takeover pack): exactly beneath the box above
@@ -1373,4 +1367,55 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   .nameforge-modal__loading-dot:nth-child(3) {
     opacity: 0.3;
   }
+}
+
+
+/* The place name wizard inside the pack editor's stage: the page scrolls, Back/Next stay below it. */
+.nameforge-editor-modal__wizard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.nameforge-recipe-editor__page {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.nameforge-recipe-editor__page > h3:first-child {
+  margin-top: 0;
+}
+.nameforge-recipe-editor__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+.nameforge-recipe-editor__step {
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+/* The wizard's part selector: the pack editor's type toggle, fixed above the scrolling page. */
+.nameforge-recipe-editor__parts {
+  flex: 0 0 auto;
+  margin-bottom: 8px;
+}
+
+/* Exploration in new lands' sentence: each phrase opens a menu of its choices. */
+.nameforge-recipe-editor__sentence {
+  margin: 4px 0 8px;
+  font-size: var(--font-ui-medium);
+  line-height: 1.6;
+}
+.nameforge-recipe-editor__sentence-link {
+  color: var(--forge-accent, var(--text-accent));
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.nameforge-recipe-editor__sentence-link:hover {
+  text-decoration-style: solid;
 }

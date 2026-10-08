@@ -1,7 +1,8 @@
-// The recipe editor (names-reference §6): every §6.1 setting and per-slot sources, written as YAML
+// The recipe editor, shown as the place name wizard (names-reference §6): every §6.1 setting and per-slot sources, written as YAML
 // properties. Recipes that start from a template store only their differences (§7).
 
-import { App, Modal, normalizePath, Notice, Setting, stringifyYaml, TFile } from "obsidian";
+import { App, Menu, Modal, normalizePath, Notice, Setting, setIcon, stringifyYaml, TFile } from "obsidian";
+import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
 import { sanitizePackNameForFilename } from "./nameParser";
 import { defaultNameMode, hasBuiltInList } from "./names/engine";
 import {
@@ -42,10 +43,50 @@ function slotCategories(part: RecipeSettings["shape"]["part"]): { id: string; la
   if (code === "2a") out.push({ id: "local-settlement-word", label: "Local settlement word" }, { id: "local-market-word", label: "Local market word" });
   return out;
 }
+/** Exploration in new lands' contexts, in menu order, as they read in the wizard's sentence. */
+const NEW_LANDS_CONTEXTS: [string, string][] = [
+  ["wild-and-unsettled", "wild and unsettled lands"],
+  ["sparse-or-weak-native-presence", "lands with a sparse, or weak, native presence"],
+  ["contested-frontier", "a contested frontier"],
+];
+/** Expansion into settled lands' contexts, as they read in the wizard's sentence. */
+const EXPANSION_CONTEXTS: [string, string][] = [
+  ["imposition", "imposing"],
+  ["accommodation", "accommodating"],
+  ["adoption", "adopting"],
+];
+/** "general empire", "Roman empire"; brackets and a trailing "Imperial" are dropped ("British empire"). */
+function empirePhrase(id: string, label: string): string {
+  if (id === "general") return "general empire";
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+Imperial$/, "").trim()} empire`;
+}
+/** The feature choices: any, the two sides, then each group. */
+const FEATURES: { id: string; label: string }[] = [
+  { id: "any", label: "Any feature" },
+  { id: "settlement", label: "Settlement" },
+  { id: "landscape", label: "Landscape" },
+  ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label })),
+];
+/** Regions that read without "the" in the place names sentence ("from Wales", but "from the North"). */
+const NO_THE_REGIONS = new Set(["Cornwall", "East Anglia", "Wales"]);
+/** "Roman themed explorers"; a bracketed note in the label is dropped ("Hellenistic themed explorers"). */
+function explorersPhrase(id: string, label: string): string {
+  if (id === "general") return "General explorers";
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()} themed explorers`;
+}
 const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 const kebab = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-export class RecipeEditorModal extends Modal {
+/** The wizard's pages, in order. */
+const PAGES = ["Template", "Shape and rendering", "Slots and generic words"];
+
+/**
+ * The recipe form as a three-page wizard, drawn into `hostEl`: a scrollable page and Back/Next
+ * beneath it. Used inside the pack editor (which supplies the name) and by RecipeEditorModal.
+ */
+export class RecipeWizard {
+  private page = 0;
+  private pageEl: HTMLElement | null = null;
   private name = "";
   private body = "";
   private own: RecipePartial = {};
@@ -56,15 +97,16 @@ export class RecipeEditorModal extends Modal {
   private explicitSlots = new Set<string>();
 
   constructor(
-    app: App,
+    private readonly app: App,
     private readonly options: RecipeEditorOptions,
+    private readonly hostEl: HTMLElement,
+    /** Where the name comes from when the host shows its own name field; otherwise page 1 has one. */
+    private readonly nameSource?: () => string,
   ) {
-    super(app);
+    hostEl.addClass("nameforge-recipe-editor");
   }
 
-  async onOpen() {
-    this.titleEl.setText(this.options.file ? "Edit recipe" : "New recipe");
-    this.modalEl.addClass("nameforge-recipe-editor");
+  async load() {
     if (this.options.file) {
       this.name = this.options.file.basename;
       const content = await this.app.vault.cachedRead(this.options.file);
@@ -75,10 +117,6 @@ export class RecipeEditorModal extends Modal {
     }
     this.rebuildWorking();
     this.render();
-  }
-
-  onClose() {
-    this.contentEl.empty();
   }
 
   private async loadTemplate(name: string | undefined) {
@@ -95,17 +133,44 @@ export class RecipeEditorModal extends Modal {
     this.explicitSlots = new Set(Object.keys(this.own.slots ?? {}));
   }
 
-  /** Everything in the form, rebuilt after each change. */
+  /** The current page and the Back/Next row, rebuilt after each change (keeping the scroll position). */
   private render() {
-    const el = this.contentEl;
-    el.empty();
-    const w = this.working;
+    const scrollTop = this.pageEl?.scrollTop ?? 0;
+    this.hostEl.empty();
+    // Page 2's part buttons stay above the scrolling page.
+    if (this.page === 1) this.renderPartButtons(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
+    this.pageEl = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__page" });
+    if (this.page === 0) this.renderTemplatePage(this.pageEl);
+    else if (this.page === 1) this.renderShapePage(this.pageEl);
+    else this.renderSlotsPage(this.pageEl);
+    this.pageEl.scrollTop = scrollTop;
 
-    new Setting(el).setName("Name").addText((t) =>
-      t.setValue(this.name).onChange((v) => {
-        this.name = v;
-      }),
-    );
+    const nav = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__nav" });
+    const back = nav.createEl("button", { text: "Back" });
+    back.disabled = this.page === 0;
+    back.addEventListener("click", () => this.goTo(this.page - 1));
+    nav.createSpan({ cls: "nameforge-recipe-editor__step", text: `${this.page + 1} of ${PAGES.length} · ${PAGES[this.page]}` });
+    const next = nav.createEl("button", { text: "Next" });
+    next.disabled = this.page === PAGES.length - 1;
+    next.addEventListener("click", () => this.goTo(this.page + 1));
+  }
+
+  private goTo(page: number) {
+    this.page = Math.max(0, Math.min(PAGES.length - 1, page));
+    if (this.pageEl) this.pageEl.scrollTop = 0;
+    this.render();
+  }
+
+  /** Page 1: name (when the host has no name field), description, template and starting template. */
+  private renderTemplatePage(el: HTMLElement) {
+    const w = this.working;
+    if (!this.nameSource) {
+      new Setting(el).setName("Name").addText((t) =>
+        t.setValue(this.name).onChange((v) => {
+          this.name = v;
+        }),
+      );
+    }
 
     new Setting(el)
       .setName("Description")
@@ -143,38 +208,53 @@ export class RecipeEditorModal extends Modal {
           });
         });
     }
+  }
 
-    el.createEl("h3", { text: "Shape" });
-    new Setting(el).setName("Part").addDropdown((d) => {
-      d.addOption("organic", "Organic (part 1)").addOption("new-land", "New land (part 2)").addOption("established", "Established culture (part 2a)");
-      d.setValue(w.shape.part).onChange((v) => {
-        w.shape.part = v as RecipeSettings["shape"]["part"];
+  /** Page 2: shape, then rendering. */
+  /** The part: one of three, each with its module's icon (place names use the wizard's own). */
+  private renderPartButtons(header: HTMLElement) {
+    const w = this.working;
+    const parts = header.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle" });
+    for (const [part, label, icon] of [
+      ["organic", "Place names", ICON_RECIPE],
+      ["new-land", "Exploration in new lands", ICON_EXPLORATION_PLACE_SHAPES],
+      ["established", "Expansion into settled lands", ICON_EMPIRE_EXPANSION_PLACE_SHAPES],
+    ] as const) {
+      const active = w.shape.part === part;
+      const button = parts.createEl("button", { cls: "nameforge-modal__toggle-button", attr: { type: "button", "aria-pressed": String(active) } });
+      button.toggleClass("is-active", active);
+      setIcon(button.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), icon);
+      button.createSpan({ text: label });
+      button.addEventListener("click", () => {
+        if (w.shape.part === part) return;
+        w.shape.part = part;
         this.render();
       });
-    });
+    }
+  }
+
+  private renderShapePage(el: HTMLElement) {
+    const w = this.working;
     if (w.shape.part === "organic") {
-      new Setting(el).setName("Region").addDropdown((d) => {
-        d.addOption("all-britain", "All Britain");
-        for (const r of PLACE_SHAPE_REGIONS) d.addOption(kebab(r.label), r.label);
-        d.setValue(kebab(w.shape.region) === "all-britain" ? "all-britain" : this.regionValue(w.shape.region)).onChange((v) => {
-          w.shape.region = v;
-        });
-      });
+      this.renderPlaceNamesSentence(el);
+    } else if (w.shape.part === "new-land") {
+      this.renderNewLandsSentence(el);
     } else {
-      const part = w.shape.part === "new-land" ? "2" : "2a";
-      new Setting(el).setName("Tradition").addDropdown((d) => {
-        for (const t of COLONIAL_TRADITIONS) if (t.parts.includes(part)) d.addOption(t.id, t.label);
-        d.setValue(w.shape.tradition).onChange((v) => {
-          w.shape.tradition = v;
+      this.renderExpansionSentence(el);
+    }
+    if (w.shape.part !== "organic") {
+      // Native place and people slots left unset draw their names from this pack.
+      new Setting(el)
+        .setName("Native pack")
+        .setDesc("Native place and people names come from this pack, unless their slots are set below.")
+        .addDropdown((d) => {
+          d.addOption("", "None");
+          for (const pack of this.options.packs) d.addOption(pack, pack);
+          if (w.native && !this.options.packs.includes(w.native)) d.addOption(w.native, `${w.native} (missing)`);
+          d.setValue(w.native ?? "").onChange((v) => {
+            w.native = v || undefined;
+          });
         });
-      });
-      new Setting(el).setName("Context").addDropdown((d) => {
-        d.addOption("none", "None");
-        for (const c of colonialContexts(part)) d.addOption(c.id, c.label);
-        d.setValue(w.shape.context).onChange((v) => {
-          w.shape.context = v;
-        });
-      });
       // Recipe takeover §A2: the coloniser's language, which reshapes adapted native names.
       new Setting(el)
         .setName("Takeover pack")
@@ -196,15 +276,8 @@ export class RecipeEditorModal extends Modal {
           });
         });
     }
-    new Setting(el).setName("Feature").addDropdown((d) => {
-      d.addOption("any", "Any").addOption("settlement", "Settlement").addOption("landscape", "Landscape");
-      for (const g of PLACE_SHAPE_DATA.groups) d.addOption(g.id, g.label);
-      d.setValue(w.shape.feature).onChange((v) => {
-        w.shape.feature = v;
-      });
-    });
 
-    el.createEl("h3", { text: "Words and rendering" });
+    el.createEl("h3", { text: "Rendering" });
     new Setting(el).setName("Register").setDesc("Balance of modern and traditional words.").addDropdown((d) =>
       d
         .addOption("modern", "Modern")
@@ -235,8 +308,20 @@ export class RecipeEditorModal extends Modal {
         w.render.etymology = v;
       }),
     );
+  }
+
+  /** Page 3: slots, then generic words. */
+  private renderSlotsPage(el: HTMLElement) {
+    const w = this.working;
+    el.createEl("h3", { text: "Slots" });
+    el.createEl("p", {
+      cls: "setting-item-description",
+      text: "Where each category's words come from. Unset categories use their built-in list (river names use the river name module), or a placeholder if there isn't one.",
+    });
+    for (const category of slotCategories(w.shape.part)) this.renderSlot(el, category.id, category.label);
+
+    el.createEl("h3", { text: "Generic words" });
     new Setting(el)
-      .setName("Generic words")
       .setDesc("One per line, e.g. “church: kirk”.")
       .addTextArea((t) => {
         t.setValue(Object.entries(w.generics).map(([k, v]) => `${k}: ${v}`).join("\n")).onChange((v) => {
@@ -250,18 +335,111 @@ export class RecipeEditorModal extends Modal {
         });
         t.inputEl.rows = 3;
       });
+  }
 
-    el.createEl("h3", { text: "Slots" });
-    el.createEl("p", {
-      cls: "setting-item-description",
-      text: "Where each category's words come from. Unset categories use their built-in list (river names use the river name module), or a placeholder if there isn't one.",
+  /** One underlined phrase in a wizard sentence; clicking it opens a menu of `choices`. */
+  private sentenceLink(sentence: HTMLElement, text: string, choices: { id: string; label: string }[], current: string, choose: (id: string) => void) {
+    const a = sentence.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button" } });
+    a.addEventListener("click", (event) => {
+      event.preventDefault();
+      const menu = new Menu();
+      for (const c of choices) {
+        menu.addItem((item) =>
+          item
+            .setTitle(c.label)
+            .setChecked(c.id === current)
+            .onClick(() => {
+              choose(c.id);
+              this.render();
+            }),
+        );
+      }
+      menu.showAtMouseEvent(event);
     });
-    for (const category of slotCategories(w.shape.part)) this.renderSlot(el, category.id, category.label);
+  }
 
-    const buttons = el.createDiv({ cls: "nameforge-recipe-editor__buttons" });
-    buttons.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
-    const save = buttons.createEl("button", { cls: "mod-cta", text: "Save" });
-    save.addEventListener("click", () => void this.save());
+  /** The feature phrase: "Any feature" at the start of a sentence, "any feature" within one. */
+  private featureLink(sentence: HTMLElement, start: boolean) {
+    const w = this.working;
+    const feature = FEATURES.find((f) => f.id === w.shape.feature) ?? FEATURES[0];
+    const text = start ? feature.label : feature.label.charAt(0).toLowerCase() + feature.label.slice(1);
+    this.sentenceLink(sentence, text, FEATURES, feature.id, (id) => (w.shape.feature = id));
+  }
+
+  /** Place names: "‹Any feature› from ‹all of Britain›" ("the" added where a region needs it). */
+  private renderPlaceNamesSentence(el: HTMLElement) {
+    const w = this.working;
+    const sentence = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
+    this.featureLink(sentence, true);
+    sentence.appendText(" from ");
+    const regions = [{ id: "all-britain", label: "All of Britain" }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: kebab(r.label), label: r.label }))];
+    const current = kebab(w.shape.region) === "all-britain" ? "all-britain" : this.regionValue(w.shape.region);
+    const region = regions.find((r) => r.id === current) ?? regions[0];
+    const text = region.id === "all-britain" ? "all of Britain" : NO_THE_REGIONS.has(region.label) ? region.label : `the ${region.label}`;
+    this.sentenceLink(sentence, text, regions, region.id, (id) => (w.shape.region = id));
+  }
+
+  /**
+   * Exploration in new lands: "‹General explorers› in ‹wild and unsettled lands›, naming ‹any feature›",
+   * each underlined phrase opening a menu of its choices.
+   */
+  private renderNewLandsSentence(el: HTMLElement) {
+    const w = this.working;
+    const traditions = COLONIAL_TRADITIONS.filter((t) => t.parts.includes("2"));
+    if (!traditions.some((t) => t.id === w.shape.tradition)) w.shape.tradition = traditions[0].id;
+    const contexts = NEW_LANDS_CONTEXTS.filter(([id]) => colonialContexts("2").some((c) => c.id === id));
+    if (!contexts.some(([id]) => id === w.shape.context)) w.shape.context = contexts[0][0];
+
+    const sentence = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
+    const tradition = traditions.find((t) => t.id === w.shape.tradition)!;
+    this.sentenceLink(
+      sentence,
+      explorersPhrase(tradition.id, tradition.label),
+      traditions.map((t) => ({ id: t.id, label: t.id === "general" ? "General explorers" : t.label })),
+      tradition.id,
+      (id) => (w.shape.tradition = id),
+    );
+    sentence.appendText(" in ");
+    this.sentenceLink(
+      sentence,
+      contexts.find(([id]) => id === w.shape.context)![1],
+      contexts.map(([id, label]) => ({ id, label })),
+      w.shape.context,
+      (id) => (w.shape.context = id),
+    );
+    sentence.appendText(", naming ");
+    this.featureLink(sentence, false);
+  }
+
+  /** Expansion into settled lands: "A ‹general empire› who is ‹imposing›, naming ‹any feature›". */
+  private renderExpansionSentence(el: HTMLElement) {
+    const w = this.working;
+    const traditions = COLONIAL_TRADITIONS.filter((t) => t.parts.includes("2a"));
+    if (!traditions.some((t) => t.id === w.shape.tradition)) w.shape.tradition = traditions[0].id;
+    const contexts = EXPANSION_CONTEXTS.filter(([id]) => colonialContexts("2a").some((c) => c.id === id));
+    if (!contexts.some(([id]) => id === w.shape.context)) w.shape.context = contexts[0][0];
+
+    const sentence = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
+    const tradition = traditions.find((t) => t.id === w.shape.tradition)!;
+    const empire = empirePhrase(tradition.id, tradition.label);
+    sentence.appendText(/^[aeiou]/i.test(empire) ? "An " : "A ");
+    this.sentenceLink(
+      sentence,
+      empire,
+      traditions.map((t) => ({ id: t.id, label: t.id === "general" ? "General empire" : t.label })),
+      tradition.id,
+      (id) => (w.shape.tradition = id),
+    );
+    sentence.appendText(" who is ");
+    this.sentenceLink(
+      sentence,
+      contexts.find(([id]) => id === w.shape.context)![1],
+      contexts.map(([id, label]) => ({ id, label })),
+      w.shape.context,
+      (id) => (w.shape.context = id),
+    );
+    sentence.appendText(", naming ");
+    this.featureLink(sentence, false);
   }
 
   private regionValue(value: string): string {
@@ -414,6 +592,7 @@ export class RecipeEditorModal extends Modal {
       register: w.register,
       render: { ...w.render },
       takeover: w.takeover,
+      native: w.native,
     };
     if (!full.templateOf || !this.template) return full;
 
@@ -429,14 +608,16 @@ export class RecipeEditorModal extends Modal {
       register: w.register !== base.register ? w.register : undefined,
       render: diff(w.render, base.render),
       takeover: w.takeover !== base.takeover ? w.takeover : undefined,
+      native: w.native !== base.native ? w.native : undefined,
     };
   }
 
-  private async save() {
-    const name = this.name.trim();
+  /** Writes the recipe; the saved path, or null when it couldn't be saved (a notice says why). */
+  async save(): Promise<string | null> {
+    const name = (this.nameSource ? this.nameSource() : this.name).trim();
     if (!name) {
       new Notice("nameForge: give the recipe a name.");
-      return;
+      return null;
     }
     const frontmatter = recipeToFrontmatter(this.collect());
     const content = `---\n${stringifyYaml(frontmatter)}---\n\n${this.body.trim()}\n`;
@@ -447,7 +628,7 @@ export class RecipeEditorModal extends Modal {
         if (this.options.file.path !== path) {
           if (existing) {
             new Notice("nameForge: a file with that name already exists.");
-            return;
+            return null;
           }
           await this.app.fileManager.renameFile(this.options.file, path);
         }
@@ -455,15 +636,55 @@ export class RecipeEditorModal extends Modal {
       } else {
         if (existing) {
           new Notice("nameForge: a file with that name already exists.");
-          return;
+          return null;
         }
         await this.app.vault.create(path, content);
       }
     } catch {
       new Notice(`nameForge: couldn't save the recipe to ${path}.`);
-      return;
+      return null;
     }
     this.options.onSaved(path);
-    this.close();
+    return path;
+  }
+}
+
+/** Editing an existing recipe on its own: the wizard with its own name field, save and cancel. */
+export class RecipeEditorModal extends Modal {
+  constructor(
+    app: App,
+    private readonly options: RecipeEditorOptions,
+  ) {
+    super(app);
+  }
+
+  async onOpen() {
+    this.titleEl.setText(this.options.file ? "Edit place name wizard" : "Place name wizard");
+    this.contentEl.addClass("nameforge-editor-modal");
+    const stage = this.contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
+    const wizard = new RecipeWizard(this.app, this.options, stage.createDiv({ cls: "nameforge-editor-modal__stage-pane nameforge-editor-modal__wizard" }));
+    // The pack editor's controls: save then cancel, as large icons.
+    const controls = this.contentEl.createDiv({ cls: "nameforge-modal__controls" });
+    const save = controls.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Save recipe" },
+    });
+    setIcon(save, ICON_SAVE);
+    save.addEventListener("click", () => {
+      void wizard.save().then((path) => {
+        if (path) this.close();
+      });
+    });
+    const cancel = controls.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Cancel" },
+    });
+    setIcon(cancel, ICON_CANCEL);
+    cancel.addEventListener("click", () => this.close());
+    await wizard.load();
+  }
+
+  onClose() {
+    this.contentEl.empty();
   }
 }

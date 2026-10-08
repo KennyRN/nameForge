@@ -37,6 +37,8 @@ export interface RecipeSettings {
   render: { joining: Joining; linkingHyphens: boolean; etymology: boolean };
   /** The takeover pack (link target): the coloniser's language that adapts native names. Colonial parts only. */
   takeover?: string;
+  /** The native pack (link target): native place and people slots left unset draw from it. Colonial parts only. */
+  native?: string;
 }
 
 /** A recipe as written: every setting optional, so a derived recipe can inherit per setting. */
@@ -50,6 +52,7 @@ export interface RecipePartial {
   register?: Register;
   render?: Partial<RecipeSettings["render"]>;
   takeover?: string;
+  native?: string;
 }
 
 export const RECIPE_DEFAULTS: RecipeSettings = {
@@ -148,6 +151,8 @@ export function readRecipe(fm: Record<string, unknown>): { recipe: RecipePartial
   }
   const takeover = linkTarget(fm.takeover);
   if (takeover) recipe.takeover = takeover;
+  const native = linkTarget(fm.native);
+  if (native) recipe.native = native;
   const register = str(fm.register);
   if (register && REGISTERS.includes(register as Register)) recipe.register = register as Register;
   else if (register) problems.push(`Unknown register “${register}”.`);
@@ -180,6 +185,7 @@ export function mergeRecipe(derived: RecipePartial, template: RecipePartial): Re
     register: derived.register ?? template.register,
     render: { ...template.render, ...derived.render },
     takeover: derived.takeover ?? template.takeover,
+    native: derived.native ?? template.native,
   };
 }
 
@@ -194,6 +200,7 @@ export function withDefaults(r: RecipePartial): RecipeSettings {
     register: r.register ?? RECIPE_DEFAULTS.register,
     render: { ...RECIPE_DEFAULTS.render, ...r.render },
     ...(r.takeover ? { takeover: r.takeover } : {}),
+    ...(r.native ? { native: r.native } : {}),
   };
 }
 
@@ -246,6 +253,7 @@ export function recipeToFrontmatter(r: RecipePartial): Record<string, unknown> {
     out.render = render;
   }
   if (r.takeover) out.takeover = `[[${r.takeover}]]`;
+  if (r.native) out.native = `[[${r.native}]]`;
   return out;
 }
 

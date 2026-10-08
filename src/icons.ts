@@ -31,6 +31,9 @@ export const ICON_GENERIC_PLACE_NAMES = "nameforge-generic-place-names";
 const ICON_GENERIC_PLACE_NAMES_SVG =
   '<g transform="scale(4.16667)"><g fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path fill="currentColor" fill-rule="evenodd" d="M11.262 17.675L12 17zm1.476 0l.005-.005l.012-.014l.045-.05l.166-.186a38 38 0 0 0 2.348-2.957c.642-.9 1.3-1.92 1.801-2.933c.49-.99.885-2.079.885-3.086C18 4.871 15.382 2 12 2S6 4.87 6 8.444c0 1.007.395 2.096.885 3.086c.501 1.013 1.16 2.033 1.8 2.933a38 38 0 0 0 2.515 3.143l.045.05l.012.014l.005.005a1 1 0 0 0 1.476 0M12 17l.738.674zm0-11a2 2 0 1 0 0 4a2 2 0 0 0 0-4" clip-rule="evenodd" /></g></g>';
 
+// Recipes share the solid map marker with the old generic place names history entries.
+export const ICON_RECIPE = "nameforge-recipe";
+
 export const ICON_EXPLORATION_PLACE_SHAPES = "nameforge-exploration-place-shapes";
 // Ant Design Icons — compass-twotone (MIT). Scaled for Obsidian's 100×100 viewBox.
 const ICON_EXPLORATION_PLACE_SHAPES_SVG =
@@ -83,7 +86,14 @@ export const ICON_COMPOUND_LIST_PACK = "nameforge-compound-list-pack";
 const ICON_COMPOUND_LIST_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M20.5 12a2.5 2.5 0 0 1 2.5 2.5v6a2.5 2.5 0 0 1-2.5 2.5h-4a2.5 2.5 0 0 1-2.5-2.5v-6a2.5 2.5 0 0 1 2.5-2.5zm-7.464 2q-.035.245-.036.5v1H4.253a.75.75 0 0 0-.75.749v.578c.001.536.192 1.054.54 1.461c1.253 1.468 3.219 2.213 5.957 2.213q1.694-.002 3-.382v.381c0 .394.066.772.185 1.125Q11.752 22 10 22.001c-3.146 0-5.531-.905-7.098-2.74a3.75 3.75 0 0 1-.898-2.434v-.578A2.25 2.25 0 0 1 4.253 14zM17 14a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM10 2.005a5 5 0 1 1 0 10a5 5 0 0 1 0-10m0 1.5a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7" /></g>';
 
 export const ICON_PLACE_PACK = "nameforge-place-pack";
-const ICON_PLACE_PACK_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7" /></g>';
+// Phosphor Icons — map-pin-fill (MIT). Scaled for Obsidian's 100×100 viewBox.
+const ICON_PLACE_PACK_SVG =
+  '<g transform="scale(0.390625)"><path fill="currentColor" d="M128 16a88.1 88.1 0 0 0-88 88c0 75.3 80 132.17 83.41 134.55a8 8 0 0 0 9.18 0C136 236.17 216 179.3 216 104a88.1 88.1 0 0 0-88-88m0 56a32 32 0 1 1-32 32a32 32 0 0 1 32-32" /></g>';
+
+export const ICON_WORD_LIST = "nameforge-word-list";
+// Material Symbols — edit-location-alt-outline-rounded (Apache 2.0). Scaled for Obsidian's 100×100 viewBox.
+const ICON_WORD_LIST_SVG =
+  '<g transform="scale(4.16667)"><path fill="currentColor" d="M4 10.2q0-3.75 2.413-5.975T12 2h.25q.425 0 .713.288T13.25 3t-.288.713T12.25 4H12Q9.475 4 7.738 5.738T6 10.2q0 1.775 1.475 4.063T12 19.35q3.05-2.8 4.525-5.087T18 10.2q0-.425.288-.712T19 9.2t.713.288t.287.712q0 2.35-1.7 5.038t-4.975 5.587q-.275.25-.625.375t-.7.125t-.7-.125t-.625-.375Q9.05 19.325 7.8 17.9t-2.087-2.762t-1.275-2.575T4 10.2m9.4.5l5.55-5.55q.15-.15.15-.35t-.15-.35l-1.4-1.4q-.15-.15-.35-.15t-.35.15L11.3 8.6q-.15.15-.225.338T11 9.325v.925q0 .325.213.538t.537.212h.925q.2 0 .388-.075t.337-.225m6.25-6.95q.15.15.35.15t.35-.15l.35-.35q.275-.275.275-.7T20.7 2l-.7-.7q-.275-.275-.7-.275t-.7.275l-.35.35q-.15.15-.15.35t.15.35z" /></g>';
 
 export const ICON_MIX_PACK = "nameforge-mix-pack";
 // Fluent UI System Icons — person-tentative 24 filled (MIT). Scaled for Obsidian's 100×100 viewBox.
@@ -122,6 +132,7 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_PACKS, ICON_PACKS_SVG);
   addIcon(ICON_PLACE_SHAPES, ICON_PLACE_SHAPES_SVG);
   addIcon(ICON_GENERIC_PLACE_NAMES, ICON_GENERIC_PLACE_NAMES_SVG);
+  addIcon(ICON_RECIPE, ICON_GENERIC_PLACE_NAMES_SVG);
   addIcon(ICON_EXPLORATION_PLACE_SHAPES, ICON_EXPLORATION_PLACE_SHAPES_SVG);
   addIcon(ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG);
   addIcon(ICON_NAME_AGEING, ICON_NAME_AGEING_SVG);
@@ -137,6 +148,7 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_COMPOUND_BREAKDOWN_PACK, ICON_COMPOUND_BREAKDOWN_PACK_SVG);
   addIcon(ICON_COMPOUND_LIST_PACK, ICON_COMPOUND_LIST_PACK_SVG);
   addIcon(ICON_PLACE_PACK, ICON_PLACE_PACK_SVG);
+  addIcon(ICON_WORD_LIST, ICON_WORD_LIST_SVG);
   addIcon(ICON_MIX_PACK, ICON_MIX_PACK_SVG);
   addIcon(ICON_SEED_LOCK, ICON_SEED_LOCK_SVG);
   addIcon(ICON_SEED_COPY, ICON_SEED_COPY_SVG);

@@ -47,6 +47,9 @@ export function parseRecipeContent(content: string): { recipe: RecipePartial; bo
   return { recipe, body: content.slice(fm[0].length), problems };
 }
 
+/** The slots a recipe's native pack fills when they are unset. */
+const NATIVE_PACK_CATEGORIES = ["native-place-name", "native-people-or-tribe"];
+
 /** Labels used to match word-list sections (§9.2), including colonial categories and local generics (§9.3). */
 const categoryLabels = new Map<string, string>([
   ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label] as const),
@@ -153,6 +156,14 @@ export class RecipeHost {
           : NAME_WORDS.categories[categoryId]?.length
             ? { kind: "built-in" }
             : { kind: "placeholder" };
+    }
+    // The native pack fills the native place and people slots the recipe leaves unset (colonial parts only).
+    if (recipe.native && recipe.shape.part !== "organic") {
+      for (const categoryId of NATIVE_PACK_CATEGORIES) {
+        if (recipe.slots[categoryId]) continue;
+        const draw = await this.packSource(recipe.native, recipePath);
+        if (draw) out[categoryId] = { kind: "sources", sources: [{ weight: 1, draw }] };
+      }
     }
     return out;
   }

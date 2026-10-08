@@ -4,8 +4,9 @@ import { GENERIC_PLACE_NAMES_HISTORY_NAME, PLACE_SHAPES_HISTORY_NAME } from "./p
 
 /** The sections reachable from the binder icon's switcher menu (renderSectionMenu) — mirrors
  * titleForge's own section switcher. "markov" is today's whole pack-driven generator and the
- * default on every open; "placeShapes" (british place names) renders part 1 shapes into names
- * through the names engine; "riverNames" runs the river engine (rivers/engine.ts); "worldPlaceNames" runs the world place names engine (world/engine.ts); "explorationPlaceShapes" and "empireExpansionPlaceShapes"
+ * default on every open; "placeShapes" (place names) renders part 1 shapes into British names
+ * through the names engine, or a world culture's names through the world engine (world/engine.ts);
+ * "riverNames" runs the river engine (rivers/engine.ts); "explorationPlaceShapes" and "empireExpansionPlaceShapes"
  * run the colonial generator (colonialShapes.ts) for parts 2 and 2a; "nameAgeing" ages a name
  * towards a target pack (ageing/engine.ts); "nameTakeover" adopts generated native names into a
  * takeover pack's language (the engine's takeover profile, via takeoverView.ts). */
@@ -19,7 +20,6 @@ export type NameForgeSection =
   | "markov"
   | "placeShapes"
   | "riverNames"
-  | "worldPlaceNames"
   | "explorationPlaceShapes"
   | "empireExpansionPlaceShapes"
   | "nameAgeing"
@@ -29,7 +29,6 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "markov",
   "placeShapes",
   "riverNames",
-  "worldPlaceNames",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "nameAgeing",
@@ -39,9 +38,8 @@ export const SECTION_ORDER: NameForgeSection[] = [
 // Section names are deliberately lowercase, matching titleForge's section-switcher menu.
 export const SECTION_LABELS: Record<NameForgeSection, string> = {
   markov: "markov generator",
-  placeShapes: "british place names",
+  placeShapes: "place names",
   riverNames: "river names",
-  worldPlaceNames: "world place names",
   explorationPlaceShapes: "exploration place names",
   empireExpansionPlaceShapes: "empire expansion place names",
   nameAgeing: "name ageing",
@@ -62,7 +60,7 @@ export const WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
 export function historySection(packName: string): NameForgeSection {
   const starts = (prefix: string) => packName.startsWith(prefix);
   if (starts(RIVER_NAMES_HISTORY_NAME)) return "riverNames";
-  if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "worldPlaceNames";
+  if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(SECTION_LABELS.explorationPlaceShapes) || starts(OLD_HISTORY_PREFIXES.explorationPlaceShapes)) {
     return "explorationPlaceShapes";
   }

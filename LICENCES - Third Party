@@ -8,6 +8,7 @@ Icons from the sets below are sourced via [Iconify](https://iconify.design) and 
 | ---------------------- | ------------------------------- | ---------- | --------------------- |
 | Material Design Icons  | Pictogrammers                   | Apache 2.0 | Retain notice         |
 | Mage Icons             | Mage Icons                      | Apache 2.0 | Retain notice         |
+| Material Symbols       | Google                          | Apache 2.0 | Retain notice         |
 | Fluent UI System Icons | Microsoft Corporation           | MIT        | Retain notice         |
 | SidekickIcons          | Andri Soone                     | MIT        | Retain notice         |
 | Framework7 Icons       | Vladimir Kharlampidi            | MIT        | Retain notice         |
@@ -15,6 +16,7 @@ Icons from the sets below are sourced via [Iconify](https://iconify.design) and 
 | Majesticons            | Gerrit Halfmann                 | MIT        | Retain notice         |
 | Ant Design Icons       | Ant UED (Alipay)                | MIT        | Retain notice         |
 | Akar Icons             | Arturo Wibawa                   | MIT        | Retain notice         |
+| Phosphor Icons         | Phosphor Icons                  | MIT        | Retain notice         |
 | Pinhead Icons          | Quincy Morgan (Wayside Mapping) | CC0 1.0    | None (public domain)  |
 
 ---
@@ -157,6 +159,36 @@ Icons from the sets below are sourced via [Iconify](https://iconify.design) and 
 
 ---
 
+### Phosphor Icons
+- Author: Phosphor Icons
+- Source: https://github.com/phosphor-icons/core
+
+	MIT License
+	
+	Copyright (c) 2023 Phosphor Icons
+	
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+	
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+	
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+
+
+
+---
+
 ### Ant Design Icons
 - Author: Ant UED (Alipay)
 - Source: https://github.com/ant-design/ant-design-icons
@@ -218,7 +250,7 @@ Icons from the sets below are sourced via [Iconify](https://iconify.design) and 
 
 ## Apache 2.0-licensed icon sets
 
-The two sets below are distributed under the Apache License 2.0, the full text
+The three sets below are distributed under the Apache License 2.0, the full text
 of which appears once at the end of this section.
 
 ### Material Design Icons
@@ -247,7 +279,11 @@ of which appears once at the end of this section.
 - Author: Mage Icons
 - Source: https://github.com/Mage-Icons/mage-icons
 
-### Apache License 2.0 (applies to both sets above)
+### Material Symbols
+- Author: Google
+- Source: https://github.com/google/material-design-icons
+
+### Apache License 2.0 (applies to all three sets above)
 
 	
 	                                 Apache License
