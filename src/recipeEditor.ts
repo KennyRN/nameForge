@@ -3,7 +3,7 @@
 
 import { App, Modal, normalizePath, Notice, Setting, stringifyYaml, TFile } from "obsidian";
 import { sanitizePackNameForFilename } from "./nameParser";
-import { hasBuiltInList } from "./names/engine";
+import { defaultNameMode, hasBuiltInList } from "./names/engine";
 import {
   mergeRecipe,
   type RecipePartial,
@@ -106,6 +106,16 @@ export class RecipeEditorModal extends Modal {
         this.name = v;
       }),
     );
+
+    new Setting(el)
+      .setName("Description")
+      .setDesc("Shown when choosing this recipe as a template.")
+      .addTextArea((t) => {
+        t.setValue(this.body).onChange((v) => {
+          this.body = v;
+        });
+        t.inputEl.rows = 3;
+      });
 
     new Setting(el)
       .setName("Template")
@@ -244,17 +254,9 @@ export class RecipeEditorModal extends Modal {
     el.createEl("h3", { text: "Slots" });
     el.createEl("p", {
       cls: "setting-item-description",
-      text: "Where each category's words come from. Unset categories use their built-in list, or a placeholder if there isn't one.",
+      text: "Where each category's words come from. Unset categories use their built-in list (river names use the river name module), or a placeholder if there isn't one.",
     });
     for (const category of slotCategories(w.shape.part)) this.renderSlot(el, category.id, category.label);
-
-    el.createEl("h3", { text: "Description" });
-    new Setting(el).setDesc("Shown when choosing this recipe as a template.").addTextArea((t) => {
-      t.setValue(this.body).onChange((v) => {
-        this.body = v;
-      });
-      t.inputEl.rows = 3;
-    });
 
     const buttons = el.createDiv({ cls: "nameforge-recipe-editor__buttons" });
     buttons.createEl("button", { text: "Cancel" }).addEventListener("click", () => this.close());
@@ -271,12 +273,18 @@ export class RecipeEditorModal extends Modal {
     const w = this.working;
     const explicit = this.explicitSlots.has(id) || (this.template?.slots?.[id] !== undefined);
     const slot: SlotSetting | undefined = explicit ? w.slots[id] : undefined;
-    const fallback = hasBuiltInList(id) ? "built-in list" : "placeholder";
+    // River brief §6.9: an unset (or built-in) river slot is drawn from the river name module,
+    // which follows the shape's part and region.
+    const river = id === "river-or-stream-name";
+    const fallback = river || hasBuiltInList(id) ? "built-in" : "placeholder";
     const setting = new Setting(el).setName(label).addDropdown((d) => {
-      d.addOption("default", `Default (${fallback})`);
-      if (hasBuiltInList(id)) d.addOption("built-in", "Built-in list");
-      d.addOption("sources", "Packs or word lists").addOption("placeholder", "Placeholder").addOption("ignore", "Ignore");
-      d.setValue(slot ? slot.kind : "default").onChange((v) => {
+      // The unset choice leads, labelled as what it resolves to, with a separator before the rest.
+      d.addOption("default", river ? "River name module" : fallback === "built-in" ? "Built-in list" : "Placeholder");
+      d.selectEl.appendChild(createEl("hr"));
+      d.addOption("sources", "Packs or word lists");
+      if (fallback !== "placeholder") d.addOption("placeholder", "Placeholder");
+      d.addOption("ignore", "Ignore");
+      d.setValue(slot && slot.kind !== fallback ? slot.kind : "default").onChange((v) => {
         if (v === "default") {
           delete w.slots[id];
           this.explicitSlots.delete(id);
@@ -342,16 +350,17 @@ export class RecipeEditorModal extends Modal {
           this.render();
         }),
       )
-      .addDropdown((d) =>
-        d
-          .addOption("", "Mode: default")
-          .addOption("stem", "Mode: stem")
-          .addOption("whole", "Mode: whole")
-          .setValue(slot.mode ?? "")
+      .addDropdown((d) => {
+        const unset = defaultNameMode(id);
+        const other = unset === "stem" ? "whole" : "stem";
+        d.addOption("", `Mode: ${unset}`);
+        d.selectEl.appendChild(createEl("hr"));
+        d.addOption(other, `Mode: ${other}`)
+          .setValue(slot.mode === other ? other : "")
           .onChange((v) => {
-            slot.mode = v === "stem" || v === "whole" ? v : undefined;
-          }),
-      )
+            slot.mode = v === other ? other : undefined;
+          });
+      })
       .addText((t) =>
         t
           .setPlaceholder("Section")

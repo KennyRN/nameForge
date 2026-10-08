@@ -784,7 +784,25 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 
 .nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button {
   flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   text-align: center;
+}
+
+.nameforge-modal__toggle-button-icon {
+  display: inline-flex;
+}
+
+.nameforge-modal__toggle-button-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.nameforge-modal__toggle-break {
+  flex-basis: 100%;
+  height: 0;
 }
 
 .nameforge-modal__compound-section.nameforge-editor-modal__stage-pane {

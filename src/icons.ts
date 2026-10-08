@@ -108,8 +108,14 @@ export const ICON_FOLDER = "nameforge-folder";
 const ICON_FOLDER_SVG =
   '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
 
+export const ICON_INFO = "nameforge-info";
+// Famicons — information-circle-outline. Scaled for Obsidian's 100×100 viewBox from its 512×512 one.
+const ICON_INFO_SVG =
+  '<g transform="scale(0.195313)"><path d="M0 0h512v512H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184s184-82.39 184-184S349.61 64 248 64Z" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M220 220h32v116" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M208 340h88" /><path fill="currentColor" d="M248 130a26 26 0 1 0 26 26a26 26 0 0 0-26-26" /></g>';
+
 export function registerNameForgeIcons(): void {
   addIcon(ICON_MEEPLE, MEEPLE_SVG);
+  addIcon(ICON_INFO, ICON_INFO_SVG);
   addIcon(ICON_CREATE_PACKS, ICON_CREATE_PACKS_SVG);
   addIcon(ICON_PLUS_SQUARE, ICON_PLUS_SQUARE_SVG);
   addIcon(ICON_PREVIOUS_GENERATIONS, ICON_PREVIOUS_GENERATIONS_SVG);

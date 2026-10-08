@@ -103,6 +103,11 @@ const NATIVE_CATEGORIES = new Set(["native-place-name", "native-people-or-tribe"
 
 /** §5.2: default mode per category for pack sources; anything else defaults to stem. */
 const WHOLE_BY_DEFAULT = new Set(["native-place-name", "native-people-or-tribe", "homeland-place-name"]);
+
+/** The mode a sources slot uses when the recipe leaves it unset. */
+export function defaultNameMode(categoryId: string): NameMode {
+  return WHOLE_BY_DEFAULT.has(categoryId) ? "whole" : "stem";
+}
 /** §4.2: person categories take a linking -s- when fused. */
 const PERSON_CATEGORIES = new Set([
   "personal-name",
@@ -433,7 +438,7 @@ export class NameRenderer {
     const source = pickWeighted(slot.sources.map((s): [ResolvedSource, number] => [s, s.weight]), rng);
     if (source.entries) return wordFill(source.entries);
     if (!source.draw) return this.placeholder(categoryId);
-    const mode: NameMode = whole ? "whole" : slot.mode ?? (WHOLE_BY_DEFAULT.has(categoryId) ? "whole" : "stem");
+    const mode: NameMode = whole ? "whole" : slot.mode ?? defaultNameMode(categoryId);
     const ratio = slot.gender ?? DEFAULT_GENDER[categoryId];
     const request: SectionRequest = {};
     if (slot.section) request.section = slot.section;

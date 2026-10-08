@@ -30,6 +30,7 @@ import {
 } from "./nameParser";
 import {
   ICON_BREAKDOWN_PACK,
+  ICON_INFO,
   ICON_PACKS,
   ICON_RIVER_NAMES,
   ICON_BULLET_INSERT,
@@ -130,6 +131,9 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
  * section trigger. */
 const SESSION_HINT = "← click here for specialist modules, or here for your name packs";
 let sessionHintShown = false;
+
+/** Word lists have no custom icon yet; a built-in Lucide icon stands in. */
+const WORD_LIST_ICON = "whole-word";
 
 function packTypeIconId(packType: NamePackType, subGenerator?: "breakdown" | "list"): string {
   if (packType === "recipePack") {
@@ -485,7 +489,7 @@ export class NameForgeModal extends Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Tradition guide" },
     });
-    setIcon(this.guideButton, "book-open");
+    setIcon(this.guideButton, ICON_INFO);
     this.guideButton.addEventListener("click", () => {
       const part = COLONIAL_SECTION_PART[this.activeSection];
       if (!part) return;
@@ -697,7 +701,7 @@ export class NameForgeModal extends Modal {
     trigger.setAttribute("title", `Region: ${region?.counties ?? "no regional weighting"}`);
   }
 
-  /** River names: All Britain, then the regions. Name takeover: the takeover packs, ineligible ones greyed out. */
+  /** River names: All Britain, then the regions. Name takeover: the eligible takeover packs. */
   private renderSecondBoxMenu(menu: HTMLElement) {
     menu.empty();
     const choose = () => {
@@ -705,7 +709,7 @@ export class NameForgeModal extends Modal {
       this.setSecondBoxMenuOpen(false);
     };
     if (this.activeSection === "nameTakeover") {
-      const packs = this.takeoverView.takeoverPacks;
+      const packs = this.takeoverView.takeoverPacks.filter((pack) => !pack.reason);
       if (packs.length === 0) menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
       for (const pack of packs) {
         const item = menu.createEl("button", {
@@ -792,7 +796,7 @@ export class NameForgeModal extends Modal {
     if (!menu) return;
     menu.empty();
     if (this.activeSection === "nameTakeover") {
-      const packs = this.takeoverView.nativePacks;
+      const packs = this.takeoverView.nativePacks.filter((pack) => !pack.reason);
       if (packs.length === 0) menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
       for (const pack of packs) {
         const item = menu.createEl("button", {
@@ -813,10 +817,11 @@ export class NameForgeModal extends Modal {
       return;
     }
     if (this.activeSection === "nameAgeing") {
-      if (this.ageingPacks.length === 0) {
+      const packs = this.ageingPacks.filter((pack) => !pack.reason);
+      if (packs.length === 0) {
         menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
       }
-      for (const pack of this.ageingPacks) {
+      for (const pack of packs) {
         const item = menu.createEl("button", {
           cls:
             "nameforge-modal__pack-dropdown-item" +
@@ -859,6 +864,7 @@ export class NameForgeModal extends Modal {
       for (const tradition of COLONIAL_TRADITIONS) {
         const id = tradition.id === "general" ? undefined : tradition.id;
         const available = isTraditionAvailable(tradition.id, part);
+        if (!available) continue;
         const item = menu.createEl("button", {
           cls:
             "nameforge-modal__pack-dropdown-item" +
@@ -2485,7 +2491,7 @@ const CONTEXT_SHORT_LABELS: Record<string, string> = {
   adoption: "adoption",
 };
 
-/** Read-only guide to the colonial traditions; clicking an available one selects it. */
+/** Read-only guide to the colonial traditions usable for this part; clicking one selects it. */
 class TraditionGuideModal extends Modal {
   constructor(
     app: App,
@@ -2501,6 +2507,7 @@ class TraditionGuideModal extends Modal {
     const list = this.contentEl.createDiv({ cls: "nameforge-guide-modal__list" });
     for (const tradition of COLONIAL_TRADITIONS) {
       const available = tradition.parts.includes(this.part);
+      if (!available) continue;
       const entry = list.createDiv({
         cls: "nameforge-guide-modal__entry" + (available ? "" : " is-unavailable"),
         attr: available ? { role: "button", tabindex: "0" } : {},
@@ -2714,55 +2721,45 @@ class NameForgeEditorModal extends Modal {
     this.packNameInput.value = this.initialPackName;
 
     const typeToggle = contentEl.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle" });
-    this.breakdownButton = typeToggle.createEl("button", {
-      cls: "nameforge-modal__toggle-button is-active",
-      text: "Breakdown",
-    });
+    const addTypeButton = (label: string, iconId: string): HTMLButtonElement => {
+      const button = typeToggle.createEl("button", { cls: "nameforge-modal__toggle-button" });
+      setIcon(button.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), iconId);
+      button.createSpan({ text: label });
+      return button;
+    };
+    this.breakdownButton = addTypeButton("Breakdown", ICON_BREAKDOWN_PACK);
     this.breakdownButton.addEventListener("click", () => {
       this.setPackType("breakdownPack");
     });
 
-    this.listButton = typeToggle.createEl("button", {
-      cls: "nameforge-modal__toggle-button",
-      text: "List",
-    });
+    this.listButton = addTypeButton("List", ICON_LIST_PACK);
     this.listButton.addEventListener("click", () => {
       this.setPackType("listPack");
     });
 
-    this.compoundButton = typeToggle.createEl("button", {
-      cls: "nameforge-modal__toggle-button",
-      text: "Compound",
-    });
+    this.compoundButton = addTypeButton("Compound", ICON_COMPOUND_BREAKDOWN_PACK);
     this.compoundButton.addEventListener("click", () => {
       this.setPackType("compoundPack");
     });
 
-    this.placeButton = typeToggle.createEl("button", {
-      cls: "nameforge-modal__toggle-button",
-      text: "Place",
+    this.mixButton = addTypeButton("Mix", ICON_MIX_PACK);
+    this.mixButton.addEventListener("click", () => {
+      this.setPackType("mixPack");
     });
+    // Place, Word list and Recipe sit on a second line.
+    typeToggle.createDiv({ cls: "nameforge-modal__toggle-break" });
+    this.placeButton = addTypeButton("Place", ICON_PLACE_PACK);
     this.placeButton.addEventListener("click", () => {
       this.setPackType("placePack");
     });
 
-    this.mixButton = typeToggle.createEl("button", {
-      cls: "nameforge-modal__toggle-button",
-      text: "Mix",
-    });
-    this.mixButton.addEventListener("click", () => {
-      this.setPackType("mixPack");
-    });
-    this.wordListButton = typeToggle.createEl("button", {
-      cls: "nameforge-modal__toggle-button",
-      text: "Word list",
-    });
+    this.wordListButton = addTypeButton("Word list", WORD_LIST_ICON);
     this.wordListButton.addEventListener("click", () => {
       this.wordListMode = true;
       this.updateTypeButtons();
       void this.loadTemplateOptions();
     });
-    const recipeButton = typeToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Recipe" });
+    const recipeButton = addTypeButton("Recipe", packTypeIconId("recipePack"));
     recipeButton.addEventListener("click", () => {
       this.close();
       void this.parent.openRecipeEditor();
