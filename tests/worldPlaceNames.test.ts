@@ -14,12 +14,15 @@ import {
 
 const ERAS = WORLD_CULTURES.flatMap((c) => c.eras.map((e) => ({ culture: c, era: e })));
 
-test("world: first release has the eight cultures", () => {
+test("world: first and second releases: twelve cultures", () => {
   assert.deepEqual(
     WORLD_CULTURES.map((c) => c.id),
-    ["anglo-saxon", "norse", "celtic", "roman", "chinese", "egyptian", "aztec", "bantu"],
+    [
+      "anglo-saxon", "norse", "celtic", "roman", "chinese", "egyptian", "aztec", "bantu",
+      "slavic", "arabic-persian", "indian", "japanese",
+    ],
   );
-  assert.equal(ERAS.length, 14);
+  assert.equal(ERAS.length, 23);
 });
 
 test("world: every slot in every template and list entry resolves for its era", () => {
@@ -104,4 +107,5 @@ test("world: history labels name the culture, and the era only where there is a 
   assert.equal(worldHistoryLabel("world place names", "egyptian", "pharaonic"), "world place names · Egyptian · Pharaonic");
   assert.equal(worldHistoryLabel("world place names", "norse"), "world place names · Norse");
   assert.equal(worldHistoryLabel("world place names", "bantu", "kingdoms"), "world place names · Bantu");
+  assert.equal(worldHistoryLabel("world place names", "slavic", "soviet"), "world place names · Slavic · Soviet");
 });

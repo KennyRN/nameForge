@@ -19611,7 +19611,42 @@ var world_place_names_default = {
     people: "people",
     ruler: "ruler",
     where: "dedication",
-    fuse: "landscape word"
+    fuse: "landscape word",
+    prince: "prince",
+    monarch: "monarch",
+    hero: "revolutionary",
+    ideal: "ideal",
+    region: "region",
+    num: "number",
+    industry: "industry",
+    abode: "abode word",
+    mother: "mother of",
+    father: "father of",
+    epithet: "epithet",
+    day: "market day",
+    gate: "gate word",
+    king: "king",
+    sage: "sage",
+    good: "auspicious word",
+    kami: "kami",
+    pretty: "suburban name",
+    number: "number",
+    virtue: "virtue",
+    spirit: "spirit",
+    emblem: "emblem",
+    buddhist: "temple name",
+    jvirtue: "district word",
+    beyond: "beyond",
+    city: "city of",
+    colony: "colonial district",
+    future: "modern tag",
+    lodging: "road stop",
+    market: "market",
+    raja: "raja",
+    valley: "valley of",
+    closed: "town",
+    red: "red thing",
+    mouth: "mouth of"
   },
   cultures: [
     {
@@ -20125,6 +20160,308 @@ var world_place_names_default = {
             ["{adj} Water", 1],
             ["River of the {animal:pl}", 2],
             ["{animal} River", 2]
+          ]
+        }
+      ]
+    },
+    {
+      id: "slavic",
+      label: "Slavic",
+      guide: "Bare possessives and new towns; then tsars' glory and 'Ruler of the East'; then waves of Soviet renaming.",
+      fuseChance: 0,
+      lists: {
+        animal: ["Bear", "Wolf|Wolves", "Elk|Elk", "Beaver", "Falcon", "Sable", "Fox", "Swan", "Crane", "Boar", "Horse", "Aurochs|Aurochs"],
+        adj: ["White", "Black", "Red", "Upper", "Lower", "Great", "Little", "Old", "New", "Holy", "Clear", "Fair", "High"],
+        prince: ["Yaroslav", "Vladimir", "Sviatoslav", "Mstislav", "Izyaslav", "Rostislav", "Boris", "Gleb", "Vsevolod", "Yuri", "Oleg", "Igor", "Olga", "Rogvolod", "Vyacheslav", "Daniil"]
+      },
+      markov: {
+        river: { corpus: ["Volga", "Oka", "Kama", "Dnieper", "Desna", "Klyazma", "Moskva", "Volkhov", "Lovat", "Msta", "Sheksna", "Mologa", "Vyatka", "Pechora", "Dvina", "Onega", "Svir", "Neva", "Ugra", "Seym", "Sozh", "Pripyat", "Sura", "Tvertsa", "Unzha", "Vetluga", "Sukhona", "Yug", "Vaga", "Pinega", "Mezen", "Belaya", "Ufa", "Chusovaya", "Tobol", "Irtysh", "Iset", "Tura", "Vychegda", "Kotorosl", "Nerl", "Teza", "Uvod", "Protva", "Ruza", "Istra", "Pakhra", "Lopasnya"], min: 3, max: 9, label: "river" }
+      },
+      eras: [
+        {
+          id: "rus",
+          label: "Rus'",
+          guide: "New Town, Yaroslav's, Pitch Town, Pereslavl beyond the Woods.",
+          lists: {
+            town: ["Town", "Town", "Fort", "Ford", "Hill"],
+            material: ["Pitch", "Salt", "Iron", "Wax", "Birch-bark", "Oak", "Clay", "Stone", "Honey", "Fur"],
+            beyond: ["Woods", "River", "Marsh", "Hills", "Lake", "Rapids", "Steppe"]
+          },
+          templates: [
+            ["New {town}", 4],
+            ["{prince:pos}", 4],
+            ["{prince:pos} Town", 3],
+            ["{material} Town", 3],
+            ["{adj} Town", 3],
+            ["{prince:pos} beyond the {beyond}", 2],
+            ["Town on the {#river}", 2],
+            ["Mouth of the {#river}", 2],
+            ["{animal} Ford", 2],
+            ["Trinity Town", 1],
+            ["Holy Mountains", 1],
+            ["{animal} Hill", 1]
+          ]
+        },
+        {
+          id: "imperial",
+          label: "Imperial",
+          guide: "Tsars' and empresses' towns, 'Glory of Catherine', 'Ruler of the East' on the frontier.",
+          lists: {
+            monarch: ["Peter", "Catherine", "Elizabeth", "Paul", "Alexander", "Nicholas", "Anna", "Maria", "Michael", "Alexis", "Constantine"],
+            region: ["East", "Caucasus", "Steppe", "North", "Sea", "Mountains", "Amur", "Frontier"],
+            homeland: ["Russia", "Serbia", "Moscow", "Archangel", "Ladoga", "Kazan", "Cherkassk", "Rostov"]
+          },
+          templates: [
+            ["{monarch:pos} City", 3],
+            ["{monarch:pos} Town", 3],
+            ["Glory of {monarch}", 2],
+            ["Saint {monarch:pos} City", 1],
+            ["Ruler of the {region}", 2],
+            ["Rule the {region}", 1],
+            ["Fortress of Saint {monarch}", 1],
+            ["{monarch:pos} Fort", 2],
+            ["Tsar's Town", 1],
+            ["Empress's Village", 1],
+            ["New {homeland}", 2]
+          ]
+        },
+        {
+          id: "soviet",
+          label: "Soviet",
+          guide: "Red Gift, Young Communists' Town, October Town, Electric Steel, closed towns known only by number.",
+          lists: {
+            ideal: ["Red", "October", "Victory", "Labour", "Friendship", "Peace", "Freedom", "Dawn", "Progress", "Pioneer", "Proletarian", "Komsomol"],
+            industry: ["Electric Steel", "Electric Town", "Tractor Town", "Steel Town", "Atom Town", "Science Town", "Oil Town", "Coal Town", "Chemical Town", "Cement Town"],
+            num: ["7", "9", "12", "16", "18", "26", "31", "40", "44", "45", "65", "70"],
+            closed: ["New Town", "White Town", "Salt Town", "Iron Town", "Red Cliff", "Pitch Town", "Upper Town", "{#river} Town"],
+            red: ["Hill", "Army Town", "Cliff", "Field", "Village", "Partisan", "Banner", "Guard", "October", "Dawn"]
+          },
+          markov: {
+            hero: { corpus: ["Kirov", "Kuibyshev", "Sverdlov", "Molotov", "Zhdanov", "Voroshilov", "Frunze", "Dzerzhinsky", "Budyonny", "Kalinin", "Ordzhonikidze", "Chkalov", "Gorky", "Chapayev", "Shchors", "Kotovsky", "Lazo", "Uritsky", "Volodarsky", "Bauman", "Kosarev", "Krupskaya", "Zhukov", "Kurchatov", "Gagarin", "Tereshkova", "Pavlov", "Michurin", "Lomonosov", "Mayakovsky", "Ostrovsky", "Fadeyev", "Stakhanov", "Papanin", "Shmidt", "Artyom", "Nogin", "Babushkin", "Zinoviev", "Kamenev", "Lenin", "Stalin", "Trotsky", "Ulyanov", "Brezhnev", "Khrushchev", "Andropov", "Chernenko", "Beria", "Yezhov", "Kaganovich", "Mikoyan", "Suslov", "Kosygin", "Gorbachev", "Tukhachevsky"], min: 4, max: 10, label: "revolutionary" }
+          },
+          templates: [
+            ["Red Gift", 1],
+            ["{ideal} Town", 4],
+            ["{#hero:pos} Town", 4],
+            ["{#hero:pos} City", 2],
+            ["Young Communists' Town", 1],
+            ["{industry}", 3],
+            ["{closed}-{num}", 2],
+            ["Red {red}", 3],
+            ["Settlement of the {ideal} Collective Farm", 1],
+            ["Hammer and Sickle", 1],
+            ["{ideal} Path", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "arabic-persian",
+      label: "Arabic & Persian",
+      guide: "Abode of Peace, Mother of Palaces, Gate of Lamentation, Tariq's Mountain; Persian abodes, gardens and kings' glory.",
+      fuseChance: 0,
+      lists: {
+        animal: ["Gazelle", "Lion", "Eagle", "Falcon", "Camel", "Horse", "Oryx|Oryxes", "Hawk", "Ostrich|Ostriches", "Leopard", "Wolf|Wolves", "Ibex|Ibex"],
+        adj: ["White", "Green", "Red", "Black", "Great", "Little", "Sweet", "Bitter", "Pleasant", "New", "Old", "Round", "High"]
+      },
+      eras: [
+        {
+          id: "arabic",
+          label: "Arabic",
+          guide: "Abodes and cities of peace, mothers and fathers of things, weekday markets, the Victorious.",
+          lists: {
+            abode: ["Peace", "Victory", "Safety", "Learning", "Kings", "Mercy", "Wisdom", "Plenty", "Faith"],
+            mother: ["Palaces", "Springs", "Palms", "Two Rivers", "Wells", "Gardens", "Towers", "Olives"],
+            father: ["the Gazelle", "the Palms", "the Wells", "the Hawk", "the Camels", "the Mountain", "the Date", "the Lion"],
+            epithet: ["Victorious", "Guarded", "Radiant", "White", "Green", "Red", "Round", "Shining", "Well-Protected", "Fortunate"],
+            gate: ["Lamentation", "the Wind", "the Sea", "Iron", "Gold", "the Desert", "Victory", "the River"],
+            person: ["Tariq", "Musa", "Uqba", "Hasan", "Ali", "Umar", "Harun", "Jafar", "Mansur", "Rashid", "Abbas", "Khalid", "Saif", "Zubayda", "Fatima", "Yusuf", "Idris", "Qasim"],
+            day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday"],
+            valley: ["Stones", "the River", "Gold", "the Olives", "Fire", "Wolves", "the Arches", "Sand"]
+          },
+          templates: [
+            ["Abode of {abode}", 3],
+            ["City of {abode}", 2],
+            ["Mother of {mother}", 3],
+            ["Father of {father}", 2],
+            ["The {epithet}", 2],
+            ["The {epithet} City", 2],
+            ["Gate of {gate}", 2],
+            ["Mountain of {person}", 2],
+            ["Palace of {person}", 2],
+            ["Camp of {person}", 1],
+            ["The Camp", 1],
+            ["Harbour of {person}", 1],
+            ["{day} Market", 2],
+            ["Valley of {valley}", 2],
+            ["The Great River", 1],
+            ["The {adj} Island", 1],
+            ["The Islands", 1],
+            ["Fortress of the {animal}", 2],
+            ["Eagle's Nest", 1],
+            ["Fort of Victory", 1]
+          ]
+        },
+        {
+          id: "persian",
+          label: "Persian",
+          guide: "Pleasant Abode, Shapur's City, Glory of Ardashir, Land of Roses, Seven Springs.",
+          lists: {
+            king: ["Shapur", "Ardashir", "Khosrow", "Kavad", "Bahram", "Darius", "Cyrus", "Peroz", "Yazdegerd", "Hormizd", "Narseh", "Shirin"],
+            person: ["Ahmad", "Hasan", "Mahmud", "Karim", "Nadir", "Abbas", "Ismail", "Tahmasp", "Jalal", "Farhad", "Parvin"],
+            abode: ["Pleasant", "Happy", "Blessed", "Green", "Flowering", "Fortunate", "Golden"],
+            plant: ["Rose", "Flower", "Poplar", "Pomegranate", "Cypress", "Tulip", "Plane Tree", "Saffron|Saffron", "Vine"],
+            num: ["Seven", "Three", "Forty", "Two", "Five"],
+            water: ["Springs", "Wells", "Streams", "Channels"],
+            sacred: ["Fire", "Water", "Light", "Sun", "Moon"]
+          },
+          templates: [
+            ["{person:pos} Abode", 3],
+            ["{abode} Abode", 2],
+            ["{king:pos} City", 3],
+            ["Glory of {king}", 2],
+            ["Land of {plant:pl}", 3],
+            ["{plant} Garden", 2],
+            ["Green City", 1],
+            ["{num} {water}", 2],
+            ["Temple of {sacred}", 1],
+            ["Fire of {king}", 1],
+            ["{adj} Fortress", 1],
+            ["Fortress of the {animal:pl}", 1],
+            ["{king:pos} Hunting Ground", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "indian",
+      label: "Indian",
+      guide: "Ancient: gods' cities and plains, sacred confluences, the Unconquerable. Modern: founders' abodes and cities, forts, markets, cantonments.",
+      fuseChance: 0,
+      lists: {
+        god: ["Indra", "Shiva", "Vishnu", "Rama", "Krishna", "Durga", "Lakshmi", "Parvati", "Ganesha", "Surya", "Agni", "Varuna", "Kali", "Hanuman", "Saraswati", "Kartikeya", "Chandra", "Kubera", "Chandi", "Mumba"],
+        animal: ["Elephant", "Tiger", "Peacock", "Snake", "Cobra", "Monkey", "Lion", "Deer|Deer", "Parrot", "Swan", "Bull", "Crocodile", "Boar"]
+      },
+      markov: {
+        river: { corpus: ["Ganga", "Yamuna", "Sarasvati", "Sindhu", "Narmada", "Godavari", "Kaveri", "Tapti", "Mahanadi", "Sarayu", "Gomati", "Gandaki", "Kosi", "Chambal", "Betwa", "Varuna", "Asi", "Vitasta", "Shatadru", "Vipasha", "Iravati", "Ghaghara", "Tungabhadra", "Bhima", "Penna", "Vaigai", "Tamraparni", "Damodar", "Manjira", "Indravati", "Sabarmati", "Mahi", "Luni", "Kshipra", "Mandakini", "Alaknanda", "Bhagirathi", "Pinakini", "Vedavati", "Hemavati"], min: 3, max: 10, label: "river" }
+      },
+      eras: [
+        {
+          id: "ancient",
+          label: "Ancient",
+          guide: "Indra's Plain, City of Elephants, Between the Varuna and the Asi, the Many-Gated.",
+          lists: {
+            epithet: ["Unconquerable", "Victorious", "Fortunate", "Radiant", "Unshakable", "Many-Gated", "Luminous", "Eternal"],
+            city: ["Victory", "Elephants", "Flowers", "Lotuses", "Kings", "Gold", "Peacocks", "Learning", "Joy"],
+            sage: ["Vasishtha", "Vishvamitra", "Agastya", "Bharadvaja", "Valmiki", "Gautama", "Kanva", "Atri", "Bhrigu", "Kapila"],
+            plant: ["Basil", "Lotus", "Sandalwood", "Banyan", "Mango", "Kadamba", "Ashoka", "Teak", "Bamboo"]
+          },
+          templates: [
+            ["{god:pos} Plain", 3],
+            ["{god:pos} City", 3],
+            ["City of {city}", 3],
+            ["The {epithet}", 3],
+            ["Between the {#river} and the {#river}", 2],
+            ["Confluence of the {#river}", 2],
+            ["Place of Sacrifice", 1],
+            ["{plant} Forest", 2],
+            ["{sage:pos} Hermitage", 2],
+            ["Abode of {god}", 2],
+            ["Mountain of {god}", 1],
+            ["{animal} City", 1],
+            ["Ford of the {#river}", 1]
+          ]
+        },
+        {
+          id: "modern",
+          label: "Modern",
+          guide: "Ahmad's Abode, Jai's City, Fort of Chandi, the River Market, McLeod's Market, Cantonment.",
+          lists: {
+            founder: ["Ahmad", "Haidar", "Murshid", "Faiz", "Aurangzeb", "Akbar", "Jahangir", "Tipu", "Firoz", "Ghazi", "Shahjahan", "Bahadur"],
+            raja: ["Jai", "Udai", "Jodha", "Bika", "Raghu", "Man", "Ajit", "Sawai", "Bhoj", "Hari", "Kesari"],
+            abode: ["Wealth", "Victory", "Faith", "Plenty", "Peace"],
+            market: ["River", "Grain", "Salt", "Silk", "Cloth", "Spice", "Horse", "Tuesday", "New", "Old"],
+            surname: ["McLeod", "Fraser", "Daly", "Clive", "Abbott", "Lyall", "Dalhousie", "Hastings", "Wellesley", "Munro", "Elphinstone"],
+            place: ["{founder:pos} Abode", "{raja:pos} City", "{animal} City"],
+            colony: ["Cantonment", "Civil Lines", "Hill Station", "Colony", "Railway Colony"]
+          },
+          templates: [
+            ["{founder:pos} Abode", 4],
+            ["{raja:pos} City", 4],
+            ["Abode of {abode}", 2],
+            ["Fort of {god}", 3],
+            ["{raja:pos} Fort", 1],
+            ["{market} Market", 2],
+            ["{surname:pos} Market", 2],
+            ["{animal} City", 2],
+            ["New {place}", 2],
+            ["{place} {colony}", 2],
+            ["{god:pos} Town", 2],
+            ["{surname} Town", 1]
+          ]
+        }
+      ]
+    },
+    {
+      id: "japanese",
+      label: "Japanese",
+      guide: "Modifier first and generic last, close to English: Long Cape, River Mouth. Samurai era adds auspicious pairs and castle towns; modern adds suburban hills of hope.",
+      fuseChance: 0,
+      lists: {
+        animal: ["Crane", "Deer|Deer", "Fox", "Bear", "Hawk", "Monkey", "Carp|Carp", "Heron", "Horse", "Boar", "Pheasant", "Cormorant", "Dragon", "Tortoise"],
+        feature: ["Hill", "Island", "Field", "Cape", "River", "Bridge", "Mountain", "Valley", "Moor", "Shore", "Bay", "Pass", "Slope", "Pond", "Well", "Marsh", "Bank", "Peak", "Ford", "Paddy"],
+        adj: ["Long", "Broad", "High", "Shallow", "Deep", "Great", "Small", "Upper", "Lower", "Middle", "New", "Old", "Wide", "Narrow", "Bright", "Clear", "Pine", "Bamboo", "Willow", "Cherry", "Plum", "Rice", "Stone", "Sand", "Red", "Black", "White", "Blue"],
+        kami: ["Hachiman", "Inari", "Tenjin", "Amaterasu", "Susanoo", "Kompira", "Ebisu", "Benten", "Kannon", "Daikoku", "Sumiyoshi", "Kasuga"],
+        mouth: ["River", "Mountain", "Valley", "Shore", "Bay", "Field", "Marsh", "Paddy", "Hill"]
+      },
+      eras: [
+        {
+          id: "samurai",
+          label: "Samurai",
+          guide: "Fortune Hill, Below the Castle, New Lodging, Capital of Peace and Tranquillity, Before Hachiman's Gate.",
+          lists: {
+            good: ["Fortune", "Peace", "Long Life", "Prosperity", "Treasure", "Gold", "Pine", "Crane", "Tortoise", "Blessing", "Harmony", "Pine Tree", "Thousand Years"],
+            virtue: ["Peace", "Tranquillity", "Harmony", "Virtue", "Prosperity", "Longevity", "Brightness"],
+            number: ["Eight", "Three", "Seven", "Five", "Hundred", "Thousand", "Ninety-Nine", "Two", "Nine"],
+            lodging: ["Lodging", "Post-town", "Barrier", "Ferry", "Market"]
+          },
+          templates: [
+            ["{adj} {feature}", 8],
+            ["{mouth} Mouth", 3],
+            ["{good} {feature}", 5],
+            ["{animal} {feature}", 3],
+            ["Below the Castle", 1],
+            ["{adj} {feature} Castle Town", 2],
+            ["New {lodging}", 2],
+            ["Capital of {virtue} and {virtue}", 1],
+            ["Before {kami:pos} Gate", 2],
+            ["{kami} {feature}", 1],
+            ["Island of Worship", 1],
+            ["{number} {animal:pl}", 1],
+            ["{number} {feature:pl}", 1],
+            ["Middle of the {feature}", 1]
+          ]
+        },
+        {
+          id: "modern",
+          label: "Modern",
+          guide: "The old patterns plus suburban dreams: Hope Hill, Cherry Hill, Harbour Future, Station Front, New Town.",
+          lists: {
+            pretty: ["Hope", "Cherry", "Plum", "Wisteria", "Star", "Sunny", "Green", "Rainbow", "Morning", "Lily", "Maple", "Camellia", "Bell", "Light"],
+            place: ["{adj} {feature}", "{adj} {feature}", "{mouth} Mouth", "{animal} {feature}"],
+            future: ["Future", "Garden", "Heights", "Park", "Science City", "Port Island", "Garden City"]
+          },
+          templates: [
+            ["{adj} {feature}", 8],
+            ["{mouth} Mouth", 3],
+            ["{animal} {feature}", 3],
+            ["{pretty} Hill", 4],
+            ["{place} New Town", 2],
+            ["{place} Station Front", 1],
+            ["Harbour Future", 1],
+            ["{place} {future}", 2],
+            ["New {place}", 1],
+            ["{kami} {feature}", 1]
           ]
         }
       ]
