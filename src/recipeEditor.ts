@@ -7,6 +7,18 @@ import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLOR
 import { sanitizePackNameForFilename } from "./nameParser";
 import { defaultNameMode, hasBuiltInList } from "./names/engine";
 import {
+  allowsLists,
+  allowsPacks,
+  allowsPlaceholderChoice,
+  showsGender,
+  SLOT_TIERS,
+  slotCategories,
+  type SlotTier,
+  slotTier,
+  tierIncludes,
+  usesNativeDefault,
+} from "./names/slotOptions";
+import {
   mergeRecipe,
   type RecipePartial,
   type RecipeSettings,
@@ -32,18 +44,6 @@ export interface RecipeEditorOptions {
   onSaved: (path: string) => void;
 }
 
-/** The slot categories for a part: part 1's, or the colonial inventory for parts 2 and 2a (with local generics in 2a). */
-function slotCategories(part: RecipeSettings["shape"]["part"]): { id: string; label: string }[] {
-  const part1 = new Map(PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]));
-  if (part === "organic") return PLACE_SHAPE_DATA.categories.filter((c) => c.id !== "empty-slot");
-  const code = part === "new-land" ? "2" : "2a";
-  const out = [
-    ...COLONIAL_DATA.inheritedCategories.filter((c) => c.parts.includes(code) && c.id !== "empty-slot").map((c) => ({ id: c.id, label: part1.get(c.id) ?? c.id })),
-    ...COLONIAL_DATA.categories.filter((c) => c.parts.includes(code)).map((c) => ({ id: c.id, label: c.label })),
-  ];
-  if (code === "2a") out.push({ id: "local-settlement-word", label: "Local settlement word" }, { id: "local-market-word", label: "Local market word" });
-  return out;
-}
 /** Exploration in new lands' contexts, in menu order, as they read in the wizard's sentence. */
 const NEW_LANDS_CONTEXTS: [string, string][] = [
   ["wild-and-unsettled", "wild and unsettled lands"],
@@ -85,8 +85,17 @@ const PAGES = ["Template", "Shape and rendering", "Slots and generic words"];
  * The recipe form as a three-page wizard, drawn into `hostEl`: a scrollable page and Back/Next
  * beneath it. Used inside the pack editor (which supplies the name) and by RecipeEditorModal.
  */
+/** The slot tiers' labels and descriptions on the slots page. */
+const TIER_TEXT: Record<SlotTier, [string, string]> = {
+  simple: ["Simple", "The slots most names need."],
+  detailed: ["Detailed", "Adds rarer people, beliefs and setting flavour."],
+  complete: ["Complete", "Every slot."],
+};
+
 export class RecipeWizard {
   private page = 0;
+  /** The slots page's level of detail: a view setting only, never saved; Simple each time the wizard opens. */
+  private tier: SlotTier = "simple";
   private pageEl: HTMLElement | null = null;
   private name = "";
   private body = "";
@@ -312,7 +321,24 @@ export class RecipeWizard {
       cls: "setting-item-description",
       text: "Where each category's words come from. Unset categories use their built-in list (river names use the river name module), or a placeholder if there isn't one.",
     });
-    for (const category of slotCategories(w.shape.part)) this.renderSlot(el, category.id, category.label);
+    // Simple · Detailed · Complete: which slots are drawn. Hidden unset slots still use their defaults.
+    const tiers = el.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle nameforge-recipe-editor__tiers" });
+    for (const tier of SLOT_TIERS) {
+      const active = this.tier === tier;
+      const button = tiers.createEl("button", { cls: "nameforge-modal__toggle-button", text: TIER_TEXT[tier][0], attr: { type: "button", "aria-pressed": String(active) } });
+      button.toggleClass("is-active", active);
+      button.addEventListener("click", () => {
+        if (this.tier === tier) return;
+        this.tier = tier;
+        this.render();
+      });
+    }
+    el.createEl("p", { cls: "setting-item-description", text: TIER_TEXT[this.tier][1] });
+    for (const category of slotCategories(w.shape.part)) {
+      const inTier = tierIncludes(this.tier, slotTier(w.shape.part, category.id));
+      // A slot that is set (here or in the template) is never hidden.
+      if (inTier || this.isSlotSet(category.id)) this.renderSlot(el, category.id, category.label, !inTier);
+    }
 
     el.createEl("h3", { text: "Generic words" });
     new Setting(el)
@@ -443,23 +469,44 @@ export class RecipeWizard {
     return r ? kebab(r.label) : "all-britain";
   }
 
-  private renderSlot(el: HTMLElement, id: string, label: string) {
+  /** Whether a slot is set explicitly, in the recipe or its template. */
+  private isSlotSet(id: string): boolean {
+    return this.explicitSlots.has(id) || this.template?.slots?.[id] !== undefined;
+  }
+
+  private renderSlot(el: HTMLElement, id: string, label: string, outsideTier = false) {
     const w = this.working;
-    const explicit = this.explicitSlots.has(id) || (this.template?.slots?.[id] !== undefined);
-    const slot: SlotSetting | undefined = explicit ? w.slots[id] : undefined;
+    const part = w.shape.part;
+    const slot: SlotSetting | undefined = this.isSlotSet(id) ? w.slots[id] : undefined;
     // River brief §6.9: an unset (or built-in) river slot is drawn from the river name module,
     // which follows the shape's part and region.
     const river = id === "river-or-stream-name";
     const fallback = river || hasBuiltInList(id) ? "built-in" : "placeholder";
+    // Colonial flora and fauna render native placeholders when unset; an explicit built-in list draws the British one.
+    const nativeDefault = usesNativeDefault(part, id);
     const setting = new Setting(el).setName(label).addDropdown((d) => {
-      // The unset choice leads, labelled as what it resolves to, with a separator before the rest.
-      d.addOption("default", river ? "River name module" : fallback === "built-in" ? "Built-in list" : "Placeholder");
-      d.selectEl.appendChild(createEl("hr"));
-      d.addOption("packs", "Name packs").addOption("lists", "Word lists");
-      if (fallback !== "placeholder") d.addOption("placeholder", "Placeholder");
-      d.addOption("ignore", "Ignore");
       // A slot mixing packs and lists (written by hand) shows as whichever its first source is.
-      const shown = !slot || slot.kind === fallback ? "default" : slot.kind === "sources" ? (slot.sources[0]?.list !== undefined ? "lists" : "packs") : slot.kind;
+      const shown =
+        !slot || (slot.kind === fallback && !(nativeDefault && slot.kind === "built-in"))
+          ? "default"
+          : slot.kind === "sources"
+            ? slot.sources[0]?.list !== undefined
+              ? "lists"
+              : "packs"
+            : slot.kind;
+      // An option this slot doesn't offer still shows when the recipe already uses it.
+      const offer = (value: string, text: string, allowed: boolean) => {
+        if (allowed) d.addOption(value, text);
+        else if (shown === value) d.addOption(value, `${text} (not recommended)`);
+      };
+      // The unset choice leads, labelled as what it resolves to, with a separator before the rest.
+      d.addOption("default", river ? "River name module" : nativeDefault ? "Native placeholder" : fallback === "built-in" ? "Built-in list" : "Placeholder");
+      d.selectEl.appendChild(createEl("hr"));
+      offer("built-in", "Built-in list", nativeDefault);
+      offer("packs", "Name packs", allowsPacks(part, id));
+      offer("lists", "Word lists", allowsLists(part, id));
+      offer("placeholder", "Placeholder", fallback !== "placeholder" && allowsPlaceholderChoice(part, id));
+      d.addOption("ignore", "Ignore");
       d.setValue(shown).onChange((v) => {
         if (v === "default") {
           delete w.slots[id];
@@ -475,6 +522,7 @@ export class RecipeWizard {
       });
     });
     setting.settingEl.addClass("nameforge-recipe-editor__slot");
+    if (outsideTier) setting.setDesc("Set – shown outside this tier");
     if (!slot || slot.kind !== "sources") return;
 
     const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
@@ -552,8 +600,10 @@ export class RecipeWizard {
           .onChange((v) => {
             slot.section = v.trim() || undefined;
           }),
-      )
-      .addText((t) => {
+      );
+    // Male % only where gender means something; a saved ratio elsewhere still shows so it can be changed.
+    if (showsGender(id) || slot.gender) {
+      footer.addText((t) => {
         t.setPlaceholder("Male %")
           .setValue(slot.gender ? String(slot.gender.male) : "")
           .onChange((v) => {
@@ -563,6 +613,7 @@ export class RecipeWizard {
         t.inputEl.type = "number";
         t.inputEl.addClass("nameforge-recipe-editor__weight");
       });
+    }
   }
 
   /** A new source of the given type, starting on the first available pack or list. */

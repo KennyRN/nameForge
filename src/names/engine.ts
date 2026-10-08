@@ -131,6 +131,11 @@ const DEFAULT_GENDER: Record<string, { male: number; female: number }> = {
   "explorer-or-founder": { male: 95, female: 5 },
 };
 
+/** Whether a slot has a default gender ratio (and so a meaningful Male % setting). */
+export function hasGenderDefault(categoryId: string): boolean {
+  return categoryId in DEFAULT_GENDER;
+}
+
 // ── Word data ───────────────────────────────────────────────────────────────
 
 /**

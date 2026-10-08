@@ -18781,6 +18781,9 @@ var DEFAULT_GENDER = {
   "commander-or-conqueror": { male: 95, female: 5 },
   "explorer-or-founder": { male: 95, female: 5 }
 };
+function hasGenderDefault(categoryId) {
+  return categoryId in DEFAULT_GENDER;
+}
 var NAME_WORDS = name_words_default;
 function hasBuiltInList(categoryId) {
   var _a2, _b;
@@ -21203,7 +21206,8 @@ var ContextGuideModal = class extends import_obsidian7.Modal {
   }
 };
 
-// src/recipeEditor.ts
+// src/names/slotOptions.ts
+var SLOT_TIERS = ["simple", "detailed", "complete"];
 function slotCategories(part) {
   const part1 = new Map(PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]));
   if (part === "organic") return PLACE_SHAPE_DATA.categories.filter((c) => c.id !== "empty-slot");
@@ -21218,6 +21222,122 @@ function slotCategories(part) {
   if (code === "2a") out.push({ id: "local-settlement-word", label: "Local settlement word" }, { id: "local-market-word", label: "Local market word" });
   return out;
 }
+var ALL = ["organic", "new-land", "established"];
+var COLONIAL = ["new-land", "established"];
+var TIER_TABLE = {
+  simple: {
+    "personal-name": ["organic", "new-land"],
+    "earlier-or-district-name": ["organic"],
+    "folk-group": ["organic"],
+    "native-place-name": COLONIAL,
+    "monarch-ruler-or-dynasty": COLONIAL,
+    "official-patron-or-sponsor": COLONIAL,
+    "explorer-or-founder": COLONIAL,
+    "wild-animal": COLONIAL,
+    bird: COLONIAL,
+    "fish-and-other-creatures": COLONIAL
+  },
+  detailed: {
+    "saint-or-holy-person": ALL,
+    deity: ["organic"],
+    "river-or-stream-name": ALL,
+    "status-or-role": ALL,
+    "ethnic-or-cultural-group": ["organic", "new-land"],
+    "supernatural-being": ALL,
+    "royal-woman": COLONIAL,
+    "commander-or-conqueror": COLONIAL,
+    "homeland-place-name": COLONIAL,
+    "native-people-or-tribe": COLONIAL,
+    "colonial-deity": COLONIAL,
+    "local-deity": ["established"],
+    tree: COLONIAL,
+    "wild-plant": COLONIAL,
+    "settler-group": COLONIAL,
+    "classical-biblical-or-legendary-name": COLONIAL,
+    ship: ["new-land"],
+    "calendar-date-or-feast": ["new-land"],
+    "local-settlement-word": ["established"],
+    "local-market-word": ["established"]
+  }
+};
+function slotTier(part, categoryId) {
+  var _a2, _b;
+  if ((_a2 = TIER_TABLE.simple[categoryId]) == null ? void 0 : _a2.includes(part)) return "simple";
+  if ((_b = TIER_TABLE.detailed[categoryId]) == null ? void 0 : _b.includes(part)) return "detailed";
+  return "complete";
+}
+function tierIncludes(chosen, slot) {
+  return SLOT_TIERS.indexOf(slot) <= SLOT_TIERS.indexOf(chosen);
+}
+var FLORA_AND_FAUNA = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant"]);
+var WORD_ONLY = /* @__PURE__ */ new Set([
+  "status-or-role",
+  "ethnic-or-cultural-group",
+  "settler-group",
+  "supernatural-being",
+  "domestic-animal",
+  "crop",
+  "landform",
+  "water-or-wetland-feature",
+  "soil-or-ground",
+  "built-feature",
+  "colour",
+  "size",
+  "age",
+  "position-or-direction",
+  "shape",
+  "quality-or-condition",
+  "number",
+  "activity",
+  "produce",
+  "religious-association",
+  "assembly-or-law",
+  "season",
+  "honorific-title",
+  "emotion-or-aspiration",
+  "event-or-incident",
+  "imperial-claim",
+  "resource",
+  "distance-or-survey-mark",
+  "calendar-date-or-feast"
+]);
+var NAMES_ONLY = /* @__PURE__ */ new Set([
+  "personal-name",
+  "folk-group",
+  "monarch-ruler-or-dynasty",
+  "royal-woman",
+  "official-patron-or-sponsor",
+  "commander-or-conqueror",
+  "explorer-or-founder",
+  "saint-or-holy-person",
+  "deity",
+  "colonial-deity",
+  "local-deity",
+  "native-place-name",
+  "native-people-or-tribe",
+  "homeland-place-name",
+  "earlier-or-district-name",
+  "river-or-stream-name"
+]);
+var NO_PLACEHOLDER = /* @__PURE__ */ new Set(["colour", "size", "age", "position-or-direction", "shape", "quality-or-condition", "number", "season"]);
+function allowsPacks(part, categoryId) {
+  if (FLORA_AND_FAUNA.has(categoryId)) return part !== "organic";
+  return !WORD_ONLY.has(categoryId);
+}
+function allowsLists(_part, categoryId) {
+  return !NAMES_ONLY.has(categoryId);
+}
+function allowsPlaceholderChoice(_part, categoryId) {
+  return !NO_PLACEHOLDER.has(categoryId);
+}
+function showsGender(categoryId) {
+  return categoryId !== "royal-woman" && hasGenderDefault(categoryId);
+}
+function usesNativeDefault(part, categoryId) {
+  return part !== "organic" && FLORA_AND_FAUNA.has(categoryId);
+}
+
+// src/recipeEditor.ts
 var NEW_LANDS_CONTEXTS = [
   ["wild-and-unsettled", "wild and unsettled lands"],
   ["sparse-or-weak-native-presence", "lands with a sparse, or weak, native presence"],
@@ -21246,6 +21366,11 @@ function explorersPhrase(id, label) {
 var same3 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 var PAGES = ["Template", "Shape and rendering", "Slots and generic words"];
+var TIER_TEXT = {
+  simple: ["Simple", "The slots most names need."],
+  detailed: ["Detailed", "Adds rarer people, beliefs and setting flavour."],
+  complete: ["Complete", "Every slot."]
+};
 var RecipeWizard = class {
   constructor(app, options, hostEl, nameSource) {
     this.app = app;
@@ -21253,6 +21378,8 @@ var RecipeWizard = class {
     this.hostEl = hostEl;
     this.nameSource = nameSource;
     this.page = 0;
+    /** The slots page's level of detail: a view setting only, never saved; Simple each time the wizard opens. */
+    this.tier = "simple";
     this.pageEl = null;
     this.name = "";
     this.body = "";
@@ -21434,7 +21561,22 @@ var RecipeWizard = class {
       cls: "setting-item-description",
       text: "Where each category's words come from. Unset categories use their built-in list (river names use the river name module), or a placeholder if there isn't one."
     });
-    for (const category of slotCategories(w.shape.part)) this.renderSlot(el, category.id, category.label);
+    const tiers = el.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle nameforge-recipe-editor__tiers" });
+    for (const tier of SLOT_TIERS) {
+      const active = this.tier === tier;
+      const button = tiers.createEl("button", { cls: "nameforge-modal__toggle-button", text: TIER_TEXT[tier][0], attr: { type: "button", "aria-pressed": String(active) } });
+      button.toggleClass("is-active", active);
+      button.addEventListener("click", () => {
+        if (this.tier === tier) return;
+        this.tier = tier;
+        this.render();
+      });
+    }
+    el.createEl("p", { cls: "setting-item-description", text: TIER_TEXT[this.tier][1] });
+    for (const category of slotCategories(w.shape.part)) {
+      const inTier = tierIncludes(this.tier, slotTier(w.shape.part, category.id));
+      if (inTier || this.isSlotSet(category.id)) this.renderSlot(el, category.id, category.label, !inTier);
+    }
     el.createEl("h3", { text: "Generic words" });
     new import_obsidian8.Setting(el).setDesc("One per line, e.g. \u201Cchurch: kirk\u201D.").addTextArea((t) => {
       t.setValue(Object.entries(w.generics).map(([k, v]) => `${k}: ${v}`).join("\n")).onChange((v) => {
@@ -21547,21 +21689,33 @@ var RecipeWizard = class {
     const r = PLACE_SHAPE_REGIONS.find((x) => x.code === value.toUpperCase() || kebab(x.label) === kebab(value));
     return r ? kebab(r.label) : "all-britain";
   }
-  renderSlot(el, id, label) {
-    var _a2, _b, _c;
+  /** Whether a slot is set explicitly, in the recipe or its template. */
+  isSlotSet(id) {
+    var _a2, _b;
+    return this.explicitSlots.has(id) || ((_b = (_a2 = this.template) == null ? void 0 : _a2.slots) == null ? void 0 : _b[id]) !== void 0;
+  }
+  renderSlot(el, id, label, outsideTier = false) {
+    var _a2;
     const w = this.working;
-    const explicit = this.explicitSlots.has(id) || ((_b = (_a2 = this.template) == null ? void 0 : _a2.slots) == null ? void 0 : _b[id]) !== void 0;
-    const slot = explicit ? w.slots[id] : void 0;
+    const part = w.shape.part;
+    const slot = this.isSlotSet(id) ? w.slots[id] : void 0;
     const river = id === "river-or-stream-name";
     const fallback = river || hasBuiltInList(id) ? "built-in" : "placeholder";
+    const nativeDefault = usesNativeDefault(part, id);
     const setting = new import_obsidian8.Setting(el).setName(label).addDropdown((d) => {
       var _a3;
-      d.addOption("default", river ? "River name module" : fallback === "built-in" ? "Built-in list" : "Placeholder");
+      const shown = !slot || slot.kind === fallback && !(nativeDefault && slot.kind === "built-in") ? "default" : slot.kind === "sources" ? ((_a3 = slot.sources[0]) == null ? void 0 : _a3.list) !== void 0 ? "lists" : "packs" : slot.kind;
+      const offer = (value, text, allowed) => {
+        if (allowed) d.addOption(value, text);
+        else if (shown === value) d.addOption(value, `${text} (not recommended)`);
+      };
+      d.addOption("default", river ? "River name module" : nativeDefault ? "Native placeholder" : fallback === "built-in" ? "Built-in list" : "Placeholder");
       d.selectEl.appendChild(createEl("hr"));
-      d.addOption("packs", "Name packs").addOption("lists", "Word lists");
-      if (fallback !== "placeholder") d.addOption("placeholder", "Placeholder");
+      offer("built-in", "Built-in list", nativeDefault);
+      offer("packs", "Name packs", allowsPacks(part, id));
+      offer("lists", "Word lists", allowsLists(part, id));
+      offer("placeholder", "Placeholder", fallback !== "placeholder" && allowsPlaceholderChoice(part, id));
       d.addOption("ignore", "Ignore");
-      const shown = !slot || slot.kind === fallback ? "default" : slot.kind === "sources" ? ((_a3 = slot.sources[0]) == null ? void 0 : _a3.list) !== void 0 ? "lists" : "packs" : slot.kind;
       d.setValue(shown).onChange((v) => {
         if (v === "default") {
           delete w.slots[id];
@@ -21577,9 +21731,10 @@ var RecipeWizard = class {
       });
     });
     setting.settingEl.addClass("nameforge-recipe-editor__slot");
+    if (outsideTier) setting.setDesc("Set \u2013 shown outside this tier");
     if (!slot || slot.kind !== "sources") return;
     const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
-    const lists = ((_c = slot.sources[0]) == null ? void 0 : _c.list) !== void 0;
+    const lists = ((_a2 = slot.sources[0]) == null ? void 0 : _a2.list) !== void 0;
     const mixed = slot.sources.some((source) => source.list !== void 0 !== lists);
     slot.sources.forEach((source, i) => {
       const row = new import_obsidian8.Setting(box);
@@ -21592,10 +21747,10 @@ var RecipeWizard = class {
         );
       }
       row.addDropdown((d) => {
-        var _a3, _b2;
+        var _a3, _b;
         const options = source.list !== void 0 ? this.options.lists : this.options.packs;
         for (const o of options) d.addOption(o, o);
-        const current = (_b2 = (_a3 = source.list) != null ? _a3 : source.pack) != null ? _b2 : "";
+        const current = (_b = (_a3 = source.list) != null ? _a3 : source.pack) != null ? _b : "";
         if (current && !options.includes(current)) d.addOption(current, `${current} (missing)`);
         d.setValue(current).onChange((v) => {
           if (source.list !== void 0) source.list = v;
@@ -21641,14 +21796,17 @@ var RecipeWizard = class {
           slot.section = v.trim() || void 0;
         });
       }
-    ).addText((t) => {
-      t.setPlaceholder("Male %").setValue(slot.gender ? String(slot.gender.male) : "").onChange((v) => {
-        const male = Number(v);
-        slot.gender = v.trim() && Number.isFinite(male) ? { male, female: Math.max(0, 100 - male) } : void 0;
+    );
+    if (showsGender(id) || slot.gender) {
+      footer.addText((t) => {
+        t.setPlaceholder("Male %").setValue(slot.gender ? String(slot.gender.male) : "").onChange((v) => {
+          const male = Number(v);
+          slot.gender = v.trim() && Number.isFinite(male) ? { male, female: Math.max(0, 100 - male) } : void 0;
+        });
+        t.inputEl.type = "number";
+        t.inputEl.addClass("nameforge-recipe-editor__weight");
       });
-      t.inputEl.type = "number";
-      t.inputEl.addClass("nameforge-recipe-editor__weight");
-    });
+    }
   }
   /** A new source of the given type, starting on the first available pack or list. */
   newSource(list) {

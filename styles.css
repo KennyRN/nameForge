@@ -1468,3 +1468,12 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 .modal .nameforge-recipe-editor__page--shape .setting-item:not(.setting-item-heading) {
   border-top: none;
 }
+/* ...except the line beneath a heading (Rendering), drawn by the setting that follows it. */
+.modal .nameforge-recipe-editor__page--shape h3 + .setting-item:not(.setting-item-heading) {
+  border-top: var(--border-width) solid var(--background-modifier-border);
+}
+
+/* The slots page's Simple · Detailed · Complete control. */
+.nameforge-recipe-editor__tiers {
+  margin: 8px 0 4px;
+}
