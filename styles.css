@@ -1055,6 +1055,14 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   background-color: transparent;
 }
 
+/* Tribal names' release headings in the tradition menu: muted and unclickable. */
+.nameforge-modal__pack-dropdown-heading {
+  padding: 6px 8px 2px;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+  pointer-events: none;
+}
+
 .nameforge-modal__pack-dropdown-note {
   font-size: var(--font-ui-smaller);
   color: var(--text-faint);
@@ -1241,6 +1249,8 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 .nameforge-modal__recipe-etymology {
   font-size: var(--font-ui-small);
   color: var(--text-muted);
+  /* Tribal names' details run to two lines. */
+  white-space: pre-line;
 }
 
 .nameforge-modal__recipe-results.is-etymology-hidden .nameforge-modal__recipe-etymology {

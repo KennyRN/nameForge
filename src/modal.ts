@@ -1,4 +1,4 @@
-import { App, Editor, Modal, normalizePath, Notice, setIcon, TFile, TFolder } from "obsidian";
+import { App, Editor, Menu, Modal, normalizePath, Notice, setIcon, TFile, TFolder } from "obsidian";
 import {
   generateCompoundNamesDetailed,
   generateMixNamesDetailed,
@@ -63,6 +63,19 @@ import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recipe";
 import { BIOMES, findBiome } from "./biomes";
+import {
+  findTradition,
+  generateTribalNames,
+  homelandSummary,
+  TRIBAL_DATA,
+  TRIBAL_GROUP_TYPES,
+  TRIBAL_PERSPECTIVES,
+  TRIBAL_REGISTERS,
+  TRIBAL_TRADITIONS,
+  tribalDetailsLine,
+  tribalHistoryLabel,
+  type TribalRegister,
+} from "./tribes/engine";
 import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/engine";
 import { findCulture, findEra, generateWorldPlaceNames, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
@@ -308,6 +321,16 @@ export class NameForgeModal extends Modal {
   private riverRegion: string | undefined = undefined;
   /** Tribal brief §19.5: the river module's colonial settings' biome; undefined is Unknown country. */
   private riverBiome: string | undefined = undefined;
+  /** Tribal names' choices (Tribal brief §18.2), kept for the session like the colonial modules'. */
+  private tribal: {
+    tradition: string;
+    biome: string | undefined;
+    register: TribalRegister;
+    groupType: string | undefined;
+    perspective: string | undefined;
+    hostile: boolean;
+  } = { tradition: "general", biome: undefined, register: "plain", groupType: undefined, perspective: undefined, hostile: false };
+  private tribalOptionsButton: HTMLButtonElement | null = null;
   /** Place names: Britain (PLACE_BRITAIN) or a world culture, and the era chosen for each culture. Session only. */
   private worldCulture: string = PLACE_BRITAIN;
   private worldEras: Record<string, string> = {};
@@ -533,6 +556,15 @@ export class NameForgeModal extends Modal {
     });
     this.guideButton.hide();
 
+    // Tribal names' options (Tribal brief §18.2): group type, perspective and hostile names.
+    this.tribalOptionsButton = createPacksRow.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Options" },
+    });
+    setIcon(this.tribalOptionsButton, "sliders-horizontal");
+    this.tribalOptionsButton.addEventListener("click", (evt) => this.openTribalOptions(evt));
+    this.tribalOptionsButton.hide();
+
     // A plain flow block under the pack row, not a floating overlay — same as titleForge's.
     this.sectionMenuEl = optionsList.createDiv({ cls: "nameforge-modal__section-menu" });
     this.sectionMenuEl.hide();
@@ -656,13 +688,15 @@ export class NameForgeModal extends Modal {
     const colonialPart = COLONIAL_SECTION_PART[section];
     this.createPacksButton?.toggleClass("is-placeholder", section !== "markov");
     // In the colonial sections the guide button takes the create button's slot instead.
-    this.createPacksButton?.toggle(!colonialPart);
+    const tribal = section === "tribalNames";
+    this.createPacksButton?.toggle(!colonialPart && !tribal);
+    this.tribalOptionsButton?.toggle(tribal);
     this.guideButton?.toggle(!!colonialPart);
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
-    this.regionDropdownEl?.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover);
-    this.showSecondBox(river || (section === "placeShapes" && this.placeHasSecondBox()) || takeover || !!colonialPart);
+    this.regionDropdownEl?.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover || tribal);
+    this.showSecondBox(river || (section === "placeShapes" && this.placeHasSecondBox()) || takeover || !!colonialPart || tribal);
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
@@ -678,7 +712,7 @@ export class NameForgeModal extends Modal {
     if (this.sectionTriggerEl) setIcon(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} — no packs yet`;
     this.sectionStubEl?.toggle(
-      section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover,
+      section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover && !tribal,
     );
   }
 
@@ -858,6 +892,13 @@ export class NameForgeModal extends Modal {
    */
   private biomeBox(): { current: string | undefined; choose: (id: string | undefined) => void; none: { label: string; title: string } } | undefined {
     const part = COLONIAL_SECTION_PART[this.activeSection];
+    if (this.activeSection === "tribalNames") {
+      return {
+        current: this.tribal.biome,
+        choose: (id) => (this.tribal.biome = id),
+        none: { label: "Homeland", title: homelandSummary(this.tribal.tradition) },
+      };
+    }
     if (this.activeSection === "riverNames" && this.riverSetting !== "british") {
       return {
         current: this.riverBiome,
@@ -1011,6 +1052,28 @@ export class NameForgeModal extends Modal {
       }
       return;
     }
+    if (this.activeSection === "tribalNames") {
+      // General, then the others under muted, unclickable release headings.
+      let group = "";
+      for (const tradition of TRIBAL_TRADITIONS) {
+        if (tradition.group !== "General" && tradition.group !== group) {
+          menu.createDiv({ cls: "nameforge-modal__pack-dropdown-heading", text: tradition.group });
+        }
+        group = tradition.group;
+        const item = menu.createEl("button", {
+          cls: "nameforge-modal__pack-dropdown-item" + (tradition.key === this.tribal.tradition ? " is-active" : ""),
+          attr: { type: "button", title: tradition.drawsOn },
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: tradition.label });
+        item.addEventListener("click", () => {
+          this.tribal.tradition = tradition.key;
+          this.updateRegionLabel();
+          this.updateSecondBoxLabel();
+          this.setRegionMenuOpen(false);
+        });
+      }
+      return;
+    }
     const part = COLONIAL_SECTION_PART[this.activeSection];
     if (part) {
       for (const tradition of COLONIAL_TRADITIONS) {
@@ -1060,6 +1123,12 @@ export class NameForgeModal extends Modal {
       this.regionTriggerEl?.setAttribute("title", `Culture: ${culture.guide}`);
       return;
     }
+    if (this.activeSection === "tribalNames") {
+      const tradition = findTradition(this.tribal.tradition) ?? TRIBAL_TRADITIONS[0];
+      if (this.regionLabelEl) this.regionLabelEl.textContent = tradition.label;
+      this.regionTriggerEl?.setAttribute("title", tradition.drawsOn);
+      return;
+    }
     const part = COLONIAL_SECTION_PART[this.activeSection];
     if (part) {
       const tradition = COLONIAL_TRADITIONS.find((t) => t.id === (this.selectedTradition[part] ?? "general"))!;
@@ -1082,6 +1151,10 @@ export class NameForgeModal extends Modal {
     if (!row) return;
     const part = COLONIAL_SECTION_PART[this.activeSection];
     row.empty();
+    if (this.activeSection === "tribalNames") {
+      this.renderTribalRegisterRow(row);
+      return;
+    }
     row.toggle(!!part);
     if (!part) return;
     // The wizard's context phrases, in its order; there is no "none".
@@ -1100,6 +1173,85 @@ export class NameForgeModal extends Modal {
         this.renderContextRow();
       });
     }
+  }
+
+  /** Tribal names (Tribal brief §18.3): headwords, with the two-line details as etymology. */
+  private async runTribalNames() {
+    const t = this.tribal;
+    const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+    const result = generateTribalNames({
+      tradition: t.tradition,
+      biome: t.biome,
+      register: t.register,
+      groupType: t.groupType,
+      perspective: t.perspective,
+      hostile: t.hostile,
+      count: this.generationCount,
+      seed: seedOverride,
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => {
+        const also = n.alternativeNames.length > 0 ? ` Also: ${n.alternativeNames.join(" · ")}` : "";
+        const echo = n.echoesReal ? " Echoes a real historical name." : "";
+        return { text: n.name, hasPlaceholder: false, etymology: `${tribalDetailsLine(n)}\n${n.origin}${also}${echo}` } as GeneratedName;
+      }),
+      "module",
+    );
+    await this.recordGenerationHistory(result.names.length, tribalHistoryLabel(SECTION_LABELS.tribalNames, t.tradition, t.biome, t.register));
+    this.setStatus(result.notices.join(" "));
+  }
+
+  /** Tribal names' register row (Tribal brief §18.2): plain · historical · legendary · admin. */
+  private renderTribalRegisterRow(row: HTMLElement) {
+    row.show();
+    for (const register of TRIBAL_REGISTERS) {
+      const active = register === this.tribal.register;
+      const button = row.createEl("button", {
+        cls: "nameforge-modal__toggle-button" + (active ? " is-active" : ""),
+        text: register === "administrative" ? "admin" : register,
+        attr: { type: "button", title: TRIBAL_DATA.registerLabels[register], "aria-pressed": String(active) },
+      });
+      button.addEventListener("click", () => {
+        this.tribal.register = register;
+        this.renderContextRow();
+      });
+    }
+  }
+
+  /** Tribal names' options menu: group type, perspective, hostile names (Tribal brief §18.2). */
+  private openTribalOptions(evt: MouseEvent) {
+    const t = this.tribal;
+    const menu = new Menu();
+    const heading = (title: string) => menu.addItem((item) => item.setTitle(title).setDisabled(true));
+    heading("Group type");
+    menu.addItem((item) => item.setTitle("Any").setChecked(!t.groupType).onClick(() => (t.groupType = undefined)));
+    for (const g of TRIBAL_GROUP_TYPES) {
+      menu.addItem((item) => item.setTitle(g.label).setChecked(t.groupType === g.key).onClick(() => (t.groupType = g.key)));
+    }
+    menu.addSeparator();
+    heading("Perspective");
+    menu.addItem((item) => item.setTitle("Any").setChecked(!t.perspective).onClick(() => (t.perspective = undefined)));
+    for (const p of TRIBAL_PERSPECTIVES) {
+      const label = TRIBAL_DATA.perspectiveLabels[p];
+      menu.addItem((item) =>
+        item
+          .setTitle(label.charAt(0).toUpperCase() + label.slice(1))
+          .setChecked(t.perspective === p)
+          .onClick(() => (t.perspective = p)),
+      );
+    }
+    menu.addSeparator();
+    menu.addItem((item) =>
+      item
+        .setTitle("Hostile names")
+        .setChecked(t.hostile)
+        .onClick(() => {
+          t.hostile = !t.hostile;
+          if (t.hostile) new Notice("Hostile names are on: some results will be insults one people used for another.");
+        }),
+    );
+    menu.showAtMouseEvent(evt);
   }
 
   /** Source field with the depth buttons (new 1, moderate 3, ancient 5) beside it, then the count row. */
@@ -1373,6 +1525,7 @@ export class NameForgeModal extends Modal {
     this.sectionSelectEl = null;
     this.editRecipeButton = null;
     this.guideButton = null;
+    this.tribalOptionsButton = null;
     this.contextRowEl = null;
     this.secondBoxRowEl = null;
     this.secondBoxDropdownEl = null;
@@ -2192,6 +2345,10 @@ export class NameForgeModal extends Modal {
     if (this.activeSection === "nameTakeover") {
       this.takeoverView.resultsEl = this.resultsEl;
       await this.takeoverView.run(this.generationCount);
+      return;
+    }
+    if (this.activeSection === "tribalNames") {
+      await this.runTribalNames();
       return;
     }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
