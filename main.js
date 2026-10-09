@@ -2056,6 +2056,8 @@ var ICON_GENERIC_PLACE_NAMES_SVG = '<g transform="scale(4.16667)"><g fill="none"
 var ICON_NATIVE_PLACE_NAMES = "nameforge-native-place-names";
 var ICON_RECIPE = "nameforge-recipe";
 var ICON_RECIPE_SVG = '<g transform="translate(0 5.556) scale(0.173611)"><path fill="currentColor" d="M288 0c-69.59 0-126 56.41-126 126c0 56.26 82.35 158.8 113.9 196.02c6.39 7.54 17.82 7.54 24.2 0C331.65 284.8 414 182.26 414 126C414 56.41 357.59 0 288 0m0 168c-23.2 0-42-18.8-42-42s18.8-42 42-42s42 18.8 42 42s-18.8 42-42 42M20.12 215.95A32.01 32.01 0 0 0 0 245.66v250.32c0 11.32 11.43 19.06 21.94 14.86L160 448V214.92c-8.84-15.98-16.07-31.54-21.25-46.42zM288 359.67c-14.07 0-27.38-6.18-36.51-16.96c-19.66-23.2-40.57-49.62-59.49-76.72v182l192 64V266c-18.92 27.09-39.82 53.52-59.49 76.72c-9.13 10.77-22.44 16.95-36.51 16.95m266.06-198.51L416 224v288l139.88-55.95A32 32 0 0 0 576 426.34V176.02c0-11.32-11.43-19.06-21.94-14.86" /></g>';
+var ICON_BIOME = "nameforge-biome";
+var ICON_BIOME_SVG = '<g transform="scale(6.66667)"><path fill="currentColor" d="m3.14 12.15l.06.04l.07.04c.04.02.08.05.12.08l.31.25l.2.14l.11.06l.07.04l.1.05l.07.02l.1.04l.08.02c.17.05.34.07.52.07h.1c.12 0 .23-.01.34-.03l.18-.04l.17-.05l.08-.03l.09-.05l.08-.04l.09-.04c.07-.05.15-.1.22-.16l.31-.25a1.44 1.44 0 0 1 1.78 0l.31.25l.19.14l.11.06l.08.04l.09.04l.08.03l.09.04l.07.02c.18.04.36.07.54.07h.1c.15 0 .3-.02.44-.05l.16-.04l.19-.07c.17-.08.32-.17.46-.28l.31-.25c.25-.2.57-.31.89-.31c.06 0 .12.01.17.01c.26.03.51.14.72.3l.32.26c.3.24.68.39 1.07.43H15v1.5h-.05c-.46 0-.89-.16-1.24-.44l-.32-.25a1.44 1.44 0 0 0-1.78 0l-.31.25c-.36.28-.8.44-1.25.44h-.1c-.45 0-.89-.16-1.25-.44l-.31-.25a1.44 1.44 0 0 0-1.78 0l-.31.25c-.36.28-.8.44-1.25.44h-.1c-.45 0-.89-.16-1.25-.44l-.31-.25a1.44 1.44 0 0 0-1.78 0l-.32.25c-.3.25-.68.4-1.07.43L0 14.5V13h.05c.46 0 .89-.15 1.24-.43l.32-.26c.25-.2.57-.31.89-.31l.11.01l.1.01l.12.02l.15.05zM4.5.5C5.17.5 8 5.83 6 7.43c-.39.32-.72.51-1 .59v1.05c.24-.05.48-.07.73-.07c.33 0 .84-.38 1.54-1.14c.46-.5 1.19-.65 1.8-.36l.8.37c.18.09.36.18.53.28l1.28.77c.06.03.12.08.18.12l.55.46c.37.32.59.78.59 1.27v.28c-.16-.03-.33-.05-.5-.05c-.55 0-1.08.19-1.52.53l-.31.25c-.17.14-.39.22-.62.22h-.1c-.23 0-.45-.08-.62-.22l-.32-.25c-.43-.34-.96-.53-1.51-.53s-1.08.19-1.51.53l-.32.25c-.17.14-.39.22-.62.22h-.1c-.23 0-.45-.08-.62-.22l-.32-.25c-.43-.34-.96-.53-1.51-.53l-.08.01c.35-.68.91-1.23 1.58-1.59v-1.4c-.28-.08-.61-.27-1-.59C1 5.83 3.84.5 4.5.5" /></g>';
 var ICON_ADVANCED = "nameforge-advanced";
 var ICON_ADVANCED_SVG = '<g transform="scale(0.15625)"><path fill="currentColor" d="M415.9 274.5c12.2-3.3 25 2.5 30.5 13.8l18.6 37.6c10.3 1.4 20.4 4.2 29.9 8.1l35-23.3c10.5-7 24.4-5.6 33.3 3.3l19.2 19.2c8.9 8.9 10.3 22.9 3.3 33.3l-23.3 34.9c1.9 4.7 3.6 9.6 5 14.7s2.3 10.1 3 15.2l37.7 18.6c11.3 5.6 17.1 18.4 13.8 30.5l-7 26.2c-3.3 12.1-14.6 20.3-27.2 19.5l-42-2.7c-6.3 8.1-13.6 15.6-21.9 22l2.7 41.9c.8 12.6-7.4 24-19.5 27.2l-26.2 7c-12.2 3.3-24.9-2.5-30.5-13.8l-18.6-37.6c-10.3-1.4-20.4-4.2-29.9-8.1l-35 23.3c-10.5 7-24.4 5.6-33.3-3.3l-19.2-19.2c-8.9-8.9-10.3-22.8-3.3-33.3l23.3-35c-1.9-4.7-3.6-9.6-5-14.7s-2.3-10.2-3-15.2L288.6 446c-11.3-5.6-17-18.4-13.8-30.5l7-26.2c3.3-12.1 14.6-20.3 27.2-19.5l41.9 2.7c6.3-8.1 13.6-15.6 21.9-22l-2.7-41.8c-.8-12.6 7.4-24 19.5-27.2l26.2-7zM448.4 404c-24.3 0-44 19.7-43.9 44.1c0 24.3 19.7 43.9 44 43.9s44-19.7 44-44c-.1-24.4-19.8-44-44.1-44M224.9 18.5l26.2 7c12.1 3.3 20.3 14.7 19.5 27.2l-2.7 41.8c8.3 6.4 15.6 13.8 21.9 22l42-2.7c12.5-.8 23.9 7.4 27.2 19.5l7 26.2c3.2 12.1-2.5 24.9-13.8 30.5l-37.7 18.6c-.7 5.1-1.7 10.2-3 15.2s-3.1 10-5 14.7l23.3 35c7 10.5 5.6 24.4-3.3 33.3L307.3 326c-8.9 8.9-22.8 10.3-33.3 3.3L239 306c-9.5 3.9-19.6 6.7-29.9 8.1l-18.6 37.6c-5.6 11.3-18.4 17-30.5 13.8l-26.2-7c-12.2-3.3-20.3-14.7-19.5-27.2l2.7-41.9c-8.3-6.4-15.6-13.8-21.9-22l-42 2.7c-12.5.8-23.9-7.4-27.2-19.5l-7-26.2c-3.2-12.1 2.5-24.9 13.8-30.5l37.7-18.6c.7-5.1 1.7-10.1 3-15.2c1.4-5.1 3-10 5-14.7l-23.3-34.9c-7-10.5-5.6-24.4 3.3-33.3L77.6 58c8.9-8.9 22.8-10.3 33.3-3.3l35 23.3c9.5-3.9 19.6-6.7 29.9-8.1l18.6-37.6c5.6-11.3 18.3-17 30.5-13.8M192.4 148c-24.3 0-44 19.7-44 44s19.7 44 44 44s44-19.7 44-44s-19.7-44-44-44" /></g>';
 var ICON_EXPLORATION_PLACE_SHAPES = "nameforge-exploration-place-shapes";
@@ -2116,6 +2118,7 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_NATIVE_PLACE_NAMES, ICON_GENERIC_PLACE_NAMES_SVG);
   (0, import_obsidian4.addIcon)(ICON_RECIPE, ICON_RECIPE_SVG);
   (0, import_obsidian4.addIcon)(ICON_ADVANCED, ICON_ADVANCED_SVG);
+  (0, import_obsidian4.addIcon)(ICON_BIOME, ICON_BIOME_SVG);
   (0, import_obsidian4.addIcon)(ICON_EXPLORATION_PLACE_SHAPES, ICON_EXPLORATION_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_NAME_AGEING, ICON_NAME_AGEING_SVG);
@@ -32512,7 +32515,7 @@ var LandButton = class {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button" }
     });
-    (0, import_obsidian6.setIcon)(this.el, "mountain");
+    (0, import_obsidian6.setIcon)(this.el, ICON_BIOME);
     this.el.addEventListener("click", (evt) => void this.open(evt));
     this.refresh();
   }
@@ -39221,7 +39224,7 @@ var NameForgeEditorModal = class extends import_obsidian12.Modal {
       this.updateTypeButtons();
       void this.loadTemplateOptions();
     });
-    this.biomeButton = addTypeButton("Biome", "mountain");
+    this.biomeButton = addTypeButton("Biome", ICON_BIOME);
     this.biomeButton.addEventListener("click", () => {
       this.biomeMode = true;
       this.wordListMode = false;

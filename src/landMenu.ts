@@ -2,6 +2,7 @@
 // shared by every module that uses them.
 
 import { Menu, setIcon } from "obsidian";
+import { ICON_BIOME } from "./icons";
 import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
 
 export interface LandState {
@@ -39,7 +40,7 @@ export class LandButton {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button" },
     });
-    setIcon(this.el, "mountain");
+    setIcon(this.el, ICON_BIOME);
     this.el.addEventListener("click", (evt) => void this.open(evt));
     this.refresh();
   }

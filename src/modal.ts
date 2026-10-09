@@ -51,6 +51,7 @@ import {
   ICON_RECIPE,
   ICON_NATIVE_PLACE_NAMES,
   ICON_ADVANCED,
+  ICON_BIOME,
   ICON_EXPLORATION_PLACE_SHAPES,
   ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   ICON_NAME_AGEING,
@@ -3370,7 +3371,7 @@ class NameForgeEditorModal extends Modal {
     });
 
     // Land brief §9.4: a biome pack, starting from a base biome.
-    this.biomeButton = addTypeButton("Biome", "mountain");
+    this.biomeButton = addTypeButton("Biome", ICON_BIOME);
     this.biomeButton.addEventListener("click", () => {
       this.biomeMode = true;
       this.wordListMode = false;
