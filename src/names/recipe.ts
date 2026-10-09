@@ -1,7 +1,7 @@
 // Recipe packs (names-reference §6–§7). No Obsidian imports: the host parses the frontmatter YAML
 // into a plain object and hands it here.
 
-import { findBiome } from "../biomes";
+import { findBiome, TERRAIN_CHOICES } from "../biomes";
 import { findTradition } from "../tribes/engine";
 
 export type Register = "modern" | "mixed" | "traditional";
@@ -36,7 +36,9 @@ export interface RecipeSettings {
   template: boolean;
   templateOf?: string;
   /** `biome` (Tribal brief §19.1): a biome id, or "unknown" for native placeholders. */
-  shape: { part: ShapePart; region: string; tradition: string; context: string; biome: string; feature: string };
+  /** `terrain` (Land brief §4.1): a terrain id, a custom terrain id or "any". A biome pack is a
+   * link, "[[Salt Marshes]]". */
+  shape: { part: ShapePart; region: string; tradition: string; context: string; biome: string; terrain: string; feature: string };
   slots: Record<string, SlotSetting>;
   generics: Record<string, string>;
   register: Register;
@@ -64,7 +66,7 @@ export interface RecipePartial {
 export const RECIPE_DEFAULTS: RecipeSettings = {
   setting: "",
   template: false,
-  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", biome: "unknown", feature: "any" },
+  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", biome: "unknown", terrain: "any", feature: "any" },
   slots: {},
   generics: {},
   register: "mixed",
@@ -148,8 +150,16 @@ export function readRecipe(fm: Record<string, unknown>): { recipe: RecipePartial
     }
     // Tribal brief §19.1: a biome id or "unknown"; anything else is reported and skipped.
     const biome = str(fm.shape.biome);
-    if (biome && (biome === "unknown" || findBiome(biome))) shape.biome = biome;
+    if (biome && /^\[\[/.test(biome)) {
+      // Land brief §4.1: a biome pack, kept as a link for the host to resolve.
+      const target = linkTarget(biome);
+      if (target) shape.biome = `[[${target}]]`;
+    } else if (biome && (biome === "unknown" || findBiome(biome))) shape.biome = biome;
     else if (biome) problems.push(`Unknown biome “${biome}”.`);
+    // Land brief §4.1: a terrain id or any; a custom terrain is only known once a pack resolves.
+    const terrain = str(fm.shape.terrain);
+    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || shape.biome?.startsWith("[["))) shape.terrain = terrain;
+    else if (terrain) problems.push(`Unknown terrain “${terrain}”.`);
     recipe.shape = shape;
   }
   if (isObject(fm.slots)) {
@@ -243,8 +253,13 @@ export function recipeToFrontmatter(r: RecipePartial): Record<string, unknown> {
   if (r.templateOf) out["template-of"] = `[[${r.templateOf}]]`;
   if (r.shape && Object.keys(r.shape).length > 0) {
     // Tribal brief §19.1: "unknown" is the default and is never written.
-    const { biome, ...rest } = r.shape;
-    out.shape = biome && biome !== "unknown" ? { ...rest, biome } : rest;
+    const { biome, terrain, ...rest } = r.shape;
+    out.shape = {
+      ...rest,
+      ...(biome && biome !== "unknown" ? { biome } : {}),
+      // Land brief §4.1: "any" is the default and is never written.
+      ...(terrain && terrain !== "any" ? { terrain } : {}),
+    };
   }
   if (r.slots && Object.keys(r.slots).length > 0) {
     out.slots = Object.fromEntries(
@@ -284,9 +299,9 @@ export function recipeToFrontmatter(r: RecipePartial): Record<string, unknown> {
  * chosen region (a region code, or undefined for All Britain), modern words, balanced joining,
  * linking hyphens, no slots mapped.
  */
-export function britishPlaceNamesRecipe(region: string | undefined): RecipeSettings {
+export function britishPlaceNamesRecipe(region: string | undefined, biome?: string, terrain?: string): RecipeSettings {
   return withDefaults({
-    shape: { part: "organic", region: region ?? "all-britain", feature: "any" },
+    shape: { part: "organic", region: region ?? "all-britain", biome: biome ?? "unknown", terrain: terrain ?? "any", feature: "any" },
     register: "modern",
     render: { joining: "balanced", linkingHyphens: true, etymology: false },
   });
@@ -303,9 +318,10 @@ export function colonialPlaceNamesRecipe(
   tradition: string | undefined,
   context: string | undefined,
   biome?: string,
+  terrain?: string,
 ): RecipeSettings {
   return withDefaults({
-    shape: { part, tradition: tradition ?? "general", context: context ?? "none", biome: biome ?? "unknown", feature: "any" },
+    shape: { part, tradition: tradition ?? "general", context: context ?? "none", biome: biome ?? "unknown", terrain: terrain ?? "any", feature: "any" },
     register: "modern",
     render: { joining: "balanced", linkingHyphens: true, etymology: false },
   });

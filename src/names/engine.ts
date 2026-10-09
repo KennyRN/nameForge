@@ -5,7 +5,7 @@
 // the shape generator's own batch for the same seed and settings.
 
 import nameWordData from "../data/name-words.json";
-import { biomeEntries, findBiome } from "../biomes";
+import { availableTerrains, type Biome, biomeEntries, environmentMultipliers, findBiome } from "../biomes";
 import { mulberry32 } from "../markov";
 import { type SectionRequest } from "../packs/sections";
 import {
@@ -244,6 +244,8 @@ export interface NameGenerateOptions {
   strictness?: number;
   /** The recipe's takeover pack, as an adopter (recipe takeover §A6). Colonial recipes only. */
   adapt?: NativeAdapter;
+  /** Land brief §4.1: the recipe's biome, resolved by the host (biome packs); built-ins resolve here. */
+  biome?: Biome;
 }
 
 /** Optional renderer streams and settings; a renderer built without them behaves as before. */
@@ -253,6 +255,9 @@ export interface NameRendererOptions {
   ofTheRng?: () => number;
   /** The batch's split-label stream (river brief §5.2); a renderer without one makes its own. */
   labelRng?: () => number;
+  /** Land brief §5.3: the resolved biome (undefined: Britain for organic, unknown country for colonial) and terrain. */
+  biome?: Biome;
+  terrain?: string;
   /** Markov settings for river fills (river brief §6.9). */
   faithfulness?: number;
   strictness?: number;
@@ -486,7 +491,7 @@ export class NameRenderer {
     if (this.colonial && !mapped && NATIVE_LABELS[categoryId]) {
       // Tribal brief §19.3: a recipe biome fills them with its own words. The fill stream is only
       // drawn when a biome is set, so recipes without one are unchanged for a given seed.
-      const biome = findBiome(this.recipe.shape.biome);
+      const biome = this.options.biome;
       const entries = biome ? biomeEntries(biome, categoryId) : undefined;
       if (entries) return { kind: "word", entry: pickWeighted(entries, rng), traditional: false };
       return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
@@ -984,7 +989,22 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
   // Recipe takeover §A4: a takeover pack only adapts colonial recipes; organic ones ignore it.
   const adaptation: NameAdaptation | undefined =
     options.adapt && !organic ? { adapt: options.adapt, seed, redrawRng: mulberry32((seed ^ REDRAW_SALT) >>> 0) } : undefined;
+  // Land brief §4.1: the biome (resolved by the host, or built in) and terrain.
+  const biomeSetting = recipe.shape.biome;
+  let biome = options.biome ?? (biomeSetting?.startsWith("[[") ? undefined : findBiome(biomeSetting));
+  if (!biome && biomeSetting?.startsWith("[[")) {
+    notices.push(`Biome pack “${biomeSetting.slice(2, -2)}” wasn't found; using ${organic ? "Britain" : "unknown country"}.`);
+  }
+  if (organic && biome?.id === "britain") biome = undefined;
+  let terrain = recipe.shape.terrain ?? "any";
+  if (terrain !== "any" && biome && !availableTerrains(biome).some((t) => t.id === terrain) && biome.customTerrains) {
+    notices.push(`${biome.label} has no “${terrain}” terrain.`);
+    terrain = "any";
+  }
+  const environment = environmentMultipliers(biome, terrain);
   const renderer = new NameRenderer(recipe, options.slots, region, {
+    biome,
+    terrain,
     adaptation,
     ofTheRng: mulberry32((seed ^ OF_THE_SALT) >>> 0),
     labelRng: mulberry32((seed ^ SPLIT_SALT) >>> 0),
@@ -994,7 +1014,7 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
   let renderOne: (i: number) => GeneratedName;
   let shapeCount: number;
   if (organic) {
-    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories });
+    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment });
     renderOne = (i) => renderer.render(shapes[i], rng);
     shapeCount = shapes.length;
   } else {
@@ -1006,6 +1026,7 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
       context: recipe.shape.context === "none" ? undefined : recipe.shape.context,
       feature: recipe.shape.feature,
       excludedCategories,
+      environment,
     });
     renderOne = (i) => renderer.renderColonial(shapes[i], rng);
     shapeCount = shapes.length;

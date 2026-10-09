@@ -281,6 +281,8 @@ export interface PlaceShapeGenerateOptions {
   excludedCategories?: string[];
   /** Output wording; shapes are chosen identically either way. Defaults to "meaning". */
   wording?: ShapeWording;
+  /** Land brief §3: biome and terrain multipliers. Undefined keeps the unweighted part 1 path. */
+  environment?: { groups: Record<string, number>; generics: Record<string, number> };
 }
 
 export interface PlaceShapeGenerateResult {
@@ -325,6 +327,7 @@ class PlaceShapeGenerator {
     private readonly region: RegionWeighting | null,
     filters: { groupIds?: string[]; feature?: string; excludedCategories?: string[] } = {},
     regions: PlaceShapeRegionData = PLACE_SHAPE_REGION_DATA,
+    private readonly environment?: { groups: Record<string, number>; generics: Record<string, number> },
   ) {
     this.excluded = new Set(filters.excludedCategories ?? []);
     let groups = filters.groupIds ? source.groups.filter((g) => filters.groupIds!.includes(g.id)) : source.groups;
@@ -337,6 +340,12 @@ class PlaceShapeGenerator {
         .map((g) => ({ ...g, generics: g.generics.filter((x) => this.categoryWeights(g, x.id).length > 0) }))
         .filter((g) => g.generics.length > 0);
     }
+    // Land brief §3: the environment re-weights what the filters leave; anything at 0 drops out.
+    if (environment) {
+      groups = groups
+        .map((g) => ({ ...g, generics: g.generics.filter((x) => this.genericWeight(x.id) > 0) }))
+        .filter((g) => g.generics.length > 0 && this.groupWeight(g.id) > 0);
+    }
     this.groups = groups;
     if (this.groups.length === 0) throw new Error("No eligible place-shape groups");
     if (feature === "settlement") {
@@ -346,12 +355,12 @@ class PlaceShapeGenerator {
         landscapeShare: region?.landscapeShareSettlement ?? PLACE_SHAPE_WEIGHTS.landscapeShareSettlement,
       };
     }
-    if (region) {
+    if (this.weighted) {
       for (const group of this.groups) {
-        this.groupWeights.push([group, region.groupMultiplier[group.id] ?? 1]);
+        this.groupWeights.push([group, this.groupWeight(group.id)]);
         this.genericWeights.set(
           group.id,
-          group.generics.map((g): [ShapeGeneric, number] => [g, region.genericMultiplier.get(g.id) ?? 1]),
+          group.generics.map((g): [ShapeGeneric, number] => [g, this.genericWeight(g.id)]),
         );
       }
     }
@@ -361,6 +370,17 @@ class PlaceShapeGenerator {
       .filter((a) => a.forms.length > 0)
       .map((a): [AffixType, number] => [a, (regions.affixBaseline[a.id] ?? 0) * (region?.affixMultiplier[a.id] ?? 1)])
       .filter(([, w]) => w > 0);
+  }
+
+  /** Weighted picks with a region or an environment; otherwise part 1's uniform picks. */
+  private get weighted(): boolean {
+    return !!this.region || !!this.environment;
+  }
+  private groupWeight(id: string): number {
+    return (this.region?.groupMultiplier[id] ?? 1) * (this.environment?.groups[id] ?? 1);
+  }
+  private genericWeight(id: string): number {
+    return (this.region?.genericMultiplier.get(id) ?? 1) * (this.environment?.generics[id] ?? 1);
   }
 
   /** Tier weight × regional category multiplier. Unlikely is 0 and stays 0. */
@@ -385,17 +405,17 @@ class PlaceShapeGenerator {
       const { settlement, landscape, landscapeShare } = this.sides;
       let pool = rng() < landscapeShare ? landscape : settlement;
       if (pool.length === 0) pool = pool === landscape ? settlement : landscape;
-      return region
-        ? pickWeighted(pool.map((g): [ShapeGroup, number] => [g, region.groupMultiplier[g.id] ?? 1]), rng)
+      return this.weighted
+        ? pickWeighted(pool.map((g): [ShapeGroup, number] => [g, this.groupWeight(g.id)]), rng)
         : pickUniform(pool, rng);
     }
-    return region ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
+    return this.weighted ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
   }
 
   next(rng: () => number): PlaceShape {
     const region = this.region;
     const group = this.pickGroup(rng);
-    const generic = region ? pickWeighted(this.genericWeights.get(group.id)!, rng) : pickUniform(group.generics, rng);
+    const generic = this.weighted ? pickWeighted(this.genericWeights.get(group.id)!, rng) : pickUniform(group.generics, rng);
     const categoryId = pickWeighted(this.categoryWeights(group, generic.id), rng);
     const shape: PlaceShape = {
       groupId: group.id,
@@ -451,7 +471,7 @@ function createGenerator(options: PlaceShapeGenerateOptions, source: PlaceShapeD
     groupIds: options.groupIds,
     feature: options.feature,
     excludedCategories: options.excludedCategories,
-  });
+  }, PLACE_SHAPE_REGION_DATA, options.environment);
 }
 
 /**

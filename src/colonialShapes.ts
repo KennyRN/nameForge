@@ -240,6 +240,8 @@ export interface ColonialGenerateOptions {
   feature?: string;
   /** Categories set to `ignore` by a recipe: weight 0 at the shape stage. */
   excludedCategories?: string[];
+  /** Land brief §3: biome and terrain multipliers on groups and generics. */
+  environment?: { groups: Record<string, number>; generics: Record<string, number> };
 }
 
 /** Feature filter "Settlement": share of landscape groups drawn (as in part 1). */
@@ -347,7 +349,7 @@ class ColonialShapeGenerator {
       for (const entry of group.generics) {
         const id = genericIdOf(entry);
         if (typeof entry !== "string" && !inPart(entry.parts)) continue;
-        const genericWeight = this.profile.genericMultipliers[id] ?? 1;
+        const genericWeight = (this.profile.genericMultipliers[id] ?? 1) * (options.environment?.generics[id] ?? 1);
         if (genericWeight <= 0) continue;
         const categories = [...resolveColonialProfile(group, id, data)]
           .filter(([c]) => inPart(categoryParts.get(c)) && !excluded.has(c))
@@ -393,7 +395,7 @@ class ColonialShapeGenerator {
   }
 
   private groupMultiplier(id: string): number {
-    return (this.profile.groupMultipliers[id] ?? 1) * (this.context?.groupMultipliers[id] ?? 1);
+    return (this.profile.groupMultipliers[id] ?? 1) * (this.context?.groupMultipliers[id] ?? 1) * (this.options.environment?.groups[id] ?? 1);
   }
 
   private categoryMultiplier(id: string): number {

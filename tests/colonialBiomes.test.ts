@@ -70,9 +70,10 @@ test("colonial biomes: an explicit slot setting still wins", () => {
   assert.ok(!builtIn.some((n) => /Baobab/.test(n.text)), "the savannah trees are not");
 });
 
-test("colonial biomes: the organic part ignores a biome", () => {
+// Land brief §4.1: organic recipes now read a biome; Britain is their default.
+test("colonial biomes: an organic recipe set in Britain is unchanged", () => {
   const plain = withDefaults({ shape: { part: "organic" } });
-  const desert = withDefaults({ shape: { part: "organic", biome: "desert" } });
+  const desert = withDefaults({ shape: { part: "organic", biome: "britain" } });
   for (const seed of SEEDS) {
     assert.deepEqual(
       generatePlaceNames({ recipe: desert, slots: {}, count: 50, seed }).names,

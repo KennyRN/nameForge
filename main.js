@@ -13125,6 +13125,17 @@ function terrainWords(biome, kind, terrain) {
   const own = ((_c = biome[kind][terrain]) != null ? _c : []).map(([w, n]) => [w, 2 * n]);
   return [...universal, ...own];
 }
+function availableTerrains(biome) {
+  var _a2;
+  const builtIn = TERRAIN_CHOICES.filter((t) => {
+    var _a3;
+    return t.id !== "any" && ((_a3 = biome.terrainWeights[t.id]) != null ? _a3 : 0) > 0;
+  });
+  return [...builtIn, ...((_a2 = biome.customTerrains) != null ? _a2 : []).filter((t) => {
+    var _a3;
+    return ((_a3 = biome.terrainWeights[t.id]) != null ? _a3 : 0) > 0;
+  })];
+}
 var biomeTitleCase = (word) => word.replace(/(^|[\s-])([a-z])/g, (_, sep, c) => sep + c.toUpperCase());
 function pluralOf(word) {
   const irregular = BIOME_DATA.irregularPlurals[word];
@@ -13179,6 +13190,24 @@ function biomeEntries(biome, categoryId, terrain) {
   const full = (_a2 = biome.entries) == null ? void 0 : _a2[list];
   if (full) return full.map((e) => [e, 1]);
   return biome[list].map(([word, weight]) => [wordEntry(word), weight]);
+}
+function environmentMultipliers(biome, terrain) {
+  var _a2, _b;
+  const t = terrain && terrain !== "any" ? terrain : void 0;
+  const plainBiome = !biome || biome.id === "britain";
+  if (plainBiome && !t) return void 0;
+  const terrainEntry = t ? (_b = TERRAIN_CHOICES.find((x) => x.id === t)) != null ? _b : (_a2 = biome == null ? void 0 : biome.customTerrains) == null ? void 0 : _a2.find((x) => x.id === t) : void 0;
+  const merge = (a = {}, b = {}) => {
+    var _a3;
+    const out = { ...a };
+    for (const [k, v] of Object.entries(b)) out[k] = ((_a3 = out[k]) != null ? _a3 : 1) * v;
+    return out;
+  };
+  const own = plainBiome ? void 0 : biome.shapeMultipliers;
+  return {
+    groups: merge(own == null ? void 0 : own.groups, terrainEntry == null ? void 0 : terrainEntry.shapeMultipliers.groups),
+    generics: merge(own == null ? void 0 : own.generics, terrainEntry == null ? void 0 : terrainEntry.shapeMultipliers.generics)
+  };
 }
 function pickWeightedPair(items, rng) {
   const total = items.reduce((sum, [, w]) => sum + w, 0);
@@ -20526,15 +20555,16 @@ function pickWeighted(entries, rng) {
   return entries[entries.length - 1][0];
 }
 var PlaceShapeGenerator = class {
-  constructor(source, region, filters = {}, regions = PLACE_SHAPE_REGION_DATA) {
+  constructor(source, region, filters = {}, regions = PLACE_SHAPE_REGION_DATA, environment) {
     this.source = source;
     this.region = region;
+    this.environment = environment;
     this.profiles = /* @__PURE__ */ new Map();
     this.groupWeights = [];
     this.genericWeights = /* @__PURE__ */ new Map();
     /** Feature filter "settlement": the two sides and the landscape share. */
     this.sides = null;
-    var _a2, _b, _c, _d;
+    var _a2, _b, _c;
     this.excluded = new Set((_a2 = filters.excludedCategories) != null ? _a2 : []);
     let groups = filters.groupIds ? source.groups.filter((g) => filters.groupIds.includes(g.id)) : source.groups;
     const feature = filters.feature && filters.feature !== "any" ? filters.feature : void 0;
@@ -20542,6 +20572,9 @@ var PlaceShapeGenerator = class {
     else if (feature && feature !== "settlement") groups = groups.filter((g) => g.id === feature);
     if (this.excluded.size > 0) {
       groups = groups.map((g) => ({ ...g, generics: g.generics.filter((x) => this.categoryWeights(g, x.id).length > 0) })).filter((g) => g.generics.length > 0);
+    }
+    if (environment) {
+      groups = groups.map((g) => ({ ...g, generics: g.generics.filter((x) => this.genericWeight(x.id) > 0) })).filter((g) => g.generics.length > 0 && this.groupWeight(g.id) > 0);
     }
     this.groups = groups;
     if (this.groups.length === 0) throw new Error("No eligible place-shape groups");
@@ -20552,24 +20585,33 @@ var PlaceShapeGenerator = class {
         landscapeShare: (_b = region == null ? void 0 : region.landscapeShareSettlement) != null ? _b : PLACE_SHAPE_WEIGHTS.landscapeShareSettlement
       };
     }
-    if (region) {
+    if (this.weighted) {
       for (const group of this.groups) {
-        this.groupWeights.push([group, (_c = region.groupMultiplier[group.id]) != null ? _c : 1]);
+        this.groupWeights.push([group, this.groupWeight(group.id)]);
         this.genericWeights.set(
           group.id,
-          group.generics.map((g) => {
-            var _a3;
-            return [g, (_a3 = region.genericMultiplier.get(g.id)) != null ? _a3 : 1];
-          })
+          group.generics.map((g) => [g, this.genericWeight(g.id)])
         );
       }
     }
     const stackGroup = source.groups.find((g) => g.id === STACK_SOURCE_GROUP);
-    this.stackGenerics = ((_d = stackGroup == null ? void 0 : stackGroup.generics) != null ? _d : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id));
+    this.stackGenerics = ((_c = stackGroup == null ? void 0 : stackGroup.generics) != null ? _c : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id));
     this.affixWeights = source.affixes.filter((a) => a.forms.length > 0).map((a) => {
       var _a3, _b2;
       return [a, ((_a3 = regions.affixBaseline[a.id]) != null ? _a3 : 0) * ((_b2 = region == null ? void 0 : region.affixMultiplier[a.id]) != null ? _b2 : 1)];
     }).filter(([, w]) => w > 0);
+  }
+  /** Weighted picks with a region or an environment; otherwise part 1's uniform picks. */
+  get weighted() {
+    return !!this.region || !!this.environment;
+  }
+  groupWeight(id) {
+    var _a2, _b, _c, _d;
+    return ((_b = (_a2 = this.region) == null ? void 0 : _a2.groupMultiplier[id]) != null ? _b : 1) * ((_d = (_c = this.environment) == null ? void 0 : _c.groups[id]) != null ? _d : 1);
+  }
+  genericWeight(id) {
+    var _a2, _b, _c, _d;
+    return ((_b = (_a2 = this.region) == null ? void 0 : _a2.genericMultiplier.get(id)) != null ? _b : 1) * ((_d = (_c = this.environment) == null ? void 0 : _c.generics[id]) != null ? _d : 1);
   }
   /** Tier weight × regional category multiplier. Unlikely is 0 and stays 0. */
   categoryWeights(group, genericId) {
@@ -20593,18 +20635,15 @@ var PlaceShapeGenerator = class {
       const { settlement, landscape, landscapeShare } = this.sides;
       let pool = rng() < landscapeShare ? landscape : settlement;
       if (pool.length === 0) pool = pool === landscape ? settlement : landscape;
-      return region ? pickWeighted(pool.map((g) => {
-        var _a2;
-        return [g, (_a2 = region.groupMultiplier[g.id]) != null ? _a2 : 1];
-      }), rng) : pickUniform(pool, rng);
+      return this.weighted ? pickWeighted(pool.map((g) => [g, this.groupWeight(g.id)]), rng) : pickUniform(pool, rng);
     }
-    return region ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
+    return this.weighted ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
   }
   next(rng) {
     var _a2, _b, _c, _d, _e;
     const region = this.region;
     const group = this.pickGroup(rng);
-    const generic = region ? pickWeighted(this.genericWeights.get(group.id), rng) : pickUniform(group.generics, rng);
+    const generic = this.weighted ? pickWeighted(this.genericWeights.get(group.id), rng) : pickUniform(group.generics, rng);
     const categoryId = pickWeighted(this.categoryWeights(group, generic.id), rng);
     const shape = {
       groupId: group.id,
@@ -20646,7 +20685,7 @@ function createGenerator(options, source) {
     groupIds: options.groupIds,
     feature: options.feature,
     excludedCategories: options.excludedCategories
-  });
+  }, PLACE_SHAPE_REGION_DATA, options.environment);
 }
 function generatePlaceShapesDetailed(options, source = PLACE_SHAPE_DATA) {
   const seed = resolveSeed(options.seed);
@@ -24822,7 +24861,7 @@ var ColonialShapeGenerator = class {
     this.data = data;
     this.groups = [];
     this.sides = null;
-    var _a2, _b;
+    var _a2, _b, _c, _d;
     const { part } = options;
     const tradition = options.tradition ? data.traditions.find((t) => t.id === options.tradition) : data.general;
     if (!tradition) throw new Error(`Unknown colonial tradition: ${options.tradition}`);
@@ -24847,7 +24886,7 @@ var ColonialShapeGenerator = class {
       for (const entry of group.generics) {
         const id = genericIdOf(entry);
         if (typeof entry !== "string" && !inPart(entry.parts)) continue;
-        const genericWeight = (_b = this.profile.genericMultipliers[id]) != null ? _b : 1;
+        const genericWeight = ((_b = this.profile.genericMultipliers[id]) != null ? _b : 1) * ((_d = (_c = options.environment) == null ? void 0 : _c.generics[id]) != null ? _d : 1);
         if (genericWeight <= 0) continue;
         const categories = [...resolveColonialProfile(group, id, data)].filter(([c]) => inPart(categoryParts.get(c)) && !excluded.has(c)).map(([c, tier]) => [c, PLACE_SHAPE_WEIGHTS.tier[tier] * this.categoryMultiplier(c)]).filter(([, w]) => w > 0);
         if (categories.length === 0) continue;
@@ -24890,8 +24929,8 @@ var ColonialShapeGenerator = class {
     }).filter(([, w]) => w > 0);
   }
   groupMultiplier(id) {
-    var _a2, _b, _c;
-    return ((_a2 = this.profile.groupMultipliers[id]) != null ? _a2 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.groupMultipliers[id]) != null ? _c : 1);
+    var _a2, _b, _c, _d, _e;
+    return ((_a2 = this.profile.groupMultipliers[id]) != null ? _a2 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.groupMultipliers[id]) != null ? _c : 1) * ((_e = (_d = this.options.environment) == null ? void 0 : _d.groups[id]) != null ? _e : 1);
   }
   categoryMultiplier(id) {
     var _a2, _b, _c;
@@ -31624,7 +31663,7 @@ var NameRenderer = class {
     const mapped = this.slots[categoryId];
     if (categoryId === RIVER_CATEGORY && (!mapped || mapped.kind === "built-in")) return this.riverWordFill(rng);
     if (this.colonial && !mapped && NATIVE_LABELS[categoryId]) {
-      const biome = findBiome(this.recipe.shape.biome);
+      const biome = this.options.biome;
       const entries = biome ? biomeEntries(biome, categoryId) : void 0;
       if (entries) return { kind: "word", entry: pickWeighted3(entries, rng), traditional: false };
       return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
@@ -32034,6 +32073,7 @@ function generatePlaceNames(options) {
   }
 }
 function* generatePlaceNamesSteps(options) {
+  var _a2, _b;
   const { recipe } = options;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const organic = recipe.shape.part === "organic";
@@ -32045,7 +32085,21 @@ function* generatePlaceNamesSteps(options) {
   const excludedCategories = Object.entries(options.slots).filter(([, slot]) => slot.kind === "ignore").map(([id]) => id);
   const rng = mulberry32((seed ^ FILL_SALT) >>> 0);
   const adaptation = options.adapt && !organic ? { adapt: options.adapt, seed, redrawRng: mulberry32((seed ^ REDRAW_SALT) >>> 0) } : void 0;
+  const biomeSetting = recipe.shape.biome;
+  let biome = (_a2 = options.biome) != null ? _a2 : (biomeSetting == null ? void 0 : biomeSetting.startsWith("[[")) ? void 0 : findBiome(biomeSetting);
+  if (!biome && (biomeSetting == null ? void 0 : biomeSetting.startsWith("[["))) {
+    notices.push(`Biome pack \u201C${biomeSetting.slice(2, -2)}\u201D wasn't found; using ${organic ? "Britain" : "unknown country"}.`);
+  }
+  if (organic && (biome == null ? void 0 : biome.id) === "britain") biome = void 0;
+  let terrain = (_b = recipe.shape.terrain) != null ? _b : "any";
+  if (terrain !== "any" && biome && !availableTerrains(biome).some((t) => t.id === terrain) && biome.customTerrains) {
+    notices.push(`${biome.label} has no \u201C${terrain}\u201D terrain.`);
+    terrain = "any";
+  }
+  const environment = environmentMultipliers(biome, terrain);
   const renderer = new NameRenderer(recipe, options.slots, region, {
+    biome,
+    terrain,
     adaptation,
     ofTheRng: mulberry32((seed ^ OF_THE_SALT) >>> 0),
     labelRng: mulberry32((seed ^ SPLIT_SALT) >>> 0),
@@ -32055,7 +32109,7 @@ function* generatePlaceNamesSteps(options) {
   let renderOne;
   let shapeCount;
   if (organic) {
-    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories });
+    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment });
     renderOne = (i) => renderer.render(shapes[i], rng);
     shapeCount = shapes.length;
   } else {
@@ -32066,7 +32120,8 @@ function* generatePlaceNamesSteps(options) {
       tradition: recipe.shape.tradition === "general" ? void 0 : recipe.shape.tradition,
       context: recipe.shape.context === "none" ? void 0 : recipe.shape.context,
       feature: recipe.shape.feature,
-      excludedCategories
+      excludedCategories,
+      environment
     });
     renderOne = (i) => renderer.renderColonial(shapes[i], rng);
     shapeCount = shapes.length;
@@ -32089,7 +32144,7 @@ function* generatePlaceNamesSteps(options) {
 var RECIPE_DEFAULTS = {
   setting: "",
   template: false,
-  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", biome: "unknown", feature: "any" },
+  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", biome: "unknown", terrain: "any", feature: "any" },
   slots: {},
   generics: {},
   register: "mixed",
@@ -32145,6 +32200,7 @@ function readSlot(v, problems, id) {
   return slot;
 }
 function readRecipe(fm) {
+  var _a2;
   const problems = [];
   const recipe = {};
   const setting = str(fm.setting);
@@ -32163,8 +32219,14 @@ function readRecipe(fm) {
       if (value) shape[key] = value;
     }
     const biome = str(fm.shape.biome);
-    if (biome && (biome === "unknown" || findBiome(biome))) shape.biome = biome;
+    if (biome && /^\[\[/.test(biome)) {
+      const target = linkTarget(biome);
+      if (target) shape.biome = `[[${target}]]`;
+    } else if (biome && (biome === "unknown" || findBiome(biome))) shape.biome = biome;
     else if (biome) problems.push(`Unknown biome \u201C${biome}\u201D.`);
+    const terrain = str(fm.shape.terrain);
+    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || ((_a2 = shape.biome) == null ? void 0 : _a2.startsWith("[[")))) shape.terrain = terrain;
+    else if (terrain) problems.push(`Unknown terrain \u201C${terrain}\u201D.`);
     recipe.shape = shape;
   }
   if (isObject(fm.slots)) {
@@ -32246,8 +32308,13 @@ function recipeToFrontmatter(r) {
   if (r.template) out.template = true;
   if (r.templateOf) out["template-of"] = `[[${r.templateOf}]]`;
   if (r.shape && Object.keys(r.shape).length > 0) {
-    const { biome, ...rest } = r.shape;
-    out.shape = biome && biome !== "unknown" ? { ...rest, biome } : rest;
+    const { biome, terrain, ...rest } = r.shape;
+    out.shape = {
+      ...rest,
+      ...biome && biome !== "unknown" ? { biome } : {},
+      // Land brief §4.1: "any" is the default and is never written.
+      ...terrain && terrain !== "any" ? { terrain } : {}
+    };
   }
   if (r.slots && Object.keys(r.slots).length > 0) {
     out.slots = Object.fromEntries(
@@ -32281,16 +32348,16 @@ function recipeToFrontmatter(r) {
   if (r.native) out.native = `[[${r.native}]]`;
   return out;
 }
-function britishPlaceNamesRecipe(region) {
+function britishPlaceNamesRecipe(region, biome, terrain) {
   return withDefaults({
-    shape: { part: "organic", region: region != null ? region : "all-britain", feature: "any" },
+    shape: { part: "organic", region: region != null ? region : "all-britain", biome: biome != null ? biome : "unknown", terrain: terrain != null ? terrain : "any", feature: "any" },
     register: "modern",
     render: { joining: "balanced", linkingHyphens: true, etymology: false }
   });
 }
-function colonialPlaceNamesRecipe(part, tradition, context, biome) {
+function colonialPlaceNamesRecipe(part, tradition, context, biome, terrain) {
   return withDefaults({
-    shape: { part, tradition: tradition != null ? tradition : "general", context: context != null ? context : "none", biome: biome != null ? biome : "unknown", feature: "any" },
+    shape: { part, tradition: tradition != null ? tradition : "general", context: context != null ? context : "none", biome: biome != null ? biome : "unknown", terrain: terrain != null ? terrain : "any", feature: "any" },
     register: "modern",
     render: { joining: "balanced", linkingHyphens: true, etymology: false }
   });
