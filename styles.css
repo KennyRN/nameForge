@@ -749,8 +749,7 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   /* Fixed-ish, but capped relative to the viewport so it doesn't push the
      save/cancel row off the bottom of shorter windows — 420px was too tall
      on smaller screens, clipping the controls below it with no scrollbar. */
-  /* The place name wizard adds the hidden template row's height (set in updateTypeButtons). */
-  height: calc(clamp(200px, 45vh, 420px) + var(--nf-wizard-extra-height, 0px));
+  height: clamp(200px, 45vh, 420px);
   overflow: hidden;
   margin-bottom: 6px;
 }
@@ -1231,12 +1230,6 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   min-width: 0;
 }
 
-.nameforge-editor-modal__template-hint {
-  margin: 0 0 8px;
-  color: var(--text-muted);
-  font-size: var(--font-ui-smaller);
-}
-
 /* Recipe results (names-reference §4.9, §8): placeholders muted; etymology beneath each name. */
 .nameforge-modal__recipe-results li {
   display: flex;
@@ -1556,4 +1549,53 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 }
 .nameforge-recipe-editor__sentence-fixed {
   font-weight: var(--font-semibold);
+}
+
+/* Create Pack window: 8px before Biome and before the Templates button. */
+.nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button--spaced {
+  margin-left: 8px;
+}
+
+/* The Templates button: icon only, filled half way between the background and the buttons. */
+.nameforge-modal__pack-type-toggle .nameforge-modal__templates-button {
+  flex: 0 0 auto;
+  background-color: color-mix(in srgb, var(--background-primary) 50%, var(--background-secondary));
+  color: var(--background-primary);
+}
+.nameforge-modal__pack-type-toggle .nameforge-modal__templates-button.is-active {
+  background-color: var(--forge-accent);
+  color: var(--text-on-accent);
+}
+
+/* The templates pane takes the right quarter of the stage; the current pane keeps the rest. */
+.nameforge-editor-modal__stage.is-templates-open > .nameforge-editor-modal__stage-pane {
+  right: 25%;
+}
+.nameforge-editor-modal__templates {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: calc(25% - 8px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--background-secondary);
+  border-radius: var(--radius-m, 8px);
+}
+.nameforge-editor-modal__template-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: auto;
+  padding: 6px 8px;
+  text-align: left;
+  white-space: normal;
+}
+.nameforge-editor-modal__template-count,
+.nameforge-editor-modal__templates-empty {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
 }

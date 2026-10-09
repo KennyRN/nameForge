@@ -67,6 +67,7 @@ import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome,
 import { chooseTribal, type TribalSentenceLimits, type TribalSentenceState, tribalSentence, tribalSentenceText } from "./tribes/sentence";
 import { isModulePresetContent, modulePresetContent, parseModulePreset, type TribalPreset } from "./presets";
 import { confirmReplace, PresetSaveModal } from "./presetModal";
+import { builtinTemplates, type TemplateType, templateTypeFor } from "./templates";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
 import { type BiomePackSource, biomeToText, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
@@ -3187,21 +3188,20 @@ export class NameForgeModal extends Modal {
   }
 
   /** Template packs of one type (or word lists), for "Start from template" in the editor. */
-  public async listTemplates(kind: NamePackType): Promise<{ name: string; description: string }[]> {
+  /** The user's own template notes of the given pack types, with their names or parts, for the templates pane. */
+  public async listTemplates(kinds: NamePackType[]): Promise<{ name: string; names?: string[]; parts?: string[][] }[]> {
     const folderPath = this.getFolderPath();
     const folder = folderPath ? this.app.vault.getFolderByPath(normalizePath(folderPath)) : null;
     if (!folder) return [];
-    const out: { name: string; description: string }[] = [];
+    const out: { name: string; names?: string[]; parts?: string[][] }[] = [];
     for (const child of folder.children) {
       if (!(child instanceof TFile) || child.extension !== "md") continue;
       try {
         const content = await this.app.vault.cachedRead(child);
         if (!isValidNamePackContent(content)) continue;
         const parsed = parseNamesFileContent(content);
-        if (!parsed.template || parsed.packType !== kind) continue;
-        const sections = parsed.sectioned?.sections.map((s) => s.name) ?? [];
-        const count = parsed.packType === "mixPack" ? `${parsed.mixSources?.length ?? 0} sources` : `${parsed.names.length} names`;
-        out.push({ name: child.basename, description: sections.length > 0 ? `${count}; sections: ${sections.join(", ")}` : count });
+        if (!parsed.template || !kinds.includes(parsed.packType)) continue;
+        out.push(parsed.packType === "compoundPack" ? { name: child.basename, parts: parsed.parts ?? [] } : { name: child.basename, names: parsed.names });
       } catch {
         continue;
       }
@@ -3401,6 +3401,10 @@ class NameForgeEditorModal extends Modal {
   /** Land brief §9.4: the editor is creating or editing a biome pack. */
   private biomeMode = false;
   private biomeButton: HTMLButtonElement | null = null;
+  /** The templates pane, beside the stage's current pane. */
+  private templatesButton: HTMLButtonElement | null = null;
+  private templatesPaneEl: HTMLElement | null = null;
+  private templatesOpen = false;
   private biomeRowEl: HTMLElement | null = null;
   private biomeBaseSelect: HTMLSelectElement | null = null;
   private biomePhraseInput: HTMLInputElement | null = null;
@@ -3413,13 +3417,7 @@ class NameForgeEditorModal extends Modal {
   private wizardButton: HTMLButtonElement | null = null;
   private wizardPaneEl: HTMLElement | null = null;
   private wizard: RecipeWizard | null = null;
-  private templateRowEl: HTMLElement | null = null;
   private stageEl: HTMLElement | null = null;
-  /** §7: "Start from template" — the chosen template's note name, if any. */
-  private templateOf: string | undefined = undefined;
-  private templateSelectEl: HTMLSelectElement | null = null;
-  private templateHintEl: HTMLElement | null = null;
-  private templateOptions: { name: string; description: string }[] = [];
   private selectedPackType: NamePackType = "breakdownPack";
   private initialText: string;
   private initialPackName: string;
@@ -3515,6 +3513,7 @@ class NameForgeEditorModal extends Modal {
 
     // Land brief §9.4: a biome pack, starting from a base biome.
     this.biomeButton = addTypeButton("Biome", ICON_BIOME);
+    this.biomeButton.addClass("nameforge-modal__toggle-button--spaced");
     this.biomeButton.addEventListener("click", () => {
       this.biomeMode = true;
       this.wizardMode = false;
@@ -3522,17 +3521,17 @@ class NameForgeEditorModal extends Modal {
       void this.enterBiomeMode();
     });
 
-    // §7: start from a template of the chosen type; the new pack stores only its differences.
-    const templateRow = contentEl.createDiv({ cls: "nameforge-editor-modal__template-row" });
-    this.templateRowEl = templateRow;
-    templateRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from template" });
-    this.templateSelectEl = templateRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from template" } });
-    this.templateSelectEl.addEventListener("change", () => {
-      const value = this.templateSelectEl?.value ?? "";
-      this.templateOf = value || undefined;
-      this.updateTemplateHint();
+    // The templates pane: icon only, on and off, separate from the pack type.
+    this.templatesButton = typeToggle.createEl("button", {
+      cls: "nameforge-modal__toggle-button nameforge-modal__toggle-button--spaced nameforge-modal__templates-button",
+      attr: { type: "button", title: "Templates", "aria-label": "Templates", "aria-pressed": "false" },
     });
-    this.templateHintEl = contentEl.createDiv({ cls: "nameforge-editor-modal__template-hint" });
+    setIcon(this.templatesButton.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), ICON_SAVE_PRESET);
+    this.templatesButton.addEventListener("click", () => {
+      this.templatesOpen = !this.templatesOpen;
+      this.updateTypeButtons();
+    });
+
 
     // Biome packs: what they start from and how they read in a sentence.
     const biomeRow = (this.biomeRowEl = contentEl.createDiv({ cls: "nameforge-editor-modal__template-row" }));
@@ -3567,6 +3566,8 @@ class NameForgeEditorModal extends Modal {
 
     this.buildCompoundSection(stage);
     this.buildMixSection(stage);
+    this.templatesPaneEl = stage.createDiv({ cls: "nameforge-editor-modal__templates" });
+    this.templatesPaneEl.hide();
     // The wizard's pane: its page scrolls inside the stage, so the modal keeps its size.
     this.wizardPaneEl = stage.createDiv({ cls: "nameforge-editor-modal__stage-pane nameforge-editor-modal__wizard" });
     this.wizardPaneEl.hide();
@@ -3575,7 +3576,6 @@ class NameForgeEditorModal extends Modal {
     this.updateTypeButtons();
     this.updateCompoundControls();
     void this.loadMixPackOptions();
-    void this.loadTemplateOptions();
 
     const controls = contentEl.createDiv({ cls: "nameforge-modal__controls" });
     const saveButton = controls.createEl("button", {
@@ -3766,31 +3766,8 @@ class NameForgeEditorModal extends Modal {
     this.biomeMode = false;
     this.wizardMode = false;
     this.updateTypeButtons();
-    void this.loadTemplateOptions();
   }
 
-  /** Lists templates of the chosen type, each with a short description. */
-  private async loadTemplateOptions() {
-    this.templateOptions = await this.parent.listTemplates(this.selectedPackType);
-    const select = this.templateSelectEl;
-    if (!select) return;
-    select.empty();
-    select.createEl("option", { text: this.templateOptions.length > 0 ? "None" : "No templates of this type", value: "" });
-    for (const t of this.templateOptions) select.createEl("option", { text: t.name, value: t.name });
-    if (!this.templateOptions.some((t) => t.name === this.templateOf)) this.templateOf = undefined;
-    select.value = this.templateOf ?? "";
-    select.disabled = this.templateOptions.length === 0;
-    this.updateTemplateHint();
-  }
-
-  private updateTemplateHint() {
-    const chosen = this.templateOptions.find((t) => t.name === this.templateOf);
-    if (!this.templateHintEl) return;
-    this.templateHintEl.setText(
-      chosen ? `${chosen.description}. Anything you leave empty comes from the template.` : "",
-    );
-    this.templateHintEl.toggle(!!chosen);
-  }
 
   /** The chosen base: a built-in id, or a user pack's path. */
   private biomeBase(): Biome {
@@ -3899,21 +3876,15 @@ class NameForgeEditorModal extends Modal {
     const isMix = !other && this.selectedPackType === "mixPack";
     this.wizardButton?.classList.toggle("is-active", isWizard);
     this.wizardButton?.setAttribute("aria-pressed", String(isWizard));
-    // The wizard has its own template choice on its first page. Its pane takes over the template
-    // row's height as well, so the modal doesn't change size.
-    if (isWizard && this.stageEl && this.templateRowEl?.isShown()) {
-      const outer = (el: HTMLElement | null) => {
-        if (!el || !el.isShown()) return 0;
-        const style = getComputedStyle(el);
-        return el.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
-      };
-      const extra = outer(this.templateRowEl) + outer(this.templateHintEl);
-      this.stageEl.style.setProperty("--nf-wizard-extra-height", `${extra}px`);
-    } else if (!isWizard) {
-      this.stageEl?.style.setProperty("--nf-wizard-extra-height", "0px");
-    }
-    this.templateRowEl?.toggle(!isWizard && !isBiome);
-    this.templateHintEl?.toggle(!isWizard && !isBiome);
+    // The templates pane: only for pack types that have templates.
+    const templateType = other ? undefined : templateTypeFor(this.selectedPackType);
+    this.templatesButton?.toggle(!!templateType);
+    const showTemplates = this.templatesOpen && !!templateType;
+    this.templatesButton?.toggleClass("is-active", showTemplates);
+    this.templatesButton?.setAttribute("aria-pressed", String(showTemplates));
+    this.stageEl?.toggleClass("is-templates-open", showTemplates);
+    this.templatesPaneEl?.toggle(showTemplates);
+    if (showTemplates && templateType) void this.renderTemplatesPane(templateType);
     this.wizardPaneEl?.toggle(isWizard);
     this.breakdownButton?.classList.toggle("is-active", isBreakdown);
     this.listButton?.classList.toggle("is-active", isList);
@@ -3931,6 +3902,39 @@ class NameForgeEditorModal extends Modal {
     for (const el of Object.values(this.textPanes)) el.toggle(el === this.inputEl);
     this.compoundSectionEl?.toggle(isCompound);
     this.mixSectionEl?.toggle(isMix);
+  }
+
+  /** Lists the built-in templates, then the user's own, for the pack type's kind of template. */
+  private async renderTemplatesPane(type: TemplateType) {
+    const pane = this.templatesPaneEl;
+    if (!pane) return;
+    const kinds: NamePackType[] = type === "people" ? ["breakdownPack", "listPack"] : type === "people-compound" ? ["compoundPack"] : ["placePack"];
+    const own = await this.parent.listTemplates(kinds);
+    pane.empty();
+    const entries = [...builtinTemplates(type).map((t) => ({ name: t.name, names: t.items, parts: t.parts })), ...own];
+    if (entries.length === 0) pane.createDiv({ cls: "nameforge-editor-modal__templates-empty", text: "No templates of this type" });
+    for (const entry of entries) {
+      const row = pane.createEl("button", { cls: "nameforge-editor-modal__template-item", attr: { type: "button" } });
+      row.createSpan({ cls: "nameforge-editor-modal__template-name", text: entry.name });
+      const count = entry.parts ? `${entry.parts.length} parts` : `${entry.names?.length ?? 0} names`;
+      row.createSpan({ cls: "nameforge-editor-modal__template-count", text: count });
+      row.addEventListener("click", () => void this.useTemplate(entry));
+    }
+  }
+
+  /** Fills the box (or the compound parts) from a template, asking first if there is text to replace. */
+  private async useTemplate(entry: { names?: string[]; parts?: string[][] }) {
+    if (entry.parts) {
+      const parts = entry.parts.slice(0, 3);
+      if (this.partTextareas.slice(0, parts.length).some((t) => t.value.trim()) && !(await confirmReplace(this.app, "Replace what's in the parts?"))) return;
+      parts.forEach((part, i) => (this.partTextareas[i].value = part.join("\n")));
+      this.setCompoundParts(parts.length >= 3 ? 3 : 2);
+      return;
+    }
+    const box = this.inputEl;
+    if (!box) return;
+    if (box.value.trim() && !(await confirmReplace(this.app, "Replace what's in the box?"))) return;
+    box.value = (entry.names ?? []).join("\n");
   }
 
   /** The text box a pack type writes in; compound and mix have their own sections instead. */
@@ -3985,7 +3989,7 @@ class NameForgeEditorModal extends Modal {
       return;
     }
     const packName = this.packNameInput?.value?.trim() || "nameForge";
-    const templateOf = this.templateOf;
+    const templateOf = undefined;
     if (this.biomeMode) {
       await this.saveBiome(packName);
       return;

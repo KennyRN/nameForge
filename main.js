@@ -32863,6 +32863,196 @@ function confirmReplace(app, question) {
   });
 }
 
+// src/data/builtin-templates.json
+var builtin_templates_default = [
+  {
+    name: "Victorian, England, Male",
+    type: "people",
+    items: [
+      "Albert",
+      "Alexander",
+      "Alfred",
+      "Algernon",
+      "Allen",
+      "Ambrose",
+      "Andrew",
+      "Anthony",
+      "Archibald",
+      "Archie",
+      "Arthur",
+      "Aubrey",
+      "August",
+      "Augustine",
+      "Augustus",
+      "Basil",
+      "Ben",
+      "Benjamin",
+      "Bernard",
+      "Bert",
+      "Bertram",
+      "Carl",
+      "Cecil",
+      "Cedric",
+      "Charles",
+      "Charley",
+      "Charlie",
+      "Chester",
+      "Clarence",
+      "Claude",
+      "Clement",
+      "Clifford",
+      "Clyde",
+      "Cornelius",
+      "Cuthbert",
+      "Cyril",
+      "Daniel",
+      "David",
+      "Donald",
+      "Douglas",
+      "Duncan",
+      "Earl",
+      "Ebenezer",
+      "Ed",
+      "Eddie",
+      "Edgar",
+      "Edmund",
+      "Edward",
+      "Edwin",
+      "Elmer",
+      "Ernest",
+      "Eugene",
+      "Eustace",
+      "Evan",
+      "Everett",
+      "Ewart",
+      "Felix",
+      "Fergus",
+      "Floyd",
+      "Francis",
+      "Frank",
+      "Franklin",
+      "Fred",
+      "Frederick",
+      "Geoffrey",
+      "George",
+      "Gerald",
+      "Gilbert",
+      "Grover",
+      "Guy",
+      "Harold",
+      "Harry",
+      "Harvey",
+      "Henry",
+      "Herbert",
+      "Herman",
+      "Horace",
+      "Howard",
+      "Hubert",
+      "Hugh",
+      "Hugo",
+      "Humphrey",
+      "Ira",
+      "Isaac",
+      "Ivan",
+      "Ivor",
+      "Jack",
+      "Jacob",
+      "James",
+      "Jasper",
+      "Jessie",
+      "Jim",
+      "Joe",
+      "John",
+      "Jonathan",
+      "Joseph",
+      "Julian",
+      "Julius",
+      "Kenneth",
+      "Laurence",
+      "Lawrence",
+      "Lee",
+      "Leo",
+      "Leonard",
+      "Leopold",
+      "Leroy",
+      "Leslie",
+      "Lewis",
+      "Lionel",
+      "Llewellyn",
+      "Lloyd",
+      "Louis",
+      "Luther",
+      "Malcolm",
+      "Marion",
+      "Martin",
+      "Maurice",
+      "Maxwell",
+      "Michael",
+      "Miles",
+      "Montague",
+      "Neville",
+      "Nigel",
+      "Oliver",
+      "Oscar",
+      "Otto",
+      "Owen",
+      "Patrick",
+      "Paul",
+      "Percival",
+      "Percy",
+      "Peter",
+      "Philip",
+      "Ralph",
+      "Randolph",
+      "Ray",
+      "Raymond",
+      "Reginald",
+      "Reuben",
+      "Richard",
+      "Robert",
+      "Roderick",
+      "Roger",
+      "Roy",
+      "Rufus",
+      "Rupert",
+      "Sam",
+      "Samuel",
+      "Septimus",
+      "Sidney",
+      "Silas",
+      "Simeon",
+      "Stanley",
+      "Stephen",
+      "Theodore",
+      "Thomas",
+      "Timothy",
+      "Tom",
+      "Valentine",
+      "Vernon",
+      "Victor",
+      "Vincent",
+      "Walter",
+      "Warren",
+      "Wilfred",
+      "Will",
+      "William",
+      "Willie"
+    ]
+  }
+];
+
+// src/templates.ts
+var BUILTIN_TEMPLATES = builtin_templates_default;
+function templateTypeFor(packType) {
+  if (packType === "breakdownPack" || packType === "listPack") return "people";
+  if (packType === "compoundPack") return "people-compound";
+  if (packType === "placePack") return "place";
+  return void 0;
+}
+function builtinTemplates(type) {
+  return BUILTIN_TEMPLATES.filter((t) => t.type === type);
+}
+
 // src/landMenu.ts
 var import_obsidian7 = require("obsidian");
 var DEFAULT_LAND = { biome: void 0, terrain: "any" };
@@ -36106,7 +36296,7 @@ var RecipeWizard = class {
       if (inTier || this.isSlotSet(category.id)) this.renderSlot(el, category.id, category.label, !inTier);
     }
   }
-  /** The slots the slots page shows: those in the tier, plus any set outside it. */
+  /** The slots the slots page lists: those in the tier, plus any set outside it. */
   shownSlots() {
     const part = this.working.shape.part;
     return slotCategories(part).filter((c) => tierIncludes(this.tier, slotTier(part, c.id)) || this.isSlotSet(c.id));
@@ -39936,8 +40126,9 @@ ${indent}${marker}${name}`).join("");
     return index;
   }
   /** Template packs of one type (or word lists), for "Start from template" in the editor. */
-  async listTemplates(kind) {
-    var _a2, _b, _c, _d;
+  /** The user's own template notes of the given pack types, with their names or parts, for the templates pane. */
+  async listTemplates(kinds) {
+    var _a2;
     const folderPath = this.getFolderPath();
     const folder = folderPath ? this.app.vault.getFolderByPath((0, import_obsidian13.normalizePath)(folderPath)) : null;
     if (!folder) return [];
@@ -39948,10 +40139,8 @@ ${indent}${marker}${name}`).join("");
         const content = await this.app.vault.cachedRead(child);
         if (!isValidNamePackContent(content)) continue;
         const parsed = parseNamesFileContent(content);
-        if (!parsed.template || parsed.packType !== kind) continue;
-        const sections = (_b = (_a2 = parsed.sectioned) == null ? void 0 : _a2.sections.map((s) => s.name)) != null ? _b : [];
-        const count = parsed.packType === "mixPack" ? `${(_d = (_c = parsed.mixSources) == null ? void 0 : _c.length) != null ? _d : 0} sources` : `${parsed.names.length} names`;
-        out.push({ name: child.basename, description: sections.length > 0 ? `${count}; sections: ${sections.join(", ")}` : count });
+        if (!parsed.template || !kinds.includes(parsed.packType)) continue;
+        out.push(parsed.packType === "compoundPack" ? { name: child.basename, parts: (_a2 = parsed.parts) != null ? _a2 : [] } : { name: child.basename, names: parsed.names });
       } catch (e) {
         continue;
       }
@@ -40116,6 +40305,10 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     /** Land brief §9.4: the editor is creating or editing a biome pack. */
     this.biomeMode = false;
     this.biomeButton = null;
+    /** The templates pane, beside the stage's current pane. */
+    this.templatesButton = null;
+    this.templatesPaneEl = null;
+    this.templatesOpen = false;
     this.biomeRowEl = null;
     this.biomeBaseSelect = null;
     this.biomePhraseInput = null;
@@ -40126,13 +40319,7 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     this.wizardButton = null;
     this.wizardPaneEl = null;
     this.wizard = null;
-    this.templateRowEl = null;
     this.stageEl = null;
-    /** §7: "Start from template" — the chosen template's note name, if any. */
-    this.templateOf = void 0;
-    this.templateSelectEl = null;
-    this.templateHintEl = null;
-    this.templateOptions = [];
     this.selectedPackType = "breakdownPack";
     this.compoundSectionEl = null;
     this.compoundPartsCount = 2;
@@ -40211,23 +40398,22 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
       void this.openWizard();
     });
     this.biomeButton = addTypeButton("Biome", ICON_BIOME);
+    this.biomeButton.addClass("nameforge-modal__toggle-button--spaced");
     this.biomeButton.addEventListener("click", () => {
       this.biomeMode = true;
       this.wizardMode = false;
       this.updateTypeButtons();
       void this.enterBiomeMode();
     });
-    const templateRow = contentEl.createDiv({ cls: "nameforge-editor-modal__template-row" });
-    this.templateRowEl = templateRow;
-    templateRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from template" });
-    this.templateSelectEl = templateRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from template" } });
-    this.templateSelectEl.addEventListener("change", () => {
-      var _a2, _b;
-      const value = (_b = (_a2 = this.templateSelectEl) == null ? void 0 : _a2.value) != null ? _b : "";
-      this.templateOf = value || void 0;
-      this.updateTemplateHint();
+    this.templatesButton = typeToggle.createEl("button", {
+      cls: "nameforge-modal__toggle-button nameforge-modal__toggle-button--spaced nameforge-modal__templates-button",
+      attr: { type: "button", title: "Templates", "aria-label": "Templates", "aria-pressed": "false" }
     });
-    this.templateHintEl = contentEl.createDiv({ cls: "nameforge-editor-modal__template-hint" });
+    (0, import_obsidian13.setIcon)(this.templatesButton.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), ICON_SAVE_PRESET);
+    this.templatesButton.addEventListener("click", () => {
+      this.templatesOpen = !this.templatesOpen;
+      this.updateTypeButtons();
+    });
     const biomeRow = this.biomeRowEl = contentEl.createDiv({ cls: "nameforge-editor-modal__template-row" });
     biomeRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from" });
     this.biomeBaseSelect = biomeRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from" } });
@@ -40253,13 +40439,14 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     if (initialPane) this.textPanes[initialPane].value = this.initialText;
     this.buildCompoundSection(stage);
     this.buildMixSection(stage);
+    this.templatesPaneEl = stage.createDiv({ cls: "nameforge-editor-modal__templates" });
+    this.templatesPaneEl.hide();
     this.wizardPaneEl = stage.createDiv({ cls: "nameforge-editor-modal__stage-pane nameforge-editor-modal__wizard" });
     this.wizardPaneEl.hide();
     this.selectedPackType = this.parent.currentPackType;
     this.updateTypeButtons();
     this.updateCompoundControls();
     void this.loadMixPackOptions();
-    void this.loadTemplateOptions();
     const controls = contentEl.createDiv({ cls: "nameforge-modal__controls" });
     const saveButton = controls.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
@@ -40427,29 +40614,6 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     this.biomeMode = false;
     this.wizardMode = false;
     this.updateTypeButtons();
-    void this.loadTemplateOptions();
-  }
-  /** Lists templates of the chosen type, each with a short description. */
-  async loadTemplateOptions() {
-    var _a2;
-    this.templateOptions = await this.parent.listTemplates(this.selectedPackType);
-    const select = this.templateSelectEl;
-    if (!select) return;
-    select.empty();
-    select.createEl("option", { text: this.templateOptions.length > 0 ? "None" : "No templates of this type", value: "" });
-    for (const t of this.templateOptions) select.createEl("option", { text: t.name, value: t.name });
-    if (!this.templateOptions.some((t) => t.name === this.templateOf)) this.templateOf = void 0;
-    select.value = (_a2 = this.templateOf) != null ? _a2 : "";
-    select.disabled = this.templateOptions.length === 0;
-    this.updateTemplateHint();
-  }
-  updateTemplateHint() {
-    const chosen = this.templateOptions.find((t) => t.name === this.templateOf);
-    if (!this.templateHintEl) return;
-    this.templateHintEl.setText(
-      chosen ? `${chosen.description}. Anything you leave empty comes from the template.` : ""
-    );
-    this.templateHintEl.toggle(!!chosen);
   }
   /** The chosen base: a built-in id, or a user pack's path. */
   biomeBase() {
@@ -40545,7 +40709,7 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     this.updateCompoundControls();
   }
   updateTypeButtons() {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w;
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x;
     const isWizard = this.wizardMode;
     const isBiome = !isWizard && this.biomeMode;
     const other = isWizard || isBiome;
@@ -40559,35 +40723,63 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     const isMix = !other && this.selectedPackType === "mixPack";
     (_d = this.wizardButton) == null ? void 0 : _d.classList.toggle("is-active", isWizard);
     (_e = this.wizardButton) == null ? void 0 : _e.setAttribute("aria-pressed", String(isWizard));
-    if (isWizard && this.stageEl && ((_f = this.templateRowEl) == null ? void 0 : _f.isShown())) {
-      const outer = (el) => {
-        if (!el || !el.isShown()) return 0;
-        const style = getComputedStyle(el);
-        return el.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
-      };
-      const extra = outer(this.templateRowEl) + outer(this.templateHintEl);
-      this.stageEl.style.setProperty("--nf-wizard-extra-height", `${extra}px`);
-    } else if (!isWizard) {
-      (_g = this.stageEl) == null ? void 0 : _g.style.setProperty("--nf-wizard-extra-height", "0px");
-    }
-    (_h = this.templateRowEl) == null ? void 0 : _h.toggle(!isWizard && !isBiome);
-    (_i = this.templateHintEl) == null ? void 0 : _i.toggle(!isWizard && !isBiome);
-    (_j = this.wizardPaneEl) == null ? void 0 : _j.toggle(isWizard);
-    (_k = this.breakdownButton) == null ? void 0 : _k.classList.toggle("is-active", isBreakdown);
-    (_l = this.listButton) == null ? void 0 : _l.classList.toggle("is-active", isList);
-    (_m = this.compoundButton) == null ? void 0 : _m.classList.toggle("is-active", isCompound);
-    (_n = this.placeButton) == null ? void 0 : _n.classList.toggle("is-active", isPlace);
-    (_o = this.mixButton) == null ? void 0 : _o.classList.toggle("is-active", isMix);
-    (_p = this.breakdownButton) == null ? void 0 : _p.setAttribute("aria-pressed", String(isBreakdown));
-    (_q = this.listButton) == null ? void 0 : _q.setAttribute("aria-pressed", String(isList));
-    (_r = this.compoundButton) == null ? void 0 : _r.setAttribute("aria-pressed", String(isCompound));
-    (_s = this.placeButton) == null ? void 0 : _s.setAttribute("aria-pressed", String(isPlace));
-    (_t = this.mixButton) == null ? void 0 : _t.setAttribute("aria-pressed", String(isMix));
+    const templateType = other ? void 0 : templateTypeFor(this.selectedPackType);
+    (_f = this.templatesButton) == null ? void 0 : _f.toggle(!!templateType);
+    const showTemplates = this.templatesOpen && !!templateType;
+    (_g = this.templatesButton) == null ? void 0 : _g.toggleClass("is-active", showTemplates);
+    (_h = this.templatesButton) == null ? void 0 : _h.setAttribute("aria-pressed", String(showTemplates));
+    (_i = this.stageEl) == null ? void 0 : _i.toggleClass("is-templates-open", showTemplates);
+    (_j = this.templatesPaneEl) == null ? void 0 : _j.toggle(showTemplates);
+    if (showTemplates && templateType) void this.renderTemplatesPane(templateType);
+    (_k = this.wizardPaneEl) == null ? void 0 : _k.toggle(isWizard);
+    (_l = this.breakdownButton) == null ? void 0 : _l.classList.toggle("is-active", isBreakdown);
+    (_m = this.listButton) == null ? void 0 : _m.classList.toggle("is-active", isList);
+    (_n = this.compoundButton) == null ? void 0 : _n.classList.toggle("is-active", isCompound);
+    (_o = this.placeButton) == null ? void 0 : _o.classList.toggle("is-active", isPlace);
+    (_p = this.mixButton) == null ? void 0 : _p.classList.toggle("is-active", isMix);
+    (_q = this.breakdownButton) == null ? void 0 : _q.setAttribute("aria-pressed", String(isBreakdown));
+    (_r = this.listButton) == null ? void 0 : _r.setAttribute("aria-pressed", String(isList));
+    (_s = this.compoundButton) == null ? void 0 : _s.setAttribute("aria-pressed", String(isCompound));
+    (_t = this.placeButton) == null ? void 0 : _t.setAttribute("aria-pressed", String(isPlace));
+    (_u = this.mixButton) == null ? void 0 : _u.setAttribute("aria-pressed", String(isMix));
     const pane = isWizard ? void 0 : isBiome ? "biome" : this.textPaneFor(this.selectedPackType);
-    this.inputEl = pane ? (_u = this.textPanes[pane]) != null ? _u : null : null;
+    this.inputEl = pane ? (_v = this.textPanes[pane]) != null ? _v : null : null;
     for (const el of Object.values(this.textPanes)) el.toggle(el === this.inputEl);
-    (_v = this.compoundSectionEl) == null ? void 0 : _v.toggle(isCompound);
-    (_w = this.mixSectionEl) == null ? void 0 : _w.toggle(isMix);
+    (_w = this.compoundSectionEl) == null ? void 0 : _w.toggle(isCompound);
+    (_x = this.mixSectionEl) == null ? void 0 : _x.toggle(isMix);
+  }
+  /** Lists the built-in templates, then the user's own, for the pack type's kind of template. */
+  async renderTemplatesPane(type) {
+    var _a2, _b;
+    const pane = this.templatesPaneEl;
+    if (!pane) return;
+    const kinds = type === "people" ? ["breakdownPack", "listPack"] : type === "people-compound" ? ["compoundPack"] : ["placePack"];
+    const own = await this.parent.listTemplates(kinds);
+    pane.empty();
+    const entries = [...builtinTemplates(type).map((t) => ({ name: t.name, names: t.items, parts: t.parts })), ...own];
+    if (entries.length === 0) pane.createDiv({ cls: "nameforge-editor-modal__templates-empty", text: "No templates of this type" });
+    for (const entry of entries) {
+      const row = pane.createEl("button", { cls: "nameforge-editor-modal__template-item", attr: { type: "button" } });
+      row.createSpan({ cls: "nameforge-editor-modal__template-name", text: entry.name });
+      const count = entry.parts ? `${entry.parts.length} parts` : `${(_b = (_a2 = entry.names) == null ? void 0 : _a2.length) != null ? _b : 0} names`;
+      row.createSpan({ cls: "nameforge-editor-modal__template-count", text: count });
+      row.addEventListener("click", () => void this.useTemplate(entry));
+    }
+  }
+  /** Fills the box (or the compound parts) from a template, asking first if there is text to replace. */
+  async useTemplate(entry) {
+    var _a2;
+    if (entry.parts) {
+      const parts = entry.parts.slice(0, 3);
+      if (this.partTextareas.slice(0, parts.length).some((t) => t.value.trim()) && !await confirmReplace(this.app, "Replace what's in the parts?")) return;
+      parts.forEach((part, i) => this.partTextareas[i].value = part.join("\n"));
+      this.setCompoundParts(parts.length >= 3 ? 3 : 2);
+      return;
+    }
+    const box = this.inputEl;
+    if (!box) return;
+    if (box.value.trim() && !await confirmReplace(this.app, "Replace what's in the box?")) return;
+    box.value = ((_a2 = entry.names) != null ? _a2 : []).join("\n");
   }
   /** The text box a pack type writes in; compound and mix have their own sections instead. */
   textPaneFor(type) {
@@ -40639,7 +40831,7 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
       return;
     }
     const packName = ((_b = (_a2 = this.packNameInput) == null ? void 0 : _a2.value) == null ? void 0 : _b.trim()) || "nameForge";
-    const templateOf = this.templateOf;
+    const templateOf = void 0;
     if (this.biomeMode) {
       await this.saveBiome(packName);
       return;
