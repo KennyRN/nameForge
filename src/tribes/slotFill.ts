@@ -6,6 +6,19 @@
 import type { Biome } from "../biomes";
 import { findTradition, tribalName, type TribalConstraints } from "./engine";
 
+/**
+ * Presets brief §5.1: a tribal slot's own choices from the tribal sentence; each absent field
+ * keeps the slot's default (§20.2 weights, the recipe's land).
+ */
+export interface TribalSlotFields {
+  /** A built-in biome id. */
+  biome?: string;
+  terrain?: string;
+  groupType?: string;
+  perspective?: string;
+  register?: string;
+}
+
 export interface TribalSlotOptions {
   /** A tradition key, or "auto" (organic folk-group only; elsewhere General). */
   tradition: string;
@@ -17,6 +30,13 @@ export interface TribalSlotOptions {
   biome?: string | Biome;
   /** Land brief §11: the recipe's terrain. */
   terrain?: string;
+  /** Presets brief §5.1: the slot's own choices. */
+  fields?: TribalSlotFields;
+}
+
+/** The §20.2 settings a slot's part uses. */
+export function tribalSlotConstraints(part: TribalSlotOptions["part"]): TribalConstraints {
+  return part === "river-british" ? RIVER_BRITISH : part === "river-colonial" ? RIVER_COLONIAL : part === "organic" ? ORGANIC : COLONIAL;
 }
 
 /** §20.2: the fill settings for each side. */
@@ -73,14 +93,22 @@ export function tribalSlotFill(options: TribalSlotOptions, rng: () => number): {
   let tradition = options.tradition;
   if (tradition === "auto") tradition = organic ? autoTradition(options.region, rng) : "general";
   if (!findTradition(tradition)) tradition = "general";
-  const constraints =
-    options.part === "river-british" ? RIVER_BRITISH : options.part === "river-colonial" ? RIVER_COLONIAL : organic ? ORGANIC : COLONIAL;
-  const biome = organic ? undefined : options.biome;
+  const fields = options.fields ?? {};
+  let constraints = tribalSlotConstraints(options.part);
+  // Presets brief §10.1: a register the slot allows replaces its weights; templates, length and
+  // the article always stay the slot's.
+  if (fields.register && constraints.registers && fields.register in constraints.registers) {
+    constraints = { ...constraints, registers: { [fields.register]: 100 } };
+  }
+  const groupType = fields.groupType && (!constraints.groupTypes || constraints.groupTypes.includes(fields.groupType)) ? fields.groupType : undefined;
+  const biome = fields.biome ?? (organic ? undefined : options.biome);
   const name = tribalName(
     {
       tradition,
       ...(typeof biome === "string" ? { biome } : biome ? { biomeData: biome } : {}),
-      terrain: options.terrain,
+      terrain: fields.terrain ?? options.terrain,
+      ...(groupType ? { groupType } : {}),
+      ...(fields.perspective ? { perspective: fields.perspective } : {}),
       hostile: false,
       constraints,
     },

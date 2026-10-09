@@ -139,7 +139,7 @@ export class RecipeHost {
     const out: Record<string, ResolvedSlot> = {};
     for (const [categoryId, slot] of Object.entries(recipe.slots)) {
       if (slot.kind === "tribal") {
-        out[categoryId] = { kind: "tribal", tradition: slot.tradition };
+        out[categoryId] = { ...slot };
         continue;
       }
       if (slot.kind !== "sources") {

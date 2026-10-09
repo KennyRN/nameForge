@@ -28,7 +28,7 @@ import {
 } from "../colonialShapes";
 import { adoptionRng } from "../takeover/batch";
 import { riverFill, type RiverSetting } from "../rivers/engine";
-import { tribalSlotFill } from "../tribes/slotFill";
+import { type TribalSlotFields, tribalSlotFill } from "../tribes/slotFill";
 
 // ── Fixed values (names-reference) ──────────────────────────────────────────
 
@@ -231,7 +231,7 @@ export type ResolvedSlot =
   | { kind: "built-in" }
   | { kind: "placeholder" }
   | { kind: "ignore" }
-  | { kind: "tribal"; tradition: string }
+  | ({ kind: "tribal"; tradition: string } & TribalSlotFields)
   /** Land brief §5.1: "From the biome" (colonial livestock and crops). */
   | { kind: "biome" }
   | { kind: "sources"; sources: ResolvedSource[]; mode?: NameMode; gender?: { male: number; female: number }; section?: string };
@@ -518,10 +518,18 @@ export class NameRenderer {
   }
 
   /** Tribal brief §20.2: a short tribal name on the fill stream, as riverWordFill. */
-  private tribalWordFill(tradition: string, rng: () => number): Fill {
+  private tribalWordFill(slot: { tradition: string } & TribalSlotFields, rng: () => number): Fill {
     const part = this.recipe.shape.part;
+    const { kind: _kind, tradition, ...fields } = slot as { kind?: string; tradition: string } & TribalSlotFields;
     const { text } = tribalSlotFill(
-      { tradition, part, region: this.region, biome: part === "organic" ? undefined : this.options.biome, terrain: this.options.terrain },
+      {
+        tradition,
+        part,
+        region: this.region,
+        biome: part === "organic" ? undefined : this.options.biome,
+        terrain: this.options.terrain,
+        ...(Object.keys(fields).length > 0 ? { fields } : {}),
+      },
       rng,
     );
     return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
@@ -569,7 +577,7 @@ export class NameRenderer {
       if (land) return land;
     }
     // Tribal brief §20.2: a tribal slot is a spaced word fill, never fused or adapted.
-    if (slot.kind === "tribal") return this.tribalWordFill(slot.tradition, rng);
+    if (slot.kind === "tribal") return this.tribalWordFill(slot, rng);
     const wordFill = (entries: NameWordEntry[] | undefined): Fill => {
       if (!entries || entries.length === 0) return this.placeholder(categoryId);
       return entryFill(pickUniform(entries, rng));

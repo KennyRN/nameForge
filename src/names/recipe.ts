@@ -2,7 +2,8 @@
 // into a plain object and hands it here.
 
 import { findBiome, TERRAIN_CHOICES } from "../biomes";
-import { findTradition } from "../tribes/engine";
+import { findTradition, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS } from "../tribes/engine";
+import type { TribalSlotFields } from "../tribes/slotFill";
 
 export type Register = "modern" | "mixed" | "traditional";
 export type Joining = "fused" | "balanced" | "spaced";
@@ -21,8 +22,9 @@ export type SlotSetting =
   | { kind: "built-in" }
   | { kind: "ignore" }
   | { kind: "placeholder" }
-  /** Tribal brief §20.1: tribal names fill the slot; `tradition` is a tradition key or "auto". */
-  | { kind: "tribal"; tradition: string }
+  /** Tribal brief §20.1: tribal names fill the slot; `tradition` is a tradition key or "auto".
+   * Presets brief §5.1: plus the slot's own choices from the tribal sentence. */
+  | ({ kind: "tribal"; tradition: string } & TribalSlotFields)
   /** Land brief §5.1: "From the biome"; only offered for colonial livestock and crops. */
   | { kind: "biome" }
   | {
@@ -103,9 +105,11 @@ function readSlot(v: unknown, problems: string[], id: string): SlotSetting | und
   // Tribal brief §20.1: { tribal: bantu } or { tribal: auto }.
   if (typeof v.tribal === "string") {
     const tradition = v.tribal.trim();
-    if (tradition === "auto" || findTradition(tradition)) return { kind: "tribal", tradition };
-    problems.push(`Slot “${id}” names an unknown tradition “${tradition}”.`);
-    return undefined;
+    if (!(tradition === "auto" || findTradition(tradition))) {
+      problems.push(`Slot “${id}” names an unknown tradition “${tradition}”.`);
+      return undefined;
+    }
+    return { kind: "tribal", tradition, ...readTribalFields(v, problems, id) };
   }
   const raw = Array.isArray(v.sources) ? v.sources : [];
   const sources: SourceRef[] = [];
@@ -131,6 +135,23 @@ function readSlot(v: unknown, problems: string[], id: string): SlotSetting | und
   const section = str(v.section);
   if (section) slot.section = section;
   return slot;
+}
+
+/** Presets brief §5.1: a tribal slot's own choices; unknown values are reported and skipped. */
+function readTribalFields(v: Record<string, unknown>, problems: string[], id: string): TribalSlotFields {
+  const out: TribalSlotFields = {};
+  const check = (key: keyof TribalSlotFields, ok: (value: string) => boolean) => {
+    const value = str(v[key]);
+    if (!value) return;
+    if (ok(value)) out[key] = value;
+    else problems.push(`Slot “${id}” has an unknown ${key} “${value}”.`);
+  };
+  check("biome", (b) => !!findBiome(b));
+  check("terrain", (t) => TERRAIN_CHOICES.some((x) => x.id === t));
+  check("groupType", (g) => TRIBAL_GROUP_TYPES.some((x) => x.key === g));
+  check("perspective", (p) => TRIBAL_PERSPECTIVES.includes(p));
+  check("register", (r) => (TRIBAL_REGISTERS as readonly string[]).includes(r));
+  return out;
 }
 
 /** Reads a recipe's frontmatter object. Unknown or invalid values are reported and skipped. */
@@ -274,7 +295,12 @@ export function recipeToFrontmatter(r: RecipePartial): Record<string, unknown> {
   if (r.slots && Object.keys(r.slots).length > 0) {
     out.slots = Object.fromEntries(
       Object.entries(r.slots).map(([id, slot]) => {
-        if (slot.kind === "tribal") return [id, { tribal: slot.tradition }];
+        if (slot.kind === "tribal") {
+          // Presets brief §5.1: only the choices that differ from the slot's defaults are written.
+          const { kind: _kind, tradition, ...fields } = slot;
+          const own = Object.fromEntries(Object.entries(fields).filter(([, value]) => value !== undefined && value !== "" && value !== "any"));
+          return [id, { tribal: tradition, ...own }];
+        }
         if (slot.kind !== "sources") return [id, slot.kind];
         const value: Record<string, unknown> = {
           sources: slot.sources.map((s) => ({

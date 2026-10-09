@@ -31265,6 +31265,9 @@ function tribalDetailsLine(name) {
 }
 
 // src/tribes/slotFill.ts
+function tribalSlotConstraints(part) {
+  return part === "river-british" ? RIVER_BRITISH : part === "river-colonial" ? RIVER_COLONIAL : part === "organic" ? ORGANIC : COLONIAL;
+}
 var COLONIAL = {
   templates: { A: 35, B: 35, F: 10, L: 10, J: 10 },
   jFirstFormOnly: true,
@@ -31308,24 +31311,31 @@ function autoTradition(region, rng) {
   return "germanic";
 }
 function tribalSlotFill(options, rng) {
-  var _a2;
+  var _a2, _b, _c, _d;
   const organic = options.part === "organic";
   let tradition = options.tradition;
   if (tradition === "auto") tradition = organic ? autoTradition(options.region, rng) : "general";
   if (!findTradition(tradition)) tradition = "general";
-  const constraints = options.part === "river-british" ? RIVER_BRITISH : options.part === "river-colonial" ? RIVER_COLONIAL : organic ? ORGANIC : COLONIAL;
-  const biome = organic ? void 0 : options.biome;
+  const fields = (_a2 = options.fields) != null ? _a2 : {};
+  let constraints = tribalSlotConstraints(options.part);
+  if (fields.register && constraints.registers && fields.register in constraints.registers) {
+    constraints = { ...constraints, registers: { [fields.register]: 100 } };
+  }
+  const groupType = fields.groupType && (!constraints.groupTypes || constraints.groupTypes.includes(fields.groupType)) ? fields.groupType : void 0;
+  const biome = (_b = fields.biome) != null ? _b : organic ? void 0 : options.biome;
   const name = tribalName(
     {
       tradition,
       ...typeof biome === "string" ? { biome } : biome ? { biomeData: biome } : {},
-      terrain: options.terrain,
+      terrain: (_c = fields.terrain) != null ? _c : options.terrain,
+      ...groupType ? { groupType } : {},
+      ...fields.perspective ? { perspective: fields.perspective } : {},
       hostile: false,
       constraints
     },
     rng
   );
-  const text = ((_a2 = name == null ? void 0 : name.name) != null ? _a2 : "People").replace(/^The /, "");
+  const text = ((_d = name == null ? void 0 : name.name) != null ? _d : "People").replace(/^The /, "");
   return { text, tradition };
 }
 
@@ -31765,10 +31775,18 @@ var NameRenderer = class {
     return text ? { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false } : asWord(pickWeighted3(entries, rng));
   }
   /** Tribal brief §20.2: a short tribal name on the fill stream, as riverWordFill. */
-  tribalWordFill(tradition, rng) {
+  tribalWordFill(slot, rng) {
     const part = this.recipe.shape.part;
+    const { kind: _kind, tradition, ...fields } = slot;
     const { text } = tribalSlotFill(
-      { tradition, part, region: this.region, biome: part === "organic" ? void 0 : this.options.biome, terrain: this.options.terrain },
+      {
+        tradition,
+        part,
+        region: this.region,
+        biome: part === "organic" ? void 0 : this.options.biome,
+        terrain: this.options.terrain,
+        ...Object.keys(fields).length > 0 ? { fields } : {}
+      },
       rng
     );
     return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
@@ -31807,7 +31825,7 @@ var NameRenderer = class {
       const land = this.landFill(categoryId, rng, (mapped == null ? void 0 : mapped.kind) === "biome");
       if (land) return land;
     }
-    if (slot.kind === "tribal") return this.tribalWordFill(slot.tradition, rng);
+    if (slot.kind === "tribal") return this.tribalWordFill(slot, rng);
     const wordFill = (entries) => {
       if (!entries || entries.length === 0) return this.placeholder(categoryId);
       return entryFill(pickUniform4(entries, rng));
@@ -32311,9 +32329,11 @@ function readSlot(v, problems, id) {
   }
   if (typeof v.tribal === "string") {
     const tradition = v.tribal.trim();
-    if (tradition === "auto" || findTradition(tradition)) return { kind: "tribal", tradition };
-    problems.push(`Slot \u201C${id}\u201D names an unknown tradition \u201C${tradition}\u201D.`);
-    return void 0;
+    if (!(tradition === "auto" || findTradition(tradition))) {
+      problems.push(`Slot \u201C${id}\u201D names an unknown tradition \u201C${tradition}\u201D.`);
+      return void 0;
+    }
+    return { kind: "tribal", tradition, ...readTribalFields(v, problems, id) };
   }
   const raw = Array.isArray(v.sources) ? v.sources : [];
   const sources = [];
@@ -32339,6 +32359,21 @@ function readSlot(v, problems, id) {
   const section = str(v.section);
   if (section) slot.section = section;
   return slot;
+}
+function readTribalFields(v, problems, id) {
+  const out = {};
+  const check = (key2, ok) => {
+    const value = str(v[key2]);
+    if (!value) return;
+    if (ok(value)) out[key2] = value;
+    else problems.push(`Slot \u201C${id}\u201D has an unknown ${key2} \u201C${value}\u201D.`);
+  };
+  check("biome", (b) => !!findBiome(b));
+  check("terrain", (t) => TERRAIN_CHOICES.some((x) => x.id === t));
+  check("groupType", (g) => TRIBAL_GROUP_TYPES.some((x) => x.key === g));
+  check("perspective", (p) => TRIBAL_PERSPECTIVES.includes(p));
+  check("register", (r) => TRIBAL_REGISTERS.includes(r));
+  return out;
 }
 function readRecipe(fm) {
   var _a2;
@@ -32465,7 +32500,11 @@ function recipeToFrontmatter(r) {
   if (r.slots && Object.keys(r.slots).length > 0) {
     out.slots = Object.fromEntries(
       Object.entries(r.slots).map(([id, slot]) => {
-        if (slot.kind === "tribal") return [id, { tribal: slot.tradition }];
+        if (slot.kind === "tribal") {
+          const { kind: _kind, tradition, ...fields } = slot;
+          const own = Object.fromEntries(Object.entries(fields).filter(([, value2]) => value2 !== void 0 && value2 !== "" && value2 !== "any"));
+          return [id, { tribal: tradition, ...own }];
+        }
         if (slot.kind !== "sources") return [id, slot.kind];
         const value = {
           sources: slot.sources.map((s) => ({
@@ -32508,6 +32547,139 @@ function colonialPlaceNamesRecipe(part, tradition, context, biome, terrain) {
     register: "modern",
     render: { joining: "balanced", linkingHyphens: true, etymology: false }
   });
+}
+
+// src/tribes/sentence.ts
+var TERRAIN_PHRASES = {
+  any: "in any terrain",
+  plains: "on the plains",
+  hills: "in hilly terrain",
+  mountains: "in mountainous terrain",
+  forest: "in a forest",
+  coast: "on the coast",
+  rivers: "by rivers and lakes",
+  wetland: "in wetlands",
+  islands: "on islands"
+};
+var PERSPECTIVE_PHRASES = {
+  any: "given to or used by them",
+  self: "used by them as their self-name",
+  neighbour: "given to them by their neighbours",
+  geographical: "given to them for where they live",
+  dynastic: "used by them for their line of descent",
+  ceremonial: "used by them as a ceremonial title",
+  later: "given to them by later writers and officials",
+  imposed: "imposed on them by outsiders"
+};
+var perspectivePhrase = (id) => {
+  var _a2, _b, _c;
+  return (_c = (_b = (_a2 = PERSPECTIVE_PHRASES[id != null ? id : "any"]) != null ? _a2 : TRIBAL_DATA.perspectiveLabels[id]) != null ? _b : id) != null ? _c : "";
+};
+function tribalSentence(state, limits) {
+  var _a2, _b, _c, _d, _e, _f, _g, _h;
+  const out = [];
+  const extra = (_a2 = limits.extraTraditions) != null ? _a2 : [];
+  const tradition = findTradition(state.tradition);
+  out.push({
+    field: "tradition",
+    text: (_d = (_c = tradition == null ? void 0 : tradition.label) != null ? _c : (_b = extra.find((t) => t.id === state.tradition)) == null ? void 0 : _b.label) != null ? _d : state.tradition,
+    title: (_e = tradition == null ? void 0 : tradition.drawsOn) != null ? _e : "The tradition follows the recipe's region",
+    choices: [...extra, ...TRIBAL_TRADITIONS.map((t) => ({ id: t.key, label: t.label }))],
+    current: state.tradition
+  });
+  out.push("-themed ");
+  const groupTypes = TRIBAL_GROUP_TYPES.filter((g) => !limits.groupTypes || limits.groupTypes.includes(g.key));
+  const group = groupTypes.find((g) => g.key === state.groupType);
+  out.push({
+    field: "groupType",
+    text: group ? group.label.toLowerCase() : "groups of any kind",
+    title: "Group type: what kind of group is being named",
+    choices: [{ id: void 0, label: "Any group type" }, ...groupTypes.map((g) => ({ id: g.key, label: g.label }))],
+    current: group == null ? void 0 : group.key
+  });
+  out.push(" in ");
+  const biome = limits.findBiome(state.biome);
+  const inline = biome && biomeInline(biome);
+  const fallback = (_f = limits.defaultBiome) != null ? _f : "their original";
+  out.push({
+    field: "biome",
+    text: inline ? `${/^[aeiou]/i.test(inline) ? "an" : "a"} ${inline}` : fallback,
+    title: (_g = biome == null ? void 0 : biome.guide) != null ? _g : tradition ? homelandSummary(tradition.key) : "Biome",
+    choices: [
+      { id: void 0, label: fallback.charAt(0).toUpperCase() + fallback.slice(1) },
+      ...limits.biomes.map((b) => {
+        var _a3, _b2;
+        return { id: (_b2 = (_a3 = b.custom) == null ? void 0 : _a3.path) != null ? _b2 : b.id, label: b.label };
+      })
+    ],
+    current: state.biome
+  });
+  out.push(" environment ");
+  const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
+  const terrainText = (id) => {
+    var _a3, _b2, _c2;
+    return (_c2 = TERRAIN_PHRASES[id]) != null ? _c2 : `in ${(_b2 = (_a3 = [...terrains, ...TERRAIN_CHOICES].find((t) => t.id === id)) == null ? void 0 : _a3.label.toLowerCase()) != null ? _b2 : "any terrain"}`;
+  };
+  out.push({
+    field: "terrain",
+    text: terrainText(state.terrain || "any"),
+    title: "Terrain: the kind of land they live in",
+    choices: [{ id: "any", label: terrainText("any") }, ...terrains.map((t) => ({ id: t.id, label: terrainText(t.id) }))],
+    current: state.terrain || "any"
+  });
+  out.push(" using ");
+  const registers = TRIBAL_REGISTERS.filter((r) => !limits.registers || limits.registers.includes(r));
+  const register = registers.includes(state.register) ? state.register : registers[0];
+  out.push({
+    field: "register",
+    text: register,
+    title: (_h = TRIBAL_DATA.registerLabels[register]) != null ? _h : register,
+    choices: registers.map((r) => ({ id: r, label: TRIBAL_DATA.registerLabels[r] })),
+    current: register
+  });
+  out.push(" names ");
+  out.push({
+    field: "perspective",
+    text: perspectivePhrase(state.perspective),
+    title: "Perspective: who uses the name",
+    choices: [void 0, ...TRIBAL_PERSPECTIVES].map((p) => ({ id: p, label: perspectivePhrase(p) })),
+    current: state.perspective
+  });
+  if (limits.hostile) {
+    out.push(", ");
+    out.push({
+      field: "hostile",
+      text: state.hostile ? "insults and all" : "no insults",
+      title: "Hostile names: insults one people used for another",
+      choices: [
+        { id: void 0, label: "no insults" },
+        { id: "hostile", label: "insults and all" }
+      ],
+      current: state.hostile ? "hostile" : void 0
+    });
+  }
+  return out;
+}
+function chooseTribal(state, field, id, findBiome2) {
+  switch (field) {
+    case "tradition":
+      return { ...state, tradition: id != null ? id : "general" };
+    case "groupType":
+      return { ...state, groupType: id };
+    case "biome": {
+      const next = findBiome2(id);
+      const keep = !next || state.terrain === "any" || availableTerrains(next).some((t) => t.id === state.terrain);
+      return { ...state, biome: id, terrain: keep ? state.terrain : "any" };
+    }
+    case "terrain":
+      return { ...state, terrain: id != null ? id : "any" };
+    case "register":
+      return { ...state, register: id != null ? id : "plain" };
+    case "perspective":
+      return { ...state, perspective: id };
+    case "hostile":
+      return { ...state, hostile: id === "hostile" };
+  }
 }
 
 // src/landMenu.ts
@@ -34804,7 +34976,7 @@ var RecipeHost = class {
     const out = {};
     for (const [categoryId, slot] of Object.entries(recipe.slots)) {
       if (slot.kind === "tribal") {
-        out[categoryId] = { kind: "tribal", tradition: slot.tradition };
+        out[categoryId] = { ...slot };
         continue;
       }
       if (slot.kind !== "sources") {
@@ -35463,6 +35635,8 @@ var RecipeWizard = class {
     this.explicitSlots = /* @__PURE__ */ new Set();
     /** Presets brief §4: page 4's section texts by slot id, kept while the wizard is open. */
     this.wordsEdits = /* @__PURE__ */ new Map();
+    /** Page 4's open sections, kept across re-renders. */
+    this.openWords = /* @__PURE__ */ new Set();
     hostEl.addClass("nameforge-recipe-editor");
   }
   async load() {
@@ -35725,6 +35899,8 @@ var RecipeWizard = class {
       const view = this.wordsView(id, label);
       if (!view) continue;
       const details = el.createEl("details", { cls: "nameforge-recipe-editor__words" });
+      details.open = this.openWords.has(id);
+      details.addEventListener("toggle", () => details.open ? this.openWords.add(id) : this.openWords.delete(id));
       const summary = details.createEl("summary");
       summary.createSpan({ cls: "nameforge-recipe-editor__words-label", text: label });
       const status = summary.createSpan({ cls: "nameforge-recipe-editor__words-status", text: view.statusText });
@@ -35736,7 +35912,7 @@ var RecipeWizard = class {
     var _a2, _b;
     const body = el.createDiv({ cls: "nameforge-recipe-editor__words-body" });
     if (view.status === "tribal") {
-      body.createDiv({ cls: "setting-item-description", text: "From the tribal names module." });
+      this.renderTribalSentence(body.createDiv({ cls: "nameforge-recipe-editor__sentence" }), view.id);
       return;
     }
     if (view.status === "river") {
@@ -35774,6 +35950,64 @@ var RecipeWizard = class {
         textarea.value = (_a3 = view.baseline) != null ? _a3 : "";
         this.wordsEdits.set(view.id, textarea.value);
         status.setText(view.resetTo === "placeholder" ? "Placeholder" : view.resetTo === "biome" ? `${(_c = (_b2 = this.currentBiome()) == null ? void 0 : _b2.label) != null ? _c : "Biome"} list` : "Built-in");
+      });
+    }
+  }
+  /**
+   * Presets brief §5.1: a tribal slot's sentence, the tribal module's own, limited to what the slot
+   * can use (§20.2): its group types and registers, and no insults.
+   */
+  renderTribalSentence(el, id) {
+    var _a2, _b, _c, _d;
+    const w = this.working;
+    const slot = w.slots[id];
+    if ((slot == null ? void 0 : slot.kind) !== "tribal") return;
+    const part = w.shape.part;
+    const constraints = tribalSlotConstraints(part);
+    const state = {
+      tradition: part !== "organic" && slot.tradition === "auto" ? "general" : slot.tradition,
+      groupType: slot.groupType,
+      biome: slot.biome,
+      terrain: (_a2 = slot.terrain) != null ? _a2 : "any",
+      register: (_c = slot.register) != null ? _c : Object.keys((_b = constraints.registers) != null ? _b : { plain: 1 })[0],
+      perspective: slot.perspective
+    };
+    const segments = tribalSentence(state, {
+      biomes: [BRITAIN, ...BIOMES],
+      findBiome: (b) => findBiome(b),
+      defaultBiome: part === "organic" ? "their original" : "the recipe's",
+      extraTraditions: part === "organic" ? [{ id: "auto", label: "Regional" }] : [],
+      groupTypes: constraints.groupTypes,
+      registers: Object.keys((_d = constraints.registers) != null ? _d : { plain: 1 })
+    });
+    for (const segment2 of segments) {
+      if (typeof segment2 === "string") {
+        el.appendText(segment2);
+        continue;
+      }
+      const a = el.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text: segment2.text, attr: { href: "#", role: "button", title: segment2.title } });
+      a.addEventListener("click", (event) => {
+        event.preventDefault();
+        const menu = new import_obsidian9.Menu();
+        for (const c of segment2.choices) {
+          menu.addItem(
+            (item) => item.setTitle(c.label).setChecked(c.id === segment2.current).onClick(() => {
+              const next = chooseTribal(state, segment2.field, c.id, (b) => findBiome(b));
+              w.slots[id] = {
+                kind: "tribal",
+                tradition: next.tradition,
+                ...next.groupType ? { groupType: next.groupType } : {},
+                ...next.biome ? { biome: next.biome } : {},
+                ...next.terrain && next.terrain !== "any" ? { terrain: next.terrain } : {},
+                ...slot.register || segment2.field === "register" ? { register: next.register } : {},
+                ...next.perspective ? { perspective: next.perspective } : {}
+              };
+              this.explicitSlots.add(id);
+              this.render();
+            })
+          );
+        }
+        menu.showAtMouseEvent(event);
       });
     }
   }
@@ -36761,27 +36995,6 @@ function formatHistoryTimestamp(date) {
   return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}-${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
 }
 var MAX_HISTORY_ENTRIES = 50;
-var TRIBAL_TERRAIN_PHRASES = {
-  any: "in any terrain",
-  plains: "on the plains",
-  hills: "in hilly terrain",
-  mountains: "in mountainous terrain",
-  forest: "in a forest",
-  coast: "on the coast",
-  rivers: "by rivers and lakes",
-  wetland: "in wetlands",
-  islands: "on islands"
-};
-var TRIBAL_PERSPECTIVE_PHRASES = {
-  any: "given to or used by them",
-  self: "used by them as their self-name",
-  neighbour: "given to them by their neighbours",
-  geographical: "given to them for where they live",
-  dynastic: "used by them for their line of descent",
-  ceremonial: "used by them as a ceremonial title",
-  later: "given to them by later writers and officials",
-  imposed: "imposed on them by outsiders"
-};
 var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
   constructor(app, plugin, settings = {}) {
     super(app);
@@ -37714,105 +37927,47 @@ ${n.origin}${also}${echo}` };
    * underlined phrase opens a menu, so the sentence holds every option.
    */
   renderTribalSentence(row) {
-    var _a2, _b;
-    const t = this.tribal;
     const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
-    const link = (...args) => this.sentenceLink(sentence2, ...args);
-    const tradition = (_a2 = findTradition(t.tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
-    link(
-      tradition.label,
-      tradition.drawsOn,
-      () => TRIBAL_TRADITIONS.map((x) => ({ id: x.key, label: x.label })),
-      t.tradition,
-      (id) => t.tradition = id != null ? id : "general"
-    );
-    sentence2.appendText("-themed ");
-    const group = TRIBAL_GROUP_TYPES.find((g) => g.key === t.groupType);
-    link(
-      group ? group.label.toLowerCase() : "groups of any kind",
-      "Group type: what kind of group is being named",
-      () => [{ id: void 0, label: "Any group type" }, ...TRIBAL_GROUP_TYPES.map((g) => ({ id: g.key, label: g.label }))],
-      t.groupType,
-      (id) => t.groupType = id
-    );
-    sentence2.appendText(" in ");
+    const segments = (custom) => tribalSentence(this.tribalState(), this.tribalLimits(custom));
+    for (const segment2 of segments(this.customBiomes)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(
+        sentence2,
+        segment2.text,
+        segment2.title,
+        // The menu reads the biome packs afresh when it opens.
+        async () => {
+          const found = segments(await this.loadCustomBiomes()).find((s) => typeof s !== "string" && s.field === segment2.field);
+          return typeof found === "object" ? found.choices : segment2.choices;
+        },
+        segment2.current,
+        (id) => {
+          this.setTribalState(chooseTribal(this.tribalState(), segment2.field, id, (x) => findBiome(x, this.customBiomes)));
+          if (segment2.field === "hostile" && id === "hostile") new import_obsidian11.Notice("Hostile names are on: some results will be insults one people used for another.");
+        }
+      );
+    }
+  }
+  /** Tribal names' choices and land as one sentence state. */
+  tribalState() {
+    const t = this.tribal;
     const land = this.land("tribal");
-    const biome = findBiome(land.biome, this.customBiomes);
-    const biomeLabel = biome && biomeInline(biome);
-    const biomeText = biomeLabel ? `${/^[aeiou]/i.test(biomeLabel) ? "an" : "a"} ${biomeLabel}` : "their original";
-    link(
-      biomeText,
-      (_b = biome == null ? void 0 : biome.guide) != null ? _b : homelandSummary(t.tradition),
-      async () => {
-        const custom = [...await this.loadCustomBiomes()].sort((x, y) => x.label.localeCompare(y.label));
-        return [
-          { id: void 0, label: "Their original" },
-          ...[BRITAIN, ...BIOMES, ...custom].map((b) => {
-            var _a3, _b2;
-            return { id: (_b2 = (_a3 = b.custom) == null ? void 0 : _a3.path) != null ? _b2 : b.id, label: b.label };
-          })
-        ];
-      },
-      land.biome,
-      (id) => {
-        var _a3;
-        const next = findBiome(id, this.customBiomes);
-        const keep = !next || land.terrain === "any" || availableTerrains(next).some((x) => x.id === land.terrain);
-        this.landStates.tribal = { biome: id, terrain: keep ? land.terrain : "any" };
-        (_a3 = this.landButton) == null ? void 0 : _a3.refresh();
-      }
-    );
-    sentence2.appendText(" environment ");
-    const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((x) => x.id !== "any");
-    const terrainText = (id) => {
-      var _a3, _b2, _c;
-      return (_c = TRIBAL_TERRAIN_PHRASES[id]) != null ? _c : `in ${(_b2 = (_a3 = [...terrains, ...TERRAIN_CHOICES].find((x) => x.id === id)) == null ? void 0 : _a3.label.toLowerCase()) != null ? _b2 : "any terrain"}`;
+    return { tradition: t.tradition, groupType: t.groupType, biome: land.biome, terrain: land.terrain, register: t.register, perspective: t.perspective, hostile: t.hostile };
+  }
+  setTribalState(state) {
+    this.tribal = { tradition: state.tradition, groupType: state.groupType, register: state.register, perspective: state.perspective, hostile: !!state.hostile };
+    this.landStates.tribal = { biome: state.biome, terrain: state.terrain };
+  }
+  /** The tribal module's sentence limits: every biome, insults offered. */
+  tribalLimits(custom) {
+    return {
+      biomes: [BRITAIN, ...BIOMES, ...[...custom].sort((x, y) => x.label.localeCompare(y.label))],
+      findBiome: (id) => findBiome(id, custom),
+      hostile: true
     };
-    link(
-      terrainText(land.terrain),
-      "Terrain: the kind of land they live in",
-      () => [{ id: "any", label: terrainText("any") }, ...terrains.map((x) => ({ id: x.id, label: terrainText(x.id) }))],
-      land.terrain,
-      (id) => {
-        var _a3;
-        this.landStates.tribal = { ...this.land("tribal"), terrain: id != null ? id : "any" };
-        (_a3 = this.landButton) == null ? void 0 : _a3.refresh();
-      }
-    );
-    sentence2.appendText(" using ");
-    link(
-      t.register,
-      TRIBAL_DATA.registerLabels[t.register],
-      () => TRIBAL_REGISTERS.map((r) => ({ id: r, label: TRIBAL_DATA.registerLabels[r] })),
-      t.register,
-      (id) => t.register = id != null ? id : "plain"
-    );
-    sentence2.appendText(" names ");
-    const perspective = (id) => {
-      var _a3;
-      return (_a3 = TRIBAL_PERSPECTIVE_PHRASES[id != null ? id : "any"]) != null ? _a3 : TRIBAL_DATA.perspectiveLabels[id];
-    };
-    link(
-      perspective(t.perspective),
-      "Perspective: who uses the name",
-      () => [void 0, ...TRIBAL_PERSPECTIVES].map((p) => ({ id: p, label: perspective(p) })),
-      t.perspective,
-      (id) => t.perspective = id
-    );
-    sentence2.appendText(", ");
-    link(
-      t.hostile ? "insults and all" : "no insults",
-      "Hostile names: insults one people used for another",
-      () => [
-        { id: void 0, label: "no insults" },
-        { id: "hostile", label: "insults and all" }
-      ],
-      t.hostile ? "hostile" : void 0,
-      (id) => {
-        t.hostile = id === "hostile";
-        if (t.hostile) new import_obsidian11.Notice("Hostile names are on: some results will be insults one people used for another.");
-      }
-    );
   }
   /** The river options button: river names, and place names' British river names. */
   refreshRiverOptions() {

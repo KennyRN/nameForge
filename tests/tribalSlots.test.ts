@@ -82,3 +82,25 @@ test("tribal slots: offered on folk-group (organic) and native-people-or-tribe (
   assert.ok(!allowsTribal("new-land", "folk-group"));
   assert.ok(!allowsTribal("new-land", "bird"));
 });
+
+test("tribal slots: the sentence's own choices round-trip and only differences are written (Presets brief §5.1)", () => {
+  const { recipe, problems } = readRecipe({
+    type: "recipe",
+    slots: { "folk-group": { tribal: "celtic", biome: "highland", groupType: "kin", perspective: "self", register: "plain", terrain: "any" } },
+  });
+  assert.deepEqual(problems, []);
+  assert.deepEqual(recipe.slots!["folk-group"], { kind: "tribal", tradition: "celtic", biome: "highland", groupType: "kin", perspective: "self", register: "plain", terrain: "any" });
+  const written = recipeToFrontmatter(recipe).slots as Record<string, unknown>;
+  assert.deepEqual(written["folk-group"], { tribal: "celtic", biome: "highland", groupType: "kin", perspective: "self", register: "plain" });
+  assert.deepEqual(recipeToFrontmatter({ slots: { "folk-group": { kind: "tribal", tradition: "auto" } } }).slots, { "folk-group": { tribal: "auto" } });
+  const bad = readRecipe({ type: "recipe", slots: { "folk-group": { tribal: "celtic", biome: "moon" } } });
+  assert.deepEqual(bad.problems, ["Slot “folk-group” has an unknown biome “moon”."]);
+});
+
+test("tribal slots: a slot's group type is used when the slot allows it", () => {
+  const rng = mulberry32(31);
+  for (let i = 0; i < 200; i++) {
+    const { text } = tribalSlotFill({ tradition: "bantu", part: "new-land", fields: { groupType: "confederation", register: "administrative" } }, rng);
+    assert.ok(text.split(" ").length <= 3 && !/^The /.test(text), text);
+  }
+});

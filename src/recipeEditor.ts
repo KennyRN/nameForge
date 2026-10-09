@@ -4,7 +4,9 @@
 import { App, Menu, Modal, normalizePath, Notice, Setting, setIcon, stringifyYaml, TFile } from "obsidian";
 import { ContextGuideModal } from "./contextGuide";
 import { CONTEXT_PHRASES, traditionLabel } from "./colonialWording";
-import { availableTerrains, type Biome, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
+import { availableTerrains, type Biome, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
+import { chooseTribal, type TribalSentenceState, tribalSentence } from "./tribes/sentence";
+import { tribalSlotConstraints } from "./tribes/slotFill";
 import { TRIBAL_TRADITIONS } from "./tribes/engine";
 import { biomeChoices, biomePhrase, explorersPhrase, FEATURES, incomersPhrase, terrainPhrase } from "./colonialSentence";
 import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
@@ -104,6 +106,8 @@ export class RecipeWizard {
   private explicitSlots = new Set<string>();
   /** Presets brief §4: page 4's section texts by slot id, kept while the wizard is open. */
   private wordsEdits = new Map<string, string>();
+  /** Page 4's open sections, kept across re-renders. */
+  private openWords = new Set<string>();
   /** The recipe's word-list note's body (without frontmatter), when it has one. */
   private wordsBody: string | undefined;
 
@@ -423,6 +427,8 @@ export class RecipeWizard {
       const view = this.wordsView(id, label);
       if (!view) continue;
       const details = el.createEl("details", { cls: "nameforge-recipe-editor__words" });
+      details.open = this.openWords.has(id);
+      details.addEventListener("toggle", () => (details.open ? this.openWords.add(id) : this.openWords.delete(id)));
       const summary = details.createEl("summary");
       summary.createSpan({ cls: "nameforge-recipe-editor__words-label", text: label });
       const status = summary.createSpan({ cls: "nameforge-recipe-editor__words-status", text: view.statusText });
@@ -434,7 +440,7 @@ export class RecipeWizard {
   private renderWordsBody(el: HTMLElement, view: SlotWordsView, status: HTMLElement) {
     const body = el.createDiv({ cls: "nameforge-recipe-editor__words-body" });
     if (view.status === "tribal") {
-      body.createDiv({ cls: "setting-item-description", text: "From the tribal names module." });
+      this.renderTribalSentence(body.createDiv({ cls: "nameforge-recipe-editor__sentence" }), view.id);
       return;
     }
     if (view.status === "river") {
@@ -470,6 +476,68 @@ export class RecipeWizard {
         textarea.value = view.baseline ?? "";
         this.wordsEdits.set(view.id, textarea.value);
         status.setText(view.resetTo === "placeholder" ? "Placeholder" : view.resetTo === "biome" ? `${this.currentBiome()?.label ?? "Biome"} list` : "Built-in");
+      });
+    }
+  }
+
+  /**
+   * Presets brief §5.1: a tribal slot's sentence, the tribal module's own, limited to what the slot
+   * can use (§20.2): its group types and registers, and no insults.
+   */
+  private renderTribalSentence(el: HTMLElement, id: string) {
+    const w = this.working;
+    const slot = w.slots[id];
+    if (slot?.kind !== "tribal") return;
+    const part = w.shape.part;
+    const constraints = tribalSlotConstraints(part);
+    const state: TribalSentenceState = {
+      tradition: part !== "organic" && slot.tradition === "auto" ? "general" : slot.tradition,
+      groupType: slot.groupType,
+      biome: slot.biome,
+      terrain: slot.terrain ?? "any",
+      register: slot.register ?? Object.keys(constraints.registers ?? { plain: 1 })[0],
+      perspective: slot.perspective,
+    };
+    const segments = tribalSentence(state, {
+      biomes: [BRITAIN, ...BIOMES],
+      findBiome: (b) => findBiome(b),
+      defaultBiome: part === "organic" ? "their original" : "the recipe's",
+      extraTraditions: part === "organic" ? [{ id: "auto", label: "Regional" }] : [],
+      groupTypes: constraints.groupTypes,
+      registers: Object.keys(constraints.registers ?? { plain: 1 }),
+    });
+    for (const segment of segments) {
+      if (typeof segment === "string") {
+        el.appendText(segment);
+        continue;
+      }
+      const a = el.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text: segment.text, attr: { href: "#", role: "button", title: segment.title } });
+      a.addEventListener("click", (event) => {
+        event.preventDefault();
+        const menu = new Menu();
+        for (const c of segment.choices) {
+          menu.addItem((item) =>
+            item
+              .setTitle(c.label)
+              .setChecked(c.id === segment.current)
+              .onClick(() => {
+                const next = chooseTribal(state, segment.field, c.id, (b) => findBiome(b));
+                // Only what differs from the slot's defaults is kept (§5.1).
+                w.slots[id] = {
+                  kind: "tribal",
+                  tradition: next.tradition,
+                  ...(next.groupType ? { groupType: next.groupType } : {}),
+                  ...(next.biome ? { biome: next.biome } : {}),
+                  ...(next.terrain && next.terrain !== "any" ? { terrain: next.terrain } : {}),
+                  ...(slot.register || segment.field === "register" ? { register: next.register } : {}),
+                  ...(next.perspective ? { perspective: next.perspective } : {}),
+                };
+                this.explicitSlots.add(id);
+                this.render();
+              }),
+          );
+        }
+        menu.showAtMouseEvent(event);
       });
     }
   }

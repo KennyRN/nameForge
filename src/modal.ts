@@ -63,17 +63,13 @@ import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recipe";
 import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
+import { chooseTribal, type TribalSentenceLimits, type TribalSentenceState, tribalSentence } from "./tribes/sentence";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
 import { type BiomePackSource, biomeToText, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
 import {
-  findTradition,
   generateTribalNames,
-  homelandSummary,
   TRIBAL_DATA,
-  TRIBAL_GROUP_TYPES,
-  TRIBAL_PERSPECTIVES,
-  TRIBAL_REGISTERS,
   TRIBAL_TRADITIONS,
   tribalDetailsLine,
   tribalHistoryLabel,
@@ -307,30 +303,7 @@ interface SectionView {
   status: string;
 }
 
-/** Tribal names' terrain phrases; a biome pack's own terrains read "in salt pans". */
-const TRIBAL_TERRAIN_PHRASES: Record<string, string> = {
-  any: "in any terrain",
-  plains: "on the plains",
-  hills: "in hilly terrain",
-  mountains: "in mountainous terrain",
-  forest: "in a forest",
-  coast: "on the coast",
-  rivers: "by rivers and lakes",
-  wetland: "in wetlands",
-  islands: "on islands",
-};
 
-/** Tribal names' sentence ending, one phrase per perspective. */
-const TRIBAL_PERSPECTIVE_PHRASES: Record<string, string> = {
-  any: "given to or used by them",
-  self: "used by them as their self-name",
-  neighbour: "given to them by their neighbours",
-  geographical: "given to them for where they live",
-  dynastic: "used by them for their line of descent",
-  ceremonial: "used by them as a ceremonial title",
-  later: "given to them by later writers and officials",
-  imposed: "imposed on them by outsiders",
-};
 
 export class NameForgeModal extends Modal {
   public plugin: NameForgePluginLike;
@@ -1316,96 +1289,50 @@ export class NameForgeModal extends Modal {
    * underlined phrase opens a menu, so the sentence holds every option.
    */
   private renderTribalSentence(row: HTMLElement) {
-    const t = this.tribal;
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
-    const link = (...args: [string, string, () => SentenceChoice[] | Promise<SentenceChoice[]>, string | undefined, (id: string | undefined) => void]) =>
-      this.sentenceLink(sentence, ...args);
-    const tradition = findTradition(t.tradition) ?? TRIBAL_TRADITIONS[0];
-    link(
-      tradition.label,
-      tradition.drawsOn,
-      () => TRIBAL_TRADITIONS.map((x) => ({ id: x.key, label: x.label })),
-      t.tradition,
-      (id) => (t.tradition = id ?? "general"),
-    );
-    sentence.appendText("-themed ");
-    const group = TRIBAL_GROUP_TYPES.find((g) => g.key === t.groupType);
-    link(
-      group ? group.label.toLowerCase() : "groups of any kind",
-      "Group type: what kind of group is being named",
-      () => [{ id: undefined, label: "Any group type" }, ...TRIBAL_GROUP_TYPES.map((g) => ({ id: g.key, label: g.label }))],
-      t.groupType,
-      (id) => (t.groupType = id),
-    );
-    sentence.appendText(" in ");
+    const segments = (custom: Biome[]) => tribalSentence(this.tribalState(), this.tribalLimits(custom));
+    for (const segment of segments(this.customBiomes)) {
+      if (typeof segment === "string") {
+        sentence.appendText(segment);
+        continue;
+      }
+      this.sentenceLink(
+        sentence,
+        segment.text,
+        segment.title,
+        // The menu reads the biome packs afresh when it opens.
+        async () => {
+          const found = segments(await this.loadCustomBiomes()).find((s) => typeof s !== "string" && s.field === segment.field);
+          return typeof found === "object" ? found.choices : segment.choices;
+        },
+        segment.current,
+        (id) => {
+          this.setTribalState(chooseTribal(this.tribalState(), segment.field, id, (x) => findBiome(x, this.customBiomes)));
+          if (segment.field === "hostile" && id === "hostile") new Notice("Hostile names are on: some results will be insults one people used for another.");
+        },
+      );
+    }
+  }
+
+  /** Tribal names' choices and land as one sentence state. */
+  private tribalState(): TribalSentenceState {
+    const t = this.tribal;
     const land = this.land("tribal");
-    const biome = findBiome(land.biome, this.customBiomes);
-    const biomeLabel = biome && biomeInline(biome);
-    const biomeText = biomeLabel ? `${/^[aeiou]/i.test(biomeLabel) ? "an" : "a"} ${biomeLabel}` : "their original";
-    link(
-      biomeText,
-      biome?.guide ?? homelandSummary(t.tradition),
-      async () => {
-        const custom = [...(await this.loadCustomBiomes())].sort((x, y) => x.label.localeCompare(y.label));
-        return [
-          { id: undefined, label: "Their original" },
-          ...[BRITAIN, ...BIOMES, ...custom].map((b) => ({ id: b.custom?.path ?? b.id, label: b.label })),
-        ];
-      },
-      land.biome,
-      (id) => {
-        // A biome without the current terrain resets it to Any (Land brief §2.7).
-        const next = findBiome(id, this.customBiomes);
-        const keep = !next || land.terrain === "any" || availableTerrains(next).some((x) => x.id === land.terrain);
-        this.landStates.tribal = { biome: id, terrain: keep ? land.terrain : "any" };
-        this.landButton?.refresh();
-      },
-    );
-    sentence.appendText(" environment ");
-    const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((x) => x.id !== "any");
-    const terrainText = (id: string) =>
-      TRIBAL_TERRAIN_PHRASES[id] ?? `in ${[...terrains, ...TERRAIN_CHOICES].find((x) => x.id === id)?.label.toLowerCase() ?? "any terrain"}`;
-    link(
-      terrainText(land.terrain),
-      "Terrain: the kind of land they live in",
-      () => [{ id: "any", label: terrainText("any") }, ...terrains.map((x) => ({ id: x.id, label: terrainText(x.id) }))],
-      land.terrain,
-      (id) => {
-        this.landStates.tribal = { ...this.land("tribal"), terrain: id ?? "any" };
-        this.landButton?.refresh();
-      },
-    );
-    sentence.appendText(" using ");
-    link(
-      t.register,
-      TRIBAL_DATA.registerLabels[t.register],
-      () => TRIBAL_REGISTERS.map((r) => ({ id: r, label: TRIBAL_DATA.registerLabels[r] })),
-      t.register,
-      (id) => (t.register = (id ?? "plain") as TribalRegister),
-    );
-    sentence.appendText(" names ");
-    const perspective = (id: string | undefined) => TRIBAL_PERSPECTIVE_PHRASES[id ?? "any"] ?? TRIBAL_DATA.perspectiveLabels[id!];
-    link(
-      perspective(t.perspective),
-      "Perspective: who uses the name",
-      () => [undefined, ...TRIBAL_PERSPECTIVES].map((p) => ({ id: p, label: perspective(p) })),
-      t.perspective,
-      (id) => (t.perspective = id),
-    );
-    sentence.appendText(", ");
-    link(
-      t.hostile ? "insults and all" : "no insults",
-      "Hostile names: insults one people used for another",
-      () => [
-        { id: undefined, label: "no insults" },
-        { id: "hostile", label: "insults and all" },
-      ],
-      t.hostile ? "hostile" : undefined,
-      (id) => {
-        t.hostile = id === "hostile";
-        if (t.hostile) new Notice("Hostile names are on: some results will be insults one people used for another.");
-      },
-    );
+    return { tradition: t.tradition, groupType: t.groupType, biome: land.biome, terrain: land.terrain, register: t.register, perspective: t.perspective, hostile: t.hostile };
+  }
+
+  private setTribalState(state: TribalSentenceState) {
+    this.tribal = { tradition: state.tradition, groupType: state.groupType, register: state.register as TribalRegister, perspective: state.perspective, hostile: !!state.hostile };
+    this.landStates.tribal = { biome: state.biome, terrain: state.terrain };
+  }
+
+  /** The tribal module's sentence limits: every biome, insults offered. */
+  private tribalLimits(custom: Biome[]): TribalSentenceLimits {
+    return {
+      biomes: [BRITAIN, ...BIOMES, ...[...custom].sort((x, y) => x.label.localeCompare(y.label))],
+      findBiome: (id) => findBiome(id, custom),
+      hostile: true,
+    };
   }
 
   /** The river options button: river names, and place names' British river names. */
