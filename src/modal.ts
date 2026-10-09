@@ -1,4 +1,4 @@
-import { App, Editor, Menu, Modal, normalizePath, Notice, setIcon, TFile, TFolder } from "obsidian";
+import { App, Editor, Menu, Modal, normalizePath, Notice, setIcon, stringifyYaml, TFile, TFolder } from "obsidian";
 import {
   generateCompoundNamesDetailed,
   generateMixNamesDetailed,
@@ -61,7 +61,7 @@ import {
 } from "./icons";
 import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
-import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recipe";
+import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings, recipeToFrontmatter } from "./names/recipe";
 import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
 import { chooseTribal, type TribalSentenceLimits, type TribalSentenceState, tribalSentence, tribalSentenceText } from "./tribes/sentence";
 import { isModulePresetContent, modulePresetContent, parseModulePreset, type TribalPreset } from "./presets";
@@ -124,7 +124,7 @@ import {
   sectionGroup,
   SWITCHER_ORDER,
 } from "./sections";
-import { biomePhrase, explorersPhrase, incomersPhrase, regionPhrase, terrainPhrase, UNKNOWN_COUNTRY } from "./colonialSentence";
+import { biomePhrase, explorersPhrase, incomersPhrase, regionPhrase, terrainPhrase, UNKNOWN_COUNTRY, wizardSentenceText } from "./colonialSentence";
 
 /** History label for british place names runs; older "place name shapes" entries keep theirs. */
 
@@ -1072,6 +1072,7 @@ export class NameForgeModal extends Modal {
     const sentenced = section === "tribalNames" || !!sectionGroup(section);
     row.toggleClass("is-sentence", sentenced);
     row.toggle(sentenced);
+    this.refreshSavePreset();
     if (section === "tribalNames") this.renderTribalSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]!);
@@ -1349,12 +1350,16 @@ export class NameForgeModal extends Modal {
 
   /** Presets brief §8.1: the Save as preset button, for the modules that have presets. */
   private refreshSavePreset() {
-    this.savePresetButton?.toggle(this.activeSection === "tribalNames");
+    const section = this.activeSection;
+    this.savePresetButton?.toggle(section === "tribalNames" || !!COLONIAL_SECTION_PART[section] || (section === "placeShapes" && this.placeIsBritain()));
   }
 
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
   private async openSavePreset() {
-    if (this.activeSection !== "tribalNames") return;
+    if (this.activeSection !== "tribalNames") {
+      await this.openSaveRecipePreset();
+      return;
+    }
     const custom = await this.loadCustomBiomes();
     const state = this.tribalState();
     const tradition = findTradition(state.tradition) ?? TRIBAL_TRADITIONS[0];
@@ -1379,6 +1384,45 @@ export class NameForgeModal extends Modal {
         hostile: !!state.hostile,
       });
       return this.writePreset(presetName, content, (existing) => isModulePresetContent(existing) && !!parseModulePreset(existing, presetName).preset);
+    }).open();
+  }
+
+  /**
+   * Presets brief §7.1, §8: a place-name module's setup saved as a recipe note, written from the
+   * recipe the module builds; a biome pack is kept as a link.
+   */
+  private async openSaveRecipePreset() {
+    const custom = await this.loadCustomBiomes();
+    const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
+    if (!colonialPart && !(this.activeSection === "placeShapes" && this.placeIsBritain())) return;
+    const key = colonialPart ? `colonial:${colonialPart}` : "britain";
+    const land = this.land(key);
+    const found = findBiome(land.biome, custom);
+    const biome = found ? (found.custom ? `[[${found.label}]]` : found.id) : undefined;
+    let recipe: RecipeSettings;
+    let name: string;
+    let description: string;
+    if (colonialPart) {
+      const part = colonialPart === "2" ? "new-land" : "established";
+      const tradition = this.selectedTradition[colonialPart];
+      const context = this.selectedContext[colonialPart];
+      recipe = colonialPlaceNamesRecipe(part, tradition, context, biome, land.terrain);
+      const t = COLONIAL_TRADITIONS.find((x) => x.id === (tradition ?? "general"))!;
+      const contextLabel = colonialContexts(colonialPart).find((c) => c.id === context)?.label.toLowerCase();
+      name = [traditionLabel(colonialPart, t.id, t.label), contextLabel].filter(Boolean).join(" · ");
+      description = wizardSentenceText(part, { tradition: t.id, context, biome, terrain: land.terrain }, custom);
+    } else {
+      recipe = britishPlaceNamesRecipe(this.selectedRegion, biome, land.terrain);
+      name = ["British", regionPhrase(this.selectedRegion), found ? biomeInline(found) : undefined].filter(Boolean).join(" · ");
+      description = wizardSentenceText("organic", { region: this.selectedRegion, biome, terrain: land.terrain }, custom);
+    }
+    new PresetSaveModal(this.app, name, `${description}.`, async (presetName, text) => {
+      if (!presetName) {
+        new Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = `---\n${stringifyYaml(recipeToFrontmatter(recipe))}---\n\n${text}\n`;
+      return this.writePreset(presetName, content, (existing) => isRecipeContent(existing) && !parseRecipeContent(existing).recipe.template);
     }).open();
   }
 

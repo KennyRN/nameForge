@@ -35432,6 +35432,11 @@ var FEATURES = [
   { id: "landscape", label: "Landscape" },
   ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label }))
 ];
+function featurePhrase(feature) {
+  var _a2;
+  const f = (_a2 = FEATURES.find((x) => x.id === feature)) != null ? _a2 : FEATURES[0];
+  return f.label.charAt(0).toLowerCase() + f.label.slice(1);
+}
 var UNKNOWN_COUNTRY = "unknown country";
 function biomeChoices(part) {
   const lead = part === "organic" ? [{ id: "unknown", label: "Britain" }] : [{ id: "unknown", label: UNKNOWN_COUNTRY }, { id: BRITAIN.id, label: BRITAIN.phrase }];
@@ -35465,6 +35470,20 @@ function regionPhrase(region) {
   const r = PLACE_SHAPE_REGIONS.find((x) => x.code === (region != null ? region : "").toUpperCase() || kebab2(x.label) === kebab2(region != null ? region : ""));
   if (!r) return "all of Britain";
   return NO_THE_REGIONS.has(r.label) ? r.label : `the ${r.label}`;
+}
+function wizardSentenceText(part, settings, custom = []) {
+  var _a2, _b, _c, _d;
+  const land = `${terrainPhrase(settings.terrain, custom)} of ${biomePhrase(settings.biome, part, custom)}`;
+  if (part === "organic") {
+    const f = (_a2 = FEATURES.find((x) => x.id === settings.feature)) != null ? _a2 : FEATURES[0];
+    return `${f.label} from ${regionPhrase(settings.region)}, set in ${land}`;
+  }
+  const colonialPart = part === "new-land" ? "2" : "2a";
+  const t = (_b = COLONIAL_TRADITIONS.find((x) => x.id === settings.tradition)) != null ? _b : COLONIAL_TRADITIONS[0];
+  const contexts = CONTEXT_PHRASES[colonialPart];
+  const c = ((_c = contexts.find(([id]) => id === settings.context)) != null ? _c : contexts[0])[1];
+  const lead = part === "new-land" ? `${explorersPhrase(t.id, t.label)} in ${c}` : `${incomersPhrase(t.id, t.label)} who are ${c}`;
+  return `${lead} across ${land}, naming ${featurePhrase((_d = settings.feature) != null ? _d : "any")}`;
 }
 
 // src/names/slotOptions.ts
@@ -37864,6 +37883,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     const sentenced = section === "tribalNames" || !!sectionGroup(section);
     row.toggleClass("is-sentence", sentenced);
     row.toggle(sentenced);
+    this.refreshSavePreset();
     if (section === "tribalNames") this.renderTribalSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
@@ -38134,12 +38154,16 @@ ${n.origin}${also}${echo}` };
   /** Presets brief §8.1: the Save as preset button, for the modules that have presets. */
   refreshSavePreset() {
     var _a2;
-    (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(this.activeSection === "tribalNames");
+    const section = this.activeSection;
+    (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(section === "tribalNames" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain());
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
   async openSavePreset() {
     var _a2;
-    if (this.activeSection !== "tribalNames") return;
+    if (this.activeSection !== "tribalNames") {
+      await this.openSaveRecipePreset();
+      return;
+    }
     const custom = await this.loadCustomBiomes();
     const state = this.tribalState();
     const tradition = (_a2 = findTradition(state.tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
@@ -38165,6 +38189,49 @@ ${n.origin}${also}${echo}` };
         hostile: !!state.hostile
       });
       return this.writePreset(presetName, content, (existing) => isModulePresetContent(existing) && !!parseModulePreset(existing, presetName).preset);
+    }).open();
+  }
+  /**
+   * Presets brief §7.1, §8: a place-name module's setup saved as a recipe note, written from the
+   * recipe the module builds; a biome pack is kept as a link.
+   */
+  async openSaveRecipePreset() {
+    var _a2;
+    const custom = await this.loadCustomBiomes();
+    const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
+    if (!colonialPart && !(this.activeSection === "placeShapes" && this.placeIsBritain())) return;
+    const key2 = colonialPart ? `colonial:${colonialPart}` : "britain";
+    const land = this.land(key2);
+    const found = findBiome(land.biome, custom);
+    const biome = found ? found.custom ? `[[${found.label}]]` : found.id : void 0;
+    let recipe;
+    let name;
+    let description;
+    if (colonialPart) {
+      const part = colonialPart === "2" ? "new-land" : "established";
+      const tradition = this.selectedTradition[colonialPart];
+      const context = this.selectedContext[colonialPart];
+      recipe = colonialPlaceNamesRecipe(part, tradition, context, biome, land.terrain);
+      const t = COLONIAL_TRADITIONS.find((x) => x.id === (tradition != null ? tradition : "general"));
+      const contextLabel = (_a2 = colonialContexts(colonialPart).find((c) => c.id === context)) == null ? void 0 : _a2.label.toLowerCase();
+      name = [traditionLabel(colonialPart, t.id, t.label), contextLabel].filter(Boolean).join(" \xB7 ");
+      description = wizardSentenceText(part, { tradition: t.id, context, biome, terrain: land.terrain }, custom);
+    } else {
+      recipe = britishPlaceNamesRecipe(this.selectedRegion, biome, land.terrain);
+      name = ["British", regionPhrase(this.selectedRegion), found ? biomeInline(found) : void 0].filter(Boolean).join(" \xB7 ");
+      description = wizardSentenceText("organic", { region: this.selectedRegion, biome, terrain: land.terrain }, custom);
+    }
+    new PresetSaveModal(this.app, name, `${description}.`, async (presetName, text) => {
+      if (!presetName) {
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = `---
+${(0, import_obsidian12.stringifyYaml)(recipeToFrontmatter(recipe))}---
+
+${text}
+`;
+      return this.writePreset(presetName, content, (existing) => isRecipeContent(existing) && !parseRecipeContent(existing).recipe.template);
     }).open();
   }
   /**
