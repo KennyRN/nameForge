@@ -1055,14 +1055,6 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   background-color: transparent;
 }
 
-/* Tribal names' release headings in the tradition menu: muted and unclickable. */
-.nameforge-modal__pack-dropdown-heading {
-  padding: 6px 8px 2px;
-  font-size: var(--font-ui-smaller);
-  color: var(--text-faint);
-  pointer-events: none;
-}
-
 .nameforge-modal__pack-dropdown-note {
   font-size: var(--font-ui-smaller);
   color: var(--text-faint);
@@ -1127,6 +1119,16 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   flex-wrap: wrap;
   justify-content: center;
   margin: 0 auto 12px;
+}
+
+/* Tribal names: the context row holds a sentence rather than toggle buttons. */
+.nameforge-modal__context-toggle.is-sentence {
+  background-color: transparent;
+}
+
+.nameforge-modal__tribal-sentence {
+  text-align: center;
+  line-height: 1.6;
 }
 
 .nameforge-modal__context-toggle .nameforge-modal__toggle-button {
