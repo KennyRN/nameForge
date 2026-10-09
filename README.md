@@ -32,8 +32,8 @@ Built by a worldbuilder, for worldbuilders.
 ## Presets and the wizard's word lists
 - **Save as preset** (the bookmark icon) saves a module's current setup as a note in your names folder, ready to run from the pack list. Native place names (Britain), exploration and expansion save a recipe, so the preset also opens in the place name wizard; tribal names saves a tribal preset note. The dialogue suggests a name and uses the module's sentence as the description.
 - **Tribal presets** run from the pack list with the tribal names icon, and the sliders icon beside the list opens one in tribal names to adjust and save again. A recipe's tribal slot can use a preset (`tribal: "[[Highland Tribes]]"`), and so can a word list's `//` line (`// Highland Tribes`); the slot still keeps its own short, article-free form.
-- **Place name wizard, page 3** has its own Save icon and an **Optional: edit word lists** button, which opens page 4.
-- **Page 4: word lists** shows every slot as what it draws from: the built-in list or the biome's words as a table to edit, an empty box for placeholders, the sources a slot already uses, the native pack, or the tribal names sentence. Only the sections you change are saved, to one word-list note for the recipe (“Danelaw words”), and the slot draws from it; Reset puts a slot back.
+- The **place name wizard** has two pages: shape and rendering, then slots. The slots page's row has its own Save icon, a **Template** icon (description, template and starting template) and an **Optional: edit word lists** button.
+- **The word lists page** shows every slot as what it draws from: the built-in list or the biome's words as a table to edit, an empty box for placeholders, the sources a slot already uses, the native pack, or the tribal names sentence. Only the sections you change are saved, to one word-list note for the recipe (“Danelaw words”), and the slot draws from it; Reset puts a slot back. Generic words are on this page too.
 - The **Word list** button has gone from the Create Pack window: page 4 replaces it. Word-list notes you already have work exactly as before.
 
 ## Installation & Use

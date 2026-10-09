@@ -35846,8 +35846,11 @@ var EXPANSION_CONTEXTS = CONTEXT_PHRASES["2a"];
 var NO_THE_REGIONS2 = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
 var same4 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 var kebab3 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-var PAGES = ["Template", "Shape and rendering", "Slots", "Word lists"];
-var MAIN_PAGES = 3;
+var PAGES = ["Shape and rendering", "Slots", "Template", "Word lists"];
+var MAIN_PAGES = 2;
+var SLOTS_PAGE = 1;
+var TEMPLATE_PAGE = 2;
+var WORDS_PAGE = 3;
 var TIER_TEXT = {
   simple: ["Simple", "The slots most names need."],
   detailed: ["Detailed", "Adds rarer people, beliefs and setting flavour."],
@@ -35918,29 +35921,29 @@ var RecipeWizard = class {
     var _a2, _b;
     const scrollTop = (_b = (_a2 = this.pageEl) == null ? void 0 : _a2.scrollTop) != null ? _b : 0;
     this.hostEl.empty();
-    if (this.page === 1) this.renderPartButtons(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
-    if (this.page === 2) this.renderSlotsHeader(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
+    if (this.page === 0) this.renderPartButtons(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
+    if (this.page === SLOTS_PAGE) this.renderSlotsHeader(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
     this.pageEl = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__page" });
-    if (this.page === 0) this.renderTemplatePage(this.pageEl);
-    else if (this.page === 1) {
+    if (this.page === 0) {
       this.pageEl.addClass("nameforge-recipe-editor__page--shape");
       this.renderShapePage(this.pageEl);
-    } else if (this.page === 2) this.renderSlotsPage(this.pageEl);
+    } else if (this.page === SLOTS_PAGE) this.renderSlotsPage(this.pageEl);
+    else if (this.page === TEMPLATE_PAGE) this.renderTemplatePage(this.pageEl);
     else this.renderWordsPage(this.pageEl);
     this.pageEl.scrollTop = scrollTop;
     const nav = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__nav" });
     const back = nav.createEl("button", { text: "Back" });
     back.disabled = this.page === 0;
-    back.addEventListener("click", () => this.goTo(this.page - 1));
-    const total = this.page < MAIN_PAGES ? MAIN_PAGES : PAGES.length;
-    nav.createSpan({ cls: "nameforge-recipe-editor__step", text: `${this.page + 1} of ${total} \xB7 ${PAGES[this.page]}` });
-    if (this.page < MAIN_PAGES - 1) {
+    back.addEventListener("click", () => this.goTo(this.page >= MAIN_PAGES ? SLOTS_PAGE : this.page - 1));
+    const step = this.page < MAIN_PAGES ? `${this.page + 1} of ${MAIN_PAGES} \xB7 ${PAGES[this.page]}` : `Optional \xB7 ${PAGES[this.page]}`;
+    nav.createSpan({ cls: "nameforge-recipe-editor__step", text: step });
+    if (this.page < SLOTS_PAGE) {
       const next = nav.createEl("button", { text: "Next" });
       next.addEventListener("click", () => this.goTo(this.page + 1));
-    } else if (this.page === MAIN_PAGES - 1) {
+    } else if (this.page === SLOTS_PAGE) {
       const actions = nav.createDiv({ cls: "nameforge-recipe-editor__nav-actions" });
       const save = actions.createEl("button", {
-        cls: "nameforge-modal__icon-action",
+        cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
         attr: { type: "button", title: "Save and use as-is", "aria-label": "Save and use as-is" }
       });
       (0, import_obsidian11.setIcon)(save, ICON_SAVE);
@@ -35948,10 +35951,16 @@ var RecipeWizard = class {
         var _a3, _b2;
         return (_b2 = (_a3 = this.options).requestSave) == null ? void 0 : _b2.call(_a3);
       });
+      const template = actions.createEl("button", {
+        cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+        attr: { type: "button", title: "Template", "aria-label": "Template" }
+      });
+      (0, import_obsidian11.setIcon)(template, ICON_SAVE_PRESET);
+      template.addEventListener("click", () => this.goTo(TEMPLATE_PAGE));
       const words = actions.createEl("button", { cls: "nameforge-recipe-editor__words-button", attr: { type: "button" } });
       (0, import_obsidian11.setIcon)(words.createSpan({ cls: "nameforge-recipe-editor__words-icon" }), ICON_RECIPE);
       words.createSpan({ text: "Optional: edit word lists" });
-      words.addEventListener("click", () => this.goTo(this.page + 1));
+      words.addEventListener("click", () => this.goTo(WORDS_PAGE));
     }
   }
   goTo(page) {
@@ -35959,17 +35968,10 @@ var RecipeWizard = class {
     if (this.pageEl) this.pageEl.scrollTop = 0;
     this.render();
   }
-  /** Page 1: name (when the host has no name field), description, template and starting template. */
+  /** The optional Template page: description, template and starting template. */
   renderTemplatePage(el) {
     var _a2, _b;
     const w = this.working;
-    if (!this.nameSource) {
-      new import_obsidian11.Setting(el).setName("Name").addText(
-        (t) => t.setValue(this.name).onChange((v) => {
-          this.name = v;
-        })
-      );
-    }
     new import_obsidian11.Setting(el).setName("Description").setDesc("Shown when choosing this recipe as a template.").addTextArea((t) => {
       t.setValue(this.body).onChange((v) => {
         this.body = v;
@@ -35997,7 +35999,7 @@ var RecipeWizard = class {
       });
     }
   }
-  /** Page 2: shape, then rendering. */
+  /** Page 1: shape, then rendering. */
   /** The part: one of three, each with its module's icon (place names use the wizard's own). */
   renderPartButtons(header) {
     const w = this.working;
@@ -36021,6 +36023,13 @@ var RecipeWizard = class {
   }
   renderShapePage(el) {
     const w = this.working;
+    if (!this.nameSource) {
+      new import_obsidian11.Setting(el).setName("Name").addText(
+        (t) => t.setValue(this.name).onChange((v) => {
+          this.name = v;
+        })
+      );
+    }
     if (w.shape.part === "organic") {
       this.renderPlaceNamesSentence(el);
     } else if (w.shape.part === "new-land") {
@@ -36069,7 +36078,7 @@ var RecipeWizard = class {
       })
     );
   }
-  /** Page 3's fixed top: the Slots heading, its description, and Simple · Detailed · Complete. */
+  /** Page 2's fixed top: the Slots heading, its description, and Simple · Detailed · Complete. */
   renderSlotsHeader(el) {
     el.createEl("h3", { text: "Slots" });
     el.createEl("p", {
@@ -36089,7 +36098,7 @@ var RecipeWizard = class {
     }
     el.createEl("p", { cls: "setting-item-description", text: TIER_TEXT[this.tier][1] });
   }
-  /** Page 3: the slots (generic words are on page 4). */
+  /** Page 2: the slots (generic words are on the word lists page). */
   renderSlotsPage(el) {
     const w = this.working;
     for (const category of slotCategories(w.shape.part)) {
@@ -36097,7 +36106,7 @@ var RecipeWizard = class {
       if (inTier || this.isSlotSet(category.id)) this.renderSlot(el, category.id, category.label, !inTier);
     }
   }
-  /** The slots page 3 shows: those in the tier, plus any set outside it. */
+  /** The slots the slots page shows: those in the tier, plus any set outside it. */
   shownSlots() {
     const part = this.working.shape.part;
     return slotCategories(part).filter((c) => tierIncludes(this.tier, slotTier(part, c.id)) || this.isSlotSet(c.id));
@@ -36117,7 +36126,7 @@ var RecipeWizard = class {
       wordsBody: this.wordsBody
     });
   }
-  /** Presets brief §4: every slot from page 3 as what it draws from; editable ones as text. */
+  /** Presets brief §4: every slot from the slots page as what it draws from; editable ones as text. */
   renderWordsPage(el) {
     const intro = el.createEl("p", {
       cls: "setting-item-description",
@@ -36698,7 +36707,7 @@ var RecipeWizard = class {
   /**
    * Presets brief §6.3: writes page 4's changed sections to the recipe's word-list note (before
    * the recipe, so the link resolves) and points those slots at it; unchanged or reset sections
-   * return to their page 3 setting. False when the note couldn't be written.
+   * return to their slots page setting. False when the note couldn't be written.
    */
   async saveWords(name) {
     var _a2, _b, _c, _d, _e, _f;

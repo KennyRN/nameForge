@@ -11,7 +11,7 @@ import { tribalSlotConstraints } from "./tribes/slotFill";
 import { type TribalPreset, tribalPresetSlot } from "./presets";
 import { TRIBAL_TRADITIONS } from "./tribes/engine";
 import { biomeChoices, biomePhrase, explorersPhrase, FEATURES, incomersPhrase, terrainPhrase } from "./colonialSentence";
-import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
+import { ICON_SAVE_PRESET, ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
 import { createWordListFileContent, sanitizePackNameForFilename } from "./nameParser";
 import {
   applyWordsToSlots,
@@ -67,7 +67,7 @@ export interface RecipeEditorOptions {
   /** Presets brief §5.1: the tribal presets in the names folder, for page 4's "Use preset". */
   tribalPresets?: { name: string; preset: TribalPreset }[];
   onSaved: (path: string) => void;
-  /** Presets brief §3.1: runs the host's own save (and closes it), for page 3's Save icon. Set by the host. */
+  /** Presets brief §3.1: runs the host's own save (and closes it), for the slots page's Save icon. Set by the host. */
   requestSave?: () => void;
 }
 
@@ -80,9 +80,12 @@ const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
 const kebab = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 /** The wizard's pages, in order. */
-const PAGES = ["Template", "Shape and rendering", "Slots", "Word lists"];
-/** Presets brief §3: the first three pages are the wizard; page 4 is optional. */
-const MAIN_PAGES = 3;
+const PAGES = ["Shape and rendering", "Slots", "Template", "Word lists"];
+/** The first two pages are the wizard; Template and Word lists open from the slots page's row. */
+const MAIN_PAGES = 2;
+const SLOTS_PAGE = 1;
+const TEMPLATE_PAGE = 2;
+const WORDS_PAGE = 3;
 
 /**
  * The recipe form as a three-page wizard, drawn into `hostEl`: a scrollable page and Back/Next
@@ -167,42 +170,48 @@ export class RecipeWizard {
   private render() {
     const scrollTop = this.pageEl?.scrollTop ?? 0;
     this.hostEl.empty();
-    // Page 2's part buttons stay above the scrolling page.
-    if (this.page === 1) this.renderPartButtons(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
-    // Page 3's heading and tier control stay above the scrolling slots too.
-    if (this.page === 2) this.renderSlotsHeader(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
+    // The shape page's part buttons stay above the scrolling page.
+    if (this.page === 0) this.renderPartButtons(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
+    // The slots page's heading and tier control stay above the scrolling slots too.
+    if (this.page === SLOTS_PAGE) this.renderSlotsHeader(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
     this.pageEl = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__page" });
-    if (this.page === 0) this.renderTemplatePage(this.pageEl);
-    else if (this.page === 1) {
+    if (this.page === 0) {
       this.pageEl.addClass("nameforge-recipe-editor__page--shape");
       this.renderShapePage(this.pageEl);
-    }
-    else if (this.page === 2) this.renderSlotsPage(this.pageEl);
+    } else if (this.page === SLOTS_PAGE) this.renderSlotsPage(this.pageEl);
+    else if (this.page === TEMPLATE_PAGE) this.renderTemplatePage(this.pageEl);
     else this.renderWordsPage(this.pageEl);
     this.pageEl.scrollTop = scrollTop;
 
-    // Presets brief §3.1: "n of 3" on the wizard's pages, "4 of 4" on the optional word lists page.
+    // "n of 2" on the wizard's pages; the optional pages go back to the slots page.
     const nav = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__nav" });
     const back = nav.createEl("button", { text: "Back" });
     back.disabled = this.page === 0;
-    back.addEventListener("click", () => this.goTo(this.page - 1));
-    const total = this.page < MAIN_PAGES ? MAIN_PAGES : PAGES.length;
-    nav.createSpan({ cls: "nameforge-recipe-editor__step", text: `${this.page + 1} of ${total} · ${PAGES[this.page]}` });
-    if (this.page < MAIN_PAGES - 1) {
+    back.addEventListener("click", () => this.goTo(this.page >= MAIN_PAGES ? SLOTS_PAGE : this.page - 1));
+    const step = this.page < MAIN_PAGES ? `${this.page + 1} of ${MAIN_PAGES} · ${PAGES[this.page]}` : `Optional · ${PAGES[this.page]}`;
+    nav.createSpan({ cls: "nameforge-recipe-editor__step", text: step });
+    if (this.page < SLOTS_PAGE) {
       const next = nav.createEl("button", { text: "Next" });
       next.addEventListener("click", () => this.goTo(this.page + 1));
-    } else if (this.page === MAIN_PAGES - 1) {
+    } else if (this.page === SLOTS_PAGE) {
       const actions = nav.createDiv({ cls: "nameforge-recipe-editor__nav-actions" });
+      // Presets brief §3.1: the same size as the host's Save icon.
       const save = actions.createEl("button", {
-        cls: "nameforge-modal__icon-action",
+        cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
         attr: { type: "button", title: "Save and use as-is", "aria-label": "Save and use as-is" },
       });
       setIcon(save, ICON_SAVE);
       save.addEventListener("click", () => this.options.requestSave?.());
+      const template = actions.createEl("button", {
+        cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+        attr: { type: "button", title: "Template", "aria-label": "Template" },
+      });
+      setIcon(template, ICON_SAVE_PRESET);
+      template.addEventListener("click", () => this.goTo(TEMPLATE_PAGE));
       const words = actions.createEl("button", { cls: "nameforge-recipe-editor__words-button", attr: { type: "button" } });
       setIcon(words.createSpan({ cls: "nameforge-recipe-editor__words-icon" }), ICON_RECIPE);
       words.createSpan({ text: "Optional: edit word lists" });
-      words.addEventListener("click", () => this.goTo(this.page + 1));
+      words.addEventListener("click", () => this.goTo(WORDS_PAGE));
     }
   }
 
@@ -212,16 +221,9 @@ export class RecipeWizard {
     this.render();
   }
 
-  /** Page 1: name (when the host has no name field), description, template and starting template. */
+  /** The optional Template page: description, template and starting template. */
   private renderTemplatePage(el: HTMLElement) {
     const w = this.working;
-    if (!this.nameSource) {
-      new Setting(el).setName("Name").addText((t) =>
-        t.setValue(this.name).onChange((v) => {
-          this.name = v;
-        }),
-      );
-    }
 
     new Setting(el)
       .setName("Description")
@@ -261,7 +263,7 @@ export class RecipeWizard {
     }
   }
 
-  /** Page 2: shape, then rendering. */
+  /** Page 1: shape, then rendering. */
   /** The part: one of three, each with its module's icon (place names use the wizard's own). */
   private renderPartButtons(header: HTMLElement) {
     const w = this.working;
@@ -286,6 +288,14 @@ export class RecipeWizard {
 
   private renderShapePage(el: HTMLElement) {
     const w = this.working;
+    // The name, when the host has no name field of its own.
+    if (!this.nameSource) {
+      new Setting(el).setName("Name").addText((t) =>
+        t.setValue(this.name).onChange((v) => {
+          this.name = v;
+        }),
+      );
+    }
     if (w.shape.part === "organic") {
       this.renderPlaceNamesSentence(el);
     } else if (w.shape.part === "new-land") {
@@ -351,7 +361,7 @@ export class RecipeWizard {
     );
   }
 
-  /** Page 3's fixed top: the Slots heading, its description, and Simple · Detailed · Complete. */
+  /** Page 2's fixed top: the Slots heading, its description, and Simple · Detailed · Complete. */
   private renderSlotsHeader(el: HTMLElement) {
     el.createEl("h3", { text: "Slots" });
     el.createEl("p", {
@@ -373,7 +383,7 @@ export class RecipeWizard {
     el.createEl("p", { cls: "setting-item-description", text: TIER_TEXT[this.tier][1] });
   }
 
-  /** Page 3: the slots (generic words are on page 4). */
+  /** Page 2: the slots (generic words are on the word lists page). */
   private renderSlotsPage(el: HTMLElement) {
     const w = this.working;
     for (const category of slotCategories(w.shape.part)) {
@@ -384,7 +394,7 @@ export class RecipeWizard {
 
   }
 
-  /** The slots page 3 shows: those in the tier, plus any set outside it. */
+  /** The slots the slots page lists: those in the tier, plus any set outside it. */
   private shownSlots(): { id: string; label: string }[] {
     const part = this.working.shape.part;
     return slotCategories(part).filter((c) => tierIncludes(this.tier, slotTier(part, c.id)) || this.isSlotSet(c.id));
@@ -406,7 +416,7 @@ export class RecipeWizard {
     });
   }
 
-  /** Presets brief §4: every slot from page 3 as what it draws from; editable ones as text. */
+  /** Presets brief §4: every slot from the slots page as what it draws from; editable ones as text. */
   private renderWordsPage(el: HTMLElement) {
     const intro = el.createEl("p", {
       cls: "setting-item-description",
@@ -1051,7 +1061,7 @@ export class RecipeWizard {
   /**
    * Presets brief §6.3: writes page 4's changed sections to the recipe's word-list note (before
    * the recipe, so the link resolves) and points those slots at it; unchanged or reset sections
-   * return to their page 3 setting. False when the note couldn't be written.
+   * return to their slots page setting. False when the note couldn't be written.
    */
   private async saveWords(name: string): Promise<boolean> {
     const w = this.working;
@@ -1180,7 +1190,7 @@ export class RecipeEditorModal extends Modal {
       });
     };
     save.addEventListener("click", run);
-    // Presets brief §3.1: page 3's Save icon runs the same save.
+    // Presets brief §3.1: the slots page's Save icon runs the same save.
     this.options.requestSave = run;
     const cancel = controls.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
