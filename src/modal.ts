@@ -3884,9 +3884,10 @@ class NameForgeEditorModal extends Modal {
     const isMix = !other && this.selectedPackType === "mixPack";
     this.wizardButton?.classList.toggle("is-active", isWizard);
     this.wizardButton?.setAttribute("aria-pressed", String(isWizard));
-    // The templates pane: only for pack types that have templates.
+    // The templates pane: only for pack types that have templates (not Mix, the wizard or Biome).
     const templateType = other ? undefined : templateTypeFor(this.selectedPackType);
-    this.templatesButton?.toggle(!!templateType);
+    // Pack types without templates keep the button, greyed out and unclickable.
+    if (this.templatesButton) this.templatesButton.disabled = !templateType;
     const showTemplates = this.templatesOpen && !!templateType;
     this.templatesButton?.toggleClass("is-active", showTemplates);
     this.templatesButton?.setAttribute("aria-pressed", String(showTemplates));

@@ -1564,6 +1564,11 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   background-color: color-mix(in srgb, var(--background-primary) 50%, var(--background-secondary));
   color: var(--text-muted);
 }
+/* Mix, the place name wizard and Biome: greyed out, the icon in the button's own colour. */
+.nameforge-modal__pack-type-toggle .nameforge-modal__templates-button:disabled {
+  color: color-mix(in srgb, var(--background-primary) 50%, var(--background-secondary));
+  cursor: default;
+}
 .nameforge-modal__pack-type-toggle .nameforge-modal__templates-button.is-active {
   background-color: var(--forge-accent);
   color: var(--text-on-accent);
