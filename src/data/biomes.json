@@ -1,22 +1,30 @@
 {
   "terrains": [
-    "open",
+    "plains",
+    "hills",
     "mountains",
+    "forest",
     "coast",
     "rivers",
     "wetland",
     "islands"
   ],
   "universal": {
-    "open": {
+    "plains": {
+      "land": [
+        "Plain",
+        "Lowland",
+        "Valley",
+        "Flats"
+      ],
+      "water": []
+    },
+    "hills": {
       "land": [
         "Hills",
-        "Valley",
         "Ridge",
         "Hollow",
-        "Plain",
-        "Upland",
-        "Lowland"
+        "Upland"
       ],
       "water": []
     },
@@ -32,6 +40,14 @@
         "Falls",
         "Springs"
       ]
+    },
+    "forest": {
+      "land": [
+        "Woods",
+        "Forest",
+        "Grove"
+      ],
+      "water": []
     },
     "coast": {
       "land": [
@@ -93,19 +109,39 @@
   "biomes": [
     {
       "id": "temperate",
-      "label": "Temperate woodland",
-      "phrase": "temperate woodland",
-      "guide": "Broadleaf forest, heath and farmland with four seasons: most of Europe, eastern North America, northern China, Korea and Japan.",
+      "label": "Temperate lands",
+      "phrase": "the temperate lands",
+      "guide": "Broadleaf forest, downs, heath and farmland with four seasons: most of Europe, eastern North America, northern China, Korea and Japan.",
       "terrainWeights": {
-        "open": 40,
-        "mountains": 10,
+        "plains": 20,
+        "hills": 15,
+        "mountains": 5,
+        "forest": 20,
         "coast": 15,
-        "rivers": 20,
-        "wetland": 10,
-        "islands": 5
+        "rivers": 15,
+        "wetland": 7,
+        "islands": 3
       },
       "land": {
-        "open": [
+        "plains": [
+          [
+            "Vale",
+            1
+          ],
+          [
+            "Meadows",
+            1
+          ],
+          [
+            "Heath",
+            1
+          ],
+          [
+            "Open Fields",
+            1
+          ]
+        ],
+        "hills": [
           [
             "Downs",
             1
@@ -127,31 +163,7 @@
             1
           ],
           [
-            "Heath",
-            1
-          ],
-          [
             "Wold",
-            1
-          ],
-          [
-            "Woodland",
-            1
-          ],
-          [
-            "Forest",
-            1
-          ],
-          [
-            "Greenwood",
-            1
-          ],
-          [
-            "Vale",
-            1
-          ],
-          [
-            "Meadows",
             1
           ]
         ],
@@ -170,6 +182,28 @@
           ],
           [
             "Blue Hills",
+            1
+          ]
+        ],
+        "forest": [
+          [
+            "Woodland",
+            1
+          ],
+          [
+            "Forest",
+            1
+          ],
+          [
+            "Greenwood",
+            1
+          ],
+          [
+            "Deep Wood",
+            1
+          ],
+          [
+            "Old Wood",
             1
           ]
         ],
@@ -711,7 +745,701 @@
           "Jet",
           1
         ]
-      ]
+      ],
+      "short": {
+        "land": {
+          "plains": [
+            "meadow",
+            "heath"
+          ],
+          "hills": [
+            "down",
+            "moor",
+            "wold"
+          ],
+          "mountains": [
+            "fell",
+            "tor",
+            "edge"
+          ],
+          "forest": [
+            "copse",
+            "thicket"
+          ],
+          "coast": [
+            "cliff",
+            "dune",
+            "shingle"
+          ],
+          "rivers": [
+            "meadow",
+            "bank"
+          ],
+          "islands": [
+            "skerry",
+            "holm"
+          ]
+        },
+        "water": {
+          "plains": [
+            "pond"
+          ],
+          "mountains": [
+            "tarn",
+            "brook"
+          ],
+          "coast": [
+            "creek",
+            "estuary",
+            "haven"
+          ],
+          "rivers": [
+            "brook",
+            "weir"
+          ],
+          "wetland": [
+            "fen",
+            "bog",
+            "mere"
+          ],
+          "islands": [
+            "sound"
+          ]
+        }
+      },
+      "ground": [
+        "clay",
+        "chalk",
+        "gravel",
+        "sand",
+        "flint",
+        "loam",
+        "peat"
+      ],
+      "resources": [
+        "iron",
+        "tin",
+        "copper",
+        "lead",
+        "coal",
+        "salt",
+        "timber"
+      ],
+      "seasons": [
+        "summer",
+        "winter",
+        "spring",
+        "autumn"
+      ],
+      "shapeMultipliers": {
+        "groups": {},
+        "generics": {}
+      }
+    },
+    {
+      "id": "moorland",
+      "label": "Moorland",
+      "phrase": "the moors",
+      "guide": "Cool, wet, windswept and mostly treeless country of heather, bog and bare hills: the Scottish Highlands and Islands, the Pennines and Dartmoor, Iceland, the Faroes, the Falklands and Tierra del Fuego.",
+      "land": {
+        "plains": [
+          [
+            "Heath",
+            1
+          ],
+          [
+            "Heather Flats",
+            1
+          ],
+          [
+            "Rough Grazing",
+            1
+          ],
+          [
+            "Cotton-Grass Flats",
+            1
+          ]
+        ],
+        "hills": [
+          [
+            "Moor",
+            1
+          ],
+          [
+            "High Moor",
+            1
+          ],
+          [
+            "Fells",
+            1
+          ],
+          [
+            "Heather Hills",
+            1
+          ],
+          [
+            "Tors",
+            1
+          ],
+          [
+            "Peat Hags",
+            1
+          ]
+        ],
+        "mountains": [
+          [
+            "Bare Mountains",
+            1
+          ],
+          [
+            "Scree Slopes",
+            1
+          ],
+          [
+            "Stony Tops",
+            1
+          ],
+          [
+            "Cairns",
+            1
+          ]
+        ],
+        "forest": [
+          [
+            "Birch Scrub",
+            1
+          ],
+          [
+            "Scrub Woods",
+            1
+          ]
+        ],
+        "coast": [
+          [
+            "Sea Cliffs",
+            1
+          ],
+          [
+            "Bird Cliffs",
+            1
+          ],
+          [
+            "Storm Beach",
+            1
+          ],
+          [
+            "Sea Stacks",
+            1
+          ]
+        ],
+        "islands": [
+          [
+            "Bird Isles",
+            1
+          ],
+          [
+            "Bare Isles",
+            1
+          ],
+          [
+            "Seal Isles",
+            1
+          ]
+        ]
+      },
+      "water": {
+        "mountains": [
+          [
+            "Tarns",
+            1
+          ],
+          [
+            "Hill Springs",
+            1
+          ]
+        ],
+        "coast": [
+          [
+            "Grey Sea",
+            1
+          ],
+          [
+            "Sounds",
+            1
+          ],
+          [
+            "Long Inlets",
+            1
+          ]
+        ],
+        "rivers": [
+          [
+            "Peat Streams",
+            1
+          ],
+          [
+            "Brown River",
+            1
+          ],
+          [
+            "Long Lakes",
+            1
+          ],
+          [
+            "Moss Pools",
+            1
+          ]
+        ],
+        "wetland": [
+          [
+            "Blanket Bog",
+            1
+          ],
+          [
+            "High Moss",
+            1
+          ],
+          [
+            "Bog Pools",
+            1
+          ],
+          [
+            "Mires",
+            1
+          ]
+        ]
+      },
+      "wildAnimals": [
+        [
+          "red deer",
+          1
+        ],
+        [
+          "hare",
+          1
+        ],
+        [
+          "mountain hare",
+          1
+        ],
+        [
+          "fox",
+          1
+        ],
+        [
+          "stoat",
+          1
+        ],
+        [
+          "otter",
+          1
+        ],
+        [
+          "wildcat",
+          1
+        ],
+        [
+          "pine marten",
+          1
+        ],
+        [
+          "wolf",
+          0.5
+        ]
+      ],
+      "birds": [
+        [
+          "grouse",
+          1
+        ],
+        [
+          "curlew",
+          1
+        ],
+        [
+          "lapwing",
+          1
+        ],
+        [
+          "golden plover",
+          1
+        ],
+        [
+          "skylark",
+          1
+        ],
+        [
+          "merlin",
+          1
+        ],
+        [
+          "hen harrier",
+          1
+        ],
+        [
+          "raven",
+          1
+        ],
+        [
+          "golden eagle",
+          1
+        ],
+        [
+          "skua",
+          1
+        ],
+        [
+          "puffin",
+          1
+        ],
+        [
+          "gannet",
+          1
+        ],
+        [
+          "snipe",
+          1
+        ]
+      ],
+      "creatures": [
+        [
+          "salmon",
+          1
+        ],
+        [
+          "trout",
+          1
+        ],
+        [
+          "eel",
+          1
+        ],
+        [
+          "seal",
+          1
+        ],
+        [
+          "adder",
+          1
+        ],
+        [
+          "frog",
+          1
+        ],
+        [
+          "dragonfly",
+          1
+        ]
+      ],
+      "trees": [
+        [
+          "rowan",
+          1
+        ],
+        [
+          "birch",
+          1
+        ],
+        [
+          "juniper",
+          1
+        ],
+        [
+          "willow",
+          1
+        ],
+        [
+          "pine",
+          1
+        ],
+        [
+          "alder",
+          1
+        ],
+        [
+          "hawthorn",
+          1
+        ]
+      ],
+      "plants": [
+        [
+          "heather",
+          1
+        ],
+        [
+          "bracken",
+          1
+        ],
+        [
+          "cotton grass",
+          1
+        ],
+        [
+          "bog myrtle",
+          1
+        ],
+        [
+          "gorse",
+          1
+        ],
+        [
+          "bilberry",
+          1
+        ],
+        [
+          "moss",
+          1
+        ],
+        [
+          "rush",
+          1
+        ]
+      ],
+      "crops": [
+        [
+          "oats",
+          1
+        ],
+        [
+          "barley",
+          1
+        ],
+        [
+          "rye",
+          1
+        ]
+      ],
+      "livestock": [
+        [
+          "sheep",
+          3
+        ],
+        [
+          "cattle",
+          2
+        ],
+        [
+          "pony",
+          1
+        ],
+        [
+          "horse",
+          1
+        ],
+        [
+          "goat",
+          1
+        ],
+        [
+          "dog",
+          1
+        ],
+        [
+          "goose",
+          1
+        ]
+      ],
+      "lifeways": [
+        [
+          "Shepherds",
+          20
+        ],
+        [
+          "Crofters",
+          14
+        ],
+        [
+          "Fishers",
+          10
+        ],
+        [
+          "Cattle Keepers",
+          10
+        ],
+        [
+          "Peat Cutters",
+          8
+        ],
+        [
+          "Fowlers",
+          8
+        ],
+        [
+          "Drovers",
+          8
+        ],
+        [
+          "Hunters",
+          6
+        ],
+        [
+          "Weavers",
+          6
+        ],
+        [
+          "Smiths",
+          4
+        ],
+        [
+          "Seal Hunters",
+          3
+        ],
+        [
+          "Kelp Gatherers",
+          3
+        ]
+      ],
+      "sacred": [
+        [
+          "Standing Stones",
+          1
+        ],
+        [
+          "Stone Circle",
+          1
+        ],
+        [
+          "Cairns",
+          1
+        ],
+        [
+          "Old Barrow",
+          1
+        ],
+        [
+          "Hill Fire",
+          1
+        ],
+        [
+          "Holy Well",
+          0.5
+        ]
+      ],
+      "materials": [
+        [
+          "Peat",
+          1
+        ],
+        [
+          "Stone",
+          1
+        ],
+        [
+          "Wool",
+          1
+        ],
+        [
+          "Slate",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Lead",
+          1
+        ]
+      ],
+      "terrainWeights": {
+        "plains": 15,
+        "hills": 35,
+        "mountains": 15,
+        "forest": 2,
+        "coast": 15,
+        "rivers": 8,
+        "wetland": 8,
+        "islands": 2
+      },
+      "short": {
+        "land": {
+          "plains": [
+            "heath"
+          ],
+          "hills": [
+            "moor",
+            "fell",
+            "tor"
+          ],
+          "mountains": [
+            "scree",
+            "cairn"
+          ],
+          "forest": [
+            "scrub"
+          ],
+          "coast": [
+            "stack",
+            "cliff"
+          ],
+          "islands": [
+            "holm",
+            "skerry"
+          ]
+        },
+        "water": {
+          "mountains": [
+            "tarn"
+          ],
+          "coast": [
+            "sound",
+            "inlet"
+          ],
+          "rivers": [
+            "rill"
+          ],
+          "wetland": [
+            "bog",
+            "mire",
+            "moss"
+          ],
+          "islands": [
+            "sound"
+          ]
+        }
+      },
+      "ground": [
+        "peat",
+        "granite",
+        "gravel",
+        "stone",
+        "slate"
+      ],
+      "resources": [
+        "peat",
+        "slate",
+        "lead",
+        "iron",
+        "granite"
+      ],
+      "seasons": [
+        "winter",
+        "summer",
+        "spring",
+        "storm"
+      ],
+      "shapeMultipliers": {
+        "groups": {
+          "upland-and-open-ground": 2.5,
+          "seasonal-and-upland-settlement": 2,
+          "wetland": 1.5,
+          "mountains-and-rock": 1.3,
+          "religious-burial-and-memorial": 1.3,
+          "open-and-farmed-land": 0.5,
+          "clearings": 0.2,
+          "woodland": 0.15
+        },
+        "generics": {
+          "plain-grassland": 0.5,
+          "volcano": 0.3,
+          "glacier": 0.3,
+          "desert": 0,
+          "oasis": 0,
+          "dry-riverbed": 0,
+          "reef": 0,
+          "lagoon": 0
+        }
+      }
     },
     {
       "id": "boreal",
@@ -719,25 +1447,19 @@
       "phrase": "northern forest and tundra",
       "guide": "Conifer forest, lakes, tundra and ice: Scandinavia, Siberia, Canada, Alaska and the Arctic edge.",
       "terrainWeights": {
-        "open": 35,
-        "mountains": 15,
+        "plains": 10,
+        "hills": 10,
+        "mountains": 10,
+        "forest": 30,
         "coast": 15,
-        "rivers": 20,
-        "wetland": 10,
-        "islands": 5
+        "rivers": 15,
+        "wetland": 7,
+        "islands": 3
       },
       "land": {
-        "open": [
+        "plains": [
           [
-            "Pine Forest",
-            1
-          ],
-          [
-            "Dark Forest",
-            1
-          ],
-          [
-            "Birch Woods",
+            "Tundra",
             1
           ],
           [
@@ -745,7 +1467,7 @@
             1
           ],
           [
-            "Tundra",
+            "Frozen Plain",
             1
           ],
           [
@@ -755,9 +1477,19 @@
           [
             "Ice Edge",
             1
+          ]
+        ],
+        "hills": [
+          [
+            "Bare Hills",
+            1
           ],
           [
-            "Frozen Plain",
+            "Stony Ridges",
+            1
+          ],
+          [
+            "Birch Hills",
             1
           ]
         ],
@@ -776,6 +1508,24 @@
           ],
           [
             "Bare Fells",
+            1
+          ]
+        ],
+        "forest": [
+          [
+            "Pine Forest",
+            1
+          ],
+          [
+            "Dark Forest",
+            1
+          ],
+          [
+            "Birch Woods",
+            1
+          ],
+          [
+            "Spruce Forest",
             1
           ]
         ],
@@ -1223,7 +1973,97 @@
           "Copper",
           1
         ]
-      ]
+      ],
+      "short": {
+        "land": {
+          "plains": [
+            "tundra",
+            "barrens"
+          ],
+          "hills": [
+            "esker"
+          ],
+          "mountains": [
+            "glacier",
+            "fell",
+            "scree"
+          ],
+          "forest": [
+            "forest",
+            "birchwood",
+            "pinewood"
+          ],
+          "coast": [
+            "skerry",
+            "ice"
+          ],
+          "islands": [
+            "skerry",
+            "holm"
+          ]
+        },
+        "water": {
+          "plains": [
+            "lake",
+            "pond"
+          ],
+          "mountains": [
+            "tarn",
+            "torrent"
+          ],
+          "coast": [
+            "fjord",
+            "inlet"
+          ],
+          "rivers": [
+            "rapids",
+            "lake",
+            "torrent"
+          ],
+          "wetland": [
+            "mire",
+            "bog",
+            "moss"
+          ]
+        }
+      },
+      "ground": [
+        "peat",
+        "gravel",
+        "rock",
+        "ice",
+        "moss"
+      ],
+      "resources": [
+        "fur",
+        "iron",
+        "copper",
+        "timber",
+        "amber"
+      ],
+      "seasons": [
+        "winter",
+        "summer",
+        "thaw"
+      ],
+      "shapeMultipliers": {
+        "groups": {
+          "woodland": 1.3,
+          "wetland": 1.5,
+          "springs-pools-and-lakes": 1.5,
+          "open-and-farmed-land": 0.4,
+          "clearings": 0.7
+        },
+        "generics": {
+          "glacier": 1.5,
+          "volcano": 0.3,
+          "desert": 0,
+          "oasis": 0,
+          "dry-riverbed": 0,
+          "reef": 0,
+          "lagoon": 0
+        }
+      }
     },
     {
       "id": "cool-rainforest",
@@ -1231,15 +2071,63 @@
       "phrase": "cool rainforest",
       "guide": "Wet, mild forest of giant conifers, ferns and moss on mountainous coasts: the Pacific Northwest, New Zealand, southern Chile, Tasmania and western Norway.",
       "terrainWeights": {
-        "open": 30,
+        "plains": 5,
+        "hills": 10,
         "mountains": 20,
+        "forest": 25,
         "coast": 25,
-        "rivers": 15,
-        "wetland": 5,
-        "islands": 5
+        "rivers": 10,
+        "wetland": 2,
+        "islands": 3
       },
       "land": {
-        "open": [
+        "plains": [
+          [
+            "Green Valleys",
+            1
+          ],
+          [
+            "Fern Flats",
+            1
+          ],
+          [
+            "River Flats",
+            1
+          ]
+        ],
+        "hills": [
+          [
+            "Mist Hills",
+            1
+          ],
+          [
+            "Green Hills",
+            1
+          ],
+          [
+            "Fern Ridges",
+            1
+          ]
+        ],
+        "mountains": [
+          [
+            "Snow Peaks",
+            1
+          ],
+          [
+            "Fire Mountain",
+            1
+          ],
+          [
+            "Glaciers",
+            1
+          ],
+          [
+            "Cloud Peaks",
+            1
+          ]
+        ],
+        "forest": [
           [
             "Deep Forest",
             1
@@ -1261,29 +2149,7 @@
             1
           ],
           [
-            "Green Valleys",
-            1
-          ],
-          [
             "Great Trees",
-            1
-          ]
-        ],
-        "mountains": [
-          [
-            "Snow Peaks",
-            1
-          ],
-          [
-            "Fire Mountain",
-            1
-          ],
-          [
-            "Glaciers",
-            1
-          ],
-          [
-            "Cloud Peaks",
             1
           ]
         ],
@@ -1681,23 +2547,125 @@
           "Cedar Bark",
           1
         ]
-      ]
+      ],
+      "short": {
+        "land": {
+          "plains": [
+            "meadow"
+          ],
+          "hills": [
+            "bluff"
+          ],
+          "mountains": [
+            "glacier",
+            "volcano"
+          ],
+          "forest": [
+            "forest",
+            "fern"
+          ],
+          "coast": [
+            "stack",
+            "beach"
+          ],
+          "islands": [
+            "stack"
+          ]
+        },
+        "water": {
+          "plains": [
+            "spring"
+          ],
+          "mountains": [
+            "torrent",
+            "geyser"
+          ],
+          "coast": [
+            "inlet",
+            "fjord"
+          ],
+          "rivers": [
+            "rapids",
+            "torrent"
+          ],
+          "wetland": [
+            "swamp",
+            "bog"
+          ]
+        }
+      },
+      "ground": [
+        "moss",
+        "peat",
+        "basalt",
+        "gravel",
+        "mud"
+      ],
+      "resources": [
+        "timber",
+        "copper",
+        "greenstone",
+        "gold"
+      ],
+      "seasons": [
+        "rain",
+        "winter",
+        "summer"
+      ],
+      "shapeMultipliers": {
+        "groups": {
+          "woodland": 2,
+          "mountains-and-rock": 1.3,
+          "coast-and-sea": 1.3,
+          "open-and-farmed-land": 0.4,
+          "upland-and-open-ground": 0.3
+        },
+        "generics": {
+          "volcano": 1.5,
+          "glacier": 1.5,
+          "plain-grassland": 0.2,
+          "desert": 0,
+          "oasis": 0,
+          "dry-riverbed": 0,
+          "reef": 0
+        }
+      }
     },
     {
       "id": "mediterranean",
-      "label": "Mediterranean hills",
-      "phrase": "Mediterranean hills",
+      "label": "Mediterranean lands",
+      "phrase": "the Mediterranean lands",
       "guide": "Hot dry summers, mild wet winters, scrub-covered hills and rocky coasts: the Mediterranean, California, central Chile, the Cape and south-west Australia.",
       "terrainWeights": {
-        "open": 35,
-        "mountains": 15,
+        "plains": 15,
+        "hills": 25,
+        "mountains": 10,
+        "forest": 5,
         "coast": 25,
-        "rivers": 10,
+        "rivers": 5,
         "wetland": 5,
         "islands": 10
       },
       "land": {
-        "open": [
+        "plains": [
+          [
+            "Stony Plain",
+            1
+          ],
+          [
+            "Dry Valleys",
+            1
+          ],
+          [
+            "Olive Plain",
+            1
+          ],
+          [
+            "Coastal Plain",
+            1
+          ]
+        ],
+        "hills": [
           [
             "Scrub Hills",
             1
@@ -1707,23 +2675,11 @@
             1
           ],
           [
-            "Stony Plain",
-            1
-          ],
-          [
             "Terraces",
             1
           ],
           [
-            "Dry Valleys",
-            1
-          ],
-          [
             "Golden Hills",
-            1
-          ],
-          [
-            "Oak Hills",
             1
           ],
           [
@@ -1746,6 +2702,20 @@
           ],
           [
             "High Pastures",
+            1
+          ]
+        ],
+        "forest": [
+          [
+            "Oak Woods",
+            1
+          ],
+          [
+            "Pine Woods",
+            1
+          ],
+          [
+            "Cork Woods",
             1
           ]
         ],
@@ -2201,23 +3171,112 @@
           "Purple Shells",
           1
         ]
-      ]
+      ],
+      "short": {
+        "land": {
+          "plains": [
+            "field"
+          ],
+          "hills": [
+            "terrace",
+            "scrub"
+          ],
+          "mountains": [
+            "gorge",
+            "crag"
+          ],
+          "forest": [
+            "pinewood"
+          ],
+          "coast": [
+            "cape",
+            "beach"
+          ],
+          "rivers": [
+            "gorge"
+          ],
+          "islands": [
+            "islet"
+          ]
+        },
+        "water": {
+          "plains": [
+            "well",
+            "cistern"
+          ],
+          "mountains": [
+            "spring"
+          ],
+          "coast": [
+            "cove",
+            "lagoon"
+          ],
+          "rivers": [
+            "torrent"
+          ],
+          "wetland": [
+            "lagoon",
+            "marsh"
+          ],
+          "islands": [
+            "strait"
+          ]
+        }
+      },
+      "ground": [
+        "limestone",
+        "marble",
+        "marl",
+        "stone",
+        "gravel",
+        "sand"
+      ],
+      "resources": [
+        "marble",
+        "silver",
+        "copper",
+        "salt",
+        "iron"
+      ],
+      "seasons": [
+        "summer",
+        "winter",
+        "harvest"
+      ],
+      "shapeMultipliers": {
+        "groups": {
+          "hills-and-slopes": 1.5,
+          "coast-and-sea": 1.3,
+          "woodland": 0.6,
+          "upland-and-open-ground": 0.6,
+          "wetland": 0.4
+        },
+        "generics": {
+          "dry-riverbed": 2,
+          "volcano": 0.5,
+          "reef": 0.3,
+          "desert": 0.2,
+          "glacier": 0
+        }
+      }
     },
     {
       "id": "steppe",
-      "label": "Steppe and prairie",
-      "phrase": "the steppe",
-      "guide": "Vast treeless grassland with hot summers and bitter winters: the Eurasian steppe from Hungary to Mongolia, the North American plains and the pampas.",
+      "label": "Steppe and grassland",
+      "phrase": "the grasslands",
+      "guide": "Temperate grassland, vast and mostly treeless, with hot summers and bitter winters: the Eurasian steppe from Hungary to Mongolia, the North American prairies and the pampas.",
       "terrainWeights": {
-        "open": 60,
-        "mountains": 10,
+        "plains": 50,
+        "hills": 15,
+        "mountains": 8,
+        "forest": 2,
         "coast": 0,
-        "rivers": 25,
+        "rivers": 20,
         "wetland": 5,
         "islands": 0
       },
       "land": {
-        "open": [
+        "plains": [
           [
             "Grass",
             1
@@ -2243,19 +3302,25 @@
             1
           ],
           [
-            "Rolling Plains",
-            1
-          ],
-          [
             "Short Grass",
             1
           ],
           [
             "Long Grass",
             1
+          ]
+        ],
+        "hills": [
+          [
+            "Rolling Hills",
+            1
           ],
           [
             "Badlands",
+            1
+          ],
+          [
+            "Grassy Ridges",
             1
           ]
         ],
@@ -2274,6 +3339,20 @@
           ],
           [
             "Snow Ridge",
+            1
+          ]
+        ],
+        "forest": [
+          [
+            "Birch Groves",
+            1
+          ],
+          [
+            "Forest Edge",
+            1
+          ],
+          [
+            "Poplar Woods",
             1
           ]
         ],
@@ -2643,7 +3722,77 @@
           "Felt",
           1
         ]
-      ]
+      ],
+      "short": {
+        "land": {
+          "plains": [
+            "steppe",
+            "grass"
+          ],
+          "hills": [
+            "mound",
+            "rise"
+          ],
+          "mountains": [
+            "scarp"
+          ],
+          "rivers": [
+            "bluff"
+          ]
+        },
+        "water": {
+          "plains": [
+            "well",
+            "lake"
+          ],
+          "mountains": [
+            "spring"
+          ],
+          "rivers": [
+            "lake"
+          ],
+          "wetland": [
+            "reedbed",
+            "marsh"
+          ]
+        }
+      },
+      "ground": [
+        "black earth",
+        "loess",
+        "salt",
+        "sand",
+        "gravel"
+      ],
+      "resources": [
+        "gold",
+        "salt",
+        "iron",
+        "copper"
+      ],
+      "seasons": [
+        "winter",
+        "summer",
+        "spring"
+      ],
+      "shapeMultipliers": {
+        "groups": {
+          "open-and-farmed-land": 2,
+          "upland-and-open-ground": 1.5,
+          "islands-and-river-land": 0.5,
+          "mountains-and-rock": 0.5,
+          "woodland": 0.2,
+          "clearings": 0.2,
+          "coast-and-sea": 0
+        },
+        "generics": {
+          "plain-grassland": 4,
+          "glacier": 0,
+          "volcano": 0,
+          "reef": 0,
+          "lagoon": 0
+        }
+      }
     },
     {
       "id": "desert",
@@ -2651,21 +3800,19 @@
       "phrase": "the desert",
       "guide": "Sand seas, stony plains, wadis and oases: the Sahara, Arabia, central Asia's deserts, the American south-west, the Atacama and Australia's interior.",
       "terrainWeights": {
-        "open": 55,
+        "plains": 45,
+        "hills": 15,
         "mountains": 15,
+        "forest": 0,
         "coast": 10,
-        "rivers": 20,
+        "rivers": 15,
         "wetland": 0,
         "islands": 0
       },
       "land": {
-        "open": [
+        "plains": [
           [
             "Sands",
-            1
-          ],
-          [
-            "Dunes",
             1
           ],
           [
@@ -2681,15 +3828,25 @@
             1
           ],
           [
-            "Red Rocks",
+            "Salt Pans",
+            1
+          ],
+          [
+            "Salt Road",
             1
           ],
           [
             "Dry Valley",
             1
+          ]
+        ],
+        "hills": [
+          [
+            "Dunes",
+            1
           ],
           [
-            "Salt Pans",
+            "Red Rocks",
             1
           ],
           [
@@ -2697,7 +3854,7 @@
             1
           ],
           [
-            "Salt Road",
+            "Rocky Hills",
             1
           ]
         ],
@@ -3087,7 +4244,87 @@
           "Turquoise",
           1
         ]
-      ]
+      ],
+      "short": {
+        "land": {
+          "plains": [
+            "sand"
+          ],
+          "hills": [
+            "dune",
+            "mesa",
+            "rock"
+          ],
+          "mountains": [
+            "canyon",
+            "rock"
+          ],
+          "coast": [
+            "spit"
+          ],
+          "rivers": [
+            "grove"
+          ]
+        },
+        "water": {
+          "plains": [
+            "well",
+            "oasis"
+          ],
+          "mountains": [
+            "pool"
+          ],
+          "coast": [
+            "inlet"
+          ],
+          "rivers": [
+            "oasis",
+            "wadi",
+            "well"
+          ]
+        }
+      },
+      "ground": [
+        "sand",
+        "salt",
+        "gravel",
+        "flint",
+        "rock",
+        "dust"
+      ],
+      "resources": [
+        "salt",
+        "gold",
+        "copper",
+        "turquoise",
+        "incense"
+      ],
+      "seasons": [
+        "summer",
+        "winter",
+        "rain"
+      ],
+      "shapeMultipliers": {
+        "groups": {
+          "springs-pools-and-lakes": 1.5,
+          "mountains-and-rock": 1.5,
+          "open-and-farmed-land": 0.5,
+          "upland-and-open-ground": 0.3,
+          "woodland": 0.05,
+          "clearings": 0.05,
+          "wetland": 0
+        },
+        "generics": {
+          "desert": 5,
+          "oasis": 5,
+          "dry-riverbed": 4,
+          "plain-grassland": 0.3,
+          "creek": 0.3,
+          "reef": 0.3,
+          "lagoon": 0.2,
+          "glacier": 0
+        }
+      }
     },
     {
       "id": "savannah",
@@ -3095,33 +4332,23 @@
       "phrase": "the savannah",
       "guide": "Tall grass, scattered trees and a long dry season: eastern and southern Africa, the Sahel's southern edge, northern Australia, the Brazilian cerrado and India's Deccan.",
       "terrainWeights": {
-        "open": 55,
-        "mountains": 10,
+        "plains": 40,
+        "hills": 15,
+        "mountains": 5,
+        "forest": 5,
         "coast": 5,
         "rivers": 20,
         "wetland": 10,
         "islands": 0
       },
       "land": {
-        "open": [
+        "plains": [
           [
             "Grasslands",
             1
           ],
           [
             "Tall Grass",
-            1
-          ],
-          [
-            "Red Hills",
-            1
-          ],
-          [
-            "Thornlands",
-            1
-          ],
-          [
-            "Bushland",
             1
           ],
           [
@@ -3133,11 +4360,25 @@
             1
           ],
           [
+            "Thornlands",
+            1
+          ]
+        ],
+        "hills": [
+          [
+            "Red Hills",
+            1
+          ],
+          [
             "Stone Hills",
             1
           ],
           [
             "Termite Hills",
+            1
+          ],
+          [
+            "Granite Hills",
             1
           ]
         ],
@@ -3156,6 +4397,20 @@
           ],
           [
             "Granite Domes",
+            1
+          ]
+        ],
+        "forest": [
+          [
+            "Bushland",
+            1
+          ],
+          [
+            "Gallery Forest",
+            1
+          ],
+          [
+            "Thorn Forest",
             1
           ]
         ],
@@ -3563,7 +4818,80 @@
           "Beads",
           1
         ]
-      ]
+      ],
+      "short": {
+        "land": {
+          "plains": [
+            "bush",
+            "scrub"
+          ],
+          "hills": [
+            "rise",
+            "outcrop"
+          ],
+          "mountains": [
+            "escarpment",
+            "plateau",
+            "dome"
+          ],
+          "forest": [
+            "thicket"
+          ],
+          "coast": [
+            "beach",
+            "dune"
+          ]
+        },
+        "water": {
+          "plains": [
+            "waterhole"
+          ],
+          "coast": [
+            "creek"
+          ],
+          "rivers": [
+            "waterhole"
+          ],
+          "wetland": [
+            "swamp",
+            "delta"
+          ]
+        }
+      },
+      "ground": [
+        "red earth",
+        "clay",
+        "sand",
+        "ironstone",
+        "granite"
+      ],
+      "resources": [
+        "iron",
+        "copper",
+        "gold",
+        "ivory",
+        "salt"
+      ],
+      "seasons": [
+        "rain",
+        "drought",
+        "harvest"
+      ],
+      "shapeMultipliers": {
+        "groups": {
+          "open-and-farmed-land": 1.5,
+          "wetland": 0.8,
+          "upland-and-open-ground": 0.5,
+          "woodland": 0.4
+        },
+        "generics": {
+          "plain-grassland": 3,
+          "dry-riverbed": 2,
+          "oasis": 0.5,
+          "desert": 0.3,
+          "glacier": 0
+        }
+      }
     },
     {
       "id": "rainforest",
@@ -3571,29 +4899,19 @@
       "phrase": "tropical rainforest",
       "guide": "Hot, wet, evergreen forest under a closed canopy, laced with great rivers: the Amazon, the Congo basin, Borneo, Sumatra and lowland New Guinea.",
       "terrainWeights": {
-        "open": 45,
-        "mountains": 10,
+        "plains": 10,
+        "hills": 10,
+        "mountains": 5,
+        "forest": 40,
         "coast": 5,
-        "rivers": 30,
-        "wetland": 10,
+        "rivers": 25,
+        "wetland": 5,
         "islands": 0
       },
       "land": {
-        "open": [
+        "plains": [
           [
-            "Deep Forest",
-            1
-          ],
-          [
-            "Great Forest",
-            1
-          ],
-          [
-            "Green Hills",
-            1
-          ],
-          [
-            "Canopy",
+            "Clearings",
             1
           ],
           [
@@ -3601,11 +4919,17 @@
             1
           ],
           [
-            "Clearings",
+            "River Flats",
+            1
+          ]
+        ],
+        "hills": [
+          [
+            "Green Hills",
             1
           ],
           [
-            "Vine Forest",
+            "Jungle Ridges",
             1
           ]
         ],
@@ -3624,6 +4948,24 @@
           ],
           [
             "Waterfall Hills",
+            1
+          ]
+        ],
+        "forest": [
+          [
+            "Deep Forest",
+            1
+          ],
+          [
+            "Great Forest",
+            1
+          ],
+          [
+            "Canopy",
+            1
+          ],
+          [
+            "Vine Forest",
             1
           ]
         ],
@@ -4025,7 +5367,85 @@
           "Rubber",
           1
         ]
-      ]
+      ],
+      "short": {
+        "land": {
+          "plains": [
+            "clearing"
+          ],
+          "hills": [
+            "spur"
+          ],
+          "mountains": [
+            "gorge"
+          ],
+          "forest": [
+            "forest",
+            "jungle"
+          ],
+          "coast": [
+            "mudbank"
+          ],
+          "rivers": [
+            "sandbank"
+          ]
+        },
+        "water": {
+          "plains": [
+            "creek"
+          ],
+          "mountains": [
+            "cascade"
+          ],
+          "coast": [
+            "creek",
+            "estuary"
+          ],
+          "rivers": [
+            "rapids",
+            "creek",
+            "oxbow"
+          ],
+          "wetland": [
+            "swamp",
+            "backwater"
+          ]
+        }
+      },
+      "ground": [
+        "mud",
+        "clay",
+        "silt",
+        "red earth",
+        "sand"
+      ],
+      "resources": [
+        "gold",
+        "rubber",
+        "timber",
+        "resin"
+      ],
+      "seasons": [
+        "rain",
+        "flood"
+      ],
+      "shapeMultipliers": {
+        "groups": {
+          "woodland": 2,
+          "rivers-and-streams": 1.5,
+          "wetland": 1.3,
+          "open-and-farmed-land": 0.4,
+          "upland-and-open-ground": 0.1
+        },
+        "generics": {
+          "creek": 1.5,
+          "plain-grassland": 0.2,
+          "desert": 0,
+          "oasis": 0,
+          "dry-riverbed": 0,
+          "glacier": 0
+        }
+      }
     },
     {
       "id": "monsoon",
@@ -4033,15 +5453,17 @@
       "phrase": "the monsoon lands",
       "guide": "Wet and dry seasons, river plains, paddy fields, bamboo and teak forest: India, Bangladesh, mainland South-East Asia, southern China and Java.",
       "terrainWeights": {
-        "open": 40,
-        "mountains": 15,
+        "plains": 30,
+        "hills": 15,
+        "mountains": 10,
+        "forest": 10,
         "coast": 10,
-        "rivers": 25,
+        "rivers": 15,
         "wetland": 10,
         "islands": 0
       },
       "land": {
-        "open": [
+        "plains": [
           [
             "River Plain",
             1
@@ -4051,27 +5473,21 @@
             1
           ],
           [
-            "Bamboo Forest",
+            "Green Plain",
             1
-          ],
-          [
-            "Teak Forest",
-            1
-          ],
+          ]
+        ],
+        "hills": [
           [
             "Terraces",
             1
           ],
           [
-            "Jungle",
-            1
-          ],
-          [
-            "Green Plain",
-            1
-          ],
-          [
             "Red Hills",
+            1
+          ],
+          [
+            "Blue Ridges",
             1
           ]
         ],
@@ -4090,6 +5506,20 @@
           ],
           [
             "Rock Heights",
+            1
+          ]
+        ],
+        "forest": [
+          [
+            "Bamboo Forest",
+            1
+          ],
+          [
+            "Teak Forest",
+            1
+          ],
+          [
+            "Jungle",
             1
           ]
         ],
@@ -4503,7 +5933,87 @@
           "Salt",
           1
         ]
-      ]
+      ],
+      "short": {
+        "land": {
+          "plains": [
+            "paddy"
+          ],
+          "hills": [
+            "terrace"
+          ],
+          "mountains": [
+            "gorge"
+          ],
+          "forest": [
+            "jungle",
+            "bamboo"
+          ],
+          "coast": [
+            "beach",
+            "dune"
+          ],
+          "rivers": [
+            "sandbank"
+          ]
+        },
+        "water": {
+          "plains": [
+            "tank",
+            "pond"
+          ],
+          "mountains": [
+            "torrent"
+          ],
+          "coast": [
+            "creek",
+            "backwater"
+          ],
+          "rivers": [
+            "delta"
+          ],
+          "wetland": [
+            "swamp",
+            "backwater",
+            "delta"
+          ]
+        }
+      },
+      "ground": [
+        "silt",
+        "clay",
+        "mud",
+        "red earth",
+        "sand"
+      ],
+      "resources": [
+        "spice",
+        "silk",
+        "pearl",
+        "ruby",
+        "salt"
+      ],
+      "seasons": [
+        "monsoon",
+        "rain",
+        "flood",
+        "harvest"
+      ],
+      "shapeMultipliers": {
+        "groups": {
+          "open-and-farmed-land": 1.5,
+          "rivers-and-streams": 1.3,
+          "wetland": 1.3,
+          "upland-and-open-ground": 0.2
+        },
+        "generics": {
+          "dry-riverbed": 0.5,
+          "lagoon": 0.5,
+          "glacier": 0.2,
+          "desert": 0.2,
+          "oasis": 0.2
+        }
+      }
     },
     {
       "id": "tropical-islands",
@@ -4511,15 +6021,27 @@
       "phrase": "tropical islands",
       "guide": "Volcanic peaks, coral atolls, lagoons and open ocean: Polynesia, Micronesia, Melanesia, the Caribbean and the Indonesian and Philippine archipelagos.",
       "terrainWeights": {
-        "open": 15,
+        "plains": 5,
+        "hills": 10,
         "mountains": 15,
+        "forest": 5,
         "coast": 35,
-        "rivers": 5,
-        "wetland": 5,
+        "rivers": 3,
+        "wetland": 2,
         "islands": 25
       },
       "land": {
-        "open": [
+        "plains": [
+          [
+            "Taro Gardens",
+            1
+          ],
+          [
+            "Coastal Flats",
+            1
+          ]
+        ],
+        "hills": [
           [
             "High Valley",
             1
@@ -4533,11 +6055,7 @@
             1
           ],
           [
-            "Taro Gardens",
-            1
-          ],
-          [
-            "Breadfruit Groves",
+            "Green Ridges",
             1
           ]
         ],
@@ -4560,6 +6078,20 @@
           ],
           [
             "Sheer Cliffs",
+            1
+          ]
+        ],
+        "forest": [
+          [
+            "Breadfruit Groves",
+            1
+          ],
+          [
+            "Palm Groves",
+            1
+          ],
+          [
+            "Fern Forest",
             1
           ]
         ],
@@ -4977,39 +6509,124 @@
           "Obsidian",
           1
         ]
-      ]
+      ],
+      "short": {
+        "land": {
+          "plains": [
+            "garden"
+          ],
+          "hills": [
+            "valley"
+          ],
+          "mountains": [
+            "volcano",
+            "crater"
+          ],
+          "coast": [
+            "beach",
+            "sandbar"
+          ],
+          "islands": [
+            "atoll",
+            "islet",
+            "cay"
+          ]
+        },
+        "water": {
+          "hills": [
+            "pool"
+          ],
+          "mountains": [
+            "pool"
+          ],
+          "coast": [
+            "reef",
+            "lagoon"
+          ],
+          "wetland": [
+            "swamp"
+          ],
+          "islands": [
+            "lagoon",
+            "reef"
+          ]
+        }
+      },
+      "ground": [
+        "coral",
+        "sand",
+        "basalt",
+        "ash",
+        "pumice"
+      ],
+      "resources": [
+        "pearl",
+        "shell",
+        "coral",
+        "obsidian",
+        "salt"
+      ],
+      "seasons": [
+        "rain",
+        "storm",
+        "harvest"
+      ],
+      "shapeMultipliers": {
+        "groups": {
+          "coast-and-sea": 2,
+          "islands-and-river-land": 2,
+          "wetland": 0.5,
+          "open-and-farmed-land": 0.5,
+          "upland-and-open-ground": 0.1
+        },
+        "generics": {
+          "reef": 4,
+          "lagoon": 4,
+          "island-group": 3,
+          "volcano": 3,
+          "plain-grassland": 0.2,
+          "glacier": 0,
+          "desert": 0,
+          "oasis": 0,
+          "dry-riverbed": 0
+        }
+      }
     },
     {
       "id": "highland",
-      "label": "High mountains",
-      "phrase": "the high mountains",
+      "label": "Highlands",
+      "phrase": "the highlands",
       "guide": "Cold, thin-aired country above the forests: the Andes, the Himalaya and Tibet, the Pamirs, the Ethiopian highlands, the high Alps and New Guinea's highland basins.",
       "terrainWeights": {
-        "open": 35,
-        "mountains": 40,
+        "plains": 15,
+        "hills": 15,
+        "mountains": 45,
+        "forest": 5,
         "coast": 0,
-        "rivers": 20,
+        "rivers": 15,
         "wetland": 5,
         "islands": 0
       },
       "land": {
-        "open": [
-          [
-            "High Pastures",
-            1
-          ],
+        "plains": [
           [
             "High Plateau",
             1
           ],
           [
-            "Cold Heights",
+            "High Plains",
             1
           ],
           [
             "Stony Plain",
             1
           ],
+          [
+            "High Pastures",
+            1
+          ]
+        ],
+        "hills": [
           [
             "Terraces",
             1
@@ -5020,6 +6637,14 @@
           ],
           [
             "Hanging Valley",
+            1
+          ],
+          [
+            "Cold Heights",
+            1
+          ],
+          [
+            "Foothills",
             1
           ]
         ],
@@ -5051,6 +6676,20 @@
           [
             "Fire Mountain",
             0.5
+          ]
+        ],
+        "forest": [
+          [
+            "Cloud Forest",
+            1
+          ],
+          [
+            "Juniper Woods",
+            1
+          ],
+          [
+            "Pine Woods",
+            1
           ]
         ],
         "rivers": [
@@ -5411,7 +7050,83 @@
           "Obsidian",
           1
         ]
-      ]
+      ],
+      "short": {
+        "land": {
+          "plains": [
+            "plateau",
+            "pasture"
+          ],
+          "hills": [
+            "terrace",
+            "foothill"
+          ],
+          "mountains": [
+            "glacier",
+            "scree",
+            "col"
+          ],
+          "rivers": [
+            "gorge"
+          ]
+        },
+        "water": {
+          "plains": [
+            "tarn"
+          ],
+          "mountains": [
+            "torrent",
+            "tarn"
+          ],
+          "rivers": [
+            "torrent",
+            "tarn"
+          ],
+          "wetland": [
+            "bog",
+            "mire"
+          ]
+        }
+      },
+      "ground": [
+        "scree",
+        "granite",
+        "slate",
+        "gravel",
+        "ice"
+      ],
+      "resources": [
+        "silver",
+        "gold",
+        "copper",
+        "tin",
+        "salt"
+      ],
+      "seasons": [
+        "winter",
+        "summer",
+        "frost",
+        "thaw"
+      ],
+      "shapeMultipliers": {
+        "groups": {
+          "mountains-and-rock": 2.5,
+          "seasonal-and-upland-settlement": 2,
+          "valleys": 1.5,
+          "hills-and-slopes": 1.3,
+          "woodland": 0.4,
+          "wetland": 0.4,
+          "coast-and-sea": 0
+        },
+        "generics": {
+          "mountain-range": 3,
+          "glacier": 3,
+          "volcano": 1.5,
+          "plain-grassland": 0.5,
+          "reef": 0,
+          "lagoon": 0
+        }
+      }
     }
   ],
   "irregularPlurals": {
@@ -5456,6 +7171,219 @@
     "octopus": "octopuses",
     "hippopotamus": "hippopotamuses",
     "rhinoceros": "rhinoceroses",
-    "bird of paradise": "birds of paradise"
+    "bird of paradise": "birds of paradise",
+    "grouse": "grouse",
+    "snipe": "snipe",
+    "red deer": "red deer"
+  },
+  "universalShort": {
+    "plains": {
+      "land": [
+        "plain",
+        "flat",
+        "vale"
+      ],
+      "water": [
+        "well",
+        "spring"
+      ]
+    },
+    "hills": {
+      "land": [
+        "hill",
+        "ridge",
+        "hollow",
+        "slope"
+      ],
+      "water": [
+        "spring"
+      ]
+    },
+    "mountains": {
+      "land": [
+        "peak",
+        "crag",
+        "pass",
+        "ridge"
+      ],
+      "water": [
+        "spring",
+        "falls"
+      ]
+    },
+    "forest": {
+      "land": [
+        "wood",
+        "grove",
+        "glade"
+      ],
+      "water": [
+        "spring",
+        "pool"
+      ]
+    },
+    "coast": {
+      "land": [
+        "point",
+        "head",
+        "cliff",
+        "shore"
+      ],
+      "water": [
+        "bay",
+        "cove",
+        "sound"
+      ]
+    },
+    "rivers": {
+      "land": [
+        "bank",
+        "bend"
+      ],
+      "water": [
+        "stream",
+        "pool",
+        "ford",
+        "lake",
+        "falls"
+      ]
+    },
+    "wetland": {
+      "land": [
+        "bank",
+        "island"
+      ],
+      "water": [
+        "marsh",
+        "pool"
+      ]
+    },
+    "islands": {
+      "land": [
+        "isle",
+        "rock"
+      ],
+      "water": [
+        "sound",
+        "bay"
+      ]
+    }
+  },
+  "britain": {
+    "id": "britain",
+    "label": "Britain",
+    "phrase": "Britain",
+    "guide": "The British Isles: the built-in British lists, with their old words, plurals and joining forms.",
+    "inherits": "temperate",
+    "builtInLists": {
+      "wildAnimals": "wild-animal",
+      "birds": "bird",
+      "creatures": "fish-and-other-creatures",
+      "trees": "tree",
+      "plants": "wild-plant",
+      "crops": "crop",
+      "livestock": "domestic-animal",
+      "shortLand": "landform",
+      "shortWater": "water-or-wetland-feature",
+      "ground": "soil-or-ground",
+      "resources": "resource",
+      "seasons": "season"
+    },
+    "terrainTags": {
+      "hill": [
+        "hills",
+        "mountains"
+      ],
+      "ridge": [
+        "hills",
+        "mountains"
+      ],
+      "spur": [
+        "hills",
+        "mountains"
+      ],
+      "edge": [
+        "hills",
+        "mountains",
+        "coast"
+      ],
+      "bank": [
+        "plains",
+        "rivers",
+        "coast",
+        "wetland",
+        "forest"
+      ],
+      "slope": [
+        "hills",
+        "mountains",
+        "forest"
+      ],
+      "knoll": [
+        "hills",
+        "islands",
+        "forest"
+      ],
+      "mound": [
+        "plains",
+        "wetland"
+      ],
+      "down": [
+        "hills"
+      ],
+      "crag": [
+        "mountains",
+        "coast"
+      ],
+      "top": [
+        "hills",
+        "mountains"
+      ],
+      "head": [
+        "coast",
+        "mountains",
+        "islands"
+      ],
+      "marsh": [
+        "wetland"
+      ],
+      "ford": [
+        "rivers"
+      ],
+      "well": [
+        "plains",
+        "islands"
+      ],
+      "spring": [
+        "plains",
+        "hills",
+        "mountains",
+        "forest"
+      ],
+      "pool": [
+        "rivers",
+        "wetland",
+        "coast",
+        "forest"
+      ],
+      "mere": [
+        "wetland",
+        "rivers",
+        "plains"
+      ],
+      "brook": [
+        "rivers",
+        "hills",
+        "forest"
+      ],
+      "stream": [
+        "rivers",
+        "mountains",
+        "hills"
+      ],
+      "moss": [
+        "wetland"
+      ]
+    }
   }
 }

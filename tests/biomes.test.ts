@@ -9,10 +9,10 @@ export const BANNED = [
   "eskimos", "head-hunters", "cannibals", "natives",
 ];
 
-test("biomes: the 11 ids in menu order", () => {
+test("biomes: the 12 ids in menu order", () => {
   assert.deepEqual(
     BIOMES.map((b) => b.id),
-    ["temperate", "boreal", "cool-rainforest", "mediterranean", "steppe", "desert", "savannah", "rainforest", "monsoon", "tropical-islands", "highland"],
+    ["temperate", "moorland", "boreal", "cool-rainforest", "mediterranean", "steppe", "desert", "savannah", "rainforest", "monsoon", "tropical-islands", "highland"],
   );
 });
 
@@ -65,7 +65,7 @@ test("biomes: plurals", () => {
   for (const [word, plural] of cases) assert.equal(pluralOf(word), plural, word);
 });
 
-test("biomes: colonial entries for the five native slots only", () => {
+test("biomes: slot entries for the nature slots", () => {
   for (const b of BIOMES) {
     for (const id of ["bird", "wild-animal", "fish-and-other-creatures", "tree", "wild-plant"]) {
       const entries = biomeEntries(b, id);
@@ -75,8 +75,9 @@ test("biomes: colonial entries for the five native slots only", () => {
         assert.ok(weight > 0);
       }
     }
-    assert.equal(biomeEntries(b, "domestic-animal"), undefined);
-    assert.equal(biomeEntries(b, "crop"), undefined);
+    // Land brief §2.6: livestock and crops are biome lists too; other slots are not.
+    assert.ok(biomeEntries(b, "domestic-animal")!.length > 0);
+    assert.equal(biomeEntries(b, "personal-name"), undefined);
   }
   const monkeyPuzzle = biomeEntries(BIOMES.find((b) => b.id === "highland")!, "tree")!.find(([e]) => e.modern === "monkey-puzzle")!;
   assert.deepEqual(monkeyPuzzle[0].forms, ["Monkey-Puzzle"]);

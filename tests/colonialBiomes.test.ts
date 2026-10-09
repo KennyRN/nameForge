@@ -96,7 +96,7 @@ test("colonial biomes: the wizard sentences", () => {
     [["new-land", "general", "wild-and-unsettled", "unknown", "any"], "General explorers in wild and unsettled lands across unknown country, naming any feature"],
     [["new-land", "spanish", "contested-frontier", "rainforest", "any"], "Spanish-themed explorers in a contested frontier across tropical rainforest, naming any feature"],
     [["new-land", "dutch", "sparse-or-weak-native-presence", "savannah", "any"], "Dutch-themed explorers in lands with a sparse, or weak, native presence across the savannah, naming any feature"],
-    [["established", "roman", "imposition", "mediterranean", "any"], "Roman-themed incomers who are ruling over the locals across Mediterranean hills, naming any feature"],
+    [["established", "roman", "imposition", "mediterranean", "any"], "Roman-themed incomers who are ruling over the locals across the Mediterranean lands, naming any feature"],
     [["established", "british-imperial", "accommodation", "monsoon", "settlement"], "British-themed incomers who are living alongside the locals across the monsoon lands, naming settlement"],
     [["established", "japanese", "adoption", "cool-rainforest", "any"], "Japanese-themed incomers who are settling in amongst the locals across cool rainforest, naming any feature"],
   ];

@@ -1,0 +1,176 @@
+{
+  "terrains": [
+    {
+      "id": "any",
+      "label": "Any terrain",
+      "phrase": "any part",
+      "shapeMultipliers": {
+        "groups": {},
+        "generics": {}
+      }
+    },
+    {
+      "id": "plains",
+      "label": "Plains",
+      "phrase": "the plains",
+      "shapeMultipliers": {
+        "groups": {
+          "open-and-farmed-land": 2.5,
+          "settlement-farms-and-estates": 1.25,
+          "woodland": 0.5,
+          "valleys": 0.5,
+          "hills-and-slopes": 0.4,
+          "coast-and-sea": 0.3,
+          "mountains-and-rock": 0.2
+        },
+        "generics": {
+          "plain-grassland": 3,
+          "desert": 2
+        }
+      }
+    },
+    {
+      "id": "hills",
+      "label": "Hills",
+      "phrase": "the hills",
+      "shapeMultipliers": {
+        "groups": {
+          "hills-and-slopes": 3,
+          "upland-and-open-ground": 2,
+          "valleys": 1.5,
+          "hollows-and-corners": 1.5,
+          "seasonal-and-upland-settlement": 1.25,
+          "mountains-and-rock": 0.5,
+          "wetland": 0.5,
+          "coast-and-sea": 0.3,
+          "islands-and-river-land": 0.3
+        },
+        "generics": {
+          "mountain-range": 0.5
+        }
+      }
+    },
+    {
+      "id": "mountains",
+      "label": "Mountains",
+      "phrase": "the mountains",
+      "shapeMultipliers": {
+        "groups": {
+          "mountains-and-rock": 3,
+          "hills-and-slopes": 2,
+          "valleys": 2,
+          "seasonal-and-upland-settlement": 2,
+          "upland-and-open-ground": 1.5,
+          "open-and-farmed-land": 0.5,
+          "wetland": 0.3,
+          "islands-and-river-land": 0.2,
+          "coast-and-sea": 0.1
+        },
+        "generics": {
+          "mountain-range": 3,
+          "volcano": 2,
+          "glacier": 2
+        }
+      }
+    },
+    {
+      "id": "forest",
+      "label": "Forest",
+      "phrase": "the forests",
+      "shapeMultipliers": {
+        "groups": {
+          "woodland": 4,
+          "clearings": 3,
+          "religious-pre-christian-and-sacred": 1.25,
+          "mountains-and-rock": 0.5,
+          "open-and-farmed-land": 0.4,
+          "upland-and-open-ground": 0.3,
+          "coast-and-sea": 0.3
+        },
+        "generics": {
+          "plain-grassland": 0.2,
+          "desert": 0
+        }
+      }
+    },
+    {
+      "id": "coast",
+      "label": "Coasts",
+      "phrase": "the coasts",
+      "shapeMultipliers": {
+        "groups": {
+          "coast-and-sea": 4,
+          "islands-and-river-land": 1.5,
+          "industry-and-trade": 1.5,
+          "valleys": 0.5,
+          "mountains-and-rock": 0.3,
+          "upland-and-open-ground": 0.3
+        },
+        "generics": {
+          "reef": 2,
+          "lagoon": 2,
+          "creek": 1.5
+        }
+      }
+    },
+    {
+      "id": "rivers",
+      "label": "Rivers and lakes",
+      "phrase": "the rivers and lakes",
+      "shapeMultipliers": {
+        "groups": {
+          "rivers-and-streams": 3,
+          "springs-pools-and-lakes": 2.5,
+          "crossings-and-routes": 2,
+          "islands-and-river-land": 1.5,
+          "valleys": 1.5,
+          "coast-and-sea": 0.3,
+          "mountains-and-rock": 0.3
+        },
+        "generics": {
+          "creek": 2,
+          "oasis": 1.5
+        }
+      }
+    },
+    {
+      "id": "wetland",
+      "label": "Wetlands",
+      "phrase": "the wetlands",
+      "shapeMultipliers": {
+        "groups": {
+          "wetland": 4,
+          "islands-and-river-land": 2,
+          "springs-pools-and-lakes": 1.5,
+          "hills-and-slopes": 0.5,
+          "upland-and-open-ground": 0.3,
+          "mountains-and-rock": 0.1
+        },
+        "generics": {
+          "lagoon": 1.5
+        }
+      }
+    },
+    {
+      "id": "islands",
+      "label": "Islands",
+      "phrase": "the islands",
+      "shapeMultipliers": {
+        "groups": {
+          "islands-and-river-land": 4,
+          "coast-and-sea": 2.5,
+          "mountains-and-rock": 0.5,
+          "valleys": 0.5,
+          "open-and-farmed-land": 0.5,
+          "upland-and-open-ground": 0.5
+        },
+        "generics": {
+          "island-group": 4,
+          "reef": 2,
+          "lagoon": 2,
+          "volcano": 1.5
+        }
+      }
+    }
+  ]
+}

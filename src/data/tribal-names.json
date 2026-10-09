@@ -6,13 +6,14 @@
    "group": "General",
    "drawsOn": "Patterns shared by a majority of traditions",
    "homeland": {
-    "temperate": 10,
+    "temperate": 8,
+    "moorland": 4,
     "boreal": 8,
     "cool-rainforest": 8,
     "mediterranean": 9,
-    "steppe": 10,
+    "steppe": 9,
     "desert": 9,
-    "savannah": 10,
+    "savannah": 9,
     "rainforest": 10,
     "monsoon": 9,
     "tropical-islands": 9,
@@ -72,7 +73,8 @@
    "group": "First release",
    "drawsOn": "Iron Age Britain and Gaul; early Irish kin vocabulary",
    "homeland": {
-    "temperate": 100
+    "temperate": 80,
+    "moorland": 20
    },
    "terrainMultipliers": {
     "mountains": 0.6,
@@ -162,8 +164,9 @@
    "group": "First release",
    "drawsOn": "Migration-era Germanic peoples; Scandinavian folk districts",
    "homeland": {
-    "temperate": 65,
-    "boreal": 35
+    "temperate": 55,
+    "boreal": 30,
+    "moorland": 15
    },
    "terrainMultipliers": {
     "coast": 1.3,
