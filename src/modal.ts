@@ -64,6 +64,7 @@ import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type N
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recipe";
 import { type Biome, BIOMES, BRITAIN, findBiome } from "./biomes";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
+import { type BiomePackSource, biomeToText, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
 import {
   findTradition,
   generateTribalNames,
@@ -326,6 +327,9 @@ export class NameForgeModal extends Modal {
   private landButton: LandButton | null = null;
   /** The user's biome packs, as last resolved (Land brief §9.5). */
   private customBiomes: Biome[] = [];
+  private biomeStamp = "";
+  /** Problems found resolving the biome packs, for the editor's status line. */
+  public biomeProblems: string[] = [];
   /** Tribal names' choices (Tribal brief §18.2), kept for the session like the colonial modules'. */
   private tribal: {
     tradition: string;
@@ -959,9 +963,41 @@ export class NameForgeModal extends Modal {
     }
   }
 
-  /** Land brief §9.5: the user's biome packs (resolved by the host). */
-  private async loadCustomBiomes(): Promise<Biome[]> {
+  /**
+   * Land brief §9.5: the user's biome packs in the names folder, resolved (base chains merged),
+   * cached by the files' modification times.
+   */
+  public async loadCustomBiomes(): Promise<Biome[]> {
+    const folder = this.app.vault.getFolderByPath(normalizePath(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const files = (folder?.children ?? []).filter((c): c is TFile => c instanceof TFile && c.extension === "md");
+    const stamp = files.map((f) => `${f.path}:${f.stat.mtime}`).join("|");
+    if (stamp === this.biomeStamp) return this.customBiomes;
+    const sources: BiomePackSource[] = [];
+    for (const file of files) {
+      try {
+        const content = await this.app.vault.cachedRead(file);
+        if (isBiomePackContent(content)) sources.push({ path: file.path, content });
+      } catch {
+        continue;
+      }
+    }
+    const { biomes, problems } = resolveBiomePacks(sources);
+    this.customBiomes = biomes;
+    this.biomeProblems = problems;
+    this.biomeStamp = stamp;
+    return biomes;
+  }
+
+  /** The biome packs as last loaded. */
+  public customBiomesCache(): Biome[] {
     return this.customBiomes;
+  }
+
+  /** A biome for a generator: a pack's `//` lines resolved to draws; built-ins unchanged. */
+  private async readyBiome(biome: Biome | undefined): Promise<Biome | undefined> {
+    if (!biome?.custom || !biome.packLines) return biome;
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    return host.withPackDraws(biome, biome.custom.path);
   }
 
   /** Gives the region box the setting box's exact left edge and width. */
@@ -2182,6 +2218,16 @@ export class NameForgeModal extends Modal {
       return;
     }
     const slots = await host.resolveSlots(loaded.recipe, file.path);
+    // Land brief §4.1: a linked biome pack, resolved here so the engine never reads the vault.
+    let biome: Biome | undefined;
+    const link = loaded.recipe.shape.biome;
+    if (link?.startsWith("[[")) {
+      const name = link.slice(2, -2);
+      const packs = await this.loadCustomBiomes();
+      const target = this.app.metadataCache.getFirstLinkpathDest(name, file.path);
+      const found = packs.find((b) => b.custom?.path === target?.path || b.label === name);
+      biome = found ? await host.withPackDraws(found, file.path) : undefined;
+    }
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
     // A takeover pack makes each adapted native name take a fraction of a second: show the dots
     // (no text) and yield between names so they keep moving (recipe takeover §A6).
@@ -2190,7 +2236,7 @@ export class NameForgeModal extends Modal {
     let result: NameGenerateResult;
     try {
       const adapt = host.resolveTakeover(loaded.recipe, file.path);
-      const steps = generatePlaceNamesSteps({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride, adapt });
+      const steps = generatePlaceNamesSteps({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride, adapt, biome });
       for (;;) {
         const next = steps.next();
         if (next.done) {
@@ -2339,6 +2385,7 @@ export class NameForgeModal extends Modal {
       lists: lists.sort(),
       templates: templates.sort((a, b) => a.name.localeCompare(b.name)),
       takeoverPacks,
+      biomes: await this.loadCustomBiomes(),
       onSaved: (saved) => {
         this.plugin.settings.namesFilePath = saved;
         void this.refreshPackDropdown().then(() => this.loadPack(saved));
@@ -2379,7 +2426,8 @@ export class NameForgeModal extends Modal {
       // River brief §2: rendered names from the fixed built-in recipe, shown as recipe results.
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
       const land = this.land("britain");
-      const biome = findBiome(land.biome, this.customBiomes);
+      await this.loadCustomBiomes();
+      const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
       const result = this.tryLand(() => generatePlaceNames({
         recipe: britishPlaceNamesRecipe(this.selectedRegion, biome?.custom ? undefined : land.biome, land.terrain),
         biome: biome?.custom ? biome : undefined,
@@ -2478,7 +2526,9 @@ export class NameForgeModal extends Modal {
       const tradition = this.selectedTradition[colonialPart];
       const context = this.selectedContext[colonialPart];
       const land = this.land(`colonial:${colonialPart}`);
-      const custom = findBiome(land.biome, this.customBiomes)?.custom ? findBiome(land.biome, this.customBiomes) : undefined;
+      await this.loadCustomBiomes();
+      const found = findBiome(land.biome, this.customBiomes);
+      const custom = found?.custom ? await this.readyBiome(found) : undefined;
       const biome = custom ? undefined : land.biome;
       // River brief §3: rendered names from the fixed built-in recipe, shown as recipe results.
       const result = this.tryLand(() => generatePlaceNames({
@@ -3156,6 +3206,16 @@ class NameForgeEditorModal extends Modal {
   private wordListButton: HTMLButtonElement | null = null;
   /** §9: the editor is creating a word list rather than a name pack. */
   private wordListMode = false;
+  /** Land brief §9.4: the editor is creating or editing a biome pack. */
+  private biomeMode = false;
+  private biomeButton: HTMLButtonElement | null = null;
+  private biomeRowEl: HTMLElement | null = null;
+  private biomeBaseSelect: HTMLSelectElement | null = null;
+  private biomePhraseInput: HTMLInputElement | null = null;
+  /** The text last put in the textarea from a base, to tell whether it has been edited since. */
+  private biomeFilled = "";
+  /** The file being edited, when the pack name matches an existing biome pack. */
+  private biomeEditing: string | undefined;
   /** The place name wizard replaces the stage's text box; it is built the first time it's chosen. */
   private wizardMode = false;
   private wizardButton: HTMLButtonElement | null = null;
@@ -3259,6 +3319,7 @@ class NameForgeEditorModal extends Modal {
     this.wizardButton.addEventListener("click", () => {
       this.wizardMode = true;
       this.wordListMode = false;
+      this.biomeMode = false;
       this.updateTypeButtons();
       void this.openWizard();
     });
@@ -3267,8 +3328,19 @@ class NameForgeEditorModal extends Modal {
     this.wordListButton.addEventListener("click", () => {
       this.wordListMode = true;
       this.wizardMode = false;
+      this.biomeMode = false;
       this.updateTypeButtons();
       void this.loadTemplateOptions();
+    });
+
+    // Land brief §9.4: a biome pack, starting from a base biome.
+    this.biomeButton = addTypeButton("Biome", "mountain");
+    this.biomeButton.addEventListener("click", () => {
+      this.biomeMode = true;
+      this.wordListMode = false;
+      this.wizardMode = false;
+      this.updateTypeButtons();
+      void this.enterBiomeMode();
     });
 
     // §7: start from a template of the chosen type; the new pack stores only its differences.
@@ -3288,6 +3360,15 @@ class NameForgeEditorModal extends Modal {
       this.updateTemplateHint();
     });
     this.templateHintEl = contentEl.createDiv({ cls: "nameforge-editor-modal__template-hint" });
+
+    // Biome packs: what they start from and how they read in a sentence.
+    const biomeRow = (this.biomeRowEl = contentEl.createDiv({ cls: "nameforge-editor-modal__template-row" }));
+    biomeRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from" });
+    this.biomeBaseSelect = biomeRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from" } });
+    this.biomeBaseSelect.addEventListener("change", () => this.refillBiome());
+    biomeRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Phrase" });
+    this.biomePhraseInput = biomeRow.createEl("input", { attr: { type: "text", "aria-label": "Phrase" } });
+    biomeRow.hide();
 
     // Fixed-height stage: the plain textarea, the compound section, and the mix
     // section are all absolutely positioned to fill it and shown/hidden as
@@ -3503,6 +3584,7 @@ class NameForgeEditorModal extends Modal {
   private setPackType(type: NamePackType) {
     this.selectedPackType = type;
     this.wordListMode = false;
+    this.biomeMode = false;
     this.wizardMode = false;
     this.updateTypeButtons();
     void this.loadTemplateOptions();
@@ -3529,6 +3611,84 @@ class NameForgeEditorModal extends Modal {
       chosen ? `${chosen.description}. Anything you leave empty comes from the template.` : "",
     );
     this.templateHintEl.toggle(!!chosen);
+  }
+
+  /** The chosen base: a built-in id, or a user pack's path. */
+  private biomeBase(): Biome {
+    const value = this.biomeBaseSelect?.value ?? "temperate";
+    return findBiome(value, this.parent.customBiomesCache()) ?? BIOMES[0];
+  }
+
+  /** The base as editable text: its sections, without frontmatter or guide. */
+  private biomeBody(b: Biome): string {
+    const text = biomeToText(b);
+    return text.slice(text.indexOf("\n## ") + 1);
+  }
+
+  /** Land brief §9.4: fills the base choices, and loads an existing pack of the same name merged. */
+  private async enterBiomeMode() {
+    const custom = await this.parent.loadCustomBiomes();
+    const select = this.biomeBaseSelect;
+    if (!select) return;
+    select.empty();
+    for (const b of [BRITAIN, ...BIOMES]) select.createEl("option", { text: b.label, value: b.id });
+    for (const b of custom) select.createEl("option", { text: b.label, value: b.custom!.path });
+    const name = this.packNameInput?.value.trim().toLowerCase();
+    const existing = custom.find((b) => b.label.toLowerCase() === name);
+    this.biomeEditing = existing?.custom?.path;
+    if (existing) {
+      select.value = existing.custom!.base;
+      if (!select.value) select.value = "temperate";
+      if (this.biomePhraseInput) this.biomePhraseInput.value = existing.phrase;
+      const body = `${existing.guide}\n\n${this.biomeBody(existing)}`;
+      if (this.inputEl) this.inputEl.value = this.biomeFilled = body;
+      return;
+    }
+    select.value = "temperate";
+    this.refillBiome();
+  }
+
+  /** Refills the textarea from the base, unless it has been edited since it was last filled. */
+  private refillBiome() {
+    const base = this.biomeBase();
+    if (this.biomePhraseInput) this.biomePhraseInput.placeholder = `the ${(this.packNameInput?.value.trim() || base.label).toLowerCase()}`;
+    if (!this.inputEl) return;
+    if (this.inputEl.value.trim() && this.inputEl.value !== this.biomeFilled) {
+      this.parent.setStatus("Your edits are kept; sections you haven't changed come from the new base.");
+      return;
+    }
+    this.inputEl.value = this.biomeFilled = this.biomeBody(base);
+  }
+
+  /** Land brief §9.4: saves only the sections that differ from the base, with the guide text. */
+  private async saveBiome(packName: string) {
+    const base = this.biomeBase();
+    const basedOn = base.custom ? `[[${base.label}]]` : base.id;
+    const phrase = this.biomePhraseInput?.value.trim();
+    const front = ["---", "type: biome", `packName: ${packName}`, "setting: ", `based-on: "${basedOn}"`, ...(phrase ? [`phrase: ${phrase}`] : []), "---"].join("\n");
+    const { text, own } = diffAgainstBase(`${front}\n\n${this.inputEl?.value ?? ""}`, base);
+    let folderPath = this.parent.getFolderPath();
+    if (!folderPath) {
+      const folder = await this.parent.promptForFolderSelection();
+      if (!folder) return;
+      folderPath = folder.path;
+    }
+    const path = this.biomeEditing ?? normalizePath(`${folderPath}/${sanitizePackNameForFilename(packName)}.md`);
+    try {
+      const existing = this.app.vault.getFileByPath(path);
+      if (existing instanceof TFile) await this.app.vault.modify(existing, text);
+      else await this.app.vault.create(path, text);
+    } catch {
+      this.parent.setStatus(`Failed to save the biome to ${path}.`);
+      return;
+    }
+    await this.parent.loadCustomBiomes();
+    const mine = this.parent.biomeProblems.filter((p) => p.startsWith(`${packName}:`) || p.includes(`“${packName}”`));
+    const pack = parseBiomePackContent(text);
+    const empty = pack.sections.filter((s) => s.words.length === 0 && s.packs.length === 0).map((s) => `“${s.heading}” is empty.`);
+    this.parent.setStatus([`Saved: ${own} sections of your own; the rest comes from ${base.label}.`, ...empty, ...mine].join(" "));
+    new Notice(`nameForge: biome “${packName}” saved.`);
+    this.close();
   }
 
   /** §9: saves the textarea as a word-list pack (tables under ## sections). */
@@ -3584,7 +3744,11 @@ class NameForgeEditorModal extends Modal {
   private updateTypeButtons() {
     const isWizard = this.wizardMode;
     const isWordList = !isWizard && this.wordListMode;
-    const other = isWizard || isWordList;
+    const isBiome = !isWizard && this.biomeMode;
+    const other = isWizard || isWordList || isBiome;
+    this.biomeButton?.classList.toggle("is-active", isBiome);
+    this.biomeButton?.setAttribute("aria-pressed", String(isBiome));
+    this.biomeRowEl?.toggle(isBiome);
     const isBreakdown = !other && this.selectedPackType === "breakdownPack";
     const isList = !other && this.selectedPackType === "listPack";
     const isCompound = !other && this.selectedPackType === "compoundPack";
@@ -3605,9 +3769,9 @@ class NameForgeEditorModal extends Modal {
     } else if (!isWizard) {
       this.stageEl?.style.setProperty("--nf-wizard-extra-height", "0px");
     }
-    this.templateRowEl?.toggle(!isWizard);
+    this.templateRowEl?.toggle(!isWizard && !isBiome);
     this.wordListHelpEl?.toggle(isWordList);
-    this.templateHintEl?.toggle(!isWizard);
+    this.templateHintEl?.toggle(!isWizard && !isBiome);
     this.wizardPaneEl?.toggle(isWizard);
     this.wordListButton?.classList.toggle("is-active", isWordList);
     this.wordListButton?.setAttribute("aria-pressed", String(isWordList));
@@ -3696,6 +3860,10 @@ class NameForgeEditorModal extends Modal {
     const templateOf = this.templateOf;
     if (this.wordListMode) {
       await this.saveWordList(packName);
+      return;
+    }
+    if (this.biomeMode) {
+      await this.saveBiome(packName);
       return;
     }
 

@@ -5,7 +5,7 @@
 // the shape generator's own batch for the same seed and settings.
 
 import nameWordData from "../data/name-words.json";
-import { availableTerrains, type Biome, biomeEntries, BRITAIN, environmentMultipliers, findBiome, shortWords, terrainWeights } from "../biomes";
+import { availableTerrains, type Biome, biomeEntries, BRITAIN, environmentMultipliers, findBiome, shortWords, SLOT_LISTS, terrainWeights } from "../biomes";
 import { mulberry32 } from "../markov";
 import { type SectionRequest } from "../packs/sections";
 import {
@@ -499,7 +499,22 @@ export class NameRenderer {
     if (this.colonial && (categoryId === "domestic-animal" || categoryId === "crop") && !chosenBiome) return undefined;
     if (!biome) return undefined;
     const entries = biomeEntries(biome, categoryId);
-    return entries && entries.length > 0 ? word(pickWeighted(entries, rng)) : undefined;
+    return entries && entries.length > 0 ? this.biomePick(biome, categoryId, entries, rng, true) : undefined;
+  }
+
+  /**
+   * A weighted pick from a biome list, counting its pack lines (Land brief §9.3): a pack line
+   * draws a whole name from that pack, used as an open, named word.
+   */
+  private biomePick(biome: Biome, categoryId: string, entries: [NameWordEntry, number][], rng: () => number, register: boolean): Fill {
+    const draws = biome.packDraws?.[SLOT_LISTS[categoryId]] ?? [];
+    const asWord = (entry: NameWordEntry): Fill => ({ kind: "word", entry, traditional: register ? this.chooseRegister(entry, rng) : false });
+    if (draws.length === 0) return asWord(pickWeighted(entries, rng));
+    type Choice = { entry: NameWordEntry } | { draw: (rng: () => number) => string | null };
+    const choice = pickWeighted<Choice>([...entries.map(([entry, w]): [Choice, number] => [{ entry }, w]), ...draws.map((d): [Choice, number] => [{ draw: d.draw }, d.weight])], rng);
+    if ("entry" in choice) return asWord(choice.entry);
+    const text = choice.draw(rng);
+    return text ? { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false } : asWord(pickWeighted(entries, rng));
   }
 
   /** Tribal brief §20.2: a short tribal name on the fill stream, as riverWordFill. */
@@ -544,7 +559,7 @@ export class NameRenderer {
       // drawn when a biome is set, so recipes without one are unchanged for a given seed.
       const biome = this.options.biome;
       const entries = biome ? biomeEntries(biome, categoryId) : undefined;
-      if (entries) return { kind: "word", entry: pickWeighted(entries, rng), traditional: false };
+      if (biome && entries) return this.biomePick(biome, categoryId, entries, rng, false);
       return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
     }
     const slot = this.slotFor(categoryId);

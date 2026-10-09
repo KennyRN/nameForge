@@ -160,7 +160,7 @@ const FUSES_COLUMN: Record<NameWordEntry["fuses"], string> = {
 };
 
 /** One built-in list as a §9.1 table. Descriptive words (no plural given) leave Plural as "—". */
-function table(entries: NameWordEntry[]): string {
+export function table(entries: NameWordEntry[]): string {
   const rows = entries.map((e) => {
     const forms = [...e.forms, ...(e.traditionalForms ?? [])].map((f) => `${f}-`).join(", ");
     return `| ${e.modern} | ${e.traditional ?? "—"} | ${e.plural ?? "—"} | ${forms || "—"} | ${FUSES_COLUMN[e.fuses]} |`;

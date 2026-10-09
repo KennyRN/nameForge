@@ -15,6 +15,7 @@ import {
   resolveMixSources,
   type WordListFileData,
 } from "./nameParser";
+import type { Biome } from "./biomes";
 import { selectSectionNames, type SectionRequest } from "./packs/sections";
 import { wordListSection } from "./packs/wordList";
 import { NAME_SLOTS, NAME_WORDS, type NativeAdapter, type ResolvedSlot, type ResolvedSource } from "./names/engine";
@@ -213,6 +214,20 @@ export class RecipeHost {
     for (const n of notices) this.notices.add(n);
     if (items.length === 0) return null;
     return { items, itemsLabel: `“${list.packName || file.basename}” › “${section.name}”` };
+  }
+
+  /** Land brief §9.5: a biome with its `//` pack lines resolved to draws (whole names). */
+  async withPackDraws(biome: Biome, from: string): Promise<Biome> {
+    if (!biome.packLines) return biome;
+    const packDraws: NonNullable<Biome["packDraws"]> = {};
+    for (const [list, lines] of Object.entries(biome.packLines)) {
+      for (const line of lines ?? []) {
+        const draw = await this.packSource(line.pack, from);
+        if (!draw) continue;
+        (packDraws[list] ??= []).push({ weight: line.weight, draw: (rng) => draw({}, "whole", rng) });
+      }
+    }
+    return { ...biome, packDraws };
   }
 
   /** A drawer for one name pack: stem or whole names (§5), honouring section and gender (§10). */

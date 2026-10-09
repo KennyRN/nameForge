@@ -83,6 +83,10 @@ export interface Biome extends Record<BiomeList, Weighted[]> {
   universalWords?: boolean;
   /** A user biome pack (Land brief §9). */
   custom?: { path: string; base: string };
+  /** Biome-pack `//` lines by list: a whole name from that pack when picked (Land brief §9.3). */
+  packLines?: Partial<Record<string, { pack: string; weight: number }[]>>;
+  /** Pack lines resolved by the host to draw functions (engines never read the vault). */
+  packDraws?: Partial<Record<string, { weight: number; draw: (rng: () => number) => string | null }[]>>;
 }
 
 interface RawBiome {
@@ -235,7 +239,7 @@ export function shortWords(biome: Biome, kind: "land" | "water", terrain: string
 }
 
 /** Land brief §2.6: slot category → biome list. */
-const SLOT_LISTS: Record<string, BiomeList> = {
+export const SLOT_LISTS: Record<string, BiomeList> = {
   bird: "birds",
   "wild-animal": "wildAnimals",
   "fish-and-other-creatures": "creatures",
