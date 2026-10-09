@@ -8,8 +8,16 @@ import { availableTerrains, type Biome, BRITAIN, findBiome, TERRAIN_CHOICES } fr
 import { TRIBAL_TRADITIONS } from "./tribes/engine";
 import { biomeChoices, biomePhrase, explorersPhrase, FEATURES, incomersPhrase, terrainPhrase } from "./colonialSentence";
 import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
-import { sanitizePackNameForFilename } from "./nameParser";
-import { type SlotWordsView, slotWordsView } from "./names/wizardWords";
+import { createWordListFileContent, sanitizePackNameForFilename } from "./nameParser";
+import {
+  applyWordsToSlots,
+  assembleWordsNote,
+  sectionChanged,
+  type SlotWordsView,
+  slotWordsView,
+  wordsNoteDescription,
+  wordsNoteName,
+} from "./names/wizardWords";
 import { defaultNameMode, hasBuiltInList } from "./names/engine";
 import {
   allowsLists,
@@ -909,6 +917,7 @@ export class RecipeWizard {
       render: { ...w.render },
       takeover: w.takeover,
       native: w.native,
+      words: w.words,
     };
     if (!full.templateOf || !this.template) return full;
 
@@ -925,7 +934,71 @@ export class RecipeWizard {
       render: diff(w.render, base.render),
       takeover: w.takeover !== base.takeover ? w.takeover : undefined,
       native: w.native !== base.native ? w.native : undefined,
+      // Presets brief §6.1: the word-list note is the recipe's own, never the template's.
+      words: w.words,
     };
+  }
+
+  /**
+   * Presets brief §6.3: writes page 4's changed sections to the recipe's word-list note (before
+   * the recipe, so the link resolves) and points those slots at it; unchanged or reset sections
+   * return to their page 3 setting. False when the note couldn't be written.
+   */
+  private async saveWords(name: string): Promise<boolean> {
+    const w = this.working;
+    const views = this.shownSlots()
+      .map(({ id, label }) => this.wordsView(id, label))
+      .filter((v): v is SlotWordsView => !!v && v.baseline !== undefined);
+    const results = views.map((v) => {
+      const text = this.wordsEdits.get(v.id) ?? v.text ?? "";
+      const previous = v.status === "edited" || !this.isSlotSet(v.id) ? undefined : w.slots[v.id];
+      return { view: v, text, changed: sectionChanged(text, v.baseline ?? ""), previous };
+    });
+    const changed = results.filter((r) => r.changed);
+    if (changed.length === 0) {
+      // §6.3 (5, 6): nothing to write; an existing note is left alone and unlinked.
+      if (results.some((r) => r.view.status === "edited")) this.applyWords(results, w.words ?? "");
+      if (w.words) new Notice(`nameForge: no words changed, so “${w.words}” is no longer linked to this recipe. The note is kept.`);
+      w.words = undefined;
+      return true;
+    }
+    const folder = this.options.file?.parent?.path ?? this.options.folderPath;
+    const exists = (n: string) => !!this.app.vault.getFileByPath(normalizePath(`${folder}/${sanitizePackNameForFilename(n)}.md`));
+    const own = w.words && this.app.metadataCache.getFirstLinkpathDest(w.words, this.options.file?.path ?? folder);
+    const noteName = wordsNoteName(name, exists, own instanceof TFile ? w.words : undefined);
+    const body = assembleWordsNote(
+      own instanceof TFile ? this.wordsBody : undefined,
+      wordsNoteDescription(name),
+      results.map((r) => r.view.label),
+      changed.map((r) => ({ label: r.view.label, text: r.text })),
+    );
+    try {
+      if (own instanceof TFile) {
+        const content = await this.app.vault.read(own);
+        const fm = content.match(/^---\s*\n[\s\S]*?\n---\s*/);
+        await this.app.vault.modify(own, `${fm ? fm[0].trimEnd() : "---\ntype: word-list\n---"}\n\n${body.trim()}\n`);
+      } else {
+        await this.app.vault.create(normalizePath(`${folder}/${sanitizePackNameForFilename(noteName)}.md`), createWordListFileContent(noteName, body));
+      }
+    } catch {
+      new Notice(`nameForge: couldn't save the word list “${noteName}”.`);
+      return false;
+    }
+    this.wordsBody = body;
+    this.applyWords(results, noteName);
+    w.words = noteName;
+    return true;
+  }
+
+  /** §6.3: the slots after a words save, kept in step with the set of explicit slots. */
+  private applyWords(results: { view: SlotWordsView; changed: boolean; previous: SlotSetting | undefined }[], noteName: string) {
+    const w = this.working;
+    w.slots = applyWordsToSlots(w.slots, results.map((r) => ({ id: r.view.id, changed: r.changed, previous: r.previous })), noteName);
+    for (const r of results) {
+      if (w.slots[r.view.id]) this.explicitSlots.add(r.view.id);
+      else this.explicitSlots.delete(r.view.id);
+    }
+    this.wordsEdits.clear();
   }
 
   /** Writes the recipe; the saved path, or null when it couldn't be saved (a notice says why). */
@@ -935,9 +1008,15 @@ export class RecipeWizard {
       new Notice("nameForge: give the recipe a name.");
       return null;
     }
+    const path = normalizePath(`${this.options.folderPath}/${sanitizePackNameForFilename(name)}.md`);
+    // Checked before the word list is written, so a refused save leaves nothing behind.
+    if (this.app.vault.getFileByPath(path) && this.options.file?.path !== path) {
+      new Notice("nameForge: a file with that name already exists.");
+      return null;
+    }
+    if (!(await this.saveWords(name))) return null;
     const frontmatter = recipeToFrontmatter(this.collect());
     const content = `---\n${stringifyYaml(frontmatter)}---\n\n${this.body.trim()}\n`;
-    const path = normalizePath(`${this.options.folderPath}/${sanitizePackNameForFilename(name)}.md`);
     try {
       const existing = this.app.vault.getFileByPath(path);
       if (this.options.file) {

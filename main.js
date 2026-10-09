@@ -35359,6 +35359,28 @@ function slotWordsView(args) {
   return { ...base, status: source.from, statusText: describe(source), baseline: text, text };
 }
 var same3 = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
+function contentKeys(text) {
+  const list = parseWordList(text);
+  const entries = [...list.unsectioned, ...list.sections.flatMap((s) => s.entries)];
+  const packs = [...list.unsectionedPacks, ...list.sections.flatMap((s) => s.packs)];
+  return [
+    ...entries.map(
+      (e) => {
+        var _a2, _b, _c;
+        return ["w", e.modern, (_a2 = e.traditional) != null ? _a2 : "", e.plural, [...e.combiningForms].sort().join(","), e.fuses, (_b = e.weight) != null ? _b : 1, (_c = e.gender) != null ? _c : ""].join("|").toLowerCase();
+      }
+    ),
+    ...packs.map((p) => {
+      var _a2;
+      return ["p", p.pack, p.weight, (_a2 = p.gender) != null ? _a2 : ""].join("|").toLowerCase();
+    })
+  ].sort();
+}
+function sectionChanged(text, baseline) {
+  const a = contentKeys(text);
+  const b = contentKeys(baseline);
+  return a.length !== b.length || a.some((k, i) => k !== b[i]);
+}
 function splitSections(body) {
   const lines2 = body.split(/\r?\n/);
   const sections = [];
@@ -35370,6 +35392,43 @@ function splitSections(body) {
     else description.push(line);
   }
   return { description: description.join("\n").trim(), sections: sections.map((s) => ({ name: s.name, raw: s.raw.join("\n").trim() })) };
+}
+function assembleWordsNote(existingBody, description, shownLabels, changed) {
+  const { description: oldDescription, sections } = splitSections(existingBody != null ? existingBody : "");
+  const shown = (name) => shownLabels.some((l) => same3(l, name));
+  const written = /* @__PURE__ */ new Set();
+  const out = [];
+  for (const s of sections) {
+    const replacement = changed.find((c) => same3(c.label, s.name));
+    if (replacement) {
+      out.push(`## ${replacement.label}
+
+${replacement.text.trim()}`);
+      written.add(replacement.label.toLowerCase());
+    } else if (!shown(s.name)) out.push(s.raw);
+  }
+  for (const c of changed) if (!written.has(c.label.toLowerCase())) out.push(`## ${c.label}
+
+${c.text.trim()}`);
+  return [existingBody === void 0 ? description : oldDescription, ...out].filter((x) => x.length > 0).join("\n\n");
+}
+function applyWordsToSlots(slots, results, noteName) {
+  const out = { ...slots };
+  for (const r of results) {
+    if (r.changed) out[r.id] = { kind: "sources", sources: [{ list: noteName, weight: 100 }] };
+    else if (r.previous) out[r.id] = r.previous;
+    else delete out[r.id];
+  }
+  return out;
+}
+function wordsNoteName(recipeName, exists, current) {
+  if (current) return current;
+  const base = `${recipeName} words`;
+  if (!exists(base)) return base;
+  for (let n = 2; ; n++) if (!exists(`${base} ${n}`)) return `${base} ${n}`;
+}
+function wordsNoteDescription(recipeName) {
+  return `Words for the [[${recipeName}]] recipe.`;
 }
 
 // src/recipeEditor.ts
@@ -36111,7 +36170,8 @@ var RecipeWizard = class {
       register: w.register,
       render: { ...w.render },
       takeover: w.takeover,
-      native: w.native
+      native: w.native,
+      words: w.words
     };
     if (!full.templateOf || !this.template) return full;
     const base = withDefaults(this.template);
@@ -36125,23 +36185,93 @@ var RecipeWizard = class {
       register: w.register !== base.register ? w.register : void 0,
       render: diff(w.render, base.render),
       takeover: w.takeover !== base.takeover ? w.takeover : void 0,
-      native: w.native !== base.native ? w.native : void 0
+      native: w.native !== base.native ? w.native : void 0,
+      // Presets brief §6.1: the word-list note is the recipe's own, never the template's.
+      words: w.words
     };
+  }
+  /**
+   * Presets brief §6.3: writes page 4's changed sections to the recipe's word-list note (before
+   * the recipe, so the link resolves) and points those slots at it; unchanged or reset sections
+   * return to their page 3 setting. False when the note couldn't be written.
+   */
+  async saveWords(name) {
+    var _a2, _b, _c, _d, _e, _f;
+    const w = this.working;
+    const views = this.shownSlots().map(({ id, label }) => this.wordsView(id, label)).filter((v) => !!v && v.baseline !== void 0);
+    const results = views.map((v) => {
+      var _a3, _b2, _c2;
+      const text = (_b2 = (_a3 = this.wordsEdits.get(v.id)) != null ? _a3 : v.text) != null ? _b2 : "";
+      const previous = v.status === "edited" || !this.isSlotSet(v.id) ? void 0 : w.slots[v.id];
+      return { view: v, text, changed: sectionChanged(text, (_c2 = v.baseline) != null ? _c2 : ""), previous };
+    });
+    const changed = results.filter((r) => r.changed);
+    if (changed.length === 0) {
+      if (results.some((r) => r.view.status === "edited")) this.applyWords(results, (_a2 = w.words) != null ? _a2 : "");
+      if (w.words) new import_obsidian9.Notice(`nameForge: no words changed, so \u201C${w.words}\u201D is no longer linked to this recipe. The note is kept.`);
+      w.words = void 0;
+      return true;
+    }
+    const folder = (_d = (_c = (_b = this.options.file) == null ? void 0 : _b.parent) == null ? void 0 : _c.path) != null ? _d : this.options.folderPath;
+    const exists = (n) => !!this.app.vault.getFileByPath((0, import_obsidian9.normalizePath)(`${folder}/${sanitizePackNameForFilename(n)}.md`));
+    const own = w.words && this.app.metadataCache.getFirstLinkpathDest(w.words, (_f = (_e = this.options.file) == null ? void 0 : _e.path) != null ? _f : folder);
+    const noteName = wordsNoteName(name, exists, own instanceof import_obsidian9.TFile ? w.words : void 0);
+    const body = assembleWordsNote(
+      own instanceof import_obsidian9.TFile ? this.wordsBody : void 0,
+      wordsNoteDescription(name),
+      results.map((r) => r.view.label),
+      changed.map((r) => ({ label: r.view.label, text: r.text }))
+    );
+    try {
+      if (own instanceof import_obsidian9.TFile) {
+        const content = await this.app.vault.read(own);
+        const fm = content.match(/^---\s*\n[\s\S]*?\n---\s*/);
+        await this.app.vault.modify(own, `${fm ? fm[0].trimEnd() : "---\ntype: word-list\n---"}
+
+${body.trim()}
+`);
+      } else {
+        await this.app.vault.create((0, import_obsidian9.normalizePath)(`${folder}/${sanitizePackNameForFilename(noteName)}.md`), createWordListFileContent(noteName, body));
+      }
+    } catch (e) {
+      new import_obsidian9.Notice(`nameForge: couldn't save the word list \u201C${noteName}\u201D.`);
+      return false;
+    }
+    this.wordsBody = body;
+    this.applyWords(results, noteName);
+    w.words = noteName;
+    return true;
+  }
+  /** §6.3: the slots after a words save, kept in step with the set of explicit slots. */
+  applyWords(results, noteName) {
+    const w = this.working;
+    w.slots = applyWordsToSlots(w.slots, results.map((r) => ({ id: r.view.id, changed: r.changed, previous: r.previous })), noteName);
+    for (const r of results) {
+      if (w.slots[r.view.id]) this.explicitSlots.add(r.view.id);
+      else this.explicitSlots.delete(r.view.id);
+    }
+    this.wordsEdits.clear();
   }
   /** Writes the recipe; the saved path, or null when it couldn't be saved (a notice says why). */
   async save() {
+    var _a2;
     const name = (this.nameSource ? this.nameSource() : this.name).trim();
     if (!name) {
       new import_obsidian9.Notice("nameForge: give the recipe a name.");
       return null;
     }
+    const path = (0, import_obsidian9.normalizePath)(`${this.options.folderPath}/${sanitizePackNameForFilename(name)}.md`);
+    if (this.app.vault.getFileByPath(path) && ((_a2 = this.options.file) == null ? void 0 : _a2.path) !== path) {
+      new import_obsidian9.Notice("nameForge: a file with that name already exists.");
+      return null;
+    }
+    if (!await this.saveWords(name)) return null;
     const frontmatter = recipeToFrontmatter(this.collect());
     const content = `---
 ${(0, import_obsidian9.stringifyYaml)(frontmatter)}---
 
 ${this.body.trim()}
 `;
-    const path = (0, import_obsidian9.normalizePath)(`${this.options.folderPath}/${sanitizePackNameForFilename(name)}.md`);
     try {
       const existing = this.app.vault.getFileByPath(path);
       if (this.options.file) {
