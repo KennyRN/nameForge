@@ -32615,6 +32615,7 @@ var world_place_names_default = {
   cultures: [
     {
       id: "anglo-saxon",
+      homelandBiome: "britain",
       label: "Anglo-Saxon",
       guide: "Fused compounds, specific first and generic last: the baseline for every other set.",
       fuseChance: 0.8,
@@ -32694,6 +32695,7 @@ var world_place_names_default = {
     },
     {
       id: "norse",
+      homelandBiome: "boreal",
       label: "Norse",
       guide: "Owners' farms, god-shrines and blunt landscape words: dale, fell, ness, holm.",
       fuseChance: 0.5,
@@ -32733,6 +32735,7 @@ var world_place_names_default = {
     },
     {
       id: "celtic",
+      homelandBiome: "britain",
       label: "Celtic",
       guide: "Head-first naming in the saints' era: Mouth of, Church of, Fort of, Head of.",
       fuseChance: 0,
@@ -32807,6 +32810,7 @@ var world_place_names_default = {
     },
     {
       id: "roman",
+      homelandBiome: "mediterranean",
       label: "Roman / Italian",
       guide: "Imperial: gods and emperors as founders, forums, milestones. Medieval: saints, castles, towers and boroughs.",
       fuseChance: 0,
@@ -32890,6 +32894,7 @@ var world_place_names_default = {
     },
     {
       id: "chinese",
+      homelandBiome: "temperate",
       label: "Chinese",
       guide: "Places named by position (north of the river, sunny bank), and in imperial times by slogan and virtue.",
       fuseChance: 0,
@@ -32962,6 +32967,7 @@ var world_place_names_default = {
     },
     {
       id: "egyptian",
+      homelandBiome: "desert",
       label: "Egyptian",
       guide: "Animal gods and theology: houses, horizons and seats of the gods; under the Greeks, cities of gods and beasts.",
       fuseChance: 0,
@@ -33025,6 +33031,7 @@ var world_place_names_default = {
     },
     {
       id: "aztec",
+      homelandBiome: "highland",
       label: "Aztec",
       guide: "Locative compounds: place of deer, grasshopper hill, near the trees. Colonial: saints joined to native names.",
       fuseChance: 0,
@@ -33089,6 +33096,7 @@ var world_place_names_default = {
     },
     {
       id: "bantu",
+      homelandBiome: "savannah",
       label: "Bantu",
       guide: "One invented people-name per batch feeds land, place and royal-town names, so a batch reads as one region.",
       fuseChance: 0,
@@ -33130,6 +33138,7 @@ var world_place_names_default = {
     },
     {
       id: "slavic",
+      homelandBiome: "temperate",
       label: "Slavic",
       guide: "Bare possessives and new towns; then tsars' glory and 'Ruler of the East'; then waves of Soviet renaming.",
       fuseChance: 0,
@@ -33221,6 +33230,7 @@ var world_place_names_default = {
     },
     {
       id: "arabic-persian",
+      homelandBiome: "desert",
       label: "Arabic & Persian",
       guide: "Abode of Peace, Mother of Palaces, Gate of Lamentation, Tariq's Mountain; Persian abodes, gardens and kings' glory.",
       fuseChance: 0,
@@ -33299,6 +33309,7 @@ var world_place_names_default = {
     },
     {
       id: "indian",
+      homelandBiome: "monsoon",
       label: "Indian",
       guide: "Ancient: gods' cities and plains, sacred confluences, the Unconquerable. Modern: founders' abodes and cities, forts, markets, cantonments.",
       fuseChance: 0,
@@ -33368,6 +33379,7 @@ var world_place_names_default = {
     },
     {
       id: "japanese",
+      homelandBiome: "temperate",
       label: "Japanese",
       guide: "Modifier first and generic last, close to English: Long Cape, River Mouth. Samurai era adds auspicious pairs and castle towns; modern adds suburban hills of hope.",
       fuseChance: 0,
@@ -33432,6 +33444,7 @@ var world_place_names_default = {
     },
     {
       id: "west-african",
+      homelandBiome: "savannah",
       label: "West African",
       guide: "Under the Kum Tree, Crocodile River, Buktu's Well, Grove of Osun; towns of invented peoples, a batch at a time.",
       fuseChance: 0,
@@ -33474,6 +33487,7 @@ var world_place_names_default = {
     },
     {
       id: "maya",
+      homelandBiome: "rainforest",
       label: "Maya",
       guide: "Big Water, Mouth of the Well of the Itza, Snake Kingdom, Three Stones; colours that are also directions.",
       fuseChance: 0,
@@ -33512,6 +33526,7 @@ var world_place_names_default = {
     },
     {
       id: "korean",
+      homelandBiome: "temperate",
       label: "Korean",
       guide: "Big Hill, Cauldron Mountain, Water Source; district names of virtue, and provinces that blend two districts.",
       fuseChance: 0,
@@ -33549,6 +33564,7 @@ var world_place_names_default = {
     },
     {
       id: "ethiopian",
+      homelandBiome: "highland",
       label: "Ethiopian",
       guide: "Mount of Light, Mount of Mark, New Flower, Hot Spring; royal camps and churches cut from the rock.",
       fuseChance: 0,
@@ -33582,6 +33598,46 @@ var world_place_names_default = {
         }
       ]
     }
+  ],
+  $swapsComment: "Land brief \xA77.2: lists a biome replaces. replacedBy weights biome lists (shortLand/shortWater are terrain words); keep entries stay at their share.",
+  biomeSwaps: [
+    { culture: "anglo-saxon", list: "wild", replacedBy: { wildAnimals: 1 }, keep: [] },
+    { culture: "anglo-saxon", list: "bird", replacedBy: { birds: 1 }, keep: [] },
+    { culture: "anglo-saxon", list: "tree", replacedBy: { trees: 1 }, keep: [] },
+    { culture: "anglo-saxon", list: "plant", replacedBy: { plants: 60, crops: 40 }, keep: [] },
+    { culture: "anglo-saxon", list: "domestic", replacedBy: { livestock: 1 }, keep: [] },
+    { culture: "anglo-saxon", list: "water", replacedBy: { shortWater: 1 }, keep: [] },
+    { culture: "norse", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: [] },
+    { culture: "norse", list: "tree", replacedBy: { trees: 1 }, keep: [] },
+    { culture: "celtic", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: [] },
+    { culture: "celtic", list: "tree", replacedBy: { trees: 1 }, keep: [] },
+    { culture: "celtic", list: "feature", era: "saints", replacedBy: { shortLand: 60, shortWater: 40 }, keep: [] },
+    { culture: "roman", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: ["Eagle", "Wolf"] },
+    { culture: "roman", list: "peak", era: "medieval", replacedBy: { shortLand: 1, terrain: "mountains" }, keep: ["Mount"] },
+    { culture: "chinese", list: "beast", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: ["Dragon", "Phoenix", "Qilin", "Golden Rooster", "White Horse"] },
+    { culture: "chinese", list: "feature", era: "modern", replacedBy: { shortLand: 60, shortWater: 40 }, keep: ["Gate", "Bridge"] },
+    { culture: "chinese", list: "water", era: "modern", replacedBy: { shortWater: 1 }, keep: [] },
+    { culture: "aztec", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: [] },
+    { culture: "aztec", list: "plant", replacedBy: { plants: 40, crops: 30, trees: 30 }, keep: [] },
+    { culture: "aztec", list: "feature", era: "mexica", replacedBy: { shortLand: 60, shortWater: 40 }, keep: [] },
+    { culture: "bantu", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: [] },
+    { culture: "bantu", list: "feature", replacedBy: { shortLand: 60, shortWater: 40 }, keep: [] },
+    { culture: "slavic", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: [] },
+    { culture: "arabic-persian", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: [] },
+    { culture: "arabic-persian", list: "plant", era: "persian", replacedBy: { plants: 50, trees: 50 }, keep: ["Rose"] },
+    { culture: "indian", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: [] },
+    { culture: "indian", list: "plant", era: "ancient", replacedBy: { plants: 50, trees: 50 }, keep: ["Lotus", "Basil"] },
+    { culture: "japanese", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: ["Dragon"] },
+    { culture: "japanese", list: "feature", replacedBy: { shortLand: 60, shortWater: 40 }, keep: ["Bridge", "Field"] },
+    { culture: "west-african", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: [] },
+    { culture: "west-african", list: "tree", replacedBy: { trees: 1 }, keep: [] },
+    { culture: "west-african", list: "feature", replacedBy: { shortLand: 60, shortWater: 40 }, keep: ["Crossing"] },
+    { culture: "maya", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: [] },
+    { culture: "maya", list: "feature", replacedBy: { shortLand: 60, shortWater: 40 }, keep: ["Plaza", "Ballcourt", "Causeway", "Well"] },
+    { culture: "korean", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: ["Dragon"] },
+    { culture: "korean", list: "feature", replacedBy: { shortLand: 60, shortWater: 40 }, keep: ["Gate", "Field"] },
+    { culture: "ethiopian", list: "animal", replacedBy: { wildAnimals: 40, birds: 30, creatures: 15, livestock: 15 }, keep: [] },
+    { culture: "ethiopian", list: "feature", replacedBy: { shortLand: 60, shortWater: 40 }, keep: ["Market", "Field"] }
   ]
 };
 
@@ -33601,7 +33657,12 @@ function findCulture(id) {
   return (_a2 = WORLD_CULTURES.find((c) => c.id === id)) != null ? _a2 : WORLD_CULTURES[0];
 }
 function cultureUsesBiomes(cultureId) {
-  return cultureId !== "egyptian";
+  return WORLD_DATA.biomeSwaps.some((s) => s.culture === cultureId);
+}
+var LAND_LISTS = /* @__PURE__ */ new Set(["feature", "water", "peak"]);
+function biomeListEntry(word) {
+  const lowered = word.toLowerCase();
+  return `${biomeTitleCase(lowered)}|${biomeTitleCase(pluralOf(lowered))}`;
 }
 function findEra(culture, eraId) {
   var _a2;
@@ -33664,11 +33725,53 @@ var WorldRenderer = class {
     this.options = options;
     this.pools = /* @__PURE__ */ new Map();
     this.notices = /* @__PURE__ */ new Set();
+    /** Land brief §7.3: the swaps for this batch, built once. */
+    this.swaps = /* @__PURE__ */ new Map();
     var _a2, _b, _c;
     this.culture = findCulture(options.culture);
     this.era = findEra(this.culture, options.era);
     this.lists = { ...this.culture.lists, ...(_a2 = this.era.lists) != null ? _a2 : {} };
     this.markov = { ...(_b = this.culture.markov) != null ? _b : {}, ...(_c = this.era.markov) != null ? _c : {} };
+    this.buildSwaps();
+  }
+  buildSwaps() {
+    var _a2;
+    const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
+    const chosen = this.options.biome;
+    if (!chosen && !terrain) return;
+    const biome = (_a2 = chosen != null ? chosen : findBiome(this.culture.homelandBiome)) != null ? _a2 : BRITAIN;
+    for (const swap of WORLD_DATA.biomeSwaps) {
+      if (swap.culture !== this.culture.id || swap.era && swap.era !== this.era.id) continue;
+      if (!chosen && !LAND_LISTS.has(swap.list)) continue;
+      const list = this.lists[swap.list];
+      if (!list) continue;
+      const keep = new Set(swap.keep);
+      const kept = list.filter((e) => keep.has(parseEntry(e).word));
+      this.swaps.set(swap.list, { swap, biome, kept, slotWeight: list.length - kept.length });
+    }
+  }
+  /** One entry from a swapped list: a kept entry, or a word from the biome. */
+  swapEntry(key, rng) {
+    var _a2;
+    const s = this.swaps.get(key);
+    if (!s) return void 0;
+    const pick2 = pickWeighted4([...s.kept.map((e) => [e, 1]), [null, s.slotWeight]], rng);
+    if (pick2 !== null) return pick2;
+    const sources = Object.entries(s.swap.replacedBy).filter(([k]) => k !== "terrain");
+    const source = sources.length === 1 ? sources[0][0] : pickWeighted4(sources, rng);
+    if (source === "shortLand" || source === "shortWater") {
+      const kind = source === "shortLand" ? "land" : "water";
+      const fixed = (_a2 = s.swap.replacedBy.terrain) != null ? _a2 : this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
+      const terrain = fixed != null ? fixed : pickWeighted4(
+        Object.entries(terrainWeights(s.biome, "any")).filter(([t, w]) => w > 0 && shortWords(s.biome, kind, t).length > 0),
+        rng
+      );
+      let words2 = shortWords(s.biome, kind, terrain);
+      if (words2.length === 0) words2 = shortWords(s.biome, kind, "plains");
+      return biomeListEntry(pickWeighted4(words2.map(([e, w]) => [e.modern, w]), rng));
+    }
+    const words = biomeWords(s.biome, source);
+    return biomeListEntry(pickWeighted4(words, rng));
   }
   getNotices() {
     return [...this.notices];
@@ -33725,7 +33828,7 @@ var WorldRenderer = class {
   }
   /** A list word, expanding any template held in the entry. */
   slot(token, rng, depth) {
-    var _a2;
+    var _a2, _b;
     if (token.markov) {
       const name = this.markovName(token.key, rng);
       const text2 = token.form === "pos" ? possessive(name) : name;
@@ -33736,7 +33839,7 @@ var WorldRenderer = class {
       this.notices.add(`No word list "${token.key}" for ${this.culture.label}.`);
       return { text: `[${token.key}]`, etym: `[${token.key}]`, fusable: false };
     }
-    const entry = parseEntry(pickUniform5(list, rng));
+    const entry = parseEntry((_a2 = this.swapEntry(token.key, rng)) != null ? _a2 : pickUniform5(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);
@@ -33745,7 +33848,7 @@ var WorldRenderer = class {
       return { text: text2, etym: token.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
     }
     let text = entry.word;
-    if (token.form === "pl") text = (_a2 = entry.plural) != null ? _a2 : pluralise2(entry.word);
+    if (token.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
     if (token.form === "pos") text = possessive(entry.word);
     const shown = token.form === "pos" ? entry.word : text;
     return {
@@ -37519,9 +37622,12 @@ ${n.origin}${also}${echo}` };
     if (this.activeSection === "placeShapes") {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_d = this.seedInputEl) == null ? void 0 : _d.value) : void 0;
       const era = this.worldEras[this.worldCulture];
+      const land = cultureUsesBiomes(this.worldCulture) ? this.land(`world:${this.worldCulture}`) : DEFAULT_LAND;
       const result2 = generateWorldPlaceNames({
         culture: this.worldCulture,
         era,
+        biome: findBiome(land.biome, this.customBiomes),
+        terrain: land.terrain,
         count: this.generationCount,
         seed: seedOverride2,
         faithfulness: this.plugin.settings.faithfulness,
@@ -37534,7 +37640,7 @@ ${n.origin}${also}${echo}` };
       );
       await this.recordGenerationHistory(
         result2.names.length,
-        worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, this.worldCulture, era)
+        worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, this.worldCulture, era) + landHistorySuffix(land, this.customBiomes)
       );
       this.setStatus(result2.notices.join(" "));
       return;

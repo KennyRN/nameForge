@@ -7,6 +7,7 @@
 // from it, as the river engine does.
 
 import worldData from "../data/world-place-names.json";
+import { type Biome, biomeTitleCase, biomeWords, BRITAIN, findBiome, pluralOf, shortWords, terrainWeights } from "../biomes";
 import { MarkovModel, mulberry32 } from "../markov";
 import { smoothJoin } from "../names/engine";
 
@@ -41,12 +42,25 @@ export interface WorldCulture {
   lists: Record<string, string[]>;
   markov?: Record<string, MarkovSource>;
   eras: WorldEra[];
+  /** Land brief §7.1: the biome used when a terrain is chosen in Homeland mode. */
+  homelandBiome: string;
+}
+
+/** Land brief §7.2: a list a biome replaces, with what replaces it and which entries stay. */
+export interface BiomeSwap {
+  culture: string;
+  list: string;
+  era?: string;
+  /** Biome list (or shortLand/shortWater) → weight; `terrain` fixes the short words' terrain. */
+  replacedBy: Record<string, number | string>;
+  keep: string[];
 }
 
 export interface WorldData {
   version: number;
   labels: Record<string, string>;
   cultures: WorldCulture[];
+  biomeSwaps: BiomeSwap[];
 }
 
 export const WORLD_DATA = worldData as unknown as WorldData;
@@ -67,7 +81,16 @@ export function findCulture(id: string | undefined): WorldCulture {
 
 /** Land brief §7.2: whether a culture has lists a biome can swap (Egyptian has none). */
 export function cultureUsesBiomes(cultureId: string): boolean {
-  return cultureId !== "egyptian";
+  return WORLD_DATA.biomeSwaps.some((s) => s.culture === cultureId);
+}
+
+/** Land brief §7.3: the swaps that describe land and water, the only ones a Homeland terrain uses. */
+const LAND_LISTS = new Set(["feature", "water", "peak"]);
+
+/** A biome word as a list entry: "Hornbill|Hornbills", "Deer|Deer" (Land brief §7.3). */
+export function biomeListEntry(word: string): string {
+  const lowered = word.toLowerCase();
+  return `${biomeTitleCase(lowered)}|${biomeTitleCase(pluralOf(lowered))}`;
 }
 
 export function findEra(culture: WorldCulture, eraId: string | undefined): WorldEra {
@@ -164,6 +187,9 @@ const titleWord = (w: string) => w.charAt(0).toUpperCase() + w.slice(1).toLowerC
 export interface WorldOptions {
   culture: string;
   era?: string;
+  /** Land brief §7: a chosen biome (undefined is Homeland) and terrain ("any" by default). */
+  biome?: Biome;
+  terrain?: string;
   faithfulness?: number;
   strictness?: number;
 }
@@ -182,6 +208,50 @@ export class WorldRenderer {
     this.era = findEra(this.culture, options.era);
     this.lists = { ...this.culture.lists, ...(this.era.lists ?? {}) };
     this.markov = { ...(this.culture.markov ?? {}), ...(this.era.markov ?? {}) };
+    this.buildSwaps();
+  }
+
+  /** Land brief §7.3: the swaps for this batch, built once. */
+  private readonly swaps = new Map<string, { swap: BiomeSwap; biome: Biome; kept: string[]; slotWeight: number }>();
+  private buildSwaps() {
+    const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : undefined;
+    const chosen = this.options.biome;
+    if (!chosen && !terrain) return;
+    const biome = chosen ?? findBiome(this.culture.homelandBiome) ?? BRITAIN;
+    for (const swap of WORLD_DATA.biomeSwaps) {
+      if (swap.culture !== this.culture.id || (swap.era && swap.era !== this.era.id)) continue;
+      if (!chosen && !LAND_LISTS.has(swap.list)) continue;
+      const list = this.lists[swap.list];
+      if (!list) continue;
+      const keep = new Set(swap.keep);
+      const kept = list.filter((e) => keep.has(parseEntry(e).word));
+      this.swaps.set(swap.list, { swap, biome, kept, slotWeight: list.length - kept.length });
+    }
+  }
+
+  /** One entry from a swapped list: a kept entry, or a word from the biome. */
+  private swapEntry(key: string, rng: () => number): string | undefined {
+    const s = this.swaps.get(key);
+    if (!s) return undefined;
+    const pick = pickWeighted([...s.kept.map((e): [string | null, number] => [e, 1]), [null, s.slotWeight]], rng);
+    if (pick !== null) return pick;
+    const sources = Object.entries(s.swap.replacedBy).filter(([k]) => k !== "terrain") as [string, number][];
+    const source = sources.length === 1 ? sources[0][0] : pickWeighted(sources, rng);
+    if (source === "shortLand" || source === "shortWater") {
+      const kind = source === "shortLand" ? "land" : "water";
+      const fixed = (s.swap.replacedBy.terrain as string | undefined) ?? (this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : undefined);
+      const terrain =
+        fixed ??
+        pickWeighted(
+          Object.entries(terrainWeights(s.biome, "any")).filter(([t, w]) => w > 0 && shortWords(s.biome, kind, t).length > 0),
+          rng,
+        );
+      let words = shortWords(s.biome, kind, terrain);
+      if (words.length === 0) words = shortWords(s.biome, kind, "plains");
+      return biomeListEntry(pickWeighted(words.map(([e, w]): [string, number] => [e.modern, w]), rng));
+    }
+    const words = biomeWords(s.biome, source as Parameters<typeof biomeWords>[1]);
+    return biomeListEntry(pickWeighted(words, rng));
   }
 
   getNotices(): string[] {
@@ -253,7 +323,7 @@ export class WorldRenderer {
       this.notices.add(`No word list "${token.key}" for ${this.culture.label}.`);
       return { text: `[${token.key}]`, etym: `[${token.key}]`, fusable: false };
     }
-    const entry = parseEntry(pickUniform(list, rng));
+    const entry = parseEntry(this.swapEntry(token.key, rng) ?? pickUniform(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);

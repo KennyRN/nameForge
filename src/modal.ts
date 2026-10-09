@@ -2396,9 +2396,13 @@ export class NameForgeModal extends Modal {
     if (this.activeSection === "placeShapes") {
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
       const era = this.worldEras[this.worldCulture];
+      // Land brief §7: the culture's own land choice (Homeland and Any terrain change nothing).
+      const land = cultureUsesBiomes(this.worldCulture) ? this.land(`world:${this.worldCulture}`) : DEFAULT_LAND;
       const result = generateWorldPlaceNames({
         culture: this.worldCulture,
         era,
+        biome: findBiome(land.biome, this.customBiomes),
+        terrain: land.terrain,
         count: this.generationCount,
         seed: seedOverride,
         faithfulness: this.plugin.settings.faithfulness,
@@ -2411,7 +2415,7 @@ export class NameForgeModal extends Modal {
       );
       await this.recordGenerationHistory(
         result.names.length,
-        worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, this.worldCulture, era),
+        worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, this.worldCulture, era) + landHistorySuffix(land, this.customBiomes),
       );
       this.setStatus(result.notices.join(" "));
       return;

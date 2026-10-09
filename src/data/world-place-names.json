@@ -117,6 +117,7 @@
   "cultures": [
     {
       "id": "anglo-saxon",
+      "homelandBiome": "britain",
       "label": "Anglo-Saxon",
       "guide": "Fused compounds, specific first and generic last: the baseline for every other set.",
       "fuseChance": 0.8,
@@ -196,6 +197,7 @@
     },
     {
       "id": "norse",
+      "homelandBiome": "boreal",
       "label": "Norse",
       "guide": "Owners' farms, god-shrines and blunt landscape words: dale, fell, ness, holm.",
       "fuseChance": 0.5,
@@ -235,6 +237,7 @@
     },
     {
       "id": "celtic",
+      "homelandBiome": "britain",
       "label": "Celtic",
       "guide": "Head-first naming in the saints' era: Mouth of, Church of, Fort of, Head of.",
       "fuseChance": 0,
@@ -309,6 +312,7 @@
     },
     {
       "id": "roman",
+      "homelandBiome": "mediterranean",
       "label": "Roman / Italian",
       "guide": "Imperial: gods and emperors as founders, forums, milestones. Medieval: saints, castles, towers and boroughs.",
       "fuseChance": 0,
@@ -392,6 +396,7 @@
     },
     {
       "id": "chinese",
+      "homelandBiome": "temperate",
       "label": "Chinese",
       "guide": "Places named by position (north of the river, sunny bank), and in imperial times by slogan and virtue.",
       "fuseChance": 0,
@@ -464,6 +469,7 @@
     },
     {
       "id": "egyptian",
+      "homelandBiome": "desert",
       "label": "Egyptian",
       "guide": "Animal gods and theology: houses, horizons and seats of the gods; under the Greeks, cities of gods and beasts.",
       "fuseChance": 0,
@@ -527,6 +533,7 @@
     },
     {
       "id": "aztec",
+      "homelandBiome": "highland",
       "label": "Aztec",
       "guide": "Locative compounds: place of deer, grasshopper hill, near the trees. Colonial: saints joined to native names.",
       "fuseChance": 0,
@@ -591,6 +598,7 @@
     },
     {
       "id": "bantu",
+      "homelandBiome": "savannah",
       "label": "Bantu",
       "guide": "One invented people-name per batch feeds land, place and royal-town names, so a batch reads as one region.",
       "fuseChance": 0,
@@ -632,6 +640,7 @@
     },
     {
       "id": "slavic",
+      "homelandBiome": "temperate",
       "label": "Slavic",
       "guide": "Bare possessives and new towns; then tsars' glory and 'Ruler of the East'; then waves of Soviet renaming.",
       "fuseChance": 0,
@@ -723,6 +732,7 @@
     },
     {
       "id": "arabic-persian",
+      "homelandBiome": "desert",
       "label": "Arabic & Persian",
       "guide": "Abode of Peace, Mother of Palaces, Gate of Lamentation, Tariq's Mountain; Persian abodes, gardens and kings' glory.",
       "fuseChance": 0,
@@ -801,6 +811,7 @@
     },
     {
       "id": "indian",
+      "homelandBiome": "monsoon",
       "label": "Indian",
       "guide": "Ancient: gods' cities and plains, sacred confluences, the Unconquerable. Modern: founders' abodes and cities, forts, markets, cantonments.",
       "fuseChance": 0,
@@ -870,6 +881,7 @@
     },
     {
       "id": "japanese",
+      "homelandBiome": "temperate",
       "label": "Japanese",
       "guide": "Modifier first and generic last, close to English: Long Cape, River Mouth. Samurai era adds auspicious pairs and castle towns; modern adds suburban hills of hope.",
       "fuseChance": 0,
@@ -934,6 +946,7 @@
     },
     {
       "id": "west-african",
+      "homelandBiome": "savannah",
       "label": "West African",
       "guide": "Under the Kum Tree, Crocodile River, Buktu's Well, Grove of Osun; towns of invented peoples, a batch at a time.",
       "fuseChance": 0,
@@ -976,6 +989,7 @@
     },
     {
       "id": "maya",
+      "homelandBiome": "rainforest",
       "label": "Maya",
       "guide": "Big Water, Mouth of the Well of the Itza, Snake Kingdom, Three Stones; colours that are also directions.",
       "fuseChance": 0,
@@ -1014,6 +1028,7 @@
     },
     {
       "id": "korean",
+      "homelandBiome": "temperate",
       "label": "Korean",
       "guide": "Big Hill, Cauldron Mountain, Water Source; district names of virtue, and provinces that blend two districts.",
       "fuseChance": 0,
@@ -1051,6 +1066,7 @@
     },
     {
       "id": "ethiopian",
+      "homelandBiome": "highland",
       "label": "Ethiopian",
       "guide": "Mount of Light, Mount of Mark, New Flower, Hot Spring; royal camps and churches cut from the rock.",
       "fuseChance": 0,
@@ -1084,5 +1100,45 @@
         }
       ]
     }
+  ],
+  "$swapsComment": "Land brief §7.2: lists a biome replaces. replacedBy weights biome lists (shortLand/shortWater are terrain words); keep entries stay at their share.",
+  "biomeSwaps": [
+    {"culture": "anglo-saxon", "list": "wild", "replacedBy": {"wildAnimals": 1}, "keep": []},
+    {"culture": "anglo-saxon", "list": "bird", "replacedBy": {"birds": 1}, "keep": []},
+    {"culture": "anglo-saxon", "list": "tree", "replacedBy": {"trees": 1}, "keep": []},
+    {"culture": "anglo-saxon", "list": "plant", "replacedBy": {"plants": 60, "crops": 40}, "keep": []},
+    {"culture": "anglo-saxon", "list": "domestic", "replacedBy": {"livestock": 1}, "keep": []},
+    {"culture": "anglo-saxon", "list": "water", "replacedBy": {"shortWater": 1}, "keep": []},
+    {"culture": "norse", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": []},
+    {"culture": "norse", "list": "tree", "replacedBy": {"trees": 1}, "keep": []},
+    {"culture": "celtic", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": []},
+    {"culture": "celtic", "list": "tree", "replacedBy": {"trees": 1}, "keep": []},
+    {"culture": "celtic", "list": "feature", "era": "saints", "replacedBy": {"shortLand": 60, "shortWater": 40}, "keep": []},
+    {"culture": "roman", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": ["Eagle", "Wolf"]},
+    {"culture": "roman", "list": "peak", "era": "medieval", "replacedBy": {"shortLand": 1, "terrain": "mountains"}, "keep": ["Mount"]},
+    {"culture": "chinese", "list": "beast", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": ["Dragon", "Phoenix", "Qilin", "Golden Rooster", "White Horse"]},
+    {"culture": "chinese", "list": "feature", "era": "modern", "replacedBy": {"shortLand": 60, "shortWater": 40}, "keep": ["Gate", "Bridge"]},
+    {"culture": "chinese", "list": "water", "era": "modern", "replacedBy": {"shortWater": 1}, "keep": []},
+    {"culture": "aztec", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": []},
+    {"culture": "aztec", "list": "plant", "replacedBy": {"plants": 40, "crops": 30, "trees": 30}, "keep": []},
+    {"culture": "aztec", "list": "feature", "era": "mexica", "replacedBy": {"shortLand": 60, "shortWater": 40}, "keep": []},
+    {"culture": "bantu", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": []},
+    {"culture": "bantu", "list": "feature", "replacedBy": {"shortLand": 60, "shortWater": 40}, "keep": []},
+    {"culture": "slavic", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": []},
+    {"culture": "arabic-persian", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": []},
+    {"culture": "arabic-persian", "list": "plant", "era": "persian", "replacedBy": {"plants": 50, "trees": 50}, "keep": ["Rose"]},
+    {"culture": "indian", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": []},
+    {"culture": "indian", "list": "plant", "era": "ancient", "replacedBy": {"plants": 50, "trees": 50}, "keep": ["Lotus", "Basil"]},
+    {"culture": "japanese", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": ["Dragon"]},
+    {"culture": "japanese", "list": "feature", "replacedBy": {"shortLand": 60, "shortWater": 40}, "keep": ["Bridge", "Field"]},
+    {"culture": "west-african", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": []},
+    {"culture": "west-african", "list": "tree", "replacedBy": {"trees": 1}, "keep": []},
+    {"culture": "west-african", "list": "feature", "replacedBy": {"shortLand": 60, "shortWater": 40}, "keep": ["Crossing"]},
+    {"culture": "maya", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": []},
+    {"culture": "maya", "list": "feature", "replacedBy": {"shortLand": 60, "shortWater": 40}, "keep": ["Plaza", "Ballcourt", "Causeway", "Well"]},
+    {"culture": "korean", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": ["Dragon"]},
+    {"culture": "korean", "list": "feature", "replacedBy": {"shortLand": 60, "shortWater": 40}, "keep": ["Gate", "Field"]},
+    {"culture": "ethiopian", "list": "animal", "replacedBy": {"wildAnimals": 40, "birds": 30, "creatures": 15, "livestock": 15}, "keep": []},
+    {"culture": "ethiopian", "list": "feature", "replacedBy": {"shortLand": 60, "shortWater": 40}, "keep": ["Market", "Field"]}
   ]
 }
