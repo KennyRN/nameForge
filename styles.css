@@ -1544,3 +1544,9 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   font-family: var(--font-monospace);
   font-size: var(--font-ui-small);
 }
+
+/* Presets brief §8.2: the Save as preset dialogue. */
+.nameforge-preset-modal__description {
+  width: 100%;
+  margin-top: 8px;
+}

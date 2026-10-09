@@ -63,11 +63,14 @@ import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recipe";
 import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
-import { chooseTribal, type TribalSentenceLimits, type TribalSentenceState, tribalSentence } from "./tribes/sentence";
+import { chooseTribal, type TribalSentenceLimits, type TribalSentenceState, tribalSentence, tribalSentenceText } from "./tribes/sentence";
+import { isModulePresetContent, modulePresetContent, parseModulePreset, type TribalPreset } from "./presets";
+import { confirmReplace, PresetSaveModal } from "./presetModal";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
 import { type BiomePackSource, biomeToText, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
 import {
+  findTradition,
   generateTribalNames,
   TRIBAL_DATA,
   TRIBAL_TRADITIONS,
@@ -104,7 +107,8 @@ import {
 } from "./colonialShapes";
 import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from "./paths";
 
-type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack";
+/** `tribalPreset` (Presets brief §9): a tribal names preset note, run as-is from the pack dropdown. */
+type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack" | "tribalPreset";
 
 import {
   BRITISH_PLACE_NAMES_HISTORY_NAME,
@@ -112,6 +116,7 @@ import {
   type NameForgeSection,
   RIVER_NAMES_HISTORY_NAME,
   SECTION_LABELS,
+  TRIBAL_NAMES_HISTORY_NAME,
   WORLD_PLACE_NAMES_HISTORY_NAME,
   GROUP_LABELS,
   SECTION_GROUPS,
@@ -172,6 +177,7 @@ let sessionHintShown = false;
 
 
 function packTypeIconId(packType: NamePackType, subGenerator?: "breakdown" | "list"): string {
+  if (packType === "tribalPreset") return ICON_TRIBAL_NAMES;
   if (packType === "recipePack") {
     // Presets brief §2.2: recipe packs wear the wizard's pen-in-pin icon.
     return ICON_RECIPE_WIZARD;
@@ -429,6 +435,10 @@ export class NameForgeModal extends Modal {
   private currentTemplateError: string | undefined = undefined;
   /** Recipe packs: the loaded recipe, the session's etymology toggle, and the edit button. */
   private currentRecipePath: string | undefined = undefined;
+  /** Presets brief §9: the loaded tribal preset note. */
+  private currentPresetPath: string | undefined = undefined;
+  private openPresetButton: HTMLButtonElement | null = null;
+  private savePresetButton: HTMLButtonElement | null = null;
   private recipeEtymology: boolean | undefined = undefined;
   private editRecipeButton: HTMLButtonElement | null = null;
   private generationCount = 25;
@@ -564,6 +574,22 @@ export class NameForgeModal extends Modal {
     setIcon(this.editRecipeButton, "pencil");
     this.editRecipeButton.addEventListener("click", () => void this.openRecipeEditor(this.currentRecipePath));
     this.editRecipeButton.hide();
+    // Presets brief §9: open the loaded tribal preset in tribal names.
+    this.openPresetButton = createPacksRow.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Open in tribal names" },
+    });
+    setIcon(this.openPresetButton, "sliders-horizontal");
+    this.openPresetButton.addEventListener("click", () => void this.openPresetInModule());
+    this.openPresetButton.hide();
+    // Presets brief §8.1: save the module's current setup as a preset.
+    this.savePresetButton = createPacksRow.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Save as preset" },
+    });
+    setIcon(this.savePresetButton, "bookmark-plus");
+    this.savePresetButton.addEventListener("click", () => void this.openSavePreset());
+    this.savePresetButton.hide();
 
     // The colonial sections' tradition guide, in the slot the create-pack button keeps.
     this.guideButton = createPacksRow.createEl("button", {
@@ -732,6 +758,7 @@ export class NameForgeModal extends Modal {
     this.packDropdownEl?.toggle(section === "markov");
     this.sectionSelectEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
     this.editRecipeButton?.toggle(section === "markov" && this.currentPackType === "recipePack");
+    this.openPresetButton?.toggle(section === "markov" && this.currentPackType === "tribalPreset");
     // Pack creation belongs to the markov generator; elsewhere the button keeps its space so the
     // box beside the trigger stays the same size.
     const colonialPart = COLONIAL_SECTION_PART[section];
@@ -741,6 +768,7 @@ export class NameForgeModal extends Modal {
     this.createPacksButton?.toggle(!colonialPart && !tribal);
     this.landButton?.refresh();
     this.guideButton?.toggle(!!colonialPart);
+    this.refreshSavePreset();
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
@@ -1239,20 +1267,40 @@ export class NameForgeModal extends Modal {
   /** Tribal names (Tribal brief §18.3): headwords, with the two-line details as etymology. */
   private async runTribalNames() {
     const t = this.tribal;
-    const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
     const land = this.land("tribal");
+    await this.runTribal(this.tribalState(), (custom) => tribalHistoryLabel(SECTION_LABELS.tribalNames, t.tradition, land.biome, t.register, land.terrain, custom));
+  }
+
+  /** Presets brief §9: a tribal preset, run with the current quantity; history "tribal names · {name}". */
+  private async runTribalPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { preset, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!preset) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runTribal(await this.presetState(preset, file.path), () => `${TRIBAL_NAMES_HISTORY_NAME} · ${preset.packName}`, problems);
+  }
+
+  /** Runs the tribal engine for a sentence state and shows the results as the module does. */
+  private async runTribal(state: TribalSentenceState, label: (custom: Biome[]) => string, problems: string[] = []) {
+    const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
     await this.loadCustomBiomes();
-    const chosen = findBiome(land.biome, this.customBiomes);
+    const chosen = findBiome(state.biome, this.customBiomes);
     const guards = await this.loadSafeguards();
     const result = generateTribalNames({
-      tradition: t.tradition,
-      ...(chosen?.custom ? { biomeData: chosen } : { biome: land.biome }),
-      terrain: land.terrain,
+      tradition: state.tradition,
+      ...(chosen?.custom ? { biomeData: chosen } : { biome: state.biome }),
+      terrain: state.terrain,
       safeguards: guards.safeguards,
-      register: t.register,
-      groupType: t.groupType,
-      perspective: t.perspective,
-      hostile: t.hostile,
+      register: state.register as TribalRegister,
+      groupType: state.groupType,
+      perspective: state.perspective,
+      hostile: !!state.hostile,
       count: this.generationCount,
       seed: seedOverride,
     });
@@ -1265,8 +1313,110 @@ export class NameForgeModal extends Modal {
       }),
       "module",
     );
-    await this.recordGenerationHistory(result.names.length, tribalHistoryLabel(SECTION_LABELS.tribalNames, t.tradition, this.land("tribal").biome, t.register, this.land("tribal").terrain, this.customBiomes));
-    this.setStatus([...result.notices, ...guards.notices].join(" "));
+    await this.recordGenerationHistory(result.names.length, label(this.customBiomes));
+    this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
+  }
+
+  /** A preset's values as a sentence state; a biome pack link is looked up among the user's packs. */
+  private async presetState(preset: TribalPreset, from: string): Promise<TribalSentenceState> {
+    let biome: string | undefined = preset.biome === "homeland" ? undefined : preset.biome;
+    if (biome?.startsWith("[[")) {
+      const name = biome.slice(2, -2);
+      const target = this.app.metadataCache.getFirstLinkpathDest(name, from);
+      const found = (await this.loadCustomBiomes()).find((b) => b.custom?.path === target?.path || b.label === name);
+      biome = found?.custom?.path;
+    }
+    return {
+      tradition: preset.tradition,
+      groupType: preset.groupType === "any" ? undefined : preset.groupType,
+      biome,
+      terrain: preset.terrain,
+      register: preset.register,
+      perspective: preset.perspective === "any" ? undefined : preset.perspective,
+      hostile: preset.hostile,
+    };
+  }
+
+  /** Presets brief §9: "Open in tribal names" applies the preset's choices for this session. */
+  private async openPresetInModule() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof TFile)) return;
+    const { preset } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!preset) return;
+    this.setTribalState(await this.presetState(preset, file.path));
+    this.switchSection("tribalNames");
+  }
+
+  /** Presets brief §8.1: the Save as preset button, for the modules that have presets. */
+  private refreshSavePreset() {
+    this.savePresetButton?.toggle(this.activeSection === "tribalNames");
+  }
+
+  /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
+  private async openSavePreset() {
+    if (this.activeSection !== "tribalNames") return;
+    const custom = await this.loadCustomBiomes();
+    const state = this.tribalState();
+    const tradition = findTradition(state.tradition) ?? TRIBAL_TRADITIONS[0];
+    const biome = findBiome(state.biome, custom);
+    const name = `${tradition.label} · ${biome ? biomeInline(biome) : "homeland"}`;
+    const description = tribalSentenceText(tribalSentence(state, this.tribalLimits(custom)));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      if (!presetName) {
+        new Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        tradition: state.tradition,
+        biome: biome ? (biome.custom ? `[[${biome.label}]]` : biome.id) : "homeland",
+        terrain: state.terrain || "any",
+        register: state.register,
+        groupType: state.groupType ?? "any",
+        perspective: state.perspective ?? "any",
+        hostile: !!state.hostile,
+      });
+      return this.writePreset(presetName, content, (existing) => isModulePresetContent(existing) && !!parseModulePreset(existing, presetName).preset);
+    }).open();
+  }
+
+  /**
+   * Presets brief §8.3: writes a preset note to the names folder. A template is never replaced; a
+   * preset of the same module is replaced only on yes; any other note is refused.
+   */
+  private async writePreset(name: string, content: string, sameModule: (existing: string) => boolean): Promise<boolean> {
+    let folderPath = this.getFolderPath();
+    if (!folderPath) {
+      const folder = await this.promptForFolderSelection();
+      if (!folder) return false;
+      folderPath = folder.path;
+    }
+    const path = normalizePath(`${folderPath}/${sanitizePackNameForFilename(name)}.md`);
+    try {
+      const existing = this.app.vault.getFileByPath(path);
+      if (existing instanceof TFile) {
+        if (await this.isTemplateFile(existing)) {
+          new Notice("nameForge: a template already has that name. Choose another name.");
+          return false;
+        }
+        if (!sameModule(await this.app.vault.read(existing))) {
+          new Notice("nameForge: a file with that name already exists.");
+          return false;
+        }
+        if (!(await confirmReplace(this.app, `Replace preset “${name}”?`))) return false;
+        await this.app.vault.modify(existing, content);
+      } else {
+        await this.app.vault.create(path, content);
+      }
+    } catch {
+      new Notice(`nameForge: couldn't save the preset to ${path}.`);
+      return false;
+    }
+    new Notice(`nameForge: preset “${name}” saved.`);
+    await this.refreshPackDropdown({ preserveSelection: true });
+    return true;
   }
 
   /** Land brief §10: every tribal safeguard pack in the names folder, merged with the built-in lists. */
@@ -1627,6 +1777,8 @@ export class NameForgeModal extends Modal {
     this.createPacksButton = null;
     this.sectionSelectEl = null;
     this.editRecipeButton = null;
+    this.openPresetButton = null;
+    this.savePresetButton = null;
     this.guideButton = null;
     this.riverOptionsButton = null;
     this.contextRowEl = null;
@@ -1862,8 +2014,8 @@ export class NameForgeModal extends Modal {
     }
 
     const packType = this.currentPackType;
-    if (packType === "recipePack") {
-      this.setStatus("Recipes are saved from the recipe editor.");
+    if (packType === "recipePack" || packType === "tribalPreset") {
+      this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
     const content = createNamesFileContent(this.plugin.settings.packName || "nameForge", names, packType, {
@@ -2016,6 +2168,11 @@ export class NameForgeModal extends Modal {
           if (!parseRecipeContent(content).recipe.template) packs.push({ path: child.path, packType: "recipePack" });
           continue;
         }
+        // Presets brief §7.2: a preset of an unknown module is left out.
+        if (isModulePresetContent(content)) {
+          if (parseModulePreset(content, child.basename).preset) packs.push({ path: child.path, packType: "tribalPreset" });
+          continue;
+        }
         if (isValidNamePackContent(content)) {
           const parsed = parseNamesFileContent(content);
           if (parsed.template) continue; // §7: templates never appear in the generate view
@@ -2075,8 +2232,14 @@ export class NameForgeModal extends Modal {
       await this.loadRecipePack(file);
       return;
     }
+    if (isModulePresetContent(content)) {
+      await this.loadTribalPreset(file, content);
+      return;
+    }
     this.currentRecipePath = undefined;
+    this.currentPresetPath = undefined;
     this.editRecipeButton?.hide();
+    this.openPresetButton?.hide();
 
     const resolved = await this.resolvePackTemplate(packPath, parseNamesFileContent(content));
     const parsed = resolved.parsed;
@@ -2143,9 +2306,32 @@ export class NameForgeModal extends Modal {
   }
 
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
+  /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
+  private async loadTribalPreset(file: TFile, content: string) {
+    this.currentPackType = "tribalPreset";
+    this.currentPresetPath = file.path;
+    this.currentRecipePath = undefined;
+    this.currentNamesText = "";
+    this.currentSectioned = undefined;
+    this.currentTemplateError = undefined;
+    this.sectionChoices = [];
+    this.sectionSelectEl?.hide();
+    this.editRecipeButton?.hide();
+    this.openPresetButton?.toggle(this.activeSection === "markov");
+    const { preset, problems } = parseModulePreset(content, file.basename);
+    this.plugin.settings.packName = preset?.packName ?? file.basename;
+    this.plugin.settings.namesFilePath = file.path;
+    this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
+    await this.plugin.saveSettings();
+    this.updatePackDropdownTrigger(file.path, "tribalPreset");
+    this.setStatus(problems.join(" "));
+  }
+
   private async loadRecipePack(file: TFile) {
     this.currentPackType = "recipePack";
     this.currentRecipePath = file.path;
+    this.currentPresetPath = undefined;
+    this.openPresetButton?.hide();
     this.recipeEtymology = undefined;
     this.currentNamesText = "";
     this.currentSectioned = undefined;
@@ -2518,6 +2704,10 @@ export class NameForgeModal extends Modal {
     }
     if (this.currentPackType === "recipePack") {
       await this.runRecipe();
+      return;
+    }
+    if (this.currentPackType === "tribalPreset") {
+      await this.runTribalPreset();
       return;
     }
     if (this.currentTemplateError) {
