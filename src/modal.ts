@@ -774,7 +774,7 @@ export class NameForgeModal extends Modal {
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
-    this.regionDropdownEl?.toggle(!!group || river || tribal);
+    this.regionDropdownEl?.toggle(!!group || river);
     // Grouped modules set everything else in their sentence.
     this.showSecondBox(river && this.riverSetting === "british");
     this.updateSecondBoxLabel();
@@ -1049,22 +1049,6 @@ export class NameForgeModal extends Modal {
       }
       return;
     }
-    if (this.activeSection === "tribalNames") {
-      for (const tradition of TRIBAL_TRADITIONS) {
-        const item = menu.createEl("button", {
-          cls: "nameforge-modal__pack-dropdown-item" + (tradition.key === this.tribal.tradition ? " is-active" : ""),
-          attr: { type: "button", title: tradition.drawsOn },
-        });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: tradition.label });
-        item.addEventListener("click", () => {
-          this.tribal.tradition = tradition.key;
-          this.updateRegionLabel();
-          this.renderContextRow();
-          this.setRegionMenuOpen(false);
-        });
-      }
-      return;
-    }
   }
 
   private updateRegionLabel() {
@@ -1077,12 +1061,6 @@ export class NameForgeModal extends Modal {
     if (this.activeSection === "riverNames") {
       if (this.regionLabelEl) this.regionLabelEl.textContent = RIVER_SETTINGS.find((s) => s.id === this.riverSetting)!.label;
       this.regionTriggerEl?.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
-      return;
-    }
-    if (this.activeSection === "tribalNames") {
-      const tradition = findTradition(this.tribal.tradition) ?? TRIBAL_TRADITIONS[0];
-      if (this.regionLabelEl) this.regionLabelEl.textContent = tradition.label;
-      this.regionTriggerEl?.setAttribute("title", tradition.drawsOn);
       return;
     }
   }

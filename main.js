@@ -36850,7 +36850,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
-    (_k = this.regionDropdownEl) == null ? void 0 : _k.toggle(!!group || river || tribal);
+    (_k = this.regionDropdownEl) == null ? void 0 : _k.toggle(!!group || river);
     this.showSecondBox(river && this.riverSetting === "british");
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
@@ -37113,25 +37113,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
       }
       return;
     }
-    if (this.activeSection === "tribalNames") {
-      for (const tradition of TRIBAL_TRADITIONS) {
-        const item = menu.createEl("button", {
-          cls: "nameforge-modal__pack-dropdown-item" + (tradition.key === this.tribal.tradition ? " is-active" : ""),
-          attr: { type: "button", title: tradition.drawsOn }
-        });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: tradition.label });
-        item.addEventListener("click", () => {
-          this.tribal.tradition = tradition.key;
-          this.updateRegionLabel();
-          this.renderContextRow();
-          this.setRegionMenuOpen(false);
-        });
-      }
-      return;
-    }
   }
   updateRegionLabel() {
-    var _a2, _b, _c, _d;
+    var _a2, _b;
     if (sectionGroup(this.activeSection)) {
       if (this.regionLabelEl) this.regionLabelEl.textContent = moduleLabel(this.activeSection);
       (_a2 = this.regionTriggerEl) == null ? void 0 : _a2.setAttribute("title", "Module");
@@ -37141,12 +37125,6 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     if (this.activeSection === "riverNames") {
       if (this.regionLabelEl) this.regionLabelEl.textContent = RIVER_SETTINGS.find((s) => s.id === this.riverSetting).label;
       (_b = this.regionTriggerEl) == null ? void 0 : _b.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
-      return;
-    }
-    if (this.activeSection === "tribalNames") {
-      const tradition = (_c = findTradition(this.tribal.tradition)) != null ? _c : TRIBAL_TRADITIONS[0];
-      if (this.regionLabelEl) this.regionLabelEl.textContent = tradition.label;
-      (_d = this.regionTriggerEl) == null ? void 0 : _d.setAttribute("title", tradition.drawsOn);
       return;
     }
   }
