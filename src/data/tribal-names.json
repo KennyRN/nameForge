@@ -1,0 +1,3834 @@
+{
+ "traditions": [
+  {
+   "key": "general",
+   "label": "General",
+   "group": "General",
+   "drawsOn": "Patterns shared by a majority of traditions",
+   "homeland": {
+    "temperate": 10,
+    "boreal": 8,
+    "cool-rainforest": 8,
+    "mediterranean": 9,
+    "steppe": 10,
+    "desert": 9,
+    "savannah": 10,
+    "rainforest": 10,
+    "monsoon": 9,
+    "tropical-islands": 9,
+    "highland": 8
+   },
+   "terrainMultipliers": {},
+   "flavour": {},
+   "favouredLifeways": [],
+   "orientation": [
+    {
+     "system": "compass",
+     "mult": 1
+    },
+    {
+     "system": "relative",
+     "mult": 1,
+     "words": [
+      "Upper",
+      "Lower",
+      "Inner",
+      "Outer"
+     ]
+    },
+    {
+     "system": "seaAxis",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "bilateral": 100
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "Folk",
+    "People",
+    "Kin",
+    "Children"
+   ],
+   "themes": {
+    "relationship": 1.5,
+    "number": 1.2
+   },
+   "templates": {},
+   "groupTypes": {},
+   "numbers": [
+    "Three",
+    "Five",
+    "Seven",
+    "Nine"
+   ],
+   "suppress": [],
+   "special": {}
+  },
+  {
+   "key": "celtic",
+   "label": "Celtic Britain & Gaul",
+   "group": "First release",
+   "drawsOn": "Iron Age Britain and Gaul; early Irish kin vocabulary",
+   "homeland": {
+    "temperate": 100
+   },
+   "terrainMultipliers": {
+    "mountains": 0.6,
+    "coast": 1.2
+   },
+   "flavour": {
+    "animals": [
+     "Hound",
+     "Boar",
+     "Salmon",
+     "Raven",
+     "Bull",
+     "Horse"
+    ],
+    "plants": [
+     "Oak",
+     "Yew",
+     "Rowan",
+     "Mistletoe"
+    ],
+    "land": [
+     "Chalkland",
+     "Downs",
+     "Moor"
+    ],
+    "lifeways": [
+     "Horse Breeders",
+     "Cattle Keepers"
+    ]
+   },
+   "favouredLifeways": [
+    "Cattle Keepers",
+    "Horse Breeders",
+    "Smiths",
+    "Ploughmen"
+   ],
+   "orientation": [
+    {
+     "system": "compass",
+     "mult": 1
+    },
+    {
+     "system": "relative",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "patrilineal": 90,
+    "bilateral": 10
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "Folk",
+    "People",
+    "Kindred",
+    "Descendants",
+    "Seed",
+    "Portion",
+    "Host"
+   ],
+   "themes": {
+    "landscape": 1.4,
+    "warfare": 1.3,
+    "qualities": 1.5,
+    "animals": 1.2,
+    "vessel": 0.3
+   },
+   "templates": {
+    "O": 1.5,
+    "A": 1.3
+   },
+   "groupTypes": {
+    "confederation": 1.3,
+    "warband": 1.2,
+    "dynasty": 1.2
+   },
+   "numbers": [
+    "Three",
+    "Seven"
+   ],
+   "suppress": [],
+   "special": {}
+  },
+  {
+   "key": "germanic",
+   "label": "Germanic & Norse",
+   "group": "First release",
+   "drawsOn": "Migration-era Germanic peoples; Scandinavian folk districts",
+   "homeland": {
+    "temperate": 65,
+    "boreal": 35
+   },
+   "terrainMultipliers": {
+    "coast": 1.3,
+    "islands": 1.3
+   },
+   "flavour": {
+    "animals": [
+     "Wolf",
+     "Raven",
+     "Boar",
+     "Bear",
+     "Stag",
+     "Eagle"
+    ],
+    "plants": [
+     "Ash",
+     "Yew",
+     "Oak",
+     "Birch"
+    ],
+    "land": [
+     "Heath"
+    ],
+    "water": [
+     "Fjord",
+     "Long Inlet"
+    ],
+    "lifeways": [
+     "Seafarers",
+     "Boatwrights"
+    ]
+   },
+   "favouredLifeways": [
+    "Cattle Keepers",
+    "Ploughmen",
+    "Boatwrights",
+    "Smiths"
+   ],
+   "orientation": [
+    {
+     "system": "compass",
+     "mult": 1
+    },
+    {
+     "system": "relative",
+     "mult": 1
+    },
+    {
+     "system": "seaAxis",
+     "mult": 1,
+     "words": [
+      "Inland",
+      "Seaward"
+     ]
+    }
+   ],
+   "lineage": {
+    "patrilineal": 90,
+    "bilateral": 10
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "Folk",
+    "Men",
+    "Kin",
+    "Host",
+    "Sons"
+   ],
+   "themes": {
+    "warfare": 1.5,
+    "dress": 2,
+    "relationship": 1.5,
+    "vessel": 1.5,
+    "sacred": 0.8
+   },
+   "templates": {
+    "A": 1.3,
+    "L": 1.2
+   },
+   "groupTypes": {
+    "warband": 1.5,
+    "migrant": 1.3,
+    "confederation": 1.2
+   },
+   "numbers": [
+    "Two",
+    "Three",
+    "Nine",
+    "Twelve"
+   ],
+   "suppress": [],
+   "special": {
+    "longship": true
+   }
+  },
+  {
+   "key": "steppe",
+   "label": "Steppe",
+   "group": "First release",
+   "drawsOn": "Scythian, Turkic and Mongol peoples",
+   "homeland": {
+    "steppe": 80,
+    "desert": 10,
+    "highland": 10
+   },
+   "terrainMultipliers": {
+    "rivers": 1.2,
+    "coast": 0,
+    "islands": 0
+   },
+   "flavour": {
+    "animals": [
+     "Horse",
+     "Wolf",
+     "Eagle",
+     "Falcon",
+     "Snow Leopard",
+     "Ram",
+     "Camel",
+     "Deer"
+    ],
+    "plants": [
+     "Feather Grass",
+     "Wormwood"
+    ],
+    "land": [
+     "Black Earth",
+     "Salt Flats"
+    ],
+    "water": [
+     "Salt Lakes"
+    ],
+    "lifeways": [
+     "Horse Herders",
+     "Felt Makers"
+    ]
+   },
+   "favouredLifeways": [
+    "Horse Herders",
+    "Riders",
+    "Ploughmen",
+    "Felt Makers"
+   ],
+   "orientation": [
+    {
+     "system": "colourDirection",
+     "mult": 2
+    },
+    {
+     "system": "moietyAxis",
+     "mult": 1,
+     "words": [
+      "Left-Hand",
+      "Right-Hand"
+     ]
+    },
+    {
+     "system": "compass",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "patrilineal": 100
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "Host",
+    "Horde",
+    "Arrows",
+    "Tents",
+    "Bone",
+    "Riders"
+   ],
+   "themes": {
+    "number": 3,
+    "lifeway": 2,
+    "dress": 1.3,
+    "water": 0.7,
+    "plants": 0.4,
+    "vessel": 0
+   },
+   "templates": {
+    "J": 3,
+    "F": 1.5,
+    "A": 1.2
+   },
+   "groupTypes": {
+    "confederation": 2,
+    "moiety": 2,
+    "warband": 1.5,
+    "settlement": 0.4
+   },
+   "numbers": [
+    "Nine",
+    "Ten",
+    "Twelve",
+    "Thirty",
+    "Hundred"
+   ],
+   "suppress": [],
+   "special": {
+    "colourCollectives": [
+     "Host",
+     "Horde",
+     "Tents",
+     "Arrows",
+     "Bone"
+    ]
+   }
+  },
+  {
+   "key": "arabian",
+   "label": "Arabian & Saharan",
+   "group": "First release",
+   "drawsOn": "Bedouin tribes; Amazigh and Tuareg confederations",
+   "homeland": {
+    "desert": 80,
+    "mediterranean": 10,
+    "highland": 5,
+    "steppe": 5
+   },
+   "terrainMultipliers": {
+    "rivers": 1.3,
+    "coast": 0.8
+   },
+   "flavour": {
+    "animals": [
+     "Camel",
+     "Lion",
+     "Oryx",
+     "Gazelle",
+     "Falcon",
+     "Mare",
+     "Hound"
+    ],
+    "plants": [
+     "Date Palm",
+     "Acacia"
+    ],
+    "water": [
+     "Wells",
+     "Oasis",
+     "Seven Wells"
+    ],
+    "lifeways": [
+     "Camel Herders",
+     "Caravaneers"
+    ]
+   },
+   "favouredLifeways": [
+    "Camel Herders",
+    "Caravaneers",
+    "Oasis Farmers",
+    "Riders"
+   ],
+   "orientation": [
+    {
+     "system": "sunriseSunset",
+     "mult": 2
+    },
+    {
+     "system": "compass",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "patrilineal": 100
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "Sons",
+    "House",
+    "Family",
+    "People",
+    "Riders",
+    "Tents"
+   ],
+   "themes": {
+    "ancestor": 2.5,
+    "water": 1.3,
+    "animals": 1.3,
+    "qualities": 1.3,
+    "landscape": 1.2,
+    "plants": 0.6,
+    "vessel": 0.2
+   },
+   "templates": {
+    "G": 2.5,
+    "N": 2,
+    "C": 1.3
+   },
+   "groupTypes": {
+    "kin": 2,
+    "dynasty": 1.3,
+    "confederation": 1.2,
+    "settlement": 0.7
+   },
+   "numbers": [
+    "Three",
+    "Seven"
+   ],
+   "suppress": [],
+   "special": {}
+  },
+  {
+   "key": "bantu",
+   "label": "Bantu Africa",
+   "group": "First release",
+   "drawsOn": "Central, eastern and southern Bantu-speaking peoples",
+   "homeland": {
+    "savannah": 70,
+    "rainforest": 15,
+    "highland": 15
+   },
+   "terrainMultipliers": {
+    "rivers": 1.2,
+    "wetland": 1.2
+   },
+   "flavour": {
+    "animals": [
+     "Lion",
+     "Leopard",
+     "Elephant",
+     "Buffalo",
+     "Crocodile",
+     "Python",
+     "Eagle",
+     "Bull",
+     "Crane"
+    ],
+    "plants": [
+     "Fig Tree",
+     "Baobab",
+     "Millet"
+    ],
+    "land": [
+     "Red Hills"
+    ],
+    "lifeways": [
+     "Cattle Keepers",
+     "Iron Smelters"
+    ]
+   },
+   "favouredLifeways": [
+    "Cattle Keepers",
+    "Millet Growers",
+    "Iron Smelters",
+    "Smiths"
+   ],
+   "orientation": [
+    {
+     "system": "compass",
+     "mult": 1
+    },
+    {
+     "system": "sunriseSunset",
+     "mult": 1
+    },
+    {
+     "system": "relative",
+     "mult": 1,
+     "words": [
+      "Upland",
+      "Lowland"
+     ]
+    }
+   ],
+   "lineage": {
+    "patrilineal": 70,
+    "matrilineal": 30
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "People",
+    "Children",
+    "House",
+    "Followers"
+   ],
+   "themes": {
+    "ancestor": 2,
+    "lifeway": 1.6,
+    "plants": 1.6,
+    "speech": 1.5,
+    "sacred": 1.2,
+    "vessel": 0.3
+   },
+   "templates": {
+    "N": 2,
+    "G": 1.5,
+    "M": 1.5,
+    "B": 1.2
+   },
+   "groupTypes": {
+    "dynasty": 1.5,
+    "kin": 1.3,
+    "confederation": 1.2
+   },
+   "numbers": [
+    "Two",
+    "Three",
+    "Four"
+   ],
+   "suppress": [],
+   "special": {}
+  },
+  {
+   "key": "northAmerican",
+   "label": "North American Woodlands & Plains",
+   "group": "First release",
+   "drawsOn": "Eastern Woodlands, Great Lakes and Plains nations",
+   "homeland": {
+    "temperate": 65,
+    "steppe": 25,
+    "boreal": 10
+   },
+   "terrainMultipliers": {
+    "rivers": 1.3,
+    "wetland": 1.2
+   },
+   "flavour": {
+    "animals": [
+     "Turtle",
+     "Beaver",
+     "Bison",
+     "Elk",
+     "Snipe",
+     "Bear",
+     "Wolf",
+     "Heron",
+     "Hawk",
+     "Deer"
+    ],
+    "plants": [
+     "Maize",
+     "Wild Rice",
+     "Pine",
+     "Cedar",
+     "Elm"
+    ],
+    "land": [
+     "Prairie"
+    ],
+    "water": [
+     "Long Lake",
+     "Wild Rice Lakes"
+    ],
+    "lifeways": [
+     "Maize Growers",
+     "Bison Hunters",
+     "Wild Rice Gatherers"
+    ]
+   },
+   "favouredLifeways": [
+    "Hunters",
+    "Fishers",
+    "Maize Growers"
+   ],
+   "orientation": [
+    {
+     "system": "compass",
+     "mult": 1
+    },
+    {
+     "system": "sunriseSunset",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "matrilineal": 60,
+    "patrilineal": 40
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "People",
+    "Nation",
+    "Clan",
+    "Fires",
+    "Allies"
+   ],
+   "themes": {
+    "relationship": 2,
+    "number": 1.8,
+    "animals": 1.5,
+    "speech": 1.5,
+    "dress": 1.3,
+    "landscape": 1.2,
+    "plants": 1.2,
+    "vessel": 0.4
+   },
+   "templates": {
+    "O": 2,
+    "C": 1.5,
+    "J": 1.5,
+    "M": 1.5
+   },
+   "groupTypes": {
+    "confederation": 1.5,
+    "kin": 1.3,
+    "moiety": 1.2,
+    "dynasty": 0.6
+   },
+   "numbers": [
+    "Three",
+    "Five",
+    "Six",
+    "Seven"
+   ],
+   "suppress": [
+    {
+     "word": "Braves",
+     "mult": 0,
+     "kind": "culture"
+    },
+    {
+     "word": "Chiefs",
+     "mult": 0,
+     "kind": "culture"
+    },
+    {
+     "word": "Spirit",
+     "mult": 0,
+     "kind": "culture"
+    },
+    {
+     "word": "Feather",
+     "mult": 0,
+     "kind": "culture"
+    },
+    {
+     "word": "Tomahawk",
+     "mult": 0,
+     "kind": "culture"
+    },
+    {
+     "word": "Horse",
+     "mult": 0.6,
+     "kind": "homeland"
+    }
+   ],
+   "special": {
+    "paintedMoccasin": true,
+    "clanAnimal": true
+   }
+  },
+  {
+   "key": "polynesian",
+   "label": "Polynesian",
+   "group": "First release",
+   "drawsOn": "Māori, Hawaiian, Samoan and Tongan societies",
+   "homeland": {
+    "tropical-islands": 80,
+    "cool-rainforest": 20
+   },
+   "terrainMultipliers": {
+    "coast": 1.5,
+    "islands": 1.5,
+    "mountains": 1.2
+   },
+   "flavour": {
+    "animals": [
+     "Shark",
+     "Turtle",
+     "Octopus",
+     "Whale",
+     "Frigatebird",
+     "Heron",
+     "Owl",
+     "Lizard",
+     "Kiwi"
+    ],
+    "plants": [
+     "Breadfruit",
+     "Coconut Palm",
+     "Pandanus",
+     "Taro",
+     "Flax",
+     "Tree Fern"
+    ],
+    "water": [
+     "Lagoon",
+     "Reef"
+    ],
+    "lifeways": [
+     "Voyagers",
+     "Navigators",
+     "Taro Planters"
+    ]
+   },
+   "favouredLifeways": [
+    "Voyagers",
+    "Navigators",
+    "Reef Fishers",
+    "Taro Planters"
+   ],
+   "orientation": [
+    {
+     "system": "seaAxis",
+     "mult": 2
+    },
+    {
+     "system": "relative",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "bilateral": 100
+   },
+   "lineageMultipliers": {
+    "Sons": 0.3,
+    "Daughters": 0.3
+   },
+   "signatureCollectives": [
+    "Descendants",
+    "Children",
+    "People",
+    "Family",
+    "Kin"
+   ],
+   "themes": {
+    "ancestor": 3,
+    "vessel": 3,
+    "sacred": 1.3,
+    "water": 1.3,
+    "plants": 1.3,
+    "warfare": 0.8,
+    "number": 0.6
+   },
+   "templates": {
+    "G": 2.5,
+    "C": 2,
+    "N": 1.5,
+    "E": 1.3
+   },
+   "groupTypes": {
+    "kin": 2,
+    "dynasty": 1.5,
+    "migrant": 1.5,
+    "frontier": 0.4
+   },
+   "numbers": [
+    "Two",
+    "Three"
+   ],
+   "suppress": [
+    {
+     "word": "Horse",
+     "mult": 0,
+     "kind": "homeland"
+    },
+    {
+     "word": "Chariot",
+     "mult": 0,
+     "kind": "culture"
+    },
+    {
+     "word": "Sword",
+     "mult": 0,
+     "kind": "culture"
+    },
+    {
+     "word": "Bow",
+     "mult": 0.3,
+     "kind": "culture"
+    }
+   ],
+   "special": {
+    "ancestorAnimal": 2
+   }
+  },
+  {
+   "key": "eastAsian",
+   "label": "East Asian",
+   "group": "First release",
+   "drawsOn": "Chinese, Japanese and Korean clans; frontier peoples seen from the centre",
+   "homeland": {
+    "temperate": 50,
+    "monsoon": 35,
+    "steppe": 10,
+    "highland": 5
+   },
+   "terrainMultipliers": {
+    "rivers": 1.3,
+    "wetland": 1.3,
+    "mountains": 1.2
+   },
+   "flavour": {
+    "animals": [
+     "Tiger",
+     "Crane",
+     "Carp",
+     "Ox",
+     "Magpie",
+     "Horse",
+     "Falcon",
+     "Bear"
+    ],
+    "plants": [
+     "Plum",
+     "Pine",
+     "Bamboo",
+     "Mulberry",
+     "Lotus"
+    ],
+    "lifeways": [
+     "Rice Growers",
+     "Silk Weavers",
+     "Ritualists"
+    ]
+   },
+   "favouredLifeways": [
+    "Rice Growers",
+    "Weavers",
+    "Silk Weavers",
+    "Ritualists",
+    "Smiths"
+   ],
+   "orientation": [
+    {
+     "system": "compass",
+     "mult": 2
+    },
+    {
+     "system": "centre",
+     "mult": 2,
+     "words": [
+      "Central"
+     ]
+    },
+    {
+     "system": "relative",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "patrilineal": 100
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "House",
+    "Clan",
+    "Line",
+    "Guild",
+    "Folk"
+   ],
+   "themes": {
+    "lifeway": 2.5,
+    "direction": 2,
+    "plants": 1.5,
+    "ancestor": 1.3,
+    "number": 1.3
+   },
+   "templates": {
+    "P": 4,
+    "L": 2,
+    "E": 1.5,
+    "J": 1.3
+   },
+   "groupTypes": {
+    "occupational": 3,
+    "dynasty": 1.5,
+    "kin": 1.5,
+    "regional": 0.8
+   },
+   "numbers": [
+    "Five",
+    "Hundred"
+   ],
+   "suppress": [],
+   "special": {
+    "dragon": 2
+   }
+  },
+  {
+   "key": "mesoamerican",
+   "label": "Mesoamerican",
+   "group": "Second release",
+   "drawsOn": "Nahua, Mixtec, Zapotec and Maya city-states",
+   "homeland": {
+    "highland": 40,
+    "rainforest": 40,
+    "desert": 10,
+    "savannah": 10
+   },
+   "terrainMultipliers": {
+    "wetland": 1.5,
+    "mountains": 1.3
+   },
+   "flavour": {
+    "animals": [
+     "Jaguar",
+     "Eagle",
+     "Serpent",
+     "Hummingbird",
+     "Quetzal",
+     "Coyote",
+     "Heron",
+     "Deer",
+     "Monkey"
+    ],
+    "plants": [
+     "Maize",
+     "Cacao",
+     "Agave",
+     "Cotton",
+     "Reed"
+    ],
+    "water": [
+     "Reed Lake"
+    ],
+    "lifeways": [
+     "Maize Growers",
+     "Featherworkers",
+     "Cacao Growers"
+    ]
+   },
+   "favouredLifeways": [
+    "Featherworkers",
+    "Traders",
+    "Maize Growers"
+   ],
+   "orientation": [
+    {
+     "system": "compass",
+     "mult": 1
+    },
+    {
+     "system": "centre",
+     "mult": 1,
+     "words": [
+      "Central"
+     ]
+    },
+    {
+     "system": "sunriseSunset",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "patrilineal": 60,
+    "bilateral": 40
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "People",
+    "House",
+    "Lords",
+    "Warriors",
+    "Great House"
+   ],
+   "themes": {
+    "sacred": 2,
+    "lifeway": 1.5,
+    "animals": 1.5,
+    "plants": 1.3,
+    "number": 1.2
+   },
+   "templates": {
+    "Q": 4,
+    "I": 1.5,
+    "F": 1.3,
+    "R": 1.3
+   },
+   "groupTypes": {
+    "dynasty": 1.5,
+    "warband": 1.5,
+    "settlement": 1.5,
+    "occupational": 1.3
+   },
+   "numbers": [
+    "Four",
+    "Seven",
+    "Thirteen"
+   ],
+   "suppress": [
+    {
+     "word": "Horse",
+     "mult": 0,
+     "kind": "homeland"
+    },
+    {
+     "word": "Chariot",
+     "mult": 0,
+     "kind": "culture"
+    },
+    {
+     "word": "Sword",
+     "mult": 0,
+     "kind": "culture"
+    }
+   ],
+   "special": {
+    "waterHill": 0.3
+   }
+  },
+  {
+   "key": "andean",
+   "label": "Andean & Southern Cone",
+   "group": "Second release",
+   "drawsOn": "Andean kin communities; Mapuche and neighbours",
+   "homeland": {
+    "highland": 60,
+    "desert": 15,
+    "cool-rainforest": 10,
+    "mediterranean": 10,
+    "steppe": 5
+   },
+   "terrainMultipliers": {
+    "mountains": 1.3,
+    "rivers": 1.2
+   },
+   "flavour": {
+    "animals": [
+     "Condor",
+     "Puma",
+     "Llama",
+     "Fox",
+     "Vicuna",
+     "Hummingbird",
+     "Serpent"
+    ],
+    "plants": [
+     "Monkey-Puzzle",
+     "Maize",
+     "Potato"
+    ],
+    "lifeways": [
+     "Llama Herders",
+     "Terrace Farmers"
+    ]
+   },
+   "favouredLifeways": [
+    "Llama Herders",
+    "Terrace Farmers",
+    "Weavers",
+    "Potato Growers"
+   ],
+   "orientation": [
+    {
+     "system": "moietyAxis",
+     "mult": 3,
+     "words": [
+      "Upper Half",
+      "Lower Half"
+     ]
+    },
+    {
+     "system": "compass",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "bilateral": 60,
+    "patrilineal": 40
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "Kin",
+    "People",
+    "House",
+    "Half",
+    "Quarter"
+   ],
+   "themes": {
+    "direction": 2.5,
+    "landscape": 1.5,
+    "sacred": 1.5,
+    "lifeway": 1.4,
+    "animals": 1.2,
+    "plants": 1.2
+   },
+   "templates": {
+    "E": 2,
+    "C": 1.5,
+    "G": 1.3,
+    "K": 1.3
+   },
+   "groupTypes": {
+    "moiety": 3,
+    "kin": 1.5,
+    "confederation": 1.2
+   },
+   "numbers": [
+    "Two",
+    "Four"
+   ],
+   "suppress": [
+    {
+     "word": "Horse",
+     "mult": 0,
+     "kind": "homeland"
+    },
+    {
+     "word": "Chariot",
+     "mult": 0,
+     "kind": "culture"
+    },
+    {
+     "word": "Sword",
+     "mult": 0,
+     "kind": "culture"
+    }
+   ],
+   "special": {}
+  },
+  {
+   "key": "maritimeSEA",
+   "label": "Maritime South-East Asian",
+   "group": "Second release",
+   "drawsOn": "Malay world, Borneo, Philippines",
+   "homeland": {
+    "rainforest": 55,
+    "tropical-islands": 30,
+    "monsoon": 15
+   },
+   "terrainMultipliers": {
+    "rivers": 1.5,
+    "coast": 1.3,
+    "islands": 1.2
+   },
+   "flavour": {
+    "animals": [
+     "Hornbill",
+     "Crocodile",
+     "Tiger",
+     "Python",
+     "Monkey",
+     "Monitor Lizard",
+     "Dugong"
+    ],
+    "plants": [
+     "Banyan",
+     "Bamboo",
+     "Sago Palm",
+     "Mangrove",
+     "Rattan"
+    ],
+    "lifeways": [
+     "Sea Nomads",
+     "Sago Makers",
+     "River Traders"
+    ]
+   },
+   "favouredLifeways": [
+    "River Fishers",
+    "Reef Fishers",
+    "Traders",
+    "Sago Makers"
+   ],
+   "orientation": [
+    {
+     "system": "riverAxis",
+     "mult": 2
+    },
+    {
+     "system": "seaAxis",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "bilateral": 100
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "People",
+    "Folk",
+    "House",
+    "Kin"
+   ],
+   "themes": {
+    "water": 2,
+    "direction": 2,
+    "lifeway": 1.6,
+    "relationship": 1.5,
+    "vessel": 1.5,
+    "animals": 1.2
+   },
+   "templates": {
+    "B": 2,
+    "E": 1.5,
+    "L": 1.3
+   },
+   "groupTypes": {
+    "regional": 1.3,
+    "settlement": 1.3,
+    "migrant": 1.3
+   },
+   "numbers": [
+    "Two",
+    "Three",
+    "Seven"
+   ],
+   "suppress": [],
+   "special": {
+    "longhouse": true
+   }
+  },
+  {
+   "key": "mediterranean",
+   "label": "Ancient Mediterranean",
+   "group": "Second release",
+   "drawsOn": "Italic peoples and Greek communities",
+   "homeland": {
+    "mediterranean": 90,
+    "temperate": 10
+   },
+   "terrainMultipliers": {
+    "coast": 1.3,
+    "islands": 1.3,
+    "mountains": 1.2
+   },
+   "flavour": {
+    "animals": [
+     "Woodpecker",
+     "Wolf",
+     "Bull",
+     "Ram",
+     "Heron",
+     "Dolphin",
+     "Owl",
+     "Eagle",
+     "Boar"
+    ],
+    "plants": [
+     "Olive",
+     "Laurel",
+     "Cypress",
+     "Vine",
+     "Oak"
+    ],
+    "lifeways": [
+     "Seafarers",
+     "Vine Growers"
+    ]
+   },
+   "favouredLifeways": [
+    "Shepherds",
+    "Seafarers",
+    "Olive Growers",
+    "Vine Growers"
+   ],
+   "orientation": [
+    {
+     "system": "compass",
+     "mult": 1
+    },
+    {
+     "system": "relative",
+     "mult": 1
+    },
+    {
+     "system": "centre",
+     "mult": 1,
+     "words": [
+      "Around"
+     ]
+    }
+   ],
+   "lineage": {
+    "patrilineal": 100
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "People",
+    "Dwellers",
+    "Settlers",
+    "Followers",
+    "Sons"
+   ],
+   "themes": {
+    "relationship": 2,
+    "animals": 1.3,
+    "sacred": 1.3,
+    "vessel": 1.3,
+    "lifeway": 1.2
+   },
+   "templates": {
+    "R": 4,
+    "D": 1.3,
+    "H": 1.3,
+    "C": 1.2
+   },
+   "groupTypes": {
+    "migrant": 2,
+    "settlement": 1.3,
+    "confederation": 1.2
+   },
+   "numbers": [
+    "Three",
+    "Four",
+    "Twelve"
+   ],
+   "suppress": [],
+   "special": {
+    "migrationGuide": 30
+   }
+  },
+  {
+   "key": "northernPacific",
+   "label": "Pacific Northwest & Arctic",
+   "group": "Expansion",
+   "drawsOn": "Northwest Coast houses and moieties; Arctic peoples",
+   "homeland": {
+    "cool-rainforest": 60,
+    "boreal": 40
+   },
+   "terrainMultipliers": {
+    "coast": 1.5,
+    "rivers": 1.3
+   },
+   "flavour": {
+    "animals": [
+     "Raven",
+     "Eagle",
+     "Wolf",
+     "Bear",
+     "Killer Whale",
+     "Salmon",
+     "Beaver",
+     "Frog",
+     "Seal"
+    ],
+    "plants": [
+     "Cedar",
+     "Spruce"
+    ],
+    "lifeways": [
+     "Salmon Fishers",
+     "Cedar Carvers",
+     "Whalers"
+    ]
+   },
+   "favouredLifeways": [
+    "Salmon Fishers",
+    "Cedar Carvers",
+    "Whalers",
+    "Sealers"
+   ],
+   "orientation": [
+    {
+     "system": "riverAxis",
+     "mult": 1
+    },
+    {
+     "system": "seaAxis",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "matrilineal": 70,
+    "bilateral": 30
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "House",
+    "Side",
+    "Clan",
+    "People"
+   ],
+   "themes": {
+    "animals": 2,
+    "vessel": 1.5,
+    "water": 1.5,
+    "lifeway": 1.5,
+    "relationship": 1.5,
+    "plants": 0.8
+   },
+   "templates": {
+    "G": 1.5,
+    "F": 1.5,
+    "O": 1.3
+   },
+   "groupTypes": {
+    "moiety": 3,
+    "kin": 1.5,
+    "dynasty": 1.2,
+    "warband": 0.6
+   },
+   "numbers": [
+    "Two",
+    "Four"
+   ],
+   "suppress": [
+    {
+     "word": "Horse",
+     "mult": 0,
+     "kind": "homeland"
+    },
+    {
+     "word": "Chariot",
+     "mult": 0,
+     "kind": "culture"
+    }
+   ],
+   "special": {
+    "ancestorAnimal": 2
+   }
+  },
+  {
+   "key": "westAfrican",
+   "label": "West African",
+   "group": "Expansion",
+   "drawsOn": "Mande, Akan, Yoruba and Sahelian societies",
+   "homeland": {
+    "savannah": 50,
+    "rainforest": 35,
+    "desert": 15
+   },
+   "terrainMultipliers": {
+    "rivers": 1.3
+   },
+   "flavour": {
+    "animals": [
+     "Python",
+     "Leopard",
+     "Crocodile",
+     "Elephant",
+     "Lion",
+     "Hornbill",
+     "Spider",
+     "Tortoise",
+     "Buffalo"
+    ],
+    "plants": [
+     "Kola Tree",
+     "Baobab",
+     "Oil Palm",
+     "Silk-Cotton Tree"
+    ],
+    "lifeways": [
+     "Traders",
+     "Smiths",
+     "Hunters"
+    ]
+   },
+   "favouredLifeways": [
+    "Traders",
+    "Smiths",
+    "Hunters",
+    "Millet Growers"
+   ],
+   "orientation": [
+    {
+     "system": "compass",
+     "mult": 1
+    },
+    {
+     "system": "riverAxis",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "patrilineal": 60,
+    "matrilineal": 40
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "People",
+    "House",
+    "Line",
+    "Children"
+   ],
+   "themes": {
+    "ancestor": 2,
+    "animals": 1.5,
+    "water": 1.3,
+    "plants": 1.2,
+    "sacred": 1.2
+   },
+   "templates": {
+    "K": 2,
+    "N": 1.5,
+    "G": 1.5,
+    "C": 1.3
+   },
+   "groupTypes": {
+    "dynasty": 1.5,
+    "kin": 1.5,
+    "settlement": 1.3
+   },
+   "numbers": [],
+   "suppress": [],
+   "special": {
+    "clanTaboo": 4
+   }
+  },
+  {
+   "key": "southAsian",
+   "label": "South Asian",
+   "group": "Expansion",
+   "drawsOn": "Vedic peoples; dynastic lineages",
+   "homeland": {
+    "monsoon": 65,
+    "highland": 15,
+    "desert": 10,
+    "rainforest": 10
+   },
+   "terrainMultipliers": {
+    "rivers": 1.5
+   },
+   "flavour": {
+    "animals": [
+     "Tiger",
+     "Elephant",
+     "Peacock",
+     "Cobra",
+     "Bull",
+     "Horse",
+     "Deer",
+     "Crane"
+    ],
+    "plants": [
+     "Lotus",
+     "Banyan",
+     "Sacred Fig",
+     "Mango",
+     "Sandalwood"
+    ],
+    "water": [
+     "Seven Rivers"
+    ]
+   },
+   "favouredLifeways": [],
+   "orientation": [
+    {
+     "system": "compass",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "patrilineal": 100
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "Line",
+    "House",
+    "Peoples",
+    "Kin"
+   ],
+   "themes": {
+    "sacred": 2.5,
+    "number": 1.8,
+    "water": 1.5,
+    "ancestor": 1.5,
+    "landscape": 1.2,
+    "lifeway": 0
+   },
+   "templates": {
+    "G": 2,
+    "J": 1.8,
+    "C": 1.3
+   },
+   "groupTypes": {
+    "dynasty": 2,
+    "confederation": 1.3,
+    "occupational": 0
+   },
+   "numbers": [
+    "Five",
+    "Seven",
+    "Ten"
+   ],
+   "suppress": [],
+   "special": {
+    "lineageSacred": [
+     "Sun",
+     "Moon",
+     "Fire"
+    ]
+   }
+  },
+  {
+   "key": "sahul",
+   "label": "Australia & New Guinea",
+   "group": "Expansion",
+   "drawsOn": "Aboriginal Australian and New Guinea communities",
+   "homeland": {
+    "desert": 40,
+    "savannah": 30,
+    "rainforest": 15,
+    "highland": 10,
+    "tropical-islands": 5
+   },
+   "terrainMultipliers": {
+    "coast": 1.3,
+    "rivers": 1.3
+   },
+   "flavour": {
+    "animals": [
+     "Kangaroo",
+     "Emu",
+     "Crocodile",
+     "Dingo",
+     "Eagle",
+     "Goanna",
+     "Barramundi",
+     "Cassowary",
+     "Bird of Paradise",
+     "Pig"
+    ],
+    "plants": [
+     "Gum Tree",
+     "Spinifex",
+     "Wattle",
+     "Pandanus",
+     "Sago Palm"
+    ],
+    "water": [
+     "Billabong",
+     "Saltwater",
+     "Freshwater"
+    ],
+    "lifeways": [
+     "Foragers",
+     "Gardeners",
+     "Pig Keepers"
+    ]
+   },
+   "favouredLifeways": [
+    "Hunters",
+    "Fishers",
+    "Gardeners"
+   ],
+   "orientation": [
+    {
+     "system": "compass",
+     "mult": 1
+    },
+    {
+     "system": "seaAxis",
+     "mult": 1
+    },
+    {
+     "system": "waterType",
+     "mult": 1
+    }
+   ],
+   "lineage": {
+    "patrilineal": 50,
+    "matrilineal": 30,
+    "bilateral": 20
+   },
+   "lineageMultipliers": {},
+   "signatureCollectives": [
+    "People",
+    "Clan",
+    "Kin"
+   ],
+   "themes": {
+    "water": 2.5,
+    "landscape": 2,
+    "speech": 1.5,
+    "relationship": 1.2,
+    "sacred": 0.5,
+    "warfare": 0.5,
+    "number": 0.5
+   },
+   "templates": {
+    "B": 2.5,
+    "M": 1.5,
+    "C": 1.3
+   },
+   "groupTypes": {
+    "regional": 1.5,
+    "moiety": 1.5,
+    "kin": 1.3,
+    "warband": 0.5,
+    "dynasty": 0.2
+   },
+   "numbers": [],
+   "suppress": [
+    {
+     "word": "Horse",
+     "mult": 0,
+     "kind": "homeland"
+    },
+    {
+     "word": "Chariot",
+     "mult": 0,
+     "kind": "culture"
+    },
+    {
+     "word": "Sword",
+     "mult": 0,
+     "kind": "culture"
+    },
+    {
+     "word": "Bow",
+     "mult": 0,
+     "kind": "culture"
+    }
+   ],
+   "special": {
+    "sacredOnly": [
+     "Sun",
+     "Moon",
+     "Rain",
+     "Springs"
+    ]
+   }
+  }
+ ],
+ "groupTypes": [
+  {
+   "key": "regional",
+   "label": "Regional people",
+   "weight": 22
+  },
+  {
+   "key": "settlement",
+   "label": "Local settlement community",
+   "weight": 12
+  },
+  {
+   "key": "kin",
+   "label": "Kin group or lineage",
+   "weight": 14
+  },
+  {
+   "key": "dynasty",
+   "label": "Ruling dynasty",
+   "weight": 9
+  },
+  {
+   "key": "confederation",
+   "label": "Confederation",
+   "weight": 10
+  },
+  {
+   "key": "warband",
+   "label": "War-band or warrior society",
+   "weight": 9
+  },
+  {
+   "key": "migrant",
+   "label": "Migrant or settler community",
+   "weight": 6
+  },
+  {
+   "key": "frontier",
+   "label": "Frontier guardians",
+   "weight": 5
+  },
+  {
+   "key": "sanctuary",
+   "label": "Religious or sanctuary community",
+   "weight": 5
+  },
+  {
+   "key": "moiety",
+   "label": "Moiety or clan division",
+   "weight": 4
+  },
+  {
+   "key": "occupational",
+   "label": "Occupational or craft community",
+   "weight": 4
+  }
+ ],
+ "groupTypeThemes": {
+  "regional": {
+   "landscape": 2,
+   "water": 2,
+   "warfare": 1,
+   "animals": 1,
+   "plants": 1,
+   "sacred": 1,
+   "direction": 2,
+   "qualities": 1,
+   "number": 1,
+   "lifeway": 2,
+   "speech": 1,
+   "dress": 1,
+   "ancestor": 0,
+   "vessel": 1,
+   "relationship": 2
+  },
+  "settlement": {
+   "landscape": 2,
+   "water": 2,
+   "warfare": 0,
+   "animals": 0,
+   "plants": 2,
+   "sacred": 1,
+   "direction": 1,
+   "qualities": 0,
+   "number": 0,
+   "lifeway": 1,
+   "speech": 0,
+   "dress": 0,
+   "ancestor": 0,
+   "vessel": 0,
+   "relationship": 1
+  },
+  "kin": {
+   "landscape": 1,
+   "water": 1,
+   "warfare": 1,
+   "animals": 2,
+   "plants": 2,
+   "sacred": 1,
+   "direction": 0,
+   "qualities": 1,
+   "number": 0,
+   "lifeway": 0,
+   "speech": 0,
+   "dress": 1,
+   "ancestor": 2,
+   "vessel": 2,
+   "relationship": 0
+  },
+  "dynasty": {
+   "landscape": 1,
+   "water": 1,
+   "warfare": 2,
+   "animals": 2,
+   "plants": 1,
+   "sacred": 2,
+   "direction": 0,
+   "qualities": 2,
+   "number": 0,
+   "lifeway": 0,
+   "speech": 0,
+   "dress": 0,
+   "ancestor": 2,
+   "vessel": 1,
+   "relationship": 0
+  },
+  "confederation": {
+   "landscape": 2,
+   "water": 2,
+   "warfare": 1,
+   "animals": 1,
+   "plants": 0,
+   "sacred": 1,
+   "direction": 2,
+   "qualities": 1,
+   "number": 2,
+   "lifeway": 1,
+   "speech": 1,
+   "dress": 0,
+   "ancestor": 1,
+   "vessel": 1,
+   "relationship": 1
+  },
+  "warband": {
+   "landscape": 1,
+   "water": 0,
+   "warfare": 2,
+   "animals": 2,
+   "plants": 0,
+   "sacred": 1,
+   "direction": 1,
+   "qualities": 2,
+   "number": 1,
+   "lifeway": 0,
+   "speech": 0,
+   "dress": 2,
+   "ancestor": 1,
+   "vessel": 1,
+   "relationship": 0
+  },
+  "migrant": {
+   "landscape": 2,
+   "water": 2,
+   "warfare": 0,
+   "animals": 0,
+   "plants": 1,
+   "sacred": 0,
+   "direction": 2,
+   "qualities": 0,
+   "number": 0,
+   "lifeway": 1,
+   "speech": 1,
+   "dress": 1,
+   "ancestor": 0,
+   "vessel": 2,
+   "relationship": 2
+  },
+  "frontier": {
+   "landscape": 2,
+   "water": 2,
+   "warfare": 2,
+   "animals": 1,
+   "plants": 0,
+   "sacred": 0,
+   "direction": 2,
+   "qualities": 1,
+   "number": 0,
+   "lifeway": 0,
+   "speech": 0,
+   "dress": 0,
+   "ancestor": 0,
+   "vessel": 0,
+   "relationship": 2
+  },
+  "sanctuary": {
+   "landscape": 1,
+   "water": 2,
+   "warfare": 0,
+   "animals": 1,
+   "plants": 2,
+   "sacred": 2,
+   "direction": 0,
+   "qualities": 1,
+   "number": 1,
+   "lifeway": 0,
+   "speech": 0,
+   "dress": 0,
+   "ancestor": 1,
+   "vessel": 0,
+   "relationship": 0
+  },
+  "moiety": {
+   "landscape": 1,
+   "water": 1,
+   "warfare": 0,
+   "animals": 2,
+   "plants": 1,
+   "sacred": 1,
+   "direction": 2,
+   "qualities": 1,
+   "number": 0,
+   "lifeway": 0,
+   "speech": 0,
+   "dress": 0,
+   "ancestor": 1,
+   "vessel": 0,
+   "relationship": 0
+  },
+  "occupational": {
+   "landscape": 1,
+   "water": 1,
+   "warfare": 1,
+   "animals": 0,
+   "plants": 1,
+   "sacred": 1,
+   "direction": 0,
+   "qualities": 0,
+   "number": 0,
+   "lifeway": 2,
+   "speech": 0,
+   "dress": 0,
+   "ancestor": 0,
+   "vessel": 1,
+   "relationship": 0
+  }
+ },
+ "perspectives": {
+  "self": 38,
+  "neighbour": 27,
+  "geographical": 10,
+  "dynastic": 10,
+  "ceremonial": 5,
+  "later": 5,
+  "imposed": 5
+ },
+ "perspectiveLabels": {
+  "self": "self-name",
+  "neighbour": "neighbour-name",
+  "geographical": "geographical description",
+  "dynastic": "dynastic or ancestral",
+  "ceremonial": "ceremonial title",
+  "later": "later or administrative",
+  "imposed": "imposed"
+ },
+ "perspectiveByGroupType": {
+  "dynasty": {
+   "dynastic": 2.5
+  },
+  "warband": {
+   "ceremonial": 2
+  },
+  "sanctuary": {
+   "ceremonial": 2
+  },
+  "migrant": {
+   "neighbour": 2,
+   "imposed": 1.5
+  },
+  "frontier": {
+   "geographical": 1.5,
+   "imposed": 1.5
+  },
+  "occupational": {
+   "later": 2
+  }
+ },
+ "tones": {
+  "toned": {
+   "respectful": 25,
+   "neutral": 60,
+   "hostile": 15
+  },
+  "plain": {
+   "respectful": 30,
+   "neutral": 70
+  }
+ },
+ "themes": {
+  "landscape": 16,
+  "water": 14,
+  "warfare": 9,
+  "animals": 12,
+  "plants": 5,
+  "sacred": 6,
+  "direction": 7,
+  "qualities": 7,
+  "number": 3,
+  "lifeway": 7,
+  "speech": 2,
+  "dress": 3,
+  "ancestor": 5,
+  "vessel": 1,
+  "relationship": 3
+ },
+ "parityCap": 40,
+ "vocabulary": {
+  "warfareUniversal": [
+   "Battle",
+   "War",
+   "Spear",
+   "Shield",
+   "Victory",
+   "Fort",
+   "Stronghold",
+   "Guard",
+   "Frontier",
+   "March",
+   "Long Shields"
+  ],
+  "warfareRestricted": {
+   "Sword": {
+    "celtic": 1,
+    "germanic": 1,
+    "steppe": 1,
+    "arabian": 1,
+    "eastAsian": 1,
+    "mediterranean": 1,
+    "southAsian": 1,
+    "westAfrican": 1,
+    "general": 1
+   },
+   "Chariot": {
+    "celtic": 1,
+    "mediterranean": 1,
+    "southAsian": 1,
+    "eastAsian": 1,
+    "general": 0.3
+   },
+   "Bow": {
+    "*": 1,
+    "polynesian": 0.3,
+    "sahul": 0
+   },
+   "Arrow": {
+    "*": 1,
+    "polynesian": 0.3,
+    "sahul": 0
+   },
+   "Bowmen": {
+    "*": 1,
+    "polynesian": 0.3,
+    "sahul": 0
+   },
+   "Axe": {
+    "celtic": 1,
+    "germanic": 1,
+    "northAmerican": 1,
+    "northernPacific": 1,
+    "general": 1
+   },
+   "Club": {
+    "polynesian": 1,
+    "northAmerican": 1,
+    "mesoamerican": 1,
+    "sahul": 1,
+    "general": 0.3
+   },
+   "Sling": {
+    "mediterranean": 1,
+    "andean": 1,
+    "general": 0.3
+   },
+   "Obsidian Blade": {
+    "mesoamerican": 1
+   },
+   "War Canoe": {
+    "polynesian": 1,
+    "maritimeSEA": 1,
+    "northernPacific": 1
+   }
+  },
+  "warfareObjects": [
+   "Spear",
+   "Shield",
+   "Axe",
+   "Bow",
+   "Sword",
+   "Club"
+  ],
+  "sacredUniversal": [
+   "Sun",
+   "Moon",
+   "Thunder",
+   "Sky",
+   "Rain",
+   "First Fire",
+   "Ancestors",
+   "Sacred Hill",
+   "Sacred Spring",
+   "Great Tree",
+   "Morning Star",
+   "Old Shrine",
+   "Cloud",
+   "Mist"
+  ],
+  "mythic": {
+   "Dragon": {
+    "eastAsian": 2,
+    "germanic": 1.5
+   },
+   "Great Serpent": {},
+   "Giants": {},
+   "Sky Bird": {}
+  },
+  "directions": {
+   "compass": [
+    "Northern",
+    "Southern",
+    "Eastern",
+    "Western",
+    "North",
+    "South",
+    "East",
+    "West"
+   ],
+   "relative": [
+    "Upper",
+    "Lower",
+    "Inner",
+    "Outer",
+    "Near",
+    "Far",
+    "Beyond",
+    "Across",
+    "Between"
+   ],
+   "centre": [
+    "Central",
+    "Middle",
+    "Border",
+    "Frontier",
+    "Around"
+   ],
+   "sunriseSunset": [
+    "Sunrise",
+    "Sunset",
+    "Dawn",
+    "Evening"
+   ],
+   "riverAxis": [
+    "Upriver",
+    "Downriver",
+    "Upstream",
+    "Downstream"
+   ],
+   "seaAxis": [
+    "Inland",
+    "Seaward",
+    "Mountainward",
+    "Windward",
+    "Leeward"
+   ],
+   "moietyAxis": [
+    "Upper Half",
+    "Lower Half",
+    "Left-Hand",
+    "Right-Hand"
+   ],
+   "waterType": [
+    "Saltwater",
+    "Freshwater"
+   ],
+   "colourDirection": [
+    "Black",
+    "Blue",
+    "Red",
+    "White",
+    "Golden"
+   ]
+  },
+  "colourDirections": {
+   "Black": "north",
+   "Blue": "east",
+   "Red": "south",
+   "White": "west",
+   "Golden": "centre"
+  },
+  "qualities": [
+   "High",
+   "Great",
+   "Strong",
+   "Bold",
+   "Watchful",
+   "Swift",
+   "Enduring",
+   "Ancient",
+   "New",
+   "Old",
+   "Fierce",
+   "Steadfast",
+   "Many"
+  ],
+  "interpretiveQualities": [
+   "Free",
+   "Noble",
+   "True",
+   "Real",
+   "Unconquered",
+   "Proud"
+  ],
+  "nominalQualities": [
+   "Unconquered",
+   "Free",
+   "Proud",
+   "Bold",
+   "Fierce",
+   "Steadfast",
+   "Watchful",
+   "Swift",
+   "Strong"
+  ],
+  "colours": [
+   "Red",
+   "White",
+   "Black",
+   "Golden",
+   "Grey",
+   "Blue",
+   "Green",
+   "Copper",
+   "Silver",
+   "Iron"
+  ],
+  "numbers": [
+   "Two",
+   "Three",
+   "Four",
+   "Five",
+   "Six",
+   "Seven",
+   "Nine",
+   "Ten",
+   "Twelve",
+   "Thirteen",
+   "Thirty",
+   "Hundred"
+  ],
+  "countedNouns": [
+   "Rivers",
+   "Hills",
+   "Fires",
+   "Arrows",
+   "Peoples",
+   "Tents",
+   "Houses",
+   "Clans",
+   "Valleys",
+   "Islands",
+   "Canoes",
+   "Wells",
+   "Lakes",
+   "Streams",
+   "Kindreds"
+  ],
+  "countedFeatures": [
+   "Rivers",
+   "Hills",
+   "Valleys",
+   "Islands",
+   "Wells",
+   "Lakes",
+   "Streams"
+  ],
+  "speech": {
+   "whole": [
+    "People of the Word",
+    "Plain Speakers"
+   ],
+   "tongues": [
+    "Quick",
+    "Old",
+    "River",
+    "Hill"
+   ],
+   "descriptor": "Strange-Speech",
+   "hostile": [
+    "Babblers",
+    "Mumblers",
+    "The Mute Ones"
+   ]
+  },
+  "dress": [
+   "Long-Beard",
+   "Long-Hair",
+   "Painted",
+   "Black-Cloak",
+   "Red-Cloak",
+   "Bear-Cloak",
+   "Shaven",
+   "Topknot",
+   "Tattooed",
+   "Bright-Shield",
+   "Black-Shield",
+   "Painted-Moccasin",
+   "Fur-Cloak",
+   "Feather-Cloak",
+   "Veiled"
+  ],
+  "ancestors": [
+   "the Navigator",
+   "the Far Navigator",
+   "the Hunter",
+   "the Smith",
+   "the Red King",
+   "the Grey King",
+   "the Iron King",
+   "the Hill King",
+   "the Bear-Born",
+   "the First Mother",
+   "the Elder Brother",
+   "the Twins",
+   "the Star-Born",
+   "the Old Woman",
+   "the One-Eyed",
+   "the Wanderer",
+   "the Hunter's Son"
+  ],
+  "canoes": [
+   "the Swift Canoe",
+   "the Long Canoe",
+   "the White Heron Canoe",
+   "the Red Wave Canoe",
+   "the Star Path Canoe",
+   "the Shark Canoe",
+   "the Two Hulls"
+  ],
+  "voyages": [
+   "the Long Voyage",
+   "the Far Shore",
+   "Landfall"
+  ],
+  "relationship": [
+   "True People",
+   "Real People",
+   "The People",
+   "First People",
+   "Dwellers Around",
+   "Outer Peoples",
+   "Inner Peoples",
+   "Allies",
+   "Friends",
+   "Latecomers",
+   "Old Settlers",
+   "New People",
+   "Folk Between",
+   "Tributaries",
+   "Original People"
+  ],
+  "hostile": {
+   "Mud Folk": "landscape",
+   "Marsh Crawlers": "landscape",
+   "Hill Thieves": "landscape",
+   "Broken Shields": "warfare",
+   "Horse Stealers": "lifeway",
+   "Fish-Eaters": "lifeway",
+   "Goat Folk": "lifeway",
+   "Latecomers": "relationship",
+   "Babblers": "speech",
+   "Mumblers": "speech",
+   "The Mute Ones": "speech"
+  },
+  "origins": [
+   "Origin Lake",
+   "Ancestor Cave",
+   "Red Cave",
+   "Far Shore"
+  ],
+  "kPhrases": [
+   {
+    "theme": "landscape",
+    "verb": "Dwell Beneath the",
+    "slot": "land"
+   },
+   {
+    "theme": "water",
+    "verb": "Fish the",
+    "slot": "water"
+   },
+   {
+    "theme": "sacred",
+    "verb": "Came from the",
+    "slot": "origin"
+   },
+   {
+    "theme": "landscape",
+    "verb": "Came from the",
+    "slot": "origin"
+   },
+   {
+    "theme": "animals",
+    "verb": "Spare the",
+    "slot": "animal"
+   },
+   {
+    "theme": "sacred",
+    "verb": "Keep the",
+    "slot": "sacred"
+   },
+   {
+    "theme": "landscape",
+    "verb": "Ride the",
+    "slot": "land",
+    "gate": "mounts"
+   },
+   {
+    "theme": "animals",
+    "verb": "Walk Before the",
+    "slot": "emblem"
+   },
+   {
+    "theme": "warfare",
+    "verb": "Walk Before the",
+    "slot": "emblem"
+   },
+   {
+    "theme": "warfare",
+    "verb": "Hold the",
+    "slot": "place"
+   },
+   {
+    "theme": "water",
+    "verb": "Hold the",
+    "slot": "place"
+   }
+  ]
+ },
+ "collectives": [
+  {
+   "word": "Folk",
+   "groupTypes": [
+    "regional",
+    "settlement",
+    "confederation",
+    "kin"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "People",
+   "groupTypes": [
+    "regional",
+    "settlement",
+    "kin",
+    "sanctuary"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "Peoples",
+   "groupTypes": [
+    "confederation"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "Dwellers",
+   "groupTypes": [
+    "regional",
+    "settlement"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "Inhabitants",
+   "groupTypes": [
+    "regional",
+    "settlement"
+   ],
+   "registers": [
+    "historical",
+    "administrative"
+   ],
+   "person": true
+  },
+  {
+   "word": "Nation",
+   "groupTypes": [
+    "regional",
+    "confederation"
+   ],
+   "registers": [
+    "historical",
+    "administrative"
+   ],
+   "person": true,
+   "perspectives": [
+    "later"
+   ],
+   "traditionMult": {
+    "northAmerican": 2
+   }
+  },
+  {
+   "word": "Settlers",
+   "groupTypes": [
+    "settlement",
+    "migrant"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "Newcomers",
+   "groupTypes": [
+    "migrant"
+   ],
+   "registers": "all",
+   "person": true,
+   "mult": 0.33
+  },
+  {
+   "word": "Arrivals",
+   "groupTypes": [
+    "migrant"
+   ],
+   "registers": "all",
+   "person": true,
+   "mult": 0.33
+  },
+  {
+   "word": "Wanderers",
+   "groupTypes": [
+    "migrant"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "Exiles",
+   "groupTypes": [
+    "migrant"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "Followers",
+   "groupTypes": [
+    "migrant",
+    "dynasty"
+   ],
+   "registers": "all",
+   "person": true,
+   "traditions": [
+    "mediterranean",
+    "bantu"
+   ],
+   "lineage": true
+  },
+  {
+   "word": "Kin",
+   "groupTypes": [
+    "kin",
+    "moiety"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "Kindred",
+   "groupTypes": [
+    "kin"
+   ],
+   "registers": "all",
+   "person": true,
+   "traditions": [
+    "celtic"
+   ],
+   "lineage": true
+  },
+  {
+   "word": "Children",
+   "groupTypes": [
+    "kin",
+    "sanctuary",
+    "dynasty"
+   ],
+   "registers": "all",
+   "person": true,
+   "lineage": true
+  },
+  {
+   "word": "Descendants",
+   "groupTypes": [
+    "kin",
+    "dynasty"
+   ],
+   "registers": "all",
+   "person": true,
+   "lineage": true
+  },
+  {
+   "word": "Sons",
+   "groupTypes": [
+    "kin",
+    "dynasty"
+   ],
+   "registers": "all",
+   "person": true,
+   "lineage": true,
+   "descent": "patrilineal"
+  },
+  {
+   "word": "Daughters",
+   "groupTypes": [
+    "kin"
+   ],
+   "registers": "all",
+   "person": true,
+   "lineage": true,
+   "descent": "matrilineal"
+  },
+  {
+   "word": "Seed",
+   "groupTypes": [
+    "kin"
+   ],
+   "registers": [
+    "historical",
+    "legendary"
+   ],
+   "traditions": [
+    "celtic"
+   ],
+   "lineage": true
+  },
+  {
+   "word": "Portion",
+   "groupTypes": [
+    "kin"
+   ],
+   "registers": [
+    "historical",
+    "legendary"
+   ],
+   "traditions": [
+    "celtic"
+   ],
+   "lineage": true
+  },
+  {
+   "word": "Bone",
+   "groupTypes": [
+    "kin",
+    "dynasty"
+   ],
+   "registers": "all",
+   "traditions": [
+    "steppe"
+   ],
+   "lineage": true
+  },
+  {
+   "word": "Family",
+   "groupTypes": [
+    "kin"
+   ],
+   "registers": "all",
+   "person": true,
+   "traditions": [
+    "arabian",
+    "polynesian"
+   ],
+   "lineage": true
+  },
+  {
+   "word": "House",
+   "groupTypes": [
+    "kin",
+    "dynasty",
+    "settlement"
+   ],
+   "registers": "all",
+   "lineage": true,
+   "singular": true
+  },
+  {
+   "word": "Line",
+   "groupTypes": [
+    "kin",
+    "dynasty"
+   ],
+   "registers": "all",
+   "lineage": true,
+   "singular": true
+  },
+  {
+   "word": "Clan",
+   "groupTypes": [
+    "kin",
+    "moiety",
+    "occupational"
+   ],
+   "registers": "all",
+   "lineage": true,
+   "singular": true
+  },
+  {
+   "word": "Lords",
+   "groupTypes": [
+    "dynasty",
+    "warband"
+   ],
+   "registers": "all",
+   "person": true,
+   "groupMult": {
+    "dynasty": 2
+   },
+   "mult": 0.5,
+   "role": true
+  },
+  {
+   "word": "Masters",
+   "groupTypes": [
+    "dynasty",
+    "warband"
+   ],
+   "registers": "all",
+   "person": true,
+   "groupMult": {
+    "dynasty": 2
+   },
+   "mult": 0.5,
+   "role": true
+  },
+  {
+   "word": "Heirs",
+   "groupTypes": [
+    "dynasty",
+    "warband"
+   ],
+   "registers": "all",
+   "person": true,
+   "groupMult": {
+    "dynasty": 2
+   },
+   "mult": 0.5,
+   "role": true
+  },
+  {
+   "word": "Warriors",
+   "groupTypes": [
+    "warband"
+   ],
+   "registers": "all",
+   "person": true,
+   "role": true
+  },
+  {
+   "word": "Companions",
+   "groupTypes": [
+    "warband"
+   ],
+   "registers": "all",
+   "person": true,
+   "role": true
+  },
+  {
+   "word": "Spears",
+   "groupTypes": [
+    "warband"
+   ],
+   "registers": "all"
+  },
+  {
+   "word": "Shields",
+   "groupTypes": [
+    "warband"
+   ],
+   "registers": "all"
+  },
+  {
+   "word": "Guard",
+   "groupTypes": [
+    "warband"
+   ],
+   "registers": "all",
+   "person": true,
+   "role": true
+  },
+  {
+   "word": "Host",
+   "groupTypes": [
+    "warband",
+    "confederation"
+   ],
+   "registers": "all"
+  },
+  {
+   "word": "Horde",
+   "groupTypes": [
+    "warband",
+    "confederation"
+   ],
+   "registers": "all",
+   "traditions": [
+    "steppe"
+   ]
+  },
+  {
+   "word": "Riders",
+   "groupTypes": [
+    "warband",
+    "regional"
+   ],
+   "registers": "all",
+   "person": true,
+   "traditions": [
+    "steppe",
+    "arabian",
+    "northAmerican"
+   ],
+   "traditionMult": {
+    "northAmerican": 0.6
+   },
+   "gate": "mounts",
+   "horse": true,
+   "role": true
+  },
+  {
+   "word": "Arrows",
+   "groupTypes": [
+    "confederation",
+    "kin"
+   ],
+   "registers": "all",
+   "traditions": [
+    "steppe"
+   ],
+   "gate": "arrows"
+  },
+  {
+   "word": "Tents",
+   "groupTypes": [
+    "confederation",
+    "kin"
+   ],
+   "registers": "all",
+   "traditions": [
+    "steppe",
+    "arabian"
+   ],
+   "gate": "tents"
+  },
+  {
+   "word": "Fires",
+   "groupTypes": [
+    "confederation"
+   ],
+   "registers": "all",
+   "traditions": [
+    "northAmerican"
+   ]
+  },
+  {
+   "word": "Allies",
+   "groupTypes": [
+    "confederation"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "Allied Houses",
+   "groupTypes": [
+    "confederation"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "United Kindreds",
+   "groupTypes": [
+    "confederation"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "Tribes",
+   "groupTypes": [
+    "confederation"
+   ],
+   "registers": [
+    "administrative"
+   ],
+   "perspectives": [
+    "later"
+   ]
+  },
+  {
+   "word": "Confederacy",
+   "groupTypes": [
+    "confederation"
+   ],
+   "registers": [
+    "administrative"
+   ],
+   "singular": true
+  },
+  {
+   "word": "Confederation",
+   "groupTypes": [
+    "confederation"
+   ],
+   "registers": [
+    "administrative"
+   ],
+   "singular": true
+  },
+  {
+   "word": "Guardians",
+   "groupTypes": [
+    "frontier"
+   ],
+   "registers": "all",
+   "person": true,
+   "role": true
+  },
+  {
+   "word": "Defenders",
+   "groupTypes": [
+    "frontier"
+   ],
+   "registers": "all",
+   "person": true,
+   "role": true
+  },
+  {
+   "word": "Watchers",
+   "groupTypes": [
+    "frontier"
+   ],
+   "registers": "all",
+   "person": true,
+   "role": true
+  },
+  {
+   "word": "Borderers",
+   "groupTypes": [
+    "frontier"
+   ],
+   "registers": "all",
+   "person": true,
+   "role": true
+  },
+  {
+   "word": "March Folk",
+   "groupTypes": [
+    "frontier"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "Defenders",
+   "groupTypes": [
+    "warband"
+   ],
+   "registers": "all",
+   "person": true,
+   "role": true
+  },
+  {
+   "word": "Wardens",
+   "groupTypes": [
+    "frontier",
+    "sanctuary"
+   ],
+   "registers": [
+    "historical",
+    "legendary"
+   ],
+   "person": true,
+   "mult": 0.5,
+   "role": true
+  },
+  {
+   "word": "Keepers",
+   "groupTypes": [
+    "sanctuary"
+   ],
+   "registers": "all",
+   "person": true,
+   "role": true
+  },
+  {
+   "word": "Guardians",
+   "groupTypes": [
+    "sanctuary"
+   ],
+   "registers": "all",
+   "person": true,
+   "role": true
+  },
+  {
+   "word": "Servants",
+   "groupTypes": [
+    "sanctuary"
+   ],
+   "registers": "all",
+   "person": true,
+   "mult": 0.5,
+   "role": true
+  },
+  {
+   "word": "Side",
+   "groupTypes": [
+    "moiety"
+   ],
+   "registers": "all",
+   "singular": true
+  },
+  {
+   "word": "Half",
+   "groupTypes": [
+    "moiety"
+   ],
+   "registers": "all",
+   "singular": true
+  },
+  {
+   "word": "Hand",
+   "groupTypes": [
+    "moiety"
+   ],
+   "registers": "all",
+   "singular": true
+  },
+  {
+   "word": "Quarter",
+   "groupTypes": [
+    "moiety"
+   ],
+   "registers": "all",
+   "singular": true
+  },
+  {
+   "word": "Guild",
+   "groupTypes": [
+    "occupational"
+   ],
+   "registers": [
+    "historical",
+    "administrative"
+   ],
+   "traditions": [
+    "eastAsian"
+   ],
+   "singular": true
+  },
+  {
+   "word": "Folk",
+   "groupTypes": [
+    "occupational"
+   ],
+   "registers": "all",
+   "person": true
+  },
+  {
+   "word": "Great House",
+   "groupTypes": [
+    "settlement"
+   ],
+   "registers": [
+    "historical"
+   ],
+   "traditions": [
+    "mesoamerican"
+   ],
+   "singular": true
+  },
+  {
+   "word": "Men",
+   "groupTypes": [
+    "regional",
+    "warband"
+   ],
+   "registers": "all",
+   "person": true,
+   "traditionMult": {
+    "germanic": 2
+   },
+   "mult": 0.3
+  }
+ ],
+ "lineageCollectives": [
+  "Children",
+  "Descendants",
+  "Sons",
+  "Daughters",
+  "Seed",
+  "Portion",
+  "Bone",
+  "House",
+  "Line",
+  "Family",
+  "Kindred",
+  "Clan",
+  "Followers"
+ ],
+ "templates": {
+  "weights": {
+   "A": [
+    18,
+    6,
+    4,
+    8
+   ],
+   "B": [
+    17,
+    8,
+    3,
+    16
+   ],
+   "C": [
+    12,
+    18,
+    16,
+    12
+   ],
+   "D": [
+    3,
+    8,
+    4,
+    4
+   ],
+   "E": [
+    9,
+    8,
+    2,
+    16
+   ],
+   "F": [
+    6,
+    5,
+    6,
+    4
+   ],
+   "G": [
+    7,
+    12,
+    14,
+    5
+   ],
+   "H": [
+    3,
+    6,
+    5,
+    2
+   ],
+   "I": [
+    4,
+    7,
+    9,
+    6
+   ],
+   "J": [
+    4,
+    5,
+    5,
+    10
+   ],
+   "K": [
+    1,
+    2,
+    13,
+    0
+   ],
+   "L": [
+    6,
+    3,
+    1,
+    8
+   ],
+   "M": [
+    2,
+    2,
+    2,
+    1
+   ],
+   "N": [
+    2,
+    3,
+    2,
+    2
+   ],
+   "O": [
+    3,
+    2,
+    7,
+    0
+   ],
+   "P": [
+    1,
+    2,
+    1,
+    4
+   ],
+   "Q": [
+    1,
+    2,
+    3,
+    1
+   ],
+   "R": [
+    1,
+    1,
+    3,
+    1
+   ]
+  },
+  "themes": {
+   "A": [
+    "qualities",
+    "warfare",
+    "dress",
+    "direction",
+    "animals",
+    "plants",
+    "sacred",
+    "relationship"
+   ],
+   "B": [
+    "landscape",
+    "water",
+    "plants"
+   ],
+   "C": [
+    "landscape",
+    "water",
+    "plants",
+    "sacred",
+    "vessel"
+   ],
+   "D": [
+    "landscape",
+    "water"
+   ],
+   "E": [
+    "direction",
+    "landscape",
+    "water"
+   ],
+   "F": [
+    "warfare",
+    "animals",
+    "plants"
+   ],
+   "G": [
+    "animals",
+    "plants",
+    "sacred",
+    "ancestor",
+    "vessel"
+   ],
+   "H": [
+    "landscape",
+    "water"
+   ],
+   "I": [
+    "landscape",
+    "water",
+    "sacred",
+    "warfare"
+   ],
+   "J": [
+    "number"
+   ],
+   "K": [
+    "landscape",
+    "water",
+    "animals",
+    "sacred",
+    "warfare"
+   ],
+   "L": [
+    "lifeway"
+   ],
+   "M": [
+    "speech"
+   ],
+   "N": [
+    "ancestor"
+   ],
+   "O": [
+    "qualities",
+    "relationship"
+   ],
+   "P": [
+    "plants",
+    "animals",
+    "lifeway"
+   ],
+   "Q": [
+    "landscape",
+    "plants",
+    "animals"
+   ],
+   "R": [
+    "animals"
+   ]
+  },
+  "groupTypes": {
+   "G": [
+    "kin",
+    "dynasty",
+    "sanctuary",
+    "moiety"
+   ],
+   "N": [
+    "kin",
+    "dynasty",
+    "sanctuary",
+    "moiety"
+   ],
+   "J": [
+    "confederation",
+    "regional",
+    "kin"
+   ],
+   "K": [
+    "regional",
+    "settlement",
+    "kin",
+    "dynasty",
+    "confederation",
+    "warband",
+    "migrant",
+    "frontier",
+    "sanctuary",
+    "moiety"
+   ],
+   "L": [
+    "regional",
+    "settlement",
+    "occupational",
+    "migrant"
+   ],
+   "M": [
+    "regional",
+    "confederation"
+   ],
+   "P": [
+    "kin",
+    "dynasty",
+    "occupational"
+   ],
+   "R": [
+    "migrant"
+   ]
+  },
+  "perspectives": {
+   "O": [
+    "self",
+    "ceremonial"
+   ]
+  },
+  "traditions": {
+   "P": {
+    "eastAsian": 1,
+    "general": 0.2
+   },
+   "Q": {
+    "mesoamerican": 1,
+    "general": 0.2
+   }
+  },
+  "tail": [
+   "A",
+   "B",
+   "E",
+   "F",
+   "L",
+   "P"
+  ]
+ },
+ "registers": [
+  "plain",
+  "historical",
+  "legendary",
+  "administrative"
+ ],
+ "registerLabels": {
+  "plain": "Plain translated",
+  "historical": "Historical narrative",
+  "legendary": "Legendary",
+  "administrative": "Administrative"
+ },
+ "lengthCaps": {
+  "plain": 6,
+  "historical": 8,
+  "administrative": 7,
+  "legendary": 9
+ },
+ "personCollectives": [
+  "People",
+  "Peoples",
+  "Folk",
+  "Men",
+  "Kin",
+  "Kindred",
+  "Children",
+  "Sons",
+  "Daughters",
+  "Nation",
+  "Dwellers",
+  "Ones",
+  "Inhabitants",
+  "Settlers",
+  "Newcomers",
+  "Arrivals",
+  "Wanderers",
+  "Exiles",
+  "Followers",
+  "Descendants",
+  "Family",
+  "Lords",
+  "Masters",
+  "Heirs",
+  "Warriors",
+  "Companions",
+  "Riders",
+  "Guardians",
+  "Defenders",
+  "Watchers",
+  "Borderers",
+  "Wardens",
+  "Keepers",
+  "Servants",
+  "Allies",
+  "Tribes",
+  "Clan",
+  "Seed",
+  "Portion"
+ ],
+ "history": {
+  "coinage": {
+   "self": [
+    "The name was their own, used at gatherings and in the recitation of descent.",
+    "They called themselves this long before anyone wrote it down.",
+    "Elders taught the name to children as the first thing they should know about who they were."
+   ],
+   "neighbour.respectful": [
+    "Their neighbours coined the name out of respect for {custom}.",
+    "Those who traded with them named them for {feature}, and meant it kindly."
+   ],
+   "neighbour.neutral": [
+    "Communities nearby first used the name for the people of the {feature}.",
+    "Travellers gave them the name because it was the plainest way to say where they lived."
+   ],
+   "neighbour.hostile": [
+    "Rivals coined the name as a jibe at {custom}.",
+    "It began as an insult shouted across a disputed border."
+   ],
+   "geographical": [
+    "The name began as a plain description of the settlements around the {feature}.",
+    "It named the country first and the people second."
+   ],
+   "dynastic": [
+    "The ruling house traced its line to {ancestor}, and the name proclaimed it.",
+    "The name was taken by the heirs of {ancestor} to set them above other families."
+   ],
+   "ceremonial": [
+    "The title was spoken at councils and in war-songs, never in ordinary speech.",
+    "Priests and singers used the name; most people used something plainer."
+   ],
+   "later": [
+    "Chroniclers applied the name to several communities they could not tell apart.",
+    "Map-makers wrote the name across a region they knew only from report."
+   ],
+   "imposed": [
+    "Imperial officials recorded the name when the region was brought under tribute.",
+    "Conquerors used the name in their tax rolls, and it stuck."
+   ]
+  },
+  "meaning": {
+   "landscape": "It refers to the {feature} at the heart of their lands.",
+   "water": "It recalls the {feature} on which their lives depended.",
+   "warfare": "It boasts of {emblem} and the battles fought with it.",
+   "animals": "The {animal} was their {interpretation}.",
+   "plants": "The {plant} stood at the centre of their oldest settlement.",
+   "sacred": "It names the {sacred} they held holy.",
+   "direction": "It placed them {direction}.",
+   "qualities": "It marks them out as {quality}.",
+   "number": "It counts {number} groups bound together by oath.",
+   "lifeway": "It names the work that fed them: they were {lifeway}.",
+   "speech": "It turns on how they spoke, which was the first thing strangers noticed.",
+   "dress": "It describes how they looked to others: {dress}.",
+   "ancestor": "It claims descent from {ancestor}.",
+   "vessel": "It remembers {vessel}, which first brought them to this land.",
+   "relationship": "It sets them in relation to the centre of the known world."
+  },
+  "qualityGloss": {
+   "High": "the people of the high ground",
+   "Great": "a great and numerous people",
+   "Strong": "a strong people",
+   "Bold": "a bold people",
+   "Watchful": "a watchful people, slow to trust",
+   "Swift": "swift travellers",
+   "Enduring": "a people who endure",
+   "Ancient": "an ancient people",
+   "New": "newcomers",
+   "Old": "the oldest settled people",
+   "Fierce": "a fierce people",
+   "Steadfast": "a steadfast people",
+   "Many": "a numerous people",
+   "Free": "a free people, subject to no one",
+   "Noble": "a noble people",
+   "True": "the true people",
+   "Real": "the real people",
+   "Unconquered": "a people never conquered",
+   "Proud": "a proud people"
+  },
+  "directionGloss": {
+   "Northern": "to the north",
+   "North": "to the north",
+   "Southern": "to the south",
+   "South": "to the south",
+   "Eastern": "to the east",
+   "East": "to the east",
+   "Western": "to the west",
+   "West": "to the west",
+   "Upper": "upstream or uphill",
+   "Lower": "downstream or downhill",
+   "Inner": "nearer the centre",
+   "Outer": "out on the edges",
+   "Near": "close at hand",
+   "Far": "far off",
+   "Beyond": "beyond the borders",
+   "Across": "across the water",
+   "Between": "between two greater peoples",
+   "Central": "at the centre",
+   "Middle": "at the centre",
+   "Border": "on the frontier",
+   "Frontier": "on the frontier",
+   "Around": "around the city",
+   "Sunrise": "towards the sunrise",
+   "Dawn": "towards the sunrise",
+   "Sunset": "towards the sunset",
+   "Evening": "towards the sunset",
+   "Upriver": "upriver",
+   "Upstream": "upriver",
+   "Downriver": "downriver",
+   "Downstream": "downriver",
+   "Inland": "inland",
+   "Seaward": "towards the sea",
+   "Mountainward": "towards the mountains",
+   "Windward": "on the windward side",
+   "Leeward": "on the leeward side",
+   "Upper Half": "in the upper half of a divided people",
+   "Lower Half": "in the lower half of a divided people",
+   "Left-Hand": "on the left hand of the ruler",
+   "Right-Hand": "on the right hand of the ruler",
+   "Saltwater": "by the salt water",
+   "Freshwater": "by the fresh water",
+   "Upland": "in the uplands",
+   "Lowland": "in the lowlands"
+  },
+  "dressGloss": {
+   "Long-Beard": "long beards",
+   "Long-Hair": "long hair",
+   "Painted": "painted skin",
+   "Black-Cloak": "black cloaks",
+   "Red-Cloak": "red cloaks",
+   "Bear-Cloak": "bearskin cloaks",
+   "Shaven": "shaven heads",
+   "Topknot": "topknots",
+   "Tattooed": "tattoos",
+   "Bright-Shield": "bright shields",
+   "Black-Shield": "black shields",
+   "Painted-Moccasin": "painted moccasins",
+   "Fur-Cloak": "fur cloaks",
+   "Feather-Cloak": "feather cloaks",
+   "Veiled": "veiled faces"
+  },
+  "acceptance": {
+   "embraced": "They took the name as their own and use it with pride.",
+   "accepted": "They accepted the name without complaint.",
+   "tolerated": "They tolerated the name but rarely used it among themselves.",
+   "resented": "They resented the name and corrected anyone who used it.",
+   "reclaimed": "Later generations took up the insult and wore it with pride.",
+   "unknown": "Whether they ever used the name themselves is not recorded."
+  },
+  "acceptanceWeights": {
+   "self": {
+    "embraced": 80,
+    "accepted": 20
+   },
+   "neighbour.respectful": {
+    "embraced": 25,
+    "accepted": 50,
+    "tolerated": 25
+   },
+   "neighbour.neutral": {
+    "embraced": 10,
+    "accepted": 50,
+    "tolerated": 30,
+    "resented": 10
+   },
+   "neighbour.hostile": {
+    "accepted": 10,
+    "tolerated": 25,
+    "resented": 45,
+    "reclaimed": 20
+   },
+   "geographical": {
+    "embraced": 20,
+    "accepted": 60,
+    "tolerated": 20
+   },
+   "dynastic": {
+    "embraced": 70,
+    "accepted": 30
+   },
+   "ceremonial": {
+    "embraced": 90,
+    "accepted": 10
+   },
+   "later": {
+    "accepted": 40,
+    "tolerated": 30,
+    "unknown": 30
+   },
+   "imposed": {
+    "accepted": 20,
+    "tolerated": 35,
+    "resented": 35,
+    "reclaimed": 10
+   }
+  },
+  "drift": {
+   "none": "Its meaning has not changed.",
+   "broadened": "In time it came to cover the whole of the surrounding region.",
+   "narrowed": "In time it came to mean only the ruling families.",
+   "passed to the land": "The land itself now bears the name.",
+   "outlived": "The name has outlived the people it once described.",
+   "transferred": "The people who replaced them took the name over.",
+   "became a title": "It survives as a title rather than the name of a people."
+  },
+  "driftWeights": {
+   "none": 40,
+   "broadened": 15,
+   "narrowed": 10,
+   "passed to the land": 15,
+   "outlived": 8,
+   "transferred": 7,
+   "became a title": 5
+  },
+  "interpretations": [
+   {
+    "key": "ancestor",
+    "weight": 25,
+    "text": "legendary ancestor"
+   },
+   {
+    "key": "regional",
+    "weight": 20,
+    "text": "emblem across the region"
+   },
+   {
+    "key": "warrior",
+    "weight": 15,
+    "text": "warriors' badge"
+   },
+   {
+    "key": "nickname",
+    "weight": 15,
+    "text": "nickname among outsiders"
+   },
+   {
+    "key": "royal",
+    "weight": 10,
+    "text": "royal symbol"
+   },
+   {
+    "key": "sacred",
+    "weight": 10,
+    "text": "sacred companion"
+   },
+   {
+    "key": "taboo",
+    "weight": 5,
+    "text": "sacred animal, which they must never harm or eat"
+   }
+  ],
+  "transplanted": "Their ancestors brought the old ways of naming with them into {biome}.",
+  "echo": "The name echoes that of a real historical people."
+ },
+ "safeguards": {
+  "blockList": [
+   "Blackfoot",
+   "Crow",
+   "People of the Longhouse",
+   "People of the Standing Stone",
+   "People of the Flint",
+   "People of the Great Hill",
+   "People of the Great Swamp",
+   "People of the Dawn Land",
+   "Dawn Land People",
+   "Children of the Mist",
+   "Cloud People",
+   "People of the Rain",
+   "Original People",
+   "Seven Council Fires",
+   "People of the Veil"
+  ],
+  "flagList": [
+   "Ten Arrows",
+   "Nine Tribes",
+   "Golden Horde",
+   "White Horde",
+   "Blue Horde",
+   "Royal Scythians",
+   "Black Cloaks",
+   "Long Beards",
+   "All Men",
+   "Painted People",
+   "Sea Peoples",
+   "Sons of the Lion",
+   "Sons of the Dog",
+   "Followers of the Woodpecker",
+   "Followers of the Bull",
+   "Falcon People",
+   "Shark Canoe"
+  ],
+  "flagListBlocks": false,
+  "banned": [
+   "Savages",
+   "Barbarians",
+   "Primitives",
+   "Heathens",
+   "Redskins",
+   "Squaw",
+   "Bushmen",
+   "Hottentots",
+   "Eskimos",
+   "Head-Hunters",
+   "Cannibals",
+   "Natives"
+  ]
+ }
+}
