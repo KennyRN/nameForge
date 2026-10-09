@@ -20,3 +20,11 @@ test("templates: Victorian, England, Male is complete", () => {
   assert.equal(items[0], "Albert");
   assert.equal(items.at(-1), "Willie");
 });
+
+test("templates: Victorian, England, Female is complete", () => {
+  const items = builtinTemplates("people").find((t) => t.name === "Victorian, England, Female")!.items!;
+  assert.equal(items.length, 168);
+  assert.equal(new Set(items).size, items.length);
+  assert.equal(items[0], "Ada");
+  assert.equal(items.at(-1), "Winifred");
+});
