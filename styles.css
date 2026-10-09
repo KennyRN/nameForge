@@ -749,7 +749,8 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   /* Fixed-ish, but capped relative to the viewport so it doesn't push the
      save/cancel row off the bottom of shorter windows — 420px was too tall
      on smaller screens, clipping the controls below it with no scrollbar. */
-  height: clamp(200px, 45vh, 420px);
+  /* The Biome tab's Start from row takes its height off the stage (set in updateTypeButtons). */
+  height: calc(clamp(200px, 45vh, 420px) - var(--nf-stage-shrink, 0px));
   overflow: hidden;
   margin-bottom: 6px;
 }

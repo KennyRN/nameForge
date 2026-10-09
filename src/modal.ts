@@ -3869,6 +3869,14 @@ class NameForgeEditorModal extends Modal {
     this.biomeButton?.classList.toggle("is-active", isBiome);
     this.biomeButton?.setAttribute("aria-pressed", String(isBiome));
     this.biomeRowEl?.toggle(isBiome);
+    // The biome row's height comes off the stage, so the window stays the size of the other tabs.
+    const row = this.biomeRowEl;
+    let shrink = 0;
+    if (isBiome && row) {
+      const style = getComputedStyle(row);
+      shrink = row.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+    }
+    this.stageEl?.style.setProperty("--nf-stage-shrink", `${shrink}px`);
     const isBreakdown = !other && this.selectedPackType === "breakdownPack";
     const isList = !other && this.selectedPackType === "listPack";
     const isCompound = !other && this.selectedPackType === "compoundPack";

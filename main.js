@@ -40709,44 +40709,51 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     this.updateCompoundControls();
   }
   updateTypeButtons() {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x;
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
     const isWizard = this.wizardMode;
     const isBiome = !isWizard && this.biomeMode;
     const other = isWizard || isBiome;
     (_a2 = this.biomeButton) == null ? void 0 : _a2.classList.toggle("is-active", isBiome);
     (_b = this.biomeButton) == null ? void 0 : _b.setAttribute("aria-pressed", String(isBiome));
     (_c = this.biomeRowEl) == null ? void 0 : _c.toggle(isBiome);
+    const row = this.biomeRowEl;
+    let shrink = 0;
+    if (isBiome && row) {
+      const style = getComputedStyle(row);
+      shrink = row.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+    }
+    (_d = this.stageEl) == null ? void 0 : _d.style.setProperty("--nf-stage-shrink", `${shrink}px`);
     const isBreakdown = !other && this.selectedPackType === "breakdownPack";
     const isList = !other && this.selectedPackType === "listPack";
     const isCompound = !other && this.selectedPackType === "compoundPack";
     const isPlace = !other && this.selectedPackType === "placePack";
     const isMix = !other && this.selectedPackType === "mixPack";
-    (_d = this.wizardButton) == null ? void 0 : _d.classList.toggle("is-active", isWizard);
-    (_e = this.wizardButton) == null ? void 0 : _e.setAttribute("aria-pressed", String(isWizard));
+    (_e = this.wizardButton) == null ? void 0 : _e.classList.toggle("is-active", isWizard);
+    (_f = this.wizardButton) == null ? void 0 : _f.setAttribute("aria-pressed", String(isWizard));
     const templateType = other ? void 0 : templateTypeFor(this.selectedPackType);
-    (_f = this.templatesButton) == null ? void 0 : _f.toggle(!!templateType);
+    (_g = this.templatesButton) == null ? void 0 : _g.toggle(!!templateType);
     const showTemplates = this.templatesOpen && !!templateType;
-    (_g = this.templatesButton) == null ? void 0 : _g.toggleClass("is-active", showTemplates);
-    (_h = this.templatesButton) == null ? void 0 : _h.setAttribute("aria-pressed", String(showTemplates));
-    (_i = this.stageEl) == null ? void 0 : _i.toggleClass("is-templates-open", showTemplates);
-    (_j = this.templatesPaneEl) == null ? void 0 : _j.toggle(showTemplates);
+    (_h = this.templatesButton) == null ? void 0 : _h.toggleClass("is-active", showTemplates);
+    (_i = this.templatesButton) == null ? void 0 : _i.setAttribute("aria-pressed", String(showTemplates));
+    (_j = this.stageEl) == null ? void 0 : _j.toggleClass("is-templates-open", showTemplates);
+    (_k = this.templatesPaneEl) == null ? void 0 : _k.toggle(showTemplates);
     if (showTemplates && templateType) void this.renderTemplatesPane(templateType);
-    (_k = this.wizardPaneEl) == null ? void 0 : _k.toggle(isWizard);
-    (_l = this.breakdownButton) == null ? void 0 : _l.classList.toggle("is-active", isBreakdown);
-    (_m = this.listButton) == null ? void 0 : _m.classList.toggle("is-active", isList);
-    (_n = this.compoundButton) == null ? void 0 : _n.classList.toggle("is-active", isCompound);
-    (_o = this.placeButton) == null ? void 0 : _o.classList.toggle("is-active", isPlace);
-    (_p = this.mixButton) == null ? void 0 : _p.classList.toggle("is-active", isMix);
-    (_q = this.breakdownButton) == null ? void 0 : _q.setAttribute("aria-pressed", String(isBreakdown));
-    (_r = this.listButton) == null ? void 0 : _r.setAttribute("aria-pressed", String(isList));
-    (_s = this.compoundButton) == null ? void 0 : _s.setAttribute("aria-pressed", String(isCompound));
-    (_t = this.placeButton) == null ? void 0 : _t.setAttribute("aria-pressed", String(isPlace));
-    (_u = this.mixButton) == null ? void 0 : _u.setAttribute("aria-pressed", String(isMix));
+    (_l = this.wizardPaneEl) == null ? void 0 : _l.toggle(isWizard);
+    (_m = this.breakdownButton) == null ? void 0 : _m.classList.toggle("is-active", isBreakdown);
+    (_n = this.listButton) == null ? void 0 : _n.classList.toggle("is-active", isList);
+    (_o = this.compoundButton) == null ? void 0 : _o.classList.toggle("is-active", isCompound);
+    (_p = this.placeButton) == null ? void 0 : _p.classList.toggle("is-active", isPlace);
+    (_q = this.mixButton) == null ? void 0 : _q.classList.toggle("is-active", isMix);
+    (_r = this.breakdownButton) == null ? void 0 : _r.setAttribute("aria-pressed", String(isBreakdown));
+    (_s = this.listButton) == null ? void 0 : _s.setAttribute("aria-pressed", String(isList));
+    (_t = this.compoundButton) == null ? void 0 : _t.setAttribute("aria-pressed", String(isCompound));
+    (_u = this.placeButton) == null ? void 0 : _u.setAttribute("aria-pressed", String(isPlace));
+    (_v = this.mixButton) == null ? void 0 : _v.setAttribute("aria-pressed", String(isMix));
     const pane = isWizard ? void 0 : isBiome ? "biome" : this.textPaneFor(this.selectedPackType);
-    this.inputEl = pane ? (_v = this.textPanes[pane]) != null ? _v : null : null;
+    this.inputEl = pane ? (_w = this.textPanes[pane]) != null ? _w : null : null;
     for (const el of Object.values(this.textPanes)) el.toggle(el === this.inputEl);
-    (_w = this.compoundSectionEl) == null ? void 0 : _w.toggle(isCompound);
-    (_x = this.mixSectionEl) == null ? void 0 : _x.toggle(isMix);
+    (_x = this.compoundSectionEl) == null ? void 0 : _x.toggle(isCompound);
+    (_y = this.mixSectionEl) == null ? void 0 : _y.toggle(isMix);
   }
   /** Lists the built-in templates, then the user's own, for the pack type's kind of template. */
   async renderTemplatesPane(type) {
