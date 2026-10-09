@@ -335,6 +335,9 @@ export class NameForgeModal extends Modal {
     hostile: boolean;
   } = { tradition: "general", register: "plain", groupType: undefined, perspective: undefined, hostile: false };
   private tribalOptionsButton: HTMLButtonElement | null = null;
+  /** Land brief §8.1: river names' peoples (session only). */
+  private riverPeoples: { mode: "tribal" | "placeholder"; tradition: string } = { mode: "tribal", tradition: "general" };
+  private riverOptionsButton: HTMLButtonElement | null = null;
   /** Place names: Britain (PLACE_BRITAIN) or a world culture, and the era chosen for each culture. Session only. */
   private worldCulture: string = PLACE_BRITAIN;
   private worldEras: Record<string, string> = {};
@@ -567,6 +570,15 @@ export class NameForgeModal extends Modal {
     this.tribalOptionsButton.addEventListener("click", (evt) => this.openTribalOptions(evt));
     this.tribalOptionsButton.hide();
 
+    // Land brief §8.1: river names' options, peoples from tribal names or as placeholders.
+    this.riverOptionsButton = createPacksRow.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Options" },
+    });
+    setIcon(this.riverOptionsButton, "sliders-horizontal");
+    this.riverOptionsButton.addEventListener("click", (evt) => this.openRiverOptions(evt));
+    this.riverOptionsButton.hide();
+
     // Land brief §6.1: biome and terrain, beside the guide button.
     this.landButton = new LandButton(createPacksRow, {
       state: () => {
@@ -719,6 +731,7 @@ export class NameForgeModal extends Modal {
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
+    this.refreshRiverOptions();
     const ageing = section === "nameAgeing";
     this.quantityToggleEl?.toggle(!ageing);
     this.ageingControlsEl?.toggle(ageing);
@@ -1081,6 +1094,7 @@ export class NameForgeModal extends Modal {
           this.worldCulture = culture.id;
           this.showSecondBox(this.placeHasSecondBox());
           this.landButton?.refresh();
+          this.refreshRiverOptions();
           this.updateSecondBoxLabel();
           this.updateRegionLabel();
           this.setRegionMenuOpen(false);
@@ -1294,6 +1308,27 @@ export class NameForgeModal extends Modal {
       (id) => (t.register = (id ?? "plain") as TribalRegister),
     );
     sentence.appendText(" names");
+  }
+
+  /** The river options button: river names, and place names' British river names. */
+  private refreshRiverOptions() {
+    this.riverOptionsButton?.toggle(this.activeSection === "riverNames" || (this.activeSection === "placeShapes" && this.placeIsRivers()));
+  }
+
+  /** Land brief §8.1: river names' options menu. */
+  private openRiverOptions(evt: MouseEvent) {
+    const r = this.riverPeoples;
+    const menu = new Menu();
+    menu.addItem((item) => item.setTitle("Peoples from tribal names").setChecked(r.mode === "tribal").onClick(() => (r.mode = "tribal")));
+    menu.addItem((item) => item.setTitle("Peoples as placeholders").setChecked(r.mode === "placeholder").onClick(() => (r.mode = "placeholder")));
+    if (this.activeSection === "riverNames" && this.riverSetting !== "british") {
+      menu.addSeparator();
+      menu.addItem((item) => item.setTitle("Tradition").setDisabled(true));
+      for (const t of TRIBAL_TRADITIONS) {
+        menu.addItem((item) => item.setTitle(t.label).setChecked(r.tradition === t.key).onClick(() => (r.tradition = t.key)));
+      }
+    }
+    menu.showAtMouseEvent(evt);
   }
 
   /** Tribal names' options menu: perspective and hostile names. */
@@ -1597,6 +1632,7 @@ export class NameForgeModal extends Modal {
     this.editRecipeButton = null;
     this.guideButton = null;
     this.tribalOptionsButton = null;
+    this.riverOptionsButton = null;
     this.contextRowEl = null;
     this.secondBoxRowEl = null;
     this.secondBoxDropdownEl = null;
@@ -2375,6 +2411,8 @@ export class NameForgeModal extends Modal {
         setting,
         region: british ? region : undefined,
         biome: biome?.id,
+        peoples: this.riverPeoples.mode,
+        peoplesTradition: this.riverPeoples.tradition,
         count: this.generationCount,
         seed: seedOverride,
         faithfulness: this.plugin.settings.faithfulness,
@@ -2388,7 +2426,8 @@ export class NameForgeModal extends Modal {
       // History keeps the brief's short setting names ("river names · British"), not the menu label.
       const settingLabel = british ? "British" : RIVER_SETTINGS.find((s) => s.id === setting)!.label;
       // Tribal brief §19.5: "river names · New Land · savannah" when a biome is set.
-      const label = `${RIVER_NAMES_HISTORY_NAME} · ${settingLabel}${biome ? ` · ${biome.label.toLowerCase()}` : ""}`;
+      const peoples = this.riverPeoples.mode === "placeholder" ? " · peoples as placeholders" : "";
+      const label = `${RIVER_NAMES_HISTORY_NAME} · ${settingLabel}${biome ? ` · ${biome.label.toLowerCase()}` : ""}${peoples}`;
       await this.recordGenerationHistory(result.names.length, british ? withRegion(label, region) : label);
       this.setStatus(result.notice ?? "");
       return;

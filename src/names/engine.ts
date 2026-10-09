@@ -33,6 +33,8 @@ import { tribalSlotFill } from "../tribes/slotFill";
 // ── Fixed values (names-reference) ──────────────────────────────────────────
 
 export const NAMES = {
+  /** Land brief §8.2: share of colonial river fills drawn from the native pack, when one is set. */
+  nativeRiverShare: 0.4,
   /** §4.1 fuse-chance modifiers and cap. */
   traditionalWord: 1.5,
   modernWord: 0.6,
@@ -525,7 +527,16 @@ export class NameRenderer {
   /** Stage 2: fill one slot. `whole` forces whole names for pack sources (§5.3). */
   fill(categoryId: string, rng: () => number, whole = false): Fill {
     const mapped = this.slots[categoryId];
-    if (categoryId === RIVER_CATEGORY && (!mapped || mapped.kind === "built-in")) return this.riverWordFill(rng);
+    if (categoryId === RIVER_CATEGORY && (!mapped || mapped.kind === "built-in")) {
+      // Land brief §8.2: with a native pack, some colonial rivers are native names, adapted by a
+      // takeover pack like native place names. The draw is only made when a native pack is set.
+      const native = this.slots["native-place-name"];
+      if (this.colonial && !mapped && this.recipe.native && native?.kind === "sources" && rng() < NAMES.nativeRiverShare) {
+        const fill = this.fill("native-place-name", rng, true);
+        if (fill.kind === "name") return fill;
+      }
+      return this.riverWordFill(rng);
+    }
     // §6.1: in colonial rendering, unmapped native flora and fauna never draw the British lists.
     // An explicit built-in mapping still does; domestic animals and crops are not in the set.
     if (this.colonial && !mapped && NATIVE_LABELS[categoryId]) {

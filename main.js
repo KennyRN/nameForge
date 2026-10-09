@@ -26380,148 +26380,6 @@ var river_names_default = {
   }
 };
 
-// src/rivers/engine.ts
-var RIVER_SETTINGS = [
-  { id: "british", label: "British River Names" },
-  { id: "new-land", label: "New Land" },
-  { id: "established", label: "Established" }
-];
-var RIVER_DATA = river_names_default;
-var REAL_NAMES = new Set(Object.values(RIVER_DATA.corpora).flat().map((n) => n.toLowerCase()));
-function pickWeighted2(weights, rng) {
-  const items = Object.entries(weights).filter(([, w]) => w > 0);
-  const total = items.reduce((n, [, w]) => n + w, 0);
-  let r = rng() * total;
-  for (const [item, w] of items) {
-    r -= w;
-    if (r < 0) return item;
-  }
-  return items[items.length - 1][0];
-}
-var pickUniform2 = (items, rng) => items[Math.floor(rng() * items.length)];
-var titleCase2 = (text) => text.replace(/(^|[\s-])(\p{L})/gu, (_, sep, ch) => sep + ch.toUpperCase());
-var letterCount2 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
-var regionKey = (region) => region && RIVER_DATA.regionCorpora[region] ? region : "all";
-function waterWordWeights(setting, region) {
-  return setting === "british" ? RIVER_DATA.waterWords.british[regionKey(region)] : RIVER_DATA.waterWords[setting];
-}
-var modelCache = /* @__PURE__ */ new Map();
-function ancientModel(region) {
-  const corpora = RIVER_DATA.regionCorpora[regionKey(region)];
-  const key = corpora.join("+");
-  let model = modelCache.get(key);
-  if (!model) {
-    model = MarkovModel.build(corpora.flatMap((c) => RIVER_DATA.corpora[c]));
-    modelCache.set(key, model);
-  }
-  return model;
-}
-function ancientName(options, rng) {
-  var _a2, _b;
-  const model = ancientModel(options.region);
-  const { minLetters, maxLetters, draws } = RIVER_DATA.ancient;
-  for (let i = 0; i < draws; i++) {
-    const seed = Math.floor(rng() * 4294967296) >>> 0;
-    const name = model.generateDetailed({
-      count: 1,
-      faithfulness: (_a2 = options.faithfulness) != null ? _a2 : 2,
-      strictness: (_b = options.strictness) != null ? _b : 3,
-      seed
-    }).names[0];
-    if (!name) continue;
-    const letters = letterCount2(name);
-    if (letters < minLetters || letters > maxLetters || REAL_NAMES.has(name.trim().toLowerCase())) continue;
-    return titleCase2(name.trim().toLowerCase());
-  }
-  return null;
-}
-function ancientForm(name, region, rng) {
-  const { scottishRegions, scottish, other } = RIVER_DATA.forms.ancient;
-  const form = pickWeighted2(region && scottishRegions.includes(region) ? scottish : other, rng);
-  if (form === "river-x") return { text: `River ${name}`, form };
-  if (form === "x-water") return { text: `${name} Water`, form };
-  if (form === "water-of-x") return { text: `Water of ${name}`, form };
-  return { text: name, form };
-}
-var colonialBiome = (options) => options.setting === "british" ? void 0 : findBiome(options.biome);
-function descriptiveName(options, rng, bare) {
-  const british = options.setting === "british";
-  const biome = colonialBiome(options);
-  const categories = RIVER_DATA.descriptiveCategories[british ? "british" : biome ? "colonialWithBiome" : "colonial"];
-  const category = pickWeighted2(categories, rng);
-  const native = biome ? biomeEntries(biome, category) : void 0;
-  const entry = native ? pickWeightedPair(native, rng) : pickUniform2(NAME_WORDS.categories[category], rng);
-  const word = entry.modern;
-  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
-  if (british) {
-    const joined = entry.fuses === "yes" ? smoothJoin(word, water) : null;
-    const fuses = joined !== null && letterCount2(joined) <= NAMES.maxFusedLetters && rng() < RIVER_DATA.britishFuseChance;
-    const name = fuses ? titleCase2(joined.toLowerCase()) : titleCase2(`${word} ${water}`);
-    if (bare) return { text: name, water, form: "bare" };
-    const form2 = pickWeighted2(RIVER_DATA.forms.britishDescriptive, rng);
-    return { text: form2 === "river-x" ? `River ${name}` : name, water, form: form2 };
-  }
-  if (bare) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
-  const form = pickWeighted2(RIVER_DATA.forms.colonialDescriptive, rng);
-  return form === "bare" && water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
-}
-var NATIVE_PLACEHOLDERS = {
-  "[native bird]": "bird",
-  "[native wild animal]": "wild-animal",
-  "[native fish or creature]": "fish-and-other-creatures",
-  "[native tree]": "tree",
-  "[native plant]": "wild-plant"
-};
-function patternName(options, rng) {
-  const items = RIVER_DATA.patterns[options.setting];
-  const pattern = pickWeighted2(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
-  const biome = colonialBiome(options);
-  const filled = biome ? pattern.replace(/\[native [^\]]+\]/g, (slot) => {
-    const entries = NATIVE_PLACEHOLDERS[slot] ? biomeEntries(biome, NATIVE_PLACEHOLDERS[slot]) : void 0;
-    return entries ? titleCase2(pickWeightedPair(entries, rng).modern) : slot;
-  }) : pattern;
-  if (!filled.includes("{water}")) return { text: filled, form: pattern };
-  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
-  return { text: filled.replace("{water}", titleCase2(water)), water, form: pattern };
-}
-function riverName(options, rng) {
-  const kind = pickWeighted2(RIVER_DATA.kindWeights[options.setting], rng);
-  if (kind === "pattern") {
-    const built = patternName(options, rng);
-    return { ...built, hasPlaceholder: /\[[^\]]+\]/.test(built.text), kind };
-  }
-  if (kind === "ancient") {
-    const name = ancientName(options, rng);
-    if (name) return { ...ancientForm(name, options.region, rng), hasPlaceholder: false, kind, ancient: name };
-  }
-  return { ...descriptiveName(options, rng, false), hasPlaceholder: false, kind };
-}
-function riverFill(options, rng) {
-  const { pattern: _pattern, ...weights } = RIVER_DATA.kindWeights[options.setting];
-  const kind = pickWeighted2(weights, rng);
-  if (kind === "ancient") {
-    const name = ancientName(options, rng);
-    if (name) return name;
-  }
-  return descriptiveName(options, rng, true).text;
-}
-function generateRiverNames(options) {
-  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
-  const rng = mulberry32(seed);
-  const count = Math.max(0, Math.floor(options.count));
-  const seen = /* @__PURE__ */ new Set();
-  const names = [];
-  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
-    const name = riverName(options, rng);
-    const key = name.text.toLowerCase();
-    if (seen.has(key)) continue;
-    seen.add(key);
-    names.push(name);
-  }
-  const notice = names.length < count ? `Only ${names.length} river names could be generated.` : void 0;
-  return { names, seed, notice };
-}
-
 // src/data/tribal-names.json
 var tribal_names_default = {
   traditions: [
@@ -30385,7 +30243,7 @@ function pick(items, rng) {
 }
 var pickRecord = (weights, rng) => pick(Object.entries(weights), rng);
 var pickPool = (pool, rng) => pick([...pool.entries()], rng);
-var pickUniform3 = (items, rng) => items[Math.floor(rng() * items.length)];
+var pickUniform2 = (items, rng) => items[Math.floor(rng() * items.length)];
 var add = (pool, word, weight) => {
   var _a2;
   if (weight > 0) pool.set(word, ((_a2 = pool.get(word)) != null ? _a2 : 0) + weight);
@@ -30448,7 +30306,7 @@ function featureWord(ctx, kind) {
 var hasColour = (word) => V.colours.some((c) => word.toLowerCase().includes(c.toLowerCase())) || /yellow/i.test(word);
 function withColour(ctx, word) {
   if (ctx.rng() >= 0.2 || hasColour(word)) return word;
-  return `${pickUniform3(V.colours, ctx.rng)} ${word}`;
+  return `${pickUniform2(V.colours, ctx.rng)} ${word}`;
 }
 function animalPool(ctx, wild = false) {
   var _a2, _b;
@@ -30590,7 +30448,7 @@ function vesselWord(ctx) {
     const pool2 = /* @__PURE__ */ new Map();
     for (const list of ["birds", "creatures"]) for (const [w, n] of biomeWords(ctx.biome, list)) add(pool2, biomeTitleCase(w), filtered(ctx, w, n));
     const animal2 = pickPool(pool2, rng);
-    if (animal2) return `the ${pickUniform3(V.colours, rng)} ${animal2} Canoe`;
+    if (animal2) return `the ${pickUniform2(V.colours, rng)} ${animal2} Canoe`;
   }
   const pool = /* @__PURE__ */ new Map();
   for (const c of V.canoes) add(pool, c, 2);
@@ -30794,12 +30652,12 @@ function templateF(ctx, parts) {
   const c = collective(ctx);
   if (!emblem || !c || hasColour(emblem)) return void 0;
   parts.collective = c;
-  return `${pickUniform3(V.colours, ctx.rng)} ${emblem} ${c}`;
+  return `${pickUniform2(V.colours, ctx.rng)} ${emblem} ${c}`;
 }
 function templateG(ctx, parts) {
   var _a2;
   let target;
-  if (ctx.theme === "ancestor") target = parts.ancestor = (_a2 = ctx.pin.get("ancestor")) != null ? _a2 : pickUniform3(V.ancestors, ctx.rng);
+  if (ctx.theme === "ancestor") target = parts.ancestor = (_a2 = ctx.pin.get("ancestor")) != null ? _a2 : pickUniform2(V.ancestors, ctx.rng);
   else target = ofTarget(ctx, parts);
   const c = collective(ctx, { lineageOnly: true });
   if (!target || !c) return void 0;
@@ -30811,7 +30669,7 @@ function templateI(ctx, parts) {
   if (!c) return void 0;
   let p;
   if (ctx.theme === "sacred") p = parts.sacred = sacred(ctx);
-  else if (ctx.theme === "warfare") p = parts.emblem = pickUniform3(["Fort", "Stronghold", "Frontier", "March"], ctx.rng);
+  else if (ctx.theme === "warfare") p = parts.emblem = pickUniform2(["Fort", "Stronghold", "Frontier", "March"], ctx.rng);
   else p = parts.feature = place(ctx, ctx.theme === "water" ? "water" : "land", 0.3);
   if (!p) return void 0;
   parts.collective = c;
@@ -30834,7 +30692,7 @@ function templateJ(ctx, parts) {
 }
 function templateK(ctx, parts) {
   const phrases = V.kPhrases.filter((p) => p.theme === ctx.theme && (p.gate !== "mounts" || mounts(ctx).length > 0));
-  const phrase = pickUniform3(phrases, ctx.rng);
+  const phrase = pickUniform2(phrases, ctx.rng);
   if (!phrase) return void 0;
   let w;
   switch (phrase.slot) {
@@ -30846,7 +30704,7 @@ function templateK(ctx, parts) {
       break;
     case "origin": {
       const land = featureWord(ctx, "land");
-      w = ctx.rng() < 0.5 || !land ? pickUniform3(V.origins, ctx.rng) : `${pickUniform3(V.colours, ctx.rng)} ${land}`;
+      w = ctx.rng() < 0.5 || !land ? pickUniform2(V.origins, ctx.rng) : `${pickUniform2(V.colours, ctx.rng)} ${land}`;
       if (hasColour(land != null ? land : "") && !V.origins.includes(w)) w = land;
       parts.feature = w;
       break;
@@ -30882,8 +30740,8 @@ function templateL(ctx, parts) {
 function templateM(ctx, parts) {
   const s = V.speech;
   const r = ctx.rng();
-  if (r < 0.3) return pickUniform3(s.whole, ctx.rng);
-  if (r < 0.65) return `Speakers of the ${pickUniform3(s.tongues, ctx.rng)} Tongue`;
+  if (r < 0.3) return pickUniform2(s.whole, ctx.rng);
+  if (r < 0.65) return `Speakers of the ${pickUniform2(s.tongues, ctx.rng)} Tongue`;
   const c = collective(ctx);
   if (!c) return void 0;
   parts.collective = c;
@@ -30892,7 +30750,7 @@ function templateM(ctx, parts) {
 function templateN(ctx, parts) {
   var _a2;
   const epithets = V.ancestors.filter((a2) => !a2.includes("'"));
-  const a = parts.ancestor = (_a2 = ctx.pin.get("ancestor")) != null ? _a2 : pickUniform3(epithets, ctx.rng);
+  const a = parts.ancestor = (_a2 = ctx.pin.get("ancestor")) != null ? _a2 : pickUniform2(epithets, ctx.rng);
   const c = collective(ctx, { personOnly: true });
   if (!a || !c || a.includes("'")) return void 0;
   parts.collective = c;
@@ -30968,7 +30826,7 @@ function buildTemplate(ctx, template, parts) {
     case "G":
       return templateG(ctx, parts);
     case "H":
-      return templateDH(ctx, parts, pickUniform3(["Beyond", "Across", "Between"], ctx.rng));
+      return templateDH(ctx, parts, pickUniform2(["Beyond", "Across", "Between"], ctx.rng));
     case "I":
       return templateI(ctx, parts);
     case "J":
@@ -31108,7 +30966,7 @@ function history(ctx, template, parts) {
     interpretation: interpretation != null ? interpretation : void 0
   };
   const pkey = historyPerspectiveKey(ctx);
-  const coinage = sentence(pickUniform3(H.coinage[pkey], rng), fills);
+  const coinage = sentence(pickUniform2(H.coinage[pkey], rng), fills);
   let meaning = sentence(H.meaning[ctx.theme], fills);
   if (ctx.mode === "chosen" && !(ctx.trad.homeland[ctx.biome.id] > 0) && rng() < 0.3) {
     meaning = sentence(H.transplanted, { biome: ctx.biome.phrase });
@@ -31391,6 +31249,23 @@ var ORGANIC = {
   groupTypes: ["regional", "settlement", "kin"],
   headwordOnly: true
 };
+var RIVER_BRITISH = {
+  templates: { A: 50, B: 50 },
+  noTail: true,
+  maxWords: 2,
+  registers: { plain: 100 },
+  groupTypes: ["regional", "settlement", "kin"],
+  headwordOnly: true
+};
+var RIVER_COLONIAL = {
+  templates: { A: 40, B: 40, F: 20 },
+  noTail: true,
+  maxWords: 2,
+  registers: { plain: 70, administrative: 30 },
+  perspectiveMultipliers: { imposed: 3, neighbour: 2 },
+  groupTypes: ["regional", "settlement", "kin", "confederation"],
+  headwordOnly: true
+};
 function autoTradition(region, rng) {
   const code = (region != null ? region : "").toUpperCase();
   if (["COR", "WAL", "SHH", "SLO"].includes(code)) return "celtic";
@@ -31404,16 +31279,166 @@ function tribalSlotFill(options, rng) {
   let tradition = options.tradition;
   if (tradition === "auto") tradition = organic ? autoTradition(options.region, rng) : "general";
   if (!findTradition(tradition)) tradition = "general";
-  const name = tribalName(
-    { tradition, biome: organic ? void 0 : options.biome, hostile: false, constraints: organic ? ORGANIC : COLONIAL },
-    rng
-  );
+  const constraints = options.part === "river-british" ? RIVER_BRITISH : options.part === "river-colonial" ? RIVER_COLONIAL : organic ? ORGANIC : COLONIAL;
+  const name = tribalName({ tradition, biome: organic ? void 0 : options.biome, hostile: false, constraints }, rng);
   const text = ((_a2 = name == null ? void 0 : name.name) != null ? _a2 : "People").replace(/^The /, "");
   return { text, tradition };
 }
 
+// src/rivers/engine.ts
+var RIVER_SETTINGS = [
+  { id: "british", label: "British River Names" },
+  { id: "new-land", label: "New Land" },
+  { id: "established", label: "Established" }
+];
+var RIVER_DATA = river_names_default;
+var REAL_NAMES = new Set(Object.values(RIVER_DATA.corpora).flat().map((n) => n.toLowerCase()));
+function pickWeighted2(weights, rng) {
+  const items = Object.entries(weights).filter(([, w]) => w > 0);
+  const total = items.reduce((n, [, w]) => n + w, 0);
+  let r = rng() * total;
+  for (const [item, w] of items) {
+    r -= w;
+    if (r < 0) return item;
+  }
+  return items[items.length - 1][0];
+}
+var pickUniform3 = (items, rng) => items[Math.floor(rng() * items.length)];
+var titleCase2 = (text) => text.replace(/(^|[\s-])(\p{L})/gu, (_, sep, ch) => sep + ch.toUpperCase());
+var letterCount2 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
+var regionKey = (region) => region && RIVER_DATA.regionCorpora[region] ? region : "all";
+function waterWordWeights(setting, region) {
+  return setting === "british" ? RIVER_DATA.waterWords.british[regionKey(region)] : RIVER_DATA.waterWords[setting];
+}
+var modelCache = /* @__PURE__ */ new Map();
+function ancientModel(region) {
+  const corpora = RIVER_DATA.regionCorpora[regionKey(region)];
+  const key = corpora.join("+");
+  let model = modelCache.get(key);
+  if (!model) {
+    model = MarkovModel.build(corpora.flatMap((c) => RIVER_DATA.corpora[c]));
+    modelCache.set(key, model);
+  }
+  return model;
+}
+function ancientName(options, rng) {
+  var _a2, _b;
+  const model = ancientModel(options.region);
+  const { minLetters, maxLetters, draws } = RIVER_DATA.ancient;
+  for (let i = 0; i < draws; i++) {
+    const seed = Math.floor(rng() * 4294967296) >>> 0;
+    const name = model.generateDetailed({
+      count: 1,
+      faithfulness: (_a2 = options.faithfulness) != null ? _a2 : 2,
+      strictness: (_b = options.strictness) != null ? _b : 3,
+      seed
+    }).names[0];
+    if (!name) continue;
+    const letters = letterCount2(name);
+    if (letters < minLetters || letters > maxLetters || REAL_NAMES.has(name.trim().toLowerCase())) continue;
+    return titleCase2(name.trim().toLowerCase());
+  }
+  return null;
+}
+function ancientForm(name, region, rng) {
+  const { scottishRegions, scottish, other } = RIVER_DATA.forms.ancient;
+  const form = pickWeighted2(region && scottishRegions.includes(region) ? scottish : other, rng);
+  if (form === "river-x") return { text: `River ${name}`, form };
+  if (form === "x-water") return { text: `${name} Water`, form };
+  if (form === "water-of-x") return { text: `Water of ${name}`, form };
+  return { text: name, form };
+}
+var colonialBiome = (options) => options.setting === "british" ? void 0 : findBiome(options.biome);
+function descriptiveName(options, rng, bare) {
+  const british = options.setting === "british";
+  const biome = colonialBiome(options);
+  const categories = RIVER_DATA.descriptiveCategories[british ? "british" : biome ? "colonialWithBiome" : "colonial"];
+  const category = pickWeighted2(categories, rng);
+  const native = biome ? biomeEntries(biome, category) : void 0;
+  const entry = native ? pickWeightedPair(native, rng) : pickUniform3(NAME_WORDS.categories[category], rng);
+  const word = entry.modern;
+  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
+  if (british) {
+    const joined = entry.fuses === "yes" ? smoothJoin(word, water) : null;
+    const fuses = joined !== null && letterCount2(joined) <= NAMES.maxFusedLetters && rng() < RIVER_DATA.britishFuseChance;
+    const name = fuses ? titleCase2(joined.toLowerCase()) : titleCase2(`${word} ${water}`);
+    if (bare) return { text: name, water, form: "bare" };
+    const form2 = pickWeighted2(RIVER_DATA.forms.britishDescriptive, rng);
+    return { text: form2 === "river-x" ? `River ${name}` : name, water, form: form2 };
+  }
+  if (bare) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
+  const form = pickWeighted2(RIVER_DATA.forms.colonialDescriptive, rng);
+  return form === "bare" && water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
+}
+var NATIVE_PLACEHOLDERS = {
+  "[native bird]": "bird",
+  "[native wild animal]": "wild-animal",
+  "[native fish or creature]": "fish-and-other-creatures",
+  "[native tree]": "tree",
+  "[native plant]": "wild-plant"
+};
+function patternName(options, rng) {
+  const items = RIVER_DATA.patterns[options.setting];
+  const picked = pickWeighted2(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
+  const pattern = options.peoples === "tribal" ? picked.replace(/\[(tribal name|native people)\]/g, () => {
+    var _a2;
+    const british = options.setting === "british";
+    return tribalSlotFill(
+      british ? { tradition: "celtic", part: "river-british", biome: "britain" } : { tradition: (_a2 = options.peoplesTradition) != null ? _a2 : "general", part: "river-colonial", biome: options.biome },
+      rng
+    ).text;
+  }) : picked;
+  const biome = colonialBiome(options);
+  const filled = biome ? pattern.replace(/\[native [^\]]+\]/g, (slot) => {
+    const entries = NATIVE_PLACEHOLDERS[slot] ? biomeEntries(biome, NATIVE_PLACEHOLDERS[slot]) : void 0;
+    return entries ? titleCase2(pickWeightedPair(entries, rng).modern) : slot;
+  }) : pattern;
+  if (!filled.includes("{water}")) return { text: filled, form: picked };
+  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
+  return { text: filled.replace("{water}", titleCase2(water)), water, form: picked };
+}
+function riverName(options, rng) {
+  const kind = pickWeighted2(RIVER_DATA.kindWeights[options.setting], rng);
+  if (kind === "pattern") {
+    const built = patternName(options, rng);
+    return { ...built, hasPlaceholder: /\[[^\]]+\]/.test(built.text), kind };
+  }
+  if (kind === "ancient") {
+    const name = ancientName(options, rng);
+    if (name) return { ...ancientForm(name, options.region, rng), hasPlaceholder: false, kind, ancient: name };
+  }
+  return { ...descriptiveName(options, rng, false), hasPlaceholder: false, kind };
+}
+function riverFill(options, rng) {
+  const { pattern: _pattern, ...weights } = RIVER_DATA.kindWeights[options.setting];
+  const kind = pickWeighted2(weights, rng);
+  if (kind === "ancient") {
+    const name = ancientName(options, rng);
+    if (name) return name;
+  }
+  return descriptiveName(options, rng, true).text;
+}
+function generateRiverNames(options) {
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const count = Math.max(0, Math.floor(options.count));
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+    const name = riverName(options, rng);
+    const key = name.text.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    names.push(name);
+  }
+  const notice = names.length < count ? `Only ${names.length} river names could be generated.` : void 0;
+  return { names, seed, notice };
+}
+
 // src/names/engine.ts
 var NAMES = {
+  /** Land brief §8.2: share of colonial river fills drawn from the native pack, when one is set. */
+  nativeRiverShare: 0.4,
   /** §4.1 fuse-chance modifiers and cap. */
   traditionalWord: 1.5,
   modernWord: 0.6,
@@ -31705,7 +31730,14 @@ var NameRenderer = class {
   fill(categoryId, rng, whole = false) {
     var _a2, _b;
     const mapped = this.slots[categoryId];
-    if (categoryId === RIVER_CATEGORY && (!mapped || mapped.kind === "built-in")) return this.riverWordFill(rng);
+    if (categoryId === RIVER_CATEGORY && (!mapped || mapped.kind === "built-in")) {
+      const native = this.slots["native-place-name"];
+      if (this.colonial && !mapped && this.recipe.native && (native == null ? void 0 : native.kind) === "sources" && rng() < NAMES.nativeRiverShare) {
+        const fill = this.fill("native-place-name", rng, true);
+        if (fill.kind === "name") return fill;
+      }
+      return this.riverWordFill(rng);
+    }
     if (this.colonial && !mapped && NATIVE_LABELS[categoryId]) {
       const biome = this.options.biome;
       const entries = biome ? biomeEntries(biome, categoryId) : void 0;
@@ -35720,6 +35752,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     /** Tribal names' choices (Tribal brief §18.2), kept for the session like the colonial modules'. */
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
     this.tribalOptionsButton = null;
+    /** Land brief §8.1: river names' peoples (session only). */
+    this.riverPeoples = { mode: "tribal", tradition: "general" };
+    this.riverOptionsButton = null;
     /** Place names: Britain (PLACE_BRITAIN) or a world culture, and the era chosen for each culture. Session only. */
     this.worldCulture = PLACE_BRITAIN;
     this.worldEras = {};
@@ -35945,6 +35980,13 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     (0, import_obsidian12.setIcon)(this.tribalOptionsButton, "sliders-horizontal");
     this.tribalOptionsButton.addEventListener("click", (evt) => this.openTribalOptions(evt));
     this.tribalOptionsButton.hide();
+    this.riverOptionsButton = createPacksRow.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button", title: "Options" }
+    });
+    (0, import_obsidian12.setIcon)(this.riverOptionsButton, "sliders-horizontal");
+    this.riverOptionsButton.addEventListener("click", (evt) => this.openRiverOptions(evt));
+    this.riverOptionsButton.hide();
     this.landButton = new LandButton(createPacksRow, {
       state: () => {
         const key = this.landKey();
@@ -36079,6 +36121,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
+    this.refreshRiverOptions();
     const ageing = section === "nameAgeing";
     (_m = this.quantityToggleEl) == null ? void 0 : _m.toggle(!ageing);
     (_n = this.ageingControlsEl) == null ? void 0 : _n.toggle(ageing);
@@ -36422,6 +36465,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
           this.worldCulture = culture.id;
           this.showSecondBox(this.placeHasSecondBox());
           (_a2 = this.landButton) == null ? void 0 : _a2.refresh();
+          this.refreshRiverOptions();
           this.updateSecondBoxLabel();
           this.updateRegionLabel();
           this.setRegionMenuOpen(false);
@@ -36630,6 +36674,26 @@ ${n.origin}${also}${echo}` };
       (id) => t.register = id != null ? id : "plain"
     );
     sentence2.appendText(" names");
+  }
+  /** The river options button: river names, and place names' British river names. */
+  refreshRiverOptions() {
+    var _a2;
+    (_a2 = this.riverOptionsButton) == null ? void 0 : _a2.toggle(this.activeSection === "riverNames" || this.activeSection === "placeShapes" && this.placeIsRivers());
+  }
+  /** Land brief §8.1: river names' options menu. */
+  openRiverOptions(evt) {
+    const r = this.riverPeoples;
+    const menu = new import_obsidian12.Menu();
+    menu.addItem((item) => item.setTitle("Peoples from tribal names").setChecked(r.mode === "tribal").onClick(() => r.mode = "tribal"));
+    menu.addItem((item) => item.setTitle("Peoples as placeholders").setChecked(r.mode === "placeholder").onClick(() => r.mode = "placeholder"));
+    if (this.activeSection === "riverNames" && this.riverSetting !== "british") {
+      menu.addSeparator();
+      menu.addItem((item) => item.setTitle("Tradition").setDisabled(true));
+      for (const t of TRIBAL_TRADITIONS) {
+        menu.addItem((item) => item.setTitle(t.label).setChecked(r.tradition === t.key).onClick(() => r.tradition = t.key));
+      }
+    }
+    menu.showAtMouseEvent(evt);
   }
   /** Tribal names' options menu: perspective and hostile names. */
   openTribalOptions(evt) {
@@ -36901,6 +36965,7 @@ ${n.origin}${also}${echo}` };
     this.editRecipeButton = null;
     this.guideButton = null;
     this.tribalOptionsButton = null;
+    this.riverOptionsButton = null;
     this.contextRowEl = null;
     this.secondBoxRowEl = null;
     this.secondBoxDropdownEl = null;
@@ -37603,6 +37668,8 @@ ${n.origin}${also}${echo}` };
         setting,
         region: british ? region : void 0,
         biome: biome == null ? void 0 : biome.id,
+        peoples: this.riverPeoples.mode,
+        peoplesTradition: this.riverPeoples.tradition,
         count: this.generationCount,
         seed: seedOverride2,
         faithfulness: this.plugin.settings.faithfulness,
@@ -37614,7 +37681,8 @@ ${n.origin}${also}${echo}` };
         "none"
       );
       const settingLabel = british ? "British" : RIVER_SETTINGS.find((s) => s.id === setting).label;
-      const label = `${RIVER_NAMES_HISTORY_NAME} \xB7 ${settingLabel}${biome ? ` \xB7 ${biome.label.toLowerCase()}` : ""}`;
+      const peoples = this.riverPeoples.mode === "placeholder" ? " \xB7 peoples as placeholders" : "";
+      const label = `${RIVER_NAMES_HISTORY_NAME} \xB7 ${settingLabel}${biome ? ` \xB7 ${biome.label.toLowerCase()}` : ""}${peoples}`;
       await this.recordGenerationHistory(result2.names.length, british ? withRegion(label, region) : label);
       this.setStatus((_c = result2.notice) != null ? _c : "");
       return;

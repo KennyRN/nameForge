@@ -9,6 +9,7 @@ import riverData from "../data/river-names.json";
 import { type Biome, biomeEntries, findBiome, pickWeightedPair } from "../biomes";
 import { MarkovModel, mulberry32 } from "../markov";
 import { NAME_WORDS, NAMES, type NameWordEntry, smoothJoin } from "../names/engine";
+import { tribalSlotFill } from "../tribes/slotFill";
 
 export type RiverSetting = "british" | "new-land" | "established";
 export type RiverKind = "ancient" | "descriptive" | "pattern";
@@ -50,6 +51,10 @@ export interface RiverOptions {
   strictness?: number;
   /** New Land and Established only (Tribal brief §19.5): a biome id that fills native placeholders. */
   biome?: string;
+  /** Land brief §8.1: "tribal" fills [tribal name] and [native people] from tribal names; default placeholders. */
+  peoples?: "tribal" | "placeholder";
+  /** Land brief §8.1: the tradition for colonial peoples (General by default). */
+  peoplesTradition?: string;
 }
 
 export interface RiverName {
@@ -186,7 +191,20 @@ const NATIVE_PLACEHOLDERS: Record<string, string> = {
 
 function patternName(options: RiverOptions, rng: () => number): Built {
   const items = RIVER_DATA.patterns[options.setting];
-  const pattern = pickWeighted(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
+  const picked = pickWeighted(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
+  // Land brief §8.1: peoples from tribal names, straight after the pattern, left to right.
+  const pattern =
+    options.peoples === "tribal"
+      ? picked.replace(/\[(tribal name|native people)\]/g, () => {
+          const british = options.setting === "british";
+          return tribalSlotFill(
+            british
+              ? { tradition: "celtic", part: "river-british", biome: "britain" }
+              : { tradition: options.peoplesTradition ?? "general", part: "river-colonial", biome: options.biome },
+            rng,
+          ).text;
+        })
+      : picked;
   // Tribal brief §19.5: with a biome, each native placeholder becomes a title-cased biome word.
   const biome = colonialBiome(options);
   const filled = biome
@@ -195,9 +213,9 @@ function patternName(options: RiverOptions, rng: () => number): Built {
         return entries ? titleCase(pickWeightedPair(entries, rng).modern) : slot;
       })
     : pattern;
-  if (!filled.includes("{water}")) return { text: filled, form: pattern };
+  if (!filled.includes("{water}")) return { text: filled, form: picked };
   const water = pickWeighted(waterWordWeights(options.setting, options.region), rng);
-  return { text: filled.replace("{water}", titleCase(water)), water, form: pattern };
+  return { text: filled.replace("{water}", titleCase(water)), water, form: picked };
 }
 
 // ── Public ──────────────────────────────────────────────────────────────────
