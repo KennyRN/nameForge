@@ -80,7 +80,7 @@ const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
 const kebab = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 /** The wizard's pages, in order. */
-const PAGES = ["Template", "Shape and rendering", "Slots and generic words", "Word lists"];
+const PAGES = ["Template", "Shape and rendering", "Slots", "Word lists"];
 /** Presets brief §3: the first three pages are the wizard; page 4 is optional. */
 const MAIN_PAGES = 3;
 

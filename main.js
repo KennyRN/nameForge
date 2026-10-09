@@ -35846,7 +35846,7 @@ var EXPANSION_CONTEXTS = CONTEXT_PHRASES["2a"];
 var NO_THE_REGIONS2 = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
 var same4 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 var kebab3 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-var PAGES = ["Template", "Shape and rendering", "Slots and generic words", "Word lists"];
+var PAGES = ["Template", "Shape and rendering", "Slots", "Word lists"];
 var MAIN_PAGES = 3;
 var TIER_TEXT = {
   simple: ["Simple", "The slots most names need."],
