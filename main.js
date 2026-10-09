@@ -36864,7 +36864,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     (_o = this.generateButtonEl) == null ? void 0 : _o.setAttribute("aria-label", action);
     if (ageing) void this.enterAgeingSection();
     if (takeover) void this.takeoverView.refresh();
-    if (this.sectionTriggerEl) (0, import_obsidian12.setIcon)(this.sectionTriggerEl, group ? GROUP_ICONS[group] : SECTION_ICONS[section]);
+    if (this.sectionTriggerEl) (0, import_obsidian12.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
     (_p = this.sectionStubEl) == null ? void 0 : _p.toggle(
       section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover && !tribal

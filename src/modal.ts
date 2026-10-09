@@ -157,7 +157,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   tribalNames: ICON_TRIBAL_NAMES,
 };
 
-// Each switcher group's icon, worn by the trigger while one of its modules is open.
+// Each switcher group's icon in the switcher menu; the trigger wears the open module's own icon.
 const GROUP_ICONS: Record<SectionGroup, string> = {
   placeNames: ICON_PLACE_SHAPES,
   advanced: ICON_ADVANCED,
@@ -790,7 +790,7 @@ export class NameForgeModal extends Modal {
     if (ageing) void this.enterAgeingSection();
     if (takeover) void this.takeoverView.refresh();
     // The trigger wears the active section's icon, as titleForge's leading icon does.
-    if (this.sectionTriggerEl) setIcon(this.sectionTriggerEl, group ? GROUP_ICONS[group] : SECTION_ICONS[section]);
+    if (this.sectionTriggerEl) setIcon(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} — no packs yet`;
     this.sectionStubEl?.toggle(
       section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover && !tribal,
