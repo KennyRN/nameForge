@@ -104,9 +104,9 @@ export const ICON_PLACE_PACK = "nameforge-place-pack";
 const ICON_PLACE_PACK_SVG =
   '<g transform="scale(0.390625)"><path fill="currentColor" d="M128 16a88.1 88.1 0 0 0-88 88c0 75.3 80 132.17 83.41 134.55a8 8 0 0 0 9.18 0C136 236.17 216 179.3 216 104a88.1 88.1 0 0 0-88-88m0 56a32 32 0 1 1-32 32a32 32 0 0 1 32-32" /></g>';
 
-export const ICON_WORD_LIST = "nameforge-word-list";
+export const ICON_RECIPE_WIZARD = "nameforge-recipe-wizard";
 // Material Symbols — edit-location-alt-outline-rounded (Apache 2.0). Scaled for Obsidian's 100×100 viewBox.
-const ICON_WORD_LIST_SVG =
+const ICON_RECIPE_WIZARD_SVG =
   '<g transform="scale(4.16667)"><path fill="currentColor" d="M4 10.2q0-3.75 2.413-5.975T12 2h.25q.425 0 .713.288T13.25 3t-.288.713T12.25 4H12Q9.475 4 7.738 5.738T6 10.2q0 1.775 1.475 4.063T12 19.35q3.05-2.8 4.525-5.087T18 10.2q0-.425.288-.712T19 9.2t.713.288t.287.712q0 2.35-1.7 5.038t-4.975 5.587q-.275.25-.625.375t-.7.125t-.7-.125t-.625-.375Q9.05 19.325 7.8 17.9t-2.087-2.762t-1.275-2.575T4 10.2m9.4.5l5.55-5.55q.15-.15.15-.35t-.15-.35l-1.4-1.4q-.15-.15-.35-.15t-.35.15L11.3 8.6q-.15.15-.225.338T11 9.325v.925q0 .325.213.538t.537.212h.925q.2 0 .388-.075t.337-.225m6.25-6.95q.15.15.35.15t.35-.15l.35-.35q.275-.275.275-.7T20.7 2l-.7-.7q-.275-.275-.7-.275t-.7.275l-.35.35q-.15.15-.15.35t.15.35z" /></g>';
 
 export const ICON_MIX_PACK = "nameforge-mix-pack";
@@ -170,7 +170,7 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_COMPOUND_BREAKDOWN_PACK, ICON_COMPOUND_BREAKDOWN_PACK_SVG);
   addIcon(ICON_COMPOUND_LIST_PACK, ICON_COMPOUND_LIST_PACK_SVG);
   addIcon(ICON_PLACE_PACK, ICON_PLACE_PACK_SVG);
-  addIcon(ICON_WORD_LIST, ICON_WORD_LIST_SVG);
+  addIcon(ICON_RECIPE_WIZARD, ICON_RECIPE_WIZARD_SVG);
   addIcon(ICON_MIX_PACK, ICON_MIX_PACK_SVG);
   addIcon(ICON_SEED_LOCK, ICON_SEED_LOCK_SVG);
   addIcon(ICON_SEED_COPY, ICON_SEED_COPY_SVG);

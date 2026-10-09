@@ -14,11 +14,9 @@ import {
   createCompoundNamesFileContent,
   createMixNamesFileContent,
   createNamesFileContent,
-  createWordListFileContent,
   isWordListContent,
   applyTemplate,
   parseTemplateFields,
-  parseWordListFileContent,
   type NamesFileData,
   isValidNamePackContent,
   MixPackIndexEntry,
@@ -45,10 +43,9 @@ import {
   ICON_LIST_PACK,
   ICON_MIX_PACK,
   ICON_PLACE_PACK,
-  ICON_WORD_LIST,
+  ICON_RECIPE_WIZARD,
   ICON_PLACE_SHAPES,
   ICON_GENERIC_PLACE_NAMES,
-  ICON_RECIPE,
   ICON_NATIVE_PLACE_NAMES,
   ICON_ADVANCED,
   ICON_BIOME,
@@ -85,7 +82,6 @@ import {
 import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/engine";
 import { cultureUsesBiomes, findCulture, findEra, generateWorldPlaceNames, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
-import { WordListGuideModal } from "./wordListGuide";
 import { CONTEXT_PHRASES, partsNote, traditionLabel } from "./colonialWording";
 import { RecipeEditorModal, type RecipeEditorOptions, RecipeWizard } from "./recipeEditor";
 import {
@@ -95,7 +91,6 @@ import {
   type SectionRequest,
   selectSectionNames,
 } from "./packs/sections";
-import { parseWordList } from "./packs/wordList";
 import { AGEING, type AgeingCandidate, ageName, validateSource } from "./ageing/engine";
 import { TakeoverView } from "./takeoverView";
 import { renderLoading, waitForPaint, waitForTask } from "./loading";
@@ -182,7 +177,8 @@ let sessionHintShown = false;
 
 function packTypeIconId(packType: NamePackType, subGenerator?: "breakdown" | "list"): string {
   if (packType === "recipePack") {
-    return ICON_RECIPE;
+    // Presets brief §2.2: recipe packs wear the wizard's pen-in-pin icon.
+    return ICON_RECIPE_WIZARD;
   }
   if (packType === "compoundPack") {
     return subGenerator === "list" ? ICON_COMPOUND_LIST_PACK : ICON_COMPOUND_BREAKDOWN_PACK;
@@ -3024,7 +3020,7 @@ export class NameForgeModal extends Modal {
   }
 
   /** Template packs of one type (or word lists), for "Start from template" in the editor. */
-  public async listTemplates(kind: NamePackType | "wordList"): Promise<{ name: string; description: string }[]> {
+  public async listTemplates(kind: NamePackType): Promise<{ name: string; description: string }[]> {
     const folderPath = this.getFolderPath();
     const folder = folderPath ? this.app.vault.getFolderByPath(normalizePath(folderPath)) : null;
     if (!folder) return [];
@@ -3033,20 +3029,12 @@ export class NameForgeModal extends Modal {
       if (!(child instanceof TFile) || child.extension !== "md") continue;
       try {
         const content = await this.app.vault.cachedRead(child);
-        if (kind === "wordList") {
-          if (!isWordListContent(content)) continue;
-          const parsed = parseWordListFileContent(content, child.basename);
-          if (!parsed.template) continue;
-          const sections = parsed.list.sections.map((s) => s.name);
-          out.push({ name: child.basename, description: sections.length > 0 ? sections.join(", ") : "No sections" });
-        } else {
-          if (!isValidNamePackContent(content)) continue;
-          const parsed = parseNamesFileContent(content);
-          if (!parsed.template || parsed.packType !== kind) continue;
-          const sections = parsed.sectioned?.sections.map((s) => s.name) ?? [];
-          const count = parsed.packType === "mixPack" ? `${parsed.mixSources?.length ?? 0} sources` : `${parsed.names.length} names`;
-          out.push({ name: child.basename, description: sections.length > 0 ? `${count}; sections: ${sections.join(", ")}` : count });
-        }
+        if (!isValidNamePackContent(content)) continue;
+        const parsed = parseNamesFileContent(content);
+        if (!parsed.template || parsed.packType !== kind) continue;
+        const sections = parsed.sectioned?.sections.map((s) => s.name) ?? [];
+        const count = parsed.packType === "mixPack" ? `${parsed.mixSources?.length ?? 0} sources` : `${parsed.names.length} names`;
+        out.push({ name: child.basename, description: sections.length > 0 ? `${count}; sections: ${sections.join(", ")}` : count });
       } catch {
         continue;
       }
@@ -3226,13 +3214,11 @@ class PreviousGenerationsModal extends Modal {
 
 const NAME_TEXTAREA_PLACEHOLDER =
   "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa";
-const WORD_LIST_TEXTAREA_PLACEHOLDER =
-  "One ## section per slot category, each with a table, - lines of words, and // lines naming packs.\n\n## Wild animal\n| Modern | Traditional | Plural | Combining forms | Fuses |\n|---|---|---|---|---|\n| kangaroo | — | kangaroos | Kangaroo- | No |\n| emu | — | emus | Emu- | Yes |\n\n## Status or role\n- Knight, Earl, Baron, King\n\n## Saint or holy person\n// Saxon Men (male)\n// Saxon Women (female)";
 const PLACE_TEXTAREA_PLACEHOLDER =
   "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
 
 /** The editor's text boxes: one per text tab. */
-type TextPane = "breakdownPack" | "listPack" | "placePack" | "wordList" | "biome";
+type TextPane = "breakdownPack" | "listPack" | "placePack" | "biome";
 
 class NameForgeEditorModal extends Modal {
   private parent: NameForgeModal;
@@ -3245,9 +3231,6 @@ class NameForgeEditorModal extends Modal {
   private compoundButton: HTMLButtonElement | null = null;
   private placeButton: HTMLButtonElement | null = null;
   private mixButton: HTMLButtonElement | null = null;
-  private wordListButton: HTMLButtonElement | null = null;
-  /** §9: the editor is creating a word list rather than a name pack. */
-  private wordListMode = false;
   /** Land brief §9.4: the editor is creating or editing a biome pack. */
   private biomeMode = false;
   private biomeButton: HTMLButtonElement | null = null;
@@ -3264,8 +3247,6 @@ class NameForgeEditorModal extends Modal {
   private wizardPaneEl: HTMLElement | null = null;
   private wizard: RecipeWizard | null = null;
   private templateRowEl: HTMLElement | null = null;
-  /** The word list guide's help icon, shown while the Word list tab is selected. */
-  private wordListHelpEl: HTMLElement | null = null;
   private stageEl: HTMLElement | null = null;
   /** §7: "Start from template" — the chosen template's note name, if any. */
   private templateOf: string | undefined = undefined;
@@ -3350,7 +3331,7 @@ class NameForgeEditorModal extends Modal {
     this.mixButton.addEventListener("click", () => {
       this.setPackType("mixPack");
     });
-    // Place, Recipe and Word list sit on a second line.
+    // Place, the place name wizard and Biome sit on a second line.
     typeToggle.createDiv({ cls: "nameforge-modal__toggle-break" });
     this.placeButton = addTypeButton("Place", ICON_PLACE_PACK);
     this.placeButton.addEventListener("click", () => {
@@ -3360,26 +3341,15 @@ class NameForgeEditorModal extends Modal {
     this.wizardButton = addTypeButton("Place name wizard", packTypeIconId("recipePack"));
     this.wizardButton.addEventListener("click", () => {
       this.wizardMode = true;
-      this.wordListMode = false;
       this.biomeMode = false;
       this.updateTypeButtons();
       void this.openWizard();
-    });
-
-    this.wordListButton = addTypeButton("Word list", ICON_WORD_LIST);
-    this.wordListButton.addEventListener("click", () => {
-      this.wordListMode = true;
-      this.wizardMode = false;
-      this.biomeMode = false;
-      this.updateTypeButtons();
-      void this.loadTemplateOptions();
     });
 
     // Land brief §9.4: a biome pack, starting from a base biome.
     this.biomeButton = addTypeButton("Biome", ICON_BIOME);
     this.biomeButton.addEventListener("click", () => {
       this.biomeMode = true;
-      this.wordListMode = false;
       this.wizardMode = false;
       this.updateTypeButtons();
       void this.enterBiomeMode();
@@ -3390,12 +3360,6 @@ class NameForgeEditorModal extends Modal {
     this.templateRowEl = templateRow;
     templateRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from template" });
     this.templateSelectEl = templateRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from template" } });
-    this.wordListHelpEl = templateRow.createSpan({
-      cls: "clickable-icon nameforge-editor-modal__help",
-      attr: { role: "button", "aria-label": "How to write a word list" },
-    });
-    setIcon(this.wordListHelpEl, "circle-help");
-    this.wordListHelpEl.addEventListener("click", () => new WordListGuideModal(this.app).open());
     this.templateSelectEl.addEventListener("change", () => {
       const value = this.templateSelectEl?.value ?? "";
       this.templateOf = value || undefined;
@@ -3423,7 +3387,6 @@ class NameForgeEditorModal extends Modal {
       breakdownPack: NAME_TEXTAREA_PLACEHOLDER,
       listPack: NAME_TEXTAREA_PLACEHOLDER,
       placePack: PLACE_TEXTAREA_PLACEHOLDER,
-      wordList: WORD_LIST_TEXTAREA_PLACEHOLDER,
       biome: "",
     };
     for (const pane of Object.keys(placeholders) as TextPane[]) {
@@ -3633,7 +3596,6 @@ class NameForgeEditorModal extends Modal {
 
   private setPackType(type: NamePackType) {
     this.selectedPackType = type;
-    this.wordListMode = false;
     this.biomeMode = false;
     this.wizardMode = false;
     this.updateTypeButtons();
@@ -3642,7 +3604,7 @@ class NameForgeEditorModal extends Modal {
 
   /** Lists templates of the chosen type, each with a short description. */
   private async loadTemplateOptions() {
-    this.templateOptions = await this.parent.listTemplates(this.wordListMode ? "wordList" : this.selectedPackType);
+    this.templateOptions = await this.parent.listTemplates(this.selectedPackType);
     const select = this.templateSelectEl;
     if (!select) return;
     select.empty();
@@ -3741,41 +3703,6 @@ class NameForgeEditorModal extends Modal {
     this.close();
   }
 
-  /** §9: saves the textarea as a word-list pack (tables under ## sections). */
-  private async saveWordList(packName: string) {
-    const body = this.inputEl?.value ?? "";
-    const list = parseWordList(body);
-    // Table rows, `-` words and `//` pack lines all count.
-    const entries =
-      list.unsectioned.length + list.unsectionedPacks.length + list.sections.reduce((n, s) => n + s.entries.length + s.packs.length, 0);
-    if (entries === 0 && !this.templateOf) {
-      this.parent.setStatus("No words to save. Add a table, a - list or a // pack line.");
-      return;
-    }
-    let folderPath = this.parent.getFolderPath();
-    if (!folderPath) {
-      const folder = await this.parent.promptForFolderSelection();
-      if (!folder) return;
-      folderPath = folder.path;
-    }
-    const path = normalizePath(`${folderPath}/${sanitizePackNameForFilename(packName)}.md`);
-    const content = createWordListFileContent(packName, body, this.templateOf);
-    try {
-      const existing = this.app.vault.getFileByPath(path);
-      if (existing instanceof TFile && (await this.parent.isTemplateFile(existing))) {
-        this.parent.setStatus("A template already has that name. Choose another name.");
-        return;
-      }
-      if (existing instanceof TFile) await this.app.vault.modify(existing, content);
-      else await this.app.vault.create(path, content);
-    } catch {
-      this.parent.setStatus(`Failed to save the word list to ${path}.`);
-      return;
-    }
-    new Notice(`nameForge: word list “${packName}” saved.`);
-    this.close();
-  }
-
   private setCompoundParts(count: 2 | 3) {
     this.compoundPartsCount = count;
     this.updateCompoundControls();
@@ -3793,9 +3720,8 @@ class NameForgeEditorModal extends Modal {
 
   private updateTypeButtons() {
     const isWizard = this.wizardMode;
-    const isWordList = !isWizard && this.wordListMode;
     const isBiome = !isWizard && this.biomeMode;
-    const other = isWizard || isWordList || isBiome;
+    const other = isWizard || isBiome;
     this.biomeButton?.classList.toggle("is-active", isBiome);
     this.biomeButton?.setAttribute("aria-pressed", String(isBiome));
     this.biomeRowEl?.toggle(isBiome);
@@ -3820,11 +3746,8 @@ class NameForgeEditorModal extends Modal {
       this.stageEl?.style.setProperty("--nf-wizard-extra-height", "0px");
     }
     this.templateRowEl?.toggle(!isWizard && !isBiome);
-    this.wordListHelpEl?.toggle(isWordList);
     this.templateHintEl?.toggle(!isWizard && !isBiome);
     this.wizardPaneEl?.toggle(isWizard);
-    this.wordListButton?.classList.toggle("is-active", isWordList);
-    this.wordListButton?.setAttribute("aria-pressed", String(isWordList));
     this.breakdownButton?.classList.toggle("is-active", isBreakdown);
     this.listButton?.classList.toggle("is-active", isList);
     this.compoundButton?.classList.toggle("is-active", isCompound);
@@ -3836,7 +3759,7 @@ class NameForgeEditorModal extends Modal {
     this.placeButton?.setAttribute("aria-pressed", String(isPlace));
     this.mixButton?.setAttribute("aria-pressed", String(isMix));
 
-    const pane = isWizard ? undefined : isWordList ? "wordList" : isBiome ? "biome" : this.textPaneFor(this.selectedPackType);
+    const pane = isWizard ? undefined : isBiome ? "biome" : this.textPaneFor(this.selectedPackType);
     this.inputEl = pane ? this.textPanes[pane] ?? null : null;
     for (const el of Object.values(this.textPanes)) el.toggle(el === this.inputEl);
     this.compoundSectionEl?.toggle(isCompound);
@@ -3893,10 +3816,6 @@ class NameForgeEditorModal extends Modal {
     }
     const packName = this.packNameInput?.value?.trim() || "nameForge";
     const templateOf = this.templateOf;
-    if (this.wordListMode) {
-      await this.saveWordList(packName);
-      return;
-    }
     if (this.biomeMode) {
       await this.saveBiome(packName);
       return;
