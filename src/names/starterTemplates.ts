@@ -159,8 +159,8 @@ const FUSES_COLUMN: Record<NameWordEntry["fuses"], string> = {
   mile: "No",
 };
 
-/** One built-in list as a §9.1 table. Descriptive words (no plural given) leave Plural as "—". */
-export function table(entries: NameWordEntry[]): string {
+/** One built-in list as a §9.1 table (Presets brief §4.3: page 4 uses it too). Descriptive words (no plural given) leave Plural as "—". */
+export function wordTable(entries: NameWordEntry[]): string {
   const rows = entries.map((e) => {
     const forms = [...e.forms, ...(e.traditionalForms ?? [])].map((f) => `${f}-`).join(", ");
     return `| ${e.modern} | ${e.traditional ?? "—"} | ${e.plural ?? "—"} | ${forms || "—"} | ${FUSES_COLUMN[e.fuses]} |`;
@@ -170,6 +170,6 @@ export function table(entries: NameWordEntry[]): string {
 
 /** The body of a word-list template: one ## section per category, then its description. */
 export function starterWordListBody(list: StarterWordList): string {
-  const sections = list.categories.map((id) => `## ${LABELS.get(id) ?? id}\n\n${table(NAME_WORDS.categories[id] ?? [])}`);
+  const sections = list.categories.map((id) => `## ${LABELS.get(id) ?? id}\n\n${wordTable(NAME_WORDS.categories[id] ?? [])}`);
   return `${list.description}\n\n${sections.join("\n\n")}`;
 }

@@ -49,6 +49,8 @@ export interface RecipeSettings {
   takeover?: string;
   /** The native pack (link target): native place and people slots left unset draw from it. Colonial parts only. */
   native?: string;
+  /** Presets brief §6.1: the recipe's own word-list note (link target); never inherited. */
+  words?: string;
 }
 
 /** A recipe as written: every setting optional, so a derived recipe can inherit per setting. */
@@ -63,6 +65,7 @@ export interface RecipePartial {
   render?: Partial<RecipeSettings["render"]>;
   takeover?: string;
   native?: string;
+  words?: string;
 }
 
 export const RECIPE_DEFAULTS: RecipeSettings = {
@@ -182,6 +185,8 @@ export function readRecipe(fm: Record<string, unknown>): { recipe: RecipePartial
   if (takeover) recipe.takeover = takeover;
   const native = linkTarget(fm.native);
   if (native) recipe.native = native;
+  const words = linkTarget(fm.words);
+  if (words) recipe.words = words;
   const register = str(fm.register);
   if (register && REGISTERS.includes(register as Register)) recipe.register = register as Register;
   else if (register) problems.push(`Unknown register “${register}”.`);
@@ -215,6 +220,8 @@ export function mergeRecipe(derived: RecipePartial, template: RecipePartial): Re
     render: { ...template.render, ...derived.render },
     takeover: derived.takeover ?? template.takeover,
     native: derived.native ?? template.native,
+    // Presets brief §6.1: each recipe has its own word-list note.
+    ...(derived.words ? { words: derived.words } : {}),
   };
 }
 
@@ -230,6 +237,7 @@ export function withDefaults(r: RecipePartial): RecipeSettings {
     render: { ...RECIPE_DEFAULTS.render, ...r.render },
     ...(r.takeover ? { takeover: r.takeover } : {}),
     ...(r.native ? { native: r.native } : {}),
+    ...(r.words ? { words: r.words } : {}),
   };
 }
 
@@ -293,6 +301,7 @@ export function recipeToFrontmatter(r: RecipePartial): Record<string, unknown> {
   }
   if (r.takeover) out.takeover = `[[${r.takeover}]]`;
   if (r.native) out.native = `[[${r.native}]]`;
+  if (r.words) out.words = `[[${r.words}]]`;
   return out;
 }
 

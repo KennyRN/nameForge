@@ -9,6 +9,7 @@ import { TRIBAL_TRADITIONS } from "./tribes/engine";
 import { biomeChoices, biomePhrase, explorersPhrase, FEATURES, incomersPhrase, terrainPhrase } from "./colonialSentence";
 import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
 import { sanitizePackNameForFilename } from "./nameParser";
+import { type SlotWordsView, slotWordsView } from "./names/wizardWords";
 import { defaultNameMode, hasBuiltInList } from "./names/engine";
 import {
   allowsLists,
@@ -52,6 +53,8 @@ export interface RecipeEditorOptions {
   /** The user's biome packs, resolved (Land brief §9.5). */
   biomes?: Biome[];
   onSaved: (path: string) => void;
+  /** Presets brief §3.1: runs the host's own save (and closes it), for page 3's Save icon. Set by the host. */
+  requestSave?: () => void;
 }
 
 /** Each colonial part's contexts, as they read in the wizard's sentence (shared with the modules). */
@@ -63,7 +66,9 @@ const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
 const kebab = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 /** The wizard's pages, in order. */
-const PAGES = ["Template", "Shape and rendering", "Slots and generic words"];
+const PAGES = ["Template", "Shape and rendering", "Slots and generic words", "Word lists"];
+/** Presets brief §3: the first three pages are the wizard; page 4 is optional. */
+const MAIN_PAGES = 3;
 
 /**
  * The recipe form as a three-page wizard, drawn into `hostEl`: a scrollable page and Back/Next
@@ -89,6 +94,10 @@ export class RecipeWizard {
   private working: RecipeSettings = withDefaults({});
   /** Slots the user has set explicitly (others use §6.3 defaults or the template). */
   private explicitSlots = new Set<string>();
+  /** Presets brief §4: page 4's section texts by slot id, kept while the wizard is open. */
+  private wordsEdits = new Map<string, string>();
+  /** The recipe's word-list note's body (without frontmatter), when it has one. */
+  private wordsBody: string | undefined;
 
   constructor(
     private readonly app: App,
@@ -108,6 +117,7 @@ export class RecipeWizard {
       this.own = parsed.recipe;
       this.body = parsed.body.trim();
       if (this.own.templateOf) await this.loadTemplate(this.own.templateOf);
+      if (this.own.words) await this.loadWords(this.own.words);
     }
     this.rebuildWorking();
     this.render();
@@ -120,6 +130,16 @@ export class RecipeWizard {
     if (!(file instanceof TFile)) return;
     const content = await this.app.vault.cachedRead(file);
     if (isRecipeContent(content)) this.template = parseRecipeContent(content).recipe;
+  }
+
+  /** Presets brief §6.1: the recipe's word-list note's body, for page 4's edited sections. */
+  private async loadWords(name: string) {
+    this.wordsBody = undefined;
+    const file = this.app.metadataCache.getFirstLinkpathDest(name, this.options.file?.path ?? this.options.folderPath);
+    if (!(file instanceof TFile)) return;
+    const content = await this.app.vault.cachedRead(file);
+    const fm = content.match(/^---\s*\n[\s\S]*?\n---\s*/);
+    this.wordsBody = fm ? content.slice(fm[0].length) : content;
   }
 
   private rebuildWorking() {
@@ -141,17 +161,33 @@ export class RecipeWizard {
       this.pageEl.addClass("nameforge-recipe-editor__page--shape");
       this.renderShapePage(this.pageEl);
     }
-    else this.renderSlotsPage(this.pageEl);
+    else if (this.page === 2) this.renderSlotsPage(this.pageEl);
+    else this.renderWordsPage(this.pageEl);
     this.pageEl.scrollTop = scrollTop;
 
+    // Presets brief §3.1: "n of 3" on the wizard's pages, "4 of 4" on the optional word lists page.
     const nav = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__nav" });
     const back = nav.createEl("button", { text: "Back" });
     back.disabled = this.page === 0;
     back.addEventListener("click", () => this.goTo(this.page - 1));
-    nav.createSpan({ cls: "nameforge-recipe-editor__step", text: `${this.page + 1} of ${PAGES.length} · ${PAGES[this.page]}` });
-    const next = nav.createEl("button", { text: "Next" });
-    next.disabled = this.page === PAGES.length - 1;
-    next.addEventListener("click", () => this.goTo(this.page + 1));
+    const total = this.page < MAIN_PAGES ? MAIN_PAGES : PAGES.length;
+    nav.createSpan({ cls: "nameforge-recipe-editor__step", text: `${this.page + 1} of ${total} · ${PAGES[this.page]}` });
+    if (this.page < MAIN_PAGES - 1) {
+      const next = nav.createEl("button", { text: "Next" });
+      next.addEventListener("click", () => this.goTo(this.page + 1));
+    } else if (this.page === MAIN_PAGES - 1) {
+      const actions = nav.createDiv({ cls: "nameforge-recipe-editor__nav-actions" });
+      const save = actions.createEl("button", {
+        cls: "nameforge-modal__icon-action",
+        attr: { type: "button", title: "Save and use as-is", "aria-label": "Save and use as-is" },
+      });
+      setIcon(save, ICON_SAVE);
+      save.addEventListener("click", () => this.options.requestSave?.());
+      const words = actions.createEl("button", { cls: "nameforge-recipe-editor__words-button", attr: { type: "button" } });
+      setIcon(words.createSpan({ cls: "nameforge-recipe-editor__words-icon" }), ICON_RECIPE);
+      words.createSpan({ text: "Optional: edit word lists" });
+      words.addEventListener("click", () => this.goTo(this.page + 1));
+    }
   }
 
   private goTo(page: number) {
@@ -345,6 +381,98 @@ export class RecipeWizard {
         });
         t.inputEl.rows = 3;
       });
+  }
+
+  /** The slots page 3 shows: those in the tier, plus any set outside it. */
+  private shownSlots(): { id: string; label: string }[] {
+    const part = this.working.shape.part;
+    return slotCategories(part).filter((c) => tierIncludes(this.tier, slotTier(part, c.id)) || this.isSlotSet(c.id));
+  }
+
+  /** Presets brief §4.1: page 4's view of one slot, or undefined when it is ignored. */
+  private wordsView(id: string, label: string): SlotWordsView | undefined {
+    const w = this.working;
+    return slotWordsView({
+      part: w.shape.part,
+      id,
+      label,
+      slot: this.isSlotSet(id) ? w.slots[id] : undefined,
+      biome: this.currentBiome(),
+      terrain: w.shape.terrain,
+      native: w.native,
+      words: w.words,
+      wordsBody: this.wordsBody,
+    });
+  }
+
+  /** Presets brief §4: every slot from page 3 as what it draws from; editable ones as text. */
+  private renderWordsPage(el: HTMLElement) {
+    el.createEl("p", {
+      cls: "setting-item-description",
+      text: "What each slot draws from. Edit a list to give this recipe its own words; only the sections you change are saved, to the recipe's word list.",
+    });
+    for (const { id, label } of this.shownSlots()) {
+      const view = this.wordsView(id, label);
+      if (!view) continue;
+      const details = el.createEl("details", { cls: "nameforge-recipe-editor__words" });
+      const summary = details.createEl("summary");
+      summary.createSpan({ cls: "nameforge-recipe-editor__words-label", text: label });
+      const status = summary.createSpan({ cls: "nameforge-recipe-editor__words-status", text: view.statusText });
+      this.renderWordsBody(details, view, status);
+    }
+  }
+
+  /** One page 4 section's body (§4.1). */
+  private renderWordsBody(el: HTMLElement, view: SlotWordsView, status: HTMLElement) {
+    const body = el.createDiv({ cls: "nameforge-recipe-editor__words-body" });
+    if (view.status === "tribal") {
+      body.createDiv({ cls: "setting-item-description", text: "From the tribal names module." });
+      return;
+    }
+    if (view.status === "river") {
+      body.createDiv({ cls: "setting-item-description", text: "From the river name module, following this recipe's shape." });
+      return;
+    }
+    if (view.status === "native") {
+      const line = body.createDiv({ cls: "setting-item-description", text: "From the native pack " });
+      this.noteLink(line, view.sources![0].pack!);
+      return;
+    }
+    if (view.status === "sources") {
+      const line = body.createDiv({ cls: "setting-item-description", text: "From " });
+      view.sources!.forEach((s, i) => {
+        if (i > 0) line.appendText(", ");
+        this.noteLink(line, s.list ?? s.pack ?? "");
+        if (view.sources!.length > 1) line.appendText(` (${s.weight})`);
+      });
+      line.appendText(". Edit these on the slots page.");
+      return;
+    }
+    const textarea = body.createEl("textarea", { cls: "nameforge-modal__textarea nameforge-recipe-editor__words-text", attr: { rows: "8" } });
+    textarea.value = this.wordsEdits.get(view.id) ?? view.text ?? "";
+    if (view.status === "placeholder") textarea.placeholder = "Leave empty to keep the placeholder. Add a table, - words or // pack lines.";
+    textarea.addEventListener("input", () => this.wordsEdits.set(view.id, textarea.value));
+    if (view.status === "edited") {
+      const reset = body.createEl("button", {
+        cls: "clickable-icon nameforge-recipe-editor__words-reset",
+        attr: { type: "button", title: view.resetTo === "placeholder" ? "Back to the placeholder" : "Back to the built-in list" },
+      });
+      setIcon(reset, "rotate-ccw");
+      reset.addEventListener("click", () => {
+        textarea.value = view.baseline ?? "";
+        this.wordsEdits.set(view.id, textarea.value);
+        status.setText(view.resetTo === "placeholder" ? "Placeholder" : view.resetTo === "biome" ? `${this.currentBiome()?.label ?? "Biome"} list` : "Built-in");
+      });
+    }
+  }
+
+  /** A note name as a link that opens the note in a new tab. */
+  private noteLink(el: HTMLElement, name: string) {
+    const a = el.createEl("a", { cls: "internal-link", text: name, attr: { href: "#" } });
+    a.addEventListener("click", (event) => {
+      event.preventDefault();
+      void this.app.workspace.openLinkText(name, this.options.file?.path ?? this.options.folderPath, "tab");
+    });
   }
 
   /** A slot dropdown's choice, applied to the working recipe. */
@@ -858,11 +986,14 @@ export class RecipeEditorModal extends Modal {
       attr: { type: "button", title: "Save recipe" },
     });
     setIcon(save, ICON_SAVE);
-    save.addEventListener("click", () => {
+    const run = () => {
       void wizard.save().then((path) => {
         if (path) this.close();
       });
-    });
+    };
+    save.addEventListener("click", run);
+    // Presets brief §3.1: page 3's Save icon runs the same save.
+    this.options.requestSave = run;
     const cancel = controls.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Cancel" },

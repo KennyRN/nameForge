@@ -3805,7 +3805,10 @@ class NameForgeEditorModal extends Modal {
   private async openWizard() {
     if (this.wizard || !this.wizardPaneEl) return;
     const pane = this.wizardPaneEl;
-    this.wizard = new RecipeWizard(this.app, await this.parent.recipeEditorOptions(), pane, () => this.packNameInput?.value ?? "");
+    const options = await this.parent.recipeEditorOptions();
+    // Presets brief §3.1: page 3's Save icon runs this modal's own save.
+    options.requestSave = () => void this.saveNames();
+    this.wizard = new RecipeWizard(this.app, options, pane, () => this.packNameInput?.value ?? "");
     await this.wizard.load();
   }
 

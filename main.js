@@ -89,12 +89,12 @@ var MarkovModel = class _MarkovModel {
         for (let k = 0; k <= KMAX; k++) {
           if (i - k < 0) continue;
           const ctx = k === 0 ? UNIGRAM_KEY : s.slice(i - k, i).join("");
-          let table2 = tables[k].get(ctx);
-          if (!table2) {
-            table2 = /* @__PURE__ */ new Map();
-            tables[k].set(ctx, table2);
+          let table = tables[k].get(ctx);
+          if (!table) {
+            table = /* @__PURE__ */ new Map();
+            tables[k].set(ctx, table);
           }
-          table2.set(ch, ((_a2 = table2.get(ch)) != null ? _a2 : 0) + 1);
+          table.set(ch, ((_a2 = table.get(ch)) != null ? _a2 : 0) + 1);
         }
       }
     }
@@ -32388,6 +32388,8 @@ function readRecipe(fm) {
   if (takeover) recipe.takeover = takeover;
   const native = linkTarget(fm.native);
   if (native) recipe.native = native;
+  const words = linkTarget(fm.words);
+  if (words) recipe.words = words;
   const register = str(fm.register);
   if (register && REGISTERS.includes(register)) recipe.register = register;
   else if (register) problems.push(`Unknown register \u201C${register}\u201D.`);
@@ -32416,7 +32418,9 @@ function mergeRecipe(derived, template) {
     register: (_b = derived.register) != null ? _b : template.register,
     render: { ...template.render, ...derived.render },
     takeover: (_c = derived.takeover) != null ? _c : template.takeover,
-    native: (_d = derived.native) != null ? _d : template.native
+    native: (_d = derived.native) != null ? _d : template.native,
+    // Presets brief §6.1: each recipe has its own word-list note.
+    ...derived.words ? { words: derived.words } : {}
   };
 }
 function withDefaults(r) {
@@ -32431,7 +32435,8 @@ function withDefaults(r) {
     register: (_c = r.register) != null ? _c : RECIPE_DEFAULTS.register,
     render: { ...RECIPE_DEFAULTS.render, ...r.render },
     ...r.takeover ? { takeover: r.takeover } : {},
-    ...r.native ? { native: r.native } : {}
+    ...r.native ? { native: r.native } : {},
+    ...r.words ? { words: r.words } : {}
   };
 }
 function applyRecipeTemplate(derived, template, name) {
@@ -32487,6 +32492,7 @@ function recipeToFrontmatter(r) {
   }
   if (r.takeover) out.takeover = `[[${r.takeover}]]`;
   if (r.native) out.native = `[[${r.native}]]`;
+  if (r.words) out.words = `[[${r.words}]]`;
   return out;
 }
 function britishPlaceNamesRecipe(region, biome, terrain) {
@@ -32795,7 +32801,7 @@ var FUSES_COLUMN = {
   "town-only": "Yes",
   mile: "No"
 };
-function table(entries) {
+function wordTable(entries) {
   const rows = entries.map((e) => {
     var _a2, _b, _c;
     const forms = [...e.forms, ...(_a2 = e.traditionalForms) != null ? _a2 : []].map((f) => `${f}-`).join(", ");
@@ -32808,7 +32814,7 @@ function starterWordListBody(list) {
     var _a2, _b;
     return `## ${(_a2 = LABELS.get(id)) != null ? _a2 : id}
 
-${table((_b = NAME_WORDS.categories[id]) != null ? _b : [])}`;
+${wordTable((_b = NAME_WORDS.categories[id]) != null ? _b : [])}`;
   });
   return `${list.description}
 
@@ -33104,7 +33110,7 @@ function biomeSections(b) {
           var _a3;
           return (_a3 = b.terrainTags[e.modern]) == null ? void 0 : _a3.includes(t);
         });
-        if (entries.length) out.push({ heading: `${name}: short ${kind}`, body: table(entries) });
+        if (entries.length) out.push({ heading: `${name}: short ${kind}`, body: wordTable(entries) });
       } else if ((_g = b.short[kind][t]) == null ? void 0 : _g.length) out.push({ heading: `${name}: short ${kind}`, body: lines(b.short[kind][t]) });
     }
     const c = custom.find((x) => x.id === t);
@@ -33114,7 +33120,7 @@ function biomeSections(b) {
   for (const [id, heading] of LIST_SECTIONS) {
     const entries = (_h = b.entries) == null ? void 0 : _h[id];
     const packLines = ((_j = (_i = b.packLines) == null ? void 0 : _i[id]) != null ? _j : []).map((p) => `// ${p.pack}${p.weight !== 1 ? ` (${fmt(p.weight)})` : ""}`).join("\n");
-    const body = entries ? table(entries) : lines(b[id], id === "lifeways");
+    const body = entries ? wordTable(entries) : lines(b[id], id === "lifeways");
     out.push({ heading, body: [body, packLines].filter(Boolean).join("\n") });
   }
   out.push({ heading: "Shape groups", body: lines(Object.entries(b.shapeMultipliers.groups), true) });
@@ -33161,8 +33167,8 @@ function diffAgainstBase(content, base) {
   flush();
   for (const s of pack.sections) {
     const b = baseText.get(norm3(s.heading));
-    const same4 = b && (s.entries && b.entries ? entryKey(s.entries) === entryKey(b.entries) : key(s.words) === key(b.words)) && s.packs.length === b.packs.length;
-    if (!same4) kept.push(`## ${s.heading}
+    const same5 = b && (s.entries && b.entries ? entryKey(s.entries) === entryKey(b.entries) : key(s.words) === key(b.words)) && s.packs.length === b.packs.length;
+    if (!same5) kept.push(`## ${s.heading}
 
 ${(_c = written.get(s.heading)) != null ? _c : ""}`.trim());
   }
@@ -35070,11 +35076,11 @@ var ContextGuideModal = class extends import_obsidian8.Modal {
       for (const text of entry.paragraphs) el.createEl("p", { text });
     }
     el.createEl("h3", { text: "At a glance" });
-    const table2 = el.createEl("table", { cls: "nameforge-context-guide__table" });
+    const table = el.createEl("table", { cls: "nameforge-context-guide__table" });
     const [head, ...rows] = AT_A_GLANCE;
-    const headRow = table2.createEl("thead").createEl("tr");
+    const headRow = table.createEl("thead").createEl("tr");
     for (const cell of head) headRow.createEl("th", { text: cell });
-    const body = table2.createEl("tbody");
+    const body = table.createEl("tbody");
     for (const row of rows) {
       const tr = body.createEl("tr");
       for (const cell of row) tr.createEl("td", { text: cell });
@@ -35270,13 +35276,110 @@ function usesNativeDefault(part, categoryId) {
   return part !== "organic" && FLORA_AND_FAUNA.has(categoryId);
 }
 
+// src/names/wizardWords.ts
+var LAND_BIOME_SLOTS2 = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant", "soil-or-ground", "resource", "season", "domestic-animal", "crop"]);
+var NATIVE_PACK_SLOTS = /* @__PURE__ */ new Set(["native-place-name", "native-people-or-tribe"]);
+var SHORT_KINDS = { landform: "land", "water-or-wetland-feature": "water" };
+var entriesOf = (pairs) => (pairs != null ? pairs : []).map(([e]) => e);
+function terrainWords2(biome, kind, terrain) {
+  if (terrain && terrain !== "any") return entriesOf(shortWords(biome, kind, terrain));
+  const seen = /* @__PURE__ */ new Set();
+  const out = [];
+  for (const t of availableTerrains(biome)) {
+    for (const [e] of shortWords(biome, kind, t.id)) {
+      if (seen.has(e.modern)) continue;
+      seen.add(e.modern);
+      out.push(e);
+    }
+  }
+  return out;
+}
+function slotBaselineSource(part, id, slot, biome, terrain) {
+  var _a2;
+  const own = biome && biome.id !== BRITAIN.id ? biome : void 0;
+  const unset = !slot;
+  const colonial = part !== "organic";
+  if ((slot == null ? void 0 : slot.kind) === "placeholder") return { from: "placeholder", entries: [] };
+  if (colonial && unset && usesNativeDefault(part, id)) {
+    const entries = own ? entriesOf(biomeEntries(own, id)) : [];
+    return entries.length > 0 ? { from: "biome", entries } : { from: "placeholder", entries: [] };
+  }
+  if (unset || (slot == null ? void 0 : slot.kind) === "biome") {
+    const kind = SHORT_KINDS[id];
+    if (kind && (own || terrain && terrain !== "any")) {
+      const entries = terrainWords2(own != null ? own : BRITAIN, kind, terrain);
+      if (entries.length > 0) return { from: own ? "biome" : "built-in", entries };
+    }
+    const followsBiome = LAND_BIOME_SLOTS2.has(id) && !(colonial && (id === "domestic-animal" || id === "crop") && (slot == null ? void 0 : slot.kind) !== "biome");
+    if (own && followsBiome) {
+      const entries = entriesOf(biomeEntries(own, id));
+      if (entries.length > 0) return { from: "biome", entries };
+    }
+  }
+  if (hasBuiltInList(id)) return { from: "built-in", entries: (_a2 = NAME_WORDS.categories[id]) != null ? _a2 : [] };
+  return { from: "placeholder", entries: [] };
+}
+function baselineText(source) {
+  return source.entries.length > 0 ? wordTable(source.entries) : "";
+}
+function slotWordsView(args) {
+  const { part, id, label, slot, biome, terrain, native, words, wordsBody } = args;
+  if ((slot == null ? void 0 : slot.kind) === "ignore") return void 0;
+  const base = { id, label };
+  if ((slot == null ? void 0 : slot.kind) === "tribal") return { ...base, status: "tribal", statusText: "Tribal names" };
+  if (id === "river-or-stream-name" && (!slot || slot.kind === "built-in")) return { ...base, status: "river", statusText: "River names" };
+  if (!slot && native && part !== "organic" && NATIVE_PACK_SLOTS.has(id)) {
+    return { ...base, status: "native", statusText: "Native pack", sources: [{ pack: native, weight: 1 }] };
+  }
+  const describe = (source2) => {
+    var _a2;
+    return source2.from === "biome" ? `${(_a2 = biome == null ? void 0 : biome.label) != null ? _a2 : "Biome"} list` : source2.from === "built-in" ? "Built-in" : "Placeholder";
+  };
+  if ((slot == null ? void 0 : slot.kind) === "sources") {
+    const only = slot.sources.length === 1 ? slot.sources[0] : void 0;
+    if (words && (only == null ? void 0 : only.list) !== void 0 && same3(only.list, words)) {
+      const source2 = slotBaselineSource(part, id, void 0, biome, terrain);
+      const section = splitSections(wordsBody != null ? wordsBody : "").sections.find((s) => same3(s.name, label));
+      return {
+        ...base,
+        status: "edited",
+        statusText: "Edited",
+        baseline: baselineText(source2),
+        text: section ? section.raw.replace(/^.*\n?/, "").trim() : "",
+        resetTo: source2.from
+      };
+    }
+    const lists = slot.sources.every((s) => s.list !== void 0);
+    const packs = slot.sources.every((s) => s.pack !== void 0);
+    const statusText = slot.sources.length > 1 ? "Sources" : lists ? "Word list" : packs ? "Name pack" : "Sources";
+    return { ...base, status: "sources", statusText, sources: slot.sources };
+  }
+  const source = slotBaselineSource(part, id, slot, biome, terrain);
+  const text = baselineText(source);
+  return { ...base, status: source.from, statusText: describe(source), baseline: text, text };
+}
+var same3 = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
+function splitSections(body) {
+  const lines2 = body.split(/\r?\n/);
+  const sections = [];
+  const description = [];
+  for (const line of lines2) {
+    const heading = line.trim().match(/^##\s+(.+?)\s*#*$/);
+    if (heading) sections.push({ name: heading[1], raw: [line] });
+    else if (sections.length > 0) sections[sections.length - 1].raw.push(line);
+    else description.push(line);
+  }
+  return { description: description.join("\n").trim(), sections: sections.map((s) => ({ name: s.name, raw: s.raw.join("\n").trim() })) };
+}
+
 // src/recipeEditor.ts
 var NEW_LANDS_CONTEXTS = CONTEXT_PHRASES["2"];
 var EXPANSION_CONTEXTS = CONTEXT_PHRASES["2a"];
 var NO_THE_REGIONS2 = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
-var same3 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+var same4 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 var kebab3 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-var PAGES = ["Template", "Shape and rendering", "Slots and generic words"];
+var PAGES = ["Template", "Shape and rendering", "Slots and generic words", "Word lists"];
+var MAIN_PAGES = 3;
 var TIER_TEXT = {
   simple: ["Simple", "The slots most names need."],
   detailed: ["Detailed", "Adds rarer people, beliefs and setting flavour."],
@@ -35299,6 +35402,8 @@ var RecipeWizard = class {
     this.working = withDefaults({});
     /** Slots the user has set explicitly (others use §6.3 defaults or the template). */
     this.explicitSlots = /* @__PURE__ */ new Set();
+    /** Presets brief §4: page 4's section texts by slot id, kept while the wizard is open. */
+    this.wordsEdits = /* @__PURE__ */ new Map();
     hostEl.addClass("nameforge-recipe-editor");
   }
   async load() {
@@ -35309,6 +35414,7 @@ var RecipeWizard = class {
       this.own = parsed.recipe;
       this.body = parsed.body.trim();
       if (this.own.templateOf) await this.loadTemplate(this.own.templateOf);
+      if (this.own.words) await this.loadWords(this.own.words);
     }
     this.rebuildWorking();
     this.render();
@@ -35321,6 +35427,16 @@ var RecipeWizard = class {
     if (!(file instanceof import_obsidian9.TFile)) return;
     const content = await this.app.vault.cachedRead(file);
     if (isRecipeContent(content)) this.template = parseRecipeContent(content).recipe;
+  }
+  /** Presets brief §6.1: the recipe's word-list note's body, for page 4's edited sections. */
+  async loadWords(name) {
+    var _a2, _b;
+    this.wordsBody = void 0;
+    const file = this.app.metadataCache.getFirstLinkpathDest(name, (_b = (_a2 = this.options.file) == null ? void 0 : _a2.path) != null ? _b : this.options.folderPath);
+    if (!(file instanceof import_obsidian9.TFile)) return;
+    const content = await this.app.vault.cachedRead(file);
+    const fm = content.match(/^---\s*\n[\s\S]*?\n---\s*/);
+    this.wordsBody = fm ? content.slice(fm[0].length) : content;
   }
   rebuildWorking() {
     var _a2;
@@ -35339,16 +35455,34 @@ var RecipeWizard = class {
     else if (this.page === 1) {
       this.pageEl.addClass("nameforge-recipe-editor__page--shape");
       this.renderShapePage(this.pageEl);
-    } else this.renderSlotsPage(this.pageEl);
+    } else if (this.page === 2) this.renderSlotsPage(this.pageEl);
+    else this.renderWordsPage(this.pageEl);
     this.pageEl.scrollTop = scrollTop;
     const nav = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__nav" });
     const back = nav.createEl("button", { text: "Back" });
     back.disabled = this.page === 0;
     back.addEventListener("click", () => this.goTo(this.page - 1));
-    nav.createSpan({ cls: "nameforge-recipe-editor__step", text: `${this.page + 1} of ${PAGES.length} \xB7 ${PAGES[this.page]}` });
-    const next = nav.createEl("button", { text: "Next" });
-    next.disabled = this.page === PAGES.length - 1;
-    next.addEventListener("click", () => this.goTo(this.page + 1));
+    const total = this.page < MAIN_PAGES ? MAIN_PAGES : PAGES.length;
+    nav.createSpan({ cls: "nameforge-recipe-editor__step", text: `${this.page + 1} of ${total} \xB7 ${PAGES[this.page]}` });
+    if (this.page < MAIN_PAGES - 1) {
+      const next = nav.createEl("button", { text: "Next" });
+      next.addEventListener("click", () => this.goTo(this.page + 1));
+    } else if (this.page === MAIN_PAGES - 1) {
+      const actions = nav.createDiv({ cls: "nameforge-recipe-editor__nav-actions" });
+      const save = actions.createEl("button", {
+        cls: "nameforge-modal__icon-action",
+        attr: { type: "button", title: "Save and use as-is", "aria-label": "Save and use as-is" }
+      });
+      (0, import_obsidian9.setIcon)(save, ICON_SAVE);
+      save.addEventListener("click", () => {
+        var _a3, _b2;
+        return (_b2 = (_a3 = this.options).requestSave) == null ? void 0 : _b2.call(_a3);
+      });
+      const words = actions.createEl("button", { cls: "nameforge-recipe-editor__words-button", attr: { type: "button" } });
+      (0, import_obsidian9.setIcon)(words.createSpan({ cls: "nameforge-recipe-editor__words-icon" }), ICON_RECIPE);
+      words.createSpan({ text: "Optional: edit word lists" });
+      words.addEventListener("click", () => this.goTo(this.page + 1));
+    }
   }
   goTo(page) {
     this.page = Math.max(0, Math.min(PAGES.length - 1, page));
@@ -35500,6 +35634,97 @@ var RecipeWizard = class {
         );
       });
       t.inputEl.rows = 3;
+    });
+  }
+  /** The slots page 3 shows: those in the tier, plus any set outside it. */
+  shownSlots() {
+    const part = this.working.shape.part;
+    return slotCategories(part).filter((c) => tierIncludes(this.tier, slotTier(part, c.id)) || this.isSlotSet(c.id));
+  }
+  /** Presets brief §4.1: page 4's view of one slot, or undefined when it is ignored. */
+  wordsView(id, label) {
+    const w = this.working;
+    return slotWordsView({
+      part: w.shape.part,
+      id,
+      label,
+      slot: this.isSlotSet(id) ? w.slots[id] : void 0,
+      biome: this.currentBiome(),
+      terrain: w.shape.terrain,
+      native: w.native,
+      words: w.words,
+      wordsBody: this.wordsBody
+    });
+  }
+  /** Presets brief §4: every slot from page 3 as what it draws from; editable ones as text. */
+  renderWordsPage(el) {
+    el.createEl("p", {
+      cls: "setting-item-description",
+      text: "What each slot draws from. Edit a list to give this recipe its own words; only the sections you change are saved, to the recipe's word list."
+    });
+    for (const { id, label } of this.shownSlots()) {
+      const view = this.wordsView(id, label);
+      if (!view) continue;
+      const details = el.createEl("details", { cls: "nameforge-recipe-editor__words" });
+      const summary = details.createEl("summary");
+      summary.createSpan({ cls: "nameforge-recipe-editor__words-label", text: label });
+      const status = summary.createSpan({ cls: "nameforge-recipe-editor__words-status", text: view.statusText });
+      this.renderWordsBody(details, view, status);
+    }
+  }
+  /** One page 4 section's body (§4.1). */
+  renderWordsBody(el, view, status) {
+    var _a2, _b;
+    const body = el.createDiv({ cls: "nameforge-recipe-editor__words-body" });
+    if (view.status === "tribal") {
+      body.createDiv({ cls: "setting-item-description", text: "From the tribal names module." });
+      return;
+    }
+    if (view.status === "river") {
+      body.createDiv({ cls: "setting-item-description", text: "From the river name module, following this recipe's shape." });
+      return;
+    }
+    if (view.status === "native") {
+      const line = body.createDiv({ cls: "setting-item-description", text: "From the native pack " });
+      this.noteLink(line, view.sources[0].pack);
+      return;
+    }
+    if (view.status === "sources") {
+      const line = body.createDiv({ cls: "setting-item-description", text: "From " });
+      view.sources.forEach((s, i) => {
+        var _a3, _b2;
+        if (i > 0) line.appendText(", ");
+        this.noteLink(line, (_b2 = (_a3 = s.list) != null ? _a3 : s.pack) != null ? _b2 : "");
+        if (view.sources.length > 1) line.appendText(` (${s.weight})`);
+      });
+      line.appendText(". Edit these on the slots page.");
+      return;
+    }
+    const textarea = body.createEl("textarea", { cls: "nameforge-modal__textarea nameforge-recipe-editor__words-text", attr: { rows: "8" } });
+    textarea.value = (_b = (_a2 = this.wordsEdits.get(view.id)) != null ? _a2 : view.text) != null ? _b : "";
+    if (view.status === "placeholder") textarea.placeholder = "Leave empty to keep the placeholder. Add a table, - words or // pack lines.";
+    textarea.addEventListener("input", () => this.wordsEdits.set(view.id, textarea.value));
+    if (view.status === "edited") {
+      const reset = body.createEl("button", {
+        cls: "clickable-icon nameforge-recipe-editor__words-reset",
+        attr: { type: "button", title: view.resetTo === "placeholder" ? "Back to the placeholder" : "Back to the built-in list" }
+      });
+      (0, import_obsidian9.setIcon)(reset, "rotate-ccw");
+      reset.addEventListener("click", () => {
+        var _a3, _b2, _c;
+        textarea.value = (_a3 = view.baseline) != null ? _a3 : "";
+        this.wordsEdits.set(view.id, textarea.value);
+        status.setText(view.resetTo === "placeholder" ? "Placeholder" : view.resetTo === "biome" ? `${(_c = (_b2 = this.currentBiome()) == null ? void 0 : _b2.label) != null ? _c : "Biome"} list` : "Built-in");
+      });
+    }
+  }
+  /** A note name as a link that opens the note in a new tab. */
+  noteLink(el, name) {
+    const a = el.createEl("a", { cls: "internal-link", text: name, attr: { href: "#" } });
+    a.addEventListener("click", (event) => {
+      var _a2, _b;
+      event.preventDefault();
+      void this.app.workspace.openLinkText(name, (_b = (_a2 = this.options.file) == null ? void 0 : _a2.path) != null ? _b : this.options.folderPath, "tab");
     });
   }
   /** A slot dropdown's choice, applied to the working recipe. */
@@ -35890,7 +36115,7 @@ var RecipeWizard = class {
     };
     if (!full.templateOf || !this.template) return full;
     const base = withDefaults(this.template);
-    const diff = (mine, theirs) => Object.fromEntries(Object.entries(mine).filter(([k, v]) => !same3(v, theirs[k])));
+    const diff = (mine, theirs) => Object.fromEntries(Object.entries(mine).filter(([k, v]) => !same4(v, theirs[k])));
     return {
       setting: w.setting !== base.setting ? w.setting : void 0,
       templateOf: full.templateOf,
@@ -35959,11 +36184,13 @@ var RecipeEditorModal = class extends import_obsidian9.Modal {
       attr: { type: "button", title: "Save recipe" }
     });
     (0, import_obsidian9.setIcon)(save, ICON_SAVE);
-    save.addEventListener("click", () => {
+    const run = () => {
       void wizard.save().then((path) => {
         if (path) this.close();
       });
-    });
+    };
+    save.addEventListener("click", run);
+    this.options.requestSave = run;
     const cancel = controls.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Cancel" }
@@ -36134,10 +36361,10 @@ var TakeoverView = class {
       new import_obsidian10.Notice("nameForge: choose a takeover pack.");
       return;
     }
-    const same4 = samePackNotice(this.nativePath, this.takeoverPath);
-    if (same4) {
-      this.host.setStatus(same4);
-      new import_obsidian10.Notice(`nameForge: ${same4}`);
+    const same5 = samePackNotice(this.nativePath, this.takeoverPath);
+    if (same5) {
+      this.host.setStatus(same5);
+      new import_obsidian10.Notice(`nameForge: ${same5}`);
       return;
     }
     const index = await this.host.scanFolderPacks();
@@ -39597,7 +39824,9 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
   async openWizard() {
     if (this.wizard || !this.wizardPaneEl) return;
     const pane = this.wizardPaneEl;
-    this.wizard = new RecipeWizard(this.app, await this.parent.recipeEditorOptions(), pane, () => {
+    const options = await this.parent.recipeEditorOptions();
+    options.requestSave = () => void this.saveNames();
+    this.wizard = new RecipeWizard(this.app, options, pane, () => {
       var _a2, _b;
       return (_b = (_a2 = this.packNameInput) == null ? void 0 : _a2.value) != null ? _b : "";
     });

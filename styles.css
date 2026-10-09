@@ -1501,3 +1501,46 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 .nameforge-recipe-editor__parts > h3:first-child {
   margin-top: 0;
 }
+
+/* Presets brief §3.1: page 3's Save icon and "Optional: edit word lists". */
+.nameforge-recipe-editor__nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nameforge-recipe-editor__words-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.nameforge-recipe-editor__words-icon {
+  display: inline-flex;
+}
+
+/* Presets brief §4: page 4's collapsible slot sections. */
+.nameforge-recipe-editor__words {
+  border-bottom: 1px solid var(--background-modifier-border);
+  padding: 6px 0;
+}
+.nameforge-recipe-editor__words > summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+}
+.nameforge-recipe-editor__words-status {
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+.nameforge-recipe-editor__words-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding-top: 6px;
+}
+.nameforge-recipe-editor__words-text {
+  flex: 1 1 auto;
+  width: 100%;
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-small);
+}

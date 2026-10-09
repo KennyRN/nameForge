@@ -9,7 +9,7 @@
 import { type Biome, type BiomeList, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES, type Terrain, type Weighted } from "./biomes";
 import { COLONIAL_DATA } from "./colonialShapes";
 import type { NameWordEntry } from "./names/engine";
-import { table } from "./names/starterTemplates";
+import { wordTable } from "./names/starterTemplates";
 import { parseWordList, type PackLine } from "./packs/wordList";
 import { PLACE_SHAPE_DATA } from "./placeShapes";
 
@@ -340,7 +340,7 @@ export function biomeSections(b: Biome): { heading: string; body: string }[] {
     for (const kind of ["land", "water"] as const) {
       if (b.terrainTags) {
         const entries = (b.entries?.[kind === "land" ? "shortLand" : "shortWater"] ?? []).filter((e) => b.terrainTags![e.modern]?.includes(t));
-        if (entries.length) out.push({ heading: `${name}: short ${kind}`, body: table(entries) });
+        if (entries.length) out.push({ heading: `${name}: short ${kind}`, body: wordTable(entries) });
       } else if (b.short[kind][t]?.length) out.push({ heading: `${name}: short ${kind}`, body: lines(b.short[kind][t]) });
     }
     const c = custom.find((x) => x.id === t);
@@ -350,7 +350,7 @@ export function biomeSections(b: Biome): { heading: string; body: string }[] {
   for (const [id, heading] of LIST_SECTIONS) {
     const entries = b.entries?.[id];
     const packLines = (b.packLines?.[id] ?? []).map((p) => `// ${p.pack}${p.weight !== 1 ? ` (${fmt(p.weight)})` : ""}`).join("\n");
-    const body = entries ? table(entries) : lines(b[id], id === "lifeways");
+    const body = entries ? wordTable(entries) : lines(b[id], id === "lifeways");
     out.push({ heading, body: [body, packLines].filter(Boolean).join("\n") });
   }
   out.push({ heading: "Shape groups", body: lines(Object.entries(b.shapeMultipliers.groups), true) });
