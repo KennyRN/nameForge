@@ -1568,8 +1568,10 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 }
 
 /* The templates pane takes the right quarter of the stage; the current pane keeps the rest. */
+/* An explicit width, since the text box's own width: 100% would otherwise win over the inset. */
 .nameforge-editor-modal__stage.is-templates-open > .nameforge-editor-modal__stage-pane {
-  right: 25%;
+  right: auto;
+  width: 75%;
 }
 .nameforge-editor-modal__templates {
   position: absolute;
