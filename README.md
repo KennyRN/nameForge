@@ -19,6 +19,13 @@ Built by a worldbuilder, for worldbuilders.
 - **Forgiving input.** Paste names one per line, comma-separated, space-separated, as bullets, wikilinks, or a mix: nameForge tidies them up and outputs them as a nice list. A line of three or more names separated by spaces is treated as a list; one or two words on a line stay as a single name.
 - **Plain markdown storage.** Packs and configuration are ordinary `.md` files with frontmatter. They sync with your vault, diff cleanly in git, and can be edited by hand.
 
+## Tribal names and biomes
+- **Tribal names** is a specialist module that names fictional peoples, kin groups, confederations, dynasties and war-bands in plain modern English, as a historian might translate them: *High Folk*, *People of the Blackwater*, *Twelve Arrows*, *Descendants of the Far Navigator*. Seventeen naming traditions (General, then three releases running from Celtic Britain & Gaul to Australia & New Guinea) decide how a name is built; no native-language words are ever produced.
+- Choose a **register** (plain, historical, legendary or admin), and from the options menu a group type, a perspective (self-name, neighbours' name, imposed and so on) and, if you want them, hostile names. Turn on the details toggle to see who coined each name, what it means, how it was received and some alternative names.
+- **Biomes** are kits of nature words: eleven of them, from temperate woodland to the high mountains. A tradition's **Homeland** uses its own country; choosing a biome moves its people somewhere new, so Polynesian-style names set in temperate woodland talk about oaks, herons and chalk hills.
+- **Exploration in new lands** and **expansion into settled lands** take a biome too, in the place name wizard (“…across the savannah, naming any feature”) and in their modules. With one set, native wildlife and plants become real words (*Hornbill Creek*, *Baobab Flat*) in place of placeholders. With none set, everything stays exactly as before.
+- In a recipe, the *native people or tribe* slot (colonial parts) and the *folk group* slot (british place names) can be filled from **Tribal names**, with a tradition of your choice, or “Regional (auto)” for the folk group, which follows the recipe's region.
+
 ## Installation & Use
 1. Turn on Community Plugins
 2. Search for nameForge

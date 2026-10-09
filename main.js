@@ -28145,7 +28145,6 @@ var TRIBAL_TRADITIONS = TRIBAL_DATA.traditions;
 var TRIBAL_REGISTERS = TRIBAL_DATA.registers;
 var TRIBAL_GROUP_TYPES = TRIBAL_DATA.groupTypes;
 var TRIBAL_PERSPECTIVES = Object.keys(TRIBAL_DATA.perspectives);
-var TRIBAL_THEMES = Object.keys(TRIBAL_DATA.themes);
 var PERSON_COLLECTIVES = TRIBAL_DATA.personCollectives;
 function findTradition(key) {
   return TRIBAL_TRADITIONS.find((t) => t.key === key);

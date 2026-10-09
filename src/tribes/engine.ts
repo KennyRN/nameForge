@@ -150,7 +150,6 @@ export const TRIBAL_TRADITIONS: readonly TribalTradition[] = TRIBAL_DATA.traditi
 export const TRIBAL_REGISTERS: readonly TribalRegister[] = TRIBAL_DATA.registers;
 export const TRIBAL_GROUP_TYPES = TRIBAL_DATA.groupTypes;
 export const TRIBAL_PERSPECTIVES = Object.keys(TRIBAL_DATA.perspectives);
-export const TRIBAL_THEMES = Object.keys(TRIBAL_DATA.themes);
 /** §14.6: words a colour may not directly modify. */
 export const PERSON_COLLECTIVES: readonly string[] = TRIBAL_DATA.personCollectives;
 
@@ -242,7 +241,7 @@ const wordRe = (w: string) => new RegExp(`(^|[^A-Za-z])${w.replace(/[-']/g, "\\$
 
 /** §14.2: title case; a, an, and, at, by, in, of, on, the, to stay lower unless first. */
 const SMALL = new Set(["a", "an", "and", "at", "by", "in", "of", "on", "the", "to"]);
-export function tribalTitleCase(text: string): string {
+function tribalTitleCase(text: string): string {
   return text
     .split(" ")
     .map((word, i) => {

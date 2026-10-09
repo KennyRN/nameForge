@@ -56,7 +56,7 @@ interface BiomeData {
   irregularPlurals: Record<string, string>;
 }
 
-export const BIOME_DATA = biomeData as unknown as BiomeData;
+const BIOME_DATA = biomeData as unknown as BiomeData;
 
 export const TERRAINS: readonly TerrainId[] = BIOME_DATA.terrains;
 
