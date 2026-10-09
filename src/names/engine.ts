@@ -521,7 +521,7 @@ export class NameRenderer {
   private tribalWordFill(tradition: string, rng: () => number): Fill {
     const part = this.recipe.shape.part;
     const { text } = tribalSlotFill(
-      { tradition, part, region: this.region, biome: part === "organic" ? undefined : this.recipe.shape.biome },
+      { tradition, part, region: this.region, biome: part === "organic" ? undefined : this.options.biome, terrain: this.options.terrain },
       rng,
     );
     return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };

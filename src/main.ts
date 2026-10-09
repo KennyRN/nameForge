@@ -1,4 +1,4 @@
-import { normalizePath, Plugin, TFile } from "obsidian";
+import { normalizePath, Notice, Plugin, TFile } from "obsidian";
 import { NameForgeSettingTab } from "./settings";
 import { AgeingHistoryEntry, GenerationHistoryEntry, MAX_HISTORY_ENTRIES, NameForgeModal, NameForgeSettings } from "./modal";
 import { ICON_MEEPLE, registerNameForgeIcons } from "./icons";
@@ -7,6 +7,7 @@ import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from 
 import { softConnectWithRetry } from "./hostConnectRetry";
 import { getStoryForgeHostApi } from "./storyforgeBridge";
 import { promptInstallStarterTemplates } from "./starterInstall";
+import { SAFEGUARD_TEMPLATE } from "./tribes/safeguardPacks";
 
 const DEFAULT_SETTINGS: NameForgeSettings = {
   namesFilePath: "",
@@ -192,6 +193,23 @@ export default class NameForgePlugin extends Plugin {
       name: "Open name generator",
       callback: () => {
         this.openNameGenerator();
+      },
+    });
+
+    // Land brief §10: a tribal safeguard list to edit, never written over an existing one.
+    this.addCommand({
+      id: "create-tribal-safeguard-list",
+      name: "Create tribal safeguard list",
+      callback: async () => {
+        const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
+        await ensureVaultFolder(this.app, folder);
+        const path = normalizePath(`${folder}/Tribal safeguards.md`);
+        if (this.app.vault.getFileByPath(path)) {
+          new Notice("nameForge: “Tribal safeguards” already exists.");
+          return;
+        }
+        await this.app.vault.create(path, SAFEGUARD_TEMPLATE);
+        new Notice("nameForge: “Tribal safeguards” created.");
       },
     });
 

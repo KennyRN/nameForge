@@ -3,6 +3,7 @@
 // Short tribal names for the colonial `native-people-or-tribe` slot and the organic `folk-group`
 // slot: plain, article-free and never fused, drawn on the recipe's fill stream.
 
+import type { Biome } from "../biomes";
 import { findTradition, tribalName, type TribalConstraints } from "./engine";
 
 export interface TribalSlotOptions {
@@ -12,8 +13,10 @@ export interface TribalSlotOptions {
   part: "organic" | "new-land" | "established" | "river-british" | "river-colonial";
   /** The recipe's region (organic) for "auto". */
   region?: string;
-  /** The recipe's biome (colonial parts); otherwise the tradition's homeland. */
-  biome?: string;
+  /** The recipe's biome (colonial parts), as an id or resolved; otherwise the tradition's homeland. */
+  biome?: string | Biome;
+  /** Land brief §11: the recipe's terrain. */
+  terrain?: string;
 }
 
 /** §20.2: the fill settings for each side. */
@@ -72,7 +75,17 @@ export function tribalSlotFill(options: TribalSlotOptions, rng: () => number): {
   if (!findTradition(tradition)) tradition = "general";
   const constraints =
     options.part === "river-british" ? RIVER_BRITISH : options.part === "river-colonial" ? RIVER_COLONIAL : organic ? ORGANIC : COLONIAL;
-  const name = tribalName({ tradition, biome: organic ? undefined : options.biome, hostile: false, constraints }, rng);
+  const biome = organic ? undefined : options.biome;
+  const name = tribalName(
+    {
+      tradition,
+      ...(typeof biome === "string" ? { biome } : biome ? { biomeData: biome } : {}),
+      terrain: options.terrain,
+      hostile: false,
+      constraints,
+    },
+    rng,
+  );
   // §20.2: a leading "The" is removed.
   const text = (name?.name ?? "People").replace(/^The /, "");
   return { text, tradition };

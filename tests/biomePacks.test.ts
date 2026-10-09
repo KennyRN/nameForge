@@ -96,3 +96,19 @@ test("biome packs: chains, loops, pack lines and empty sections", () => {
   assert.deepEqual(p.packLines?.birds, [{ pack: "Saxon Birds", weight: 2 }]);
   assert.deepEqual(p.trees, []);
 });
+
+// ── Tribal safeguard packs (Land brief §10) ─────────────────────────────────
+
+import { mergeSafeguards, parseSafeguardPack } from "../src/tribes/safeguardPacks";
+import { TRIBAL_DATA } from "../src/tribes/engine";
+
+test("safeguard packs: allow, block and the built-in block list", () => {
+  const pack = parseSafeguardPack("---\ntype: tribal-safeguards\n---\n\n## Block\n- Hill Folk\n\n## Allow\n- Golden Horde, Crow\n");
+  const merged = mergeSafeguards(TRIBAL_DATA.safeguards, [pack]);
+  assert.ok(!merged.flag.includes("Golden Horde"), "Allow takes a flag-list entry off");
+  assert.ok(merged.block.includes("Crow"), "a built-in block entry stays");
+  assert.ok(merged.notices.some((n) => n.includes("Crow")));
+  assert.ok(merged.block.includes("Hill Folk"), "a pack's Block adds an entry");
+  assert.equal(merged.flagBlocks, false);
+  assert.equal(mergeSafeguards(TRIBAL_DATA.safeguards, [parseSafeguardPack("---\ntype: tribal-safeguards\nflag-list-blocks: true\n---\n")]).flagBlocks, true);
+});

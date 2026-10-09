@@ -3,6 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { BIOMES, biomeWords, findBiome, TERRAINS } from "../src/biomes";
 import { mulberry32 } from "../src/markov";
+import tribalSnapshots from "./fixtures/tribal-snapshots.json";
 import {
   breaksColourRule,
   generateTribalNames,
@@ -172,6 +173,14 @@ test("tribal: biome gating", () => {
   const gated = seaShare("steppe");
   const open = seaShare("tropical-islands");
   assert.ok(gated < open / 2, `${(gated * 100).toFixed(1)}% gated against ${(open * 100).toFixed(1)}% at home`);
+});
+
+test("tribal: snapshots after the terrain split hold", () => {
+  for (const tradition of ["general", "celtic", "polynesian"]) {
+    for (const seed of [1, 2]) {
+      assert.deepEqual(JSON.parse(JSON.stringify(generateTribalNames({ tradition, count: 20, seed }).names)), (tribalSnapshots as Record<string, unknown>)[`${tradition} ${seed}`]);
+    }
+  }
 });
 
 test("tribal: history labels", () => {

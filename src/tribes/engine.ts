@@ -186,6 +186,12 @@ export interface TribalOptions {
   perspective?: string;
   hostile?: boolean;
   constraints?: TribalConstraints;
+  /** Land brief §11: a terrain id (custom terrains too) or "any". */
+  terrain?: string;
+  /** Land brief §11: a resolved biome (a user pack), used in place of `biome`. */
+  biomeData?: Biome;
+  /** Land brief §10: the merged safeguard lists; the built-in lists when absent. */
+  safeguards?: { block: string[]; flag: string[]; flagBlocks: boolean };
 }
 
 export interface TribalName {
@@ -194,7 +200,7 @@ export interface TribalName {
   tradition: string;
   biome: string;
   biomeMode: BiomeMode;
-  terrain: TerrainId | null;
+  terrain: string | null;
   groupType: string;
   perspective: string;
   tone: "respectful" | "neutral" | "hostile";
@@ -260,7 +266,7 @@ interface Ctx {
   trad: TribalTradition;
   biome: Biome;
   mode: BiomeMode;
-  terrainWeights: Record<TerrainId, number>;
+  terrainWeights: Record<string, number>;
   register: TribalRegister;
   groupType: string;
   perspective: string;
@@ -270,7 +276,7 @@ interface Ctx {
   rng: Rng;
   opts: TribalOptions;
   /** The terrain of the last landscape or water word drawn. */
-  terrain: TerrainId | null;
+  terrain: string | null;
   /** Words to reuse when building alternatives (§16). */
   pin: Map<string, string>;
 }
@@ -295,12 +301,19 @@ interface Parts {
 }
 
 /** A terrain's share after the tradition's multipliers, in percent (§3.8). */
-const share = (ctx: Ctx, ...terrains: TerrainId[]) => terrains.reduce((n, t) => n + ctx.terrainWeights[t], 0);
+const share = (ctx: Ctx, ...terrains: TerrainId[]) => terrains.reduce((n, t) => n + (ctx.terrainWeights[t] ?? 0), 0);
 
-function effectiveTerrains(trad: TribalTradition, biome: Biome): Record<TerrainId, number> {
-  const raw = Object.fromEntries(TERRAINS.map((t) => [t, biome.terrainWeights[t] * (trad.terrainMultipliers[t] ?? 1)])) as Record<TerrainId, number>;
+/**
+ * Terrain shares in percent after the tradition's multipliers (§3.8). Land brief §11: a chosen
+ * terrain the biome has is the only one; custom terrains count as plains for gating.
+ */
+function effectiveTerrains(trad: TribalTradition, biome: Biome, terrain?: string): Record<string, number> {
+  const zero = Object.fromEntries(TERRAINS.map((t) => [t, 0])) as Record<string, number>;
+  if (terrain && terrain !== "any" && (biome.terrainWeights[terrain] ?? 0) > 0) return { ...zero, [terrain]: 100 };
+  const keys = Object.keys(biome.terrainWeights);
+  const raw = Object.fromEntries(keys.map((t) => [t, biome.terrainWeights[t] * (trad.terrainMultipliers[t as TerrainId] ?? 1)]));
   const total = Object.values(raw).reduce((n, w) => n + w, 0) || 1;
-  return Object.fromEntries(TERRAINS.map((t) => [t, (raw[t] * 100) / total])) as Record<TerrainId, number>;
+  return { ...zero, ...Object.fromEntries(keys.map((t) => [t, (raw[t] * 100) / total])) };
 }
 
 /** §5.4: a suppression multiplier for a word (homeland suppressions only in Homeland mode). */
@@ -333,7 +346,7 @@ function filtered(ctx: Ctx, word: string, weight: number): number {
   return weight * suppression(ctx, word);
 }
 
-function landPool(ctx: Ctx, kind: "land" | "water", terrain: TerrainId): Pool {
+function landPool(ctx: Ctx, kind: "land" | "water", terrain: string): Pool {
   const pool: Pool = new Map();
   for (const [w, n] of terrainWords(ctx.biome, kind, terrain)) add(pool, w, filtered(ctx, w, n));
   if (ctx.mode === "homeland") for (const w of ctx.trad.flavour[kind] ?? []) add(pool, w, filtered(ctx, w, 3));
@@ -345,7 +358,7 @@ function featureWord(ctx: Ctx, kind: "land" | "water" | "any"): string | undefin
   const pinned = ctx.pin.get(kind === "any" ? "feature" : kind) ?? ctx.pin.get("feature");
   if (pinned) return pinned;
   const k = kind === "any" ? (ctx.rng() < 0.5 ? "land" : "water") : kind;
-  const terrains = TERRAINS.map((t): [TerrainId, number] => [t, landPool(ctx, k, t).size > 0 ? ctx.terrainWeights[t] : 0]);
+  const terrains = Object.keys(ctx.terrainWeights).map((t): [string, number] => [t, landPool(ctx, k, t).size > 0 ? ctx.terrainWeights[t] : 0]);
   const terrain = pick(terrains, ctx.rng);
   if (!terrain) return kind === "any" ? featureWord(ctx, k === "land" ? "water" : "land") : undefined;
   ctx.terrain = terrain;
@@ -966,8 +979,23 @@ function hostileWord(ctx: Ctx): string | undefined {
 // ── Rendering and safeguards (§14, §17) ─────────────────────────────────────
 
 const norm = (s: string) => s.toLowerCase().replace(/^the /, "").trim();
-const BLOCK = new Set(TRIBAL_DATA.safeguards.blockList.map(norm));
-const FLAG = new Set(TRIBAL_DATA.safeguards.flagList.map(norm));
+const BUILT_IN_GUARDS = {
+  block: new Set(TRIBAL_DATA.safeguards.blockList.map(norm)),
+  flag: new Set(TRIBAL_DATA.safeguards.flagList.map(norm)),
+  flagBlocks: TRIBAL_DATA.safeguards.flagListBlocks,
+};
+const guardCache = new WeakMap<object, typeof BUILT_IN_GUARDS>();
+/** Land brief §10: the run's safeguard lists as sets (the built-in lists unless packs merged others). */
+function safeguardSets(opts: TribalOptions): typeof BUILT_IN_GUARDS {
+  const s = opts.safeguards;
+  if (!s) return BUILT_IN_GUARDS;
+  let sets = guardCache.get(s);
+  if (!sets) {
+    sets = { block: new Set(s.block.map(norm)), flag: new Set(s.flag.map(norm)), flagBlocks: s.flagBlocks };
+    guardCache.set(s, sets);
+  }
+  return sets;
+}
 
 /** §14.6: a colour directly before a person-collective reads as a racial label. */
 export function breaksColourRule(name: string, traditionKey: string): boolean {
@@ -1017,8 +1045,9 @@ function render(ctx: Ctx, template: string, text: string, parts: Parts): { headw
   if (!ENGLISH.test(headword)) return null;
   if (breaksColourRule(headword, ctx.trad.key)) return null;
   if (TRIBAL_DATA.safeguards.banned.some((b) => wordRe(b).test(headword))) return null;
-  if (BLOCK.has(norm(headword))) return null;
-  if (TRIBAL_DATA.safeguards.flagListBlocks && FLAG.has(norm(headword))) return null;
+  const guards = safeguardSets(ctx.opts);
+  if (guards.block.has(norm(headword))) return null;
+  if (guards.flagBlocks && guards.flag.has(norm(headword))) return null;
   return { headword, tail };
 }
 
@@ -1222,7 +1251,7 @@ function makeCtx(trad: TribalTradition, biome: Biome, mode: BiomeMode, groupType
     trad,
     biome,
     mode,
-    terrainWeights: effectiveTerrains(trad, biome),
+    terrainWeights: effectiveTerrains(trad, biome, options.terrain),
     register,
     groupType,
     perspective: "self",
@@ -1257,7 +1286,7 @@ function groupTypeChoices(trad: TribalTradition, options: TribalOptions): Record
  */
 export function tribalName(options: TribalOptions, rng: Rng): TribalName | null {
   const trad = findTradition(options.tradition) ?? TRIBAL_TRADITIONS[0];
-  const chosen = findBiome(options.biome);
+  const chosen = options.biomeData ?? findBiome(options.biome);
   const mode: BiomeMode = chosen ? "chosen" : "homeland";
   const biome = chosen ?? findBiome(pickRecord(trad.homeland, rng))!;
   const groupType = pickRecord(groupTypeChoices(trad, options), rng);
@@ -1279,7 +1308,7 @@ export function tribalName(options: TribalOptions, rng: Rng): TribalName | null 
 function finish(ctx: Ctx, a: Attempt, requested: TribalTradition, options: TribalOptions): TribalName {
   const parts = a.parts;
   const headwordOnly = options.constraints?.headwordOnly;
-  const echoesReal = FLAG.has(norm(a.headword));
+  const echoesReal = safeguardSets(options).flag.has(norm(a.headword));
   const base = {
     name: a.headword,
     inText: inTextOf(a.headword),

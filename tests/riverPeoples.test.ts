@@ -82,3 +82,22 @@ test("river peoples: colonial recipes with a native pack name some rivers native
   const adapted = run((s) => `${s}q`);
   assert.ok(adapted.some((n) => /Zz\d+aq/.test(n.text)), "a takeover pack adapts a native river");
 });
+
+// ── Tribal names with a terrain (Land brief §11) ────────────────────────────
+
+import { BRITAIN, terrainWords } from "../src/biomes";
+import { tribalName } from "../src/tribes/engine";
+
+test("tribal terrain: Polynesian names set on Britain's coasts use coast words only", () => {
+  const coast = new Set([...terrainWords(BRITAIN, "land", "coast"), ...terrainWords(BRITAIN, "water", "coast")].map(([w]) => w));
+  const rng = mulberry32(12);
+  let checked = 0;
+  for (let i = 0; i < 1000; i++) {
+    const n = tribalName({ tradition: "polynesian", biome: "britain", terrain: "coast", constraints: { headwordOnly: true } }, rng);
+    if (!n || (n.theme !== "landscape" && n.theme !== "water")) continue;
+    if (n.terrain !== null) assert.equal(n.terrain, "coast", n.name);
+    if (coast.has(n.keyword)) checked++;
+    else assert.ok(!n.keyword || n.terrain === "coast", `${n.name}: ${n.keyword}`);
+  }
+  assert.ok(checked > 0);
+});

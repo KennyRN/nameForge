@@ -64,6 +64,7 @@ import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type N
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recipe";
 import { type Biome, BIOMES, BRITAIN, findBiome } from "./biomes";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
+import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
 import { type BiomePackSource, biomeToText, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
 import {
   findTradition,
@@ -1260,9 +1261,15 @@ export class NameForgeModal extends Modal {
   private async runTribalNames() {
     const t = this.tribal;
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+    const land = this.land("tribal");
+    await this.loadCustomBiomes();
+    const chosen = findBiome(land.biome, this.customBiomes);
+    const guards = await this.loadSafeguards();
     const result = generateTribalNames({
       tradition: t.tradition,
-      biome: this.land("tribal").biome,
+      ...(chosen?.custom ? { biomeData: chosen } : { biome: land.biome }),
+      terrain: land.terrain,
+      safeguards: guards.safeguards,
       register: t.register,
       groupType: t.groupType,
       perspective: t.perspective,
@@ -1280,7 +1287,21 @@ export class NameForgeModal extends Modal {
       "module",
     );
     await this.recordGenerationHistory(result.names.length, tribalHistoryLabel(SECTION_LABELS.tribalNames, t.tradition, this.land("tribal").biome, t.register, this.land("tribal").terrain, this.customBiomes));
-    this.setStatus(result.notices.join(" "));
+    this.setStatus([...result.notices, ...guards.notices].join(" "));
+  }
+
+  /** Land brief §10: every tribal safeguard pack in the names folder, merged with the built-in lists. */
+  private async loadSafeguards(): Promise<{ safeguards?: Safeguards; notices: string[] }> {
+    const folder = this.app.vault.getFolderByPath(normalizePath(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const packs = [];
+    for (const child of folder?.children ?? []) {
+      if (!(child instanceof TFile) || child.extension !== "md") continue;
+      const content = await this.app.vault.cachedRead(child);
+      if (isSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
+    }
+    if (packs.length === 0) return { notices: [] };
+    const { notices, ...safeguards } = mergeSafeguards(TRIBAL_DATA.safeguards, packs);
+    return { safeguards, notices };
   }
 
   /**
