@@ -10,8 +10,8 @@ import { GENERIC_PLACE_NAMES_HISTORY_NAME, PLACE_SHAPES_HISTORY_NAME } from "./p
  * are a choice within place names; "explorationPlaceShapes" and "empireExpansionPlaceShapes"
  * run the colonial generator (colonialShapes.ts) for parts 2 and 2a; "nameAgeing" ages a name
  * towards a target pack (ageing/engine.ts); "nameTakeover" adopts generated native names into a
- * takeover pack's language (the engine's takeover profile, via takeoverView.ts); "groups" is a
- * placeholder for now and shows the "no packs yet" stub. */
+ * takeover pack's language (the engine's takeover profile, via takeoverView.ts); "tribalNames"
+ * names peoples, kin groups and confederations (tribes/engine.ts, Tribal brief). */
 /** History rows from before the renames start with these; they keep their icons (river brief §1). */
 export const OLD_HISTORY_PREFIXES = {
   explorationPlaceShapes: ["exploration place name shapes", "exploration place names"],
@@ -26,16 +26,16 @@ export type NameForgeSection =
   | "empireExpansionPlaceShapes"
   | "nameAgeing"
   | "nameTakeover"
-  | "groups";
+  | "tribalNames";
 
 export const SECTION_ORDER: NameForgeSection[] = [
   "markov",
   "placeShapes",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
+  "tribalNames",
   "nameAgeing",
   "nameTakeover",
-  "groups",
 ];
 
 // Section names are deliberately lowercase, matching titleForge's section-switcher menu.
@@ -47,13 +47,14 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   empireExpansionPlaceShapes: "expansion into settled lands",
   nameAgeing: "name ageing",
   nameTakeover: "name takeover",
-  groups: "groups",
+  tribalNames: "tribal names",
 };
 
 /** History labels for new runs of the place-name and river modules. */
 export const BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
 export const RIVER_NAMES_HISTORY_NAME = "river names";
 export const WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
+export const TRIBAL_NAMES_HISTORY_NAME = "tribal names";
 
 /**
  * Which module a history entry belongs to, read from its label, so each module shows only its own
@@ -66,6 +67,8 @@ export function historySection(packName: string): NameForgeSection {
   // River names now live in place names (British river names); old entries go with them.
   if (starts(RIVER_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
+  // Tribal brief §18.1.
+  if (starts(TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }

@@ -33,7 +33,7 @@ import {
   ICON_INFO,
   ICON_PACKS,
   ICON_RIVER_NAMES,
-  ICON_GROUPS,
+  ICON_TRIBAL_NAMES,
   ICON_BULLET_INSERT,
   ICON_CANCEL,
   ICON_CHECKLIST_INSERT,
@@ -130,7 +130,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   nameAgeing: ICON_NAME_AGEING,
   nameTakeover: ICON_NAME_TAKEOVER,
-  groups: ICON_GROUPS,
+  tribalNames: ICON_TRIBAL_NAMES,
 };
 
 /** Shown in the pack box on the first open of each Obsidian session; the arrow points at the

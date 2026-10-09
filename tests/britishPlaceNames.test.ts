@@ -227,9 +227,9 @@ test("line-up: seven modules in order, with their labels; river names live in pl
       "place names",
       "exploration in new lands",
       "expansion into settled lands",
+      "tribal names",
       "name ageing",
       "name takeover",
-      "groups",
     ],
   );
   assert.ok(!Object.values(SECTION_LABELS).includes("generic place name generator"));
