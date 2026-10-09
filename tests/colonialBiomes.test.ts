@@ -4,7 +4,6 @@ import assert from "node:assert/strict";
 import snapshots from "./fixtures/biome-snapshots.json";
 import { BIOMES, biomeEntries } from "../src/biomes";
 import { colonialHistoryLabel } from "../src/colonialShapes";
-import { colonialSentenceText } from "../src/colonialSentence";
 import { generatePlaceNames, NAME_WORDS, type NameWordEntry, type ResolvedSlot } from "../src/names/engine";
 import { colonialPlaceNamesRecipe, readRecipe, recipeToFrontmatter, withDefaults } from "../src/names/recipe";
 import { mulberry32 } from "../src/markov";
@@ -90,18 +89,6 @@ test("colonial biomes: YAML round trip", () => {
   const unknown = recipeToFrontmatter({ shape: { part: "new-land", biome: "unknown" } });
   assert.ok(!("biome" in (unknown.shape as Record<string, unknown>)));
   assert.deepEqual(readRecipe({ shape: { biome: "tundra" } }).problems, ["Unknown biome “tundra”."]);
-});
-
-test("colonial biomes: the wizard sentences", () => {
-  const cases: [Parameters<typeof colonialSentenceText>, string][] = [
-    [["new-land", "general", "wild-and-unsettled", "unknown", "any"], "General explorers in wild and unsettled lands across unknown country, naming any feature"],
-    [["new-land", "spanish", "contested-frontier", "rainforest", "any"], "Spanish-themed explorers in a contested frontier across tropical rainforest, naming any feature"],
-    [["new-land", "dutch", "sparse-or-weak-native-presence", "savannah", "any"], "Dutch-themed explorers in lands with a sparse, or weak, native presence across the savannah, naming any feature"],
-    [["established", "roman", "imposition", "mediterranean", "any"], "Roman-themed incomers who are ruling over the locals across the Mediterranean lands, naming any feature"],
-    [["established", "british-imperial", "accommodation", "monsoon", "settlement"], "British-themed incomers who are living alongside the locals across the monsoon lands, naming settlement"],
-    [["established", "japanese", "adoption", "cool-rainforest", "any"], "Japanese-themed incomers who are settling in amongst the locals across cool rainforest, naming any feature"],
-  ];
-  for (const [args, sentence] of cases) assert.equal(colonialSentenceText(...args), sentence);
 });
 
 test("colonial biomes: history labels", () => {

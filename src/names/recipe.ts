@@ -23,6 +23,8 @@ export type SlotSetting =
   | { kind: "placeholder" }
   /** Tribal brief §20.1: tribal names fill the slot; `tradition` is a tradition key or "auto". */
   | { kind: "tribal"; tradition: string }
+  /** Land brief §5.1: "From the biome"; only offered for colonial livestock and crops. */
+  | { kind: "biome" }
   | {
       kind: "sources";
       sources: SourceRef[];
@@ -90,7 +92,7 @@ export function linkTarget(v: unknown): string | undefined {
 }
 
 function readSlot(v: unknown, problems: string[], id: string): SlotSetting | undefined {
-  if (v === "built-in" || v === "ignore" || v === "placeholder") return { kind: v };
+  if (v === "built-in" || v === "ignore" || v === "placeholder" || v === "biome") return { kind: v };
   if (!isObject(v)) {
     problems.push(`Slot “${id}” isn't built-in, ignore, placeholder or a list of sources.`);
     return undefined;

@@ -4,15 +4,17 @@
 import { App, Menu, Modal, normalizePath, Notice, Setting, setIcon, stringifyYaml, TFile } from "obsidian";
 import { ContextGuideModal } from "./contextGuide";
 import { CONTEXT_PHRASES, traditionLabel } from "./colonialWording";
-import { findBiome } from "./biomes";
+import { availableTerrains, type Biome, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
 import { TRIBAL_TRADITIONS } from "./tribes/engine";
-import { BIOME_CHOICES, biomePhrase, explorersPhrase, FEATURES, incomersPhrase } from "./colonialSentence";
+import { biomeChoices, biomePhrase, explorersPhrase, FEATURES, incomersPhrase, terrainPhrase } from "./colonialSentence";
 import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
 import { sanitizePackNameForFilename } from "./nameParser";
 import { defaultNameMode, hasBuiltInList } from "./names/engine";
 import {
   allowsLists,
   allowsTribal,
+  slotChoices,
+  slotDefaultLabel,
   allowsPacks,
   allowsPlaceholderChoice,
   NAME_SLOTS,
@@ -47,6 +49,8 @@ export interface RecipeEditorOptions {
   templates: { name: string; description: string }[];
   /** Packs offered as the takeover pack (basenames), with why each ineligible one can't be used. */
   takeoverPacks: { name: string; reason?: string }[];
+  /** The user's biome packs, resolved (Land brief §9.5). */
+  biomes?: Biome[];
   onSaved: (path: string) => void;
 }
 
@@ -343,6 +347,45 @@ export class RecipeWizard {
       });
   }
 
+  /** A slot dropdown's choice, applied to the working recipe. */
+  private setSlotChoice(id: string, part: string, v: string) {
+    const w = this.working;
+    if (v === "default") {
+      delete w.slots[id];
+      this.explicitSlots.delete(id);
+    } else if (v === "tribal") {
+      // Tribal brief §20.3: organic slots start on the regional choice, colonial ones on General.
+      w.slots[id] = { kind: "tribal", tradition: part === "organic" ? "auto" : "general" };
+      this.explicitSlots.add(id);
+    } else if (v === "packs" || v === "lists") {
+      w.slots[id] = { kind: "sources", sources: [this.newSource(v === "lists")] };
+      this.explicitSlots.add(id);
+    } else {
+      w.slots[id] = { kind: v as "built-in" | "placeholder" | "ignore" | "biome" };
+      this.explicitSlots.add(id);
+    }
+    this.render();
+  }
+
+  /** Land brief §5.2: the muted line under a land slot. */
+  private landSlotDescription(part: string, id: string, fromBiome: boolean): string {
+    if (id === "river-or-stream-name") return "";
+    const biome = this.currentBiome();
+    const colonial = part !== "organic";
+    const shown = biome ?? (colonial ? undefined : BRITAIN);
+    if (id === "landform" || id === "water-or-wetland-feature") {
+      const terrain = [...TERRAIN_CHOICES, ...(biome?.customTerrains ?? [])].find((t) => t.id === (this.working.shape.terrain || "any"));
+      return `${(shown ?? BRITAIN).label} · ${terrain?.label ?? "Any terrain"}`;
+    }
+    if (colonial && (id === "domestic-animal" || id === "crop")) {
+      if (!fromBiome) return "The incomers' own animals and crops (Britain list)";
+      return biome ? `${biome.label} list` : "Britain list until a biome is chosen";
+    }
+    if (shown) return `${shown.label} list`;
+    if (["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant"].includes(id)) return "Native placeholder until a biome is chosen";
+    return "Britain list until a biome is chosen";
+  }
+
   /** Tribal brief §20.3: the Tribal names slot's one dropdown, Tradition. */
   private renderTribalFooter(el: HTMLElement, slot: { kind: "tribal"; tradition: string }, part: string) {
     const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
@@ -394,6 +437,9 @@ export class RecipeWizard {
     const region = regions.find((r) => r.id === current) ?? regions[0];
     const text = region.id === "all-britain" ? "all of Britain" : NO_THE_REGIONS.has(region.label) ? region.label : `the ${region.label}`;
     this.sentenceLink(sentence, text, regions, region.id, (id) => (w.shape.region = id));
+    sentence.appendText(", set in ");
+    this.landLinks(sentence);
+    this.guideIcon(sentence, false);
   }
 
   /**
@@ -424,7 +470,8 @@ export class RecipeWizard {
       w.shape.context,
       (id) => (w.shape.context = id),
     );
-    this.biomeLink(sentence);
+    sentence.appendText(" across ");
+    this.landLinks(sentence);
     sentence.appendText(", naming ");
     this.featureLink(sentence, false);
     this.guideIcon(sentence, false);
@@ -455,35 +502,77 @@ export class RecipeWizard {
       w.shape.context,
       (id) => (w.shape.context = id),
     );
-    this.biomeLink(sentence);
+    sentence.appendText(" across ");
+    this.landLinks(sentence);
     sentence.appendText(", naming ");
     this.featureLink(sentence, false);
     this.guideIcon(sentence, true);
   }
 
-  /** Tribal brief §19.2: " across ‹unknown country›", a menu of "unknown country" then the 11 biomes. */
-  private biomeLink(sentence: HTMLElement) {
+  /** The user's biome packs (Land brief §9), as the host resolved them. */
+  private get customBiomes(): Biome[] {
+    return this.options.biomes ?? [];
+  }
+
+  /** The current biome setting as a Biome, if it is one (built in or a pack). */
+  private currentBiome(): Biome | undefined {
+    const b = this.working.shape.biome;
+    if (b?.startsWith("[[")) return this.customBiomes.find((x) => x.label === b.slice(2, -2));
+    return findBiome(b);
+  }
+
+  /**
+   * Land brief §4.2: "‹any part› of ‹Britain›". The terrain menu offers Any, then the biome's
+   * terrains (all eight with no biome); the biome menu the part's default, Britain, the 12 biomes
+   * and the user's packs. A biome without the current terrain resets it to Any.
+   */
+  private landLinks(sentence: HTMLElement) {
     const w = this.working;
-    sentence.appendText(" across ");
-    const [unknown, ...biomes] = BIOME_CHOICES;
-    const a = sentence.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text: biomePhrase(w.shape.biome), attr: { href: "#", role: "button" } });
-    a.addEventListener("click", (event) => {
-      event.preventDefault();
-      const menu = new Menu();
-      const add = (c: { id: string; label: string }) =>
-        menu.addItem((item) =>
-          item
-            .setTitle(c.label)
-            .setChecked(c.id === (w.shape.biome || "unknown"))
-            .onClick(() => {
-              w.shape.biome = c.id;
-              this.render();
-            }),
-        );
-      add(unknown);
+    const part = w.shape.part;
+    const custom = this.customBiomes;
+    const menuLink = (text: string, build: (menu: Menu) => void) => {
+      const a = sentence.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button" } });
+      a.addEventListener("click", (event) => {
+        event.preventDefault();
+        const menu = new Menu();
+        build(menu);
+        menu.showAtMouseEvent(event);
+      });
+    };
+    const choose = (menu: Menu, label: string, checked: boolean, apply: () => void) =>
+      menu.addItem((item) =>
+        item
+          .setTitle(label)
+          .setChecked(checked)
+          .onClick(() => {
+            apply();
+            this.render();
+          }),
+      );
+    const biome = this.currentBiome();
+    menuLink(terrainPhrase(w.shape.terrain, custom), (menu) => {
+      choose(menu, "any part", !w.shape.terrain || w.shape.terrain === "any", () => (w.shape.terrain = "any"));
       menu.addSeparator();
-      biomes.forEach(add);
-      menu.showAtMouseEvent(event);
+      const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
+      for (const t of terrains) choose(menu, t.phrase, w.shape.terrain === t.id, () => (w.shape.terrain = t.id));
+    });
+    sentence.appendText(" of ");
+    menuLink(biomePhrase(w.shape.biome, part, custom), (menu) => {
+      const [first, ...rest] = biomeChoices(part);
+      const set = (id: string) => () => {
+        w.shape.biome = id;
+        const next = this.currentBiome();
+        if (next && w.shape.terrain !== "any" && !availableTerrains(next).some((t) => t.id === w.shape.terrain)) w.shape.terrain = "any";
+      };
+      choose(menu, first.label, !w.shape.biome || w.shape.biome === "unknown", set("unknown"));
+      menu.addSeparator();
+      for (const c of rest) choose(menu, c.label, w.shape.biome === c.id, set(c.id));
+      if (custom.length > 0) {
+        menu.addSeparator();
+        for (const b of [...custom].sort((x, y) => x.label.localeCompare(y.label))) {
+          choose(menu, b.phrase, w.shape.biome === `[[${b.label}]]`, set(`[[${b.label}]]`));
+        }
+      }
     });
   }
 
@@ -491,7 +580,7 @@ export class RecipeWizard {
   private guideIcon(sentence: HTMLElement, contexts: boolean) {
     const info = sentence.createSpan({ cls: "clickable-icon nameforge-recipe-editor__info", attr: { role: "button", "aria-label": contexts ? "Context and biome guide" : "Biome guide" } });
     setIcon(info, ICON_INFO);
-    info.addEventListener("click", () => new ContextGuideModal(this.app, contexts).open());
+    info.addEventListener("click", () => new ContextGuideModal(this.app, contexts, this.customBiomes).open());
   }
 
   private regionValue(value: string): string {
@@ -514,7 +603,28 @@ export class RecipeWizard {
     const fallback = river || hasBuiltInList(id) ? "built-in" : "placeholder";
     // Colonial flora and fauna render native placeholders when unset; an explicit built-in list draws the British one.
     const nativeDefault = usesNativeDefault(part, id);
+    // Land brief §5.1: the land slots' short dropdowns.
+    const choices = slotChoices(part, id);
     const setting = new Setting(el).setName(label).addDropdown((d) => {
+      if (choices) {
+        const shown = !slot ? "default" : slot.kind === "sources" ? (slot.sources[0]?.list !== undefined ? "lists" : "packs") : slot.kind;
+        const legacy = (value: string, text: string) => {
+          if (shown === value) d.addOption(value, `${text} (not recommended)`);
+        };
+        d.addOption("default", slotDefaultLabel(part, id));
+        d.selectEl.appendChild(createEl("hr"));
+        if (choices.includes("biome")) d.addOption("biome", "From the biome");
+        else legacy("biome", "From the biome");
+        legacy("built-in", "Built-in list");
+        legacy("packs", "Name packs");
+        legacy("lists", "Word lists");
+        legacy("tribal", "Tribal names");
+        if (choices.includes("placeholder")) d.addOption("placeholder", "Placeholder");
+        else legacy("placeholder", "Placeholder");
+        d.addOption("ignore", "Ignore");
+        d.setValue(shown).onChange((v) => this.setSlotChoice(id, part, v));
+        return;
+      }
       // A slot mixing packs and lists (written by hand) shows as whichever its first source is.
       const shown =
         !slot || (slot.kind === fallback && !(nativeDefault && slot.kind === "built-in"))
@@ -541,26 +651,12 @@ export class RecipeWizard {
       offer("tribal", "Tribal names", allowsTribal(part, id));
       offer("placeholder", "Placeholder", fallback !== "placeholder" && allowsPlaceholderChoice(part, id));
       d.addOption("ignore", "Ignore");
-      d.setValue(shown).onChange((v) => {
-        if (v === "default") {
-          delete w.slots[id];
-          this.explicitSlots.delete(id);
-        } else if (v === "tribal") {
-          // Tribal brief §20.3: organic slots start on the regional choice, colonial ones on General.
-          w.slots[id] = { kind: "tribal", tradition: part === "organic" ? "auto" : "general" };
-          this.explicitSlots.add(id);
-        } else if (v === "packs" || v === "lists") {
-          w.slots[id] = { kind: "sources", sources: [this.newSource(v === "lists")] };
-          this.explicitSlots.add(id);
-        } else {
-          w.slots[id] = { kind: v as "built-in" | "placeholder" | "ignore" };
-          this.explicitSlots.add(id);
-        }
-        this.render();
-      });
+      d.setValue(shown).onChange((v) => this.setSlotChoice(id, part, v));
     });
     setting.settingEl.addClass("nameforge-recipe-editor__slot");
-    if (outsideTier) setting.setDesc("Set – shown outside this tier");
+    // Land brief §5.2: what a land slot's default resolves to, then the tier note.
+    const desc = [choices && (!slot || slot.kind === "biome") ? this.landSlotDescription(part, id, slot?.kind === "biome") : "", outsideTier ? "Set – shown outside this tier" : ""];
+    if (desc.some(Boolean)) setting.setDesc(desc.filter(Boolean).join(" · "));
     if (slot?.kind === "tribal") {
       this.renderTribalFooter(el, slot, part);
       return;

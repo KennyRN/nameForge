@@ -2,7 +2,8 @@
 // opened from the place name wizard's information icon. Exploration shows only the biomes.
 
 import { App, Modal } from "obsidian";
-import { BIOMES } from "./biomes";
+import { type Biome, BIOMES, BRITAIN, TERRAIN_CHOICES } from "./biomes";
+import { PLACE_SHAPE_DATA } from "./placeShapes";
 
 interface ContextGuideEntry {
   heading: string;
@@ -45,7 +46,11 @@ const RULE_OF_THUMB =
 
 export class ContextGuideModal extends Modal {
   /** `contexts`: show expansion's three contexts before the biomes. */
-  constructor(app: App, private contexts = true) {
+  constructor(
+    app: App,
+    private contexts = true,
+    private custom: readonly Biome[] = [],
+  ) {
     super(app);
   }
 
@@ -54,10 +59,25 @@ export class ContextGuideModal extends Modal {
     const el = this.contentEl;
     if (this.contexts) this.renderContexts(el);
     el.createEl("h3", { cls: "nameforge-context-guide__heading", text: "Biomes" });
-    for (const biome of BIOMES) {
+    const entry = (label: string, text: string) => {
       const p = el.createEl("p");
-      p.createEl("strong", { text: biome.label });
-      p.appendText(`: ${biome.guide}`);
+      p.createEl("strong", { text: label });
+      p.appendText(`: ${text}`);
+    };
+    for (const biome of [BRITAIN, ...BIOMES]) entry(biome.label, biome.guide);
+    // Land brief §4.2: each terrain, with what it favours (its top two group multipliers).
+    el.createEl("h3", { cls: "nameforge-context-guide__heading", text: "Terrain" });
+    const groupLabel = (id: string) => (PLACE_SHAPE_DATA.groups.find((g) => g.id === id)?.label ?? id).toLowerCase();
+    for (const t of TERRAIN_CHOICES.filter((x) => x.id !== "any")) {
+      const top = Object.entries(t.shapeMultipliers.groups)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 2)
+        .map(([id]) => groupLabel(id));
+      entry(t.label, top.join(", "));
+    }
+    if (this.custom.length > 0) {
+      el.createEl("h3", { cls: "nameforge-context-guide__heading", text: "Your biomes" });
+      for (const b of this.custom) entry(b.label, b.guide);
     }
     el.createEl("p", { cls: "nameforge-guide-modal__credit", text: "Above text created by Claude.ai" });
   }

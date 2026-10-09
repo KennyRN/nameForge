@@ -5,7 +5,7 @@
 // the shape generator's own batch for the same seed and settings.
 
 import nameWordData from "../data/name-words.json";
-import { availableTerrains, type Biome, biomeEntries, environmentMultipliers, findBiome } from "../biomes";
+import { availableTerrains, type Biome, biomeEntries, BRITAIN, environmentMultipliers, findBiome, shortWords, terrainWeights } from "../biomes";
 import { mulberry32 } from "../markov";
 import { type SectionRequest } from "../packs/sections";
 import {
@@ -91,6 +91,8 @@ const SPLIT_LABELS: Record<string, string[]> = {
 };
 /** Salt for the split-label stream (river brief §5.2); consumed only by those choices. */
 const SPLIT_SALT = 0x2b7d94c1;
+/** Land brief §5.3: slots a biome fills (the five nature slots are handled with the native labels). */
+const LAND_BIOME_SLOTS = new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant", "soil-or-ground", "resource", "season", "domestic-animal", "crop"]);
 /** River brief §6: unmapped native flora and fauna in colonial rendering. */
 const NATIVE_LABELS: Record<string, string> = {
   bird: "native bird",
@@ -228,6 +230,8 @@ export type ResolvedSlot =
   | { kind: "placeholder" }
   | { kind: "ignore" }
   | { kind: "tribal"; tradition: string }
+  /** Land brief §5.1: "From the biome" (colonial livestock and crops). */
+  | { kind: "biome" }
   | { kind: "sources"; sources: ResolvedSource[]; mode?: NameMode; gender?: { male: number; female: number }; section?: string };
 
 /** Adopts one native name into the takeover pack's language; null when the adoption fails. */
@@ -460,6 +464,42 @@ export class NameRenderer {
     return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
   }
 
+  /**
+   * Land brief §5.3–§5.4: a fill from the biome and terrain, or undefined to take today's path
+   * (Britain with Any terrain draws today's built-ins uniformly, so seeds are unchanged).
+   */
+  private landFill(categoryId: string, rng: () => number, chosenBiome: boolean): Fill | undefined {
+    const biome = this.options.biome?.id === "britain" ? undefined : this.options.biome;
+    const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : undefined;
+    const word = (entry: NameWordEntry): Fill => ({ kind: "word", entry, traditional: this.chooseRegister(entry, rng) });
+    if (categoryId === "landform" || categoryId === "water-or-wetland-feature") {
+      const kind = categoryId === "landform" ? "land" : "water";
+      if (!biome) {
+        if (!terrain) return undefined;
+        const tagged = shortWords(BRITAIN, kind, terrain).map(([e]) => e);
+        if (tagged.length > 0) return word(pickUniform(tagged, rng));
+        return word(pickUniform(shortWords(BRITAIN, kind, "plains").map(([e]) => e), rng));
+      }
+      let t = terrain;
+      if (!t) {
+        const weights = Object.entries(terrainWeights(biome, "any")).filter(([id, w]) => w > 0 && shortWords(biome, kind, id).length > 0);
+        t = pickWeighted(weights, rng);
+      }
+      let entries = shortWords(biome, kind, t);
+      if (entries.length === 0) {
+        this.notices.add(`“${t}” has no short ${kind} words; using the plains.`);
+        entries = shortWords(biome, kind, "plains");
+      }
+      return entries.length > 0 ? word(pickWeighted(entries, rng)) : undefined;
+    }
+    if (!LAND_BIOME_SLOTS.has(categoryId)) return undefined;
+    // Colonial livestock and crops are the incomers' own unless "From the biome" is chosen.
+    if (this.colonial && (categoryId === "domestic-animal" || categoryId === "crop") && !chosenBiome) return undefined;
+    if (!biome) return undefined;
+    const entries = biomeEntries(biome, categoryId);
+    return entries && entries.length > 0 ? word(pickWeighted(entries, rng)) : undefined;
+  }
+
   /** Tribal brief §20.2: a short tribal name on the fill stream, as riverWordFill. */
   private tribalWordFill(tradition: string, rng: () => number): Fill {
     const part = this.recipe.shape.part;
@@ -497,6 +537,11 @@ export class NameRenderer {
       return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
     }
     const slot = this.slotFor(categoryId);
+    // Land brief §5.3: unset land slots (and "From the biome" where offered) follow the biome and terrain.
+    if (!mapped || mapped.kind === "biome") {
+      const land = this.landFill(categoryId, rng, mapped?.kind === "biome");
+      if (land) return land;
+    }
     // Tribal brief §20.2: a tribal slot is a spaced word fill, never fused or adapted.
     if (slot.kind === "tribal") return this.tribalWordFill(slot.tradition, rng);
     const wordFill = (entries: NameWordEntry[] | undefined): Fill => {
@@ -509,8 +554,12 @@ export class NameRenderer {
       if (entry.modern.includes("[direction]")) entry = { ...entry, modern: entry.modern.replace("[direction]", pickUniform(DIRECTIONS, rng)) };
       return { kind: "word", entry, traditional: this.chooseRegister(entry, rng) };
     };
+    // Land brief §5.1: Placeholder on a colonial nature slot reads as the native label.
+    if (slot.kind === "placeholder" && this.colonial && NATIVE_LABELS[categoryId]) {
+      return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
+    }
     if (slot.kind === "placeholder" || slot.kind === "ignore") return this.placeholder(categoryId);
-    if (slot.kind === "built-in") return wordFill(NAME_WORDS.categories[categoryId]);
+    if (slot.kind === "built-in" || slot.kind === "biome") return wordFill(NAME_WORDS.categories[categoryId]);
 
     const source = pickWeighted(slot.sources.map((s): [ResolvedSource, number] => [s, s.weight]), rng);
     if (source.items) return this.itemFill(source, slot, categoryId, rng, whole, entryFill);

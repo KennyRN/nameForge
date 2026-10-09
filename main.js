@@ -13136,6 +13136,13 @@ function availableTerrains(biome) {
     return ((_a3 = biome.terrainWeights[t.id]) != null ? _a3 : 0) > 0;
   })];
 }
+function terrainWeights(biome, choice, multipliers = {}) {
+  if (choice && choice !== "any") return { [choice]: 100 };
+  return Object.fromEntries(Object.entries(biome.terrainWeights).map(([t, w]) => {
+    var _a2;
+    return [t, w * ((_a2 = multipliers[t]) != null ? _a2 : 1)];
+  }));
+}
 var biomeTitleCase = (word) => word.replace(/(^|[\s-])([a-z])/g, (_, sep, c) => sep + c.toUpperCase());
 function pluralOf(word) {
   const irregular = BIOME_DATA.irregularPlurals[word];
@@ -31453,6 +31460,7 @@ var SPLIT_LABELS = {
   "commander-or-conqueror": ["commander", "conqueror"]
 };
 var SPLIT_SALT = 729650369;
+var LAND_BIOME_SLOTS = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant", "soil-or-ground", "resource", "season", "domestic-animal", "crop"]);
 var NATIVE_LABELS = {
   bird: "native bird",
   "wild-animal": "native wild animal",
@@ -31637,6 +31645,41 @@ var NameRenderer = class {
     );
     return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
   }
+  /**
+   * Land brief §5.3–§5.4: a fill from the biome and terrain, or undefined to take today's path
+   * (Britain with Any terrain draws today's built-ins uniformly, so seeds are unchanged).
+   */
+  landFill(categoryId, rng, chosenBiome) {
+    var _a2;
+    const biome = ((_a2 = this.options.biome) == null ? void 0 : _a2.id) === "britain" ? void 0 : this.options.biome;
+    const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
+    const word = (entry) => ({ kind: "word", entry, traditional: this.chooseRegister(entry, rng) });
+    if (categoryId === "landform" || categoryId === "water-or-wetland-feature") {
+      const kind = categoryId === "landform" ? "land" : "water";
+      if (!biome) {
+        if (!terrain) return void 0;
+        const tagged = shortWords(BRITAIN, kind, terrain).map(([e]) => e);
+        if (tagged.length > 0) return word(pickUniform4(tagged, rng));
+        return word(pickUniform4(shortWords(BRITAIN, kind, "plains").map(([e]) => e), rng));
+      }
+      let t = terrain;
+      if (!t) {
+        const weights = Object.entries(terrainWeights(biome, "any")).filter(([id, w]) => w > 0 && shortWords(biome, kind, id).length > 0);
+        t = pickWeighted3(weights, rng);
+      }
+      let entries2 = shortWords(biome, kind, t);
+      if (entries2.length === 0) {
+        this.notices.add(`\u201C${t}\u201D has no short ${kind} words; using the plains.`);
+        entries2 = shortWords(biome, kind, "plains");
+      }
+      return entries2.length > 0 ? word(pickWeighted3(entries2, rng)) : void 0;
+    }
+    if (!LAND_BIOME_SLOTS.has(categoryId)) return void 0;
+    if (this.colonial && (categoryId === "domestic-animal" || categoryId === "crop") && !chosenBiome) return void 0;
+    if (!biome) return void 0;
+    const entries = biomeEntries(biome, categoryId);
+    return entries && entries.length > 0 ? word(pickWeighted3(entries, rng)) : void 0;
+  }
   /** Tribal brief §20.2: a short tribal name on the fill stream, as riverWordFill. */
   tribalWordFill(tradition, rng) {
     const part = this.recipe.shape.part;
@@ -31669,6 +31712,10 @@ var NameRenderer = class {
       return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
     }
     const slot = this.slotFor(categoryId);
+    if (!mapped || mapped.kind === "biome") {
+      const land = this.landFill(categoryId, rng, (mapped == null ? void 0 : mapped.kind) === "biome");
+      if (land) return land;
+    }
     if (slot.kind === "tribal") return this.tribalWordFill(slot.tradition, rng);
     const wordFill = (entries) => {
       if (!entries || entries.length === 0) return this.placeholder(categoryId);
@@ -31679,8 +31726,11 @@ var NameRenderer = class {
       if (entry.modern.includes("[direction]")) entry = { ...entry, modern: entry.modern.replace("[direction]", pickUniform4(DIRECTIONS, rng)) };
       return { kind: "word", entry, traditional: this.chooseRegister(entry, rng) };
     };
+    if (slot.kind === "placeholder" && this.colonial && NATIVE_LABELS[categoryId]) {
+      return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
+    }
     if (slot.kind === "placeholder" || slot.kind === "ignore") return this.placeholder(categoryId);
-    if (slot.kind === "built-in") return wordFill(NAME_WORDS.categories[categoryId]);
+    if (slot.kind === "built-in" || slot.kind === "biome") return wordFill(NAME_WORDS.categories[categoryId]);
     const source = pickWeighted3(slot.sources.map((s) => [s, s.weight]), rng);
     if (source.items) return this.itemFill(source, slot, categoryId, rng, whole, entryFill);
     if (source.entries) return wordFill(source.entries);
@@ -32163,7 +32213,7 @@ function linkTarget(v) {
   return target || void 0;
 }
 function readSlot(v, problems, id) {
-  if (v === "built-in" || v === "ignore" || v === "placeholder") return { kind: v };
+  if (v === "built-in" || v === "ignore" || v === "placeholder" || v === "biome") return { kind: v };
   if (!isObject(v)) {
     problems.push(`Slot \u201C${id}\u201D isn't built-in, ignore, placeholder or a list of sources.`);
     return void 0;
@@ -34086,19 +34136,34 @@ var AT_A_GLANCE = [
 var RULE_OF_THUMB = "A useful rule of thumb when choosing: ask whose language a traveller would hear in the market fifty years after the takeover. If it's the incomers', it's imposition; if it's a mix, accommodation; if it's still the locals', adoption.";
 var ContextGuideModal = class extends import_obsidian8.Modal {
   /** `contexts`: show expansion's three contexts before the biomes. */
-  constructor(app, contexts = true) {
+  constructor(app, contexts = true, custom = []) {
     super(app);
     this.contexts = contexts;
+    this.custom = custom;
   }
   onOpen() {
     this.modalEl.addClass("nameforge-guide-modal", "nameforge-context-guide");
     const el = this.contentEl;
     if (this.contexts) this.renderContexts(el);
     el.createEl("h3", { cls: "nameforge-context-guide__heading", text: "Biomes" });
-    for (const biome of BIOMES) {
+    const entry = (label, text) => {
       const p = el.createEl("p");
-      p.createEl("strong", { text: biome.label });
-      p.appendText(`: ${biome.guide}`);
+      p.createEl("strong", { text: label });
+      p.appendText(`: ${text}`);
+    };
+    for (const biome of [BRITAIN, ...BIOMES]) entry(biome.label, biome.guide);
+    el.createEl("h3", { cls: "nameforge-context-guide__heading", text: "Terrain" });
+    const groupLabel = (id) => {
+      var _a2, _b;
+      return ((_b = (_a2 = PLACE_SHAPE_DATA.groups.find((g) => g.id === id)) == null ? void 0 : _a2.label) != null ? _b : id).toLowerCase();
+    };
+    for (const t of TERRAIN_CHOICES.filter((x) => x.id !== "any")) {
+      const top = Object.entries(t.shapeMultipliers.groups).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([id]) => groupLabel(id));
+      entry(t.label, top.join(", "));
+    }
+    if (this.custom.length > 0) {
+      el.createEl("h3", { cls: "nameforge-context-guide__heading", text: "Your biomes" });
+      for (const b of this.custom) entry(b.label, b.guide);
     }
     el.createEl("p", { cls: "nameforge-guide-modal__credit", text: "Above text created by Claude.ai" });
   }
@@ -34140,13 +34205,31 @@ var FEATURES = [
   ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label }))
 ];
 var UNKNOWN_COUNTRY = "unknown country";
-var BIOME_CHOICES = [
-  { id: "unknown", label: UNKNOWN_COUNTRY },
-  ...BIOMES.map((b) => ({ id: b.id, label: b.phrase }))
-];
-function biomePhrase(biome) {
+function biomeChoices(part) {
+  const lead = part === "organic" ? [{ id: "unknown", label: "Britain" }] : [{ id: "unknown", label: UNKNOWN_COUNTRY }, { id: BRITAIN.id, label: BRITAIN.phrase }];
+  return [...lead, ...BIOMES.map((b) => ({ id: b.id, label: b.phrase }))];
+}
+function biomePhrase(biome, part = "new-land", custom = []) {
+  var _a2;
+  if (biome == null ? void 0 : biome.startsWith("[[")) {
+    const name = biome.slice(2, -2);
+    const pack = custom.find((b) => {
+      var _a3;
+      return b.label === name || ((_a3 = b.custom) == null ? void 0 : _a3.path) === name;
+    });
+    return (_a2 = pack == null ? void 0 : pack.phrase) != null ? _a2 : name;
+  }
+  const found = findBiome(biome, custom);
+  if (found) return found.phrase;
+  return part === "organic" ? BRITAIN.phrase : UNKNOWN_COUNTRY;
+}
+function terrainPhrase(terrain, custom = []) {
   var _a2, _b;
-  return (_b = (_a2 = findBiome(biome)) == null ? void 0 : _a2.phrase) != null ? _b : UNKNOWN_COUNTRY;
+  const all = [...TERRAIN_CHOICES, ...custom.flatMap((b) => {
+    var _a3;
+    return (_a3 = b.customTerrains) != null ? _a3 : [];
+  })];
+  return (_b = (_a2 = all.find((t) => t.id === (terrain || "any"))) == null ? void 0 : _a2.phrase) != null ? _b : "any part";
 }
 
 // src/names/slotOptions.ts
@@ -34245,18 +34328,35 @@ var WORD_ONLY = /* @__PURE__ */ new Set([
   "calendar-date-or-feast"
 ]);
 var NO_PLACEHOLDER = /* @__PURE__ */ new Set(["colour", "size", "age", "position-or-direction", "shape", "quality-or-condition", "number", "season"]);
+var NATURE = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant"]);
+function slotChoices(part, categoryId) {
+  if (NATURE.has(categoryId) || categoryId === "landform" || categoryId === "water-or-wetland-feature") return ["default", "placeholder", "ignore"];
+  if (categoryId === "soil-or-ground" || categoryId === "river-or-stream-name") return ["default", "placeholder", "ignore"];
+  if (categoryId === "resource" && part === "new-land") return ["default", "placeholder", "ignore"];
+  if (categoryId === "season") return ["default", "ignore"];
+  if (categoryId === "domestic-animal" || categoryId === "crop") return part === "organic" ? ["default", "ignore"] : ["default", "biome", "ignore"];
+  return void 0;
+}
+function slotDefaultLabel(part, categoryId) {
+  if (categoryId === "river-or-stream-name") return "River name module";
+  if (categoryId === "landform" || categoryId === "water-or-wetland-feature") return "From the terrain";
+  if ((categoryId === "domestic-animal" || categoryId === "crop") && part !== "organic") return "Incomers' own";
+  return "From the biome";
+}
 function allowsPacks(part, categoryId) {
+  if (slotChoices(part, categoryId)) return false;
   if (FLORA_AND_FAUNA.has(categoryId)) return part !== "organic";
   return !WORD_ONLY.has(categoryId);
 }
-function allowsLists(_part, _categoryId) {
-  return true;
+function allowsLists(part, categoryId) {
+  return !slotChoices(part, categoryId);
 }
 function allowsTribal(part, categoryId) {
   if (part === "organic") return categoryId === "folk-group";
   return categoryId === "native-people-or-tribe";
 }
-function allowsPlaceholderChoice(_part, categoryId) {
+function allowsPlaceholderChoice(part, categoryId) {
+  if (slotChoices(part, categoryId)) return false;
   return !NO_PLACEHOLDER.has(categoryId);
 }
 function showsGender(categoryId) {
@@ -34498,6 +34598,43 @@ var RecipeWizard = class {
       t.inputEl.rows = 3;
     });
   }
+  /** A slot dropdown's choice, applied to the working recipe. */
+  setSlotChoice(id, part, v) {
+    const w = this.working;
+    if (v === "default") {
+      delete w.slots[id];
+      this.explicitSlots.delete(id);
+    } else if (v === "tribal") {
+      w.slots[id] = { kind: "tribal", tradition: part === "organic" ? "auto" : "general" };
+      this.explicitSlots.add(id);
+    } else if (v === "packs" || v === "lists") {
+      w.slots[id] = { kind: "sources", sources: [this.newSource(v === "lists")] };
+      this.explicitSlots.add(id);
+    } else {
+      w.slots[id] = { kind: v };
+      this.explicitSlots.add(id);
+    }
+    this.render();
+  }
+  /** Land brief §5.2: the muted line under a land slot. */
+  landSlotDescription(part, id, fromBiome) {
+    var _a2, _b;
+    if (id === "river-or-stream-name") return "";
+    const biome = this.currentBiome();
+    const colonial = part !== "organic";
+    const shown = biome != null ? biome : colonial ? void 0 : BRITAIN;
+    if (id === "landform" || id === "water-or-wetland-feature") {
+      const terrain = [...TERRAIN_CHOICES, ...(_a2 = biome == null ? void 0 : biome.customTerrains) != null ? _a2 : []].find((t) => t.id === (this.working.shape.terrain || "any"));
+      return `${(shown != null ? shown : BRITAIN).label} \xB7 ${(_b = terrain == null ? void 0 : terrain.label) != null ? _b : "Any terrain"}`;
+    }
+    if (colonial && (id === "domestic-animal" || id === "crop")) {
+      if (!fromBiome) return "The incomers' own animals and crops (Britain list)";
+      return biome ? `${biome.label} list` : "Britain list until a biome is chosen";
+    }
+    if (shown) return `${shown.label} list`;
+    if (["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant"].includes(id)) return "Native placeholder until a biome is chosen";
+    return "Britain list until a biome is chosen";
+  }
   /** Tribal brief §20.3: the Tribal names slot's one dropdown, Tradition. */
   renderTribalFooter(el, slot, part) {
     const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
@@ -34545,6 +34682,9 @@ var RecipeWizard = class {
     const region = (_a2 = regions.find((r) => r.id === current)) != null ? _a2 : regions[0];
     const text = region.id === "all-britain" ? "all of Britain" : NO_THE_REGIONS.has(region.label) ? region.label : `the ${region.label}`;
     this.sentenceLink(sentence2, text, regions, region.id, (id) => w.shape.region = id);
+    sentence2.appendText(", set in ");
+    this.landLinks(sentence2);
+    this.guideIcon(sentence2, false);
   }
   /**
    * Exploration in new lands: "‹General explorers› in ‹wild and unsettled lands›, naming ‹any feature›",
@@ -34573,7 +34713,8 @@ var RecipeWizard = class {
       w.shape.context,
       (id) => w.shape.context = id
     );
-    this.biomeLink(sentence2);
+    sentence2.appendText(" across ");
+    this.landLinks(sentence2);
     sentence2.appendText(", naming ");
     this.featureLink(sentence2, false);
     this.guideIcon(sentence2, false);
@@ -34602,37 +34743,78 @@ var RecipeWizard = class {
       w.shape.context,
       (id) => w.shape.context = id
     );
-    this.biomeLink(sentence2);
+    sentence2.appendText(" across ");
+    this.landLinks(sentence2);
     sentence2.appendText(", naming ");
     this.featureLink(sentence2, false);
     this.guideIcon(sentence2, true);
   }
-  /** Tribal brief §19.2: " across ‹unknown country›", a menu of "unknown country" then the 11 biomes. */
-  biomeLink(sentence2) {
+  /** The user's biome packs (Land brief §9), as the host resolved them. */
+  get customBiomes() {
+    var _a2;
+    return (_a2 = this.options.biomes) != null ? _a2 : [];
+  }
+  /** The current biome setting as a Biome, if it is one (built in or a pack). */
+  currentBiome() {
+    const b = this.working.shape.biome;
+    if (b == null ? void 0 : b.startsWith("[[")) return this.customBiomes.find((x) => x.label === b.slice(2, -2));
+    return findBiome(b);
+  }
+  /**
+   * Land brief §4.2: "‹any part› of ‹Britain›". The terrain menu offers Any, then the biome's
+   * terrains (all eight with no biome); the biome menu the part's default, Britain, the 12 biomes
+   * and the user's packs. A biome without the current terrain resets it to Any.
+   */
+  landLinks(sentence2) {
     const w = this.working;
-    sentence2.appendText(" across ");
-    const [unknown, ...biomes] = BIOME_CHOICES;
-    const a = sentence2.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text: biomePhrase(w.shape.biome), attr: { href: "#", role: "button" } });
-    a.addEventListener("click", (event) => {
-      event.preventDefault();
-      const menu = new import_obsidian9.Menu();
-      const add2 = (c) => menu.addItem(
-        (item) => item.setTitle(c.label).setChecked(c.id === (w.shape.biome || "unknown")).onClick(() => {
-          w.shape.biome = c.id;
-          this.render();
-        })
-      );
-      add2(unknown);
+    const part = w.shape.part;
+    const custom = this.customBiomes;
+    const menuLink = (text, build) => {
+      const a = sentence2.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button" } });
+      a.addEventListener("click", (event) => {
+        event.preventDefault();
+        const menu = new import_obsidian9.Menu();
+        build(menu);
+        menu.showAtMouseEvent(event);
+      });
+    };
+    const choose = (menu, label, checked, apply) => menu.addItem(
+      (item) => item.setTitle(label).setChecked(checked).onClick(() => {
+        apply();
+        this.render();
+      })
+    );
+    const biome = this.currentBiome();
+    menuLink(terrainPhrase(w.shape.terrain, custom), (menu) => {
+      choose(menu, "any part", !w.shape.terrain || w.shape.terrain === "any", () => w.shape.terrain = "any");
       menu.addSeparator();
-      biomes.forEach(add2);
-      menu.showAtMouseEvent(event);
+      const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
+      for (const t of terrains) choose(menu, t.phrase, w.shape.terrain === t.id, () => w.shape.terrain = t.id);
+    });
+    sentence2.appendText(" of ");
+    menuLink(biomePhrase(w.shape.biome, part, custom), (menu) => {
+      const [first, ...rest] = biomeChoices(part);
+      const set = (id) => () => {
+        w.shape.biome = id;
+        const next = this.currentBiome();
+        if (next && w.shape.terrain !== "any" && !availableTerrains(next).some((t) => t.id === w.shape.terrain)) w.shape.terrain = "any";
+      };
+      choose(menu, first.label, !w.shape.biome || w.shape.biome === "unknown", set("unknown"));
+      menu.addSeparator();
+      for (const c of rest) choose(menu, c.label, w.shape.biome === c.id, set(c.id));
+      if (custom.length > 0) {
+        menu.addSeparator();
+        for (const b of [...custom].sort((x, y) => x.label.localeCompare(y.label))) {
+          choose(menu, b.phrase, w.shape.biome === `[[${b.label}]]`, set(`[[${b.label}]]`));
+        }
+      }
     });
   }
   /** The guide icon at the end of a colonial sentence: the contexts (expansion only), then biomes. */
   guideIcon(sentence2, contexts) {
     const info = sentence2.createSpan({ cls: "clickable-icon nameforge-recipe-editor__info", attr: { role: "button", "aria-label": contexts ? "Context and biome guide" : "Biome guide" } });
     (0, import_obsidian9.setIcon)(info, ICON_INFO);
-    info.addEventListener("click", () => new ContextGuideModal(this.app, contexts).open());
+    info.addEventListener("click", () => new ContextGuideModal(this.app, contexts, this.customBiomes).open());
   }
   regionValue(value) {
     const r = PLACE_SHAPE_REGIONS.find((x) => x.code === value.toUpperCase() || kebab(x.label) === kebab(value));
@@ -34651,9 +34833,29 @@ var RecipeWizard = class {
     const river = id === "river-or-stream-name";
     const fallback = river || hasBuiltInList(id) ? "built-in" : "placeholder";
     const nativeDefault = usesNativeDefault(part, id);
+    const choices = slotChoices(part, id);
     const setting = new import_obsidian9.Setting(el).setName(label).addDropdown((d) => {
-      var _a3;
-      const shown = !slot || slot.kind === fallback && !(nativeDefault && slot.kind === "built-in") ? "default" : slot.kind === "sources" ? ((_a3 = slot.sources[0]) == null ? void 0 : _a3.list) !== void 0 ? "lists" : "packs" : slot.kind;
+      var _a3, _b;
+      if (choices) {
+        const shown2 = !slot ? "default" : slot.kind === "sources" ? ((_a3 = slot.sources[0]) == null ? void 0 : _a3.list) !== void 0 ? "lists" : "packs" : slot.kind;
+        const legacy = (value, text) => {
+          if (shown2 === value) d.addOption(value, `${text} (not recommended)`);
+        };
+        d.addOption("default", slotDefaultLabel(part, id));
+        d.selectEl.appendChild(createEl("hr"));
+        if (choices.includes("biome")) d.addOption("biome", "From the biome");
+        else legacy("biome", "From the biome");
+        legacy("built-in", "Built-in list");
+        legacy("packs", "Name packs");
+        legacy("lists", "Word lists");
+        legacy("tribal", "Tribal names");
+        if (choices.includes("placeholder")) d.addOption("placeholder", "Placeholder");
+        else legacy("placeholder", "Placeholder");
+        d.addOption("ignore", "Ignore");
+        d.setValue(shown2).onChange((v) => this.setSlotChoice(id, part, v));
+        return;
+      }
+      const shown = !slot || slot.kind === fallback && !(nativeDefault && slot.kind === "built-in") ? "default" : slot.kind === "sources" ? ((_b = slot.sources[0]) == null ? void 0 : _b.list) !== void 0 ? "lists" : "packs" : slot.kind;
       const offer = (value, text, allowed) => {
         if (allowed) d.addOption(value, text);
         else if (shown === value) d.addOption(value, `${text} (not recommended)`);
@@ -34668,25 +34870,11 @@ var RecipeWizard = class {
       offer("tribal", "Tribal names", allowsTribal(part, id));
       offer("placeholder", "Placeholder", fallback !== "placeholder" && allowsPlaceholderChoice(part, id));
       d.addOption("ignore", "Ignore");
-      d.setValue(shown).onChange((v) => {
-        if (v === "default") {
-          delete w.slots[id];
-          this.explicitSlots.delete(id);
-        } else if (v === "tribal") {
-          w.slots[id] = { kind: "tribal", tradition: part === "organic" ? "auto" : "general" };
-          this.explicitSlots.add(id);
-        } else if (v === "packs" || v === "lists") {
-          w.slots[id] = { kind: "sources", sources: [this.newSource(v === "lists")] };
-          this.explicitSlots.add(id);
-        } else {
-          w.slots[id] = { kind: v };
-          this.explicitSlots.add(id);
-        }
-        this.render();
-      });
+      d.setValue(shown).onChange((v) => this.setSlotChoice(id, part, v));
     });
     setting.settingEl.addClass("nameforge-recipe-editor__slot");
-    if (outsideTier) setting.setDesc("Set \u2013 shown outside this tier");
+    const desc = [choices && (!slot || slot.kind === "biome") ? this.landSlotDescription(part, id, (slot == null ? void 0 : slot.kind) === "biome") : "", outsideTier ? "Set \u2013 shown outside this tier" : ""];
+    if (desc.some(Boolean)) setting.setDesc(desc.filter(Boolean).join(" \xB7 "));
     if ((slot == null ? void 0 : slot.kind) === "tribal") {
       this.renderTribalFooter(el, slot, part);
       return;

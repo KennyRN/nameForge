@@ -5,6 +5,7 @@ import {
   allowsLists,
   allowsPacks,
   allowsPlaceholderChoice,
+  slotChoices,
   NAME_SLOTS,
   showsGender,
   type SlotPart,
@@ -68,27 +69,47 @@ test("options: the name-slot set is the proper-name slots", () => {
 
 test("options: Name packs and Word lists per slot", () => {
   for (const part of PARTS) {
+    // Land brief §5.1: the land slots have their own choices (tested below).
+    const land = (id: string) => !!slotChoices(part, id);
     for (const id of WORD_ONLY) assert.equal(allowsPacks(part, id), false, `${part} ${id} packs`);
-    for (const id of FLORA_AND_FAUNA) assert.equal(allowsPacks(part, id), part !== "organic", `${part} ${id} packs`);
+    for (const id of FLORA_AND_FAUNA) assert.equal(allowsPacks(part, id), false, `${part} ${id} packs`);
     // Word lists can hold names and `//` pack lines, so every slot offers them.
     for (const id of NAMES_ONLY) {
-      assert.equal(allowsLists(part, id), true, `${part} ${id} lists`);
-      assert.equal(allowsPacks(part, id), true, `${part} ${id} packs`);
+      assert.equal(allowsLists(part, id), !land(id), `${part} ${id} lists`);
+      assert.equal(allowsPacks(part, id), !land(id), `${part} ${id} packs`);
     }
-    for (const id of ids(part)) assert.equal(allowsLists(part, id), true, `${part} ${id} lists`);
+    for (const id of ids(part)) assert.equal(allowsLists(part, id), !land(id), `${part} ${id} lists`);
     for (const id of BOTH) {
       assert.equal(allowsPacks(part, id), true, `${part} ${id} packs`);
       assert.equal(allowsLists(part, id), true, `${part} ${id} lists`);
     }
-    for (const id of WORD_ONLY) assert.equal(allowsLists(part, id), true, `${part} ${id} lists`);
+    for (const id of WORD_ONLY) assert.equal(allowsLists(part, id), !land(id), `${part} ${id} lists`);
   }
 });
 
 test("options: no Placeholder choice for bare descriptive slots", () => {
   const none = ["colour", "size", "age", "position-or-direction", "shape", "quality-or-condition", "number", "season"];
   for (const part of PARTS) {
-    for (const id of ids(part)) assert.equal(allowsPlaceholderChoice(part, id), !none.includes(id), `${part} ${id}`);
+    for (const id of ids(part)) {
+      if (slotChoices(part, id)) assert.equal(allowsPlaceholderChoice(part, id), false, `${part} ${id}`);
+      else assert.equal(allowsPlaceholderChoice(part, id), !none.includes(id), `${part} ${id}`);
+    }
   }
+});
+
+test("options: two-choice land slots (Land brief §5.1)", () => {
+  const nature = ["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant"];
+  for (const part of PARTS) {
+    for (const id of [...nature, "landform", "water-or-wetland-feature", "soil-or-ground", "river-or-stream-name"]) {
+      assert.deepEqual(slotChoices(part, id), ["default", "placeholder", "ignore"], `${part} ${id}`);
+    }
+    assert.deepEqual(slotChoices(part, "season"), ["default", "ignore"]);
+    for (const id of ["domestic-animal", "crop"]) {
+      assert.deepEqual(slotChoices(part, id), part === "organic" ? ["default", "ignore"] : ["default", "biome", "ignore"], `${part} ${id}`);
+    }
+  }
+  assert.deepEqual(slotChoices("new-land", "resource"), ["default", "placeholder", "ignore"]);
+  assert.equal(slotChoices("organic", "personal-name"), undefined);
 });
 
 test("options: Male % only for slots with a default ratio, never royal woman", () => {
