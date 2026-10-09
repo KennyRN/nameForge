@@ -65,6 +65,11 @@ export function findCulture(id: string | undefined): WorldCulture {
   return WORLD_CULTURES.find((c) => c.id === id) ?? WORLD_CULTURES[0];
 }
 
+/** Land brief §7.2: whether a culture has lists a biome can swap (Egyptian has none). */
+export function cultureUsesBiomes(cultureId: string): boolean {
+  return cultureId !== "egyptian";
+}
+
 export function findEra(culture: WorldCulture, eraId: string | undefined): WorldEra {
   return culture.eras.find((e) => e.id === eraId) ?? culture.eras[0];
 }

@@ -62,7 +62,8 @@ import {
 import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recipe";
-import { BIOMES, findBiome } from "./biomes";
+import { type Biome, BIOMES, BRITAIN, findBiome } from "./biomes";
+import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import {
   findTradition,
   generateTribalNames,
@@ -77,7 +78,7 @@ import {
   type TribalRegister,
 } from "./tribes/engine";
 import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/engine";
-import { findCulture, findEra, generateWorldPlaceNames, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
+import { cultureUsesBiomes, findCulture, findEra, generateWorldPlaceNames, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
 import { WordListGuideModal } from "./wordListGuide";
 import { CONTEXT_PHRASES, partsNote, traditionLabel } from "./colonialWording";
@@ -320,16 +321,19 @@ export class NameForgeModal extends Modal {
   private riverSetting: RiverSetting = "british";
   private riverRegion: string | undefined = undefined;
   /** Tribal brief §19.5: the river module's colonial settings' biome; undefined is Unknown country. */
-  private riverBiome: string | undefined = undefined;
+  /** Land brief §6: each module's biome and terrain, kept for the session. */
+  private landStates: Record<string, LandState> = {};
+  private landButton: LandButton | null = null;
+  /** The user's biome packs, as last resolved (Land brief §9.5). */
+  private customBiomes: Biome[] = [];
   /** Tribal names' choices (Tribal brief §18.2), kept for the session like the colonial modules'. */
   private tribal: {
     tradition: string;
-    biome: string | undefined;
     register: TribalRegister;
     groupType: string | undefined;
     perspective: string | undefined;
     hostile: boolean;
-  } = { tradition: "general", biome: undefined, register: "plain", groupType: undefined, perspective: undefined, hostile: false };
+  } = { tradition: "general", register: "plain", groupType: undefined, perspective: undefined, hostile: false };
   private tribalOptionsButton: HTMLButtonElement | null = null;
   /** Place names: Britain (PLACE_BRITAIN) or a world culture, and the era chosen for each culture. Session only. */
   private worldCulture: string = PLACE_BRITAIN;
@@ -347,8 +351,6 @@ export class NameForgeModal extends Modal {
   private selectedTradition: Record<ColonialPart, string | undefined> = { "2": undefined, "2a": undefined };
   /** Each part's context, starting on its first (as the wizard does): wild and unsettled lands, ruling over the locals. */
   private selectedContext: Record<ColonialPart, string | undefined> = { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] };
-  /** Tribal brief §19.4: each colonial part's biome; undefined is Unknown country (native placeholders). */
-  private selectedBiome: Record<ColonialPart, string | undefined> = { "2": undefined, "2a": undefined };
   private contextRowEl: HTMLElement | null = null;
   private quantityToggleEl: HTMLElement | null = null;
   private generateButtonEl: HTMLButtonElement | null = null;
@@ -565,6 +567,22 @@ export class NameForgeModal extends Modal {
     this.tribalOptionsButton.addEventListener("click", (evt) => this.openTribalOptions(evt));
     this.tribalOptionsButton.hide();
 
+    // Land brief §6.1: biome and terrain, beside the guide button.
+    this.landButton = new LandButton(createPacksRow, {
+      state: () => {
+        const key = this.landKey();
+        return key ? this.land(key) : undefined;
+      },
+      set: (state) => {
+        const key = this.landKey();
+        if (key) this.landStates[key] = state;
+      },
+      defaultLabel: () => this.landDefaultLabel(),
+      terrain: () => this.landKey() !== "river",
+      customBiomes: () => this.loadCustomBiomes(),
+      onChange: () => this.renderContextRow(),
+    });
+
     // A plain flow block under the pack row, not a floating overlay — same as titleForge's.
     this.sectionMenuEl = optionsList.createDiv({ cls: "nameforge-modal__section-menu" });
     this.sectionMenuEl.hide();
@@ -691,12 +709,13 @@ export class NameForgeModal extends Modal {
     const tribal = section === "tribalNames";
     this.createPacksButton?.toggle(!colonialPart && !tribal);
     this.tribalOptionsButton?.toggle(tribal);
+    this.landButton?.refresh();
     this.guideButton?.toggle(!!colonialPart);
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
     this.regionDropdownEl?.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover || tribal);
-    this.showSecondBox(river || (section === "placeShapes" && this.placeHasSecondBox()) || takeover || !!colonialPart || tribal);
+    this.showSecondBox((river && this.riverSetting === "british") || (section === "placeShapes" && this.placeHasSecondBox()) || takeover || tribal);
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
@@ -790,13 +809,6 @@ export class NameForgeModal extends Modal {
       trigger.setAttribute("title", "Group type: what kind of group is being named");
       return;
     }
-    const biomeBox = this.biomeBox();
-    if (biomeBox) {
-      const biome = findBiome(biomeBox.current);
-      label.textContent = biome?.label ?? biomeBox.none.label;
-      trigger.setAttribute("title", biome?.guide ?? biomeBox.none.title);
-      return;
-    }
     if (this.activeSection === "placeShapes" && this.placeIsWorld()) {
       const era = findEra(findCulture(this.worldCulture), this.worldEras[this.worldCulture]);
       label.textContent = era.label;
@@ -856,22 +868,6 @@ export class NameForgeModal extends Modal {
       }
       return;
     }
-    const biomeBox = this.biomeBox();
-    if (biomeBox) {
-      const choices = [{ id: undefined, label: biomeBox.none.label, guide: biomeBox.none.title }, ...BIOMES];
-      for (const biome of choices) {
-        const item = menu.createEl("button", {
-          cls: "nameforge-modal__pack-dropdown-item" + (biome.id === biomeBox.current ? " is-active" : ""),
-          attr: { type: "button", title: biome.guide },
-        });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: biome.label });
-        item.addEventListener("click", () => {
-          biomeBox.choose(biome.id);
-          choose();
-        });
-      }
-      return;
-    }
     if (this.activeSection === "placeShapes" && this.placeIsWorld()) {
       const culture = findCulture(this.worldCulture);
       const current = findEra(culture, this.worldEras[culture.id]);
@@ -909,26 +905,50 @@ export class NameForgeModal extends Modal {
   }
 
   /**
-   * The second box as a biome chooser (Tribal brief §19.4), for the modules that take one: the
-   * current biome, how to change it, and the first choice (no biome).
+   * Land brief §6.2: the active module's land key (per part for the colonial modules, per culture
+   * for world place names), or undefined where there is no Land button.
    */
-  private biomeBox(): { current: string | undefined; choose: (id: string | undefined) => void; none: { label: string; title: string } } | undefined {
+  private landKey(): string | undefined {
     const part = COLONIAL_SECTION_PART[this.activeSection];
-    if (this.activeSection === "riverNames" && this.riverSetting !== "british") {
-      return {
-        current: this.riverBiome,
-        choose: (id) => (this.riverBiome = id),
-        none: { label: "Unknown country", title: "Unknown country: native wildlife and plants stay as placeholders" },
-      };
-    }
-    if (part) {
-      return {
-        current: this.selectedBiome[part],
-        choose: (id) => (this.selectedBiome[part] = id),
-        none: { label: "Unknown country", title: "Unknown country: native wildlife and plants stay as placeholders" },
-      };
+    if (part) return `colonial:${part}`;
+    if (this.activeSection === "tribalNames") return "tribal";
+    if (this.activeSection === "riverNames") return this.riverSetting === "british" ? undefined : "river";
+    if (this.activeSection === "placeShapes") {
+      if (this.placeIsBritain()) return "britain";
+      if (this.placeIsWorld() && cultureUsesBiomes(this.worldCulture)) return `world:${this.worldCulture}`;
     }
     return undefined;
+  }
+
+  /** A module's land choice (session only). */
+  private land(key: string): LandState {
+    return this.landStates[key] ?? DEFAULT_LAND;
+  }
+
+  /** The module's default biome as the Land menu shows it. */
+  private landDefaultLabel(): string {
+    const key = this.landKey() ?? "";
+    if (key === "britain") return "Britain";
+    if (key === "tribal" || key.startsWith("world:")) return "Homeland";
+    return "Unknown country";
+  }
+
+  /** Land brief §3: a land-driven batch, or undefined (with a status) when nothing fits. */
+  private tryLand<T>(run: () => T): T | undefined {
+    try {
+      return run();
+    } catch (error) {
+      if (error instanceof Error && /^No eligible/.test(error.message)) {
+        this.setStatus("No place names fit this biome and terrain.");
+        return undefined;
+      }
+      throw error;
+    }
+  }
+
+  /** Land brief §9.5: the user's biome packs (resolved by the host). */
+  private async loadCustomBiomes(): Promise<Biome[]> {
+    return this.customBiomes;
   }
 
   /** Gives the region box the setting box's exact left edge and width. */
@@ -1037,8 +1057,8 @@ export class NameForgeModal extends Modal {
         item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: setting.label });
         item.addEventListener("click", () => {
           this.riverSetting = setting.id;
-          // British: the region box; New Land and Established: the biome box (Tribal brief §19.5).
-          this.updateSecondBoxLabel();
+          this.showSecondBox(setting.id === "british");
+          this.landButton?.refresh();
           this.updateRegionLabel();
           this.setRegionMenuOpen(false);
         });
@@ -1060,6 +1080,7 @@ export class NameForgeModal extends Modal {
         item.addEventListener("click", () => {
           this.worldCulture = culture.id;
           this.showSecondBox(this.placeHasSecondBox());
+          this.landButton?.refresh();
           this.updateSecondBoxLabel();
           this.updateRegionLabel();
           this.setRegionMenuOpen(false);
@@ -1191,7 +1212,7 @@ export class NameForgeModal extends Modal {
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
     const result = generateTribalNames({
       tradition: t.tradition,
-      biome: t.biome,
+      biome: this.land("tribal").biome,
       register: t.register,
       groupType: t.groupType,
       perspective: t.perspective,
@@ -1208,7 +1229,7 @@ export class NameForgeModal extends Modal {
       }),
       "module",
     );
-    await this.recordGenerationHistory(result.names.length, tribalHistoryLabel(SECTION_LABELS.tribalNames, t.tradition, t.biome, t.register));
+    await this.recordGenerationHistory(result.names.length, tribalHistoryLabel(SECTION_LABELS.tribalNames, t.tradition, this.land("tribal").biome, t.register, this.land("tribal").terrain, this.customBiomes));
     this.setStatus(result.notices.join(" "));
   }
 
@@ -1251,14 +1272,18 @@ export class NameForgeModal extends Modal {
     );
     const group = TRIBAL_GROUP_TYPES.find((g) => g.key === t.groupType);
     sentence.appendText(`-themed ${group ? group.label.toLowerCase() : "groups of any kind"} in `);
-    const biome = findBiome(t.biome);
+    const land = this.land("tribal");
+    const biome = findBiome(land.biome, this.customBiomes);
     const biomeText = biome ? `${/^[aeiou]/i.test(biome.label) ? "an" : "a"} ${biome.label.toLowerCase()}` : "their original";
     link(
       biomeText,
       biome?.guide ?? homelandSummary(t.tradition),
-      [{ id: undefined, label: "Their original" }, ...BIOMES.map((b) => ({ id: b.id, label: b.label }))],
-      t.biome,
-      (id) => (t.biome = id),
+      [{ id: undefined, label: "Their original" }, ...[BRITAIN, ...BIOMES].map((b) => ({ id: b.id, label: b.label }))],
+      land.biome,
+      (id) => {
+        this.landStates.tribal = { ...land, biome: id };
+        this.landButton?.refresh();
+      },
     );
     sentence.appendText(" environment using ");
     link(
@@ -2317,17 +2342,24 @@ export class NameForgeModal extends Modal {
     if (this.activeSection === "placeShapes" && this.placeIsBritain()) {
       // River brief §2: rendered names from the fixed built-in recipe, shown as recipe results.
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
-      const result = generatePlaceNames({
-        recipe: britishPlaceNamesRecipe(this.selectedRegion),
+      const land = this.land("britain");
+      const biome = findBiome(land.biome, this.customBiomes);
+      const result = this.tryLand(() => generatePlaceNames({
+        recipe: britishPlaceNamesRecipe(this.selectedRegion, biome?.custom ? undefined : land.biome, land.terrain),
+        biome: biome?.custom ? biome : undefined,
         slots: {},
         count: this.generationCount,
         seed: seedOverride,
         faithfulness: this.plugin.settings.faithfulness,
         strictness: this.plugin.settings.strictness,
-      });
+      }));
+      if (!result) return;
       this.currentSeed = result.seed;
       this.renderRecipeResults(result.names, "module");
-      await this.recordGenerationHistory(result.names.length, withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, this.selectedRegion));
+      await this.recordGenerationHistory(
+        result.names.length,
+        withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, this.selectedRegion) + landHistorySuffix(land, this.customBiomes),
+      );
       this.setStatus(result.notices.join(" "));
       return;
     }
@@ -2338,7 +2370,7 @@ export class NameForgeModal extends Modal {
       const setting: RiverSetting = placeRivers ? "british" : this.riverSetting;
       const british = setting === "british";
       const region = placeRivers ? this.selectedRegion : this.riverRegion;
-      const biome = british ? undefined : findBiome(this.riverBiome);
+      const biome = british ? undefined : findBiome(this.land("river").biome, this.customBiomes);
       const result = generateRiverNames({
         setting,
         region: british ? region : undefined,
@@ -2402,21 +2434,26 @@ export class NameForgeModal extends Modal {
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
       const tradition = this.selectedTradition[colonialPart];
       const context = this.selectedContext[colonialPart];
-      const biome = this.selectedBiome[colonialPart];
+      const land = this.land(`colonial:${colonialPart}`);
+      const custom = findBiome(land.biome, this.customBiomes)?.custom ? findBiome(land.biome, this.customBiomes) : undefined;
+      const biome = custom ? undefined : land.biome;
       // River brief §3: rendered names from the fixed built-in recipe, shown as recipe results.
-      const result = generatePlaceNames({
-        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome),
+      const result = this.tryLand(() => generatePlaceNames({
+        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain),
+        biome: custom,
         slots: {},
         count: this.generationCount,
         seed: seedOverride,
         faithfulness: this.plugin.settings.faithfulness,
         strictness: this.plugin.settings.strictness,
-      });
+      }));
+      if (!result) return;
       this.currentSeed = result.seed;
       this.renderRecipeResults(result.names, "module");
       await this.recordGenerationHistory(
         result.names.length,
-        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context, biome),
+        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context, custom ? undefined : biome) +
+          landHistorySuffix(land, this.customBiomes, !!custom),
       );
       this.setStatus("");
       return;

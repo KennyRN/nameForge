@@ -6,7 +6,7 @@
 // group type → perspective and tone → theme → template → words → rendering → safeguards (§4).
 
 import tribalData from "../data/tribal-names.json";
-import { type Biome, biomeTitleCase, biomeWords, findBiome, pluralOf, type TerrainId, TERRAINS, terrainWords } from "../biomes";
+import { type Biome, biomeTitleCase, biomeWords, findBiome, pluralOf, TERRAIN_CHOICES, type TerrainId, TERRAINS, terrainWords } from "../biomes";
 import { mulberry32 } from "../markov";
 
 export type TribalRegister = "plain" | "historical" | "legendary" | "administrative";
@@ -1385,10 +1385,19 @@ export function generateTribalNames(options: TribalOptions & { count: number; se
 }
 
 /** "tribal names · Polynesian · Temperate woodland · plain" (§18.3). */
-export function tribalHistoryLabel(sectionLabel: string, tradition: string, biome: string | undefined, register: TribalRegister): string {
+export function tribalHistoryLabel(
+  sectionLabel: string,
+  tradition: string,
+  biome: string | undefined,
+  register: TribalRegister,
+  terrain = "any",
+  custom: readonly Biome[] = [],
+): string {
   const t = findTradition(tradition) ?? TRIBAL_TRADITIONS[0];
-  const b = findBiome(biome);
-  return [sectionLabel, t.label, b ? b.label : "homeland", register].join(" · ");
+  const b = findBiome(biome, custom);
+  // Land brief §6.4: "tribal names · Polynesian · britain · coasts · plain".
+  const land = [...TERRAIN_CHOICES, ...(b?.customTerrains ?? [])].find((x) => x.id === terrain && x.id !== "any");
+  return [sectionLabel, t.label, b ? b.label.toLowerCase() : "homeland", ...(land ? [land.label.toLowerCase()] : []), register].join(" · ");
 }
 
 /** "Homeland: tropical islands 80%, cool rainforest 20%" (§18.2). */
