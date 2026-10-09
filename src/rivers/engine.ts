@@ -6,6 +6,7 @@
 // sub-seeds from it, as the takeover module's native drawer does.
 
 import riverData from "../data/river-names.json";
+import { type Biome, biomeEntries, findBiome, pickWeightedPair } from "../biomes";
 import { MarkovModel, mulberry32 } from "../markov";
 import { NAME_WORDS, NAMES, type NameWordEntry, smoothJoin } from "../names/engine";
 
@@ -26,7 +27,7 @@ interface RiverData {
   ancient: { minLetters: number; maxLetters: number; draws: number };
   kindWeights: Record<RiverSetting, Record<RiverKind, number>>;
   waterWords: { british: Record<string, Weights>; "new-land": Weights; established: Weights };
-  descriptiveCategories: { british: Weights; colonial: Weights };
+  descriptiveCategories: { british: Weights; colonial: Weights; colonialWithBiome: Weights };
   britishFuseChance: number;
   forms: {
     ancient: { scottishRegions: string[]; scottish: Weights; other: Weights };
@@ -47,6 +48,8 @@ export interface RiverOptions {
   region?: string;
   faithfulness?: number;
   strictness?: number;
+  /** New Land and Established only (Tribal brief §19.5): a biome id that fills native placeholders. */
+  biome?: string;
 }
 
 export interface RiverName {
@@ -135,13 +138,20 @@ function ancientForm(name: string, region: string | undefined, rng: () => number
   return { text: name, form };
 }
 
+/** Tribal brief §19.5: the colonial settings' biome, if one is set. */
+const colonialBiome = (options: RiverOptions): Biome | undefined => (options.setting === "british" ? undefined : findBiome(options.biome));
+
 // ── Descriptive names ───────────────────────────────────────────────────────
 
 /** A word from a built-in list (modern register) and a water word, joined; `bare` never adds River. */
 function descriptiveName(options: RiverOptions, rng: () => number, bare: boolean): Built {
   const british = options.setting === "british";
-  const category = pickWeighted(RIVER_DATA.descriptiveCategories[british ? "british" : "colonial"], rng);
-  const entry: NameWordEntry = pickUniform(NAME_WORDS.categories[category], rng);
+  const biome = colonialBiome(options);
+  const categories = RIVER_DATA.descriptiveCategories[british ? "british" : biome ? "colonialWithBiome" : "colonial"];
+  const category = pickWeighted(categories, rng);
+  // Tribal brief §19.5: the five native categories draw from the biome, the rest from the built-in lists.
+  const native = biome ? biomeEntries(biome, category) : undefined;
+  const entry: NameWordEntry = native ? pickWeightedPair(native, rng) : pickUniform(NAME_WORDS.categories[category], rng);
   const word = entry.modern;
   const water = pickWeighted(waterWordWeights(options.setting, options.region), rng);
 
@@ -165,12 +175,29 @@ function descriptiveName(options: RiverOptions, rng: () => number, bare: boolean
 
 // ── Patterns ────────────────────────────────────────────────────────────────
 
+/** Tribal brief §19.5: the native flora and fauna placeholders a biome fills. */
+const NATIVE_PLACEHOLDERS: Record<string, string> = {
+  "[native bird]": "bird",
+  "[native wild animal]": "wild-animal",
+  "[native fish or creature]": "fish-and-other-creatures",
+  "[native tree]": "tree",
+  "[native plant]": "wild-plant",
+};
+
 function patternName(options: RiverOptions, rng: () => number): Built {
   const items = RIVER_DATA.patterns[options.setting];
   const pattern = pickWeighted(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
-  if (!pattern.includes("{water}")) return { text: pattern, form: pattern };
+  // Tribal brief §19.5: with a biome, each native placeholder becomes a title-cased biome word.
+  const biome = colonialBiome(options);
+  const filled = biome
+    ? pattern.replace(/\[native [^\]]+\]/g, (slot) => {
+        const entries = NATIVE_PLACEHOLDERS[slot] ? biomeEntries(biome, NATIVE_PLACEHOLDERS[slot]) : undefined;
+        return entries ? titleCase(pickWeightedPair(entries, rng).modern) : slot;
+      })
+    : pattern;
+  if (!filled.includes("{water}")) return { text: filled, form: pattern };
   const water = pickWeighted(waterWordWeights(options.setting, options.region), rng);
-  return { text: pattern.replace("{water}", titleCase(water)), water, form: pattern };
+  return { text: filled.replace("{water}", titleCase(water)), water, form: pattern };
 }
 
 // ── Public ──────────────────────────────────────────────────────────────────

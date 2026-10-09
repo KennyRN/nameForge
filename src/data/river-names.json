@@ -446,6 +446,16 @@
       "colour": 50,
       "quality-or-condition": 30,
       "shape": 20
+    },
+    "colonialWithBiome": {
+      "colour": 35,
+      "quality-or-condition": 20,
+      "shape": 12,
+      "bird": 10,
+      "wild-animal": 8,
+      "tree": 8,
+      "wild-plant": 4,
+      "fish-and-other-creatures": 3
     }
   },
   "britishFuseChance": 0.75,

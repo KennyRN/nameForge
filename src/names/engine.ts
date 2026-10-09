@@ -443,6 +443,8 @@ export class NameRenderer {
       {
         setting,
         region: setting === "british" ? this.region : undefined,
+        // Tribal brief §19.5: colonial parts pass the recipe's biome.
+        biome: setting === "british" ? undefined : this.recipe.shape.biome,
         faithfulness: this.options.faithfulness,
         strictness: this.options.strictness,
       },

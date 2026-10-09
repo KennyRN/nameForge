@@ -5,8 +5,10 @@ import snapshots from "./fixtures/biome-snapshots.json";
 import { BIOMES, biomeEntries } from "../src/biomes";
 import { colonialHistoryLabel } from "../src/colonialShapes";
 import { colonialSentenceText } from "../src/colonialSentence";
-import { generatePlaceNames, type NameWordEntry, type ResolvedSlot } from "../src/names/engine";
+import { generatePlaceNames, NAME_WORDS, type NameWordEntry, type ResolvedSlot } from "../src/names/engine";
 import { colonialPlaceNamesRecipe, readRecipe, recipeToFrontmatter, withDefaults } from "../src/names/recipe";
+import { mulberry32 } from "../src/markov";
+import { generateRiverNames, RIVER_DATA, riverName } from "../src/rivers/engine";
 
 const SEEDS = [1, 4242, 987654321];
 const RECIPES: [string, "new-land" | "established", string | undefined, string | undefined][] = [
@@ -19,7 +21,7 @@ const SNAPSHOTS = snapshots as Record<string, unknown>;
 const NATIVE_IDS = ["bird", "wild-animal", "fish-and-other-creatures", "tree", "wild-plant"];
 /** The five flora and fauna placeholders a biome replaces. [native place] and [native people] are
  * filled by a native pack, not a biome, so they can still appear. */
-export const NATIVE_FLORA_FAUNA = /\[native (bird|wild animal|fish or creature|tree|plant)\]/;
+const NATIVE_FLORA_FAUNA = /\[native (bird|wild animal|fish or creature|tree|plant)\]/;
 
 test("colonial biomes: recipes without a biome match the recorded output exactly", () => {
   for (const [key, part, tradition, context] of RECIPES) {
@@ -49,17 +51,22 @@ const listSlot = (...modern: string[]): ResolvedSlot => ({
   sources: [{ weight: 1, entries: modern.map((m): NameWordEntry => ({ modern: m, forms: [], fuses: "no" })) }],
 });
 
+const noRivers: Record<string, ResolvedSlot> = { "river-or-stream-name": { kind: "ignore" } };
+
 test("colonial biomes: an explicit slot setting still wins", () => {
   const savannah = colonialPlaceNamesRecipe("new-land", undefined, undefined, "savannah");
-  const withList = generatePlaceNames({ recipe: savannah, slots: { bird: listSlot("Testbird", "Otherbird") }, count: 2000, seed: 3 }).names;
+  const withList = generatePlaceNames({ recipe: savannah, slots: { bird: listSlot("Testbird", "Otherbird"), ...noRivers }, count: 2000, seed: 3 }).names;
   assert.ok(withList.some((n) => /Testbird|Otherbird/.test(n.text)), "the fixture birds appear");
+  // River fills draw biome birds too (§19.5), so rivers are left out of this check.
   // Savannah birds found in no other savannah list never appear: bird fills come only from the fixture.
   const birdsOnly = ["Hornbill", "Guineafowl", "Ostrich", "Secretary Bird", "Crowned Crane", "Weaver Bird"];
   assert.ok(!withList.some((n) => birdsOnly.some((b) => n.text.includes(b))));
-  const without = generatePlaceNames({ recipe: savannah, slots: {}, count: 2000, seed: 3 }).names;
+  const without = generatePlaceNames({ recipe: savannah, slots: { ...noRivers }, count: 2000, seed: 3 }).names;
   assert.ok(without.some((n) => birdsOnly.some((b) => n.text.includes(b))), "the same check finds them without the fixture");
-  const builtIn = generatePlaceNames({ recipe: savannah, slots: { tree: { kind: "built-in" } }, count: 2000, seed: 3 }).names;
-  assert.ok(builtIn.some((n) => /\bOak/.test(n.text)), "the British tree list is drawn");
+  const builtIn = generatePlaceNames({ recipe: savannah, slots: { tree: { kind: "built-in" }, ...noRivers }, count: 2000, seed: 3 }).names;
+  const british = NAME_WORDS.categories.tree.flatMap((e) => [e.modern, ...e.forms]).map((w) => w.toLowerCase());
+  assert.ok(british.includes("oak"), "Oak can appear");
+  assert.ok(builtIn.some((n) => british.some((w) => n.text.toLowerCase().includes(w))), "the British tree list is drawn");
   assert.ok(!builtIn.some((n) => /Baobab/.test(n.text)), "the savannah trees are not");
 });
 
@@ -104,4 +111,32 @@ test("colonial biomes: history labels", () => {
     colonialHistoryLabel("exploration place names", "2", "spanish", "contested-frontier", undefined),
   );
   assert.ok(!colonialHistoryLabel("exploration place names", "2", "spanish", "contested-frontier").includes("rainforest"));
+});
+
+// ── River names (Tribal brief §19.5, §22.4) ─────────────────────────────────
+
+test("river biomes: no biome matches the recorded output exactly, for all three settings", () => {
+  for (const setting of ["british", "new-land", "established"] as const) {
+    for (const seed of SEEDS) {
+      const names = generateRiverNames({ setting, count: 20, seed }).names;
+      assert.deepEqual(JSON.parse(JSON.stringify(names)), SNAPSHOTS[`river ${setting} ${seed}`], `${setting} ${seed}`);
+    }
+  }
+});
+
+test("river biomes: colonial settings with a biome leave no native flora or fauna placeholder", () => {
+  for (const setting of ["new-land", "established"] as const) {
+    for (const biome of BIOMES) {
+      const rng = mulberry32(11);
+      for (let i = 0; i < 2000; i++) {
+        const name = riverName({ setting, biome: biome.id }, rng);
+        assert.ok(!NATIVE_FLORA_FAUNA.test(name.text), `${setting} ${biome.id}: ${name.text}`);
+        assert.equal(name.hasPlaceholder, /\[[^\]]+\]/.test(name.text));
+      }
+    }
+  }
+});
+
+test("river biomes: colonialWithBiome weights sum to 100", () => {
+  assert.equal(Object.values(RIVER_DATA.descriptiveCategories.colonialWithBiome).reduce((n, w) => n + w, 0), 100);
 });

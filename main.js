@@ -10997,6 +10997,15 @@ function biomeEntries(biome, categoryId) {
     weight
   ]);
 }
+function pickWeightedPair(items, rng) {
+  const total = items.reduce((sum, [, w]) => sum + w, 0);
+  let roll = rng() * total;
+  for (const [item, w] of items) {
+    roll -= w;
+    if (roll < 0) return item;
+  }
+  return items[items.length - 1][0];
+}
 
 // src/data/place-shapes.json
 var place_shapes_default = {
@@ -23971,6 +23980,16 @@ var river_names_default = {
       colour: 50,
       "quality-or-condition": 30,
       shape: 20
+    },
+    colonialWithBiome: {
+      colour: 35,
+      "quality-or-condition": 20,
+      shape: 12,
+      bird: 10,
+      "wild-animal": 8,
+      tree: 8,
+      "wild-plant": 4,
+      "fish-and-other-creatures": 3
     }
   },
   britishFuseChance: 0.75,
@@ -24195,10 +24214,14 @@ function ancientForm(name, region, rng) {
   if (form === "water-of-x") return { text: `Water of ${name}`, form };
   return { text: name, form };
 }
+var colonialBiome = (options) => options.setting === "british" ? void 0 : findBiome(options.biome);
 function descriptiveName(options, rng, bare) {
   const british = options.setting === "british";
-  const category = pickWeighted2(RIVER_DATA.descriptiveCategories[british ? "british" : "colonial"], rng);
-  const entry = pickUniform2(NAME_WORDS.categories[category], rng);
+  const biome = colonialBiome(options);
+  const categories = RIVER_DATA.descriptiveCategories[british ? "british" : biome ? "colonialWithBiome" : "colonial"];
+  const category = pickWeighted2(categories, rng);
+  const native = biome ? biomeEntries(biome, category) : void 0;
+  const entry = native ? pickWeightedPair(native, rng) : pickUniform2(NAME_WORDS.categories[category], rng);
   const word = entry.modern;
   const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
   if (british) {
@@ -24213,12 +24236,24 @@ function descriptiveName(options, rng, bare) {
   const form = pickWeighted2(RIVER_DATA.forms.colonialDescriptive, rng);
   return form === "bare" && water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
 }
+var NATIVE_PLACEHOLDERS = {
+  "[native bird]": "bird",
+  "[native wild animal]": "wild-animal",
+  "[native fish or creature]": "fish-and-other-creatures",
+  "[native tree]": "tree",
+  "[native plant]": "wild-plant"
+};
 function patternName(options, rng) {
   const items = RIVER_DATA.patterns[options.setting];
   const pattern = pickWeighted2(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
-  if (!pattern.includes("{water}")) return { text: pattern, form: pattern };
+  const biome = colonialBiome(options);
+  const filled = biome ? pattern.replace(/\[native [^\]]+\]/g, (slot) => {
+    const entries = NATIVE_PLACEHOLDERS[slot] ? biomeEntries(biome, NATIVE_PLACEHOLDERS[slot]) : void 0;
+    return entries ? titleCase2(pickWeightedPair(entries, rng).modern) : slot;
+  }) : pattern;
+  if (!filled.includes("{water}")) return { text: filled, form: pattern };
   const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
-  return { text: pattern.replace("{water}", titleCase2(water)), water, form: pattern };
+  return { text: filled.replace("{water}", titleCase2(water)), water, form: pattern };
 }
 function riverName(options, rng) {
   const kind = pickWeighted2(RIVER_DATA.kindWeights[options.setting], rng);
@@ -24482,6 +24517,8 @@ var NameRenderer = class {
       {
         setting,
         region: setting === "british" ? this.region : void 0,
+        // Tribal brief §19.5: colonial parts pass the recipe's biome.
+        biome: setting === "british" ? void 0 : this.recipe.shape.biome,
         faithfulness: this.options.faithfulness,
         strictness: this.options.strictness
       },
@@ -28116,6 +28153,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     /** River names (river brief §6.8): setting and, for British, region. Session only. */
     this.riverSetting = "british";
     this.riverRegion = void 0;
+    /** Tribal brief §19.5: the river module's colonial settings' biome; undefined is Unknown country. */
+    this.riverBiome = void 0;
     /** Place names: Britain (PLACE_BRITAIN) or a world culture, and the era chosen for each culture. Session only. */
     this.worldCulture = PLACE_BRITAIN;
     this.worldEras = {};
@@ -28449,7 +28488,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
     (_j = this.regionDropdownEl) == null ? void 0 : _j.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover);
-    this.showSecondBox(river && this.riverSetting === "british" || section === "placeShapes" && this.placeHasSecondBox() || takeover || !!colonialPart);
+    this.showSecondBox(river || section === "placeShapes" && this.placeHasSecondBox() || takeover || !!colonialPart);
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
@@ -28635,6 +28674,13 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
    */
   biomeBox() {
     const part = COLONIAL_SECTION_PART[this.activeSection];
+    if (this.activeSection === "riverNames" && this.riverSetting !== "british") {
+      return {
+        current: this.riverBiome,
+        choose: (id) => this.riverBiome = id,
+        none: { label: "Unknown country", title: "Unknown country: native wildlife and plants stay as placeholders" }
+      };
+    }
     if (part) {
       return {
         current: this.selectedBiome[part],
@@ -28743,7 +28789,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
         item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: setting.label });
         item.addEventListener("click", () => {
           this.riverSetting = setting.id;
-          this.showSecondBox(setting.id === "british");
+          this.updateSecondBoxLabel();
           this.updateRegionLabel();
           this.setRegionMenuOpen(false);
         });
@@ -29795,9 +29841,11 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       const setting = placeRivers ? "british" : this.riverSetting;
       const british = setting === "british";
       const region = placeRivers ? this.selectedRegion : this.riverRegion;
+      const biome = british ? void 0 : findBiome(this.riverBiome);
       const result2 = generateRiverNames({
         setting,
         region: british ? region : void 0,
+        biome: biome == null ? void 0 : biome.id,
         count: this.generationCount,
         seed: seedOverride2,
         faithfulness: this.plugin.settings.faithfulness,
@@ -29809,7 +29857,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
         "none"
       );
       const settingLabel = british ? "British" : RIVER_SETTINGS.find((s) => s.id === setting).label;
-      const label = `${RIVER_NAMES_HISTORY_NAME} \xB7 ${settingLabel}`;
+      const label = `${RIVER_NAMES_HISTORY_NAME} \xB7 ${settingLabel}${biome ? ` \xB7 ${biome.label.toLowerCase()}` : ""}`;
       await this.recordGenerationHistory(result2.names.length, british ? withRegion(label, region) : label);
       this.setStatus((_c = result2.notice) != null ? _c : "");
       return;

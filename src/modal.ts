@@ -306,6 +306,8 @@ export class NameForgeModal extends Modal {
   /** River names (river brief §6.8): setting and, for British, region. Session only. */
   private riverSetting: RiverSetting = "british";
   private riverRegion: string | undefined = undefined;
+  /** Tribal brief §19.5: the river module's colonial settings' biome; undefined is Unknown country. */
+  private riverBiome: string | undefined = undefined;
   /** Place names: Britain (PLACE_BRITAIN) or a world culture, and the era chosen for each culture. Session only. */
   private worldCulture: string = PLACE_BRITAIN;
   private worldEras: Record<string, string> = {};
@@ -660,7 +662,7 @@ export class NameForgeModal extends Modal {
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
     this.regionDropdownEl?.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover);
-    this.showSecondBox((river && this.riverSetting === "british") || (section === "placeShapes" && this.placeHasSecondBox()) || takeover || !!colonialPart);
+    this.showSecondBox(river || (section === "placeShapes" && this.placeHasSecondBox()) || takeover || !!colonialPart);
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
@@ -856,6 +858,13 @@ export class NameForgeModal extends Modal {
    */
   private biomeBox(): { current: string | undefined; choose: (id: string | undefined) => void; none: { label: string; title: string } } | undefined {
     const part = COLONIAL_SECTION_PART[this.activeSection];
+    if (this.activeSection === "riverNames" && this.riverSetting !== "british") {
+      return {
+        current: this.riverBiome,
+        choose: (id) => (this.riverBiome = id),
+        none: { label: "Unknown country", title: "Unknown country: native wildlife and plants stay as placeholders" },
+      };
+    }
     if (part) {
       return {
         current: this.selectedBiome[part],
@@ -972,7 +981,8 @@ export class NameForgeModal extends Modal {
         item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: setting.label });
         item.addEventListener("click", () => {
           this.riverSetting = setting.id;
-          this.showSecondBox(setting.id === "british");
+          // British: the region box; New Land and Established: the biome box (Tribal brief §19.5).
+          this.updateSecondBoxLabel();
           this.updateRegionLabel();
           this.setRegionMenuOpen(false);
         });
@@ -2129,9 +2139,11 @@ export class NameForgeModal extends Modal {
       const setting: RiverSetting = placeRivers ? "british" : this.riverSetting;
       const british = setting === "british";
       const region = placeRivers ? this.selectedRegion : this.riverRegion;
+      const biome = british ? undefined : findBiome(this.riverBiome);
       const result = generateRiverNames({
         setting,
         region: british ? region : undefined,
+        biome: biome?.id,
         count: this.generationCount,
         seed: seedOverride,
         faithfulness: this.plugin.settings.faithfulness,
@@ -2144,7 +2156,8 @@ export class NameForgeModal extends Modal {
       );
       // History keeps the brief's short setting names ("river names · British"), not the menu label.
       const settingLabel = british ? "British" : RIVER_SETTINGS.find((s) => s.id === setting)!.label;
-      const label = `${RIVER_NAMES_HISTORY_NAME} · ${settingLabel}`;
+      // Tribal brief §19.5: "river names · New Land · savannah" when a biome is set.
+      const label = `${RIVER_NAMES_HISTORY_NAME} · ${settingLabel}${biome ? ` · ${biome.label.toLowerCase()}` : ""}`;
       await this.recordGenerationHistory(result.names.length, british ? withRegion(label, region) : label);
       this.setStatus(result.notice ?? "");
       return;
