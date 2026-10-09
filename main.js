@@ -2053,7 +2053,11 @@ var ICON_PLACE_SHAPES = "nameforge-place-shapes";
 var ICON_PLACE_SHAPES_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path d="M17 8.444C17 11.537 12 17 12 17s-5-5.463-5-8.556S9.239 3 12 3s5 2.352 5 5.444" /><circle cx="12" cy="8" r="1" /></g></g>';
 var ICON_GENERIC_PLACE_NAMES = "nameforge-generic-place-names";
 var ICON_GENERIC_PLACE_NAMES_SVG = '<g transform="scale(4.16667)"><g fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path fill="currentColor" fill-rule="evenodd" d="M11.262 17.675L12 17zm1.476 0l.005-.005l.012-.014l.045-.05l.166-.186a38 38 0 0 0 2.348-2.957c.642-.9 1.3-1.92 1.801-2.933c.49-.99.885-2.079.885-3.086C18 4.871 15.382 2 12 2S6 4.87 6 8.444c0 1.007.395 2.096.885 3.086c.501 1.013 1.16 2.033 1.8 2.933a38 38 0 0 0 2.515 3.143l.045.05l.012.014l.005.005a1 1 0 0 0 1.476 0M12 17l.738.674zm0-11a2 2 0 1 0 0 4a2 2 0 0 0 0-4" clip-rule="evenodd" /></g></g>';
+var ICON_NATIVE_PLACE_NAMES = "nameforge-native-place-names";
 var ICON_RECIPE = "nameforge-recipe";
+var ICON_RECIPE_SVG = '<g transform="translate(0 5.556) scale(0.173611)"><path fill="currentColor" d="M288 0c-69.59 0-126 56.41-126 126c0 56.26 82.35 158.8 113.9 196.02c6.39 7.54 17.82 7.54 24.2 0C331.65 284.8 414 182.26 414 126C414 56.41 357.59 0 288 0m0 168c-23.2 0-42-18.8-42-42s18.8-42 42-42s42 18.8 42 42s-18.8 42-42 42M20.12 215.95A32.01 32.01 0 0 0 0 245.66v250.32c0 11.32 11.43 19.06 21.94 14.86L160 448V214.92c-8.84-15.98-16.07-31.54-21.25-46.42zM288 359.67c-14.07 0-27.38-6.18-36.51-16.96c-19.66-23.2-40.57-49.62-59.49-76.72v182l192 64V266c-18.92 27.09-39.82 53.52-59.49 76.72c-9.13 10.77-22.44 16.95-36.51 16.95m266.06-198.51L416 224v288l139.88-55.95A32 32 0 0 0 576 426.34V176.02c0-11.32-11.43-19.06-21.94-14.86" /></g>';
+var ICON_ADVANCED = "nameforge-advanced";
+var ICON_ADVANCED_SVG = '<g transform="scale(0.15625)"><path fill="currentColor" d="M415.9 274.5c12.2-3.3 25 2.5 30.5 13.8l18.6 37.6c10.3 1.4 20.4 4.2 29.9 8.1l35-23.3c10.5-7 24.4-5.6 33.3 3.3l19.2 19.2c8.9 8.9 10.3 22.9 3.3 33.3l-23.3 34.9c1.9 4.7 3.6 9.6 5 14.7s2.3 10.1 3 15.2l37.7 18.6c11.3 5.6 17.1 18.4 13.8 30.5l-7 26.2c-3.3 12.1-14.6 20.3-27.2 19.5l-42-2.7c-6.3 8.1-13.6 15.6-21.9 22l2.7 41.9c.8 12.6-7.4 24-19.5 27.2l-26.2 7c-12.2 3.3-24.9-2.5-30.5-13.8l-18.6-37.6c-10.3-1.4-20.4-4.2-29.9-8.1l-35 23.3c-10.5 7-24.4 5.6-33.3-3.3l-19.2-19.2c-8.9-8.9-10.3-22.8-3.3-33.3l23.3-35c-1.9-4.7-3.6-9.6-5-14.7s-2.3-10.2-3-15.2L288.6 446c-11.3-5.6-17-18.4-13.8-30.5l7-26.2c3.3-12.1 14.6-20.3 27.2-19.5l41.9 2.7c6.3-8.1 13.6-15.6 21.9-22l-2.7-41.8c-.8-12.6 7.4-24 19.5-27.2l26.2-7zM448.4 404c-24.3 0-44 19.7-43.9 44.1c0 24.3 19.7 43.9 44 43.9s44-19.7 44-44c-.1-24.4-19.8-44-44.1-44M224.9 18.5l26.2 7c12.1 3.3 20.3 14.7 19.5 27.2l-2.7 41.8c8.3 6.4 15.6 13.8 21.9 22l42-2.7c12.5-.8 23.9 7.4 27.2 19.5l7 26.2c3.2 12.1-2.5 24.9-13.8 30.5l-37.7 18.6c-.7 5.1-1.7 10.2-3 15.2s-3.1 10-5 14.7l23.3 35c7 10.5 5.6 24.4-3.3 33.3L307.3 326c-8.9 8.9-22.8 10.3-33.3 3.3L239 306c-9.5 3.9-19.6 6.7-29.9 8.1l-18.6 37.6c-5.6 11.3-18.4 17-30.5 13.8l-26.2-7c-12.2-3.3-20.3-14.7-19.5-27.2l2.7-41.9c-8.3-6.4-15.6-13.8-21.9-22l-42 2.7c-12.5.8-23.9-7.4-27.2-19.5l-7-26.2c-3.2-12.1 2.5-24.9 13.8-30.5l37.7-18.6c.7-5.1 1.7-10.1 3-15.2c1.4-5.1 3-10 5-14.7l-23.3-34.9c-7-10.5-5.6-24.4 3.3-33.3L77.6 58c8.9-8.9 22.8-10.3 33.3-3.3l35 23.3c9.5-3.9 19.6-6.7 29.9-8.1l18.6-37.6c5.6-11.3 18.3-17 30.5-13.8M192.4 148c-24.3 0-44 19.7-44 44s19.7 44 44 44s44-19.7 44-44s-19.7-44-44-44" /></g>';
 var ICON_EXPLORATION_PLACE_SHAPES = "nameforge-exploration-place-shapes";
 var ICON_EXPLORATION_PLACE_SHAPES_SVG = '<g transform="scale(0.0976563)"><path fill="currentColor" fill-opacity=".15" d="M512 140c-205.4 0-372 166.6-372 372s166.6 372 372 372s372-166.6 372-372s-166.6-372-372-372M327.6 701.7c-2 .9-4.4 0-5.3-2.1c-.4-1-.4-2.2 0-3.2L421 470.9L553.1 603zm375.1-375.1L604 552.1L471.9 420l225.5-98.7c2-.9 4.4 0 5.3 2.1c.4 1 .4 2.1 0 3.2" /><path fill="currentColor" d="M322.3 696.4c-.4 1-.4 2.2 0 3.2c.9 2.1 3.3 3 5.3 2.1L553.1 603L421 470.9zm375.1-375.1L471.9 420L604 552.1l98.7-225.5c.4-1.1.4-2.2 0-3.2c-.9-2.1-3.3-3-5.3-2.1" /><path fill="currentColor" d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448s448-200.6 448-448S759.4 64 512 64m0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372s372 166.6 372 372s-166.6 372-372 372" /></g>';
 var ICON_EMPIRE_EXPANSION_PLACE_SHAPES = "nameforge-empire-expansion-place-shapes";
@@ -2109,7 +2113,9 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_PACKS, ICON_PACKS_SVG);
   (0, import_obsidian4.addIcon)(ICON_PLACE_SHAPES, ICON_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_GENERIC_PLACE_NAMES, ICON_GENERIC_PLACE_NAMES_SVG);
-  (0, import_obsidian4.addIcon)(ICON_RECIPE, ICON_GENERIC_PLACE_NAMES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_NATIVE_PLACE_NAMES, ICON_GENERIC_PLACE_NAMES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_RECIPE, ICON_RECIPE_SVG);
+  (0, import_obsidian4.addIcon)(ICON_ADVANCED, ICON_ADVANCED_SVG);
   (0, import_obsidian4.addIcon)(ICON_EXPLORATION_PLACE_SHAPES, ICON_EXPLORATION_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG);
   (0, import_obsidian4.addIcon)(ICON_NAME_AGEING, ICON_NAME_AGEING_SVG);
@@ -32193,8 +32199,8 @@ var NameRenderer = class {
 };
 function resolveRegionSetting(value) {
   if (!value || value === "all-britain") return void 0;
-  const kebab3 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  const region = PLACE_SHAPE_REGIONS.find((r) => r.code === value.toUpperCase() || kebab3(r.label) === kebab3(value));
+  const kebab4 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const region = PLACE_SHAPE_REGIONS.find((r) => r.code === value.toUpperCase() || kebab4(r.label) === kebab4(value));
   return region == null ? void 0 : region.code;
 }
 function generatePlaceNames(options) {
@@ -35139,6 +35145,13 @@ function terrainPhrase(terrain, custom = []) {
   })];
   return (_b = (_a2 = all.find((t) => t.id === (terrain || "any"))) == null ? void 0 : _a2.phrase) != null ? _b : "any part";
 }
+var NO_THE_REGIONS = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
+var kebab2 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function regionPhrase(region) {
+  const r = PLACE_SHAPE_REGIONS.find((x) => x.code === (region != null ? region : "").toUpperCase() || kebab2(x.label) === kebab2(region != null ? region : ""));
+  if (!r) return "all of Britain";
+  return NO_THE_REGIONS.has(r.label) ? r.label : `the ${r.label}`;
+}
 
 // src/names/slotOptions.ts
 var SLOT_TIERS = ["simple", "detailed", "complete"];
@@ -35277,9 +35290,9 @@ function usesNativeDefault(part, categoryId) {
 // src/recipeEditor.ts
 var NEW_LANDS_CONTEXTS = CONTEXT_PHRASES["2"];
 var EXPANSION_CONTEXTS = CONTEXT_PHRASES["2a"];
-var NO_THE_REGIONS = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
+var NO_THE_REGIONS2 = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
 var same3 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-var kebab2 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+var kebab3 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 var PAGES = ["Template", "Shape and rendering", "Slots and generic words"];
 var TIER_TEXT = {
   simple: ["Simple", "The slots most names need."],
@@ -35585,10 +35598,10 @@ var RecipeWizard = class {
     const sentence2 = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
     this.featureLink(sentence2, true);
     sentence2.appendText(" from ");
-    const regions = [{ id: "all-britain", label: "All of Britain" }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: kebab2(r.label), label: r.label }))];
-    const current = kebab2(w.shape.region) === "all-britain" ? "all-britain" : this.regionValue(w.shape.region);
+    const regions = [{ id: "all-britain", label: "All of Britain" }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: kebab3(r.label), label: r.label }))];
+    const current = kebab3(w.shape.region) === "all-britain" ? "all-britain" : this.regionValue(w.shape.region);
     const region = (_a2 = regions.find((r) => r.id === current)) != null ? _a2 : regions[0];
-    const text = region.id === "all-britain" ? "all of Britain" : NO_THE_REGIONS.has(region.label) ? region.label : `the ${region.label}`;
+    const text = region.id === "all-britain" ? "all of Britain" : NO_THE_REGIONS2.has(region.label) ? region.label : `the ${region.label}`;
     this.sentenceLink(sentence2, text, regions, region.id, (id) => w.shape.region = id);
     sentence2.appendText(", set in ");
     this.landLinks(sentence2);
@@ -35725,8 +35738,8 @@ var RecipeWizard = class {
     info.addEventListener("click", () => new ContextGuideModal(this.app, contexts, this.customBiomes).open());
   }
   regionValue(value) {
-    const r = PLACE_SHAPE_REGIONS.find((x) => x.code === value.toUpperCase() || kebab2(x.label) === kebab2(value));
-    return r ? kebab2(r.label) : "all-britain";
+    const r = PLACE_SHAPE_REGIONS.find((x) => x.code === value.toUpperCase() || kebab3(x.label) === kebab3(value));
+    return r ? kebab3(r.label) : "all-britain";
   }
   /** Whether a slot is set explicitly, in the recipe or its template. */
   isSlotSet(id) {
@@ -36271,23 +36284,26 @@ function formatAgedName(trail, format) {
 
 // src/sections.ts
 var OLD_HISTORY_PREFIXES = {
-  explorationPlaceShapes: ["exploration place name shapes", "exploration place names"],
+  explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
   empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"]
 };
-var SECTION_ORDER = [
-  "markov",
-  "placeShapes",
-  "explorationPlaceShapes",
-  "empireExpansionPlaceShapes",
-  "tribalNames",
-  "nameAgeing",
-  "nameTakeover"
-];
+var SECTION_GROUPS = {
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  advanced: ["nameAgeing", "nameTakeover"]
+};
+var GROUP_LABELS = {
+  placeNames: "place names",
+  advanced: "advanced"
+};
+var SWITCHER_ORDER = ["markov", "placeNames", "tribalNames", "advanced"];
+function sectionGroup(section) {
+  return Object.keys(SECTION_GROUPS).find((g) => SECTION_GROUPS[g].includes(section));
+}
 var SECTION_LABELS = {
   markov: "markov generator",
-  placeShapes: "place names",
+  placeShapes: "native place names",
   riverNames: "river names",
-  explorationPlaceShapes: "exploration in new lands",
+  explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
   nameAgeing: "name ageing",
   nameTakeover: "name takeover",
@@ -36325,7 +36341,7 @@ var withRegion = (label, regionCode) => {
 };
 var SECTION_ICONS = {
   markov: ICON_PACKS,
-  placeShapes: ICON_PLACE_SHAPES,
+  placeShapes: ICON_NATIVE_PLACE_NAMES,
   riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
@@ -36333,6 +36349,11 @@ var SECTION_ICONS = {
   nameTakeover: ICON_NAME_TAKEOVER,
   tribalNames: ICON_TRIBAL_NAMES
 };
+var GROUP_ICONS = {
+  placeNames: ICON_PLACE_SHAPES,
+  advanced: ICON_ADVANCED
+};
+var moduleLabel = (section) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
 var PLACE_BRITAIN = "britain";
 var PLACE_BRITISH_RIVERS = "british-rivers";
 var SESSION_HINT = "\u2190 click here for specialist modules, or here for your name packs";
@@ -36462,6 +36483,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     /** Problems found resolving the biome packs, for the editor's status line. */
     this.biomeProblems = [];
     /** Tribal names' choices (Tribal brief §18.2), kept for the session like the colonial modules'. */
+    /** Each switcher group's last-used module (session only). */
+    this.groupModule = { placeNames: "placeShapes", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
     /** Land brief §8.1: river names' peoples (session only). */
     this.riverPeoples = { mode: "tribal", tradition: "general" };
@@ -36517,6 +36540,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
       onNativeLabelChange: () => {
         this.updateRegionLabel();
         this.updateSecondBoxLabel();
+        this.renderContextRow();
       }
     });
     this.guideButton = null;
@@ -36694,7 +36718,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     this.landButton = new LandButton(createPacksRow, {
       state: () => {
         const key2 = this.landKey();
-        return key2 && key2 !== "tribal" ? this.land(key2) : void 0;
+        return key2 === "river" ? this.land(key2) : void 0;
       },
       set: (state) => {
         const key2 = this.landKey();
@@ -36773,21 +36797,26 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
   /** The section switcher, opened by clicking the binder icon — a port of titleForge's
    * renderSectionPicker. Rebuilt on each open so the active item's highlight is current. */
   renderSectionMenu() {
+    var _a2;
     const menu = this.sectionMenuEl;
     if (!menu) return;
     menu.empty();
-    for (const section of SECTION_ORDER) {
+    const current = (_a2 = sectionGroup(this.activeSection)) != null ? _a2 : this.activeSection;
+    for (const entry of SWITCHER_ORDER) {
+      const group = entry in SECTION_GROUPS ? entry : void 0;
+      const label = group ? GROUP_LABELS[group] : SECTION_LABELS[entry];
       const item = menu.createDiv({
-        cls: "nameforge-modal__section-menu-item" + (section === this.activeSection ? " is-active" : ""),
-        attr: { role: "button", tabindex: "0", "aria-label": SECTION_LABELS[section] }
+        cls: "nameforge-modal__section-menu-item" + (entry === current ? " is-active" : ""),
+        attr: { role: "button", tabindex: "0", "aria-label": label }
       });
-      (0, import_obsidian12.setIcon)(item.createSpan({ cls: "nameforge-modal__section-menu-icon" }), SECTION_ICONS[section]);
-      item.createSpan({ text: SECTION_LABELS[section] });
-      item.addEventListener("click", () => this.switchSection(section));
+      (0, import_obsidian12.setIcon)(item.createSpan({ cls: "nameforge-modal__section-menu-icon" }), group ? GROUP_ICONS[group] : SECTION_ICONS[entry]);
+      item.createSpan({ text: label });
+      const go = () => this.switchSection(group ? this.groupModule[group] : entry);
+      item.addEventListener("click", go);
       item.addEventListener("keydown", (evt) => {
         if (evt.key === "Enter" || evt.key === " ") {
           evt.preventDefault();
-          this.switchSection(section);
+          go();
         }
       });
     }
@@ -36807,6 +36836,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     this.setSecondBoxMenuOpen(false);
     this.swapSectionView(section);
     this.activeSection = section;
+    const group = sectionGroup(section);
+    if (group) this.groupModule[group] = section;
     (_d = this.packDropdownEl) == null ? void 0 : _d.toggle(section === "markov");
     (_e = this.sectionSelectEl) == null ? void 0 : _e.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_f = this.editRecipeButton) == null ? void 0 : _f.toggle(section === "markov" && this.currentPackType === "recipePack");
@@ -36819,8 +36850,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
-    (_k = this.regionDropdownEl) == null ? void 0 : _k.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover || tribal);
-    this.showSecondBox(river && this.riverSetting === "british" || section === "placeShapes" && this.placeHasSecondBox() || takeover);
+    (_k = this.regionDropdownEl) == null ? void 0 : _k.toggle(!!group || river || tribal);
+    this.showSecondBox(river && this.riverSetting === "british");
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
@@ -36833,7 +36864,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     (_o = this.generateButtonEl) == null ? void 0 : _o.setAttribute("aria-label", action);
     if (ageing) void this.enterAgeingSection();
     if (takeover) void this.takeoverView.refresh();
-    if (this.sectionTriggerEl) (0, import_obsidian12.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
+    if (this.sectionTriggerEl) (0, import_obsidian12.setIcon)(this.sectionTriggerEl, group ? GROUP_ICONS[group] : SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
     (_p = this.sectionStubEl) == null ? void 0 : _p.toggle(
       section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover && !tribal
@@ -36850,10 +36881,6 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
   /** Place names: whether a world culture is chosen. */
   placeIsWorld() {
     return !this.placeIsBritain() && !this.placeIsRivers();
-  }
-  /** Place names: the second box shows Britain's regions (for places or rivers), or a culture's eras when it has more than one. */
-  placeHasSecondBox() {
-    return !this.placeIsWorld() || findCulture(this.worldCulture).eras.length > 1;
   }
   /**
    * The box beneath the box beside the section trigger: the region for river names' British setting
@@ -36894,71 +36921,25 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
   }
   /** The second box's label and tooltip for the active module. */
   updateSecondBoxLabel() {
-    var _a2, _b, _c;
+    var _a2, _b;
     const label = this.secondBoxLabelEl;
     const trigger = this.secondBoxTriggerEl;
     if (!label || !trigger) return;
-    if (this.activeSection === "nameTakeover") {
-      label.textContent = this.takeoverView.takeoverLabel();
-      trigger.setAttribute("title", "Takeover pack: the language that adopts the names");
-      return;
-    }
-    if (this.activeSection === "placeShapes" && this.placeIsWorld()) {
-      const era = findEra(findCulture(this.worldCulture), this.worldEras[this.worldCulture]);
-      label.textContent = era.label;
-      trigger.setAttribute("title", `Era: ${(_a2 = era.guide) != null ? _a2 : era.label}`);
-      return;
-    }
     const regionCode = this.activeSection === "placeShapes" ? this.selectedRegion : this.riverRegion;
     const region = PLACE_SHAPE_REGIONS.find((r) => r.code === regionCode);
-    label.textContent = (_b = region == null ? void 0 : region.label) != null ? _b : "All Britain";
-    trigger.setAttribute("title", `Region: ${(_c = region == null ? void 0 : region.counties) != null ? _c : "no regional weighting"}`);
+    label.textContent = (_a2 = region == null ? void 0 : region.label) != null ? _a2 : "All Britain";
+    trigger.setAttribute("title", `Region: ${(_b = region == null ? void 0 : region.counties) != null ? _b : "no regional weighting"}`);
   }
   /**
    * River names and place names' Britain: All Britain, then the regions. Place names' world cultures:
    * the culture's eras. Name takeover: the eligible takeover packs.
    */
   renderSecondBoxMenu(menu) {
-    var _a2;
     menu.empty();
     const choose = () => {
       this.updateSecondBoxLabel();
       this.setSecondBoxMenuOpen(false);
     };
-    if (this.activeSection === "nameTakeover") {
-      const packs = this.takeoverView.takeoverPacks.filter((pack) => !pack.reason);
-      if (packs.length === 0) menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
-      for (const pack of packs) {
-        const item = menu.createEl("button", {
-          cls: "nameforge-modal__pack-dropdown-item" + (pack.path === this.takeoverView.takeoverPath ? " is-active" : "") + (pack.reason ? " is-unavailable" : ""),
-          attr: { type: "button", "aria-disabled": String(!!pack.reason), ...pack.reason ? { title: pack.reason } : {} }
-        });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: pack.label });
-        if (pack.reason) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: pack.reason });
-        item.addEventListener("click", () => {
-          if (pack.reason) return;
-          this.takeoverView.selectTakeover(pack.path);
-          choose();
-        });
-      }
-      return;
-    }
-    if (this.activeSection === "placeShapes" && this.placeIsWorld()) {
-      const culture = findCulture(this.worldCulture);
-      const current2 = findEra(culture, this.worldEras[culture.id]);
-      for (const era of culture.eras) {
-        const item = menu.createEl("button", {
-          cls: "nameforge-modal__pack-dropdown-item" + (era.id === current2.id ? " is-active" : ""),
-          attr: { type: "button", title: (_a2 = era.guide) != null ? _a2 : era.label }
-        });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: era.label });
-        item.addEventListener("click", () => {
-          this.worldEras[culture.id] = era.id;
-          choose();
-        });
-      }
-      return;
-    }
     const options = [
       { code: void 0, label: "All Britain" },
       ...PLACE_SHAPE_REGIONS
@@ -37101,45 +37082,16 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     const menu = this.regionMenuEl;
     if (!menu) return;
     menu.empty();
-    if (this.activeSection === "nameTakeover") {
-      const packs = this.takeoverView.nativePacks.filter((pack) => !pack.reason);
-      if (packs.length === 0) menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
-      for (const pack of packs) {
+    const group = sectionGroup(this.activeSection);
+    if (group) {
+      for (const section of SECTION_GROUPS[group]) {
         const item = menu.createEl("button", {
-          cls: "nameforge-modal__pack-dropdown-item" + (pack.path === this.takeoverView.nativePath ? " is-active" : "") + (pack.reason ? " is-unavailable" : ""),
-          attr: { type: "button", "aria-disabled": String(!!pack.reason), ...pack.reason ? { title: pack.reason } : {} }
+          cls: "nameforge-modal__pack-dropdown-item" + (section === this.activeSection ? " is-active" : ""),
+          attr: { type: "button" }
         });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: pack.label });
-        if (pack.reason) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: pack.reason });
-        item.addEventListener("click", () => {
-          if (pack.reason) return;
-          this.takeoverView.selectNative(pack.path);
-          this.setRegionMenuOpen(false);
-        });
-      }
-      return;
-    }
-    if (this.activeSection === "nameAgeing") {
-      const packs = this.ageingPacks.filter((pack) => !pack.reason);
-      if (packs.length === 0) {
-        menu.createDiv({ cls: "nameforge-modal__pack-dropdown-empty", text: "No packs found" });
-      }
-      for (const pack of packs) {
-        const item = menu.createEl("button", {
-          cls: "nameforge-modal__pack-dropdown-item" + (pack.path === this.ageingTargetPath ? " is-active" : "") + (pack.reason ? " is-unavailable" : ""),
-          attr: { type: "button", "aria-disabled": String(!!pack.reason), ...pack.reason ? { title: pack.reason } : {} }
-        });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: pack.label });
-        if (pack.reason) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: pack.reason });
-        item.addEventListener("click", () => {
-          if (pack.reason) {
-            new import_obsidian12.Notice(`nameForge: ${pack.label} can't be a target \u2014 ${pack.reason}.`);
-            return;
-          }
-          this.ageingTargetPath = pack.path;
-          this.updateRegionLabel();
-          this.setRegionMenuOpen(false);
-        });
+        (0, import_obsidian12.setIcon)(item.createSpan({ cls: "nameforge-modal__section-menu-icon" }), SECTION_ICONS[section]);
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: moduleLabel(section) });
+        item.addEventListener("click", () => this.switchSection(section));
       }
       return;
     }
@@ -37155,31 +37107,6 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
           this.riverSetting = setting.id;
           this.showSecondBox(setting.id === "british");
           (_a2 = this.landButton) == null ? void 0 : _a2.refresh();
-          this.updateRegionLabel();
-          this.setRegionMenuOpen(false);
-        });
-      }
-      return;
-    }
-    if (this.activeSection === "placeShapes") {
-      const choices = [
-        { id: PLACE_BRITAIN, label: "Britain", guide: "British place names, weighted by region" },
-        { id: PLACE_BRITISH_RIVERS, label: "British river names", guide: "British river names, weighted by region" },
-        ...WORLD_CULTURES
-      ];
-      for (const culture of choices) {
-        const item = menu.createEl("button", {
-          cls: "nameforge-modal__pack-dropdown-item" + (culture.id === this.worldCulture ? " is-active" : ""),
-          attr: { type: "button", title: culture.guide }
-        });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: culture.label });
-        item.addEventListener("click", () => {
-          var _a2;
-          this.worldCulture = culture.id;
-          this.showSecondBox(this.placeHasSecondBox());
-          (_a2 = this.landButton) == null ? void 0 : _a2.refresh();
-          this.refreshRiverOptions();
-          this.updateSecondBoxLabel();
           this.updateRegionLabel();
           this.setRegionMenuOpen(false);
         });
@@ -37202,102 +37129,218 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
       }
       return;
     }
-    const part = COLONIAL_SECTION_PART[this.activeSection];
-    if (part) {
-      for (const tradition of COLONIAL_TRADITIONS) {
-        const id = tradition.id === "general" ? void 0 : tradition.id;
-        const available = isTraditionAvailable(tradition.id, part);
-        if (!available) continue;
-        const item = menu.createEl("button", {
-          cls: "nameforge-modal__pack-dropdown-item" + (id === this.selectedTradition[part] ? " is-active" : "") + (available ? "" : " is-unavailable"),
-          attr: { type: "button", title: tradition.guide, "aria-disabled": String(!available) }
-        });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: traditionLabel(part, tradition.id, tradition.label) });
-        if (!available) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: partsNote(tradition.parts) });
-        item.addEventListener("click", () => {
-          if (!available) return;
-          this.selectedTradition[part] = id;
-          this.updateRegionLabel();
-          this.setRegionMenuOpen(false);
-        });
-      }
-      return;
-    }
   }
   updateRegionLabel() {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i;
-    if (this.activeSection === "nameTakeover") {
-      if (this.regionLabelEl) this.regionLabelEl.textContent = this.takeoverView.nativeLabel();
-      (_a2 = this.regionTriggerEl) == null ? void 0 : _a2.setAttribute("title", "Native pack: the names to be taken over");
-      return;
-    }
-    if (this.activeSection === "nameAgeing") {
-      const pack = this.ageingPacks.find((p) => p.path === this.ageingTargetPath);
-      if (this.regionLabelEl) this.regionLabelEl.textContent = pack ? pack.label : "choose a target pack";
-      (_b = this.regionTriggerEl) == null ? void 0 : _b.setAttribute("title", "Target pack: the language the name ages towards");
+    var _a2, _b, _c, _d;
+    if (sectionGroup(this.activeSection)) {
+      if (this.regionLabelEl) this.regionLabelEl.textContent = moduleLabel(this.activeSection);
+      (_a2 = this.regionTriggerEl) == null ? void 0 : _a2.setAttribute("title", "Module");
+      this.renderContextRow();
       return;
     }
     if (this.activeSection === "riverNames") {
       if (this.regionLabelEl) this.regionLabelEl.textContent = RIVER_SETTINGS.find((s) => s.id === this.riverSetting).label;
-      (_c = this.regionTriggerEl) == null ? void 0 : _c.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
-      return;
-    }
-    if (this.activeSection === "placeShapes" && this.placeIsWorld()) {
-      const culture = findCulture(this.worldCulture);
-      if (this.regionLabelEl) this.regionLabelEl.textContent = culture.label;
-      (_d = this.regionTriggerEl) == null ? void 0 : _d.setAttribute("title", `Culture: ${culture.guide}`);
+      (_b = this.regionTriggerEl) == null ? void 0 : _b.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
       return;
     }
     if (this.activeSection === "tribalNames") {
-      const tradition = (_e = findTradition(this.tribal.tradition)) != null ? _e : TRIBAL_TRADITIONS[0];
+      const tradition = (_c = findTradition(this.tribal.tradition)) != null ? _c : TRIBAL_TRADITIONS[0];
       if (this.regionLabelEl) this.regionLabelEl.textContent = tradition.label;
-      (_f = this.regionTriggerEl) == null ? void 0 : _f.setAttribute("title", tradition.drawsOn);
+      (_d = this.regionTriggerEl) == null ? void 0 : _d.setAttribute("title", tradition.drawsOn);
       return;
     }
-    const part = COLONIAL_SECTION_PART[this.activeSection];
-    if (part) {
-      const tradition = COLONIAL_TRADITIONS.find((t) => {
-        var _a3;
-        return t.id === ((_a3 = this.selectedTradition[part]) != null ? _a3 : "general");
-      });
-      if (this.regionLabelEl) this.regionLabelEl.textContent = traditionLabel(part, tradition.id, tradition.label);
-      (_g = this.regionTriggerEl) == null ? void 0 : _g.setAttribute("title", tradition.guide);
-      return;
-    }
-    if (this.activeSection === "placeShapes" && this.placeIsRivers()) {
-      if (this.regionLabelEl) this.regionLabelEl.textContent = "British river names";
-      (_h = this.regionTriggerEl) == null ? void 0 : _h.setAttribute("title", "British river names, weighted by region");
-      return;
-    }
-    if (this.regionLabelEl) this.regionLabelEl.textContent = "Britain";
-    (_i = this.regionTriggerEl) == null ? void 0 : _i.setAttribute("title", "Culture: British place names, weighted by region");
   }
-  /** The context toggle row: None plus the part's frontier types or accommodation levels. */
+  /** The sentence row: tribal names and every grouped module set their choices in a sentence. */
   renderContextRow() {
     const row = this.contextRowEl;
     if (!row) return;
-    const part = COLONIAL_SECTION_PART[this.activeSection];
     row.empty();
-    row.toggleClass("is-sentence", this.activeSection === "tribalNames");
-    if (this.activeSection === "tribalNames") {
-      this.renderTribalSentence(row);
+    const section = this.activeSection;
+    const sentenced = section === "tribalNames" || !!sectionGroup(section);
+    row.toggleClass("is-sentence", sentenced);
+    row.toggle(sentenced);
+    if (section === "tribalNames") this.renderTribalSentence(row);
+    else if (section === "placeShapes") this.renderNativeSentence(row);
+    else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
+    else if (section === "nameAgeing") this.renderAgeingSentence(row);
+    else if (section === "nameTakeover") this.renderTakeoverSentence(row);
+  }
+  /** A sentence link that opens a menu of choices; choosing re-renders the sentence. */
+  sentenceLink(sentence2, text, title, choices, current, choose) {
+    const a = sentence2.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button", title } });
+    a.addEventListener("click", async (event) => {
+      event.preventDefault();
+      const menu = new import_obsidian12.Menu();
+      const list = await choices();
+      if (list.length === 0) menu.addItem((item) => item.setTitle("No packs found").setDisabled(true));
+      for (const c of list) {
+        menu.addItem(
+          (item) => item.setTitle(c.label).setChecked(c.id === current).onClick(() => {
+            choose(c.id);
+            this.updateRegionLabel();
+            this.renderContextRow();
+          })
+        );
+      }
+      menu.showAtMouseEvent(event);
+    });
+  }
+  /** "…set in ‹any part› of ‹unknown country›": the land phrases for a module's land key. */
+  landClause(sentence2, key2, defaultPhrase, part, britainAsDefault) {
+    var _a2;
+    const land = this.land(key2);
+    const biome = findBiome(land.biome, this.customBiomes);
+    const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
+    this.sentenceLink(
+      sentence2,
+      terrainPhrase(land.terrain, this.customBiomes),
+      "Terrain: the kind of land being named",
+      () => [{ id: "any", label: "any part" }, ...terrains.map((t) => ({ id: t.id, label: terrainPhrase(t.id, this.customBiomes) }))],
+      land.terrain,
+      (id) => this.landStates[key2] = { ...this.land(key2), terrain: id != null ? id : "any" }
+    );
+    sentence2.appendText(" of ");
+    this.sentenceLink(
+      sentence2,
+      biome ? biomePhrase(land.biome, part, this.customBiomes) : defaultPhrase,
+      (_a2 = biome == null ? void 0 : biome.guide) != null ? _a2 : "Biome: the plants, wildlife, ground and seasons",
+      async () => {
+        const custom = [...await this.loadCustomBiomes()].sort((x, y) => x.label.localeCompare(y.label));
+        return [
+          { id: void 0, label: defaultPhrase },
+          ...[...britainAsDefault ? [] : [BRITAIN], ...BIOMES, ...custom].map((b) => {
+            var _a3, _b;
+            return { id: (_b = (_a3 = b.custom) == null ? void 0 : _a3.path) != null ? _b : b.id, label: b.phrase };
+          })
+        ];
+      },
+      land.biome,
+      (id) => {
+        const current = this.land(key2);
+        const next = findBiome(id, this.customBiomes);
+        const keep = !next || current.terrain === "any" || availableTerrains(next).some((t) => t.id === current.terrain);
+        this.landStates[key2] = { biome: id, terrain: keep ? current.terrain : "any" };
+      }
+    );
+  }
+  /**
+   * Native place names: "‹British› place names from ‹all of Britain›, set in ‹any part› of ‹Britain›",
+   * "‹British river› names from ‹all of Britain›", "‹Chinese› place names from the ‹Imperial› era, set in…".
+   */
+  renderNativeSentence(row) {
+    var _a2, _b;
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    const cultures = [
+      { id: PLACE_BRITAIN, label: "British" },
+      { id: PLACE_BRITISH_RIVERS, label: "British river" },
+      ...WORLD_CULTURES.map((c) => ({ id: c.id, label: c.label, title: c.guide }))
+    ];
+    const culture = (_a2 = cultures.find((c) => c.id === this.worldCulture)) != null ? _a2 : cultures[0];
+    this.sentenceLink(sentence2, culture.label, "Culture", () => cultures, this.worldCulture, (id) => {
+      this.worldCulture = id != null ? id : PLACE_BRITAIN;
+      this.refreshRiverOptions();
+    });
+    if (!this.placeIsWorld()) {
+      sentence2.appendText(this.placeIsRivers() ? " names from " : " place names from ");
+      const regions = [{ id: void 0, label: "all of Britain" }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: regionPhrase(r.code), title: r.counties }))];
+      this.sentenceLink(sentence2, regionPhrase(this.selectedRegion), "Region: weights the names towards it", () => regions, this.selectedRegion, (id) => this.selectedRegion = id);
+      if (this.placeIsRivers()) return;
+      sentence2.appendText(", set in ");
+      this.landClause(sentence2, "britain", BRITAIN.phrase, "organic", true);
       return;
     }
-    row.toggle(!!part);
-    if (!part) return;
-    const options = CONTEXT_PHRASES[part].filter(([id]) => colonialContexts(part).some((c) => c.id === id)).map(([id, phrase]) => ({ id, phrase, label: colonialContexts(part).find((c) => c.id === id).label }));
-    for (const option of options) {
-      const active = option.id === this.selectedContext[part];
-      const button = row.createEl("button", {
-        cls: "nameforge-modal__toggle-button" + (active ? " is-active" : ""),
-        text: option.phrase,
-        attr: { type: "button", title: option.label, "aria-pressed": String(active) }
-      });
-      button.addEventListener("click", () => {
-        this.selectedContext[part] = option.id;
-        this.renderContextRow();
-      });
+    sentence2.appendText(" place names");
+    const world = findCulture(this.worldCulture);
+    if (world.eras.length > 1) {
+      const era = findEra(world, this.worldEras[world.id]);
+      sentence2.appendText(" from the ");
+      this.sentenceLink(
+        sentence2,
+        era.label,
+        (_b = era.guide) != null ? _b : "Era",
+        () => world.eras.map((e) => ({ id: e.id, label: e.label, title: e.guide })),
+        era.id,
+        (id) => {
+          if (id) this.worldEras[world.id] = id;
+        }
+      );
+      sentence2.appendText(" era");
     }
+    if (!cultureUsesBiomes(world.id)) return;
+    sentence2.appendText(", set in ");
+    this.landClause(sentence2, `world:${world.id}`, "their homeland", "new-land", false);
+  }
+  /**
+   * Exploration and expansion, read like the wizard's sentences: "‹General explorers› in ‹wild and
+   * unsettled lands› across ‹any part› of ‹unknown country›", "‹General incomers› who are ‹ruling over
+   * the locals› across…".
+   */
+  renderColonialSentence(row, part) {
+    var _a2, _b, _c;
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    const phrase = part === "2" ? explorersPhrase : incomersPhrase;
+    const tradition = COLONIAL_TRADITIONS.find((t) => {
+      var _a3;
+      return t.id === ((_a3 = this.selectedTradition[part]) != null ? _a3 : "general");
+    });
+    this.sentenceLink(
+      sentence2,
+      phrase(tradition.id, tradition.label),
+      tradition.guide,
+      () => COLONIAL_TRADITIONS.filter((t) => isTraditionAvailable(t.id, part)).map((t) => ({ id: t.id, label: phrase(t.id, t.label), title: t.guide })),
+      tradition.id,
+      (id) => this.selectedTradition[part] = id === "general" ? void 0 : id
+    );
+    sentence2.appendText(part === "2" ? " in " : " who are ");
+    const contexts = CONTEXT_PHRASES[part].filter(([id]) => colonialContexts(part).some((c) => c.id === id));
+    const context = (_a2 = contexts.find(([id]) => id === this.selectedContext[part])) != null ? _a2 : contexts[0];
+    this.sentenceLink(
+      sentence2,
+      context[1],
+      (_c = (_b = colonialContexts(part).find((c) => c.id === context[0])) == null ? void 0 : _b.label) != null ? _c : "",
+      () => contexts.map(([id, text]) => ({ id, label: text })),
+      context[0],
+      (id) => this.selectedContext[part] = id
+    );
+    sentence2.appendText(" across ");
+    this.landClause(sentence2, `colonial:${part}`, UNKNOWN_COUNTRY, part === "2" ? "new-land" : "established", false);
+  }
+  /** Name ageing: "Age the name towards ‹target pack›". */
+  renderAgeingSentence(row) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    const pack = this.ageingPacks.find((p) => p.path === this.ageingTargetPath);
+    sentence2.appendText("Age the name towards ");
+    this.sentenceLink(
+      sentence2,
+      pack ? pack.label : "a target pack",
+      "Target pack: the language the name ages towards",
+      () => this.ageingPacks.filter((p) => !p.reason).map((p) => ({ id: p.path, label: p.label })),
+      this.ageingTargetPath,
+      (id) => this.ageingTargetPath = id
+    );
+  }
+  /** Name takeover: "Take over names from ‹native pack› into ‹takeover pack›". */
+  renderTakeoverSentence(row) {
+    const view = this.takeoverView;
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    sentence2.appendText("Take over names from ");
+    this.sentenceLink(
+      sentence2,
+      view.nativeLabel(),
+      "Native pack: the names to be taken over",
+      () => view.nativePacks.filter((p) => !p.reason).map((p) => ({ id: p.path, label: p.label })),
+      view.nativePath,
+      (id) => id && view.selectNative(id)
+    );
+    sentence2.appendText(" into ");
+    this.sentenceLink(
+      sentence2,
+      view.takeoverLabel(),
+      "Takeover pack: the language that adopts the names",
+      () => view.takeoverPacks.filter((p) => !p.reason).map((p) => ({ id: p.path, label: p.label })),
+      view.takeoverPath,
+      (id) => id && view.selectTakeover(id)
+    );
   }
   /** Tribal names (Tribal brief §18.3): headwords, with the two-line details as etymology. */
   async runTribalNames() {
@@ -37355,25 +37398,8 @@ ${n.origin}${also}${echo}` };
   renderTribalSentence(row) {
     var _a2, _b;
     const t = this.tribal;
-    row.show();
     const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
-    const link = (text, title, choices, current, choose) => {
-      const a = sentence2.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button", title } });
-      a.addEventListener("click", async (event) => {
-        event.preventDefault();
-        const menu = new import_obsidian12.Menu();
-        for (const c of await choices()) {
-          menu.addItem(
-            (item) => item.setTitle(c.label).setChecked(c.id === current).onClick(() => {
-              choose(c.id);
-              this.updateRegionLabel();
-              this.renderContextRow();
-            })
-          );
-        }
-        menu.showAtMouseEvent(event);
-      });
-    };
+    const link = (...args) => this.sentenceLink(sentence2, ...args);
     const tradition = (_a2 = findTradition(t.tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
     link(
       tradition.label,
@@ -37556,6 +37582,7 @@ ${n.origin}${also}${echo}` };
       this.ageingTargetPath = void 0;
     }
     this.updateRegionLabel();
+    this.renderContextRow();
   }
   /** Why a pack can't be an ageing target or a takeover pack (ageing §1), or undefined if it can. */
   targetPackReason(entry, index) {

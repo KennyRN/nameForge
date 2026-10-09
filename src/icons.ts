@@ -31,8 +31,18 @@ export const ICON_GENERIC_PLACE_NAMES = "nameforge-generic-place-names";
 const ICON_GENERIC_PLACE_NAMES_SVG =
   '<g transform="scale(4.16667)"><g fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 16.016c1.245.529 2 1.223 2 1.984c0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984" /><path fill="currentColor" fill-rule="evenodd" d="M11.262 17.675L12 17zm1.476 0l.005-.005l.012-.014l.045-.05l.166-.186a38 38 0 0 0 2.348-2.957c.642-.9 1.3-1.92 1.801-2.933c.49-.99.885-2.079.885-3.086C18 4.871 15.382 2 12 2S6 4.87 6 8.444c0 1.007.395 2.096.885 3.086c.501 1.013 1.16 2.033 1.8 2.933a38 38 0 0 0 2.515 3.143l.045.05l.012.014l.005.005a1 1 0 0 0 1.476 0M12 17l.738.674zm0-11a2 2 0 1 0 0 4a2 2 0 0 0 0-4" clip-rule="evenodd" /></g></g>';
 
-// Recipes share the solid map marker with the old generic place names history entries.
+// Native place names share the solid map marker with the old generic place names history entries.
+export const ICON_NATIVE_PLACE_NAMES = "nameforge-native-place-names";
+
 export const ICON_RECIPE = "nameforge-recipe";
+// Font Awesome 5 — map-marked-alt solid (CC BY 4.0). Scaled for Obsidian's 100×100 viewBox.
+const ICON_RECIPE_SVG =
+  '<g transform="translate(0 5.556) scale(0.173611)"><path fill="currentColor" d="M288 0c-69.59 0-126 56.41-126 126c0 56.26 82.35 158.8 113.9 196.02c6.39 7.54 17.82 7.54 24.2 0C331.65 284.8 414 182.26 414 126C414 56.41 357.59 0 288 0m0 168c-23.2 0-42-18.8-42-42s18.8-42 42-42s42 18.8 42 42s-18.8 42-42 42M20.12 215.95A32.01 32.01 0 0 0 0 245.66v250.32c0 11.32 11.43 19.06 21.94 14.86L160 448V214.92c-8.84-15.98-16.07-31.54-21.25-46.42zM288 359.67c-14.07 0-27.38-6.18-36.51-16.96c-19.66-23.2-40.57-49.62-59.49-76.72v182l192 64V266c-18.92 27.09-39.82 53.52-59.49 76.72c-9.13 10.77-22.44 16.95-36.51 16.95m266.06-198.51L416 224v288l139.88-55.95A32 32 0 0 0 576 426.34V176.02c0-11.32-11.43-19.06-21.94-14.86" /></g>';
+
+export const ICON_ADVANCED = "nameforge-advanced";
+// Font Awesome 7 — cogs solid (CC BY 4.0). Scaled for Obsidian's 100×100 viewBox.
+const ICON_ADVANCED_SVG =
+  '<g transform="scale(0.15625)"><path fill="currentColor" d="M415.9 274.5c12.2-3.3 25 2.5 30.5 13.8l18.6 37.6c10.3 1.4 20.4 4.2 29.9 8.1l35-23.3c10.5-7 24.4-5.6 33.3 3.3l19.2 19.2c8.9 8.9 10.3 22.9 3.3 33.3l-23.3 34.9c1.9 4.7 3.6 9.6 5 14.7s2.3 10.1 3 15.2l37.7 18.6c11.3 5.6 17.1 18.4 13.8 30.5l-7 26.2c-3.3 12.1-14.6 20.3-27.2 19.5l-42-2.7c-6.3 8.1-13.6 15.6-21.9 22l2.7 41.9c.8 12.6-7.4 24-19.5 27.2l-26.2 7c-12.2 3.3-24.9-2.5-30.5-13.8l-18.6-37.6c-10.3-1.4-20.4-4.2-29.9-8.1l-35 23.3c-10.5 7-24.4 5.6-33.3-3.3l-19.2-19.2c-8.9-8.9-10.3-22.8-3.3-33.3l23.3-35c-1.9-4.7-3.6-9.6-5-14.7s-2.3-10.2-3-15.2L288.6 446c-11.3-5.6-17-18.4-13.8-30.5l7-26.2c3.3-12.1 14.6-20.3 27.2-19.5l41.9 2.7c6.3-8.1 13.6-15.6 21.9-22l-2.7-41.8c-.8-12.6 7.4-24 19.5-27.2l26.2-7zM448.4 404c-24.3 0-44 19.7-43.9 44.1c0 24.3 19.7 43.9 44 43.9s44-19.7 44-44c-.1-24.4-19.8-44-44.1-44M224.9 18.5l26.2 7c12.1 3.3 20.3 14.7 19.5 27.2l-2.7 41.8c8.3 6.4 15.6 13.8 21.9 22l42-2.7c12.5-.8 23.9 7.4 27.2 19.5l7 26.2c3.2 12.1-2.5 24.9-13.8 30.5l-37.7 18.6c-.7 5.1-1.7 10.2-3 15.2s-3.1 10-5 14.7l23.3 35c7 10.5 5.6 24.4-3.3 33.3L307.3 326c-8.9 8.9-22.8 10.3-33.3 3.3L239 306c-9.5 3.9-19.6 6.7-29.9 8.1l-18.6 37.6c-5.6 11.3-18.4 17-30.5 13.8l-26.2-7c-12.2-3.3-20.3-14.7-19.5-27.2l2.7-41.9c-8.3-6.4-15.6-13.8-21.9-22l-42 2.7c-12.5.8-23.9-7.4-27.2-19.5l-7-26.2c-3.2-12.1 2.5-24.9 13.8-30.5l37.7-18.6c.7-5.1 1.7-10.1 3-15.2c1.4-5.1 3-10 5-14.7l-23.3-34.9c-7-10.5-5.6-24.4 3.3-33.3L77.6 58c8.9-8.9 22.8-10.3 33.3-3.3l35 23.3c9.5-3.9 19.6-6.7 29.9-8.1l18.6-37.6c5.6-11.3 18.3-17 30.5-13.8M192.4 148c-24.3 0-44 19.7-44 44s19.7 44 44 44s44-19.7 44-44s-19.7-44-44-44" /></g>';
 
 export const ICON_EXPLORATION_PLACE_SHAPES = "nameforge-exploration-place-shapes";
 // Ant Design Icons — compass-twotone (MIT). Scaled for Obsidian's 100×100 viewBox.
@@ -137,7 +147,9 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_PACKS, ICON_PACKS_SVG);
   addIcon(ICON_PLACE_SHAPES, ICON_PLACE_SHAPES_SVG);
   addIcon(ICON_GENERIC_PLACE_NAMES, ICON_GENERIC_PLACE_NAMES_SVG);
-  addIcon(ICON_RECIPE, ICON_GENERIC_PLACE_NAMES_SVG);
+  addIcon(ICON_NATIVE_PLACE_NAMES, ICON_GENERIC_PLACE_NAMES_SVG);
+  addIcon(ICON_RECIPE, ICON_RECIPE_SVG);
+  addIcon(ICON_ADVANCED, ICON_ADVANCED_SVG);
   addIcon(ICON_EXPLORATION_PLACE_SHAPES, ICON_EXPLORATION_PLACE_SHAPES_SVG);
   addIcon(ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG);
   addIcon(ICON_NAME_AGEING, ICON_NAME_AGEING_SVG);

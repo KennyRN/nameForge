@@ -14,7 +14,7 @@ import { GENERIC_PLACE_NAMES_HISTORY_NAME, PLACE_SHAPES_HISTORY_NAME } from "./p
  * names peoples, kin groups and confederations (tribes/engine.ts, Tribal brief). */
 /** History rows from before the renames start with these; they keep their icons (river brief §1). */
 export const OLD_HISTORY_PREFIXES = {
-  explorationPlaceShapes: ["exploration place name shapes", "exploration place names"],
+  explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
   empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"],
 } as const;
 
@@ -38,12 +38,34 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "nameTakeover",
 ];
 
+/** Groups in the section switcher: picking one opens its last-used module, and the box beside the
+ * trigger then chooses between the group's modules. */
+export type SectionGroup = "placeNames" | "advanced";
+
+export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  advanced: ["nameAgeing", "nameTakeover"],
+};
+
+export const GROUP_LABELS: Record<SectionGroup, string> = {
+  placeNames: "place names",
+  advanced: "advanced",
+};
+
+/** The switcher's line-up: modules and groups. */
+export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "tribalNames", "advanced"];
+
+/** The group a module belongs to, if any. */
+export function sectionGroup(section: NameForgeSection): SectionGroup | undefined {
+  return (Object.keys(SECTION_GROUPS) as SectionGroup[]).find((g) => SECTION_GROUPS[g].includes(section));
+}
+
 // Section names are deliberately lowercase, matching titleForge's section-switcher menu.
 export const SECTION_LABELS: Record<NameForgeSection, string> = {
   markov: "markov generator",
-  placeShapes: "place names",
+  placeShapes: "native place names",
   riverNames: "river names",
-  explorationPlaceShapes: "exploration in new lands",
+  explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
   nameAgeing: "name ageing",
   nameTakeover: "name takeover",

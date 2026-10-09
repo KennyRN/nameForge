@@ -224,8 +224,8 @@ test("line-up: seven modules in order, with their labels; river names live in pl
     SECTION_ORDER.map((s) => SECTION_LABELS[s]),
     [
       "markov generator",
-      "place names",
-      "exploration in new lands",
+      "native place names",
+      "exploration into new lands",
       "expansion into settled lands",
       "tribal names",
       "name ageing",
@@ -382,6 +382,7 @@ test("history: each entry belongs to one module, old labels included", () => {
     ["british place names · North", "placeShapes"],
     ["place name shapes · Wales", "placeShapes"],
     ["generic place name generator", "placeShapes"],
+    ["exploration into new lands · Spanish", "explorationPlaceShapes"],
     ["exploration in new lands · Spanish", "explorationPlaceShapes"],
     ["exploration place names · Spanish", "explorationPlaceShapes"],
     ["exploration place name shapes", "explorationPlaceShapes"],
