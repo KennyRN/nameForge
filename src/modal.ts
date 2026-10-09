@@ -49,6 +49,7 @@ import {
   ICON_NATIVE_PLACE_NAMES,
   ICON_ADVANCED,
   ICON_BIOME,
+  ICON_SAVE_PRESET,
   ICON_EXPLORATION_PLACE_SHAPES,
   ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   ICON_NAME_AGEING,
@@ -587,7 +588,7 @@ export class NameForgeModal extends Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Save as preset" },
     });
-    setIcon(this.savePresetButton, "bookmark-plus");
+    setIcon(this.savePresetButton, ICON_SAVE_PRESET);
     this.savePresetButton.addEventListener("click", () => void this.openSavePreset());
     this.savePresetButton.hide();
 

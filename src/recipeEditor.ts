@@ -373,7 +373,7 @@ export class RecipeWizard {
     el.createEl("p", { cls: "setting-item-description", text: TIER_TEXT[this.tier][1] });
   }
 
-  /** Page 3: slots, then generic words. */
+  /** Page 3: the slots (generic words are on page 4). */
   private renderSlotsPage(el: HTMLElement) {
     const w = this.working;
     for (const category of slotCategories(w.shape.part)) {
@@ -382,21 +382,6 @@ export class RecipeWizard {
       if (inTier || this.isSlotSet(category.id)) this.renderSlot(el, category.id, category.label, !inTier);
     }
 
-    el.createEl("h3", { text: "Generic words" });
-    new Setting(el)
-      .setDesc("One per line, e.g. “church: kirk”.")
-      .addTextArea((t) => {
-        t.setValue(Object.entries(w.generics).map(([k, v]) => `${k}: ${v}`).join("\n")).onChange((v) => {
-          w.generics = Object.fromEntries(
-            v
-              .split("\n")
-              .map((line) => line.split(":").map((x) => x.trim()))
-              .filter(([k, r]) => k && r)
-              .map(([k, r]) => [k.toLowerCase(), r]),
-          );
-        });
-        t.inputEl.rows = 3;
-      });
   }
 
   /** The slots page 3 shows: those in the tier, plus any set outside it. */
@@ -441,6 +426,27 @@ export class RecipeWizard {
       const status = summary.createSpan({ cls: "nameforge-recipe-editor__words-status", text: view.statusText });
       this.renderWordsBody(details, view, status);
     }
+    this.renderGenericWords(el);
+  }
+
+  /** Generic words (on page 4, after the slots): replacements for the generic part of a name. */
+  private renderGenericWords(el: HTMLElement) {
+    const w = this.working;
+    el.createEl("h3", { text: "Generic words" });
+    new Setting(el)
+      .setDesc("One per line, e.g. “church: kirk”.")
+      .addTextArea((t) => {
+        t.setValue(Object.entries(w.generics).map(([k, v]) => `${k}: ${v}`).join("\n")).onChange((v) => {
+          w.generics = Object.fromEntries(
+            v
+              .split("\n")
+              .map((line) => line.split(":").map((x) => x.trim()))
+              .filter(([k, r]) => k && r)
+              .map(([k, r]) => [k.toLowerCase(), r]),
+          );
+        });
+        t.inputEl.rows = 3;
+      });
   }
 
   /** One page 4 section's body (§4.1). */
