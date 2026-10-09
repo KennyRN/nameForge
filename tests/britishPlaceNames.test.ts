@@ -219,17 +219,17 @@ test("lists: §5 entries exist with the §5.1 fields", () => {
 // ── Module line-up (§1) ─────────────────────────────────────────────────────
 
 
-test("line-up: seven modules in order, with their labels; no generic place name generator", () => {
+test("line-up: seven modules in order, with their labels; river names live in place names", () => {
   assert.deepEqual(
     SECTION_ORDER.map((s) => SECTION_LABELS[s]),
     [
       "markov generator",
       "place names",
-      "river names",
-      "exploration place names",
-      "empire expansion place names",
+      "exploration in new lands",
+      "expansion into settled lands",
       "name ageing",
       "name takeover",
+      "groups",
     ],
   );
   assert.ok(!Object.values(SECTION_LABELS).includes("generic place name generator"));
@@ -375,15 +375,17 @@ test("placeholder labels: split choices never touch the fill stream", () => {
 
 test("history: each entry belongs to one module, old labels included", () => {
   const cases: [string, string][] = [
-    ["river names · British", "riverNames"],
-    ["river names · New Land", "riverNames"],
+    ["river names · British", "placeShapes"],
+    ["river names · New Land", "placeShapes"],
     ["world place names · Egyptian · Pharaonic", "placeShapes"],
     ["world place names · Norse", "placeShapes"],
     ["british place names · North", "placeShapes"],
     ["place name shapes · Wales", "placeShapes"],
     ["generic place name generator", "placeShapes"],
+    ["exploration in new lands · Spanish", "explorationPlaceShapes"],
     ["exploration place names · Spanish", "explorationPlaceShapes"],
     ["exploration place name shapes", "explorationPlaceShapes"],
+    ["expansion into settled lands · Roman", "empireExpansionPlaceShapes"],
     ["empire expansion place names", "empireExpansionPlaceShapes"],
     ["empire expansion place name shapes · Dutch", "empireExpansionPlaceShapes"],
     ["Saxon names", "markov"],

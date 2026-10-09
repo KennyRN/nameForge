@@ -1477,3 +1477,15 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 .nameforge-recipe-editor__tiers {
   margin: 8px 0 4px;
 }
+
+/* The word list guide's help icon, at the end of the template row. */
+.nameforge-editor-modal__help {
+  margin-left: auto;
+}
+/* The word list guide: a wider window, so its tables and examples fit. */
+.nameforge-word-list-guide.modal {
+  width: min(760px, 92vw);
+}
+.nameforge-recipe-editor__parts > h3:first-child {
+  margin-top: 0;
+}

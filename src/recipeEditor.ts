@@ -3,6 +3,7 @@
 
 import { App, Menu, Modal, normalizePath, Notice, Setting, setIcon, stringifyYaml, TFile } from "obsidian";
 import { ContextGuideModal } from "./contextGuide";
+import { CONTEXT_PHRASES, traditionLabel } from "./colonialWording";
 import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
 import { sanitizePackNameForFilename } from "./nameParser";
 import { defaultNameMode, hasBuiltInList } from "./names/engine";
@@ -45,18 +46,9 @@ export interface RecipeEditorOptions {
   onSaved: (path: string) => void;
 }
 
-/** Exploration in new lands' contexts, in menu order, as they read in the wizard's sentence. */
-const NEW_LANDS_CONTEXTS: [string, string][] = [
-  ["wild-and-unsettled", "wild and unsettled lands"],
-  ["sparse-or-weak-native-presence", "lands with a sparse, or weak, native presence"],
-  ["contested-frontier", "a contested frontier"],
-];
-/** Expansion into settled lands' contexts, as they read in the wizard's sentence. */
-const EXPANSION_CONTEXTS: [string, string][] = [
-  ["imposition", "ruling over the locals"],
-  ["accommodation", "living alongside the locals"],
-  ["adoption", "settling in amongst the locals"],
-];
+/** Each colonial part's contexts, as they read in the wizard's sentence (shared with the modules). */
+const NEW_LANDS_CONTEXTS = CONTEXT_PHRASES["2"];
+const EXPANSION_CONTEXTS = CONTEXT_PHRASES["2a"];
 /** "General incomers", "Roman-themed incomers"; brackets and a trailing "Imperial" are dropped ("British-themed incomers"). */
 function incomersPhrase(id: string, label: string): string {
   if (id === "general") return "General incomers";
@@ -150,6 +142,8 @@ export class RecipeWizard {
     this.hostEl.empty();
     // Page 2's part buttons stay above the scrolling page.
     if (this.page === 1) this.renderPartButtons(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
+    // Page 3's heading and tier control stay above the scrolling slots too.
+    if (this.page === 2) this.renderSlotsHeader(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
     this.pageEl = this.hostEl.createDiv({ cls: "nameforge-recipe-editor__page" });
     if (this.page === 0) this.renderTemplatePage(this.pageEl);
     else if (this.page === 1) {
@@ -314,9 +308,8 @@ export class RecipeWizard {
     );
   }
 
-  /** Page 3: slots, then generic words. */
-  private renderSlotsPage(el: HTMLElement) {
-    const w = this.working;
+  /** Page 3's fixed top: the Slots heading, its description, and Simple · Detailed · Complete. */
+  private renderSlotsHeader(el: HTMLElement) {
     el.createEl("h3", { text: "Slots" });
     el.createEl("p", {
       cls: "setting-item-description",
@@ -335,6 +328,11 @@ export class RecipeWizard {
       });
     }
     el.createEl("p", { cls: "setting-item-description", text: TIER_TEXT[this.tier][1] });
+  }
+
+  /** Page 3: slots, then generic words. */
+  private renderSlotsPage(el: HTMLElement) {
+    const w = this.working;
     for (const category of slotCategories(w.shape.part)) {
       const inTier = tierIncludes(this.tier, slotTier(w.shape.part, category.id));
       // A slot that is set (here or in the template) is never hidden.
@@ -416,7 +414,7 @@ export class RecipeWizard {
     this.sentenceLink(
       sentence,
       explorersPhrase(tradition.id, tradition.label),
-      traditions.map((t) => ({ id: t.id, label: t.id === "general" ? "General explorers" : t.label })),
+      traditions.map((t) => ({ id: t.id, label: traditionLabel("2", t.id, t.label) })),
       tradition.id,
       (id) => (w.shape.tradition = id),
     );
@@ -445,7 +443,7 @@ export class RecipeWizard {
     this.sentenceLink(
       sentence,
       incomersPhrase(tradition.id, tradition.label),
-      traditions.map((t) => ({ id: t.id, label: t.id === "general" ? "General incomers" : t.label })),
+      traditions.map((t) => ({ id: t.id, label: traditionLabel("2a", t.id, t.label) })),
       tradition.id,
       (id) => (w.shape.tradition = id),
     );

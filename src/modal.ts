@@ -33,6 +33,7 @@ import {
   ICON_INFO,
   ICON_PACKS,
   ICON_RIVER_NAMES,
+  ICON_GROUPS,
   ICON_BULLET_INSERT,
   ICON_CANCEL,
   ICON_CHECKLIST_INSERT,
@@ -64,6 +65,8 @@ import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recip
 import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/engine";
 import { findCulture, findEra, generateWorldPlaceNames, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
+import { WordListGuideModal } from "./wordListGuide";
+import { CONTEXT_PHRASES, partsNote, traditionLabel } from "./colonialWording";
 import { RecipeEditorModal, type RecipeEditorOptions, RecipeWizard } from "./recipeEditor";
 import {
   parseNameSections,
@@ -116,8 +119,6 @@ const withRegion = (label: string, regionCode: string | undefined) => {
   return region ? `${label} · ${region.label}` : label;
 };
 
-const partNote = (parts: ColonialPart[]) =>
-  parts.length === 2 ? "parts 2 and 2a" : `part ${parts[0]} only`;
 
 
 // Each section's icon, shown on the section trigger and in the switcher menu.
@@ -129,12 +130,15 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   nameAgeing: ICON_NAME_AGEING,
   nameTakeover: ICON_NAME_TAKEOVER,
+  groups: ICON_GROUPS,
 };
 
 /** Shown in the pack box on the first open of each Obsidian session; the arrow points at the
  * section trigger. */
 /** Place names' first-box choice for the British generator; every other choice is a world culture id. */
 const PLACE_BRITAIN = "britain";
+/** Place names' first-box choice for British river names (the river engine's British setting). */
+const PLACE_BRITISH_RIVERS = "british-rivers";
 
 const SESSION_HINT = "← click here for specialist modules, or here for your name packs";
 let sessionHintShown = false;
@@ -315,7 +319,8 @@ export class NameForgeModal extends Modal {
   private moduleEtymology = false;
   /** Colonial tradition and context per part; undefined = General / None. Session only. */
   private selectedTradition: Record<ColonialPart, string | undefined> = { "2": undefined, "2a": undefined };
-  private selectedContext: Record<ColonialPart, string | undefined> = { "2": undefined, "2a": undefined };
+  /** Each part's context, starting on its first (as the wizard does): wild and unsettled lands, ruling over the locals. */
+  private selectedContext: Record<ColonialPart, string | undefined> = { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] };
   private contextRowEl: HTMLElement | null = null;
   private quantityToggleEl: HTMLElement | null = null;
   private generateButtonEl: HTMLButtonElement | null = null;
@@ -672,14 +677,24 @@ export class NameForgeModal extends Modal {
     );
   }
 
-  /** Place names: whether Britain is chosen rather than a world culture. */
+  /** Place names: whether Britain is chosen rather than British rivers or a world culture. */
   private placeIsBritain(): boolean {
     return this.worldCulture === PLACE_BRITAIN;
   }
 
-  /** Place names: the second box shows Britain's regions, or a culture's eras when it has more than one. */
+  /** Place names: whether British river names are chosen. */
+  private placeIsRivers(): boolean {
+    return this.worldCulture === PLACE_BRITISH_RIVERS;
+  }
+
+  /** Place names: whether a world culture is chosen. */
+  private placeIsWorld(): boolean {
+    return !this.placeIsBritain() && !this.placeIsRivers();
+  }
+
+  /** Place names: the second box shows Britain's regions (for places or rivers), or a culture's eras when it has more than one. */
   private placeHasSecondBox(): boolean {
-    return this.placeIsBritain() || findCulture(this.worldCulture).eras.length > 1;
+    return !this.placeIsWorld() || findCulture(this.worldCulture).eras.length > 1;
   }
 
   /**
@@ -730,7 +745,7 @@ export class NameForgeModal extends Modal {
       trigger.setAttribute("title", "Takeover pack: the language that adopts the names");
       return;
     }
-    if (this.activeSection === "placeShapes" && !this.placeIsBritain()) {
+    if (this.activeSection === "placeShapes" && this.placeIsWorld()) {
       const era = findEra(findCulture(this.worldCulture), this.worldEras[this.worldCulture]);
       label.textContent = era.label;
       trigger.setAttribute("title", `Era: ${era.guide ?? era.label}`);
@@ -773,7 +788,7 @@ export class NameForgeModal extends Modal {
       }
       return;
     }
-    if (this.activeSection === "placeShapes" && !this.placeIsBritain()) {
+    if (this.activeSection === "placeShapes" && this.placeIsWorld()) {
       const culture = findCulture(this.worldCulture);
       const current = findEra(culture, this.worldEras[culture.id]);
       for (const era of culture.eras) {
@@ -925,6 +940,7 @@ export class NameForgeModal extends Modal {
     if (this.activeSection === "placeShapes") {
       const choices = [
         { id: PLACE_BRITAIN, label: "Britain", guide: "British place names, weighted by region" },
+        { id: PLACE_BRITISH_RIVERS, label: "British river names", guide: "British river names, weighted by region" },
         ...WORLD_CULTURES,
       ];
       for (const culture of choices) {
@@ -956,8 +972,8 @@ export class NameForgeModal extends Modal {
             (available ? "" : " is-unavailable"),
           attr: { type: "button", title: tradition.guide, "aria-disabled": String(!available) },
         });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: tradition.label });
-        if (!available) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: partNote(tradition.parts) });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: traditionLabel(part, tradition.id, tradition.label) });
+        if (!available) item.createSpan({ cls: "nameforge-modal__pack-dropdown-note", text: partsNote(tradition.parts) });
         item.addEventListener("click", () => {
           if (!available) return;
           this.selectedTradition[part] = id;
@@ -986,7 +1002,7 @@ export class NameForgeModal extends Modal {
       this.regionTriggerEl?.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
       return;
     }
-    if (this.activeSection === "placeShapes" && !this.placeIsBritain()) {
+    if (this.activeSection === "placeShapes" && this.placeIsWorld()) {
       const culture = findCulture(this.worldCulture);
       if (this.regionLabelEl) this.regionLabelEl.textContent = culture.label;
       this.regionTriggerEl?.setAttribute("title", `Culture: ${culture.guide}`);
@@ -995,8 +1011,13 @@ export class NameForgeModal extends Modal {
     const part = COLONIAL_SECTION_PART[this.activeSection];
     if (part) {
       const tradition = COLONIAL_TRADITIONS.find((t) => t.id === (this.selectedTradition[part] ?? "general"))!;
-      if (this.regionLabelEl) this.regionLabelEl.textContent = tradition.label;
+      if (this.regionLabelEl) this.regionLabelEl.textContent = traditionLabel(part, tradition.id, tradition.label);
       this.regionTriggerEl?.setAttribute("title", tradition.guide);
+      return;
+    }
+    if (this.activeSection === "placeShapes" && this.placeIsRivers()) {
+      if (this.regionLabelEl) this.regionLabelEl.textContent = "British river names";
+      this.regionTriggerEl?.setAttribute("title", "British river names, weighted by region");
       return;
     }
     if (this.regionLabelEl) this.regionLabelEl.textContent = "Britain";
@@ -1011,12 +1032,15 @@ export class NameForgeModal extends Modal {
     row.empty();
     row.toggle(!!part);
     if (!part) return;
-    const options = [{ id: undefined as string | undefined, label: "none" }, ...colonialContexts(part)];
+    // The wizard's context phrases, in its order; there is no "none".
+    const options = CONTEXT_PHRASES[part]
+      .filter(([id]) => colonialContexts(part).some((c) => c.id === id))
+      .map(([id, phrase]) => ({ id, phrase, label: colonialContexts(part).find((c) => c.id === id)!.label }));
     for (const option of options) {
       const active = option.id === this.selectedContext[part];
       const button = row.createEl("button", {
         cls: "nameforge-modal__toggle-button" + (active ? " is-active" : ""),
-        text: CONTEXT_SHORT_LABELS[option.id ?? "none"] ?? option.label.toLowerCase(),
+        text: option.phrase,
         attr: { type: "button", title: option.label, "aria-pressed": String(active) },
       });
       button.addEventListener("click", () => {
@@ -2056,12 +2080,16 @@ export class NameForgeModal extends Modal {
       this.setStatus(result.notices.join(" "));
       return;
     }
-    if (this.activeSection === "riverNames") {
+    // Place names' British river names: the river engine's British setting, with the place names region.
+    const placeRivers = this.activeSection === "placeShapes" && this.placeIsRivers();
+    if (this.activeSection === "riverNames" || placeRivers) {
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
-      const british = this.riverSetting === "british";
+      const setting: RiverSetting = placeRivers ? "british" : this.riverSetting;
+      const british = setting === "british";
+      const region = placeRivers ? this.selectedRegion : this.riverRegion;
       const result = generateRiverNames({
-        setting: this.riverSetting,
-        region: british ? this.riverRegion : undefined,
+        setting,
+        region: british ? region : undefined,
         count: this.generationCount,
         seed: seedOverride,
         faithfulness: this.plugin.settings.faithfulness,
@@ -2073,9 +2101,9 @@ export class NameForgeModal extends Modal {
         "none",
       );
       // History keeps the brief's short setting names ("river names · British"), not the menu label.
-      const settingLabel = british ? "British" : RIVER_SETTINGS.find((s) => s.id === this.riverSetting)!.label;
+      const settingLabel = british ? "British" : RIVER_SETTINGS.find((s) => s.id === setting)!.label;
       const label = `${RIVER_NAMES_HISTORY_NAME} · ${settingLabel}`;
-      await this.recordGenerationHistory(result.names.length, british ? withRegion(label, this.riverRegion) : label);
+      await this.recordGenerationHistory(result.names.length, british ? withRegion(label, region) : label);
       this.setStatus(result.notice ?? "");
       return;
     }
@@ -2616,17 +2644,6 @@ export class NameForgeModal extends Modal {
   }
 }
 
-/** Short labels for the context toggle row; the full label is the button's tooltip. */
-const CONTEXT_SHORT_LABELS: Record<string, string> = {
-  none: "none",
-  "sparse-or-weak-native-presence": "sparse",
-  "contested-frontier": "contested",
-  "wild-and-unsettled": "wild",
-  imposition: "imposition",
-  accommodation: "accommodation",
-  adoption: "adoption",
-};
-
 /** Read-only guide to the colonial traditions usable for this part; clicking one selects it. */
 class TraditionGuideModal extends Modal {
   constructor(
@@ -2649,8 +2666,8 @@ class TraditionGuideModal extends Modal {
         attr: available ? { role: "button", tabindex: "0" } : {},
       });
       const heading = entry.createDiv({ cls: "nameforge-guide-modal__heading" });
-      heading.createSpan({ cls: "nameforge-guide-modal__name", text: tradition.label });
-      heading.createSpan({ cls: "nameforge-guide-modal__parts", text: partNote(tradition.parts).replace(" only", "") });
+      heading.createSpan({ cls: "nameforge-guide-modal__name", text: traditionLabel(this.part, tradition.id, tradition.label) });
+      heading.createSpan({ cls: "nameforge-guide-modal__parts", text: partsNote(tradition.parts) });
       entry.createDiv({ cls: "nameforge-guide-modal__text", text: tradition.guide });
       if (available) {
         entry.addEventListener("click", () => {
@@ -2806,6 +2823,8 @@ class NameForgeEditorModal extends Modal {
   private wizardPaneEl: HTMLElement | null = null;
   private wizard: RecipeWizard | null = null;
   private templateRowEl: HTMLElement | null = null;
+  /** The word list guide's help icon, shown while the Word list tab is selected. */
+  private wordListHelpEl: HTMLElement | null = null;
   private stageEl: HTMLElement | null = null;
   /** §7: "Start from template" — the chosen template's note name, if any. */
   private templateOf: string | undefined = undefined;
@@ -2918,6 +2937,12 @@ class NameForgeEditorModal extends Modal {
     this.templateRowEl = templateRow;
     templateRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from template" });
     this.templateSelectEl = templateRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from template" } });
+    this.wordListHelpEl = templateRow.createSpan({
+      cls: "clickable-icon nameforge-editor-modal__help",
+      attr: { role: "button", "aria-label": "How to write a word list" },
+    });
+    setIcon(this.wordListHelpEl, "circle-help");
+    this.wordListHelpEl.addEventListener("click", () => new WordListGuideModal(this.app).open());
     this.templateSelectEl.addEventListener("change", () => {
       const value = this.templateSelectEl?.value ?? "";
       this.templateOf = value || undefined;
@@ -3242,6 +3267,7 @@ class NameForgeEditorModal extends Modal {
       this.stageEl?.style.setProperty("--nf-wizard-extra-height", "0px");
     }
     this.templateRowEl?.toggle(!isWizard);
+    this.wordListHelpEl?.toggle(isWordList);
     this.templateHintEl?.toggle(!isWizard);
     this.wizardPaneEl?.toggle(isWizard);
     this.wordListButton?.classList.toggle("is-active", isWordList);
