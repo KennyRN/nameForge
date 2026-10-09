@@ -3524,7 +3524,7 @@ class NameForgeEditorModal extends Modal {
     // The templates pane: icon only, on and off, separate from the pack type.
     this.templatesButton = typeToggle.createEl("button", {
       cls: "nameforge-modal__toggle-button nameforge-modal__toggle-button--spaced nameforge-modal__templates-button",
-      attr: { type: "button", title: "Templates", "aria-label": "Templates", "aria-pressed": "false" },
+      attr: { type: "button", "aria-label": "Templates", "aria-pressed": "false" },
     });
     setIcon(this.templatesButton.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), ICON_SAVE_PRESET);
     this.templatesButton.addEventListener("click", () => {

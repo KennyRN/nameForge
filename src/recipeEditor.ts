@@ -198,13 +198,13 @@ export class RecipeWizard {
       // Presets brief §3.1: the same size as the host's Save icon.
       const save = actions.createEl("button", {
         cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
-        attr: { type: "button", title: "Save and use as-is", "aria-label": "Save and use as-is" },
+        attr: { type: "button", "aria-label": "Save and use as-is" },
       });
       setIcon(save, ICON_SAVE);
       save.addEventListener("click", () => this.options.requestSave?.());
       const template = actions.createEl("button", {
         cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
-        attr: { type: "button", title: "Template", "aria-label": "Template" },
+        attr: { type: "button", "aria-label": "Template" },
       });
       setIcon(template, ICON_SAVE_PRESET);
       template.addEventListener("click", () => this.goTo(TEMPLATE_PAGE));

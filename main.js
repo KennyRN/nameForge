@@ -36134,7 +36134,7 @@ var RecipeWizard = class {
       const actions = nav.createDiv({ cls: "nameforge-recipe-editor__nav-actions" });
       const save = actions.createEl("button", {
         cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
-        attr: { type: "button", title: "Save and use as-is", "aria-label": "Save and use as-is" }
+        attr: { type: "button", "aria-label": "Save and use as-is" }
       });
       (0, import_obsidian11.setIcon)(save, ICON_SAVE);
       save.addEventListener("click", () => {
@@ -36143,7 +36143,7 @@ var RecipeWizard = class {
       });
       const template = actions.createEl("button", {
         cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
-        attr: { type: "button", title: "Template", "aria-label": "Template" }
+        attr: { type: "button", "aria-label": "Template" }
       });
       (0, import_obsidian11.setIcon)(template, ICON_SAVE_PRESET);
       template.addEventListener("click", () => this.goTo(TEMPLATE_PAGE));
@@ -40407,7 +40407,7 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     });
     this.templatesButton = typeToggle.createEl("button", {
       cls: "nameforge-modal__toggle-button nameforge-modal__toggle-button--spaced nameforge-modal__templates-button",
-      attr: { type: "button", title: "Templates", "aria-label": "Templates", "aria-pressed": "false" }
+      attr: { type: "button", "aria-label": "Templates", "aria-pressed": "false" }
     });
     (0, import_obsidian13.setIcon)(this.templatesButton.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), ICON_SAVE_PRESET);
     this.templatesButton.addEventListener("click", () => {
