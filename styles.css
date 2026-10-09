@@ -1556,11 +1556,12 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   margin-left: 8px;
 }
 
-/* The Templates button: icon only, filled half way between the background and the buttons. */
+/* The Templates button: icon only, filled half way between the background and the buttons; its icon
+   takes the other buttons' colour. */
 .nameforge-modal__pack-type-toggle .nameforge-modal__templates-button {
   flex: 0 0 auto;
   background-color: color-mix(in srgb, var(--background-primary) 50%, var(--background-secondary));
-  color: var(--background-primary);
+  color: var(--text-muted);
 }
 .nameforge-modal__pack-type-toggle .nameforge-modal__templates-button.is-active {
   background-color: var(--forge-accent);
