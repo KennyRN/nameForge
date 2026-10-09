@@ -1550,3 +1550,10 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   width: 100%;
   margin-top: 8px;
 }
+.nameforge-recipe-editor__words-body.is-stacked {
+  flex-direction: column;
+  align-items: stretch;
+}
+.nameforge-recipe-editor__sentence-fixed {
+  font-weight: var(--font-semibold);
+}

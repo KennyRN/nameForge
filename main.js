@@ -32329,6 +32329,10 @@ function readSlot(v, problems, id) {
   }
   if (typeof v.tribal === "string") {
     const tradition = v.tribal.trim();
+    if (tradition.startsWith("[[")) {
+      const preset = linkTarget(tradition);
+      if (preset) return { kind: "tribal", tradition: "general", preset };
+    }
     if (!(tradition === "auto" || findTradition(tradition))) {
       problems.push(`Slot \u201C${id}\u201D names an unknown tradition \u201C${tradition}\u201D.`);
       return void 0;
@@ -32501,7 +32505,8 @@ function recipeToFrontmatter(r) {
     out.slots = Object.fromEntries(
       Object.entries(r.slots).map(([id, slot]) => {
         if (slot.kind === "tribal") {
-          const { kind: _kind, tradition, ...fields2 } = slot;
+          if (slot.preset) return [id, { tribal: `[[${slot.preset}]]` }];
+          const { kind: _kind, tradition, preset: _preset, ...fields2 } = slot;
           const own = Object.fromEntries(Object.entries(fields2).filter(([, value2]) => value2 !== void 0 && value2 !== "" && value2 !== "any"));
           return [id, { tribal: tradition, ...own }];
         }
@@ -32770,6 +32775,26 @@ function modulePresetContent(preset) {
     preset.description.trim(),
     ""
   ].join("\n");
+}
+function tribalPresetSlot(preset) {
+  return {
+    tradition: preset.tradition,
+    ...preset.biome !== "homeland" && findBiome(preset.biome) ? { biome: preset.biome } : {},
+    ...preset.terrain !== "any" ? { terrain: preset.terrain } : {},
+    ...preset.groupType !== "any" ? { groupType: preset.groupType } : {},
+    ...preset.perspective !== "any" ? { perspective: preset.perspective } : {},
+    ...preset.register === "plain" || preset.register === "administrative" ? { register: preset.register } : {}
+  };
+}
+function readTribalPresetSource(name, content) {
+  if (content === null) return { notice: `Preset \u201C${name}\u201D is missing.` };
+  const parsed = isModulePresetContent(content) ? parseModulePreset(content, name).preset : void 0;
+  if (!parsed) return { notice: `\u201C${name}\u201D isn't a tribal names preset.` };
+  return { preset: parsed };
+}
+function tribalPresetDraw(preset) {
+  const { tradition, ...fields2 } = tribalPresetSlot(preset);
+  return (rng) => tribalSlotFill({ tradition, part: "new-land", fields: fields2 }, rng).text;
 }
 
 // src/presetModal.ts
@@ -35129,7 +35154,18 @@ var RecipeHost = class {
     const out = {};
     for (const [categoryId, slot] of Object.entries(recipe.slots)) {
       if (slot.kind === "tribal") {
-        out[categoryId] = { ...slot };
+        if (!slot.preset) {
+          out[categoryId] = { ...slot };
+          continue;
+        }
+        const file = this.resolveLink(slot.preset, recipePath);
+        const found = readTribalPresetSource(slot.preset, file ? await this.read(file) : null);
+        if ("notice" in found) {
+          this.notices.add(found.notice);
+          out[categoryId] = { kind: "placeholder" };
+          continue;
+        }
+        out[categoryId] = { kind: "tribal", ...tribalPresetSlot(found.preset) };
         continue;
       }
       if (slot.kind !== "sources") {
@@ -35189,6 +35225,12 @@ var RecipeHost = class {
       const packFile = this.resolveLink(pack, listFile.path);
       const packContent = packFile ? await this.read(packFile) : null;
       if (!packFile || packContent === null) return { missing: true };
+      if (isModulePresetContent(packContent)) {
+        const preset = parseModulePreset(packContent, packFile.basename).preset;
+        if (!preset) return { notPack: true };
+        const draw2 = tribalPresetDraw(preset);
+        return { draw: (_request, _mode, rng) => draw2(rng) };
+      }
       if (isWordListContent(packContent) || isRecipeContent(packContent)) return { notPack: true };
       const draw = await this.packSource(pack, listFile.path);
       return draw ? { draw } : { missing: true };
@@ -36084,6 +36126,7 @@ var RecipeWizard = class {
     var _a2, _b;
     const body = el.createDiv({ cls: "nameforge-recipe-editor__words-body" });
     if (view.status === "tribal") {
+      body.addClass("is-stacked");
       this.renderTribalSentence(body.createDiv({ cls: "nameforge-recipe-editor__sentence" }), view.id);
       return;
     }
@@ -36130,19 +36173,36 @@ var RecipeWizard = class {
    * can use (§20.2): its group types and registers, and no insults.
    */
   renderTribalSentence(el, id) {
-    var _a2, _b, _c, _d;
+    var _a2, _b, _c, _d, _e, _f, _g;
     const w = this.working;
     const slot = w.slots[id];
     if ((slot == null ? void 0 : slot.kind) !== "tribal") return;
     const part = w.shape.part;
     const constraints = tribalSlotConstraints(part);
+    const presets = (_a2 = this.options.tribalPresets) != null ? _a2 : [];
+    const linked = slot.preset ? presets.find((p) => p.name.toLowerCase() === slot.preset.toLowerCase()) : void 0;
+    new import_obsidian10.Setting((_b = el.parentElement) != null ? _b : el).setName("Use preset").addDropdown((d) => {
+      var _a3;
+      d.addOption("", "None");
+      for (const p of presets) d.addOption(p.name, p.name);
+      if (slot.preset && !linked) d.addOption(slot.preset, `${slot.preset} (missing)`);
+      d.setValue((_a3 = slot.preset) != null ? _a3 : "").onChange((v) => {
+        const chosen = presets.find((p) => p.name === v);
+        if (chosen) w.slots[id] = { kind: "tribal", tradition: chosen.preset.tradition, preset: chosen.name };
+        else w.slots[id] = linked ? { kind: "tribal", ...tribalPresetSlot(linked.preset) } : { kind: "tribal", tradition: slot.tradition };
+        this.explicitSlots.add(id);
+        this.render();
+      });
+    }).settingEl.addClass("nameforge-recipe-editor__preset");
+    (_c = el.parentElement) == null ? void 0 : _c.appendChild(el);
+    const fields2 = linked ? tribalPresetSlot(linked.preset) : slot;
     const state = {
-      tradition: part !== "organic" && slot.tradition === "auto" ? "general" : slot.tradition,
-      groupType: slot.groupType,
-      biome: slot.biome,
-      terrain: (_a2 = slot.terrain) != null ? _a2 : "any",
-      register: (_c = slot.register) != null ? _c : Object.keys((_b = constraints.registers) != null ? _b : { plain: 1 })[0],
-      perspective: slot.perspective
+      tradition: part !== "organic" && fields2.tradition === "auto" ? "general" : fields2.tradition,
+      groupType: fields2.groupType,
+      biome: fields2.biome,
+      terrain: (_d = fields2.terrain) != null ? _d : "any",
+      register: (_f = fields2.register) != null ? _f : Object.keys((_e = constraints.registers) != null ? _e : { plain: 1 })[0],
+      perspective: fields2.perspective
     };
     const segments = tribalSentence(state, {
       biomes: [BRITAIN, ...BIOMES],
@@ -36150,11 +36210,15 @@ var RecipeWizard = class {
       defaultBiome: part === "organic" ? "their original" : "the recipe's",
       extraTraditions: part === "organic" ? [{ id: "auto", label: "Regional" }] : [],
       groupTypes: constraints.groupTypes,
-      registers: Object.keys((_d = constraints.registers) != null ? _d : { plain: 1 })
+      registers: Object.keys((_g = constraints.registers) != null ? _g : { plain: 1 })
     });
     for (const segment2 of segments) {
       if (typeof segment2 === "string") {
         el.appendText(segment2);
+        continue;
+      }
+      if (slot.preset) {
+        el.createSpan({ cls: "nameforge-recipe-editor__sentence-fixed", text: segment2.text, attr: { title: segment2.title } });
         continue;
       }
       const a = el.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text: segment2.text, attr: { href: "#", role: "button", title: segment2.title } });
@@ -36232,6 +36296,10 @@ var RecipeWizard = class {
   /** Tribal brief §20.3: the Tribal names slot's one dropdown, Tradition. */
   renderTribalFooter(el, slot, part) {
     const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
+    if (slot.preset) {
+      new import_obsidian10.Setting(box).setName("Preset").setDesc(`${slot.preset} \u2013 change it on the word lists page.`);
+      return;
+    }
     new import_obsidian10.Setting(box).setName("Tradition").addDropdown((d) => {
       if (part === "organic") d.addOption("auto", "Regional (auto)");
       for (const t of TRIBAL_TRADITIONS) d.addOption(t.key, t.label);
@@ -39252,6 +39320,7 @@ ${text}
     const packs = [];
     const lists = [];
     const templates = [];
+    const tribalPresets = [];
     const index = await this.scanFolderPacks();
     const takeoverPacks = index.filter((entry) => !entry.parsed.template).map((entry) => {
       var _a3;
@@ -39268,6 +39337,9 @@ ${text}
         if (parsed.recipe.template) templates.push({ name: child.basename, description: parsed.body.trim().split("\n")[0] || "No description" });
       } else if (isWordListContent(content)) {
         lists.push(child.basename);
+      } else if (isModulePresetContent(content)) {
+        const { preset } = parseModulePreset(content, child.basename);
+        if (preset) tribalPresets.push({ name: child.basename, preset });
       } else if (isValidNamePackContent(content) && !parseNamesFileContent(content).template) {
         packs.push(child.basename);
       }
@@ -39281,6 +39353,7 @@ ${text}
       templates: templates.sort((a, b) => a.name.localeCompare(b.name)),
       takeoverPacks,
       biomes: await this.loadCustomBiomes(),
+      tribalPresets: tribalPresets.sort((a, b) => a.name.localeCompare(b.name)),
       onSaved: (saved) => {
         this.plugin.settings.namesFilePath = saved;
         void this.refreshPackDropdown().then(() => this.loadPack(saved));

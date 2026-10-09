@@ -4,6 +4,7 @@
 
 import { findBiome, TERRAIN_CHOICES } from "./biomes";
 import { findTradition, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS } from "./tribes/engine";
+import { type TribalSlotFields, tribalSlotFill } from "./tribes/slotFill";
 
 export const TRIBAL_PRESET_MODULE = "tribal-names";
 
@@ -110,4 +111,37 @@ export function modulePresetContent(preset: TribalPreset): string {
     preset.description.trim(),
     "",
   ].join("\n");
+}
+
+// ── Presets as sources (§10) ─────────────────────────────────────────────────
+
+/**
+ * §10.1: what a tribal preset gives a recipe slot. The slot keeps its templates, length and
+ * article (Tribal brief §20.2); the preset's group type and register apply only where the slot
+ * allows them (slotFill checks), and hostile names are always off. A biome pack link can't be
+ * used in a slot, so it falls back to the recipe's biome, as homeland does.
+ */
+export function tribalPresetSlot(preset: TribalPreset): { tradition: string } & TribalSlotFields {
+  return {
+    tradition: preset.tradition,
+    ...(preset.biome !== "homeland" && findBiome(preset.biome) ? { biome: preset.biome } : {}),
+    ...(preset.terrain !== "any" ? { terrain: preset.terrain } : {}),
+    ...(preset.groupType !== "any" ? { groupType: preset.groupType } : {}),
+    ...(preset.perspective !== "any" ? { perspective: preset.perspective } : {}),
+    ...(preset.register === "plain" || preset.register === "administrative" ? { register: preset.register } : {}),
+  };
+}
+
+/** §10.1: a linked preset's note, or why it can't be used (the slot then renders its placeholder). */
+export function readTribalPresetSource(name: string, content: string | null): { preset: TribalPreset } | { notice: string } {
+  if (content === null) return { notice: `Preset “${name}” is missing.` };
+  const parsed = isModulePresetContent(content) ? parseModulePreset(content, name).preset : undefined;
+  if (!parsed) return { notice: `“${name}” isn't a tribal names preset.` };
+  return { preset: parsed };
+}
+
+/** §10.2: a `//` line's draw from a preset: the colonial column of §20.2, with the preset's settings. */
+export function tribalPresetDraw(preset: TribalPreset): (rng: () => number) => string {
+  const { tradition, ...fields } = tribalPresetSlot(preset);
+  return (rng) => tribalSlotFill({ tradition, part: "new-land", fields }, rng).text;
 }

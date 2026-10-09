@@ -24,7 +24,7 @@ export type SlotSetting =
   | { kind: "placeholder" }
   /** Tribal brief §20.1: tribal names fill the slot; `tradition` is a tradition key or "auto".
    * Presets brief §5.1: plus the slot's own choices from the tribal sentence. */
-  | ({ kind: "tribal"; tradition: string } & TribalSlotFields)
+  | ({ kind: "tribal"; tradition: string; /** Presets brief §10.1: a tribal preset's note name. */ preset?: string } & TribalSlotFields)
   /** Land brief §5.1: "From the biome"; only offered for colonial livestock and crops. */
   | { kind: "biome" }
   | {
@@ -105,6 +105,11 @@ function readSlot(v: unknown, problems: string[], id: string): SlotSetting | und
   // Tribal brief §20.1: { tribal: bantu } or { tribal: auto }.
   if (typeof v.tribal === "string") {
     const tradition = v.tribal.trim();
+    // Presets brief §10.1: { tribal: "[[Highland Tribes]]" } names a tribal preset.
+    if (tradition.startsWith("[[")) {
+      const preset = linkTarget(tradition);
+      if (preset) return { kind: "tribal", tradition: "general", preset };
+    }
     if (!(tradition === "auto" || findTradition(tradition))) {
       problems.push(`Slot “${id}” names an unknown tradition “${tradition}”.`);
       return undefined;
@@ -297,7 +302,8 @@ export function recipeToFrontmatter(r: RecipePartial): Record<string, unknown> {
       Object.entries(r.slots).map(([id, slot]) => {
         if (slot.kind === "tribal") {
           // Presets brief §5.1: only the choices that differ from the slot's defaults are written.
-          const { kind: _kind, tradition, ...fields } = slot;
+          if (slot.preset) return [id, { tribal: `[[${slot.preset}]]` }];
+          const { kind: _kind, tradition, preset: _preset, ...fields } = slot;
           const own = Object.fromEntries(Object.entries(fields).filter(([, value]) => value !== undefined && value !== "" && value !== "any"));
           return [id, { tribal: tradition, ...own }];
         }

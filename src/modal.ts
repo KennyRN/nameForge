@@ -2546,6 +2546,7 @@ export class NameForgeModal extends Modal {
     const packs: string[] = [];
     const lists: string[] = [];
     const templates: { name: string; description: string }[] = [];
+    const tribalPresets: { name: string; preset: TribalPreset }[] = [];
     // Takeover packs for colonial recipes: the takeover section's own eligibility rules (ageing §1).
     const index = await this.scanFolderPacks();
     const takeoverPacks = index
@@ -2563,6 +2564,9 @@ export class NameForgeModal extends Modal {
         if (parsed.recipe.template) templates.push({ name: child.basename, description: parsed.body.trim().split("\n")[0] || "No description" });
       } else if (isWordListContent(content)) {
         lists.push(child.basename);
+      } else if (isModulePresetContent(content)) {
+        const { preset } = parseModulePreset(content, child.basename);
+        if (preset) tribalPresets.push({ name: child.basename, preset });
       } else if (isValidNamePackContent(content) && !parseNamesFileContent(content).template) {
         packs.push(child.basename);
       }
@@ -2576,6 +2580,7 @@ export class NameForgeModal extends Modal {
       templates: templates.sort((a, b) => a.name.localeCompare(b.name)),
       takeoverPacks,
       biomes: await this.loadCustomBiomes(),
+      tribalPresets: tribalPresets.sort((a, b) => a.name.localeCompare(b.name)),
       onSaved: (saved) => {
         this.plugin.settings.namesFilePath = saved;
         void this.refreshPackDropdown().then(() => this.loadPack(saved));

@@ -7,6 +7,7 @@ import { CONTEXT_PHRASES, traditionLabel } from "./colonialWording";
 import { availableTerrains, type Biome, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
 import { chooseTribal, type TribalSentenceState, tribalSentence } from "./tribes/sentence";
 import { tribalSlotConstraints } from "./tribes/slotFill";
+import { type TribalPreset, tribalPresetSlot } from "./presets";
 import { TRIBAL_TRADITIONS } from "./tribes/engine";
 import { biomeChoices, biomePhrase, explorersPhrase, FEATURES, incomersPhrase, terrainPhrase } from "./colonialSentence";
 import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
@@ -62,6 +63,8 @@ export interface RecipeEditorOptions {
   takeoverPacks: { name: string; reason?: string }[];
   /** The user's biome packs, resolved (Land brief §9.5). */
   biomes?: Biome[];
+  /** Presets brief §5.1: the tribal presets in the names folder, for page 4's "Use preset". */
+  tribalPresets?: { name: string; preset: TribalPreset }[];
   onSaved: (path: string) => void;
   /** Presets brief §3.1: runs the host's own save (and closes it), for page 3's Save icon. Set by the host. */
   requestSave?: () => void;
@@ -440,6 +443,7 @@ export class RecipeWizard {
   private renderWordsBody(el: HTMLElement, view: SlotWordsView, status: HTMLElement) {
     const body = el.createDiv({ cls: "nameforge-recipe-editor__words-body" });
     if (view.status === "tribal") {
+      body.addClass("is-stacked");
       this.renderTribalSentence(body.createDiv({ cls: "nameforge-recipe-editor__sentence" }), view.id);
       return;
     }
@@ -490,13 +494,32 @@ export class RecipeWizard {
     if (slot?.kind !== "tribal") return;
     const part = w.shape.part;
     const constraints = tribalSlotConstraints(part);
+    // Presets brief §5.1: "Use preset" – a preset's values read-only, or the editable sentence.
+    const presets = this.options.tribalPresets ?? [];
+    const linked = slot.preset ? presets.find((p) => p.name.toLowerCase() === slot.preset!.toLowerCase()) : undefined;
+    new Setting(el.parentElement ?? el).setName("Use preset").addDropdown((d) => {
+      d.addOption("", "None");
+      for (const p of presets) d.addOption(p.name, p.name);
+      if (slot.preset && !linked) d.addOption(slot.preset, `${slot.preset} (missing)`);
+      d.setValue(slot.preset ?? "").onChange((v) => {
+        const chosen = presets.find((p) => p.name === v);
+        if (chosen) w.slots[id] = { kind: "tribal", tradition: chosen.preset.tradition, preset: chosen.name };
+        // None returns to the editable sentence, starting from the preset's values.
+        else w.slots[id] = linked ? { kind: "tribal", ...tribalPresetSlot(linked.preset) } : { kind: "tribal", tradition: slot.tradition };
+        this.explicitSlots.add(id);
+        this.render();
+      });
+    }).settingEl.addClass("nameforge-recipe-editor__preset");
+    // The sentence goes after the preset row.
+    el.parentElement?.appendChild(el);
+    const fields = linked ? tribalPresetSlot(linked.preset) : slot;
     const state: TribalSentenceState = {
-      tradition: part !== "organic" && slot.tradition === "auto" ? "general" : slot.tradition,
-      groupType: slot.groupType,
-      biome: slot.biome,
-      terrain: slot.terrain ?? "any",
-      register: slot.register ?? Object.keys(constraints.registers ?? { plain: 1 })[0],
-      perspective: slot.perspective,
+      tradition: part !== "organic" && fields.tradition === "auto" ? "general" : fields.tradition,
+      groupType: fields.groupType,
+      biome: fields.biome,
+      terrain: fields.terrain ?? "any",
+      register: fields.register ?? Object.keys(constraints.registers ?? { plain: 1 })[0],
+      perspective: fields.perspective,
     };
     const segments = tribalSentence(state, {
       biomes: [BRITAIN, ...BIOMES],
@@ -509,6 +532,10 @@ export class RecipeWizard {
     for (const segment of segments) {
       if (typeof segment === "string") {
         el.appendText(segment);
+        continue;
+      }
+      if (slot.preset) {
+        el.createSpan({ cls: "nameforge-recipe-editor__sentence-fixed", text: segment.text, attr: { title: segment.title } });
         continue;
       }
       const a = el.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text: segment.text, attr: { href: "#", role: "button", title: segment.title } });
@@ -591,8 +618,12 @@ export class RecipeWizard {
   }
 
   /** Tribal brief §20.3: the Tribal names slot's one dropdown, Tradition. */
-  private renderTribalFooter(el: HTMLElement, slot: { kind: "tribal"; tradition: string }, part: string) {
+  private renderTribalFooter(el: HTMLElement, slot: { kind: "tribal"; tradition: string; preset?: string }, part: string) {
     const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
+    if (slot.preset) {
+      new Setting(box).setName("Preset").setDesc(`${slot.preset} – change it on the word lists page.`);
+      return;
+    }
     new Setting(box).setName("Tradition").addDropdown((d) => {
       if (part === "organic") d.addOption("auto", "Regional (auto)");
       for (const t of TRIBAL_TRADITIONS) d.addOption(t.key, t.label);

@@ -24,6 +24,7 @@ import { needsItems, resolveWordListItems, toNameWordEntry } from "./names/wordL
 import { PLACE_SHAPE_DATA } from "./placeShapes";
 import { COLONIAL_DATA } from "./colonialShapes";
 import { type RecipeTakeoverInput, resolveRecipeTakeover } from "./takeover/recipe";
+import { isModulePresetContent, parseModulePreset, readTribalPresetSource, tribalPresetDraw, tribalPresetSlot } from "./presets";
 
 /** The takeover module's target rules, supplied by the modal (the same ones the takeover section uses). */
 export type TakeoverTargets = Pick<RecipeTakeoverInput, "targetReason" | "targetNames">;
@@ -139,7 +140,20 @@ export class RecipeHost {
     const out: Record<string, ResolvedSlot> = {};
     for (const [categoryId, slot] of Object.entries(recipe.slots)) {
       if (slot.kind === "tribal") {
-        out[categoryId] = { ...slot };
+        if (!slot.preset) {
+          out[categoryId] = { ...slot };
+          continue;
+        }
+        // Presets brief §10.1: a linked tribal preset supplies the settings; missing or not a
+        // preset, the slot renders its placeholder, as a missing name pack does.
+        const file = this.resolveLink(slot.preset, recipePath);
+        const found = readTribalPresetSource(slot.preset, file ? await this.read(file) : null);
+        if ("notice" in found) {
+          this.notices.add(found.notice);
+          out[categoryId] = { kind: "placeholder" };
+          continue;
+        }
+        out[categoryId] = { kind: "tribal", ...tribalPresetSlot(found.preset) };
         continue;
       }
       if (slot.kind !== "sources") {
@@ -207,6 +221,13 @@ export class RecipeHost {
       const packFile = this.resolveLink(pack, listFile.path);
       const packContent = packFile ? await this.read(packFile) : null;
       if (!packFile || packContent === null) return { missing: true };
+      // Presets brief §10.2: a tribal preset draws short tribal names; recipes and word lists stay refused.
+      if (isModulePresetContent(packContent)) {
+        const preset = parseModulePreset(packContent, packFile.basename).preset;
+        if (!preset) return { notPack: true };
+        const draw = tribalPresetDraw(preset);
+        return { draw: (_request, _mode, rng) => draw(rng) };
+      }
       if (isWordListContent(packContent) || isRecipeContent(packContent)) return { notPack: true };
       const draw = await this.packSource(pack, listFile.path);
       return draw ? { draw } : { missing: true };
