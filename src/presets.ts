@@ -136,7 +136,7 @@ export function tribalPresetSlot(preset: TribalPreset): { tradition: string } & 
 export function readTribalPresetSource(name: string, content: string | null): { preset: TribalPreset } | { notice: string } {
   if (content === null) return { notice: `Preset “${name}” is missing.` };
   const parsed = isModulePresetContent(content) ? parseModulePreset(content, name).preset : undefined;
-  if (!parsed) return { notice: `“${name}” isn't a tribal names preset.` };
+  if (!parsed) return { notice: `“${name}” isn't a tribes and kin groups preset.` };
   return { preset: parsed };
 }
 

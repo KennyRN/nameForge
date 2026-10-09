@@ -107,7 +107,7 @@ export function slotWordsView(args: {
   const { part, id, label, slot, biome, terrain, native, words, wordsBody } = args;
   if (slot?.kind === "ignore") return undefined;
   const base = { id, label };
-  if (slot?.kind === "tribal") return { ...base, status: "tribal", statusText: "Tribal names" };
+  if (slot?.kind === "tribal") return { ...base, status: "tribal", statusText: "Tribes and kin groups" };
   if (id === "river-or-stream-name" && (!slot || slot.kind === "built-in")) return { ...base, status: "river", statusText: "River names" };
   if (!slot && native && part !== "organic" && NATIVE_PACK_SLOTS.has(id)) {
     return { ...base, status: "native", statusText: "Native pack", sources: [{ pack: native, weight: 1 }] };

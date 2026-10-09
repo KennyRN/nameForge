@@ -159,6 +159,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
 // Each switcher group's icon in the switcher menu; the trigger wears the open module's own icon.
 const GROUP_ICONS: Record<SectionGroup, string> = {
   placeNames: ICON_PLACE_SHAPES,
+  groupNames: ICON_TRIBAL_NAMES,
   advanced: ICON_ADVANCED,
 };
 
@@ -354,7 +355,7 @@ export class NameForgeModal extends Modal {
   public biomeProblems: string[] = [];
   /** Tribal names' choices (Tribal brief §18.2), kept for the session like the colonial modules'. */
   /** Each switcher group's last-used module (session only). */
-  private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", advanced: "nameAgeing" };
+  private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", groupNames: "tribalNames", advanced: "nameAgeing" };
   private tribal: {
     tradition: string;
     register: TribalRegister;
@@ -579,7 +580,7 @@ export class NameForgeModal extends Modal {
     // Presets brief §9: open the loaded tribal preset in tribal names.
     this.openPresetButton = createPacksRow.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
-      attr: { type: "button", title: "Open in tribal names" },
+      attr: { type: "button", title: "Open in tribes and kin groups" },
     });
     setIcon(this.openPresetButton, "sliders-horizontal");
     this.openPresetButton.addEventListener("click", () => void this.openPresetInModule());
@@ -1271,7 +1272,7 @@ export class NameForgeModal extends Modal {
   private async runTribalNames() {
     const t = this.tribal;
     const land = this.land("tribal");
-    await this.runTribal(this.tribalState(), (custom) => tribalHistoryLabel(SECTION_LABELS.tribalNames, t.tradition, land.biome, t.register, land.terrain, custom));
+    await this.runTribal(this.tribalState(), (custom) => tribalHistoryLabel(TRIBAL_NAMES_HISTORY_NAME, t.tradition, land.biome, t.register, land.terrain, custom));
   }
 
   /** Presets brief §9: a tribal preset, run with the current quantity; history "tribal names · {name}". */
@@ -1340,7 +1341,7 @@ export class NameForgeModal extends Modal {
     };
   }
 
-  /** Presets brief §9: "Open in tribal names" applies the preset's choices for this session. */
+  /** Presets brief §9: "Open in tribes and kin groups" applies the preset's choices for this session. */
   private async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof TFile)) return;
@@ -1540,7 +1541,7 @@ export class NameForgeModal extends Modal {
   private openRiverOptions(evt: MouseEvent) {
     const r = this.riverPeoples;
     const menu = new Menu();
-    menu.addItem((item) => item.setTitle("Peoples from tribal names").setChecked(r.mode === "tribal").onClick(() => (r.mode = "tribal")));
+    menu.addItem((item) => item.setTitle("Peoples from tribes and kin groups").setChecked(r.mode === "tribal").onClick(() => (r.mode = "tribal")));
     menu.addItem((item) => item.setTitle("Peoples as placeholders").setChecked(r.mode === "placeholder").onClick(() => (r.mode = "placeholder")));
     if (this.activeSection === "riverNames" && this.riverSetting !== "british") {
       menu.addSeparator();

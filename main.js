@@ -32792,7 +32792,7 @@ function tribalPresetSlot(preset) {
 function readTribalPresetSource(name, content) {
   if (content === null) return { notice: `Preset \u201C${name}\u201D is missing.` };
   const parsed = isModulePresetContent(content) ? parseModulePreset(content, name).preset : void 0;
-  if (!parsed) return { notice: `\u201C${name}\u201D isn't a tribal names preset.` };
+  if (!parsed) return { notice: `\u201C${name}\u201D isn't a tribes and kin groups preset.` };
   return { preset: parsed };
 }
 function tribalPresetDraw(preset) {
@@ -36099,7 +36099,7 @@ function slotWordsView(args) {
   const { part, id, label, slot, biome, terrain, native, words, wordsBody } = args;
   if ((slot == null ? void 0 : slot.kind) === "ignore") return void 0;
   const base = { id, label };
-  if ((slot == null ? void 0 : slot.kind) === "tribal") return { ...base, status: "tribal", statusText: "Tribal names" };
+  if ((slot == null ? void 0 : slot.kind) === "tribal") return { ...base, status: "tribal", statusText: "Tribes and kin groups" };
   if (id === "river-or-stream-name" && (!slot || slot.kind === "built-in")) return { ...base, status: "river", statusText: "River names" };
   if (!slot && native && part !== "organic" && NATIVE_PACK_SLOTS.has(id)) {
     return { ...base, status: "native", statusText: "Native pack", sources: [{ pack: native, weight: 1 }] };
@@ -36914,7 +36914,7 @@ var RecipeWizard = class {
         legacy("built-in", "Built-in list");
         legacy("packs", "Name packs");
         legacy("lists", "Word lists");
-        legacy("tribal", "Tribal names");
+        legacy("tribal", "Tribes and kin groups");
         if (choices.includes("placeholder")) d.addOption("placeholder", "Placeholder");
         else legacy("placeholder", "Placeholder");
         d.addOption("ignore", "Ignore");
@@ -36933,7 +36933,7 @@ var RecipeWizard = class {
       offer("built-in", "Built-in list", nativeDefault);
       offer("packs", "Name packs", allowsPacks(part, id));
       offer("lists", "Word lists", allowsLists(part, id));
-      offer("tribal", "Tribal names", allowsTribal(part, id));
+      offer("tribal", "Tribes and kin groups", allowsTribal(part, id));
       offer("placeholder", "Placeholder", fallback !== "placeholder" && allowsPlaceholderChoice(part, id));
       d.addOption("ignore", "Ignore");
       d.setValue(shown).onChange((v) => this.setSlotChoice(id, part, v));
@@ -37507,13 +37507,15 @@ var OLD_HISTORY_PREFIXES = {
 };
 var SECTION_GROUPS = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  groupNames: ["tribalNames"],
   advanced: ["nameAgeing", "nameTakeover"]
 };
 var GROUP_LABELS = {
   placeNames: "place names",
+  groupNames: "group names",
   advanced: "advanced"
 };
-var SWITCHER_ORDER = ["markov", "placeNames", "tribalNames", "advanced"];
+var SWITCHER_ORDER = ["markov", "placeNames", "groupNames", "advanced"];
 function sectionGroup(section) {
   return Object.keys(SECTION_GROUPS).find((g) => SECTION_GROUPS[g].includes(section));
 }
@@ -37525,17 +37527,18 @@ var SECTION_LABELS = {
   empireExpansionPlaceShapes: "expansion into settled lands",
   nameAgeing: "name ageing",
   nameTakeover: "name takeover",
-  tribalNames: "tribal names"
+  tribalNames: "tribes and kin groups"
 };
 var BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
 var RIVER_NAMES_HISTORY_NAME = "river names";
 var WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
-var TRIBAL_NAMES_HISTORY_NAME = "tribal names";
+var TRIBAL_NAMES_HISTORY_NAME = "tribes and kin groups";
+var OLD_TRIBAL_NAMES_HISTORY_NAME = "tribal names";
 function historySection(packName) {
   const starts = (prefix) => packName.startsWith(prefix);
   if (starts(RIVER_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
-  if (starts(TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
+  if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }
@@ -37569,6 +37572,7 @@ var SECTION_ICONS = {
 };
 var GROUP_ICONS = {
   placeNames: ICON_PLACE_SHAPES,
+  groupNames: ICON_TRIBAL_NAMES,
   advanced: ICON_ADVANCED
 };
 var moduleLabel = (section) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
@@ -37682,7 +37686,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.biomeProblems = [];
     /** Tribal names' choices (Tribal brief §18.2), kept for the session like the colonial modules'. */
     /** Each switcher group's last-used module (session only). */
-    this.groupModule = { placeNames: "placeShapes", advanced: "nameAgeing" };
+    this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
     /** Land brief §8.1: river names' peoples (session only). */
     this.riverPeoples = { mode: "tribal", tradition: "general" };
@@ -37898,7 +37902,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.editRecipeButton.hide();
     this.openPresetButton = createPacksRow.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
-      attr: { type: "button", title: "Open in tribal names" }
+      attr: { type: "button", title: "Open in tribes and kin groups" }
     });
     (0, import_obsidian13.setIcon)(this.openPresetButton, "sliders-horizontal");
     this.openPresetButton.addEventListener("click", () => void this.openPresetInModule());
@@ -38543,7 +38547,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
   async runTribalNames() {
     const t = this.tribal;
     const land = this.land("tribal");
-    await this.runTribal(this.tribalState(), (custom) => tribalHistoryLabel(SECTION_LABELS.tribalNames, t.tradition, land.biome, t.register, land.terrain, custom));
+    await this.runTribal(this.tribalState(), (custom) => tribalHistoryLabel(TRIBAL_NAMES_HISTORY_NAME, t.tradition, land.biome, t.register, land.terrain, custom));
   }
   /** Presets brief §9: a tribal preset, run with the current quantity; history "tribal names · {name}". */
   async runTribalPreset() {
@@ -38614,7 +38618,7 @@ ${n.origin}${also}${echo}` };
       hostile: preset.hostile
     };
   }
-  /** Presets brief §9: "Open in tribal names" applies the preset's choices for this session. */
+  /** Presets brief §9: "Open in tribes and kin groups" applies the preset's choices for this session. */
   async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian13.TFile)) return;
@@ -38813,7 +38817,7 @@ ${text}
   openRiverOptions(evt) {
     const r = this.riverPeoples;
     const menu = new import_obsidian13.Menu();
-    menu.addItem((item) => item.setTitle("Peoples from tribal names").setChecked(r.mode === "tribal").onClick(() => r.mode = "tribal"));
+    menu.addItem((item) => item.setTitle("Peoples from tribes and kin groups").setChecked(r.mode === "tribal").onClick(() => r.mode = "tribal"));
     menu.addItem((item) => item.setTitle("Peoples as placeholders").setChecked(r.mode === "placeholder").onClick(() => r.mode = "placeholder"));
     if (this.activeSection === "riverNames" && this.riverSetting !== "british") {
       menu.addSeparator();

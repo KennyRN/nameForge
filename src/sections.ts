@@ -40,20 +40,22 @@ export const SECTION_ORDER: NameForgeSection[] = [
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
  * trigger then chooses between the group's modules. */
-export type SectionGroup = "placeNames" | "advanced";
+export type SectionGroup = "placeNames" | "groupNames" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  groupNames: ["tribalNames"],
   advanced: ["nameAgeing", "nameTakeover"],
 };
 
 export const GROUP_LABELS: Record<SectionGroup, string> = {
   placeNames: "place names",
+  groupNames: "group names",
   advanced: "advanced",
 };
 
 /** The switcher's line-up: modules and groups. */
-export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "tribalNames", "advanced"];
+export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "groupNames", "advanced"];
 
 /** The group a module belongs to, if any. */
 export function sectionGroup(section: NameForgeSection): SectionGroup | undefined {
@@ -69,14 +71,16 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   empireExpansionPlaceShapes: "expansion into settled lands",
   nameAgeing: "name ageing",
   nameTakeover: "name takeover",
-  tribalNames: "tribal names",
+  tribalNames: "tribes and kin groups",
 };
 
 /** History labels for new runs of the place-name and river modules. */
 export const BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
 export const RIVER_NAMES_HISTORY_NAME = "river names";
 export const WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
-export const TRIBAL_NAMES_HISTORY_NAME = "tribal names";
+export const TRIBAL_NAMES_HISTORY_NAME = "tribes and kin groups";
+/** History rows from before the rename to tribes and kin groups. */
+export const OLD_TRIBAL_NAMES_HISTORY_NAME = "tribal names";
 
 /**
  * Which module a history entry belongs to, read from its label, so each module shows only its own
@@ -90,7 +94,7 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(RIVER_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
   // Tribal brief §18.1.
-  if (starts(TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
+  if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }

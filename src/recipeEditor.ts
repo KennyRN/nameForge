@@ -873,7 +873,7 @@ export class RecipeWizard {
         legacy("built-in", "Built-in list");
         legacy("packs", "Name packs");
         legacy("lists", "Word lists");
-        legacy("tribal", "Tribal names");
+        legacy("tribal", "Tribes and kin groups");
         if (choices.includes("placeholder")) d.addOption("placeholder", "Placeholder");
         else legacy("placeholder", "Placeholder");
         d.addOption("ignore", "Ignore");
@@ -903,7 +903,7 @@ export class RecipeWizard {
       offer("built-in", "Built-in list", nativeDefault);
       offer("packs", "Name packs", allowsPacks(part, id));
       offer("lists", "Word lists", allowsLists(part, id));
-      offer("tribal", "Tribal names", allowsTribal(part, id));
+      offer("tribal", "Tribes and kin groups", allowsTribal(part, id));
       offer("placeholder", "Placeholder", fallback !== "placeholder" && allowsPlaceholderChoice(part, id));
       d.addOption("ignore", "Ignore");
       d.setValue(shown).onChange((v) => this.setSlotChoice(id, part, v));

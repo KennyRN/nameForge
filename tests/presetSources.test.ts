@@ -63,7 +63,7 @@ test("preset sources: a missing preset or another note gives a notice and a plac
   const names = generatePlaceNames({ recipe, slots: { "native-people-or-tribe": missing.slot }, count: 300, seed: 2 }).names;
   assert.ok(names.some((n) => /\[native people/.test(n.text)), "placeholder output");
   const pack = resolve("X", "---\ntype: namePack\npackName: X\npackType: listPack\n---\nAelfric\n");
-  assert.equal(pack.notice, "“X” isn't a tribal names preset.");
+  assert.equal(pack.notice, "“X” isn't a tribes and kin groups preset.");
 });
 
 test("preset sources: a word list's // line draws from a preset", async () => {

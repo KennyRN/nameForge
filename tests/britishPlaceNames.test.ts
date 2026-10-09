@@ -227,7 +227,7 @@ test("line-up: seven modules in order, with their labels; river names live in pl
       "native place names",
       "exploration into new lands",
       "expansion into settled lands",
-      "tribal names",
+      "tribes and kin groups",
       "name ageing",
       "name takeover",
     ],
@@ -389,6 +389,8 @@ test("history: each entry belongs to one module, old labels included", () => {
     ["expansion into settled lands · Roman", "empireExpansionPlaceShapes"],
     ["empire expansion place names", "empireExpansionPlaceShapes"],
     ["empire expansion place name shapes · Dutch", "empireExpansionPlaceShapes"],
+    ["tribes and kin groups · Celtic Britain & Gaul · homeland · plain", "tribalNames"],
+    ["tribal names · Polynesian · temperate · plain", "tribalNames"],
     ["Saxon names", "markov"],
     ["nameForge", "markov"],
   ];
