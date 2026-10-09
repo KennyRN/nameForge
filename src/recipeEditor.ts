@@ -5,12 +5,14 @@ import { App, Menu, Modal, normalizePath, Notice, Setting, setIcon, stringifyYam
 import { ContextGuideModal } from "./contextGuide";
 import { CONTEXT_PHRASES, traditionLabel } from "./colonialWording";
 import { findBiome } from "./biomes";
+import { TRIBAL_TRADITIONS } from "./tribes/engine";
 import { BIOME_CHOICES, biomePhrase, explorersPhrase, FEATURES, incomersPhrase } from "./colonialSentence";
 import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
 import { sanitizePackNameForFilename } from "./nameParser";
 import { defaultNameMode, hasBuiltInList } from "./names/engine";
 import {
   allowsLists,
+  allowsTribal,
   allowsPacks,
   allowsPlaceholderChoice,
   NAME_SLOTS,
@@ -31,7 +33,7 @@ import {
   withDefaults,
 } from "./names/recipe";
 import { COLONIAL_DATA, COLONIAL_TRADITIONS, colonialContexts } from "./colonialShapes";
-import { PLACE_SHAPE_DATA, PLACE_SHAPE_REGIONS } from "./placeShapes";
+import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 import { isRecipeContent, parseRecipeContent } from "./recipeHost";
 
 export interface RecipeEditorOptions {
@@ -341,6 +343,17 @@ export class RecipeWizard {
       });
   }
 
+  /** Tribal brief §20.3: the Tribal names slot's one dropdown, Tradition. */
+  private renderTribalFooter(el: HTMLElement, slot: { kind: "tribal"; tradition: string }, part: string) {
+    const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
+    new Setting(box).setName("Tradition").addDropdown((d) => {
+      if (part === "organic") d.addOption("auto", "Regional (auto)");
+      for (const t of TRIBAL_TRADITIONS) d.addOption(t.key, t.label);
+      const current = part !== "organic" && slot.tradition === "auto" ? "general" : slot.tradition;
+      d.setValue(current).onChange((v) => (slot.tradition = v));
+    });
+  }
+
   /** One underlined phrase in a wizard sentence; clicking it opens a menu of `choices`. */
   private sentenceLink(sentence: HTMLElement, text: string, choices: { id: string; label: string }[], current: string, choose: (id: string) => void) {
     const a = sentence.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button" } });
@@ -525,12 +538,17 @@ export class RecipeWizard {
       offer("built-in", "Built-in list", nativeDefault);
       offer("packs", "Name packs", allowsPacks(part, id));
       offer("lists", "Word lists", allowsLists(part, id));
+      offer("tribal", "Tribal names", allowsTribal(part, id));
       offer("placeholder", "Placeholder", fallback !== "placeholder" && allowsPlaceholderChoice(part, id));
       d.addOption("ignore", "Ignore");
       d.setValue(shown).onChange((v) => {
         if (v === "default") {
           delete w.slots[id];
           this.explicitSlots.delete(id);
+        } else if (v === "tribal") {
+          // Tribal brief §20.3: organic slots start on the regional choice, colonial ones on General.
+          w.slots[id] = { kind: "tribal", tradition: part === "organic" ? "auto" : "general" };
+          this.explicitSlots.add(id);
         } else if (v === "packs" || v === "lists") {
           w.slots[id] = { kind: "sources", sources: [this.newSource(v === "lists")] };
           this.explicitSlots.add(id);
@@ -543,6 +561,10 @@ export class RecipeWizard {
     });
     setting.settingEl.addClass("nameforge-recipe-editor__slot");
     if (outsideTier) setting.setDesc("Set – shown outside this tier");
+    if (slot?.kind === "tribal") {
+      this.renderTribalFooter(el, slot, part);
+      return;
+    }
     if (!slot || slot.kind !== "sources") return;
 
     const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });

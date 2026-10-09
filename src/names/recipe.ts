@@ -2,6 +2,7 @@
 // into a plain object and hands it here.
 
 import { findBiome } from "../biomes";
+import { findTradition } from "../tribes/engine";
 
 export type Register = "modern" | "mixed" | "traditional";
 export type Joining = "fused" | "balanced" | "spaced";
@@ -20,6 +21,8 @@ export type SlotSetting =
   | { kind: "built-in" }
   | { kind: "ignore" }
   | { kind: "placeholder" }
+  /** Tribal brief §20.1: tribal names fill the slot; `tradition` is a tradition key or "auto". */
+  | { kind: "tribal"; tradition: string }
   | {
       kind: "sources";
       sources: SourceRef[];
@@ -88,6 +91,13 @@ function readSlot(v: unknown, problems: string[], id: string): SlotSetting | und
   if (v === "built-in" || v === "ignore" || v === "placeholder") return { kind: v };
   if (!isObject(v)) {
     problems.push(`Slot “${id}” isn't built-in, ignore, placeholder or a list of sources.`);
+    return undefined;
+  }
+  // Tribal brief §20.1: { tribal: bantu } or { tribal: auto }.
+  if (typeof v.tribal === "string") {
+    const tradition = v.tribal.trim();
+    if (tradition === "auto" || findTradition(tradition)) return { kind: "tribal", tradition };
+    problems.push(`Slot “${id}” names an unknown tradition “${tradition}”.`);
     return undefined;
   }
   const raw = Array.isArray(v.sources) ? v.sources : [];
@@ -239,6 +249,7 @@ export function recipeToFrontmatter(r: RecipePartial): Record<string, unknown> {
   if (r.slots && Object.keys(r.slots).length > 0) {
     out.slots = Object.fromEntries(
       Object.entries(r.slots).map(([id, slot]) => {
+        if (slot.kind === "tribal") return [id, { tribal: slot.tradition }];
         if (slot.kind !== "sources") return [id, slot.kind];
         const value: Record<string, unknown> = {
           sources: slot.sources.map((s) => ({

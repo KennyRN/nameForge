@@ -28,6 +28,7 @@ import {
 } from "../colonialShapes";
 import { adoptionRng } from "../takeover/batch";
 import { riverFill, type RiverSetting } from "../rivers/engine";
+import { tribalSlotFill } from "../tribes/slotFill";
 
 // ── Fixed values (names-reference) ──────────────────────────────────────────
 
@@ -226,6 +227,7 @@ export type ResolvedSlot =
   | { kind: "built-in" }
   | { kind: "placeholder" }
   | { kind: "ignore" }
+  | { kind: "tribal"; tradition: string }
   | { kind: "sources"; sources: ResolvedSource[]; mode?: NameMode; gender?: { male: number; female: number }; section?: string };
 
 /** Adopts one native name into the takeover pack's language; null when the adoption fails. */
@@ -453,6 +455,16 @@ export class NameRenderer {
     return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
   }
 
+  /** Tribal brief §20.2: a short tribal name on the fill stream, as riverWordFill. */
+  private tribalWordFill(tradition: string, rng: () => number): Fill {
+    const part = this.recipe.shape.part;
+    const { text } = tribalSlotFill(
+      { tradition, part, region: this.region, biome: part === "organic" ? undefined : this.recipe.shape.biome },
+      rng,
+    );
+    return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
+  }
+
   /**
    * River brief §3: a keep-set word in a linked generic-first order keeps "{Generic} of the {Word}"
    * with probability 0.65 on its own stream; null means flip and join as before.
@@ -480,6 +492,8 @@ export class NameRenderer {
       return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
     }
     const slot = this.slotFor(categoryId);
+    // Tribal brief §20.2: a tribal slot is a spaced word fill, never fused or adapted.
+    if (slot.kind === "tribal") return this.tribalWordFill(slot.tradition, rng);
     const wordFill = (entries: NameWordEntry[] | undefined): Fill => {
       if (!entries || entries.length === 0) return this.placeholder(categoryId);
       return entryFill(pickUniform(entries, rng));

@@ -143,6 +143,12 @@ export function allowsLists(_part: SlotPart, _categoryId: string): boolean {
   return true;
 }
 
+/** Tribal brief §20.3: Tribal names on the organic folk-group slot and the colonial native-people slot only. */
+export function allowsTribal(part: SlotPart, categoryId: string): boolean {
+  if (part === "organic") return categoryId === "folk-group";
+  return categoryId === "native-people-or-tribe";
+}
+
 /** Whether a slot offers an explicit Placeholder choice (still only when its default isn't one). */
 export function allowsPlaceholderChoice(_part: SlotPart, categoryId: string): boolean {
   return !NO_PLACEHOLDER.has(categoryId);

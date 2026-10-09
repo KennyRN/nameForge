@@ -137,6 +137,10 @@ export class RecipeHost {
   async resolveSlots(recipe: RecipeSettings, recipePath: string): Promise<Record<string, ResolvedSlot>> {
     const out: Record<string, ResolvedSlot> = {};
     for (const [categoryId, slot] of Object.entries(recipe.slots)) {
+      if (slot.kind === "tribal") {
+        out[categoryId] = { kind: "tribal", tradition: slot.tradition };
+        continue;
+      }
       if (slot.kind !== "sources") {
         out[categoryId] = { kind: slot.kind };
         continue;
