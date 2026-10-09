@@ -19,6 +19,8 @@ export interface LandButtonOptions {
   defaultLabel: () => string;
   /** Whether the module offers terrain. */
   terrain: () => boolean;
+  /** Whether the menu offers biome (tribal names set it in their sentence instead). */
+  biome: () => boolean;
   /** The user's biome packs, read when the menu opens (Land brief §9.5). */
   customBiomes: () => Promise<Biome[]>;
   onChange: () => void;
@@ -52,10 +54,10 @@ export class LandButton {
     const biome = findBiome(state.biome, this.custom);
     const terrain = [...TERRAIN_CHOICES, ...(biome?.customTerrains ?? [])].find((t) => t.id === state.terrain);
     const biomeLabel = biome?.label ?? this.options.defaultLabel();
-    const parts = [biomeLabel, ...(this.options.terrain() ? [terrain?.label ?? "Any terrain"] : [])];
+    const parts = [...(this.options.biome() ? [biomeLabel] : []), ...(this.options.terrain() ? [terrain?.label ?? "Any terrain"] : [])];
     this.el.setAttribute("title", `Land: ${parts.join(" · ")}`);
     this.el.setAttribute("aria-label", `Land: ${parts.join(" · ")}`);
-    this.el.toggleClass("is-active", !!state.biome || state.terrain !== "any");
+    this.el.toggleClass("is-active", (this.options.biome() && !!state.biome) || state.terrain !== "any");
   }
 
   private async open(evt: MouseEvent) {
@@ -75,14 +77,15 @@ export class LandButton {
       const keep = !biome || state.terrain === "any" || availableTerrains(biome).some((t) => t.id === state.terrain);
       choose({ biome: id, terrain: keep ? state.terrain : "any" });
     };
-    heading("Biome");
+    const withBiome = this.options.biome();
+    if (withBiome) heading("Biome");
     const defaultLabel = this.options.defaultLabel();
-    menu.addItem((item) => item.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(undefined)));
-    menu.addSeparator();
+    if (withBiome) menu.addItem((item) => item.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(undefined)));
+    if (withBiome) menu.addSeparator();
     // Britain is listed unless it is already the default.
     const builtIn = defaultLabel === BRITAIN.label ? BIOMES : [BRITAIN, ...BIOMES];
-    for (const b of builtIn) menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === b.id).onClick(() => setBiome(b.id)));
-    if (this.custom.length > 0) {
+    if (withBiome) for (const b of builtIn) menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === b.id).onClick(() => setBiome(b.id)));
+    if (withBiome && this.custom.length > 0) {
       menu.addSeparator();
       heading("Your biomes");
       for (const b of [...this.custom].sort((x, y) => x.label.localeCompare(y.label))) {
@@ -91,7 +94,7 @@ export class LandButton {
       }
     }
     if (this.options.terrain()) {
-      menu.addSeparator();
+      if (withBiome) menu.addSeparator();
       heading("Terrain");
       const biome = findBiome(state.biome, this.custom);
       const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");

@@ -62,7 +62,7 @@ import {
 import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recipe";
-import { type Biome, BIOMES, BRITAIN, findBiome } from "./biomes";
+import { availableTerrains, type Biome, BIOMES, BRITAIN, findBiome } from "./biomes";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
 import { type BiomePackSource, biomeToText, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
@@ -292,6 +292,18 @@ interface SectionView {
   status: string;
 }
 
+/** Tribal names' sentence ending, one phrase per perspective. */
+const TRIBAL_PERSPECTIVE_PHRASES: Record<string, string> = {
+  any: "given to or used by them",
+  self: "used by them as their self-name",
+  neighbour: "given to them by their neighbours",
+  geographical: "given to them for where they live",
+  dynastic: "used by them for their line of descent",
+  ceremonial: "used by them as a ceremonial title",
+  later: "given to them by later writers and officials",
+  imposed: "imposed on them by outsiders",
+};
+
 export class NameForgeModal extends Modal {
   public plugin: NameForgePluginLike;
   private resultsEl: HTMLElement | null = null;
@@ -339,7 +351,6 @@ export class NameForgeModal extends Modal {
     perspective: string | undefined;
     hostile: boolean;
   } = { tradition: "general", register: "plain", groupType: undefined, perspective: undefined, hostile: false };
-  private tribalOptionsButton: HTMLButtonElement | null = null;
   /** Land brief §8.1: river names' peoples (session only). */
   private riverPeoples: { mode: "tribal" | "placeholder"; tradition: string } = { mode: "tribal", tradition: "general" };
   private riverOptionsButton: HTMLButtonElement | null = null;
@@ -566,15 +577,6 @@ export class NameForgeModal extends Modal {
     });
     this.guideButton.hide();
 
-    // Tribal names' options (Tribal brief §18.2): group type, perspective and hostile names.
-    this.tribalOptionsButton = createPacksRow.createEl("button", {
-      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
-      attr: { type: "button", title: "Options" },
-    });
-    setIcon(this.tribalOptionsButton, "sliders-horizontal");
-    this.tribalOptionsButton.addEventListener("click", (evt) => this.openTribalOptions(evt));
-    this.tribalOptionsButton.hide();
-
     // Land brief §8.1: river names' options, peoples from tribal names or as placeholders.
     this.riverOptionsButton = createPacksRow.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
@@ -596,6 +598,8 @@ export class NameForgeModal extends Modal {
       },
       defaultLabel: () => this.landDefaultLabel(),
       terrain: () => this.landKey() !== "river",
+      // Tribal names set the biome in their sentence.
+      biome: () => this.landKey() !== "tribal",
       customBiomes: () => this.loadCustomBiomes(),
       onChange: () => this.renderContextRow(),
     });
@@ -725,14 +729,13 @@ export class NameForgeModal extends Modal {
     // In the colonial sections the guide button takes the create button's slot instead.
     const tribal = section === "tribalNames";
     this.createPacksButton?.toggle(!colonialPart && !tribal);
-    this.tribalOptionsButton?.toggle(tribal);
     this.landButton?.refresh();
     this.guideButton?.toggle(!!colonialPart);
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
     this.regionDropdownEl?.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover || tribal);
-    this.showSecondBox((river && this.riverSetting === "british") || (section === "placeShapes" && this.placeHasSecondBox()) || takeover || tribal);
+    this.showSecondBox((river && this.riverSetting === "british") || (section === "placeShapes" && this.placeHasSecondBox()) || takeover);
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
@@ -821,12 +824,6 @@ export class NameForgeModal extends Modal {
       trigger.setAttribute("title", "Takeover pack: the language that adopts the names");
       return;
     }
-    if (this.activeSection === "tribalNames") {
-      const g = TRIBAL_GROUP_TYPES.find((x) => x.key === this.tribal.groupType);
-      label.textContent = g?.label ?? "Any group type";
-      trigger.setAttribute("title", "Group type: what kind of group is being named");
-      return;
-    }
     if (this.activeSection === "placeShapes" && this.placeIsWorld()) {
       const era = findEra(findCulture(this.worldCulture), this.worldEras[this.worldCulture]);
       label.textContent = era.label;
@@ -865,22 +862,6 @@ export class NameForgeModal extends Modal {
         item.addEventListener("click", () => {
           if (pack.reason) return;
           this.takeoverView.selectTakeover(pack.path);
-          choose();
-        });
-      }
-      return;
-    }
-    if (this.activeSection === "tribalNames") {
-      // Tribal names: the group type, which the sentence below mirrors.
-      for (const g of [{ key: undefined, label: "Any group type" }, ...TRIBAL_GROUP_TYPES]) {
-        const item = menu.createEl("button", {
-          cls: "nameforge-modal__pack-dropdown-item" + (g.key === this.tribal.groupType ? " is-active" : ""),
-          attr: { type: "button" },
-        });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: g.label });
-        item.addEventListener("click", () => {
-          this.tribal.groupType = g.key;
-          this.renderContextRow();
           choose();
         });
       }
@@ -1305,20 +1286,21 @@ export class NameForgeModal extends Modal {
   }
 
   /**
-   * Tribal names' sentence, read like the place name wizard's: "‹Polynesian›-themed kin groups in
-   * ‹their original› environment using ‹plain› names". The underlined phrases open menus; the group
-   * type mirrors the box above.
+   * Tribal names' sentence, read like the place name wizard's: "‹Polynesian›-themed ‹kin groups› in
+   * ‹their original› environment using ‹plain› names ‹given to or used by them›, ‹no insults›". Each
+   * underlined phrase opens a menu, so the sentence holds every option.
    */
   private renderTribalSentence(row: HTMLElement) {
     const t = this.tribal;
     row.show();
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
-    const link = (text: string, title: string, choices: { id: string | undefined; label: string }[], current: string | undefined, choose: (id: string | undefined) => void) => {
+    type Choice = { id: string | undefined; label: string };
+    const link = (text: string, title: string, choices: () => Choice[] | Promise<Choice[]>, current: string | undefined, choose: (id: string | undefined) => void) => {
       const a = sentence.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button", title } });
-      a.addEventListener("click", (event) => {
+      a.addEventListener("click", async (event) => {
         event.preventDefault();
         const menu = new Menu();
-        for (const c of choices) {
+        for (const c of await choices()) {
           menu.addItem((item) =>
             item
               .setTitle(c.label)
@@ -1337,22 +1319,39 @@ export class NameForgeModal extends Modal {
     link(
       tradition.label,
       tradition.drawsOn,
-      TRIBAL_TRADITIONS.map((x) => ({ id: x.key, label: x.label })),
+      () => TRIBAL_TRADITIONS.map((x) => ({ id: x.key, label: x.label })),
       t.tradition,
       (id) => (t.tradition = id ?? "general"),
     );
+    sentence.appendText("-themed ");
     const group = TRIBAL_GROUP_TYPES.find((g) => g.key === t.groupType);
-    sentence.appendText(`-themed ${group ? group.label.toLowerCase() : "groups of any kind"} in `);
+    link(
+      group ? group.label.toLowerCase() : "groups of any kind",
+      "Group type: what kind of group is being named",
+      () => [{ id: undefined, label: "Any group type" }, ...TRIBAL_GROUP_TYPES.map((g) => ({ id: g.key, label: g.label }))],
+      t.groupType,
+      (id) => (t.groupType = id),
+    );
+    sentence.appendText(" in ");
     const land = this.land("tribal");
     const biome = findBiome(land.biome, this.customBiomes);
     const biomeText = biome ? `${/^[aeiou]/i.test(biome.label) ? "an" : "a"} ${biome.label.toLowerCase()}` : "their original";
     link(
       biomeText,
       biome?.guide ?? homelandSummary(t.tradition),
-      [{ id: undefined, label: "Their original" }, ...[BRITAIN, ...BIOMES].map((b) => ({ id: b.id, label: b.label }))],
+      async () => {
+        const custom = [...(await this.loadCustomBiomes())].sort((x, y) => x.label.localeCompare(y.label));
+        return [
+          { id: undefined, label: "Their original" },
+          ...[BRITAIN, ...BIOMES, ...custom].map((b) => ({ id: b.custom?.path ?? b.id, label: b.label })),
+        ];
+      },
       land.biome,
       (id) => {
-        this.landStates.tribal = { ...land, biome: id };
+        // A biome without the current terrain resets it to Any (Land brief §2.7).
+        const next = findBiome(id, this.customBiomes);
+        const keep = !next || land.terrain === "any" || availableTerrains(next).some((x) => x.id === land.terrain);
+        this.landStates.tribal = { biome: id, terrain: keep ? land.terrain : "any" };
         this.landButton?.refresh();
       },
     );
@@ -1360,11 +1359,33 @@ export class NameForgeModal extends Modal {
     link(
       t.register,
       TRIBAL_DATA.registerLabels[t.register],
-      TRIBAL_REGISTERS.map((r) => ({ id: r, label: TRIBAL_DATA.registerLabels[r] })),
+      () => TRIBAL_REGISTERS.map((r) => ({ id: r, label: TRIBAL_DATA.registerLabels[r] })),
       t.register,
       (id) => (t.register = (id ?? "plain") as TribalRegister),
     );
-    sentence.appendText(" names");
+    sentence.appendText(" names ");
+    const perspective = (id: string | undefined) => TRIBAL_PERSPECTIVE_PHRASES[id ?? "any"] ?? TRIBAL_DATA.perspectiveLabels[id!];
+    link(
+      perspective(t.perspective),
+      "Perspective: who uses the name",
+      () => [undefined, ...TRIBAL_PERSPECTIVES].map((p) => ({ id: p, label: perspective(p) })),
+      t.perspective,
+      (id) => (t.perspective = id),
+    );
+    sentence.appendText(", ");
+    link(
+      t.hostile ? "insults and all" : "no insults",
+      "Hostile names: insults one people used for another",
+      () => [
+        { id: undefined, label: "no insults" },
+        { id: "hostile", label: "insults and all" },
+      ],
+      t.hostile ? "hostile" : undefined,
+      (id) => {
+        t.hostile = id === "hostile";
+        if (t.hostile) new Notice("Hostile names are on: some results will be insults one people used for another.");
+      },
+    );
   }
 
   /** The river options button: river names, and place names' British river names. */
@@ -1385,35 +1406,6 @@ export class NameForgeModal extends Modal {
         menu.addItem((item) => item.setTitle(t.label).setChecked(r.tradition === t.key).onClick(() => (r.tradition = t.key)));
       }
     }
-    menu.showAtMouseEvent(evt);
-  }
-
-  /** Tribal names' options menu: perspective and hostile names. */
-  private openTribalOptions(evt: MouseEvent) {
-    const t = this.tribal;
-    const menu = new Menu();
-    const heading = (title: string) => menu.addItem((item) => item.setTitle(title).setDisabled(true));
-    heading("Perspective");
-    menu.addItem((item) => item.setTitle("Any").setChecked(!t.perspective).onClick(() => (t.perspective = undefined)));
-    for (const p of TRIBAL_PERSPECTIVES) {
-      const label = TRIBAL_DATA.perspectiveLabels[p];
-      menu.addItem((item) =>
-        item
-          .setTitle(label.charAt(0).toUpperCase() + label.slice(1))
-          .setChecked(t.perspective === p)
-          .onClick(() => (t.perspective = p)),
-      );
-    }
-    menu.addSeparator();
-    menu.addItem((item) =>
-      item
-        .setTitle("Hostile names")
-        .setChecked(t.hostile)
-        .onClick(() => {
-          t.hostile = !t.hostile;
-          if (t.hostile) new Notice("Hostile names are on: some results will be insults one people used for another.");
-        }),
-    );
     menu.showAtMouseEvent(evt);
   }
 
@@ -1688,7 +1680,6 @@ export class NameForgeModal extends Modal {
     this.sectionSelectEl = null;
     this.editRecipeButton = null;
     this.guideButton = null;
-    this.tribalOptionsButton = null;
     this.riverOptionsButton = null;
     this.contextRowEl = null;
     this.secondBoxRowEl = null;
