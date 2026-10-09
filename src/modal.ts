@@ -602,8 +602,9 @@ export class NameForgeModal extends Modal {
     // Land brief §6.1: biome and terrain, beside the guide button.
     this.landButton = new LandButton(createPacksRow, {
       state: () => {
+        // Tribal names set their biome and terrain in their sentence instead.
         const key = this.landKey();
-        return key ? this.land(key) : undefined;
+        return key && key !== "tribal" ? this.land(key) : undefined;
       },
       set: (state) => {
         const key = this.landKey();
@@ -611,8 +612,6 @@ export class NameForgeModal extends Modal {
       },
       defaultLabel: () => this.landDefaultLabel(),
       terrain: () => this.landKey() !== "river",
-      // Tribal names set the biome in their sentence.
-      biome: () => this.landKey() !== "tribal",
       customBiomes: () => this.loadCustomBiomes(),
       onChange: () => this.renderContextRow(),
     });

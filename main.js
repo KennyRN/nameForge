@@ -32519,10 +32519,10 @@ var LandButton = class {
     const biome = findBiome(state.biome, this.custom);
     const terrain = [...TERRAIN_CHOICES, ...(_a2 = biome == null ? void 0 : biome.customTerrains) != null ? _a2 : []].find((t) => t.id === state.terrain);
     const biomeLabel = (_b = biome == null ? void 0 : biome.label) != null ? _b : this.options.defaultLabel();
-    const parts = [...this.options.biome() ? [biomeLabel] : [], ...this.options.terrain() ? [(_c = terrain == null ? void 0 : terrain.label) != null ? _c : "Any terrain"] : []];
+    const parts = [biomeLabel, ...this.options.terrain() ? [(_c = terrain == null ? void 0 : terrain.label) != null ? _c : "Any terrain"] : []];
     this.el.setAttribute("title", `Land: ${parts.join(" \xB7 ")}`);
     this.el.setAttribute("aria-label", `Land: ${parts.join(" \xB7 ")}`);
-    this.el.toggleClass("is-active", this.options.biome() && !!state.biome || state.terrain !== "any");
+    this.el.toggleClass("is-active", !!state.biome || state.terrain !== "any");
   }
   async open(evt) {
     var _a2, _b;
@@ -32541,14 +32541,13 @@ var LandButton = class {
       const keep = !biome || state.terrain === "any" || availableTerrains(biome).some((t) => t.id === state.terrain);
       choose({ biome: id, terrain: keep ? state.terrain : "any" });
     };
-    const withBiome = this.options.biome();
-    if (withBiome) heading("Biome");
+    heading("Biome");
     const defaultLabel = this.options.defaultLabel();
-    if (withBiome) menu.addItem((item) => item.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(void 0)));
-    if (withBiome) menu.addSeparator();
+    menu.addItem((item) => item.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(void 0)));
+    menu.addSeparator();
     const builtIn = defaultLabel === BRITAIN.label ? BIOMES : [BRITAIN, ...BIOMES];
-    if (withBiome) for (const b of builtIn) menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === b.id).onClick(() => setBiome(b.id)));
-    if (withBiome && this.custom.length > 0) {
+    for (const b of builtIn) menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === b.id).onClick(() => setBiome(b.id)));
+    if (this.custom.length > 0) {
       menu.addSeparator();
       heading("Your biomes");
       for (const b of [...this.custom].sort((x, y) => x.label.localeCompare(y.label))) {
@@ -32557,7 +32556,7 @@ var LandButton = class {
       }
     }
     if (this.options.terrain()) {
-      if (withBiome) menu.addSeparator();
+      menu.addSeparator();
       heading("Terrain");
       const biome = findBiome(state.biome, this.custom);
       const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
@@ -36695,7 +36694,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     this.landButton = new LandButton(createPacksRow, {
       state: () => {
         const key2 = this.landKey();
-        return key2 ? this.land(key2) : void 0;
+        return key2 && key2 !== "tribal" ? this.land(key2) : void 0;
       },
       set: (state) => {
         const key2 = this.landKey();
@@ -36703,8 +36702,6 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
       },
       defaultLabel: () => this.landDefaultLabel(),
       terrain: () => this.landKey() !== "river",
-      // Tribal names set the biome in their sentence.
-      biome: () => this.landKey() !== "tribal",
       customBiomes: () => this.loadCustomBiomes(),
       onChange: () => this.renderContextRow()
     });
