@@ -121,7 +121,7 @@ test("land slots: the wizard sentences", () => {
   const cases: [Parameters<typeof wizardSentenceText>[0], Parameters<typeof wizardSentenceText>[1], string][] = [
     ["organic", { region: "all-britain", biome: "britain", terrain: "any", feature: "any" }, "Any feature from all of Britain, set in any part of Britain"],
     ["organic", { region: "north", biome: "desert", terrain: "mountains", feature: "any" }, "Any feature from the North, set in the mountains of the desert"],
-    ["organic", { region: "wales", biome: "tropical-islands", terrain: "coast", feature: "landscape" }, "Landscape from Wales, set in the coasts of tropical islands"],
+    ["organic", { region: "wales", biome: "tropical-islands", terrain: "coast", feature: "landscape" }, "Landscape from Wales, set in the coasts of a tropical archipelago"],
     ["organic", { region: "all-britain", biome: "britain", terrain: "forest", feature: "any" }, "Any feature from all of Britain, set in the forests of Britain"],
     ["new-land", { tradition: "roman", context: "contested-frontier", biome: "highland", terrain: "hills", feature: "any" }, "Roman-themed explorers in a contested frontier across the hills of the highlands, naming any feature"],
     ["new-land", { tradition: "general", context: "wild-and-unsettled", biome: "unknown", terrain: "any", feature: "any" }, "General explorers in wild and unsettled lands across any part of unknown country, naming any feature"],

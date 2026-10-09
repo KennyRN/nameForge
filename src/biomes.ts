@@ -59,7 +59,7 @@ export interface Terrain {
 
 export interface Biome extends Record<BiomeList, Weighted[]> {
   id: string;
-  /** The menu label, e.g. "Temperate lands". */
+  /** The menu label, e.g. "Temperate". */
   label: string;
   /** The sentence phrase, e.g. "the savannah". */
   phrase: string;
@@ -301,4 +301,9 @@ export function pickWeightedPair<T>(items: readonly [T, number][], rng: () => nu
     if (roll < 0) return item;
   }
   return items[items.length - 1][0];
+}
+
+/** A biome's label inside a sentence or history label: lower case, except "British". */
+export function biomeInline(biome: Pick<Biome, "id" | "label">): string {
+  return biome.id === BRITAIN.id ? biome.label : biome.label.toLowerCase();
 }

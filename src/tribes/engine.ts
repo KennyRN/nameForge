@@ -6,7 +6,7 @@
 // group type → perspective and tone → theme → template → words → rendering → safeguards (§4).
 
 import tribalData from "../data/tribal-names.json";
-import { type Biome, biomeTitleCase, biomeWords, findBiome, pluralOf, TERRAIN_CHOICES, type TerrainId, TERRAINS, terrainWords } from "../biomes";
+import { type Biome, biomeInline, biomeTitleCase, biomeWords, findBiome, pluralOf, TERRAIN_CHOICES, type TerrainId, TERRAINS, terrainWords } from "../biomes";
 import { mulberry32 } from "../markov";
 
 export type TribalRegister = "plain" | "historical" | "legendary" | "administrative";
@@ -1426,7 +1426,7 @@ export function tribalHistoryLabel(
   const b = findBiome(biome, custom);
   // Land brief §6.4: "tribal names · Polynesian · britain · coasts · plain".
   const land = [...TERRAIN_CHOICES, ...(b?.customTerrains ?? [])].find((x) => x.id === terrain && x.id !== "any");
-  return [sectionLabel, t.label, b ? b.label.toLowerCase() : "homeland", ...(land ? [land.label.toLowerCase()] : []), register].join(" · ");
+  return [sectionLabel, t.label, b ? biomeInline(b) : "homeland", ...(land ? [land.label.toLowerCase()] : []), register].join(" · ");
 }
 
 /** "Homeland: tropical islands 80%, cool rainforest 20%" (§18.2). */

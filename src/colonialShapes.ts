@@ -6,7 +6,7 @@
 // No Obsidian dependency, so it runs (and is tested) under plain Node.
 
 import colonialData from "./data/colonial-shapes.json";
-import { findBiome } from "./biomes";
+import { biomeInline, findBiome } from "./biomes";
 import { mulberry32 } from "./markov";
 import {
   type AffixForm,
@@ -640,6 +640,6 @@ export function colonialHistoryLabel(
   if (c) parts.push(c.label.toLowerCase());
   // Tribal brief §19.4: a biome's menu label, lower case; labels without one are unchanged.
   const b = findBiome(biome);
-  if (b) parts.push(b.label.toLowerCase());
+  if (b) parts.push(biomeInline(b));
   return parts.join(" · ");
 }

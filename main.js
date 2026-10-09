@@ -5608,7 +5608,7 @@ var biomes_default = {
   biomes: [
     {
       id: "temperate",
-      label: "Temperate lands",
+      label: "Temperate",
       phrase: "the temperate lands",
       guide: "Broadleaf forest, downs, heath and farmland with four seasons: most of Europe, eastern North America, northern China, Korea and Japan.",
       terrainWeights: {
@@ -8132,7 +8132,7 @@ var biomes_default = {
     },
     {
       id: "mediterranean",
-      label: "Mediterranean lands",
+      label: "Mediterranean",
       phrase: "the Mediterranean lands",
       guide: "Hot dry summers, mild wet winters, scrub-covered hills and rocky coasts: the Mediterranean, California, central Chile, the Cape and south-west Australia.",
       terrainWeights: {
@@ -10948,7 +10948,7 @@ var biomes_default = {
     },
     {
       id: "monsoon",
-      label: "Monsoon lands",
+      label: "Monsoon",
       phrase: "the monsoon lands",
       guide: "Wet and dry seasons, river plains, paddy fields, bamboo and teak forest: India, Bangladesh, mainland South-East Asia, southern China and Java.",
       terrainWeights: {
@@ -11516,8 +11516,8 @@ var biomes_default = {
     },
     {
       id: "tropical-islands",
-      label: "Tropical islands",
-      phrase: "tropical islands",
+      label: "Tropical archipelago",
+      phrase: "a tropical archipelago",
       guide: "Volcanic peaks, coral atolls, lagoons and open ocean: Polynesia, Micronesia, Melanesia, the Caribbean and the Indonesian and Philippine archipelagos.",
       terrainWeights: {
         plains: 5,
@@ -12770,7 +12770,7 @@ var biomes_default = {
   },
   britain: {
     id: "britain",
-    label: "Britain",
+    label: "British",
     phrase: "Britain",
     guide: "The British Isles: the built-in British lists, with their old words, plurals and joining forms.",
     inherits: "temperate",
@@ -13224,6 +13224,9 @@ function pickWeightedPair(items, rng) {
     if (roll < 0) return item;
   }
   return items[items.length - 1][0];
+}
+function biomeInline(biome) {
+  return biome.id === BRITAIN.id ? biome.label : biome.label.toLowerCase();
 }
 
 // src/data/place-shapes.json
@@ -25117,7 +25120,7 @@ function colonialHistoryLabel(sectionLabel, part, tradition, context, biome) {
   const c = context ? COLONIAL_DATA.contexts[part].find((x) => x.id === context) : void 0;
   if (c) parts.push(c.label.toLowerCase());
   const b = findBiome(biome);
-  if (b) parts.push(b.label.toLowerCase());
+  if (b) parts.push(biomeInline(b));
   return parts.join(" \xB7 ");
 }
 
@@ -31233,7 +31236,7 @@ function tribalHistoryLabel(sectionLabel, tradition, biome, register, terrain = 
   const t = (_a2 = findTradition(tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
   const b = findBiome(biome, custom);
   const land = [...TERRAIN_CHOICES, ...(_b = b == null ? void 0 : b.customTerrains) != null ? _b : []].find((x) => x.id === terrain && x.id !== "any");
-  return [sectionLabel, t.label, b ? b.label.toLowerCase() : "homeland", ...land ? [land.label.toLowerCase()] : [], register].join(" \xB7 ");
+  return [sectionLabel, t.label, b ? biomeInline(b) : "homeland", ...land ? [land.label.toLowerCase()] : [], register].join(" \xB7 ");
 }
 function homelandSummary(tradition) {
   var _a2;
@@ -32571,7 +32574,7 @@ function landHistorySuffix(state, custom = [], withBiome = true) {
   if (!state) return "";
   const biome = findBiome(state.biome, custom);
   const terrain = [...TERRAIN_CHOICES, ...(_a2 = biome == null ? void 0 : biome.customTerrains) != null ? _a2 : []].find((t) => t.id === state.terrain && t.id !== "any");
-  return `${withBiome && biome ? ` \xB7 ${biome.label.toLowerCase()}` : ""}${terrain ? ` \xB7 ${terrain.label.toLowerCase()}` : ""}`;
+  return `${withBiome && biome ? ` \xB7 ${biomeInline(biome)}` : ""}${terrain ? ` \xB7 ${terrain.label.toLowerCase()}` : ""}`;
 }
 
 // src/tribes/safeguardPacks.ts
@@ -36398,6 +36401,17 @@ function formatHistoryTimestamp(date) {
   return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}-${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
 }
 var MAX_HISTORY_ENTRIES = 50;
+var TRIBAL_TERRAIN_PHRASES = {
+  any: "in any terrain",
+  plains: "on the plains",
+  hills: "in hilly terrain",
+  mountains: "in mountainous terrain",
+  forest: "in a forest",
+  coast: "on the coast",
+  rivers: "by rivers and lakes",
+  wetland: "in wetlands",
+  islands: "on islands"
+};
 var TRIBAL_PERSPECTIVE_PHRASES = {
   any: "given to or used by them",
   self: "used by them as their self-name",
@@ -36991,7 +37005,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
   landDefaultLabel() {
     var _a2;
     const key2 = (_a2 = this.landKey()) != null ? _a2 : "";
-    if (key2 === "britain") return "Britain";
+    if (key2 === "britain") return BRITAIN.label;
     if (key2 === "tribal" || key2.startsWith("world:")) return "Homeland";
     return "Unknown country";
   }
@@ -37383,7 +37397,8 @@ ${n.origin}${also}${echo}` };
     sentence2.appendText(" in ");
     const land = this.land("tribal");
     const biome = findBiome(land.biome, this.customBiomes);
-    const biomeText = biome ? `${/^[aeiou]/i.test(biome.label) ? "an" : "a"} ${biome.label.toLowerCase()}` : "their original";
+    const biomeLabel = biome && biomeInline(biome);
+    const biomeText = biomeLabel ? `${/^[aeiou]/i.test(biomeLabel) ? "an" : "a"} ${biomeLabel}` : "their original";
     link(
       biomeText,
       (_b = biome == null ? void 0 : biome.guide) != null ? _b : homelandSummary(t.tradition),
@@ -37406,7 +37421,24 @@ ${n.origin}${also}${echo}` };
         (_a3 = this.landButton) == null ? void 0 : _a3.refresh();
       }
     );
-    sentence2.appendText(" environment using ");
+    sentence2.appendText(" environment ");
+    const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((x) => x.id !== "any");
+    const terrainText = (id) => {
+      var _a3, _b2, _c;
+      return (_c = TRIBAL_TERRAIN_PHRASES[id]) != null ? _c : `in ${(_b2 = (_a3 = [...terrains, ...TERRAIN_CHOICES].find((x) => x.id === id)) == null ? void 0 : _a3.label.toLowerCase()) != null ? _b2 : "any terrain"}`;
+    };
+    link(
+      terrainText(land.terrain),
+      "Terrain: the kind of land they live in",
+      () => [{ id: "any", label: terrainText("any") }, ...terrains.map((x) => ({ id: x.id, label: terrainText(x.id) }))],
+      land.terrain,
+      (id) => {
+        var _a3;
+        this.landStates.tribal = { ...this.land("tribal"), terrain: id != null ? id : "any" };
+        (_a3 = this.landButton) == null ? void 0 : _a3.refresh();
+      }
+    );
+    sentence2.appendText(" using ");
     link(
       t.register,
       TRIBAL_DATA.registerLabels[t.register],
@@ -38439,7 +38471,7 @@ ${n.origin}${also}${echo}` };
       );
       const settingLabel = british ? "British" : RIVER_SETTINGS.find((s) => s.id === setting).label;
       const peoples = this.riverPeoples.mode === "placeholder" ? " \xB7 peoples as placeholders" : "";
-      const label = `${RIVER_NAMES_HISTORY_NAME} \xB7 ${settingLabel}${biome ? ` \xB7 ${biome.label.toLowerCase()}` : ""}${peoples}`;
+      const label = `${RIVER_NAMES_HISTORY_NAME} \xB7 ${settingLabel}${biome ? ` \xB7 ${biomeInline(biome)}` : ""}${peoples}`;
       await this.recordGenerationHistory(result2.names.length, british ? withRegion(label, region) : label);
       this.setStatus((_c = result2.notice) != null ? _c : "");
       return;

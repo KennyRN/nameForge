@@ -91,7 +91,7 @@ test("land: environment multipliers", () => {
 
 test("land: renames and Moorland", () => {
   const labels: Record<string, string> = {
-    temperate: "Temperate lands", steppe: "Steppe and grassland", mediterranean: "Mediterranean lands", highland: "Highlands", moorland: "Moorland",
+    temperate: "Temperate", steppe: "Steppe and grassland", mediterranean: "Mediterranean", highland: "Highlands", moorland: "Moorland",
   };
   for (const [id, label] of Object.entries(labels)) assert.equal(b(id).label, label);
   const moor = b("moorland");

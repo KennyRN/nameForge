@@ -62,7 +62,7 @@ import {
 import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "./names/recipe";
-import { availableTerrains, type Biome, BIOMES, BRITAIN, findBiome } from "./biomes";
+import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
 import { type BiomePackSource, biomeToText, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
@@ -291,6 +291,19 @@ interface SectionView {
   seedLockButton: HTMLButtonElement | null;
   status: string;
 }
+
+/** Tribal names' terrain phrases; a biome pack's own terrains read "in salt pans". */
+const TRIBAL_TERRAIN_PHRASES: Record<string, string> = {
+  any: "in any terrain",
+  plains: "on the plains",
+  hills: "in hilly terrain",
+  mountains: "in mountainous terrain",
+  forest: "in a forest",
+  coast: "on the coast",
+  rivers: "by rivers and lakes",
+  wetland: "in wetlands",
+  islands: "on islands",
+};
 
 /** Tribal names' sentence ending, one phrase per perspective. */
 const TRIBAL_PERSPECTIVE_PHRASES: Record<string, string> = {
@@ -927,7 +940,7 @@ export class NameForgeModal extends Modal {
   /** The module's default biome as the Land menu shows it. */
   private landDefaultLabel(): string {
     const key = this.landKey() ?? "";
-    if (key === "britain") return "Britain";
+    if (key === "britain") return BRITAIN.label;
     if (key === "tribal" || key.startsWith("world:")) return "Homeland";
     return "Unknown country";
   }
@@ -1335,7 +1348,8 @@ export class NameForgeModal extends Modal {
     sentence.appendText(" in ");
     const land = this.land("tribal");
     const biome = findBiome(land.biome, this.customBiomes);
-    const biomeText = biome ? `${/^[aeiou]/i.test(biome.label) ? "an" : "a"} ${biome.label.toLowerCase()}` : "their original";
+    const biomeLabel = biome && biomeInline(biome);
+    const biomeText = biomeLabel ? `${/^[aeiou]/i.test(biomeLabel) ? "an" : "a"} ${biomeLabel}` : "their original";
     link(
       biomeText,
       biome?.guide ?? homelandSummary(t.tradition),
@@ -1355,7 +1369,21 @@ export class NameForgeModal extends Modal {
         this.landButton?.refresh();
       },
     );
-    sentence.appendText(" environment using ");
+    sentence.appendText(" environment ");
+    const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((x) => x.id !== "any");
+    const terrainText = (id: string) =>
+      TRIBAL_TERRAIN_PHRASES[id] ?? `in ${[...terrains, ...TERRAIN_CHOICES].find((x) => x.id === id)?.label.toLowerCase() ?? "any terrain"}`;
+    link(
+      terrainText(land.terrain),
+      "Terrain: the kind of land they live in",
+      () => [{ id: "any", label: terrainText("any") }, ...terrains.map((x) => ({ id: x.id, label: terrainText(x.id) }))],
+      land.terrain,
+      (id) => {
+        this.landStates.tribal = { ...this.land("tribal"), terrain: id ?? "any" };
+        this.landButton?.refresh();
+      },
+    );
+    sentence.appendText(" using ");
     link(
       t.register,
       TRIBAL_DATA.registerLabels[t.register],
@@ -2487,7 +2515,7 @@ export class NameForgeModal extends Modal {
       const settingLabel = british ? "British" : RIVER_SETTINGS.find((s) => s.id === setting)!.label;
       // Tribal brief §19.5: "river names · New Land · savannah" when a biome is set.
       const peoples = this.riverPeoples.mode === "placeholder" ? " · peoples as placeholders" : "";
-      const label = `${RIVER_NAMES_HISTORY_NAME} · ${settingLabel}${biome ? ` · ${biome.label.toLowerCase()}` : ""}${peoples}`;
+      const label = `${RIVER_NAMES_HISTORY_NAME} · ${settingLabel}${biome ? ` · ${biomeInline(biome)}` : ""}${peoples}`;
       await this.recordGenerationHistory(result.names.length, british ? withRegion(label, region) : label);
       this.setStatus(result.notice ?? "");
       return;

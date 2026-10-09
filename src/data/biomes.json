@@ -109,7 +109,7 @@
   "biomes": [
     {
       "id": "temperate",
-      "label": "Temperate lands",
+      "label": "Temperate",
       "phrase": "the temperate lands",
       "guide": "Broadleaf forest, downs, heath and farmland with four seasons: most of Europe, eastern North America, northern China, Korea and Japan.",
       "terrainWeights": {
@@ -2633,7 +2633,7 @@
     },
     {
       "id": "mediterranean",
-      "label": "Mediterranean lands",
+      "label": "Mediterranean",
       "phrase": "the Mediterranean lands",
       "guide": "Hot dry summers, mild wet winters, scrub-covered hills and rocky coasts: the Mediterranean, California, central Chile, the Cape and south-west Australia.",
       "terrainWeights": {
@@ -5449,7 +5449,7 @@
     },
     {
       "id": "monsoon",
-      "label": "Monsoon lands",
+      "label": "Monsoon",
       "phrase": "the monsoon lands",
       "guide": "Wet and dry seasons, river plains, paddy fields, bamboo and teak forest: India, Bangladesh, mainland South-East Asia, southern China and Java.",
       "terrainWeights": {
@@ -6017,8 +6017,8 @@
     },
     {
       "id": "tropical-islands",
-      "label": "Tropical islands",
-      "phrase": "tropical islands",
+      "label": "Tropical archipelago",
+      "phrase": "a tropical archipelago",
       "guide": "Volcanic peaks, coral atolls, lagoons and open ocean: Polynesia, Micronesia, Melanesia, the Caribbean and the Indonesian and Philippine archipelagos.",
       "terrainWeights": {
         "plains": 5,
@@ -7271,7 +7271,7 @@
   },
   "britain": {
     "id": "britain",
-    "label": "Britain",
+    "label": "British",
     "phrase": "Britain",
     "guide": "The British Isles: the built-in British lists, with their old words, plurals and joining forms.",
     "inherits": "temperate",

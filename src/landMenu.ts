@@ -2,7 +2,7 @@
 // shared by every module that uses them.
 
 import { Menu, setIcon } from "obsidian";
-import { availableTerrains, type Biome, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
+import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
 
 export interface LandState {
   /** A built-in biome id, a biome pack's path, or undefined for the module's default. */
@@ -112,5 +112,5 @@ export function landHistorySuffix(state: LandState | undefined, custom: readonly
   if (!state) return "";
   const biome = findBiome(state.biome, custom);
   const terrain = [...TERRAIN_CHOICES, ...(biome?.customTerrains ?? [])].find((t) => t.id === state.terrain && t.id !== "any");
-  return `${withBiome && biome ? ` · ${biome.label.toLowerCase()}` : ""}${terrain ? ` · ${terrain.label.toLowerCase()}` : ""}`;
+  return `${withBiome && biome ? ` · ${biomeInline(biome)}` : ""}${terrain ? ` · ${terrain.label.toLowerCase()}` : ""}`;
 }

@@ -184,7 +184,7 @@ test("tribal: snapshots after the terrain split hold", () => {
 });
 
 test("tribal: history labels", () => {
-  assert.equal(tribalHistoryLabel("tribal names", "polynesian", "temperate", "plain"), "tribal names · Polynesian · temperate lands · plain");
+  assert.equal(tribalHistoryLabel("tribal names", "polynesian", "temperate", "plain"), "tribal names · Polynesian · temperate · plain");
   assert.equal(tribalHistoryLabel("tribal names", "celtic", undefined, "historical"), "tribal names · Celtic Britain & Gaul · homeland · historical");
-  assert.equal(tribalHistoryLabel("tribal names", "polynesian", "britain", "plain", "coast"), "tribal names · Polynesian · britain · coasts · plain");
+  assert.equal(tribalHistoryLabel("tribal names", "polynesian", "britain", "plain", "coast"), "tribal names · Polynesian · British · coasts · plain");
 });
