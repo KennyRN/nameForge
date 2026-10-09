@@ -3,6 +3,7 @@
 
 import { App, Menu, Modal, normalizePath, Notice, Setting, setIcon, stringifyYaml, TFile } from "obsidian";
 import { ContextGuideModal } from "./contextGuide";
+import { WordListGuideModal } from "./wordListGuide";
 import { CONTEXT_PHRASES, traditionLabel } from "./colonialWording";
 import { availableTerrains, type Biome, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
 import { chooseTribal, type TribalSentenceState, tribalSentence } from "./tribes/sentence";
@@ -422,10 +423,13 @@ export class RecipeWizard {
 
   /** Presets brief §4: every slot from page 3 as what it draws from; editable ones as text. */
   private renderWordsPage(el: HTMLElement) {
-    el.createEl("p", {
+    const intro = el.createEl("p", {
       cls: "setting-item-description",
-      text: "What each slot draws from. Edit a list to give this recipe its own words; only the sections you change are saved, to the recipe's word list.",
+      text: "What each slot draws from. Edit a list to give this recipe its own words; only the sections you change are saved, to the recipe's word list. ",
     });
+    const help = intro.createSpan({ cls: "clickable-icon nameforge-editor-modal__help", attr: { role: "button", "aria-label": "How to write a word list" } });
+    setIcon(help, "circle-help");
+    help.addEventListener("click", () => new WordListGuideModal(this.app).open());
     for (const { id, label } of this.shownSlots()) {
       const view = this.wordsView(id, label);
       if (!view) continue;
