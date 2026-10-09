@@ -5,6 +5,7 @@
 // the shape generator's own batch for the same seed and settings.
 
 import nameWordData from "../data/name-words.json";
+import { biomeEntries, findBiome } from "../biomes";
 import { mulberry32 } from "../markov";
 import { type SectionRequest } from "../packs/sections";
 import {
@@ -469,6 +470,11 @@ export class NameRenderer {
     // §6.1: in colonial rendering, unmapped native flora and fauna never draw the British lists.
     // An explicit built-in mapping still does; domestic animals and crops are not in the set.
     if (this.colonial && !mapped && NATIVE_LABELS[categoryId]) {
+      // Tribal brief §19.3: a recipe biome fills them with its own words. The fill stream is only
+      // drawn when a biome is set, so recipes without one are unchanged for a given seed.
+      const biome = findBiome(this.recipe.shape.biome);
+      const entries = biome ? biomeEntries(biome, categoryId) : undefined;
+      if (entries) return { kind: "word", entry: pickWeighted(entries, rng), traditional: false };
       return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
     }
     const slot = this.slotFor(categoryId);

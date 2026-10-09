@@ -6,6 +6,7 @@
 // No Obsidian dependency, so it runs (and is tested) under plain Node.
 
 import colonialData from "./data/colonial-shapes.json";
+import { findBiome } from "./biomes";
 import { mulberry32 } from "./markov";
 import {
   type AffixForm,
@@ -623,11 +624,20 @@ export function sampleColonialShapes(options: ColonialGenerateOptions): Colonial
 }
 
 /** History label: the section name plus any non-default tradition and context. */
-export function colonialHistoryLabel(sectionLabel: string, part: ColonialPart, tradition?: string, context?: string): string {
+export function colonialHistoryLabel(
+  sectionLabel: string,
+  part: ColonialPart,
+  tradition?: string,
+  context?: string,
+  biome?: string,
+): string {
   const parts = [sectionLabel];
   const t = tradition ? COLONIAL_DATA.traditions.find((x) => x.id === tradition) : undefined;
   if (t) parts.push(t.label);
   const c = context ? COLONIAL_DATA.contexts[part].find((x) => x.id === context) : undefined;
   if (c) parts.push(c.label.toLowerCase());
+  // Tribal brief §19.4: a biome's menu label, lower case; labels without one are unchanged.
+  const b = findBiome(biome);
+  if (b) parts.push(b.label.toLowerCase());
   return parts.join(" · ");
 }

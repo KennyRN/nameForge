@@ -1,0 +1,5087 @@
+{
+ "new-land general 1": [
+  {
+   "text": "Clearing of the [native plant]",
+   "hasPlaceholder": true,
+   "etymology": "[woodland, then clearing] of [wild plant]",
+   "shape": {
+    "part": "2",
+    "groupId": "clearings",
+    "genericId": "woodland-then-clearing",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false
+   }
+  },
+  {
+   "text": "Battle Heath",
+   "hasPlaceholder": false,
+   "etymology": "[event or incident: battle] + [heath]",
+   "shape": {
+    "part": "2",
+    "groupId": "upland-and-open-ground",
+    "genericId": "heath",
+    "categoryId": "event-or-incident",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "[native bird] Well",
+   "hasPlaceholder": true,
+   "etymology": "[bird] + [spring with roman association]",
+   "shape": {
+    "part": "2",
+    "groupId": "springs-pools-and-lakes",
+    "genericId": "spring-with-roman-association",
+    "categoryId": "bird",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false
+   }
+  },
+  {
+   "text": "[personal name] Court",
+   "hasPlaceholder": true,
+   "etymology": "[personal name] + [royal or lordly court]",
+   "shape": {
+    "part": "2",
+    "groupId": "lordship-and-authority",
+    "genericId": "royal-or-lordly-court",
+    "categoryId": "personal-name",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "Court of [monarch]",
+   "hasPlaceholder": true,
+   "etymology": "[royal or lordly court] + [monarch, ruler or dynasty]",
+   "shape": {
+    "part": "2",
+    "groupId": "lordship-and-authority",
+    "genericId": "royal-or-lordly-court",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Great Gorge",
+   "hasPlaceholder": false,
+   "etymology": "[size: great] + [river-cut gorge]",
+   "shape": {
+    "part": "2",
+    "groupId": "valleys",
+    "genericId": "river-cut-gorge",
+    "categoryId": "size",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false
+   }
+  },
+  {
+   "text": "[commander]'s Fort",
+   "hasPlaceholder": true,
+   "etymology": "[commander or conqueror]'s + [fort]",
+   "shape": {
+    "part": "2",
+    "groupId": "defensive",
+    "genericId": "fort",
+    "categoryId": "commander-or-conqueror",
+    "structure": "possessive",
+    "treatments": {}
+   }
+  },
+  {
+   "text": "Cottage of [patron]",
+   "hasPlaceholder": true,
+   "etymology": "[cottage] + [official, patron or sponsor]",
+   "shape": {
+    "part": "2",
+    "groupId": "dwellings-and-buildings",
+    "genericId": "cottage",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Manor of [patron]",
+   "hasPlaceholder": true,
+   "etymology": "[manor house] of [official, patron or sponsor]",
+   "shape": {
+    "part": "2",
+    "groupId": "lordship-and-authority",
+    "genericId": "manor-house",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Golden Creek Territory",
+   "hasPlaceholder": false,
+   "etymology": "[land, territory] of [river or stream name, adopted: Golden Creek]",
+   "shape": {
+    "part": "2",
+    "groupId": "territories",
+    "genericId": "land-territory",
+    "categoryId": "river-or-stream-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Irish Geo",
+   "hasPlaceholder": false,
+   "etymology": "[coastal chasm, geo] + [settler group: Irish]",
+   "shape": {
+    "part": "2",
+    "groupId": "coast-and-sea",
+    "genericId": "coastal-chasm-geo",
+    "categoryId": "settler-group",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "[holy person] Cross",
+   "hasPlaceholder": true,
+   "etymology": "[saint or holy person] + [standing cross]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-christian",
+    "genericId": "standing-cross",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "Crooked Bank",
+   "hasPlaceholder": false,
+   "etymology": "[steep slope, bank] + [shape: crooked]",
+   "shape": {
+    "part": "2",
+    "groupId": "hills-and-slopes",
+    "genericId": "steep-slope-bank",
+    "categoryId": "shape",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false
+   }
+  },
+  {
+   "text": "[colonial deity] Shrine",
+   "hasPlaceholder": true,
+   "etymology": "[colonial deity] + [shrine, idol]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-pre-christian-and-sacred",
+    "genericId": "shrine-idol",
+    "categoryId": "colonial-deity",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "Upper Streetbank",
+   "hasPlaceholder": false,
+   "etymology": "Upper [built feature: street] + [steep slope, bank]",
+   "shape": {
+    "part": "2",
+    "groupId": "hills-and-slopes",
+    "genericId": "steep-slope-bank",
+    "categoryId": "built-feature",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "affix": {
+     "typeId": "position",
+     "form": {
+      "text": "Upper",
+      "position": "before"
+     }
+    }
+   }
+  },
+  {
+   "text": "North Hill",
+   "hasPlaceholder": false,
+   "etymology": "[hill] + [position or direction: north]",
+   "shape": {
+    "part": "2",
+    "groupId": "hills-and-slopes",
+    "genericId": "hill",
+    "categoryId": "position-or-direction",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false
+   }
+  },
+  {
+   "text": "[native plant] Province",
+   "hasPlaceholder": true,
+   "etymology": "[wild plant] + [province, kingdom] (translated native name)",
+   "shape": {
+    "part": "2",
+    "groupId": "territories",
+    "genericId": "province-kingdom",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": true
+   }
+  },
+  {
+   "text": "[native place] Gallows",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adapted] + [execution site]",
+   "shape": {
+    "part": "2",
+    "groupId": "communal-and-legal",
+    "genericId": "execution-site",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "[personal name]'s Bottom",
+   "hasPlaceholder": true,
+   "etymology": "[personal name]'s + [valley bottom]",
+   "shape": {
+    "part": "2",
+    "groupId": "hollows-and-corners",
+    "genericId": "valley-bottom",
+    "categoryId": "personal-name",
+    "structure": "possessive",
+    "treatments": {}
+   }
+  },
+  {
+   "text": "Ferry of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[ferry] of [native place name, adapted]",
+   "shape": {
+    "part": "2",
+    "groupId": "crossings-and-routes",
+    "genericId": "ferry",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-linked"
+   }
+  }
+ ],
+ "new-land general 4242": [
+  {
+   "text": "[native place] Ferry",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adopted] + [ferry]",
+   "shape": {
+    "part": "2",
+    "groupId": "crossings-and-routes",
+    "genericId": "ferry",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "[founder] Spring",
+   "hasPlaceholder": true,
+   "etymology": "[explorer or founder] + [river source, spring-head]",
+   "shape": {
+    "part": "2",
+    "groupId": "rivers-and-streams",
+    "genericId": "river-source-spring-head",
+    "categoryId": "explorer-or-founder",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "[explorer]",
+   "hasPlaceholder": true,
+   "etymology": "[explorer or founder]",
+   "shape": {
+    "part": "2",
+    "groupId": "colonial-settlement",
+    "genericId": "planned-village",
+    "categoryId": "explorer-or-founder",
+    "structure": "bare-specific",
+    "treatments": {},
+    "definite": false
+   }
+  },
+  {
+   "text": "[holy person] Minster",
+   "hasPlaceholder": true,
+   "etymology": "[saint or holy person] + [minster, mother church]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-christian",
+    "genericId": "minster-mother-church",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "Bradcliff",
+   "hasPlaceholder": false,
+   "etymology": "[sea cliff] of [shape: broad] (translated native name)",
+   "shape": {
+    "part": "2",
+    "groupId": "coast-and-sea",
+    "genericId": "sea-cliff",
+    "categoryId": "shape",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": true
+   }
+  },
+  {
+   "text": "[native place]",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adopted]",
+   "shape": {
+    "part": "2",
+    "groupId": "mountains-and-rock",
+    "genericId": "pointed-hill",
+    "categoryId": "native-place-name",
+    "structure": "bare-specific",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "definite": false
+   }
+  },
+  {
+   "text": "[native plant] Pasture",
+   "hasPlaceholder": true,
+   "etymology": "[woodland swine pasture] + [wild plant]",
+   "shape": {
+    "part": "2",
+    "groupId": "clearings",
+    "genericId": "woodland-swine-pasture",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false
+   }
+  },
+  {
+   "text": "Green Post",
+   "hasPlaceholder": false,
+   "etymology": "[river or stream name, adapted: Green] + [frontier post]",
+   "shape": {
+    "part": "2",
+    "groupId": "military-and-administrative",
+    "genericId": "frontier-post",
+    "categoryId": "river-or-stream-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "[native place]",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adapted]",
+   "shape": {
+    "part": "2",
+    "groupId": "territories",
+    "genericId": "province-kingdom",
+    "categoryId": "native-place-name",
+    "structure": "bare-specific",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "definite": false
+   }
+  },
+  {
+   "text": "Moor of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[upland moor] of [native place name, adapted]",
+   "shape": {
+    "part": "2",
+    "groupId": "upland-and-open-ground",
+    "genericId": "upland-moor",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "[native plant] Bend",
+   "hasPlaceholder": true,
+   "etymology": "[bend, crook] + [wild plant]",
+   "shape": {
+    "part": "2",
+    "groupId": "hollows-and-corners",
+    "genericId": "bend-crook",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false
+   }
+  },
+  {
+   "text": "Estate of [ruler]",
+   "hasPlaceholder": true,
+   "etymology": "[estate, manor centre] + [monarch, ruler or dynasty]",
+   "shape": {
+    "part": "2",
+    "groupId": "settlement-farms-and-estates",
+    "genericId": "estate-manor-centre",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "[dynasty]",
+   "hasPlaceholder": true,
+   "etymology": "[monarch, ruler or dynasty]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-pre-christian-and-sacred",
+    "genericId": "sacred-grove",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "bare-specific",
+    "treatments": {},
+    "definite": false
+   }
+  },
+  {
+   "text": "[official]'s Hall",
+   "hasPlaceholder": true,
+   "etymology": "[official, patron or sponsor]'s + [lord’s hall]",
+   "shape": {
+    "part": "2",
+    "groupId": "lordship-and-authority",
+    "genericId": "lords-hall",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "possessive",
+    "treatments": {}
+   }
+  },
+  {
+   "text": "Gallows of [personal name]",
+   "hasPlaceholder": true,
+   "etymology": "[execution site] + [personal name]",
+   "shape": {
+    "part": "2",
+    "groupId": "communal-and-legal",
+    "genericId": "execution-site",
+    "categoryId": "personal-name",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Tor of [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "[tor] + [saint or holy person]",
+   "shape": {
+    "part": "2",
+    "groupId": "mountains-and-rock",
+    "genericId": "tor",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "[native plant] Land",
+   "hasPlaceholder": true,
+   "etymology": "[wild plant] + [land, territory]",
+   "shape": {
+    "part": "2",
+    "groupId": "territories",
+    "genericId": "land-territory",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false
+   }
+  },
+  {
+   "text": "South Round Glen",
+   "hasPlaceholder": false,
+   "etymology": "South [narrow valley, glen] + [river or stream name, adapted: Round]",
+   "shape": {
+    "part": "2",
+    "groupId": "valleys",
+    "genericId": "narrow-valley-glen",
+    "categoryId": "river-or-stream-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-direct",
+    "affix": {
+     "typeId": "position",
+     "form": {
+      "text": "South",
+      "position": "before"
+     }
+    }
+   }
+  },
+  {
+   "text": "[native wild animal] Beach",
+   "hasPlaceholder": true,
+   "etymology": "[wild animal] + [beach, strand]",
+   "shape": {
+    "part": "2",
+    "groupId": "coast-and-sea",
+    "genericId": "beach-strand",
+    "categoryId": "wild-animal",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false
+   }
+  },
+  {
+   "text": "Cold Grave",
+   "hasPlaceholder": false,
+   "etymology": "[quality or condition: cold] + [grave] (translated native name)",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-burial-and-memorial",
+    "genericId": "grave",
+    "categoryId": "quality-or-condition",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": true
+   }
+  }
+ ],
+ "new-land general 987654321": [
+  {
+   "text": "Land of the [native plant]",
+   "hasPlaceholder": true,
+   "etymology": "[land, territory] of [wild plant]",
+   "shape": {
+    "part": "2",
+    "groupId": "territories",
+    "genericId": "land-territory",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false
+   }
+  },
+  {
+   "text": "[native tree] Marsh",
+   "hasPlaceholder": true,
+   "etymology": "[brushwood marsh, carr] of [tree]",
+   "shape": {
+    "part": "2",
+    "groupId": "wetland",
+    "genericId": "brushwood-marsh-carr",
+    "categoryId": "tree",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false
+   }
+  },
+  {
+   "text": "Prescourt",
+   "hasPlaceholder": false,
+   "etymology": "[royal or lordly court] + [status or role: priest]",
+   "shape": {
+    "part": "2",
+    "groupId": "lordship-and-authority",
+    "genericId": "royal-or-lordly-court",
+    "categoryId": "status-or-role",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Graveyard of [personal name]",
+   "hasPlaceholder": true,
+   "etymology": "[burial ground, churchyard] of [personal name]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-burial-and-memorial",
+    "genericId": "burial-ground-churchyard",
+    "categoryId": "personal-name",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Bath",
+   "hasPlaceholder": false,
+   "etymology": "[bath, spa]",
+   "shape": {
+    "part": "2",
+    "groupId": "communal-and-legal",
+    "genericId": "bath-spa",
+    "categoryId": "empty-slot",
+    "structure": "simplex",
+    "treatments": {},
+    "plural": false,
+    "definite": false
+   }
+  },
+  {
+   "text": "Fulhouse",
+   "hasPlaceholder": false,
+   "etymology": "[quality or condition: foul] + [dwelling]",
+   "shape": {
+    "part": "2",
+    "groupId": "dwellings-and-buildings",
+    "genericId": "dwelling",
+    "categoryId": "quality-or-condition",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false
+   }
+  },
+  {
+   "text": "[colonial deity] Temple",
+   "hasPlaceholder": true,
+   "etymology": "[colonial deity] + [heathen temple]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-pre-christian-and-sacred",
+    "genericId": "heathen-temple",
+    "categoryId": "colonial-deity",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "Welsh Earthwork",
+   "hasPlaceholder": false,
+   "etymology": "[dyke, boundary earthwork] + [settler group: Welsh]",
+   "shape": {
+    "part": "2",
+    "groupId": "defensive",
+    "genericId": "dyke-boundary-earthwork",
+    "categoryId": "settler-group",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "[patron] Ridge",
+   "hasPlaceholder": true,
+   "etymology": "[official, patron or sponsor] + [back, low ridge]",
+   "shape": {
+    "part": "2",
+    "groupId": "hills-and-slopes",
+    "genericId": "back-low-ridge",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "Dry Farmland",
+   "hasPlaceholder": false,
+   "etymology": "[quality or condition: dry] + [arable field]",
+   "shape": {
+    "part": "2",
+    "groupId": "open-and-farmed-land",
+    "genericId": "arable-field",
+    "categoryId": "quality-or-condition",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false
+   }
+  },
+  {
+   "text": "Grave of [personal name] [personal name]",
+   "hasPlaceholder": true,
+   "etymology": "[grave] + [personal name] [personal name]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-burial-and-memorial",
+    "genericId": "grave",
+    "categoryId": "personal-name",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "affix": {
+     "typeId": "owner-by-family",
+     "form": {
+      "text": "",
+      "position": "after",
+      "slotCategory": "personal-name"
+     }
+    }
+   }
+  },
+  {
+   "text": "[native bird] River",
+   "hasPlaceholder": true,
+   "etymology": "[river] + [bird]",
+   "shape": {
+    "part": "2",
+    "groupId": "rivers-and-streams",
+    "genericId": "river",
+    "categoryId": "bird",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false
+   }
+  },
+  {
+   "text": "King [native tree] Wallow",
+   "hasPlaceholder": true,
+   "etymology": "[status or role: king] [miry pool, wallowing place] + [tree]",
+   "shape": {
+    "part": "2",
+    "groupId": "wetland",
+    "genericId": "miry-pool-wallowing-place",
+    "categoryId": "tree",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false,
+    "affix": {
+     "typeId": "owner-by-status",
+     "form": {
+      "text": "",
+      "position": "before",
+      "slotCategory": "status-or-role"
+     }
+    }
+   }
+  },
+  {
+   "text": "[holy person] Mission",
+   "hasPlaceholder": true,
+   "etymology": "[saint or holy person] + [mission]",
+   "shape": {
+    "part": "2",
+    "groupId": "colonial-settlement",
+    "genericId": "mission",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "[native wild animal] Stream [personal name]",
+   "hasPlaceholder": true,
+   "etymology": "[wild animal] + [clear stream] [personal name]",
+   "shape": {
+    "part": "2",
+    "groupId": "rivers-and-streams",
+    "genericId": "clear-stream",
+    "categoryId": "wild-animal",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "affix": {
+     "typeId": "owner-by-family",
+     "form": {
+      "text": "",
+      "position": "after",
+      "slotCategory": "personal-name"
+     }
+    }
+   }
+  },
+  {
+   "text": "[patron] Camp",
+   "hasPlaceholder": true,
+   "etymology": "[official, patron or sponsor] + [garrison camp]",
+   "shape": {
+    "part": "2",
+    "groupId": "military-and-administrative",
+    "genericId": "garrison-camp",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "English Lookout",
+   "hasPlaceholder": false,
+   "etymology": "[ethnic or cultural group: English] + [lookout hill]",
+   "shape": {
+    "part": "2",
+    "groupId": "defensive",
+    "genericId": "lookout-hill",
+    "categoryId": "ethnic-or-cultural-group",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "Free peasant Danger Hill",
+   "hasPlaceholder": false,
+   "etymology": "[status or role: free peasant] [wooded hill] + [event or incident: danger]",
+   "shape": {
+    "part": "2",
+    "groupId": "woodland",
+    "genericId": "wooded-hill",
+    "categoryId": "event-or-incident",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "affix": {
+     "typeId": "owner-by-status",
+     "form": {
+      "text": "",
+      "position": "before",
+      "slotCategory": "status-or-role"
+     }
+    }
+   }
+  },
+  {
+   "text": "Blue River",
+   "hasPlaceholder": false,
+   "etymology": "[river or stream name, adopted: Blue] + [river]",
+   "shape": {
+    "part": "2",
+    "groupId": "rivers-and-streams",
+    "genericId": "river",
+    "categoryId": "river-or-stream-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "[personal name] Court",
+   "hasPlaceholder": true,
+   "etymology": "[personal name] + [royal or lordly court]",
+   "shape": {
+    "part": "2",
+    "groupId": "lordship-and-authority",
+    "genericId": "royal-or-lordly-court",
+    "categoryId": "personal-name",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  }
+ ],
+ "new-land spanish contested 1": [
+  {
+   "text": "Overdown",
+   "hasPlaceholder": false,
+   "etymology": "[low level-topped hill] + [position or direction: upper]",
+   "shape": {
+    "part": "2",
+    "groupId": "hills-and-slopes",
+    "genericId": "low-level-topped-hill",
+    "categoryId": "position-or-direction",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false
+   }
+  },
+  {
+   "text": "White Wash",
+   "hasPlaceholder": false,
+   "etymology": "[flood-prone land by a river] + [colour: white]",
+   "shape": {
+    "part": "2",
+    "groupId": "wetland",
+    "genericId": "flood-prone-land-by-a-river",
+    "categoryId": "colour",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false
+   }
+  },
+  {
+   "text": "Hermitage of [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "[hermitage, retreat] + [saint or holy person]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-christian",
+    "genericId": "hermitage-retreat",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Dry Hall",
+   "hasPlaceholder": false,
+   "etymology": "[hall] of [quality or condition: dry]",
+   "shape": {
+    "part": "2",
+    "groupId": "dwellings-and-buildings",
+    "genericId": "hall",
+    "categoryId": "quality-or-condition",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false
+   }
+  },
+  {
+   "text": "Tor of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[tor] of [native place name, adapted]",
+   "shape": {
+    "part": "2",
+    "groupId": "mountains-and-rock",
+    "genericId": "tor",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Dyke of [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "[dyke, boundary earthwork] + [saint or holy person]",
+   "shape": {
+    "part": "2",
+    "groupId": "defensive",
+    "genericId": "dyke-boundary-earthwork",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Witch Hollow",
+   "hasPlaceholder": false,
+   "etymology": "[supernatural being: witch] + [corrie]",
+   "shape": {
+    "part": "2",
+    "groupId": "valleys",
+    "genericId": "corrie",
+    "categoryId": "supernatural-being",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "Tribulation Post",
+   "hasPlaceholder": false,
+   "etymology": "[frontier post] of [event or incident: tribulation]",
+   "shape": {
+    "part": "2",
+    "groupId": "military-and-administrative",
+    "genericId": "frontier-post",
+    "categoryId": "event-or-incident",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Catastrophe Gallows",
+   "hasPlaceholder": false,
+   "etymology": "[execution site] of [event or incident: catastrophe]",
+   "shape": {
+    "part": "2",
+    "groupId": "communal-and-legal",
+    "genericId": "execution-site",
+    "categoryId": "event-or-incident",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "[native people] Post",
+   "hasPlaceholder": true,
+   "etymology": "[native people or tribe, adapted] + [frontier post]",
+   "shape": {
+    "part": "2",
+    "groupId": "military-and-administrative",
+    "genericId": "frontier-post",
+    "categoryId": "native-people-or-tribe",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "specific-first"
+   }
+  },
+  {
+   "text": "Post of [native people]",
+   "hasPlaceholder": true,
+   "etymology": "[frontier post] + [native people or tribe, adapted]",
+   "shape": {
+    "part": "2",
+    "groupId": "military-and-administrative",
+    "genericId": "frontier-post",
+    "categoryId": "native-people-or-tribe",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "[holy person] of Red Run",
+   "hasPlaceholder": true,
+   "etymology": "[saint or holy person] of [river or stream name, adopted: Red Run]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-christian",
+    "genericId": "standing-cross",
+    "categoryId": "saint-or-holy-person",
+    "structure": "double-specific",
+    "treatments": {
+     "second": "adopted"
+    },
+    "secondCategoryId": "river-or-stream-name"
+   }
+  },
+  {
+   "text": "Sand Way",
+   "hasPlaceholder": false,
+   "etymology": "[way, track] of [soil or ground: sand]",
+   "shape": {
+    "part": "2",
+    "groupId": "crossings-and-routes",
+    "genericId": "way-track",
+    "categoryId": "soil-or-ground",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Shrine of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[shrine, idol] + [native place name, adapted]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-pre-christian-and-sacred",
+    "genericId": "shrine-idol",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "West of the [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[position or direction: west] of the [native place name, adapted]",
+   "shape": {
+    "part": "2",
+    "groupId": "communal-and-legal",
+    "genericId": "meeting-place",
+    "categoryId": "position-or-direction",
+    "structure": "position-of-landmark",
+    "treatments": {
+     "second": "adapted"
+    },
+    "secondCategoryId": "native-place-name",
+    "translated": false
+   }
+  },
+  {
+   "text": "Great Way of [monarch]",
+   "hasPlaceholder": true,
+   "etymology": "Great [way, track] of [monarch, ruler or dynasty]",
+   "shape": {
+    "part": "2",
+    "groupId": "crossings-and-routes",
+    "genericId": "way-track",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "affix": {
+     "typeId": "size",
+     "form": {
+      "text": "Great",
+      "position": "before"
+     }
+    }
+   }
+  },
+  {
+   "text": "Dry Creek of [explorer]",
+   "hasPlaceholder": true,
+   "etymology": "[dry riverbed] of [explorer or founder]",
+   "shape": {
+    "part": "2",
+    "groupId": "new-landscapes",
+    "genericId": "dry-riverbed",
+    "categoryId": "explorer-or-founder",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Meadow of [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "[hay meadow] + [saint or holy person]",
+   "shape": {
+    "part": "2",
+    "groupId": "open-and-farmed-land",
+    "genericId": "hay-meadow",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Bath of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[bath, spa] of [native place name, adopted]",
+   "shape": {
+    "part": "2",
+    "groupId": "communal-and-legal",
+    "genericId": "bath-spa",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Moot",
+   "hasPlaceholder": false,
+   "etymology": "[meeting place]",
+   "shape": {
+    "part": "2",
+    "groupId": "communal-and-legal",
+    "genericId": "meeting-place",
+    "categoryId": "empty-slot",
+    "structure": "simplex",
+    "treatments": {},
+    "plural": false,
+    "definite": false
+   }
+  }
+ ],
+ "new-land spanish contested 4242": [
+  {
+   "text": "Chase of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[royal hunting ground] + [native place name, adopted]",
+   "shape": {
+    "part": "2",
+    "groupId": "woodland",
+    "genericId": "royal-hunting-ground",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Spring of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[river source, spring-head] of [native place name, adopted]",
+   "shape": {
+    "part": "2",
+    "groupId": "rivers-and-streams",
+    "genericId": "river-source-spring-head",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Post of [conqueror]",
+   "hasPlaceholder": true,
+   "etymology": "[frontier post] + [commander or conqueror]",
+   "shape": {
+    "part": "2",
+    "groupId": "military-and-administrative",
+    "genericId": "frontier-post",
+    "categoryId": "commander-or-conqueror",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Fort [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "[fort] + [saint or holy person]",
+   "shape": {
+    "part": "2",
+    "groupId": "defensive",
+    "genericId": "fort",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "[holy person] of Sweet",
+   "hasPlaceholder": true,
+   "etymology": "[saint or holy person] of [river or stream name, adapted: Sweet]",
+   "shape": {
+    "part": "2",
+    "groupId": "military-and-administrative",
+    "genericId": "frontier-post",
+    "categoryId": "saint-or-holy-person",
+    "structure": "double-specific",
+    "treatments": {
+     "second": "adapted"
+    },
+    "secondCategoryId": "river-or-stream-name"
+   }
+  },
+  {
+   "text": "Lost Camp",
+   "hasPlaceholder": false,
+   "etymology": "[garrison camp] + [event or incident: lost]",
+   "shape": {
+    "part": "2",
+    "groupId": "military-and-administrative",
+    "genericId": "garrison-camp",
+    "categoryId": "event-or-incident",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Great Knoll",
+   "hasPlaceholder": false,
+   "etymology": "[knoll] of [size: great]",
+   "shape": {
+    "part": "2",
+    "groupId": "hills-and-slopes",
+    "genericId": "knoll",
+    "categoryId": "size",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false
+   }
+  },
+  {
+   "text": "Post of [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "[frontier post] + [saint or holy person]",
+   "shape": {
+    "part": "2",
+    "groupId": "military-and-administrative",
+    "genericId": "frontier-post",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Round Heath",
+   "hasPlaceholder": false,
+   "etymology": "[heath] of [river or stream name, adapted: Round]",
+   "shape": {
+    "part": "2",
+    "groupId": "upland-and-open-ground",
+    "genericId": "heath",
+    "categoryId": "river-or-stream-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Christmas Sanctuary",
+   "hasPlaceholder": false,
+   "etymology": "[holy place] of [calendar date or feast: Christmas]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-christian",
+    "genericId": "holy-place",
+    "categoryId": "calendar-date-or-feast",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Discovery Cairn",
+   "hasPlaceholder": false,
+   "etymology": "[cairn] of [event or incident: discovery]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-burial-and-memorial",
+    "genericId": "cairn",
+    "categoryId": "event-or-incident",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "[native place]",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adapted]",
+   "shape": {
+    "part": "2",
+    "groupId": "hills-and-slopes",
+    "genericId": "back-low-ridge",
+    "categoryId": "native-place-name",
+    "structure": "bare-specific",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "definite": false
+   }
+  },
+  {
+   "text": "Twygraveyard",
+   "hasPlaceholder": false,
+   "etymology": "[burial ground, churchyard] + [number: two]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-burial-and-memorial",
+    "genericId": "burial-ground-churchyard",
+    "categoryId": "number",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false
+   }
+  },
+  {
+   "text": "Gravel Clearing",
+   "hasPlaceholder": false,
+   "etymology": "[woodland, then clearing] + [soil or ground: gravel]",
+   "shape": {
+    "part": "2",
+    "groupId": "clearings",
+    "genericId": "woodland-then-clearing",
+    "categoryId": "soil-or-ground",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Prince Outpost of [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "[status or role: prince] [frontier post] of [saint or holy person]",
+   "shape": {
+    "part": "2",
+    "groupId": "military-and-administrative",
+    "genericId": "frontier-post",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "affix": {
+     "typeId": "owner-by-status",
+     "form": {
+      "text": "",
+      "position": "before",
+      "slotCategory": "status-or-role"
+     }
+    }
+   }
+  },
+  {
+   "text": "August of Rough",
+   "hasPlaceholder": false,
+   "etymology": "[honorific title: August] of [river or stream name, adapted: Rough]",
+   "shape": {
+    "part": "2",
+    "groupId": "military-and-administrative",
+    "genericId": "frontier-post",
+    "categoryId": "honorific-title",
+    "structure": "double-specific",
+    "treatments": {
+     "second": "adapted"
+    },
+    "secondCategoryId": "river-or-stream-name"
+   }
+  },
+  {
+   "text": "The Prosperity",
+   "hasPlaceholder": false,
+   "etymology": "The [emotion or aspiration: prosperity]",
+   "shape": {
+    "part": "2",
+    "groupId": "colonial-settlement",
+    "genericId": "crossing",
+    "categoryId": "emotion-or-aspiration",
+    "structure": "bare-specific",
+    "treatments": {},
+    "definite": true
+   }
+  },
+  {
+   "text": "Cliff of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[sea cliff] + [native place name, adapted]",
+   "shape": {
+    "part": "2",
+    "groupId": "coast-and-sea",
+    "genericId": "sea-cliff",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Holy Hermitage",
+   "hasPlaceholder": false,
+   "etymology": "[hermitage, retreat] of [religious association: holy]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-christian",
+    "genericId": "hermitage-retreat",
+    "categoryId": "religious-association",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Grave of [native people]",
+   "hasPlaceholder": true,
+   "etymology": "[grave] + [native people or tribe, adopted]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-burial-and-memorial",
+    "genericId": "grave",
+    "categoryId": "native-people-or-tribe",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-direct"
+   }
+  }
+ ],
+ "new-land spanish contested 987654321": [
+  {
+   "text": "Land of the [native plant]",
+   "hasPlaceholder": true,
+   "etymology": "[land, territory] of [wild plant]",
+   "shape": {
+    "part": "2",
+    "groupId": "territories",
+    "genericId": "land-territory",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false
+   }
+  },
+  {
+   "text": "[native bird] Island",
+   "hasPlaceholder": true,
+   "etymology": "[dry ground in wet land] of [bird]",
+   "shape": {
+    "part": "2",
+    "groupId": "islands-and-river-land",
+    "genericId": "dry-ground-in-wet-land",
+    "categoryId": "bird",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false
+   }
+  },
+  {
+   "text": "Westmoot",
+   "hasPlaceholder": false,
+   "etymology": "[meeting place] of [position or direction: west]",
+   "shape": {
+    "part": "2",
+    "groupId": "communal-and-legal",
+    "genericId": "meeting-place",
+    "categoryId": "position-or-direction",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false
+   }
+  },
+  {
+   "text": "House of [homeland place name]",
+   "hasPlaceholder": true,
+   "etymology": "[house] of [homeland place name]",
+   "shape": {
+    "part": "2",
+    "groupId": "dwellings-and-buildings",
+    "genericId": "house",
+    "categoryId": "homeland-place-name",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Old Greenpool",
+   "hasPlaceholder": false,
+   "etymology": "Old [pool] + [colour: green]",
+   "shape": {
+    "part": "2",
+    "groupId": "springs-pools-and-lakes",
+    "genericId": "pool",
+    "categoryId": "colour",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false,
+    "affix": {
+     "typeId": "age",
+     "form": {
+      "text": "Old",
+      "position": "before"
+     }
+    }
+   }
+  },
+  {
+   "text": "Corpus Christi Church",
+   "hasPlaceholder": false,
+   "etymology": "[church] + [calendar date or feast: Corpus Christi]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-christian",
+    "genericId": "church",
+    "categoryId": "calendar-date-or-feast",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Fold of [patron]",
+   "hasPlaceholder": true,
+   "etymology": "[animal fold] of [official, patron or sponsor]",
+   "shape": {
+    "part": "2",
+    "groupId": "open-and-farmed-land",
+    "genericId": "animal-fold",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Meadow of [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "[hay meadow] of [saint or holy person]",
+   "shape": {
+    "part": "2",
+    "groupId": "open-and-farmed-land",
+    "genericId": "hay-meadow",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Boundary",
+   "hasPlaceholder": false,
+   "etymology": "[boundary]",
+   "shape": {
+    "part": "2",
+    "groupId": "communal-and-legal",
+    "genericId": "boundary",
+    "categoryId": "empty-slot",
+    "structure": "simplex",
+    "treatments": {},
+    "plural": false,
+    "definite": false
+   }
+  },
+  {
+   "text": "Great Earthwork of [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "Great [dyke, boundary earthwork] + [saint or holy person]",
+   "shape": {
+    "part": "2",
+    "groupId": "defensive",
+    "genericId": "dyke-boundary-earthwork",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "affix": {
+     "typeId": "size",
+     "form": {
+      "text": "Great",
+      "position": "before"
+     }
+    }
+   }
+  },
+  {
+   "text": "Valley of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[small enclosed side valley] + [native place name, adapted]",
+   "shape": {
+    "part": "2",
+    "groupId": "valleys",
+    "genericId": "small-enclosed-side-valley",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "Moor of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[upland moor] + [native place name, adopted]",
+   "shape": {
+    "part": "2",
+    "groupId": "upland-and-open-ground",
+    "genericId": "upland-moor",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "[holy person] of [native people]",
+   "hasPlaceholder": true,
+   "etymology": "[saint or holy person] of [native people or tribe, adopted]",
+   "shape": {
+    "part": "2",
+    "groupId": "religious-burial-and-memorial",
+    "genericId": "burial-mound",
+    "categoryId": "saint-or-holy-person",
+    "structure": "double-specific",
+    "treatments": {
+     "second": "adopted"
+    },
+    "secondCategoryId": "native-people-or-tribe"
+   }
+  },
+  {
+   "text": "Fort of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[fortified place, stronghold] of [native place name, adopted]",
+   "shape": {
+    "part": "2",
+    "groupId": "defensive",
+    "genericId": "fortified-place-stronghold",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Mound Hall",
+   "hasPlaceholder": false,
+   "etymology": "[hall] of [landform: mound]",
+   "shape": {
+    "part": "2",
+    "groupId": "dwellings-and-buildings",
+    "genericId": "hall",
+    "categoryId": "landform",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Clearing of the [native tree]",
+   "hasPlaceholder": true,
+   "etymology": "[woodland, then clearing] of [tree]",
+   "shape": {
+    "part": "2",
+    "groupId": "clearings",
+    "genericId": "woodland-then-clearing",
+    "categoryId": "tree",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false
+   }
+  },
+  {
+   "text": "Corner of [personal name]",
+   "hasPlaceholder": true,
+   "etymology": "[corner, projecting piece of land] + [personal name]",
+   "shape": {
+    "part": "2",
+    "groupId": "hollows-and-corners",
+    "genericId": "corner-projecting-piece-of-land",
+    "categoryId": "personal-name",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct"
+   }
+  },
+  {
+   "text": "North Beacon",
+   "hasPlaceholder": false,
+   "etymology": "[beacon] of [position or direction: north]",
+   "shape": {
+    "part": "2",
+    "groupId": "defensive",
+    "genericId": "beacon",
+    "categoryId": "position-or-direction",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false
+   }
+  },
+  {
+   "text": "Estate of [personal name]",
+   "hasPlaceholder": true,
+   "etymology": "[estate, manor centre] of [personal name]",
+   "shape": {
+    "part": "2",
+    "groupId": "settlement-farms-and-estates",
+    "genericId": "estate-manor-centre",
+    "categoryId": "personal-name",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked"
+   }
+  },
+  {
+   "text": "Clean Stream",
+   "hasPlaceholder": false,
+   "etymology": "[quality or condition: clean] + [stream with its valley]",
+   "shape": {
+    "part": "2",
+    "groupId": "rivers-and-streams",
+    "genericId": "stream-with-its-valley",
+    "categoryId": "quality-or-condition",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false
+   }
+  }
+ ],
+ "established general 1": [
+  {
+   "text": "Roundown",
+   "hasPlaceholder": false,
+   "etymology": "[low level-topped hill] of [shape: round]",
+   "shape": {
+    "part": "2a",
+    "groupId": "hills-and-slopes",
+    "genericId": "low-level-topped-hill",
+    "categoryId": "shape",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Good Hope Glen",
+   "hasPlaceholder": false,
+   "etymology": "[emotion or aspiration: good hope] + [narrow valley, glen]",
+   "shape": {
+    "part": "2a",
+    "groupId": "valleys",
+    "genericId": "narrow-valley-glen",
+    "categoryId": "emotion-or-aspiration",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Fort [royal woman]",
+   "hasPlaceholder": true,
+   "etymology": "[fort] + [royal woman]",
+   "shape": {
+    "part": "2a",
+    "groupId": "defensive",
+    "genericId": "fort",
+    "categoryId": "royal-woman",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Deep Grave",
+   "hasPlaceholder": false,
+   "etymology": "[quality or condition: deep] + [grave]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-burial-and-memorial",
+    "genericId": "grave",
+    "categoryId": "quality-or-condition",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[monarch] Barrow",
+   "hasPlaceholder": true,
+   "etymology": "[monarch, ruler or dynasty] + [burial mound]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-burial-and-memorial",
+    "genericId": "burial-mound",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[explorer] [local settlement word]",
+   "hasPlaceholder": true,
+   "etymology": "[explorer or founder] + [local settlement word]",
+   "shape": {
+    "part": "2a",
+    "groupId": "local-generics",
+    "genericId": "local-settlement-word",
+    "categoryId": "explorer-or-founder",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "hybrid"
+   }
+  },
+  {
+   "text": "[native place] Grove",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adopted] + [sacred grove]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-pre-christian-and-sacred",
+    "genericId": "sacred-grove",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "specific-first",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "Concord Camp",
+   "hasPlaceholder": false,
+   "etymology": "[imperial claim: concord] + [garrison camp]",
+   "shape": {
+    "part": "2a",
+    "groupId": "military-and-administrative",
+    "genericId": "garrison-camp",
+    "categoryId": "imperial-claim",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[patron] Dry Creek [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "[official, patron or sponsor] + [dry riverbed] [saint or holy person]",
+   "shape": {
+    "part": "2a",
+    "groupId": "new-landscapes",
+    "genericId": "dry-riverbed",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "affix": {
+     "typeId": "dedication",
+     "form": {
+      "text": "",
+      "position": "after",
+      "slotCategory": "saint-or-holy-person"
+     }
+    },
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[native place] Civil Lines",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adapted] + [civil lines]",
+   "shape": {
+    "part": "2a",
+    "groupId": "military-and-administrative",
+    "genericId": "civil-lines",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "specific-first",
+    "renamingType": "hybrid"
+   }
+  },
+  {
+   "text": "White Cross",
+   "hasPlaceholder": false,
+   "etymology": "[river or stream name, adopted: White] + [standing cross]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-christian",
+    "genericId": "standing-cross",
+    "categoryId": "river-or-stream-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "specific-first",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "Gallows",
+   "hasPlaceholder": false,
+   "etymology": "[execution site]",
+   "shape": {
+    "part": "2a",
+    "groupId": "communal-and-legal",
+    "genericId": "execution-site",
+    "categoryId": "empty-slot",
+    "structure": "simplex",
+    "treatments": {},
+    "plural": false,
+    "definite": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "West Cantonment",
+   "hasPlaceholder": false,
+   "etymology": "[cantonment] of [position or direction: west]",
+   "shape": {
+    "part": "2a",
+    "groupId": "military-and-administrative",
+    "genericId": "cantonment",
+    "categoryId": "position-or-direction",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Broad Tor",
+   "hasPlaceholder": false,
+   "etymology": "[shape: broad] + [tor] (translated native name)",
+   "shape": {
+    "part": "2a",
+    "groupId": "mountains-and-rock",
+    "genericId": "tor",
+    "categoryId": "shape",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": true,
+    "renamingType": "translated"
+   }
+  },
+  {
+   "text": "[native bird] Crag",
+   "hasPlaceholder": true,
+   "etymology": "[bird] + [crag]",
+   "shape": {
+    "part": "2a",
+    "groupId": "mountains-and-rock",
+    "genericId": "crag",
+    "categoryId": "bird",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Troy Wall",
+   "hasPlaceholder": false,
+   "etymology": "[classical, biblical or legendary name: Troy] + [wall]",
+   "shape": {
+    "part": "2a",
+    "groupId": "defensive",
+    "genericId": "wall",
+    "categoryId": "classical-biblical-or-legendary-name",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Stream Village",
+   "hasPlaceholder": false,
+   "etymology": "[village] + [water or wetland feature: stream]",
+   "shape": {
+    "part": "2a",
+    "groupId": "settlement-farms-and-estates",
+    "genericId": "village",
+    "categoryId": "water-or-wetland-feature",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Great Mill of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "Great [mill] + [native place name, adopted]",
+   "shape": {
+    "part": "2a",
+    "groupId": "industry-and-trade",
+    "genericId": "mill",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-direct",
+    "affix": {
+     "typeId": "size",
+     "form": {
+      "text": "Great",
+      "position": "before"
+     }
+    },
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "Chase of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[royal hunting ground] of [native place name, adapted]",
+   "shape": {
+    "part": "2a",
+    "groupId": "woodland",
+    "genericId": "royal-hunting-ground",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-linked",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "Farcastle",
+   "hasPlaceholder": false,
+   "etymology": "[position or direction: far] + [castle]",
+   "shape": {
+    "part": "2a",
+    "groupId": "defensive",
+    "genericId": "castle",
+    "categoryId": "position-or-direction",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  }
+ ],
+ "established general 4242": [
+  {
+   "text": "[native place] Chase",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adopted] + [royal hunting ground]",
+   "shape": {
+    "part": "2a",
+    "groupId": "woodland",
+    "genericId": "royal-hunting-ground",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "specific-first",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "[patron] Spring",
+   "hasPlaceholder": true,
+   "etymology": "[official, patron or sponsor] + [river source, spring-head]",
+   "shape": {
+    "part": "2a",
+    "groupId": "rivers-and-streams",
+    "genericId": "river-source-spring-head",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[patron] Camp",
+   "hasPlaceholder": true,
+   "etymology": "[official, patron or sponsor] + [garrison camp]",
+   "shape": {
+    "part": "2a",
+    "groupId": "military-and-administrative",
+    "genericId": "garrison-camp",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Hill Fort",
+   "hasPlaceholder": false,
+   "etymology": "[fort] + [landform: hill]",
+   "shape": {
+    "part": "2a",
+    "groupId": "defensive",
+    "genericId": "fort",
+    "categoryId": "landform",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Grove of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[grove, small wood] of [native place name, adopted]",
+   "shape": {
+    "part": "2a",
+    "groupId": "woodland",
+    "genericId": "grove-small-wood",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-linked",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "[native place]",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adopted]",
+   "shape": {
+    "part": "2a",
+    "groupId": "upland-and-open-ground",
+    "genericId": "upland-moor",
+    "categoryId": "native-place-name",
+    "structure": "bare-specific",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "definite": false,
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "Flax Pasture",
+   "hasPlaceholder": false,
+   "etymology": "[woodland swine pasture] + [crop: flax]",
+   "shape": {
+    "part": "2a",
+    "groupId": "clearings",
+    "genericId": "woodland-swine-pasture",
+    "categoryId": "crop",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Newprovince",
+   "hasPlaceholder": false,
+   "etymology": "[age: new] + [province, kingdom]",
+   "shape": {
+    "part": "2a",
+    "groupId": "territories",
+    "genericId": "province-kingdom",
+    "categoryId": "age",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Oasis of [patron]",
+   "hasPlaceholder": true,
+   "etymology": "[oasis] + [official, patron or sponsor]",
+   "shape": {
+    "part": "2a",
+    "groupId": "new-landscapes",
+    "genericId": "oasis",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Sanctuary of [founder]",
+   "hasPlaceholder": true,
+   "etymology": "[holy place] of [explorer or founder]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-christian",
+    "genericId": "holy-place",
+    "categoryId": "explorer-or-founder",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[monarch] Orchard",
+   "hasPlaceholder": true,
+   "etymology": "[monarch, ruler or dynasty] + [orchard]",
+   "shape": {
+    "part": "2a",
+    "groupId": "open-and-farmed-land",
+    "genericId": "orchard",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Round Wold",
+   "hasPlaceholder": false,
+   "etymology": "[wold] + [river or stream name, adopted: Round]",
+   "shape": {
+    "part": "2a",
+    "groupId": "upland-and-open-ground",
+    "genericId": "wold",
+    "categoryId": "river-or-stream-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-direct",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "[native plant] Heath",
+   "hasPlaceholder": true,
+   "etymology": "[heath] of [wild plant]",
+   "shape": {
+    "part": "2a",
+    "groupId": "upland-and-open-ground",
+    "genericId": "heath",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Civil Lines",
+   "hasPlaceholder": false,
+   "etymology": "[civil lines]",
+   "shape": {
+    "part": "2a",
+    "groupId": "military-and-administrative",
+    "genericId": "civil-lines",
+    "categoryId": "empty-slot",
+    "structure": "simplex",
+    "treatments": {},
+    "plural": false,
+    "definite": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Village of [native place] [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "[village] + [native place name, adapted] [saint or holy person]",
+   "shape": {
+    "part": "2a",
+    "groupId": "settlement-farms-and-estates",
+    "genericId": "village",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-direct",
+    "affix": {
+     "typeId": "dedication",
+     "form": {
+      "text": "",
+      "position": "after",
+      "slotCategory": "saint-or-holy-person"
+     }
+    },
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "South Corner",
+   "hasPlaceholder": false,
+   "etymology": "South [corner, angle]",
+   "shape": {
+    "part": "2a",
+    "groupId": "hollows-and-corners",
+    "genericId": "corner-angle",
+    "categoryId": "empty-slot",
+    "structure": "simplex",
+    "treatments": {},
+    "plural": false,
+    "definite": false,
+    "affix": {
+     "typeId": "position",
+     "form": {
+      "text": "South",
+      "position": "before"
+     }
+    },
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[native place] Civil Lines",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adapted] + [civil lines]",
+   "shape": {
+    "part": "2a",
+    "groupId": "military-and-administrative",
+    "genericId": "civil-lines",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "specific-first",
+    "renamingType": "hybrid"
+   }
+  },
+  {
+   "text": "[ruler] Kiln",
+   "hasPlaceholder": true,
+   "etymology": "[monarch, ruler or dynasty] + [kiln]",
+   "shape": {
+    "part": "2a",
+    "groupId": "industry-and-trade",
+    "genericId": "kiln",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "North of the [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[position or direction: north] of the [native place name, adopted] (translated native name)",
+   "shape": {
+    "part": "2a",
+    "groupId": "military-and-administrative",
+    "genericId": "garrison-camp",
+    "categoryId": "position-or-direction",
+    "structure": "position-of-landmark",
+    "treatments": {
+     "second": "adopted"
+    },
+    "secondCategoryId": "native-place-name",
+    "translated": true,
+    "renamingType": "translated"
+   }
+  },
+  {
+   "text": "Middle Hut",
+   "hasPlaceholder": false,
+   "etymology": "[position or direction: middle] + [hut, temporary shelter]",
+   "shape": {
+    "part": "2a",
+    "groupId": "dwellings-and-buildings",
+    "genericId": "hut-temporary-shelter",
+    "categoryId": "position-or-direction",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  }
+ ],
+ "established general 987654321": [
+  {
+   "text": "[holy person] Plains",
+   "hasPlaceholder": true,
+   "etymology": "[saint or holy person] + [plain, grassland]",
+   "shape": {
+    "part": "2a",
+    "groupId": "new-landscapes",
+    "genericId": "plain-grassland",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Little Hall of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "Little [lord’s hall] of [native place name, adopted]",
+   "shape": {
+    "part": "2a",
+    "groupId": "lordship-and-authority",
+    "genericId": "lords-hall",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-linked",
+    "affix": {
+     "typeId": "size",
+     "form": {
+      "text": "Little",
+      "position": "before"
+     }
+    },
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "[patron]",
+   "hasPlaceholder": true,
+   "etymology": "[official, patron or sponsor]",
+   "shape": {
+    "part": "2a",
+    "groupId": "local-generics",
+    "genericId": "local-settlement-word",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "bare-specific",
+    "treatments": {},
+    "definite": false,
+    "renamingType": "hybrid"
+   }
+  },
+  {
+   "text": "Head",
+   "hasPlaceholder": false,
+   "etymology": "[valley head]",
+   "shape": {
+    "part": "2a",
+    "groupId": "hollows-and-corners",
+    "genericId": "valley-head",
+    "categoryId": "empty-slot",
+    "structure": "simplex",
+    "treatments": {},
+    "plural": false,
+    "definite": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[native plant] Spring",
+   "hasPlaceholder": true,
+   "etymology": "[wild plant] + [spring, well]",
+   "shape": {
+    "part": "2a",
+    "groupId": "springs-pools-and-lakes",
+    "genericId": "spring-well",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[local deity] Temple",
+   "hasPlaceholder": true,
+   "etymology": "[local deity] + [heathen temple]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-pre-christian-and-sacred",
+    "genericId": "heathen-temple",
+    "categoryId": "local-deity",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "German Dyke",
+   "hasPlaceholder": false,
+   "etymology": "[dyke, boundary earthwork] + [settler group: German]",
+   "shape": {
+    "part": "2a",
+    "groupId": "defensive",
+    "genericId": "dyke-boundary-earthwork",
+    "categoryId": "settler-group",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[patron] Ridge",
+   "hasPlaceholder": true,
+   "etymology": "[official, patron or sponsor] + [back, low ridge]",
+   "shape": {
+    "part": "2a",
+    "groupId": "hills-and-slopes",
+    "genericId": "back-low-ridge",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Fisher Farmland",
+   "hasPlaceholder": false,
+   "etymology": "[activity: fisher] + [arable field]",
+   "shape": {
+    "part": "2a",
+    "groupId": "open-and-farmed-land",
+    "genericId": "arable-field",
+    "categoryId": "activity",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Abbot Court",
+   "hasPlaceholder": false,
+   "etymology": "[status or role: abbot] + [royal or lordly court]",
+   "shape": {
+    "part": "2a",
+    "groupId": "lordship-and-authority",
+    "genericId": "royal-or-lordly-court",
+    "categoryId": "status-or-role",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[native place] Field",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adopted] + [open country]",
+   "shape": {
+    "part": "2a",
+    "groupId": "open-and-farmed-land",
+    "genericId": "open-country",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "specific-first",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "[native place] Valley",
+   "hasPlaceholder": true,
+   "etymology": "[native place name, adapted] + [small enclosed side valley]",
+   "shape": {
+    "part": "2a",
+    "groupId": "valleys",
+    "genericId": "small-enclosed-side-valley",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "specific-first",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "Mount [official]",
+   "hasPlaceholder": true,
+   "etymology": "[mountain] + [official, patron or sponsor]",
+   "shape": {
+    "part": "2a",
+    "groupId": "mountains-and-rock",
+    "genericId": "mountain",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "North Grove",
+   "hasPlaceholder": false,
+   "etymology": "North [sacred grove]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-pre-christian-and-sacred",
+    "genericId": "sacred-grove",
+    "categoryId": "empty-slot",
+    "structure": "simplex",
+    "treatments": {},
+    "plural": false,
+    "definite": false,
+    "affix": {
+     "typeId": "position",
+     "form": {
+      "text": "North",
+      "position": "before"
+     }
+    },
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[commander] Grave",
+   "hasPlaceholder": true,
+   "etymology": "[commander or conqueror] + [grave]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-burial-and-memorial",
+    "genericId": "grave",
+    "categoryId": "commander-or-conqueror",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Old Hall",
+   "hasPlaceholder": false,
+   "etymology": "[hall] of [age: old]",
+   "shape": {
+    "part": "2a",
+    "groupId": "dwellings-and-buildings",
+    "genericId": "hall",
+    "categoryId": "age",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Oldhall",
+   "hasPlaceholder": false,
+   "etymology": "[age: old] + [hall]",
+   "shape": {
+    "part": "2a",
+    "groupId": "dwellings-and-buildings",
+    "genericId": "hall",
+    "categoryId": "age",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[holy person] Corner",
+   "hasPlaceholder": true,
+   "etymology": "[saint or holy person] + [corner, projecting piece of land]",
+   "shape": {
+    "part": "2a",
+    "groupId": "hollows-and-corners",
+    "genericId": "corner-projecting-piece-of-land",
+    "categoryId": "saint-or-holy-person",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "East Little Peak",
+   "hasPlaceholder": false,
+   "etymology": "East [size: little] + [sharp peak]",
+   "shape": {
+    "part": "2a",
+    "groupId": "mountains-and-rock",
+    "genericId": "sharp-peak",
+    "categoryId": "size",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "affix": {
+     "typeId": "position",
+     "form": {
+      "text": "East",
+      "position": "before"
+     }
+    },
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Trading Post",
+   "hasPlaceholder": false,
+   "etymology": "[trading post]",
+   "shape": {
+    "part": "2a",
+    "groupId": "colonial-settlement",
+    "genericId": "trading-post",
+    "categoryId": "empty-slot",
+    "structure": "simplex",
+    "treatments": {},
+    "plural": false,
+    "definite": false,
+    "renamingType": "replacement"
+   }
+  }
+ ],
+ "established roman imposition 1": [
+  {
+   "text": "Roundown",
+   "hasPlaceholder": false,
+   "etymology": "[low level-topped hill] of [shape: round]",
+   "shape": {
+    "part": "2a",
+    "groupId": "hills-and-slopes",
+    "genericId": "low-level-topped-hill",
+    "categoryId": "shape",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Good Hope Glen",
+   "hasPlaceholder": false,
+   "etymology": "[narrow valley, glen] + [emotion or aspiration: good hope]",
+   "shape": {
+    "part": "2a",
+    "groupId": "valleys",
+    "genericId": "narrow-valley-glen",
+    "categoryId": "emotion-or-aspiration",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Court of [monarch]",
+   "hasPlaceholder": true,
+   "etymology": "[royal or lordly court] + [monarch, ruler or dynasty]",
+   "shape": {
+    "part": "2a",
+    "groupId": "lordship-and-authority",
+    "genericId": "royal-or-lordly-court",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Deep Hall",
+   "hasPlaceholder": false,
+   "etymology": "[hall] of [quality or condition: deep]",
+   "shape": {
+    "part": "2a",
+    "groupId": "dwellings-and-buildings",
+    "genericId": "hall",
+    "categoryId": "quality-or-condition",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Tor of [patron]",
+   "hasPlaceholder": true,
+   "etymology": "[tor] of [official, patron or sponsor]",
+   "shape": {
+    "part": "2a",
+    "groupId": "mountains-and-rock",
+    "genericId": "tor",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Mound Manor",
+   "hasPlaceholder": false,
+   "etymology": "[manor house] + [landform: mound]",
+   "shape": {
+    "part": "2a",
+    "groupId": "lordship-and-authority",
+    "genericId": "manor-house",
+    "categoryId": "landform",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Regal Court",
+   "hasPlaceholder": false,
+   "etymology": "[royal or lordly court] + [honorific title: Regal]",
+   "shape": {
+    "part": "2a",
+    "groupId": "lordship-and-authority",
+    "genericId": "royal-or-lordly-court",
+    "categoryId": "honorific-title",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Cottage of [patron]",
+   "hasPlaceholder": true,
+   "etymology": "[cottage] of [official, patron or sponsor]",
+   "shape": {
+    "part": "2a",
+    "groupId": "dwellings-and-buildings",
+    "genericId": "cottage",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Bath of [local deity]",
+   "hasPlaceholder": true,
+   "etymology": "[bath, spa] of [local deity]",
+   "shape": {
+    "part": "2a",
+    "groupId": "communal-and-legal",
+    "genericId": "bath-spa",
+    "categoryId": "local-deity",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[native people] Camp",
+   "hasPlaceholder": true,
+   "etymology": "[native people or tribe, adapted] + [garrison camp]",
+   "shape": {
+    "part": "2a",
+    "groupId": "military-and-administrative",
+    "genericId": "garrison-camp",
+    "categoryId": "native-people-or-tribe",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "specific-first",
+    "renamingType": "hybrid"
+   }
+  },
+  {
+   "text": "Camp of [native people]",
+   "hasPlaceholder": true,
+   "etymology": "[garrison camp] + [native people or tribe, adapted]",
+   "shape": {
+    "part": "2a",
+    "groupId": "military-and-administrative",
+    "genericId": "garrison-camp",
+    "categoryId": "native-people-or-tribe",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-direct",
+    "renamingType": "hybrid"
+   }
+  },
+  {
+   "text": "Well",
+   "hasPlaceholder": false,
+   "etymology": "[holy spring]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-pre-christian-and-sacred",
+    "genericId": "holy-spring",
+    "categoryId": "empty-slot",
+    "structure": "simplex",
+    "treatments": {},
+    "plural": false,
+    "definite": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Cold Spring",
+   "hasPlaceholder": false,
+   "etymology": "[quality or condition: cold] + [river source, spring-head]",
+   "shape": {
+    "part": "2a",
+    "groupId": "rivers-and-streams",
+    "genericId": "river-source-spring-head",
+    "categoryId": "quality-or-condition",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Moot",
+   "hasPlaceholder": false,
+   "etymology": "[meeting place]",
+   "shape": {
+    "part": "2a",
+    "groupId": "communal-and-legal",
+    "genericId": "meeting-place",
+    "categoryId": "empty-slot",
+    "structure": "simplex",
+    "treatments": {},
+    "plural": false,
+    "definite": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Broad Tor",
+   "hasPlaceholder": false,
+   "etymology": "[tor] + [shape: broad]",
+   "shape": {
+    "part": "2a",
+    "groupId": "mountains-and-rock",
+    "genericId": "tor",
+    "categoryId": "shape",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Red Heath",
+   "hasPlaceholder": false,
+   "etymology": "[heath] of [river or stream name, adopted: Red]",
+   "shape": {
+    "part": "2a",
+    "groupId": "upland-and-open-ground",
+    "genericId": "heath",
+    "categoryId": "river-or-stream-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-linked",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "[patron]'s Manor",
+   "hasPlaceholder": true,
+   "etymology": "[official, patron or sponsor]'s + [manor house]",
+   "shape": {
+    "part": "2a",
+    "groupId": "lordship-and-authority",
+    "genericId": "manor-house",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "possessive",
+    "treatments": {},
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Hill Village",
+   "hasPlaceholder": false,
+   "etymology": "[village] of [landform: hill]",
+   "shape": {
+    "part": "2a",
+    "groupId": "settlement-farms-and-estates",
+    "genericId": "village",
+    "categoryId": "landform",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Irish Mill",
+   "hasPlaceholder": false,
+   "etymology": "[mill] of [settler group: Irish]",
+   "shape": {
+    "part": "2a",
+    "groupId": "industry-and-trade",
+    "genericId": "mill",
+    "categoryId": "settler-group",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Head Fort",
+   "hasPlaceholder": false,
+   "etymology": "[fortified place, stronghold] of [landform: head]",
+   "shape": {
+    "part": "2a",
+    "groupId": "defensive",
+    "genericId": "fortified-place-stronghold",
+    "categoryId": "landform",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  }
+ ],
+ "established roman imposition 4242": [
+  {
+   "text": "Chase of [native place]",
+   "hasPlaceholder": true,
+   "etymology": "[royal hunting ground] + [native place name, adopted]",
+   "shape": {
+    "part": "2a",
+    "groupId": "woodland",
+    "genericId": "royal-hunting-ground",
+    "categoryId": "native-place-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-direct",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "Spring of [ruler]",
+   "hasPlaceholder": true,
+   "etymology": "[river source, spring-head] of [monarch, ruler or dynasty]",
+   "shape": {
+    "part": "2a",
+    "groupId": "rivers-and-streams",
+    "genericId": "river-source-spring-head",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Great Grey-Brown Creek Beacon",
+   "hasPlaceholder": false,
+   "etymology": "Great [beacon] + [river or stream name, adopted: Grey-Brown Creek]",
+   "shape": {
+    "part": "2a",
+    "groupId": "defensive",
+    "genericId": "beacon",
+    "categoryId": "river-or-stream-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-direct",
+    "affix": {
+     "typeId": "size",
+     "form": {
+      "text": "Great",
+      "position": "before"
+     }
+    },
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "Castle of [ruler] [holy person]",
+   "hasPlaceholder": true,
+   "etymology": "[castle] + [monarch, ruler or dynasty] [saint or holy person]",
+   "shape": {
+    "part": "2a",
+    "groupId": "defensive",
+    "genericId": "castle",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "affix": {
+     "typeId": "dedication",
+     "form": {
+      "text": "",
+      "position": "after",
+      "slotCategory": "saint-or-holy-person"
+     }
+    },
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Upper Broad Crag",
+   "hasPlaceholder": false,
+   "etymology": "Upper [shape: broad] + [crag]",
+   "shape": {
+    "part": "2a",
+    "groupId": "mountains-and-rock",
+    "genericId": "crag",
+    "categoryId": "shape",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "affix": {
+     "typeId": "position",
+     "form": {
+      "text": "Upper",
+      "position": "before"
+     }
+    },
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Cold Farmland",
+   "hasPlaceholder": false,
+   "etymology": "[arable field] of [quality or condition: cold]",
+   "shape": {
+    "part": "2a",
+    "groupId": "open-and-farmed-land",
+    "genericId": "arable-field",
+    "categoryId": "quality-or-condition",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Imperial [local settlement word]",
+   "hasPlaceholder": true,
+   "etymology": "[local settlement word] + [honorific title: Imperial]",
+   "shape": {
+    "part": "2a",
+    "groupId": "local-generics",
+    "genericId": "local-settlement-word",
+    "categoryId": "honorific-title",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "hybrid"
+   }
+  },
+  {
+   "text": "Round Heath",
+   "hasPlaceholder": false,
+   "etymology": "[heath] of [river or stream name, adapted: Round]",
+   "shape": {
+    "part": "2a",
+    "groupId": "upland-and-open-ground",
+    "genericId": "heath",
+    "categoryId": "river-or-stream-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adapted"
+    },
+    "wordOrder": "generic-first-linked",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "Port [explorer]",
+   "hasPlaceholder": true,
+   "etymology": "[market town, harbour] of [explorer or founder]",
+   "shape": {
+    "part": "2a",
+    "groupId": "industry-and-trade",
+    "genericId": "market-town-harbour",
+    "categoryId": "explorer-or-founder",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Long Orchard",
+   "hasPlaceholder": false,
+   "etymology": "[orchard] of [shape: long]",
+   "shape": {
+    "part": "2a",
+    "groupId": "open-and-farmed-land",
+    "genericId": "orchard",
+    "categoryId": "shape",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Summer Estate",
+   "hasPlaceholder": false,
+   "etymology": "[estate, manor centre] of [season: summer]",
+   "shape": {
+    "part": "2a",
+    "groupId": "settlement-farms-and-estates",
+    "genericId": "estate-manor-centre",
+    "categoryId": "season",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Lower Meadow",
+   "hasPlaceholder": false,
+   "etymology": "[water meadow] of [position or direction: lower]",
+   "shape": {
+    "part": "2a",
+    "groupId": "islands-and-river-land",
+    "genericId": "water-meadow",
+    "categoryId": "position-or-direction",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[sponsor] [local settlement word]",
+   "hasPlaceholder": true,
+   "etymology": "[official, patron or sponsor] + [local settlement word]",
+   "shape": {
+    "part": "2a",
+    "groupId": "local-generics",
+    "genericId": "local-settlement-word",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "hybrid"
+   }
+  },
+  {
+   "text": "[native wild animal] Mouth",
+   "hasPlaceholder": true,
+   "etymology": "[river mouth] of [wild animal]",
+   "shape": {
+    "part": "2a",
+    "groupId": "rivers-and-streams",
+    "genericId": "river-mouth",
+    "categoryId": "wild-animal",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Ford of [official]",
+   "hasPlaceholder": true,
+   "etymology": "[river crossing] of [official, patron or sponsor]",
+   "shape": {
+    "part": "2a",
+    "groupId": "crossings-and-routes",
+    "genericId": "river-crossing",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Court of [ruler]",
+   "hasPlaceholder": true,
+   "etymology": "[royal or lordly court] of [monarch, ruler or dynasty]",
+   "shape": {
+    "part": "2a",
+    "groupId": "lordship-and-authority",
+    "genericId": "royal-or-lordly-court",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Cairn of [founder]",
+   "hasPlaceholder": true,
+   "etymology": "[cairn] of [explorer or founder]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-burial-and-memorial",
+    "genericId": "cairn",
+    "categoryId": "explorer-or-founder",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Golden Mountain",
+   "hasPlaceholder": false,
+   "etymology": "[mountain] of [colour: golden]",
+   "shape": {
+    "part": "2a",
+    "groupId": "mountains-and-rock",
+    "genericId": "mountain",
+    "categoryId": "colour",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Barley Hall-by-Bright",
+   "hasPlaceholder": false,
+   "etymology": "[crop: barley] + [hall] by [river or stream name: Bright]",
+   "shape": {
+    "part": "2a",
+    "groupId": "dwellings-and-buildings",
+    "genericId": "hall",
+    "categoryId": "crop",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "affix": {
+     "typeId": "location",
+     "form": {
+      "text": "by",
+      "position": "after",
+      "slotCategory": "river-or-stream-name"
+     }
+    },
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Shrine of [monarch]",
+   "hasPlaceholder": true,
+   "etymology": "[shrine, idol] of [monarch, ruler or dynasty]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-pre-christian-and-sacred",
+    "genericId": "shrine-idol",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  }
+ ],
+ "established roman imposition 987654321": [
+  {
+   "text": "Land of the [native plant]",
+   "hasPlaceholder": true,
+   "etymology": "[land, territory] of [wild plant]",
+   "shape": {
+    "part": "2a",
+    "groupId": "territories",
+    "genericId": "land-territory",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[native plant] Island",
+   "hasPlaceholder": true,
+   "etymology": "[dry ground in wet land] of [wild plant]",
+   "shape": {
+    "part": "2a",
+    "groupId": "islands-and-river-land",
+    "genericId": "dry-ground-in-wet-land",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Westmoot",
+   "hasPlaceholder": false,
+   "etymology": "[meeting place] of [position or direction: west]",
+   "shape": {
+    "part": "2a",
+    "groupId": "communal-and-legal",
+    "genericId": "meeting-place",
+    "categoryId": "position-or-direction",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Farmstead of [homeland place name]",
+   "hasPlaceholder": true,
+   "etymology": "[enclosed farmstead] of [homeland place name]",
+   "shape": {
+    "part": "2a",
+    "groupId": "settlement-farms-and-estates",
+    "genericId": "enclosed-farmstead",
+    "categoryId": "homeland-place-name",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "North [native plant] Marsh",
+   "hasPlaceholder": true,
+   "etymology": "North [brushwood marsh, carr] + [wild plant]",
+   "shape": {
+    "part": "2a",
+    "groupId": "wetland",
+    "genericId": "brushwood-marsh-carr",
+    "categoryId": "wild-plant",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false,
+    "affix": {
+     "typeId": "position",
+     "form": {
+      "text": "North",
+      "position": "before"
+     }
+    },
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[colonial deity] Temple",
+   "hasPlaceholder": true,
+   "etymology": "[colonial deity] + [heathen temple]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-pre-christian-and-sacred",
+    "genericId": "heathen-temple",
+    "categoryId": "colonial-deity",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Imperial Manor",
+   "hasPlaceholder": false,
+   "etymology": "[manor house] + [honorific title: Imperial]",
+   "shape": {
+    "part": "2a",
+    "groupId": "lordship-and-authority",
+    "genericId": "manor-house",
+    "categoryId": "honorific-title",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "South Bog",
+   "hasPlaceholder": false,
+   "etymology": "[position or direction: south] + [peat bog, moss]",
+   "shape": {
+    "part": "2a",
+    "groupId": "wetland",
+    "genericId": "peat-bog-moss",
+    "categoryId": "position-or-direction",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Pass of [patron]",
+   "hasPlaceholder": true,
+   "etymology": "[pass] + [official, patron or sponsor]",
+   "shape": {
+    "part": "2a",
+    "groupId": "crossings-and-routes",
+    "genericId": "pass",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[colonial deity] Shrine",
+   "hasPlaceholder": true,
+   "etymology": "[colonial deity] + [shrine, idol]",
+   "shape": {
+    "part": "2a",
+    "groupId": "religious-pre-christian-and-sacred",
+    "genericId": "shrine-idol",
+    "categoryId": "colonial-deity",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "specific-first",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "[native tree] Ferry",
+   "hasPlaceholder": true,
+   "etymology": "[ferry] + [tree]",
+   "shape": {
+    "part": "2a",
+    "groupId": "crossings-and-routes",
+    "genericId": "ferry",
+    "categoryId": "tree",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "translated": false,
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Regal Garrison",
+   "hasPlaceholder": false,
+   "etymology": "[garrison camp] of [honorific title: Regal]",
+   "shape": {
+    "part": "2a",
+    "groupId": "military-and-administrative",
+    "genericId": "garrison-camp",
+    "categoryId": "honorific-title",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Moor of [ruler]",
+   "hasPlaceholder": true,
+   "etymology": "[upland moor] + [monarch, ruler or dynasty]",
+   "shape": {
+    "part": "2a",
+    "groupId": "upland-and-open-ground",
+    "genericId": "upland-moor",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Nun Bridge of [monarch]",
+   "hasPlaceholder": true,
+   "etymology": "[status or role: nun] [bridge] + [monarch, ruler or dynasty]",
+   "shape": {
+    "part": "2a",
+    "groupId": "crossings-and-routes",
+    "genericId": "bridge",
+    "categoryId": "monarch-ruler-or-dynasty",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "affix": {
+     "typeId": "owner-by-status",
+     "form": {
+      "text": "",
+      "position": "before",
+      "slotCategory": "status-or-role"
+     }
+    },
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Grand of Grey",
+   "hasPlaceholder": false,
+   "etymology": "[honorific title: Grand] of [river or stream name, adopted: Grey]",
+   "shape": {
+    "part": "2a",
+    "groupId": "military-and-administrative",
+    "genericId": "garrison-camp",
+    "categoryId": "honorific-title",
+    "structure": "double-specific",
+    "treatments": {
+     "second": "adopted"
+    },
+    "secondCategoryId": "river-or-stream-name",
+    "renamingType": "honorific-overlay"
+   }
+  },
+  {
+   "text": "Hall of the Nun",
+   "hasPlaceholder": false,
+   "etymology": "[lord’s hall] of [status or role: nun]",
+   "shape": {
+    "part": "2a",
+    "groupId": "lordship-and-authority",
+    "genericId": "lords-hall",
+    "categoryId": "status-or-role",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Pasture of [official]",
+   "hasPlaceholder": true,
+   "etymology": "[woodland swine pasture] + [colony] of [official, patron or sponsor]",
+   "shape": {
+    "part": "2a",
+    "groupId": "clearings",
+    "genericId": "woodland-swine-pasture",
+    "categoryId": "official-patron-or-sponsor",
+    "structure": "stacked-generic",
+    "treatments": {},
+    "stackedGenericId": "colony",
+    "wordOrder": "generic-first-linked",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Imperial Mill",
+   "hasPlaceholder": false,
+   "etymology": "[mill] + [honorific title: Imperial]",
+   "shape": {
+    "part": "2a",
+    "groupId": "industry-and-trade",
+    "genericId": "mill",
+    "categoryId": "honorific-title",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "renamingType": "replacement"
+   }
+  },
+  {
+   "text": "Grey Creek Boundary",
+   "hasPlaceholder": false,
+   "etymology": "[boundary] of [river or stream name, adopted: Grey Creek]",
+   "shape": {
+    "part": "2a",
+    "groupId": "communal-and-legal",
+    "genericId": "boundary",
+    "categoryId": "river-or-stream-name",
+    "structure": "two-part-compound",
+    "treatments": {
+     "specific": "adopted"
+    },
+    "wordOrder": "generic-first-linked",
+    "renamingType": "adapted"
+   }
+  },
+  {
+   "text": "West City of [royal woman]",
+   "hasPlaceholder": true,
+   "etymology": "West [city] + [royal woman]",
+   "shape": {
+    "part": "2a",
+    "groupId": "colonial-settlement",
+    "genericId": "city",
+    "categoryId": "royal-woman",
+    "structure": "two-part-compound",
+    "treatments": {},
+    "wordOrder": "generic-first-direct",
+    "affix": {
+     "typeId": "position",
+     "form": {
+      "text": "West",
+      "position": "before"
+     }
+    },
+    "renamingType": "replacement"
+   }
+  }
+ ],
+ "river british 1": [
+  {
+   "text": "River Grey Fleet",
+   "water": "fleet",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River Seion",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Seion"
+  },
+  {
+   "text": "Summerwater",
+   "water": "water",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River Lled",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Lled"
+  },
+  {
+   "text": "River Cherwel",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Cherwel"
+  },
+  {
+   "text": "River Nen",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Nen"
+  },
+  {
+   "text": "Ivybrook",
+   "water": "brook",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Claybeck",
+   "water": "beck",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[personal name]'s Beck",
+   "water": "beck",
+   "form": "[personal name]'s {water}",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "River Llwchar",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Llwchar"
+  },
+  {
+   "text": "River Naire",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Naire"
+  },
+  {
+   "text": "River Redbrook",
+   "water": "brook",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River Sirwell",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Sirwell"
+  },
+  {
+   "text": "Rothi",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Rothi"
+  },
+  {
+   "text": "[earlier or district name] Water",
+   "form": "[earlier or district name] Water",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[tribal name] Water",
+   "form": "[tribal name] Water",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[personal name]'s Brook",
+   "water": "brook",
+   "form": "[personal name]'s {water}",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "River [deity]",
+   "form": "River [deity]",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[tribal name] River",
+   "form": "[tribal name] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Gwensum",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Gwensum"
+  }
+ ],
+ "river british 4242": [
+  {
+   "text": "Elderburn",
+   "water": "burn",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River Clwy",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Clwy"
+  },
+  {
+   "text": "Flint Burn",
+   "water": "burn",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Fairburn",
+   "water": "burn",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River Cothen",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Cothen"
+  },
+  {
+   "text": "River Erick",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Erick"
+  },
+  {
+   "text": "Wildcat Stream",
+   "water": "stream",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River Wrchymni",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Wrchymni"
+  },
+  {
+   "text": "River Cothan",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Cothan"
+  },
+  {
+   "text": "[personal name]'s Water",
+   "water": "water",
+   "form": "[personal name]'s {water}",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "River Cleanbeck",
+   "water": "beck",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Lodder",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Lodder"
+  },
+  {
+   "text": "River With",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "With"
+  },
+  {
+   "text": "River Ale",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Ale"
+  },
+  {
+   "text": "Roughbeck",
+   "water": "beck",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Curlewfleet",
+   "water": "fleet",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[earlier or district name] Water",
+   "form": "[earlier or district name] Water",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Gorse Bourne",
+   "water": "bourne",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River Lever",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Lever"
+  },
+  {
+   "text": "Brownburn",
+   "water": "burn",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  }
+ ],
+ "river british 987654321": [
+  {
+   "text": "[personal name]'s Brook",
+   "water": "brook",
+   "form": "[personal name]'s {water}",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[tribal name] River",
+   "form": "[tribal name] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "River Gwyfor",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Gwyfor"
+  },
+  {
+   "text": "Loss",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Loss"
+  },
+  {
+   "text": "River Summerbrook",
+   "water": "brook",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[personal name]'s Water",
+   "water": "water",
+   "form": "[personal name]'s {water}",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Dyforchy",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Dyforchy"
+  },
+  {
+   "text": "Aspenwater",
+   "water": "water",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River Urrowey",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Urrowey"
+  },
+  {
+   "text": "Grey Water",
+   "water": "water",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River Coqueth",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Coqueth"
+  },
+  {
+   "text": "River Lland",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Lland"
+  },
+  {
+   "text": "Stoneburn",
+   "water": "burn",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River Fairbrook",
+   "water": "brook",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Foxglove Water",
+   "water": "water",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River Gwen",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Gwen"
+  },
+  {
+   "text": "River Twrchar",
+   "form": "river-x",
+   "hasPlaceholder": false,
+   "kind": "ancient",
+   "ancient": "Twrchar"
+  },
+  {
+   "text": "Otterbrook",
+   "water": "brook",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Molewater",
+   "water": "water",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[earlier or district name] Water",
+   "form": "[earlier or district name] Water",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  }
+ ],
+ "river new-land 1": [
+  {
+   "text": "[native people] River",
+   "form": "[native people] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "High River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[personal name] River",
+   "form": "[personal name] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Green River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Green Run",
+   "water": "run",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Green Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Grey-Brown Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Clean Run",
+   "water": "run",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Warm River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Brown Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Grey-Brown Fork",
+   "water": "fork",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[native people] Creek",
+   "form": "[native people] Creek",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Brown Branch",
+   "water": "branch",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[native fish or creature] River",
+   "form": "[native fish or creature] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Blue",
+   "water": "river",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Crooked River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Cold Fork",
+   "water": "fork",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Red Fork",
+   "water": "fork",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Bright River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Red Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  }
+ ],
+ "river new-land 4242": [
+  {
+   "text": "Golden Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Green River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[native people] Creek",
+   "form": "[native people] Creek",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[native plant] Creek",
+   "form": "[native plant] Creek",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Sweet River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Red River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Grey Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Broad",
+   "water": "river",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Dry",
+   "water": "river",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Long Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[personal name] River",
+   "form": "[personal name] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "River of the [native people]",
+   "form": "River of the [native people]",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[explorer] River",
+   "form": "[explorer] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Brown",
+   "water": "river",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "High Run",
+   "water": "run",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Sweet Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[native people] River",
+   "form": "[native people] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[native tree] Creek",
+   "form": "[native tree] Creek",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Rough River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Bright River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  }
+ ],
+ "river new-land 987654321": [
+  {
+   "text": "[native people] River",
+   "form": "[native people] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Crooked River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Grey-Brown Branch",
+   "water": "branch",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[explorer] River",
+   "form": "[explorer] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Blue Branch",
+   "water": "branch",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "White Branch",
+   "water": "branch",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Broad Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Red Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "White",
+   "water": "river",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Red Run",
+   "water": "run",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[personal name]'s Creek",
+   "form": "[personal name]'s Creek",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[personal name] River",
+   "form": "[personal name] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[monarch] River",
+   "form": "[monarch] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Blue Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "White River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Cold Fork",
+   "water": "fork",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Black River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Round Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[native people] Creek",
+   "form": "[native people] Creek",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "River of the [native people]",
+   "form": "River of the [native people]",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  }
+ ],
+ "river established 1": [
+  {
+   "text": "[native people] River",
+   "form": "[native people] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[native plant] River",
+   "form": "[native plant] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[personal name]'s Creek",
+   "form": "[personal name]'s Creek",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[monarch] River",
+   "form": "[monarch] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Red River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Brown River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Grey-Brown Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Bright Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Warm River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[holy person] River",
+   "form": "[holy person] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "River of the [native people]",
+   "form": "River of the [native people]",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[native tree] River",
+   "form": "[native tree] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[native bird] River",
+   "form": "[native bird] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Broad Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Deep",
+   "water": "river",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "White River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Red Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Bright River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "High Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Golden River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  }
+ ],
+ "river established 4242": [
+  {
+   "text": "[native people] River",
+   "form": "[native people] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[monarch] River",
+   "form": "[monarch] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Green River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[personal name] River",
+   "form": "[personal name] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "River of the [native people]",
+   "form": "River of the [native people]",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[native bird] River",
+   "form": "[native bird] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Warm River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "White River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[native tree] River",
+   "form": "[native tree] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[holy person] River",
+   "form": "[holy person] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Long Stream",
+   "water": "stream",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[native plant] River",
+   "form": "[native plant] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Brown",
+   "water": "river",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "High Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Sweet",
+   "water": "river",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[personal name]'s Creek",
+   "form": "[personal name]'s Creek",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Rough River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Bright River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[native wild animal] River",
+   "form": "[native wild animal] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Grey",
+   "water": "river",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  }
+ ],
+ "river established 987654321": [
+  {
+   "text": "[native people] River",
+   "form": "[native people] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Crooked River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[native fish or creature] River",
+   "form": "[native fish or creature] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "White Creek",
+   "water": "creek",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Black",
+   "water": "river",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "River of the [native people]",
+   "form": "River of the [native people]",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Cold River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Golden River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Rough River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[holy person] River",
+   "form": "[holy person] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Blue River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "White River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Round River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "Brown",
+   "water": "river",
+   "form": "bare",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[personal name] River",
+   "form": "[personal name] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Green River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  },
+  {
+   "text": "[native bird] River",
+   "form": "[native bird] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[personal name]'s Creek",
+   "form": "[personal name]'s Creek",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "[monarch] River",
+   "form": "[monarch] River",
+   "hasPlaceholder": true,
+   "kind": "pattern"
+  },
+  {
+   "text": "Red River",
+   "water": "river",
+   "form": "x-water",
+   "hasPlaceholder": false,
+   "kind": "descriptive"
+  }
+ ]
+}

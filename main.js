@@ -5496,6 +5496,5508 @@ var name_words_default = {
   ]
 };
 
+// src/data/biomes.json
+var biomes_default = {
+  terrains: [
+    "open",
+    "mountains",
+    "coast",
+    "rivers",
+    "wetland",
+    "islands"
+  ],
+  universal: {
+    open: {
+      land: [
+        "Hills",
+        "Valley",
+        "Ridge",
+        "Hollow",
+        "Plain",
+        "Upland",
+        "Lowland"
+      ],
+      water: []
+    },
+    mountains: {
+      land: [
+        "Mountains",
+        "Peaks",
+        "Pass",
+        "Heights",
+        "Crags"
+      ],
+      water: [
+        "Falls",
+        "Springs"
+      ]
+    },
+    coast: {
+      land: [
+        "Shore",
+        "Headland",
+        "Cliffs",
+        "Point"
+      ],
+      water: [
+        "Bay",
+        "Inlet",
+        "Straits"
+      ]
+    },
+    rivers: {
+      land: [],
+      water: [
+        "River",
+        "Upper River",
+        "Lower River",
+        "Ford",
+        "Falls",
+        "River Fork",
+        "River Mouth",
+        "Springs",
+        "Lake",
+        "Twin Streams",
+        "Three Rivers",
+        "Blackwater",
+        "Whitewater",
+        "Darkwater",
+        "Swiftwater",
+        "Deepwater",
+        "Reedwater",
+        "Clearwater",
+        "Redwater"
+      ]
+    },
+    wetland: {
+      land: [],
+      water: [
+        "Marsh",
+        "Swamp",
+        "Reeds"
+      ]
+    },
+    islands: {
+      land: [
+        "Isles",
+        "Island",
+        "Outer Islands",
+        "Twin Isles"
+      ],
+      water: [
+        "Sound"
+      ]
+    }
+  },
+  biomes: [
+    {
+      id: "temperate",
+      label: "Temperate woodland",
+      phrase: "temperate woodland",
+      guide: "Broadleaf forest, heath and farmland with four seasons: most of Europe, eastern North America, northern China, Korea and Japan.",
+      terrainWeights: {
+        open: 40,
+        mountains: 10,
+        coast: 15,
+        rivers: 20,
+        wetland: 10,
+        islands: 5
+      },
+      land: {
+        open: [
+          [
+            "Downs",
+            1
+          ],
+          [
+            "Downland",
+            1
+          ],
+          [
+            "Chalkland",
+            1
+          ],
+          [
+            "Chalk Hills",
+            1
+          ],
+          [
+            "Moor",
+            1
+          ],
+          [
+            "Heath",
+            1
+          ],
+          [
+            "Wold",
+            1
+          ],
+          [
+            "Woodland",
+            1
+          ],
+          [
+            "Forest",
+            1
+          ],
+          [
+            "Greenwood",
+            1
+          ],
+          [
+            "Vale",
+            1
+          ],
+          [
+            "Meadows",
+            1
+          ]
+        ],
+        mountains: [
+          [
+            "Fells",
+            1
+          ],
+          [
+            "High Moors",
+            1
+          ],
+          [
+            "Stony Heights",
+            1
+          ],
+          [
+            "Blue Hills",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Shingle",
+            1
+          ],
+          [
+            "Sea Cliffs",
+            1
+          ],
+          [
+            "White Cliffs",
+            1
+          ],
+          [
+            "Dunes",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Water Meadows",
+            1
+          ],
+          [
+            "Riverlands",
+            1
+          ]
+        ],
+        wetland: [
+          [
+            "Levels",
+            1
+          ],
+          [
+            "Fenland",
+            1
+          ]
+        ],
+        islands: [
+          [
+            "Green Isles",
+            1
+          ],
+          [
+            "Grey Isles",
+            1
+          ],
+          [
+            "Seal Isles",
+            1
+          ]
+        ]
+      },
+      water: {
+        mountains: [
+          [
+            "Tarns",
+            1
+          ],
+          [
+            "Hill Springs",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Estuary",
+            1
+          ],
+          [
+            "Grey Sea",
+            1
+          ],
+          [
+            "Tidal Flats",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Broad River",
+            1
+          ],
+          [
+            "Stony Ford",
+            1
+          ],
+          [
+            "Willow Ford",
+            1
+          ],
+          [
+            "Eastern Ford",
+            1
+          ],
+          [
+            "Brook",
+            1
+          ],
+          [
+            "Clear Pools",
+            1
+          ]
+        ],
+        wetland: [
+          [
+            "Fen",
+            1
+          ],
+          [
+            "Fens",
+            1
+          ],
+          [
+            "Reed Marsh",
+            1
+          ],
+          [
+            "Bog",
+            1
+          ],
+          [
+            "Mere",
+            1
+          ]
+        ]
+      },
+      wildAnimals: [
+        [
+          "bear",
+          1
+        ],
+        [
+          "wolf",
+          1
+        ],
+        [
+          "boar",
+          1
+        ],
+        [
+          "deer",
+          1
+        ],
+        [
+          "stag",
+          1
+        ],
+        [
+          "elk",
+          1
+        ],
+        [
+          "fox",
+          1
+        ],
+        [
+          "otter",
+          1
+        ],
+        [
+          "beaver",
+          1
+        ],
+        [
+          "hare",
+          1
+        ],
+        [
+          "badger",
+          1
+        ],
+        [
+          "wildcat",
+          1
+        ],
+        [
+          "lynx",
+          1
+        ]
+      ],
+      birds: [
+        [
+          "raven",
+          1
+        ],
+        [
+          "crow",
+          1
+        ],
+        [
+          "hawk",
+          1
+        ],
+        [
+          "eagle",
+          1
+        ],
+        [
+          "owl",
+          1
+        ],
+        [
+          "heron",
+          1
+        ],
+        [
+          "crane",
+          1
+        ],
+        [
+          "swan",
+          1
+        ],
+        [
+          "woodpecker",
+          1
+        ],
+        [
+          "cuckoo",
+          1
+        ],
+        [
+          "wren",
+          1
+        ],
+        [
+          "kingfisher",
+          1
+        ],
+        [
+          "falcon",
+          1
+        ]
+      ],
+      creatures: [
+        [
+          "salmon",
+          1
+        ],
+        [
+          "trout",
+          1
+        ],
+        [
+          "pike",
+          1
+        ],
+        [
+          "eel",
+          1
+        ],
+        [
+          "adder",
+          1
+        ],
+        [
+          "toad",
+          1
+        ],
+        [
+          "bee",
+          1
+        ],
+        [
+          "seal",
+          1
+        ]
+      ],
+      trees: [
+        [
+          "oak",
+          1
+        ],
+        [
+          "ash",
+          1
+        ],
+        [
+          "yew",
+          1
+        ],
+        [
+          "hazel",
+          1
+        ],
+        [
+          "alder",
+          1
+        ],
+        [
+          "birch",
+          1
+        ],
+        [
+          "rowan",
+          1
+        ],
+        [
+          "willow",
+          1
+        ],
+        [
+          "beech",
+          1
+        ],
+        [
+          "elm",
+          1
+        ],
+        [
+          "holly",
+          1
+        ],
+        [
+          "lime",
+          1
+        ]
+      ],
+      plants: [
+        [
+          "heather",
+          1
+        ],
+        [
+          "bracken",
+          1
+        ],
+        [
+          "gorse",
+          1
+        ],
+        [
+          "reed",
+          1
+        ],
+        [
+          "rush",
+          1
+        ],
+        [
+          "fern",
+          1
+        ],
+        [
+          "thistle",
+          1
+        ],
+        [
+          "mistletoe",
+          1
+        ],
+        [
+          "ivy",
+          1
+        ],
+        [
+          "foxglove",
+          1
+        ]
+      ],
+      crops: [
+        [
+          "wheat",
+          1
+        ],
+        [
+          "barley",
+          1
+        ],
+        [
+          "oats",
+          1
+        ],
+        [
+          "rye",
+          1
+        ],
+        [
+          "flax",
+          1
+        ],
+        [
+          "beans",
+          1
+        ]
+      ],
+      livestock: [
+        [
+          "cattle",
+          2
+        ],
+        [
+          "horse",
+          2
+        ],
+        [
+          "sheep",
+          2
+        ],
+        [
+          "pig",
+          1
+        ],
+        [
+          "goat",
+          1
+        ],
+        [
+          "hound",
+          1
+        ],
+        [
+          "goose",
+          1
+        ],
+        [
+          "ox",
+          1
+        ]
+      ],
+      lifeways: [
+        [
+          "Cattle Keepers",
+          14
+        ],
+        [
+          "Ploughmen",
+          12
+        ],
+        [
+          "Shepherds",
+          10
+        ],
+        [
+          "Hunters",
+          8
+        ],
+        [
+          "Fishers",
+          8
+        ],
+        [
+          "Smiths",
+          8
+        ],
+        [
+          "Woodsmen",
+          8
+        ],
+        [
+          "Swineherds",
+          6
+        ],
+        [
+          "Weavers",
+          6
+        ],
+        [
+          "Horse Breeders",
+          6
+        ],
+        [
+          "Potters",
+          5
+        ],
+        [
+          "Salt Makers",
+          4
+        ],
+        [
+          "Traders",
+          4
+        ],
+        [
+          "Charcoal Burners",
+          1
+        ]
+      ],
+      sacred: [
+        [
+          "Standing Stones",
+          1
+        ],
+        [
+          "Sacred Grove",
+          1
+        ],
+        [
+          "Old Oak",
+          1
+        ],
+        [
+          "Barrow",
+          1
+        ],
+        [
+          "Midsummer Fire",
+          1
+        ],
+        [
+          "Holy Well",
+          0.5
+        ]
+      ],
+      materials: [
+        [
+          "Flints",
+          1
+        ],
+        [
+          "Chalk",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Tin",
+          1
+        ],
+        [
+          "Copper",
+          1
+        ],
+        [
+          "Salt",
+          1
+        ],
+        [
+          "Amber",
+          1
+        ],
+        [
+          "Jet",
+          1
+        ]
+      ]
+    },
+    {
+      id: "boreal",
+      label: "Northern forest and tundra",
+      phrase: "northern forest and tundra",
+      guide: "Conifer forest, lakes, tundra and ice: Scandinavia, Siberia, Canada, Alaska and the Arctic edge.",
+      terrainWeights: {
+        open: 35,
+        mountains: 15,
+        coast: 15,
+        rivers: 20,
+        wetland: 10,
+        islands: 5
+      },
+      land: {
+        open: [
+          [
+            "Pine Forest",
+            1
+          ],
+          [
+            "Dark Forest",
+            1
+          ],
+          [
+            "Birch Woods",
+            1
+          ],
+          [
+            "Barrens",
+            1
+          ],
+          [
+            "Tundra",
+            1
+          ],
+          [
+            "Snowfields",
+            1
+          ],
+          [
+            "Ice Edge",
+            1
+          ],
+          [
+            "Frozen Plain",
+            1
+          ]
+        ],
+        mountains: [
+          [
+            "Ice Mountains",
+            1
+          ],
+          [
+            "White Peaks",
+            1
+          ],
+          [
+            "Glacier",
+            1
+          ],
+          [
+            "Bare Fells",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Ice Shore",
+            1
+          ],
+          [
+            "Skerries",
+            1
+          ],
+          [
+            "Cold Shore",
+            1
+          ],
+          [
+            "Floe Edge",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Lakelands",
+            1
+          ]
+        ],
+        islands: [
+          [
+            "Ice Isles",
+            1
+          ],
+          [
+            "Seal Isles",
+            1
+          ],
+          [
+            "Bird Rocks",
+            1
+          ]
+        ]
+      },
+      water: {
+        mountains: [
+          [
+            "Meltwater",
+            1
+          ],
+          [
+            "Ice Falls",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Fjord",
+            1
+          ],
+          [
+            "Long Inlet",
+            1
+          ],
+          [
+            "Cold Sea",
+            1
+          ],
+          [
+            "Ice Sea",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Rapids",
+            1
+          ],
+          [
+            "Ice River",
+            1
+          ],
+          [
+            "Long Lake",
+            1
+          ],
+          [
+            "Clear Lakes",
+            1
+          ],
+          [
+            "Cold Springs",
+            1
+          ],
+          [
+            "Thousand Lakes",
+            1
+          ]
+        ],
+        wetland: [
+          [
+            "Mire",
+            1
+          ],
+          [
+            "Peat Bog",
+            1
+          ],
+          [
+            "Moss",
+            1
+          ],
+          [
+            "Bog",
+            1
+          ]
+        ]
+      },
+      wildAnimals: [
+        [
+          "bear",
+          1
+        ],
+        [
+          "white bear",
+          1
+        ],
+        [
+          "wolf",
+          1
+        ],
+        [
+          "elk",
+          1
+        ],
+        [
+          "reindeer",
+          1
+        ],
+        [
+          "wolverine",
+          1
+        ],
+        [
+          "lynx",
+          1
+        ],
+        [
+          "fox",
+          1
+        ],
+        [
+          "Arctic fox",
+          1
+        ],
+        [
+          "hare",
+          1
+        ],
+        [
+          "beaver",
+          1
+        ],
+        [
+          "musk ox",
+          1
+        ],
+        [
+          "marten",
+          1
+        ],
+        [
+          "sable",
+          1
+        ]
+      ],
+      birds: [
+        [
+          "raven",
+          1
+        ],
+        [
+          "eagle",
+          1
+        ],
+        [
+          "owl",
+          1
+        ],
+        [
+          "snowy owl",
+          1
+        ],
+        [
+          "swan",
+          1
+        ],
+        [
+          "goose",
+          1
+        ],
+        [
+          "diver",
+          1
+        ],
+        [
+          "ptarmigan",
+          1
+        ],
+        [
+          "crane",
+          1
+        ],
+        [
+          "gyrfalcon",
+          1
+        ]
+      ],
+      creatures: [
+        [
+          "salmon",
+          1
+        ],
+        [
+          "char",
+          1
+        ],
+        [
+          "pike",
+          1
+        ],
+        [
+          "seal",
+          1
+        ],
+        [
+          "walrus",
+          1
+        ],
+        [
+          "whale",
+          1
+        ],
+        [
+          "killer whale",
+          1
+        ],
+        [
+          "narwhal",
+          1
+        ]
+      ],
+      trees: [
+        [
+          "pine",
+          1
+        ],
+        [
+          "spruce",
+          1
+        ],
+        [
+          "fir",
+          1
+        ],
+        [
+          "larch",
+          1
+        ],
+        [
+          "birch",
+          1
+        ],
+        [
+          "cedar",
+          1
+        ],
+        [
+          "willow",
+          1
+        ],
+        [
+          "aspen",
+          1
+        ]
+      ],
+      plants: [
+        [
+          "moss",
+          1
+        ],
+        [
+          "lichen",
+          1
+        ],
+        [
+          "cloudberry",
+          1
+        ],
+        [
+          "cotton grass",
+          1
+        ],
+        [
+          "crowberry",
+          1
+        ],
+        [
+          "reindeer moss",
+          1
+        ]
+      ],
+      crops: [
+        [
+          "barley",
+          1
+        ],
+        [
+          "rye",
+          1
+        ],
+        [
+          "oats",
+          1
+        ]
+      ],
+      livestock: [
+        [
+          "reindeer",
+          3
+        ],
+        [
+          "dog",
+          2
+        ],
+        [
+          "horse",
+          0.5
+        ]
+      ],
+      lifeways: [
+        [
+          "Reindeer Herders",
+          16
+        ],
+        [
+          "Hunters",
+          14
+        ],
+        [
+          "Salmon Fishers",
+          12
+        ],
+        [
+          "Sealers",
+          8
+        ],
+        [
+          "Fur Hunters",
+          8
+        ],
+        [
+          "Whalers",
+          6
+        ],
+        [
+          "Ice Fishers",
+          6
+        ],
+        [
+          "Woodsmen",
+          6
+        ],
+        [
+          "Sledge Drivers",
+          5
+        ],
+        [
+          "Boatwrights",
+          5
+        ],
+        [
+          "Net Makers",
+          5
+        ],
+        [
+          "Smiths",
+          5
+        ],
+        [
+          "Traders",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Northern Lights",
+          1
+        ],
+        [
+          "Midnight Sun",
+          1
+        ],
+        [
+          "Long Night",
+          1
+        ],
+        [
+          "First Snow",
+          1
+        ],
+        [
+          "Sacred Bear",
+          1
+        ],
+        [
+          "Stone Cairns",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Amber",
+          1
+        ],
+        [
+          "Ivory",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Furs",
+          1
+        ],
+        [
+          "Antler",
+          1
+        ],
+        [
+          "Soapstone",
+          1
+        ],
+        [
+          "Copper",
+          1
+        ]
+      ]
+    },
+    {
+      id: "cool-rainforest",
+      label: "Cool rainforest",
+      phrase: "cool rainforest",
+      guide: "Wet, mild forest of giant conifers, ferns and moss on mountainous coasts: the Pacific Northwest, New Zealand, southern Chile, Tasmania and western Norway.",
+      terrainWeights: {
+        open: 30,
+        mountains: 20,
+        coast: 25,
+        rivers: 15,
+        wetland: 5,
+        islands: 5
+      },
+      land: {
+        open: [
+          [
+            "Deep Forest",
+            1
+          ],
+          [
+            "Fern Forest",
+            1
+          ],
+          [
+            "Moss Forest",
+            1
+          ],
+          [
+            "Mist Forest",
+            1
+          ],
+          [
+            "Old Forest",
+            1
+          ],
+          [
+            "Green Valleys",
+            1
+          ],
+          [
+            "Great Trees",
+            1
+          ]
+        ],
+        mountains: [
+          [
+            "Snow Peaks",
+            1
+          ],
+          [
+            "Fire Mountain",
+            1
+          ],
+          [
+            "Glaciers",
+            1
+          ],
+          [
+            "Cloud Peaks",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Black Sands",
+            1
+          ],
+          [
+            "Sea Stacks",
+            1
+          ],
+          [
+            "Rocky Shore",
+            1
+          ]
+        ],
+        islands: [
+          [
+            "Green Isles",
+            1
+          ],
+          [
+            "Rain Isles",
+            1
+          ]
+        ]
+      },
+      water: {
+        mountains: [
+          [
+            "Meltwater",
+            1
+          ],
+          [
+            "Hot Springs",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Long Inlet",
+            1
+          ],
+          [
+            "Fjords",
+            1
+          ],
+          [
+            "Sounds",
+            1
+          ],
+          [
+            "Kelp Beds",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Rapids",
+            1
+          ],
+          [
+            "Glacier River",
+            1
+          ],
+          [
+            "Green River",
+            1
+          ],
+          [
+            "Clear Lakes",
+            1
+          ],
+          [
+            "Hot Springs",
+            1
+          ]
+        ],
+        wetland: [
+          [
+            "Swamp",
+            1
+          ],
+          [
+            "Peat Bog",
+            1
+          ],
+          [
+            "Flax Swamp",
+            1
+          ]
+        ]
+      },
+      wildAnimals: [
+        [
+          "bear",
+          1
+        ],
+        [
+          "black bear",
+          1
+        ],
+        [
+          "wolf",
+          1
+        ],
+        [
+          "elk",
+          1
+        ],
+        [
+          "deer",
+          1
+        ],
+        [
+          "cougar",
+          1
+        ],
+        [
+          "otter",
+          1
+        ],
+        [
+          "sea otter",
+          1
+        ],
+        [
+          "beaver",
+          1
+        ],
+        [
+          "mountain goat",
+          1
+        ],
+        [
+          "mink",
+          1
+        ]
+      ],
+      birds: [
+        [
+          "raven",
+          1
+        ],
+        [
+          "eagle",
+          1
+        ],
+        [
+          "owl",
+          1
+        ],
+        [
+          "heron",
+          1
+        ],
+        [
+          "kingfisher",
+          1
+        ],
+        [
+          "mountain parrot",
+          1
+        ],
+        [
+          "wren",
+          1
+        ],
+        [
+          "thrush",
+          1
+        ],
+        [
+          "gull",
+          1
+        ],
+        [
+          "hawk",
+          1
+        ]
+      ],
+      creatures: [
+        [
+          "salmon",
+          1
+        ],
+        [
+          "trout",
+          1
+        ],
+        [
+          "eel",
+          1
+        ],
+        [
+          "seal",
+          1
+        ],
+        [
+          "sea lion",
+          1
+        ],
+        [
+          "killer whale",
+          1
+        ],
+        [
+          "whale",
+          1
+        ],
+        [
+          "octopus",
+          1
+        ],
+        [
+          "crab",
+          1
+        ]
+      ],
+      trees: [
+        [
+          "cedar",
+          1
+        ],
+        [
+          "spruce",
+          1
+        ],
+        [
+          "hemlock",
+          1
+        ],
+        [
+          "fir",
+          1
+        ],
+        [
+          "tree fern",
+          1
+        ],
+        [
+          "southern beech",
+          1
+        ],
+        [
+          "alder",
+          1
+        ],
+        [
+          "yew",
+          1
+        ]
+      ],
+      plants: [
+        [
+          "fern",
+          1
+        ],
+        [
+          "moss",
+          1
+        ],
+        [
+          "lichen",
+          1
+        ],
+        [
+          "flax",
+          1
+        ],
+        [
+          "salmonberry",
+          1
+        ],
+        [
+          "sorrel",
+          1
+        ],
+        [
+          "bramble",
+          1
+        ]
+      ],
+      crops: [
+        [
+          "sweet potato",
+          1
+        ],
+        [
+          "beans",
+          1
+        ]
+      ],
+      livestock: [
+        [
+          "dog",
+          2
+        ]
+      ],
+      lifeways: [
+        [
+          "Salmon Fishers",
+          18
+        ],
+        [
+          "Hunters",
+          12
+        ],
+        [
+          "Cedar Carvers",
+          10
+        ],
+        [
+          "Boatwrights",
+          8
+        ],
+        [
+          "Weavers",
+          8
+        ],
+        [
+          "Whalers",
+          6
+        ],
+        [
+          "Sealers",
+          6
+        ],
+        [
+          "Net Makers",
+          6
+        ],
+        [
+          "Berry Gatherers",
+          6
+        ],
+        [
+          "Traders",
+          6
+        ],
+        [
+          "Coppersmiths",
+          6
+        ],
+        [
+          "Shell Gatherers",
+          4
+        ],
+        [
+          "Gardeners",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Carved Posts",
+          1
+        ],
+        [
+          "Great Cedar",
+          1
+        ],
+        [
+          "Mist",
+          1
+        ],
+        [
+          "Fire Mountain",
+          1
+        ],
+        [
+          "Steaming Springs",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Greenstone",
+          1
+        ],
+        [
+          "Copper",
+          1
+        ],
+        [
+          "Obsidian",
+          1
+        ],
+        [
+          "Shells",
+          1
+        ],
+        [
+          "Cedar Bark",
+          1
+        ]
+      ]
+    },
+    {
+      id: "mediterranean",
+      label: "Mediterranean hills",
+      phrase: "Mediterranean hills",
+      guide: "Hot dry summers, mild wet winters, scrub-covered hills and rocky coasts: the Mediterranean, California, central Chile, the Cape and south-west Australia.",
+      terrainWeights: {
+        open: 35,
+        mountains: 15,
+        coast: 25,
+        rivers: 10,
+        wetland: 5,
+        islands: 10
+      },
+      land: {
+        open: [
+          [
+            "Scrub Hills",
+            1
+          ],
+          [
+            "Rocky Hills",
+            1
+          ],
+          [
+            "Stony Plain",
+            1
+          ],
+          [
+            "Terraces",
+            1
+          ],
+          [
+            "Dry Valleys",
+            1
+          ],
+          [
+            "Golden Hills",
+            1
+          ],
+          [
+            "Oak Hills",
+            1
+          ],
+          [
+            "Limestone Hills",
+            1
+          ]
+        ],
+        mountains: [
+          [
+            "White Mountains",
+            1
+          ],
+          [
+            "Limestone Peaks",
+            1
+          ],
+          [
+            "Snow Peaks",
+            1
+          ],
+          [
+            "High Pastures",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Rocky Shore",
+            1
+          ],
+          [
+            "Coves",
+            1
+          ],
+          [
+            "White Cliffs",
+            1
+          ],
+          [
+            "Sea Caves",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Gorge",
+            1
+          ]
+        ],
+        islands: [
+          [
+            "Many Isles",
+            1
+          ],
+          [
+            "White Isles",
+            1
+          ],
+          [
+            "Rocky Isles",
+            1
+          ]
+        ]
+      },
+      water: {
+        mountains: [
+          [
+            "Mountain Springs",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Blue Bay",
+            1
+          ],
+          [
+            "Calm Sea",
+            1
+          ],
+          [
+            "Wine-Dark Sea",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Winter Stream",
+            1
+          ],
+          [
+            "Dry River",
+            1
+          ],
+          [
+            "Cold Spring",
+            1
+          ]
+        ],
+        wetland: [
+          [
+            "Salt Marsh",
+            1
+          ],
+          [
+            "Lagoon",
+            1
+          ],
+          [
+            "Delta",
+            1
+          ]
+        ]
+      },
+      wildAnimals: [
+        [
+          "wolf",
+          1
+        ],
+        [
+          "boar",
+          1
+        ],
+        [
+          "deer",
+          1
+        ],
+        [
+          "lynx",
+          1
+        ],
+        [
+          "wild goat",
+          1
+        ],
+        [
+          "ibex",
+          1
+        ],
+        [
+          "fox",
+          1
+        ],
+        [
+          "hare",
+          1
+        ],
+        [
+          "bear",
+          0.5
+        ],
+        [
+          "jackal",
+          1
+        ],
+        [
+          "wild sheep",
+          1
+        ]
+      ],
+      birds: [
+        [
+          "eagle",
+          1
+        ],
+        [
+          "vulture",
+          1
+        ],
+        [
+          "hawk",
+          1
+        ],
+        [
+          "owl",
+          1
+        ],
+        [
+          "dove",
+          1
+        ],
+        [
+          "partridge",
+          1
+        ],
+        [
+          "swallow",
+          1
+        ],
+        [
+          "stork",
+          1
+        ],
+        [
+          "hoopoe",
+          1
+        ],
+        [
+          "nightingale",
+          1
+        ],
+        [
+          "woodpecker",
+          1
+        ]
+      ],
+      creatures: [
+        [
+          "tuna",
+          1
+        ],
+        [
+          "dolphin",
+          1
+        ],
+        [
+          "octopus",
+          1
+        ],
+        [
+          "lizard",
+          1
+        ],
+        [
+          "tortoise",
+          1
+        ],
+        [
+          "scorpion",
+          1
+        ],
+        [
+          "cicada",
+          1
+        ],
+        [
+          "bee",
+          1
+        ],
+        [
+          "viper",
+          1
+        ]
+      ],
+      trees: [
+        [
+          "olive",
+          1
+        ],
+        [
+          "oak",
+          1
+        ],
+        [
+          "cork oak",
+          1
+        ],
+        [
+          "cypress",
+          1
+        ],
+        [
+          "pine",
+          1
+        ],
+        [
+          "laurel",
+          1
+        ],
+        [
+          "fig",
+          1
+        ],
+        [
+          "carob",
+          1
+        ],
+        [
+          "almond",
+          1
+        ],
+        [
+          "plane",
+          1
+        ]
+      ],
+      plants: [
+        [
+          "thyme",
+          1
+        ],
+        [
+          "myrtle",
+          1
+        ],
+        [
+          "rosemary",
+          1
+        ],
+        [
+          "broom",
+          1
+        ],
+        [
+          "oleander",
+          1
+        ],
+        [
+          "asphodel",
+          1
+        ],
+        [
+          "sage",
+          1
+        ]
+      ],
+      crops: [
+        [
+          "wheat",
+          1
+        ],
+        [
+          "barley",
+          1
+        ],
+        [
+          "vines",
+          1
+        ],
+        [
+          "olives",
+          1
+        ],
+        [
+          "figs",
+          1
+        ],
+        [
+          "lentils",
+          1
+        ],
+        [
+          "beans",
+          1
+        ]
+      ],
+      livestock: [
+        [
+          "sheep",
+          2
+        ],
+        [
+          "goat",
+          2
+        ],
+        [
+          "cattle",
+          1
+        ],
+        [
+          "horse",
+          1
+        ],
+        [
+          "donkey",
+          1
+        ],
+        [
+          "pig",
+          1
+        ],
+        [
+          "hound",
+          1
+        ],
+        [
+          "bull",
+          1
+        ]
+      ],
+      lifeways: [
+        [
+          "Shepherds",
+          14
+        ],
+        [
+          "Fishers",
+          12
+        ],
+        [
+          "Goatherds",
+          10
+        ],
+        [
+          "Vine Growers",
+          10
+        ],
+        [
+          "Olive Growers",
+          10
+        ],
+        [
+          "Seafarers",
+          10
+        ],
+        [
+          "Traders",
+          10
+        ],
+        [
+          "Ploughmen",
+          8
+        ],
+        [
+          "Potters",
+          6
+        ],
+        [
+          "Smiths",
+          4
+        ],
+        [
+          "Beekeepers",
+          4
+        ],
+        [
+          "Salt Makers",
+          2
+        ]
+      ],
+      sacred: [
+        [
+          "Sacred Spring",
+          1
+        ],
+        [
+          "Oracle",
+          1
+        ],
+        [
+          "Old Shrine",
+          1
+        ],
+        [
+          "Sacred Cave",
+          1
+        ],
+        [
+          "Holy Mountain",
+          1
+        ],
+        [
+          "Evening Star",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Marble",
+          1
+        ],
+        [
+          "Copper",
+          1
+        ],
+        [
+          "Silver",
+          1
+        ],
+        [
+          "Salt",
+          1
+        ],
+        [
+          "Purple Shells",
+          1
+        ]
+      ]
+    },
+    {
+      id: "steppe",
+      label: "Steppe and prairie",
+      phrase: "the steppe",
+      guide: "Vast treeless grassland with hot summers and bitter winters: the Eurasian steppe from Hungary to Mongolia, the North American plains and the pampas.",
+      terrainWeights: {
+        open: 60,
+        mountains: 10,
+        coast: 0,
+        rivers: 25,
+        wetland: 5,
+        islands: 0
+      },
+      land: {
+        open: [
+          [
+            "Grass",
+            1
+          ],
+          [
+            "Grasslands",
+            1
+          ],
+          [
+            "Open Plain",
+            1
+          ],
+          [
+            "Black Earth",
+            1
+          ],
+          [
+            "Salt Flats",
+            1
+          ],
+          [
+            "Sea of Grass",
+            1
+          ],
+          [
+            "Rolling Plains",
+            1
+          ],
+          [
+            "Short Grass",
+            1
+          ],
+          [
+            "Long Grass",
+            1
+          ],
+          [
+            "Badlands",
+            1
+          ]
+        ],
+        mountains: [
+          [
+            "Sky Mountains",
+            1
+          ],
+          [
+            "Golden Mountains",
+            1
+          ],
+          [
+            "Stony Hills",
+            1
+          ],
+          [
+            "Snow Ridge",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "River Bluffs",
+            1
+          ]
+        ]
+      },
+      water: {
+        mountains: [
+          [
+            "Snow Springs",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Salt Lake",
+            1
+          ],
+          [
+            "Salt Lakes",
+            1
+          ],
+          [
+            "Bitter Springs",
+            1
+          ],
+          [
+            "Wide River",
+            1
+          ],
+          [
+            "Muddy River",
+            1
+          ],
+          [
+            "Wells",
+            1
+          ],
+          [
+            "Seven Wells",
+            1
+          ],
+          [
+            "Long River",
+            1
+          ]
+        ],
+        wetland: [
+          [
+            "Reed Lakes",
+            1
+          ],
+          [
+            "Reed Beds",
+            1
+          ],
+          [
+            "Salt Marsh",
+            1
+          ]
+        ]
+      },
+      wildAnimals: [
+        [
+          "wolf",
+          1
+        ],
+        [
+          "wild horse",
+          1
+        ],
+        [
+          "deer",
+          1
+        ],
+        [
+          "antelope",
+          1
+        ],
+        [
+          "wild ass",
+          1
+        ],
+        [
+          "marmot",
+          1
+        ],
+        [
+          "bison",
+          1
+        ],
+        [
+          "gazelle",
+          1
+        ],
+        [
+          "fox",
+          1
+        ],
+        [
+          "hare",
+          1
+        ],
+        [
+          "bear",
+          0.3
+        ]
+      ],
+      birds: [
+        [
+          "eagle",
+          1
+        ],
+        [
+          "golden eagle",
+          1
+        ],
+        [
+          "falcon",
+          1
+        ],
+        [
+          "hawk",
+          1
+        ],
+        [
+          "bustard",
+          1
+        ],
+        [
+          "crane",
+          1
+        ],
+        [
+          "lark",
+          1
+        ],
+        [
+          "kite",
+          1
+        ],
+        [
+          "vulture",
+          1
+        ],
+        [
+          "swan",
+          1
+        ]
+      ],
+      creatures: [
+        [
+          "sturgeon",
+          1
+        ],
+        [
+          "carp",
+          1
+        ],
+        [
+          "snake",
+          1
+        ],
+        [
+          "viper",
+          1
+        ],
+        [
+          "locust",
+          1
+        ],
+        [
+          "beetle",
+          1
+        ]
+      ],
+      trees: [
+        [
+          "poplar",
+          1
+        ],
+        [
+          "willow",
+          1
+        ],
+        [
+          "birch",
+          1
+        ],
+        [
+          "tamarisk",
+          1
+        ],
+        [
+          "elm",
+          1
+        ]
+      ],
+      plants: [
+        [
+          "feather grass",
+          1
+        ],
+        [
+          "wormwood",
+          1
+        ],
+        [
+          "sage",
+          1
+        ],
+        [
+          "wild tulip",
+          1
+        ],
+        [
+          "thistle",
+          1
+        ],
+        [
+          "tumbleweed",
+          1
+        ],
+        [
+          "sunflower",
+          1
+        ]
+      ],
+      crops: [
+        [
+          "millet",
+          1
+        ],
+        [
+          "barley",
+          1
+        ],
+        [
+          "wheat",
+          1
+        ]
+      ],
+      livestock: [
+        [
+          "horse",
+          3
+        ],
+        [
+          "sheep",
+          2
+        ],
+        [
+          "cattle",
+          1
+        ],
+        [
+          "camel",
+          1
+        ],
+        [
+          "goat",
+          1
+        ],
+        [
+          "yak",
+          0.5
+        ],
+        [
+          "dog",
+          1
+        ]
+      ],
+      lifeways: [
+        [
+          "Horse Herders",
+          20
+        ],
+        [
+          "Riders",
+          12
+        ],
+        [
+          "Shepherds",
+          12
+        ],
+        [
+          "Hunters",
+          10
+        ],
+        [
+          "Cattle Keepers",
+          8
+        ],
+        [
+          "Ploughmen",
+          8
+        ],
+        [
+          "Felt Makers",
+          6
+        ],
+        [
+          "Smiths",
+          6
+        ],
+        [
+          "Traders",
+          6
+        ],
+        [
+          "Camel Herders",
+          4
+        ],
+        [
+          "Millet Growers",
+          4
+        ],
+        [
+          "Wagon Dwellers",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Eternal Sky",
+          1
+        ],
+        [
+          "Burial Mounds",
+          1
+        ],
+        [
+          "Stone Figures",
+          1
+        ],
+        [
+          "Sacred Fire",
+          1
+        ],
+        [
+          "High Sky",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Gold",
+          1
+        ],
+        [
+          "Bronze",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Salt",
+          1
+        ],
+        [
+          "Felt",
+          1
+        ]
+      ]
+    },
+    {
+      id: "desert",
+      label: "Desert",
+      phrase: "the desert",
+      guide: "Sand seas, stony plains, wadis and oases: the Sahara, Arabia, central Asia's deserts, the American south-west, the Atacama and Australia's interior.",
+      terrainWeights: {
+        open: 55,
+        mountains: 15,
+        coast: 10,
+        rivers: 20,
+        wetland: 0,
+        islands: 0
+      },
+      land: {
+        open: [
+          [
+            "Sands",
+            1
+          ],
+          [
+            "Dunes",
+            1
+          ],
+          [
+            "Sand Sea",
+            1
+          ],
+          [
+            "Stony Desert",
+            1
+          ],
+          [
+            "Gravel Plain",
+            1
+          ],
+          [
+            "Red Rocks",
+            1
+          ],
+          [
+            "Dry Valley",
+            1
+          ],
+          [
+            "Salt Pans",
+            1
+          ],
+          [
+            "Mesas",
+            1
+          ],
+          [
+            "Salt Road",
+            1
+          ]
+        ],
+        mountains: [
+          [
+            "Black Mountains",
+            1
+          ],
+          [
+            "Bare Mountains",
+            1
+          ],
+          [
+            "Canyon",
+            1
+          ],
+          [
+            "Red Cliffs",
+            1
+          ],
+          [
+            "Rock Towers",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Salt Coast",
+            1
+          ],
+          [
+            "Fog Coast",
+            1
+          ],
+          [
+            "Bare Shore",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Palm Groves",
+            1
+          ],
+          [
+            "Oasis Gardens",
+            1
+          ]
+        ]
+      },
+      water: {
+        mountains: [
+          [
+            "Hidden Spring",
+            1
+          ],
+          [
+            "Rock Pools",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Pearl Banks",
+            1
+          ],
+          [
+            "Shallow Gulf",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Oasis",
+            1
+          ],
+          [
+            "Wells",
+            1
+          ],
+          [
+            "Seven Wells",
+            1
+          ],
+          [
+            "Bitter Springs",
+            1
+          ],
+          [
+            "Sweet Wells",
+            1
+          ],
+          [
+            "Wadi",
+            1
+          ],
+          [
+            "Great River",
+            1
+          ]
+        ]
+      },
+      wildAnimals: [
+        [
+          "oryx",
+          1
+        ],
+        [
+          "gazelle",
+          1
+        ],
+        [
+          "jackal",
+          1
+        ],
+        [
+          "fox",
+          1
+        ],
+        [
+          "hyena",
+          1
+        ],
+        [
+          "lion",
+          0.5
+        ],
+        [
+          "wild ass",
+          1
+        ],
+        [
+          "ibex",
+          1
+        ],
+        [
+          "hare",
+          1
+        ],
+        [
+          "desert lynx",
+          1
+        ]
+      ],
+      birds: [
+        [
+          "falcon",
+          1
+        ],
+        [
+          "hawk",
+          1
+        ],
+        [
+          "ostrich",
+          1
+        ],
+        [
+          "vulture",
+          1
+        ],
+        [
+          "sandgrouse",
+          1
+        ],
+        [
+          "raven",
+          1
+        ],
+        [
+          "owl",
+          1
+        ],
+        [
+          "eagle",
+          1
+        ],
+        [
+          "bustard",
+          1
+        ]
+      ],
+      creatures: [
+        [
+          "scorpion",
+          1
+        ],
+        [
+          "viper",
+          1
+        ],
+        [
+          "cobra",
+          1
+        ],
+        [
+          "lizard",
+          1
+        ],
+        [
+          "locust",
+          1
+        ],
+        [
+          "scarab",
+          1
+        ]
+      ],
+      trees: [
+        [
+          "date palm",
+          1
+        ],
+        [
+          "acacia",
+          1
+        ],
+        [
+          "tamarisk",
+          1
+        ],
+        [
+          "palm",
+          1
+        ],
+        [
+          "juniper",
+          1
+        ],
+        [
+          "frankincense tree",
+          1
+        ]
+      ],
+      plants: [
+        [
+          "thorn bush",
+          1
+        ],
+        [
+          "cactus",
+          1
+        ],
+        [
+          "saltbush",
+          1
+        ],
+        [
+          "wild melon",
+          1
+        ],
+        [
+          "desert grass",
+          1
+        ]
+      ],
+      crops: [
+        [
+          "dates",
+          1
+        ],
+        [
+          "barley",
+          1
+        ],
+        [
+          "millet",
+          1
+        ],
+        [
+          "melons",
+          1
+        ]
+      ],
+      livestock: [
+        [
+          "camel",
+          3
+        ],
+        [
+          "goat",
+          2
+        ],
+        [
+          "sheep",
+          1
+        ],
+        [
+          "donkey",
+          1
+        ],
+        [
+          "horse",
+          0.5
+        ],
+        [
+          "hound",
+          1
+        ]
+      ],
+      lifeways: [
+        [
+          "Camel Herders",
+          22
+        ],
+        [
+          "Caravaneers",
+          10
+        ],
+        [
+          "Oasis Farmers",
+          10
+        ],
+        [
+          "Goatherds",
+          10
+        ],
+        [
+          "Date Growers",
+          8
+        ],
+        [
+          "Salt Traders",
+          8
+        ],
+        [
+          "Riders",
+          8
+        ],
+        [
+          "Well Diggers",
+          6
+        ],
+        [
+          "Hunters",
+          6
+        ],
+        [
+          "Smiths",
+          6
+        ],
+        [
+          "Traders",
+          6
+        ]
+      ],
+      sacred: [
+        [
+          "Morning Star",
+          1
+        ],
+        [
+          "Sacred Rock",
+          1
+        ],
+        [
+          "Sacred Well",
+          1
+        ],
+        [
+          "Desert Wind",
+          1
+        ],
+        [
+          "Star Paths",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Salt",
+          1
+        ],
+        [
+          "Gold",
+          1
+        ],
+        [
+          "Incense",
+          1
+        ],
+        [
+          "Copper",
+          1
+        ],
+        [
+          "Turquoise",
+          1
+        ]
+      ]
+    },
+    {
+      id: "savannah",
+      label: "Savannah",
+      phrase: "the savannah",
+      guide: "Tall grass, scattered trees and a long dry season: eastern and southern Africa, the Sahel's southern edge, northern Australia, the Brazilian cerrado and India's Deccan.",
+      terrainWeights: {
+        open: 55,
+        mountains: 10,
+        coast: 5,
+        rivers: 20,
+        wetland: 10,
+        islands: 0
+      },
+      land: {
+        open: [
+          [
+            "Grasslands",
+            1
+          ],
+          [
+            "Tall Grass",
+            1
+          ],
+          [
+            "Red Hills",
+            1
+          ],
+          [
+            "Thornlands",
+            1
+          ],
+          [
+            "Bushland",
+            1
+          ],
+          [
+            "Wide Plains",
+            1
+          ],
+          [
+            "Red Earth",
+            1
+          ],
+          [
+            "Stone Hills",
+            1
+          ],
+          [
+            "Termite Hills",
+            1
+          ]
+        ],
+        mountains: [
+          [
+            "Plateau",
+            1
+          ],
+          [
+            "Escarpment",
+            1
+          ],
+          [
+            "Flat-Top Hills",
+            1
+          ],
+          [
+            "Granite Domes",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "White Sands",
+            1
+          ],
+          [
+            "Palm Shore",
+            1
+          ]
+        ]
+      },
+      water: {
+        mountains: [
+          [
+            "Hill Springs",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Warm Sea",
+            1
+          ],
+          [
+            "Creek Mouth",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Great River",
+            1
+          ],
+          [
+            "Waterhole",
+            1
+          ],
+          [
+            "Brown River",
+            1
+          ],
+          [
+            "Dry River",
+            1
+          ],
+          [
+            "Thundering Falls",
+            1
+          ],
+          [
+            "Hippo Pools",
+            1
+          ]
+        ],
+        wetland: [
+          [
+            "Swamps",
+            1
+          ],
+          [
+            "Flood Plain",
+            1
+          ],
+          [
+            "Delta",
+            1
+          ],
+          [
+            "Papyrus Marsh",
+            1
+          ],
+          [
+            "Reed Beds",
+            1
+          ]
+        ]
+      },
+      wildAnimals: [
+        [
+          "lion",
+          1
+        ],
+        [
+          "leopard",
+          1
+        ],
+        [
+          "cheetah",
+          1
+        ],
+        [
+          "elephant",
+          1
+        ],
+        [
+          "buffalo",
+          1
+        ],
+        [
+          "rhinoceros",
+          1
+        ],
+        [
+          "giraffe",
+          1
+        ],
+        [
+          "zebra",
+          1
+        ],
+        [
+          "antelope",
+          1
+        ],
+        [
+          "hyena",
+          1
+        ],
+        [
+          "hippopotamus",
+          1
+        ],
+        [
+          "wild dog",
+          1
+        ],
+        [
+          "baboon",
+          1
+        ],
+        [
+          "warthog",
+          1
+        ]
+      ],
+      birds: [
+        [
+          "eagle",
+          1
+        ],
+        [
+          "vulture",
+          1
+        ],
+        [
+          "ostrich",
+          1
+        ],
+        [
+          "crowned crane",
+          1
+        ],
+        [
+          "hornbill",
+          1
+        ],
+        [
+          "guineafowl",
+          1
+        ],
+        [
+          "stork",
+          1
+        ],
+        [
+          "weaver bird",
+          1
+        ],
+        [
+          "secretary bird",
+          1
+        ],
+        [
+          "hawk",
+          1
+        ]
+      ],
+      creatures: [
+        [
+          "crocodile",
+          1
+        ],
+        [
+          "python",
+          1
+        ],
+        [
+          "cobra",
+          1
+        ],
+        [
+          "mamba",
+          1
+        ],
+        [
+          "tortoise",
+          1
+        ],
+        [
+          "termite",
+          1
+        ],
+        [
+          "catfish",
+          1
+        ]
+      ],
+      trees: [
+        [
+          "baobab",
+          1
+        ],
+        [
+          "acacia",
+          1
+        ],
+        [
+          "fig",
+          1
+        ],
+        [
+          "palm",
+          1
+        ],
+        [
+          "thorn tree",
+          1
+        ],
+        [
+          "ebony",
+          1
+        ]
+      ],
+      plants: [
+        [
+          "elephant grass",
+          1
+        ],
+        [
+          "aloe",
+          1
+        ],
+        [
+          "papyrus",
+          1
+        ],
+        [
+          "thorn bush",
+          1
+        ],
+        [
+          "wild gourd",
+          1
+        ]
+      ],
+      crops: [
+        [
+          "millet",
+          1
+        ],
+        [
+          "sorghum",
+          1
+        ],
+        [
+          "yams",
+          1
+        ],
+        [
+          "beans",
+          1
+        ],
+        [
+          "gourds",
+          1
+        ]
+      ],
+      livestock: [
+        [
+          "cattle",
+          3
+        ],
+        [
+          "goat",
+          2
+        ],
+        [
+          "sheep",
+          1
+        ],
+        [
+          "donkey",
+          1
+        ],
+        [
+          "dog",
+          1
+        ],
+        [
+          "chicken",
+          1
+        ]
+      ],
+      lifeways: [
+        [
+          "Cattle Keepers",
+          22
+        ],
+        [
+          "Millet Growers",
+          12
+        ],
+        [
+          "Hunters",
+          10
+        ],
+        [
+          "Smiths",
+          10
+        ],
+        [
+          "Traders",
+          8
+        ],
+        [
+          "Goatherds",
+          6
+        ],
+        [
+          "Potters",
+          6
+        ],
+        [
+          "Fishers",
+          6
+        ],
+        [
+          "Weavers",
+          6
+        ],
+        [
+          "Iron Smelters",
+          6
+        ],
+        [
+          "Honey Gatherers",
+          4
+        ],
+        [
+          "Salt Makers",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Rain Hill",
+          1
+        ],
+        [
+          "Sacred Fig",
+          1
+        ],
+        [
+          "Great Baobab",
+          1
+        ],
+        [
+          "Thunder",
+          1
+        ],
+        [
+          "Ancestor Stones",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Copper",
+          1
+        ],
+        [
+          "Ivory",
+          1
+        ],
+        [
+          "Salt",
+          1
+        ],
+        [
+          "Ochre",
+          1
+        ],
+        [
+          "Gold",
+          1
+        ],
+        [
+          "Beads",
+          1
+        ]
+      ]
+    },
+    {
+      id: "rainforest",
+      label: "Tropical rainforest",
+      phrase: "tropical rainforest",
+      guide: "Hot, wet, evergreen forest under a closed canopy, laced with great rivers: the Amazon, the Congo basin, Borneo, Sumatra and lowland New Guinea.",
+      terrainWeights: {
+        open: 45,
+        mountains: 10,
+        coast: 5,
+        rivers: 30,
+        wetland: 10,
+        islands: 0
+      },
+      land: {
+        open: [
+          [
+            "Deep Forest",
+            1
+          ],
+          [
+            "Great Forest",
+            1
+          ],
+          [
+            "Green Hills",
+            1
+          ],
+          [
+            "Canopy",
+            1
+          ],
+          [
+            "Forest Edge",
+            1
+          ],
+          [
+            "Clearings",
+            1
+          ],
+          [
+            "Vine Forest",
+            1
+          ]
+        ],
+        mountains: [
+          [
+            "Cloud Forest",
+            1
+          ],
+          [
+            "Mist Mountains",
+            1
+          ],
+          [
+            "Green Peaks",
+            1
+          ],
+          [
+            "Waterfall Hills",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Mangrove Coast",
+            1
+          ],
+          [
+            "Black Sands",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Sandbanks",
+            1
+          ]
+        ]
+      },
+      water: {
+        mountains: [
+          [
+            "Waterfalls",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Warm Sea",
+            1
+          ],
+          [
+            "Muddy Shallows",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Black River",
+            1
+          ],
+          [
+            "Brown River",
+            1
+          ],
+          [
+            "Great River",
+            1
+          ],
+          [
+            "Floodwater",
+            1
+          ],
+          [
+            "Rapids",
+            1
+          ],
+          [
+            "Oxbow Lake",
+            1
+          ],
+          [
+            "Hundred Streams",
+            1
+          ],
+          [
+            "Green River",
+            1
+          ]
+        ],
+        wetland: [
+          [
+            "Mangroves",
+            1
+          ],
+          [
+            "Swamp Forest",
+            1
+          ],
+          [
+            "Flooded Forest",
+            1
+          ],
+          [
+            "Sago Swamp",
+            1
+          ]
+        ]
+      },
+      wildAnimals: [
+        [
+          "monkey",
+          1
+        ],
+        [
+          "ape",
+          0.5
+        ],
+        [
+          "leopard",
+          1
+        ],
+        [
+          "tapir",
+          1
+        ],
+        [
+          "forest elephant",
+          1
+        ],
+        [
+          "wild pig",
+          1
+        ],
+        [
+          "bat",
+          1
+        ],
+        [
+          "otter",
+          1
+        ],
+        [
+          "mouse-deer",
+          1
+        ],
+        [
+          "porcupine",
+          1
+        ]
+      ],
+      birds: [
+        [
+          "parrot",
+          1
+        ],
+        [
+          "hornbill",
+          1
+        ],
+        [
+          "harpy eagle",
+          1
+        ],
+        [
+          "kingfisher",
+          1
+        ],
+        [
+          "heron",
+          1
+        ],
+        [
+          "owl",
+          1
+        ],
+        [
+          "bird of paradise",
+          1
+        ],
+        [
+          "pigeon",
+          1
+        ]
+      ],
+      creatures: [
+        [
+          "crocodile",
+          1
+        ],
+        [
+          "python",
+          1
+        ],
+        [
+          "tree frog",
+          1
+        ],
+        [
+          "butterfly",
+          1
+        ],
+        [
+          "river turtle",
+          1
+        ],
+        [
+          "catfish",
+          1
+        ],
+        [
+          "monitor lizard",
+          1
+        ],
+        [
+          "beetle",
+          1
+        ]
+      ],
+      trees: [
+        [
+          "banyan",
+          1
+        ],
+        [
+          "fig",
+          1
+        ],
+        [
+          "mahogany",
+          1
+        ],
+        [
+          "kapok",
+          1
+        ],
+        [
+          "ironwood",
+          1
+        ],
+        [
+          "palm",
+          1
+        ],
+        [
+          "rubber tree",
+          1
+        ],
+        [
+          "tree fern",
+          1
+        ]
+      ],
+      plants: [
+        [
+          "liana",
+          1
+        ],
+        [
+          "orchid",
+          1
+        ],
+        [
+          "fern",
+          1
+        ],
+        [
+          "rattan",
+          1
+        ],
+        [
+          "pitcher plant",
+          1
+        ],
+        [
+          "moss",
+          1
+        ]
+      ],
+      crops: [
+        [
+          "cassava",
+          1
+        ],
+        [
+          "yams",
+          1
+        ],
+        [
+          "bananas",
+          1
+        ],
+        [
+          "taro",
+          1
+        ],
+        [
+          "rice",
+          1
+        ],
+        [
+          "sago",
+          1
+        ]
+      ],
+      livestock: [
+        [
+          "pig",
+          2
+        ],
+        [
+          "chicken",
+          1
+        ],
+        [
+          "dog",
+          1
+        ]
+      ],
+      lifeways: [
+        [
+          "River Fishers",
+          16
+        ],
+        [
+          "Hunters",
+          14
+        ],
+        [
+          "Forest Gardeners",
+          12
+        ],
+        [
+          "Traders",
+          8
+        ],
+        [
+          "Gatherers",
+          6
+        ],
+        [
+          "Blowpipe Hunters",
+          6
+        ],
+        [
+          "Boatwrights",
+          6
+        ],
+        [
+          "Sago Makers",
+          6
+        ],
+        [
+          "Rattan Weavers",
+          6
+        ],
+        [
+          "Honey Gatherers",
+          4
+        ],
+        [
+          "Potters",
+          4
+        ],
+        [
+          "Bark-Cloth Makers",
+          4
+        ],
+        [
+          "Bird Catchers",
+          4
+        ],
+        [
+          "Resin Gatherers",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Great Tree",
+          1
+        ],
+        [
+          "Sacred Pool",
+          1
+        ],
+        [
+          "Thunder",
+          1
+        ],
+        [
+          "Rain",
+          1
+        ],
+        [
+          "Old Forest",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Gold",
+          1
+        ],
+        [
+          "Feathers",
+          1
+        ],
+        [
+          "Resin",
+          1
+        ],
+        [
+          "Bark Cloth",
+          1
+        ],
+        [
+          "Rubber",
+          1
+        ]
+      ]
+    },
+    {
+      id: "monsoon",
+      label: "Monsoon lands",
+      phrase: "the monsoon lands",
+      guide: "Wet and dry seasons, river plains, paddy fields, bamboo and teak forest: India, Bangladesh, mainland South-East Asia, southern China and Java.",
+      terrainWeights: {
+        open: 40,
+        mountains: 15,
+        coast: 10,
+        rivers: 25,
+        wetland: 10,
+        islands: 0
+      },
+      land: {
+        open: [
+          [
+            "River Plain",
+            1
+          ],
+          [
+            "Paddies",
+            1
+          ],
+          [
+            "Bamboo Forest",
+            1
+          ],
+          [
+            "Teak Forest",
+            1
+          ],
+          [
+            "Terraces",
+            1
+          ],
+          [
+            "Jungle",
+            1
+          ],
+          [
+            "Green Plain",
+            1
+          ],
+          [
+            "Red Hills",
+            1
+          ]
+        ],
+        mountains: [
+          [
+            "Blue Hills",
+            1
+          ],
+          [
+            "Snow Mountains",
+            1
+          ],
+          [
+            "Cloud Hills",
+            1
+          ],
+          [
+            "Rock Heights",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Palm Coast",
+            1
+          ],
+          [
+            "Spice Coast",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Sandbanks",
+            1
+          ]
+        ]
+      },
+      water: {
+        mountains: [
+          [
+            "Mountain Torrent",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Warm Sea",
+            1
+          ],
+          [
+            "Pearl Banks",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Great River",
+            1
+          ],
+          [
+            "Delta",
+            1
+          ],
+          [
+            "Floodwater",
+            1
+          ],
+          [
+            "Lotus Pools",
+            1
+          ],
+          [
+            "Seven Rivers",
+            1
+          ],
+          [
+            "Tanks",
+            1
+          ]
+        ],
+        wetland: [
+          [
+            "Mangroves",
+            1
+          ],
+          [
+            "Floodplain",
+            1
+          ],
+          [
+            "Lotus Marsh",
+            1
+          ]
+        ]
+      },
+      wildAnimals: [
+        [
+          "tiger",
+          1
+        ],
+        [
+          "elephant",
+          1
+        ],
+        [
+          "leopard",
+          1
+        ],
+        [
+          "monkey",
+          1
+        ],
+        [
+          "rhinoceros",
+          1
+        ],
+        [
+          "water buffalo",
+          1
+        ],
+        [
+          "deer",
+          1
+        ],
+        [
+          "boar",
+          1
+        ],
+        [
+          "bear",
+          1
+        ],
+        [
+          "mongoose",
+          1
+        ],
+        [
+          "wild dog",
+          1
+        ]
+      ],
+      birds: [
+        [
+          "peacock",
+          1
+        ],
+        [
+          "crane",
+          1
+        ],
+        [
+          "kingfisher",
+          1
+        ],
+        [
+          "parrot",
+          1
+        ],
+        [
+          "myna",
+          1
+        ],
+        [
+          "vulture",
+          1
+        ],
+        [
+          "kite",
+          1
+        ],
+        [
+          "hornbill",
+          1
+        ],
+        [
+          "heron",
+          1
+        ],
+        [
+          "egret",
+          1
+        ]
+      ],
+      creatures: [
+        [
+          "cobra",
+          1
+        ],
+        [
+          "python",
+          1
+        ],
+        [
+          "crocodile",
+          1
+        ],
+        [
+          "carp",
+          1
+        ],
+        [
+          "river dolphin",
+          1
+        ],
+        [
+          "turtle",
+          1
+        ],
+        [
+          "frog",
+          1
+        ],
+        [
+          "firefly",
+          1
+        ]
+      ],
+      trees: [
+        [
+          "banyan",
+          1
+        ],
+        [
+          "sacred fig",
+          1
+        ],
+        [
+          "teak",
+          1
+        ],
+        [
+          "mango",
+          1
+        ],
+        [
+          "bamboo",
+          1
+        ],
+        [
+          "palm",
+          1
+        ],
+        [
+          "sandalwood",
+          1
+        ],
+        [
+          "mulberry",
+          1
+        ]
+      ],
+      plants: [
+        [
+          "lotus",
+          1
+        ],
+        [
+          "jasmine",
+          1
+        ],
+        [
+          "reed",
+          1
+        ],
+        [
+          "rattan",
+          1
+        ],
+        [
+          "water lily",
+          1
+        ]
+      ],
+      crops: [
+        [
+          "rice",
+          3
+        ],
+        [
+          "millet",
+          1
+        ],
+        [
+          "sugar cane",
+          1
+        ],
+        [
+          "cotton",
+          1
+        ],
+        [
+          "pepper",
+          1
+        ],
+        [
+          "lentils",
+          1
+        ]
+      ],
+      livestock: [
+        [
+          "water buffalo",
+          2
+        ],
+        [
+          "cattle",
+          2
+        ],
+        [
+          "elephant",
+          1
+        ],
+        [
+          "goat",
+          1
+        ],
+        [
+          "chicken",
+          1
+        ],
+        [
+          "pig",
+          1
+        ],
+        [
+          "dog",
+          1
+        ]
+      ],
+      lifeways: [
+        [
+          "Rice Growers",
+          22
+        ],
+        [
+          "Fishers",
+          10
+        ],
+        [
+          "Traders",
+          10
+        ],
+        [
+          "Buffalo Herders",
+          8
+        ],
+        [
+          "Weavers",
+          8
+        ],
+        [
+          "Potters",
+          6
+        ],
+        [
+          "Smiths",
+          6
+        ],
+        [
+          "Spice Growers",
+          6
+        ],
+        [
+          "Silk Weavers",
+          6
+        ],
+        [
+          "Boatmen",
+          6
+        ],
+        [
+          "Elephant Keepers",
+          4
+        ],
+        [
+          "Salt Makers",
+          4
+        ],
+        [
+          "Cotton Growers",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Sacred River",
+          1
+        ],
+        [
+          "Monsoon Rains",
+          1
+        ],
+        [
+          "Sacred Fire",
+          1
+        ],
+        [
+          "Lotus Pool",
+          1
+        ],
+        [
+          "Serpent Shrine",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Silk",
+          1
+        ],
+        [
+          "Spices",
+          1
+        ],
+        [
+          "Pearls",
+          1
+        ],
+        [
+          "Indigo",
+          1
+        ],
+        [
+          "Rubies",
+          1
+        ],
+        [
+          "Salt",
+          1
+        ]
+      ]
+    },
+    {
+      id: "tropical-islands",
+      label: "Tropical islands",
+      phrase: "tropical islands",
+      guide: "Volcanic peaks, coral atolls, lagoons and open ocean: Polynesia, Micronesia, Melanesia, the Caribbean and the Indonesian and Philippine archipelagos.",
+      terrainWeights: {
+        open: 15,
+        mountains: 15,
+        coast: 35,
+        rivers: 5,
+        wetland: 5,
+        islands: 25
+      },
+      land: {
+        open: [
+          [
+            "High Valley",
+            1
+          ],
+          [
+            "Green Valleys",
+            1
+          ],
+          [
+            "Cloud Valley",
+            1
+          ],
+          [
+            "Taro Gardens",
+            1
+          ],
+          [
+            "Breadfruit Groves",
+            1
+          ]
+        ],
+        mountains: [
+          [
+            "Fire Mountain",
+            1
+          ],
+          [
+            "Rain Mountain",
+            1
+          ],
+          [
+            "Smoking Mountain",
+            1
+          ],
+          [
+            "Cloud Peak",
+            1
+          ],
+          [
+            "Sheer Cliffs",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Black Sands",
+            1
+          ],
+          [
+            "White Sands",
+            1
+          ],
+          [
+            "Twin Bays",
+            1
+          ],
+          [
+            "Coral Shore",
+            1
+          ],
+          [
+            "Blowhole",
+            1
+          ],
+          [
+            "Sandbar",
+            1
+          ]
+        ],
+        islands: [
+          [
+            "Atoll",
+            1
+          ],
+          [
+            "Far Isles",
+            1
+          ],
+          [
+            "Low Isles",
+            1
+          ],
+          [
+            "Coral Isles",
+            1
+          ]
+        ]
+      },
+      water: {
+        mountains: [
+          [
+            "Waterfall",
+            1
+          ],
+          [
+            "Mountain Pools",
+            1
+          ]
+        ],
+        coast: [
+          [
+            "Reef",
+            1
+          ],
+          [
+            "Outer Reef",
+            1
+          ],
+          [
+            "Lagoon",
+            1
+          ],
+          [
+            "Reef Pass",
+            1
+          ],
+          [
+            "Long Bay",
+            1
+          ],
+          [
+            "Deep Ocean",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Clear Stream",
+            1
+          ],
+          [
+            "Freshwater Springs",
+            1
+          ]
+        ],
+        wetland: [
+          [
+            "Mangroves",
+            1
+          ],
+          [
+            "Taro Swamp",
+            1
+          ]
+        ]
+      },
+      wildAnimals: [
+        [
+          "fruit bat",
+          1
+        ],
+        [
+          "flying fox",
+          1
+        ],
+        [
+          "wild pig",
+          1
+        ],
+        [
+          "monitor lizard",
+          1
+        ],
+        [
+          "rat",
+          0.3
+        ]
+      ],
+      birds: [
+        [
+          "frigatebird",
+          1
+        ],
+        [
+          "heron",
+          1
+        ],
+        [
+          "owl",
+          1
+        ],
+        [
+          "tern",
+          1
+        ],
+        [
+          "albatross",
+          1
+        ],
+        [
+          "parrot",
+          1
+        ],
+        [
+          "tropicbird",
+          1
+        ],
+        [
+          "plover",
+          1
+        ],
+        [
+          "fruit dove",
+          1
+        ]
+      ],
+      creatures: [
+        [
+          "shark",
+          1
+        ],
+        [
+          "turtle",
+          1
+        ],
+        [
+          "octopus",
+          1
+        ],
+        [
+          "whale",
+          1
+        ],
+        [
+          "eel",
+          1
+        ],
+        [
+          "manta ray",
+          1
+        ],
+        [
+          "dolphin",
+          1
+        ],
+        [
+          "tuna",
+          1
+        ],
+        [
+          "flying fish",
+          1
+        ],
+        [
+          "crab",
+          1
+        ],
+        [
+          "giant clam",
+          1
+        ],
+        [
+          "gecko",
+          1
+        ]
+      ],
+      trees: [
+        [
+          "coconut palm",
+          1
+        ],
+        [
+          "breadfruit",
+          1
+        ],
+        [
+          "pandanus",
+          1
+        ],
+        [
+          "candlenut",
+          1
+        ],
+        [
+          "ironwood",
+          1
+        ],
+        [
+          "banyan",
+          1
+        ],
+        [
+          "hibiscus",
+          1
+        ],
+        [
+          "mangrove",
+          1
+        ]
+      ],
+      plants: [
+        [
+          "fern",
+          1
+        ],
+        [
+          "vine",
+          1
+        ],
+        [
+          "sea grass",
+          1
+        ],
+        [
+          "ginger",
+          1
+        ],
+        [
+          "sugar cane",
+          1
+        ]
+      ],
+      crops: [
+        [
+          "taro",
+          1
+        ],
+        [
+          "breadfruit",
+          1
+        ],
+        [
+          "yams",
+          1
+        ],
+        [
+          "sweet potato",
+          1
+        ],
+        [
+          "coconuts",
+          1
+        ],
+        [
+          "bananas",
+          1
+        ],
+        [
+          "sugar cane",
+          1
+        ]
+      ],
+      livestock: [
+        [
+          "pig",
+          2
+        ],
+        [
+          "dog",
+          1
+        ],
+        [
+          "chicken",
+          1
+        ]
+      ],
+      lifeways: [
+        [
+          "Reef Fishers",
+          18
+        ],
+        [
+          "Voyagers",
+          16
+        ],
+        [
+          "Taro Planters",
+          12
+        ],
+        [
+          "Navigators",
+          8
+        ],
+        [
+          "Boatwrights",
+          8
+        ],
+        [
+          "Net Makers",
+          6
+        ],
+        [
+          "Pearl Divers",
+          6
+        ],
+        [
+          "Breadfruit Growers",
+          6
+        ],
+        [
+          "Traders",
+          6
+        ],
+        [
+          "Shell Gatherers",
+          4
+        ],
+        [
+          "Bark-Cloth Makers",
+          4
+        ],
+        [
+          "Bird Catchers",
+          4
+        ],
+        [
+          "Salt Makers",
+          2
+        ]
+      ],
+      sacred: [
+        [
+          "Fire Mountain",
+          1
+        ],
+        [
+          "Sacred Reef",
+          1
+        ],
+        [
+          "Star Path",
+          1
+        ],
+        [
+          "Ocean",
+          1
+        ],
+        [
+          "Rainbow",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Shells",
+          1
+        ],
+        [
+          "Pearls",
+          1
+        ],
+        [
+          "Red Feathers",
+          1
+        ],
+        [
+          "Basalt",
+          1
+        ],
+        [
+          "Coral",
+          1
+        ],
+        [
+          "Obsidian",
+          1
+        ]
+      ]
+    },
+    {
+      id: "highland",
+      label: "High mountains",
+      phrase: "the high mountains",
+      guide: "Cold, thin-aired country above the forests: the Andes, the Himalaya and Tibet, the Pamirs, the Ethiopian highlands, the high Alps and New Guinea's highland basins.",
+      terrainWeights: {
+        open: 35,
+        mountains: 40,
+        coast: 0,
+        rivers: 20,
+        wetland: 5,
+        islands: 0
+      },
+      land: {
+        open: [
+          [
+            "High Pastures",
+            1
+          ],
+          [
+            "High Plateau",
+            1
+          ],
+          [
+            "Cold Heights",
+            1
+          ],
+          [
+            "Stony Plain",
+            1
+          ],
+          [
+            "Terraces",
+            1
+          ],
+          [
+            "High Valley",
+            1
+          ],
+          [
+            "Hanging Valley",
+            1
+          ]
+        ],
+        mountains: [
+          [
+            "Twin Peaks",
+            1
+          ],
+          [
+            "Snow Peaks",
+            1
+          ],
+          [
+            "Ice Fields",
+            1
+          ],
+          [
+            "Glacier",
+            1
+          ],
+          [
+            "Sky Peaks",
+            1
+          ],
+          [
+            "Eagle Crags",
+            1
+          ],
+          [
+            "Fire Mountain",
+            0.5
+          ]
+        ],
+        rivers: [
+          [
+            "Gorge",
+            1
+          ]
+        ]
+      },
+      water: {
+        mountains: [
+          [
+            "Glacier River",
+            1
+          ],
+          [
+            "Torrent",
+            1
+          ]
+        ],
+        rivers: [
+          [
+            "Cold Lake",
+            1
+          ],
+          [
+            "Snow Springs",
+            1
+          ],
+          [
+            "High Lake",
+            1
+          ],
+          [
+            "Hot Springs",
+            1
+          ],
+          [
+            "Torrent",
+            1
+          ]
+        ],
+        wetland: [
+          [
+            "High Marsh",
+            1
+          ],
+          [
+            "Salt Lake",
+            1
+          ]
+        ]
+      },
+      wildAnimals: [
+        [
+          "snow leopard",
+          1
+        ],
+        [
+          "puma",
+          1
+        ],
+        [
+          "bear",
+          1
+        ],
+        [
+          "wild yak",
+          1
+        ],
+        [
+          "ibex",
+          1
+        ],
+        [
+          "wild sheep",
+          1
+        ],
+        [
+          "wolf",
+          1
+        ],
+        [
+          "marmot",
+          1
+        ],
+        [
+          "vicuna",
+          1
+        ]
+      ],
+      birds: [
+        [
+          "condor",
+          1
+        ],
+        [
+          "eagle",
+          1
+        ],
+        [
+          "bearded vulture",
+          1
+        ],
+        [
+          "falcon",
+          1
+        ],
+        [
+          "raven",
+          1
+        ],
+        [
+          "chough",
+          1
+        ],
+        [
+          "pheasant",
+          1
+        ],
+        [
+          "snowcock",
+          1
+        ]
+      ],
+      creatures: [
+        [
+          "trout",
+          1
+        ],
+        [
+          "toad",
+          1
+        ],
+        [
+          "frog",
+          1
+        ],
+        [
+          "lizard",
+          1
+        ],
+        [
+          "butterfly",
+          1
+        ],
+        [
+          "beetle",
+          1
+        ]
+      ],
+      trees: [
+        [
+          "juniper",
+          1
+        ],
+        [
+          "pine",
+          1
+        ],
+        [
+          "rhododendron",
+          1
+        ],
+        [
+          "monkey-puzzle",
+          1
+        ],
+        [
+          "cedar",
+          1
+        ],
+        [
+          "birch",
+          1
+        ]
+      ],
+      plants: [
+        [
+          "moss",
+          1
+        ],
+        [
+          "lichen",
+          1
+        ],
+        [
+          "edelweiss",
+          1
+        ],
+        [
+          "gentian",
+          1
+        ],
+        [
+          "bunch grass",
+          1
+        ],
+        [
+          "wild potato",
+          1
+        ]
+      ],
+      crops: [
+        [
+          "potatoes",
+          1
+        ],
+        [
+          "barley",
+          1
+        ],
+        [
+          "maize",
+          1
+        ],
+        [
+          "quinoa",
+          1
+        ],
+        [
+          "beans",
+          1
+        ]
+      ],
+      livestock: [
+        [
+          "llama",
+          2
+        ],
+        [
+          "yak",
+          2
+        ],
+        [
+          "alpaca",
+          1
+        ],
+        [
+          "goat",
+          1
+        ],
+        [
+          "sheep",
+          1
+        ],
+        [
+          "horse",
+          0.5
+        ],
+        [
+          "dog",
+          1
+        ],
+        [
+          "mule",
+          0.5
+        ]
+      ],
+      lifeways: [
+        [
+          "Terrace Farmers",
+          14
+        ],
+        [
+          "Llama Herders",
+          12
+        ],
+        [
+          "Yak Herders",
+          12
+        ],
+        [
+          "Shepherds",
+          10
+        ],
+        [
+          "Weavers",
+          10
+        ],
+        [
+          "Potato Growers",
+          8
+        ],
+        [
+          "Traders",
+          8
+        ],
+        [
+          "Miners",
+          6
+        ],
+        [
+          "Salt Traders",
+          6
+        ],
+        [
+          "Hunters",
+          6
+        ],
+        [
+          "Smiths",
+          4
+        ],
+        [
+          "Porters",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Holy Mountain",
+          1
+        ],
+        [
+          "Origin Lake",
+          1
+        ],
+        [
+          "Ancestor Cave",
+          1
+        ],
+        [
+          "Cairns",
+          1
+        ],
+        [
+          "Sun",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Silver",
+          1
+        ],
+        [
+          "Gold",
+          1
+        ],
+        [
+          "Copper",
+          1
+        ],
+        [
+          "Salt",
+          1
+        ],
+        [
+          "Turquoise",
+          1
+        ],
+        [
+          "Wool",
+          1
+        ],
+        [
+          "Obsidian",
+          1
+        ]
+      ]
+    }
+  ],
+  irregularPlurals: {
+    deer: "deer",
+    sheep: "sheep",
+    salmon: "salmon",
+    trout: "trout",
+    char: "char",
+    pike: "pike",
+    carp: "carp",
+    tuna: "tuna",
+    catfish: "catfish",
+    "flying fish": "flying fish",
+    bison: "bison",
+    buffalo: "buffalo",
+    "water buffalo": "water buffalo",
+    elk: "elk",
+    reindeer: "reindeer",
+    "musk ox": "musk oxen",
+    ox: "oxen",
+    wolf: "wolves",
+    wolverine: "wolverines",
+    goose: "geese",
+    "mouse-deer": "mouse-deer",
+    cattle: "cattle",
+    grass: "grasses",
+    fish: "fish",
+    sturgeon: "sturgeon",
+    swine: "swine",
+    cactus: "cacti",
+    papyrus: "papyrus",
+    lotus: "lotuses",
+    fungus: "fungi",
+    leaf: "leaves",
+    "wild ass": "wild asses",
+    ibex: "ibex",
+    snowcock: "snowcocks",
+    "giant clam": "giant clams",
+    oryx: "oryx",
+    vicuna: "vicunas",
+    mongoose: "mongooses",
+    octopus: "octopuses",
+    hippopotamus: "hippopotamuses",
+    rhinoceros: "rhinoceroses",
+    "bird of paradise": "birds of paradise"
+  }
+};
+
+// src/biomes.ts
+var BIOME_DATA = biomes_default;
+var TERRAINS = BIOME_DATA.terrains;
+var BIOMES = BIOME_DATA.biomes;
+function findBiome(id) {
+  return id ? BIOMES.find((b) => b.id === id) : void 0;
+}
+var biomeTitleCase = (word) => word.replace(/(^|[\s-])([a-z])/g, (_, sep, c) => sep + c.toUpperCase());
+function pluralOf(word) {
+  const irregular = BIOME_DATA.irregularPlurals[word];
+  if (irregular) return irregular;
+  const of = word.indexOf(" of ");
+  if (of > 0) return pluralOf(word.slice(0, of)) + word.slice(of);
+  const space = word.lastIndexOf(" ");
+  if (space > 0) {
+    const head = word.slice(space + 1);
+    const headPlural = BIOME_DATA.irregularPlurals[head];
+    if (headPlural) return word.slice(0, space + 1) + headPlural;
+  }
+  if (/(s|x|z|ch|sh)$/.test(word)) return `${word}es`;
+  if (/[^aeiou]y$/.test(word)) return `${word.slice(0, -1)}ies`;
+  return `${word}s`;
+}
+var COLONIAL_LISTS = {
+  bird: "birds",
+  "wild-animal": "wildAnimals",
+  "fish-and-other-creatures": "creatures",
+  tree: "trees",
+  "wild-plant": "plants"
+};
+function biomeEntries(biome, categoryId) {
+  const list = COLONIAL_LISTS[categoryId];
+  if (!list) return void 0;
+  return biome[list].map(([word, weight]) => [
+    { modern: word, plural: pluralOf(word), forms: [biomeTitleCase(word)], fuses: "no" },
+    weight
+  ]);
+}
+
 // src/data/place-shapes.json
 var place_shapes_default = {
   $comment: "Transcribed from place-name-shapes-reference.md (part 1). Data only: no plugin logic. Source elements and examples are kept for reference and never output.",
@@ -17370,12 +22872,14 @@ function generateColonialShapesDetailed(options) {
   }
   return { shapes, names, seed };
 }
-function colonialHistoryLabel(sectionLabel, part, tradition, context) {
+function colonialHistoryLabel(sectionLabel, part, tradition, context, biome) {
   const parts = [sectionLabel];
   const t = tradition ? COLONIAL_DATA.traditions.find((x) => x.id === tradition) : void 0;
   if (t) parts.push(t.label);
   const c = context ? COLONIAL_DATA.contexts[part].find((x) => x.id === context) : void 0;
   if (c) parts.push(c.label.toLowerCase());
+  const b = findBiome(biome);
+  if (b) parts.push(b.label.toLowerCase());
   return parts.join(" \xB7 ");
 }
 
@@ -19002,6 +24506,9 @@ var NameRenderer = class {
     const mapped = this.slots[categoryId];
     if (categoryId === RIVER_CATEGORY && (!mapped || mapped.kind === "built-in")) return this.riverWordFill(rng);
     if (this.colonial && !mapped && NATIVE_LABELS[categoryId]) {
+      const biome = findBiome(this.recipe.shape.biome);
+      const entries = biome ? biomeEntries(biome, categoryId) : void 0;
+      if (entries) return { kind: "word", entry: pickWeighted3(entries, rng), traditional: false };
       return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
     }
     const slot = this.slotFor(categoryId);
@@ -19463,7 +24970,7 @@ function* generatePlaceNamesSteps(options) {
 var RECIPE_DEFAULTS = {
   setting: "",
   template: false,
-  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", feature: "any" },
+  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", biome: "unknown", feature: "any" },
   slots: {},
   generics: {},
   register: "mixed",
@@ -19530,6 +25037,9 @@ function readRecipe(fm) {
       const value = str(fm.shape[key]);
       if (value) shape[key] = value;
     }
+    const biome = str(fm.shape.biome);
+    if (biome && (biome === "unknown" || findBiome(biome))) shape.biome = biome;
+    else if (biome) problems.push(`Unknown biome \u201C${biome}\u201D.`);
     recipe.shape = shape;
   }
   if (isObject(fm.slots)) {
@@ -19610,7 +25120,10 @@ function recipeToFrontmatter(r) {
   const out = { type: "recipe", setting: (_a2 = r.setting) != null ? _a2 : "" };
   if (r.template) out.template = true;
   if (r.templateOf) out["template-of"] = `[[${r.templateOf}]]`;
-  if (r.shape && Object.keys(r.shape).length > 0) out.shape = { ...r.shape };
+  if (r.shape && Object.keys(r.shape).length > 0) {
+    const { biome, ...rest } = r.shape;
+    out.shape = biome && biome !== "unknown" ? { ...rest, biome } : rest;
+  }
   if (r.slots && Object.keys(r.slots).length > 0) {
     out.slots = Object.fromEntries(
       Object.entries(r.slots).map(([id, slot]) => {
@@ -19649,9 +25162,9 @@ function britishPlaceNamesRecipe(region) {
     render: { joining: "balanced", linkingHyphens: true, etymology: false }
   });
 }
-function colonialPlaceNamesRecipe(part, tradition, context) {
+function colonialPlaceNamesRecipe(part, tradition, context, biome) {
   return withDefaults({
-    shape: { part, tradition: tradition != null ? tradition : "general", context: context != null ? context : "none", feature: "any" },
+    shape: { part, tradition: tradition != null ? tradition : "general", context: context != null ? context : "none", biome: biome != null ? biome : "unknown", feature: "any" },
     register: "modern",
     render: { joining: "balanced", linkingHyphens: true, etymology: false }
   });
@@ -21375,12 +26888,24 @@ var AT_A_GLANCE = [
 ];
 var RULE_OF_THUMB = "A useful rule of thumb when choosing: ask whose language a traveller would hear in the market fifty years after the takeover. If it's the incomers', it's imposition; if it's a mix, accommodation; if it's still the locals', adoption.";
 var ContextGuideModal = class extends import_obsidian8.Modal {
-  constructor(app) {
+  /** `contexts`: show expansion's three contexts before the biomes. */
+  constructor(app, contexts = true) {
     super(app);
+    this.contexts = contexts;
   }
   onOpen() {
     this.modalEl.addClass("nameforge-guide-modal", "nameforge-context-guide");
     const el = this.contentEl;
+    if (this.contexts) this.renderContexts(el);
+    el.createEl("h3", { cls: "nameforge-context-guide__heading", text: "Biomes" });
+    for (const biome of BIOMES) {
+      const p = el.createEl("p");
+      p.createEl("strong", { text: biome.label });
+      p.appendText(`: ${biome.guide}`);
+    }
+    el.createEl("p", { cls: "nameforge-guide-modal__credit", text: "Above text created by Claude.ai" });
+  }
+  renderContexts(el) {
     for (const entry of ENTRIES) {
       el.createEl("h3", { cls: "nameforge-context-guide__heading", text: entry.heading });
       for (const text of entry.paragraphs) el.createEl("p", { text });
@@ -21396,12 +26921,36 @@ var ContextGuideModal = class extends import_obsidian8.Modal {
       for (const cell of row) tr.createEl("td", { text: cell });
     }
     el.createEl("p", { text: RULE_OF_THUMB });
-    el.createEl("p", { cls: "nameforge-guide-modal__credit", text: "Above text created by Claude.ai" });
   }
   onClose() {
     this.contentEl.empty();
   }
 };
+
+// src/colonialSentence.ts
+function incomersPhrase(id, label) {
+  if (id === "general") return "General incomers";
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+Imperial$/, "").trim()}-themed incomers`;
+}
+function explorersPhrase(id, label) {
+  if (id === "general") return "General explorers";
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()}-themed explorers`;
+}
+var FEATURES = [
+  { id: "any", label: "Any feature" },
+  { id: "settlement", label: "Settlement" },
+  { id: "landscape", label: "Landscape" },
+  ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label }))
+];
+var UNKNOWN_COUNTRY = "unknown country";
+var BIOME_CHOICES = [
+  { id: "unknown", label: UNKNOWN_COUNTRY },
+  ...BIOMES.map((b) => ({ id: b.id, label: b.phrase }))
+];
+function biomePhrase(biome) {
+  var _a2, _b;
+  return (_b = (_a2 = findBiome(biome)) == null ? void 0 : _a2.phrase) != null ? _b : UNKNOWN_COUNTRY;
+}
 
 // src/names/slotOptions.ts
 var SLOT_TIERS = ["simple", "detailed", "complete"];
@@ -21519,21 +27068,7 @@ function usesNativeDefault(part, categoryId) {
 // src/recipeEditor.ts
 var NEW_LANDS_CONTEXTS = CONTEXT_PHRASES["2"];
 var EXPANSION_CONTEXTS = CONTEXT_PHRASES["2a"];
-function incomersPhrase(id, label) {
-  if (id === "general") return "General incomers";
-  return `${label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+Imperial$/, "").trim()}-themed incomers`;
-}
-var FEATURES = [
-  { id: "any", label: "Any feature" },
-  { id: "settlement", label: "Settlement" },
-  { id: "landscape", label: "Landscape" },
-  ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label }))
-];
 var NO_THE_REGIONS = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
-function explorersPhrase(id, label) {
-  if (id === "general") return "General explorers";
-  return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()}-themed explorers`;
-}
 var same3 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 var PAGES = ["Template", "Shape and rendering", "Slots and generic words"];
@@ -21827,8 +27362,10 @@ var RecipeWizard = class {
       w.shape.context,
       (id) => w.shape.context = id
     );
+    this.biomeLink(sentence);
     sentence.appendText(", naming ");
     this.featureLink(sentence, false);
+    this.guideIcon(sentence, false);
   }
   /** Expansion into settled lands: "‹General incomers› who are ‹ruling over the locals›, naming ‹any feature›". */
   renderExpansionSentence(el) {
@@ -21854,11 +27391,37 @@ var RecipeWizard = class {
       w.shape.context,
       (id) => w.shape.context = id
     );
+    this.biomeLink(sentence);
     sentence.appendText(", naming ");
     this.featureLink(sentence, false);
-    const info = sentence.createSpan({ cls: "clickable-icon nameforge-recipe-editor__info", attr: { role: "button", "aria-label": "Context guide" } });
+    this.guideIcon(sentence, true);
+  }
+  /** Tribal brief §19.2: " across ‹unknown country›", a menu of "unknown country" then the 11 biomes. */
+  biomeLink(sentence) {
+    const w = this.working;
+    sentence.appendText(" across ");
+    const [unknown, ...biomes] = BIOME_CHOICES;
+    const a = sentence.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text: biomePhrase(w.shape.biome), attr: { href: "#", role: "button" } });
+    a.addEventListener("click", (event) => {
+      event.preventDefault();
+      const menu = new import_obsidian9.Menu();
+      const add = (c) => menu.addItem(
+        (item) => item.setTitle(c.label).setChecked(c.id === (w.shape.biome || "unknown")).onClick(() => {
+          w.shape.biome = c.id;
+          this.render();
+        })
+      );
+      add(unknown);
+      menu.addSeparator();
+      biomes.forEach(add);
+      menu.showAtMouseEvent(event);
+    });
+  }
+  /** The guide icon at the end of a colonial sentence: the contexts (expansion only), then biomes. */
+  guideIcon(sentence, contexts) {
+    const info = sentence.createSpan({ cls: "clickable-icon nameforge-recipe-editor__info", attr: { role: "button", "aria-label": contexts ? "Context and biome guide" : "Biome guide" } });
     (0, import_obsidian9.setIcon)(info, ICON_INFO);
-    info.addEventListener("click", () => new ContextGuideModal(this.app).open());
+    info.addEventListener("click", () => new ContextGuideModal(this.app, contexts).open());
   }
   regionValue(value) {
     const r = PLACE_SHAPE_REGIONS.find((x) => x.code === value.toUpperCase() || kebab(x.label) === kebab(value));
@@ -21884,7 +27447,9 @@ var RecipeWizard = class {
         if (allowed) d.addOption(value, text);
         else if (shown === value) d.addOption(value, `${text} (not recommended)`);
       };
-      d.addOption("default", river ? "River name module" : nativeDefault ? "Native placeholder" : fallback === "built-in" ? "Built-in list" : "Placeholder");
+      const biome = nativeDefault ? findBiome(w.shape.biome) : void 0;
+      const nativeLabel = biome ? `${biome.label} list` : "Native placeholder";
+      d.addOption("default", river ? "River name module" : nativeDefault ? nativeLabel : fallback === "built-in" ? "Built-in list" : "Placeholder");
       d.selectEl.appendChild(createEl("hr"));
       offer("built-in", "Built-in list", nativeDefault);
       offer("packs", "Name packs", allowsPacks(part, id));
@@ -22568,6 +28133,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     this.selectedTradition = { "2": void 0, "2a": void 0 };
     /** Each part's context, starting on its first (as the wizard does): wild and unsettled lands, ruling over the locals. */
     this.selectedContext = { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] };
+    /** Tribal brief §19.4: each colonial part's biome; undefined is Unknown country (native placeholders). */
+    this.selectedBiome = { "2": void 0, "2a": void 0 };
     this.contextRowEl = null;
     this.quantityToggleEl = null;
     this.generateButtonEl = null;
@@ -22882,7 +28449,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
     (_j = this.regionDropdownEl) == null ? void 0 : _j.toggle(section === "placeShapes" || river || !!colonialPart || section === "nameAgeing" || takeover);
-    this.showSecondBox(river && this.riverSetting === "british" || section === "placeShapes" && this.placeHasSecondBox() || takeover);
+    this.showSecondBox(river && this.riverSetting === "british" || section === "placeShapes" && this.placeHasSecondBox() || takeover || !!colonialPart);
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
@@ -22955,7 +28522,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
   }
   /** The second box's label and tooltip for the active module. */
   updateSecondBoxLabel() {
-    var _a2, _b, _c;
+    var _a2, _b, _c, _d, _e;
     const label = this.secondBoxLabelEl;
     const trigger = this.secondBoxTriggerEl;
     if (!label || !trigger) return;
@@ -22964,16 +28531,23 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       trigger.setAttribute("title", "Takeover pack: the language that adopts the names");
       return;
     }
+    const biomeBox = this.biomeBox();
+    if (biomeBox) {
+      const biome = findBiome(biomeBox.current);
+      label.textContent = (_a2 = biome == null ? void 0 : biome.label) != null ? _a2 : biomeBox.none.label;
+      trigger.setAttribute("title", (_b = biome == null ? void 0 : biome.guide) != null ? _b : biomeBox.none.title);
+      return;
+    }
     if (this.activeSection === "placeShapes" && this.placeIsWorld()) {
       const era = findEra(findCulture(this.worldCulture), this.worldEras[this.worldCulture]);
       label.textContent = era.label;
-      trigger.setAttribute("title", `Era: ${(_a2 = era.guide) != null ? _a2 : era.label}`);
+      trigger.setAttribute("title", `Era: ${(_c = era.guide) != null ? _c : era.label}`);
       return;
     }
     const regionCode = this.activeSection === "placeShapes" ? this.selectedRegion : this.riverRegion;
     const region = PLACE_SHAPE_REGIONS.find((r) => r.code === regionCode);
-    label.textContent = (_b = region == null ? void 0 : region.label) != null ? _b : "All Britain";
-    trigger.setAttribute("title", `Region: ${(_c = region == null ? void 0 : region.counties) != null ? _c : "no regional weighting"}`);
+    label.textContent = (_d = region == null ? void 0 : region.label) != null ? _d : "All Britain";
+    trigger.setAttribute("title", `Region: ${(_e = region == null ? void 0 : region.counties) != null ? _e : "no regional weighting"}`);
   }
   /**
    * River names and place names' Britain: All Britain, then the regions. Place names' world cultures:
@@ -22999,6 +28573,22 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
         item.addEventListener("click", () => {
           if (pack.reason) return;
           this.takeoverView.selectTakeover(pack.path);
+          choose();
+        });
+      }
+      return;
+    }
+    const biomeBox = this.biomeBox();
+    if (biomeBox) {
+      const choices = [{ id: void 0, label: biomeBox.none.label, guide: biomeBox.none.title }, ...BIOMES];
+      for (const biome of choices) {
+        const item = menu.createEl("button", {
+          cls: "nameforge-modal__pack-dropdown-item" + (biome.id === biomeBox.current ? " is-active" : ""),
+          attr: { type: "button", title: biome.guide }
+        });
+        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: biome.label });
+        item.addEventListener("click", () => {
+          biomeBox.choose(biome.id);
           choose();
         });
       }
@@ -23038,6 +28628,21 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
         choose();
       });
     }
+  }
+  /**
+   * The second box as a biome chooser (Tribal brief §19.4), for the modules that take one: the
+   * current biome, how to change it, and the first choice (no biome).
+   */
+  biomeBox() {
+    const part = COLONIAL_SECTION_PART[this.activeSection];
+    if (part) {
+      return {
+        current: this.selectedBiome[part],
+        choose: (id) => this.selectedBiome[part] = id,
+        none: { label: "Unknown country", title: "Unknown country: native wildlife and plants stay as placeholders" }
+      };
+    }
+    return void 0;
   }
   /** Gives the region box the setting box's exact left edge and width. */
   alignSecondBox() {
@@ -24246,8 +29851,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
       const tradition = this.selectedTradition[colonialPart];
       const context = this.selectedContext[colonialPart];
+      const biome = this.selectedBiome[colonialPart];
       const result2 = generatePlaceNames({
-        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context),
+        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome),
         slots: {},
         count: this.generationCount,
         seed: seedOverride2,
@@ -24258,7 +29864,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       this.renderRecipeResults(result2.names, "module");
       await this.recordGenerationHistory(
         result2.names.length,
-        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context)
+        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context, biome)
       );
       this.setStatus("");
       return;

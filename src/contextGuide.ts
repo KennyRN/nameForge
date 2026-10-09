@@ -1,7 +1,8 @@
-// The guide to expansion into settled lands' three contexts, opened from the place name wizard's
-// information icon.
+// The guide to expansion into settled lands' three contexts and to the biomes (Tribal brief §19.2),
+// opened from the place name wizard's information icon. Exploration shows only the biomes.
 
 import { App, Modal } from "obsidian";
+import { BIOMES } from "./biomes";
 
 interface ContextGuideEntry {
   heading: string;
@@ -43,13 +44,25 @@ const RULE_OF_THUMB =
   "A useful rule of thumb when choosing: ask whose language a traveller would hear in the market fifty years after the takeover. If it's the incomers', it's imposition; if it's a mix, accommodation; if it's still the locals', adoption.";
 
 export class ContextGuideModal extends Modal {
-  constructor(app: App) {
+  /** `contexts`: show expansion's three contexts before the biomes. */
+  constructor(app: App, private contexts = true) {
     super(app);
   }
 
   onOpen() {
     this.modalEl.addClass("nameforge-guide-modal", "nameforge-context-guide");
     const el = this.contentEl;
+    if (this.contexts) this.renderContexts(el);
+    el.createEl("h3", { cls: "nameforge-context-guide__heading", text: "Biomes" });
+    for (const biome of BIOMES) {
+      const p = el.createEl("p");
+      p.createEl("strong", { text: biome.label });
+      p.appendText(`: ${biome.guide}`);
+    }
+    el.createEl("p", { cls: "nameforge-guide-modal__credit", text: "Above text created by Claude.ai" });
+  }
+
+  private renderContexts(el: HTMLElement) {
     for (const entry of ENTRIES) {
       // Each context's heading, brackets and all, in the modal title's style.
       el.createEl("h3", { cls: "nameforge-context-guide__heading", text: entry.heading });
@@ -66,7 +79,6 @@ export class ContextGuideModal extends Modal {
       for (const cell of row) tr.createEl("td", { text: cell });
     }
     el.createEl("p", { text: RULE_OF_THUMB });
-    el.createEl("p", { cls: "nameforge-guide-modal__credit", text: "Above text created by Claude.ai" });
   }
 
   onClose() {

@@ -182,7 +182,7 @@ test("recipes: the §6.6 example reads; templates merge per setting", () => {
 
   const template: RecipePartial = { shape: { region: "north", feature: "landscape" }, register: "modern", render: { joining: "fused" }, slots: { tree: { kind: "placeholder" } } };
   const merged = withDefaults(mergeRecipe({ shape: { region: "wales" }, slots: { bird: { kind: "ignore" } } }, template));
-  assert.deepEqual(merged.shape, { part: "organic", region: "wales", tradition: "general", context: "none", feature: "landscape" });
+  assert.deepEqual(merged.shape, { part: "organic", region: "wales", tradition: "general", context: "none", biome: "unknown", feature: "landscape" });
   assert.equal(merged.register, "modern");
   assert.equal(merged.render.joining, "fused");
   assert.deepEqual(Object.keys(merged.slots).sort(), ["bird", "tree"]);

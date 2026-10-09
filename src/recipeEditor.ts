@@ -4,6 +4,8 @@
 import { App, Menu, Modal, normalizePath, Notice, Setting, setIcon, stringifyYaml, TFile } from "obsidian";
 import { ContextGuideModal } from "./contextGuide";
 import { CONTEXT_PHRASES, traditionLabel } from "./colonialWording";
+import { findBiome } from "./biomes";
+import { BIOME_CHOICES, biomePhrase, explorersPhrase, FEATURES, incomersPhrase } from "./colonialSentence";
 import { ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
 import { sanitizePackNameForFilename } from "./nameParser";
 import { defaultNameMode, hasBuiltInList } from "./names/engine";
@@ -49,25 +51,8 @@ export interface RecipeEditorOptions {
 /** Each colonial part's contexts, as they read in the wizard's sentence (shared with the modules). */
 const NEW_LANDS_CONTEXTS = CONTEXT_PHRASES["2"];
 const EXPANSION_CONTEXTS = CONTEXT_PHRASES["2a"];
-/** "General incomers", "Roman-themed incomers"; brackets and a trailing "Imperial" are dropped ("British-themed incomers"). */
-function incomersPhrase(id: string, label: string): string {
-  if (id === "general") return "General incomers";
-  return `${label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+Imperial$/, "").trim()}-themed incomers`;
-}
-/** The feature choices: any, the two sides, then each group. */
-const FEATURES: { id: string; label: string }[] = [
-  { id: "any", label: "Any feature" },
-  { id: "settlement", label: "Settlement" },
-  { id: "landscape", label: "Landscape" },
-  ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label })),
-];
 /** Regions that read without "the" in the place names sentence ("from Wales", but "from the North"). */
 const NO_THE_REGIONS = new Set(["Cornwall", "East Anglia", "Wales"]);
-/** "Roman-themed explorers"; a bracketed note in the label is dropped ("Hellenistic-themed explorers"). */
-function explorersPhrase(id: string, label: string): string {
-  if (id === "general") return "General explorers";
-  return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()}-themed explorers`;
-}
 const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 const kebab = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
@@ -426,8 +411,10 @@ export class RecipeWizard {
       w.shape.context,
       (id) => (w.shape.context = id),
     );
+    this.biomeLink(sentence);
     sentence.appendText(", naming ");
     this.featureLink(sentence, false);
+    this.guideIcon(sentence, false);
   }
 
   /** Expansion into settled lands: "‹General incomers› who are ‹ruling over the locals›, naming ‹any feature›". */
@@ -455,12 +442,43 @@ export class RecipeWizard {
       w.shape.context,
       (id) => (w.shape.context = id),
     );
+    this.biomeLink(sentence);
     sentence.appendText(", naming ");
     this.featureLink(sentence, false);
-    // The guide to the three contexts.
-    const info = sentence.createSpan({ cls: "clickable-icon nameforge-recipe-editor__info", attr: { role: "button", "aria-label": "Context guide" } });
+    this.guideIcon(sentence, true);
+  }
+
+  /** Tribal brief §19.2: " across ‹unknown country›", a menu of "unknown country" then the 11 biomes. */
+  private biomeLink(sentence: HTMLElement) {
+    const w = this.working;
+    sentence.appendText(" across ");
+    const [unknown, ...biomes] = BIOME_CHOICES;
+    const a = sentence.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text: biomePhrase(w.shape.biome), attr: { href: "#", role: "button" } });
+    a.addEventListener("click", (event) => {
+      event.preventDefault();
+      const menu = new Menu();
+      const add = (c: { id: string; label: string }) =>
+        menu.addItem((item) =>
+          item
+            .setTitle(c.label)
+            .setChecked(c.id === (w.shape.biome || "unknown"))
+            .onClick(() => {
+              w.shape.biome = c.id;
+              this.render();
+            }),
+        );
+      add(unknown);
+      menu.addSeparator();
+      biomes.forEach(add);
+      menu.showAtMouseEvent(event);
+    });
+  }
+
+  /** The guide icon at the end of a colonial sentence: the contexts (expansion only), then biomes. */
+  private guideIcon(sentence: HTMLElement, contexts: boolean) {
+    const info = sentence.createSpan({ cls: "clickable-icon nameforge-recipe-editor__info", attr: { role: "button", "aria-label": contexts ? "Context and biome guide" : "Biome guide" } });
     setIcon(info, ICON_INFO);
-    info.addEventListener("click", () => new ContextGuideModal(this.app).open());
+    info.addEventListener("click", () => new ContextGuideModal(this.app, contexts).open());
   }
 
   private regionValue(value: string): string {
@@ -499,7 +517,10 @@ export class RecipeWizard {
         else if (shown === value) d.addOption(value, `${text} (not recommended)`);
       };
       // The unset choice leads, labelled as what it resolves to, with a separator before the rest.
-      d.addOption("default", river ? "River name module" : nativeDefault ? "Native placeholder" : fallback === "built-in" ? "Built-in list" : "Placeholder");
+      // Tribal brief §19.3: with a biome set, unset native flora and fauna draw its list.
+      const biome = nativeDefault ? findBiome(w.shape.biome) : undefined;
+      const nativeLabel = biome ? `${biome.label} list` : "Native placeholder";
+      d.addOption("default", river ? "River name module" : nativeDefault ? nativeLabel : fallback === "built-in" ? "Built-in list" : "Placeholder");
       d.selectEl.appendChild(createEl("hr"));
       offer("built-in", "Built-in list", nativeDefault);
       offer("packs", "Name packs", allowsPacks(part, id));

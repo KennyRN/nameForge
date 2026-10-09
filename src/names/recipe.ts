@@ -1,6 +1,8 @@
 // Recipe packs (names-reference §6–§7). No Obsidian imports: the host parses the frontmatter YAML
 // into a plain object and hands it here.
 
+import { findBiome } from "../biomes";
+
 export type Register = "modern" | "mixed" | "traditional";
 export type Joining = "fused" | "balanced" | "spaced";
 export type ShapePart = "organic" | "new-land" | "established";
@@ -30,7 +32,8 @@ export interface RecipeSettings {
   setting: string;
   template: boolean;
   templateOf?: string;
-  shape: { part: ShapePart; region: string; tradition: string; context: string; feature: string };
+  /** `biome` (Tribal brief §19.1): a biome id, or "unknown" for native placeholders. */
+  shape: { part: ShapePart; region: string; tradition: string; context: string; biome: string; feature: string };
   slots: Record<string, SlotSetting>;
   generics: Record<string, string>;
   register: Register;
@@ -58,7 +61,7 @@ export interface RecipePartial {
 export const RECIPE_DEFAULTS: RecipeSettings = {
   setting: "",
   template: false,
-  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", feature: "any" },
+  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", biome: "unknown", feature: "any" },
   slots: {},
   generics: {},
   register: "mixed",
@@ -133,6 +136,10 @@ export function readRecipe(fm: Record<string, unknown>): { recipe: RecipePartial
       const value = str(fm.shape[key]);
       if (value) shape[key] = value;
     }
+    // Tribal brief §19.1: a biome id or "unknown"; anything else is reported and skipped.
+    const biome = str(fm.shape.biome);
+    if (biome && (biome === "unknown" || findBiome(biome))) shape.biome = biome;
+    else if (biome) problems.push(`Unknown biome “${biome}”.`);
     recipe.shape = shape;
   }
   if (isObject(fm.slots)) {
@@ -224,7 +231,11 @@ export function recipeToFrontmatter(r: RecipePartial): Record<string, unknown> {
   const out: Record<string, unknown> = { type: "recipe", setting: r.setting ?? "" };
   if (r.template) out.template = true;
   if (r.templateOf) out["template-of"] = `[[${r.templateOf}]]`;
-  if (r.shape && Object.keys(r.shape).length > 0) out.shape = { ...r.shape };
+  if (r.shape && Object.keys(r.shape).length > 0) {
+    // Tribal brief §19.1: "unknown" is the default and is never written.
+    const { biome, ...rest } = r.shape;
+    out.shape = biome && biome !== "unknown" ? { ...rest, biome } : rest;
+  }
   if (r.slots && Object.keys(r.slots).length > 0) {
     out.slots = Object.fromEntries(
       Object.entries(r.slots).map(([id, slot]) => {
@@ -274,14 +285,16 @@ export function britishPlaceNamesRecipe(region: string | undefined): RecipeSetti
  * The exploration and empire expansion place names modules' fixed built-in recipe (river brief §3):
  * colonial part 2 (`new-land`) or 2a (`established`) with the module's tradition and context
  * (undefined for General and none), modern words, balanced joining, linking hyphens, no slots.
+ * A biome (Tribal brief §19.4) fills native wildlife and plants; undefined leaves placeholders.
  */
 export function colonialPlaceNamesRecipe(
   part: "new-land" | "established",
   tradition: string | undefined,
   context: string | undefined,
+  biome?: string,
 ): RecipeSettings {
   return withDefaults({
-    shape: { part, tradition: tradition ?? "general", context: context ?? "none", feature: "any" },
+    shape: { part, tradition: tradition ?? "general", context: context ?? "none", biome: biome ?? "unknown", feature: "any" },
     register: "modern",
     render: { joining: "balanced", linkingHyphens: true, etymology: false },
   });
