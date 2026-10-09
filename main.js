@@ -39106,7 +39106,9 @@ var PLACE_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-sep
 var NameForgeEditorModal = class extends import_obsidian12.Modal {
   constructor(app, parent, initialText, initialPackName) {
     super(app);
+    /** The active tab's text box (one of textPanes), or null on the tabs without one. */
     this.inputEl = null;
+    this.textPanes = {};
     this.packNameInput = null;
     this.breakdownButton = null;
     this.listButton = null;
@@ -39258,14 +39260,21 @@ var NameForgeEditorModal = class extends import_obsidian12.Modal {
     biomeRow.hide();
     const stage = contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
     this.stageEl = stage;
-    this.inputEl = stage.createEl("textarea", {
-      cls: "nameforge-modal__textarea nameforge-editor-modal__stage-pane",
-      attr: {
-        placeholder: NAME_TEXTAREA_PLACEHOLDER,
-        rows: "12"
-      }
-    });
-    this.inputEl.value = this.initialText;
+    const placeholders = {
+      breakdownPack: NAME_TEXTAREA_PLACEHOLDER,
+      listPack: NAME_TEXTAREA_PLACEHOLDER,
+      placePack: PLACE_TEXTAREA_PLACEHOLDER,
+      wordList: WORD_LIST_TEXTAREA_PLACEHOLDER,
+      biome: ""
+    };
+    for (const pane of Object.keys(placeholders)) {
+      this.textPanes[pane] = stage.createEl("textarea", {
+        cls: "nameforge-modal__textarea nameforge-editor-modal__stage-pane",
+        attr: { placeholder: placeholders[pane], rows: "12" }
+      });
+    }
+    const initialPane = this.textPaneFor(this.parent.currentPackType);
+    if (initialPane) this.textPanes[initialPane].value = this.initialText;
     this.buildCompoundSection(stage);
     this.buildMixSection(stage);
     this.wizardPaneEl = stage.createDiv({ cls: "nameforge-editor-modal__stage-pane nameforge-editor-modal__wizard" });
@@ -39594,7 +39603,7 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     this.updateCompoundControls();
   }
   updateTypeButtons() {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _A, _B, _C, _D, _E, _F, _G, _H, _I;
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z;
     const isWizard = this.wizardMode;
     const isWordList = !isWizard && this.wordListMode;
     const isBiome = !isWizard && this.biomeMode;
@@ -39636,26 +39645,15 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     (_u = this.compoundButton) == null ? void 0 : _u.setAttribute("aria-pressed", String(isCompound));
     (_v = this.placeButton) == null ? void 0 : _v.setAttribute("aria-pressed", String(isPlace));
     (_w = this.mixButton) == null ? void 0 : _w.setAttribute("aria-pressed", String(isMix));
-    if (this.inputEl) {
-      this.inputEl.placeholder = isWordList ? WORD_LIST_TEXTAREA_PLACEHOLDER : isPlace ? PLACE_TEXTAREA_PLACEHOLDER : NAME_TEXTAREA_PLACEHOLDER;
-    }
-    if (isWizard) {
-      (_x = this.inputEl) == null ? void 0 : _x.hide();
-      (_y = this.compoundSectionEl) == null ? void 0 : _y.hide();
-      (_z = this.mixSectionEl) == null ? void 0 : _z.hide();
-    } else if (isCompound) {
-      (_A = this.inputEl) == null ? void 0 : _A.hide();
-      (_B = this.compoundSectionEl) == null ? void 0 : _B.show();
-      (_C = this.mixSectionEl) == null ? void 0 : _C.hide();
-    } else if (isMix) {
-      (_D = this.inputEl) == null ? void 0 : _D.hide();
-      (_E = this.compoundSectionEl) == null ? void 0 : _E.hide();
-      (_F = this.mixSectionEl) == null ? void 0 : _F.show();
-    } else {
-      (_G = this.inputEl) == null ? void 0 : _G.show();
-      (_H = this.compoundSectionEl) == null ? void 0 : _H.hide();
-      (_I = this.mixSectionEl) == null ? void 0 : _I.hide();
-    }
+    const pane = isWizard ? void 0 : isWordList ? "wordList" : isBiome ? "biome" : this.textPaneFor(this.selectedPackType);
+    this.inputEl = pane ? (_x = this.textPanes[pane]) != null ? _x : null : null;
+    for (const el of Object.values(this.textPanes)) el.toggle(el === this.inputEl);
+    (_y = this.compoundSectionEl) == null ? void 0 : _y.toggle(isCompound);
+    (_z = this.mixSectionEl) == null ? void 0 : _z.toggle(isMix);
+  }
+  /** The text box a pack type writes in; compound and mix have their own sections instead. */
+  textPaneFor(type) {
+    return type === "breakdownPack" || type === "listPack" || type === "placePack" ? type : void 0;
   }
   updateCompoundControls() {
     var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;

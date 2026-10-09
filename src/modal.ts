@@ -3231,9 +3231,14 @@ const WORD_LIST_TEXTAREA_PLACEHOLDER =
 const PLACE_TEXTAREA_PLACEHOLDER =
   "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
 
+/** The editor's text boxes: one per text tab. */
+type TextPane = "breakdownPack" | "listPack" | "placePack" | "wordList" | "biome";
+
 class NameForgeEditorModal extends Modal {
   private parent: NameForgeModal;
+  /** The active tab's text box (one of textPanes), or null on the tabs without one. */
   private inputEl: HTMLTextAreaElement | null = null;
+  private textPanes: Partial<Record<TextPane, HTMLTextAreaElement>> = {};
   private packNameInput: HTMLInputElement | null = null;
   private breakdownButton: HTMLButtonElement | null = null;
   private listButton: HTMLButtonElement | null = null;
@@ -3413,14 +3418,22 @@ class NameForgeEditorModal extends Modal {
     const stage = contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
     this.stageEl = stage;
 
-    this.inputEl = stage.createEl("textarea", {
-      cls: "nameforge-modal__textarea nameforge-editor-modal__stage-pane",
-      attr: {
-        placeholder: NAME_TEXTAREA_PLACEHOLDER,
-        rows: "12",
-      },
-    });
-    this.inputEl.value = this.initialText;
+    // Each text tab has its own box, so words typed under one never carry into another.
+    const placeholders: Record<TextPane, string> = {
+      breakdownPack: NAME_TEXTAREA_PLACEHOLDER,
+      listPack: NAME_TEXTAREA_PLACEHOLDER,
+      placePack: PLACE_TEXTAREA_PLACEHOLDER,
+      wordList: WORD_LIST_TEXTAREA_PLACEHOLDER,
+      biome: "",
+    };
+    for (const pane of Object.keys(placeholders) as TextPane[]) {
+      this.textPanes[pane] = stage.createEl("textarea", {
+        cls: "nameforge-modal__textarea nameforge-editor-modal__stage-pane",
+        attr: { placeholder: placeholders[pane], rows: "12" },
+      });
+    }
+    const initialPane = this.textPaneFor(this.parent.currentPackType);
+    if (initialPane) this.textPanes[initialPane]!.value = this.initialText;
 
     this.buildCompoundSection(stage);
     this.buildMixSection(stage);
@@ -3823,31 +3836,16 @@ class NameForgeEditorModal extends Modal {
     this.placeButton?.setAttribute("aria-pressed", String(isPlace));
     this.mixButton?.setAttribute("aria-pressed", String(isMix));
 
-    if (this.inputEl) {
-      this.inputEl.placeholder = isWordList
-        ? WORD_LIST_TEXTAREA_PLACEHOLDER
-        : isPlace
-          ? PLACE_TEXTAREA_PLACEHOLDER
-          : NAME_TEXTAREA_PLACEHOLDER;
-    }
+    const pane = isWizard ? undefined : isWordList ? "wordList" : isBiome ? "biome" : this.textPaneFor(this.selectedPackType);
+    this.inputEl = pane ? this.textPanes[pane] ?? null : null;
+    for (const el of Object.values(this.textPanes)) el.toggle(el === this.inputEl);
+    this.compoundSectionEl?.toggle(isCompound);
+    this.mixSectionEl?.toggle(isMix);
+  }
 
-    if (isWizard) {
-      this.inputEl?.hide();
-      this.compoundSectionEl?.hide();
-      this.mixSectionEl?.hide();
-    } else if (isCompound) {
-      this.inputEl?.hide();
-      this.compoundSectionEl?.show();
-      this.mixSectionEl?.hide();
-    } else if (isMix) {
-      this.inputEl?.hide();
-      this.compoundSectionEl?.hide();
-      this.mixSectionEl?.show();
-    } else {
-      this.inputEl?.show();
-      this.compoundSectionEl?.hide();
-      this.mixSectionEl?.hide();
-    }
+  /** The text box a pack type writes in; compound and mix have their own sections instead. */
+  private textPaneFor(type: NamePackType): TextPane | undefined {
+    return type === "breakdownPack" || type === "listPack" || type === "placePack" ? type : undefined;
   }
 
   private updateCompoundControls() {
