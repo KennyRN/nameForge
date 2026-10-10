@@ -160,3 +160,102 @@ test("§15.4: 10,000 names: modifiers and qualifiers only where §7 allows; ideo
     assert.equal(new Set(content).size, content.length, n.official);
   }
 });
+
+// ── §15.5 Length and short forms ────────────────────────────────────────────
+
+test("§15.5: ceremonial names start with an honorific for their form", () => {
+  for (const era of REALM_ERAS) {
+    for (const n of many({ era: era.key, length: "ceremonial", people: "invented", genre: era.code === "IS" || era.code === "NF" ? "scifi" : "fantasy" }, 300)) {
+      assert.ok(n.honorific && n.official.startsWith(n.honorific), n.official);
+      if (n.honorific !== "Most Serene" || n.shape !== "Most Serene Republic of {place}") {
+        const group = n.formGroup as keyof typeof REALM_DATA.honorifics;
+        assert.ok(words(REALM_DATA.honorifics[group]).includes(n.honorific!), `${n.official} (${group})`);
+      }
+    }
+  }
+});
+
+test("§15.5: short forms follow §11 for every kind of shape", () => {
+  const strip = (s: string) => s.replace(/^the /, "");
+  const rules: Record<string, (n: RealmName) => boolean> = {
+    "{form} of the {landIdentity}": (n) => n.official === `${n.form} of the ${n.short}`,
+    "{form} of {place}": (n) => n.official === `${n.form} of ${n.short}`,
+    "{modifier} {form} of {place}": (n) => n.official === `${n.modifier} ${n.form} of ${n.short}`,
+    "{place} {form}": (n) => n.official === `${n.short} ${n.form}`,
+    "{landCompound} {form}": (n) => n.official === `${n.short} ${n.form}`,
+    "{dynasty} {form}": (n) => n.official === `${n.short} ${n.form}`,
+    "{star} {form}": (n) => n.official === `${n.short} ${n.form}`,
+    "{compassAdj} {form}": (n) => n.short === n.official,
+    "{cultQual} {form}": (n) => n.short === n.official,
+    "the {collQual} {collNoun}": (n) => n.short === n.official,
+    "{federalForm} of {collQual} {collNoun}": (n) => n.short === `the ${n.official.slice(n.official.indexOf(" of ") + 4)}`,
+    "{form} of House {dynasty}": (n) => n.official === `${n.form} of House ${n.short}`,
+    "{form} of the {peopleQual} {peopleNoun}": (n) => n.official === `${n.form} of the ${n.short}`,
+    "{form} of {tribal}": (n) => strip(n.official.slice(n.official.indexOf(" of ") + 4)) === n.short,
+    "New {place}": (n) => n.short === n.official,
+    "{brandRoot} {corpForm}": (n) => n.official.startsWith(`${n.short} `),
+  };
+  const seen = new Set<string>();
+  const options: Omit<RealmOptions, "count" | "seed">[] = [
+    { people: "invented", namedFor: "land" },
+    { people: "invented", namedFor: "place" },
+    { people: "invented", namedFor: "dynasty" },
+    { people: "invented", namedFor: "people" },
+    { people: "invented", namedFor: "stars", era: "interstellar", genre: "scifi" },
+    { people: "invented", character: "colonial" },
+    { people: "invented", character: "corporate", era: "nearFuture", genre: "scifi" },
+  ];
+  for (const o of options) {
+    for (const n of many({ ...o, length: "plain", output: "both" }, 600)) {
+      const rule = rules[n.shape];
+      if (!rule) continue;
+      seen.add(n.shape);
+      assert.ok(rule(n), `${n.shape}: ${n.official} → ${n.short}`);
+    }
+  }
+  assert.deepEqual([...seen].sort(), Object.keys(rules).sort());
+  // Ceremonial: the short form of the plain name underneath.
+  for (const n of many({ people: "invented", namedFor: "place", length: "ceremonial" }, 300)) {
+    if (n.shape === "{form} of {place}") assert.ok(n.official.includes(` of ${n.short}`), `${n.official} → ${n.short}`);
+  }
+});
+
+test("§15.5: output both is “X (Y)”, or X alone when they match", () => {
+  for (const n of many({ people: "invented", output: "both" }, 500)) {
+    if (n.official.toLowerCase() === n.short.toLowerCase()) assert.equal(n.text, n.official);
+    else assert.equal(n.text, `${n.official} (${n.short})`);
+  }
+});
+
+// ── §15.6 Tone ──────────────────────────────────────────────────────────────
+
+test("§15.6: tone grim raises the share of grim names at least 1.5×", () => {
+  const share = (tone: "any" | "grim") => {
+    const names = many({ tone, people: "invented", era: "modern" }, 2000);
+    return names.filter((n) => n.tones.includes("grim")).length / names.length;
+  };
+  const any = share("any");
+  const grim = share("grim");
+  assert.ok(grim >= any * 1.5, `${grim} vs ${any}`);
+});
+
+// ── §15.7 Safeguards ────────────────────────────────────────────────────────
+
+test("§15.7: 5,000 names per culture: no blocked names, banned words or living-religion terms", () => {
+  const block = new Set(REALM_DATA.safeguards.block.map((w) => w.toLowerCase().replace(/^the /, "")));
+  const terms = [...REALM_DATA.safeguards.banned, ...REALM_DATA.safeguards.religious, "God", "Allah", "Christ", "Jesus", "Buddha"];
+  const has = (text: string, w: string) => new RegExp(`(^|[^A-Za-z])${w}($|[^A-Za-z])`, "i").test(text);
+  for (const c of REALM_CULTURES) {
+    for (const n of many({ culture: c.key, people: "invented", era: REALM_ERAS[c.key.length % 6].key }, 5000)) {
+      for (const x of [n.official, n.short]) assert.ok(!block.has(x.toLowerCase().replace(/^the /, "")), `${c.key}: ${x}`);
+      for (const w of terms) assert.ok(!has(n.official, w), `${c.key}: ${n.official}`);
+    }
+  }
+});
+
+test("§15.7: bare blocked words still appear inside longer names", () => {
+  const stars = many({ era: "interstellar", genre: "scifi", people: "invented" }, 2000);
+  assert.ok(stars.some((n) => /\bFederation\b/.test(n.official) && n.official !== "Federation"));
+  const holy = many({ character: "religious", people: "invented" }, 2000);
+  assert.ok(holy.some((n) => /\bReach\b/.test(n.official)));
+});
