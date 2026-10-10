@@ -2,7 +2,7 @@
 // weighted by its number of names, then comes from that list alone, so its tag is true.
 // No Obsidian imports.
 
-import { ListGenerator, MarkovModel, mulberry32 } from "../markov";
+import { ListGenerator, MarkovModel, mulberry32, PlaceNameModel } from "../markov";
 import { breakdownSettingsFor } from "./sections";
 
 export interface LabelledName {
@@ -17,7 +17,8 @@ export interface LabelledList {
 }
 
 export interface LabelledOptions {
-  generator: "breakdown" | "list";
+  /** "place": breakdown on PlaceNameModel (Place generators brief §2.1). */
+  generator: "breakdown" | "list" | "place";
   count: number;
   faithfulness?: number;
   strictness?: number;
@@ -54,7 +55,8 @@ export function generateLabelledNames(
       // §2.3: a list under the Breakdown minimum is loosened.
       const loosened = breakdownSettingsFor(list.names.length, options.strictness ?? 3);
       if (loosened.allowSourceCopies) small.push({ tag: list.tag, count: list.names.length });
-      pools[i] = MarkovModel.build(list.names).generateDetailed({
+      const model = options.generator === "place" ? PlaceNameModel.build(list.names) : MarkovModel.build(list.names);
+      pools[i] = model.generateDetailed({
         count,
         faithfulness: options.faithfulness ?? 2,
         ...loosened,

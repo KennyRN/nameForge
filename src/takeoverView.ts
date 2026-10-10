@@ -3,6 +3,7 @@
 
 import { normalizePath, Notice, setIcon } from "obsidian";
 import { compoundSettings } from "./packs/compound";
+import { placePackDraw } from "./packs/placeDraw";
 import { adoptName, type Adoption, prepareTakeoverTarget } from "./ageing/engine";
 import {
   generateCompoundNamesDetailed,
@@ -72,6 +73,11 @@ export function nativeDrawer(
       return (rng) => generator.generateMultiple(1, mulberry32(subSeed(rng)))[0] ?? null;
     }
     case "placePack": {
+      // Place generators brief §2.4: list and compound place packs; breakdown as before.
+      if (parsed.placeGenerator === "list" || parsed.placeGenerator === "compound") {
+        const draw = placePackDraw(parsed, settings);
+        return (rng) => draw({}, "whole", rng);
+      }
       const model = PlaceNameModel.build(extractNamesFromMarkdown(parsed.names.join("\n")));
       return (rng) => model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed(rng) }).names[0] ?? null;
     }

@@ -1030,7 +1030,7 @@ function generateCompoundNamesDetailed(parts, options) {
       generator.train(part);
       return generator.generateMultiple(poolSize, mulberry32(nextSubSeed()));
     }
-    const model = MarkovModel.build(part);
+    const model = options.breakdownModel === "place" ? PlaceNameModel.build(part) : MarkovModel.build(part);
     const subSeed2 = nextSubSeed();
     const strictness = (_c = options.strictness) != null ? _c : 3;
     const pool2 = model.generateDetailed({ count: poolSize, faithfulness: (_d = options.faithfulness) != null ? _d : 2, strictness, seed: subSeed2 }).names;
@@ -1546,16 +1546,16 @@ function generateCompoundTitled(parts, options) {
   const seen = /* @__PURE__ */ new Set();
   const live = titles.map((_, i) => i);
   while (out.length < count && live.length > 0) {
-    const pick2 = live[Math.floor(rng() * live.length)];
-    const names = batch(pick2);
-    if (cursors[pick2] >= names.length) {
-      live.splice(live.indexOf(pick2), 1);
+    const pick3 = live[Math.floor(rng() * live.length)];
+    const names = batch(pick3);
+    if (cursors[pick3] >= names.length) {
+      live.splice(live.indexOf(pick3), 1);
       continue;
     }
-    const name = names[cursors[pick2]++];
+    const name = names[cursors[pick3]++];
     if (seen.has(name.toLowerCase())) continue;
     seen.add(name.toLowerCase());
-    out.push({ name, tag: titles[pick2] });
+    out.push({ name, tag: titles[pick3] });
   }
   return { names: out, seed, loosened };
 }
@@ -20943,8 +20943,8 @@ function generatePlaceShapesDetailed(options, source = PLACE_SHAPE_DATA) {
   }
   let names;
   if (options.wording === "plain") {
-    const pick2 = mulberry32((seed ^ PLAIN_WORDING_SALT) >>> 0);
-    names = shapes.map((shape) => formatter.formatPlain(shape, options.region, pick2));
+    const pick3 = mulberry32((seed ^ PLAIN_WORDING_SALT) >>> 0);
+    names = shapes.map((shape) => formatter.formatPlain(shape, options.region, pick3));
   } else {
     names = shapes.map((shape) => formatter.format(shape));
   }
@@ -20970,7 +20970,7 @@ var PlaceShapeFormatter = class {
    * Part 1a wording: generics as plain words, with dropped generics rewritten and regional
    * variants added. `pick` is the secondary RNG; it is only drawn when a generic has two words.
    */
-  formatPlain(shape, region, pick2) {
+  formatPlain(shape, region, pick3) {
     var _a2;
     const rewrite = this.words.rewrites.find((r) => r.generic === shape.genericId);
     const effective = rewrite ? {
@@ -20982,7 +20982,7 @@ var PlaceShapeFormatter = class {
       if (rewrite && id === shape.genericId) return plural ? rewrite.plural || rewrite.word : rewrite.word;
       const entry = this.words.words[id];
       if (!entry) return bracket(this.generics.get(id));
-      const i = entry.words.length > 1 ? Math.floor(pick2() * entry.words.length) : 0;
+      const i = entry.words.length > 1 ? Math.floor(pick3() * entry.words.length) : 0;
       const usePlural = plural && entry.plurals[i] !== "";
       const word = usePlural ? entry.plurals[i] : entry.words[i];
       const variant = region ? this.words.variants.find((v) => v.generic === id && v.regions.includes(region)) : void 0;
@@ -50513,8 +50513,8 @@ var WorldRenderer = class {
     var _a2;
     const s = this.swaps.get(key2);
     if (!s) return void 0;
-    const pick2 = pickWeighted4([...s.kept.map((e) => [e, 1]), [null, s.slotWeight]], rng);
-    if (pick2 !== null) return pick2;
+    const pick3 = pickWeighted4([...s.kept.map((e) => [e, 1]), [null, s.slotWeight]], rng);
+    if (pick3 !== null) return pick3;
     const sources = Object.entries(s.swap.replacedBy).filter(([k]) => k !== "terrain");
     const source = sources.length === 1 ? sources[0][0] : pickWeighted4(sources, rng);
     if (source === "shortLand" || source === "shortWater") {
@@ -51399,7 +51399,7 @@ function parseModulePreset(content, fileName) {
     return { problems };
   }
   const d = TRIBAL_PRESET_DEFAULTS;
-  const pick2 = (key2, fallback, ok) => {
+  const pick3 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -51415,12 +51415,12 @@ function parseModulePreset(content, fileName) {
       packName: values.packName || fileName,
       setting: (_b = values.setting) != null ? _b : "",
       description: body.trim(),
-      tradition: pick2("tradition", d.tradition, (v) => !!findTradition(v)),
-      biome: pick2("biome", d.biome, (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
-      terrain: pick2("terrain", d.terrain, (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
-      register: pick2("register", d.register, (v) => TRIBAL_REGISTERS.includes(v)),
-      groupType: pick2("groupType", d.groupType, (v) => v === "any" || TRIBAL_GROUP_TYPES.some((g) => g.key === v)),
-      perspective: pick2("perspective", d.perspective, (v) => v === "any" || TRIBAL_PERSPECTIVES.includes(v)),
+      tradition: pick3("tradition", d.tradition, (v) => !!findTradition(v)),
+      biome: pick3("biome", d.biome, (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
+      terrain: pick3("terrain", d.terrain, (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
+      register: pick3("register", d.register, (v) => TRIBAL_REGISTERS.includes(v)),
+      groupType: pick3("groupType", d.groupType, (v) => v === "any" || TRIBAL_GROUP_TYPES.some((g) => g.key === v)),
+      perspective: pick3("perspective", d.perspective, (v) => v === "any" || TRIBAL_PERSPECTIVES.includes(v)),
       hostile
     },
     problems
@@ -51457,7 +51457,7 @@ function parseGroupPreset(values, body, fileName) {
     problems.push(`Unknown family \u201C${(_b = values.family) != null ? _b : ""}\u201D.`);
     return { problems };
   }
-  const pick2 = (key2, fallback, ok) => {
+  const pick3 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -51476,13 +51476,13 @@ function parseGroupPreset(values, body, fileName) {
       setting: (_c = values.setting) != null ? _c : "",
       description: body.trim(),
       family: family.key,
-      tradition: pick2("tradition", "general", (v) => !!findTradition(v)),
-      groupType: pick2("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v)),
-      genre: pick2("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
+      tradition: pick3("tradition", "general", (v) => !!findTradition(v)),
+      groupType: pick3("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v)),
+      genre: pick3("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
       fantastic: flag("fantastic"),
-      form: pick2("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
-      front: pick2("front", "say", (v) => ["say", "hide", "may"].includes(v)),
-      people: pick2("people", "placeholders", (v) => ["placeholders", "invented"].includes(v))
+      form: pick3("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
+      front: pick3("front", "say", (v) => ["say", "hide", "may"].includes(v)),
+      people: pick3("people", "placeholders", (v) => ["placeholders", "invented"].includes(v))
     },
     problems
   };
@@ -52797,6 +52797,67 @@ function isBiomePackContent(content) {
 // src/recipeHost.ts
 var import_obsidian8 = require("obsidian");
 
+// src/packs/placeDraw.ts
+var seedFrom = (rng) => Math.floor(rng() * 4294967296) >>> 0;
+var pick2 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
+function placePackDraw(parsed, settings, notice = () => {
+}) {
+  var _a2, _b;
+  const faithfulness = (_a2 = settings.faithfulness) != null ? _a2 : 2;
+  const strictness = (_b = settings.strictness) != null ? _b : 3;
+  const models = /* @__PURE__ */ new Map();
+  const model = (key2, names) => {
+    if (!models.has(key2)) models.set(key2, PlaceNameModel.build(names));
+    return models.get(key2);
+  };
+  const keyOf = (r) => {
+    var _a3, _b2;
+    return `${(_a3 = r.section) != null ? _a3 : ""}|${(_b2 = r.gender) != null ? _b2 : ""}`;
+  };
+  if (parsed.placeGenerator === "compound") {
+    const data = compoundPartData(parsed);
+    const options = { ...compoundSettings(parsed), breakdownModel: "place", faithfulness, strictness };
+    return (request, mode, rng) => {
+      var _a3, _b2, _c;
+      const parts = compoundPartsFor(data, (_a3 = request.section) != null ? _a3 : request.gender);
+      if (mode === "stem") {
+        const first = (_b2 = parts[0]) != null ? _b2 : [];
+        if (first.length === 0) return null;
+        return partIsBreakdown(options.generator, parsed.compoundPartGenerators, 0) ? model(`part1|${keyOf(request)}`, first).sampleStem(rng, faithfulness, strictness) : pick2(first, rng);
+      }
+      return (_c = generateCompoundNamesDetailed(parts, { count: 1, ...options, seed: seedFrom(rng) }).names[0]) != null ? _c : null;
+    };
+  }
+  const wholeNames = extractNamesFromMarkdown(parsed.names.join("\n"));
+  const namesFor2 = (request) => {
+    if (parsed.sectioned && (request.section || request.gender)) {
+      const selection = selectSectionNames(parsed.sectioned, request);
+      for (const n of selection.notices) notice(`${parsed.packName}: ${n}`);
+      return { names: selection.names, label: selection.used };
+    }
+    return { names: wholeNames };
+  };
+  if (parsed.placeGenerator === "list") {
+    const generator = new ListGenerator();
+    return (request, _mode, rng) => {
+      var _a3;
+      const { names } = namesFor2(request);
+      generator.train(names);
+      return (_a3 = generator.generateMultiple(1, mulberry32(seedFrom(rng)))[0]) != null ? _a3 : null;
+    };
+  }
+  return (request, mode, rng) => {
+    var _a3;
+    const { names, label } = namesFor2(request);
+    if (names.length === 0) return null;
+    const m = model(keyOf(request), names);
+    if (mode === "stem") return m.sampleStem(rng, faithfulness, strictness);
+    const loosened = label ? breakdownSettingsFor(names.length, strictness) : { allowSourceCopies: false, strictness };
+    if (label && loosened.allowSourceCopies) notice(`${parsed.packName}: ${smallListNotice(label, names.length)}`);
+    return (_a3 = m.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom(rng) }).names[0]) != null ? _a3 : null;
+  };
+}
+
 // src/names/wordListSource.ts
 function toNameWordEntry(e) {
   return {
@@ -53069,8 +53130,8 @@ var RecipeHost = class {
     }
     const faithfulness = (_a2 = this.settings.faithfulness) != null ? _a2 : 2;
     const strictness = (_b = this.settings.strictness) != null ? _b : 3;
-    const seedFrom = (rng) => Math.floor(rng() * 4294967296) >>> 0;
-    const pick2 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
+    const seedFrom2 = (rng) => Math.floor(rng() * 4294967296) >>> 0;
+    const pick3 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
     const cache = /* @__PURE__ */ new Map();
     const cached = (key2, build) => {
       if (!cache.has(key2)) cache.set(key2, build());
@@ -53093,7 +53154,7 @@ var RecipeHost = class {
       const label = listLabels.get(key2);
       const loosened = label ? breakdownSettingsFor(names.length, strictness) : { allowSourceCopies: false, strictness };
       if (label && loosened.allowSourceCopies) this.notices.add(`${parsed.packName}: ${smallListNotice(label, names.length)}`);
-      return (_a3 = model.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom(rng) }).names[0]) != null ? _a3 : pick2(names, rng);
+      return (_a3 = model.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom2(rng) }).names[0]) != null ? _a3 : pick3(names, rng);
     };
     const requestKey = (r) => {
       var _a3, _b2;
@@ -53101,18 +53162,11 @@ var RecipeHost = class {
     };
     switch (parsed.packType) {
       case "listPack":
-        return (request, _mode, rng) => pick2(namesFor2(request), rng);
+        return (request, _mode, rng) => pick3(namesFor2(request), rng);
       case "breakdownPack":
         return (request, _mode, rng) => markovName(namesFor2(request), requestKey(request), rng);
-      case "placePack": {
-        const names = extractNamesFromMarkdown(parsed.names.join("\n"));
-        return (_request, mode, rng) => {
-          var _a3;
-          const model = cached("place", () => PlaceNameModel.build(names));
-          if (mode === "stem") return model.sampleStem(rng, faithfulness, strictness);
-          return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: seedFrom(rng) }).names[0]) != null ? _a3 : null;
-        };
-      }
+      case "placePack":
+        return placePackDraw(parsed, this.settings, (n) => this.notices.add(n));
       case "compoundPack": {
         const data = compoundPartData(parsed);
         const settings = compoundSettings(parsed);
@@ -53121,9 +53175,9 @@ var RecipeHost = class {
           const parts = compoundPartsFor(data, (_a3 = request.section) != null ? _a3 : request.gender);
           if (mode === "stem") {
             const first = (_b2 = parts[0]) != null ? _b2 : [];
-            return partIsBreakdown(settings.generator, parsed.compoundPartGenerators, 0) ? markovName(first, `part1|${requestKey(request)}`, rng) : pick2(first, rng);
+            return partIsBreakdown(settings.generator, parsed.compoundPartGenerators, 0) ? markovName(first, `part1|${requestKey(request)}`, rng) : pick3(first, rng);
           }
-          return (_c = generateCompoundNamesDetailed(parts, { count: 1, ...settings, faithfulness, strictness, seed: seedFrom(rng) }).names[0]) != null ? _c : null;
+          return (_c = generateCompoundNamesDetailed(parts, { count: 1, ...settings, faithfulness, strictness, seed: seedFrom2(rng) }).names[0]) != null ? _c : null;
         };
       }
       case "mixPack":
@@ -54661,7 +54715,8 @@ function generateLabelledNames(lists, options) {
     } else {
       const loosened = breakdownSettingsFor(list.names.length, (_a2 = options.strictness) != null ? _a2 : 3);
       if (loosened.allowSourceCopies) small.push({ tag: list.tag, count: list.names.length });
-      pools[i] = MarkovModel.build(list.names).generateDetailed({
+      const model = options.generator === "place" ? PlaceNameModel.build(list.names) : MarkovModel.build(list.names);
+      pools[i] = model.generateDetailed({
         count,
         faithfulness: (_b = options.faithfulness) != null ? _b : 2,
         ...loosened,
@@ -54676,24 +54731,24 @@ function generateLabelledNames(lists, options) {
   while (result.length < count && live.length > 0) {
     const total = live.reduce((sum, i) => sum + viable[i].names.length, 0);
     let roll = masterRng() * total;
-    let pick2 = live[live.length - 1];
+    let pick3 = live[live.length - 1];
     for (const i of live) {
       roll -= viable[i].names.length;
       if (roll < 0) {
-        pick2 = i;
+        pick3 = i;
         break;
       }
     }
-    const names = pool2(pick2);
-    if (cursors[pick2] >= names.length) {
-      live.splice(live.indexOf(pick2), 1);
+    const names = pool2(pick3);
+    if (cursors[pick3] >= names.length) {
+      live.splice(live.indexOf(pick3), 1);
       continue;
     }
-    const name = names[cursors[pick2]++];
+    const name = names[cursors[pick3]++];
     const key2 = name.toLowerCase();
     if (seen.has(key2)) continue;
     seen.add(key2);
-    result.push({ name, ...viable[pick2].tag !== void 0 ? { tag: viable[pick2].tag } : {} });
+    result.push({ name, ...viable[pick3].tag !== void 0 ? { tag: viable[pick3].tag } : {} });
   }
   return { names: result, seed, small };
 }
@@ -54752,6 +54807,10 @@ function nativeDrawer(entry, index, settings) {
       };
     }
     case "placePack": {
+      if (parsed.placeGenerator === "list" || parsed.placeGenerator === "compound") {
+        const draw = placePackDraw(parsed, settings);
+        return (rng) => draw({}, "whole", rng);
+      }
       const model = PlaceNameModel.build(extractNamesFromMarkdown(parsed.names.join("\n")));
       return (rng) => {
         var _a3;
@@ -55123,14 +55182,14 @@ function packSubGenerator(packType, compoundGenerator) {
 function resolveSeed3(seed) {
   return seed !== void 0 && Number.isFinite(seed) ? Math.floor(seed) >>> 0 : Math.random() * 4294967295 >>> 0;
 }
-function generateNamesFromSource(namesText, packType, count = 6, settings = {}, seed, breakdown) {
+function generateNamesFromSource(namesText, packType, count = 6, settings = {}, seed, breakdown, placeGenerator) {
   var _a2, _b, _c, _d;
   const names = extractNamesFromMarkdown(namesText);
   const resolvedSeed = resolveSeed3(seed);
   if (names.length === 0) {
     return { names: [], seed: resolvedSeed };
   }
-  if (packType === "listPack") {
+  if (packType === "listPack" || packType === "placePack" && placeGenerator === "list") {
     const generator = new ListGenerator();
     generator.train(names);
     return { names: generator.generateMultiple(count, mulberry32(resolvedSeed)), seed: resolvedSeed };
@@ -55141,6 +55200,7 @@ function generateNamesFromSource(namesText, packType, count = 6, settings = {}, 
       count,
       faithfulness: (_a2 = settings.faithfulness) != null ? _a2 : 2,
       strictness: (_b = settings.strictness) != null ? _b : 3,
+      ...breakdown,
       seed: resolvedSeed
     });
     return { names: result2.names, seed: result2.seed, endings: model2.endings };
@@ -55299,6 +55359,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.currentPackType = "breakdownPack";
     /** The loaded compound pack: parts with their titles, joining, frequencies and generators. */
     this.currentCompound = void 0;
+    /** Place generators brief §2: the loaded place pack's generator; undefined for other packs. */
+    this.currentPlaceGenerator = void 0;
     this.currentMixSources = [];
     /** §10: the loaded pack's sections (List/Breakdown), section options, and the chosen section. */
     this.currentSectioned = void 0;
@@ -56563,7 +56625,7 @@ ${text}
   /** Why a pack can't be an ageing target or a takeover pack (ageing §1), or undefined if it can. */
   targetPackReason(entry, index) {
     if (entry.templateError) return entry.templateError.replace(/\.$/, "");
-    if (entry.parsed.packType === "compoundPack") return "compound packs hold name parts, not whole names";
+    if (isCompoundPack(entry.parsed)) return "compound packs hold name parts, not whole names";
     const names = this.ageingTargetNames(entry, index);
     if (typeof names === "string") return names;
     if (new Set(names.names.map((n) => n.toLowerCase())).size < AGEING.minTargetNames) {
@@ -56576,6 +56638,7 @@ ${text}
    * names for Breakdown, List and Place; the weighted blend for Mix. Returns a reason on failure.
    */
   ageingTargetNames(entry, index) {
+    var _a2;
     const { parsed } = entry;
     if (parsed.packType === "mixPack") {
       const resolved = resolveMixSources((0, import_obsidian13.normalizePath)(entry.path), parsed, index);
@@ -56584,7 +56647,7 @@ ${text}
       return { names: distinct, corpus: buildWeightedCorpus(resolved.sources), endings: [] };
     }
     const names = extractNamesFromMarkdown(parsed.names.join("\n"));
-    const endings = parsed.packType === "placePack" ? PlaceNameModel.build(names).endings.map((e) => e.suffix).filter((x) => x) : [];
+    const endings = parsed.packType === "placePack" && ((_a2 = parsed.placeGenerator) != null ? _a2 : "breakdown") === "breakdown" ? PlaceNameModel.build(names).endings.map((e) => e.suffix).filter((x) => x) : [];
     return { names, corpus: names, endings };
   }
   async runAgeing() {
@@ -57128,7 +57191,7 @@ ${text}
     await this.loadPack(defaultPack);
   }
   async loadPack(packPath) {
-    var _a2, _b, _c, _d;
+    var _a2, _b, _c, _d, _e;
     const file = this.app.vault.getFileByPath((0, import_obsidian13.normalizePath)(packPath));
     if (!(file instanceof import_obsidian13.TFile)) {
       this.setStatus(`Pack not found at ${packPath}.`);
@@ -57162,12 +57225,13 @@ ${text}
     this.currentPackType = parsed.packType;
     this.currentSectioned = parsed.sectioned;
     await this.updateSectionChoices(parsed);
-    if (parsed.packType === "compoundPack") {
+    this.currentPlaceGenerator = parsed.packType === "placePack" ? (_c = parsed.placeGenerator) != null ? _c : "breakdown" : void 0;
+    if (isCompoundPack(parsed)) {
       this.currentCompound = parsed;
       this.currentMixSources = [];
       this.currentNamesText = "";
     } else if (parsed.packType === "mixPack") {
-      this.currentMixSources = (_c = parsed.mixSources) != null ? _c : [];
+      this.currentMixSources = (_d = parsed.mixSources) != null ? _d : [];
       this.currentCompound = void 0;
       this.currentNamesText = "";
     } else {
@@ -57183,7 +57247,7 @@ ${text}
       parsed.packType,
       packSubGenerator(parsed.packType, parsed.compoundGenerator)
     );
-    this.setStatus((_d = resolved.error) != null ? _d : "");
+    this.setStatus((_e = resolved.error) != null ? _e : "");
   }
   /**
    * §7: applies a pack's template. A missing template, a template that itself has a template, or
@@ -57453,7 +57517,7 @@ ${text}
     let choices = [];
     if (parsed.sectioned && parsed.sectioned.sections.length > 0) {
       choices = sectionOptions(parsed.sectioned);
-    } else if (parsed.packType === "compoundPack") {
+    } else if (isCompoundPack(parsed)) {
       const titles = compoundTitles(compoundPartData(parsed));
       if (titles.length > 0) choices = [...titles.map((t) => ({ label: t, request: { section: t } })), wholePackOption()];
     } else if (parsed.packType === "mixPack") {
@@ -57474,13 +57538,21 @@ ${text}
     this.sectionLabelsShown = true;
     this.renderSectionSentence();
   }
+  /** Whether the loaded pack holds parts (people compound, or a compound place pack). */
+  compoundLoaded() {
+    return isCompoundPack({ packType: this.currentPackType, placeGenerator: this.currentPlaceGenerator });
+  }
+  /** Whether the loaded pack picks names as written (List packs and list place packs). */
+  isListLoaded() {
+    return this.currentPackType === "listPack" || this.currentPackType === "placePack" && this.currentPlaceGenerator === "list";
+  }
   /** The chosen section option, if the pack has any. */
   get sectionChoice() {
     return this.sectionChoices[this.sectionChoiceIndex];
   }
   /** Whether whole-pack results carry their list's tag (§1.3; not offered for Mix packs). */
   labelsOffered() {
-    return this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" || this.currentPackType === "compoundPack";
+    return ["listPack", "breakdownPack", "compoundPack", "placePack"].includes(this.currentPackType);
   }
   /** "Use the ‹male› names" or "Use the ‹whole pack› names, ‹showing› each name's list (Alfred · male)". */
   renderSectionSentence() {
@@ -57528,7 +57600,7 @@ ${text}
   /** The bracketed example: the pack's first heading and one of its names. */
   sectionExample() {
     var _a2;
-    if (this.currentPackType === "compoundPack" && this.currentCompound) {
+    if (this.currentCompound && this.compoundLoaded()) {
       const data = compoundPartData(this.currentCompound);
       const title = compoundTitles(data)[0];
       const fragments = compoundPartsFor(data, title).map((names) => names[0]).filter((n) => n !== void 0);
@@ -57687,12 +57759,14 @@ ${text}
       return;
     }
     const seedOverride = this.seedLocked ? parseSeedInput((_f = this.seedInputEl) == null ? void 0 : _f.value) : void 0;
-    if (this.currentPackType === "compoundPack") {
+    if (this.currentCompound && this.compoundLoaded()) {
       const data = compoundPartData((_g = this.currentCompound) != null ? _g : {});
       const choice2 = this.sectionChoice;
       const options = {
         count: this.generationCount,
         ...compoundSettings((_h = this.currentCompound) != null ? _h : {}),
+        // Place generators brief §2.3: a compound place pack's breakdown parts use the place model.
+        ...this.currentPackType === "placePack" ? { breakdownModel: "place" } : {},
         faithfulness: this.plugin.settings.faithfulness,
         strictness: this.plugin.settings.strictness,
         seed: seedOverride
@@ -57773,7 +57847,7 @@ ${text}
     const choice = this.sectionChoice;
     if ((choice == null ? void 0 : choice.whole) && this.sectionLabelsShown && this.labelsOffered() && this.currentSectioned) {
       const result2 = generateLabelledNames(labelledLists(this.currentSectioned), {
-        generator: this.currentPackType === "listPack" ? "list" : "breakdown",
+        generator: this.isListLoaded() ? "list" : this.currentPackType === "placePack" ? "place" : "breakdown",
         count: this.generationCount,
         faithfulness: this.plugin.settings.faithfulness,
         strictness: this.plugin.settings.strictness,
@@ -57801,7 +57875,7 @@ ${text}
       const selection = selectSectionNames(this.currentSectioned, choice.request);
       namesText = selection.names.join("\n");
       sectionNotices = selection.notices;
-      if (this.currentPackType === "breakdownPack") {
+      if (this.currentPackType === "breakdownPack" || this.currentPackType === "placePack" && this.currentPlaceGenerator === "breakdown") {
         loosened = breakdownSettingsFor(selection.names.length, (_j = this.plugin.settings.strictness) != null ? _j : 3);
         if (!loosened.allowSourceCopies) loosened = void 0;
         else sectionNotices.push(smallListNotice(selection.used, selection.names.length));
@@ -57814,7 +57888,8 @@ ${text}
       this.generationCount,
       this.plugin.settings,
       seedOverride,
-      loosened
+      loosened,
+      this.currentPlaceGenerator
     );
     if (result.names.length === 0) {
       if (usedSection && usedSection !== "the whole pack") {

@@ -16,6 +16,7 @@ import {
   type WordListFileData,
 } from "./nameParser";
 import type { Biome } from "./biomes";
+import { placePackDraw } from "./packs/placeDraw";
 import { compoundPartData, compoundPartsFor, compoundSettings, partIsBreakdown } from "./packs/compound";
 import { breakdownSettingsFor, selectSectionNames, smallListNotice, type SectionRequest } from "./packs/sections";
 import { wordListSection } from "./packs/wordList";
@@ -307,14 +308,9 @@ export class RecipeHost {
         return (request, _mode, rng) => pick(namesFor(request), rng);
       case "breakdownPack":
         return (request, _mode, rng) => markovName(namesFor(request), requestKey(request), rng);
-      case "placePack": {
-        const names = extractNamesFromMarkdown(parsed.names.join("\n"));
-        return (_request, mode: NameMode, rng) => {
-          const model = cached("place", () => PlaceNameModel.build(names));
-          if (mode === "stem") return model.sampleStem(rng, faithfulness, strictness);
-          return model.generateDetailed({ count: 1, faithfulness, strictness, seed: seedFrom(rng) }).names[0] ?? null;
-        };
-      }
+      case "placePack":
+        // Place generators brief §2.4: breakdown, list or compound, by the pack's placeGenerator.
+        return placePackDraw(parsed, this.settings, (n) => this.notices.add(n));
       case "compoundPack": {
         // Compound brief §4.5: a slot's section picks a title; a gender draw uses a title of the
         // same name where a part has one (compoundPartsFor falls back to all of a part's names).

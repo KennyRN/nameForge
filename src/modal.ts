@@ -13,6 +13,8 @@ import {
 } from "./markov";
 import {
   createCompoundNamesFileContent,
+  isCompoundPack,
+  type PlaceGenerator,
   createMixNamesFileContent,
   createNamesFileContent,
   isWordListContent,
@@ -272,6 +274,8 @@ function generateNamesFromSource(
   seed?: number,
   /** Compound brief §2.3: a small Breakdown list's looser settings. */
   breakdown?: { allowSourceCopies: boolean; strictness: number },
+  /** Place generators brief §2.2: a list place pack picks names as written. */
+  placeGenerator?: PlaceGenerator,
 ): SourceGenerationResult {
   const names = extractNamesFromMarkdown(namesText);
   const resolvedSeed = resolveSeed(seed);
@@ -279,7 +283,7 @@ function generateNamesFromSource(
     return { names: [], seed: resolvedSeed };
   }
 
-  if (packType === "listPack") {
+  if (packType === "listPack" || (packType === "placePack" && placeGenerator === "list")) {
     const generator = new ListGenerator();
     generator.train(names);
     return { names: generator.generateMultiple(count, mulberry32(resolvedSeed)), seed: resolvedSeed };
@@ -291,6 +295,7 @@ function generateNamesFromSource(
       count,
       faithfulness: settings.faithfulness ?? 2,
       strictness: settings.strictness ?? 3,
+      ...breakdown,
       seed: resolvedSeed,
     });
     return { names: result.names, seed: result.seed, endings: model.endings };
@@ -512,6 +517,8 @@ export class NameForgeModal extends Modal {
   public currentPackType: NamePackType = "breakdownPack";
   /** The loaded compound pack: parts with their titles, joining, frequencies and generators. */
   private currentCompound: NamesFileData | undefined = undefined;
+  /** Place generators brief §2: the loaded place pack's generator; undefined for other packs. */
+  private currentPlaceGenerator: PlaceGenerator | undefined = undefined;
   private currentMixSources: MixSourceRef[] = [];
   /** §10: the loaded pack's sections (List/Breakdown), section options, and the chosen section. */
   private currentSectioned: SectionedNames | undefined = undefined;
@@ -1841,7 +1848,7 @@ export class NameForgeModal extends Modal {
   /** Why a pack can't be an ageing target or a takeover pack (ageing §1), or undefined if it can. */
   private targetPackReason(entry: MixPackIndexEntry, index: MixPackIndexEntry[]): string | undefined {
     if (entry.templateError) return entry.templateError.replace(/\.$/, "");
-    if (entry.parsed.packType === "compoundPack") return "compound packs hold name parts, not whole names";
+    if (isCompoundPack(entry.parsed)) return "compound packs hold name parts, not whole names";
     const names = this.ageingTargetNames(entry, index);
     if (typeof names === "string") return names;
     if (new Set(names.names.map((n) => n.toLowerCase())).size < AGEING.minTargetNames) {
@@ -1867,7 +1874,7 @@ export class NameForgeModal extends Modal {
     }
     const names = extractNamesFromMarkdown(parsed.names.join("\n"));
     const endings =
-      parsed.packType === "placePack" ? PlaceNameModel.build(names).endings.map((e) => e.suffix).filter((x) => x) : [];
+      parsed.packType === "placePack" && (parsed.placeGenerator ?? "breakdown") === "breakdown" ? PlaceNameModel.build(names).endings.map((e) => e.suffix).filter((x) => x) : [];
     return { names, corpus: names, endings };
   }
 
@@ -2523,7 +2530,8 @@ export class NameForgeModal extends Modal {
     this.currentPackType = parsed.packType;
     this.currentSectioned = parsed.sectioned;
     await this.updateSectionChoices(parsed);
-    if (parsed.packType === "compoundPack") {
+    this.currentPlaceGenerator = parsed.packType === "placePack" ? parsed.placeGenerator ?? "breakdown" : undefined;
+    if (isCompoundPack(parsed)) {
       this.currentCompound = parsed;
       this.currentMixSources = [];
       this.currentNamesText = "";
@@ -2822,7 +2830,7 @@ export class NameForgeModal extends Modal {
     let choices: SectionOption[] = [];
     if (parsed.sectioned && parsed.sectioned.sections.length > 0) {
       choices = sectionOptions(parsed.sectioned);
-    } else if (parsed.packType === "compoundPack") {
+    } else if (isCompoundPack(parsed)) {
       // §4.4: the titles across all parts, in order of first appearance.
       const titles = compoundTitles(compoundPartData(parsed));
       if (titles.length > 0) choices = [...titles.map((t) => ({ label: t, request: { section: t } })), wholePackOption()];
@@ -2845,6 +2853,16 @@ export class NameForgeModal extends Modal {
     this.renderSectionSentence();
   }
 
+  /** Whether the loaded pack holds parts (people compound, or a compound place pack). */
+  private compoundLoaded(): boolean {
+    return isCompoundPack({ packType: this.currentPackType, placeGenerator: this.currentPlaceGenerator });
+  }
+
+  /** Whether the loaded pack picks names as written (List packs and list place packs). */
+  private isListLoaded(): boolean {
+    return this.currentPackType === "listPack" || (this.currentPackType === "placePack" && this.currentPlaceGenerator === "list");
+  }
+
   /** The chosen section option, if the pack has any. */
   private get sectionChoice(): SectionOption | undefined {
     return this.sectionChoices[this.sectionChoiceIndex];
@@ -2852,7 +2870,7 @@ export class NameForgeModal extends Modal {
 
   /** Whether whole-pack results carry their list's tag (§1.3; not offered for Mix packs). */
   private labelsOffered(): boolean {
-    return this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" || this.currentPackType === "compoundPack";
+    return ["listPack", "breakdownPack", "compoundPack", "placePack"].includes(this.currentPackType);
   }
 
   /** "Use the ‹male› names" or "Use the ‹whole pack› names, ‹showing› each name's list (Alfred · male)". */
@@ -2900,7 +2918,7 @@ export class NameForgeModal extends Modal {
 
   /** The bracketed example: the pack's first heading and one of its names. */
   private sectionExample(): { name: string; tag: string } {
-    if (this.currentPackType === "compoundPack" && this.currentCompound) {
+    if (this.currentCompound && this.compoundLoaded()) {
       const data = compoundPartData(this.currentCompound);
       const title = compoundTitles(data)[0];
       const fragments = compoundPartsFor(data, title).map((names) => names[0]).filter((n) => n !== undefined);
@@ -3068,7 +3086,7 @@ export class NameForgeModal extends Modal {
     }
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
 
-    if (this.currentPackType === "compoundPack") {
+    if (this.currentCompound && this.compoundLoaded()) {
       // Compound brief §4.4, §4.5: a chosen title resolves the parts; whole pack with labels picks a
       // title per name; whole pack without labels uses every part's names, as before.
       const data = compoundPartData(this.currentCompound ?? {});
@@ -3076,6 +3094,8 @@ export class NameForgeModal extends Modal {
       const options = {
         count: this.generationCount,
         ...compoundSettings(this.currentCompound ?? {}),
+        // Place generators brief §2.3: a compound place pack's breakdown parts use the place model.
+        ...(this.currentPackType === "placePack" ? { breakdownModel: "place" as const } : {}),
         faithfulness: this.plugin.settings.faithfulness,
         strictness: this.plugin.settings.strictness,
         seed: seedOverride,
@@ -3167,7 +3187,7 @@ export class NameForgeModal extends Modal {
     const choice = this.sectionChoice;
     if (choice?.whole && this.sectionLabelsShown && this.labelsOffered() && this.currentSectioned) {
       const result = generateLabelledNames(labelledLists(this.currentSectioned), {
-        generator: this.currentPackType === "listPack" ? "list" : "breakdown",
+        generator: this.isListLoaded() ? "list" : this.currentPackType === "placePack" ? "place" : "breakdown",
         count: this.generationCount,
         faithfulness: this.plugin.settings.faithfulness,
         strictness: this.plugin.settings.strictness,
@@ -3195,7 +3215,7 @@ export class NameForgeModal extends Modal {
       const selection = selectSectionNames(this.currentSectioned, choice.request);
       namesText = selection.names.join("\n");
       sectionNotices = selection.notices;
-      if (this.currentPackType === "breakdownPack") {
+      if (this.currentPackType === "breakdownPack" || (this.currentPackType === "placePack" && this.currentPlaceGenerator === "breakdown")) {
         loosened = breakdownSettingsFor(selection.names.length, this.plugin.settings.strictness ?? 3);
         if (!loosened.allowSourceCopies) loosened = undefined;
         else sectionNotices.push(smallListNotice(selection.used, selection.names.length));
@@ -3209,6 +3229,7 @@ export class NameForgeModal extends Modal {
       this.plugin.settings,
       seedOverride,
       loosened,
+      this.currentPlaceGenerator,
     );
 
     if (result.names.length === 0) {

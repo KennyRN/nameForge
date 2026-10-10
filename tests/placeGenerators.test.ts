@@ -95,3 +95,63 @@ test("seed regression: existing place packs match the captured batches and endin
     }
   }
 });
+
+// ── Generation (§2) ─────────────────────────────────────────────────────────
+import { generateCompoundNamesDetailed, mulberry32 } from "../src/markov";
+import { generateLabelledNames } from "../src/packs/labelled";
+import { labelledLists } from "../src/packs/sections";
+import { placePackDraw } from "../src/packs/placeDraw";
+
+const TOWNS = readFileSync("tests/fixtures/packs/english-towns.txt", "utf8").split("\n").filter(Boolean);
+const LATIN = readFileSync("tests/fixtures/packs/latin-towns.txt", "utf8").split("\n").filter(Boolean);
+
+test("compound with breakdownModel place: breakdown parts come from a PlaceNameModel; list parts verbatim", () => {
+  const tails = ["ford", "bridge", "ley"];
+  const seed = 11;
+  const result = generateCompoundNamesDetailed([TOWNS, tails], {
+    count: 20,
+    generator: "combined",
+    partGenerators: ["breakdown", "list"],
+    joining: "spaced",
+    breakdownModel: "place",
+    seed,
+  });
+  const subSeed = Math.floor(mulberry32(seed)() * 0xffffffff) >>> 0;
+  const pool = PlaceNameModel.build(TOWNS).generateDetailed({ count: 30, faithfulness: 2, strictness: 3, seed: subSeed }).names;
+  assert.ok(result.names.length > 0);
+  for (const n of result.names) {
+    const last = n.split(" ").at(-1)!;
+    assert.ok(["Ford", "Bridge", "Ley"].includes(last), n);
+    assert.ok(pool.map((p) => p.split(" ").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ")).includes(n.slice(0, -last.length - 1)), n);
+  }
+});
+
+test("whole-pack labels for place breakdown and list are true to their lists", () => {
+  const p = parseNamesFileContent(place("placeGenerator: list\n", SECTIONED));
+  const lists = labelledLists(p.sectioned!);
+  for (const n of generateLabelledNames(lists, { generator: "list", count: 10, seed: 2 }).names) {
+    assert.ok(lists.find((l) => l.tag === n.tag)!.names.includes(n.name));
+  }
+  const big = [{ tag: "english", names: TOWNS }, { tag: "latin", names: LATIN }];
+  const a = generateLabelledNames(big, { generator: "place", count: 20, seed: 5 });
+  assert.ok(a.names.length > 0);
+  for (const n of a.names) assert.ok(n.tag === "english" || n.tag === "latin");
+  assert.deepEqual(a, generateLabelledNames(big, { generator: "place", count: 20, seed: 5 }));
+});
+
+test("recipe draws: stem mode for each place generator", () => {
+  const rng = mulberry32(3);
+  const breakdown = placePackDraw(parseNamesFileContent(place("", TOWNS.join("\n"))), {});
+  const stem = breakdown({}, "stem", rng);
+  assert.ok(stem && stem.length > 0);
+  assert.equal(stem, PlaceNameModel.build(TOWNS).sampleStem(mulberry32(3)));
+  const list = placePackDraw(parseNamesFileContent(place("placeGenerator: list\n", SECTIONED)), {});
+  for (let i = 0; i < 10; i++) assert.ok(["Grimsby", "Skegness", "Derby", "Thoresby"].includes(list({}, "stem", rng)!));
+  assert.ok(["Derby", "Thoresby"].includes(list({ section: "inland" }, "whole", rng)!));
+  const listFirst = parseNamesFileContent(COMPOUND.replace("compoundPartGenerators: breakdown, list", "compoundPartGenerators: list, list"));
+  for (let i = 0; i < 10; i++) assert.ok(["Ash", "Wis", "Thorn"].includes(placePackDraw(listFirst, {})({}, "stem", rng)!));
+  const breakdownFirst = placePackDraw(parseNamesFileContent(COMPOUND.replace(/# Part 1\n[\s\S]*?\n\n# Part 2/, `# Part 1\n${TOWNS.join("\n")}\n\n# Part 2`)), {});
+  assert.ok(breakdownFirst({}, "stem", rng));
+  const whole = placePackDraw(parseNamesFileContent(COMPOUND), {})({ section: "river" }, "whole", rng);
+  assert.ok(whole && /(ford|bridge)$/.test(whole), String(whole));
+});

@@ -1436,6 +1436,8 @@ export interface CompoundGenerateOptions {
   partUse?: number[];
   /** Compound brief §4.1: each part's generator when `generator` is "combined"; missing = breakdown. */
   partGenerators?: ("breakdown" | "list")[];
+  /** Place generators brief §2.3: "place" builds breakdown parts on PlaceNameModel; default "plain". */
+  breakdownModel?: "plain" | "place";
   /**
    * RNG seed. Same seed + same source parts + same options = identical
    * output. Omit for a random seed — the seed actually used is always
@@ -1489,7 +1491,7 @@ export function generateCompoundNamesDetailed(
       generator.train(part);
       return generator.generateMultiple(poolSize, mulberry32(nextSubSeed()));
     }
-    const model = MarkovModel.build(part);
+    const model = options.breakdownModel === "place" ? PlaceNameModel.build(part) : MarkovModel.build(part);
     const subSeed = nextSubSeed();
     const strictness = options.strictness ?? 3;
     const pool = model.generateDetailed({ count: poolSize, faithfulness: options.faithfulness ?? 2, strictness, seed: subSeed }).names;
