@@ -81,7 +81,7 @@ import { chooseGroup, DEFAULT_GROUP_STATE, effectiveFront, groupPresetState, gro
 import { isGroupSafeguardPackContent } from "./groups/safeguardPacks";
 import { isModulePresetContent, modulePresetContent, parseModulePreset, type TribalPreset } from "./presets";
 import { confirmReplace, PresetSaveModal } from "./presetModal";
-import { builtinTemplates, type TemplateType, templateTypeFor } from "./templates";
+import { builtinTemplates, templateNameCount, templateText, type TemplateType, templateTypeFor } from "./templates";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
 import { type BiomePackSource, biomeToText, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
@@ -4259,19 +4259,22 @@ class NameForgeEditorModal extends Modal {
     const kinds: NamePackType[] = type === "people" ? ["breakdownPack", "listPack"] : type === "people-compound" ? ["compoundPack"] : ["placePack"];
     const own = await this.parent.listTemplates(kinds);
     pane.empty();
-    const entries = [...builtinTemplates(type).map((t) => ({ name: t.name, names: t.items, parts: t.parts })), ...own];
+    const entries: { name: string; names?: string[]; parts?: string[][]; partTexts?: string[]; text?: string; count?: number }[] = [
+      ...builtinTemplates(type).map((t) => ({ name: t.name, parts: t.parts, text: templateText(t), count: templateNameCount(t) })),
+      ...own,
+    ];
     if (entries.length === 0) pane.createDiv({ cls: "nameforge-editor-modal__templates-empty", text: "No templates of this type" });
     for (const entry of entries) {
       const row = pane.createEl("button", { cls: "nameforge-editor-modal__template-item", attr: { type: "button" } });
       row.createSpan({ cls: "nameforge-editor-modal__template-name", text: entry.name });
-      const count = entry.parts ? `${entry.parts.length} parts` : `${entry.names?.length ?? 0} names`;
+      const count = entry.parts ? `${entry.parts.length} parts` : `${entry.count ?? entry.names?.length ?? 0} names`;
       row.createSpan({ cls: "nameforge-editor-modal__template-count", text: count });
       row.addEventListener("click", () => void this.useTemplate(entry));
     }
   }
 
   /** Fills the box (or the compound parts) from a template, asking first if there is text to replace. */
-  private async useTemplate(entry: { names?: string[]; parts?: string[][]; partTexts?: string[] }) {
+  private async useTemplate(entry: { names?: string[]; parts?: string[][]; partTexts?: string[]; text?: string }) {
     if (entry.parts) {
       const parts = entry.parts.slice(0, 3);
       if (this.partTextareas.slice(0, parts.length).some((t) => t.value.trim()) && !(await confirmReplace(this.app, "Replace what's in the parts?"))) return;
@@ -4283,7 +4286,7 @@ class NameForgeEditorModal extends Modal {
     const box = this.inputEl;
     if (!box) return;
     if (box.value.trim() && !(await confirmReplace(this.app, "Replace what's in the box?"))) return;
-    box.value = (entry.names ?? []).join("\n");
+    box.value = entry.text ?? (entry.names ?? []).join("\n");
   }
 
   /** The text box a pack type writes in; compound and mix have their own sections instead. */
