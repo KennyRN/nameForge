@@ -34,7 +34,14 @@ export type NameForgeSection =
   | "tradeGuilds"
   | "adventureCompanies"
   | "powerFactions"
-  | "supernaturalCourts";
+  | "supernaturalCourts"
+  // Bynames brief §1.1: epithets, titles and family names.
+  | "epithets"
+  | "titles"
+  | "familyNames";
+
+/** Bynames brief §1.1: the three bynames modules, in order. */
+export const BYNAME_SECTIONS: NameForgeSection[] = ["epithets", "titles", "familyNames"];
 
 /** Group brief §1.1: the seven group-name modules, in order. */
 export const GROUP_NAME_SECTIONS: NameForgeSection[] = [
@@ -54,28 +61,31 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "empireExpansionPlaceShapes",
   "tribalNames",
   ...GROUP_NAME_SECTIONS,
+  ...BYNAME_SECTIONS,
   "nameAgeing",
   "nameTakeover",
 ];
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
  * trigger then chooses between the group's modules. */
-export type SectionGroup = "placeNames" | "groupNames" | "advanced";
+export type SectionGroup = "placeNames" | "groupNames" | "bynames" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
   groupNames: ["tribalNames", ...GROUP_NAME_SECTIONS],
+  bynames: BYNAME_SECTIONS,
   advanced: ["nameAgeing", "nameTakeover"],
 };
 
 export const GROUP_LABELS: Record<SectionGroup, string> = {
   placeNames: "place names",
   groupNames: "group names",
+  bynames: "bynames and titles",
   advanced: "advanced",
 };
 
 /** The switcher's line-up: modules and groups. */
-export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "groupNames", "advanced"];
+export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "groupNames", "bynames", "advanced"];
 
 /** The group a module belongs to, if any. */
 export function sectionGroup(section: NameForgeSection): SectionGroup | undefined {
@@ -99,6 +109,9 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   adventureCompanies: "adventurers and explorers",
   powerFactions: "powers and factions",
   supernaturalCourts: "supernatural courts and hosts",
+  epithets: "epithets and bynames",
+  titles: "titles and honorifics",
+  familyNames: "family names",
 };
 
 /** History labels for new runs of the place-name and river modules. */
@@ -124,6 +137,8 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
   // Group brief §1.2: each group-name module's label starts its history rows.
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  // Bynames brief §1.2: "{module label} · {setting} · {culture}…".
+  for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }

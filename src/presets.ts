@@ -6,6 +6,15 @@
 import { findBiome, TERRAIN_CHOICES } from "./biomes";
 import { findTradition, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS } from "./tribes/engine";
 import { type TribalSlotFields, tribalSlotFill } from "./tribes/slotFill";
+import {
+  BYNAME_CULTURES,
+  type BynameGender,
+  type BynameLanguage,
+  type BynameLength,
+  type BynameModule,
+  type BynameSource,
+  moduleKinds,
+} from "./bynames/engine";
 import { findFamily, GROUP_TONES, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
 
 export const TRIBAL_PRESET_MODULE = "tribal-names";
@@ -54,13 +63,18 @@ export function isModulePresetContent(content: string): boolean {
 }
 
 /** §7.2: a preset's values; unknown values are reported and take their defaults. */
-export function parseModulePreset(content: string, fileName: string): { preset?: TribalPreset; group?: GroupPreset; problems: string[] } {
+export function parseModulePreset(
+  content: string,
+  fileName: string,
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
   const { values, body } = parsed;
   // Group brief §13: group-name presets sit beside tribal ones.
   if (values.module === GROUP_PRESET_MODULE) return parseGroupPreset(values, body, fileName);
+  // Bynames brief §12: byname presets too.
+  if (values.module === BYNAME_PRESET_MODULE) return parseBynamePreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module “${values.module ?? ""}”.`);
     return { problems };
@@ -95,7 +109,8 @@ export function parseModulePreset(content: string, fileName: string): { preset?:
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset): string {
+  if ("bynameModule" in preset) return bynamePresetContent(preset);
   if ("family" in preset) return groupPresetContent(preset);
   const quote = (v: string) => (/^\[\[|[:#]/.test(v) ? `"${v}"` : v);
   return [
@@ -204,6 +219,95 @@ function groupPresetContent(preset: GroupPreset): string {
     `people: ${preset.people}`,
     `tone: ${preset.tone}`,
     `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Byname presets (Bynames brief §12) ──────────────────────────────────────
+
+export const BYNAME_PRESET_MODULE = "bynames";
+
+export interface BynamePreset {
+  packName: string;
+  setting: string;
+  description: string;
+  bynameModule: BynameModule;
+  culture: string;
+  kind: string;
+  genre: GroupGenre;
+  fantastic: boolean;
+  tone: GroupToneChoice;
+  language: BynameLanguage;
+  gender: BynameGender;
+  length: BynameLength;
+  source: BynameSource;
+  /** The pack's name, with source "pack". */
+  pack?: string;
+  /** A heading, "gender" or "whole". */
+  section: string;
+}
+
+function parseBynamePreset(values: Record<string, string>, body: string, fileName: string): { byname?: BynamePreset; problems: string[] } {
+  const problems: string[] = [];
+  const module = values.bynameModule as BynameModule;
+  if (!["epithets", "titles", "familyNames"].includes(module)) {
+    problems.push(`Unknown bynameModule “${values.bynameModule ?? ""}”.`);
+    return { problems };
+  }
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const fantasticRaw = values.fantastic;
+  if (fantasticRaw && fantasticRaw !== "true" && fantasticRaw !== "false") problems.push(`Unknown fantastic “${fantasticRaw}”.`);
+  const culture = pick("culture", "general", (v) => BYNAME_CULTURES.some((c) => c.key === v));
+  return {
+    byname: {
+      packName: values.packName || fileName,
+      setting: values.setting ?? "",
+      description: body.trim(),
+      bynameModule: module,
+      culture,
+      kind: pick("kind", "any", (v) => v === "any" || moduleKinds(module).some((k) => k.key === v)),
+      genre: pick<GroupGenre>("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
+      fantastic: fantasticRaw === "true",
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      language: pick<BynameLanguage>("language", "english", (v) => ["english", "native", "mixed"].includes(v)),
+      gender: pick<BynameGender>("gender", "anyone", (v) => ["men", "women", "anyone"].includes(v)),
+      length: pick<BynameLength>("length", "single", (v) => ["single", "full"].includes(v)),
+      source: pick<BynameSource>("source", "placeholder", (v) => ["placeholder", "pack", "none"].includes(v)),
+      ...(values.pack ? { pack: values.pack.replace(/^\[\[|\]\]$/g, "") } : {}),
+      section: values.section || "gender",
+    },
+    problems,
+  };
+}
+
+function bynamePresetContent(preset: BynamePreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${BYNAME_PRESET_MODULE}`,
+    `bynameModule: ${preset.bynameModule}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.kind}`,
+    `genre: ${preset.genre}`,
+    `fantastic: ${preset.fantastic}`,
+    `tone: ${preset.tone}`,
+    `language: ${preset.language}`,
+    `gender: ${preset.gender}`,
+    `length: ${preset.length}`,
+    `source: ${preset.source}`,
+    ...(preset.pack ? [`pack: ${preset.pack}`] : []),
+    `section: ${preset.section}`,
     "---",
     "",
     preset.description.trim(),

@@ -461,19 +461,19 @@ function stripInlineMarkup(s) {
 function parseNameTokens(text) {
   const tokens = text.split(/[\n,;]/).flatMap((t) => splitOnJoiners(t)).flatMap((t) => splitSpaceSeparatedList(t)).map((t) => t.trim()).filter((t) => t.length > 0);
   const names = [];
-  for (const token2 of tokens) {
-    const cleaned = cleanToken(stripLeadingConjunction(token2));
+  for (const token3 of tokens) {
+    const cleaned = cleanToken(stripLeadingConjunction(token3));
     if (cleaned === "" || isNoise(cleaned)) continue;
     names.push(cleaned);
   }
   return dedupe(names);
 }
-function splitSpaceSeparatedList(token2) {
-  const parts = splitOnUnquotedWhitespace(token2);
+function splitSpaceSeparatedList(token3) {
+  const parts = splitOnUnquotedWhitespace(token3);
   if (parts.length >= 3) return parts;
-  const loose = unwrapOuterQuotes(token2.trim()).split(/\s+/).filter((p) => p.length > 0);
+  const loose = unwrapOuterQuotes(token3.trim()).split(/\s+/).filter((p) => p.length > 0);
   if (loose.length >= 3) return loose;
-  return [token2];
+  return [token3];
 }
 function unwrapOuterQuotes(s) {
   const pairs = [
@@ -489,11 +489,11 @@ function unwrapOuterQuotes(s) {
   }
   return s;
 }
-function splitOnUnquotedWhitespace(token2) {
+function splitOnUnquotedWhitespace(token3) {
   const parts = [];
   let current = "";
   let quote2 = null;
-  for (const char of token2) {
+  for (const char of token3) {
     if (quote2) {
       current += char;
       if (char === matchingQuote(quote2)) quote2 = null;
@@ -519,8 +519,8 @@ function matchingQuote(open) {
   if (open === "\u2018") return "\u2019";
   return open;
 }
-function splitOnJoiners(token2) {
-  let parts = [token2];
+function splitOnJoiners(token3) {
+  let parts = [token3];
   for (const joiner of JOINERS) {
     const next = [];
     for (const part of parts) {
@@ -536,12 +536,12 @@ function splitOnJoiners(token2) {
   }
   return parts;
 }
-function stripLeadingConjunction(token2) {
-  const lower2 = token2.toLowerCase();
+function stripLeadingConjunction(token3) {
+  const lower2 = token3.toLowerCase();
   for (const lead of LEADERS) {
-    if (lower2.startsWith(lead)) return token2.slice(lead.length).trim();
+    if (lower2.startsWith(lead)) return token3.slice(lead.length).trim();
   }
-  return token2;
+  return token3;
 }
 function cleanToken(s) {
   let t = s.trim();
@@ -1859,7 +1859,7 @@ function namesFromParsedPack(parsed) {
   }
   return parsed.names.filter((name) => name.trim().length > 0);
 }
-function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ new Set(), sectionRequest) {
+function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ new Set(), sectionRequest2) {
   var _a2;
   if (visiting.has(mixPath)) {
     return { sources: [], error: `Mix pack cycle involving ${mixData.packName || mixPath}.` };
@@ -1877,7 +1877,7 @@ function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ n
       visiting.delete(mixPath);
       return { sources: [], error: `Mix pack cannot include itself.` };
     }
-    const nested = resolvePackToCorpus(found, index, visiting, sectionRequest);
+    const nested = resolvePackToCorpus(found, index, visiting, sectionRequest2);
     if (nested.error) {
       visiting.delete(mixPath);
       return { sources: [], error: nested.error };
@@ -1890,13 +1890,13 @@ function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ n
   }
   return { sources };
 }
-function resolvePackToCorpus(entry, index, visiting, sectionRequest) {
+function resolvePackToCorpus(entry, index, visiting, sectionRequest2) {
   if (entry.parsed.packType !== "mixPack") {
     const sectioned = entry.parsed.sectioned;
-    if (sectionRequest && sectioned) return { names: selectSectionNames(sectioned, sectionRequest).names };
+    if (sectionRequest2 && sectioned) return { names: selectSectionNames(sectioned, sectionRequest2).names };
     return { names: namesFromParsedPack(entry.parsed) };
   }
-  const nested = resolveMixSources(entry.path, entry.parsed, index, visiting, sectionRequest);
+  const nested = resolveMixSources(entry.path, entry.parsed, index, visiting, sectionRequest2);
   if (nested.error) return { names: [], error: nested.error };
   return { names: buildWeightedCorpus(nested.sources) };
 }
@@ -2321,12 +2321,15 @@ var ICON_RIVER_NAMES = "nameforge-river-names";
 var ICON_RIVER_NAMES_SVG = '<g transform="scale(6.66667)"><path fill="currentColor" d="M12 9c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14q-1.245 0-2.25-1.5Q10.995 13 9.75 13T7.5 11.5Q6.495 13 5.25 13T3 11.5Q1.995 13 .75 13c-.26 0-.51-.05-.75-.14v-2.05c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2m0-4c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14Q13.005 9 12 7.5Q10.995 9 9.75 9T7.5 7.5Q6.495 9 5.25 9T3 7.5Q1.995 9 .75 9C.49 9 .24 8.95 0 8.86V6.81c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2m0-4c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14Q13.005 5 12 3.5Q10.995 5 9.75 5T7.5 3.5Q6.495 5 5.25 5T3 3.5Q1.995 5 .75 5C.49 5 .24 4.95 0 4.86V2.81c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2" /></g>';
 var ICON_TRIBAL_NAMES = "nameforge-tribal-names";
 var ICON_TRIBAL_NAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="currentColor"><path d="M20.0918 14.3257L20.2848 12.4316C20.3878 11.421 20.4558 10.7537 20.4024 10.3332L20.4211 10.3333C21.2931 10.3333 22 9.58714 22 8.66667C22 7.74619 21.2931 7 20.4211 7C19.549 7 18.8421 7.74619 18.8421 8.66667C18.8421 9.08296 18.9867 9.4636 19.2258 9.7557C18.8826 9.9793 18.4338 10.4511 17.7584 11.1613L17.7584 11.1613C17.2381 11.7084 16.9779 11.9819 16.6877 12.0243C16.5269 12.0478 16.363 12.0236 16.2145 11.9546C15.9465 11.83 15.7678 11.4919 15.4105 10.8155L13.5268 7.25044C13.3063 6.83319 13.1218 6.48397 12.9554 6.20294C13.6379 5.83541 14.1053 5.08643 14.1053 4.22222C14.1053 2.99492 13.1627 2 12 2C10.8373 2 9.89474 2.99492 9.89474 4.22222C9.89474 5.08643 10.3621 5.83541 11.0446 6.20294C10.8782 6.48399 10.6937 6.83316 10.4732 7.25045L8.58953 10.8155C8.23217 11.4919 8.05348 11.83 7.78548 11.9546C7.63699 12.0236 7.47313 12.0478 7.31231 12.0243C7.02208 11.9819 6.76191 11.7084 6.24157 11.1613C5.56617 10.4511 5.11743 9.97929 4.77424 9.75569C5.0133 9.4636 5.15789 9.08296 5.15789 8.66667C5.15789 7.74619 4.45098 7 3.57895 7C2.70692 7 2 7.74619 2 8.66667C2 9.58714 2.70692 10.3333 3.57895 10.3333L3.59759 10.3332C3.54423 10.7537 3.61223 11.421 3.71521 12.4316L3.90821 14.3257C4.01535 15.377 4.10443 16.3774 4.21355 17.2778H19.7864C19.8956 16.3774 19.9847 15.377 20.0918 14.3257Z" /><path d="M10.8548 22H13.1452C16.1304 22 17.623 22 18.6189 21.0591C19.0535 20.6484 19.3288 19.908 19.5274 18.9444H4.47259C4.67121 19.908 4.94646 20.6484 5.38113 21.0591C6.37702 22 7.86961 22 10.8548 22Z" /></g></g>';
+var ICON_BYNAMES = "nameforge-bynames";
+var ICON_BYNAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 5a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M4 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M16 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M12 7v4H6v4" /><path d="M12 11h6v4" /></g></g>';
 var ICON_FOLDER = "nameforge-folder";
 var ICON_FOLDER_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
 var ICON_INFO = "nameforge-info";
 var ICON_INFO_SVG = '<g transform="scale(0.195313)"><path d="M0 0h512v512H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184s184-82.39 184-184S349.61 64 248 64Z" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M220 220h32v116" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M208 340h88" /><path fill="currentColor" d="M248 130a26 26 0 1 0 26 26a26 26 0 0 0-26-26" /></g>';
 function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_MEEPLE, MEEPLE_SVG);
+  (0, import_obsidian4.addIcon)(ICON_BYNAMES, ICON_BYNAMES_SVG);
   (0, import_obsidian4.addIcon)(ICON_INFO, ICON_INFO_SVG);
   (0, import_obsidian4.addIcon)(ICON_CREATE_PACKS, ICON_CREATE_PACKS_SVG);
   (0, import_obsidian4.addIcon)(ICON_PLUS_SQUARE, ICON_PLUS_SQUARE_SVG);
@@ -32653,15 +32656,15 @@ function readRecipe(fm) {
   if (register && REGISTERS.includes(register)) recipe.register = register;
   else if (register) problems.push(`Unknown register \u201C${register}\u201D.`);
   if (isObject(fm.render)) {
-    const render2 = {};
+    const render3 = {};
     const joining = str(fm.render.joining);
-    if (joining && JOININGS.includes(joining)) render2.joining = joining;
+    if (joining && JOININGS.includes(joining)) render3.joining = joining;
     else if (joining) problems.push(`Unknown joining \u201C${joining}\u201D.`);
     const hyphens = bool(fm.render["linking-hyphens"]);
-    if (hyphens !== void 0) render2.linkingHyphens = hyphens;
+    if (hyphens !== void 0) render3.linkingHyphens = hyphens;
     const etymology = bool(fm.render.etymology);
-    if (etymology !== void 0) render2.etymology = etymology;
-    recipe.render = render2;
+    if (etymology !== void 0) render3.etymology = etymology;
+    recipe.render = render3;
   }
   return { recipe, problems };
 }
@@ -32748,11 +32751,11 @@ function recipeToFrontmatter(r) {
   if (r.generics && Object.keys(r.generics).length > 0) out.generics = { ...r.generics };
   if (r.register) out.register = r.register;
   if (r.render && Object.keys(r.render).length > 0) {
-    const render2 = {};
-    if (r.render.joining) render2.joining = r.render.joining;
-    if (r.render.linkingHyphens !== void 0) render2["linking-hyphens"] = r.render.linkingHyphens;
-    if (r.render.etymology !== void 0) render2.etymology = r.render.etymology;
-    out.render = render2;
+    const render3 = {};
+    if (r.render.joining) render3.joining = r.render.joining;
+    if (r.render.linkingHyphens !== void 0) render3["linking-hyphens"] = r.render.linkingHyphens;
+    if (r.render.etymology !== void 0) render3.etymology = r.render.etymology;
+    out.render = render3;
   }
   if (r.takeover) out.takeover = `[[${r.takeover}]]`;
   if (r.native) out.native = `[[${r.native}]]`;
@@ -53413,34 +53416,34 @@ var WorldRenderer = class {
     return pickUniform5(source.corpus, rng);
   }
   /** A list word, expanding any template held in the entry. */
-  slot(token2, rng, depth) {
+  slot(token3, rng, depth) {
     var _a2, _b;
-    if (token2.markov) {
-      const name = this.markovName(token2.key, rng);
-      const text2 = token2.form === "pos" ? possessive(name) : name;
-      return { text: text2, etym: `[${this.label(token2.key)}: ${name}]${token2.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
+    if (token3.markov) {
+      const name = this.markovName(token3.key, rng);
+      const text2 = token3.form === "pos" ? possessive(name) : name;
+      return { text: text2, etym: `[${this.label(token3.key)}: ${name}]${token3.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
     }
-    const list = this.lists[token2.key];
+    const list = this.lists[token3.key];
     if (!list || list.length === 0) {
-      this.notices.add(`No word list "${token2.key}" for ${this.culture.label}.`);
-      return { text: `[${token2.key}]`, etym: `[${token2.key}]`, fusable: false };
+      this.notices.add(`No word list "${token3.key}" for ${this.culture.label}.`);
+      return { text: `[${token3.key}]`, etym: `[${token3.key}]`, fusable: false };
     }
-    const entry = parseEntry((_a2 = this.swapEntry(token2.key, rng)) != null ? _a2 : pickUniform5(list, rng));
+    const entry = parseEntry((_a2 = this.swapEntry(token3.key, rng)) != null ? _a2 : pickUniform5(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);
-      const text2 = token2.form === "pos" ? possessive(inner.text) : inner.text;
-      const etym = single ? inner.etym : `[${this.label(token2.key)}: ${inner.text}]`;
-      return { text: text2, etym: token2.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
+      const text2 = token3.form === "pos" ? possessive(inner.text) : inner.text;
+      const etym = single ? inner.etym : `[${this.label(token3.key)}: ${inner.text}]`;
+      return { text: text2, etym: token3.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
     }
     let text = entry.word;
-    if (token2.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
-    if (token2.form === "pos") text = possessive(entry.word);
-    const shown = token2.form === "pos" ? entry.word : text;
+    if (token3.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
+    if (token3.form === "pos") text = possessive(entry.word);
+    const shown = token3.form === "pos" ? entry.word : text;
     return {
       text,
-      etym: `[${this.label(token2.key)}: ${shown}]${token2.form === "pos" ? possessiveTail(entry.word) : ""}`,
-      fusable: !entry.noFuse && token2.form !== "pos"
+      etym: `[${this.label(token3.key)}: ${shown}]${token3.form === "pos" ? possessiveTail(entry.word) : ""}`,
+      fusable: !entry.noFuse && token3.form !== "pos"
     };
   }
   /** Renders a template: slots filled, "+" groups fused or spaced. */
@@ -53454,14 +53457,14 @@ var WorldRenderer = class {
       out.push(group.length === 1 ? group[0] : this.fuse(group, rng));
       group = [];
     };
-    for (const token2 of tokens) {
-      if (token2.kind === "fuse") {
+    for (const token3 of tokens) {
+      if (token3.kind === "fuse") {
         joinNext = true;
         continue;
       }
       let piece;
-      if (token2.kind === "text") piece = { text: token2.text, etym: token2.text.toLowerCase(), fusable: !/\s/.test(token2.text) };
-      else piece = this.slot(token2, rng, depth);
+      if (token3.kind === "text") piece = { text: token3.text, etym: token3.text.toLowerCase(), fusable: !/\s/.test(token3.text) };
+      else piece = this.slot(token3, rng, depth);
       if (!joinNext) flush();
       group.push(piece);
       joinNext = false;
@@ -53670,6 +53673,9 @@ var PERSON_NOUNS = new Set(GROUP_DATA.safeguards.personNouns);
 var COLOUR_WORDS = new Set(["colour", "colourRich", "habit"].flatMap((l) => GROUP_DATA.lists[l].map((e) => e.w)));
 var NUMBER_WORDS = new Set([...GROUP_DATA.lists.number, ...GROUP_DATA.lists.ordinalWord].map((e) => e.w));
 var BLOCKED_INITIALS = new Set(GROUP_DATA.safeguards.blockedInitials);
+function hasBannedWord(text) {
+  return BANNED.some((re) => re.test(text));
+}
 function breaksGroupColourRule(text) {
   const words = text.split(/\s+/);
   return words.some((w, i) => i < words.length - 1 && COLOUR_WORDS.has(w) && PERSON_NOUNS.has(words[i + 1]));
@@ -53925,6 +53931,38 @@ function inventedTown(ctx, type) {
     if (names.length > 0) return pickOne(names, rng);
   }
   return `${pick2(ctx, "townPrefix", type)}${pick2(ctx, "townSuffix", type)}`;
+}
+var sharedCtxs = /* @__PURE__ */ new Map();
+function sharedCtx(setting, rng) {
+  let found = sharedCtxs.get(setting);
+  if (!found) {
+    const family = GROUP_FAMILIES[0];
+    const ctx = { rng, setting, family, vocab: void 0, people: void 0, mode: "invented", form: "any", block: /* @__PURE__ */ new Set(), pools: /* @__PURE__ */ new Map(), tone: "any", drawn: /* @__PURE__ */ new Set() };
+    found = { ctx, type: family.types[0] };
+    sharedCtxs.set(setting, found);
+  }
+  found.ctx.rng = rng;
+  return found;
+}
+function groupTown(setting, source, rng) {
+  const { ctx, type } = sharedCtx(setting, rng);
+  if (setting !== "SF" && source) {
+    const names = townPool(source);
+    if (names.length > 0) return pickOne(names, rng);
+  }
+  if (setting !== "SF") return `${pickWeighted5(pool(ctx, "townPrefix", type), rng)}${pickWeighted5(pool(ctx, "townSuffix", type), rng)}`;
+  return inventedTown(ctx, type);
+}
+function groupListWords(name, setting) {
+  const { ctx, type } = sharedCtx(setting, Math.random);
+  return pool(ctx, name, type);
+}
+function prefixedLand(word, setting, rng) {
+  const { ctx, type } = sharedCtx(setting, rng);
+  const holds = word.includes(" ") || GROUP_DATA.lists.land.some((e) => e.w === word && e.noPrefix);
+  if (holds || rng() >= 0.3) return word;
+  const prefix = rng() < 0.5 ? pickWeighted5(pool(ctx, "landPrefix", type), rng) : pickWeighted5(pool(ctx, "colour", type), rng);
+  return `${prefix} ${word}`;
 }
 function initialsToken(ctx, type) {
   const formal = type.shapes.filter((s) => s.f === "F" && !s.p.includes("{initials}") && shapeWeight(ctx, s) > 0);
@@ -54422,6 +54460,7651 @@ Names to allow, though they echo a real or well-known group.
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
 
+// src/data/bynames.json
+var bynames_default = {
+  version: 1,
+  cultures: [
+    {
+      key: "general",
+      label: "General",
+      guide: "No cultural flavour; fantasy and sci-fi words"
+    },
+    {
+      key: "anglo-saxon",
+      label: "Anglo-Saxon"
+    },
+    {
+      key: "norse",
+      label: "Norse"
+    },
+    {
+      key: "celtic",
+      label: "Celtic"
+    },
+    {
+      key: "norman-british",
+      label: "Norman & British",
+      guide: "Norman lords, medieval English surnames, knights and offices"
+    },
+    {
+      key: "roman",
+      label: "Roman / Italian"
+    },
+    {
+      key: "greek-byzantine",
+      label: "Greek & Byzantine",
+      guide: "Ancient Greek filiation, Byzantine courts and family names"
+    },
+    {
+      key: "slavic",
+      label: "Slavic"
+    },
+    {
+      key: "steppe",
+      label: "Turkic & Mongol steppe",
+      guide: "Khans, begs and khatuns; Turkic patronymics; wolf and horse bynames"
+    },
+    {
+      key: "arabic-persian",
+      label: "Arabic & Persian"
+    },
+    {
+      key: "indian",
+      label: "Indian"
+    },
+    {
+      key: "chinese",
+      label: "Chinese"
+    },
+    {
+      key: "japanese",
+      label: "Japanese"
+    },
+    {
+      key: "korean",
+      label: "Korean"
+    },
+    {
+      key: "egyptian",
+      label: "Egyptian"
+    },
+    {
+      key: "ethiopian",
+      label: "Ethiopian"
+    },
+    {
+      key: "bantu",
+      label: "Bantu"
+    },
+    {
+      key: "west-african",
+      label: "West African"
+    },
+    {
+      key: "aztec",
+      label: "Aztec"
+    },
+    {
+      key: "maya",
+      label: "Maya"
+    }
+  ],
+  cultureAnimals: {
+    "norman-british": [
+      "Lion",
+      "Hart",
+      "Boar",
+      "Bear",
+      "Hound",
+      "Falcon",
+      "Swan",
+      "Wolf"
+    ],
+    "greek-byzantine": [
+      "Lion",
+      "Eagle",
+      "Bull",
+      "Dolphin",
+      "Owl",
+      "Serpent",
+      "Boar"
+    ],
+    steppe: [
+      "Wolf",
+      "Grey Wolf",
+      "Horse",
+      "Falcon",
+      "Eagle",
+      "Bear",
+      "Snow Leopard",
+      "Camel"
+    ]
+  },
+  familyFirst: [
+    "chinese",
+    "japanese",
+    "korean"
+  ],
+  clanBornSuffixes: [
+    "born",
+    "blood",
+    "heart",
+    "fist",
+    "brand",
+    "shield"
+  ],
+  clanStyleSuffixes: [
+    "heart",
+    "blood",
+    "shield",
+    "fist",
+    "bane"
+  ],
+  ranks: {
+    general: [
+      {
+        x: 2,
+        m: "King",
+        f: "Queen"
+      },
+      {
+        x: 3,
+        m: "Lord",
+        f: "Lady"
+      },
+      {
+        m: "Duke",
+        f: "Duchess"
+      },
+      {
+        m: "Count",
+        f: "Countess"
+      },
+      {
+        m: "Baron",
+        f: "Baroness"
+      },
+      {
+        m: "Prince",
+        f: "Princess"
+      },
+      {
+        x: 0.5,
+        w: "Marshal"
+      },
+      {
+        w: "Warden"
+      },
+      {
+        w: "Steward"
+      },
+      {
+        x: 0.5,
+        w: "Chancellor"
+      },
+      {
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ],
+        w: "Governor"
+      },
+      {
+        s: [
+          "MR",
+          "MF"
+        ],
+        w: "President"
+      },
+      {
+        s: [
+          "MR",
+          "MF"
+        ],
+        w: "Minister"
+      },
+      {
+        s: [
+          "MR",
+          "MF"
+        ],
+        w: "Director"
+      },
+      {
+        s: [
+          "MR",
+          "MF"
+        ],
+        w: "Commissioner"
+      },
+      {
+        s: [
+          "MR",
+          "MF"
+        ],
+        m: "Chairman",
+        f: "Chairwoman"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Administrator"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Prefect"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "High Commissioner"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Overseer"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Director-General"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Governor-General"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Archmage"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        g: "f",
+        w: "Witch-Queen"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        g: "m",
+        w: "Warlock-King"
+      }
+    ],
+    "anglo-saxon": [
+      {
+        m: "King",
+        f: "Queen",
+        nm: "Cyning",
+        nf: "Cwen"
+      },
+      {
+        m: "Lord",
+        f: "Lady",
+        nm: "Hlaford",
+        nf: "Hl\xE6fdige"
+      },
+      {
+        m: "Ealdorman",
+        f: null,
+        nm: "Ealdorman",
+        nf: null
+      },
+      {
+        m: "Thane",
+        f: null,
+        nm: "Thegn",
+        nf: null
+      },
+      {
+        m: "Reeve",
+        f: null,
+        nm: "Gerefa",
+        nf: null
+      },
+      {
+        m: "Prince",
+        f: null,
+        nm: "\xC6theling",
+        nf: null
+      }
+    ],
+    norse: [
+      {
+        m: "King",
+        f: "Queen",
+        nm: "Konungr",
+        nf: "Drottning"
+      },
+      {
+        m: "Jarl",
+        f: null,
+        nm: "Jarl",
+        nf: null
+      },
+      {
+        m: "Chieftain",
+        f: null,
+        nm: "Go\xF0i",
+        nf: null
+      },
+      {
+        m: "Hersir",
+        f: null,
+        nm: "Hersir",
+        nf: null
+      },
+      {
+        m: "Lawspeaker",
+        f: null,
+        nm: "L\xF6gs\xF6guma\xF0r",
+        nf: null
+      },
+      {
+        m: "Sea-King",
+        f: null,
+        nm: "S\xE6konungr",
+        nf: null
+      }
+    ],
+    celtic: [
+      {
+        m: "King",
+        f: "Queen",
+        nm: "R\xED",
+        nf: "R\xEDgan"
+      },
+      {
+        m: "High King",
+        f: "High Queen",
+        nm: "Ard R\xED",
+        nf: "Ard R\xEDgan"
+      },
+      {
+        m: "Chief",
+        f: null,
+        nm: "To\xEDsech",
+        nf: null
+      },
+      {
+        m: "Lord",
+        f: "Lady",
+        nm: "Tigerna",
+        nf: "Tigernae"
+      },
+      {
+        m: "Bard",
+        f: null,
+        nm: "Bard",
+        nf: null
+      }
+    ],
+    "norman-british": [
+      {
+        m: "King",
+        f: "Queen",
+        nm: "Roi",
+        nf: "Reine"
+      },
+      {
+        m: "Duke",
+        f: "Duchess",
+        nm: "Duc",
+        nf: "Duchesse"
+      },
+      {
+        m: "Earl",
+        f: "Countess",
+        nm: "Comte",
+        nf: "Comtesse"
+      },
+      {
+        m: "Baron",
+        f: "Baroness"
+      },
+      {
+        m: "Lord",
+        f: "Lady",
+        nm: "Seigneur",
+        nf: "Dame"
+      },
+      {
+        x: 2,
+        m: "Sir",
+        f: "Dame"
+      },
+      {
+        m: "Sheriff",
+        f: null
+      },
+      {
+        m: "Constable",
+        f: null,
+        nm: "Conn\xE9table",
+        nf: null
+      },
+      {
+        m: "Seneschal",
+        f: null,
+        nm: "S\xE9n\xE9chal",
+        nf: null
+      },
+      {
+        m: "Marshal",
+        f: null,
+        nm: "Mar\xE9chal",
+        nf: null
+      },
+      {
+        s: [
+          "MR",
+          "MF"
+        ],
+        m: "Lord Lieutenant",
+        f: "Lady Lieutenant"
+      },
+      {
+        s: [
+          "MR",
+          "MF"
+        ],
+        m: "Chief Constable",
+        f: "Chief Constable"
+      },
+      {
+        s: [
+          "MR",
+          "MF"
+        ],
+        m: "Alderman",
+        f: "Alderwoman"
+      },
+      {
+        s: [
+          "MR",
+          "MF"
+        ],
+        m: "Mayor",
+        f: "Mayor"
+      }
+    ],
+    roman: [
+      {
+        m: "Emperor",
+        f: "Empress",
+        nm: "Imperator",
+        nf: "Augusta"
+      },
+      {
+        m: "Caesar",
+        f: null,
+        nm: "Caesar",
+        nf: null
+      },
+      {
+        m: "Consul",
+        f: null,
+        nm: "Consul",
+        nf: null
+      },
+      {
+        m: "Senator",
+        f: null,
+        nm: "Senator",
+        nf: null
+      },
+      {
+        m: "Legate",
+        f: null,
+        nm: "Legatus",
+        nf: null
+      },
+      {
+        m: "Tribune",
+        f: null,
+        nm: "Tribunus",
+        nf: null
+      },
+      {
+        m: "Prefect",
+        f: null,
+        nm: "Praefectus",
+        nf: null
+      },
+      {
+        m: "Proconsul",
+        f: null,
+        nm: "Proconsul",
+        nf: null
+      },
+      {
+        m: "Lady",
+        f: "Lady",
+        nm: null,
+        nf: "Domina"
+      },
+      {
+        s: [
+          "MR",
+          "MF"
+        ],
+        x: 0.3,
+        m: "Doge",
+        f: null,
+        nm: "Doge",
+        nf: null
+      }
+    ],
+    "greek-byzantine": [
+      {
+        m: "Emperor",
+        f: "Empress",
+        nm: "Basileus",
+        nf: "Basilissa"
+      },
+      {
+        m: "Autocrat",
+        f: null,
+        nm: "Autokrator",
+        nf: null
+      },
+      {
+        m: "Despot",
+        f: "Despoina",
+        nm: "Despotes",
+        nf: "Despoina"
+      },
+      {
+        m: "General",
+        f: null,
+        nm: "Strategos",
+        nf: null
+      },
+      {
+        m: "Archon",
+        f: "Archontissa",
+        nm: "Archon",
+        nf: "Archontissa"
+      },
+      {
+        m: "Logothete",
+        f: null,
+        nm: "Logothetes",
+        nf: null
+      },
+      {
+        m: "Exarch",
+        f: null,
+        nm: "Exarchos",
+        nf: null
+      },
+      {
+        m: "Patrician",
+        f: "Patrician",
+        nm: "Patrikios",
+        nf: "Zoste Patrikia"
+      },
+      {
+        m: "Sebastos",
+        f: "Sebaste",
+        nm: "Sebastos",
+        nf: "Sebaste"
+      }
+    ],
+    slavic: [
+      {
+        m: "Tsar",
+        f: "Tsaritsa",
+        nm: "Tsar",
+        nf: "Tsaritsa"
+      },
+      {
+        m: "Grand Prince",
+        f: "Grand Princess",
+        nm: "Veliky Knyaz",
+        nf: "Velikaya Knyaginya"
+      },
+      {
+        m: "Prince",
+        f: "Princess",
+        nm: "Knyaz",
+        nf: "Knyaginya"
+      },
+      {
+        m: "Boyar",
+        f: "Boyarynya",
+        nm: "Boyar",
+        nf: "Boyarynya"
+      },
+      {
+        m: "Voivode",
+        f: null,
+        nm: "Voivode",
+        nf: null
+      },
+      {
+        m: "Ban",
+        f: null,
+        nm: "Ban",
+        nf: null
+      },
+      {
+        m: "Hetman",
+        f: null,
+        nm: "Hetman",
+        nf: null
+      }
+    ],
+    steppe: [
+      {
+        pos: "after",
+        m: "Khan",
+        f: "Khatun",
+        nm: "Khan",
+        nf: "Khatun"
+      },
+      {
+        m: "Great Khan",
+        f: null,
+        nm: "Khagan",
+        nf: null
+      },
+      {
+        pos: "after",
+        m: "Beg",
+        f: null,
+        nm: "Beg",
+        nf: null
+      },
+      {
+        m: "Commander",
+        f: null,
+        nm: "Noyan",
+        nf: null
+      },
+      {
+        m: "Tarkhan",
+        f: null,
+        nm: "Tarkhan",
+        nf: null
+      },
+      {
+        m: "Yabgu",
+        f: null,
+        nm: "Yabgu",
+        nf: null
+      }
+    ],
+    "arabic-persian": [
+      {
+        m: "Sultan",
+        f: "Sultana",
+        nm: "Sultan",
+        nf: "Sultana"
+      },
+      {
+        m: "King",
+        f: "Queen",
+        nm: "Malik",
+        nf: "Malika"
+      },
+      {
+        m: "Emir",
+        f: "Emira",
+        nm: "Amir",
+        nf: "Amira"
+      },
+      {
+        m: "Shah",
+        f: "Shahbanu",
+        nm: "Shah",
+        nf: "Shahbanu"
+      },
+      {
+        m: "Vizier",
+        f: null,
+        nm: "Wazir",
+        nf: null
+      },
+      {
+        m: "Satrap",
+        f: null,
+        nm: "Satrap",
+        nf: null
+      },
+      {
+        m: "Sheikh",
+        f: "Sheikha",
+        nm: "Shaykh",
+        nf: "Shaykha"
+      },
+      {
+        m: "Nawab",
+        f: "Begum",
+        nm: "Nawab",
+        nf: "Begum"
+      }
+    ],
+    indian: [
+      {
+        x: 2,
+        m: "King",
+        f: "Queen",
+        nm: "Raja",
+        nf: "Rani"
+      },
+      {
+        m: "Great King",
+        f: "Great Queen",
+        nm: "Maharaja",
+        nf: "Maharani"
+      },
+      {
+        m: "Emperor",
+        f: "Empress",
+        nm: "Samrat",
+        nf: "Samragni"
+      },
+      {
+        m: "Crown Prince",
+        f: "Crown Princess",
+        nm: "Yuvaraja",
+        nf: "Yuvarani"
+      },
+      {
+        m: "General",
+        f: null,
+        nm: "Senapati",
+        nf: null
+      },
+      {
+        m: "Minister",
+        f: null,
+        nm: "Amatya",
+        nf: null
+      },
+      {
+        m: "Nawab",
+        f: "Begum",
+        nm: "Nawab",
+        nf: "Begum"
+      }
+    ],
+    chinese: [
+      {
+        m: "Emperor",
+        f: "Empress",
+        nm: "Huangdi",
+        nf: "Huanghou"
+      },
+      {
+        m: "King",
+        f: "Queen",
+        nm: "Wang",
+        nf: "Wanghou"
+      },
+      {
+        m: "Duke",
+        f: null,
+        nm: "Gong",
+        nf: null
+      },
+      {
+        m: "Marquis",
+        f: null,
+        nm: "Hou",
+        nf: null
+      },
+      {
+        m: "General",
+        f: null,
+        nm: "Jiangjun",
+        nf: null
+      },
+      {
+        m: "Chancellor",
+        f: null,
+        nm: "Chengxiang",
+        nf: null
+      },
+      {
+        m: "Princess",
+        f: "Princess",
+        nm: null,
+        nf: "Gongzhu"
+      }
+    ],
+    japanese: [
+      {
+        x: 0.3,
+        m: "Emperor",
+        f: "Empress",
+        nm: "Tenn\u014D",
+        nf: "K\u014Dg\u014D"
+      },
+      {
+        m: "Shogun",
+        f: null,
+        nm: "Sh\u014Dgun",
+        nf: null
+      },
+      {
+        m: "Regent",
+        f: null,
+        nm: "Kampaku",
+        nf: null
+      },
+      {
+        m: "Lord",
+        f: null,
+        nm: "Daimy\u014D",
+        nf: null
+      },
+      {
+        m: "Princess",
+        f: "Princess",
+        nm: null,
+        nf: "Hime"
+      },
+      {
+        m: "Governor",
+        f: null,
+        nm: "Kami",
+        nf: null
+      }
+    ],
+    korean: [
+      {
+        m: "King",
+        f: "Queen",
+        nm: "Wang",
+        nf: "Wangbi"
+      },
+      {
+        m: "Great King",
+        f: null,
+        nm: "Daewang",
+        nf: null
+      },
+      {
+        m: "Emperor",
+        f: null,
+        nm: "Hwangje",
+        nf: null
+      },
+      {
+        m: "Crown Prince",
+        f: null,
+        nm: "Seja",
+        nf: null
+      },
+      {
+        m: "Princess",
+        f: "Princess",
+        nm: null,
+        nf: "Gongju"
+      },
+      {
+        m: "General",
+        f: null,
+        nm: "Janggun",
+        nf: null
+      },
+      {
+        m: "Chief Minister",
+        f: null,
+        nm: "Yeonguijeong",
+        nf: null
+      }
+    ],
+    egyptian: [
+      {
+        m: "Pharaoh",
+        f: "Pharaoh",
+        nm: "Per-aa",
+        nf: "Per-aa"
+      },
+      {
+        m: null,
+        f: "King's Great Wife",
+        nm: null,
+        nf: "Hemet Nesu Weret"
+      },
+      {
+        m: "Vizier",
+        f: null,
+        nm: "Tjaty",
+        nf: null
+      },
+      {
+        m: "Nomarch",
+        f: null,
+        nm: "Nomarch",
+        nf: null
+      },
+      {
+        m: "Overseer",
+        f: null,
+        nm: "Imy-ra",
+        nf: null
+      },
+      {
+        m: "Scribe",
+        f: null,
+        nm: "Sesh",
+        nf: null
+      }
+    ],
+    ethiopian: [
+      {
+        m: "Emperor",
+        f: "Empress",
+        nm: "Negusa Nagast",
+        nf: "Nigiste Negestat"
+      },
+      {
+        m: "King",
+        f: "Queen",
+        nm: "Negus",
+        nf: "Nigist"
+      },
+      {
+        m: "Prince",
+        f: "Princess",
+        nm: "Le'ul",
+        nf: "Le'ilt"
+      },
+      {
+        m: "Duke",
+        f: null,
+        nm: "Ras",
+        nf: null
+      },
+      {
+        m: "Commander",
+        f: null,
+        nm: "Dejazmach",
+        nf: null
+      },
+      {
+        m: "Vanguard Commander",
+        f: null,
+        nm: "Fitawrari",
+        nf: null
+      },
+      {
+        m: "Queen",
+        f: "Queen",
+        nm: null,
+        nf: "Itege"
+      }
+    ],
+    bantu: [
+      {
+        m: "King",
+        f: "Queen",
+        nm: "Mwami",
+        nf: "Mwamikazi"
+      },
+      {
+        m: "Chief",
+        f: null,
+        nm: "Nkosi",
+        nf: null
+      },
+      {
+        m: "Lord",
+        f: null,
+        nm: "Mfumu",
+        nf: null
+      },
+      {
+        m: "Ruler",
+        f: null,
+        nm: "Mani",
+        nf: null
+      },
+      {
+        m: "Queen Mother",
+        f: "Queen Mother",
+        nm: null,
+        nf: "Ndlovukazi"
+      },
+      {
+        m: "Elder",
+        f: "Elder",
+        nm: "Mzee",
+        nf: "Mzee"
+      }
+    ],
+    "west-african": [
+      {
+        m: "Emperor",
+        f: null,
+        nm: "Mansa",
+        nf: null
+      },
+      {
+        x: 0.5,
+        m: "Emperor",
+        f: null,
+        nm: "Askia",
+        nf: null
+      },
+      {
+        m: "King",
+        f: "Queen",
+        nm: "Oba",
+        nf: null
+      },
+      {
+        m: "Owner of the Palace",
+        f: null,
+        nm: "Alaafin",
+        nf: null
+      },
+      {
+        m: "Chief",
+        f: null,
+        nm: "Ohene",
+        nf: null
+      },
+      {
+        m: "Queen Mother",
+        f: "Queen Mother",
+        nm: null,
+        nf: "Ohemaa"
+      },
+      {
+        m: "Queen Mother",
+        f: "Queen Mother",
+        nm: null,
+        nf: "Iyoba"
+      },
+      {
+        m: "Emir",
+        f: null,
+        nm: "Amir",
+        nf: null
+      }
+    ],
+    aztec: [
+      {
+        m: "Ruler",
+        f: "Ruler",
+        nm: "Tlatoani",
+        nf: "Cihuatlatoani"
+      },
+      {
+        m: "Great Speaker",
+        f: null,
+        nm: "Huey Tlatoani",
+        nf: null
+      },
+      {
+        m: "Lord",
+        f: "Lady",
+        nm: "Tecuhtli",
+        nf: "Cihuapilli"
+      },
+      {
+        m: "Snake Woman",
+        f: null,
+        nm: "Cihuacoatl",
+        nf: null
+      },
+      {
+        m: "Noble",
+        f: "Noble",
+        nm: "Pilli",
+        nf: "Cihuapilli"
+      },
+      {
+        m: "Eagle Lord",
+        f: null,
+        nm: "Cuauhpilli",
+        nf: null
+      }
+    ],
+    maya: [
+      {
+        m: "Holy Lord",
+        f: "Holy Lady",
+        nm: "K'uhul Ajaw",
+        nf: "K'uhul Ixik"
+      },
+      {
+        m: "Lord",
+        f: "Lady",
+        nm: "Ajaw",
+        nf: "Ix Ajaw"
+      },
+      {
+        m: "Overlord",
+        f: "Overlady",
+        nm: "Kalomte'",
+        nf: "Ix Kalomte'"
+      },
+      {
+        m: "Governor",
+        f: null,
+        nm: "Sajal",
+        nf: null
+      },
+      {
+        m: "Keeper of the Holy Books",
+        f: null,
+        nm: "Aj K'uhun",
+        nf: null
+      }
+    ]
+  },
+  styles: {
+    general: [
+      {
+        t: [
+          "grand"
+        ],
+        w: "King of Kings"
+      },
+      {
+        x: 2,
+        w: "Lord of the {domainLand}"
+      },
+      {
+        t: [
+          "grand"
+        ],
+        w: "Protector of the Realm"
+      },
+      {
+        w: "Shield of the People"
+      },
+      {
+        t: [
+          "plain"
+        ],
+        w: "Keeper of the Peace"
+      },
+      {
+        s: [
+          "MR",
+          "MF"
+        ],
+        m: "Father of the Nation",
+        f: "Mother of the Nation"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Lord of Storms"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Keeper of the Sacred Flame"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        t: [
+          "strange"
+        ],
+        w: "Master of the Ten Winds"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Custodian of the Core"
+      }
+    ],
+    "anglo-saxon": [
+      {
+        w: "Ring-Giver",
+        n: "Beahgifa"
+      },
+      {
+        t: [
+          "grand"
+        ],
+        w: "Gold-Friend of Men"
+      },
+      {
+        w: "Ruler of Britain",
+        n: "Bretwalda"
+      },
+      {
+        t: [
+          "plain"
+        ],
+        w: "Shepherd of the People"
+      },
+      {
+        w: "Protector of Warriors"
+      }
+    ],
+    norse: [
+      {
+        w: "Ring-Giver"
+      },
+      {
+        t: [
+          "grand"
+        ],
+        w: "Gold-Breaker of the Sea-Wolves"
+      },
+      {
+        t: [
+          "grim"
+        ],
+        w: "Feeder of Ravens"
+      },
+      {
+        w: "Sea-King",
+        n: "S\xE6konungr"
+      },
+      {
+        w: "Gift-Giver"
+      }
+    ],
+    celtic: [
+      {
+        w: "High King",
+        n: "Ard R\xED"
+      },
+      {
+        t: [
+          "grand"
+        ],
+        w: "Hound of the {epPlaceLand}"
+      },
+      {
+        w: "King of the {number} Kingdoms"
+      },
+      {
+        w: "Lord of the Sea-Roads"
+      }
+    ],
+    "norman-british": [
+      {
+        w: "Lord of {town}"
+      },
+      {
+        w: "Lord of the {domainLand}"
+      },
+      {
+        w: "Protector of the Realm"
+      },
+      {
+        x: 0.3,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ],
+        w: "Lord Protector"
+      },
+      {
+        w: "Defender of {town}"
+      },
+      {
+        w: "Duke of {town}",
+        n: "Duc de {town}"
+      }
+    ],
+    roman: [
+      {
+        t: [
+          "grand"
+        ],
+        w: "Father of the Fatherland",
+        n: "Pater Patriae"
+      },
+      {
+        w: "First Citizen",
+        n: "Princeps"
+      },
+      {
+        w: "Greatest Pontiff",
+        n: "Pontifex Maximus"
+      },
+      {
+        w: "Unconquered",
+        n: "Invictus"
+      },
+      {
+        w: "Dutiful and Fortunate",
+        n: "Pius Felix"
+      },
+      {
+        w: "Conqueror of the {domainLand}"
+      }
+    ],
+    "greek-byzantine": [
+      {
+        t: [
+          "grand"
+        ],
+        w: "Purple-Born",
+        n: "Porphyrogennetos"
+      },
+      {
+        w: "Autocrat",
+        n: "Autokrator"
+      },
+      {
+        w: "Ever-August",
+        n: "Aei Augoustos"
+      },
+      {
+        w: "Despot of the {domainLand}",
+        n: "Despotes of the {domainLand}"
+      }
+    ],
+    slavic: [
+      {
+        w: "Autocrat of All the {domainLand}",
+        n: "Samoderzhets of All the {domainLand}"
+      },
+      {
+        w: "Grand Prince of {town}",
+        n: "Veliky Knyaz of {town}"
+      },
+      {
+        t: [
+          "plain"
+        ],
+        w: "Father of the Land"
+      }
+    ],
+    steppe: [
+      {
+        t: [
+          "grand"
+        ],
+        w: "Great Khan",
+        n: "Khagan"
+      },
+      {
+        w: "Lord of the Felt Tents"
+      },
+      {
+        w: "Ruler of the Four Corners"
+      },
+      {
+        w: "Khan of the {colourNick} Steppe"
+      },
+      {
+        t: [
+          "grim"
+        ],
+        w: "Wolf of the Steppe"
+      }
+    ],
+    "arabic-persian": [
+      {
+        t: [
+          "grand"
+        ],
+        w: "King of Kings",
+        n: "Shahanshah"
+      },
+      {
+        w: "Pillar of the State"
+      },
+      {
+        w: "Shield of the State"
+      },
+      {
+        w: "Lamp of the State"
+      },
+      {
+        w: "Glory of the State"
+      },
+      {
+        w: "Right Hand of the State"
+      },
+      {
+        w: "Lord of the Two Seas"
+      },
+      {
+        w: "Lord of the Lands of {town}"
+      }
+    ],
+    indian: [
+      {
+        t: [
+          "grand"
+        ],
+        w: "King of Great Kings",
+        n: "Maharajadhiraja"
+      },
+      {
+        w: "Universal Ruler",
+        n: "Chakravartin"
+      },
+      {
+        w: "Beloved of the Earth",
+        n: "Prithvivallabha"
+      },
+      {
+        w: "Lord of the Three Oceans"
+      },
+      {
+        t: [
+          "grim"
+        ],
+        w: "Destroyer of Foes"
+      }
+    ],
+    chinese: [
+      {
+        t: [
+          "grand"
+        ],
+        w: "Son of Heaven",
+        n: "Tianzi"
+      },
+      {
+        w: "Ten Thousand Years",
+        n: "Wansui"
+      },
+      {
+        t: [
+          "grand"
+        ],
+        w: "Holder of the Mandate"
+      },
+      {
+        w: "Lord of the Middle Kingdom"
+      }
+    ],
+    japanese: [
+      {
+        x: 0.3,
+        w: "Son of Heaven",
+        n: "Tenshi"
+      },
+      {
+        t: [
+          "grand"
+        ],
+        w: "Ruler of the Realm"
+      },
+      {
+        w: "Lord of the Eastern Provinces"
+      },
+      {
+        w: "Great General of the {domainLand}"
+      }
+    ],
+    korean: [
+      {
+        t: [
+          "grand"
+        ],
+        w: "Great King",
+        n: "Daewang"
+      },
+      {
+        w: "King of the Eastern Land"
+      },
+      {
+        w: "Lord of the Three Kingdoms"
+      }
+    ],
+    egyptian: [
+      {
+        t: [
+          "grand"
+        ],
+        w: "Lord of the Two Lands",
+        n: "Neb Tawy"
+      },
+      {
+        w: "Son of Ra",
+        n: "Sa Ra"
+      },
+      {
+        x: 2,
+        w: "Beloved of {god}"
+      },
+      {
+        t: [
+          "strange"
+        ],
+        w: "Living Image of {god}"
+      },
+      {
+        t: [
+          "grand"
+        ],
+        w: "Mighty Bull",
+        n: "Ka Nakht"
+      },
+      {
+        w: "Lord of Crowns",
+        n: "Neb Khau"
+      }
+    ],
+    ethiopian: [
+      {
+        t: [
+          "grand"
+        ],
+        w: "King of Kings",
+        n: "Negusa Nagast"
+      },
+      {
+        w: "Lord of the Highlands"
+      },
+      {
+        w: "Light of {town}"
+      }
+    ],
+    bantu: [
+      {
+        t: [
+          "grand"
+        ],
+        w: "The Lion",
+        n: "Ingwenyama"
+      },
+      {
+        g: "f",
+        w: "The She-Elephant",
+        n: "Ndlovukazi"
+      },
+      {
+        g: "f",
+        w: "Mother of the Nation"
+      },
+      {
+        w: "Lord of the Land"
+      },
+      {
+        t: [
+          "plain"
+        ],
+        w: "Owner of Cattle"
+      }
+    ],
+    "west-african": [
+      {
+        t: [
+          "grand"
+        ],
+        w: "Ruler of the World",
+        n: "Mogho Naaba"
+      },
+      {
+        w: "Owner of the Palace",
+        n: "Alaafin"
+      },
+      {
+        w: "Lord of the Gold Lands"
+      },
+      {
+        w: "Master of the River"
+      }
+    ],
+    aztec: [
+      {
+        t: [
+          "grand"
+        ],
+        w: "Great Speaker",
+        n: "Huey Tlatoani"
+      },
+      {
+        t: [
+          "strange"
+        ],
+        w: "Holder of the Mat and Seat"
+      },
+      {
+        w: "Lord of {town}",
+        n: "Tecuhtli of {town}"
+      }
+    ],
+    maya: [
+      {
+        w: "Holy Lord of {town}",
+        n: "K'uhul Ajaw of {town}"
+      },
+      {
+        t: [
+          "grand"
+        ],
+        w: "Overlord of the West",
+        n: "Ochk'in Kalomte'"
+      },
+      {
+        t: [
+          "grim"
+        ],
+        g: "m",
+        w: "He of Twenty Captives",
+        n: "Aj Winik Baak"
+      },
+      {
+        t: [
+          "strange"
+        ],
+        w: "Lord of the {number} Katuns"
+      }
+    ]
+  },
+  lists: {
+    epCharacter: [
+      {
+        x: 3,
+        w: "Great",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Magnificent",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Glorious",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        x: 2,
+        w: "Just",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        x: 3,
+        w: "Wise",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Pious",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Noble",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Valiant",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Victorious",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Unconquered",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Lawgiver",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        x: 2,
+        w: "Good",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Steady",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Quiet",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Patient",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Careful",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Honest",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Thrifty",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Peaceful",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Fair-Minded",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        x: 2,
+        w: "Cruel",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Ruthless",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Grim",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Merciless",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Wrathful",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Pitiless",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Bloody",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Terrible",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Iron-Hearted",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Treacherous",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Generous",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Merry",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Lucky",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Rash",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Restless",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Peaceable",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Lavish",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Talkative",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Unlucky",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Quarrelsome",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Silent",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Sleepless",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Unsmiling",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Watchful",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Far-Seeing",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Strange",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Dreamer",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        x: 3,
+        w: "Bold"
+      },
+      {
+        x: 2,
+        w: "Brave"
+      },
+      {
+        x: 2,
+        w: "Proud"
+      },
+      {
+        w: "Stern"
+      },
+      {
+        w: "Resolute"
+      },
+      {
+        w: "Merciful"
+      },
+      {
+        w: "Learned"
+      },
+      {
+        w: "Stout-Hearted"
+      },
+      {
+        w: "Young"
+      },
+      {
+        x: 2,
+        w: "Old"
+      },
+      {
+        w: "Elder"
+      },
+      {
+        w: "Younger"
+      },
+      {
+        w: "Hardy"
+      },
+      {
+        w: "Fierce"
+      },
+      {
+        w: "Wary"
+      },
+      {
+        w: "Gentle"
+      },
+      {
+        x: 2,
+        w: "Strong"
+      }
+    ],
+    epBody: [
+      {
+        x: 2,
+        w: "Tall"
+      },
+      {
+        w: "Short"
+      },
+      {
+        w: "Broad"
+      },
+      {
+        x: 2,
+        w: "Strong"
+      },
+      {
+        x: 2,
+        w: "Fair"
+      },
+      {
+        w: "Dark"
+      },
+      {
+        x: 2,
+        w: "Red"
+      },
+      {
+        w: "White"
+      },
+      {
+        w: "Black"
+      },
+      {
+        w: "Grey"
+      },
+      {
+        w: "Golden"
+      },
+      {
+        w: "Red-Haired"
+      },
+      {
+        w: "Fair-Haired"
+      },
+      {
+        w: "Black-Bearded"
+      },
+      {
+        w: "Grey-Bearded"
+      },
+      {
+        w: "Long-Haired"
+      },
+      {
+        w: "Handsome"
+      },
+      {
+        w: "Beautiful"
+      },
+      {
+        w: "Scarred"
+      },
+      {
+        w: "One-Eyed"
+      },
+      {
+        w: "Swift"
+      },
+      {
+        x: 0.3,
+        t: [
+          "grand"
+        ],
+        w: "Lion-Hearted"
+      }
+    ],
+    epBodyMind: [
+      {
+        w: "Fat",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Bald",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Stammerer",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Unready",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Short-Legged",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Squint-Eyed",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Big-Nosed",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Simple",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Sleepy",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Gouty",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Flat-Nosed",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Wry-Necked",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Fat-Bellied",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Clumsy",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Lame",
+        t: [
+          "grim"
+        ],
+        bm: true
+      },
+      {
+        w: "Mad",
+        t: [
+          "grim"
+        ],
+        bm: true
+      },
+      {
+        w: "Blind",
+        t: [
+          "grim"
+        ],
+        bm: true
+      },
+      {
+        w: "Crookback",
+        t: [
+          "grim"
+        ],
+        bm: true
+      },
+      {
+        w: "Hunchback",
+        t: [
+          "grim"
+        ],
+        bm: true
+      },
+      {
+        x: 0.3,
+        w: "Leper",
+        t: [
+          "grim"
+        ],
+        bm: true
+      },
+      {
+        w: "Deaf",
+        t: [
+          "grim"
+        ],
+        bm: true
+      },
+      {
+        w: "Mute",
+        t: [
+          "grim"
+        ],
+        bm: true
+      },
+      {
+        w: "Twisted",
+        t: [
+          "grim"
+        ],
+        bm: true
+      },
+      {
+        w: "Pale",
+        t: [
+          "grim"
+        ],
+        bm: true
+      }
+    ],
+    epDeed: [
+      {
+        x: 2,
+        w: "Conqueror",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Founder",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Lawgiver",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Liberator",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Restorer",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Unifier",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Peacemaker",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Victor",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        x: 2,
+        w: "Builder",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Farmer",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Shipwright",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Smith",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Ploughman",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Fisher",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Hunter",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Traveller",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Trader",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Butcher",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Usurper",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Tyrant",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Oathbreaker",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Kinslayer",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Burner",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Hangman",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        x: 0.5,
+        w: "Exile",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Wanderer",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Rover",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Kingmaker",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Peacock",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Gambler",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Seer",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Pilgrim",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Returner",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Dreamer",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Wakeful",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Explorer"
+      },
+      {
+        w: "Navigator"
+      },
+      {
+        w: "Defender"
+      },
+      {
+        w: "Avenger"
+      },
+      {
+        x: 0.3,
+        s: [
+          "FL",
+          "FH"
+        ],
+        w: "Crusader"
+      },
+      {
+        w: "Champion"
+      },
+      {
+        w: "Hero"
+      },
+      {
+        w: "Breaker"
+      },
+      {
+        w: "Raider"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Dragonslayer"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Demonbane"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Giant-Scourge"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Witch-Hunter"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Spellbreaker"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Wyrmbane"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Starfarer"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Planetbreaker"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Void-Walker"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Pathfinder"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Terraformer"
+      }
+    ],
+    epMystic: [
+      {
+        x: 2,
+        w: "Blessed",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Chosen",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Enlightened",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Anointed",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        x: 0.5,
+        w: "Holy",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Radiant",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        x: 2,
+        w: "Cursed",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        x: 0.5,
+        w: "Damned",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Deathless",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Doomed",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Hollow",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        x: 0.3,
+        w: "Unburied",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Prophet",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Seer",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Twice-Born",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Dreaming",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Far-Walker",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Unseen",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Moon-Touched",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        x: 0.5,
+        w: "Witch-Born",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Fortunate"
+      },
+      {
+        w: "Fated"
+      },
+      {
+        w: "Foretold"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Flameborn"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Frost-Touched"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Storm-Called"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Spirit-Touched"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Spellbound"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Warpborn"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Synthborn"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Void-Touched"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Uplifted"
+      }
+    ],
+    beast: [
+      {
+        x: 3,
+        w: "Wolf"
+      },
+      {
+        x: 2,
+        w: "Bear"
+      },
+      {
+        x: 2,
+        w: "Lion"
+      },
+      {
+        x: 2,
+        w: "Raven"
+      },
+      {
+        x: 2,
+        w: "Eagle"
+      },
+      {
+        x: 2,
+        w: "Fox"
+      },
+      {
+        w: "Boar"
+      },
+      {
+        w: "Stag"
+      },
+      {
+        w: "Hound"
+      },
+      {
+        w: "Hawk"
+      },
+      {
+        w: "Falcon"
+      },
+      {
+        w: "Serpent"
+      },
+      {
+        w: "Bull"
+      },
+      {
+        w: "Badger"
+      },
+      {
+        w: "Otter"
+      },
+      {
+        w: "Crow"
+      },
+      {
+        w: "Owl"
+      },
+      {
+        w: "Lynx"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Dragon"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Griffin"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Wyvern"
+      },
+      {
+        w: "She-Wolf",
+        x: 0.5,
+        g: "f",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "She-Bear",
+        x: 0.5,
+        g: "f",
+        t: [
+          "light"
+        ]
+      }
+    ],
+    element: [
+      {
+        x: 2,
+        w: "Storm"
+      },
+      {
+        w: "Thunder"
+      },
+      {
+        w: "Tempest"
+      },
+      {
+        w: "Flame"
+      },
+      {
+        w: "Frost"
+      },
+      {
+        w: "Winter"
+      },
+      {
+        w: "Wind"
+      },
+      {
+        w: "Gale"
+      },
+      {
+        w: "Lightning"
+      },
+      {
+        w: "Tide"
+      },
+      {
+        w: "Ember"
+      },
+      {
+        w: "Ash"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Nova"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Comet"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Void"
+      }
+    ],
+    colourNick: [
+      {
+        x: 3,
+        w: "Red"
+      },
+      {
+        x: 3,
+        w: "Black"
+      },
+      {
+        x: 2,
+        w: "White"
+      },
+      {
+        x: 2,
+        w: "Grey"
+      },
+      {
+        w: "Gold"
+      },
+      {
+        w: "Silver"
+      },
+      {
+        w: "Bronze"
+      },
+      {
+        w: "Crimson"
+      },
+      {
+        x: 0.5,
+        w: "Azure"
+      },
+      {
+        x: 0.5,
+        w: "Emerald"
+      },
+      {
+        w: "Scarlet"
+      }
+    ],
+    epPlaceLandExtra: [
+      {
+        x: 2,
+        w: "North"
+      },
+      {
+        x: 2,
+        w: "South"
+      },
+      {
+        x: 2,
+        w: "East"
+      },
+      {
+        x: 2,
+        w: "West"
+      },
+      {
+        w: "Isles"
+      },
+      {
+        w: "Plains"
+      },
+      {
+        w: "Frontier"
+      },
+      {
+        w: "Highlands"
+      },
+      {
+        w: "Hills"
+      },
+      {
+        w: "Marshes"
+      },
+      {
+        w: "Coast"
+      },
+      {
+        cx: {
+          steppe: 5
+        },
+        w: "Steppe"
+      },
+      {
+        cx: {
+          "arabic-persian": 5,
+          egyptian: 5
+        },
+        w: "Desert"
+      },
+      {
+        w: "Forest"
+      }
+    ],
+    epPlaceSpaceExtra: [
+      {
+        w: "Belt"
+      },
+      {
+        w: "Core"
+      }
+    ],
+    modernNick: [
+      {
+        x: 2,
+        w: "Lucky",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Slim",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Tiny",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Doc",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Sparky",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Two-Times",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Mumbles",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Spuds",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "the Weasel",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Knuckles",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Lefty",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Shorty",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Dapper",
+        t: [
+          "light"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "the Knife",
+        t: [
+          "grim"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "the Hammer",
+        t: [
+          "grim"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Mad Dog",
+        t: [
+          "grim"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "the Undertaker",
+        t: [
+          "grim"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Cold Eyes",
+        t: [
+          "grim"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "the Ghost",
+        t: [
+          "strange"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "the Owl",
+        t: [
+          "strange"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Whisper",
+        t: [
+          "strange"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "the Saint",
+        t: [
+          "strange"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Red",
+        t: [
+          "plain"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Duke",
+        t: [
+          "plain"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Ace",
+        t: [
+          "plain"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Chief",
+        t: [
+          "plain"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Doc",
+        t: [
+          "plain"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Sarge",
+        t: [
+          "plain"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Mac",
+        t: [
+          "plain"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "the Professor",
+        t: [
+          "grand"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "the Baron",
+        t: [
+          "grand"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "the Governor",
+        t: [
+          "grand"
+        ],
+        s: [
+          "MR",
+          "MF"
+        ]
+      }
+    ],
+    dayNumber: [
+      {
+        w: "One",
+        n: "Ce"
+      },
+      {
+        w: "Two",
+        n: "Ome"
+      },
+      {
+        w: "Three",
+        n: "Yei"
+      },
+      {
+        w: "Four",
+        n: "Nahui"
+      },
+      {
+        w: "Five",
+        n: "Macuilli"
+      },
+      {
+        w: "Six",
+        n: "Chicuace"
+      },
+      {
+        w: "Seven",
+        n: "Chicome"
+      },
+      {
+        w: "Eight",
+        n: "Chicuei"
+      },
+      {
+        w: "Nine",
+        n: "Chicnahui"
+      },
+      {
+        w: "Ten",
+        n: "Mahtlactli"
+      },
+      {
+        w: "Eleven",
+        n: "Mahtlactli-once"
+      },
+      {
+        w: "Twelve",
+        n: "Mahtlactli-omome"
+      },
+      {
+        w: "Thirteen",
+        n: "Mahtlactli-omei"
+      }
+    ],
+    daySign: [
+      {
+        w: "Crocodile",
+        n: "Cipactli"
+      },
+      {
+        w: "Wind",
+        n: "Ehecatl"
+      },
+      {
+        w: "House",
+        n: "Calli"
+      },
+      {
+        w: "Lizard",
+        n: "Cuetzpalin"
+      },
+      {
+        w: "Serpent",
+        n: "Coatl"
+      },
+      {
+        w: "Death",
+        n: "Miquiztli"
+      },
+      {
+        w: "Deer",
+        n: "Mazatl"
+      },
+      {
+        w: "Rabbit",
+        n: "Tochtli"
+      },
+      {
+        w: "Water",
+        n: "Atl"
+      },
+      {
+        w: "Dog",
+        n: "Itzcuintli"
+      },
+      {
+        w: "Monkey",
+        n: "Ozomatli"
+      },
+      {
+        w: "Grass",
+        n: "Malinalli"
+      },
+      {
+        w: "Reed",
+        n: "Acatl"
+      },
+      {
+        w: "Jaguar",
+        n: "Ocelotl"
+      },
+      {
+        w: "Eagle",
+        n: "Cuauhtli"
+      },
+      {
+        w: "Vulture",
+        n: "Cozcacuauhtli"
+      },
+      {
+        w: "Movement",
+        n: "Ollin"
+      },
+      {
+        w: "Flint",
+        n: "Tecpatl"
+      },
+      {
+        w: "Rain",
+        n: "Quiahuitl"
+      },
+      {
+        w: "Flower",
+        n: "Xochitl"
+      }
+    ],
+    material: [
+      {
+        x: 3,
+        w: "Iron"
+      },
+      {
+        x: 2,
+        w: "Stone"
+      },
+      {
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ],
+        w: "Steel"
+      },
+      {
+        w: "Gold"
+      },
+      {
+        w: "Silver"
+      },
+      {
+        w: "Bronze"
+      },
+      {
+        w: "Oak"
+      },
+      {
+        w: "Ash"
+      },
+      {
+        w: "Frost"
+      },
+      {
+        w: "Fire"
+      },
+      {
+        w: "Storm"
+      },
+      {
+        t: [
+          "grim"
+        ],
+        w: "Blood"
+      },
+      {
+        t: [
+          "grim"
+        ],
+        w: "Bone"
+      },
+      {
+        w: "Black"
+      },
+      {
+        w: "White"
+      },
+      {
+        w: "Red"
+      },
+      {
+        w: "Grey"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Chrome"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Void"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Star"
+      }
+    ],
+    bodyPart: [
+      {
+        x: 3,
+        w: "hand"
+      },
+      {
+        x: 2,
+        w: "heart"
+      },
+      {
+        w: "fist"
+      },
+      {
+        w: "arm"
+      },
+      {
+        w: "beard"
+      },
+      {
+        w: "foot"
+      },
+      {
+        w: "shield"
+      },
+      {
+        w: "eye"
+      },
+      {
+        w: "brow"
+      },
+      {
+        w: "tooth"
+      },
+      {
+        w: "side"
+      },
+      {
+        t: [
+          "grim"
+        ],
+        w: "skull"
+      }
+    ],
+    bodyLook: [
+      {
+        w: "Blue+tooth"
+      },
+      {
+        w: "Fork+beard"
+      },
+      {
+        w: "Fair+hair"
+      },
+      {
+        w: "Long+shanks"
+      },
+      {
+        w: "Strong+bow"
+      },
+      {
+        w: "Bare+foot"
+      },
+      {
+        w: "Broad+hand"
+      },
+      {
+        w: "Grey+cloak"
+      },
+      {
+        w: "Long+sword"
+      },
+      {
+        w: "Red+cloak"
+      },
+      {
+        w: "Iron+side"
+      },
+      {
+        w: "Hard+head"
+      },
+      {
+        bm: true,
+        w: "Wide+mouth"
+      },
+      {
+        bm: true,
+        w: "Crook+back"
+      },
+      {
+        bm: true,
+        w: "Flat+nose"
+      },
+      {
+        bm: true,
+        w: "Split+lip"
+      },
+      {
+        bm: true,
+        w: "Wry+neck"
+      },
+      {
+        bm: true,
+        w: "Ox+foot"
+      }
+    ],
+    doer: [
+      {
+        t: [
+          "grim"
+        ],
+        w: "Oath+breaker"
+      },
+      {
+        w: "Shield+breaker"
+      },
+      {
+        w: "Ship+breaker"
+      },
+      {
+        t: [
+          "grand"
+        ],
+        w: "Ring+giver"
+      },
+      {
+        w: "King+maker"
+      },
+      {
+        w: "Bridge+builder"
+      },
+      {
+        t: [
+          "grand"
+        ],
+        w: "Gold+giver"
+      },
+      {
+        t: [
+          "grim"
+        ],
+        w: "Wolf+feeder"
+      },
+      {
+        t: [
+          "grim"
+        ],
+        w: "Raven+feeder"
+      },
+      {
+        t: [
+          "grand"
+        ],
+        w: "Peace+weaver"
+      },
+      {
+        w: "Spear+shaker"
+      },
+      {
+        t: [
+          "grim"
+        ],
+        w: "Skull+splitter"
+      },
+      {
+        w: "Wave+rider"
+      },
+      {
+        w: "Sea+rover"
+      },
+      {
+        t: [
+          "light"
+        ],
+        w: "Mead+drinker"
+      },
+      {
+        t: [
+          "light"
+        ],
+        w: "Ale+swiller"
+      },
+      {
+        w: "Horse+breaker"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Dragon+bane"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Troll+slayer"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Rune+carver"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Moon+caller"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Star+weaver"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Storm+crow"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Grid+runner"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Ghost+wire"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Black+code"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Star+born"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Void+walker"
+      }
+    ],
+    clanStyleSF: [
+      {
+        s: [
+          "SF"
+        ],
+        w: "Voidborn"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Starborn"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Gridborn"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Shipborn"
+      }
+    ],
+    officeWord: [
+      {
+        x: 3,
+        w: "Warden"
+      },
+      {
+        x: 3,
+        w: "Keeper"
+      },
+      {
+        x: 2,
+        w: "Guardian"
+      },
+      {
+        x: 3,
+        m: "Lord",
+        f: "Lady"
+      },
+      {
+        x: 2,
+        m: "Master",
+        f: "Mistress"
+      },
+      {
+        w: "Protector"
+      },
+      {
+        x: 2,
+        w: "Steward"
+      },
+      {
+        w: "Shield"
+      },
+      {
+        w: "Hand"
+      },
+      {
+        w: "Voice"
+      },
+      {
+        w: "Sword"
+      },
+      {
+        w: "Watcher"
+      },
+      {
+        w: "Captain"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Custodian"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Administrator"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Overseer"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Director"
+      }
+    ],
+    courtDomain: [
+      {
+        w: "Seal"
+      },
+      {
+        w: "Rolls"
+      },
+      {
+        w: "Treasury"
+      },
+      {
+        x: 2,
+        w: "Horse"
+      },
+      {
+        w: "Wardrobe"
+      },
+      {
+        w: "Hounds"
+      },
+      {
+        w: "Hunt"
+      },
+      {
+        w: "Granaries"
+      },
+      {
+        w: "Keys"
+      },
+      {
+        x: 2,
+        w: "Gates"
+      },
+      {
+        w: "Walls"
+      },
+      {
+        w: "Harbour"
+      },
+      {
+        w: "Mint"
+      },
+      {
+        w: "Ships"
+      },
+      {
+        w: "Wine"
+      },
+      {
+        w: "Bedchamber"
+      },
+      {
+        w: "Archives"
+      },
+      {
+        w: "Roads"
+      },
+      {
+        w: "Bridges"
+      },
+      {
+        w: "Waters"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Runes"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Fey Roads"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        x: 0.5,
+        w: "Sacred Flame"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        x: 0.5,
+        w: "Dragons"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        x: 0.5,
+        w: "Storms"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Core"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Docks"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Data Vaults"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Rings"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Long Watch"
+      }
+    ],
+    trade: [
+      {
+        x: 3,
+        w: "Smith"
+      },
+      {
+        w: "Baker"
+      },
+      {
+        w: "Brewer"
+      },
+      {
+        w: "Butcher"
+      },
+      {
+        w: "Carter"
+      },
+      {
+        w: "Chandler"
+      },
+      {
+        w: "Cooper"
+      },
+      {
+        w: "Draper"
+      },
+      {
+        w: "Dyer"
+      },
+      {
+        w: "Fisher"
+      },
+      {
+        w: "Fletcher"
+      },
+      {
+        w: "Fowler"
+      },
+      {
+        w: "Glover"
+      },
+      {
+        w: "Hunter"
+      },
+      {
+        w: "Mason"
+      },
+      {
+        x: 2,
+        w: "Miller"
+      },
+      {
+        w: "Parker"
+      },
+      {
+        w: "Potter"
+      },
+      {
+        w: "Sawyer"
+      },
+      {
+        w: "Shepherd"
+      },
+      {
+        w: "Skinner"
+      },
+      {
+        w: "Slater"
+      },
+      {
+        w: "Spicer"
+      },
+      {
+        x: 2,
+        w: "Taylor"
+      },
+      {
+        w: "Thatcher"
+      },
+      {
+        w: "Turner"
+      },
+      {
+        w: "Walker"
+      },
+      {
+        w: "Ward"
+      },
+      {
+        w: "Weaver"
+      },
+      {
+        w: "Webster"
+      },
+      {
+        w: "Wright"
+      },
+      {
+        w: "Bowyer"
+      },
+      {
+        w: "Collier"
+      },
+      {
+        w: "Cartwright"
+      },
+      {
+        w: "Wheelwright"
+      },
+      {
+        w: "Tanner"
+      },
+      {
+        w: "Tyler"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Runesmith"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Spellwright"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Dragonkeeper"
+      },
+      {
+        s: [
+          "FH",
+          "MF"
+        ],
+        w: "Ironbinder"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Voidwright"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Starmaker"
+      },
+      {
+        s: [
+          "SF"
+        ],
+        w: "Synthwright"
+      }
+    ],
+    placeFirst: [
+      {
+        w: "Ash"
+      },
+      {
+        w: "Oak"
+      },
+      {
+        w: "Elm"
+      },
+      {
+        w: "Thorn"
+      },
+      {
+        w: "Black"
+      },
+      {
+        w: "White"
+      },
+      {
+        w: "Red"
+      },
+      {
+        w: "Green"
+      },
+      {
+        w: "Grey"
+      },
+      {
+        w: "North"
+      },
+      {
+        w: "South"
+      },
+      {
+        w: "East"
+      },
+      {
+        w: "West"
+      },
+      {
+        w: "Brad"
+      },
+      {
+        w: "Stan"
+      },
+      {
+        w: "Brook"
+      },
+      {
+        w: "Hay"
+      },
+      {
+        w: "Lang"
+      },
+      {
+        w: "Rad"
+      },
+      {
+        w: "Wood"
+      },
+      {
+        w: "Holly"
+      },
+      {
+        w: "Fern"
+      },
+      {
+        w: "Bir"
+      },
+      {
+        w: "Cold"
+      },
+      {
+        w: "Win"
+      },
+      {
+        w: "Hart"
+      },
+      {
+        w: "Wolf"
+      },
+      {
+        w: "Shel"
+      },
+      {
+        w: "Kirk"
+      }
+    ],
+    placeLast: [
+      {
+        x: 2,
+        w: "ford"
+      },
+      {
+        x: 2,
+        w: "ley"
+      },
+      {
+        x: 2,
+        w: "ton"
+      },
+      {
+        w: "wood"
+      },
+      {
+        w: "field"
+      },
+      {
+        w: "hill"
+      },
+      {
+        w: "well"
+      },
+      {
+        w: "brook"
+      },
+      {
+        w: "stone"
+      },
+      {
+        w: "marsh"
+      },
+      {
+        w: "worth"
+      },
+      {
+        w: "combe"
+      },
+      {
+        w: "dale"
+      },
+      {
+        w: "bury"
+      },
+      {
+        w: "by"
+      },
+      {
+        w: "thorpe"
+      },
+      {
+        w: "holt"
+      },
+      {
+        w: "hurst"
+      },
+      {
+        w: "stead"
+      },
+      {
+        w: "wick"
+      }
+    ],
+    placeWord: [
+      {
+        w: "Hill"
+      },
+      {
+        w: "Brook"
+      },
+      {
+        w: "Ford"
+      },
+      {
+        w: "Wood"
+      },
+      {
+        w: "Stone"
+      },
+      {
+        w: "Marsh"
+      },
+      {
+        w: "Field"
+      },
+      {
+        w: "Dale"
+      },
+      {
+        w: "Moor"
+      },
+      {
+        w: "Heath"
+      },
+      {
+        w: "Lane"
+      },
+      {
+        w: "Bridge"
+      },
+      {
+        w: "Green"
+      },
+      {
+        w: "Shaw"
+      },
+      {
+        w: "Holt"
+      }
+    ],
+    nick: [
+      {
+        w: "Brown"
+      },
+      {
+        w: "White"
+      },
+      {
+        w: "Black"
+      },
+      {
+        w: "Grey"
+      },
+      {
+        w: "Little"
+      },
+      {
+        w: "Long"
+      },
+      {
+        w: "Short"
+      },
+      {
+        w: "Young"
+      },
+      {
+        w: "Good"
+      },
+      {
+        w: "Strong"
+      },
+      {
+        w: "Armstrong"
+      },
+      {
+        w: "Swift"
+      },
+      {
+        w: "Fairfax"
+      },
+      {
+        w: "Whitehead"
+      },
+      {
+        w: "Redhead"
+      },
+      {
+        w: "Goodman"
+      },
+      {
+        w: "Bold"
+      },
+      {
+        w: "Sharp"
+      },
+      {
+        w: "Hardy"
+      },
+      {
+        w: "Merry"
+      },
+      {
+        w: "Wise"
+      },
+      {
+        w: "Cruikshank",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Ballard",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Gammon",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Crookes",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        w: "Lightfoot",
+        t: [
+          "light"
+        ],
+        bm: true
+      }
+    ],
+    normanNick: [
+      {
+        n: "Brun",
+        w: "Brown"
+      },
+      {
+        n: "Blanc",
+        w: "White"
+      },
+      {
+        n: "Roux",
+        w: "Red"
+      },
+      {
+        n: "Gros",
+        w: "Fat",
+        bm: true,
+        t: [
+          "light"
+        ]
+      },
+      {
+        n: "Petit",
+        w: "Little"
+      },
+      {
+        n: "Fort",
+        w: "Strong"
+      },
+      {
+        n: "Sage",
+        w: "Wise"
+      },
+      {
+        n: "Hardi",
+        w: "Bold"
+      },
+      {
+        n: "Breton",
+        w: "Breton"
+      },
+      {
+        n: "Long",
+        w: "Tall"
+      },
+      {
+        n: "Noir",
+        w: "Black"
+      }
+    ],
+    normanTrade: [
+      {
+        n: "F\xE8vre",
+        w: "Smith"
+      }
+    ],
+    nomen: [
+      {
+        x: 0.3,
+        m: "Julius",
+        f: "Julia"
+      },
+      {
+        m: "Cornelius",
+        f: "Cornelia"
+      },
+      {
+        m: "Valerius",
+        f: "Valeria"
+      },
+      {
+        x: 0.5,
+        m: "Claudius",
+        f: "Claudia"
+      },
+      {
+        m: "Aemilius",
+        f: "Aemilia"
+      },
+      {
+        m: "Fabius",
+        f: "Fabia"
+      },
+      {
+        m: "Junius",
+        f: "Junia"
+      },
+      {
+        m: "Licinius",
+        f: "Licinia"
+      },
+      {
+        m: "Sempronius",
+        f: "Sempronia"
+      },
+      {
+        m: "Tullius",
+        f: "Tullia"
+      },
+      {
+        m: "Aurelius",
+        f: "Aurelia"
+      },
+      {
+        m: "Flavius",
+        f: "Flavia"
+      },
+      {
+        m: "Domitius",
+        f: "Domitia"
+      },
+      {
+        m: "Sulpicius",
+        f: "Sulpicia"
+      },
+      {
+        m: "Caecilius",
+        f: "Caecilia"
+      },
+      {
+        m: "Calpurnius",
+        f: "Calpurnia"
+      },
+      {
+        m: "Antonius",
+        f: "Antonia"
+      },
+      {
+        m: "Octavius",
+        f: "Octavia"
+      },
+      {
+        m: "Livius",
+        f: "Livia"
+      },
+      {
+        m: "Servilius",
+        f: "Servilia"
+      },
+      {
+        m: "Manlius",
+        f: "Manlia"
+      },
+      {
+        m: "Postumius",
+        f: "Postumia"
+      },
+      {
+        m: "Furius",
+        f: "Furia"
+      },
+      {
+        m: "Horatius",
+        f: "Horatia"
+      }
+    ],
+    cognomen: [
+      {
+        n: "Rufus",
+        w: "Red"
+      },
+      {
+        n: "Niger",
+        w: "Black"
+      },
+      {
+        n: "Albinus",
+        w: "White"
+      },
+      {
+        n: "Longus",
+        w: "Tall"
+      },
+      {
+        n: "Magnus",
+        w: "Great",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        n: "Severus",
+        w: "Stern"
+      },
+      {
+        n: "Felix",
+        w: "Lucky",
+        t: [
+          "light"
+        ]
+      },
+      {
+        n: "Pius",
+        w: "Dutiful"
+      },
+      {
+        n: "Lepidus",
+        w: "Charming",
+        t: [
+          "light"
+        ]
+      },
+      {
+        n: "Paullus",
+        w: "Small"
+      },
+      {
+        n: "Agricola",
+        w: "Farmer",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        n: "Corvus",
+        w: "Raven"
+      },
+      {
+        n: "Lupus",
+        w: "Wolf"
+      },
+      {
+        n: "Ursus",
+        w: "Bear"
+      },
+      {
+        n: "Aquila",
+        w: "Eagle"
+      },
+      {
+        n: "Celer",
+        w: "Swift"
+      },
+      {
+        n: "Sabinus",
+        w: "Sabine"
+      },
+      {
+        n: "Maximus",
+        w: "Greatest",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        n: "Priscus",
+        w: "Elder"
+      },
+      {
+        n: "Fortis",
+        w: "Brave"
+      },
+      {
+        n: "Crassus",
+        w: "Fat",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        n: "Naso",
+        w: "Nose",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        n: "Strabo",
+        w: "Squinter",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        n: "Balbus",
+        w: "Stammerer",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        n: "Caecus",
+        w: "Blind",
+        t: [
+          "grim"
+        ],
+        bm: true
+      },
+      {
+        n: "Brutus",
+        w: "Dull",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        n: "Varus",
+        w: "Bow-Legged",
+        t: [
+          "light"
+        ],
+        bm: true
+      },
+      {
+        n: "Calvus",
+        w: "Bald",
+        t: [
+          "light"
+        ],
+        bm: true
+      }
+    ],
+    byzantineFamily: [
+      {
+        m: "Komnenos",
+        f: "Komnene"
+      },
+      {
+        m: "Doukas",
+        f: "Doukaina"
+      },
+      {
+        m: "Palaiologos",
+        f: "Palaiologina"
+      },
+      {
+        m: "Angelos",
+        f: "Angelene"
+      },
+      {
+        m: "Laskaris",
+        f: "Laskaris"
+      },
+      {
+        m: "Kantakouzenos",
+        f: "Kantakouzene"
+      },
+      {
+        m: "Phokas",
+        f: "Phokas"
+      },
+      {
+        m: "Skleros",
+        f: "Sklerene"
+      },
+      {
+        m: "Bryennios",
+        f: "Bryenniene"
+      },
+      {
+        m: "Dalassenos",
+        f: "Dalassene"
+      },
+      {
+        m: "Tornikes",
+        f: "Tornikes"
+      },
+      {
+        m: "Kourkouas",
+        f: "Kourkouas"
+      },
+      {
+        m: "Argyros",
+        f: "Argyrene"
+      },
+      {
+        m: "Melissenos",
+        f: "Melissene"
+      },
+      {
+        m: "Botaneiates",
+        f: "Botaneiates"
+      },
+      {
+        m: "Tarchaneiotes",
+        f: "Tarchaneiotes"
+      },
+      {
+        m: "Raoul",
+        f: "Raoul"
+      },
+      {
+        m: "Philanthropenos",
+        f: "Philanthropene"
+      },
+      {
+        m: "Synadenos",
+        f: "Synadene"
+      },
+      {
+        m: "Branas",
+        f: "Branas"
+      }
+    ],
+    slavicFamily: [
+      {
+        n: "Kuznetsov",
+        w: "Smith",
+        nf: "Kuznetsova"
+      },
+      {
+        n: "Melnikov",
+        w: "Miller",
+        nf: "Melnikova"
+      },
+      {
+        n: "Rybakov",
+        w: "Fisher",
+        nf: "Rybakova"
+      },
+      {
+        n: "Plotnikov",
+        w: "Carpenter",
+        nf: "Plotnikova"
+      },
+      {
+        n: "Goncharov",
+        w: "Potter",
+        nf: "Goncharova"
+      },
+      {
+        n: "Volkov",
+        w: "Wolf",
+        nf: "Volkova"
+      },
+      {
+        n: "Sokolov",
+        w: "Falcon",
+        nf: "Sokolova"
+      },
+      {
+        n: "Lebedev",
+        w: "Swan",
+        nf: "Lebedeva"
+      },
+      {
+        n: "Medvedev",
+        w: "Bear",
+        nf: "Medvedeva"
+      },
+      {
+        n: "Orlov",
+        w: "Eagle",
+        nf: "Orlova"
+      },
+      {
+        n: "Voronin",
+        w: "Raven",
+        nf: "Voronina"
+      },
+      {
+        n: "Kozlov",
+        w: "Goat",
+        nf: "Kozlova"
+      },
+      {
+        n: "Zaitsev",
+        w: "Hare",
+        nf: "Zaitseva"
+      },
+      {
+        n: "Belov",
+        w: "White",
+        nf: "Belova"
+      },
+      {
+        n: "Chernov",
+        w: "Black",
+        nf: "Chernova"
+      },
+      {
+        n: "Novikov",
+        w: "Newman",
+        nf: "Novikova"
+      },
+      {
+        n: "Morozov",
+        w: "Frost",
+        nf: "Morozova"
+      },
+      {
+        n: "Kamenev",
+        w: "Stone",
+        nf: "Kameneva"
+      },
+      {
+        n: "Lesnoy",
+        w: "Forest",
+        nf: "Lesnaya"
+      }
+    ],
+    arabicTrade: [
+      {
+        n: "al-Haddad",
+        w: "Smith"
+      },
+      {
+        n: "al-Najjar",
+        w: "Carpenter"
+      },
+      {
+        n: "al-Khayyat",
+        w: "Tailor"
+      },
+      {
+        n: "al-Attar",
+        w: "Perfumer"
+      },
+      {
+        n: "al-Sabbagh",
+        w: "Dyer"
+      },
+      {
+        n: "al-Warraq",
+        w: "Stationer"
+      },
+      {
+        n: "al-Sayegh",
+        w: "Goldsmith"
+      },
+      {
+        n: "al-Tahhan",
+        w: "Miller"
+      },
+      {
+        n: "al-Jammal",
+        w: "Cameleer"
+      },
+      {
+        n: "al-Bazzaz",
+        w: "Cloth-Seller"
+      }
+    ],
+    arabicPlace: [
+      {
+        n: "al-Baghdadi",
+        w: "of Baghdad"
+      },
+      {
+        n: "al-Dimashqi",
+        w: "of Damascus"
+      },
+      {
+        n: "al-Misri",
+        w: "of Egypt"
+      },
+      {
+        n: "al-Andalusi",
+        w: "of Andalusia"
+      },
+      {
+        n: "al-Farisi",
+        w: "of Fars"
+      },
+      {
+        n: "al-Shirazi",
+        w: "of Shiraz"
+      },
+      {
+        n: "al-Isfahani",
+        w: "of Isfahan"
+      },
+      {
+        n: "al-Tabrizi",
+        w: "of Tabriz"
+      },
+      {
+        n: "al-Basri",
+        w: "of Basra"
+      },
+      {
+        n: "al-Kufi",
+        w: "of Kufa"
+      },
+      {
+        n: "al-Halabi",
+        w: "of Aleppo"
+      },
+      {
+        n: "al-Maghribi",
+        w: "of the West"
+      },
+      {
+        n: "al-Yamani",
+        w: "of Yemen"
+      }
+    ],
+    chineseFamily: [
+      {
+        n: "Li",
+        w: "Plum"
+      },
+      {
+        n: "Wang",
+        w: "King"
+      },
+      {
+        n: "Zhang"
+      },
+      {
+        n: "Liu"
+      },
+      {
+        n: "Chen"
+      },
+      {
+        n: "Yang",
+        w: "Poplar"
+      },
+      {
+        n: "Zhao"
+      },
+      {
+        n: "Huang",
+        w: "Yellow"
+      },
+      {
+        n: "Zhou"
+      },
+      {
+        n: "Wu"
+      },
+      {
+        n: "Xu"
+      },
+      {
+        n: "Sun"
+      },
+      {
+        n: "Ma",
+        w: "Horse"
+      },
+      {
+        n: "Zhu",
+        w: "Vermilion"
+      },
+      {
+        n: "Hu"
+      },
+      {
+        n: "Guo"
+      },
+      {
+        n: "He"
+      },
+      {
+        n: "Lin",
+        w: "Forest"
+      },
+      {
+        n: "Gao",
+        w: "High"
+      },
+      {
+        n: "Luo"
+      },
+      {
+        n: "Zheng"
+      },
+      {
+        n: "Liang"
+      },
+      {
+        n: "Xie"
+      },
+      {
+        n: "Tang"
+      },
+      {
+        n: "Han"
+      },
+      {
+        n: "Feng"
+      },
+      {
+        n: "Deng"
+      },
+      {
+        n: "Cao"
+      },
+      {
+        n: "Peng"
+      },
+      {
+        n: "Xiao"
+      },
+      {
+        n: "Tian",
+        w: "Field"
+      },
+      {
+        n: "Dong"
+      },
+      {
+        n: "Pan"
+      },
+      {
+        n: "Yuan"
+      },
+      {
+        n: "Cai"
+      },
+      {
+        n: "Jiang"
+      },
+      {
+        n: "Yu"
+      },
+      {
+        n: "Du"
+      },
+      {
+        n: "Ye",
+        w: "Leaf"
+      },
+      {
+        n: "Cheng"
+      },
+      {
+        n: "Wei"
+      },
+      {
+        n: "Su"
+      },
+      {
+        n: "Ding"
+      },
+      {
+        n: "Shen"
+      },
+      {
+        n: "Yao"
+      },
+      {
+        n: "Lu"
+      },
+      {
+        n: "Cui"
+      },
+      {
+        n: "Zhong"
+      },
+      {
+        n: "Tan"
+      },
+      {
+        n: "Fan"
+      },
+      {
+        n: "Jin",
+        w: "Gold"
+      },
+      {
+        n: "Shi",
+        w: "Stone"
+      },
+      {
+        n: "Bai",
+        w: "White"
+      },
+      {
+        n: "Meng"
+      },
+      {
+        n: "Xiong",
+        w: "Bear"
+      },
+      {
+        n: "Qin"
+      },
+      {
+        n: "Long",
+        w: "Dragon"
+      }
+    ],
+    japaneseFamily: [
+      {
+        n: "Tanaka",
+        w: "Middlefield"
+      },
+      {
+        n: "Yamamoto",
+        w: "Mountainfoot"
+      },
+      {
+        n: "Yamada",
+        w: "Mountainfield"
+      },
+      {
+        n: "Nakamura",
+        w: "Midvillage"
+      },
+      {
+        n: "Kobayashi",
+        w: "Littlewood"
+      },
+      {
+        n: "Matsumoto",
+        w: "Pinefoot"
+      },
+      {
+        n: "Inoue",
+        w: "Wellhead"
+      },
+      {
+        n: "Kimura",
+        w: "Treeton"
+      },
+      {
+        n: "Hayashi",
+        w: "Forest"
+      },
+      {
+        n: "Ishikawa",
+        w: "Stonebrook"
+      },
+      {
+        n: "Yamaguchi",
+        w: "Hillmouth"
+      },
+      {
+        n: "Morita",
+        w: "Woodfield"
+      },
+      {
+        n: "Ikeda",
+        w: "Pondfield"
+      },
+      {
+        n: "Hashimoto",
+        w: "Bridgefoot"
+      },
+      {
+        n: "Ishii",
+        w: "Stonewell"
+      },
+      {
+        n: "Ogawa",
+        w: "Littlebrook"
+      },
+      {
+        n: "Okada",
+        w: "Hillfield"
+      },
+      {
+        n: "Fujita",
+        w: "Wisteriafield"
+      },
+      {
+        n: "Takahashi",
+        w: "Highbridge"
+      },
+      {
+        n: "Kawaguchi",
+        w: "Rivermouth"
+      },
+      {
+        n: "Matsuda",
+        w: "Pinefield"
+      },
+      {
+        n: "Sakamoto",
+        w: "Slopefoot"
+      },
+      {
+        n: "Shimizu",
+        w: "Clearwater"
+      },
+      {
+        n: "Mori",
+        w: "Wood"
+      },
+      {
+        n: "Ono",
+        w: "Littlefield"
+      },
+      {
+        n: "Nishimura",
+        w: "Westvillage"
+      },
+      {
+        n: "Kitamura",
+        w: "Northvillage"
+      },
+      {
+        n: "Kawamura",
+        w: "Rivervillage"
+      },
+      {
+        n: "Takeda",
+        w: "Bamboofield",
+        x: 0.3
+      }
+    ],
+    koreanFamily: [
+      {
+        n: "Kim",
+        w: "Gold"
+      },
+      {
+        n: "Lee",
+        w: "Plum"
+      },
+      {
+        n: "Park"
+      },
+      {
+        n: "Choi"
+      },
+      {
+        n: "Jung"
+      },
+      {
+        n: "Kang"
+      },
+      {
+        n: "Cho"
+      },
+      {
+        n: "Yoon"
+      },
+      {
+        n: "Jang"
+      },
+      {
+        n: "Lim",
+        w: "Forest"
+      },
+      {
+        n: "Han"
+      },
+      {
+        n: "Oh"
+      },
+      {
+        n: "Seo"
+      },
+      {
+        n: "Shin"
+      },
+      {
+        n: "Kwon"
+      },
+      {
+        n: "Hwang",
+        w: "Yellow"
+      },
+      {
+        n: "Ahn"
+      },
+      {
+        n: "Song"
+      },
+      {
+        n: "Ryu",
+        w: "Willow"
+      },
+      {
+        n: "Hong"
+      },
+      {
+        n: "Jeon"
+      },
+      {
+        n: "Ko"
+      },
+      {
+        n: "Moon"
+      },
+      {
+        n: "Yang"
+      },
+      {
+        n: "Son"
+      },
+      {
+        n: "Baek",
+        w: "White"
+      },
+      {
+        n: "Seok",
+        w: "Stone"
+      },
+      {
+        n: "Ma",
+        w: "Horse"
+      }
+    ],
+    bantuFamily: [
+      {
+        n: "Ndlovu",
+        w: "Elephant"
+      },
+      {
+        n: "Ngwenya",
+        w: "Crocodile"
+      },
+      {
+        n: "Nyathi",
+        w: "Buffalo"
+      },
+      {
+        n: "Ngonyama",
+        w: "Lion"
+      }
+    ]
+  },
+  epithets: {
+    any: "epithets of any kind",
+    kinds: [
+      {
+        key: "character",
+        menu: "Character",
+        plural: "epithets of character",
+        w: 25
+      },
+      {
+        key: "body",
+        menu: "Body and look",
+        plural: "epithets of body and look",
+        w: 15
+      },
+      {
+        key: "deeds",
+        menu: "Deeds",
+        plural: "epithets of deeds",
+        w: 15
+      },
+      {
+        key: "beast",
+        menu: "Beast and element",
+        plural: "beast and element names",
+        w: 15
+      },
+      {
+        key: "mystic",
+        menu: "Mystical",
+        plural: "mystical epithets",
+        w: 10
+      },
+      {
+        key: "place",
+        menu: "Place",
+        plural: "place bynames",
+        w: 10
+      },
+      {
+        key: "compound",
+        menu: "Compound bynames",
+        plural: "compound bynames",
+        w: 10
+      },
+      {
+        key: "nickname",
+        menu: "Modern nicknames",
+        plural: "nicknames",
+        w: 15,
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        key: "dayName",
+        menu: "Day names",
+        plural: "day names",
+        w: 15,
+        s: [
+          "FL",
+          "FH"
+        ],
+        cultures: [
+          "aztec"
+        ]
+      }
+    ],
+    shapes: [
+      {
+        kind: "character",
+        p: "the {epCharacter}",
+        join: "the",
+        w: 80
+      },
+      {
+        kind: "character",
+        p: "the {epCharacter} and {epCharacter}",
+        join: "the",
+        w: 5,
+        t: [
+          "grand"
+        ]
+      },
+      {
+        kind: "character",
+        p: "the {epCharacter} {beast}",
+        join: "the",
+        w: 15
+      },
+      {
+        kind: "body",
+        p: "the {epBody}",
+        join: "the",
+        w: 60
+      },
+      {
+        kind: "body",
+        p: "{bodyLook}",
+        join: "bare",
+        w: 25,
+        s: [
+          "FL",
+          "FH"
+        ],
+        t: [
+          "light"
+        ]
+      },
+      {
+        kind: "body",
+        p: "the {epBodyMind}",
+        join: "the",
+        w: 15,
+        gate: true
+      },
+      {
+        kind: "deeds",
+        p: "the {epDeed}",
+        join: "the",
+        w: 75
+      },
+      {
+        kind: "deeds",
+        p: "{doer}",
+        join: "bare",
+        w: 25,
+        t: [
+          "light"
+        ]
+      },
+      {
+        kind: "beast",
+        p: "the {beast}",
+        join: "the",
+        w: 30
+      },
+      {
+        kind: "beast",
+        p: "{colourNick} {beast}",
+        join: "bare",
+        w: 25
+      },
+      {
+        kind: "beast",
+        p: "the {element}",
+        join: "the",
+        w: 15
+      },
+      {
+        kind: "beast",
+        p: "{beast} of the {epPlaceLand}",
+        join: "comma",
+        w: 15,
+        t: [
+          "grand"
+        ]
+      },
+      {
+        kind: "beast",
+        p: "{beast} of {town}",
+        join: "comma",
+        w: 15,
+        t: [
+          "grand"
+        ]
+      },
+      {
+        kind: "mystic",
+        p: "the {epMystic}",
+        join: "the",
+        w: 80
+      },
+      {
+        kind: "mystic",
+        p: "{element}-Touched",
+        join: "bare",
+        w: 15,
+        s: [
+          "FH",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        kind: "place",
+        p: "of the {epPlaceLand}",
+        join: "of",
+        w: 50
+      },
+      {
+        kind: "place",
+        p: "of {town}",
+        join: "of",
+        w: 50,
+        t: [
+          "plain"
+        ]
+      },
+      {
+        kind: "compound",
+        p: "{material+bodyPart}",
+        join: "bare",
+        w: 40
+      },
+      {
+        kind: "compound",
+        p: "{doer}",
+        join: "bare",
+        w: 30,
+        t: [
+          "light"
+        ]
+      },
+      {
+        kind: "compound",
+        p: "{clanBorn}",
+        join: "bare",
+        w: 30,
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        kind: "nickname",
+        p: "\u201C{modernNick}\u201D",
+        join: "bare",
+        w: 100,
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        kind: "dayName",
+        p: "{dayNumber} {daySign}",
+        join: "comma",
+        w: 100,
+        s: [
+          "FL",
+          "FH"
+        ]
+      }
+    ]
+  },
+  titles: {
+    any: "titles of any kind",
+    kinds: [
+      {
+        key: "rank",
+        menu: "Ranks",
+        plural: "ranks",
+        w: 40
+      },
+      {
+        key: "office",
+        menu: "Offices of a domain",
+        plural: "offices",
+        w: 40
+      },
+      {
+        key: "style",
+        menu: "Royal and sacred styles",
+        plural: "royal styles",
+        w: 20
+      }
+    ],
+    shapes: [
+      {
+        kind: "rank",
+        p: "{rank}",
+        w: 100
+      },
+      {
+        kind: "office",
+        p: "{officeWord} of the {courtDomain}",
+        w: 35,
+        t: [
+          "plain"
+        ]
+      },
+      {
+        kind: "office",
+        p: "{officeWord} of the {domainLand}",
+        w: 30
+      },
+      {
+        kind: "office",
+        p: "{officeWord} of {town}",
+        w: 20
+      },
+      {
+        kind: "office",
+        p: "{rank} of {town}",
+        w: 15
+      },
+      {
+        kind: "style",
+        p: "{style}",
+        w: 100,
+        t: [
+          "grand"
+        ]
+      }
+    ],
+    nativeOf: {
+      "norman-british": "de"
+    }
+  },
+  family: {
+    any: "family names of any kind",
+    kinds: [
+      {
+        key: "patronymic",
+        menu: "Patronymics",
+        plural: "patronymics"
+      },
+      {
+        key: "occupational",
+        menu: "Trades",
+        plural: "trade names",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        key: "place",
+        menu: "Places",
+        plural: "place names",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        key: "descriptive",
+        menu: "Nicknames",
+        plural: "nickname surnames"
+      },
+      {
+        key: "inherited",
+        menu: "Inherited surnames",
+        plural: "inherited surnames"
+      },
+      {
+        key: "clan",
+        menu: "Clan-style",
+        plural: "clan-style names",
+        s: [
+          "FH",
+          "MF",
+          "SF"
+        ],
+        cultures: [
+          "general"
+        ]
+      }
+    ],
+    cultures: {
+      general: {
+        w: {
+          occupational: 30,
+          place: 30,
+          descriptive: 20,
+          patronymic: 20,
+          clan: 15
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "{father}son",
+              l: "e",
+              w: 70,
+              g: "m"
+            },
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 30,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            }
+          ],
+          clan: [
+            {
+              p: "{clanStyle}",
+              l: "both",
+              w: 1,
+              t: [
+                "grand"
+              ]
+            }
+          ],
+          occupational: [
+            {
+              p: "{trade}",
+              l: "both",
+              w: 1
+            }
+          ],
+          place: [
+            {
+              p: "{placeFirst+placeLast}",
+              l: "both",
+              w: 1
+            },
+            {
+              p: "{placeWord}",
+              l: "both",
+              w: 1
+            }
+          ],
+          descriptive: [
+            {
+              p: "{nick}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      "anglo-saxon": {
+        w: {
+          patronymic: 50,
+          descriptive: 30,
+          place: 20
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "{father}ing",
+              l: "n",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "{father}es dohtor",
+              l: "n",
+              w: 1,
+              g: "f"
+            }
+          ],
+          place: [
+            {
+              p: "of {town}",
+              l: "both",
+              w: 1
+            }
+          ],
+          descriptive: [
+            {
+              p: "{nick}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      norse: {
+        w: {
+          patronymic: 70,
+          descriptive: 30
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "{father}son",
+              l: "e",
+              w: 60,
+              g: "m"
+            },
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 40,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "{father:norseSon}",
+              l: "n",
+              w: 10,
+              g: "m"
+            },
+            {
+              p: "{father:norseDaughter}",
+              l: "n",
+              w: 10,
+              g: "f"
+            },
+            {
+              p: "{mother:norseSon}",
+              l: "n",
+              w: 1,
+              g: "m"
+            }
+          ],
+          descriptive: [
+            {
+              p: "{nick}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      celtic: {
+        w: {
+          patronymic: 75,
+          descriptive: 25
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "Mac{father}",
+              l: "n",
+              w: 40,
+              g: "m"
+            },
+            {
+              p: "O'{father}",
+              l: "n",
+              w: 20,
+              g: "m"
+            },
+            {
+              p: "Nic{father}",
+              l: "n",
+              w: 40,
+              g: "f"
+            },
+            {
+              p: "{father:welsh}",
+              l: "n",
+              w: 30,
+              g: "m"
+            },
+            {
+              p: "ferch {father}",
+              l: "n",
+              w: 30,
+              g: "f"
+            },
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 70,
+              g: "m"
+            },
+            {
+              p: "grandson of {father}",
+              l: "e",
+              w: 20,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            }
+          ],
+          descriptive: [
+            {
+              p: "{nick}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      "norman-british": {
+        w: {
+          occupational: 25,
+          place: 25,
+          descriptive: 15,
+          patronymic: 20,
+          inherited: 15
+        },
+        forms: {
+          occupational: [
+            {
+              p: "{trade}",
+              l: "both",
+              w: 1
+            },
+            {
+              p: "le {normanTrade:native}",
+              l: "n",
+              w: 1
+            }
+          ],
+          place: [
+            {
+              p: "{placeFirst+placeLast}",
+              l: "e",
+              w: 1
+            },
+            {
+              p: "{placeWord}",
+              l: "e",
+              w: 1
+            },
+            {
+              p: "de {town}",
+              l: "n",
+              w: 1
+            }
+          ],
+          descriptive: [
+            {
+              p: "{nick}",
+              l: "e",
+              w: 1
+            },
+            {
+              p: "le {normanNick:native}",
+              l: "n",
+              w: 1
+            }
+          ],
+          patronymic: [
+            {
+              p: "{father}son",
+              l: "e",
+              w: 60
+            },
+            {
+              p: "{father}s",
+              l: "e",
+              w: 40
+            },
+            {
+              p: "Fitz{father}",
+              l: "n",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "de {town}",
+              l: "n",
+              w: 1,
+              g: "f"
+            }
+          ],
+          inherited: [
+            {
+              p: "{placeFirst+placeLast}",
+              l: "e",
+              w: 1
+            },
+            {
+              p: "de {placeFirst+placeLast}",
+              l: "n",
+              w: 1
+            }
+          ]
+        }
+      },
+      roman: {
+        w: {
+          inherited: 70,
+          descriptive: 30
+        },
+        forms: {
+          inherited: [
+            {
+              p: "{nomen} {cognomen:native}",
+              l: "n",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "{nomen}",
+              l: "n",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "{nomen} the {cognomen}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "{nomen}",
+              l: "e",
+              w: 1,
+              g: "f"
+            }
+          ],
+          descriptive: [
+            {
+              p: "{cognomen:native}",
+              l: "n",
+              w: 1
+            },
+            {
+              p: "the {cognomen}",
+              l: "e",
+              w: 1
+            }
+          ]
+        }
+      },
+      "greek-byzantine": {
+        w: {
+          patronymic: 40,
+          inherited: 60
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "{father:greek}",
+              l: "n",
+              w: 1,
+              g: "m"
+            }
+          ],
+          inherited: [
+            {
+              p: "{byzantineFamily}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      slavic: {
+        w: {
+          patronymic: 40,
+          inherited: 60
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "{father:slavic}",
+              l: "n",
+              w: 1
+            }
+          ],
+          inherited: [
+            {
+              p: "{slavicFamily}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      steppe: {
+        w: {
+          patronymic: 70,
+          descriptive: 30
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "{father}o\u011Flu",
+              l: "n",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "{father}k\u0131z\u0131",
+              l: "n",
+              w: 1,
+              g: "f"
+            }
+          ],
+          descriptive: [
+            {
+              p: "of the {colourNick} Wolf Clan",
+              l: "both",
+              w: 1
+            },
+            {
+              p: "of the {beast} Clan",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      "arabic-persian": {
+        w: {
+          patronymic: 40,
+          occupational: 20,
+          place: 25,
+          descriptive: 15
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "ibn {father}",
+              l: "n",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "bint {father}",
+              l: "n",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "{father}zadeh",
+              l: "n",
+              w: 0.3
+            }
+          ],
+          descriptive: [
+            {
+              p: "Abu {child}",
+              l: "n",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "Umm {child}",
+              l: "n",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "father of {child}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "mother of {child}",
+              l: "e",
+              w: 1,
+              g: "f"
+            }
+          ],
+          occupational: [
+            {
+              p: "{arabicTrade}",
+              l: "both",
+              w: 1
+            }
+          ],
+          place: [
+            {
+              p: "{arabicPlace}",
+              l: "both",
+              w: 13
+            },
+            {
+              p: "of {town}",
+              l: "e",
+              w: 2
+            }
+          ]
+        }
+      },
+      indian: {
+        w: {
+          patronymic: 60,
+          place: 40
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "{father}putra",
+              l: "n",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "{father}putri",
+              l: "n",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "{mother}putra",
+              l: "n",
+              w: 0.3,
+              g: "m"
+            }
+          ],
+          place: [
+            {
+              p: "of {town}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      chinese: {
+        w: {
+          inherited: 100
+        },
+        forms: {
+          inherited: [
+            {
+              p: "{chineseFamily}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      japanese: {
+        w: {
+          inherited: 100
+        },
+        forms: {
+          inherited: [
+            {
+              p: "{japaneseFamily}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      korean: {
+        w: {
+          inherited: 100
+        },
+        forms: {
+          inherited: [
+            {
+              p: "{koreanFamily}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      egyptian: {
+        w: {
+          patronymic: 70,
+          place: 30
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "sa {father}",
+              l: "n",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "sat {father}",
+              l: "n",
+              w: 1,
+              g: "f"
+            }
+          ],
+          place: [
+            {
+              p: "of {town}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      ethiopian: {
+        w: {
+          patronymic: 100
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "{father}",
+              l: "n",
+              w: 1
+            }
+          ]
+        }
+      },
+      bantu: {
+        w: {
+          patronymic: 60,
+          inherited: 40
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "ka{father}",
+              l: "n",
+              w: 1
+            }
+          ],
+          inherited: [
+            {
+              p: "{bantuFamily}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      "west-african": {
+        w: {
+          patronymic: 70,
+          place: 30
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "e",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "e",
+              w: 1,
+              g: "f"
+            },
+            {
+              p: "dan {father}",
+              l: "n",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "'yar {father}",
+              l: "n",
+              w: 1,
+              g: "f"
+            }
+          ],
+          place: [
+            {
+              p: "of {town}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      aztec: {
+        w: {
+          patronymic: 40,
+          place: 60
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "both",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "both",
+              w: 1,
+              g: "f"
+            }
+          ],
+          place: [
+            {
+              p: "of {town}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      },
+      maya: {
+        w: {
+          patronymic: 40,
+          place: 60
+        },
+        forms: {
+          patronymic: [
+            {
+              p: "son of {father}",
+              l: "both",
+              w: 1,
+              g: "m"
+            },
+            {
+              p: "daughter of {father}",
+              l: "both",
+              w: 1,
+              g: "f"
+            }
+          ],
+          place: [
+            {
+              p: "of {town}",
+              l: "both",
+              w: 1
+            }
+          ]
+        }
+      }
+    }
+  },
+  safeguards: {
+    block: [
+      "William the Conqueror",
+      "Harald Bluetooth",
+      "Sweyn Forkbeard",
+      "Harald Fairhair",
+      "Erik the Red",
+      "Eric the Red",
+      "Ivar the Boneless",
+      "\xC6thelred the Unready",
+      "Ethelred the Unready",
+      "Alfred the Great",
+      "Edward the Confessor",
+      "Edward Longshanks",
+      "Richard the Lionheart",
+      "Richard Lionheart",
+      "Lionheart",
+      "Vlad the Impaler",
+      "Ivan the Terrible",
+      "Peter the Great",
+      "Catherine the Great",
+      "Alexander the Great",
+      "Charles the Bald",
+      "Pepin the Short",
+      "Louis the Pious",
+      "Charles the Hammer",
+      "Basil the Bulgar-Slayer",
+      "Bulgar-Slayer",
+      "Suleiman the Magnificent",
+      "Tiger of Kai",
+      "One-Eyed Dragon",
+      "Red Devil",
+      "Bloody Mary",
+      "Black Prince",
+      "Iron Lady",
+      "Iron Duke",
+      "Lion of the North",
+      "Desert Fox",
+      "Scourge of God",
+      "Hammer of the Scots",
+      "Warwick the Kingmaker",
+      "Longshanks",
+      "Lackland",
+      "Bluebeard",
+      "Barbarossa",
+      "Richard Crookback",
+      "Lion of Judah",
+      "Defender of the Faith",
+      "Commander of the Faithful",
+      "Custodian of the Two Holy Mosques",
+      "Keeper of the Holy Places",
+      "Shadow of God on Earth",
+      "Lord of the Isles",
+      "Prince of Wales",
+      "Duke of Cornwall",
+      "Duke of York",
+      "Emperor of the Romans",
+      "Supreme Leader",
+      "Great Leader",
+      "Dear Leader",
+      "F\xFChrer",
+      "Il Duce",
+      "Generalissimo",
+      "Sword of Faith",
+      "Sword of Islam",
+      "Sword of God",
+      "Lion of God",
+      "Light of the Faith",
+      "Pillar of the Faith",
+      "Glory of the Faith",
+      "Oakenshield",
+      "Elf-friend",
+      "Elf-Friend",
+      "Stormborn",
+      "Kingslayer",
+      "Mother of Dragons",
+      "Breaker of Chains",
+      "Unburnt",
+      "Warden of the North",
+      "Hand of the King",
+      "Lord Commander",
+      "Kingsguard",
+      "Dragonborn",
+      "Dovahkiin",
+      "Witcher",
+      "White Wolf",
+      "Grey Pilgrim",
+      "Strider",
+      "Wormtongue",
+      "Ringbearer",
+      "Ring-Bearer",
+      "Lightbringer",
+      "Godslayer",
+      "Warp-Touched",
+      "Emperor of Mankind",
+      "Lord of Light",
+      "Dark Lord",
+      "Chosen One",
+      "Boy Who Lived",
+      "Mad King",
+      "Night King",
+      "King in the North",
+      "Imp",
+      "Hound",
+      "the Mountain",
+      "Lady Stoneheart",
+      "Bloodraven",
+      "Starkiller",
+      "Skywalker",
+      "Darth",
+      "Scarface",
+      "Bugsy",
+      "Machine Gun",
+      "Legs",
+      "Lucky Luciano",
+      "Teflon Don",
+      "Dapper Don"
+    ],
+    blockPatterns: [
+      "of the Faith$",
+      "of Islam$",
+      "of God$"
+    ],
+    flag: [
+      "the Bold",
+      "the Great",
+      "the Wise",
+      "the Fair",
+      "the Just",
+      "the Good",
+      "the Pious",
+      "the Fat",
+      "the Bald",
+      "the Lame",
+      "the Mad",
+      "the Red",
+      "the Black",
+      "Ironside",
+      "Ironhand",
+      "Strongbow",
+      "Fitzwalter",
+      "King of Kings",
+      "Son of Heaven",
+      "Ring-Giver"
+    ],
+    flagListBlocks: false,
+    banned: [
+      "Saracen",
+      "Infidel",
+      "Heathen",
+      "Gypsy",
+      "Savage",
+      "Barbarian",
+      "Coolie",
+      "Darkie",
+      "Negro",
+      "Half-Breed",
+      "Cripple",
+      "Retard",
+      "Spastic",
+      "Midget",
+      "Idiot",
+      "Imbecile"
+    ],
+    bannedEpithets: [
+      "the Moor",
+      "the Turk",
+      "the Pagan",
+      "the Mongol",
+      "the Dwarf",
+      "the Jew",
+      "the Gentile"
+    ],
+    sacred: [
+      "Abd al",
+      "Abdul",
+      "uddin",
+      "ud-Din",
+      "Giorgis"
+    ],
+    noGods: [
+      "indian",
+      "arabic-persian",
+      "ethiopian",
+      "greek-byzantine"
+    ],
+    casteWords: [
+      "Sharma",
+      "Patel",
+      "Iyer",
+      "Thakur",
+      "Rana",
+      "Keita",
+      "Traor\xE9",
+      "Kouyat\xE9",
+      "MacLeod",
+      "MacDonald"
+    ]
+  }
+};
+
+// src/bynames/engine.ts
+var BYNAMES_DATA = bynames_default;
+var BYNAME_CULTURES = BYNAMES_DATA.cultures.map((c) => {
+  var _a2, _b;
+  const world = WORLD_CULTURES.find((w) => w.id === c.key);
+  return { key: c.key, label: c.label, guide: (_b = (_a2 = c.guide) != null ? _a2 : world == null ? void 0 : world.guide) != null ? _b : "" };
+});
+var BYNAME_MODULE_LABELS = {
+  epithets: "epithets and bynames",
+  titles: "titles and honorifics",
+  familyNames: "family names"
+};
+function moduleAny(module2) {
+  return module2 === "epithets" ? BYNAMES_DATA.epithets.any : module2 === "titles" ? BYNAMES_DATA.titles.any : BYNAMES_DATA.family.any;
+}
+function moduleKinds(module2) {
+  return module2 === "epithets" ? BYNAMES_DATA.epithets.kinds : module2 === "titles" ? BYNAMES_DATA.titles.kinds : BYNAMES_DATA.family.kinds;
+}
+function availableKinds(module2, culture, setting) {
+  const kinds = moduleKinds(module2).filter((k) => (!k.s || k.s.includes(setting)) && (!k.cultures || k.cultures.includes(culture)));
+  if (module2 === "familyNames") {
+    const system = BYNAMES_DATA.family.cultures[culture];
+    return kinds.filter((k) => system == null ? void 0 : system.w[k.key]).map((kind) => ({ kind, weight: system.w[kind.key] }));
+  }
+  const shapes = module2 === "epithets" ? BYNAMES_DATA.epithets.shapes : BYNAMES_DATA.titles.shapes;
+  return kinds.filter((k) => shapes.some((s) => s.kind === k.key && (!s.s || s.s.includes(setting)))).map((kind) => {
+    var _a2;
+    return { kind, weight: (_a2 = kind.w) != null ? _a2 : 1 };
+  });
+}
+function showsLanguage(module2, culture) {
+  if (culture === "general") return false;
+  return module2 !== "epithets" || culture === "aztec";
+}
+var lightOrGrim = (tone) => tone === "light" || tone === "grim";
+function entryForm(e, sex, native) {
+  if (e.g && e.g !== (sex === "male" ? "m" : "f")) return void 0;
+  if (native) {
+    if ("nm" in e || "nf" in e) {
+      const v = sex === "male" ? e.nm !== void 0 ? e.nm : e.n : e.nf !== void 0 ? e.nf : e.n;
+      return v ? { text: v, native: true } : void 0;
+    }
+    if (e.n !== void 0) return { text: e.n, native: true };
+  }
+  if ("m" in e || "f" in e) {
+    const v = sex === "male" ? e.m : e.f;
+    return v ? { text: v, native: false } : void 0;
+  }
+  return e.w !== void 0 ? { text: e.w, native: false } : void 0;
+}
+function drawEntries(ctx, entries, opts = {}) {
+  var _a2, _b, _c, _d, _e;
+  const live = [];
+  for (const e of entries) {
+    if (e.s && !e.s.includes(ctx.setting)) continue;
+    if (e.bm && !lightOrGrim(ctx.tone)) continue;
+    const form = entryForm(e, ctx.sex, opts.englishOnly ? false : ctx.native || !!opts.nativeOnly);
+    if (!form) continue;
+    if (opts.nativeOnly && !form.native) continue;
+    const w = ((_a2 = e.x) != null ? _a2 : 1) * ((_c = (_b = e.cx) == null ? void 0 : _b[ctx.culture]) != null ? _c : 1) * toneFactor((_d = e.t) != null ? _d : [], ctx.tone);
+    if (w > 0) live.push([{ ...form, entry: e }, w]);
+  }
+  const pick4 = pickWeighted5(live, ctx.rng);
+  if (pick4) for (const t of (_e = pick4.entry.t) != null ? _e : []) ctx.drawn.add(t);
+  return pick4;
+}
+var stripPlural = (raw) => raw.split("|")[0].replace(/~$/, "");
+function cultureAnimals(culture) {
+  var _a2, _b;
+  if (BYNAMES_DATA.cultureAnimals[culture]) return BYNAMES_DATA.cultureAnimals[culture];
+  const world = WORLD_CULTURES.find((c) => c.id === culture);
+  if (!world) return [];
+  const raw = (_b = (_a2 = world.lists.animal) != null ? _a2 : world.lists.beast) != null ? _b : [];
+  return raw.flatMap((w) => {
+    var _a3;
+    const ref = w.match(/^\{(\w+)\}$/);
+    return ref ? ((_a3 = world.lists[ref[1]]) != null ? _a3 : []).filter((x) => !x.includes("{")) : [w];
+  }).map(stripPlural);
+}
+function cultureLand(culture) {
+  var _a2;
+  const world = WORLD_CULTURES.find((c) => c.id === culture);
+  return ((_a2 = world == null ? void 0 : world.lists.land) != null ? _a2 : []).filter((w) => !w.includes("{")).map(stripPlural);
+}
+var HOLY_NAMES = new Map(
+  BYNAMES_DATA.safeguards.noGods.flatMap((key2) => {
+    var _a2, _b;
+    const world = WORLD_CULTURES.find((c) => c.id === key2);
+    const words = [...(_a2 = world == null ? void 0 : world.lists.god) != null ? _a2 : [], ...(_b = world == null ? void 0 : world.lists.saint) != null ? _b : []].map(stripPlural).filter((w) => !w.includes("{"));
+    return words.length > 0 ? [[key2, new RegExp(`(^|[^\\p{L}])(${words.join("|")})($|[^\\p{L}])`, "u")]] : [];
+  })
+);
+function townSource(culture) {
+  if (["general", "anglo-saxon", "celtic", "norman-british"].includes(culture)) return "britain";
+  if (culture === "greek-byzantine" || culture === "steppe") return void 0;
+  return culture;
+}
+var PLACEHOLDERS = { self: "[name]", father: "[father]", mother: "[mother]", child: "[child]" };
+function personName(ctx, role) {
+  if (ctx.source !== "pack" || !ctx.draw) return PLACEHOLDERS[role];
+  const sex = role === "father" ? "male" : role === "mother" ? "female" : role === "child" ? ctx.rng() < 0.5 ? "male" : "female" : ctx.sex;
+  for (let i = 0; i < 20; i++) {
+    const name = ctx.draw(role, sex, ctx.rng);
+    if (name) return name;
+  }
+  ctx.packFailed = true;
+  return PLACEHOLDERS[role];
+}
+function slavicPatronymic(father, sex) {
+  const lower2 = father.toLowerCase();
+  const male = sex === "male";
+  const drop = (n) => father.slice(0, father.length - n);
+  for (const end of ["iy", "ei", "y", "i"]) if (lower2.endsWith(end)) return drop(end.length) + (male ? "evich" : "evna");
+  if (lower2.endsWith("a")) return drop(1) + (male ? "ich" : "ichna");
+  return father + (male ? "ovich" : "ovna");
+}
+function norsePatronymic(parent, sex) {
+  const s = parent.toLowerCase().endsWith("s") ? "" : "s";
+  return parent + s + (sex === "male" ? "son" : "d\xF3ttir");
+}
+function welshPatronymic(father) {
+  return `${/^[aeiouAEIOU]/.test(father) ? "ab" : "ap"} ${father}`;
+}
+function greekPatronymic(father) {
+  return (/[aeiouAEIOU]$/.test(father) ? father.slice(0, -1) : father) + "ides";
+}
+function nativeOf(culture, place2) {
+  const word = BYNAMES_DATA.titles.nativeOf[culture];
+  if (!word) return `of ${place2}`;
+  return word === "de" && /^[AEIOUaeiouÆæ]/.test(place2) ? `d'${place2}` : `${word} ${place2}`;
+}
+function render2(ctx, pattern) {
+  let failed = false;
+  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
+    if (failed) return "";
+    const piece = token2(ctx, raw);
+    if (piece === void 0) failed = true;
+    return piece != null ? piece : "";
+  });
+  return failed ? void 0 : out;
+}
+var joinClosed = (a, b) => a + b.toLowerCase();
+var closeUp = (w) => w.includes("+") ? w.split("+").reduce((x, y) => joinClosed(x, y)) : w;
+function listWord(ctx, name, opts = {}) {
+  var _a2;
+  const entries = BYNAMES_DATA.lists[name];
+  if (!entries) throw new Error(`Bynames: no list \u201C${name}\u201D.`);
+  return (_a2 = drawEntries(ctx, entries, opts)) == null ? void 0 : _a2.text;
+}
+function token2(ctx, raw) {
+  var _a2, _b, _c, _d, _e;
+  const [name, mod] = raw.split(":");
+  if (name.includes("+")) {
+    const [a, b] = name.split("+");
+    const first = token2(ctx, a);
+    const second = token2(ctx, b);
+    return first && second ? joinClosed(first, second) : void 0;
+  }
+  const rng = ctx.rng;
+  switch (name) {
+    case "father":
+    case "mother": {
+      const parent = personName(ctx, name);
+      if (mod === "norseSon") return norsePatronymic(parent, "male");
+      if (mod === "norseDaughter") return norsePatronymic(parent, "female");
+      if (mod === "welsh") return welshPatronymic(parent);
+      if (mod === "greek") return greekPatronymic(parent);
+      if (mod === "slavic") return slavicPatronymic(parent, ctx.sex);
+      return parent;
+    }
+    case "child":
+      return personName(ctx, "child");
+    case "town": {
+      const holy = HOLY_NAMES.get(ctx.culture);
+      for (let i = 0; i < 20; i++) {
+        const town = groupTown(ctx.setting, townSource(ctx.culture), rng);
+        if (!holy || !holy.test(town)) return town;
+      }
+      return void 0;
+    }
+    case "god": {
+      if (BYNAMES_DATA.safeguards.noGods.includes(ctx.culture)) return void 0;
+      const gods = (_b = (_a2 = WORLD_CULTURES.find((c) => c.id === ctx.culture)) == null ? void 0 : _a2.lists.god) != null ? _b : [];
+      return gods.length > 0 ? stripPlural(gods[Math.floor(rng() * gods.length)]) : void 0;
+    }
+    case "number":
+    case "compass":
+    case "star": {
+      return pickWeighted5(groupListWords(name, ctx.setting), rng);
+    }
+    case "epPlaceLand":
+    case "domainLand":
+      return placeLand(ctx);
+    case "beast": {
+      const extra = cultureAnimals(ctx.culture).map((w) => ({ w, x: 3 }));
+      return (_c = drawEntries(ctx, ctx.culture === "general" ? BYNAMES_DATA.lists.beast : [...BYNAMES_DATA.lists.beast, ...extra])) == null ? void 0 : _c.text;
+    }
+    case "clanBorn": {
+      const half = rng() < 0.5 ? listWord(ctx, "material") : listWord(ctx, "element");
+      const suffix = BYNAMES_DATA.clanBornSuffixes[Math.floor(rng() * BYNAMES_DATA.clanBornSuffixes.length)];
+      return half ? joinClosed(half, suffix) : void 0;
+    }
+    case "clanStyle": {
+      const choices = [["material", 40]];
+      if (["FH", "MF"].includes(ctx.setting)) choices.push(["clanBorn", 40]);
+      if (ctx.setting === "SF") choices.push(["sf", 20]);
+      const which = pickWeighted5(choices, rng);
+      if (which === "clanBorn") return token2(ctx, "clanBorn");
+      if (which === "sf") return listWord(ctx, "clanStyleSF");
+      const half = listWord(ctx, "material");
+      const suffix = BYNAMES_DATA.clanStyleSuffixes[Math.floor(rng() * BYNAMES_DATA.clanStyleSuffixes.length)];
+      return half ? joinClosed(half, suffix) : void 0;
+    }
+    case "rank": {
+      const pick4 = drawEntries(ctx, (_d = BYNAMES_DATA.ranks[ctx.culture]) != null ? _d : []);
+      if (!pick4) return void 0;
+      ctx.rankAfter = pick4.entry.pos === "after";
+      ctx.rankNative = pick4.native;
+      return pick4.text;
+    }
+    case "style": {
+      const pick4 = drawEntries(ctx, (_e = BYNAMES_DATA.styles[ctx.culture]) != null ? _e : []);
+      return pick4 ? render2(ctx, pick4.text) : void 0;
+    }
+  }
+  if (!BYNAMES_DATA.lists[name]) throw new Error(`Bynames: no list \u201C${name}\u201D.`);
+  const word = listWord(ctx, name, mod === "native" ? { nativeOnly: true } : mod === "E" ? { englishOnly: true } : {});
+  return word === void 0 ? void 0 : closeUp(word);
+}
+function placeLand(ctx) {
+  var _a2;
+  const rng = ctx.rng;
+  const extras = (name) => BYNAMES_DATA.lists[name].map((e) => {
+    var _a3, _b, _c;
+    return [{ word: e.w, gn: false }, ((_a3 = e.x) != null ? _a3 : 1) * ((_c = (_b = e.cx) == null ? void 0 : _b[ctx.culture]) != null ? _c : 1)];
+  });
+  if (ctx.setting === "SF") {
+    const pool3 = [...groupListWords("spaceLand", "SF").map(([w, n]) => [{ word: w, gn: false }, n]), ...extras("epPlaceSpaceExtra")];
+    return (_a2 = pickWeighted5(pool3, rng)) == null ? void 0 : _a2.word;
+  }
+  const pool2 = [
+    ...groupListWords("land", ctx.setting).map(([w, n]) => [{ word: w, gn: true }, n]),
+    ...cultureLand(ctx.culture).map((w) => [{ word: w, gn: false }, 1]),
+    ...extras("epPlaceLandExtra")
+  ];
+  const pick4 = pickWeighted5(pool2, rng);
+  if (!pick4) return void 0;
+  return pick4.gn ? prefixedLand(pick4.word, ctx.setting, rng) : pick4.word;
+}
+var SMALL3 = /* @__PURE__ */ new Set(["of", "the", "and", "a", "an", "de", "le"]);
+var contentWords = (text) => text.replace(/[“”",.]/g, "").split(/[\s-]+/).map((w) => w.toLowerCase()).filter((w) => w && !SMALL3.has(w) && !w.startsWith("["));
+var wordRe3 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
+var BANNED_WORDS = BYNAMES_DATA.safeguards.banned.map(wordRe3);
+var BANNED_EPITHETS = new Set(BYNAMES_DATA.safeguards.bannedEpithets.map((w) => w.toLowerCase()));
+var SACRED = BYNAMES_DATA.safeguards.sacred.map((w) => w.toLowerCase());
+function acceptable2(guard, built, cap2) {
+  const name = built.text.replace(/\[(name|father|mother|child)\]/g, "").trim();
+  for (const candidate of [built.text, built.part, name]) {
+    const n = normForBlock(candidate.replace(/^,\s*/, "").replace(/[“”]/g, ""));
+    if (n && guard.block.has(n)) return false;
+    if (guard.patterns.some((re) => re.test(candidate))) return false;
+  }
+  if (hasBannedWord(built.text) || BANNED_WORDS.some((re) => re.test(built.text))) return false;
+  if (BANNED_EPITHETS.has(built.part.toLowerCase())) return false;
+  const lower2 = built.text.toLowerCase();
+  if (SACRED.some((w) => lower2.includes(w))) return false;
+  if (contentWords(built.part).length > cap2) return false;
+  const words = contentWords(built.part);
+  if (new Set(words).size !== words.length) return false;
+  return true;
+}
+function newCtx(base, sex, native) {
+  return { ...base, sex, native, drawn: /* @__PURE__ */ new Set(), rankAfter: false, rankNative: false };
+}
+var tonesOf = (shapeTones2, drawn) => {
+  const all = /* @__PURE__ */ new Set([...shapeTones2 != null ? shapeTones2 : [], ...drawn]);
+  return GROUP_TONES.filter((t) => all.has(t));
+};
+function pickShape(ctx, shapes, kind) {
+  const live = shapes.filter((s) => s.kind === kind && (!s.s || s.s.includes(ctx.setting)) && (!s.gate || lightOrGrim(ctx.tone))).map((s) => {
+    var _a2;
+    return [s, s.w * toneFactor((_a2 = s.t) != null ? _a2 : [], ctx.tone)];
+  });
+  return pickWeighted5(live, ctx.rng);
+}
+var NUMBER_WORDS2 = new Set(BYNAMES_DATA.lists.dayNumber.flatMap((e) => [e.w, e.n]));
+function joinEpithet(name, part, join2) {
+  if (!name) return part;
+  if (join2 === "comma") return NUMBER_WORDS2.has(part.split(" ")[0]) ? `${name}, ${part}` : `${name}, the ${part}`;
+  return `${name} ${part}`;
+}
+function buildEpithet(ctx, kind) {
+  const shape = pickShape(ctx, BYNAMES_DATA.epithets.shapes, kind);
+  if (!shape) return void 0;
+  const part = render2(ctx, shape.p);
+  if (!part) return void 0;
+  const name = ctx.source === "none" ? void 0 : personName(ctx, "self");
+  return { part, text: joinEpithet(name, part, shape.join), kind, shape: shape.p, tones: tonesOf(shape.t, ctx.drawn) };
+}
+function oneTitle(ctx, kind, forceShape) {
+  const shapes = BYNAMES_DATA.titles.shapes;
+  const shape = forceShape ? shapes.find((s) => s.p === forceShape) : pickShape(ctx, shapes, kind);
+  if (!shape) return void 0;
+  ctx.rankAfter = false;
+  ctx.rankNative = false;
+  let text;
+  if (shape.p === "{rank} of {town}") {
+    const rank = token2(ctx, "rank");
+    const town = token2(ctx, "town");
+    if (!rank || !town) return void 0;
+    text = `${rank} ${ctx.rankNative ? nativeOf(ctx.culture, town) : `of ${town}`}`;
+  } else text = render2(ctx, shape.p);
+  if (!text) return void 0;
+  return { text, shape, rank: shape.p === "{rank}" || shape.p === "{rank} of {town}", after: ctx.rankAfter };
+}
+function buildTitle(ctx, kind, length) {
+  var _a2, _b;
+  const name = ctx.source === "none" ? void 0 : personName(ctx, "self");
+  if (length === "single") {
+    const title = oneTitle(ctx, kind);
+    if (!title) return void 0;
+    const bare = title.shape.p === "{rank}";
+    const text = !name ? title.text : bare ? title.after ? `${name} ${title.text}` : `${title.text} ${name}` : `${name}, ${title.text}`;
+    return { part: title.text, text, kind, shape: title.shape.p, tones: tonesOf(title.shape.t, ctx.drawn) };
+  }
+  const r = ctx.rng();
+  const size = r < 0.4 ? 2 : r < 0.8 ? 3 : 4;
+  const firstShape = pickWeighted5([["{rank}", 100], ["{rank} of {town}", 15]], ctx.rng);
+  const first = oneTitle(ctx, "rank", firstShape);
+  if (!first) return void 0;
+  const parts = [first.text];
+  const used = new Set(contentWords(first.text));
+  let offices = 0;
+  const shapeTones2 = new Set((_a2 = first.shape.t) != null ? _a2 : []);
+  for (let tries = 0; parts.length < size && tries < 40; tries++) {
+    const kindPick = offices > 0 ? "style" : pickWeighted5([["style", 20], ["office", 40]], ctx.rng);
+    const next = oneTitle(ctx, kindPick);
+    if (!next || next.rank) continue;
+    const words = contentWords(next.text);
+    if (parts.includes(next.text) || words.some((w) => used.has(w))) continue;
+    parts.push(next.text);
+    words.forEach((w) => used.add(w));
+    if (kindPick === "office") offices++;
+    for (const t of (_b = next.shape.t) != null ? _b : []) shapeTones2.add(t);
+  }
+  if (parts.length < size) return void 0;
+  const rest = parts.slice(1).join(", ");
+  let head = first.text;
+  if (name) {
+    const ofAt = firstShape === "{rank} of {town}" ? first.text.search(/ (of|de|d') ?/) : -1;
+    const rank = ofAt >= 0 ? first.text.slice(0, ofAt) : first.text;
+    const place2 = ofAt >= 0 ? first.text.slice(ofAt) : "";
+    head = (first.after ? `${name} ${rank}` : `${rank} ${name}`) + place2;
+  }
+  return { part: parts.join(", "), text: `${head}, ${rest}`, kind: "full", shape: "full style", tones: tonesOf([...shapeTones2], ctx.drawn) };
+}
+var SON_OF = /^(son|daughter|grandson|father|mother) of /;
+function buildFamily(ctx, kind) {
+  var _a2, _b, _c, _d;
+  const system = BYNAMES_DATA.family.cultures[ctx.culture];
+  const forms = ((_a2 = system == null ? void 0 : system.forms[kind]) != null ? _a2 : []).filter(
+    (f) => (f.l === "both" || f.l === (ctx.native ? "n" : "e")) && (!f.g || f.g === (ctx.sex === "male" ? "m" : "f"))
+  );
+  const kindTones = (_c = (_b = BYNAMES_DATA.family.kinds.find((k) => k.key === kind)) == null ? void 0 : _b.t) != null ? _c : [];
+  const form = pickWeighted5(
+    forms.map((f) => {
+      var _a3;
+      return [f, f.w * toneFactor([...kindTones, ...(_a3 = f.t) != null ? _a3 : []], ctx.tone)];
+    }),
+    ctx.rng
+  );
+  if (!form) return void 0;
+  const part = render2(ctx, form.p);
+  if (!part) return void 0;
+  const name = ctx.source === "none" ? void 0 : personName(ctx, "self");
+  let text = part;
+  if (name) {
+    if (BYNAMES_DATA.familyFirst.includes(ctx.culture)) text = `${part} ${name}`;
+    else if (SON_OF.test(part)) text = `${name}, ${part}`;
+    else text = `${name} ${part}`;
+  }
+  return { part, text, kind, shape: form.p, tones: tonesOf([...kindTones, ...(_d = form.t) != null ? _d : []], ctx.drawn) };
+}
+function generateBynames(options) {
+  var _a2, _b, _c, _d, _e, _f, _g, _h;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const module2 = options.module;
+  const culture = BYNAME_CULTURES.some((c) => c.key === options.culture) ? options.culture : "general";
+  const genre = (_a2 = options.genre) != null ? _a2 : "fantasy";
+  const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
+  const tone = (_b = options.tone) != null ? _b : "any";
+  const language = showsLanguage(module2, culture) ? (_c = options.language) != null ? _c : "english" : "english";
+  const gender = (_d = options.gender) != null ? _d : "anyone";
+  const length = module2 === "titles" ? (_e = options.length) != null ? _e : "single" : "single";
+  const notices = [];
+  const kinds = availableKinds(module2, culture, setting);
+  const chosen = options.kind ? kinds.find((k) => k.kind.key === options.kind) : void 0;
+  if (options.kind && !chosen) notices.push(`\u201C${options.kind}\u201D isn't available here; using any kind.`);
+  const guards = (_f = options.safeguards) != null ? _f : { block: BYNAMES_DATA.safeguards.block, flag: BYNAMES_DATA.safeguards.flag, flagListBlocks: BYNAMES_DATA.safeguards.flagListBlocks };
+  const guard = {
+    block: new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock)),
+    patterns: BYNAMES_DATA.safeguards.blockPatterns.map((p) => new RegExp(p, "i"))
+  };
+  const base = { rng, setting, culture, tone, source: (_g = options.source) != null ? _g : "placeholder", draw: options.draw, packFailed: false };
+  const kindChoices = kinds.map(({ kind, weight }) => [kind.key, weight]);
+  const count = Math.max(0, Math.floor(options.count));
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  let packFailed = false;
+  const oneName2 = () => {
+    var _a3;
+    const sex = gender === "men" ? "male" : gender === "women" ? "female" : rng() < 0.5 ? "male" : "female";
+    const native = language === "native" || language === "mixed" && rng() < 0.5;
+    let kind = (_a3 = chosen == null ? void 0 : chosen.kind.key) != null ? _a3 : length === "full" ? "rank" : pickWeighted5(kindChoices, rng);
+    for (let round = 0; round < 2 && kind; round++) {
+      for (let i = 0; i < 20; i++) {
+        const ctx = newCtx(base, sex, native);
+        const built = module2 === "epithets" ? buildEpithet(ctx, kind) : module2 === "titles" ? buildTitle(ctx, kind, length) : buildFamily(ctx, kind);
+        if (ctx.packFailed) packFailed = true;
+        if (!built || !acceptable2(guard, built, length === "full" ? 24 : 8)) continue;
+        return { text: built.text, module: module2, culture, kind: built.kind, shape: built.shape, gender: sex, language: native ? "native" : "english", tones: built.tones };
+      }
+      if (!chosen) kind = pickWeighted5(kindChoices, rng);
+    }
+    return void 0;
+  };
+  if (kindChoices.length > 0) {
+    for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+      const name = oneName2();
+      if (!name) continue;
+      const key2 = name.text.toLowerCase();
+      if (seen.has(key2)) continue;
+      seen.add(key2);
+      names.push(name);
+    }
+  }
+  if (packFailed) notices.push(`Pack \u201C${(_h = options.packName) != null ? _h : ""}\u201D gave no names; placeholders used.`);
+  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+  return { names, seed, notices };
+}
+function bynameHistoryLabel(module2, genre, fantastic, culture, tone = "any", language = "english") {
+  var _a2, _b;
+  const label = (_b = (_a2 = BYNAME_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+  return [
+    BYNAME_MODULE_LABELS[module2],
+    SETTING_PHRASES[groupSetting(genre, fantastic)],
+    label,
+    ...tone !== "any" ? [tone] : [],
+    ...language !== "english" && showsLanguage(module2, culture) ? [language] : []
+  ].join(" \xB7 ");
+}
+
+// src/bynames/sentence.ts
+var DEFAULT_BYNAME_STATE = {
+  culture: "general",
+  genre: "fantasy",
+  fantastic: false,
+  tone: "any",
+  language: "english",
+  gender: "anyone",
+  length: "single",
+  source: "placeholder"
+};
+var LANGUAGE_TEXT = { english: "in English", native: "in native forms", mixed: "in English or native forms" };
+var LENGTH_TEXT = { single: "as single titles", full: "as full styles" };
+var SOURCE_TEXT = (module2) => module2 === "familyNames" ? { placeholder: "with a placeholder name", pack: "with names from", none: "on their own" } : { placeholder: "after a placeholder name", pack: "after names from", none: "on their own" };
+var SOURCE_MENU = (module2) => {
+  const t = SOURCE_TEXT(module2);
+  return { ...t, pack: `${t.pack} a pack` };
+};
+var same3 = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
+function hasGenderSections(headings) {
+  return headings.some((h) => same3(h, "male")) && headings.some((h) => same3(h, "female"));
+}
+function sectionRequest(state, headings, role, sex) {
+  if (state.section === "whole" || headings.length === 0) return {};
+  if (state.section && state.section !== "gender") return { section: state.section };
+  const wanted = role === "father" ? "male" : role === "mother" ? "female" : sex;
+  if (hasGenderSections(headings)) return { section: headings.find((h) => same3(h, wanted)) };
+  return { section: headings[0] };
+}
+var sectionText = (state, headings) => {
+  if (state.section === "whole") return "the whole pack";
+  if (state.section && state.section !== "gender") return `its ${state.section} section`;
+  return hasGenderSections(headings) ? "its section for the gender" : `its ${headings[0]} section`;
+};
+function bynameSentence(state, module2, packs = []) {
+  var _a2, _b, _c, _d, _e;
+  const out = [];
+  const culture = (_a2 = BYNAME_CULTURES.find((c) => c.key === state.culture)) != null ? _a2 : BYNAME_CULTURES[0];
+  out.push({
+    field: "culture",
+    text: culture.label,
+    title: "Naming culture: which customs the names follow",
+    choices: BYNAME_CULTURES.map((c) => ({ id: c.key, label: c.label })),
+    current: culture.key
+  });
+  out.push("-themed ");
+  const setting = groupSetting(state.genre, state.fantastic);
+  const kinds = availableKinds(module2, culture.key, setting);
+  const kind = (_b = kinds.find((k) => k.kind.key === state.kind)) == null ? void 0 : _b.kind;
+  out.push({
+    field: "kind",
+    text: kind ? kind.plural : moduleAny(module2),
+    title: kind ? kind.menu : moduleAny(module2),
+    choices: [{ id: void 0, label: "Any" }, ...kinds.map((k) => ({ id: k.kind.key, label: k.kind.menu }))],
+    current: kind == null ? void 0 : kind.key
+  });
+  out.push(" for a ");
+  out.push({
+    field: "genre",
+    text: GENRE_TEXT[state.genre],
+    title: "Genre: the kind of world",
+    choices: ["fantasy", "modern", "scifi"].map((g) => ({ id: g, label: GENRE_TEXT[g] })),
+    current: state.genre
+  });
+  out.push(" world");
+  if (state.genre !== "scifi") {
+    const phrases = FANTASTIC_TEXT[state.genre];
+    out.push(" ");
+    out.push({
+      field: "fantastic",
+      text: phrases[state.fantastic ? 1 : 0],
+      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
+      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
+      current: state.fantastic ? "on" : "off"
+    });
+  }
+  out.push(", ");
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
+  if (showsLanguage(module2, culture.key)) {
+    out.push(", ");
+    out.push({
+      field: "language",
+      text: LANGUAGE_TEXT[state.language],
+      title: "English translations, the culture's own words, or a mix",
+      choices: ["english", "native", "mixed"].map((l) => ({ id: l, label: LANGUAGE_TEXT[l] })),
+      current: state.language
+    });
+  }
+  out.push(", for ");
+  out.push({
+    field: "gender",
+    text: state.gender,
+    title: "Decides forms such as King or Queen, -son or -d\xF3ttir",
+    choices: ["men", "women", "anyone"].map((g) => ({ id: g, label: g })),
+    current: state.gender
+  });
+  if (module2 === "titles") {
+    out.push(", ");
+    out.push({
+      field: "length",
+      text: LENGTH_TEXT[state.length],
+      title: "One title, or a full royal style of two to four",
+      choices: ["single", "full"].map((l) => ({ id: l, label: LENGTH_TEXT[l] })),
+      current: state.length
+    });
+  }
+  out.push(", ");
+  out.push({
+    field: "source",
+    text: SOURCE_TEXT(module2)[state.source],
+    title: "Who the byname belongs to",
+    choices: ["placeholder", "pack", "none"].map((s) => ({ id: s, label: SOURCE_MENU(module2)[s] })),
+    current: state.source
+  });
+  if (state.source === "pack") {
+    const pack = (_c = packs.find((p) => p.name === state.pack)) != null ? _c : packs[0];
+    out.push(" ");
+    out.push({
+      field: "pack",
+      text: (_d = pack == null ? void 0 : pack.name) != null ? _d : "a pack",
+      title: "The name pack the names come from",
+      choices: packs.map((p) => ({ id: p.name, label: p.name })),
+      current: pack == null ? void 0 : pack.name
+    });
+    if (pack && pack.headings.length > 0) {
+      out.push(", ");
+      out.push({
+        field: "section",
+        text: sectionText(state, pack.headings),
+        title: "The pack's section the names come from",
+        choices: [
+          ...hasGenderSections(pack.headings) ? [{ id: "gender", label: "its section for the gender" }] : [],
+          ...pack.headings.map((h) => ({ id: h, label: `its ${h} section` })),
+          { id: "whole", label: "the whole pack" }
+        ],
+        current: (_e = state.section) != null ? _e : hasGenderSections(pack.headings) ? "gender" : pack.headings[0]
+      });
+    }
+  }
+  return out;
+}
+function bynameSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function chooseByname(state, field, id, module2) {
+  let next = { ...state };
+  switch (field) {
+    case "culture":
+      next.culture = id != null ? id : "general";
+      if (next.culture === "general") next.language = "english";
+      break;
+    case "kind":
+      next.kind = id;
+      break;
+    case "genre":
+      next.genre = id != null ? id : "fantasy";
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "language":
+      next.language = id != null ? id : "english";
+      break;
+    case "gender":
+      next.gender = id != null ? id : "anyone";
+      break;
+    case "length":
+      next.length = id != null ? id : "single";
+      break;
+    case "source":
+      next.source = id != null ? id : "placeholder";
+      break;
+    case "pack":
+      next.pack = id;
+      next.section = void 0;
+      break;
+    case "section":
+      next.section = id;
+      break;
+  }
+  const kinds = availableKinds(module2, next.culture, groupSetting(next.genre, next.fantastic));
+  if (next.kind && !kinds.some((k) => k.kind.key === next.kind)) next = { ...next, kind: void 0 };
+  return next;
+}
+function effectiveLanguage(state, module2) {
+  return showsLanguage(module2, state.culture) ? state.language : "english";
+}
+function bynamePresetState(preset) {
+  return {
+    culture: preset.culture,
+    kind: preset.kind === "any" ? void 0 : preset.kind,
+    genre: preset.genre,
+    fantastic: preset.fantastic,
+    tone: preset.tone,
+    language: preset.language,
+    gender: preset.gender,
+    length: preset.length,
+    source: preset.source,
+    pack: preset.pack,
+    section: preset.section === "gender" ? void 0 : preset.section
+  };
+}
+
+// src/bynames/safeguardPacks.ts
+var BYNAME_SAFEGUARD_TYPE = "byname-safeguards";
+function isBynameSafeguardPackContent(content) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  return !!fm && new RegExp(`^type:\\s*["']?${BYNAME_SAFEGUARD_TYPE}["']?\\s*$`, "m").test(fm[1]);
+}
+var BYNAME_SAFEGUARD_TEMPLATE = `---
+type: byname-safeguards
+flag-list-blocks: false
+---
+
+## Block
+
+Bynames, titles and family names never to produce. Each one is added to the built-in block list of real epithets, titles and well-known fictional names.
+
+## Flag
+
+Names to allow, though they echo a real or well-known person or title.
+
+## Allow
+
+Names to take off the flag list. Built-in block-list names can't be allowed.
+`;
+
 // src/presets.ts
 var TRIBAL_PRESET_MODULE = "tribal-names";
 var TRIBAL_PRESET_DEFAULTS = {
@@ -54455,6 +62138,7 @@ function parseModulePreset(content, fileName) {
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
   const { values, body } = parsed;
   if (values.module === GROUP_PRESET_MODULE) return parseGroupPreset(values, body, fileName);
+  if (values.module === BYNAME_PRESET_MODULE) return parseBynamePreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module \u201C${(_a2 = values.module) != null ? _a2 : ""}\u201D.`);
     return { problems };
@@ -54488,6 +62172,7 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("bynameModule" in preset) return bynamePresetContent(preset);
   if ("family" in preset) return groupPresetContent(preset);
   const quote2 = (v) => /^\[\[|[:#]/.test(v) ? `"${v}"` : v;
   return [
@@ -54573,6 +62258,71 @@ function groupPresetContent(preset) {
     `people: ${preset.people}`,
     `tone: ${preset.tone}`,
     `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
+var BYNAME_PRESET_MODULE = "bynames";
+function parseBynamePreset(values, body, fileName) {
+  var _a2, _b;
+  const problems = [];
+  const module2 = values.bynameModule;
+  if (!["epithets", "titles", "familyNames"].includes(module2)) {
+    problems.push(`Unknown bynameModule \u201C${(_a2 = values.bynameModule) != null ? _a2 : ""}\u201D.`);
+    return { problems };
+  }
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const fantasticRaw = values.fantastic;
+  if (fantasticRaw && fantasticRaw !== "true" && fantasticRaw !== "false") problems.push(`Unknown fantastic \u201C${fantasticRaw}\u201D.`);
+  const culture = pick4("culture", "general", (v) => BYNAME_CULTURES.some((c) => c.key === v));
+  return {
+    byname: {
+      packName: values.packName || fileName,
+      setting: (_b = values.setting) != null ? _b : "",
+      description: body.trim(),
+      bynameModule: module2,
+      culture,
+      kind: pick4("kind", "any", (v) => v === "any" || moduleKinds(module2).some((k) => k.key === v)),
+      genre: pick4("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
+      fantastic: fantasticRaw === "true",
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      language: pick4("language", "english", (v) => ["english", "native", "mixed"].includes(v)),
+      gender: pick4("gender", "anyone", (v) => ["men", "women", "anyone"].includes(v)),
+      length: pick4("length", "single", (v) => ["single", "full"].includes(v)),
+      source: pick4("source", "placeholder", (v) => ["placeholder", "pack", "none"].includes(v)),
+      ...values.pack ? { pack: values.pack.replace(/^\[\[|\]\]$/g, "") } : {},
+      section: values.section || "gender"
+    },
+    problems
+  };
+}
+function bynamePresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${BYNAME_PRESET_MODULE}`,
+    `bynameModule: ${preset.bynameModule}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.kind}`,
+    `genre: ${preset.genre}`,
+    `fantastic: ${preset.fantastic}`,
+    `tone: ${preset.tone}`,
+    `language: ${preset.language}`,
+    `gender: ${preset.gender}`,
+    `length: ${preset.length}`,
+    `source: ${preset.source}`,
+    ...preset.pack ? [`pack: ${preset.pack}`] : [],
+    `section: ${preset.section}`,
     "---",
     "",
     preset.description.trim(),
@@ -55799,12 +63549,12 @@ function terrainHeading(heading) {
   const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
   return m ? { terrain: m[1].trim(), part: m[2].toLowerCase() } : null;
 }
-function terrainId(token2, custom) {
+function terrainId(token3, custom) {
   var _a2;
-  const t = norm4(token2);
+  const t = norm4(token3);
   const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm4(x.id) === t || norm4(x.label) === t));
   if (builtIn) return builtIn.id;
-  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab(token2))) == null ? void 0 : _a2.id;
+  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab(token3))) == null ? void 0 : _a2.id;
 }
 var key = (words) => words.map(([w, n]) => `${norm4(w)}|${n}`).sort().join("\n");
 var entryKey = (entries) => entries.map((e) => `${norm4(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
@@ -56042,8 +63792,8 @@ function diffAgainstBase(content, base) {
   flush();
   for (const s of pack.sections) {
     const b = baseText.get(norm4(s.heading));
-    const same5 = b && (s.entries && b.entries ? entryKey(s.entries) === entryKey(b.entries) : key(s.words) === key(b.words)) && s.packs.length === b.packs.length;
-    if (!same5) kept.push(`## ${s.heading}
+    const same6 = b && (s.entries && b.entries ? entryKey(s.entries) === entryKey(b.entries) : key(s.words) === key(b.words)) && s.packs.length === b.packs.length;
+    if (!same6) kept.push(`## ${s.heading}
 
 ${(_c = written.get(s.heading)) != null ? _c : ""}`.trim());
   }
@@ -56406,6 +64156,11 @@ var RecipeHost = class {
     return { ...biome, packDraws };
   }
   /** A drawer for one name pack: stem or whole names (§5), honouring section and gender (§10). */
+  /** Bynames brief §2.4: a pack's draw, by the same path word-list `//` lines use; notices are kept. */
+  async packDraw(target, from) {
+    const draw = await this.packSource(target, from);
+    return { draw, notices: [...this.notices] };
+  }
   async packSource(target, from) {
     var _a2, _b;
     const file = this.resolveLink(target, from);
@@ -56888,9 +64643,9 @@ function slotWordsView(args) {
   };
   if ((slot == null ? void 0 : slot.kind) === "sources") {
     const only = slot.sources.length === 1 ? slot.sources[0] : void 0;
-    if (words && (only == null ? void 0 : only.list) !== void 0 && same3(only.list, words)) {
+    if (words && (only == null ? void 0 : only.list) !== void 0 && same4(only.list, words)) {
       const source2 = slotBaselineSource(part, id, void 0, biome, terrain);
-      const section = splitSections(wordsBody != null ? wordsBody : "").sections.find((s) => same3(s.name, label));
+      const section = splitSections(wordsBody != null ? wordsBody : "").sections.find((s) => same4(s.name, label));
       return {
         ...base,
         status: "edited",
@@ -56909,7 +64664,7 @@ function slotWordsView(args) {
   const text = baselineText(source);
   return { ...base, status: source.from, statusText: describe(source), baseline: text, text };
 }
-var same3 = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
+var same4 = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
 function contentKeys(text) {
   const list = parseWordList(text);
   const entries = [...list.unsectioned, ...list.sections.flatMap((s) => s.entries)];
@@ -56946,11 +64701,11 @@ function splitSections(body) {
 }
 function assembleWordsNote(existingBody, description, shownLabels, changed) {
   const { description: oldDescription, sections } = splitSections(existingBody != null ? existingBody : "");
-  const shown = (name) => shownLabels.some((l) => same3(l, name));
+  const shown = (name) => shownLabels.some((l) => same4(l, name));
   const written = /* @__PURE__ */ new Set();
   const out = [];
   for (const s of sections) {
-    const replacement = changed.find((c) => same3(c.label, s.name));
+    const replacement = changed.find((c) => same4(c.label, s.name));
     if (replacement) {
       out.push(`## ${replacement.label}
 
@@ -56986,7 +64741,7 @@ function wordsNoteDescription(recipeName) {
 var NEW_LANDS_CONTEXTS = CONTEXT_PHRASES["2"];
 var EXPANSION_CONTEXTS = CONTEXT_PHRASES["2a"];
 var NO_THE_REGIONS2 = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
-var same4 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+var same5 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 var kebab3 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 var PAGES = ["Shape and rendering", "Slots", "Template", "Word lists"];
 var MAIN_PAGES = 2;
@@ -57831,7 +65586,7 @@ var RecipeWizard = class {
     };
     if (!full.templateOf || !this.template) return full;
     const base = withDefaults(this.template);
-    const diff = (mine, theirs) => Object.fromEntries(Object.entries(mine).filter(([k, v]) => !same4(v, theirs[k])));
+    const diff = (mine, theirs) => Object.fromEntries(Object.entries(mine).filter(([k, v]) => !same5(v, theirs[k])));
     return {
       setting: w.setting !== base.setting ? w.setting : void 0,
       templateOf: full.templateOf,
@@ -58210,10 +65965,10 @@ var TakeoverView = class {
       new import_obsidian12.Notice("nameForge: choose a takeover pack.");
       return;
     }
-    const same5 = samePackNotice(this.nativePath, this.takeoverPath);
-    if (same5) {
-      this.host.setStatus(same5);
-      new import_obsidian12.Notice(`nameForge: ${same5}`);
+    const same6 = samePackNotice(this.nativePath, this.takeoverPath);
+    if (same6) {
+      this.host.setStatus(same6);
+      new import_obsidian12.Notice(`nameForge: ${same6}`);
       return;
     }
     const index = await this.host.scanFolderPacks();
@@ -58346,6 +66101,7 @@ var OLD_HISTORY_PREFIXES = {
   explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
   empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"]
 };
+var BYNAME_SECTIONS = ["epithets", "titles", "familyNames"];
 var GROUP_NAME_SECTIONS = [
   "mysticOrders",
   "martialOrders",
@@ -58362,20 +66118,23 @@ var SECTION_ORDER = [
   "empireExpansionPlaceShapes",
   "tribalNames",
   ...GROUP_NAME_SECTIONS,
+  ...BYNAME_SECTIONS,
   "nameAgeing",
   "nameTakeover"
 ];
 var SECTION_GROUPS = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
   groupNames: ["tribalNames", ...GROUP_NAME_SECTIONS],
+  bynames: BYNAME_SECTIONS,
   advanced: ["nameAgeing", "nameTakeover"]
 };
 var GROUP_LABELS = {
   placeNames: "place names",
   groupNames: "group names",
+  bynames: "bynames and titles",
   advanced: "advanced"
 };
-var SWITCHER_ORDER = ["markov", "placeNames", "groupNames", "advanced"];
+var SWITCHER_ORDER = ["markov", "placeNames", "groupNames", "bynames", "advanced"];
 function sectionGroup(section) {
   return Object.keys(SECTION_GROUPS).find((g) => SECTION_GROUPS[g].includes(section));
 }
@@ -58394,7 +66153,10 @@ var SECTION_LABELS = {
   tradeGuilds: "guilds and trading houses",
   adventureCompanies: "adventurers and explorers",
   powerFactions: "powers and factions",
-  supernaturalCourts: "supernatural courts and hosts"
+  supernaturalCourts: "supernatural courts and hosts",
+  epithets: "epithets and bynames",
+  titles: "titles and honorifics",
+  familyNames: "family names"
 };
 var BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
 var RIVER_NAMES_HISTORY_NAME = "river names";
@@ -58407,6 +66169,7 @@ function historySection(packName) {
   if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }
@@ -58437,6 +66200,10 @@ var SECTION_ICONS = {
   nameAgeing: ICON_NAME_AGEING,
   nameTakeover: ICON_NAME_TAKEOVER,
   tribalNames: ICON_TRIBAL_NAMES,
+  // Bynames brief §1.1: Lucide icons.
+  epithets: "quote",
+  titles: "crown",
+  familyNames: "users",
   // Group brief §1.1: Lucide icons.
   mysticOrders: "sparkles",
   martialOrders: "swords",
@@ -58449,6 +66216,7 @@ var SECTION_ICONS = {
 var GROUP_ICONS = {
   placeNames: ICON_PLACE_SHAPES,
   groupNames: ICON_TRIBAL_NAMES,
+  bynames: ICON_BYNAMES,
   advanced: ICON_ADVANCED
 };
 var moduleLabel = (section) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
@@ -58458,6 +66226,7 @@ var SESSION_HINT = "\u2190 click here for specialist modules, or here for your n
 var sessionHintShown = false;
 function packTypeIconId(packType, subGenerator) {
   if (packType === "tribalPreset" || packType === "groupPreset") return ICON_TRIBAL_NAMES;
+  if (packType === "bynamePreset") return ICON_BYNAMES;
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;
   }
@@ -58684,8 +66453,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     /** Tribal names' choices (Tribal brief §18.2), kept for the session like the colonial modules'. */
     /** Group brief §2.5: each group-name module's sentence choices (session only). */
     this.groupStates = {};
+    /** Bynames brief §2.5: each bynames module's choices, and the vault's people packs for the sentence. */
+    this.bynameStates = {};
+    this.bynamePacks = [];
+    this.bynamePacksLoaded = false;
     /** Each switcher group's last-used module (session only). */
-    this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", advanced: "nameAgeing" };
+    this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
     /** Land brief §8.1: river names' peoples (session only). */
     this.riverPeoples = { mode: "tribal", tradition: "general" };
@@ -59055,10 +66828,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     (_c = this.packDropdownEl) == null ? void 0 : _c.toggle(section === "markov");
     (_d = this.sectionSentenceEl) == null ? void 0 : _d.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_e = this.editRecipeButton) == null ? void 0 : _e.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset"));
+    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section);
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section);
     (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart && !tribal);
     (_i = this.landButton) == null ? void 0 : _i.refresh();
     (_j = this.guideButton) == null ? void 0 : _j.toggle(!!colonialPart);
@@ -59357,6 +67130,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.refreshSavePreset();
     if (section === "tribalNames") this.renderTribalSentence(row);
     else if (groupFamily) this.renderGroupSentence(row, groupFamily);
+    else if (BYNAME_SECTIONS.includes(section)) this.renderBynameSentence(row, section);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -59618,7 +67392,12 @@ ${n.origin}${also}${echo}` };
   async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian13.TFile)) return;
-    const { preset, group } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (byname) {
+      this.bynameStates[byname.bynameModule] = bynamePresetState(byname);
+      this.switchSection(byname.bynameModule);
+      return;
+    }
     if (group) {
       const family = findFamily(group.family);
       this.groupStates[family.key] = groupPresetState(group);
@@ -59628,6 +67407,165 @@ ${n.origin}${also}${echo}` };
     if (!preset) return;
     this.setTribalState(await this.presetState(preset, file.path));
     this.switchSection("tribalNames");
+  }
+  // ── Bynames and titles (Bynames brief) ────────────────────────────────────
+  /** §2.5: a bynames module's choices, session only. */
+  bynameState(module2) {
+    var _a2, _b;
+    return (_b = (_a2 = this.bynameStates)[module2]) != null ? _b : _a2[module2] = { ...DEFAULT_BYNAME_STATE };
+  }
+  /** §2.2: the vault's people packs (not place packs, word lists or recipes) and their `##` headings. */
+  async loadBynamePacks() {
+    const index = await this.scanFolderPacks();
+    const packs = index.filter((e) => !e.parsed.template && ["breakdownPack", "listPack", "compoundPack", "mixPack"].includes(e.parsed.packType)).map((e) => {
+      var _a2, _b;
+      return {
+        name: e.path.split("/").pop().replace(/\.md$/i, ""),
+        headings: e.parsed.packType === "compoundPack" ? compoundTitles(compoundPartData(e.parsed)) : ((_b = (_a2 = e.parsed.sectioned) == null ? void 0 : _a2.sections) != null ? _b : []).map((s) => s.name)
+      };
+    }).sort((a, b) => a.name.localeCompare(b.name));
+    this.bynamePacks = packs;
+    return packs;
+  }
+  /** §2: the module's sentence; the pack list loads once, then the sentence redraws with it. */
+  renderBynameSentence(row, module2) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    const state = this.bynameState(module2);
+    if (state.source === "pack" && !this.bynamePacksLoaded) {
+      this.bynamePacksLoaded = true;
+      void this.loadBynamePacks().then(() => this.renderContextRow());
+    }
+    for (const segment2 of bynameSentence(state, module2, this.bynamePacks)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      const choices = segment2.field === "pack" ? async () => (await this.loadBynamePacks()).map((p) => ({ id: p.name, label: p.name })) : () => segment2.choices;
+      this.sentenceLink(sentence2, segment2.text, segment2.title, choices, segment2.current, (id) => {
+        var _a2;
+        const next = chooseByname(this.bynameState(module2), segment2.field, id, module2);
+        if (segment2.field === "source" && next.source === "pack" && !next.pack) next.pack = (_a2 = this.bynamePacks[0]) == null ? void 0 : _a2.name;
+        this.bynameStates[module2] = next;
+        if (segment2.field === "source" && next.source === "pack") void this.loadBynamePacks().then(() => this.renderContextRow());
+      });
+    }
+  }
+  /** §2.4: the pack's draw through the word-list `//` path, with the section by role and sex. */
+  async bynameDraw(state) {
+    var _a2, _b, _c, _d;
+    if (state.source !== "pack") return { notices: [] };
+    const packs = await this.loadBynamePacks();
+    const name = (_b = state.pack) != null ? _b : (_a2 = packs[0]) == null ? void 0 : _a2.name;
+    if (!name) return { notices: ["No name packs found; placeholders used."] };
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
+    const { draw, notices } = await host.packDraw(name, (0, import_obsidian13.normalizePath)(`${folder}/${name}.md`));
+    if (!draw) return { notices, packName: name };
+    const headings = (_d = (_c = packs.find((p) => p.name === name)) == null ? void 0 : _c.headings) != null ? _d : [];
+    return {
+      draw: (role, sex, rng) => draw(sectionRequest(state, headings, role, sex), "whole", rng),
+      notices,
+      packName: name
+    };
+  }
+  /** §13: the finished strings only; history "{module} · {setting} · {culture}…". */
+  async runBynames(module2, state = this.bynameState(module2), label, problems = []) {
+    var _a2;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
+    const guards = await this.loadBynameSafeguards();
+    const pack = await this.bynameDraw(state);
+    const result = generateBynames({
+      module: module2,
+      culture: state.culture,
+      kind: state.kind,
+      genre: state.genre,
+      fantastic: state.fantastic,
+      tone: state.tone,
+      language: effectiveLanguage(state, module2),
+      gender: state.gender,
+      length: state.length,
+      // A pack that can't be drawn runs with placeholders (§12).
+      source: state.source === "pack" && !pack.draw ? "placeholder" : state.source,
+      draw: pack.draw,
+      packName: pack.packName,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
+      "none"
+    );
+    const history2 = label != null ? label : bynameHistoryLabel(module2, state.genre, state.fantastic, state.culture, state.tone, effectiveLanguage(state, module2));
+    await this.recordGenerationHistory(result.names.length, history2);
+    this.setStatus([...problems, ...pack.notices, ...result.notices, ...guards.notices].join(" "));
+  }
+  /** §11.7: every byname safeguard pack in the names folder, merged with the built-in lists. */
+  async loadBynameSafeguards() {
+    var _a2;
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian13.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const packs = [];
+    for (const child of (_a2 = folder == null ? void 0 : folder.children) != null ? _a2 : []) {
+      if (!(child instanceof import_obsidian13.TFile) || child.extension !== "md") continue;
+      const content = await this.app.vault.cachedRead(child);
+      if (isBynameSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
+    }
+    if (packs.length === 0) return { notices: [] };
+    const g = BYNAMES_DATA.safeguards;
+    const { notices, block, flag, flagBlocks } = mergeSafeguards({ blockList: g.block, flagList: g.flag, flagListBlocks: g.flagListBlocks }, packs);
+    return { safeguards: { block, flag, flagListBlocks: flagBlocks }, notices };
+  }
+  /** §12: "{culture} · {kind or module}", described by the sentence. */
+  openSaveBynamePreset(module2) {
+    var _a2, _b;
+    const state = this.bynameState(module2);
+    const culture = (_b = (_a2 = BYNAME_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+    const kind = moduleKinds(module2).find((k) => k.key === state.kind);
+    const name = [culture, kind ? kind.menu : SECTION_LABELS[module2]].join(" \xB7 ");
+    const description = bynameSentenceText(bynameSentence(state, module2, this.bynamePacks));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a3, _b2;
+      if (!presetName) {
+        new import_obsidian13.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        bynameModule: module2,
+        culture: state.culture,
+        kind: (_a3 = state.kind) != null ? _a3 : "any",
+        genre: state.genre,
+        fantastic: state.fantastic,
+        tone: state.tone,
+        language: effectiveLanguage(state, module2),
+        gender: state.gender,
+        length: state.length,
+        source: state.source,
+        ...state.source === "pack" && state.pack ? { pack: state.pack } : {},
+        section: (_b2 = state.section) != null ? _b2 : "gender"
+      });
+      return this.writePreset(presetName, content, (existing) => {
+        var _a4;
+        return ((_a4 = parseModulePreset(existing, presetName).byname) == null ? void 0 : _a4.bynameModule) === module2;
+      });
+    }).open();
+  }
+  /** §12: a byname preset, run as its module runs; history "{module} · {preset}". */
+  async runBynamePreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian13.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { byname, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!byname) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runBynames(byname.bynameModule, bynamePresetState(byname), `${SECTION_LABELS[byname.bynameModule]} \xB7 ${byname.packName}`, problems);
   }
   /** Group brief §13: a group preset, run as its module runs; history "{module} · {preset}". */
   async runGroupPreset() {
@@ -59649,7 +67587,7 @@ ${n.origin}${also}${echo}` };
     var _a2;
     const section = this.activeSection;
     (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(
-      section === "tribalNames" || !!familyForSection(section) || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -59658,6 +67596,10 @@ ${n.origin}${also}${echo}` };
     const groupFamily = familyForSection(this.activeSection);
     if (groupFamily) {
       this.openSaveGroupPreset(groupFamily);
+      return;
+    }
+    if (BYNAME_SECTIONS.includes(this.activeSection)) {
+      this.openSaveBynamePreset(this.activeSection);
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -60414,7 +68356,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -60565,6 +68507,7 @@ ${text}
           const parsed = parseModulePreset(content, child.basename);
           if (parsed.preset) packs.push({ path: child.path, packType: "tribalPreset" });
           else if (parsed.group) packs.push({ path: child.path, packType: "groupPreset" });
+          else if (parsed.byname) packs.push({ path: child.path, packType: "bynamePreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -60707,9 +68650,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a2, _b, _c, _d, _e, _f, _g;
-    const { preset, group, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = group ? "groupPreset" : "tribalPreset";
+    var _a2, _b, _c, _d, _e, _f, _g, _h;
+    const { preset, group, byname, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -60719,9 +68662,9 @@ ${text}
     (_a2 = this.sectionSentenceEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
-    const module2 = group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
+    const module2 = byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
     (_e = this.openPresetButton) == null ? void 0 : _e.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : file.basename;
+    this.plugin.settings.packName = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -61138,6 +69081,10 @@ ${text}
       await this.runGroupNames(groupFamily);
       return;
     }
+    if (BYNAME_SECTIONS.includes(this.activeSection)) {
+      await this.runBynames(this.activeSection);
+      return;
+    }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
@@ -61177,6 +69124,10 @@ ${text}
     }
     if (this.currentPackType === "tribalPreset") {
       await this.runTribalPreset();
+      return;
+    }
+    if (this.currentPackType === "bynamePreset") {
+      await this.runBynamePreset();
       return;
     }
     if (this.currentPackType === "groupPreset") {
@@ -62648,6 +70599,21 @@ var NameForgePlugin = class extends import_obsidian15.Plugin {
         }
         await this.app.vault.create(path, GROUP_SAFEGUARD_TEMPLATE);
         new import_obsidian15.Notice("nameForge: \u201CGroup safeguards\u201D created.");
+      }
+    });
+    this.addCommand({
+      id: "create-byname-safeguard-list",
+      name: "Create byname safeguard list",
+      callback: async () => {
+        const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
+        await ensureVaultFolder(this.app, folder);
+        const path = (0, import_obsidian15.normalizePath)(`${folder}/Byname safeguards.md`);
+        if (this.app.vault.getFileByPath(path)) {
+          new import_obsidian15.Notice("nameForge: \u201CByname safeguards\u201D already exists.");
+          return;
+        }
+        await this.app.vault.create(path, BYNAME_SAFEGUARD_TEMPLATE);
+        new import_obsidian15.Notice("nameForge: \u201CByname safeguards\u201D created.");
       }
     });
     this.addCommand({

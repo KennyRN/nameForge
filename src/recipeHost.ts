@@ -254,6 +254,12 @@ export class RecipeHost {
   }
 
   /** A drawer for one name pack: stem or whole names (§5), honouring section and gender (§10). */
+/** Bynames brief §2.4: a pack's draw, by the same path word-list `//` lines use; notices are kept. */
+  async packDraw(target: string, from: string): Promise<{ draw: ResolvedSource["draw"] | null; notices: string[] }> {
+    const draw = await this.packSource(target, from);
+    return { draw, notices: [...this.notices] };
+  }
+
   private async packSource(target: string, from: string): Promise<ResolvedSource["draw"] | null> {
     const file = this.resolveLink(target, from);
     const content = file ? await this.read(file) : null;

@@ -53,8 +53,8 @@ export const DEFAULT_GROUP_STATE: GroupSentenceState = {
   series: false,
 };
 
-const GENRE_TEXT: Record<GroupGenre, string> = { fantasy: "fantasy", modern: "modern", scifi: "science fiction" };
-const FANTASTIC_TEXT: Record<"fantasy" | "modern", [string, string]> = {
+export const GENRE_TEXT: Record<GroupGenre, string> = { fantasy: "fantasy", modern: "modern", scifi: "science fiction" };
+export const FANTASTIC_TEXT: Record<"fantasy" | "modern", [string, string]> = {
   fantasy: ["of historic or low fantasy", "of high or epic fantasy"],
   modern: ["as it really is", "of contemporary fantasy"],
 };

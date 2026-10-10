@@ -282,3 +282,99 @@ test("safeguards: a pack name can't complete a real byname", () => {
   const alone = Array.from({ length: 20 }, (_, i) => gen({ module: "epithets", tone: "light", kind: "body", source: "none" }, 100, i + 1).names).flat();
   assert.ok(alone.some((n) => n.text === "the Unready"), "the Unready is allowed on its own");
 });
+
+// §15.7 Sentence
+
+import { bynameSentence, bynameSentenceText, chooseByname, DEFAULT_BYNAME_STATE, sectionRequest } from "../src/bynames/sentence";
+import { BYNAME_PRESET_MODULE, modulePresetContent, parseModulePreset, type BynamePreset } from "../src/presets";
+import { historySection, SECTION_GROUPS, SWITCHER_ORDER } from "../src/sections";
+import { bynameHistoryLabel } from "../src/bynames/engine";
+
+const fieldsOf = (module: BynameModule, state = DEFAULT_BYNAME_STATE, packs: { name: string; headings: string[] }[] = []) =>
+  bynameSentence(state, module, packs).flatMap((s) => (typeof s === "string" ? [] : [s.field]));
+
+test("bynames sentence: default epithets text", () => {
+  assert.equal(
+    bynameSentenceText(bynameSentence(DEFAULT_BYNAME_STATE, "epithets")),
+    "General-themed epithets of any kind for a fantasy world of historic or low fantasy, of any tone, for anyone, after a placeholder name.",
+  );
+  assert.equal(
+    bynameSentenceText(bynameSentence(DEFAULT_BYNAME_STATE, "familyNames")),
+    "General-themed family names of any kind for a fantasy world of historic or low fantasy, of any tone, for anyone, with a placeholder name.",
+  );
+  assert.ok(fieldsOf("titles").includes("length") && !fieldsOf("epithets").includes("length"));
+});
+
+test("bynames sentence: the language link shows for titles and family names with a culture, and Aztec epithets", () => {
+  const norse = { ...DEFAULT_BYNAME_STATE, culture: "norse" };
+  assert.ok(!fieldsOf("titles").includes("language"));
+  assert.ok(!fieldsOf("epithets", norse).includes("language"));
+  assert.ok(fieldsOf("titles", norse).includes("language") && fieldsOf("familyNames", norse).includes("language"));
+  assert.ok(fieldsOf("epithets", { ...DEFAULT_BYNAME_STATE, culture: "aztec" }).includes("language"));
+  // Culture set to General: language resets to English.
+  const mixed = { ...norse, language: "mixed" as const };
+  assert.equal(chooseByname(mixed, "culture", "general", "titles").language, "english");
+  // A kind that isn't available resets to Any.
+  const day = { ...DEFAULT_BYNAME_STATE, culture: "aztec", kind: "dayName" };
+  assert.equal(chooseByname(day, "culture", "norse", "epithets").kind, undefined);
+});
+
+test("bynames sentence: a pack with Male and Female headings defaults to the gender's section", () => {
+  const packs = [{ name: "Steppe names", headings: ["Male", "Female", "Elders"] }];
+  const state = { ...DEFAULT_BYNAME_STATE, source: "pack" as const, pack: "Steppe names" };
+  const segment = bynameSentence(state, "titles", packs).find((s) => typeof s !== "string" && s.field === "section");
+  assert.ok(segment && typeof segment !== "string" && segment.text === "its section for the gender");
+  assert.deepEqual(sectionRequest(state, packs[0].headings, "self", "male"), { section: "Male" });
+  assert.deepEqual(sectionRequest(state, packs[0].headings, "self", "female"), { section: "Female" });
+  assert.deepEqual(sectionRequest(state, packs[0].headings, "father", "female"), { section: "Male" });
+  assert.deepEqual(sectionRequest({ section: "Elders" }, packs[0].headings, "self", "male"), { section: "Elders" });
+  assert.deepEqual(sectionRequest({ section: "whole" }, packs[0].headings, "self", "male"), {});
+  assert.deepEqual(sectionRequest({}, ["Nobles", "Commons"], "self", "female"), { section: "Nobles" });
+  assert.ok(!fieldsOf("titles", { ...state, source: "placeholder" }, packs).includes("pack"));
+});
+
+test("bynames: the switcher group, history labels and their sections", () => {
+  assert.deepEqual(SECTION_GROUPS.bynames, ["epithets", "titles", "familyNames"]);
+  assert.equal(SWITCHER_ORDER[SWITCHER_ORDER.indexOf("groupNames") + 1], "bynames");
+  const label = bynameHistoryLabel("titles", "fantasy", true, "norse", "grim", "native");
+  assert.equal(label, "titles and honorifics · high or epic fantasy · Norse · grim · native");
+  assert.equal(historySection(label), "titles");
+  assert.equal(bynameHistoryLabel("epithets", "fantasy", false, "general"), "epithets and bynames · historic or low fantasy · General");
+  assert.equal(historySection("family names · real-world modern · Slavic"), "familyNames");
+});
+
+// §15.8 Presets
+
+test("bynames presets: round trip, unknown values and a missing pack", () => {
+  const preset: BynamePreset = {
+    packName: "Steppe khans",
+    setting: "",
+    description: "Turkic & Mongol steppe-themed titles.",
+    bynameModule: "titles",
+    culture: "steppe",
+    kind: "any",
+    genre: "fantasy",
+    fantastic: false,
+    tone: "grand",
+    language: "mixed",
+    gender: "men",
+    length: "full",
+    source: "pack",
+    pack: "Steppe names",
+    section: "Male",
+  };
+  const content = modulePresetContent(preset);
+  assert.match(content, new RegExp(`^module: ${BYNAME_PRESET_MODULE}$`, "m"));
+  const parsed = parseModulePreset(content, "x");
+  assert.deepEqual(parsed.problems, []);
+  assert.deepEqual(parsed.byname, preset);
+  const odd = parseModulePreset("---\ntype: module-preset\nmodule: bynames\nbynameModule: titles\nculture: atlantean\nlength: endless\n---\n", "P");
+  assert.deepEqual(odd.problems, ["Unknown culture “atlantean”.", "Unknown length “endless”."]);
+  assert.equal(odd.byname!.culture, "general");
+  assert.equal(odd.byname!.length, "single");
+  assert.equal(odd.byname!.section, "gender");
+  // A missing pack runs with placeholders (the modal passes source "placeholder" when the pack can't be drawn).
+  const run = gen({ module: "titles", culture: "steppe", source: "pack", draw: () => null, packName: "Steppe names" }, 5);
+  assert.ok(run.names.every((n) => n.text.includes("[name]")));
+  assert.ok(run.notices.includes("Pack “Steppe names” gave no names; placeholders used."));
+});
