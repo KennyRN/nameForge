@@ -274,13 +274,20 @@ export interface GroupSafeguards {
   flagListBlocks: boolean;
 }
 
-const norm = (s: string) => s.toLowerCase().replace(/^the /, "").replace(/\s+/g, " ").trim();
+/** §12: a name as the block lists compare it: lower case, without a leading "the". */
+export const normForBlock = (s: string) => s.toLowerCase().replace(/^the /, "").replace(/\s+/g, " ").trim();
+const norm = normForBlock;
 const wordRe = (w: string) => new RegExp(`(^|[^A-Za-z])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^A-Za-z])`, "i");
 const BANNED = [...TRIBAL_DATA.safeguards.banned, ...GROUP_DATA.safeguards.banned].map(wordRe);
 const PERSON_NOUNS = new Set(GROUP_DATA.safeguards.personNouns);
 const COLOUR_WORDS = new Set(["colour", "colourRich", "habit"].flatMap((l) => GROUP_DATA.lists[l].map((e) => e.w)));
 const NUMBER_WORDS = new Set([...GROUP_DATA.lists.number, ...GROUP_DATA.lists.ordinalWord].map((e) => e.w));
 const BLOCKED_INITIALS = new Set(GROUP_DATA.safeguards.blockedInitials);
+
+/** §12.3: whether a text holds a banned word (the tribal and group banned lists). */
+export function hasBannedWord(text: string): boolean {
+  return BANNED.some((re) => re.test(text));
+}
 
 /** §12.4: a colour directly before a person noun. */
 export function breaksGroupColourRule(text: string): boolean {
@@ -356,7 +363,7 @@ interface Ctx {
   drawn: Set<GroupTone>;
 }
 
-const pickWeighted = <T>(items: [T, number][], rng: () => number): T | undefined => {
+export const pickWeighted = <T>(items: [T, number][], rng: () => number): T | undefined => {
   const total = items.reduce((n, [, w]) => n + w, 0);
   if (total <= 0) return undefined;
   let r = rng() * total;
@@ -645,6 +652,48 @@ function inventedTown(ctx: Ctx, type: GroupType): string {
     if (names.length > 0) return pickOne(names, rng);
   }
   return `${pick(ctx, "townPrefix", type)}${pick(ctx, "townSuffix", type)}`;
+}
+
+// ── Shared with other modules (Bynames brief: reuse, don't copy) ────────────
+
+/** A context for drawing outside a group batch: no flavour, invented people, tone Any. */
+const sharedCtxs = new Map<GroupSetting, { ctx: Ctx; type: GroupType }>();
+function sharedCtx(setting: GroupSetting, rng: () => number): { ctx: Ctx; type: GroupType } {
+  let found = sharedCtxs.get(setting);
+  if (!found) {
+    const family = GROUP_FAMILIES[0];
+    const ctx: Ctx = { rng, setting, family, vocab: undefined, people: undefined, mode: "invented", form: "any", block: new Set(), pools: new Map(), tone: "any", drawn: new Set() };
+    found = { ctx, type: family.types[0] };
+    sharedCtxs.set(setting, found);
+  }
+  found.ctx.rng = rng;
+  return found;
+}
+
+/** §8.4: an invented place: a pool for a world culture or "britain", else a land compound; SF patterns in SF. */
+export function groupTown(setting: GroupSetting, source: string | undefined, rng: () => number): string {
+  const { ctx, type } = sharedCtx(setting, rng);
+  if (setting !== "SF" && source) {
+    const names = townPool(source);
+    if (names.length > 0) return pickOne(names, rng);
+  }
+  if (setting !== "SF") return `${pickWeighted(pool(ctx, "townPrefix", type), rng)}${pickWeighted(pool(ctx, "townSuffix", type), rng)}`;
+  return inventedTown(ctx, type);
+}
+
+/** A group list's words here, weighted (setting tags and `sx` applied). */
+export function groupListWords(name: string, setting: GroupSetting): [string, number][] {
+  const { ctx, type } = sharedCtx(setting, Math.random);
+  return pool(ctx, name, type);
+}
+
+/** §5.4: a land word, sometimes with a prefix ("Western Hills", "Red Marches"), unless it holds one already. */
+export function prefixedLand(word: string, setting: GroupSetting, rng: () => number): string {
+  const { ctx, type } = sharedCtx(setting, rng);
+  const holds = word.includes(" ") || GROUP_DATA.lists.land.some((e) => e.w === word && e.noPrefix);
+  if (holds || rng() >= 0.3) return word;
+  const prefix = rng() < 0.5 ? pickWeighted(pool(ctx, "landPrefix", type), rng) : pickWeighted(pool(ctx, "colour", type), rng);
+  return `${prefix} ${word}`;
 }
 
 /** §11.6: initials of a formal name for the same type. */

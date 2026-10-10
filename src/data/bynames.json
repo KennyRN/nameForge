@@ -1,0 +1,6953 @@
+{
+ "version": 1,
+ "cultures": [
+  {
+   "key": "general",
+   "label": "General",
+   "guide": "No cultural flavour; fantasy and sci-fi words"
+  },
+  {
+   "key": "anglo-saxon",
+   "label": "Anglo-Saxon"
+  },
+  {
+   "key": "norse",
+   "label": "Norse"
+  },
+  {
+   "key": "celtic",
+   "label": "Celtic"
+  },
+  {
+   "key": "norman-british",
+   "label": "Norman & British",
+   "guide": "Norman lords, medieval English surnames, knights and offices"
+  },
+  {
+   "key": "roman",
+   "label": "Roman / Italian"
+  },
+  {
+   "key": "greek-byzantine",
+   "label": "Greek & Byzantine",
+   "guide": "Ancient Greek filiation, Byzantine courts and family names"
+  },
+  {
+   "key": "slavic",
+   "label": "Slavic"
+  },
+  {
+   "key": "steppe",
+   "label": "Turkic & Mongol steppe",
+   "guide": "Khans, begs and khatuns; Turkic patronymics; wolf and horse bynames"
+  },
+  {
+   "key": "arabic-persian",
+   "label": "Arabic & Persian"
+  },
+  {
+   "key": "indian",
+   "label": "Indian"
+  },
+  {
+   "key": "chinese",
+   "label": "Chinese"
+  },
+  {
+   "key": "japanese",
+   "label": "Japanese"
+  },
+  {
+   "key": "korean",
+   "label": "Korean"
+  },
+  {
+   "key": "egyptian",
+   "label": "Egyptian"
+  },
+  {
+   "key": "ethiopian",
+   "label": "Ethiopian"
+  },
+  {
+   "key": "bantu",
+   "label": "Bantu"
+  },
+  {
+   "key": "west-african",
+   "label": "West African"
+  },
+  {
+   "key": "aztec",
+   "label": "Aztec"
+  },
+  {
+   "key": "maya",
+   "label": "Maya"
+  }
+ ],
+ "cultureAnimals": {
+  "norman-british": [
+   "Lion",
+   "Hart",
+   "Boar",
+   "Bear",
+   "Hound",
+   "Falcon",
+   "Swan",
+   "Wolf"
+  ],
+  "greek-byzantine": [
+   "Lion",
+   "Eagle",
+   "Bull",
+   "Dolphin",
+   "Owl",
+   "Serpent",
+   "Boar"
+  ],
+  "steppe": [
+   "Wolf",
+   "Grey Wolf",
+   "Horse",
+   "Falcon",
+   "Eagle",
+   "Bear",
+   "Snow Leopard",
+   "Camel"
+  ]
+ },
+ "familyFirst": [
+  "chinese",
+  "japanese",
+  "korean"
+ ],
+ "clanBornSuffixes": [
+  "born",
+  "blood",
+  "heart",
+  "fist",
+  "brand",
+  "shield"
+ ],
+ "clanStyleSuffixes": [
+  "heart",
+  "blood",
+  "shield",
+  "fist",
+  "bane"
+ ],
+ "ranks": {
+  "general": [
+   {
+    "x": 2,
+    "m": "King",
+    "f": "Queen"
+   },
+   {
+    "x": 3,
+    "m": "Lord",
+    "f": "Lady"
+   },
+   {
+    "m": "Duke",
+    "f": "Duchess"
+   },
+   {
+    "m": "Count",
+    "f": "Countess"
+   },
+   {
+    "m": "Baron",
+    "f": "Baroness"
+   },
+   {
+    "m": "Prince",
+    "f": "Princess"
+   },
+   {
+    "x": 0.5,
+    "w": "Marshal"
+   },
+   {
+    "w": "Warden"
+   },
+   {
+    "w": "Steward"
+   },
+   {
+    "x": 0.5,
+    "w": "Chancellor"
+   },
+   {
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ],
+    "w": "Governor"
+   },
+   {
+    "s": [
+     "MR",
+     "MF"
+    ],
+    "w": "President"
+   },
+   {
+    "s": [
+     "MR",
+     "MF"
+    ],
+    "w": "Minister"
+   },
+   {
+    "s": [
+     "MR",
+     "MF"
+    ],
+    "w": "Director"
+   },
+   {
+    "s": [
+     "MR",
+     "MF"
+    ],
+    "w": "Commissioner"
+   },
+   {
+    "s": [
+     "MR",
+     "MF"
+    ],
+    "m": "Chairman",
+    "f": "Chairwoman"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Administrator"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Prefect"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "High Commissioner"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Overseer"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Director-General"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Governor-General"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Archmage"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "g": "f",
+    "w": "Witch-Queen"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "g": "m",
+    "w": "Warlock-King"
+   }
+  ],
+  "anglo-saxon": [
+   {
+    "m": "King",
+    "f": "Queen",
+    "nm": "Cyning",
+    "nf": "Cwen"
+   },
+   {
+    "m": "Lord",
+    "f": "Lady",
+    "nm": "Hlaford",
+    "nf": "Hlæfdige"
+   },
+   {
+    "m": "Ealdorman",
+    "f": null,
+    "nm": "Ealdorman",
+    "nf": null
+   },
+   {
+    "m": "Thane",
+    "f": null,
+    "nm": "Thegn",
+    "nf": null
+   },
+   {
+    "m": "Reeve",
+    "f": null,
+    "nm": "Gerefa",
+    "nf": null
+   },
+   {
+    "m": "Prince",
+    "f": null,
+    "nm": "Ætheling",
+    "nf": null
+   }
+  ],
+  "norse": [
+   {
+    "m": "King",
+    "f": "Queen",
+    "nm": "Konungr",
+    "nf": "Drottning"
+   },
+   {
+    "m": "Jarl",
+    "f": null,
+    "nm": "Jarl",
+    "nf": null
+   },
+   {
+    "m": "Chieftain",
+    "f": null,
+    "nm": "Goði",
+    "nf": null
+   },
+   {
+    "m": "Hersir",
+    "f": null,
+    "nm": "Hersir",
+    "nf": null
+   },
+   {
+    "m": "Lawspeaker",
+    "f": null,
+    "nm": "Lögsögumaðr",
+    "nf": null
+   },
+   {
+    "m": "Sea-King",
+    "f": null,
+    "nm": "Sækonungr",
+    "nf": null
+   }
+  ],
+  "celtic": [
+   {
+    "m": "King",
+    "f": "Queen",
+    "nm": "Rí",
+    "nf": "Rígan"
+   },
+   {
+    "m": "High King",
+    "f": "High Queen",
+    "nm": "Ard Rí",
+    "nf": "Ard Rígan"
+   },
+   {
+    "m": "Chief",
+    "f": null,
+    "nm": "Toísech",
+    "nf": null
+   },
+   {
+    "m": "Lord",
+    "f": "Lady",
+    "nm": "Tigerna",
+    "nf": "Tigernae"
+   },
+   {
+    "m": "Bard",
+    "f": null,
+    "nm": "Bard",
+    "nf": null
+   }
+  ],
+  "norman-british": [
+   {
+    "m": "King",
+    "f": "Queen",
+    "nm": "Roi",
+    "nf": "Reine"
+   },
+   {
+    "m": "Duke",
+    "f": "Duchess",
+    "nm": "Duc",
+    "nf": "Duchesse"
+   },
+   {
+    "m": "Earl",
+    "f": "Countess",
+    "nm": "Comte",
+    "nf": "Comtesse"
+   },
+   {
+    "m": "Baron",
+    "f": "Baroness"
+   },
+   {
+    "m": "Lord",
+    "f": "Lady",
+    "nm": "Seigneur",
+    "nf": "Dame"
+   },
+   {
+    "x": 2,
+    "m": "Sir",
+    "f": "Dame"
+   },
+   {
+    "m": "Sheriff",
+    "f": null
+   },
+   {
+    "m": "Constable",
+    "f": null,
+    "nm": "Connétable",
+    "nf": null
+   },
+   {
+    "m": "Seneschal",
+    "f": null,
+    "nm": "Sénéchal",
+    "nf": null
+   },
+   {
+    "m": "Marshal",
+    "f": null,
+    "nm": "Maréchal",
+    "nf": null
+   },
+   {
+    "s": [
+     "MR",
+     "MF"
+    ],
+    "m": "Lord Lieutenant",
+    "f": "Lady Lieutenant"
+   },
+   {
+    "s": [
+     "MR",
+     "MF"
+    ],
+    "m": "Chief Constable",
+    "f": "Chief Constable"
+   },
+   {
+    "s": [
+     "MR",
+     "MF"
+    ],
+    "m": "Alderman",
+    "f": "Alderwoman"
+   },
+   {
+    "s": [
+     "MR",
+     "MF"
+    ],
+    "m": "Mayor",
+    "f": "Mayor"
+   }
+  ],
+  "roman": [
+   {
+    "m": "Emperor",
+    "f": "Empress",
+    "nm": "Imperator",
+    "nf": "Augusta"
+   },
+   {
+    "m": "Caesar",
+    "f": null,
+    "nm": "Caesar",
+    "nf": null
+   },
+   {
+    "m": "Consul",
+    "f": null,
+    "nm": "Consul",
+    "nf": null
+   },
+   {
+    "m": "Senator",
+    "f": null,
+    "nm": "Senator",
+    "nf": null
+   },
+   {
+    "m": "Legate",
+    "f": null,
+    "nm": "Legatus",
+    "nf": null
+   },
+   {
+    "m": "Tribune",
+    "f": null,
+    "nm": "Tribunus",
+    "nf": null
+   },
+   {
+    "m": "Prefect",
+    "f": null,
+    "nm": "Praefectus",
+    "nf": null
+   },
+   {
+    "m": "Proconsul",
+    "f": null,
+    "nm": "Proconsul",
+    "nf": null
+   },
+   {
+    "m": "Lady",
+    "f": "Lady",
+    "nm": null,
+    "nf": "Domina"
+   },
+   {
+    "s": [
+     "MR",
+     "MF"
+    ],
+    "x": 0.3,
+    "m": "Doge",
+    "f": null,
+    "nm": "Doge",
+    "nf": null
+   }
+  ],
+  "greek-byzantine": [
+   {
+    "m": "Emperor",
+    "f": "Empress",
+    "nm": "Basileus",
+    "nf": "Basilissa"
+   },
+   {
+    "m": "Autocrat",
+    "f": null,
+    "nm": "Autokrator",
+    "nf": null
+   },
+   {
+    "m": "Despot",
+    "f": "Despoina",
+    "nm": "Despotes",
+    "nf": "Despoina"
+   },
+   {
+    "m": "General",
+    "f": null,
+    "nm": "Strategos",
+    "nf": null
+   },
+   {
+    "m": "Archon",
+    "f": "Archontissa",
+    "nm": "Archon",
+    "nf": "Archontissa"
+   },
+   {
+    "m": "Logothete",
+    "f": null,
+    "nm": "Logothetes",
+    "nf": null
+   },
+   {
+    "m": "Exarch",
+    "f": null,
+    "nm": "Exarchos",
+    "nf": null
+   },
+   {
+    "m": "Patrician",
+    "f": "Patrician",
+    "nm": "Patrikios",
+    "nf": "Zoste Patrikia"
+   },
+   {
+    "m": "Sebastos",
+    "f": "Sebaste",
+    "nm": "Sebastos",
+    "nf": "Sebaste"
+   }
+  ],
+  "slavic": [
+   {
+    "m": "Tsar",
+    "f": "Tsaritsa",
+    "nm": "Tsar",
+    "nf": "Tsaritsa"
+   },
+   {
+    "m": "Grand Prince",
+    "f": "Grand Princess",
+    "nm": "Veliky Knyaz",
+    "nf": "Velikaya Knyaginya"
+   },
+   {
+    "m": "Prince",
+    "f": "Princess",
+    "nm": "Knyaz",
+    "nf": "Knyaginya"
+   },
+   {
+    "m": "Boyar",
+    "f": "Boyarynya",
+    "nm": "Boyar",
+    "nf": "Boyarynya"
+   },
+   {
+    "m": "Voivode",
+    "f": null,
+    "nm": "Voivode",
+    "nf": null
+   },
+   {
+    "m": "Ban",
+    "f": null,
+    "nm": "Ban",
+    "nf": null
+   },
+   {
+    "m": "Hetman",
+    "f": null,
+    "nm": "Hetman",
+    "nf": null
+   }
+  ],
+  "steppe": [
+   {
+    "pos": "after",
+    "m": "Khan",
+    "f": "Khatun",
+    "nm": "Khan",
+    "nf": "Khatun"
+   },
+   {
+    "m": "Great Khan",
+    "f": null,
+    "nm": "Khagan",
+    "nf": null
+   },
+   {
+    "pos": "after",
+    "m": "Beg",
+    "f": null,
+    "nm": "Beg",
+    "nf": null
+   },
+   {
+    "m": "Commander",
+    "f": null,
+    "nm": "Noyan",
+    "nf": null
+   },
+   {
+    "m": "Tarkhan",
+    "f": null,
+    "nm": "Tarkhan",
+    "nf": null
+   },
+   {
+    "m": "Yabgu",
+    "f": null,
+    "nm": "Yabgu",
+    "nf": null
+   }
+  ],
+  "arabic-persian": [
+   {
+    "m": "Sultan",
+    "f": "Sultana",
+    "nm": "Sultan",
+    "nf": "Sultana"
+   },
+   {
+    "m": "King",
+    "f": "Queen",
+    "nm": "Malik",
+    "nf": "Malika"
+   },
+   {
+    "m": "Emir",
+    "f": "Emira",
+    "nm": "Amir",
+    "nf": "Amira"
+   },
+   {
+    "m": "Shah",
+    "f": "Shahbanu",
+    "nm": "Shah",
+    "nf": "Shahbanu"
+   },
+   {
+    "m": "Vizier",
+    "f": null,
+    "nm": "Wazir",
+    "nf": null
+   },
+   {
+    "m": "Satrap",
+    "f": null,
+    "nm": "Satrap",
+    "nf": null
+   },
+   {
+    "m": "Sheikh",
+    "f": "Sheikha",
+    "nm": "Shaykh",
+    "nf": "Shaykha"
+   },
+   {
+    "m": "Nawab",
+    "f": "Begum",
+    "nm": "Nawab",
+    "nf": "Begum"
+   }
+  ],
+  "indian": [
+   {
+    "x": 2,
+    "m": "King",
+    "f": "Queen",
+    "nm": "Raja",
+    "nf": "Rani"
+   },
+   {
+    "m": "Great King",
+    "f": "Great Queen",
+    "nm": "Maharaja",
+    "nf": "Maharani"
+   },
+   {
+    "m": "Emperor",
+    "f": "Empress",
+    "nm": "Samrat",
+    "nf": "Samragni"
+   },
+   {
+    "m": "Crown Prince",
+    "f": "Crown Princess",
+    "nm": "Yuvaraja",
+    "nf": "Yuvarani"
+   },
+   {
+    "m": "General",
+    "f": null,
+    "nm": "Senapati",
+    "nf": null
+   },
+   {
+    "m": "Minister",
+    "f": null,
+    "nm": "Amatya",
+    "nf": null
+   },
+   {
+    "m": "Nawab",
+    "f": "Begum",
+    "nm": "Nawab",
+    "nf": "Begum"
+   }
+  ],
+  "chinese": [
+   {
+    "m": "Emperor",
+    "f": "Empress",
+    "nm": "Huangdi",
+    "nf": "Huanghou"
+   },
+   {
+    "m": "King",
+    "f": "Queen",
+    "nm": "Wang",
+    "nf": "Wanghou"
+   },
+   {
+    "m": "Duke",
+    "f": null,
+    "nm": "Gong",
+    "nf": null
+   },
+   {
+    "m": "Marquis",
+    "f": null,
+    "nm": "Hou",
+    "nf": null
+   },
+   {
+    "m": "General",
+    "f": null,
+    "nm": "Jiangjun",
+    "nf": null
+   },
+   {
+    "m": "Chancellor",
+    "f": null,
+    "nm": "Chengxiang",
+    "nf": null
+   },
+   {
+    "m": "Princess",
+    "f": "Princess",
+    "nm": null,
+    "nf": "Gongzhu"
+   }
+  ],
+  "japanese": [
+   {
+    "x": 0.3,
+    "m": "Emperor",
+    "f": "Empress",
+    "nm": "Tennō",
+    "nf": "Kōgō"
+   },
+   {
+    "m": "Shogun",
+    "f": null,
+    "nm": "Shōgun",
+    "nf": null
+   },
+   {
+    "m": "Regent",
+    "f": null,
+    "nm": "Kampaku",
+    "nf": null
+   },
+   {
+    "m": "Lord",
+    "f": null,
+    "nm": "Daimyō",
+    "nf": null
+   },
+   {
+    "m": "Princess",
+    "f": "Princess",
+    "nm": null,
+    "nf": "Hime"
+   },
+   {
+    "m": "Governor",
+    "f": null,
+    "nm": "Kami",
+    "nf": null
+   }
+  ],
+  "korean": [
+   {
+    "m": "King",
+    "f": "Queen",
+    "nm": "Wang",
+    "nf": "Wangbi"
+   },
+   {
+    "m": "Great King",
+    "f": null,
+    "nm": "Daewang",
+    "nf": null
+   },
+   {
+    "m": "Emperor",
+    "f": null,
+    "nm": "Hwangje",
+    "nf": null
+   },
+   {
+    "m": "Crown Prince",
+    "f": null,
+    "nm": "Seja",
+    "nf": null
+   },
+   {
+    "m": "Princess",
+    "f": "Princess",
+    "nm": null,
+    "nf": "Gongju"
+   },
+   {
+    "m": "General",
+    "f": null,
+    "nm": "Janggun",
+    "nf": null
+   },
+   {
+    "m": "Chief Minister",
+    "f": null,
+    "nm": "Yeonguijeong",
+    "nf": null
+   }
+  ],
+  "egyptian": [
+   {
+    "m": "Pharaoh",
+    "f": "Pharaoh",
+    "nm": "Per-aa",
+    "nf": "Per-aa"
+   },
+   {
+    "m": null,
+    "f": "King's Great Wife",
+    "nm": null,
+    "nf": "Hemet Nesu Weret"
+   },
+   {
+    "m": "Vizier",
+    "f": null,
+    "nm": "Tjaty",
+    "nf": null
+   },
+   {
+    "m": "Nomarch",
+    "f": null,
+    "nm": "Nomarch",
+    "nf": null
+   },
+   {
+    "m": "Overseer",
+    "f": null,
+    "nm": "Imy-ra",
+    "nf": null
+   },
+   {
+    "m": "Scribe",
+    "f": null,
+    "nm": "Sesh",
+    "nf": null
+   }
+  ],
+  "ethiopian": [
+   {
+    "m": "Emperor",
+    "f": "Empress",
+    "nm": "Negusa Nagast",
+    "nf": "Nigiste Negestat"
+   },
+   {
+    "m": "King",
+    "f": "Queen",
+    "nm": "Negus",
+    "nf": "Nigist"
+   },
+   {
+    "m": "Prince",
+    "f": "Princess",
+    "nm": "Le'ul",
+    "nf": "Le'ilt"
+   },
+   {
+    "m": "Duke",
+    "f": null,
+    "nm": "Ras",
+    "nf": null
+   },
+   {
+    "m": "Commander",
+    "f": null,
+    "nm": "Dejazmach",
+    "nf": null
+   },
+   {
+    "m": "Vanguard Commander",
+    "f": null,
+    "nm": "Fitawrari",
+    "nf": null
+   },
+   {
+    "m": "Queen",
+    "f": "Queen",
+    "nm": null,
+    "nf": "Itege"
+   }
+  ],
+  "bantu": [
+   {
+    "m": "King",
+    "f": "Queen",
+    "nm": "Mwami",
+    "nf": "Mwamikazi"
+   },
+   {
+    "m": "Chief",
+    "f": null,
+    "nm": "Nkosi",
+    "nf": null
+   },
+   {
+    "m": "Lord",
+    "f": null,
+    "nm": "Mfumu",
+    "nf": null
+   },
+   {
+    "m": "Ruler",
+    "f": null,
+    "nm": "Mani",
+    "nf": null
+   },
+   {
+    "m": "Queen Mother",
+    "f": "Queen Mother",
+    "nm": null,
+    "nf": "Ndlovukazi"
+   },
+   {
+    "m": "Elder",
+    "f": "Elder",
+    "nm": "Mzee",
+    "nf": "Mzee"
+   }
+  ],
+  "west-african": [
+   {
+    "m": "Emperor",
+    "f": null,
+    "nm": "Mansa",
+    "nf": null
+   },
+   {
+    "x": 0.5,
+    "m": "Emperor",
+    "f": null,
+    "nm": "Askia",
+    "nf": null
+   },
+   {
+    "m": "King",
+    "f": "Queen",
+    "nm": "Oba",
+    "nf": null
+   },
+   {
+    "m": "Owner of the Palace",
+    "f": null,
+    "nm": "Alaafin",
+    "nf": null
+   },
+   {
+    "m": "Chief",
+    "f": null,
+    "nm": "Ohene",
+    "nf": null
+   },
+   {
+    "m": "Queen Mother",
+    "f": "Queen Mother",
+    "nm": null,
+    "nf": "Ohemaa"
+   },
+   {
+    "m": "Queen Mother",
+    "f": "Queen Mother",
+    "nm": null,
+    "nf": "Iyoba"
+   },
+   {
+    "m": "Emir",
+    "f": null,
+    "nm": "Amir",
+    "nf": null
+   }
+  ],
+  "aztec": [
+   {
+    "m": "Ruler",
+    "f": "Ruler",
+    "nm": "Tlatoani",
+    "nf": "Cihuatlatoani"
+   },
+   {
+    "m": "Great Speaker",
+    "f": null,
+    "nm": "Huey Tlatoani",
+    "nf": null
+   },
+   {
+    "m": "Lord",
+    "f": "Lady",
+    "nm": "Tecuhtli",
+    "nf": "Cihuapilli"
+   },
+   {
+    "m": "Snake Woman",
+    "f": null,
+    "nm": "Cihuacoatl",
+    "nf": null
+   },
+   {
+    "m": "Noble",
+    "f": "Noble",
+    "nm": "Pilli",
+    "nf": "Cihuapilli"
+   },
+   {
+    "m": "Eagle Lord",
+    "f": null,
+    "nm": "Cuauhpilli",
+    "nf": null
+   }
+  ],
+  "maya": [
+   {
+    "m": "Holy Lord",
+    "f": "Holy Lady",
+    "nm": "K'uhul Ajaw",
+    "nf": "K'uhul Ixik"
+   },
+   {
+    "m": "Lord",
+    "f": "Lady",
+    "nm": "Ajaw",
+    "nf": "Ix Ajaw"
+   },
+   {
+    "m": "Overlord",
+    "f": "Overlady",
+    "nm": "Kalomte'",
+    "nf": "Ix Kalomte'"
+   },
+   {
+    "m": "Governor",
+    "f": null,
+    "nm": "Sajal",
+    "nf": null
+   },
+   {
+    "m": "Keeper of the Holy Books",
+    "f": null,
+    "nm": "Aj K'uhun",
+    "nf": null
+   }
+  ]
+ },
+ "styles": {
+  "general": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "King of Kings"
+   },
+   {
+    "x": 2,
+    "w": "Lord of the {domainLand}"
+   },
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Protector of the Realm"
+   },
+   {
+    "w": "Shield of the People"
+   },
+   {
+    "t": [
+     "plain"
+    ],
+    "w": "Keeper of the Peace"
+   },
+   {
+    "s": [
+     "MR",
+     "MF"
+    ],
+    "m": "Father of the Nation",
+    "f": "Mother of the Nation"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Lord of Storms"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Keeper of the Sacred Flame"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "t": [
+     "strange"
+    ],
+    "w": "Master of the Ten Winds"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Custodian of the Core"
+   }
+  ],
+  "anglo-saxon": [
+   {
+    "w": "Ring-Giver",
+    "n": "Beahgifa"
+   },
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Gold-Friend of Men"
+   },
+   {
+    "w": "Ruler of Britain",
+    "n": "Bretwalda"
+   },
+   {
+    "t": [
+     "plain"
+    ],
+    "w": "Shepherd of the People"
+   },
+   {
+    "w": "Protector of Warriors"
+   }
+  ],
+  "norse": [
+   {
+    "w": "Ring-Giver"
+   },
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Gold-Breaker of the Sea-Wolves"
+   },
+   {
+    "t": [
+     "grim"
+    ],
+    "w": "Feeder of Ravens"
+   },
+   {
+    "w": "Sea-King",
+    "n": "Sækonungr"
+   },
+   {
+    "w": "Gift-Giver"
+   }
+  ],
+  "celtic": [
+   {
+    "w": "High King",
+    "n": "Ard Rí"
+   },
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Hound of the {epPlaceLand}"
+   },
+   {
+    "w": "King of the {number} Kingdoms"
+   },
+   {
+    "w": "Lord of the Sea-Roads"
+   }
+  ],
+  "norman-british": [
+   {
+    "w": "Lord of {town}"
+   },
+   {
+    "w": "Lord of the {domainLand}"
+   },
+   {
+    "w": "Protector of the Realm"
+   },
+   {
+    "x": 0.3,
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ],
+    "w": "Lord Protector"
+   },
+   {
+    "w": "Defender of {town}"
+   },
+   {
+    "w": "Duke of {town}",
+    "n": "Duc de {town}"
+   }
+  ],
+  "roman": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Father of the Fatherland",
+    "n": "Pater Patriae"
+   },
+   {
+    "w": "First Citizen",
+    "n": "Princeps"
+   },
+   {
+    "w": "Greatest Pontiff",
+    "n": "Pontifex Maximus"
+   },
+   {
+    "w": "Unconquered",
+    "n": "Invictus"
+   },
+   {
+    "w": "Dutiful and Fortunate",
+    "n": "Pius Felix"
+   },
+   {
+    "w": "Conqueror of the {domainLand}"
+   }
+  ],
+  "greek-byzantine": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Purple-Born",
+    "n": "Porphyrogennetos"
+   },
+   {
+    "w": "Autocrat",
+    "n": "Autokrator"
+   },
+   {
+    "w": "Ever-August",
+    "n": "Aei Augoustos"
+   },
+   {
+    "w": "Despot of the {domainLand}",
+    "n": "Despotes of the {domainLand}"
+   }
+  ],
+  "slavic": [
+   {
+    "w": "Autocrat of All the {domainLand}",
+    "n": "Samoderzhets of All the {domainLand}"
+   },
+   {
+    "w": "Grand Prince of {town}",
+    "n": "Veliky Knyaz of {town}"
+   },
+   {
+    "t": [
+     "plain"
+    ],
+    "w": "Father of the Land"
+   }
+  ],
+  "steppe": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Great Khan",
+    "n": "Khagan"
+   },
+   {
+    "w": "Lord of the Felt Tents"
+   },
+   {
+    "w": "Ruler of the Four Corners"
+   },
+   {
+    "w": "Khan of the {colourNick} Steppe"
+   },
+   {
+    "t": [
+     "grim"
+    ],
+    "w": "Wolf of the Steppe"
+   }
+  ],
+  "arabic-persian": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "King of Kings",
+    "n": "Shahanshah"
+   },
+   {
+    "w": "Pillar of the State"
+   },
+   {
+    "w": "Shield of the State"
+   },
+   {
+    "w": "Lamp of the State"
+   },
+   {
+    "w": "Glory of the State"
+   },
+   {
+    "w": "Right Hand of the State"
+   },
+   {
+    "w": "Lord of the Two Seas"
+   },
+   {
+    "w": "Lord of the Lands of {town}"
+   }
+  ],
+  "indian": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "King of Great Kings",
+    "n": "Maharajadhiraja"
+   },
+   {
+    "w": "Universal Ruler",
+    "n": "Chakravartin"
+   },
+   {
+    "w": "Beloved of the Earth",
+    "n": "Prithvivallabha"
+   },
+   {
+    "w": "Lord of the Three Oceans"
+   },
+   {
+    "t": [
+     "grim"
+    ],
+    "w": "Destroyer of Foes"
+   }
+  ],
+  "chinese": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Son of Heaven",
+    "n": "Tianzi"
+   },
+   {
+    "w": "Ten Thousand Years",
+    "n": "Wansui"
+   },
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Holder of the Mandate"
+   },
+   {
+    "w": "Lord of the Middle Kingdom"
+   }
+  ],
+  "japanese": [
+   {
+    "x": 0.3,
+    "w": "Son of Heaven",
+    "n": "Tenshi"
+   },
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Ruler of the Realm"
+   },
+   {
+    "w": "Lord of the Eastern Provinces"
+   },
+   {
+    "w": "Great General of the {domainLand}"
+   }
+  ],
+  "korean": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Great King",
+    "n": "Daewang"
+   },
+   {
+    "w": "King of the Eastern Land"
+   },
+   {
+    "w": "Lord of the Three Kingdoms"
+   }
+  ],
+  "egyptian": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Lord of the Two Lands",
+    "n": "Neb Tawy"
+   },
+   {
+    "w": "Son of Ra",
+    "n": "Sa Ra"
+   },
+   {
+    "x": 2,
+    "w": "Beloved of {god}"
+   },
+   {
+    "t": [
+     "strange"
+    ],
+    "w": "Living Image of {god}"
+   },
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Mighty Bull",
+    "n": "Ka Nakht"
+   },
+   {
+    "w": "Lord of Crowns",
+    "n": "Neb Khau"
+   }
+  ],
+  "ethiopian": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "King of Kings",
+    "n": "Negusa Nagast"
+   },
+   {
+    "w": "Lord of the Highlands"
+   },
+   {
+    "w": "Light of {town}"
+   }
+  ],
+  "bantu": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "The Lion",
+    "n": "Ingwenyama"
+   },
+   {
+    "g": "f",
+    "w": "The She-Elephant",
+    "n": "Ndlovukazi"
+   },
+   {
+    "g": "f",
+    "w": "Mother of the Nation"
+   },
+   {
+    "w": "Lord of the Land"
+   },
+   {
+    "t": [
+     "plain"
+    ],
+    "w": "Owner of Cattle"
+   }
+  ],
+  "west-african": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Ruler of the World",
+    "n": "Mogho Naaba"
+   },
+   {
+    "w": "Owner of the Palace",
+    "n": "Alaafin"
+   },
+   {
+    "w": "Lord of the Gold Lands"
+   },
+   {
+    "w": "Master of the River"
+   }
+  ],
+  "aztec": [
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Great Speaker",
+    "n": "Huey Tlatoani"
+   },
+   {
+    "t": [
+     "strange"
+    ],
+    "w": "Holder of the Mat and Seat"
+   },
+   {
+    "w": "Lord of {town}",
+    "n": "Tecuhtli of {town}"
+   }
+  ],
+  "maya": [
+   {
+    "w": "Holy Lord of {town}",
+    "n": "K'uhul Ajaw of {town}"
+   },
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Overlord of the West",
+    "n": "Ochk'in Kalomte'"
+   },
+   {
+    "t": [
+     "grim"
+    ],
+    "g": "m",
+    "w": "He of Twenty Captives",
+    "n": "Aj Winik Baak"
+   },
+   {
+    "t": [
+     "strange"
+    ],
+    "w": "Lord of the {number} Katuns"
+   }
+  ]
+ },
+ "lists": {
+  "epCharacter": [
+   {
+    "x": 3,
+    "w": "Great",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Magnificent",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Glorious",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "x": 2,
+    "w": "Just",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "x": 3,
+    "w": "Wise",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Pious",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Noble",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Valiant",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Victorious",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Unconquered",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Lawgiver",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "x": 2,
+    "w": "Good",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Steady",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Quiet",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Patient",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Careful",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Honest",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Thrifty",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Peaceful",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Fair-Minded",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "x": 2,
+    "w": "Cruel",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Ruthless",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Grim",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Merciless",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Wrathful",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Pitiless",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Bloody",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Terrible",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Iron-Hearted",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Treacherous",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Generous",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Merry",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Lucky",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Rash",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Restless",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Peaceable",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Lavish",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Talkative",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Unlucky",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Quarrelsome",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Silent",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Sleepless",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Unsmiling",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Watchful",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Far-Seeing",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Strange",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Dreamer",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "x": 3,
+    "w": "Bold"
+   },
+   {
+    "x": 2,
+    "w": "Brave"
+   },
+   {
+    "x": 2,
+    "w": "Proud"
+   },
+   {
+    "w": "Stern"
+   },
+   {
+    "w": "Resolute"
+   },
+   {
+    "w": "Merciful"
+   },
+   {
+    "w": "Learned"
+   },
+   {
+    "w": "Stout-Hearted"
+   },
+   {
+    "w": "Young"
+   },
+   {
+    "x": 2,
+    "w": "Old"
+   },
+   {
+    "w": "Elder"
+   },
+   {
+    "w": "Younger"
+   },
+   {
+    "w": "Hardy"
+   },
+   {
+    "w": "Fierce"
+   },
+   {
+    "w": "Wary"
+   },
+   {
+    "w": "Gentle"
+   },
+   {
+    "x": 2,
+    "w": "Strong"
+   }
+  ],
+  "epBody": [
+   {
+    "x": 2,
+    "w": "Tall"
+   },
+   {
+    "w": "Short"
+   },
+   {
+    "w": "Broad"
+   },
+   {
+    "x": 2,
+    "w": "Strong"
+   },
+   {
+    "x": 2,
+    "w": "Fair"
+   },
+   {
+    "w": "Dark"
+   },
+   {
+    "x": 2,
+    "w": "Red"
+   },
+   {
+    "w": "White"
+   },
+   {
+    "w": "Black"
+   },
+   {
+    "w": "Grey"
+   },
+   {
+    "w": "Golden"
+   },
+   {
+    "w": "Red-Haired"
+   },
+   {
+    "w": "Fair-Haired"
+   },
+   {
+    "w": "Black-Bearded"
+   },
+   {
+    "w": "Grey-Bearded"
+   },
+   {
+    "w": "Long-Haired"
+   },
+   {
+    "w": "Handsome"
+   },
+   {
+    "w": "Beautiful"
+   },
+   {
+    "w": "Scarred"
+   },
+   {
+    "w": "One-Eyed"
+   },
+   {
+    "w": "Swift"
+   },
+   {
+    "x": 0.3,
+    "t": [
+     "grand"
+    ],
+    "w": "Lion-Hearted"
+   }
+  ],
+  "epBodyMind": [
+   {
+    "w": "Fat",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Bald",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Stammerer",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Unready",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Short-Legged",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Squint-Eyed",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Big-Nosed",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Simple",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Sleepy",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Gouty",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Flat-Nosed",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Wry-Necked",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Fat-Bellied",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Clumsy",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Lame",
+    "t": [
+     "grim"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Mad",
+    "t": [
+     "grim"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Blind",
+    "t": [
+     "grim"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Crookback",
+    "t": [
+     "grim"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Hunchback",
+    "t": [
+     "grim"
+    ],
+    "bm": true
+   },
+   {
+    "x": 0.3,
+    "w": "Leper",
+    "t": [
+     "grim"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Deaf",
+    "t": [
+     "grim"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Mute",
+    "t": [
+     "grim"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Twisted",
+    "t": [
+     "grim"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Pale",
+    "t": [
+     "grim"
+    ],
+    "bm": true
+   }
+  ],
+  "epDeed": [
+   {
+    "x": 2,
+    "w": "Conqueror",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Founder",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Lawgiver",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Liberator",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Restorer",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Unifier",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Peacemaker",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Victor",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "x": 2,
+    "w": "Builder",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Farmer",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Shipwright",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Smith",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Ploughman",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Fisher",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Hunter",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Traveller",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Trader",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Butcher",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Usurper",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Tyrant",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Oathbreaker",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Kinslayer",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Burner",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Hangman",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "x": 0.5,
+    "w": "Exile",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Wanderer",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Rover",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Kingmaker",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Peacock",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Gambler",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Seer",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Pilgrim",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Returner",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Dreamer",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Wakeful",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Explorer"
+   },
+   {
+    "w": "Navigator"
+   },
+   {
+    "w": "Defender"
+   },
+   {
+    "w": "Avenger"
+   },
+   {
+    "x": 0.3,
+    "s": [
+     "FL",
+     "FH"
+    ],
+    "w": "Crusader"
+   },
+   {
+    "w": "Champion"
+   },
+   {
+    "w": "Hero"
+   },
+   {
+    "w": "Breaker"
+   },
+   {
+    "w": "Raider"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Dragonslayer"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Demonbane"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Giant-Scourge"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Witch-Hunter"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Spellbreaker"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Wyrmbane"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Starfarer"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Planetbreaker"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Void-Walker"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Pathfinder"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Terraformer"
+   }
+  ],
+  "epMystic": [
+   {
+    "x": 2,
+    "w": "Blessed",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Chosen",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Enlightened",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Anointed",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "x": 0.5,
+    "w": "Holy",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Radiant",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "x": 2,
+    "w": "Cursed",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "x": 0.5,
+    "w": "Damned",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Deathless",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Doomed",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Hollow",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "x": 0.3,
+    "w": "Unburied",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Prophet",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Seer",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Twice-Born",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Dreaming",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Far-Walker",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Unseen",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Moon-Touched",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "x": 0.5,
+    "w": "Witch-Born",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Fortunate"
+   },
+   {
+    "w": "Fated"
+   },
+   {
+    "w": "Foretold"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Flameborn"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Frost-Touched"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Storm-Called"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Spirit-Touched"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Spellbound"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Warpborn"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Synthborn"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Void-Touched"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Uplifted"
+   }
+  ],
+  "beast": [
+   {
+    "x": 3,
+    "w": "Wolf"
+   },
+   {
+    "x": 2,
+    "w": "Bear"
+   },
+   {
+    "x": 2,
+    "w": "Lion"
+   },
+   {
+    "x": 2,
+    "w": "Raven"
+   },
+   {
+    "x": 2,
+    "w": "Eagle"
+   },
+   {
+    "x": 2,
+    "w": "Fox"
+   },
+   {
+    "w": "Boar"
+   },
+   {
+    "w": "Stag"
+   },
+   {
+    "w": "Hound"
+   },
+   {
+    "w": "Hawk"
+   },
+   {
+    "w": "Falcon"
+   },
+   {
+    "w": "Serpent"
+   },
+   {
+    "w": "Bull"
+   },
+   {
+    "w": "Badger"
+   },
+   {
+    "w": "Otter"
+   },
+   {
+    "w": "Crow"
+   },
+   {
+    "w": "Owl"
+   },
+   {
+    "w": "Lynx"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Dragon"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Griffin"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Wyvern"
+   },
+   {
+    "w": "She-Wolf",
+    "x": 0.5,
+    "g": "f",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "She-Bear",
+    "x": 0.5,
+    "g": "f",
+    "t": [
+     "light"
+    ]
+   }
+  ],
+  "element": [
+   {
+    "x": 2,
+    "w": "Storm"
+   },
+   {
+    "w": "Thunder"
+   },
+   {
+    "w": "Tempest"
+   },
+   {
+    "w": "Flame"
+   },
+   {
+    "w": "Frost"
+   },
+   {
+    "w": "Winter"
+   },
+   {
+    "w": "Wind"
+   },
+   {
+    "w": "Gale"
+   },
+   {
+    "w": "Lightning"
+   },
+   {
+    "w": "Tide"
+   },
+   {
+    "w": "Ember"
+   },
+   {
+    "w": "Ash"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Nova"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Comet"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Void"
+   }
+  ],
+  "colourNick": [
+   {
+    "x": 3,
+    "w": "Red"
+   },
+   {
+    "x": 3,
+    "w": "Black"
+   },
+   {
+    "x": 2,
+    "w": "White"
+   },
+   {
+    "x": 2,
+    "w": "Grey"
+   },
+   {
+    "w": "Gold"
+   },
+   {
+    "w": "Silver"
+   },
+   {
+    "w": "Bronze"
+   },
+   {
+    "w": "Crimson"
+   },
+   {
+    "x": 0.5,
+    "w": "Azure"
+   },
+   {
+    "x": 0.5,
+    "w": "Emerald"
+   },
+   {
+    "w": "Scarlet"
+   }
+  ],
+  "epPlaceLandExtra": [
+   {
+    "x": 2,
+    "w": "North"
+   },
+   {
+    "x": 2,
+    "w": "South"
+   },
+   {
+    "x": 2,
+    "w": "East"
+   },
+   {
+    "x": 2,
+    "w": "West"
+   },
+   {
+    "w": "Isles"
+   },
+   {
+    "w": "Plains"
+   },
+   {
+    "w": "Frontier"
+   },
+   {
+    "w": "Highlands"
+   },
+   {
+    "w": "Hills"
+   },
+   {
+    "w": "Marshes"
+   },
+   {
+    "w": "Coast"
+   },
+   {
+    "cx": {
+     "steppe": 5
+    },
+    "w": "Steppe"
+   },
+   {
+    "cx": {
+     "arabic-persian": 5,
+     "egyptian": 5
+    },
+    "w": "Desert"
+   },
+   {
+    "w": "Forest"
+   }
+  ],
+  "epPlaceSpaceExtra": [
+   {
+    "w": "Belt"
+   },
+   {
+    "w": "Core"
+   }
+  ],
+  "modernNick": [
+   {
+    "x": 2,
+    "w": "Lucky",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Slim",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Tiny",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Doc",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Sparky",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Two-Times",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Mumbles",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Spuds",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "the Weasel",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Knuckles",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Lefty",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Shorty",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Dapper",
+    "t": [
+     "light"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "the Knife",
+    "t": [
+     "grim"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "the Hammer",
+    "t": [
+     "grim"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Mad Dog",
+    "t": [
+     "grim"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "the Undertaker",
+    "t": [
+     "grim"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Cold Eyes",
+    "t": [
+     "grim"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "the Ghost",
+    "t": [
+     "strange"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "the Owl",
+    "t": [
+     "strange"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Whisper",
+    "t": [
+     "strange"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "the Saint",
+    "t": [
+     "strange"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Red",
+    "t": [
+     "plain"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Duke",
+    "t": [
+     "plain"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Ace",
+    "t": [
+     "plain"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Chief",
+    "t": [
+     "plain"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Doc",
+    "t": [
+     "plain"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Sarge",
+    "t": [
+     "plain"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Mac",
+    "t": [
+     "plain"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "the Professor",
+    "t": [
+     "grand"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "the Baron",
+    "t": [
+     "grand"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "the Governor",
+    "t": [
+     "grand"
+    ],
+    "s": [
+     "MR",
+     "MF"
+    ]
+   }
+  ],
+  "dayNumber": [
+   {
+    "w": "One",
+    "n": "Ce"
+   },
+   {
+    "w": "Two",
+    "n": "Ome"
+   },
+   {
+    "w": "Three",
+    "n": "Yei"
+   },
+   {
+    "w": "Four",
+    "n": "Nahui"
+   },
+   {
+    "w": "Five",
+    "n": "Macuilli"
+   },
+   {
+    "w": "Six",
+    "n": "Chicuace"
+   },
+   {
+    "w": "Seven",
+    "n": "Chicome"
+   },
+   {
+    "w": "Eight",
+    "n": "Chicuei"
+   },
+   {
+    "w": "Nine",
+    "n": "Chicnahui"
+   },
+   {
+    "w": "Ten",
+    "n": "Mahtlactli"
+   },
+   {
+    "w": "Eleven",
+    "n": "Mahtlactli-once"
+   },
+   {
+    "w": "Twelve",
+    "n": "Mahtlactli-omome"
+   },
+   {
+    "w": "Thirteen",
+    "n": "Mahtlactli-omei"
+   }
+  ],
+  "daySign": [
+   {
+    "w": "Crocodile",
+    "n": "Cipactli"
+   },
+   {
+    "w": "Wind",
+    "n": "Ehecatl"
+   },
+   {
+    "w": "House",
+    "n": "Calli"
+   },
+   {
+    "w": "Lizard",
+    "n": "Cuetzpalin"
+   },
+   {
+    "w": "Serpent",
+    "n": "Coatl"
+   },
+   {
+    "w": "Death",
+    "n": "Miquiztli"
+   },
+   {
+    "w": "Deer",
+    "n": "Mazatl"
+   },
+   {
+    "w": "Rabbit",
+    "n": "Tochtli"
+   },
+   {
+    "w": "Water",
+    "n": "Atl"
+   },
+   {
+    "w": "Dog",
+    "n": "Itzcuintli"
+   },
+   {
+    "w": "Monkey",
+    "n": "Ozomatli"
+   },
+   {
+    "w": "Grass",
+    "n": "Malinalli"
+   },
+   {
+    "w": "Reed",
+    "n": "Acatl"
+   },
+   {
+    "w": "Jaguar",
+    "n": "Ocelotl"
+   },
+   {
+    "w": "Eagle",
+    "n": "Cuauhtli"
+   },
+   {
+    "w": "Vulture",
+    "n": "Cozcacuauhtli"
+   },
+   {
+    "w": "Movement",
+    "n": "Ollin"
+   },
+   {
+    "w": "Flint",
+    "n": "Tecpatl"
+   },
+   {
+    "w": "Rain",
+    "n": "Quiahuitl"
+   },
+   {
+    "w": "Flower",
+    "n": "Xochitl"
+   }
+  ],
+  "material": [
+   {
+    "x": 3,
+    "w": "Iron"
+   },
+   {
+    "x": 2,
+    "w": "Stone"
+   },
+   {
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ],
+    "w": "Steel"
+   },
+   {
+    "w": "Gold"
+   },
+   {
+    "w": "Silver"
+   },
+   {
+    "w": "Bronze"
+   },
+   {
+    "w": "Oak"
+   },
+   {
+    "w": "Ash"
+   },
+   {
+    "w": "Frost"
+   },
+   {
+    "w": "Fire"
+   },
+   {
+    "w": "Storm"
+   },
+   {
+    "t": [
+     "grim"
+    ],
+    "w": "Blood"
+   },
+   {
+    "t": [
+     "grim"
+    ],
+    "w": "Bone"
+   },
+   {
+    "w": "Black"
+   },
+   {
+    "w": "White"
+   },
+   {
+    "w": "Red"
+   },
+   {
+    "w": "Grey"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Chrome"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Void"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Star"
+   }
+  ],
+  "bodyPart": [
+   {
+    "x": 3,
+    "w": "hand"
+   },
+   {
+    "x": 2,
+    "w": "heart"
+   },
+   {
+    "w": "fist"
+   },
+   {
+    "w": "arm"
+   },
+   {
+    "w": "beard"
+   },
+   {
+    "w": "foot"
+   },
+   {
+    "w": "shield"
+   },
+   {
+    "w": "eye"
+   },
+   {
+    "w": "brow"
+   },
+   {
+    "w": "tooth"
+   },
+   {
+    "w": "side"
+   },
+   {
+    "t": [
+     "grim"
+    ],
+    "w": "skull"
+   }
+  ],
+  "bodyLook": [
+   {
+    "w": "Blue+tooth"
+   },
+   {
+    "w": "Fork+beard"
+   },
+   {
+    "w": "Fair+hair"
+   },
+   {
+    "w": "Long+shanks"
+   },
+   {
+    "w": "Strong+bow"
+   },
+   {
+    "w": "Bare+foot"
+   },
+   {
+    "w": "Broad+hand"
+   },
+   {
+    "w": "Grey+cloak"
+   },
+   {
+    "w": "Long+sword"
+   },
+   {
+    "w": "Red+cloak"
+   },
+   {
+    "w": "Iron+side"
+   },
+   {
+    "w": "Hard+head"
+   },
+   {
+    "bm": true,
+    "w": "Wide+mouth"
+   },
+   {
+    "bm": true,
+    "w": "Crook+back"
+   },
+   {
+    "bm": true,
+    "w": "Flat+nose"
+   },
+   {
+    "bm": true,
+    "w": "Split+lip"
+   },
+   {
+    "bm": true,
+    "w": "Wry+neck"
+   },
+   {
+    "bm": true,
+    "w": "Ox+foot"
+   }
+  ],
+  "doer": [
+   {
+    "t": [
+     "grim"
+    ],
+    "w": "Oath+breaker"
+   },
+   {
+    "w": "Shield+breaker"
+   },
+   {
+    "w": "Ship+breaker"
+   },
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Ring+giver"
+   },
+   {
+    "w": "King+maker"
+   },
+   {
+    "w": "Bridge+builder"
+   },
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Gold+giver"
+   },
+   {
+    "t": [
+     "grim"
+    ],
+    "w": "Wolf+feeder"
+   },
+   {
+    "t": [
+     "grim"
+    ],
+    "w": "Raven+feeder"
+   },
+   {
+    "t": [
+     "grand"
+    ],
+    "w": "Peace+weaver"
+   },
+   {
+    "w": "Spear+shaker"
+   },
+   {
+    "t": [
+     "grim"
+    ],
+    "w": "Skull+splitter"
+   },
+   {
+    "w": "Wave+rider"
+   },
+   {
+    "w": "Sea+rover"
+   },
+   {
+    "t": [
+     "light"
+    ],
+    "w": "Mead+drinker"
+   },
+   {
+    "t": [
+     "light"
+    ],
+    "w": "Ale+swiller"
+   },
+   {
+    "w": "Horse+breaker"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Dragon+bane"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Troll+slayer"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Rune+carver"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Moon+caller"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Star+weaver"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Storm+crow"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Grid+runner"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Ghost+wire"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Black+code"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Star+born"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Void+walker"
+   }
+  ],
+  "clanStyleSF": [
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Voidborn"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Starborn"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Gridborn"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Shipborn"
+   }
+  ],
+  "officeWord": [
+   {
+    "x": 3,
+    "w": "Warden"
+   },
+   {
+    "x": 3,
+    "w": "Keeper"
+   },
+   {
+    "x": 2,
+    "w": "Guardian"
+   },
+   {
+    "x": 3,
+    "m": "Lord",
+    "f": "Lady"
+   },
+   {
+    "x": 2,
+    "m": "Master",
+    "f": "Mistress"
+   },
+   {
+    "w": "Protector"
+   },
+   {
+    "x": 2,
+    "w": "Steward"
+   },
+   {
+    "w": "Shield"
+   },
+   {
+    "w": "Hand"
+   },
+   {
+    "w": "Voice"
+   },
+   {
+    "w": "Sword"
+   },
+   {
+    "w": "Watcher"
+   },
+   {
+    "w": "Captain"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Custodian"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Administrator"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Overseer"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Director"
+   }
+  ],
+  "courtDomain": [
+   {
+    "w": "Seal"
+   },
+   {
+    "w": "Rolls"
+   },
+   {
+    "w": "Treasury"
+   },
+   {
+    "x": 2,
+    "w": "Horse"
+   },
+   {
+    "w": "Wardrobe"
+   },
+   {
+    "w": "Hounds"
+   },
+   {
+    "w": "Hunt"
+   },
+   {
+    "w": "Granaries"
+   },
+   {
+    "w": "Keys"
+   },
+   {
+    "x": 2,
+    "w": "Gates"
+   },
+   {
+    "w": "Walls"
+   },
+   {
+    "w": "Harbour"
+   },
+   {
+    "w": "Mint"
+   },
+   {
+    "w": "Ships"
+   },
+   {
+    "w": "Wine"
+   },
+   {
+    "w": "Bedchamber"
+   },
+   {
+    "w": "Archives"
+   },
+   {
+    "w": "Roads"
+   },
+   {
+    "w": "Bridges"
+   },
+   {
+    "w": "Waters"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Runes"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Fey Roads"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "x": 0.5,
+    "w": "Sacred Flame"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "x": 0.5,
+    "w": "Dragons"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "x": 0.5,
+    "w": "Storms"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Core"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Docks"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Data Vaults"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Rings"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Long Watch"
+   }
+  ],
+  "trade": [
+   {
+    "x": 3,
+    "w": "Smith"
+   },
+   {
+    "w": "Baker"
+   },
+   {
+    "w": "Brewer"
+   },
+   {
+    "w": "Butcher"
+   },
+   {
+    "w": "Carter"
+   },
+   {
+    "w": "Chandler"
+   },
+   {
+    "w": "Cooper"
+   },
+   {
+    "w": "Draper"
+   },
+   {
+    "w": "Dyer"
+   },
+   {
+    "w": "Fisher"
+   },
+   {
+    "w": "Fletcher"
+   },
+   {
+    "w": "Fowler"
+   },
+   {
+    "w": "Glover"
+   },
+   {
+    "w": "Hunter"
+   },
+   {
+    "w": "Mason"
+   },
+   {
+    "x": 2,
+    "w": "Miller"
+   },
+   {
+    "w": "Parker"
+   },
+   {
+    "w": "Potter"
+   },
+   {
+    "w": "Sawyer"
+   },
+   {
+    "w": "Shepherd"
+   },
+   {
+    "w": "Skinner"
+   },
+   {
+    "w": "Slater"
+   },
+   {
+    "w": "Spicer"
+   },
+   {
+    "x": 2,
+    "w": "Taylor"
+   },
+   {
+    "w": "Thatcher"
+   },
+   {
+    "w": "Turner"
+   },
+   {
+    "w": "Walker"
+   },
+   {
+    "w": "Ward"
+   },
+   {
+    "w": "Weaver"
+   },
+   {
+    "w": "Webster"
+   },
+   {
+    "w": "Wright"
+   },
+   {
+    "w": "Bowyer"
+   },
+   {
+    "w": "Collier"
+   },
+   {
+    "w": "Cartwright"
+   },
+   {
+    "w": "Wheelwright"
+   },
+   {
+    "w": "Tanner"
+   },
+   {
+    "w": "Tyler"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Runesmith"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Spellwright"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Dragonkeeper"
+   },
+   {
+    "s": [
+     "FH",
+     "MF"
+    ],
+    "w": "Ironbinder"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Voidwright"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Starmaker"
+   },
+   {
+    "s": [
+     "SF"
+    ],
+    "w": "Synthwright"
+   }
+  ],
+  "placeFirst": [
+   {
+    "w": "Ash"
+   },
+   {
+    "w": "Oak"
+   },
+   {
+    "w": "Elm"
+   },
+   {
+    "w": "Thorn"
+   },
+   {
+    "w": "Black"
+   },
+   {
+    "w": "White"
+   },
+   {
+    "w": "Red"
+   },
+   {
+    "w": "Green"
+   },
+   {
+    "w": "Grey"
+   },
+   {
+    "w": "North"
+   },
+   {
+    "w": "South"
+   },
+   {
+    "w": "East"
+   },
+   {
+    "w": "West"
+   },
+   {
+    "w": "Brad"
+   },
+   {
+    "w": "Stan"
+   },
+   {
+    "w": "Brook"
+   },
+   {
+    "w": "Hay"
+   },
+   {
+    "w": "Lang"
+   },
+   {
+    "w": "Rad"
+   },
+   {
+    "w": "Wood"
+   },
+   {
+    "w": "Holly"
+   },
+   {
+    "w": "Fern"
+   },
+   {
+    "w": "Bir"
+   },
+   {
+    "w": "Cold"
+   },
+   {
+    "w": "Win"
+   },
+   {
+    "w": "Hart"
+   },
+   {
+    "w": "Wolf"
+   },
+   {
+    "w": "Shel"
+   },
+   {
+    "w": "Kirk"
+   }
+  ],
+  "placeLast": [
+   {
+    "x": 2,
+    "w": "ford"
+   },
+   {
+    "x": 2,
+    "w": "ley"
+   },
+   {
+    "x": 2,
+    "w": "ton"
+   },
+   {
+    "w": "wood"
+   },
+   {
+    "w": "field"
+   },
+   {
+    "w": "hill"
+   },
+   {
+    "w": "well"
+   },
+   {
+    "w": "brook"
+   },
+   {
+    "w": "stone"
+   },
+   {
+    "w": "marsh"
+   },
+   {
+    "w": "worth"
+   },
+   {
+    "w": "combe"
+   },
+   {
+    "w": "dale"
+   },
+   {
+    "w": "bury"
+   },
+   {
+    "w": "by"
+   },
+   {
+    "w": "thorpe"
+   },
+   {
+    "w": "holt"
+   },
+   {
+    "w": "hurst"
+   },
+   {
+    "w": "stead"
+   },
+   {
+    "w": "wick"
+   }
+  ],
+  "placeWord": [
+   {
+    "w": "Hill"
+   },
+   {
+    "w": "Brook"
+   },
+   {
+    "w": "Ford"
+   },
+   {
+    "w": "Wood"
+   },
+   {
+    "w": "Stone"
+   },
+   {
+    "w": "Marsh"
+   },
+   {
+    "w": "Field"
+   },
+   {
+    "w": "Dale"
+   },
+   {
+    "w": "Moor"
+   },
+   {
+    "w": "Heath"
+   },
+   {
+    "w": "Lane"
+   },
+   {
+    "w": "Bridge"
+   },
+   {
+    "w": "Green"
+   },
+   {
+    "w": "Shaw"
+   },
+   {
+    "w": "Holt"
+   }
+  ],
+  "nick": [
+   {
+    "w": "Brown"
+   },
+   {
+    "w": "White"
+   },
+   {
+    "w": "Black"
+   },
+   {
+    "w": "Grey"
+   },
+   {
+    "w": "Little"
+   },
+   {
+    "w": "Long"
+   },
+   {
+    "w": "Short"
+   },
+   {
+    "w": "Young"
+   },
+   {
+    "w": "Good"
+   },
+   {
+    "w": "Strong"
+   },
+   {
+    "w": "Armstrong"
+   },
+   {
+    "w": "Swift"
+   },
+   {
+    "w": "Fairfax"
+   },
+   {
+    "w": "Whitehead"
+   },
+   {
+    "w": "Redhead"
+   },
+   {
+    "w": "Goodman"
+   },
+   {
+    "w": "Bold"
+   },
+   {
+    "w": "Sharp"
+   },
+   {
+    "w": "Hardy"
+   },
+   {
+    "w": "Merry"
+   },
+   {
+    "w": "Wise"
+   },
+   {
+    "w": "Cruikshank",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Ballard",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Gammon",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Crookes",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "w": "Lightfoot",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   }
+  ],
+  "normanNick": [
+   {
+    "n": "Brun",
+    "w": "Brown"
+   },
+   {
+    "n": "Blanc",
+    "w": "White"
+   },
+   {
+    "n": "Roux",
+    "w": "Red"
+   },
+   {
+    "n": "Gros",
+    "w": "Fat",
+    "bm": true,
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "n": "Petit",
+    "w": "Little"
+   },
+   {
+    "n": "Fort",
+    "w": "Strong"
+   },
+   {
+    "n": "Sage",
+    "w": "Wise"
+   },
+   {
+    "n": "Hardi",
+    "w": "Bold"
+   },
+   {
+    "n": "Breton",
+    "w": "Breton"
+   },
+   {
+    "n": "Long",
+    "w": "Tall"
+   },
+   {
+    "n": "Noir",
+    "w": "Black"
+   }
+  ],
+  "normanTrade": [
+   {
+    "n": "Fèvre",
+    "w": "Smith"
+   }
+  ],
+  "nomen": [
+   {
+    "x": 0.3,
+    "m": "Julius",
+    "f": "Julia"
+   },
+   {
+    "m": "Cornelius",
+    "f": "Cornelia"
+   },
+   {
+    "m": "Valerius",
+    "f": "Valeria"
+   },
+   {
+    "x": 0.5,
+    "m": "Claudius",
+    "f": "Claudia"
+   },
+   {
+    "m": "Aemilius",
+    "f": "Aemilia"
+   },
+   {
+    "m": "Fabius",
+    "f": "Fabia"
+   },
+   {
+    "m": "Junius",
+    "f": "Junia"
+   },
+   {
+    "m": "Licinius",
+    "f": "Licinia"
+   },
+   {
+    "m": "Sempronius",
+    "f": "Sempronia"
+   },
+   {
+    "m": "Tullius",
+    "f": "Tullia"
+   },
+   {
+    "m": "Aurelius",
+    "f": "Aurelia"
+   },
+   {
+    "m": "Flavius",
+    "f": "Flavia"
+   },
+   {
+    "m": "Domitius",
+    "f": "Domitia"
+   },
+   {
+    "m": "Sulpicius",
+    "f": "Sulpicia"
+   },
+   {
+    "m": "Caecilius",
+    "f": "Caecilia"
+   },
+   {
+    "m": "Calpurnius",
+    "f": "Calpurnia"
+   },
+   {
+    "m": "Antonius",
+    "f": "Antonia"
+   },
+   {
+    "m": "Octavius",
+    "f": "Octavia"
+   },
+   {
+    "m": "Livius",
+    "f": "Livia"
+   },
+   {
+    "m": "Servilius",
+    "f": "Servilia"
+   },
+   {
+    "m": "Manlius",
+    "f": "Manlia"
+   },
+   {
+    "m": "Postumius",
+    "f": "Postumia"
+   },
+   {
+    "m": "Furius",
+    "f": "Furia"
+   },
+   {
+    "m": "Horatius",
+    "f": "Horatia"
+   }
+  ],
+  "cognomen": [
+   {
+    "n": "Rufus",
+    "w": "Red"
+   },
+   {
+    "n": "Niger",
+    "w": "Black"
+   },
+   {
+    "n": "Albinus",
+    "w": "White"
+   },
+   {
+    "n": "Longus",
+    "w": "Tall"
+   },
+   {
+    "n": "Magnus",
+    "w": "Great",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "n": "Severus",
+    "w": "Stern"
+   },
+   {
+    "n": "Felix",
+    "w": "Lucky",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "n": "Pius",
+    "w": "Dutiful"
+   },
+   {
+    "n": "Lepidus",
+    "w": "Charming",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "n": "Paullus",
+    "w": "Small"
+   },
+   {
+    "n": "Agricola",
+    "w": "Farmer",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "n": "Corvus",
+    "w": "Raven"
+   },
+   {
+    "n": "Lupus",
+    "w": "Wolf"
+   },
+   {
+    "n": "Ursus",
+    "w": "Bear"
+   },
+   {
+    "n": "Aquila",
+    "w": "Eagle"
+   },
+   {
+    "n": "Celer",
+    "w": "Swift"
+   },
+   {
+    "n": "Sabinus",
+    "w": "Sabine"
+   },
+   {
+    "n": "Maximus",
+    "w": "Greatest",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "n": "Priscus",
+    "w": "Elder"
+   },
+   {
+    "n": "Fortis",
+    "w": "Brave"
+   },
+   {
+    "n": "Crassus",
+    "w": "Fat",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "n": "Naso",
+    "w": "Nose",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "n": "Strabo",
+    "w": "Squinter",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "n": "Balbus",
+    "w": "Stammerer",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "n": "Caecus",
+    "w": "Blind",
+    "t": [
+     "grim"
+    ],
+    "bm": true
+   },
+   {
+    "n": "Brutus",
+    "w": "Dull",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "n": "Varus",
+    "w": "Bow-Legged",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   },
+   {
+    "n": "Calvus",
+    "w": "Bald",
+    "t": [
+     "light"
+    ],
+    "bm": true
+   }
+  ],
+  "byzantineFamily": [
+   {
+    "m": "Komnenos",
+    "f": "Komnene"
+   },
+   {
+    "m": "Doukas",
+    "f": "Doukaina"
+   },
+   {
+    "m": "Palaiologos",
+    "f": "Palaiologina"
+   },
+   {
+    "m": "Angelos",
+    "f": "Angelene"
+   },
+   {
+    "m": "Laskaris",
+    "f": "Laskaris"
+   },
+   {
+    "m": "Kantakouzenos",
+    "f": "Kantakouzene"
+   },
+   {
+    "m": "Phokas",
+    "f": "Phokas"
+   },
+   {
+    "m": "Skleros",
+    "f": "Sklerene"
+   },
+   {
+    "m": "Bryennios",
+    "f": "Bryenniene"
+   },
+   {
+    "m": "Dalassenos",
+    "f": "Dalassene"
+   },
+   {
+    "m": "Tornikes",
+    "f": "Tornikes"
+   },
+   {
+    "m": "Kourkouas",
+    "f": "Kourkouas"
+   },
+   {
+    "m": "Argyros",
+    "f": "Argyrene"
+   },
+   {
+    "m": "Melissenos",
+    "f": "Melissene"
+   },
+   {
+    "m": "Botaneiates",
+    "f": "Botaneiates"
+   },
+   {
+    "m": "Tarchaneiotes",
+    "f": "Tarchaneiotes"
+   },
+   {
+    "m": "Raoul",
+    "f": "Raoul"
+   },
+   {
+    "m": "Philanthropenos",
+    "f": "Philanthropene"
+   },
+   {
+    "m": "Synadenos",
+    "f": "Synadene"
+   },
+   {
+    "m": "Branas",
+    "f": "Branas"
+   }
+  ],
+  "slavicFamily": [
+   {
+    "n": "Kuznetsov",
+    "w": "Smith",
+    "nf": "Kuznetsova"
+   },
+   {
+    "n": "Melnikov",
+    "w": "Miller",
+    "nf": "Melnikova"
+   },
+   {
+    "n": "Rybakov",
+    "w": "Fisher",
+    "nf": "Rybakova"
+   },
+   {
+    "n": "Plotnikov",
+    "w": "Carpenter",
+    "nf": "Plotnikova"
+   },
+   {
+    "n": "Goncharov",
+    "w": "Potter",
+    "nf": "Goncharova"
+   },
+   {
+    "n": "Volkov",
+    "w": "Wolf",
+    "nf": "Volkova"
+   },
+   {
+    "n": "Sokolov",
+    "w": "Falcon",
+    "nf": "Sokolova"
+   },
+   {
+    "n": "Lebedev",
+    "w": "Swan",
+    "nf": "Lebedeva"
+   },
+   {
+    "n": "Medvedev",
+    "w": "Bear",
+    "nf": "Medvedeva"
+   },
+   {
+    "n": "Orlov",
+    "w": "Eagle",
+    "nf": "Orlova"
+   },
+   {
+    "n": "Voronin",
+    "w": "Raven",
+    "nf": "Voronina"
+   },
+   {
+    "n": "Kozlov",
+    "w": "Goat",
+    "nf": "Kozlova"
+   },
+   {
+    "n": "Zaitsev",
+    "w": "Hare",
+    "nf": "Zaitseva"
+   },
+   {
+    "n": "Belov",
+    "w": "White",
+    "nf": "Belova"
+   },
+   {
+    "n": "Chernov",
+    "w": "Black",
+    "nf": "Chernova"
+   },
+   {
+    "n": "Novikov",
+    "w": "Newman",
+    "nf": "Novikova"
+   },
+   {
+    "n": "Morozov",
+    "w": "Frost",
+    "nf": "Morozova"
+   },
+   {
+    "n": "Kamenev",
+    "w": "Stone",
+    "nf": "Kameneva"
+   },
+   {
+    "n": "Lesnoy",
+    "w": "Forest",
+    "nf": "Lesnaya"
+   }
+  ],
+  "arabicTrade": [
+   {
+    "n": "al-Haddad",
+    "w": "Smith"
+   },
+   {
+    "n": "al-Najjar",
+    "w": "Carpenter"
+   },
+   {
+    "n": "al-Khayyat",
+    "w": "Tailor"
+   },
+   {
+    "n": "al-Attar",
+    "w": "Perfumer"
+   },
+   {
+    "n": "al-Sabbagh",
+    "w": "Dyer"
+   },
+   {
+    "n": "al-Warraq",
+    "w": "Stationer"
+   },
+   {
+    "n": "al-Sayegh",
+    "w": "Goldsmith"
+   },
+   {
+    "n": "al-Tahhan",
+    "w": "Miller"
+   },
+   {
+    "n": "al-Jammal",
+    "w": "Cameleer"
+   },
+   {
+    "n": "al-Bazzaz",
+    "w": "Cloth-Seller"
+   }
+  ],
+  "arabicPlace": [
+   {
+    "n": "al-Baghdadi",
+    "w": "of Baghdad"
+   },
+   {
+    "n": "al-Dimashqi",
+    "w": "of Damascus"
+   },
+   {
+    "n": "al-Misri",
+    "w": "of Egypt"
+   },
+   {
+    "n": "al-Andalusi",
+    "w": "of Andalusia"
+   },
+   {
+    "n": "al-Farisi",
+    "w": "of Fars"
+   },
+   {
+    "n": "al-Shirazi",
+    "w": "of Shiraz"
+   },
+   {
+    "n": "al-Isfahani",
+    "w": "of Isfahan"
+   },
+   {
+    "n": "al-Tabrizi",
+    "w": "of Tabriz"
+   },
+   {
+    "n": "al-Basri",
+    "w": "of Basra"
+   },
+   {
+    "n": "al-Kufi",
+    "w": "of Kufa"
+   },
+   {
+    "n": "al-Halabi",
+    "w": "of Aleppo"
+   },
+   {
+    "n": "al-Maghribi",
+    "w": "of the West"
+   },
+   {
+    "n": "al-Yamani",
+    "w": "of Yemen"
+   }
+  ],
+  "chineseFamily": [
+   {
+    "n": "Li",
+    "w": "Plum"
+   },
+   {
+    "n": "Wang",
+    "w": "King"
+   },
+   {
+    "n": "Zhang"
+   },
+   {
+    "n": "Liu"
+   },
+   {
+    "n": "Chen"
+   },
+   {
+    "n": "Yang",
+    "w": "Poplar"
+   },
+   {
+    "n": "Zhao"
+   },
+   {
+    "n": "Huang",
+    "w": "Yellow"
+   },
+   {
+    "n": "Zhou"
+   },
+   {
+    "n": "Wu"
+   },
+   {
+    "n": "Xu"
+   },
+   {
+    "n": "Sun"
+   },
+   {
+    "n": "Ma",
+    "w": "Horse"
+   },
+   {
+    "n": "Zhu",
+    "w": "Vermilion"
+   },
+   {
+    "n": "Hu"
+   },
+   {
+    "n": "Guo"
+   },
+   {
+    "n": "He"
+   },
+   {
+    "n": "Lin",
+    "w": "Forest"
+   },
+   {
+    "n": "Gao",
+    "w": "High"
+   },
+   {
+    "n": "Luo"
+   },
+   {
+    "n": "Zheng"
+   },
+   {
+    "n": "Liang"
+   },
+   {
+    "n": "Xie"
+   },
+   {
+    "n": "Tang"
+   },
+   {
+    "n": "Han"
+   },
+   {
+    "n": "Feng"
+   },
+   {
+    "n": "Deng"
+   },
+   {
+    "n": "Cao"
+   },
+   {
+    "n": "Peng"
+   },
+   {
+    "n": "Xiao"
+   },
+   {
+    "n": "Tian",
+    "w": "Field"
+   },
+   {
+    "n": "Dong"
+   },
+   {
+    "n": "Pan"
+   },
+   {
+    "n": "Yuan"
+   },
+   {
+    "n": "Cai"
+   },
+   {
+    "n": "Jiang"
+   },
+   {
+    "n": "Yu"
+   },
+   {
+    "n": "Du"
+   },
+   {
+    "n": "Ye",
+    "w": "Leaf"
+   },
+   {
+    "n": "Cheng"
+   },
+   {
+    "n": "Wei"
+   },
+   {
+    "n": "Su"
+   },
+   {
+    "n": "Ding"
+   },
+   {
+    "n": "Shen"
+   },
+   {
+    "n": "Yao"
+   },
+   {
+    "n": "Lu"
+   },
+   {
+    "n": "Cui"
+   },
+   {
+    "n": "Zhong"
+   },
+   {
+    "n": "Tan"
+   },
+   {
+    "n": "Fan"
+   },
+   {
+    "n": "Jin",
+    "w": "Gold"
+   },
+   {
+    "n": "Shi",
+    "w": "Stone"
+   },
+   {
+    "n": "Bai",
+    "w": "White"
+   },
+   {
+    "n": "Meng"
+   },
+   {
+    "n": "Xiong",
+    "w": "Bear"
+   },
+   {
+    "n": "Qin"
+   },
+   {
+    "n": "Long",
+    "w": "Dragon"
+   }
+  ],
+  "japaneseFamily": [
+   {
+    "n": "Tanaka",
+    "w": "Middlefield"
+   },
+   {
+    "n": "Yamamoto",
+    "w": "Mountainfoot"
+   },
+   {
+    "n": "Yamada",
+    "w": "Mountainfield"
+   },
+   {
+    "n": "Nakamura",
+    "w": "Midvillage"
+   },
+   {
+    "n": "Kobayashi",
+    "w": "Littlewood"
+   },
+   {
+    "n": "Matsumoto",
+    "w": "Pinefoot"
+   },
+   {
+    "n": "Inoue",
+    "w": "Wellhead"
+   },
+   {
+    "n": "Kimura",
+    "w": "Treeton"
+   },
+   {
+    "n": "Hayashi",
+    "w": "Forest"
+   },
+   {
+    "n": "Ishikawa",
+    "w": "Stonebrook"
+   },
+   {
+    "n": "Yamaguchi",
+    "w": "Hillmouth"
+   },
+   {
+    "n": "Morita",
+    "w": "Woodfield"
+   },
+   {
+    "n": "Ikeda",
+    "w": "Pondfield"
+   },
+   {
+    "n": "Hashimoto",
+    "w": "Bridgefoot"
+   },
+   {
+    "n": "Ishii",
+    "w": "Stonewell"
+   },
+   {
+    "n": "Ogawa",
+    "w": "Littlebrook"
+   },
+   {
+    "n": "Okada",
+    "w": "Hillfield"
+   },
+   {
+    "n": "Fujita",
+    "w": "Wisteriafield"
+   },
+   {
+    "n": "Takahashi",
+    "w": "Highbridge"
+   },
+   {
+    "n": "Kawaguchi",
+    "w": "Rivermouth"
+   },
+   {
+    "n": "Matsuda",
+    "w": "Pinefield"
+   },
+   {
+    "n": "Sakamoto",
+    "w": "Slopefoot"
+   },
+   {
+    "n": "Shimizu",
+    "w": "Clearwater"
+   },
+   {
+    "n": "Mori",
+    "w": "Wood"
+   },
+   {
+    "n": "Ono",
+    "w": "Littlefield"
+   },
+   {
+    "n": "Nishimura",
+    "w": "Westvillage"
+   },
+   {
+    "n": "Kitamura",
+    "w": "Northvillage"
+   },
+   {
+    "n": "Kawamura",
+    "w": "Rivervillage"
+   },
+   {
+    "n": "Takeda",
+    "w": "Bamboofield",
+    "x": 0.3
+   }
+  ],
+  "koreanFamily": [
+   {
+    "n": "Kim",
+    "w": "Gold"
+   },
+   {
+    "n": "Lee",
+    "w": "Plum"
+   },
+   {
+    "n": "Park"
+   },
+   {
+    "n": "Choi"
+   },
+   {
+    "n": "Jung"
+   },
+   {
+    "n": "Kang"
+   },
+   {
+    "n": "Cho"
+   },
+   {
+    "n": "Yoon"
+   },
+   {
+    "n": "Jang"
+   },
+   {
+    "n": "Lim",
+    "w": "Forest"
+   },
+   {
+    "n": "Han"
+   },
+   {
+    "n": "Oh"
+   },
+   {
+    "n": "Seo"
+   },
+   {
+    "n": "Shin"
+   },
+   {
+    "n": "Kwon"
+   },
+   {
+    "n": "Hwang",
+    "w": "Yellow"
+   },
+   {
+    "n": "Ahn"
+   },
+   {
+    "n": "Song"
+   },
+   {
+    "n": "Ryu",
+    "w": "Willow"
+   },
+   {
+    "n": "Hong"
+   },
+   {
+    "n": "Jeon"
+   },
+   {
+    "n": "Ko"
+   },
+   {
+    "n": "Moon"
+   },
+   {
+    "n": "Yang"
+   },
+   {
+    "n": "Son"
+   },
+   {
+    "n": "Baek",
+    "w": "White"
+   },
+   {
+    "n": "Seok",
+    "w": "Stone"
+   },
+   {
+    "n": "Ma",
+    "w": "Horse"
+   }
+  ],
+  "bantuFamily": [
+   {
+    "n": "Ndlovu",
+    "w": "Elephant"
+   },
+   {
+    "n": "Ngwenya",
+    "w": "Crocodile"
+   },
+   {
+    "n": "Nyathi",
+    "w": "Buffalo"
+   },
+   {
+    "n": "Ngonyama",
+    "w": "Lion"
+   }
+  ]
+ },
+ "epithets": {
+  "any": "epithets of any kind",
+  "kinds": [
+   {
+    "key": "character",
+    "menu": "Character",
+    "plural": "epithets of character",
+    "w": 25
+   },
+   {
+    "key": "body",
+    "menu": "Body and look",
+    "plural": "epithets of body and look",
+    "w": 15
+   },
+   {
+    "key": "deeds",
+    "menu": "Deeds",
+    "plural": "epithets of deeds",
+    "w": 15
+   },
+   {
+    "key": "beast",
+    "menu": "Beast and element",
+    "plural": "beast and element names",
+    "w": 15
+   },
+   {
+    "key": "mystic",
+    "menu": "Mystical",
+    "plural": "mystical epithets",
+    "w": 10
+   },
+   {
+    "key": "place",
+    "menu": "Place",
+    "plural": "place bynames",
+    "w": 10
+   },
+   {
+    "key": "compound",
+    "menu": "Compound bynames",
+    "plural": "compound bynames",
+    "w": 10
+   },
+   {
+    "key": "nickname",
+    "menu": "Modern nicknames",
+    "plural": "nicknames",
+    "w": 15,
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "key": "dayName",
+    "menu": "Day names",
+    "plural": "day names",
+    "w": 15,
+    "s": [
+     "FL",
+     "FH"
+    ],
+    "cultures": [
+     "aztec"
+    ]
+   }
+  ],
+  "shapes": [
+   {
+    "kind": "character",
+    "p": "the {epCharacter}",
+    "join": "the",
+    "w": 80
+   },
+   {
+    "kind": "character",
+    "p": "the {epCharacter} and {epCharacter}",
+    "join": "the",
+    "w": 5,
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "kind": "character",
+    "p": "the {epCharacter} {beast}",
+    "join": "the",
+    "w": 15
+   },
+   {
+    "kind": "body",
+    "p": "the {epBody}",
+    "join": "the",
+    "w": 60
+   },
+   {
+    "kind": "body",
+    "p": "{bodyLook}",
+    "join": "bare",
+    "w": 25,
+    "s": [
+     "FL",
+     "FH"
+    ],
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "kind": "body",
+    "p": "the {epBodyMind}",
+    "join": "the",
+    "w": 15,
+    "gate": true
+   },
+   {
+    "kind": "deeds",
+    "p": "the {epDeed}",
+    "join": "the",
+    "w": 75
+   },
+   {
+    "kind": "deeds",
+    "p": "{doer}",
+    "join": "bare",
+    "w": 25,
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "kind": "beast",
+    "p": "the {beast}",
+    "join": "the",
+    "w": 30
+   },
+   {
+    "kind": "beast",
+    "p": "{colourNick} {beast}",
+    "join": "bare",
+    "w": 25
+   },
+   {
+    "kind": "beast",
+    "p": "the {element}",
+    "join": "the",
+    "w": 15
+   },
+   {
+    "kind": "beast",
+    "p": "{beast} of the {epPlaceLand}",
+    "join": "comma",
+    "w": 15,
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "kind": "beast",
+    "p": "{beast} of {town}",
+    "join": "comma",
+    "w": 15,
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "kind": "mystic",
+    "p": "the {epMystic}",
+    "join": "the",
+    "w": 80
+   },
+   {
+    "kind": "mystic",
+    "p": "{element}-Touched",
+    "join": "bare",
+    "w": 15,
+    "s": [
+     "FH",
+     "MF",
+     "SF"
+    ]
+   },
+   {
+    "kind": "place",
+    "p": "of the {epPlaceLand}",
+    "join": "of",
+    "w": 50
+   },
+   {
+    "kind": "place",
+    "p": "of {town}",
+    "join": "of",
+    "w": 50,
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "kind": "compound",
+    "p": "{material+bodyPart}",
+    "join": "bare",
+    "w": 40
+   },
+   {
+    "kind": "compound",
+    "p": "{doer}",
+    "join": "bare",
+    "w": 30,
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "kind": "compound",
+    "p": "{clanBorn}",
+    "join": "bare",
+    "w": 30,
+    "s": [
+     "FH",
+     "MF"
+    ]
+   },
+   {
+    "kind": "nickname",
+    "p": "“{modernNick}”",
+    "join": "bare",
+    "w": 100,
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "kind": "dayName",
+    "p": "{dayNumber} {daySign}",
+    "join": "comma",
+    "w": 100,
+    "s": [
+     "FL",
+     "FH"
+    ]
+   }
+  ]
+ },
+ "titles": {
+  "any": "titles of any kind",
+  "kinds": [
+   {
+    "key": "rank",
+    "menu": "Ranks",
+    "plural": "ranks",
+    "w": 40
+   },
+   {
+    "key": "office",
+    "menu": "Offices of a domain",
+    "plural": "offices",
+    "w": 40
+   },
+   {
+    "key": "style",
+    "menu": "Royal and sacred styles",
+    "plural": "royal styles",
+    "w": 20
+   }
+  ],
+  "shapes": [
+   {
+    "kind": "rank",
+    "p": "{rank}",
+    "w": 100
+   },
+   {
+    "kind": "office",
+    "p": "{officeWord} of the {courtDomain}",
+    "w": 35,
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "kind": "office",
+    "p": "{officeWord} of the {domainLand}",
+    "w": 30
+   },
+   {
+    "kind": "office",
+    "p": "{officeWord} of {town}",
+    "w": 20
+   },
+   {
+    "kind": "office",
+    "p": "{rank} of {town}",
+    "w": 15
+   },
+   {
+    "kind": "style",
+    "p": "{style}",
+    "w": 100,
+    "t": [
+     "grand"
+    ]
+   }
+  ],
+  "nativeOf": {
+   "norman-british": "de"
+  }
+ },
+ "family": {
+  "any": "family names of any kind",
+  "kinds": [
+   {
+    "key": "patronymic",
+    "menu": "Patronymics",
+    "plural": "patronymics"
+   },
+   {
+    "key": "occupational",
+    "menu": "Trades",
+    "plural": "trade names",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "key": "place",
+    "menu": "Places",
+    "plural": "place names",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "key": "descriptive",
+    "menu": "Nicknames",
+    "plural": "nickname surnames"
+   },
+   {
+    "key": "inherited",
+    "menu": "Inherited surnames",
+    "plural": "inherited surnames"
+   },
+   {
+    "key": "clan",
+    "menu": "Clan-style",
+    "plural": "clan-style names",
+    "s": [
+     "FH",
+     "MF",
+     "SF"
+    ],
+    "cultures": [
+     "general"
+    ]
+   }
+  ],
+  "cultures": {
+   "general": {
+    "w": {
+     "occupational": 30,
+     "place": 30,
+     "descriptive": 20,
+     "patronymic": 20,
+     "clan": 15
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "{father}son",
+       "l": "e",
+       "w": 70,
+       "g": "m"
+      },
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 30,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "clan": [
+      {
+       "p": "{clanStyle}",
+       "l": "both",
+       "w": 1,
+       "t": [
+        "grand"
+       ]
+      }
+     ],
+     "occupational": [
+      {
+       "p": "{trade}",
+       "l": "both",
+       "w": 1
+      }
+     ],
+     "place": [
+      {
+       "p": "{placeFirst+placeLast}",
+       "l": "both",
+       "w": 1
+      },
+      {
+       "p": "{placeWord}",
+       "l": "both",
+       "w": 1
+      }
+     ],
+     "descriptive": [
+      {
+       "p": "{nick}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "anglo-saxon": {
+    "w": {
+     "patronymic": 50,
+     "descriptive": 30,
+     "place": 20
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "{father}ing",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "{father}es dohtor",
+       "l": "n",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "place": [
+      {
+       "p": "of {town}",
+       "l": "both",
+       "w": 1
+      }
+     ],
+     "descriptive": [
+      {
+       "p": "{nick}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "norse": {
+    "w": {
+     "patronymic": 70,
+     "descriptive": 30
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "{father}son",
+       "l": "e",
+       "w": 60,
+       "g": "m"
+      },
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 40,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "{father:norseSon}",
+       "l": "n",
+       "w": 10,
+       "g": "m"
+      },
+      {
+       "p": "{father:norseDaughter}",
+       "l": "n",
+       "w": 10,
+       "g": "f"
+      },
+      {
+       "p": "{mother:norseSon}",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      }
+     ],
+     "descriptive": [
+      {
+       "p": "{nick}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "celtic": {
+    "w": {
+     "patronymic": 75,
+     "descriptive": 25
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "Mac{father}",
+       "l": "n",
+       "w": 40,
+       "g": "m"
+      },
+      {
+       "p": "O'{father}",
+       "l": "n",
+       "w": 20,
+       "g": "m"
+      },
+      {
+       "p": "Nic{father}",
+       "l": "n",
+       "w": 40,
+       "g": "f"
+      },
+      {
+       "p": "{father:welsh}",
+       "l": "n",
+       "w": 30,
+       "g": "m"
+      },
+      {
+       "p": "ferch {father}",
+       "l": "n",
+       "w": 30,
+       "g": "f"
+      },
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 70,
+       "g": "m"
+      },
+      {
+       "p": "grandson of {father}",
+       "l": "e",
+       "w": 20,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "descriptive": [
+      {
+       "p": "{nick}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "norman-british": {
+    "w": {
+     "occupational": 25,
+     "place": 25,
+     "descriptive": 15,
+     "patronymic": 20,
+     "inherited": 15
+    },
+    "forms": {
+     "occupational": [
+      {
+       "p": "{trade}",
+       "l": "both",
+       "w": 1
+      },
+      {
+       "p": "le {normanTrade:native}",
+       "l": "n",
+       "w": 1
+      }
+     ],
+     "place": [
+      {
+       "p": "{placeFirst+placeLast}",
+       "l": "e",
+       "w": 1
+      },
+      {
+       "p": "{placeWord}",
+       "l": "e",
+       "w": 1
+      },
+      {
+       "p": "de {town}",
+       "l": "n",
+       "w": 1
+      }
+     ],
+     "descriptive": [
+      {
+       "p": "{nick}",
+       "l": "e",
+       "w": 1
+      },
+      {
+       "p": "le {normanNick:native}",
+       "l": "n",
+       "w": 1
+      }
+     ],
+     "patronymic": [
+      {
+       "p": "{father}son",
+       "l": "e",
+       "w": 60
+      },
+      {
+       "p": "{father}s",
+       "l": "e",
+       "w": 40
+      },
+      {
+       "p": "Fitz{father}",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "de {town}",
+       "l": "n",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "inherited": [
+      {
+       "p": "{placeFirst+placeLast}",
+       "l": "e",
+       "w": 1
+      },
+      {
+       "p": "de {placeFirst+placeLast}",
+       "l": "n",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "roman": {
+    "w": {
+     "inherited": 70,
+     "descriptive": 30
+    },
+    "forms": {
+     "inherited": [
+      {
+       "p": "{nomen} {cognomen:native}",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "{nomen}",
+       "l": "n",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "{nomen} the {cognomen}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "{nomen}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "descriptive": [
+      {
+       "p": "{cognomen:native}",
+       "l": "n",
+       "w": 1
+      },
+      {
+       "p": "the {cognomen}",
+       "l": "e",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "greek-byzantine": {
+    "w": {
+     "patronymic": 40,
+     "inherited": 60
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "{father:greek}",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      }
+     ],
+     "inherited": [
+      {
+       "p": "{byzantineFamily}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "slavic": {
+    "w": {
+     "patronymic": 40,
+     "inherited": 60
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "{father:slavic}",
+       "l": "n",
+       "w": 1
+      }
+     ],
+     "inherited": [
+      {
+       "p": "{slavicFamily}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "steppe": {
+    "w": {
+     "patronymic": 70,
+     "descriptive": 30
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "{father}oğlu",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "{father}kızı",
+       "l": "n",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "descriptive": [
+      {
+       "p": "of the {colourNick} Wolf Clan",
+       "l": "both",
+       "w": 1
+      },
+      {
+       "p": "of the {beast} Clan",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "arabic-persian": {
+    "w": {
+     "patronymic": 40,
+     "occupational": 20,
+     "place": 25,
+     "descriptive": 15
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "ibn {father}",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "bint {father}",
+       "l": "n",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "{father}zadeh",
+       "l": "n",
+       "w": 0.3
+      }
+     ],
+     "descriptive": [
+      {
+       "p": "Abu {child}",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "Umm {child}",
+       "l": "n",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "father of {child}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "mother of {child}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "occupational": [
+      {
+       "p": "{arabicTrade}",
+       "l": "both",
+       "w": 1
+      }
+     ],
+     "place": [
+      {
+       "p": "{arabicPlace}",
+       "l": "both",
+       "w": 13
+      },
+      {
+       "p": "of {town}",
+       "l": "e",
+       "w": 2
+      }
+     ]
+    }
+   },
+   "indian": {
+    "w": {
+     "patronymic": 60,
+     "place": 40
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "{father}putra",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "{father}putri",
+       "l": "n",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "{mother}putra",
+       "l": "n",
+       "w": 0.3,
+       "g": "m"
+      }
+     ],
+     "place": [
+      {
+       "p": "of {town}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "chinese": {
+    "w": {
+     "inherited": 100
+    },
+    "forms": {
+     "inherited": [
+      {
+       "p": "{chineseFamily}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "japanese": {
+    "w": {
+     "inherited": 100
+    },
+    "forms": {
+     "inherited": [
+      {
+       "p": "{japaneseFamily}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "korean": {
+    "w": {
+     "inherited": 100
+    },
+    "forms": {
+     "inherited": [
+      {
+       "p": "{koreanFamily}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "egyptian": {
+    "w": {
+     "patronymic": 70,
+     "place": 30
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "sa {father}",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "sat {father}",
+       "l": "n",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "place": [
+      {
+       "p": "of {town}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "ethiopian": {
+    "w": {
+     "patronymic": 100
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "{father}",
+       "l": "n",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "bantu": {
+    "w": {
+     "patronymic": 60,
+     "inherited": 40
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "ka{father}",
+       "l": "n",
+       "w": 1
+      }
+     ],
+     "inherited": [
+      {
+       "p": "{bantuFamily}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "west-african": {
+    "w": {
+     "patronymic": 70,
+     "place": 30
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "e",
+       "w": 1,
+       "g": "f"
+      },
+      {
+       "p": "dan {father}",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "'yar {father}",
+       "l": "n",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "place": [
+      {
+       "p": "of {town}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "aztec": {
+    "w": {
+     "patronymic": 40,
+     "place": 60
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "both",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "both",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "place": [
+      {
+       "p": "of {town}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "maya": {
+    "w": {
+     "patronymic": 40,
+     "place": 60
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "both",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "both",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "place": [
+      {
+       "p": "of {town}",
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   }
+  }
+ },
+ "safeguards": {
+  "block": [
+   "William the Conqueror",
+   "Harald Bluetooth",
+   "Sweyn Forkbeard",
+   "Harald Fairhair",
+   "Erik the Red",
+   "Eric the Red",
+   "Ivar the Boneless",
+   "Æthelred the Unready",
+   "Ethelred the Unready",
+   "Alfred the Great",
+   "Edward the Confessor",
+   "Edward Longshanks",
+   "Richard the Lionheart",
+   "Richard Lionheart",
+   "Lionheart",
+   "Vlad the Impaler",
+   "Ivan the Terrible",
+   "Peter the Great",
+   "Catherine the Great",
+   "Alexander the Great",
+   "Charles the Bald",
+   "Pepin the Short",
+   "Louis the Pious",
+   "Charles the Hammer",
+   "Basil the Bulgar-Slayer",
+   "Bulgar-Slayer",
+   "Suleiman the Magnificent",
+   "Tiger of Kai",
+   "One-Eyed Dragon",
+   "Red Devil",
+   "Bloody Mary",
+   "Black Prince",
+   "Iron Lady",
+   "Iron Duke",
+   "Lion of the North",
+   "Desert Fox",
+   "Scourge of God",
+   "Hammer of the Scots",
+   "Warwick the Kingmaker",
+   "Longshanks",
+   "Lackland",
+   "Bluebeard",
+   "Barbarossa",
+   "Richard Crookback",
+   "Lion of Judah",
+   "Defender of the Faith",
+   "Commander of the Faithful",
+   "Custodian of the Two Holy Mosques",
+   "Keeper of the Holy Places",
+   "Shadow of God on Earth",
+   "Lord of the Isles",
+   "Prince of Wales",
+   "Duke of Cornwall",
+   "Duke of York",
+   "Emperor of the Romans",
+   "Supreme Leader",
+   "Great Leader",
+   "Dear Leader",
+   "Führer",
+   "Il Duce",
+   "Generalissimo",
+   "Sword of Faith",
+   "Sword of Islam",
+   "Sword of God",
+   "Lion of God",
+   "Light of the Faith",
+   "Pillar of the Faith",
+   "Glory of the Faith",
+   "Oakenshield",
+   "Elf-friend",
+   "Elf-Friend",
+   "Stormborn",
+   "Kingslayer",
+   "Mother of Dragons",
+   "Breaker of Chains",
+   "Unburnt",
+   "Warden of the North",
+   "Hand of the King",
+   "Lord Commander",
+   "Kingsguard",
+   "Dragonborn",
+   "Dovahkiin",
+   "Witcher",
+   "White Wolf",
+   "Grey Pilgrim",
+   "Strider",
+   "Wormtongue",
+   "Ringbearer",
+   "Ring-Bearer",
+   "Lightbringer",
+   "Godslayer",
+   "Warp-Touched",
+   "Emperor of Mankind",
+   "Lord of Light",
+   "Dark Lord",
+   "Chosen One",
+   "Boy Who Lived",
+   "Mad King",
+   "Night King",
+   "King in the North",
+   "Imp",
+   "Hound",
+   "the Mountain",
+   "Lady Stoneheart",
+   "Bloodraven",
+   "Starkiller",
+   "Skywalker",
+   "Darth",
+   "Scarface",
+   "Bugsy",
+   "Machine Gun",
+   "Legs",
+   "Lucky Luciano",
+   "Teflon Don",
+   "Dapper Don"
+  ],
+  "blockPatterns": [
+   "of the Faith$",
+   "of Islam$",
+   "of God$"
+  ],
+  "flag": [
+   "the Bold",
+   "the Great",
+   "the Wise",
+   "the Fair",
+   "the Just",
+   "the Good",
+   "the Pious",
+   "the Fat",
+   "the Bald",
+   "the Lame",
+   "the Mad",
+   "the Red",
+   "the Black",
+   "Ironside",
+   "Ironhand",
+   "Strongbow",
+   "Fitzwalter",
+   "King of Kings",
+   "Son of Heaven",
+   "Ring-Giver"
+  ],
+  "flagListBlocks": false,
+  "banned": [
+   "Saracen",
+   "Infidel",
+   "Heathen",
+   "Gypsy",
+   "Savage",
+   "Barbarian",
+   "Coolie",
+   "Darkie",
+   "Negro",
+   "Half-Breed",
+   "Cripple",
+   "Retard",
+   "Spastic",
+   "Midget",
+   "Idiot",
+   "Imbecile"
+  ],
+  "bannedEpithets": [
+   "the Moor",
+   "the Turk",
+   "the Pagan",
+   "the Mongol",
+   "the Dwarf",
+   "the Jew",
+   "the Gentile"
+  ],
+  "sacred": [
+   "Abd al",
+   "Abdul",
+   "uddin",
+   "ud-Din",
+   "Giorgis"
+  ],
+  "noGods": [
+   "indian",
+   "arabic-persian",
+   "ethiopian",
+   "greek-byzantine"
+  ],
+  "casteWords": [
+   "Sharma",
+   "Patel",
+   "Iyer",
+   "Thakur",
+   "Rana",
+   "Keita",
+   "Traoré",
+   "Kouyaté",
+   "MacLeod",
+   "MacDonald"
+  ]
+ }
+}

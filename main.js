@@ -53662,7 +53662,8 @@ function capitalise(text, formal) {
     return word.replace(/(^|[-–])([a-z])/g, (_m, sep, c) => sep + c.toUpperCase());
   }).join(" ");
 }
-var norm2 = (s) => s.toLowerCase().replace(/^the /, "").replace(/\s+/g, " ").trim();
+var normForBlock = (s) => s.toLowerCase().replace(/^the /, "").replace(/\s+/g, " ").trim();
+var norm2 = normForBlock;
 var wordRe2 = (w) => new RegExp(`(^|[^A-Za-z])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^A-Za-z])`, "i");
 var BANNED = [...TRIBAL_DATA.safeguards.banned, ...GROUP_DATA.safeguards.banned].map(wordRe2);
 var PERSON_NOUNS = new Set(GROUP_DATA.safeguards.personNouns);
