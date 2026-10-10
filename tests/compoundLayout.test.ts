@@ -118,3 +118,19 @@ test("tiny Breakdown parts that gave nothing are loosened and now give names (§
   assert.ok(result.names.length > 0);
   assert.ok((result.loosened ?? []).length > 0);
 });
+
+import { compoundPartFromText } from "../src/packs/compound";
+
+test("editor part boxes: typed ## titles save as titles and come back as typed (§5.3)", () => {
+  const boxes = ["Grak\nMor", "## male\ngash\n## women\nith"];
+  const parts = boxes.map(compoundPartFromText);
+  const written = createCompoundNamesFileContent("Orcs", parts, "combined", "joined", undefined, {
+    partUse: ["all", "sometimes"],
+    partGenerators: ["list", "breakdown"],
+  });
+  assert.match(written, /^compoundPartUse: all, sometimes$/m);
+  assert.match(written, /^compoundPartGenerators: list, breakdown$/m);
+  const parsed = parseNamesFileContent(written);
+  assert.deepEqual(parsed.compoundPartData![1].sectioned!.sections.map((s) => s.name), ["male", "women"]);
+  assert.deepEqual(parsed.parts, [["Grak", "Mor"], ["gash", "ith"]]);
+});

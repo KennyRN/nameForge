@@ -1412,6 +1412,13 @@ function mergeWordLists(derived, template) {
 // src/packs/compound.ts
 var COMPOUND_USE_PERCENT = { all: 100, most: 80, often: 50, sometimes: 20, rarely: 10 };
 var COMPOUND_USES = Object.keys(COMPOUND_USE_PERCENT);
+var COMPOUND_USE_PHRASES = {
+  all: "all of the time",
+  most: "most of the time",
+  often: "often",
+  sometimes: "sometimes",
+  rarely: "rarely"
+};
 var unquote = (v) => v.trim().replace(/^['"]|['"]$/g, "");
 function parseCompoundGenerator(raw) {
   const v = unquote(raw != null ? raw : "");
@@ -1465,6 +1472,11 @@ function splitOldParts(body, partCount) {
 function serialiseCompoundPart(part) {
   if (Array.isArray(part)) return part.join("\n");
   return part.sectioned ? serialiseNameSections(part.sectioned) : part.names.join("\n");
+}
+function compoundPartFromText(text) {
+  const sectioned = parseNameSections(text);
+  if (!sectioned || sectioned.sections.length === 0) return { names: extractNamesFromMarkdown(text) };
+  return { names: allSectionedNames(sectioned), sectioned };
 }
 function compoundTitles(parts) {
   var _a2, _b;
@@ -54218,7 +54230,7 @@ var RecipeWizard = class {
     const w = this.working;
     const part = w.shape.part;
     const custom = this.customBiomes;
-    const menuLink = (text, build) => {
+    const menuLink2 = (text, build) => {
       const a = sentence2.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button" } });
       a.addEventListener("click", (event) => {
         event.preventDefault();
@@ -54234,14 +54246,14 @@ var RecipeWizard = class {
       })
     );
     const biome = this.currentBiome();
-    menuLink(terrainPhrase(w.shape.terrain, custom), (menu) => {
+    menuLink2(terrainPhrase(w.shape.terrain, custom), (menu) => {
       choose(menu, "any part", !w.shape.terrain || w.shape.terrain === "any", () => w.shape.terrain = "any");
       menu.addSeparator();
       const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
       for (const t of terrains) choose(menu, t.phrase, w.shape.terrain === t.id, () => w.shape.terrain = t.id);
     });
     sentence2.appendText(" of ");
-    menuLink(biomePhrase(w.shape.biome, part, custom), (menu) => {
+    menuLink2(biomePhrase(w.shape.biome, part, custom), (menu) => {
       const [first, ...rest] = biomeChoices(part);
       const set = (id) => () => {
         w.shape.biome = id;
@@ -55110,6 +55122,21 @@ function generateNamesFromSource(namesText, packType, count = 6, settings = {}, 
     seed: resolvedSeed
   });
   return { names: result.names, seed: result.seed };
+}
+var COMPOUND_EXAMPLES = {
+  "2-joined": "Wulf+stan = Wulfstan",
+  "2-spaced": "Lofty+Tiger = Lofty Tiger",
+  "3-joined": "\xC6thel+wulf+stan = \xC6thelwulfstan",
+  "3-spaced": "Julius+Octavia+Caesar = Julius Octavia Caesar"
+};
+function menuLink(sentence2, text, title, choices, current, choose) {
+  const a = sentence2.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button", title } });
+  a.addEventListener("click", (event) => {
+    event.preventDefault();
+    const menu = new import_obsidian13.Menu();
+    for (const c of choices) menu.addItem((item) => item.setTitle(c.label).setChecked(c.id === current).onClick(() => choose(c.id)));
+    menu.showAtMouseEvent(event);
+  });
 }
 function resultName(el) {
   var _a2, _b;
@@ -58061,7 +58088,9 @@ ${indent}${marker}${name}`).join("");
         if (!isValidNamePackContent(content)) continue;
         const parsed = parseNamesFileContent(content);
         if (!parsed.template || !kinds.includes(parsed.packType)) continue;
-        out.push(parsed.packType === "compoundPack" ? { name: child.basename, parts: (_a2 = parsed.parts) != null ? _a2 : [] } : { name: child.basename, names: parsed.names });
+        out.push(
+          parsed.packType === "compoundPack" ? { name: child.basename, parts: (_a2 = parsed.parts) != null ? _a2 : [], partTexts: compoundPartData(parsed).map(serialiseCompoundPart) } : { name: child.basename, names: parsed.names }
+        );
       } catch (e) {
         continue;
       }
@@ -58246,14 +58275,12 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     this.compoundPartsCount = 2;
     this.compoundGenerator = "breakdown";
     this.compoundJoining = "joined";
-    this.twoPartsButton = null;
-    this.threePartsButton = null;
-    this.compoundBreakdownButton = null;
-    this.compoundListButton = null;
-    this.joinedButton = null;
-    this.spacedButton = null;
-    this.partsExampleEl = null;
-    this.joiningExampleEl = null;
+    /** Compound brief §5.2: each part's frequency, and its generator when the pack is combined. */
+    this.compoundPartUse = ["all", "all", "all"];
+    this.compoundPartGenerators = ["breakdown", "breakdown", "breakdown"];
+    /** §5.1: the pack sentence; §5.2: one sentence above each part box. */
+    this.compoundSentenceEl = null;
+    this.partSentenceEls = [];
     this.partTextareas = [];
     this.partWrapperEls = [];
     this.mixSectionEl = null;
@@ -58388,35 +58415,15 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     this.compoundSectionEl = container.createDiv({
       cls: "nameforge-modal__compound-section nameforge-editor-modal__stage-pane"
     });
-    const optionsRow = this.compoundSectionEl.createDiv({ cls: "nameforge-modal__compound-options-row" });
-    const partsColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
-    const partsToggle = partsColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
-    this.twoPartsButton = partsToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "2 parts" });
-    this.twoPartsButton.addEventListener("click", () => this.setCompoundParts(2));
-    this.threePartsButton = partsToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "3 parts" });
-    this.threePartsButton.addEventListener("click", () => this.setCompoundParts(3));
-    this.partsExampleEl = partsColumn.createDiv({ cls: "nameforge-modal__compound-example" });
-    const generatorColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
-    const generatorToggle = generatorColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
-    this.compoundBreakdownButton = generatorToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Breakdown" });
-    this.compoundBreakdownButton.addEventListener("click", () => this.setCompoundGenerator("breakdown"));
-    this.compoundListButton = generatorToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "List" });
-    this.compoundListButton.addEventListener("click", () => this.setCompoundGenerator("list"));
-    const joiningColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
-    const joiningToggle = joiningColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
-    this.joinedButton = joiningToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Joined" });
-    this.joinedButton.addEventListener("click", () => this.setCompoundJoining("joined"));
-    this.spacedButton = joiningToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Spaced" });
-    this.spacedButton.addEventListener("click", () => this.setCompoundJoining("spaced"));
-    this.joiningExampleEl = joiningColumn.createDiv({ cls: "nameforge-modal__compound-example" });
+    this.compoundSentenceEl = this.compoundSectionEl.createDiv({ cls: "nameforge-recipe-editor__sentence nameforge-modal__compound-sentence" });
     const partBoxesEl = this.compoundSectionEl.createDiv({ cls: "nameforge-modal__part-boxes" });
     for (let i = 0; i < 3; i++) {
       const wrapper = partBoxesEl.createDiv({ cls: "nameforge-modal__part-box" });
-      wrapper.createEl("label", { cls: "nameforge-modal__part-label", text: `Part ${i + 1}` });
+      this.partSentenceEls.push(wrapper.createDiv({ cls: "nameforge-modal__part-label" }));
       const textarea = wrapper.createEl("textarea", {
         cls: "nameforge-modal__textarea",
         attr: {
-          placeholder: "Paste name elements as CSV, one per line, or space-separated.\n\nWulf\nBeorht\nEad",
+          placeholder: "Paste name elements as CSV, one per line, or space-separated. Start a line with ## to add a title.\n\nWulf\nBeorht\nEad",
           rows: "6"
         }
       });
@@ -58700,7 +58707,10 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     if (entry.parts) {
       const parts = entry.parts.slice(0, 3);
       if (this.partTextareas.slice(0, parts.length).some((t) => t.value.trim()) && !await confirmReplace(this.app, "Replace what's in the parts?")) return;
-      parts.forEach((part, i) => this.partTextareas[i].value = part.join("\n"));
+      parts.forEach((part, i) => {
+        var _a3, _b;
+        return this.partTextareas[i].value = (_b = (_a3 = entry.partTexts) == null ? void 0 : _a3[i]) != null ? _b : part.join("\n");
+      });
       this.setCompoundParts(parts.length >= 3 ? 3 : 2);
       return;
     }
@@ -58713,26 +58723,57 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
   textPaneFor(type) {
     return type === "breakdownPack" || type === "listPack" || type === "placePack" ? type : void 0;
   }
+  /** §5.1, §5.2: the pack sentence and each part's sentence, rebuilt on every change. */
+  renderCompoundSentences() {
+    const sentence2 = this.compoundSentenceEl;
+    if (sentence2) {
+      sentence2.empty();
+      sentence2.appendText("Names have ");
+      menuLink(
+        sentence2,
+        String(this.compoundPartsCount),
+        "How many parts each name has",
+        ["2", "3"].map((v) => ({ id: v, label: v })),
+        String(this.compoundPartsCount),
+        (id) => this.setCompoundParts(id === "3" ? 3 : 2)
+      );
+      sentence2.appendText(" parts, built as ");
+      menuLink(
+        sentence2,
+        this.compoundGenerator,
+        "Breakdown makes new parts from the lists; list uses them as written; combined sets each part",
+        ["breakdown", "list", "combined"].map((v) => ({ id: v, label: v })),
+        this.compoundGenerator,
+        (id) => this.setCompoundGenerator(id)
+      );
+      sentence2.appendText(" and ");
+      menuLink(
+        sentence2,
+        this.compoundJoining,
+        "Joined into one word, or spaced as separate words",
+        ["joined", "spaced"].map((v) => ({ id: v, label: v })),
+        this.compoundJoining,
+        (id) => this.setCompoundJoining(id === "spaced" ? "spaced" : "joined")
+      );
+      sentence2.appendText(` (${COMPOUND_EXAMPLES[`${this.compoundPartsCount}-${this.compoundJoining}`]})`);
+    }
+    this.partSentenceEls.forEach((el, i) => {
+      el.empty();
+      el.appendText(`Part ${i + 1} is used `);
+      menuLink(el, COMPOUND_USE_PHRASES[this.compoundPartUse[i]], "How often this part is in a name", COMPOUND_USES.map((u) => ({ id: u, label: COMPOUND_USE_PHRASES[u] })), this.compoundPartUse[i], (id) => {
+        this.compoundPartUse[i] = id;
+        this.renderCompoundSentences();
+      });
+      if (this.compoundGenerator !== "combined") return;
+      el.appendText(", and is a ");
+      menuLink(el, this.compoundPartGenerators[i], "Breakdown makes new parts from the list; list uses them as written", ["breakdown", "list"].map((v) => ({ id: v, label: v })), this.compoundPartGenerators[i], (id) => {
+        this.compoundPartGenerators[i] = id === "list" ? "list" : "breakdown";
+        this.renderCompoundSentences();
+      });
+    });
+  }
   updateCompoundControls() {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
-    (_a2 = this.twoPartsButton) == null ? void 0 : _a2.classList.toggle("is-active", this.compoundPartsCount === 2);
-    (_b = this.threePartsButton) == null ? void 0 : _b.classList.toggle("is-active", this.compoundPartsCount === 3);
-    (_c = this.twoPartsButton) == null ? void 0 : _c.setAttribute("aria-pressed", String(this.compoundPartsCount === 2));
-    (_d = this.threePartsButton) == null ? void 0 : _d.setAttribute("aria-pressed", String(this.compoundPartsCount === 3));
-    if (this.partsExampleEl) {
-      this.partsExampleEl.textContent = this.compoundPartsCount === 3 ? "Julius Octavia Caesar" : "Bright Blossom";
-    }
-    (_e = this.compoundBreakdownButton) == null ? void 0 : _e.classList.toggle("is-active", this.compoundGenerator === "breakdown");
-    (_f = this.compoundListButton) == null ? void 0 : _f.classList.toggle("is-active", this.compoundGenerator === "list");
-    (_g = this.compoundBreakdownButton) == null ? void 0 : _g.setAttribute("aria-pressed", String(this.compoundGenerator === "breakdown"));
-    (_h = this.compoundListButton) == null ? void 0 : _h.setAttribute("aria-pressed", String(this.compoundGenerator === "list"));
-    (_i = this.joinedButton) == null ? void 0 : _i.classList.toggle("is-active", this.compoundJoining === "joined");
-    (_j = this.spacedButton) == null ? void 0 : _j.classList.toggle("is-active", this.compoundJoining === "spaced");
-    (_k = this.joinedButton) == null ? void 0 : _k.setAttribute("aria-pressed", String(this.compoundJoining === "joined"));
-    (_l = this.spacedButton) == null ? void 0 : _l.setAttribute("aria-pressed", String(this.compoundJoining === "spaced"));
-    if (this.joiningExampleEl) {
-      this.joiningExampleEl.textContent = this.compoundJoining === "spaced" ? "Lofty+Tiger = Lofty Tiger" : "Wulf+stan = Wulfstan";
-    }
+    this.renderCompoundSentences();
     const thirdWrapper = this.partWrapperEls[2];
     if (this.compoundPartsCount === 3) {
       thirdWrapper == null ? void 0 : thirdWrapper.show();
@@ -58765,8 +58806,8 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
       return;
     }
     if (this.selectedPackType === "compoundPack") {
-      const parts = this.partTextareas.slice(0, this.compoundPartsCount).map((textarea) => extractNamesFromMarkdown(textarea.value || ""));
-      if (!templateOf && parts.some((part) => part.length === 0)) {
+      const parts = this.partTextareas.slice(0, this.compoundPartsCount).map((textarea) => compoundPartFromText(textarea.value || ""));
+      if (!templateOf && parts.some((part) => part.names.length === 0)) {
         this.parent.setStatus("No names to save. Enter at least one name for each part.");
         return;
       }
@@ -58786,7 +58827,10 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
       const fileName2 = sanitizePackNameForFilename(packName);
       this.parent.plugin.settings.namesFilePath = (0, import_obsidian13.normalizePath)(`${folderPath2}/${fileName2}.md`);
       await this.parent.plugin.saveSettings();
-      await this.parent.saveCompoundToConfiguredFile(parts, this.compoundGenerator, this.compoundJoining, templateOf);
+      await this.parent.saveCompoundToConfiguredFile(parts, this.compoundGenerator, this.compoundJoining, templateOf, {
+        partUse: this.compoundPartUse.slice(0, this.compoundPartsCount),
+        partGenerators: this.compoundGenerator === "combined" ? this.compoundPartGenerators.slice(0, this.compoundPartsCount) : void 0
+      });
       this.close();
       return;
     }

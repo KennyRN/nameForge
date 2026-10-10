@@ -120,7 +120,10 @@ import {
   type CompoundPart,
   type CompoundPartGenerator,
   type CompoundUse,
+  COMPOUND_USE_PHRASES,
+  COMPOUND_USES,
   compoundPartData,
+  compoundPartFromText,
   compoundPartsFor,
   compoundSettings,
   compoundTitles,
@@ -302,6 +305,32 @@ function generateNamesFromSource(
     seed: resolvedSeed,
   });
   return { names: result.names, seed: result.seed };
+}
+
+/** Compound brief §5.1: the pack sentence's bracketed example for each parts and joining. */
+const COMPOUND_EXAMPLES: Record<string, string> = {
+  "2-joined": "Wulf+stan = Wulfstan",
+  "2-spaced": "Lofty+Tiger = Lofty Tiger",
+  "3-joined": "Æthel+wulf+stan = Æthelwulfstan",
+  "3-spaced": "Julius+Octavia+Caesar = Julius Octavia Caesar",
+};
+
+/** A sentence phrase that opens a menu of choices (as the generate view's sentenceLink, for the editor). */
+function menuLink(
+  sentence: HTMLElement,
+  text: string,
+  title: string,
+  choices: { id: string; label: string }[],
+  current: string,
+  choose: (id: string) => void,
+) {
+  const a = sentence.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button", title } });
+  a.addEventListener("click", (event) => {
+    event.preventDefault();
+    const menu = new Menu();
+    for (const c of choices) menu.addItem((item) => item.setTitle(c.label).setChecked(c.id === current).onClick(() => choose(c.id)));
+    menu.showAtMouseEvent(event);
+  });
 }
 
 /** A results row's name, without any list tag (Compound brief §1.3). */
@@ -3519,11 +3548,11 @@ export class NameForgeModal extends Modal {
 
   /** Template packs of one type (or word lists), for "Start from template" in the editor. */
   /** The user's own template notes of the given pack types, with their names or parts, for the templates pane. */
-  public async listTemplates(kinds: NamePackType[]): Promise<{ name: string; names?: string[]; parts?: string[][] }[]> {
+  public async listTemplates(kinds: NamePackType[]): Promise<{ name: string; names?: string[]; parts?: string[][]; partTexts?: string[] }[]> {
     const folderPath = this.getFolderPath();
     const folder = folderPath ? this.app.vault.getFolderByPath(normalizePath(folderPath)) : null;
     if (!folder) return [];
-    const out: { name: string; names?: string[]; parts?: string[][] }[] = [];
+    const out: { name: string; names?: string[]; parts?: string[][]; partTexts?: string[] }[] = [];
     for (const child of folder.children) {
       if (!(child instanceof TFile) || child.extension !== "md") continue;
       try {
@@ -3531,7 +3560,11 @@ export class NameForgeModal extends Modal {
         if (!isValidNamePackContent(content)) continue;
         const parsed = parseNamesFileContent(content);
         if (!parsed.template || !kinds.includes(parsed.packType)) continue;
-        out.push(parsed.packType === "compoundPack" ? { name: child.basename, parts: parsed.parts ?? [] } : { name: child.basename, names: parsed.names });
+        out.push(
+          parsed.packType === "compoundPack"
+            ? { name: child.basename, parts: parsed.parts ?? [], partTexts: compoundPartData(parsed).map(serialiseCompoundPart) }
+            : { name: child.basename, names: parsed.names },
+        );
       } catch {
         continue;
       }
@@ -3754,16 +3787,14 @@ class NameForgeEditorModal extends Modal {
 
   private compoundSectionEl: HTMLElement | null = null;
   private compoundPartsCount: 2 | 3 = 2;
-  private compoundGenerator: "breakdown" | "list" = "breakdown";
+  private compoundGenerator: CompoundGenerator = "breakdown";
   private compoundJoining: "joined" | "spaced" = "joined";
-  private twoPartsButton: HTMLButtonElement | null = null;
-  private threePartsButton: HTMLButtonElement | null = null;
-  private compoundBreakdownButton: HTMLButtonElement | null = null;
-  private compoundListButton: HTMLButtonElement | null = null;
-  private joinedButton: HTMLButtonElement | null = null;
-  private spacedButton: HTMLButtonElement | null = null;
-  private partsExampleEl: HTMLElement | null = null;
-  private joiningExampleEl: HTMLElement | null = null;
+  /** Compound brief §5.2: each part's frequency, and its generator when the pack is combined. */
+  private compoundPartUse: CompoundUse[] = ["all", "all", "all"];
+  private compoundPartGenerators: CompoundPartGenerator[] = ["breakdown", "breakdown", "breakdown"];
+  /** §5.1: the pack sentence; §5.2: one sentence above each part box. */
+  private compoundSentenceEl: HTMLElement | null = null;
+  private partSentenceEls: HTMLElement[] = [];
   private partTextareas: HTMLTextAreaElement[] = [];
   private partWrapperEls: HTMLElement[] = [];
 
@@ -3930,39 +3961,17 @@ class NameForgeEditorModal extends Modal {
       cls: "nameforge-modal__compound-section nameforge-editor-modal__stage-pane",
     });
 
-    const optionsRow = this.compoundSectionEl.createDiv({ cls: "nameforge-modal__compound-options-row" });
-
-    const partsColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
-    const partsToggle = partsColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
-    this.twoPartsButton = partsToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "2 parts" });
-    this.twoPartsButton.addEventListener("click", () => this.setCompoundParts(2));
-    this.threePartsButton = partsToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "3 parts" });
-    this.threePartsButton.addEventListener("click", () => this.setCompoundParts(3));
-    this.partsExampleEl = partsColumn.createDiv({ cls: "nameforge-modal__compound-example" });
-
-    const generatorColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
-    const generatorToggle = generatorColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
-    this.compoundBreakdownButton = generatorToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Breakdown" });
-    this.compoundBreakdownButton.addEventListener("click", () => this.setCompoundGenerator("breakdown"));
-    this.compoundListButton = generatorToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "List" });
-    this.compoundListButton.addEventListener("click", () => this.setCompoundGenerator("list"));
-
-    const joiningColumn = optionsRow.createDiv({ cls: "nameforge-modal__compound-option-column" });
-    const joiningToggle = joiningColumn.createDiv({ cls: "nameforge-modal__toggle-panel" });
-    this.joinedButton = joiningToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Joined" });
-    this.joinedButton.addEventListener("click", () => this.setCompoundJoining("joined"));
-    this.spacedButton = joiningToggle.createEl("button", { cls: "nameforge-modal__toggle-button", text: "Spaced" });
-    this.spacedButton.addEventListener("click", () => this.setCompoundJoining("spaced"));
-    this.joiningExampleEl = joiningColumn.createDiv({ cls: "nameforge-modal__compound-example" });
+    // Compound brief §5.1: "Names have ‹2› parts, built as ‹breakdown› and ‹joined› (Wulf+stan = Wulfstan)".
+    this.compoundSentenceEl = this.compoundSectionEl.createDiv({ cls: "nameforge-recipe-editor__sentence nameforge-modal__compound-sentence" });
 
     const partBoxesEl = this.compoundSectionEl.createDiv({ cls: "nameforge-modal__part-boxes" });
     for (let i = 0; i < 3; i++) {
       const wrapper = partBoxesEl.createDiv({ cls: "nameforge-modal__part-box" });
-      wrapper.createEl("label", { cls: "nameforge-modal__part-label", text: `Part ${i + 1}` });
+      this.partSentenceEls.push(wrapper.createDiv({ cls: "nameforge-modal__part-label" }));
       const textarea = wrapper.createEl("textarea", {
         cls: "nameforge-modal__textarea",
         attr: {
-          placeholder: "Paste name elements as CSV, one per line, or space-separated.\n\nWulf\nBeorht\nEad",
+          placeholder: "Paste name elements as CSV, one per line, or space-separated. Start a line with ## to add a title.\n\nWulf\nBeorht\nEad",
           rows: "6",
         },
       });
@@ -4182,7 +4191,7 @@ class NameForgeEditorModal extends Modal {
     this.updateCompoundControls();
   }
 
-  private setCompoundGenerator(generator: "breakdown" | "list") {
+  private setCompoundGenerator(generator: CompoundGenerator) {
     this.compoundGenerator = generator;
     this.updateCompoundControls();
   }
@@ -4262,11 +4271,12 @@ class NameForgeEditorModal extends Modal {
   }
 
   /** Fills the box (or the compound parts) from a template, asking first if there is text to replace. */
-  private async useTemplate(entry: { names?: string[]; parts?: string[][] }) {
+  private async useTemplate(entry: { names?: string[]; parts?: string[][]; partTexts?: string[] }) {
     if (entry.parts) {
       const parts = entry.parts.slice(0, 3);
       if (this.partTextareas.slice(0, parts.length).some((t) => t.value.trim()) && !(await confirmReplace(this.app, "Replace what's in the parts?"))) return;
-      parts.forEach((part, i) => (this.partTextareas[i].value = part.join("\n")));
+      // §5.3: a pack's titles come into the boxes with its names.
+      parts.forEach((part, i) => (this.partTextareas[i].value = entry.partTexts?.[i] ?? part.join("\n")));
       this.setCompoundParts(parts.length >= 3 ? 3 : 2);
       return;
     }
@@ -4281,28 +4291,48 @@ class NameForgeEditorModal extends Modal {
     return type === "breakdownPack" || type === "listPack" || type === "placePack" ? type : undefined;
   }
 
+  /** §5.1, §5.2: the pack sentence and each part's sentence, rebuilt on every change. */
+  private renderCompoundSentences() {
+    const sentence = this.compoundSentenceEl;
+    if (sentence) {
+      sentence.empty();
+      sentence.appendText("Names have ");
+      menuLink(sentence, String(this.compoundPartsCount), "How many parts each name has", ["2", "3"].map((v) => ({ id: v, label: v })), String(this.compoundPartsCount), (id) =>
+        this.setCompoundParts(id === "3" ? 3 : 2),
+      );
+      sentence.appendText(" parts, built as ");
+      menuLink(
+        sentence,
+        this.compoundGenerator,
+        "Breakdown makes new parts from the lists; list uses them as written; combined sets each part",
+        (["breakdown", "list", "combined"] as const).map((v) => ({ id: v, label: v })),
+        this.compoundGenerator,
+        (id) => this.setCompoundGenerator(id as CompoundGenerator),
+      );
+      sentence.appendText(" and ");
+      menuLink(sentence, this.compoundJoining, "Joined into one word, or spaced as separate words", ["joined", "spaced"].map((v) => ({ id: v, label: v })), this.compoundJoining, (id) =>
+        this.setCompoundJoining(id === "spaced" ? "spaced" : "joined"),
+      );
+      sentence.appendText(` (${COMPOUND_EXAMPLES[`${this.compoundPartsCount}-${this.compoundJoining}`]})`);
+    }
+    this.partSentenceEls.forEach((el, i) => {
+      el.empty();
+      el.appendText(`Part ${i + 1} is used `);
+      menuLink(el, COMPOUND_USE_PHRASES[this.compoundPartUse[i]], "How often this part is in a name", COMPOUND_USES.map((u) => ({ id: u, label: COMPOUND_USE_PHRASES[u] })), this.compoundPartUse[i], (id) => {
+        this.compoundPartUse[i] = id as CompoundUse;
+        this.renderCompoundSentences();
+      });
+      if (this.compoundGenerator !== "combined") return;
+      el.appendText(", and is a ");
+      menuLink(el, this.compoundPartGenerators[i], "Breakdown makes new parts from the list; list uses them as written", ["breakdown", "list"].map((v) => ({ id: v, label: v })), this.compoundPartGenerators[i], (id) => {
+        this.compoundPartGenerators[i] = id === "list" ? "list" : "breakdown";
+        this.renderCompoundSentences();
+      });
+    });
+  }
+
   private updateCompoundControls() {
-    this.twoPartsButton?.classList.toggle("is-active", this.compoundPartsCount === 2);
-    this.threePartsButton?.classList.toggle("is-active", this.compoundPartsCount === 3);
-    this.twoPartsButton?.setAttribute("aria-pressed", String(this.compoundPartsCount === 2));
-    this.threePartsButton?.setAttribute("aria-pressed", String(this.compoundPartsCount === 3));
-    if (this.partsExampleEl) {
-      this.partsExampleEl.textContent = this.compoundPartsCount === 3 ? "Julius Octavia Caesar" : "Bright Blossom";
-    }
-
-    this.compoundBreakdownButton?.classList.toggle("is-active", this.compoundGenerator === "breakdown");
-    this.compoundListButton?.classList.toggle("is-active", this.compoundGenerator === "list");
-    this.compoundBreakdownButton?.setAttribute("aria-pressed", String(this.compoundGenerator === "breakdown"));
-    this.compoundListButton?.setAttribute("aria-pressed", String(this.compoundGenerator === "list"));
-
-    this.joinedButton?.classList.toggle("is-active", this.compoundJoining === "joined");
-    this.spacedButton?.classList.toggle("is-active", this.compoundJoining === "spaced");
-    this.joinedButton?.setAttribute("aria-pressed", String(this.compoundJoining === "joined"));
-    this.spacedButton?.setAttribute("aria-pressed", String(this.compoundJoining === "spaced"));
-    if (this.joiningExampleEl) {
-      this.joiningExampleEl.textContent = this.compoundJoining === "spaced" ? "Lofty+Tiger = Lofty Tiger" : "Wulf+stan = Wulfstan";
-    }
-
+    this.renderCompoundSentences();
     const thirdWrapper = this.partWrapperEls[2];
     if (this.compoundPartsCount === 3) {
       thirdWrapper?.show();
@@ -4335,11 +4365,10 @@ class NameForgeEditorModal extends Modal {
     }
 
     if (this.selectedPackType === "compoundPack") {
-      const parts = this.partTextareas
-        .slice(0, this.compoundPartsCount)
-        .map((textarea) => extractNamesFromMarkdown(textarea.value || ""));
+      // §5.3: `## title` lines in a part box are kept as that part's titles.
+      const parts = this.partTextareas.slice(0, this.compoundPartsCount).map((textarea) => compoundPartFromText(textarea.value || ""));
 
-      if (!templateOf && parts.some((part) => part.length === 0)) {
+      if (!templateOf && parts.some((part) => part.names.length === 0)) {
         this.parent.setStatus("No names to save. Enter at least one name for each part.");
         return;
       }
@@ -4363,7 +4392,10 @@ class NameForgeEditorModal extends Modal {
       this.parent.plugin.settings.namesFilePath = normalizePath(`${folderPath}/${fileName}.md`);
       await this.parent.plugin.saveSettings();
 
-      await this.parent.saveCompoundToConfiguredFile(parts, this.compoundGenerator, this.compoundJoining, templateOf);
+      await this.parent.saveCompoundToConfiguredFile(parts, this.compoundGenerator, this.compoundJoining, templateOf, {
+        partUse: this.compoundPartUse.slice(0, this.compoundPartsCount),
+        partGenerators: this.compoundGenerator === "combined" ? this.compoundPartGenerators.slice(0, this.compoundPartsCount) : undefined,
+      });
       this.close();
       return;
     }
