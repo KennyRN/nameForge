@@ -263,6 +263,15 @@ function cultureLand(culture: string): string[] {
   return (world?.lists.land ?? []).filter((w) => !w.includes("{")).map(stripPlural);
 }
 
+/** §11.4: the deity and saint names each no-gods culture's places may draw on. */
+const HOLY_NAMES = new Map(
+  BYNAMES_DATA.safeguards.noGods.flatMap((key) => {
+    const world = WORLD_CULTURES.find((c) => c.id === key);
+    const words = [...(world?.lists.god ?? []), ...(world?.lists.saint ?? [])].map(stripPlural).filter((w) => !w.includes("{"));
+    return words.length > 0 ? [[key, new RegExp(`(^|[^\\p{L}])(${words.join("|")})($|[^\\p{L}])`, "u")] as const] : [];
+  }),
+);
+
 /** §4.3: where invented places come from. */
 function townSource(culture: string): string | undefined {
   if (["general", "anglo-saxon", "celtic", "norman-british"].includes(culture)) return "britain";
@@ -292,7 +301,8 @@ export function slavicPatronymic(father: string, sex: Sex): string {
   const male = sex === "male";
   const drop = (n: number) => father.slice(0, father.length - n);
   for (const end of ["iy", "ei", "y", "i"]) if (lower.endsWith(end)) return drop(end.length) + (male ? "evich" : "evna");
-  for (const end of ["ya", "a"]) if (lower.endsWith(end)) return drop(end.length) + (male ? "ich" : "ichna");
+  // -a and -ya drop the final a (Ilya → Ilyich, as §15.5 has it).
+  if (lower.endsWith("a")) return drop(1) + (male ? "ich" : "ichna");
   return father + (male ? "ovich" : "ovna");
 }
 
@@ -362,8 +372,15 @@ function token(ctx: Ctx, raw: string): string | undefined {
     }
     case "child":
       return personName(ctx, "child");
-    case "town":
-      return groupTown(ctx.setting, townSource(ctx.culture), rng);
+    case "town": {
+      // §11.4: no deity or saint names in these cultures' places (Ganesha's Plain, Saint George's).
+      const holy = HOLY_NAMES.get(ctx.culture);
+      for (let i = 0; i < 20; i++) {
+        const town = groupTown(ctx.setting, townSource(ctx.culture), rng);
+        if (!holy || !holy.test(town)) return town;
+      }
+      return undefined;
+    }
     case "god": {
       if (BYNAMES_DATA.safeguards.noGods.includes(ctx.culture)) return undefined;
       const gods = WORLD_CULTURES.find((c) => c.id === ctx.culture)?.lists.god ?? [];
@@ -439,7 +456,7 @@ function placeLand(ctx: Ctx): string | undefined {
 const SMALL = new Set(["of", "the", "and", "a", "an", "de", "le"]);
 const contentWords = (text: string) =>
   text
-    .replace(/[“”"]/g, "")
+    .replace(/[“”",.]/g, "")
     .split(/[\s-]+/)
     .map((w) => w.toLowerCase())
     .filter((w) => w && !SMALL.has(w) && !w.startsWith("["));

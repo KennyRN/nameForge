@@ -140,3 +140,145 @@ test("epithets: Aztec day names in English and native forms", () => {
   assert.ok(native.includes("Ce Acatl"));
   assert.equal(gen({ module: "epithets", culture: "aztec", kind: "dayName", language: "native" }, 1).names[0].text.startsWith("[name], "), true);
 });
+
+// §15.4 Titles
+
+import { WORLD_CULTURES } from "../src/world/engine";
+import { entryForm, greekPatronymic, nativeOf, norsePatronymic, slavicPatronymic, welshPatronymic } from "../src/bynames/engine";
+
+/** Every form a culture's ranks give one sex, in English and native. */
+const rankForms = (culture: string, sex: "male" | "female") =>
+  new Set(BYNAMES_DATA.ranks[culture].flatMap((e) => [entryForm(e, sex, false)?.text, entryForm(e, sex, true)?.text]).filter(Boolean));
+
+test("titles: men never get a women's form, nor women a men's (2,000 each, every culture)", () => {
+  for (const c of BYNAME_CULTURES) {
+    for (const [gender, sex] of [["men", "male"], ["women", "female"]] as const) {
+      const forms = rankForms(c.key, sex);
+      const names = Array.from({ length: 4 }, (_, i) => gen({ module: "titles", culture: c.key, kind: "rank", gender, language: "mixed", source: "none" }, 500, i + 1).names).flat();
+      for (const n of names) assert.ok(forms.has(n.text), `${c.key} ${gender}: ${n.text}`);
+    }
+  }
+});
+
+test("titles: steppe Khan follows the name", () => {
+  const names = gen({ module: "titles", culture: "steppe", kind: "rank", gender: "men" }, 100).names.map((n) => n.text);
+  assert.ok(names.includes("[name] Khan"), names.join(", "));
+  assert.ok(!names.includes("Khan [name]"));
+});
+
+test("titles: full styles have 2–4 parts, a rank first and no repeated content word", () => {
+  for (const c of BYNAME_CULTURES) {
+    const names = gen({ module: "titles", culture: c.key, length: "full", source: "none", gender: "men" }, 50, 3).names;
+    assert.ok(names.length > 0, c.key);
+    const ranks = rankForms(c.key, "male");
+    for (const n of names) {
+      const parts = n.text.split(", ");
+      assert.ok(parts.length >= 2 && parts.length <= 4, n.text);
+      assert.ok([...ranks].some((r) => parts[0] === r || parts[0].startsWith(`${r} of `) || parts[0].startsWith(`${r} de `) || parts[0].startsWith(`${r} d'`)), n.text);
+      const words = n.text.split(/[\s,-]+/).map((w) => w.toLowerCase()).filter((w) => w && !["of", "the", "and", "a", "an", "de", "le"].includes(w));
+      assert.equal(new Set(words).size, words.length, n.text);
+    }
+  }
+});
+
+test("titles: native forms, and English where an entry has none", () => {
+  const norse = gen({ module: "titles", culture: "norse", kind: "rank", language: "native", gender: "men", source: "none" }, 6).names.map((n) => n.text);
+  assert.ok(norse.includes("Konungr") && !norse.includes("King"), norse.join(", "));
+  const norman = gen({ module: "titles", culture: "norman-british", kind: "rank", language: "native", gender: "men", source: "none" }, 12).names.map((n) => n.text);
+  assert.ok(norman.includes("Baron") && norman.includes("Roi"), norman.join(", "));
+});
+
+test("titles: Norman native place takes de, or d' before a vowel", () => {
+  assert.equal(`Duc ${nativeOf("norman-british", "Fenwick")}`, "Duc de Fenwick");
+  assert.equal(nativeOf("norman-british", "Avonmouth"), "d'Avonmouth");
+  assert.equal(nativeOf("norse", "Fenwick"), "of Fenwick");
+  const offices = Array.from({ length: 10 }, (_, i) => gen({ module: "titles", culture: "norman-british", kind: "office", language: "native", gender: "men", source: "none" }, 100, i + 1).names).flat();
+  const ranked = offices.filter((n) => n.shape === "{rank} of {town}").map((n) => n.text);
+  assert.ok(ranked.some((t) => /^Duc (de |d')/.test(t)), ranked.slice(0, 8).join(", "));
+  assert.ok(!ranked.some((t) => /^(Duc|Roi|Comte) of /.test(t)));
+});
+
+// §15.5 Family names
+
+const packOf = (names: Partial<Record<"self" | "father" | "mother" | "child", string>>) => ({
+  source: "pack" as const,
+  draw: (role: "self" | "father" | "mother" | "child") => names[role] ?? null,
+});
+
+test("family names: Slavic, Norse, Welsh and Greek parent forms", () => {
+  assert.equal(slavicPatronymic("Ivan", "male"), "Ivanovich");
+  assert.equal(slavicPatronymic("Ivan", "female"), "Ivanovna");
+  assert.equal(slavicPatronymic("Sergei", "male"), "Sergevich");
+  assert.equal(slavicPatronymic("Sergei", "female"), "Sergevna");
+  assert.equal(slavicPatronymic("Ilya", "male"), "Ilyich");
+  assert.equal(slavicPatronymic("Ilya", "female"), "Ilyichna");
+  assert.equal(norsePatronymic("Sigurd", "male"), "Sigurdsson");
+  assert.equal(norsePatronymic("Sigurd", "female"), "Sigurdsdóttir");
+  assert.equal(norsePatronymic("Hans", "male"), "Hansson");
+  assert.equal(norsePatronymic("Hans", "female"), "Hansdóttir");
+  assert.equal(welshPatronymic("Owain"), "ab Owain");
+  assert.equal(welshPatronymic("Rhys"), "ap Rhys");
+  assert.equal(greekPatronymic("Nikolaos"), "Nikolaosides");
+  assert.equal(greekPatronymic("Andrea"), "Andreides");
+});
+
+test("family names: Gaelic Mac and Nic join the father's name", () => {
+  const men = gen({ module: "familyNames", culture: "celtic", kind: "patronymic", language: "native", gender: "men", ...packOf({ self: "Tavin", father: "Brannoc" }) }, 10).names.map((n) => n.text);
+  const women = gen({ module: "familyNames", culture: "celtic", kind: "patronymic", language: "native", gender: "women", ...packOf({ self: "Ailsa", father: "Brannoc" }) }, 10).names.map((n) => n.text);
+  assert.ok(men.includes("Tavin MacBrannoc") && men.includes("Tavin O'Brannoc"), men.join(", "));
+  assert.ok(women.includes("Ailsa NicBrannoc") && !women.some((t) => t.includes("MacBrannoc")), women.join(", "));
+});
+
+test("family names: family-first cultures put the surname first", () => {
+  const names = gen({ module: "familyNames", culture: "chinese", language: "native" }, 60).names.map((n) => n.text);
+  assert.ok(names.includes("Wang [name]"), names.slice(0, 6).join(", "));
+  assert.ok(names.every((t) => t.endsWith(" [name]")));
+});
+
+test("family names: Indian names hold no trade or caste word", () => {
+  const trade = new Set(BYNAMES_DATA.lists.trade.map((e) => e.w!.toLowerCase()));
+  const caste = BYNAMES_DATA.safeguards.casteWords.map((w) => w.toLowerCase());
+  const names = Array.from({ length: 50 }, (_, i) => gen({ module: "familyNames", culture: "indian", language: "mixed" }, 100, i + 1).names).flat();
+  assert.ok(names.length >= 1000);
+  for (const n of names) {
+    const words = n.text.toLowerCase().split(/[\s,]+/);
+    assert.ok(!words.some((w) => trade.has(w) || caste.includes(w)), n.text);
+  }
+});
+
+test("family names: English-mode Chinese draws only the 15 pairs", () => {
+  const english = new Set(BYNAMES_DATA.lists.chineseFamily.filter((e) => e.w).map((e) => e.w));
+  assert.equal(english.size, 15);
+  const names = gen({ module: "familyNames", culture: "chinese", language: "english", source: "none" }, 40).names.map((n) => n.text);
+  assert.ok(names.length > 0 && names.every((t) => english.has(t)), names.join(", "));
+});
+
+// §15.6 Safeguards
+
+test("safeguards: no block-list match, banned word or sacred form (per module and culture)", () => {
+  const block = new Set(BYNAMES_DATA.safeguards.block.map((b) => b.toLowerCase().replace(/^the /, "")));
+  const banned = [...BYNAMES_DATA.safeguards.banned];
+  const sacred = BYNAMES_DATA.safeguards.sacred.map((w) => w.toLowerCase());
+  // §11.4: no deity names for these cultures (the Indian world list stands for real deities here).
+  const noGods = new Set(BYNAMES_DATA.safeguards.noGods);
+  const deities = (WORLD_CULTURES.find((w) => w.id === "indian")!.lists.god ?? []).map((g) => g.split("|")[0]);
+  for (const module of MODULES) for (const c of BYNAME_CULTURES) {
+    const names = Array.from({ length: 10 }, (_, i) => gen({ module, culture: c.key, language: "mixed", tone: (["any", "light", "grim", "grand", "strange"] as const)[i % 5] }, 100, i + 1).names).flat();
+    for (const n of names) {
+      const bare = n.text.replace(/\[(name|father|mother|child)\],? ?/g, "").replace(/[“”]/g, "").toLowerCase().replace(/^the /, "").trim();
+      assert.ok(!block.has(bare), `${module} ${c.key}: ${n.text}`);
+      assert.ok(!banned.some((w) => new RegExp(`(^|[^\\p{L}])${w}($|[^\\p{L}])`, "iu").test(n.text)), n.text);
+      assert.ok(!sacred.some((w) => n.text.toLowerCase().includes(w)), n.text);
+      assert.ok(!/ of (the Faith|Islam|God)$/i.test(n.text), n.text);
+      if (noGods.has(c.key)) assert.ok(!deities.some((g) => new RegExp(`\\b${g}\\b`).test(n.text)), n.text);
+    }
+  }
+});
+
+test("safeguards: a pack name can't complete a real byname", () => {
+  const names = Array.from({ length: 20 }, (_, i) => gen({ module: "epithets", tone: "light", ...packOf({ self: "Æthelred" }) }, 100, i + 1).names).flat();
+  assert.ok(names.length > 0);
+  assert.ok(!names.some((n) => n.text === "Æthelred the Unready"));
+  const alone = Array.from({ length: 20 }, (_, i) => gen({ module: "epithets", tone: "light", kind: "body", source: "none" }, 100, i + 1).names).flat();
+  assert.ok(alone.some((n) => n.text === "the Unready"), "the Unready is allowed on its own");
+});
