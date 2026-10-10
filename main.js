@@ -1561,6 +1561,13 @@ function generateCompoundTitled(parts, options) {
 }
 
 // src/nameParser.ts
+function parsePlaceGenerator(raw) {
+  const v = (raw != null ? raw : "").trim().replace(/^['"]|['"]$/g, "");
+  return v === "list" || v === "compound" ? v : "breakdown";
+}
+function isCompoundPack(p) {
+  return p.packType === "compoundPack" || p.packType === "placePack" && p.placeGenerator === "compound";
+}
 var PACK_TYPES = ["breakdownPack", "listPack", "compoundPack", "placePack", "mixPack"];
 function isPackType(value) {
   return PACK_TYPES.includes(value);
@@ -1574,7 +1581,7 @@ function isValidNamePackContent(content) {
   return /^type:\s*namePack\s*$/m.test(frontmatter) && /^packName:\s*(.+)$/m.test(frontmatter);
 }
 function parseNamesFileContent(content) {
-  var _a2, _b, _c;
+  var _a2, _b, _c, _d, _e;
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   let packName = "nameForge";
   let body = content;
@@ -1600,15 +1607,16 @@ function parseNamesFileContent(content) {
     }
     templateFields = parseTemplateFields(frontmatter);
     body = content.slice(frontmatterMatch[0].length);
-    if (packType === "compoundPack") {
+    const placeGenerator2 = packType === "placePack" ? parsePlaceGenerator((_a2 = frontmatter.match(/^placeGenerator:\s*(.*)$/m)) == null ? void 0 : _a2[1]) : void 0;
+    if (packType === "compoundPack" || placeGenerator2 === "compound") {
       const compoundPartsMatch = frontmatter.match(/^compoundParts:\s*(.+)$/m);
       const compoundParts = compoundPartsMatch && compoundPartsMatch[1].trim() === "3" ? 3 : 2;
-      const compoundGenerator = parseCompoundGenerator((_a2 = frontmatter.match(/^compoundGenerator:\s*(.+)$/m)) == null ? void 0 : _a2[1]);
+      const compoundGenerator = parseCompoundGenerator((_b = frontmatter.match(/^compoundGenerator:\s*(.+)$/m)) == null ? void 0 : _b[1]);
       const compoundJoiningMatch = frontmatter.match(/^compoundJoining:\s*(.+)$/m);
       const compoundJoining = compoundJoiningMatch && compoundJoiningMatch[1].trim().replace(/^['"]|['"]$/g, "") === "spaced" ? "spaced" : "joined";
       const partData = parseCompoundBody(body, compoundParts);
-      const partUse = parseCompoundUse((_b = frontmatter.match(/^compoundPartUse:\s*(.*)$/m)) == null ? void 0 : _b[1], compoundParts);
-      const partGenerators = compoundGenerator === "combined" ? parseCompoundPartGenerators((_c = frontmatter.match(/^compoundPartGenerators:\s*(.*)$/m)) == null ? void 0 : _c[1], compoundParts) : void 0;
+      const partUse = parseCompoundUse((_c = frontmatter.match(/^compoundPartUse:\s*(.*)$/m)) == null ? void 0 : _c[1], compoundParts);
+      const partGenerators = compoundGenerator === "combined" ? parseCompoundPartGenerators((_d = frontmatter.match(/^compoundPartGenerators:\s*(.*)$/m)) == null ? void 0 : _d[1], compoundParts) : void 0;
       return {
         packName,
         names: [],
@@ -1620,6 +1628,7 @@ function parseNamesFileContent(content) {
         compoundPartData: partData,
         compoundPartUse: partUse,
         ...partGenerators ? { compoundPartGenerators: partGenerators } : {},
+        ...placeGenerator2 ? { placeGenerator: placeGenerator2 } : {},
         setting,
         ...templateFields
       };
@@ -1635,11 +1644,13 @@ function parseNamesFileContent(content) {
       };
     }
   }
-  const sectioned = packType === "listPack" || packType === "breakdownPack" ? parseNameSections(body) : null;
+  const sectioned = packType === "listPack" || packType === "breakdownPack" || packType === "placePack" ? parseNameSections(body) : null;
+  const placeGenerator = packType === "placePack" && frontmatterMatch ? parsePlaceGenerator((_e = frontmatterMatch[1].match(/^placeGenerator:\s*(.*)$/m)) == null ? void 0 : _e[1]) : void 0;
   return {
     packName,
     names: extractNamesFromMarkdown(body),
     packType,
+    ...placeGenerator ? { placeGenerator } : {},
     setting,
     ...sectioned ? { sectioned } : {},
     ...templateFields
@@ -1667,7 +1678,7 @@ function applyTemplate(derived, template) {
 function mergeWithTemplate(derived, template) {
   var _a2, _b, _c;
   const merged = { ...derived };
-  if (derived.packType === "compoundPack") {
+  if (isCompoundPack(derived)) {
     const count = (_b = (_a2 = derived.compoundParts) != null ? _a2 : template.compoundParts) != null ? _b : 2;
     merged.parts = Array.from({ length: count }, (_, i) => {
       var _a3, _b2, _c2, _d;
@@ -1701,10 +1712,12 @@ function createNamesFileContent(packName, names, packType = "breakdownPack", opt
   const templateLine = options.templateOf ? `template-of: "[[${options.templateOf}]]"
 ` : "";
   const body = options.sectioned ? serialiseNameSections(options.sectioned) : names.join("\n");
+  const placeLine = packType === "placePack" && options.placeGenerator && options.placeGenerator !== "breakdown" ? `placeGenerator: ${options.placeGenerator}
+` : "";
   return `---
 type: namePack
 packType: ${packType}
-packName: ${safePackName}
+${placeLine}packName: ${safePackName}
 setting: 
 ${templateLine}---
 
@@ -1733,9 +1746,10 @@ ${text}` : `# Part ${index + 1}`;
   });
   const gensLine = generator === "combined" && gens.some((g) => g !== "breakdown") ? `compoundPartGenerators: ${gens.join(", ")}
 ` : "";
+  const typeLines = options.place ? "packType: placePack\nplaceGenerator: compound" : "packType: compoundPack";
   return `---
 type: namePack
-packType: compoundPack
+${typeLines}
 compoundParts: ${parts.length}
 compoundGenerator: ${generator}
 compoundJoining: ${joining}
@@ -1840,7 +1854,7 @@ function findPackInIndex(index, ref) {
 }
 function namesFromParsedPack(parsed) {
   var _a2;
-  if (parsed.packType === "compoundPack") {
+  if (isCompoundPack(parsed)) {
     return ((_a2 = parsed.parts) != null ? _a2 : []).flat().filter((name) => name.trim().length > 0);
   }
   return parsed.names.filter((name) => name.trim().length > 0);
