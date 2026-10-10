@@ -106,7 +106,12 @@ import {
   type SectionOption,
   sectionOptions,
   wholePackOption,
+  breakdownSettingsFor,
+  emptyListNotice,
   selectSectionNames,
+  shortBreakdownLists,
+  shortListsSaveNotice,
+  smallListNotice,
 } from "./packs/sections";
 import { generateLabelledNames } from "./packs/labelled";
 import { AGEING, type AgeingCandidate, ageName, validateSource } from "./ageing/engine";
@@ -247,7 +252,9 @@ function generateNamesFromSource(
   packType: NamePackType,
   count: number = 6,
   settings: NameForgeSettings = {},
-  seed?: number
+  seed?: number,
+  /** Compound brief §2.3: a small Breakdown list's looser settings. */
+  breakdown?: { allowSourceCopies: boolean; strictness: number },
 ): SourceGenerationResult {
   const names = extractNamesFromMarkdown(namesText);
   const resolvedSeed = resolveSeed(seed);
@@ -277,6 +284,7 @@ function generateNamesFromSource(
     count,
     faithfulness: settings.faithfulness ?? 2,
     strictness: settings.strictness ?? 3,
+    ...breakdown,
     seed: resolvedSeed,
   });
   return { names: result.names, seed: result.seed };
@@ -2244,6 +2252,13 @@ export class NameForgeModal extends Modal {
     }
     this.currentNamesText = names.join("\n");
     this.setStatus("");
+    // Compound brief §2.2: small Breakdown lists save with a warning.
+    if (packType === "breakdownPack") this.warnShortLists(shortBreakdownLists([{ body: namesText, breakdown: true }]));
+  }
+
+  /** §2.2: one notice naming every Breakdown list under the minimum. */
+  private warnShortLists(short: ReturnType<typeof shortBreakdownLists>) {
+    if (short.length > 0) new Notice(shortListsSaveNotice(short), 10000);
   }
 
   public async saveCompoundToConfiguredFile(
@@ -2292,6 +2307,7 @@ export class NameForgeModal extends Modal {
     this.currentCompoundGenerator = generator;
     this.currentCompoundJoining = joining;
     this.setStatus("");
+    this.warnShortLists(shortBreakdownLists(parts.map((part, i) => ({ part: i + 1, body: part.join("\n"), breakdown: generator === "breakdown" }))));
   }
 
   public async saveMixToConfiguredFile(sources: MixSourceRef[], templateOf?: string) {
@@ -3014,7 +3030,7 @@ export class NameForgeModal extends Modal {
       this.currentSeed = result.seed;
       this.renderResults(result.names);
       await this.recordGenerationHistory(result.names.length);
-      this.setStatus("");
+      this.setStatus((result.loosened ?? []).map((i) => smallListNotice(`Part ${i + 1}`, this.currentCompoundParts[i].length)).join(" "));
       return;
     }
 
@@ -3087,31 +3103,42 @@ export class NameForgeModal extends Modal {
       this.currentSeed = result.seed;
       this.renderResults(result.names.map((n) => n.name), undefined, result.names.map((n) => n.tag));
       await this.recordGenerationHistory(result.names.length);
-      this.setStatus("");
+      this.setStatus(result.small.map((l) => smallListNotice(l.tag ?? "untitled", l.count)).join(" "));
       return;
     }
 
-    // §10: a chosen section narrows the names; Breakdown sections under 20 names fall back.
+    // §10: a chosen section narrows the names. Compound brief §2.3: a small Breakdown section is
+    // used as chosen, loosened, with a notice — never swapped for the whole pack.
     let namesText = this.currentNamesText;
     let sectionNotices: string[] = [];
+    let loosened: { allowSourceCopies: boolean; strictness: number } | undefined;
+    let usedSection: string | undefined;
     if (choice && !choice.whole && this.currentSectioned) {
-      const selection = selectSectionNames(
-        this.currentSectioned,
-        choice.request,
-        this.currentPackType === "breakdownPack" ? 20 : 0,
-      );
+      const selection = selectSectionNames(this.currentSectioned, choice.request);
       namesText = selection.names.join("\n");
       sectionNotices = selection.notices;
+      if (this.currentPackType === "breakdownPack") {
+        loosened = breakdownSettingsFor(selection.names.length, this.plugin.settings.strictness ?? 3);
+        if (!loosened.allowSourceCopies) loosened = undefined;
+        else sectionNotices.push(smallListNotice(selection.used, selection.names.length));
+      }
+      usedSection = selection.used;
     }
     const result = generateNamesFromSource(
       namesText,
       this.currentPackType,
       this.generationCount,
       this.plugin.settings,
-      seedOverride
+      seedOverride,
+      loosened,
     );
 
     if (result.names.length === 0) {
+      if (usedSection && usedSection !== "the whole pack") {
+        this.renderResults([], emptyListNotice(usedSection));
+        this.setStatus(emptyListNotice(usedSection));
+        return;
+      }
       this.renderResults([], "Select a pack with names to generate from.");
       this.setStatus("No names available to generate from.");
       return;

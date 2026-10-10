@@ -1456,10 +1456,13 @@ function joinCompoundParts(fragments: string[], joining: "joined" | "spaced"): s
  * reproducible) and is then reused for the final fragment-combination
  * sampling, so the whole batch is reproducible from one number.
  */
+/** Compound brief §2: Breakdown lists under this many names are warned about on save and loosened at generation. */
+export const BREAKDOWN_MIN_NAMES = 20;
+
 export function generateCompoundNamesDetailed(
   parts: string[][],
   options: CompoundGenerateOptions
-): GenerateResult {
+): GenerateResult & { loosened?: number[] } {
   const count = Math.max(0, Math.floor(options.count));
   const seed =
     options.seed !== undefined && Number.isFinite(options.seed)
@@ -1472,7 +1475,8 @@ export function generateCompoundNamesDetailed(
   const nextSubSeed = (): number => Math.floor(masterRng() * 0xffffffff) >>> 0;
 
   const poolSize = Math.max(count, 30);
-  const pools: string[][] = parts.map((part) => {
+  const loosened: number[] = [];
+  const pools: string[][] = parts.map((part, index) => {
     if (part.length === 0) return [];
     if (options.generator === "list") {
       const generator = new ListGenerator();
@@ -1480,15 +1484,23 @@ export function generateCompoundNamesDetailed(
       return generator.generateMultiple(poolSize, mulberry32(nextSubSeed()));
     }
     const model = MarkovModel.build(part);
+    const subSeed = nextSubSeed();
+    const strictness = options.strictness ?? 3;
+    const pool = model.generateDetailed({ count: poolSize, faithfulness: options.faithfulness ?? 2, strictness, seed: subSeed }).names;
+    // Compound brief §2.3: a small part that gives nothing is loosened (same sub-seed, so the
+    // order of draws is unchanged); parts that already give names are untouched.
+    if (pool.length > 0 || part.length >= BREAKDOWN_MIN_NAMES) return pool;
+    loosened.push(index);
     return model.generateDetailed({
       count: poolSize,
       faithfulness: options.faithfulness ?? 2,
-      strictness: options.strictness ?? 3,
-      seed: nextSubSeed(),
+      strictness: Math.max(1, strictness - 1),
+      allowSourceCopies: true,
+      seed: subSeed,
     }).names;
   });
 
-  if (pools.some((pool) => pool.length === 0)) return { names: [], seed };
+  if (pools.some((pool) => pool.length === 0)) return { names: [], seed, loosened };
 
   const result: string[] = [];
   const seen = new Set<string>();
@@ -1505,7 +1517,7 @@ export function generateCompoundNamesDetailed(
     result.push(name);
   }
 
-  return { names: result, seed };
+  return { names: result, seed, loosened };
 }
 
 /** Convenience wrapper — use `generateCompoundNamesDetailed` when the UI needs the seed. */

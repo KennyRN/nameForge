@@ -16,7 +16,7 @@ import {
   type WordListFileData,
 } from "./nameParser";
 import type { Biome } from "./biomes";
-import { selectSectionNames, type SectionRequest } from "./packs/sections";
+import { breakdownSettingsFor, selectSectionNames, smallListNotice, type SectionRequest } from "./packs/sections";
 import { wordListSection } from "./packs/wordList";
 import { NAME_SLOTS, NAME_WORDS, type NativeAdapter, type ResolvedSlot, type ResolvedSource } from "./names/engine";
 import { applyRecipeTemplate, type NameMode, readRecipe, type RecipePartial, type RecipeSettings, withDefaults } from "./names/recipe";
@@ -281,16 +281,23 @@ export class RecipeHost {
     };
     const namesFor = (request: SectionRequest): string[] => {
       if (parsed.sectioned && (request.section || request.gender)) {
-        const selection = selectSectionNames(parsed.sectioned, request, parsed.packType === "breakdownPack" ? 20 : 0);
+        const selection = selectSectionNames(parsed.sectioned, request);
         for (const n of selection.notices) this.notices.add(`${parsed.packName}: ${n}`);
+        listLabels.set(requestKey(request), selection.used);
         return selection.names;
       }
       return parsed.names;
     };
+    const listLabels = new Map<string, string>();
+    // Compound brief §2.3: a section under the Breakdown minimum is loosened, with one notice
+    // (where it used to fall back to the whole pack); whole packs draw as before.
     const markovName = (names: string[], key: string, rng: () => number) => {
       if (names.length === 0) return null;
       const model = cached(key, () => MarkovModel.build(names));
-      return model.generateDetailed({ count: 1, faithfulness, strictness, seed: seedFrom(rng) }).names[0] ?? pick(names, rng);
+      const label = listLabels.get(key);
+      const loosened = label ? breakdownSettingsFor(names.length, strictness) : { allowSourceCopies: false, strictness };
+      if (label && loosened.allowSourceCopies) this.notices.add(`${parsed.packName}: ${smallListNotice(label, names.length)}`);
+      return model.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom(rng) }).names[0] ?? pick(names, rng);
     };
     const requestKey = (r: SectionRequest) => `${r.section ?? ""}|${r.gender ?? ""}`;
 

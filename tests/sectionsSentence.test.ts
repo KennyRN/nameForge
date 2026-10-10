@@ -36,3 +36,37 @@ test("whole pack with labels (Breakdown): tags are headings, names unique, same 
   assert.equal(new Set(a.names.map((n) => n.name.toLowerCase())).size, a.names.length);
   for (const n of a.names) assert.ok(n.tag === "male" || n.tag === "women");
 });
+
+// ── Small Breakdown lists (§2) ──────────────────────────────────────────────
+import { BREAKDOWN_MIN_NAMES, breakdownSettingsFor, shortBreakdownLists, shortListsSaveNotice } from "../src/packs/sections";
+import { MarkovModel } from "../src/markov";
+
+const names = (n: number, p = "N") => Array.from({ length: n }, (_, i) => `${p}${String.fromCharCode(97 + (i % 26))}${String.fromCharCode(97 + Math.floor(i / 26))}`);
+
+test("short-list check: Breakdown sections and compound Breakdown parts found; List exempt", () => {
+  assert.equal(BREAKDOWN_MIN_NAMES, 20);
+  const body = `## men\n${names(25).join("\n")}\n## women\n${names(11, "W").join("\n")}`;
+  assert.deepEqual(shortBreakdownLists([{ body, breakdown: true }]), [{ title: "women", count: 11 }]);
+  assert.deepEqual(shortBreakdownLists([{ body, breakdown: false }]), []);
+  assert.deepEqual(shortBreakdownLists([{ body: names(8).join("\n"), breakdown: true }]), [{ count: 8 }]);
+  const parts = shortBreakdownLists([
+    { part: 1, body: names(30).join("\n"), breakdown: true },
+    { part: 2, body: `## children\n${names(8).join("\n")}`, breakdown: true },
+    { part: 3, body: names(3).join("\n"), breakdown: false },
+  ]);
+  assert.deepEqual(parts, [{ part: 2, title: "children", count: 8 }]);
+  assert.equal(
+    shortListsSaveNotice([{ title: "women", count: 11 }, { part: 2, title: "children", count: 8 }]),
+    "Saved. “women” has 11 names and Part 2 “children” has 8. Breakdown lists under 20 names may give short batches or repeat names from the list.",
+  );
+});
+
+test("loosened Breakdown on an 8-name list returns names", () => {
+  const list = ["Alfred", "Edwin", "Oswin", "Godric", "Wulfric", "Aldred", "Cynric", "Eadric"];
+  const loosened = breakdownSettingsFor(list.length, 3);
+  assert.deepEqual(loosened, { allowSourceCopies: true, strictness: 2 });
+  assert.deepEqual(breakdownSettingsFor(20, 3), { allowSourceCopies: false, strictness: 3 });
+  assert.equal(breakdownSettingsFor(5, 1).strictness, 1);
+  const out = MarkovModel.build(list).generateDetailed({ count: 10, ...loosened, seed: 4 }).names;
+  assert.ok(out.length > 0);
+});

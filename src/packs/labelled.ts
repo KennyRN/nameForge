@@ -3,6 +3,7 @@
 // No Obsidian imports.
 
 import { ListGenerator, MarkovModel, mulberry32 } from "../markov";
+import { breakdownSettingsFor } from "./sections";
 
 export interface LabelledName {
   name: string;
@@ -27,12 +28,16 @@ export interface LabelledOptions {
  * Each list gets its own pool (a shuffle for List, a Markov batch for Breakdown) from a sub-seed
  * drawn in list order; names are then taken from the pools in weighted turn, deduped across the batch.
  */
-export function generateLabelledNames(lists: LabelledList[], options: LabelledOptions): { names: LabelledName[]; seed: number } {
+export function generateLabelledNames(
+  lists: LabelledList[],
+  options: LabelledOptions,
+): { names: LabelledName[]; seed: number; small: { tag?: string; count: number }[] } {
   const count = Math.max(0, Math.floor(options.count));
   const seed =
     options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const viable = lists.filter((l) => l.names.length > 0);
-  if (count === 0 || viable.length === 0) return { names: [], seed };
+  const small: { tag?: string; count: number }[] = [];
+  if (count === 0 || viable.length === 0) return { names: [], seed, small };
 
   const masterRng = mulberry32(seed);
   const subSeeds = viable.map(() => Math.floor(masterRng() * 0xffffffff) >>> 0);
@@ -46,10 +51,13 @@ export function generateLabelledNames(lists: LabelledList[], options: LabelledOp
       generator.train(list.names);
       pools[i] = generator.generateMultiple(count, mulberry32(subSeeds[i]));
     } else {
+      // §2.3: a list under the Breakdown minimum is loosened.
+      const loosened = breakdownSettingsFor(list.names.length, options.strictness ?? 3);
+      if (loosened.allowSourceCopies) small.push({ tag: list.tag, count: list.names.length });
       pools[i] = MarkovModel.build(list.names).generateDetailed({
         count,
         faithfulness: options.faithfulness ?? 2,
-        strictness: options.strictness ?? 3,
+        ...loosened,
         seed: subSeeds[i],
       }).names;
     }
@@ -81,5 +89,5 @@ export function generateLabelledNames(lists: LabelledList[], options: LabelledOp
     seen.add(key);
     result.push({ name, ...(viable[pick].tag !== undefined ? { tag: viable[pick].tag } : {}) });
   }
-  return { names: result, seed };
+  return { names: result, seed, small };
 }

@@ -1012,6 +1012,7 @@ function joinCompoundParts(fragments, joining) {
   }
   return fragments.map((f, i) => i === 0 ? capitaliseFirst(f.toLowerCase()) : f.toLowerCase()).join("");
 }
+var BREAKDOWN_MIN_NAMES = 20;
 function generateCompoundNamesDetailed(parts, options) {
   const count = Math.max(0, Math.floor(options.count));
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
@@ -1019,8 +1020,9 @@ function generateCompoundNamesDetailed(parts, options) {
   const masterRng = mulberry32(seed);
   const nextSubSeed = () => Math.floor(masterRng() * 4294967295) >>> 0;
   const poolSize = Math.max(count, 30);
-  const pools = parts.map((part) => {
-    var _a2, _b;
+  const loosened = [];
+  const pools = parts.map((part, index) => {
+    var _a2, _b, _c;
     if (part.length === 0) return [];
     if (options.generator === "list") {
       const generator = new ListGenerator();
@@ -1028,14 +1030,20 @@ function generateCompoundNamesDetailed(parts, options) {
       return generator.generateMultiple(poolSize, mulberry32(nextSubSeed()));
     }
     const model = MarkovModel.build(part);
+    const subSeed2 = nextSubSeed();
+    const strictness = (_a2 = options.strictness) != null ? _a2 : 3;
+    const pool2 = model.generateDetailed({ count: poolSize, faithfulness: (_b = options.faithfulness) != null ? _b : 2, strictness, seed: subSeed2 }).names;
+    if (pool2.length > 0 || part.length >= BREAKDOWN_MIN_NAMES) return pool2;
+    loosened.push(index);
     return model.generateDetailed({
       count: poolSize,
-      faithfulness: (_a2 = options.faithfulness) != null ? _a2 : 2,
-      strictness: (_b = options.strictness) != null ? _b : 3,
-      seed: nextSubSeed()
+      faithfulness: (_c = options.faithfulness) != null ? _c : 2,
+      strictness: Math.max(1, strictness - 1),
+      allowSourceCopies: true,
+      seed: subSeed2
     }).names;
   });
-  if (pools.some((pool2) => pool2.length === 0)) return { names: [], seed };
+  if (pools.some((pool2) => pool2.length === 0)) return { names: [], seed, loosened };
   const result = [];
   const seen = /* @__PURE__ */ new Set();
   let tries = 0;
@@ -1049,7 +1057,7 @@ function generateCompoundNamesDetailed(parts, options) {
     seen.add(key2);
     result.push(name);
   }
-  return { names: result, seed };
+  return { names: result, seed, loosened };
 }
 function buildWeightedCorpus(sources) {
   const filtered2 = sources.filter((source) => source.names.length > 0 && source.weight > 0);
@@ -1196,7 +1204,7 @@ function namesFor(s, r) {
   }
   return allSectionedNames(s);
 }
-function selectSectionNames(s, request, minNames = 0) {
+function selectSectionNames(s, request) {
   const steps = [];
   if (request.section && request.gender) steps.push({ section: request.section, gender: request.gender });
   if (request.section) steps.push({ section: request.section });
@@ -1210,10 +1218,6 @@ function selectSectionNames(s, request, minNames = 0) {
     const next = last ? "" : labelOf(steps[i + 1], s);
     if (names === null && !last) {
       notices.push(`\u201C${labelOf(step, s)}\u201D not found \u2014 using ${quote(next)}.`);
-      continue;
-    }
-    if (names !== null && names.length < minNames && !last) {
-      notices.push(`\u201C${labelOf(step, s)}\u201D has only ${names.length} names \u2014 using ${quote(next)}.`);
       continue;
     }
     return { names: names != null ? names : allSectionedNames(s), used: labelOf(step, s), notices };
@@ -1248,6 +1252,33 @@ function mergeSectionedNames(derived, template) {
     unsectioned: derived.unsectioned.length > 0 ? derived.unsectioned : template.unsectioned,
     sections
   };
+}
+function breakdownSettingsFor(nameCount, strictness) {
+  return nameCount < BREAKDOWN_MIN_NAMES ? { allowSourceCopies: true, strictness: Math.max(1, strictness - 1) } : { allowSourceCopies: false, strictness };
+}
+var smallListNotice = (label, count) => `\u201C${label}\u201D has ${count} names: some results may be names from the list.`;
+var emptyListNotice = (label) => `\u201C${label}\u201D produced no names.`;
+function shortBreakdownLists(lists) {
+  const short = [];
+  for (const list of lists) {
+    if (!list.breakdown) continue;
+    const sectioned = parseNameSections(list.body);
+    const checks = sectioned && sectioned.sections.length > 0 ? sectioned.sections.map((section) => ({ title: section.name, count: sectionNames(section).length })) : [{ title: void 0, count: dedupe2(extractNamesFromMarkdown(list.body)).length }];
+    for (const c of checks) {
+      if (c.count > 0 && c.count < BREAKDOWN_MIN_NAMES) {
+        short.push({ ...list.part !== void 0 ? { part: list.part } : {}, ...c.title !== void 0 ? { title: c.title } : {}, count: c.count });
+      }
+    }
+  }
+  return short;
+}
+function shortListsSaveNotice(short) {
+  const phrases = short.map((s, i) => {
+    const name = [s.part !== void 0 ? `Part ${s.part}` : "", s.title !== void 0 ? `\u201C${s.title}\u201D` : ""].filter(Boolean).join(" ") || "The pack";
+    return `${name} has ${s.count}${i === 0 ? " names" : ""}`;
+  });
+  const list = phrases.length > 1 ? `${phrases.slice(0, -1).join(", ")} and ${phrases[phrases.length - 1]}` : phrases[0];
+  return `Saved. ${list}. Breakdown lists under ${BREAKDOWN_MIN_NAMES} names may give short batches or repeat names from the list.`;
 }
 
 // src/packs/wordList.ts
@@ -52849,17 +52880,22 @@ var RecipeHost = class {
     };
     const namesFor2 = (request) => {
       if (parsed.sectioned && (request.section || request.gender)) {
-        const selection = selectSectionNames(parsed.sectioned, request, parsed.packType === "breakdownPack" ? 20 : 0);
+        const selection = selectSectionNames(parsed.sectioned, request);
         for (const n of selection.notices) this.notices.add(`${parsed.packName}: ${n}`);
+        listLabels.set(requestKey(request), selection.used);
         return selection.names;
       }
       return parsed.names;
     };
+    const listLabels = /* @__PURE__ */ new Map();
     const markovName = (names, key2, rng) => {
       var _a3;
       if (names.length === 0) return null;
       const model = cached(key2, () => MarkovModel.build(names));
-      return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: seedFrom(rng) }).names[0]) != null ? _a3 : pick2(names, rng);
+      const label = listLabels.get(key2);
+      const loosened = label ? breakdownSettingsFor(names.length, strictness) : { allowSourceCopies: false, strictness };
+      if (label && loosened.allowSourceCopies) this.notices.add(`${parsed.packName}: ${smallListNotice(label, names.length)}`);
+      return (_a3 = model.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom(rng) }).names[0]) != null ? _a3 : pick2(names, rng);
     };
     const requestKey = (r) => {
       var _a3, _b2;
@@ -54415,7 +54451,8 @@ function generateLabelledNames(lists, options) {
   const count = Math.max(0, Math.floor(options.count));
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const viable = lists.filter((l) => l.names.length > 0);
-  if (count === 0 || viable.length === 0) return { names: [], seed };
+  const small = [];
+  if (count === 0 || viable.length === 0) return { names: [], seed, small };
   const masterRng = mulberry32(seed);
   const subSeeds = viable.map(() => Math.floor(masterRng() * 4294967295) >>> 0);
   const pools = viable.map(() => void 0);
@@ -54429,10 +54466,12 @@ function generateLabelledNames(lists, options) {
       generator.train(list.names);
       pools[i] = generator.generateMultiple(count, mulberry32(subSeeds[i]));
     } else {
+      const loosened = breakdownSettingsFor(list.names.length, (_a2 = options.strictness) != null ? _a2 : 3);
+      if (loosened.allowSourceCopies) small.push({ tag: list.tag, count: list.names.length });
       pools[i] = MarkovModel.build(list.names).generateDetailed({
         count,
-        faithfulness: (_a2 = options.faithfulness) != null ? _a2 : 2,
-        strictness: (_b = options.strictness) != null ? _b : 3,
+        faithfulness: (_b = options.faithfulness) != null ? _b : 2,
+        ...loosened,
         seed: subSeeds[i]
       }).names;
     }
@@ -54463,7 +54502,7 @@ function generateLabelledNames(lists, options) {
     seen.add(key2);
     result.push({ name, ...viable[pick2].tag !== void 0 ? { tag: viable[pick2].tag } : {} });
   }
-  return { names: result, seed };
+  return { names: result, seed, small };
 }
 
 // src/takeoverView.ts
@@ -54892,7 +54931,7 @@ function packSubGenerator(packType, compoundGenerator) {
 function resolveSeed3(seed) {
   return seed !== void 0 && Number.isFinite(seed) ? Math.floor(seed) >>> 0 : Math.random() * 4294967295 >>> 0;
 }
-function generateNamesFromSource(namesText, packType, count = 6, settings = {}, seed) {
+function generateNamesFromSource(namesText, packType, count = 6, settings = {}, seed, breakdown) {
   var _a2, _b, _c, _d;
   const names = extractNamesFromMarkdown(namesText);
   const resolvedSeed = resolveSeed3(seed);
@@ -54919,6 +54958,7 @@ function generateNamesFromSource(namesText, packType, count = 6, settings = {}, 
     count,
     faithfulness: (_c = settings.faithfulness) != null ? _c : 2,
     strictness: (_d = settings.strictness) != null ? _d : 3,
+    ...breakdown,
     seed: resolvedSeed
   });
   return { names: result.names, seed: result.seed };
@@ -56722,6 +56762,11 @@ ${text}
     }
     this.currentNamesText = names.join("\n");
     this.setStatus("");
+    if (packType === "breakdownPack") this.warnShortLists(shortBreakdownLists([{ body: namesText, breakdown: true }]));
+  }
+  /** §2.2: one notice naming every Breakdown list under the minimum. */
+  warnShortLists(short) {
+    if (short.length > 0) new import_obsidian13.Notice(shortListsSaveNotice(short), 1e4);
   }
   async saveCompoundToConfiguredFile(parts, generator, joining, templateOf) {
     const filePath = this.getResolvedFilePath();
@@ -56759,6 +56804,7 @@ ${text}
     this.currentCompoundGenerator = generator;
     this.currentCompoundJoining = joining;
     this.setStatus("");
+    this.warnShortLists(shortBreakdownLists(parts.map((part, i) => ({ part: i + 1, body: part.join("\n"), breakdown: generator === "breakdown" }))));
   }
   async saveMixToConfiguredFile(sources, templateOf) {
     const filePath = this.getResolvedFilePath();
@@ -57272,7 +57318,7 @@ ${text}
     return first ? { name: first.names[0], tag: first.tag } : { name: "Alfred", tag: "male" };
   }
   async generateSelectedCount() {
-    var _a2, _b, _c, _d, _e, _f;
+    var _a2, _b, _c, _d, _e, _f, _g, _h;
     if (this.activeSection === "placeShapes" && this.placeIsBritain()) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
       const land = this.land("britain");
@@ -57438,7 +57484,7 @@ ${text}
       this.currentSeed = result2.seed;
       this.renderResults(result2.names);
       await this.recordGenerationHistory(result2.names.length);
-      this.setStatus("");
+      this.setStatus(((_g = result2.loosened) != null ? _g : []).map((i) => smallListNotice(`Part ${i + 1}`, this.currentCompoundParts[i].length)).join(" "));
       return;
     }
     if (this.currentPackType === "mixPack") {
@@ -57502,28 +57548,41 @@ ${text}
       this.currentSeed = result2.seed;
       this.renderResults(result2.names.map((n) => n.name), void 0, result2.names.map((n) => n.tag));
       await this.recordGenerationHistory(result2.names.length);
-      this.setStatus("");
+      this.setStatus(result2.small.map((l) => {
+        var _a3;
+        return smallListNotice((_a3 = l.tag) != null ? _a3 : "untitled", l.count);
+      }).join(" "));
       return;
     }
     let namesText = this.currentNamesText;
     let sectionNotices = [];
+    let loosened;
+    let usedSection;
     if (choice && !choice.whole && this.currentSectioned) {
-      const selection = selectSectionNames(
-        this.currentSectioned,
-        choice.request,
-        this.currentPackType === "breakdownPack" ? 20 : 0
-      );
+      const selection = selectSectionNames(this.currentSectioned, choice.request);
       namesText = selection.names.join("\n");
       sectionNotices = selection.notices;
+      if (this.currentPackType === "breakdownPack") {
+        loosened = breakdownSettingsFor(selection.names.length, (_h = this.plugin.settings.strictness) != null ? _h : 3);
+        if (!loosened.allowSourceCopies) loosened = void 0;
+        else sectionNotices.push(smallListNotice(selection.used, selection.names.length));
+      }
+      usedSection = selection.used;
     }
     const result = generateNamesFromSource(
       namesText,
       this.currentPackType,
       this.generationCount,
       this.plugin.settings,
-      seedOverride
+      seedOverride,
+      loosened
     );
     if (result.names.length === 0) {
+      if (usedSection && usedSection !== "the whole pack") {
+        this.renderResults([], emptyListNotice(usedSection));
+        this.setStatus(emptyListNotice(usedSection));
+        return;
+      }
       this.renderResults([], "Select a pack with names to generate from.");
       this.setStatus("No names available to generate from.");
       return;

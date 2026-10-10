@@ -4,7 +4,7 @@
 // a section or subsection headed "Male" or "Female". Names outside any heading are unsectioned and
 // count as either gender. Packs without headings are not sectioned at all and behave as before.
 
-import { extractNamesFromMarkdown } from "../markov";
+import { BREAKDOWN_MIN_NAMES, extractNamesFromMarkdown } from "../markov";
 
 export interface NameSubsection {
   name: string;
@@ -176,10 +176,10 @@ function namesFor(s: SectionedNames, r: SectionRequest): string[] | null {
 }
 
 /**
- * Picks names for a request, falling back subsection → section → whole pack. A missing step, or
- * one with fewer than `minNames` names (Breakdown packs: 20), falls back one step with a notice.
+ * Picks names for a request, falling back subsection → section → whole pack when a step is
+ * missing. A small list is used as chosen (Compound brief §2.3): callers loosen Breakdown instead.
  */
-export function selectSectionNames(s: SectionedNames, request: SectionRequest, minNames = 0): SectionSelection {
+export function selectSectionNames(s: SectionedNames, request: SectionRequest): SectionSelection {
   const steps: SectionRequest[] = [];
   if (request.section && request.gender) steps.push({ section: request.section, gender: request.gender });
   if (request.section) steps.push({ section: request.section });
@@ -194,10 +194,6 @@ export function selectSectionNames(s: SectionedNames, request: SectionRequest, m
     const next = last ? "" : labelOf(steps[i + 1], s);
     if (names === null && !last) {
       notices.push(`“${labelOf(step, s)}” not found — using ${quote(next)}.`);
-      continue;
-    }
-    if (names !== null && names.length < minNames && !last) {
-      notices.push(`“${labelOf(step, s)}” has only ${names.length} names — using ${quote(next)}.`);
       continue;
     }
     return { names: names ?? allSectionedNames(s), used: labelOf(step, s), notices };
@@ -238,4 +234,62 @@ export function mergeSectionedNames(derived: SectionedNames, template: Sectioned
     unsectioned: derived.unsectioned.length > 0 ? derived.unsectioned : template.unsectioned,
     sections,
   };
+}
+
+// ── Small Breakdown lists (Compound brief §2) ───────────────────────────────
+
+export { BREAKDOWN_MIN_NAMES };
+
+/** §2.3: generation settings for a Breakdown list; under the minimum, copies are allowed and strictness is one step looser. */
+export function breakdownSettingsFor(nameCount: number, strictness: number): { allowSourceCopies: boolean; strictness: number } {
+  return nameCount < BREAKDOWN_MIN_NAMES
+    ? { allowSourceCopies: true, strictness: Math.max(1, strictness - 1) }
+    : { allowSourceCopies: false, strictness };
+}
+
+/** §2.3: the notice for a small list used at generation. */
+export const smallListNotice = (label: string, count: number) => `“${label}” has ${count} names: some results may be names from the list.`;
+
+/** §2.3: the notice for a list that still gave nothing. */
+export const emptyListNotice = (label: string) => `“${label}” produced no names.`;
+
+export interface ShortList {
+  /** 1-based part number, for compound packs. */
+  part?: number;
+  /** The `##` heading, when the list is a section. */
+  title?: string;
+  count: number;
+}
+
+/**
+ * §2.2: every Breakdown list under the minimum. Each input is a pack's (or a compound part's)
+ * text; its `##` sections are checked one by one, or the whole text when it has none. Inputs
+ * that aren't Breakdown are exempt.
+ */
+export function shortBreakdownLists(lists: { part?: number; body: string; breakdown: boolean }[]): ShortList[] {
+  const short: ShortList[] = [];
+  for (const list of lists) {
+    if (!list.breakdown) continue;
+    const sectioned = parseNameSections(list.body);
+    const checks =
+      sectioned && sectioned.sections.length > 0
+        ? sectioned.sections.map((section) => ({ title: section.name as string | undefined, count: sectionNames(section).length }))
+        : [{ title: undefined, count: dedupe(extractNamesFromMarkdown(list.body)).length }];
+    for (const c of checks) {
+      if (c.count > 0 && c.count < BREAKDOWN_MIN_NAMES) {
+        short.push({ ...(list.part !== undefined ? { part: list.part } : {}), ...(c.title !== undefined ? { title: c.title } : {}), count: c.count });
+      }
+    }
+  }
+  return short;
+}
+
+/** §2.2: the save notice, e.g. Saved. “women” has 11 names and Part 2 “children” has 8. … */
+export function shortListsSaveNotice(short: ShortList[]): string {
+  const phrases = short.map((s, i) => {
+    const name = [s.part !== undefined ? `Part ${s.part}` : "", s.title !== undefined ? `“${s.title}”` : ""].filter(Boolean).join(" ") || "The pack";
+    return `${name} has ${s.count}${i === 0 ? " names" : ""}`;
+  });
+  const list = phrases.length > 1 ? `${phrases.slice(0, -1).join(", ")} and ${phrases[phrases.length - 1]}` : phrases[0];
+  return `Saved. ${list}. Breakdown lists under ${BREAKDOWN_MIN_NAMES} names may give short batches or repeat names from the list.`;
 }

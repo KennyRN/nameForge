@@ -76,13 +76,14 @@ test("sections: fallback subsection → section → whole pack, with notices", (
   assert.equal(missing.names.length, 3);
 });
 
-test("sections: a Breakdown section under 20 names falls back one step", () => {
+test("sections: a small section is used as chosen, not swapped for the whole pack (Compound brief §2.3)", () => {
   const big = Array.from({ length: 25 }, (_, i) => `Name${String.fromCharCode(97 + (i % 26))}${i}`);
-  const s = parseNameSections(`## Noble\n### Male\nAeth\n### Female\n${big.join("\n")}`)!;
-  const male = selectSectionNames(s, { section: "Noble", gender: "male" }, 20);
-  assert.equal(male.used, "Noble");
-  assert.match(male.notices[0], /has only 1 names — using “Noble”/);
-  assert.equal(selectSectionNames(s, { section: "Noble", gender: "female" }, 20).used, "Noble · Female");
+  const s = parseNameSections(`## Noble\n### Male\nAeth\n### Female\n${big.join("\n")}\n## Clergy\nBede\nCuth`)!;
+  const clergy = selectSectionNames(s, { section: "Clergy" });
+  assert.equal(clergy.used, "Clergy");
+  assert.deepEqual(clergy.names, ["Bede", "Cuth"]);
+  assert.deepEqual(clergy.notices, []);
+  assert.equal(selectSectionNames(s, { section: "Noble", gender: "male" }).used, "Noble · Male");
 });
 
 test("templates: fields parse; derived packs inherit what they leave empty, replace what they have", () => {
