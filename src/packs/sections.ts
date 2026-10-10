@@ -104,17 +104,36 @@ export function allSectionedNames(s: SectionedNames): string[] {
   return dedupe([...s.unsectioned, ...s.sections.flatMap(sectionNames)]);
 }
 
-/** Selector options: each section, then its gender subsections. */
-export function sectionOptions(s: SectionedNames): { label: string; request: SectionRequest }[] {
-  const options: { label: string; request: SectionRequest }[] = [];
+export interface SectionOption {
+  label: string;
+  request: SectionRequest;
+  /** The "whole pack" choice, always last. */
+  whole?: boolean;
+}
+
+export const WHOLE_PACK_LABEL = "whole pack";
+
+/** The sections sentence's choices (Compound brief §1.2): each `##` section in file order, then the whole pack. */
+export function sectionOptions(s: SectionedNames): SectionOption[] {
+  return [...headingOptions(s), wholePackOption()];
+}
+
+/** Each `##` section, without the whole-pack choice (Mix packs merge these across sources). */
+export function headingOptions(s: SectionedNames): SectionOption[] {
+  return s.sections.map((section) => ({ label: section.name, request: { section: section.name } }));
+}
+
+export const wholePackOption = (): SectionOption => ({ label: WHOLE_PACK_LABEL, request: {}, whole: true });
+
+/** The lists a whole pack is drawn from when labelled (§1.3): names before the first heading (untagged), then each section. */
+export function labelledLists(s: SectionedNames): { tag?: string; names: string[] }[] {
+  const lists: { tag?: string; names: string[] }[] = [];
+  if (s.unsectioned.length > 0) lists.push({ names: dedupe(s.unsectioned) });
   for (const section of s.sections) {
-    options.push({ label: section.name, request: { section: section.name } });
-    for (const gender of ["male", "female"] as const) {
-      const sub = section.subsections.find((x) => isGender(x.name, gender));
-      if (sub) options.push({ label: `${section.name} · ${sub.name}`, request: { section: section.name, gender } });
-    }
+    const names = sectionNames(section);
+    if (names.length > 0) lists.push({ tag: section.name, names });
   }
-  return options;
+  return lists;
 }
 
 const labelOf = (r: SectionRequest, s: SectionedNames) => {

@@ -1143,16 +1143,22 @@ function sectionNames(section) {
 function allSectionedNames(s) {
   return dedupe2([...s.unsectioned, ...s.sections.flatMap(sectionNames)]);
 }
+var WHOLE_PACK_LABEL = "whole pack";
 function sectionOptions(s) {
-  const options = [];
+  return [...headingOptions(s), wholePackOption()];
+}
+function headingOptions(s) {
+  return s.sections.map((section) => ({ label: section.name, request: { section: section.name } }));
+}
+var wholePackOption = () => ({ label: WHOLE_PACK_LABEL, request: {}, whole: true });
+function labelledLists(s) {
+  const lists = [];
+  if (s.unsectioned.length > 0) lists.push({ names: dedupe2(s.unsectioned) });
   for (const section of s.sections) {
-    options.push({ label: section.name, request: { section: section.name } });
-    for (const gender of ["male", "female"]) {
-      const sub = section.subsections.find((x) => isGender(x.name, gender));
-      if (sub) options.push({ label: `${section.name} \xB7 ${sub.name}`, request: { section: section.name, gender } });
-    }
+    const names = sectionNames(section);
+    if (names.length > 0) lists.push({ tag: section.name, names });
   }
-  return options;
+  return lists;
 }
 var labelOf = (r, s) => {
   var _a2, _b;
@@ -54404,6 +54410,62 @@ var RecipeEditorModal = class extends import_obsidian11.Modal {
   }
 };
 
+// src/packs/labelled.ts
+function generateLabelledNames(lists, options) {
+  const count = Math.max(0, Math.floor(options.count));
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const viable = lists.filter((l) => l.names.length > 0);
+  if (count === 0 || viable.length === 0) return { names: [], seed };
+  const masterRng = mulberry32(seed);
+  const subSeeds = viable.map(() => Math.floor(masterRng() * 4294967295) >>> 0);
+  const pools = viable.map(() => void 0);
+  const cursors = viable.map(() => 0);
+  const pool2 = (i) => {
+    var _a2, _b;
+    if (pools[i]) return pools[i];
+    const list = viable[i];
+    if (options.generator === "list") {
+      const generator = new ListGenerator();
+      generator.train(list.names);
+      pools[i] = generator.generateMultiple(count, mulberry32(subSeeds[i]));
+    } else {
+      pools[i] = MarkovModel.build(list.names).generateDetailed({
+        count,
+        faithfulness: (_a2 = options.faithfulness) != null ? _a2 : 2,
+        strictness: (_b = options.strictness) != null ? _b : 3,
+        seed: subSeeds[i]
+      }).names;
+    }
+    return pools[i];
+  };
+  const result = [];
+  const seen = /* @__PURE__ */ new Set();
+  const live = viable.map((_, i) => i);
+  while (result.length < count && live.length > 0) {
+    const total = live.reduce((sum, i) => sum + viable[i].names.length, 0);
+    let roll = masterRng() * total;
+    let pick2 = live[live.length - 1];
+    for (const i of live) {
+      roll -= viable[i].names.length;
+      if (roll < 0) {
+        pick2 = i;
+        break;
+      }
+    }
+    const names = pool2(pick2);
+    if (cursors[pick2] >= names.length) {
+      live.splice(live.indexOf(pick2), 1);
+      continue;
+    }
+    const name = names[cursors[pick2]++];
+    const key2 = name.toLowerCase();
+    if (seen.has(key2)) continue;
+    seen.add(key2);
+    result.push({ name, ...viable[pick2].tag !== void 0 ? { tag: viable[pick2].tag } : {} });
+  }
+  return { names: result, seed };
+}
+
 // src/takeoverView.ts
 var import_obsidian12 = require("obsidian");
 
@@ -54861,6 +54923,10 @@ function generateNamesFromSource(namesText, packType, count = 6, settings = {}, 
   });
   return { names: result.names, seed: result.seed };
 }
+function resultName(el) {
+  var _a2, _b;
+  return (_b = (_a2 = el.getAttribute("data-name")) != null ? _a2 : el.textContent) != null ? _b : "";
+}
 function parseSeedInput(value) {
   if (!value || !value.trim()) return void 0;
   const parsed = Number(value.trim());
@@ -54991,8 +55057,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     /** §10: the loaded pack's sections (List/Breakdown), section options, and the chosen section. */
     this.currentSectioned = void 0;
     this.sectionChoices = [];
-    this.currentSectionRequest = void 0;
-    this.sectionSelectEl = null;
+    /** Compound brief §1: the chosen sentence option (the first heading on load) and whole-pack labels. */
+    this.sectionChoiceIndex = 0;
+    this.sectionLabelsShown = true;
+    this.sectionSentenceEl = null;
     /** §7: set when the loaded pack's template couldn't be applied. */
     this.currentTemplateError = void 0;
     /** Recipe packs: the loaded recipe, the session's etymology toggle, and the edit button. */
@@ -55180,16 +55248,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     });
     this.sectionMenuEl = optionsList.createDiv({ cls: "nameforge-modal__section-menu" });
     this.sectionMenuEl.hide();
-    this.sectionSelectEl = optionsList.createEl("select", {
-      cls: "dropdown nameforge-modal__pack-section-select",
-      attr: { "aria-label": "Section", title: "Section" }
-    });
-    this.sectionSelectEl.addEventListener("change", () => {
-      var _a2, _b, _c;
-      const i = Number((_b = (_a2 = this.sectionSelectEl) == null ? void 0 : _a2.value) != null ? _b : -1);
-      this.currentSectionRequest = i >= 0 ? (_c = this.sectionChoices[i]) == null ? void 0 : _c.request : void 0;
-    });
-    this.sectionSelectEl.hide();
+    this.sectionSentenceEl = optionsList.createDiv({ cls: "nameforge-modal__tribal-sentence nameforge-modal__section-sentence" });
+    this.sectionSentenceEl.hide();
     this.buildSecondBox(optionsList);
     const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityToggleEl = quantityToggle;
@@ -55273,11 +55333,11 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
   /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
    * dropdown on the shape sections, the placeholder box otherwise. Everything else is left as it is. */
   switchSection(section) {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q;
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
     if (section === "nameAgeing" && this.activeSection === "markov") {
       const selected = (_b = (_a2 = this.resultsEl) == null ? void 0 : _a2.querySelectorAll("li.is-selected")) != null ? _b : [];
       if (selected.length === 1 && this.ageingSourceInput) {
-        this.ageingSourceInput.value = (_c = selected[0].textContent) != null ? _c : "";
+        this.ageingSourceInput.value = resultName(selected[0]);
       }
     }
     this.setSectionMenuOpen(false);
@@ -55287,37 +55347,37 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.activeSection = section;
     const group = sectionGroup(section);
     if (group) this.groupModule[group] = section;
-    (_d = this.packDropdownEl) == null ? void 0 : _d.toggle(section === "markov");
-    (_e = this.sectionSelectEl) == null ? void 0 : _e.toggle(section === "markov" && this.sectionChoices.length > 0);
-    (_f = this.editRecipeButton) == null ? void 0 : _f.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_g = this.openPresetButton) == null ? void 0 : _g.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset"));
+    (_c = this.packDropdownEl) == null ? void 0 : _c.toggle(section === "markov");
+    (_d = this.sectionSentenceEl) == null ? void 0 : _d.toggle(section === "markov" && this.sectionChoices.length > 0);
+    (_e = this.editRecipeButton) == null ? void 0 : _e.toggle(section === "markov" && this.currentPackType === "recipePack");
+    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
-    (_h = this.createPacksButton) == null ? void 0 : _h.toggleClass("is-placeholder", section !== "markov");
+    (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
     const tribal = section === "tribalNames" || !!familyForSection(section);
-    (_i = this.createPacksButton) == null ? void 0 : _i.toggle(!colonialPart && !tribal);
-    (_j = this.landButton) == null ? void 0 : _j.refresh();
-    (_k = this.guideButton) == null ? void 0 : _k.toggle(!!colonialPart);
+    (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart && !tribal);
+    (_i = this.landButton) == null ? void 0 : _i.refresh();
+    (_j = this.guideButton) == null ? void 0 : _j.toggle(!!colonialPart);
     this.refreshSavePreset();
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
     const river = section === "riverNames";
-    (_l = this.regionDropdownEl) == null ? void 0 : _l.toggle(!!group || river);
+    (_k = this.regionDropdownEl) == null ? void 0 : _k.toggle(!!group || river);
     this.showSecondBox(river && this.riverSetting === "british");
     this.updateSecondBoxLabel();
     this.updateRegionLabel();
     this.renderContextRow();
     this.refreshRiverOptions();
     const ageing = section === "nameAgeing";
-    (_m = this.quantityToggleEl) == null ? void 0 : _m.toggle(!ageing);
-    (_n = this.ageingControlsEl) == null ? void 0 : _n.toggle(ageing);
+    (_l = this.quantityToggleEl) == null ? void 0 : _l.toggle(!ageing);
+    (_m = this.ageingControlsEl) == null ? void 0 : _m.toggle(ageing);
     const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
-    (_o = this.generateButtonEl) == null ? void 0 : _o.setAttribute("title", action);
-    (_p = this.generateButtonEl) == null ? void 0 : _p.setAttribute("aria-label", action);
+    (_n = this.generateButtonEl) == null ? void 0 : _n.setAttribute("title", action);
+    (_o = this.generateButtonEl) == null ? void 0 : _o.setAttribute("aria-label", action);
     if (ageing) void this.enterAgeingSection();
     if (takeover) void this.takeoverView.refresh();
     if (this.sectionTriggerEl) (0, import_obsidian13.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
-    (_q = this.sectionStubEl) == null ? void 0 : _q.toggle(
+    (_p = this.sectionStubEl) == null ? void 0 : _p.toggle(
       section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover && !tribal
     );
   }
@@ -56431,7 +56491,7 @@ ${text}
     this.isRegionMenuOpen = false;
     this.quantityButtons = [];
     this.createPacksButton = null;
-    this.sectionSelectEl = null;
+    this.sectionSentenceEl = null;
     this.editRecipeButton = null;
     this.openPresetButton = null;
     this.savePresetButton = null;
@@ -56907,7 +56967,7 @@ ${text}
     this.currentSectioned = void 0;
     this.currentTemplateError = void 0;
     this.sectionChoices = [];
-    (_a2 = this.sectionSelectEl) == null ? void 0 : _a2.hide();
+    (_a2 = this.sectionSentenceEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
     const module2 = group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
@@ -56930,7 +56990,7 @@ ${text}
     this.currentSectioned = void 0;
     this.currentTemplateError = void 0;
     this.sectionChoices = [];
-    (_b = this.sectionSelectEl) == null ? void 0 : _b.hide();
+    (_b = this.sectionSentenceEl) == null ? void 0 : _b.hide();
     (_c = this.editRecipeButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
     this.plugin.settings.packName = file.basename;
     this.plugin.settings.namesFilePath = file.path;
@@ -57130,33 +57190,86 @@ ${text}
       }
     };
   }
-  /** Fills the Section selector for List and Breakdown packs with sections, and Mix packs whose sources have them. */
+  /** Compound brief §1: the sections sentence's choices — the pack's `##` headings (for Mix packs,
+   * its sources' headings), then whole pack. The first heading is chosen on every load. */
   async updateSectionChoices(parsed) {
     var _a2;
     let choices = [];
-    if (parsed.sectioned) {
+    if (parsed.sectioned && parsed.sectioned.sections.length > 0) {
       choices = sectionOptions(parsed.sectioned);
     } else if (parsed.packType === "mixPack") {
       const index = await this.scanFolderPacks();
       const seen = /* @__PURE__ */ new Set();
       for (const ref of (_a2 = parsed.mixSources) != null ? _a2 : []) {
         const source = findPackInIndex(index, ref.packName);
-        for (const option of (source == null ? void 0 : source.parsed.sectioned) ? sectionOptions(source.parsed.sectioned) : []) {
+        for (const option of (source == null ? void 0 : source.parsed.sectioned) ? headingOptions(source.parsed.sectioned) : []) {
           if (seen.has(option.label.toLowerCase())) continue;
           seen.add(option.label.toLowerCase());
           choices.push(option);
         }
       }
+      if (choices.length > 0) choices.push(wholePackOption());
     }
     this.sectionChoices = choices;
-    this.currentSectionRequest = void 0;
-    const select = this.sectionSelectEl;
-    if (!select) return;
-    select.empty();
-    select.createEl("option", { text: "whole pack", value: "-1" });
-    choices.forEach((c, i) => select.createEl("option", { text: c.label, value: String(i) }));
-    select.value = "-1";
-    select.toggle(this.activeSection === "markov" && choices.length > 0);
+    this.sectionChoiceIndex = 0;
+    this.sectionLabelsShown = true;
+    this.renderSectionSentence();
+  }
+  /** The chosen section option, if the pack has any. */
+  get sectionChoice() {
+    return this.sectionChoices[this.sectionChoiceIndex];
+  }
+  /** Whether whole-pack results carry their list's tag (§1.3; not offered for Mix packs). */
+  labelsOffered() {
+    return this.currentPackType === "listPack" || this.currentPackType === "breakdownPack";
+  }
+  /** "Use the ‹male› names" or "Use the ‹whole pack› names, ‹showing› each name's list (Alfred · male)". */
+  renderSectionSentence() {
+    const el = this.sectionSentenceEl;
+    if (!el) return;
+    el.empty();
+    const choice = this.sectionChoice;
+    el.toggle(this.activeSection === "markov" && !!choice);
+    if (!choice) return;
+    const rerender = () => this.renderSectionSentence();
+    el.appendText("Use the ");
+    this.sentenceLink(
+      el,
+      choice.label,
+      "The list to draw names from",
+      () => this.sectionChoices.map((c, i) => ({ id: String(i), label: c.label })),
+      String(this.sectionChoiceIndex),
+      (id) => {
+        var _a2;
+        this.sectionChoiceIndex = Number(id != null ? id : 0);
+        if ((_a2 = this.sectionChoice) == null ? void 0 : _a2.whole) this.sectionLabelsShown = true;
+        rerender();
+      }
+    );
+    el.appendText(" names");
+    if (!choice.whole || !this.labelsOffered()) return;
+    el.appendText(", ");
+    this.sentenceLink(
+      el,
+      this.sectionLabelsShown ? "showing" : "hiding",
+      "Show which list each name came from",
+      () => [
+        { id: "showing", label: "showing" },
+        { id: "hiding", label: "hiding" }
+      ],
+      this.sectionLabelsShown ? "showing" : "hiding",
+      (id) => {
+        this.sectionLabelsShown = id !== "hiding";
+        rerender();
+      }
+    );
+    const example = this.sectionExample();
+    el.appendText(` each name's list (${this.sectionLabelsShown ? `${example.name} \xB7 ${example.tag}` : example.name})`);
+  }
+  /** The bracketed example: the pack's first heading and one of its names. */
+  sectionExample() {
+    const first = this.currentSectioned ? labelledLists(this.currentSectioned).find((l) => l.tag) : void 0;
+    return first ? { name: first.names[0], tag: first.tag } : { name: "Alfred", tag: "male" };
   }
   async generateSelectedCount() {
     var _a2, _b, _c, _d, _e, _f;
@@ -57348,7 +57461,8 @@ ${text}
         this.setStatus(mixEntry.templateError);
         return;
       }
-      const resolved = resolveMixSources((0, import_obsidian13.normalizePath)(mixPath), mixData, index, void 0, this.currentSectionRequest);
+      const choice2 = this.sectionChoice;
+      const resolved = resolveMixSources((0, import_obsidian13.normalizePath)(mixPath), mixData, index, void 0, choice2 && !choice2.whole ? choice2.request : void 0);
       if (resolved.error) {
         this.renderResults([], resolved.error);
         this.setStatus(resolved.error);
@@ -57371,12 +57485,32 @@ ${text}
       this.setStatus("");
       return;
     }
+    const choice = this.sectionChoice;
+    if ((choice == null ? void 0 : choice.whole) && this.sectionLabelsShown && this.labelsOffered() && this.currentSectioned) {
+      const result2 = generateLabelledNames(labelledLists(this.currentSectioned), {
+        generator: this.currentPackType === "listPack" ? "list" : "breakdown",
+        count: this.generationCount,
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness,
+        seed: seedOverride
+      });
+      if (result2.names.length === 0) {
+        this.renderResults([], "Select a pack with names to generate from.");
+        this.setStatus("No names available to generate from.");
+        return;
+      }
+      this.currentSeed = result2.seed;
+      this.renderResults(result2.names.map((n) => n.name), void 0, result2.names.map((n) => n.tag));
+      await this.recordGenerationHistory(result2.names.length);
+      this.setStatus("");
+      return;
+    }
     let namesText = this.currentNamesText;
     let sectionNotices = [];
-    if (this.currentSectionRequest && this.currentSectioned) {
+    if (choice && !choice.whole && this.currentSectioned) {
       const selection = selectSectionNames(
         this.currentSectioned,
-        this.currentSectionRequest,
+        choice.request,
         this.currentPackType === "breakdownPack" ? 20 : 0
       );
       namesText = selection.names.join("\n");
@@ -57479,7 +57613,7 @@ ${text}
       else new PreviousGenerationsModal(this.app, this).open();
     });
   }
-  renderResults(names, placeholderMessage) {
+  renderResults(names, placeholderMessage, tags) {
     if (!this.resultsEl) {
       return;
     }
@@ -57504,10 +57638,7 @@ ${text}
       attr: { type: "button", title: "Insert bullet list" }
     });
     (0, import_obsidian13.setIcon)(bulletButton, ICON_BULLET_INSERT);
-    const getSelectedNames = () => Array.from(list.querySelectorAll("li.is-selected")).map((el) => {
-      var _a2;
-      return (_a2 = el.textContent) != null ? _a2 : "";
-    });
+    const getSelectedNames = () => Array.from(list.querySelectorAll("li.is-selected")).map(resultName);
     const updateInsertButtons = () => {
       const selected = getSelectedNames();
       insertButton.disabled = selected.length !== 1;
@@ -57521,8 +57652,10 @@ ${text}
     if (placeholderMessage) {
       list.createEl("li", { cls: "nameforge-modal__placeholder", text: placeholderMessage });
     } else {
-      names.forEach((name) => {
-        const item = list.createEl("li", { text: name });
+      names.forEach((name, i) => {
+        const item = list.createEl("li", { text: name, attr: { "data-name": name } });
+        const tag = tags == null ? void 0 : tags[i];
+        if (tag) item.createSpan({ cls: "nameforge-modal__result-tag", text: ` \xB7 ${tag}` });
         item.addEventListener("click", () => {
           item.classList.toggle("is-selected");
           updateInsertButtons();

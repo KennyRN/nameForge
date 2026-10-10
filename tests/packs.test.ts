@@ -54,7 +54,7 @@ test("unchanged: a sectioned pack's names (no section chosen) match the old extr
 
 test("sections: named section, gender subsection and gender across sections", () => {
   const s = parseNameSections(SECTIONED)!;
-  assert.deepEqual(sectionOptions(s).map((o) => o.label), ["Noble", "Noble · Male", "Noble · Female", "Common", "Common · Male", "Common · Female"]);
+  assert.deepEqual(sectionOptions(s).map((o) => o.label), ["Noble", "Common", "whole pack"]);
   assert.deepEqual(selectSectionNames(s, { section: "noble" }).names, ["Aethelric", "Beornwulf", "Aethelflaed", "Cyneburh"]);
   assert.deepEqual(selectSectionNames(s, { section: "Common", gender: "female" }).names, ["Bebbe", "Tila"]);
   assert.deepEqual(selectSectionNames(s, { gender: "male" }).names, ["Aethelric", "Beornwulf", "Dudda", "Wiga"]);

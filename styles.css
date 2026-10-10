@@ -1206,10 +1206,13 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   width: auto;
 }
 
-/* §10 Section selector under the pack row (markov generator, packs with sections). */
-.nameforge-modal__pack-section-select {
-  align-self: center;
-  max-width: 100%;
+/* Compound brief §1: the sections sentence under the pack row, and whole-pack tags on results. */
+.nameforge-modal__section-sentence {
+  margin: 0 auto 8px;
+}
+
+.nameforge-modal__result-tag {
+  color: var(--text-muted);
 }
 
 /* §7 "Start from template" in the pack editor. */

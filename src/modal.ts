@@ -101,10 +101,14 @@ import { RecipeEditorModal, type RecipeEditorOptions, RecipeWizard } from "./rec
 import {
   parseNameSections,
   type SectionedNames,
+  headingOptions,
+  labelledLists,
+  type SectionOption,
   sectionOptions,
-  type SectionRequest,
+  wholePackOption,
   selectSectionNames,
 } from "./packs/sections";
+import { generateLabelledNames } from "./packs/labelled";
 import { AGEING, type AgeingCandidate, ageName, validateSource } from "./ageing/engine";
 import { TakeoverView } from "./takeoverView";
 import { renderLoading, waitForPaint, waitForTask } from "./loading";
@@ -276,6 +280,11 @@ function generateNamesFromSource(
     seed: resolvedSeed,
   });
   return { names: result.names, seed: result.seed };
+}
+
+/** A results row's name, without any list tag (Compound brief §1.3). */
+function resultName(el: Element): string {
+  return el.getAttribute("data-name") ?? el.textContent ?? "";
 }
 
 function parseSeedInput(value?: string): number | undefined {
@@ -456,9 +465,11 @@ export class NameForgeModal extends Modal {
   private currentMixSources: MixSourceRef[] = [];
   /** §10: the loaded pack's sections (List/Breakdown), section options, and the chosen section. */
   private currentSectioned: SectionedNames | undefined = undefined;
-  private sectionChoices: { label: string; request: SectionRequest }[] = [];
-  private currentSectionRequest: SectionRequest | undefined = undefined;
-  private sectionSelectEl: HTMLSelectElement | null = null;
+  private sectionChoices: SectionOption[] = [];
+  /** Compound brief §1: the chosen sentence option (the first heading on load) and whole-pack labels. */
+  private sectionChoiceIndex = 0;
+  private sectionLabelsShown = true;
+  private sectionSentenceEl: HTMLElement | null = null;
   /** §7: set when the loaded pack's template couldn't be applied. */
   private currentTemplateError: string | undefined = undefined;
   /** Recipe packs: the loaded recipe, the session's etymology toggle, and the edit button. */
@@ -665,16 +676,9 @@ export class NameForgeModal extends Modal {
     this.sectionMenuEl = optionsList.createDiv({ cls: "nameforge-modal__section-menu" });
     this.sectionMenuEl.hide();
 
-    // §10: the pack's sections, for List, Breakdown and Mix packs that have them.
-    this.sectionSelectEl = optionsList.createEl("select", {
-      cls: "dropdown nameforge-modal__pack-section-select",
-      attr: { "aria-label": "Section", title: "Section" },
-    });
-    this.sectionSelectEl.addEventListener("change", () => {
-      const i = Number(this.sectionSelectEl?.value ?? -1);
-      this.currentSectionRequest = i >= 0 ? this.sectionChoices[i]?.request : undefined;
-    });
-    this.sectionSelectEl.hide();
+    // Compound brief §1: the pack's sections as a sentence, for packs that have `##` headings.
+    this.sectionSentenceEl = optionsList.createDiv({ cls: "nameforge-modal__tribal-sentence nameforge-modal__section-sentence" });
+    this.sectionSentenceEl.hide();
 
     this.buildSecondBox(optionsList);
 
@@ -773,7 +777,7 @@ export class NameForgeModal extends Modal {
     if (section === "nameAgeing" && this.activeSection === "markov") {
       const selected = this.resultsEl?.querySelectorAll("li.is-selected") ?? [];
       if (selected.length === 1 && this.ageingSourceInput) {
-        this.ageingSourceInput.value = selected[0].textContent ?? "";
+        this.ageingSourceInput.value = resultName(selected[0]);
       }
     }
     this.setSectionMenuOpen(false);
@@ -784,7 +788,7 @@ export class NameForgeModal extends Modal {
     const group = sectionGroup(section);
     if (group) this.groupModule[group] = section;
     this.packDropdownEl?.toggle(section === "markov");
-    this.sectionSelectEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
+    this.sectionSentenceEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
     this.editRecipeButton?.toggle(section === "markov" && this.currentPackType === "recipePack");
     this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset"));
     // Pack creation belongs to the markov generator; elsewhere the button keeps its space so the
@@ -1976,7 +1980,7 @@ export class NameForgeModal extends Modal {
     this.isRegionMenuOpen = false;
     this.quantityButtons = [];
     this.createPacksButton = null;
-    this.sectionSelectEl = null;
+    this.sectionSentenceEl = null;
     this.editRecipeButton = null;
     this.openPresetButton = null;
     this.savePresetButton = null;
@@ -2519,7 +2523,7 @@ export class NameForgeModal extends Modal {
     this.currentSectioned = undefined;
     this.currentTemplateError = undefined;
     this.sectionChoices = [];
-    this.sectionSelectEl?.hide();
+    this.sectionSentenceEl?.hide();
     this.editRecipeButton?.hide();
     this.openPresetButton?.toggle(this.activeSection === "markov");
     const module = group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
@@ -2542,7 +2546,7 @@ export class NameForgeModal extends Modal {
     this.currentSectioned = undefined;
     this.currentTemplateError = undefined;
     this.sectionChoices = [];
-    this.sectionSelectEl?.hide();
+    this.sectionSentenceEl?.hide();
     this.editRecipeButton?.toggle(this.activeSection === "markov");
     this.plugin.settings.packName = file.basename;
     this.plugin.settings.namesFilePath = file.path;
@@ -2749,32 +2753,88 @@ export class NameForgeModal extends Modal {
     };
   }
 
-  /** Fills the Section selector for List and Breakdown packs with sections, and Mix packs whose sources have them. */
+  /** Compound brief §1: the sections sentence's choices — the pack's `##` headings (for Mix packs,
+   * its sources' headings), then whole pack. The first heading is chosen on every load. */
   private async updateSectionChoices(parsed: NamesFileData) {
-    let choices: { label: string; request: SectionRequest }[] = [];
-    if (parsed.sectioned) {
+    let choices: SectionOption[] = [];
+    if (parsed.sectioned && parsed.sectioned.sections.length > 0) {
       choices = sectionOptions(parsed.sectioned);
     } else if (parsed.packType === "mixPack") {
       const index = await this.scanFolderPacks();
       const seen = new Set<string>();
       for (const ref of parsed.mixSources ?? []) {
         const source = findPackInIndex(index, ref.packName);
-        for (const option of source?.parsed.sectioned ? sectionOptions(source.parsed.sectioned) : []) {
+        for (const option of source?.parsed.sectioned ? headingOptions(source.parsed.sectioned) : []) {
           if (seen.has(option.label.toLowerCase())) continue;
           seen.add(option.label.toLowerCase());
           choices.push(option);
         }
       }
+      if (choices.length > 0) choices.push(wholePackOption());
     }
     this.sectionChoices = choices;
-    this.currentSectionRequest = undefined;
-    const select = this.sectionSelectEl;
-    if (!select) return;
-    select.empty();
-    select.createEl("option", { text: "whole pack", value: "-1" });
-    choices.forEach((c, i) => select.createEl("option", { text: c.label, value: String(i) }));
-    select.value = "-1";
-    select.toggle(this.activeSection === "markov" && choices.length > 0);
+    this.sectionChoiceIndex = 0;
+    this.sectionLabelsShown = true;
+    this.renderSectionSentence();
+  }
+
+  /** The chosen section option, if the pack has any. */
+  private get sectionChoice(): SectionOption | undefined {
+    return this.sectionChoices[this.sectionChoiceIndex];
+  }
+
+  /** Whether whole-pack results carry their list's tag (§1.3; not offered for Mix packs). */
+  private labelsOffered(): boolean {
+    return this.currentPackType === "listPack" || this.currentPackType === "breakdownPack";
+  }
+
+  /** "Use the ‹male› names" or "Use the ‹whole pack› names, ‹showing› each name's list (Alfred · male)". */
+  private renderSectionSentence() {
+    const el = this.sectionSentenceEl;
+    if (!el) return;
+    el.empty();
+    const choice = this.sectionChoice;
+    el.toggle(this.activeSection === "markov" && !!choice);
+    if (!choice) return;
+    const rerender = () => this.renderSectionSentence();
+    el.appendText("Use the ");
+    this.sentenceLink(
+      el,
+      choice.label,
+      "The list to draw names from",
+      () => this.sectionChoices.map((c, i) => ({ id: String(i), label: c.label })),
+      String(this.sectionChoiceIndex),
+      (id) => {
+        this.sectionChoiceIndex = Number(id ?? 0);
+        if (this.sectionChoice?.whole) this.sectionLabelsShown = true;
+        rerender();
+      },
+    );
+    el.appendText(" names");
+    if (!choice.whole || !this.labelsOffered()) return;
+    el.appendText(", ");
+    this.sentenceLink(
+      el,
+      this.sectionLabelsShown ? "showing" : "hiding",
+      "Show which list each name came from",
+      () => [
+        { id: "showing", label: "showing" },
+        { id: "hiding", label: "hiding" },
+      ],
+      this.sectionLabelsShown ? "showing" : "hiding",
+      (id) => {
+        this.sectionLabelsShown = id !== "hiding";
+        rerender();
+      },
+    );
+    const example = this.sectionExample();
+    el.appendText(` each name's list (${this.sectionLabelsShown ? `${example.name} · ${example.tag}` : example.name})`);
+  }
+
+  /** The bracketed example: the pack's first heading and one of its names. */
+  private sectionExample(): { name: string; tag: string } {
+    const first = this.currentSectioned ? labelledLists(this.currentSectioned).find((l) => l.tag) : undefined;
+    return first ? { name: first.names[0], tag: first.tag! } : { name: "Alfred", tag: "male" };
   }
 
   private async generateSelectedCount() {
@@ -2980,7 +3040,8 @@ export class NameForgeModal extends Modal {
         this.setStatus(mixEntry.templateError);
         return;
       }
-      const resolved = resolveMixSources(normalizePath(mixPath), mixData, index, undefined, this.currentSectionRequest);
+      const choice = this.sectionChoice;
+      const resolved = resolveMixSources(normalizePath(mixPath), mixData, index, undefined, choice && !choice.whole ? choice.request : undefined);
 
       if (resolved.error) {
         this.renderResults([], resolved.error);
@@ -3008,13 +3069,35 @@ export class NameForgeModal extends Modal {
       return;
     }
 
+    // Compound brief §1.3: whole pack with labels — each name comes from one list and carries its tag.
+    const choice = this.sectionChoice;
+    if (choice?.whole && this.sectionLabelsShown && this.labelsOffered() && this.currentSectioned) {
+      const result = generateLabelledNames(labelledLists(this.currentSectioned), {
+        generator: this.currentPackType === "listPack" ? "list" : "breakdown",
+        count: this.generationCount,
+        faithfulness: this.plugin.settings.faithfulness,
+        strictness: this.plugin.settings.strictness,
+        seed: seedOverride,
+      });
+      if (result.names.length === 0) {
+        this.renderResults([], "Select a pack with names to generate from.");
+        this.setStatus("No names available to generate from.");
+        return;
+      }
+      this.currentSeed = result.seed;
+      this.renderResults(result.names.map((n) => n.name), undefined, result.names.map((n) => n.tag));
+      await this.recordGenerationHistory(result.names.length);
+      this.setStatus("");
+      return;
+    }
+
     // §10: a chosen section narrows the names; Breakdown sections under 20 names fall back.
     let namesText = this.currentNamesText;
     let sectionNotices: string[] = [];
-    if (this.currentSectionRequest && this.currentSectioned) {
+    if (choice && !choice.whole && this.currentSectioned) {
       const selection = selectSectionNames(
         this.currentSectioned,
-        this.currentSectionRequest,
+        choice.request,
         this.currentPackType === "breakdownPack" ? 20 : 0,
       );
       namesText = selection.names.join("\n");
@@ -3126,7 +3209,7 @@ export class NameForgeModal extends Modal {
     });
   }
 
-  private renderResults(names: string[], placeholderMessage?: string) {
+  private renderResults(names: string[], placeholderMessage?: string, tags?: (string | undefined)[]) {
     if (!this.resultsEl) {
       return;
     }
@@ -3158,7 +3241,7 @@ export class NameForgeModal extends Modal {
     setIcon(bulletButton, ICON_BULLET_INSERT);
 
     const getSelectedNames = (): string[] =>
-      Array.from(list.querySelectorAll("li.is-selected")).map((el) => el.textContent ?? "");
+      Array.from(list.querySelectorAll("li.is-selected")).map(resultName);
 
     const updateInsertButtons = () => {
       const selected = getSelectedNames();
@@ -3175,8 +3258,11 @@ export class NameForgeModal extends Modal {
     if (placeholderMessage) {
       list.createEl("li", { cls: "nameforge-modal__placeholder", text: placeholderMessage });
     } else {
-      names.forEach((name) => {
-        const item = list.createEl("li", { text: name });
+      names.forEach((name, i) => {
+        // §1.3: the name lives in a data attribute; the tag is display-only.
+        const item = list.createEl("li", { text: name, attr: { "data-name": name } });
+        const tag = tags?.[i];
+        if (tag) item.createSpan({ cls: "nameforge-modal__result-tag", text: ` · ${tag}` });
         item.addEventListener("click", () => {
           item.classList.toggle("is-selected");
           updateInsertButtons();
