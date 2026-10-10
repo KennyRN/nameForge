@@ -248,7 +248,7 @@ export function initialsOf(text: string): string {
     .join("");
 }
 
-const ordinalText = (n: number) => {
+export const ordinalText = (n: number) => {
   const s = n % 100 >= 11 && n % 100 <= 13 ? "th" : n % 10 === 1 ? "st" : n % 10 === 2 ? "nd" : n % 10 === 3 ? "rd" : "th";
   return `${n}${s}`;
 };
@@ -696,6 +696,23 @@ export function prefixedLand(word: string, setting: GroupSetting, rng: () => num
   return `${prefix} ${word}`;
 }
 
+/** §8.2: an invented person: surname forms only where the culture has surnames; "the {flavourAnimal}"
+ * from the given animals (beast and bird without them). */
+export function groupPerson(setting: GroupSetting, surnames: boolean, rng: () => number, animals?: string[]): string | undefined {
+  const { ctx, type } = sharedCtx(setting, rng);
+  const shapes = surnames ? GROUP_DATA.people.person : GROUP_DATA.people.personOther;
+  let pattern = pickWeighted(shapes.map((s): [string, number] => [s.p, s.w]), rng)!;
+  if (animals && animals.length > 0) pattern = pattern.replace("{flavourAnimal}", pickOne(animals, rng));
+  return renderPattern(ctx, pattern, type);
+}
+
+/** §8.2: an invented holy person: Saint {saintName}, or the Blessed {saintName} in sci-fi. */
+export function groupSaint(setting: GroupSetting, rng: () => number): string {
+  const { ctx, type } = sharedCtx(setting, rng);
+  const saint = pick(ctx, "saintName", type);
+  return setting === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`;
+}
+
 /** §11.6: initials of a formal name for the same type. */
 function initialsToken(ctx: Ctx, type: GroupType): Piece | undefined {
   const formal = type.shapes.filter((s) => s.f === "F" && !s.p.includes("{initials}") && shapeWeight(ctx, s) > 0);
@@ -804,6 +821,17 @@ function acceptable(ctx: Ctx, text: string, formal: boolean): boolean {
   const words = text.split(" ").filter((w) => w && w !== "&");
   const counted = words.filter((w, i) => !(i === 0 && w === "the") && !SMALL.has(w.toLowerCase()));
   if (counted.length > (formal ? 8 : 5)) return false;
+  if (repeatsContent(counted)) return false;
+  const n = norm(text);
+  if (ctx.block.has(n)) return false;
+  if (BANNED.some((re) => re.test(text))) return false;
+  if (breaksGroupColourRule(text)) return false;
+  return true;
+}
+
+/** §11.5: a content word twice (ignoring a final s), or two colours or two numbers; placeholders
+ * and compounds' parts are checked word by word. */
+export function repeatsContent(counted: string[]): boolean {
   const content = counted.filter((w) => !w.startsWith("[")).flatMap((w) => w.split(/[-–]/));
   const seen = new Set<string>();
   let colours = 0;
@@ -812,17 +840,12 @@ function acceptable(ctx: Ctx, text: string, formal: boolean): boolean {
     const bare = raw.replace(/'s?$/, "").replace(/[(),.]/g, "");
     if (!bare) continue;
     const key = bare.toLowerCase().replace(/s$/, "");
-    if (seen.has(key)) return false;
+    if (seen.has(key)) return true;
     seen.add(key);
     if (COLOUR_WORDS.has(bare)) colours++;
     if (NUMBER_WORDS.has(bare) || /^\d+(st|nd|rd|th)$/.test(bare)) numbers++;
   }
-  if (colours > 1 || numbers > 1) return false;
-  const n = norm(text);
-  if (ctx.block.has(n)) return false;
-  if (BANNED.some((re) => re.test(text))) return false;
-  if (breaksGroupColourRule(text)) return false;
-  return true;
+  return colours > 1 || numbers > 1;
 }
 
 /** §4: one name, with the failure rules; undefined after 40 failed draws. */
@@ -861,12 +884,15 @@ const NEVER_ANCHORS = new Set(["person", "holy", "initials"]);
 /** Owner tokens that render as placeholders in placeholder mode. */
 const PLACEHOLDER_TOKENS = new Set(["person", "holy", "town", "surname", "house"]);
 
-type TokenKind = "counter" | "owner" | "list" | "never";
+export type TokenKind = "counter" | "owner" | "list" | "never";
 const kindOf = (name: string): TokenKind =>
   COUNTERS.has(name) ? "counter" : OWNERS.has(name) ? "owner" : NEVER_ANCHORS.has(name) ? "never" : "list";
 
+/** Tone brief §3.2: a token's kind in a series (counter, owner, list, or never an anchor). */
+export const seriesTokenKind = (name: string): TokenKind => kindOf(name);
+
 /** §3.4: the gap to the next counter value: +1 (50%), +2 (25%), +3 to +6 (25%). */
-function counterGap(rng: () => number): number {
+export function counterGap(rng: () => number): number {
   const r = rng();
   if (r < 0.5) return 1;
   if (r < 0.75) return 2;

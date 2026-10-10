@@ -1,0 +1,6271 @@
+{
+ "$comment": "Ships and spacecraft (docs/ships-and-spacecraft-brief.md). Built from the brief by build_vessels.py; lists are as the brief writes them.",
+ "modules": {
+  "ships": "ships and boats",
+  "spacecraft": "spacecraft and stations"
+ },
+ "cultures": [
+  {
+   "key": "general",
+   "label": "General",
+   "group": "",
+   "span": "T1-T7",
+   "town": "britain",
+   "holy": "blessing",
+   "surnames": true,
+   "womanNames": true
+  },
+  {
+   "key": "anglo-saxon",
+   "label": "Anglo-Saxon",
+   "group": "British Isles and northern Europe",
+   "span": "T1-T3",
+   "roles": {
+    "beast": 2,
+    "holy": 1.5,
+    "royal": 1.5,
+    "commerce": 0.5,
+    "poetic": 2
+   },
+   "flavour": {
+    "world": "anglo-saxon"
+   },
+   "town": "britain",
+   "holy": "christian",
+   "lists": {
+    "virtue": [
+     {
+      "w": "Brave"
+     },
+     {
+      "w": "Bold"
+     },
+     {
+      "w": "Steadfast"
+     },
+     {
+      "w": "Victory"
+     },
+     {
+      "w": "Courage"
+     },
+     {
+      "w": "Glory",
+      "t": [
+       "grand"
+      ]
+     },
+     {
+      "w": "Faithful"
+     },
+     {
+      "w": "Wolf-Hearted"
+     }
+    ],
+    "poetic": [
+     {
+      "w": "Wave-Steed"
+     },
+     {
+      "w": "Sea-Stallion"
+     },
+     {
+      "w": "Foam-Necked"
+     },
+     {
+      "w": "Ring-Prowed",
+      "t": [
+       "grand"
+      ]
+     },
+     {
+      "w": "Swan of the Waves"
+     },
+     {
+      "w": "Sea-Wood"
+     },
+     {
+      "w": "Whale-Road Rider"
+     },
+     {
+      "w": "Curved-Prow"
+     }
+    ]
+   },
+   "surnames": true
+  },
+  {
+   "key": "norse",
+   "label": "Norse",
+   "group": "British Isles and northern Europe",
+   "span": "T1-T3",
+   "roles": {
+    "beast": 3,
+    "menace": 1.5,
+    "poetic": 2,
+    "holy": 0.5,
+    "commerce": 0.5
+   },
+   "flavour": {
+    "world": "norse"
+   },
+   "town": "norse",
+   "holy": "gods",
+   "gods": {
+    "world": "norse",
+    "shapes": [
+     {
+      "p": "{god:poss} {beast}",
+      "w": 35
+     }
+    ]
+   },
+   "lists": {
+    "virtue": [
+     {
+      "w": "Bold"
+     },
+     {
+      "w": "Fearless"
+     },
+     {
+      "w": "Victory"
+     },
+     {
+      "w": "Gold-Breasted",
+      "t": [
+       "grand"
+      ]
+     },
+     {
+      "w": "Battle-Glad",
+      "t": [
+       "grim"
+      ]
+     }
+    ],
+    "beastExtra": [
+     {
+      "w": "Serpent",
+      "x": 2
+     },
+     {
+      "w": "Dragon",
+      "x": 2
+     },
+     {
+      "w": "Raven",
+      "x": 2
+     },
+     {
+      "w": "Wolf",
+      "x": 2
+     },
+     {
+      "w": "Bison",
+      "x": 2
+     },
+     {
+      "w": "Crane",
+      "x": 2
+     },
+     {
+      "w": "Bull",
+      "x": 2
+     },
+     {
+      "w": "Snake",
+      "x": 2
+     }
+    ],
+    "poetic": [
+     {
+      "w": "Wave-Steed"
+     },
+     {
+      "w": "Sea-Stallion"
+     },
+     {
+      "w": "Sail-Horse"
+     },
+     {
+      "w": "Surf-Raven"
+     },
+     {
+      "w": "Long Snake"
+     },
+     {
+      "w": "Gold-Mane"
+     },
+     {
+      "w": "Storm-Rider"
+     },
+     {
+      "w": "Fjord-Wolf"
+     }
+    ]
+   },
+   "surnames": true
+  },
+  {
+   "key": "celtic",
+   "label": "Celtic",
+   "group": "British Isles and northern Europe",
+   "span": "T1-T4",
+   "roles": {
+    "beast": 2,
+    "holy": 2,
+    "sky": 1.5
+   },
+   "flavour": {
+    "world": "celtic"
+   },
+   "town": "britain",
+   "holy": "christian",
+   "lists": {
+    "virtue": [
+     {
+      "w": "Bold"
+     },
+     {
+      "w": "Swift"
+     },
+     {
+      "w": "Faithful"
+     },
+     {
+      "w": "Bright"
+     },
+     {
+      "w": "Glory"
+     }
+    ],
+    "poetic": [
+     {
+      "w": "Wave of the West"
+     },
+     {
+      "w": "Hound of the Sea"
+     },
+     {
+      "w": "Salmon of the Strand"
+     },
+     {
+      "w": "Curragh of the Saint"
+     },
+     {
+      "w": "Star of the Sound"
+     },
+     {
+      "w": "Grey Seal"
+     },
+     {
+      "w": "Bright Wave"
+     }
+    ]
+   },
+   "surnames": true,
+   "womanNames": true
+  },
+  {
+   "key": "norman-british",
+   "label": "Norman & British",
+   "group": "British Isles and northern Europe",
+   "span": "T2-T7",
+   "techRoles": {
+    "T2-T3": {
+     "holy": 3,
+     "royal": 1.5
+    },
+    "T4": {
+     "virtue": 3,
+     "royal": 2,
+     "beast": 1.5
+    },
+    "T5": {
+     "virtue": 2,
+     "place": 2
+    },
+    "T6": {
+     "virtue": 2,
+     "place": 2
+    },
+    "T7": {
+     "place": 2,
+     "person": 1.5
+    }
+   },
+   "flavour": [
+    "Lion",
+    "Hart",
+    "Boar",
+    "Bear",
+    "Hound",
+    "Falcon",
+    "Swan"
+   ],
+   "town": "britain",
+   "holy": "christian",
+   "lists": {
+    "virtue": [
+     {
+      "w": "Good Anne",
+      "k": "T2-T3"
+     },
+     {
+      "w": "Saint Mary",
+      "k": "T2-T3"
+     },
+     {
+      "w": "Christopher",
+      "k": "T2-T3"
+     },
+     {
+      "w": "Gabriel",
+      "k": "T2-T3"
+     },
+     {
+      "w": "Peter",
+      "k": "T2-T3"
+     },
+     {
+      "w": "Trinity Royal",
+      "x": 0.3,
+      "k": "T2-T3"
+     },
+     {
+      "w": "Thunderer",
+      "k": "T4"
+     },
+     {
+      "w": "Indefatigable",
+      "k": "T4"
+     },
+     {
+      "w": "Bellerophon",
+      "k": "T4"
+     },
+     {
+      "w": "Ajax",
+      "k": "T4"
+     },
+     {
+      "w": "Orion",
+      "k": "T4"
+     },
+     {
+      "w": "Minotaur",
+      "k": "T4"
+     },
+     {
+      "w": "Agamemnon",
+      "k": "T4"
+     },
+     {
+      "w": "Defiance",
+      "k": "T4"
+     },
+     {
+      "w": "Invincible",
+      "k": "T4"
+     },
+     {
+      "w": "Indomitable",
+      "k": "T4"
+     },
+     {
+      "w": "Majestic",
+      "k": "T4"
+     },
+     {
+      "w": "Revenge",
+      "x": 0.3,
+      "k": "T4"
+     },
+     {
+      "w": "Dauntless",
+      "k": "T5-T6"
+     },
+     {
+      "w": "Vanguard",
+      "k": "T5-T6"
+     },
+     {
+      "w": "Formidable",
+      "k": "T5-T6"
+     },
+     {
+      "w": "Warrior",
+      "k": "T5-T6"
+     },
+     {
+      "w": "Dreadnought",
+      "x": 0.3,
+      "k": "T5-T6"
+     },
+     {
+      "w": "Courageous",
+      "k": "T5-T6"
+     },
+     {
+      "w": "Glorious",
+      "k": "T5-T6"
+     },
+     {
+      "w": "Renown",
+      "k": "T5-T6"
+     },
+     {
+      "w": "Defender",
+      "k": "T7"
+     },
+     {
+      "w": "Protector",
+      "k": "T7"
+     },
+     {
+      "w": "Daring",
+      "k": "T7"
+     },
+     {
+      "w": "Diamond",
+      "k": "T7"
+     },
+     {
+      "w": "Duncan",
+      "k": "T7"
+     }
+    ],
+    "royal": [
+     {
+      "w": "Sovereign"
+     },
+     {
+      "w": "Royal Oak"
+     },
+     {
+      "w": "Royal George",
+      "x": 0.3
+     },
+     {
+      "w": "Prince Regent"
+     },
+     {
+      "w": "Queen"
+     },
+     {
+      "w": "Monarch"
+     },
+     {
+      "w": "Royal Sovereign"
+     }
+    ]
+   },
+   "surnames": true,
+   "womanNames": true
+  },
+  {
+   "key": "french",
+   "label": "French",
+   "group": "Western and southern Europe",
+   "span": "T3-T7",
+   "roles": {
+    "virtue": 2,
+    "royal": 1.5
+   },
+   "techRoles": {
+    "T6-T7": {
+     "person": 2,
+     "place": 1.5
+    }
+   },
+   "flavour": [
+    "Lion",
+    "Eagle",
+    "Cockerel",
+    "Stag",
+    "Swan",
+    "Falcon"
+   ],
+   "town": "compound",
+   "holy": "christian",
+   "marian": 0.3,
+   "lists": {
+    "virtue": [
+     {
+      "w": "Glorious"
+     },
+     {
+      "w": "Majestic"
+     },
+     {
+      "w": "Formidable"
+     },
+     {
+      "w": "Redoubtable"
+     },
+     {
+      "w": "Brilliant"
+     },
+     {
+      "w": "Intrepid"
+     },
+     {
+      "w": "Triumphant"
+     },
+     {
+      "w": "Fearless"
+     },
+     {
+      "w": "Thundering"
+     },
+     {
+      "w": "Invincible"
+     },
+     {
+      "w": "Superb"
+     },
+     {
+      "w": "Magnanimous"
+     },
+     {
+      "w": "Audacious"
+     },
+     {
+      "w": "Terrible",
+      "x": 0.3,
+      "t": [
+       "grim"
+      ]
+     }
+    ],
+    "royal": [
+     {
+      "w": "Royal Sun"
+     },
+     {
+      "w": "Crown"
+     },
+     {
+      "w": "Dauphin"
+     },
+     {
+      "w": "Royal Louis",
+      "x": 0.3
+     },
+     {
+      "w": "Queen"
+     },
+     {
+      "w": "Majesty"
+     }
+    ]
+   }
+  },
+  {
+   "key": "dutch",
+   "label": "Dutch",
+   "group": "Western and southern Europe",
+   "span": "T3-T7",
+   "roles": {
+    "place": 2,
+    "commerce": 2,
+    "person": 1.5,
+    "holy": 0.3
+   },
+   "flavour": [
+    "Lion",
+    "Swan",
+    "Heron",
+    "Stork",
+    "Horse"
+   ],
+   "town": "compound",
+   "holy": "christian",
+   "holyX": 0.3,
+   "shapes": [
+    {
+     "role": "place",
+     "p": "Golden {town}",
+     "w": 20
+    },
+    {
+     "role": "place",
+     "p": "Arms of {town}",
+     "w": 25
+    },
+    {
+     "role": "place",
+     "p": "Lion of {town}",
+     "w": 15,
+     "t": [
+      "grand"
+     ]
+    }
+   ],
+   "lists": {
+    "virtue": [
+     {
+      "w": "Concord"
+     },
+     {
+      "w": "Unity"
+     },
+     {
+      "w": "Prosperity"
+     },
+     {
+      "w": "Good Hope"
+     },
+     {
+      "w": "Peace"
+     },
+     {
+      "w": "Freedom"
+     },
+     {
+      "w": "Hope"
+     },
+     {
+      "w": "Faith"
+     },
+     {
+      "w": "Diligence"
+     }
+    ]
+   },
+   "surnames": true
+  },
+  {
+   "key": "iberian",
+   "label": "Spanish & Portuguese",
+   "group": "Western and southern Europe",
+   "span": "T3-T6",
+   "roles": {
+    "holy": 3,
+    "royal": 2
+   },
+   "flavour": [
+    "Lion",
+    "Bull",
+    "Eagle",
+    "Falcon",
+    "Dolphin"
+   ],
+   "town": "compound",
+   "holy": "christian",
+   "marian": 3,
+   "shapes": [
+    {
+     "role": "holy",
+     "p": "Most Holy {holyNoun}",
+     "w": 15,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "role": "holy",
+     "p": "Holy Trinity",
+     "w": 5
+    },
+    {
+     "role": "holy",
+     "p": "Holy Cross",
+     "w": 5
+    },
+    {
+     "role": "holy",
+     "p": "{holy} and {holy}",
+     "w": 5
+    }
+   ],
+   "lists": {
+    "virtue": [
+     {
+      "w": "Victory"
+     },
+     {
+      "w": "Triumph"
+     },
+     {
+      "w": "Conception"
+     },
+     {
+      "w": "Hope"
+     },
+     {
+      "w": "Glory"
+     },
+     {
+      "w": "Fortune"
+     }
+    ],
+    "royal": [
+     {
+      "w": "Royal Prince"
+     },
+     {
+      "w": "Crown"
+     },
+     {
+      "w": "Royal Philip",
+      "x": 0.3
+     },
+     {
+      "w": "Prince of the Sea"
+     }
+    ]
+   }
+  },
+  {
+   "key": "roman",
+   "label": "Roman / Italian",
+   "group": "Western and southern Europe",
+   "span": "T2-T7",
+   "roles": {
+    "virtue": 2
+   },
+   "techRoles": {
+    "T2": {
+     "holy": 2
+    },
+    "T6-T7": {
+     "person": 2,
+     "place": 2
+    }
+   },
+   "flavour": {
+    "world": "roman"
+   },
+   "town": "roman",
+   "holy": "christian",
+   "gods": {
+    "k": "T2",
+    "list": [
+     {
+      "w": "Jupiter"
+     },
+     {
+      "w": "Mars"
+     },
+     {
+      "w": "Neptune"
+     },
+     {
+      "w": "Minerva"
+     },
+     {
+      "w": "Mercury"
+     },
+     {
+      "w": "Venus"
+     },
+     {
+      "w": "Apollo"
+     },
+     {
+      "w": "Diana"
+     },
+     {
+      "w": "the Twins"
+     }
+    ],
+    "shapes": [
+     {
+      "p": "{god:poss} {beast}",
+      "w": 17.5
+     },
+     {
+      "p": "Fortune of {god}",
+      "w": 17.5
+     }
+    ]
+   },
+   "shapes": [
+    {
+     "role": "place",
+     "p": "Lion of {town}",
+     "w": 15,
+     "k": "T3-T5"
+    }
+   ],
+   "lists": {
+    "virtue": [
+     {
+      "w": "Victory"
+     },
+     {
+      "w": "Concord"
+     },
+     {
+      "w": "Fortune"
+     },
+     {
+      "w": "Faith"
+     },
+     {
+      "w": "Piety"
+     },
+     {
+      "w": "Valour"
+     },
+     {
+      "w": "Peace"
+     },
+     {
+      "w": "Triumph"
+     },
+     {
+      "w": "Unconquered"
+     }
+    ]
+   }
+  },
+  {
+   "key": "greek-byzantine",
+   "label": "Greek & Byzantine",
+   "group": "Western and southern Europe",
+   "span": "T2-T4",
+   "roles": {
+    "holy": 2,
+    "virtue": 1.5
+   },
+   "flavour": [
+    "Dolphin",
+    "Eagle",
+    "Lion",
+    "Owl",
+    "Bull",
+    "Serpent"
+   ],
+   "town": "compound",
+   "holy": "christian",
+   "gods": {
+    "k": "T2",
+    "list": [
+     {
+      "w": "Athena"
+     },
+     {
+      "w": "Poseidon"
+     },
+     {
+      "w": "Apollo"
+     },
+     {
+      "w": "Artemis"
+     },
+     {
+      "w": "Hermes"
+     },
+     {
+      "w": "Nike"
+     }
+    ],
+    "shapes": [
+     {
+      "p": "{god:poss} {beast}",
+      "w": 35
+     }
+    ]
+   },
+   "lists": {
+    "virtue": [
+     {
+      "w": "Victory"
+     },
+     {
+      "w": "Glory"
+     },
+     {
+      "w": "Swift"
+     },
+     {
+      "w": "Faithful"
+     }
+    ],
+    "poetic": [
+     {
+      "w": "Sea-Born Victory"
+     },
+     {
+      "w": "Daughter of Dawn"
+     },
+     {
+      "w": "Dolphin"
+     },
+     {
+      "w": "Swift"
+     },
+     {
+      "w": "Imperial Light"
+     },
+     {
+      "w": "Guardian Angel"
+     },
+     {
+      "w": "Sacred Victory"
+     }
+    ]
+   }
+  },
+  {
+   "key": "slavic",
+   "label": "Slavic",
+   "group": "Eastern Europe and the steppe",
+   "span": "T1-T7",
+   "roles": {
+    "beast": 1.5
+   },
+   "techRoles": {
+    "T5-T7": {
+     "person": 2,
+     "virtue": 1.5
+    }
+   },
+   "flavour": {
+    "world": "slavic"
+   },
+   "town": "slavic",
+   "holy": "christian",
+   "shapes": [
+    {
+     "role": "virtue",
+     "p": "Red Banner",
+     "w": 5,
+     "k": "T6-T7"
+    },
+    {
+     "role": "virtue",
+     "p": "Red Star",
+     "w": 5,
+     "k": "T6-T7"
+    },
+    {
+     "role": "virtue",
+     "p": "Admiral {surname}",
+     "w": 15,
+     "k": "T6-T7"
+    },
+    {
+     "role": "virtue",
+     "p": "Marshal {surname}",
+     "w": 10,
+     "k": "T6-T7"
+    },
+    {
+     "role": "virtue",
+     "p": "Guardian of the People",
+     "w": 5,
+     "k": "T6-T7"
+    }
+   ],
+   "lists": {
+    "virtue": [
+     {
+      "w": "Steadfast"
+     },
+     {
+      "w": "Resolute"
+     },
+     {
+      "w": "Thundering"
+     },
+     {
+      "w": "Swift"
+     },
+     {
+      "w": "Fearless"
+     },
+     {
+      "w": "Glorious"
+     },
+     {
+      "w": "Courageous"
+     },
+     {
+      "w": "Vigilant"
+     },
+     {
+      "w": "Bold"
+     }
+    ],
+    "beastExtra": [
+     {
+      "w": "Falcon",
+      "k": "T1-T3"
+     },
+     {
+      "w": "Swan",
+      "k": "T1-T3"
+     },
+     {
+      "w": "Grey Duck",
+      "k": "T1-T3"
+     },
+     {
+      "w": "Pike",
+      "k": "T1-T3"
+     }
+    ]
+   }
+  },
+  {
+   "key": "steppe",
+   "label": "Turkic & Mongol steppe",
+   "group": "Eastern Europe and the steppe",
+   "span": "T1-T3",
+   "roles": {
+    "beast": 3,
+    "sky": 2,
+    "commerce": 0.5
+   },
+   "flavour": [
+    "Wolf",
+    "Horse",
+    "Falcon",
+    "Eagle",
+    "Snow Leopard",
+    "Swan"
+   ],
+   "town": "compound",
+   "holy": "none",
+   "lists": {
+    "virtue": [
+     {
+      "w": "Swift"
+     },
+     {
+      "w": "Bold"
+     },
+     {
+      "w": "Fearless"
+     },
+     {
+      "w": "Victory"
+     }
+    ],
+    "sky": [
+     {
+      "w": "Blue Sky"
+     },
+     {
+      "w": "Morning Star"
+     },
+     {
+      "w": "Great Bear"
+     },
+     {
+      "w": "North Wind"
+     },
+     {
+      "w": "Moon"
+     }
+    ],
+    "poetic": [
+     {
+      "w": "Wind across the Grass"
+     },
+     {
+      "w": "Swift Rider"
+     },
+     {
+      "w": "Horse of the Waves"
+     },
+     {
+      "w": "Grey Wolf of the Lake"
+     },
+     {
+      "w": "Falcon on the River"
+     },
+     {
+      "w": "Rider of the Salt Lake"
+     }
+    ]
+   }
+  },
+  {
+   "key": "arabic-persian",
+   "label": "Arabic & Persian",
+   "group": "Middle East, Africa and the Indian Ocean",
+   "span": "T2-T5",
+   "roles": {
+    "sky": 2,
+    "virtue": 2,
+    "commerce": 1.5,
+    "holy": 0
+   },
+   "flavour": {
+    "world": "arabic-persian"
+   },
+   "town": "arabic-persian",
+   "holy": "none",
+   "lists": {
+    "virtue": [
+     {
+      "w": "Victorious"
+     },
+     {
+      "w": "Glory"
+     },
+     {
+      "w": "Fortune"
+     },
+     {
+      "w": "Light of Guidance"
+     },
+     {
+      "w": "Star of Prosperity"
+     },
+     {
+      "w": "Key to the East"
+     },
+     {
+      "w": "Garden of the Sea"
+     },
+     {
+      "w": "Gift of the Sea"
+     }
+    ],
+    "poetic": [
+     {
+      "w": "Pearl of {town}"
+     },
+     {
+      "w": "Opening of Good"
+     },
+     {
+      "w": "Lamp of the Gulf"
+     },
+     {
+      "w": "Moon of the Two Seas"
+     },
+     {
+      "w": "Falcon of the Gulf"
+     },
+     {
+      "w": "Rose of {town}"
+     }
+    ]
+   }
+  },
+  {
+   "key": "ottoman",
+   "label": "Ottoman & Barbary",
+   "group": "Middle East, Africa and the Indian Ocean",
+   "span": "T3-T5",
+   "roles": {
+    "virtue": 2,
+    "royal": 1.5,
+    "holy": 0
+   },
+   "flavour": [
+    "Lion",
+    "Falcon",
+    "Eagle",
+    "Horse"
+   ],
+   "town": "compound",
+   "holy": "none",
+   "shapes": [
+    {
+     "role": "menace",
+     "p": "{menaceExtra}",
+     "w": 20,
+     "fn": [
+      "raider"
+     ]
+    }
+   ],
+   "lists": {
+    "virtue": [
+     {
+      "w": "Conquest"
+     },
+     {
+      "w": "Great Conquest"
+     },
+     {
+      "w": "Tower of Victory"
+     },
+     {
+      "w": "Happiness"
+     },
+     {
+      "w": "Help"
+     },
+     {
+      "w": "Glory"
+     },
+     {
+      "w": "Victory"
+     },
+     {
+      "w": "Triumph"
+     }
+    ],
+    "royal": [
+     {
+      "w": "Crown of the Sea"
+     },
+     {
+      "w": "Lion of the Sea"
+     },
+     {
+      "w": "Sword of the Sultan",
+      "x": 0.3
+     },
+     {
+      "w": "Throne of the Sea"
+     }
+    ],
+    "menaceExtra": [
+     {
+      "w": "Corsair"
+     },
+     {
+      "w": "Sea-Lion"
+     },
+     {
+      "w": "Red Galley"
+     },
+     {
+      "w": "Scourge of {town}",
+      "x": 0.3
+     }
+    ]
+   }
+  },
+  {
+   "key": "swahili-omani",
+   "label": "Swahili & Omani",
+   "group": "Middle East, Africa and the Indian Ocean",
+   "span": "T2-T5",
+   "roles": {
+    "commerce": 2,
+    "sky": 1.5,
+    "holy": 0
+   },
+   "flavour": [
+    "Dolphin",
+    "Turtle",
+    "Falcon",
+    "Heron",
+    "Kingfisher"
+   ],
+   "town": "compound",
+   "holy": "none",
+   "lists": {
+    "sky": [
+     {
+      "w": "Monsoon Wind"
+     },
+     {
+      "w": "North-East Wind"
+     },
+     {
+      "w": "Moon of the Coast"
+     },
+     {
+      "w": "Morning Star"
+     },
+     {
+      "w": "Coral Star"
+     }
+    ],
+    "poetic": [
+     {
+      "w": "Pearl of the Coast"
+     },
+     {
+      "w": "Blessing of the Coast"
+     },
+     {
+      "w": "Gift of the Sea"
+     },
+     {
+      "w": "Lamp of {town}"
+     },
+     {
+      "w": "Clove Wind"
+     },
+     {
+      "w": "Star of the Coral Coast"
+     },
+     {
+      "w": "Daughter of the Monsoon"
+     }
+    ]
+   }
+  },
+  {
+   "key": "egyptian",
+   "label": "Egyptian",
+   "group": "Middle East, Africa and the Indian Ocean",
+   "span": "T1-T3",
+   "roles": {
+    "holy": 2,
+    "royal": 2
+   },
+   "flavour": {
+    "world": "egyptian"
+   },
+   "town": "egyptian",
+   "holy": "gods",
+   "gods": {
+    "world": "egyptian",
+    "shapes": [
+     {
+      "p": "{god:poss} Barque",
+      "w": 20
+     },
+     {
+      "p": "Beloved of {god}",
+      "w": 20
+     },
+     {
+      "p": "Star of {god}",
+      "w": 10
+     }
+    ]
+   },
+   "lists": {
+    "royal": [
+     {
+      "w": "Glory of the Two Lands"
+     },
+     {
+      "w": "Pharaoh's Favour"
+     },
+     {
+      "w": "Star of the Two Lands"
+     },
+     {
+      "w": "Wild Bull"
+     }
+    ],
+    "poetic": [
+     {
+      "w": "Appearing in {town}"
+     },
+     {
+      "w": "Falcon of the River"
+     },
+     {
+      "w": "Gift of the Nile",
+      "x": 0.3
+     },
+     {
+      "w": "Lotus on the Water"
+     }
+    ]
+   }
+  },
+  {
+   "key": "ethiopian",
+   "label": "Ethiopian",
+   "group": "Middle East, Africa and the Indian Ocean",
+   "span": "T1-T4",
+   "roles": {
+    "holy": 1.5,
+    "royal": 1.5
+   },
+   "flavour": {
+    "world": "ethiopian"
+   },
+   "town": "ethiopian",
+   "holy": "christian",
+   "noSaints": true,
+   "lists": {
+    "royal": [
+     {
+      "w": "Crown of {town}"
+     },
+     {
+      "w": "Lion of the Highlands"
+     },
+     {
+      "w": "Glory of the King"
+     }
+    ],
+    "poetic": [
+     {
+      "w": "Star of the Red Sea"
+     },
+     {
+      "w": "Papyrus of the Lake"
+     },
+     {
+      "w": "Morning on the Lake"
+     }
+    ]
+   }
+  },
+  {
+   "key": "bantu",
+   "label": "Bantu",
+   "group": "Middle East, Africa and the Indian Ocean",
+   "span": "T1-T3",
+   "roles": {
+    "beast": 3,
+    "place": 1.5
+   },
+   "flavour": {
+    "world": "bantu"
+   },
+   "town": "bantu",
+   "holy": "none",
+   "lists": {
+    "poetic": [
+     {
+      "w": "Elephant of the Lake"
+     },
+     {
+      "w": "Lion of the River"
+     },
+     {
+      "w": "She Who Crosses the Waters"
+     },
+     {
+      "w": "Crocodile's Brother"
+     },
+     {
+      "w": "Fish-Eagle's Cry"
+     },
+     {
+      "w": "Child of the Great Lake"
+     },
+     {
+      "w": "Rain over the River"
+     }
+    ]
+   }
+  },
+  {
+   "key": "west-african",
+   "label": "West African",
+   "group": "Middle East, Africa and the Indian Ocean",
+   "span": "T1-T3",
+   "roles": {
+    "beast": 2,
+    "commerce": 2
+   },
+   "flavour": {
+    "world": "west-african"
+   },
+   "town": "west-african",
+   "holy": "none",
+   "lists": {
+    "poetic": [
+     {
+      "w": "Child of the River"
+     },
+     {
+      "w": "Python of the River"
+     },
+     {
+      "w": "Market Canoe"
+     },
+     {
+      "w": "Kola Bearer"
+     },
+     {
+      "w": "Hornbill over the Water"
+     },
+     {
+      "w": "Leopard of the Bend"
+     },
+     {
+      "w": "Gift of the Floods"
+     }
+    ]
+   }
+  },
+  {
+   "key": "indian",
+   "label": "Indian",
+   "group": "Middle East, Africa and the Indian Ocean",
+   "span": "T2-T7",
+   "roles": {
+    "sky": 1.5,
+    "virtue": 1.5,
+    "royal": 1.5,
+    "holy": 0
+   },
+   "techRoles": {
+    "T7": {
+     "place": 2
+    }
+   },
+   "flavour": {
+    "world": "indian"
+   },
+   "town": "indian",
+   "holy": "none",
+   "lists": {
+    "virtue": [
+     {
+      "w": "Courageous"
+     },
+     {
+      "w": "Mighty"
+     },
+     {
+      "w": "Sword"
+     },
+     {
+      "w": "Victory"
+     },
+     {
+      "w": "Glorious"
+     },
+     {
+      "w": "Fearless"
+     },
+     {
+      "w": "Lion-Hearted"
+     }
+    ],
+    "poetic": [
+     {
+      "w": "Lotus of the Sea"
+     },
+     {
+      "w": "Monsoon Star"
+     },
+     {
+      "w": "Pearl of the Coast"
+     },
+     {
+      "w": "Elephant of the Waves"
+     },
+     {
+      "w": "Peacock of the Sea"
+     },
+     {
+      "w": "Tiger of the Bay"
+     },
+     {
+      "w": "Star of the Western Coast"
+     }
+    ]
+   }
+  },
+  {
+   "key": "malay",
+   "label": "Malay & Indonesian",
+   "group": "Middle East, Africa and the Indian Ocean",
+   "span": "T1-T5",
+   "roles": {
+    "sky": 1.5,
+    "beast": 1.5,
+    "poetic": 1.5,
+    "holy": 0
+   },
+   "flavour": {
+    "tribal": "maritimeSEA"
+   },
+   "town": "compound",
+   "holy": "none",
+   "lists": {
+    "poetic": [
+     {
+      "w": "Sea Hornbill"
+     },
+     {
+      "w": "Dragon of the Strait"
+     },
+     {
+      "w": "Wind of the Straits"
+     },
+     {
+      "w": "Monsoon Pearl"
+     },
+     {
+      "w": "Swift Prau"
+     },
+     {
+      "w": "Pride of {town}"
+     },
+     {
+      "w": "Moon over the Mangroves"
+     },
+     {
+      "w": "Crocodile of the River"
+     }
+    ]
+   }
+  },
+  {
+   "key": "chinese",
+   "label": "Chinese",
+   "group": "East Asia",
+   "span": "T2-T7",
+   "roles": {
+    "sky": 1.5,
+    "beast": 2,
+    "virtue": 1.5,
+    "holy": 0
+   },
+   "techRoles": {
+    "T7": {
+     "place": 2
+    }
+   },
+   "flavour": {
+    "world": "chinese"
+   },
+   "town": "chinese",
+   "holy": "none",
+   "lists": {
+    "virtue": [
+     {
+      "w": "Ten Thousand Blessings"
+     },
+     {
+      "w": "Peaceful Sea"
+     },
+     {
+      "w": "Guarding the Sea"
+     },
+     {
+      "w": "Harmony"
+     },
+     {
+      "w": "Prosperity"
+     },
+     {
+      "w": "Eternal Peace"
+     },
+     {
+      "w": "Lasting Peace"
+     },
+     {
+      "w": "Calm Waves"
+     },
+     {
+      "w": "Settled Waters"
+     }
+    ],
+    "poetic": [
+     {
+      "w": "Moonlit Voyage"
+     },
+     {
+      "w": "Golden Crane"
+     },
+     {
+      "w": "Peaceful River"
+     },
+     {
+      "w": "Eastern Dragon"
+     },
+     {
+      "w": "Jade Phoenix"
+     },
+     {
+      "w": "Pearl of the South Sea"
+     }
+    ]
+   }
+  },
+  {
+   "key": "japanese",
+   "label": "Japanese",
+   "group": "East Asia",
+   "span": "T1-T7",
+   "roles": {
+    "sky": 2,
+    "place": 2
+   },
+   "flavour": {
+    "world": "japanese"
+   },
+   "town": "japanese",
+   "holy": "none",
+   "shapes": [
+    {
+     "role": "place",
+     "p": "Red Mountain",
+     "w": 5
+    },
+    {
+     "role": "place",
+     "p": "{colour} Mountain",
+     "w": 15
+    },
+    {
+     "role": "place",
+     "p": "{town} River",
+     "w": 10
+    },
+    {
+     "role": "place",
+     "p": "Cherry Blossom",
+     "w": 5
+    }
+   ],
+   "lists": {
+    "sky": [
+     {
+      "w": "Morning Mist"
+     },
+     {
+      "w": "Autumn Moon"
+     },
+     {
+      "w": "Heavenly Wind"
+     },
+     {
+      "w": "Swift Current"
+     },
+     {
+      "w": "Spring Rain"
+     },
+     {
+      "w": "Evening Snow"
+     },
+     {
+      "w": "Morning Sun"
+     },
+     {
+      "w": "Summer Cloud"
+     }
+    ]
+   }
+  },
+  {
+   "key": "korean",
+   "label": "Korean",
+   "group": "East Asia",
+   "span": "T1-T7",
+   "roles": {
+    "beast": 1.5
+   },
+   "techRoles": {
+    "T6-T7": {
+     "person": 2,
+     "place": 1.5
+    }
+   },
+   "flavour": {
+    "world": "korean"
+   },
+   "town": "korean",
+   "holy": "none",
+   "lists": {
+    "beastExtra": [
+     {
+      "w": "Turtle",
+      "x": 2
+     },
+     {
+      "w": "Tiger",
+      "x": 2
+     },
+     {
+      "w": "Crane",
+      "x": 2
+     },
+     {
+      "w": "Dragon",
+      "x": 2
+     }
+    ],
+    "virtue": [
+     {
+      "w": "Loyalty"
+     },
+     {
+      "w": "Righteous"
+     },
+     {
+      "w": "Morning Calm"
+     },
+     {
+      "w": "Eastern Sea"
+     }
+    ]
+   }
+  },
+  {
+   "key": "hawaiian",
+   "label": "Hawaiian",
+   "group": "The Pacific",
+   "span": "T1-T3",
+   "roles": {
+    "poetic": 3,
+    "sky": 3,
+    "menace": 0,
+    "leisure": 0,
+    "commerce": 0.3
+   },
+   "flavour": {
+    "tribal": "polynesian"
+   },
+   "town": "compound",
+   "holy": "none",
+   "lists": {
+    "poetic": [
+     {
+      "w": "Guiding Star"
+     },
+     {
+      "w": "Path of the Ancestors"
+     },
+     {
+      "w": "Child of the Ocean"
+     },
+     {
+      "w": "Wind from the High Mountain"
+     },
+     {
+      "w": "We Return Together"
+     },
+     {
+      "w": "Dawn beyond the Island"
+     },
+     {
+      "w": "Ocean of Gladness"
+     },
+     {
+      "w": "The Sea Remembers"
+     },
+     {
+      "w": "Star Path"
+     },
+     {
+      "w": "Swell from the South"
+     }
+    ],
+    "sky": [
+     {
+      "w": "Guiding Star"
+     },
+     {
+      "w": "Rising Swell"
+     },
+     {
+      "w": "Morning Star"
+     },
+     {
+      "w": "Trade Wind"
+     },
+     {
+      "w": "Rain from the Mountain"
+     }
+    ]
+   },
+   "sensitive": true
+  },
+  {
+   "key": "maori",
+   "label": "Māori",
+   "group": "The Pacific",
+   "span": "T1-T3",
+   "roles": {
+    "poetic": 3,
+    "sky": 3,
+    "menace": 0,
+    "leisure": 0,
+    "commerce": 0.3
+   },
+   "flavour": {
+    "tribal": "polynesian"
+   },
+   "town": "compound",
+   "holy": "none",
+   "lists": {
+    "poetic": [
+     {
+      "w": "Great Canoe of the Dawn"
+     },
+     {
+      "w": "Path from the Ancient Homeland"
+     },
+     {
+      "w": "Guardian of the Southern Cape"
+     },
+     {
+      "w": "Descendants of the Mountain"
+     },
+     {
+      "w": "Spear of the Red Chief"
+     },
+     {
+      "w": "The Long Arrival"
+     },
+     {
+      "w": "Ancestor beneath the Stars"
+     },
+     {
+      "w": "Voice of the Headland"
+     }
+    ]
+   },
+   "sensitive": true
+  },
+  {
+   "key": "w-polynesian",
+   "label": "Western Polynesian",
+   "group": "The Pacific",
+   "span": "T1-T3",
+   "roles": {
+    "poetic": 3,
+    "sky": 3,
+    "menace": 0,
+    "leisure": 0,
+    "commerce": 0.3
+   },
+   "flavour": {
+    "tribal": "polynesian"
+   },
+   "town": "compound",
+   "holy": "none",
+   "lists": {
+    "poetic": [
+     {
+      "w": "Strength of the Islands"
+     },
+     {
+      "w": "House upon the Sea"
+     },
+     {
+      "w": "Chief's Passage"
+     },
+     {
+      "w": "Strong Hands Together"
+     },
+     {
+      "w": "Friend of the Western Wind"
+     },
+     {
+      "w": "The Returning Family"
+     },
+     {
+      "w": "Shield of the Lagoon"
+     },
+     {
+      "w": "Voyage of Many Islands"
+     }
+    ]
+   },
+   "sensitive": true
+  },
+  {
+   "key": "american",
+   "label": "American",
+   "group": "The Americas",
+   "span": "T4-T7",
+   "roles": {
+    "virtue": 2,
+    "place": 2
+   },
+   "techRoles": {
+    "T7": {
+     "person": 2
+    }
+   },
+   "flavour": [
+    "Eagle",
+    "Bear",
+    "Wolf",
+    "Bison",
+    "Hawk",
+    "Panther"
+   ],
+   "town": "britain",
+   "holy": "christian",
+   "holyX": 0.3,
+   "shapes": [
+    {
+     "role": "person",
+     "p": "{president}",
+     "w": 50,
+     "k": "T7"
+    }
+   ],
+   "lists": {
+    "virtue": [
+     {
+      "w": "Liberty",
+      "x": 2
+     },
+     {
+      "w": "Independence"
+     },
+     {
+      "w": "Union"
+     },
+     {
+      "w": "Resolute"
+     },
+     {
+      "w": "Intrepid"
+     },
+     {
+      "w": "Freedom"
+     },
+     {
+      "w": "Enterprise",
+      "x": 0.3
+     },
+     {
+      "w": "Constellation",
+      "x": 0.3
+     },
+     {
+      "w": "Patriot"
+     }
+    ]
+   },
+   "surnames": true,
+   "womanNames": true
+  },
+  {
+   "key": "nw-coast",
+   "label": "Pacific Northwest Coast",
+   "group": "The Americas",
+   "span": "T1-T1",
+   "roles": {
+    "poetic": 3,
+    "beast": 2,
+    "menace": 0,
+    "leisure": 0,
+    "commerce": 0.3
+   },
+   "flavour": {
+    "tribal": "northernPacific"
+   },
+   "town": "compound",
+   "holy": "none",
+   "lists": {
+    "poetic": [
+     {
+      "w": "Raven over the Water"
+     },
+     {
+      "w": "Great Cedar"
+     },
+     {
+      "w": "House of the Killer Whale"
+     },
+     {
+      "w": "Salmon Returning"
+     },
+     {
+      "w": "Chief of the Western Sea"
+     },
+     {
+      "w": "Eagle's Passage"
+     },
+     {
+      "w": "Voice of the Deep"
+     },
+     {
+      "w": "Canoe of the High-Prowed House"
+     }
+    ]
+   },
+   "sensitive": true
+  },
+  {
+   "key": "arctic",
+   "label": "Arctic",
+   "group": "The Americas",
+   "span": "T1-T1",
+   "roles": {
+    "poetic": 3,
+    "beast": 2,
+    "menace": 0,
+    "leisure": 0,
+    "commerce": 0.3
+   },
+   "flavour": {
+    "tribal": "northernPacific"
+   },
+   "town": "compound",
+   "holy": "none",
+   "lists": {
+    "poetic": [
+     {
+      "w": "Quiet Harpoon"
+     },
+     {
+      "w": "Seal beneath the Ice"
+     },
+     {
+      "w": "Safe Passage Home"
+     },
+     {
+      "w": "Breath over Dark Water"
+     },
+     {
+      "w": "Patient Hunter"
+     },
+     {
+      "w": "Opening in the Ice"
+     },
+     {
+      "w": "Swift beneath the Snow"
+     },
+     {
+      "w": "Provider's Return"
+     }
+    ]
+   },
+   "sensitive": true
+  },
+  {
+   "key": "na-woodlands",
+   "label": "North American Woodlands & Rivers",
+   "group": "The Americas",
+   "span": "T1-T1",
+   "roles": {
+    "poetic": 3,
+    "beast": 2,
+    "menace": 0,
+    "leisure": 0,
+    "commerce": 0.3
+   },
+   "flavour": {
+    "tribal": "northAmerican"
+   },
+   "town": "compound",
+   "holy": "none",
+   "lists": {
+    "poetic": [
+     {
+      "w": "White Birch"
+     },
+     {
+      "w": "Loon across the Lake"
+     },
+     {
+      "w": "Bear's River"
+     },
+     {
+      "w": "Swift Portage"
+     },
+     {
+      "w": "Morning on the Great Water"
+     },
+     {
+      "w": "Northern Crossing"
+     },
+     {
+      "w": "Crane among the Reeds"
+     },
+     {
+      "w": "Path through Many Lakes"
+     },
+     {
+      "w": "Great River"
+     },
+     {
+      "w": "Turtle in the Current"
+     },
+     {
+      "w": "Heron of the Floodplain"
+     },
+     {
+      "w": "Downriver Trader"
+     },
+     {
+      "w": "Meeting of the Waters"
+     }
+    ]
+   },
+   "sensitive": true
+  },
+  {
+   "key": "aztec",
+   "label": "Aztec",
+   "group": "The Americas",
+   "span": "T1-T1",
+   "roles": {
+    "beast": 2,
+    "poetic": 2,
+    "holy": 1.5
+   },
+   "flavour": {
+    "world": "aztec"
+   },
+   "town": "aztec",
+   "holy": "gods",
+   "gods": {
+    "world": "aztec",
+    "shapes": [
+     {
+      "p": "{god:poss} Canoe",
+      "w": 20
+     }
+    ]
+   },
+   "lists": {
+    "poetic": [
+     {
+      "w": "Jade Water"
+     },
+     {
+      "w": "Flower of the Lake"
+     },
+     {
+      "w": "Reed of the Lake"
+     },
+     {
+      "w": "Precious Feather"
+     },
+     {
+      "w": "Eagle on the Water"
+     },
+     {
+      "w": "Hummingbird Canoe"
+     }
+    ]
+   }
+  },
+  {
+   "key": "maya",
+   "label": "Maya",
+   "group": "The Americas",
+   "span": "T1-T1",
+   "roles": {
+    "beast": 2,
+    "poetic": 2,
+    "holy": 1.5
+   },
+   "flavour": {
+    "world": "maya"
+   },
+   "town": "maya",
+   "holy": "gods",
+   "gods": {
+    "world": "maya",
+    "shapes": [
+     {
+      "p": "{god:poss} Canoe",
+      "w": 20
+     }
+    ]
+   },
+   "lists": {
+    "poetic": [
+     {
+      "w": "Road across the Water"
+     },
+     {
+      "w": "Sea Turtle"
+     },
+     {
+      "w": "Merchant of the Coast"
+     },
+     {
+      "w": "Bearer of Cacao"
+     },
+     {
+      "w": "Sun between the Islands"
+     },
+     {
+      "w": "Jaguar's Passage"
+     },
+     {
+      "w": "Morning Star Canoe"
+     }
+    ]
+   }
+  },
+  {
+   "key": "andean",
+   "label": "Andean",
+   "group": "The Americas",
+   "span": "T1-T3",
+   "roles": {
+    "poetic": 3,
+    "beast": 2,
+    "menace": 0,
+    "leisure": 0,
+    "commerce": 0.3
+   },
+   "flavour": {
+    "tribal": "andean"
+   },
+   "town": "compound",
+   "holy": "none",
+   "lists": {
+    "poetic": [
+     {
+      "w": "Reed of the Lake"
+     },
+     {
+      "w": "Condor over the Water"
+     },
+     {
+      "w": "Sun on the Lake"
+     },
+     {
+      "w": "Daughter of the Lake"
+     },
+     {
+      "w": "Raft of the South Wind"
+     },
+     {
+      "w": "Balsa of the Cold Current"
+     }
+    ]
+   },
+   "sensitive": true
+  }
+ ],
+ "technology": {
+  "ships": [
+   {
+    "code": "T1",
+    "label": "paddle and canoe"
+   },
+   {
+    "code": "T2",
+    "label": "oar and galley"
+   },
+   {
+    "code": "T3",
+    "label": "early sail"
+   },
+   {
+    "code": "T4",
+    "label": "Age of Sail"
+   },
+   {
+    "code": "T5",
+    "label": "steam and iron"
+   },
+   {
+    "code": "T6",
+    "label": "diesel and steel"
+   },
+   {
+    "code": "T7",
+    "label": "modern"
+   }
+  ],
+  "spacecraft": [
+   {
+    "code": "S1",
+    "label": "rocket age"
+   },
+   {
+    "code": "S2",
+    "label": "interplanetary"
+   },
+   {
+    "code": "S3",
+    "label": "interstellar"
+   }
+  ]
+ },
+ "techWords": {
+  "T1": {
+   "techAdj": [
+    {
+     "w": "Swift"
+    },
+    {
+     "w": "Light"
+    },
+    {
+     "w": "Little"
+    },
+    {
+     "w": "Quick"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Paddle"
+    },
+    {
+     "w": "Reed"
+    },
+    {
+     "w": "Bark"
+    },
+    {
+     "w": "Current"
+    }
+   ]
+  },
+  "T2": {
+   "techAdj": [
+    {
+     "w": "Many-Oared"
+    },
+    {
+     "w": "Swift-Oared"
+    },
+    {
+     "w": "Bronze-Beaked"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Oar"
+    },
+    {
+     "w": "Ram"
+    },
+    {
+     "w": "Beak"
+    },
+    {
+     "w": "Rower"
+    }
+   ]
+  },
+  "T3": {
+   "techAdj": [
+    {
+     "w": "Fair-Winded"
+    },
+    {
+     "w": "White-Winged"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Sail"
+    },
+    {
+     "w": "Wind"
+    },
+    {
+     "w": "Mast"
+    },
+    {
+     "w": "Pennant"
+    }
+   ]
+  },
+  "T4": {
+   "techAdj": [
+    {
+     "w": "Tall"
+    },
+    {
+     "w": "White-Sailed"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Canvas"
+    },
+    {
+     "w": "Gale"
+    },
+    {
+     "w": "Topsail"
+    },
+    {
+     "w": "Broadside"
+    }
+   ]
+  },
+  "T5": {
+   "techAdj": [
+    {
+     "w": "Iron",
+     "x": 2
+    },
+    {
+     "w": "Steam"
+    },
+    {
+     "w": "Brass"
+    },
+    {
+     "w": "Coal-Black"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Engine"
+    },
+    {
+     "w": "Funnel"
+    },
+    {
+     "w": "Boiler"
+    },
+    {
+     "w": "Steamer"
+    },
+    {
+     "w": "Collier"
+    },
+    {
+     "w": "Smoke"
+    }
+   ]
+  },
+  "T6": {
+   "techAdj": [
+    {
+     "w": "Steel",
+     "x": 2
+    },
+    {
+     "w": "Turbine"
+    },
+    {
+     "w": "Express"
+    },
+    {
+     "w": "Diesel"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Turbine"
+    },
+    {
+     "w": "Express"
+    },
+    {
+     "w": "Engine"
+    },
+    {
+     "w": "Dynamo"
+    },
+    {
+     "w": "Piston"
+    }
+   ]
+  },
+  "T7": {
+   "techAdj": [
+    {
+     "w": "Global"
+    },
+    {
+     "w": "Swift"
+    },
+    {
+     "w": "Blue"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Carrier"
+    },
+    {
+     "w": "Express"
+    },
+    {
+     "w": "Navigator"
+    },
+    {
+     "w": "Spirit"
+    },
+    {
+     "w": "Runner"
+    }
+   ]
+  },
+  "S1": {
+   "techAdj": [
+    {
+     "w": "Rocket"
+    },
+    {
+     "w": "Orbital"
+    },
+    {
+     "w": "Lunar"
+    },
+    {
+     "w": "Rising"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Rocket"
+    },
+    {
+     "w": "Orbit"
+    },
+    {
+     "w": "Booster"
+    },
+    {
+     "w": "Capsule"
+    }
+   ]
+  },
+  "S2": {
+   "techAdj": [
+    {
+     "w": "Solar"
+    },
+    {
+     "w": "Ion"
+    },
+    {
+     "w": "Planetary"
+    },
+    {
+     "w": "Belt"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Drive"
+    },
+    {
+     "w": "Sail"
+    },
+    {
+     "w": "Lander"
+    },
+    {
+     "w": "Shuttle"
+    }
+   ]
+  },
+  "S3": {
+   "techAdj": [
+    {
+     "w": "Deep"
+    },
+    {
+     "w": "Interstellar"
+    },
+    {
+     "w": "Long"
+    },
+    {
+     "w": "Far"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Light"
+    },
+    {
+     "w": "Lightyear"
+    },
+    {
+     "w": "Wake"
+    },
+    {
+     "w": "Leap"
+    }
+   ]
+  }
+ },
+ "hybrids": {
+  "share": {
+   "inSpan": 0.2,
+   "outOfSpan": 0.35
+  },
+  "shapes": [
+   {
+    "p": "{techAdj} {cultureNoun}",
+    "w": 50
+   },
+   {
+    "p": "{techAdj} {poetic}",
+    "w": 20
+   },
+   {
+    "p": "{cultureNoun} of {techNoun}",
+    "w": 10
+   },
+   {
+    "p": "{techNoun} {cultureNoun}",
+    "w": 20
+   }
+  ]
+ },
+ "functions": {
+  "ships": {
+   "any": "ships and boats of any kind",
+   "list": [
+    {
+     "key": "war",
+     "menu": "Warships",
+     "plural": "warships",
+     "w": 25,
+     "description": "Warships from war canoes to carriers"
+    },
+    {
+     "key": "merchant",
+     "menu": "Merchant ships",
+     "plural": "merchant ships",
+     "w": 20,
+     "description": "Traders, cargo ships and merchantmen"
+    },
+    {
+     "key": "passenger",
+     "menu": "Passenger ships",
+     "plural": "passenger ships",
+     "w": 8,
+     "description": "Packets, liners and ferries",
+     "min": "T4"
+    },
+    {
+     "key": "explore",
+     "menu": "Exploration and research",
+     "plural": "ships of exploration",
+     "w": 8,
+     "description": "Ships of exploration, survey and research"
+    },
+    {
+     "key": "working",
+     "menu": "Working boats",
+     "plural": "working boats",
+     "w": 15,
+     "description": "Fishing boats, tugs, ferries and harbour craft"
+    },
+    {
+     "key": "yacht",
+     "menu": "Yachts and pleasure boats",
+     "plural": "yachts and pleasure boats",
+     "w": 8,
+     "description": "Yachts and pleasure boats",
+     "min": "T3",
+     "noSensitive": true
+    },
+    {
+     "key": "raider",
+     "menu": "Pirates, privateers and smugglers",
+     "plural": "raiders",
+     "w": 10,
+     "description": "Pirates, privateers and smugglers"
+    },
+    {
+     "key": "sacred",
+     "menu": "Sacred and official vessels",
+     "plural": "sacred and official vessels",
+     "w": 6,
+     "description": "Royal barges, ceremonial and sacred craft"
+    }
+   ]
+  },
+  "spacecraft": {
+   "any": "spacecraft of any kind",
+   "list": [
+    {
+     "key": "war",
+     "menu": "Warships",
+     "plural": "warships",
+     "w": 25,
+     "description": "Warships"
+    },
+    {
+     "key": "merchant",
+     "menu": "Freighters",
+     "plural": "freighters",
+     "w": 20,
+     "description": "Freighters"
+    },
+    {
+     "key": "passenger",
+     "menu": "Liners",
+     "plural": "liners",
+     "w": 8,
+     "description": "Liners",
+     "min": "S2"
+    },
+    {
+     "key": "explore",
+     "menu": "Survey and exploration",
+     "plural": "survey ships",
+     "w": 12,
+     "description": "Survey and exploration"
+    },
+    {
+     "key": "working",
+     "menu": "Working craft",
+     "plural": "working craft",
+     "w": 10,
+     "description": "Tugs, miners, haulers and salvage ships"
+    },
+    {
+     "key": "yacht",
+     "menu": "Private craft",
+     "plural": "private craft",
+     "w": 5,
+     "description": "Private craft",
+     "min": "S2"
+    },
+    {
+     "key": "raider",
+     "menu": "Raiders and smugglers",
+     "plural": "raiders",
+     "w": 8,
+     "description": "Raiders and smugglers"
+    },
+    {
+     "key": "sacred",
+     "menu": "Flagships and official ships",
+     "plural": "official ships",
+     "w": 4,
+     "description": "Flagships and official ships"
+    },
+    {
+     "key": "colony",
+     "menu": "Colony and generation ships",
+     "plural": "colony ships",
+     "w": 8,
+     "description": "Colony and generation ships",
+     "min": "S2"
+    },
+    {
+     "key": "station",
+     "menu": "Stations and habitats",
+     "plural": "stations and habitats",
+     "w": 10,
+     "description": "Stations and habitats"
+    }
+   ]
+  }
+ },
+ "roles": [
+  "virtue",
+  "royal",
+  "holy",
+  "beast",
+  "sky",
+  "place",
+  "person",
+  "poetic",
+  "commerce",
+  "menace",
+  "discovery",
+  "affection",
+  "leisure",
+  "designation"
+ ],
+ "roleWeights": {
+  "ships": {
+   "war": {
+    "virtue": 30,
+    "royal": 15,
+    "holy": 5,
+    "beast": 15,
+    "sky": 5,
+    "place": 15,
+    "person": 5,
+    "poetic": 5,
+    "commerce": 0,
+    "menace": 5,
+    "discovery": 0,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 0
+   },
+   "merchant": {
+    "virtue": 5,
+    "royal": 5,
+    "holy": 10,
+    "beast": 5,
+    "sky": 10,
+    "place": 15,
+    "person": 10,
+    "poetic": 5,
+    "commerce": 35,
+    "menace": 0,
+    "discovery": 5,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 0
+   },
+   "passenger": {
+    "virtue": 5,
+    "royal": 15,
+    "holy": 5,
+    "beast": 5,
+    "sky": 10,
+    "place": 25,
+    "person": 10,
+    "poetic": 5,
+    "commerce": 15,
+    "menace": 0,
+    "discovery": 5,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 0
+   },
+   "explore": {
+    "virtue": 10,
+    "royal": 5,
+    "holy": 5,
+    "beast": 5,
+    "sky": 15,
+    "place": 5,
+    "person": 10,
+    "poetic": 10,
+    "commerce": 5,
+    "menace": 0,
+    "discovery": 30,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 0
+   },
+   "working": {
+    "virtue": 5,
+    "royal": 0,
+    "holy": 10,
+    "beast": 5,
+    "sky": 10,
+    "place": 15,
+    "person": 20,
+    "poetic": 5,
+    "commerce": 5,
+    "menace": 0,
+    "discovery": 0,
+    "affection": 25,
+    "leisure": 0,
+    "designation": 5
+   },
+   "yacht": {
+    "virtue": 2,
+    "royal": 2,
+    "holy": 0,
+    "beast": 5,
+    "sky": 10,
+    "place": 2,
+    "person": 10,
+    "poetic": 10,
+    "commerce": 5,
+    "menace": 0,
+    "discovery": 5,
+    "affection": 20,
+    "leisure": 30,
+    "designation": 0
+   },
+   "raider": {
+    "virtue": 5,
+    "royal": 2,
+    "holy": 0,
+    "beast": 15,
+    "sky": 10,
+    "place": 2,
+    "person": 5,
+    "poetic": 5,
+    "commerce": 5,
+    "menace": 40,
+    "discovery": 0,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 0
+   },
+   "sacred": {
+    "virtue": 5,
+    "royal": 15,
+    "holy": 35,
+    "beast": 5,
+    "sky": 10,
+    "place": 5,
+    "person": 10,
+    "poetic": 15,
+    "commerce": 0,
+    "menace": 0,
+    "discovery": 0,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 0
+   }
+  },
+  "spacecraft": {
+   "war": {
+    "virtue": 30,
+    "royal": 10,
+    "holy": 0,
+    "beast": 15,
+    "sky": 10,
+    "place": 10,
+    "person": 15,
+    "poetic": 5,
+    "commerce": 0,
+    "menace": 5,
+    "discovery": 0,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 0
+   },
+   "merchant": {
+    "virtue": 5,
+    "royal": 0,
+    "holy": 0,
+    "beast": 5,
+    "sky": 10,
+    "place": 15,
+    "person": 5,
+    "poetic": 0,
+    "commerce": 40,
+    "menace": 0,
+    "discovery": 5,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 20
+   },
+   "passenger": {
+    "virtue": 5,
+    "royal": 10,
+    "holy": 0,
+    "beast": 0,
+    "sky": 15,
+    "place": 20,
+    "person": 10,
+    "poetic": 5,
+    "commerce": 25,
+    "menace": 0,
+    "discovery": 5,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 0
+   },
+   "explore": {
+    "virtue": 10,
+    "royal": 0,
+    "holy": 0,
+    "beast": 5,
+    "sky": 20,
+    "place": 5,
+    "person": 20,
+    "poetic": 10,
+    "commerce": 0,
+    "menace": 0,
+    "discovery": 30,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 0
+   },
+   "working": {
+    "virtue": 5,
+    "royal": 0,
+    "holy": 0,
+    "beast": 5,
+    "sky": 5,
+    "place": 10,
+    "person": 10,
+    "poetic": 0,
+    "commerce": 15,
+    "menace": 0,
+    "discovery": 0,
+    "affection": 15,
+    "leisure": 0,
+    "designation": 40
+   },
+   "yacht": {
+    "virtue": 2,
+    "royal": 2,
+    "holy": 0,
+    "beast": 5,
+    "sky": 10,
+    "place": 2,
+    "person": 10,
+    "poetic": 10,
+    "commerce": 5,
+    "menace": 0,
+    "discovery": 5,
+    "affection": 15,
+    "leisure": 30,
+    "designation": 0
+   },
+   "raider": {
+    "virtue": 5,
+    "royal": 0,
+    "holy": 0,
+    "beast": 15,
+    "sky": 10,
+    "place": 0,
+    "person": 5,
+    "poetic": 5,
+    "commerce": 0,
+    "menace": 45,
+    "discovery": 0,
+    "affection": 5,
+    "leisure": 0,
+    "designation": 10
+   },
+   "sacred": {
+    "virtue": 10,
+    "royal": 20,
+    "holy": 10,
+    "beast": 5,
+    "sky": 15,
+    "place": 10,
+    "person": 15,
+    "poetic": 15,
+    "commerce": 0,
+    "menace": 0,
+    "discovery": 0,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 0
+   },
+   "colony": {
+    "virtue": 10,
+    "royal": 0,
+    "holy": 5,
+    "beast": 0,
+    "sky": 15,
+    "place": 20,
+    "person": 10,
+    "poetic": 30,
+    "commerce": 0,
+    "menace": 0,
+    "discovery": 10,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 0
+   },
+   "station": {
+    "virtue": 5,
+    "royal": 5,
+    "holy": 0,
+    "beast": 0,
+    "sky": 20,
+    "place": 30,
+    "person": 15,
+    "poetic": 10,
+    "commerce": 5,
+    "menace": 0,
+    "discovery": 5,
+    "affection": 0,
+    "leisure": 0,
+    "designation": 5
+   }
+  }
+ },
+ "roleExtras": [
+  {
+   "module": "ships",
+   "function": "war",
+   "role": "designation",
+   "w": 5,
+   "k": "T6-T7"
+  }
+ ],
+ "lists": {
+  "virtue": [
+   {
+    "w": "Resolute",
+    "x": 2
+   },
+   {
+    "w": "Valiant",
+    "x": 2
+   },
+   {
+    "w": "Defiance"
+   },
+   {
+    "w": "Courage"
+   },
+   {
+    "w": "Endurance"
+   },
+   {
+    "w": "Constant"
+   },
+   {
+    "w": "Faithful"
+   },
+   {
+    "w": "Steadfast"
+   },
+   {
+    "w": "Victory",
+    "x": 2
+   },
+   {
+    "w": "Triumph"
+   },
+   {
+    "w": "Glory",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Hope"
+   },
+   {
+    "w": "Fortitude"
+   },
+   {
+    "w": "Liberty"
+   },
+   {
+    "w": "Dauntless"
+   },
+   {
+    "w": "Intrepid"
+   },
+   {
+    "w": "Vigilant"
+   },
+   {
+    "w": "Indomitable",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Swift"
+   },
+   {
+    "w": "Bold"
+   }
+  ],
+  "virtueAdj": [
+   {
+    "w": "Faithful"
+   },
+   {
+    "w": "Brave"
+   },
+   {
+    "w": "Swift"
+   },
+   {
+    "w": "Bold"
+   },
+   {
+    "w": "Constant"
+   },
+   {
+    "w": "Noble",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Golden",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "True"
+   },
+   {
+    "w": "Steadfast"
+   },
+   {
+    "w": "Gallant",
+    "t": [
+     "grand"
+    ]
+   }
+  ],
+  "royal": [
+   {
+    "w": "Sovereign",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Crown"
+   },
+   {
+    "w": "Monarch"
+   },
+   {
+    "w": "Regent"
+   },
+   {
+    "w": "Prince"
+   },
+   {
+    "w": "Princess"
+   },
+   {
+    "w": "Empress",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Majesty",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Sceptre"
+   }
+  ],
+  "ruler": [
+   {
+    "w": "King"
+   },
+   {
+    "w": "Queen"
+   },
+   {
+    "w": "Prince"
+   },
+   {
+    "w": "Duke"
+   },
+   {
+    "w": "Emperor"
+   },
+   {
+    "w": "Lord"
+   }
+  ],
+  "seaLand": [
+   {
+    "w": "North"
+   },
+   {
+    "w": "South"
+   },
+   {
+    "w": "East"
+   },
+   {
+    "w": "West"
+   },
+   {
+    "w": "Isles"
+   },
+   {
+    "w": "Indies"
+   },
+   {
+    "w": "Ocean"
+   },
+   {
+    "w": "Deep"
+   }
+  ],
+  "sky": [
+   {
+    "w": "Star",
+    "x": 2
+   },
+   {
+    "w": "Dawn"
+   },
+   {
+    "w": "Morning Star"
+   },
+   {
+    "w": "Evening Star"
+   },
+   {
+    "w": "North Star"
+   },
+   {
+    "w": "Comet"
+   },
+   {
+    "w": "Moon"
+   },
+   {
+    "w": "Sun"
+   },
+   {
+    "w": "Wind"
+   },
+   {
+    "w": "Tempest"
+   },
+   {
+    "w": "Rising Sun"
+   },
+   {
+    "w": "Aurora"
+   },
+   {
+    "w": "Meteor"
+   }
+  ],
+  "skyAdj": [
+   {
+    "w": "Morning"
+   },
+   {
+    "w": "Evening"
+   },
+   {
+    "w": "Northern"
+   },
+   {
+    "w": "Southern"
+   },
+   {
+    "w": "Rising"
+   },
+   {
+    "w": "Silver"
+   },
+   {
+    "w": "Bright"
+   },
+   {
+    "w": "Falling",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Western"
+   },
+   {
+    "w": "Wandering",
+    "t": [
+     "strange"
+    ]
+   }
+  ],
+  "seaAdj": [
+   {
+    "w": "Sea"
+   },
+   {
+    "w": "Ocean"
+   },
+   {
+    "w": "Wave"
+   },
+   {
+    "w": "Tide"
+   },
+   {
+    "w": "Salt"
+   },
+   {
+    "w": "Storm"
+   }
+  ],
+  "spaceSeaAdj": [
+   {
+    "w": "Star"
+   },
+   {
+    "w": "Void"
+   },
+   {
+    "w": "Deep"
+   },
+   {
+    "w": "Solar"
+   },
+   {
+    "w": "Night"
+   }
+  ],
+  "commerceAdj": [
+   {
+    "w": "Good"
+   },
+   {
+    "w": "Prosperous"
+   },
+   {
+    "w": "Fair"
+   },
+   {
+    "w": "Golden"
+   },
+   {
+    "w": "Honest",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Rich"
+   },
+   {
+    "w": "Lucky",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Steady",
+    "t": [
+     "plain"
+    ]
+   }
+  ],
+  "commerceNoun": [
+   {
+    "w": "Fortune",
+    "x": 2
+   },
+   {
+    "w": "Venture",
+    "x": 2
+   },
+   {
+    "w": "Enterprise"
+   },
+   {
+    "w": "Trader",
+    "x": 2
+   },
+   {
+    "w": "Merchant"
+   },
+   {
+    "w": "Adventurer"
+   },
+   {
+    "w": "Return"
+   },
+   {
+    "w": "Exchange"
+   },
+   {
+    "w": "Bounty"
+   },
+   {
+    "w": "Harvest"
+   },
+   {
+    "w": "Prosperity"
+   },
+   {
+    "w": "Increase"
+   },
+   {
+    "w": "Success"
+   },
+   {
+    "w": "Carrier",
+    "k": "T7"
+   },
+   {
+    "w": "Spirit",
+    "k": "T7"
+   },
+   {
+    "w": "Pioneer",
+    "k": "T7"
+   }
+  ],
+  "menaceAdj": [
+   {
+    "w": "Black",
+    "x": 2
+   },
+   {
+    "w": "Red"
+   },
+   {
+    "w": "Bloody"
+   },
+   {
+    "w": "Grim"
+   },
+   {
+    "w": "Cruel"
+   },
+   {
+    "w": "Dread"
+   },
+   {
+    "w": "Wicked"
+   },
+   {
+    "w": "Broken"
+   },
+   {
+    "w": "Hungry"
+   }
+  ],
+  "menaceNoun": [
+   {
+    "w": "Fortune"
+   },
+   {
+    "w": "Reckoning"
+   },
+   {
+    "w": "Revenge"
+   },
+   {
+    "w": "Vengeance"
+   },
+   {
+    "w": "Wrath"
+   },
+   {
+    "w": "Shadow"
+   },
+   {
+    "w": "Terror"
+   },
+   {
+    "w": "Warning"
+   },
+   {
+    "w": "Mercy",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Grin"
+   },
+   {
+    "w": "Crown"
+   }
+  ],
+  "figure": [
+   {
+    "w": "Widow"
+   },
+   {
+    "w": "Tyrant"
+   },
+   {
+    "w": "Devil"
+   },
+   {
+    "w": "Hangman"
+   },
+   {
+    "w": "Sinner"
+   },
+   {
+    "w": "Beggar"
+   },
+   {
+    "w": "Queen"
+   },
+   {
+    "w": "Dead Man"
+   },
+   {
+    "w": "King"
+   },
+   {
+    "w": "Gallows"
+   }
+  ],
+  "consequence": [
+   {
+    "w": "Revenge"
+   },
+   {
+    "w": "Reckoning"
+   },
+   {
+    "w": "Ransom"
+   },
+   {
+    "w": "Curse"
+   },
+   {
+    "w": "Debt"
+   },
+   {
+    "w": "Lament"
+   },
+   {
+    "w": "Delight",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Folly",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Bargain",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Prize"
+   }
+  ],
+  "discovery": [
+   {
+    "w": "Discovery"
+   },
+   {
+    "w": "Endeavour"
+   },
+   {
+    "w": "Resolution"
+   },
+   {
+    "w": "Adventure"
+   },
+   {
+    "w": "Explorer"
+   },
+   {
+    "w": "Pathfinder"
+   },
+   {
+    "w": "Venture"
+   },
+   {
+    "w": "Horizon"
+   },
+   {
+    "w": "Wayfarer"
+   },
+   {
+    "w": "Seeker"
+   },
+   {
+    "w": "Surveyor"
+   },
+   {
+    "w": "Investigator"
+   },
+   {
+    "w": "Pioneer"
+   }
+  ],
+  "affectionAdj": [
+   {
+    "w": "Little",
+    "x": 2
+   },
+   {
+    "w": "Good"
+   },
+   {
+    "w": "Our",
+    "x": 2
+   },
+   {
+    "w": "Bonny"
+   },
+   {
+    "w": "Lucky"
+   },
+   {
+    "w": "Faithful"
+   }
+  ],
+  "affectionNoun": [
+   {
+    "w": "Lass"
+   },
+   {
+    "w": "Lad"
+   },
+   {
+    "w": "Girl"
+   },
+   {
+    "w": "Pride",
+    "x": 2
+   },
+   {
+    "w": "Joy"
+   },
+   {
+    "w": "Darling"
+   },
+   {
+    "w": "Star"
+   }
+  ],
+  "leisureName": [
+   {
+    "w": "Second Wind"
+   },
+   {
+    "w": "No Hurry"
+   },
+   {
+    "w": "Blue Escape"
+   },
+   {
+    "w": "One More Day"
+   },
+   {
+    "w": "Knot Working"
+   },
+   {
+    "w": "Reel Time"
+   },
+   {
+    "w": "Sea Esta"
+   },
+   {
+    "w": "Shore Thing"
+   },
+   {
+    "w": "Seas the Day"
+   },
+   {
+    "w": "Liquid Assets"
+   },
+   {
+    "w": "Afternoon Off"
+   },
+   {
+    "w": "Well Earned"
+   },
+   {
+    "w": "Why Not"
+   },
+   {
+    "w": "Plan B"
+   },
+   {
+    "w": "Pension Pot"
+   },
+   {
+    "w": "Nauti Buoy"
+   },
+   {
+    "w": "Fair Weather"
+   },
+   {
+    "w": "Gone Fishing"
+   }
+  ],
+  "leisureAdj": [
+   {
+    "w": "Summer"
+   },
+   {
+    "w": "Lazy"
+   },
+   {
+    "w": "Golden"
+   },
+   {
+    "w": "Easy"
+   },
+   {
+    "w": "Blue"
+   },
+   {
+    "w": "Sunny"
+   },
+   {
+    "w": "Gentle"
+   }
+  ],
+  "leisureNoun": [
+   {
+    "w": "Dream"
+   },
+   {
+    "w": "Escape"
+   },
+   {
+    "w": "Days"
+   },
+   {
+    "w": "Breeze"
+   },
+   {
+    "w": "Hours"
+   },
+   {
+    "w": "Afternoon"
+   },
+   {
+    "w": "Drift"
+   }
+  ],
+  "womanName": [
+   {
+    "w": "Mary",
+    "x": 2
+   },
+   {
+    "w": "Anne"
+   },
+   {
+    "w": "Elsie"
+   },
+   {
+    "w": "Emily"
+   },
+   {
+    "w": "Grace"
+   },
+   {
+    "w": "Margaret"
+   },
+   {
+    "w": "Kate"
+   },
+   {
+    "w": "Ellen"
+   },
+   {
+    "w": "Rose"
+   },
+   {
+    "w": "Ivy"
+   },
+   {
+    "w": "Lily"
+   },
+   {
+    "w": "Jane"
+   },
+   {
+    "w": "Beth"
+   },
+   {
+    "w": "Molly"
+   },
+   {
+    "w": "Agnes"
+   },
+   {
+    "w": "Edith"
+   },
+   {
+    "w": "Dora"
+   },
+   {
+    "w": "Nellie"
+   },
+   {
+    "w": "Florence"
+   },
+   {
+    "w": "Ada"
+   }
+  ],
+  "designationWord": [
+   {
+    "w": "Patrol Boat"
+   },
+   {
+    "w": "Launch"
+   },
+   {
+    "w": "Lighter"
+   },
+   {
+    "w": "Tender"
+   },
+   {
+    "w": "Barge"
+   },
+   {
+    "w": "Pilot Boat"
+   },
+   {
+    "w": "Motor Gunboat",
+    "k": "T6"
+   },
+   {
+    "w": "Landing Craft",
+    "k": "T6-T7"
+   }
+  ],
+  "spaceDesignationWord": [
+   {
+    "w": "Tender"
+   },
+   {
+    "w": "Lighter"
+   },
+   {
+    "w": "Drone"
+   },
+   {
+    "w": "Ore Hauler"
+   },
+   {
+    "w": "Tug"
+   },
+   {
+    "w": "Shuttle"
+   },
+   {
+    "w": "Cutter"
+   },
+   {
+    "w": "Lander"
+   }
+  ],
+  "marian": [
+   {
+    "w": "Victory"
+   },
+   {
+    "w": "Good Hope"
+   },
+   {
+    "w": "the Rosary"
+   },
+   {
+    "w": "Mercy"
+   },
+   {
+    "w": "the Snows"
+   },
+   {
+    "w": "the Sea"
+   },
+   {
+    "w": "Remedies"
+   },
+   {
+    "w": "Sorrows"
+   },
+   {
+    "w": "Solitude"
+   },
+   {
+    "w": "Light"
+   },
+   {
+    "w": "Peace"
+   },
+   {
+    "w": "Help"
+   },
+   {
+    "w": "Good Voyage"
+   }
+  ],
+  "holyNoun": [
+   {
+    "w": "Grace"
+   },
+   {
+    "w": "Providence"
+   },
+   {
+    "w": "Blessing"
+   },
+   {
+    "w": "Mercy"
+   },
+   {
+    "w": "Hope"
+   },
+   {
+    "w": "Good Fortune"
+   },
+   {
+    "w": "Deliverance"
+   },
+   {
+    "w": "Thanksgiving"
+   }
+  ],
+  "holyAdj": [
+   {
+    "w": "Holy"
+   },
+   {
+    "w": "Blessed"
+   },
+   {
+    "w": "Good"
+   },
+   {
+    "w": "Sacred"
+   }
+  ],
+  "season": [
+   {
+    "w": "Spring"
+   },
+   {
+    "w": "Summer"
+   },
+   {
+    "w": "Autumn"
+   },
+   {
+    "w": "Winter"
+   }
+  ]
+ },
+ "listTones": {
+  "menaceAdj": [
+   "grim"
+  ],
+  "affectionAdj": [
+   "light"
+  ],
+  "leisureName": [
+   "light"
+  ]
+ },
+ "shapes": [
+  {
+   "role": "virtue",
+   "p": "{virtue}",
+   "w": 60
+  },
+  {
+   "role": "virtue",
+   "p": "{virtueAdj} {beast}",
+   "w": 20
+  },
+  {
+   "role": "virtue",
+   "p": "The {virtueAdj}",
+   "w": 5
+  },
+  {
+   "role": "virtue",
+   "p": "{virtue} of {town}",
+   "w": 15,
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "royal",
+   "p": "{royal}",
+   "w": 25,
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "royal",
+   "p": "Royal {beast}",
+   "w": 20,
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "royal",
+   "p": "{ruler:poss} {virtue}",
+   "w": 20
+  },
+  {
+   "role": "royal",
+   "p": "{royal} of the {seaLand}",
+   "w": 20,
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "royal",
+   "p": "{royal} of the Seas",
+   "w": 5,
+   "k": "T3-T4",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "royal",
+   "p": "Empress of the {seaLand}",
+   "w": 10,
+   "k": "T5-T7",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "holy",
+   "p": "{holy}",
+   "w": 35,
+   "holy": "saint"
+  },
+  {
+   "role": "holy",
+   "p": "{holyAdj} {holyNoun}",
+   "w": 30,
+   "t": [
+    "grand"
+   ],
+   "holy": "blessing"
+  },
+  {
+   "role": "holy",
+   "p": "Our Lady of {marian}",
+   "w": 15,
+   "t": [
+    "grand"
+   ],
+   "holy": "marian"
+  },
+  {
+   "role": "holy",
+   "p": "{holyNoun}",
+   "w": 20,
+   "holy": "blessingOnly"
+  },
+  {
+   "role": "beast",
+   "p": "{beast}",
+   "w": 30
+  },
+  {
+   "role": "beast",
+   "p": "{colour} {beast}",
+   "w": 30
+  },
+  {
+   "role": "beast",
+   "p": "{seaAdj} {beast}",
+   "w": 15
+  },
+  {
+   "role": "beast",
+   "p": "{beast} of {town}",
+   "w": 15,
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "beast",
+   "p": "{beast:poss} {weapon}",
+   "w": 10,
+   "t": [
+    "grim"
+   ]
+  },
+  {
+   "role": "sky",
+   "p": "{sky}",
+   "w": 20
+  },
+  {
+   "role": "sky",
+   "p": "{skyAdj} {sky}",
+   "w": 40
+  },
+  {
+   "role": "sky",
+   "p": "{sky} of the {compass}",
+   "w": 20,
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "role": "sky",
+   "p": "{sky} over {town}",
+   "w": 20,
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "role": "place",
+   "p": "{town}",
+   "w": 40,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "role": "place",
+   "p": "City of {town}",
+   "w": 20,
+   "k": "T5-T7",
+   "fn": [
+    "passenger",
+    "merchant"
+   ],
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "role": "place",
+   "p": "Pride of {town}",
+   "w": 20,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "role": "place",
+   "p": "{town} {commerceNoun}",
+   "w": 20,
+   "fn": [
+    "merchant"
+   ],
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "role": "person",
+   "p": "{womanName}",
+   "w": 25
+  },
+  {
+   "role": "person",
+   "p": "{womanName} {surname}",
+   "w": 15,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "role": "person",
+   "p": "Admiral {surname}",
+   "w": 15,
+   "k": "T5-T7",
+   "fn": [
+    "war"
+   ]
+  },
+  {
+   "role": "person",
+   "p": "{surname}",
+   "w": 20,
+   "k": "T6-T7",
+   "fn": [
+    "war",
+    "explore"
+   ],
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "role": "person",
+   "p": "{person}",
+   "w": 25
+  },
+  {
+   "role": "poetic",
+   "p": "{poetic}",
+   "w": 100
+  },
+  {
+   "role": "commerce",
+   "p": "{commerceAdj} {commerceNoun}",
+   "w": 40
+  },
+  {
+   "role": "commerce",
+   "p": "Merchant's {commerceNoun}",
+   "w": 15
+  },
+  {
+   "role": "commerce",
+   "p": "{seaLand} {commerceNoun}",
+   "w": 25
+  },
+  {
+   "role": "commerce",
+   "p": "{brandRoot} {town}",
+   "w": 20,
+   "k": "T7",
+   "s": [
+    "MR",
+    "MF",
+    "SF"
+   ],
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "role": "menace",
+   "p": "{menaceAdj} {menaceNoun}",
+   "w": 40,
+   "t": [
+    "grim"
+   ]
+  },
+  {
+   "role": "menace",
+   "p": "{figure:poss} {consequence}",
+   "w": 40
+  },
+  {
+   "role": "menace",
+   "p": "{menaceNoun}",
+   "w": 20,
+   "t": [
+    "grim"
+   ]
+  },
+  {
+   "role": "discovery",
+   "p": "{discovery}",
+   "w": 50
+  },
+  {
+   "role": "discovery",
+   "p": "Far {discovery}",
+   "w": 15
+  },
+  {
+   "role": "discovery",
+   "p": "{compass} {discovery}",
+   "w": 20
+  },
+  {
+   "role": "discovery",
+   "p": "New {discovery}",
+   "w": 15
+  },
+  {
+   "role": "affection",
+   "p": "{affectionAdj} {womanName}",
+   "w": 35,
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "affection",
+   "p": "{town} {affectionNoun}",
+   "w": 35,
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "affection",
+   "p": "{affectionAdj} {affectionNoun}",
+   "w": 30,
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "leisure",
+   "p": "{leisureName}",
+   "w": 60,
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "leisure",
+   "p": "{leisureAdj} {leisureNoun}",
+   "w": 40,
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "designation",
+   "p": "{designationWord} {n}",
+   "w": 100,
+   "t": [
+    "plain"
+   ]
+  }
+ ],
+ "styles": [
+  {
+   "key": "heroic",
+   "label": "heroic",
+   "settings": [
+    "FH"
+   ],
+   "modules": [
+    "ships"
+   ],
+   "description": "Heroes, virtues, legendary weapons",
+   "tone": "grand",
+   "name": [
+    {
+     "w": "Silver Champion"
+    },
+    {
+     "w": "Dawn Sword"
+    },
+    {
+     "w": "Star of Courage"
+    }
+   ],
+   "pools": {
+    "hAdj": [
+     {
+      "w": "Silver"
+     },
+     {
+      "w": "Golden"
+     },
+     {
+      "w": "Dawn"
+     },
+     {
+      "w": "Bright"
+     },
+     {
+      "w": "Valiant"
+     },
+     {
+      "w": "Shining"
+     }
+    ],
+    "hNoun": [
+     {
+      "w": "Champion"
+     },
+     {
+      "w": "Sword"
+     },
+     {
+      "w": "Banner"
+     },
+     {
+      "w": "Oath"
+     },
+     {
+      "w": "Crown"
+     },
+     {
+      "w": "Lance"
+     },
+     {
+      "w": "Shield"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{hAdj} {hNoun}",
+    "{hNoun} of {town}",
+    "{beast:poss} Honour"
+   ]
+  },
+  {
+   "key": "dark",
+   "label": "dark",
+   "settings": [
+    "FH",
+    "MF"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "Curses, death, ominous holy imagery",
+   "tone": "grim",
+   "name": [
+    {
+     "w": "Hollow Saint"
+    },
+    {
+     "w": "Black Testament"
+    },
+    {
+     "w": "Grave Tide"
+    },
+    {
+     "w": "Mourning Crown"
+    },
+    {
+     "w": "The Last Sin"
+    }
+   ],
+   "pools": {
+    "dAdj": [
+     {
+      "w": "Hollow"
+     },
+     {
+      "w": "Black"
+     },
+     {
+      "w": "Grave"
+     },
+     {
+      "w": "Mourning"
+     },
+     {
+      "w": "Ashen"
+     },
+     {
+      "w": "Drowned"
+     },
+     {
+      "w": "Silent"
+     }
+    ],
+    "dNoun": [
+     {
+      "w": "Saint"
+     },
+     {
+      "w": "Testament"
+     },
+     {
+      "w": "Tide"
+     },
+     {
+      "w": "Crown"
+     },
+     {
+      "w": "Sin"
+     },
+     {
+      "w": "Psalm"
+     },
+     {
+      "w": "Shroud"
+     },
+     {
+      "w": "Vigil"
+     },
+     {
+      "w": "Bell"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{dAdj} {dNoun}",
+    "The {ordinalWord} {dNoun}"
+   ]
+  },
+  {
+   "key": "elven",
+   "label": "elven",
+   "settings": [
+    "FH"
+   ],
+   "modules": [
+    "ships"
+   ],
+   "description": "Moonlight, memory, song, silver",
+   "tone": "strange",
+   "name": [
+    {
+     "w": "Moonlit Bough"
+    },
+    {
+     "w": "Song before Sunrise"
+    },
+    {
+     "w": "Silver Leaf"
+    },
+    {
+     "w": "Memory of Spring"
+    },
+    {
+     "w": "Starlight upon Water"
+    }
+   ],
+   "pools": {
+    "eAdj": [
+     {
+      "w": "Moonlit"
+     },
+     {
+      "w": "Silver"
+     },
+     {
+      "w": "Starlit"
+     },
+     {
+      "w": "Evening"
+     },
+     {
+      "w": "Gentle"
+     },
+     {
+      "w": "Dreaming"
+     }
+    ],
+    "eNoun": [
+     {
+      "w": "Bough"
+     },
+     {
+      "w": "Leaf"
+     },
+     {
+      "w": "Song"
+     },
+     {
+      "w": "Memory"
+     },
+     {
+      "w": "Willow"
+     },
+     {
+      "w": "Dew"
+     },
+     {
+      "w": "Lantern"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{eAdj} {eNoun}",
+    "{eNoun} before {sky}",
+    "{eNoun} of {season}"
+   ]
+  },
+  {
+   "key": "dwarven",
+   "label": "dwarven",
+   "settings": [
+    "FH"
+   ],
+   "modules": [
+    "ships"
+   ],
+   "description": "Metal, craft, clan, engines",
+   "name": [
+    {
+     "w": "Iron Promise"
+    },
+    {
+     "w": "Clan Anvil"
+    },
+    {
+     "w": "Stonewake"
+    },
+    {
+     "w": "Forge Runner"
+    },
+    {
+     "w": "Brass Leviathan"
+    }
+   ],
+   "pools": {
+    "wAdj": [
+     {
+      "w": "Iron"
+     },
+     {
+      "w": "Brass"
+     },
+     {
+      "w": "Stone"
+     },
+     {
+      "w": "Deep"
+     },
+     {
+      "w": "Coal"
+     },
+     {
+      "w": "Hammered"
+     }
+    ],
+    "wNoun": [
+     {
+      "w": "Promise"
+     },
+     {
+      "w": "Anvil"
+     },
+     {
+      "w": "Oath"
+     },
+     {
+      "w": "Forge"
+     },
+     {
+      "w": "Hammer"
+     },
+     {
+      "w": "Leviathan"
+     },
+     {
+      "w": "Hearth"
+     },
+     {
+      "w": "Bellows"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{wAdj} {wNoun}",
+    "Clan {wNoun}",
+    "{wAdj+wake}"
+   ]
+  },
+  {
+   "key": "oceanic",
+   "label": "Oceanic voyaging (fantasy)",
+   "settings": [
+    "FH"
+   ],
+   "modules": [
+    "ships"
+   ],
+   "description": "The ocean as a living presence; chosen navigators. Fantasy, not a real culture.",
+   "tone": "strange",
+   "name": [
+    {
+     "w": "The Ocean's Chosen"
+    },
+    {
+     "w": "Heart of the Endless Sea"
+    },
+    {
+     "w": "Wayfinder's Promise"
+    },
+    {
+     "w": "Island beyond the Sunset"
+    },
+    {
+     "w": "Daughter of the Living Tide"
+    },
+    {
+     "w": "Song of the Returning Stars"
+    },
+    {
+     "w": "The Wind Knows Our Way"
+    },
+    {
+     "w": "Where the Ocean Leads"
+    }
+   ],
+   "pools": {
+    "oNoun": [
+     {
+      "w": "Tide"
+     },
+     {
+      "w": "Star"
+     },
+     {
+      "w": "Wave"
+     },
+     {
+      "w": "Island"
+     },
+     {
+      "w": "Wind"
+     },
+     {
+      "w": "Reef"
+     }
+    ],
+    "oAdj": [
+     {
+      "w": "Living"
+     },
+     {
+      "w": "Endless"
+     },
+     {
+      "w": "Returning"
+     },
+     {
+      "w": "Singing"
+     },
+     {
+      "w": "Chosen"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "Heart of the {oAdj} {oNoun}",
+    "Child of the {oAdj} {oNoun}",
+    "The {oNoun} Remembers"
+   ]
+  },
+  {
+   "key": "fpirate",
+   "label": "fantasy pirate",
+   "settings": [
+    "FH"
+   ],
+   "modules": [
+    "ships"
+   ],
+   "description": "Monsters, curses, treasure",
+   "tone": "grim",
+   "name": [
+    {
+     "w": "Kraken's Debt"
+    },
+    {
+     "w": "Crimson Gallows"
+    },
+    {
+     "w": "Dead Man's Fortune"
+    },
+    {
+     "w": "The Burning Mermaid"
+    },
+    {
+     "w": "Devil's Compass"
+    }
+   ],
+   "pools": {
+    "monster": [
+     {
+      "w": "Kraken"
+     },
+     {
+      "w": "Leviathan"
+     },
+     {
+      "w": "Siren"
+     },
+     {
+      "w": "Mermaid"
+     },
+     {
+      "w": "Sea-Serpent"
+     },
+     {
+      "w": "Devil"
+     },
+     {
+      "w": "Ghost"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{monster:poss} {consequence}",
+    "The {menaceAdj} {monster}",
+    "{colour} {monster}"
+   ]
+  },
+  {
+   "key": "steampunk",
+   "label": "steampunk",
+   "settings": [
+    "MF",
+    "FH"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "Brass, aether, imperial invention",
+   "tone": "grand",
+   "name": [
+    {
+     "w": "Imperial Aether"
+    },
+    {
+     "w": "Brass Majesty"
+    },
+    {
+     "w": "Queen's Contrivance"
+    },
+    {
+     "w": "Indefatigable Engine"
+    },
+    {
+     "w": "Crown of Progress"
+    }
+   ],
+   "pools": {
+    "spAdj": [
+     {
+      "w": "Brass"
+     },
+     {
+      "w": "Aether"
+     },
+     {
+      "w": "Clockwork"
+     },
+     {
+      "w": "Copper"
+     },
+     {
+      "w": "Imperial"
+     },
+     {
+      "w": "Gilded"
+     }
+    ],
+    "spNoun": [
+     {
+      "w": "Majesty"
+     },
+     {
+      "w": "Contrivance"
+     },
+     {
+      "w": "Engine"
+     },
+     {
+      "w": "Progress"
+     },
+     {
+      "w": "Marvel"
+     },
+     {
+      "w": "Apparatus"
+     },
+     {
+      "w": "Dynamo"
+     },
+     {
+      "w": "Sovereign"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{spAdj} {spNoun}",
+    "{ruler:poss} {spNoun}",
+    "{spNoun} of {town}"
+   ]
+  },
+  {
+   "key": "dieselpunk",
+   "label": "dieselpunk",
+   "settings": [
+    "MF"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "Industry, propaganda, heroic machinery",
+   "tone": "plain",
+   "name": [
+    {
+     "w": "Steel Horizon"
+    },
+    {
+     "w": "People's Thunder"
+    },
+    {
+     "w": "Victory Express"
+    },
+    {
+     "w": "Modern Titan"
+    },
+    {
+     "w": "National Dynamo"
+    }
+   ],
+   "pools": {
+    "dpAdj": [
+     {
+      "w": "Steel"
+     },
+     {
+      "w": "Modern"
+     },
+     {
+      "w": "National"
+     },
+     {
+      "w": "Chrome"
+     },
+     {
+      "w": "Streamlined"
+     }
+    ],
+    "dpNoun": [
+     {
+      "w": "Horizon"
+     },
+     {
+      "w": "Thunder"
+     },
+     {
+      "w": "Titan"
+     },
+     {
+      "w": "Dynamo"
+     },
+     {
+      "w": "Express"
+     },
+     {
+      "w": "Century"
+     },
+     {
+      "w": "Tomorrow"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{dpAdj} {dpNoun}",
+    "{town} {dpNoun}"
+   ]
+  },
+  {
+   "key": "postapoc",
+   "label": "post-apocalyptic",
+   "settings": [
+    "MF",
+    "SF"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "Salvage, scarcity, dark jokes",
+   "tone": "light",
+   "name": [
+    {
+     "w": "Still Floating"
+    },
+    {
+     "w": "Last Ferry"
+    },
+    {
+     "w": "Canned Hope"
+    },
+    {
+     "w": "Plenty Enough"
+    },
+    {
+     "w": "Patched Again"
+    },
+    {
+     "w": "Not Sinking Today"
+    }
+   ],
+   "pools": {
+    "paAdj": [
+     {
+      "w": "Last"
+     },
+     {
+      "w": "Patched"
+     },
+     {
+      "w": "Canned"
+     },
+     {
+      "w": "Spare"
+     },
+     {
+      "w": "Second-Hand"
+     }
+    ],
+    "paNoun": [
+     {
+      "w": "Ferry"
+     },
+     {
+      "w": "Hope"
+     },
+     {
+      "w": "Chance"
+     },
+     {
+      "w": "Tin"
+     },
+     {
+      "w": "Luck"
+     },
+     {
+      "w": "Road"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{paAdj} {paNoun}",
+    "{town} Road",
+    "Old {town}"
+   ]
+  },
+  {
+   "key": "wasteland",
+   "label": "wasteland raider",
+   "settings": [
+    "MF",
+    "SF"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "Rust, bone, crude boasting",
+   "tone": "grim",
+   "name": [
+    {
+     "w": "Rust Tyrant"
+    },
+    {
+     "w": "Bone Wake"
+    },
+    {
+     "w": "Fuel Thief"
+    },
+    {
+     "w": "Scrap King"
+    },
+    {
+     "w": "Red Engine"
+    }
+   ],
+   "pools": {
+    "wrAdj": [
+     {
+      "w": "Rust"
+     },
+     {
+      "w": "Bone"
+     },
+     {
+      "w": "Scrap"
+     },
+     {
+      "w": "Red"
+     },
+     {
+      "w": "Chrome"
+     },
+     {
+      "w": "Burnt"
+     }
+    ],
+    "wrNoun": [
+     {
+      "w": "Tyrant"
+     },
+     {
+      "w": "Wake"
+     },
+     {
+      "w": "Thief"
+     },
+     {
+      "w": "King"
+     },
+     {
+      "w": "Engine"
+     },
+     {
+      "w": "Jaw"
+     },
+     {
+      "w": "Grin"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{wrAdj} {wrNoun}",
+    "{wrNoun} of {town}"
+   ]
+  },
+  {
+   "key": "sfmilitary",
+   "label": "military",
+   "settings": [
+    "SF"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "Battles, predators, commanders",
+   "tone": "grand",
+   "name": [
+    {
+     "w": "Unyielding"
+    },
+    {
+     "w": "Relentless"
+    },
+    {
+     "w": "Implacable"
+    }
+   ],
+   "pools": {
+    "battle": [
+     {
+      "w": "Thermopylae"
+     },
+     {
+      "w": "Salamis"
+     },
+     {
+      "w": "Trafalgar"
+     },
+     {
+      "w": "Lepanto"
+     },
+     {
+      "w": "Agincourt"
+     },
+     {
+      "w": "Jutland"
+     },
+     {
+      "w": "Marathon"
+     },
+     {
+      "w": "Actium"
+     },
+     {
+      "w": "Hastings"
+     }
+    ],
+    "predator": [
+     {
+      "w": "Harrier"
+     },
+     {
+      "w": "Raptor"
+     },
+     {
+      "w": "Viper"
+     },
+     {
+      "w": "Shrike"
+     },
+     {
+      "w": "Mako"
+     },
+     {
+      "w": "Kestrel"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{battle}",
+    "{predator}",
+    "Admiral {surname}",
+    "{virtue}"
+   ]
+  },
+  {
+   "key": "sfexplore",
+   "label": "exploration",
+   "settings": [
+    "SF"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "Scientists, horizons, patient discovery",
+   "name": [
+    {
+     "w": "Far Horizon"
+    },
+    {
+     "w": "New Dawn"
+    },
+    {
+     "w": "Patient Explorer"
+    }
+   ],
+   "pools": {
+    "exAdj": [
+     {
+      "w": "Patient"
+     },
+     {
+      "w": "Far"
+     },
+     {
+      "w": "Quiet"
+     },
+     {
+      "w": "Long"
+     },
+     {
+      "w": "New"
+     }
+    ],
+    "exNoun": [
+     {
+      "w": "Horizon"
+     },
+     {
+      "w": "Dawn"
+     },
+     {
+      "w": "Explorer"
+     },
+     {
+      "w": "Surveyor"
+     },
+     {
+      "w": "Question"
+     },
+     {
+      "w": "Light"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{exAdj} {exNoun}",
+    "{star} {exNoun}",
+    "{scientist}"
+   ]
+  },
+  {
+   "key": "corporate",
+   "label": "corporate",
+   "settings": [
+    "SF",
+    "MR",
+    "MF"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "Company stems, asset codes",
+   "tone": "plain",
+   "name": [
+    {
+     "w": "Prosperity"
+    },
+    {
+     "w": "Reliable Transit"
+    }
+   ],
+   "pools": {
+    "asset": [
+     {
+      "w": "Asset"
+     },
+     {
+      "w": "Venture"
+     },
+     {
+      "w": "Holding"
+     },
+     {
+      "w": "Unit"
+     },
+     {
+      "w": "Logistics"
+     },
+     {
+      "w": "Transit"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{brandRoot} {asset} {numberWord}",
+    "{brandRoot} {town}",
+    "{brandRoot} {asset}"
+   ]
+  },
+  {
+   "key": "colony",
+   "label": "colony",
+   "settings": [
+    "SF"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "New homes, memory, survival",
+   "name": [
+    {
+     "w": "Children of Earth"
+    },
+    {
+     "w": "Lasting Hope"
+    },
+    {
+     "w": "Second Garden"
+    },
+    {
+     "w": "Ancestral Memory"
+    }
+   ],
+   "pools": {
+    "cAdj": [
+     {
+      "w": "Lasting"
+     },
+     {
+      "w": "Second"
+     },
+     {
+      "w": "New"
+     },
+     {
+      "w": "Long"
+     },
+     {
+      "w": "Faithful"
+     }
+    ],
+    "cNoun": [
+     {
+      "w": "Hope"
+     },
+     {
+      "w": "Garden"
+     },
+     {
+      "w": "Memory"
+     },
+     {
+      "w": "Promise"
+     },
+     {
+      "w": "Home"
+     },
+     {
+      "w": "Harvest"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "New {town}",
+    "{cAdj} {cNoun}",
+    "Children of {town}"
+   ]
+  },
+  {
+   "key": "ai",
+   "label": "AI culture",
+   "settings": [
+    "SF"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "Philosophical statements and paradoxes",
+   "tone": "strange",
+   "name": [
+    {
+     "w": "Kindly Consider the Alternative"
+    },
+    {
+     "w": "Necessary Silence"
+    },
+    {
+     "w": "We Remember Differently"
+    },
+    {
+     "w": "Patient Question"
+    },
+    {
+     "w": "Consensus Nine"
+    }
+   ],
+   "pools": {
+    "aiAdv": [
+     {
+      "w": "Kindly"
+     },
+     {
+      "w": "Gently"
+     },
+     {
+      "w": "Respectfully"
+     },
+     {
+      "w": "Regretfully"
+     },
+     {
+      "w": "Patiently"
+     }
+    ],
+    "aiVerb": [
+     {
+      "w": "Consider"
+     },
+     {
+      "w": "Reconsider"
+     },
+     {
+      "w": "Forgive"
+     },
+     {
+      "w": "Revisit"
+     },
+     {
+      "w": "Weigh"
+     }
+    ],
+    "aiObj": [
+     {
+      "w": "Alternative"
+     },
+     {
+      "w": "Evidence"
+     },
+     {
+      "w": "Question"
+     },
+     {
+      "w": "Margin"
+     },
+     {
+      "w": "Silence"
+     }
+    ],
+    "aiAdj": [
+     {
+      "w": "Necessary"
+     },
+     {
+      "w": "Patient"
+     },
+     {
+      "w": "Reasonable"
+     },
+     {
+      "w": "Polite"
+     },
+     {
+      "w": "Surplus"
+     }
+    ],
+    "aiNoun": [
+     {
+      "w": "Silence"
+     },
+     {
+      "w": "Question"
+     },
+     {
+      "w": "Doubt"
+     },
+     {
+      "w": "Courtesy"
+     },
+     {
+      "w": "Consensus"
+     }
+    ],
+    "aiVerbPl": [
+     {
+      "w": "Remember"
+     },
+     {
+      "w": "Disagree"
+     },
+     {
+      "w": "Wonder"
+     },
+     {
+      "w": "Insist"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{aiAdv} {aiVerb} the {aiObj}",
+    "We {aiVerbPl} Otherwise",
+    "{aiAdj} {aiNoun}",
+    "{aiNoun} {numberWord}"
+   ]
+  },
+  {
+   "key": "alien",
+   "label": "alien in translation",
+   "settings": [
+    "SF"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "Translated ritual phrases",
+   "tone": "strange",
+   "name": [
+    {
+     "w": "The Water That Remembers"
+    },
+    {
+     "w": "Third Voice of Winter"
+    },
+    {
+     "w": "We Cross Together"
+    },
+    {
+     "w": "Warm Stone beneath Stars"
+    },
+    {
+     "w": "Child of the Returning Sky"
+    }
+   ],
+   "pools": {
+    "alElem": [
+     {
+      "w": "Water"
+     },
+     {
+      "w": "Stone"
+     },
+     {
+      "w": "Wind"
+     },
+     {
+      "w": "Light"
+     },
+     {
+      "w": "Salt"
+     }
+    ],
+    "alVerb": [
+     {
+      "w": "Remembers"
+     },
+     {
+      "w": "Listens"
+     },
+     {
+      "w": "Waits"
+     },
+     {
+      "w": "Returns"
+     },
+     {
+      "w": "Sings"
+     }
+    ],
+    "alVoice": [
+     {
+      "w": "Voice"
+     },
+     {
+      "w": "Song"
+     },
+     {
+      "w": "Breath"
+     },
+     {
+      "w": "Hand"
+     }
+    ],
+    "alTemp": [
+     {
+      "w": "Warm"
+     },
+     {
+      "w": "Cold"
+     },
+     {
+      "w": "Slow"
+     },
+     {
+      "w": "Still"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "The {alElem} That {alVerb}",
+    "{ordinalWord} {alVoice} of {season}",
+    "{alTemp} {alElem} beneath Stars"
+   ]
+  },
+  {
+   "key": "outlaw",
+   "label": "frontier outlaw",
+   "settings": [
+    "SF"
+   ],
+   "modules": [
+    "ships",
+    "spacecraft"
+   ],
+   "description": "Stolen wealth, defiance, dark humour",
+   "tone": "light",
+   "name": [
+    {
+     "w": "Stolen Sunrise"
+    },
+    {
+     "w": "Tax Collector"
+    },
+    {
+     "w": "Vacuum Jackal"
+    },
+    {
+     "w": "Honest Salvage"
+    },
+    {
+     "w": "Last Warning"
+    }
+   ],
+   "pools": {
+    "oAdj2": [
+     {
+      "w": "Stolen"
+     },
+     {
+      "w": "Honest"
+     },
+     {
+      "w": "Lucky"
+     },
+     {
+      "w": "Borrowed"
+     },
+     {
+      "w": "Crooked"
+     }
+    ],
+    "oNoun2": [
+     {
+      "w": "Sunrise"
+     },
+     {
+      "w": "Salvage"
+     },
+     {
+      "w": "Warning"
+     },
+     {
+      "w": "Jackal"
+     },
+     {
+      "w": "Promise"
+     },
+     {
+      "w": "Payday"
+     }
+    ]
+   },
+   "shapes": [
+    "{name}",
+    "{oAdj2} {oNoun2}",
+    "{tech} {beast}",
+    "{figure:poss} {consequence}"
+   ]
+  }
+ ],
+ "styleShare": {
+  "default": 0.6,
+  "general": 0.85,
+  "poolMultiplier": 3
+ },
+ "space": {
+  "station": [
+   {
+    "p": "{town} Station",
+    "w": 25
+   },
+   {
+    "p": "{sky} Station",
+    "w": 15
+   },
+   {
+    "p": "{greek} Station",
+    "w": 10
+   },
+   {
+    "p": "Habitat {numberWord}",
+    "w": 10
+   },
+   {
+    "p": "{discovery} Station",
+    "w": 10
+   },
+   {
+    "p": "New {town}",
+    "w": 15
+   },
+   {
+    "p": "{ordinal} Ring of {town}",
+    "w": 5
+   },
+   {
+    "p": "{star} Gate",
+    "w": 10
+   }
+  ],
+  "colony": [
+   {
+    "p": "{cAdj} {cNoun}",
+    "w": 30
+   },
+   {
+    "p": "New {town}",
+    "w": 25
+   },
+   {
+    "p": "Children of {town}",
+    "w": 15
+   },
+   {
+    "p": "{poetic}",
+    "w": 20
+   },
+   {
+    "p": "{colonyName}",
+    "w": 10
+   }
+  ]
+ },
+ "personLabels": {
+  "war": "admiral",
+  "merchant": "founder",
+  "passenger": "founder",
+  "explore": "explorer"
+ },
+ "prefixes": {
+  "real": [
+   {
+    "p": "HMS",
+    "cultures": [
+     "general",
+     "norman-british"
+    ],
+    "fn": [
+     "war"
+    ],
+    "k": "T4-T7"
+   },
+   {
+    "p": "HMY",
+    "cultures": [
+     "general",
+     "norman-british"
+    ],
+    "fn": [
+     "sacred",
+     "yacht"
+    ],
+    "k": "T4-T7"
+   },
+   {
+    "p": "USS",
+    "cultures": [
+     "american"
+    ],
+    "fn": [
+     "war"
+    ],
+    "k": "T4-T7"
+   },
+   {
+    "p": "RMS",
+    "cultures": [
+     "general",
+     "norman-british"
+    ],
+    "fn": [
+     "passenger"
+    ],
+    "k": "T5-T7"
+   },
+   {
+    "p": "SS",
+    "fn": [
+     "merchant",
+     "passenger"
+    ],
+    "k": "T5"
+   },
+   {
+    "p": "SS",
+    "fn": [
+     "merchant",
+     "passenger"
+    ],
+    "k": "T6",
+    "x": 0.3
+   },
+   {
+    "p": "MV",
+    "fn": [
+     "merchant",
+     "passenger",
+     "working"
+    ],
+    "k": "T6-T7"
+   },
+   {
+    "p": "SY",
+    "fn": [
+     "yacht"
+    ],
+    "k": "T5"
+   },
+   {
+    "p": "MY",
+    "fn": [
+     "yacht"
+    ],
+    "k": "T6-T7"
+   },
+   {
+    "p": "RV",
+    "fn": [
+     "explore"
+    ],
+    "k": "T6-T7"
+   },
+   {
+    "p": "FV",
+    "fn": [
+     "working"
+    ],
+    "k": "T6-T7"
+   }
+  ],
+  "sf": {
+   "war": [
+    "CNS",
+    "FNS",
+    "TNS",
+    "RNS",
+    "ANS"
+   ],
+   "merchant": [
+    "CMV",
+    "IFV",
+    "MV"
+   ],
+   "passenger": [
+    "SPL",
+    "IPL"
+   ],
+   "explore": [
+    "ISV",
+    "RSV",
+    "DSV"
+   ],
+   "working": [
+    "MT",
+    "UT"
+   ],
+   "yacht": [
+    "PY",
+    "SY"
+   ],
+   "colony": [
+    "CSV",
+    "LSV"
+   ],
+   "sacred": [
+    "ESV",
+    "FSV"
+   ]
+  }
+ },
+ "safeguards": {
+  "block": [
+   "Titanic",
+   "Lusitania",
+   "Britannic",
+   "Olympic",
+   "Bismarck",
+   "Tirpitz",
+   "Yamato",
+   "Musashi",
+   "Mayflower",
+   "Golden Hind",
+   "Mary Rose",
+   "Cutty Sark",
+   "Queen Anne's Revenge",
+   "Bounty",
+   "Essex",
+   "Mary Celeste",
+   "Marie Celeste",
+   "Edmund Fitzgerald",
+   "Andrea Doria",
+   "Exxon Valdez",
+   "Costa Concordia",
+   "Rainbow Warrior",
+   "General Belgrano",
+   "Belgrano",
+   "Kursk",
+   "Arizona",
+   "Graf Spee",
+   "Admiral Graf Spee",
+   "Scharnhorst",
+   "Potemkin",
+   "Aurora",
+   "Batavia",
+   "Vasa",
+   "Santa Maria",
+   "Pinta",
+   "Nina",
+   "Kon-Tiki",
+   "Long Serpent",
+   "Short Serpent",
+   "Divine Wind",
+   "Royal Charles",
+   "Black Prince",
+   "Grace of God",
+   "Holy Ghost",
+   "Star of Gladness",
+   "Hokulea",
+   "Black Pearl",
+   "Amistad",
+   "Zong",
+   "Clotilda",
+   "Brookes",
+   "Henrietta Marie",
+   "Jesus of Lubeck",
+   "Wanderer",
+   "Wildfire",
+   "Hannibal",
+   "Flying Dutchman",
+   "Nautilus",
+   "Pequod",
+   "Hispaniola",
+   "Jolly Roger",
+   "Dawn Treader",
+   "Event Horizon",
+   "Millennium Falcon",
+   "Nostromo",
+   "Sulaco",
+   "Rocinante",
+   "Galactica",
+   "Discovery One",
+   "Heart of Gold",
+   "Red Dwarf",
+   "Bebop",
+   "Planet Express",
+   "Moya",
+   "Normandy",
+   "Red October",
+   "Interceptor",
+   "Going Merry",
+   "Thousand Sunny",
+   "Apollo",
+   "Gemini",
+   "Mercury",
+   "Vostok",
+   "Voskhod",
+   "Soyuz",
+   "Shenzhou",
+   "Tiangong",
+   "Mir",
+   "Skylab",
+   "Columbia",
+   "Challenger",
+   "Atlantis",
+   "Buran",
+   "Starship",
+   "Voyager",
+   "Hubble",
+   "ISS",
+   "International Space Station",
+   "So Much For Subtlety",
+   "Of Course I Still Love You",
+   "Just Read the Instructions",
+   "Sleeper Service",
+   "Grey Area",
+   "Attitude Adjuster",
+   "Limiting Factor",
+   "Killing Time",
+   "Experiencing a Significant Gravitas Shortfall",
+   "Mistake Not",
+   "Lasting Damage",
+   "Problem Child",
+   "Bora Horza Gobuchul",
+   "Size Isn't Everything",
+   "Very Little Gravitas Indeed"
+  ],
+  "blockSpacecraft": [
+   "Enterprise",
+   "Serenity",
+   "Defiant",
+   "Liberator",
+   "Andromeda",
+   "Endeavour",
+   "Discovery",
+   "Dragon",
+   "Orion",
+   "Artemis",
+   "Pioneer",
+   "Viking"
+  ],
+  "blockUnless": [
+   {
+    "w": "Argo",
+    "culture": "greek-byzantine",
+    "k": "T2"
+   }
+  ],
+  "blockPrefixed": [
+   "USS Enterprise"
+  ],
+  "blockPrefixes": [
+   "USCSS",
+   "UNSC",
+   "SDF"
+  ],
+  "flag": [
+   "Victory",
+   "Enterprise",
+   "Resolute",
+   "Endeavour",
+   "Discovery",
+   "Endurance",
+   "Beagle",
+   "Defiance",
+   "Revenge",
+   "Dreadnought",
+   "Warspite",
+   "Ark Royal",
+   "Hood",
+   "Invincible",
+   "Royal Oak",
+   "Sovereign of the Seas",
+   "Serenity",
+   "Liberty",
+   "Constitution",
+   "Independence",
+   "Golden Crane",
+   "Lion of Bristol"
+  ],
+  "flagListBlocks": false,
+  "banned": [
+   "Slave",
+   "Slaver",
+   "Blackbirder",
+   "Coolie",
+   "Infidel",
+   "Heathen",
+   "Savage"
+  ],
+  "divine": [
+   "God",
+   "Christ",
+   "Jesus",
+   "Allah",
+   "Muhammad",
+   "Yahweh",
+   "Jehovah",
+   "Brahma",
+   "Vishnu",
+   "Shiva",
+   "Krishna",
+   "Rama",
+   "Buddha"
+  ],
+  "divinePhrases": [
+   "of God",
+   "of the Prophet",
+   "of the Faith"
+  ],
+  "sensitiveLists": [
+   "affectionAdj",
+   "affectionNoun",
+   "menaceAdj",
+   "menaceNoun",
+   "figure",
+   "leisureName",
+   "leisureAdj",
+   "leisureNoun"
+  ]
+ }
+}

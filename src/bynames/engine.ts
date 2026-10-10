@@ -243,11 +243,16 @@ function drawEntries(ctx: Ctx, entries: BynameEntry[], opts: { nativeOnly?: bool
   return pick;
 }
 
-const stripPlural = (raw: string) => raw.split("|")[0].replace(/~$/, "");
+export const stripPlural = (raw: string) => raw.split("|")[0].replace(/~$/, "");
 
 /** §4.3: the culture's animals, ×3 in `beast`. */
 function cultureAnimals(culture: string): string[] {
   if (BYNAMES_DATA.cultureAnimals[culture]) return BYNAMES_DATA.cultureAnimals[culture];
+  return worldAnimals(culture);
+}
+
+/** A world culture's `animal` list (`beast` for Chinese), with `{domestic}`-style references expanded. */
+export function worldAnimals(culture: string): string[] {
   const world = WORLD_CULTURES.find((c) => c.id === culture);
   if (!world) return [];
   const raw = world.lists.animal ?? world.lists.beast ?? [];
@@ -258,7 +263,7 @@ function cultureAnimals(culture: string): string[] {
 }
 
 /** The culture's own land words (world `land` lists), for `epPlaceLand` (§5.2). */
-function cultureLand(culture: string): string[] {
+export function cultureLand(culture: string): string[] {
   const world = WORLD_CULTURES.find((c) => c.id === culture);
   return (world?.lists.land ?? []).filter((w) => !w.includes("{")).map(stripPlural);
 }
@@ -271,6 +276,11 @@ const HOLY_NAMES = new Map(
     return words.length > 0 ? [[key, new RegExp(`(^|[^\\p{L}])(${words.join("|")})($|[^\\p{L}])`, "u")] as const] : [];
   }),
 );
+
+/** §11.4: the pattern for a no-gods culture's deity and saint names, if it has any. */
+export function holyNamesIn(culture: string): RegExp | undefined {
+  return HOLY_NAMES.get(culture);
+}
 
 /** §4.3: where invented places come from. */
 function townSource(culture: string): string | undefined {

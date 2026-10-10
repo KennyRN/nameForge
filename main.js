@@ -54050,6 +54050,14 @@ function acceptable(ctx, text, formal) {
   const words = text.split(" ").filter((w) => w && w !== "&");
   const counted = words.filter((w, i) => !(i === 0 && w === "the") && !SMALL2.has(w.toLowerCase()));
   if (counted.length > (formal ? 8 : 5)) return false;
+  if (repeatsContent(counted)) return false;
+  const n = norm2(text);
+  if (ctx.block.has(n)) return false;
+  if (BANNED.some((re) => re.test(text))) return false;
+  if (breaksGroupColourRule(text)) return false;
+  return true;
+}
+function repeatsContent(counted) {
   const content = counted.filter((w) => !w.startsWith("[")).flatMap((w) => w.split(/[-–]/));
   const seen = /* @__PURE__ */ new Set();
   let colours = 0;
@@ -54058,17 +54066,12 @@ function acceptable(ctx, text, formal) {
     const bare = raw.replace(/'s?$/, "").replace(/[(),.]/g, "");
     if (!bare) continue;
     const key2 = bare.toLowerCase().replace(/s$/, "");
-    if (seen.has(key2)) return false;
+    if (seen.has(key2)) return true;
     seen.add(key2);
     if (COLOUR_WORDS.has(bare)) colours++;
     if (NUMBER_WORDS.has(bare) || /^\d+(st|nd|rd|th)$/.test(bare)) numbers++;
   }
-  if (colours > 1 || numbers > 1) return false;
-  const n = norm2(text);
-  if (ctx.block.has(n)) return false;
-  if (BANNED.some((re) => re.test(text))) return false;
-  if (breaksGroupColourRule(text)) return false;
-  return true;
+  return colours > 1 || numbers > 1;
 }
 function oneName(ctx, options, chosen, types) {
   const drawType = () => chosen != null ? chosen : pickWeighted5(types, ctx.rng);
@@ -61483,8 +61486,11 @@ function drawEntries(ctx, entries, opts = {}) {
 }
 var stripPlural = (raw) => raw.split("|")[0].replace(/~$/, "");
 function cultureAnimals(culture) {
-  var _a2, _b;
   if (BYNAMES_DATA.cultureAnimals[culture]) return BYNAMES_DATA.cultureAnimals[culture];
+  return worldAnimals(culture);
+}
+function worldAnimals(culture) {
+  var _a2, _b;
   const world = WORLD_CULTURES.find((c) => c.id === culture);
   if (!world) return [];
   const raw = (_b = (_a2 = world.lists.animal) != null ? _a2 : world.lists.beast) != null ? _b : [];
