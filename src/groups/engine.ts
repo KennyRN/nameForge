@@ -993,8 +993,21 @@ export function generateGroupNames(options: GroupOptions): GroupBatch {
   return { names, seed, notices };
 }
 
-/** §1.2: "armies and martial orders · high or epic fantasy · Germanic & Norse". */
-export function groupHistoryLabel(family: GroupFamily, genre: GroupGenre, fantastic: boolean, tradition: string): string {
+/** §1.2: "armies and martial orders · high or epic fantasy · Germanic & Norse", then (Tone brief §6.1) " · grim · series". */
+export function groupHistoryLabel(
+  family: GroupFamily,
+  genre: GroupGenre,
+  fantastic: boolean,
+  tradition: string,
+  tone: GroupToneChoice = "any",
+  series = false,
+): string {
   const t = findTradition(tradition);
-  return [family.label, SETTING_PHRASES[groupSetting(genre, fantastic)], t && t.key !== "general" ? t.label : "General"].join(" · ");
+  return [
+    family.label,
+    SETTING_PHRASES[groupSetting(genre, fantastic)],
+    t && t.key !== "general" ? t.label : "General",
+    ...(tone !== "any" ? [tone] : []),
+    ...(series ? ["series"] : []),
+  ].join(" · ");
 }

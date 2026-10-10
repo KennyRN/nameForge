@@ -11,7 +11,10 @@ import {
   type GroupFront,
   type GroupGenre,
   type GroupPeople,
+  type GroupToneChoice,
+  GROUP_TONES,
   groupSetting,
+  TONE_PHRASES,
   SETTING_PHRASES,
   typesInSetting,
 } from "./engine";
@@ -25,9 +28,12 @@ export interface GroupSentenceState {
   form: GroupForm;
   front: GroupFront;
   people: GroupPeople;
+  /** Tone brief §5: the tone, and whether one press gives one related set. */
+  tone: GroupToneChoice;
+  series: boolean;
 }
 
-export type GroupField = "tradition" | "type" | "genre" | "fantastic" | "form" | "front" | "people";
+export type GroupField = "tradition" | "type" | "genre" | "fantastic" | "form" | "tone" | "front" | "people" | "series";
 
 export interface GroupChoice {
   id: string | undefined;
@@ -43,6 +49,8 @@ export const DEFAULT_GROUP_STATE: GroupSentenceState = {
   form: "any",
   front: "say",
   people: "placeholders",
+  tone: "any",
+  series: false,
 };
 
 const GENRE_TEXT: Record<GroupGenre, string> = { fantasy: "fantasy", modern: "modern", scifi: "science fiction" };
@@ -53,6 +61,7 @@ const FANTASTIC_TEXT: Record<"fantasy" | "modern", [string, string]> = {
 const FORM_TEXT: Record<GroupForm, string> = { any: "formal or everyday", formal: "formal", everyday: "everyday" };
 const FRONT_TEXT: Record<GroupFront, string> = { say: "that say what they are", hide: "that hide what they are", may: "that may hide what they are" };
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const SERIES_TEXT = { off: "each one separate", on: "as one related set" };
 
 /** §2.2: whether the front link shows: the type can take a front, or Any with one available type that can. */
 export function showsFront(state: GroupSentenceState, family: GroupFamily): boolean {
@@ -120,7 +129,15 @@ export function groupSentence(state: GroupSentenceState, family: GroupFamily): G
     choices: (["any", "formal", "everyday"] as GroupForm[]).map((f) => ({ id: f, label: FORM_TEXT[f] })),
     current: state.form,
   });
-  out.push(" names");
+  out.push(" names ");
+  // Tone brief §5.2: the tone sits between form and front.
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: (["any", ...GROUP_TONES] as GroupToneChoice[]).map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone,
+  });
   if (showsFront(state, family)) {
     out.push(" ");
     out.push({
@@ -140,6 +157,17 @@ export function groupSentence(state: GroupSentenceState, family: GroupFamily): G
     current: state.people,
   });
   out.push(" people and places");
+  // Tone brief §5.2: the series link comes last, only with a type picked.
+  if (type) {
+    out.push(", ");
+    out.push({
+      field: "series",
+      text: SERIES_TEXT[state.series ? "on" : "off"],
+      title: "A related set: one shape, sharing a town, colour, owner or a number sequence",
+      choices: (["off", "on"] as const).map((v) => ({ id: v, label: SERIES_TEXT[v] })),
+      current: state.series ? "on" : "off",
+    });
+  }
   return out;
 }
 
@@ -175,12 +203,20 @@ export function chooseGroup(state: GroupSentenceState, field: GroupField, id: st
     case "people":
       next.people = (id as GroupPeople) ?? "placeholders";
       break;
+    case "tone":
+      next.tone = (id as GroupToneChoice) ?? "any";
+      break;
+    case "series":
+      next.series = id === "on";
+      break;
   }
   // Genre or fantastic changed: a type the new setting lacks resets to Any.
   const available = typesInSetting(family, groupSetting(next.genre, next.fantastic));
   if (next.type && !available.some((t) => t.key === next.type)) next = { ...next, type: undefined };
   // Type changed: a type that can't take a front resets the front to "say".
   if (field === "type" && next.type && !showsFront(next, family)) next = { ...next, front: "say" };
+  // Tone brief §5.3: with type Any, series is off.
+  if (!next.type && next.series) next = { ...next, series: false };
   return next;
 }
 
@@ -193,6 +229,8 @@ export function groupPresetState(preset: {
   form: GroupForm;
   front: GroupFront;
   people: GroupPeople;
+  tone: GroupToneChoice;
+  series: boolean;
 }): GroupSentenceState {
   return {
     tradition: preset.tradition,
@@ -202,5 +240,7 @@ export function groupPresetState(preset: {
     form: preset.form,
     front: preset.front,
     people: preset.people,
+    tone: preset.tone,
+    series: preset.groupType !== "any" && preset.series,
   };
 }

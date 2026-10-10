@@ -53529,6 +53529,14 @@ var GROUP_TAGS = {
   L: ["FL", "MR"]
 };
 var GROUP_TONES = ["grand", "plain", "grim", "light", "strange"];
+var TONE_PHRASES = {
+  any: "of any tone",
+  grand: "with a grand air",
+  plain: "with a plain, workaday feel",
+  grim: "with a grim edge",
+  light: "with a light touch",
+  strange: "with a strange air"
+};
 var TONE_OPPOSITES = {
   grand: ["light", "plain"],
   plain: ["grand", "strange"],
@@ -54203,9 +54211,15 @@ function generateGroupNames(options) {
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
   return { names, seed, notices };
 }
-function groupHistoryLabel(family, genre, fantastic, tradition) {
+function groupHistoryLabel(family, genre, fantastic, tradition, tone = "any", series = false) {
   const t = findTradition(tradition);
-  return [family.label, SETTING_PHRASES[groupSetting(genre, fantastic)], t && t.key !== "general" ? t.label : "General"].join(" \xB7 ");
+  return [
+    family.label,
+    SETTING_PHRASES[groupSetting(genre, fantastic)],
+    t && t.key !== "general" ? t.label : "General",
+    ...tone !== "any" ? [tone] : [],
+    ...series ? ["series"] : []
+  ].join(" \xB7 ");
 }
 
 // src/groups/sentence.ts
@@ -54215,7 +54229,9 @@ var DEFAULT_GROUP_STATE = {
   fantastic: false,
   form: "any",
   front: "say",
-  people: "placeholders"
+  people: "placeholders",
+  tone: "any",
+  series: false
 };
 var GENRE_TEXT = { fantasy: "fantasy", modern: "modern", scifi: "science fiction" };
 var FANTASTIC_TEXT = {
@@ -54225,6 +54241,7 @@ var FANTASTIC_TEXT = {
 var FORM_TEXT = { any: "formal or everyday", formal: "formal", everyday: "everyday" };
 var FRONT_TEXT = { say: "that say what they are", hide: "that hide what they are", may: "that may hide what they are" };
 var PEOPLE_TEXT = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT = { off: "each one separate", on: "as one related set" };
 function showsFront(state, family) {
   const available = typesInSetting(family, groupSetting(state.genre, state.fantastic));
   const type = available.find((t) => t.key === state.type);
@@ -54285,7 +54302,14 @@ function groupSentence(state, family) {
     choices: ["any", "formal", "everyday"].map((f) => ({ id: f, label: FORM_TEXT[f] })),
     current: state.form
   });
-  out.push(" names");
+  out.push(" names ");
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
   if (showsFront(state, family)) {
     out.push(" ");
     out.push({
@@ -54305,6 +54329,16 @@ function groupSentence(state, family) {
     current: state.people
   });
   out.push(" people and places");
+  if (type) {
+    out.push(", ");
+    out.push({
+      field: "series",
+      text: SERIES_TEXT[state.series ? "on" : "off"],
+      title: "A related set: one shape, sharing a town, colour, owner or a number sequence",
+      choices: ["off", "on"].map((v) => ({ id: v, label: SERIES_TEXT[v] })),
+      current: state.series ? "on" : "off"
+    });
+  }
   return out;
 }
 function groupSentenceText(segments) {
@@ -54336,10 +54370,17 @@ function chooseGroup(state, field, id, family) {
     case "people":
       next.people = id != null ? id : "placeholders";
       break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "series":
+      next.series = id === "on";
+      break;
   }
   const available = typesInSetting(family, groupSetting(next.genre, next.fantastic));
   if (next.type && !available.some((t) => t.key === next.type)) next = { ...next, type: void 0 };
   if (field === "type" && next.type && !showsFront(next, family)) next = { ...next, front: "say" };
+  if (!next.type && next.series) next = { ...next, series: false };
   return next;
 }
 function groupPresetState(preset) {
@@ -54350,7 +54391,9 @@ function groupPresetState(preset) {
     fantastic: preset.fantastic,
     form: preset.form,
     front: preset.front,
-    people: preset.people
+    people: preset.people,
+    tone: preset.tone,
+    series: preset.groupType !== "any" && preset.series
   };
 }
 
@@ -54487,6 +54530,12 @@ function parseGroupPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
+  const groupType = pick4("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v));
+  let series = flag("series");
+  if (series && groupType === "any") {
+    problems.push("Series needs a type.");
+    series = false;
+  }
   return {
     group: {
       packName: values.packName || fileName,
@@ -54494,12 +54543,14 @@ function parseGroupPreset(values, body, fileName) {
       description: body.trim(),
       family: family.key,
       tradition: pick4("tradition", "general", (v) => !!findTradition(v)),
-      groupType: pick4("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v)),
+      groupType,
       genre: pick4("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
       fantastic: flag("fantastic"),
       form: pick4("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
       front: pick4("front", "say", (v) => ["say", "hide", "may"].includes(v)),
-      people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v))
+      people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      series
     },
     problems
   };
@@ -54519,6 +54570,8 @@ function groupPresetContent(preset) {
     `form: ${preset.form}`,
     `front: ${preset.front}`,
     `people: ${preset.people}`,
+    `tone: ${preset.tone}`,
+    `series: ${preset.series}`,
     "---",
     "",
     preset.description.trim(),
@@ -59705,7 +59758,9 @@ ${text}
         fantastic: state.genre === "scifi" ? false : state.fantastic,
         form: state.form,
         front: effectiveFront(state, family),
-        people: state.people
+        people: state.people,
+        tone: state.tone,
+        series: !!state.type && state.series
       });
       return this.writePreset(presetName, content, (existing) => {
         var _a4;
@@ -59784,6 +59839,9 @@ ${text}
         form: state.form,
         front: effectiveFront(state, family),
         people: state.people,
+        // Tone brief §4: series needs a type; the sentence hides it otherwise.
+        tone: state.tone,
+        series: !!state.type && state.series,
         count: this.generationCount,
         seed: seedOverride,
         safeguards: guards.safeguards
@@ -59797,7 +59855,7 @@ ${text}
       result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
       "none"
     );
-    await this.recordGenerationHistory(result.names.length, label != null ? label : groupHistoryLabel(family, state.genre, state.fantastic, state.tradition));
+    await this.recordGenerationHistory(result.names.length, label != null ? label : groupHistoryLabel(family, state.genre, state.fantastic, state.tradition, state.tone, !!state.type && state.series));
     this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
   }
   /** Group brief §12.6: every group safeguard pack in the names folder, merged with the built-in lists. */

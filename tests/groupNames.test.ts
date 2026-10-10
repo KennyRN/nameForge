@@ -249,7 +249,7 @@ const fields = (key: string, state = DEFAULT_GROUP_STATE) => groupSentence(state
 test("group sentence: the default mystic sentence, and which links show", () => {
   assert.equal(
     groupSentenceText(groupSentence(DEFAULT_GROUP_STATE, family("mystic"))),
-    "General-themed orders and faiths of any kind for a fantasy world of historic or low fantasy, using formal or everyday names that say what they are, with placeholders for people and places.",
+    "General-themed orders and faiths of any kind for a fantasy world of historic or low fantasy, using formal or everyday names of any tone that say what they are, with placeholders for people and places.",
   );
   assert.ok(!fields("martial").includes("front"));
   assert.ok(!fields("mystic", { ...DEFAULT_GROUP_STATE, genre: "scifi" }).includes("fantastic"));
@@ -284,6 +284,8 @@ test("group presets: round trip, unknown family, unknown genre", () => {
     form: "any" as const,
     front: "say" as const,
     people: "invented" as const,
+    tone: "any" as const,
+    series: false,
   };
   const parsed = parseModulePreset(modulePresetContent(preset), "x");
   assert.deepEqual(parsed.problems, []);
@@ -510,4 +512,64 @@ test("series: an {ordinalWord} series of 20 stops at the end of the list, with t
     assert.ok(batch.notices.includes(`Only ${batch.names.length} names could be generated.`));
   }
   assert.ok(found);
+});
+
+// §9.5 Sentence
+
+test("tone sentence: default text, tone between form and front, series only with a type", () => {
+  assert.equal(
+    groupSentenceText(groupSentence(DEFAULT_GROUP_STATE, family("mystic"))),
+    "General-themed orders and faiths of any kind for a fantasy world of historic or low fantasy, using formal or everyday names of any tone that say what they are, with placeholders for people and places.",
+  );
+  const order = fields("underworld", { ...DEFAULT_GROUP_STATE, type: "syndicate" });
+  assert.deepEqual(order.slice(order.indexOf("form"), order.indexOf("form") + 3), ["form", "tone", "front"]);
+  assert.ok(!fields("martial").includes("series"));
+  assert.equal(order.at(-1), "series");
+  const unit = { ...DEFAULT_GROUP_STATE, type: "unit", series: true, tone: "grim" as const };
+  assert.ok(
+    groupSentenceText(groupSentence(unit, family("martial"))).endsWith("names with a grim edge, with placeholders for people and places, as one related set."),
+  );
+  assert.equal(chooseGroup(unit, "type", undefined, family("martial")).series, false);
+  assert.equal(chooseGroup(unit, "type", undefined, family("martial")).tone, "grim");
+  assert.equal(chooseGroup(DEFAULT_GROUP_STATE, "series", "on", family("martial")).series, false);
+});
+
+// §9.6 Presets and history
+
+test("tone presets: round trip, series without a type, older presets", () => {
+  const preset = {
+    packName: "Grim Rifles",
+    setting: "",
+    description: "x",
+    family: "martial",
+    tradition: "general",
+    groupType: "unit",
+    genre: "fantasy" as const,
+    fantastic: false,
+    form: "any" as const,
+    front: "say" as const,
+    people: "placeholders" as const,
+    tone: "grim" as const,
+    series: true,
+  };
+  const parsed = parseModulePreset(modulePresetContent(preset), "x");
+  assert.deepEqual(parsed.problems, []);
+  assert.deepEqual(parsed.group, preset);
+  const anyType = parseModulePreset(modulePresetContent({ ...preset, groupType: "any" }), "x");
+  assert.deepEqual(anyType.problems, ["Series needs a type."]);
+  assert.equal(anyType.group!.series, false);
+  const older = parseModulePreset("---\ntype: module-preset\nmodule: group-names\nfamily: mystic\n---\n", "P");
+  assert.deepEqual(older.problems, []);
+  assert.equal(older.group!.tone, "any");
+  assert.equal(older.group!.series, false);
+  const odd = parseModulePreset("---\ntype: module-preset\nmodule: group-names\nfamily: mystic\ntone: jolly\n---\n", "P");
+  assert.deepEqual(odd.problems, ["Unknown tone “jolly”."]);
+});
+
+test("tone history: ' · grim · series' only when set", () => {
+  assert.equal(
+    groupHistoryLabel(family("martial"), "fantasy", false, "germanic", "grim", true),
+    "armies and martial orders · historic or low fantasy · Germanic & Norse · grim · series",
+  );
+  assert.equal(groupHistoryLabel(family("martial"), "fantasy", false, "germanic", "any", false), "armies and martial orders · historic or low fantasy · Germanic & Norse");
 });

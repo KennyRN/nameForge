@@ -1693,6 +1693,8 @@ export class NameForgeModal extends Modal {
         form: state.form,
         front: effectiveFront(state, family),
         people: state.people,
+        tone: state.tone,
+        series: !!state.type && state.series,
       });
       return this.writePreset(presetName, content, (existing) => parseModulePreset(existing, presetName).group?.family === family.key);
     }).open();
@@ -1770,6 +1772,9 @@ export class NameForgeModal extends Modal {
         form: state.form,
         front: effectiveFront(state, family),
         people: state.people,
+        // Tone brief §4: series needs a type; the sentence hides it otherwise.
+        tone: state.tone,
+        series: !!state.type && state.series,
         count: this.generationCount,
         seed: seedOverride,
         safeguards: guards.safeguards,
@@ -1783,7 +1788,7 @@ export class NameForgeModal extends Modal {
       result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" }) as GeneratedName),
       "none",
     );
-    await this.recordGenerationHistory(result.names.length, label ?? groupHistoryLabel(family, state.genre, state.fantastic, state.tradition));
+    await this.recordGenerationHistory(result.names.length, label ?? groupHistoryLabel(family, state.genre, state.fantastic, state.tradition, state.tone, !!state.type && state.series));
     this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
   }
 

@@ -6,7 +6,7 @@
 import { findBiome, TERRAIN_CHOICES } from "./biomes";
 import { findTradition, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS } from "./tribes/engine";
 import { type TribalSlotFields, tribalSlotFill } from "./tribes/slotFill";
-import { findFamily, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople } from "./groups/engine";
+import { findFamily, GROUP_TONES, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
 
 export const TRIBAL_PRESET_MODULE = "tribal-names";
 
@@ -135,6 +135,9 @@ export interface GroupPreset {
   form: GroupForm;
   front: GroupFront;
   people: GroupPeople;
+  /** Tone brief §6.2: older presets without these keys load as "any" and false. */
+  tone: GroupToneChoice;
+  series: boolean;
 }
 
 function parseGroupPreset(values: Record<string, string>, body: string, fileName: string): { group?: GroupPreset; problems: string[] } {
@@ -157,6 +160,13 @@ function parseGroupPreset(values: Record<string, string>, body: string, fileName
     if (v) problems.push(`Unknown ${key} “${v}”.`);
     return false;
   };
+  const groupType = pick("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v));
+  let series = flag("series");
+  // Tone brief §6.2: a series needs a type; with Any the preset runs as separate names.
+  if (series && groupType === "any") {
+    problems.push("Series needs a type.");
+    series = false;
+  }
   return {
     group: {
       packName: values.packName || fileName,
@@ -164,12 +174,14 @@ function parseGroupPreset(values: Record<string, string>, body: string, fileName
       description: body.trim(),
       family: family.key,
       tradition: pick("tradition", "general", (v) => !!findTradition(v)),
-      groupType: pick("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v)),
+      groupType,
       genre: pick<GroupGenre>("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
       fantastic: flag("fantastic"),
       form: pick<GroupForm>("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
       front: pick<GroupFront>("front", "say", (v) => ["say", "hide", "may"].includes(v)),
       people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      series,
     },
     problems,
   };
@@ -190,6 +202,8 @@ function groupPresetContent(preset: GroupPreset): string {
     `form: ${preset.form}`,
     `front: ${preset.front}`,
     `people: ${preset.people}`,
+    `tone: ${preset.tone}`,
+    `series: ${preset.series}`,
     "---",
     "",
     preset.description.trim(),
