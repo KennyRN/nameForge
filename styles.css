@@ -806,6 +806,30 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   height: 0;
 }
 
+/* Place generators brief §4: the Place pane — its sentence, then the text box or the compound parts. */
+.nameforge-editor-modal__place-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.nameforge-editor-modal__place-section > .nameforge-editor-modal__place-box {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  resize: none;
+}
+
+.nameforge-modal__compound-section.nameforge-editor-modal__place-compound {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
 .nameforge-modal__compound-section.nameforge-editor-modal__stage-pane {
   display: flex;
   flex-direction: column;

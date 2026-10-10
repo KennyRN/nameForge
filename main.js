@@ -55230,6 +55230,106 @@ function menuLink(sentence2, text, title, choices, current, choose) {
     menu.showAtMouseEvent(event);
   });
 }
+var PLACE_COMPOUND_EXAMPLES = {
+  "2-joined": "Ash+ford = Ashford",
+  "2-spaced": "Kings+Bridge = Kings Bridge",
+  "3-joined": "Ash+wick+ham = Ashwickham",
+  "3-spaced": "Old+Kings+Bridge = Old Kings Bridge"
+};
+var CompoundPartsEditor = class {
+  constructor(container, examples, placeholderExample) {
+    this.examples = examples;
+    this.count = 2;
+    this.generator = "breakdown";
+    this.joining = "joined";
+    this.partUse = ["all", "all", "all"];
+    this.partGenerators = ["breakdown", "breakdown", "breakdown"];
+    this.partSentenceEls = [];
+    this.textareas = [];
+    this.wrappers = [];
+    this.sentenceEl = container.createDiv({ cls: "nameforge-recipe-editor__sentence nameforge-modal__compound-sentence" });
+    const boxes = container.createDiv({ cls: "nameforge-modal__part-boxes" });
+    for (let i = 0; i < 3; i++) {
+      const wrapper = boxes.createDiv({ cls: "nameforge-modal__part-box" });
+      this.partSentenceEls.push(wrapper.createDiv({ cls: "nameforge-modal__part-label" }));
+      this.textareas.push(
+        wrapper.createEl("textarea", {
+          cls: "nameforge-modal__textarea",
+          attr: {
+            placeholder: `Paste name elements as CSV, one per line, or space-separated. Start a line with ## to add a title.
+
+${placeholderExample}`,
+            rows: "6"
+          }
+        })
+      );
+      this.wrappers.push(wrapper);
+    }
+    this.render();
+  }
+  /** The values to save: parts (with titles), generator, joining and the per-part settings. */
+  values() {
+    return {
+      parts: this.textareas.slice(0, this.count).map((t) => compoundPartFromText(t.value || "")),
+      generator: this.generator,
+      joining: this.joining,
+      partUse: this.partUse.slice(0, this.count),
+      partGenerators: this.generator === "combined" ? this.partGenerators.slice(0, this.count) : void 0
+    };
+  }
+  hasText(count) {
+    return this.textareas.slice(0, count).some((t) => t.value.trim());
+  }
+  /** Fills the part boxes and sets the parts count to match. */
+  fill(texts) {
+    texts.forEach((text, i) => this.textareas[i].value = text);
+    this.count = texts.length >= 3 ? 3 : 2;
+    this.render();
+  }
+  render() {
+    var _a2;
+    const sentence2 = this.sentenceEl;
+    sentence2.empty();
+    sentence2.appendText("Names have ");
+    menuLink(sentence2, String(this.count), "How many parts each name has", ["2", "3"].map((v) => ({ id: v, label: v })), String(this.count), (id) => {
+      this.count = id === "3" ? 3 : 2;
+      this.render();
+    });
+    sentence2.appendText(" parts, built as ");
+    menuLink(
+      sentence2,
+      this.generator,
+      "Breakdown makes new parts from the lists; list uses them as written; combined sets each part",
+      ["breakdown", "list", "combined"].map((v) => ({ id: v, label: v })),
+      this.generator,
+      (id) => {
+        this.generator = id;
+        this.render();
+      }
+    );
+    sentence2.appendText(" and ");
+    menuLink(sentence2, this.joining, "Joined into one word, or spaced as separate words", ["joined", "spaced"].map((v) => ({ id: v, label: v })), this.joining, (id) => {
+      this.joining = id === "spaced" ? "spaced" : "joined";
+      this.render();
+    });
+    sentence2.appendText(` (${this.examples[`${this.count}-${this.joining}`]})`);
+    this.partSentenceEls.forEach((el, i) => {
+      el.empty();
+      el.appendText(`Part ${i + 1} is used `);
+      menuLink(el, COMPOUND_USE_PHRASES[this.partUse[i]], "How often this part is in a name", COMPOUND_USES.map((u) => ({ id: u, label: COMPOUND_USE_PHRASES[u] })), this.partUse[i], (id) => {
+        this.partUse[i] = id;
+        this.render();
+      });
+      if (this.generator !== "combined") return;
+      el.appendText(", and is a ");
+      menuLink(el, this.partGenerators[i], "Breakdown makes new parts from the list; list uses them as written", ["breakdown", "list"].map((v) => ({ id: v, label: v })), this.partGenerators[i], (id) => {
+        this.partGenerators[i] = id === "list" ? "list" : "breakdown";
+        this.render();
+      });
+    });
+    (_a2 = this.wrappers[2]) == null ? void 0 : _a2.toggle(this.count === 3);
+  }
+};
 function resultName(el) {
   var _a2, _b;
   return (_b = (_a2 = el.getAttribute("data-name")) != null ? _a2 : el.textContent) != null ? _b : "";
@@ -56986,7 +57086,7 @@ ${text}
       modal.open();
     });
   }
-  async saveToConfiguredFile(namesText, templateOf) {
+  async saveToConfiguredFile(namesText, templateOf, placeGenerator) {
     var _a2;
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
@@ -56998,7 +57098,7 @@ ${text}
       this.setStatus("No names to save. Enter at least one name.");
       return;
     }
-    const sectioned = this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" ? (_a2 = parseNameSections(namesText)) != null ? _a2 : void 0 : void 0;
+    const sectioned = this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" || this.currentPackType === "placePack" ? (_a2 = parseNameSections(namesText)) != null ? _a2 : void 0 : void 0;
     const normalizedFilePath = (0, import_obsidian13.normalizePath)(filePath);
     const folderPath = normalizedFilePath.includes("/") ? normalizedFilePath.substring(0, normalizedFilePath.lastIndexOf("/")) : "";
     if (folderPath && !this.app.vault.getFolderByPath(folderPath)) {
@@ -57012,7 +57112,8 @@ ${text}
     }
     const content = createNamesFileContent(this.plugin.settings.packName || "nameForge", names, packType, {
       templateOf,
-      sectioned
+      sectioned,
+      placeGenerator
     });
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
@@ -57031,7 +57132,9 @@ ${text}
     }
     this.currentNamesText = names.join("\n");
     this.setStatus("");
-    if (packType === "breakdownPack") this.warnShortLists(shortBreakdownLists([{ body: namesText, breakdown: true }]));
+    if (packType === "breakdownPack" || packType === "placePack" && (placeGenerator != null ? placeGenerator : "breakdown") === "breakdown") {
+      this.warnShortLists(shortBreakdownLists([{ body: namesText, breakdown: true }]));
+    }
   }
   /** §2.2: one notice naming every Breakdown list under the minimum. */
   warnShortLists(short) {
@@ -58196,7 +58299,7 @@ ${indent}${marker}${name}`).join("");
         const parsed = parseNamesFileContent(content);
         if (!parsed.template || !kinds.includes(parsed.packType)) continue;
         out.push(
-          parsed.packType === "compoundPack" ? { name: child.basename, parts: (_a2 = parsed.parts) != null ? _a2 : [], partTexts: compoundPartData(parsed).map(serialiseCompoundPart) } : { name: child.basename, names: parsed.names }
+          isCompoundPack(parsed) ? { name: child.basename, parts: (_a2 = parsed.parts) != null ? _a2 : [], partTexts: compoundPartData(parsed).map(serialiseCompoundPart) } : { name: child.basename, names: parsed.names, placeGenerator: parsed.placeGenerator }
         );
       } catch (e) {
         continue;
@@ -58379,17 +58482,14 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     this.stageEl = null;
     this.selectedPackType = "breakdownPack";
     this.compoundSectionEl = null;
-    this.compoundPartsCount = 2;
-    this.compoundGenerator = "breakdown";
-    this.compoundJoining = "joined";
-    /** Compound brief §5.2: each part's frequency, and its generator when the pack is combined. */
-    this.compoundPartUse = ["all", "all", "all"];
-    this.compoundPartGenerators = ["breakdown", "breakdown", "breakdown"];
-    /** §5.1: the pack sentence; §5.2: one sentence above each part box. */
-    this.compoundSentenceEl = null;
-    this.partSentenceEls = [];
-    this.partTextareas = [];
-    this.partWrapperEls = [];
+    /** Compound brief §5: the people compound section's sentences and part boxes. */
+    this.peopleCompound = null;
+    /** Place generators brief §4: the Place pane — its sentence, the text box or the compound parts. */
+    this.placeSectionEl = null;
+    this.placeSentenceEl = null;
+    this.placeCompoundEl = null;
+    this.placeCompound = null;
+    this.placeGenerator = "breakdown";
     this.mixSectionEl = null;
     this.mixSourcesEl = null;
     this.mixHintEl = null;
@@ -58493,6 +58593,7 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     const initialPane = this.textPaneFor(this.parent.currentPackType);
     if (initialPane) this.textPanes[initialPane].value = this.initialText;
     this.buildCompoundSection(stage);
+    this.buildPlaceSection(stage);
     this.buildMixSection(stage);
     this.templatesPaneEl = stage.createDiv({ cls: "nameforge-editor-modal__templates" });
     this.templatesPaneEl.hide();
@@ -58500,7 +58601,6 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     this.wizardPaneEl.hide();
     this.selectedPackType = this.parent.currentPackType;
     this.updateTypeButtons();
-    this.updateCompoundControls();
     void this.loadMixPackOptions();
     const controls = contentEl.createDiv({ cls: "nameforge-modal__controls" });
     const saveButton = controls.createEl("button", {
@@ -58522,21 +58622,42 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     this.compoundSectionEl = container.createDiv({
       cls: "nameforge-modal__compound-section nameforge-editor-modal__stage-pane"
     });
-    this.compoundSentenceEl = this.compoundSectionEl.createDiv({ cls: "nameforge-recipe-editor__sentence nameforge-modal__compound-sentence" });
-    const partBoxesEl = this.compoundSectionEl.createDiv({ cls: "nameforge-modal__part-boxes" });
-    for (let i = 0; i < 3; i++) {
-      const wrapper = partBoxesEl.createDiv({ cls: "nameforge-modal__part-box" });
-      this.partSentenceEls.push(wrapper.createDiv({ cls: "nameforge-modal__part-label" }));
-      const textarea = wrapper.createEl("textarea", {
-        cls: "nameforge-modal__textarea",
-        attr: {
-          placeholder: "Paste name elements as CSV, one per line, or space-separated. Start a line with ## to add a title.\n\nWulf\nBeorht\nEad",
-          rows: "6"
-        }
-      });
-      this.partTextareas.push(textarea);
-      this.partWrapperEls.push(wrapper);
+    this.peopleCompound = new CompoundPartsEditor(this.compoundSectionEl, COMPOUND_EXAMPLES, "Wulf\nBeorht\nEad");
+  }
+  /** Place generators brief §4.1: "Place pack will be a ‹breakdown› pack", then the text box or the parts. */
+  buildPlaceSection(container) {
+    const section = this.placeSectionEl = container.createDiv({ cls: "nameforge-editor-modal__stage-pane nameforge-editor-modal__place-section" });
+    this.placeSentenceEl = section.createDiv({ cls: "nameforge-recipe-editor__sentence nameforge-modal__compound-sentence" });
+    const box = this.textPanes.placePack;
+    if (box) {
+      box.removeClass("nameforge-editor-modal__stage-pane");
+      box.addClass("nameforge-editor-modal__place-box");
+      section.appendChild(box);
     }
+    this.placeCompoundEl = section.createDiv({ cls: "nameforge-modal__compound-section nameforge-editor-modal__place-compound" });
+    this.placeCompound = new CompoundPartsEditor(this.placeCompoundEl, PLACE_COMPOUND_EXAMPLES, "Ash\nThorn\nKings");
+    this.renderPlaceSentence();
+  }
+  renderPlaceSentence() {
+    const el = this.placeSentenceEl;
+    if (!el) return;
+    el.empty();
+    el.appendText("Place pack will be a ");
+    menuLink(
+      el,
+      this.placeGenerator,
+      "Breakdown makes new place names; list picks them as written; compound joins parts",
+      ["breakdown", "list", "compound"].map((v) => ({ id: v, label: v })),
+      this.placeGenerator,
+      (id) => this.setPlaceGenerator(id)
+    );
+    el.appendText(" pack");
+  }
+  /** §4.4: breakdown and list share the text box; compound keeps its own parts while the modal is open. */
+  setPlaceGenerator(generator) {
+    this.placeGenerator = generator;
+    this.renderPlaceSentence();
+    this.updateTypeButtons();
   }
   buildMixSection(container) {
     this.mixSectionEl = container.createDiv({
@@ -58731,20 +58852,8 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     new import_obsidian13.Notice(`nameForge: biome \u201C${packName}\u201D saved.`);
     this.close();
   }
-  setCompoundParts(count) {
-    this.compoundPartsCount = count;
-    this.updateCompoundControls();
-  }
-  setCompoundGenerator(generator) {
-    this.compoundGenerator = generator;
-    this.updateCompoundControls();
-  }
-  setCompoundJoining(joining) {
-    this.compoundJoining = joining;
-    this.updateCompoundControls();
-  }
   updateTypeButtons() {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x;
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z;
     const isWizard = this.wizardMode;
     const isBiome = !isWizard && this.biomeMode;
     const other = isWizard || isBiome;
@@ -58784,11 +58893,14 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     (_s = this.compoundButton) == null ? void 0 : _s.setAttribute("aria-pressed", String(isCompound));
     (_t = this.placeButton) == null ? void 0 : _t.setAttribute("aria-pressed", String(isPlace));
     (_u = this.mixButton) == null ? void 0 : _u.setAttribute("aria-pressed", String(isMix));
-    const pane = isWizard ? void 0 : isBiome ? "biome" : this.textPaneFor(this.selectedPackType);
+    const placeCompound = isPlace && this.placeGenerator === "compound";
+    const pane = isWizard || placeCompound ? void 0 : isBiome ? "biome" : this.textPaneFor(this.selectedPackType);
     this.inputEl = pane ? (_v = this.textPanes[pane]) != null ? _v : null : null;
     for (const el of Object.values(this.textPanes)) el.toggle(el === this.inputEl);
     (_w = this.compoundSectionEl) == null ? void 0 : _w.toggle(isCompound);
-    (_x = this.mixSectionEl) == null ? void 0 : _x.toggle(isMix);
+    (_x = this.placeSectionEl) == null ? void 0 : _x.toggle(isPlace);
+    (_y = this.placeCompoundEl) == null ? void 0 : _y.toggle(placeCompound);
+    (_z = this.mixSectionEl) == null ? void 0 : _z.toggle(isMix);
   }
   /** Lists the built-in templates, then the user's own, for the pack type's kind of template. */
   async renderTemplatesPane(type) {
@@ -58796,10 +58908,11 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     const pane = this.templatesPaneEl;
     if (!pane) return;
     const kinds = type === "people" ? ["breakdownPack", "listPack"] : type === "people-compound" ? ["compoundPack"] : ["placePack"];
-    const own = await this.parent.listTemplates(kinds);
+    const placeCompound = type === "place" && this.placeGenerator === "compound";
+    const own = (await this.parent.listTemplates(kinds)).filter((t) => type !== "place" || !!t.parts === placeCompound);
     pane.empty();
     const entries = [
-      ...builtinTemplates(type).map((t) => ({ name: t.name, parts: t.parts, text: templateText(t), count: templateNameCount(t) })),
+      ...(placeCompound ? [] : builtinTemplates(type)).map((t) => ({ name: t.name, parts: t.parts, text: templateText(t), count: templateNameCount(t) })),
       ...own
     ];
     if (entries.length === 0) pane.createDiv({ cls: "nameforge-editor-modal__templates-empty", text: "No templates of this type" });
@@ -58815,81 +58928,25 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
   async useTemplate(entry) {
     var _a2, _b;
     if (entry.parts) {
+      const editor = this.selectedPackType === "placePack" ? this.placeCompound : this.peopleCompound;
+      if (!editor) return;
       const parts = entry.parts.slice(0, 3);
-      if (this.partTextareas.slice(0, parts.length).some((t) => t.value.trim()) && !await confirmReplace(this.app, "Replace what's in the parts?")) return;
-      parts.forEach((part, i) => {
+      if (editor.hasText(parts.length) && !await confirmReplace(this.app, "Replace what's in the parts?")) return;
+      editor.fill(parts.map((part, i) => {
         var _a3, _b2;
-        return this.partTextareas[i].value = (_b2 = (_a3 = entry.partTexts) == null ? void 0 : _a3[i]) != null ? _b2 : part.join("\n");
-      });
-      this.setCompoundParts(parts.length >= 3 ? 3 : 2);
+        return (_b2 = (_a3 = entry.partTexts) == null ? void 0 : _a3[i]) != null ? _b2 : part.join("\n");
+      }));
       return;
     }
     const box = this.inputEl;
     if (!box) return;
     if (box.value.trim() && !await confirmReplace(this.app, "Replace what's in the box?")) return;
     box.value = (_b = entry.text) != null ? _b : ((_a2 = entry.names) != null ? _a2 : []).join("\n");
+    if (this.selectedPackType === "placePack" && entry.placeGenerator && entry.placeGenerator !== "compound") this.setPlaceGenerator(entry.placeGenerator);
   }
   /** The text box a pack type writes in; compound and mix have their own sections instead. */
   textPaneFor(type) {
     return type === "breakdownPack" || type === "listPack" || type === "placePack" ? type : void 0;
-  }
-  /** §5.1, §5.2: the pack sentence and each part's sentence, rebuilt on every change. */
-  renderCompoundSentences() {
-    const sentence2 = this.compoundSentenceEl;
-    if (sentence2) {
-      sentence2.empty();
-      sentence2.appendText("Names have ");
-      menuLink(
-        sentence2,
-        String(this.compoundPartsCount),
-        "How many parts each name has",
-        ["2", "3"].map((v) => ({ id: v, label: v })),
-        String(this.compoundPartsCount),
-        (id) => this.setCompoundParts(id === "3" ? 3 : 2)
-      );
-      sentence2.appendText(" parts, built as ");
-      menuLink(
-        sentence2,
-        this.compoundGenerator,
-        "Breakdown makes new parts from the lists; list uses them as written; combined sets each part",
-        ["breakdown", "list", "combined"].map((v) => ({ id: v, label: v })),
-        this.compoundGenerator,
-        (id) => this.setCompoundGenerator(id)
-      );
-      sentence2.appendText(" and ");
-      menuLink(
-        sentence2,
-        this.compoundJoining,
-        "Joined into one word, or spaced as separate words",
-        ["joined", "spaced"].map((v) => ({ id: v, label: v })),
-        this.compoundJoining,
-        (id) => this.setCompoundJoining(id === "spaced" ? "spaced" : "joined")
-      );
-      sentence2.appendText(` (${COMPOUND_EXAMPLES[`${this.compoundPartsCount}-${this.compoundJoining}`]})`);
-    }
-    this.partSentenceEls.forEach((el, i) => {
-      el.empty();
-      el.appendText(`Part ${i + 1} is used `);
-      menuLink(el, COMPOUND_USE_PHRASES[this.compoundPartUse[i]], "How often this part is in a name", COMPOUND_USES.map((u) => ({ id: u, label: COMPOUND_USE_PHRASES[u] })), this.compoundPartUse[i], (id) => {
-        this.compoundPartUse[i] = id;
-        this.renderCompoundSentences();
-      });
-      if (this.compoundGenerator !== "combined") return;
-      el.appendText(", and is a ");
-      menuLink(el, this.compoundPartGenerators[i], "Breakdown makes new parts from the list; list uses them as written", ["breakdown", "list"].map((v) => ({ id: v, label: v })), this.compoundPartGenerators[i], (id) => {
-        this.compoundPartGenerators[i] = id === "list" ? "list" : "breakdown";
-        this.renderCompoundSentences();
-      });
-    });
-  }
-  updateCompoundControls() {
-    this.renderCompoundSentences();
-    const thirdWrapper = this.partWrapperEls[2];
-    if (this.compoundPartsCount === 3) {
-      thirdWrapper == null ? void 0 : thirdWrapper.show();
-    } else {
-      thirdWrapper == null ? void 0 : thirdWrapper.hide();
-    }
   }
   /** Builds the place name wizard in its pane the first time it's chosen; it keeps its answers after. */
   async openWizard() {
@@ -58915,14 +58972,17 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
       await this.saveBiome(packName);
       return;
     }
-    if (this.selectedPackType === "compoundPack") {
-      const parts = this.partTextareas.slice(0, this.compoundPartsCount).map((textarea) => compoundPartFromText(textarea.value || ""));
+    const placeCompound = this.selectedPackType === "placePack" && this.placeGenerator === "compound";
+    const compoundEditor = placeCompound ? this.placeCompound : this.selectedPackType === "compoundPack" ? this.peopleCompound : null;
+    if (compoundEditor) {
+      const values = compoundEditor.values();
+      const parts = values.parts;
       if (!templateOf && parts.some((part) => part.names.length === 0)) {
         this.parent.setStatus("No names to save. Enter at least one name for each part.");
         return;
       }
       this.parent.plugin.settings.packName = packName;
-      this.parent.currentPackType = "compoundPack";
+      this.parent.currentPackType = placeCompound ? "placePack" : "compoundPack";
       await this.parent.plugin.saveSettings();
       let folderPath2 = this.parent.getFolderPath();
       if (!folderPath2) {
@@ -58937,9 +58997,10 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
       const fileName2 = sanitizePackNameForFilename(packName);
       this.parent.plugin.settings.namesFilePath = (0, import_obsidian13.normalizePath)(`${folderPath2}/${fileName2}.md`);
       await this.parent.plugin.saveSettings();
-      await this.parent.saveCompoundToConfiguredFile(parts, this.compoundGenerator, this.compoundJoining, templateOf, {
-        partUse: this.compoundPartUse.slice(0, this.compoundPartsCount),
-        partGenerators: this.compoundGenerator === "combined" ? this.compoundPartGenerators.slice(0, this.compoundPartsCount) : void 0
+      await this.parent.saveCompoundToConfiguredFile(parts, values.generator, values.joining, templateOf, {
+        partUse: values.partUse,
+        partGenerators: values.partGenerators,
+        place: placeCompound
       });
       this.close();
       return;
@@ -58994,7 +59055,7 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     const fileName = sanitizePackNameForFilename(packName);
     this.parent.plugin.settings.namesFilePath = (0, import_obsidian13.normalizePath)(`${folderPath}/${fileName}.md`);
     await this.parent.plugin.saveSettings();
-    await this.parent.saveToConfiguredFile(namesText, templateOf);
+    await this.parent.saveToConfiguredFile(namesText, templateOf, this.selectedPackType === "placePack" ? this.placeGenerator : void 0);
     this.close();
   }
 };

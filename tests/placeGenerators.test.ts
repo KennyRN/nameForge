@@ -155,3 +155,21 @@ test("recipe draws: stem mode for each place generator", () => {
   const whole = placePackDraw(parseNamesFileContent(COMPOUND), {})({ section: "river" }, "whole", rng);
   assert.ok(whole && /(ford|bridge)$/.test(whole), String(whole));
 });
+
+import { shortBreakdownLists } from "../src/packs/sections";
+import { partIsBreakdown } from "../src/packs/compound";
+
+test("short-list check counts place breakdown lists and breakdown parts; list exempt", () => {
+  const p = parseNamesFileContent(place("", SECTIONED));
+  const breakdown = (p.placeGenerator ?? "breakdown") === "breakdown";
+  assert.deepEqual(shortBreakdownLists([{ body: SECTIONED, breakdown }]), [
+    { title: "coastal", count: 2 },
+    { title: "inland", count: 2 },
+  ]);
+  assert.deepEqual(shortBreakdownLists([{ body: SECTIONED, breakdown: parseNamesFileContent(place("placeGenerator: list\n", SECTIONED)).placeGenerator === "breakdown" }]), []);
+  const c = parseNamesFileContent(COMPOUND);
+  const short = shortBreakdownLists(
+    c.compoundPartData!.map((part, i) => ({ part: i + 1, body: part.sectioned ? "## x\n" + part.names.join("\n") : part.names.join("\n"), breakdown: partIsBreakdown(c.compoundGenerator!, c.compoundPartGenerators, i) })),
+  );
+  assert.deepEqual(short, [{ part: 1, count: 3 }]);
+});
