@@ -1,10 +1,12 @@
-// Module presets (Presets brief §7.2): a module's setup saved as a note that runs as-is. Tribal
-// names is the only module with its own preset type; place-name presets are recipes (§7.1).
+// Module presets (Presets brief §7.2, Group brief §13): a module's setup saved as a note that runs
+// as-is. Tribes and kin groups and the group-name modules have their own preset type; place-name
+// presets are recipes (Presets brief §7.1).
 // No Obsidian imports: the frontmatter is flat `key: value` lines.
 
 import { findBiome, TERRAIN_CHOICES } from "./biomes";
 import { findTradition, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS } from "./tribes/engine";
 import { type TribalSlotFields, tribalSlotFill } from "./tribes/slotFill";
+import { findFamily, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople } from "./groups/engine";
 
 export const TRIBAL_PRESET_MODULE = "tribal-names";
 
@@ -52,11 +54,13 @@ export function isModulePresetContent(content: string): boolean {
 }
 
 /** §7.2: a preset's values; unknown values are reported and take their defaults. */
-export function parseModulePreset(content: string, fileName: string): { preset?: TribalPreset; problems: string[] } {
+export function parseModulePreset(content: string, fileName: string): { preset?: TribalPreset; group?: GroupPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
   const { values, body } = parsed;
+  // Group brief §13: group-name presets sit beside tribal ones.
+  if (values.module === GROUP_PRESET_MODULE) return parseGroupPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module “${values.module ?? ""}”.`);
     return { problems };
@@ -91,7 +95,8 @@ export function parseModulePreset(content: string, fileName: string): { preset?:
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset): string {
+  if ("family" in preset) return groupPresetContent(preset);
   const quote = (v: string) => (/^\[\[|[:#]/.test(v) ? `"${v}"` : v);
   return [
     "---",
@@ -106,6 +111,85 @@ export function modulePresetContent(preset: TribalPreset): string {
     `groupType: ${preset.groupType}`,
     `perspective: ${preset.perspective}`,
     `hostile: ${preset.hostile}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Group-name presets (Group brief §13) ────────────────────────────────────
+
+export const GROUP_PRESET_MODULE = "group-names";
+
+export interface GroupPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  family: string;
+  tradition: string;
+  /** "any" or a type key of the family. */
+  groupType: string;
+  genre: GroupGenre;
+  fantastic: boolean;
+  form: GroupForm;
+  front: GroupFront;
+  people: GroupPeople;
+}
+
+function parseGroupPreset(values: Record<string, string>, body: string, fileName: string): { group?: GroupPreset; problems: string[] } {
+  const problems: string[] = [];
+  const family = findFamily(values.family ?? "");
+  if (!family) {
+    problems.push(`Unknown family “${values.family ?? ""}”.`);
+    return { problems };
+  }
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const flag = (key: string): boolean => {
+    const v = values[key];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key} “${v}”.`);
+    return false;
+  };
+  return {
+    group: {
+      packName: values.packName || fileName,
+      setting: values.setting ?? "",
+      description: body.trim(),
+      family: family.key,
+      tradition: pick("tradition", "general", (v) => !!findTradition(v)),
+      groupType: pick("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v)),
+      genre: pick<GroupGenre>("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
+      fantastic: flag("fantastic"),
+      form: pick<GroupForm>("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
+      front: pick<GroupFront>("front", "say", (v) => ["say", "hide", "may"].includes(v)),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+    },
+    problems,
+  };
+}
+
+function groupPresetContent(preset: GroupPreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${GROUP_PRESET_MODULE}`,
+    `family: ${preset.family}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `tradition: ${preset.tradition}`,
+    `groupType: ${preset.groupType}`,
+    `genre: ${preset.genre}`,
+    `fantastic: ${preset.fantastic}`,
+    `form: ${preset.form}`,
+    `front: ${preset.front}`,
+    `people: ${preset.people}`,
     "---",
     "",
     preset.description.trim(),

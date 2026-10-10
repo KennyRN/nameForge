@@ -51073,6 +51073,10 @@ function groupSentence(state, family) {
   out.push(" people and places");
   return out;
 }
+function groupSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
 function chooseGroup(state, field, id, family) {
   let next = { ...state };
   switch (field) {
@@ -51103,6 +51107,17 @@ function chooseGroup(state, field, id, family) {
   if (next.type && !available.some((t) => t.key === next.type)) next = { ...next, type: void 0 };
   if (field === "type" && next.type && !showsFront(next, family)) next = { ...next, front: "say" };
   return next;
+}
+function groupPresetState(preset) {
+  return {
+    tradition: preset.tradition,
+    type: preset.groupType === "any" ? void 0 : preset.groupType,
+    genre: preset.genre,
+    fantastic: preset.fantastic,
+    form: preset.form,
+    front: preset.front,
+    people: preset.people
+  };
 }
 
 // src/groups/safeguardPacks.ts
@@ -51161,6 +51176,7 @@ function parseModulePreset(content, fileName) {
   const problems = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
   const { values, body } = parsed;
+  if (values.module === GROUP_PRESET_MODULE) return parseGroupPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module \u201C${(_a2 = values.module) != null ? _a2 : ""}\u201D.`);
     return { problems };
@@ -51194,6 +51210,7 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("family" in preset) return groupPresetContent(preset);
   const quote2 = (v) => /^\[\[|[:#]/.test(v) ? `"${v}"` : v;
   return [
     "---",
@@ -51208,6 +51225,66 @@ function modulePresetContent(preset) {
     `groupType: ${preset.groupType}`,
     `perspective: ${preset.perspective}`,
     `hostile: ${preset.hostile}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
+var GROUP_PRESET_MODULE = "group-names";
+function parseGroupPreset(values, body, fileName) {
+  var _a2, _b, _c;
+  const problems = [];
+  const family = findFamily((_a2 = values.family) != null ? _a2 : "");
+  if (!family) {
+    problems.push(`Unknown family \u201C${(_b = values.family) != null ? _b : ""}\u201D.`);
+    return { problems };
+  }
+  const pick2 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const flag = (key2) => {
+    const v = values[key2];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return false;
+  };
+  return {
+    group: {
+      packName: values.packName || fileName,
+      setting: (_c = values.setting) != null ? _c : "",
+      description: body.trim(),
+      family: family.key,
+      tradition: pick2("tradition", "general", (v) => !!findTradition(v)),
+      groupType: pick2("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v)),
+      genre: pick2("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
+      fantastic: flag("fantastic"),
+      form: pick2("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
+      front: pick2("front", "say", (v) => ["say", "hide", "may"].includes(v)),
+      people: pick2("people", "placeholders", (v) => ["placeholders", "invented"].includes(v))
+    },
+    problems
+  };
+}
+function groupPresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${GROUP_PRESET_MODULE}`,
+    `family: ${preset.family}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `tradition: ${preset.tradition}`,
+    `groupType: ${preset.groupType}`,
+    `genre: ${preset.genre}`,
+    `fantastic: ${preset.fantastic}`,
+    `form: ${preset.form}`,
+    `front: ${preset.front}`,
+    `people: ${preset.people}`,
     "---",
     "",
     preset.description.trim(),
@@ -54731,7 +54808,7 @@ var PLACE_BRITISH_RIVERS = "british-rivers";
 var SESSION_HINT = "\u2190 click here for specialist modules, or here for your name packs";
 var sessionHintShown = false;
 function packTypeIconId(packType, subGenerator) {
-  if (packType === "tribalPreset") return ICON_TRIBAL_NAMES;
+  if (packType === "tribalPreset" || packType === "groupPreset") return ICON_TRIBAL_NAMES;
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;
   }
@@ -55213,7 +55290,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     (_d = this.packDropdownEl) == null ? void 0 : _d.toggle(section === "markov");
     (_e = this.sectionSelectEl) == null ? void 0 : _e.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_f = this.editRecipeButton) == null ? void 0 : _f.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_g = this.openPresetButton) == null ? void 0 : _g.toggle(section === "markov" && this.currentPackType === "tribalPreset");
+    (_g = this.openPresetButton) == null ? void 0 : _g.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_h = this.createPacksButton) == null ? void 0 : _h.toggleClass("is-placeholder", section !== "markov");
     const tribal = section === "tribalNames" || !!familyForSection(section);
@@ -55776,20 +55853,48 @@ ${n.origin}${also}${echo}` };
   async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian13.TFile)) return;
-    const { preset } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (group) {
+      const family = findFamily(group.family);
+      this.groupStates[family.key] = groupPresetState(group);
+      this.switchSection(family.section);
+      return;
+    }
     if (!preset) return;
     this.setTribalState(await this.presetState(preset, file.path));
     this.switchSection("tribalNames");
+  }
+  /** Group brief §13: a group preset, run as its module runs; history "{module} · {preset}". */
+  async runGroupPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian13.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { group, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const family = group ? findFamily(group.family) : void 0;
+    if (!group || !family) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runGroupNames(family, groupPresetState(group), `${family.label} \xB7 ${group.packName}`, problems);
   }
   /** Presets brief §8.1: the Save as preset button, for the modules that have presets. */
   refreshSavePreset() {
     var _a2;
     const section = this.activeSection;
-    (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(section === "tribalNames" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain());
+    (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(
+      section === "tribalNames" || !!familyForSection(section) || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+    );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
   async openSavePreset() {
     var _a2;
+    const groupFamily = familyForSection(this.activeSection);
+    if (groupFamily) {
+      this.openSaveGroupPreset(groupFamily);
+      return;
+    }
     if (this.activeSection !== "tribalNames") {
       await this.openSaveRecipePreset();
       return;
@@ -55862,6 +55967,39 @@ ${(0, import_obsidian13.stringifyYaml)(recipeToFrontmatter(recipe))}---
 ${text}
 `;
       return this.writePreset(presetName, content, (existing) => isRecipeContent(existing) && !parseRecipeContent(existing).recipe.template);
+    }).open();
+  }
+  /** Group brief §13: "{tradition} · {type or family} · {setting}", described by the sentence. */
+  openSaveGroupPreset(family) {
+    var _a2;
+    const state = this.groupState(family);
+    const tradition = (_a2 = findTradition(state.tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
+    const type = family.types.find((t) => t.key === state.type);
+    const name = [tradition.label, type ? type.menu : family.label, SETTING_PHRASES[groupSetting(state.genre, state.fantastic)]].join(" \xB7 ");
+    const description = groupSentenceText(groupSentence(state, family));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a3;
+      if (!presetName) {
+        new import_obsidian13.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        family: family.key,
+        tradition: state.tradition,
+        groupType: (_a3 = state.type) != null ? _a3 : "any",
+        genre: state.genre,
+        fantastic: state.genre === "scifi" ? false : state.fantastic,
+        form: state.form,
+        front: effectiveFront(state, family),
+        people: state.people
+      });
+      return this.writePreset(presetName, content, (existing) => {
+        var _a4;
+        return ((_a4 = parseModulePreset(existing, presetName).group) == null ? void 0 : _a4.family) === family.key;
+      });
     }).open();
   }
   /**
@@ -56499,7 +56637,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -56632,7 +56770,9 @@ ${text}
           continue;
         }
         if (isModulePresetContent(content)) {
-          if (parseModulePreset(content, child.basename).preset) packs.push({ path: child.path, packType: "tribalPreset" });
+          const parsed = parseModulePreset(content, child.basename);
+          if (parsed.preset) packs.push({ path: child.path, packType: "tribalPreset" });
+          else if (parsed.group) packs.push({ path: child.path, packType: "groupPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -56758,8 +56898,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a2, _b, _c, _d;
-    this.currentPackType = "tribalPreset";
+    var _a2, _b, _c, _d, _e, _f, _g;
+    const { preset, group, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -56769,12 +56910,13 @@ ${text}
     (_a2 = this.sectionSelectEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
-    const { preset, problems } = parseModulePreset(content, file.basename);
-    this.plugin.settings.packName = (_d = preset == null ? void 0 : preset.packName) != null ? _d : file.basename;
+    const module2 = group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
+    (_e = this.openPresetButton) == null ? void 0 : _e.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
+    this.plugin.settings.packName = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
-    this.updatePackDropdownTrigger(file.path, "tribalPreset");
+    this.updatePackDropdownTrigger(file.path, this.currentPackType);
     this.setStatus(problems.join(" "));
   }
   async loadRecipePack(file) {
@@ -57155,6 +57297,10 @@ ${text}
     }
     if (this.currentPackType === "tribalPreset") {
       await this.runTribalPreset();
+      return;
+    }
+    if (this.currentPackType === "groupPreset") {
+      await this.runGroupPreset();
       return;
     }
     if (this.currentTemplateError) {

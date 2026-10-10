@@ -183,3 +183,24 @@ export function chooseGroup(state: GroupSentenceState, field: GroupField, id: st
   if (field === "type" && next.type && !showsFront(next, family)) next = { ...next, front: "say" };
   return next;
 }
+
+/** Group brief §13: a preset's values as a sentence state. */
+export function groupPresetState(preset: {
+  tradition: string;
+  groupType: string;
+  genre: GroupGenre;
+  fantastic: boolean;
+  form: GroupForm;
+  front: GroupFront;
+  people: GroupPeople;
+}): GroupSentenceState {
+  return {
+    tradition: preset.tradition,
+    type: preset.groupType === "any" ? undefined : preset.groupType,
+    genre: preset.genre,
+    fantastic: preset.fantastic,
+    form: preset.form,
+    front: preset.front,
+    people: preset.people,
+  };
+}

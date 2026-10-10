@@ -65,8 +65,18 @@ import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type N
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings, recipeToFrontmatter } from "./names/recipe";
 import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
 import { chooseTribal, type TribalSentenceLimits, type TribalSentenceState, tribalSentence, tribalSentenceText } from "./tribes/sentence";
-import { familyForSection, generateGroupNames, GROUP_DATA, type GroupFamily, groupHistoryLabel, type GroupSafeguards } from "./groups/engine";
-import { chooseGroup, DEFAULT_GROUP_STATE, effectiveFront, groupSentence, type GroupSentenceState } from "./groups/sentence";
+import {
+  familyForSection,
+  findFamily,
+  generateGroupNames,
+  GROUP_DATA,
+  type GroupFamily,
+  groupHistoryLabel,
+  type GroupSafeguards,
+  groupSetting,
+  SETTING_PHRASES,
+} from "./groups/engine";
+import { chooseGroup, DEFAULT_GROUP_STATE, effectiveFront, groupPresetState, groupSentence, groupSentenceText, type GroupSentenceState } from "./groups/sentence";
 import { isGroupSafeguardPackContent } from "./groups/safeguardPacks";
 import { isModulePresetContent, modulePresetContent, parseModulePreset, type TribalPreset } from "./presets";
 import { confirmReplace, PresetSaveModal } from "./presetModal";
@@ -112,8 +122,9 @@ import {
 } from "./colonialShapes";
 import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from "./paths";
 
-/** `tribalPreset` (Presets brief §9): a tribal names preset note, run as-is from the pack dropdown. */
-type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack" | "tribalPreset";
+/** `tribalPreset` (Presets brief §9) and `groupPreset` (Group brief §13): module preset notes, run
+ * as-is from the pack dropdown. */
+type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack" | "tribalPreset" | "groupPreset";
 
 import {
   BRITISH_PLACE_NAMES_HISTORY_NAME,
@@ -191,7 +202,8 @@ let sessionHintShown = false;
 
 
 function packTypeIconId(packType: NamePackType, subGenerator?: "breakdown" | "list"): string {
-  if (packType === "tribalPreset") return ICON_TRIBAL_NAMES;
+  // Both preset kinds wear the group names icon.
+  if (packType === "tribalPreset" || packType === "groupPreset") return ICON_TRIBAL_NAMES;
   if (packType === "recipePack") {
     // Presets brief §2.2: recipe packs wear the wizard's pen-in-pin icon.
     return ICON_RECIPE_WIZARD;
@@ -774,7 +786,7 @@ export class NameForgeModal extends Modal {
     this.packDropdownEl?.toggle(section === "markov");
     this.sectionSelectEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
     this.editRecipeButton?.toggle(section === "markov" && this.currentPackType === "recipePack");
-    this.openPresetButton?.toggle(section === "markov" && this.currentPackType === "tribalPreset");
+    this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset"));
     // Pack creation belongs to the markov generator; elsewhere the button keeps its space so the
     // box beside the trigger stays the same size.
     const colonialPart = COLONIAL_SECTION_PART[section];
@@ -1361,20 +1373,50 @@ export class NameForgeModal extends Modal {
   private async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof TFile)) return;
-    const { preset } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (group) {
+      // Group brief §13: the preset's choices, applied to its module for this session.
+      const family = findFamily(group.family)!;
+      this.groupStates[family.key] = groupPresetState(group);
+      this.switchSection(family.section as NameForgeSection);
+      return;
+    }
     if (!preset) return;
     this.setTribalState(await this.presetState(preset, file.path));
     this.switchSection("tribalNames");
   }
 
+  /** Group brief §13: a group preset, run as its module runs; history "{module} · {preset}". */
+  private async runGroupPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { group, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const family = group ? findFamily(group.family) : undefined;
+    if (!group || !family) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runGroupNames(family, groupPresetState(group), `${family.label} · ${group.packName}`, problems);
+  }
+
   /** Presets brief §8.1: the Save as preset button, for the modules that have presets. */
   private refreshSavePreset() {
     const section = this.activeSection;
-    this.savePresetButton?.toggle(section === "tribalNames" || !!COLONIAL_SECTION_PART[section] || (section === "placeShapes" && this.placeIsBritain()));
+    this.savePresetButton?.toggle(
+      section === "tribalNames" || !!familyForSection(section) || !!COLONIAL_SECTION_PART[section] || (section === "placeShapes" && this.placeIsBritain()),
+    );
   }
 
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
   private async openSavePreset() {
+    const groupFamily = familyForSection(this.activeSection);
+    if (groupFamily) {
+      this.openSaveGroupPreset(groupFamily);
+      return;
+    }
     if (this.activeSection !== "tribalNames") {
       await this.openSaveRecipePreset();
       return;
@@ -1442,6 +1484,35 @@ export class NameForgeModal extends Modal {
       }
       const content = `---\n${stringifyYaml(recipeToFrontmatter(recipe))}---\n\n${text}\n`;
       return this.writePreset(presetName, content, (existing) => isRecipeContent(existing) && !parseRecipeContent(existing).recipe.template);
+    }).open();
+  }
+
+  /** Group brief §13: "{tradition} · {type or family} · {setting}", described by the sentence. */
+  private openSaveGroupPreset(family: GroupFamily) {
+    const state = this.groupState(family);
+    const tradition = findTradition(state.tradition) ?? TRIBAL_TRADITIONS[0];
+    const type = family.types.find((t) => t.key === state.type);
+    const name = [tradition.label, type ? type.menu : family.label, SETTING_PHRASES[groupSetting(state.genre, state.fantastic)]].join(" · ");
+    const description = groupSentenceText(groupSentence(state, family));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      if (!presetName) {
+        new Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        family: family.key,
+        tradition: state.tradition,
+        groupType: state.type ?? "any",
+        genre: state.genre,
+        fantastic: state.genre === "scifi" ? false : state.fantastic,
+        form: state.form,
+        front: effectiveFront(state, family),
+        people: state.people,
+      });
+      return this.writePreset(presetName, content, (existing) => parseModulePreset(existing, presetName).group?.family === family.key);
     }).open();
   }
 
@@ -2144,7 +2215,7 @@ export class NameForgeModal extends Modal {
     }
 
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -2300,7 +2371,9 @@ export class NameForgeModal extends Modal {
         }
         // Presets brief §7.2: a preset of an unknown module is left out.
         if (isModulePresetContent(content)) {
-          if (parseModulePreset(content, child.basename).preset) packs.push({ path: child.path, packType: "tribalPreset" });
+          const parsed = parseModulePreset(content, child.basename);
+          if (parsed.preset) packs.push({ path: child.path, packType: "tribalPreset" });
+          else if (parsed.group) packs.push({ path: child.path, packType: "groupPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -2438,7 +2511,8 @@ export class NameForgeModal extends Modal {
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   private async loadTribalPreset(file: TFile, content: string) {
-    this.currentPackType = "tribalPreset";
+    const { preset, group, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = undefined;
     this.currentNamesText = "";
@@ -2448,12 +2522,13 @@ export class NameForgeModal extends Modal {
     this.sectionSelectEl?.hide();
     this.editRecipeButton?.hide();
     this.openPresetButton?.toggle(this.activeSection === "markov");
-    const { preset, problems } = parseModulePreset(content, file.basename);
-    this.plugin.settings.packName = preset?.packName ?? file.basename;
+    const module = group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
+    this.openPresetButton?.setAttribute("title", `Open in ${module ?? SECTION_LABELS.tribalNames}`);
+    this.plugin.settings.packName = preset?.packName ?? group?.packName ?? file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
-    this.updatePackDropdownTrigger(file.path, "tribalPreset");
+    this.updatePackDropdownTrigger(file.path, this.currentPackType);
     this.setStatus(problems.join(" "));
   }
 
@@ -2848,6 +2923,10 @@ export class NameForgeModal extends Modal {
     }
     if (this.currentPackType === "tribalPreset") {
       await this.runTribalPreset();
+      return;
+    }
+    if (this.currentPackType === "groupPreset") {
+      await this.runGroupPreset();
       return;
     }
     if (this.currentTemplateError) {

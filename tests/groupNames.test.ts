@@ -22,6 +22,7 @@ import {
   type GroupSetting,
 } from "../src/groups/engine";
 import { chooseGroup, DEFAULT_GROUP_STATE, groupSentence, groupSentenceText } from "../src/groups/sentence";
+import { modulePresetContent, parseModulePreset } from "../src/presets";
 import { TRIBAL_DATA, TRIBAL_TRADITIONS } from "../src/tribes/engine";
 
 const SETTING_OPTIONS: Record<GroupSetting, { genre: GroupGenre; fantastic: boolean }> = {
@@ -266,4 +267,32 @@ test("group sentence: resets", () => {
   const hiding = { ...DEFAULT_GROUP_STATE, front: "hide" as const };
   assert.equal(chooseGroup(hiding, "type", "holy", family("mystic")).front, "say");
   assert.equal(groupHistoryLabel(family("martial"), "fantasy", true, "germanic"), "armies and martial orders · high or epic fantasy · Germanic & Norse");
+});
+
+// ── §16.8 Presets ───────────────────────────────────────────────────────────
+
+test("group presets: round trip, unknown family, unknown genre", () => {
+  const preset = {
+    packName: "Border Regiments",
+    setting: "",
+    description: "Germanic & Norse-themed regular units for a fantasy world of historic or low fantasy.",
+    family: "martial",
+    tradition: "germanic",
+    groupType: "unit",
+    genre: "fantasy" as const,
+    fantastic: false,
+    form: "any" as const,
+    front: "say" as const,
+    people: "invented" as const,
+  };
+  const parsed = parseModulePreset(modulePresetContent(preset), "x");
+  assert.deepEqual(parsed.problems, []);
+  assert.deepEqual(parsed.group, preset);
+  assert.equal(parsed.preset, undefined);
+  const unknown = parseModulePreset("---\ntype: module-preset\nmodule: group-names\nfamily: pirates\n---\n", "P");
+  assert.deepEqual(unknown.problems, ["Unknown family “pirates”."]);
+  assert.equal(unknown.group, undefined);
+  const genre = parseModulePreset("---\ntype: module-preset\nmodule: group-names\nfamily: mystic\ngenre: steampunk\n---\n", "P");
+  assert.deepEqual(genre.problems, ["Unknown genre “steampunk”."]);
+  assert.equal(genre.group!.genre, "fantasy");
 });
