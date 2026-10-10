@@ -52063,6 +52063,205 @@ var builtin_templates_default = [
         ]
       }
     ]
+  },
+  {
+    name: "Orc",
+    type: "people-compound",
+    parts: [
+      [
+        "Ag",
+        "Bad",
+        "Bag",
+        "Brag",
+        "Brog",
+        "Bruk",
+        "Dag",
+        "Darg",
+        "Drog",
+        "Dug",
+        "Gaz",
+        "Ghaz",
+        "Gob",
+        "Gor",
+        "Gorg",
+        "Grak",
+        "Grath",
+        "Grub",
+        "Gruk",
+        "Grug",
+        "Karg",
+        "Khar",
+        "Krag",
+        "Krug",
+        "Lag",
+        "Lug",
+        "Mog",
+        "Morg",
+        "Mug",
+        "Murg",
+        "Nag",
+        "Narg",
+        "Rag",
+        "Ruk",
+        "Shag",
+        "Snag",
+        "Thak",
+        "Thrag",
+        "Thruk",
+        "Ug",
+        "Urg",
+        "Warg",
+        "Yarg",
+        "Zag",
+        "Zog",
+        "Zug"
+      ],
+      [
+        "ak",
+        "bag",
+        "dak",
+        "drag",
+        "gak",
+        "gan",
+        "gar",
+        "gash",
+        "gath",
+        "gor",
+        "grath",
+        "grim",
+        "grom",
+        "gul",
+        "hak",
+        "han",
+        "kash",
+        "krag",
+        "mak",
+        "mog",
+        "muk",
+        "nak",
+        "nash",
+        "rag",
+        "rak",
+        "rok",
+        "rosh",
+        "ruk",
+        "shak",
+        "thak",
+        "thar",
+        "zag",
+        "zog"
+      ],
+      [
+        "ag",
+        "ak",
+        "an",
+        "ar",
+        "ash",
+        "ath",
+        "og",
+        "ok",
+        "or",
+        "org",
+        "osh",
+        "rak",
+        "rok",
+        "rosh",
+        "thak",
+        "thor",
+        "ug",
+        "uk",
+        "ur",
+        "a",
+        "ah",
+        "aka",
+        "ana",
+        "ara",
+        "asha",
+        "era",
+        "ika",
+        "ina",
+        "ira",
+        "ka",
+        "ra",
+        "sha",
+        "tha",
+        "ya",
+        "za",
+        "en",
+        "in",
+        "on",
+        "un",
+        "yn",
+        "el",
+        "ik",
+        "ul"
+      ]
+    ],
+    partSections: [
+      null,
+      null,
+      [
+        {
+          name: "Male",
+          items: [
+            "ag",
+            "ak",
+            "an",
+            "ar",
+            "ash",
+            "ath",
+            "og",
+            "ok",
+            "or",
+            "org",
+            "osh",
+            "rak",
+            "rok",
+            "rosh",
+            "thak",
+            "thor",
+            "ug",
+            "uk",
+            "ur"
+          ]
+        },
+        {
+          name: "Female",
+          items: [
+            "a",
+            "ah",
+            "aka",
+            "ana",
+            "ara",
+            "asha",
+            "era",
+            "ika",
+            "ina",
+            "ira",
+            "ka",
+            "ra",
+            "sha",
+            "tha",
+            "ya",
+            "za"
+          ]
+        },
+        {
+          name: "Child",
+          items: [
+            "en",
+            "in",
+            "on",
+            "un",
+            "yn",
+            "el",
+            "ik",
+            "or",
+            "ul"
+          ]
+        }
+      ]
+    ]
   }
 ];
 
@@ -52086,6 +52285,15 @@ ${s.items.join("\n")}`).join("\n\n");
 function templateNameCount(t) {
   var _a2, _b;
   return t.sections ? t.sections.reduce((n, s) => n + s.items.length, 0) : (_b = (_a2 = t.items) == null ? void 0 : _a2.length) != null ? _b : 0;
+}
+function templatePartTexts(t) {
+  var _a2;
+  return (_a2 = t.parts) == null ? void 0 : _a2.map((part, i) => {
+    var _a3;
+    const sections = (_a3 = t.partSections) == null ? void 0 : _a3[i];
+    return sections ? sections.map((s) => `## ${s.name}
+${s.items.join("\n")}`).join("\n\n") : part.join("\n");
+  });
 }
 
 // src/landMenu.ts
@@ -58912,7 +59120,7 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     const own = (await this.parent.listTemplates(kinds)).filter((t) => type !== "place" || !!t.parts === placeCompound);
     pane.empty();
     const entries = [
-      ...(placeCompound ? [] : builtinTemplates(type)).map((t) => ({ name: t.name, parts: t.parts, text: templateText(t), count: templateNameCount(t) })),
+      ...(placeCompound ? [] : builtinTemplates(type)).map((t) => ({ name: t.name, parts: t.parts, partTexts: templatePartTexts(t), text: templateText(t), count: templateNameCount(t) })),
       ...own
     ];
     if (entries.length === 0) pane.createDiv({ cls: "nameforge-editor-modal__templates-empty", text: "No templates of this type" });

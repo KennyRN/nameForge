@@ -83,7 +83,7 @@ import { chooseGroup, DEFAULT_GROUP_STATE, effectiveFront, groupPresetState, gro
 import { isGroupSafeguardPackContent } from "./groups/safeguardPacks";
 import { isModulePresetContent, modulePresetContent, parseModulePreset, type TribalPreset } from "./presets";
 import { confirmReplace, PresetSaveModal } from "./presetModal";
-import { builtinTemplates, templateNameCount, templateText, type TemplateType, templateTypeFor } from "./templates";
+import { builtinTemplates, templateNameCount, templatePartTexts, templateText, type TemplateType, templateTypeFor } from "./templates";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
 import { type BiomePackSource, biomeToText, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
@@ -4416,7 +4416,7 @@ class NameForgeEditorModal extends Modal {
     const own = (await this.parent.listTemplates(kinds)).filter((t) => type !== "place" || !!t.parts === placeCompound);
     pane.empty();
     const entries: TemplateEntry[] = [
-      ...(placeCompound ? [] : builtinTemplates(type)).map((t) => ({ name: t.name, parts: t.parts, text: templateText(t), count: templateNameCount(t) })),
+      ...(placeCompound ? [] : builtinTemplates(type)).map((t) => ({ name: t.name, parts: t.parts, partTexts: templatePartTexts(t), text: templateText(t), count: templateNameCount(t) })),
       ...own,
     ];
     if (entries.length === 0) pane.createDiv({ cls: "nameforge-editor-modal__templates-empty", text: "No templates of this type" });

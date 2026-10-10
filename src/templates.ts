@@ -14,6 +14,8 @@ export interface BuiltinTemplate {
   sections?: { name: string; items: string[] }[];
   /** People compound templates: the parts, each a list of name elements. */
   parts?: string[][];
+  /** Compound templates: a part's `##` titles and their elements, where the part has titles. */
+  partSections?: ({ name: string; items: string[] }[] | null)[];
 }
 
 export const BUILTIN_TEMPLATES = builtinData as BuiltinTemplate[];
@@ -39,4 +41,12 @@ export function templateText(t: BuiltinTemplate): string {
 /** How many names a template holds, across its sections. */
 export function templateNameCount(t: BuiltinTemplate): number {
   return t.sections ? t.sections.reduce((n, s) => n + s.items.length, 0) : t.items?.length ?? 0;
+}
+
+/** A compound template's part boxes: each part's elements, or its titles with their elements. */
+export function templatePartTexts(t: BuiltinTemplate): string[] | undefined {
+  return t.parts?.map((part, i) => {
+    const sections = t.partSections?.[i];
+    return sections ? sections.map((s) => `## ${s.name}\n${s.items.join("\n")}`).join("\n\n") : part.join("\n");
+  });
 }

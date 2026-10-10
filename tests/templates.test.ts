@@ -47,3 +47,19 @@ test("templates: a sectioned template fills the box as ## lists the pack reads b
   assert.deepEqual(parsed.sections.map((s) => [s.name, s.names.length]), [["male", 77], ["female", 25]]);
   assert.deepEqual(builtinTemplates("people").map((x) => x.name), ["Victorian, England", "Anglo-Saxon"]);
 });
+
+import { templatePartTexts } from "../src/templates";
+import { compoundPartFromText, compoundTitles } from "../src/packs/compound";
+
+test("templates: Orc is a three-part compound; part 3 has Male, Female and Child titles", () => {
+  const t = builtinTemplates("people-compound").find((x) => x.name === "Orc")!;
+  assert.deepEqual(t.parts!.map((p) => p.length), [46, 33, 43]);
+  const parts = templatePartTexts(t)!.map(compoundPartFromText);
+  assert.equal(parts[0].sectioned, undefined);
+  assert.deepEqual(compoundTitles(parts), ["Male", "Female", "Child"]);
+  const child = t.partSections![2]!.find((s) => s.name === "Child")!.items;
+  assert.equal(child.length, 9);
+  assert.equal(child.at(-1), "ul");
+  // The extractor treats a lone "or" as a list conjunction, so it drops out when the box is read.
+  assert.ok(!parts[2].sectioned!.sections[2].names.includes("or"));
+});
