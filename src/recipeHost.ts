@@ -16,6 +16,7 @@ import {
   type WordListFileData,
 } from "./nameParser";
 import type { Biome } from "./biomes";
+import { compoundPartData, compoundPartsFor, compoundSettings, partIsBreakdown } from "./packs/compound";
 import { breakdownSettingsFor, selectSectionNames, smallListNotice, type SectionRequest } from "./packs/sections";
 import { wordListSection } from "./packs/wordList";
 import { NAME_SLOTS, NAME_WORDS, type NativeAdapter, type ResolvedSlot, type ResolvedSource } from "./names/engine";
@@ -315,22 +316,19 @@ export class RecipeHost {
         };
       }
       case "compoundPack": {
-        const parts = parsed.parts ?? [];
-        return (_request, mode: NameMode, rng) => {
+        // Compound brief §4.5: a slot's section picks a title; a gender draw uses a title of the
+        // same name where a part has one (compoundPartsFor falls back to all of a part's names).
+        const data = compoundPartData(parsed);
+        const settings = compoundSettings(parsed);
+        return (request, mode: NameMode, rng) => {
+          const parts = compoundPartsFor(data, request.section ?? request.gender);
           if (mode === "stem") {
             const first = parts[0] ?? [];
-            return parsed.compoundGenerator === "list" ? pick(first, rng) : markovName(first, "part1", rng);
+            return partIsBreakdown(settings.generator, parsed.compoundPartGenerators, 0)
+              ? markovName(first, `part1|${requestKey(request)}`, rng)
+              : pick(first, rng);
           }
-          return (
-            generateCompoundNamesDetailed(parts, {
-              count: 1,
-              generator: parsed.compoundGenerator ?? "breakdown",
-              joining: parsed.compoundJoining ?? "joined",
-              faithfulness,
-              strictness,
-              seed: seedFrom(rng),
-            }).names[0] ?? null
-          );
+          return generateCompoundNamesDetailed(parts, { count: 1, ...settings, faithfulness, strictness, seed: seedFrom(rng) }).names[0] ?? null;
         };
       }
       case "mixPack":

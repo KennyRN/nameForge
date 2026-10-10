@@ -2,6 +2,7 @@
 // batch filling (takeover/batch.ts) carry no Obsidian imports.
 
 import { normalizePath, Notice, setIcon } from "obsidian";
+import { compoundSettings } from "./packs/compound";
 import { adoptName, type Adoption, prepareTakeoverTarget } from "./ageing/engine";
 import {
   generateCompoundNamesDetailed,
@@ -76,11 +77,11 @@ export function nativeDrawer(
     }
     case "compoundPack": {
       const parts = parsed.parts ?? [];
+      // Compound brief §4.5: frequencies and per-part generators; no titles.
       return (rng) =>
         generateCompoundNamesDetailed(parts, {
           count: 1,
-          generator: parsed.compoundGenerator ?? "breakdown",
-          joining: parsed.compoundJoining ?? "joined",
+          ...compoundSettings(parsed),
           faithfulness,
           strictness,
           seed: subSeed(rng),

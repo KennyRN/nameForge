@@ -1022,22 +1022,23 @@ function generateCompoundNamesDetailed(parts, options) {
   const poolSize = Math.max(count, 30);
   const loosened = [];
   const pools = parts.map((part, index) => {
-    var _a2, _b, _c;
+    var _a2, _b, _c, _d, _e;
     if (part.length === 0) return [];
-    if (options.generator === "list") {
+    const partGenerator = options.generator === "combined" ? (_b = (_a2 = options.partGenerators) == null ? void 0 : _a2[index]) != null ? _b : "breakdown" : options.generator;
+    if (partGenerator === "list") {
       const generator = new ListGenerator();
       generator.train(part);
       return generator.generateMultiple(poolSize, mulberry32(nextSubSeed()));
     }
     const model = MarkovModel.build(part);
     const subSeed2 = nextSubSeed();
-    const strictness = (_a2 = options.strictness) != null ? _a2 : 3;
-    const pool2 = model.generateDetailed({ count: poolSize, faithfulness: (_b = options.faithfulness) != null ? _b : 2, strictness, seed: subSeed2 }).names;
+    const strictness = (_c = options.strictness) != null ? _c : 3;
+    const pool2 = model.generateDetailed({ count: poolSize, faithfulness: (_d = options.faithfulness) != null ? _d : 2, strictness, seed: subSeed2 }).names;
     if (pool2.length > 0 || part.length >= BREAKDOWN_MIN_NAMES) return pool2;
     loosened.push(index);
     return model.generateDetailed({
       count: poolSize,
-      faithfulness: (_c = options.faithfulness) != null ? _c : 2,
+      faithfulness: (_e = options.faithfulness) != null ? _e : 2,
       strictness: Math.max(1, strictness - 1),
       allowSourceCopies: true,
       seed: subSeed2
@@ -1048,9 +1049,15 @@ function generateCompoundNamesDetailed(parts, options) {
   const seen = /* @__PURE__ */ new Set();
   let tries = 0;
   const maxTries = Math.max(1e3, count * 300);
+  const use = pools.map((_, i) => {
+    var _a2, _b;
+    return (_b = (_a2 = options.partUse) == null ? void 0 : _a2[i]) != null ? _b : 100;
+  });
   while (result.length < count && tries < maxTries) {
     tries++;
-    const fragments = pools.map((pool2) => pool2[Math.floor(masterRng() * pool2.length)]);
+    const included = use.map((u) => u >= 100 || masterRng() * 100 < u);
+    if (!included.includes(true)) continue;
+    const fragments = pools.filter((_, i) => included[i]).map((pool2) => pool2[Math.floor(masterRng() * pool2.length)]);
     const name = joinCompoundParts(fragments, options.joining);
     const key2 = name.toLowerCase();
     if (seen.has(key2)) continue;
@@ -1458,6 +1465,87 @@ function splitOldParts(body, partCount) {
 function serialiseCompoundPart(part) {
   if (Array.isArray(part)) return part.join("\n");
   return part.sectioned ? serialiseNameSections(part.sectioned) : part.names.join("\n");
+}
+function compoundTitles(parts) {
+  var _a2, _b;
+  const seen = /* @__PURE__ */ new Set();
+  const titles = [];
+  for (const part of parts) {
+    for (const section of (_b = (_a2 = part.sectioned) == null ? void 0 : _a2.sections) != null ? _b : []) {
+      const key2 = section.name.trim().toLowerCase();
+      if (seen.has(key2)) continue;
+      seen.add(key2);
+      titles.push(section.name);
+    }
+  }
+  return titles;
+}
+function compoundPartsFor(parts, title) {
+  if (!title) return parts.map((p) => p.names);
+  const key2 = title.trim().toLowerCase();
+  return parts.map((p) => {
+    var _a2;
+    const section = (_a2 = p.sectioned) == null ? void 0 : _a2.sections.find((s) => s.name.trim().toLowerCase() === key2);
+    return section ? sectionNames(section) : p.names;
+  });
+}
+function partIsBreakdown(generator, partGenerators, index) {
+  var _a2;
+  if (generator === "combined") return ((_a2 = partGenerators == null ? void 0 : partGenerators[index]) != null ? _a2 : "breakdown") === "breakdown";
+  return generator === "breakdown";
+}
+function compoundUsePercents(uses) {
+  return uses == null ? void 0 : uses.map((u) => COMPOUND_USE_PERCENT[u]);
+}
+function compoundSettings(parsed) {
+  var _a2, _b;
+  return {
+    generator: (_a2 = parsed.compoundGenerator) != null ? _a2 : "breakdown",
+    joining: (_b = parsed.compoundJoining) != null ? _b : "joined",
+    partUse: compoundUsePercents(parsed.compoundPartUse),
+    partGenerators: parsed.compoundPartGenerators
+  };
+}
+function compoundPartData(parsed) {
+  var _a2, _b;
+  return (_b = parsed.compoundPartData) != null ? _b : ((_a2 = parsed.parts) != null ? _a2 : []).map((names) => ({ names }));
+}
+function generateCompoundTitled(parts, options) {
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const titles = compoundTitles(parts);
+  const count = Math.max(0, Math.floor(options.count));
+  const loosened = [];
+  if (count === 0 || titles.length === 0) return { names: [], seed, loosened };
+  const rng = mulberry32(seed);
+  const subSeeds = titles.map(() => Math.floor(rng() * 4294967295) >>> 0);
+  const batches = titles.map(() => void 0);
+  const cursors = titles.map(() => 0);
+  const batch = (i) => {
+    var _a2;
+    if (!batches[i]) {
+      const resolved = compoundPartsFor(parts, titles[i]);
+      const result = generateCompoundNamesDetailed(resolved, { ...options, count, seed: subSeeds[i] });
+      for (const p of (_a2 = result.loosened) != null ? _a2 : []) loosened.push({ title: titles[i], part: p + 1, count: resolved[p].length });
+      batches[i] = result.names;
+    }
+    return batches[i];
+  };
+  const out = [];
+  const seen = /* @__PURE__ */ new Set();
+  const live = titles.map((_, i) => i);
+  while (out.length < count && live.length > 0) {
+    const pick2 = live[Math.floor(rng() * live.length)];
+    const names = batch(pick2);
+    if (cursors[pick2] >= names.length) {
+      live.splice(live.indexOf(pick2), 1);
+      continue;
+    }
+    const name = names[cursors[pick2]++];
+    if (seen.has(name.toLowerCase())) continue;
+    seen.add(name.toLowerCase());
+    out.push({ name, tag: titles[pick2] });
+  }
+  return { names: out, seed, loosened };
 }
 
 // src/nameParser.ts
@@ -52917,7 +53005,7 @@ var RecipeHost = class {
   }
   /** A drawer for one name pack: stem or whole names (§5), honouring section and gender (§10). */
   async packSource(target, from) {
-    var _a2, _b, _c;
+    var _a2, _b;
     const file = this.resolveLink(target, from);
     const content = file ? await this.read(file) : null;
     if (!file || content === null) {
@@ -52982,21 +53070,16 @@ var RecipeHost = class {
         };
       }
       case "compoundPack": {
-        const parts = (_c = parsed.parts) != null ? _c : [];
-        return (_request, mode, rng) => {
-          var _a3, _b2, _c2, _d;
+        const data = compoundPartData(parsed);
+        const settings = compoundSettings(parsed);
+        return (request, mode, rng) => {
+          var _a3, _b2, _c;
+          const parts = compoundPartsFor(data, (_a3 = request.section) != null ? _a3 : request.gender);
           if (mode === "stem") {
-            const first = (_a3 = parts[0]) != null ? _a3 : [];
-            return parsed.compoundGenerator === "list" ? pick2(first, rng) : markovName(first, "part1", rng);
+            const first = (_b2 = parts[0]) != null ? _b2 : [];
+            return partIsBreakdown(settings.generator, parsed.compoundPartGenerators, 0) ? markovName(first, `part1|${requestKey(request)}`, rng) : pick2(first, rng);
           }
-          return (_d = generateCompoundNamesDetailed(parts, {
-            count: 1,
-            generator: (_b2 = parsed.compoundGenerator) != null ? _b2 : "breakdown",
-            joining: (_c2 = parsed.compoundJoining) != null ? _c2 : "joined",
-            faithfulness,
-            strictness,
-            seed: seedFrom(rng)
-          }).names[0]) != null ? _d : null;
+          return (_c = generateCompoundNamesDetailed(parts, { count: 1, ...settings, faithfulness, strictness, seed: seedFrom(rng) }).names[0]) != null ? _c : null;
         };
       }
       case "mixPack":
@@ -54634,15 +54717,14 @@ function nativeDrawer(entry, index, settings) {
     case "compoundPack": {
       const parts = (_c = parsed.parts) != null ? _c : [];
       return (rng) => {
-        var _a3, _b2, _c2;
-        return (_c2 = generateCompoundNamesDetailed(parts, {
+        var _a3;
+        return (_a3 = generateCompoundNamesDetailed(parts, {
           count: 1,
-          generator: (_a3 = parsed.compoundGenerator) != null ? _a3 : "breakdown",
-          joining: (_b2 = parsed.compoundJoining) != null ? _b2 : "joined",
+          ...compoundSettings(parsed),
           faithfulness,
           strictness,
           seed: subSeed(rng)
-        }).names[0]) != null ? _c2 : null;
+        }).names[0]) != null ? _a3 : null;
       };
     }
     case "mixPack": {
@@ -55156,9 +55238,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     };
     this.currentNamesText = "";
     this.currentPackType = "breakdownPack";
-    this.currentCompoundParts = [];
-    this.currentCompoundGenerator = "breakdown";
-    this.currentCompoundJoining = "joined";
+    /** The loaded compound pack: parts with their titles, joining, frequencies and generators. */
+    this.currentCompound = void 0;
     this.currentMixSources = [];
     /** §10: the loaded pack's sections (List/Breakdown), section options, and the chosen section. */
     this.currentSectioned = void 0;
@@ -56834,13 +56915,13 @@ ${text}
   warnShortLists(short) {
     if (short.length > 0) new import_obsidian13.Notice(shortListsSaveNotice(short), 1e4);
   }
-  async saveCompoundToConfiguredFile(parts, generator, joining, templateOf) {
+  async saveCompoundToConfiguredFile(parts, generator, joining, templateOf, options = {}) {
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
       return;
     }
-    if (!templateOf && parts.some((part) => part.length === 0)) {
+    if (!templateOf && parts.some((part) => (Array.isArray(part) ? part : part.names).length === 0)) {
       this.setStatus("No names to save. Enter at least one name for each part.");
       return;
     }
@@ -56850,7 +56931,7 @@ ${text}
       this.setStatus(`Folder not found at ${folderPath}. Select or create it first.`);
       return;
     }
-    const content = createCompoundNamesFileContent(this.plugin.settings.packName || "nameForge", parts, generator, joining, templateOf);
+    const content = createCompoundNamesFileContent(this.plugin.settings.packName || "nameForge", parts, generator, joining, templateOf, options);
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
       if (existingFile instanceof import_obsidian13.TFile) {
@@ -56866,11 +56947,17 @@ ${text}
       this.setStatus(`Failed to save names to ${filePath}.`);
       return;
     }
-    this.currentCompoundParts = parts;
-    this.currentCompoundGenerator = generator;
-    this.currentCompoundJoining = joining;
+    this.currentCompound = parseNamesFileContent(content);
     this.setStatus("");
-    this.warnShortLists(shortBreakdownLists(parts.map((part, i) => ({ part: i + 1, body: part.join("\n"), breakdown: generator === "breakdown" }))));
+    this.warnShortLists(
+      shortBreakdownLists(
+        parts.map((part, i) => ({
+          part: i + 1,
+          body: serialiseCompoundPart(part),
+          breakdown: partIsBreakdown(generator, options.partGenerators, i)
+        }))
+      )
+    );
   }
   async saveMixToConfiguredFile(sources, templateOf) {
     const filePath = this.getResolvedFilePath();
@@ -56982,7 +57069,7 @@ ${text}
     await this.loadPack(defaultPack);
   }
   async loadPack(packPath) {
-    var _a2, _b, _c, _d, _e, _f, _g;
+    var _a2, _b, _c, _d;
     const file = this.app.vault.getFileByPath((0, import_obsidian13.normalizePath)(packPath));
     if (!(file instanceof import_obsidian13.TFile)) {
       this.setStatus(`Pack not found at ${packPath}.`);
@@ -57017,19 +57104,17 @@ ${text}
     this.currentSectioned = parsed.sectioned;
     await this.updateSectionChoices(parsed);
     if (parsed.packType === "compoundPack") {
-      this.currentCompoundParts = (_c = parsed.parts) != null ? _c : [];
-      this.currentCompoundGenerator = (_d = parsed.compoundGenerator) != null ? _d : "breakdown";
-      this.currentCompoundJoining = (_e = parsed.compoundJoining) != null ? _e : "joined";
+      this.currentCompound = parsed;
       this.currentMixSources = [];
       this.currentNamesText = "";
     } else if (parsed.packType === "mixPack") {
-      this.currentMixSources = (_f = parsed.mixSources) != null ? _f : [];
-      this.currentCompoundParts = [];
+      this.currentMixSources = (_c = parsed.mixSources) != null ? _c : [];
+      this.currentCompound = void 0;
       this.currentNamesText = "";
     } else {
       this.currentNamesText = parsed.names.join("\n");
       this.currentMixSources = [];
-      this.currentCompoundParts = [];
+      this.currentCompound = void 0;
     }
     this.plugin.settings.namesFilePath = packPath;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
@@ -57039,7 +57124,7 @@ ${text}
       parsed.packType,
       packSubGenerator(parsed.packType, parsed.compoundGenerator)
     );
-    this.setStatus((_g = resolved.error) != null ? _g : "");
+    this.setStatus((_d = resolved.error) != null ? _d : "");
   }
   /**
    * §7: applies a pack's template. A missing template, a template that itself has a template, or
@@ -57309,6 +57394,9 @@ ${text}
     let choices = [];
     if (parsed.sectioned && parsed.sectioned.sections.length > 0) {
       choices = sectionOptions(parsed.sectioned);
+    } else if (parsed.packType === "compoundPack") {
+      const titles = compoundTitles(compoundPartData(parsed));
+      if (titles.length > 0) choices = [...titles.map((t) => ({ label: t, request: { section: t } })), wholePackOption()];
     } else if (parsed.packType === "mixPack") {
       const index = await this.scanFolderPacks();
       const seen = /* @__PURE__ */ new Set();
@@ -57333,7 +57421,7 @@ ${text}
   }
   /** Whether whole-pack results carry their list's tag (§1.3; not offered for Mix packs). */
   labelsOffered() {
-    return this.currentPackType === "listPack" || this.currentPackType === "breakdownPack";
+    return this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" || this.currentPackType === "compoundPack";
   }
   /** "Use the ‹male› names" or "Use the ‹whole pack› names, ‹showing› each name's list (Alfred · male)". */
   renderSectionSentence() {
@@ -57380,11 +57468,18 @@ ${text}
   }
   /** The bracketed example: the pack's first heading and one of its names. */
   sectionExample() {
+    var _a2;
+    if (this.currentPackType === "compoundPack" && this.currentCompound) {
+      const data = compoundPartData(this.currentCompound);
+      const title = compoundTitles(data)[0];
+      const fragments = compoundPartsFor(data, title).map((names) => names[0]).filter((n) => n !== void 0);
+      if (title && fragments.length > 0) return { name: joinCompoundParts(fragments, (_a2 = this.currentCompound.compoundJoining) != null ? _a2 : "joined"), tag: title };
+    }
     const first = this.currentSectioned ? labelledLists(this.currentSectioned).find((l) => l.tag) : void 0;
     return first ? { name: first.names[0], tag: first.tag } : { name: "Alfred", tag: "male" };
   }
   async generateSelectedCount() {
-    var _a2, _b, _c, _d, _e, _f, _g, _h;
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j;
     if (this.activeSection === "placeShapes" && this.placeIsBritain()) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
       const land = this.land("britain");
@@ -57534,23 +57629,42 @@ ${text}
     }
     const seedOverride = this.seedLocked ? parseSeedInput((_f = this.seedInputEl) == null ? void 0 : _f.value) : void 0;
     if (this.currentPackType === "compoundPack") {
-      const result2 = generateCompoundNamesDetailed(this.currentCompoundParts, {
+      const data = compoundPartData((_g = this.currentCompound) != null ? _g : {});
+      const choice2 = this.sectionChoice;
+      const options = {
         count: this.generationCount,
-        generator: this.currentCompoundGenerator,
-        joining: this.currentCompoundJoining,
+        ...compoundSettings((_h = this.currentCompound) != null ? _h : {}),
         faithfulness: this.plugin.settings.faithfulness,
         strictness: this.plugin.settings.strictness,
         seed: seedOverride
-      });
-      if (result2.names.length === 0) {
+      };
+      let names;
+      let tags;
+      let seed;
+      let small;
+      if ((choice2 == null ? void 0 : choice2.whole) && this.sectionLabelsShown) {
+        const result2 = generateCompoundTitled(data, options);
+        names = result2.names.map((n) => n.name);
+        tags = result2.names.map((n) => n.tag);
+        seed = result2.seed;
+        small = result2.loosened.map((l) => smallListNotice(`Part ${l.part} \u201C${l.title}\u201D`, l.count));
+      } else {
+        const title = choice2 && !choice2.whole ? choice2.label : void 0;
+        const parts = compoundPartsFor(data, title);
+        const result2 = generateCompoundNamesDetailed(parts, options);
+        names = result2.names;
+        seed = result2.seed;
+        small = ((_i = result2.loosened) != null ? _i : []).map((i) => smallListNotice(`Part ${i + 1}${title ? ` \u201C${title}\u201D` : ""}`, parts[i].length));
+      }
+      if (names.length === 0) {
         this.renderResults([], "Select a pack with names to generate from.");
         this.setStatus("No names available to generate from.");
         return;
       }
-      this.currentSeed = result2.seed;
-      this.renderResults(result2.names);
-      await this.recordGenerationHistory(result2.names.length);
-      this.setStatus(((_g = result2.loosened) != null ? _g : []).map((i) => smallListNotice(`Part ${i + 1}`, this.currentCompoundParts[i].length)).join(" "));
+      this.currentSeed = seed;
+      this.renderResults(names, void 0, tags);
+      await this.recordGenerationHistory(names.length);
+      this.setStatus(small.join(" "));
       return;
     }
     if (this.currentPackType === "mixPack") {
@@ -57629,7 +57743,7 @@ ${text}
       namesText = selection.names.join("\n");
       sectionNotices = selection.notices;
       if (this.currentPackType === "breakdownPack") {
-        loosened = breakdownSettingsFor(selection.names.length, (_h = this.plugin.settings.strictness) != null ? _h : 3);
+        loosened = breakdownSettingsFor(selection.names.length, (_j = this.plugin.settings.strictness) != null ? _j : 3);
         if (!loosened.allowSourceCopies) loosened = void 0;
         else sectionNotices.push(smallListNotice(selection.used, selection.names.length));
       }

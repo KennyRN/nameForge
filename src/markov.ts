@@ -1432,6 +1432,10 @@ export interface CompoundGenerateOptions {
   joining: "joined" | "spaced";
   faithfulness?: number;
   strictness?: number;
+  /** Compound brief §4.1: how often each part is used, as percentages; missing = 100. */
+  partUse?: number[];
+  /** Compound brief §4.1: each part's generator when `generator` is "combined"; missing = breakdown. */
+  partGenerators?: ("breakdown" | "list")[];
   /**
    * RNG seed. Same seed + same source parts + same options = identical
    * output. Omit for a random seed — the seed actually used is always
@@ -1440,7 +1444,7 @@ export interface CompoundGenerateOptions {
   seed?: number;
 }
 
-function joinCompoundParts(fragments: string[], joining: "joined" | "spaced"): string {
+export function joinCompoundParts(fragments: string[], joining: "joined" | "spaced"): string {
   if (joining === "spaced") {
     return fragments.map((f) => capitaliseFirst(f)).join(" ");
   }
@@ -1479,7 +1483,8 @@ export function generateCompoundNamesDetailed(
   const loosened: number[] = [];
   const pools: string[][] = parts.map((part, index) => {
     if (part.length === 0) return [];
-    if (options.generator === "list") {
+    const partGenerator = options.generator === "combined" ? options.partGenerators?.[index] ?? "breakdown" : options.generator;
+    if (partGenerator === "list") {
       const generator = new ListGenerator();
       generator.train(part);
       return generator.generateMultiple(poolSize, mulberry32(nextSubSeed()));
@@ -1508,9 +1513,14 @@ export function generateCompoundNamesDetailed(
   let tries = 0;
   const maxTries = Math.max(1000, count * 300);
 
+  // §4.3: parts used less than all of the time roll to be included; parts at 100% never draw,
+  // so packs without frequencies give exactly the batches they always have.
+  const use = pools.map((_, i) => options.partUse?.[i] ?? 100);
   while (result.length < count && tries < maxTries) {
     tries++;
-    const fragments = pools.map((pool) => pool[Math.floor(masterRng() * pool.length)]);
+    const included = use.map((u) => u >= 100 || masterRng() * 100 < u);
+    if (!included.includes(true)) continue;
+    const fragments = pools.filter((_, i) => included[i]).map((pool) => pool[Math.floor(masterRng() * pool.length)]);
     const name = joinCompoundParts(fragments, options.joining);
     const key = name.toLowerCase();
     if (seen.has(key)) continue;

@@ -1,6 +1,7 @@
 import { App, Editor, Menu, Modal, normalizePath, Notice, setIcon, stringifyYaml, TFile, TFolder } from "obsidian";
 import {
   generateCompoundNamesDetailed,
+  joinCompoundParts,
   generateMixNamesDetailed,
   ListGenerator,
   MarkovModel,
@@ -114,7 +115,19 @@ import {
   smallListNotice,
 } from "./packs/sections";
 import { generateLabelledNames } from "./packs/labelled";
-import { type CompoundGenerator } from "./packs/compound";
+import {
+  type CompoundGenerator,
+  type CompoundPart,
+  type CompoundPartGenerator,
+  type CompoundUse,
+  compoundPartData,
+  compoundPartsFor,
+  compoundSettings,
+  compoundTitles,
+  generateCompoundTitled,
+  partIsBreakdown,
+  serialiseCompoundPart,
+} from "./packs/compound";
 import { AGEING, type AgeingCandidate, ageName, validateSource } from "./ageing/engine";
 import { TakeoverView } from "./takeoverView";
 import { renderLoading, waitForPaint, waitForTask } from "./loading";
@@ -468,9 +481,8 @@ export class NameForgeModal extends Modal {
   private clearResultsSelection: () => void = () => {};
   private currentNamesText = "";
   public currentPackType: NamePackType = "breakdownPack";
-  private currentCompoundParts: string[][] = [];
-  private currentCompoundGenerator: CompoundGenerator = "breakdown";
-  private currentCompoundJoining: "joined" | "spaced" = "joined";
+  /** The loaded compound pack: parts with their titles, joining, frequencies and generators. */
+  private currentCompound: NamesFileData | undefined = undefined;
   private currentMixSources: MixSourceRef[] = [];
   /** §10: the loaded pack's sections (List/Breakdown), section options, and the chosen section. */
   private currentSectioned: SectionedNames | undefined = undefined;
@@ -2263,10 +2275,11 @@ export class NameForgeModal extends Modal {
   }
 
   public async saveCompoundToConfiguredFile(
-    parts: string[][],
-    generator: "breakdown" | "list",
+    parts: (string[] | CompoundPart)[],
+    generator: CompoundGenerator,
     joining: "joined" | "spaced",
     templateOf?: string,
+    options: { partUse?: CompoundUse[]; partGenerators?: CompoundPartGenerator[] } = {},
   ) {
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
@@ -2274,7 +2287,7 @@ export class NameForgeModal extends Modal {
       return;
     }
 
-    if (!templateOf && parts.some((part) => part.length === 0)) {
+    if (!templateOf && parts.some((part) => (Array.isArray(part) ? part : part.names).length === 0)) {
       this.setStatus("No names to save. Enter at least one name for each part.");
       return;
     }
@@ -2288,7 +2301,7 @@ export class NameForgeModal extends Modal {
       return;
     }
 
-    const content = createCompoundNamesFileContent(this.plugin.settings.packName || "nameForge", parts, generator, joining, templateOf);
+    const content = createCompoundNamesFileContent(this.plugin.settings.packName || "nameForge", parts, generator, joining, templateOf, options);
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
       if (existingFile instanceof TFile) {
@@ -2304,11 +2317,17 @@ export class NameForgeModal extends Modal {
       this.setStatus(`Failed to save names to ${filePath}.`);
       return;
     }
-    this.currentCompoundParts = parts;
-    this.currentCompoundGenerator = generator;
-    this.currentCompoundJoining = joining;
+    this.currentCompound = parseNamesFileContent(content);
     this.setStatus("");
-    this.warnShortLists(shortBreakdownLists(parts.map((part, i) => ({ part: i + 1, body: part.join("\n"), breakdown: generator === "breakdown" }))));
+    this.warnShortLists(
+      shortBreakdownLists(
+        parts.map((part, i) => ({
+          part: i + 1,
+          body: serialiseCompoundPart(part),
+          breakdown: partIsBreakdown(generator, options.partGenerators, i),
+        })),
+      ),
+    );
   }
 
   public async saveMixToConfiguredFile(sources: MixSourceRef[], templateOf?: string) {
@@ -2476,19 +2495,17 @@ export class NameForgeModal extends Modal {
     this.currentSectioned = parsed.sectioned;
     await this.updateSectionChoices(parsed);
     if (parsed.packType === "compoundPack") {
-      this.currentCompoundParts = parsed.parts ?? [];
-      this.currentCompoundGenerator = parsed.compoundGenerator ?? "breakdown";
-      this.currentCompoundJoining = parsed.compoundJoining ?? "joined";
+      this.currentCompound = parsed;
       this.currentMixSources = [];
       this.currentNamesText = "";
     } else if (parsed.packType === "mixPack") {
       this.currentMixSources = parsed.mixSources ?? [];
-      this.currentCompoundParts = [];
+      this.currentCompound = undefined;
       this.currentNamesText = "";
     } else {
       this.currentNamesText = parsed.names.join("\n");
       this.currentMixSources = [];
-      this.currentCompoundParts = [];
+      this.currentCompound = undefined;
     }
     this.plugin.settings.namesFilePath = packPath;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
@@ -2776,6 +2793,10 @@ export class NameForgeModal extends Modal {
     let choices: SectionOption[] = [];
     if (parsed.sectioned && parsed.sectioned.sections.length > 0) {
       choices = sectionOptions(parsed.sectioned);
+    } else if (parsed.packType === "compoundPack") {
+      // §4.4: the titles across all parts, in order of first appearance.
+      const titles = compoundTitles(compoundPartData(parsed));
+      if (titles.length > 0) choices = [...titles.map((t) => ({ label: t, request: { section: t } })), wholePackOption()];
     } else if (parsed.packType === "mixPack") {
       const index = await this.scanFolderPacks();
       const seen = new Set<string>();
@@ -2802,7 +2823,7 @@ export class NameForgeModal extends Modal {
 
   /** Whether whole-pack results carry their list's tag (§1.3; not offered for Mix packs). */
   private labelsOffered(): boolean {
-    return this.currentPackType === "listPack" || this.currentPackType === "breakdownPack";
+    return this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" || this.currentPackType === "compoundPack";
   }
 
   /** "Use the ‹male› names" or "Use the ‹whole pack› names, ‹showing› each name's list (Alfred · male)". */
@@ -2850,6 +2871,12 @@ export class NameForgeModal extends Modal {
 
   /** The bracketed example: the pack's first heading and one of its names. */
   private sectionExample(): { name: string; tag: string } {
+    if (this.currentPackType === "compoundPack" && this.currentCompound) {
+      const data = compoundPartData(this.currentCompound);
+      const title = compoundTitles(data)[0];
+      const fragments = compoundPartsFor(data, title).map((names) => names[0]).filter((n) => n !== undefined);
+      if (title && fragments.length > 0) return { name: joinCompoundParts(fragments, this.currentCompound.compoundJoining ?? "joined"), tag: title };
+    }
     const first = this.currentSectioned ? labelledLists(this.currentSectioned).find((l) => l.tag) : undefined;
     return first ? { name: first.names[0], tag: first.tag! } : { name: "Alfred", tag: "male" };
   }
@@ -3013,25 +3040,46 @@ export class NameForgeModal extends Modal {
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
 
     if (this.currentPackType === "compoundPack") {
-      const result = generateCompoundNamesDetailed(this.currentCompoundParts, {
+      // Compound brief §4.4, §4.5: a chosen title resolves the parts; whole pack with labels picks a
+      // title per name; whole pack without labels uses every part's names, as before.
+      const data = compoundPartData(this.currentCompound ?? {});
+      const choice = this.sectionChoice;
+      const options = {
         count: this.generationCount,
-        generator: this.currentCompoundGenerator,
-        joining: this.currentCompoundJoining,
+        ...compoundSettings(this.currentCompound ?? {}),
         faithfulness: this.plugin.settings.faithfulness,
         strictness: this.plugin.settings.strictness,
         seed: seedOverride,
-      });
+      };
+      let names: string[];
+      let tags: (string | undefined)[] | undefined;
+      let seed: number;
+      let small: string[];
+      if (choice?.whole && this.sectionLabelsShown) {
+        const result = generateCompoundTitled(data, options);
+        names = result.names.map((n) => n.name);
+        tags = result.names.map((n) => n.tag);
+        seed = result.seed;
+        small = result.loosened.map((l) => smallListNotice(`Part ${l.part} “${l.title}”`, l.count));
+      } else {
+        const title = choice && !choice.whole ? choice.label : undefined;
+        const parts = compoundPartsFor(data, title);
+        const result = generateCompoundNamesDetailed(parts, options);
+        names = result.names;
+        seed = result.seed;
+        small = (result.loosened ?? []).map((i) => smallListNotice(`Part ${i + 1}${title ? ` “${title}”` : ""}`, parts[i].length));
+      }
 
-      if (result.names.length === 0) {
+      if (names.length === 0) {
         this.renderResults([], "Select a pack with names to generate from.");
         this.setStatus("No names available to generate from.");
         return;
       }
 
-      this.currentSeed = result.seed;
-      this.renderResults(result.names);
-      await this.recordGenerationHistory(result.names.length);
-      this.setStatus((result.loosened ?? []).map((i) => smallListNotice(`Part ${i + 1}`, this.currentCompoundParts[i].length)).join(" "));
+      this.currentSeed = seed;
+      this.renderResults(names, undefined, tags);
+      await this.recordGenerationHistory(names.length);
+      this.setStatus(small.join(" "));
       return;
     }
 

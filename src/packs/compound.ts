@@ -3,7 +3,7 @@
 // Parts are marked `# Part 1/2/3` (H1); each part's `##` headings are its titles. Old packs mark
 // parts `## Part N` and have no titles. Frequencies and per-part generators live in frontmatter.
 
-import { extractNamesFromMarkdown } from "../markov";
+import { type CompoundGenerateOptions, extractNamesFromMarkdown, generateCompoundNamesDetailed, mulberry32 } from "../markov";
 import { allSectionedNames, parseNameSections, type SectionedNames, sectionNames, serialiseNameSections } from "./sections";
 
 export type CompoundGenerator = "breakdown" | "list" | "combined";
@@ -136,4 +136,74 @@ export function compoundPartsFor(parts: CompoundPart[], title?: string): string[
 export function partIsBreakdown(generator: CompoundGenerator, partGenerators: CompoundPartGenerator[] | undefined, index: number): boolean {
   if (generator === "combined") return (partGenerators?.[index] ?? "breakdown") === "breakdown";
   return generator === "breakdown";
+}
+
+/** §4.1: part-use words as the generator's percentages. */
+export function compoundUsePercents(uses: CompoundUse[] | undefined): number[] | undefined {
+  return uses?.map((u) => COMPOUND_USE_PERCENT[u]);
+}
+
+/** A parsed compound pack's generator settings (§4.5: every caller passes the same ones). */
+export function compoundSettings(parsed: {
+  compoundGenerator?: CompoundGenerator;
+  compoundJoining?: "joined" | "spaced";
+  compoundPartUse?: CompoundUse[];
+  compoundPartGenerators?: CompoundPartGenerator[];
+}): Pick<CompoundGenerateOptions, "generator" | "joining" | "partUse" | "partGenerators"> {
+  return {
+    generator: parsed.compoundGenerator ?? "breakdown",
+    joining: parsed.compoundJoining ?? "joined",
+    partUse: compoundUsePercents(parsed.compoundPartUse),
+    partGenerators: parsed.compoundPartGenerators,
+  };
+}
+
+/** A pack's parts as part data: old callers that only have names get untitled parts. */
+export function compoundPartData(parsed: { parts?: string[][]; compoundPartData?: CompoundPart[] }): CompoundPart[] {
+  return parsed.compoundPartData ?? (parsed.parts ?? []).map((names) => ({ names }));
+}
+
+/**
+ * §4.4: whole pack with labels. Each name picks a title at random (equal chance) and comes from
+ * that title's resolved parts, tagged with the title. Each title's batch is generated once from a
+ * sub-seed drawn in title order; titles that run dry drop out.
+ */
+export function generateCompoundTitled(
+  parts: CompoundPart[],
+  options: CompoundGenerateOptions,
+): { names: { name: string; tag: string }[]; seed: number; loosened: { title: string; part: number; count: number }[] } {
+  const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
+  const titles = compoundTitles(parts);
+  const count = Math.max(0, Math.floor(options.count));
+  const loosened: { title: string; part: number; count: number }[] = [];
+  if (count === 0 || titles.length === 0) return { names: [], seed, loosened };
+  const rng = mulberry32(seed);
+  const subSeeds = titles.map(() => Math.floor(rng() * 0xffffffff) >>> 0);
+  const batches: (string[] | undefined)[] = titles.map(() => undefined);
+  const cursors = titles.map(() => 0);
+  const batch = (i: number): string[] => {
+    if (!batches[i]) {
+      const resolved = compoundPartsFor(parts, titles[i]);
+      const result = generateCompoundNamesDetailed(resolved, { ...options, count, seed: subSeeds[i] });
+      for (const p of result.loosened ?? []) loosened.push({ title: titles[i], part: p + 1, count: resolved[p].length });
+      batches[i] = result.names;
+    }
+    return batches[i]!;
+  };
+  const out: { name: string; tag: string }[] = [];
+  const seen = new Set<string>();
+  const live = titles.map((_, i) => i);
+  while (out.length < count && live.length > 0) {
+    const pick = live[Math.floor(rng() * live.length)];
+    const names = batch(pick);
+    if (cursors[pick] >= names.length) {
+      live.splice(live.indexOf(pick), 1);
+      continue;
+    }
+    const name = names[cursors[pick]++];
+    if (seen.has(name.toLowerCase())) continue;
+    seen.add(name.toLowerCase());
+    out.push({ name, tag: titles[pick] });
+  }
+  return { names: out, seed, loosened };
 }
