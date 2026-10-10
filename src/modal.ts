@@ -114,6 +114,7 @@ import {
   smallListNotice,
 } from "./packs/sections";
 import { generateLabelledNames } from "./packs/labelled";
+import { type CompoundGenerator } from "./packs/compound";
 import { AGEING, type AgeingCandidate, ageName, validateSource } from "./ageing/engine";
 import { TakeoverView } from "./takeoverView";
 import { renderLoading, waitForPaint, waitForTask } from "./loading";
@@ -210,7 +211,7 @@ const SESSION_HINT = "← click here for specialist modules, or here for your na
 let sessionHintShown = false;
 
 
-function packTypeIconId(packType: NamePackType, subGenerator?: "breakdown" | "list"): string {
+function packTypeIconId(packType: NamePackType, subGenerator?: CompoundGenerator): string {
   // Both preset kinds wear the group names icon.
   if (packType === "tribalPreset" || packType === "groupPreset") return ICON_TRIBAL_NAMES;
   if (packType === "recipePack") {
@@ -229,7 +230,7 @@ function packTypeIconId(packType: NamePackType, subGenerator?: "breakdown" | "li
   return packType === "listPack" ? ICON_LIST_PACK : ICON_BREAKDOWN_PACK;
 }
 
-function packSubGenerator(packType: NamePackType, compoundGenerator?: "breakdown" | "list"): "breakdown" | "list" | undefined {
+function packSubGenerator(packType: NamePackType, compoundGenerator?: CompoundGenerator): CompoundGenerator | undefined {
   if (packType === "compoundPack") return compoundGenerator;
   return undefined;
 }
@@ -463,12 +464,12 @@ export class NameForgeModal extends Modal {
   private createPacksButton: HTMLButtonElement | null = null;
   /** True while the once-per-session hint covers the pack box label. */
   private showSessionHint = false;
-  private packTrigger: { path: string; type: NamePackType; sub?: "breakdown" | "list" } | null = null;
+  private packTrigger: { path: string; type: NamePackType; sub?: CompoundGenerator } | null = null;
   private clearResultsSelection: () => void = () => {};
   private currentNamesText = "";
   public currentPackType: NamePackType = "breakdownPack";
   private currentCompoundParts: string[][] = [];
-  private currentCompoundGenerator: "breakdown" | "list" = "breakdown";
+  private currentCompoundGenerator: CompoundGenerator = "breakdown";
   private currentCompoundJoining: "joined" | "spaced" = "joined";
   private currentMixSources: MixSourceRef[] = [];
   /** §10: the loaded pack's sections (List/Breakdown), section options, and the chosen section. */
@@ -2086,7 +2087,7 @@ export class NameForgeModal extends Modal {
     this.packDropdownTrigger?.setAttribute("aria-expanded", "false");
   }
 
-  private updatePackDropdownTrigger(packPath: string, packType: NamePackType, subGenerator?: "breakdown" | "list") {
+  private updatePackDropdownTrigger(packPath: string, packType: NamePackType, subGenerator?: CompoundGenerator) {
     this.packTrigger = { path: packPath, type: packType, sub: subGenerator };
     this.renderPackTrigger();
   }
@@ -2112,7 +2113,7 @@ export class NameForgeModal extends Modal {
     this.renderPackTrigger();
   }
 
-  private renderPackDropdownMenu(packs: { path: string; packType: NamePackType; compoundGenerator?: "breakdown" | "list" }[]) {
+  private renderPackDropdownMenu(packs: { path: string; packType: NamePackType; compoundGenerator?: CompoundGenerator }[]) {
     if (!this.packDropdownMenuEl) {
       return;
     }
@@ -2377,7 +2378,7 @@ export class NameForgeModal extends Modal {
       return;
     }
 
-    const packs: { path: string; packType: NamePackType; compoundGenerator?: "breakdown" | "list" }[] = [];
+    const packs: { path: string; packType: NamePackType; compoundGenerator?: CompoundGenerator }[] = [];
 
     for (const child of folder.children) {
       if (!(child instanceof TFile) || child.extension !== "md") {
@@ -3494,7 +3495,7 @@ export class NameForgeModal extends Modal {
     path: string;
     packName: string;
     packType: NamePackType;
-    compoundGenerator?: "breakdown" | "list";
+    compoundGenerator?: CompoundGenerator;
   }[]> {
     const index = await this.scanFolderPacks();
     return index.filter((entry) => !entry.parsed.template).map((entry) => ({

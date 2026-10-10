@@ -1402,6 +1402,64 @@ function mergeWordLists(derived, template) {
   };
 }
 
+// src/packs/compound.ts
+var COMPOUND_USE_PERCENT = { all: 100, most: 80, often: 50, sometimes: 20, rarely: 10 };
+var COMPOUND_USES = Object.keys(COMPOUND_USE_PERCENT);
+var unquote = (v) => v.trim().replace(/^['"]|['"]$/g, "");
+function parseCompoundGenerator(raw) {
+  const v = unquote(raw != null ? raw : "");
+  return v === "list" || v === "combined" ? v : "breakdown";
+}
+function parseCompoundUse(raw, count) {
+  const words = unquote(raw != null ? raw : "").split(",").map((w) => w.trim().toLowerCase());
+  return Array.from({ length: count }, (_, i) => {
+    var _a2;
+    return COMPOUND_USES.includes((_a2 = words[i]) != null ? _a2 : "") ? words[i] : "all";
+  });
+}
+function parseCompoundPartGenerators(raw, count) {
+  const words = unquote(raw != null ? raw : "").split(",").map((w) => w.trim().toLowerCase());
+  return Array.from({ length: count }, (_, i) => words[i] === "list" ? "list" : "breakdown");
+}
+var H1_PART = /^#\s+Part\s*([123])\s*$/gim;
+var H2_PART = /^##\s*Part\s*[123]\s*$/gm;
+function hasH1Parts(body) {
+  return [...body.matchAll(H1_PART)].length > 0;
+}
+function parseCompoundBody(body, partCount) {
+  if (!hasH1Parts(body)) {
+    return splitOldParts(body, partCount).map((text) => ({ names: extractNamesFromMarkdown(text) }));
+  }
+  const matches = [...body.matchAll(H1_PART)];
+  const texts = Array.from({ length: partCount }, () => "");
+  matches.forEach((m, i) => {
+    var _a2, _b;
+    const n = Number(m[1]) - 1;
+    if (n >= partCount || m.index === void 0) return;
+    const end = (_b = (_a2 = matches[i + 1]) == null ? void 0 : _a2.index) != null ? _b : body.length;
+    texts[n] += body.slice(m.index + m[0].length, end);
+  });
+  return texts.map((text) => {
+    const sectioned = parseNameSections(text);
+    if (!sectioned || sectioned.sections.length === 0) return { names: extractNamesFromMarkdown(text) };
+    return { names: allSectionedNames(sectioned), sectioned };
+  });
+}
+function splitOldParts(body, partCount) {
+  const matches = [...body.matchAll(H2_PART)];
+  return Array.from({ length: partCount }, (_, i) => {
+    var _a2, _b;
+    const match = matches[i];
+    if (!match || match.index === void 0) return "";
+    const end = (_b = (_a2 = matches[i + 1]) == null ? void 0 : _a2.index) != null ? _b : body.length;
+    return body.slice(match.index + match[0].length, end);
+  });
+}
+function serialiseCompoundPart(part) {
+  if (Array.isArray(part)) return part.join("\n");
+  return part.sectioned ? serialiseNameSections(part.sectioned) : part.names.join("\n");
+}
+
 // src/nameParser.ts
 var PACK_TYPES = ["breakdownPack", "listPack", "compoundPack", "placePack", "mixPack"];
 function isPackType(value) {
@@ -1416,6 +1474,7 @@ function isValidNamePackContent(content) {
   return /^type:\s*namePack\s*$/m.test(frontmatter) && /^packName:\s*(.+)$/m.test(frontmatter);
 }
 function parseNamesFileContent(content) {
+  var _a2, _b, _c;
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   let packName = "nameForge";
   let body = content;
@@ -1444,11 +1503,12 @@ function parseNamesFileContent(content) {
     if (packType === "compoundPack") {
       const compoundPartsMatch = frontmatter.match(/^compoundParts:\s*(.+)$/m);
       const compoundParts = compoundPartsMatch && compoundPartsMatch[1].trim() === "3" ? 3 : 2;
-      const compoundGeneratorMatch = frontmatter.match(/^compoundGenerator:\s*(.+)$/m);
-      const compoundGenerator = compoundGeneratorMatch && compoundGeneratorMatch[1].trim().replace(/^['"]|['"]$/g, "") === "list" ? "list" : "breakdown";
+      const compoundGenerator = parseCompoundGenerator((_a2 = frontmatter.match(/^compoundGenerator:\s*(.+)$/m)) == null ? void 0 : _a2[1]);
       const compoundJoiningMatch = frontmatter.match(/^compoundJoining:\s*(.+)$/m);
       const compoundJoining = compoundJoiningMatch && compoundJoiningMatch[1].trim().replace(/^['"]|['"]$/g, "") === "spaced" ? "spaced" : "joined";
-      const parts = splitCompoundPartSections(body, compoundParts).map((section) => extractNamesFromMarkdown(section));
+      const partData = parseCompoundBody(body, compoundParts);
+      const partUse = parseCompoundUse((_b = frontmatter.match(/^compoundPartUse:\s*(.*)$/m)) == null ? void 0 : _b[1], compoundParts);
+      const partGenerators = compoundGenerator === "combined" ? parseCompoundPartGenerators((_c = frontmatter.match(/^compoundPartGenerators:\s*(.*)$/m)) == null ? void 0 : _c[1], compoundParts) : void 0;
       return {
         packName,
         names: [],
@@ -1456,7 +1516,10 @@ function parseNamesFileContent(content) {
         compoundParts,
         compoundGenerator,
         compoundJoining,
-        parts,
+        parts: partData.map((p) => p.names),
+        compoundPartData: partData,
+        compoundPartUse: partUse,
+        ...partGenerators ? { compoundPartGenerators: partGenerators } : {},
         setting,
         ...templateFields
       };
@@ -1511,6 +1574,12 @@ function mergeWithTemplate(derived, template) {
       const own = (_b2 = (_a3 = derived.parts) == null ? void 0 : _a3[i]) != null ? _b2 : [];
       return own.length > 0 ? own : (_d = (_c2 = template.parts) == null ? void 0 : _c2[i]) != null ? _d : [];
     });
+    merged.compoundPartData = Array.from({ length: count }, (_, i) => {
+      var _a3, _b2, _c2, _d;
+      const own = (_b2 = (_a3 = derived.parts) == null ? void 0 : _a3[i]) != null ? _b2 : [];
+      const from = own.length > 0 ? derived : template;
+      return (_d = (_c2 = from.compoundPartData) == null ? void 0 : _c2[i]) != null ? _d : { names: merged.parts[i] };
+    });
     return merged;
   }
   if (derived.packType === "mixPack") {
@@ -1527,24 +1596,6 @@ function mergeWithTemplate(derived, template) {
   else delete merged.sectioned;
   return merged;
 }
-function splitCompoundPartSections(body, partCount) {
-  var _a2;
-  const sections = [];
-  const headingRegex = /^##\s*Part\s*[123]\s*$/gm;
-  const matches = [...body.matchAll(headingRegex)];
-  for (let i = 0; i < partCount; i++) {
-    const match = matches[i];
-    if (!match || match.index === void 0) {
-      sections.push("");
-      continue;
-    }
-    const start = match.index + match[0].length;
-    const nextIndex = (_a2 = matches[i + 1]) == null ? void 0 : _a2.index;
-    const end = nextIndex === void 0 ? body.length : nextIndex;
-    sections.push(body.slice(start, end));
-  }
-  return sections;
-}
 function createNamesFileContent(packName, names, packType = "breakdownPack", options = {}) {
   const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
   const templateLine = options.templateOf ? `template-of: "[[${options.templateOf}]]"
@@ -1560,20 +1611,35 @@ ${templateLine}---
 ${body}
 `;
 }
-function createCompoundNamesFileContent(packName, parts, generator, joining, templateOf) {
+function createCompoundNamesFileContent(packName, parts, generator, joining, templateOf, options = {}) {
   const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
   const templateLine = templateOf ? `template-of: "[[${templateOf}]]"
 ` : "";
-  const partsSections = parts.map((partNames, index) => `## Part ${index + 1}
+  const partsSections = parts.map((part, index) => {
+    const text = serialiseCompoundPart(part);
+    return text ? `# Part ${index + 1}
 
-${partNames.join("\n")}`).join("\n\n");
+${text}` : `# Part ${index + 1}`;
+  }).join("\n\n");
+  const use = parts.map((_, i) => {
+    var _a2, _b;
+    return (_b = (_a2 = options.partUse) == null ? void 0 : _a2[i]) != null ? _b : "all";
+  });
+  const useLine = use.some((u) => u !== "all") ? `compoundPartUse: ${use.join(", ")}
+` : "";
+  const gens = parts.map((_, i) => {
+    var _a2, _b;
+    return (_b = (_a2 = options.partGenerators) == null ? void 0 : _a2[i]) != null ? _b : "breakdown";
+  });
+  const gensLine = generator === "combined" && gens.some((g) => g !== "breakdown") ? `compoundPartGenerators: ${gens.join(", ")}
+` : "";
   return `---
 type: namePack
 packType: compoundPack
 compoundParts: ${parts.length}
 compoundGenerator: ${generator}
 compoundJoining: ${joining}
-packName: ${safePackName}
+${useLine}${gensLine}packName: ${safePackName}
 setting: 
 ${templateLine}---
 

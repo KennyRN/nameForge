@@ -11,6 +11,17 @@ import {
   serialiseNameSections,
 } from "./packs/sections";
 import { mergeWordLists, parseWordList, type WordList } from "./packs/wordList";
+import {
+  type CompoundGenerator,
+  type CompoundPart,
+  type CompoundPartGenerator,
+  type CompoundUse,
+  parseCompoundBody,
+  parseCompoundGenerator,
+  parseCompoundPartGenerators,
+  parseCompoundUse,
+  serialiseCompoundPart,
+} from "./packs/compound";
 
 export interface ParsedName {
   original: string;
@@ -28,9 +39,16 @@ export interface NamesFileData {
   names: string[];
   packType: "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack";
   compoundParts?: 2 | 3;
-  compoundGenerator?: "breakdown" | "list";
+  compoundGenerator?: CompoundGenerator;
   compoundJoining?: "joined" | "spaced";
+  /** Every name in each part (Compound brief §3.2: kept for callers that ignore titles). */
   parts?: string[][];
+  /** Each part's names and `##` titles (`# Part N` layout); old packs have no titles. */
+  compoundPartData?: CompoundPart[];
+  /** Compound brief §3.1: how often each part is used (`all` when missing). */
+  compoundPartUse?: CompoundUse[];
+  /** Compound brief §3.1: each part's generator, read only when the pack's generator is combined. */
+  compoundPartGenerators?: CompoundPartGenerator[];
   mixSources?: MixSourceRef[];
   /** The fictional world/setting this pack belongs to. Reserved for future use; blank by default. */
   setting: string;
@@ -122,13 +140,18 @@ export function parseNamesFileContent(content: string): NamesFileData {
       const compoundPartsMatch = frontmatter.match(/^compoundParts:\s*(.+)$/m);
       const compoundParts = compoundPartsMatch && compoundPartsMatch[1].trim() === "3" ? 3 : 2;
 
-      const compoundGeneratorMatch = frontmatter.match(/^compoundGenerator:\s*(.+)$/m);
-      const compoundGenerator = compoundGeneratorMatch && compoundGeneratorMatch[1].trim().replace(/^['"]|['"]$/g, "") === "list" ? "list" : "breakdown";
+      const compoundGenerator = parseCompoundGenerator(frontmatter.match(/^compoundGenerator:\s*(.+)$/m)?.[1]);
 
       const compoundJoiningMatch = frontmatter.match(/^compoundJoining:\s*(.+)$/m);
       const compoundJoining = compoundJoiningMatch && compoundJoiningMatch[1].trim().replace(/^['"]|['"]$/g, "") === "spaced" ? "spaced" : "joined";
 
-      const parts = splitCompoundPartSections(body, compoundParts).map((section) => extractNamesFromMarkdown(section));
+      // Compound brief §3.2: `# Part N` parts with `##` titles, or the old `## Part N` split.
+      const partData = parseCompoundBody(body, compoundParts);
+      const partUse = parseCompoundUse(frontmatter.match(/^compoundPartUse:\s*(.*)$/m)?.[1], compoundParts);
+      const partGenerators =
+        compoundGenerator === "combined"
+          ? parseCompoundPartGenerators(frontmatter.match(/^compoundPartGenerators:\s*(.*)$/m)?.[1], compoundParts)
+          : undefined;
 
       return {
         packName,
@@ -137,7 +160,10 @@ export function parseNamesFileContent(content: string): NamesFileData {
         compoundParts,
         compoundGenerator,
         compoundJoining,
-        parts,
+        parts: partData.map((p) => p.names),
+        compoundPartData: partData,
+        compoundPartUse: partUse,
+        ...(partGenerators ? { compoundPartGenerators: partGenerators } : {}),
         setting,
         ...templateFields,
       };
@@ -208,6 +234,12 @@ export function mergeWithTemplate(derived: NamesFileData, template: NamesFileDat
       const own = derived.parts?.[i] ?? [];
       return own.length > 0 ? own : template.parts?.[i] ?? [];
     });
+    // A part's titles travel with its names.
+    merged.compoundPartData = Array.from({ length: count }, (_, i) => {
+      const own = derived.parts?.[i] ?? [];
+      const from = own.length > 0 ? derived : template;
+      return from.compoundPartData?.[i] ?? { names: merged.parts![i] };
+    });
     return merged;
   }
   if (derived.packType === "mixPack") {
@@ -222,26 +254,6 @@ export function mergeWithTemplate(derived: NamesFileData, template: NamesFileDat
   return merged;
 }
 
-function splitCompoundPartSections(body: string, partCount: 2 | 3): string[] {
-  const sections: string[] = [];
-  const headingRegex = /^##\s*Part\s*[123]\s*$/gm;
-  const matches = [...body.matchAll(headingRegex)];
-
-  for (let i = 0; i < partCount; i++) {
-    const match = matches[i];
-    if (!match || match.index === undefined) {
-      sections.push("");
-      continue;
-    }
-    const start = match.index + match[0].length;
-    const nextIndex = matches[i + 1]?.index;
-    const end = nextIndex === undefined ? body.length : nextIndex;
-    sections.push(body.slice(start, end));
-  }
-
-  return sections;
-}
-
 export function createNamesFileContent(
   packName: string,
   names: string[],
@@ -254,20 +266,32 @@ export function createNamesFileContent(
   return `---\ntype: namePack\npackType: ${packType}\npackName: ${safePackName}\nsetting: \n${templateLine}---\n\n${body}\n`;
 }
 
+/**
+ * Compound brief §3.3: the `# Part N` layout, each part's titles and names as typed. The part-use
+ * and per-part generator keys are written only when they differ from the defaults.
+ */
 export function createCompoundNamesFileContent(
   packName: string,
-  parts: string[][],
-  generator: "breakdown" | "list",
+  parts: (string[] | CompoundPart)[],
+  generator: CompoundGenerator,
   joining: "joined" | "spaced",
   templateOf?: string,
+  options: { partUse?: CompoundUse[]; partGenerators?: CompoundPartGenerator[] } = {},
 ): string {
   const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
   const templateLine = templateOf ? `template-of: "[[${templateOf}]]"\n` : "";
   const partsSections = parts
-    .map((partNames, index) => `## Part ${index + 1}\n\n${partNames.join("\n")}`)
+    .map((part, index) => {
+      const text = serialiseCompoundPart(part);
+      return text ? `# Part ${index + 1}\n\n${text}` : `# Part ${index + 1}`;
+    })
     .join("\n\n");
+  const use = parts.map((_, i) => options.partUse?.[i] ?? "all");
+  const useLine = use.some((u) => u !== "all") ? `compoundPartUse: ${use.join(", ")}\n` : "";
+  const gens = parts.map((_, i) => options.partGenerators?.[i] ?? "breakdown");
+  const gensLine = generator === "combined" && gens.some((g) => g !== "breakdown") ? `compoundPartGenerators: ${gens.join(", ")}\n` : "";
 
-  return `---\ntype: namePack\npackType: compoundPack\ncompoundParts: ${parts.length}\ncompoundGenerator: ${generator}\ncompoundJoining: ${joining}\npackName: ${safePackName}\nsetting: \n${templateLine}---\n\n${partsSections}\n`;
+  return `---\ntype: namePack\npackType: compoundPack\ncompoundParts: ${parts.length}\ncompoundGenerator: ${generator}\ncompoundJoining: ${joining}\n${useLine}${gensLine}packName: ${safePackName}\nsetting: \n${templateLine}---\n\n${partsSections}\n`;
 }
 
 export function createMixNamesFileContent(packName: string, sources: MixSourceRef[], templateOf?: string): string {

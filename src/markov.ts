@@ -1427,7 +1427,8 @@ export class ListGenerator {
 // ===========================================================================
 export interface CompoundGenerateOptions {
   count: number;
-  generator: "breakdown" | "list";
+  /** "combined": each part uses its own entry in `partGenerators` (Compound brief §4). */
+  generator: "breakdown" | "list" | "combined";
   joining: "joined" | "spaced";
   faithfulness?: number;
   strictness?: number;
