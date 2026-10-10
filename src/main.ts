@@ -9,6 +9,7 @@ import { getStoryForgeHostApi } from "./storyforgeBridge";
 import { promptInstallStarterTemplates } from "./starterInstall";
 import { SAFEGUARD_TEMPLATE } from "./tribes/safeguardPacks";
 import { BYNAME_SAFEGUARD_TEMPLATE } from "./bynames/safeguardPacks";
+import { VESSEL_SAFEGUARD_TEMPLATE } from "./vessels/safeguardPacks";
 import { GROUP_SAFEGUARD_TEMPLATE } from "./groups/safeguardPacks";
 
 const DEFAULT_SETTINGS: NameForgeSettings = {
@@ -246,6 +247,23 @@ export default class NameForgePlugin extends Plugin {
         }
         await this.app.vault.create(path, BYNAME_SAFEGUARD_TEMPLATE);
         new Notice("nameForge: “Byname safeguards” created.");
+      },
+    });
+
+    // Ships brief §14.5: a vessel safeguard list to edit, never written over an existing one.
+    this.addCommand({
+      id: "create-vessel-safeguard-list",
+      name: "Create vessel safeguard list",
+      callback: async () => {
+        const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
+        await ensureVaultFolder(this.app, folder);
+        const path = normalizePath(`${folder}/Vessel safeguards.md`);
+        if (this.app.vault.getFileByPath(path)) {
+          new Notice("nameForge: “Vessel safeguards” already exists.");
+          return;
+        }
+        await this.app.vault.create(path, VESSEL_SAFEGUARD_TEMPLATE);
+        new Notice("nameForge: “Vessel safeguards” created.");
       },
     });
 

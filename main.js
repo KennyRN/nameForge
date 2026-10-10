@@ -461,19 +461,19 @@ function stripInlineMarkup(s) {
 function parseNameTokens(text) {
   const tokens = text.split(/[\n,;]/).flatMap((t) => splitOnJoiners(t)).flatMap((t) => splitSpaceSeparatedList(t)).map((t) => t.trim()).filter((t) => t.length > 0);
   const names = [];
-  for (const token3 of tokens) {
-    const cleaned = cleanToken(stripLeadingConjunction(token3));
+  for (const token4 of tokens) {
+    const cleaned = cleanToken(stripLeadingConjunction(token4));
     if (cleaned === "" || isNoise(cleaned)) continue;
     names.push(cleaned);
   }
   return dedupe(names);
 }
-function splitSpaceSeparatedList(token3) {
-  const parts = splitOnUnquotedWhitespace(token3);
+function splitSpaceSeparatedList(token4) {
+  const parts = splitOnUnquotedWhitespace(token4);
   if (parts.length >= 3) return parts;
-  const loose = unwrapOuterQuotes(token3.trim()).split(/\s+/).filter((p) => p.length > 0);
+  const loose = unwrapOuterQuotes(token4.trim()).split(/\s+/).filter((p) => p.length > 0);
   if (loose.length >= 3) return loose;
-  return [token3];
+  return [token4];
 }
 function unwrapOuterQuotes(s) {
   const pairs = [
@@ -489,11 +489,11 @@ function unwrapOuterQuotes(s) {
   }
   return s;
 }
-function splitOnUnquotedWhitespace(token3) {
+function splitOnUnquotedWhitespace(token4) {
   const parts = [];
   let current = "";
   let quote2 = null;
-  for (const char of token3) {
+  for (const char of token4) {
     if (quote2) {
       current += char;
       if (char === matchingQuote(quote2)) quote2 = null;
@@ -519,8 +519,8 @@ function matchingQuote(open) {
   if (open === "\u2018") return "\u2019";
   return open;
 }
-function splitOnJoiners(token3) {
-  let parts = [token3];
+function splitOnJoiners(token4) {
+  let parts = [token4];
   for (const joiner of JOINERS) {
     const next = [];
     for (const part of parts) {
@@ -536,12 +536,12 @@ function splitOnJoiners(token3) {
   }
   return parts;
 }
-function stripLeadingConjunction(token3) {
-  const lower2 = token3.toLowerCase();
+function stripLeadingConjunction(token4) {
+  const lower2 = token4.toLowerCase();
   for (const lead of LEADERS) {
-    if (lower2.startsWith(lead)) return token3.slice(lead.length).trim();
+    if (lower2.startsWith(lead)) return token4.slice(lead.length).trim();
   }
-  return token3;
+  return token4;
 }
 function cleanToken(s) {
   let t = s.trim();
@@ -997,13 +997,13 @@ var ListGenerator = class {
    * `mulberry32(seed)`) so batches can be reproduced.
    */
   generateMultiple(count, rng = Math.random) {
-    const pool2 = Array.from(new Set(this.names));
-    const n = Math.min(count, pool2.length);
+    const pool3 = Array.from(new Set(this.names));
+    const n = Math.min(count, pool3.length);
     for (let i = 0; i < n; i++) {
-      const j = i + Math.floor(rng() * (pool2.length - i));
-      [pool2[i], pool2[j]] = [pool2[j], pool2[i]];
+      const j = i + Math.floor(rng() * (pool3.length - i));
+      [pool3[i], pool3[j]] = [pool3[j], pool3[i]];
     }
-    return pool2.slice(0, n);
+    return pool3.slice(0, n);
   }
 };
 function joinCompoundParts(fragments, joining) {
@@ -1033,8 +1033,8 @@ function generateCompoundNamesDetailed(parts, options) {
     const model = options.breakdownModel === "place" ? PlaceNameModel.build(part) : MarkovModel.build(part);
     const subSeed2 = nextSubSeed();
     const strictness = (_c = options.strictness) != null ? _c : 3;
-    const pool2 = model.generateDetailed({ count: poolSize, faithfulness: (_d = options.faithfulness) != null ? _d : 2, strictness, seed: subSeed2 }).names;
-    if (pool2.length > 0 || part.length >= BREAKDOWN_MIN_NAMES) return pool2;
+    const pool3 = model.generateDetailed({ count: poolSize, faithfulness: (_d = options.faithfulness) != null ? _d : 2, strictness, seed: subSeed2 }).names;
+    if (pool3.length > 0 || part.length >= BREAKDOWN_MIN_NAMES) return pool3;
     loosened.push(index);
     return model.generateDetailed({
       count: poolSize,
@@ -1044,7 +1044,7 @@ function generateCompoundNamesDetailed(parts, options) {
       seed: subSeed2
     }).names;
   });
-  if (pools.some((pool2) => pool2.length === 0)) return { names: [], seed, loosened };
+  if (pools.some((pool3) => pool3.length === 0)) return { names: [], seed, loosened };
   const result = [];
   const seen = /* @__PURE__ */ new Set();
   let tries = 0;
@@ -1057,7 +1057,7 @@ function generateCompoundNamesDetailed(parts, options) {
     tries++;
     const included = use.map((u) => u >= 100 || masterRng() * 100 < u);
     if (!included.includes(true)) continue;
-    const fragments = pools.filter((_, i) => included[i]).map((pool2) => pool2[Math.floor(masterRng() * pool2.length)]);
+    const fragments = pools.filter((_, i) => included[i]).map((pool3) => pool3[Math.floor(masterRng() * pool3.length)]);
     const name = joinCompoundParts(fragments, options.joining);
     const key2 = name.toLowerCase();
     if (seen.has(key2)) continue;
@@ -2323,6 +2323,8 @@ var ICON_TRIBAL_NAMES = "nameforge-tribal-names";
 var ICON_TRIBAL_NAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="currentColor"><path d="M20.0918 14.3257L20.2848 12.4316C20.3878 11.421 20.4558 10.7537 20.4024 10.3332L20.4211 10.3333C21.2931 10.3333 22 9.58714 22 8.66667C22 7.74619 21.2931 7 20.4211 7C19.549 7 18.8421 7.74619 18.8421 8.66667C18.8421 9.08296 18.9867 9.4636 19.2258 9.7557C18.8826 9.9793 18.4338 10.4511 17.7584 11.1613L17.7584 11.1613C17.2381 11.7084 16.9779 11.9819 16.6877 12.0243C16.5269 12.0478 16.363 12.0236 16.2145 11.9546C15.9465 11.83 15.7678 11.4919 15.4105 10.8155L13.5268 7.25044C13.3063 6.83319 13.1218 6.48397 12.9554 6.20294C13.6379 5.83541 14.1053 5.08643 14.1053 4.22222C14.1053 2.99492 13.1627 2 12 2C10.8373 2 9.89474 2.99492 9.89474 4.22222C9.89474 5.08643 10.3621 5.83541 11.0446 6.20294C10.8782 6.48399 10.6937 6.83316 10.4732 7.25045L8.58953 10.8155C8.23217 11.4919 8.05348 11.83 7.78548 11.9546C7.63699 12.0236 7.47313 12.0478 7.31231 12.0243C7.02208 11.9819 6.76191 11.7084 6.24157 11.1613C5.56617 10.4511 5.11743 9.97929 4.77424 9.75569C5.0133 9.4636 5.15789 9.08296 5.15789 8.66667C5.15789 7.74619 4.45098 7 3.57895 7C2.70692 7 2 7.74619 2 8.66667C2 9.58714 2.70692 10.3333 3.57895 10.3333L3.59759 10.3332C3.54423 10.7537 3.61223 11.421 3.71521 12.4316L3.90821 14.3257C4.01535 15.377 4.10443 16.3774 4.21355 17.2778H19.7864C19.8956 16.3774 19.9847 15.377 20.0918 14.3257Z" /><path d="M10.8548 22H13.1452C16.1304 22 17.623 22 18.6189 21.0591C19.0535 20.6484 19.3288 19.908 19.5274 18.9444H4.47259C4.67121 19.908 4.94646 20.6484 5.38113 21.0591C6.37702 22 7.86961 22 10.8548 22Z" /></g></g>';
 var ICON_BYNAMES = "nameforge-bynames";
 var ICON_BYNAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 5a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M4 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M16 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M12 7v4H6v4" /><path d="M12 11h6v4" /></g></g>';
+var ICON_SHIPS = "nameforge-ships";
+var ICON_SHIPS_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M8.75 2a.75.75 0 0 0-.75.75V5H5.75a.75.75 0 0 0-.75.75v4.765l-1.46.534a.75.75 0 0 0-.423 1.02l2.335 5.019a1.75 1.75 0 0 1 2.22 1.143q0 .006.009.027q.018.053.067.165c.068.15.171.344.308.527c.276.367.564.55.944.55s.668-.182.943-.55a2.8 2.8 0 0 0 .384-.718a1.75 1.75 0 0 1 3.342-.005l.01.028q.018.053.067.165c.069.151.172.345.31.529c.278.37.567.551.944.551s.665-.182.943-.55a3 3 0 0 0 .386-.721a1.75 1.75 0 0 1 2.294-1.114l2.468-5.031a.75.75 0 0 0-.421-1.037L19 10.451V5.75a.75.75 0 0 0-.75-.75H16V2.75a.75.75 0 0 0-.75-.75zm5.75 3h-5V3.5h5zm3 1.5v3.416l-4.397-1.569a3.25 3.25 0 0 0-2.21.01L6.5 9.964V6.5zm1.227 12.064l-.003-.01a.75.75 0 0 0-1.441-.023v.002l-.004.009l-.02.058q-.03.082-.096.232c-.09.199-.228.46-.42.718c-.388.515-.94.950-1.743.950s-1.356-.435-1.743-.950a3.9 3.9 0 0 1-.538-1.009l-.003-.009a.75.75 0 0 0-1.435.001v.001l-.004.01l-.02.057a3.8 3.8 0 0 1-.514.950c-.386.514-.937.949-1.743.949s-1.358-.435-1.744-.950a3.8 3.8 0 0 1-.535-1.007l-.003-.011a.75.75 0 0 0-1.441.020l-.003.009l-.018.054a3.3 3.3 0 0 1-.504.922c-.384.490-.996.963-2.002.963a.75.75 0 0 0 0 1.5c1.574 0 2.587-.777 3.183-1.537L6 20.374l.056.076C6.608 21.185 7.556 22 9 22s2.392-.815 2.943-1.55l.057-.078l.058.079C12.610 21.185 13.558 22 15 22s2.390-.815 2.942-1.55l.055-.075q.032.044.066.087c.595.761 1.610 1.538 3.187 1.538a.75.75 0 0 0 0-1.5c-1.012 0-1.623-.473-2.005-.962a3.3 3.3 0 0 1-.518-.974" /></g>';
 var ICON_FOLDER = "nameforge-folder";
 var ICON_FOLDER_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
 var ICON_INFO = "nameforge-info";
@@ -2330,6 +2332,7 @@ var ICON_INFO_SVG = '<g transform="scale(0.195313)"><path d="M0 0h512v512H0z" fi
 function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_MEEPLE, MEEPLE_SVG);
   (0, import_obsidian4.addIcon)(ICON_BYNAMES, ICON_BYNAMES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_SHIPS, ICON_SHIPS_SVG);
   (0, import_obsidian4.addIcon)(ICON_INFO, ICON_INFO_SVG);
   (0, import_obsidian4.addIcon)(ICON_CREATE_PACKS, ICON_CREATE_PACKS_SVG);
   (0, import_obsidian4.addIcon)(ICON_PLUS_SQUARE, ICON_PLUS_SQUARE_SVG);
@@ -20875,9 +20878,9 @@ var PlaceShapeGenerator = class {
     const region = this.region;
     if (this.sides) {
       const { settlement, landscape, landscapeShare } = this.sides;
-      let pool2 = rng() < landscapeShare ? landscape : settlement;
-      if (pool2.length === 0) pool2 = pool2 === landscape ? settlement : landscape;
-      return this.weighted ? pickWeighted(pool2.map((g) => [g, this.groupWeight(g.id)]), rng) : pickUniform(pool2, rng);
+      let pool3 = rng() < landscapeShare ? landscape : settlement;
+      if (pool3.length === 0) pool3 = pool3 === landscape ? settlement : landscape;
+      return this.weighted ? pickWeighted(pool3.map((g) => [g, this.groupWeight(g.id)]), rng) : pickUniform(pool3, rng);
     }
     return this.weighted ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
   }
@@ -25187,12 +25190,12 @@ var ColonialShapeGenerator = class {
     var _a2, _b, _c;
     const s = this.data.structures;
     const { part } = this.options;
-    let pool2 = this.groups;
+    let pool3 = this.groups;
     if (this.sides) {
-      pool2 = rng() < LANDSCAPE_SHARE_SETTLEMENT ? this.sides.landscape : this.sides.settlement;
-      if (pool2.length === 0) pool2 = this.groups;
+      pool3 = rng() < LANDSCAPE_SHARE_SETTLEMENT ? this.sides.landscape : this.sides.settlement;
+      if (pool3.length === 0) pool3 = this.groups;
     }
-    const eligible = pickWeighted(pool2, rng);
+    const eligible = pickWeighted(pool3, rng);
     const generic = pickWeighted(eligible.generics, rng);
     const categoryId = pickWeighted(generic.categories, rng);
     const shape = {
@@ -25700,21 +25703,21 @@ function eraWeight(era, depth) {
 function sampleBeam(items, k, rng, temperature) {
   if (items.length <= k) return items.map(([t]) => t);
   const max = Math.max(...items.map(([, s]) => s));
-  const pool2 = items.map(([t, s]) => [t, Math.exp((s - max) / temperature)]);
+  const pool3 = items.map(([t, s]) => [t, Math.exp((s - max) / temperature)]);
   const chosen = [];
   for (let n = 0; n < k; n++) {
-    const total = pool2.reduce((sum, [, w]) => sum + w, 0);
+    const total = pool3.reduce((sum, [, w]) => sum + w, 0);
     let r = rng() * total;
-    let idx = pool2.length - 1;
-    for (let i = 0; i < pool2.length; i++) {
-      r -= pool2[i][1];
+    let idx = pool3.length - 1;
+    for (let i = 0; i < pool3.length; i++) {
+      r -= pool3[i][1];
       if (r < 0) {
         idx = i;
         break;
       }
     }
-    chosen.push(pool2[idx][0]);
-    pool2.splice(idx, 1);
+    chosen.push(pool3[idx][0]);
+    pool3.splice(idx, 1);
   }
   return chosen;
 }
@@ -25753,7 +25756,7 @@ function plausibilityScorer(targetNames, buildScorer) {
   };
 }
 function beamSearch(source, initial, profile, inputRng) {
-  const pool2 = [];
+  const pool3 = [];
   for (let run = 0; run < profile.runs; run++) {
     const rng = mulberry32(Math.floor(inputRng() * 4294967296) >>> 0);
     let beam = [{ form: source, trail: [source], state: initial }];
@@ -25773,9 +25776,9 @@ function beamSearch(source, initial, profile, inputRng) {
       const limit = profile.stepLimit;
       beam = working.filter((e) => limit === void 0 || recognisability(e.item.form, e.form) >= limit).map((e) => ({ form: e.form, trail: [...e.item.trail, e.form], state: e.state }));
     }
-    pool2.push(...beam);
+    pool3.push(...beam);
   }
-  return pool2;
+  return pool3;
 }
 function ageName(input) {
   const sourceError = validateSource(input.source);
@@ -25807,7 +25810,7 @@ function ageName(input) {
     }
     return v;
   };
-  const pool2 = beamSearch(
+  const pool3 = beamSearch(
     source,
     void 0,
     {
@@ -25827,7 +25830,7 @@ function ageName(input) {
   const finalW = eraWeight(depth, depth);
   const floor = AGEING.depthFloor[depth];
   const best = /* @__PURE__ */ new Map();
-  for (const item of pool2) {
+  for (const item of pool3) {
     if (item.form === source) continue;
     if (rSource(item.form) < floor) continue;
     if (plausibility(item.form) < AGEING.minPlausibility) continue;
@@ -25901,7 +25904,7 @@ function adoptName(input) {
   };
   const score = (form, w) => w * P(form) + (1 - w) * R(form);
   const zeros = () => nativeParts.map(() => 0);
-  const pool2 = beamSearch(
+  const pool3 = beamSearch(
     source,
     { added: zeros(), inserted: zeros(), moves: [] },
     {
@@ -25932,7 +25935,7 @@ function adoptName(input) {
   );
   let best = null;
   let bestScore = -Infinity;
-  for (const item of pool2) {
+  for (const item of pool3) {
     if (item.form === source) continue;
     if (R(item.form) < TAKEOVER.minRecognisability) continue;
     if (P(item.form) < TAKEOVER.minPlausibility) continue;
@@ -30477,11 +30480,11 @@ function pick(items, rng) {
   return live[live.length - 1][0];
 }
 var pickRecord = (weights, rng) => pick(Object.entries(weights), rng);
-var pickPool = (pool2, rng) => pick([...pool2.entries()], rng);
+var pickPool = (pool3, rng) => pick([...pool3.entries()], rng);
 var pickUniform2 = (items, rng) => items[Math.floor(rng() * items.length)];
-var add = (pool2, word, weight) => {
+var add = (pool3, word, weight) => {
   var _a2;
-  if (weight > 0) pool2.set(word, ((_a2 = pool2.get(word)) != null ? _a2 : 0) + weight);
+  if (weight > 0) pool3.set(word, ((_a2 = pool3.get(word)) != null ? _a2 : 0) + weight);
 };
 var lower = (s) => s.toLowerCase();
 var wordRe = (w) => new RegExp(`(^|[^A-Za-z])${w.replace(/[-']/g, "\\$&")}s?($|[^A-Za-z])`, "i");
@@ -30529,10 +30532,10 @@ function filtered(ctx, word, weight) {
 }
 function landPool(ctx, kind, terrain) {
   var _a2;
-  const pool2 = /* @__PURE__ */ new Map();
-  for (const [w, n] of terrainWords(ctx.biome, kind, terrain)) add(pool2, w, filtered(ctx, w, n));
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour[kind]) != null ? _a2 : []) add(pool2, w, filtered(ctx, w, 3));
-  return pool2;
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const [w, n] of terrainWords(ctx.biome, kind, terrain)) add(pool3, w, filtered(ctx, w, n));
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour[kind]) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 3));
+  return pool3;
 }
 function featureWord(ctx, kind) {
   var _a2;
@@ -30552,61 +30555,61 @@ function withColour(ctx, word) {
 }
 function animalPool(ctx, wild = false) {
   var _a2, _b;
-  const pool2 = /* @__PURE__ */ new Map();
+  const pool3 = /* @__PURE__ */ new Map();
   const b = ctx.biome;
   const lists = wild ? [["wildAnimals", 1], ["birds", 1]] : [["wildAnimals", 1], ["birds", 1], ["creatures", 0.7], ["livestock", 0.5]];
   for (const [list, factor] of lists) {
     for (const [w, n] of biomeWords(b, list)) {
       const word = biomeTitleCase(w);
-      add(pool2, word, filtered(ctx, word, 2 * factor * n));
+      add(pool3, word, filtered(ctx, word, 2 * factor * n));
     }
   }
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.animals) != null ? _a2 : []) add(pool2, w, filtered(ctx, w, 3));
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.animals) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 3));
   if (!wild && ctx.register === "legendary") {
-    for (const [w, mults] of Object.entries(V.mythic)) add(pool2, w, filtered(ctx, w, 0.5 * ((_b = mults[ctx.trad.key]) != null ? _b : 1)));
+    for (const [w, mults] of Object.entries(V.mythic)) add(pool3, w, filtered(ctx, w, 0.5 * ((_b = mults[ctx.trad.key]) != null ? _b : 1)));
   }
-  return pool2;
+  return pool3;
 }
 function plantPool(ctx) {
   var _a2;
-  const pool2 = /* @__PURE__ */ new Map();
+  const pool3 = /* @__PURE__ */ new Map();
   for (const [list, factor] of [["trees", 1], ["plants", 1], ["crops", 0.5]]) {
     for (const [w, n] of biomeWords(ctx.biome, list)) {
       const word = biomeTitleCase(w);
-      add(pool2, word, filtered(ctx, word, 2 * factor * n));
+      add(pool3, word, filtered(ctx, word, 2 * factor * n));
     }
   }
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.plants) != null ? _a2 : []) add(pool2, w, filtered(ctx, w, 3));
-  return pool2;
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.plants) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 3));
+  return pool3;
 }
 function sacredPool(ctx) {
-  const pool2 = /* @__PURE__ */ new Map();
+  const pool3 = /* @__PURE__ */ new Map();
   const only = ctx.trad.special.sacredOnly;
   if (only) {
-    for (const w of only) add(pool2, w, 1);
-    return pool2;
+    for (const w of only) add(pool3, w, 1);
+    return pool3;
   }
-  for (const w of V.sacredUniversal) add(pool2, w, filtered(ctx, w, 1));
-  for (const [w, n] of biomeWords(ctx.biome, "sacred")) add(pool2, w, filtered(ctx, w, 2 * n));
-  return pool2;
+  for (const w of V.sacredUniversal) add(pool3, w, filtered(ctx, w, 1));
+  for (const [w, n] of biomeWords(ctx.biome, "sacred")) add(pool3, w, filtered(ctx, w, 2 * n));
+  return pool3;
 }
 function lifewayPool(ctx) {
   var _a2;
-  const pool2 = /* @__PURE__ */ new Map();
+  const pool3 = /* @__PURE__ */ new Map();
   const canRide = mounts(ctx).length > 0;
   const fav = new Set(ctx.trad.favouredLifeways);
   const gate = (w) => w === "Riders" && !canRide ? 0 : 1;
-  for (const [w, n] of biomeWords(ctx.biome, "lifeways")) add(pool2, w, filtered(ctx, w, n * (fav.has(w) ? 2 : 1) * gate(w)));
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.lifeways) != null ? _a2 : []) add(pool2, w, filtered(ctx, w, 10 * gate(w)));
-  return pool2;
+  for (const [w, n] of biomeWords(ctx.biome, "lifeways")) add(pool3, w, filtered(ctx, w, n * (fav.has(w) ? 2 : 1) * gate(w)));
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.lifeways) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 10 * gate(w)));
+  return pool3;
 }
 var materials = (ctx) => {
-  const pool2 = /* @__PURE__ */ new Map();
-  for (const [w, n] of biomeWords(ctx.biome, "materials")) add(pool2, w, filtered(ctx, w, n));
-  return pool2;
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const [w, n] of biomeWords(ctx.biome, "materials")) add(pool3, w, filtered(ctx, w, n));
+  return pool3;
 };
 function warfarePool(ctx, objectsOnly = false) {
-  const pool2 = /* @__PURE__ */ new Map();
+  const pool3 = /* @__PURE__ */ new Map();
   const restricted = (w) => {
     var _a2, _b;
     const allowed = V.warfareRestricted[w];
@@ -30616,12 +30619,12 @@ function warfarePool(ctx, objectsOnly = false) {
     return m;
   };
   const words = objectsOnly ? V.warfareObjects : [...V.warfareUniversal, ...Object.keys(V.warfareRestricted)];
-  for (const w of words) add(pool2, w, filtered(ctx, w, restricted(w)));
-  return pool2;
+  for (const w of words) add(pool3, w, filtered(ctx, w, restricted(w)));
+  return pool3;
 }
 function directionPool(ctx, { halves = false, colours = true } = {}) {
   var _a2, _b;
-  const pool2 = /* @__PURE__ */ new Map();
+  const pool3 = /* @__PURE__ */ new Map();
   for (const o of ctx.trad.orientation) {
     let words = (_b = (_a2 = o.words) != null ? _a2 : V.directions[o.system]) != null ? _b : [];
     if (!halves) words = words.filter((w) => !w.endsWith(" Half"));
@@ -30629,18 +30632,18 @@ function directionPool(ctx, { halves = false, colours = true } = {}) {
     let m = o.mult;
     if (o.system === "seaAxis" && share(ctx, "coast", "islands") < 10) m *= 0.2;
     if (o.system === "riverAxis" && share(ctx, "rivers") < 15) m *= 0.2;
-    for (const w of words) add(pool2, w, filtered(ctx, w, m));
+    for (const w of words) add(pool3, w, filtered(ctx, w, m));
   }
-  return pool2;
+  return pool3;
 }
 function qualityPool(ctx) {
-  const pool2 = /* @__PURE__ */ new Map();
-  for (const w of V.qualities) add(pool2, w, 1);
-  if (["self", "dynastic", "ceremonial"].includes(ctx.perspective)) for (const w of V.interpretiveQualities) add(pool2, w, 1);
-  return pool2;
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const w of V.qualities) add(pool3, w, 1);
+  if (["self", "dynastic", "ceremonial"].includes(ctx.perspective)) for (const w of V.interpretiveQualities) add(pool3, w, 1);
+  return pool3;
 }
 function dressPool(ctx) {
-  const pool2 = /* @__PURE__ */ new Map();
+  const pool3 = /* @__PURE__ */ new Map();
   const id = ctx.biome.id;
   const gate = {
     "Bear-Cloak": biomeWords(ctx.biome, "wildAnimals").some(([w]) => w === "bear"),
@@ -30649,8 +30652,8 @@ function dressPool(ctx) {
     Veiled: id === "desert",
     "Painted-Moccasin": !!ctx.trad.special.paintedMoccasin
   };
-  for (const w of V.dress) add(pool2, w, filtered(ctx, w, gate[w] === false ? 0 : 1));
-  return pool2;
+  for (const w of V.dress) add(pool3, w, filtered(ctx, w, gate[w] === false ? 0 : 1));
+  return pool3;
 }
 function numberWord(ctx) {
   const preferred = new Set(ctx.trad.numbers);
@@ -30687,21 +30690,21 @@ function vesselWord(ctx) {
   if (pinned) return pinned;
   const rng = ctx.rng;
   if (ctx.mode === "chosen" && rng() < 1 / 3) {
-    const pool3 = /* @__PURE__ */ new Map();
-    for (const list of ["birds", "creatures"]) for (const [w, n] of biomeWords(ctx.biome, list)) add(pool3, biomeTitleCase(w), filtered(ctx, w, n));
-    const animal2 = pickPool(pool3, rng);
+    const pool4 = /* @__PURE__ */ new Map();
+    for (const list of ["birds", "creatures"]) for (const [w, n] of biomeWords(ctx.biome, list)) add(pool4, biomeTitleCase(w), filtered(ctx, w, n));
+    const animal2 = pickPool(pool4, rng);
     if (animal2) return `the ${pickUniform2(V.colours, rng)} ${animal2} Canoe`;
   }
-  const pool2 = /* @__PURE__ */ new Map();
-  for (const c of V.canoes) add(pool2, c, 2);
-  for (const v of V.voyages) add(pool2, v, 1);
-  if (ctx.trad.special.longship) add(pool2, "the Longship", 2);
-  if (share(ctx, "rivers") >= 25) add(pool2, "the Raft", 1);
-  return pickPool(pool2, rng);
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const c of V.canoes) add(pool3, c, 2);
+  for (const v of V.voyages) add(pool3, v, 1);
+  if (ctx.trad.special.longship) add(pool3, "the Longship", 2);
+  if (share(ctx, "rivers") >= 25) add(pool3, "the Raft", 1);
+  return pickPool(pool3, rng);
 }
 function collectivePool(ctx, filter = {}) {
   var _a2, _b, _c, _d, _e, _f;
-  const pool2 = /* @__PURE__ */ new Map();
+  const pool3 = /* @__PURE__ */ new Map();
   const lineageSet = new Set(TRIBAL_DATA.lineageCollectives);
   const signature = new Set(ctx.trad.signatureCollectives);
   for (const row of TRIBAL_DATA.collectives) {
@@ -30720,9 +30723,9 @@ function collectivePool(ctx, filter = {}) {
     w *= (_f = ctx.trad.lineageMultipliers[row.word]) != null ? _f : 1;
     if (row.gate === "mounts" && mounts(ctx).length === 0) w = 0;
     if (row.gate === "arrows" || row.gate === "tents") w *= countedOk(ctx, row.gate === "arrows" ? "Arrows" : "Tents");
-    add(pool2, row.word, filtered(ctx, row.word, w));
+    add(pool3, row.word, filtered(ctx, row.word, w));
   }
-  return pool2;
+  return pool3;
 }
 var collective = (ctx, filter) => pickPool(collectivePool(ctx, filter), ctx.rng);
 function traditionThemeWeights(trad) {
@@ -30817,9 +30820,9 @@ function templateA(ctx, parts) {
   const rng = ctx.rng;
   switch (ctx.theme) {
     case "relationship": {
-      const pool2 = /* @__PURE__ */ new Map();
-      for (const w of V.relationship) add(pool2, w, w === "Tributaries" && !["imposed", "later"].includes(ctx.perspective) ? 0 : 1);
-      return parts.keyword = (_a2 = pickPool(pool2, rng)) != null ? _a2 : "";
+      const pool3 = /* @__PURE__ */ new Map();
+      for (const w of V.relationship) add(pool3, w, w === "Tributaries" && !["imposed", "later"].includes(ctx.perspective) ? 0 : 1);
+      return parts.keyword = (_a2 = pickPool(pool3, rng)) != null ? _a2 : "";
     }
     case "qualities":
       parts.quality = pickPool(qualityPool(ctx), rng);
@@ -31009,9 +31012,9 @@ function templateO(ctx, parts) {
     const q2 = parts.quality = pickPool(qualityPool(ctx), ctx.rng);
     return q2 ? `The ${q2} Ones` : void 0;
   }
-  const pool2 = /* @__PURE__ */ new Map();
-  for (const w of V.nominalQualities) add(pool2, w, ["Free", "Proud", "Unconquered"].includes(w) && !["self", "dynastic", "ceremonial"].includes(ctx.perspective) ? 0 : 1);
-  const q = parts.quality = pickPool(pool2, ctx.rng);
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const w of V.nominalQualities) add(pool3, w, ["Free", "Proud", "Unconquered"].includes(w) && !["self", "dynastic", "ceremonial"].includes(ctx.perspective) ? 0 : 1);
+  const q = parts.quality = pickPool(pool3, ctx.rng);
   return q ? `The ${q}` : void 0;
 }
 function templateP(ctx, parts) {
@@ -31093,7 +31096,7 @@ function buildTemplate(ctx, template, parts) {
   return void 0;
 }
 function hostileWord(ctx) {
-  const pool2 = /* @__PURE__ */ new Map();
+  const pool3 = /* @__PURE__ */ new Map();
   for (const [w, theme] of Object.entries(V.hostile)) {
     if (theme !== ctx.theme) continue;
     let ok = true;
@@ -31101,9 +31104,9 @@ function hostileWord(ctx) {
     if (w === "Goat Folk") ok = hasLivestock(ctx, "goat");
     if (w === "Fish-Eaters") ok = share(ctx, "coast", "rivers") >= 15;
     if (w === "Mud Folk" || w === "Marsh Crawlers") ok = share(ctx, "wetland") >= 5;
-    add(pool2, w, ok ? filtered(ctx, w, 1) : 0);
+    add(pool3, w, ok ? filtered(ctx, w, 1) : 0);
   }
-  return pickPool(pool2, ctx.rng);
+  return pickPool(pool3, ctx.rng);
 }
 var norm = (s) => s.toLowerCase().replace(/^the /, "").trim();
 var BUILT_IN_GUARDS = {
@@ -53384,13 +53387,13 @@ var WorldRenderer = class {
       return `[${key2}]`;
     }
     if (source.batch) {
-      let pool2 = this.pools.get(key2);
-      if (!pool2) {
-        pool2 = [];
-        for (let i = 0; i < source.batch; i++) pool2.push(this.drawMarkov(source, rng, pool2));
-        this.pools.set(key2, pool2);
+      let pool3 = this.pools.get(key2);
+      if (!pool3) {
+        pool3 = [];
+        for (let i = 0; i < source.batch; i++) pool3.push(this.drawMarkov(source, rng, pool3));
+        this.pools.set(key2, pool3);
       }
-      return pickUniform5(pool2, rng);
+      return pickUniform5(pool3, rng);
     }
     return this.drawMarkov(source, rng, []);
   }
@@ -53416,34 +53419,34 @@ var WorldRenderer = class {
     return pickUniform5(source.corpus, rng);
   }
   /** A list word, expanding any template held in the entry. */
-  slot(token3, rng, depth) {
+  slot(token4, rng, depth) {
     var _a2, _b;
-    if (token3.markov) {
-      const name = this.markovName(token3.key, rng);
-      const text2 = token3.form === "pos" ? possessive(name) : name;
-      return { text: text2, etym: `[${this.label(token3.key)}: ${name}]${token3.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
+    if (token4.markov) {
+      const name = this.markovName(token4.key, rng);
+      const text2 = token4.form === "pos" ? possessive(name) : name;
+      return { text: text2, etym: `[${this.label(token4.key)}: ${name}]${token4.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
     }
-    const list = this.lists[token3.key];
+    const list = this.lists[token4.key];
     if (!list || list.length === 0) {
-      this.notices.add(`No word list "${token3.key}" for ${this.culture.label}.`);
-      return { text: `[${token3.key}]`, etym: `[${token3.key}]`, fusable: false };
+      this.notices.add(`No word list "${token4.key}" for ${this.culture.label}.`);
+      return { text: `[${token4.key}]`, etym: `[${token4.key}]`, fusable: false };
     }
-    const entry = parseEntry((_a2 = this.swapEntry(token3.key, rng)) != null ? _a2 : pickUniform5(list, rng));
+    const entry = parseEntry((_a2 = this.swapEntry(token4.key, rng)) != null ? _a2 : pickUniform5(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);
-      const text2 = token3.form === "pos" ? possessive(inner.text) : inner.text;
-      const etym = single ? inner.etym : `[${this.label(token3.key)}: ${inner.text}]`;
-      return { text: text2, etym: token3.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
+      const text2 = token4.form === "pos" ? possessive(inner.text) : inner.text;
+      const etym = single ? inner.etym : `[${this.label(token4.key)}: ${inner.text}]`;
+      return { text: text2, etym: token4.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
     }
     let text = entry.word;
-    if (token3.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
-    if (token3.form === "pos") text = possessive(entry.word);
-    const shown = token3.form === "pos" ? entry.word : text;
+    if (token4.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
+    if (token4.form === "pos") text = possessive(entry.word);
+    const shown = token4.form === "pos" ? entry.word : text;
     return {
       text,
-      etym: `[${this.label(token3.key)}: ${shown}]${token3.form === "pos" ? possessiveTail(entry.word) : ""}`,
-      fusable: !entry.noFuse && token3.form !== "pos"
+      etym: `[${this.label(token4.key)}: ${shown}]${token4.form === "pos" ? possessiveTail(entry.word) : ""}`,
+      fusable: !entry.noFuse && token4.form !== "pos"
     };
   }
   /** Renders a template: slots filled, "+" groups fused or spaced. */
@@ -53457,14 +53460,14 @@ var WorldRenderer = class {
       out.push(group.length === 1 ? group[0] : this.fuse(group, rng));
       group = [];
     };
-    for (const token3 of tokens) {
-      if (token3.kind === "fuse") {
+    for (const token4 of tokens) {
+      if (token4.kind === "fuse") {
         joinNext = true;
         continue;
       }
       let piece;
-      if (token3.kind === "text") piece = { text: token3.text, etym: token3.text.toLowerCase(), fusable: !/\s/.test(token3.text) };
-      else piece = this.slot(token3, rng, depth);
+      if (token4.kind === "text") piece = { text: token4.text, etym: token4.text.toLowerCase(), fusable: !/\s/.test(token4.text) };
+      else piece = this.slot(token4, rng, depth);
       if (!joinNext) flush();
       group.push(piece);
       joinNext = false;
@@ -53964,6 +53967,18 @@ function prefixedLand(word, setting, rng) {
   const prefix = rng() < 0.5 ? pickWeighted5(pool(ctx, "landPrefix", type), rng) : pickWeighted5(pool(ctx, "colour", type), rng);
   return `${prefix} ${word}`;
 }
+function groupPerson(setting, surnames, rng, animals) {
+  const { ctx, type } = sharedCtx(setting, rng);
+  const shapes = surnames ? GROUP_DATA.people.person : GROUP_DATA.people.personOther;
+  let pattern = pickWeighted5(shapes.map((s) => [s.p, s.w]), rng);
+  if (animals && animals.length > 0) pattern = pattern.replace("{flavourAnimal}", pickOne(animals, rng));
+  return renderPattern(ctx, pattern, type);
+}
+function groupSaint(setting, rng) {
+  const { ctx, type } = sharedCtx(setting, rng);
+  const saint = pick2(ctx, "saintName", type);
+  return setting === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`;
+}
 function initialsToken(ctx, type) {
   const formal = type.shapes.filter((s) => s.f === "F" && !s.p.includes("{initials}") && shapeWeight(ctx, s) > 0);
   for (let i = 0; i < 20 && formal.length > 0; i++) {
@@ -54103,6 +54118,7 @@ var OWNERS = /* @__PURE__ */ new Set(["town", "surname", "house", "brandRoot", "
 var NEVER_ANCHORS = /* @__PURE__ */ new Set(["person", "holy", "initials"]);
 var PLACEHOLDER_TOKENS = /* @__PURE__ */ new Set(["person", "holy", "town", "surname", "house"]);
 var kindOf = (name) => COUNTERS.has(name) ? "counter" : OWNERS.has(name) ? "owner" : NEVER_ANCHORS.has(name) ? "never" : "list";
+var seriesTokenKind = (name) => kindOf(name);
 function counterGap(rng) {
   const r = rng();
   if (r < 0.5) return 1;
@@ -54184,11 +54200,11 @@ function generateSeries(ctx, type, frontChoice, count, toneChoice) {
   const hasToken = (sh) => [...sh.p.matchAll(/\{([^}]+)\}/g)].some((m) => m[1].split(":")[0].split("/").includes(anchor.name));
   const plain = plainShapes(ctx, type).filter((sh) => sh.p !== first.shape.p && hasToken(sh));
   const fronts = frontChoice !== "say" && canFront(type) ? frontShapes(type).filter((sh) => sh.p !== first.shape.p && hasToken(sh)) : [];
-  const pool2 = byForm(ctx, [...plain, ...fronts]);
-  if (pool2.length === 0) return { names, seriesTone };
+  const pool3 = byForm(ctx, [...plain, ...fronts]);
+  if (pool3.length === 0) return { names, seriesTone };
   const frontSet = new Set(fronts);
   fill(() => {
-    const shape = pickWeighted5(pool2, ctx.rng);
+    const shape = pickWeighted5(pool3, ctx.rng);
     return renderShape(ctx, type, type, shape, frontSet.has(shape), { byName: anchor });
   });
   return { names, seriesTone };
@@ -61513,6 +61529,9 @@ var HOLY_NAMES = new Map(
     return words.length > 0 ? [[key2, new RegExp(`(^|[^\\p{L}])(${words.join("|")})($|[^\\p{L}])`, "u")]] : [];
   })
 );
+function holyNamesIn(culture) {
+  return HOLY_NAMES.get(culture);
+}
 function townSource(culture) {
   if (["general", "anglo-saxon", "celtic", "norman-british"].includes(culture)) return "britain";
   if (culture === "greek-byzantine" || culture === "steppe") return void 0;
@@ -61596,8 +61615,8 @@ function token2(ctx, raw) {
     case "town": {
       const holy = HOLY_NAMES.get(ctx.culture);
       for (let i = 0; i < 20; i++) {
-        const town = groupTown(ctx.setting, townSource(ctx.culture), rng);
-        if (!holy || !holy.test(town)) return town;
+        const town2 = groupTown(ctx.setting, townSource(ctx.culture), rng);
+        if (!holy || !holy.test(town2)) return town2;
       }
       return void 0;
     }
@@ -61658,15 +61677,15 @@ function placeLand(ctx) {
     return [{ word: e.w, gn: false }, ((_a3 = e.x) != null ? _a3 : 1) * ((_c = (_b = e.cx) == null ? void 0 : _b[ctx.culture]) != null ? _c : 1)];
   });
   if (ctx.setting === "SF") {
-    const pool3 = [...groupListWords("spaceLand", "SF").map(([w, n]) => [{ word: w, gn: false }, n]), ...extras("epPlaceSpaceExtra")];
-    return (_a2 = pickWeighted5(pool3, rng)) == null ? void 0 : _a2.word;
+    const pool4 = [...groupListWords("spaceLand", "SF").map(([w, n]) => [{ word: w, gn: false }, n]), ...extras("epPlaceSpaceExtra")];
+    return (_a2 = pickWeighted5(pool4, rng)) == null ? void 0 : _a2.word;
   }
-  const pool2 = [
+  const pool3 = [
     ...groupListWords("land", ctx.setting).map(([w, n]) => [{ word: w, gn: true }, n]),
     ...cultureLand(ctx.culture).map((w) => [{ word: w, gn: false }, 1]),
     ...extras("epPlaceLandExtra")
   ];
-  const pick4 = pickWeighted5(pool2, rng);
+  const pick4 = pickWeighted5(pool3, rng);
   if (!pick4) return void 0;
   return pick4.gn ? prefixedLand(pick4.word, ctx.setting, rng) : pick4.word;
 }
@@ -61729,9 +61748,9 @@ function oneTitle(ctx, kind, forceShape) {
   let text;
   if (shape.p === "{rank} of {town}") {
     const rank = token2(ctx, "rank");
-    const town = token2(ctx, "town");
-    if (!rank || !town) return void 0;
-    text = `${rank} ${ctx.rankNative ? nativeOf(ctx.culture, town) : `of ${town}`}`;
+    const town2 = token2(ctx, "town");
+    if (!rank || !town2) return void 0;
+    text = `${rank} ${ctx.rankNative ? nativeOf(ctx.culture, town2) : `of ${town2}`}`;
   } else text = render2(ctx, shape.p);
   if (!text) return void 0;
   return { text, shape, rank: shape.p === "{rank}" || shape.p === "{rank} of {town}", after: ctx.rankAfter };
@@ -62111,6 +62130,7128 @@ Names to allow, though they echo a real or well-known person or title.
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
 
+// src/data/vessels.json
+var vessels_default = {
+  $comment: "Ships and spacecraft (docs/ships-and-spacecraft-brief.md). Built from the brief by build_vessels.py; lists are as the brief writes them.",
+  modules: {
+    ships: "ships and boats",
+    spacecraft: "spacecraft and stations"
+  },
+  cultures: [
+    {
+      key: "general",
+      label: "General",
+      group: "",
+      span: "T1-T7",
+      town: "britain",
+      holy: "blessing",
+      surnames: true,
+      womanNames: true
+    },
+    {
+      key: "anglo-saxon",
+      label: "Anglo-Saxon",
+      group: "British Isles and northern Europe",
+      span: "T1-T3",
+      roles: {
+        beast: 2,
+        holy: 1.5,
+        royal: 1.5,
+        commerce: 0.5,
+        poetic: 2
+      },
+      flavour: {
+        world: "anglo-saxon"
+      },
+      town: "britain",
+      holy: "christian",
+      lists: {
+        virtue: [
+          {
+            w: "Brave"
+          },
+          {
+            w: "Bold"
+          },
+          {
+            w: "Steadfast"
+          },
+          {
+            w: "Victory"
+          },
+          {
+            w: "Courage"
+          },
+          {
+            w: "Glory",
+            t: [
+              "grand"
+            ]
+          },
+          {
+            w: "Faithful"
+          },
+          {
+            w: "Wolf-Hearted"
+          }
+        ],
+        poetic: [
+          {
+            w: "Wave-Steed"
+          },
+          {
+            w: "Sea-Stallion"
+          },
+          {
+            w: "Foam-Necked"
+          },
+          {
+            w: "Ring-Prowed",
+            t: [
+              "grand"
+            ]
+          },
+          {
+            w: "Swan of the Waves"
+          },
+          {
+            w: "Sea-Wood"
+          },
+          {
+            w: "Whale-Road Rider"
+          },
+          {
+            w: "Curved-Prow"
+          }
+        ]
+      },
+      surnames: true
+    },
+    {
+      key: "norse",
+      label: "Norse",
+      group: "British Isles and northern Europe",
+      span: "T1-T3",
+      roles: {
+        beast: 3,
+        menace: 1.5,
+        poetic: 2,
+        holy: 0.5,
+        commerce: 0.5
+      },
+      flavour: {
+        world: "norse"
+      },
+      town: "norse",
+      holy: "gods",
+      gods: {
+        world: "norse",
+        shapes: [
+          {
+            p: "{god:poss} {beast}",
+            w: 35
+          }
+        ]
+      },
+      lists: {
+        virtue: [
+          {
+            w: "Bold"
+          },
+          {
+            w: "Fearless"
+          },
+          {
+            w: "Victory"
+          },
+          {
+            w: "Gold-Breasted",
+            t: [
+              "grand"
+            ]
+          },
+          {
+            w: "Battle-Glad",
+            t: [
+              "grim"
+            ]
+          }
+        ],
+        beastExtra: [
+          {
+            w: "Serpent",
+            x: 2
+          },
+          {
+            w: "Dragon",
+            x: 2
+          },
+          {
+            w: "Raven",
+            x: 2
+          },
+          {
+            w: "Wolf",
+            x: 2
+          },
+          {
+            w: "Bison",
+            x: 2
+          },
+          {
+            w: "Crane",
+            x: 2
+          },
+          {
+            w: "Bull",
+            x: 2
+          },
+          {
+            w: "Snake",
+            x: 2
+          }
+        ],
+        poetic: [
+          {
+            w: "Wave-Steed"
+          },
+          {
+            w: "Sea-Stallion"
+          },
+          {
+            w: "Sail-Horse"
+          },
+          {
+            w: "Surf-Raven"
+          },
+          {
+            w: "Long Snake"
+          },
+          {
+            w: "Gold-Mane"
+          },
+          {
+            w: "Storm-Rider"
+          },
+          {
+            w: "Fjord-Wolf"
+          }
+        ]
+      },
+      surnames: true
+    },
+    {
+      key: "celtic",
+      label: "Celtic",
+      group: "British Isles and northern Europe",
+      span: "T1-T4",
+      roles: {
+        beast: 2,
+        holy: 2,
+        sky: 1.5
+      },
+      flavour: {
+        world: "celtic"
+      },
+      town: "britain",
+      holy: "christian",
+      lists: {
+        virtue: [
+          {
+            w: "Bold"
+          },
+          {
+            w: "Swift"
+          },
+          {
+            w: "Faithful"
+          },
+          {
+            w: "Bright"
+          },
+          {
+            w: "Glory"
+          }
+        ],
+        poetic: [
+          {
+            w: "Wave of the West"
+          },
+          {
+            w: "Hound of the Sea"
+          },
+          {
+            w: "Salmon of the Strand"
+          },
+          {
+            w: "Curragh of the Saint"
+          },
+          {
+            w: "Star of the Sound"
+          },
+          {
+            w: "Grey Seal"
+          },
+          {
+            w: "Bright Wave"
+          }
+        ]
+      },
+      surnames: true,
+      womanNames: true
+    },
+    {
+      key: "norman-british",
+      label: "Norman & British",
+      group: "British Isles and northern Europe",
+      span: "T2-T7",
+      techRoles: {
+        "T2-T3": {
+          holy: 3,
+          royal: 1.5
+        },
+        T4: {
+          virtue: 3,
+          royal: 2,
+          beast: 1.5
+        },
+        T5: {
+          virtue: 2,
+          place: 2
+        },
+        T6: {
+          virtue: 2,
+          place: 2
+        },
+        T7: {
+          place: 2,
+          person: 1.5
+        }
+      },
+      flavour: [
+        "Lion",
+        "Hart",
+        "Boar",
+        "Bear",
+        "Hound",
+        "Falcon",
+        "Swan"
+      ],
+      town: "britain",
+      holy: "christian",
+      lists: {
+        virtue: [
+          {
+            w: "Good Anne",
+            k: "T2-T3"
+          },
+          {
+            w: "Saint Mary",
+            k: "T2-T3"
+          },
+          {
+            w: "Christopher",
+            k: "T2-T3"
+          },
+          {
+            w: "Gabriel",
+            k: "T2-T3"
+          },
+          {
+            w: "Peter",
+            k: "T2-T3"
+          },
+          {
+            w: "Trinity Royal",
+            x: 0.3,
+            k: "T2-T3"
+          },
+          {
+            w: "Thunderer",
+            k: "T4"
+          },
+          {
+            w: "Indefatigable",
+            k: "T4"
+          },
+          {
+            w: "Bellerophon",
+            k: "T4"
+          },
+          {
+            w: "Ajax",
+            k: "T4"
+          },
+          {
+            w: "Orion",
+            k: "T4"
+          },
+          {
+            w: "Minotaur",
+            k: "T4"
+          },
+          {
+            w: "Agamemnon",
+            k: "T4"
+          },
+          {
+            w: "Defiance",
+            k: "T4"
+          },
+          {
+            w: "Invincible",
+            k: "T4"
+          },
+          {
+            w: "Indomitable",
+            k: "T4"
+          },
+          {
+            w: "Majestic",
+            k: "T4"
+          },
+          {
+            w: "Revenge",
+            x: 0.3,
+            k: "T4"
+          },
+          {
+            w: "Dauntless",
+            k: "T5-T6"
+          },
+          {
+            w: "Vanguard",
+            k: "T5-T6"
+          },
+          {
+            w: "Formidable",
+            k: "T5-T6"
+          },
+          {
+            w: "Warrior",
+            k: "T5-T6"
+          },
+          {
+            w: "Dreadnought",
+            x: 0.3,
+            k: "T5-T6"
+          },
+          {
+            w: "Courageous",
+            k: "T5-T6"
+          },
+          {
+            w: "Glorious",
+            k: "T5-T6"
+          },
+          {
+            w: "Renown",
+            k: "T5-T6"
+          },
+          {
+            w: "Defender",
+            k: "T7"
+          },
+          {
+            w: "Protector",
+            k: "T7"
+          },
+          {
+            w: "Daring",
+            k: "T7"
+          },
+          {
+            w: "Diamond",
+            k: "T7"
+          },
+          {
+            w: "Duncan",
+            k: "T7"
+          }
+        ],
+        royal: [
+          {
+            w: "Sovereign"
+          },
+          {
+            w: "Royal Oak"
+          },
+          {
+            w: "Royal George",
+            x: 0.3
+          },
+          {
+            w: "Prince Regent"
+          },
+          {
+            w: "Queen"
+          },
+          {
+            w: "Monarch"
+          },
+          {
+            w: "Royal Sovereign"
+          }
+        ]
+      },
+      surnames: true,
+      womanNames: true
+    },
+    {
+      key: "french",
+      label: "French",
+      group: "Western and southern Europe",
+      span: "T3-T7",
+      roles: {
+        virtue: 2,
+        royal: 1.5
+      },
+      techRoles: {
+        "T6-T7": {
+          person: 2,
+          place: 1.5
+        }
+      },
+      flavour: [
+        "Lion",
+        "Eagle",
+        "Cockerel",
+        "Stag",
+        "Swan",
+        "Falcon"
+      ],
+      town: "compound",
+      holy: "christian",
+      marian: 0.3,
+      lists: {
+        virtue: [
+          {
+            w: "Glorious"
+          },
+          {
+            w: "Majestic"
+          },
+          {
+            w: "Formidable"
+          },
+          {
+            w: "Redoubtable"
+          },
+          {
+            w: "Brilliant"
+          },
+          {
+            w: "Intrepid"
+          },
+          {
+            w: "Triumphant"
+          },
+          {
+            w: "Fearless"
+          },
+          {
+            w: "Thundering"
+          },
+          {
+            w: "Invincible"
+          },
+          {
+            w: "Superb"
+          },
+          {
+            w: "Magnanimous"
+          },
+          {
+            w: "Audacious"
+          },
+          {
+            w: "Terrible",
+            x: 0.3,
+            t: [
+              "grim"
+            ]
+          }
+        ],
+        royal: [
+          {
+            w: "Royal Sun"
+          },
+          {
+            w: "Crown"
+          },
+          {
+            w: "Dauphin"
+          },
+          {
+            w: "Royal Louis",
+            x: 0.3
+          },
+          {
+            w: "Queen"
+          },
+          {
+            w: "Majesty"
+          }
+        ]
+      }
+    },
+    {
+      key: "dutch",
+      label: "Dutch",
+      group: "Western and southern Europe",
+      span: "T3-T7",
+      roles: {
+        place: 2,
+        commerce: 2,
+        person: 1.5,
+        holy: 0.3
+      },
+      flavour: [
+        "Lion",
+        "Swan",
+        "Heron",
+        "Stork",
+        "Horse"
+      ],
+      town: "compound",
+      holy: "christian",
+      holyX: 0.3,
+      shapes: [
+        {
+          role: "place",
+          p: "Golden {town}",
+          w: 20
+        },
+        {
+          role: "place",
+          p: "Arms of {town}",
+          w: 25
+        },
+        {
+          role: "place",
+          p: "Lion of {town}",
+          w: 15,
+          t: [
+            "grand"
+          ]
+        }
+      ],
+      lists: {
+        virtue: [
+          {
+            w: "Concord"
+          },
+          {
+            w: "Unity"
+          },
+          {
+            w: "Prosperity"
+          },
+          {
+            w: "Good Hope"
+          },
+          {
+            w: "Peace"
+          },
+          {
+            w: "Freedom"
+          },
+          {
+            w: "Hope"
+          },
+          {
+            w: "Faith"
+          },
+          {
+            w: "Diligence"
+          }
+        ]
+      },
+      surnames: true
+    },
+    {
+      key: "iberian",
+      label: "Spanish & Portuguese",
+      group: "Western and southern Europe",
+      span: "T3-T6",
+      roles: {
+        holy: 3,
+        royal: 2
+      },
+      flavour: [
+        "Lion",
+        "Bull",
+        "Eagle",
+        "Falcon",
+        "Dolphin"
+      ],
+      town: "compound",
+      holy: "christian",
+      marian: 3,
+      shapes: [
+        {
+          role: "holy",
+          p: "Most Holy {holyNoun}",
+          w: 15,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          role: "holy",
+          p: "Holy Trinity",
+          w: 5
+        },
+        {
+          role: "holy",
+          p: "Holy Cross",
+          w: 5
+        },
+        {
+          role: "holy",
+          p: "{holy} and {holy}",
+          w: 5
+        }
+      ],
+      lists: {
+        virtue: [
+          {
+            w: "Victory"
+          },
+          {
+            w: "Triumph"
+          },
+          {
+            w: "Conception"
+          },
+          {
+            w: "Hope"
+          },
+          {
+            w: "Glory"
+          },
+          {
+            w: "Fortune"
+          }
+        ],
+        royal: [
+          {
+            w: "Royal Prince"
+          },
+          {
+            w: "Crown"
+          },
+          {
+            w: "Royal Philip",
+            x: 0.3
+          },
+          {
+            w: "Prince of the Sea"
+          }
+        ]
+      }
+    },
+    {
+      key: "roman",
+      label: "Roman / Italian",
+      group: "Western and southern Europe",
+      span: "T2-T7",
+      roles: {
+        virtue: 2
+      },
+      techRoles: {
+        T2: {
+          holy: 2
+        },
+        "T6-T7": {
+          person: 2,
+          place: 2
+        }
+      },
+      flavour: {
+        world: "roman"
+      },
+      town: "roman",
+      holy: "christian",
+      gods: {
+        k: "T2",
+        list: [
+          {
+            w: "Jupiter"
+          },
+          {
+            w: "Mars"
+          },
+          {
+            w: "Neptune"
+          },
+          {
+            w: "Minerva"
+          },
+          {
+            w: "Mercury"
+          },
+          {
+            w: "Venus"
+          },
+          {
+            w: "Apollo"
+          },
+          {
+            w: "Diana"
+          },
+          {
+            w: "the Twins"
+          }
+        ],
+        shapes: [
+          {
+            p: "{god:poss} {beast}",
+            w: 17.5
+          },
+          {
+            p: "Fortune of {god}",
+            w: 17.5
+          }
+        ]
+      },
+      shapes: [
+        {
+          role: "place",
+          p: "Lion of {town}",
+          w: 15,
+          k: "T3-T5"
+        }
+      ],
+      lists: {
+        virtue: [
+          {
+            w: "Victory"
+          },
+          {
+            w: "Concord"
+          },
+          {
+            w: "Fortune"
+          },
+          {
+            w: "Faith"
+          },
+          {
+            w: "Piety"
+          },
+          {
+            w: "Valour"
+          },
+          {
+            w: "Peace"
+          },
+          {
+            w: "Triumph"
+          },
+          {
+            w: "Unconquered"
+          }
+        ]
+      }
+    },
+    {
+      key: "greek-byzantine",
+      label: "Greek & Byzantine",
+      group: "Western and southern Europe",
+      span: "T2-T4",
+      roles: {
+        holy: 2,
+        virtue: 1.5
+      },
+      flavour: [
+        "Dolphin",
+        "Eagle",
+        "Lion",
+        "Owl",
+        "Bull",
+        "Serpent"
+      ],
+      town: "compound",
+      holy: "christian",
+      gods: {
+        k: "T2",
+        list: [
+          {
+            w: "Athena"
+          },
+          {
+            w: "Poseidon"
+          },
+          {
+            w: "Apollo"
+          },
+          {
+            w: "Artemis"
+          },
+          {
+            w: "Hermes"
+          },
+          {
+            w: "Nike"
+          }
+        ],
+        shapes: [
+          {
+            p: "{god:poss} {beast}",
+            w: 35
+          }
+        ]
+      },
+      lists: {
+        virtue: [
+          {
+            w: "Victory"
+          },
+          {
+            w: "Glory"
+          },
+          {
+            w: "Swift"
+          },
+          {
+            w: "Faithful"
+          }
+        ],
+        poetic: [
+          {
+            w: "Sea-Born Victory"
+          },
+          {
+            w: "Daughter of Dawn"
+          },
+          {
+            w: "Dolphin"
+          },
+          {
+            w: "Swift"
+          },
+          {
+            w: "Imperial Light"
+          },
+          {
+            w: "Guardian Angel"
+          },
+          {
+            w: "Sacred Victory"
+          }
+        ]
+      }
+    },
+    {
+      key: "slavic",
+      label: "Slavic",
+      group: "Eastern Europe and the steppe",
+      span: "T1-T7",
+      roles: {
+        beast: 1.5
+      },
+      techRoles: {
+        "T5-T7": {
+          person: 2,
+          virtue: 1.5
+        }
+      },
+      flavour: {
+        world: "slavic"
+      },
+      town: "slavic",
+      holy: "christian",
+      shapes: [
+        {
+          role: "virtue",
+          p: "Red Banner",
+          w: 5,
+          k: "T6-T7"
+        },
+        {
+          role: "virtue",
+          p: "Red Star",
+          w: 5,
+          k: "T6-T7"
+        },
+        {
+          role: "virtue",
+          p: "Admiral {surname}",
+          w: 15,
+          k: "T6-T7"
+        },
+        {
+          role: "virtue",
+          p: "Marshal {surname}",
+          w: 10,
+          k: "T6-T7"
+        },
+        {
+          role: "virtue",
+          p: "Guardian of the People",
+          w: 5,
+          k: "T6-T7"
+        }
+      ],
+      lists: {
+        virtue: [
+          {
+            w: "Steadfast"
+          },
+          {
+            w: "Resolute"
+          },
+          {
+            w: "Thundering"
+          },
+          {
+            w: "Swift"
+          },
+          {
+            w: "Fearless"
+          },
+          {
+            w: "Glorious"
+          },
+          {
+            w: "Courageous"
+          },
+          {
+            w: "Vigilant"
+          },
+          {
+            w: "Bold"
+          }
+        ],
+        beastExtra: [
+          {
+            w: "Falcon",
+            k: "T1-T3"
+          },
+          {
+            w: "Swan",
+            k: "T1-T3"
+          },
+          {
+            w: "Grey Duck",
+            k: "T1-T3"
+          },
+          {
+            w: "Pike",
+            k: "T1-T3"
+          }
+        ]
+      }
+    },
+    {
+      key: "steppe",
+      label: "Turkic & Mongol steppe",
+      group: "Eastern Europe and the steppe",
+      span: "T1-T3",
+      roles: {
+        beast: 3,
+        sky: 2,
+        commerce: 0.5
+      },
+      flavour: [
+        "Wolf",
+        "Horse",
+        "Falcon",
+        "Eagle",
+        "Snow Leopard",
+        "Swan"
+      ],
+      town: "compound",
+      holy: "none",
+      lists: {
+        virtue: [
+          {
+            w: "Swift"
+          },
+          {
+            w: "Bold"
+          },
+          {
+            w: "Fearless"
+          },
+          {
+            w: "Victory"
+          }
+        ],
+        sky: [
+          {
+            w: "Blue Sky"
+          },
+          {
+            w: "Morning Star"
+          },
+          {
+            w: "Great Bear"
+          },
+          {
+            w: "North Wind"
+          },
+          {
+            w: "Moon"
+          }
+        ],
+        poetic: [
+          {
+            w: "Wind across the Grass"
+          },
+          {
+            w: "Swift Rider"
+          },
+          {
+            w: "Horse of the Waves"
+          },
+          {
+            w: "Grey Wolf of the Lake"
+          },
+          {
+            w: "Falcon on the River"
+          },
+          {
+            w: "Rider of the Salt Lake"
+          }
+        ]
+      }
+    },
+    {
+      key: "arabic-persian",
+      label: "Arabic & Persian",
+      group: "Middle East, Africa and the Indian Ocean",
+      span: "T2-T5",
+      roles: {
+        sky: 2,
+        virtue: 2,
+        commerce: 1.5,
+        holy: 0
+      },
+      flavour: {
+        world: "arabic-persian"
+      },
+      town: "arabic-persian",
+      holy: "none",
+      lists: {
+        virtue: [
+          {
+            w: "Victorious"
+          },
+          {
+            w: "Glory"
+          },
+          {
+            w: "Fortune"
+          },
+          {
+            w: "Light of Guidance"
+          },
+          {
+            w: "Star of Prosperity"
+          },
+          {
+            w: "Key to the East"
+          },
+          {
+            w: "Garden of the Sea"
+          },
+          {
+            w: "Gift of the Sea"
+          }
+        ],
+        poetic: [
+          {
+            w: "Pearl of {town}"
+          },
+          {
+            w: "Opening of Good"
+          },
+          {
+            w: "Lamp of the Gulf"
+          },
+          {
+            w: "Moon of the Two Seas"
+          },
+          {
+            w: "Falcon of the Gulf"
+          },
+          {
+            w: "Rose of {town}"
+          }
+        ]
+      }
+    },
+    {
+      key: "ottoman",
+      label: "Ottoman & Barbary",
+      group: "Middle East, Africa and the Indian Ocean",
+      span: "T3-T5",
+      roles: {
+        virtue: 2,
+        royal: 1.5,
+        holy: 0
+      },
+      flavour: [
+        "Lion",
+        "Falcon",
+        "Eagle",
+        "Horse"
+      ],
+      town: "compound",
+      holy: "none",
+      shapes: [
+        {
+          role: "menace",
+          p: "{menaceExtra}",
+          w: 20,
+          fn: [
+            "raider"
+          ]
+        }
+      ],
+      lists: {
+        virtue: [
+          {
+            w: "Conquest"
+          },
+          {
+            w: "Great Conquest"
+          },
+          {
+            w: "Tower of Victory"
+          },
+          {
+            w: "Happiness"
+          },
+          {
+            w: "Help"
+          },
+          {
+            w: "Glory"
+          },
+          {
+            w: "Victory"
+          },
+          {
+            w: "Triumph"
+          }
+        ],
+        royal: [
+          {
+            w: "Crown of the Sea"
+          },
+          {
+            w: "Lion of the Sea"
+          },
+          {
+            w: "Sword of the Sultan",
+            x: 0.3
+          },
+          {
+            w: "Throne of the Sea"
+          }
+        ],
+        menaceExtra: [
+          {
+            w: "Corsair"
+          },
+          {
+            w: "Sea-Lion"
+          },
+          {
+            w: "Red Galley"
+          },
+          {
+            w: "Scourge of {town}",
+            x: 0.3
+          }
+        ]
+      }
+    },
+    {
+      key: "swahili-omani",
+      label: "Swahili & Omani",
+      group: "Middle East, Africa and the Indian Ocean",
+      span: "T2-T5",
+      roles: {
+        commerce: 2,
+        sky: 1.5,
+        holy: 0
+      },
+      flavour: [
+        "Dolphin",
+        "Turtle",
+        "Falcon",
+        "Heron",
+        "Kingfisher"
+      ],
+      town: "compound",
+      holy: "none",
+      lists: {
+        sky: [
+          {
+            w: "Monsoon Wind"
+          },
+          {
+            w: "North-East Wind"
+          },
+          {
+            w: "Moon of the Coast"
+          },
+          {
+            w: "Morning Star"
+          },
+          {
+            w: "Coral Star"
+          }
+        ],
+        poetic: [
+          {
+            w: "Pearl of the Coast"
+          },
+          {
+            w: "Blessing of the Coast"
+          },
+          {
+            w: "Gift of the Sea"
+          },
+          {
+            w: "Lamp of {town}"
+          },
+          {
+            w: "Clove Wind"
+          },
+          {
+            w: "Star of the Coral Coast"
+          },
+          {
+            w: "Daughter of the Monsoon"
+          }
+        ]
+      }
+    },
+    {
+      key: "egyptian",
+      label: "Egyptian",
+      group: "Middle East, Africa and the Indian Ocean",
+      span: "T1-T3",
+      roles: {
+        holy: 2,
+        royal: 2
+      },
+      flavour: {
+        world: "egyptian"
+      },
+      town: "egyptian",
+      holy: "gods",
+      gods: {
+        world: "egyptian",
+        shapes: [
+          {
+            p: "{god:poss} Barque",
+            w: 20
+          },
+          {
+            p: "Beloved of {god}",
+            w: 20
+          },
+          {
+            p: "Star of {god}",
+            w: 10
+          }
+        ]
+      },
+      lists: {
+        royal: [
+          {
+            w: "Glory of the Two Lands"
+          },
+          {
+            w: "Pharaoh's Favour"
+          },
+          {
+            w: "Star of the Two Lands"
+          },
+          {
+            w: "Wild Bull"
+          }
+        ],
+        poetic: [
+          {
+            w: "Appearing in {town}"
+          },
+          {
+            w: "Falcon of the River"
+          },
+          {
+            w: "Gift of the Nile",
+            x: 0.3
+          },
+          {
+            w: "Lotus on the Water"
+          }
+        ]
+      }
+    },
+    {
+      key: "ethiopian",
+      label: "Ethiopian",
+      group: "Middle East, Africa and the Indian Ocean",
+      span: "T1-T4",
+      roles: {
+        holy: 1.5,
+        royal: 1.5
+      },
+      flavour: {
+        world: "ethiopian"
+      },
+      town: "ethiopian",
+      holy: "christian",
+      noSaints: true,
+      lists: {
+        royal: [
+          {
+            w: "Crown of {town}"
+          },
+          {
+            w: "Lion of the Highlands"
+          },
+          {
+            w: "Glory of the King"
+          }
+        ],
+        poetic: [
+          {
+            w: "Star of the Red Sea"
+          },
+          {
+            w: "Papyrus of the Lake"
+          },
+          {
+            w: "Morning on the Lake"
+          }
+        ]
+      }
+    },
+    {
+      key: "bantu",
+      label: "Bantu",
+      group: "Middle East, Africa and the Indian Ocean",
+      span: "T1-T3",
+      roles: {
+        beast: 3,
+        place: 1.5
+      },
+      flavour: {
+        world: "bantu"
+      },
+      town: "bantu",
+      holy: "none",
+      lists: {
+        poetic: [
+          {
+            w: "Elephant of the Lake"
+          },
+          {
+            w: "Lion of the River"
+          },
+          {
+            w: "She Who Crosses the Waters"
+          },
+          {
+            w: "Crocodile's Brother"
+          },
+          {
+            w: "Fish-Eagle's Cry"
+          },
+          {
+            w: "Child of the Great Lake"
+          },
+          {
+            w: "Rain over the River"
+          }
+        ]
+      }
+    },
+    {
+      key: "west-african",
+      label: "West African",
+      group: "Middle East, Africa and the Indian Ocean",
+      span: "T1-T3",
+      roles: {
+        beast: 2,
+        commerce: 2
+      },
+      flavour: {
+        world: "west-african"
+      },
+      town: "west-african",
+      holy: "none",
+      lists: {
+        poetic: [
+          {
+            w: "Child of the River"
+          },
+          {
+            w: "Python of the River"
+          },
+          {
+            w: "Market Canoe"
+          },
+          {
+            w: "Kola Bearer"
+          },
+          {
+            w: "Hornbill over the Water"
+          },
+          {
+            w: "Leopard of the Bend"
+          },
+          {
+            w: "Gift of the Floods"
+          }
+        ]
+      }
+    },
+    {
+      key: "indian",
+      label: "Indian",
+      group: "Middle East, Africa and the Indian Ocean",
+      span: "T2-T7",
+      roles: {
+        sky: 1.5,
+        virtue: 1.5,
+        royal: 1.5,
+        holy: 0
+      },
+      techRoles: {
+        T7: {
+          place: 2
+        }
+      },
+      flavour: {
+        world: "indian"
+      },
+      town: "indian",
+      holy: "none",
+      lists: {
+        virtue: [
+          {
+            w: "Courageous"
+          },
+          {
+            w: "Mighty"
+          },
+          {
+            w: "Sword"
+          },
+          {
+            w: "Victory"
+          },
+          {
+            w: "Glorious"
+          },
+          {
+            w: "Fearless"
+          },
+          {
+            w: "Lion-Hearted"
+          }
+        ],
+        poetic: [
+          {
+            w: "Lotus of the Sea"
+          },
+          {
+            w: "Monsoon Star"
+          },
+          {
+            w: "Pearl of the Coast"
+          },
+          {
+            w: "Elephant of the Waves"
+          },
+          {
+            w: "Peacock of the Sea"
+          },
+          {
+            w: "Tiger of the Bay"
+          },
+          {
+            w: "Star of the Western Coast"
+          }
+        ]
+      }
+    },
+    {
+      key: "malay",
+      label: "Malay & Indonesian",
+      group: "Middle East, Africa and the Indian Ocean",
+      span: "T1-T5",
+      roles: {
+        sky: 1.5,
+        beast: 1.5,
+        poetic: 1.5,
+        holy: 0
+      },
+      flavour: {
+        tribal: "maritimeSEA"
+      },
+      town: "compound",
+      holy: "none",
+      lists: {
+        poetic: [
+          {
+            w: "Sea Hornbill"
+          },
+          {
+            w: "Dragon of the Strait"
+          },
+          {
+            w: "Wind of the Straits"
+          },
+          {
+            w: "Monsoon Pearl"
+          },
+          {
+            w: "Swift Prau"
+          },
+          {
+            w: "Pride of {town}"
+          },
+          {
+            w: "Moon over the Mangroves"
+          },
+          {
+            w: "Crocodile of the River"
+          }
+        ]
+      }
+    },
+    {
+      key: "chinese",
+      label: "Chinese",
+      group: "East Asia",
+      span: "T2-T7",
+      roles: {
+        sky: 1.5,
+        beast: 2,
+        virtue: 1.5,
+        holy: 0
+      },
+      techRoles: {
+        T7: {
+          place: 2
+        }
+      },
+      flavour: {
+        world: "chinese"
+      },
+      town: "chinese",
+      holy: "none",
+      lists: {
+        virtue: [
+          {
+            w: "Ten Thousand Blessings"
+          },
+          {
+            w: "Peaceful Sea"
+          },
+          {
+            w: "Guarding the Sea"
+          },
+          {
+            w: "Harmony"
+          },
+          {
+            w: "Prosperity"
+          },
+          {
+            w: "Eternal Peace"
+          },
+          {
+            w: "Lasting Peace"
+          },
+          {
+            w: "Calm Waves"
+          },
+          {
+            w: "Settled Waters"
+          }
+        ],
+        poetic: [
+          {
+            w: "Moonlit Voyage"
+          },
+          {
+            w: "Golden Crane"
+          },
+          {
+            w: "Peaceful River"
+          },
+          {
+            w: "Eastern Dragon"
+          },
+          {
+            w: "Jade Phoenix"
+          },
+          {
+            w: "Pearl of the South Sea"
+          }
+        ]
+      }
+    },
+    {
+      key: "japanese",
+      label: "Japanese",
+      group: "East Asia",
+      span: "T1-T7",
+      roles: {
+        sky: 2,
+        place: 2
+      },
+      flavour: {
+        world: "japanese"
+      },
+      town: "japanese",
+      holy: "none",
+      shapes: [
+        {
+          role: "place",
+          p: "Red Mountain",
+          w: 5
+        },
+        {
+          role: "place",
+          p: "{colour} Mountain",
+          w: 15
+        },
+        {
+          role: "place",
+          p: "{town} River",
+          w: 10
+        },
+        {
+          role: "place",
+          p: "Cherry Blossom",
+          w: 5
+        }
+      ],
+      lists: {
+        sky: [
+          {
+            w: "Morning Mist"
+          },
+          {
+            w: "Autumn Moon"
+          },
+          {
+            w: "Heavenly Wind"
+          },
+          {
+            w: "Swift Current"
+          },
+          {
+            w: "Spring Rain"
+          },
+          {
+            w: "Evening Snow"
+          },
+          {
+            w: "Morning Sun"
+          },
+          {
+            w: "Summer Cloud"
+          }
+        ]
+      }
+    },
+    {
+      key: "korean",
+      label: "Korean",
+      group: "East Asia",
+      span: "T1-T7",
+      roles: {
+        beast: 1.5
+      },
+      techRoles: {
+        "T6-T7": {
+          person: 2,
+          place: 1.5
+        }
+      },
+      flavour: {
+        world: "korean"
+      },
+      town: "korean",
+      holy: "none",
+      lists: {
+        beastExtra: [
+          {
+            w: "Turtle",
+            x: 2
+          },
+          {
+            w: "Tiger",
+            x: 2
+          },
+          {
+            w: "Crane",
+            x: 2
+          },
+          {
+            w: "Dragon",
+            x: 2
+          }
+        ],
+        virtue: [
+          {
+            w: "Loyalty"
+          },
+          {
+            w: "Righteous"
+          },
+          {
+            w: "Morning Calm"
+          },
+          {
+            w: "Eastern Sea"
+          }
+        ]
+      }
+    },
+    {
+      key: "hawaiian",
+      label: "Hawaiian",
+      group: "The Pacific",
+      span: "T1-T3",
+      roles: {
+        poetic: 3,
+        sky: 3,
+        menace: 0,
+        leisure: 0,
+        commerce: 0.3
+      },
+      flavour: {
+        tribal: "polynesian"
+      },
+      town: "compound",
+      holy: "none",
+      lists: {
+        poetic: [
+          {
+            w: "Guiding Star"
+          },
+          {
+            w: "Path of the Ancestors"
+          },
+          {
+            w: "Child of the Ocean"
+          },
+          {
+            w: "Wind from the High Mountain"
+          },
+          {
+            w: "We Return Together"
+          },
+          {
+            w: "Dawn beyond the Island"
+          },
+          {
+            w: "Ocean of Gladness"
+          },
+          {
+            w: "The Sea Remembers"
+          },
+          {
+            w: "Star Path"
+          },
+          {
+            w: "Swell from the South"
+          }
+        ],
+        sky: [
+          {
+            w: "Guiding Star"
+          },
+          {
+            w: "Rising Swell"
+          },
+          {
+            w: "Morning Star"
+          },
+          {
+            w: "Trade Wind"
+          },
+          {
+            w: "Rain from the Mountain"
+          }
+        ]
+      },
+      sensitive: true
+    },
+    {
+      key: "maori",
+      label: "M\u0101ori",
+      group: "The Pacific",
+      span: "T1-T3",
+      roles: {
+        poetic: 3,
+        sky: 3,
+        menace: 0,
+        leisure: 0,
+        commerce: 0.3
+      },
+      flavour: {
+        tribal: "polynesian"
+      },
+      town: "compound",
+      holy: "none",
+      lists: {
+        poetic: [
+          {
+            w: "Great Canoe of the Dawn"
+          },
+          {
+            w: "Path from the Ancient Homeland"
+          },
+          {
+            w: "Guardian of the Southern Cape"
+          },
+          {
+            w: "Descendants of the Mountain"
+          },
+          {
+            w: "Spear of the Red Chief"
+          },
+          {
+            w: "The Long Arrival"
+          },
+          {
+            w: "Ancestor beneath the Stars"
+          },
+          {
+            w: "Voice of the Headland"
+          }
+        ]
+      },
+      sensitive: true
+    },
+    {
+      key: "w-polynesian",
+      label: "Western Polynesian",
+      group: "The Pacific",
+      span: "T1-T3",
+      roles: {
+        poetic: 3,
+        sky: 3,
+        menace: 0,
+        leisure: 0,
+        commerce: 0.3
+      },
+      flavour: {
+        tribal: "polynesian"
+      },
+      town: "compound",
+      holy: "none",
+      lists: {
+        poetic: [
+          {
+            w: "Strength of the Islands"
+          },
+          {
+            w: "House upon the Sea"
+          },
+          {
+            w: "Chief's Passage"
+          },
+          {
+            w: "Strong Hands Together"
+          },
+          {
+            w: "Friend of the Western Wind"
+          },
+          {
+            w: "The Returning Family"
+          },
+          {
+            w: "Shield of the Lagoon"
+          },
+          {
+            w: "Voyage of Many Islands"
+          }
+        ]
+      },
+      sensitive: true
+    },
+    {
+      key: "american",
+      label: "American",
+      group: "The Americas",
+      span: "T4-T7",
+      roles: {
+        virtue: 2,
+        place: 2
+      },
+      techRoles: {
+        T7: {
+          person: 2
+        }
+      },
+      flavour: [
+        "Eagle",
+        "Bear",
+        "Wolf",
+        "Bison",
+        "Hawk",
+        "Panther"
+      ],
+      town: "britain",
+      holy: "christian",
+      holyX: 0.3,
+      shapes: [
+        {
+          role: "person",
+          p: "{president}",
+          w: 50,
+          k: "T7"
+        }
+      ],
+      lists: {
+        virtue: [
+          {
+            w: "Liberty",
+            x: 2
+          },
+          {
+            w: "Independence"
+          },
+          {
+            w: "Union"
+          },
+          {
+            w: "Resolute"
+          },
+          {
+            w: "Intrepid"
+          },
+          {
+            w: "Freedom"
+          },
+          {
+            w: "Enterprise",
+            x: 0.3
+          },
+          {
+            w: "Constellation",
+            x: 0.3
+          },
+          {
+            w: "Patriot"
+          }
+        ]
+      },
+      surnames: true,
+      womanNames: true
+    },
+    {
+      key: "nw-coast",
+      label: "Pacific Northwest Coast",
+      group: "The Americas",
+      span: "T1-T1",
+      roles: {
+        poetic: 3,
+        beast: 2,
+        menace: 0,
+        leisure: 0,
+        commerce: 0.3
+      },
+      flavour: {
+        tribal: "northernPacific"
+      },
+      town: "compound",
+      holy: "none",
+      lists: {
+        poetic: [
+          {
+            w: "Raven over the Water"
+          },
+          {
+            w: "Great Cedar"
+          },
+          {
+            w: "House of the Killer Whale"
+          },
+          {
+            w: "Salmon Returning"
+          },
+          {
+            w: "Chief of the Western Sea"
+          },
+          {
+            w: "Eagle's Passage"
+          },
+          {
+            w: "Voice of the Deep"
+          },
+          {
+            w: "Canoe of the High-Prowed House"
+          }
+        ]
+      },
+      sensitive: true
+    },
+    {
+      key: "arctic",
+      label: "Arctic",
+      group: "The Americas",
+      span: "T1-T1",
+      roles: {
+        poetic: 3,
+        beast: 2,
+        menace: 0,
+        leisure: 0,
+        commerce: 0.3
+      },
+      flavour: {
+        tribal: "northernPacific"
+      },
+      town: "compound",
+      holy: "none",
+      lists: {
+        poetic: [
+          {
+            w: "Quiet Harpoon"
+          },
+          {
+            w: "Seal beneath the Ice"
+          },
+          {
+            w: "Safe Passage Home"
+          },
+          {
+            w: "Breath over Dark Water"
+          },
+          {
+            w: "Patient Hunter"
+          },
+          {
+            w: "Opening in the Ice"
+          },
+          {
+            w: "Swift beneath the Snow"
+          },
+          {
+            w: "Provider's Return"
+          }
+        ]
+      },
+      sensitive: true
+    },
+    {
+      key: "na-woodlands",
+      label: "North American Woodlands & Rivers",
+      group: "The Americas",
+      span: "T1-T1",
+      roles: {
+        poetic: 3,
+        beast: 2,
+        menace: 0,
+        leisure: 0,
+        commerce: 0.3
+      },
+      flavour: {
+        tribal: "northAmerican"
+      },
+      town: "compound",
+      holy: "none",
+      lists: {
+        poetic: [
+          {
+            w: "White Birch"
+          },
+          {
+            w: "Loon across the Lake"
+          },
+          {
+            w: "Bear's River"
+          },
+          {
+            w: "Swift Portage"
+          },
+          {
+            w: "Morning on the Great Water"
+          },
+          {
+            w: "Northern Crossing"
+          },
+          {
+            w: "Crane among the Reeds"
+          },
+          {
+            w: "Path through Many Lakes"
+          },
+          {
+            w: "Great River"
+          },
+          {
+            w: "Turtle in the Current"
+          },
+          {
+            w: "Heron of the Floodplain"
+          },
+          {
+            w: "Downriver Trader"
+          },
+          {
+            w: "Meeting of the Waters"
+          }
+        ]
+      },
+      sensitive: true
+    },
+    {
+      key: "aztec",
+      label: "Aztec",
+      group: "The Americas",
+      span: "T1-T1",
+      roles: {
+        beast: 2,
+        poetic: 2,
+        holy: 1.5
+      },
+      flavour: {
+        world: "aztec"
+      },
+      town: "aztec",
+      holy: "gods",
+      gods: {
+        world: "aztec",
+        shapes: [
+          {
+            p: "{god:poss} Canoe",
+            w: 20
+          }
+        ]
+      },
+      lists: {
+        poetic: [
+          {
+            w: "Jade Water"
+          },
+          {
+            w: "Flower of the Lake"
+          },
+          {
+            w: "Reed of the Lake"
+          },
+          {
+            w: "Precious Feather"
+          },
+          {
+            w: "Eagle on the Water"
+          },
+          {
+            w: "Hummingbird Canoe"
+          }
+        ]
+      }
+    },
+    {
+      key: "maya",
+      label: "Maya",
+      group: "The Americas",
+      span: "T1-T1",
+      roles: {
+        beast: 2,
+        poetic: 2,
+        holy: 1.5
+      },
+      flavour: {
+        world: "maya"
+      },
+      town: "maya",
+      holy: "gods",
+      gods: {
+        world: "maya",
+        shapes: [
+          {
+            p: "{god:poss} Canoe",
+            w: 20
+          }
+        ]
+      },
+      lists: {
+        poetic: [
+          {
+            w: "Road across the Water"
+          },
+          {
+            w: "Sea Turtle"
+          },
+          {
+            w: "Merchant of the Coast"
+          },
+          {
+            w: "Bearer of Cacao"
+          },
+          {
+            w: "Sun between the Islands"
+          },
+          {
+            w: "Jaguar's Passage"
+          },
+          {
+            w: "Morning Star Canoe"
+          }
+        ]
+      }
+    },
+    {
+      key: "andean",
+      label: "Andean",
+      group: "The Americas",
+      span: "T1-T3",
+      roles: {
+        poetic: 3,
+        beast: 2,
+        menace: 0,
+        leisure: 0,
+        commerce: 0.3
+      },
+      flavour: {
+        tribal: "andean"
+      },
+      town: "compound",
+      holy: "none",
+      lists: {
+        poetic: [
+          {
+            w: "Reed of the Lake"
+          },
+          {
+            w: "Condor over the Water"
+          },
+          {
+            w: "Sun on the Lake"
+          },
+          {
+            w: "Daughter of the Lake"
+          },
+          {
+            w: "Raft of the South Wind"
+          },
+          {
+            w: "Balsa of the Cold Current"
+          }
+        ]
+      },
+      sensitive: true
+    }
+  ],
+  technology: {
+    ships: [
+      {
+        code: "T1",
+        label: "paddle and canoe"
+      },
+      {
+        code: "T2",
+        label: "oar and galley"
+      },
+      {
+        code: "T3",
+        label: "early sail"
+      },
+      {
+        code: "T4",
+        label: "Age of Sail"
+      },
+      {
+        code: "T5",
+        label: "steam and iron"
+      },
+      {
+        code: "T6",
+        label: "diesel and steel"
+      },
+      {
+        code: "T7",
+        label: "modern"
+      }
+    ],
+    spacecraft: [
+      {
+        code: "S1",
+        label: "rocket age"
+      },
+      {
+        code: "S2",
+        label: "interplanetary"
+      },
+      {
+        code: "S3",
+        label: "interstellar"
+      }
+    ]
+  },
+  techWords: {
+    T1: {
+      techAdj: [
+        {
+          w: "Swift"
+        },
+        {
+          w: "Light"
+        },
+        {
+          w: "Little"
+        },
+        {
+          w: "Quick"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Paddle"
+        },
+        {
+          w: "Reed"
+        },
+        {
+          w: "Bark"
+        },
+        {
+          w: "Current"
+        }
+      ]
+    },
+    T2: {
+      techAdj: [
+        {
+          w: "Many-Oared"
+        },
+        {
+          w: "Swift-Oared"
+        },
+        {
+          w: "Bronze-Beaked"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Oar"
+        },
+        {
+          w: "Ram"
+        },
+        {
+          w: "Beak"
+        },
+        {
+          w: "Rower"
+        }
+      ]
+    },
+    T3: {
+      techAdj: [
+        {
+          w: "Fair-Winded"
+        },
+        {
+          w: "White-Winged"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Sail"
+        },
+        {
+          w: "Wind"
+        },
+        {
+          w: "Mast"
+        },
+        {
+          w: "Pennant"
+        }
+      ]
+    },
+    T4: {
+      techAdj: [
+        {
+          w: "Tall"
+        },
+        {
+          w: "White-Sailed"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Canvas"
+        },
+        {
+          w: "Gale"
+        },
+        {
+          w: "Topsail"
+        },
+        {
+          w: "Broadside"
+        }
+      ]
+    },
+    T5: {
+      techAdj: [
+        {
+          w: "Iron",
+          x: 2
+        },
+        {
+          w: "Steam"
+        },
+        {
+          w: "Brass"
+        },
+        {
+          w: "Coal-Black"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Engine"
+        },
+        {
+          w: "Funnel"
+        },
+        {
+          w: "Boiler"
+        },
+        {
+          w: "Steamer"
+        },
+        {
+          w: "Collier"
+        },
+        {
+          w: "Smoke"
+        }
+      ]
+    },
+    T6: {
+      techAdj: [
+        {
+          w: "Steel",
+          x: 2
+        },
+        {
+          w: "Turbine"
+        },
+        {
+          w: "Express"
+        },
+        {
+          w: "Diesel"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Turbine"
+        },
+        {
+          w: "Express"
+        },
+        {
+          w: "Engine"
+        },
+        {
+          w: "Dynamo"
+        },
+        {
+          w: "Piston"
+        }
+      ]
+    },
+    T7: {
+      techAdj: [
+        {
+          w: "Global"
+        },
+        {
+          w: "Swift"
+        },
+        {
+          w: "Blue"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Carrier"
+        },
+        {
+          w: "Express"
+        },
+        {
+          w: "Navigator"
+        },
+        {
+          w: "Spirit"
+        },
+        {
+          w: "Runner"
+        }
+      ]
+    },
+    S1: {
+      techAdj: [
+        {
+          w: "Rocket"
+        },
+        {
+          w: "Orbital"
+        },
+        {
+          w: "Lunar"
+        },
+        {
+          w: "Rising"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Rocket"
+        },
+        {
+          w: "Orbit"
+        },
+        {
+          w: "Booster"
+        },
+        {
+          w: "Capsule"
+        }
+      ]
+    },
+    S2: {
+      techAdj: [
+        {
+          w: "Solar"
+        },
+        {
+          w: "Ion"
+        },
+        {
+          w: "Planetary"
+        },
+        {
+          w: "Belt"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Drive"
+        },
+        {
+          w: "Sail"
+        },
+        {
+          w: "Lander"
+        },
+        {
+          w: "Shuttle"
+        }
+      ]
+    },
+    S3: {
+      techAdj: [
+        {
+          w: "Deep"
+        },
+        {
+          w: "Interstellar"
+        },
+        {
+          w: "Long"
+        },
+        {
+          w: "Far"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Light"
+        },
+        {
+          w: "Lightyear"
+        },
+        {
+          w: "Wake"
+        },
+        {
+          w: "Leap"
+        }
+      ]
+    }
+  },
+  hybrids: {
+    share: {
+      inSpan: 0.2,
+      outOfSpan: 0.35
+    },
+    shapes: [
+      {
+        p: "{techAdj} {cultureNoun}",
+        w: 50
+      },
+      {
+        p: "{techAdj} {poetic}",
+        w: 20
+      },
+      {
+        p: "{cultureNoun} of {techNoun}",
+        w: 10
+      },
+      {
+        p: "{techNoun} {cultureNoun}",
+        w: 20
+      }
+    ]
+  },
+  functions: {
+    ships: {
+      any: "ships and boats of any kind",
+      list: [
+        {
+          key: "war",
+          menu: "Warships",
+          plural: "warships",
+          w: 25,
+          description: "Warships from war canoes to carriers"
+        },
+        {
+          key: "merchant",
+          menu: "Merchant ships",
+          plural: "merchant ships",
+          w: 20,
+          description: "Traders, cargo ships and merchantmen"
+        },
+        {
+          key: "passenger",
+          menu: "Passenger ships",
+          plural: "passenger ships",
+          w: 8,
+          description: "Packets, liners and ferries",
+          min: "T4"
+        },
+        {
+          key: "explore",
+          menu: "Exploration and research",
+          plural: "ships of exploration",
+          w: 8,
+          description: "Ships of exploration, survey and research"
+        },
+        {
+          key: "working",
+          menu: "Working boats",
+          plural: "working boats",
+          w: 15,
+          description: "Fishing boats, tugs, ferries and harbour craft"
+        },
+        {
+          key: "yacht",
+          menu: "Yachts and pleasure boats",
+          plural: "yachts and pleasure boats",
+          w: 8,
+          description: "Yachts and pleasure boats",
+          min: "T3",
+          noSensitive: true
+        },
+        {
+          key: "raider",
+          menu: "Pirates, privateers and smugglers",
+          plural: "raiders",
+          w: 10,
+          description: "Pirates, privateers and smugglers"
+        },
+        {
+          key: "sacred",
+          menu: "Sacred and official vessels",
+          plural: "sacred and official vessels",
+          w: 6,
+          description: "Royal barges, ceremonial and sacred craft"
+        }
+      ]
+    },
+    spacecraft: {
+      any: "spacecraft of any kind",
+      list: [
+        {
+          key: "war",
+          menu: "Warships",
+          plural: "warships",
+          w: 25,
+          description: "Warships"
+        },
+        {
+          key: "merchant",
+          menu: "Freighters",
+          plural: "freighters",
+          w: 20,
+          description: "Freighters"
+        },
+        {
+          key: "passenger",
+          menu: "Liners",
+          plural: "liners",
+          w: 8,
+          description: "Liners",
+          min: "S2"
+        },
+        {
+          key: "explore",
+          menu: "Survey and exploration",
+          plural: "survey ships",
+          w: 12,
+          description: "Survey and exploration"
+        },
+        {
+          key: "working",
+          menu: "Working craft",
+          plural: "working craft",
+          w: 10,
+          description: "Tugs, miners, haulers and salvage ships"
+        },
+        {
+          key: "yacht",
+          menu: "Private craft",
+          plural: "private craft",
+          w: 5,
+          description: "Private craft",
+          min: "S2"
+        },
+        {
+          key: "raider",
+          menu: "Raiders and smugglers",
+          plural: "raiders",
+          w: 8,
+          description: "Raiders and smugglers"
+        },
+        {
+          key: "sacred",
+          menu: "Flagships and official ships",
+          plural: "official ships",
+          w: 4,
+          description: "Flagships and official ships"
+        },
+        {
+          key: "colony",
+          menu: "Colony and generation ships",
+          plural: "colony ships",
+          w: 8,
+          description: "Colony and generation ships",
+          min: "S2"
+        },
+        {
+          key: "station",
+          menu: "Stations and habitats",
+          plural: "stations and habitats",
+          w: 10,
+          description: "Stations and habitats"
+        }
+      ]
+    }
+  },
+  roles: [
+    "virtue",
+    "royal",
+    "holy",
+    "beast",
+    "sky",
+    "place",
+    "person",
+    "poetic",
+    "commerce",
+    "menace",
+    "discovery",
+    "affection",
+    "leisure",
+    "designation"
+  ],
+  roleWeights: {
+    ships: {
+      war: {
+        virtue: 30,
+        royal: 15,
+        holy: 5,
+        beast: 15,
+        sky: 5,
+        place: 15,
+        person: 5,
+        poetic: 5,
+        commerce: 0,
+        menace: 5,
+        discovery: 0,
+        affection: 0,
+        leisure: 0,
+        designation: 0
+      },
+      merchant: {
+        virtue: 5,
+        royal: 5,
+        holy: 10,
+        beast: 5,
+        sky: 10,
+        place: 15,
+        person: 10,
+        poetic: 5,
+        commerce: 35,
+        menace: 0,
+        discovery: 5,
+        affection: 0,
+        leisure: 0,
+        designation: 0
+      },
+      passenger: {
+        virtue: 5,
+        royal: 15,
+        holy: 5,
+        beast: 5,
+        sky: 10,
+        place: 25,
+        person: 10,
+        poetic: 5,
+        commerce: 15,
+        menace: 0,
+        discovery: 5,
+        affection: 0,
+        leisure: 0,
+        designation: 0
+      },
+      explore: {
+        virtue: 10,
+        royal: 5,
+        holy: 5,
+        beast: 5,
+        sky: 15,
+        place: 5,
+        person: 10,
+        poetic: 10,
+        commerce: 5,
+        menace: 0,
+        discovery: 30,
+        affection: 0,
+        leisure: 0,
+        designation: 0
+      },
+      working: {
+        virtue: 5,
+        royal: 0,
+        holy: 10,
+        beast: 5,
+        sky: 10,
+        place: 15,
+        person: 20,
+        poetic: 5,
+        commerce: 5,
+        menace: 0,
+        discovery: 0,
+        affection: 25,
+        leisure: 0,
+        designation: 5
+      },
+      yacht: {
+        virtue: 2,
+        royal: 2,
+        holy: 0,
+        beast: 5,
+        sky: 10,
+        place: 2,
+        person: 10,
+        poetic: 10,
+        commerce: 5,
+        menace: 0,
+        discovery: 5,
+        affection: 20,
+        leisure: 30,
+        designation: 0
+      },
+      raider: {
+        virtue: 5,
+        royal: 2,
+        holy: 0,
+        beast: 15,
+        sky: 10,
+        place: 2,
+        person: 5,
+        poetic: 5,
+        commerce: 5,
+        menace: 40,
+        discovery: 0,
+        affection: 0,
+        leisure: 0,
+        designation: 0
+      },
+      sacred: {
+        virtue: 5,
+        royal: 15,
+        holy: 35,
+        beast: 5,
+        sky: 10,
+        place: 5,
+        person: 10,
+        poetic: 15,
+        commerce: 0,
+        menace: 0,
+        discovery: 0,
+        affection: 0,
+        leisure: 0,
+        designation: 0
+      }
+    },
+    spacecraft: {
+      war: {
+        virtue: 30,
+        royal: 10,
+        holy: 0,
+        beast: 15,
+        sky: 10,
+        place: 10,
+        person: 15,
+        poetic: 5,
+        commerce: 0,
+        menace: 5,
+        discovery: 0,
+        affection: 0,
+        leisure: 0,
+        designation: 0
+      },
+      merchant: {
+        virtue: 5,
+        royal: 0,
+        holy: 0,
+        beast: 5,
+        sky: 10,
+        place: 15,
+        person: 5,
+        poetic: 0,
+        commerce: 40,
+        menace: 0,
+        discovery: 5,
+        affection: 0,
+        leisure: 0,
+        designation: 20
+      },
+      passenger: {
+        virtue: 5,
+        royal: 10,
+        holy: 0,
+        beast: 0,
+        sky: 15,
+        place: 20,
+        person: 10,
+        poetic: 5,
+        commerce: 25,
+        menace: 0,
+        discovery: 5,
+        affection: 0,
+        leisure: 0,
+        designation: 0
+      },
+      explore: {
+        virtue: 10,
+        royal: 0,
+        holy: 0,
+        beast: 5,
+        sky: 20,
+        place: 5,
+        person: 20,
+        poetic: 10,
+        commerce: 0,
+        menace: 0,
+        discovery: 30,
+        affection: 0,
+        leisure: 0,
+        designation: 0
+      },
+      working: {
+        virtue: 5,
+        royal: 0,
+        holy: 0,
+        beast: 5,
+        sky: 5,
+        place: 10,
+        person: 10,
+        poetic: 0,
+        commerce: 15,
+        menace: 0,
+        discovery: 0,
+        affection: 15,
+        leisure: 0,
+        designation: 40
+      },
+      yacht: {
+        virtue: 2,
+        royal: 2,
+        holy: 0,
+        beast: 5,
+        sky: 10,
+        place: 2,
+        person: 10,
+        poetic: 10,
+        commerce: 5,
+        menace: 0,
+        discovery: 5,
+        affection: 15,
+        leisure: 30,
+        designation: 0
+      },
+      raider: {
+        virtue: 5,
+        royal: 0,
+        holy: 0,
+        beast: 15,
+        sky: 10,
+        place: 0,
+        person: 5,
+        poetic: 5,
+        commerce: 0,
+        menace: 45,
+        discovery: 0,
+        affection: 5,
+        leisure: 0,
+        designation: 10
+      },
+      sacred: {
+        virtue: 10,
+        royal: 20,
+        holy: 10,
+        beast: 5,
+        sky: 15,
+        place: 10,
+        person: 15,
+        poetic: 15,
+        commerce: 0,
+        menace: 0,
+        discovery: 0,
+        affection: 0,
+        leisure: 0,
+        designation: 0
+      },
+      colony: {
+        virtue: 10,
+        royal: 0,
+        holy: 5,
+        beast: 0,
+        sky: 15,
+        place: 20,
+        person: 10,
+        poetic: 30,
+        commerce: 0,
+        menace: 0,
+        discovery: 10,
+        affection: 0,
+        leisure: 0,
+        designation: 0
+      },
+      station: {
+        virtue: 5,
+        royal: 5,
+        holy: 0,
+        beast: 0,
+        sky: 20,
+        place: 30,
+        person: 15,
+        poetic: 10,
+        commerce: 5,
+        menace: 0,
+        discovery: 5,
+        affection: 0,
+        leisure: 0,
+        designation: 5
+      }
+    }
+  },
+  roleExtras: [
+    {
+      module: "ships",
+      function: "war",
+      role: "designation",
+      w: 5,
+      k: "T6-T7"
+    }
+  ],
+  lists: {
+    virtue: [
+      {
+        w: "Resolute",
+        x: 2
+      },
+      {
+        w: "Valiant",
+        x: 2
+      },
+      {
+        w: "Defiance"
+      },
+      {
+        w: "Courage"
+      },
+      {
+        w: "Endurance"
+      },
+      {
+        w: "Constant"
+      },
+      {
+        w: "Faithful"
+      },
+      {
+        w: "Steadfast"
+      },
+      {
+        w: "Victory",
+        x: 2
+      },
+      {
+        w: "Triumph"
+      },
+      {
+        w: "Glory",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Hope"
+      },
+      {
+        w: "Fortitude"
+      },
+      {
+        w: "Liberty"
+      },
+      {
+        w: "Dauntless"
+      },
+      {
+        w: "Intrepid"
+      },
+      {
+        w: "Vigilant"
+      },
+      {
+        w: "Indomitable",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Swift"
+      },
+      {
+        w: "Bold"
+      }
+    ],
+    virtueAdj: [
+      {
+        w: "Faithful"
+      },
+      {
+        w: "Brave"
+      },
+      {
+        w: "Swift"
+      },
+      {
+        w: "Bold"
+      },
+      {
+        w: "Constant"
+      },
+      {
+        w: "Noble",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Golden",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "True"
+      },
+      {
+        w: "Steadfast"
+      },
+      {
+        w: "Gallant",
+        t: [
+          "grand"
+        ]
+      }
+    ],
+    royal: [
+      {
+        w: "Sovereign",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Crown"
+      },
+      {
+        w: "Monarch"
+      },
+      {
+        w: "Regent"
+      },
+      {
+        w: "Prince"
+      },
+      {
+        w: "Princess"
+      },
+      {
+        w: "Empress",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Majesty",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Sceptre"
+      }
+    ],
+    ruler: [
+      {
+        w: "King"
+      },
+      {
+        w: "Queen"
+      },
+      {
+        w: "Prince"
+      },
+      {
+        w: "Duke"
+      },
+      {
+        w: "Emperor"
+      },
+      {
+        w: "Lord"
+      }
+    ],
+    seaLand: [
+      {
+        w: "North"
+      },
+      {
+        w: "South"
+      },
+      {
+        w: "East"
+      },
+      {
+        w: "West"
+      },
+      {
+        w: "Isles"
+      },
+      {
+        w: "Indies"
+      },
+      {
+        w: "Ocean"
+      },
+      {
+        w: "Deep"
+      }
+    ],
+    sky: [
+      {
+        w: "Star",
+        x: 2
+      },
+      {
+        w: "Dawn"
+      },
+      {
+        w: "Morning Star"
+      },
+      {
+        w: "Evening Star"
+      },
+      {
+        w: "North Star"
+      },
+      {
+        w: "Comet"
+      },
+      {
+        w: "Moon"
+      },
+      {
+        w: "Sun"
+      },
+      {
+        w: "Wind"
+      },
+      {
+        w: "Tempest"
+      },
+      {
+        w: "Rising Sun"
+      },
+      {
+        w: "Aurora"
+      },
+      {
+        w: "Meteor"
+      }
+    ],
+    skyAdj: [
+      {
+        w: "Morning"
+      },
+      {
+        w: "Evening"
+      },
+      {
+        w: "Northern"
+      },
+      {
+        w: "Southern"
+      },
+      {
+        w: "Rising"
+      },
+      {
+        w: "Silver"
+      },
+      {
+        w: "Bright"
+      },
+      {
+        w: "Falling",
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Western"
+      },
+      {
+        w: "Wandering",
+        t: [
+          "strange"
+        ]
+      }
+    ],
+    seaAdj: [
+      {
+        w: "Sea"
+      },
+      {
+        w: "Ocean"
+      },
+      {
+        w: "Wave"
+      },
+      {
+        w: "Tide"
+      },
+      {
+        w: "Salt"
+      },
+      {
+        w: "Storm"
+      }
+    ],
+    spaceSeaAdj: [
+      {
+        w: "Star"
+      },
+      {
+        w: "Void"
+      },
+      {
+        w: "Deep"
+      },
+      {
+        w: "Solar"
+      },
+      {
+        w: "Night"
+      }
+    ],
+    commerceAdj: [
+      {
+        w: "Good"
+      },
+      {
+        w: "Prosperous"
+      },
+      {
+        w: "Fair"
+      },
+      {
+        w: "Golden"
+      },
+      {
+        w: "Honest",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Rich"
+      },
+      {
+        w: "Lucky",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Steady",
+        t: [
+          "plain"
+        ]
+      }
+    ],
+    commerceNoun: [
+      {
+        w: "Fortune",
+        x: 2
+      },
+      {
+        w: "Venture",
+        x: 2
+      },
+      {
+        w: "Enterprise"
+      },
+      {
+        w: "Trader",
+        x: 2
+      },
+      {
+        w: "Merchant"
+      },
+      {
+        w: "Adventurer"
+      },
+      {
+        w: "Return"
+      },
+      {
+        w: "Exchange"
+      },
+      {
+        w: "Bounty"
+      },
+      {
+        w: "Harvest"
+      },
+      {
+        w: "Prosperity"
+      },
+      {
+        w: "Increase"
+      },
+      {
+        w: "Success"
+      },
+      {
+        w: "Carrier",
+        k: "T7"
+      },
+      {
+        w: "Spirit",
+        k: "T7"
+      },
+      {
+        w: "Pioneer",
+        k: "T7"
+      }
+    ],
+    menaceAdj: [
+      {
+        w: "Black",
+        x: 2
+      },
+      {
+        w: "Red"
+      },
+      {
+        w: "Bloody"
+      },
+      {
+        w: "Grim"
+      },
+      {
+        w: "Cruel"
+      },
+      {
+        w: "Dread"
+      },
+      {
+        w: "Wicked"
+      },
+      {
+        w: "Broken"
+      },
+      {
+        w: "Hungry"
+      }
+    ],
+    menaceNoun: [
+      {
+        w: "Fortune"
+      },
+      {
+        w: "Reckoning"
+      },
+      {
+        w: "Revenge"
+      },
+      {
+        w: "Vengeance"
+      },
+      {
+        w: "Wrath"
+      },
+      {
+        w: "Shadow"
+      },
+      {
+        w: "Terror"
+      },
+      {
+        w: "Warning"
+      },
+      {
+        w: "Mercy",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Grin"
+      },
+      {
+        w: "Crown"
+      }
+    ],
+    figure: [
+      {
+        w: "Widow"
+      },
+      {
+        w: "Tyrant"
+      },
+      {
+        w: "Devil"
+      },
+      {
+        w: "Hangman"
+      },
+      {
+        w: "Sinner"
+      },
+      {
+        w: "Beggar"
+      },
+      {
+        w: "Queen"
+      },
+      {
+        w: "Dead Man"
+      },
+      {
+        w: "King"
+      },
+      {
+        w: "Gallows"
+      }
+    ],
+    consequence: [
+      {
+        w: "Revenge"
+      },
+      {
+        w: "Reckoning"
+      },
+      {
+        w: "Ransom"
+      },
+      {
+        w: "Curse"
+      },
+      {
+        w: "Debt"
+      },
+      {
+        w: "Lament"
+      },
+      {
+        w: "Delight",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Folly",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Bargain",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Prize"
+      }
+    ],
+    discovery: [
+      {
+        w: "Discovery"
+      },
+      {
+        w: "Endeavour"
+      },
+      {
+        w: "Resolution"
+      },
+      {
+        w: "Adventure"
+      },
+      {
+        w: "Explorer"
+      },
+      {
+        w: "Pathfinder"
+      },
+      {
+        w: "Venture"
+      },
+      {
+        w: "Horizon"
+      },
+      {
+        w: "Wayfarer"
+      },
+      {
+        w: "Seeker"
+      },
+      {
+        w: "Surveyor"
+      },
+      {
+        w: "Investigator"
+      },
+      {
+        w: "Pioneer"
+      }
+    ],
+    affectionAdj: [
+      {
+        w: "Little",
+        x: 2
+      },
+      {
+        w: "Good"
+      },
+      {
+        w: "Our",
+        x: 2
+      },
+      {
+        w: "Bonny"
+      },
+      {
+        w: "Lucky"
+      },
+      {
+        w: "Faithful"
+      }
+    ],
+    affectionNoun: [
+      {
+        w: "Lass"
+      },
+      {
+        w: "Lad"
+      },
+      {
+        w: "Girl"
+      },
+      {
+        w: "Pride",
+        x: 2
+      },
+      {
+        w: "Joy"
+      },
+      {
+        w: "Darling"
+      },
+      {
+        w: "Star"
+      }
+    ],
+    leisureName: [
+      {
+        w: "Second Wind"
+      },
+      {
+        w: "No Hurry"
+      },
+      {
+        w: "Blue Escape"
+      },
+      {
+        w: "One More Day"
+      },
+      {
+        w: "Knot Working"
+      },
+      {
+        w: "Reel Time"
+      },
+      {
+        w: "Sea Esta"
+      },
+      {
+        w: "Shore Thing"
+      },
+      {
+        w: "Seas the Day"
+      },
+      {
+        w: "Liquid Assets"
+      },
+      {
+        w: "Afternoon Off"
+      },
+      {
+        w: "Well Earned"
+      },
+      {
+        w: "Why Not"
+      },
+      {
+        w: "Plan B"
+      },
+      {
+        w: "Pension Pot"
+      },
+      {
+        w: "Nauti Buoy"
+      },
+      {
+        w: "Fair Weather"
+      },
+      {
+        w: "Gone Fishing"
+      }
+    ],
+    leisureAdj: [
+      {
+        w: "Summer"
+      },
+      {
+        w: "Lazy"
+      },
+      {
+        w: "Golden"
+      },
+      {
+        w: "Easy"
+      },
+      {
+        w: "Blue"
+      },
+      {
+        w: "Sunny"
+      },
+      {
+        w: "Gentle"
+      }
+    ],
+    leisureNoun: [
+      {
+        w: "Dream"
+      },
+      {
+        w: "Escape"
+      },
+      {
+        w: "Days"
+      },
+      {
+        w: "Breeze"
+      },
+      {
+        w: "Hours"
+      },
+      {
+        w: "Afternoon"
+      },
+      {
+        w: "Drift"
+      }
+    ],
+    womanName: [
+      {
+        w: "Mary",
+        x: 2
+      },
+      {
+        w: "Anne"
+      },
+      {
+        w: "Elsie"
+      },
+      {
+        w: "Emily"
+      },
+      {
+        w: "Grace"
+      },
+      {
+        w: "Margaret"
+      },
+      {
+        w: "Kate"
+      },
+      {
+        w: "Ellen"
+      },
+      {
+        w: "Rose"
+      },
+      {
+        w: "Ivy"
+      },
+      {
+        w: "Lily"
+      },
+      {
+        w: "Jane"
+      },
+      {
+        w: "Beth"
+      },
+      {
+        w: "Molly"
+      },
+      {
+        w: "Agnes"
+      },
+      {
+        w: "Edith"
+      },
+      {
+        w: "Dora"
+      },
+      {
+        w: "Nellie"
+      },
+      {
+        w: "Florence"
+      },
+      {
+        w: "Ada"
+      }
+    ],
+    designationWord: [
+      {
+        w: "Patrol Boat"
+      },
+      {
+        w: "Launch"
+      },
+      {
+        w: "Lighter"
+      },
+      {
+        w: "Tender"
+      },
+      {
+        w: "Barge"
+      },
+      {
+        w: "Pilot Boat"
+      },
+      {
+        w: "Motor Gunboat",
+        k: "T6"
+      },
+      {
+        w: "Landing Craft",
+        k: "T6-T7"
+      }
+    ],
+    spaceDesignationWord: [
+      {
+        w: "Tender"
+      },
+      {
+        w: "Lighter"
+      },
+      {
+        w: "Drone"
+      },
+      {
+        w: "Ore Hauler"
+      },
+      {
+        w: "Tug"
+      },
+      {
+        w: "Shuttle"
+      },
+      {
+        w: "Cutter"
+      },
+      {
+        w: "Lander"
+      }
+    ],
+    marian: [
+      {
+        w: "Victory"
+      },
+      {
+        w: "Good Hope"
+      },
+      {
+        w: "the Rosary"
+      },
+      {
+        w: "Mercy"
+      },
+      {
+        w: "the Snows"
+      },
+      {
+        w: "the Sea"
+      },
+      {
+        w: "Remedies"
+      },
+      {
+        w: "Sorrows"
+      },
+      {
+        w: "Solitude"
+      },
+      {
+        w: "Light"
+      },
+      {
+        w: "Peace"
+      },
+      {
+        w: "Help"
+      },
+      {
+        w: "Good Voyage"
+      }
+    ],
+    holyNoun: [
+      {
+        w: "Grace"
+      },
+      {
+        w: "Providence"
+      },
+      {
+        w: "Blessing"
+      },
+      {
+        w: "Mercy"
+      },
+      {
+        w: "Hope"
+      },
+      {
+        w: "Good Fortune"
+      },
+      {
+        w: "Deliverance"
+      },
+      {
+        w: "Thanksgiving"
+      }
+    ],
+    holyAdj: [
+      {
+        w: "Holy"
+      },
+      {
+        w: "Blessed"
+      },
+      {
+        w: "Good"
+      },
+      {
+        w: "Sacred"
+      }
+    ],
+    season: [
+      {
+        w: "Spring"
+      },
+      {
+        w: "Summer"
+      },
+      {
+        w: "Autumn"
+      },
+      {
+        w: "Winter"
+      }
+    ]
+  },
+  listTones: {
+    menaceAdj: [
+      "grim"
+    ],
+    affectionAdj: [
+      "light"
+    ],
+    leisureName: [
+      "light"
+    ]
+  },
+  shapes: [
+    {
+      role: "virtue",
+      p: "{virtue}",
+      w: 60
+    },
+    {
+      role: "virtue",
+      p: "{virtueAdj} {beast}",
+      w: 20
+    },
+    {
+      role: "virtue",
+      p: "The {virtueAdj}",
+      w: 5
+    },
+    {
+      role: "virtue",
+      p: "{virtue} of {town}",
+      w: 15,
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "royal",
+      p: "{royal}",
+      w: 25,
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "royal",
+      p: "Royal {beast}",
+      w: 20,
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "royal",
+      p: "{ruler:poss} {virtue}",
+      w: 20
+    },
+    {
+      role: "royal",
+      p: "{royal} of the {seaLand}",
+      w: 20,
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "royal",
+      p: "{royal} of the Seas",
+      w: 5,
+      k: "T3-T4",
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "royal",
+      p: "Empress of the {seaLand}",
+      w: 10,
+      k: "T5-T7",
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "holy",
+      p: "{holy}",
+      w: 35,
+      holy: "saint"
+    },
+    {
+      role: "holy",
+      p: "{holyAdj} {holyNoun}",
+      w: 30,
+      t: [
+        "grand"
+      ],
+      holy: "blessing"
+    },
+    {
+      role: "holy",
+      p: "Our Lady of {marian}",
+      w: 15,
+      t: [
+        "grand"
+      ],
+      holy: "marian"
+    },
+    {
+      role: "holy",
+      p: "{holyNoun}",
+      w: 20,
+      holy: "blessingOnly"
+    },
+    {
+      role: "beast",
+      p: "{beast}",
+      w: 30
+    },
+    {
+      role: "beast",
+      p: "{colour} {beast}",
+      w: 30
+    },
+    {
+      role: "beast",
+      p: "{seaAdj} {beast}",
+      w: 15
+    },
+    {
+      role: "beast",
+      p: "{beast} of {town}",
+      w: 15,
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "beast",
+      p: "{beast:poss} {weapon}",
+      w: 10,
+      t: [
+        "grim"
+      ]
+    },
+    {
+      role: "sky",
+      p: "{sky}",
+      w: 20
+    },
+    {
+      role: "sky",
+      p: "{skyAdj} {sky}",
+      w: 40
+    },
+    {
+      role: "sky",
+      p: "{sky} of the {compass}",
+      w: 20,
+      t: [
+        "strange"
+      ]
+    },
+    {
+      role: "sky",
+      p: "{sky} over {town}",
+      w: 20,
+      t: [
+        "strange"
+      ]
+    },
+    {
+      role: "place",
+      p: "{town}",
+      w: 40,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      role: "place",
+      p: "City of {town}",
+      w: 20,
+      k: "T5-T7",
+      fn: [
+        "passenger",
+        "merchant"
+      ],
+      t: [
+        "plain"
+      ]
+    },
+    {
+      role: "place",
+      p: "Pride of {town}",
+      w: 20,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      role: "place",
+      p: "{town} {commerceNoun}",
+      w: 20,
+      fn: [
+        "merchant"
+      ],
+      t: [
+        "plain"
+      ]
+    },
+    {
+      role: "person",
+      p: "{womanName}",
+      w: 25
+    },
+    {
+      role: "person",
+      p: "{womanName} {surname}",
+      w: 15,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      role: "person",
+      p: "Admiral {surname}",
+      w: 15,
+      k: "T5-T7",
+      fn: [
+        "war"
+      ]
+    },
+    {
+      role: "person",
+      p: "{surname}",
+      w: 20,
+      k: "T6-T7",
+      fn: [
+        "war",
+        "explore"
+      ],
+      t: [
+        "plain"
+      ]
+    },
+    {
+      role: "person",
+      p: "{person}",
+      w: 25
+    },
+    {
+      role: "poetic",
+      p: "{poetic}",
+      w: 100
+    },
+    {
+      role: "commerce",
+      p: "{commerceAdj} {commerceNoun}",
+      w: 40
+    },
+    {
+      role: "commerce",
+      p: "Merchant's {commerceNoun}",
+      w: 15
+    },
+    {
+      role: "commerce",
+      p: "{seaLand} {commerceNoun}",
+      w: 25
+    },
+    {
+      role: "commerce",
+      p: "{brandRoot} {town}",
+      w: 20,
+      k: "T7",
+      s: [
+        "MR",
+        "MF",
+        "SF"
+      ],
+      t: [
+        "plain"
+      ]
+    },
+    {
+      role: "menace",
+      p: "{menaceAdj} {menaceNoun}",
+      w: 40,
+      t: [
+        "grim"
+      ]
+    },
+    {
+      role: "menace",
+      p: "{figure:poss} {consequence}",
+      w: 40
+    },
+    {
+      role: "menace",
+      p: "{menaceNoun}",
+      w: 20,
+      t: [
+        "grim"
+      ]
+    },
+    {
+      role: "discovery",
+      p: "{discovery}",
+      w: 50
+    },
+    {
+      role: "discovery",
+      p: "Far {discovery}",
+      w: 15
+    },
+    {
+      role: "discovery",
+      p: "{compass} {discovery}",
+      w: 20
+    },
+    {
+      role: "discovery",
+      p: "New {discovery}",
+      w: 15
+    },
+    {
+      role: "affection",
+      p: "{affectionAdj} {womanName}",
+      w: 35,
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "affection",
+      p: "{town} {affectionNoun}",
+      w: 35,
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "affection",
+      p: "{affectionAdj} {affectionNoun}",
+      w: 30,
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "leisure",
+      p: "{leisureName}",
+      w: 60,
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "leisure",
+      p: "{leisureAdj} {leisureNoun}",
+      w: 40,
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "designation",
+      p: "{designationWord} {n}",
+      w: 100,
+      t: [
+        "plain"
+      ]
+    }
+  ],
+  styles: [
+    {
+      key: "heroic",
+      label: "heroic",
+      settings: [
+        "FH"
+      ],
+      modules: [
+        "ships"
+      ],
+      description: "Heroes, virtues, legendary weapons",
+      tone: "grand",
+      name: [
+        {
+          w: "Silver Champion"
+        },
+        {
+          w: "Dawn Sword"
+        },
+        {
+          w: "Star of Courage"
+        }
+      ],
+      pools: {
+        hAdj: [
+          {
+            w: "Silver"
+          },
+          {
+            w: "Golden"
+          },
+          {
+            w: "Dawn"
+          },
+          {
+            w: "Bright"
+          },
+          {
+            w: "Valiant"
+          },
+          {
+            w: "Shining"
+          }
+        ],
+        hNoun: [
+          {
+            w: "Champion"
+          },
+          {
+            w: "Sword"
+          },
+          {
+            w: "Banner"
+          },
+          {
+            w: "Oath"
+          },
+          {
+            w: "Crown"
+          },
+          {
+            w: "Lance"
+          },
+          {
+            w: "Shield"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{hAdj} {hNoun}",
+        "{hNoun} of {town}",
+        "{beast:poss} Honour"
+      ]
+    },
+    {
+      key: "dark",
+      label: "dark",
+      settings: [
+        "FH",
+        "MF"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "Curses, death, ominous holy imagery",
+      tone: "grim",
+      name: [
+        {
+          w: "Hollow Saint"
+        },
+        {
+          w: "Black Testament"
+        },
+        {
+          w: "Grave Tide"
+        },
+        {
+          w: "Mourning Crown"
+        },
+        {
+          w: "The Last Sin"
+        }
+      ],
+      pools: {
+        dAdj: [
+          {
+            w: "Hollow"
+          },
+          {
+            w: "Black"
+          },
+          {
+            w: "Grave"
+          },
+          {
+            w: "Mourning"
+          },
+          {
+            w: "Ashen"
+          },
+          {
+            w: "Drowned"
+          },
+          {
+            w: "Silent"
+          }
+        ],
+        dNoun: [
+          {
+            w: "Saint"
+          },
+          {
+            w: "Testament"
+          },
+          {
+            w: "Tide"
+          },
+          {
+            w: "Crown"
+          },
+          {
+            w: "Sin"
+          },
+          {
+            w: "Psalm"
+          },
+          {
+            w: "Shroud"
+          },
+          {
+            w: "Vigil"
+          },
+          {
+            w: "Bell"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{dAdj} {dNoun}",
+        "The {ordinalWord} {dNoun}"
+      ]
+    },
+    {
+      key: "elven",
+      label: "elven",
+      settings: [
+        "FH"
+      ],
+      modules: [
+        "ships"
+      ],
+      description: "Moonlight, memory, song, silver",
+      tone: "strange",
+      name: [
+        {
+          w: "Moonlit Bough"
+        },
+        {
+          w: "Song before Sunrise"
+        },
+        {
+          w: "Silver Leaf"
+        },
+        {
+          w: "Memory of Spring"
+        },
+        {
+          w: "Starlight upon Water"
+        }
+      ],
+      pools: {
+        eAdj: [
+          {
+            w: "Moonlit"
+          },
+          {
+            w: "Silver"
+          },
+          {
+            w: "Starlit"
+          },
+          {
+            w: "Evening"
+          },
+          {
+            w: "Gentle"
+          },
+          {
+            w: "Dreaming"
+          }
+        ],
+        eNoun: [
+          {
+            w: "Bough"
+          },
+          {
+            w: "Leaf"
+          },
+          {
+            w: "Song"
+          },
+          {
+            w: "Memory"
+          },
+          {
+            w: "Willow"
+          },
+          {
+            w: "Dew"
+          },
+          {
+            w: "Lantern"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{eAdj} {eNoun}",
+        "{eNoun} before {sky}",
+        "{eNoun} of {season}"
+      ]
+    },
+    {
+      key: "dwarven",
+      label: "dwarven",
+      settings: [
+        "FH"
+      ],
+      modules: [
+        "ships"
+      ],
+      description: "Metal, craft, clan, engines",
+      name: [
+        {
+          w: "Iron Promise"
+        },
+        {
+          w: "Clan Anvil"
+        },
+        {
+          w: "Stonewake"
+        },
+        {
+          w: "Forge Runner"
+        },
+        {
+          w: "Brass Leviathan"
+        }
+      ],
+      pools: {
+        wAdj: [
+          {
+            w: "Iron"
+          },
+          {
+            w: "Brass"
+          },
+          {
+            w: "Stone"
+          },
+          {
+            w: "Deep"
+          },
+          {
+            w: "Coal"
+          },
+          {
+            w: "Hammered"
+          }
+        ],
+        wNoun: [
+          {
+            w: "Promise"
+          },
+          {
+            w: "Anvil"
+          },
+          {
+            w: "Oath"
+          },
+          {
+            w: "Forge"
+          },
+          {
+            w: "Hammer"
+          },
+          {
+            w: "Leviathan"
+          },
+          {
+            w: "Hearth"
+          },
+          {
+            w: "Bellows"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{wAdj} {wNoun}",
+        "Clan {wNoun}",
+        "{wAdj+wake}"
+      ]
+    },
+    {
+      key: "oceanic",
+      label: "Oceanic voyaging (fantasy)",
+      settings: [
+        "FH"
+      ],
+      modules: [
+        "ships"
+      ],
+      description: "The ocean as a living presence; chosen navigators. Fantasy, not a real culture.",
+      tone: "strange",
+      name: [
+        {
+          w: "The Ocean's Chosen"
+        },
+        {
+          w: "Heart of the Endless Sea"
+        },
+        {
+          w: "Wayfinder's Promise"
+        },
+        {
+          w: "Island beyond the Sunset"
+        },
+        {
+          w: "Daughter of the Living Tide"
+        },
+        {
+          w: "Song of the Returning Stars"
+        },
+        {
+          w: "The Wind Knows Our Way"
+        },
+        {
+          w: "Where the Ocean Leads"
+        }
+      ],
+      pools: {
+        oNoun: [
+          {
+            w: "Tide"
+          },
+          {
+            w: "Star"
+          },
+          {
+            w: "Wave"
+          },
+          {
+            w: "Island"
+          },
+          {
+            w: "Wind"
+          },
+          {
+            w: "Reef"
+          }
+        ],
+        oAdj: [
+          {
+            w: "Living"
+          },
+          {
+            w: "Endless"
+          },
+          {
+            w: "Returning"
+          },
+          {
+            w: "Singing"
+          },
+          {
+            w: "Chosen"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "Heart of the {oAdj} {oNoun}",
+        "Child of the {oAdj} {oNoun}",
+        "The {oNoun} Remembers"
+      ]
+    },
+    {
+      key: "fpirate",
+      label: "fantasy pirate",
+      settings: [
+        "FH"
+      ],
+      modules: [
+        "ships"
+      ],
+      description: "Monsters, curses, treasure",
+      tone: "grim",
+      name: [
+        {
+          w: "Kraken's Debt"
+        },
+        {
+          w: "Crimson Gallows"
+        },
+        {
+          w: "Dead Man's Fortune"
+        },
+        {
+          w: "The Burning Mermaid"
+        },
+        {
+          w: "Devil's Compass"
+        }
+      ],
+      pools: {
+        monster: [
+          {
+            w: "Kraken"
+          },
+          {
+            w: "Leviathan"
+          },
+          {
+            w: "Siren"
+          },
+          {
+            w: "Mermaid"
+          },
+          {
+            w: "Sea-Serpent"
+          },
+          {
+            w: "Devil"
+          },
+          {
+            w: "Ghost"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{monster:poss} {consequence}",
+        "The {menaceAdj} {monster}",
+        "{colour} {monster}"
+      ]
+    },
+    {
+      key: "steampunk",
+      label: "steampunk",
+      settings: [
+        "MF",
+        "FH"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "Brass, aether, imperial invention",
+      tone: "grand",
+      name: [
+        {
+          w: "Imperial Aether"
+        },
+        {
+          w: "Brass Majesty"
+        },
+        {
+          w: "Queen's Contrivance"
+        },
+        {
+          w: "Indefatigable Engine"
+        },
+        {
+          w: "Crown of Progress"
+        }
+      ],
+      pools: {
+        spAdj: [
+          {
+            w: "Brass"
+          },
+          {
+            w: "Aether"
+          },
+          {
+            w: "Clockwork"
+          },
+          {
+            w: "Copper"
+          },
+          {
+            w: "Imperial"
+          },
+          {
+            w: "Gilded"
+          }
+        ],
+        spNoun: [
+          {
+            w: "Majesty"
+          },
+          {
+            w: "Contrivance"
+          },
+          {
+            w: "Engine"
+          },
+          {
+            w: "Progress"
+          },
+          {
+            w: "Marvel"
+          },
+          {
+            w: "Apparatus"
+          },
+          {
+            w: "Dynamo"
+          },
+          {
+            w: "Sovereign"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{spAdj} {spNoun}",
+        "{ruler:poss} {spNoun}",
+        "{spNoun} of {town}"
+      ]
+    },
+    {
+      key: "dieselpunk",
+      label: "dieselpunk",
+      settings: [
+        "MF"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "Industry, propaganda, heroic machinery",
+      tone: "plain",
+      name: [
+        {
+          w: "Steel Horizon"
+        },
+        {
+          w: "People's Thunder"
+        },
+        {
+          w: "Victory Express"
+        },
+        {
+          w: "Modern Titan"
+        },
+        {
+          w: "National Dynamo"
+        }
+      ],
+      pools: {
+        dpAdj: [
+          {
+            w: "Steel"
+          },
+          {
+            w: "Modern"
+          },
+          {
+            w: "National"
+          },
+          {
+            w: "Chrome"
+          },
+          {
+            w: "Streamlined"
+          }
+        ],
+        dpNoun: [
+          {
+            w: "Horizon"
+          },
+          {
+            w: "Thunder"
+          },
+          {
+            w: "Titan"
+          },
+          {
+            w: "Dynamo"
+          },
+          {
+            w: "Express"
+          },
+          {
+            w: "Century"
+          },
+          {
+            w: "Tomorrow"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{dpAdj} {dpNoun}",
+        "{town} {dpNoun}"
+      ]
+    },
+    {
+      key: "postapoc",
+      label: "post-apocalyptic",
+      settings: [
+        "MF",
+        "SF"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "Salvage, scarcity, dark jokes",
+      tone: "light",
+      name: [
+        {
+          w: "Still Floating"
+        },
+        {
+          w: "Last Ferry"
+        },
+        {
+          w: "Canned Hope"
+        },
+        {
+          w: "Plenty Enough"
+        },
+        {
+          w: "Patched Again"
+        },
+        {
+          w: "Not Sinking Today"
+        }
+      ],
+      pools: {
+        paAdj: [
+          {
+            w: "Last"
+          },
+          {
+            w: "Patched"
+          },
+          {
+            w: "Canned"
+          },
+          {
+            w: "Spare"
+          },
+          {
+            w: "Second-Hand"
+          }
+        ],
+        paNoun: [
+          {
+            w: "Ferry"
+          },
+          {
+            w: "Hope"
+          },
+          {
+            w: "Chance"
+          },
+          {
+            w: "Tin"
+          },
+          {
+            w: "Luck"
+          },
+          {
+            w: "Road"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{paAdj} {paNoun}",
+        "{town} Road",
+        "Old {town}"
+      ]
+    },
+    {
+      key: "wasteland",
+      label: "wasteland raider",
+      settings: [
+        "MF",
+        "SF"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "Rust, bone, crude boasting",
+      tone: "grim",
+      name: [
+        {
+          w: "Rust Tyrant"
+        },
+        {
+          w: "Bone Wake"
+        },
+        {
+          w: "Fuel Thief"
+        },
+        {
+          w: "Scrap King"
+        },
+        {
+          w: "Red Engine"
+        }
+      ],
+      pools: {
+        wrAdj: [
+          {
+            w: "Rust"
+          },
+          {
+            w: "Bone"
+          },
+          {
+            w: "Scrap"
+          },
+          {
+            w: "Red"
+          },
+          {
+            w: "Chrome"
+          },
+          {
+            w: "Burnt"
+          }
+        ],
+        wrNoun: [
+          {
+            w: "Tyrant"
+          },
+          {
+            w: "Wake"
+          },
+          {
+            w: "Thief"
+          },
+          {
+            w: "King"
+          },
+          {
+            w: "Engine"
+          },
+          {
+            w: "Jaw"
+          },
+          {
+            w: "Grin"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{wrAdj} {wrNoun}",
+        "{wrNoun} of {town}"
+      ]
+    },
+    {
+      key: "sfmilitary",
+      label: "military",
+      settings: [
+        "SF"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "Battles, predators, commanders",
+      tone: "grand",
+      name: [
+        {
+          w: "Unyielding"
+        },
+        {
+          w: "Relentless"
+        },
+        {
+          w: "Implacable"
+        }
+      ],
+      pools: {
+        battle: [
+          {
+            w: "Thermopylae"
+          },
+          {
+            w: "Salamis"
+          },
+          {
+            w: "Trafalgar"
+          },
+          {
+            w: "Lepanto"
+          },
+          {
+            w: "Agincourt"
+          },
+          {
+            w: "Jutland"
+          },
+          {
+            w: "Marathon"
+          },
+          {
+            w: "Actium"
+          },
+          {
+            w: "Hastings"
+          }
+        ],
+        predator: [
+          {
+            w: "Harrier"
+          },
+          {
+            w: "Raptor"
+          },
+          {
+            w: "Viper"
+          },
+          {
+            w: "Shrike"
+          },
+          {
+            w: "Mako"
+          },
+          {
+            w: "Kestrel"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{battle}",
+        "{predator}",
+        "Admiral {surname}",
+        "{virtue}"
+      ]
+    },
+    {
+      key: "sfexplore",
+      label: "exploration",
+      settings: [
+        "SF"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "Scientists, horizons, patient discovery",
+      name: [
+        {
+          w: "Far Horizon"
+        },
+        {
+          w: "New Dawn"
+        },
+        {
+          w: "Patient Explorer"
+        }
+      ],
+      pools: {
+        exAdj: [
+          {
+            w: "Patient"
+          },
+          {
+            w: "Far"
+          },
+          {
+            w: "Quiet"
+          },
+          {
+            w: "Long"
+          },
+          {
+            w: "New"
+          }
+        ],
+        exNoun: [
+          {
+            w: "Horizon"
+          },
+          {
+            w: "Dawn"
+          },
+          {
+            w: "Explorer"
+          },
+          {
+            w: "Surveyor"
+          },
+          {
+            w: "Question"
+          },
+          {
+            w: "Light"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{exAdj} {exNoun}",
+        "{star} {exNoun}",
+        "{scientist}"
+      ]
+    },
+    {
+      key: "corporate",
+      label: "corporate",
+      settings: [
+        "SF",
+        "MR",
+        "MF"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "Company stems, asset codes",
+      tone: "plain",
+      name: [
+        {
+          w: "Prosperity"
+        },
+        {
+          w: "Reliable Transit"
+        }
+      ],
+      pools: {
+        asset: [
+          {
+            w: "Asset"
+          },
+          {
+            w: "Venture"
+          },
+          {
+            w: "Holding"
+          },
+          {
+            w: "Unit"
+          },
+          {
+            w: "Logistics"
+          },
+          {
+            w: "Transit"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{brandRoot} {asset} {numberWord}",
+        "{brandRoot} {town}",
+        "{brandRoot} {asset}"
+      ]
+    },
+    {
+      key: "colony",
+      label: "colony",
+      settings: [
+        "SF"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "New homes, memory, survival",
+      name: [
+        {
+          w: "Children of Earth"
+        },
+        {
+          w: "Lasting Hope"
+        },
+        {
+          w: "Second Garden"
+        },
+        {
+          w: "Ancestral Memory"
+        }
+      ],
+      pools: {
+        cAdj: [
+          {
+            w: "Lasting"
+          },
+          {
+            w: "Second"
+          },
+          {
+            w: "New"
+          },
+          {
+            w: "Long"
+          },
+          {
+            w: "Faithful"
+          }
+        ],
+        cNoun: [
+          {
+            w: "Hope"
+          },
+          {
+            w: "Garden"
+          },
+          {
+            w: "Memory"
+          },
+          {
+            w: "Promise"
+          },
+          {
+            w: "Home"
+          },
+          {
+            w: "Harvest"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "New {town}",
+        "{cAdj} {cNoun}",
+        "Children of {town}"
+      ]
+    },
+    {
+      key: "ai",
+      label: "AI culture",
+      settings: [
+        "SF"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "Philosophical statements and paradoxes",
+      tone: "strange",
+      name: [
+        {
+          w: "Kindly Consider the Alternative"
+        },
+        {
+          w: "Necessary Silence"
+        },
+        {
+          w: "We Remember Differently"
+        },
+        {
+          w: "Patient Question"
+        },
+        {
+          w: "Consensus Nine"
+        }
+      ],
+      pools: {
+        aiAdv: [
+          {
+            w: "Kindly"
+          },
+          {
+            w: "Gently"
+          },
+          {
+            w: "Respectfully"
+          },
+          {
+            w: "Regretfully"
+          },
+          {
+            w: "Patiently"
+          }
+        ],
+        aiVerb: [
+          {
+            w: "Consider"
+          },
+          {
+            w: "Reconsider"
+          },
+          {
+            w: "Forgive"
+          },
+          {
+            w: "Revisit"
+          },
+          {
+            w: "Weigh"
+          }
+        ],
+        aiObj: [
+          {
+            w: "Alternative"
+          },
+          {
+            w: "Evidence"
+          },
+          {
+            w: "Question"
+          },
+          {
+            w: "Margin"
+          },
+          {
+            w: "Silence"
+          }
+        ],
+        aiAdj: [
+          {
+            w: "Necessary"
+          },
+          {
+            w: "Patient"
+          },
+          {
+            w: "Reasonable"
+          },
+          {
+            w: "Polite"
+          },
+          {
+            w: "Surplus"
+          }
+        ],
+        aiNoun: [
+          {
+            w: "Silence"
+          },
+          {
+            w: "Question"
+          },
+          {
+            w: "Doubt"
+          },
+          {
+            w: "Courtesy"
+          },
+          {
+            w: "Consensus"
+          }
+        ],
+        aiVerbPl: [
+          {
+            w: "Remember"
+          },
+          {
+            w: "Disagree"
+          },
+          {
+            w: "Wonder"
+          },
+          {
+            w: "Insist"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{aiAdv} {aiVerb} the {aiObj}",
+        "We {aiVerbPl} Otherwise",
+        "{aiAdj} {aiNoun}",
+        "{aiNoun} {numberWord}"
+      ]
+    },
+    {
+      key: "alien",
+      label: "alien in translation",
+      settings: [
+        "SF"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "Translated ritual phrases",
+      tone: "strange",
+      name: [
+        {
+          w: "The Water That Remembers"
+        },
+        {
+          w: "Third Voice of Winter"
+        },
+        {
+          w: "We Cross Together"
+        },
+        {
+          w: "Warm Stone beneath Stars"
+        },
+        {
+          w: "Child of the Returning Sky"
+        }
+      ],
+      pools: {
+        alElem: [
+          {
+            w: "Water"
+          },
+          {
+            w: "Stone"
+          },
+          {
+            w: "Wind"
+          },
+          {
+            w: "Light"
+          },
+          {
+            w: "Salt"
+          }
+        ],
+        alVerb: [
+          {
+            w: "Remembers"
+          },
+          {
+            w: "Listens"
+          },
+          {
+            w: "Waits"
+          },
+          {
+            w: "Returns"
+          },
+          {
+            w: "Sings"
+          }
+        ],
+        alVoice: [
+          {
+            w: "Voice"
+          },
+          {
+            w: "Song"
+          },
+          {
+            w: "Breath"
+          },
+          {
+            w: "Hand"
+          }
+        ],
+        alTemp: [
+          {
+            w: "Warm"
+          },
+          {
+            w: "Cold"
+          },
+          {
+            w: "Slow"
+          },
+          {
+            w: "Still"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "The {alElem} That {alVerb}",
+        "{ordinalWord} {alVoice} of {season}",
+        "{alTemp} {alElem} beneath Stars"
+      ]
+    },
+    {
+      key: "outlaw",
+      label: "frontier outlaw",
+      settings: [
+        "SF"
+      ],
+      modules: [
+        "ships",
+        "spacecraft"
+      ],
+      description: "Stolen wealth, defiance, dark humour",
+      tone: "light",
+      name: [
+        {
+          w: "Stolen Sunrise"
+        },
+        {
+          w: "Tax Collector"
+        },
+        {
+          w: "Vacuum Jackal"
+        },
+        {
+          w: "Honest Salvage"
+        },
+        {
+          w: "Last Warning"
+        }
+      ],
+      pools: {
+        oAdj2: [
+          {
+            w: "Stolen"
+          },
+          {
+            w: "Honest"
+          },
+          {
+            w: "Lucky"
+          },
+          {
+            w: "Borrowed"
+          },
+          {
+            w: "Crooked"
+          }
+        ],
+        oNoun2: [
+          {
+            w: "Sunrise"
+          },
+          {
+            w: "Salvage"
+          },
+          {
+            w: "Warning"
+          },
+          {
+            w: "Jackal"
+          },
+          {
+            w: "Promise"
+          },
+          {
+            w: "Payday"
+          }
+        ]
+      },
+      shapes: [
+        "{name}",
+        "{oAdj2} {oNoun2}",
+        "{tech} {beast}",
+        "{figure:poss} {consequence}"
+      ]
+    }
+  ],
+  styleShare: {
+    default: 0.6,
+    general: 0.85,
+    poolMultiplier: 3
+  },
+  space: {
+    station: [
+      {
+        p: "{town} Station",
+        w: 25
+      },
+      {
+        p: "{sky} Station",
+        w: 15
+      },
+      {
+        p: "{greek} Station",
+        w: 10
+      },
+      {
+        p: "Habitat {numberWord}",
+        w: 10
+      },
+      {
+        p: "{discovery} Station",
+        w: 10
+      },
+      {
+        p: "New {town}",
+        w: 15
+      },
+      {
+        p: "{ordinal} Ring of {town}",
+        w: 5
+      },
+      {
+        p: "{star} Gate",
+        w: 10
+      }
+    ],
+    colony: [
+      {
+        p: "{cAdj} {cNoun}",
+        w: 30
+      },
+      {
+        p: "New {town}",
+        w: 25
+      },
+      {
+        p: "Children of {town}",
+        w: 15
+      },
+      {
+        p: "{poetic}",
+        w: 20
+      },
+      {
+        p: "{colonyName}",
+        w: 10
+      }
+    ]
+  },
+  personLabels: {
+    war: "admiral",
+    merchant: "founder",
+    passenger: "founder",
+    explore: "explorer"
+  },
+  prefixes: {
+    real: [
+      {
+        p: "HMS",
+        cultures: [
+          "general",
+          "norman-british"
+        ],
+        fn: [
+          "war"
+        ],
+        k: "T4-T7"
+      },
+      {
+        p: "HMY",
+        cultures: [
+          "general",
+          "norman-british"
+        ],
+        fn: [
+          "sacred",
+          "yacht"
+        ],
+        k: "T4-T7"
+      },
+      {
+        p: "USS",
+        cultures: [
+          "american"
+        ],
+        fn: [
+          "war"
+        ],
+        k: "T4-T7"
+      },
+      {
+        p: "RMS",
+        cultures: [
+          "general",
+          "norman-british"
+        ],
+        fn: [
+          "passenger"
+        ],
+        k: "T5-T7"
+      },
+      {
+        p: "SS",
+        fn: [
+          "merchant",
+          "passenger"
+        ],
+        k: "T5"
+      },
+      {
+        p: "SS",
+        fn: [
+          "merchant",
+          "passenger"
+        ],
+        k: "T6",
+        x: 0.3
+      },
+      {
+        p: "MV",
+        fn: [
+          "merchant",
+          "passenger",
+          "working"
+        ],
+        k: "T6-T7"
+      },
+      {
+        p: "SY",
+        fn: [
+          "yacht"
+        ],
+        k: "T5"
+      },
+      {
+        p: "MY",
+        fn: [
+          "yacht"
+        ],
+        k: "T6-T7"
+      },
+      {
+        p: "RV",
+        fn: [
+          "explore"
+        ],
+        k: "T6-T7"
+      },
+      {
+        p: "FV",
+        fn: [
+          "working"
+        ],
+        k: "T6-T7"
+      }
+    ],
+    sf: {
+      war: [
+        "CNS",
+        "FNS",
+        "TNS",
+        "RNS",
+        "ANS"
+      ],
+      merchant: [
+        "CMV",
+        "IFV",
+        "MV"
+      ],
+      passenger: [
+        "SPL",
+        "IPL"
+      ],
+      explore: [
+        "ISV",
+        "RSV",
+        "DSV"
+      ],
+      working: [
+        "MT",
+        "UT"
+      ],
+      yacht: [
+        "PY",
+        "SY"
+      ],
+      colony: [
+        "CSV",
+        "LSV"
+      ],
+      sacred: [
+        "ESV",
+        "FSV"
+      ]
+    }
+  },
+  safeguards: {
+    block: [
+      "Titanic",
+      "Lusitania",
+      "Britannic",
+      "Olympic",
+      "Bismarck",
+      "Tirpitz",
+      "Yamato",
+      "Musashi",
+      "Mayflower",
+      "Golden Hind",
+      "Mary Rose",
+      "Cutty Sark",
+      "Queen Anne's Revenge",
+      "Bounty",
+      "Essex",
+      "Mary Celeste",
+      "Marie Celeste",
+      "Edmund Fitzgerald",
+      "Andrea Doria",
+      "Exxon Valdez",
+      "Costa Concordia",
+      "Rainbow Warrior",
+      "General Belgrano",
+      "Belgrano",
+      "Kursk",
+      "Arizona",
+      "Graf Spee",
+      "Admiral Graf Spee",
+      "Scharnhorst",
+      "Potemkin",
+      "Aurora",
+      "Batavia",
+      "Vasa",
+      "Santa Maria",
+      "Pinta",
+      "Nina",
+      "Kon-Tiki",
+      "Long Serpent",
+      "Short Serpent",
+      "Divine Wind",
+      "Royal Charles",
+      "Black Prince",
+      "Grace of God",
+      "Holy Ghost",
+      "Star of Gladness",
+      "Hokulea",
+      "Black Pearl",
+      "Amistad",
+      "Zong",
+      "Clotilda",
+      "Brookes",
+      "Henrietta Marie",
+      "Jesus of Lubeck",
+      "Wanderer",
+      "Wildfire",
+      "Hannibal",
+      "Flying Dutchman",
+      "Nautilus",
+      "Pequod",
+      "Hispaniola",
+      "Jolly Roger",
+      "Dawn Treader",
+      "Event Horizon",
+      "Millennium Falcon",
+      "Nostromo",
+      "Sulaco",
+      "Rocinante",
+      "Galactica",
+      "Discovery One",
+      "Heart of Gold",
+      "Red Dwarf",
+      "Bebop",
+      "Planet Express",
+      "Moya",
+      "Normandy",
+      "Red October",
+      "Interceptor",
+      "Going Merry",
+      "Thousand Sunny",
+      "Apollo",
+      "Gemini",
+      "Mercury",
+      "Vostok",
+      "Voskhod",
+      "Soyuz",
+      "Shenzhou",
+      "Tiangong",
+      "Mir",
+      "Skylab",
+      "Columbia",
+      "Challenger",
+      "Atlantis",
+      "Buran",
+      "Starship",
+      "Voyager",
+      "Hubble",
+      "ISS",
+      "International Space Station",
+      "So Much For Subtlety",
+      "Of Course I Still Love You",
+      "Just Read the Instructions",
+      "Sleeper Service",
+      "Grey Area",
+      "Attitude Adjuster",
+      "Limiting Factor",
+      "Killing Time",
+      "Experiencing a Significant Gravitas Shortfall",
+      "Mistake Not",
+      "Lasting Damage",
+      "Problem Child",
+      "Bora Horza Gobuchul",
+      "Size Isn't Everything",
+      "Very Little Gravitas Indeed"
+    ],
+    blockSpacecraft: [
+      "Enterprise",
+      "Serenity",
+      "Defiant",
+      "Liberator",
+      "Andromeda",
+      "Endeavour",
+      "Discovery",
+      "Dragon",
+      "Orion",
+      "Artemis",
+      "Pioneer",
+      "Viking"
+    ],
+    blockUnless: [
+      {
+        w: "Argo",
+        culture: "greek-byzantine",
+        k: "T2"
+      }
+    ],
+    blockPrefixed: [
+      "USS Enterprise"
+    ],
+    blockPrefixes: [
+      "USCSS",
+      "UNSC",
+      "SDF"
+    ],
+    flag: [
+      "Victory",
+      "Enterprise",
+      "Resolute",
+      "Endeavour",
+      "Discovery",
+      "Endurance",
+      "Beagle",
+      "Defiance",
+      "Revenge",
+      "Dreadnought",
+      "Warspite",
+      "Ark Royal",
+      "Hood",
+      "Invincible",
+      "Royal Oak",
+      "Sovereign of the Seas",
+      "Serenity",
+      "Liberty",
+      "Constitution",
+      "Independence",
+      "Golden Crane",
+      "Lion of Bristol"
+    ],
+    flagListBlocks: false,
+    banned: [
+      "Slave",
+      "Slaver",
+      "Blackbirder",
+      "Coolie",
+      "Infidel",
+      "Heathen",
+      "Savage"
+    ],
+    divine: [
+      "God",
+      "Christ",
+      "Jesus",
+      "Allah",
+      "Muhammad",
+      "Yahweh",
+      "Jehovah",
+      "Brahma",
+      "Vishnu",
+      "Shiva",
+      "Krishna",
+      "Rama",
+      "Buddha"
+    ],
+    divinePhrases: [
+      "of God",
+      "of the Prophet",
+      "of the Faith"
+    ],
+    sensitiveLists: [
+      "affectionAdj",
+      "affectionNoun",
+      "menaceAdj",
+      "menaceNoun",
+      "figure",
+      "leisureName",
+      "leisureAdj",
+      "leisureNoun"
+    ]
+  }
+};
+
+// src/vessels/engine.ts
+var VESSEL_DATA = vessels_default;
+var VESSEL_CULTURES = VESSEL_DATA.cultures;
+var VESSEL_MODULE_LABELS = VESSEL_DATA.modules;
+function findVesselCulture(key2) {
+  return VESSEL_CULTURES.find((c) => c.key === key2);
+}
+var levelNumber = (code) => parseInt(code.slice(1), 10);
+function range(k) {
+  const [lo, hi] = k.split("-");
+  return [levelNumber(lo), levelNumber(hi != null ? hi : lo)];
+}
+function inRange(k, level) {
+  if (!k) return true;
+  if (k.charAt(0) !== level.charAt(0)) return false;
+  const [lo, hi] = range(k);
+  const n = levelNumber(level);
+  return n >= lo && n <= hi;
+}
+function spanLevels(culture) {
+  const [lo, hi] = range(culture.span);
+  const out = [];
+  for (let n = lo; n <= hi; n++) out.push(`T${n}`);
+  return out;
+}
+function customsLevel(culture, level) {
+  const [lo, hi] = range(culture.span);
+  if (level.startsWith("S")) return `T${hi}`;
+  return `T${Math.min(hi, Math.max(lo, levelNumber(level)))}`;
+}
+function inSpan(culture, level) {
+  return level.startsWith("T") && inRange(culture.span, level);
+}
+function techLabel(module2, code) {
+  var _a2, _b;
+  return (_b = (_a2 = VESSEL_DATA.technology[module2].find((t) => t.code === code)) == null ? void 0 : _a2.label) != null ? _b : code;
+}
+function techChoices(module2, setting) {
+  const all = VESSEL_DATA.technology[module2].map((t) => t.code);
+  return module2 === "spacecraft" && setting !== "SF" ? ["S1"] : all;
+}
+function anyLevels(module2, culture, setting) {
+  return module2 === "ships" ? spanLevels(culture) : techChoices(module2, setting);
+}
+function moduleFunctions(module2) {
+  return VESSEL_DATA.functions[module2].list;
+}
+function functionAny(module2) {
+  return VESSEL_DATA.functions[module2].any;
+}
+function functionAvailableAt(fn, culture, level) {
+  if (fn.noSensitive && culture.sensitive) return false;
+  if (!fn.min) return true;
+  return level.charAt(0) === fn.min.charAt(0) && levelNumber(level) >= levelNumber(fn.min);
+}
+function availableFunctions(module2, cultureKey, technology, setting) {
+  var _a2;
+  const culture = (_a2 = findVesselCulture(cultureKey)) != null ? _a2 : VESSEL_CULTURES[0];
+  const levels = technology === "any" ? anyLevels(module2, culture, setting) : [technology];
+  return moduleFunctions(module2).filter((f) => levels.some((l) => functionAvailableAt(f, culture, l)));
+}
+var pickOne2 = (items, rng) => items[Math.floor(rng() * items.length)];
+var GN_LISTS = /* @__PURE__ */ new Set(["colour", "number", "ordinalWord", "greek", "land", "spaceLand", "compass", "star", "brandRoot", "surname", "weapon", "tech", "beast"]);
+var STYLE_POOLS = new Map(VESSEL_DATA.styles.flatMap((st) => Object.entries(st.pools)));
+var CULTURE_ONLY = /* @__PURE__ */ new Set(["poetic", "menaceExtra"]);
+var UNTONED = /* @__PURE__ */ new Set(["surname"]);
+var ANIMALS = /* @__PURE__ */ new Map();
+function flavourAnimals(culture) {
+  var _a2, _b;
+  let found = ANIMALS.get(culture.key);
+  if (found) return found;
+  const f = culture.flavour;
+  if (!f) found = [];
+  else if (Array.isArray(f)) found = f;
+  else if ("world" in f) found = worldAnimals(f.world);
+  else found = [...(_b = (_a2 = findTradition(f.tribal)) == null ? void 0 : _a2.flavour.animals) != null ? _b : []];
+  ANIMALS.set(culture.key, found);
+  return found;
+}
+function landWords(culture) {
+  var _a2, _b;
+  const f = culture.flavour;
+  if (f && !Array.isArray(f) && "tribal" in f) {
+    const t = findTradition(f.tribal);
+    return [...(_a2 = t == null ? void 0 : t.flavour.land) != null ? _a2 : [], ...(_b = t == null ? void 0 : t.flavour.water) != null ? _b : []];
+  }
+  if (f && !Array.isArray(f) && "world" in f) return cultureLand(f.world);
+  return [];
+}
+function godWords(culture) {
+  var _a2;
+  const gods = culture.gods;
+  if (!gods) return [];
+  if (gods.list) return gods.list;
+  const world = WORLD_CULTURES.find((c) => c.id === gods.world);
+  return ((_a2 = world == null ? void 0 : world.lists.god) != null ? _a2 : []).map((w) => ({ w: stripPlural(w) }));
+}
+function holyType(ctx) {
+  var _a2;
+  const c = ctx.culture;
+  if ((_a2 = c.gods) == null ? void 0 : _a2.k) return inRange(c.gods.k, ctx.customs) ? "gods" : c.holy;
+  return c.holy;
+}
+function pool2(ctx, name) {
+  var _a2, _b, _c, _d, _e, _f, _g, _h;
+  const key2 = `${name}|${ctx.customs}|${ctx.level}|${ctx.boost}|${ctx.tone}`;
+  const cached = ctx.pools.get(key2);
+  if (cached) return cached;
+  const weights = /* @__PURE__ */ new Map();
+  const add2 = (word, w, t) => {
+    const prev = weights.get(word);
+    if (prev) prev.w += w;
+    else weights.set(word, { w, t });
+  };
+  const addEntries = (list, entries, mult = 1) => {
+    var _a3, _b2, _c2;
+    for (const e of entries != null ? entries : []) {
+      if (!inRange(e.k, ctx.customs)) continue;
+      add2(e.w, ((_a3 = e.x) != null ? _a3 : 1) * mult, (_c2 = (_b2 = e.t) != null ? _b2 : VESSEL_DATA.listTones[list]) != null ? _c2 : []);
+    }
+  };
+  const own = (_a2 = ctx.culture.lists) != null ? _a2 : {};
+  const space = ctx.module === "spacecraft";
+  if (name === "techAdj" || name === "techNoun") {
+    for (const e of (_c = (_b = VESSEL_DATA.techWords[ctx.level]) == null ? void 0 : _b[name]) != null ? _c : []) add2(e.w, (_d = e.x) != null ? _d : 1, (_e = e.t) != null ? _e : []);
+  } else if (name === "god") {
+    addEntries(name, godWords(ctx.culture));
+  } else if (name === "beast") {
+    for (const [w, n] of groupListWords("beast", ctx.setting)) add2(w, n, wordTones("beast", w));
+    for (const w of flavourAnimals(ctx.culture)) {
+      const prev = weights.get(w);
+      if (prev) prev.w *= 3;
+      else add2(w, 3, []);
+    }
+    addEntries("beast", own.beastExtra);
+  } else if (name === "seaLand" && space) {
+    for (const [w, n] of groupListWords("spaceLand", "SF")) add2(w, n, wordTones("spaceLand", w));
+  } else if (name === "seaLand") {
+    addEntries(name, VESSEL_DATA.lists.seaLand);
+    for (const w of landWords(ctx.culture)) add2(stripPlural(w), 2, []);
+  } else if (name === "seaAdj" && space) {
+    addEntries(name, VESSEL_DATA.lists.spaceSeaAdj);
+  } else if (name === "designationWord" && space) {
+    addEntries(name, VESSEL_DATA.lists.spaceDesignationWord);
+  } else if (name === "numberWord") {
+    for (const [w, n] of groupListWords("number", ctx.setting)) add2(w, n, wordTones("number", w));
+  } else if (own[name]) {
+    addEntries(name, own[name]);
+  } else if (VESSEL_DATA.lists[name]) {
+    addEntries(name, VESSEL_DATA.lists[name]);
+  } else if (GN_LISTS.has(name)) {
+    for (const [w, n] of groupListWords(name, ctx.setting)) add2(w, n, wordTones(name, w));
+  } else if (name === "name" && ctx.style) {
+    addEntries(name, ctx.style.name);
+  } else if (name === "colonyName") {
+    addEntries(name, (_f = VESSEL_DATA.styles.find((st) => st.key === "colony")) == null ? void 0 : _f.name);
+  } else if (STYLE_POOLS.has(name)) {
+    addEntries(name, (_h = (_g = ctx.style) == null ? void 0 : _g.pools[name]) != null ? _h : STYLE_POOLS.get(name));
+  } else if (!CULTURE_ONLY.has(name)) {
+    throw new Error(`Vessels: no list \u201C${name}\u201D.`);
+  }
+  if (ctx.boost && ctx.style) {
+    const suffix = name === "virtueAdj" || name === "skyAdj" ? "Adj" : name === "virtue" || name === "sky" ? "Noun" : void 0;
+    if (suffix) {
+      for (const [pool3, entries] of Object.entries(ctx.style.pools)) {
+        if (!new RegExp(`${suffix}\\d*$`).test(pool3)) continue;
+        for (const e of entries) add2(e.w, VESSEL_DATA.styleShare.poolMultiplier, ctx.style.tone ? [ctx.style.tone] : []);
+      }
+    }
+  }
+  const tone = !UNTONED.has(name) && ctx.tone !== "any";
+  const out = [...weights].map(([w, { w: n, t }]) => [{ w, t }, tone ? n * toneFactor(t, ctx.tone) : n]).filter(([, n]) => n > 0);
+  ctx.pools.set(key2, out);
+  return out;
+}
+function listWord2(ctx, name, filter) {
+  const items = filter ? pool2(ctx, name).filter(([e]) => filter(e.w)) : pool2(ctx, name);
+  const pick4 = pickWeighted5(items, ctx.rng);
+  if (!pick4) return void 0;
+  for (const t of pick4.t) ctx.drawn.add(t);
+  ctx.words.push({ list: name, word: pick4.w });
+  return pick4.w.includes("{") ? renderPattern2(ctx, pick4.w) : pick4.w;
+}
+function town(ctx) {
+  const rng = ctx.rng;
+  if (ctx.module === "spacecraft" && ctx.setting === "SF") return groupTown("SF", void 0, rng);
+  const source = ctx.culture.town === "compound" ? void 0 : ctx.culture.town;
+  const setting = ctx.setting === "SF" ? "MR" : ctx.setting;
+  const holy = holyNamesIn(ctx.culture.key);
+  for (let i = 0; i < 20; i++) {
+    const t = groupTown(setting, source, rng);
+    if (!holy || !holy.test(t)) return t;
+  }
+  return void 0;
+}
+var personLabel = (ctx) => {
+  var _a2;
+  return (_a2 = VESSEL_DATA.personLabels[ctx.fn]) != null ? _a2 : "owner";
+};
+function inventedPerson2(ctx) {
+  return groupPerson(ctx.setting, !!ctx.culture.surnames, ctx.rng, flavourAnimals(ctx.culture));
+}
+var POETIC_SHORT = (w) => w.split(" ").length <= 5 && !/^(The|We|Where) /.test(w);
+function token3(ctx, name) {
+  if (name.includes("+")) {
+    const [a, b] = name.split("+");
+    const first = token3(ctx, a);
+    const second = VESSEL_DATA.lists[b] || STYLE_POOLS.has(b) ? token3(ctx, b) : b;
+    return first && second ? first + second.toLowerCase() : void 0;
+  }
+  return baseToken(ctx, name);
+}
+var withMod = (text, mod) => mod === "poss" ? groupPossessive(text, false) : text;
+function baseToken(ctx, name) {
+  const rng = ctx.rng;
+  const placeholders = ctx.mode === "placeholders";
+  switch (name) {
+    case "town":
+      return placeholders ? "[place]" : town(ctx);
+    case "surname":
+      return placeholders ? "[surname]" : listWord2(ctx, "surname");
+    case "womanName":
+      return placeholders ? "[woman's name]" : listWord2(ctx, "womanName");
+    case "person":
+      return placeholders ? `[${personLabel(ctx)}]` : inventedPerson2(ctx);
+    case "president":
+      return placeholders ? "[president]" : inventedPerson2(ctx);
+    case "scientist":
+      return placeholders ? "[scientist]" : inventedPerson2(ctx);
+    case "holy":
+      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "n":
+      return String(1 + Math.floor(rng() * 99));
+    case "ordinal": {
+      const choices = [];
+      for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
+      return ordinalText(pickWeighted5(choices, rng));
+    }
+    case "poetic":
+      return ctx.poeticAllowed ? listWord2(ctx, "poetic") : void 0;
+    case "poeticShort":
+      return ctx.poeticAllowed ? listWord2(ctx, "poetic", POETIC_SHORT) : void 0;
+    case "cultureNoun": {
+      const sources = ["beast", "sky", "virtue", ...ctx.poeticAllowed && pool2(ctx, "poetic").length > 0 ? ["poetic"] : []];
+      return listWord2(ctx, pickOne2(sources, rng));
+    }
+  }
+  return listWord2(ctx, name);
+}
+function renderPattern2(ctx, pattern, hooks) {
+  let failed = false;
+  let index = -1;
+  let nameUsed = false;
+  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw, at) => {
+    var _a2, _b;
+    if (failed) return "";
+    index++;
+    const [name, mod] = raw.split(":");
+    let piece;
+    const fixed = (_a2 = hooks == null ? void 0 : hooks.byIndex) == null ? void 0 : _a2.get(index);
+    if (fixed) piece = fixed.text;
+    else if ((hooks == null ? void 0 : hooks.byName) && !nameUsed && hooks.byName.name === name) {
+      piece = hooks.byName.text;
+      nameUsed = true;
+    } else piece = token3(ctx, name);
+    if (piece && name === "compass" && pattern.slice(0, at).endsWith("of the ")) piece = piece.replace(/ern$/, "");
+    if (piece === void 0 || piece === "") {
+      failed = true;
+      return "";
+    }
+    (_b = hooks == null ? void 0 : hooks.record) == null ? void 0 : _b.push({ name, text: piece });
+    return withMod(piece, mod);
+  });
+  return failed ? void 0 : out;
+}
+var SMALL4 = /* @__PURE__ */ new Set([
+  "of",
+  "the",
+  "and",
+  "for",
+  "in",
+  "at",
+  "by",
+  "on",
+  "to",
+  "from",
+  "over",
+  "upon",
+  "beyond",
+  "beneath",
+  "among",
+  "across",
+  "through",
+  "between",
+  "above",
+  "into",
+  "with",
+  "before"
+]);
+function vesselCapitals(text) {
+  return text.split(" ").map((word, i) => {
+    if (!word || word.startsWith("[")) return word;
+    const lower2 = word.toLowerCase();
+    if (SMALL4.has(lower2) && i > 0) return lower2;
+    return word.replace(/(^|[-–])([a-z])/g, (_m, sep, c) => sep + c.toUpperCase());
+  }).join(" ");
+}
+var countedWords = (text) => text.split(" ").filter((w, i) => w && !(i === 0 && w === "The") && !SMALL4.has(w.toLowerCase()));
+var wordRe4 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
+var BANNED2 = [...VESSEL_DATA.safeguards.banned, ...VESSEL_DATA.safeguards.divine].map(wordRe4);
+var DIVINE_PHRASES = VESSEL_DATA.safeguards.divinePhrases.map(wordRe4);
+function breaksVesselWords(text) {
+  return hasBannedWord(text) || BANNED2.some((re) => re.test(text)) || DIVINE_PHRASES.some((re) => re.test(text));
+}
+function guardFor(module2, guards) {
+  const s = VESSEL_DATA.safeguards;
+  const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock));
+  if (module2 === "spacecraft") for (const w of s.blockSpacecraft) block.add(normForBlock(w));
+  return { block, prefixed: new Set(s.blockPrefixed.map(normForBlock)) };
+}
+function blocked(ctx, guard, name, prefix) {
+  const n = normForBlock(name);
+  if (guard.block.has(n)) return true;
+  for (const u of VESSEL_DATA.safeguards.blockUnless) {
+    if (n === normForBlock(u.w) && !(ctx.culture.key === u.culture && inRange(u.k, ctx.customs))) return true;
+  }
+  if (prefix && (guard.prefixed.has(normForBlock(`${prefix} ${name}`)) || VESSEL_DATA.safeguards.blockPrefixes.includes(prefix))) return true;
+  return false;
+}
+function acceptable3(ctx, guard, name) {
+  const counted = countedWords(name);
+  if (counted.length === 0 || counted.length > 8) return false;
+  if (repeatsContent(counted)) return false;
+  if (blocked(ctx, guard, name)) return false;
+  if (breaksVesselWords(name)) return false;
+  return true;
+}
+var SENSITIVE_TOKENS = new RegExp(`\\{(${VESSEL_DATA.safeguards.sensitiveLists.join("|")})[}:]`);
+function vesselShapeTones(p, own = []) {
+  var _a2;
+  const out = new Set(own);
+  for (const m of p.matchAll(/\{([^}:+]+)/g)) for (const t of (_a2 = VESSEL_DATA.listTones[m[1]]) != null ? _a2 : []) out.add(t);
+  return GROUP_TONES.filter((t) => out.has(t));
+}
+function roleWeights(ctx) {
+  var _a2, _b, _c, _d, _e;
+  const c = ctx.culture;
+  const base = { ...VESSEL_DATA.roleWeights[ctx.module][ctx.fn] };
+  for (const e of VESSEL_DATA.roleExtras) {
+    if (e.module === ctx.module && e.function === ctx.fn && inRange(e.k, ctx.customs)) base[e.role] = ((_a2 = base[e.role]) != null ? _a2 : 0) + e.w;
+  }
+  if (ctx.module === "spacecraft" && (ctx.fn === "station" || ctx.fn === "colony")) base[ctx.fn] = 100;
+  const out = [];
+  for (const [role, w] of Object.entries(base)) {
+    let n = w * ((_c = (_b = c.roles) == null ? void 0 : _b[role]) != null ? _c : 1);
+    for (const [k, mults] of Object.entries((_d = c.techRoles) != null ? _d : {})) if (inRange(k, ctx.customs)) n *= (_e = mults[role]) != null ? _e : 1;
+    if (role === "holy" && holyType(ctx) === "none") n = 0;
+    if (c.sensitive && ["affection", "menace", "leisure"].includes(role)) n = 0;
+    if (role === "poetic" && !ctx.poeticAllowed) n = 0;
+    if (n > 0) out.push([role, n]);
+  }
+  return out;
+}
+function roleShapes(ctx, role, only) {
+  var _a2, _b, _c, _d, _e, _f, _g;
+  const c = ctx.culture;
+  const holy = holyType(ctx);
+  const shapes = [...VESSEL_DATA.shapes.filter((s) => s.role === role), ...((_a2 = c.shapes) != null ? _a2 : []).filter((s) => s.role === role)];
+  if (role === "station" || role === "colony") for (const sh of VESSEL_DATA.space[role]) shapes.push({ role, p: sh.p, w: sh.w });
+  if (role === "holy" && holy === "gods") for (const g of (_c = (_b = c.gods) == null ? void 0 : _b.shapes) != null ? _c : []) shapes.push({ role, p: g.p, w: g.w });
+  const out = [];
+  for (const shape of shapes) {
+    if (only && shape.p !== only) continue;
+    if (!inRange(shape.k, ctx.customs)) continue;
+    if (shape.s && !shape.s.includes(ctx.setting)) continue;
+    if (shape.fn && !shape.fn.includes(ctx.fn)) continue;
+    let w = shape.w;
+    if (shape.holy) {
+      const saints = holy === "christian" && !c.noSaints;
+      const ok = shape.holy === "saint" ? saints : shape.holy === "marian" ? saints && !!c.marian : shape.holy === "blessing" ? holy !== "none" : holy === "christian" || holy === "blessing";
+      if (!ok) continue;
+      if (shape.holy === "saint") w *= (_d = c.holyX) != null ? _d : 1;
+      if (shape.holy === "marian") w *= (_e = c.marian) != null ? _e : 1;
+    }
+    if (shape.p.includes("{poetic}") && (!ctx.poeticAllowed || !((_g = (_f = c.lists) == null ? void 0 : _f.poetic) == null ? void 0 : _g.length))) continue;
+    if (ctx.mode === "invented" && shape.p.includes("{womanName}") && !c.womanNames) continue;
+    if (ctx.mode === "invented" && shape.p.includes("{surname}") && !c.surnames) continue;
+    if (c.sensitive && SENSITIVE_TOKENS.test(shape.p)) continue;
+    w *= toneFactor(vesselShapeTones(shape.p, shape.t), ctx.tone);
+    if (w > 0) out.push([shape, w]);
+  }
+  return out;
+}
+var spacePattern = (ctx, p) => ctx.module === "spacecraft" ? p.replace(/^City of /, "Pride of ") : p;
+function renderPlan(ctx, plan, hooks = {}) {
+  ctx.drawn = /* @__PURE__ */ new Set();
+  ctx.words = [];
+  const record = [];
+  const raw = renderPattern2(ctx, plan.p, { ...hooks, record });
+  if (!raw) return void 0;
+  const name = vesselCapitals(raw.replace(/\s+/g, " ").trim());
+  const tones = /* @__PURE__ */ new Set([...plan.tones, ...ctx.drawn]);
+  return { name, plan, record, tones: GROUP_TONES.filter((t) => tones.has(t)) };
+}
+function rolePlans(ctx, role, only) {
+  return roleShapes(ctx, role, only).map(([s, w]) => [{ route: "role", role, p: spacePattern(ctx, s.p), tones: vesselShapeTones(s.p, s.t) }, w]);
+}
+function hybridPlans(ctx) {
+  const poetic = ctx.poeticAllowed && pool2(ctx, "poetic").some(([e]) => POETIC_SHORT(e.w));
+  return VESSEL_DATA.hybrids.shapes.filter((s) => poetic || !s.p.includes("{poetic}")).map((s) => [{ route: "hybrid", role: "hybrid", p: s.p.replace("{poetic}", "{poeticShort}"), tones: [] }, s.w]);
+}
+function stylePlans(ctx) {
+  const st = ctx.style;
+  const tones = st.tone ? [st.tone] : [];
+  return st.shapes.filter((p) => !(ctx.culture.sensitive && SENSITIVE_TOKENS.test(p))).map((p) => [{ route: "style", role: st.key, p, tones: vesselShapeTones(p, tones) }, toneFactor(vesselShapeTones(p, tones), ctx.tone)]).filter(([, w]) => w > 0);
+}
+function availableStyles(module2, setting) {
+  return VESSEL_DATA.styles.filter((st) => st.modules.includes(module2) && st.settings.includes(setting));
+}
+var prefixSetting = (setting) => setting === "MR" || setting === "MF" || setting === "SF";
+function realPrefix(ctx) {
+  const rows = VESSEL_DATA.prefixes.real.filter(
+    (r) => (!r.cultures || r.cultures.includes(ctx.culture.key)) && r.fn.includes(ctx.fn) && inRange(r.k, ctx.level)
+  );
+  return pickWeighted5(rows.map((r) => {
+    var _a2;
+    return [r.p, (_a2 = r.x) != null ? _a2 : 1];
+  }), ctx.rng);
+}
+var PLACEHOLDER_TOKENS2 = /* @__PURE__ */ new Set(["town", "surname", "womanName", "person", "president", "scientist", "holy"]);
+var NEVER_ANCHORS2 = /* @__PURE__ */ new Set(["person", "president", "scientist", "holy"]);
+var kindOf2 = (name) => NEVER_ANCHORS2.has(name) ? "never" : seriesTokenKind(name);
+function* counterValues2(ctx, name, first) {
+  if (name === "ordinal") {
+    for (let n = parseInt(first, 10); n <= 99; n += counterGap(ctx.rng)) yield ordinalText(n);
+    return;
+  }
+  const words = [...new Set(groupListWords(name, ctx.setting).map(([w]) => w))];
+  for (let i = words.indexOf(first); i >= 0 && i < words.length; i += counterGap(ctx.rng)) yield words[i];
+}
+var lightOrGrim2 = (tone) => tone === "light" || tone === "grim";
+function generateVesselNames(options) {
+  var _a2, _b, _c, _d, _e;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const module2 = options.module;
+  const notices = [];
+  const culture = (_a2 = findVesselCulture(options.culture)) != null ? _a2 : VESSEL_CULTURES[0];
+  const genre = (_b = options.genre) != null ? _b : module2 === "spacecraft" ? "scifi" : "fantasy";
+  const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
+  let tone = (_c = options.tone) != null ? _c : "any";
+  const levels = techChoices(module2, setting);
+  let technology = (_d = options.technology) != null ? _d : "any";
+  if (technology !== "any" && !levels.includes(technology)) {
+    notices.push(`\u201C${technology}\u201D isn't available here; using any technology.`);
+    technology = "any";
+  }
+  const functions = availableFunctions(module2, culture.key, technology, setting);
+  const chosenFn = options.function ? functions.find((f) => f.key === options.function) : void 0;
+  if (options.function && !chosenFn) notices.push(`\u201C${options.function}\u201D isn't available here; using any function.`);
+  let style = options.style && options.style !== "none" ? availableStyles(module2, setting).find((st) => st.key === options.style) : void 0;
+  if (options.style && options.style !== "none" && !style) notices.push(`Style \u201C${options.style}\u201D isn't available here.`);
+  const guards = (_e = options.safeguards) != null ? _e : { block: VESSEL_DATA.safeguards.block, flag: VESSEL_DATA.safeguards.flag, flagListBlocks: VESSEL_DATA.safeguards.flagListBlocks };
+  const guard = guardFor(module2, guards);
+  const pools = /* @__PURE__ */ new Map();
+  const count = Math.max(0, Math.floor(options.count));
+  const prefixes = !!options.prefixes && prefixSetting(setting);
+  const sfPrefixes = /* @__PURE__ */ new Map();
+  const sfPrefix = (fn) => {
+    if (!sfPrefixes.has(fn)) {
+      const list = VESSEL_DATA.prefixes.sf[fn];
+      sfPrefixes.set(fn, list ? pickOne2(list, rng) : void 0);
+    }
+    return sfPrefixes.get(fn);
+  };
+  const styleShare = !style ? 0 : style.key === "oceanic" && culture.sensitive ? 1 : culture.key === "general" ? VESSEL_DATA.styleShare.general : VESSEL_DATA.styleShare.default;
+  const newCtx2 = (level, fn) => {
+    var _a3;
+    return {
+      rng,
+      module: module2,
+      setting,
+      culture,
+      mode: (_a3 = options.people) != null ? _a3 : "placeholders",
+      tone,
+      level,
+      customs: customsLevel(culture, level),
+      fn,
+      style,
+      boost: !!style,
+      // §14.4: sensitive cultures' poetic names never go to a style or a light or grim name.
+      poeticAllowed: !(culture.sensitive && (lightOrGrim2(tone) || !!style)),
+      drawn: /* @__PURE__ */ new Set(),
+      words: [],
+      pools
+    };
+  };
+  const choosePlan = (ctx) => {
+    if (style && !options.shape && rng() < styleShare) {
+      ctx.boost = false;
+      return pickWeighted5(stylePlans(ctx), rng);
+    }
+    const role = pickWeighted5(roleWeights(ctx), rng);
+    if (!role) return void 0;
+    const share2 = inSpan(culture, ctx.level) ? VESSEL_DATA.hybrids.share.inSpan : VESSEL_DATA.hybrids.share.outOfSpan;
+    if (!options.shape && role !== "designation" && role !== "leisure" && rng() < share2) return pickWeighted5(hybridPlans(ctx), rng);
+    return pickWeighted5(rolePlans(ctx, role, options.shape), rng);
+  };
+  const result = (ctx, built, series) => {
+    if (!built || !acceptable3(ctx, guard, built.name)) return void 0;
+    let prefix;
+    if (prefixes && !built.name.startsWith("The ")) prefix = setting === "SF" ? sfPrefix(ctx.fn) : module2 === "ships" ? realPrefix(ctx) : void 0;
+    if (prefix && blocked(ctx, guard, built.name, prefix)) return void 0;
+    return {
+      text: prefix ? `${prefix} ${built.name}` : built.name,
+      name: built.name,
+      ...prefix ? { prefix } : {},
+      route: built.plan.route,
+      role: built.plan.role,
+      shape: built.plan.p,
+      function: ctx.fn,
+      level: ctx.level,
+      customs: ctx.customs,
+      tones: built.tones,
+      words: ctx.words,
+      ...series ? { series } : {}
+    };
+  };
+  const levelPool = technology === "any" ? anyLevels(module2, culture, setting).filter((l) => !chosenFn || functionAvailableAt(chosenFn, culture, l)) : [technology];
+  const fnChoices = (level) => functions.filter((f) => functionAvailableAt(f, culture, level));
+  const oneName2 = () => {
+    if (levelPool.length === 0) return void 0;
+    for (let round = 0; round < 2; round++) {
+      const level = pickOne2(levelPool, rng);
+      const fn = chosenFn != null ? chosenFn : pickWeighted5(fnChoices(level).map((f) => [f, f.w]), rng);
+      if (!fn) continue;
+      for (let i = 0; i < 20; i++) {
+        const ctx = newCtx2(level, fn.key);
+        const plan = choosePlan(ctx);
+        if (!plan) break;
+        const name = result(ctx, renderPlan(ctx, plan));
+        if (name) return name;
+      }
+    }
+    return void 0;
+  };
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  const add2 = (name) => {
+    if (!name) return false;
+    const key2 = name.text.toLowerCase();
+    if (seen.has(key2)) return false;
+    seen.add(key2);
+    names.push(name);
+    return true;
+  };
+  if (options.series && chosenFn && levelPool.length > 0) {
+    const seriesTone = drawClass();
+    if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+    return { names, seed, notices, seriesTone };
+  }
+  if (options.series && !chosenFn) notices.push("A class needs a function.");
+  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) add2(oneName2());
+  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+  return { names, seed, notices };
+  function drawClass() {
+    var _a3, _b2, _c2, _d2;
+    const level = pickOne2(levelPool, rng);
+    const fn = chosenFn.key;
+    const placeholders = ((_a3 = options.people) != null ? _a3 : "placeholders") === "placeholders";
+    const isPlaceholder = (d) => placeholders && PLACEHOLDER_TOKENS2.has(d.name);
+    let first;
+    for (let i = 0; i < 40 && !first; i++) {
+      const ctx2 = newCtx2(level, fn);
+      const plan2 = choosePlan(ctx2);
+      if (!plan2) continue;
+      const built = renderPlan(ctx2, plan2);
+      const name = result(ctx2, built);
+      if (!built || !name) continue;
+      if (!built.record.some((d) => kindOf2(d.name) === "counter") && !built.record.some((d) => !isPlaceholder(d))) continue;
+      first = { ctx: ctx2, built, name };
+    }
+    if (!first) return tone;
+    if (tone === "any") tone = (_b2 = first.built.plan.tones[0]) != null ? _b2 : "any";
+    const plan = first.built.plan;
+    const rec = first.built.record;
+    const draw = (hooks, p = plan) => {
+      const ctx2 = newCtx2(level, fn);
+      if (p.route === "style") ctx2.boost = false;
+      return result(ctx2, renderPlan(ctx2, p, hooks), info);
+    };
+    const counterAt = rec.findIndex((d) => kindOf2(d.name) === "counter");
+    let info;
+    if (counterAt >= 0) {
+      info = { anchor: null, value: null, counter: rec[counterAt].name };
+      add2({ ...first.name, series: info });
+      const locked = new Map(rec.map((d, i) => [i, d]));
+      let firstValue = true;
+      for (const value of counterValues2(first.ctx, rec[counterAt].name, rec[counterAt].text)) {
+        if (names.length >= count) break;
+        if (firstValue) {
+          firstValue = false;
+          continue;
+        }
+        locked.set(counterAt, { name: rec[counterAt].name, text: value });
+        add2(draw({ byIndex: new Map(locked) }));
+      }
+      return tone;
+    }
+    let anchorAt = rec.findIndex((d) => kindOf2(d.name) === "owner" && !isPlaceholder(d));
+    const listAt = rec.map((d, i) => kindOf2(d.name) === "list" && !isPlaceholder(d) ? i : -1).filter((i) => i >= 0);
+    if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
+    const anchor = anchorAt >= 0 ? rec[anchorAt] : void 0;
+    info = { anchor: (_c2 = anchor == null ? void 0 : anchor.name) != null ? _c2 : null, value: (_d2 = anchor == null ? void 0 : anchor.text) != null ? _d2 : null, counter: null };
+    const hold = /* @__PURE__ */ new Map();
+    if (anchor) hold.set(anchorAt, anchor);
+    else if (listAt.length === 1) rec.forEach((d, i) => i !== listAt[0] && hold.set(i, d));
+    add2({ ...first.name, series: info });
+    const fill = (next) => {
+      for (let idle = 0; idle < 20 && names.length < count; ) idle = add2(next()) ? 0 : idle + 1;
+    };
+    fill(() => draw({ byIndex: hold }));
+    if (!anchor || names.length >= count) return tone;
+    const ctx = newCtx2(level, fn);
+    const others = (plan.route === "style" ? stylePlans(ctx) : plan.route === "hybrid" ? hybridPlans(ctx) : rolePlans(ctx, plan.role)).filter(
+      ([p]) => p.p !== plan.p && [...p.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name)
+    );
+    if (others.length === 0) return tone;
+    fill(() => draw({ byName: anchor }, pickWeighted5(others, rng)));
+    return tone;
+  }
+}
+
+// src/vessels/sentence.ts
+function defaultVesselState(module2) {
+  return {
+    culture: "general",
+    technology: "any",
+    genre: module2 === "spacecraft" ? "scifi" : "fantasy",
+    fantastic: false,
+    style: "none",
+    tone: "any",
+    prefixes: false,
+    people: "placeholders",
+    series: false
+  };
+}
+var PEOPLE_TEXT2 = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT2 = { off: "each one separate", on: "as one class" };
+var PREFIX_TEXT = { off: "without prefixes", on: "with prefixes" };
+var article = (word) => /^[aeiou]/i.test(word) ? "an" : "a";
+function vesselSetting(state) {
+  return groupSetting(state.genre, state.genre === "scifi" ? false : state.fantastic);
+}
+var showsPrefixes = (state) => prefixSetting(vesselSetting(state));
+function vesselSentence(state, module2) {
+  var _a2, _b;
+  const out = [];
+  const culture = (_a2 = VESSEL_CULTURES.find((c) => c.key === state.culture)) != null ? _a2 : VESSEL_CULTURES[0];
+  const setting = vesselSetting(state);
+  out.push({
+    field: "culture",
+    text: culture.label,
+    title: "Naming culture: what its people name vessels after",
+    choices: VESSEL_CULTURES.map((c, i) => {
+      var _a3;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a3 = VESSEL_CULTURES[i - 1]) == null ? void 0 : _a3.group) ? { group: c.group } : {} };
+    }),
+    current: culture.key
+  });
+  out.push("-themed ");
+  const fns = availableFunctions(module2, culture.key, state.technology, setting);
+  const fn = fns.find((f) => f.key === state.function);
+  out.push({
+    field: "function",
+    text: fn ? fn.plural : functionAny(module2),
+    title: fn ? fn.description : functionAny(module2),
+    choices: [{ id: void 0, label: "Any" }, ...fns.map((f) => ({ id: f.key, label: f.menu }))],
+    current: fn == null ? void 0 : fn.key
+  });
+  out.push(" with ");
+  out.push({
+    field: "technology",
+    text: state.technology === "any" ? "any" : techLabel(module2, state.technology),
+    title: "What the vessel is: adds its own words; any culture can have any technology",
+    choices: [{ id: "any", label: "any" }, ...techChoices(module2, setting).map((c) => ({ id: c, label: techLabel(module2, c) }))],
+    current: state.technology
+  });
+  out.push(" technology, for a ");
+  const genres = module2 === "spacecraft" ? ["modern", "scifi"] : ["fantasy", "modern", "scifi"];
+  out.push({
+    field: "genre",
+    text: GENRE_TEXT[state.genre],
+    title: "Genre: the kind of world",
+    choices: genres.map((g) => ({ id: g, label: GENRE_TEXT[g] })),
+    current: state.genre
+  });
+  out.push(" world");
+  if (state.genre !== "scifi") {
+    const phrases = FANTASTIC_TEXT[state.genre];
+    out.push(" ");
+    out.push({
+      field: "fantastic",
+      text: phrases[state.fantastic ? 1 : 0],
+      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
+      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
+      current: state.fantastic ? "on" : "off"
+    });
+  }
+  out.push(", in ");
+  const styles = availableStyles(module2, setting);
+  const style = styles.find((s) => s.key === state.style);
+  out.push({
+    field: "style",
+    text: style ? `${article(style.label)} ${style.label}` : "no particular",
+    title: style ? style.description : "Style: genre flavour",
+    choices: [{ id: "none", label: "no particular" }, ...styles.map((s) => ({ id: s.key, label: s.label }))],
+    current: (_b = style == null ? void 0 : style.key) != null ? _b : "none"
+  });
+  out.push(" style, ");
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
+  if (showsPrefixes(state)) {
+    out.push(", ");
+    out.push({
+      field: "prefixes",
+      text: PREFIX_TEXT[state.prefixes ? "on" : "off"],
+      title: "Prefixes such as HMS or SS, where the culture and period used them",
+      choices: [
+        { id: "off", label: PREFIX_TEXT.off },
+        { id: "on", label: PREFIX_TEXT.on }
+      ],
+      current: state.prefixes ? "on" : "off"
+    });
+  }
+  out.push(", with ");
+  out.push({
+    field: "people",
+    text: PEOPLE_TEXT2[state.people],
+    title: "Placeholders like [admiral], or invented names",
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT2[p] })),
+    current: state.people
+  });
+  out.push(" people and places, ");
+  if (fn) {
+    out.push({
+      field: "series",
+      text: SERIES_TEXT2[state.series ? "on" : "off"],
+      title: "A class: one shape, sharing a word, an owner or a number sequence",
+      choices: [
+        { id: "off", label: SERIES_TEXT2.off },
+        { id: "on", label: SERIES_TEXT2.on }
+      ],
+      current: state.series ? "on" : "off"
+    });
+  } else out.push(SERIES_TEXT2.off);
+  return out;
+}
+function vesselSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function chooseVessel(state, field, id, module2) {
+  const next = { ...state };
+  switch (field) {
+    case "culture":
+      next.culture = id != null ? id : "general";
+      break;
+    case "function":
+      next.function = id;
+      break;
+    case "technology":
+      next.technology = id != null ? id : "any";
+      break;
+    case "genre":
+      next.genre = id != null ? id : "fantasy";
+      if (module2 === "spacecraft" && next.genre === "modern") next.technology = "S1";
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "style":
+      next.style = id != null ? id : "none";
+      break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "prefixes":
+      next.prefixes = id === "on";
+      break;
+    case "people":
+      next.people = id != null ? id : "placeholders";
+      break;
+    case "series":
+      next.series = id === "on";
+      break;
+  }
+  const setting = vesselSetting(next);
+  if (!techChoices(module2, setting).includes(next.technology) && next.technology !== "any") next.technology = "any";
+  if (next.function && !availableFunctions(module2, next.culture, next.technology, setting).some((f) => f.key === next.function)) next.function = void 0;
+  if (!next.function) next.series = false;
+  if (next.style !== "none" && !availableStyles(module2, setting).some((s) => s.key === next.style)) next.style = "none";
+  return next;
+}
+function vesselHistory(module2, state, label) {
+  var _a2, _b;
+  const setting = vesselSetting(state);
+  const culture = (_b = (_a2 = VESSEL_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+  const style = availableStyles(module2, setting).find((s) => s.key === state.style);
+  return [
+    label,
+    SETTING_PHRASES[setting],
+    culture,
+    state.technology === "any" ? "any technology" : techLabel(module2, state.technology),
+    ...style ? [style.label] : [],
+    ...state.tone !== "any" ? [state.tone] : [],
+    ...state.series && state.function ? ["class"] : []
+  ].join(" \xB7 ");
+}
+
+// src/vessels/safeguardPacks.ts
+var VESSEL_SAFEGUARD_TYPE = "vessel-safeguards";
+function isVesselSafeguardPackContent(content) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  return !!fm && new RegExp(`^type:\\s*["']?${VESSEL_SAFEGUARD_TYPE}["']?\\s*$`, "m").test(fm[1]);
+}
+var VESSEL_SAFEGUARD_TEMPLATE = `---
+type: vessel-safeguards
+flag-list-blocks: false
+---
+
+## Block
+
+Ship and spacecraft names never to produce. Each one is added to the built-in block list of famous real ships, spacecraft and fictional vessels.
+
+## Flag
+
+Names to allow, though they echo a real or well-known vessel.
+
+## Allow
+
+Names to take off the flag list. Built-in block-list names can't be allowed.
+`;
+
 // src/presets.ts
 var TRIBAL_PRESET_MODULE = "tribal-names";
 var TRIBAL_PRESET_DEFAULTS = {
@@ -62145,6 +69286,7 @@ function parseModulePreset(content, fileName) {
   const { values, body } = parsed;
   if (values.module === GROUP_PRESET_MODULE) return parseGroupPreset(values, body, fileName);
   if (values.module === BYNAME_PRESET_MODULE) return parseBynamePreset(values, body, fileName);
+  if (values.module === VESSEL_PRESET_MODULE) return parseVesselPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module \u201C${(_a2 = values.module) != null ? _a2 : ""}\u201D.`);
     return { problems };
@@ -62178,6 +69320,7 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("vesselModule" in preset) return vesselPresetContent(preset);
   if ("bynameModule" in preset) return bynamePresetContent(preset);
   if ("family" in preset) return groupPresetContent(preset);
   const quote2 = (v) => /^\[\[|[:#]/.test(v) ? `"${v}"` : v;
@@ -62329,6 +69472,86 @@ function bynamePresetContent(preset) {
     `source: ${preset.source}`,
     ...preset.pack ? [`pack: ${preset.pack}`] : [],
     `section: ${preset.section}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
+var VESSEL_PRESET_MODULE = "vessels";
+function parseVesselPreset(values, body, fileName) {
+  var _a2, _b;
+  const problems = [];
+  const module2 = values.vesselModule;
+  if (module2 !== "ships" && module2 !== "spacecraft") {
+    problems.push(`Unknown vesselModule \u201C${(_a2 = values.vesselModule) != null ? _a2 : ""}\u201D.`);
+    return { problems };
+  }
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const flag = (key2) => {
+    const v = values[key2];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return false;
+  };
+  const genre = pick4("genre", module2 === "spacecraft" ? "scifi" : "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
+  const fantastic = flag("fantastic");
+  const setting = groupSetting(genre, genre === "scifi" ? false : fantastic);
+  const fn = pick4("function", "any", (v) => v === "any" || moduleFunctions(module2).some((f) => f.key === v));
+  let style = pick4("style", "none", (v) => v === "none" || VESSEL_DATA.styles.some((st) => st.key === v));
+  if (style !== "none" && !availableStyles(module2, setting).some((s) => s.key === style)) {
+    problems.push(`Style \u201C${style}\u201D isn't available here.`);
+    style = "none";
+  }
+  let series = flag("series");
+  if (series && fn === "any") {
+    problems.push("Series needs a type.");
+    series = false;
+  }
+  return {
+    vessel: {
+      packName: values.packName || fileName,
+      setting: (_b = values.setting) != null ? _b : "",
+      description: body.trim(),
+      vesselModule: module2,
+      culture: pick4("culture", "general", (v) => !!findVesselCulture(v)),
+      function: fn,
+      technology: pick4("technology", "any", (v) => v === "any" || techChoices(module2, "SF").includes(v)),
+      genre,
+      fantastic,
+      style,
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      prefixes: flag("prefixes"),
+      people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series
+    },
+    problems
+  };
+}
+function vesselPresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${VESSEL_PRESET_MODULE}`,
+    `vesselModule: ${preset.vesselModule}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `function: ${preset.function}`,
+    `technology: ${preset.technology}`,
+    `genre: ${preset.genre}`,
+    `fantastic: ${preset.fantastic}`,
+    `style: ${preset.style}`,
+    `tone: ${preset.tone}`,
+    `prefixes: ${preset.prefixes}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
     "---",
     "",
     preset.description.trim(),
@@ -63555,12 +70778,12 @@ function terrainHeading(heading) {
   const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
   return m ? { terrain: m[1].trim(), part: m[2].toLowerCase() } : null;
 }
-function terrainId(token3, custom) {
+function terrainId(token4, custom) {
   var _a2;
-  const t = norm4(token3);
+  const t = norm4(token4);
   const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm4(x.id) === t || norm4(x.label) === t));
   if (builtIn) return builtIn.id;
-  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab(token3))) == null ? void 0 : _a2.id;
+  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab(token4))) == null ? void 0 : _a2.id;
 }
 var key = (words) => words.map(([w, n]) => `${norm4(w)}|${n}`).sort().join("\n");
 var entryKey = (entries) => entries.map((e) => `${norm4(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
@@ -65762,7 +72985,7 @@ function generateLabelledNames(lists, options) {
   const subSeeds = viable.map(() => Math.floor(masterRng() * 4294967295) >>> 0);
   const pools = viable.map(() => void 0);
   const cursors = viable.map(() => 0);
-  const pool2 = (i) => {
+  const pool3 = (i) => {
     var _a2, _b;
     if (pools[i]) return pools[i];
     const list = viable[i];
@@ -65797,7 +73020,7 @@ function generateLabelledNames(lists, options) {
         break;
       }
     }
-    const names = pool2(pick4);
+    const names = pool3(pick4);
     if (cursors[pick4] >= names.length) {
       live.splice(live.indexOf(pick4), 1);
       continue;
@@ -66107,6 +73330,7 @@ var OLD_HISTORY_PREFIXES = {
   explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
   empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"]
 };
+var VESSEL_SECTIONS = ["ships", "spacecraft"];
 var BYNAME_SECTIONS = ["epithets", "titles", "familyNames"];
 var GROUP_NAME_SECTIONS = [
   "mysticOrders",
@@ -66126,13 +73350,14 @@ var SECTION_ORDER = [
   ...GROUP_NAME_SECTIONS,
   ...BYNAME_SECTIONS,
   "nameAgeing",
-  "nameTakeover"
+  "nameTakeover",
+  ...VESSEL_SECTIONS
 ];
 var SECTION_GROUPS = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
   groupNames: ["tribalNames", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
-  advanced: ["nameAgeing", "nameTakeover"]
+  advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS]
 };
 var GROUP_LABELS = {
   placeNames: "place names",
@@ -66162,7 +73387,9 @@ var SECTION_LABELS = {
   supernaturalCourts: "supernatural courts and hosts",
   epithets: "epithets and bynames",
   titles: "titles and honorifics",
-  familyNames: "family names"
+  familyNames: "family names",
+  ships: "ships and boats",
+  spacecraft: "spacecraft and stations"
 };
 var BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
 var RIVER_NAMES_HISTORY_NAME = "river names";
@@ -66176,6 +73403,7 @@ function historySection(packName) {
   if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }
@@ -66210,6 +73438,9 @@ var SECTION_ICONS = {
   epithets: "quote",
   titles: "crown",
   familyNames: "users",
+  // Ships brief §1.1, with the supplied ship icon for ships and boats.
+  ships: ICON_SHIPS,
+  spacecraft: "rocket",
   // Group brief §1.1: Lucide icons.
   mysticOrders: "sparkles",
   martialOrders: "swords",
@@ -66233,6 +73464,7 @@ var sessionHintShown = false;
 function packTypeIconId(packType, subGenerator) {
   if (packType === "tribalPreset" || packType === "groupPreset") return ICON_TRIBAL_NAMES;
   if (packType === "bynamePreset") return ICON_BYNAMES;
+  if (packType === "vesselPreset") return ICON_SHIPS;
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;
   }
@@ -66463,6 +73695,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.bynameStates = {};
     this.bynamePacks = [];
     this.bynamePacksLoaded = false;
+    /** Ships brief §2.4: each vessel module's choices, session only. */
+    this.vesselStates = {};
     /** Each switcher group's last-used module (session only). */
     this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
@@ -66834,10 +74068,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     (_c = this.packDropdownEl) == null ? void 0 : _c.toggle(section === "markov");
     (_d = this.sectionSentenceEl) == null ? void 0 : _d.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_e = this.editRecipeButton) == null ? void 0 : _e.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset"));
+    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section);
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section);
     (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart && !tribal);
     (_i = this.landButton) == null ? void 0 : _i.refresh();
     (_j = this.guideButton) == null ? void 0 : _j.toggle(!!colonialPart);
@@ -67137,6 +74371,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     if (section === "tribalNames") this.renderTribalSentence(row);
     else if (groupFamily) this.renderGroupSentence(row, groupFamily);
     else if (BYNAME_SECTIONS.includes(section)) this.renderBynameSentence(row, section);
+    else if (VESSEL_SECTIONS.includes(section)) this.renderVesselSentence(row, section);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -67398,7 +74633,12 @@ ${n.origin}${also}${echo}` };
   async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian13.TFile)) return;
-    const { preset, group, byname } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (vessel) {
+      this.vesselStates[vessel.vesselModule] = this.vesselPresetState(vessel);
+      this.switchSection(vessel.vesselModule);
+      return;
+    }
     if (byname) {
       this.bynameStates[byname.bynameModule] = bynamePresetState(byname);
       this.switchSection(byname.bynameModule);
@@ -67413,6 +74653,134 @@ ${n.origin}${also}${echo}` };
     if (!preset) return;
     this.setTribalState(await this.presetState(preset, file.path));
     this.switchSection("tribalNames");
+  }
+  // ── Ships and spacecraft (Ships brief) ────────────────────────────────────
+  /** §2.4: a vessel module's choices, session only. */
+  vesselState(module2) {
+    var _a2, _b;
+    return (_b = (_a2 = this.vesselStates)[module2]) != null ? _b : _a2[module2] = defaultVesselState(module2);
+  }
+  vesselPresetState(p) {
+    return {
+      culture: p.culture,
+      function: p.function === "any" ? void 0 : p.function,
+      technology: p.technology,
+      genre: p.genre,
+      fantastic: p.fantastic,
+      style: p.style,
+      tone: p.tone,
+      prefixes: p.prefixes,
+      people: p.people,
+      series: p.series
+    };
+  }
+  /** §2: the module's sentence. */
+  renderVesselSentence(row, module2) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment2 of vesselSentence(this.vesselState(module2), module2)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(sentence2, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {
+        this.vesselStates[module2] = chooseVessel(this.vesselState(module2), segment2.field, id, module2);
+      });
+    }
+  }
+  /** GN §14: the finished strings only; history "{module} · {setting} · {culture} · {technology}…". */
+  async runVessels(module2, state = this.vesselState(module2), label, problems = []) {
+    var _a2;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
+    const guards = await this.loadVesselSafeguards();
+    const result = generateVesselNames({
+      module: module2,
+      culture: state.culture,
+      function: state.function,
+      technology: state.technology,
+      genre: state.genre,
+      fantastic: state.fantastic,
+      style: state.style,
+      tone: state.tone,
+      prefixes: state.prefixes,
+      people: state.people,
+      series: state.series && !!state.function,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
+      "none"
+    );
+    const history2 = label != null ? label : vesselHistory(module2, state, SECTION_LABELS[module2]);
+    await this.recordGenerationHistory(result.names.length, history2);
+    this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
+  }
+  /** §14.5: every vessel safeguard pack in the names folder, merged with the built-in lists. */
+  async loadVesselSafeguards() {
+    var _a2;
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian13.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const packs = [];
+    for (const child of (_a2 = folder == null ? void 0 : folder.children) != null ? _a2 : []) {
+      if (!(child instanceof import_obsidian13.TFile) || child.extension !== "md") continue;
+      const content = await this.app.vault.cachedRead(child);
+      if (isVesselSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
+    }
+    if (packs.length === 0) return { notices: [] };
+    const g = VESSEL_DATA.safeguards;
+    const { notices, block, flag, flagBlocks } = mergeSafeguards({ blockList: g.block, flagList: g.flag, flagListBlocks: g.flagListBlocks }, packs);
+    return { safeguards: { block, flag, flagListBlocks: flagBlocks }, notices };
+  }
+  /** §15: "{culture} · {function or module}", described by the sentence. */
+  openSaveVesselPreset(module2) {
+    var _a2, _b;
+    const state = this.vesselState(module2);
+    const culture = (_b = (_a2 = VESSEL_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+    const fn = moduleFunctions(module2).find((f) => f.key === state.function);
+    const name = [culture, fn ? fn.menu : SECTION_LABELS[module2]].join(" \xB7 ");
+    const description = vesselSentenceText(vesselSentence(state, module2));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a3;
+      if (!presetName) {
+        new import_obsidian13.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        vesselModule: module2,
+        culture: state.culture,
+        function: (_a3 = state.function) != null ? _a3 : "any",
+        technology: state.technology,
+        genre: state.genre,
+        fantastic: state.fantastic,
+        style: state.style,
+        tone: state.tone,
+        prefixes: state.prefixes,
+        people: state.people,
+        series: state.series && !!state.function
+      });
+      return this.writePreset(presetName, content, (existing) => {
+        var _a4;
+        return ((_a4 = parseModulePreset(existing, presetName).vessel) == null ? void 0 : _a4.vesselModule) === module2;
+      });
+    }).open();
+  }
+  /** §15: a vessel preset, run as its module runs; history "{module} · {preset}". */
+  async runVesselPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian13.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { vessel, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!vessel) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runVessels(vessel.vesselModule, this.vesselPresetState(vessel), `${SECTION_LABELS[vessel.vesselModule]} \xB7 ${vessel.packName}`, problems);
   }
   // ── Bynames and titles (Bynames brief) ────────────────────────────────────
   /** §2.5: a bynames module's choices, session only. */
@@ -67593,7 +74961,7 @@ ${n.origin}${also}${echo}` };
     var _a2;
     const section = this.activeSection;
     (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -67606,6 +74974,10 @@ ${n.origin}${also}${echo}` };
     }
     if (BYNAME_SECTIONS.includes(this.activeSection)) {
       this.openSaveBynamePreset(this.activeSection);
+      return;
+    }
+    if (VESSEL_SECTIONS.includes(this.activeSection)) {
+      this.openSaveVesselPreset(this.activeSection);
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -68362,7 +75734,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -68514,6 +75886,7 @@ ${text}
           if (parsed.preset) packs.push({ path: child.path, packType: "tribalPreset" });
           else if (parsed.group) packs.push({ path: child.path, packType: "groupPreset" });
           else if (parsed.byname) packs.push({ path: child.path, packType: "bynamePreset" });
+          else if (parsed.vessel) packs.push({ path: child.path, packType: "vesselPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -68656,9 +76029,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a2, _b, _c, _d, _e, _f, _g, _h;
-    const { preset, group, byname, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i;
+    const { preset, group, byname, vessel, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -68668,9 +76041,9 @@ ${text}
     (_a2 = this.sectionSentenceEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
-    const module2 = byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
+    const module2 = vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
     (_e = this.openPresetButton) == null ? void 0 : _e.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : file.basename;
+    this.plugin.settings.packName = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -69091,6 +76464,10 @@ ${text}
       await this.runBynames(this.activeSection);
       return;
     }
+    if (VESSEL_SECTIONS.includes(this.activeSection)) {
+      await this.runVessels(this.activeSection);
+      return;
+    }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
@@ -69134,6 +76511,10 @@ ${text}
     }
     if (this.currentPackType === "bynamePreset") {
       await this.runBynamePreset();
+      return;
+    }
+    if (this.currentPackType === "vesselPreset") {
+      await this.runVesselPreset();
       return;
     }
     if (this.currentPackType === "groupPreset") {
@@ -70620,6 +78001,21 @@ var NameForgePlugin = class extends import_obsidian15.Plugin {
         }
         await this.app.vault.create(path, BYNAME_SAFEGUARD_TEMPLATE);
         new import_obsidian15.Notice("nameForge: \u201CByname safeguards\u201D created.");
+      }
+    });
+    this.addCommand({
+      id: "create-vessel-safeguard-list",
+      name: "Create vessel safeguard list",
+      callback: async () => {
+        const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
+        await ensureVaultFolder(this.app, folder);
+        const path = (0, import_obsidian15.normalizePath)(`${folder}/Vessel safeguards.md`);
+        if (this.app.vault.getFileByPath(path)) {
+          new import_obsidian15.Notice("nameForge: \u201CVessel safeguards\u201D already exists.");
+          return;
+        }
+        await this.app.vault.create(path, VESSEL_SAFEGUARD_TEMPLATE);
+        new import_obsidian15.Notice("nameForge: \u201CVessel safeguards\u201D created.");
       }
     });
     this.addCommand({

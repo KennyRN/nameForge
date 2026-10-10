@@ -279,3 +279,43 @@ test("§16.7: a {brandRoot} {town} class shares the brand root", () => {
   const root = b.names[0].name.split(" ")[0];
   for (const n of b.names) assert.equal(n.name.split(" ")[0], root, n.text);
 });
+
+// ── §16.8 Sentence and presets ──────────────────────────────────────────────
+
+import { chooseVessel, defaultVesselState, vesselSentence, vesselSentenceText } from "../src/vessels/sentence";
+import { modulePresetContent, parseModulePreset } from "../src/presets";
+
+test("§16.8: the default ships sentence; prefix link hidden in FL; class link hidden with function Any", () => {
+  const state = defaultVesselState("ships");
+  const segs = vesselSentence(state, "ships");
+  assert.equal(
+    vesselSentenceText(segs),
+    "General-themed ships and boats of any kind with any technology, for a fantasy world of historic or low fantasy, in no particular style, of any tone, with placeholders for people and places, each one separate.",
+  );
+  const fields = (s: typeof segs) => s.filter((x) => typeof x !== "string").map((x) => (x as { field: string }).field);
+  assert.ok(!fields(segs).includes("prefixes") && !fields(segs).includes("series"));
+  const war = chooseVessel(state, "function", "war", "ships");
+  assert.ok(fields(vesselSentence(war, "ships")).includes("series"));
+  assert.equal(chooseVessel({ ...war, series: true }, "function", undefined, "ships").series, false);
+});
+
+test("§16.8: spacecraft in a modern world offer rocket age only", () => {
+  const modern = chooseVessel(defaultVesselState("spacecraft"), "genre", "modern", "spacecraft");
+  assert.equal(modern.technology, "S1");
+  const tech = vesselSentence(modern, "spacecraft").find((x) => typeof x !== "string" && x.field === "technology") as { choices: { id?: string }[] };
+  assert.deepEqual(tech.choices.map((c) => c.id), ["any", "S1"]);
+});
+
+test("§16.8: presets round-trip; an unavailable style is reported", () => {
+  const preset = {
+    packName: "Polynesian steamers", setting: "", description: "Hawaiian-themed merchant ships.", vesselModule: "ships" as const, culture: "hawaiian",
+    function: "merchant", technology: "T5", genre: "fantasy" as const, fantastic: false, style: "none", tone: "any" as const, prefixes: false,
+    people: "placeholders" as const, series: false,
+  };
+  const parsed = parseModulePreset(modulePresetContent(preset), "x");
+  assert.deepEqual(parsed.vessel, preset);
+  assert.deepEqual(parsed.problems, []);
+  const bad = parseModulePreset(modulePresetContent({ ...preset, style: "corporate" }), "x");
+  assert.equal(bad.vessel?.style, "none");
+  assert.ok(bad.problems.includes("Style “corporate” isn't available here."));
+});

@@ -144,6 +144,11 @@ export const ICON_BYNAMES = "nameforge-bynames";
 const ICON_BYNAMES_SVG =
   '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 5a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M4 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M16 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M12 7v4H6v4" /><path d="M12 11h6v4" /></g></g>';
 
+export const ICON_SHIPS = "nameforge-ships";
+// Fluent UI System Icons — vehicle-ship-24-filled (MIT). Scaled for Obsidian's 100×100 viewBox.
+const ICON_SHIPS_SVG =
+  '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M8.75 2a.75.75 0 0 0-.75.75V5H5.75a.75.75 0 0 0-.75.75v4.765l-1.46.534a.75.75 0 0 0-.423 1.02l2.335 5.019a1.75 1.75 0 0 1 2.22 1.143q0 .006.009.027q.018.053.067.165c.068.15.171.344.308.527c.276.367.564.55.944.55s.668-.182.943-.55a2.8 2.8 0 0 0 .384-.718a1.75 1.75 0 0 1 3.342-.005l.01.028q.018.053.067.165c.069.151.172.345.31.529c.278.37.567.551.944.551s.665-.182.943-.55a3 3 0 0 0 .386-.721a1.75 1.75 0 0 1 2.294-1.114l2.468-5.031a.75.75 0 0 0-.421-1.037L19 10.451V5.75a.75.75 0 0 0-.75-.75H16V2.75a.75.75 0 0 0-.75-.75zm5.75 3h-5V3.5h5zm3 1.5v3.416l-4.397-1.569a3.25 3.25 0 0 0-2.21.01L6.5 9.964V6.5zm1.227 12.064l-.003-.01a.75.75 0 0 0-1.441-.023v.002l-.004.009l-.02.058q-.03.082-.096.232c-.09.199-.228.46-.42.718c-.388.515-.94.950-1.743.950s-1.356-.435-1.743-.950a3.9 3.9 0 0 1-.538-1.009l-.003-.009a.75.75 0 0 0-1.435.001v.001l-.004.01l-.02.057a3.8 3.8 0 0 1-.514.950c-.386.514-.937.949-1.743.949s-1.358-.435-1.744-.950a3.8 3.8 0 0 1-.535-1.007l-.003-.011a.75.75 0 0 0-1.441.020l-.003.009l-.018.054a3.3 3.3 0 0 1-.504.922c-.384.490-.996.963-2.002.963a.75.75 0 0 0 0 1.5c1.574 0 2.587-.777 3.183-1.537L6 20.374l.056.076C6.608 21.185 7.556 22 9 22s2.392-.815 2.943-1.55l.057-.078l.058.079C12.610 21.185 13.558 22 15 22s2.390-.815 2.942-1.55l.055-.075q.032.044.066.087c.595.761 1.610 1.538 3.187 1.538a.75.75 0 0 0 0-1.5c-1.012 0-1.623-.473-2.005-.962a3.3 3.3 0 0 1-.518-.974" /></g>';
+
 export const ICON_FOLDER = "nameforge-folder";
 const ICON_FOLDER_SVG =
   '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
@@ -156,6 +161,7 @@ const ICON_INFO_SVG =
 export function registerNameForgeIcons(): void {
   addIcon(ICON_MEEPLE, MEEPLE_SVG);
   addIcon(ICON_BYNAMES, ICON_BYNAMES_SVG);
+  addIcon(ICON_SHIPS, ICON_SHIPS_SVG);
   addIcon(ICON_INFO, ICON_INFO_SVG);
   addIcon(ICON_CREATE_PACKS, ICON_CREATE_PACKS_SVG);
   addIcon(ICON_PLUS_SQUARE, ICON_PLUS_SQUARE_SVG);

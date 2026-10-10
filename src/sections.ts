@@ -38,7 +38,13 @@ export type NameForgeSection =
   // Bynames brief §1.1: epithets, titles and family names.
   | "epithets"
   | "titles"
-  | "familyNames";
+  | "familyNames"
+  // Ships brief §1.1: ships and boats, spacecraft and stations (in the advanced group).
+  | "ships"
+  | "spacecraft";
+
+/** Ships brief §1.1: the two vessel modules, in order. */
+export const VESSEL_SECTIONS: NameForgeSection[] = ["ships", "spacecraft"];
 
 /** Bynames brief §1.1: the three bynames modules, in order. */
 export const BYNAME_SECTIONS: NameForgeSection[] = ["epithets", "titles", "familyNames"];
@@ -64,6 +70,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   ...BYNAME_SECTIONS,
   "nameAgeing",
   "nameTakeover",
+  ...VESSEL_SECTIONS,
 ];
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
@@ -74,7 +81,7 @@ export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
   groupNames: ["tribalNames", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
-  advanced: ["nameAgeing", "nameTakeover"],
+  advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS],
 };
 
 export const GROUP_LABELS: Record<SectionGroup, string> = {
@@ -112,6 +119,8 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   epithets: "epithets and bynames",
   titles: "titles and honorifics",
   familyNames: "family names",
+  ships: "ships and boats",
+  spacecraft: "spacecraft and stations",
 };
 
 /** History labels for new runs of the place-name and river modules. */
@@ -139,6 +148,8 @@ export function historySection(packName: string): NameForgeSection {
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   // Bynames brief §1.2: "{module label} · {setting} · {culture}…".
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  // Ships brief §1.2: "{module label} · {setting} · {culture} · {technology}…".
+  for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }

@@ -15,7 +15,8 @@ import {
   type BynameSource,
   moduleKinds,
 } from "./bynames/engine";
-import { findFamily, GROUP_TONES, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
+import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
+import { findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
 
 export const TRIBAL_PRESET_MODULE = "tribal-names";
 
@@ -66,7 +67,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -75,6 +76,8 @@ export function parseModulePreset(
   if (values.module === GROUP_PRESET_MODULE) return parseGroupPreset(values, body, fileName);
   // Bynames brief §12: byname presets too.
   if (values.module === BYNAME_PRESET_MODULE) return parseBynamePreset(values, body, fileName);
+  // Ships brief §15: vessel presets too.
+  if (values.module === VESSEL_PRESET_MODULE) return parseVesselPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module “${values.module ?? ""}”.`);
     return { problems };
@@ -109,7 +112,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset): string {
+  if ("vesselModule" in preset) return vesselPresetContent(preset);
   if ("bynameModule" in preset) return bynamePresetContent(preset);
   if ("family" in preset) return groupPresetContent(preset);
   const quote = (v: string) => (/^\[\[|[:#]/.test(v) ? `"${v}"` : v);
@@ -308,6 +312,109 @@ function bynamePresetContent(preset: BynamePreset): string {
     `source: ${preset.source}`,
     ...(preset.pack ? [`pack: ${preset.pack}`] : []),
     `section: ${preset.section}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Vessel presets (Ships brief §15) ────────────────────────────────────────
+
+export const VESSEL_PRESET_MODULE = "vessels";
+
+export interface VesselPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  vesselModule: VesselModule;
+  culture: string;
+  /** "any" or a function key. */
+  function: string;
+  technology: string;
+  genre: GroupGenre;
+  fantastic: boolean;
+  style: string;
+  tone: GroupToneChoice;
+  prefixes: boolean;
+  people: GroupPeople;
+  series: boolean;
+}
+
+function parseVesselPreset(values: Record<string, string>, body: string, fileName: string): { vessel?: VesselPreset; problems: string[] } {
+  const problems: string[] = [];
+  const module = values.vesselModule as VesselModule;
+  if (module !== "ships" && module !== "spacecraft") {
+    problems.push(`Unknown vesselModule “${values.vesselModule ?? ""}”.`);
+    return { problems };
+  }
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const flag = (key: string): boolean => {
+    const v = values[key];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key} “${v}”.`);
+    return false;
+  };
+  const genre = pick<GroupGenre>("genre", module === "spacecraft" ? "scifi" : "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
+  const fantastic = flag("fantastic");
+  const setting = groupSetting(genre, genre === "scifi" ? false : fantastic);
+  const fn = pick("function", "any", (v) => v === "any" || moduleFunctions(module).some((f) => f.key === v));
+  let style = pick("style", "none", (v) => v === "none" || VESSEL_DATA.styles.some((st) => st.key === v));
+  // §15: a style not offered in the preset's setting runs as none.
+  if (style !== "none" && !availableStyles(module, setting).some((s) => s.key === style)) {
+    problems.push(`Style “${style}” isn't available here.`);
+    style = "none";
+  }
+  let series = flag("series");
+  if (series && fn === "any") {
+    problems.push("Series needs a type.");
+    series = false;
+  }
+  return {
+    vessel: {
+      packName: values.packName || fileName,
+      setting: values.setting ?? "",
+      description: body.trim(),
+      vesselModule: module,
+      culture: pick("culture", "general", (v) => !!findVesselCulture(v)),
+      function: fn,
+      technology: pick("technology", "any", (v) => v === "any" || techChoices(module, "SF").includes(v)),
+      genre,
+      fantastic,
+      style,
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      prefixes: flag("prefixes"),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series,
+    },
+    problems,
+  };
+}
+
+function vesselPresetContent(preset: VesselPreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${VESSEL_PRESET_MODULE}`,
+    `vesselModule: ${preset.vesselModule}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `function: ${preset.function}`,
+    `technology: ${preset.technology}`,
+    `genre: ${preset.genre}`,
+    `fantastic: ${preset.fantastic}`,
+    `style: ${preset.style}`,
+    `tone: ${preset.tone}`,
+    `prefixes: ${preset.prefixes}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
     "---",
     "",
     preset.description.trim(),
