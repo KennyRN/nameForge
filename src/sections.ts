@@ -39,6 +39,8 @@ export type NameForgeSection =
   | "epithets"
   | "titles"
   | "familyNames"
+  // Realms brief §1.1: realms and polities, after tribes and kin groups.
+  | "realms"
   // Ships brief §1.1: ships and boats, spacecraft and stations (in the advanced group).
   | "ships"
   | "spacecraft";
@@ -66,6 +68,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "tribalNames",
+  "realms",
   ...GROUP_NAME_SECTIONS,
   ...BYNAME_SECTIONS,
   "nameAgeing",
@@ -79,7 +82,7 @@ export type SectionGroup = "placeNames" | "groupNames" | "bynames" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
-  groupNames: ["tribalNames", ...GROUP_NAME_SECTIONS],
+  groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS],
 };
@@ -109,6 +112,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   nameAgeing: "name ageing",
   nameTakeover: "name takeover",
   tribalNames: "tribes and kin groups",
+  realms: "realms and polities",
   mysticOrders: "faiths and mystic orders",
   martialOrders: "armies and martial orders",
   underworldGroups: "thieves and the underworld",
@@ -144,6 +148,8 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
   // Tribal brief §18.1.
   if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
+  // Realms brief §1.2: "realms and polities · {setting} · {culture} · {era}…".
+  if (starts(SECTION_LABELS.realms)) return "realms";
   // Group brief §1.2: each group-name module's label starts its history rows.
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   // Bynames brief §1.2: "{module label} · {setting} · {culture}…".

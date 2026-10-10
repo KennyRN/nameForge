@@ -10,6 +10,7 @@ import { promptInstallStarterTemplates } from "./starterInstall";
 import { SAFEGUARD_TEMPLATE } from "./tribes/safeguardPacks";
 import { BYNAME_SAFEGUARD_TEMPLATE } from "./bynames/safeguardPacks";
 import { VESSEL_SAFEGUARD_TEMPLATE } from "./vessels/safeguardPacks";
+import { REALM_SAFEGUARD_TEMPLATE } from "./realms/safeguardPacks";
 import { GROUP_SAFEGUARD_TEMPLATE } from "./groups/safeguardPacks";
 
 const DEFAULT_SETTINGS: NameForgeSettings = {
@@ -247,6 +248,23 @@ export default class NameForgePlugin extends Plugin {
         }
         await this.app.vault.create(path, BYNAME_SAFEGUARD_TEMPLATE);
         new Notice("nameForge: “Byname safeguards” created.");
+      },
+    });
+
+    // Realms brief §12.4: a realm safeguard list to edit, never written over an existing one.
+    this.addCommand({
+      id: "create-realm-safeguard-list",
+      name: "Create realm safeguard list",
+      callback: async () => {
+        const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
+        await ensureVaultFolder(this.app, folder);
+        const path = normalizePath(`${folder}/Realm safeguards.md`);
+        if (this.app.vault.getFileByPath(path)) {
+          new Notice("nameForge: “Realm safeguards” already exists.");
+          return;
+        }
+        await this.app.vault.create(path, REALM_SAFEGUARD_TEMPLATE);
+        new Notice("nameForge: “Realm safeguards” created.");
       },
     });
 

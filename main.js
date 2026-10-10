@@ -461,19 +461,19 @@ function stripInlineMarkup(s) {
 function parseNameTokens(text) {
   const tokens = text.split(/[\n,;]/).flatMap((t) => splitOnJoiners(t)).flatMap((t) => splitSpaceSeparatedList(t)).map((t) => t.trim()).filter((t) => t.length > 0);
   const names = [];
-  for (const token4 of tokens) {
-    const cleaned = cleanToken(stripLeadingConjunction(token4));
+  for (const token5 of tokens) {
+    const cleaned = cleanToken(stripLeadingConjunction(token5));
     if (cleaned === "" || isNoise(cleaned)) continue;
     names.push(cleaned);
   }
   return dedupe(names);
 }
-function splitSpaceSeparatedList(token4) {
-  const parts = splitOnUnquotedWhitespace(token4);
+function splitSpaceSeparatedList(token5) {
+  const parts = splitOnUnquotedWhitespace(token5);
   if (parts.length >= 3) return parts;
-  const loose = unwrapOuterQuotes(token4.trim()).split(/\s+/).filter((p) => p.length > 0);
+  const loose = unwrapOuterQuotes(token5.trim()).split(/\s+/).filter((p) => p.length > 0);
   if (loose.length >= 3) return loose;
-  return [token4];
+  return [token5];
 }
 function unwrapOuterQuotes(s) {
   const pairs = [
@@ -489,11 +489,11 @@ function unwrapOuterQuotes(s) {
   }
   return s;
 }
-function splitOnUnquotedWhitespace(token4) {
+function splitOnUnquotedWhitespace(token5) {
   const parts = [];
   let current = "";
   let quote2 = null;
-  for (const char of token4) {
+  for (const char of token5) {
     if (quote2) {
       current += char;
       if (char === matchingQuote(quote2)) quote2 = null;
@@ -519,8 +519,8 @@ function matchingQuote(open) {
   if (open === "\u2018") return "\u2019";
   return open;
 }
-function splitOnJoiners(token4) {
-  let parts = [token4];
+function splitOnJoiners(token5) {
+  let parts = [token5];
   for (const joiner of JOINERS) {
     const next = [];
     for (const part of parts) {
@@ -536,12 +536,12 @@ function splitOnJoiners(token4) {
   }
   return parts;
 }
-function stripLeadingConjunction(token4) {
-  const lower2 = token4.toLowerCase();
+function stripLeadingConjunction(token5) {
+  const lower2 = token5.toLowerCase();
   for (const lead of LEADERS) {
-    if (lower2.startsWith(lead)) return token4.slice(lead.length).trim();
+    if (lower2.startsWith(lead)) return token5.slice(lead.length).trim();
   }
-  return token4;
+  return token5;
 }
 function cleanToken(s) {
   let t = s.trim();
@@ -53419,34 +53419,34 @@ var WorldRenderer = class {
     return pickUniform5(source.corpus, rng);
   }
   /** A list word, expanding any template held in the entry. */
-  slot(token4, rng, depth) {
+  slot(token5, rng, depth) {
     var _a2, _b;
-    if (token4.markov) {
-      const name = this.markovName(token4.key, rng);
-      const text2 = token4.form === "pos" ? possessive(name) : name;
-      return { text: text2, etym: `[${this.label(token4.key)}: ${name}]${token4.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
+    if (token5.markov) {
+      const name = this.markovName(token5.key, rng);
+      const text2 = token5.form === "pos" ? possessive(name) : name;
+      return { text: text2, etym: `[${this.label(token5.key)}: ${name}]${token5.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
     }
-    const list = this.lists[token4.key];
+    const list = this.lists[token5.key];
     if (!list || list.length === 0) {
-      this.notices.add(`No word list "${token4.key}" for ${this.culture.label}.`);
-      return { text: `[${token4.key}]`, etym: `[${token4.key}]`, fusable: false };
+      this.notices.add(`No word list "${token5.key}" for ${this.culture.label}.`);
+      return { text: `[${token5.key}]`, etym: `[${token5.key}]`, fusable: false };
     }
-    const entry = parseEntry((_a2 = this.swapEntry(token4.key, rng)) != null ? _a2 : pickUniform5(list, rng));
+    const entry = parseEntry((_a2 = this.swapEntry(token5.key, rng)) != null ? _a2 : pickUniform5(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);
-      const text2 = token4.form === "pos" ? possessive(inner.text) : inner.text;
-      const etym = single ? inner.etym : `[${this.label(token4.key)}: ${inner.text}]`;
-      return { text: text2, etym: token4.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
+      const text2 = token5.form === "pos" ? possessive(inner.text) : inner.text;
+      const etym = single ? inner.etym : `[${this.label(token5.key)}: ${inner.text}]`;
+      return { text: text2, etym: token5.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
     }
     let text = entry.word;
-    if (token4.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
-    if (token4.form === "pos") text = possessive(entry.word);
-    const shown = token4.form === "pos" ? entry.word : text;
+    if (token5.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
+    if (token5.form === "pos") text = possessive(entry.word);
+    const shown = token5.form === "pos" ? entry.word : text;
     return {
       text,
-      etym: `[${this.label(token4.key)}: ${shown}]${token4.form === "pos" ? possessiveTail(entry.word) : ""}`,
-      fusable: !entry.noFuse && token4.form !== "pos"
+      etym: `[${this.label(token5.key)}: ${shown}]${token5.form === "pos" ? possessiveTail(entry.word) : ""}`,
+      fusable: !entry.noFuse && token5.form !== "pos"
     };
   }
   /** Renders a template: slots filled, "+" groups fused or spaced. */
@@ -53460,14 +53460,14 @@ var WorldRenderer = class {
       out.push(group.length === 1 ? group[0] : this.fuse(group, rng));
       group = [];
     };
-    for (const token4 of tokens) {
-      if (token4.kind === "fuse") {
+    for (const token5 of tokens) {
+      if (token5.kind === "fuse") {
         joinNext = true;
         continue;
       }
       let piece;
-      if (token4.kind === "text") piece = { text: token4.text, etym: token4.text.toLowerCase(), fusable: !/\s/.test(token4.text) };
-      else piece = this.slot(token4, rng, depth);
+      if (token5.kind === "text") piece = { text: token5.text, etym: token5.text.toLowerCase(), fusable: !/\s/.test(token5.text) };
+      else piece = this.slot(token5, rng, depth);
       if (!joinNext) flush();
       group.push(piece);
       joinNext = false;
@@ -54063,17 +54063,17 @@ function renderShape(ctx, type, listType, shape, front, hooks) {
 }
 function acceptable(ctx, text, formal) {
   const words = text.split(" ").filter((w) => w && w !== "&");
-  const counted = words.filter((w, i) => !(i === 0 && w === "the") && !SMALL2.has(w.toLowerCase()));
-  if (counted.length > (formal ? 8 : 5)) return false;
-  if (repeatsContent(counted)) return false;
+  const counted2 = words.filter((w, i) => !(i === 0 && w === "the") && !SMALL2.has(w.toLowerCase()));
+  if (counted2.length > (formal ? 8 : 5)) return false;
+  if (repeatsContent(counted2)) return false;
   const n = norm2(text);
   if (ctx.block.has(n)) return false;
   if (BANNED.some((re) => re.test(text))) return false;
   if (breaksGroupColourRule(text)) return false;
   return true;
 }
-function repeatsContent(counted) {
-  const content = counted.filter((w) => !w.startsWith("[")).flatMap((w) => w.split(/[-–]/));
+function repeatsContent(counted2) {
+  const content = counted2.filter((w) => !w.startsWith("[")).flatMap((w) => w.split(/[-–]/));
   const seen = /* @__PURE__ */ new Set();
   let colours = 0;
   let numbers = 0;
@@ -61566,10 +61566,10 @@ function welshPatronymic(father) {
 function greekPatronymic(father) {
   return (/[aeiouAEIOU]$/.test(father) ? father.slice(0, -1) : father) + "ides";
 }
-function nativeOf(culture, place2) {
+function nativeOf(culture, place3) {
   const word = BYNAMES_DATA.titles.nativeOf[culture];
-  if (!word) return `of ${place2}`;
-  return word === "de" && /^[AEIOUaeiouÆæ]/.test(place2) ? `d'${place2}` : `${word} ${place2}`;
+  if (!word) return `of ${place3}`;
+  return word === "de" && /^[AEIOUaeiouÆæ]/.test(place3) ? `d'${place3}` : `${word} ${place3}`;
 }
 function render2(ctx, pattern) {
   let failed = false;
@@ -61791,8 +61791,8 @@ function buildTitle(ctx, kind, length) {
   if (name) {
     const ofAt = firstShape === "{rank} of {town}" ? first.text.search(/ (of|de|d') ?/) : -1;
     const rank = ofAt >= 0 ? first.text.slice(0, ofAt) : first.text;
-    const place2 = ofAt >= 0 ? first.text.slice(ofAt) : "";
-    head = (first.after ? `${name} ${rank}` : `${rank} ${name}`) + place2;
+    const place3 = ofAt >= 0 ? first.text.slice(ofAt) : "";
+    head = (first.after ? `${name} ${rank}` : `${rank} ${name}`) + place3;
   }
   return { part: parts.join(", "), text: `${head}, ${rest}`, kind: "full", shape: "full style", tones: tonesOf([...shapeTones2], ctx.drawn) };
 }
@@ -62129,6 +62129,3139 @@ Names to allow, though they echo a real or well-known person or title.
 
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
+
+// src/data/realms.json
+var realms_default = {
+  $comment: "Realms and polities (docs/realms-and-polities-brief.md). Built from the brief by build_realms.py.",
+  eras: [
+    {
+      key: "ancient",
+      label: "ancient",
+      code: "AN"
+    },
+    {
+      key: "medieval",
+      label: "medieval",
+      code: "MD"
+    },
+    {
+      key: "earlyModern",
+      label: "early modern",
+      code: "EM"
+    },
+    {
+      key: "modern",
+      label: "modern",
+      code: "MO"
+    },
+    {
+      key: "nearFuture",
+      label: "near future",
+      code: "NF"
+    },
+    {
+      key: "interstellar",
+      label: "interstellar",
+      code: "IS"
+    }
+  ],
+  forms: [
+    {
+      w: "Kingdom",
+      pl: "Kingdoms",
+      g: "crown",
+      era: {
+        AN: 30,
+        MD: 30,
+        EM: 20,
+        MO: 5,
+        NF: 2,
+        IS: 2
+      }
+    },
+    {
+      w: "Realm",
+      pl: "Realms",
+      g: "crown",
+      era: {
+        AN: 15,
+        MD: 15,
+        EM: 5,
+        MO: 0,
+        NF: 0,
+        IS: 1
+      }
+    },
+    {
+      w: "Empire",
+      pl: "Empires",
+      g: "imperial",
+      era: {
+        AN: 20,
+        MD: 5,
+        EM: 15,
+        MO: 3,
+        NF: 2,
+        IS: 5
+      },
+      t: [
+        "grand"
+      ]
+    },
+    {
+      w: "Dominion",
+      pl: "Dominions",
+      g: "imperial",
+      era: {
+        AN: 5,
+        MD: 5,
+        EM: 10,
+        MO: 5,
+        NF: 2,
+        IS: 5
+      },
+      t: [
+        "grand"
+      ]
+    },
+    {
+      w: "Principality",
+      pl: "Principalities",
+      g: "crown",
+      era: {
+        AN: 0,
+        MD: 15,
+        EM: 10,
+        MO: 3,
+        NF: 1,
+        IS: 1
+      }
+    },
+    {
+      w: "Duchy",
+      pl: "Duchies",
+      g: "crown",
+      era: {
+        AN: 0,
+        MD: 20,
+        EM: 10,
+        MO: 2,
+        NF: 0,
+        IS: 1
+      }
+    },
+    {
+      w: "Grand Duchy",
+      pl: "Grand Duchies",
+      g: "crown",
+      era: {
+        AN: 0,
+        MD: 3,
+        EM: 5,
+        MO: 3,
+        NF: 0,
+        IS: 1
+      },
+      t: [
+        "grand"
+      ]
+    },
+    {
+      w: "County",
+      pl: "Counties",
+      g: "crown",
+      era: {
+        AN: 0,
+        MD: 10,
+        EM: 3,
+        MO: 0,
+        NF: 0,
+        IS: 0
+      },
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "March",
+      pl: "Marches",
+      g: "crown",
+      era: {
+        AN: 0,
+        MD: 15,
+        EM: 5,
+        MO: 0,
+        NF: 0,
+        IS: 1
+      }
+    },
+    {
+      w: "Lordship",
+      pl: "Lordships",
+      g: "crown",
+      era: {
+        AN: 0,
+        MD: 8,
+        EM: 2,
+        MO: 0,
+        NF: 0,
+        IS: 0
+      },
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Electorate",
+      pl: "Electorates",
+      g: "crown",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 5,
+        MO: 0,
+        NF: 0,
+        IS: 0
+      }
+    },
+    {
+      w: "City-State",
+      pl: "City-States",
+      g: "republic",
+      era: {
+        AN: 20,
+        MD: 8,
+        EM: 3,
+        MO: 2,
+        NF: 3,
+        IS: 2
+      }
+    },
+    {
+      w: "Free City",
+      pl: "Free Cities",
+      g: "republic",
+      era: {
+        AN: 0,
+        MD: 10,
+        EM: 5,
+        MO: 1,
+        NF: 2,
+        IS: 1
+      }
+    },
+    {
+      w: "Republic",
+      pl: "Republics",
+      g: "republic",
+      era: {
+        AN: 8,
+        MD: 3,
+        EM: 20,
+        MO: 30,
+        NF: 20,
+        IS: 15
+      }
+    },
+    {
+      w: "Commonwealth",
+      pl: "Commonwealths",
+      g: "republic",
+      era: {
+        AN: 0,
+        MD: 2,
+        EM: 10,
+        MO: 10,
+        NF: 10,
+        IS: 10
+      }
+    },
+    {
+      w: "State",
+      pl: "States",
+      g: "republic",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 2,
+        MO: 15,
+        NF: 10,
+        IS: 5
+      },
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Free State",
+      pl: "Free States",
+      g: "republic",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 3,
+        MO: 5,
+        NF: 5,
+        IS: 3
+      }
+    },
+    {
+      w: "League",
+      pl: "Leagues",
+      g: "federal",
+      era: {
+        AN: 15,
+        MD: 10,
+        EM: 8,
+        MO: 2,
+        NF: 3,
+        IS: 5
+      }
+    },
+    {
+      w: "Confederation",
+      pl: "Confederations",
+      g: "federal",
+      era: {
+        AN: 5,
+        MD: 3,
+        EM: 8,
+        MO: 8,
+        NF: 5,
+        IS: 5
+      }
+    },
+    {
+      w: "Confederacy",
+      pl: "Confederacies",
+      g: "federal",
+      era: {
+        AN: 5,
+        MD: 3,
+        EM: 5,
+        MO: 3,
+        NF: 3,
+        IS: 2
+      }
+    },
+    {
+      w: "Union",
+      pl: "Unions",
+      g: "federal",
+      era: {
+        AN: 3,
+        MD: 2,
+        EM: 5,
+        MO: 15,
+        NF: 15,
+        IS: 15
+      }
+    },
+    {
+      w: "Federation",
+      pl: "Federations",
+      g: "federal",
+      era: {
+        AN: 2,
+        MD: 0,
+        EM: 2,
+        MO: 15,
+        NF: 15,
+        IS: 20
+      }
+    },
+    {
+      w: "Compact",
+      pl: "Compacts",
+      g: "federal",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 2,
+        MO: 2,
+        NF: 8,
+        IS: 10
+      },
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Coalition",
+      pl: "Coalitions",
+      g: "federal",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 1,
+        MO: 3,
+        NF: 8,
+        IS: 10
+      },
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Alliance",
+      pl: "Alliances",
+      g: "federal",
+      era: {
+        AN: 3,
+        MD: 2,
+        EM: 3,
+        MO: 3,
+        NF: 5,
+        IS: 5
+      }
+    },
+    {
+      w: "Protectorate",
+      pl: "Protectorates",
+      g: "admin",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 5,
+        MO: 8,
+        NF: 8,
+        IS: 8
+      }
+    },
+    {
+      w: "Territory",
+      pl: "Territories",
+      g: "admin",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 5,
+        MO: 8,
+        NF: 8,
+        IS: 5
+      },
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Colony",
+      pl: "Colonies",
+      g: "admin",
+      era: {
+        AN: 3,
+        MD: 0,
+        EM: 8,
+        MO: 3,
+        NF: 3,
+        IS: 5
+      }
+    },
+    {
+      w: "Province",
+      pl: "Provinces",
+      g: "admin",
+      era: {
+        AN: 5,
+        MD: 2,
+        EM: 5,
+        MO: 3,
+        NF: 3,
+        IS: 3
+      },
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Authority",
+      pl: "Authorities",
+      g: "admin",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 2,
+        NF: 15,
+        IS: 15
+      },
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Directorate",
+      pl: "Directorates",
+      g: "admin",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 1,
+        NF: 10,
+        IS: 12
+      }
+    },
+    {
+      w: "Hegemony",
+      pl: "Hegemonies",
+      g: "imperial",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 3,
+        IS: 8
+      },
+      t: [
+        "grim"
+      ]
+    },
+    {
+      w: "Interstellar Federation",
+      pl: "Interstellar Federations",
+      g: "federal",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 0,
+        IS: 10
+      },
+      compound: true,
+      t: [
+        "grand"
+      ]
+    },
+    {
+      w: "Planetary Union",
+      pl: "Planetary Unions",
+      g: "federal",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 2,
+        IS: 10
+      },
+      compound: true
+    },
+    {
+      w: "Colonial Authority",
+      pl: "Colonial Authoritys",
+      g: "admin",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 2,
+        IS: 8
+      },
+      compound: true,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Trade Directorate",
+      pl: "Trade Directorates",
+      g: "admin",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 2,
+        IS: 6
+      },
+      compound: true,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Orbital Republic",
+      pl: "Orbital Republics",
+      g: "republic",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 3,
+        IS: 6
+      },
+      compound: true
+    },
+    {
+      w: "Sector Government",
+      pl: "Sector Governments",
+      g: "admin",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 0,
+        IS: 6
+      },
+      compound: true,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "System Hegemony",
+      pl: "System Hegemonys",
+      g: "imperial",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 0,
+        IS: 4
+      },
+      compound: true,
+      t: [
+        "grim"
+      ]
+    },
+    {
+      w: "Stellar Commonwealth",
+      pl: "Stellar Commonwealths",
+      g: "republic",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 0,
+        IS: 5
+      },
+      compound: true,
+      t: [
+        "grand"
+      ]
+    },
+    {
+      w: "Metropolitan Authority",
+      pl: "Metropolitan Authoritys",
+      g: "admin",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 8,
+        IS: 2
+      },
+      compound: true,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Free Zone",
+      pl: "Free Zones",
+      g: "republic",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 6,
+        IS: 2
+      },
+      compound: true
+    },
+    {
+      w: "Development Zone",
+      pl: "Development Zones",
+      g: "admin",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 5,
+        IS: 3
+      },
+      compound: true,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Provisional Government",
+      pl: "Provisional Governments",
+      g: "admin",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 5,
+        IS: 2
+      },
+      compound: true,
+      t: [
+        "grim"
+      ]
+    },
+    {
+      w: "Successor State",
+      pl: "Successor States",
+      g: "republic",
+      era: {
+        AN: 0,
+        MD: 0,
+        EM: 0,
+        MO: 0,
+        NF: 5,
+        IS: 2
+      },
+      compound: true,
+      t: [
+        "grim"
+      ]
+    },
+    {
+      w: "Nation",
+      pl: "Nations",
+      g: "tribal",
+      era: {
+        AN: 15,
+        MD: 15,
+        EM: 15,
+        MO: 15,
+        NF: 15,
+        IS: 15
+      },
+      peoplesOnly: true
+    }
+  ],
+  cultures: {
+    norse: {
+      mult: {
+        Kingdom: 1,
+        Realm: 1,
+        Commonwealth: 1
+      },
+      forms: [
+        {
+          w: "Jarldom",
+          pl: "Jarldoms",
+          g: "crown",
+          eras: [
+            "MD"
+          ],
+          x: 2
+        },
+        {
+          w: "Sea-Realm",
+          pl: "Sea-Realms",
+          g: "crown",
+          eras: [
+            "MD"
+          ],
+          x: 0.5
+        }
+      ]
+    },
+    "anglo-saxon": {
+      mult: {
+        Kingdom: 2
+      },
+      peoplesMult: 2
+    },
+    celtic: {
+      mult: {
+        Lordship: 2,
+        Confederation: 1.5
+      },
+      forms: [
+        {
+          w: "High Kingdom",
+          pl: "High Kingdoms",
+          g: "crown",
+          eras: [
+            "AN",
+            "MD"
+          ],
+          x: 2
+        },
+        {
+          w: "Clan Lands",
+          pl: "Clan Lands",
+          g: "tribal",
+          eras: [
+            "AN",
+            "MD",
+            "EM"
+          ],
+          x: 1
+        }
+      ]
+    },
+    "norman-british": {
+      mult: {
+        Duchy: 2,
+        March: 2,
+        County: 1.5,
+        Dominion: 1.5
+      },
+      forms: [
+        {
+          w: "Earldom",
+          pl: "Earldoms",
+          g: "crown",
+          eras: [
+            "MD"
+          ],
+          x: 1
+        },
+        {
+          w: "County Palatine",
+          pl: "Counties Palatine",
+          g: "crown",
+          eras: [
+            "MD",
+            "EM"
+          ],
+          x: 0.5
+        }
+      ]
+    },
+    roman: {
+      mult: {
+        Republic: 2,
+        Empire: 2,
+        Province: 2,
+        "City-State": 1.5
+      }
+    },
+    "greek-byzantine": {
+      mult: {
+        "City-State": 3,
+        League: 2,
+        Empire: 1.5
+      },
+      forms: [
+        {
+          w: "Despotate",
+          pl: "Despotates",
+          g: "crown",
+          eras: [
+            "MD"
+          ],
+          x: 1
+        },
+        {
+          w: "Exarchate",
+          pl: "Exarchates",
+          g: "imperial",
+          eras: [
+            "MD"
+          ],
+          x: 1
+        }
+      ]
+    },
+    slavic: {
+      mult: {
+        Principality: 2,
+        Commonwealth: 1.5
+      },
+      forms: [
+        {
+          w: "Tsardom",
+          pl: "Tsardoms",
+          g: "crown",
+          eras: [
+            "EM"
+          ],
+          x: 2
+        },
+        {
+          w: "Grand Principality",
+          pl: "Grand Principalities",
+          g: "crown",
+          eras: [
+            "MD"
+          ],
+          x: 2
+        },
+        {
+          w: "Voivodeship",
+          pl: "Voivodeships",
+          g: "crown",
+          eras: [
+            "MD",
+            "EM"
+          ],
+          x: 0.5
+        }
+      ]
+    },
+    steppe: {
+      mult: {
+        Confederation: 2,
+        Union: 1.5
+      },
+      forms: [
+        {
+          w: "Khanate",
+          pl: "Khanates",
+          g: "crown",
+          eras: [
+            "MD",
+            "EM"
+          ],
+          x: 3
+        },
+        {
+          w: "Khaganate",
+          pl: "Khaganates",
+          g: "imperial",
+          eras: [
+            "AN",
+            "MD"
+          ],
+          x: 2
+        },
+        {
+          w: "Horde",
+          pl: "Hordes",
+          g: "tribal",
+          eras: [
+            "MD"
+          ],
+          x: 2
+        }
+      ]
+    },
+    "arabic-persian": {
+      mult: {
+        Empire: 1.5
+      },
+      forms: [
+        {
+          w: "Sultanate",
+          pl: "Sultanates",
+          g: "crown",
+          eras: [
+            "MD",
+            "EM",
+            "MO"
+          ],
+          x: 3
+        },
+        {
+          w: "Emirate",
+          pl: "Emirates",
+          g: "crown",
+          eras: [
+            "MD",
+            "EM",
+            "MO"
+          ],
+          x: 3
+        },
+        {
+          w: "Sheikhdom",
+          pl: "Sheikhdoms",
+          g: "crown",
+          eras: [
+            "EM",
+            "MO"
+          ],
+          x: 1
+        },
+        {
+          w: "Satrapy",
+          pl: "Satrapies",
+          g: "admin",
+          eras: [
+            "AN"
+          ],
+          x: 2
+        }
+      ]
+    },
+    indian: {
+      mult: {
+        Kingdom: 2,
+        Empire: 1.5,
+        Confederacy: 1.5
+      },
+      forms: [
+        {
+          w: "Sultanate",
+          pl: "Sultanates",
+          g: "crown",
+          eras: [
+            "MD",
+            "EM"
+          ],
+          x: 1
+        },
+        {
+          w: "Princely State",
+          pl: "Princely States",
+          g: "crown",
+          eras: [
+            "MO"
+          ],
+          x: 1
+        }
+      ],
+      eraMult: {
+        AN: {
+          Republic: 0.5
+        }
+      }
+    },
+    chinese: {
+      mult: {
+        Empire: 2,
+        Kingdom: 2,
+        Protectorate: 1.5
+      }
+    },
+    japanese: {
+      mult: {
+        Province: 2,
+        Empire: 1
+      },
+      forms: [
+        {
+          w: "Shogunate",
+          pl: "Shogunates",
+          g: "crown",
+          eras: [
+            "MD",
+            "EM"
+          ],
+          x: 2
+        },
+        {
+          w: "Domain",
+          pl: "Domains",
+          g: "crown",
+          eras: [
+            "MD",
+            "EM"
+          ],
+          x: 2
+        }
+      ]
+    },
+    korean: {
+      mult: {
+        Kingdom: 3,
+        Empire: 1,
+        Confederacy: 0.5
+      }
+    },
+    egyptian: {
+      mult: {
+        Kingdom: 3,
+        Empire: 1.5
+      },
+      forms: [
+        {
+          w: "Nome",
+          pl: "Nomes",
+          g: "admin",
+          eras: [
+            "AN"
+          ],
+          x: 1
+        }
+      ]
+    },
+    ethiopian: {
+      mult: {
+        Empire: 2,
+        Kingdom: 2
+      }
+    },
+    bantu: {
+      mult: {
+        Kingdom: 3,
+        Confederacy: 1.5,
+        Empire: 0.5
+      },
+      forms: [
+        {
+          w: "Chiefdom",
+          pl: "Chiefdoms",
+          g: "tribal",
+          eras: [
+            "AN",
+            "MD",
+            "EM"
+          ],
+          x: 2
+        }
+      ]
+    },
+    "west-african": {
+      mult: {
+        Empire: 2,
+        Kingdom: 2,
+        "City-State": 1.5,
+        Confederacy: 1.5
+      },
+      forms: [
+        {
+          w: "Emirate",
+          pl: "Emirates",
+          g: "crown",
+          eras: [
+            "EM"
+          ],
+          x: 1
+        }
+      ]
+    },
+    aztec: {
+      mult: {
+        "City-State": 3,
+        Empire: 1,
+        League: 1,
+        Alliance: 1
+      }
+    },
+    maya: {
+      mult: {
+        "City-State": 3,
+        Kingdom: 2,
+        League: 1
+      }
+    }
+  },
+  characters: [
+    {
+      key: "territorial",
+      menu: "Territorial",
+      plural: "territorial realms",
+      w: 40,
+      description: "Kingdoms, duchies and republics named for land, places and dynasties"
+    },
+    {
+      key: "merchant",
+      menu: "Merchant",
+      plural: "merchant states",
+      w: 10,
+      description: "Merchant republics, leagues of free ports, trading compacts"
+    },
+    {
+      key: "religious",
+      menu: "Religious",
+      plural: "holy realms",
+      w: 8,
+      description: "Holy kingdoms and sacred dominions"
+    },
+    {
+      key: "military",
+      menu: "Military",
+      plural: "military states",
+      w: 10,
+      description: "Marches, protectorates and frontier commands"
+    },
+    {
+      key: "colonial",
+      menu: "Colonial",
+      plural: "colonies",
+      w: 10,
+      description: "Crown territories, charters and new settlements"
+    },
+    {
+      key: "outlaw",
+      menu: "Outlaw",
+      plural: "outlaw states",
+      w: 6,
+      description: "Free corsair ports and smuggler coasts"
+    },
+    {
+      key: "peoples",
+      menu: "Peoples",
+      plural: "confederacies of peoples",
+      w: 10,
+      description: "Unions and confederacies of tribes and clans"
+    },
+    {
+      key: "corporate",
+      menu: "Corporate",
+      plural: "corporate states",
+      w: 6,
+      description: "Authorities, charters and governance zones",
+      eraMult: {
+        AN: 0,
+        MD: 0,
+        EM: 0.3
+      }
+    }
+  ],
+  characterMult: {
+    merchant: {
+      forms: {
+        Republic: 3,
+        League: 3,
+        "Free City": 2,
+        Compact: 2,
+        Commonwealth: 1.5,
+        "City-State": 1.5
+      },
+      groups: {
+        crown: 0.3,
+        imperial: 0.3
+      }
+    },
+    religious: {
+      forms: {
+        Realm: 2,
+        Dominion: 2,
+        Kingdom: 1.5,
+        Commonwealth: 1.5,
+        League: 1.5
+      },
+      groups: {
+        federal: 0.3,
+        admin: 0.3
+      }
+    },
+    military: {
+      forms: {
+        March: 4,
+        Protectorate: 3,
+        Dominion: 1.5,
+        Territory: 1.5,
+        Lordship: 1.5
+      },
+      groups: {
+        republic: 0.5
+      }
+    },
+    colonial: {
+      forms: {
+        Colony: 4,
+        Territory: 3,
+        Province: 2,
+        Dominion: 2,
+        Protectorate: 1.5,
+        "Colonial Authority": 3
+      },
+      groups: {
+        crown: 0.3
+      }
+    },
+    outlaw: {
+      forms: {
+        "Free City": 3,
+        Republic: 2,
+        "Free State": 2,
+        League: 1.5
+      },
+      groups: {
+        crown: 0.2,
+        imperial: 0.2,
+        admin: 0.2
+      }
+    },
+    peoples: {
+      forms: {
+        Confederacy: 4,
+        Confederation: 3,
+        Union: 3,
+        Alliance: 2,
+        League: 1.5
+      },
+      groups: {
+        tribal: 3,
+        republic: 0.2,
+        admin: 0.2
+      }
+    },
+    corporate: {
+      forms: {
+        Directorate: 3,
+        Authority: 3,
+        Compact: 2
+      },
+      groups: {
+        admin: 4,
+        crown: 0,
+        imperial: 0,
+        tribal: 0
+      }
+    }
+  },
+  namedFor: [
+    {
+      key: "anything",
+      label: "anything"
+    },
+    {
+      key: "land",
+      label: "their land"
+    },
+    {
+      key: "place",
+      label: "a place"
+    },
+    {
+      key: "dynasty",
+      label: "a dynasty"
+    },
+    {
+      key: "people",
+      label: "a people"
+    },
+    {
+      key: "stars",
+      label: "the stars",
+      eras: [
+        "NF",
+        "IS"
+      ]
+    }
+  ],
+  namedForWeights: {
+    territorial: {
+      land: 40,
+      place: 30,
+      dynasty: 15,
+      people: 5,
+      stars: 10
+    },
+    merchant: {
+      land: 20,
+      place: 60,
+      dynasty: 5,
+      people: 0,
+      stars: 15
+    },
+    religious: {
+      land: 40,
+      place: 40,
+      dynasty: 10,
+      people: 0,
+      stars: 10
+    },
+    military: {
+      land: 50,
+      place: 40,
+      dynasty: 5,
+      people: 0,
+      stars: 5
+    },
+    colonial: {
+      land: 30,
+      place: 55,
+      dynasty: 5,
+      people: 0,
+      stars: 10
+    },
+    outlaw: {
+      land: 50,
+      place: 40,
+      dynasty: 0,
+      people: 0,
+      stars: 10
+    },
+    peoples: {
+      land: 20,
+      place: 0,
+      dynasty: 0,
+      people: 80,
+      stars: 0
+    },
+    corporate: {
+      land: 0,
+      place: 50,
+      dynasty: 0,
+      people: 0,
+      stars: 50
+    }
+  },
+  lists: {
+    landPl: [
+      {
+        w: "Fells"
+      },
+      {
+        w: "Hills"
+      },
+      {
+        w: "Marches"
+      },
+      {
+        w: "Plains"
+      },
+      {
+        w: "Forests"
+      },
+      {
+        w: "Woods"
+      },
+      {
+        w: "Vales"
+      },
+      {
+        w: "Marshes"
+      },
+      {
+        w: "Peaks"
+      },
+      {
+        w: "Mountains"
+      },
+      {
+        w: "Moors"
+      },
+      {
+        w: "Steppes"
+      },
+      {
+        w: "Downs"
+      },
+      {
+        w: "Wolds"
+      },
+      {
+        w: "Heaths"
+      },
+      {
+        w: "Dales"
+      },
+      {
+        w: "Uplands"
+      }
+    ],
+    waterPl: [
+      {
+        w: "Rivers"
+      },
+      {
+        w: "Lakes"
+      },
+      {
+        w: "Shores"
+      },
+      {
+        w: "Isles"
+      },
+      {
+        w: "Islands"
+      },
+      {
+        w: "Straits"
+      },
+      {
+        w: "Lagoons"
+      },
+      {
+        w: "Reefs"
+      },
+      {
+        w: "Waters"
+      }
+    ],
+    waterSg: [
+      {
+        w: "Coast"
+      },
+      {
+        w: "Delta"
+      },
+      {
+        w: "Bay"
+      },
+      {
+        w: "Sound"
+      },
+      {
+        w: "Strand"
+      },
+      {
+        w: "Gulf"
+      }
+    ],
+    settlementPl: [
+      {
+        w: "Cities"
+      },
+      {
+        w: "Towns"
+      },
+      {
+        w: "Ports"
+      },
+      {
+        w: "Forts"
+      },
+      {
+        w: "Harbours"
+      },
+      {
+        w: "Crossings"
+      },
+      {
+        w: "Roads"
+      },
+      {
+        w: "Cantons"
+      },
+      {
+        w: "Provinces"
+      },
+      {
+        w: "Valleys"
+      }
+    ],
+    regional: [
+      {
+        w: "Frontier"
+      },
+      {
+        w: "Heartland"
+      },
+      {
+        w: "Borderlands"
+      },
+      {
+        w: "Interior"
+      },
+      {
+        w: "Lowlands"
+      },
+      {
+        w: "Highlands"
+      },
+      {
+        w: "Midlands"
+      }
+    ],
+    compassAdj: [
+      {
+        w: "Northern"
+      },
+      {
+        w: "Southern"
+      },
+      {
+        w: "Eastern"
+      },
+      {
+        w: "Western"
+      },
+      {
+        w: "Central"
+      },
+      {
+        w: "Upper"
+      },
+      {
+        w: "Lower"
+      },
+      {
+        w: "Outer"
+      },
+      {
+        w: "Inner"
+      }
+    ],
+    landQual: [
+      {
+        w: "Highland"
+      },
+      {
+        w: "Lowland"
+      },
+      {
+        w: "Coastal"
+      },
+      {
+        w: "Frontier"
+      },
+      {
+        w: "Border"
+      },
+      {
+        w: "River"
+      },
+      {
+        w: "Island"
+      },
+      {
+        w: "Lake"
+      },
+      {
+        w: "Forest"
+      },
+      {
+        w: "Hill"
+      },
+      {
+        w: "Marsh"
+      },
+      {
+        w: "Desert",
+        biome: "desert"
+      },
+      {
+        w: "Steppe",
+        biome: "steppe"
+      }
+    ],
+    cultQual: [
+      {
+        w: "Golden"
+      },
+      {
+        w: "Iron",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Silver"
+      },
+      {
+        w: "Crimson"
+      },
+      {
+        w: "Emerald"
+      },
+      {
+        w: "Sapphire"
+      },
+      {
+        w: "Sacred",
+        character: "religious",
+        t: [
+          "strange"
+        ]
+      }
+    ],
+    peopleQual: [
+      {
+        w: "River"
+      },
+      {
+        w: "Hill"
+      },
+      {
+        w: "Forest"
+      },
+      {
+        w: "Lake"
+      },
+      {
+        w: "Marsh"
+      },
+      {
+        w: "Coast"
+      },
+      {
+        w: "Island"
+      },
+      {
+        w: "Mountain"
+      },
+      {
+        w: "Horse"
+      },
+      {
+        w: "Sky",
+        cx: {
+          steppe: 3
+        }
+      },
+      {
+        w: "Wolf"
+      },
+      {
+        w: "Bear"
+      },
+      {
+        w: "Raven"
+      },
+      {
+        w: "Salmon"
+      },
+      {
+        w: "Elk"
+      }
+    ],
+    peopleNoun: [
+      {
+        w: "Tribes",
+        x: 3
+      },
+      {
+        w: "Clans",
+        x: 3
+      },
+      {
+        w: "Peoples",
+        x: 2
+      },
+      {
+        w: "Folk"
+      },
+      {
+        w: "Kin"
+      },
+      {
+        w: "Nations"
+      },
+      {
+        w: "Houses"
+      }
+    ],
+    collNoun: [
+      {
+        w: "Cities"
+      },
+      {
+        w: "Ports"
+      },
+      {
+        w: "Towns"
+      },
+      {
+        w: "Cantons"
+      },
+      {
+        w: "Provinces"
+      },
+      {
+        w: "Realms"
+      },
+      {
+        w: "Kingdoms"
+      },
+      {
+        w: "Marches"
+      },
+      {
+        w: "Colonies"
+      },
+      {
+        w: "States"
+      },
+      {
+        w: "Harbours"
+      },
+      {
+        w: "Tribes"
+      },
+      {
+        w: "Clans"
+      },
+      {
+        w: "Worlds",
+        eras: [
+          "NF",
+          "IS"
+        ]
+      },
+      {
+        w: "Systems",
+        eras: [
+          "NF",
+          "IS"
+        ]
+      },
+      {
+        w: "Stations",
+        eras: [
+          "NF",
+          "IS"
+        ]
+      }
+    ],
+    holyIdea: [
+      {
+        w: "Dawn"
+      },
+      {
+        w: "Light"
+      },
+      {
+        w: "Flame"
+      },
+      {
+        w: "Covenant"
+      },
+      {
+        w: "Lamp"
+      },
+      {
+        w: "Altar"
+      },
+      {
+        w: "Pilgrims"
+      },
+      {
+        w: "Seven Shrines"
+      },
+      {
+        w: "Morning Star"
+      },
+      {
+        w: "Open Hand"
+      }
+    ],
+    outlawNoun: [
+      {
+        w: "Corsair"
+      },
+      {
+        w: "Rover"
+      },
+      {
+        w: "Buccaneer"
+      },
+      {
+        w: "Smuggler"
+      },
+      {
+        w: "Reaver"
+      }
+    ],
+    outlawAdj: [
+      {
+        w: "Smuggler",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Corsair"
+      },
+      {
+        w: "Pirate"
+      },
+      {
+        w: "Wrecker",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Black"
+      },
+      {
+        w: "Lawless"
+      },
+      {
+        w: "Rover"
+      }
+    ],
+    corpForm: [
+      {
+        w: "Governance Zone"
+      },
+      {
+        w: "Development Authority"
+      },
+      {
+        w: "Resource Directorate"
+      },
+      {
+        w: "Commercial Territory"
+      },
+      {
+        w: "Charter Zone"
+      },
+      {
+        w: "Holdings Authority"
+      }
+    ],
+    resource: [
+      {
+        w: "Resource"
+      },
+      {
+        w: "Mining"
+      },
+      {
+        w: "Trade"
+      },
+      {
+        w: "Development"
+      },
+      {
+        w: "Water"
+      },
+      {
+        w: "Energy"
+      }
+    ],
+    corpWord: [
+      {
+        w: "Directorate"
+      },
+      {
+        w: "Authority"
+      },
+      {
+        w: "Charter"
+      },
+      {
+        w: "Zone"
+      }
+    ]
+  },
+  cultQualExtra: {
+    chinese: [
+      "Jade",
+      "Celestial"
+    ],
+    japanese: [
+      "Jade"
+    ],
+    steppe: [
+      "Blue",
+      "Grey",
+      "White"
+    ],
+    "arabic-persian": [
+      "Sapphire",
+      "Golden"
+    ],
+    norse: [
+      "Iron"
+    ],
+    egyptian: [
+      "Golden",
+      "Upper",
+      "Lower"
+    ],
+    ethiopian: [
+      "Highland"
+    ]
+  },
+  wordTones: {
+    cultQual: {
+      Celestial: [
+        "strange"
+      ],
+      Jade: [
+        "strange"
+      ],
+      Iron: [
+        "grim"
+      ]
+    }
+  },
+  landIdentity: [
+    {
+      p: "{compassAdj} {landPl}",
+      w: 40
+    },
+    {
+      p: "{landPl}",
+      w: 20
+    },
+    {
+      p: "{compassAdj} {waterPl}",
+      w: 15
+    },
+    {
+      p: "{regional}",
+      w: 10
+    },
+    {
+      p: "{colour} {waterSg}",
+      w: 7.5
+    },
+    {
+      p: "{compassAdj} {waterSg}",
+      w: 7.5
+    }
+  ],
+  shapes: {
+    land: [
+      {
+        p: "{form} of the {landIdentity}",
+        w: 45,
+        short: "{landIdentity}",
+        pair: "landIdentity",
+        upperLower: true
+      },
+      {
+        p: "{compassAdj} {form}",
+        w: 15,
+        short: "same"
+      },
+      {
+        p: "{landCompound} {form}",
+        w: 15,
+        short: "{landCompound}"
+      },
+      {
+        p: "{cultQual} {form}",
+        w: 10,
+        short: "same"
+      },
+      {
+        p: "{form} of the {cultQual} {waterSg}",
+        w: 10,
+        short: "{cultQual} {waterSg}"
+      },
+      {
+        p: "the {landQual} {federalForm}",
+        w: 5,
+        short: "same"
+      }
+    ],
+    place: [
+      {
+        p: "{form} of {place}",
+        w: 45,
+        short: "{place}",
+        pair: "place"
+      },
+      {
+        p: "{place} {form}",
+        w: 35,
+        short: "{place}"
+      },
+      {
+        p: "{modifier} {form} of {place}",
+        w: 20,
+        short: "{place}",
+        pair: "place"
+      }
+    ],
+    dynasty: [
+      {
+        p: "{form} of House {dynasty}",
+        w: 40,
+        short: "{dynasty}"
+      },
+      {
+        p: "{form} of the {dynasty:pl}",
+        w: 25,
+        short: "{dynasty:pl}"
+      },
+      {
+        p: "{dynasty} {form}",
+        w: 35,
+        short: "{dynasty}"
+      }
+    ],
+    stars: [
+      {
+        p: "{form} of {star}",
+        w: 35,
+        short: "{star}",
+        pair: "star"
+      },
+      {
+        p: "{star} {form}",
+        w: 25,
+        short: "{star}"
+      },
+      {
+        p: "United Worlds of {star}",
+        w: 10,
+        short: "{star}",
+        g: "federal"
+      },
+      {
+        p: "Free Colonies of {star}",
+        w: 10,
+        short: "{star}",
+        g: "admin"
+      },
+      {
+        p: "{form} of the {spaceLand}",
+        w: 20,
+        short: "{spaceLand}",
+        pair: "spaceLand"
+      }
+    ],
+    collective: [
+      {
+        p: "the {collQual} {collNoun}",
+        w: 45,
+        short: "same",
+        g: "federal",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        p: "the {number} {collNoun}",
+        w: 20,
+        short: "same",
+        g: "federal",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        p: "{federalForm} of {collQual} {collNoun}",
+        w: 20,
+        short: "the {collQual} {collNoun}",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        p: "{federalForm} of the {number} {collNoun}",
+        w: 15,
+        short: "the {number} {collNoun}",
+        t: [
+          "plain"
+        ]
+      }
+    ],
+    people: [
+      {
+        p: "{form} of the {peopleQual} {peopleNoun}",
+        w: 50,
+        short: "{peopleQual} {peopleNoun}"
+      },
+      {
+        p: "{form} of {tribal}",
+        w: 30,
+        short: "{tribal}"
+      },
+      {
+        p: "the {peopleQual} {federalForm}",
+        w: 10,
+        short: "same"
+      },
+      {
+        p: "Lands of the {beast} Clan",
+        w: 10,
+        short: "{beast} Clan",
+        g: "tribal"
+      }
+    ]
+  },
+  collectiveShare: 0.15,
+  characterShapes: {
+    merchant: {
+      share: 0.5,
+      t: [
+        "plain"
+      ],
+      shapes: [
+        {
+          p: "Merchant Republic of {place}",
+          w: 1,
+          short: "{place}",
+          g: "republic"
+        },
+        {
+          p: "League of Free {settlementPl}",
+          w: 1,
+          short: "the Free {settlementPl}",
+          g: "federal"
+        },
+        {
+          p: "{place} Trading Compact",
+          w: 1,
+          short: "{place}",
+          g: "federal"
+        },
+        {
+          p: "{cultQual} Coast Trading Compact",
+          w: 1,
+          short: "{cultQual} Coast",
+          g: "federal"
+        },
+        {
+          p: "Most Serene Republic of {place}",
+          w: 1,
+          short: "{place}",
+          g: "republic",
+          ceremonialOnly: true,
+          honorific: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "the Merchant {collNoun}",
+          w: 1,
+          short: "same",
+          g: "federal",
+          collQual: "Merchant"
+        }
+      ]
+    },
+    religious: {
+      share: 0.5,
+      t: [
+        "strange"
+      ],
+      shapes: [
+        {
+          p: "Holy {form} of {holy:poss} Reach",
+          w: 1,
+          short: "{holy:poss} Reach"
+        },
+        {
+          p: "Sacred {form} of the {holyIdea}",
+          w: 1,
+          short: "{holyIdea}"
+        },
+        {
+          p: "Temple {form}",
+          w: 1,
+          short: "same",
+          groups: [
+            "republic",
+            "federal"
+          ]
+        },
+        {
+          p: "{form} of the {holyIdea}",
+          w: 1,
+          short: "{holyIdea}"
+        },
+        {
+          p: "Holy {form} of {place}",
+          w: 1,
+          short: "{place}"
+        }
+      ]
+    },
+    military: {
+      share: 0.5,
+      shapes: [
+        {
+          p: "the {landQual} Protectorate",
+          w: 1,
+          short: "same",
+          g: "admin"
+        },
+        {
+          p: "the Iron {form}",
+          w: 1,
+          short: "same",
+          t: [
+            "grim"
+          ]
+        },
+        {
+          p: "March of {place}",
+          w: 1,
+          short: "{place}",
+          g: "crown"
+        },
+        {
+          p: "{place} March",
+          w: 1,
+          short: "{place}",
+          g: "crown"
+        },
+        {
+          p: "{compassAdj} Military Governorate",
+          w: 1,
+          short: "same",
+          g: "admin",
+          eras: [
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{landQual} Command",
+          w: 1,
+          short: "same",
+          g: "admin",
+          eras: [
+            "NF",
+            "IS"
+          ]
+        }
+      ]
+    },
+    colonial: {
+      share: 0.6,
+      shapes: [
+        {
+          p: "New {place}",
+          w: 25,
+          short: "same",
+          g: "admin"
+        },
+        {
+          p: "Crown Territory of {place}",
+          w: 15,
+          short: "same",
+          g: "admin"
+        },
+        {
+          p: "{compassAdj} Colonial Authority",
+          w: 10,
+          short: "same",
+          g: "admin"
+        },
+        {
+          p: "Colony of {place}",
+          w: 10,
+          short: "same",
+          g: "admin"
+        },
+        {
+          p: "{place} Colony",
+          w: 10,
+          short: "same",
+          g: "admin"
+        },
+        {
+          p: "Chartered Territory of {place}",
+          w: 10,
+          short: "same",
+          g: "admin"
+        },
+        {
+          p: "Province of New {place}",
+          w: 10,
+          short: "same",
+          g: "admin"
+        },
+        {
+          p: "Dominion of {place}",
+          w: 10,
+          short: "same",
+          g: "imperial"
+        }
+      ]
+    },
+    outlaw: {
+      share: 0.6,
+      t: [
+        "grim"
+      ],
+      shapes: [
+        {
+          p: "the Free {outlawNoun} Ports",
+          w: 1,
+          short: "same",
+          g: "republic"
+        },
+        {
+          p: "the {outlawAdj} Coast",
+          w: 1,
+          short: "same",
+          g: "republic"
+        },
+        {
+          p: "Republic of {place}",
+          w: 1,
+          short: "{place}",
+          g: "republic"
+        },
+        {
+          p: "the Free {settlementPl} of the {waterSg}",
+          w: 1,
+          short: "same",
+          g: "republic"
+        }
+      ]
+    },
+    corporate: {
+      share: 0.7,
+      shapes: [
+        {
+          p: "{brandRoot} {corpForm}",
+          w: 1,
+          short: "{brandRoot}",
+          g: "admin"
+        },
+        {
+          p: "{star} {resource} {corpWord}",
+          w: 1,
+          short: "{star}",
+          g: "admin",
+          eras: [
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{brandRoot} Commercial Territory",
+          w: 1,
+          short: "{brandRoot}",
+          g: "admin"
+        },
+        {
+          p: "{place} Development Charter",
+          w: 1,
+          short: "{place}",
+          g: "admin"
+        },
+        {
+          p: "Chartered Territory of the {brandRoot} Company",
+          w: 1,
+          short: "{brandRoot}",
+          g: "admin",
+          eras: [
+            "EM",
+            "MO"
+          ]
+        }
+      ]
+    }
+  },
+  modifiers: [
+    {
+      w: "Free",
+      with: [
+        "Republic",
+        "State",
+        "City",
+        "City-State",
+        "Commonwealth",
+        "Free Zone"
+      ],
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "MO",
+        "NF",
+        "IS"
+      ]
+    },
+    {
+      w: "Sovereign",
+      with: [
+        "State",
+        "Republic",
+        "Principality",
+        "Realm",
+        "Nation"
+      ],
+      eras: [
+        "EM",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      t: [
+        "grand"
+      ]
+    },
+    {
+      w: "Independent",
+      with: [
+        "State",
+        "Republic",
+        "Principality"
+      ],
+      eras: [
+        "MO",
+        "NF",
+        "IS"
+      ],
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Federal",
+      with: [
+        "Republic",
+        "Union"
+      ],
+      eras: [
+        "MO",
+        "NF",
+        "IS"
+      ],
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Royal",
+      with: [
+        "Realm",
+        "March",
+        "Colony",
+        "Territory",
+        "Province",
+        "Dominion"
+      ],
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      t: [
+        "grand"
+      ]
+    },
+    {
+      w: "Imperial",
+      with: [
+        "Dominion",
+        "Province",
+        "Territory",
+        "Protectorate",
+        "Authority",
+        "Exarchate"
+      ],
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      t: [
+        "grand"
+      ]
+    },
+    {
+      w: "Grand",
+      with: [
+        "Republic",
+        "League",
+        "Alliance",
+        "Coalition"
+      ],
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      t: [
+        "grand"
+      ]
+    },
+    {
+      w: "Holy",
+      with: [
+        "Kingdom",
+        "Realm",
+        "Dominion",
+        "Principality",
+        "League",
+        "Commonwealth"
+      ],
+      eras: [
+        "AN",
+        "MD",
+        "EM"
+      ],
+      t: [
+        "grand"
+      ]
+    },
+    {
+      w: "Sacred",
+      with: [
+        "Realm",
+        "Dominion",
+        "Commonwealth",
+        "League"
+      ],
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      t: [
+        "strange"
+      ]
+    },
+    {
+      w: "Merchant",
+      with: [
+        "Republic",
+        "League",
+        "Commonwealth",
+        "Principality",
+        "Compact"
+      ],
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "Crown",
+      with: [
+        "Colony",
+        "Territory",
+        "Dominion",
+        "Province"
+      ],
+      eras: [
+        "EM",
+        "MO",
+        "NF",
+        "IS"
+      ]
+    },
+    {
+      w: "Chartered",
+      with: [
+        "Territory",
+        "Colony",
+        "Province"
+      ],
+      eras: [
+        "EM",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      t: [
+        "plain"
+      ]
+    },
+    {
+      w: "United",
+      with: [
+        "Republic",
+        "Federation",
+        "Commonwealth"
+      ],
+      eras: [
+        "MO",
+        "NF",
+        "IS"
+      ]
+    }
+  ],
+  ideology: {
+    with: [
+      "Republic",
+      "Union",
+      "Commonwealth",
+      "State",
+      "Federation",
+      "Free State"
+    ],
+    eras: [
+      "MO",
+      "NF",
+      "IS"
+    ],
+    share: 0.25,
+    words: [
+      {
+        w: "People's",
+        x: 2
+      },
+      {
+        w: "Democratic",
+        x: 2
+      },
+      {
+        w: "Popular"
+      },
+      {
+        w: "Citizens'"
+      },
+      {
+        w: "Workers'"
+      },
+      {
+        w: "Revolutionary",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Constitutional",
+        t: [
+          "plain"
+        ]
+      },
+      {
+        w: "Provisional",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Restored",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Free and Independent",
+        x: 0.5
+      }
+    ]
+  },
+  political: [
+    "Free",
+    "United",
+    "Federal",
+    "Sovereign",
+    "Independent",
+    "Royal",
+    "Imperial"
+  ],
+  collQual: [
+    {
+      w: "Free",
+      with: [
+        "Cities",
+        "Ports",
+        "Towns",
+        "Cantons",
+        "States",
+        "Harbours",
+        "Colonies",
+        "Worlds",
+        "Stations"
+      ]
+    },
+    {
+      w: "United",
+      with: [
+        "Provinces",
+        "Realms",
+        "Colonies",
+        "States",
+        "Tribes",
+        "Clans",
+        "Worlds",
+        "Systems"
+      ]
+    },
+    {
+      w: "Federated",
+      with: [
+        "Provinces",
+        "States",
+        "Colonies",
+        "Worlds",
+        "Systems"
+      ]
+    },
+    {
+      w: "Merchant",
+      with: [
+        "Cities",
+        "Ports",
+        "Towns",
+        "Harbours"
+      ]
+    },
+    {
+      w: "River",
+      with: [
+        "Kingdoms",
+        "Marches",
+        "Realms",
+        "Provinces",
+        "Cities",
+        "Tribes",
+        "Clans"
+      ]
+    },
+    {
+      w: "Border",
+      with: [
+        "Kingdoms",
+        "Marches",
+        "Realms",
+        "Provinces",
+        "Cities",
+        "Tribes",
+        "Clans"
+      ]
+    },
+    {
+      w: "Island",
+      with: [
+        "Kingdoms",
+        "Marches",
+        "Realms",
+        "Provinces",
+        "Cities",
+        "Tribes",
+        "Clans"
+      ]
+    },
+    {
+      w: "Hill",
+      with: [
+        "Kingdoms",
+        "Marches",
+        "Realms",
+        "Provinces",
+        "Cities",
+        "Tribes",
+        "Clans"
+      ]
+    },
+    {
+      w: "Coastal",
+      with: [
+        "Kingdoms",
+        "Marches",
+        "Realms",
+        "Provinces",
+        "Cities",
+        "Tribes",
+        "Clans"
+      ]
+    },
+    {
+      list: "compassAdj",
+      with: [
+        "Kingdoms",
+        "Marches",
+        "Realms",
+        "Provinces",
+        "Cities",
+        "Colonies",
+        "Tribes",
+        "Clans",
+        "Worlds"
+      ]
+    }
+  ],
+  honorifics: {
+    republic: [
+      {
+        w: "Most Serene",
+        x: 2,
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Free and Sovereign"
+      },
+      {
+        w: "Most Illustrious"
+      }
+    ],
+    crown: [
+      {
+        w: "Most Noble"
+      },
+      {
+        w: "Ancient and Royal"
+      },
+      {
+        w: "Sovereign"
+      }
+    ],
+    imperial: [
+      {
+        w: "Exalted"
+      },
+      {
+        w: "Sublime"
+      },
+      {
+        w: "Glorious"
+      },
+      {
+        w: "Great"
+      }
+    ],
+    federal: [
+      {
+        w: "Grand"
+      },
+      {
+        w: "Free and United"
+      },
+      {
+        w: "Sovereign"
+      }
+    ],
+    admin: [
+      {
+        w: "Royal"
+      },
+      {
+        w: "Imperial"
+      },
+      {
+        w: "Chartered"
+      }
+    ],
+    tribal: [
+      {
+        w: "Ancient"
+      },
+      {
+        w: "Great"
+      }
+    ]
+  },
+  ceremonial: {
+    pair: 0.5,
+    upperLower: 0.1,
+    t: [
+      "grand"
+    ]
+  },
+  homeland: {
+    general: "temperate",
+    "norman-british": "temperate",
+    "greek-byzantine": "mediterranean",
+    steppe: "steppe"
+  },
+  tribal: {
+    "anglo-saxon": "germanic",
+    norse: "germanic",
+    celtic: "celtic",
+    "norman-british": "celtic",
+    roman: "mediterranean",
+    "greek-byzantine": "mediterranean",
+    steppe: "steppe",
+    "arabic-persian": "arabian",
+    egyptian: "arabian",
+    indian: "southAsian",
+    chinese: "eastAsian",
+    japanese: "eastAsian",
+    korean: "eastAsian",
+    bantu: "bantu",
+    "west-african": "westAfrican",
+    aztec: "mesoamerican",
+    maya: "mesoamerican",
+    general: "general",
+    slavic: "general",
+    ethiopian: "general"
+  },
+  dynastyCultures: [
+    "general",
+    "celtic",
+    "norman-british",
+    "anglo-saxon",
+    "norse"
+  ],
+  safeguards: {
+    block: [
+      "United Kingdom",
+      "Great Britain",
+      "United States",
+      "United States of America",
+      "Confederate States",
+      "Confederate States of America",
+      "Holy Roman Empire",
+      "Ottoman Empire",
+      "Byzantine Empire",
+      "Roman Empire",
+      "Mongol Empire",
+      "Golden Horde",
+      "Great Horde",
+      "Blue Horde",
+      "White Horde",
+      "Mughal Empire",
+      "British Empire",
+      "Russian Empire",
+      "Soviet Union",
+      "Union of Soviet Socialist Republics",
+      "Third Reich",
+      "German Reich",
+      "Reich",
+      "People's Republic of China",
+      "Republic of China",
+      "Celestial Empire",
+      "Middle Kingdom",
+      "Empire of the Rising Sun",
+      "United Provinces",
+      "Dutch Republic",
+      "Most Serene Republic of Venice",
+      "Serene Republic",
+      "Polish-Lithuanian Commonwealth",
+      "Commonwealth of Nations",
+      "Commonwealth of England",
+      "Hanseatic League",
+      "Delian League",
+      "Peloponnesian League",
+      "Triple Alliance",
+      "Aztec Triple Alliance",
+      "Crusader States",
+      "Kingdom of Jerusalem",
+      "Papal States",
+      "Holy See",
+      "Vatican",
+      "Islamic State",
+      "Caliphate",
+      "Free State of Prussia",
+      "Irish Free State",
+      "Orange Free State",
+      "Congo Free State",
+      "Confederation of the Rhine",
+      "Swiss Confederation",
+      "Old Swiss Confederacy",
+      "Grand Duchy of Lithuania",
+      "Grand Duchy of Muscovy",
+      "Tsardom of Russia",
+      "Duchy of Normandy",
+      "Duchy of Burgundy",
+      "Kingdom of Wessex",
+      "Danelaw",
+      "Northumbria",
+      "Mercia",
+      "East Anglia",
+      "Wessex",
+      "Gran Colombia",
+      "East India Company",
+      "Hudson's Bay Company",
+      "New England",
+      "New Netherland",
+      "New Spain",
+      "New France",
+      "New Amsterdam",
+      "Raj",
+      "British Raj",
+      "Maratha Confederacy",
+      "Ashanti Empire",
+      "Mali Empire",
+      "Songhai Empire",
+      "Zulu Kingdom",
+      "Kingdom of Kongo",
+      "Great Zimbabwe",
+      "Ethiopian Empire",
+      "Solomonic Empire",
+      "Inca Empire",
+      "Tawantinsuyu",
+      "Maya League",
+      "League of Mayapan",
+      "Galactic Empire",
+      "Galactic Republic",
+      "Old Republic",
+      "First Order",
+      "Rebel Alliance",
+      "United Federation of Planets",
+      "Federation of Planets",
+      "Klingon Empire",
+      "Romulan Star Empire",
+      "Imperium",
+      "Imperium of Man",
+      "Tau Empire",
+      "Free Cities of Essos",
+      "Seven Kingdoms",
+      "Iron Islands",
+      "Riverlands",
+      "Westerlands",
+      "Reach",
+      "Stormlands",
+      "Vale of Arryn",
+      "Dorne",
+      "Gondor",
+      "Rohan",
+      "Mordor",
+      "Arnor",
+      "Shire",
+      "Narnia",
+      "Old Empire",
+      "Empire of Man",
+      "Covenant",
+      "UNSC",
+      "United Nations Space Command",
+      "Earth Alliance",
+      "Terran Federation",
+      "Terran Confederacy",
+      "Systems Alliance",
+      "Citadel",
+      "Federation",
+      "Coalition of Planets",
+      "Outer Rim",
+      "Core Worlds",
+      "Tyrell",
+      "Weyland-Yutani",
+      "Commonwealth",
+      "Brotherhood of Steel",
+      "New California Republic",
+      "NCR",
+      "Caesar's Legion",
+      "Panem",
+      "Oceania",
+      "Eurasia",
+      "Eastasia",
+      "Airstrip One",
+      "Gilead"
+    ],
+    flag: [
+      "New Albion",
+      "Free Cities",
+      "Northern League",
+      "Hanseatic",
+      "Seven Cantons",
+      "River Kingdoms",
+      "Border Marches",
+      "Western Kingdom",
+      "Middle Realm",
+      "People's Republic",
+      "Democratic Republic",
+      "Free State",
+      "Grand Duchy",
+      "Federated States",
+      "United Provinces of the North"
+    ],
+    flagListBlocks: false,
+    banned: [
+      "Caliphate",
+      "Reich",
+      "Fascist",
+      "National Socialist",
+      "Aryan",
+      "Apartheid",
+      "Jihad",
+      "Crusader",
+      "Theocracy",
+      "Master Race",
+      "Homeland",
+      "Bantustan",
+      "Reservation",
+      "Mandate"
+    ],
+    religious: [
+      "Islamic",
+      "Christian",
+      "Hindu",
+      "Buddhist",
+      "Jewish"
+    ]
+  },
+  caps: {
+    plain: 8,
+    ceremonial: 14
+  }
+};
 
 // src/data/vessels.json
 var vessels_default = {
@@ -68733,9 +71866,9 @@ function blocked(ctx, guard, name, prefix) {
   return false;
 }
 function acceptable3(ctx, guard, name) {
-  const counted = countedWords(name);
-  if (counted.length === 0 || counted.length > 8) return false;
-  if (repeatsContent(counted)) return false;
+  const counted2 = countedWords(name);
+  if (counted2.length === 0 || counted2.length > 8) return false;
+  if (repeatsContent(counted2)) return false;
   if (blocked(ctx, guard, name)) return false;
   if (breaksVesselWords(name)) return false;
   return true;
@@ -69036,6 +72169,701 @@ function generateVesselNames(options) {
   }
 }
 
+// src/realms/engine.ts
+var REALM_DATA = realms_default;
+var REALM_ERAS = REALM_DATA.eras;
+var REALM_CHARACTERS = REALM_DATA.characters;
+var REALM_NAMED_FOR = REALM_DATA.namedFor;
+var REALM_CULTURES = BYNAME_CULTURES;
+var eraCode = (era) => {
+  var _a2, _b;
+  return (_b = (_a2 = REALM_ERAS.find((e) => e.key === era)) == null ? void 0 : _a2.code) != null ? _b : "MD";
+};
+function namedForOffered(key2, era) {
+  const n = REALM_NAMED_FOR.find((x) => x.key === key2);
+  return !!n && (!n.eras || n.eras.includes(eraCode(era)));
+}
+function homelandBiome(culture) {
+  var _a2, _b, _c;
+  return (_c = (_b = (_a2 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a2.homelandBiome) != null ? _b : REALM_DATA.homeland[culture]) != null ? _c : "temperate";
+}
+var FORM_CACHE = /* @__PURE__ */ new Map();
+function cultureForms(culture, era) {
+  var _a2, _b, _c, _d, _e, _f;
+  const key2 = `${culture}|${era}`;
+  const cached = FORM_CACHE.get(key2);
+  if (cached) return cached;
+  const c = REALM_DATA.cultures[culture];
+  const out = [];
+  for (const f of REALM_DATA.forms) {
+    let w = f.era[era] * ((_a2 = c == null ? void 0 : c.mult[f.w]) != null ? _a2 : 1) * ((_d = (_c = (_b = c == null ? void 0 : c.eraMult) == null ? void 0 : _b[era]) == null ? void 0 : _c[f.w]) != null ? _d : 1);
+    out.push([{ w: f.w, pl: f.pl, g: f.g, t: (_e = f.t) != null ? _e : [], compound: !!f.compound, peoplesOnly: !!f.peoplesOnly, culture: false }, w]);
+  }
+  for (const f of (_f = c == null ? void 0 : c.forms) != null ? _f : []) {
+    out.push([{ w: f.w, pl: f.pl, g: f.g, t: [], compound: false, peoplesOnly: false, culture: true }, 15 * f.x * (f.eras.includes(era) ? 1 : 0.3)]);
+  }
+  const live = out.filter(([, w]) => w > 0);
+  FORM_CACHE.set(key2, live);
+  return live;
+}
+function characterMult(character, form) {
+  var _a2, _b;
+  const m = REALM_DATA.characterMult[character];
+  if (!m) return 1;
+  return (_b = (_a2 = m.forms[form.w]) != null ? _a2 : m.groups[form.g]) != null ? _b : 1;
+}
+var ALL_FORMS = [.../* @__PURE__ */ new Set([...REALM_DATA.forms.map((f) => f.w), ...Object.values(REALM_DATA.cultures).flatMap((c) => {
+  var _a2;
+  return ((_a2 = c.forms) != null ? _a2 : []).map((f) => f.w);
+})])];
+var COMPOUND_FORMS = REALM_DATA.forms.filter((f) => f.compound).map((f) => f.w);
+var formGroup = (w) => {
+  var _a2, _b, _c;
+  return (_c = (_a2 = REALM_DATA.forms.find((f) => f.w === w)) == null ? void 0 : _a2.g) != null ? _c : (_b = Object.values(REALM_DATA.cultures).flatMap((c) => {
+    var _a3;
+    return (_a3 = c.forms) != null ? _a3 : [];
+  }).find((f) => f.w === w)) == null ? void 0 : _b.g;
+};
+function compatibleModifiers(form, era) {
+  const g = formGroup(form);
+  const out = [];
+  for (const m of REALM_DATA.modifiers) {
+    if (!m.with.includes(form) || !m.eras.includes(era)) continue;
+    if (form.split(/[\s-]/).includes(m.w)) continue;
+    if (m.w === "Free" && (g === "crown" || g === "imperial")) continue;
+    if ((m.w === "Royal" || m.w === "Imperial") && (g === "republic" || g === "federal")) continue;
+    out.push({ w: m.w, t: m.t });
+  }
+  return out;
+}
+var ideologyFor = (form, era) => REALM_DATA.ideology.with.includes(form) && REALM_DATA.ideology.eras.includes(era);
+function compatibleCollQuals(noun) {
+  const out = [];
+  for (const q of REALM_DATA.collQual) {
+    if (!q.with.includes(noun)) continue;
+    if (q.w) out.push(q.w);
+    else out.push(...REALM_DATA.lists[q.list].map((e) => e.w));
+  }
+  return out;
+}
+var pickOne3 = (items, rng) => items[Math.floor(rng() * items.length)];
+var LIST_CACHE = /* @__PURE__ */ new Map();
+function identityLists(biome, terrain) {
+  let byTerrain = LIST_CACHE.get(biome);
+  if (!byTerrain) LIST_CACHE.set(biome, byTerrain = /* @__PURE__ */ new Map());
+  const cached = byTerrain.get(terrain);
+  if (cached) return cached;
+  const lists = /* @__PURE__ */ new Map();
+  for (const [name, entries] of Object.entries(REALM_DATA.lists)) lists.set(name, entries.map((e) => {
+    var _a2;
+    return [e, (_a2 = e.x) != null ? _a2 : 1];
+  }));
+  const terrains = terrain && terrain !== "any" ? [terrain] : availableTerrains(biome).map((t) => t.id);
+  const add2 = { landPl: [], waterPl: [], waterSg: [] };
+  for (const t of terrains) {
+    for (const [w] of terrainWords(biome, "land", t)) {
+      if (w.includes("{")) continue;
+      add2.landPl.push(/s$/.test(w) ? w : biomeTitleCase(pluralOf(w.toLowerCase())));
+    }
+    for (const [w] of terrainWords(biome, "water", t)) {
+      if (w.includes("{")) continue;
+      (/s$/.test(w) ? add2.waterPl : add2.waterSg).push(w);
+    }
+  }
+  const chosen = terrain && terrain !== "any";
+  for (const [name, words] of Object.entries(add2)) {
+    const unique = [...new Set(words)];
+    if (unique.length === 0) continue;
+    const biomeWords2 = unique.map((w) => [{ w }, 3]);
+    if (chosen && name !== "waterSg") lists.set(name, biomeWords2);
+    else lists.set(name, [...lists.get(name).filter(([e]) => !unique.includes(e.w)), ...biomeWords2]);
+  }
+  byTerrain.set(terrain, lists);
+  return lists;
+}
+var wordToneOf = (list, e) => {
+  var _a2, _b, _c;
+  return (_c = (_b = (_a2 = REALM_DATA.wordTones[list]) == null ? void 0 : _a2[e.w]) != null ? _b : e.t) != null ? _c : [];
+};
+function listPool(ctx, name) {
+  const key2 = `${name}|${ctx.character}`;
+  const cached = ctx.pools.get(key2);
+  if (cached) return cached;
+  const result = buildListPool(ctx, name);
+  ctx.pools.set(key2, result);
+  return result;
+}
+function buildListPool(ctx, name) {
+  var _a2, _b, _c, _d;
+  const out = [];
+  for (const [e, w] of (_a2 = ctx.lists.get(name)) != null ? _a2 : []) {
+    if (e.eras && !e.eras.includes(ctx.era)) continue;
+    if (e.biome && e.biome !== ctx.biome.id) continue;
+    if (e.character && e.character !== ctx.character) continue;
+    out.push([e, w * ((_c = (_b = e.cx) == null ? void 0 : _b[ctx.culture]) != null ? _c : 1)]);
+  }
+  if (name === "cultQual") {
+    for (const w of (_d = REALM_DATA.cultQualExtra[ctx.culture]) != null ? _d : []) {
+      const found = out.find(([e]) => e.w === w);
+      if (found) found[1] *= 3;
+      else out.push([{ w }, 3]);
+    }
+  }
+  if (name === "peopleQual") {
+    for (const w of cultureAnimals(ctx.culture)) {
+      const found = out.find(([e]) => e.w === w);
+      if (found) found[1] *= 2;
+      else out.push([{ w }, 2]);
+    }
+    for (const [w, n] of groupListWords("colour", ctx.setting)) out.push([{ w, t: wordTones("colour", w) }, n * 0.3]);
+  }
+  return out.map(([e, w]) => [e, w * toneFactor(wordToneOf(name, e), ctx.tone)]).filter(([, w]) => w > 0);
+}
+function listWord3(ctx, name, keep) {
+  const pool3 = keep ? listPool(ctx, name).filter(([e2]) => keep(e2.w)) : listPool(ctx, name);
+  const e = pickWeighted5(pool3, ctx.rng);
+  if (!e) return void 0;
+  for (const t of wordToneOf(name, e)) ctx.drawn.add(t);
+  return e.w;
+}
+function gnWord(ctx, name, keep, setting = ctx.setting) {
+  const pool3 = groupListWords(name, setting).filter(([w2]) => !keep || keep(w2)).map(([w2, n]) => [w2, n * toneFactor(wordTones(name, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  const w = pickWeighted5(pool3, ctx.rng);
+  if (w !== void 0) for (const t of wordTones(name, w)) ctx.drawn.add(t);
+  return w;
+}
+function drawForm(ctx, keep) {
+  const pool3 = cultureForms(ctx.culture, ctx.era).filter(([f2]) => keep(f2)).map(([f2, w]) => [f2, w * characterMult(ctx.character, f2) * toneFactor(f2.t, ctx.tone)]).filter(([, w]) => w > 0);
+  const f = pickWeighted5(pool3, ctx.rng);
+  if (f) for (const t of f.t) ctx.drawn.add(t);
+  return f;
+}
+function drawModifier(ctx) {
+  var _a2, _b;
+  const form = (_a2 = ctx.form) == null ? void 0 : _a2.w;
+  if (!form) return void 0;
+  const plain = compatibleModifiers(form, ctx.era);
+  const ideology = ideologyFor(form, ctx.era);
+  const fromIdeology = ideology && (plain.length === 0 || ctx.rng() < REALM_DATA.ideology.share);
+  const entries = fromIdeology ? REALM_DATA.ideology.words : plain;
+  const pool3 = entries.map((e2) => {
+    var _a3, _b2;
+    return [e2, ((_a3 = e2.x) != null ? _a3 : 1) * toneFactor((_b2 = e2.t) != null ? _b2 : [], ctx.tone)];
+  }).filter(([, w]) => w > 0);
+  const e = pickWeighted5(pool3, ctx.rng);
+  if (!e) return void 0;
+  for (const t of (_b = e.t) != null ? _b : []) ctx.drawn.add(t);
+  return e.w;
+}
+var DYNASTY = (f) => (f.g === "crown" || f.g === "imperial") && !f.compound && !f.peoplesOnly;
+var PEOPLES = (f) => f.g === "federal" || f.g === "tribal" || ["Kingdom", "Realm", "Nation"].includes(f.w);
+var PLAIN_FORM = (f) => !f.peoplesOnly;
+var CHRISTIAN = /* @__PURE__ */ new Set(["general", "anglo-saxon", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "ethiopian"]);
+function place2(ctx) {
+  if (ctx.mode === "placeholders") return "[place]";
+  const holy = holyNamesIn(ctx.culture);
+  for (let i = 0; i < 20; i++) {
+    const t = groupTown(ctx.setting, townSource(ctx.culture), ctx.rng).replace(/^The /, "");
+    if (!holy || !holy.test(t)) return t;
+  }
+  return void 0;
+}
+function token4(ctx, name, shape, kind) {
+  var _a2, _b;
+  const rng = ctx.rng;
+  switch (name) {
+    case "form":
+    case "federalForm":
+      return (_a2 = ctx.form) == null ? void 0 : _a2.w;
+    case "modifier":
+      return ctx.modifier = drawModifier(ctx);
+    case "collNoun":
+      return ctx.collNoun;
+    case "collQual": {
+      const ok = compatibleCollQuals((_b = ctx.collNoun) != null ? _b : "");
+      const pool3 = ok.map((w) => {
+        const t = w === "Free" && ctx.collNoun === "Ports" ? ["light"] : [];
+        return [w, toneFactor(t, ctx.tone)];
+      });
+      const q = pickWeighted5(pool3, rng);
+      if (q === "Free" && ctx.collNoun === "Ports") ctx.drawn.add("light");
+      return ctx.collQual = q;
+    }
+    case "landIdentity": {
+      const p = pickWeighted5(REALM_DATA.landIdentity.map((s) => [s.p, s.w]), rng);
+      return renderTokens(ctx, p, shape, kind);
+    }
+    case "place":
+      return place2(ctx);
+    case "landCompound":
+      return ctx.mode === "placeholders" ? "[place]" : groupTown("FL", void 0, rng);
+    case "dynasty":
+      if (ctx.mode === "placeholders" || !REALM_DATA.dynastyCultures.includes(ctx.culture)) return "[dynasty]";
+      return gnWord(ctx, "house");
+    case "star":
+      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : gnWord(ctx, "star", void 0, "SF");
+    case "spaceLand": {
+      const w = gnWord(ctx, "spaceLand", void 0, "SF");
+      return w && rng() < 0.3 ? `${gnWord(ctx, "spacePrefix", void 0, "SF")} ${w}` : w;
+    }
+    case "tribal": {
+      if (ctx.mode === "placeholders") return "[people]";
+      const t = ctx.tribal();
+      return t ? /^the /i.test(t) ? t : `the ${t}` : void 0;
+    }
+    case "holy":
+      if (ctx.mode === "placeholders") return "[holy person]";
+      return CHRISTIAN.has(ctx.culture) ? groupSaint(ctx.setting, rng) : `the ${gnWord(ctx, "holyTitle")}`;
+    case "beast": {
+      const animals = cultureAnimals(ctx.culture);
+      const pool3 = [...groupListWords("beast", ctx.setting), ...animals.map((a) => [a, 3])];
+      return pickWeighted5(pool3, rng);
+    }
+    case "number":
+      return gnWord(ctx, "number", (w) => !["Two", "Hundred", "Thousand"].includes(w));
+    case "colour":
+    case "brandRoot":
+      return gnWord(ctx, name);
+  }
+  return listWord3(ctx, name);
+}
+function renderTokens(ctx, pattern, shape, kind) {
+  let failed = false;
+  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
+    if (failed) return "";
+    const [name, mod] = raw.split(":");
+    const text = token4(ctx, name, shape, kind);
+    if (!text) {
+      failed = true;
+      return "";
+    }
+    if (!ctx.values.has(name)) ctx.values.set(name, text);
+    if (mod === "poss") return groupPossessive(text, false);
+    if (mod === "pl") return text.startsWith("[") ? text : groupPlural(text);
+    return text;
+  });
+  return failed ? void 0 : out;
+}
+var SMALL5 = /* @__PURE__ */ new Set(["of", "the", "and", "for", "in", "at", "by", "on", "to", "from"]);
+function realmCapitals(text) {
+  return text.replace(/\bthe the\b/gi, "the").replace(/\s+/g, " ").trim().split(" ").map((word, i) => {
+    if (!word || word.startsWith("[")) return word;
+    const lower2 = word.toLowerCase();
+    if (SMALL5.has(lower2) && (i > 0 || lower2 === "the")) return lower2;
+    return word.replace(/(^|[-–])([a-z])/g, (_m, sep, c) => sep + c.toUpperCase());
+  }).join(" ");
+}
+var counted = (text) => text.split(" ").filter((w, i) => w && !(i === 0 && w.toLowerCase() === "the") && !SMALL5.has(w.toLowerCase()));
+var wordRe5 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
+var BANNED3 = [...REALM_DATA.safeguards.banned, ...REALM_DATA.safeguards.religious, ...VESSEL_DATA.safeguards.divine, ...VESSEL_DATA.safeguards.divinePhrases].map(wordRe5);
+function breaksRealmWords(text) {
+  return hasBannedWord(text) || BANNED3.some((re) => re.test(text));
+}
+var COLOUR_BEFORE_PEOPLE = new RegExp(`\\b(${groupListWords("colour", "FL").map(([w]) => w).join("|")}) (Peoples|Folk|Kin)\\b`);
+var TRIBAL_POOLS = /* @__PURE__ */ new Map();
+function tribalPool(tradition, biome, terrain, custom) {
+  var _a2, _b;
+  const key2 = `${tradition}|${custom ? (_b = (_a2 = custom.custom) == null ? void 0 : _a2.path) != null ? _b : biome.id : biome.id}|${terrain}`;
+  let found = TRIBAL_POOLS.get(key2);
+  if (!found) {
+    found = generateTribalNames({ tradition, ...custom ? { biomeData: custom } : { biome: biome.id }, terrain, count: 120, seed: 1789 }).names.map((n) => n.name).filter((n) => !n.includes("["));
+    TRIBAL_POOLS.set(key2, found);
+  }
+  return found;
+}
+function generateRealmNames(options) {
+  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const notices = [];
+  const culture = REALM_CULTURES.some((c) => c.key === options.culture) ? options.culture : "general";
+  const era = eraCode((_a2 = options.era) != null ? _a2 : "medieval");
+  const genre = (_b = options.genre) != null ? _b : "fantasy";
+  const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
+  const tone = (_c = options.tone) != null ? _c : "any";
+  const length = (_d = options.length) != null ? _d : "plain";
+  const output = (_e = options.output) != null ? _e : "official";
+  const mode = (_f = options.people) != null ? _f : "placeholders";
+  let namedFor = (_g = options.namedFor) != null ? _g : "anything";
+  if (namedFor === "stars" && !namedForOffered("stars", (_h = options.era) != null ? _h : "medieval")) {
+    notices.push("\u201CThe stars\u201D needs the near-future or interstellar era.");
+    namedFor = "anything";
+  }
+  const biome = (_j = (_i = options.biomeData) != null ? _i : findBiome(!options.biome || options.biome === "homeland" ? homelandBiome(culture) : options.biome)) != null ? _j : findBiome("temperate");
+  const terrain = (_k = options.terrain) != null ? _k : "any";
+  const lists = identityLists(biome, terrain);
+  const chosen = options.character ? REALM_CHARACTERS.find((c) => c.key === options.character) : void 0;
+  if (options.character && !chosen) notices.push(`\u201C${options.character}\u201D isn't a realm character; using any.`);
+  const characters = REALM_CHARACTERS.map((c) => {
+    var _a3, _b2;
+    return [c.key, c.w * ((_b2 = (_a3 = c.eraMult) == null ? void 0 : _a3[era]) != null ? _b2 : 1)];
+  }).filter(([, w]) => w > 0);
+  const guards = (_l = options.safeguards) != null ? _l : { block: REALM_DATA.safeguards.block, flag: REALM_DATA.safeguards.flag, flagListBlocks: REALM_DATA.safeguards.flagListBlocks };
+  const pools = /* @__PURE__ */ new Map();
+  const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock));
+  const tribal = () => {
+    var _a3;
+    const pool3 = tribalPool((_a3 = REALM_DATA.tribal[culture]) != null ? _a3 : "general", biome, terrain, options.biomeData);
+    return pool3.length > 0 ? pickOne3(pool3, rng) : void 0;
+  };
+  const namedForWeights = (character) => Object.entries(REALM_DATA.namedForWeights[character]).filter(([k]) => namedForOffered(k, REALM_ERAS.find((e) => e.code === era).key)).map(([k, w]) => {
+    var _a3, _b2;
+    return [k, w * (k === "people" ? (_b2 = (_a3 = REALM_DATA.cultures[culture]) == null ? void 0 : _a3.peoplesMult) != null ? _b2 : 1 : 1)];
+  }).filter(([, w]) => w > 0);
+  const chooseShape = (character, nf) => {
+    var _a3, _b2, _c2;
+    const weigh = (shapes, extra = []) => shapes.filter((s2) => (!s2.eras || s2.eras.includes(era)) && (!s2.ceremonialOnly || length === "ceremonial")).map((s2) => {
+      var _a4;
+      return [s2, s2.w * toneFactor([...extra, ...(_a4 = s2.t) != null ? _a4 : []], tone)];
+    }).filter(([, w]) => w > 0);
+    const own = REALM_DATA.characterShapes[character];
+    if (namedFor === "anything" && own && rng() < own.share) {
+      const s2 = pickWeighted5(weigh(own.shapes, own.t), rng);
+      if (s2) return { shape: s2, kind: "character", nf: "character", t: [...(_a3 = own.t) != null ? _a3 : [], ...(_b2 = s2.t) != null ? _b2 : []] };
+    }
+    const resolved = nf === "anything" ? pickWeighted5(namedForWeights(character), rng) : nf;
+    if (!resolved || resolved === "anything") return void 0;
+    const kind = (resolved === "land" || resolved === "place") && rng() < REALM_DATA.collectiveShare ? "collective" : resolved;
+    const s = pickWeighted5(weigh(REALM_DATA.shapes[kind]), rng);
+    return s ? { shape: s, kind, nf: resolved, t: (_c2 = s.t) != null ? _c2 : [] } : void 0;
+  };
+  const oneName2 = () => {
+    var _a3;
+    for (let round = 0; round < 2; round++) {
+      const character = (_a3 = chosen == null ? void 0 : chosen.key) != null ? _a3 : pickWeighted5(characters, rng);
+      if (!character) return void 0;
+      for (let i = 0; i < 20; i++) {
+        const choice = chooseShape(character, namedFor);
+        if (!choice) continue;
+        const built = build(character, choice);
+        if (built) return built;
+      }
+    }
+    return void 0;
+  };
+  function build(character, choice) {
+    var _a3, _b2, _c2, _d2;
+    const { shape, kind } = choice;
+    const ctx = { rng, setting, era, culture, character, tone, mode, biome, lists, pools, tribal, drawn: /* @__PURE__ */ new Set(), values: /* @__PURE__ */ new Map() };
+    if (/\{(form|federalForm)\}/.test(shape.p)) {
+      const keep = shape.p.includes("{federalForm}") ? (f) => f.g === "federal" && !f.peoplesOnly : kind === "dynasty" ? DYNASTY : kind === "people" ? PEOPLES : shape.groups ? (f) => shape.groups.includes(f.g) && PLAIN_FORM(f) : shape.p.includes("{modifier}") ? (f) => PLAIN_FORM(f) && (compatibleModifiers(f.w, era).length > 0 || ideologyFor(f.w, era)) : PLAIN_FORM;
+      ctx.form = drawForm(ctx, keep);
+      if (!ctx.form) return void 0;
+    }
+    if (shape.p.includes("{collNoun}")) {
+      const keep = shape.collQual ? (w) => compatibleCollQuals(w).includes(shape.collQual) : (w) => compatibleCollQuals(w).length > 0 || !shape.p.includes("{collQual}");
+      ctx.collNoun = listWord3(ctx, "collNoun", keep);
+      if (!ctx.collNoun) return void 0;
+    }
+    const ceremonial = length === "ceremonial";
+    let pattern = shape.p;
+    let pairToken;
+    if (ceremonial) {
+      if (shape.upperLower && rng() < REALM_DATA.ceremonial.upperLower) pattern = pattern.replace("{landIdentity}", "Upper and Lower {landPl}");
+      else if (shape.pair && rng() < REALM_DATA.ceremonial.pair) pairToken = shape.pair;
+    }
+    let raw = renderTokens(ctx, pattern, shape, kind);
+    if (!raw) return void 0;
+    const plainOfficial = realmCapitals(raw);
+    if (pattern !== shape.p) ctx.values.set("landIdentity", raw.slice(raw.indexOf("Upper and Lower")));
+    if (pairToken) {
+      const first = ctx.values.get(pairToken);
+      const second = token4(ctx, pairToken, shape, kind);
+      if (!second || second === first) return void 0;
+      const the = new RegExp(`of the ${first.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`).test(raw);
+      raw = raw.replace(first, `${first} and ${the ? "the " : ""}${second.replace(/^the /, "")}`);
+    }
+    let official = realmCapitals(raw);
+    let honorific;
+    if (ceremonial && !shape.honorific) {
+      const group = (_c2 = (_b2 = (_a3 = ctx.form) == null ? void 0 : _a3.g) != null ? _b2 : shape.g) != null ? _c2 : "federal";
+      const pool3 = REALM_DATA.honorifics[group].map((e) => {
+        var _a4, _b3;
+        return [e, ((_a4 = e.x) != null ? _a4 : 1) * toneFactor((_b3 = e.t) != null ? _b3 : [], tone)];
+      }).filter(([, w]) => w > 0);
+      const h = pickWeighted5(pool3, rng);
+      if (!h) return void 0;
+      honorific = h.w;
+      for (const t of (_d2 = h.t) != null ? _d2 : []) ctx.drawn.add(t);
+      official = realmCapitals(`${honorific} ${official.replace(/^the /, "")}`);
+    } else if (shape.honorific) honorific = "Most Serene";
+    const short = realmCapitals(renderShort(ctx, shape.short, plainOfficial));
+    const words = counted(official);
+    if (words.length === 0 || words.length > REALM_DATA.caps[length]) return void 0;
+    if (repeatsContent(words)) return void 0;
+    for (const n of [official, short]) if (block.has(normForBlock(n))) return void 0;
+    if (breaksRealmWords(official) || breaksGroupColourRule(official) || COLOUR_BEFORE_PEOPLE.test(official)) return void 0;
+    const text = output === "official" ? official : output === "short" ? short : official.toLowerCase() === short.toLowerCase() ? official : `${official} (${short})`;
+    const tones = /* @__PURE__ */ new Set([...choice.t, ...ctx.drawn, ...ceremonial ? REALM_DATA.ceremonial.t : []]);
+    return {
+      text,
+      official,
+      short,
+      character,
+      namedFor: choice.nf,
+      kind,
+      shape: shape.p,
+      ...ctx.form ? { form: ctx.form.w, formGroup: ctx.form.g } : shape.g ? { formGroup: shape.g } : {},
+      ...ctx.modifier ? { modifier: ctx.modifier } : {},
+      ...honorific ? { honorific } : {},
+      ...ctx.collQual ? { collQual: ctx.collQual } : shape.collQual ? { collQual: shape.collQual } : {},
+      ...ctx.collNoun ? { collNoun: ctx.collNoun } : {},
+      tones: GROUP_TONES.filter((t) => tones.has(t))
+    };
+  }
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  const count = Math.max(0, Math.floor(options.count));
+  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+    const name = oneName2();
+    if (!name) continue;
+    const key2 = name.text.toLowerCase();
+    if (seen.has(key2)) continue;
+    seen.add(key2);
+    names.push(name);
+  }
+  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+  return { names, seed, notices };
+}
+function renderShort(ctx, template, plain) {
+  if (template === "same") return plain;
+  const keepThe = template.startsWith("the ");
+  const out = template.replace(/\{([^}]+)\}/g, (_m, raw) => {
+    var _a2;
+    const [name, mod] = raw.split(":");
+    const v = (_a2 = ctx.values.get(name)) != null ? _a2 : "";
+    if (mod === "poss") return groupPossessive(v, false);
+    if (mod === "pl") return v.startsWith("[") ? v : groupPlural(v);
+    return v;
+  });
+  return keepThe ? out : out.replace(/^the /i, "");
+}
+function realmHistoryLabel(genre, fantastic, culture, era, character, tone = "any") {
+  var _a2, _b, _c, _d;
+  const label = (_b = (_a2 = REALM_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+  return [
+    "realms and polities",
+    SETTING_PHRASES[groupSetting(genre, genre === "scifi" ? false : fantastic)],
+    label,
+    (_d = (_c = REALM_ERAS.find((e) => e.key === era)) == null ? void 0 : _c.label) != null ? _d : era,
+    ...character ? [character] : [],
+    ...tone !== "any" ? [tone] : []
+  ].join(" \xB7 ");
+}
+
+// src/realms/sentence.ts
+var DEFAULT_REALM_STATE = {
+  culture: "general",
+  era: "medieval",
+  genre: "fantasy",
+  fantastic: false,
+  namedFor: "anything",
+  terrain: "any",
+  tone: "any",
+  length: "plain",
+  output: "official",
+  people: "placeholders"
+};
+var OUTPUT_TEXT = { official: "official names", short: "short names", both: "official and short names" };
+var PEOPLE_TEXT2 = { placeholders: "placeholders for", invented: "invented" };
+var showsLand = (state) => state.namedFor === "anything" || state.namedFor === "land";
+function realmSentence(state, limits) {
+  var _a2, _b, _c, _d;
+  const out = [];
+  const culture = (_a2 = REALM_CULTURES.find((c) => c.key === state.culture)) != null ? _a2 : REALM_CULTURES[0];
+  out.push({
+    field: "culture",
+    text: culture.label,
+    title: "Which customs and forms of government",
+    choices: REALM_CULTURES.map((c) => ({ id: c.key, label: c.label })),
+    current: culture.key
+  });
+  out.push("-themed ");
+  const character = REALM_CHARACTERS.find((c) => c.key === state.character);
+  out.push({
+    field: "character",
+    text: character ? character.plural : "realms of any kind",
+    title: character ? character.description : "Realms of any kind",
+    choices: [{ id: void 0, label: "Any" }, ...REALM_CHARACTERS.map((c) => ({ id: c.key, label: c.menu }))],
+    current: character == null ? void 0 : character.key
+  });
+  out.push(" of the ");
+  const era = (_b = REALM_ERAS.find((e) => e.key === state.era)) != null ? _b : REALM_ERAS[1];
+  out.push({
+    field: "era",
+    text: era.label,
+    title: "Which forms of government are common: any culture can have any era",
+    choices: REALM_ERAS.map((e) => ({ id: e.key, label: e.label })),
+    current: era.key
+  });
+  out.push(" era, for a ");
+  out.push({
+    field: "genre",
+    text: GENRE_TEXT[state.genre],
+    title: "Genre: the kind of world",
+    choices: ["fantasy", "modern", "scifi"].map((g) => ({ id: g, label: GENRE_TEXT[g] })),
+    current: state.genre
+  });
+  out.push(" world");
+  if (state.genre !== "scifi") {
+    const setting = groupSetting(state.genre, state.fantastic);
+    const phrases = FANTASTIC_TEXT[state.genre];
+    out.push(" ");
+    out.push({
+      field: "fantastic",
+      text: phrases[state.fantastic ? 1 : 0],
+      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
+      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
+      current: state.fantastic ? "on" : "off"
+    });
+  }
+  out.push(", named for ");
+  const nf = (_c = REALM_NAMED_FOR.find((n) => n.key === state.namedFor)) != null ? _c : REALM_NAMED_FOR[0];
+  out.push({
+    field: "namedFor",
+    text: nf.label,
+    title: "Where the state's identity comes from",
+    choices: REALM_NAMED_FOR.filter((n) => namedForOffered(n.key, state.era)).map((n) => ({ id: n.key, label: n.label })),
+    current: nf.key
+  });
+  if (showsLand(state)) {
+    out.push(", in ");
+    const biome = limits.findBiome(state.biome);
+    out.push({
+      field: "biome",
+      text: biome ? biome.phrase : "their homeland",
+      title: (_d = biome == null ? void 0 : biome.guide) != null ? _d : "Their homeland: the culture's own land",
+      choices: [{ id: void 0, label: "Their homeland" }, ...limits.biomes.map((b) => {
+        var _a3, _b2;
+        return { id: (_b2 = (_a3 = b.custom) == null ? void 0 : _a3.path) != null ? _b2 : b.id, label: b.label };
+      })],
+      current: state.biome
+    });
+    out.push(" ");
+    const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
+    const terrainText = (id) => {
+      var _a3, _b2;
+      return `of ${id === "any" ? "any terrain" : (_b2 = (_a3 = [...terrains, ...TERRAIN_CHOICES].find((t) => t.id === id)) == null ? void 0 : _a3.label.toLowerCase()) != null ? _b2 : id}`;
+    };
+    out.push({
+      field: "terrain",
+      text: terrainText(state.terrain || "any"),
+      title: "Terrain: the kind of land they hold",
+      choices: [{ id: "any", label: terrainText("any") }, ...terrains.map((t) => ({ id: t.id, label: terrainText(t.id) }))],
+      current: state.terrain || "any"
+    });
+  }
+  out.push(", ");
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
+  out.push(", as ");
+  out.push({
+    field: "length",
+    text: state.length,
+    title: "Plain names, or ceremonial ones with honorifics",
+    choices: ["plain", "ceremonial"].map((l) => ({ id: l, label: l })),
+    current: state.length
+  });
+  out.push(" names, giving ");
+  out.push({
+    field: "output",
+    text: OUTPUT_TEXT[state.output],
+    title: "The full official name, the everyday short name, or both",
+    choices: ["official", "short", "both"].map((o) => ({ id: o, label: OUTPUT_TEXT[o] })),
+    current: state.output
+  });
+  out.push(", with ");
+  out.push({
+    field: "people",
+    text: PEOPLE_TEXT2[state.people],
+    title: "Placeholders like [place], or invented names",
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT2[p] })),
+    current: state.people
+  });
+  out.push(" people and places");
+  return out;
+}
+function realmSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function chooseRealm(state, field, id, findBiome2) {
+  const next = { ...state };
+  switch (field) {
+    case "culture":
+      next.culture = id != null ? id : "general";
+      break;
+    case "character":
+      next.character = id;
+      break;
+    case "era":
+      next.era = id != null ? id : "medieval";
+      if (next.namedFor === "stars" && !namedForOffered("stars", next.era)) next.namedFor = "anything";
+      break;
+    case "genre":
+      next.genre = id != null ? id : "fantasy";
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "namedFor":
+      next.namedFor = id != null ? id : "anything";
+      break;
+    case "biome": {
+      const biome = findBiome2(id);
+      const keep = !biome || state.terrain === "any" || availableTerrains(biome).some((t) => t.id === state.terrain);
+      next.biome = id;
+      next.terrain = keep ? state.terrain : "any";
+      break;
+    }
+    case "terrain":
+      next.terrain = id != null ? id : "any";
+      break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "length":
+      next.length = id != null ? id : "plain";
+      break;
+    case "output":
+      next.output = id != null ? id : "official";
+      break;
+    case "people":
+      next.people = id != null ? id : "placeholders";
+      break;
+  }
+  return next;
+}
+
+// src/realms/safeguardPacks.ts
+var REALM_SAFEGUARD_TYPE = "realm-safeguards";
+function isRealmSafeguardPackContent(content) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  return !!fm && new RegExp(`^type:\\s*["']?${REALM_SAFEGUARD_TYPE}["']?\\s*$`, "m").test(fm[1]);
+}
+var REALM_SAFEGUARD_TEMPLATE = `---
+type: realm-safeguards
+flag-list-blocks: false
+---
+
+## Block
+
+Realm names never to produce. Each one is added to the built-in block list of real states and well-known fictional ones.
+
+## Flag
+
+Names to allow, though they echo a real or well-known state.
+
+## Allow
+
+Names to take off the flag list. Built-in block-list names can't be allowed.
+`;
+
 // src/vessels/sentence.ts
 function defaultVesselState(module2) {
   return {
@@ -69050,7 +72878,7 @@ function defaultVesselState(module2) {
     series: false
   };
 }
-var PEOPLE_TEXT2 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT3 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT2 = { off: "each one separate", on: "as one class" };
 var PREFIX_TEXT = { off: "without prefixes", on: "with prefixes" };
 var article = (word) => /^[aeiou]/i.test(word) ? "an" : "a";
@@ -69146,9 +72974,9 @@ function vesselSentence(state, module2) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT2[state.people],
+    text: PEOPLE_TEXT3[state.people],
     title: "Placeholders like [admiral], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT2[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT3[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -69287,6 +73115,7 @@ function parseModulePreset(content, fileName) {
   if (values.module === GROUP_PRESET_MODULE) return parseGroupPreset(values, body, fileName);
   if (values.module === BYNAME_PRESET_MODULE) return parseBynamePreset(values, body, fileName);
   if (values.module === VESSEL_PRESET_MODULE) return parseVesselPreset(values, body, fileName);
+  if (values.module === REALM_PRESET_MODULE) return parseRealmPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module \u201C${(_a2 = values.module) != null ? _a2 : ""}\u201D.`);
     return { problems };
@@ -69320,6 +73149,7 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("namedFor" in preset) return realmPresetContent(preset);
   if ("vesselModule" in preset) return vesselPresetContent(preset);
   if ("bynameModule" in preset) return bynamePresetContent(preset);
   if ("family" in preset) return groupPresetContent(preset);
@@ -69472,6 +73302,76 @@ function bynamePresetContent(preset) {
     `source: ${preset.source}`,
     ...preset.pack ? [`pack: ${preset.pack}`] : [],
     `section: ${preset.section}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
+var REALM_PRESET_MODULE = "realms";
+function parseRealmPreset(values, body, fileName) {
+  var _a2;
+  const problems = [];
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const flag = (key2) => {
+    const v = values[key2];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return false;
+  };
+  const era = pick4("era", "medieval", (v) => REALM_ERAS.some((e) => e.key === v));
+  let namedFor = pick4("namedFor", "anything", (v) => ["anything", "land", "place", "dynasty", "people", "stars"].includes(v));
+  if (namedFor === "stars" && !namedForOffered("stars", era)) {
+    problems.push("\u201CThe stars\u201D needs the near-future or interstellar era.");
+    namedFor = "anything";
+  }
+  return {
+    realm: {
+      packName: values.packName || fileName,
+      setting: (_a2 = values.setting) != null ? _a2 : "",
+      description: body.trim(),
+      culture: pick4("culture", "general", (v) => REALM_CULTURES.some((c) => c.key === v)),
+      character: pick4("character", "any", (v) => v === "any" || REALM_CHARACTERS.some((c) => c.key === v)),
+      era,
+      genre: pick4("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
+      fantastic: flag("fantastic"),
+      namedFor,
+      biome: pick4("biome", "homeland", (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
+      terrain: pick4("terrain", "any", (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      length: pick4("length", "plain", (v) => ["plain", "ceremonial"].includes(v)),
+      output: pick4("output", "official", (v) => ["official", "short", "both"].includes(v)),
+      people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v))
+    },
+    problems
+  };
+}
+function realmPresetContent(preset) {
+  const quote2 = (v) => /^\[\[|[:#]/.test(v) ? `"${v}"` : v;
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${REALM_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `character: ${preset.character}`,
+    `era: ${preset.era}`,
+    `genre: ${preset.genre}`,
+    `fantastic: ${preset.fantastic}`,
+    `namedFor: ${preset.namedFor}`,
+    `biome: ${quote2(preset.biome)}`,
+    `terrain: ${preset.terrain}`,
+    `tone: ${preset.tone}`,
+    `length: ${preset.length}`,
+    `output: ${preset.output}`,
+    `people: ${preset.people}`,
     "---",
     "",
     preset.description.trim(),
@@ -70778,12 +74678,12 @@ function terrainHeading(heading) {
   const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
   return m ? { terrain: m[1].trim(), part: m[2].toLowerCase() } : null;
 }
-function terrainId(token4, custom) {
+function terrainId(token5, custom) {
   var _a2;
-  const t = norm4(token4);
+  const t = norm4(token5);
   const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm4(x.id) === t || norm4(x.label) === t));
   if (builtIn) return builtIn.id;
-  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab(token4))) == null ? void 0 : _a2.id;
+  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab(token5))) == null ? void 0 : _a2.id;
 }
 var key = (words) => words.map(([w, n]) => `${norm4(w)}|${n}`).sort().join("\n");
 var entryKey = (entries) => entries.map((e) => `${norm4(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
@@ -73347,6 +77247,7 @@ var SECTION_ORDER = [
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "tribalNames",
+  "realms",
   ...GROUP_NAME_SECTIONS,
   ...BYNAME_SECTIONS,
   "nameAgeing",
@@ -73355,7 +77256,7 @@ var SECTION_ORDER = [
 ];
 var SECTION_GROUPS = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
-  groupNames: ["tribalNames", ...GROUP_NAME_SECTIONS],
+  groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS]
 };
@@ -73378,6 +77279,7 @@ var SECTION_LABELS = {
   nameAgeing: "name ageing",
   nameTakeover: "name takeover",
   tribalNames: "tribes and kin groups",
+  realms: "realms and polities",
   mysticOrders: "faiths and mystic orders",
   martialOrders: "armies and martial orders",
   underworldGroups: "thieves and the underworld",
@@ -73401,6 +77303,7 @@ function historySection(packName) {
   if (starts(RIVER_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
+  if (starts(SECTION_LABELS.realms)) return "realms";
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
@@ -73434,6 +77337,8 @@ var SECTION_ICONS = {
   nameAgeing: ICON_NAME_AGEING,
   nameTakeover: ICON_NAME_TAKEOVER,
   tribalNames: ICON_TRIBAL_NAMES,
+  // Realms brief §1.1.
+  realms: "castle",
   // Bynames brief §1.1: Lucide icons.
   epithets: "quote",
   titles: "crown",
@@ -73465,6 +77370,7 @@ function packTypeIconId(packType, subGenerator) {
   if (packType === "tribalPreset" || packType === "groupPreset") return ICON_TRIBAL_NAMES;
   if (packType === "bynamePreset") return ICON_BYNAMES;
   if (packType === "vesselPreset") return ICON_SHIPS;
+  if (packType === "realmPreset") return ICON_TRIBAL_NAMES;
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;
   }
@@ -73697,6 +77603,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.bynamePacksLoaded = false;
     /** Ships brief §2.4: each vessel module's choices, session only. */
     this.vesselStates = {};
+    /** Realms brief §2.4: the realms sentence's choices, session only. */
+    this.realmState = { ...DEFAULT_REALM_STATE };
     /** Each switcher group's last-used module (session only). */
     this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
@@ -74068,10 +77976,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     (_c = this.packDropdownEl) == null ? void 0 : _c.toggle(section === "markov");
     (_d = this.sectionSentenceEl) == null ? void 0 : _d.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_e = this.editRecipeButton) == null ? void 0 : _e.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset"));
+    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section);
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms";
     (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart && !tribal);
     (_i = this.landButton) == null ? void 0 : _i.refresh();
     (_j = this.guideButton) == null ? void 0 : _j.toggle(!!colonialPart);
@@ -74173,8 +78081,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       { code: void 0, label: "All Britain" },
       ...PLACE_SHAPE_REGIONS
     ];
-    const place2 = this.activeSection === "placeShapes";
-    const current = place2 ? this.selectedRegion : this.riverRegion;
+    const place3 = this.activeSection === "placeShapes";
+    const current = place3 ? this.selectedRegion : this.riverRegion;
     for (const { code, label: text, counties } of options) {
       const item = menu.createEl("button", {
         cls: "nameforge-modal__pack-dropdown-item" + (code === current ? " is-active" : ""),
@@ -74182,7 +78090,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       });
       item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text });
       item.addEventListener("click", () => {
-        if (place2) this.selectedRegion = code;
+        if (place3) this.selectedRegion = code;
         else this.riverRegion = code;
         choose();
       });
@@ -74372,6 +78280,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     else if (groupFamily) this.renderGroupSentence(row, groupFamily);
     else if (BYNAME_SECTIONS.includes(section)) this.renderBynameSentence(row, section);
     else if (VESSEL_SECTIONS.includes(section)) this.renderVesselSentence(row, section);
+    else if (section === "realms") this.renderRealmSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -74633,7 +78542,12 @@ ${n.origin}${also}${echo}` };
   async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian13.TFile)) return;
-    const { preset, group, byname, vessel } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, realm } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (realm) {
+      this.realmState = this.realmPresetState(realm);
+      this.switchSection("realms");
+      return;
+    }
     if (vessel) {
       this.vesselStates[vessel.vesselModule] = this.vesselPresetState(vessel);
       this.switchSection(vessel.vesselModule);
@@ -74653,6 +78567,147 @@ ${n.origin}${also}${echo}` };
     if (!preset) return;
     this.setTribalState(await this.presetState(preset, file.path));
     this.switchSection("tribalNames");
+  }
+  // ── Realms and polities (Realms brief) ────────────────────────────────────
+  realmPresetState(p) {
+    return {
+      culture: p.culture,
+      character: p.character === "any" ? void 0 : p.character,
+      era: p.era,
+      genre: p.genre,
+      fantastic: p.fantastic,
+      namedFor: p.namedFor,
+      biome: p.biome === "homeland" ? void 0 : p.biome,
+      terrain: p.terrain,
+      tone: p.tone,
+      length: p.length,
+      output: p.output,
+      people: p.people
+    };
+  }
+  realmLimits(custom) {
+    return { biomes: [BRITAIN, ...BIOMES, ...[...custom].sort((x, y) => x.label.localeCompare(y.label))], findBiome: (id) => findBiome(id, custom) };
+  }
+  /** §2: the sentence; the biome menu reads the biome packs afresh when it opens. */
+  renderRealmSentence(row) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    const segments = (custom) => realmSentence(this.realmState, this.realmLimits(custom));
+    for (const segment2 of segments(this.customBiomes)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(
+        sentence2,
+        segment2.text,
+        segment2.title,
+        async () => {
+          const found = segments(await this.loadCustomBiomes()).find((s) => typeof s !== "string" && s.field === segment2.field);
+          return typeof found === "object" ? found.choices : segment2.choices;
+        },
+        segment2.current,
+        (id) => {
+          this.realmState = chooseRealm(this.realmState, segment2.field, id, (x) => findBiome(x, this.customBiomes));
+        }
+      );
+    }
+  }
+  /** GN §14: the finished strings only; history "realms and polities · {setting} · {culture} · {era}…". */
+  async runRealms(state = this.realmState, label, problems = []) {
+    var _a2, _b;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
+    const guards = await this.loadRealmSafeguards();
+    const custom = await this.loadCustomBiomes();
+    const biome = state.biome ? findBiome(state.biome, custom) : void 0;
+    const result = generateRealmNames({
+      culture: state.culture,
+      character: state.character,
+      era: state.era,
+      genre: state.genre,
+      fantastic: state.fantastic,
+      namedFor: state.namedFor,
+      ...(biome == null ? void 0 : biome.custom) ? { biomeData: biome } : { biome: biome == null ? void 0 : biome.id },
+      terrain: state.terrain,
+      tone: state.tone,
+      length: state.length,
+      output: state.output,
+      people: state.people,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
+      "none"
+    );
+    const character = (_b = REALM_CHARACTERS.find((c) => c.key === state.character)) == null ? void 0 : _b.key;
+    const history2 = label != null ? label : realmHistoryLabel(state.genre, state.fantastic, state.culture, state.era, character, state.tone);
+    await this.recordGenerationHistory(result.names.length, history2);
+    this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
+  }
+  /** §12.4: every realm safeguard pack in the names folder, merged with the built-in lists. */
+  async loadRealmSafeguards() {
+    var _a2;
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian13.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const packs = [];
+    for (const child of (_a2 = folder == null ? void 0 : folder.children) != null ? _a2 : []) {
+      if (!(child instanceof import_obsidian13.TFile) || child.extension !== "md") continue;
+      const content = await this.app.vault.cachedRead(child);
+      if (isRealmSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
+    }
+    if (packs.length === 0) return { notices: [] };
+    const g = REALM_DATA.safeguards;
+    const { notices, block, flag, flagBlocks } = mergeSafeguards({ blockList: g.block, flagList: g.flag, flagListBlocks: g.flagListBlocks }, packs);
+    return { safeguards: { block, flag, flagListBlocks: flagBlocks }, notices };
+  }
+  /** §13: "{culture} · {character or module} · {era}", described by the sentence. */
+  openSaveRealmPreset() {
+    var _a2, _b;
+    const state = this.realmState;
+    const culture = (_b = (_a2 = REALM_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+    const character = REALM_CHARACTERS.find((c) => c.key === state.character);
+    const name = [culture, character ? character.menu : SECTION_LABELS.realms].join(" \xB7 ");
+    const description = realmSentenceText(realmSentence(state, this.realmLimits(this.customBiomes)));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a3, _b2;
+      if (!presetName) {
+        new import_obsidian13.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        culture: state.culture,
+        character: (_a3 = state.character) != null ? _a3 : "any",
+        era: state.era,
+        genre: state.genre,
+        fantastic: state.fantastic,
+        namedFor: state.namedFor,
+        biome: (_b2 = state.biome) != null ? _b2 : "homeland",
+        terrain: state.terrain,
+        tone: state.tone,
+        length: state.length,
+        output: state.output,
+        people: state.people
+      });
+      return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).realm);
+    }).open();
+  }
+  /** §13: a realm preset, run as the module runs; history "realms and polities · {preset}". */
+  async runRealmPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian13.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { realm, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!realm) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runRealms(this.realmPresetState(realm), `${SECTION_LABELS.realms} \xB7 ${realm.packName}`, problems);
   }
   // ── Ships and spacecraft (Ships brief) ────────────────────────────────────
   /** §2.4: a vessel module's choices, session only. */
@@ -74961,7 +79016,7 @@ ${n.origin}${also}${echo}` };
     var _a2;
     const section = this.activeSection;
     (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -74978,6 +79033,10 @@ ${n.origin}${also}${echo}` };
     }
     if (VESSEL_SECTIONS.includes(this.activeSection)) {
       this.openSaveVesselPreset(this.activeSection);
+      return;
+    }
+    if (this.activeSection === "realms") {
+      this.openSaveRealmPreset();
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -75734,7 +79793,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -75887,6 +79946,7 @@ ${text}
           else if (parsed.group) packs.push({ path: child.path, packType: "groupPreset" });
           else if (parsed.byname) packs.push({ path: child.path, packType: "bynamePreset" });
           else if (parsed.vessel) packs.push({ path: child.path, packType: "vesselPreset" });
+          else if (parsed.realm) packs.push({ path: child.path, packType: "realmPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -76029,9 +80089,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i;
-    const { preset, group, byname, vessel, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j;
+    const { preset, group, byname, vessel, realm, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -76041,9 +80101,9 @@ ${text}
     (_a2 = this.sectionSentenceEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
-    const module2 = vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
+    const module2 = realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
     (_e = this.openPresetButton) == null ? void 0 : _e.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : file.basename;
+    this.plugin.settings.packName = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm == null ? void 0 : realm.packName) != null ? _j : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -76468,6 +80528,10 @@ ${text}
       await this.runVessels(this.activeSection);
       return;
     }
+    if (this.activeSection === "realms") {
+      await this.runRealms();
+      return;
+    }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
@@ -76515,6 +80579,10 @@ ${text}
     }
     if (this.currentPackType === "vesselPreset") {
       await this.runVesselPreset();
+      return;
+    }
+    if (this.currentPackType === "realmPreset") {
+      await this.runRealmPreset();
       return;
     }
     if (this.currentPackType === "groupPreset") {
@@ -78001,6 +82069,21 @@ var NameForgePlugin = class extends import_obsidian15.Plugin {
         }
         await this.app.vault.create(path, BYNAME_SAFEGUARD_TEMPLATE);
         new import_obsidian15.Notice("nameForge: \u201CByname safeguards\u201D created.");
+      }
+    });
+    this.addCommand({
+      id: "create-realm-safeguard-list",
+      name: "Create realm safeguard list",
+      callback: async () => {
+        const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
+        await ensureVaultFolder(this.app, folder);
+        const path = (0, import_obsidian15.normalizePath)(`${folder}/Realm safeguards.md`);
+        if (this.app.vault.getFileByPath(path)) {
+          new import_obsidian15.Notice("nameForge: \u201CRealm safeguards\u201D already exists.");
+          return;
+        }
+        await this.app.vault.create(path, REALM_SAFEGUARD_TEMPLATE);
+        new import_obsidian15.Notice("nameForge: \u201CRealm safeguards\u201D created.");
       }
     });
     this.addCommand({

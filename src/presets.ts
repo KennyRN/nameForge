@@ -15,6 +15,7 @@ import {
   type BynameSource,
   moduleKinds,
 } from "./bynames/engine";
+import { namedForOffered, REALM_CHARACTERS, REALM_CULTURES, REALM_ERAS, type RealmLength, type RealmNamedFor, type RealmOutput } from "./realms/engine";
 import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
 import { findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
 
@@ -67,7 +68,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -78,6 +79,8 @@ export function parseModulePreset(
   if (values.module === BYNAME_PRESET_MODULE) return parseBynamePreset(values, body, fileName);
   // Ships brief §15: vessel presets too.
   if (values.module === VESSEL_PRESET_MODULE) return parseVesselPreset(values, body, fileName);
+  // Realms brief §13: realm presets too.
+  if (values.module === REALM_PRESET_MODULE) return parseRealmPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module “${values.module ?? ""}”.`);
     return { problems };
@@ -112,7 +115,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset): string {
+  if ("namedFor" in preset) return realmPresetContent(preset);
   if ("vesselModule" in preset) return vesselPresetContent(preset);
   if ("bynameModule" in preset) return bynamePresetContent(preset);
   if ("family" in preset) return groupPresetContent(preset);
@@ -312,6 +316,101 @@ function bynamePresetContent(preset: BynamePreset): string {
     `source: ${preset.source}`,
     ...(preset.pack ? [`pack: ${preset.pack}`] : []),
     `section: ${preset.section}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Realm presets (Realms brief §13) ────────────────────────────────────────
+
+export const REALM_PRESET_MODULE = "realms";
+
+export interface RealmPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  culture: string;
+  /** "any" or a character key. */
+  character: string;
+  era: string;
+  genre: GroupGenre;
+  fantastic: boolean;
+  namedFor: RealmNamedFor;
+  /** "homeland" or a biome id. */
+  biome: string;
+  terrain: string;
+  tone: GroupToneChoice;
+  length: RealmLength;
+  output: RealmOutput;
+  people: GroupPeople;
+}
+
+function parseRealmPreset(values: Record<string, string>, body: string, fileName: string): { realm?: RealmPreset; problems: string[] } {
+  const problems: string[] = [];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const flag = (key: string): boolean => {
+    const v = values[key];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key} “${v}”.`);
+    return false;
+  };
+  const era = pick("era", "medieval", (v) => REALM_ERAS.some((e) => e.key === v));
+  let namedFor = pick<RealmNamedFor>("namedFor", "anything", (v) => ["anything", "land", "place", "dynasty", "people", "stars"].includes(v));
+  // §13: the stars need a future era; the preset runs as anything.
+  if (namedFor === "stars" && !namedForOffered("stars", era)) {
+    problems.push("“The stars” needs the near-future or interstellar era.");
+    namedFor = "anything";
+  }
+  return {
+    realm: {
+      packName: values.packName || fileName,
+      setting: values.setting ?? "",
+      description: body.trim(),
+      culture: pick("culture", "general", (v) => REALM_CULTURES.some((c) => c.key === v)),
+      character: pick("character", "any", (v) => v === "any" || REALM_CHARACTERS.some((c) => c.key === v)),
+      era,
+      genre: pick<GroupGenre>("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
+      fantastic: flag("fantastic"),
+      namedFor,
+      biome: pick("biome", "homeland", (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
+      terrain: pick("terrain", "any", (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      length: pick<RealmLength>("length", "plain", (v) => ["plain", "ceremonial"].includes(v)),
+      output: pick<RealmOutput>("output", "official", (v) => ["official", "short", "both"].includes(v)),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+    },
+    problems,
+  };
+}
+
+function realmPresetContent(preset: RealmPreset): string {
+  const quote = (v: string) => (/^\[\[|[:#]/.test(v) ? `"${v}"` : v);
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${REALM_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `character: ${preset.character}`,
+    `era: ${preset.era}`,
+    `genre: ${preset.genre}`,
+    `fantastic: ${preset.fantastic}`,
+    `namedFor: ${preset.namedFor}`,
+    `biome: ${quote(preset.biome)}`,
+    `terrain: ${preset.terrain}`,
+    `tone: ${preset.tone}`,
+    `length: ${preset.length}`,
+    `output: ${preset.output}`,
+    `people: ${preset.people}`,
     "---",
     "",
     preset.description.trim(),

@@ -228,6 +228,7 @@ test("line-up: the modules in order, with their labels; river names live in plac
       "exploration into new lands",
       "expansion into settled lands",
       "tribes and kin groups",
+      "realms and polities",
       "faiths and mystic orders",
       "armies and martial orders",
       "thieves and the underworld",

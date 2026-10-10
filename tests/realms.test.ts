@@ -259,3 +259,53 @@ test("§15.7: bare blocked words still appear inside longer names", () => {
   const holy = many({ character: "religious", people: "invented" }, 2000);
   assert.ok(holy.some((n) => /\bReach\b/.test(n.official)));
 });
+
+// ── §15.8 Sentence and presets ──────────────────────────────────────────────
+
+import { BIOMES, BRITAIN, findBiome } from "../src/biomes";
+import { modulePresetContent, parseModulePreset } from "../src/presets";
+import { chooseRealm, DEFAULT_REALM_STATE, realmSentence, realmSentenceText, type RealmSentenceState } from "../src/realms/sentence";
+
+const limits = { biomes: [BRITAIN, ...BIOMES], findBiome: (id: string | undefined) => findBiome(id) };
+const fieldsOf = (state: RealmSentenceState) => realmSentence(state, limits).filter((s) => typeof s !== "string").map((s) => (s as { field: string }).field);
+
+test("§15.8: the default sentence", () => {
+  assert.equal(
+    realmSentenceText(realmSentence(DEFAULT_REALM_STATE, limits)),
+    "General-themed realms of any kind of the medieval era, for a fantasy world of historic or low fantasy, named for anything, in their homeland of any terrain, of any tone, as plain names, giving official names, with placeholders for people and places.",
+  );
+});
+
+test("§15.8: “the stars” only in the future eras; leaving them resets it", () => {
+  const offered = (era: string) => {
+    const seg = realmSentence({ ...DEFAULT_REALM_STATE, era }, limits).find((s) => typeof s !== "string" && s.field === "namedFor") as { choices: { id?: string }[] };
+    return seg.choices.some((c) => c.id === "stars");
+  };
+  for (const e of REALM_ERAS) assert.equal(offered(e.key), e.code === "NF" || e.code === "IS", e.key);
+  const stars = { ...DEFAULT_REALM_STATE, era: "interstellar", namedFor: "stars" as const };
+  assert.equal(chooseRealm(stars, "era", "modern", limits.findBiome).namedFor, "anything");
+  assert.equal(chooseRealm(stars, "era", "nearFuture", limits.findBiome).namedFor, "stars");
+});
+
+test("§15.8: biome and terrain links only for anything and their land", () => {
+  for (const nf of ["anything", "land", "place", "dynasty", "people", "stars"] as const) {
+    const f = fieldsOf({ ...DEFAULT_REALM_STATE, era: "interstellar", namedFor: nf });
+    const shown = nf === "anything" || nf === "land";
+    assert.equal(f.includes("biome"), shown, nf);
+    assert.equal(f.includes("terrain"), shown, nf);
+  }
+});
+
+test("§15.8: presets round-trip; the stars in the middle ages report and run as anything", () => {
+  const preset = {
+    packName: "Steppe khanates", setting: "", description: "Turkic & Mongol steppe-themed realms.", culture: "steppe", character: "any", era: "medieval",
+    genre: "fantasy" as const, fantastic: false, namedFor: "anything" as const, biome: "homeland", terrain: "any", tone: "any" as const, length: "plain" as const,
+    output: "both" as const, people: "invented" as const,
+  };
+  const parsed = parseModulePreset(modulePresetContent(preset), "x");
+  assert.deepEqual(parsed.realm, preset);
+  assert.deepEqual(parsed.problems, []);
+  const stars = parseModulePreset(modulePresetContent({ ...preset, namedFor: "stars" }), "x");
+  assert.equal(stars.realm?.namedFor, "anything");
+  assert.ok(stars.problems.includes("“The stars” needs the near-future or interstellar era."));
+});
