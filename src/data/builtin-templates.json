@@ -429,5 +429,36 @@
    "Wulfric",
    "Wulfstan"
   ]
+ },
+ {
+  "name": "Anglo-Saxon, Female",
+  "type": "people",
+  "items": [
+   "Æthelflaed",
+   "Agatha",
+   "Agnes",
+   "Beadohild",
+   "Ceolburh",
+   "Cuthburh",
+   "Cwenburh",
+   "Eadburg",
+   "Eanflaed",
+   "Eawyn",
+   "Edith",
+   "Emma",
+   "Ethelflaed",
+   "Hild",
+   "Hilda",
+   "Hildeburg",
+   "Hildegard",
+   "Inga",
+   "Mathilda",
+   "Matilda",
+   "Mildrith",
+   "Osgyth",
+   "Wealhtheow",
+   "Wulfwyn",
+   "Wynflaed"
+  ]
  }
 ]

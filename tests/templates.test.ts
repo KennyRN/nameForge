@@ -35,3 +35,10 @@ test("templates: Anglo-Saxon, Male is unique and alphabetical", () => {
   assert.equal(new Set(items).size, items.length);
   assert.deepEqual(items, [...items].sort());
 });
+
+test("templates: Anglo-Saxon, Female is unique and alphabetical", () => {
+  const items = builtinTemplates("people").find((t) => t.name === "Anglo-Saxon, Female")!.items!;
+  assert.equal(items.length, 25);
+  assert.equal(new Set(items).size, items.length);
+  assert.deepEqual(items, [...items].sort((a, b) => a.localeCompare(b, "en")));
+});

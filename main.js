@@ -33295,6 +33295,37 @@ var builtin_templates_default = [
       "Wulfric",
       "Wulfstan"
     ]
+  },
+  {
+    name: "Anglo-Saxon, Female",
+    type: "people",
+    items: [
+      "\xC6thelflaed",
+      "Agatha",
+      "Agnes",
+      "Beadohild",
+      "Ceolburh",
+      "Cuthburh",
+      "Cwenburh",
+      "Eadburg",
+      "Eanflaed",
+      "Eawyn",
+      "Edith",
+      "Emma",
+      "Ethelflaed",
+      "Hild",
+      "Hilda",
+      "Hildeburg",
+      "Hildegard",
+      "Inga",
+      "Mathilda",
+      "Matilda",
+      "Mildrith",
+      "Osgyth",
+      "Wealhtheow",
+      "Wulfwyn",
+      "Wynflaed"
+    ]
   }
 ];
 
