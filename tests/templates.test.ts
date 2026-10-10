@@ -53,13 +53,30 @@ import { compoundPartFromText, compoundTitles } from "../src/packs/compound";
 
 test("templates: Orc is a three-part compound; part 3 has Male, Female and Child titles", () => {
   const t = builtinTemplates("people-compound").find((x) => x.name === "Orc")!;
-  assert.deepEqual(t.parts!.map((p) => p.length), [46, 33, 43]);
+  assert.deepEqual(t.parts!.map((p) => p.length), [46, 33, 42]);
   const parts = templatePartTexts(t)!.map(compoundPartFromText);
   assert.equal(parts[0].sectioned, undefined);
   assert.deepEqual(compoundTitles(parts), ["Male", "Female", "Child"]);
   const child = t.partSections![2]!.find((s) => s.name === "Child")!.items;
-  assert.equal(child.length, 9);
+  assert.equal(child.length, 8);
   assert.equal(child.at(-1), "ul");
-  // The extractor treats a lone "or" as a list conjunction, so it drops out when the box is read.
-  assert.ok(!parts[2].sectioned!.sections[2].names.includes("or"));
+  assert.ok(!t.parts!.flat().includes("or"));
+  assert.deepEqual(parts[2].sectioned!.sections.map((s) => s.names.length), [18, 16, 8]);
+});
+
+import { examplePacks, isExamplePackPath } from "../src/templates";
+import { parseNamesFileContent } from "../src/nameParser";
+import { sectionOptions } from "../src/packs/sections";
+
+test("example packs: Victorian as list and breakdown, Orc as combined; each offers its titles", () => {
+  const packs = examplePacks().map((e) => ({ path: e.path, parsed: parseNamesFileContent(e.content) }));
+  assert.ok(packs.every((p) => isExamplePackPath(p.path)));
+  const [list, breakdown, orc] = packs.map((p) => p.parsed);
+  assert.equal(list.packType, "listPack");
+  assert.equal(breakdown.packType, "breakdownPack");
+  for (const p of [list, breakdown]) assert.deepEqual(sectionOptions(p.sectioned!).map((o) => o.label), ["male", "female", "whole pack"]);
+  assert.equal(list.names.length, 333); // Jessie, Marion and Willie are in both lists
+  assert.equal(orc.compoundGenerator, "combined");
+  assert.deepEqual(orc.compoundPartUse, ["all", "sometimes", "all"]);
+  assert.deepEqual(compoundTitles(orc.compoundPartData!), ["Male", "Female", "Child"]);
 });

@@ -52160,7 +52160,6 @@ var builtin_templates_default = [
         "ath",
         "og",
         "ok",
-        "or",
         "org",
         "osh",
         "rak",
@@ -52212,7 +52211,6 @@ var builtin_templates_default = [
             "ath",
             "og",
             "ok",
-            "or",
             "org",
             "osh",
             "rak",
@@ -52256,7 +52254,6 @@ var builtin_templates_default = [
             "yn",
             "el",
             "ik",
-            "or",
             "ul"
           ]
         }
@@ -52295,6 +52292,27 @@ function templatePartTexts(t) {
 ${s.items.join("\n")}`).join("\n\n") : part.join("\n");
   });
 }
+var EXAMPLE_PACK_PREFIX = "nameforge-example:/";
+var builtin = (name) => BUILTIN_TEMPLATES.find((t) => t.name === name);
+function examplePacks() {
+  var _a2, _b, _c;
+  const victorian = builtin("Victorian, England");
+  const sectioned = (_a2 = parseNameSections(templateText(victorian))) != null ? _a2 : void 0;
+  const names = ((_b = victorian.sections) != null ? _b : []).flatMap((s) => s.items);
+  const orc = builtin("Orc");
+  return [
+    { path: `${EXAMPLE_PACK_PREFIX}Victorian, England (list)`, content: createNamesFileContent("Victorian, England (list)", names, "listPack", { sectioned }) },
+    { path: `${EXAMPLE_PACK_PREFIX}Victorian, England (breakdown)`, content: createNamesFileContent("Victorian, England (breakdown)", names, "breakdownPack", { sectioned }) },
+    {
+      path: `${EXAMPLE_PACK_PREFIX}Orc`,
+      content: createCompoundNamesFileContent("Orc", ((_c = templatePartTexts(orc)) != null ? _c : []).map(compoundPartFromText), "combined", "joined", void 0, {
+        partUse: ["all", "sometimes", "all"],
+        partGenerators: ["breakdown", "breakdown", "list"]
+      })
+    }
+  ];
+}
+var isExamplePackPath = (path) => !!path && path.startsWith(EXAMPLE_PACK_PREFIX);
 
 // src/landMenu.ts
 var import_obsidian7 = require("obsidian");
@@ -57216,11 +57234,17 @@ ${text}
     this.showSessionHint = false;
     this.renderPackTrigger();
   }
-  renderPackDropdownMenu(packs) {
+  renderPackDropdownMenu(packs, examples = false) {
     if (!this.packDropdownMenuEl) {
       return;
     }
     this.packDropdownMenuEl.empty();
+    if (examples) {
+      this.packDropdownMenuEl.createDiv({
+        cls: "nameforge-modal__pack-dropdown-examples-note",
+        text: "These are built-in example packs. They're removed from this list once you create your own packs."
+      });
+    }
     if (packs.length === 0) {
       this.packDropdownMenuEl.createDiv({
         cls: "nameforge-modal__pack-dropdown-empty",
@@ -57433,7 +57457,7 @@ ${text}
     }
     const folderPath = this.getFolderPath();
     if (!folderPath) {
-      this.renderPackDropdownMenu([]);
+      await this.showExamplePacks(options);
       this.setStatus("Set a folder to store name packs before browsing them.");
       return;
     }
@@ -57446,7 +57470,7 @@ ${text}
       }
     }
     if (!folder) {
-      this.renderPackDropdownMenu([]);
+      await this.showExamplePacks(options);
       this.setStatus(`Folder not found at ${folderPath}.`);
       return;
     }
@@ -57481,10 +57505,11 @@ ${text}
       }
     }
     packs.sort((a, b) => a.path.localeCompare(b.path));
-    this.renderPackDropdownMenu(packs);
     if (packs.length === 0) {
+      await this.showExamplePacks(options);
       return;
     }
+    this.renderPackDropdownMenu(packs);
     const paths = packs.map((pack) => pack.path);
     const lastUsed = this.plugin.settings.namesFilePath;
     const defaultPack = lastUsed && paths.includes(lastUsed) ? lastUsed : paths[0];
@@ -57501,25 +57526,42 @@ ${text}
     }
     await this.loadPack(defaultPack);
   }
+  /** No packs of the user's own: the built-in example packs, with a note saying so. */
+  async showExamplePacks(options) {
+    var _a2;
+    const examples = examplePacks().map((e) => {
+      const parsed = parseNamesFileContent(e.content);
+      return { path: e.path, packType: parsed.packType, compoundGenerator: parsed.compoundGenerator };
+    });
+    this.renderPackDropdownMenu(examples, true);
+    const lastUsed = this.plugin.settings.namesFilePath;
+    const selected = (_a2 = examples.find((e) => e.path === lastUsed)) != null ? _a2 : examples[0];
+    if (options.preserveSelection && selected.path === lastUsed) {
+      this.updatePackDropdownTrigger(selected.path, selected.packType, packSubGenerator(selected.packType, selected.compoundGenerator));
+      return;
+    }
+    await this.loadPack(selected.path);
+  }
   async loadPack(packPath) {
     var _a2, _b, _c, _d, _e;
-    const file = this.app.vault.getFileByPath((0, import_obsidian13.normalizePath)(packPath));
-    if (!(file instanceof import_obsidian13.TFile)) {
+    const example = isExamplePackPath(packPath) ? examplePacks().find((e) => e.path === packPath) : void 0;
+    const file = example ? null : this.app.vault.getFileByPath((0, import_obsidian13.normalizePath)(packPath));
+    if (!example && !(file instanceof import_obsidian13.TFile)) {
       this.setStatus(`Pack not found at ${packPath}.`);
       return;
     }
     let content;
     try {
-      content = await this.app.vault.cachedRead(file);
+      content = example ? example.content : await this.app.vault.cachedRead(file);
     } catch (e) {
       this.setStatus(`Failed to load pack ${packPath}.`);
       return;
     }
-    if (isRecipeContent(content)) {
+    if (file instanceof import_obsidian13.TFile && isRecipeContent(content)) {
       await this.loadRecipePack(file);
       return;
     }
-    if (isModulePresetContent(content)) {
+    if (file instanceof import_obsidian13.TFile && isModulePresetContent(content)) {
       await this.loadTribalPreset(file, content);
       return;
     }

@@ -83,7 +83,7 @@ import { chooseGroup, DEFAULT_GROUP_STATE, effectiveFront, groupPresetState, gro
 import { isGroupSafeguardPackContent } from "./groups/safeguardPacks";
 import { isModulePresetContent, modulePresetContent, parseModulePreset, type TribalPreset } from "./presets";
 import { confirmReplace, PresetSaveModal } from "./presetModal";
-import { builtinTemplates, templateNameCount, templatePartTexts, templateText, type TemplateType, templateTypeFor } from "./templates";
+import { builtinTemplates, examplePacks, isExamplePackPath, templateNameCount, templatePartTexts, templateText, type TemplateType, templateTypeFor } from "./templates";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
 import { type BiomePackSource, biomeToText, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
@@ -2282,12 +2282,18 @@ export class NameForgeModal extends Modal {
     this.renderPackTrigger();
   }
 
-  private renderPackDropdownMenu(packs: { path: string; packType: NamePackType; compoundGenerator?: CompoundGenerator }[]) {
+  private renderPackDropdownMenu(packs: { path: string; packType: NamePackType; compoundGenerator?: CompoundGenerator }[], examples = false) {
     if (!this.packDropdownMenuEl) {
       return;
     }
 
     this.packDropdownMenuEl.empty();
+    if (examples) {
+      this.packDropdownMenuEl.createDiv({
+        cls: "nameforge-modal__pack-dropdown-examples-note",
+        text: "These are built-in example packs. They're removed from this list once you create your own packs.",
+      });
+    }
 
     if (packs.length === 0) {
       this.packDropdownMenuEl.createDiv({
@@ -2539,7 +2545,7 @@ export class NameForgeModal extends Modal {
 
     const folderPath = this.getFolderPath();
     if (!folderPath) {
-      this.renderPackDropdownMenu([]);
+      await this.showExamplePacks(options);
       this.setStatus("Set a folder to store name packs before browsing them.");
       return;
     }
@@ -2553,7 +2559,7 @@ export class NameForgeModal extends Modal {
       }
     }
     if (!folder) {
-      this.renderPackDropdownMenu([]);
+      await this.showExamplePacks(options);
       this.setStatus(`Folder not found at ${folderPath}.`);
       return;
     }
@@ -2592,11 +2598,11 @@ export class NameForgeModal extends Modal {
     }
 
     packs.sort((a, b) => a.path.localeCompare(b.path));
-    this.renderPackDropdownMenu(packs);
-
     if (packs.length === 0) {
+      await this.showExamplePacks(options);
       return;
     }
+    this.renderPackDropdownMenu(packs);
 
     const paths = packs.map((pack) => pack.path);
     const lastUsed = this.plugin.settings.namesFilePath;
@@ -2617,26 +2623,44 @@ export class NameForgeModal extends Modal {
     await this.loadPack(defaultPack);
   }
 
+  /** No packs of the user's own: the built-in example packs, with a note saying so. */
+  private async showExamplePacks(options: { preserveSelection?: boolean }) {
+    const examples = examplePacks().map((e) => {
+      const parsed = parseNamesFileContent(e.content);
+      return { path: e.path, packType: parsed.packType, compoundGenerator: parsed.compoundGenerator };
+    });
+    this.renderPackDropdownMenu(examples, true);
+    const lastUsed = this.plugin.settings.namesFilePath;
+    const selected = examples.find((e) => e.path === lastUsed) ?? examples[0];
+    if (options.preserveSelection && selected.path === lastUsed) {
+      this.updatePackDropdownTrigger(selected.path, selected.packType, packSubGenerator(selected.packType, selected.compoundGenerator));
+      return;
+    }
+    await this.loadPack(selected.path);
+  }
+
   private async loadPack(packPath: string) {
-    const file = this.app.vault.getFileByPath(normalizePath(packPath));
-    if (!(file instanceof TFile)) {
+    // Example packs live in memory, not in the vault.
+    const example = isExamplePackPath(packPath) ? examplePacks().find((e) => e.path === packPath) : undefined;
+    const file = example ? null : this.app.vault.getFileByPath(normalizePath(packPath));
+    if (!example && !(file instanceof TFile)) {
       this.setStatus(`Pack not found at ${packPath}.`);
       return;
     }
 
     let content: string;
     try {
-      content = await this.app.vault.cachedRead(file);
+      content = example ? example.content : await this.app.vault.cachedRead(file as TFile);
     } catch {
       this.setStatus(`Failed to load pack ${packPath}.`);
       return;
     }
 
-    if (isRecipeContent(content)) {
+    if (file instanceof TFile && isRecipeContent(content)) {
       await this.loadRecipePack(file);
       return;
     }
-    if (isModulePresetContent(content)) {
+    if (file instanceof TFile && isModulePresetContent(content)) {
       await this.loadTribalPreset(file, content);
       return;
     }

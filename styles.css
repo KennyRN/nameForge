@@ -1204,6 +1204,14 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   width: auto;
 }
 
+/* The note above the built-in example packs in the pack list. */
+.nameforge-modal__pack-dropdown-examples-note {
+  padding: 6px 10px;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
 /* Compound brief §1: the sections sentence under the pack row, and whole-pack tags on results. */
 .nameforge-modal__section-sentence {
   margin: 0 auto 8px;
