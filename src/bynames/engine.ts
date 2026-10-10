@@ -246,7 +246,7 @@ function drawEntries(ctx: Ctx, entries: BynameEntry[], opts: { nativeOnly?: bool
 export const stripPlural = (raw: string) => raw.split("|")[0].replace(/~$/, "");
 
 /** §4.3: the culture's animals, ×3 in `beast`. */
-function cultureAnimals(culture: string): string[] {
+export function cultureAnimals(culture: string): string[] {
   if (BYNAMES_DATA.cultureAnimals[culture]) return BYNAMES_DATA.cultureAnimals[culture];
   return worldAnimals(culture);
 }
@@ -283,7 +283,7 @@ export function holyNamesIn(culture: string): RegExp | undefined {
 }
 
 /** §4.3: where invented places come from. */
-function townSource(culture: string): string | undefined {
+export function townSource(culture: string): string | undefined {
   if (["general", "anglo-saxon", "celtic", "norman-british"].includes(culture)) return "britain";
   if (culture === "greek-byzantine" || culture === "steppe") return undefined;
   return culture;

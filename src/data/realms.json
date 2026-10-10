@@ -1,0 +1,3131 @@
+{
+ "$comment": "Realms and polities (docs/realms-and-polities-brief.md). Built from the brief by build_realms.py.",
+ "eras": [
+  {
+   "key": "ancient",
+   "label": "ancient",
+   "code": "AN"
+  },
+  {
+   "key": "medieval",
+   "label": "medieval",
+   "code": "MD"
+  },
+  {
+   "key": "earlyModern",
+   "label": "early modern",
+   "code": "EM"
+  },
+  {
+   "key": "modern",
+   "label": "modern",
+   "code": "MO"
+  },
+  {
+   "key": "nearFuture",
+   "label": "near future",
+   "code": "NF"
+  },
+  {
+   "key": "interstellar",
+   "label": "interstellar",
+   "code": "IS"
+  }
+ ],
+ "forms": [
+  {
+   "w": "Kingdom",
+   "pl": "Kingdoms",
+   "g": "crown",
+   "era": {
+    "AN": 30,
+    "MD": 30,
+    "EM": 20,
+    "MO": 5,
+    "NF": 2,
+    "IS": 2
+   }
+  },
+  {
+   "w": "Realm",
+   "pl": "Realms",
+   "g": "crown",
+   "era": {
+    "AN": 15,
+    "MD": 15,
+    "EM": 5,
+    "MO": 0,
+    "NF": 0,
+    "IS": 1
+   }
+  },
+  {
+   "w": "Empire",
+   "pl": "Empires",
+   "g": "imperial",
+   "era": {
+    "AN": 20,
+    "MD": 5,
+    "EM": 15,
+    "MO": 3,
+    "NF": 2,
+    "IS": 5
+   },
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "w": "Dominion",
+   "pl": "Dominions",
+   "g": "imperial",
+   "era": {
+    "AN": 5,
+    "MD": 5,
+    "EM": 10,
+    "MO": 5,
+    "NF": 2,
+    "IS": 5
+   },
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "w": "Principality",
+   "pl": "Principalities",
+   "g": "crown",
+   "era": {
+    "AN": 0,
+    "MD": 15,
+    "EM": 10,
+    "MO": 3,
+    "NF": 1,
+    "IS": 1
+   }
+  },
+  {
+   "w": "Duchy",
+   "pl": "Duchies",
+   "g": "crown",
+   "era": {
+    "AN": 0,
+    "MD": 20,
+    "EM": 10,
+    "MO": 2,
+    "NF": 0,
+    "IS": 1
+   }
+  },
+  {
+   "w": "Grand Duchy",
+   "pl": "Grand Duchies",
+   "g": "crown",
+   "era": {
+    "AN": 0,
+    "MD": 3,
+    "EM": 5,
+    "MO": 3,
+    "NF": 0,
+    "IS": 1
+   },
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "w": "County",
+   "pl": "Counties",
+   "g": "crown",
+   "era": {
+    "AN": 0,
+    "MD": 10,
+    "EM": 3,
+    "MO": 0,
+    "NF": 0,
+    "IS": 0
+   },
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "March",
+   "pl": "Marches",
+   "g": "crown",
+   "era": {
+    "AN": 0,
+    "MD": 15,
+    "EM": 5,
+    "MO": 0,
+    "NF": 0,
+    "IS": 1
+   }
+  },
+  {
+   "w": "Lordship",
+   "pl": "Lordships",
+   "g": "crown",
+   "era": {
+    "AN": 0,
+    "MD": 8,
+    "EM": 2,
+    "MO": 0,
+    "NF": 0,
+    "IS": 0
+   },
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Electorate",
+   "pl": "Electorates",
+   "g": "crown",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 5,
+    "MO": 0,
+    "NF": 0,
+    "IS": 0
+   }
+  },
+  {
+   "w": "City-State",
+   "pl": "City-States",
+   "g": "republic",
+   "era": {
+    "AN": 20,
+    "MD": 8,
+    "EM": 3,
+    "MO": 2,
+    "NF": 3,
+    "IS": 2
+   }
+  },
+  {
+   "w": "Free City",
+   "pl": "Free Cities",
+   "g": "republic",
+   "era": {
+    "AN": 0,
+    "MD": 10,
+    "EM": 5,
+    "MO": 1,
+    "NF": 2,
+    "IS": 1
+   }
+  },
+  {
+   "w": "Republic",
+   "pl": "Republics",
+   "g": "republic",
+   "era": {
+    "AN": 8,
+    "MD": 3,
+    "EM": 20,
+    "MO": 30,
+    "NF": 20,
+    "IS": 15
+   }
+  },
+  {
+   "w": "Commonwealth",
+   "pl": "Commonwealths",
+   "g": "republic",
+   "era": {
+    "AN": 0,
+    "MD": 2,
+    "EM": 10,
+    "MO": 10,
+    "NF": 10,
+    "IS": 10
+   }
+  },
+  {
+   "w": "State",
+   "pl": "States",
+   "g": "republic",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 2,
+    "MO": 15,
+    "NF": 10,
+    "IS": 5
+   },
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Free State",
+   "pl": "Free States",
+   "g": "republic",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 3,
+    "MO": 5,
+    "NF": 5,
+    "IS": 3
+   }
+  },
+  {
+   "w": "League",
+   "pl": "Leagues",
+   "g": "federal",
+   "era": {
+    "AN": 15,
+    "MD": 10,
+    "EM": 8,
+    "MO": 2,
+    "NF": 3,
+    "IS": 5
+   }
+  },
+  {
+   "w": "Confederation",
+   "pl": "Confederations",
+   "g": "federal",
+   "era": {
+    "AN": 5,
+    "MD": 3,
+    "EM": 8,
+    "MO": 8,
+    "NF": 5,
+    "IS": 5
+   }
+  },
+  {
+   "w": "Confederacy",
+   "pl": "Confederacies",
+   "g": "federal",
+   "era": {
+    "AN": 5,
+    "MD": 3,
+    "EM": 5,
+    "MO": 3,
+    "NF": 3,
+    "IS": 2
+   }
+  },
+  {
+   "w": "Union",
+   "pl": "Unions",
+   "g": "federal",
+   "era": {
+    "AN": 3,
+    "MD": 2,
+    "EM": 5,
+    "MO": 15,
+    "NF": 15,
+    "IS": 15
+   }
+  },
+  {
+   "w": "Federation",
+   "pl": "Federations",
+   "g": "federal",
+   "era": {
+    "AN": 2,
+    "MD": 0,
+    "EM": 2,
+    "MO": 15,
+    "NF": 15,
+    "IS": 20
+   }
+  },
+  {
+   "w": "Compact",
+   "pl": "Compacts",
+   "g": "federal",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 2,
+    "MO": 2,
+    "NF": 8,
+    "IS": 10
+   },
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Coalition",
+   "pl": "Coalitions",
+   "g": "federal",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 1,
+    "MO": 3,
+    "NF": 8,
+    "IS": 10
+   },
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Alliance",
+   "pl": "Alliances",
+   "g": "federal",
+   "era": {
+    "AN": 3,
+    "MD": 2,
+    "EM": 3,
+    "MO": 3,
+    "NF": 5,
+    "IS": 5
+   }
+  },
+  {
+   "w": "Protectorate",
+   "pl": "Protectorates",
+   "g": "admin",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 5,
+    "MO": 8,
+    "NF": 8,
+    "IS": 8
+   }
+  },
+  {
+   "w": "Territory",
+   "pl": "Territories",
+   "g": "admin",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 5,
+    "MO": 8,
+    "NF": 8,
+    "IS": 5
+   },
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Colony",
+   "pl": "Colonies",
+   "g": "admin",
+   "era": {
+    "AN": 3,
+    "MD": 0,
+    "EM": 8,
+    "MO": 3,
+    "NF": 3,
+    "IS": 5
+   }
+  },
+  {
+   "w": "Province",
+   "pl": "Provinces",
+   "g": "admin",
+   "era": {
+    "AN": 5,
+    "MD": 2,
+    "EM": 5,
+    "MO": 3,
+    "NF": 3,
+    "IS": 3
+   },
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Authority",
+   "pl": "Authorities",
+   "g": "admin",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 2,
+    "NF": 15,
+    "IS": 15
+   },
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Directorate",
+   "pl": "Directorates",
+   "g": "admin",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 1,
+    "NF": 10,
+    "IS": 12
+   }
+  },
+  {
+   "w": "Hegemony",
+   "pl": "Hegemonies",
+   "g": "imperial",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 3,
+    "IS": 8
+   },
+   "t": [
+    "grim"
+   ]
+  },
+  {
+   "w": "Interstellar Federation",
+   "pl": "Interstellar Federations",
+   "g": "federal",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 0,
+    "IS": 10
+   },
+   "compound": true,
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "w": "Planetary Union",
+   "pl": "Planetary Unions",
+   "g": "federal",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 2,
+    "IS": 10
+   },
+   "compound": true
+  },
+  {
+   "w": "Colonial Authority",
+   "pl": "Colonial Authoritys",
+   "g": "admin",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 2,
+    "IS": 8
+   },
+   "compound": true,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Trade Directorate",
+   "pl": "Trade Directorates",
+   "g": "admin",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 2,
+    "IS": 6
+   },
+   "compound": true,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Orbital Republic",
+   "pl": "Orbital Republics",
+   "g": "republic",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 3,
+    "IS": 6
+   },
+   "compound": true
+  },
+  {
+   "w": "Sector Government",
+   "pl": "Sector Governments",
+   "g": "admin",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 0,
+    "IS": 6
+   },
+   "compound": true,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "System Hegemony",
+   "pl": "System Hegemonys",
+   "g": "imperial",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 0,
+    "IS": 4
+   },
+   "compound": true,
+   "t": [
+    "grim"
+   ]
+  },
+  {
+   "w": "Stellar Commonwealth",
+   "pl": "Stellar Commonwealths",
+   "g": "republic",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 0,
+    "IS": 5
+   },
+   "compound": true,
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "w": "Metropolitan Authority",
+   "pl": "Metropolitan Authoritys",
+   "g": "admin",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 8,
+    "IS": 2
+   },
+   "compound": true,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Free Zone",
+   "pl": "Free Zones",
+   "g": "republic",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 6,
+    "IS": 2
+   },
+   "compound": true
+  },
+  {
+   "w": "Development Zone",
+   "pl": "Development Zones",
+   "g": "admin",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 5,
+    "IS": 3
+   },
+   "compound": true,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Provisional Government",
+   "pl": "Provisional Governments",
+   "g": "admin",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 5,
+    "IS": 2
+   },
+   "compound": true,
+   "t": [
+    "grim"
+   ]
+  },
+  {
+   "w": "Successor State",
+   "pl": "Successor States",
+   "g": "republic",
+   "era": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "MO": 0,
+    "NF": 5,
+    "IS": 2
+   },
+   "compound": true,
+   "t": [
+    "grim"
+   ]
+  },
+  {
+   "w": "Nation",
+   "pl": "Nations",
+   "g": "tribal",
+   "era": {
+    "AN": 15,
+    "MD": 15,
+    "EM": 15,
+    "MO": 15,
+    "NF": 15,
+    "IS": 15
+   },
+   "peoplesOnly": true
+  }
+ ],
+ "cultures": {
+  "norse": {
+   "mult": {
+    "Kingdom": 1,
+    "Realm": 1,
+    "Commonwealth": 1
+   },
+   "forms": [
+    {
+     "w": "Jarldom",
+     "pl": "Jarldoms",
+     "g": "crown",
+     "eras": [
+      "MD"
+     ],
+     "x": 2
+    },
+    {
+     "w": "Sea-Realm",
+     "pl": "Sea-Realms",
+     "g": "crown",
+     "eras": [
+      "MD"
+     ],
+     "x": 0.5
+    }
+   ]
+  },
+  "anglo-saxon": {
+   "mult": {
+    "Kingdom": 2
+   },
+   "peoplesMult": 2
+  },
+  "celtic": {
+   "mult": {
+    "Lordship": 2,
+    "Confederation": 1.5
+   },
+   "forms": [
+    {
+     "w": "High Kingdom",
+     "pl": "High Kingdoms",
+     "g": "crown",
+     "eras": [
+      "AN",
+      "MD"
+     ],
+     "x": 2
+    },
+    {
+     "w": "Clan Lands",
+     "pl": "Clan Lands",
+     "g": "tribal",
+     "eras": [
+      "AN",
+      "MD",
+      "EM"
+     ],
+     "x": 1
+    }
+   ]
+  },
+  "norman-british": {
+   "mult": {
+    "Duchy": 2,
+    "March": 2,
+    "County": 1.5,
+    "Dominion": 1.5
+   },
+   "forms": [
+    {
+     "w": "Earldom",
+     "pl": "Earldoms",
+     "g": "crown",
+     "eras": [
+      "MD"
+     ],
+     "x": 1
+    },
+    {
+     "w": "County Palatine",
+     "pl": "Counties Palatine",
+     "g": "crown",
+     "eras": [
+      "MD",
+      "EM"
+     ],
+     "x": 0.5
+    }
+   ]
+  },
+  "roman": {
+   "mult": {
+    "Republic": 2,
+    "Empire": 2,
+    "Province": 2,
+    "City-State": 1.5
+   }
+  },
+  "greek-byzantine": {
+   "mult": {
+    "City-State": 3,
+    "League": 2,
+    "Empire": 1.5
+   },
+   "forms": [
+    {
+     "w": "Despotate",
+     "pl": "Despotates",
+     "g": "crown",
+     "eras": [
+      "MD"
+     ],
+     "x": 1
+    },
+    {
+     "w": "Exarchate",
+     "pl": "Exarchates",
+     "g": "imperial",
+     "eras": [
+      "MD"
+     ],
+     "x": 1
+    }
+   ]
+  },
+  "slavic": {
+   "mult": {
+    "Principality": 2,
+    "Commonwealth": 1.5
+   },
+   "forms": [
+    {
+     "w": "Tsardom",
+     "pl": "Tsardoms",
+     "g": "crown",
+     "eras": [
+      "EM"
+     ],
+     "x": 2
+    },
+    {
+     "w": "Grand Principality",
+     "pl": "Grand Principalities",
+     "g": "crown",
+     "eras": [
+      "MD"
+     ],
+     "x": 2
+    },
+    {
+     "w": "Voivodeship",
+     "pl": "Voivodeships",
+     "g": "crown",
+     "eras": [
+      "MD",
+      "EM"
+     ],
+     "x": 0.5
+    }
+   ]
+  },
+  "steppe": {
+   "mult": {
+    "Confederation": 2,
+    "Union": 1.5
+   },
+   "forms": [
+    {
+     "w": "Khanate",
+     "pl": "Khanates",
+     "g": "crown",
+     "eras": [
+      "MD",
+      "EM"
+     ],
+     "x": 3
+    },
+    {
+     "w": "Khaganate",
+     "pl": "Khaganates",
+     "g": "imperial",
+     "eras": [
+      "AN",
+      "MD"
+     ],
+     "x": 2
+    },
+    {
+     "w": "Horde",
+     "pl": "Hordes",
+     "g": "tribal",
+     "eras": [
+      "MD"
+     ],
+     "x": 2
+    }
+   ]
+  },
+  "arabic-persian": {
+   "mult": {
+    "Empire": 1.5
+   },
+   "forms": [
+    {
+     "w": "Sultanate",
+     "pl": "Sultanates",
+     "g": "crown",
+     "eras": [
+      "MD",
+      "EM",
+      "MO"
+     ],
+     "x": 3
+    },
+    {
+     "w": "Emirate",
+     "pl": "Emirates",
+     "g": "crown",
+     "eras": [
+      "MD",
+      "EM",
+      "MO"
+     ],
+     "x": 3
+    },
+    {
+     "w": "Sheikhdom",
+     "pl": "Sheikhdoms",
+     "g": "crown",
+     "eras": [
+      "EM",
+      "MO"
+     ],
+     "x": 1
+    },
+    {
+     "w": "Satrapy",
+     "pl": "Satrapies",
+     "g": "admin",
+     "eras": [
+      "AN"
+     ],
+     "x": 2
+    }
+   ]
+  },
+  "indian": {
+   "mult": {
+    "Kingdom": 2,
+    "Empire": 1.5,
+    "Confederacy": 1.5
+   },
+   "forms": [
+    {
+     "w": "Sultanate",
+     "pl": "Sultanates",
+     "g": "crown",
+     "eras": [
+      "MD",
+      "EM"
+     ],
+     "x": 1
+    },
+    {
+     "w": "Princely State",
+     "pl": "Princely States",
+     "g": "crown",
+     "eras": [
+      "MO"
+     ],
+     "x": 1
+    }
+   ],
+   "eraMult": {
+    "AN": {
+     "Republic": 0.5
+    }
+   }
+  },
+  "chinese": {
+   "mult": {
+    "Empire": 2,
+    "Kingdom": 2,
+    "Protectorate": 1.5
+   }
+  },
+  "japanese": {
+   "mult": {
+    "Province": 2,
+    "Empire": 1
+   },
+   "forms": [
+    {
+     "w": "Shogunate",
+     "pl": "Shogunates",
+     "g": "crown",
+     "eras": [
+      "MD",
+      "EM"
+     ],
+     "x": 2
+    },
+    {
+     "w": "Domain",
+     "pl": "Domains",
+     "g": "crown",
+     "eras": [
+      "MD",
+      "EM"
+     ],
+     "x": 2
+    }
+   ]
+  },
+  "korean": {
+   "mult": {
+    "Kingdom": 3,
+    "Empire": 1,
+    "Confederacy": 0.5
+   }
+  },
+  "egyptian": {
+   "mult": {
+    "Kingdom": 3,
+    "Empire": 1.5
+   },
+   "forms": [
+    {
+     "w": "Nome",
+     "pl": "Nomes",
+     "g": "admin",
+     "eras": [
+      "AN"
+     ],
+     "x": 1
+    }
+   ]
+  },
+  "ethiopian": {
+   "mult": {
+    "Empire": 2,
+    "Kingdom": 2
+   }
+  },
+  "bantu": {
+   "mult": {
+    "Kingdom": 3,
+    "Confederacy": 1.5,
+    "Empire": 0.5
+   },
+   "forms": [
+    {
+     "w": "Chiefdom",
+     "pl": "Chiefdoms",
+     "g": "tribal",
+     "eras": [
+      "AN",
+      "MD",
+      "EM"
+     ],
+     "x": 2
+    }
+   ]
+  },
+  "west-african": {
+   "mult": {
+    "Empire": 2,
+    "Kingdom": 2,
+    "City-State": 1.5,
+    "Confederacy": 1.5
+   },
+   "forms": [
+    {
+     "w": "Emirate",
+     "pl": "Emirates",
+     "g": "crown",
+     "eras": [
+      "EM"
+     ],
+     "x": 1
+    }
+   ]
+  },
+  "aztec": {
+   "mult": {
+    "City-State": 3,
+    "Empire": 1,
+    "League": 1,
+    "Alliance": 1
+   }
+  },
+  "maya": {
+   "mult": {
+    "City-State": 3,
+    "Kingdom": 2,
+    "League": 1
+   }
+  }
+ },
+ "characters": [
+  {
+   "key": "territorial",
+   "menu": "Territorial",
+   "plural": "territorial realms",
+   "w": 40,
+   "description": "Kingdoms, duchies and republics named for land, places and dynasties"
+  },
+  {
+   "key": "merchant",
+   "menu": "Merchant",
+   "plural": "merchant states",
+   "w": 10,
+   "description": "Merchant republics, leagues of free ports, trading compacts"
+  },
+  {
+   "key": "religious",
+   "menu": "Religious",
+   "plural": "holy realms",
+   "w": 8,
+   "description": "Holy kingdoms and sacred dominions"
+  },
+  {
+   "key": "military",
+   "menu": "Military",
+   "plural": "military states",
+   "w": 10,
+   "description": "Marches, protectorates and frontier commands"
+  },
+  {
+   "key": "colonial",
+   "menu": "Colonial",
+   "plural": "colonies",
+   "w": 10,
+   "description": "Crown territories, charters and new settlements"
+  },
+  {
+   "key": "outlaw",
+   "menu": "Outlaw",
+   "plural": "outlaw states",
+   "w": 6,
+   "description": "Free corsair ports and smuggler coasts"
+  },
+  {
+   "key": "peoples",
+   "menu": "Peoples",
+   "plural": "confederacies of peoples",
+   "w": 10,
+   "description": "Unions and confederacies of tribes and clans"
+  },
+  {
+   "key": "corporate",
+   "menu": "Corporate",
+   "plural": "corporate states",
+   "w": 6,
+   "description": "Authorities, charters and governance zones",
+   "eraMult": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0.3
+   }
+  }
+ ],
+ "characterMult": {
+  "merchant": {
+   "forms": {
+    "Republic": 3,
+    "League": 3,
+    "Free City": 2,
+    "Compact": 2,
+    "Commonwealth": 1.5,
+    "City-State": 1.5
+   },
+   "groups": {
+    "crown": 0.3,
+    "imperial": 0.3
+   }
+  },
+  "religious": {
+   "forms": {
+    "Realm": 2,
+    "Dominion": 2,
+    "Kingdom": 1.5,
+    "Commonwealth": 1.5,
+    "League": 1.5
+   },
+   "groups": {
+    "federal": 0.3,
+    "admin": 0.3
+   }
+  },
+  "military": {
+   "forms": {
+    "March": 4,
+    "Protectorate": 3,
+    "Dominion": 1.5,
+    "Territory": 1.5,
+    "Lordship": 1.5
+   },
+   "groups": {
+    "republic": 0.5
+   }
+  },
+  "colonial": {
+   "forms": {
+    "Colony": 4,
+    "Territory": 3,
+    "Province": 2,
+    "Dominion": 2,
+    "Protectorate": 1.5,
+    "Colonial Authority": 3
+   },
+   "groups": {
+    "crown": 0.3
+   }
+  },
+  "outlaw": {
+   "forms": {
+    "Free City": 3,
+    "Republic": 2,
+    "Free State": 2,
+    "League": 1.5
+   },
+   "groups": {
+    "crown": 0.2,
+    "imperial": 0.2,
+    "admin": 0.2
+   }
+  },
+  "peoples": {
+   "forms": {
+    "Confederacy": 4,
+    "Confederation": 3,
+    "Union": 3,
+    "Alliance": 2,
+    "League": 1.5
+   },
+   "groups": {
+    "tribal": 3,
+    "republic": 0.2,
+    "admin": 0.2
+   }
+  },
+  "corporate": {
+   "forms": {
+    "Directorate": 3,
+    "Authority": 3,
+    "Compact": 2
+   },
+   "groups": {
+    "admin": 4,
+    "crown": 0,
+    "imperial": 0,
+    "tribal": 0
+   }
+  }
+ },
+ "namedFor": [
+  {
+   "key": "anything",
+   "label": "anything"
+  },
+  {
+   "key": "land",
+   "label": "their land"
+  },
+  {
+   "key": "place",
+   "label": "a place"
+  },
+  {
+   "key": "dynasty",
+   "label": "a dynasty"
+  },
+  {
+   "key": "people",
+   "label": "a people"
+  },
+  {
+   "key": "stars",
+   "label": "the stars",
+   "eras": [
+    "NF",
+    "IS"
+   ]
+  }
+ ],
+ "namedForWeights": {
+  "territorial": {
+   "land": 40,
+   "place": 30,
+   "dynasty": 15,
+   "people": 5,
+   "stars": 10
+  },
+  "merchant": {
+   "land": 20,
+   "place": 60,
+   "dynasty": 5,
+   "people": 0,
+   "stars": 15
+  },
+  "religious": {
+   "land": 40,
+   "place": 40,
+   "dynasty": 10,
+   "people": 0,
+   "stars": 10
+  },
+  "military": {
+   "land": 50,
+   "place": 40,
+   "dynasty": 5,
+   "people": 0,
+   "stars": 5
+  },
+  "colonial": {
+   "land": 30,
+   "place": 55,
+   "dynasty": 5,
+   "people": 0,
+   "stars": 10
+  },
+  "outlaw": {
+   "land": 50,
+   "place": 40,
+   "dynasty": 0,
+   "people": 0,
+   "stars": 10
+  },
+  "peoples": {
+   "land": 20,
+   "place": 0,
+   "dynasty": 0,
+   "people": 80,
+   "stars": 0
+  },
+  "corporate": {
+   "land": 0,
+   "place": 50,
+   "dynasty": 0,
+   "people": 0,
+   "stars": 50
+  }
+ },
+ "lists": {
+  "landPl": [
+   {
+    "w": "Fells"
+   },
+   {
+    "w": "Hills"
+   },
+   {
+    "w": "Marches"
+   },
+   {
+    "w": "Plains"
+   },
+   {
+    "w": "Forests"
+   },
+   {
+    "w": "Woods"
+   },
+   {
+    "w": "Vales"
+   },
+   {
+    "w": "Marshes"
+   },
+   {
+    "w": "Peaks"
+   },
+   {
+    "w": "Mountains"
+   },
+   {
+    "w": "Moors"
+   },
+   {
+    "w": "Steppes"
+   },
+   {
+    "w": "Downs"
+   },
+   {
+    "w": "Wolds"
+   },
+   {
+    "w": "Heaths"
+   },
+   {
+    "w": "Dales"
+   },
+   {
+    "w": "Uplands"
+   }
+  ],
+  "waterPl": [
+   {
+    "w": "Rivers"
+   },
+   {
+    "w": "Lakes"
+   },
+   {
+    "w": "Shores"
+   },
+   {
+    "w": "Isles"
+   },
+   {
+    "w": "Islands"
+   },
+   {
+    "w": "Straits"
+   },
+   {
+    "w": "Lagoons"
+   },
+   {
+    "w": "Reefs"
+   },
+   {
+    "w": "Waters"
+   }
+  ],
+  "waterSg": [
+   {
+    "w": "Coast"
+   },
+   {
+    "w": "Delta"
+   },
+   {
+    "w": "Bay"
+   },
+   {
+    "w": "Sound"
+   },
+   {
+    "w": "Strand"
+   },
+   {
+    "w": "Gulf"
+   }
+  ],
+  "settlementPl": [
+   {
+    "w": "Cities"
+   },
+   {
+    "w": "Towns"
+   },
+   {
+    "w": "Ports"
+   },
+   {
+    "w": "Forts"
+   },
+   {
+    "w": "Harbours"
+   },
+   {
+    "w": "Crossings"
+   },
+   {
+    "w": "Roads"
+   },
+   {
+    "w": "Cantons"
+   },
+   {
+    "w": "Provinces"
+   },
+   {
+    "w": "Valleys"
+   }
+  ],
+  "regional": [
+   {
+    "w": "Frontier"
+   },
+   {
+    "w": "Heartland"
+   },
+   {
+    "w": "Borderlands"
+   },
+   {
+    "w": "Interior"
+   },
+   {
+    "w": "Lowlands"
+   },
+   {
+    "w": "Highlands"
+   },
+   {
+    "w": "Midlands"
+   }
+  ],
+  "compassAdj": [
+   {
+    "w": "Northern"
+   },
+   {
+    "w": "Southern"
+   },
+   {
+    "w": "Eastern"
+   },
+   {
+    "w": "Western"
+   },
+   {
+    "w": "Central"
+   },
+   {
+    "w": "Upper"
+   },
+   {
+    "w": "Lower"
+   },
+   {
+    "w": "Outer"
+   },
+   {
+    "w": "Inner"
+   }
+  ],
+  "landQual": [
+   {
+    "w": "Highland"
+   },
+   {
+    "w": "Lowland"
+   },
+   {
+    "w": "Coastal"
+   },
+   {
+    "w": "Frontier"
+   },
+   {
+    "w": "Border"
+   },
+   {
+    "w": "River"
+   },
+   {
+    "w": "Island"
+   },
+   {
+    "w": "Lake"
+   },
+   {
+    "w": "Forest"
+   },
+   {
+    "w": "Hill"
+   },
+   {
+    "w": "Marsh"
+   },
+   {
+    "w": "Desert",
+    "biome": "desert"
+   },
+   {
+    "w": "Steppe",
+    "biome": "steppe"
+   }
+  ],
+  "cultQual": [
+   {
+    "w": "Golden"
+   },
+   {
+    "w": "Iron",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Silver"
+   },
+   {
+    "w": "Crimson"
+   },
+   {
+    "w": "Emerald"
+   },
+   {
+    "w": "Sapphire"
+   },
+   {
+    "w": "Sacred",
+    "character": "religious",
+    "t": [
+     "strange"
+    ]
+   }
+  ],
+  "peopleQual": [
+   {
+    "w": "River"
+   },
+   {
+    "w": "Hill"
+   },
+   {
+    "w": "Forest"
+   },
+   {
+    "w": "Lake"
+   },
+   {
+    "w": "Marsh"
+   },
+   {
+    "w": "Coast"
+   },
+   {
+    "w": "Island"
+   },
+   {
+    "w": "Mountain"
+   },
+   {
+    "w": "Horse"
+   },
+   {
+    "w": "Sky",
+    "cx": {
+     "steppe": 3
+    }
+   },
+   {
+    "w": "Wolf"
+   },
+   {
+    "w": "Bear"
+   },
+   {
+    "w": "Raven"
+   },
+   {
+    "w": "Salmon"
+   },
+   {
+    "w": "Elk"
+   }
+  ],
+  "peopleNoun": [
+   {
+    "w": "Tribes",
+    "x": 3
+   },
+   {
+    "w": "Clans",
+    "x": 3
+   },
+   {
+    "w": "Peoples",
+    "x": 2
+   },
+   {
+    "w": "Folk"
+   },
+   {
+    "w": "Kin"
+   },
+   {
+    "w": "Nations"
+   },
+   {
+    "w": "Houses"
+   }
+  ],
+  "collNoun": [
+   {
+    "w": "Cities"
+   },
+   {
+    "w": "Ports"
+   },
+   {
+    "w": "Towns"
+   },
+   {
+    "w": "Cantons"
+   },
+   {
+    "w": "Provinces"
+   },
+   {
+    "w": "Realms"
+   },
+   {
+    "w": "Kingdoms"
+   },
+   {
+    "w": "Marches"
+   },
+   {
+    "w": "Colonies"
+   },
+   {
+    "w": "States"
+   },
+   {
+    "w": "Harbours"
+   },
+   {
+    "w": "Tribes"
+   },
+   {
+    "w": "Clans"
+   },
+   {
+    "w": "Worlds",
+    "eras": [
+     "NF",
+     "IS"
+    ]
+   },
+   {
+    "w": "Systems",
+    "eras": [
+     "NF",
+     "IS"
+    ]
+   },
+   {
+    "w": "Stations",
+    "eras": [
+     "NF",
+     "IS"
+    ]
+   }
+  ],
+  "holyIdea": [
+   {
+    "w": "Dawn"
+   },
+   {
+    "w": "Light"
+   },
+   {
+    "w": "Flame"
+   },
+   {
+    "w": "Covenant"
+   },
+   {
+    "w": "Lamp"
+   },
+   {
+    "w": "Altar"
+   },
+   {
+    "w": "Pilgrims"
+   },
+   {
+    "w": "Seven Shrines"
+   },
+   {
+    "w": "Morning Star"
+   },
+   {
+    "w": "Open Hand"
+   }
+  ],
+  "outlawNoun": [
+   {
+    "w": "Corsair"
+   },
+   {
+    "w": "Rover"
+   },
+   {
+    "w": "Buccaneer"
+   },
+   {
+    "w": "Smuggler"
+   },
+   {
+    "w": "Reaver"
+   }
+  ],
+  "outlawAdj": [
+   {
+    "w": "Smuggler",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Corsair"
+   },
+   {
+    "w": "Pirate"
+   },
+   {
+    "w": "Wrecker",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Black"
+   },
+   {
+    "w": "Lawless"
+   },
+   {
+    "w": "Rover"
+   }
+  ],
+  "corpForm": [
+   {
+    "w": "Governance Zone"
+   },
+   {
+    "w": "Development Authority"
+   },
+   {
+    "w": "Resource Directorate"
+   },
+   {
+    "w": "Commercial Territory"
+   },
+   {
+    "w": "Charter Zone"
+   },
+   {
+    "w": "Holdings Authority"
+   }
+  ],
+  "resource": [
+   {
+    "w": "Resource"
+   },
+   {
+    "w": "Mining"
+   },
+   {
+    "w": "Trade"
+   },
+   {
+    "w": "Development"
+   },
+   {
+    "w": "Water"
+   },
+   {
+    "w": "Energy"
+   }
+  ],
+  "corpWord": [
+   {
+    "w": "Directorate"
+   },
+   {
+    "w": "Authority"
+   },
+   {
+    "w": "Charter"
+   },
+   {
+    "w": "Zone"
+   }
+  ]
+ },
+ "cultQualExtra": {
+  "chinese": [
+   "Jade",
+   "Celestial"
+  ],
+  "japanese": [
+   "Jade"
+  ],
+  "steppe": [
+   "Blue",
+   "Grey",
+   "White"
+  ],
+  "arabic-persian": [
+   "Sapphire",
+   "Golden"
+  ],
+  "norse": [
+   "Iron"
+  ],
+  "egyptian": [
+   "Golden",
+   "Upper",
+   "Lower"
+  ],
+  "ethiopian": [
+   "Highland"
+  ]
+ },
+ "wordTones": {
+  "cultQual": {
+   "Celestial": [
+    "strange"
+   ],
+   "Jade": [
+    "strange"
+   ],
+   "Iron": [
+    "grim"
+   ]
+  }
+ },
+ "landIdentity": [
+  {
+   "p": "{compassAdj} {landPl}",
+   "w": 40
+  },
+  {
+   "p": "{landPl}",
+   "w": 20
+  },
+  {
+   "p": "{compassAdj} {waterPl}",
+   "w": 15
+  },
+  {
+   "p": "{regional}",
+   "w": 10
+  },
+  {
+   "p": "{colour} {waterSg}",
+   "w": 7.5
+  },
+  {
+   "p": "{compassAdj} {waterSg}",
+   "w": 7.5
+  }
+ ],
+ "shapes": {
+  "land": [
+   {
+    "p": "{form} of the {landIdentity}",
+    "w": 45,
+    "short": "{landIdentity}",
+    "pair": "landIdentity",
+    "upperLower": true
+   },
+   {
+    "p": "{compassAdj} {form}",
+    "w": 15,
+    "short": "same"
+   },
+   {
+    "p": "{landCompound} {form}",
+    "w": 15,
+    "short": "{landCompound}"
+   },
+   {
+    "p": "{cultQual} {form}",
+    "w": 10,
+    "short": "same"
+   },
+   {
+    "p": "{form} of the {cultQual} {waterSg}",
+    "w": 10,
+    "short": "{cultQual} {waterSg}"
+   },
+   {
+    "p": "the {landQual} {federalForm}",
+    "w": 5,
+    "short": "same"
+   }
+  ],
+  "place": [
+   {
+    "p": "{form} of {place}",
+    "w": 45,
+    "short": "{place}",
+    "pair": "place"
+   },
+   {
+    "p": "{place} {form}",
+    "w": 35,
+    "short": "{place}"
+   },
+   {
+    "p": "{modifier} {form} of {place}",
+    "w": 20,
+    "short": "{place}",
+    "pair": "place"
+   }
+  ],
+  "dynasty": [
+   {
+    "p": "{form} of House {dynasty}",
+    "w": 40,
+    "short": "{dynasty}"
+   },
+   {
+    "p": "{form} of the {dynasty:pl}",
+    "w": 25,
+    "short": "{dynasty:pl}"
+   },
+   {
+    "p": "{dynasty} {form}",
+    "w": 35,
+    "short": "{dynasty}"
+   }
+  ],
+  "stars": [
+   {
+    "p": "{form} of {star}",
+    "w": 35,
+    "short": "{star}",
+    "pair": "star"
+   },
+   {
+    "p": "{star} {form}",
+    "w": 25,
+    "short": "{star}"
+   },
+   {
+    "p": "United Worlds of {star}",
+    "w": 10,
+    "short": "{star}",
+    "g": "federal"
+   },
+   {
+    "p": "Free Colonies of {star}",
+    "w": 10,
+    "short": "{star}",
+    "g": "admin"
+   },
+   {
+    "p": "{form} of the {spaceLand}",
+    "w": 20,
+    "short": "{spaceLand}",
+    "pair": "spaceLand"
+   }
+  ],
+  "collective": [
+   {
+    "p": "the {collQual} {collNoun}",
+    "w": 45,
+    "short": "same",
+    "g": "federal",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "p": "the {number} {collNoun}",
+    "w": 20,
+    "short": "same",
+    "g": "federal",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "p": "{federalForm} of {collQual} {collNoun}",
+    "w": 20,
+    "short": "the {collQual} {collNoun}",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "p": "{federalForm} of the {number} {collNoun}",
+    "w": 15,
+    "short": "the {number} {collNoun}",
+    "t": [
+     "plain"
+    ]
+   }
+  ],
+  "people": [
+   {
+    "p": "{form} of the {peopleQual} {peopleNoun}",
+    "w": 50,
+    "short": "{peopleQual} {peopleNoun}"
+   },
+   {
+    "p": "{form} of {tribal}",
+    "w": 30,
+    "short": "{tribal}"
+   },
+   {
+    "p": "the {peopleQual} {federalForm}",
+    "w": 10,
+    "short": "same"
+   },
+   {
+    "p": "Lands of the {beast} Clan",
+    "w": 10,
+    "short": "{beast} Clan",
+    "g": "tribal"
+   }
+  ]
+ },
+ "collectiveShare": 0.15,
+ "characterShapes": {
+  "merchant": {
+   "share": 0.5,
+   "t": [
+    "plain"
+   ],
+   "shapes": [
+    {
+     "p": "Merchant Republic of {place}",
+     "w": 1,
+     "short": "{place}",
+     "g": "republic"
+    },
+    {
+     "p": "League of Free {settlementPl}",
+     "w": 1,
+     "short": "the Free {settlementPl}",
+     "g": "federal"
+    },
+    {
+     "p": "{place} Trading Compact",
+     "w": 1,
+     "short": "{place}",
+     "g": "federal"
+    },
+    {
+     "p": "{cultQual} Coast Trading Compact",
+     "w": 1,
+     "short": "{cultQual} Coast",
+     "g": "federal"
+    },
+    {
+     "p": "Most Serene Republic of {place}",
+     "w": 1,
+     "short": "{place}",
+     "g": "republic",
+     "ceremonialOnly": true,
+     "honorific": true,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "the Merchant {collNoun}",
+     "w": 1,
+     "short": "same",
+     "g": "federal",
+     "collQual": "Merchant"
+    }
+   ]
+  },
+  "religious": {
+   "share": 0.5,
+   "t": [
+    "strange"
+   ],
+   "shapes": [
+    {
+     "p": "Holy {form} of {holy:poss} Reach",
+     "w": 1,
+     "short": "{holy:poss} Reach"
+    },
+    {
+     "p": "Sacred {form} of the {holyIdea}",
+     "w": 1,
+     "short": "{holyIdea}"
+    },
+    {
+     "p": "Temple {form}",
+     "w": 1,
+     "short": "same",
+     "groups": [
+      "republic",
+      "federal"
+     ]
+    },
+    {
+     "p": "{form} of the {holyIdea}",
+     "w": 1,
+     "short": "{holyIdea}"
+    },
+    {
+     "p": "Holy {form} of {place}",
+     "w": 1,
+     "short": "{place}"
+    }
+   ]
+  },
+  "military": {
+   "share": 0.5,
+   "shapes": [
+    {
+     "p": "the {landQual} Protectorate",
+     "w": 1,
+     "short": "same",
+     "g": "admin"
+    },
+    {
+     "p": "the Iron {form}",
+     "w": 1,
+     "short": "same",
+     "t": [
+      "grim"
+     ]
+    },
+    {
+     "p": "March of {place}",
+     "w": 1,
+     "short": "{place}",
+     "g": "crown"
+    },
+    {
+     "p": "{place} March",
+     "w": 1,
+     "short": "{place}",
+     "g": "crown"
+    },
+    {
+     "p": "{compassAdj} Military Governorate",
+     "w": 1,
+     "short": "same",
+     "g": "admin",
+     "eras": [
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{landQual} Command",
+     "w": 1,
+     "short": "same",
+     "g": "admin",
+     "eras": [
+      "NF",
+      "IS"
+     ]
+    }
+   ]
+  },
+  "colonial": {
+   "share": 0.6,
+   "shapes": [
+    {
+     "p": "New {place}",
+     "w": 25,
+     "short": "same",
+     "g": "admin"
+    },
+    {
+     "p": "Crown Territory of {place}",
+     "w": 15,
+     "short": "same",
+     "g": "admin"
+    },
+    {
+     "p": "{compassAdj} Colonial Authority",
+     "w": 10,
+     "short": "same",
+     "g": "admin"
+    },
+    {
+     "p": "Colony of {place}",
+     "w": 10,
+     "short": "same",
+     "g": "admin"
+    },
+    {
+     "p": "{place} Colony",
+     "w": 10,
+     "short": "same",
+     "g": "admin"
+    },
+    {
+     "p": "Chartered Territory of {place}",
+     "w": 10,
+     "short": "same",
+     "g": "admin"
+    },
+    {
+     "p": "Province of New {place}",
+     "w": 10,
+     "short": "same",
+     "g": "admin"
+    },
+    {
+     "p": "Dominion of {place}",
+     "w": 10,
+     "short": "same",
+     "g": "imperial"
+    }
+   ]
+  },
+  "outlaw": {
+   "share": 0.6,
+   "t": [
+    "grim"
+   ],
+   "shapes": [
+    {
+     "p": "the Free {outlawNoun} Ports",
+     "w": 1,
+     "short": "same",
+     "g": "republic"
+    },
+    {
+     "p": "the {outlawAdj} Coast",
+     "w": 1,
+     "short": "same",
+     "g": "republic"
+    },
+    {
+     "p": "Republic of {place}",
+     "w": 1,
+     "short": "{place}",
+     "g": "republic"
+    },
+    {
+     "p": "the Free {settlementPl} of the {waterSg}",
+     "w": 1,
+     "short": "same",
+     "g": "republic"
+    }
+   ]
+  },
+  "corporate": {
+   "share": 0.7,
+   "shapes": [
+    {
+     "p": "{brandRoot} {corpForm}",
+     "w": 1,
+     "short": "{brandRoot}",
+     "g": "admin"
+    },
+    {
+     "p": "{star} {resource} {corpWord}",
+     "w": 1,
+     "short": "{star}",
+     "g": "admin",
+     "eras": [
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{brandRoot} Commercial Territory",
+     "w": 1,
+     "short": "{brandRoot}",
+     "g": "admin"
+    },
+    {
+     "p": "{place} Development Charter",
+     "w": 1,
+     "short": "{place}",
+     "g": "admin"
+    },
+    {
+     "p": "Chartered Territory of the {brandRoot} Company",
+     "w": 1,
+     "short": "{brandRoot}",
+     "g": "admin",
+     "eras": [
+      "EM",
+      "MO"
+     ]
+    }
+   ]
+  }
+ },
+ "modifiers": [
+  {
+   "w": "Free",
+   "with": [
+    "Republic",
+    "State",
+    "City",
+    "City-State",
+    "Commonwealth",
+    "Free Zone"
+   ],
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "MO",
+    "NF",
+    "IS"
+   ]
+  },
+  {
+   "w": "Sovereign",
+   "with": [
+    "State",
+    "Republic",
+    "Principality",
+    "Realm",
+    "Nation"
+   ],
+   "eras": [
+    "EM",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "w": "Independent",
+   "with": [
+    "State",
+    "Republic",
+    "Principality"
+   ],
+   "eras": [
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Federal",
+   "with": [
+    "Republic",
+    "Union"
+   ],
+   "eras": [
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Royal",
+   "with": [
+    "Realm",
+    "March",
+    "Colony",
+    "Territory",
+    "Province",
+    "Dominion"
+   ],
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "w": "Imperial",
+   "with": [
+    "Dominion",
+    "Province",
+    "Territory",
+    "Protectorate",
+    "Authority",
+    "Exarchate"
+   ],
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "w": "Grand",
+   "with": [
+    "Republic",
+    "League",
+    "Alliance",
+    "Coalition"
+   ],
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "w": "Holy",
+   "with": [
+    "Kingdom",
+    "Realm",
+    "Dominion",
+    "Principality",
+    "League",
+    "Commonwealth"
+   ],
+   "eras": [
+    "AN",
+    "MD",
+    "EM"
+   ],
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "w": "Sacred",
+   "with": [
+    "Realm",
+    "Dominion",
+    "Commonwealth",
+    "League"
+   ],
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "w": "Merchant",
+   "with": [
+    "Republic",
+    "League",
+    "Commonwealth",
+    "Principality",
+    "Compact"
+   ],
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "Crown",
+   "with": [
+    "Colony",
+    "Territory",
+    "Dominion",
+    "Province"
+   ],
+   "eras": [
+    "EM",
+    "MO",
+    "NF",
+    "IS"
+   ]
+  },
+  {
+   "w": "Chartered",
+   "with": [
+    "Territory",
+    "Colony",
+    "Province"
+   ],
+   "eras": [
+    "EM",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "w": "United",
+   "with": [
+    "Republic",
+    "Federation",
+    "Commonwealth"
+   ],
+   "eras": [
+    "MO",
+    "NF",
+    "IS"
+   ]
+  }
+ ],
+ "ideology": {
+  "with": [
+   "Republic",
+   "Union",
+   "Commonwealth",
+   "State",
+   "Federation",
+   "Free State"
+  ],
+  "eras": [
+   "MO",
+   "NF",
+   "IS"
+  ],
+  "share": 0.25,
+  "words": [
+   {
+    "w": "People's",
+    "x": 2
+   },
+   {
+    "w": "Democratic",
+    "x": 2
+   },
+   {
+    "w": "Popular"
+   },
+   {
+    "w": "Citizens'"
+   },
+   {
+    "w": "Workers'"
+   },
+   {
+    "w": "Revolutionary",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Constitutional",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Provisional",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Restored",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Free and Independent",
+    "x": 0.5
+   }
+  ]
+ },
+ "political": [
+  "Free",
+  "United",
+  "Federal",
+  "Sovereign",
+  "Independent",
+  "Royal",
+  "Imperial"
+ ],
+ "collQual": [
+  {
+   "w": "Free",
+   "with": [
+    "Cities",
+    "Ports",
+    "Towns",
+    "Cantons",
+    "States",
+    "Harbours",
+    "Colonies",
+    "Worlds",
+    "Stations"
+   ]
+  },
+  {
+   "w": "United",
+   "with": [
+    "Provinces",
+    "Realms",
+    "Colonies",
+    "States",
+    "Tribes",
+    "Clans",
+    "Worlds",
+    "Systems"
+   ]
+  },
+  {
+   "w": "Federated",
+   "with": [
+    "Provinces",
+    "States",
+    "Colonies",
+    "Worlds",
+    "Systems"
+   ]
+  },
+  {
+   "w": "Merchant",
+   "with": [
+    "Cities",
+    "Ports",
+    "Towns",
+    "Harbours"
+   ]
+  },
+  {
+   "w": "River",
+   "with": [
+    "Kingdoms",
+    "Marches",
+    "Realms",
+    "Provinces",
+    "Cities",
+    "Tribes",
+    "Clans"
+   ]
+  },
+  {
+   "w": "Border",
+   "with": [
+    "Kingdoms",
+    "Marches",
+    "Realms",
+    "Provinces",
+    "Cities",
+    "Tribes",
+    "Clans"
+   ]
+  },
+  {
+   "w": "Island",
+   "with": [
+    "Kingdoms",
+    "Marches",
+    "Realms",
+    "Provinces",
+    "Cities",
+    "Tribes",
+    "Clans"
+   ]
+  },
+  {
+   "w": "Hill",
+   "with": [
+    "Kingdoms",
+    "Marches",
+    "Realms",
+    "Provinces",
+    "Cities",
+    "Tribes",
+    "Clans"
+   ]
+  },
+  {
+   "w": "Coastal",
+   "with": [
+    "Kingdoms",
+    "Marches",
+    "Realms",
+    "Provinces",
+    "Cities",
+    "Tribes",
+    "Clans"
+   ]
+  },
+  {
+   "list": "compassAdj",
+   "with": [
+    "Kingdoms",
+    "Marches",
+    "Realms",
+    "Provinces",
+    "Cities",
+    "Colonies",
+    "Tribes",
+    "Clans",
+    "Worlds"
+   ]
+  }
+ ],
+ "honorifics": {
+  "republic": [
+   {
+    "w": "Most Serene",
+    "x": 2,
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Free and Sovereign"
+   },
+   {
+    "w": "Most Illustrious"
+   }
+  ],
+  "crown": [
+   {
+    "w": "Most Noble"
+   },
+   {
+    "w": "Ancient and Royal"
+   },
+   {
+    "w": "Sovereign"
+   }
+  ],
+  "imperial": [
+   {
+    "w": "Exalted"
+   },
+   {
+    "w": "Sublime"
+   },
+   {
+    "w": "Glorious"
+   },
+   {
+    "w": "Great"
+   }
+  ],
+  "federal": [
+   {
+    "w": "Grand"
+   },
+   {
+    "w": "Free and United"
+   },
+   {
+    "w": "Sovereign"
+   }
+  ],
+  "admin": [
+   {
+    "w": "Royal"
+   },
+   {
+    "w": "Imperial"
+   },
+   {
+    "w": "Chartered"
+   }
+  ],
+  "tribal": [
+   {
+    "w": "Ancient"
+   },
+   {
+    "w": "Great"
+   }
+  ]
+ },
+ "ceremonial": {
+  "pair": 0.5,
+  "upperLower": 0.1,
+  "t": [
+   "grand"
+  ]
+ },
+ "homeland": {
+  "general": "temperate",
+  "norman-british": "temperate",
+  "greek-byzantine": "mediterranean",
+  "steppe": "steppe"
+ },
+ "tribal": {
+  "anglo-saxon": "germanic",
+  "norse": "germanic",
+  "celtic": "celtic",
+  "norman-british": "celtic",
+  "roman": "mediterranean",
+  "greek-byzantine": "mediterranean",
+  "steppe": "steppe",
+  "arabic-persian": "arabian",
+  "egyptian": "arabian",
+  "indian": "southAsian",
+  "chinese": "eastAsian",
+  "japanese": "eastAsian",
+  "korean": "eastAsian",
+  "bantu": "bantu",
+  "west-african": "westAfrican",
+  "aztec": "mesoamerican",
+  "maya": "mesoamerican",
+  "general": "general",
+  "slavic": "general",
+  "ethiopian": "general"
+ },
+ "dynastyCultures": [
+  "general",
+  "celtic",
+  "norman-british",
+  "anglo-saxon",
+  "norse"
+ ],
+ "safeguards": {
+  "block": [
+   "United Kingdom",
+   "Great Britain",
+   "United States",
+   "United States of America",
+   "Confederate States",
+   "Confederate States of America",
+   "Holy Roman Empire",
+   "Ottoman Empire",
+   "Byzantine Empire",
+   "Roman Empire",
+   "Mongol Empire",
+   "Golden Horde",
+   "Great Horde",
+   "Blue Horde",
+   "White Horde",
+   "Mughal Empire",
+   "British Empire",
+   "Russian Empire",
+   "Soviet Union",
+   "Union of Soviet Socialist Republics",
+   "Third Reich",
+   "German Reich",
+   "Reich",
+   "People's Republic of China",
+   "Republic of China",
+   "Celestial Empire",
+   "Middle Kingdom",
+   "Empire of the Rising Sun",
+   "United Provinces",
+   "Dutch Republic",
+   "Most Serene Republic of Venice",
+   "Serene Republic",
+   "Polish-Lithuanian Commonwealth",
+   "Commonwealth of Nations",
+   "Commonwealth of England",
+   "Hanseatic League",
+   "Delian League",
+   "Peloponnesian League",
+   "Triple Alliance",
+   "Aztec Triple Alliance",
+   "Crusader States",
+   "Kingdom of Jerusalem",
+   "Papal States",
+   "Holy See",
+   "Vatican",
+   "Islamic State",
+   "Caliphate",
+   "Free State of Prussia",
+   "Irish Free State",
+   "Orange Free State",
+   "Congo Free State",
+   "Confederation of the Rhine",
+   "Swiss Confederation",
+   "Old Swiss Confederacy",
+   "Grand Duchy of Lithuania",
+   "Grand Duchy of Muscovy",
+   "Tsardom of Russia",
+   "Duchy of Normandy",
+   "Duchy of Burgundy",
+   "Kingdom of Wessex",
+   "Danelaw",
+   "Northumbria",
+   "Mercia",
+   "East Anglia",
+   "Wessex",
+   "Gran Colombia",
+   "East India Company",
+   "Hudson's Bay Company",
+   "New England",
+   "New Netherland",
+   "New Spain",
+   "New France",
+   "New Amsterdam",
+   "Raj",
+   "British Raj",
+   "Maratha Confederacy",
+   "Ashanti Empire",
+   "Mali Empire",
+   "Songhai Empire",
+   "Zulu Kingdom",
+   "Kingdom of Kongo",
+   "Great Zimbabwe",
+   "Ethiopian Empire",
+   "Solomonic Empire",
+   "Inca Empire",
+   "Tawantinsuyu",
+   "Maya League",
+   "League of Mayapan",
+   "Galactic Empire",
+   "Galactic Republic",
+   "Old Republic",
+   "First Order",
+   "Rebel Alliance",
+   "United Federation of Planets",
+   "Federation of Planets",
+   "Klingon Empire",
+   "Romulan Star Empire",
+   "Imperium",
+   "Imperium of Man",
+   "Tau Empire",
+   "Free Cities of Essos",
+   "Seven Kingdoms",
+   "Iron Islands",
+   "Riverlands",
+   "Westerlands",
+   "Reach",
+   "Stormlands",
+   "Vale of Arryn",
+   "Dorne",
+   "Gondor",
+   "Rohan",
+   "Mordor",
+   "Arnor",
+   "Shire",
+   "Narnia",
+   "Old Empire",
+   "Empire of Man",
+   "Covenant",
+   "UNSC",
+   "United Nations Space Command",
+   "Earth Alliance",
+   "Terran Federation",
+   "Terran Confederacy",
+   "Systems Alliance",
+   "Citadel",
+   "Federation",
+   "Coalition of Planets",
+   "Outer Rim",
+   "Core Worlds",
+   "Tyrell",
+   "Weyland-Yutani",
+   "Commonwealth",
+   "Brotherhood of Steel",
+   "New California Republic",
+   "NCR",
+   "Caesar's Legion",
+   "Panem",
+   "Oceania",
+   "Eurasia",
+   "Eastasia",
+   "Airstrip One",
+   "Gilead"
+  ],
+  "flag": [
+   "New Albion",
+   "Free Cities",
+   "Northern League",
+   "Hanseatic",
+   "Seven Cantons",
+   "River Kingdoms",
+   "Border Marches",
+   "Western Kingdom",
+   "Middle Realm",
+   "People's Republic",
+   "Democratic Republic",
+   "Free State",
+   "Grand Duchy",
+   "Federated States",
+   "United Provinces of the North"
+  ],
+  "flagListBlocks": false,
+  "banned": [
+   "Caliphate",
+   "Reich",
+   "Fascist",
+   "National Socialist",
+   "Aryan",
+   "Apartheid",
+   "Jihad",
+   "Crusader",
+   "Theocracy",
+   "Master Race",
+   "Homeland",
+   "Bantustan",
+   "Reservation",
+   "Mandate"
+  ],
+  "religious": [
+   "Islamic",
+   "Christian",
+   "Hindu",
+   "Buddhist",
+   "Jewish"
+  ]
+ },
+ "caps": {
+  "plain": 8,
+  "ceremonial": 14
+ }
+}
