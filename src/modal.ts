@@ -65,6 +65,9 @@ import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type N
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings, recipeToFrontmatter } from "./names/recipe";
 import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
 import { chooseTribal, type TribalSentenceLimits, type TribalSentenceState, tribalSentence, tribalSentenceText } from "./tribes/sentence";
+import { familyForSection, generateGroupNames, GROUP_DATA, type GroupFamily, groupHistoryLabel, type GroupSafeguards } from "./groups/engine";
+import { chooseGroup, DEFAULT_GROUP_STATE, effectiveFront, groupSentence, type GroupSentenceState } from "./groups/sentence";
+import { isGroupSafeguardPackContent } from "./groups/safeguardPacks";
 import { isModulePresetContent, modulePresetContent, parseModulePreset, type TribalPreset } from "./presets";
 import { confirmReplace, PresetSaveModal } from "./presetModal";
 import { builtinTemplates, type TemplateType, templateTypeFor } from "./templates";
@@ -154,6 +157,14 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   nameAgeing: ICON_NAME_AGEING,
   nameTakeover: ICON_NAME_TAKEOVER,
   tribalNames: ICON_TRIBAL_NAMES,
+  // Group brief §1.1: Lucide icons.
+  mysticOrders: "sparkles",
+  martialOrders: "swords",
+  underworldGroups: "venetian-mask",
+  tradeGuilds: "scale",
+  adventureCompanies: "compass",
+  powerFactions: "landmark",
+  supernaturalCourts: "ghost",
 };
 
 // Each switcher group's icon in the switcher menu; the trigger wears the open module's own icon.
@@ -354,6 +365,8 @@ export class NameForgeModal extends Modal {
   /** Problems found resolving the biome packs, for the editor's status line. */
   public biomeProblems: string[] = [];
   /** Tribal names' choices (Tribal brief §18.2), kept for the session like the colonial modules'. */
+  /** Group brief §2.5: each group-name module's sentence choices (session only). */
+  private groupStates: Record<string, GroupSentenceState> = {};
   /** Each switcher group's last-used module (session only). */
   private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", groupNames: "tribalNames", advanced: "nameAgeing" };
   private tribal: {
@@ -767,7 +780,8 @@ export class NameForgeModal extends Modal {
     const colonialPart = COLONIAL_SECTION_PART[section];
     this.createPacksButton?.toggleClass("is-placeholder", section !== "markov");
     // In the colonial sections the guide button takes the create button's slot instead.
-    const tribal = section === "tribalNames";
+    // Tribes and kin groups and the group-name modules set everything in their sentences.
+    const tribal = section === "tribalNames" || !!familyForSection(section);
     this.createPacksButton?.toggle(!colonialPart && !tribal);
     this.landButton?.refresh();
     this.guideButton?.toggle(!!colonialPart);
@@ -1073,10 +1087,12 @@ export class NameForgeModal extends Modal {
     row.empty();
     const section = this.activeSection;
     const sentenced = section === "tribalNames" || !!sectionGroup(section);
+    const groupFamily = familyForSection(section);
     row.toggleClass("is-sentence", sentenced);
     row.toggle(sentenced);
     this.refreshSavePreset();
     if (section === "tribalNames") this.renderTribalSentence(row);
+    else if (groupFamily) this.renderGroupSentence(row, groupFamily);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]!);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -1464,6 +1480,73 @@ export class NameForgeModal extends Modal {
     new Notice(`nameForge: preset “${name}” saved.`);
     await this.refreshPackDropdown({ preserveSelection: true });
     return true;
+  }
+
+  /** Group brief §2: a group-name module's choices (session only), per family. */
+  private groupState(family: GroupFamily): GroupSentenceState {
+    return (this.groupStates[family.key] ??= { ...DEFAULT_GROUP_STATE });
+  }
+
+  /** Group brief §2: the module's sentence, rendered as tribes and kin groups' is. */
+  private renderGroupSentence(row: HTMLElement, family: GroupFamily) {
+    const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    const state = this.groupState(family);
+    for (const segment of groupSentence(state, family)) {
+      if (typeof segment === "string") {
+        sentence.appendText(segment);
+        continue;
+      }
+      this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
+        this.groupStates[family.key] = chooseGroup(this.groupState(family), segment.field, id, family);
+      });
+    }
+  }
+
+  /** Group brief §14: names only, no details; history "{module} · {setting} · {tradition}". */
+  private async runGroupNames(family: GroupFamily, state = this.groupState(family), label?: string, problems: string[] = []) {
+    const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+    const guards = await this.loadGroupSafeguards();
+    let result;
+    try {
+      result = generateGroupNames({
+        family: family.key,
+        tradition: state.tradition,
+        type: state.type,
+        genre: state.genre,
+        fantastic: state.fantastic,
+        form: state.form,
+        front: effectiveFront(state, family),
+        people: state.people,
+        count: this.generationCount,
+        seed: seedOverride,
+        safeguards: guards.safeguards,
+      });
+    } catch (error) {
+      this.setStatus(error instanceof Error ? error.message : "Couldn't generate names.");
+      return;
+    }
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" }) as GeneratedName),
+      "none",
+    );
+    await this.recordGenerationHistory(result.names.length, label ?? groupHistoryLabel(family, state.genre, state.fantastic, state.tradition));
+    this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
+  }
+
+  /** Group brief §12.6: every group safeguard pack in the names folder, merged with the built-in lists. */
+  private async loadGroupSafeguards(): Promise<{ safeguards?: GroupSafeguards; notices: string[] }> {
+    const folder = this.app.vault.getFolderByPath(normalizePath(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const packs = [];
+    for (const child of folder?.children ?? []) {
+      if (!(child instanceof TFile) || child.extension !== "md") continue;
+      const content = await this.app.vault.cachedRead(child);
+      if (isGroupSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
+    }
+    if (packs.length === 0) return { notices: [] };
+    const g = GROUP_DATA.safeguards;
+    const { notices, block, flag, flagBlocks } = mergeSafeguards({ blockList: g.block, flagList: g.flag, flagListBlocks: g.flagListBlocks }, packs);
+    return { safeguards: { block, flag, flagListBlocks: flagBlocks }, notices };
   }
 
   /** Land brief §10: every tribal safeguard pack in the names folder, merged with the built-in lists. */
@@ -2716,6 +2799,11 @@ export class NameForgeModal extends Modal {
     }
     if (this.activeSection === "tribalNames") {
       await this.runTribalNames();
+      return;
+    }
+    const groupFamily = familyForSection(this.activeSection);
+    if (groupFamily) {
+      await this.runGroupNames(groupFamily);
       return;
     }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];

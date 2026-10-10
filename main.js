@@ -461,19 +461,19 @@ function stripInlineMarkup(s) {
 function parseNameTokens(text) {
   const tokens = text.split(/[\n,;]/).flatMap((t) => splitOnJoiners(t)).flatMap((t) => splitSpaceSeparatedList(t)).map((t) => t.trim()).filter((t) => t.length > 0);
   const names = [];
-  for (const token of tokens) {
-    const cleaned = cleanToken(stripLeadingConjunction(token));
+  for (const token2 of tokens) {
+    const cleaned = cleanToken(stripLeadingConjunction(token2));
     if (cleaned === "" || isNoise(cleaned)) continue;
     names.push(cleaned);
   }
   return dedupe(names);
 }
-function splitSpaceSeparatedList(token) {
-  const parts = splitOnUnquotedWhitespace(token);
+function splitSpaceSeparatedList(token2) {
+  const parts = splitOnUnquotedWhitespace(token2);
   if (parts.length >= 3) return parts;
-  const loose = unwrapOuterQuotes(token.trim()).split(/\s+/).filter((p) => p.length > 0);
+  const loose = unwrapOuterQuotes(token2.trim()).split(/\s+/).filter((p) => p.length > 0);
   if (loose.length >= 3) return loose;
-  return [token];
+  return [token2];
 }
 function unwrapOuterQuotes(s) {
   const pairs = [
@@ -489,11 +489,11 @@ function unwrapOuterQuotes(s) {
   }
   return s;
 }
-function splitOnUnquotedWhitespace(token) {
+function splitOnUnquotedWhitespace(token2) {
   const parts = [];
   let current = "";
   let quote2 = null;
-  for (const char of token) {
+  for (const char of token2) {
     if (quote2) {
       current += char;
       if (char === matchingQuote(quote2)) quote2 = null;
@@ -519,8 +519,8 @@ function matchingQuote(open) {
   if (open === "\u2018") return "\u2019";
   return open;
 }
-function splitOnJoiners(token) {
-  let parts = [token];
+function splitOnJoiners(token2) {
+  let parts = [token2];
   for (const joiner of JOINERS) {
     const next = [];
     for (const part of parts) {
@@ -536,12 +536,12 @@ function splitOnJoiners(token) {
   }
   return parts;
 }
-function stripLeadingConjunction(token) {
-  const lower2 = token.toLowerCase();
+function stripLeadingConjunction(token2) {
+  const lower2 = token2.toLowerCase();
   for (const lead of LEADERS) {
-    if (lower2.startsWith(lead)) return token.slice(lead.length).trim();
+    if (lower2.startsWith(lead)) return token2.slice(lead.length).trim();
   }
-  return token;
+  return token2;
 }
 function cleanToken(s) {
   let t = s.trim();
@@ -997,13 +997,13 @@ var ListGenerator = class {
    * `mulberry32(seed)`) so batches can be reproduced.
    */
   generateMultiple(count, rng = Math.random) {
-    const pool = Array.from(new Set(this.names));
-    const n = Math.min(count, pool.length);
+    const pool2 = Array.from(new Set(this.names));
+    const n = Math.min(count, pool2.length);
     for (let i = 0; i < n; i++) {
-      const j = i + Math.floor(rng() * (pool.length - i));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
+      const j = i + Math.floor(rng() * (pool2.length - i));
+      [pool2[i], pool2[j]] = [pool2[j], pool2[i]];
     }
-    return pool.slice(0, n);
+    return pool2.slice(0, n);
   }
 };
 function joinCompoundParts(fragments, joining) {
@@ -1035,14 +1035,14 @@ function generateCompoundNamesDetailed(parts, options) {
       seed: nextSubSeed()
     }).names;
   });
-  if (pools.some((pool) => pool.length === 0)) return { names: [], seed };
+  if (pools.some((pool2) => pool2.length === 0)) return { names: [], seed };
   const result = [];
   const seen = /* @__PURE__ */ new Set();
   let tries = 0;
   const maxTries = Math.max(1e3, count * 300);
   while (result.length < count && tries < maxTries) {
     tries++;
-    const fragments = pools.map((pool) => pool[Math.floor(masterRng() * pool.length)]);
+    const fragments = pools.map((pool2) => pool2[Math.floor(masterRng() * pool2.length)]);
     const name = joinCompoundParts(fragments, options.joining);
     const key2 = name.toLowerCase();
     if (seen.has(key2)) continue;
@@ -20655,9 +20655,9 @@ var PlaceShapeGenerator = class {
     const region = this.region;
     if (this.sides) {
       const { settlement, landscape, landscapeShare } = this.sides;
-      let pool = rng() < landscapeShare ? landscape : settlement;
-      if (pool.length === 0) pool = pool === landscape ? settlement : landscape;
-      return this.weighted ? pickWeighted(pool.map((g) => [g, this.groupWeight(g.id)]), rng) : pickUniform(pool, rng);
+      let pool2 = rng() < landscapeShare ? landscape : settlement;
+      if (pool2.length === 0) pool2 = pool2 === landscape ? settlement : landscape;
+      return this.weighted ? pickWeighted(pool2.map((g) => [g, this.groupWeight(g.id)]), rng) : pickUniform(pool2, rng);
     }
     return this.weighted ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
   }
@@ -24967,12 +24967,12 @@ var ColonialShapeGenerator = class {
     var _a2, _b, _c;
     const s = this.data.structures;
     const { part } = this.options;
-    let pool = this.groups;
+    let pool2 = this.groups;
     if (this.sides) {
-      pool = rng() < LANDSCAPE_SHARE_SETTLEMENT ? this.sides.landscape : this.sides.settlement;
-      if (pool.length === 0) pool = this.groups;
+      pool2 = rng() < LANDSCAPE_SHARE_SETTLEMENT ? this.sides.landscape : this.sides.settlement;
+      if (pool2.length === 0) pool2 = this.groups;
     }
-    const eligible = pickWeighted(pool, rng);
+    const eligible = pickWeighted(pool2, rng);
     const generic = pickWeighted(eligible.generics, rng);
     const categoryId = pickWeighted(generic.categories, rng);
     const shape = {
@@ -25480,21 +25480,21 @@ function eraWeight(era, depth) {
 function sampleBeam(items, k, rng, temperature) {
   if (items.length <= k) return items.map(([t]) => t);
   const max = Math.max(...items.map(([, s]) => s));
-  const pool = items.map(([t, s]) => [t, Math.exp((s - max) / temperature)]);
+  const pool2 = items.map(([t, s]) => [t, Math.exp((s - max) / temperature)]);
   const chosen = [];
   for (let n = 0; n < k; n++) {
-    const total = pool.reduce((sum, [, w]) => sum + w, 0);
+    const total = pool2.reduce((sum, [, w]) => sum + w, 0);
     let r = rng() * total;
-    let idx = pool.length - 1;
-    for (let i = 0; i < pool.length; i++) {
-      r -= pool[i][1];
+    let idx = pool2.length - 1;
+    for (let i = 0; i < pool2.length; i++) {
+      r -= pool2[i][1];
       if (r < 0) {
         idx = i;
         break;
       }
     }
-    chosen.push(pool[idx][0]);
-    pool.splice(idx, 1);
+    chosen.push(pool2[idx][0]);
+    pool2.splice(idx, 1);
   }
   return chosen;
 }
@@ -25533,7 +25533,7 @@ function plausibilityScorer(targetNames, buildScorer) {
   };
 }
 function beamSearch(source, initial, profile, inputRng) {
-  const pool = [];
+  const pool2 = [];
   for (let run = 0; run < profile.runs; run++) {
     const rng = mulberry32(Math.floor(inputRng() * 4294967296) >>> 0);
     let beam = [{ form: source, trail: [source], state: initial }];
@@ -25553,9 +25553,9 @@ function beamSearch(source, initial, profile, inputRng) {
       const limit = profile.stepLimit;
       beam = working.filter((e) => limit === void 0 || recognisability(e.item.form, e.form) >= limit).map((e) => ({ form: e.form, trail: [...e.item.trail, e.form], state: e.state }));
     }
-    pool.push(...beam);
+    pool2.push(...beam);
   }
-  return pool;
+  return pool2;
 }
 function ageName(input) {
   const sourceError = validateSource(input.source);
@@ -25587,7 +25587,7 @@ function ageName(input) {
     }
     return v;
   };
-  const pool = beamSearch(
+  const pool2 = beamSearch(
     source,
     void 0,
     {
@@ -25607,7 +25607,7 @@ function ageName(input) {
   const finalW = eraWeight(depth, depth);
   const floor = AGEING.depthFloor[depth];
   const best = /* @__PURE__ */ new Map();
-  for (const item of pool) {
+  for (const item of pool2) {
     if (item.form === source) continue;
     if (rSource(item.form) < floor) continue;
     if (plausibility(item.form) < AGEING.minPlausibility) continue;
@@ -25681,7 +25681,7 @@ function adoptName(input) {
   };
   const score = (form, w) => w * P(form) + (1 - w) * R(form);
   const zeros = () => nativeParts.map(() => 0);
-  const pool = beamSearch(
+  const pool2 = beamSearch(
     source,
     { added: zeros(), inserted: zeros(), moves: [] },
     {
@@ -25712,7 +25712,7 @@ function adoptName(input) {
   );
   let best = null;
   let bestScore = -Infinity;
-  for (const item of pool) {
+  for (const item of pool2) {
     if (item.form === source) continue;
     if (R(item.form) < TAKEOVER.minRecognisability) continue;
     if (P(item.form) < TAKEOVER.minPlausibility) continue;
@@ -30257,11 +30257,11 @@ function pick(items, rng) {
   return live[live.length - 1][0];
 }
 var pickRecord = (weights, rng) => pick(Object.entries(weights), rng);
-var pickPool = (pool, rng) => pick([...pool.entries()], rng);
+var pickPool = (pool2, rng) => pick([...pool2.entries()], rng);
 var pickUniform2 = (items, rng) => items[Math.floor(rng() * items.length)];
-var add = (pool, word, weight) => {
+var add = (pool2, word, weight) => {
   var _a2;
-  if (weight > 0) pool.set(word, ((_a2 = pool.get(word)) != null ? _a2 : 0) + weight);
+  if (weight > 0) pool2.set(word, ((_a2 = pool2.get(word)) != null ? _a2 : 0) + weight);
 };
 var lower = (s) => s.toLowerCase();
 var wordRe = (w) => new RegExp(`(^|[^A-Za-z])${w.replace(/[-']/g, "\\$&")}s?($|[^A-Za-z])`, "i");
@@ -30309,10 +30309,10 @@ function filtered(ctx, word, weight) {
 }
 function landPool(ctx, kind, terrain) {
   var _a2;
-  const pool = /* @__PURE__ */ new Map();
-  for (const [w, n] of terrainWords(ctx.biome, kind, terrain)) add(pool, w, filtered(ctx, w, n));
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour[kind]) != null ? _a2 : []) add(pool, w, filtered(ctx, w, 3));
-  return pool;
+  const pool2 = /* @__PURE__ */ new Map();
+  for (const [w, n] of terrainWords(ctx.biome, kind, terrain)) add(pool2, w, filtered(ctx, w, n));
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour[kind]) != null ? _a2 : []) add(pool2, w, filtered(ctx, w, 3));
+  return pool2;
 }
 function featureWord(ctx, kind) {
   var _a2;
@@ -30332,61 +30332,61 @@ function withColour(ctx, word) {
 }
 function animalPool(ctx, wild = false) {
   var _a2, _b;
-  const pool = /* @__PURE__ */ new Map();
+  const pool2 = /* @__PURE__ */ new Map();
   const b = ctx.biome;
   const lists = wild ? [["wildAnimals", 1], ["birds", 1]] : [["wildAnimals", 1], ["birds", 1], ["creatures", 0.7], ["livestock", 0.5]];
   for (const [list, factor] of lists) {
     for (const [w, n] of biomeWords(b, list)) {
       const word = biomeTitleCase(w);
-      add(pool, word, filtered(ctx, word, 2 * factor * n));
+      add(pool2, word, filtered(ctx, word, 2 * factor * n));
     }
   }
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.animals) != null ? _a2 : []) add(pool, w, filtered(ctx, w, 3));
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.animals) != null ? _a2 : []) add(pool2, w, filtered(ctx, w, 3));
   if (!wild && ctx.register === "legendary") {
-    for (const [w, mults] of Object.entries(V.mythic)) add(pool, w, filtered(ctx, w, 0.5 * ((_b = mults[ctx.trad.key]) != null ? _b : 1)));
+    for (const [w, mults] of Object.entries(V.mythic)) add(pool2, w, filtered(ctx, w, 0.5 * ((_b = mults[ctx.trad.key]) != null ? _b : 1)));
   }
-  return pool;
+  return pool2;
 }
 function plantPool(ctx) {
   var _a2;
-  const pool = /* @__PURE__ */ new Map();
+  const pool2 = /* @__PURE__ */ new Map();
   for (const [list, factor] of [["trees", 1], ["plants", 1], ["crops", 0.5]]) {
     for (const [w, n] of biomeWords(ctx.biome, list)) {
       const word = biomeTitleCase(w);
-      add(pool, word, filtered(ctx, word, 2 * factor * n));
+      add(pool2, word, filtered(ctx, word, 2 * factor * n));
     }
   }
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.plants) != null ? _a2 : []) add(pool, w, filtered(ctx, w, 3));
-  return pool;
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.plants) != null ? _a2 : []) add(pool2, w, filtered(ctx, w, 3));
+  return pool2;
 }
 function sacredPool(ctx) {
-  const pool = /* @__PURE__ */ new Map();
+  const pool2 = /* @__PURE__ */ new Map();
   const only = ctx.trad.special.sacredOnly;
   if (only) {
-    for (const w of only) add(pool, w, 1);
-    return pool;
+    for (const w of only) add(pool2, w, 1);
+    return pool2;
   }
-  for (const w of V.sacredUniversal) add(pool, w, filtered(ctx, w, 1));
-  for (const [w, n] of biomeWords(ctx.biome, "sacred")) add(pool, w, filtered(ctx, w, 2 * n));
-  return pool;
+  for (const w of V.sacredUniversal) add(pool2, w, filtered(ctx, w, 1));
+  for (const [w, n] of biomeWords(ctx.biome, "sacred")) add(pool2, w, filtered(ctx, w, 2 * n));
+  return pool2;
 }
 function lifewayPool(ctx) {
   var _a2;
-  const pool = /* @__PURE__ */ new Map();
+  const pool2 = /* @__PURE__ */ new Map();
   const canRide = mounts(ctx).length > 0;
   const fav = new Set(ctx.trad.favouredLifeways);
   const gate = (w) => w === "Riders" && !canRide ? 0 : 1;
-  for (const [w, n] of biomeWords(ctx.biome, "lifeways")) add(pool, w, filtered(ctx, w, n * (fav.has(w) ? 2 : 1) * gate(w)));
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.lifeways) != null ? _a2 : []) add(pool, w, filtered(ctx, w, 10 * gate(w)));
-  return pool;
+  for (const [w, n] of biomeWords(ctx.biome, "lifeways")) add(pool2, w, filtered(ctx, w, n * (fav.has(w) ? 2 : 1) * gate(w)));
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.lifeways) != null ? _a2 : []) add(pool2, w, filtered(ctx, w, 10 * gate(w)));
+  return pool2;
 }
 var materials = (ctx) => {
-  const pool = /* @__PURE__ */ new Map();
-  for (const [w, n] of biomeWords(ctx.biome, "materials")) add(pool, w, filtered(ctx, w, n));
-  return pool;
+  const pool2 = /* @__PURE__ */ new Map();
+  for (const [w, n] of biomeWords(ctx.biome, "materials")) add(pool2, w, filtered(ctx, w, n));
+  return pool2;
 };
 function warfarePool(ctx, objectsOnly = false) {
-  const pool = /* @__PURE__ */ new Map();
+  const pool2 = /* @__PURE__ */ new Map();
   const restricted = (w) => {
     var _a2, _b;
     const allowed = V.warfareRestricted[w];
@@ -30396,12 +30396,12 @@ function warfarePool(ctx, objectsOnly = false) {
     return m;
   };
   const words = objectsOnly ? V.warfareObjects : [...V.warfareUniversal, ...Object.keys(V.warfareRestricted)];
-  for (const w of words) add(pool, w, filtered(ctx, w, restricted(w)));
-  return pool;
+  for (const w of words) add(pool2, w, filtered(ctx, w, restricted(w)));
+  return pool2;
 }
 function directionPool(ctx, { halves = false, colours = true } = {}) {
   var _a2, _b;
-  const pool = /* @__PURE__ */ new Map();
+  const pool2 = /* @__PURE__ */ new Map();
   for (const o of ctx.trad.orientation) {
     let words = (_b = (_a2 = o.words) != null ? _a2 : V.directions[o.system]) != null ? _b : [];
     if (!halves) words = words.filter((w) => !w.endsWith(" Half"));
@@ -30409,18 +30409,18 @@ function directionPool(ctx, { halves = false, colours = true } = {}) {
     let m = o.mult;
     if (o.system === "seaAxis" && share(ctx, "coast", "islands") < 10) m *= 0.2;
     if (o.system === "riverAxis" && share(ctx, "rivers") < 15) m *= 0.2;
-    for (const w of words) add(pool, w, filtered(ctx, w, m));
+    for (const w of words) add(pool2, w, filtered(ctx, w, m));
   }
-  return pool;
+  return pool2;
 }
 function qualityPool(ctx) {
-  const pool = /* @__PURE__ */ new Map();
-  for (const w of V.qualities) add(pool, w, 1);
-  if (["self", "dynastic", "ceremonial"].includes(ctx.perspective)) for (const w of V.interpretiveQualities) add(pool, w, 1);
-  return pool;
+  const pool2 = /* @__PURE__ */ new Map();
+  for (const w of V.qualities) add(pool2, w, 1);
+  if (["self", "dynastic", "ceremonial"].includes(ctx.perspective)) for (const w of V.interpretiveQualities) add(pool2, w, 1);
+  return pool2;
 }
 function dressPool(ctx) {
-  const pool = /* @__PURE__ */ new Map();
+  const pool2 = /* @__PURE__ */ new Map();
   const id = ctx.biome.id;
   const gate = {
     "Bear-Cloak": biomeWords(ctx.biome, "wildAnimals").some(([w]) => w === "bear"),
@@ -30429,8 +30429,8 @@ function dressPool(ctx) {
     Veiled: id === "desert",
     "Painted-Moccasin": !!ctx.trad.special.paintedMoccasin
   };
-  for (const w of V.dress) add(pool, w, filtered(ctx, w, gate[w] === false ? 0 : 1));
-  return pool;
+  for (const w of V.dress) add(pool2, w, filtered(ctx, w, gate[w] === false ? 0 : 1));
+  return pool2;
 }
 function numberWord(ctx) {
   const preferred = new Set(ctx.trad.numbers);
@@ -30467,21 +30467,21 @@ function vesselWord(ctx) {
   if (pinned) return pinned;
   const rng = ctx.rng;
   if (ctx.mode === "chosen" && rng() < 1 / 3) {
-    const pool2 = /* @__PURE__ */ new Map();
-    for (const list of ["birds", "creatures"]) for (const [w, n] of biomeWords(ctx.biome, list)) add(pool2, biomeTitleCase(w), filtered(ctx, w, n));
-    const animal2 = pickPool(pool2, rng);
+    const pool3 = /* @__PURE__ */ new Map();
+    for (const list of ["birds", "creatures"]) for (const [w, n] of biomeWords(ctx.biome, list)) add(pool3, biomeTitleCase(w), filtered(ctx, w, n));
+    const animal2 = pickPool(pool3, rng);
     if (animal2) return `the ${pickUniform2(V.colours, rng)} ${animal2} Canoe`;
   }
-  const pool = /* @__PURE__ */ new Map();
-  for (const c of V.canoes) add(pool, c, 2);
-  for (const v of V.voyages) add(pool, v, 1);
-  if (ctx.trad.special.longship) add(pool, "the Longship", 2);
-  if (share(ctx, "rivers") >= 25) add(pool, "the Raft", 1);
-  return pickPool(pool, rng);
+  const pool2 = /* @__PURE__ */ new Map();
+  for (const c of V.canoes) add(pool2, c, 2);
+  for (const v of V.voyages) add(pool2, v, 1);
+  if (ctx.trad.special.longship) add(pool2, "the Longship", 2);
+  if (share(ctx, "rivers") >= 25) add(pool2, "the Raft", 1);
+  return pickPool(pool2, rng);
 }
 function collectivePool(ctx, filter = {}) {
   var _a2, _b, _c, _d, _e, _f;
-  const pool = /* @__PURE__ */ new Map();
+  const pool2 = /* @__PURE__ */ new Map();
   const lineageSet = new Set(TRIBAL_DATA.lineageCollectives);
   const signature = new Set(ctx.trad.signatureCollectives);
   for (const row of TRIBAL_DATA.collectives) {
@@ -30500,9 +30500,9 @@ function collectivePool(ctx, filter = {}) {
     w *= (_f = ctx.trad.lineageMultipliers[row.word]) != null ? _f : 1;
     if (row.gate === "mounts" && mounts(ctx).length === 0) w = 0;
     if (row.gate === "arrows" || row.gate === "tents") w *= countedOk(ctx, row.gate === "arrows" ? "Arrows" : "Tents");
-    add(pool, row.word, filtered(ctx, row.word, w));
+    add(pool2, row.word, filtered(ctx, row.word, w));
   }
-  return pool;
+  return pool2;
 }
 var collective = (ctx, filter) => pickPool(collectivePool(ctx, filter), ctx.rng);
 function traditionThemeWeights(trad) {
@@ -30597,9 +30597,9 @@ function templateA(ctx, parts) {
   const rng = ctx.rng;
   switch (ctx.theme) {
     case "relationship": {
-      const pool = /* @__PURE__ */ new Map();
-      for (const w of V.relationship) add(pool, w, w === "Tributaries" && !["imposed", "later"].includes(ctx.perspective) ? 0 : 1);
-      return parts.keyword = (_a2 = pickPool(pool, rng)) != null ? _a2 : "";
+      const pool2 = /* @__PURE__ */ new Map();
+      for (const w of V.relationship) add(pool2, w, w === "Tributaries" && !["imposed", "later"].includes(ctx.perspective) ? 0 : 1);
+      return parts.keyword = (_a2 = pickPool(pool2, rng)) != null ? _a2 : "";
     }
     case "qualities":
       parts.quality = pickPool(qualityPool(ctx), rng);
@@ -30789,9 +30789,9 @@ function templateO(ctx, parts) {
     const q2 = parts.quality = pickPool(qualityPool(ctx), ctx.rng);
     return q2 ? `The ${q2} Ones` : void 0;
   }
-  const pool = /* @__PURE__ */ new Map();
-  for (const w of V.nominalQualities) add(pool, w, ["Free", "Proud", "Unconquered"].includes(w) && !["self", "dynastic", "ceremonial"].includes(ctx.perspective) ? 0 : 1);
-  const q = parts.quality = pickPool(pool, ctx.rng);
+  const pool2 = /* @__PURE__ */ new Map();
+  for (const w of V.nominalQualities) add(pool2, w, ["Free", "Proud", "Unconquered"].includes(w) && !["self", "dynastic", "ceremonial"].includes(ctx.perspective) ? 0 : 1);
+  const q = parts.quality = pickPool(pool2, ctx.rng);
   return q ? `The ${q}` : void 0;
 }
 function templateP(ctx, parts) {
@@ -30873,7 +30873,7 @@ function buildTemplate(ctx, template, parts) {
   return void 0;
 }
 function hostileWord(ctx) {
-  const pool = /* @__PURE__ */ new Map();
+  const pool2 = /* @__PURE__ */ new Map();
   for (const [w, theme] of Object.entries(V.hostile)) {
     if (theme !== ctx.theme) continue;
     let ok = true;
@@ -30881,9 +30881,9 @@ function hostileWord(ctx) {
     if (w === "Goat Folk") ok = hasLivestock(ctx, "goat");
     if (w === "Fish-Eaters") ok = share(ctx, "coast", "rivers") >= 15;
     if (w === "Mud Folk" || w === "Marsh Crawlers") ok = share(ctx, "wetland") >= 5;
-    add(pool, w, ok ? filtered(ctx, w, 1) : 0);
+    add(pool2, w, ok ? filtered(ctx, w, 1) : 0);
   }
-  return pickPool(pool, ctx.rng);
+  return pickPool(pool2, ctx.rng);
 }
 var norm = (s) => s.toLowerCase().replace(/^the /, "").trim();
 var BUILT_IN_GUARDS = {
@@ -32694,1358 +32694,16347 @@ function chooseTribal(state, field, id, findBiome2) {
   }
 }
 
-// src/presets.ts
-var TRIBAL_PRESET_MODULE = "tribal-names";
-var TRIBAL_PRESET_DEFAULTS = {
-  tradition: "general",
-  biome: "homeland",
-  terrain: "any",
-  register: "plain",
-  groupType: "any",
-  perspective: "any",
-  hostile: false
-};
-var FRONTMATTER = /^---\s*\n([\s\S]*?)\n---\s*\n?/;
-function fields(content) {
-  const fm = content.match(FRONTMATTER);
-  if (!fm) return void 0;
-  const values = {};
-  for (const line of fm[1].split(/\r?\n/)) {
-    const m = line.match(/^([A-Za-z][\w-]*):\s*(.*)$/);
-    if (m) values[m[1]] = m[2].trim().replace(/^(['"])(.*)\1$/, "$2");
-  }
-  return { values, body: content.slice(fm[0].length) };
-}
-function isModulePresetContent(content) {
-  var _a2;
-  return ((_a2 = fields(content)) == null ? void 0 : _a2.values.type) === "module-preset";
-}
-function parseModulePreset(content, fileName) {
-  var _a2, _b;
-  const parsed = fields(content);
-  const problems = [];
-  if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
-  const { values, body } = parsed;
-  if (values.module !== TRIBAL_PRESET_MODULE) {
-    problems.push(`Unknown module \u201C${(_a2 = values.module) != null ? _a2 : ""}\u201D.`);
-    return { problems };
-  }
-  const d = TRIBAL_PRESET_DEFAULTS;
-  const pick2 = (key2, fallback, ok) => {
-    const v = values[key2];
-    if (v === void 0 || v === "") return fallback;
-    if (ok(v)) return v;
-    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
-    return fallback;
-  };
-  const hostileRaw = values.hostile;
-  let hostile = d.hostile;
-  if (hostileRaw === "true" || hostileRaw === "false") hostile = hostileRaw === "true";
-  else if (hostileRaw) problems.push(`Unknown hostile \u201C${hostileRaw}\u201D.`);
-  return {
-    preset: {
-      packName: values.packName || fileName,
-      setting: (_b = values.setting) != null ? _b : "",
-      description: body.trim(),
-      tradition: pick2("tradition", d.tradition, (v) => !!findTradition(v)),
-      biome: pick2("biome", d.biome, (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
-      terrain: pick2("terrain", d.terrain, (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
-      register: pick2("register", d.register, (v) => TRIBAL_REGISTERS.includes(v)),
-      groupType: pick2("groupType", d.groupType, (v) => v === "any" || TRIBAL_GROUP_TYPES.some((g) => g.key === v)),
-      perspective: pick2("perspective", d.perspective, (v) => v === "any" || TRIBAL_PERSPECTIVES.includes(v)),
-      hostile
-    },
-    problems
-  };
-}
-function modulePresetContent(preset) {
-  const quote2 = (v) => /^\[\[|[:#]/.test(v) ? `"${v}"` : v;
-  return [
-    "---",
-    "type: module-preset",
-    `module: ${TRIBAL_PRESET_MODULE}`,
-    `packName: ${preset.packName}`,
-    `setting: ${preset.setting}`,
-    `tradition: ${preset.tradition}`,
-    `biome: ${quote2(preset.biome)}`,
-    `terrain: ${preset.terrain}`,
-    `register: ${preset.register}`,
-    `groupType: ${preset.groupType}`,
-    `perspective: ${preset.perspective}`,
-    `hostile: ${preset.hostile}`,
-    "---",
-    "",
-    preset.description.trim(),
-    ""
-  ].join("\n");
-}
-function tribalPresetSlot(preset) {
-  return {
-    tradition: preset.tradition,
-    ...preset.biome !== "homeland" && findBiome(preset.biome) ? { biome: preset.biome } : {},
-    ...preset.terrain !== "any" ? { terrain: preset.terrain } : {},
-    ...preset.groupType !== "any" ? { groupType: preset.groupType } : {},
-    ...preset.perspective !== "any" ? { perspective: preset.perspective } : {},
-    ...preset.register === "plain" || preset.register === "administrative" ? { register: preset.register } : {}
-  };
-}
-function readTribalPresetSource(name, content) {
-  if (content === null) return { notice: `Preset \u201C${name}\u201D is missing.` };
-  const parsed = isModulePresetContent(content) ? parseModulePreset(content, name).preset : void 0;
-  if (!parsed) return { notice: `\u201C${name}\u201D isn't a tribes and kin groups preset.` };
-  return { preset: parsed };
-}
-function tribalPresetDraw(preset) {
-  const { tradition, ...fields2 } = tribalPresetSlot(preset);
-  return (rng) => tribalSlotFill({ tradition, part: "new-land", fields: fields2 }, rng).text;
-}
-
-// src/presetModal.ts
-var import_obsidian6 = require("obsidian");
-var PresetSaveModal = class extends import_obsidian6.Modal {
-  constructor(app, name, description, onSave) {
-    super(app);
-    this.name = name;
-    this.description = description;
-    this.onSave = onSave;
-  }
-  onOpen() {
-    this.titleEl.setText("Save as preset");
-    this.contentEl.addClass("nameforge-editor-modal", "nameforge-preset-modal");
-    const nameRow = this.contentEl.createDiv({ cls: "nameforge-modal__pack-name-row" });
-    nameRow.createEl("label", { text: "Name" });
-    const name = nameRow.createEl("input", { cls: "nameforge-modal__pack-name-input", attr: { type: "text" } });
-    name.value = this.name;
-    const description = this.contentEl.createEl("textarea", { cls: "nameforge-modal__textarea nameforge-preset-modal__description", attr: { rows: "4" } });
-    description.value = this.description;
-    const controls = this.contentEl.createDiv({ cls: "nameforge-modal__controls" });
-    const save = controls.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title: "Save preset" } });
-    (0, import_obsidian6.setIcon)(save, ICON_SAVE);
-    save.addEventListener("click", () => {
-      void this.onSave(name.value.trim(), description.value.trim()).then((done) => {
-        if (done) this.close();
-      });
-    });
-    const cancel = controls.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title: "Cancel" } });
-    (0, import_obsidian6.setIcon)(cancel, ICON_CANCEL);
-    cancel.addEventListener("click", () => this.close());
-    name.focus();
-  }
-  onClose() {
-    this.contentEl.empty();
-  }
-};
-function confirmReplace(app, question) {
-  return new Promise((resolve) => {
-    const modal = new class extends import_obsidian6.Modal {
-      constructor() {
-        super(...arguments);
-        this.answered = false;
-      }
-      onOpen() {
-        this.contentEl.createEl("p", { text: question });
-        const row = this.contentEl.createDiv({ cls: "modal-button-container" });
-        const yes = row.createEl("button", { cls: "mod-warning", text: "Replace" });
-        yes.addEventListener("click", () => {
-          this.answered = true;
-          resolve(true);
-          this.close();
-        });
-        const no = row.createEl("button", { text: "Cancel" });
-        no.addEventListener("click", () => this.close());
-      }
-      onClose() {
-        if (!this.answered) resolve(false);
-        this.contentEl.empty();
-      }
-    }(app);
-    modal.open();
-  });
-}
-
-// src/data/builtin-templates.json
-var builtin_templates_default = [
-  {
-    name: "Victorian, England, Male",
-    type: "people",
-    items: [
-      "Albert",
-      "Alexander",
-      "Alfred",
-      "Algernon",
-      "Allen",
-      "Ambrose",
-      "Andrew",
-      "Anthony",
-      "Archibald",
-      "Archie",
-      "Arthur",
-      "Aubrey",
-      "August",
-      "Augustine",
-      "Augustus",
-      "Basil",
-      "Ben",
-      "Benjamin",
-      "Bernard",
-      "Bert",
-      "Bertram",
-      "Carl",
-      "Cecil",
-      "Cedric",
-      "Charles",
-      "Charley",
-      "Charlie",
-      "Chester",
-      "Clarence",
-      "Claude",
-      "Clement",
-      "Clifford",
-      "Clyde",
-      "Cornelius",
-      "Cuthbert",
-      "Cyril",
-      "Daniel",
-      "David",
-      "Donald",
-      "Douglas",
-      "Duncan",
-      "Earl",
-      "Ebenezer",
-      "Ed",
-      "Eddie",
-      "Edgar",
-      "Edmund",
-      "Edward",
-      "Edwin",
-      "Elmer",
-      "Ernest",
-      "Eugene",
-      "Eustace",
-      "Evan",
-      "Everett",
-      "Ewart",
-      "Felix",
-      "Fergus",
-      "Floyd",
-      "Francis",
-      "Frank",
-      "Franklin",
-      "Fred",
-      "Frederick",
-      "Geoffrey",
-      "George",
-      "Gerald",
-      "Gilbert",
-      "Grover",
-      "Guy",
-      "Harold",
-      "Harry",
-      "Harvey",
-      "Henry",
-      "Herbert",
-      "Herman",
-      "Horace",
-      "Howard",
-      "Hubert",
-      "Hugh",
-      "Hugo",
-      "Humphrey",
-      "Ira",
-      "Isaac",
-      "Ivan",
-      "Ivor",
-      "Jack",
-      "Jacob",
-      "James",
-      "Jasper",
-      "Jessie",
-      "Jim",
-      "Joe",
-      "John",
-      "Jonathan",
-      "Joseph",
-      "Julian",
-      "Julius",
-      "Kenneth",
-      "Laurence",
-      "Lawrence",
-      "Lee",
-      "Leo",
-      "Leonard",
-      "Leopold",
-      "Leroy",
-      "Leslie",
-      "Lewis",
-      "Lionel",
-      "Llewellyn",
-      "Lloyd",
-      "Louis",
-      "Luther",
-      "Malcolm",
-      "Marion",
-      "Martin",
-      "Maurice",
-      "Maxwell",
-      "Michael",
-      "Miles",
-      "Montague",
-      "Neville",
-      "Nigel",
-      "Oliver",
-      "Oscar",
-      "Otto",
-      "Owen",
-      "Patrick",
-      "Paul",
-      "Percival",
-      "Percy",
-      "Peter",
-      "Philip",
-      "Ralph",
-      "Randolph",
-      "Ray",
-      "Raymond",
-      "Reginald",
-      "Reuben",
-      "Richard",
-      "Robert",
-      "Roderick",
-      "Roger",
-      "Roy",
-      "Rufus",
-      "Rupert",
-      "Sam",
-      "Samuel",
-      "Septimus",
-      "Sidney",
-      "Silas",
-      "Simeon",
-      "Stanley",
-      "Stephen",
-      "Theodore",
-      "Thomas",
-      "Timothy",
-      "Tom",
-      "Valentine",
-      "Vernon",
-      "Victor",
-      "Vincent",
-      "Walter",
-      "Warren",
-      "Wilfred",
-      "Will",
-      "William",
-      "Willie"
-    ]
-  },
-  {
-    name: "Victorian, England, Female",
-    type: "people",
-    items: [
-      "Ada",
-      "Addie",
-      "Adelaide",
-      "Adeline",
-      "Agatha",
-      "Agnes",
-      "Alice",
-      "Alma",
-      "Amanda",
-      "Amelia",
-      "Amy",
-      "Anna",
-      "Anne",
-      "Annie",
-      "Augusta",
-      "Beatrice",
-      "Bertha",
-      "Bessie",
-      "Blanche",
-      "Caroline",
-      "Carrie",
-      "Catherine",
-      "Cecilia",
-      "Cecily",
-      "Charlotte",
-      "Clara",
-      "Clarissa",
-      "Clementina",
-      "Constance",
-      "Cora",
-      "Cordelia",
-      "Daisy",
-      "Delia",
-      "Della",
-      "Dora",
-      "Dorcas",
-      "Doris",
-      "Dorothea",
-      "Dorothy",
-      "Edith",
-      "Edna",
-      "Effie",
-      "Eliza",
-      "Elizabeth",
-      "Ella",
-      "Ellen",
-      "Elsie",
-      "Emily",
-      "Emma",
-      "Emmeline",
-      "Esther",
-      "Ethel",
-      "Etta",
-      "Eugenie",
-      "Eva",
-      "Eveline",
-      "Flora",
-      "Florence",
-      "Frances",
-      "Freda",
-      "Georgia",
-      "Georgina",
-      "Gertrude",
-      "Gladys",
-      "Grace",
-      "Gwendoline",
-      "Harriet",
-      "Hattie",
-      "Hazel",
-      "Helen",
-      "Helena",
-      "Henrietta",
-      "Hetty",
-      "Hilda",
-      "Honor",
-      "Ida",
-      "Irene",
-      "Iris",
-      "Isabel",
-      "Ivy",
-      "Jane",
-      "Jemima",
-      "Jennie",
-      "Jenny",
-      "Jessie",
-      "Josephine",
-      "Julia",
-      "Kate",
-      "Katherine",
-      "Kathleen",
-      "Kathryn",
-      "Katie",
-      "Laura",
-      "Lavinia",
-      "Leah",
-      "Lena",
-      "Lillian",
-      "Lillie",
-      "Lily",
-      "Lizzie",
-      "Lottie",
-      "Louisa",
-      "Louise",
-      "Lucy",
-      "Lula",
-      "Lulu",
-      "Lydia",
-      "Mabel",
-      "Mae",
-      "Maggie",
-      "Mamie",
-      "Margaret",
-      "Marguerite",
-      "Marie",
-      "Marion",
-      "Marjorie",
-      "Martha",
-      "Mary",
-      "Matilda",
-      "Maude",
-      "May",
-      "Mercy",
-      "Mildred",
-      "Millicent",
-      "Minnie",
-      "Mollie",
-      "Myrtle",
-      "Nancy",
-      "Nannie",
-      "Nellie",
-      "Nettie",
-      "Nora",
-      "Olive",
-      "Patience",
-      "Pauline",
-      "Pearl",
-      "Phoebe",
-      "Phyllis",
-      "Priscilla",
-      "Prudence",
-      "Rachel",
-      "Rebecca",
-      "Rhoda",
-      "Rosa",
-      "Rose",
-      "Rosetta",
-      "Rosina",
-      "Ruby",
-      "Ruth",
-      "Sadie",
-      "Sallie",
-      "Sarah",
-      "Selina",
-      "Stella",
-      "Susan",
-      "Susannah",
-      "Susie",
-      "Sylvia",
-      "Tabitha",
-      "Theodora",
-      "Theresa",
-      "Ursula",
-      "Victoria",
-      "Viola",
-      "Violet",
-      "Wilhelmina",
-      "Willie",
-      "Winifred"
-    ]
-  },
-  {
-    name: "Anglo-Saxon, Male",
-    type: "people",
-    items: [
-      "Acca",
-      "Aldfrith",
-      "Aldhelm",
-      "Aldred",
-      "Aldulf",
-      "Aldwine",
-      "Alfred",
-      "Alric",
-      "Asser",
-      "Athelstan",
-      "Athelwald",
-      "Baldred",
-      "Baldric",
-      "Baldwin",
-      "Bede",
-      "Beocca",
-      "Beorn",
-      "Beornhelm",
-      "Beornred",
-      "Beornulf",
-      "Brand",
-      "Brihtnoth",
-      "Brunstan",
-      "Burhred",
-      "Byrhthelm",
-      "Byrhtnoth",
-      "Cadwallon",
-      "Ceadda",
-      "Ceadwalla",
-      "Ceawlin",
-      "Cenred",
-      "Cenwulf",
-      "Ceolred",
-      "Ceolwulf",
-      "Ceorl",
-      "Cerdic",
-      "Cuthbert",
-      "Cuthred",
-      "Cuthwine",
-      "Cuthwulf",
-      "Cynegils",
-      "Cynehelm",
-      "Cynewulf",
-      "Cynric",
-      "Dunstan",
-      "Eadbald",
-      "Eadgar",
-      "Eadmund",
-      "Eadric",
-      "Eadweard",
-      "Eadwine",
-      "Edgar",
-      "Edmund",
-      "Edward",
-      "Edwin",
-      "Eomer",
-      "Eormenric",
-      "Framric",
-      "Freawine",
-      "Gamal",
-      "Godric",
-      "Godwine",
-      "Harold",
-      "Hengest",
-      "Horsa",
-      "Leofric",
-      "Leofwine",
-      "Offa",
-      "Oswald",
-      "Oswine",
-      "Penda",
-      "Siward",
-      "Uhtred",
-      "Wiglaf",
-      "Wulfgar",
-      "Wulfric",
-      "Wulfstan"
-    ]
-  },
-  {
-    name: "Anglo-Saxon, Female",
-    type: "people",
-    items: [
-      "\xC6thelflaed",
-      "Agatha",
-      "Agnes",
-      "Beadohild",
-      "Ceolburh",
-      "Cuthburh",
-      "Cwenburh",
-      "Eadburg",
-      "Eanflaed",
-      "Eawyn",
-      "Edith",
-      "Emma",
-      "Ethelflaed",
-      "Hild",
-      "Hilda",
-      "Hildeburg",
-      "Hildegard",
-      "Inga",
-      "Mathilda",
-      "Matilda",
-      "Mildrith",
-      "Osgyth",
-      "Wealhtheow",
-      "Wulfwyn",
-      "Wynflaed"
-    ]
-  }
-];
-
-// src/templates.ts
-var BUILTIN_TEMPLATES = builtin_templates_default;
-function templateTypeFor(packType) {
-  if (packType === "breakdownPack" || packType === "listPack") return "people";
-  if (packType === "compoundPack") return "people-compound";
-  if (packType === "placePack") return "place";
-  return void 0;
-}
-function builtinTemplates(type) {
-  return BUILTIN_TEMPLATES.filter((t) => t.type === type);
-}
-
-// src/landMenu.ts
-var import_obsidian7 = require("obsidian");
-var DEFAULT_LAND = { biome: void 0, terrain: "any" };
-var LandButton = class {
-  constructor(container, options) {
-    this.options = options;
-    this.custom = [];
-    this.el = container.createEl("button", {
-      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
-      attr: { type: "button" }
-    });
-    (0, import_obsidian7.setIcon)(this.el, ICON_BIOME);
-    this.el.addEventListener("click", (evt) => void this.open(evt));
-    this.refresh();
-  }
-  /** Shows or hides the button and updates its tooltip and active state. */
-  refresh() {
-    var _a2, _b, _c;
-    const state = this.options.state();
-    this.el.toggle(!!state);
-    if (!state) return;
-    const biome = findBiome(state.biome, this.custom);
-    const terrain = [...TERRAIN_CHOICES, ...(_a2 = biome == null ? void 0 : biome.customTerrains) != null ? _a2 : []].find((t) => t.id === state.terrain);
-    const biomeLabel = (_b = biome == null ? void 0 : biome.label) != null ? _b : this.options.defaultLabel();
-    const parts = [biomeLabel, ...this.options.terrain() ? [(_c = terrain == null ? void 0 : terrain.label) != null ? _c : "Any terrain"] : []];
-    this.el.setAttribute("title", `Land: ${parts.join(" \xB7 ")}`);
-    this.el.setAttribute("aria-label", `Land: ${parts.join(" \xB7 ")}`);
-    this.el.toggleClass("is-active", !!state.biome || state.terrain !== "any");
-  }
-  async open(evt) {
-    var _a2, _b;
-    const state = this.options.state();
-    if (!state) return;
-    this.custom = await this.options.customBiomes();
-    const menu = new import_obsidian7.Menu();
-    const heading = (title) => menu.addItem((item) => item.setTitle(title).setDisabled(true));
-    const choose = (next) => {
-      this.options.set(next);
-      this.refresh();
-      this.options.onChange();
-    };
-    const setBiome = (id) => {
-      const biome = findBiome(id, this.custom);
-      const keep = !biome || state.terrain === "any" || availableTerrains(biome).some((t) => t.id === state.terrain);
-      choose({ biome: id, terrain: keep ? state.terrain : "any" });
-    };
-    heading("Biome");
-    const defaultLabel = this.options.defaultLabel();
-    menu.addItem((item) => item.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(void 0)));
-    menu.addSeparator();
-    const builtIn = defaultLabel === BRITAIN.label ? BIOMES : [BRITAIN, ...BIOMES];
-    for (const b of builtIn) menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === b.id).onClick(() => setBiome(b.id)));
-    if (this.custom.length > 0) {
-      menu.addSeparator();
-      heading("Your biomes");
-      for (const b of [...this.custom].sort((x, y) => x.label.localeCompare(y.label))) {
-        const id = (_b = (_a2 = b.custom) == null ? void 0 : _a2.path) != null ? _b : b.id;
-        menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === id).onClick(() => setBiome(id)));
-      }
+// src/data/group-names.json
+var group_names_default = {
+  settings: {
+    phrases: {
+      FL: "historic or low fantasy",
+      FH: "high or epic fantasy",
+      MR: "real-world modern",
+      MF: "contemporary fantasy",
+      SF: "science fiction"
     }
-    if (this.options.terrain()) {
-      menu.addSeparator();
-      heading("Terrain");
-      const biome = findBiome(state.biome, this.custom);
-      const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
-      menu.addItem((item) => item.setTitle("Any terrain").setChecked(state.terrain === "any").onClick(() => choose({ ...state, terrain: "any" })));
-      for (const t of terrains) {
-        menu.addItem((item) => item.setTitle(t.label).setChecked(state.terrain === t.id).onClick(() => choose({ ...state, terrain: t.id })));
-      }
-    }
-    menu.showAtMouseEvent(evt);
-  }
-};
-function landHistorySuffix(state, custom = [], withBiome = true) {
-  var _a2;
-  if (!state) return "";
-  const biome = findBiome(state.biome, custom);
-  const terrain = [...TERRAIN_CHOICES, ...(_a2 = biome == null ? void 0 : biome.customTerrains) != null ? _a2 : []].find((t) => t.id === state.terrain && t.id !== "any");
-  return `${withBiome && biome ? ` \xB7 ${biomeInline(biome)}` : ""}${terrain ? ` \xB7 ${terrain.label.toLowerCase()}` : ""}`;
-}
-
-// src/tribes/safeguardPacks.ts
-function isSafeguardPackContent(content) {
-  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
-  return !!fm && /^type:\s*["']?tribal-safeguards["']?\s*$/m.test(fm[1]);
-}
-function parseSafeguardPack(content) {
-  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
-  const pack = { block: [], flag: [], allow: [], flagListBlocks: !!fm && /^flag-list-blocks:\s*true\s*$/m.test(fm[1]) };
-  let target = null;
-  for (const raw of (fm ? content.slice(fm[0].length) : content).split(/\r?\n/)) {
-    const line = raw.trim();
-    const heading = line.match(/^##\s+(.+?)\s*#*$/);
-    if (heading) {
-      const h = heading[1].toLowerCase();
-      target = h === "block" ? pack.block : h === "flag" ? pack.flag : h === "allow" ? pack.allow : null;
-      continue;
-    }
-    const bullet = line.match(/^[-*+]\s+(.+)$/);
-    if (bullet && target) target.push(...bullet[1].split(",").map((w) => w.trim()).filter(Boolean));
-  }
-  return pack;
-}
-var norm2 = (s) => s.trim().toLowerCase().replace(/^the /, "");
-function mergeSafeguards(builtIn, packs) {
-  const notices = [];
-  const builtInBlock = new Set(builtIn.blockList.map(norm2));
-  const allow = /* @__PURE__ */ new Set();
-  for (const p of packs) {
-    for (const a of p.allow) {
-      if (builtInBlock.has(norm2(a))) notices.push(`\u201C${a}\u201D is on the built-in block list and stays blocked.`);
-      else allow.add(norm2(a));
-    }
-  }
-  const block = [...builtIn.blockList, ...packs.flatMap((p) => p.block)];
-  const flag = [...builtIn.flagList, ...packs.flatMap((p) => p.flag)].filter((f) => !allow.has(norm2(f)));
-  return { block, flag, flagBlocks: builtIn.flagListBlocks || packs.some((p) => p.flagListBlocks), notices };
-}
-var SAFEGUARD_TEMPLATE = `---
-type: tribal-safeguards
-flag-list-blocks: false
----
-
-## Block
-
-Names never to produce. Each one is added to the built-in block list, which protects living peoples' names.
-
-## Flag
-
-Names to allow but mark as echoing a real historical people.
-
-## Allow
-
-Names to take off the flag list. Built-in block-list names can't be allowed.
-`;
-
-// src/names/starterTemplates.ts
-var STARTER_RECIPES = [
-  {
-    name: "Organic Britain",
-    recipe: { shape: { part: "organic", region: "all-britain" }, register: "mixed", render: { joining: "balanced" } },
-    description: "Organic British place names drawn from all of Britain, with a mix of modern and traditional words."
   },
-  {
-    name: "Old English Shire",
-    recipe: { shape: { part: "organic", region: "south-east" }, register: "traditional", render: { joining: "fused" } },
-    description: "South East England in traditional words, with parts readily fused into single names."
-  },
-  {
-    name: "Danelaw",
-    recipe: {
-      shape: { part: "organic", region: "east-midlands" },
-      register: "traditional",
-      slots: {
-        "personal-name": {
-          kind: "sources",
-          sources: [
-            { pack: "Saxon names", weight: 70 },
-            { pack: "Norse names", weight: 30 }
+  families: [
+    {
+      key: "mystic",
+      section: "mysticOrders",
+      label: "faiths and mystic orders",
+      icon: "sparkles",
+      any: "orders and faiths of any kind",
+      types: [
+        {
+          key: "esoteric",
+          menu: "Esoteric and secret societies",
+          sentence: "esoteric societies",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 25,
+          front: "society",
+          person: "founder",
+          description: "Hermetic brotherhoods, secret lodges and questers after hidden knowledge, from harmless to sinister",
+          shapes: [
+            {
+              p: "{group} of the {entity}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "{group} of the {quality} {entity}",
+              f: "F",
+              w: 30
+            },
+            {
+              p: "{group} of the {colourRich} {entity}",
+              f: "F",
+              w: 20
+            },
+            {
+              p: "{quality} {group} of the {colourRich} {entity}",
+              f: "F",
+              w: 8
+            },
+            {
+              p: "{members} of the {entity}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "{members} of the {quality} {entity}",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "{members} Beyond the {entity}",
+              f: "B",
+              w: 3
+            },
+            {
+              p: "{colourRich} {members}",
+              f: "E",
+              w: 6
+            },
+            {
+              p: "{quality} {members}",
+              f: "E",
+              w: 4
+            },
+            {
+              p: "the {colourRich} {group}",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "the {entity} {group}",
+              f: "E",
+              w: 4
+            },
+            {
+              p: "Most Ancient {group} of the {quality} {entity}",
+              f: "F",
+              w: 2
+            },
+            {
+              p: "Hermetic {group} of the {entity}",
+              f: "F",
+              w: 1,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "arcane",
+          menu: "Arcane orders and colleges",
+          sentence: "arcane orders",
+          settings: [
+            "FH",
+            "MF",
+            "SF"
+          ],
+          weight: 20,
+          front: "society",
+          person: "founder",
+          description: "Orders of working magicians, wizards' colleges, psychic orders",
+          shapes: [
+            {
+              p: "{group} of the {entity}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "{group} of the {quality} {entity}",
+              f: "F",
+              w: 30
+            },
+            {
+              p: "{group} of the {colourRich} {entity}",
+              f: "F",
+              w: 20
+            },
+            {
+              p: "{quality} {group} of the {colourRich} {entity}",
+              f: "F",
+              w: 8
+            },
+            {
+              p: "{members} of the {entity}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "{members} of the {quality} {entity}",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "{members} Beyond the {entity}",
+              f: "B",
+              w: 3
+            },
+            {
+              p: "{colourRich} {members}",
+              f: "E",
+              w: 6
+            },
+            {
+              p: "{quality} {members}",
+              f: "E",
+              w: 4
+            },
+            {
+              p: "the {colourRich} {group}",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "the {entity} {group}",
+              f: "E",
+              w: 4
+            },
+            {
+              p: "Most Ancient {group} of the {quality} {entity}",
+              f: "F",
+              w: 2
+            },
+            {
+              p: "Hermetic {group} of the {entity}",
+              f: "F",
+              w: 1,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "College of the {quality} {entity}",
+              f: "F",
+              w: 6
+            },
+            {
+              p: "the {colourRich} Tower",
+              f: "E",
+              w: 2,
+              s: [
+                "FH"
+              ]
+            },
+            {
+              p: "the {quality} Choir",
+              f: "E",
+              w: 3,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "{entity} Collective",
+              f: "E",
+              w: 2,
+              s: [
+                "SF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "holy",
+          menu: "Holy and monastic orders",
+          sentence: "holy orders",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 20,
+          front: null,
+          person: "founder",
+          description: "Monks, nuns, friars and religious houses",
+          shapes: [
+            {
+              p: "Order of {holy}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "{holyMembers} of {holy}",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "{holyMembers} of the {holyEntity}",
+              f: "B",
+              w: 20
+            },
+            {
+              p: "{holyQuality} {holyMembers} of the {holyEntity}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "{holyGroup} of the {holyQuality} {holyEntity}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "the {holyQuality} {holyMembers}",
+              f: "E",
+              w: 12
+            },
+            {
+              p: "the {habit} {holyMembers}",
+              f: "E",
+              w: 6,
+              filter: {
+                holyMembers: [
+                  "Friars",
+                  "Monks",
+                  "Nuns",
+                  "Canons"
+                ]
+              }
+            },
+            {
+              p: "the {holyEntity} {holyGroup}",
+              f: "E",
+              w: 7
+            }
+          ]
+        },
+        {
+          key: "cult",
+          menu: "Cults and heresies",
+          sentence: "cults",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: "society",
+          person: "prophet",
+          description: "Cults, heresies and doomsday faiths",
+          shapes: [
+            {
+              p: "Children of the {cultQuality} {cultEntity}",
+              f: "B",
+              w: 18
+            },
+            {
+              p: "Cult of the {cultQuality} {cultEntity}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "Church of the {cultQuality} {cultEntity}",
+              f: "F",
+              w: 8
+            },
+            {
+              p: "the {cultQuality} {cultGroup}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Those Who {verbPhrase}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {cultEntity:poss} {cultGroup}",
+              f: "E",
+              w: 8
+            },
+            {
+              p: "{cultGroup} of the {ordinalWord} {cultEntity}",
+              f: "F",
+              w: 8
+            },
+            {
+              p: "the {cultName}",
+              f: "E",
+              w: 8
+            },
+            {
+              p: "{person:poss} {cultGroup}",
+              f: "E",
+              w: 5
+            }
+          ]
+        },
+        {
+          key: "coven",
+          menu: "Covens and lodges",
+          sentence: "covens and lodges",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF"
+          ],
+          weight: 10,
+          front: "society",
+          person: "founder",
+          description: "Witches' covens, druids' groves, cunning folk",
+          shapes: [
+            {
+              p: "the {covenLand} Coven",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "Circle of the {covenEmblem}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "{covenMembers} of the {colourRich} Moon",
+              f: "B",
+              w: 6
+            },
+            {
+              p: "the {covenEmblem} {covenGroup}",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "{covenGroup} of the {colour} {covenEmblem}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "the {covenLand} {covenMembers}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Grove of the {tree}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "the {number} of the {covenLand}",
+              f: "E",
+              w: 6
+            }
+          ]
+        },
+        {
+          key: "school",
+          menu: "Schools of philosophy",
+          sentence: "schools of philosophy",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 10,
+          front: null,
+          person: "teacher",
+          description: "Philosophical schools and followers of a teaching",
+          shapes: [
+            {
+              p: "the {emblem} School",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "{schoolGroup} of the {schoolIdea}",
+              f: "B",
+              w: 20
+            },
+            {
+              p: "the {schoolPlace} {schoolMembers}",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "Followers of the {schoolIdea}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "{person:poss} School",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Academy of the {quality} {entity}",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "the {schoolIdea}",
+              f: "E",
+              w: 10
+            }
           ]
         }
-      }
+      ]
     },
-    description: "The East Midlands in traditional words. The personal-name slot draws 70% from \u201CSaxon names\u201D and 30% from \u201CNorse names\u201D: replace these with your own packs. Until they exist, personal names stay as placeholders."
-  },
-  {
-    name: "Northern Dales",
-    recipe: { shape: { part: "organic", region: "north" }, register: "mixed" },
-    description: "The North of England, with a mix of modern and traditional words."
-  },
-  {
-    name: "Highland Glens",
-    recipe: { shape: { part: "organic", region: "scottish-highlands-and-hebrides" }, register: "modern" },
-    description: "The Scottish Highlands and Hebrides, in modern words."
-  },
-  {
-    name: "Welsh Hills",
-    recipe: { shape: { part: "organic", region: "wales" }, register: "modern" },
-    description: "Wales, in modern words."
-  },
-  {
-    name: "Settler Frontier",
-    recipe: {
-      shape: { part: "new-land", tradition: "english-speaking-settler", context: "sparse-or-weak-native-presence" },
-      register: "modern"
-    },
-    description: "New land settled by English-speaking settlers, with a sparse or weak native presence, in modern words."
-  },
-  {
-    name: "Imperial Survey",
-    recipe: { shape: { part: "new-land", tradition: "british-imperial", context: "wild-and-unsettled" } },
-    description: "Wild and unsettled new land named by British imperial officials, navy and explorers."
-  },
-  {
-    name: "Mission Lands",
-    recipe: { shape: { part: "new-land", tradition: "spanish", context: "contested-frontier" } },
-    description: "A contested frontier named in the Spanish tradition: saints, feasts and missions."
-  },
-  {
-    name: "Roman Province",
-    recipe: { shape: { part: "established", tradition: "roman", context: "accommodation" } },
-    description: "A Roman province within an established culture, accommodating local peoples and gods."
-  },
-  {
-    name: "Company Rule",
-    recipe: { shape: { part: "established", tradition: "british-imperial", context: "imposition" } },
-    description: "British imperial rule imposed on an established culture: cantonments, civil lines and twin cities."
-  },
-  {
-    name: "Invented World",
-    recipe: {
-      shape: { part: "organic", region: "all-britain" },
-      register: "mixed",
-      slots: {
-        "calendar-date-or-feast": { kind: "placeholder" },
-        "classical-biblical-or-legendary-name": { kind: "placeholder" },
-        "settler-group": { kind: "placeholder" },
-        "ethnic-or-cultural-group": { kind: "placeholder" }
-      }
-    },
-    description: "Organic shapes for an invented world: calendar dates, classical names, settler groups and ethnic or cultural groups are left as placeholders for your own world's words."
-  }
-];
-var STARTER_WORD_LISTS = [
-  {
-    name: "European Fauna",
-    categories: ["domestic-animal", "wild-animal", "bird", "fish-and-other-creatures"],
-    description: "The built-in animal lists, ready to edit."
-  },
-  { name: "European Flora", categories: ["tree", "wild-plant", "crop"], description: "The built-in plant lists, ready to edit." },
-  {
-    name: "Landscape and Description",
-    categories: [
-      "colour",
-      "size",
-      "age",
-      "position-or-direction",
-      "shape",
-      "quality-or-condition",
-      "number",
-      "landform",
-      "water-or-wetland-feature",
-      "soil-or-ground",
-      "built-feature"
-    ],
-    description: "The built-in description and landscape lists, ready to edit."
-  },
-  {
-    name: "Life and Belief",
-    categories: [
-      "activity",
-      "produce",
-      "religious-association",
-      "season",
-      "assembly-or-law",
-      "status-or-role",
-      "ethnic-or-cultural-group",
-      "supernatural-being"
-    ],
-    description: "The built-in lists for activity, belief and people, ready to edit."
-  },
-  {
-    name: "Colonial Words",
-    categories: [
-      "resource",
-      "emotion-or-aspiration",
-      "event-or-incident",
-      "calendar-date-or-feast",
-      "imperial-claim",
-      "classical-biblical-or-legendary-name",
-      "ship",
-      "honorific-title",
-      "settler-group",
-      "distance-or-survey-mark"
-    ],
-    description: "The built-in colonial lists, ready to edit."
-  }
-];
-var LABELS = new Map([
-  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]),
-  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label])
-]);
-var FUSES_COLUMN = {
-  yes: "Yes",
-  no: "No",
-  "traditional-only": "Traditional only",
-  "number-fused": "Yes",
-  "number-spaced": "No",
-  "town-only": "Yes",
-  mile: "No"
-};
-function wordTable(entries) {
-  const rows = entries.map((e) => {
-    var _a2, _b, _c;
-    const forms = [...e.forms, ...(_a2 = e.traditionalForms) != null ? _a2 : []].map((f) => `${f}-`).join(", ");
-    return `| ${e.modern} | ${(_b = e.traditional) != null ? _b : "\u2014"} | ${(_c = e.plural) != null ? _c : "\u2014"} | ${forms || "\u2014"} | ${FUSES_COLUMN[e.fuses]} |`;
-  });
-  return ["| Modern | Traditional | Plural | Combining forms | Fuses |", "|---|---|---|---|---|", ...rows].join("\n");
-}
-function starterWordListBody(list) {
-  const sections = list.categories.map((id) => {
-    var _a2, _b;
-    return `## ${(_a2 = LABELS.get(id)) != null ? _a2 : id}
-
-${wordTable((_b = NAME_WORDS.categories[id]) != null ? _b : [])}`;
-  });
-  return `${list.description}
-
-${sections.join("\n\n")}`;
-}
-
-// src/biomePacks.ts
-var LIST_SECTIONS = [
-  ["wildAnimals", "Wild animals", ["wild animal"]],
-  ["birds", "Birds", ["bird"]],
-  ["creatures", "Creatures", ["fish and other creatures"]],
-  ["trees", "Trees", ["tree"]],
-  ["plants", "Plants", ["wild plant"]],
-  ["crops", "Crops", ["crop"]],
-  ["livestock", "Livestock", ["domestic animal"]],
-  ["lifeways", "Lifeways", []],
-  ["sacred", "Sacred", []],
-  ["materials", "Materials", []],
-  ["ground", "Ground", ["soil or ground"]],
-  ["resources", "Resources", ["resource"]],
-  ["seasons", "Seasons", ["season"]]
-];
-var norm3 = (s) => s.trim().toLowerCase();
-var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-function weightedItems(text) {
-  return text.split(",").map((w) => w.trim()).filter((w) => w.length > 0).map((item) => {
-    const m = item.match(/^(.*?)\s*\((\d+(?:\.\d+)?)\)$/);
-    return m ? [m[1].trim(), Number(m[2])] : [item, 1];
-  });
-}
-function fusesOf(e) {
-  return e.fuses;
-}
-function parseBiomePackContent(content, fallbackName = "Biome") {
-  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
-  const frontmatter = fm ? fm[1] : "";
-  const field = (key2) => {
-    var _a2, _b;
-    return (_b = (_a2 = frontmatter.match(new RegExp(`^${key2}:\\s*(.*)$`, "m"))) == null ? void 0 : _a2[1].trim().replace(/^['"]|['"]$/g, "")) != null ? _b : "";
-  };
-  const body = fm ? content.slice(fm[0].length) : content;
-  const guideLines = [];
-  const sections = [];
-  let current = null;
-  let tableLines = [];
-  const flushTable = () => {
-    var _a2;
-    if (current && tableLines.length > 0) {
-      const rows = parseWordList(tableLines.join("\n")).unsectioned;
-      current.entries = [
-        ...(_a2 = current.entries) != null ? _a2 : [],
-        ...rows.map((r) => ({
-          modern: r.modern,
-          ...r.traditional ? { traditional: r.traditional } : {},
-          plural: r.plural,
-          forms: r.combiningForms,
-          fuses: r.fuses
-        }))
-      ];
-      current.words.push(...rows.map((r) => [r.modern, 1]));
-    }
-    tableLines = [];
-  };
-  for (const raw of body.split(/\r?\n/)) {
-    const line = raw.trim();
-    const heading = line.match(/^##\s+(.+?)\s*#*$/);
-    if (heading) {
-      flushTable();
-      current = { heading: heading[1], words: [], packs: [] };
-      sections.push(current);
-      continue;
-    }
-    if (!current) {
-      if (!/^#\s/.test(line)) guideLines.push(raw);
-      continue;
-    }
-    if (line.startsWith("|")) {
-      tableLines.push(line);
-      continue;
-    }
-    flushTable();
-    const bullet = line.match(/^[-*+]\s+(.+)$/);
-    if (bullet) current.words.push(...weightedItems(bullet[1]));
-    const pack = line.match(/^\/\/\s*(.+)$/);
-    if (pack) {
-      const parsed = parseWordList(`// ${pack[1]}`).unsectionedPacks[0];
-      if (parsed) current.packs.push(parsed);
-    }
-  }
-  flushTable();
-  const universal = field("universal-words");
-  return {
-    packName: field("packName") || fallbackName,
-    basedOn: field("based-on") || "temperate",
-    ...field("phrase") ? { phrase: field("phrase") } : {},
-    universalWords: universal !== "false",
-    setting: field("setting"),
-    guide: guideLines.join("\n").trim(),
-    sections
-  };
-}
-var groupIds = new Map([
-  ...PLACE_SHAPE_DATA.groups.flatMap((g) => [[norm3(g.id), g.id], [norm3(g.label), g.id]]),
-  ...COLONIAL_DATA.groups.flatMap((g) => [[norm3(g.id), g.id], ...g.label ? [[norm3(g.label), g.id]] : []])
-]);
-function terrainHeading(heading) {
-  const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
-  return m ? { terrain: m[1].trim(), part: m[2].toLowerCase() } : null;
-}
-function terrainId(token, custom) {
-  var _a2;
-  const t = norm3(token);
-  const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm3(x.id) === t || norm3(x.label) === t));
-  if (builtIn) return builtIn.id;
-  return (_a2 = custom.find((x) => norm3(x.label) === t || x.id === kebab(token))) == null ? void 0 : _a2.id;
-}
-var key = (words) => words.map(([w, n]) => `${norm3(w)}|${n}`).sort().join("\n");
-var entryKey = (entries) => entries.map((e) => `${norm3(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
-function fusesKey(f) {
-  return f === "no" || f === "number-spaced" || f === "mile" ? "no" : f === "traditional-only" ? "traditional-only" : "yes";
-}
-var recordKey = (r) => Object.entries(r).map(([k, v]) => `${k}|${v}`).sort().join("\n");
-function applyBiomePack(base, pack, path) {
-  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
-  const problems = [];
-  const b = {
-    ...base,
-    land: { ...base.land },
-    water: { ...base.water },
-    short: { land: { ...base.short.land }, water: { ...base.short.water } },
-    shapeMultipliers: { groups: { ...base.shapeMultipliers.groups }, generics: { ...base.shapeMultipliers.generics } },
-    ...base.entries ? { entries: { ...base.entries } } : {},
-    ...base.customTerrains ? { customTerrains: [...base.customTerrains] } : {}
-  };
-  if (path) {
-    b.id = `pack:${path}`;
-    b.custom = { path, base: (_b = (_a2 = base.custom) == null ? void 0 : _a2.path) != null ? _b : base.id };
-    b.label = pack.packName;
-    b.phrase = (_c = pack.phrase) != null ? _c : /^the\b/i.test(pack.packName) ? pack.packName : `the ${pack.packName.toLowerCase()}`;
-    b.guide = pack.guide || `Based on ${base.label}.`;
-  } else {
-    if (pack.phrase) b.phrase = pack.phrase;
-    if (pack.guide) b.guide = pack.guide;
-  }
-  if (!pack.universalWords) b.universalWords = false;
-  const packLines = { ...(_d = base.packLines) != null ? _d : {} };
-  const weightsSection = pack.sections.find((s) => ["terrain weights", "terrains"].includes(norm3(s.heading)));
-  if (weightsSection) {
-    const weights = {};
-    const custom = [];
-    for (const [name, w] of weightsSection.words) {
-      const id = terrainId(name, []);
-      if (id) weights[id] = w;
-      else {
-        const cid = kebab(name);
-        custom.push({ id: cid, label: name, phrase: `the ${name.toLowerCase()}`, shapeMultipliers: { groups: {}, generics: {} } });
-        weights[cid] = w;
-      }
-    }
-    if (recordKey(weights) !== recordKey(Object.fromEntries(Object.entries(base.terrainWeights).filter(([, w]) => w > 0)))) {
-      b.terrainWeights = Object.fromEntries(TERRAIN_CHOICES.filter((t) => t.id !== "any").map((t) => {
-        var _a3;
-        return [t.id, (_a3 = weights[t.id]) != null ? _a3 : 0];
-      }));
-      for (const t of custom) b.terrainWeights[t.id] = weights[t.id];
-      if (custom.length > 0) b.customTerrains = custom;
-      else delete b.customTerrains;
-    }
-  }
-  const customTerrains = (_e = b.customTerrains) != null ? _e : [];
-  for (const section of pack.sections) {
-    const h = norm3(section.heading);
-    if (section === weightsSection) continue;
-    const list = LIST_SECTIONS.find(([, heading, aliases]) => norm3(heading) === h || aliases.includes(h));
-    if (list) {
-      const [id] = list;
-      if (section.packs.length > 0) packLines[id] = section.packs;
-      const baseEntries = (_f = base.entries) == null ? void 0 : _f[id];
-      if (section.entries) {
-        if (!baseEntries || entryKey(section.entries) !== entryKey(baseEntries)) {
-          b.entries = { ...(_g = b.entries) != null ? _g : {}, [id]: section.entries };
-          b[id] = section.entries.map((e) => [e.modern, 1]);
-        }
-      } else if (key(section.words) !== key(base[id])) {
-        b[id] = section.words;
-        if ((_h = b.entries) == null ? void 0 : _h[id]) {
-          const { [id]: _dropped, ...rest } = b.entries;
-          b.entries = rest;
-        }
-      }
-      continue;
-    }
-    if (h === "shape groups" || h === "shape generics") {
-      const record = Object.fromEntries(section.words.map(([w, n]) => {
-        var _a3;
-        return [h === "shape groups" ? (_a3 = groupIds.get(norm3(w))) != null ? _a3 : w : w, n];
-      }));
-      const target = h === "shape groups" ? "groups" : "generics";
-      if (recordKey(record) !== recordKey(base.shapeMultipliers[target])) b.shapeMultipliers[target] = record;
-      continue;
-    }
-    const th = terrainHeading(section.heading);
-    if (!th) {
-      problems.push(`Unknown heading \u201C${section.heading}\u201D.`);
-      continue;
-    }
-    const tid = terrainId(th.terrain, customTerrains);
-    if (!tid) {
-      problems.push(`\u201C${th.terrain}\u201D has words but no weight in Terrain weights.`);
-      continue;
-    }
-    if (th.part === "land" || th.part === "water") {
-      const side = b[th.part];
-      const own = ((_i = base[th.part][tid]) != null ? _i : []).map(([w, n]) => [w, n]);
-      if (key(section.words) !== key(own)) side[tid] = section.words;
-    } else if (th.part === "short land" || th.part === "short water") {
-      const kind = th.part === "short land" ? "land" : "water";
-      if (base.terrainTags && section.entries) {
-        const listKey = kind === "land" ? "shortLand" : "shortWater";
-        const baseTagged = ((_k = (_j = base.entries) == null ? void 0 : _j[listKey]) != null ? _k : []).filter((e) => {
-          var _a3;
-          return (_a3 = base.terrainTags[e.modern]) == null ? void 0 : _a3.includes(tid);
-        });
-        if (entryKey(section.entries) !== entryKey(baseTagged)) {
-          b.terrainTags = { ...b.terrainTags };
-          const entries = [...(_m = (_l = b.entries) == null ? void 0 : _l[listKey]) != null ? _m : []];
-          for (const e of section.entries) {
-            if (!entries.some((x) => norm3(x.modern) === norm3(e.modern))) entries.push(e);
-            b.terrainTags[e.modern] = [.../* @__PURE__ */ new Set([...(_n = b.terrainTags[e.modern]) != null ? _n : [], tid])];
-          }
-          for (const e of baseTagged) {
-            if (!section.entries.some((x) => norm3(x.modern) === norm3(e.modern))) {
-              b.terrainTags[e.modern] = ((_o = b.terrainTags[e.modern]) != null ? _o : []).filter((t) => t !== tid);
+    {
+      key: "martial",
+      section: "martialOrders",
+      label: "armies and martial orders",
+      icon: "swords",
+      any: "martial groups of any kind",
+      types: [
+        {
+          key: "unit",
+          menu: "Regular units",
+          sentence: "regular units",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 35,
+          front: null,
+          person: "commander",
+          description: "Legions, regiments, battalions and starship troops",
+          shapes: [
+            {
+              p: "{person:poss} {band}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{desc} {band}",
+              f: "E",
+              w: 25
+            },
+            {
+              p: "{desc} {desc} {unitGroup}",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "{band} of the {land}",
+              f: "B",
+              w: 5
+            },
+            {
+              p: "{band} of {element}",
+              f: "B",
+              w: 4
+            },
+            {
+              p: "{ordinal} {unitGroup}",
+              f: "F",
+              w: 12
+            },
+            {
+              p: "{ordinal} ({town}) Regiment of {regimentOf}",
+              f: "F",
+              w: 6,
+              s: [
+                "FL",
+                "MR"
+              ]
+            },
+            {
+              p: "{ordinal} {town} {arm}",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "{ordinalWord} {unitGroup} of the {land}",
+              f: "F",
+              w: 6,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "{ordinal} Battalion, {town} {arm}",
+              f: "F",
+              w: 5,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "the {nickname}",
+              f: "E",
+              w: 10,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "{greek} {greek} {starBand}",
+              f: "E",
+              w: 4,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "{ordinal} {tech} {soldiers}",
+              f: "F",
+              w: 8,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "Task Force {greek}",
+              f: "F",
+              w: 4,
+              s: [
+                "MR",
+                "SF"
+              ],
+              sx: {
+                MR: 0.5
+              }
+            },
+            {
+              p: "{tech} {band}",
+              f: "E",
+              w: 8,
+              s: [
+                "SF"
+              ]
             }
-          }
-          b.entries = { ...(_p = b.entries) != null ? _p : {}, [listKey]: entries };
+          ]
+        },
+        {
+          key: "chivalric",
+          menu: "Knightly and chivalric orders",
+          sentence: "knightly orders",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: null,
+          person: "founder",
+          description: "Orders of knighthood and honour",
+          shapes: [
+            {
+              p: "Order of the {colour} {knightEmblem}",
+              f: "F",
+              w: 25
+            },
+            {
+              p: "Order of the {knightEmblem}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "Knights of the {knightEmblem}",
+              f: "B",
+              w: 15,
+              s: [
+                "FL",
+                "FH",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "Knights of the {colour} {knightEmblem}",
+              f: "B",
+              w: 10,
+              s: [
+                "FL",
+                "FH",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "Most Noble Order of the {colour} {knightEmblem}",
+              f: "F",
+              w: 4
+            },
+            {
+              p: "Order of {holy}",
+              f: "F",
+              w: 8,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "Knights Protector of the {land}",
+              f: "F",
+              w: 4,
+              s: [
+                "FL",
+                "FH",
+                "MF"
+              ]
+            },
+            {
+              p: "{chivMembers} of the {knightEmblem}",
+              f: "B",
+              w: 8,
+              s: [
+                "FL",
+                "FH",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "the {colour} Knights",
+              f: "E",
+              w: 5,
+              s: [
+                "FL",
+                "FH",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "the {knightEmblem} Knights",
+              f: "E",
+              w: 6,
+              s: [
+                "FL",
+                "FH",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "the {colour} {knightEmblem:pl}",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "Royal {town} Order",
+              f: "F",
+              w: 4,
+              s: [
+                "MR"
+              ]
+            },
+            {
+              p: "Order of {town}",
+              f: "F",
+              w: 4,
+              s: [
+                "MR"
+              ]
+            },
+            {
+              p: "Knights of {star}",
+              f: "F",
+              w: 6,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "Order of the {tech} Star",
+              f: "F",
+              w: 4,
+              s: [
+                "SF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "mercenary",
+          menu: "Mercenary and free companies",
+          sentence: "mercenary companies",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: null,
+          person: "captain",
+          description: "Free companies, sellswords and private military firms",
+          shapes: [
+            {
+              p: "the {desc} {emblem} Company",
+              f: "E",
+              w: 20,
+              s: [
+                "FL",
+                "FH",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "the {colour} Company",
+              f: "E",
+              w: 8,
+              s: [
+                "FL",
+                "FH",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{person:poss} {mercs}",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "Free Company of the {emblem}",
+              f: "F",
+              w: 10,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "the {town} {mercs}",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "the {desc} {creatures}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{surname} {securitySuffix}",
+              f: "B",
+              w: 15,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{brandRoot} {securitySuffix}",
+              f: "B",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "fleet",
+          menu: "Fleets and squadrons",
+          sentence: "fleets and squadrons",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 10,
+          front: null,
+          person: "admiral",
+          description: "Navies, squadrons and flotillas",
+          shapes: [
+            {
+              p: "the {compass} Squadron",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "{ordinal} Fleet",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "the {town} {fleetGroup}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "{town} Navy",
+              f: "F",
+              w: 5,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "the {fleetQuality} Flotilla",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{ordinal} {tech} Flotilla",
+              f: "F",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "Task Group {greek}",
+              f: "F",
+              w: 8,
+              s: [
+                "MR",
+                "SF"
+              ],
+              sx: {
+                MR: 0.5
+              }
+            },
+            {
+              p: "Squadron of the {colour} {knightEmblem}",
+              f: "F",
+              w: 8,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "the {colour} Fleet",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {land} Patrol",
+              f: "E",
+              w: 5
+            }
+          ]
+        },
+        {
+          key: "watch",
+          menu: "Watch, police and law",
+          sentence: "watches and police forces",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 10,
+          front: null,
+          person: "captain",
+          description: "City watches, constabularies, marshals and police",
+          shapes: [
+            {
+              p: "the {town} Watch",
+              f: "B",
+              w: 20,
+              s: [
+                "FL",
+                "FH",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{town} Constabulary",
+              f: "F",
+              w: 10,
+              s: [
+                "FL",
+                "MR",
+                "MF"
+              ],
+              sx: {
+                FL: 0.5
+              }
+            },
+            {
+              p: "the {land} Watch",
+              f: "E",
+              w: 8,
+              s: [
+                "FL",
+                "FH",
+                "MF"
+              ]
+            },
+            {
+              p: "Bureau of {lawPursuit}",
+              f: "F",
+              w: 8,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{ordinal} Precinct",
+              f: "F",
+              w: 5,
+              s: [
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "the {colour}-Coats",
+              f: "E",
+              w: 10,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "Wardens of the {land}",
+              f: "B",
+              w: 10,
+              s: [
+                "FL",
+                "FH",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{town} Marshals",
+              f: "E",
+              w: 8
+            },
+            {
+              p: "{town} {enforcement}",
+              f: "F",
+              w: 8,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "{watchGroup} of the {land}",
+              f: "B",
+              w: 6
+            }
+          ]
+        },
+        {
+          key: "raiders",
+          menu: "Bandits, pirates and raiders",
+          sentence: "bandits and raiders",
+          settings: [
+            "FL",
+            "FH",
+            "MF",
+            "SF"
+          ],
+          weight: 10,
+          front: null,
+          person: "captain",
+          description: "Bandits, pirates, corsairs and raiders",
+          shapes: [
+            {
+              p: "Brethren of the {colour} {raiderEmblem}",
+              f: "B",
+              w: 10,
+              s: [
+                "FL",
+                "FH",
+                "SF"
+              ]
+            },
+            {
+              p: "{person:poss} {raiders}",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "the {desc} {gear}",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "{raiders} of the {land}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "the {land} {raiders}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {tech} {raiders}",
+              f: "E",
+              w: 15,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "the {colour} {creatures}",
+              f: "E",
+              w: 10
+            }
+          ]
+        },
+        {
+          key: "guardians",
+          menu: "Guardians of a place",
+          sentence: "guardians of a place",
+          settings: [
+            "FL",
+            "FH",
+            "MF",
+            "SF"
+          ],
+          weight: 5,
+          front: null,
+          person: "founder",
+          description: "Sworn guardians of a pass, coast or tower",
+          shapes: [
+            {
+              p: "{warders} of the {land}",
+              f: "B",
+              w: 40
+            },
+            {
+              p: "the {land} {warders}",
+              f: "E",
+              w: 25
+            },
+            {
+              p: "Guardians of the {desc} {land}",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "the {colour} Watch",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Keepers of the {knightEmblem}",
+              f: "B",
+              w: 15
+            }
+          ]
         }
-      } else if (key(section.words) !== key((_q = base.short[kind][tid]) != null ? _q : [])) {
-        b.short[kind][tid] = section.words;
+      ]
+    },
+    {
+      key: "underworld",
+      section: "underworldGroups",
+      label: "thieves and the underworld",
+      icon: "venetian-mask",
+      any: "underworld groups of any kind",
+      types: [
+        {
+          key: "thieves",
+          menu: "Thieves' guilds",
+          sentence: "thieves' guilds",
+          settings: [
+            "FL",
+            "FH",
+            "MF"
+          ],
+          weight: 25,
+          front: "thieves",
+          person: "leader",
+          description: "Guilds of thieves, cutpurses and housebreakers",
+          shapes: [
+            {
+              p: "the {shade} {uWeapon/uItem}",
+              f: "E",
+              w: 25
+            },
+            {
+              p: "{shade} {agents}",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "{thiefGroup} of the {uItem}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "the {agents:poss} {thiefGroup}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {uCreature}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {shade} {uCreature}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{person:poss} {agents}",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "the {town} {thiefGroup}",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "Knights of the {uWeapon}",
+              f: "B",
+              w: 5
+            }
+          ]
+        },
+        {
+          key: "assassins",
+          menu: "Assassins' guilds",
+          sentence: "assassins' guilds",
+          settings: [
+            "FL",
+            "FH",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: "assassins",
+          person: "leader",
+          description: "Guilds of assassins, from a recognised trade to a whispered rumour",
+          shapes: [
+            {
+              p: "House of the {lastThing}",
+              f: "B",
+              w: 20
+            },
+            {
+              p: "the {shade} {uWeapon}",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "Brotherhood of the {uItem}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "the {uCreature}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{shade} {agents}",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "the {number} {uWeapon:pl}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{thiefGroup} of the {lastThing}",
+              f: "F",
+              w: 10
+            }
+          ],
+          listFilter: {
+            agents: [
+              "Hunters",
+              "Slayers",
+              "Stalkers",
+              "Takers",
+              "Cutters"
+            ]
+          }
+        },
+        {
+          key: "gang",
+          menu: "Street gangs",
+          sentence: "street gangs",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 20,
+          front: "business",
+          person: "leader",
+          description: "Street gangs from rookeries to neon-lit levels",
+          shapes: [
+            {
+              p: "the {street} {gangMembers}",
+              f: "E",
+              w: 25
+            },
+            {
+              p: "the {gangNoun}",
+              f: "E",
+              w: 20,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "the {colour} {gangWear}",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "the {urbanArea} {gangMembers}",
+              f: "E",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "the {urban} {gangNoun/gangMembers}",
+              f: "E",
+              w: 15,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{person:poss} {gangMembers}",
+              f: "E",
+              w: 10
+            }
+          ]
+        },
+        {
+          key: "syndicate",
+          menu: "Crime families and syndicates",
+          sentence: "crime families and syndicates",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: "business",
+          person: "boss",
+          description: "Crime families, outfits and cartels",
+          shapes: [
+            {
+              p: "the {surname} Family",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "the {town} {firm}",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "the {number} {portPlaces}",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "the {shade} Hand",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "{person:poss} {firm}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {surname} {firm}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {urban} {firm}",
+              f: "E",
+              w: 5,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "the {colour} {emblem} {thiefGroup}",
+              f: "E",
+              w: 5
+            }
+          ]
+        },
+        {
+          key: "smugglers",
+          menu: "Smuggling rings",
+          sentence: "smuggling rings",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: "freeTraders",
+          person: "leader",
+          description: "Smuggling rings, owlers and blockade runners",
+          shapes: [
+            {
+              p: "the {town} Ring",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "the {land} {smugglerAgents}",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "the {shade} {smugglerAgents}",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "Gentlemen of the {land}",
+              f: "B",
+              w: 10,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "{person:poss} {smugglerAgents}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {tech} Runners",
+              f: "E",
+              w: 15,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "the {colour} Lanterns",
+              f: "E",
+              w: 10
+            }
+          ]
+        },
+        {
+          key: "crew",
+          menu: "Heist and hacker crews",
+          sentence: "heist and hacker crews",
+          settings: [
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 10,
+          front: "business",
+          person: "leader",
+          description: "Heist crews and hacker collectives",
+          shapes: [
+            {
+              p: "{techWord} {crewCollective}",
+              f: "E",
+              w: 40
+            },
+            {
+              p: "the {techWord} {uCreature}",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "{person:poss} Crew",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "the {number} {crewNoun}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {colour} {gangWear}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{greek} {crewCollective}",
+              f: "E",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      key: "trade",
+      section: "tradeGuilds",
+      label: "guilds and trading houses",
+      icon: "scale",
+      any: "trading groups of any kind",
+      types: [
+        {
+          key: "craft",
+          menu: "Craft guilds and livery companies",
+          sentence: "craft guilds",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 30,
+          front: null,
+          person: "founder",
+          description: "Craft guilds and livery companies",
+          shapes: [
+            {
+              p: "{craftHonorific} Company of {tradesmen}",
+              f: "F",
+              w: 20
+            },
+            {
+              p: "Guild of {tradesmen}",
+              f: "F",
+              w: 20
+            },
+            {
+              p: "the {tradesmen:poss} Guild",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "{tradeDesc} {emblem} {tradesmen}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{tradesmen} of the {colour} {emblem}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "the {town} {tradesmen}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Fellowship of {tradesmen}",
+              f: "F",
+              w: 5
+            },
+            {
+              p: "Guild of {tech} {tradesmen}",
+              f: "F",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "merchant",
+          menu: "Merchant houses and trading companies",
+          sentence: "merchant houses",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 25,
+          front: null,
+          person: "founder",
+          description: "Merchant houses, chartered companies and trade consortia",
+          shapes: [
+            {
+              p: "House {house}",
+              f: "B",
+              w: 15,
+              s: [
+                "FL",
+                "FH",
+                "SF"
+              ]
+            },
+            {
+              p: "the {compass} Company",
+              f: "E",
+              w: 10,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "the {town} Company",
+              f: "E",
+              w: 8
+            },
+            {
+              p: "Honourable Company of {goods} Merchants",
+              f: "F",
+              w: 8
+            },
+            {
+              p: "{goods} Merchants of {town}",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "{surname} & {surname}",
+              f: "B",
+              w: 12
+            },
+            {
+              p: "Merchant Adventurers of {town}",
+              f: "F",
+              w: 5,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "the {town} {goods} Company",
+              f: "E",
+              w: 12
+            },
+            {
+              p: "Company of the {knightEmblem}",
+              f: "B",
+              w: 8,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "{brandRoot} Trading {combineWord}",
+              f: "F",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "{town} Trade Consortium",
+              f: "F",
+              w: 5,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "bank",
+          menu: "Banks and finance houses",
+          sentence: "banks",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 10,
+          front: null,
+          person: "founder",
+          description: "Banks, counting houses and finance houses",
+          shapes: [
+            {
+              p: "{surname} & {surname}",
+              f: "B",
+              w: 25
+            },
+            {
+              p: "{surname} Brothers",
+              f: "B",
+              w: 8
+            },
+            {
+              p: "Bank of {town}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "{town} {bankWord}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "House of {surname}",
+              f: "F",
+              w: 10,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "the {colour} {various} Bank",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{surname}, {surname} & Co.",
+              f: "F",
+              w: 10,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "{brandRoot} Capital",
+              f: "F",
+              w: 7,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "corp",
+          menu: "Corporations and megacorps",
+          sentence: "corporations",
+          settings: [
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: null,
+          person: "founder",
+          description: "Corporations, conglomerates and megacorps",
+          shapes: [
+            {
+              p: "{brandRoot} {corpSuffix}",
+              f: "B",
+              w: 45,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{surname}\u2013{surname}",
+              f: "B",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{town} {corpSuffix}",
+              f: "B",
+              w: 15,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{brandStart}{brandEnd}",
+              f: "B",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{surname} {corpSuffix}",
+              f: "B",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{initials}",
+              f: "E",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "union",
+          menu: "Unions and workers' associations",
+          sentence: "unions",
+          settings: [
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 10,
+          front: null,
+          person: "founder",
+          description: "Trade unions, friendly societies and workers' collectives",
+          shapes: [
+            {
+              p: "Amalgamated Society of {unionTrade}",
+              f: "F",
+              w: 20,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "the {town} {unionTrade:poss} Union",
+              f: "B",
+              w: 25,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "National Union of {unionTrade}",
+              f: "F",
+              w: 15,
+              s: [
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "{unionTrade:poss} Friendly Society",
+              f: "F",
+              w: 10,
+              s: [
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "United Brotherhood of {unionTrade}",
+              f: "F",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "the {unionTrade:poss} Collective",
+              f: "E",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "{initials}",
+              f: "E",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "caravan",
+          menu: "Caravans and shipping lines",
+          sentence: "caravans and shipping lines",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 10,
+          front: null,
+          person: "master",
+          description: "Caravans, shipping lines and freight companies",
+          shapes: [
+            {
+              p: "the {land} Caravan",
+              f: "E",
+              w: 15,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "Caravan of the {number} {wellPlaces}",
+              f: "F",
+              w: 10,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "{person:poss} Caravan",
+              f: "E",
+              w: 10,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "the {colour} {lineEmblem} Line",
+              f: "E",
+              w: 20,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "{town} Steam Packet Company",
+              f: "F",
+              w: 8,
+              s: [
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "the {surname} Line",
+              f: "E",
+              w: 12
+            },
+            {
+              p: "{town} Freight",
+              f: "B",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{brandRoot} Lines",
+              f: "B",
+              w: 8,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "{star} Transit",
+              f: "B",
+              w: 7,
+              s: [
+                "SF"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      key: "adventure",
+      section: "adventureCompanies",
+      label: "adventurers and explorers",
+      icon: "compass",
+      any: "adventuring groups of any kind",
+      types: [
+        {
+          key: "company",
+          menu: "Adventuring companies",
+          sentence: "adventuring companies",
+          settings: [
+            "FL",
+            "FH",
+            "MF",
+            "SF"
+          ],
+          weight: 50,
+          front: null,
+          person: "leader",
+          description: "Adventuring parties with a name to build",
+          shapes: [
+            {
+              p: "{companyGroup} of the {emblem}",
+              f: "B",
+              w: 12
+            },
+            {
+              p: "{companyGroup} of the {colour} {emblem}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "the {colour} {creature:pl}",
+              f: "E",
+              w: 8
+            },
+            {
+              p: "{tradeDesc} {emblem} {vocation}",
+              f: "E",
+              w: 6
+            },
+            {
+              p: "the {compound}",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "{compound} Company",
+              f: "E",
+              w: 3
+            },
+            {
+              p: "the {number} in {colour}",
+              f: "E",
+              w: 3
+            },
+            {
+              p: "{person:poss} {companyGroup}",
+              f: "E",
+              w: 6
+            },
+            {
+              p: "Company of the {ordinalWord} {emblem}",
+              f: "F",
+              w: 4
+            },
+            {
+              p: "the {emblem} and {emblem} Company",
+              f: "E",
+              w: 3
+            },
+            {
+              p: "the {tech} {creature:pl}",
+              f: "E",
+              w: 6,
+              s: [
+                "SF"
+              ]
+            }
+          ],
+          borrow: [
+            {
+              share: 10,
+              types: [
+                "esoteric"
+              ]
+            },
+            {
+              share: 10,
+              types: [
+                "thieves"
+              ]
+            },
+            {
+              share: 30,
+              types: [
+                "unit"
+              ],
+              form: "E",
+              andTypes: [
+                "mercenary"
+              ]
+            },
+            {
+              share: 50,
+              own: true
+            }
+          ]
+        },
+        {
+          key: "expedition",
+          menu: "Expeditions and survey corps",
+          sentence: "expeditions",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 25,
+          front: null,
+          person: "leader",
+          description: "Expeditions, surveys and exploring societies",
+          shapes: [
+            {
+              p: "the {expPlace} Expedition",
+              f: "B",
+              w: 25
+            },
+            {
+              p: "{person:poss} Expedition",
+              f: "B",
+              w: 20
+            },
+            {
+              p: "the {expPlace} Survey",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "Royal {expPlace} Survey",
+              f: "F",
+              w: 8,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "{expQuality} Survey Corps",
+              f: "F",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "Society for the Exploration of the {expPlace}",
+              f: "F",
+              w: 7
+            },
+            {
+              p: "Company of {expPlace} Pathfinders",
+              f: "F",
+              w: 5
+            },
+            {
+              p: "{ordinal} {town} Expedition",
+              f: "F",
+              w: 5,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{greek} Expedition",
+              f: "E",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "hunters",
+          menu: "Hunter and slayer lodges",
+          sentence: "hunters' lodges",
+          settings: [
+            "FL",
+            "FH",
+            "MF",
+            "SF"
+          ],
+          weight: 25,
+          front: null,
+          person: "leader",
+          description: "Lodges of monster hunters, slayers and bounty hunters",
+          shapes: [
+            {
+              p: "Lodge of the {colour} {beast}",
+              f: "B",
+              w: 25
+            },
+            {
+              p: "the {monster} {hunterNoun}",
+              f: "E",
+              w: 25
+            },
+            {
+              p: "the {town} Huntsmen",
+              f: "E",
+              w: 10,
+              s: [
+                "FL",
+                "FH",
+                "MF"
+              ]
+            },
+            {
+              p: "Order of the {colour} {weapon}",
+              f: "F",
+              w: 10,
+              s: [
+                "FL",
+                "FH",
+                "MF"
+              ]
+            },
+            {
+              p: "Brotherhood of the {desc} Hunt",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "{person:poss} {retrieval}",
+              f: "B",
+              w: 10,
+              s: [
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "the {tech} {hunterNoun}",
+              f: "E",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "Hunters' Brotherhood of the {land}",
+              f: "F",
+              w: 3,
+              s: [
+                "FL",
+                "FH",
+                "MF"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      key: "power",
+      section: "powerFactions",
+      label: "powers and factions",
+      icon: "landmark",
+      any: "powers of any kind",
+      types: [
+        {
+          key: "council",
+          menu: "Councils and courts",
+          sentence: "councils",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: null,
+          person: "founder",
+          description: "Ruling councils, courts and assemblies",
+          shapes: [
+            {
+              p: "Council of {number} {various:pl}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "the {colour} Chamber",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Council of {town}",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "the {number}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {councilQuality} Court",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{town} {assemblyWord}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "the {town} {directorate}",
+              f: "B",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{ordinal} Directorate",
+              f: "F",
+              w: 5,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "the {colour} Table",
+              f: "E",
+              w: 5
+            }
+          ]
+        },
+        {
+          key: "faction",
+          menu: "Factions and parties",
+          sentence: "factions",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 20,
+          front: null,
+          person: "leader",
+          description: "Political factions and parties",
+          shapes: [
+            {
+              p: "the {ideal} Party",
+              f: "B",
+              w: 20
+            },
+            {
+              p: "the {factionColour}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{town} {ideal} League",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "{ideal} and {ideal}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Friends of the {ideal}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "the {factionNick}",
+              f: "E",
+              w: 20,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "the {ideal} Faction",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "Party of the {ideal}",
+              f: "F",
+              w: 5
+            },
+            {
+              p: "Movement for {ideal}",
+              f: "F",
+              w: 5,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "secret",
+          menu: "Secret societies and conspiracies",
+          sentence: "secret societies",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: "society",
+          person: "founder",
+          description: "Conspiracies and secret societies with political aims",
+          shapes: [
+            {
+              p: "Society of the {secretQuality} {secretItem}",
+              f: "B",
+              w: 25
+            },
+            {
+              p: "the {secretQuality} {secretItem}",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "the {number}",
+              f: "E",
+              w: 8
+            },
+            {
+              p: "Brotherhood of the {entity}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "the {colour} {secretItem}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Friends of {person}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "the {number} {secretItem:pl}",
+              f: "E",
+              w: 12
+            },
+            {
+              p: "Order of the {secretQuality} {secretItem}",
+              f: "F",
+              w: 5
+            }
+          ]
+        },
+        {
+          key: "rebels",
+          menu: "Rebels and resistance movements",
+          sentence: "rebel movements",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: "society",
+          person: "leader",
+          description: "Rebels, resistance movements and risings",
+          shapes: [
+            {
+              p: "Sons of the {rebelQuality} {rebelEmblem}",
+              f: "B",
+              w: 12
+            },
+            {
+              p: "Daughters of the {rebelQuality} {rebelEmblem}",
+              f: "B",
+              w: 6
+            },
+            {
+              p: "{town} Liberation Front",
+              f: "F",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "Free {town} {rebelGroup}",
+              f: "B",
+              w: 12
+            },
+            {
+              p: "the {colour} {rebelWear}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {ordinalWord} of {season} Movement",
+              f: "F",
+              w: 4,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "{ordinal} of {month} Movement",
+              f: "F",
+              w: 4,
+              s: [
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "Army of the {ideal}",
+              f: "F",
+              w: 6
+            },
+            {
+              p: "{person:poss} Rising",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {rebelQuality} Hand",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "Rebels of the {land}",
+              f: "E",
+              w: 10
+            }
+          ]
+        },
+        {
+          key: "league",
+          menu: "Leagues and alliances",
+          sentence: "leagues",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 10,
+          front: null,
+          person: "founder",
+          description: "Leagues, alliances and compacts",
+          shapes: [
+            {
+              p: "League of {number} {cityWord:pl}",
+              f: "F",
+              w: 20
+            },
+            {
+              p: "the {councilQuality} Concord",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{town} {leagueGroup}",
+              f: "F",
+              w: 20
+            },
+            {
+              p: "the {ideal} {leagueGroup}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "Union of {town} and {town}",
+              f: "F",
+              w: 5
+            },
+            {
+              p: "the {number} {cityWord:pl}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Coalition of {number} Worlds",
+              f: "F",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "Free {cityWord:pl} {leagueGroup}",
+              f: "B",
+              w: 10
+            }
+          ]
+        },
+        {
+          key: "agency",
+          menu: "Agencies and intelligence services",
+          sentence: "agencies",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: "office",
+          person: "spymaster",
+          description: "Spy networks and intelligence services",
+          shapes: [
+            {
+              p: "Section {number}",
+              f: "E",
+              w: 15,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "Bureau of {agencyPursuit}",
+              f: "F",
+              w: 15,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "the {colour} Desk",
+              f: "E",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "Department of {agencyPursuit}",
+              f: "F",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "Office of {agencyPursuit}",
+              f: "F",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "{ordinal} Directorate",
+              f: "F",
+              w: 5,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            },
+            {
+              p: "Directorate {greek}",
+              f: "F",
+              w: 8,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "the {ruler:poss} {spyWord}",
+              f: "E",
+              w: 15,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "the {colour} Cabinet",
+              f: "E",
+              w: 8,
+              s: [
+                "FL",
+                "FH"
+              ]
+            },
+            {
+              p: "the {secretQuality} Office",
+              f: "E",
+              w: 8
+            },
+            {
+              p: "{initials}",
+              f: "E",
+              w: 10,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ]
+            }
+          ]
+        },
+        {
+          key: "house",
+          menu: "Noble and great houses",
+          sentence: "great houses",
+          settings: [
+            "FL",
+            "FH",
+            "MF",
+            "SF"
+          ],
+          weight: 10,
+          front: null,
+          person: "founder",
+          description: "Noble and great houses",
+          shapes: [
+            {
+              p: "House {house}",
+              f: "B",
+              w: 35
+            },
+            {
+              p: "House {house} of {town}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "the {house:pl} of {town}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "House of the {colour} {knightEmblem}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "the {house} Line",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "House {house}\u2013{house}",
+              f: "B",
+              w: 5,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "House {house} of {star}",
+              f: "F",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      key: "supernatural",
+      section: "supernaturalCourts",
+      label: "supernatural courts and hosts",
+      icon: "ghost",
+      any: "supernatural groups of any kind",
+      types: [
+        {
+          key: "fey",
+          menu: "Fey courts and the hidden folk",
+          sentence: "fey courts",
+          settings: [
+            "FL",
+            "FH",
+            "MF"
+          ],
+          weight: 20,
+          front: "folk",
+          person: "lord",
+          description: "Fairy courts and the hidden folk under the hill",
+          shapes: [
+            {
+              p: "Court of the {feyPlant} {skyThing}",
+              f: "B",
+              w: 20
+            },
+            {
+              p: "the {feyTime} Court",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "Folk of the {feyPlace}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "the {colour} {feyPlant} Court",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {number} Courts of the {feyPlace}",
+              f: "F",
+              w: 5
+            },
+            {
+              p: "the {feyTime} {feyTitle:poss} Court",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "Riders of the {feyPlace}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{person:poss} Court",
+              f: "E",
+              w: 10
+            }
+          ]
+        },
+        {
+          key: "blood",
+          menu: "Vampire bloodlines and courts",
+          sentence: "vampire bloodlines",
+          settings: [
+            "FL",
+            "FH",
+            "MF"
+          ],
+          weight: 20,
+          front: "society",
+          person: "sire",
+          description: "Vampire bloodlines, houses and courts",
+          shapes: [
+            {
+              p: "the {colour} Line",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "House {house}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "Blood of {person}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "Children of the {bloodQuality} {skyThing}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "the {bloodQuality} Kindred",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {house} Court",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Court of the {colour} {knightEmblem}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "the {number} Bloods",
+              f: "E",
+              w: 5
+            }
+          ]
+        },
+        {
+          key: "pack",
+          menu: "Shapeshifter packs",
+          sentence: "shapeshifter packs",
+          settings: [
+            "FL",
+            "FH",
+            "MF"
+          ],
+          weight: 15,
+          front: "society",
+          person: "alpha",
+          description: "Werewolf and shapeshifter packs",
+          shapes: [
+            {
+              p: "Pack of the {colour} {land}",
+              f: "B",
+              w: 25
+            },
+            {
+              p: "the {land} Pack",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "the {colour}-{bodyPart} Pack",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Children of the {skyThing}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "the {shifter}-{kinWord}",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "{person:poss} Pack",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {number} {bodyPart:pl}",
+              f: "E",
+              w: 10
+            }
+          ]
+        },
+        {
+          key: "spirit",
+          menu: "Spirit courts and wild hunts",
+          sentence: "spirit hosts",
+          settings: [
+            "FL",
+            "FH",
+            "MF"
+          ],
+          weight: 15,
+          front: "folk",
+          person: "lord",
+          description: "Spirit courts, ghost hosts and wild hunts",
+          shapes: [
+            {
+              p: "the {colour/feyTime} Hunt",
+              f: "E",
+              w: 25
+            },
+            {
+              p: "Riders of the {weather}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "the {feyTime} Riders",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Court of the {feyPlace}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "Spirits of the {land}",
+              f: "B",
+              w: 10
+            },
+            {
+              p: "the {number} Winds",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {deadQuality} Dead",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {deadQuality} Host",
+              f: "E",
+              w: 10
+            }
+          ]
+        },
+        {
+          key: "undead",
+          menu: "Undead legions",
+          sentence: "undead legions",
+          settings: [
+            "FH",
+            "MF"
+          ],
+          weight: 10,
+          front: null,
+          person: "lord",
+          description: "Legions of the risen dead",
+          shapes: [
+            {
+              p: "Host of the {ordinalWord} {hellPlace}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "Legion of the {deadQuality} Crown",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "the {deadQuality} {undeadNoun}",
+              f: "E",
+              w: 25
+            },
+            {
+              p: "Army of {person}",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "the {colour} Barrows",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {number} {undeadNoun}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Legion of the {land}",
+              f: "F",
+              w: 15
+            }
+          ]
+        },
+        {
+          key: "demon",
+          menu: "Demonic and infernal hosts",
+          sentence: "infernal hosts",
+          settings: [
+            "FL",
+            "FH",
+            "MF"
+          ],
+          weight: 15,
+          front: "benefactor",
+          person: "lord",
+          description: "Demonic hosts and infernal courts",
+          shapes: [
+            {
+              p: "Host of the {ordinalWord} {hellPlace}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "Legion of {person}",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "the {demonQuality} Choir",
+              f: "E",
+              w: 15
+            },
+            {
+              p: "Court of {number} {chainItem}",
+              f: "F",
+              w: 15
+            },
+            {
+              p: "{person:poss} Own",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "the {colour} {hellPlace}",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Princes of the {hellPlace}",
+              f: "B",
+              w: 10
+            }
+          ]
+        },
+        {
+          key: "celestial",
+          menu: "Angelic and celestial hosts",
+          sentence: "celestial hosts",
+          settings: [
+            "FH",
+            "MF"
+          ],
+          weight: 5,
+          front: null,
+          person: "lord",
+          description: "Angelic choirs and heavenly hosts",
+          shapes: [
+            {
+              p: "Host of the {heavenQuality} {heavenThing}",
+              f: "F",
+              w: 25
+            },
+            {
+              p: "Choir of the {entity}",
+              f: "F",
+              w: 20
+            },
+            {
+              p: "the {colour} Wings",
+              f: "E",
+              w: 20
+            },
+            {
+              p: "the {number} Thrones",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "Watchers of the {heavenThing}",
+              f: "B",
+              w: 15
+            },
+            {
+              p: "the {heavenQuality} Host",
+              f: "E",
+              w: 10
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  fronts: {
+    society: {
+      shapes: [
+        {
+          p: "Society for {pursuit}",
+          f: "F",
+          w: 25
+        },
+        {
+          p: "Friends of the {respectablePlace}",
+          f: "B",
+          w: 20
+        },
+        {
+          p: "the {weekday} Club",
+          f: "E",
+          w: 15
+        },
+        {
+          p: "the {streetFirst} {club}",
+          f: "E",
+          w: 20
+        },
+        {
+          p: "{town} Benevolent Society",
+          f: "F",
+          w: 10
+        },
+        {
+          p: "{town} Philosophical Society",
+          f: "F",
+          w: 10
+        }
+      ],
+      typeShapes: {
+        pack: [
+          {
+            p: "the {town} Hunt",
+            f: "E",
+            w: 15
+          }
+        ]
       }
-    } else {
-      const custom = customTerrains.find((t) => t.id === tid);
-      if (!custom) continue;
-      const record = Object.fromEntries(section.words.map(([w, n]) => {
-        var _a3;
-        return [th.part === "shape groups" ? (_a3 = groupIds.get(norm3(w))) != null ? _a3 : w : w, n];
-      }));
-      custom.shapeMultipliers = { ...custom.shapeMultipliers, [th.part === "shape groups" ? "groups" : "generics"]: record };
+    },
+    thieves: {
+      shapes: [
+        {
+          p: "Honourable Company of {thiefEuph}",
+          f: "F",
+          w: 25
+        },
+        {
+          p: "Guild of {thiefEuph}",
+          f: "F",
+          w: 20
+        },
+        {
+          p: "the {town} {thiefEuph}",
+          f: "E",
+          w: 20
+        },
+        {
+          p: "Society of {thiefEuph}",
+          f: "F",
+          w: 15
+        },
+        {
+          p: "the {gentleAdj} {thiefEuph}",
+          f: "E",
+          w: 20
+        }
+      ]
+    },
+    assassins: {
+      shapes: [
+        {
+          p: "{balancers} of {balance}",
+          f: "B",
+          w: 35
+        },
+        {
+          p: "{redressAdj} {redress} {redressGroup}",
+          f: "B",
+          w: 35
+        },
+        {
+          p: "the {town} {redress} Society",
+          f: "F",
+          w: 15
+        },
+        {
+          p: "{brandRoot} Resolution Services",
+          f: "F",
+          w: 15,
+          s: [
+            "MR",
+            "MF",
+            "SF"
+          ]
+        }
+      ]
+    },
+    business: {
+      shapes: [
+        {
+          p: "{surname} & Sons {businessTrade}",
+          f: "B",
+          w: 30
+        },
+        {
+          p: "{town} {businessTrade} Company",
+          f: "F",
+          w: 20
+        },
+        {
+          p: "{town} {businessTrade}",
+          f: "E",
+          w: 15
+        },
+        {
+          p: "the {town} Social Club",
+          f: "E",
+          w: 15,
+          s: [
+            "FL",
+            "FH",
+            "MR",
+            "MF"
+          ]
+        },
+        {
+          p: "{brandRoot} {corpSuffix}",
+          f: "B",
+          w: 20,
+          s: [
+            "MR",
+            "MF",
+            "SF"
+          ]
+        }
+      ]
+    },
+    freeTraders: {
+      shapes: [
+        {
+          p: "{town} Free Traders",
+          f: "E",
+          w: 25
+        },
+        {
+          p: "{town} {fishWord} Company",
+          f: "F",
+          w: 25,
+          s: [
+            "FL",
+            "FH",
+            "MR",
+            "MF"
+          ]
+        },
+        {
+          p: "Friends of the Harbour Lights",
+          f: "B",
+          w: 10
+        },
+        {
+          p: "{town} Pilots' Association",
+          f: "F",
+          w: 15
+        },
+        {
+          p: "{brandRoot} Logistics",
+          f: "F",
+          w: 20,
+          s: [
+            "MR",
+            "MF",
+            "SF"
+          ]
+        }
+      ]
+    },
+    office: {
+      shapes: [
+        {
+          p: "Department of {mundane}",
+          f: "F",
+          w: 30,
+          s: [
+            "MR",
+            "MF",
+            "SF"
+          ]
+        },
+        {
+          p: "Bureau of {mundane}",
+          f: "F",
+          w: 25,
+          s: [
+            "MR",
+            "MF",
+            "SF"
+          ]
+        },
+        {
+          p: "the {town} {mundaneOffice}",
+          f: "E",
+          w: 25
+        },
+        {
+          p: "the {ruler:poss} {clerkWord}",
+          f: "E",
+          w: 20,
+          s: [
+            "FL",
+            "FH"
+          ]
+        }
+      ]
+    },
+    folk: {
+      shapes: [
+        {
+          p: "the {folkKind} {folkWord}",
+          f: "E",
+          w: 40
+        },
+        {
+          p: "the People of {peace}",
+          f: "B",
+          w: 20
+        },
+        {
+          p: "{folkFixed}",
+          f: "E",
+          w: 20
+        },
+        {
+          p: "Folk of the {respectablePlace}",
+          f: "B",
+          w: 20
+        }
+      ]
+    },
+    benefactor: {
+      shapes: [
+        {
+          p: "the {benefAdj} {benefGroup}",
+          f: "E",
+          w: 40
+        },
+        {
+          p: "{town} Benefactors",
+          f: "E",
+          w: 20
+        },
+        {
+          p: "Friends of the {bargainWord}",
+          f: "B",
+          w: 20
+        },
+        {
+          p: "{town} Mutual Assurance Society",
+          f: "F",
+          w: 20
+        }
+      ]
     }
+  },
+  lists: {
+    colour: [
+      {
+        w: "Black",
+        x: 2
+      },
+      {
+        w: "White",
+        x: 1.5
+      },
+      {
+        w: "Red",
+        x: 2
+      },
+      {
+        w: "Grey",
+        x: 2
+      },
+      {
+        w: "Green"
+      },
+      {
+        w: "Blue"
+      },
+      {
+        w: "Gold"
+      },
+      {
+        w: "Golden"
+      },
+      {
+        w: "Silver",
+        x: 1.5
+      },
+      {
+        w: "Iron"
+      },
+      {
+        w: "Scarlet"
+      },
+      {
+        w: "Crimson"
+      },
+      {
+        w: "Ashen"
+      },
+      {
+        w: "Pale"
+      },
+      {
+        w: "Copper"
+      },
+      {
+        w: "Bronze"
+      },
+      {
+        w: "Russet"
+      },
+      {
+        w: "Amber"
+      },
+      {
+        w: "Sable",
+        x: 0.5
+      },
+      {
+        w: "Azure",
+        x: 0.5
+      },
+      {
+        w: "Jade",
+        x: 0.5
+      },
+      {
+        w: "Ivory",
+        x: 0.5
+      },
+      {
+        w: "Violet",
+        x: 0.5
+      },
+      {
+        w: "Purple",
+        x: 0.5
+      }
+    ],
+    colourRich: [
+      {
+        w: "Amber"
+      },
+      {
+        w: "Amethyst"
+      },
+      {
+        w: "Aquamarine",
+        x: 0.3
+      },
+      {
+        w: "Ashen"
+      },
+      {
+        w: "Azure",
+        x: 2
+      },
+      {
+        w: "Beryl",
+        x: 0.3
+      },
+      {
+        w: "Black"
+      },
+      {
+        w: "Blue"
+      },
+      {
+        w: "Brazen",
+        x: 0.5
+      },
+      {
+        w: "Bronze"
+      },
+      {
+        w: "Carmine",
+        x: 0.5
+      },
+      {
+        w: "Cerulean",
+        x: 0.5
+      },
+      {
+        w: "Copper"
+      },
+      {
+        w: "Crimson",
+        x: 2
+      },
+      {
+        w: "Crystal"
+      },
+      {
+        w: "Ebony"
+      },
+      {
+        w: "Emerald",
+        x: 1.5
+      },
+      {
+        w: "Golden",
+        x: 2
+      },
+      {
+        w: "Green"
+      },
+      {
+        w: "Grey"
+      },
+      {
+        w: "Incarnadine",
+        x: 0.2
+      },
+      {
+        w: "Indigo"
+      },
+      {
+        w: "Ivory"
+      },
+      {
+        w: "Jade",
+        x: 1.5
+      },
+      {
+        w: "Jet",
+        x: 0.5
+      },
+      {
+        w: "Malachite",
+        x: 0.3
+      },
+      {
+        w: "Opal",
+        x: 0.5
+      },
+      {
+        w: "Pale"
+      },
+      {
+        w: "Pearl"
+      },
+      {
+        w: "Purple"
+      },
+      {
+        w: "Rainbow",
+        x: 0.3
+      },
+      {
+        w: "Red"
+      },
+      {
+        w: "Rosy",
+        x: 0.5
+      },
+      {
+        w: "Ruby"
+      },
+      {
+        w: "Russet",
+        x: 0.5
+      },
+      {
+        w: "Sable",
+        x: 0.5
+      },
+      {
+        w: "Sapphire"
+      },
+      {
+        w: "Scarlet"
+      },
+      {
+        w: "Silver",
+        x: 2
+      },
+      {
+        w: "Topaz",
+        x: 0.3
+      },
+      {
+        w: "Turquoise",
+        x: 0.3
+      },
+      {
+        w: "Umber",
+        x: 0.5
+      },
+      {
+        w: "Vermilion",
+        x: 0.5
+      },
+      {
+        w: "Violet"
+      },
+      {
+        w: "Viridian",
+        x: 0.3
+      },
+      {
+        w: "White",
+        x: 2
+      }
+    ],
+    number: [
+      {
+        w: "Two"
+      },
+      {
+        w: "Three",
+        x: 2
+      },
+      {
+        w: "Four"
+      },
+      {
+        w: "Five"
+      },
+      {
+        w: "Six"
+      },
+      {
+        w: "Seven",
+        x: 3
+      },
+      {
+        w: "Nine",
+        x: 2
+      },
+      {
+        w: "Ten"
+      },
+      {
+        w: "Twelve",
+        x: 2
+      },
+      {
+        w: "Thirteen"
+      },
+      {
+        w: "Hundred",
+        x: 0.5
+      },
+      {
+        w: "Thousand",
+        x: 0.3
+      }
+    ],
+    ordinalWord: [
+      {
+        w: "First"
+      },
+      {
+        w: "Second"
+      },
+      {
+        w: "Third"
+      },
+      {
+        w: "Fourth"
+      },
+      {
+        w: "Fifth"
+      },
+      {
+        w: "Sixth"
+      },
+      {
+        w: "Seventh",
+        x: 2
+      },
+      {
+        w: "Eighth"
+      },
+      {
+        w: "Ninth",
+        x: 2
+      },
+      {
+        w: "Tenth"
+      },
+      {
+        w: "Twelfth"
+      },
+      {
+        w: "Thirteenth"
+      }
+    ],
+    greek: [
+      {
+        w: "Alpha",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Beta",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Gamma",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Delta",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Epsilon",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Zeta",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Eta",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Theta",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Iota",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Kappa",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Lambda",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Mu",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Nu",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Xi",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Omicron",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Pi",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Rho",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Sigma",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Tau",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Upsilon",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Phi",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Chi",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Psi",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Omega",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    desc: [
+      {
+        w: "Black"
+      },
+      {
+        w: "White"
+      },
+      {
+        w: "Red"
+      },
+      {
+        w: "Gold"
+      },
+      {
+        w: "Silver"
+      },
+      {
+        w: "Iron",
+        x: 2
+      },
+      {
+        w: "Blue"
+      },
+      {
+        w: "Green"
+      },
+      {
+        w: "Grey"
+      },
+      {
+        w: "Battle"
+      },
+      {
+        w: "Blood",
+        x: 0.5
+      },
+      {
+        w: "Bolt"
+      },
+      {
+        w: "Bone"
+      },
+      {
+        w: "Chaos",
+        x: 0.3
+      },
+      {
+        w: "Dark"
+      },
+      {
+        w: "Death",
+        x: 0.3
+      },
+      {
+        w: "Dire",
+        x: 0.5
+      },
+      {
+        w: "Doom",
+        x: 0.3
+      },
+      {
+        w: "Fire"
+      },
+      {
+        w: "Flame"
+      },
+      {
+        w: "Free"
+      },
+      {
+        w: "High"
+      },
+      {
+        w: "Law",
+        x: 0.3
+      },
+      {
+        w: "Light"
+      },
+      {
+        w: "Lightning"
+      },
+      {
+        w: "Moon"
+      },
+      {
+        w: "Night",
+        x: 1.5
+      },
+      {
+        w: "Rune",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Sea"
+      },
+      {
+        w: "Skull",
+        x: 0.5
+      },
+      {
+        w: "Star"
+      },
+      {
+        w: "Storm",
+        x: 2
+      },
+      {
+        w: "Sun"
+      },
+      {
+        w: "Thunder",
+        x: 2
+      },
+      {
+        w: "Thunderbolt",
+        x: 0.5
+      },
+      {
+        w: "Torch"
+      },
+      {
+        w: "War"
+      },
+      {
+        w: "Wave"
+      },
+      {
+        w: "Wind"
+      },
+      {
+        w: "Wing"
+      },
+      {
+        w: "Wrath",
+        x: 0.5
+      },
+      {
+        w: "Steel",
+        x: 1.5
+      },
+      {
+        w: "Stone"
+      },
+      {
+        w: "Ash"
+      },
+      {
+        w: "Ember"
+      },
+      {
+        w: "Frost"
+      },
+      {
+        w: "Winter"
+      },
+      {
+        w: "Crown"
+      },
+      {
+        w: "Royal"
+      },
+      {
+        w: "Loyal"
+      },
+      {
+        w: "Long"
+      },
+      {
+        w: "Last"
+      },
+      {
+        w: "Old"
+      },
+      {
+        w: "Salt"
+      },
+      {
+        w: "Border"
+      },
+      {
+        w: "Hollow"
+      },
+      {
+        w: "Sudden"
+      },
+      {
+        w: "Swift"
+      }
+    ],
+    tech: [
+      {
+        w: "Astral",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Comet",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Celestial",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Cosmic",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Cyber",
+        x: 0.5,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Deep-Space",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Eclipse",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Galactic",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Graviton",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Hyperspace",
+        x: 0.5,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Ion",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Infrared",
+        x: 0.5,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Laser",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Lunar",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Meteor",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Nova",
+        x: 2,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Orbital",
+        x: 2,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Phase",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Photon",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Plasma",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Pulsar",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Quantum",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Quasar",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Rocket",
+        x: 0.5,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Solar",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Sonic",
+        x: 0.5,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Stellar",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Temporal",
+        x: 0.5,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Ultraviolet",
+        x: 0.3,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Vector",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Void",
+        x: 2,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Warp",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Zero-G",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Nanotech",
+        x: 0.5,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Biotech",
+        x: 0.5,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Disruptor",
+        x: 0.3,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Nullifier",
+        x: 0.3,
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    urban: [
+      {
+        w: "Neon",
+        x: 2,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Chrome",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Static",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Glass",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Concrete",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Velvet",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Paper",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Midnight",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Rust",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Signal",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    land: [
+      {
+        w: "Crags",
+        x: 2
+      },
+      {
+        w: "Deep",
+        x: 2
+      },
+      {
+        w: "Marches",
+        x: 2
+      },
+      {
+        w: "Fens"
+      },
+      {
+        w: "Moors"
+      },
+      {
+        w: "Heath"
+      },
+      {
+        w: "Downs"
+      },
+      {
+        w: "Wolds"
+      },
+      {
+        w: "Fells"
+      },
+      {
+        w: "Dales"
+      },
+      {
+        w: "Hollow"
+      },
+      {
+        w: "Vale"
+      },
+      {
+        w: "Highlands"
+      },
+      {
+        w: "Lowlands"
+      },
+      {
+        w: "Coast"
+      },
+      {
+        w: "Shore"
+      },
+      {
+        w: "Strand"
+      },
+      {
+        w: "Isles"
+      },
+      {
+        w: "Reach"
+      },
+      {
+        w: "Sound"
+      },
+      {
+        w: "Narrows"
+      },
+      {
+        w: "Straits"
+      },
+      {
+        w: "Shallows"
+      },
+      {
+        w: "Bay"
+      },
+      {
+        w: "Cape"
+      },
+      {
+        w: "Headland"
+      },
+      {
+        w: "Cliffs"
+      },
+      {
+        w: "Pass",
+        x: 1.5
+      },
+      {
+        w: "Gate",
+        x: 1.5
+      },
+      {
+        w: "Ford"
+      },
+      {
+        w: "Bridge"
+      },
+      {
+        w: "Crossing"
+      },
+      {
+        w: "Old Road",
+        noPrefix: true
+      },
+      {
+        w: "Long Road",
+        noPrefix: true
+      },
+      {
+        w: "Salt Road",
+        noPrefix: true
+      },
+      {
+        w: "Wall"
+      },
+      {
+        w: "Tower"
+      },
+      {
+        w: "Barrow"
+      },
+      {
+        w: "Mere"
+      },
+      {
+        w: "Lakes"
+      },
+      {
+        w: "Falls"
+      },
+      {
+        w: "Forest"
+      },
+      {
+        w: "Weald"
+      },
+      {
+        w: "Greenwood"
+      },
+      {
+        w: "Wastes"
+      },
+      {
+        w: "Sands"
+      },
+      {
+        w: "Barrens"
+      },
+      {
+        w: "Peaks"
+      },
+      {
+        w: "Heights"
+      },
+      {
+        w: "Frontier"
+      },
+      {
+        w: "Borders"
+      },
+      {
+        w: "Harbour"
+      },
+      {
+        w: "Docks"
+      }
+    ],
+    spaceLand: [
+      {
+        w: "Belt",
+        x: 2,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Rim",
+        x: 2,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Reach",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Drift",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Halo",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Ring",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Verge",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Expanse",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Deep",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Void",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Core",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Spur",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Gap",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Shoals",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Cluster",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Frontier",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Dark",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Lanes",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    compass: [
+      {
+        w: "Northern"
+      },
+      {
+        w: "Southern"
+      },
+      {
+        w: "Eastern"
+      },
+      {
+        w: "Western"
+      },
+      {
+        w: "Home",
+        x: 0.3
+      }
+    ],
+    quality: [
+      {
+        w: "Ancient",
+        x: 2
+      },
+      {
+        w: "Arcane",
+        x: 2
+      },
+      {
+        w: "Astral"
+      },
+      {
+        w: "Blinding",
+        x: 0.5
+      },
+      {
+        w: "Bright"
+      },
+      {
+        w: "Burning"
+      },
+      {
+        w: "Bygone",
+        x: 0.5
+      },
+      {
+        w: "Celestial"
+      },
+      {
+        w: "Concealed"
+      },
+      {
+        w: "Cosmic"
+      },
+      {
+        w: "Dark",
+        x: 2
+      },
+      {
+        w: "Deep"
+      },
+      {
+        w: "Dusky",
+        x: 0.5
+      },
+      {
+        w: "Effulgent",
+        x: 0.3
+      },
+      {
+        w: "Elder",
+        x: 2
+      },
+      {
+        w: "Elemental",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Esoteric"
+      },
+      {
+        w: "Eternal",
+        x: 2
+      },
+      {
+        w: "Ethereal"
+      },
+      {
+        w: "Forgotten",
+        x: 2
+      },
+      {
+        w: "Gloomy",
+        x: 0.3
+      },
+      {
+        w: "Glorious",
+        x: 0.5
+      },
+      {
+        w: "Glowing",
+        x: 0.5
+      },
+      {
+        w: "Gnostic",
+        x: 0.5
+      },
+      {
+        w: "Hidden",
+        x: 2
+      },
+      {
+        w: "Ineffable",
+        x: 0.5
+      },
+      {
+        w: "Inner",
+        x: 2
+      },
+      {
+        w: "Lost",
+        x: 2
+      },
+      {
+        w: "Luminous"
+      },
+      {
+        w: "Lunar"
+      },
+      {
+        w: "Magical",
+        x: 0.5,
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Mysterious",
+        x: 0.5
+      },
+      {
+        w: "Mystic"
+      },
+      {
+        w: "Occult"
+      },
+      {
+        w: "Penumbral",
+        x: 0.3
+      },
+      {
+        w: "Profound",
+        x: 0.5
+      },
+      {
+        w: "Pure"
+      },
+      {
+        w: "Quintessential",
+        x: 0.2
+      },
+      {
+        w: "Radiant"
+      },
+      {
+        w: "Recondite",
+        x: 0.2
+      },
+      {
+        w: "Resplendent",
+        x: 0.3
+      },
+      {
+        w: "Revealed"
+      },
+      {
+        w: "Sacred",
+        x: 2
+      },
+      {
+        w: "Secret",
+        x: 2
+      },
+      {
+        w: "Shadowed"
+      },
+      {
+        w: "Shining"
+      },
+      {
+        w: "Sidereal",
+        x: 0.3
+      },
+      {
+        w: "Singing",
+        x: 0.5
+      },
+      {
+        w: "Sinister",
+        x: 0.3
+      },
+      {
+        w: "Solar"
+      },
+      {
+        w: "Solemn",
+        x: 0.5
+      },
+      {
+        w: "Spiral"
+      },
+      {
+        w: "Starry"
+      },
+      {
+        w: "Sublime",
+        x: 0.5
+      },
+      {
+        w: "Supernal",
+        x: 0.3
+      },
+      {
+        w: "Timeless"
+      },
+      {
+        w: "Transcendent",
+        x: 0.5
+      },
+      {
+        w: "True",
+        x: 2
+      },
+      {
+        w: "Veiled",
+        x: 2
+      },
+      {
+        w: "Silent",
+        x: 2
+      },
+      {
+        w: "Still"
+      },
+      {
+        w: "Hollow"
+      },
+      {
+        w: "Sleeping"
+      },
+      {
+        w: "Unseen"
+      },
+      {
+        w: "Nameless"
+      },
+      {
+        w: "Unbroken"
+      },
+      {
+        w: "Wandering"
+      },
+      {
+        w: "Weeping"
+      },
+      {
+        w: "Whispering"
+      },
+      {
+        w: "First"
+      },
+      {
+        w: "Last"
+      },
+      {
+        w: "Unspoken"
+      },
+      {
+        w: "Quantum",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Recursive",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Infinite",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Binary",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Null",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Prime",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Fractal",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    entity: [
+      {
+        w: "Arcana",
+        x: 0.3
+      },
+      {
+        w: "Chalice"
+      },
+      {
+        w: "Chamber"
+      },
+      {
+        w: "Cloud"
+      },
+      {
+        w: "Cowl"
+      },
+      {
+        w: "Crown"
+      },
+      {
+        w: "Crystal"
+      },
+      {
+        w: "Darkness"
+      },
+      {
+        w: "Dawn",
+        x: 2
+      },
+      {
+        w: "Day"
+      },
+      {
+        w: "Doctrine",
+        x: 0.5
+      },
+      {
+        w: "Dominion",
+        x: 0.5
+      },
+      {
+        w: "Enlightenment",
+        x: 0.5
+      },
+      {
+        w: "Eye",
+        x: 2
+      },
+      {
+        w: "Faith"
+      },
+      {
+        w: "Fane",
+        x: 0.3
+      },
+      {
+        w: "Fire"
+      },
+      {
+        w: "Flame",
+        x: 2
+      },
+      {
+        w: "Fountain"
+      },
+      {
+        w: "Gate",
+        x: 2
+      },
+      {
+        w: "Glyph"
+      },
+      {
+        w: "Grail",
+        x: 0.5
+      },
+      {
+        w: "Hand",
+        x: 2
+      },
+      {
+        w: "Harmony"
+      },
+      {
+        w: "Heart"
+      },
+      {
+        w: "Insight",
+        x: 0.5
+      },
+      {
+        w: "Key",
+        x: 2
+      },
+      {
+        w: "Knowledge"
+      },
+      {
+        w: "Light",
+        x: 2
+      },
+      {
+        w: "Lore"
+      },
+      {
+        w: "Mantle"
+      },
+      {
+        w: "Mind"
+      },
+      {
+        w: "Moon",
+        x: 2
+      },
+      {
+        w: "Mystery"
+      },
+      {
+        w: "Night"
+      },
+      {
+        w: "Orb"
+      },
+      {
+        w: "Path",
+        x: 2
+      },
+      {
+        w: "Pentacle",
+        x: 0.5
+      },
+      {
+        w: "Pillar"
+      },
+      {
+        w: "Pool"
+      },
+      {
+        w: "Portal",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Power"
+      },
+      {
+        w: "Pyramid",
+        x: 0.5
+      },
+      {
+        w: "Question",
+        x: 0.5
+      },
+      {
+        w: "Radiance"
+      },
+      {
+        w: "Rainbow",
+        x: 0.5
+      },
+      {
+        w: "Revelation"
+      },
+      {
+        w: "Robe",
+        x: 0.5
+      },
+      {
+        w: "Rod"
+      },
+      {
+        w: "Sceptre"
+      },
+      {
+        w: "Scroll"
+      },
+      {
+        w: "Secret"
+      },
+      {
+        w: "Shadow",
+        x: 2
+      },
+      {
+        w: "Shrine"
+      },
+      {
+        w: "Sigil"
+      },
+      {
+        w: "Sign"
+      },
+      {
+        w: "Sky"
+      },
+      {
+        w: "Sphere"
+      },
+      {
+        w: "Spring"
+      },
+      {
+        w: "Staff"
+      },
+      {
+        w: "Star",
+        x: 2
+      },
+      {
+        w: "Stone"
+      },
+      {
+        w: "Sun",
+        x: 2
+      },
+      {
+        w: "Symbol",
+        x: 0.5
+      },
+      {
+        w: "Teaching",
+        x: 0.5
+      },
+      {
+        w: "Temple"
+      },
+      {
+        w: "Throne"
+      },
+      {
+        w: "Time"
+      },
+      {
+        w: "Truth"
+      },
+      {
+        w: "Twilight"
+      },
+      {
+        w: "Veil",
+        x: 2
+      },
+      {
+        w: "Verity",
+        x: 0.5
+      },
+      {
+        w: "Void"
+      },
+      {
+        w: "Wand",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Way",
+        x: 2
+      },
+      {
+        w: "Wisdom"
+      },
+      {
+        w: "Word",
+        x: 2
+      },
+      {
+        w: "World"
+      },
+      {
+        w: "Lantern",
+        x: 2
+      },
+      {
+        w: "Mirror",
+        x: 2
+      },
+      {
+        w: "Labyrinth"
+      },
+      {
+        w: "Threshold"
+      },
+      {
+        w: "Silence"
+      },
+      {
+        w: "Ember"
+      },
+      {
+        w: "Well"
+      },
+      {
+        w: "Tree"
+      },
+      {
+        w: "Serpent"
+      },
+      {
+        w: "Rose",
+        x: 2
+      },
+      {
+        w: "Compass"
+      },
+      {
+        w: "Hourglass"
+      },
+      {
+        w: "Eclipse"
+      },
+      {
+        w: "Tide"
+      },
+      {
+        w: "Loom"
+      },
+      {
+        w: "Thread"
+      },
+      {
+        w: "Spindle"
+      },
+      {
+        w: "Tower"
+      },
+      {
+        w: "Lamp",
+        x: 2
+      },
+      {
+        w: "Seal"
+      },
+      {
+        w: "Spiral"
+      },
+      {
+        w: "Ouroboros",
+        x: 0.3
+      },
+      {
+        w: "Lotus",
+        x: 0.5
+      },
+      {
+        w: "Sleeper"
+      },
+      {
+        w: "Signal",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Singularity",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Lattice",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Cipher",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Pattern",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Frequency",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Machine",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Code",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Horizon",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Array",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Helix",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Energy",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    surname: [
+      {
+        w: "Ashby"
+      },
+      {
+        w: "Thorne"
+      },
+      {
+        w: "Hale"
+      },
+      {
+        w: "Varden"
+      },
+      {
+        w: "Harrow"
+      },
+      {
+        w: "Vance"
+      },
+      {
+        w: "Fenwick"
+      },
+      {
+        w: "Blackwood"
+      },
+      {
+        w: "Ostrey"
+      },
+      {
+        w: "Pell"
+      },
+      {
+        w: "Garrick"
+      },
+      {
+        w: "Holloway"
+      },
+      {
+        w: "Kestle"
+      },
+      {
+        w: "Rook"
+      },
+      {
+        w: "Selwyn"
+      },
+      {
+        w: "Tressel"
+      },
+      {
+        w: "Whitlock"
+      },
+      {
+        w: "Ambrose"
+      },
+      {
+        w: "Callow"
+      },
+      {
+        w: "Dunmore"
+      },
+      {
+        w: "Everard"
+      },
+      {
+        w: "Farrant"
+      },
+      {
+        w: "Gedge"
+      },
+      {
+        w: "Hartnell"
+      },
+      {
+        w: "Ingram"
+      },
+      {
+        w: "Jessop"
+      },
+      {
+        w: "Kingsley"
+      },
+      {
+        w: "Lacey"
+      },
+      {
+        w: "Marchbank"
+      },
+      {
+        w: "Northcote"
+      },
+      {
+        w: "Orme"
+      },
+      {
+        w: "Pagett"
+      },
+      {
+        w: "Quarrie"
+      },
+      {
+        w: "Rendell"
+      },
+      {
+        w: "Stannard"
+      },
+      {
+        w: "Tolley"
+      },
+      {
+        w: "Upshaw"
+      },
+      {
+        w: "Venn"
+      },
+      {
+        w: "Wardle"
+      },
+      {
+        w: "Yelland"
+      },
+      {
+        w: "Ashdown"
+      },
+      {
+        w: "Brack"
+      },
+      {
+        w: "Corrie"
+      },
+      {
+        w: "Drewitt"
+      },
+      {
+        w: "Eastlake"
+      },
+      {
+        w: "Fairweather"
+      },
+      {
+        w: "Grice"
+      },
+      {
+        w: "Hollis"
+      },
+      {
+        w: "Ketteridge"
+      },
+      {
+        w: "Larkin"
+      },
+      {
+        w: "Merrow"
+      },
+      {
+        w: "Nash"
+      },
+      {
+        w: "Oakes"
+      },
+      {
+        w: "Prentice"
+      },
+      {
+        w: "Ruddock"
+      },
+      {
+        w: "Shard"
+      },
+      {
+        w: "Tarrant"
+      },
+      {
+        w: "Vosper"
+      },
+      {
+        w: "Winship"
+      },
+      {
+        w: "Yeo"
+      }
+    ],
+    house: [
+      {
+        w: "Velloran"
+      },
+      {
+        w: "Dravane"
+      },
+      {
+        w: "Corvane"
+      },
+      {
+        w: "Ostrey"
+      },
+      {
+        w: "Vey"
+      },
+      {
+        w: "Marrow"
+      },
+      {
+        w: "Varrick"
+      },
+      {
+        w: "Talmont"
+      },
+      {
+        w: "Morcant"
+      },
+      {
+        w: "Esk"
+      },
+      {
+        w: "Darrow"
+      },
+      {
+        w: "Quenby"
+      },
+      {
+        w: "Lisle"
+      },
+      {
+        w: "Arden"
+      },
+      {
+        w: "Caddoc"
+      },
+      {
+        w: "Fenmore"
+      },
+      {
+        w: "Sorrel"
+      },
+      {
+        w: "Thane"
+      },
+      {
+        w: "Valcourt"
+      },
+      {
+        w: "Ravel"
+      },
+      {
+        w: "Aster"
+      },
+      {
+        w: "Blackmere"
+      },
+      {
+        w: "Vantrell"
+      },
+      {
+        w: "Orrin"
+      },
+      {
+        w: "Selden"
+      },
+      {
+        w: "Corrow"
+      },
+      {
+        w: "Maelis"
+      },
+      {
+        w: "Tarrow"
+      },
+      {
+        w: "Vesper"
+      },
+      {
+        w: "Ilmar"
+      },
+      {
+        w: "Harrowgate"
+      },
+      {
+        w: "Ashcombe"
+      },
+      {
+        w: "Revel"
+      },
+      {
+        w: "Strand"
+      },
+      {
+        w: "Wyvenhoe"
+      },
+      {
+        w: "Calloway"
+      }
+    ],
+    brandRoot: [
+      {
+        w: "Kestrel",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Meridian",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Vantage",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Axiom",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Halcyon",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Sable",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Corvid",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Lumen",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Paragon",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Vertex",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Ardent",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Northstar",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Bastion",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Cinder",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Helix",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Arbor",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Solace",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Tessera",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Argent",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Brightwater",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Ironvale",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Greyfield",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Monarch",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Harrow",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Vesper",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Orrery",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Cobalt",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Saltire",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Wyvern",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Juniper",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    corpSuffix: [
+      {
+        w: "Dynamics",
+        x: 2,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Systems",
+        x: 2,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Industries",
+        x: 2,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Holdings",
+        x: 2,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Consolidated",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Group",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Technologies",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Labs",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Works",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Logistics",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Analytics",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Heavy Industries",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Mining",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Aerospace",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Solutions",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Partners",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Corporation",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Ventures",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Energy",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Biotech",
+        x: 0.5,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Pharmaceuticals",
+        x: 0.5,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Shipping",
+        x: 0.5,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Combine",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    group: [
+      {
+        w: "Order",
+        x: 3
+      },
+      {
+        w: "Circle",
+        x: 3
+      },
+      {
+        w: "Brotherhood",
+        x: 2
+      },
+      {
+        w: "Sisterhood",
+        x: 2
+      },
+      {
+        w: "Society",
+        x: 2
+      },
+      {
+        w: "Fellowship",
+        x: 2
+      },
+      {
+        w: "Conclave"
+      },
+      {
+        w: "Lodge"
+      },
+      {
+        w: "Temple"
+      },
+      {
+        w: "Chapter"
+      },
+      {
+        w: "Assembly"
+      },
+      {
+        w: "Alliance"
+      },
+      {
+        w: "Association",
+        x: 0.5
+      },
+      {
+        w: "Cabal"
+      },
+      {
+        w: "Confraternity",
+        x: 0.5
+      },
+      {
+        w: "Convocation",
+        x: 0.5
+      },
+      {
+        w: "Coterie",
+        x: 0.5
+      },
+      {
+        w: "Fraternity"
+      },
+      {
+        w: "League"
+      },
+      {
+        w: "Sodality",
+        x: 0.5
+      },
+      {
+        w: "Guild",
+        x: 0.5
+      },
+      {
+        w: "College",
+        x: 2,
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Tower",
+        s: [
+          "FH",
+          "MF"
+        ],
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Collegium",
+        x: 0.5,
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Sanctum",
+        x: 0.5,
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Choir",
+        s: [
+          "SF"
+        ],
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Collective",
+        s: [
+          "SF"
+        ],
+        types: [
+          "arcane"
+        ]
+      }
+    ],
+    members: [
+      {
+        w: "Seekers",
+        x: 3
+      },
+      {
+        w: "Adepts",
+        x: 2
+      },
+      {
+        w: "Initiates",
+        x: 2
+      },
+      {
+        w: "Keepers",
+        x: 2
+      },
+      {
+        w: "Brothers",
+        x: 2
+      },
+      {
+        w: "Sisters",
+        x: 2
+      },
+      {
+        w: "Children",
+        x: 2
+      },
+      {
+        w: "Disciples"
+      },
+      {
+        w: "Devotees"
+      },
+      {
+        w: "Votaries",
+        x: 0.5
+      },
+      {
+        w: "Apostles",
+        x: 0.5
+      },
+      {
+        w: "Aspirants",
+        x: 0.5
+      },
+      {
+        w: "Fellows",
+        x: 0.5
+      },
+      {
+        w: "Followers"
+      },
+      {
+        w: "Servants"
+      },
+      {
+        w: "Masters"
+      },
+      {
+        w: "Illuminants",
+        x: 0.3
+      },
+      {
+        w: "Revealers",
+        x: 0.3
+      },
+      {
+        w: "Watchers"
+      },
+      {
+        w: "Wardens"
+      },
+      {
+        w: "Heirs"
+      },
+      {
+        w: "Walkers"
+      },
+      {
+        w: "Dreamers"
+      },
+      {
+        w: "Sages"
+      },
+      {
+        w: "Hermits",
+        x: 0.5
+      },
+      {
+        w: "Gentlemen",
+        x: 0.3
+      },
+      {
+        w: "Ladies",
+        x: 0.3
+      },
+      {
+        w: "Magi",
+        s: [
+          "FH",
+          "MF"
+        ],
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Mages",
+        s: [
+          "FH",
+          "MF"
+        ],
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Sorcerers",
+        s: [
+          "FH",
+          "MF"
+        ],
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Enchanters",
+        s: [
+          "FH",
+          "MF"
+        ],
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Wizards",
+        x: 0.5,
+        s: [
+          "FH",
+          "MF"
+        ],
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Thaumaturges",
+        x: 0.3,
+        s: [
+          "FH",
+          "MF"
+        ],
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Psions",
+        s: [
+          "SF"
+        ],
+        types: [
+          "arcane"
+        ]
+      },
+      {
+        w: "Mentalists",
+        s: [
+          "SF"
+        ],
+        types: [
+          "arcane"
+        ]
+      }
+    ],
+    holyGroup: [
+      {
+        w: "Order",
+        x: 3
+      },
+      {
+        w: "Brothers",
+        x: 2
+      },
+      {
+        w: "Sisters",
+        x: 2
+      },
+      {
+        w: "Brotherhood"
+      },
+      {
+        w: "Sisterhood"
+      },
+      {
+        w: "Friars"
+      },
+      {
+        w: "Community"
+      },
+      {
+        w: "House"
+      },
+      {
+        w: "Congregation"
+      },
+      {
+        w: "Society",
+        x: 0.5
+      },
+      {
+        w: "Fellowship",
+        x: 0.5
+      }
+    ],
+    holyMembers: [
+      {
+        w: "Brothers",
+        x: 2
+      },
+      {
+        w: "Sisters",
+        x: 2
+      },
+      {
+        w: "Friars",
+        x: 2
+      },
+      {
+        w: "Monks"
+      },
+      {
+        w: "Nuns"
+      },
+      {
+        w: "Canons",
+        x: 0.5
+      },
+      {
+        w: "Hermits"
+      },
+      {
+        w: "Keepers"
+      },
+      {
+        w: "Servants"
+      },
+      {
+        w: "Pilgrims"
+      },
+      {
+        w: "Penitents",
+        x: 0.5
+      }
+    ],
+    holyQuality: [
+      {
+        w: "Holy",
+        x: 2
+      },
+      {
+        w: "Blessed"
+      },
+      {
+        w: "Humble"
+      },
+      {
+        w: "Poor",
+        x: 2
+      },
+      {
+        w: "Little"
+      },
+      {
+        w: "Silent"
+      },
+      {
+        w: "Barefoot"
+      },
+      {
+        w: "Penitent",
+        x: 0.5
+      },
+      {
+        w: "Merciful"
+      },
+      {
+        w: "Wandering"
+      },
+      {
+        w: "Hidden",
+        x: 0.5
+      }
+    ],
+    holyEntity: [
+      {
+        w: "Lantern"
+      },
+      {
+        w: "Still Water"
+      },
+      {
+        w: "Open Hand"
+      },
+      {
+        w: "Bread"
+      },
+      {
+        w: "Well"
+      },
+      {
+        w: "Hearth"
+      },
+      {
+        w: "Mercy"
+      },
+      {
+        w: "Dawn"
+      },
+      {
+        w: "Grace"
+      },
+      {
+        w: "Vigil"
+      },
+      {
+        w: "Bell"
+      },
+      {
+        w: "Lamp"
+      },
+      {
+        w: "Mountain"
+      },
+      {
+        w: "Pilgrim Road"
+      },
+      {
+        w: "Ash"
+      },
+      {
+        w: "Silence"
+      },
+      {
+        w: "Lamb"
+      },
+      {
+        w: "Dove"
+      },
+      {
+        w: "Olive"
+      },
+      {
+        w: "Rose"
+      },
+      {
+        w: "Spring"
+      },
+      {
+        w: "Stone"
+      },
+      {
+        w: "Path"
+      },
+      {
+        w: "Gate"
+      },
+      {
+        w: "Quiet Star",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Long Voyage",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Far Light",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    habit: [
+      {
+        w: "Grey",
+        x: 2
+      },
+      {
+        w: "White"
+      },
+      {
+        w: "Black"
+      },
+      {
+        w: "Brown",
+        x: 1.5
+      }
+    ],
+    cultGroup: [
+      {
+        w: "Cult",
+        x: 2
+      },
+      {
+        w: "Children",
+        x: 3
+      },
+      {
+        w: "Church",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Temple"
+      },
+      {
+        w: "Chosen"
+      },
+      {
+        w: "Followers"
+      },
+      {
+        w: "Flock"
+      },
+      {
+        w: "Brood",
+        x: 0.5
+      },
+      {
+        w: "Congregation"
+      },
+      {
+        w: "Covenant"
+      },
+      {
+        w: "Remnant",
+        x: 0.5
+      }
+    ],
+    cultQuality: [
+      {
+        w: "Hollow",
+        x: 2
+      },
+      {
+        w: "Pale",
+        x: 2
+      },
+      {
+        w: "Silent"
+      },
+      {
+        w: "Weeping"
+      },
+      {
+        w: "Unblinking"
+      },
+      {
+        w: "Drowned"
+      },
+      {
+        w: "Coming"
+      },
+      {
+        w: "Final"
+      },
+      {
+        w: "Sleeping"
+      },
+      {
+        w: "Burning"
+      },
+      {
+        w: "Nameless"
+      },
+      {
+        w: "Patient"
+      },
+      {
+        w: "Hungry"
+      },
+      {
+        w: "Crawling",
+        x: 0.3
+      },
+      {
+        w: "Smiling"
+      },
+      {
+        w: "Faceless"
+      },
+      {
+        w: "Twin"
+      },
+      {
+        w: "Ninth"
+      }
+    ],
+    cultEntity: [
+      {
+        w: "Sun",
+        x: 2
+      },
+      {
+        w: "Flame"
+      },
+      {
+        w: "Moon"
+      },
+      {
+        w: "King"
+      },
+      {
+        w: "Queen"
+      },
+      {
+        w: "Harvest"
+      },
+      {
+        w: "Dark"
+      },
+      {
+        w: "Star"
+      },
+      {
+        w: "Hour"
+      },
+      {
+        w: "Eye"
+      },
+      {
+        w: "Tide"
+      },
+      {
+        w: "Bell"
+      },
+      {
+        w: "Lamb"
+      },
+      {
+        w: "Door"
+      },
+      {
+        w: "Mother"
+      },
+      {
+        w: "Father"
+      },
+      {
+        w: "Child"
+      },
+      {
+        w: "Mouth",
+        x: 0.5
+      },
+      {
+        w: "Worm",
+        x: 0.5
+      },
+      {
+        w: "Crown"
+      },
+      {
+        w: "Throne"
+      },
+      {
+        w: "Choir"
+      },
+      {
+        w: "Gate"
+      },
+      {
+        w: "Dreamer"
+      }
+    ],
+    cultName: [
+      {
+        w: "Unbound"
+      },
+      {
+        w: "Awakened"
+      },
+      {
+        w: "Returned"
+      },
+      {
+        w: "Watchful"
+      },
+      {
+        w: "Unsleeping"
+      },
+      {
+        w: "Hollowed"
+      },
+      {
+        w: "Marked"
+      },
+      {
+        w: "Faithful Few"
+      },
+      {
+        w: "Blessed Few"
+      },
+      {
+        w: "Remnant"
+      }
+    ],
+    verbPhrase: [
+      {
+        w: "Wait Beneath"
+      },
+      {
+        w: "Keep the Last Flame"
+      },
+      {
+        w: "Dream Below"
+      },
+      {
+        w: "Remember the Fall"
+      },
+      {
+        w: "Watch the Sky"
+      },
+      {
+        w: "Do Not Sleep"
+      },
+      {
+        w: "Speak in Silence"
+      },
+      {
+        w: "Walk at Dusk"
+      },
+      {
+        w: "Count the Days"
+      },
+      {
+        w: "Listen to the Deep"
+      },
+      {
+        w: "Wait for the Tide"
+      },
+      {
+        w: "Bear the Mark"
+      }
+    ],
+    covenGroup: [
+      {
+        w: "Coven",
+        x: 3
+      },
+      {
+        w: "Circle",
+        x: 2
+      },
+      {
+        w: "Lodge"
+      },
+      {
+        w: "Grove"
+      },
+      {
+        w: "Hearth"
+      },
+      {
+        w: "Ring"
+      },
+      {
+        w: "Moot",
+        x: 0.5
+      },
+      {
+        w: "Gathering",
+        x: 0.5
+      }
+    ],
+    covenMembers: [
+      {
+        w: "Sisters"
+      },
+      {
+        w: "Daughters"
+      },
+      {
+        w: "Wise Women"
+      },
+      {
+        w: "Cunning Folk"
+      },
+      {
+        w: "Hedge-Witches"
+      },
+      {
+        w: "Keepers"
+      },
+      {
+        w: "Dancers"
+      },
+      {
+        w: "Dreamers"
+      },
+      {
+        w: "Gatherers"
+      }
+    ],
+    covenEmblem: [
+      {
+        w: "Hare",
+        x: 2
+      },
+      {
+        w: "Toad"
+      },
+      {
+        w: "Owl"
+      },
+      {
+        w: "Cat"
+      },
+      {
+        w: "Moon",
+        x: 2
+      },
+      {
+        w: "Thorn"
+      },
+      {
+        w: "Hawthorn"
+      },
+      {
+        w: "Yew"
+      },
+      {
+        w: "Elder"
+      },
+      {
+        w: "Rowan"
+      },
+      {
+        w: "Mistletoe"
+      },
+      {
+        w: "Cauldron"
+      },
+      {
+        w: "Broom"
+      },
+      {
+        w: "Candle"
+      },
+      {
+        w: "Mirror"
+      },
+      {
+        w: "Bone"
+      },
+      {
+        w: "Needle"
+      },
+      {
+        w: "Thread"
+      },
+      {
+        w: "Apple"
+      },
+      {
+        w: "Hag-Stone"
+      }
+    ],
+    covenLand: [
+      {
+        w: "Fen"
+      },
+      {
+        w: "Moor"
+      },
+      {
+        w: "Heath"
+      },
+      {
+        w: "Hollow"
+      },
+      {
+        w: "Crossroads"
+      },
+      {
+        w: "Mere"
+      },
+      {
+        w: "Barrow"
+      },
+      {
+        w: "Wood"
+      },
+      {
+        w: "Common"
+      },
+      {
+        w: "Marsh"
+      }
+    ],
+    tree: [
+      {
+        w: "Oak"
+      },
+      {
+        w: "Yew"
+      },
+      {
+        w: "Ash"
+      },
+      {
+        w: "Rowan"
+      },
+      {
+        w: "Hazel"
+      },
+      {
+        w: "Holly"
+      },
+      {
+        w: "Elder"
+      },
+      {
+        w: "Willow"
+      },
+      {
+        w: "Birch"
+      },
+      {
+        w: "Hawthorn"
+      }
+    ],
+    schoolGroup: [
+      {
+        w: "School",
+        x: 3
+      },
+      {
+        w: "Academy"
+      },
+      {
+        w: "Garden"
+      },
+      {
+        w: "Porch"
+      },
+      {
+        w: "Walk"
+      },
+      {
+        w: "Hall"
+      },
+      {
+        w: "Way"
+      },
+      {
+        w: "Path"
+      },
+      {
+        w: "Circle"
+      }
+    ],
+    schoolMembers: [
+      {
+        w: "Thinkers",
+        x: 2
+      },
+      {
+        w: "Walkers"
+      },
+      {
+        w: "Questioners"
+      },
+      {
+        w: "Listeners"
+      },
+      {
+        w: "Doubters"
+      },
+      {
+        w: "Followers"
+      },
+      {
+        w: "Students"
+      },
+      {
+        w: "Friends"
+      },
+      {
+        w: "Seekers"
+      }
+    ],
+    schoolPlace: [
+      {
+        w: "Garden"
+      },
+      {
+        w: "Porch"
+      },
+      {
+        w: "Colonnade"
+      },
+      {
+        w: "Grove"
+      },
+      {
+        w: "Well"
+      },
+      {
+        w: "Market"
+      },
+      {
+        w: "Bridge"
+      },
+      {
+        w: "Hill"
+      },
+      {
+        w: "Library"
+      },
+      {
+        w: "Fountain"
+      }
+    ],
+    schoolIdea: [
+      {
+        w: "Quiet Mind"
+      },
+      {
+        w: "Open Question"
+      },
+      {
+        w: "Still Water"
+      },
+      {
+        w: "Long View"
+      },
+      {
+        w: "Plain Truth"
+      },
+      {
+        w: "Second Thought"
+      },
+      {
+        w: "Measured Step"
+      },
+      {
+        w: "Empty Cup"
+      },
+      {
+        w: "Common Good"
+      },
+      {
+        w: "Clear Glass"
+      },
+      {
+        w: "Narrow Gate"
+      },
+      {
+        w: "Turning Wheel"
+      }
+    ],
+    unitGroup: [
+      {
+        w: "Army"
+      },
+      {
+        w: "Battalion",
+        sx: {
+          FL: 0.5,
+          FH: 0.5
+        }
+      },
+      {
+        w: "Brigade"
+      },
+      {
+        w: "Cohort",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Century",
+        x: 0.5,
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Commandos",
+        x: 0.5,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Company",
+        x: 2
+      },
+      {
+        w: "Contingent",
+        x: 0.5
+      },
+      {
+        w: "Division",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Force"
+      },
+      {
+        w: "Garrison"
+      },
+      {
+        w: "Guard",
+        x: 2
+      },
+      {
+        w: "Legion",
+        x: 2
+      },
+      {
+        w: "Militia"
+      },
+      {
+        w: "Patrol"
+      },
+      {
+        w: "Phalanx",
+        x: 0.5,
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Platoon",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Regiment",
+        x: 2
+      },
+      {
+        w: "Section",
+        x: 0.5,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Squad",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Squadron"
+      },
+      {
+        w: "Troop"
+      },
+      {
+        w: "Vanguard"
+      },
+      {
+        w: "Host",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Warband",
+        x: 0.5,
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Banner",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Lance",
+        x: 0.5,
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Wing",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Detachment",
+        x: 0.5,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    soldiers: [
+      {
+        w: "Champions",
+        x: 0.5
+      },
+      {
+        w: "Fighters",
+        x: 0.5
+      },
+      {
+        w: "Marines"
+      },
+      {
+        w: "Paladins",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Riders"
+      },
+      {
+        w: "Skirmishers",
+        x: 0.5
+      },
+      {
+        w: "Soldiers"
+      },
+      {
+        w: "Troopers"
+      },
+      {
+        w: "Veterans",
+        x: 2
+      },
+      {
+        w: "Victors",
+        x: 0.5
+      },
+      {
+        w: "Warriors"
+      },
+      {
+        w: "Raiders"
+      },
+      {
+        w: "Rangers"
+      },
+      {
+        w: "Lancers"
+      },
+      {
+        w: "Blades"
+      },
+      {
+        w: "Bravos"
+      },
+      {
+        w: "Irregulars"
+      },
+      {
+        w: "Volunteers"
+      },
+      {
+        w: "Fencibles",
+        x: 0.5,
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Yeomen",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Janissaries",
+        x: 0.3,
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Sentinels"
+      },
+      {
+        w: "Drop Troopers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Starfarers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Spacers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Exo-Troopers",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    warders: [
+      {
+        w: "Defenders"
+      },
+      {
+        w: "Guardians"
+      },
+      {
+        w: "Guards"
+      },
+      {
+        w: "Keepers"
+      },
+      {
+        w: "Knights"
+      },
+      {
+        w: "Lords",
+        x: 0.5
+      },
+      {
+        w: "Preservers",
+        x: 0.5
+      },
+      {
+        w: "Protectors"
+      },
+      {
+        w: "Rangers"
+      },
+      {
+        w: "Sentinels"
+      },
+      {
+        w: "Sentries"
+      },
+      {
+        w: "Wardens",
+        x: 2
+      },
+      {
+        w: "Warders"
+      },
+      {
+        w: "Watchers",
+        x: 2
+      },
+      {
+        w: "Crusaders",
+        x: 0.3,
+        s: [
+          "FL",
+          "FH"
+        ]
+      }
+    ],
+    mercs: [
+      {
+        w: "Bandits"
+      },
+      {
+        w: "Destroyers",
+        x: 0.5
+      },
+      {
+        w: "Marauders"
+      },
+      {
+        w: "Pirates"
+      },
+      {
+        w: "Raptors",
+        x: 0.5
+      },
+      {
+        w: "Reavers"
+      },
+      {
+        w: "Sellswords"
+      },
+      {
+        w: "Freeswords"
+      },
+      {
+        w: "Free Lances"
+      },
+      {
+        w: "Condottieri",
+        tx: {
+          mediterranean: 3
+        },
+        x: 0.2
+      },
+      {
+        w: "Contractors",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Devourers",
+        x: 0.3,
+        s: [
+          "FH",
+          "MF"
+        ]
+      }
+    ],
+    gear: [
+      {
+        w: "Arrows"
+      },
+      {
+        w: "Axes"
+      },
+      {
+        w: "Blades",
+        x: 2
+      },
+      {
+        w: "Bows"
+      },
+      {
+        w: "Bucklers"
+      },
+      {
+        w: "Claws"
+      },
+      {
+        w: "Daggers"
+      },
+      {
+        w: "Darts"
+      },
+      {
+        w: "Fangs"
+      },
+      {
+        w: "Fists"
+      },
+      {
+        w: "Flails"
+      },
+      {
+        w: "Gauntlets"
+      },
+      {
+        w: "Halberds"
+      },
+      {
+        w: "Hammers"
+      },
+      {
+        w: "Helms"
+      },
+      {
+        w: "Knives"
+      },
+      {
+        w: "Lances"
+      },
+      {
+        w: "Maces"
+      },
+      {
+        w: "Pikes"
+      },
+      {
+        w: "Scythes"
+      },
+      {
+        w: "Shields"
+      },
+      {
+        w: "Spears"
+      },
+      {
+        w: "Swords"
+      },
+      {
+        w: "Talons"
+      },
+      {
+        w: "Teeth"
+      },
+      {
+        w: "Muskets",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Sabres",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Bayonets",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Lasers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Railguns",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Lances",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    creatures: [
+      {
+        w: "Bears"
+      },
+      {
+        w: "Boars"
+      },
+      {
+        w: "Bulls"
+      },
+      {
+        w: "Eagles"
+      },
+      {
+        w: "Falcons"
+      },
+      {
+        w: "Hawks"
+      },
+      {
+        w: "Hounds"
+      },
+      {
+        w: "Jaguars"
+      },
+      {
+        w: "Lions"
+      },
+      {
+        w: "Panthers"
+      },
+      {
+        w: "Rats"
+      },
+      {
+        w: "Scorpions"
+      },
+      {
+        w: "Sharks"
+      },
+      {
+        w: "Tigers"
+      },
+      {
+        w: "Vipers"
+      },
+      {
+        w: "Wolves",
+        x: 2
+      },
+      {
+        w: "Ravens"
+      },
+      {
+        w: "Stags"
+      },
+      {
+        w: "Wolverines"
+      },
+      {
+        w: "Badgers"
+      },
+      {
+        w: "Griffins",
+        sx: {
+          MR: 0.5,
+          MF: 0.5,
+          SF: 0.5
+        }
+      },
+      {
+        w: "Dragons",
+        sx: {
+          MR: 0.5,
+          MF: 0.5,
+          SF: 0.5
+        }
+      },
+      {
+        w: "Wyverns",
+        sx: {
+          MR: 0.5,
+          MF: 0.5,
+          SF: 0.5
+        }
+      },
+      {
+        w: "Basilisks",
+        sx: {
+          MR: 0.5,
+          MF: 0.5,
+          SF: 0.5
+        }
+      },
+      {
+        w: "elsewhere)",
+        x: 0.5
+      },
+      {
+        w: "Angels",
+        x: 0.5
+      },
+      {
+        w: "Devils",
+        x: 0.5
+      }
+    ],
+    starBand: [
+      {
+        w: "Meteors",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Comets",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Novas",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Pulsars",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Quasars",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Vipers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Hornets",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Lancers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Spectres",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Phantoms",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Valkyries",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    arm: [
+      {
+        w: "Foot",
+        x: 3,
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Horse",
+        x: 2,
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Rifles",
+        x: 3,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Fusiliers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Dragoons",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Lancers"
+      },
+      {
+        w: "Hussars",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Grenadiers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Light Infantry",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Bowmen",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Pikemen",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Archers",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Marines"
+      },
+      {
+        w: "Rangers"
+      },
+      {
+        w: "Artillery",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Engineers",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Sappers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Cavalry"
+      },
+      {
+        w: "Yeomanry",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Borderers"
+      },
+      {
+        w: "Fencibles",
+        x: 0.5,
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Mounted Infantry",
+        x: 0.5,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Highlanders",
+        only: [
+          "celtic"
+        ]
+      },
+      {
+        w: "Drop Infantry",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Armoured Infantry",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Pathfinders",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Orbital Marines",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Recon",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    regimentOf: [
+      {
+        w: "Foot",
+        x: 3
+      },
+      {
+        w: "Horse"
+      },
+      {
+        w: "Dragoons",
+        x: 0.5
+      },
+      {
+        w: "Marines",
+        x: 0.5
+      }
+    ],
+    element: [
+      {
+        w: "Flame"
+      },
+      {
+        w: "Iron"
+      },
+      {
+        w: "Thunder"
+      },
+      {
+        w: "Winter"
+      },
+      {
+        w: "Stone"
+      },
+      {
+        w: "Storm"
+      },
+      {
+        w: "Ash"
+      },
+      {
+        w: "Night"
+      }
+    ],
+    nickTrait: [
+      {
+        w: "Steadfasts"
+      },
+      {
+        w: "Stubborns"
+      },
+      {
+        w: "Never-Yields"
+      },
+      {
+        w: "Mudlarks"
+      },
+      {
+        w: "Night-Owls"
+      },
+      {
+        w: "Lambs"
+      },
+      {
+        w: "Sweeps"
+      },
+      {
+        w: "Sprigs"
+      },
+      {
+        w: "Bucks"
+      },
+      {
+        w: "Moles"
+      },
+      {
+        w: "Larks"
+      },
+      {
+        w: "Ploughboys"
+      },
+      {
+        w: "Dandies"
+      },
+      {
+        w: "Greybacks"
+      },
+      {
+        w: "Ironbacks"
+      },
+      {
+        w: "Leatherheads"
+      },
+      {
+        w: "Stonewallers"
+      },
+      {
+        w: "Muddy Boots"
+      },
+      {
+        w: "Long Faces"
+      },
+      {
+        w: "Tin-Hats",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "\xA712)"
+      },
+      {
+        w: "Die-Hards",
+        x: 0.3
+      }
+    ],
+    garment: [
+      {
+        w: "Cuff"
+      },
+      {
+        w: "Sleeve"
+      },
+      {
+        w: "Coat"
+      },
+      {
+        w: "Jacket"
+      },
+      {
+        w: "Cap"
+      },
+      {
+        w: "Collar"
+      },
+      {
+        w: "Plume"
+      },
+      {
+        w: "Sash"
+      },
+      {
+        w: "Glove"
+      },
+      {
+        w: "Facing"
+      }
+    ],
+    nickAdj: [
+      {
+        w: "Fighting",
+        x: 2
+      },
+      {
+        w: "Bloody",
+        x: 0.5
+      },
+      {
+        w: "Gallant"
+      },
+      {
+        w: "Faithful"
+      },
+      {
+        w: "Old",
+        x: 2
+      },
+      {
+        w: "Hungry"
+      },
+      {
+        w: "Lucky"
+      },
+      {
+        w: "Stubborn"
+      },
+      {
+        w: "Ragged"
+      },
+      {
+        w: "Saucy",
+        x: 0.3
+      }
+    ],
+    knightEmblem: [
+      {
+        w: "Lily"
+      },
+      {
+        w: "Rose",
+        x: 2
+      },
+      {
+        w: "Oak"
+      },
+      {
+        w: "Rowan"
+      },
+      {
+        w: "Eagle"
+      },
+      {
+        w: "Falcon"
+      },
+      {
+        w: "Hawk"
+      },
+      {
+        w: "Swan"
+      },
+      {
+        w: "Dragon"
+      },
+      {
+        w: "Griffin"
+      },
+      {
+        w: "Hart",
+        x: 2
+      },
+      {
+        w: "Leopard"
+      },
+      {
+        w: "Lion",
+        x: 2
+      },
+      {
+        w: "Panther"
+      },
+      {
+        w: "Hand"
+      },
+      {
+        w: "Harp"
+      },
+      {
+        w: "Shell"
+      },
+      {
+        w: "Sun"
+      },
+      {
+        w: "Talisman"
+      },
+      {
+        w: "Star",
+        x: 2
+      },
+      {
+        w: "Spur"
+      },
+      {
+        w: "Sword"
+      },
+      {
+        w: "Crescent"
+      },
+      {
+        w: "Tower"
+      },
+      {
+        w: "Key"
+      },
+      {
+        w: "Bell"
+      },
+      {
+        w: "Unicorn"
+      },
+      {
+        w: "Stag"
+      },
+      {
+        w: "Boar"
+      },
+      {
+        w: "Pelican"
+      },
+      {
+        w: "Crane"
+      },
+      {
+        w: "Lamp"
+      },
+      {
+        w: "Anchor"
+      },
+      {
+        w: "Wheel"
+      },
+      {
+        w: "Ermine"
+      },
+      {
+        w: "Broom"
+      },
+      {
+        w: "Holly"
+      },
+      {
+        w: "Thistle",
+        x: 0.5
+      },
+      {
+        w: "Ship"
+      }
+    ],
+    chivMembers: [
+      {
+        w: "Knights",
+        x: 3
+      },
+      {
+        w: "Companions",
+        x: 2
+      },
+      {
+        w: "Brothers",
+        x: 2
+      },
+      {
+        w: "Sergeants",
+        x: 0.5
+      },
+      {
+        w: "Paladins",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Champions"
+      },
+      {
+        w: "Defenders"
+      },
+      {
+        w: "Sworn Brothers",
+        x: 0.5
+      }
+    ],
+    securitySuffix: [
+      {
+        w: "Security",
+        x: 2,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Defence Solutions",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Risk Management",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Tactical",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Protection Services",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Strategic Services",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    fleetGroup: [
+      {
+        w: "Fleet",
+        x: 3
+      },
+      {
+        w: "Squadron",
+        x: 3
+      },
+      {
+        w: "Flotilla",
+        x: 2
+      },
+      {
+        w: "Armada",
+        s: [
+          "FL",
+          "FH",
+          "SF"
+        ]
+      },
+      {
+        w: "Navy",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Patrol"
+      },
+      {
+        w: "Picket",
+        x: 0.5,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Convoy",
+        x: 0.5
+      },
+      {
+        w: "Task Group",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Battle Group",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    fleetQuality: [
+      {
+        w: "Storm"
+      },
+      {
+        w: "Grey"
+      },
+      {
+        w: "Swift"
+      },
+      {
+        w: "Silent"
+      },
+      {
+        w: "Iron"
+      },
+      {
+        w: "Night"
+      },
+      {
+        w: "Long"
+      },
+      {
+        w: "Salt"
+      },
+      {
+        w: "Thunder"
+      },
+      {
+        w: "Winter"
+      }
+    ],
+    watchGroup: [
+      {
+        w: "Watch",
+        x: 3
+      },
+      {
+        w: "Guard",
+        x: 2
+      },
+      {
+        w: "Wardens"
+      },
+      {
+        w: "Marshals"
+      },
+      {
+        w: "Peacekeepers",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Runners"
+      },
+      {
+        w: "Thief-Takers",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Proctors",
+        x: 0.5
+      },
+      {
+        w: "Beadles",
+        x: 0.3,
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Rangers"
+      },
+      {
+        w: "Patrol"
+      },
+      {
+        w: "Inquisitors",
+        x: 0.5,
+        s: [
+          "FH",
+          "MF"
+        ]
+      }
+    ],
+    lawPursuit: [
+      {
+        w: "Inquiry",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Investigation",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Public Safety",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Public Order",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Special Cases",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Missing Persons",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Unusual Crimes",
+        s: [
+          "MF"
+        ]
+      }
+    ],
+    enforcement: [
+      {
+        w: "Enforcement Division",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Security Directorate",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Colonial Marshals",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Station Security",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    raiders: [
+      {
+        w: "Bandits"
+      },
+      {
+        w: "Brigands"
+      },
+      {
+        w: "Corsairs"
+      },
+      {
+        w: "Freebooters"
+      },
+      {
+        w: "Buccaneers"
+      },
+      {
+        w: "Marauders"
+      },
+      {
+        w: "Outlaws",
+        x: 0.5
+      },
+      {
+        w: "Pirates"
+      },
+      {
+        w: "Raiders",
+        x: 2
+      },
+      {
+        w: "Reavers",
+        x: 2
+      },
+      {
+        w: "Rovers"
+      },
+      {
+        w: "Sea-Wolves"
+      },
+      {
+        w: "Wreckers"
+      },
+      {
+        w: "Wolves"
+      }
+    ],
+    raiderEmblem: [
+      {
+        w: "Tide"
+      },
+      {
+        w: "Sail"
+      },
+      {
+        w: "Flag"
+      },
+      {
+        w: "Hook"
+      },
+      {
+        w: "Skull"
+      },
+      {
+        w: "Anchor"
+      },
+      {
+        w: "Shark"
+      },
+      {
+        w: "Wave"
+      },
+      {
+        w: "Gull"
+      },
+      {
+        w: "Wind"
+      },
+      {
+        w: "Moon"
+      }
+    ],
+    shade: [
+      {
+        w: "Black"
+      },
+      {
+        w: "Dark"
+      },
+      {
+        w: "Dim"
+      },
+      {
+        w: "Dusk",
+        x: 2
+      },
+      {
+        w: "Fog"
+      },
+      {
+        w: "Gloom"
+      },
+      {
+        w: "Grey"
+      },
+      {
+        w: "Night",
+        x: 2
+      },
+      {
+        w: "Shade"
+      },
+      {
+        w: "Shadow",
+        x: 2
+      },
+      {
+        w: "Smoke"
+      },
+      {
+        w: "Quiet",
+        x: 2
+      },
+      {
+        w: "Subtle"
+      },
+      {
+        w: "Whisper"
+      },
+      {
+        w: "Bloody",
+        x: 0.5
+      },
+      {
+        w: "Hidden"
+      },
+      {
+        w: "Red"
+      },
+      {
+        w: "Ready"
+      },
+      {
+        w: "Sharp"
+      },
+      {
+        w: "Sudden"
+      },
+      {
+        w: "Velvet",
+        x: 1.5
+      },
+      {
+        w: "Silent"
+      },
+      {
+        w: "Soft"
+      },
+      {
+        w: "Still"
+      },
+      {
+        w: "Crooked"
+      },
+      {
+        w: "Nimble"
+      },
+      {
+        w: "Lean"
+      },
+      {
+        w: "Cold"
+      },
+      {
+        w: "Long"
+      },
+      {
+        w: "Narrow"
+      },
+      {
+        w: "Hollow"
+      },
+      {
+        w: "Sly"
+      },
+      {
+        w: "Quick"
+      },
+      {
+        w: "Midnight"
+      },
+      {
+        w: "Moonless"
+      }
+    ],
+    uWeapon: [
+      {
+        w: "Blade"
+      },
+      {
+        w: "Bolt"
+      },
+      {
+        w: "Claw"
+      },
+      {
+        w: "Dagger"
+      },
+      {
+        w: "Dirk"
+      },
+      {
+        w: "Fang"
+      },
+      {
+        w: "Hand",
+        x: 2
+      },
+      {
+        w: "Knife",
+        x: 2
+      },
+      {
+        w: "Razor"
+      },
+      {
+        w: "Needle"
+      },
+      {
+        w: "Stiletto",
+        x: 0.5
+      },
+      {
+        w: "Sting"
+      },
+      {
+        w: "Cosh",
+        x: 0.5,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Garrotte",
+        x: 0.3
+      }
+    ],
+    uItem: [
+      {
+        w: "Balance"
+      },
+      {
+        w: "Hourglass"
+      },
+      {
+        w: "Scales"
+      },
+      {
+        w: "Cloak"
+      },
+      {
+        w: "Cowl"
+      },
+      {
+        w: "Hand"
+      },
+      {
+        w: "Hood"
+      },
+      {
+        w: "Mantle"
+      },
+      {
+        w: "Mask",
+        x: 2
+      },
+      {
+        w: "Glove"
+      },
+      {
+        w: "Key"
+      },
+      {
+        w: "Lock"
+      },
+      {
+        w: "Lantern"
+      },
+      {
+        w: "Coin"
+      },
+      {
+        w: "Purse"
+      },
+      {
+        w: "Candle"
+      },
+      {
+        w: "Thread"
+      }
+    ],
+    uCreature: [
+      {
+        w: "Snakes"
+      },
+      {
+        w: "Scorpions"
+      },
+      {
+        w: "Spiders"
+      },
+      {
+        w: "Bats"
+      },
+      {
+        w: "Cats"
+      },
+      {
+        w: "Jackdaws"
+      },
+      {
+        w: "Dogs"
+      },
+      {
+        w: "Owls"
+      },
+      {
+        w: "Magpies"
+      },
+      {
+        w: "Rats",
+        x: 2
+      },
+      {
+        w: "Weasels"
+      },
+      {
+        w: "Foxes"
+      },
+      {
+        w: "Stoats"
+      },
+      {
+        w: "Ferrets"
+      },
+      {
+        w: "Crows"
+      },
+      {
+        w: "Moths"
+      },
+      {
+        w: "Eels"
+      },
+      {
+        w: "Vipers"
+      },
+      {
+        w: "Jackals"
+      }
+    ],
+    agents: [
+      {
+        w: "Finders"
+      },
+      {
+        w: "Hunters"
+      },
+      {
+        w: "Seekers"
+      },
+      {
+        w: "Shadows"
+      },
+      {
+        w: "Slayers"
+      },
+      {
+        w: "Stalkers",
+        x: 2
+      },
+      {
+        w: "Takers"
+      },
+      {
+        w: "Cutters"
+      },
+      {
+        w: "Lifters"
+      },
+      {
+        w: "Pickers"
+      },
+      {
+        w: "Walkers"
+      },
+      {
+        w: "Creepers"
+      },
+      {
+        w: "Prowlers"
+      },
+      {
+        w: "Light-Fingers"
+      }
+    ],
+    thiefGroup: [
+      {
+        w: "Guild",
+        x: 3
+      },
+      {
+        w: "Brotherhood",
+        x: 2
+      },
+      {
+        w: "Fellowship"
+      },
+      {
+        w: "Band"
+      },
+      {
+        w: "Crew"
+      },
+      {
+        w: "Company"
+      },
+      {
+        w: "Ring"
+      },
+      {
+        w: "Family"
+      },
+      {
+        w: "Hand"
+      },
+      {
+        w: "Lodge"
+      },
+      {
+        w: "Society"
+      },
+      {
+        w: "Brethren"
+      }
+    ],
+    lastThing: [
+      {
+        w: "Last Breath"
+      },
+      {
+        w: "Final Hour"
+      },
+      {
+        w: "Long Sleep"
+      },
+      {
+        w: "Quiet End"
+      },
+      {
+        w: "Closed Eye"
+      },
+      {
+        w: "Cut Thread"
+      },
+      {
+        w: "Still Heart"
+      },
+      {
+        w: "Last Candle"
+      },
+      {
+        w: "Folded Hands"
+      },
+      {
+        w: "Empty Chair"
+      }
+    ],
+    gangMembers: [
+      {
+        w: "Boys",
+        x: 3
+      },
+      {
+        w: "Lads"
+      },
+      {
+        w: "Girls"
+      },
+      {
+        w: "Lasses",
+        x: 0.5
+      },
+      {
+        w: "Mob",
+        x: 2
+      },
+      {
+        w: "Crew",
+        x: 2
+      },
+      {
+        w: "Gang",
+        x: 2
+      },
+      {
+        w: "Set",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Firm",
+        x: 0.5
+      },
+      {
+        w: "Kings",
+        x: 0.5
+      },
+      {
+        w: "Lords"
+      },
+      {
+        w: "Saints"
+      },
+      {
+        w: "Jackals"
+      },
+      {
+        w: "Dogs"
+      },
+      {
+        w: "Hounds"
+      }
+    ],
+    gangWear: [
+      {
+        w: "Caps"
+      },
+      {
+        w: "Scarves"
+      },
+      {
+        w: "Jackets"
+      },
+      {
+        w: "Boots"
+      },
+      {
+        w: "Hats"
+      },
+      {
+        w: "Bandanas",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Gloves"
+      },
+      {
+        w: "Ribbons"
+      },
+      {
+        w: "Feathers"
+      },
+      {
+        w: "Coats"
+      },
+      {
+        w: "Sashes"
+      },
+      {
+        w: "Hoods"
+      }
+    ],
+    gangNoun: [
+      {
+        w: "Lamplighters"
+      },
+      {
+        w: "Sweeps"
+      },
+      {
+        w: "Jackdaws"
+      },
+      {
+        w: "Razors",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Rooks"
+      },
+      {
+        w: "Alley Cats"
+      },
+      {
+        w: "Ragged Kings"
+      },
+      {
+        w: "Monkeys"
+      },
+      {
+        w: "Moles"
+      },
+      {
+        w: "Ferrets"
+      },
+      {
+        w: "Hooks"
+      },
+      {
+        w: "Pennies"
+      },
+      {
+        w: "Farthings",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Sixpences",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Dockers"
+      },
+      {
+        w: "Tanners"
+      }
+    ],
+    streetFirst: [
+      {
+        w: "Tanner"
+      },
+      {
+        w: "Mill"
+      },
+      {
+        w: "Rope"
+      },
+      {
+        w: "Brewer"
+      },
+      {
+        w: "Cooper"
+      },
+      {
+        w: "Chandler"
+      },
+      {
+        w: "Fish"
+      },
+      {
+        w: "Bell"
+      },
+      {
+        w: "Gallows"
+      },
+      {
+        w: "Market"
+      },
+      {
+        w: "Water"
+      },
+      {
+        w: "Dock"
+      },
+      {
+        w: "Coal"
+      },
+      {
+        w: "Salt"
+      },
+      {
+        w: "Bridge"
+      },
+      {
+        w: "King"
+      },
+      {
+        w: "Queen"
+      },
+      {
+        w: "Ash"
+      },
+      {
+        w: "Elm"
+      },
+      {
+        w: "Cherry"
+      },
+      {
+        w: "Sheep"
+      },
+      {
+        w: "Hog"
+      },
+      {
+        w: "Angel"
+      },
+      {
+        w: "Hope"
+      },
+      {
+        w: "Paradise"
+      }
+    ],
+    streetLast: [
+      {
+        w: "Street",
+        x: 3
+      },
+      {
+        w: "Lane",
+        x: 2
+      },
+      {
+        w: "Row"
+      },
+      {
+        w: "Yard"
+      },
+      {
+        w: "Road"
+      },
+      {
+        w: "Court"
+      },
+      {
+        w: "Alley"
+      },
+      {
+        w: "Walk"
+      },
+      {
+        w: "Steps"
+      },
+      {
+        w: "Wharf"
+      }
+    ],
+    urbanArea: [
+      {
+        w: "Dockside",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Northside",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Southside",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Eastside",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Westside",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Riverside",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Uptown",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Downtown",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Underground",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Canalside",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    firm: [
+      {
+        w: "Outfit"
+      },
+      {
+        w: "Combine"
+      },
+      {
+        w: "Concern"
+      },
+      {
+        w: "Organisation"
+      },
+      {
+        w: "Syndicate",
+        x: 2
+      },
+      {
+        w: "Cartel",
+        x: 0.5,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Ring"
+      },
+      {
+        w: "Family",
+        x: 2
+      },
+      {
+        w: "Clan",
+        x: 0.5
+      },
+      {
+        w: "Brotherhood"
+      },
+      {
+        w: "Consortium",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    portPlaces: [
+      {
+        w: "Ports"
+      },
+      {
+        w: "Bridges"
+      },
+      {
+        w: "Docks"
+      },
+      {
+        w: "Gates"
+      },
+      {
+        w: "Lanes"
+      },
+      {
+        w: "Wharves"
+      },
+      {
+        w: "Towers"
+      },
+      {
+        w: "Markets"
+      }
+    ],
+    smugglerAgents: [
+      {
+        w: "Owlers",
+        x: 2
+      },
+      {
+        w: "Free Traders"
+      },
+      {
+        w: "Lantern Men"
+      },
+      {
+        w: "Tide-Runners"
+      },
+      {
+        w: "Gentlemen"
+      },
+      {
+        w: "Runners",
+        x: 2
+      },
+      {
+        w: "Landers"
+      },
+      {
+        w: "Blockade Runners",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    crewCollective: [
+      {
+        w: "Choir"
+      },
+      {
+        w: "Collective"
+      },
+      {
+        w: "Cell"
+      },
+      {
+        w: "Crew",
+        x: 2
+      },
+      {
+        w: "Front"
+      },
+      {
+        w: "Circle"
+      },
+      {
+        w: "Kids"
+      },
+      {
+        w: "Ghosts"
+      },
+      {
+        w: "Saints"
+      },
+      {
+        w: "Wolves"
+      },
+      {
+        w: "Syndicate"
+      },
+      {
+        w: "Club"
+      }
+    ],
+    techWord: [
+      {
+        w: "Null"
+      },
+      {
+        w: "Static"
+      },
+      {
+        w: "Zero"
+      },
+      {
+        w: "Glass"
+      },
+      {
+        w: "Cipher"
+      },
+      {
+        w: "Ghost"
+      },
+      {
+        w: "Echo"
+      },
+      {
+        w: "Proxy"
+      },
+      {
+        w: "Kernel"
+      },
+      {
+        w: "Packet"
+      },
+      {
+        w: "Signal"
+      },
+      {
+        w: "Neon"
+      },
+      {
+        w: "Chrome"
+      },
+      {
+        w: "Cold Boot",
+        x: 0.5
+      },
+      {
+        w: "Root"
+      },
+      {
+        w: "Vector"
+      },
+      {
+        w: "Mirror"
+      },
+      {
+        w: "Shadow"
+      },
+      {
+        w: "Rust"
+      },
+      {
+        w: "Silicon"
+      }
+    ],
+    crewNoun: [
+      {
+        w: "Ghosts"
+      },
+      {
+        w: "Saints"
+      },
+      {
+        w: "Keys"
+      },
+      {
+        w: "Locks"
+      },
+      {
+        w: "Masks"
+      },
+      {
+        w: "Gloves"
+      },
+      {
+        w: "Shadows"
+      }
+    ],
+    tradesmen: [
+      {
+        w: "Armourers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Bakers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Barbers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Bellfounders",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Blacksmiths",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Bookbinders",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Bowyers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Brewers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Broderers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Butchers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Candlemakers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Carpenters",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Cartographers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Chandlers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Clockmakers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Clothworkers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Coopers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Cordwainers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Cutlers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Drapers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Dyers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Farriers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Feltmakers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Fishmongers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Fletchers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Founders",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Glassblowers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Glaziers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Glovers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Goldsmiths",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Grocers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Haberdashers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Ironmongers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Joiners",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Lanternmakers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Leathersellers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Locksmiths",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Masons",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Mercers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Millers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Needlemakers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Painters",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Perfumers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Pewterers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Plasterers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Potters",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Ropemakers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Saddlers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Salters",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Scriveners",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Shipwrights",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Skinners",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Spectacle Makers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Stationers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Tanners",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Tilers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Turners",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Vintners",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Weavers",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Wheelwrights",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Woolmen",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Electricians",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Engineers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Printers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Mechanics",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Plumbers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Builders",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Surveyors",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Typesetters",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Alchemists",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Enchanters",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Runecarvers",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Wandwrights",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Golemwrights",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Beast-Tamers",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Spell-Scribes",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Pilots",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Navigators",
+        x: 0.5,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Engineers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Riggers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Salvagers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Fabricators",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Terraformers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Prospectors",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Couriers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Data-Brokers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Shipwrights",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Medics",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    craftHonorific: [
+      {
+        w: "Worshipful",
+        x: 3,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Honourable",
+        x: 2
+      },
+      {
+        w: "Ancient"
+      },
+      {
+        w: "Royal"
+      },
+      {
+        w: "Venerable",
+        x: 0.5
+      },
+      {
+        w: "Most Excellent",
+        x: 0.3
+      }
+    ],
+    goods: [
+      {
+        w: "Spice",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Salt",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Wool",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Silk",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Amber",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Tea",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Furs",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Timber",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Wine",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Iron",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Copper",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Tin",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Pepper",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Saffron",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Indigo",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Cotton",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Coffee",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Grain",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Horses",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Pearls",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Glass",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Paper",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Cloth",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Ore",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Ice",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Water",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Data",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Fuel",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Salvage",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Helium",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Alloys",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Medicines",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    tradeDesc: [
+      {
+        w: "Royal"
+      },
+      {
+        w: "Golden"
+      },
+      {
+        w: "Silver"
+      },
+      {
+        w: "Old"
+      },
+      {
+        w: "Black"
+      },
+      {
+        w: "Red"
+      },
+      {
+        w: "Green"
+      },
+      {
+        w: "Iron"
+      },
+      {
+        w: "Honest"
+      },
+      {
+        w: "Good"
+      }
+    ],
+    bankWord: [
+      {
+        w: "Bank",
+        x: 3
+      },
+      {
+        w: "Savings Bank",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Mutual",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Building Society",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Exchange"
+      },
+      {
+        w: "Counting House",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Trust"
+      },
+      {
+        w: "Credit Union",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Capital",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    combineWord: [
+      {
+        w: "Combine",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Consortium",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Concern",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Syndicate",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    unionTrade: [
+      {
+        w: "Dockers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Miners",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Railwaymen",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Weavers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Printers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Seamen",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Engineers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Carters",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Teachers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Nurses",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Clerks",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Bakers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Postal Workers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Shipbuilders",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Steelworkers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Drivers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Spacers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Belt Miners",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Dock Hands",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Ring Workers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Hydroponic Growers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Ice Haulers",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Reactor Crews",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    lineEmblem: [
+      {
+        w: "Pennant",
+        x: 2
+      },
+      {
+        w: "Star"
+      },
+      {
+        w: "Anchor"
+      },
+      {
+        w: "Funnel",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Ensign"
+      },
+      {
+        w: "Flag"
+      },
+      {
+        w: "Diamond"
+      },
+      {
+        w: "Ribbon"
+      },
+      {
+        w: "Band"
+      }
+    ],
+    wellPlaces: [
+      {
+        w: "Wells"
+      },
+      {
+        w: "Oases"
+      },
+      {
+        w: "Palms"
+      },
+      {
+        w: "Stars"
+      }
+    ],
+    companyGroup: [
+      {
+        w: "Company",
+        x: 3
+      },
+      {
+        w: "Fellowship",
+        x: 2
+      },
+      {
+        w: "Band",
+        x: 2
+      },
+      {
+        w: "Alliance"
+      },
+      {
+        w: "Brotherhood"
+      },
+      {
+        w: "Sisterhood"
+      },
+      {
+        w: "League"
+      },
+      {
+        w: "Order",
+        x: 0.5
+      },
+      {
+        w: "Crew",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Society",
+        x: 0.5
+      }
+    ],
+    vocation: [
+      {
+        w: "Swords"
+      },
+      {
+        w: "Blades"
+      },
+      {
+        w: "Hunters"
+      },
+      {
+        w: "Foresters"
+      },
+      {
+        w: "Rangers"
+      },
+      {
+        w: "Scouts"
+      },
+      {
+        w: "Pilgrims"
+      },
+      {
+        w: "Delvers"
+      },
+      {
+        w: "Wanderers"
+      },
+      {
+        w: "Seekers"
+      },
+      {
+        w: "Pathfinders"
+      },
+      {
+        w: "Wizards",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Witches",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Spellblades",
+        x: 0.3,
+        s: [
+          "FH",
+          "MF"
+        ]
+      }
+    ],
+    compound: [
+      {
+        w: "Crackbones"
+      },
+      {
+        w: "Bonebreakers"
+      },
+      {
+        w: "Stormchasers"
+      },
+      {
+        w: "Gravediggers"
+      },
+      {
+        w: "Duskwalkers"
+      },
+      {
+        w: "Lockbreakers"
+      },
+      {
+        w: "Coin-Finders"
+      },
+      {
+        w: "Fatecasters"
+      },
+      {
+        w: "Ironsingers"
+      },
+      {
+        w: "Ashwalkers"
+      },
+      {
+        w: "Starfinders"
+      },
+      {
+        w: "Mudlarks"
+      },
+      {
+        w: "Luckhunters"
+      },
+      {
+        w: "Doomsayers",
+        x: 0.5
+      },
+      {
+        w: "Gatecrashers"
+      },
+      {
+        w: "Mapmakers"
+      },
+      {
+        w: "Wayfinders"
+      },
+      {
+        w: "Pathbreakers"
+      },
+      {
+        w: "Lantern-Bearers"
+      },
+      {
+        w: "Kettle-Breakers",
+        x: 0.5
+      },
+      {
+        w: "Wyrmtakers",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Dungeon-Delvers",
+        s: [
+          "FH",
+          "MF"
+        ]
+      }
+    ],
+    expPlace: [
+      {
+        w: "Far North",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Southern Ice",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Inland Sea",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Interior",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Sunken Coast",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "High Passes",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Outer Isles",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Western Ocean",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Lost Valley",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Great Forest",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Burning Sands",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Long River",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Deep Rim",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Outer Belt",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Far Drift",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Silent Reach",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Kepler Gap",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Inner Halo",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    expQuality: [
+      {
+        w: "Deep",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Far",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Long-Range",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Outer",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Frontier",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Pathfinder",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    monster: [
+      {
+        w: "Wyrm",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Ghoul",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Troll",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Vampire",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Werewolf",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Wight",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Hag",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Giant",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Drake",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Shade",
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Witch",
+        x: 0.3,
+        s: [
+          "FH",
+          "MF"
+        ]
+      },
+      {
+        w: "Wolf"
+      },
+      {
+        w: "Boar"
+      },
+      {
+        w: "Bear"
+      },
+      {
+        w: "Beast"
+      },
+      {
+        w: "Void-Beast",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Bug",
+        x: 0.5,
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    hunterNoun: [
+      {
+        w: "Hunters",
+        x: 2
+      },
+      {
+        w: "Wardens"
+      },
+      {
+        w: "Takers"
+      },
+      {
+        w: "Slayers"
+      },
+      {
+        w: "Stalkers"
+      },
+      {
+        w: "Huntsmen"
+      },
+      {
+        w: "Trackers"
+      }
+    ],
+    retrieval: [
+      {
+        w: "Retrievals",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Recovery Services",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Bounty Office",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Acquisitions",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    assemblyWord: [
+      {
+        w: "Assembly",
+        x: 2
+      },
+      {
+        w: "Senate"
+      },
+      {
+        w: "Moot",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Parliament",
+        x: 0.5,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Conclave"
+      },
+      {
+        w: "Synod",
+        x: 0.3
+      },
+      {
+        w: "Witan",
+        tx: {
+          germanic: 5
+        },
+        x: 0.3
+      }
+    ],
+    directorate: [
+      {
+        w: "Directorate",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Committee",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Authority",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Commission",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Board",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    councilQuality: [
+      {
+        w: "Silent"
+      },
+      {
+        w: "Hidden"
+      },
+      {
+        w: "Old"
+      },
+      {
+        w: "Inner"
+      },
+      {
+        w: "Upper"
+      },
+      {
+        w: "Lower"
+      },
+      {
+        w: "Lesser"
+      },
+      {
+        w: "Greater"
+      }
+    ],
+    ideal: [
+      {
+        w: "Commonweal"
+      },
+      {
+        w: "Hearth"
+      },
+      {
+        w: "Crown"
+      },
+      {
+        w: "Liberty"
+      },
+      {
+        w: "Unity"
+      },
+      {
+        w: "Progress"
+      },
+      {
+        w: "Order"
+      },
+      {
+        w: "Reform"
+      },
+      {
+        w: "Concord"
+      },
+      {
+        w: "Plenty"
+      },
+      {
+        w: "Covenant"
+      },
+      {
+        w: "Restoration"
+      },
+      {
+        w: "Commons"
+      },
+      {
+        w: "Charter"
+      },
+      {
+        w: "Land"
+      },
+      {
+        w: "Harvest"
+      },
+      {
+        w: "Bread"
+      },
+      {
+        w: "Lantern"
+      },
+      {
+        w: "Plough"
+      },
+      {
+        w: "Anchor"
+      },
+      {
+        w: "Rose"
+      },
+      {
+        w: "Tomorrow",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Future",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Frontier",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    factionColour: [
+      {
+        w: "Blues"
+      },
+      {
+        w: "Greens"
+      },
+      {
+        w: "Golds"
+      },
+      {
+        w: "Greys"
+      },
+      {
+        w: "Purples"
+      },
+      {
+        w: "Ambers"
+      }
+    ],
+    factionNick: [
+      {
+        w: "Hedgers"
+      },
+      {
+        w: "Bellringers"
+      },
+      {
+        w: "Roundcaps"
+      },
+      {
+        w: "Weathercocks"
+      },
+      {
+        w: "Long Wigs"
+      },
+      {
+        w: "Cockades"
+      },
+      {
+        w: "Brooms"
+      },
+      {
+        w: "Turnips",
+        x: 0.5
+      },
+      {
+        w: "Candlemen"
+      },
+      {
+        w: "Hearthmen"
+      },
+      {
+        w: "Sheaves"
+      },
+      {
+        w: "Levellers",
+        x: 0.3
+      },
+      {
+        w: "Diggers",
+        x: 0.3
+      }
+    ],
+    secretItem: [
+      {
+        w: "Door"
+      },
+      {
+        w: "Key"
+      },
+      {
+        w: "Table"
+      },
+      {
+        w: "Lamp"
+      },
+      {
+        w: "Seal"
+      },
+      {
+        w: "Ring"
+      },
+      {
+        w: "Glove"
+      },
+      {
+        w: "Mask"
+      },
+      {
+        w: "Ledger"
+      },
+      {
+        w: "Quill"
+      },
+      {
+        w: "Candle"
+      },
+      {
+        w: "Cup"
+      },
+      {
+        w: "Mirror"
+      },
+      {
+        w: "Thread"
+      },
+      {
+        w: "Coin"
+      },
+      {
+        w: "Chair"
+      },
+      {
+        w: "Window"
+      },
+      {
+        w: "Stair"
+      }
+    ],
+    secretQuality: [
+      {
+        w: "Closed"
+      },
+      {
+        w: "Quiet"
+      },
+      {
+        w: "Hidden"
+      },
+      {
+        w: "Silent"
+      },
+      {
+        w: "Second"
+      },
+      {
+        w: "Empty"
+      },
+      {
+        w: "Folded"
+      },
+      {
+        w: "Sealed"
+      },
+      {
+        w: "Locked"
+      },
+      {
+        w: "Unlit"
+      },
+      {
+        w: "Turning"
+      },
+      {
+        w: "Inner"
+      },
+      {
+        w: "Last"
+      }
+    ],
+    rebelQuality: [
+      {
+        w: "Broken"
+      },
+      {
+        w: "Fallen"
+      },
+      {
+        w: "Last"
+      },
+      {
+        w: "Burning"
+      },
+      {
+        w: "Free"
+      },
+      {
+        w: "Rising"
+      },
+      {
+        w: "Unbowed"
+      },
+      {
+        w: "Hidden"
+      },
+      {
+        w: "Uncrowned"
+      },
+      {
+        w: "Unbroken"
+      }
+    ],
+    rebelEmblem: [
+      {
+        w: "Crown"
+      },
+      {
+        w: "Sword"
+      },
+      {
+        w: "Oak"
+      },
+      {
+        w: "Banner"
+      },
+      {
+        w: "Flame"
+      },
+      {
+        w: "Star"
+      },
+      {
+        w: "Wheel"
+      },
+      {
+        w: "Plough"
+      },
+      {
+        w: "Bell"
+      },
+      {
+        w: "Chain"
+      },
+      {
+        w: "Gate"
+      },
+      {
+        w: "Rose"
+      }
+    ],
+    rebelGroup: [
+      {
+        w: "Front"
+      },
+      {
+        w: "Movement",
+        x: 2
+      },
+      {
+        w: "Army",
+        x: 0.5
+      },
+      {
+        w: "Militia"
+      },
+      {
+        w: "Brotherhood"
+      },
+      {
+        w: "Rising"
+      },
+      {
+        w: "Alliance"
+      }
+    ],
+    rebelWear: [
+      {
+        w: "Ribbons"
+      },
+      {
+        w: "Cockades"
+      },
+      {
+        w: "Sashes"
+      },
+      {
+        w: "Caps"
+      },
+      {
+        w: "Scarves"
+      },
+      {
+        w: "Armbands"
+      }
+    ],
+    season: [
+      {
+        w: "Thaw"
+      },
+      {
+        w: "Seedtime"
+      },
+      {
+        w: "Midsummer"
+      },
+      {
+        w: "Harvest"
+      },
+      {
+        w: "Leaf-Fall"
+      },
+      {
+        w: "Frost"
+      },
+      {
+        w: "Deepwinter"
+      }
+    ],
+    month: [
+      {
+        w: "January",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "February",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "March",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "April",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "May",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "June",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "July",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "August",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "September",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "October",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "November",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "December",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    cityWord: [
+      {
+        w: "Harbour",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "City",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Town",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Port",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "River",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Valley",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Crown",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Tower",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Gate",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "World",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Moon",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Station",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Colony",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Habitat",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    leagueGroup: [
+      {
+        w: "League",
+        x: 3
+      },
+      {
+        w: "Alliance",
+        x: 2
+      },
+      {
+        w: "Concord"
+      },
+      {
+        w: "Compact"
+      },
+      {
+        w: "Covenant"
+      },
+      {
+        w: "Union"
+      },
+      {
+        w: "Accord"
+      },
+      {
+        w: "Federation",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Commonwealth",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Confederacy"
+      },
+      {
+        w: "Coalition"
+      },
+      {
+        w: "Pact"
+      },
+      {
+        w: "Entente",
+        x: 0.3
+      },
+      {
+        w: "Concordat",
+        x: 0.3
+      },
+      {
+        w: "Hegemony",
+        x: 0.5,
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    agencyPursuit: [
+      {
+        w: "Unusual Affairs",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Special Operations",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Internal Security",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "External Affairs",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Continuity",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Records",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Correspondence",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Public Safety",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Strategic Studies",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Information",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Arcane Affairs",
+        s: [
+          "MF"
+        ]
+      },
+      {
+        w: "Unusual Phenomena",
+        s: [
+          "MF"
+        ]
+      },
+      {
+        w: "Hidden Matters",
+        s: [
+          "MF"
+        ]
+      }
+    ],
+    spyWord: [
+      {
+        w: "Eyes",
+        x: 2
+      },
+      {
+        w: "Ears"
+      },
+      {
+        w: "Shadows"
+      },
+      {
+        w: "Quills"
+      },
+      {
+        w: "Whisperers"
+      },
+      {
+        w: "Hands"
+      },
+      {
+        w: "Lanterns"
+      },
+      {
+        w: "Ravens"
+      }
+    ],
+    ruler: [
+      {
+        w: "King",
+        x: 2
+      },
+      {
+        w: "Queen",
+        x: 2
+      },
+      {
+        w: "Duke"
+      },
+      {
+        w: "Prince"
+      },
+      {
+        w: "Regent"
+      },
+      {
+        w: "Emperor"
+      },
+      {
+        w: "Empress"
+      },
+      {
+        w: "Countess"
+      },
+      {
+        w: "Doge",
+        x: 0.3
+      },
+      {
+        w: "Margrave",
+        x: 0.3
+      }
+    ],
+    feyTime: [
+      {
+        w: "Winter"
+      },
+      {
+        w: "Summer"
+      },
+      {
+        w: "Autumn"
+      },
+      {
+        w: "Spring"
+      },
+      {
+        w: "Twilight",
+        x: 2
+      },
+      {
+        w: "Midnight"
+      },
+      {
+        w: "Dawn"
+      },
+      {
+        w: "Dusk"
+      },
+      {
+        w: "Moonlit"
+      },
+      {
+        w: "Frost"
+      },
+      {
+        w: "Harvest"
+      }
+    ],
+    feyPlant: [
+      {
+        w: "Rowan"
+      },
+      {
+        w: "Thorn"
+      },
+      {
+        w: "Hawthorn"
+      },
+      {
+        w: "Elder"
+      },
+      {
+        w: "Ash"
+      },
+      {
+        w: "Willow"
+      },
+      {
+        w: "Briar"
+      },
+      {
+        w: "Foxglove"
+      },
+      {
+        w: "Bluebell"
+      },
+      {
+        w: "Hazel"
+      }
+    ],
+    feyPlace: [
+      {
+        w: "Hollow Hill",
+        x: 2
+      },
+      {
+        w: "Green Mound"
+      },
+      {
+        w: "Old Barrow"
+      },
+      {
+        w: "Silver Mere"
+      },
+      {
+        w: "Thorn Ring"
+      },
+      {
+        w: "Under-Hill"
+      },
+      {
+        w: "Mist"
+      },
+      {
+        w: "Deep Wood"
+      },
+      {
+        w: "Fairy Ring",
+        x: 0.5
+      }
+    ],
+    feyTitle: [
+      {
+        w: "Queen",
+        x: 2
+      },
+      {
+        w: "King",
+        x: 2
+      },
+      {
+        w: "Lady"
+      },
+      {
+        w: "Lord"
+      },
+      {
+        w: "Prince"
+      },
+      {
+        w: "Huntsman"
+      },
+      {
+        w: "Piper"
+      }
+    ],
+    skyThing: [
+      {
+        w: "Moon",
+        x: 2
+      },
+      {
+        w: "Star",
+        x: 2
+      },
+      {
+        w: "Sun"
+      },
+      {
+        w: "Dawn"
+      },
+      {
+        w: "Dusk"
+      },
+      {
+        w: "Mist"
+      },
+      {
+        w: "Dew"
+      },
+      {
+        w: "Frost"
+      }
+    ],
+    bloodQuality: [
+      {
+        w: "Silent"
+      },
+      {
+        w: "Ancient"
+      },
+      {
+        w: "Hollow"
+      },
+      {
+        w: "Hungry"
+      },
+      {
+        w: "Patient"
+      },
+      {
+        w: "Sleepless"
+      },
+      {
+        w: "Velvet"
+      },
+      {
+        w: "Cold"
+      },
+      {
+        w: "Nameless"
+      }
+    ],
+    bodyPart: [
+      {
+        w: "Fang"
+      },
+      {
+        w: "Claw"
+      },
+      {
+        w: "Paw"
+      },
+      {
+        w: "Pelt"
+      },
+      {
+        w: "Mane"
+      },
+      {
+        w: "Tooth"
+      },
+      {
+        w: "Eye"
+      }
+    ],
+    kinWord: [
+      {
+        w: "Kin",
+        x: 2
+      },
+      {
+        w: "Sons"
+      },
+      {
+        w: "Daughters"
+      },
+      {
+        w: "Brood"
+      },
+      {
+        w: "Blood"
+      }
+    ],
+    shifter: [
+      {
+        w: "Wolf",
+        x: 3
+      },
+      {
+        w: "Bear",
+        x: 2
+      },
+      {
+        w: "Boar"
+      },
+      {
+        w: "Hare"
+      },
+      {
+        w: "Fox"
+      },
+      {
+        w: "Raven"
+      },
+      {
+        w: "Seal"
+      },
+      {
+        w: "Cat"
+      },
+      {
+        w: "Stag"
+      },
+      {
+        w: "Hound"
+      }
+    ],
+    weather: [
+      {
+        w: "Gale"
+      },
+      {
+        w: "Mist"
+      },
+      {
+        w: "Frost"
+      },
+      {
+        w: "Thunder"
+      },
+      {
+        w: "North Wind"
+      },
+      {
+        w: "Long Night"
+      },
+      {
+        w: "Rain"
+      },
+      {
+        w: "Snow"
+      }
+    ],
+    deadQuality: [
+      {
+        w: "Restless"
+      },
+      {
+        w: "Hungry"
+      },
+      {
+        w: "Drowned"
+      },
+      {
+        w: "Unquiet"
+      },
+      {
+        w: "Nameless"
+      },
+      {
+        w: "Patient"
+      },
+      {
+        w: "Weeping"
+      },
+      {
+        w: "Hollow"
+      },
+      {
+        w: "Grey"
+      }
+    ],
+    undeadNoun: [
+      {
+        w: "Kings"
+      },
+      {
+        w: "Dead"
+      },
+      {
+        w: "Legion"
+      },
+      {
+        w: "Host"
+      },
+      {
+        w: "Lords"
+      },
+      {
+        w: "Barrow-Kings"
+      },
+      {
+        w: "Sleepers"
+      },
+      {
+        w: "Risen"
+      }
+    ],
+    hellPlace: [
+      {
+        w: "Pit",
+        x: 2
+      },
+      {
+        w: "Abyss"
+      },
+      {
+        w: "Furnace"
+      },
+      {
+        w: "Deep"
+      },
+      {
+        w: "Gate"
+      },
+      {
+        w: "Fire"
+      },
+      {
+        w: "Ash"
+      },
+      {
+        w: "Cinders"
+      },
+      {
+        w: "Pyre"
+      },
+      {
+        w: "Throne"
+      }
+    ],
+    demonQuality: [
+      {
+        w: "Burning"
+      },
+      {
+        w: "Smiling"
+      },
+      {
+        w: "Hungry"
+      },
+      {
+        w: "Hollow"
+      },
+      {
+        w: "Brazen"
+      },
+      {
+        w: "Cinder"
+      },
+      {
+        w: "Thousand-Voiced"
+      },
+      {
+        w: "Patient"
+      },
+      {
+        w: "Laughing"
+      }
+    ],
+    chainItem: [
+      {
+        w: "Chains"
+      },
+      {
+        w: "Keys"
+      },
+      {
+        w: "Thorns"
+      },
+      {
+        w: "Crowns"
+      },
+      {
+        w: "Bells"
+      },
+      {
+        w: "Horns"
+      },
+      {
+        w: "Seals"
+      }
+    ],
+    heavenThing: [
+      {
+        w: "Sun"
+      },
+      {
+        w: "Dawn"
+      },
+      {
+        w: "Star"
+      },
+      {
+        w: "Light"
+      },
+      {
+        w: "Flame"
+      },
+      {
+        w: "Throne"
+      },
+      {
+        w: "Gate"
+      },
+      {
+        w: "Sky"
+      },
+      {
+        w: "Morning"
+      }
+    ],
+    heavenQuality: [
+      {
+        w: "Shining"
+      },
+      {
+        w: "Radiant"
+      },
+      {
+        w: "Golden"
+      },
+      {
+        w: "Silver"
+      },
+      {
+        w: "White"
+      },
+      {
+        w: "Unfading"
+      },
+      {
+        w: "Burning"
+      },
+      {
+        w: "Silent"
+      },
+      {
+        w: "Highest"
+      }
+    ],
+    pursuit: [
+      {
+        w: "Quiet Remembrance"
+      },
+      {
+        w: "the Study of Old Tongues"
+      },
+      {
+        w: "the Preservation of Antiquities"
+      },
+      {
+        w: "Mutual Improvement"
+      },
+      {
+        w: "the Encouragement of the Arts"
+      },
+      {
+        w: "Natural Philosophy"
+      },
+      {
+        w: "Lantern-Lit Walks"
+      },
+      {
+        w: "the Relief of Widows"
+      },
+      {
+        w: "Rational Recreation"
+      },
+      {
+        w: "Psychical Research",
+        x: 0.3
+      }
+    ],
+    respectablePlace: [
+      {
+        w: "Old Library"
+      },
+      {
+        w: "Harbour Lights"
+      },
+      {
+        w: "Lower Gardens"
+      },
+      {
+        w: "Old Bridge"
+      },
+      {
+        w: "Night Garden"
+      },
+      {
+        w: "Abbey Ruins"
+      },
+      {
+        w: "Town Museum"
+      },
+      {
+        w: "Bell Tower"
+      },
+      {
+        w: "Physic Garden"
+      }
+    ],
+    weekday: [
+      {
+        w: "Monday"
+      },
+      {
+        w: "Tuesday"
+      },
+      {
+        w: "Wednesday"
+      },
+      {
+        w: "Friday"
+      },
+      {
+        w: "Saturday"
+      },
+      {
+        w: "Sunday"
+      },
+      {
+        w: "Thursday",
+        x: 2
+      }
+    ],
+    club: [
+      {
+        w: "Supper Club"
+      },
+      {
+        w: "Reading Circle"
+      },
+      {
+        w: "Debating Society"
+      },
+      {
+        w: "Rambling Club"
+      },
+      {
+        w: "Chess Club"
+      },
+      {
+        w: "Dining Club"
+      },
+      {
+        w: "Choral Society"
+      },
+      {
+        w: "Sewing Circle"
+      },
+      {
+        w: "Bridge Club",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Book Club",
+        s: [
+          "MR",
+          "MF"
+        ]
+      }
+    ],
+    thiefEuph: [
+      {
+        w: "Uplifters"
+      },
+      {
+        w: "Redistributors"
+      },
+      {
+        w: "Leviers"
+      },
+      {
+        w: "Liberators"
+      },
+      {
+        w: "Relocators"
+      },
+      {
+        w: "Lighteners"
+      },
+      {
+        w: "Collectors"
+      },
+      {
+        w: "Finders"
+      },
+      {
+        w: "Purse-Lighteners"
+      },
+      {
+        w: "Rehomers",
+        s: [
+          "MR",
+          "MF"
+        ]
+      }
+    ],
+    gentleAdj: [
+      {
+        w: "Kindly"
+      },
+      {
+        w: "Generous"
+      },
+      {
+        w: "Honest"
+      },
+      {
+        w: "Thoughtful"
+      },
+      {
+        w: "Obliging"
+      },
+      {
+        w: "Charitable"
+      },
+      {
+        w: "Gentle"
+      }
+    ],
+    balancers: [
+      {
+        w: "Arrangers"
+      },
+      {
+        w: "Bestowers",
+        x: 0.3
+      },
+      {
+        w: "Disbursers",
+        x: 0.3
+      },
+      {
+        w: "Disposers"
+      },
+      {
+        w: "Harmonisers"
+      },
+      {
+        w: "Reconcilers"
+      },
+      {
+        w: "Regulators"
+      },
+      {
+        w: "Reinstaters"
+      },
+      {
+        w: "Restorers",
+        x: 2
+      },
+      {
+        w: "Balancers"
+      },
+      {
+        w: "Correctors"
+      },
+      {
+        w: "Adjusters"
+      },
+      {
+        w: "Menders"
+      }
+    ],
+    balance: [
+      {
+        w: "Balance",
+        x: 2
+      },
+      {
+        w: "Congruity",
+        x: 0.3
+      },
+      {
+        w: "Correspondence",
+        x: 0.5
+      },
+      {
+        w: "Equilibrium"
+      },
+      {
+        w: "Equipoise"
+      },
+      {
+        w: "Equity"
+      },
+      {
+        w: "Equivalence",
+        x: 0.5
+      },
+      {
+        w: "Parity"
+      },
+      {
+        w: "Symmetry"
+      },
+      {
+        w: "Accounts"
+      },
+      {
+        w: "Old Debts"
+      }
+    ],
+    redressAdj: [
+      {
+        w: "Acute",
+        x: 0.3
+      },
+      {
+        w: "Apposite",
+        x: 0.5
+      },
+      {
+        w: "Apt"
+      },
+      {
+        w: "Decisive"
+      },
+      {
+        w: "Dependable"
+      },
+      {
+        w: "Discreet"
+      },
+      {
+        w: "Extreme",
+        x: 0.3
+      },
+      {
+        w: "Faithful"
+      },
+      {
+        w: "Final"
+      },
+      {
+        w: "Fitting"
+      },
+      {
+        w: "Impartial"
+      },
+      {
+        w: "Prompt"
+      },
+      {
+        w: "Reliable"
+      },
+      {
+        w: "Certain"
+      },
+      {
+        w: "Supreme",
+        x: 0.5
+      },
+      {
+        w: "Ultimate",
+        x: 0.5
+      },
+      {
+        w: "Utmost",
+        x: 0.3
+      }
+    ],
+    redress: [
+      {
+        w: "Action"
+      },
+      {
+        w: "Justice"
+      },
+      {
+        w: "Reckoning"
+      },
+      {
+        w: "Recompense"
+      },
+      {
+        w: "Redress"
+      },
+      {
+        w: "Remedy"
+      },
+      {
+        w: "Reparation"
+      },
+      {
+        w: "Reprisal",
+        x: 0.5
+      },
+      {
+        w: "Requital"
+      },
+      {
+        w: "Retribution",
+        x: 0.5
+      },
+      {
+        w: "Satisfaction"
+      },
+      {
+        w: "Settlement"
+      },
+      {
+        w: "Vindication",
+        x: 0.5
+      }
+    ],
+    redressGroup: [
+      {
+        w: "Alliance"
+      },
+      {
+        w: "Association"
+      },
+      {
+        w: "Company"
+      },
+      {
+        w: "Corporation",
+        x: 2,
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Organisation"
+      },
+      {
+        w: "Society",
+        x: 2
+      },
+      {
+        w: "Syndicate"
+      },
+      {
+        w: "Agency",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    businessTrade: [
+      {
+        w: "Haulage"
+      },
+      {
+        w: "Shipping"
+      },
+      {
+        w: "Import\u2013Export"
+      },
+      {
+        w: "Scrap Metals"
+      },
+      {
+        w: "Fine Wines"
+      },
+      {
+        w: "Laundry"
+      },
+      {
+        w: "Removals"
+      },
+      {
+        w: "Pawnbrokers"
+      },
+      {
+        w: "Builders' Merchants",
+        s: [
+          "MR",
+          "MF"
+        ]
+      }
+    ],
+    fishWord: [
+      {
+        w: "Fishing"
+      },
+      {
+        w: "Oyster"
+      },
+      {
+        w: "Herring"
+      },
+      {
+        w: "Salvage"
+      },
+      {
+        w: "Lighterage"
+      },
+      {
+        w: "Ferry"
+      }
+    ],
+    mundane: [
+      {
+        w: "Fisheries"
+      },
+      {
+        w: "Weights and Measures"
+      },
+      {
+        w: "Public Records"
+      },
+      {
+        w: "Agricultural Statistics"
+      },
+      {
+        w: "Inland Waterways"
+      },
+      {
+        w: "Postal Correspondence"
+      },
+      {
+        w: "Lighthouses"
+      },
+      {
+        w: "Bridges and Roads"
+      },
+      {
+        w: "Census Returns"
+      },
+      {
+        w: "Archives"
+      }
+    ],
+    mundaneOffice: [
+      {
+        w: "Records Office"
+      },
+      {
+        w: "Survey Office"
+      },
+      {
+        w: "Tide Office"
+      },
+      {
+        w: "Statistical Office"
+      }
+    ],
+    clerkWord: [
+      {
+        w: "Clerks",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Surveyors",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Almoners",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Archivists",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Tax-Gatherers",
+        s: [
+          "FL",
+          "FH"
+        ]
+      }
+    ],
+    folkKind: [
+      {
+        w: "Good",
+        x: 2
+      },
+      {
+        w: "Kindly"
+      },
+      {
+        w: "Gentle"
+      },
+      {
+        w: "Quiet"
+      },
+      {
+        w: "Fair"
+      },
+      {
+        w: "Honest"
+      },
+      {
+        w: "Pleasant"
+      },
+      {
+        w: "Bright"
+      },
+      {
+        w: "Little",
+        x: 0.3
+      },
+      {
+        w: "Old",
+        x: 0.5
+      },
+      {
+        w: "Lordly",
+        x: 0.3
+      }
+    ],
+    folkWord: [
+      {
+        w: "Neighbours",
+        x: 2
+      },
+      {
+        w: "Folk",
+        x: 2
+      },
+      {
+        w: "People"
+      },
+      {
+        w: "Ones"
+      },
+      {
+        w: "Company"
+      },
+      {
+        w: "Gentry"
+      }
+    ],
+    folkFixed: [
+      {
+        w: "the Gentry"
+      },
+      {
+        w: "the Good People"
+      },
+      {
+        w: "Themselves"
+      },
+      {
+        w: "the Others"
+      },
+      {
+        w: "Them Below"
+      },
+      {
+        w: "the Hidden Ones"
+      },
+      {
+        w: "the Gentle Neighbours"
+      }
+    ],
+    peace: [
+      {
+        w: "Peace"
+      },
+      {
+        w: "the Hills"
+      },
+      {
+        w: "the Mounds"
+      },
+      {
+        w: "the Mist"
+      },
+      {
+        w: "Plenty"
+      }
+    ],
+    benefAdj: [
+      {
+        w: "Generous"
+      },
+      {
+        w: "Patient"
+      },
+      {
+        w: "Charitable"
+      },
+      {
+        w: "Obliging"
+      },
+      {
+        w: "Accommodating"
+      },
+      {
+        w: "Kindly"
+      },
+      {
+        w: "Openhanded"
+      }
+    ],
+    benefGroup: [
+      {
+        w: "Company"
+      },
+      {
+        w: "Lenders"
+      },
+      {
+        w: "Benefactors"
+      },
+      {
+        w: "Friends"
+      },
+      {
+        w: "Patrons"
+      },
+      {
+        w: "Society"
+      },
+      {
+        w: "Partners"
+      }
+    ],
+    bargainWord: [
+      {
+        w: "Bargain"
+      },
+      {
+        w: "Fair Exchange"
+      },
+      {
+        w: "Open Hand"
+      },
+      {
+        w: "Long Lease"
+      },
+      {
+        w: "Kind Offer"
+      }
+    ],
+    personTitle: [
+      {
+        w: "Duke",
+        x: 2
+      },
+      {
+        w: "Count"
+      },
+      {
+        w: "Baron"
+      },
+      {
+        w: "Captain",
+        x: 2
+      },
+      {
+        w: "Lady"
+      },
+      {
+        w: "Lord"
+      },
+      {
+        w: "Widow"
+      },
+      {
+        w: "Prince"
+      },
+      {
+        w: "Earl"
+      },
+      {
+        w: "Colonel",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Commodore"
+      },
+      {
+        w: "Admiral"
+      },
+      {
+        w: "Marshal"
+      },
+      {
+        w: "Knight"
+      },
+      {
+        w: "Queen"
+      },
+      {
+        w: "King"
+      },
+      {
+        w: "Mother"
+      },
+      {
+        w: "Doctor",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Director",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Abbot",
+        x: 0.3
+      }
+    ],
+    rank: [
+      {
+        w: "Captain",
+        x: 3
+      },
+      {
+        w: "Colonel",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Major",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Mother"
+      },
+      {
+        w: "Doctor",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Sergeant"
+      },
+      {
+        w: "Master"
+      },
+      {
+        w: "Mistress",
+        s: [
+          "FL",
+          "FH"
+        ]
+      },
+      {
+        w: "Commander",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Admiral",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    saintName: [
+      {
+        w: "Aldric"
+      },
+      {
+        w: "Bertilla"
+      },
+      {
+        w: "Brannoc"
+      },
+      {
+        w: "Cuthwin"
+      },
+      {
+        w: "Cyneburg"
+      },
+      {
+        w: "Edith"
+      },
+      {
+        w: "Elfrida"
+      },
+      {
+        w: "Felix"
+      },
+      {
+        w: "Gerwin"
+      },
+      {
+        w: "Hilary"
+      },
+      {
+        w: "Hilde"
+      },
+      {
+        w: "Ivo"
+      },
+      {
+        w: "Juthwara"
+      },
+      {
+        w: "Kenelm"
+      },
+      {
+        w: "Leofric"
+      },
+      {
+        w: "Lioba"
+      },
+      {
+        w: "Maelor"
+      },
+      {
+        w: "Mildred"
+      },
+      {
+        w: "Osyth"
+      },
+      {
+        w: "Petroc"
+      },
+      {
+        w: "Sidwell"
+      },
+      {
+        w: "Tecla"
+      },
+      {
+        w: "Wendreda"
+      },
+      {
+        w: "Wilfrid"
+      },
+      {
+        w: "Ysolde"
+      }
+    ],
+    holyTitle: [
+      {
+        w: "First Teacher"
+      },
+      {
+        w: "Silent Master"
+      },
+      {
+        w: "Wandering Sage"
+      },
+      {
+        w: "Lamp-Bearer"
+      },
+      {
+        w: "Pilgrim"
+      },
+      {
+        w: "Old Hermit"
+      }
+    ],
+    star: [
+      {
+        w: "Altair"
+      },
+      {
+        w: "Vega"
+      },
+      {
+        w: "Deneb"
+      },
+      {
+        w: "Rigel"
+      },
+      {
+        w: "Spica"
+      },
+      {
+        w: "Sirius"
+      },
+      {
+        w: "Capella"
+      },
+      {
+        w: "Arcturus"
+      },
+      {
+        w: "Procyon"
+      },
+      {
+        w: "Pollux"
+      },
+      {
+        w: "Castor"
+      },
+      {
+        w: "Antares"
+      },
+      {
+        w: "Regulus"
+      },
+      {
+        w: "Fomalhaut"
+      },
+      {
+        w: "Aldebaran"
+      },
+      {
+        w: "Achernar"
+      },
+      {
+        w: "Betelgeuse"
+      },
+      {
+        w: "Canopus"
+      },
+      {
+        w: "Mira"
+      },
+      {
+        w: "Algol"
+      },
+      {
+        w: "Denebola"
+      },
+      {
+        w: "Alcor"
+      },
+      {
+        w: "Mizar"
+      },
+      {
+        w: "Electra"
+      },
+      {
+        w: "Maia"
+      },
+      {
+        w: "Bellatrix"
+      },
+      {
+        w: "Alnitak"
+      },
+      {
+        w: "Mintaka"
+      },
+      {
+        w: "Hadar"
+      },
+      {
+        w: "Shaula"
+      },
+      {
+        w: "Tau Ceti"
+      },
+      {
+        w: "Eridani"
+      }
+    ],
+    beast: [
+      {
+        w: "Bear",
+        x: 2
+      },
+      {
+        w: "Boar",
+        x: 2
+      },
+      {
+        w: "Bull"
+      },
+      {
+        w: "Fox",
+        x: 1.5
+      },
+      {
+        w: "Hart",
+        x: 2
+      },
+      {
+        w: "Hind"
+      },
+      {
+        w: "Horse"
+      },
+      {
+        w: "Lamb"
+      },
+      {
+        w: "Lion",
+        x: 2
+      },
+      {
+        w: "Ram"
+      },
+      {
+        w: "Stag",
+        x: 2
+      },
+      {
+        w: "Wolf",
+        x: 2
+      },
+      {
+        w: "Badger"
+      },
+      {
+        w: "Otter"
+      },
+      {
+        w: "Hare",
+        x: 1.5
+      },
+      {
+        w: "Hound",
+        x: 1.5
+      },
+      {
+        w: "Talbot",
+        x: 0.5
+      },
+      {
+        w: "Leopard"
+      },
+      {
+        w: "Panther"
+      },
+      {
+        w: "Tiger",
+        x: 0.5
+      },
+      {
+        w: "Elephant",
+        x: 0.3
+      },
+      {
+        w: "Ox"
+      },
+      {
+        w: "Goat"
+      },
+      {
+        w: "Cat"
+      },
+      {
+        w: "Weasel",
+        x: 0.5
+      },
+      {
+        w: "Stoat",
+        x: 0.5
+      },
+      {
+        w: "Bat",
+        x: 0.5
+      },
+      {
+        w: "Spider",
+        x: 0.5
+      },
+      {
+        w: "Scorpion",
+        x: 0.5
+      },
+      {
+        w: "Serpent"
+      },
+      {
+        w: "Adder",
+        x: 0.5
+      },
+      {
+        w: "Toad",
+        x: 0.5
+      },
+      {
+        w: "Bee",
+        x: 0.5
+      },
+      {
+        w: "Squirrel",
+        x: 0.3
+      },
+      {
+        w: "Lynx"
+      },
+      {
+        w: "Ermine",
+        x: 0.5
+      }
+    ],
+    bird: [
+      {
+        w: "Cock"
+      },
+      {
+        w: "Crane"
+      },
+      {
+        w: "Crow"
+      },
+      {
+        w: "Raven",
+        x: 2
+      },
+      {
+        w: "Rook"
+      },
+      {
+        w: "Dove"
+      },
+      {
+        w: "Eagle",
+        x: 2
+      },
+      {
+        w: "Falcon",
+        x: 1.5
+      },
+      {
+        w: "Hawk",
+        x: 1.5
+      },
+      {
+        w: "Goshawk",
+        x: 0.5
+      },
+      {
+        w: "Merlin",
+        x: 0.5
+      },
+      {
+        w: "Heron"
+      },
+      {
+        w: "Kingfisher"
+      },
+      {
+        w: "Lark"
+      },
+      {
+        w: "Nightingale"
+      },
+      {
+        w: "Owl",
+        x: 1.5
+      },
+      {
+        w: "Peacock",
+        x: 0.5
+      },
+      {
+        w: "Pelican",
+        x: 0.5
+      },
+      {
+        w: "Pheasant",
+        x: 0.3
+      },
+      {
+        w: "Swan",
+        x: 1.5
+      },
+      {
+        w: "Swallow"
+      },
+      {
+        w: "Martlet",
+        x: 0.5
+      },
+      {
+        w: "Swift"
+      },
+      {
+        w: "Wren"
+      },
+      {
+        w: "Magpie"
+      },
+      {
+        w: "Jackdaw"
+      },
+      {
+        w: "Kite"
+      },
+      {
+        w: "Osprey"
+      },
+      {
+        w: "Stork",
+        x: 0.5
+      },
+      {
+        w: "Gull"
+      },
+      {
+        w: "Curlew",
+        x: 0.5
+      }
+    ],
+    fish: [
+      {
+        w: "Dolphin"
+      },
+      {
+        w: "Pike"
+      },
+      {
+        w: "Salmon"
+      },
+      {
+        w: "Trout",
+        x: 0.5
+      },
+      {
+        w: "Eel"
+      },
+      {
+        w: "Whale"
+      },
+      {
+        w: "Shark"
+      },
+      {
+        w: "Crab",
+        x: 0.5
+      },
+      {
+        w: "Lobster",
+        x: 0.3
+      },
+      {
+        w: "Sturgeon",
+        x: 0.3
+      }
+    ],
+    heraldicBeast: [
+      {
+        w: "Dragon",
+        x: 3
+      },
+      {
+        w: "Wyvern"
+      },
+      {
+        w: "Griffin",
+        x: 2
+      },
+      {
+        w: "Unicorn",
+        x: 1.5
+      },
+      {
+        w: "Phoenix"
+      },
+      {
+        w: "Basilisk",
+        x: 0.5
+      },
+      {
+        w: "Cockatrice",
+        x: 0.5
+      },
+      {
+        w: "Mermaid",
+        x: 0.5
+      },
+      {
+        w: "Pegasus",
+        x: 0.5
+      },
+      {
+        w: "Salamander",
+        x: 0.5
+      },
+      {
+        w: "Sea-Serpent",
+        x: 0.5
+      },
+      {
+        w: "Hydra",
+        x: 0.3
+      },
+      {
+        w: "Manticore",
+        x: 0.3
+      },
+      {
+        w: "Sphinx",
+        x: 0.3
+      },
+      {
+        w: "Enfield",
+        x: 0.2
+      },
+      {
+        w: "Opinicus",
+        x: 0.2
+      }
+    ],
+    weapon: [
+      {
+        w: "Arrow"
+      },
+      {
+        w: "Axe"
+      },
+      {
+        w: "Bow"
+      },
+      {
+        w: "Crossbow",
+        x: 0.5
+      },
+      {
+        w: "Dagger"
+      },
+      {
+        w: "Dart",
+        x: 0.5
+      },
+      {
+        w: "Flail",
+        x: 0.3
+      },
+      {
+        w: "Halberd",
+        x: 0.5
+      },
+      {
+        w: "Hammer"
+      },
+      {
+        w: "Javelin",
+        x: 0.5
+      },
+      {
+        w: "Lance"
+      },
+      {
+        w: "Mace",
+        x: 0.5
+      },
+      {
+        w: "Pike",
+        x: 0.5
+      },
+      {
+        w: "Sling",
+        x: 0.3
+      },
+      {
+        w: "Spear"
+      },
+      {
+        w: "Staff"
+      },
+      {
+        w: "Sword",
+        x: 2
+      },
+      {
+        w: "Sabre"
+      },
+      {
+        w: "Rapier",
+        x: 0.5
+      },
+      {
+        w: "Trident",
+        x: 0.5
+      }
+    ],
+    worn: [
+      {
+        w: "Boot",
+        x: 0.3
+      },
+      {
+        w: "Buckle",
+        x: 0.5
+      },
+      {
+        w: "Cloak"
+      },
+      {
+        w: "Coronet",
+        x: 0.5
+      },
+      {
+        w: "Crown",
+        x: 2
+      },
+      {
+        w: "Gauntlet"
+      },
+      {
+        w: "Glove"
+      },
+      {
+        w: "Hood"
+      },
+      {
+        w: "Helm"
+      },
+      {
+        w: "Mask"
+      },
+      {
+        w: "Ring"
+      },
+      {
+        w: "Robe",
+        x: 0.5
+      },
+      {
+        w: "Spur"
+      },
+      {
+        w: "Mantle"
+      }
+    ],
+    celestial: [
+      {
+        w: "Cloud"
+      },
+      {
+        w: "Moon",
+        x: 2
+      },
+      {
+        w: "Crescent"
+      },
+      {
+        w: "Rainbow",
+        x: 0.3
+      },
+      {
+        w: "Star",
+        x: 2
+      },
+      {
+        w: "Sun",
+        x: 2
+      },
+      {
+        w: "Thunderbolt",
+        x: 0.5
+      },
+      {
+        w: "Comet"
+      },
+      {
+        w: "Eclipse",
+        x: 0.5
+      }
+    ],
+    plant: [
+      {
+        w: "Acorn"
+      },
+      {
+        w: "Oak",
+        x: 2
+      },
+      {
+        w: "Ash"
+      },
+      {
+        w: "Elm"
+      },
+      {
+        w: "Birch"
+      },
+      {
+        w: "Hazel"
+      },
+      {
+        w: "Holly"
+      },
+      {
+        w: "Ivy"
+      },
+      {
+        w: "Hawthorn"
+      },
+      {
+        w: "Rowan"
+      },
+      {
+        w: "Willow"
+      },
+      {
+        w: "Yew"
+      },
+      {
+        w: "Thistle"
+      },
+      {
+        w: "Rose",
+        x: 2
+      },
+      {
+        w: "Lily"
+      },
+      {
+        w: "Trefoil",
+        x: 0.3
+      },
+      {
+        w: "Bluebell",
+        x: 0.5
+      },
+      {
+        w: "Briar"
+      },
+      {
+        w: "Fern"
+      },
+      {
+        w: "Vine"
+      },
+      {
+        w: "Sheaf"
+      },
+      {
+        w: "Thorn"
+      },
+      {
+        w: "Laurel"
+      },
+      {
+        w: "Olive"
+      },
+      {
+        w: "Lotus",
+        x: 0.5
+      },
+      {
+        w: "Poppy"
+      },
+      {
+        w: "Mandrake",
+        x: 0.3
+      },
+      {
+        w: "Mistletoe",
+        x: 0.5
+      },
+      {
+        w: "Apple"
+      }
+    ],
+    musical: [
+      {
+        w: "Drum"
+      },
+      {
+        w: "Fiddle"
+      },
+      {
+        w: "Flute"
+      },
+      {
+        w: "Harp",
+        x: 2
+      },
+      {
+        w: "Horn",
+        x: 2
+      },
+      {
+        w: "Lute"
+      },
+      {
+        w: "Lyre"
+      },
+      {
+        w: "Pipe"
+      },
+      {
+        w: "Trumpet"
+      },
+      {
+        w: "Bell"
+      },
+      {
+        w: "Whistle",
+        x: 0.5
+      },
+      {
+        w: "Tabor",
+        x: 0.3
+      }
+    ],
+    various: [
+      {
+        w: "Anchor"
+      },
+      {
+        w: "Anvil"
+      },
+      {
+        w: "Arrowhead",
+        x: 0.5
+      },
+      {
+        w: "Banner"
+      },
+      {
+        w: "Beacon"
+      },
+      {
+        w: "Beehive"
+      },
+      {
+        w: "Bell"
+      },
+      {
+        w: "Book"
+      },
+      {
+        w: "Bridge"
+      },
+      {
+        w: "Brazier"
+      },
+      {
+        w: "Candle"
+      },
+      {
+        w: "Cauldron"
+      },
+      {
+        w: "Castle"
+      },
+      {
+        w: "Chain"
+      },
+      {
+        w: "Chest",
+        x: 0.5
+      },
+      {
+        w: "Coin"
+      },
+      {
+        w: "Cup"
+      },
+      {
+        w: "Fleece",
+        x: 0.5
+      },
+      {
+        w: "Gate"
+      },
+      {
+        w: "Hand",
+        x: 1.5
+      },
+      {
+        w: "Fist"
+      },
+      {
+        w: "Horseshoe"
+      },
+      {
+        w: "Hourglass"
+      },
+      {
+        w: "Key",
+        x: 1.5
+      },
+      {
+        w: "Lamp"
+      },
+      {
+        w: "Lantern",
+        x: 1.5
+      },
+      {
+        w: "Lock"
+      },
+      {
+        w: "Loom"
+      },
+      {
+        w: "Needle"
+      },
+      {
+        w: "Plough"
+      },
+      {
+        w: "Portcullis"
+      },
+      {
+        w: "Quill"
+      },
+      {
+        w: "Rope"
+      },
+      {
+        w: "Sail"
+      },
+      {
+        w: "Scales"
+      },
+      {
+        w: "Sceptre"
+      },
+      {
+        w: "Scroll"
+      },
+      {
+        w: "Shell"
+      },
+      {
+        w: "Shield",
+        x: 1.5
+      },
+      {
+        w: "Ship"
+      },
+      {
+        w: "Sickle"
+      },
+      {
+        w: "Spindle"
+      },
+      {
+        w: "Talisman"
+      },
+      {
+        w: "Tower",
+        x: 1.5
+      },
+      {
+        w: "Wheel"
+      },
+      {
+        w: "Well"
+      },
+      {
+        w: "Windmill",
+        x: 0.5
+      },
+      {
+        w: "Compass"
+      },
+      {
+        w: "Torch"
+      },
+      {
+        w: "Kettle",
+        x: 0.3
+      },
+      {
+        w: "Tinderbox",
+        x: 0.3
+      }
+    ],
+    food: [
+      {
+        w: "Apple"
+      },
+      {
+        w: "Plum"
+      },
+      {
+        w: "Pear"
+      },
+      {
+        w: "Pomegranate"
+      },
+      {
+        w: "Loaf"
+      },
+      {
+        w: "Cheese"
+      },
+      {
+        w: "Fig"
+      },
+      {
+        w: "Barrel"
+      }
+    ],
+    modernEmblem: [
+      {
+        w: "Bolt",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Wing",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Arrow",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Star",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Globe",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Lens",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Prism",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Spark",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Cog",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Atom",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Satellite",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Comet",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Rocket",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    brandStart: [
+      {
+        w: "Vent",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Ax",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Quant",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Lum",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Ser",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Cor",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Nov",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Vel",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Tal",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Zeph",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Orb",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Kyn",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Hal",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Mer",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Tess",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Cal",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Dyn",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Ost",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    brandEnd: [
+      {
+        w: "rix",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "ion",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "ara",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "eon",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "ica",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "ium",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "ora",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "yx",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "aris",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "ent",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "ova",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "ex",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      }
+    ],
+    spacePrefix: [
+      {
+        w: "Outer"
+      },
+      {
+        w: "Inner"
+      },
+      {
+        w: "Far"
+      },
+      {
+        w: "Near"
+      },
+      {
+        w: "Deep"
+      },
+      {
+        w: "Long"
+      },
+      {
+        w: "Silent"
+      },
+      {
+        w: "Northern"
+      },
+      {
+        w: "Southern"
+      },
+      {
+        w: "Eastern"
+      },
+      {
+        w: "Western"
+      }
+    ],
+    landPrefix: [
+      {
+        w: "Northern"
+      },
+      {
+        w: "Southern"
+      },
+      {
+        w: "Eastern"
+      },
+      {
+        w: "Western"
+      }
+    ],
+    townPrefix: [
+      {
+        w: "North"
+      },
+      {
+        w: "South"
+      },
+      {
+        w: "East"
+      },
+      {
+        w: "West"
+      },
+      {
+        w: "Black"
+      },
+      {
+        w: "White"
+      },
+      {
+        w: "Red"
+      },
+      {
+        w: "Grey"
+      },
+      {
+        w: "Green"
+      },
+      {
+        w: "Ash"
+      },
+      {
+        w: "Iron"
+      },
+      {
+        w: "Salt"
+      },
+      {
+        w: "Stone"
+      },
+      {
+        w: "Oak"
+      },
+      {
+        w: "Elm"
+      },
+      {
+        w: "Thorn"
+      },
+      {
+        w: "Wolf"
+      }
+    ],
+    townSuffix: [
+      {
+        w: "march"
+      },
+      {
+        w: "ford"
+      },
+      {
+        w: "haven"
+      },
+      {
+        w: "moor"
+      },
+      {
+        w: "gate"
+      },
+      {
+        w: "wick"
+      },
+      {
+        w: "mere"
+      },
+      {
+        w: "holt"
+      },
+      {
+        w: "combe"
+      },
+      {
+        w: "fell"
+      },
+      {
+        w: "water"
+      },
+      {
+        w: "bridge"
+      },
+      {
+        w: "stead"
+      }
+    ],
+    supernaturalTitle: [
+      {
+        w: "Queen",
+        x: 2
+      },
+      {
+        w: "King",
+        x: 2
+      },
+      {
+        w: "Lady"
+      },
+      {
+        w: "Lord"
+      },
+      {
+        w: "Prince"
+      },
+      {
+        w: "Huntsman"
+      },
+      {
+        w: "Piper"
+      },
+      {
+        w: "Countess"
+      },
+      {
+        w: "Sire"
+      }
+    ]
+  },
+  composites: {
+    emblem: [
+      [
+        "beast",
+        20
+      ],
+      [
+        "bird",
+        18
+      ],
+      [
+        "fish",
+        5
+      ],
+      [
+        "heraldicBeast",
+        10
+      ],
+      [
+        "weapon",
+        10
+      ],
+      [
+        "worn",
+        6
+      ],
+      [
+        "celestial",
+        8
+      ],
+      [
+        "plant",
+        10
+      ],
+      [
+        "musical",
+        3
+      ],
+      [
+        "various",
+        10
+      ],
+      [
+        "food",
+        1
+      ],
+      [
+        "modernEmblem",
+        6
+      ]
+    ],
+    creature: [
+      [
+        "beast",
+        1
+      ],
+      [
+        "bird",
+        1
+      ],
+      [
+        "fish",
+        1
+      ]
+    ],
+    band: [
+      [
+        "soldiers",
+        30
+      ],
+      [
+        "warders",
+        15
+      ],
+      [
+        "gear",
+        25
+      ],
+      [
+        "creatures",
+        30
+      ],
+      [
+        "starBand",
+        20
+      ]
+    ]
+  },
+  nickname: [
+    {
+      p: "{nickTrait}",
+      w: 35
+    },
+    {
+      p: "{colour}-{garment:pl}",
+      w: 25
+    },
+    {
+      p: "{creatures}",
+      w: 20
+    },
+    {
+      p: "{nickAdj} {ordinalWord}",
+      w: 20
+    }
+  ],
+  traditions: {
+    signatures: {
+      celtic: {
+        group: [
+          "Grove"
+        ],
+        covenGroup: [
+          "Grove"
+        ],
+        members: [
+          [
+            "Druids",
+            "PM"
+          ]
+        ],
+        soldiers: [
+          "Hounds",
+          "Champions"
+        ],
+        companyGroup: [
+          "Band"
+        ],
+        vocation: [
+          "Bards"
+        ]
+      },
+      germanic: {
+        unitGroup: [
+          "Hearth-Troop",
+          "Host"
+        ],
+        soldiers: [
+          "Sworn Men",
+          "Wolf-Coats"
+        ],
+        assemblyWord: [
+          "Moot"
+        ],
+        raiders: [
+          "Sea-Wolves"
+        ],
+        companyGroup: [
+          "Fellowship"
+        ]
+      },
+      steppe: {
+        unitGroup: [
+          "Horde",
+          "Hundred",
+          "Thousand",
+          "Banner"
+        ],
+        soldiers: [
+          "Riders",
+          "Archers"
+        ],
+        assemblyWord: [
+          "Great Council"
+        ]
+      },
+      arabian: {
+        group: [
+          "Path",
+          "Lodge"
+        ],
+        companyGroup: [
+          "Caravan"
+        ],
+        soldiers: [
+          "Riders"
+        ]
+      },
+      bantu: {
+        unitGroup: [
+          "Regiment",
+          "Age-Set"
+        ],
+        group: [
+          "Society"
+        ],
+        assemblyWord: [
+          "Council",
+          "Gathering"
+        ],
+        soldiers: [
+          "Spears",
+          "Shields"
+        ]
+      },
+      northAmerican: {
+        group: [
+          "Society",
+          "Lodge"
+        ],
+        assemblyWord: [
+          "Council Fire"
+        ],
+        soldiers: [
+          "Scouts",
+          "Runners"
+        ]
+      },
+      polynesian: {
+        companyGroup: [
+          "Canoe",
+          "Voyagers"
+        ],
+        tradesmen: [
+          "Navigators",
+          "Canoe-Builders"
+        ],
+        members: [
+          "Wayfinders"
+        ]
+      },
+      eastAsian: {
+        group: [
+          "School",
+          "Sect",
+          "Hall",
+          "Gate",
+          "Pavilion",
+          "Society"
+        ],
+        thiefGroup: [
+          "School",
+          "Sect",
+          "Hall",
+          "Gate",
+          "Pavilion",
+          "Society"
+        ],
+        unitGroup: [
+          "Banner"
+        ],
+        members: [
+          "Disciples",
+          "Retainers"
+        ]
+      },
+      mesoamerican: {
+        group: [
+          "House"
+        ],
+        tradesmen: [
+          "Featherworkers"
+        ],
+        soldiers: [
+          "Eagle Warriors",
+          "Jaguar Warriors"
+        ]
+      },
+      andean: {
+        members: [
+          "Knot-Keepers"
+        ],
+        soldiers: [
+          "Runners"
+        ],
+        group: [
+          "House",
+          "Order"
+        ]
+      },
+      maritimeSEA: {
+        fleetGroup: [
+          "Fleet"
+        ],
+        raiders: [
+          "Sea-Rovers"
+        ],
+        companyGroup: [
+          "Brotherhood"
+        ]
+      },
+      mediterranean: {
+        unitGroup: [
+          "Legion",
+          "Cohort",
+          "Century"
+        ],
+        group: [
+          "College",
+          "Sodality"
+        ],
+        schoolGroup: [
+          "Porch",
+          "Garden"
+        ],
+        assemblyWord: [
+          "Senate",
+          "Assembly"
+        ]
+      },
+      northernPacific: {
+        group: [
+          "Society",
+          "House"
+        ],
+        tradesmen: [
+          "Carvers",
+          "Canoe-Builders"
+        ],
+        members: [
+          "Dancers"
+        ]
+      },
+      westAfrican: {
+        group: [
+          "Society"
+        ],
+        tradesmen: [
+          "Smiths",
+          "Praise-Singers"
+        ],
+        assemblyWord: [
+          "Council"
+        ]
+      },
+      southAsian: {
+        group: [
+          "Order",
+          "Fellowship"
+        ],
+        assemblyWord: [
+          "Assembly"
+        ],
+        schoolGroup: [
+          "School",
+          "Way"
+        ],
+        members: [
+          "Seekers",
+          "Wanderers"
+        ]
+      },
+      sahul: {}
+    },
+    typeMultipliers: {
+      arabian: {
+        caravan: 3
+      }
+    },
+    shapeMultipliers: {
+      westAfrican: {
+        "Hunters' Brotherhood of the {land}": 5
+      }
+    },
+    extraShapes: {
+      eastAsian: {
+        esoteric: [
+          {
+            p: "the {colour} {emblem} {group}",
+            f: "E",
+            w: 10
+          }
+        ],
+        arcane: [
+          {
+            p: "the {colour} {emblem} {group}",
+            f: "E",
+            w: 10
+          }
+        ],
+        thieves: [
+          {
+            p: "the {colour} {emblem} {thiefGroup}",
+            f: "E",
+            w: 10
+          }
+        ]
+      }
+    },
+    cultureMap: {
+      mediterranean: [
+        [
+          "roman",
+          1
+        ]
+      ],
+      eastAsian: [
+        [
+          "chinese",
+          50
+        ],
+        [
+          "japanese",
+          25
+        ],
+        [
+          "korean",
+          25
+        ]
+      ],
+      mesoamerican: [
+        [
+          "aztec",
+          60
+        ],
+        [
+          "maya",
+          40
+        ]
+      ],
+      bantu: [
+        [
+          "bantu",
+          1
+        ]
+      ],
+      westAfrican: [
+        [
+          "west-african",
+          1
+        ]
+      ],
+      arabian: [
+        [
+          "arabic-persian",
+          1
+        ]
+      ],
+      southAsian: [
+        [
+          "indian",
+          1
+        ]
+      ]
+    }
+  },
+  safeguards: {
+    block: [
+      "Illuminati",
+      "Golden Dawn",
+      "Hermetic Order of the Golden Dawn",
+      "Rosicrucians",
+      "Rose Cross",
+      "Order of the Rose Cross",
+      "Freemasons",
+      "Ordo Templi Orientis",
+      "Thule Society",
+      "Skull and Bones",
+      "Opus Dei",
+      "Knights Templar",
+      "Templars",
+      "Knights Hospitaller",
+      "Hospitallers",
+      "Teutonic Knights",
+      "Society of Jesus",
+      "Jesuits",
+      "Franciscans",
+      "Dominicans",
+      "Benedictines",
+      "Poor Clares",
+      "Order of Preachers",
+      "Little Sisters of the Poor",
+      "Royal Society",
+      "Royal Geographical Society",
+      "Order of the Garter",
+      "Order of the Bath",
+      "Order of the Thistle",
+      "Order of the Golden Fleece",
+      "Order of Merit",
+      "Order of the British Empire",
+      "Legion of Honour",
+      "Round Table",
+      "Knights of the Round Table",
+      "Red Army",
+      "SS",
+      "Waffen-SS",
+      "Gestapo",
+      "Stasi",
+      "Black and Tans",
+      "Wagner Group",
+      "Blackwater",
+      "Executive Outcomes",
+      "MI5",
+      "MI6",
+      "CIA",
+      "FBI",
+      "KGB",
+      "NSA",
+      "Mossad",
+      "Special Branch",
+      "Secret Intelligence Service",
+      "Security Service",
+      "Special Operations Executive",
+      "Privy Council",
+      "High Court",
+      "Supreme Court",
+      "Ordnance Survey",
+      "Black Hand",
+      "Red Hand",
+      "Ku Klux Klan",
+      "Klan",
+      "Aryan Brotherhood",
+      "Hells Angels",
+      "Hell's Angels",
+      "Bandidos",
+      "Outlaws",
+      "Pagans",
+      "Mongols",
+      "Bloods",
+      "Crips",
+      "Latin Kings",
+      "MS-13",
+      "Peaky Blinders",
+      "Forty Elephants",
+      "Five Families",
+      "Cosa Nostra",
+      "Mafia",
+      "Camorra",
+      "'Ndrangheta",
+      "Yakuza",
+      "Triads",
+      "the Firm",
+      "Medell\xEDn Cartel",
+      "Sinaloa Cartel",
+      "Irish Republican Army",
+      "IRA",
+      "Provisional IRA",
+      "Ulster Defence Association",
+      "Ulster Volunteer Force",
+      "ETA",
+      "Red Army Faction",
+      "Red Brigades",
+      "Black September",
+      "Shining Path",
+      "Tamil Tigers",
+      "Weathermen",
+      "Weather Underground",
+      "Baader-Meinhof",
+      "Symbionese Liberation Army",
+      "Black Panthers",
+      "Black Panther Party",
+      "Hamas",
+      "Hezbollah",
+      "al-Qaeda",
+      "Islamic State",
+      "Muslim Brotherhood",
+      "National Front",
+      "British National Party",
+      "Labour Party",
+      "Conservative Party",
+      "Liberal Party",
+      "Liberal Democrats",
+      "Green Party",
+      "Reform Party",
+      "Democratic Party",
+      "Republican Party",
+      "Communist Party",
+      "Socialist Workers Party",
+      "Freedom Party",
+      "People's Party",
+      "National Party",
+      "East India Company",
+      "Hudson's Bay Company",
+      "Hanseatic League",
+      "Virginia Company",
+      "Lehman Brothers",
+      "Warner Brothers",
+      "National Union of Mineworkers",
+      "Night's Watch",
+      "Kingsguard",
+      "Golden Company",
+      "Second Sons",
+      "Unsullied",
+      "Faceless Men",
+      "Iron Bank",
+      "Brotherhood Without Banners",
+      "Stormcloaks",
+      "Dark Brotherhood",
+      "Harpers",
+      "Zhentarim",
+      "Red Wizards",
+      "Jedi",
+      "Sith",
+      "Galactic Empire",
+      "Rebel Alliance",
+      "First Order",
+      "Avengers",
+      "X-Men",
+      "Justice League",
+      "SHIELD",
+      "Hydra",
+      "Umbrella Corporation",
+      "Weyland-Yutani",
+      "Tyrell Corporation",
+      "Cyberdyne Systems",
+      "Aperture Science",
+      "Black Mesa",
+      "Torchwood",
+      "Men in Black",
+      "Ghostbusters",
+      "Section 31",
+      "Starfleet",
+      "Space Marines",
+      "Spacing Guild",
+      "Bene Gesserit",
+      "Outer Rim",
+      "Green Lantern",
+      "Green Lanterns",
+      "Green Lantern Corps",
+      "Night Riders",
+      "Black Riders",
+      "Nine Riders",
+      "Riders of the Storm",
+      "Riders on the Storm",
+      "Seelie Court",
+      "Unseelie Court",
+      "Ninth Circle",
+      "Devil's Own",
+      "Borrowers",
+      "Fellowship of the Ring",
+      "Order of the Phoenix",
+      "Death Eaters",
+      "Dumbledore's Army",
+      "Brotherhood of Steel"
+    ],
+    flag: [
+      "White Company",
+      "Grey Friars",
+      "Black Friars",
+      "White Friars",
+      "Die-Hards",
+      "Red Devils",
+      "Red-Coats",
+      "Levellers",
+      "Diggers",
+      "Long Knives",
+      "Children of the Moon",
+      "Good Neighbours",
+      "Fair Folk",
+      "Gentry",
+      "People of Peace",
+      "Kindly Ones",
+      "Free Traders",
+      "Bow Street Runners",
+      "Merchant Adventurers",
+      "Eagle Warriors",
+      "Jaguar Warriors",
+      "Society for Psychical Research",
+      "Wild Hunt",
+      "Winter Court",
+      "Summer Court",
+      "Section Nine",
+      "Sons of Liberty",
+      "Hellfire Club",
+      "Star Chamber",
+      "Silk Road",
+      "Colonial Marines",
+      "Western Squadron",
+      "Home Fleet",
+      "Blues",
+      "Greens",
+      "Four Winds"
+    ],
+    flagListBlocks: false,
+    banned: [
+      "Aryan",
+      "Reich",
+      "Nazi",
+      "Fascist",
+      "Klan",
+      "Jihad",
+      "Jihadist",
+      "Caliphate",
+      "Supremacist",
+      "Master Race",
+      "Racial",
+      "Pogrom",
+      "Holocaust",
+      "Genocide",
+      "Swastika"
+    ],
+    personNouns: [
+      "Men",
+      "Women",
+      "People",
+      "Folk",
+      "Kin",
+      "Kindred",
+      "Children",
+      "Sons",
+      "Daughters",
+      "Brothers",
+      "Sisters",
+      "Brotherhood",
+      "Sisterhood",
+      "Boys",
+      "Girls",
+      "Lads",
+      "Lasses",
+      "Nation",
+      "Tribe",
+      "Tribes",
+      "Family",
+      "Clan"
+    ],
+    blockedInitials: [
+      "IRA",
+      "ETA",
+      "SS",
+      "KKK",
+      "CIA",
+      "FBI",
+      "KGB",
+      "NSA",
+      "MI5",
+      "MI6",
+      "NHS",
+      "BBC",
+      "ISIS",
+      "NATO",
+      "UVF",
+      "UDA",
+      "BNP",
+      "NUM",
+      "SOE"
+    ]
+  },
+  people: {
+    person: [
+      {
+        p: "the {colour} {personTitle}",
+        w: 30
+      },
+      {
+        p: "Old {surname}",
+        w: 15
+      },
+      {
+        p: "{rank} {surname}",
+        w: 25
+      },
+      {
+        p: "{surname}",
+        w: 20
+      },
+      {
+        p: "the {flavourAnimal}",
+        w: 10
+      }
+    ],
+    personOther: [
+      {
+        p: "the {colour} {personTitle}",
+        w: 60
+      },
+      {
+        p: "the {flavourAnimal}",
+        w: 40
+      }
+    ],
+    surnameTraditions: [
+      "general",
+      "celtic",
+      "germanic"
+    ],
+    saintTraditions: [
+      "general",
+      "celtic",
+      "germanic",
+      "mediterranean"
+    ],
+    sfTown: [
+      {
+        p: "{star}",
+        w: 40
+      },
+      {
+        p: "{star} {starNumber}",
+        w: 20
+      },
+      {
+        p: "{spaceLandPrefixed}",
+        w: 20
+      },
+      {
+        p: "{brandRoot} Station",
+        w: 10
+      },
+      {
+        p: "New {britishPlace}",
+        w: 10
+      }
+    ]
   }
-  if (Object.keys(packLines).length > 0) b.packLines = packLines;
-  for (const [, heading] of LIST_SECTIONS) {
-    const s = pack.sections.find((x) => norm3(x.heading) === norm3(heading));
-    if (s && s.words.length === 0 && s.packs.length === 0) problems.push(`\u201C${heading}\u201D is empty.`);
-  }
-  for (const t of Object.keys(b.terrainWeights).filter((t2) => b.terrainWeights[t2] > 0)) {
-    const has = ((_s = (_r = b.land[t]) == null ? void 0 : _r.length) != null ? _s : 0) + ((_u = (_t = b.water[t]) == null ? void 0 : _t.length) != null ? _u : 0) + ((_w = (_v = b.short.land[t]) == null ? void 0 : _v.length) != null ? _w : 0) + ((_y = (_x = b.short.water[t]) == null ? void 0 : _x.length) != null ? _y : 0);
-    if (has === 0 && customTerrains.some((c) => c.id === t)) problems.push(`\u201C${customTerrains.find((c) => c.id === t).label}\u201D has a weight but no words.`);
-  }
-  return { biome: b, problems };
-}
-var fmt = (n) => String(Number(n.toFixed(6)));
-function lines(words, alwaysWeights = false) {
-  const items = words.map(([w, n]) => alwaysWeights || n !== 1 ? `${w} (${fmt(n)})` : w);
-  const out = [];
-  for (let i = 0; i < items.length; i += 8) out.push(`- ${items.slice(i, i + 8).join(", ")}`);
-  return out.join("\n");
-}
-var terrainName = (id, custom) => {
-  var _a2, _b, _c, _d;
-  return (_d = (_c = (_a2 = TERRAIN_CHOICES.find((t) => t.id === id)) == null ? void 0 : _a2.label) != null ? _c : (_b = custom.find((t) => t.id === id)) == null ? void 0 : _b.label) != null ? _d : id;
 };
-function biomeSections(b) {
-  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j;
-  const custom = (_a2 = b.customTerrains) != null ? _a2 : [];
-  const out = [];
-  const terrains = [...TERRAIN_CHOICES.filter((t) => t.id !== "any").map((t) => t.id), ...custom.map((t) => t.id)];
-  out.push({
-    heading: "Terrain weights",
-    body: lines(terrains.filter((t) => {
-      var _a3;
-      return ((_a3 = b.terrainWeights[t]) != null ? _a3 : 0) > 0;
-    }).map((t) => [terrainName(t, custom), b.terrainWeights[t]]), true)
-  });
-  for (const t of terrains) {
-    if (((_b = b.terrainWeights[t]) != null ? _b : 0) <= 0) continue;
-    const name = terrainName(t, custom);
-    if ((_c = b.land[t]) == null ? void 0 : _c.length) out.push({ heading: `${name}: land`, body: lines(b.land[t]) });
-    if ((_d = b.water[t]) == null ? void 0 : _d.length) out.push({ heading: `${name}: water`, body: lines(b.water[t]) });
-    for (const kind of ["land", "water"]) {
-      if (b.terrainTags) {
-        const entries = ((_f = (_e = b.entries) == null ? void 0 : _e[kind === "land" ? "shortLand" : "shortWater"]) != null ? _f : []).filter((e) => {
-          var _a3;
-          return (_a3 = b.terrainTags[e.modern]) == null ? void 0 : _a3.includes(t);
-        });
-        if (entries.length) out.push({ heading: `${name}: short ${kind}`, body: wordTable(entries) });
-      } else if ((_g = b.short[kind][t]) == null ? void 0 : _g.length) out.push({ heading: `${name}: short ${kind}`, body: lines(b.short[kind][t]) });
-    }
-    const c = custom.find((x) => x.id === t);
-    if (c && Object.keys(c.shapeMultipliers.groups).length) out.push({ heading: `${name}: shape groups`, body: lines(Object.entries(c.shapeMultipliers.groups), true) });
-    if (c && Object.keys(c.shapeMultipliers.generics).length) out.push({ heading: `${name}: shape generics`, body: lines(Object.entries(c.shapeMultipliers.generics), true) });
-  }
-  for (const [id, heading] of LIST_SECTIONS) {
-    const entries = (_h = b.entries) == null ? void 0 : _h[id];
-    const packLines = ((_j = (_i = b.packLines) == null ? void 0 : _i[id]) != null ? _j : []).map((p) => `// ${p.pack}${p.weight !== 1 ? ` (${fmt(p.weight)})` : ""}`).join("\n");
-    const body = entries ? wordTable(entries) : lines(b[id], id === "lifeways");
-    out.push({ heading, body: [body, packLines].filter(Boolean).join("\n") });
-  }
-  out.push({ heading: "Shape groups", body: lines(Object.entries(b.shapeMultipliers.groups), true) });
-  out.push({ heading: "Shape generics", body: lines(Object.entries(b.shapeMultipliers.generics), true) });
-  return out;
-}
-function biomeToText(b, basedOn = b.custom ? `[[${b.custom.base}]]` : b.id) {
-  const front = ["---", "type: biome", `packName: ${b.label}`, "setting: ", `based-on: "${basedOn}"`, `phrase: ${b.phrase}`];
-  if (b.universalWords === false) front.push("universal-words: false");
-  front.push("---");
-  const sections = biomeSections(b).map((s) => `## ${s.heading}
-
-${s.body}`);
-  return `${front.join("\n")}
-
-${b.guide}
-
-${sections.join("\n\n")}
-`;
-}
-function diffAgainstBase(content, base) {
-  var _a2, _b, _c;
-  const pack = parseBiomePackContent(content);
-  const baseText = new Map(parseBiomePackContent(biomeToText(base)).sections.map((s) => [norm3(s.heading), s]));
-  const fm = (_b = (_a2 = content.match(/^---\s*\n[\s\S]*?\n---\s*/)) == null ? void 0 : _a2[0]) != null ? _b : "";
-  const kept = [];
-  const bodyLines = content.slice(fm.length).split(/\r?\n/);
-  const written = /* @__PURE__ */ new Map();
-  let current = null;
-  let buffer = [];
-  const flush = () => {
-    if (current) written.set(current, buffer.join("\n").trim());
-    buffer = [];
-  };
-  for (const line of bodyLines) {
-    const h = line.trim().match(/^##\s+(.+?)\s*#*$/);
-    if (h) {
-      flush();
-      current = h[1];
-      continue;
-    }
-    if (current) buffer.push(line);
-  }
-  flush();
-  for (const s of pack.sections) {
-    const b = baseText.get(norm3(s.heading));
-    const same5 = b && (s.entries && b.entries ? entryKey(s.entries) === entryKey(b.entries) : key(s.words) === key(b.words)) && s.packs.length === b.packs.length;
-    if (!same5) kept.push(`## ${s.heading}
-
-${(_c = written.get(s.heading)) != null ? _c : ""}`.trim());
-  }
-  const guide = pack.guide ? `${pack.guide}
-
-` : "";
-  return { text: `${fm.trim()}
-
-${guide}${kept.join("\n\n")}
-`, own: kept.length };
-}
-function resolveBiomePacks(files) {
-  const parsed = new Map(files.map((f) => [f.path, parseBiomePackContent(f.content, f.path.replace(/^.*\//, "").replace(/\.md$/, ""))]));
-  const byName = new Map([...parsed].map(([path, p]) => [norm3(p.packName), path]));
-  const done = /* @__PURE__ */ new Map();
-  const problems = [];
-  const temperate = BIOMES.find((b) => b.id === "temperate");
-  const resolve = (path, seen) => {
-    var _a2, _b;
-    const cached = done.get(path);
-    if (cached) return cached;
-    const pack = parsed.get(path);
-    const link = (_a2 = pack.basedOn.match(/^\[\[([^\]|]+)/)) == null ? void 0 : _a2[1];
-    let base;
-    if (link) {
-      const basePath = (_b = byName.get(norm3(link))) != null ? _b : [...parsed.keys()].find((p) => p.replace(/\.md$/, "").endsWith(link));
-      if (basePath && !seen.includes(basePath) && seen.length < 5) base = resolve(basePath, [...seen, path]);
-    } else {
-      base = pack.basedOn === "britain" ? BRITAIN : findBiome(pack.basedOn);
-    }
-    if (!base) {
-      problems.push(`Biome pack \u201C${pack.packName}\u201D can't find its base \u201C${link != null ? link : pack.basedOn}\u201D; using temperate woodland.`);
-      base = temperate;
-    }
-    const { biome, problems: own } = applyBiomePack(base, pack, path);
-    problems.push(...own.map((p) => `${pack.packName}: ${p}`));
-    done.set(path, biome);
-    return biome;
-  };
-  const biomes = [...parsed.keys()].map((p) => resolve(p, []));
-  return { biomes: biomes.sort((a, b) => a.label.localeCompare(b.label)), problems };
-}
-function isBiomePackContent(content) {
-  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
-  return !!fm && /^type:\s*["']?biome["']?\s*$/m.test(fm[1]);
-}
 
 // src/data/world-place-names.json
 var world_place_names_default = {
@@ -35347,13 +50336,13 @@ var WorldRenderer = class {
       return `[${key2}]`;
     }
     if (source.batch) {
-      let pool = this.pools.get(key2);
-      if (!pool) {
-        pool = [];
-        for (let i = 0; i < source.batch; i++) pool.push(this.drawMarkov(source, rng, pool));
-        this.pools.set(key2, pool);
+      let pool2 = this.pools.get(key2);
+      if (!pool2) {
+        pool2 = [];
+        for (let i = 0; i < source.batch; i++) pool2.push(this.drawMarkov(source, rng, pool2));
+        this.pools.set(key2, pool2);
       }
-      return pickUniform5(pool, rng);
+      return pickUniform5(pool2, rng);
     }
     return this.drawMarkov(source, rng, []);
   }
@@ -35379,34 +50368,34 @@ var WorldRenderer = class {
     return pickUniform5(source.corpus, rng);
   }
   /** A list word, expanding any template held in the entry. */
-  slot(token, rng, depth) {
+  slot(token2, rng, depth) {
     var _a2, _b;
-    if (token.markov) {
-      const name = this.markovName(token.key, rng);
-      const text2 = token.form === "pos" ? possessive(name) : name;
-      return { text: text2, etym: `[${this.label(token.key)}: ${name}]${token.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
+    if (token2.markov) {
+      const name = this.markovName(token2.key, rng);
+      const text2 = token2.form === "pos" ? possessive(name) : name;
+      return { text: text2, etym: `[${this.label(token2.key)}: ${name}]${token2.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
     }
-    const list = this.lists[token.key];
+    const list = this.lists[token2.key];
     if (!list || list.length === 0) {
-      this.notices.add(`No word list "${token.key}" for ${this.culture.label}.`);
-      return { text: `[${token.key}]`, etym: `[${token.key}]`, fusable: false };
+      this.notices.add(`No word list "${token2.key}" for ${this.culture.label}.`);
+      return { text: `[${token2.key}]`, etym: `[${token2.key}]`, fusable: false };
     }
-    const entry = parseEntry((_a2 = this.swapEntry(token.key, rng)) != null ? _a2 : pickUniform5(list, rng));
+    const entry = parseEntry((_a2 = this.swapEntry(token2.key, rng)) != null ? _a2 : pickUniform5(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);
-      const text2 = token.form === "pos" ? possessive(inner.text) : inner.text;
-      const etym = single ? inner.etym : `[${this.label(token.key)}: ${inner.text}]`;
-      return { text: text2, etym: token.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
+      const text2 = token2.form === "pos" ? possessive(inner.text) : inner.text;
+      const etym = single ? inner.etym : `[${this.label(token2.key)}: ${inner.text}]`;
+      return { text: text2, etym: token2.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
     }
     let text = entry.word;
-    if (token.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
-    if (token.form === "pos") text = possessive(entry.word);
-    const shown = token.form === "pos" ? entry.word : text;
+    if (token2.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
+    if (token2.form === "pos") text = possessive(entry.word);
+    const shown = token2.form === "pos" ? entry.word : text;
     return {
       text,
-      etym: `[${this.label(token.key)}: ${shown}]${token.form === "pos" ? possessiveTail(entry.word) : ""}`,
-      fusable: !entry.noFuse && token.form !== "pos"
+      etym: `[${this.label(token2.key)}: ${shown}]${token2.form === "pos" ? possessiveTail(entry.word) : ""}`,
+      fusable: !entry.noFuse && token2.form !== "pos"
     };
   }
   /** Renders a template: slots filled, "+" groups fused or spaced. */
@@ -35420,14 +50409,14 @@ var WorldRenderer = class {
       out.push(group.length === 1 ? group[0] : this.fuse(group, rng));
       group = [];
     };
-    for (const token of tokens) {
-      if (token.kind === "fuse") {
+    for (const token2 of tokens) {
+      if (token2.kind === "fuse") {
         joinNext = true;
         continue;
       }
       let piece;
-      if (token.kind === "text") piece = { text: token.text, etym: token.text.toLowerCase(), fusable: !/\s/.test(token.text) };
-      else piece = this.slot(token, rng, depth);
+      if (token2.kind === "text") piece = { text: token2.text, etym: token2.text.toLowerCase(), fusable: !/\s/.test(token2.text) };
+      else piece = this.slot(token2, rng, depth);
       if (!joinNext) flush();
       group.push(piece);
       joinNext = false;
@@ -35479,6 +50468,2018 @@ function worldHistoryLabel(base, cultureId, eraId) {
   const culture = findCulture(cultureId);
   const era = findEra(culture, eraId);
   return culture.eras.length > 1 ? `${base} \xB7 ${culture.label} \xB7 ${era.label}` : `${base} \xB7 ${culture.label}`;
+}
+
+// src/groups/engine.ts
+var GROUP_DATA = group_names_default;
+var GROUP_FAMILIES = GROUP_DATA.families;
+var SETTING_PHRASES = GROUP_DATA.settings.phrases;
+var GROUP_TAGS = {
+  H: ["FH", "MF"],
+  P: ["FL", "FH"],
+  M: ["MR", "MF", "SF"],
+  MO: ["MR", "MF"],
+  S: ["SF"],
+  PM: ["FL", "FH", "MR", "MF"],
+  L: ["FL", "MR"]
+};
+function findFamily(key2) {
+  return GROUP_FAMILIES.find((f) => f.key === key2);
+}
+function familyForSection(section) {
+  return GROUP_FAMILIES.find((f) => f.section === section);
+}
+function groupSetting(genre, fantastic) {
+  if (genre === "scifi") return "SF";
+  if (genre === "modern") return fantastic ? "MF" : "MR";
+  return fantastic ? "FH" : "FL";
+}
+function typesInSetting(family, setting) {
+  return family.types.filter((t) => t.settings.includes(setting));
+}
+function canFront(type) {
+  return !!type.front && !!GROUP_DATA.fronts[type.front];
+}
+var SMALL2 = /* @__PURE__ */ new Set(["of", "the", "and", "for", "in", "at", "by", "on", "to", "from"]);
+var PLURALS = { Wolf: "Wolves", Knife: "Knives", Ox: "Oxen", Mouse: "Mice", Staff: "Staffs", Thief: "Thieves", Tooth: "Teeth" };
+var PLURAL_LISTS = /* @__PURE__ */ new Set([
+  "soldiers",
+  "warders",
+  "mercs",
+  "gear",
+  "creatures",
+  "starBand",
+  "band",
+  "arm",
+  "tradesmen",
+  "unionTrade",
+  "agents",
+  "uCreature",
+  "gangMembers",
+  "gangWear",
+  "gangNoun",
+  "smugglerAgents",
+  "crewNoun",
+  "raiders",
+  "hunterNoun",
+  "vocation",
+  "compound",
+  "members",
+  "holyMembers",
+  "covenMembers",
+  "schoolMembers",
+  "chivMembers",
+  "portPlaces",
+  "wellPlaces",
+  "factionColour",
+  "factionNick",
+  "spyWord",
+  "chainItem",
+  "thiefEuph",
+  "balancers",
+  "nickTrait"
+]);
+function groupPlural(word) {
+  const dash = word.lastIndexOf("-");
+  if (dash > 0) return word.slice(0, dash + 1) + groupPlural(word.slice(dash + 1));
+  if (PLURALS[word]) return PLURALS[word];
+  const lower2 = pluralOf(word.toLowerCase());
+  return word.charAt(0) + lower2.slice(1);
+}
+function groupPossessive(word, plural) {
+  if (plural && word.endsWith("s")) return `${word}'`;
+  return `${word}'s`;
+}
+function initialsOf(text) {
+  return text.split(/\s+/).filter((w) => w && !SMALL2.has(w.toLowerCase()) && /^[A-Za-z]/.test(w)).map((w) => w.charAt(0).toUpperCase()).join("");
+}
+var ordinalText = (n) => {
+  const s = n % 100 >= 11 && n % 100 <= 13 ? "th" : n % 10 === 1 ? "st" : n % 10 === 2 ? "nd" : n % 10 === 3 ? "rd" : "th";
+  return `${n}${s}`;
+};
+function capitalise(text, formal) {
+  return text.split(" ").map((word, i) => {
+    if (!word || word.startsWith("[")) return word;
+    const lower2 = word.toLowerCase();
+    if (SMALL2.has(lower2) && (i > 0 || lower2 === "the" || !formal)) return lower2;
+    return word.replace(/(^|[-–])([a-z])/g, (_m, sep, c) => sep + c.toUpperCase());
+  }).join(" ");
+}
+var norm2 = (s) => s.toLowerCase().replace(/^the /, "").replace(/\s+/g, " ").trim();
+var wordRe2 = (w) => new RegExp(`(^|[^A-Za-z])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^A-Za-z])`, "i");
+var BANNED = [...TRIBAL_DATA.safeguards.banned, ...GROUP_DATA.safeguards.banned].map(wordRe2);
+var PERSON_NOUNS = new Set(GROUP_DATA.safeguards.personNouns);
+var COLOUR_WORDS = new Set(["colour", "colourRich", "habit"].flatMap((l) => GROUP_DATA.lists[l].map((e) => e.w)));
+var NUMBER_WORDS = new Set([...GROUP_DATA.lists.number, ...GROUP_DATA.lists.ordinalWord].map((e) => e.w));
+var BLOCKED_INITIALS = new Set(GROUP_DATA.safeguards.blockedInitials);
+function breaksGroupColourRule(text) {
+  const words = text.split(/\s+/);
+  return words.some((w, i) => i < words.length - 1 && COLOUR_WORDS.has(w) && PERSON_NOUNS.has(words[i + 1]));
+}
+var pickWeighted5 = (items, rng) => {
+  const total = items.reduce((n, [, w]) => n + w, 0);
+  if (total <= 0) return void 0;
+  let r = rng() * total;
+  for (const [item, w] of items) {
+    r -= w;
+    if (r < 0) return item;
+  }
+  return items[items.length - 1][0];
+};
+var pickOne = (items, rng) => items[Math.floor(rng() * items.length)];
+function listTag(name) {
+  var _a2, _b;
+  const entries = (_a2 = GROUP_DATA.lists[name]) != null ? _a2 : [];
+  const first = (_b = entries[0]) == null ? void 0 : _b.s;
+  if (!first || entries.some((e) => !e.s || e.s.join() !== first.join())) return void 0;
+  return first;
+}
+function pool(ctx, name, type, filter) {
+  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
+  const key2 = `${name}|${type.key}|${(_a2 = filter == null ? void 0 : filter.join(",")) != null ? _a2 : ""}`;
+  const cached = ctx.pools.get(key2);
+  if (cached) return cached;
+  const S = ctx.setting;
+  const trad = ctx.vocab;
+  const weights = /* @__PURE__ */ new Map();
+  const add2 = (word, w) => {
+    var _a3;
+    return weights.set(word, ((_a3 = weights.get(word)) != null ? _a3 : 0) + w);
+  };
+  for (const e of (_b = GROUP_DATA.lists[name]) != null ? _b : []) {
+    if (e.s && !e.s.includes(S)) continue;
+    if (e.types && !e.types.includes(type.key)) continue;
+    if (e.only && (!trad || !e.only.includes(trad.key))) continue;
+    add2(e.w, ((_c = e.x) != null ? _c : 1) * ((_e = (_d = e.sx) == null ? void 0 : _d[S]) != null ? _e : 1) * (trad ? (_g = (_f = e.tx) == null ? void 0 : _f[trad.key]) != null ? _g : 1 : 1));
+  }
+  if (trad) {
+    const tag = listTag(name);
+    for (const sig of (_i = (_h = GROUP_DATA.traditions.signatures[trad.key]) == null ? void 0 : _h[name]) != null ? _i : []) {
+      const [word, own] = typeof sig === "string" ? [sig, void 0] : sig;
+      const settings = own ? GROUP_TAGS[own] : tag;
+      if (settings && !settings.includes(S)) continue;
+      if (weights.has(word)) weights.set(word, weights.get(word) * 3);
+      else add2(word, 3);
+    }
+    const boost = (words, mult, plural = false) => {
+      for (const raw of words != null ? words : []) {
+        const word = plural ? groupPlural(raw) : raw;
+        if (weights.has(word)) weights.set(word, weights.get(word) * mult);
+        else add2(word, mult);
+      }
+    };
+    if (["beast", "bird", "shifter"].includes(name)) boost(trad.flavour.animals, 3);
+    if (name === "creatures") boost(trad.flavour.animals, 3, true);
+    if (["plant", "tree", "feyPlant"].includes(name)) boost(trad.flavour.plants, 3);
+    if (name === "knightEmblem") boost([...(_j = trad.flavour.animals) != null ? _j : [], ...(_k = trad.flavour.plants) != null ? _k : []], 2);
+    if (name === "land") boost([...(_l = trad.flavour.land) != null ? _l : [], ...(_m = trad.flavour.water) != null ? _m : []], 3);
+    if (name === "covenLand") boost(trad.flavour.land, 3);
+    if (name === "number") boost(trad.numbers, 3);
+    if (trad.key !== "sahul" && (S === "FL" || S === "FH") && ["weapon", "gear", "uWeapon"].includes(name)) {
+      for (const s of trad.suppress.filter((x) => x.kind === "culture")) {
+        for (const word of [s.word, groupPlural(s.word)]) if (weights.has(word)) weights.set(word, weights.get(word) * s.mult);
+      }
+    }
+  }
+  const keep = filter != null ? filter : (_n = type.listFilter) == null ? void 0 : _n[name];
+  const out = [...weights].filter(([w, n]) => n > 0 && (!keep || keep.includes(w)));
+  ctx.pools.set(key2, out);
+  return out;
+}
+function compositeWord(ctx, name, type) {
+  const parts = GROUP_DATA.composites[name];
+  if (name === "creature") {
+    const merged = parts.flatMap(([sub2]) => pool(ctx, sub2, type));
+    return pickWeighted5(merged, ctx.rng);
+  }
+  const live = parts.filter(([sub2]) => pool(ctx, sub2, type).length > 0);
+  const sub = pickWeighted5(live, ctx.rng);
+  return sub ? pickWeighted5(pool(ctx, sub, type), ctx.rng) : void 0;
+}
+var townPools = /* @__PURE__ */ new Map();
+function townPool(key2) {
+  let found = townPools.get(key2);
+  if (found) return found;
+  const names = key2 === "britain" ? generatePlaceNames({ recipe: britishPlaceNamesRecipe(void 0), slots: {}, count: 300, seed: 1789 }).names.map((n) => n.text) : generateWorldPlaceNames({ culture: key2, count: 300, seed: 1789 }).names.map((n) => n.text);
+  found = names.filter((n) => !n.includes("["));
+  townPools.set(key2, found);
+  return found;
+}
+var isGeneral = (t) => !t || t.key === "general";
+function renderPattern(ctx, pattern, type, shape) {
+  let out = "";
+  const re = /\{([^}]+)\}/g;
+  let last = 0;
+  let m;
+  while (m = re.exec(pattern)) {
+    out += pattern.slice(last, m.index);
+    last = re.lastIndex;
+    const [rawName, mod] = m[1].split(":");
+    const name = rawName.includes("/") ? pickOne(rawName.split("/"), ctx.rng) : rawName;
+    const piece = token(ctx, name, type, shape);
+    if (!piece) return void 0;
+    let text = piece.text;
+    if (name === "compound" && pattern.slice(last).startsWith(" Company")) text = text.replace(/s$/, "");
+    if (mod === "pl") text = piece.plural ? text : groupPlural(text);
+    if (mod === "poss") text = groupPossessive(text, piece.plural);
+    out += text;
+  }
+  out += pattern.slice(last);
+  return out;
+}
+function token(ctx, name, type, shape) {
+  var _a2, _b, _c, _d;
+  const rng = ctx.rng;
+  const S = ctx.setting;
+  const placeholders = ctx.mode === "placeholders";
+  const word = (list) => {
+    var _a3;
+    const w = pickWeighted5(pool(ctx, list, type, (_a3 = shape == null ? void 0 : shape.filter) == null ? void 0 : _a3[list]), rng);
+    return w === void 0 ? void 0 : { text: w, plural: PLURAL_LISTS.has(list) };
+  };
+  switch (name) {
+    case "person":
+      if (placeholders) return { text: `[${type.person}]`, plural: false };
+      return { text: (_a2 = inventedPerson(ctx, type)) != null ? _a2 : "", plural: false };
+    case "holy": {
+      if (placeholders) return { text: "[holy person]", plural: false };
+      const saints = GROUP_DATA.people.saintTraditions.includes((_c = (_b = ctx.people) == null ? void 0 : _b.key) != null ? _c : "general");
+      if (!saints) return { text: `the ${pickWeighted5(pool(ctx, "holyTitle", type), rng)}`, plural: false };
+      const saint = pickWeighted5(pool(ctx, "saintName", type), rng);
+      return { text: S === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`, plural: false };
+    }
+    case "town":
+      if (placeholders) return { text: "[place]", plural: false };
+      return { text: inventedTown(ctx, type), plural: false };
+    case "surname":
+      if (placeholders) return { text: "[surname]", plural: false };
+      return word("surname");
+    case "house":
+      if (placeholders) return { text: "[house]", plural: false };
+      return word("house");
+    case "ordinal": {
+      const choices = [];
+      for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
+      return { text: ordinalText(pickWeighted5(choices, rng)), plural: false };
+    }
+    case "land": {
+      if (S === "SF") {
+        const w2 = pickWeighted5(pool(ctx, "spaceLand", type), rng);
+        const prefix = rng() < 0.3 ? `${pickWeighted5(pool(ctx, "spacePrefix", type), rng)} ` : "";
+        return { text: prefix + w2, plural: false };
+      }
+      const w = pickWeighted5(pool(ctx, "land", type), rng);
+      if (!w) return void 0;
+      const holds = w.includes(" ") || GROUP_DATA.lists.land.some((e) => e.w === w && e.noPrefix);
+      if (!holds && rng() < 0.3) {
+        const prefix = rng() < 0.5 ? pickWeighted5(pool(ctx, "landPrefix", type), rng) : pickWeighted5(pool(ctx, "colour", type), rng);
+        return { text: `${prefix} ${w}`, plural: false };
+      }
+      return { text: w, plural: false };
+    }
+    case "street":
+      if (S === "SF") {
+        const n = (max) => 1 + Math.floor(rng() * max);
+        const forms = [() => `Deck ${n(40)}`, () => `Ring ${pickWeighted5(pool(ctx, "greek", type), rng)}`, () => `Level ${n(99)}`, () => `Sector ${n(20)}`];
+        return { text: pickOne(forms, rng)(), plural: false };
+      }
+      return { text: `${pickWeighted5(pool(ctx, "streetFirst", type), rng)} ${pickWeighted5(pool(ctx, "streetLast", type), rng)}`, plural: false };
+    case "nickname": {
+      const shapeChoice = pickWeighted5(GROUP_DATA.nickname.map((n) => [n.p, n.w]), rng);
+      const text = renderPattern(ctx, shapeChoice, type);
+      return text ? { text, plural: true } : void 0;
+    }
+    case "star":
+      return word("star");
+    case "starNumber":
+      return { text: String(1 + Math.floor(rng() * 12)), plural: false };
+    case "spaceLandPrefixed":
+      return { text: `${pickWeighted5(pool(ctx, "spacePrefix", type), rng)} ${pickWeighted5(pool(ctx, "spaceLand", type), rng)}`, plural: false };
+    case "britishPlace":
+      return { text: pickOne(townPool("britain"), rng), plural: false };
+    case "flavourAnimal": {
+      const animals = (_d = ctx.vocab) == null ? void 0 : _d.flavour.animals;
+      if (animals && animals.length > 0) return { text: pickOne(animals, rng), plural: false };
+      const merged = [...pool(ctx, "beast", type), ...pool(ctx, "bird", type)];
+      return { text: pickWeighted5(merged, rng), plural: false };
+    }
+    case "personTitle":
+      return word(ctx.family.key === "supernatural" ? "supernaturalTitle" : "personTitle");
+    case "initials":
+      return initialsToken(ctx, type);
+  }
+  if (GROUP_DATA.composites[name]) {
+    const w = compositeWord(ctx, name, type);
+    return w === void 0 ? void 0 : { text: w, plural: name === "band" };
+  }
+  if (!GROUP_DATA.lists[name]) throw new Error(`Group names: no list \u201C${name}\u201D.`);
+  return word(name);
+}
+function inventedPerson(ctx, type) {
+  var _a2, _b;
+  const surnames = GROUP_DATA.people.surnameTraditions.includes((_b = (_a2 = ctx.people) == null ? void 0 : _a2.key) != null ? _b : "general");
+  const shapes = surnames ? GROUP_DATA.people.person : GROUP_DATA.people.personOther;
+  const pattern = pickWeighted5(shapes.map((s) => [s.p, s.w]), ctx.rng);
+  return renderPattern(ctx, pattern, type);
+}
+function inventedTown(ctx, type) {
+  var _a2, _b, _c;
+  const rng = ctx.rng;
+  if (ctx.setting === "SF") {
+    const pattern = pickWeighted5(GROUP_DATA.people.sfTown.map((s) => [s.p, s.w]), rng);
+    return (_a2 = renderPattern(ctx, pattern, type)) != null ? _a2 : "Vega";
+  }
+  const key2 = (_c = (_b = ctx.people) == null ? void 0 : _b.key) != null ? _c : "general";
+  let source;
+  if (GROUP_DATA.people.surnameTraditions.includes(key2)) source = "britain";
+  else {
+    const cultures = GROUP_DATA.traditions.cultureMap[key2];
+    if (cultures) source = pickWeighted5(cultures, rng);
+  }
+  if (source) {
+    const names = townPool(source);
+    if (names.length > 0) return pickOne(names, rng);
+  }
+  return `${pickWeighted5(pool(ctx, "townPrefix", type), rng)}${pickWeighted5(pool(ctx, "townSuffix", type), rng)}`;
+}
+function initialsToken(ctx, type) {
+  const formal = type.shapes.filter((s) => s.f === "F" && !s.p.includes("{initials}") && shapeWeight(ctx, s) > 0);
+  for (let i = 0; i < 20 && formal.length > 0; i++) {
+    const shape = pickWeighted5(formal.map((s) => [s, shapeWeight(ctx, s)]), ctx.rng);
+    const text = renderPattern(ctx, shape.p, type, shape);
+    if (!text || text.includes("[")) continue;
+    const letters = initialsOf(capitalise(text, true));
+    if (letters.length < 3 || letters.length > 5) continue;
+    if (BLOCKED_INITIALS.has(letters) || ctx.block.has(norm2(letters)) || BANNED.some((re) => re.test(letters))) continue;
+    return { text: letters, plural: false };
+  }
+  return void 0;
+}
+function shapeWeight(ctx, shape) {
+  var _a2, _b, _c, _d, _e, _f;
+  if (shape.s && !shape.s.includes(ctx.setting)) return 0;
+  if (ctx.mode === "invented" && /\{(surname|house)\}/.test(shape.p) && !GROUP_DATA.people.surnameTraditions.includes((_b = (_a2 = ctx.people) == null ? void 0 : _a2.key) != null ? _b : "general")) {
+    return 0;
+  }
+  const trad = ctx.vocab ? (_d = (_c = GROUP_DATA.traditions.shapeMultipliers[ctx.vocab.key]) == null ? void 0 : _c[shape.p]) != null ? _d : 1 : 1;
+  return shape.w * ((_f = (_e = shape.sx) == null ? void 0 : _e[ctx.setting]) != null ? _f : 1) * trad;
+}
+function byForm(ctx, shapes) {
+  const live = shapes.map((s) => [s, shapeWeight(ctx, s)]).filter(([, w]) => w > 0);
+  const wanted = ctx.form === "formal" ? ["F", "B"] : ctx.form === "everyday" ? ["E", "B"] : ["F", "E", "B"];
+  const matching = live.filter(([s]) => wanted.includes(s.f));
+  return matching.length > 0 ? matching : live;
+}
+function plainShapes(ctx, type) {
+  var _a2, _b;
+  const extra = ctx.vocab ? (_b = (_a2 = GROUP_DATA.traditions.extraShapes[ctx.vocab.key]) == null ? void 0 : _a2[type.key]) != null ? _b : [] : [];
+  return [...type.shapes, ...extra];
+}
+function frontShapes(type) {
+  var _a2, _b, _c;
+  const front = GROUP_DATA.fronts[(_a2 = type.front) != null ? _a2 : ""];
+  if (!front) return [];
+  return [...front.shapes, ...(_c = (_b = front.typeShapes) == null ? void 0 : _b[type.key]) != null ? _c : []];
+}
+function companySource(ctx, type) {
+  var _a2, _b;
+  const share2 = pickWeighted5(((_a2 = type.borrow) != null ? _a2 : []).map((b) => [b, b.share]), ctx.rng);
+  if (!share2 || share2.own) return { shapes: type.shapes, listType: type };
+  const family = (key2) => GROUP_FAMILIES.flatMap((f) => f.types).find((t) => t.key === key2);
+  const source = family(share2.types[0]);
+  const shapes = source.shapes.filter((s) => !share2.form || s.f === share2.form);
+  for (const extra of (_b = share2.andTypes) != null ? _b : []) shapes.push(...family(extra).shapes);
+  return { shapes, listType: source };
+}
+function drawName(ctx, type, front) {
+  let shapes;
+  let listType = type;
+  if (front) shapes = frontShapes(type);
+  else if (type.borrow) ({ shapes, listType } = companySource(ctx, type));
+  else shapes = plainShapes(ctx, type);
+  const choices = byForm(ctx, shapes);
+  const shape = pickWeighted5(choices, ctx.rng);
+  if (!shape) return void 0;
+  const raw = renderPattern(ctx, shape.p, { ...listType, person: type.person }, shape);
+  if (!raw) return void 0;
+  if (shape.p === "{brandStart}{brandEnd}" && raw.length < 5) return void 0;
+  const formal = shape.f === "F" || shape.f === "B" && ctx.form !== "everyday";
+  const text = capitalise(raw.replace(/\s+/g, " ").trim(), shape.f === "F");
+  if (!acceptable(ctx, text, formal)) return void 0;
+  return { text, family: ctx.family.key, type: type.key, shape: shape.p, front, form: shape.f };
+}
+function acceptable(ctx, text, formal) {
+  const words = text.split(" ").filter((w) => w && w !== "&");
+  const counted = words.filter((w, i) => !(i === 0 && w === "the") && !SMALL2.has(w.toLowerCase()));
+  if (counted.length > (formal ? 8 : 5)) return false;
+  const content = counted.filter((w) => !w.startsWith("[")).flatMap((w) => w.split(/[-–]/));
+  const seen = /* @__PURE__ */ new Set();
+  let colours = 0;
+  let numbers = 0;
+  for (const raw of content) {
+    const bare = raw.replace(/'s?$/, "").replace(/[(),.]/g, "");
+    if (!bare) continue;
+    const key2 = bare.toLowerCase().replace(/s$/, "");
+    if (seen.has(key2)) return false;
+    seen.add(key2);
+    if (COLOUR_WORDS.has(bare)) colours++;
+    if (NUMBER_WORDS.has(bare) || /^\d+(st|nd|rd|th)$/.test(bare)) numbers++;
+  }
+  if (colours > 1 || numbers > 1) return false;
+  const n = norm2(text);
+  if (ctx.block.has(n)) return false;
+  if (BANNED.some((re) => re.test(text))) return false;
+  if (breaksGroupColourRule(text)) return false;
+  return true;
+}
+function oneName(ctx, options, chosen, types) {
+  const drawType = () => chosen != null ? chosen : pickWeighted5(types, ctx.rng);
+  let type = drawType();
+  const vocab = ctx.vocab;
+  for (let round = 0; round < 2 && type; round++) {
+    for (let i = 0; i < 20; i++) {
+      const frontable = canFront(type);
+      const front = frontable && (options.front === "hide" || options.front === "may" && ctx.rng() < 0.25);
+      const name = drawName(ctx, type, front);
+      if (name) {
+        ctx.vocab = vocab;
+        return name;
+      }
+    }
+    if (chosen) {
+      ctx.vocab = void 0;
+      ctx.pools.clear();
+    } else type = drawType();
+  }
+  if (ctx.vocab !== vocab) {
+    ctx.vocab = vocab;
+    ctx.pools.clear();
+  }
+  return void 0;
+}
+function generateGroupNames(options) {
+  var _a2, _b, _c, _d, _e, _f;
+  const family = findFamily(options.family);
+  if (!family) throw new Error(`Unknown family \u201C${options.family}\u201D.`);
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const genre = (_a2 = options.genre) != null ? _a2 : "fantasy";
+  const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
+  const notices = [];
+  const available = typesInSetting(family, setting);
+  if (available.length === 0) throw new Error(`${family.label} aren't offered in ${SETTING_PHRASES[setting]}.`);
+  const tradition = findTradition((_b = options.tradition) != null ? _b : "general");
+  const people = isGeneral(tradition) ? void 0 : tradition;
+  const vocab = people && !(people.key === "southAsian" && family.key === "trade") ? people : void 0;
+  const guards = (_c = options.safeguards) != null ? _c : { block: GROUP_DATA.safeguards.block, flag: GROUP_DATA.safeguards.flag, flagListBlocks: GROUP_DATA.safeguards.flagListBlocks };
+  const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(norm2));
+  const ctx = {
+    rng: mulberry32(seed),
+    setting,
+    family,
+    vocab,
+    people,
+    mode: (_d = options.people) != null ? _d : "placeholders",
+    form: (_e = options.form) != null ? _e : "any",
+    block,
+    pools: /* @__PURE__ */ new Map()
+  };
+  const chosen = options.type ? available.find((t) => t.key === options.type) : void 0;
+  if (options.type && !chosen) {
+    notices.push(`\u201C${options.type}\u201D isn't available in ${SETTING_PHRASES[setting]}; using any type.`);
+  }
+  const front = (_f = options.front) != null ? _f : "say";
+  const typeWeight = (t) => {
+    var _a3, _b2;
+    return t.weight * (vocab ? (_b2 = (_a3 = GROUP_DATA.traditions.typeMultipliers[vocab.key]) == null ? void 0 : _a3[t.key]) != null ? _b2 : 1 : 1);
+  };
+  let candidates = available.filter((t) => front !== "hide" || canFront(t));
+  if (candidates.length === 0) candidates = available;
+  const types = candidates.map((t) => [t, typeWeight(t)]);
+  const count = Math.max(0, Math.floor(options.count));
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+    const name = oneName(ctx, { front }, chosen, types);
+    if (!name) continue;
+    const key2 = name.text.toLowerCase();
+    if (seen.has(key2)) continue;
+    seen.add(key2);
+    names.push(name);
+  }
+  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+  return { names, seed, notices };
+}
+function groupHistoryLabel(family, genre, fantastic, tradition) {
+  const t = findTradition(tradition);
+  return [family.label, SETTING_PHRASES[groupSetting(genre, fantastic)], t && t.key !== "general" ? t.label : "General"].join(" \xB7 ");
+}
+
+// src/groups/sentence.ts
+var DEFAULT_GROUP_STATE = {
+  tradition: "general",
+  genre: "fantasy",
+  fantastic: false,
+  form: "any",
+  front: "say",
+  people: "placeholders"
+};
+var GENRE_TEXT = { fantasy: "fantasy", modern: "modern", scifi: "science fiction" };
+var FANTASTIC_TEXT = {
+  fantasy: ["of historic or low fantasy", "of high or epic fantasy"],
+  modern: ["as it really is", "of contemporary fantasy"]
+};
+var FORM_TEXT = { any: "formal or everyday", formal: "formal", everyday: "everyday" };
+var FRONT_TEXT = { say: "that say what they are", hide: "that hide what they are", may: "that may hide what they are" };
+var PEOPLE_TEXT = { placeholders: "placeholders for", invented: "invented" };
+function showsFront(state, family) {
+  const available = typesInSetting(family, groupSetting(state.genre, state.fantastic));
+  const type = available.find((t) => t.key === state.type);
+  return type ? canFront(type) : available.some(canFront);
+}
+function effectiveFront(state, family) {
+  return showsFront(state, family) ? state.front : "say";
+}
+var genresFor = (family) => family.key === "supernatural" ? ["fantasy", "modern"] : ["fantasy", "modern", "scifi"];
+function groupSentence(state, family) {
+  var _a2;
+  const out = [];
+  const tradition = (_a2 = TRIBAL_TRADITIONS.find((t) => t.key === state.tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
+  out.push({
+    field: "tradition",
+    text: tradition.label,
+    title: tradition.key === "general" ? "No cultural flavour" : tradition.drawsOn,
+    choices: TRIBAL_TRADITIONS.map((t) => ({ id: t.key, label: t.label })),
+    current: tradition.key
+  });
+  out.push("-themed ");
+  const setting = groupSetting(state.genre, state.fantastic);
+  const available = typesInSetting(family, setting);
+  const type = available.find((t) => t.key === state.type);
+  out.push({
+    field: "type",
+    text: type ? type.sentence : family.any,
+    title: type ? type.description : `Any of the ${family.label}`,
+    choices: [{ id: void 0, label: "Any" }, ...available.map((t) => ({ id: t.key, label: t.menu }))],
+    current: type == null ? void 0 : type.key
+  });
+  out.push(" for a ");
+  out.push({
+    field: "genre",
+    text: GENRE_TEXT[state.genre],
+    title: "Genre: the kind of world",
+    choices: genresFor(family).map((g) => ({ id: g, label: GENRE_TEXT[g] })),
+    current: state.genre
+  });
+  out.push(" world");
+  if (state.genre !== "scifi") {
+    const phrases = FANTASTIC_TEXT[state.genre];
+    const offered = family.key === "supernatural" && state.genre === "modern" ? [true] : [false, true];
+    out.push(" ");
+    out.push({
+      field: "fantastic",
+      text: phrases[state.fantastic ? 1 : 0],
+      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
+      choices: offered.map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
+      current: state.fantastic ? "on" : "off"
+    });
+  }
+  out.push(", using ");
+  out.push({
+    field: "form",
+    text: FORM_TEXT[state.form],
+    title: "Formal titles, everyday names, or both",
+    choices: ["any", "formal", "everyday"].map((f) => ({ id: f, label: FORM_TEXT[f] })),
+    current: state.form
+  });
+  out.push(" names");
+  if (showsFront(state, family)) {
+    out.push(" ");
+    out.push({
+      field: "front",
+      text: FRONT_TEXT[state.front],
+      title: "Front names: respectable names that hide what a group really is",
+      choices: ["say", "hide", "may"].map((f) => ({ id: f, label: FRONT_TEXT[f] })),
+      current: state.front
+    });
+  }
+  out.push(", with ");
+  out.push({
+    field: "people",
+    text: PEOPLE_TEXT[state.people],
+    title: "Placeholders like [commander], or invented names",
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    current: state.people
+  });
+  out.push(" people and places");
+  return out;
+}
+function chooseGroup(state, field, id, family) {
+  let next = { ...state };
+  switch (field) {
+    case "tradition":
+      next.tradition = id != null ? id : "general";
+      break;
+    case "type":
+      next.type = id;
+      break;
+    case "genre":
+      next.genre = id != null ? id : "fantasy";
+      if (family.key === "supernatural" && next.genre === "modern") next.fantastic = true;
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "form":
+      next.form = id != null ? id : "any";
+      break;
+    case "front":
+      next.front = id != null ? id : "say";
+      break;
+    case "people":
+      next.people = id != null ? id : "placeholders";
+      break;
+  }
+  const available = typesInSetting(family, groupSetting(next.genre, next.fantastic));
+  if (next.type && !available.some((t) => t.key === next.type)) next = { ...next, type: void 0 };
+  if (field === "type" && next.type && !showsFront(next, family)) next = { ...next, front: "say" };
+  return next;
+}
+
+// src/groups/safeguardPacks.ts
+var GROUP_SAFEGUARD_TYPE = "group-safeguards";
+function isGroupSafeguardPackContent(content) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  return !!fm && new RegExp(`^type:\\s*["']?${GROUP_SAFEGUARD_TYPE}["']?\\s*$`, "m").test(fm[1]);
+}
+var GROUP_SAFEGUARD_TEMPLATE = `---
+type: group-safeguards
+flag-list-blocks: false
+---
+
+## Block
+
+Names never to produce. Each one is added to the built-in block list of real orders, armies, gangs, companies and movements.
+
+## Flag
+
+Names to allow, though they echo a real or well-known group.
+
+## Allow
+
+Names to take off the flag list. Built-in block-list names can't be allowed.
+`;
+
+// src/presets.ts
+var TRIBAL_PRESET_MODULE = "tribal-names";
+var TRIBAL_PRESET_DEFAULTS = {
+  tradition: "general",
+  biome: "homeland",
+  terrain: "any",
+  register: "plain",
+  groupType: "any",
+  perspective: "any",
+  hostile: false
+};
+var FRONTMATTER = /^---\s*\n([\s\S]*?)\n---\s*\n?/;
+function fields(content) {
+  const fm = content.match(FRONTMATTER);
+  if (!fm) return void 0;
+  const values = {};
+  for (const line of fm[1].split(/\r?\n/)) {
+    const m = line.match(/^([A-Za-z][\w-]*):\s*(.*)$/);
+    if (m) values[m[1]] = m[2].trim().replace(/^(['"])(.*)\1$/, "$2");
+  }
+  return { values, body: content.slice(fm[0].length) };
+}
+function isModulePresetContent(content) {
+  var _a2;
+  return ((_a2 = fields(content)) == null ? void 0 : _a2.values.type) === "module-preset";
+}
+function parseModulePreset(content, fileName) {
+  var _a2, _b;
+  const parsed = fields(content);
+  const problems = [];
+  if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
+  const { values, body } = parsed;
+  if (values.module !== TRIBAL_PRESET_MODULE) {
+    problems.push(`Unknown module \u201C${(_a2 = values.module) != null ? _a2 : ""}\u201D.`);
+    return { problems };
+  }
+  const d = TRIBAL_PRESET_DEFAULTS;
+  const pick2 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const hostileRaw = values.hostile;
+  let hostile = d.hostile;
+  if (hostileRaw === "true" || hostileRaw === "false") hostile = hostileRaw === "true";
+  else if (hostileRaw) problems.push(`Unknown hostile \u201C${hostileRaw}\u201D.`);
+  return {
+    preset: {
+      packName: values.packName || fileName,
+      setting: (_b = values.setting) != null ? _b : "",
+      description: body.trim(),
+      tradition: pick2("tradition", d.tradition, (v) => !!findTradition(v)),
+      biome: pick2("biome", d.biome, (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
+      terrain: pick2("terrain", d.terrain, (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
+      register: pick2("register", d.register, (v) => TRIBAL_REGISTERS.includes(v)),
+      groupType: pick2("groupType", d.groupType, (v) => v === "any" || TRIBAL_GROUP_TYPES.some((g) => g.key === v)),
+      perspective: pick2("perspective", d.perspective, (v) => v === "any" || TRIBAL_PERSPECTIVES.includes(v)),
+      hostile
+    },
+    problems
+  };
+}
+function modulePresetContent(preset) {
+  const quote2 = (v) => /^\[\[|[:#]/.test(v) ? `"${v}"` : v;
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${TRIBAL_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `tradition: ${preset.tradition}`,
+    `biome: ${quote2(preset.biome)}`,
+    `terrain: ${preset.terrain}`,
+    `register: ${preset.register}`,
+    `groupType: ${preset.groupType}`,
+    `perspective: ${preset.perspective}`,
+    `hostile: ${preset.hostile}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
+function tribalPresetSlot(preset) {
+  return {
+    tradition: preset.tradition,
+    ...preset.biome !== "homeland" && findBiome(preset.biome) ? { biome: preset.biome } : {},
+    ...preset.terrain !== "any" ? { terrain: preset.terrain } : {},
+    ...preset.groupType !== "any" ? { groupType: preset.groupType } : {},
+    ...preset.perspective !== "any" ? { perspective: preset.perspective } : {},
+    ...preset.register === "plain" || preset.register === "administrative" ? { register: preset.register } : {}
+  };
+}
+function readTribalPresetSource(name, content) {
+  if (content === null) return { notice: `Preset \u201C${name}\u201D is missing.` };
+  const parsed = isModulePresetContent(content) ? parseModulePreset(content, name).preset : void 0;
+  if (!parsed) return { notice: `\u201C${name}\u201D isn't a tribes and kin groups preset.` };
+  return { preset: parsed };
+}
+function tribalPresetDraw(preset) {
+  const { tradition, ...fields2 } = tribalPresetSlot(preset);
+  return (rng) => tribalSlotFill({ tradition, part: "new-land", fields: fields2 }, rng).text;
+}
+
+// src/presetModal.ts
+var import_obsidian6 = require("obsidian");
+var PresetSaveModal = class extends import_obsidian6.Modal {
+  constructor(app, name, description, onSave) {
+    super(app);
+    this.name = name;
+    this.description = description;
+    this.onSave = onSave;
+  }
+  onOpen() {
+    this.titleEl.setText("Save as preset");
+    this.contentEl.addClass("nameforge-editor-modal", "nameforge-preset-modal");
+    const nameRow = this.contentEl.createDiv({ cls: "nameforge-modal__pack-name-row" });
+    nameRow.createEl("label", { text: "Name" });
+    const name = nameRow.createEl("input", { cls: "nameforge-modal__pack-name-input", attr: { type: "text" } });
+    name.value = this.name;
+    const description = this.contentEl.createEl("textarea", { cls: "nameforge-modal__textarea nameforge-preset-modal__description", attr: { rows: "4" } });
+    description.value = this.description;
+    const controls = this.contentEl.createDiv({ cls: "nameforge-modal__controls" });
+    const save = controls.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title: "Save preset" } });
+    (0, import_obsidian6.setIcon)(save, ICON_SAVE);
+    save.addEventListener("click", () => {
+      void this.onSave(name.value.trim(), description.value.trim()).then((done) => {
+        if (done) this.close();
+      });
+    });
+    const cancel = controls.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title: "Cancel" } });
+    (0, import_obsidian6.setIcon)(cancel, ICON_CANCEL);
+    cancel.addEventListener("click", () => this.close());
+    name.focus();
+  }
+  onClose() {
+    this.contentEl.empty();
+  }
+};
+function confirmReplace(app, question) {
+  return new Promise((resolve) => {
+    const modal = new class extends import_obsidian6.Modal {
+      constructor() {
+        super(...arguments);
+        this.answered = false;
+      }
+      onOpen() {
+        this.contentEl.createEl("p", { text: question });
+        const row = this.contentEl.createDiv({ cls: "modal-button-container" });
+        const yes = row.createEl("button", { cls: "mod-warning", text: "Replace" });
+        yes.addEventListener("click", () => {
+          this.answered = true;
+          resolve(true);
+          this.close();
+        });
+        const no = row.createEl("button", { text: "Cancel" });
+        no.addEventListener("click", () => this.close());
+      }
+      onClose() {
+        if (!this.answered) resolve(false);
+        this.contentEl.empty();
+      }
+    }(app);
+    modal.open();
+  });
+}
+
+// src/data/builtin-templates.json
+var builtin_templates_default = [
+  {
+    name: "Victorian, England, Male",
+    type: "people",
+    items: [
+      "Albert",
+      "Alexander",
+      "Alfred",
+      "Algernon",
+      "Allen",
+      "Ambrose",
+      "Andrew",
+      "Anthony",
+      "Archibald",
+      "Archie",
+      "Arthur",
+      "Aubrey",
+      "August",
+      "Augustine",
+      "Augustus",
+      "Basil",
+      "Ben",
+      "Benjamin",
+      "Bernard",
+      "Bert",
+      "Bertram",
+      "Carl",
+      "Cecil",
+      "Cedric",
+      "Charles",
+      "Charley",
+      "Charlie",
+      "Chester",
+      "Clarence",
+      "Claude",
+      "Clement",
+      "Clifford",
+      "Clyde",
+      "Cornelius",
+      "Cuthbert",
+      "Cyril",
+      "Daniel",
+      "David",
+      "Donald",
+      "Douglas",
+      "Duncan",
+      "Earl",
+      "Ebenezer",
+      "Ed",
+      "Eddie",
+      "Edgar",
+      "Edmund",
+      "Edward",
+      "Edwin",
+      "Elmer",
+      "Ernest",
+      "Eugene",
+      "Eustace",
+      "Evan",
+      "Everett",
+      "Ewart",
+      "Felix",
+      "Fergus",
+      "Floyd",
+      "Francis",
+      "Frank",
+      "Franklin",
+      "Fred",
+      "Frederick",
+      "Geoffrey",
+      "George",
+      "Gerald",
+      "Gilbert",
+      "Grover",
+      "Guy",
+      "Harold",
+      "Harry",
+      "Harvey",
+      "Henry",
+      "Herbert",
+      "Herman",
+      "Horace",
+      "Howard",
+      "Hubert",
+      "Hugh",
+      "Hugo",
+      "Humphrey",
+      "Ira",
+      "Isaac",
+      "Ivan",
+      "Ivor",
+      "Jack",
+      "Jacob",
+      "James",
+      "Jasper",
+      "Jessie",
+      "Jim",
+      "Joe",
+      "John",
+      "Jonathan",
+      "Joseph",
+      "Julian",
+      "Julius",
+      "Kenneth",
+      "Laurence",
+      "Lawrence",
+      "Lee",
+      "Leo",
+      "Leonard",
+      "Leopold",
+      "Leroy",
+      "Leslie",
+      "Lewis",
+      "Lionel",
+      "Llewellyn",
+      "Lloyd",
+      "Louis",
+      "Luther",
+      "Malcolm",
+      "Marion",
+      "Martin",
+      "Maurice",
+      "Maxwell",
+      "Michael",
+      "Miles",
+      "Montague",
+      "Neville",
+      "Nigel",
+      "Oliver",
+      "Oscar",
+      "Otto",
+      "Owen",
+      "Patrick",
+      "Paul",
+      "Percival",
+      "Percy",
+      "Peter",
+      "Philip",
+      "Ralph",
+      "Randolph",
+      "Ray",
+      "Raymond",
+      "Reginald",
+      "Reuben",
+      "Richard",
+      "Robert",
+      "Roderick",
+      "Roger",
+      "Roy",
+      "Rufus",
+      "Rupert",
+      "Sam",
+      "Samuel",
+      "Septimus",
+      "Sidney",
+      "Silas",
+      "Simeon",
+      "Stanley",
+      "Stephen",
+      "Theodore",
+      "Thomas",
+      "Timothy",
+      "Tom",
+      "Valentine",
+      "Vernon",
+      "Victor",
+      "Vincent",
+      "Walter",
+      "Warren",
+      "Wilfred",
+      "Will",
+      "William",
+      "Willie"
+    ]
+  },
+  {
+    name: "Victorian, England, Female",
+    type: "people",
+    items: [
+      "Ada",
+      "Addie",
+      "Adelaide",
+      "Adeline",
+      "Agatha",
+      "Agnes",
+      "Alice",
+      "Alma",
+      "Amanda",
+      "Amelia",
+      "Amy",
+      "Anna",
+      "Anne",
+      "Annie",
+      "Augusta",
+      "Beatrice",
+      "Bertha",
+      "Bessie",
+      "Blanche",
+      "Caroline",
+      "Carrie",
+      "Catherine",
+      "Cecilia",
+      "Cecily",
+      "Charlotte",
+      "Clara",
+      "Clarissa",
+      "Clementina",
+      "Constance",
+      "Cora",
+      "Cordelia",
+      "Daisy",
+      "Delia",
+      "Della",
+      "Dora",
+      "Dorcas",
+      "Doris",
+      "Dorothea",
+      "Dorothy",
+      "Edith",
+      "Edna",
+      "Effie",
+      "Eliza",
+      "Elizabeth",
+      "Ella",
+      "Ellen",
+      "Elsie",
+      "Emily",
+      "Emma",
+      "Emmeline",
+      "Esther",
+      "Ethel",
+      "Etta",
+      "Eugenie",
+      "Eva",
+      "Eveline",
+      "Flora",
+      "Florence",
+      "Frances",
+      "Freda",
+      "Georgia",
+      "Georgina",
+      "Gertrude",
+      "Gladys",
+      "Grace",
+      "Gwendoline",
+      "Harriet",
+      "Hattie",
+      "Hazel",
+      "Helen",
+      "Helena",
+      "Henrietta",
+      "Hetty",
+      "Hilda",
+      "Honor",
+      "Ida",
+      "Irene",
+      "Iris",
+      "Isabel",
+      "Ivy",
+      "Jane",
+      "Jemima",
+      "Jennie",
+      "Jenny",
+      "Jessie",
+      "Josephine",
+      "Julia",
+      "Kate",
+      "Katherine",
+      "Kathleen",
+      "Kathryn",
+      "Katie",
+      "Laura",
+      "Lavinia",
+      "Leah",
+      "Lena",
+      "Lillian",
+      "Lillie",
+      "Lily",
+      "Lizzie",
+      "Lottie",
+      "Louisa",
+      "Louise",
+      "Lucy",
+      "Lula",
+      "Lulu",
+      "Lydia",
+      "Mabel",
+      "Mae",
+      "Maggie",
+      "Mamie",
+      "Margaret",
+      "Marguerite",
+      "Marie",
+      "Marion",
+      "Marjorie",
+      "Martha",
+      "Mary",
+      "Matilda",
+      "Maude",
+      "May",
+      "Mercy",
+      "Mildred",
+      "Millicent",
+      "Minnie",
+      "Mollie",
+      "Myrtle",
+      "Nancy",
+      "Nannie",
+      "Nellie",
+      "Nettie",
+      "Nora",
+      "Olive",
+      "Patience",
+      "Pauline",
+      "Pearl",
+      "Phoebe",
+      "Phyllis",
+      "Priscilla",
+      "Prudence",
+      "Rachel",
+      "Rebecca",
+      "Rhoda",
+      "Rosa",
+      "Rose",
+      "Rosetta",
+      "Rosina",
+      "Ruby",
+      "Ruth",
+      "Sadie",
+      "Sallie",
+      "Sarah",
+      "Selina",
+      "Stella",
+      "Susan",
+      "Susannah",
+      "Susie",
+      "Sylvia",
+      "Tabitha",
+      "Theodora",
+      "Theresa",
+      "Ursula",
+      "Victoria",
+      "Viola",
+      "Violet",
+      "Wilhelmina",
+      "Willie",
+      "Winifred"
+    ]
+  },
+  {
+    name: "Anglo-Saxon, Male",
+    type: "people",
+    items: [
+      "Acca",
+      "Aldfrith",
+      "Aldhelm",
+      "Aldred",
+      "Aldulf",
+      "Aldwine",
+      "Alfred",
+      "Alric",
+      "Asser",
+      "Athelstan",
+      "Athelwald",
+      "Baldred",
+      "Baldric",
+      "Baldwin",
+      "Bede",
+      "Beocca",
+      "Beorn",
+      "Beornhelm",
+      "Beornred",
+      "Beornulf",
+      "Brand",
+      "Brihtnoth",
+      "Brunstan",
+      "Burhred",
+      "Byrhthelm",
+      "Byrhtnoth",
+      "Cadwallon",
+      "Ceadda",
+      "Ceadwalla",
+      "Ceawlin",
+      "Cenred",
+      "Cenwulf",
+      "Ceolred",
+      "Ceolwulf",
+      "Ceorl",
+      "Cerdic",
+      "Cuthbert",
+      "Cuthred",
+      "Cuthwine",
+      "Cuthwulf",
+      "Cynegils",
+      "Cynehelm",
+      "Cynewulf",
+      "Cynric",
+      "Dunstan",
+      "Eadbald",
+      "Eadgar",
+      "Eadmund",
+      "Eadric",
+      "Eadweard",
+      "Eadwine",
+      "Edgar",
+      "Edmund",
+      "Edward",
+      "Edwin",
+      "Eomer",
+      "Eormenric",
+      "Framric",
+      "Freawine",
+      "Gamal",
+      "Godric",
+      "Godwine",
+      "Harold",
+      "Hengest",
+      "Horsa",
+      "Leofric",
+      "Leofwine",
+      "Offa",
+      "Oswald",
+      "Oswine",
+      "Penda",
+      "Siward",
+      "Uhtred",
+      "Wiglaf",
+      "Wulfgar",
+      "Wulfric",
+      "Wulfstan"
+    ]
+  },
+  {
+    name: "Anglo-Saxon, Female",
+    type: "people",
+    items: [
+      "\xC6thelflaed",
+      "Agatha",
+      "Agnes",
+      "Beadohild",
+      "Ceolburh",
+      "Cuthburh",
+      "Cwenburh",
+      "Eadburg",
+      "Eanflaed",
+      "Eawyn",
+      "Edith",
+      "Emma",
+      "Ethelflaed",
+      "Hild",
+      "Hilda",
+      "Hildeburg",
+      "Hildegard",
+      "Inga",
+      "Mathilda",
+      "Matilda",
+      "Mildrith",
+      "Osgyth",
+      "Wealhtheow",
+      "Wulfwyn",
+      "Wynflaed"
+    ]
+  }
+];
+
+// src/templates.ts
+var BUILTIN_TEMPLATES = builtin_templates_default;
+function templateTypeFor(packType) {
+  if (packType === "breakdownPack" || packType === "listPack") return "people";
+  if (packType === "compoundPack") return "people-compound";
+  if (packType === "placePack") return "place";
+  return void 0;
+}
+function builtinTemplates(type) {
+  return BUILTIN_TEMPLATES.filter((t) => t.type === type);
+}
+
+// src/landMenu.ts
+var import_obsidian7 = require("obsidian");
+var DEFAULT_LAND = { biome: void 0, terrain: "any" };
+var LandButton = class {
+  constructor(container, options) {
+    this.options = options;
+    this.custom = [];
+    this.el = container.createEl("button", {
+      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
+      attr: { type: "button" }
+    });
+    (0, import_obsidian7.setIcon)(this.el, ICON_BIOME);
+    this.el.addEventListener("click", (evt) => void this.open(evt));
+    this.refresh();
+  }
+  /** Shows or hides the button and updates its tooltip and active state. */
+  refresh() {
+    var _a2, _b, _c;
+    const state = this.options.state();
+    this.el.toggle(!!state);
+    if (!state) return;
+    const biome = findBiome(state.biome, this.custom);
+    const terrain = [...TERRAIN_CHOICES, ...(_a2 = biome == null ? void 0 : biome.customTerrains) != null ? _a2 : []].find((t) => t.id === state.terrain);
+    const biomeLabel = (_b = biome == null ? void 0 : biome.label) != null ? _b : this.options.defaultLabel();
+    const parts = [biomeLabel, ...this.options.terrain() ? [(_c = terrain == null ? void 0 : terrain.label) != null ? _c : "Any terrain"] : []];
+    this.el.setAttribute("title", `Land: ${parts.join(" \xB7 ")}`);
+    this.el.setAttribute("aria-label", `Land: ${parts.join(" \xB7 ")}`);
+    this.el.toggleClass("is-active", !!state.biome || state.terrain !== "any");
+  }
+  async open(evt) {
+    var _a2, _b;
+    const state = this.options.state();
+    if (!state) return;
+    this.custom = await this.options.customBiomes();
+    const menu = new import_obsidian7.Menu();
+    const heading = (title) => menu.addItem((item) => item.setTitle(title).setDisabled(true));
+    const choose = (next) => {
+      this.options.set(next);
+      this.refresh();
+      this.options.onChange();
+    };
+    const setBiome = (id) => {
+      const biome = findBiome(id, this.custom);
+      const keep = !biome || state.terrain === "any" || availableTerrains(biome).some((t) => t.id === state.terrain);
+      choose({ biome: id, terrain: keep ? state.terrain : "any" });
+    };
+    heading("Biome");
+    const defaultLabel = this.options.defaultLabel();
+    menu.addItem((item) => item.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(void 0)));
+    menu.addSeparator();
+    const builtIn = defaultLabel === BRITAIN.label ? BIOMES : [BRITAIN, ...BIOMES];
+    for (const b of builtIn) menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === b.id).onClick(() => setBiome(b.id)));
+    if (this.custom.length > 0) {
+      menu.addSeparator();
+      heading("Your biomes");
+      for (const b of [...this.custom].sort((x, y) => x.label.localeCompare(y.label))) {
+        const id = (_b = (_a2 = b.custom) == null ? void 0 : _a2.path) != null ? _b : b.id;
+        menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === id).onClick(() => setBiome(id)));
+      }
+    }
+    if (this.options.terrain()) {
+      menu.addSeparator();
+      heading("Terrain");
+      const biome = findBiome(state.biome, this.custom);
+      const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
+      menu.addItem((item) => item.setTitle("Any terrain").setChecked(state.terrain === "any").onClick(() => choose({ ...state, terrain: "any" })));
+      for (const t of terrains) {
+        menu.addItem((item) => item.setTitle(t.label).setChecked(state.terrain === t.id).onClick(() => choose({ ...state, terrain: t.id })));
+      }
+    }
+    menu.showAtMouseEvent(evt);
+  }
+};
+function landHistorySuffix(state, custom = [], withBiome = true) {
+  var _a2;
+  if (!state) return "";
+  const biome = findBiome(state.biome, custom);
+  const terrain = [...TERRAIN_CHOICES, ...(_a2 = biome == null ? void 0 : biome.customTerrains) != null ? _a2 : []].find((t) => t.id === state.terrain && t.id !== "any");
+  return `${withBiome && biome ? ` \xB7 ${biomeInline(biome)}` : ""}${terrain ? ` \xB7 ${terrain.label.toLowerCase()}` : ""}`;
+}
+
+// src/tribes/safeguardPacks.ts
+function isSafeguardPackContent(content) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  return !!fm && /^type:\s*["']?tribal-safeguards["']?\s*$/m.test(fm[1]);
+}
+function parseSafeguardPack(content) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  const pack = { block: [], flag: [], allow: [], flagListBlocks: !!fm && /^flag-list-blocks:\s*true\s*$/m.test(fm[1]) };
+  let target = null;
+  for (const raw of (fm ? content.slice(fm[0].length) : content).split(/\r?\n/)) {
+    const line = raw.trim();
+    const heading = line.match(/^##\s+(.+?)\s*#*$/);
+    if (heading) {
+      const h = heading[1].toLowerCase();
+      target = h === "block" ? pack.block : h === "flag" ? pack.flag : h === "allow" ? pack.allow : null;
+      continue;
+    }
+    const bullet = line.match(/^[-*+]\s+(.+)$/);
+    if (bullet && target) target.push(...bullet[1].split(",").map((w) => w.trim()).filter(Boolean));
+  }
+  return pack;
+}
+var norm3 = (s) => s.trim().toLowerCase().replace(/^the /, "");
+function mergeSafeguards(builtIn, packs) {
+  const notices = [];
+  const builtInBlock = new Set(builtIn.blockList.map(norm3));
+  const allow = /* @__PURE__ */ new Set();
+  for (const p of packs) {
+    for (const a of p.allow) {
+      if (builtInBlock.has(norm3(a))) notices.push(`\u201C${a}\u201D is on the built-in block list and stays blocked.`);
+      else allow.add(norm3(a));
+    }
+  }
+  const block = [...builtIn.blockList, ...packs.flatMap((p) => p.block)];
+  const flag = [...builtIn.flagList, ...packs.flatMap((p) => p.flag)].filter((f) => !allow.has(norm3(f)));
+  return { block, flag, flagBlocks: builtIn.flagListBlocks || packs.some((p) => p.flagListBlocks), notices };
+}
+var SAFEGUARD_TEMPLATE = `---
+type: tribal-safeguards
+flag-list-blocks: false
+---
+
+## Block
+
+Names never to produce. Each one is added to the built-in block list, which protects living peoples' names.
+
+## Flag
+
+Names to allow but mark as echoing a real historical people.
+
+## Allow
+
+Names to take off the flag list. Built-in block-list names can't be allowed.
+`;
+
+// src/names/starterTemplates.ts
+var STARTER_RECIPES = [
+  {
+    name: "Organic Britain",
+    recipe: { shape: { part: "organic", region: "all-britain" }, register: "mixed", render: { joining: "balanced" } },
+    description: "Organic British place names drawn from all of Britain, with a mix of modern and traditional words."
+  },
+  {
+    name: "Old English Shire",
+    recipe: { shape: { part: "organic", region: "south-east" }, register: "traditional", render: { joining: "fused" } },
+    description: "South East England in traditional words, with parts readily fused into single names."
+  },
+  {
+    name: "Danelaw",
+    recipe: {
+      shape: { part: "organic", region: "east-midlands" },
+      register: "traditional",
+      slots: {
+        "personal-name": {
+          kind: "sources",
+          sources: [
+            { pack: "Saxon names", weight: 70 },
+            { pack: "Norse names", weight: 30 }
+          ]
+        }
+      }
+    },
+    description: "The East Midlands in traditional words. The personal-name slot draws 70% from \u201CSaxon names\u201D and 30% from \u201CNorse names\u201D: replace these with your own packs. Until they exist, personal names stay as placeholders."
+  },
+  {
+    name: "Northern Dales",
+    recipe: { shape: { part: "organic", region: "north" }, register: "mixed" },
+    description: "The North of England, with a mix of modern and traditional words."
+  },
+  {
+    name: "Highland Glens",
+    recipe: { shape: { part: "organic", region: "scottish-highlands-and-hebrides" }, register: "modern" },
+    description: "The Scottish Highlands and Hebrides, in modern words."
+  },
+  {
+    name: "Welsh Hills",
+    recipe: { shape: { part: "organic", region: "wales" }, register: "modern" },
+    description: "Wales, in modern words."
+  },
+  {
+    name: "Settler Frontier",
+    recipe: {
+      shape: { part: "new-land", tradition: "english-speaking-settler", context: "sparse-or-weak-native-presence" },
+      register: "modern"
+    },
+    description: "New land settled by English-speaking settlers, with a sparse or weak native presence, in modern words."
+  },
+  {
+    name: "Imperial Survey",
+    recipe: { shape: { part: "new-land", tradition: "british-imperial", context: "wild-and-unsettled" } },
+    description: "Wild and unsettled new land named by British imperial officials, navy and explorers."
+  },
+  {
+    name: "Mission Lands",
+    recipe: { shape: { part: "new-land", tradition: "spanish", context: "contested-frontier" } },
+    description: "A contested frontier named in the Spanish tradition: saints, feasts and missions."
+  },
+  {
+    name: "Roman Province",
+    recipe: { shape: { part: "established", tradition: "roman", context: "accommodation" } },
+    description: "A Roman province within an established culture, accommodating local peoples and gods."
+  },
+  {
+    name: "Company Rule",
+    recipe: { shape: { part: "established", tradition: "british-imperial", context: "imposition" } },
+    description: "British imperial rule imposed on an established culture: cantonments, civil lines and twin cities."
+  },
+  {
+    name: "Invented World",
+    recipe: {
+      shape: { part: "organic", region: "all-britain" },
+      register: "mixed",
+      slots: {
+        "calendar-date-or-feast": { kind: "placeholder" },
+        "classical-biblical-or-legendary-name": { kind: "placeholder" },
+        "settler-group": { kind: "placeholder" },
+        "ethnic-or-cultural-group": { kind: "placeholder" }
+      }
+    },
+    description: "Organic shapes for an invented world: calendar dates, classical names, settler groups and ethnic or cultural groups are left as placeholders for your own world's words."
+  }
+];
+var STARTER_WORD_LISTS = [
+  {
+    name: "European Fauna",
+    categories: ["domestic-animal", "wild-animal", "bird", "fish-and-other-creatures"],
+    description: "The built-in animal lists, ready to edit."
+  },
+  { name: "European Flora", categories: ["tree", "wild-plant", "crop"], description: "The built-in plant lists, ready to edit." },
+  {
+    name: "Landscape and Description",
+    categories: [
+      "colour",
+      "size",
+      "age",
+      "position-or-direction",
+      "shape",
+      "quality-or-condition",
+      "number",
+      "landform",
+      "water-or-wetland-feature",
+      "soil-or-ground",
+      "built-feature"
+    ],
+    description: "The built-in description and landscape lists, ready to edit."
+  },
+  {
+    name: "Life and Belief",
+    categories: [
+      "activity",
+      "produce",
+      "religious-association",
+      "season",
+      "assembly-or-law",
+      "status-or-role",
+      "ethnic-or-cultural-group",
+      "supernatural-being"
+    ],
+    description: "The built-in lists for activity, belief and people, ready to edit."
+  },
+  {
+    name: "Colonial Words",
+    categories: [
+      "resource",
+      "emotion-or-aspiration",
+      "event-or-incident",
+      "calendar-date-or-feast",
+      "imperial-claim",
+      "classical-biblical-or-legendary-name",
+      "ship",
+      "honorific-title",
+      "settler-group",
+      "distance-or-survey-mark"
+    ],
+    description: "The built-in colonial lists, ready to edit."
+  }
+];
+var LABELS = new Map([
+  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]),
+  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label])
+]);
+var FUSES_COLUMN = {
+  yes: "Yes",
+  no: "No",
+  "traditional-only": "Traditional only",
+  "number-fused": "Yes",
+  "number-spaced": "No",
+  "town-only": "Yes",
+  mile: "No"
+};
+function wordTable(entries) {
+  const rows = entries.map((e) => {
+    var _a2, _b, _c;
+    const forms = [...e.forms, ...(_a2 = e.traditionalForms) != null ? _a2 : []].map((f) => `${f}-`).join(", ");
+    return `| ${e.modern} | ${(_b = e.traditional) != null ? _b : "\u2014"} | ${(_c = e.plural) != null ? _c : "\u2014"} | ${forms || "\u2014"} | ${FUSES_COLUMN[e.fuses]} |`;
+  });
+  return ["| Modern | Traditional | Plural | Combining forms | Fuses |", "|---|---|---|---|---|", ...rows].join("\n");
+}
+function starterWordListBody(list) {
+  const sections = list.categories.map((id) => {
+    var _a2, _b;
+    return `## ${(_a2 = LABELS.get(id)) != null ? _a2 : id}
+
+${wordTable((_b = NAME_WORDS.categories[id]) != null ? _b : [])}`;
+  });
+  return `${list.description}
+
+${sections.join("\n\n")}`;
+}
+
+// src/biomePacks.ts
+var LIST_SECTIONS = [
+  ["wildAnimals", "Wild animals", ["wild animal"]],
+  ["birds", "Birds", ["bird"]],
+  ["creatures", "Creatures", ["fish and other creatures"]],
+  ["trees", "Trees", ["tree"]],
+  ["plants", "Plants", ["wild plant"]],
+  ["crops", "Crops", ["crop"]],
+  ["livestock", "Livestock", ["domestic animal"]],
+  ["lifeways", "Lifeways", []],
+  ["sacred", "Sacred", []],
+  ["materials", "Materials", []],
+  ["ground", "Ground", ["soil or ground"]],
+  ["resources", "Resources", ["resource"]],
+  ["seasons", "Seasons", ["season"]]
+];
+var norm4 = (s) => s.trim().toLowerCase();
+var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function weightedItems(text) {
+  return text.split(",").map((w) => w.trim()).filter((w) => w.length > 0).map((item) => {
+    const m = item.match(/^(.*?)\s*\((\d+(?:\.\d+)?)\)$/);
+    return m ? [m[1].trim(), Number(m[2])] : [item, 1];
+  });
+}
+function fusesOf(e) {
+  return e.fuses;
+}
+function parseBiomePackContent(content, fallbackName = "Biome") {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  const frontmatter = fm ? fm[1] : "";
+  const field = (key2) => {
+    var _a2, _b;
+    return (_b = (_a2 = frontmatter.match(new RegExp(`^${key2}:\\s*(.*)$`, "m"))) == null ? void 0 : _a2[1].trim().replace(/^['"]|['"]$/g, "")) != null ? _b : "";
+  };
+  const body = fm ? content.slice(fm[0].length) : content;
+  const guideLines = [];
+  const sections = [];
+  let current = null;
+  let tableLines = [];
+  const flushTable = () => {
+    var _a2;
+    if (current && tableLines.length > 0) {
+      const rows = parseWordList(tableLines.join("\n")).unsectioned;
+      current.entries = [
+        ...(_a2 = current.entries) != null ? _a2 : [],
+        ...rows.map((r) => ({
+          modern: r.modern,
+          ...r.traditional ? { traditional: r.traditional } : {},
+          plural: r.plural,
+          forms: r.combiningForms,
+          fuses: r.fuses
+        }))
+      ];
+      current.words.push(...rows.map((r) => [r.modern, 1]));
+    }
+    tableLines = [];
+  };
+  for (const raw of body.split(/\r?\n/)) {
+    const line = raw.trim();
+    const heading = line.match(/^##\s+(.+?)\s*#*$/);
+    if (heading) {
+      flushTable();
+      current = { heading: heading[1], words: [], packs: [] };
+      sections.push(current);
+      continue;
+    }
+    if (!current) {
+      if (!/^#\s/.test(line)) guideLines.push(raw);
+      continue;
+    }
+    if (line.startsWith("|")) {
+      tableLines.push(line);
+      continue;
+    }
+    flushTable();
+    const bullet = line.match(/^[-*+]\s+(.+)$/);
+    if (bullet) current.words.push(...weightedItems(bullet[1]));
+    const pack = line.match(/^\/\/\s*(.+)$/);
+    if (pack) {
+      const parsed = parseWordList(`// ${pack[1]}`).unsectionedPacks[0];
+      if (parsed) current.packs.push(parsed);
+    }
+  }
+  flushTable();
+  const universal = field("universal-words");
+  return {
+    packName: field("packName") || fallbackName,
+    basedOn: field("based-on") || "temperate",
+    ...field("phrase") ? { phrase: field("phrase") } : {},
+    universalWords: universal !== "false",
+    setting: field("setting"),
+    guide: guideLines.join("\n").trim(),
+    sections
+  };
+}
+var groupIds = new Map([
+  ...PLACE_SHAPE_DATA.groups.flatMap((g) => [[norm4(g.id), g.id], [norm4(g.label), g.id]]),
+  ...COLONIAL_DATA.groups.flatMap((g) => [[norm4(g.id), g.id], ...g.label ? [[norm4(g.label), g.id]] : []])
+]);
+function terrainHeading(heading) {
+  const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
+  return m ? { terrain: m[1].trim(), part: m[2].toLowerCase() } : null;
+}
+function terrainId(token2, custom) {
+  var _a2;
+  const t = norm4(token2);
+  const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm4(x.id) === t || norm4(x.label) === t));
+  if (builtIn) return builtIn.id;
+  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab(token2))) == null ? void 0 : _a2.id;
+}
+var key = (words) => words.map(([w, n]) => `${norm4(w)}|${n}`).sort().join("\n");
+var entryKey = (entries) => entries.map((e) => `${norm4(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
+function fusesKey(f) {
+  return f === "no" || f === "number-spaced" || f === "mile" ? "no" : f === "traditional-only" ? "traditional-only" : "yes";
+}
+var recordKey = (r) => Object.entries(r).map(([k, v]) => `${k}|${v}`).sort().join("\n");
+function applyBiomePack(base, pack, path) {
+  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
+  const problems = [];
+  const b = {
+    ...base,
+    land: { ...base.land },
+    water: { ...base.water },
+    short: { land: { ...base.short.land }, water: { ...base.short.water } },
+    shapeMultipliers: { groups: { ...base.shapeMultipliers.groups }, generics: { ...base.shapeMultipliers.generics } },
+    ...base.entries ? { entries: { ...base.entries } } : {},
+    ...base.customTerrains ? { customTerrains: [...base.customTerrains] } : {}
+  };
+  if (path) {
+    b.id = `pack:${path}`;
+    b.custom = { path, base: (_b = (_a2 = base.custom) == null ? void 0 : _a2.path) != null ? _b : base.id };
+    b.label = pack.packName;
+    b.phrase = (_c = pack.phrase) != null ? _c : /^the\b/i.test(pack.packName) ? pack.packName : `the ${pack.packName.toLowerCase()}`;
+    b.guide = pack.guide || `Based on ${base.label}.`;
+  } else {
+    if (pack.phrase) b.phrase = pack.phrase;
+    if (pack.guide) b.guide = pack.guide;
+  }
+  if (!pack.universalWords) b.universalWords = false;
+  const packLines = { ...(_d = base.packLines) != null ? _d : {} };
+  const weightsSection = pack.sections.find((s) => ["terrain weights", "terrains"].includes(norm4(s.heading)));
+  if (weightsSection) {
+    const weights = {};
+    const custom = [];
+    for (const [name, w] of weightsSection.words) {
+      const id = terrainId(name, []);
+      if (id) weights[id] = w;
+      else {
+        const cid = kebab(name);
+        custom.push({ id: cid, label: name, phrase: `the ${name.toLowerCase()}`, shapeMultipliers: { groups: {}, generics: {} } });
+        weights[cid] = w;
+      }
+    }
+    if (recordKey(weights) !== recordKey(Object.fromEntries(Object.entries(base.terrainWeights).filter(([, w]) => w > 0)))) {
+      b.terrainWeights = Object.fromEntries(TERRAIN_CHOICES.filter((t) => t.id !== "any").map((t) => {
+        var _a3;
+        return [t.id, (_a3 = weights[t.id]) != null ? _a3 : 0];
+      }));
+      for (const t of custom) b.terrainWeights[t.id] = weights[t.id];
+      if (custom.length > 0) b.customTerrains = custom;
+      else delete b.customTerrains;
+    }
+  }
+  const customTerrains = (_e = b.customTerrains) != null ? _e : [];
+  for (const section of pack.sections) {
+    const h = norm4(section.heading);
+    if (section === weightsSection) continue;
+    const list = LIST_SECTIONS.find(([, heading, aliases]) => norm4(heading) === h || aliases.includes(h));
+    if (list) {
+      const [id] = list;
+      if (section.packs.length > 0) packLines[id] = section.packs;
+      const baseEntries = (_f = base.entries) == null ? void 0 : _f[id];
+      if (section.entries) {
+        if (!baseEntries || entryKey(section.entries) !== entryKey(baseEntries)) {
+          b.entries = { ...(_g = b.entries) != null ? _g : {}, [id]: section.entries };
+          b[id] = section.entries.map((e) => [e.modern, 1]);
+        }
+      } else if (key(section.words) !== key(base[id])) {
+        b[id] = section.words;
+        if ((_h = b.entries) == null ? void 0 : _h[id]) {
+          const { [id]: _dropped, ...rest } = b.entries;
+          b.entries = rest;
+        }
+      }
+      continue;
+    }
+    if (h === "shape groups" || h === "shape generics") {
+      const record = Object.fromEntries(section.words.map(([w, n]) => {
+        var _a3;
+        return [h === "shape groups" ? (_a3 = groupIds.get(norm4(w))) != null ? _a3 : w : w, n];
+      }));
+      const target = h === "shape groups" ? "groups" : "generics";
+      if (recordKey(record) !== recordKey(base.shapeMultipliers[target])) b.shapeMultipliers[target] = record;
+      continue;
+    }
+    const th = terrainHeading(section.heading);
+    if (!th) {
+      problems.push(`Unknown heading \u201C${section.heading}\u201D.`);
+      continue;
+    }
+    const tid = terrainId(th.terrain, customTerrains);
+    if (!tid) {
+      problems.push(`\u201C${th.terrain}\u201D has words but no weight in Terrain weights.`);
+      continue;
+    }
+    if (th.part === "land" || th.part === "water") {
+      const side = b[th.part];
+      const own = ((_i = base[th.part][tid]) != null ? _i : []).map(([w, n]) => [w, n]);
+      if (key(section.words) !== key(own)) side[tid] = section.words;
+    } else if (th.part === "short land" || th.part === "short water") {
+      const kind = th.part === "short land" ? "land" : "water";
+      if (base.terrainTags && section.entries) {
+        const listKey = kind === "land" ? "shortLand" : "shortWater";
+        const baseTagged = ((_k = (_j = base.entries) == null ? void 0 : _j[listKey]) != null ? _k : []).filter((e) => {
+          var _a3;
+          return (_a3 = base.terrainTags[e.modern]) == null ? void 0 : _a3.includes(tid);
+        });
+        if (entryKey(section.entries) !== entryKey(baseTagged)) {
+          b.terrainTags = { ...b.terrainTags };
+          const entries = [...(_m = (_l = b.entries) == null ? void 0 : _l[listKey]) != null ? _m : []];
+          for (const e of section.entries) {
+            if (!entries.some((x) => norm4(x.modern) === norm4(e.modern))) entries.push(e);
+            b.terrainTags[e.modern] = [.../* @__PURE__ */ new Set([...(_n = b.terrainTags[e.modern]) != null ? _n : [], tid])];
+          }
+          for (const e of baseTagged) {
+            if (!section.entries.some((x) => norm4(x.modern) === norm4(e.modern))) {
+              b.terrainTags[e.modern] = ((_o = b.terrainTags[e.modern]) != null ? _o : []).filter((t) => t !== tid);
+            }
+          }
+          b.entries = { ...(_p = b.entries) != null ? _p : {}, [listKey]: entries };
+        }
+      } else if (key(section.words) !== key((_q = base.short[kind][tid]) != null ? _q : [])) {
+        b.short[kind][tid] = section.words;
+      }
+    } else {
+      const custom = customTerrains.find((t) => t.id === tid);
+      if (!custom) continue;
+      const record = Object.fromEntries(section.words.map(([w, n]) => {
+        var _a3;
+        return [th.part === "shape groups" ? (_a3 = groupIds.get(norm4(w))) != null ? _a3 : w : w, n];
+      }));
+      custom.shapeMultipliers = { ...custom.shapeMultipliers, [th.part === "shape groups" ? "groups" : "generics"]: record };
+    }
+  }
+  if (Object.keys(packLines).length > 0) b.packLines = packLines;
+  for (const [, heading] of LIST_SECTIONS) {
+    const s = pack.sections.find((x) => norm4(x.heading) === norm4(heading));
+    if (s && s.words.length === 0 && s.packs.length === 0) problems.push(`\u201C${heading}\u201D is empty.`);
+  }
+  for (const t of Object.keys(b.terrainWeights).filter((t2) => b.terrainWeights[t2] > 0)) {
+    const has = ((_s = (_r = b.land[t]) == null ? void 0 : _r.length) != null ? _s : 0) + ((_u = (_t = b.water[t]) == null ? void 0 : _t.length) != null ? _u : 0) + ((_w = (_v = b.short.land[t]) == null ? void 0 : _v.length) != null ? _w : 0) + ((_y = (_x = b.short.water[t]) == null ? void 0 : _x.length) != null ? _y : 0);
+    if (has === 0 && customTerrains.some((c) => c.id === t)) problems.push(`\u201C${customTerrains.find((c) => c.id === t).label}\u201D has a weight but no words.`);
+  }
+  return { biome: b, problems };
+}
+var fmt = (n) => String(Number(n.toFixed(6)));
+function lines(words, alwaysWeights = false) {
+  const items = words.map(([w, n]) => alwaysWeights || n !== 1 ? `${w} (${fmt(n)})` : w);
+  const out = [];
+  for (let i = 0; i < items.length; i += 8) out.push(`- ${items.slice(i, i + 8).join(", ")}`);
+  return out.join("\n");
+}
+var terrainName = (id, custom) => {
+  var _a2, _b, _c, _d;
+  return (_d = (_c = (_a2 = TERRAIN_CHOICES.find((t) => t.id === id)) == null ? void 0 : _a2.label) != null ? _c : (_b = custom.find((t) => t.id === id)) == null ? void 0 : _b.label) != null ? _d : id;
+};
+function biomeSections(b) {
+  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j;
+  const custom = (_a2 = b.customTerrains) != null ? _a2 : [];
+  const out = [];
+  const terrains = [...TERRAIN_CHOICES.filter((t) => t.id !== "any").map((t) => t.id), ...custom.map((t) => t.id)];
+  out.push({
+    heading: "Terrain weights",
+    body: lines(terrains.filter((t) => {
+      var _a3;
+      return ((_a3 = b.terrainWeights[t]) != null ? _a3 : 0) > 0;
+    }).map((t) => [terrainName(t, custom), b.terrainWeights[t]]), true)
+  });
+  for (const t of terrains) {
+    if (((_b = b.terrainWeights[t]) != null ? _b : 0) <= 0) continue;
+    const name = terrainName(t, custom);
+    if ((_c = b.land[t]) == null ? void 0 : _c.length) out.push({ heading: `${name}: land`, body: lines(b.land[t]) });
+    if ((_d = b.water[t]) == null ? void 0 : _d.length) out.push({ heading: `${name}: water`, body: lines(b.water[t]) });
+    for (const kind of ["land", "water"]) {
+      if (b.terrainTags) {
+        const entries = ((_f = (_e = b.entries) == null ? void 0 : _e[kind === "land" ? "shortLand" : "shortWater"]) != null ? _f : []).filter((e) => {
+          var _a3;
+          return (_a3 = b.terrainTags[e.modern]) == null ? void 0 : _a3.includes(t);
+        });
+        if (entries.length) out.push({ heading: `${name}: short ${kind}`, body: wordTable(entries) });
+      } else if ((_g = b.short[kind][t]) == null ? void 0 : _g.length) out.push({ heading: `${name}: short ${kind}`, body: lines(b.short[kind][t]) });
+    }
+    const c = custom.find((x) => x.id === t);
+    if (c && Object.keys(c.shapeMultipliers.groups).length) out.push({ heading: `${name}: shape groups`, body: lines(Object.entries(c.shapeMultipliers.groups), true) });
+    if (c && Object.keys(c.shapeMultipliers.generics).length) out.push({ heading: `${name}: shape generics`, body: lines(Object.entries(c.shapeMultipliers.generics), true) });
+  }
+  for (const [id, heading] of LIST_SECTIONS) {
+    const entries = (_h = b.entries) == null ? void 0 : _h[id];
+    const packLines = ((_j = (_i = b.packLines) == null ? void 0 : _i[id]) != null ? _j : []).map((p) => `// ${p.pack}${p.weight !== 1 ? ` (${fmt(p.weight)})` : ""}`).join("\n");
+    const body = entries ? wordTable(entries) : lines(b[id], id === "lifeways");
+    out.push({ heading, body: [body, packLines].filter(Boolean).join("\n") });
+  }
+  out.push({ heading: "Shape groups", body: lines(Object.entries(b.shapeMultipliers.groups), true) });
+  out.push({ heading: "Shape generics", body: lines(Object.entries(b.shapeMultipliers.generics), true) });
+  return out;
+}
+function biomeToText(b, basedOn = b.custom ? `[[${b.custom.base}]]` : b.id) {
+  const front = ["---", "type: biome", `packName: ${b.label}`, "setting: ", `based-on: "${basedOn}"`, `phrase: ${b.phrase}`];
+  if (b.universalWords === false) front.push("universal-words: false");
+  front.push("---");
+  const sections = biomeSections(b).map((s) => `## ${s.heading}
+
+${s.body}`);
+  return `${front.join("\n")}
+
+${b.guide}
+
+${sections.join("\n\n")}
+`;
+}
+function diffAgainstBase(content, base) {
+  var _a2, _b, _c;
+  const pack = parseBiomePackContent(content);
+  const baseText = new Map(parseBiomePackContent(biomeToText(base)).sections.map((s) => [norm4(s.heading), s]));
+  const fm = (_b = (_a2 = content.match(/^---\s*\n[\s\S]*?\n---\s*/)) == null ? void 0 : _a2[0]) != null ? _b : "";
+  const kept = [];
+  const bodyLines = content.slice(fm.length).split(/\r?\n/);
+  const written = /* @__PURE__ */ new Map();
+  let current = null;
+  let buffer = [];
+  const flush = () => {
+    if (current) written.set(current, buffer.join("\n").trim());
+    buffer = [];
+  };
+  for (const line of bodyLines) {
+    const h = line.trim().match(/^##\s+(.+?)\s*#*$/);
+    if (h) {
+      flush();
+      current = h[1];
+      continue;
+    }
+    if (current) buffer.push(line);
+  }
+  flush();
+  for (const s of pack.sections) {
+    const b = baseText.get(norm4(s.heading));
+    const same5 = b && (s.entries && b.entries ? entryKey(s.entries) === entryKey(b.entries) : key(s.words) === key(b.words)) && s.packs.length === b.packs.length;
+    if (!same5) kept.push(`## ${s.heading}
+
+${(_c = written.get(s.heading)) != null ? _c : ""}`.trim());
+  }
+  const guide = pack.guide ? `${pack.guide}
+
+` : "";
+  return { text: `${fm.trim()}
+
+${guide}${kept.join("\n\n")}
+`, own: kept.length };
+}
+function resolveBiomePacks(files) {
+  const parsed = new Map(files.map((f) => [f.path, parseBiomePackContent(f.content, f.path.replace(/^.*\//, "").replace(/\.md$/, ""))]));
+  const byName = new Map([...parsed].map(([path, p]) => [norm4(p.packName), path]));
+  const done = /* @__PURE__ */ new Map();
+  const problems = [];
+  const temperate = BIOMES.find((b) => b.id === "temperate");
+  const resolve = (path, seen) => {
+    var _a2, _b;
+    const cached = done.get(path);
+    if (cached) return cached;
+    const pack = parsed.get(path);
+    const link = (_a2 = pack.basedOn.match(/^\[\[([^\]|]+)/)) == null ? void 0 : _a2[1];
+    let base;
+    if (link) {
+      const basePath = (_b = byName.get(norm4(link))) != null ? _b : [...parsed.keys()].find((p) => p.replace(/\.md$/, "").endsWith(link));
+      if (basePath && !seen.includes(basePath) && seen.length < 5) base = resolve(basePath, [...seen, path]);
+    } else {
+      base = pack.basedOn === "britain" ? BRITAIN : findBiome(pack.basedOn);
+    }
+    if (!base) {
+      problems.push(`Biome pack \u201C${pack.packName}\u201D can't find its base \u201C${link != null ? link : pack.basedOn}\u201D; using temperate woodland.`);
+      base = temperate;
+    }
+    const { biome, problems: own } = applyBiomePack(base, pack, path);
+    problems.push(...own.map((p) => `${pack.packName}: ${p}`));
+    done.set(path, biome);
+    return biome;
+  };
+  const biomes = [...parsed.keys()].map((p) => resolve(p, []));
+  return { biomes: biomes.sort((a, b) => a.label.localeCompare(b.label)), problems };
+}
+function isBiomePackContent(content) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  return !!fm && /^type:\s*["']?biome["']?\s*$/m.test(fm[1]);
 }
 
 // src/recipeHost.ts
@@ -37619,9 +54620,28 @@ var OLD_HISTORY_PREFIXES = {
   explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
   empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"]
 };
+var GROUP_NAME_SECTIONS = [
+  "mysticOrders",
+  "martialOrders",
+  "underworldGroups",
+  "tradeGuilds",
+  "adventureCompanies",
+  "powerFactions",
+  "supernaturalCourts"
+];
+var SECTION_ORDER = [
+  "markov",
+  "placeShapes",
+  "explorationPlaceShapes",
+  "empireExpansionPlaceShapes",
+  "tribalNames",
+  ...GROUP_NAME_SECTIONS,
+  "nameAgeing",
+  "nameTakeover"
+];
 var SECTION_GROUPS = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
-  groupNames: ["tribalNames"],
+  groupNames: ["tribalNames", ...GROUP_NAME_SECTIONS],
   advanced: ["nameAgeing", "nameTakeover"]
 };
 var GROUP_LABELS = {
@@ -37641,7 +54661,14 @@ var SECTION_LABELS = {
   empireExpansionPlaceShapes: "expansion into settled lands",
   nameAgeing: "name ageing",
   nameTakeover: "name takeover",
-  tribalNames: "tribes and kin groups"
+  tribalNames: "tribes and kin groups",
+  mysticOrders: "faiths and mystic orders",
+  martialOrders: "armies and martial orders",
+  underworldGroups: "thieves and the underworld",
+  tradeGuilds: "guilds and trading houses",
+  adventureCompanies: "adventurers and explorers",
+  powerFactions: "powers and factions",
+  supernaturalCourts: "supernatural courts and hosts"
 };
 var BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
 var RIVER_NAMES_HISTORY_NAME = "river names";
@@ -37653,6 +54680,7 @@ function historySection(packName) {
   if (starts(RIVER_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
+  for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }
@@ -37682,7 +54710,15 @@ var SECTION_ICONS = {
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
   nameAgeing: ICON_NAME_AGEING,
   nameTakeover: ICON_NAME_TAKEOVER,
-  tribalNames: ICON_TRIBAL_NAMES
+  tribalNames: ICON_TRIBAL_NAMES,
+  // Group brief §1.1: Lucide icons.
+  mysticOrders: "sparkles",
+  martialOrders: "swords",
+  underworldGroups: "venetian-mask",
+  tradeGuilds: "scale",
+  adventureCompanies: "compass",
+  powerFactions: "landmark",
+  supernaturalCourts: "ghost"
 };
 var GROUP_ICONS = {
   placeNames: ICON_PLACE_SHAPES,
@@ -37799,6 +54835,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     /** Problems found resolving the biome packs, for the editor's status line. */
     this.biomeProblems = [];
     /** Tribal names' choices (Tribal brief §18.2), kept for the session like the colonial modules'. */
+    /** Group brief §2.5: each group-name module's sentence choices (session only). */
+    this.groupStates = {};
     /** Each switcher group's last-used module (session only). */
     this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
@@ -38178,7 +55216,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     (_g = this.openPresetButton) == null ? void 0 : _g.toggle(section === "markov" && this.currentPackType === "tribalPreset");
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_h = this.createPacksButton) == null ? void 0 : _h.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames";
+    const tribal = section === "tribalNames" || !!familyForSection(section);
     (_i = this.createPacksButton) == null ? void 0 : _i.toggle(!colonialPart && !tribal);
     (_j = this.landButton) == null ? void 0 : _j.refresh();
     (_k = this.guideButton) == null ? void 0 : _k.toggle(!!colonialPart);
@@ -38471,10 +55509,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     row.empty();
     const section = this.activeSection;
     const sentenced = section === "tribalNames" || !!sectionGroup(section);
+    const groupFamily = familyForSection(section);
     row.toggleClass("is-sentence", sentenced);
     row.toggle(sentenced);
     this.refreshSavePreset();
     if (section === "tribalNames") this.renderTribalSentence(row);
+    else if (groupFamily) this.renderGroupSentence(row, groupFamily);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -38859,6 +55899,72 @@ ${text}
     new import_obsidian13.Notice(`nameForge: preset \u201C${name}\u201D saved.`);
     await this.refreshPackDropdown({ preserveSelection: true });
     return true;
+  }
+  /** Group brief §2: a group-name module's choices (session only), per family. */
+  groupState(family) {
+    var _a2, _b, _c;
+    return (_c = (_a2 = this.groupStates)[_b = family.key]) != null ? _c : _a2[_b] = { ...DEFAULT_GROUP_STATE };
+  }
+  /** Group brief §2: the module's sentence, rendered as tribes and kin groups' is. */
+  renderGroupSentence(row, family) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    const state = this.groupState(family);
+    for (const segment2 of groupSentence(state, family)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(sentence2, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {
+        this.groupStates[family.key] = chooseGroup(this.groupState(family), segment2.field, id, family);
+      });
+    }
+  }
+  /** Group brief §14: names only, no details; history "{module} · {setting} · {tradition}". */
+  async runGroupNames(family, state = this.groupState(family), label, problems = []) {
+    var _a2;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
+    const guards = await this.loadGroupSafeguards();
+    let result;
+    try {
+      result = generateGroupNames({
+        family: family.key,
+        tradition: state.tradition,
+        type: state.type,
+        genre: state.genre,
+        fantastic: state.fantastic,
+        form: state.form,
+        front: effectiveFront(state, family),
+        people: state.people,
+        count: this.generationCount,
+        seed: seedOverride,
+        safeguards: guards.safeguards
+      });
+    } catch (error) {
+      this.setStatus(error instanceof Error ? error.message : "Couldn't generate names.");
+      return;
+    }
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
+      "none"
+    );
+    await this.recordGenerationHistory(result.names.length, label != null ? label : groupHistoryLabel(family, state.genre, state.fantastic, state.tradition));
+    this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
+  }
+  /** Group brief §12.6: every group safeguard pack in the names folder, merged with the built-in lists. */
+  async loadGroupSafeguards() {
+    var _a2;
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian13.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const packs = [];
+    for (const child of (_a2 = folder == null ? void 0 : folder.children) != null ? _a2 : []) {
+      if (!(child instanceof import_obsidian13.TFile) || child.extension !== "md") continue;
+      const content = await this.app.vault.cachedRead(child);
+      if (isGroupSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
+    }
+    if (packs.length === 0) return { notices: [] };
+    const g = GROUP_DATA.safeguards;
+    const { notices, block, flag, flagBlocks } = mergeSafeguards({ blockList: g.block, flagList: g.flag, flagListBlocks: g.flagListBlocks }, packs);
+    return { safeguards: { block, flag, flagListBlocks: flagBlocks }, notices };
   }
   /** Land brief §10: every tribal safeguard pack in the names folder, merged with the built-in lists. */
   async loadSafeguards() {
@@ -40003,6 +57109,11 @@ ${text}
     }
     if (this.activeSection === "tribalNames") {
       await this.runTribalNames();
+      return;
+    }
+    const groupFamily = familyForSection(this.activeSection);
+    if (groupFamily) {
+      await this.runGroupNames(groupFamily);
       return;
     }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
@@ -41463,6 +58574,21 @@ var NameForgePlugin = class extends import_obsidian15.Plugin {
         }
         await this.app.vault.create(path, SAFEGUARD_TEMPLATE);
         new import_obsidian15.Notice("nameForge: \u201CTribal safeguards\u201D created.");
+      }
+    });
+    this.addCommand({
+      id: "create-group-safeguard-list",
+      name: "Create group safeguard list",
+      callback: async () => {
+        const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
+        await ensureVaultFolder(this.app, folder);
+        const path = (0, import_obsidian15.normalizePath)(`${folder}/Group safeguards.md`);
+        if (this.app.vault.getFileByPath(path)) {
+          new import_obsidian15.Notice("nameForge: \u201CGroup safeguards\u201D already exists.");
+          return;
+        }
+        await this.app.vault.create(path, GROUP_SAFEGUARD_TEMPLATE);
+        new import_obsidian15.Notice("nameForge: \u201CGroup safeguards\u201D created.");
       }
     });
     this.addCommand({

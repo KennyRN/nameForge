@@ -8,6 +8,7 @@ import { softConnectWithRetry } from "./hostConnectRetry";
 import { getStoryForgeHostApi } from "./storyforgeBridge";
 import { promptInstallStarterTemplates } from "./starterInstall";
 import { SAFEGUARD_TEMPLATE } from "./tribes/safeguardPacks";
+import { GROUP_SAFEGUARD_TEMPLATE } from "./groups/safeguardPacks";
 
 const DEFAULT_SETTINGS: NameForgeSettings = {
   namesFilePath: "",
@@ -210,6 +211,23 @@ export default class NameForgePlugin extends Plugin {
         }
         await this.app.vault.create(path, SAFEGUARD_TEMPLATE);
         new Notice("nameForge: “Tribal safeguards” created.");
+      },
+    });
+
+    // Group brief §12.6: a group safeguard list to edit, never written over an existing one.
+    this.addCommand({
+      id: "create-group-safeguard-list",
+      name: "Create group safeguard list",
+      callback: async () => {
+        const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
+        await ensureVaultFolder(this.app, folder);
+        const path = normalizePath(`${folder}/Group safeguards.md`);
+        if (this.app.vault.getFileByPath(path)) {
+          new Notice("nameForge: “Group safeguards” already exists.");
+          return;
+        }
+        await this.app.vault.create(path, GROUP_SAFEGUARD_TEMPLATE);
+        new Notice("nameForge: “Group safeguards” created.");
       },
     });
 

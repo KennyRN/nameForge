@@ -26,7 +26,26 @@ export type NameForgeSection =
   | "empireExpansionPlaceShapes"
   | "nameAgeing"
   | "nameTakeover"
-  | "tribalNames";
+  | "tribalNames"
+  // Group brief §1.1: orders, companies and factions.
+  | "mysticOrders"
+  | "martialOrders"
+  | "underworldGroups"
+  | "tradeGuilds"
+  | "adventureCompanies"
+  | "powerFactions"
+  | "supernaturalCourts";
+
+/** Group brief §1.1: the seven group-name modules, in order. */
+export const GROUP_NAME_SECTIONS: NameForgeSection[] = [
+  "mysticOrders",
+  "martialOrders",
+  "underworldGroups",
+  "tradeGuilds",
+  "adventureCompanies",
+  "powerFactions",
+  "supernaturalCourts",
+];
 
 export const SECTION_ORDER: NameForgeSection[] = [
   "markov",
@@ -34,6 +53,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "tribalNames",
+  ...GROUP_NAME_SECTIONS,
   "nameAgeing",
   "nameTakeover",
 ];
@@ -44,7 +64,7 @@ export type SectionGroup = "placeNames" | "groupNames" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
-  groupNames: ["tribalNames"],
+  groupNames: ["tribalNames", ...GROUP_NAME_SECTIONS],
   advanced: ["nameAgeing", "nameTakeover"],
 };
 
@@ -72,6 +92,13 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   nameAgeing: "name ageing",
   nameTakeover: "name takeover",
   tribalNames: "tribes and kin groups",
+  mysticOrders: "faiths and mystic orders",
+  martialOrders: "armies and martial orders",
+  underworldGroups: "thieves and the underworld",
+  tradeGuilds: "guilds and trading houses",
+  adventureCompanies: "adventurers and explorers",
+  powerFactions: "powers and factions",
+  supernaturalCourts: "supernatural courts and hosts",
 };
 
 /** History labels for new runs of the place-name and river modules. */
@@ -95,6 +122,8 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
   // Tribal brief §18.1.
   if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
+  // Group brief §1.2: each group-name module's label starts its history rows.
+  for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }

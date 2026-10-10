@@ -219,7 +219,7 @@ test("lists: §5 entries exist with the §5.1 fields", () => {
 // ── Module line-up (§1) ─────────────────────────────────────────────────────
 
 
-test("line-up: seven modules in order, with their labels; river names live in place names", () => {
+test("line-up: the modules in order, with their labels; river names live in place names", () => {
   assert.deepEqual(
     SECTION_ORDER.map((s) => SECTION_LABELS[s]),
     [
@@ -228,6 +228,13 @@ test("line-up: seven modules in order, with their labels; river names live in pl
       "exploration into new lands",
       "expansion into settled lands",
       "tribes and kin groups",
+      "faiths and mystic orders",
+      "armies and martial orders",
+      "thieves and the underworld",
+      "guilds and trading houses",
+      "adventurers and explorers",
+      "powers and factions",
+      "supernatural courts and hosts",
       "name ageing",
       "name takeover",
     ],
@@ -391,6 +398,8 @@ test("history: each entry belongs to one module, old labels included", () => {
     ["empire expansion place name shapes · Dutch", "empireExpansionPlaceShapes"],
     ["tribes and kin groups · Celtic Britain & Gaul · homeland · plain", "tribalNames"],
     ["tribal names · Polynesian · temperate · plain", "tribalNames"],
+    ["armies and martial orders · high or epic fantasy · Germanic & Norse", "martialOrders"],
+    ["supernatural courts and hosts · contemporary fantasy · General", "supernaturalCourts"],
     ["Saxon names", "markov"],
     ["nameForge", "markov"],
   ];

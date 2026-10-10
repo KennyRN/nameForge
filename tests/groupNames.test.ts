@@ -9,6 +9,7 @@ import {
   GROUP_FAMILIES,
   GROUP_SETTINGS,
   GROUP_TAGS,
+  groupHistoryLabel,
   groupPlural,
   groupPossessive,
   groupSetting,
@@ -20,6 +21,7 @@ import {
   type GroupOptions,
   type GroupSetting,
 } from "../src/groups/engine";
+import { chooseGroup, DEFAULT_GROUP_STATE, groupSentence, groupSentenceText } from "../src/groups/sentence";
 import { TRIBAL_DATA, TRIBAL_TRADITIONS } from "../src/tribes/engine";
 
 const SETTING_OPTIONS: Record<GroupSetting, { genre: GroupGenre; fantastic: boolean }> = {
@@ -236,4 +238,32 @@ test("group names: possessives, plurals, initials and en dashes", () => {
   assert.ok(partners.length > 0);
   for (const n of partners) assert.ok(n.text.includes("–") && !n.text.includes("-"), n.text);
   assert.equal(groupSetting("scifi", true), "SF");
+});
+
+// ── §16.7 Sentence ──────────────────────────────────────────────────────────
+
+const family = (key: string) => GROUP_FAMILIES.find((f) => f.key === key)!;
+const fields = (key: string, state = DEFAULT_GROUP_STATE) => groupSentence(state, family(key)).flatMap((s) => (typeof s === "string" ? [] : [s.field]));
+
+test("group sentence: the default mystic sentence, and which links show", () => {
+  assert.equal(
+    groupSentenceText(groupSentence(DEFAULT_GROUP_STATE, family("mystic"))),
+    "General-themed orders and faiths of any kind for a fantasy world of historic or low fantasy, using formal or everyday names that say what they are, with placeholders for people and places.",
+  );
+  assert.ok(!fields("martial").includes("front"));
+  assert.ok(!fields("mystic", { ...DEFAULT_GROUP_STATE, genre: "scifi" }).includes("fantastic"));
+});
+
+test("group sentence: resets", () => {
+  // Thieves' guilds don't exist in the real modern world: the type resets to Any.
+  const thieves = chooseGroup(DEFAULT_GROUP_STATE, "type", "thieves", family("underworld"));
+  assert.equal(chooseGroup(thieves, "genre", "modern", family("underworld")).type, undefined);
+  // Supernatural: fantasy and modern only; modern sets the fantastic switch.
+  const genre = groupSentence(DEFAULT_GROUP_STATE, family("supernatural")).find((s) => typeof s !== "string" && s.field === "genre");
+  assert.deepEqual(typeof genre === "object" ? genre.choices.map((c) => c.id) : [], ["fantasy", "modern"]);
+  assert.equal(chooseGroup(DEFAULT_GROUP_STATE, "genre", "modern", family("supernatural")).fantastic, true);
+  // A type that can't take a front resets the front.
+  const hiding = { ...DEFAULT_GROUP_STATE, front: "hide" as const };
+  assert.equal(chooseGroup(hiding, "type", "holy", family("mystic")).front, "say");
+  assert.equal(groupHistoryLabel(family("martial"), "fantasy", true, "germanic"), "armies and martial orders · high or epic fantasy · Germanic & Norse");
 });
