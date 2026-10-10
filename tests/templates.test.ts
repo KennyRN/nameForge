@@ -28,3 +28,10 @@ test("templates: Victorian, England, Female is complete", () => {
   assert.equal(items[0], "Ada");
   assert.equal(items.at(-1), "Winifred");
 });
+
+test("templates: Anglo-Saxon, Male is unique and alphabetical", () => {
+  const items = builtinTemplates("people").find((t) => t.name === "Anglo-Saxon, Male")!.items!;
+  assert.equal(items.length, 77);
+  assert.equal(new Set(items).size, items.length);
+  assert.deepEqual(items, [...items].sort());
+});
