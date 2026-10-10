@@ -307,11 +307,22 @@ export interface GroupOptions {
   safeguards?: GroupSafeguards;
   /** Tone brief §4: weights names towards a mood; "any" (the default) changes nothing. */
   tone?: GroupToneChoice;
+  /** Tone brief §3, §4: one related set instead of separate names; needs a type. */
+  series?: boolean;
+}
+
+/** Tone brief §3.7: how a name sits in its series. */
+export interface GroupSeriesInfo {
+  anchor: string | null;
+  value: string | null;
+  counter: string | null;
 }
 
 export interface GroupName {
   /** Tone brief §3.7: the shape's effective tones plus the tones of every word drawn. */
   tones: GroupTone[];
+  /** Tone brief §3.7: set on every name of a series. */
+  series?: GroupSeriesInfo;
   text: string;
   family: string;
   type: string;
@@ -324,6 +335,8 @@ export interface GroupBatch {
   names: GroupName[];
   seed: number;
   notices: string[];
+  /** Tone brief §3.3: the tone a series was drawn under. */
+  seriesTone?: GroupToneChoice;
 }
 
 interface Ctx {
@@ -464,19 +477,48 @@ interface Piece {
   plural: boolean;
 }
 
+/** Tone brief §3: a shape's top-level tokens as drawn, and values held fixed in a series. */
+interface SeriesHooks {
+  /** Values by token position in the shape. */
+  byIndex?: Map<number, Drawn>;
+  /** A value for the first token of this name (the top-up anchor, §3.5). */
+  byName?: Drawn;
+  /** Filled with the tokens as drawn. */
+  record?: Drawn[];
+}
+
+interface Drawn {
+  name: string;
+  piece: Piece;
+}
+
 /** Renders a shape's tokens; undefined when a token has nothing to offer here (§3.3). */
-function renderPattern(ctx: Ctx, pattern: string, type: GroupType, shape?: GroupShape): string | undefined {
+function renderPattern(ctx: Ctx, pattern: string, type: GroupType, shape?: GroupShape, hooks?: SeriesHooks): string | undefined {
   let out = "";
   const re = /\{([^}]+)\}/g;
   let last = 0;
   let m: RegExpExecArray | null;
+  let index = -1;
+  let nameUsed = false;
   while ((m = re.exec(pattern))) {
+    index++;
     out += pattern.slice(last, m.index);
     last = re.lastIndex;
     const [rawName, mod] = m[1].split(":");
-    const name = rawName.includes("/") ? pickOne(rawName.split("/"), ctx.rng) : rawName;
-    const piece = token(ctx, name, type, shape);
+    const fixed = hooks?.byIndex?.get(index);
+    const alternatives = rawName.split("/");
+    let name: string;
+    let piece: Piece | undefined;
+    if (fixed) ({ name, piece } = fixed);
+    else if (hooks?.byName && !nameUsed && alternatives.includes(hooks.byName.name)) {
+      ({ name, piece } = hooks.byName);
+      nameUsed = true;
+    } else {
+      name = rawName.includes("/") ? pickOne(alternatives, ctx.rng) : rawName;
+      piece = token(ctx, name, type, shape);
+    }
     if (!piece) return undefined;
+    hooks?.record?.push({ name, piece });
     let text = piece.text;
     // §6.5: "{compound} Company" uses the compound's singular.
     if (name === "compound" && pattern.slice(last).startsWith(" Company")) text = text.replace(/s$/, "");
@@ -666,6 +708,17 @@ function companySource(ctx: Ctx, type: GroupType): { shapes: GroupShape[]; listT
 
 /** One name for a type, or undefined when this draw fails (§4). */
 function drawName(ctx: Ctx, type: GroupType, front: boolean): GroupName | undefined {
+  return drawDetailed(ctx, type, front)?.name;
+}
+
+interface Detailed {
+  name: GroupName;
+  shape: GroupShape;
+  listType: GroupType;
+  record: Drawn[];
+}
+
+function drawDetailed(ctx: Ctx, type: GroupType, front: boolean): Detailed | undefined {
   let shapes: GroupShape[];
   let listType = type;
   if (front) shapes = frontShapes(type);
@@ -674,16 +727,27 @@ function drawName(ctx: Ctx, type: GroupType, front: boolean): GroupName | undefi
   const choices = byForm(ctx, shapes);
   const shape = pickWeighted(choices, ctx.rng);
   if (!shape) return undefined;
+  return renderShape(ctx, type, listType, shape, front, {});
+}
+
+/** Renders one shape as a name, with series hooks (Tone brief §3). */
+function renderShape(ctx: Ctx, type: GroupType, listType: GroupType, shape: GroupShape, front: boolean, hooks: SeriesHooks): Detailed | undefined {
   ctx.drawn = new Set();
+  const record: Drawn[] = [];
   // Borrowed shapes keep their own lists; the person label stays the company's.
-  const raw = renderPattern(ctx, shape.p, { ...listType, person: type.person }, shape);
+  const raw = renderPattern(ctx, shape.p, { ...listType, person: type.person }, shape, { ...hooks, record });
   if (!raw) return undefined;
   if (shape.p === "{brandStart}{brandEnd}" && raw.length < 5) return undefined;
   const formal = shape.f === "F" || (shape.f === "B" && ctx.form !== "everyday");
   const text = capitalise(raw.replace(/\s+/g, " ").trim(), shape.f === "F");
   if (!acceptable(ctx, text, formal)) return undefined;
   const tones = new Set<GroupTone>([...shapeTones(shape), ...ctx.drawn]);
-  return { text, family: ctx.family.key, type: type.key, shape: shape.p, front, form: shape.f, tones: GROUP_TONES.filter((t) => tones.has(t)) };
+  return {
+    name: { text, family: ctx.family.key, type: type.key, shape: shape.p, front, form: shape.f, tones: GROUP_TONES.filter((t) => tones.has(t)) },
+    shape,
+    listType,
+    record,
+  };
 }
 
 /** §11.2, §11.5 and §12: length, repetition and safeguards. */
@@ -740,10 +804,139 @@ function oneName(ctx: Ctx, options: Required<Pick<GroupOptions, "front">>, chose
   return undefined;
 }
 
+// ── Series (Tone brief §3) ──────────────────────────────────────────────────
+
+const COUNTERS = new Set(["ordinal", "ordinalWord", "greek"]);
+const OWNERS = new Set(["town", "surname", "house", "brandRoot", "star"]);
+const NEVER_ANCHORS = new Set(["person", "holy", "initials"]);
+/** Owner tokens that render as placeholders in placeholder mode. */
+const PLACEHOLDER_TOKENS = new Set(["person", "holy", "town", "surname", "house"]);
+
+type TokenKind = "counter" | "owner" | "list" | "never";
+const kindOf = (name: string): TokenKind =>
+  COUNTERS.has(name) ? "counter" : OWNERS.has(name) ? "owner" : NEVER_ANCHORS.has(name) ? "never" : "list";
+
+/** §3.4: the gap to the next counter value: +1 (50%), +2 (25%), +3 to +6 (25%). */
+function counterGap(rng: () => number): number {
+  const r = rng();
+  if (r < 0.5) return 1;
+  if (r < 0.75) return 2;
+  return 3 + Math.floor(rng() * 4);
+}
+
+/** §3.4: the counter's values, from its first, as pieces. */
+function* counterValues(ctx: Ctx, name: string, first: Piece): Generator<{ piece: Piece; order: number }> {
+  if (name === "ordinal") {
+    let n = parseInt(first.text, 10);
+    while (n <= 99) {
+      yield { piece: { text: ordinalText(n), plural: false }, order: n };
+      n += counterGap(ctx.rng);
+    }
+    return;
+  }
+  const words = [...new Set(GROUP_DATA.lists[name].map((e) => e.w))];
+  let i = words.indexOf(first.text);
+  if (i < 0) return;
+  while (i < words.length) {
+    yield { piece: { text: words[i], plural: false }, order: i };
+    i += counterGap(ctx.rng);
+  }
+}
+
+/**
+ * §3: one related set. The first shape is drawn as usual; a counter counts upwards with every
+ * other token locked; otherwise the anchor is held while the rest vary, then other shapes with the
+ * anchor's token top the set up.
+ */
+function generateSeries(
+  ctx: Ctx,
+  type: GroupType,
+  frontChoice: GroupFront,
+  count: number,
+  toneChoice: GroupToneChoice,
+): { names: GroupName[]; seriesTone: GroupToneChoice } {
+  const placeholders = ctx.mode === "placeholders";
+  const varies = (d: Drawn) => !(placeholders && PLACEHOLDER_TOKENS.has(d.name));
+  const hideFirst = frontChoice === "hide" && canFront(type);
+  // §3.3 step 3: draw the first shape, redrawing one where nothing could vary.
+  let first: Detailed | undefined;
+  for (let i = 0; i < 40 && !first; i++) {
+    const d = drawDetailed(ctx, type, hideFirst);
+    if (!d) continue;
+    if (!d.record.some((r) => kindOf(r.name) === "counter") && !d.record.some(varies)) continue;
+    first = d;
+  }
+  if (!first) return { names: [], seriesTone: toneChoice };
+  // §3.3 step 2: with tone Any, the first shape's first tone (in tone order) holds for the series.
+  const seriesTone: GroupToneChoice = toneChoice !== "any" ? toneChoice : shapeTones(first.shape)[0] ?? "any";
+  ctx.tone = seriesTone;
+
+  const names: GroupName[] = [];
+  const seen = new Set<string>();
+  const add = (d: Detailed | undefined, info: GroupSeriesInfo): boolean => {
+    if (!d) return false;
+    const key = d.name.text.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    names.push({ ...d.name, series: info });
+    return true;
+  };
+  const rec = first.record;
+  const counterAt = rec.findIndex((r) => kindOf(r.name) === "counter");
+
+  // §3.4: a counter counts upwards; every other token keeps its first value.
+  if (counterAt >= 0) {
+    const info: GroupSeriesInfo = { anchor: null, value: null, counter: rec[counterAt].name };
+    const locked = new Map(rec.map((r, i) => [i, r] as const));
+    for (const { piece } of counterValues(ctx, rec[counterAt].name, rec[counterAt].piece)) {
+      if (names.length >= count) break;
+      locked.set(counterAt, { name: rec[counterAt].name, piece });
+      add(renderShape(ctx, type, first.listType, first.shape, first.name.front, { byIndex: new Map(locked) }), info);
+    }
+    return { names, seriesTone };
+  }
+
+  // §3.3 step 4: the anchor.
+  const isPlaceholder = (d: Drawn) => placeholders && PLACEHOLDER_TOKENS.has(d.name);
+  let anchorAt = -1;
+  const sa = first.shape.sa;
+  if (sa) anchorAt = rec.findIndex((r) => r.name === sa && !isPlaceholder(r));
+  if (anchorAt < 0) anchorAt = rec.findIndex((r) => kindOf(r.name) === "owner" && !isPlaceholder(r));
+  const listAt = rec.map((r, i) => (kindOf(r.name) === "list" ? i : -1)).filter((i) => i >= 0);
+  if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
+  const anchor = anchorAt >= 0 ? rec[anchorAt] : undefined;
+  const info: GroupSeriesInfo = { anchor: anchor?.name ?? null, value: anchor?.piece.text ?? null, counter: null };
+
+  // §3.5 step 1: the locked shape, the anchor held (or, with no anchor, everything but its one list token).
+  const hold = new Map<number, Drawn>();
+  if (anchor) hold.set(anchorAt, anchor);
+  else if (listAt.length === 1) rec.forEach((r, i) => i !== listAt[0] && hold.set(i, r));
+  add(first, info);
+  const fill = (draw: () => Detailed | undefined) => {
+    for (let idle = 0; idle < 20 && names.length < count; ) idle = add(draw(), info) ? 0 : idle + 1;
+  };
+  fill(() => renderShape(ctx, type, first!.listType, first!.shape, first!.name.front, { byIndex: hold }));
+  if (!anchor || names.length >= count) return { names, seriesTone };
+
+  // §3.5 step 2: top up from the type's other shapes (and front shapes when fronts may show) with the anchor's token.
+  const hasToken = (sh: GroupShape) => [...sh.p.matchAll(/\{([^}]+)\}/g)].some((m) => m[1].split(":")[0].split("/").includes(anchor.name));
+  const plain = plainShapes(ctx, type).filter((sh) => sh.p !== first!.shape.p && hasToken(sh));
+  const fronts = frontChoice !== "say" && canFront(type) ? frontShapes(type).filter((sh) => sh.p !== first!.shape.p && hasToken(sh)) : [];
+  const pool = byForm(ctx, [...plain, ...fronts]);
+  if (pool.length === 0) return { names, seriesTone };
+  const frontSet = new Set(fronts);
+  fill(() => {
+    const shape = pickWeighted(pool, ctx.rng)!;
+    return renderShape(ctx, type, type, shape, frontSet.has(shape), { byName: anchor });
+  });
+  return { names, seriesTone };
+}
+
 /** §4: a batch of unique names. */
 export function generateGroupNames(options: GroupOptions): GroupBatch {
   const family = findFamily(options.family);
   if (!family) throw new Error(`Unknown family “${options.family}”.`);
+  if (options.series && !options.type) throw new Error("Series needs a type.");
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const genre = options.genre ?? "fantasy";
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
@@ -781,6 +974,11 @@ export function generateGroupNames(options: GroupOptions): GroupBatch {
   const types = candidates.map((t): [GroupType, number] => [t, typeWeight(t)]);
 
   const count = Math.max(0, Math.floor(options.count));
+  if (options.series && chosen) {
+    const series = generateSeries(ctx, chosen, front, count, options.tone ?? "any");
+    if (series.names.length < count) notices.push(`Only ${series.names.length} names could be generated.`);
+    return { names: series.names, seed, notices, seriesTone: series.seriesTone };
+  }
   const seen = new Set<string>();
   const names: GroupName[] = [];
   for (let attempt = 0; attempt < count * 50 && names.length < count; attempt++) {

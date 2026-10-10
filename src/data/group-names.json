@@ -58,12 +58,14 @@
       {
        "p": "{members} of the {entity}",
        "f": "B",
-       "w": 10.0
+       "w": 10.0,
+       "sa": "entity"
       },
       {
        "p": "{members} of the {quality} {entity}",
        "f": "F",
-       "w": 10.0
+       "w": 10.0,
+       "sa": "entity"
       },
       {
        "p": "{members} Beyond the {entity}",
@@ -160,12 +162,14 @@
       {
        "p": "{members} of the {entity}",
        "f": "B",
-       "w": 10.0
+       "w": 10.0,
+       "sa": "entity"
       },
       {
        "p": "{members} of the {quality} {entity}",
        "f": "F",
-       "w": 10.0
+       "w": 10.0,
+       "sa": "entity"
       },
       {
        "p": "{members} Beyond the {entity}",
@@ -292,12 +296,14 @@
       {
        "p": "{holyMembers} of the {holyEntity}",
        "f": "B",
-       "w": 20.0
+       "w": 20.0,
+       "sa": "holyEntity"
       },
       {
        "p": "{holyQuality} {holyMembers} of the {holyEntity}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "sa": "holyEntity"
       },
       {
        "p": "{holyGroup} of the {holyQuality} {holyEntity}",
@@ -357,12 +363,14 @@
       {
        "p": "Children of the {cultQuality} {cultEntity}",
        "f": "B",
-       "w": 18.0
+       "w": 18.0,
+       "sa": "cultEntity"
       },
       {
        "p": "Cult of the {cultQuality} {cultEntity}",
        "f": "B",
-       "w": 15.0
+       "w": 15.0,
+       "sa": "cultEntity"
       },
       {
        "p": "Church of the {cultQuality} {cultEntity}",
@@ -1845,7 +1853,8 @@
       {
        "p": "{tradesmen} of the {colour} {emblem}",
        "f": "B",
-       "w": 10.0
+       "w": 10.0,
+       "sa": "emblem"
       },
       {
        "p": "the {town} {tradesmen}",
@@ -1932,7 +1941,8 @@
        "w": 10.0,
        "t": [
         "plain"
-       ]
+       ],
+       "sa": "town"
       },
       {
        "p": "{surname} & {surname}",
@@ -3006,12 +3016,14 @@
       {
        "p": "Sons of the {rebelQuality} {rebelEmblem}",
        "f": "B",
-       "w": 12.0
+       "w": 12.0,
+       "sa": "rebelEmblem"
       },
       {
        "p": "Daughters of the {rebelQuality} {rebelEmblem}",
        "f": "B",
-       "w": 6.0
+       "w": 6.0,
+       "sa": "rebelEmblem"
       },
       {
        "p": "{town} Liberation Front",
@@ -3421,7 +3433,8 @@
        "w": 20.0,
        "t": [
         "strange"
-       ]
+       ],
+       "sa": "skyThing"
       },
       {
        "p": "the {feyTime} Court",

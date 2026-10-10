@@ -418,3 +418,96 @@ test("tone: every module, setting, form, front, people mode and tone fills a bat
     }
   }
 });
+
+// §9.4 Series
+
+const seriesOf = (family: string, type: string, s: GroupSetting, count: number, seed: number, extra: Partial<GroupOptions> = {}) =>
+  run({ family, type, series: true, ...extra }, s, count, seed);
+const familyOf = (type: string) => GROUP_FAMILIES.find((f) => f.types.some((t) => t.key === type))!.key;
+const includesWord = (text: string, value: string) => {
+  const t = text.toLowerCase();
+  return t.includes(value.toLowerCase()) || t.includes(groupPlural(value).toLowerCase());
+};
+
+test("series: needs a type", () => {
+  assert.throws(() => run({ family: "martial", series: true }, "FH", 5), /Series needs a type/);
+});
+
+test("series: a counter counts upwards with the rest locked", () => {
+  let found = 0;
+  for (let seed = 1; seed < 3000 && found < 5; seed++) {
+    const batch = seriesOf("martial", "unit", "FH", 5, seed, { people: "invented" });
+    if (batch.names[0]?.shape !== "{ordinal} {town} {arm}") continue;
+    found++;
+    const parts = batch.names.map((n) => n.text.match(/^(\d+)(?:st|nd|rd|th) (.+)$/)!);
+    assert.ok(parts.every((p) => p && p[2] === parts[0][2]), batch.names.map((n) => n.text).join(" / "));
+    for (let i = 1; i < parts.length; i++) assert.ok(Number(parts[i][1]) > Number(parts[i - 1][1]));
+    assert.ok(batch.names.every((n) => n.series?.counter === "ordinal"));
+  }
+  assert.ok(found > 0);
+});
+
+test("series: every name keeps the first shape or the anchor value, across types and settings", () => {
+  for (const f of GROUP_FAMILIES) for (const s of settingsOf(f.key)) for (const type of typesInSetting(f, s)) {
+    for (let seed = 1; seed <= 200; seed++) {
+      const batch = seriesOf(f.key, type.key, s, 5, seed);
+      const first = batch.names[0];
+      if (!first) continue;
+      for (const n of batch.names) {
+        const value = n.series?.value;
+        assert.ok(n.shape === first.shape || (value && includesWord(n.text, value)), `${type.key} ${s} ${seed}: ${n.text} (${first.text})`);
+        if (n.series?.anchor && value) assert.ok(includesWord(n.text, value), `${type.key} ${s} ${seed}: ${n.text} lacks ${value}`);
+      }
+    }
+  }
+});
+
+test("series: in placeholder mode no anchor is a placeholder owner token", () => {
+  for (const f of GROUP_FAMILIES) for (const s of settingsOf(f.key)) for (const type of typesInSetting(f, s)) {
+    for (let seed = 1; seed <= 40; seed++) {
+      const anchor = seriesOf(f.key, type.key, s, 5, seed).names[0]?.series?.anchor;
+      assert.ok(!anchor || !["town", "surname", "house"].includes(anchor), `${type.key} ${s} ${seed}: ${anchor}`);
+    }
+  }
+});
+
+test("series: syndicate families top up with fronts that share the surname", () => {
+  let series = 0;
+  let withFront = 0;
+  for (let seed = 1; seed < 20000 && series < 200; seed++) {
+    const batch = seriesOf("underworld", "syndicate", "FH", 5, seed, { front: "may", people: "invented" });
+    if (batch.names[0]?.shape !== "the {surname} Family") continue;
+    series++;
+    const surname = batch.names[0].series!.value!;
+    if (batch.names.some((n) => n.front && n.text.includes(surname))) withFront++;
+  }
+  assert.ok(series >= 50, `only ${series} family series`);
+  assert.ok(withFront / series >= 0.25, `${withFront} of ${series}`);
+});
+
+test("series: with tone Any the first shape's tone holds for the series", () => {
+  for (const type of ["unit", "syndicate", "holy", "fey", "corp"]) {
+    const family = familyOf(type);
+    const s: GroupSetting = TYPE_BY_KEY.get(type)!.settings[0];
+    for (let seed = 1; seed <= 30; seed++) {
+      const batch = seriesOf(family, type, s, 5, seed);
+      if (batch.names.length === 0) continue;
+      const shape = [...TYPE_BY_KEY.get(type)!.shapes, ...Object.values(GROUP_DATA.fronts).flatMap((fr) => [...fr.shapes, ...Object.values(fr.typeShapes ?? {}).flat()])].find((sh) => sh.p === batch.names[0].shape);
+      const expected = (shape ? shapeTones(shape)[0] : undefined) ?? "any";
+      assert.equal(batch.seriesTone, expected, `${type} ${seed}`);
+    }
+  }
+  assert.equal(seriesOf("martial", "unit", "FH", 5, 1, { tone: "grim" }).seriesTone, "grim");
+});
+
+test("series: an {ordinalWord} series of 20 stops at the end of the list, with the notice", () => {
+  let found = false;
+  for (let seed = 1; seed < 5000 && !found; seed++) {
+    const batch = seriesOf("martial", "unit", "FH", 20, seed);
+    if (batch.names[0]?.series?.counter !== "ordinalWord") continue;
+    found = true;
+    assert.ok(batch.names.length <= 13);
+    assert.ok(batch.notices.includes(`Only ${batch.names.length} names could be generated.`));
+  }
+  assert.ok(found);
+});

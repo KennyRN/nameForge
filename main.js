@@ -32972,12 +32972,14 @@ var group_names_default = {
             {
               p: "{members} of the {entity}",
               f: "B",
-              w: 10
+              w: 10,
+              sa: "entity"
             },
             {
               p: "{members} of the {quality} {entity}",
               f: "F",
-              w: 10
+              w: 10,
+              sa: "entity"
             },
             {
               p: "{members} Beyond the {entity}",
@@ -33074,12 +33076,14 @@ var group_names_default = {
             {
               p: "{members} of the {entity}",
               f: "B",
-              w: 10
+              w: 10,
+              sa: "entity"
             },
             {
               p: "{members} of the {quality} {entity}",
               f: "F",
-              w: 10
+              w: 10,
+              sa: "entity"
             },
             {
               p: "{members} Beyond the {entity}",
@@ -33206,12 +33210,14 @@ var group_names_default = {
             {
               p: "{holyMembers} of the {holyEntity}",
               f: "B",
-              w: 20
+              w: 20,
+              sa: "holyEntity"
             },
             {
               p: "{holyQuality} {holyMembers} of the {holyEntity}",
               f: "F",
-              w: 15
+              w: 15,
+              sa: "holyEntity"
             },
             {
               p: "{holyGroup} of the {holyQuality} {holyEntity}",
@@ -33271,12 +33277,14 @@ var group_names_default = {
             {
               p: "Children of the {cultQuality} {cultEntity}",
               f: "B",
-              w: 18
+              w: 18,
+              sa: "cultEntity"
             },
             {
               p: "Cult of the {cultQuality} {cultEntity}",
               f: "B",
-              w: 15
+              w: 15,
+              sa: "cultEntity"
             },
             {
               p: "Church of the {cultQuality} {cultEntity}",
@@ -34759,7 +34767,8 @@ var group_names_default = {
             {
               p: "{tradesmen} of the {colour} {emblem}",
               f: "B",
-              w: 10
+              w: 10,
+              sa: "emblem"
             },
             {
               p: "the {town} {tradesmen}",
@@ -34846,7 +34855,8 @@ var group_names_default = {
               w: 10,
               t: [
                 "plain"
-              ]
+              ],
+              sa: "town"
             },
             {
               p: "{surname} & {surname}",
@@ -35920,12 +35930,14 @@ var group_names_default = {
             {
               p: "Sons of the {rebelQuality} {rebelEmblem}",
               f: "B",
-              w: 12
+              w: 12,
+              sa: "rebelEmblem"
             },
             {
               p: "Daughters of the {rebelQuality} {rebelEmblem}",
               f: "B",
-              w: 6
+              w: 6,
+              sa: "rebelEmblem"
             },
             {
               p: "{town} Liberation Front",
@@ -36335,7 +36347,8 @@ var group_names_default = {
               w: 20,
               t: [
                 "strange"
-              ]
+              ],
+              sa: "skyThing"
             },
             {
               p: "the {feyTime} Court",
@@ -53753,18 +53766,33 @@ function townPool(key2) {
   return found;
 }
 var isGeneral = (t) => !t || t.key === "general";
-function renderPattern(ctx, pattern, type, shape) {
+function renderPattern(ctx, pattern, type, shape, hooks) {
+  var _a2, _b;
   let out = "";
   const re = /\{([^}]+)\}/g;
   let last = 0;
   let m;
+  let index = -1;
+  let nameUsed = false;
   while (m = re.exec(pattern)) {
+    index++;
     out += pattern.slice(last, m.index);
     last = re.lastIndex;
     const [rawName, mod] = m[1].split(":");
-    const name = rawName.includes("/") ? pickOne(rawName.split("/"), ctx.rng) : rawName;
-    const piece = token(ctx, name, type, shape);
+    const fixed = (_a2 = hooks == null ? void 0 : hooks.byIndex) == null ? void 0 : _a2.get(index);
+    const alternatives = rawName.split("/");
+    let name;
+    let piece;
+    if (fixed) ({ name, piece } = fixed);
+    else if ((hooks == null ? void 0 : hooks.byName) && !nameUsed && alternatives.includes(hooks.byName.name)) {
+      ({ name, piece } = hooks.byName);
+      nameUsed = true;
+    } else {
+      name = rawName.includes("/") ? pickOne(alternatives, ctx.rng) : rawName;
+      piece = token(ctx, name, type, shape);
+    }
     if (!piece) return void 0;
+    (_b = hooks == null ? void 0 : hooks.record) == null ? void 0 : _b.push({ name, piece });
     let text = piece.text;
     if (name === "compound" && pattern.slice(last).startsWith(" Company")) text = text.replace(/s$/, "");
     if (mod === "pl") text = piece.plural ? text : groupPlural(text);
@@ -53940,6 +53968,10 @@ function companySource(ctx, type) {
   return { shapes, listType: source };
 }
 function drawName(ctx, type, front) {
+  var _a2;
+  return (_a2 = drawDetailed(ctx, type, front)) == null ? void 0 : _a2.name;
+}
+function drawDetailed(ctx, type, front) {
   let shapes;
   let listType = type;
   if (front) shapes = frontShapes(type);
@@ -53948,15 +53980,24 @@ function drawName(ctx, type, front) {
   const choices = byForm(ctx, shapes);
   const shape = pickWeighted5(choices, ctx.rng);
   if (!shape) return void 0;
+  return renderShape(ctx, type, listType, shape, front, {});
+}
+function renderShape(ctx, type, listType, shape, front, hooks) {
   ctx.drawn = /* @__PURE__ */ new Set();
-  const raw = renderPattern(ctx, shape.p, { ...listType, person: type.person }, shape);
+  const record = [];
+  const raw = renderPattern(ctx, shape.p, { ...listType, person: type.person }, shape, { ...hooks, record });
   if (!raw) return void 0;
   if (shape.p === "{brandStart}{brandEnd}" && raw.length < 5) return void 0;
   const formal = shape.f === "F" || shape.f === "B" && ctx.form !== "everyday";
   const text = capitalise(raw.replace(/\s+/g, " ").trim(), shape.f === "F");
   if (!acceptable(ctx, text, formal)) return void 0;
   const tones = /* @__PURE__ */ new Set([...shapeTones(shape), ...ctx.drawn]);
-  return { text, family: ctx.family.key, type: type.key, shape: shape.p, front, form: shape.f, tones: GROUP_TONES.filter((t) => tones.has(t)) };
+  return {
+    name: { text, family: ctx.family.key, type: type.key, shape: shape.p, front, form: shape.f, tones: GROUP_TONES.filter((t) => tones.has(t)) },
+    shape,
+    listType,
+    record
+  };
 }
 function acceptable(ctx, text, formal) {
   const words = text.split(" ").filter((w) => w && w !== "&");
@@ -54007,10 +54048,106 @@ function oneName(ctx, options, chosen, types) {
   }
   return void 0;
 }
+var COUNTERS = /* @__PURE__ */ new Set(["ordinal", "ordinalWord", "greek"]);
+var OWNERS = /* @__PURE__ */ new Set(["town", "surname", "house", "brandRoot", "star"]);
+var NEVER_ANCHORS = /* @__PURE__ */ new Set(["person", "holy", "initials"]);
+var PLACEHOLDER_TOKENS = /* @__PURE__ */ new Set(["person", "holy", "town", "surname", "house"]);
+var kindOf = (name) => COUNTERS.has(name) ? "counter" : OWNERS.has(name) ? "owner" : NEVER_ANCHORS.has(name) ? "never" : "list";
+function counterGap(rng) {
+  const r = rng();
+  if (r < 0.5) return 1;
+  if (r < 0.75) return 2;
+  return 3 + Math.floor(rng() * 4);
+}
+function* counterValues(ctx, name, first) {
+  if (name === "ordinal") {
+    let n = parseInt(first.text, 10);
+    while (n <= 99) {
+      yield { piece: { text: ordinalText(n), plural: false }, order: n };
+      n += counterGap(ctx.rng);
+    }
+    return;
+  }
+  const words = [...new Set(GROUP_DATA.lists[name].map((e) => e.w))];
+  let i = words.indexOf(first.text);
+  if (i < 0) return;
+  while (i < words.length) {
+    yield { piece: { text: words[i], plural: false }, order: i };
+    i += counterGap(ctx.rng);
+  }
+}
+function generateSeries(ctx, type, frontChoice, count, toneChoice) {
+  var _a2, _b, _c;
+  const placeholders = ctx.mode === "placeholders";
+  const varies = (d) => !(placeholders && PLACEHOLDER_TOKENS.has(d.name));
+  const hideFirst = frontChoice === "hide" && canFront(type);
+  let first;
+  for (let i = 0; i < 40 && !first; i++) {
+    const d = drawDetailed(ctx, type, hideFirst);
+    if (!d) continue;
+    if (!d.record.some((r) => kindOf(r.name) === "counter") && !d.record.some(varies)) continue;
+    first = d;
+  }
+  if (!first) return { names: [], seriesTone: toneChoice };
+  const seriesTone = toneChoice !== "any" ? toneChoice : (_a2 = shapeTones(first.shape)[0]) != null ? _a2 : "any";
+  ctx.tone = seriesTone;
+  const names = [];
+  const seen = /* @__PURE__ */ new Set();
+  const add2 = (d, info2) => {
+    if (!d) return false;
+    const key2 = d.name.text.toLowerCase();
+    if (seen.has(key2)) return false;
+    seen.add(key2);
+    names.push({ ...d.name, series: info2 });
+    return true;
+  };
+  const rec = first.record;
+  const counterAt = rec.findIndex((r) => kindOf(r.name) === "counter");
+  if (counterAt >= 0) {
+    const info2 = { anchor: null, value: null, counter: rec[counterAt].name };
+    const locked = new Map(rec.map((r, i) => [i, r]));
+    for (const { piece } of counterValues(ctx, rec[counterAt].name, rec[counterAt].piece)) {
+      if (names.length >= count) break;
+      locked.set(counterAt, { name: rec[counterAt].name, piece });
+      add2(renderShape(ctx, type, first.listType, first.shape, first.name.front, { byIndex: new Map(locked) }), info2);
+    }
+    return { names, seriesTone };
+  }
+  const isPlaceholder = (d) => placeholders && PLACEHOLDER_TOKENS.has(d.name);
+  let anchorAt = -1;
+  const sa = first.shape.sa;
+  if (sa) anchorAt = rec.findIndex((r) => r.name === sa && !isPlaceholder(r));
+  if (anchorAt < 0) anchorAt = rec.findIndex((r) => kindOf(r.name) === "owner" && !isPlaceholder(r));
+  const listAt = rec.map((r, i) => kindOf(r.name) === "list" ? i : -1).filter((i) => i >= 0);
+  if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
+  const anchor = anchorAt >= 0 ? rec[anchorAt] : void 0;
+  const info = { anchor: (_b = anchor == null ? void 0 : anchor.name) != null ? _b : null, value: (_c = anchor == null ? void 0 : anchor.piece.text) != null ? _c : null, counter: null };
+  const hold = /* @__PURE__ */ new Map();
+  if (anchor) hold.set(anchorAt, anchor);
+  else if (listAt.length === 1) rec.forEach((r, i) => i !== listAt[0] && hold.set(i, r));
+  add2(first, info);
+  const fill = (draw) => {
+    for (let idle = 0; idle < 20 && names.length < count; ) idle = add2(draw(), info) ? 0 : idle + 1;
+  };
+  fill(() => renderShape(ctx, type, first.listType, first.shape, first.name.front, { byIndex: hold }));
+  if (!anchor || names.length >= count) return { names, seriesTone };
+  const hasToken = (sh) => [...sh.p.matchAll(/\{([^}]+)\}/g)].some((m) => m[1].split(":")[0].split("/").includes(anchor.name));
+  const plain = plainShapes(ctx, type).filter((sh) => sh.p !== first.shape.p && hasToken(sh));
+  const fronts = frontChoice !== "say" && canFront(type) ? frontShapes(type).filter((sh) => sh.p !== first.shape.p && hasToken(sh)) : [];
+  const pool2 = byForm(ctx, [...plain, ...fronts]);
+  if (pool2.length === 0) return { names, seriesTone };
+  const frontSet = new Set(fronts);
+  fill(() => {
+    const shape = pickWeighted5(pool2, ctx.rng);
+    return renderShape(ctx, type, type, shape, frontSet.has(shape), { byName: anchor });
+  });
+  return { names, seriesTone };
+}
 function generateGroupNames(options) {
-  var _a2, _b, _c, _d, _e, _f, _g;
+  var _a2, _b, _c, _d, _e, _f, _g, _h;
   const family = findFamily(options.family);
   if (!family) throw new Error(`Unknown family \u201C${options.family}\u201D.`);
+  if (options.series && !options.type) throw new Error("Series needs a type.");
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const genre = (_a2 = options.genre) != null ? _a2 : "fantasy";
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
@@ -54048,6 +54185,11 @@ function generateGroupNames(options) {
   if (candidates.length === 0) candidates = available;
   const types = candidates.map((t) => [t, typeWeight(t)]);
   const count = Math.max(0, Math.floor(options.count));
+  if (options.series && chosen) {
+    const series = generateSeries(ctx, chosen, front, count, (_h = options.tone) != null ? _h : "any");
+    if (series.names.length < count) notices.push(`Only ${series.names.length} names could be generated.`);
+    return { names: series.names, seed, notices, seriesTone: series.seriesTone };
+  }
   const seen = /* @__PURE__ */ new Set();
   const names = [];
   for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
