@@ -22,6 +22,8 @@ import {
   hasBannedWord,
   normForBlock,
   ordinalText,
+  counterGap,
+  seriesTokenKind,
   pickWeighted,
   repeatsContent,
   SETTING_PHRASES,
@@ -304,6 +306,8 @@ const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() 
 
 /** Lists that come from group-names.json (§8.1), with their setting tags and tones. */
 const GN_LISTS = new Set(["colour", "number", "ordinalWord", "greek", "land", "spaceLand", "compass", "star", "brandRoot", "surname", "weapon", "tech", "beast"]);
+/** §10.3: every style's pools by name (the colony shapes of §11.2 draw on the colony style's). */
+const STYLE_POOLS = new Map(VESSEL_DATA.styles.flatMap((st) => Object.entries(st.pools)));
 /** Lists only some cultures have (§8.3); empty elsewhere. */
 const CULTURE_ONLY = new Set(["poetic", "menaceExtra"]);
 /** GN §8.2 / TS §2.5: never tone-weighted. */
@@ -400,8 +404,13 @@ function pool(ctx: Ctx, name: string): [{ w: string; t: GroupTone[] }, number][]
     addEntries(name, VESSEL_DATA.lists[name]);
   } else if (GN_LISTS.has(name)) {
     for (const [w, n] of groupListWords(name, ctx.setting)) add(w, n, wordTones(name, w));
-  } else if (ctx.style?.pools[name]) {
-    addEntries(name, ctx.style.pools[name]);
+  } else if (name === "name" && ctx.style) {
+    addEntries(name, ctx.style.name);
+  } else if (name === "colonyName") {
+    // §11.2: the colony style's whole names.
+    addEntries(name, VESSEL_DATA.styles.find((st) => st.key === "colony")?.name);
+  } else if (STYLE_POOLS.has(name)) {
+    addEntries(name, (ctx.style?.pools[name] ?? STYLE_POOLS.get(name))!);
   } else if (!CULTURE_ONLY.has(name)) {
     throw new Error(`Vessels: no list “${name}”.`);
   }
@@ -459,19 +468,18 @@ function inventedPerson(ctx: Ctx): string | undefined {
 const POETIC_SHORT = (w: string) => w.split(" ").length <= 5 && !/^(The|We|Where) /.test(w);
 
 /** One token (§8, §9, §12). */
-function token(ctx: Ctx, raw: string): string | undefined {
-  const [name, mod] = raw.split(":");
+function token(ctx: Ctx, name: string): string | undefined {
   if (name.includes("+")) {
     // §13: closed compounds, the second part lower case ({wAdj+wake}: Stonewake).
     const [a, b] = name.split("+");
     const first = token(ctx, a);
-    const second = VESSEL_DATA.lists[b] || ctx.style?.pools[b] ? token(ctx, b) : b;
+    const second = VESSEL_DATA.lists[b] || STYLE_POOLS.has(b) ? token(ctx, b) : b;
     return first && second ? first + second.toLowerCase() : undefined;
   }
-  const text = baseToken(ctx, name);
-  if (text === undefined) return undefined;
-  return mod === "poss" ? groupPossessive(text, false) : text;
+  return baseToken(ctx, name);
 }
+
+const withMod = (text: string, mod: string | undefined) => (mod === "poss" ? groupPossessive(text, false) : text);
 
 function baseToken(ctx: Ctx, name: string): string | undefined {
   const rng = ctx.rng;
@@ -511,16 +519,43 @@ function baseToken(ctx: Ctx, name: string): string | undefined {
   return listWord(ctx, name);
 }
 
+/** TS §3: a top-level token as drawn. */
+interface Drawn {
+  name: string;
+  text: string;
+}
+
+/** TS §3: values held fixed in a class (by token position, or for the anchor's token), and the record. */
+interface Hooks {
+  byIndex?: Map<number, Drawn>;
+  byName?: Drawn;
+  record?: Drawn[];
+}
+
 /** Renders a pattern's tokens; undefined when one has nothing to offer. */
-function renderPattern(ctx: Ctx, pattern: string): string | undefined {
+function renderPattern(ctx: Ctx, pattern: string, hooks?: Hooks): string | undefined {
   let failed = false;
+  let index = -1;
+  let nameUsed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw: string, at: number) => {
     if (failed) return "";
-    let piece = token(ctx, raw);
+    index++;
+    const [name, mod] = raw.split(":");
+    let piece: string | undefined;
+    const fixed = hooks?.byIndex?.get(index);
+    if (fixed) piece = fixed.text;
+    else if (hooks?.byName && !nameUsed && hooks.byName.name === name) {
+      piece = hooks.byName.text;
+      nameUsed = true;
+    } else piece = token(ctx, name);
     // "Star of the West", as §8.2's example has it: the compass word's noun after "of the".
-    if (piece && raw === "compass" && pattern.slice(0, at).endsWith("of the ")) piece = piece.replace(/ern$/, "");
-    if (piece === undefined || piece === "") failed = true;
-    return piece ?? "";
+    if (piece && name === "compass" && pattern.slice(0, at).endsWith("of the ")) piece = piece.replace(/ern$/, "");
+    if (piece === undefined || piece === "") {
+      failed = true;
+      return "";
+    }
+    hooks?.record?.push({ name, text: piece });
+    return withMod(piece, mod);
   });
   return failed ? undefined : out;
 }
@@ -610,6 +645,8 @@ function roleWeights(ctx: Ctx): [string, number][] {
   for (const e of VESSEL_DATA.roleExtras) {
     if (e.module === ctx.module && e.function === ctx.fn && inRange(e.k, ctx.customs)) base[e.role] = (base[e.role] ?? 0) + e.w;
   }
+  // §11: stations and colony ships also draw on their own shapes, as a role beside the others.
+  if (ctx.module === "spacecraft" && (ctx.fn === "station" || ctx.fn === "colony")) base[ctx.fn] = 100;
   const out: [string, number][] = [];
   for (const [role, w] of Object.entries(base)) {
     let n = w * (c.roles?.[role] ?? 1);
@@ -628,6 +665,7 @@ function roleShapes(ctx: Ctx, role: string, only?: string): [VesselShape, number
   const c = ctx.culture;
   const holy = holyType(ctx);
   const shapes: VesselShape[] = [...VESSEL_DATA.shapes.filter((s) => s.role === role), ...(c.shapes ?? []).filter((s) => s.role === role)];
+  if (role === "station" || role === "colony") for (const sh of VESSEL_DATA.space[role]) shapes.push({ role, p: sh.p, w: sh.w });
   if (role === "holy" && holy === "gods") for (const g of c.gods?.shapes ?? []) shapes.push({ role, p: g.p, w: g.w });
   const out: [VesselShape, number][] = [];
   for (const shape of shapes) {
@@ -658,40 +696,91 @@ function roleShapes(ctx: Ctx, role: string, only?: string): [VesselShape, number
 /** §11.3: spacecraft name cities with "Pride of". */
 const spacePattern = (ctx: Ctx, p: string) => (ctx.module === "spacecraft" ? p.replace(/^City of /, "Pride of ") : p);
 
-interface Built {
-  name: string;
+/** A name's route, role and pattern: what a class holds fixed (TS §3). */
+interface Plan {
   route: VesselRoute;
   role: string;
-  shape: string;
+  p: string;
   tones: GroupTone[];
 }
 
-function finish(ctx: Ctx, raw: string | undefined, route: VesselRoute, role: string, shape: string, shapeTones: GroupTone[]): Built | undefined {
+interface Built {
+  name: string;
+  plan: Plan;
+  tones: GroupTone[];
+  record: Drawn[];
+}
+
+function renderPlan(ctx: Ctx, plan: Plan, hooks: Hooks = {}): Built | undefined {
+  ctx.drawn = new Set();
+  ctx.words = [];
+  const record: Drawn[] = [];
+  const raw = renderPattern(ctx, plan.p, { ...hooks, record });
   if (!raw) return undefined;
   const name = vesselCapitals(raw.replace(/\s+/g, " ").trim());
-  const tones = new Set<GroupTone>([...shapeTones, ...ctx.drawn]);
-  return { name, route, role, shape, tones: GROUP_TONES.filter((t) => tones.has(t)) };
+  const tones = new Set<GroupTone>([...plan.tones, ...ctx.drawn]);
+  return { name, plan, record, tones: GROUP_TONES.filter((t) => tones.has(t)) };
 }
 
-function roleRoute(ctx: Ctx, role: string, only?: string): Built | undefined {
-  const shape = pickWeighted(roleShapes(ctx, role, only), ctx.rng);
-  if (!shape) return undefined;
-  const p = spacePattern(ctx, shape.p);
-  return finish(ctx, renderPattern(ctx, p), "role", role, p, vesselShapeTones(shape.p, shape.t));
+/** The role route's patterns (§7, §8; §11.3 in spacecraft). */
+function rolePlans(ctx: Ctx, role: string, only?: string): [Plan, number][] {
+  return roleShapes(ctx, role, only).map(([s, w]): [Plan, number] => [{ route: "role", role, p: spacePattern(ctx, s.p), tones: vesselShapeTones(s.p, s.t) }, w]);
 }
 
-/** §9.3: a hybrid of the culture's words and the technology's. */
-function hybridRoute(ctx: Ctx): Built | undefined {
+/** §9.3: the hybrid patterns; `{techAdj} {poetic}` only with a short poetic name. */
+function hybridPlans(ctx: Ctx): [Plan, number][] {
   const poetic = ctx.poeticAllowed && pool(ctx, "poetic").some(([e]) => POETIC_SHORT(e.w));
-  const shapes = VESSEL_DATA.hybrids.shapes.filter((s) => poetic || !s.p.includes("{poetic}")).map((s): [string, number] => [s.p, s.w]);
-  const p = pickWeighted(shapes, ctx.rng);
-  if (!p) return undefined;
-  return finish(ctx, renderPattern(ctx, p.replace("{poetic}", "{poeticShort}")), "hybrid", "hybrid", p, []);
+  return VESSEL_DATA.hybrids.shapes
+    .filter((s) => poetic || !s.p.includes("{poetic}"))
+    .map((s): [Plan, number] => [{ route: "hybrid", role: "hybrid", p: s.p.replace("{poetic}", "{poeticShort}"), tones: [] }, s.w]);
 }
 
-// ── Batches ─────────────────────────────────────────────────────────────────
+/** §10.3: the style's shapes, equal weights, its tone on each (§10.4); never a sensitive culture's light or grim lists. */
+function stylePlans(ctx: Ctx): [Plan, number][] {
+  const st = ctx.style!;
+  const tones = st.tone ? [st.tone] : [];
+  return st.shapes
+    .filter((p) => !(ctx.culture.sensitive && SENSITIVE_TOKENS.test(p)))
+    .map((p): [Plan, number] => [{ route: "style", role: st.key, p, tones: vesselShapeTones(p, tones) }, toneFactor(vesselShapeTones(p, tones), ctx.tone)])
+    .filter(([, w]) => w > 0);
+}
+
+/** §10.1: the styles a module offers in a setting. */
+export function availableStyles(module: VesselModule, setting: GroupSetting): VesselStyle[] {
+  return VESSEL_DATA.styles.filter((st) => st.modules.includes(module) && st.settings.includes(setting));
+}
+
+/** §12.3: whether prefixes can show: the link is on in MR, MF and SF. */
+export const prefixSetting = (setting: GroupSetting) => setting === "MR" || setting === "MF" || setting === "SF";
+
+/** §12.3: the real-world prefix rows that apply to a name. */
+function realPrefix(ctx: Ctx): string | undefined {
+  const rows = VESSEL_DATA.prefixes.real.filter(
+    (r) => (!r.cultures || r.cultures.includes(ctx.culture.key)) && r.fn.includes(ctx.fn) && inRange(r.k, ctx.level),
+  );
+  return pickWeighted(rows.map((r): [string, number] => [r.p, r.x ?? 1]), ctx.rng);
+}
+
+// ── Classes (TS §3) ─────────────────────────────────────────────────────────
+
+/** Tokens that render as placeholders in placeholder mode, and tokens that are never anchors. */
+const PLACEHOLDER_TOKENS = new Set(["town", "surname", "womanName", "person", "president", "scientist", "holy"]);
+const NEVER_ANCHORS = new Set(["person", "president", "scientist", "holy"]);
+const kindOf = (name: string) => (NEVER_ANCHORS.has(name) ? "never" : seriesTokenKind(name));
+
+/** TS §3.4: a counter's values from its first, ascending. */
+function* counterValues(ctx: Ctx, name: string, first: string): Generator<string> {
+  if (name === "ordinal") {
+    for (let n = parseInt(first, 10); n <= 99; n += counterGap(ctx.rng)) yield ordinalText(n);
+    return;
+  }
+  const words = [...new Set(groupListWords(name, ctx.setting).map(([w]) => w))];
+  for (let i = words.indexOf(first); i >= 0 && i < words.length; i += counterGap(ctx.rng)) yield words[i];
+}
 
 const lightOrGrim = (tone: GroupToneChoice) => tone === "light" || tone === "grim";
+
+// ── Batches ─────────────────────────────────────────────────────────────────
 
 /** §5: a batch of unique names. */
 export function generateVesselNames(options: VesselOptions): VesselBatch {
@@ -702,7 +791,7 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
   const culture = findVesselCulture(options.culture) ?? VESSEL_CULTURES[0];
   const genre = options.genre ?? (module === "spacecraft" ? "scifi" : "fantasy");
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
-  const tone = options.tone ?? "any";
+  let tone = options.tone ?? "any";
   const levels = techChoices(module, setting);
   let technology = options.technology ?? "any";
   if (technology !== "any" && !levels.includes(technology)) {
@@ -710,12 +799,26 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
     technology = "any";
   }
   const functions = availableFunctions(module, culture.key, technology, setting);
-  let chosenFn = options.function ? functions.find((f) => f.key === options.function) : undefined;
+  const chosenFn = options.function ? functions.find((f) => f.key === options.function) : undefined;
   if (options.function && !chosenFn) notices.push(`“${options.function}” isn't available here; using any function.`);
+  let style = options.style && options.style !== "none" ? availableStyles(module, setting).find((st) => st.key === options.style) : undefined;
+  if (options.style && options.style !== "none" && !style) notices.push(`Style “${options.style}” isn't available here.`);
   const guards = options.safeguards ?? { block: VESSEL_DATA.safeguards.block, flag: VESSEL_DATA.safeguards.flag, flagListBlocks: VESSEL_DATA.safeguards.flagListBlocks };
   const guard = guardFor(module, guards);
   const pools = new Map<string, [{ w: string; t: GroupTone[] }, number][]>();
   const count = Math.max(0, Math.floor(options.count));
+  const prefixes = !!options.prefixes && prefixSetting(setting);
+  // §12.3: in sci-fi, one prefix per function for the whole batch.
+  const sfPrefixes = new Map<string, string | undefined>();
+  const sfPrefix = (fn: string) => {
+    if (!sfPrefixes.has(fn)) {
+      const list = VESSEL_DATA.prefixes.sf[fn];
+      sfPrefixes.set(fn, list ? pickOne(list, rng) : undefined);
+    }
+    return sfPrefixes.get(fn);
+  };
+  // §10.2: a style's share of names (General 85%); §14.4: oceanic never draws on a sensitive culture's lists.
+  const styleShare = !style ? 0 : style.key === "oceanic" && culture.sensitive ? 1 : culture.key === "general" ? VESSEL_DATA.styleShare.general : VESSEL_DATA.styleShare.default;
 
   const newCtx = (level: string, fn: string): Ctx => ({
     rng,
@@ -727,45 +830,68 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
     level,
     customs: customsLevel(culture, level),
     fn,
-    boost: false,
-    poeticAllowed: !(culture.sensitive && lightOrGrim(tone)),
+    style,
+    boost: !!style,
+    // §14.4: sensitive cultures' poetic names never go to a style or a light or grim name.
+    poeticAllowed: !(culture.sensitive && (lightOrGrim(tone) || !!style)),
     drawn: new Set(),
     words: [],
     pools,
   });
 
+  /** §5: the route and pattern for one draw. */
+  const choosePlan = (ctx: Ctx): Plan | undefined => {
+    if (style && !options.shape && rng() < styleShare) {
+      ctx.boost = false;
+      return pickWeighted(stylePlans(ctx), rng);
+    }
+    const role = pickWeighted(roleWeights(ctx), rng);
+    if (!role) return undefined;
+    // §9.1: designation and leisure names are never hybrids.
+    const share = inSpan(culture, ctx.level) ? VESSEL_DATA.hybrids.share.inSpan : VESSEL_DATA.hybrids.share.outOfSpan;
+    if (!options.shape && role !== "designation" && role !== "leisure" && rng() < share) return pickWeighted(hybridPlans(ctx), rng);
+    return pickWeighted(rolePlans(ctx, role, options.shape), rng);
+  };
+
+  /** A finished, checked name with its prefix, or undefined. */
+  const result = (ctx: Ctx, built: Built | undefined, series?: VesselName["series"]): VesselName | undefined => {
+    if (!built || !acceptable(ctx, guard, built.name)) return undefined;
+    let prefix: string | undefined;
+    if (prefixes && !built.name.startsWith("The ")) prefix = setting === "SF" ? sfPrefix(ctx.fn) : module === "ships" ? realPrefix(ctx) : undefined;
+    if (prefix && blocked(ctx, guard, built.name, prefix)) return undefined;
+    return {
+      text: prefix ? `${prefix} ${built.name}` : built.name,
+      name: built.name,
+      ...(prefix ? { prefix } : {}),
+      route: built.plan.route,
+      role: built.plan.role,
+      shape: built.plan.p,
+      function: ctx.fn,
+      level: ctx.level,
+      customs: ctx.customs,
+      tones: built.tones,
+      words: ctx.words,
+      ...(series ? { series } : {}),
+    };
+  };
+
+  // §2.2: "any" draws a level evenly from those it offers, keeping the chosen function possible.
+  const levelPool = technology === "any" ? anyLevels(module, culture, setting).filter((l) => !chosenFn || functionAvailableAt(chosenFn, culture, l)) : [technology];
+  const fnChoices = (level: string) => functions.filter((f) => functionAvailableAt(f, culture, level));
+
   /** One name: technology, function, route, role, shape (§5); undefined after the GN §4 failures. */
   const oneName = (): VesselName | undefined => {
-    const fnChoices = (level: string) => functions.filter((f) => functionAvailableAt(f, culture, level));
-    // §2.2: "any" draws a level evenly from those it offers, keeping the chosen function possible.
-    const levelPool = technology === "any" ? anyLevels(module, culture, setting).filter((l) => !chosenFn || functionAvailableAt(chosenFn, culture, l)) : [technology];
     if (levelPool.length === 0) return undefined;
     for (let round = 0; round < 2; round++) {
       const level = pickOne(levelPool, rng);
       const fn = chosenFn ?? pickWeighted(fnChoices(level).map((f): [VesselFunction, number] => [f, f.w]), rng);
       if (!fn) continue;
-      const out = inSpan(culture, level);
       for (let i = 0; i < 20; i++) {
         const ctx = newCtx(level, fn.key);
-        const role = pickWeighted(roleWeights(ctx), rng);
-        if (!role) break;
-        // §9.1: designation and leisure names are never hybrids.
-        const share = out ? VESSEL_DATA.hybrids.share.inSpan : VESSEL_DATA.hybrids.share.outOfSpan;
-        const hybrid = !options.shape && role !== "designation" && role !== "leisure" && rng() < share;
-        const built = hybrid ? hybridRoute(ctx) : roleRoute(ctx, role, options.shape);
-        if (!built || !acceptable(ctx, guard, built.name)) continue;
-        return {
-          text: built.name,
-          name: built.name,
-          route: built.route,
-          role: built.role,
-          shape: built.shape,
-          function: fn.key,
-          level,
-          customs: ctx.customs,
-          tones: built.tones,
-          words: ctx.words,
-        };
+        const plan = choosePlan(ctx);
+        if (!plan) break;
+        const name = result(ctx, renderPlan(ctx, plan));
+        if (name) return name;
       }
     }
     return undefined;
@@ -773,16 +899,96 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
 
   const seen = new Set<string>();
   const names: VesselName[] = [];
-  for (let attempt = 0; attempt < count * 50 && names.length < count; attempt++) {
-    const name = oneName();
-    if (!name) continue;
+  const add = (name: VesselName | undefined): boolean => {
+    if (!name) return false;
     const key = name.text.toLowerCase();
-    if (seen.has(key)) continue;
+    if (seen.has(key)) return false;
     seen.add(key);
     names.push(name);
+    return true;
+  };
+
+  if (options.series && chosenFn && levelPool.length > 0) {
+    const seriesTone = drawClass();
+    if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+    return { names, seed, notices, seriesTone };
   }
+  if (options.series && !chosenFn) notices.push("A class needs a function.");
+
+  for (let attempt = 0; attempt < count * 50 && names.length < count; attempt++) add(oneName());
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
   return { names, seed, notices };
+
+  /** TS §3: one class: one technology, route and shape; a counter counts, or an anchor holds while the rest vary. */
+  function drawClass(): GroupToneChoice {
+    const level = pickOne(levelPool, rng);
+    const fn = chosenFn!.key;
+    const placeholders = (options.people ?? "placeholders") === "placeholders";
+    const isPlaceholder = (d: Drawn) => placeholders && PLACEHOLDER_TOKENS.has(d.name);
+    let first: { ctx: Ctx; built: Built; name: VesselName } | undefined;
+    for (let i = 0; i < 40 && !first; i++) {
+      const ctx = newCtx(level, fn);
+      const plan = choosePlan(ctx);
+      if (!plan) continue;
+      const built = renderPlan(ctx, plan);
+      const name = result(ctx, built);
+      if (!built || !name) continue;
+      // TS §3.3 step 3: redraw a shape where nothing could vary.
+      if (!built.record.some((d) => kindOf(d.name) === "counter") && !built.record.some((d) => !isPlaceholder(d))) continue;
+      first = { ctx, built, name };
+    }
+    if (!first) return tone;
+    // TS §3.3 step 2: with tone Any, the first shape's first tone holds for the class.
+    if (tone === "any") tone = first.built.plan.tones[0] ?? "any";
+    const plan = first.built.plan;
+    const rec = first.built.record;
+    const draw = (hooks: Hooks, p = plan) => {
+      const ctx = newCtx(level, fn);
+      if (p.route === "style") ctx.boost = false;
+      return result(ctx, renderPlan(ctx, p, hooks), info);
+    };
+    const counterAt = rec.findIndex((d) => kindOf(d.name) === "counter");
+    let info: VesselName["series"];
+    if (counterAt >= 0) {
+      info = { anchor: null, value: null, counter: rec[counterAt].name };
+      add({ ...first.name, series: info });
+      const locked = new Map(rec.map((d, i) => [i, d] as const));
+      let firstValue = true;
+      for (const value of counterValues(first.ctx, rec[counterAt].name, rec[counterAt].text)) {
+        if (names.length >= count) break;
+        if (firstValue) {
+          firstValue = false;
+          continue;
+        }
+        locked.set(counterAt, { name: rec[counterAt].name, text: value });
+        add(draw({ byIndex: new Map(locked) }));
+      }
+      return tone;
+    }
+    // TS §3.3 step 4: the first owner token that isn't a placeholder, else the first of two or more list tokens.
+    let anchorAt = rec.findIndex((d) => kindOf(d.name) === "owner" && !isPlaceholder(d));
+    const listAt = rec.map((d, i) => (kindOf(d.name) === "list" && !isPlaceholder(d) ? i : -1)).filter((i) => i >= 0);
+    if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
+    const anchor = anchorAt >= 0 ? rec[anchorAt] : undefined;
+    info = { anchor: anchor?.name ?? null, value: anchor?.text ?? null, counter: null };
+    const hold = new Map<number, Drawn>();
+    if (anchor) hold.set(anchorAt, anchor);
+    else if (listAt.length === 1) rec.forEach((d, i) => i !== listAt[0] && hold.set(i, d));
+    add({ ...first.name, series: info });
+    const fill = (next: () => VesselName | undefined) => {
+      for (let idle = 0; idle < 20 && names.length < count; ) idle = add(next()) ? 0 : idle + 1;
+    };
+    fill(() => draw({ byIndex: hold }));
+    if (!anchor || names.length >= count) return tone;
+    // TS §3.5: top up from the route's other shapes with the anchor's token.
+    const ctx = newCtx(level, fn);
+    const others = (plan.route === "style" ? stylePlans(ctx) : plan.route === "hybrid" ? hybridPlans(ctx) : rolePlans(ctx, plan.role)).filter(
+      ([p]) => p.p !== plan.p && [...p.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name),
+    );
+    if (others.length === 0) return tone;
+    fill(() => draw({ byName: anchor }, pickWeighted(others, rng)!));
+    return tone;
+  }
 }
 
 /** §1.2: "ships and boats · historic or low fantasy · Hawaiian · steam and iron". */

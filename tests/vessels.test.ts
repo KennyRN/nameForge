@@ -3,6 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   availableFunctions,
+  availableStyles,
   flavourAnimals,
   generateVesselNames,
   inRange,
@@ -188,4 +189,93 @@ test("§16.3: arctic spacecraft at S3: hybrids use S3 words, the rest arctic lis
     for (const w of n.words) if (w.list === "poetic") assert.ok(poetic.includes(w.word), w.word);
   }
   assert.ok(names.every((n) => inRange("S3", n.level)));
+});
+
+// ── §16.4 Styles ────────────────────────────────────────────────────────────
+
+test("§16.4: styles only in their settings; a style takes at least half the names", () => {
+  for (const st of VESSEL_DATA.styles) {
+    for (const module of ["ships", "spacecraft"] as VesselModule[]) {
+      for (const setting of MODULE_SETTINGS[module]) {
+        const offered = availableStyles(module, setting).some((x) => x.key === st.key);
+        assert.equal(offered, st.settings.includes(setting) && st.modules.includes(module), `${st.key} ${module} ${setting}`);
+      }
+    }
+  }
+  const names = many({ module: "ships", culture: "norse", style: "elven", ...SETTINGS.FH }, 2000);
+  assert.ok(names.filter((n) => n.route === "style").length >= 1000);
+});
+
+test("§16.4: oceanic never uses a sensitive culture's lists", () => {
+  for (const c of VESSEL_CULTURES.filter((x) => x.sensitive)) {
+    const own = new Set(Object.values(c.lists ?? {}).flatMap(entryWords));
+    for (const n of many({ module: "ships", culture: c.key, style: "oceanic", ...SETTINGS.FH }, 300)) {
+      assert.equal(n.route, "style", n.text);
+      for (const w of n.words) assert.ok(!own.has(w.word), `${c.key}: ${n.text}`);
+    }
+  }
+});
+
+// ── §16.5 Prefixes ──────────────────────────────────────────────────────────
+
+test("§16.5: HMS only on British or General warships at T4–T7 in MR/MF with prefixes on", () => {
+  for (const c of VESSEL_CULTURES) {
+    for (const setting of ["MR", "MF"] as GroupSetting[]) {
+      for (const n of generateVesselNames({ module: "ships", culture: c.key, prefixes: true, ...SETTINGS[setting], count: 60, seed: 2 }).names) {
+        if (n.prefix !== "HMS") continue;
+        assert.ok(["general", "norman-british"].includes(c.key) && n.function === "war" && inRange("T4-T7", n.level), n.text);
+      }
+    }
+  }
+  const war = generateVesselNames({ module: "ships", culture: "norman-british", function: "war", technology: "T5", prefixes: true, ...SETTINGS.MR, count: 40, seed: 1 }).names;
+  assert.ok(war.some((n) => n.prefix === "HMS"));
+});
+
+test("§16.5: no prefix in fantasy, none before “The”; one SF prefix per function", () => {
+  for (const setting of ["FL", "FH"] as GroupSetting[]) {
+    assert.ok(generateVesselNames({ module: "ships", prefixes: true, ...SETTINGS[setting], count: 60, seed: 3 }).names.every((n) => !n.prefix));
+  }
+  const sf = generateVesselNames({ module: "spacecraft", prefixes: true, ...SETTINGS.SF, count: 200, seed: 4 }).names;
+  for (const n of sf) if (n.name.startsWith("The ")) assert.ok(!n.prefix, n.text);
+  const byFn = new Map<string, Set<string>>();
+  for (const n of sf) if (n.prefix) byFn.set(n.function, (byFn.get(n.function) ?? new Set()).add(n.prefix));
+  assert.ok(byFn.size > 0);
+  for (const [fn, set] of byFn) assert.equal(set.size, 1, fn);
+});
+
+// ── §16.6 Safeguards ────────────────────────────────────────────────────────
+
+test("§16.6: 5,000 names per culture per module: no blocked names, banned words or divine names", () => {
+  const s = VESSEL_DATA.safeguards;
+  const divine = [...s.divine, ...s.banned];
+  for (const module of ["ships", "spacecraft"] as VesselModule[]) {
+    const block = new Set([...s.block, ...(module === "spacecraft" ? s.blockSpacecraft : [])].map((w) => w.toLowerCase().replace(/^the /, "")));
+    for (const c of VESSEL_CULTURES) {
+      const names = many({ module, culture: c.key, people: "invented", ...SETTINGS[module === "ships" ? "FL" : "SF"] }, 5000);
+      for (const n of names) {
+        assert.ok(!block.has(n.name.toLowerCase().replace(/^the /, "")), `${module} ${c.key}: ${n.text}`);
+        for (const w of divine) assert.ok(!hasWord(n.text, w), `${c.key}: ${n.text}`);
+      }
+      if (c.sensitive) {
+        for (const n of names) assert.ok(!n.words.some((w) => s.sensitiveLists.includes(w.list)) && !["affection", "menace", "leisure"].includes(n.role), `${c.key}: ${n.text}`);
+      }
+    }
+  }
+});
+
+// ── §16.7 Classes ───────────────────────────────────────────────────────────
+
+test("§16.7: a {virtue} class: single virtue words, all different", () => {
+  const b = generateVesselNames({ module: "ships", culture: "norman-british", function: "war", technology: "T4", series: true, shape: "{virtue}", count: 8, seed: 1 });
+  assert.ok(b.names.length >= 5);
+  const virtues = entryWords(culture("norman-british").lists!.virtue);
+  for (const n of b.names) assert.ok(virtues.includes(n.name), n.text);
+  assert.equal(new Set(b.names.map((n) => n.name)).size, b.names.length);
+});
+
+test("§16.7: a {brandRoot} {town} class shares the brand root", () => {
+  const b = generateVesselNames({ module: "ships", culture: "general", function: "merchant", technology: "T7", genre: "modern", people: "invented", series: true, shape: "{brandRoot} {town}", count: 8, seed: 2 });
+  assert.ok(b.names.length >= 3);
+  const root = b.names[0].name.split(" ")[0];
+  for (const n of b.names) assert.equal(n.name.split(" ")[0], root, n.text);
 });
