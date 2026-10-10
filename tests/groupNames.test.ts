@@ -296,3 +296,125 @@ test("group presets: round trip, unknown family, unknown genre", () => {
   assert.deepEqual(genre.problems, ["Unknown genre “steampunk”."]);
   assert.equal(genre.group!.genre, "fantasy");
 });
+
+// ── Tone and series brief §9 ────────────────────────────────────────────────
+
+import { readFileSync } from "node:fs";
+import { GROUP_TONES, shapeTones, TONE_OPPOSITES, type GroupTone, type GroupToneChoice } from "../src/groups/engine";
+
+const TONE_BRIEF = readFileSync("docs/group-tone-and-series-brief.md", "utf8");
+const briefSection = (from: string, to: string) => TONE_BRIEF.slice(TONE_BRIEF.indexOf(from), TONE_BRIEF.indexOf(to));
+const TYPE_BY_KEY = new Map(GROUP_FAMILIES.flatMap((f) => f.types.map((t) => [t.key, t] as const)));
+
+// §9.1 Data
+
+test("tone: no stray fragments; words start with a capital (bar brandEnd, townSuffix and a leading 'the')", () => {
+  for (const [name, entries] of Object.entries(GROUP_DATA.lists)) {
+    for (const e of entries) {
+      assert.ok(!/[()§×]/.test(e.w), `${name}: ${e.w}`);
+      if (name === "brandEnd" || name === "townSuffix") continue;
+      const first = e.w.replace(/^the /, "");
+      assert.ok(!/^[a-z]/.test(first), `${name}: ${e.w}`);
+    }
+  }
+  assert.ok(!GROUP_DATA.lists.creatures.some((e) => e.w === "elsewhere)"));
+  assert.ok(!GROUP_DATA.lists.nickTrait.some((e) => e.w === "§12)"));
+});
+
+test("tone: every tag is a tone, and every listTones key names a list", () => {
+  const ok = (ts: string[] | undefined) => (ts ?? []).every((t) => (GROUP_TONES as string[]).includes(t));
+  for (const [name, ts] of Object.entries(GROUP_DATA.listTones)) {
+    assert.ok(GROUP_DATA.lists[name], name);
+    assert.ok(ok(ts), name);
+  }
+  for (const [name, entries] of Object.entries(GROUP_DATA.lists)) for (const e of entries) assert.ok(ok(e.t), `${name}: ${e.w}`);
+  const shapes = [...GROUP_FAMILIES.flatMap((f) => f.types.flatMap((t) => t.shapes)), ...Object.values(GROUP_DATA.fronts).flatMap((f) => [...f.shapes, ...Object.values(f.typeShapes ?? {}).flat()])];
+  for (const s of shapes) assert.ok(ok(s.t), s.p);
+});
+
+test("tone: every shape in §2.8 carries its tag, as the brief lists it", () => {
+  const sec = briefSection("### 2.8", "### 2.9");
+  const [typesPart, frontsPart] = sec.split("**Fronts**");
+  let rows = 0;
+  for (const m of typesPart.matchAll(/^\| ([\w, ]+?) \| `(.+?)` \| (\w+)/gm)) {
+    if (m[1] === "Type") continue;
+    for (const key of m[1].split(",").map((x) => x.trim())) {
+      const shape = TYPE_BY_KEY.get(key)!.shapes.find((s) => s.p === m[2]);
+      assert.ok(shape, `${key}: ${m[2]}`);
+      assert.deepEqual(shape!.t, [m[3]], `${key}: ${m[2]}`);
+      rows++;
+    }
+  }
+  for (const m of frontsPart.matchAll(/^\| (\w+)(?: \((\w+)\))? \| (.+?) \| (\w+)/gm)) {
+    if (m[1] === "Front") continue;
+    const front = GROUP_DATA.fronts[m[1]];
+    const pool = m[2] ? front.typeShapes![m[2]] : front.shapes;
+    const hits = m[3] === "all shapes" ? pool : m[3] === "all other shapes" ? pool.filter((s) => s.t?.[0] === m[4]) : pool.filter((s) => s.p === m[3].replace(/`/g, ""));
+    assert.ok(hits.length > 0, `${m[1]}: ${m[3]}`);
+    for (const s of hits) assert.ok(s.t?.includes(m[4] as GroupTone), `${m[1]}: ${s.p}`);
+    rows++;
+  }
+  assert.ok(rows > 200);
+});
+
+test("tone: the §2.7 word tags are in the lists", () => {
+  const sec = briefSection("### 2.7", "### 2.8");
+  for (const line of sec.split("\n")) {
+    const m = line.match(/^\| `(\w+)`(?: †)? \| (.*) \|$/);
+    if (!m) continue;
+    m[2].split(" | ").forEach((cell, i) => {
+      if (cell === "–" || cell === "(list tag)") return;
+      for (const w of cell.split(",").map((x) => x.trim())) {
+        const hits = GROUP_DATA.lists[m[1]].filter((e) => e.w === w);
+        assert.ok(hits.length > 0 && hits.every((e) => e.t?.includes(GROUP_TONES[i])), `${m[1]}: ${w}`);
+      }
+    });
+  }
+});
+
+// §9.2 Tone weighting
+
+test("tone: Any gives exactly the batches from before the brief", () => {
+  const fixture = JSON.parse(readFileSync("tests/fixtures/group-snapshots.json", "utf8")) as Record<string, string[]>;
+  const extras: Partial<GroupOptions>[] = [{}, { people: "invented", front: "may", tradition: "celtic" }, { form: "everyday", front: "hide" }];
+  for (const f of GROUP_FAMILIES) for (const s of settingsOf(f.key)) {
+    extras.forEach((extra, i) => {
+      const names = run({ family: f.key, ...extra, tone: "any" }, s, 30, 100 + i).names.map((n) => n.text);
+      assert.deepEqual(names, fixture[`${f.key} ${s} ${i}`], `${f.key} ${s} ${i}`);
+    });
+  }
+});
+
+test("tone: each tone lifts its own share ×1.5 and lowers its opposites", () => {
+  const share = (names: GroupName[], t: GroupTone) => names.filter((n) => n.tones.includes(t)).length / Math.max(1, names.length);
+  for (const f of GROUP_FAMILIES) {
+    const s: GroupSetting = settingsOf(f.key).includes("FH") ? "FH" : "MF";
+    const shapes = typesInSetting(f, s).flatMap((t) => t.shapes).filter((sh) => !sh.s || sh.s.includes(s));
+    // 2,000 names as 20 batches of 100: one batch of 2,000 runs out of unique names for small
+    // shapes ("Friends of [founder]" appears once), which caps the share whatever the weights.
+    const sample = (tone: GroupToneChoice) => Array.from({ length: 20 }, (_, i) => run({ family: f.key, tone }, s, 100, 21 + i).names).flat();
+    const base = sample("any");
+    for (const tone of GROUP_TONES) {
+      const toned = sample(tone);
+      if (shapes.some((sh) => shapeTones(sh).includes(tone))) {
+        assert.ok(share(toned, tone) >= 1.5 * share(base, tone), `${f.key} ${tone}: ${share(toned, tone)} vs ${share(base, tone)}`);
+      }
+      for (const o of TONE_OPPOSITES[tone]) {
+        if (share(base, o) > 0) assert.ok(share(toned, o) < share(base, o), `${f.key} ${tone} opposes ${o}`);
+      }
+    }
+  }
+});
+
+// §9.3 Tone never empties
+
+test("tone: every module, setting, form, front, people mode and tone fills a batch of 20", () => {
+  for (const f of GROUP_FAMILIES) for (const s of settingsOf(f.key)) for (const form of ["any", "formal", "everyday"] as GroupForm[]) {
+    const fronts = typesInSetting(f, s).some(canFront) ? (["say", "hide"] as const) : (["say"] as const);
+    for (const front of fronts) for (const people of ["placeholders", "invented"] as const) for (const tone of ["any", ...GROUP_TONES] as GroupToneChoice[]) {
+      const batch = run({ family: f.key, form, front, people, tone }, s, 20, 4);
+      assert.equal(batch.names.length, 20, `${f.key} ${s} ${form} ${front} ${people} ${tone}`);
+      assert.equal(new Set(batch.names.map((n) => n.text.toLowerCase())).size, 20);
+    }
+  }
+});

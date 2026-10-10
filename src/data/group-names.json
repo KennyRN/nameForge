@@ -50,7 +50,10 @@
       {
        "p": "{quality} {group} of the {colourRich} {entity}",
        "f": "F",
-       "w": 8.0
+       "w": 8.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "{members} of the {entity}",
@@ -65,7 +68,10 @@
       {
        "p": "{members} Beyond the {entity}",
        "f": "B",
-       "w": 3.0
+       "w": 3.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "{colourRich} {members}",
@@ -85,12 +91,18 @@
       {
        "p": "the {entity} {group}",
        "f": "E",
-       "w": 4.0
+       "w": 4.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Most Ancient {group} of the {quality} {entity}",
        "f": "F",
-       "w": 2.0
+       "w": 2.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Hermetic {group} of the {entity}",
@@ -101,6 +113,9 @@
         "FH",
         "MR",
         "MF"
+       ],
+       "t": [
+        "grand"
        ]
       }
      ]
@@ -137,7 +152,10 @@
       {
        "p": "{quality} {group} of the {colourRich} {entity}",
        "f": "F",
-       "w": 8.0
+       "w": 8.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "{members} of the {entity}",
@@ -152,7 +170,10 @@
       {
        "p": "{members} Beyond the {entity}",
        "f": "B",
-       "w": 3.0
+       "w": 3.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "{colourRich} {members}",
@@ -172,12 +193,18 @@
       {
        "p": "the {entity} {group}",
        "f": "E",
-       "w": 4.0
+       "w": 4.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Most Ancient {group} of the {quality} {entity}",
        "f": "F",
-       "w": 2.0
+       "w": 2.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Hermetic {group} of the {entity}",
@@ -188,12 +215,18 @@
         "FH",
         "MR",
         "MF"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
        "p": "College of the {quality} {entity}",
        "f": "F",
-       "w": 6.0
+       "w": 6.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {colourRich} Tower",
@@ -209,6 +242,9 @@
        "w": 3.0,
        "s": [
         "SF"
+       ],
+       "t": [
+        "strange"
        ]
       },
       {
@@ -217,6 +253,9 @@
        "w": 2.0,
        "s": [
         "SF"
+       ],
+       "t": [
+        "strange"
        ]
       }
      ]
@@ -240,7 +279,10 @@
       {
        "p": "Order of {holy}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "{holyMembers} of {holy}",
@@ -265,7 +307,10 @@
       {
        "p": "the {holyQuality} {holyMembers}",
        "f": "E",
-       "w": 12.0
+       "w": 12.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {habit} {holyMembers}",
@@ -278,12 +323,18 @@
          "Nuns",
          "Canons"
         ]
-       }
+       },
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {holyEntity} {holyGroup}",
        "f": "E",
-       "w": 7.0
+       "w": 7.0,
+       "t": [
+        "plain"
+       ]
       }
      ]
     },
@@ -316,7 +367,10 @@
       {
        "p": "Church of the {cultQuality} {cultEntity}",
        "f": "F",
-       "w": 8.0
+       "w": 8.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {cultQuality} {cultGroup}",
@@ -326,7 +380,10 @@
       {
        "p": "Those Who {verbPhrase}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {cultEntity:poss} {cultGroup}",
@@ -336,7 +393,10 @@
       {
        "p": "{cultGroup} of the {ordinalWord} {cultEntity}",
        "f": "F",
-       "w": 8.0
+       "w": 8.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {cultName}",
@@ -346,7 +406,10 @@
       {
        "p": "{person:poss} {cultGroup}",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "plain"
+       ]
       }
      ]
     },
@@ -368,7 +431,10 @@
       {
        "p": "the {covenLand} Coven",
        "f": "E",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Circle of the {covenEmblem}",
@@ -378,12 +444,18 @@
       {
        "p": "{covenMembers} of the {colourRich} Moon",
        "f": "B",
-       "w": 6.0
+       "w": 6.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {covenEmblem} {covenGroup}",
        "f": "E",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "{covenGroup} of the {colour} {covenEmblem}",
@@ -393,7 +465,10 @@
       {
        "p": "the {covenLand} {covenMembers}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Grove of the {tree}",
@@ -403,7 +478,10 @@
       {
        "p": "the {number} of the {covenLand}",
        "f": "E",
-       "w": 6.0
+       "w": 6.0,
+       "t": [
+        "strange"
+       ]
       }
      ]
     },
@@ -426,7 +504,10 @@
       {
        "p": "the {emblem} School",
        "f": "E",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{schoolGroup} of the {schoolIdea}",
@@ -446,17 +527,26 @@
       {
        "p": "{person:poss} School",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Academy of the {quality} {entity}",
        "f": "F",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {schoolIdea}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "light"
+       ]
       }
      ]
     }
@@ -488,7 +578,10 @@
       {
        "p": "{person:poss} {band}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{desc} {band}",
@@ -498,7 +591,10 @@
       {
        "p": "{desc} {desc} {unitGroup}",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "grim"
+       ]
       },
       {
        "p": "{band} of the {land}",
@@ -513,7 +609,10 @@
       {
        "p": "{ordinal} {unitGroup}",
        "f": "F",
-       "w": 12.0
+       "w": 12.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{ordinal} ({town}) Regiment of {regimentOf}",
@@ -522,12 +621,18 @@
        "s": [
         "FL",
         "MR"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
        "p": "{ordinal} {town} {arm}",
        "f": "F",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{ordinalWord} {unitGroup} of the {land}",
@@ -536,6 +641,9 @@
        "s": [
         "FL",
         "FH"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -546,6 +654,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -557,6 +668,9 @@
         "FH",
         "MR",
         "MF"
+       ],
+       "t": [
+        "light"
        ]
       },
       {
@@ -585,7 +699,10 @@
        ],
        "sx": {
         "MR": 0.5
-       }
+       },
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{tech} {band}",
@@ -616,7 +733,10 @@
       {
        "p": "Order of the {colour} {knightEmblem}",
        "f": "F",
-       "w": 25.0
+       "w": 25.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Order of the {knightEmblem}",
@@ -648,7 +768,10 @@
       {
        "p": "Most Noble Order of the {colour} {knightEmblem}",
        "f": "F",
-       "w": 4.0
+       "w": 4.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Order of {holy}",
@@ -669,6 +792,9 @@
         "FL",
         "FH",
         "MF"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -691,6 +817,9 @@
         "FH",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -702,12 +831,18 @@
         "FH",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
        "p": "the {colour} {knightEmblem:pl}",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "Royal {town} Order",
@@ -715,6 +850,9 @@
        "w": 4.0,
        "s": [
         "MR"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -739,6 +877,9 @@
        "w": 4.0,
        "s": [
         "SF"
+       ],
+       "t": [
+        "grand"
        ]
       }
      ]
@@ -768,6 +909,9 @@
         "FH",
         "MF",
         "SF"
+       ],
+       "t": [
+        "light"
        ]
       },
       {
@@ -779,12 +923,18 @@
         "FH",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
        "p": "{person:poss} {mercs}",
        "f": "E",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Free Company of the {emblem}",
@@ -793,12 +943,18 @@
        "s": [
         "FL",
         "FH"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
        "p": "the {town} {mercs}",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {desc} {creatures}",
@@ -813,6 +969,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -846,17 +1005,26 @@
       {
        "p": "the {compass} Squadron",
        "f": "B",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{ordinal} Fleet",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {town} {fleetGroup}",
        "f": "B",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{town} Navy",
@@ -866,6 +1034,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -891,7 +1062,10 @@
        ],
        "sx": {
         "MR": 0.5
-       }
+       },
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Squadron of the {colour} {knightEmblem}",
@@ -900,6 +1074,9 @@
        "s": [
         "FL",
         "FH"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -939,6 +1116,9 @@
         "FH",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -952,7 +1132,10 @@
        ],
        "sx": {
         "FL": 0.5
-       }
+       },
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {land} Watch",
@@ -972,6 +1155,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -981,6 +1167,9 @@
        "s": [
         "MR",
         "MF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -992,6 +1181,9 @@
         "FH",
         "MR",
         "MF"
+       ],
+       "t": [
+        "light"
        ]
       },
       {
@@ -1003,12 +1195,18 @@
         "FH",
         "MF",
         "SF"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
        "p": "{town} Marshals",
        "f": "E",
-       "w": 8.0
+       "w": 8.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{town} {enforcement}",
@@ -1048,17 +1246,26 @@
         "FL",
         "FH",
         "SF"
+       ],
+       "t": [
+        "light"
        ]
       },
       {
        "p": "{person:poss} {raiders}",
        "f": "E",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {desc} {gear}",
        "f": "E",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "grim"
+       ]
       },
       {
        "p": "{raiders} of the {land}",
@@ -1113,17 +1320,26 @@
       {
        "p": "Guardians of the {desc} {land}",
        "f": "F",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {colour} Watch",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Keepers of the {knightEmblem}",
        "f": "B",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "strange"
+       ]
       }
      ]
     }
@@ -1168,12 +1384,18 @@
       {
        "p": "the {agents:poss} {thiefGroup}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {uCreature}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "the {shade} {uCreature}",
@@ -1183,17 +1405,26 @@
       {
        "p": "{person:poss} {agents}",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {town} {thiefGroup}",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Knights of the {uWeapon}",
        "f": "B",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "light"
+       ]
       }
      ]
     },
@@ -1230,7 +1461,10 @@
       {
        "p": "the {uCreature}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "{shade} {agents}",
@@ -1240,7 +1474,10 @@
       {
        "p": "the {number} {uWeapon:pl}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "grim"
+       ]
       },
       {
        "p": "{thiefGroup} of the {lastThing}",
@@ -1277,7 +1514,10 @@
       {
        "p": "the {street} {gangMembers}",
        "f": "E",
-       "w": 25.0
+       "w": 25.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {gangNoun}",
@@ -1293,7 +1533,10 @@
       {
        "p": "the {colour} {gangWear}",
        "f": "E",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {urbanArea} {gangMembers}",
@@ -1303,6 +1546,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -1318,7 +1564,10 @@
       {
        "p": "{person:poss} {gangMembers}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       }
      ]
     },
@@ -1341,32 +1590,50 @@
       {
        "p": "the {surname} Family",
        "f": "E",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {town} {firm}",
        "f": "E",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {number} {portPlaces}",
        "f": "E",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {shade} Hand",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "grim"
+       ]
       },
       {
        "p": "{person:poss} {firm}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {surname} {firm}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {urban} {firm}",
@@ -1379,7 +1646,10 @@
       {
        "p": "the {colour} {emblem} {thiefGroup}",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "grand"
+       ]
       }
      ]
     },
@@ -1402,7 +1672,10 @@
       {
        "p": "the {town} Ring",
        "f": "E",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {land} {smugglerAgents}",
@@ -1423,12 +1696,18 @@
         "FH",
         "MR",
         "MF"
+       ],
+       "t": [
+        "light"
        ]
       },
       {
        "p": "{person:poss} {smugglerAgents}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {tech} Runners",
@@ -1441,7 +1720,10 @@
       {
        "p": "the {colour} Lanterns",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "strange"
+       ]
       }
      ]
     },
@@ -1467,17 +1749,26 @@
       {
        "p": "the {techWord} {uCreature}",
        "f": "E",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "{person:poss} Crew",
        "f": "E",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {number} {crewNoun}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {colour} {gangWear}",
@@ -1522,22 +1813,34 @@
       {
        "p": "{craftHonorific} Company of {tradesmen}",
        "f": "F",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Guild of {tradesmen}",
        "f": "F",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {tradesmen:poss} Guild",
        "f": "E",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{tradeDesc} {emblem} {tradesmen}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "{tradesmen} of the {colour} {emblem}",
@@ -1547,7 +1850,10 @@
       {
        "p": "the {town} {tradesmen}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Fellowship of {tradesmen}",
@@ -1588,6 +1894,9 @@
         "FL",
         "FH",
         "SF"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -1604,22 +1913,34 @@
       {
        "p": "the {town} Company",
        "f": "E",
-       "w": 8.0
+       "w": 8.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Honourable Company of {goods} Merchants",
        "f": "F",
-       "w": 8.0
+       "w": 8.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "{goods} Merchants of {town}",
        "f": "F",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{surname} & {surname}",
        "f": "B",
-       "w": 12.0
+       "w": 12.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Merchant Adventurers of {town}",
@@ -1628,12 +1949,18 @@
        "s": [
         "FL",
         "FH"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
        "p": "the {town} {goods} Company",
        "f": "E",
-       "w": 12.0
+       "w": 12.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Company of the {knightEmblem}",
@@ -1642,6 +1969,9 @@
        "s": [
         "FL",
         "FH"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -1660,6 +1990,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       }
      ]
@@ -1683,22 +2016,34 @@
       {
        "p": "{surname} & {surname}",
        "f": "B",
-       "w": 25.0
+       "w": 25.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{surname} Brothers",
        "f": "B",
-       "w": 8.0
+       "w": 8.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Bank of {town}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{town} {bankWord}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "House of {surname}",
@@ -1707,12 +2052,18 @@
        "s": [
         "FL",
         "FH"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
        "p": "the {colour} {various} Bank",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "{surname}, {surname} & Co.",
@@ -1723,6 +2074,9 @@
         "FH",
         "MR",
         "MF"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -1779,6 +2133,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -1789,6 +2146,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "strange"
        ]
       },
       {
@@ -1799,6 +2159,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -1809,6 +2172,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       }
      ]
@@ -1835,6 +2201,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -1845,6 +2214,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -1863,6 +2235,9 @@
        "s": [
         "MR",
         "MF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -1873,6 +2248,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -1891,6 +2269,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       }
      ]
@@ -1927,6 +2308,9 @@
        "s": [
         "FL",
         "FH"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -1936,6 +2320,9 @@
        "s": [
         "FL",
         "FH"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -1947,6 +2334,9 @@
         "FH",
         "MR",
         "MF"
+       ],
+       "t": [
+        "light"
        ]
       },
       {
@@ -1956,12 +2346,18 @@
        "s": [
         "MR",
         "MF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
        "p": "the {surname} Line",
        "f": "E",
-       "w": 12.0
+       "w": 12.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{town} Freight",
@@ -1971,6 +2367,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2028,42 +2427,66 @@
       {
        "p": "the {colour} {creature:pl}",
        "f": "E",
-       "w": 8.0
+       "w": 8.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{tradeDesc} {emblem} {vocation}",
        "f": "E",
-       "w": 6.0
+       "w": 6.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "the {compound}",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "{compound} Company",
        "f": "E",
-       "w": 3.0
+       "w": 3.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "the {number} in {colour}",
        "f": "E",
-       "w": 3.0
+       "w": 3.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "{person:poss} {companyGroup}",
        "f": "E",
-       "w": 6.0
+       "w": 6.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Company of the {ordinalWord} {emblem}",
        "f": "F",
-       "w": 4.0
+       "w": 4.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {emblem} and {emblem} Company",
        "f": "E",
-       "w": 3.0
+       "w": 3.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "the {tech} {creature:pl}",
@@ -2122,17 +2545,26 @@
       {
        "p": "the {expPlace} Expedition",
        "f": "B",
-       "w": 25.0
+       "w": 25.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{person:poss} Expedition",
        "f": "B",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {expPlace} Survey",
        "f": "B",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Royal {expPlace} Survey",
@@ -2143,6 +2575,9 @@
         "FH",
         "MR",
         "MF"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -2156,7 +2591,10 @@
       {
        "p": "Society for the Exploration of the {expPlace}",
        "f": "F",
-       "w": 7.0
+       "w": 7.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Company of {expPlace} Pathfinders",
@@ -2171,6 +2609,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2206,7 +2647,10 @@
       {
        "p": "the {monster} {hunterNoun}",
        "f": "E",
-       "w": 25.0
+       "w": 25.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {town} Huntsmen",
@@ -2216,6 +2660,9 @@
         "FL",
         "FH",
         "MF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2226,12 +2673,18 @@
         "FL",
         "FH",
         "MF"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
        "p": "Brotherhood of the {desc} Hunt",
        "f": "F",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "grim"
+       ]
       },
       {
        "p": "{person:poss} {retrieval}",
@@ -2240,6 +2693,9 @@
        "s": [
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2258,6 +2714,9 @@
         "FL",
         "FH",
         "MF"
+       ],
+       "t": [
+        "grand"
        ]
       }
      ]
@@ -2290,32 +2749,50 @@
       {
        "p": "Council of {number} {various:pl}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {colour} Chamber",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Council of {town}",
        "f": "F",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {number}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {councilQuality} Court",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "{town} {assemblyWord}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {town} {directorate}",
@@ -2325,6 +2802,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2333,6 +2813,9 @@
        "w": 5.0,
        "s": [
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2361,12 +2844,18 @@
       {
        "p": "the {ideal} Party",
        "f": "B",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {factionColour}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{town} {ideal} League",
@@ -2381,7 +2870,10 @@
       {
        "p": "Friends of the {ideal}",
        "f": "B",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "the {factionNick}",
@@ -2392,17 +2884,26 @@
         "FH",
         "MR",
         "MF"
+       ],
+       "t": [
+        "light"
        ]
       },
       {
        "p": "the {ideal} Faction",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Party of the {ideal}",
        "f": "F",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Movement for {ideal}",
@@ -2445,7 +2946,10 @@
       {
        "p": "the {number}",
        "f": "E",
-       "w": 8.0
+       "w": 8.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "Brotherhood of the {entity}",
@@ -2460,17 +2964,26 @@
       {
        "p": "Friends of {person}",
        "f": "B",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "the {number} {secretItem:pl}",
        "f": "E",
-       "w": 12.0
+       "w": 12.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "Order of the {secretQuality} {secretItem}",
        "f": "F",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "grand"
+       ]
       }
      ]
     },
@@ -2508,6 +3021,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2518,7 +3034,10 @@
       {
        "p": "the {colour} {rebelWear}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {ordinalWord} of {season} Movement",
@@ -2527,6 +3046,9 @@
        "s": [
         "FL",
         "FH"
+       ],
+       "t": [
+        "strange"
        ]
       },
       {
@@ -2541,17 +3063,26 @@
       {
        "p": "Army of the {ideal}",
        "f": "F",
-       "w": 6.0
+       "w": 6.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "{person:poss} Rising",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {rebelQuality} Hand",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "grim"
+       ]
       },
       {
        "p": "Rebels of the {land}",
@@ -2579,7 +3110,10 @@
       {
        "p": "League of {number} {cityWord:pl}",
        "f": "F",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {councilQuality} Concord",
@@ -2589,7 +3123,10 @@
       {
        "p": "{town} {leagueGroup}",
        "f": "F",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {ideal} {leagueGroup}",
@@ -2599,12 +3136,18 @@
       {
        "p": "Union of {town} and {town}",
        "f": "F",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {number} {cityWord:pl}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "Coalition of {number} Worlds",
@@ -2612,6 +3155,9 @@
        "w": 10.0,
        "s": [
         "SF"
+       ],
+       "t": [
+        "grand"
        ]
       },
       {
@@ -2645,6 +3191,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2655,6 +3204,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2665,6 +3217,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2675,6 +3230,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2685,6 +3243,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2695,6 +3256,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       },
       {
@@ -2712,6 +3276,9 @@
        "s": [
         "FL",
         "FH"
+       ],
+       "t": [
+        "light"
        ]
       },
       {
@@ -2721,12 +3288,18 @@
        "s": [
         "FL",
         "FH"
+       ],
+       "t": [
+        "strange"
        ]
       },
       {
        "p": "the {secretQuality} Office",
        "f": "E",
-       "w": 8.0
+       "w": 8.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "{initials}",
@@ -2736,6 +3309,9 @@
         "MR",
         "MF",
         "SF"
+       ],
+       "t": [
+        "plain"
        ]
       }
      ]
@@ -2758,27 +3334,42 @@
       {
        "p": "House {house}",
        "f": "B",
-       "w": 35.0
+       "w": 35.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "House {house} of {town}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {house:pl} of {town}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "House of the {colour} {knightEmblem}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {house} Line",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "House {house}–{house}",
@@ -2794,6 +3385,9 @@
        "w": 10.0,
        "s": [
         "SF"
+       ],
+       "t": [
+        "grand"
        ]
       }
      ]
@@ -2824,7 +3418,10 @@
       {
        "p": "Court of the {feyPlant} {skyThing}",
        "f": "B",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {feyTime} Court",
@@ -2834,7 +3431,10 @@
       {
        "p": "Folk of the {feyPlace}",
        "f": "B",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "the {colour} {feyPlant} Court",
@@ -2844,22 +3444,34 @@
       {
        "p": "the {number} Courts of the {feyPlace}",
        "f": "F",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {feyTime} {feyTitle:poss} Court",
        "f": "E",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Riders of the {feyPlace}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "{person:poss} Court",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       }
      ]
     },
@@ -2880,22 +3492,34 @@
       {
        "p": "the {colour} Line",
        "f": "E",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "House {house}",
        "f": "B",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Blood of {person}",
        "f": "B",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grim"
+       ]
       },
       {
        "p": "Children of the {bloodQuality} {skyThing}",
        "f": "B",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {bloodQuality} Kindred",
@@ -2910,12 +3534,18 @@
       {
        "p": "Court of the {colour} {knightEmblem}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {number} Bloods",
        "f": "E",
-       "w": 5.0
+       "w": 5.0,
+       "t": [
+        "grim"
+       ]
       }
      ]
     },
@@ -2941,7 +3571,10 @@
       {
        "p": "the {land} Pack",
        "f": "E",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {colour}-{bodyPart} Pack",
@@ -2951,22 +3584,34 @@
       {
        "p": "Children of the {skyThing}",
        "f": "B",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {shifter}-{kinWord}",
        "f": "E",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "{person:poss} Pack",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {number} {bodyPart:pl}",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "grim"
+       ]
       }
      ]
     },
@@ -2992,7 +3637,10 @@
       {
        "p": "Riders of the {weather}",
        "f": "B",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {feyTime} Riders",
@@ -3002,7 +3650,10 @@
       {
        "p": "Court of the {feyPlace}",
        "f": "B",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Spirits of the {land}",
@@ -3012,7 +3663,10 @@
       {
        "p": "the {number} Winds",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {deadQuality} Dead",
@@ -3042,12 +3696,18 @@
       {
        "p": "Host of the {ordinalWord} {hellPlace}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Legion of the {deadQuality} Crown",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {deadQuality} {undeadNoun}",
@@ -3057,12 +3717,18 @@
       {
        "p": "Army of {person}",
        "f": "F",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {colour} Barrows",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "grim"
+       ]
       },
       {
        "p": "the {number} {undeadNoun}",
@@ -3072,7 +3738,10 @@
       {
        "p": "Legion of the {land}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grand"
+       ]
       }
      ]
     },
@@ -3093,7 +3762,10 @@
       {
        "p": "Host of the {ordinalWord} {hellPlace}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Legion of {person}",
@@ -3103,17 +3775,26 @@
       {
        "p": "the {demonQuality} Choir",
        "f": "E",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "Court of {number} {chainItem}",
        "f": "F",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "{person:poss} Own",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "light"
+       ]
       },
       {
        "p": "the {colour} {hellPlace}",
@@ -3123,7 +3804,10 @@
       {
        "p": "Princes of the {hellPlace}",
        "f": "B",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "grand"
+       ]
       }
      ]
     },
@@ -3148,22 +3832,34 @@
       {
        "p": "Choir of the {entity}",
        "f": "F",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "the {colour} Wings",
        "f": "E",
-       "w": 20.0
+       "w": 20.0,
+       "t": [
+        "plain"
+       ]
       },
       {
        "p": "the {number} Thrones",
        "f": "E",
-       "w": 10.0
+       "w": 10.0,
+       "t": [
+        "grand"
+       ]
       },
       {
        "p": "Watchers of the {heavenThing}",
        "f": "B",
-       "w": 15.0
+       "w": 15.0,
+       "t": [
+        "strange"
+       ]
       },
       {
        "p": "the {heavenQuality} Host",
@@ -3186,27 +3882,42 @@
     {
      "p": "Friends of the {respectablePlace}",
      "f": "B",
-     "w": 20.0
+     "w": 20.0,
+     "t": [
+      "strange"
+     ]
     },
     {
      "p": "the {weekday} Club",
      "f": "E",
-     "w": 15.0
+     "w": 15.0,
+     "t": [
+      "light"
+     ]
     },
     {
      "p": "the {streetFirst} {club}",
      "f": "E",
-     "w": 20.0
+     "w": 20.0,
+     "t": [
+      "light"
+     ]
     },
     {
      "p": "{town} Benevolent Society",
      "f": "F",
-     "w": 10.0
+     "w": 10.0,
+     "t": [
+      "plain"
+     ]
     },
     {
      "p": "{town} Philosophical Society",
      "f": "F",
-     "w": 10.0
+     "w": 10.0,
+     "t": [
+      "grand"
+     ]
     }
    ],
    "typeShapes": {
@@ -3214,7 +3925,10 @@
      {
       "p": "the {town} Hunt",
       "f": "E",
-      "w": 15
+      "w": 15,
+      "t": [
+       "plain"
+      ]
      }
     ]
    }
@@ -3224,7 +3938,10 @@
     {
      "p": "Honourable Company of {thiefEuph}",
      "f": "F",
-     "w": 25.0
+     "w": 25.0,
+     "t": [
+      "grand"
+     ]
     },
     {
      "p": "Guild of {thiefEuph}",
@@ -3273,6 +3990,9 @@
       "MR",
       "MF",
       "SF"
+     ],
+     "t": [
+      "plain"
      ]
     }
    ]
@@ -3282,17 +4002,26 @@
     {
      "p": "{surname} & Sons {businessTrade}",
      "f": "B",
-     "w": 30.0
+     "w": 30.0,
+     "t": [
+      "plain"
+     ]
     },
     {
      "p": "{town} {businessTrade} Company",
      "f": "F",
-     "w": 20.0
+     "w": 20.0,
+     "t": [
+      "plain"
+     ]
     },
     {
      "p": "{town} {businessTrade}",
      "f": "E",
-     "w": 15.0
+     "w": 15.0,
+     "t": [
+      "plain"
+     ]
     },
     {
      "p": "the {town} Social Club",
@@ -3303,6 +4032,9 @@
       "FH",
       "MR",
       "MF"
+     ],
+     "t": [
+      "plain"
      ]
     },
     {
@@ -3313,6 +4045,9 @@
       "MR",
       "MF",
       "SF"
+     ],
+     "t": [
+      "plain"
      ]
     }
    ]
@@ -3322,7 +4057,10 @@
     {
      "p": "{town} Free Traders",
      "f": "E",
-     "w": 25.0
+     "w": 25.0,
+     "t": [
+      "plain"
+     ]
     },
     {
      "p": "{town} {fishWord} Company",
@@ -3333,17 +4071,26 @@
       "FH",
       "MR",
       "MF"
+     ],
+     "t": [
+      "plain"
      ]
     },
     {
      "p": "Friends of the Harbour Lights",
      "f": "B",
-     "w": 10.0
+     "w": 10.0,
+     "t": [
+      "light"
+     ]
     },
     {
      "p": "{town} Pilots' Association",
      "f": "F",
-     "w": 15.0
+     "w": 15.0,
+     "t": [
+      "plain"
+     ]
     },
     {
      "p": "{brandRoot} Logistics",
@@ -3353,6 +4100,9 @@
       "MR",
       "MF",
       "SF"
+     ],
+     "t": [
+      "plain"
      ]
     }
    ]
@@ -3367,6 +4117,9 @@
       "MR",
       "MF",
       "SF"
+     ],
+     "t": [
+      "plain"
      ]
     },
     {
@@ -3377,12 +4130,18 @@
       "MR",
       "MF",
       "SF"
+     ],
+     "t": [
+      "plain"
      ]
     },
     {
      "p": "the {town} {mundaneOffice}",
      "f": "E",
-     "w": 25.0
+     "w": 25.0,
+     "t": [
+      "plain"
+     ]
     },
     {
      "p": "the {ruler:poss} {clerkWord}",
@@ -3391,6 +4150,9 @@
      "s": [
       "FL",
       "FH"
+     ],
+     "t": [
+      "plain"
      ]
     }
    ]
@@ -3405,7 +4167,10 @@
     {
      "p": "the People of {peace}",
      "f": "B",
-     "w": 20.0
+     "w": 20.0,
+     "t": [
+      "strange"
+     ]
     },
     {
      "p": "{folkFixed}",
@@ -3415,7 +4180,10 @@
     {
      "p": "Folk of the {respectablePlace}",
      "f": "B",
-     "w": 20.0
+     "w": 20.0,
+     "t": [
+      "strange"
+     ]
     }
    ]
   },
@@ -3434,12 +4202,18 @@
     {
      "p": "Friends of the {bargainWord}",
      "f": "B",
-     "w": 20.0
+     "w": 20.0,
+     "t": [
+      "strange"
+     ]
     },
     {
      "p": "{town} Mutual Assurance Society",
      "f": "F",
-     "w": 20.0
+     "w": 20.0,
+     "t": [
+      "plain"
+     ]
     }
    ]
   }
@@ -3448,7 +4222,10 @@
   "colour": [
    {
     "w": "Black",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "White",
@@ -3456,62 +4233,110 @@
    },
    {
     "w": "Red",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Grey",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Green"
+    "w": "Green",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Blue"
+    "w": "Blue",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Gold"
+    "w": "Gold",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Golden"
+    "w": "Golden",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Silver",
-    "x": 1.5
+    "x": 1.5,
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Iron"
+    "w": "Iron",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Scarlet"
+    "w": "Scarlet",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Crimson"
+    "w": "Crimson",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Ashen"
+    "w": "Ashen",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Pale"
+    "w": "Pale",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Copper"
+    "w": "Copper",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Bronze"
    },
    {
-    "w": "Russet"
+    "w": "Russet",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Amber"
    },
    {
     "w": "Sable",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Azure",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Jade",
@@ -3519,15 +4344,24 @@
    },
    {
     "w": "Ivory",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Violet",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Purple",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    }
   ],
   "colourRich": [
@@ -3535,28 +4369,43 @@
     "w": "Amber"
    },
    {
-    "w": "Amethyst"
+    "w": "Amethyst",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Aquamarine",
     "x": 0.3
    },
    {
-    "w": "Ashen"
+    "w": "Ashen",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Azure",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Beryl",
     "x": 0.3
    },
    {
-    "w": "Black"
+    "w": "Black",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Blue"
+    "w": "Blue",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Brazen",
@@ -3578,37 +4427,64 @@
    },
    {
     "w": "Crimson",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Crystal"
+    "w": "Crystal",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Ebony"
+    "w": "Ebony",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Emerald",
-    "x": 1.5
+    "x": 1.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Golden",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Green"
+    "w": "Green",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Grey"
+    "w": "Grey",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Incarnadine",
-    "x": 0.2
+    "x": 0.2,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Indigo"
    },
    {
-    "w": "Ivory"
+    "w": "Ivory",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Jade",
@@ -3616,7 +4492,10 @@
    },
    {
     "w": "Jet",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Malachite",
@@ -3624,30 +4503,51 @@
    },
    {
     "w": "Opal",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Pale"
+    "w": "Pale",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Pearl"
+    "w": "Pearl",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Purple"
    },
    {
     "w": "Rainbow",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Red"
+    "w": "Red",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Rosy",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Ruby"
+    "w": "Ruby",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Russet",
@@ -3655,21 +4555,33 @@
    },
    {
     "w": "Sable",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Sapphire"
+    "w": "Sapphire",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Scarlet"
    },
    {
     "w": "Silver",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Topaz",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Turquoise",
@@ -3677,7 +4589,10 @@
    },
    {
     "w": "Umber",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Vermilion",
@@ -3688,11 +4603,17 @@
    },
    {
     "w": "Viridian",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "White",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    }
   ],
   "number": [
@@ -3714,11 +4635,17 @@
    },
    {
     "w": "Seven",
-    "x": 3.0
+    "x": 3.0,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Nine",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Ten"
@@ -3728,7 +4655,10 @@
     "x": 2.0
    },
    {
-    "w": "Thirteen"
+    "w": "Thirteen",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Hundred",
@@ -3936,14 +4866,23 @@
     "w": "Red"
    },
    {
-    "w": "Gold"
+    "w": "Gold",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Silver"
+    "w": "Silver",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Iron",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Blue"
@@ -3952,39 +4891,63 @@
     "w": "Green"
    },
    {
-    "w": "Grey"
+    "w": "Grey",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Battle"
    },
    {
     "w": "Blood",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Bolt"
    },
    {
-    "w": "Bone"
+    "w": "Bone",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Chaos",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Dark"
+    "w": "Dark",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Death",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Dire",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Doom",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Fire"
@@ -3996,7 +4959,10 @@
     "w": "Free"
    },
    {
-    "w": "High"
+    "w": "High",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Law",
@@ -4006,42 +4972,69 @@
     "w": "Light"
    },
    {
-    "w": "Lightning"
+    "w": "Lightning",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Moon"
+    "w": "Moon",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Night",
-    "x": 1.5
+    "x": 1.5,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Rune",
     "s": [
      "FH",
      "MF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
-    "w": "Sea"
+    "w": "Sea",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Skull",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Star"
+    "w": "Star",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Storm",
     "x": 2.0
    },
    {
-    "w": "Sun"
+    "w": "Sun",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Thunder",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Thunderbolt",
@@ -4064,17 +5057,26 @@
    },
    {
     "w": "Wrath",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Steel",
     "x": 1.5
    },
    {
-    "w": "Stone"
+    "w": "Stone",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Ash"
+    "w": "Ash",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Ember"
@@ -4086,31 +5088,58 @@
     "w": "Winter"
    },
    {
-    "w": "Crown"
+    "w": "Crown",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Royal"
+    "w": "Royal",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Loyal"
+    "w": "Loyal",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Long"
+    "w": "Long",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Last"
+    "w": "Last",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Old"
+    "w": "Old",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Salt"
+    "w": "Salt",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Border"
+    "w": "Border",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Hollow"
+    "w": "Hollow",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Sudden"
@@ -4124,6 +5153,9 @@
     "w": "Astral",
     "s": [
      "SF"
+    ],
+    "t": [
+     "grand"
     ]
    },
    {
@@ -4136,12 +5168,18 @@
     "w": "Celestial",
     "s": [
      "SF"
+    ],
+    "t": [
+     "grand"
     ]
    },
    {
     "w": "Cosmic",
     "s": [
      "SF"
+    ],
+    "t": [
+     "grand"
     ]
    },
    {
@@ -4167,6 +5205,9 @@
     "w": "Galactic",
     "s": [
      "SF"
+    ],
+    "t": [
+     "grand"
     ]
    },
    {
@@ -4186,6 +5227,9 @@
     "w": "Ion",
     "s": [
      "SF"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
@@ -4205,6 +5249,9 @@
     "w": "Lunar",
     "s": [
      "SF"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
@@ -4225,12 +5272,18 @@
     "x": 2.0,
     "s": [
      "SF"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
     "w": "Phase",
     "s": [
      "SF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
@@ -4255,6 +5308,9 @@
     "w": "Quantum",
     "s": [
      "SF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
@@ -4268,12 +5324,18 @@
     "x": 0.5,
     "s": [
      "SF"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
     "w": "Solar",
     "s": [
      "SF"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
@@ -4287,6 +5349,9 @@
     "w": "Stellar",
     "s": [
      "SF"
+    ],
+    "t": [
+     "grand"
     ]
    },
    {
@@ -4294,6 +5359,9 @@
     "x": 0.5,
     "s": [
      "SF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
@@ -4314,12 +5382,18 @@
     "x": 2.0,
     "s": [
      "SF"
+    ],
+    "t": [
+     "grim"
     ]
    },
    {
     "w": "Warp",
     "s": [
      "SF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
@@ -4347,6 +5421,9 @@
     "x": 0.3,
     "s": [
      "SF"
+    ],
+    "t": [
+     "grim"
     ]
    },
    {
@@ -4354,6 +5431,9 @@
     "x": 0.3,
     "s": [
      "SF"
+    ],
+    "t": [
+     "grim"
     ]
    }
   ],
@@ -4737,11 +5817,17 @@
   "quality": [
    {
     "w": "Ancient",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Arcane",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Astral"
@@ -4761,17 +5847,26 @@
     "x": 0.5
    },
    {
-    "w": "Celestial"
+    "w": "Celestial",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Concealed"
+    "w": "Concealed",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Cosmic"
    },
    {
     "w": "Dark",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Deep"
@@ -4782,11 +5877,17 @@
    },
    {
     "w": "Effulgent",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Elder",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Elemental",
@@ -4796,26 +5897,41 @@
     ]
    },
    {
-    "w": "Esoteric"
+    "w": "Esoteric",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Eternal",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Ethereal"
    },
    {
     "w": "Forgotten",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Gloomy",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Glorious",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Glowing",
@@ -4827,22 +5943,37 @@
    },
    {
     "w": "Hidden",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Ineffable",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Inner",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Lost",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Luminous"
+    "w": "Luminous",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Lunar"
@@ -4857,56 +5988,92 @@
    },
    {
     "w": "Mysterious",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Mystic"
    },
    {
-    "w": "Occult"
+    "w": "Occult",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Penumbral",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Profound",
     "x": 0.5
    },
    {
-    "w": "Pure"
+    "w": "Pure",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Quintessential",
-    "x": 0.2
+    "x": 0.2,
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Radiant"
+    "w": "Radiant",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Recondite",
-    "x": 0.2
+    "x": 0.2,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Resplendent",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Revealed"
    },
    {
     "w": "Sacred",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Secret",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Shadowed"
+    "w": "Shadowed",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Shining"
+    "w": "Shining",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Sidereal",
@@ -4914,11 +6081,17 @@
    },
    {
     "w": "Singing",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Sinister",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Solar"
@@ -4928,52 +6101,85 @@
     "x": 0.5
    },
    {
-    "w": "Spiral"
+    "w": "Spiral",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Starry"
    },
    {
     "w": "Sublime",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Supernal",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Timeless"
    },
    {
     "w": "Transcendent",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "True",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Veiled",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Silent",
     "x": 2.0
    },
    {
-    "w": "Still"
+    "w": "Still",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Hollow"
+    "w": "Hollow",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Sleeping"
+    "w": "Sleeping",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Unseen"
+    "w": "Unseen",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Nameless"
+    "w": "Nameless",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Unbroken"
@@ -4982,19 +6188,34 @@
     "w": "Wandering"
    },
    {
-    "w": "Weeping"
+    "w": "Weeping",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Whispering"
+    "w": "Whispering",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "First"
+    "w": "First",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Last"
+    "w": "Last",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Unspoken"
+    "w": "Unspoken",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Quantum",
@@ -5006,12 +6227,18 @@
     "w": "Recursive",
     "s": [
      "SF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
     "w": "Infinite",
     "s": [
      "SF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
@@ -5024,6 +6251,9 @@
     "w": "Null",
     "s": [
      "SF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
@@ -5036,6 +6266,9 @@
     "w": "Fractal",
     "s": [
      "SF"
+    ],
+    "t": [
+     "strange"
     ]
    }
   ],
@@ -5045,7 +6278,10 @@
     "x": 0.3
    },
    {
-    "w": "Chalice"
+    "w": "Chalice",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Chamber"
@@ -5057,13 +6293,19 @@
     "w": "Cowl"
    },
    {
-    "w": "Crown"
+    "w": "Crown",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Crystal"
    },
    {
-    "w": "Darkness"
+    "w": "Darkness",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Dawn",
@@ -5078,7 +6320,10 @@
    },
    {
     "w": "Dominion",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Enlightenment",
@@ -5086,7 +6331,10 @@
    },
    {
     "w": "Eye",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Faith"
@@ -5114,11 +6362,17 @@
    },
    {
     "w": "Grail",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Hand",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Harmony"
@@ -5132,7 +6386,10 @@
    },
    {
     "w": "Key",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Knowledge"
@@ -5158,14 +6415,20 @@
     "w": "Mystery"
    },
    {
-    "w": "Night"
+    "w": "Night",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Orb"
    },
    {
     "w": "Path",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Pentacle",
@@ -5182,6 +6445,9 @@
     "s": [
      "FH",
      "MF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
@@ -5193,17 +6459,26 @@
    },
    {
     "w": "Question",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Radiance"
+    "w": "Radiance",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Rainbow",
     "x": 0.5
    },
    {
-    "w": "Revelation"
+    "w": "Revelation",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Robe",
@@ -5213,7 +6488,10 @@
     "w": "Rod"
    },
    {
-    "w": "Sceptre"
+    "w": "Sceptre",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Scroll"
@@ -5223,7 +6501,10 @@
    },
    {
     "w": "Shadow",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Shrine"
@@ -5251,11 +6532,17 @@
     "x": 2.0
    },
    {
-    "w": "Stone"
+    "w": "Stone",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Sun",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Symbol",
@@ -5269,7 +6556,10 @@
     "w": "Temple"
    },
    {
-    "w": "Throne"
+    "w": "Throne",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Time"
@@ -5282,14 +6572,20 @@
    },
    {
     "w": "Veil",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Verity",
     "x": 0.5
    },
    {
-    "w": "Void"
+    "w": "Void",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Wand",
@@ -5300,46 +6596,73 @@
    },
    {
     "w": "Way",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Wisdom"
    },
    {
     "w": "Word",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "World"
    },
    {
     "w": "Lantern",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Mirror",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Labyrinth"
+    "w": "Labyrinth",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Threshold"
+    "w": "Threshold",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Silence"
+    "w": "Silence",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Ember"
    },
    {
-    "w": "Well"
+    "w": "Well",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Tree"
    },
    {
-    "w": "Serpent"
+    "w": "Serpent",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Rose",
@@ -5349,7 +6672,10 @@
     "w": "Compass"
    },
    {
-    "w": "Hourglass"
+    "w": "Hourglass",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Eclipse"
@@ -5371,24 +6697,36 @@
    },
    {
     "w": "Lamp",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Seal"
    },
    {
-    "w": "Spiral"
+    "w": "Spiral",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Ouroboros",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Lotus",
     "x": 0.5
    },
    {
-    "w": "Sleeper"
+    "w": "Sleeper",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Signal",
@@ -5400,6 +6738,9 @@
     "w": "Singularity",
     "s": [
      "SF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
@@ -6319,7 +7660,10 @@
    },
    {
     "w": "Adepts",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Initiates",
@@ -6331,15 +7675,24 @@
    },
    {
     "w": "Brothers",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Sisters",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Children",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Disciples"
@@ -6353,7 +7706,10 @@
    },
    {
     "w": "Apostles",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Aspirants",
@@ -6361,54 +7717,96 @@
    },
    {
     "w": "Fellows",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Followers"
+    "w": "Followers",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Servants"
+    "w": "Servants",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Masters"
+    "w": "Masters",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Illuminants",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Revealers",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Watchers"
+    "w": "Watchers",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Wardens"
    },
    {
-    "w": "Heirs"
+    "w": "Heirs",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Walkers"
+    "w": "Walkers",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Dreamers"
+    "w": "Dreamers",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Sages"
+    "w": "Sages",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Hermits",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Gentlemen",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Ladies",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Magi",
@@ -6418,6 +7816,9 @@
     ],
     "types": [
      "arcane"
+    ],
+    "t": [
+     "grand"
     ]
    },
    {
@@ -6574,30 +7975,54 @@
   "holyQuality": [
    {
     "w": "Holy",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Blessed"
+    "w": "Blessed",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Humble"
+    "w": "Humble",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Poor",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Little"
+    "w": "Little",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Silent"
+    "w": "Silent",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Barefoot"
+    "w": "Barefoot",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Penitent",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Merciful"
@@ -6607,57 +8032,99 @@
    },
    {
     "w": "Hidden",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "strange"
+    ]
    }
   ],
   "holyEntity": [
    {
-    "w": "Lantern"
+    "w": "Lantern",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Still Water"
    },
    {
-    "w": "Open Hand"
+    "w": "Open Hand",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Bread"
+    "w": "Bread",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Well"
+    "w": "Well",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Hearth"
+    "w": "Hearth",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Mercy"
    },
    {
-    "w": "Dawn"
+    "w": "Dawn",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Grace"
+    "w": "Grace",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Vigil"
+    "w": "Vigil",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Bell"
+    "w": "Bell",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Lamp"
+    "w": "Lamp",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Mountain"
+    "w": "Mountain",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Pilgrim Road"
    },
    {
-    "w": "Ash"
+    "w": "Ash",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Silence"
+    "w": "Silence",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Lamb"
@@ -6675,18 +8142,30 @@
     "w": "Spring"
    },
    {
-    "w": "Stone"
+    "w": "Stone",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Path"
+    "w": "Path",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Gate"
+    "w": "Gate",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Quiet Star",
     "s": [
      "SF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
@@ -6699,6 +8178,9 @@
     "w": "Far Light",
     "s": [
      "SF"
+    ],
+    "t": [
+     "grand"
     ]
    }
   ],
@@ -6766,66 +8248,123 @@
   "cultQuality": [
    {
     "w": "Hollow",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Pale",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Silent"
+    "w": "Silent",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Weeping"
+    "w": "Weeping",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Unblinking"
+    "w": "Unblinking",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Drowned"
+    "w": "Drowned",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Coming"
+    "w": "Coming",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Final"
+    "w": "Final",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Sleeping"
+    "w": "Sleeping",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Burning"
+    "w": "Burning",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Nameless"
+    "w": "Nameless",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Patient"
+    "w": "Patient",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Hungry"
+    "w": "Hungry",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Crawling",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Smiling"
+    "w": "Smiling",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Faceless"
+    "w": "Faceless",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Twin"
+    "w": "Twin",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Ninth"
+    "w": "Ninth",
+    "t": [
+     "strange"
+    ]
    }
   ],
   "cultEntity": [
    {
     "w": "Sun",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Flame"
@@ -6834,25 +8373,40 @@
     "w": "Moon"
    },
    {
-    "w": "King"
+    "w": "King",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Queen"
+    "w": "Queen",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Harvest"
    },
    {
-    "w": "Dark"
+    "w": "Dark",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Star"
    },
    {
-    "w": "Hour"
+    "w": "Hour",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Eye"
+    "w": "Eye",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Tide"
@@ -6861,42 +8415,75 @@
     "w": "Bell"
    },
    {
-    "w": "Lamb"
+    "w": "Lamb",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Door"
+    "w": "Door",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Mother"
+    "w": "Mother",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Father"
+    "w": "Father",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Child"
+    "w": "Child",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Mouth",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Worm",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Crown"
+    "w": "Crown",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Throne"
+    "w": "Throne",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Choir"
+    "w": "Choir",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Gate"
    },
    {
-    "w": "Dreamer"
+    "w": "Dreamer",
+    "t": [
+     "strange"
+    ]
    }
   ],
   "cultName": [
@@ -7031,20 +8618,35 @@
   "covenEmblem": [
    {
     "w": "Hare",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Toad"
+    "w": "Toad",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Owl"
+    "w": "Owl",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Cat"
+    "w": "Cat",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Moon",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Thorn"
@@ -7065,31 +8667,58 @@
     "w": "Mistletoe"
    },
    {
-    "w": "Cauldron"
+    "w": "Cauldron",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Broom"
+    "w": "Broom",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Candle"
+    "w": "Candle",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Mirror"
+    "w": "Mirror",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Bone"
+    "w": "Bone",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Needle"
+    "w": "Needle",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Thread"
+    "w": "Thread",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Apple"
+    "w": "Apple",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Hag-Stone"
+    "w": "Hag-Stone",
+    "t": [
+     "grim"
+    ]
    }
   ],
   "covenLand": [
@@ -7457,11 +9086,17 @@
   "soldiers": [
    {
     "w": "Champions",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Fighters",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Marines"
@@ -7471,6 +9106,9 @@
     "s": [
      "FH",
      "MF"
+    ],
+    "t": [
+     "grand"
     ]
    },
    {
@@ -7481,10 +9119,16 @@
     "x": 0.5
    },
    {
-    "w": "Soldiers"
+    "w": "Soldiers",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Troopers"
+    "w": "Troopers",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Veterans",
@@ -7492,31 +9136,49 @@
    },
    {
     "w": "Victors",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Warriors"
    },
    {
-    "w": "Raiders"
+    "w": "Raiders",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Rangers"
    },
    {
-    "w": "Lancers"
+    "w": "Lancers",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Blades"
    },
    {
-    "w": "Bravos"
+    "w": "Bravos",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Irregulars"
+    "w": "Irregulars",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Volunteers"
+    "w": "Volunteers",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Fencibles",
@@ -7524,6 +9186,9 @@
     "s": [
      "FL",
      "FH"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
@@ -7531,6 +9196,9 @@
     "s": [
      "FL",
      "FH"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
@@ -7539,10 +9207,16 @@
     "s": [
      "FL",
      "FH"
+    ],
+    "t": [
+     "grand"
     ]
    },
    {
-    "w": "Sentinels"
+    "w": "Sentinels",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Drop Troopers",
@@ -7577,24 +9251,42 @@
     "w": "Guardians"
    },
    {
-    "w": "Guards"
+    "w": "Guards",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Keepers"
+    "w": "Keepers",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Knights"
+    "w": "Knights",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Lords",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Preservers",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Protectors"
+    "w": "Protectors",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Rangers"
@@ -7603,18 +9295,27 @@
     "w": "Sentinels"
    },
    {
-    "w": "Sentries"
+    "w": "Sentries",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Wardens",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Warders"
    },
    {
     "w": "Watchers",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Crusaders",
@@ -7622,6 +9323,9 @@
     "s": [
      "FL",
      "FH"
+    ],
+    "t": [
+     "grand"
     ]
    }
   ],
@@ -7631,10 +9335,16 @@
    },
    {
     "w": "Destroyers",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Marauders"
+    "w": "Marauders",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Pirates"
@@ -7644,23 +9354,38 @@
     "x": 0.5
    },
    {
-    "w": "Reavers"
+    "w": "Reavers",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Sellswords"
+    "w": "Sellswords",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Freeswords"
+    "w": "Freeswords",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Free Lances"
+    "w": "Free Lances",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Condottieri",
     "tx": {
      "mediterranean": 3.0
     },
-    "x": 0.2
+    "x": 0.2,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Contractors",
@@ -7668,6 +9393,9 @@
      "MR",
      "MF",
      "SF"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
@@ -7676,6 +9404,9 @@
     "s": [
      "FH",
      "MF"
+    ],
+    "t": [
+     "grim"
     ]
    }
   ],
@@ -7691,28 +9422,49 @@
     "x": 2.0
    },
    {
-    "w": "Bows"
+    "w": "Bows",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Bucklers"
+    "w": "Bucklers",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Claws"
+    "w": "Claws",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Daggers"
    },
    {
-    "w": "Darts"
+    "w": "Darts",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Fangs"
+    "w": "Fangs",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Fists"
+    "w": "Fists",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Flails"
+    "w": "Flails",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Gauntlets"
@@ -7727,34 +9479,64 @@
     "w": "Helms"
    },
    {
-    "w": "Knives"
+    "w": "Knives",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Lances"
+    "w": "Lances",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Maces"
+    "w": "Maces",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Pikes"
+    "w": "Pikes",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Scythes"
+    "w": "Scythes",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Shields"
+    "w": "Shields",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Spears"
+    "w": "Spears",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Swords"
+    "w": "Swords",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Talons"
+    "w": "Talons",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Teeth"
+    "w": "Teeth",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Muskets",
@@ -7772,6 +9554,9 @@
      "FH",
      "MR",
      "MF"
+    ],
+    "t": [
+     "grand"
     ]
    },
    {
@@ -7799,70 +9584,121 @@
     "w": "Lances",
     "s": [
      "SF"
+    ],
+    "t": [
+     "grand"
     ]
    }
   ],
   "creatures": [
    {
-    "w": "Bears"
+    "w": "Bears",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Boars"
+    "w": "Boars",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Bulls"
+    "w": "Bulls",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Eagles"
+    "w": "Eagles",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Falcons"
+    "w": "Falcons",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Hawks"
+    "w": "Hawks",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Hounds"
+    "w": "Hounds",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Jaguars"
    },
    {
-    "w": "Lions"
+    "w": "Lions",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Panthers"
    },
    {
-    "w": "Rats"
+    "w": "Rats",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Scorpions"
+    "w": "Scorpions",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Sharks"
+    "w": "Sharks",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Tigers"
    },
    {
-    "w": "Vipers"
+    "w": "Vipers",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Wolves",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Ravens"
+    "w": "Ravens",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Stags"
+    "w": "Stags",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Wolverines"
    },
    {
-    "w": "Badgers"
+    "w": "Badgers",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Griffins",
@@ -7870,7 +9706,10 @@
      "MR": 0.5,
      "MF": 0.5,
      "SF": 0.5
-    }
+    },
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Dragons",
@@ -7878,7 +9717,10 @@
      "MR": 0.5,
      "MF": 0.5,
      "SF": 0.5
-    }
+    },
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Wyverns",
@@ -7894,11 +9736,10 @@
      "MR": 0.5,
      "MF": 0.5,
      "SF": 0.5
-    }
-   },
-   {
-    "w": "elsewhere)",
-    "x": 0.5
+    },
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Angels",
@@ -7906,7 +9747,10 @@
    },
    {
     "w": "Devils",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    }
   ],
   "starBand": [
@@ -8194,28 +10038,52 @@
   ],
   "element": [
    {
-    "w": "Flame"
+    "w": "Flame",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Iron"
+    "w": "Iron",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Thunder"
+    "w": "Thunder",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Winter"
+    "w": "Winter",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Stone"
+    "w": "Stone",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Storm"
+    "w": "Storm",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Ash"
+    "w": "Ash",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Night"
+    "w": "Night",
+    "t": [
+     "grim"
+    ]
    }
   ],
   "nickTrait": [
@@ -8285,9 +10153,6 @@
     ]
    },
    {
-    "w": "§12)"
-   },
-   {
     "w": "Die-Hards",
     "x": 0.3
    }
@@ -8327,37 +10192,67 @@
   "nickAdj": [
    {
     "w": "Fighting",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Bloody",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Gallant"
+    "w": "Gallant",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Faithful"
+    "w": "Faithful",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Old",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Hungry"
+    "w": "Hungry",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Lucky"
+    "w": "Lucky",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Stubborn"
+    "w": "Stubborn",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Ragged"
+    "w": "Ragged",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Saucy",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "light"
+    ]
    }
   ],
   "knightEmblem": [
@@ -8632,31 +10527,58 @@
   ],
   "fleetQuality": [
    {
-    "w": "Storm"
+    "w": "Storm",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Grey"
+    "w": "Grey",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Swift"
+    "w": "Swift",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Silent"
+    "w": "Silent",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Iron"
+    "w": "Iron",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Night"
+    "w": "Night",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Long"
+    "w": "Long",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Salt"
+    "w": "Salt",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Thunder"
+    "w": "Thunder",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Winter"
@@ -8806,46 +10728,79 @@
   ],
   "raiders": [
    {
-    "w": "Bandits"
+    "w": "Bandits",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Brigands"
+    "w": "Brigands",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Corsairs"
    },
    {
-    "w": "Freebooters"
+    "w": "Freebooters",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Buccaneers"
+    "w": "Buccaneers",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Marauders"
+    "w": "Marauders",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Outlaws",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Pirates"
+    "w": "Pirates",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Raiders",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Reavers",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Rovers"
+    "w": "Rovers",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Sea-Wolves"
    },
    {
-    "w": "Wreckers"
+    "w": "Wreckers",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Wolves"
@@ -8888,54 +10843,90 @@
   ],
   "shade": [
    {
-    "w": "Black"
+    "w": "Black",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Dark"
+    "w": "Dark",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Dim"
+    "w": "Dim",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Dusk",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Fog"
+    "w": "Fog",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Gloom"
+    "w": "Gloom",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Grey"
+    "w": "Grey",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Night",
     "x": 2.0
    },
    {
-    "w": "Shade"
+    "w": "Shade",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Shadow",
     "x": 2.0
    },
    {
-    "w": "Smoke"
+    "w": "Smoke",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Quiet",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Subtle"
    },
    {
-    "w": "Whisper"
+    "w": "Whisper",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Bloody",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Hidden"
@@ -8944,7 +10935,10 @@
     "w": "Red"
    },
    {
-    "w": "Ready"
+    "w": "Ready",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Sharp"
@@ -8954,87 +10948,153 @@
    },
    {
     "w": "Velvet",
-    "x": 1.5
+    "x": 1.5,
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Silent"
    },
    {
-    "w": "Soft"
+    "w": "Soft",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Still"
    },
    {
-    "w": "Crooked"
+    "w": "Crooked",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Nimble"
+    "w": "Nimble",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Lean"
+    "w": "Lean",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Cold"
+    "w": "Cold",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Long"
+    "w": "Long",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Narrow"
+    "w": "Narrow",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Hollow"
+    "w": "Hollow",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Sly"
+    "w": "Sly",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Quick"
+    "w": "Quick",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Midnight"
+    "w": "Midnight",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Moonless"
+    "w": "Moonless",
+    "t": [
+     "grim"
+    ]
    }
   ],
   "uWeapon": [
    {
-    "w": "Blade"
+    "w": "Blade",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Bolt"
    },
    {
-    "w": "Claw"
+    "w": "Claw",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Dagger"
+    "w": "Dagger",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Dirk"
    },
    {
-    "w": "Fang"
+    "w": "Fang",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Hand",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Knife",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Razor"
+    "w": "Razor",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Needle"
+    "w": "Needle",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Stiletto",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Sting"
@@ -9047,11 +11107,17 @@
      "FH",
      "MR",
      "MF"
+    ],
+    "t": [
+     "light"
     ]
    },
    {
     "w": "Garrotte",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grim"
+    ]
    }
   ],
   "uItem": [
@@ -9113,64 +11179,118 @@
     "w": "Snakes"
    },
    {
-    "w": "Scorpions"
+    "w": "Scorpions",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Spiders"
+    "w": "Spiders",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Bats"
+    "w": "Bats",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Cats"
+    "w": "Cats",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Jackdaws"
+    "w": "Jackdaws",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Dogs"
    },
    {
-    "w": "Owls"
+    "w": "Owls",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Magpies"
+    "w": "Magpies",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Rats",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Weasels"
+    "w": "Weasels",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Foxes"
+    "w": "Foxes",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Stoats"
+    "w": "Stoats",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Ferrets"
+    "w": "Ferrets",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Crows"
+    "w": "Crows",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Moths"
+    "w": "Moths",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Eels"
+    "w": "Eels",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Vipers"
+    "w": "Vipers",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Jackals"
+    "w": "Jackals",
+    "t": [
+     "grim"
+    ]
    }
   ],
   "agents": [
    {
-    "w": "Finders"
+    "w": "Finders",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Hunters"
@@ -9179,38 +11299,68 @@
     "w": "Seekers"
    },
    {
-    "w": "Shadows"
+    "w": "Shadows",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Slayers"
+    "w": "Slayers",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Stalkers",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Takers"
+    "w": "Takers",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Cutters"
+    "w": "Cutters",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Lifters"
+    "w": "Lifters",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Pickers"
+    "w": "Pickers",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Walkers"
+    "w": "Walkers",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Creepers"
+    "w": "Creepers",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Prowlers"
    },
    {
-    "w": "Light-Fingers"
+    "w": "Light-Fingers",
+    "t": [
+     "light"
+    ]
    }
   ],
   "thiefGroup": [
@@ -9288,29 +11438,50 @@
   "gangMembers": [
    {
     "w": "Boys",
-    "x": 3.0
+    "x": 3.0,
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Lads"
+    "w": "Lads",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Girls"
+    "w": "Girls",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Lasses",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Mob",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Crew",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Gang",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Set",
@@ -9318,30 +11489,54 @@
      "MR",
      "MF",
      "SF"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
     "w": "Firm",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Kings",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Lords"
+    "w": "Lords",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Saints"
+    "w": "Saints",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Jackals"
+    "w": "Jackals",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Dogs"
+    "w": "Dogs",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Hounds"
+    "w": "Hounds",
+    "t": [
+     "grim"
+    ]
    }
   ],
   "gangWear": [
@@ -9722,26 +11917,47 @@
   "smugglerAgents": [
    {
     "w": "Owlers",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Free Traders"
+    "w": "Free Traders",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Lantern Men"
+    "w": "Lantern Men",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Tide-Runners"
+    "w": "Tide-Runners",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Gentlemen"
+    "w": "Gentlemen",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Runners",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Landers"
+    "w": "Landers",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Blockade Runners",
@@ -9749,81 +11965,141 @@
      "MR",
      "MF",
      "SF"
+    ],
+    "t": [
+     "plain"
     ]
    }
   ],
   "crewCollective": [
    {
-    "w": "Choir"
+    "w": "Choir",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Collective"
+    "w": "Collective",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Cell"
+    "w": "Cell",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Crew",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Front"
+    "w": "Front",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Circle"
    },
    {
-    "w": "Kids"
+    "w": "Kids",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Ghosts"
+    "w": "Ghosts",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Saints"
+    "w": "Saints",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Wolves"
+    "w": "Wolves",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Syndicate"
    },
    {
-    "w": "Club"
+    "w": "Club",
+    "t": [
+     "plain"
+    ]
    }
   ],
   "techWord": [
    {
-    "w": "Null"
+    "w": "Null",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Static"
    },
    {
-    "w": "Zero"
+    "w": "Zero",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Glass"
    },
    {
-    "w": "Cipher"
+    "w": "Cipher",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Ghost"
+    "w": "Ghost",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Echo"
+    "w": "Echo",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Proxy"
+    "w": "Proxy",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Kernel"
+    "w": "Kernel",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Packet"
+    "w": "Packet",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Signal"
+    "w": "Signal",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Neon"
@@ -9833,22 +12109,40 @@
    },
    {
     "w": "Cold Boot",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Root"
+    "w": "Root",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Vector"
+    "w": "Vector",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Mirror"
+    "w": "Mirror",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Shadow"
+    "w": "Shadow",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Rust"
+    "w": "Rust",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Silicon"
@@ -10901,34 +13195,64 @@
   ],
   "tradeDesc": [
    {
-    "w": "Royal"
+    "w": "Royal",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Golden"
+    "w": "Golden",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Silver"
+    "w": "Silver",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Old"
+    "w": "Old",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Black"
+    "w": "Black",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Red"
+    "w": "Red",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Green"
+    "w": "Green",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Iron"
+    "w": "Iron",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Honest"
+    "w": "Honest",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Good"
+    "w": "Good",
+    "t": [
+     "light"
+    ]
    }
   ],
   "bankWord": [
@@ -11403,6 +13727,9 @@
      "FH",
      "MR",
      "MF"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
@@ -11421,6 +13748,9 @@
      "FH",
      "MR",
      "MF"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
@@ -11430,6 +13760,9 @@
      "FH",
      "MR",
      "MF"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
@@ -11439,6 +13772,9 @@
      "FH",
      "MR",
      "MF"
+    ],
+    "t": [
+     "grim"
     ]
    },
    {
@@ -11466,6 +13802,9 @@
      "FH",
      "MR",
      "MF"
+    ],
+    "t": [
+     "grand"
     ]
    },
    {
@@ -11475,6 +13814,9 @@
      "FH",
      "MR",
      "MF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
@@ -11484,6 +13826,9 @@
      "FH",
      "MR",
      "MF"
+    ],
+    "t": [
+     "grand"
     ]
    },
    {
@@ -11493,6 +13838,9 @@
      "FH",
      "MR",
      "MF"
+    ],
+    "t": [
+     "grim"
     ]
    },
    {
@@ -11502,6 +13850,9 @@
      "FH",
      "MR",
      "MF"
+    ],
+    "t": [
+     "plain"
     ]
    },
    {
@@ -11526,6 +13877,9 @@
     "w": "Silent Reach",
     "s": [
      "SF"
+    ],
+    "t": [
+     "strange"
     ]
    },
    {
@@ -11825,39 +14179,72 @@
   ],
   "councilQuality": [
    {
-    "w": "Silent"
+    "w": "Silent",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Hidden"
+    "w": "Hidden",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Old"
+    "w": "Old",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Inner"
+    "w": "Inner",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Upper"
+    "w": "Upper",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Lower"
+    "w": "Lower",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Lesser"
+    "w": "Lesser",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Greater"
+    "w": "Greater",
+    "t": [
+     "plain"
+    ]
    }
   ],
   "ideal": [
    {
-    "w": "Commonweal"
+    "w": "Commonweal",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Hearth"
+    "w": "Hearth",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Crown"
+    "w": "Crown",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Liberty"
@@ -11875,40 +14262,73 @@
     "w": "Reform"
    },
    {
-    "w": "Concord"
+    "w": "Concord",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Plenty"
    },
    {
-    "w": "Covenant"
+    "w": "Covenant",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Restoration"
+    "w": "Restoration",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Commons"
+    "w": "Commons",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Charter"
+    "w": "Charter",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Land"
+    "w": "Land",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Harvest"
+    "w": "Harvest",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Bread"
+    "w": "Bread",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Lantern"
+    "w": "Lantern",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Plough"
+    "w": "Plough",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Anchor"
+    "w": "Anchor",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Rose"
@@ -12002,58 +14422,100 @@
   ],
   "secretItem": [
    {
-    "w": "Door"
+    "w": "Door",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Key"
    },
    {
-    "w": "Table"
+    "w": "Table",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Lamp"
    },
    {
-    "w": "Seal"
+    "w": "Seal",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Ring"
    },
    {
-    "w": "Glove"
+    "w": "Glove",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Mask"
+    "w": "Mask",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Ledger"
+    "w": "Ledger",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Quill"
+    "w": "Quill",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Candle"
    },
    {
-    "w": "Cup"
+    "w": "Cup",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Mirror"
+    "w": "Mirror",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Thread"
+    "w": "Thread",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Coin"
+    "w": "Coin",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Chair"
+    "w": "Chair",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Window"
+    "w": "Window",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Stair"
+    "w": "Stair",
+    "t": [
+     "plain"
+    ]
    }
   ],
   "secretQuality": [
@@ -12070,7 +14532,10 @@
     "w": "Silent"
    },
    {
-    "w": "Second"
+    "w": "Second",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Empty"
@@ -12091,7 +14556,10 @@
     "w": "Turning"
    },
    {
-    "w": "Inner"
+    "w": "Inner",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Last"
@@ -12099,34 +14567,64 @@
   ],
   "rebelQuality": [
    {
-    "w": "Broken"
+    "w": "Broken",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Fallen"
+    "w": "Fallen",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Last"
+    "w": "Last",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Burning"
+    "w": "Burning",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Free"
+    "w": "Free",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Rising"
+    "w": "Rising",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Unbowed"
+    "w": "Unbowed",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Hidden"
+    "w": "Hidden",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Uncrowned"
+    "w": "Uncrowned",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Unbroken"
+    "w": "Unbroken",
+    "t": [
+     "grand"
+    ]
    }
   ],
   "rebelEmblem": [
@@ -12676,38 +15174,71 @@
   ],
   "feyTime": [
    {
-    "w": "Winter"
+    "w": "Winter",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Summer"
+    "w": "Summer",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Autumn"
+    "w": "Autumn",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Spring"
+    "w": "Spring",
+    "t": [
+     "plain"
+    ]
    },
    {
     "w": "Twilight",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Midnight"
+    "w": "Midnight",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Dawn"
+    "w": "Dawn",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Dusk"
+    "w": "Dusk",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Moonlit"
+    "w": "Moonlit",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Frost"
+    "w": "Frost",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Harvest"
+    "w": "Harvest",
+    "t": [
+     "plain"
+    ]
    }
   ],
   "feyPlant": [
@@ -12801,58 +15332,109 @@
   "skyThing": [
    {
     "w": "Moon",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Star",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Sun"
+    "w": "Sun",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Dawn"
+    "w": "Dawn",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Dusk"
+    "w": "Dusk",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Mist"
+    "w": "Mist",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Dew"
+    "w": "Dew",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Frost"
+    "w": "Frost",
+    "t": [
+     "grim"
+    ]
    }
   ],
   "bloodQuality": [
    {
-    "w": "Silent"
+    "w": "Silent",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Ancient"
+    "w": "Ancient",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Hollow"
+    "w": "Hollow",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Hungry"
+    "w": "Hungry",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Patient"
+    "w": "Patient",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Sleepless"
+    "w": "Sleepless",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Velvet"
+    "w": "Velvet",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Cold"
+    "w": "Cold",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Nameless"
+    "w": "Nameless",
+    "t": [
+     "strange"
+    ]
    }
   ],
   "bodyPart": [
@@ -12987,28 +15569,52 @@
   ],
   "undeadNoun": [
    {
-    "w": "Kings"
+    "w": "Kings",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Dead"
+    "w": "Dead",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Legion"
+    "w": "Legion",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Host"
+    "w": "Host",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Lords"
+    "w": "Lords",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Barrow-Kings"
+    "w": "Barrow-Kings",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Sleepers"
+    "w": "Sleepers",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Risen"
+    "w": "Risen",
+    "t": [
+     "grim"
+    ]
    }
   ],
   "hellPlace": [
@@ -13046,31 +15652,58 @@
   ],
   "demonQuality": [
    {
-    "w": "Burning"
+    "w": "Burning",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Smiling"
+    "w": "Smiling",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Hungry"
+    "w": "Hungry",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Hollow"
+    "w": "Hollow",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Brazen"
+    "w": "Brazen",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Cinder"
+    "w": "Cinder",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Thousand-Voiced"
+    "w": "Thousand-Voiced",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Patient"
+    "w": "Patient",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Laughing"
+    "w": "Laughing",
+    "t": [
+     "strange"
+    ]
    }
   ],
   "chainItem": [
@@ -13127,13 +15760,22 @@
   ],
   "heavenQuality": [
    {
-    "w": "Shining"
+    "w": "Shining",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Radiant"
+    "w": "Radiant",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Golden"
+    "w": "Golden",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Silver"
@@ -13142,49 +15784,88 @@
     "w": "White"
    },
    {
-    "w": "Unfading"
+    "w": "Unfading",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Burning"
    },
    {
-    "w": "Silent"
+    "w": "Silent",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "Highest"
+    "w": "Highest",
+    "t": [
+     "grand"
+    ]
    }
   ],
   "pursuit": [
    {
-    "w": "Quiet Remembrance"
+    "w": "Quiet Remembrance",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "the Study of Old Tongues"
+    "w": "the Study of Old Tongues",
+    "t": [
+     "strange"
+    ]
    },
    {
-    "w": "the Preservation of Antiquities"
+    "w": "the Preservation of Antiquities",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Mutual Improvement"
+    "w": "Mutual Improvement",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "the Encouragement of the Arts"
+    "w": "the Encouragement of the Arts",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Natural Philosophy"
+    "w": "Natural Philosophy",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Lantern-Lit Walks"
+    "w": "Lantern-Lit Walks",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "the Relief of Widows"
+    "w": "the Relief of Widows",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Rational Recreation"
+    "w": "Rational Recreation",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Psychical Research",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "strange"
+    ]
    }
   ],
   "respectablePlace": [
@@ -13341,7 +16022,10 @@
   ],
   "balancers": [
    {
-    "w": "Arrangers"
+    "w": "Arrangers",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Bestowers",
@@ -13352,35 +16036,59 @@
     "x": 0.3
    },
    {
-    "w": "Disposers"
+    "w": "Disposers",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Harmonisers"
+    "w": "Harmonisers",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Reconcilers"
+    "w": "Reconcilers",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Regulators"
+    "w": "Regulators",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Reinstaters"
    },
    {
     "w": "Restorers",
-    "x": 2.0
+    "x": 2.0,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Balancers"
    },
    {
-    "w": "Correctors"
+    "w": "Correctors",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Adjusters"
+    "w": "Adjusters",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Menders"
+    "w": "Menders",
+    "t": [
+     "light"
+    ]
    }
   ],
   "balance": [
@@ -13432,53 +16140,92 @@
     "x": 0.5
    },
    {
-    "w": "Apt"
+    "w": "Apt",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Decisive"
+    "w": "Decisive",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Dependable"
+    "w": "Dependable",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Discreet"
+    "w": "Discreet",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Extreme",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Faithful"
    },
    {
-    "w": "Final"
+    "w": "Final",
+    "t": [
+     "grim"
+    ]
    },
    {
-    "w": "Fitting"
+    "w": "Fitting",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Impartial"
+    "w": "Impartial",
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Prompt"
+    "w": "Prompt",
+    "t": [
+     "light"
+    ]
    },
    {
-    "w": "Reliable"
+    "w": "Reliable",
+    "t": [
+     "light"
+    ]
    },
    {
     "w": "Certain"
    },
    {
     "w": "Supreme",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Ultimate",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Utmost",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "grim"
+    ]
    }
   ],
   "redress": [
@@ -13711,7 +16458,10 @@
     "w": "Gentle"
    },
    {
-    "w": "Quiet"
+    "w": "Quiet",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Fair"
@@ -13731,11 +16481,17 @@
    },
    {
     "w": "Old",
-    "x": 0.5
+    "x": 0.5,
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Lordly",
-    "x": 0.3
+    "x": 0.3,
+    "t": [
+     "strange"
+    ]
    }
   ],
   "folkWord": [
@@ -13805,7 +16561,10 @@
     "w": "Generous"
    },
    {
-    "w": "Patient"
+    "w": "Patient",
+    "t": [
+     "strange"
+    ]
    },
    {
     "w": "Charitable"
@@ -16335,6 +19094,62 @@
     "p": "New {britishPlace}",
     "w": 10
    }
+  ]
+ },
+ "listTones": {
+  "craftHonorific": [
+   "grand"
+  ],
+  "heavenThing": [
+   "grand"
+  ],
+  "lastThing": [
+   "grim"
+  ],
+  "deadQuality": [
+   "grim"
+  ],
+  "hellPlace": [
+   "grim"
+  ],
+  "chainItem": [
+   "grim"
+  ],
+  "nickTrait": [
+   "light"
+  ],
+  "gangNoun": [
+   "light"
+  ],
+  "factionNick": [
+   "light"
+  ],
+  "compound": [
+   "light"
+  ],
+  "thiefEuph": [
+   "light"
+  ],
+  "gentleAdj": [
+   "light"
+  ],
+  "benefAdj": [
+   "light"
+  ],
+  "folkKind": [
+   "light"
+  ],
+  "verbPhrase": [
+   "strange"
+  ],
+  "cultName": [
+   "strange"
+  ],
+  "secretQuality": [
+   "strange"
+  ],
+  "folkFixed": [
+   "strange"
   ]
  }
 }

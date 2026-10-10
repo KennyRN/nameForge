@@ -19,6 +19,9 @@ export type GroupForm = "any" | "formal" | "everyday";
 export type GroupFront = "say" | "hide" | "may";
 export type GroupPeople = "placeholders" | "invented";
 type ShapeForm = "F" | "E" | "B";
+/** Tone brief §2.1. */
+export type GroupTone = "grand" | "plain" | "grim" | "light" | "strange";
+export type GroupToneChoice = "any" | GroupTone;
 
 export interface GroupEntry {
   w: string;
@@ -29,6 +32,8 @@ export interface GroupEntry {
   only?: string[];
   types?: string[];
   noPrefix?: boolean;
+  /** Tone brief §2.3: the word's tones; replaces its list's tones (an empty array is neutral). */
+  t?: GroupTone[];
 }
 
 export interface GroupShape {
@@ -39,6 +44,10 @@ export interface GroupShape {
   sx?: Partial<Record<GroupSetting, number>>;
   /** A list narrowed to these words for this shape (§6.1: the habit shape's members). */
   filter?: Record<string, string[]>;
+  /** Tone brief §2.3: the shape's own tones. */
+  t?: GroupTone[];
+  /** Tone brief §3.6: the series anchor, overriding the automatic choice. */
+  sa?: string;
 }
 
 export interface GroupType {
@@ -70,6 +79,8 @@ interface GroupData {
   families: GroupFamily[];
   fronts: Record<string, { shapes: GroupShape[]; typeShapes?: Record<string, GroupShape[]> }>;
   lists: Record<string, GroupEntry[]>;
+  /** Tone brief §2.6: every word in these lists carries the list's tones. */
+  listTones: Record<string, GroupTone[]>;
   composites: Record<string, [string, number][]>;
   nickname: { p: string; w: number }[];
   traditions: {
@@ -104,6 +115,72 @@ export const GROUP_TAGS: Record<string, GroupSetting[]> = {
   PM: ["FL", "FH", "MR", "MF"],
   L: ["FL", "MR"],
 };
+
+// ── Tone (Tone brief §2) ────────────────────────────────────────────────────
+
+export const GROUP_TONES: GroupTone[] = ["grand", "plain", "grim", "light", "strange"];
+
+/** §2.1: the sentence text for each tone. */
+export const TONE_PHRASES: Record<GroupToneChoice, string> = {
+  any: "of any tone",
+  grand: "with a grand air",
+  plain: "with a plain, workaday feel",
+  grim: "with a grim edge",
+  light: "with a light touch",
+  strange: "with a strange air",
+};
+
+/** §2.2: the tones each tone is opposed by. */
+export const TONE_OPPOSITES: Record<GroupTone, GroupTone[]> = {
+  grand: ["light", "plain"],
+  plain: ["grand", "strange"],
+  grim: ["light"],
+  light: ["grand", "grim"],
+  strange: ["plain"],
+};
+
+/** §2.4: ×4 for a match (which wins over an opposite), ×0.25 for an opposite, else ×1. */
+export function toneFactor(tags: readonly string[], tone: GroupToneChoice): number {
+  if (tone === "any" || tags.length === 0) return 1;
+  if (tags.includes(tone)) return 4;
+  return tags.some((t) => (TONE_OPPOSITES[tone] as string[]).includes(t)) ? 0.25 : 1;
+}
+
+/** §2.5: never tone-weighted. */
+const UNTONED_LISTS = new Set(["surname", "house", "townPrefix", "townSuffix"]);
+
+const WORD_TONES = new Map<string, Map<string, GroupTone[]>>();
+for (const [list, entries] of Object.entries(GROUP_DATA.lists)) {
+  for (const e of entries) {
+    if (!e.t) continue;
+    if (!WORD_TONES.has(list)) WORD_TONES.set(list, new Map());
+    WORD_TONES.get(list)!.set(e.w, e.t);
+  }
+}
+
+/** §2.3: a word's tones: its own, or its list's. */
+export function wordTones(list: string, word: string): GroupTone[] {
+  return WORD_TONES.get(list)?.get(word) ?? GROUP_DATA.listTones[list] ?? [];
+}
+
+/** §2.4: a shape's effective tones: its own plus the list tones of every list its tokens name. */
+const SHAPE_TONES = new Map<string, GroupTone[]>();
+export function shapeTones(shape: Pick<GroupShape, "p" | "t">): GroupTone[] {
+  const key = `${shape.p}|${(shape.t ?? []).join(",")}`;
+  const cached = SHAPE_TONES.get(key);
+  if (cached) return cached;
+  const result = computeShapeTones(shape);
+  SHAPE_TONES.set(key, result);
+  return result;
+}
+
+function computeShapeTones(shape: Pick<GroupShape, "p" | "t">): GroupTone[] {
+  const out = new Set<GroupTone>(shape.t ?? []);
+  for (const m of shape.p.matchAll(/\{([^}]+)\}/g)) {
+    for (const name of m[1].split(":")[0].split("/")) for (const t of GROUP_DATA.listTones[name] ?? []) out.add(t);
+  }
+  return GROUP_TONES.filter((t) => out.has(t));
+}
 
 export function findFamily(key: string): GroupFamily | undefined {
   return GROUP_FAMILIES.find((f) => f.key === key);
@@ -228,9 +305,13 @@ export interface GroupOptions {
   seed?: number;
   /** §12.6: the merged safeguard lists; the built-in lists when absent. */
   safeguards?: GroupSafeguards;
+  /** Tone brief §4: weights names towards a mood; "any" (the default) changes nothing. */
+  tone?: GroupToneChoice;
 }
 
 export interface GroupName {
+  /** Tone brief §3.7: the shape's effective tones plus the tones of every word drawn. */
+  tones: GroupTone[];
   text: string;
   family: string;
   type: string;
@@ -257,6 +338,9 @@ interface Ctx {
   form: GroupForm;
   block: Set<string>;
   pools: Map<string, [string, number][]>;
+  /** Tone brief §2: the tone for this draw, and the tones of the words drawn so far. */
+  tone: GroupToneChoice;
+  drawn: Set<GroupTone>;
 }
 
 const pickWeighted = <T>(items: [T, number][], rng: () => number): T | undefined => {
@@ -282,7 +366,7 @@ function listTag(name: string): GroupSetting[] | undefined {
 
 /** The words a list offers here, weighted: setting, type, tradition and flavour applied (§3.3, §9). */
 function pool(ctx: Ctx, name: string, type: GroupType, filter?: string[]): [string, number][] {
-  const key = `${name}|${type.key}|${filter?.join(",") ?? ""}`;
+  const key = `${name}|${type.key}|${filter?.join(",") ?? ""}|${ctx.tone}`;
   const cached = ctx.pools.get(key);
   if (cached) return cached;
   const S = ctx.setting;
@@ -327,10 +411,21 @@ function pool(ctx: Ctx, name: string, type: GroupType, filter?: string[]): [stri
       }
     }
   }
+  // Tone brief §2.4: the word factor; tone Any leaves the weights untouched.
+  if (ctx.tone !== "any" && !UNTONED_LISTS.has(name)) {
+    for (const [word, w] of weights) weights.set(word, w * toneFactor(wordTones(name, word), ctx.tone));
+  }
   const keep = filter ?? type.listFilter?.[name];
   const out = [...weights].filter(([w, n]) => n > 0 && (!keep || keep.includes(w)));
   ctx.pools.set(key, out);
   return out;
+}
+
+/** A word from a list, noting its tones for the name (Tone brief §3.7). */
+function pick(ctx: Ctx, name: string, type: GroupType, filter?: string[]): string | undefined {
+  const w = pickWeighted(pool(ctx, name, type, filter), ctx.rng);
+  if (w !== undefined) for (const t of wordTones(name, w)) ctx.drawn.add(t);
+  return w;
 }
 
 /** A composite list (§5.5): pick a sub-list by its weight, then a word from it. */
@@ -338,11 +433,14 @@ function compositeWord(ctx: Ctx, name: string, type: GroupType): string | undefi
   const parts = GROUP_DATA.composites[name];
   if (name === "creature") {
     const merged = parts.flatMap(([sub]) => pool(ctx, sub, type));
-    return pickWeighted(merged, ctx.rng);
+    const w = pickWeighted(merged, ctx.rng);
+    const from = parts.find(([sub]) => w !== undefined && pool(ctx, sub, type).some(([x]) => x === w));
+    if (w !== undefined && from) for (const t of wordTones(from[0], w)) ctx.drawn.add(t);
+    return w;
   }
   const live = parts.filter(([sub]) => pool(ctx, sub, type).length > 0);
   const sub = pickWeighted(live, ctx.rng);
-  return sub ? pickWeighted(pool(ctx, sub, type), ctx.rng) : undefined;
+  return sub ? pick(ctx, sub, type) : undefined;
 }
 
 // Invented places (§8.4), drawn from pools made once with fixed seeds, so batches stay seed-stable.
@@ -396,7 +494,7 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
   const S = ctx.setting;
   const placeholders = ctx.mode === "placeholders";
   const word = (list: string): Piece | undefined => {
-    const w = pickWeighted(pool(ctx, list, type, shape?.filter?.[list]), rng);
+    const w = pick(ctx, list, type, shape?.filter?.[list]);
     return w === undefined ? undefined : { text: w, plural: PLURAL_LISTS.has(list) };
   };
   switch (name) {
@@ -406,8 +504,8 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
     case "holy": {
       if (placeholders) return { text: "[holy person]", plural: false };
       const saints = GROUP_DATA.people.saintTraditions.includes(ctx.people?.key ?? "general");
-      if (!saints) return { text: `the ${pickWeighted(pool(ctx, "holyTitle", type), rng)}`, plural: false };
-      const saint = pickWeighted(pool(ctx, "saintName", type), rng);
+      if (!saints) return { text: `the ${pick(ctx, "holyTitle", type)}`, plural: false };
+      const saint = pick(ctx, "saintName", type);
       return { text: S === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`, plural: false };
     }
     case "town":
@@ -426,15 +524,15 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
     }
     case "land": {
       if (S === "SF") {
-        const w = pickWeighted(pool(ctx, "spaceLand", type), rng)!;
-        const prefix = rng() < 0.3 ? `${pickWeighted(pool(ctx, "spacePrefix", type), rng)} ` : "";
+        const w = pick(ctx, "spaceLand", type)!;
+        const prefix = rng() < 0.3 ? `${pick(ctx, "spacePrefix", type)} ` : "";
         return { text: prefix + w, plural: false };
       }
-      const w = pickWeighted(pool(ctx, "land", type), rng);
+      const w = pick(ctx, "land", type);
       if (!w) return undefined;
       const holds = w.includes(" ") || GROUP_DATA.lists.land.some((e) => e.w === w && e.noPrefix);
       if (!holds && rng() < 0.3) {
-        const prefix = rng() < 0.5 ? pickWeighted(pool(ctx, "landPrefix", type), rng) : pickWeighted(pool(ctx, "colour", type), rng);
+        const prefix = rng() < 0.5 ? pick(ctx, "landPrefix", type) : pick(ctx, "colour", type);
         return { text: `${prefix} ${w}`, plural: false };
       }
       return { text: w, plural: false };
@@ -442,10 +540,10 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
     case "street":
       if (S === "SF") {
         const n = (max: number) => 1 + Math.floor(rng() * max);
-        const forms = [() => `Deck ${n(40)}`, () => `Ring ${pickWeighted(pool(ctx, "greek", type), rng)}`, () => `Level ${n(99)}`, () => `Sector ${n(20)}`];
+        const forms = [() => `Deck ${n(40)}`, () => `Ring ${pick(ctx, "greek", type)}`, () => `Level ${n(99)}`, () => `Sector ${n(20)}`];
         return { text: pickOne(forms, rng)(), plural: false };
       }
-      return { text: `${pickWeighted(pool(ctx, "streetFirst", type), rng)} ${pickWeighted(pool(ctx, "streetLast", type), rng)}`, plural: false };
+      return { text: `${pick(ctx, "streetFirst", type)} ${pick(ctx, "streetLast", type)}`, plural: false };
     case "nickname": {
       const shapeChoice = pickWeighted(GROUP_DATA.nickname.map((n): [string, number] => [n.p, n.w]), rng)!;
       const text = renderPattern(ctx, shapeChoice, type);
@@ -456,7 +554,7 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
     case "starNumber":
       return { text: String(1 + Math.floor(rng() * 12)), plural: false };
     case "spaceLandPrefixed":
-      return { text: `${pickWeighted(pool(ctx, "spacePrefix", type), rng)} ${pickWeighted(pool(ctx, "spaceLand", type), rng)}`, plural: false };
+      return { text: `${pick(ctx, "spacePrefix", type)} ${pick(ctx, "spaceLand", type)}`, plural: false };
     case "britishPlace":
       return { text: pickOne(townPool("britain"), rng), plural: false };
     case "flavourAnimal": {
@@ -504,7 +602,7 @@ function inventedTown(ctx: Ctx, type: GroupType): string {
     const names = townPool(source);
     if (names.length > 0) return pickOne(names, rng);
   }
-  return `${pickWeighted(pool(ctx, "townPrefix", type), rng)}${pickWeighted(pool(ctx, "townSuffix", type), rng)}`;
+  return `${pick(ctx, "townPrefix", type)}${pick(ctx, "townSuffix", type)}`;
 }
 
 /** §11.6: initials of a formal name for the same type. */
@@ -530,7 +628,9 @@ function shapeWeight(ctx: Ctx, shape: GroupShape): number {
     return 0;
   }
   const trad = ctx.vocab ? GROUP_DATA.traditions.shapeMultipliers[ctx.vocab.key]?.[shape.p] ?? 1 : 1;
-  return shape.w * (shape.sx?.[ctx.setting] ?? 1) * trad;
+  // Tone brief §2.4: the shape factor; tone Any multiplies by nothing.
+  const tone = ctx.tone === "any" ? 1 : toneFactor(shapeTones(shape), ctx.tone);
+  return shape.w * (shape.sx?.[ctx.setting] ?? 1) * trad * tone;
 }
 
 /** §10: shapes for the chosen form, falling back to all of them when the form has none. */
@@ -574,6 +674,7 @@ function drawName(ctx: Ctx, type: GroupType, front: boolean): GroupName | undefi
   const choices = byForm(ctx, shapes);
   const shape = pickWeighted(choices, ctx.rng);
   if (!shape) return undefined;
+  ctx.drawn = new Set();
   // Borrowed shapes keep their own lists; the person label stays the company's.
   const raw = renderPattern(ctx, shape.p, { ...listType, person: type.person }, shape);
   if (!raw) return undefined;
@@ -581,7 +682,8 @@ function drawName(ctx: Ctx, type: GroupType, front: boolean): GroupName | undefi
   const formal = shape.f === "F" || (shape.f === "B" && ctx.form !== "everyday");
   const text = capitalise(raw.replace(/\s+/g, " ").trim(), shape.f === "F");
   if (!acceptable(ctx, text, formal)) return undefined;
-  return { text, family: ctx.family.key, type: type.key, shape: shape.p, front, form: shape.f };
+  const tones = new Set<GroupTone>([...shapeTones(shape), ...ctx.drawn]);
+  return { text, family: ctx.family.key, type: type.key, shape: shape.p, front, form: shape.f, tones: GROUP_TONES.filter((t) => tones.has(t)) };
 }
 
 /** §11.2, §11.5 and §12: length, repetition and safeguards. */
@@ -664,6 +766,8 @@ export function generateGroupNames(options: GroupOptions): GroupBatch {
     form: options.form ?? "any",
     block,
     pools: new Map(),
+    tone: options.tone ?? "any",
+    drawn: new Set(),
   };
   const chosen = options.type ? available.find((t) => t.key === options.type) : undefined;
   if (options.type && !chosen) {

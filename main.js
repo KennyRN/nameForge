@@ -1546,16 +1546,16 @@ function generateCompoundTitled(parts, options) {
   const seen = /* @__PURE__ */ new Set();
   const live = titles.map((_, i) => i);
   while (out.length < count && live.length > 0) {
-    const pick3 = live[Math.floor(rng() * live.length)];
-    const names = batch(pick3);
-    if (cursors[pick3] >= names.length) {
-      live.splice(live.indexOf(pick3), 1);
+    const pick4 = live[Math.floor(rng() * live.length)];
+    const names = batch(pick4);
+    if (cursors[pick4] >= names.length) {
+      live.splice(live.indexOf(pick4), 1);
       continue;
     }
-    const name = names[cursors[pick3]++];
+    const name = names[cursors[pick4]++];
     if (seen.has(name.toLowerCase())) continue;
     seen.add(name.toLowerCase());
-    out.push({ name, tag: titles[pick3] });
+    out.push({ name, tag: titles[pick4] });
   }
   return { names: out, seed, loosened };
 }
@@ -20943,8 +20943,8 @@ function generatePlaceShapesDetailed(options, source = PLACE_SHAPE_DATA) {
   }
   let names;
   if (options.wording === "plain") {
-    const pick3 = mulberry32((seed ^ PLAIN_WORDING_SALT) >>> 0);
-    names = shapes.map((shape) => formatter.formatPlain(shape, options.region, pick3));
+    const pick4 = mulberry32((seed ^ PLAIN_WORDING_SALT) >>> 0);
+    names = shapes.map((shape) => formatter.formatPlain(shape, options.region, pick4));
   } else {
     names = shapes.map((shape) => formatter.format(shape));
   }
@@ -20970,7 +20970,7 @@ var PlaceShapeFormatter = class {
    * Part 1a wording: generics as plain words, with dropped generics rewritten and regional
    * variants added. `pick` is the secondary RNG; it is only drawn when a generic has two words.
    */
-  formatPlain(shape, region, pick3) {
+  formatPlain(shape, region, pick4) {
     var _a2;
     const rewrite = this.words.rewrites.find((r) => r.generic === shape.genericId);
     const effective = rewrite ? {
@@ -20982,7 +20982,7 @@ var PlaceShapeFormatter = class {
       if (rewrite && id === shape.genericId) return plural ? rewrite.plural || rewrite.word : rewrite.word;
       const entry = this.words.words[id];
       if (!entry) return bracket(this.generics.get(id));
-      const i = entry.words.length > 1 ? Math.floor(pick3() * entry.words.length) : 0;
+      const i = entry.words.length > 1 ? Math.floor(pick4() * entry.words.length) : 0;
       const usePlural = plural && entry.plurals[i] !== "";
       const word = usePlural ? entry.plurals[i] : entry.words[i];
       const variant = region ? this.words.variants.find((v) => v.generic === id && v.regions.includes(region)) : void 0;
@@ -32964,7 +32964,10 @@ var group_names_default = {
             {
               p: "{quality} {group} of the {colourRich} {entity}",
               f: "F",
-              w: 8
+              w: 8,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "{members} of the {entity}",
@@ -32979,7 +32982,10 @@ var group_names_default = {
             {
               p: "{members} Beyond the {entity}",
               f: "B",
-              w: 3
+              w: 3,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "{colourRich} {members}",
@@ -32999,12 +33005,18 @@ var group_names_default = {
             {
               p: "the {entity} {group}",
               f: "E",
-              w: 4
+              w: 4,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Most Ancient {group} of the {quality} {entity}",
               f: "F",
-              w: 2
+              w: 2,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Hermetic {group} of the {entity}",
@@ -33015,6 +33027,9 @@ var group_names_default = {
                 "FH",
                 "MR",
                 "MF"
+              ],
+              t: [
+                "grand"
               ]
             }
           ]
@@ -33051,7 +33066,10 @@ var group_names_default = {
             {
               p: "{quality} {group} of the {colourRich} {entity}",
               f: "F",
-              w: 8
+              w: 8,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "{members} of the {entity}",
@@ -33066,7 +33084,10 @@ var group_names_default = {
             {
               p: "{members} Beyond the {entity}",
               f: "B",
-              w: 3
+              w: 3,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "{colourRich} {members}",
@@ -33086,12 +33107,18 @@ var group_names_default = {
             {
               p: "the {entity} {group}",
               f: "E",
-              w: 4
+              w: 4,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Most Ancient {group} of the {quality} {entity}",
               f: "F",
-              w: 2
+              w: 2,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Hermetic {group} of the {entity}",
@@ -33102,12 +33129,18 @@ var group_names_default = {
                 "FH",
                 "MR",
                 "MF"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
               p: "College of the {quality} {entity}",
               f: "F",
-              w: 6
+              w: 6,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {colourRich} Tower",
@@ -33123,6 +33156,9 @@ var group_names_default = {
               w: 3,
               s: [
                 "SF"
+              ],
+              t: [
+                "strange"
               ]
             },
             {
@@ -33131,6 +33167,9 @@ var group_names_default = {
               w: 2,
               s: [
                 "SF"
+              ],
+              t: [
+                "strange"
               ]
             }
           ]
@@ -33154,7 +33193,10 @@ var group_names_default = {
             {
               p: "Order of {holy}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "{holyMembers} of {holy}",
@@ -33179,7 +33221,10 @@ var group_names_default = {
             {
               p: "the {holyQuality} {holyMembers}",
               f: "E",
-              w: 12
+              w: 12,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {habit} {holyMembers}",
@@ -33192,12 +33237,18 @@ var group_names_default = {
                   "Nuns",
                   "Canons"
                 ]
-              }
+              },
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {holyEntity} {holyGroup}",
               f: "E",
-              w: 7
+              w: 7,
+              t: [
+                "plain"
+              ]
             }
           ]
         },
@@ -33230,7 +33281,10 @@ var group_names_default = {
             {
               p: "Church of the {cultQuality} {cultEntity}",
               f: "F",
-              w: 8
+              w: 8,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {cultQuality} {cultGroup}",
@@ -33240,7 +33294,10 @@ var group_names_default = {
             {
               p: "Those Who {verbPhrase}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {cultEntity:poss} {cultGroup}",
@@ -33250,7 +33307,10 @@ var group_names_default = {
             {
               p: "{cultGroup} of the {ordinalWord} {cultEntity}",
               f: "F",
-              w: 8
+              w: 8,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {cultName}",
@@ -33260,7 +33320,10 @@ var group_names_default = {
             {
               p: "{person:poss} {cultGroup}",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "plain"
+              ]
             }
           ]
         },
@@ -33282,7 +33345,10 @@ var group_names_default = {
             {
               p: "the {covenLand} Coven",
               f: "E",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Circle of the {covenEmblem}",
@@ -33292,12 +33358,18 @@ var group_names_default = {
             {
               p: "{covenMembers} of the {colourRich} Moon",
               f: "B",
-              w: 6
+              w: 6,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {covenEmblem} {covenGroup}",
               f: "E",
-              w: 15
+              w: 15,
+              t: [
+                "light"
+              ]
             },
             {
               p: "{covenGroup} of the {colour} {covenEmblem}",
@@ -33307,7 +33379,10 @@ var group_names_default = {
             {
               p: "the {covenLand} {covenMembers}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Grove of the {tree}",
@@ -33317,7 +33392,10 @@ var group_names_default = {
             {
               p: "the {number} of the {covenLand}",
               f: "E",
-              w: 6
+              w: 6,
+              t: [
+                "strange"
+              ]
             }
           ]
         },
@@ -33340,7 +33418,10 @@ var group_names_default = {
             {
               p: "the {emblem} School",
               f: "E",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{schoolGroup} of the {schoolIdea}",
@@ -33360,17 +33441,26 @@ var group_names_default = {
             {
               p: "{person:poss} School",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Academy of the {quality} {entity}",
               f: "F",
-              w: 10
+              w: 10,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {schoolIdea}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "light"
+              ]
             }
           ]
         }
@@ -33402,7 +33492,10 @@ var group_names_default = {
             {
               p: "{person:poss} {band}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{desc} {band}",
@@ -33412,7 +33505,10 @@ var group_names_default = {
             {
               p: "{desc} {desc} {unitGroup}",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "grim"
+              ]
             },
             {
               p: "{band} of the {land}",
@@ -33427,7 +33523,10 @@ var group_names_default = {
             {
               p: "{ordinal} {unitGroup}",
               f: "F",
-              w: 12
+              w: 12,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{ordinal} ({town}) Regiment of {regimentOf}",
@@ -33436,12 +33535,18 @@ var group_names_default = {
               s: [
                 "FL",
                 "MR"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
               p: "{ordinal} {town} {arm}",
               f: "F",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{ordinalWord} {unitGroup} of the {land}",
@@ -33450,6 +33555,9 @@ var group_names_default = {
               s: [
                 "FL",
                 "FH"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -33460,6 +33568,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -33471,6 +33582,9 @@ var group_names_default = {
                 "FH",
                 "MR",
                 "MF"
+              ],
+              t: [
+                "light"
               ]
             },
             {
@@ -33499,7 +33613,10 @@ var group_names_default = {
               ],
               sx: {
                 MR: 0.5
-              }
+              },
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{tech} {band}",
@@ -33530,7 +33647,10 @@ var group_names_default = {
             {
               p: "Order of the {colour} {knightEmblem}",
               f: "F",
-              w: 25
+              w: 25,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Order of the {knightEmblem}",
@@ -33562,7 +33682,10 @@ var group_names_default = {
             {
               p: "Most Noble Order of the {colour} {knightEmblem}",
               f: "F",
-              w: 4
+              w: 4,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Order of {holy}",
@@ -33583,6 +33706,9 @@ var group_names_default = {
                 "FL",
                 "FH",
                 "MF"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -33605,6 +33731,9 @@ var group_names_default = {
                 "FH",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -33616,12 +33745,18 @@ var group_names_default = {
                 "FH",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
               p: "the {colour} {knightEmblem:pl}",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "light"
+              ]
             },
             {
               p: "Royal {town} Order",
@@ -33629,6 +33764,9 @@ var group_names_default = {
               w: 4,
               s: [
                 "MR"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -33653,6 +33791,9 @@ var group_names_default = {
               w: 4,
               s: [
                 "SF"
+              ],
+              t: [
+                "grand"
               ]
             }
           ]
@@ -33682,6 +33823,9 @@ var group_names_default = {
                 "FH",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "light"
               ]
             },
             {
@@ -33693,12 +33837,18 @@ var group_names_default = {
                 "FH",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
               p: "{person:poss} {mercs}",
               f: "E",
-              w: 15
+              w: 15,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Free Company of the {emblem}",
@@ -33707,12 +33857,18 @@ var group_names_default = {
               s: [
                 "FL",
                 "FH"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
               p: "the {town} {mercs}",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {desc} {creatures}",
@@ -33727,6 +33883,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -33760,17 +33919,26 @@ var group_names_default = {
             {
               p: "the {compass} Squadron",
               f: "B",
-              w: 15
+              w: 15,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{ordinal} Fleet",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {town} {fleetGroup}",
               f: "B",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{town} Navy",
@@ -33780,6 +33948,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -33805,7 +33976,10 @@ var group_names_default = {
               ],
               sx: {
                 MR: 0.5
-              }
+              },
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Squadron of the {colour} {knightEmblem}",
@@ -33814,6 +33988,9 @@ var group_names_default = {
               s: [
                 "FL",
                 "FH"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -33853,6 +34030,9 @@ var group_names_default = {
                 "FH",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -33866,7 +34046,10 @@ var group_names_default = {
               ],
               sx: {
                 FL: 0.5
-              }
+              },
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {land} Watch",
@@ -33886,6 +34069,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -33895,6 +34081,9 @@ var group_names_default = {
               s: [
                 "MR",
                 "MF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -33906,6 +34095,9 @@ var group_names_default = {
                 "FH",
                 "MR",
                 "MF"
+              ],
+              t: [
+                "light"
               ]
             },
             {
@@ -33917,12 +34109,18 @@ var group_names_default = {
                 "FH",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
               p: "{town} Marshals",
               f: "E",
-              w: 8
+              w: 8,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{town} {enforcement}",
@@ -33962,17 +34160,26 @@ var group_names_default = {
                 "FL",
                 "FH",
                 "SF"
+              ],
+              t: [
+                "light"
               ]
             },
             {
               p: "{person:poss} {raiders}",
               f: "E",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {desc} {gear}",
               f: "E",
-              w: 20
+              w: 20,
+              t: [
+                "grim"
+              ]
             },
             {
               p: "{raiders} of the {land}",
@@ -34027,17 +34234,26 @@ var group_names_default = {
             {
               p: "Guardians of the {desc} {land}",
               f: "F",
-              w: 10
+              w: 10,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {colour} Watch",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Keepers of the {knightEmblem}",
               f: "B",
-              w: 15
+              w: 15,
+              t: [
+                "strange"
+              ]
             }
           ]
         }
@@ -34082,12 +34298,18 @@ var group_names_default = {
             {
               p: "the {agents:poss} {thiefGroup}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {uCreature}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "light"
+              ]
             },
             {
               p: "the {shade} {uCreature}",
@@ -34097,17 +34319,26 @@ var group_names_default = {
             {
               p: "{person:poss} {agents}",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {town} {thiefGroup}",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Knights of the {uWeapon}",
               f: "B",
-              w: 5
+              w: 5,
+              t: [
+                "light"
+              ]
             }
           ]
         },
@@ -34144,7 +34375,10 @@ var group_names_default = {
             {
               p: "the {uCreature}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "{shade} {agents}",
@@ -34154,7 +34388,10 @@ var group_names_default = {
             {
               p: "the {number} {uWeapon:pl}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "grim"
+              ]
             },
             {
               p: "{thiefGroup} of the {lastThing}",
@@ -34191,7 +34428,10 @@ var group_names_default = {
             {
               p: "the {street} {gangMembers}",
               f: "E",
-              w: 25
+              w: 25,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {gangNoun}",
@@ -34207,7 +34447,10 @@ var group_names_default = {
             {
               p: "the {colour} {gangWear}",
               f: "E",
-              w: 15
+              w: 15,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {urbanArea} {gangMembers}",
@@ -34217,6 +34460,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -34232,7 +34478,10 @@ var group_names_default = {
             {
               p: "{person:poss} {gangMembers}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             }
           ]
         },
@@ -34255,32 +34504,50 @@ var group_names_default = {
             {
               p: "the {surname} Family",
               f: "E",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {town} {firm}",
               f: "E",
-              w: 15
+              w: 15,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {number} {portPlaces}",
               f: "E",
-              w: 15
+              w: 15,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {shade} Hand",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "grim"
+              ]
             },
             {
               p: "{person:poss} {firm}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {surname} {firm}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {urban} {firm}",
@@ -34293,7 +34560,10 @@ var group_names_default = {
             {
               p: "the {colour} {emblem} {thiefGroup}",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "grand"
+              ]
             }
           ]
         },
@@ -34316,7 +34586,10 @@ var group_names_default = {
             {
               p: "the {town} Ring",
               f: "E",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {land} {smugglerAgents}",
@@ -34337,12 +34610,18 @@ var group_names_default = {
                 "FH",
                 "MR",
                 "MF"
+              ],
+              t: [
+                "light"
               ]
             },
             {
               p: "{person:poss} {smugglerAgents}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {tech} Runners",
@@ -34355,7 +34634,10 @@ var group_names_default = {
             {
               p: "the {colour} Lanterns",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "strange"
+              ]
             }
           ]
         },
@@ -34381,17 +34663,26 @@ var group_names_default = {
             {
               p: "the {techWord} {uCreature}",
               f: "E",
-              w: 15
+              w: 15,
+              t: [
+                "light"
+              ]
             },
             {
               p: "{person:poss} Crew",
               f: "E",
-              w: 15
+              w: 15,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {number} {crewNoun}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {colour} {gangWear}",
@@ -34436,22 +34727,34 @@ var group_names_default = {
             {
               p: "{craftHonorific} Company of {tradesmen}",
               f: "F",
-              w: 20
+              w: 20,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Guild of {tradesmen}",
               f: "F",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {tradesmen:poss} Guild",
               f: "E",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{tradeDesc} {emblem} {tradesmen}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "light"
+              ]
             },
             {
               p: "{tradesmen} of the {colour} {emblem}",
@@ -34461,7 +34764,10 @@ var group_names_default = {
             {
               p: "the {town} {tradesmen}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Fellowship of {tradesmen}",
@@ -34502,6 +34808,9 @@ var group_names_default = {
                 "FL",
                 "FH",
                 "SF"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -34518,22 +34827,34 @@ var group_names_default = {
             {
               p: "the {town} Company",
               f: "E",
-              w: 8
+              w: 8,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Honourable Company of {goods} Merchants",
               f: "F",
-              w: 8
+              w: 8,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "{goods} Merchants of {town}",
               f: "F",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{surname} & {surname}",
               f: "B",
-              w: 12
+              w: 12,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Merchant Adventurers of {town}",
@@ -34542,12 +34863,18 @@ var group_names_default = {
               s: [
                 "FL",
                 "FH"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
               p: "the {town} {goods} Company",
               f: "E",
-              w: 12
+              w: 12,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Company of the {knightEmblem}",
@@ -34556,6 +34883,9 @@ var group_names_default = {
               s: [
                 "FL",
                 "FH"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -34574,6 +34904,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             }
           ]
@@ -34597,22 +34930,34 @@ var group_names_default = {
             {
               p: "{surname} & {surname}",
               f: "B",
-              w: 25
+              w: 25,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{surname} Brothers",
               f: "B",
-              w: 8
+              w: 8,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Bank of {town}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{town} {bankWord}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "House of {surname}",
@@ -34621,12 +34966,18 @@ var group_names_default = {
               s: [
                 "FL",
                 "FH"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
               p: "the {colour} {various} Bank",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "light"
+              ]
             },
             {
               p: "{surname}, {surname} & Co.",
@@ -34637,6 +34988,9 @@ var group_names_default = {
                 "FH",
                 "MR",
                 "MF"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -34693,6 +35047,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -34703,6 +35060,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "strange"
               ]
             },
             {
@@ -34713,6 +35073,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -34723,6 +35086,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             }
           ]
@@ -34749,6 +35115,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -34759,6 +35128,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -34777,6 +35149,9 @@ var group_names_default = {
               s: [
                 "MR",
                 "MF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -34787,6 +35162,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -34805,6 +35183,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             }
           ]
@@ -34841,6 +35222,9 @@ var group_names_default = {
               s: [
                 "FL",
                 "FH"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -34850,6 +35234,9 @@ var group_names_default = {
               s: [
                 "FL",
                 "FH"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -34861,6 +35248,9 @@ var group_names_default = {
                 "FH",
                 "MR",
                 "MF"
+              ],
+              t: [
+                "light"
               ]
             },
             {
@@ -34870,12 +35260,18 @@ var group_names_default = {
               s: [
                 "MR",
                 "MF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
               p: "the {surname} Line",
               f: "E",
-              w: 12
+              w: 12,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{town} Freight",
@@ -34885,6 +35281,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -34942,42 +35341,66 @@ var group_names_default = {
             {
               p: "the {colour} {creature:pl}",
               f: "E",
-              w: 8
+              w: 8,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{tradeDesc} {emblem} {vocation}",
               f: "E",
-              w: 6
+              w: 6,
+              t: [
+                "light"
+              ]
             },
             {
               p: "the {compound}",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "light"
+              ]
             },
             {
               p: "{compound} Company",
               f: "E",
-              w: 3
+              w: 3,
+              t: [
+                "light"
+              ]
             },
             {
               p: "the {number} in {colour}",
               f: "E",
-              w: 3
+              w: 3,
+              t: [
+                "light"
+              ]
             },
             {
               p: "{person:poss} {companyGroup}",
               f: "E",
-              w: 6
+              w: 6,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Company of the {ordinalWord} {emblem}",
               f: "F",
-              w: 4
+              w: 4,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {emblem} and {emblem} Company",
               f: "E",
-              w: 3
+              w: 3,
+              t: [
+                "light"
+              ]
             },
             {
               p: "the {tech} {creature:pl}",
@@ -35036,17 +35459,26 @@ var group_names_default = {
             {
               p: "the {expPlace} Expedition",
               f: "B",
-              w: 25
+              w: 25,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{person:poss} Expedition",
               f: "B",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {expPlace} Survey",
               f: "B",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Royal {expPlace} Survey",
@@ -35057,6 +35489,9 @@ var group_names_default = {
                 "FH",
                 "MR",
                 "MF"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -35070,7 +35505,10 @@ var group_names_default = {
             {
               p: "Society for the Exploration of the {expPlace}",
               f: "F",
-              w: 7
+              w: 7,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Company of {expPlace} Pathfinders",
@@ -35085,6 +35523,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35120,7 +35561,10 @@ var group_names_default = {
             {
               p: "the {monster} {hunterNoun}",
               f: "E",
-              w: 25
+              w: 25,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {town} Huntsmen",
@@ -35130,6 +35574,9 @@ var group_names_default = {
                 "FL",
                 "FH",
                 "MF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35140,12 +35587,18 @@ var group_names_default = {
                 "FL",
                 "FH",
                 "MF"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
               p: "Brotherhood of the {desc} Hunt",
               f: "F",
-              w: 10
+              w: 10,
+              t: [
+                "grim"
+              ]
             },
             {
               p: "{person:poss} {retrieval}",
@@ -35154,6 +35607,9 @@ var group_names_default = {
               s: [
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35172,6 +35628,9 @@ var group_names_default = {
                 "FL",
                 "FH",
                 "MF"
+              ],
+              t: [
+                "grand"
               ]
             }
           ]
@@ -35204,32 +35663,50 @@ var group_names_default = {
             {
               p: "Council of {number} {various:pl}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {colour} Chamber",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Council of {town}",
               f: "F",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {number}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {councilQuality} Court",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "{town} {assemblyWord}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {town} {directorate}",
@@ -35239,6 +35716,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35247,6 +35727,9 @@ var group_names_default = {
               w: 5,
               s: [
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35275,12 +35758,18 @@ var group_names_default = {
             {
               p: "the {ideal} Party",
               f: "B",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {factionColour}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{town} {ideal} League",
@@ -35295,7 +35784,10 @@ var group_names_default = {
             {
               p: "Friends of the {ideal}",
               f: "B",
-              w: 10
+              w: 10,
+              t: [
+                "light"
+              ]
             },
             {
               p: "the {factionNick}",
@@ -35306,17 +35798,26 @@ var group_names_default = {
                 "FH",
                 "MR",
                 "MF"
+              ],
+              t: [
+                "light"
               ]
             },
             {
               p: "the {ideal} Faction",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Party of the {ideal}",
               f: "F",
-              w: 5
+              w: 5,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Movement for {ideal}",
@@ -35359,7 +35860,10 @@ var group_names_default = {
             {
               p: "the {number}",
               f: "E",
-              w: 8
+              w: 8,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "Brotherhood of the {entity}",
@@ -35374,17 +35878,26 @@ var group_names_default = {
             {
               p: "Friends of {person}",
               f: "B",
-              w: 10
+              w: 10,
+              t: [
+                "light"
+              ]
             },
             {
               p: "the {number} {secretItem:pl}",
               f: "E",
-              w: 12
+              w: 12,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "Order of the {secretQuality} {secretItem}",
               f: "F",
-              w: 5
+              w: 5,
+              t: [
+                "grand"
+              ]
             }
           ]
         },
@@ -35422,6 +35935,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35432,7 +35948,10 @@ var group_names_default = {
             {
               p: "the {colour} {rebelWear}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {ordinalWord} of {season} Movement",
@@ -35441,6 +35960,9 @@ var group_names_default = {
               s: [
                 "FL",
                 "FH"
+              ],
+              t: [
+                "strange"
               ]
             },
             {
@@ -35455,17 +35977,26 @@ var group_names_default = {
             {
               p: "Army of the {ideal}",
               f: "F",
-              w: 6
+              w: 6,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "{person:poss} Rising",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {rebelQuality} Hand",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "grim"
+              ]
             },
             {
               p: "Rebels of the {land}",
@@ -35493,7 +36024,10 @@ var group_names_default = {
             {
               p: "League of {number} {cityWord:pl}",
               f: "F",
-              w: 20
+              w: 20,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {councilQuality} Concord",
@@ -35503,7 +36037,10 @@ var group_names_default = {
             {
               p: "{town} {leagueGroup}",
               f: "F",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {ideal} {leagueGroup}",
@@ -35513,12 +36050,18 @@ var group_names_default = {
             {
               p: "Union of {town} and {town}",
               f: "F",
-              w: 5
+              w: 5,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {number} {cityWord:pl}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "Coalition of {number} Worlds",
@@ -35526,6 +36069,9 @@ var group_names_default = {
               w: 10,
               s: [
                 "SF"
+              ],
+              t: [
+                "grand"
               ]
             },
             {
@@ -35559,6 +36105,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35569,6 +36118,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35579,6 +36131,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35589,6 +36144,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35599,6 +36157,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35609,6 +36170,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             },
             {
@@ -35626,6 +36190,9 @@ var group_names_default = {
               s: [
                 "FL",
                 "FH"
+              ],
+              t: [
+                "light"
               ]
             },
             {
@@ -35635,12 +36202,18 @@ var group_names_default = {
               s: [
                 "FL",
                 "FH"
+              ],
+              t: [
+                "strange"
               ]
             },
             {
               p: "the {secretQuality} Office",
               f: "E",
-              w: 8
+              w: 8,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "{initials}",
@@ -35650,6 +36223,9 @@ var group_names_default = {
                 "MR",
                 "MF",
                 "SF"
+              ],
+              t: [
+                "plain"
               ]
             }
           ]
@@ -35672,27 +36248,42 @@ var group_names_default = {
             {
               p: "House {house}",
               f: "B",
-              w: 35
+              w: 35,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "House {house} of {town}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {house:pl} of {town}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "House of the {colour} {knightEmblem}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {house} Line",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "House {house}\u2013{house}",
@@ -35708,6 +36299,9 @@ var group_names_default = {
               w: 10,
               s: [
                 "SF"
+              ],
+              t: [
+                "grand"
               ]
             }
           ]
@@ -35738,7 +36332,10 @@ var group_names_default = {
             {
               p: "Court of the {feyPlant} {skyThing}",
               f: "B",
-              w: 20
+              w: 20,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {feyTime} Court",
@@ -35748,7 +36345,10 @@ var group_names_default = {
             {
               p: "Folk of the {feyPlace}",
               f: "B",
-              w: 15
+              w: 15,
+              t: [
+                "light"
+              ]
             },
             {
               p: "the {colour} {feyPlant} Court",
@@ -35758,22 +36358,34 @@ var group_names_default = {
             {
               p: "the {number} Courts of the {feyPlace}",
               f: "F",
-              w: 5
+              w: 5,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {feyTime} {feyTitle:poss} Court",
               f: "E",
-              w: 15
+              w: 15,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Riders of the {feyPlace}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "{person:poss} Court",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             }
           ]
         },
@@ -35794,22 +36406,34 @@ var group_names_default = {
             {
               p: "the {colour} Line",
               f: "E",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "House {house}",
               f: "B",
-              w: 15
+              w: 15,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Blood of {person}",
               f: "B",
-              w: 15
+              w: 15,
+              t: [
+                "grim"
+              ]
             },
             {
               p: "Children of the {bloodQuality} {skyThing}",
               f: "B",
-              w: 10
+              w: 10,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {bloodQuality} Kindred",
@@ -35824,12 +36448,18 @@ var group_names_default = {
             {
               p: "Court of the {colour} {knightEmblem}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {number} Bloods",
               f: "E",
-              w: 5
+              w: 5,
+              t: [
+                "grim"
+              ]
             }
           ]
         },
@@ -35855,7 +36485,10 @@ var group_names_default = {
             {
               p: "the {land} Pack",
               f: "E",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {colour}-{bodyPart} Pack",
@@ -35865,22 +36498,34 @@ var group_names_default = {
             {
               p: "Children of the {skyThing}",
               f: "B",
-              w: 10
+              w: 10,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {shifter}-{kinWord}",
               f: "E",
-              w: 15
+              w: 15,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "{person:poss} Pack",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {number} {bodyPart:pl}",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "grim"
+              ]
             }
           ]
         },
@@ -35906,7 +36551,10 @@ var group_names_default = {
             {
               p: "Riders of the {weather}",
               f: "B",
-              w: 15
+              w: 15,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {feyTime} Riders",
@@ -35916,7 +36564,10 @@ var group_names_default = {
             {
               p: "Court of the {feyPlace}",
               f: "B",
-              w: 10
+              w: 10,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Spirits of the {land}",
@@ -35926,7 +36577,10 @@ var group_names_default = {
             {
               p: "the {number} Winds",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {deadQuality} Dead",
@@ -35956,12 +36610,18 @@ var group_names_default = {
             {
               p: "Host of the {ordinalWord} {hellPlace}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Legion of the {deadQuality} Crown",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {deadQuality} {undeadNoun}",
@@ -35971,12 +36631,18 @@ var group_names_default = {
             {
               p: "Army of {person}",
               f: "F",
-              w: 10
+              w: 10,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {colour} Barrows",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "grim"
+              ]
             },
             {
               p: "the {number} {undeadNoun}",
@@ -35986,7 +36652,10 @@ var group_names_default = {
             {
               p: "Legion of the {land}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "grand"
+              ]
             }
           ]
         },
@@ -36007,7 +36676,10 @@ var group_names_default = {
             {
               p: "Host of the {ordinalWord} {hellPlace}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Legion of {person}",
@@ -36017,17 +36689,26 @@ var group_names_default = {
             {
               p: "the {demonQuality} Choir",
               f: "E",
-              w: 15
+              w: 15,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "Court of {number} {chainItem}",
               f: "F",
-              w: 15
+              w: 15,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "{person:poss} Own",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "light"
+              ]
             },
             {
               p: "the {colour} {hellPlace}",
@@ -36037,7 +36718,10 @@ var group_names_default = {
             {
               p: "Princes of the {hellPlace}",
               f: "B",
-              w: 10
+              w: 10,
+              t: [
+                "grand"
+              ]
             }
           ]
         },
@@ -36062,22 +36746,34 @@ var group_names_default = {
             {
               p: "Choir of the {entity}",
               f: "F",
-              w: 20
+              w: 20,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "the {colour} Wings",
               f: "E",
-              w: 20
+              w: 20,
+              t: [
+                "plain"
+              ]
             },
             {
               p: "the {number} Thrones",
               f: "E",
-              w: 10
+              w: 10,
+              t: [
+                "grand"
+              ]
             },
             {
               p: "Watchers of the {heavenThing}",
               f: "B",
-              w: 15
+              w: 15,
+              t: [
+                "strange"
+              ]
             },
             {
               p: "the {heavenQuality} Host",
@@ -36100,27 +36796,42 @@ var group_names_default = {
         {
           p: "Friends of the {respectablePlace}",
           f: "B",
-          w: 20
+          w: 20,
+          t: [
+            "strange"
+          ]
         },
         {
           p: "the {weekday} Club",
           f: "E",
-          w: 15
+          w: 15,
+          t: [
+            "light"
+          ]
         },
         {
           p: "the {streetFirst} {club}",
           f: "E",
-          w: 20
+          w: 20,
+          t: [
+            "light"
+          ]
         },
         {
           p: "{town} Benevolent Society",
           f: "F",
-          w: 10
+          w: 10,
+          t: [
+            "plain"
+          ]
         },
         {
           p: "{town} Philosophical Society",
           f: "F",
-          w: 10
+          w: 10,
+          t: [
+            "grand"
+          ]
         }
       ],
       typeShapes: {
@@ -36128,7 +36839,10 @@ var group_names_default = {
           {
             p: "the {town} Hunt",
             f: "E",
-            w: 15
+            w: 15,
+            t: [
+              "plain"
+            ]
           }
         ]
       }
@@ -36138,7 +36852,10 @@ var group_names_default = {
         {
           p: "Honourable Company of {thiefEuph}",
           f: "F",
-          w: 25
+          w: 25,
+          t: [
+            "grand"
+          ]
         },
         {
           p: "Guild of {thiefEuph}",
@@ -36187,6 +36904,9 @@ var group_names_default = {
             "MR",
             "MF",
             "SF"
+          ],
+          t: [
+            "plain"
           ]
         }
       ]
@@ -36196,17 +36916,26 @@ var group_names_default = {
         {
           p: "{surname} & Sons {businessTrade}",
           f: "B",
-          w: 30
+          w: 30,
+          t: [
+            "plain"
+          ]
         },
         {
           p: "{town} {businessTrade} Company",
           f: "F",
-          w: 20
+          w: 20,
+          t: [
+            "plain"
+          ]
         },
         {
           p: "{town} {businessTrade}",
           f: "E",
-          w: 15
+          w: 15,
+          t: [
+            "plain"
+          ]
         },
         {
           p: "the {town} Social Club",
@@ -36217,6 +36946,9 @@ var group_names_default = {
             "FH",
             "MR",
             "MF"
+          ],
+          t: [
+            "plain"
           ]
         },
         {
@@ -36227,6 +36959,9 @@ var group_names_default = {
             "MR",
             "MF",
             "SF"
+          ],
+          t: [
+            "plain"
           ]
         }
       ]
@@ -36236,7 +36971,10 @@ var group_names_default = {
         {
           p: "{town} Free Traders",
           f: "E",
-          w: 25
+          w: 25,
+          t: [
+            "plain"
+          ]
         },
         {
           p: "{town} {fishWord} Company",
@@ -36247,17 +36985,26 @@ var group_names_default = {
             "FH",
             "MR",
             "MF"
+          ],
+          t: [
+            "plain"
           ]
         },
         {
           p: "Friends of the Harbour Lights",
           f: "B",
-          w: 10
+          w: 10,
+          t: [
+            "light"
+          ]
         },
         {
           p: "{town} Pilots' Association",
           f: "F",
-          w: 15
+          w: 15,
+          t: [
+            "plain"
+          ]
         },
         {
           p: "{brandRoot} Logistics",
@@ -36267,6 +37014,9 @@ var group_names_default = {
             "MR",
             "MF",
             "SF"
+          ],
+          t: [
+            "plain"
           ]
         }
       ]
@@ -36281,6 +37031,9 @@ var group_names_default = {
             "MR",
             "MF",
             "SF"
+          ],
+          t: [
+            "plain"
           ]
         },
         {
@@ -36291,12 +37044,18 @@ var group_names_default = {
             "MR",
             "MF",
             "SF"
+          ],
+          t: [
+            "plain"
           ]
         },
         {
           p: "the {town} {mundaneOffice}",
           f: "E",
-          w: 25
+          w: 25,
+          t: [
+            "plain"
+          ]
         },
         {
           p: "the {ruler:poss} {clerkWord}",
@@ -36305,6 +37064,9 @@ var group_names_default = {
           s: [
             "FL",
             "FH"
+          ],
+          t: [
+            "plain"
           ]
         }
       ]
@@ -36319,7 +37081,10 @@ var group_names_default = {
         {
           p: "the People of {peace}",
           f: "B",
-          w: 20
+          w: 20,
+          t: [
+            "strange"
+          ]
         },
         {
           p: "{folkFixed}",
@@ -36329,7 +37094,10 @@ var group_names_default = {
         {
           p: "Folk of the {respectablePlace}",
           f: "B",
-          w: 20
+          w: 20,
+          t: [
+            "strange"
+          ]
         }
       ]
     },
@@ -36348,12 +37116,18 @@ var group_names_default = {
         {
           p: "Friends of the {bargainWord}",
           f: "B",
-          w: 20
+          w: 20,
+          t: [
+            "strange"
+          ]
         },
         {
           p: "{town} Mutual Assurance Society",
           f: "F",
-          w: 20
+          w: 20,
+          t: [
+            "plain"
+          ]
         }
       ]
     }
@@ -36362,7 +37136,10 @@ var group_names_default = {
     colour: [
       {
         w: "Black",
-        x: 2
+        x: 2,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "White",
@@ -36370,62 +37147,110 @@ var group_names_default = {
       },
       {
         w: "Red",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Grey",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Green"
+        w: "Green",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Blue"
+        w: "Blue",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Gold"
+        w: "Gold",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Golden"
+        w: "Golden",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Silver",
-        x: 1.5
+        x: 1.5,
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Iron"
+        w: "Iron",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Scarlet"
+        w: "Scarlet",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Crimson"
+        w: "Crimson",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Ashen"
+        w: "Ashen",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Pale"
+        w: "Pale",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Copper"
+        w: "Copper",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Bronze"
       },
       {
-        w: "Russet"
+        w: "Russet",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Amber"
       },
       {
         w: "Sable",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Azure",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Jade",
@@ -36433,15 +37258,24 @@ var group_names_default = {
       },
       {
         w: "Ivory",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Violet",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Purple",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       }
     ],
     colourRich: [
@@ -36449,28 +37283,43 @@ var group_names_default = {
         w: "Amber"
       },
       {
-        w: "Amethyst"
+        w: "Amethyst",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Aquamarine",
         x: 0.3
       },
       {
-        w: "Ashen"
+        w: "Ashen",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Azure",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Beryl",
         x: 0.3
       },
       {
-        w: "Black"
+        w: "Black",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Blue"
+        w: "Blue",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Brazen",
@@ -36492,37 +37341,64 @@ var group_names_default = {
       },
       {
         w: "Crimson",
-        x: 2
+        x: 2,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Crystal"
+        w: "Crystal",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Ebony"
+        w: "Ebony",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Emerald",
-        x: 1.5
+        x: 1.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Golden",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Green"
+        w: "Green",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Grey"
+        w: "Grey",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Incarnadine",
-        x: 0.2
+        x: 0.2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Indigo"
       },
       {
-        w: "Ivory"
+        w: "Ivory",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Jade",
@@ -36530,7 +37406,10 @@ var group_names_default = {
       },
       {
         w: "Jet",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Malachite",
@@ -36538,30 +37417,51 @@ var group_names_default = {
       },
       {
         w: "Opal",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Pale"
+        w: "Pale",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Pearl"
+        w: "Pearl",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Purple"
       },
       {
         w: "Rainbow",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Red"
+        w: "Red",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Rosy",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Ruby"
+        w: "Ruby",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Russet",
@@ -36569,21 +37469,33 @@ var group_names_default = {
       },
       {
         w: "Sable",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Sapphire"
+        w: "Sapphire",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Scarlet"
       },
       {
         w: "Silver",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Topaz",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Turquoise",
@@ -36591,7 +37503,10 @@ var group_names_default = {
       },
       {
         w: "Umber",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Vermilion",
@@ -36602,11 +37517,17 @@ var group_names_default = {
       },
       {
         w: "Viridian",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "White",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       }
     ],
     number: [
@@ -36628,11 +37549,17 @@ var group_names_default = {
       },
       {
         w: "Seven",
-        x: 3
+        x: 3,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Nine",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Ten"
@@ -36642,7 +37569,10 @@ var group_names_default = {
         x: 2
       },
       {
-        w: "Thirteen"
+        w: "Thirteen",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Hundred",
@@ -36850,14 +37780,23 @@ var group_names_default = {
         w: "Red"
       },
       {
-        w: "Gold"
+        w: "Gold",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Silver"
+        w: "Silver",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Iron",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Blue"
@@ -36866,39 +37805,63 @@ var group_names_default = {
         w: "Green"
       },
       {
-        w: "Grey"
+        w: "Grey",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Battle"
       },
       {
         w: "Blood",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Bolt"
       },
       {
-        w: "Bone"
+        w: "Bone",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Chaos",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Dark"
+        w: "Dark",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Death",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Dire",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Doom",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Fire"
@@ -36910,7 +37873,10 @@ var group_names_default = {
         w: "Free"
       },
       {
-        w: "High"
+        w: "High",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Law",
@@ -36920,42 +37886,69 @@ var group_names_default = {
         w: "Light"
       },
       {
-        w: "Lightning"
+        w: "Lightning",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Moon"
+        w: "Moon",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Night",
-        x: 1.5
+        x: 1.5,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Rune",
         s: [
           "FH",
           "MF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
-        w: "Sea"
+        w: "Sea",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Skull",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Star"
+        w: "Star",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Storm",
         x: 2
       },
       {
-        w: "Sun"
+        w: "Sun",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Thunder",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Thunderbolt",
@@ -36978,17 +37971,26 @@ var group_names_default = {
       },
       {
         w: "Wrath",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Steel",
         x: 1.5
       },
       {
-        w: "Stone"
+        w: "Stone",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Ash"
+        w: "Ash",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Ember"
@@ -37000,31 +38002,58 @@ var group_names_default = {
         w: "Winter"
       },
       {
-        w: "Crown"
+        w: "Crown",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Royal"
+        w: "Royal",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Loyal"
+        w: "Loyal",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Long"
+        w: "Long",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Last"
+        w: "Last",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Old"
+        w: "Old",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Salt"
+        w: "Salt",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Border"
+        w: "Border",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Hollow"
+        w: "Hollow",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Sudden"
@@ -37038,6 +38067,9 @@ var group_names_default = {
         w: "Astral",
         s: [
           "SF"
+        ],
+        t: [
+          "grand"
         ]
       },
       {
@@ -37050,12 +38082,18 @@ var group_names_default = {
         w: "Celestial",
         s: [
           "SF"
+        ],
+        t: [
+          "grand"
         ]
       },
       {
         w: "Cosmic",
         s: [
           "SF"
+        ],
+        t: [
+          "grand"
         ]
       },
       {
@@ -37081,6 +38119,9 @@ var group_names_default = {
         w: "Galactic",
         s: [
           "SF"
+        ],
+        t: [
+          "grand"
         ]
       },
       {
@@ -37100,6 +38141,9 @@ var group_names_default = {
         w: "Ion",
         s: [
           "SF"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
@@ -37119,6 +38163,9 @@ var group_names_default = {
         w: "Lunar",
         s: [
           "SF"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
@@ -37139,12 +38186,18 @@ var group_names_default = {
         x: 2,
         s: [
           "SF"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
         w: "Phase",
         s: [
           "SF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
@@ -37169,6 +38222,9 @@ var group_names_default = {
         w: "Quantum",
         s: [
           "SF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
@@ -37182,12 +38238,18 @@ var group_names_default = {
         x: 0.5,
         s: [
           "SF"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
         w: "Solar",
         s: [
           "SF"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
@@ -37201,6 +38263,9 @@ var group_names_default = {
         w: "Stellar",
         s: [
           "SF"
+        ],
+        t: [
+          "grand"
         ]
       },
       {
@@ -37208,6 +38273,9 @@ var group_names_default = {
         x: 0.5,
         s: [
           "SF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
@@ -37228,12 +38296,18 @@ var group_names_default = {
         x: 2,
         s: [
           "SF"
+        ],
+        t: [
+          "grim"
         ]
       },
       {
         w: "Warp",
         s: [
           "SF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
@@ -37261,6 +38335,9 @@ var group_names_default = {
         x: 0.3,
         s: [
           "SF"
+        ],
+        t: [
+          "grim"
         ]
       },
       {
@@ -37268,6 +38345,9 @@ var group_names_default = {
         x: 0.3,
         s: [
           "SF"
+        ],
+        t: [
+          "grim"
         ]
       }
     ],
@@ -37651,11 +38731,17 @@ var group_names_default = {
     quality: [
       {
         w: "Ancient",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Arcane",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Astral"
@@ -37675,17 +38761,26 @@ var group_names_default = {
         x: 0.5
       },
       {
-        w: "Celestial"
+        w: "Celestial",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Concealed"
+        w: "Concealed",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Cosmic"
       },
       {
         w: "Dark",
-        x: 2
+        x: 2,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Deep"
@@ -37696,11 +38791,17 @@ var group_names_default = {
       },
       {
         w: "Effulgent",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Elder",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Elemental",
@@ -37710,26 +38811,41 @@ var group_names_default = {
         ]
       },
       {
-        w: "Esoteric"
+        w: "Esoteric",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Eternal",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Ethereal"
       },
       {
         w: "Forgotten",
-        x: 2
+        x: 2,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Gloomy",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Glorious",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Glowing",
@@ -37741,22 +38857,37 @@ var group_names_default = {
       },
       {
         w: "Hidden",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Ineffable",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Inner",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Lost",
-        x: 2
+        x: 2,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Luminous"
+        w: "Luminous",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Lunar"
@@ -37771,56 +38902,92 @@ var group_names_default = {
       },
       {
         w: "Mysterious",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Mystic"
       },
       {
-        w: "Occult"
+        w: "Occult",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Penumbral",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Profound",
         x: 0.5
       },
       {
-        w: "Pure"
+        w: "Pure",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Quintessential",
-        x: 0.2
+        x: 0.2,
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Radiant"
+        w: "Radiant",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Recondite",
-        x: 0.2
+        x: 0.2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Resplendent",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Revealed"
       },
       {
         w: "Sacred",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Secret",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Shadowed"
+        w: "Shadowed",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Shining"
+        w: "Shining",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Sidereal",
@@ -37828,11 +38995,17 @@ var group_names_default = {
       },
       {
         w: "Singing",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "light"
+        ]
       },
       {
         w: "Sinister",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Solar"
@@ -37842,52 +39015,85 @@ var group_names_default = {
         x: 0.5
       },
       {
-        w: "Spiral"
+        w: "Spiral",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Starry"
       },
       {
         w: "Sublime",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Supernal",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Timeless"
       },
       {
         w: "Transcendent",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "True",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Veiled",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Silent",
         x: 2
       },
       {
-        w: "Still"
+        w: "Still",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Hollow"
+        w: "Hollow",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Sleeping"
+        w: "Sleeping",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Unseen"
+        w: "Unseen",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Nameless"
+        w: "Nameless",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Unbroken"
@@ -37896,19 +39102,34 @@ var group_names_default = {
         w: "Wandering"
       },
       {
-        w: "Weeping"
+        w: "Weeping",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Whispering"
+        w: "Whispering",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "First"
+        w: "First",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Last"
+        w: "Last",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Unspoken"
+        w: "Unspoken",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Quantum",
@@ -37920,12 +39141,18 @@ var group_names_default = {
         w: "Recursive",
         s: [
           "SF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
         w: "Infinite",
         s: [
           "SF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
@@ -37938,6 +39165,9 @@ var group_names_default = {
         w: "Null",
         s: [
           "SF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
@@ -37950,6 +39180,9 @@ var group_names_default = {
         w: "Fractal",
         s: [
           "SF"
+        ],
+        t: [
+          "strange"
         ]
       }
     ],
@@ -37959,7 +39192,10 @@ var group_names_default = {
         x: 0.3
       },
       {
-        w: "Chalice"
+        w: "Chalice",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Chamber"
@@ -37971,13 +39207,19 @@ var group_names_default = {
         w: "Cowl"
       },
       {
-        w: "Crown"
+        w: "Crown",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Crystal"
       },
       {
-        w: "Darkness"
+        w: "Darkness",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Dawn",
@@ -37992,7 +39234,10 @@ var group_names_default = {
       },
       {
         w: "Dominion",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Enlightenment",
@@ -38000,7 +39245,10 @@ var group_names_default = {
       },
       {
         w: "Eye",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Faith"
@@ -38028,11 +39276,17 @@ var group_names_default = {
       },
       {
         w: "Grail",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Hand",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Harmony"
@@ -38046,7 +39300,10 @@ var group_names_default = {
       },
       {
         w: "Key",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Knowledge"
@@ -38072,14 +39329,20 @@ var group_names_default = {
         w: "Mystery"
       },
       {
-        w: "Night"
+        w: "Night",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Orb"
       },
       {
         w: "Path",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Pentacle",
@@ -38096,6 +39359,9 @@ var group_names_default = {
         s: [
           "FH",
           "MF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
@@ -38107,17 +39373,26 @@ var group_names_default = {
       },
       {
         w: "Question",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Radiance"
+        w: "Radiance",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Rainbow",
         x: 0.5
       },
       {
-        w: "Revelation"
+        w: "Revelation",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Robe",
@@ -38127,7 +39402,10 @@ var group_names_default = {
         w: "Rod"
       },
       {
-        w: "Sceptre"
+        w: "Sceptre",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Scroll"
@@ -38137,7 +39415,10 @@ var group_names_default = {
       },
       {
         w: "Shadow",
-        x: 2
+        x: 2,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Shrine"
@@ -38165,11 +39446,17 @@ var group_names_default = {
         x: 2
       },
       {
-        w: "Stone"
+        w: "Stone",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Sun",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Symbol",
@@ -38183,7 +39470,10 @@ var group_names_default = {
         w: "Temple"
       },
       {
-        w: "Throne"
+        w: "Throne",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Time"
@@ -38196,14 +39486,20 @@ var group_names_default = {
       },
       {
         w: "Veil",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Verity",
         x: 0.5
       },
       {
-        w: "Void"
+        w: "Void",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Wand",
@@ -38214,46 +39510,73 @@ var group_names_default = {
       },
       {
         w: "Way",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Wisdom"
       },
       {
         w: "Word",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "World"
       },
       {
         w: "Lantern",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Mirror",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Labyrinth"
+        w: "Labyrinth",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Threshold"
+        w: "Threshold",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Silence"
+        w: "Silence",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Ember"
       },
       {
-        w: "Well"
+        w: "Well",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Tree"
       },
       {
-        w: "Serpent"
+        w: "Serpent",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Rose",
@@ -38263,7 +39586,10 @@ var group_names_default = {
         w: "Compass"
       },
       {
-        w: "Hourglass"
+        w: "Hourglass",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Eclipse"
@@ -38285,24 +39611,36 @@ var group_names_default = {
       },
       {
         w: "Lamp",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Seal"
       },
       {
-        w: "Spiral"
+        w: "Spiral",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Ouroboros",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Lotus",
         x: 0.5
       },
       {
-        w: "Sleeper"
+        w: "Sleeper",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Signal",
@@ -38314,6 +39652,9 @@ var group_names_default = {
         w: "Singularity",
         s: [
           "SF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
@@ -39233,7 +40574,10 @@ var group_names_default = {
       },
       {
         w: "Adepts",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Initiates",
@@ -39245,15 +40589,24 @@ var group_names_default = {
       },
       {
         w: "Brothers",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Sisters",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Children",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Disciples"
@@ -39267,7 +40620,10 @@ var group_names_default = {
       },
       {
         w: "Apostles",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Aspirants",
@@ -39275,54 +40631,96 @@ var group_names_default = {
       },
       {
         w: "Fellows",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Followers"
+        w: "Followers",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Servants"
+        w: "Servants",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Masters"
+        w: "Masters",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Illuminants",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Revealers",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Watchers"
+        w: "Watchers",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Wardens"
       },
       {
-        w: "Heirs"
+        w: "Heirs",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Walkers"
+        w: "Walkers",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Dreamers"
+        w: "Dreamers",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Sages"
+        w: "Sages",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Hermits",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Gentlemen",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "light"
+        ]
       },
       {
         w: "Ladies",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "light"
+        ]
       },
       {
         w: "Magi",
@@ -39332,6 +40730,9 @@ var group_names_default = {
         ],
         types: [
           "arcane"
+        ],
+        t: [
+          "grand"
         ]
       },
       {
@@ -39488,30 +40889,54 @@ var group_names_default = {
     holyQuality: [
       {
         w: "Holy",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Blessed"
+        w: "Blessed",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Humble"
+        w: "Humble",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Poor",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Little"
+        w: "Little",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Silent"
+        w: "Silent",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Barefoot"
+        w: "Barefoot",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Penitent",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Merciful"
@@ -39521,57 +40946,99 @@ var group_names_default = {
       },
       {
         w: "Hidden",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "strange"
+        ]
       }
     ],
     holyEntity: [
       {
-        w: "Lantern"
+        w: "Lantern",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Still Water"
       },
       {
-        w: "Open Hand"
+        w: "Open Hand",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Bread"
+        w: "Bread",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Well"
+        w: "Well",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Hearth"
+        w: "Hearth",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Mercy"
       },
       {
-        w: "Dawn"
+        w: "Dawn",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Grace"
+        w: "Grace",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Vigil"
+        w: "Vigil",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Bell"
+        w: "Bell",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Lamp"
+        w: "Lamp",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Mountain"
+        w: "Mountain",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Pilgrim Road"
       },
       {
-        w: "Ash"
+        w: "Ash",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Silence"
+        w: "Silence",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Lamb"
@@ -39589,18 +41056,30 @@ var group_names_default = {
         w: "Spring"
       },
       {
-        w: "Stone"
+        w: "Stone",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Path"
+        w: "Path",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Gate"
+        w: "Gate",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Quiet Star",
         s: [
           "SF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
@@ -39613,6 +41092,9 @@ var group_names_default = {
         w: "Far Light",
         s: [
           "SF"
+        ],
+        t: [
+          "grand"
         ]
       }
     ],
@@ -39680,66 +41162,123 @@ var group_names_default = {
     cultQuality: [
       {
         w: "Hollow",
-        x: 2
+        x: 2,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Pale",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Silent"
+        w: "Silent",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Weeping"
+        w: "Weeping",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Unblinking"
+        w: "Unblinking",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Drowned"
+        w: "Drowned",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Coming"
+        w: "Coming",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Final"
+        w: "Final",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Sleeping"
+        w: "Sleeping",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Burning"
+        w: "Burning",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Nameless"
+        w: "Nameless",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Patient"
+        w: "Patient",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Hungry"
+        w: "Hungry",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Crawling",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Smiling"
+        w: "Smiling",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Faceless"
+        w: "Faceless",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Twin"
+        w: "Twin",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Ninth"
+        w: "Ninth",
+        t: [
+          "strange"
+        ]
       }
     ],
     cultEntity: [
       {
         w: "Sun",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Flame"
@@ -39748,25 +41287,40 @@ var group_names_default = {
         w: "Moon"
       },
       {
-        w: "King"
+        w: "King",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Queen"
+        w: "Queen",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Harvest"
       },
       {
-        w: "Dark"
+        w: "Dark",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Star"
       },
       {
-        w: "Hour"
+        w: "Hour",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Eye"
+        w: "Eye",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Tide"
@@ -39775,42 +41329,75 @@ var group_names_default = {
         w: "Bell"
       },
       {
-        w: "Lamb"
+        w: "Lamb",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Door"
+        w: "Door",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Mother"
+        w: "Mother",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Father"
+        w: "Father",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Child"
+        w: "Child",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Mouth",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Worm",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Crown"
+        w: "Crown",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Throne"
+        w: "Throne",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Choir"
+        w: "Choir",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Gate"
       },
       {
-        w: "Dreamer"
+        w: "Dreamer",
+        t: [
+          "strange"
+        ]
       }
     ],
     cultName: [
@@ -39945,20 +41532,35 @@ var group_names_default = {
     covenEmblem: [
       {
         w: "Hare",
-        x: 2
+        x: 2,
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Toad"
+        w: "Toad",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Owl"
+        w: "Owl",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Cat"
+        w: "Cat",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Moon",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Thorn"
@@ -39979,31 +41581,58 @@ var group_names_default = {
         w: "Mistletoe"
       },
       {
-        w: "Cauldron"
+        w: "Cauldron",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Broom"
+        w: "Broom",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Candle"
+        w: "Candle",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Mirror"
+        w: "Mirror",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Bone"
+        w: "Bone",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Needle"
+        w: "Needle",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Thread"
+        w: "Thread",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Apple"
+        w: "Apple",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Hag-Stone"
+        w: "Hag-Stone",
+        t: [
+          "grim"
+        ]
       }
     ],
     covenLand: [
@@ -40371,11 +42000,17 @@ var group_names_default = {
     soldiers: [
       {
         w: "Champions",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Fighters",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Marines"
@@ -40385,6 +42020,9 @@ var group_names_default = {
         s: [
           "FH",
           "MF"
+        ],
+        t: [
+          "grand"
         ]
       },
       {
@@ -40395,10 +42033,16 @@ var group_names_default = {
         x: 0.5
       },
       {
-        w: "Soldiers"
+        w: "Soldiers",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Troopers"
+        w: "Troopers",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Veterans",
@@ -40406,31 +42050,49 @@ var group_names_default = {
       },
       {
         w: "Victors",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Warriors"
       },
       {
-        w: "Raiders"
+        w: "Raiders",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Rangers"
       },
       {
-        w: "Lancers"
+        w: "Lancers",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Blades"
       },
       {
-        w: "Bravos"
+        w: "Bravos",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Irregulars"
+        w: "Irregulars",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Volunteers"
+        w: "Volunteers",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Fencibles",
@@ -40438,6 +42100,9 @@ var group_names_default = {
         s: [
           "FL",
           "FH"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
@@ -40445,6 +42110,9 @@ var group_names_default = {
         s: [
           "FL",
           "FH"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
@@ -40453,10 +42121,16 @@ var group_names_default = {
         s: [
           "FL",
           "FH"
+        ],
+        t: [
+          "grand"
         ]
       },
       {
-        w: "Sentinels"
+        w: "Sentinels",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Drop Troopers",
@@ -40491,24 +42165,42 @@ var group_names_default = {
         w: "Guardians"
       },
       {
-        w: "Guards"
+        w: "Guards",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Keepers"
+        w: "Keepers",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Knights"
+        w: "Knights",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Lords",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Preservers",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Protectors"
+        w: "Protectors",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Rangers"
@@ -40517,18 +42209,27 @@ var group_names_default = {
         w: "Sentinels"
       },
       {
-        w: "Sentries"
+        w: "Sentries",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Wardens",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Warders"
       },
       {
         w: "Watchers",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Crusaders",
@@ -40536,6 +42237,9 @@ var group_names_default = {
         s: [
           "FL",
           "FH"
+        ],
+        t: [
+          "grand"
         ]
       }
     ],
@@ -40545,10 +42249,16 @@ var group_names_default = {
       },
       {
         w: "Destroyers",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Marauders"
+        w: "Marauders",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Pirates"
@@ -40558,23 +42268,38 @@ var group_names_default = {
         x: 0.5
       },
       {
-        w: "Reavers"
+        w: "Reavers",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Sellswords"
+        w: "Sellswords",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Freeswords"
+        w: "Freeswords",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Free Lances"
+        w: "Free Lances",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Condottieri",
         tx: {
           mediterranean: 3
         },
-        x: 0.2
+        x: 0.2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Contractors",
@@ -40582,6 +42307,9 @@ var group_names_default = {
           "MR",
           "MF",
           "SF"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
@@ -40590,6 +42318,9 @@ var group_names_default = {
         s: [
           "FH",
           "MF"
+        ],
+        t: [
+          "grim"
         ]
       }
     ],
@@ -40605,28 +42336,49 @@ var group_names_default = {
         x: 2
       },
       {
-        w: "Bows"
+        w: "Bows",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Bucklers"
+        w: "Bucklers",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Claws"
+        w: "Claws",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Daggers"
       },
       {
-        w: "Darts"
+        w: "Darts",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Fangs"
+        w: "Fangs",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Fists"
+        w: "Fists",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Flails"
+        w: "Flails",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Gauntlets"
@@ -40641,34 +42393,64 @@ var group_names_default = {
         w: "Helms"
       },
       {
-        w: "Knives"
+        w: "Knives",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Lances"
+        w: "Lances",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Maces"
+        w: "Maces",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Pikes"
+        w: "Pikes",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Scythes"
+        w: "Scythes",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Shields"
+        w: "Shields",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Spears"
+        w: "Spears",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Swords"
+        w: "Swords",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Talons"
+        w: "Talons",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Teeth"
+        w: "Teeth",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Muskets",
@@ -40686,6 +42468,9 @@ var group_names_default = {
           "FH",
           "MR",
           "MF"
+        ],
+        t: [
+          "grand"
         ]
       },
       {
@@ -40713,70 +42498,121 @@ var group_names_default = {
         w: "Lances",
         s: [
           "SF"
+        ],
+        t: [
+          "grand"
         ]
       }
     ],
     creatures: [
       {
-        w: "Bears"
+        w: "Bears",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Boars"
+        w: "Boars",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Bulls"
+        w: "Bulls",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Eagles"
+        w: "Eagles",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Falcons"
+        w: "Falcons",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Hawks"
+        w: "Hawks",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Hounds"
+        w: "Hounds",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Jaguars"
       },
       {
-        w: "Lions"
+        w: "Lions",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Panthers"
       },
       {
-        w: "Rats"
+        w: "Rats",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Scorpions"
+        w: "Scorpions",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Sharks"
+        w: "Sharks",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Tigers"
       },
       {
-        w: "Vipers"
+        w: "Vipers",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Wolves",
-        x: 2
+        x: 2,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Ravens"
+        w: "Ravens",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Stags"
+        w: "Stags",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Wolverines"
       },
       {
-        w: "Badgers"
+        w: "Badgers",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Griffins",
@@ -40784,7 +42620,10 @@ var group_names_default = {
           MR: 0.5,
           MF: 0.5,
           SF: 0.5
-        }
+        },
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Dragons",
@@ -40792,7 +42631,10 @@ var group_names_default = {
           MR: 0.5,
           MF: 0.5,
           SF: 0.5
-        }
+        },
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Wyverns",
@@ -40808,11 +42650,10 @@ var group_names_default = {
           MR: 0.5,
           MF: 0.5,
           SF: 0.5
-        }
-      },
-      {
-        w: "elsewhere)",
-        x: 0.5
+        },
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Angels",
@@ -40820,7 +42661,10 @@ var group_names_default = {
       },
       {
         w: "Devils",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       }
     ],
     starBand: [
@@ -41108,28 +42952,52 @@ var group_names_default = {
     ],
     element: [
       {
-        w: "Flame"
+        w: "Flame",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Iron"
+        w: "Iron",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Thunder"
+        w: "Thunder",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Winter"
+        w: "Winter",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Stone"
+        w: "Stone",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Storm"
+        w: "Storm",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Ash"
+        w: "Ash",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Night"
+        w: "Night",
+        t: [
+          "grim"
+        ]
       }
     ],
     nickTrait: [
@@ -41199,9 +43067,6 @@ var group_names_default = {
         ]
       },
       {
-        w: "\xA712)"
-      },
-      {
         w: "Die-Hards",
         x: 0.3
       }
@@ -41241,37 +43106,67 @@ var group_names_default = {
     nickAdj: [
       {
         w: "Fighting",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Bloody",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Gallant"
+        w: "Gallant",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Faithful"
+        w: "Faithful",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Old",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Hungry"
+        w: "Hungry",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Lucky"
+        w: "Lucky",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Stubborn"
+        w: "Stubborn",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Ragged"
+        w: "Ragged",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Saucy",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "light"
+        ]
       }
     ],
     knightEmblem: [
@@ -41546,31 +43441,58 @@ var group_names_default = {
     ],
     fleetQuality: [
       {
-        w: "Storm"
+        w: "Storm",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Grey"
+        w: "Grey",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Swift"
+        w: "Swift",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Silent"
+        w: "Silent",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Iron"
+        w: "Iron",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Night"
+        w: "Night",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Long"
+        w: "Long",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Salt"
+        w: "Salt",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Thunder"
+        w: "Thunder",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Winter"
@@ -41720,46 +43642,79 @@ var group_names_default = {
     ],
     raiders: [
       {
-        w: "Bandits"
+        w: "Bandits",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Brigands"
+        w: "Brigands",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Corsairs"
       },
       {
-        w: "Freebooters"
+        w: "Freebooters",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Buccaneers"
+        w: "Buccaneers",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Marauders"
+        w: "Marauders",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Outlaws",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Pirates"
+        w: "Pirates",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Raiders",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Reavers",
-        x: 2
+        x: 2,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Rovers"
+        w: "Rovers",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Sea-Wolves"
       },
       {
-        w: "Wreckers"
+        w: "Wreckers",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Wolves"
@@ -41802,54 +43757,90 @@ var group_names_default = {
     ],
     shade: [
       {
-        w: "Black"
+        w: "Black",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Dark"
+        w: "Dark",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Dim"
+        w: "Dim",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Dusk",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Fog"
+        w: "Fog",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Gloom"
+        w: "Gloom",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Grey"
+        w: "Grey",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Night",
         x: 2
       },
       {
-        w: "Shade"
+        w: "Shade",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Shadow",
         x: 2
       },
       {
-        w: "Smoke"
+        w: "Smoke",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Quiet",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Subtle"
       },
       {
-        w: "Whisper"
+        w: "Whisper",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Bloody",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Hidden"
@@ -41858,7 +43849,10 @@ var group_names_default = {
         w: "Red"
       },
       {
-        w: "Ready"
+        w: "Ready",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Sharp"
@@ -41868,87 +43862,153 @@ var group_names_default = {
       },
       {
         w: "Velvet",
-        x: 1.5
+        x: 1.5,
+        t: [
+          "light"
+        ]
       },
       {
         w: "Silent"
       },
       {
-        w: "Soft"
+        w: "Soft",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Still"
       },
       {
-        w: "Crooked"
+        w: "Crooked",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Nimble"
+        w: "Nimble",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Lean"
+        w: "Lean",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Cold"
+        w: "Cold",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Long"
+        w: "Long",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Narrow"
+        w: "Narrow",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Hollow"
+        w: "Hollow",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Sly"
+        w: "Sly",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Quick"
+        w: "Quick",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Midnight"
+        w: "Midnight",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Moonless"
+        w: "Moonless",
+        t: [
+          "grim"
+        ]
       }
     ],
     uWeapon: [
       {
-        w: "Blade"
+        w: "Blade",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Bolt"
       },
       {
-        w: "Claw"
+        w: "Claw",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Dagger"
+        w: "Dagger",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Dirk"
       },
       {
-        w: "Fang"
+        w: "Fang",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Hand",
-        x: 2
+        x: 2,
+        t: [
+          "light"
+        ]
       },
       {
         w: "Knife",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Razor"
+        w: "Razor",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Needle"
+        w: "Needle",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Stiletto",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Sting"
@@ -41961,11 +44021,17 @@ var group_names_default = {
           "FH",
           "MR",
           "MF"
+        ],
+        t: [
+          "light"
         ]
       },
       {
         w: "Garrotte",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grim"
+        ]
       }
     ],
     uItem: [
@@ -42027,64 +44093,118 @@ var group_names_default = {
         w: "Snakes"
       },
       {
-        w: "Scorpions"
+        w: "Scorpions",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Spiders"
+        w: "Spiders",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Bats"
+        w: "Bats",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Cats"
+        w: "Cats",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Jackdaws"
+        w: "Jackdaws",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Dogs"
       },
       {
-        w: "Owls"
+        w: "Owls",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Magpies"
+        w: "Magpies",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Rats",
-        x: 2
+        x: 2,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Weasels"
+        w: "Weasels",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Foxes"
+        w: "Foxes",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Stoats"
+        w: "Stoats",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Ferrets"
+        w: "Ferrets",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Crows"
+        w: "Crows",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Moths"
+        w: "Moths",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Eels"
+        w: "Eels",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Vipers"
+        w: "Vipers",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Jackals"
+        w: "Jackals",
+        t: [
+          "grim"
+        ]
       }
     ],
     agents: [
       {
-        w: "Finders"
+        w: "Finders",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Hunters"
@@ -42093,38 +44213,68 @@ var group_names_default = {
         w: "Seekers"
       },
       {
-        w: "Shadows"
+        w: "Shadows",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Slayers"
+        w: "Slayers",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Stalkers",
-        x: 2
+        x: 2,
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Takers"
+        w: "Takers",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Cutters"
+        w: "Cutters",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Lifters"
+        w: "Lifters",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Pickers"
+        w: "Pickers",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Walkers"
+        w: "Walkers",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Creepers"
+        w: "Creepers",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Prowlers"
       },
       {
-        w: "Light-Fingers"
+        w: "Light-Fingers",
+        t: [
+          "light"
+        ]
       }
     ],
     thiefGroup: [
@@ -42202,29 +44352,50 @@ var group_names_default = {
     gangMembers: [
       {
         w: "Boys",
-        x: 3
+        x: 3,
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Lads"
+        w: "Lads",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Girls"
+        w: "Girls",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Lasses",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "light"
+        ]
       },
       {
         w: "Mob",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Crew",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Gang",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Set",
@@ -42232,30 +44403,54 @@ var group_names_default = {
           "MR",
           "MF",
           "SF"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
         w: "Firm",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Kings",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Lords"
+        w: "Lords",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Saints"
+        w: "Saints",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Jackals"
+        w: "Jackals",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Dogs"
+        w: "Dogs",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Hounds"
+        w: "Hounds",
+        t: [
+          "grim"
+        ]
       }
     ],
     gangWear: [
@@ -42636,26 +44831,47 @@ var group_names_default = {
     smugglerAgents: [
       {
         w: "Owlers",
-        x: 2
+        x: 2,
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Free Traders"
+        w: "Free Traders",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Lantern Men"
+        w: "Lantern Men",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Tide-Runners"
+        w: "Tide-Runners",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Gentlemen"
+        w: "Gentlemen",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Runners",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Landers"
+        w: "Landers",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Blockade Runners",
@@ -42663,81 +44879,141 @@ var group_names_default = {
           "MR",
           "MF",
           "SF"
+        ],
+        t: [
+          "plain"
         ]
       }
     ],
     crewCollective: [
       {
-        w: "Choir"
+        w: "Choir",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Collective"
+        w: "Collective",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Cell"
+        w: "Cell",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Crew",
-        x: 2
+        x: 2,
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Front"
+        w: "Front",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Circle"
       },
       {
-        w: "Kids"
+        w: "Kids",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Ghosts"
+        w: "Ghosts",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Saints"
+        w: "Saints",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Wolves"
+        w: "Wolves",
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Syndicate"
       },
       {
-        w: "Club"
+        w: "Club",
+        t: [
+          "plain"
+        ]
       }
     ],
     techWord: [
       {
-        w: "Null"
+        w: "Null",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Static"
       },
       {
-        w: "Zero"
+        w: "Zero",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Glass"
       },
       {
-        w: "Cipher"
+        w: "Cipher",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Ghost"
+        w: "Ghost",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Echo"
+        w: "Echo",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Proxy"
+        w: "Proxy",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Kernel"
+        w: "Kernel",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Packet"
+        w: "Packet",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Signal"
+        w: "Signal",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Neon"
@@ -42747,22 +45023,40 @@ var group_names_default = {
       },
       {
         w: "Cold Boot",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Root"
+        w: "Root",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Vector"
+        w: "Vector",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Mirror"
+        w: "Mirror",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Shadow"
+        w: "Shadow",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Rust"
+        w: "Rust",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Silicon"
@@ -43815,34 +46109,64 @@ var group_names_default = {
     ],
     tradeDesc: [
       {
-        w: "Royal"
+        w: "Royal",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Golden"
+        w: "Golden",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Silver"
+        w: "Silver",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Old"
+        w: "Old",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Black"
+        w: "Black",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Red"
+        w: "Red",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Green"
+        w: "Green",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Iron"
+        w: "Iron",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Honest"
+        w: "Honest",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Good"
+        w: "Good",
+        t: [
+          "light"
+        ]
       }
     ],
     bankWord: [
@@ -44317,6 +46641,9 @@ var group_names_default = {
           "FH",
           "MR",
           "MF"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
@@ -44335,6 +46662,9 @@ var group_names_default = {
           "FH",
           "MR",
           "MF"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
@@ -44344,6 +46674,9 @@ var group_names_default = {
           "FH",
           "MR",
           "MF"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
@@ -44353,6 +46686,9 @@ var group_names_default = {
           "FH",
           "MR",
           "MF"
+        ],
+        t: [
+          "grim"
         ]
       },
       {
@@ -44380,6 +46716,9 @@ var group_names_default = {
           "FH",
           "MR",
           "MF"
+        ],
+        t: [
+          "grand"
         ]
       },
       {
@@ -44389,6 +46728,9 @@ var group_names_default = {
           "FH",
           "MR",
           "MF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
@@ -44398,6 +46740,9 @@ var group_names_default = {
           "FH",
           "MR",
           "MF"
+        ],
+        t: [
+          "grand"
         ]
       },
       {
@@ -44407,6 +46752,9 @@ var group_names_default = {
           "FH",
           "MR",
           "MF"
+        ],
+        t: [
+          "grim"
         ]
       },
       {
@@ -44416,6 +46764,9 @@ var group_names_default = {
           "FH",
           "MR",
           "MF"
+        ],
+        t: [
+          "plain"
         ]
       },
       {
@@ -44440,6 +46791,9 @@ var group_names_default = {
         w: "Silent Reach",
         s: [
           "SF"
+        ],
+        t: [
+          "strange"
         ]
       },
       {
@@ -44739,39 +47093,72 @@ var group_names_default = {
     ],
     councilQuality: [
       {
-        w: "Silent"
+        w: "Silent",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Hidden"
+        w: "Hidden",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Old"
+        w: "Old",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Inner"
+        w: "Inner",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Upper"
+        w: "Upper",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Lower"
+        w: "Lower",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Lesser"
+        w: "Lesser",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Greater"
+        w: "Greater",
+        t: [
+          "plain"
+        ]
       }
     ],
     ideal: [
       {
-        w: "Commonweal"
+        w: "Commonweal",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Hearth"
+        w: "Hearth",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Crown"
+        w: "Crown",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Liberty"
@@ -44789,40 +47176,73 @@ var group_names_default = {
         w: "Reform"
       },
       {
-        w: "Concord"
+        w: "Concord",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Plenty"
       },
       {
-        w: "Covenant"
+        w: "Covenant",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Restoration"
+        w: "Restoration",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Commons"
+        w: "Commons",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Charter"
+        w: "Charter",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Land"
+        w: "Land",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Harvest"
+        w: "Harvest",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Bread"
+        w: "Bread",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Lantern"
+        w: "Lantern",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Plough"
+        w: "Plough",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Anchor"
+        w: "Anchor",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Rose"
@@ -44916,58 +47336,100 @@ var group_names_default = {
     ],
     secretItem: [
       {
-        w: "Door"
+        w: "Door",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Key"
       },
       {
-        w: "Table"
+        w: "Table",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Lamp"
       },
       {
-        w: "Seal"
+        w: "Seal",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Ring"
       },
       {
-        w: "Glove"
+        w: "Glove",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Mask"
+        w: "Mask",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Ledger"
+        w: "Ledger",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Quill"
+        w: "Quill",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Candle"
       },
       {
-        w: "Cup"
+        w: "Cup",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Mirror"
+        w: "Mirror",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Thread"
+        w: "Thread",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Coin"
+        w: "Coin",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Chair"
+        w: "Chair",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Window"
+        w: "Window",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Stair"
+        w: "Stair",
+        t: [
+          "plain"
+        ]
       }
     ],
     secretQuality: [
@@ -44984,7 +47446,10 @@ var group_names_default = {
         w: "Silent"
       },
       {
-        w: "Second"
+        w: "Second",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Empty"
@@ -45005,7 +47470,10 @@ var group_names_default = {
         w: "Turning"
       },
       {
-        w: "Inner"
+        w: "Inner",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Last"
@@ -45013,34 +47481,64 @@ var group_names_default = {
     ],
     rebelQuality: [
       {
-        w: "Broken"
+        w: "Broken",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Fallen"
+        w: "Fallen",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Last"
+        w: "Last",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Burning"
+        w: "Burning",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Free"
+        w: "Free",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Rising"
+        w: "Rising",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Unbowed"
+        w: "Unbowed",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Hidden"
+        w: "Hidden",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Uncrowned"
+        w: "Uncrowned",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Unbroken"
+        w: "Unbroken",
+        t: [
+          "grand"
+        ]
       }
     ],
     rebelEmblem: [
@@ -45590,38 +48088,71 @@ var group_names_default = {
     ],
     feyTime: [
       {
-        w: "Winter"
+        w: "Winter",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Summer"
+        w: "Summer",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Autumn"
+        w: "Autumn",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Spring"
+        w: "Spring",
+        t: [
+          "plain"
+        ]
       },
       {
         w: "Twilight",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Midnight"
+        w: "Midnight",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Dawn"
+        w: "Dawn",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Dusk"
+        w: "Dusk",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Moonlit"
+        w: "Moonlit",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Frost"
+        w: "Frost",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Harvest"
+        w: "Harvest",
+        t: [
+          "plain"
+        ]
       }
     ],
     feyPlant: [
@@ -45715,58 +48246,109 @@ var group_names_default = {
     skyThing: [
       {
         w: "Moon",
-        x: 2
+        x: 2,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Star",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Sun"
+        w: "Sun",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Dawn"
+        w: "Dawn",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Dusk"
+        w: "Dusk",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Mist"
+        w: "Mist",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Dew"
+        w: "Dew",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Frost"
+        w: "Frost",
+        t: [
+          "grim"
+        ]
       }
     ],
     bloodQuality: [
       {
-        w: "Silent"
+        w: "Silent",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Ancient"
+        w: "Ancient",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Hollow"
+        w: "Hollow",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Hungry"
+        w: "Hungry",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Patient"
+        w: "Patient",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Sleepless"
+        w: "Sleepless",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Velvet"
+        w: "Velvet",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Cold"
+        w: "Cold",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Nameless"
+        w: "Nameless",
+        t: [
+          "strange"
+        ]
       }
     ],
     bodyPart: [
@@ -45901,28 +48483,52 @@ var group_names_default = {
     ],
     undeadNoun: [
       {
-        w: "Kings"
+        w: "Kings",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Dead"
+        w: "Dead",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Legion"
+        w: "Legion",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Host"
+        w: "Host",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Lords"
+        w: "Lords",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Barrow-Kings"
+        w: "Barrow-Kings",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Sleepers"
+        w: "Sleepers",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Risen"
+        w: "Risen",
+        t: [
+          "grim"
+        ]
       }
     ],
     hellPlace: [
@@ -45960,31 +48566,58 @@ var group_names_default = {
     ],
     demonQuality: [
       {
-        w: "Burning"
+        w: "Burning",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Smiling"
+        w: "Smiling",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Hungry"
+        w: "Hungry",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Hollow"
+        w: "Hollow",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Brazen"
+        w: "Brazen",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Cinder"
+        w: "Cinder",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Thousand-Voiced"
+        w: "Thousand-Voiced",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Patient"
+        w: "Patient",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Laughing"
+        w: "Laughing",
+        t: [
+          "strange"
+        ]
       }
     ],
     chainItem: [
@@ -46041,13 +48674,22 @@ var group_names_default = {
     ],
     heavenQuality: [
       {
-        w: "Shining"
+        w: "Shining",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Radiant"
+        w: "Radiant",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Golden"
+        w: "Golden",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Silver"
@@ -46056,49 +48698,88 @@ var group_names_default = {
         w: "White"
       },
       {
-        w: "Unfading"
+        w: "Unfading",
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Burning"
       },
       {
-        w: "Silent"
+        w: "Silent",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "Highest"
+        w: "Highest",
+        t: [
+          "grand"
+        ]
       }
     ],
     pursuit: [
       {
-        w: "Quiet Remembrance"
+        w: "Quiet Remembrance",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "the Study of Old Tongues"
+        w: "the Study of Old Tongues",
+        t: [
+          "strange"
+        ]
       },
       {
-        w: "the Preservation of Antiquities"
+        w: "the Preservation of Antiquities",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Mutual Improvement"
+        w: "Mutual Improvement",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "the Encouragement of the Arts"
+        w: "the Encouragement of the Arts",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Natural Philosophy"
+        w: "Natural Philosophy",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Lantern-Lit Walks"
+        w: "Lantern-Lit Walks",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "the Relief of Widows"
+        w: "the Relief of Widows",
+        t: [
+          "plain"
+        ]
       },
       {
-        w: "Rational Recreation"
+        w: "Rational Recreation",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Psychical Research",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "strange"
+        ]
       }
     ],
     respectablePlace: [
@@ -46255,7 +48936,10 @@ var group_names_default = {
     ],
     balancers: [
       {
-        w: "Arrangers"
+        w: "Arrangers",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Bestowers",
@@ -46266,35 +48950,59 @@ var group_names_default = {
         x: 0.3
       },
       {
-        w: "Disposers"
+        w: "Disposers",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Harmonisers"
+        w: "Harmonisers",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Reconcilers"
+        w: "Reconcilers",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Regulators"
+        w: "Regulators",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Reinstaters"
       },
       {
         w: "Restorers",
-        x: 2
+        x: 2,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Balancers"
       },
       {
-        w: "Correctors"
+        w: "Correctors",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Adjusters"
+        w: "Adjusters",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Menders"
+        w: "Menders",
+        t: [
+          "light"
+        ]
       }
     ],
     balance: [
@@ -46346,53 +49054,92 @@ var group_names_default = {
         x: 0.5
       },
       {
-        w: "Apt"
+        w: "Apt",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Decisive"
+        w: "Decisive",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Dependable"
+        w: "Dependable",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Discreet"
+        w: "Discreet",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Extreme",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Faithful"
       },
       {
-        w: "Final"
+        w: "Final",
+        t: [
+          "grim"
+        ]
       },
       {
-        w: "Fitting"
+        w: "Fitting",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Impartial"
+        w: "Impartial",
+        t: [
+          "grand"
+        ]
       },
       {
-        w: "Prompt"
+        w: "Prompt",
+        t: [
+          "light"
+        ]
       },
       {
-        w: "Reliable"
+        w: "Reliable",
+        t: [
+          "light"
+        ]
       },
       {
         w: "Certain"
       },
       {
         w: "Supreme",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grand"
+        ]
       },
       {
         w: "Ultimate",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "grim"
+        ]
       },
       {
         w: "Utmost",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "grim"
+        ]
       }
     ],
     redress: [
@@ -46625,7 +49372,10 @@ var group_names_default = {
         w: "Gentle"
       },
       {
-        w: "Quiet"
+        w: "Quiet",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Fair"
@@ -46645,11 +49395,17 @@ var group_names_default = {
       },
       {
         w: "Old",
-        x: 0.5
+        x: 0.5,
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Lordly",
-        x: 0.3
+        x: 0.3,
+        t: [
+          "strange"
+        ]
       }
     ],
     folkWord: [
@@ -46719,7 +49475,10 @@ var group_names_default = {
         w: "Generous"
       },
       {
-        w: "Patient"
+        w: "Patient",
+        t: [
+          "strange"
+        ]
       },
       {
         w: "Charitable"
@@ -49250,6 +52009,62 @@ var group_names_default = {
         w: 10
       }
     ]
+  },
+  listTones: {
+    craftHonorific: [
+      "grand"
+    ],
+    heavenThing: [
+      "grand"
+    ],
+    lastThing: [
+      "grim"
+    ],
+    deadQuality: [
+      "grim"
+    ],
+    hellPlace: [
+      "grim"
+    ],
+    chainItem: [
+      "grim"
+    ],
+    nickTrait: [
+      "light"
+    ],
+    gangNoun: [
+      "light"
+    ],
+    factionNick: [
+      "light"
+    ],
+    compound: [
+      "light"
+    ],
+    thiefEuph: [
+      "light"
+    ],
+    gentleAdj: [
+      "light"
+    ],
+    benefAdj: [
+      "light"
+    ],
+    folkKind: [
+      "light"
+    ],
+    verbPhrase: [
+      "strange"
+    ],
+    cultName: [
+      "strange"
+    ],
+    secretQuality: [
+      "strange"
+    ],
+    folkFixed: [
+      "strange"
+    ]
   }
 };
 
@@ -50513,8 +53328,8 @@ var WorldRenderer = class {
     var _a2;
     const s = this.swaps.get(key2);
     if (!s) return void 0;
-    const pick3 = pickWeighted4([...s.kept.map((e) => [e, 1]), [null, s.slotWeight]], rng);
-    if (pick3 !== null) return pick3;
+    const pick4 = pickWeighted4([...s.kept.map((e) => [e, 1]), [null, s.slotWeight]], rng);
+    if (pick4 !== null) return pick4;
     const sources = Object.entries(s.swap.replacedBy).filter(([k]) => k !== "terrain");
     const source = sources.length === 1 ? sources[0][0] : pickWeighted4(sources, rng);
     if (source === "shortLand" || source === "shortWater") {
@@ -50700,6 +53515,50 @@ var GROUP_TAGS = {
   PM: ["FL", "FH", "MR", "MF"],
   L: ["FL", "MR"]
 };
+var GROUP_TONES = ["grand", "plain", "grim", "light", "strange"];
+var TONE_OPPOSITES = {
+  grand: ["light", "plain"],
+  plain: ["grand", "strange"],
+  grim: ["light"],
+  light: ["grand", "grim"],
+  strange: ["plain"]
+};
+function toneFactor(tags, tone) {
+  if (tone === "any" || tags.length === 0) return 1;
+  if (tags.includes(tone)) return 4;
+  return tags.some((t) => TONE_OPPOSITES[tone].includes(t)) ? 0.25 : 1;
+}
+var UNTONED_LISTS = /* @__PURE__ */ new Set(["surname", "house", "townPrefix", "townSuffix"]);
+var WORD_TONES = /* @__PURE__ */ new Map();
+for (const [list, entries] of Object.entries(GROUP_DATA.lists)) {
+  for (const e of entries) {
+    if (!e.t) continue;
+    if (!WORD_TONES.has(list)) WORD_TONES.set(list, /* @__PURE__ */ new Map());
+    WORD_TONES.get(list).set(e.w, e.t);
+  }
+}
+function wordTones(list, word) {
+  var _a2, _b, _c;
+  return (_c = (_b = (_a2 = WORD_TONES.get(list)) == null ? void 0 : _a2.get(word)) != null ? _b : GROUP_DATA.listTones[list]) != null ? _c : [];
+}
+var SHAPE_TONES = /* @__PURE__ */ new Map();
+function shapeTones(shape) {
+  var _a2;
+  const key2 = `${shape.p}|${((_a2 = shape.t) != null ? _a2 : []).join(",")}`;
+  const cached = SHAPE_TONES.get(key2);
+  if (cached) return cached;
+  const result = computeShapeTones(shape);
+  SHAPE_TONES.set(key2, result);
+  return result;
+}
+function computeShapeTones(shape) {
+  var _a2, _b;
+  const out = new Set((_a2 = shape.t) != null ? _a2 : []);
+  for (const m of shape.p.matchAll(/\{([^}]+)\}/g)) {
+    for (const name of m[1].split(":")[0].split("/")) for (const t of (_b = GROUP_DATA.listTones[name]) != null ? _b : []) out.add(t);
+  }
+  return GROUP_TONES.filter((t) => out.has(t));
+}
 function findFamily(key2) {
   return GROUP_FAMILIES.find((f) => f.key === key2);
 }
@@ -50813,7 +53672,7 @@ function listTag(name) {
 }
 function pool(ctx, name, type, filter) {
   var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
-  const key2 = `${name}|${type.key}|${(_a2 = filter == null ? void 0 : filter.join(",")) != null ? _a2 : ""}`;
+  const key2 = `${name}|${type.key}|${(_a2 = filter == null ? void 0 : filter.join(",")) != null ? _a2 : ""}|${ctx.tone}`;
   const cached = ctx.pools.get(key2);
   if (cached) return cached;
   const S = ctx.setting;
@@ -50858,20 +53717,31 @@ function pool(ctx, name, type, filter) {
       }
     }
   }
+  if (ctx.tone !== "any" && !UNTONED_LISTS.has(name)) {
+    for (const [word, w] of weights) weights.set(word, w * toneFactor(wordTones(name, word), ctx.tone));
+  }
   const keep = filter != null ? filter : (_n = type.listFilter) == null ? void 0 : _n[name];
   const out = [...weights].filter(([w, n]) => n > 0 && (!keep || keep.includes(w)));
   ctx.pools.set(key2, out);
   return out;
 }
+function pick2(ctx, name, type, filter) {
+  const w = pickWeighted5(pool(ctx, name, type, filter), ctx.rng);
+  if (w !== void 0) for (const t of wordTones(name, w)) ctx.drawn.add(t);
+  return w;
+}
 function compositeWord(ctx, name, type) {
   const parts = GROUP_DATA.composites[name];
   if (name === "creature") {
     const merged = parts.flatMap(([sub2]) => pool(ctx, sub2, type));
-    return pickWeighted5(merged, ctx.rng);
+    const w = pickWeighted5(merged, ctx.rng);
+    const from = parts.find(([sub2]) => w !== void 0 && pool(ctx, sub2, type).some(([x]) => x === w));
+    if (w !== void 0 && from) for (const t of wordTones(from[0], w)) ctx.drawn.add(t);
+    return w;
   }
   const live = parts.filter(([sub2]) => pool(ctx, sub2, type).length > 0);
   const sub = pickWeighted5(live, ctx.rng);
-  return sub ? pickWeighted5(pool(ctx, sub, type), ctx.rng) : void 0;
+  return sub ? pick2(ctx, sub, type) : void 0;
 }
 var townPools = /* @__PURE__ */ new Map();
 function townPool(key2) {
@@ -50911,7 +53781,7 @@ function token(ctx, name, type, shape) {
   const placeholders = ctx.mode === "placeholders";
   const word = (list) => {
     var _a3;
-    const w = pickWeighted5(pool(ctx, list, type, (_a3 = shape == null ? void 0 : shape.filter) == null ? void 0 : _a3[list]), rng);
+    const w = pick2(ctx, list, type, (_a3 = shape == null ? void 0 : shape.filter) == null ? void 0 : _a3[list]);
     return w === void 0 ? void 0 : { text: w, plural: PLURAL_LISTS.has(list) };
   };
   switch (name) {
@@ -50921,8 +53791,8 @@ function token(ctx, name, type, shape) {
     case "holy": {
       if (placeholders) return { text: "[holy person]", plural: false };
       const saints = GROUP_DATA.people.saintTraditions.includes((_c = (_b = ctx.people) == null ? void 0 : _b.key) != null ? _c : "general");
-      if (!saints) return { text: `the ${pickWeighted5(pool(ctx, "holyTitle", type), rng)}`, plural: false };
-      const saint = pickWeighted5(pool(ctx, "saintName", type), rng);
+      if (!saints) return { text: `the ${pick2(ctx, "holyTitle", type)}`, plural: false };
+      const saint = pick2(ctx, "saintName", type);
       return { text: S === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`, plural: false };
     }
     case "town":
@@ -50941,15 +53811,15 @@ function token(ctx, name, type, shape) {
     }
     case "land": {
       if (S === "SF") {
-        const w2 = pickWeighted5(pool(ctx, "spaceLand", type), rng);
-        const prefix = rng() < 0.3 ? `${pickWeighted5(pool(ctx, "spacePrefix", type), rng)} ` : "";
+        const w2 = pick2(ctx, "spaceLand", type);
+        const prefix = rng() < 0.3 ? `${pick2(ctx, "spacePrefix", type)} ` : "";
         return { text: prefix + w2, plural: false };
       }
-      const w = pickWeighted5(pool(ctx, "land", type), rng);
+      const w = pick2(ctx, "land", type);
       if (!w) return void 0;
       const holds = w.includes(" ") || GROUP_DATA.lists.land.some((e) => e.w === w && e.noPrefix);
       if (!holds && rng() < 0.3) {
-        const prefix = rng() < 0.5 ? pickWeighted5(pool(ctx, "landPrefix", type), rng) : pickWeighted5(pool(ctx, "colour", type), rng);
+        const prefix = rng() < 0.5 ? pick2(ctx, "landPrefix", type) : pick2(ctx, "colour", type);
         return { text: `${prefix} ${w}`, plural: false };
       }
       return { text: w, plural: false };
@@ -50957,10 +53827,10 @@ function token(ctx, name, type, shape) {
     case "street":
       if (S === "SF") {
         const n = (max) => 1 + Math.floor(rng() * max);
-        const forms = [() => `Deck ${n(40)}`, () => `Ring ${pickWeighted5(pool(ctx, "greek", type), rng)}`, () => `Level ${n(99)}`, () => `Sector ${n(20)}`];
+        const forms = [() => `Deck ${n(40)}`, () => `Ring ${pick2(ctx, "greek", type)}`, () => `Level ${n(99)}`, () => `Sector ${n(20)}`];
         return { text: pickOne(forms, rng)(), plural: false };
       }
-      return { text: `${pickWeighted5(pool(ctx, "streetFirst", type), rng)} ${pickWeighted5(pool(ctx, "streetLast", type), rng)}`, plural: false };
+      return { text: `${pick2(ctx, "streetFirst", type)} ${pick2(ctx, "streetLast", type)}`, plural: false };
     case "nickname": {
       const shapeChoice = pickWeighted5(GROUP_DATA.nickname.map((n) => [n.p, n.w]), rng);
       const text = renderPattern(ctx, shapeChoice, type);
@@ -50971,7 +53841,7 @@ function token(ctx, name, type, shape) {
     case "starNumber":
       return { text: String(1 + Math.floor(rng() * 12)), plural: false };
     case "spaceLandPrefixed":
-      return { text: `${pickWeighted5(pool(ctx, "spacePrefix", type), rng)} ${pickWeighted5(pool(ctx, "spaceLand", type), rng)}`, plural: false };
+      return { text: `${pick2(ctx, "spacePrefix", type)} ${pick2(ctx, "spaceLand", type)}`, plural: false };
     case "britishPlace":
       return { text: pickOne(townPool("britain"), rng), plural: false };
     case "flavourAnimal": {
@@ -51017,7 +53887,7 @@ function inventedTown(ctx, type) {
     const names = townPool(source);
     if (names.length > 0) return pickOne(names, rng);
   }
-  return `${pickWeighted5(pool(ctx, "townPrefix", type), rng)}${pickWeighted5(pool(ctx, "townSuffix", type), rng)}`;
+  return `${pick2(ctx, "townPrefix", type)}${pick2(ctx, "townSuffix", type)}`;
 }
 function initialsToken(ctx, type) {
   const formal = type.shapes.filter((s) => s.f === "F" && !s.p.includes("{initials}") && shapeWeight(ctx, s) > 0);
@@ -51039,7 +53909,8 @@ function shapeWeight(ctx, shape) {
     return 0;
   }
   const trad = ctx.vocab ? (_d = (_c = GROUP_DATA.traditions.shapeMultipliers[ctx.vocab.key]) == null ? void 0 : _c[shape.p]) != null ? _d : 1 : 1;
-  return shape.w * ((_f = (_e = shape.sx) == null ? void 0 : _e[ctx.setting]) != null ? _f : 1) * trad;
+  const tone = ctx.tone === "any" ? 1 : toneFactor(shapeTones(shape), ctx.tone);
+  return shape.w * ((_f = (_e = shape.sx) == null ? void 0 : _e[ctx.setting]) != null ? _f : 1) * trad * tone;
 }
 function byForm(ctx, shapes) {
   const live = shapes.map((s) => [s, shapeWeight(ctx, s)]).filter(([, w]) => w > 0);
@@ -51077,13 +53948,15 @@ function drawName(ctx, type, front) {
   const choices = byForm(ctx, shapes);
   const shape = pickWeighted5(choices, ctx.rng);
   if (!shape) return void 0;
+  ctx.drawn = /* @__PURE__ */ new Set();
   const raw = renderPattern(ctx, shape.p, { ...listType, person: type.person }, shape);
   if (!raw) return void 0;
   if (shape.p === "{brandStart}{brandEnd}" && raw.length < 5) return void 0;
   const formal = shape.f === "F" || shape.f === "B" && ctx.form !== "everyday";
   const text = capitalise(raw.replace(/\s+/g, " ").trim(), shape.f === "F");
   if (!acceptable(ctx, text, formal)) return void 0;
-  return { text, family: ctx.family.key, type: type.key, shape: shape.p, front, form: shape.f };
+  const tones = /* @__PURE__ */ new Set([...shapeTones(shape), ...ctx.drawn]);
+  return { text, family: ctx.family.key, type: type.key, shape: shape.p, front, form: shape.f, tones: GROUP_TONES.filter((t) => tones.has(t)) };
 }
 function acceptable(ctx, text, formal) {
   const words = text.split(" ").filter((w) => w && w !== "&");
@@ -51135,7 +54008,7 @@ function oneName(ctx, options, chosen, types) {
   return void 0;
 }
 function generateGroupNames(options) {
-  var _a2, _b, _c, _d, _e, _f;
+  var _a2, _b, _c, _d, _e, _f, _g;
   const family = findFamily(options.family);
   if (!family) throw new Error(`Unknown family \u201C${options.family}\u201D.`);
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
@@ -51158,13 +54031,15 @@ function generateGroupNames(options) {
     mode: (_d = options.people) != null ? _d : "placeholders",
     form: (_e = options.form) != null ? _e : "any",
     block,
-    pools: /* @__PURE__ */ new Map()
+    pools: /* @__PURE__ */ new Map(),
+    tone: (_f = options.tone) != null ? _f : "any",
+    drawn: /* @__PURE__ */ new Set()
   };
   const chosen = options.type ? available.find((t) => t.key === options.type) : void 0;
   if (options.type && !chosen) {
     notices.push(`\u201C${options.type}\u201D isn't available in ${SETTING_PHRASES[setting]}; using any type.`);
   }
-  const front = (_f = options.front) != null ? _f : "say";
+  const front = (_g = options.front) != null ? _g : "say";
   const typeWeight = (t) => {
     var _a3, _b2;
     return t.weight * (vocab ? (_b2 = (_a3 = GROUP_DATA.traditions.typeMultipliers[vocab.key]) == null ? void 0 : _a3[t.key]) != null ? _b2 : 1 : 1);
@@ -51399,7 +54274,7 @@ function parseModulePreset(content, fileName) {
     return { problems };
   }
   const d = TRIBAL_PRESET_DEFAULTS;
-  const pick3 = (key2, fallback, ok) => {
+  const pick4 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -51415,12 +54290,12 @@ function parseModulePreset(content, fileName) {
       packName: values.packName || fileName,
       setting: (_b = values.setting) != null ? _b : "",
       description: body.trim(),
-      tradition: pick3("tradition", d.tradition, (v) => !!findTradition(v)),
-      biome: pick3("biome", d.biome, (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
-      terrain: pick3("terrain", d.terrain, (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
-      register: pick3("register", d.register, (v) => TRIBAL_REGISTERS.includes(v)),
-      groupType: pick3("groupType", d.groupType, (v) => v === "any" || TRIBAL_GROUP_TYPES.some((g) => g.key === v)),
-      perspective: pick3("perspective", d.perspective, (v) => v === "any" || TRIBAL_PERSPECTIVES.includes(v)),
+      tradition: pick4("tradition", d.tradition, (v) => !!findTradition(v)),
+      biome: pick4("biome", d.biome, (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
+      terrain: pick4("terrain", d.terrain, (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
+      register: pick4("register", d.register, (v) => TRIBAL_REGISTERS.includes(v)),
+      groupType: pick4("groupType", d.groupType, (v) => v === "any" || TRIBAL_GROUP_TYPES.some((g) => g.key === v)),
+      perspective: pick4("perspective", d.perspective, (v) => v === "any" || TRIBAL_PERSPECTIVES.includes(v)),
       hostile
     },
     problems
@@ -51457,7 +54332,7 @@ function parseGroupPreset(values, body, fileName) {
     problems.push(`Unknown family \u201C${(_b = values.family) != null ? _b : ""}\u201D.`);
     return { problems };
   }
-  const pick3 = (key2, fallback, ok) => {
+  const pick4 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -51476,13 +54351,13 @@ function parseGroupPreset(values, body, fileName) {
       setting: (_c = values.setting) != null ? _c : "",
       description: body.trim(),
       family: family.key,
-      tradition: pick3("tradition", "general", (v) => !!findTradition(v)),
-      groupType: pick3("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v)),
-      genre: pick3("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
+      tradition: pick4("tradition", "general", (v) => !!findTradition(v)),
+      groupType: pick4("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v)),
+      genre: pick4("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
       fantastic: flag("fantastic"),
-      form: pick3("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
-      front: pick3("front", "say", (v) => ["say", "hide", "may"].includes(v)),
-      people: pick3("people", "placeholders", (v) => ["placeholders", "invented"].includes(v))
+      form: pick4("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
+      front: pick4("front", "say", (v) => ["say", "hide", "may"].includes(v)),
+      people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v))
     },
     problems
   };
@@ -53025,7 +55900,7 @@ var import_obsidian8 = require("obsidian");
 
 // src/packs/placeDraw.ts
 var seedFrom = (rng) => Math.floor(rng() * 4294967296) >>> 0;
-var pick2 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
+var pick3 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
 function placePackDraw(parsed, settings, notice = () => {
 }) {
   var _a2, _b;
@@ -53049,7 +55924,7 @@ function placePackDraw(parsed, settings, notice = () => {
       if (mode === "stem") {
         const first = (_b2 = parts[0]) != null ? _b2 : [];
         if (first.length === 0) return null;
-        return partIsBreakdown(options.generator, parsed.compoundPartGenerators, 0) ? model(`part1|${keyOf(request)}`, first).sampleStem(rng, faithfulness, strictness) : pick2(first, rng);
+        return partIsBreakdown(options.generator, parsed.compoundPartGenerators, 0) ? model(`part1|${keyOf(request)}`, first).sampleStem(rng, faithfulness, strictness) : pick3(first, rng);
       }
       return (_c = generateCompoundNamesDetailed(parts, { count: 1, ...options, seed: seedFrom(rng) }).names[0]) != null ? _c : null;
     };
@@ -53357,7 +56232,7 @@ var RecipeHost = class {
     const faithfulness = (_a2 = this.settings.faithfulness) != null ? _a2 : 2;
     const strictness = (_b = this.settings.strictness) != null ? _b : 3;
     const seedFrom2 = (rng) => Math.floor(rng() * 4294967296) >>> 0;
-    const pick3 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
+    const pick4 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
     const cache = /* @__PURE__ */ new Map();
     const cached = (key2, build) => {
       if (!cache.has(key2)) cache.set(key2, build());
@@ -53380,7 +56255,7 @@ var RecipeHost = class {
       const label = listLabels.get(key2);
       const loosened = label ? breakdownSettingsFor(names.length, strictness) : { allowSourceCopies: false, strictness };
       if (label && loosened.allowSourceCopies) this.notices.add(`${parsed.packName}: ${smallListNotice(label, names.length)}`);
-      return (_a3 = model.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom2(rng) }).names[0]) != null ? _a3 : pick3(names, rng);
+      return (_a3 = model.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom2(rng) }).names[0]) != null ? _a3 : pick4(names, rng);
     };
     const requestKey = (r) => {
       var _a3, _b2;
@@ -53388,7 +56263,7 @@ var RecipeHost = class {
     };
     switch (parsed.packType) {
       case "listPack":
-        return (request, _mode, rng) => pick3(namesFor2(request), rng);
+        return (request, _mode, rng) => pick4(namesFor2(request), rng);
       case "breakdownPack":
         return (request, _mode, rng) => markovName(namesFor2(request), requestKey(request), rng);
       case "placePack":
@@ -53401,7 +56276,7 @@ var RecipeHost = class {
           const parts = compoundPartsFor(data, (_a3 = request.section) != null ? _a3 : request.gender);
           if (mode === "stem") {
             const first = (_b2 = parts[0]) != null ? _b2 : [];
-            return partIsBreakdown(settings.generator, parsed.compoundPartGenerators, 0) ? markovName(first, `part1|${requestKey(request)}`, rng) : pick3(first, rng);
+            return partIsBreakdown(settings.generator, parsed.compoundPartGenerators, 0) ? markovName(first, `part1|${requestKey(request)}`, rng) : pick4(first, rng);
           }
           return (_c = generateCompoundNamesDetailed(parts, { count: 1, ...settings, faithfulness, strictness, seed: seedFrom2(rng) }).names[0]) != null ? _c : null;
         };
@@ -54957,24 +57832,24 @@ function generateLabelledNames(lists, options) {
   while (result.length < count && live.length > 0) {
     const total = live.reduce((sum, i) => sum + viable[i].names.length, 0);
     let roll = masterRng() * total;
-    let pick3 = live[live.length - 1];
+    let pick4 = live[live.length - 1];
     for (const i of live) {
       roll -= viable[i].names.length;
       if (roll < 0) {
-        pick3 = i;
+        pick4 = i;
         break;
       }
     }
-    const names = pool2(pick3);
-    if (cursors[pick3] >= names.length) {
-      live.splice(live.indexOf(pick3), 1);
+    const names = pool2(pick4);
+    if (cursors[pick4] >= names.length) {
+      live.splice(live.indexOf(pick4), 1);
       continue;
     }
-    const name = names[cursors[pick3]++];
+    const name = names[cursors[pick4]++];
     const key2 = name.toLowerCase();
     if (seen.has(key2)) continue;
     seen.add(key2);
-    result.push({ name, ...viable[pick3].tag !== void 0 ? { tag: viable[pick3].tag } : {} });
+    result.push({ name, ...viable[pick4].tag !== void 0 ? { tag: viable[pick4].tag } : {} });
   }
   return { names: result, seed, small };
 }
