@@ -284,10 +284,11 @@ function ownerNames(ctx: Ctx): string[] {
 /** §6.3: `{route}`: one route name, kind road, drove or trade, without "the". */
 function route(ctx: Ctx): string | undefined {
   // Settlement kit §4: the road through town.
-  const through = ctx.options.context?.throughRoute;
-  if (through) {
+  const context = ctx.options.context;
+  if (context) {
+    if (!context.throughRoute) return undefined;
     ctx.isRoute = true;
-    return through.replace(/^the /i, "");
+    return context.throughRoute.replace(/^the /i, "");
   }
   const kind = pickWeighted(Object.entries(INN_DATA.lists.routeKinds), ctx.rng);
   const r = generateRouteNames({

@@ -1,0 +1,56 @@
+{
+ "$comment": "Settlement kit (docs/settlement-kit-brief.md §5–§7): section sizes, the group line-up, positions and the ships section. The kit has no word lists of its own.",
+ "version": 1,
+ "sizes": {
+  "roads": {"village": 2, "town": 3, "city": 4, "great": 5},
+  "districts": {"village": 0, "town": 3, "city": 5, "great": 7},
+  "streets": {"village": 4, "town": 8, "city": 12, "great": 16},
+  "squares": {"village": 1, "town": 2, "city": 3, "great": 4},
+  "inns": {"village": 1, "town": 3, "city": 5, "great": 7},
+  "buildings": {"village": 3, "town": 6, "city": 9, "great": 12},
+  "groups": {"village": 1, "town": 4, "city": 7, "great": 10},
+  "ships": {"village": 2, "town": 3, "city": 4, "great": 6}
+ },
+ "detail": {"brief": 0.5, "standard": 1, "full": 1.5},
+ "sections": [
+  {"key": "roads", "title": "Roads", "step": 3},
+  {"key": "districts", "title": "Districts", "step": 5},
+  {"key": "streets", "title": "Streets", "step": 6},
+  {"key": "squares", "title": "Squares and markets", "step": 7},
+  {"key": "inns", "title": "Inns", "step": 8},
+  {"key": "buildings", "title": "Buildings and landmarks", "step": 4},
+  {"key": "groups", "title": "Groups", "step": 9},
+  {"key": "ships", "title": "Ships", "step": 10}
+ ],
+ "groups": [
+  {"role": "Faith", "family": "mystic", "type": "holy", "from": "village", "cult": {"share": 0.2, "tones": ["grim", "strange"]}},
+  {"role": "Watch", "family": "martial", "type": "watch", "from": "town"},
+  {"role": "Guild", "family": "trade", "type": "craft", "from": "town"},
+  {"role": "Council", "family": "power", "type": "council", "from": "town"},
+  {"role": "Merchants", "family": "trade", "type": "merchant", "from": "city"},
+  {"role": "Gang", "family": "underworld", "type": "gang", "from": "city"},
+  {"role": "Garrison", "family": "martial", "type": "unit", "from": "city"},
+  {"role": "Guild", "family": "trade", "type": "craft", "from": "great"},
+  {"role": "Thieves", "family": "underworld", "type": "thieves", "from": "great"},
+  {"role": "Secret society", "family": "power", "type": "secret", "from": "great"},
+  {"role": "Faction", "family": "power", "type": "faction", "from": "great"},
+  {"role": "Faith", "family": "mystic", "from": "great"}
+ ],
+ "hideFront": ["underworld", "secret"],
+ "positions": [
+  {"key": "inland", "text": "inland", "sf": "on a planet", "summary": "", "sfSummary": "", "setting": "town", "villageSetting": "country", "effects": {}},
+  {"key": "river", "text": "on a river", "sf": "on a river world", "summary": "on a river", "sfSummary": "on a river world", "setting": "town", "ships": "working",
+   "effects": {"buildingKindX": {"crossing": 2}, "componentX": {"compCrossing": 2, "compWaterside": 2}}},
+  {"key": "coast", "text": "on the coast", "sf": "on an ocean world", "summary": "on the coast", "sfSummary": "on an ocean world", "setting": "port", "ships": "any",
+   "effects": {"buildingKindX": {"maritime": 5}, "componentX": {"compWaterside": 3}}},
+  {"key": "crossroads", "text": "at a crossroads", "sf": "on a station", "summary": "at a crossroads", "sfSummary": "on a station", "setting": "road", "roadsExtra": 1,
+   "effects": {"roadsideX": 2, "buildingKindX": {"crossing": 1.5, "monument": 1.5}},
+   "sfStation": {"setting": "port", "ships": "any", "effects": {"buildingKindX": {"maritime": 5}, "componentX": {"compWaterside": 3}}}}
+ ],
+ "vessels": {"ships": {"AN": "T2", "MD": "T3", "EM": "T4", "ST": "T5", "MO": "T7", "NF": "T7"}, "spacecraft": {"NF": "S1", "IS": "S3"}},
+ "rulerShapes": "of {town}",
+ "villageOfficeWords": ["Reeve", "Headman", "Steward", "Elder"],
+ "seedStep": 7919,
+ "rerollStep": 15485863,
+ "dedupeTries": 20
+}

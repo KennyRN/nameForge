@@ -79622,11 +79622,11 @@ function dialectWord(ctx, keep) {
   return fromPool(ctx, "alleyDialect", items);
 }
 function route(ctx) {
-  var _a2;
-  const through = (_a2 = ctx.options.context) == null ? void 0 : _a2.throughRoute;
-  if (through) {
+  const context = ctx.options.context;
+  if (context) {
+    if (!context.throughRoute) return void 0;
     ctx.isRoute = true;
-    return through;
+    return context.throughRoute;
   }
   const kinds = ROUTE_ERAS.findIndex((e) => e.code === ctx.era) >= ROUTE_ERAS.findIndex((e) => e.code === "MO") ? STREET_DATA.route.modern : STREET_DATA.route.kinds;
   const kind = pickWeighted5(Object.entries(kinds), ctx.rng);
@@ -80493,11 +80493,11 @@ function ownerNames2(ctx) {
   return [...personNames(ctx.culture.key), ...STREET_DATA.surnameCultures.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : []];
 }
 function route2(ctx) {
-  var _a2;
-  const through = (_a2 = ctx.options.context) == null ? void 0 : _a2.throughRoute;
-  if (through) {
+  const context = ctx.options.context;
+  if (context) {
+    if (!context.throughRoute) return void 0;
     ctx.isRoute = true;
-    return through.replace(/^the /i, "");
+    return context.throughRoute.replace(/^the /i, "");
   }
   const kind = pickWeighted5(Object.entries(INN_DATA.lists.routeKinds), ctx.rng);
   const r = generateRouteNames({

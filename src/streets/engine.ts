@@ -294,10 +294,11 @@ function dialectWord(ctx: Ctx, keep?: (w: string) => boolean): string | undefine
 /** §4: `{route}`: one route name for the same culture, era, fantastic, region and people. */
 function route(ctx: Ctx): string | undefined {
   // Settlement kit §4: the road through town.
-  const through = ctx.options.context?.throughRoute;
-  if (through) {
+  const context = ctx.options.context;
+  if (context) {
+    if (!context.throughRoute) return undefined;
     ctx.isRoute = true;
-    return through;
+    return context.throughRoute;
   }
   const kinds = ROUTE_ERAS.findIndex((e) => e.code === ctx.era) >= ROUTE_ERAS.findIndex((e) => e.code === "MO") ? STREET_DATA.route.modern : STREET_DATA.route.kinds;
   const kind = pickWeighted(Object.entries(kinds), ctx.rng);
