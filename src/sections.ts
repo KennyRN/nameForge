@@ -31,6 +31,8 @@ export type NameForgeSection =
   | "innNames"
   // Buildings brief §1.1: after inns and taverns.
   | "buildingNames"
+  // Settlement kit §1.1: after buildings and landmarks.
+  | "settlementKit"
   | "riverNames"
   | "explorationPlaceShapes"
   | "empireExpansionPlaceShapes"
@@ -79,6 +81,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "streetNames",
   "innNames",
   "buildingNames",
+  "settlementKit",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "tribalNames",
@@ -95,7 +98,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
 export type SectionGroup = "placeNames" | "groupNames" | "bynames" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
-  placeNames: ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  placeNames: ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames", "settlementKit", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
   groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS],
@@ -124,6 +127,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   streetNames: "streets and districts",
   innNames: "inns and taverns",
   buildingNames: "buildings and landmarks",
+  settlementKit: "settlement kit",
   riverNames: "river names",
   explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
@@ -174,6 +178,8 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(SECTION_LABELS.innNames)) return "innNames";
   // Buildings brief §1.2: "buildings and landmarks · {era} · {culture}…".
   if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
+  // Settlement kit §1.2: "settlement kit · {settlement name} · {size}…".
+  if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
   // Realms brief §1.2: "realms and polities · {setting} · {culture} · {era}…".
   if (starts(SECTION_LABELS.realms)) return "realms";
   // Group brief §1.2: each group-name module's label starts its history rows.

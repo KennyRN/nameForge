@@ -1031,9 +1031,9 @@ function generateCompoundNamesDetailed(parts, options) {
       return generator.generateMultiple(poolSize, mulberry32(nextSubSeed()));
     }
     const model = options.breakdownModel === "place" ? PlaceNameModel.build(part) : MarkovModel.build(part);
-    const subSeed2 = nextSubSeed();
+    const subSeed3 = nextSubSeed();
     const strictness = (_c = options.strictness) != null ? _c : 3;
-    const pool3 = model.generateDetailed({ count: poolSize, faithfulness: (_d = options.faithfulness) != null ? _d : 2, strictness, seed: subSeed2 }).names;
+    const pool3 = model.generateDetailed({ count: poolSize, faithfulness: (_d = options.faithfulness) != null ? _d : 2, strictness, seed: subSeed3 }).names;
     if (pool3.length > 0 || part.length >= BREAKDOWN_MIN_NAMES) return pool3;
     loosened.push(index);
     return model.generateDetailed({
@@ -1041,7 +1041,7 @@ function generateCompoundNamesDetailed(parts, options) {
       faithfulness: (_e = options.faithfulness) != null ? _e : 2,
       strictness: Math.max(1, strictness - 1),
       allowSourceCopies: true,
-      seed: subSeed2
+      seed: subSeed3
     }).names;
   });
   if (pools.some((pool3) => pool3.length === 0)) return { names: [], seed, loosened };
@@ -2167,6 +2167,8 @@ var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
         await ensureVaultFolder(this.app, value.trim());
         void this.refreshLegacyFolder();
       }
+    } else if (key2 === "settlementsFolder" && typeof value === "string") {
+      this.plugin.settings.settlementsFolder = value.trim();
     } else if (key2 === "faithfulness" && typeof value === "number") {
       this.plugin.settings.faithfulness = value;
     } else if (key2 === "strictness" && typeof value === "number") {
@@ -2187,6 +2189,17 @@ var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
           placeholder: DEFAULT_NAMES_FOLDER,
           includeRoot: true,
           defaultValue: DEFAULT_NAMES_FOLDER
+        }
+      },
+      {
+        name: "Settlements folder",
+        desc: "Where the settlement kit's Create note writes settlement notes. Empty: the names folder plus /Settlements.",
+        control: {
+          type: "folder",
+          key: "settlementsFolder",
+          placeholder: `${DEFAULT_NAMES_FOLDER}/Settlements`,
+          includeRoot: true,
+          defaultValue: ""
         }
       },
       {
@@ -80918,6 +80931,486 @@ function generateInnNames(options) {
   }
 }
 
+// src/data/settlement-kit.json
+var settlement_kit_default = {
+  $comment: "Settlement kit (docs/settlement-kit-brief.md \xA75\u2013\xA77): section sizes, the group line-up, positions and the ships section. The kit has no word lists of its own.",
+  version: 1,
+  sizes: {
+    roads: { village: 2, town: 3, city: 4, great: 5 },
+    districts: { village: 0, town: 3, city: 5, great: 7 },
+    streets: { village: 4, town: 8, city: 12, great: 16 },
+    squares: { village: 1, town: 2, city: 3, great: 4 },
+    inns: { village: 1, town: 3, city: 5, great: 7 },
+    buildings: { village: 3, town: 6, city: 9, great: 12 },
+    groups: { village: 1, town: 4, city: 7, great: 10 },
+    ships: { village: 2, town: 3, city: 4, great: 6 }
+  },
+  detail: { brief: 0.5, standard: 1, full: 1.5 },
+  sections: [
+    { key: "roads", title: "Roads", step: 3 },
+    { key: "districts", title: "Districts", step: 5 },
+    { key: "streets", title: "Streets", step: 6 },
+    { key: "squares", title: "Squares and markets", step: 7 },
+    { key: "inns", title: "Inns", step: 8 },
+    { key: "buildings", title: "Buildings and landmarks", step: 4 },
+    { key: "groups", title: "Groups", step: 9 },
+    { key: "ships", title: "Ships", step: 10 }
+  ],
+  groups: [
+    { role: "Faith", family: "mystic", type: "holy", from: "village", cult: { share: 0.2, tones: ["grim", "strange"] } },
+    { role: "Watch", family: "martial", type: "watch", from: "town" },
+    { role: "Guild", family: "trade", type: "craft", from: "town" },
+    { role: "Council", family: "power", type: "council", from: "town" },
+    { role: "Merchants", family: "trade", type: "merchant", from: "city" },
+    { role: "Gang", family: "underworld", type: "gang", from: "city" },
+    { role: "Garrison", family: "martial", type: "unit", from: "city" },
+    { role: "Guild", family: "trade", type: "craft", from: "great" },
+    { role: "Thieves", family: "underworld", type: "thieves", from: "great" },
+    { role: "Secret society", family: "power", type: "secret", from: "great" },
+    { role: "Faction", family: "power", type: "faction", from: "great" },
+    { role: "Faith", family: "mystic", from: "great" }
+  ],
+  hideFront: ["underworld", "secret"],
+  positions: [
+    { key: "inland", text: "inland", sf: "on a planet", summary: "", sfSummary: "", setting: "town", villageSetting: "country", effects: {} },
+    {
+      key: "river",
+      text: "on a river",
+      sf: "on a river world",
+      summary: "on a river",
+      sfSummary: "on a river world",
+      setting: "town",
+      ships: "working",
+      effects: { buildingKindX: { crossing: 2 }, componentX: { compCrossing: 2, compWaterside: 2 } }
+    },
+    {
+      key: "coast",
+      text: "on the coast",
+      sf: "on an ocean world",
+      summary: "on the coast",
+      sfSummary: "on an ocean world",
+      setting: "port",
+      ships: "any",
+      effects: { buildingKindX: { maritime: 5 }, componentX: { compWaterside: 3 } }
+    },
+    {
+      key: "crossroads",
+      text: "at a crossroads",
+      sf: "on a station",
+      summary: "at a crossroads",
+      sfSummary: "on a station",
+      setting: "road",
+      roadsExtra: 1,
+      effects: { roadsideX: 2, buildingKindX: { crossing: 1.5, monument: 1.5 } },
+      sfStation: { setting: "port", ships: "any", effects: { buildingKindX: { maritime: 5 }, componentX: { compWaterside: 3 } } }
+    }
+  ],
+  vessels: { ships: { AN: "T2", MD: "T3", EM: "T4", ST: "T5", MO: "T7", NF: "T7" }, spacecraft: { NF: "S1", IS: "S3" } },
+  rulerShapes: "of {town}",
+  villageOfficeWords: ["Reeve", "Headman", "Steward", "Elder"],
+  seedStep: 7919,
+  rerollStep: 15485863,
+  dedupeTries: 20
+};
+
+// src/settlement/context.ts
+function vesselCultureFor(culture) {
+  return culture === "polynesian" ? "hawaiian" : culture;
+}
+function groupTraditionFor(culture) {
+  var _a2;
+  if (culture === "polynesian" || culture === "andean") return culture;
+  return (_a2 = REALM_DATA.tribal[culture]) != null ? _a2 : "general";
+}
+function realmEraFor(era) {
+  var _a2;
+  return ((_a2 = REALM_ERAS.find((e) => e.code === era)) != null ? _a2 : REALM_ERAS.find((e) => e.code === "MO")).key;
+}
+function groupGenreFor(era) {
+  const setting = routeSetting(era, false);
+  return setting === "SF" ? "scifi" : setting === "MR" || setting === "MF" ? "modern" : "fantasy";
+}
+var isFuture4 = (era) => era === "NF" || era === "IS";
+var CASTE3 = /* @__PURE__ */ new Set(["indian", "west-african"]);
+function defaultBlocked(name) {
+  const n = routeNorm(name);
+  return routeBlockSet().has(n) || GROUP_DATA.safeguards.block.some((b) => normForBlock(b) === normForBlock(name)) || breaksRouteWords(name) || hasBannedWord(name);
+}
+function twoWords(vocab, pool3, o, rng, extra = []) {
+  const items = poolEntries(vocab, pool3, { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region }).map(([e, w]) => [e.w, w]);
+  for (const e of extra) {
+    const found = items.find(([w]) => w === e.w);
+    if (found) found[1] *= 2;
+    else items.push([e.w, 2]);
+  }
+  const out = [];
+  for (let i = 0; i < 20 && out.length < 2; i++) {
+    const w = pickWeighted5(items.filter(([x]) => !out.includes(x)), rng);
+    if (!w) break;
+    out.push(w);
+  }
+  return out;
+}
+function buildContext(o, rng) {
+  var _a2, _b, _c, _d, _e;
+  const vocab = (_a2 = o.vocab) != null ? _a2 : BUILT_IN_VOCAB;
+  const setting = routeSetting(o.era, o.fantastic);
+  const blocked2 = (_b = o.blocked) != null ? _b : defaultBlocked;
+  const taken = [];
+  const place3 = () => {
+    var _a3;
+    for (let i = 0; i < 200; i++) {
+      const t2 = isFuture4(o.era) ? groupTown("SF", void 0, rng) : routePlace(o.culture, setting, rng);
+      if (t2 && !t2.includes("[") && !blocked2(t2) && !taken.some((x) => x.toLowerCase() === t2.toLowerCase())) {
+        taken.push(t2);
+        return t2;
+      }
+    }
+    const t = `${(_a3 = taken[0]) != null ? _a3 : "Newtown"} ${taken.length + 1}`;
+    taken.push(t);
+    return t;
+  };
+  const town3 = place3();
+  const neighbours = Array.from({ length: 6 }, place3);
+  let realm = null;
+  if (!(o.village && rng() < 0.5)) {
+    const r = generateRealmNames({
+      culture: o.culture,
+      era: realmEraFor(o.era),
+      genre: groupGenreFor(o.era),
+      fantastic: o.fantastic,
+      character: isFuture4(o.era) ? void 0 : "territorial",
+      output: "official",
+      people: "invented",
+      tone: o.tone,
+      count: 1,
+      seed: Math.floor(rng() * 4294967295),
+      safeguards: o.realmSafeguards
+    }).names[0];
+    realm = r && !r.text.includes("[") ? r.text : null;
+  }
+  const people = personNames(o.culture);
+  const founder2 = o.people === "invented" && people.length > 0 ? people[Math.floor(rng() * people.length)] : "[founder]";
+  const holy = inCultureGroup("christian", o.culture, o.era) ? groupSaint(setting, rng) : null;
+  const trades = CASTE3.has(o.culture) ? null : twoWords(vocab, "streetTrades", o, rng);
+  const goods = twoWords(vocab, "streetGoods", o, rng, (_e = (_d = (_c = vocab.pools.routeGoods) == null ? void 0 : _c.cultureExtra) == null ? void 0 : _d[o.culture]) != null ? _e : []);
+  return {
+    town: town3,
+    neighbours,
+    realm,
+    founder: founder2,
+    holy,
+    trades,
+    goods,
+    throughRoute: null,
+    landmarks: [],
+    setting,
+    tradition: groupTraditionFor(o.culture),
+    vesselCulture: vesselCultureFor(o.culture)
+  };
+}
+
+// src/settlement/kit.ts
+var KIT_DATA = settlement_kit_default;
+var KIT_POSITIONS = KIT_DATA.positions;
+var KIT_SIZES = ["village", "town", "city", "great"];
+var KIT_CONTENTS = { whole: "the whole settlement", places: "its places only", people: "its people and groups only" };
+var KIT_DETAILS = ["brief", "standard", "full"];
+var isFuture5 = (era) => era === "NF" || era === "IS";
+var positionText = (key2, era) => {
+  const p = KIT_POSITIONS.find((x) => x.key === key2);
+  return isFuture5(era) ? p.sf : p.text;
+};
+function sectionCount(key2, size, detail, position = "inland") {
+  var _a2;
+  const base = KIT_DATA.sizes[key2][size];
+  if (base === 0) return 0;
+  const extra = key2 === "roads" ? (_a2 = KIT_POSITIONS.find((p) => p.key === position).roadsExtra) != null ? _a2 : 0 : 0;
+  return Math.ceil(base * KIT_DATA.detail[detail]) + extra;
+}
+function sectionsFor(contents, position, era) {
+  const all = KIT_DATA.sections.map((s) => s.key);
+  if (contents === "people") return ["groups"];
+  const water = shipsModule(position, era) !== void 0;
+  return all.filter((k) => !(contents === "places" && (k === "groups" || k === "ships")) && !(k === "ships" && !water));
+}
+function positionInfo(position, era, size) {
+  var _a2;
+  const p = KIT_POSITIONS.find((x) => x.key === position);
+  if (isFuture5(era) && p.sfStation) return { ...p.sfStation, roadsExtra: 0 };
+  return { setting: size === "village" && p.villageSetting ? p.villageSetting : p.setting, ships: p.ships, effects: p.effects, roadsExtra: (_a2 = p.roadsExtra) != null ? _a2 : 0 };
+}
+function shipsModule(position, era) {
+  if (position === "inland") return void 0;
+  if (era === "IS") return "spacecraft";
+  if (era === "NF" && position === "crossroads") return "spacecraft";
+  if (position === "crossroads") return void 0;
+  return "ships";
+}
+var norm3 = (s) => s.toLowerCase().replace(/^the /, "").trim();
+var STEPS = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10 };
+var LANDMARK_KINDS = ["defence", "crossing", "water", "monument"];
+var THROUGH_KINDS = ["road", "drove", "trade"];
+var subSeed = (seed, step, rerolls = 0) => step * KIT_DATA.seedStep + seed + rerolls * KIT_DATA.rerollStep >>> 0;
+function resolveKitOptions(o) {
+  var _a2, _b, _c, _d;
+  const culture = (_b = (_a2 = findRouteCulture(o.culture)) == null ? void 0 : _a2.key) != null ? _b : "norman-british";
+  const era = ROUTE_ERAS.some((e) => e.code === o.era) ? o.era : "MD";
+  return {
+    culture,
+    era,
+    fantastic: !!o.fantastic,
+    region: ["anglo-saxon", "celtic", "norman-british"].includes(culture) && o.region && o.region !== "all" ? o.region : void 0,
+    size: KIT_SIZES.includes(o.size) ? o.size : "town",
+    position: KIT_POSITIONS.some((p) => p.key === o.position) ? o.position : "inland",
+    tone: (_c = o.tone) != null ? _c : "any",
+    contents: o.contents && o.contents in KIT_CONTENTS ? o.contents : "whole",
+    detail: KIT_DETAILS.includes(o.detail) ? o.detail : "standard",
+    people: (_d = o.people) != null ? _d : "placeholders",
+    seed: o.seed !== void 0 && Number.isFinite(o.seed) ? o.seed >>> 0 : Math.random() * 4294967295 >>> 0
+  };
+}
+function kitSummary(o, realm) {
+  const size = sizeLabel(o.size, o.era);
+  const p = KIT_POSITIONS.find((x) => x.key === o.position);
+  const where2 = isFuture5(o.era) ? p.sfSummary : p.summary;
+  const the = realm && !/^the /i.test(realm) ? `the ${realm}` : realm;
+  return `${/^[aeiou]/i.test(size) ? "an" : "a"} ${size}${where2 ? ` ${where2}` : ""}${the ? `, in ${the}` : ""}`;
+}
+function generateKit(options) {
+  var _a2, _b, _c, _d, _e, _f, _g;
+  const o = resolveKitOptions(options);
+  const rerolls = { ...(_a2 = options.rerolls) != null ? _a2 : {} };
+  const notices = [];
+  const g = (_b = options.safeguards) != null ? _b : {};
+  const pos = positionInfo(o.position, o.era, o.size);
+  const seedFor = (key2) => {
+    var _a3;
+    return subSeed(o.seed, STEPS[key2], key2 === "ruler" ? 0 : (_a3 = rerolls[key2]) != null ? _a3 : 0);
+  };
+  const context = {
+    ...buildContext(
+      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm },
+      mulberry32(subSeed(o.seed, STEPS.context))
+    ),
+    effects: pos.effects
+  };
+  const keep = sectionsFor(o.contents, o.position, o.era);
+  const common = { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, tone: o.tone, people: o.people, vocab: options.vocab, context };
+  const used = /* @__PURE__ */ new Set([norm3(context.town)]);
+  const sharedOk = (text) => {
+    const n = norm3(text);
+    return !!context.throughRoute && n === norm3(context.throughRoute) || context.landmarks.some((l) => norm3(l) === n || norm3(`${l} Inn`) === n);
+  };
+  const sections = /* @__PURE__ */ new Map();
+  const kept = new Map(((_d = (_c = options.keep) == null ? void 0 : _c.sections) != null ? _d : []).map((sec) => [sec.key, sec]));
+  for (const sec of kept.values()) for (const e of sec.entries) used.add(norm3(e.text));
+  const title = (key2) => key2 === "ships" && shipsModule(o.position, o.era) === "spacecraft" ? "Spacecraft" : KIT_DATA.sections.find((s) => s.key === key2).title;
+  const run = (key2, wanted, batch) => {
+    const keptSection = kept.get(key2);
+    if (keptSection) {
+      sections.set(key2, keptSection);
+      return keptSection.entries;
+    }
+    const seed = seedFor(key2);
+    const first = batch(seed, wanted);
+    const entries = [];
+    const local = /* @__PURE__ */ new Set();
+    const take = (name) => {
+      const n = norm3(name.text);
+      if (local.has(n) || used.has(n) && !sharedOk(name.text)) return false;
+      local.add(n);
+      entries.push({ text: name.text, ...name.kind ? { kind: name.kind } : {} });
+      return true;
+    };
+    let short = 0;
+    for (const n of first.names) if (!take(n)) short++;
+    short += Math.max(0, wanted - first.names.length);
+    for (let t = 1; t <= KIT_DATA.dedupeTries && entries.length < wanted && short > 0; t++) {
+      for (const n of batch(seed + t * 104729 >>> 0, wanted).names) {
+        if (entries.length >= wanted) break;
+        take(n);
+      }
+    }
+    for (const e of entries) used.add(norm3(e.text));
+    if (entries.length < wanted && first.notices.length > 0) notices.push(`${title(key2)}: ${first.notices.join(" ")}`);
+    else if (entries.length < wanted) notices.push(`${title(key2)}: only ${entries.length} of ${wanted}.`);
+    sections.set(key2, { key: key2, title: title(key2), entries, wanted });
+    return entries;
+  };
+  const want = (key2) => keep.includes(key2) ? sectionCount(key2, o.size, o.detail, o.position) : 0;
+  let ruler = options.keep ? options.keep.ruler : null;
+  if (o.contents !== "places" && !options.keep) {
+    const r = generateBynames({
+      module: "titles",
+      culture: o.culture,
+      kind: "office",
+      genre: groupGenreFor(o.era),
+      fantastic: o.fantastic,
+      tone: o.tone,
+      language: "english",
+      gender: "anyone",
+      source: "none",
+      count: 1,
+      seed: seedFor("ruler"),
+      safeguards: g.byname,
+      context,
+      shapeFilter: (p) => p.endsWith(KIT_DATA.rulerShapes),
+      officeWords: o.size === "village" ? KIT_DATA.villageOfficeWords : void 0
+    }).names[0];
+    ruler = (_e = r == null ? void 0 : r.text) != null ? _e : null;
+  }
+  const roadsWanted = want("roads");
+  if (roadsWanted > 0 || keep.includes("streets") || keep.includes("inns")) {
+    const roads = generateRouteNames({ ...common, series: true, count: Math.max(roadsWanted, 1), seed: seedFor("roads"), safeguards: g.route });
+    let through = roads.names.find((n) => THROUGH_KINDS.includes(n.kind));
+    for (const kind of through ? [] : THROUGH_KINDS) {
+      through = generateRouteNames({ ...common, kind, count: 1, seed: seedFor("roads") + 1 >>> 0, safeguards: g.route }).names.find((n) => n.kind === kind);
+      if (through) break;
+    }
+    context.throughRoute = kept.has("roads") ? options.keep.throughRoute : (_f = through == null ? void 0 : through.text) != null ? _f : null;
+    if (roadsWanted > 0) {
+      run("roads", roadsWanted, (seed, count) => seed === seedFor("roads") ? roads : generateRouteNames({ ...common, series: true, count, seed, safeguards: g.route }));
+      const section = sections.get("roads");
+      if (context.throughRoute && !section.entries.some((e) => e.text === context.throughRoute)) section.entries[Math.min(section.entries.length, roadsWanted) - 1] = { text: context.throughRoute, kind: through.kind };
+      for (const e of section.entries) if (e.text === context.throughRoute) e.through = true;
+    }
+  }
+  const buildingRun = (seed, count) => generateBuildingNames({ ...common, series: true, setting: pos.setting, count, seed, safeguards: g.building });
+  const buildingsWanted = want("buildings");
+  if (buildingsWanted > 0) {
+    run("buildings", buildingsWanted, buildingRun);
+    if (!kept.has("buildings")) patronSaint(sections.get("buildings"));
+    context.landmarks = kept.has("buildings") ? options.keep.landmarks : landmarksOf(sections.get("buildings").entries);
+  }
+  const street = (kind) => (seed, count) => generateStreetNames({ ...common, kind, size: o.size, series: true, count, seed, safeguards: g.street, routeSafeguards: g.route, landmarkSafeguards: g.building });
+  if (want("districts") > 0) run("districts", want("districts"), street("districts"));
+  if (want("streets") > 0) {
+    const entries = run("streets", want("streets"), street("streets"));
+    const through = context.throughRoute;
+    if (!kept.has("streets") && through && entries.length >= 8 && !entries.some((e) => e.text === through)) {
+      used.delete(norm3(entries[entries.length - 1].text));
+      entries[entries.length - 1] = { text: through, kind: "streets" };
+    }
+  }
+  if (want("squares") > 0) run("squares", want("squares"), street("squares"));
+  if (want("inns") > 0)
+    run(
+      "inns",
+      want("inns"),
+      (seed, count) => generateInnNames({ ...common, series: true, setting: pos.setting, count, seed, safeguards: g.inn, routeSafeguards: g.route, landmarkSafeguards: g.building })
+    );
+  if (want("groups") > 0) {
+    if (kept.has("groups")) sections.set("groups", kept.get("groups"));
+    else groupsSection(want("groups"));
+  }
+  const module2 = shipsModule(o.position, o.era);
+  if (module2 && want("ships") > 0) {
+    const vesselCulture = VESSEL_CULTURES.some((c) => c.key === context.vesselCulture) ? context.vesselCulture : "general";
+    const technology = (_g = KIT_DATA.vessels[module2][o.era]) != null ? _g : module2 === "ships" ? "T7" : "S3";
+    const fn = (isFuture5(o.era) && o.position === "crossroads" ? "any" : pos.ships) === "working" ? "working" : void 0;
+    run("ships", want("ships"), (seed, count) => {
+      const b = generateVesselNames({ module: module2, culture: vesselCulture, technology, function: fn, genre: groupGenreFor(o.era), fantastic: o.fantastic, tone: o.tone, people: o.people, count, seed, safeguards: g.vessel, context });
+      return { names: b.names.map((n) => ({ text: n.text, kind: n.function })), notices: b.notices };
+    });
+  }
+  const order = KIT_DATA.sections.map((s) => s.key).filter((k) => sections.has(k));
+  return {
+    options: o,
+    rerolls,
+    context,
+    summary: kitSummary(o, context.realm),
+    ruler,
+    sections: order.map((k) => sections.get(k)),
+    notices
+  };
+  function patronSaint(section) {
+    const holy = context.holy;
+    if (!holy || o.size === "village" || section.entries.some((e) => e.text.includes(holy))) return;
+    for (let t = 0; t < 10; t++) {
+      const n = generateBuildingNames({
+        ...common,
+        kind: "faith",
+        setting: pos.setting,
+        shape: "{holy:poss} {bw}",
+        count: 1,
+        seed: seedFor("buildings") + 7 + t >>> 0,
+        safeguards: g.building
+      }).names[0];
+      if (!n || !n.text.includes(holy) || used.has(norm3(n.text))) continue;
+      const faith = section.entries.findIndex((e) => e.kind === "faith");
+      const replace = faith >= 0 ? faith : section.entries.length - 1;
+      if (replace < 0) section.entries.push({ text: n.text, kind: "faith" });
+      else {
+        used.delete(norm3(section.entries[replace].text));
+        section.entries[replace] = { text: n.text, kind: "faith" };
+      }
+      used.add(norm3(n.text));
+      return;
+    }
+  }
+  function groupsSection(wanted) {
+    const genre = groupGenreFor(o.era);
+    const setting = groupSetting(genre, genre === "scifi" ? false : o.fantastic);
+    const sizeIndex = KIT_SIZES.indexOf(o.size);
+    const rows = [...KIT_DATA.groups.filter((r) => KIT_SIZES.indexOf(r.from) <= sizeIndex), ...KIT_DATA.groups.filter((r) => KIT_SIZES.indexOf(r.from) > sizeIndex)];
+    const rng = mulberry32(seedFor("groups"));
+    const entries = [];
+    let index = 0;
+    for (const row of rows) {
+      if (entries.length >= wanted) break;
+      index++;
+      const family = GROUP_FAMILIES.find((f) => f.key === row.family);
+      let type = row.type;
+      if (row.cult && row.cult.tones.includes(o.tone) && rng() < row.cult.share) type = "cult";
+      const offered = typesInSetting(family, setting);
+      if (offered.length === 0 || type && !offered.some((t) => t.key === type)) continue;
+      const front = KIT_DATA.hideFront.includes(row.family) || type === "secret" ? "may" : void 0;
+      for (let t = 0; t <= KIT_DATA.dedupeTries; t++) {
+        const n = generateGroupNames({
+          family: row.family,
+          type,
+          tradition: context.tradition,
+          genre,
+          fantastic: o.fantastic,
+          form: "any",
+          front,
+          people: o.people,
+          tone: o.tone,
+          count: 1,
+          seed: seedFor("groups") + index * 31 + t * 104729 >>> 0,
+          safeguards: g.group,
+          context
+        }).names[0];
+        if (!n || used.has(norm3(n.text))) continue;
+        used.add(norm3(n.text));
+        entries.push({ text: n.text, role: row.role });
+        break;
+      }
+    }
+    if (entries.length < wanted) notices.push(`Groups: only ${entries.length} of ${wanted}.`);
+    sections.set("groups", { key: "groups", title: "Groups", entries, wanted });
+  }
+}
+function landmarksOf(entries) {
+  return entries.filter((e) => LANDMARK_KINDS.includes(e.kind)).map((e) => e.text.replace(/^the /, "")).filter((t) => t.split(" ").length <= 3);
+}
+function rerollTargets(key2) {
+  if (key2 === "roads" || key2 === "buildings") return [key2, "streets", "inns"];
+  return [key2];
+}
+function rerollKit(kit, key2, options = {}) {
+  var _a2;
+  const rerolls = { ...kit.rerolls };
+  for (const k of rerollTargets(key2)) rerolls[k] = ((_a2 = rerolls[k]) != null ? _a2 : 0) + 1;
+  const redo = rerollTargets(key2);
+  const keep = { sections: kit.sections.filter((s) => !redo.includes(s.key)), ruler: kit.ruler, throughRoute: kit.context.throughRoute, landmarks: kit.context.landmarks };
+  const next = generateKit({ ...kit.options, ...options, rerolls, keep });
+  const others = rerollTargets(key2).filter((k) => k !== key2 && next.sections.some((s) => s.key === k));
+  const note = others.length > 0 ? `${others.map((k) => KIT_DATA.sections.find((s) => s.key === k).title.toLowerCase()).join(" and ").replace(/^./, (c) => c.toUpperCase())} were redone to match.` : void 0;
+  return { kit: next, note };
+}
+
 // src/presets.ts
 var TRIBAL_PRESET_MODULE = "tribal-names";
 var TRIBAL_PRESET_DEFAULTS = {
@@ -80958,6 +81451,7 @@ function parseModulePreset(content, fileName) {
   if (values.module === STREET_PRESET_MODULE) return parseStreetPreset(values, body, fileName);
   if (values.module === INN_PRESET_MODULE) return parseInnPreset(values, body, fileName);
   if (values.module === BUILDING_PRESET_MODULE) return parseBuildingPreset(values, body, fileName);
+  if (values.module === KIT_PRESET_MODULE) return parseKitPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module \u201C${(_a2 = values.module) != null ? _a2 : ""}\u201D.`);
     return { problems };
@@ -80991,6 +81485,7 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("contents" in preset) return kitPresetContent(preset);
   if ("buildingKind" in preset) return buildingPresetContent(preset);
   if ("innKind" in preset) return innPresetContent(preset);
   if ("streetKind" in preset) return streetPresetContent(preset);
@@ -81490,6 +81985,59 @@ function buildingPresetContent(preset) {
     ""
   ].join("\n");
 }
+var KIT_PRESET_MODULE = "settlement-kit";
+function parseKitPreset(values, body, fileName) {
+  const problems = [];
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const fantastic = values.fantastic === "true";
+  if (values.fantastic && values.fantastic !== "true" && values.fantastic !== "false") problems.push(`Unknown fantastic \u201C${values.fantastic}\u201D.`);
+  return {
+    kit: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      era: pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      fantastic,
+      size: pick4("size", "town", (v) => KIT_SIZES.includes(v)),
+      position: pick4("position", "inland", (v) => KIT_POSITIONS.some((p) => p.key === v)),
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      contents: pick4("contents", "whole", (v) => v in KIT_CONTENTS),
+      detail: pick4("detail", "standard", (v) => KIT_DETAILS.includes(v)),
+      people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v))
+    },
+    problems
+  };
+}
+function kitPresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${KIT_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `region: ${preset.region}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `size: ${preset.size}`,
+    `position: ${preset.position}`,
+    `tone: ${preset.tone}`,
+    `contents: ${preset.contents}`,
+    `detail: ${preset.detail}`,
+    `people: ${preset.people}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
 var VESSEL_PRESET_MODULE = "vessels";
 function parseVesselPreset(values, body, fileName) {
   var _a2, _b;
@@ -81857,6 +82405,284 @@ Names to allow, though they echo a real or well-known route.
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
 
+// src/settlement/kitFormat.ts
+function kitMarkdown(kit) {
+  const lines2 = [`## ${kit.context.town}`, `*${kit.summary.charAt(0).toUpperCase()}${kit.summary.slice(1)}.*`, ""];
+  if (kit.ruler) lines2.push(`**Ruler:** ${kit.ruler}`, "");
+  for (const section of kit.sections) {
+    if (section.entries.length === 0) continue;
+    lines2.push(`### ${section.title}`);
+    for (const e of section.entries) {
+      if (e.role) lines2.push(`- **${e.role}:** ${e.text}`);
+      else lines2.push(`- ${e.text}${e.through ? " *(through the town)*" : ""}`);
+    }
+    lines2.push("");
+  }
+  return `${lines2.join("\n").trimEnd()}
+`;
+}
+var SETTLEMENT_NOTE_TYPE = "settlement";
+function kitNoteContent(kit) {
+  var _a2;
+  const o = kit.options;
+  return [
+    "---",
+    `type: ${SETTLEMENT_NOTE_TYPE}`,
+    `culture: ${o.culture}`,
+    `era: ${o.era}`,
+    `fantastic: ${o.fantastic}`,
+    `region: ${(_a2 = o.region) != null ? _a2 : "all"}`,
+    `size: ${o.size}`,
+    `position: ${o.position}`,
+    `tone: ${o.tone}`,
+    `contents: ${o.contents}`,
+    `detail: ${o.detail}`,
+    `people: ${o.people}`,
+    `seed: ${o.seed}`,
+    ...kit.context.realm ? [`realm: ${kit.context.realm}`] : [],
+    "---",
+    "",
+    kitMarkdown(kit)
+  ].join("\n");
+}
+function parseKitNote(content) {
+  var _a2;
+  const fm = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!fm) return { problems: ["This note has no frontmatter."] };
+  const values = {};
+  for (const line of fm[1].split(/\r?\n/)) {
+    const m = line.match(/^([A-Za-z][\w-]*):\s*(.*)$/);
+    if (m) values[m[1]] = m[2].trim().replace(/^(['"])(.*)\1$/, "$2");
+  }
+  if (values.type !== SETTLEMENT_NOTE_TYPE) return { problems: ["This note isn't a settlement."] };
+  const problems = [];
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const seed = Number(values.seed);
+  if (!Number.isInteger(seed) || seed < 0) problems.push(`Unknown seed \u201C${(_a2 = values.seed) != null ? _a2 : ""}\u201D.`);
+  const fantastic = values.fantastic === "true";
+  if (values.fantastic && values.fantastic !== "true" && values.fantastic !== "false") problems.push(`Unknown fantastic \u201C${values.fantastic}\u201D.`);
+  return {
+    settings: {
+      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      era: pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      fantastic,
+      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      size: pick4("size", "town", (v) => KIT_SIZES.includes(v)),
+      position: pick4("position", "inland", (v) => KIT_POSITIONS.some((p) => p.key === v)),
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      contents: pick4("contents", "whole", (v) => v in KIT_CONTENTS),
+      detail: pick4("detail", "standard", (v) => KIT_DETAILS.includes(v)),
+      people: pick4("people", "placeholders", (v) => v === "placeholders" || v === "invented"),
+      seed: Number.isInteger(seed) && seed >= 0 ? seed : 0
+    },
+    problems
+  };
+}
+function freeNotePath(folder, town3, exists) {
+  const base = town3.replace(/[\\/:*?"<>|#^[\]]/g, "").trim() || "Settlement";
+  const dir = folder.replace(/\/+$/, "");
+  const at = (name) => dir ? `${dir}/${name}.md` : `${name}.md`;
+  if (!exists(at(base))) return at(base);
+  for (let n = 2; ; n++) if (!exists(at(`${base} ${n}`))) return at(`${base} ${n}`);
+}
+var KIT_HISTORY_HEADING = "## Settlement Kit History";
+function kitHistorySection(entries) {
+  const kits = entries.filter((e) => e.block);
+  if (kits.length === 0) return "";
+  const parts = kits.map((e) => `### ${e.timestamp} | ${e.seed}
+${e.block.trimEnd().split("\n").map((l) => `> ${l}`.trimEnd()).join("\n")}`);
+  return `
+${KIT_HISTORY_HEADING}
+
+${parts.join("\n\n")}
+`;
+}
+function parseKitHistory(body) {
+  const out = /* @__PURE__ */ new Map();
+  const at = body.indexOf(KIT_HISTORY_HEADING);
+  if (at < 0) return out;
+  let rest = body.slice(at + KIT_HISTORY_HEADING.length);
+  const next = rest.search(/\n## /);
+  if (next >= 0) rest = rest.slice(0, next);
+  let key2;
+  let lines2 = [];
+  const flush = () => {
+    if (key2) out.set(key2, `${lines2.join("\n").trimEnd()}
+`);
+  };
+  for (const line of rest.split(/\r?\n/)) {
+    const head = line.match(/^### (\S+) \| (-?\d+)\s*$/);
+    if (head) {
+      flush();
+      key2 = `${head[1]} | ${head[2]}`;
+      lines2 = [];
+    } else if (key2 && line.startsWith(">")) lines2.push(line.replace(/^> ?/, ""));
+  }
+  flush();
+  return out;
+}
+
+// src/settlement/kitSentence.ts
+var DEFAULT_KIT_STATE = {
+  culture: "norman-british",
+  era: "MD",
+  fantastic: false,
+  size: "town",
+  position: "inland",
+  tone: "any",
+  contents: "whole",
+  detail: "standard",
+  people: "placeholders"
+};
+var PEOPLE_TEXT5 = { placeholders: "placeholders for", invented: "invented" };
+function kitSentence(state) {
+  var _a2;
+  const out = [];
+  const culture = (_a2 = findRouteCulture(state.culture)) != null ? _a2 : ROUTE_CULTURES[0];
+  out.push(/^[aeiou]/i.test(culture.label) ? "an " : "a ");
+  out.push({
+    field: "culture",
+    text: culture.label,
+    title: "Naming culture: whose customs the settlement follows",
+    choices: ROUTE_CULTURES.map((c, i) => {
+      var _a3;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a3 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a3.group) ? { group: c.group } : {} };
+    }),
+    current: culture.key
+  });
+  out.push(" ");
+  out.push({
+    field: "size",
+    text: sizeLabel(state.size, state.era),
+    title: "How big the settlement is",
+    choices: KIT_SIZES.map((s) => ({ id: s, label: sizeLabel(s, state.era) })),
+    current: state.size
+  });
+  out.push(" of the ");
+  out.push({
+    field: "era",
+    text: routeEraLabel(state.era),
+    title: "The age: decides which roads, buildings, houses and ships exist",
+    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
+    current: state.era
+  });
+  out.push(" era, in a ");
+  const words = fantasticWords(state.era);
+  out.push({
+    field: "fantastic",
+    text: words[state.fantastic ? 1 : 0],
+    title: "Open magic and monsters; in the steam age, steampunk",
+    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
+    current: state.fantastic ? "on" : "off"
+  });
+  out.push(" world, ");
+  if (showsRegion(state)) {
+    out.push({
+      field: "region",
+      text: routeRegionText(state.region),
+      title: "Weights the names towards a region's customs",
+      choices: [
+        { id: void 0, label: routeRegionText(void 0) },
+        ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: routeRegionText(r.code), title: r.counties }))
+      ],
+      current: state.region
+    });
+    out.push(", ");
+  }
+  out.push({
+    field: "position",
+    text: positionText(state.position, state.era),
+    title: "Where it stands: decides harbours, bridges, ships and roadside inns",
+    choices: KIT_POSITIONS.map((p) => ({ id: p.key, label: positionText(p.key, state.era) })),
+    current: state.position
+  });
+  out.push(", ");
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
+  out.push(", giving ");
+  out.push({
+    field: "contents",
+    text: KIT_CONTENTS[state.contents],
+    title: "Everything, just the places, or just the people and groups",
+    choices: Object.keys(KIT_CONTENTS).map((c) => ({ id: c, label: KIT_CONTENTS[c] })),
+    current: state.contents
+  });
+  out.push(" in ");
+  out.push({
+    field: "detail",
+    text: state.detail,
+    title: "How many names in each section",
+    choices: KIT_DETAILS.map((d) => ({ id: d, label: d })),
+    current: state.detail
+  });
+  out.push(" detail, with ");
+  out.push({
+    field: "people",
+    text: PEOPLE_TEXT5[state.people],
+    title: "Placeholders like [founder], or invented names",
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT5[p] })),
+    current: state.people
+  });
+  out.push(" people and places");
+  return out;
+}
+function kitSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function chooseKit(state, field, id) {
+  const next = { ...state };
+  switch (field) {
+    case "culture":
+      next.culture = id != null ? id : DEFAULT_KIT_STATE.culture;
+      break;
+    case "era":
+      next.era = ROUTE_ERAS.some((e) => e.code === id) ? id : DEFAULT_KIT_STATE.era;
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "region":
+      next.region = id;
+      break;
+    case "size":
+      next.size = KIT_SIZES.includes(id) ? id : DEFAULT_KIT_STATE.size;
+      break;
+    case "position":
+      next.position = KIT_POSITIONS.some((p) => p.key === id) ? id : DEFAULT_KIT_STATE.position;
+      break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "contents":
+      next.contents = id && id in KIT_CONTENTS ? id : "whole";
+      break;
+    case "detail":
+      next.detail = KIT_DETAILS.includes(id) ? id : "standard";
+      break;
+    case "people":
+      next.people = id != null ? id : "placeholders";
+      break;
+  }
+  if (!showsRegion(next)) next.region = void 0;
+  return next;
+}
+function kitHistoryLabel(town3, state) {
+  var _a2, _b;
+  return ["settlement kit", town3, sizeLabel(state.size, state.era), routeEraLabel(state.era), (_b = (_a2 = findRouteCulture(state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General"].join(" \xB7 ");
+}
+
 // src/buildings/sentence.ts
 var DEFAULT_BUILDING_STATE = {
   culture: "norman-british",
@@ -81867,7 +82693,7 @@ var DEFAULT_BUILDING_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT5 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT6 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT4 = { off: "each one separate", on: "as one town" };
 var settingText = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
 function buildingSentence(state) {
@@ -81943,9 +82769,9 @@ function buildingSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT5[state.people],
+    text: PEOPLE_TEXT6[state.people],
     title: "Placeholders like [founder], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT5[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT6[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -82028,7 +82854,7 @@ var DEFAULT_INN_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT6 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT7 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT5 = { off: "each one separate", on: "as one town" };
 var settingText2 = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
 var showsForm = (state) => hasSignTradition(state.culture);
@@ -82115,9 +82941,9 @@ function innSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT6[state.people],
+    text: PEOPLE_TEXT7[state.people],
     title: "Placeholders like [owner], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT6[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT7[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -82204,7 +83030,7 @@ var DEFAULT_STREET_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT7 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT8 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT6 = { off: "each one separate", on: "as one town" };
 var DIALECT_TEXT = {
   plain: "with plain words only",
@@ -82310,9 +83136,9 @@ function streetSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT7[state.people],
+    text: PEOPLE_TEXT8[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT7[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT8[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -83300,19 +84126,19 @@ function parseSafeguardPack(content) {
   }
   return pack;
 }
-var norm3 = (s) => s.trim().toLowerCase().replace(/^the /, "");
+var norm4 = (s) => s.trim().toLowerCase().replace(/^the /, "");
 function mergeSafeguards(builtIn, packs) {
   const notices = [];
-  const builtInBlock = new Set(builtIn.blockList.map(norm3));
+  const builtInBlock = new Set(builtIn.blockList.map(norm4));
   const allow = /* @__PURE__ */ new Set();
   for (const p of packs) {
     for (const a of p.allow) {
-      if (builtInBlock.has(norm3(a))) notices.push(`\u201C${a}\u201D is on the built-in block list and stays blocked.`);
-      else allow.add(norm3(a));
+      if (builtInBlock.has(norm4(a))) notices.push(`\u201C${a}\u201D is on the built-in block list and stays blocked.`);
+      else allow.add(norm4(a));
     }
   }
   const block = [...builtIn.blockList, ...packs.flatMap((p) => p.block)];
-  const flag = [...builtIn.flagList, ...packs.flatMap((p) => p.flag)].filter((f) => !allow.has(norm3(f)));
+  const flag = [...builtIn.flagList, ...packs.flatMap((p) => p.flag)].filter((f) => !allow.has(norm4(f)));
   return { block, flag, flagBlocks: builtIn.flagListBlocks || packs.some((p) => p.flagListBlocks), notices };
 }
 var SAFEGUARD_TEMPLATE = `---
@@ -83524,7 +84350,7 @@ var LIST_SECTIONS = [
   ["resources", "Resources", ["resource"]],
   ["seasons", "Seasons", ["season"]]
 ];
-var norm4 = (s) => s.trim().toLowerCase();
+var norm5 = (s) => s.trim().toLowerCase();
 var kebab2 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 function weightedItems(text) {
   return text.split(",").map((w) => w.trim()).filter((w) => w.length > 0).map((item2) => {
@@ -83604,8 +84430,8 @@ function parseBiomePackContent(content, fallbackName = "Biome") {
   };
 }
 var groupIds = new Map([
-  ...PLACE_SHAPE_DATA.groups.flatMap((g) => [[norm4(g.id), g.id], [norm4(g.label), g.id]]),
-  ...COLONIAL_DATA.groups.flatMap((g) => [[norm4(g.id), g.id], ...g.label ? [[norm4(g.label), g.id]] : []])
+  ...PLACE_SHAPE_DATA.groups.flatMap((g) => [[norm5(g.id), g.id], [norm5(g.label), g.id]]),
+  ...COLONIAL_DATA.groups.flatMap((g) => [[norm5(g.id), g.id], ...g.label ? [[norm5(g.label), g.id]] : []])
 ]);
 function terrainHeading(heading) {
   const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
@@ -83613,13 +84439,13 @@ function terrainHeading(heading) {
 }
 function terrainId(token9, custom) {
   var _a2;
-  const t = norm4(token9);
-  const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm4(x.id) === t || norm4(x.label) === t));
+  const t = norm5(token9);
+  const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm5(x.id) === t || norm5(x.label) === t));
   if (builtIn) return builtIn.id;
-  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab2(token9))) == null ? void 0 : _a2.id;
+  return (_a2 = custom.find((x) => norm5(x.label) === t || x.id === kebab2(token9))) == null ? void 0 : _a2.id;
 }
-var key = (words) => words.map(([w, n]) => `${norm4(w)}|${n}`).sort().join("\n");
-var entryKey = (entries) => entries.map((e) => `${norm4(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
+var key = (words) => words.map(([w, n]) => `${norm5(w)}|${n}`).sort().join("\n");
+var entryKey = (entries) => entries.map((e) => `${norm5(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
 function fusesKey(f) {
   return f === "no" || f === "number-spaced" || f === "mile" ? "no" : f === "traditional-only" ? "traditional-only" : "yes";
 }
@@ -83648,7 +84474,7 @@ function applyBiomePack(base, pack, path) {
   }
   if (!pack.universalWords) b.universalWords = false;
   const packLines = { ...(_d = base.packLines) != null ? _d : {} };
-  const weightsSection = pack.sections.find((s) => ["terrain weights", "terrains"].includes(norm4(s.heading)));
+  const weightsSection = pack.sections.find((s) => ["terrain weights", "terrains"].includes(norm5(s.heading)));
   if (weightsSection) {
     const weights = {};
     const custom = [];
@@ -83673,9 +84499,9 @@ function applyBiomePack(base, pack, path) {
   }
   const customTerrains = (_e = b.customTerrains) != null ? _e : [];
   for (const section of pack.sections) {
-    const h = norm4(section.heading);
+    const h = norm5(section.heading);
     if (section === weightsSection) continue;
-    const list = LIST_SECTIONS.find(([, heading, aliases]) => norm4(heading) === h || aliases.includes(h));
+    const list = LIST_SECTIONS.find(([, heading, aliases]) => norm5(heading) === h || aliases.includes(h));
     if (list) {
       const [id] = list;
       if (section.packs.length > 0) packLines[id] = section.packs;
@@ -83697,7 +84523,7 @@ function applyBiomePack(base, pack, path) {
     if (h === "shape groups" || h === "shape generics") {
       const record = Object.fromEntries(section.words.map(([w, n]) => {
         var _a3;
-        return [h === "shape groups" ? (_a3 = groupIds.get(norm4(w))) != null ? _a3 : w : w, n];
+        return [h === "shape groups" ? (_a3 = groupIds.get(norm5(w))) != null ? _a3 : w : w, n];
       }));
       const target = h === "shape groups" ? "groups" : "generics";
       if (recordKey(record) !== recordKey(base.shapeMultipliers[target])) b.shapeMultipliers[target] = record;
@@ -83729,11 +84555,11 @@ function applyBiomePack(base, pack, path) {
           b.terrainTags = { ...b.terrainTags };
           const entries = [...(_m = (_l = b.entries) == null ? void 0 : _l[listKey]) != null ? _m : []];
           for (const e of section.entries) {
-            if (!entries.some((x) => norm4(x.modern) === norm4(e.modern))) entries.push(e);
+            if (!entries.some((x) => norm5(x.modern) === norm5(e.modern))) entries.push(e);
             b.terrainTags[e.modern] = [.../* @__PURE__ */ new Set([...(_n = b.terrainTags[e.modern]) != null ? _n : [], tid])];
           }
           for (const e of baseTagged) {
-            if (!section.entries.some((x) => norm4(x.modern) === norm4(e.modern))) {
+            if (!section.entries.some((x) => norm5(x.modern) === norm5(e.modern))) {
               b.terrainTags[e.modern] = ((_o = b.terrainTags[e.modern]) != null ? _o : []).filter((t) => t !== tid);
             }
           }
@@ -83747,14 +84573,14 @@ function applyBiomePack(base, pack, path) {
       if (!custom) continue;
       const record = Object.fromEntries(section.words.map(([w, n]) => {
         var _a3;
-        return [th.part === "shape groups" ? (_a3 = groupIds.get(norm4(w))) != null ? _a3 : w : w, n];
+        return [th.part === "shape groups" ? (_a3 = groupIds.get(norm5(w))) != null ? _a3 : w : w, n];
       }));
       custom.shapeMultipliers = { ...custom.shapeMultipliers, [th.part === "shape groups" ? "groups" : "generics"]: record };
     }
   }
   if (Object.keys(packLines).length > 0) b.packLines = packLines;
   for (const [, heading] of LIST_SECTIONS) {
-    const s = pack.sections.find((x) => norm4(x.heading) === norm4(heading));
+    const s = pack.sections.find((x) => norm5(x.heading) === norm5(heading));
     if (s && s.words.length === 0 && s.packs.length === 0) problems.push(`\u201C${heading}\u201D is empty.`);
   }
   for (const t of Object.keys(b.terrainWeights).filter((t2) => b.terrainWeights[t2] > 0)) {
@@ -83831,7 +84657,7 @@ ${sections.join("\n\n")}
 function diffAgainstBase(content, base) {
   var _a2, _b, _c;
   const pack = parseBiomePackContent(content);
-  const baseText = new Map(parseBiomePackContent(biomeToText(base)).sections.map((s) => [norm4(s.heading), s]));
+  const baseText = new Map(parseBiomePackContent(biomeToText(base)).sections.map((s) => [norm5(s.heading), s]));
   const fm = (_b = (_a2 = content.match(/^---\s*\n[\s\S]*?\n---\s*/)) == null ? void 0 : _a2[0]) != null ? _b : "";
   const kept = [];
   const bodyLines = content.slice(fm.length).split(/\r?\n/);
@@ -83853,7 +84679,7 @@ function diffAgainstBase(content, base) {
   }
   flush();
   for (const s of pack.sections) {
-    const b = baseText.get(norm4(s.heading));
+    const b = baseText.get(norm5(s.heading));
     const same6 = b && (s.entries && b.entries ? entryKey(s.entries) === entryKey(b.entries) : key(s.words) === key(b.words)) && s.packs.length === b.packs.length;
     if (!same6) kept.push(`## ${s.heading}
 
@@ -83869,7 +84695,7 @@ ${guide}${kept.join("\n\n")}
 }
 function resolveBiomePacks(files) {
   const parsed = new Map(files.map((f) => [f.path, parseBiomePackContent(f.content, f.path.replace(/^.*\//, "").replace(/\.md$/, ""))]));
-  const byName = new Map([...parsed].map(([path, p]) => [norm4(p.packName), path]));
+  const byName = new Map([...parsed].map(([path, p]) => [norm5(p.packName), path]));
   const done = /* @__PURE__ */ new Map();
   const problems = [];
   const temperate = BIOMES.find((b) => b.id === "temperate");
@@ -83881,7 +84707,7 @@ function resolveBiomePacks(files) {
     const link = (_a2 = pack.basedOn.match(/^\[\[([^\]|]+)/)) == null ? void 0 : _a2[1];
     let base;
     if (link) {
-      const basePath = (_b = byName.get(norm4(link))) != null ? _b : [...parsed.keys()].find((p) => p.replace(/\.md$/, "").endsWith(link));
+      const basePath = (_b = byName.get(norm5(link))) != null ? _b : [...parsed.keys()].find((p) => p.replace(/\.md$/, "").endsWith(link));
       if (basePath && !seen.includes(basePath) && seen.length < 5) base = resolve(basePath, [...seen, path]);
     } else {
       base = pack.basedOn === "britain" ? BRITAIN : findBiome(pack.basedOn);
@@ -85812,7 +86638,7 @@ function waitForTask() {
 
 // src/takeoverView.ts
 var SEED_MASK = 4294967296;
-var subSeed = (rng) => Math.floor(rng() * SEED_MASK) >>> 0;
+var subSeed2 = (rng) => Math.floor(rng() * SEED_MASK) >>> 0;
 function nativeDrawer(entry, index, settings) {
   var _a2, _b, _c;
   const { parsed } = entry;
@@ -85824,7 +86650,7 @@ function nativeDrawer(entry, index, settings) {
       generator.train(extractNamesFromMarkdown(parsed.names.join("\n")));
       return (rng) => {
         var _a3;
-        return (_a3 = generator.generateMultiple(1, mulberry32(subSeed(rng)))[0]) != null ? _a3 : null;
+        return (_a3 = generator.generateMultiple(1, mulberry32(subSeed2(rng)))[0]) != null ? _a3 : null;
       };
     }
     case "placePack": {
@@ -85835,7 +86661,7 @@ function nativeDrawer(entry, index, settings) {
       const model = PlaceNameModel.build(extractNamesFromMarkdown(parsed.names.join("\n")));
       return (rng) => {
         var _a3;
-        return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed(rng) }).names[0]) != null ? _a3 : null;
+        return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed2(rng) }).names[0]) != null ? _a3 : null;
       };
     }
     case "compoundPack": {
@@ -85847,7 +86673,7 @@ function nativeDrawer(entry, index, settings) {
           ...compoundSettings(parsed),
           faithfulness,
           strictness,
-          seed: subSeed(rng)
+          seed: subSeed2(rng)
         }).names[0]) != null ? _a3 : null;
       };
     }
@@ -85859,7 +86685,7 @@ function nativeDrawer(entry, index, settings) {
       const model = MarkovModel.build(corpus);
       return (rng) => {
         var _a3;
-        return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed(rng) }).names[0]) != null ? _a3 : null;
+        return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed2(rng) }).names[0]) != null ? _a3 : null;
       };
     }
     default: {
@@ -85868,7 +86694,7 @@ function nativeDrawer(entry, index, settings) {
       const model = MarkovModel.build(names);
       return (rng) => {
         var _a3;
-        return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed(rng) }).names[0]) != null ? _a3 : null;
+        return (_a3 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed2(rng) }).names[0]) != null ? _a3 : null;
       };
     }
   }
@@ -86090,6 +86916,7 @@ var SECTION_ORDER = [
   "streetNames",
   "innNames",
   "buildingNames",
+  "settlementKit",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "tribalNames",
@@ -86101,7 +86928,7 @@ var SECTION_ORDER = [
   ...VESSEL_SECTIONS
 ];
 var SECTION_GROUPS = {
-  placeNames: ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  placeNames: ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames", "settlementKit", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
   groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS]
@@ -86123,6 +86950,7 @@ var SECTION_LABELS = {
   streetNames: "streets and districts",
   innNames: "inns and taverns",
   buildingNames: "buildings and landmarks",
+  settlementKit: "settlement kit",
   riverNames: "river names",
   explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
@@ -86157,6 +86985,7 @@ function historySection(packName) {
   if (starts(SECTION_LABELS.streetNames)) return "streetNames";
   if (starts(SECTION_LABELS.innNames)) return "innNames";
   if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
+  if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
   if (starts(SECTION_LABELS.realms)) return "realms";
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
@@ -86194,6 +87023,8 @@ var SECTION_ICONS = {
   innNames: "beer",
   // Buildings brief §1.1.
   buildingNames: "landmark",
+  // Settlement kit §1.1.
+  settlementKit: "building-2",
   riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
@@ -86238,6 +87069,7 @@ function packTypeIconId(packType, subGenerator) {
   if (packType === "streetPreset") return "signpost";
   if (packType === "innPreset") return "beer";
   if (packType === "buildingPreset") return "landmark";
+  if (packType === "kitPreset") return "building-2";
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;
   }
@@ -86480,6 +87312,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.innState = { ...DEFAULT_INN_STATE };
     /** Buildings brief §2: the buildings sentence's choices, session only. */
     this.buildingState = { ...DEFAULT_BUILDING_STATE };
+    /** Settlement kit §2: the kit sentence's choices, session only, and the kit on show. */
+    this.kitState = { ...DEFAULT_KIT_STATE };
+    this.currentKit = null;
     /** Each switcher group's last-used module (session only). */
     this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
@@ -86851,10 +87686,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     (_c = this.packDropdownEl) == null ? void 0 : _c.toggle(section === "markov");
     (_d = this.sectionSentenceEl) == null ? void 0 : _d.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_e = this.editRecipeButton) == null ? void 0 : _e.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset"));
+    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit";
     (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart && !tribal);
     (_i = this.landButton) == null ? void 0 : _i.refresh();
     (_j = this.guideButton) == null ? void 0 : _j.toggle(!!colonialPart);
@@ -86869,7 +87704,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.renderContextRow();
     this.refreshRiverOptions();
     const ageing = section === "nameAgeing";
-    (_l = this.quantityToggleEl) == null ? void 0 : _l.toggle(!ageing);
+    (_l = this.quantityToggleEl) == null ? void 0 : _l.toggle(!ageing && section !== "settlementKit");
     (_m = this.ageingControlsEl) == null ? void 0 : _m.toggle(ageing);
     const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
     (_n = this.generateButtonEl) == null ? void 0 : _n.setAttribute("title", action);
@@ -87160,6 +87995,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     else if (section === "streetNames") this.renderStreetSentence(row);
     else if (section === "innNames") this.renderInnSentence(row);
     else if (section === "buildingNames") this.renderBuildingSentence(row);
+    else if (section === "settlementKit") this.renderKitSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -87421,7 +88257,12 @@ ${n.origin}${also}${echo}` };
   async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian13.TFile)) return;
-    const { preset, group, byname, vessel, realm, route: route3, street, inn, building } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, realm, route: route3, street, inn, building, kit } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (kit) {
+      this.kitState = this.kitPresetState(kit);
+      this.switchSection("settlementKit");
+      return;
+    }
     if (building) {
       this.buildingState = this.buildingPresetState(building);
       this.switchSection("buildingNames");
@@ -87795,6 +88636,212 @@ ${n.origin}${also}${echo}` };
       return;
     }
     await this.runInns(this.innPresetState(inn), `${SECTION_LABELS.innNames} \xB7 ${inn.packName}`, problems);
+  }
+  // ── Settlement kit (Settlement kit brief) ────────────────────────────────
+  kitPresetState(p) {
+    const base = {
+      culture: p.culture,
+      era: p.era,
+      fantastic: p.fantastic,
+      region: p.region === "all" ? void 0 : p.region,
+      size: p.size,
+      position: p.position,
+      tone: p.tone,
+      contents: p.contents,
+      detail: p.detail,
+      people: p.people
+    };
+    return chooseKit(base, "culture", base.culture);
+  }
+  /** §2: the sentence. */
+  renderKitSentence(row) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment2 of kitSentence(this.kitState)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(sentence2, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {
+        this.kitState = chooseKit(this.kitState, segment2.field, id);
+      });
+    }
+  }
+  /** §10: each module's merged safeguards and the merged vocabulary, for one kit. */
+  async kitInputs() {
+    const route3 = await this.loadSettlementSafeguards();
+    const street = await this.loadSettlementSafeguards(STREET_DATA.safeguards);
+    const inn = await this.loadSettlementSafeguards(INN_DATA.safeguards);
+    const building = await this.loadSettlementSafeguards(BUILDING_DATA.safeguards);
+    const group = await this.loadGroupSafeguards();
+    const byname = await this.loadBynameSafeguards();
+    const vessel = await this.loadVesselSafeguards();
+    const realm = await this.loadRealmSafeguards();
+    const vocab = await this.loadSettlementVocabulary(route3.safeguards, routeWordBlocked);
+    const all = [route3, street, inn, building, group, byname, vessel, realm];
+    return {
+      safeguards: { route: route3.safeguards, street: street.safeguards, inn: inn.safeguards, building: building.safeguards, group: group.safeguards, byname: byname.safeguards, vessel: vessel.safeguards, realm: realm.safeguards },
+      vocab,
+      notices: [...new Set(all.flatMap((x) => x.notices))]
+    };
+  }
+  /** §6: a new kit; history "settlement kit · {name} · {size} · {era} · {culture}" with the whole block. */
+  async runKit(state = this.kitState, label, problems = [], seed) {
+    var _a2;
+    const seedOverride = seed != null ? seed : this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
+    const inputs = await this.kitInputs();
+    const kit = generateKit({ ...state, seed: seedOverride, safeguards: inputs.safeguards, vocab: inputs.vocab.vocab });
+    this.currentSeed = kit.options.seed;
+    this.currentKit = kit;
+    this.renderKitResult(kit);
+    const count = kit.sections.reduce((n, sec) => n + sec.entries.length, 0);
+    await this.recordGenerationHistory(count, label ? `${label} \xB7 ${kit.context.town}` : kitHistoryLabel(kit.context.town, kit.options), kitMarkdown(kit));
+    this.setStatus([...problems, ...kit.notices, ...inputs.notices, ...inputs.vocab.notices].join(" "));
+  }
+  /** §8.4: one section redone with the same context; the note says what else was redone. */
+  async rerollKitSection(key2) {
+    if (!this.currentKit) return;
+    const inputs = await this.kitInputs();
+    const { kit, note } = rerollKit(this.currentKit, key2, { safeguards: inputs.safeguards, vocab: inputs.vocab.vocab });
+    this.currentKit = kit;
+    this.renderKitResult(kit);
+    this.setStatus([note != null ? note : "", ...kit.notices].filter((x) => x).join(" "));
+  }
+  /** §9.3: the settlements folder: the setting, or the names folder plus /Settlements. */
+  settlementsFolder() {
+    var _a2;
+    const set = (_a2 = this.plugin.settings.settlementsFolder) == null ? void 0 : _a2.trim();
+    return (0, import_obsidian13.normalizePath)(set || `${this.getFolderPath() || DEFAULT_NAMES_FOLDER}/Settlements`);
+  }
+  /** §9.3: "{town}.md" (or "{town} 2.md" …) with frontmatter and the block; never overwrites; opens it. */
+  async createKitNote(kit) {
+    const folder = this.settlementsFolder();
+    await ensureVaultFolder(this.app, folder);
+    const path = freeNotePath(folder, kit.context.town, (p) => !!this.app.vault.getAbstractFileByPath((0, import_obsidian13.normalizePath)(p)));
+    const file = await this.app.vault.create((0, import_obsidian13.normalizePath)(path), kitNoteContent(kit));
+    await this.app.workspace.getLeaf(false).openFile(file);
+    this.setStatus(`Created ${file.path}.`);
+  }
+  /** §9.3: the command "Regenerate settlement from note": the same kit from a note's settings. */
+  async showSettlementFromNote(settings, problems = []) {
+    this.kitState = chooseKit({ ...settings, region: settings.region === "all" ? void 0 : settings.region }, "culture", settings.culture);
+    this.switchSection("settlementKit");
+    await this.runKit(this.kitState, void 0, problems, settings.seed);
+  }
+  /** §1.2: a kit's block from history, shown again without regenerating. */
+  showKitBlock(block) {
+    this.switchSection("settlementKit");
+    if (!this.resultsEl) return;
+    this.currentKit = null;
+    this.resultsEl.empty();
+    const view = this.resultsEl.createDiv({ cls: "nameforge-kit" });
+    view.createEl("pre", { cls: "nameforge-kit__block", text: block });
+    this.kitActions(block);
+  }
+  /** §9.1: the kit as headings and lists, each section with its reroll icon (§2.3). */
+  renderKitResult(kit) {
+    if (!this.resultsEl) return;
+    this.resultsEl.empty();
+    const view = this.resultsEl.createDiv({ cls: "nameforge-kit" });
+    view.createDiv({ cls: "nameforge-kit__name", text: kit.context.town });
+    view.createDiv({ cls: "nameforge-kit__summary", text: `${kit.summary.charAt(0).toUpperCase()}${kit.summary.slice(1)}.` });
+    if (kit.ruler) {
+      const ruler = view.createDiv({ cls: "nameforge-kit__ruler" });
+      ruler.createSpan({ cls: "nameforge-kit__role", text: "Ruler: " });
+      this.kitText(ruler, kit.ruler);
+    }
+    for (const section of kit.sections) {
+      if (section.entries.length === 0) continue;
+      const head = view.createDiv({ cls: "nameforge-kit__heading" });
+      head.createSpan({ text: section.title });
+      const reroll = head.createEl("button", { cls: "nameforge-modal__icon-action nameforge-kit__reroll", attr: { type: "button", title: `Reroll ${section.title.toLowerCase()}` } });
+      (0, import_obsidian13.setIcon)(reroll, "refresh-cw");
+      reroll.addEventListener("click", () => void this.rerollKitSection(section.key));
+      const list = view.createEl("ul", { cls: "nameforge-kit__list" });
+      for (const e of section.entries) {
+        const item2 = list.createEl("li");
+        if (e.role) item2.createSpan({ cls: "nameforge-kit__role", text: `${e.role}: ` });
+        this.kitText(item2, e.text);
+        if (e.through) item2.createSpan({ cls: "nameforge-kit__note", text: " (through the town)" });
+      }
+    }
+    this.kitActions(kitMarkdown(kit), kit);
+  }
+  /** Placeholders muted, as in the other modules' results. */
+  kitText(el, text) {
+    for (const part of text.split(/(\[[^\]]+\])/)) {
+      if (!part) continue;
+      if (part.startsWith("[")) el.createSpan({ cls: "nameforge-modal__placeholder-part", text: part });
+      else el.appendText(part);
+    }
+  }
+  /** §2.3: Insert, Copy and Create note, beside the seed. */
+  kitActions(block, kit) {
+    if (!this.resultsEl) return;
+    const actions = this.resultsEl.createDiv({ cls: "nameforge-modal__results-actions" });
+    this.buildSeedControls(actions.createDiv({ cls: "nameforge-modal__seed-group" }));
+    const buttons = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
+    const button = (icon, title, run) => {
+      const b = buttons.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title } });
+      (0, import_obsidian13.setIcon)(b, icon);
+      b.addEventListener("click", run);
+      return b;
+    };
+    button(ICON_TEXT_INSERT, "Insert", () => this.insertPlainText(block));
+    button("copy", "Copy", () => {
+      void navigator.clipboard.writeText(block).then(() => this.setStatus("Copied."));
+    });
+    if (kit) button("file-plus", "Create note", () => void this.createKitNote(kit));
+    if (this.panelMode) {
+      const history2 = this.resultsEl.createEl("button", { cls: "nameforge-modal__panel-action", attr: { type: "button" } });
+      (0, import_obsidian13.setIcon)(history2.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
+      history2.createSpan({ cls: "nameforge-modal__panel-action-label", text: "previous generations" });
+      history2.addEventListener("click", () => new PreviousGenerationsModal(this.app, this).open());
+    }
+  }
+  /** §11: "{culture} · settlement kit", described by the sentence. */
+  openSaveKitPreset() {
+    var _a2, _b;
+    const state = this.kitState;
+    const culture = (_b = (_a2 = findRouteCulture(state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+    const name = [culture, SECTION_LABELS.settlementKit].join(" \xB7 ");
+    const description = kitSentenceText(kitSentence(state));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a3;
+      if (!presetName) {
+        new import_obsidian13.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        culture: state.culture,
+        region: (_a3 = state.region) != null ? _a3 : "all",
+        era: state.era,
+        fantastic: state.fantastic,
+        size: state.size,
+        position: state.position,
+        tone: state.tone,
+        contents: state.contents,
+        detail: state.detail,
+        people: state.people
+      });
+      return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).kit);
+    }).open();
+  }
+  /** §11: a kit preset, run as the module runs; history "settlement kit · {preset} · {name}". */
+  async runKitPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian13.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { kit, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!kit) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runKit(this.kitPresetState(kit), `${SECTION_LABELS.settlementKit} \xB7 ${kit.packName}`, problems);
   }
   // ── Buildings and landmarks (Buildings brief) ────────────────────────────
   buildingPresetState(p) {
@@ -88360,7 +89407,7 @@ ${n.origin}${also}${echo}` };
     var _a2;
     const section = this.activeSection;
     (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -88397,6 +89444,10 @@ ${n.origin}${also}${echo}` };
     }
     if (this.activeSection === "buildingNames") {
       this.openSaveBuildingPreset();
+      return;
+    }
+    if (this.activeSection === "settlementKit") {
+      this.openSaveKitPreset();
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -89155,7 +90206,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "kitPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -89313,6 +90364,7 @@ ${text}
           else if (parsed.street) packs.push({ path: child.path, packType: "streetPreset" });
           else if (parsed.inn) packs.push({ path: child.path, packType: "innPreset" });
           else if (parsed.building) packs.push({ path: child.path, packType: "buildingPreset" });
+          else if (parsed.kit) packs.push({ path: child.path, packType: "kitPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -89455,9 +90507,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
-    const { preset, group, byname, vessel, realm, route: route3, street, inn, building, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
+    const { preset, group, byname, vessel, realm, route: route3, street, inn, building, kit, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = kit ? "kitPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -89467,9 +90519,9 @@ ${text}
     (_a2 = this.sectionSentenceEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
-    const module2 = building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
+    const module2 = kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
     (_e = this.openPresetButton) == null ? void 0 : _e.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm == null ? void 0 : realm.packName) != null ? _j : route3 == null ? void 0 : route3.packName) != null ? _k : street == null ? void 0 : street.packName) != null ? _l : inn == null ? void 0 : inn.packName) != null ? _m : building == null ? void 0 : building.packName) != null ? _n : file.basename;
+    this.plugin.settings.packName = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm == null ? void 0 : realm.packName) != null ? _j : route3 == null ? void 0 : route3.packName) != null ? _k : street == null ? void 0 : street.packName) != null ? _l : inn == null ? void 0 : inn.packName) != null ? _m : building == null ? void 0 : building.packName) != null ? _n : kit == null ? void 0 : kit.packName) != null ? _o : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -89914,6 +90966,10 @@ ${text}
       await this.runBuildings();
       return;
     }
+    if (this.activeSection === "settlementKit") {
+      await this.runKit();
+      return;
+    }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
@@ -89981,6 +91037,10 @@ ${text}
     }
     if (this.currentPackType === "buildingPreset") {
       await this.runBuildingPreset();
+      return;
+    }
+    if (this.currentPackType === "kitPreset") {
+      await this.runKitPreset();
       return;
     }
     if (this.currentPackType === "groupPreset") {
@@ -90147,14 +91207,15 @@ ${text}
   historySectionShown() {
     return this.activeSection;
   }
-  async recordGenerationHistory(count, packName) {
+  async recordGenerationHistory(count, packName, block) {
     var _a2;
     if (this.currentSeed === null) return;
     const entry = {
       packName: packName != null ? packName : this.plugin.settings.packName || "nameForge",
       timestamp: formatHistoryTimestamp(/* @__PURE__ */ new Date()),
       seed: this.currentSeed,
-      count
+      count,
+      ...block ? { block } : {}
     };
     this.plugin.settings.previousGenerations = [
       entry,
@@ -90575,6 +91636,15 @@ var PreviousGenerationsModal = class extends import_obsidian13.Modal {
         event.stopPropagation();
         void navigator.clipboard.writeText(String(entry.seed));
       });
+      const block = entry.block;
+      if (block) {
+        row.addClass("is-clickable");
+        row.setAttribute("title", "Show this settlement again");
+        row.addEventListener("click", () => {
+          this.parent.showKitBlock(block);
+          this.close();
+        });
+      }
     }
   }
 };
@@ -91364,6 +92434,8 @@ function parseSettingsMarkdownContent(content) {
       parsed.namesFilePath = trimmedValue;
     } else if (key2 === "packName") {
       parsed.packName = trimmedValue;
+    } else if (key2 === "settlementsFolder") {
+      parsed.settlementsFolder = trimmedValue;
     } else if (key2 === "faithfulness") {
       const numeric = Number(trimmedValue);
       if (!Number.isNaN(numeric)) {
@@ -91378,6 +92450,11 @@ function parseSettingsMarkdownContent(content) {
   }
   const body = content.slice(frontmatterMatch[0].length);
   const history2 = parseGenerationHistory(body);
+  const blocks = parseKitHistory(body);
+  for (const entry of history2) {
+    const block = blocks.get(`${entry.timestamp} | ${entry.seed}`);
+    if (block && entry.packName.startsWith("settlement kit")) entry.block = block;
+  }
   if (history2.length > 0) {
     parsed.previousGenerations = history2;
   }
@@ -91388,12 +92465,16 @@ function parseSettingsMarkdownContent(content) {
   return parsed;
 }
 function createSettingsMarkdownContent(settings) {
-  var _a2, _b;
+  var _a2, _b, _c;
   const folderPath = resolveNamesFolderPath(settings.folderPath, settings.namesFilePath);
   const lines2 = [`folder: ${folderPath || DEFAULT_NAMES_FOLDER}`, `namesFilePath: ${settings.namesFilePath || ""}`];
   const trimmedPackName = (settings.packName || "").trim().replace(/\s+/g, " ");
   if (trimmedPackName) {
     lines2.push(`packName: ${trimmedPackName}`);
+  }
+  const settlements = (settings.settlementsFolder || "").trim();
+  if (settlements) {
+    lines2.push(`settlementsFolder: ${settlements}`);
   }
   lines2.push(`faithfulness: ${(_a2 = settings.faithfulness) != null ? _a2 : DEFAULT_SETTINGS.faithfulness}`);
   lines2.push(`strictness: ${(_b = settings.strictness) != null ? _b : DEFAULT_SETTINGS.strictness}`);
@@ -91402,7 +92483,7 @@ type: configurationFile
 ${lines2.join("\n")}
 ---
 `;
-  return frontmatter + createGenerationHistorySection(settings.previousGenerations) + createAgeingHistorySection(settings.ageingHistory);
+  return frontmatter + createGenerationHistorySection(settings.previousGenerations) + createAgeingHistorySection(settings.ageingHistory) + kitHistorySection(((_c = settings.previousGenerations) != null ? _c : []).slice(0, MAX_HISTORY_ENTRIES));
 }
 var NameForgePlugin = class extends import_obsidian15.Plugin {
   constructor() {
@@ -91523,6 +92604,25 @@ var NameForgePlugin = class extends import_obsidian15.Plugin {
         const vault = { exists: (path) => !!this.app.vault.getFileByPath((0, import_obsidian15.normalizePath)(path)), create: (path, content) => this.app.vault.create((0, import_obsidian15.normalizePath)(path), content) };
         const result = await createVocabularyPack(vault, folder);
         new import_obsidian15.Notice(result === "exists" ? "nameForge: \u201CVocabulary\u201D already exists." : "nameForge: \u201CVocabulary\u201D created.");
+      }
+    });
+    this.addCommand({
+      id: "regenerate-settlement-from-note",
+      name: "Regenerate settlement from note",
+      callback: async () => {
+        const file = this.app.workspace.getActiveFile();
+        if (!(file instanceof import_obsidian15.TFile)) {
+          new import_obsidian15.Notice("nameForge: open a settlement note first.");
+          return;
+        }
+        const { settings, problems } = parseKitNote(await this.app.vault.cachedRead(file));
+        if (!settings) {
+          new import_obsidian15.Notice(`nameForge: ${problems.join(" ")}`);
+          return;
+        }
+        const modal = new NameForgeModal(this.app, this, this.settings);
+        modal.open();
+        await modal.showSettlementFromNote(settings, problems);
       }
     });
     this.addCommand({

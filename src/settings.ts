@@ -23,6 +23,9 @@ export class NameForgeSettingTab extends PluginSettingTab {
         await ensureVaultFolder(this.app, value.trim());
         void this.refreshLegacyFolder();
       }
+    } else if (key === "settlementsFolder" && typeof value === "string") {
+      // Settlement kit §9.3: created when a settlement note is first written.
+      this.plugin.settings.settlementsFolder = value.trim();
     } else if (key === "faithfulness" && typeof value === "number") {
       this.plugin.settings.faithfulness = value;
     } else if (key === "strictness" && typeof value === "number") {
@@ -44,6 +47,17 @@ export class NameForgeSettingTab extends PluginSettingTab {
           placeholder: DEFAULT_NAMES_FOLDER,
           includeRoot: true,
           defaultValue: DEFAULT_NAMES_FOLDER,
+        },
+      },
+      {
+        name: "Settlements folder",
+        desc: "Where the settlement kit's Create note writes settlement notes. Empty: the names folder plus /Settlements.",
+        control: {
+          type: "folder" as const,
+          key: "settlementsFolder",
+          placeholder: `${DEFAULT_NAMES_FOLDER}/Settlements`,
+          includeRoot: true,
+          defaultValue: "",
         },
       },
       {

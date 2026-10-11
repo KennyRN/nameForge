@@ -14,6 +14,7 @@ import { REALM_SAFEGUARD_TEMPLATE } from "./realms/safeguardPacks";
 import { GROUP_SAFEGUARD_TEMPLATE } from "./groups/safeguardPacks";
 import { createVocabularyPack } from "./settlement/vocabPacks";
 import { SETTLEMENT_SAFEGUARD_TEMPLATE } from "./settlement/safeguardPacks";
+import { kitHistorySection, parseKitHistory, parseKitNote } from "./settlement/kitFormat";
 
 const DEFAULT_SETTINGS: NameForgeSettings = {
   namesFilePath: "",
@@ -136,6 +137,8 @@ function parseSettingsMarkdownContent(content: string): Partial<NameForgeSetting
       parsed.namesFilePath = trimmedValue;
     } else if (key === "packName") {
       parsed.packName = trimmedValue;
+    } else if (key === "settlementsFolder") {
+      parsed.settlementsFolder = trimmedValue;
     } else if (key === "faithfulness") {
       const numeric = Number(trimmedValue);
       if (!Number.isNaN(numeric)) {
@@ -151,6 +154,12 @@ function parseSettingsMarkdownContent(content: string): Partial<NameForgeSetting
 
   const body = content.slice(frontmatterMatch[0].length);
   const history = parseGenerationHistory(body);
+  // Settlement kit §1.2: each kit's block, kept in its own section.
+  const blocks = parseKitHistory(body);
+  for (const entry of history) {
+    const block = blocks.get(`${entry.timestamp} | ${entry.seed}`);
+    if (block && entry.packName.startsWith("settlement kit")) entry.block = block;
+  }
   if (history.length > 0) {
     parsed.previousGenerations = history;
   }
@@ -171,6 +180,11 @@ function createSettingsMarkdownContent(settings: NameForgeSettings): string {
     lines.push(`packName: ${trimmedPackName}`);
   }
 
+  const settlements = (settings.settlementsFolder || "").trim();
+  if (settlements) {
+    lines.push(`settlementsFolder: ${settlements}`);
+  }
+
   lines.push(`faithfulness: ${settings.faithfulness ?? DEFAULT_SETTINGS.faithfulness}`);
   lines.push(`strictness: ${settings.strictness ?? DEFAULT_SETTINGS.strictness}`);
 
@@ -178,7 +192,8 @@ function createSettingsMarkdownContent(settings: NameForgeSettings): string {
   return (
     frontmatter +
     createGenerationHistorySection(settings.previousGenerations) +
-    createAgeingHistorySection(settings.ageingHistory)
+    createAgeingHistorySection(settings.ageingHistory) +
+    kitHistorySection((settings.previousGenerations ?? []).slice(0, MAX_HISTORY_ENTRIES))
   );
 }
 
@@ -314,6 +329,27 @@ export default class NameForgePlugin extends Plugin {
         const vault = { exists: (path: string) => !!this.app.vault.getFileByPath(normalizePath(path)), create: (path: string, content: string) => this.app.vault.create(normalizePath(path), content) };
         const result = await createVocabularyPack(vault, folder);
         new Notice(result === "exists" ? "nameForge: “Vocabulary” already exists." : "nameForge: “Vocabulary” created.");
+      },
+    });
+
+    // Settlement kit §9.3: the same kit again, from a settlement note's frontmatter.
+    this.addCommand({
+      id: "regenerate-settlement-from-note",
+      name: "Regenerate settlement from note",
+      callback: async () => {
+        const file = this.app.workspace.getActiveFile();
+        if (!(file instanceof TFile)) {
+          new Notice("nameForge: open a settlement note first.");
+          return;
+        }
+        const { settings, problems } = parseKitNote(await this.app.vault.cachedRead(file));
+        if (!settings) {
+          new Notice(`nameForge: ${problems.join(" ")}`);
+          return;
+        }
+        const modal = new NameForgeModal(this.app, this, this.settings);
+        modal.open();
+        await modal.showSettlementFromNote(settings, problems);
       },
     });
 

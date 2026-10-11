@@ -1617,3 +1617,67 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   color: var(--text-muted);
   font-size: var(--font-ui-smaller);
 }
+
+/* Settlement kit (settlement kit brief §2.3, §9.1): the kit as headings and lists in the results box,
+   each section heading with its reroll icon. */
+.nameforge-kit {
+  height: var(--nf-results-height);
+  overflow-y: auto;
+  padding: 8px 12px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m, 6px);
+  background-color: var(--background-secondary);
+}
+
+.nameforge-modal--panel .nameforge-kit {
+  flex: 1;
+  height: auto;
+  min-height: 280px;
+}
+
+.nameforge-kit__name {
+  font-size: var(--font-ui-large);
+  font-weight: var(--font-semibold);
+}
+
+.nameforge-kit__summary {
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.nameforge-kit__ruler {
+  margin-bottom: 4px;
+}
+
+.nameforge-kit__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-weight: var(--font-semibold);
+}
+
+.nameforge-kit__list {
+  margin: 2px 0 0;
+  padding-left: 18px;
+}
+
+.nameforge-kit__role {
+  font-weight: var(--font-semibold);
+}
+
+.nameforge-kit__note {
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.nameforge-kit__block {
+  margin: 0;
+  white-space: pre-wrap;
+  font-size: var(--font-ui-small);
+}
+
+.nameforge-history-modal__row.is-clickable {
+  cursor: pointer;
+}

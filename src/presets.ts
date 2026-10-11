@@ -20,6 +20,7 @@ import { findRouteCulture, findRouteKind, kindsOffered, ROUTE_ERAS, routeEraLabe
 import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 import { INN_KINDS, INN_SETTINGS, type InnForm, type InnKind, type InnSetting } from "./inns/engine";
 import { BUILDING_KINDS, type BuildingKind } from "./buildings/engine";
+import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
 import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
 import { findCommodity, findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
@@ -73,7 +74,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -94,6 +95,8 @@ export function parseModulePreset(
   if (values.module === INN_PRESET_MODULE) return parseInnPreset(values, body, fileName);
   // Buildings brief §13: building presets too.
   if (values.module === BUILDING_PRESET_MODULE) return parseBuildingPreset(values, body, fileName);
+  // Settlement kit §11: kit presets too.
+  if (values.module === KIT_PRESET_MODULE) return parseKitPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module “${values.module ?? ""}”.`);
     return { problems };
@@ -128,7 +131,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset): string {
+  if ("contents" in preset) return kitPresetContent(preset);
   if ("buildingKind" in preset) return buildingPresetContent(preset);
   if ("innKind" in preset) return innPresetContent(preset);
   if ("streetKind" in preset) return streetPresetContent(preset);
@@ -789,6 +793,81 @@ function buildingPresetContent(preset: BuildingPreset): string {
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
     `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Settlement kit presets (Settlement kit brief §11) ───────────────────────
+
+export const KIT_PRESET_MODULE = "settlement-kit";
+
+export interface KitPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  culture: string;
+  /** "all" or a place-shape region code. */
+  region: string;
+  era: RouteEra;
+  fantastic: boolean;
+  size: KitSize;
+  position: KitPosition;
+  tone: GroupToneChoice;
+  contents: KitContents;
+  detail: KitDetail;
+  people: GroupPeople;
+}
+
+function parseKitPreset(values: Record<string, string>, body: string, fileName: string): { kit?: KitPreset; problems: string[] } {
+  const problems: string[] = [];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const fantastic = values.fantastic === "true";
+  if (values.fantastic && values.fantastic !== "true" && values.fantastic !== "false") problems.push(`Unknown fantastic “${values.fantastic}”.`);
+  return {
+    kit: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      culture: pick("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      era: pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      fantastic,
+      size: pick<KitSize>("size", "town", (v) => KIT_SIZES.includes(v as KitSize)),
+      position: pick<KitPosition>("position", "inland", (v) => KIT_POSITIONS.some((p) => p.key === v)),
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      contents: pick<KitContents>("contents", "whole", (v) => v in KIT_CONTENTS),
+      detail: pick<KitDetail>("detail", "standard", (v) => KIT_DETAILS.includes(v as KitDetail)),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+    },
+    problems,
+  };
+}
+
+function kitPresetContent(preset: KitPreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${KIT_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `region: ${preset.region}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `size: ${preset.size}`,
+    `position: ${preset.position}`,
+    `tone: ${preset.tone}`,
+    `contents: ${preset.contents}`,
+    `detail: ${preset.detail}`,
+    `people: ${preset.people}`,
     "---",
     "",
     preset.description.trim(),

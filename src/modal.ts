@@ -110,13 +110,16 @@ import { isRealmSafeguardPackContent } from "./realms/safeguardPacks";
 import { generateVesselNames, moduleFunctions, VESSEL_CULTURES, VESSEL_DATA, type VesselModule } from "./vessels/engine";
 import { chooseVessel, defaultVesselState, vesselHistory, vesselSentence, vesselSentenceText, type VesselSentenceState } from "./vessels/sentence";
 import { isVesselSafeguardPackContent } from "./vessels/safeguardPacks";
-import { isModulePresetContent, modulePresetContent, parseModulePreset, type RealmPreset, type RoutePreset, type StreetPreset, type InnPreset, type BuildingPreset, type TribalPreset, type VesselPreset } from "./presets";
+import { isModulePresetContent, modulePresetContent, parseModulePreset, type RealmPreset, type RoutePreset, type StreetPreset, type InnPreset, type BuildingPreset, type KitPreset, type TribalPreset, type VesselPreset } from "./presets";
 import { defaultRouteSafeguards, findRouteCulture, findRouteKind, generateRouteNames, ROUTE_DATA, routeWordBlocked } from "./routes/engine";
 import { chooseRoute, DEFAULT_ROUTE_STATE, routeHistoryLabel, routeSentence, routeSentenceText, type RouteSentenceState } from "./routes/sentence";
 import { isSettlementSafeguardPackContent } from "./settlement/safeguardPacks";
 import { generateStreetNames, STREET_DATA, STREET_KINDS, streetWordBlocked } from "./streets/engine";
 import { generateInnNames, INN_DATA, INN_KINDS, innWordBlocked } from "./inns/engine";
 import { BUILDING_DATA, BUILDING_KINDS, buildingWordBlocked, generateBuildingNames } from "./buildings/engine";
+import { generateKit, rerollKit, type Kit, type KitSafeguards, type KitSectionKey } from "./settlement/kit";
+import { freeNotePath, kitMarkdown, kitNoteContent, type KitNoteSettings } from "./settlement/kitFormat";
+import { chooseKit, DEFAULT_KIT_STATE, kitHistoryLabel, kitSentence, kitSentenceText, type KitSentenceState } from "./settlement/kitSentence";
 import { buildingHistoryLabel, buildingSentence, buildingSentenceText, chooseBuilding, DEFAULT_BUILDING_STATE, type BuildingSentenceState } from "./buildings/sentence";
 import { chooseInn, DEFAULT_INN_STATE, innFormFor, innHistoryLabel, innSentence, innSentenceText, type InnSentenceState } from "./inns/sentence";
 import { chooseStreet, DEFAULT_STREET_STATE, streetHistoryLabel, streetSentence, streetSentenceText, type StreetSentenceState } from "./streets/sentence";
@@ -191,7 +194,7 @@ import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from 
 
 /** `tribalPreset` (Presets brief §9) and `groupPreset` (Group brief §13): module preset notes, run
  * as-is from the pack dropdown. */
-type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack" | "tribalPreset" | "groupPreset" | "bynamePreset" | "vesselPreset" | "realmPreset" | "routePreset" | "streetPreset" | "innPreset" | "buildingPreset";
+type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack" | "tribalPreset" | "groupPreset" | "bynamePreset" | "vesselPreset" | "realmPreset" | "routePreset" | "streetPreset" | "innPreset" | "buildingPreset" | "kitPreset";
 
 import {
   BRITISH_PLACE_NAMES_HISTORY_NAME,
@@ -239,6 +242,8 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   innNames: "beer",
   // Buildings brief §1.1.
   buildingNames: "landmark",
+  // Settlement kit §1.1.
+  settlementKit: "building-2",
   riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
@@ -298,6 +303,7 @@ function packTypeIconId(packType: NamePackType, subGenerator?: CompoundGenerator
   if (packType === "streetPreset") return "signpost";
   if (packType === "innPreset") return "beer";
   if (packType === "buildingPreset") return "landmark";
+  if (packType === "kitPreset") return "building-2";
   if (packType === "recipePack") {
     // Presets brief §2.2: recipe packs wear the wizard's pen-in-pin icon.
     return ICON_RECIPE_WIZARD;
@@ -551,6 +557,8 @@ export interface GenerationHistoryEntry {
   timestamp: string;
   seed: number;
   count?: number;
+  /** Settlement kit §1.2: the kit's whole block, shown again from history. */
+  block?: string;
 }
 
 /** One name-ageing run, kept in its own history (never in generation history). */
@@ -565,6 +573,8 @@ export interface NameForgeSettings {
   namesFilePath?: string;
   packName?: string;
   folderPath?: string;
+  /** Settlement kit §9.3: where "Create note" writes settlements; the names folder plus /Settlements when unset. */
+  settlementsFolder?: string;
   faithfulness?: number;
   strictness?: number;
   previousGenerations?: GenerationHistoryEntry[];
@@ -647,6 +657,9 @@ export class NameForgeModal extends Modal {
   private innState: InnSentenceState = { ...DEFAULT_INN_STATE };
   /** Buildings brief §2: the buildings sentence's choices, session only. */
   private buildingState: BuildingSentenceState = { ...DEFAULT_BUILDING_STATE };
+  /** Settlement kit §2: the kit sentence's choices, session only, and the kit on show. */
+  private kitState: KitSentenceState = { ...DEFAULT_KIT_STATE };
+  private currentKit: Kit | null = null;
   /** Each switcher group's last-used module (session only). */
   private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", advanced: "nameAgeing" };
   private tribal: {
@@ -1050,14 +1063,14 @@ export class NameForgeModal extends Modal {
     this.packDropdownEl?.toggle(section === "markov");
     this.sectionSentenceEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
     this.editRecipeButton?.toggle(section === "markov" && this.currentPackType === "recipePack");
-    this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset"));
+    this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset"));
     // Pack creation belongs to the markov generator; elsewhere the button keeps its space so the
     // box beside the trigger stays the same size.
     const colonialPart = COLONIAL_SECTION_PART[section];
     this.createPacksButton?.toggleClass("is-placeholder", section !== "markov");
     // In the colonial sections the guide button takes the create button's slot instead.
     // Tribes and kin groups and the group-name modules set everything in their sentences.
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit";
     this.createPacksButton?.toggle(!colonialPart && !tribal);
     this.landButton?.refresh();
     this.guideButton?.toggle(!!colonialPart);
@@ -1073,7 +1086,8 @@ export class NameForgeModal extends Modal {
     this.renderContextRow();
     this.refreshRiverOptions();
     const ageing = section === "nameAgeing";
-    this.quantityToggleEl?.toggle(!ageing);
+    // Settlement kit §5: the kit sets its own counts.
+    this.quantityToggleEl?.toggle(!ageing && section !== "settlementKit");
     this.ageingControlsEl?.toggle(ageing);
     const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
     this.generateButtonEl?.setAttribute("title", action);
@@ -1376,6 +1390,7 @@ export class NameForgeModal extends Modal {
     else if (section === "streetNames") this.renderStreetSentence(row);
     else if (section === "innNames") this.renderInnSentence(row);
     else if (section === "buildingNames") this.renderBuildingSentence(row);
+    else if (section === "settlementKit") this.renderKitSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]!);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -1644,7 +1659,13 @@ export class NameForgeModal extends Modal {
   private async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof TFile)) return;
-    const { preset, group, byname, vessel, realm, route, street, inn, building } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, realm, route, street, inn, building, kit } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (kit) {
+      // Settlement kit §11: the preset's choices, applied to the module for this session.
+      this.kitState = this.kitPresetState(kit);
+      this.switchSection("settlementKit");
+      return;
+    }
     if (building) {
       // Buildings brief §13: the preset's choices, applied to the module for this session.
       this.buildingState = this.buildingPresetState(building);
@@ -2038,6 +2059,223 @@ export class NameForgeModal extends Modal {
       return;
     }
     await this.runInns(this.innPresetState(inn), `${SECTION_LABELS.innNames} · ${inn.packName}`, problems);
+  }
+
+  // ── Settlement kit (Settlement kit brief) ────────────────────────────────
+
+  private kitPresetState(p: KitPreset): KitSentenceState {
+    const base: KitSentenceState = {
+      culture: p.culture,
+      era: p.era,
+      fantastic: p.fantastic,
+      region: p.region === "all" ? undefined : p.region,
+      size: p.size,
+      position: p.position,
+      tone: p.tone,
+      contents: p.contents,
+      detail: p.detail,
+      people: p.people,
+    };
+    return chooseKit(base, "culture", base.culture);
+  }
+
+  /** §2: the sentence. */
+  private renderKitSentence(row: HTMLElement) {
+    const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment of kitSentence(this.kitState)) {
+      if (typeof segment === "string") {
+        sentence.appendText(segment);
+        continue;
+      }
+      this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
+        this.kitState = chooseKit(this.kitState, segment.field, id);
+      });
+    }
+  }
+
+  /** §10: each module's merged safeguards and the merged vocabulary, for one kit. */
+  private async kitInputs(): Promise<{ safeguards: KitSafeguards; vocab: Awaited<ReturnType<NameForgeModal["loadSettlementVocabulary"]>>; notices: string[] }> {
+    const route = await this.loadSettlementSafeguards();
+    const street = await this.loadSettlementSafeguards(STREET_DATA.safeguards);
+    const inn = await this.loadSettlementSafeguards(INN_DATA.safeguards);
+    const building = await this.loadSettlementSafeguards(BUILDING_DATA.safeguards);
+    const group = await this.loadGroupSafeguards();
+    const byname = await this.loadBynameSafeguards();
+    const vessel = await this.loadVesselSafeguards();
+    const realm = await this.loadRealmSafeguards();
+    const vocab = await this.loadSettlementVocabulary(route.safeguards, routeWordBlocked);
+    const all = [route, street, inn, building, group, byname, vessel, realm];
+    return {
+      safeguards: { route: route.safeguards, street: street.safeguards, inn: inn.safeguards, building: building.safeguards, group: group.safeguards, byname: byname.safeguards, vessel: vessel.safeguards, realm: realm.safeguards },
+      vocab,
+      notices: [...new Set(all.flatMap((x) => x.notices))],
+    };
+  }
+
+  /** §6: a new kit; history "settlement kit · {name} · {size} · {era} · {culture}" with the whole block. */
+  private async runKit(state = this.kitState, label?: string, problems: string[] = [], seed?: number) {
+    const seedOverride = seed ?? (this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined);
+    const inputs = await this.kitInputs();
+    const kit = generateKit({ ...state, seed: seedOverride, safeguards: inputs.safeguards, vocab: inputs.vocab.vocab });
+    this.currentSeed = kit.options.seed;
+    this.currentKit = kit;
+    this.renderKitResult(kit);
+    const count = kit.sections.reduce((n, sec) => n + sec.entries.length, 0);
+    await this.recordGenerationHistory(count, label ? `${label} · ${kit.context.town}` : kitHistoryLabel(kit.context.town, kit.options), kitMarkdown(kit));
+    this.setStatus([...problems, ...kit.notices, ...inputs.notices, ...inputs.vocab.notices].join(" "));
+  }
+
+  /** §8.4: one section redone with the same context; the note says what else was redone. */
+  private async rerollKitSection(key: KitSectionKey) {
+    if (!this.currentKit) return;
+    const inputs = await this.kitInputs();
+    const { kit, note } = rerollKit(this.currentKit, key, { safeguards: inputs.safeguards, vocab: inputs.vocab.vocab });
+    this.currentKit = kit;
+    this.renderKitResult(kit);
+    this.setStatus([note ?? "", ...kit.notices].filter((x) => x).join(" "));
+  }
+
+  /** §9.3: the settlements folder: the setting, or the names folder plus /Settlements. */
+  private settlementsFolder(): string {
+    const set = this.plugin.settings.settlementsFolder?.trim();
+    return normalizePath(set || `${this.getFolderPath() || DEFAULT_NAMES_FOLDER}/Settlements`);
+  }
+
+  /** §9.3: "{town}.md" (or "{town} 2.md" …) with frontmatter and the block; never overwrites; opens it. */
+  private async createKitNote(kit: Kit) {
+    const folder = this.settlementsFolder();
+    await ensureVaultFolder(this.app, folder);
+    const path = freeNotePath(folder, kit.context.town, (p) => !!this.app.vault.getAbstractFileByPath(normalizePath(p)));
+    const file = await this.app.vault.create(normalizePath(path), kitNoteContent(kit));
+    await this.app.workspace.getLeaf(false).openFile(file);
+    this.setStatus(`Created ${file.path}.`);
+  }
+
+  /** §9.3: the command "Regenerate settlement from note": the same kit from a note's settings. */
+  async showSettlementFromNote(settings: KitNoteSettings, problems: string[] = []) {
+    this.kitState = chooseKit({ ...settings, region: settings.region === "all" ? undefined : settings.region }, "culture", settings.culture);
+    this.switchSection("settlementKit");
+    await this.runKit(this.kitState, undefined, problems, settings.seed);
+  }
+
+  /** §1.2: a kit's block from history, shown again without regenerating. */
+  showKitBlock(block: string) {
+    this.switchSection("settlementKit");
+    if (!this.resultsEl) return;
+    this.currentKit = null;
+    this.resultsEl.empty();
+    const view = this.resultsEl.createDiv({ cls: "nameforge-kit" });
+    view.createEl("pre", { cls: "nameforge-kit__block", text: block });
+    this.kitActions(block);
+  }
+
+  /** §9.1: the kit as headings and lists, each section with its reroll icon (§2.3). */
+  private renderKitResult(kit: Kit) {
+    if (!this.resultsEl) return;
+    this.resultsEl.empty();
+    const view = this.resultsEl.createDiv({ cls: "nameforge-kit" });
+    view.createDiv({ cls: "nameforge-kit__name", text: kit.context.town });
+    view.createDiv({ cls: "nameforge-kit__summary", text: `${kit.summary.charAt(0).toUpperCase()}${kit.summary.slice(1)}.` });
+    if (kit.ruler) {
+      const ruler = view.createDiv({ cls: "nameforge-kit__ruler" });
+      ruler.createSpan({ cls: "nameforge-kit__role", text: "Ruler: " });
+      this.kitText(ruler, kit.ruler);
+    }
+    for (const section of kit.sections) {
+      if (section.entries.length === 0) continue;
+      const head = view.createDiv({ cls: "nameforge-kit__heading" });
+      head.createSpan({ text: section.title });
+      const reroll = head.createEl("button", { cls: "nameforge-modal__icon-action nameforge-kit__reroll", attr: { type: "button", title: `Reroll ${section.title.toLowerCase()}` } });
+      setIcon(reroll, "refresh-cw");
+      reroll.addEventListener("click", () => void this.rerollKitSection(section.key));
+      const list = view.createEl("ul", { cls: "nameforge-kit__list" });
+      for (const e of section.entries) {
+        const item = list.createEl("li");
+        if (e.role) item.createSpan({ cls: "nameforge-kit__role", text: `${e.role}: ` });
+        this.kitText(item, e.text);
+        if (e.through) item.createSpan({ cls: "nameforge-kit__note", text: " (through the town)" });
+      }
+    }
+    this.kitActions(kitMarkdown(kit), kit);
+  }
+
+  /** Placeholders muted, as in the other modules' results. */
+  private kitText(el: HTMLElement, text: string) {
+    for (const part of text.split(/(\[[^\]]+\])/)) {
+      if (!part) continue;
+      if (part.startsWith("[")) el.createSpan({ cls: "nameforge-modal__placeholder-part", text: part });
+      else el.appendText(part);
+    }
+  }
+
+  /** §2.3: Insert, Copy and Create note, beside the seed. */
+  private kitActions(block: string, kit?: Kit) {
+    if (!this.resultsEl) return;
+    const actions = this.resultsEl.createDiv({ cls: "nameforge-modal__results-actions" });
+    this.buildSeedControls(actions.createDiv({ cls: "nameforge-modal__seed-group" }));
+    const buttons = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
+    const button = (icon: string, title: string, run: () => void) => {
+      const b = buttons.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title } });
+      setIcon(b, icon);
+      b.addEventListener("click", run);
+      return b;
+    };
+    button(ICON_TEXT_INSERT, "Insert", () => this.insertPlainText(block));
+    button("copy", "Copy", () => {
+      void navigator.clipboard.writeText(block).then(() => this.setStatus("Copied."));
+    });
+    if (kit) button("file-plus", "Create note", () => void this.createKitNote(kit));
+    if (this.panelMode) {
+      const history = this.resultsEl.createEl("button", { cls: "nameforge-modal__panel-action", attr: { type: "button" } });
+      setIcon(history.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
+      history.createSpan({ cls: "nameforge-modal__panel-action-label", text: "previous generations" });
+      history.addEventListener("click", () => new PreviousGenerationsModal(this.app, this).open());
+    }
+  }
+
+  /** §11: "{culture} · settlement kit", described by the sentence. */
+  private openSaveKitPreset() {
+    const state = this.kitState;
+    const culture = findRouteCulture(state.culture)?.label ?? "General";
+    const name = [culture, SECTION_LABELS.settlementKit].join(" · ");
+    const description = kitSentenceText(kitSentence(state));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      if (!presetName) {
+        new Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        culture: state.culture,
+        region: state.region ?? "all",
+        era: state.era,
+        fantastic: state.fantastic,
+        size: state.size,
+        position: state.position,
+        tone: state.tone,
+        contents: state.contents,
+        detail: state.detail,
+        people: state.people,
+      });
+      return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).kit);
+    }).open();
+  }
+
+  /** §11: a kit preset, run as the module runs; history "settlement kit · {preset} · {name}". */
+  private async runKitPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { kit, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!kit) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runKit(this.kitPresetState(kit), `${SECTION_LABELS.settlementKit} · ${kit.packName}`, problems);
   }
 
   // ── Buildings and landmarks (Buildings brief) ────────────────────────────
@@ -2620,6 +2858,7 @@ export class NameForgeModal extends Modal {
         section === "streetNames" ||
         section === "innNames" ||
         section === "buildingNames" ||
+        section === "settlementKit" ||
         !!COLONIAL_SECTION_PART[section] ||
         (section === "placeShapes" && this.placeIsBritain()),
     );
@@ -2658,6 +2897,10 @@ export class NameForgeModal extends Modal {
     }
     if (this.activeSection === "buildingNames") {
       this.openSaveBuildingPreset();
+      return;
+    }
+    if (this.activeSection === "settlementKit") {
+      this.openSaveKitPreset();
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -3471,7 +3714,7 @@ export class NameForgeModal extends Modal {
     }
 
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "kitPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -3656,6 +3899,7 @@ export class NameForgeModal extends Modal {
           else if (parsed.street) packs.push({ path: child.path, packType: "streetPreset" });
           else if (parsed.inn) packs.push({ path: child.path, packType: "innPreset" });
           else if (parsed.building) packs.push({ path: child.path, packType: "buildingPreset" });
+          else if (parsed.kit) packs.push({ path: child.path, packType: "kitPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -3810,8 +4054,8 @@ export class NameForgeModal extends Modal {
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   private async loadTribalPreset(file: TFile, content: string) {
-    const { preset, group, byname, vessel, realm, route, street, inn, building, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route ? "routePreset" : realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    const { preset, group, byname, vessel, realm, route, street, inn, building, kit, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = kit ? "kitPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route ? "routePreset" : realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = undefined;
     this.currentNamesText = "";
@@ -3821,9 +4065,9 @@ export class NameForgeModal extends Modal {
     this.sectionSentenceEl?.hide();
     this.editRecipeButton?.hide();
     this.openPresetButton?.toggle(this.activeSection === "markov");
-    const module = building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
+    const module = kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
     this.openPresetButton?.setAttribute("title", `Open in ${module ?? SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = preset?.packName ?? group?.packName ?? byname?.packName ?? vessel?.packName ?? realm?.packName ?? route?.packName ?? street?.packName ?? inn?.packName ?? building?.packName ?? file.basename;
+    this.plugin.settings.packName = preset?.packName ?? group?.packName ?? byname?.packName ?? vessel?.packName ?? realm?.packName ?? route?.packName ?? street?.packName ?? inn?.packName ?? building?.packName ?? kit?.packName ?? file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -4284,6 +4528,10 @@ export class NameForgeModal extends Modal {
       await this.runBuildings();
       return;
     }
+    if (this.activeSection === "settlementKit") {
+      await this.runKit();
+      return;
+    }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
@@ -4354,6 +4602,10 @@ export class NameForgeModal extends Modal {
     }
     if (this.currentPackType === "buildingPreset") {
       await this.runBuildingPreset();
+      return;
+    }
+    if (this.currentPackType === "kitPreset") {
+      await this.runKitPreset();
       return;
     }
     if (this.currentPackType === "groupPreset") {
@@ -4538,13 +4790,14 @@ export class NameForgeModal extends Modal {
     return this.activeSection;
   }
 
-  private async recordGenerationHistory(count: number, packName?: string) {
+  private async recordGenerationHistory(count: number, packName?: string, block?: string) {
     if (this.currentSeed === null) return;
     const entry: GenerationHistoryEntry = {
       packName: packName ?? (this.plugin.settings.packName || "nameForge"),
       timestamp: formatHistoryTimestamp(new Date()),
       seed: this.currentSeed,
       count,
+      ...(block ? { block } : {}),
     };
     this.plugin.settings.previousGenerations = [
       entry,
@@ -5039,6 +5292,16 @@ class PreviousGenerationsModal extends Modal {
         event.stopPropagation();
         void navigator.clipboard.writeText(String(entry.seed));
       });
+      // Settlement kit §1.2: a kit's row shows its block again (no regeneration).
+      const block = entry.block;
+      if (block) {
+        row.addClass("is-clickable");
+        row.setAttribute("title", "Show this settlement again");
+        row.addEventListener("click", () => {
+          this.parent.showKitBlock(block);
+          this.close();
+        });
+      }
     }
   }
 }

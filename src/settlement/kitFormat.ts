@@ -112,3 +112,41 @@ export function freeNotePath(folder: string, town: string, exists: (path: string
   if (!exists(at(base))) return at(base);
   for (let n = 2; ; n++) if (!exists(at(`${base} ${n}`))) return at(`${base} ${n}`);
 }
+
+// ── History (§1.2) ──────────────────────────────────────────────────────────
+
+/** §1.2: the heading of the configuration note's section that keeps each kit's block. */
+export const KIT_HISTORY_HEADING = "## Settlement Kit History";
+
+/** §1.2: each kit's block under "### {timestamp} | {seed}", quoted so its own headings stay inside. */
+export function kitHistorySection(entries: { timestamp: string; seed: number; block?: string }[]): string {
+  const kits = entries.filter((e) => e.block);
+  if (kits.length === 0) return "";
+  const parts = kits.map((e) => `### ${e.timestamp} | ${e.seed}\n${e.block!.trimEnd().split("\n").map((l) => `> ${l}`.trimEnd()).join("\n")}`);
+  return `\n${KIT_HISTORY_HEADING}\n\n${parts.join("\n\n")}\n`;
+}
+
+/** §1.2: the blocks kept by kitHistorySection, by "{timestamp} | {seed}". */
+export function parseKitHistory(body: string): Map<string, string> {
+  const out = new Map<string, string>();
+  const at = body.indexOf(KIT_HISTORY_HEADING);
+  if (at < 0) return out;
+  let rest = body.slice(at + KIT_HISTORY_HEADING.length);
+  const next = rest.search(/\n## /);
+  if (next >= 0) rest = rest.slice(0, next);
+  let key: string | undefined;
+  let lines: string[] = [];
+  const flush = () => {
+    if (key) out.set(key, `${lines.join("\n").trimEnd()}\n`);
+  };
+  for (const line of rest.split(/\r?\n/)) {
+    const head = line.match(/^### (\S+) \| (-?\d+)\s*$/);
+    if (head) {
+      flush();
+      key = `${head[1]} | ${head[2]}`;
+      lines = [];
+    } else if (key && line.startsWith(">")) lines.push(line.replace(/^> ?/, ""));
+  }
+  flush();
+  return out;
+}

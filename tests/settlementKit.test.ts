@@ -297,3 +297,97 @@ test("§8.3: the summary line", () => {
   assert.ok(/^a city on the coast(, in the .+)?$/.test(kit.summary), kit.summary);
   assert.ok(/^an outpost on a station/.test(generateKit({ culture: "general", era: "IS", size: "village", position: "crossroads", seed: 2 }).summary));
 });
+
+// ── §13.7 Module ────────────────────────────────────────────────────────────
+
+import { chooseKit, DEFAULT_KIT_STATE, kitHistoryLabel, kitSentence, kitSentenceText } from "../src/settlement/kitSentence";
+import { freeNotePath, kitHistorySection, kitNoteContent, parseKitHistory, parseKitNote } from "../src/settlement/kitFormat";
+import { modulePresetContent, parseModulePreset, type KitPreset } from "../src/presets";
+import { historySection, SECTION_GROUPS } from "../src/sections";
+
+test("§13.7: the default sentence's plain text; “An” before a vowel", () => {
+  assert.equal(
+    kitSentenceText(kitSentence(DEFAULT_KIT_STATE)),
+    "A Norman & British town of the medieval era, in a realistic world, across all of Britain, inland, of any tone, giving the whole settlement in standard detail, with placeholders for people and places.",
+  );
+  const arabic = [["culture", "arabic-persian"], ["size", "city"], ["position", "coast"], ["people", "invented"], ["detail", "full"]].reduce((s, [f, id]) => chooseKit(s, f as never, id), DEFAULT_KIT_STATE);
+  assert.equal(
+    kitSentenceText(kitSentence(arabic)),
+    "An Arabic & Persian city of the medieval era, in a realistic world, on the coast, of any tone, giving the whole settlement in full detail, with invented people and places.",
+  );
+  const station = chooseKit(chooseKit(DEFAULT_KIT_STATE, "era", "IS"), "position", "crossroads");
+  assert.ok(kitSentenceText(kitSentence(station)).includes(" colony of the interstellar era, in a "), kitSentenceText(kitSentence(station)));
+  assert.ok(kitSentenceText(kitSentence(station)).includes(", on a station, "));
+});
+
+test("§1: the module follows buildings and landmarks; history label and section", () => {
+  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 6), ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames", "settlementKit"]);
+  const label = kitHistoryLabel("Fenwick", DEFAULT_KIT_STATE);
+  assert.equal(label, "settlement kit · Fenwick · town · medieval · Norman & British");
+  assert.equal(historySection(label), "settlementKit");
+});
+
+test("§13.7: Create note never overwrites", () => {
+  const taken = new Set(["Settlements/Fenwick.md", "Settlements/Fenwick 2.md"]);
+  assert.equal(freeNotePath("Settlements/", "Fenwick", (p) => taken.has(p)), "Settlements/Fenwick 3.md");
+  assert.equal(freeNotePath("Settlements", "Ashby", (p) => taken.has(p)), "Settlements/Ashby.md");
+});
+
+test("§13.7: the note's frontmatter round-trips through Regenerate to the same kit", () => {
+  for (const o of [
+    { culture: "norman-british", position: "river" as const, people: "invented" as const, seed: 482913 },
+    { culture: "japanese", era: "EM" as RouteEra, size: "city" as const, detail: "full" as const, seed: 77 },
+    { culture: "norman-british", region: "SBL", era: "EM" as RouteEra, position: "crossroads" as const, contents: "places" as const, seed: 5 },
+  ]) {
+    const kit = generateKit(o);
+    const note = kitNoteContent(kit);
+    assert.ok(note.startsWith("---\ntype: settlement\n"), note);
+    assert.ok(note.includes(`\nseed: ${kit.options.seed}\n`) && note.endsWith(kitMarkdown(kit)));
+    const { settings, problems } = parseKitNote(note);
+    assert.deepEqual(problems, []);
+    const again = generateKit({ ...settings!, region: settings!.region === "all" ? undefined : settings!.region });
+    assert.equal(kitMarkdown(again), kitMarkdown(kit));
+  }
+  assert.deepEqual(parseKitNote("---\ntype: vocabulary\n---\n").problems, ["This note isn't a settlement."]);
+});
+
+test("§1.2: each kit's block is kept in history and read back", () => {
+  const kit = generateKit({ culture: "norman-british", seed: 9 });
+  const block = kitMarkdown(kit);
+  const section = kitHistorySection([
+    { timestamp: "20261011-120000", seed: 9, block },
+    { timestamp: "20261011-110000", seed: 4 },
+  ]);
+  assert.ok(!/\n## /.test(section.replace("\n## Settlement Kit History", "")), section);
+  const read = parseKitHistory(`## Generation History\n\n- x\n${section}\n## Ageing History\n`);
+  assert.equal(read.get("20261011-120000 | 9"), block);
+  assert.equal(read.size, 1);
+});
+
+test("§13.7: presets round-trip", () => {
+  const preset: KitPreset = {
+    packName: "Border market town",
+    setting: "",
+    description: "A Norman & British town of the early modern era, in a realistic world, in the Scottish Borderlands, at a crossroads, of any tone, giving the whole settlement in standard detail, with invented people and places.",
+    culture: "norman-british",
+    region: "SBL",
+    era: "EM",
+    fantastic: false,
+    size: "town",
+    position: "crossroads",
+    tone: "any",
+    contents: "whole",
+    detail: "standard",
+    people: "invented",
+  };
+  const content = modulePresetContent(preset);
+  assert.ok(content.includes("module: settlement-kit\n") && content.includes("position: crossroads\n") && content.includes("detail: standard\n"));
+  const parsed = parseModulePreset(content, "x");
+  assert.deepEqual(parsed.kit, preset);
+  assert.deepEqual(parsed.problems, []);
+  const state = [["era", "EM"], ["region", "SBL"], ["position", "crossroads"], ["people", "invented"]].reduce((s, [f, id]) => chooseKit(s, f as never, id), DEFAULT_KIT_STATE);
+  assert.equal(kitSentenceText(kitSentence(state)), preset.description);
+  const bad = parseModulePreset(modulePresetContent({ ...preset, size: "hamlet" as never, detail: "huge" as never }), "x");
+  assert.equal(bad.kit?.size, "town");
+  assert.deepEqual(bad.problems, ["Unknown size “hamlet”.", "Unknown detail “huge”."]);
+});
