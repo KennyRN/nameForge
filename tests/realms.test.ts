@@ -309,3 +309,10 @@ test("§15.8: presets round-trip; the stars in the middle ages report and run as
   assert.equal(stars.realm?.namedFor, "anything");
   assert.ok(stars.problems.includes("“The stars” needs the near-future or interstellar era."));
 });
+
+test("§12.3: living religions' divine names become [deity]", async () => {
+  const { withDeityPlaceholders } = await import("../src/realms/engine");
+  assert.equal(withDeityPlaceholders("Holy Realm of Shiva's Reach"), "Holy Realm of [deity]'s Reach");
+  assert.equal(withDeityPlaceholders("Kingdom of the Maize God"), "Kingdom of the Maize [deity]");
+  assert.equal(withDeityPlaceholders("Godwin March"), "Godwin March");
+});

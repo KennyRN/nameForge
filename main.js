@@ -72455,7 +72455,11 @@ function realmCapitals(text) {
 }
 var counted = (text) => text.split(" ").filter((w, i) => w && !(i === 0 && w.toLowerCase() === "the") && !SMALL5.has(w.toLowerCase()));
 var wordRe5 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
-var BANNED3 = [...REALM_DATA.safeguards.banned, ...REALM_DATA.safeguards.religious, ...VESSEL_DATA.safeguards.divine, ...VESSEL_DATA.safeguards.divinePhrases].map(wordRe5);
+var BANNED3 = [...REALM_DATA.safeguards.banned, ...REALM_DATA.safeguards.religious].map(wordRe5);
+var DIVINE = new RegExp(`(^|[^\\p{L}])(${VESSEL_DATA.safeguards.divine.join("|")})(?=$|[^\\p{L}])`, "giu");
+function withDeityPlaceholders(text) {
+  return text.replace(DIVINE, (_m, before) => `${before}[deity]`);
+}
 function breaksRealmWords(text) {
   return hasBannedWord(text) || BANNED3.some((re) => re.test(text));
 }
@@ -72564,7 +72568,7 @@ function generateRealmNames(options) {
     }
     let raw = renderTokens(ctx, pattern, shape, kind);
     if (!raw) return void 0;
-    const plainOfficial = realmCapitals(raw);
+    const plainOfficial = realmCapitals(withDeityPlaceholders(raw));
     if (pattern !== shape.p) ctx.values.set("landIdentity", raw.slice(raw.indexOf("Upper and Lower")));
     if (pairToken) {
       const first = ctx.values.get(pairToken);
@@ -72573,6 +72577,7 @@ function generateRealmNames(options) {
       const the = new RegExp(`of the ${first.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`).test(raw);
       raw = raw.replace(first, `${first} and ${the ? "the " : ""}${second.replace(/^the /, "")}`);
     }
+    raw = withDeityPlaceholders(raw);
     let official = realmCapitals(raw);
     let honorific;
     if (ceremonial && !shape.honorific) {
@@ -72587,7 +72592,7 @@ function generateRealmNames(options) {
       for (const t of (_d2 = h.t) != null ? _d2 : []) ctx.drawn.add(t);
       official = realmCapitals(`${honorific} ${official.replace(/^the /, "")}`);
     } else if (shape.honorific) honorific = "Most Serene";
-    const short = realmCapitals(renderShort(ctx, shape.short, plainOfficial));
+    const short = realmCapitals(withDeityPlaceholders(renderShort(ctx, shape.short, plainOfficial)));
     const words = counted(official);
     if (words.length === 0 || words.length > REALM_DATA.caps[length]) return void 0;
     if (repeatsContent(words)) return void 0;

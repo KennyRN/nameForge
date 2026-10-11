@@ -533,9 +533,15 @@ const counted = (text: string) => text.split(" ").filter((w, i) => w && !(i === 
 // ── Safeguards (§12) ────────────────────────────────────────────────────────
 
 const wordRe = (w: string) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
-const BANNED = [...REALM_DATA.safeguards.banned, ...REALM_DATA.safeguards.religious, ...VESSEL_DATA.safeguards.divine, ...VESSEL_DATA.safeguards.divinePhrases].map(wordRe);
+const BANNED = [...REALM_DATA.safeguards.banned, ...REALM_DATA.safeguards.religious].map(wordRe);
+const DIVINE = new RegExp(`(^|[^\\p{L}])(${VESSEL_DATA.safeguards.divine.join("|")})(?=$|[^\\p{L}])`, "giu");
 
-/** §12.3: banned words, living religions' names and terms. */
+/** §12.3: a living religion's divine name becomes the placeholder [deity] (the Maize God's Reach → the Maize [deity]'s Reach). */
+export function withDeityPlaceholders(text: string): string {
+  return text.replace(DIVINE, (_m, before: string) => `${before}[deity]`);
+}
+
+/** §12.3: banned words and living religions' terms (divine names are replaced, not redrawn). */
 export function breaksRealmWords(text: string): boolean {
   return hasBannedWord(text) || BANNED.some((re) => re.test(text));
 }
@@ -670,7 +676,7 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
     let raw = renderTokens(ctx, pattern, shape, kind);
     if (!raw) return undefined;
     // §11: the plain name underneath a ceremonial one (without an "and" pair).
-    const plainOfficial = realmCapitals(raw);
+    const plainOfficial = realmCapitals(withDeityPlaceholders(raw));
     if (pattern !== shape.p) ctx.values.set("landIdentity", raw.slice(raw.indexOf("Upper and Lower")));
     if (pairToken) {
       const first = ctx.values.get(pairToken)!;
@@ -679,6 +685,7 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
       const the = new RegExp(`of the ${first.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`).test(raw);
       raw = raw.replace(first, `${first} and ${the ? "the " : ""}${second.replace(/^the /, "")}`);
     }
+    raw = withDeityPlaceholders(raw);
     let official = realmCapitals(raw);
     // §8: an honorific for the form's group, always, in ceremonial names.
     let honorific: string | undefined;
@@ -691,7 +698,7 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
       for (const t of h.t ?? []) ctx.drawn.add(t);
       official = realmCapitals(`${honorific} ${official.replace(/^the /, "")}`);
     } else if (shape.honorific) honorific = "Most Serene";
-    const short = realmCapitals(renderShort(ctx, shape.short, plainOfficial));
+    const short = realmCapitals(withDeityPlaceholders(renderShort(ctx, shape.short, plainOfficial)));
     // Caps, repetition, safeguards (§4, §7.3, §12).
     const words = counted(official);
     if (words.length === 0 || words.length > REALM_DATA.caps[length]) return undefined;
