@@ -77702,18 +77702,20 @@ var godNames = (culture) => {
   var _a2, _b;
   return GOD_CULTURES.has(culture) ? ((_b = (_a2 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a2.lists.god) != null ? _b : []).filter((w) => !w.includes("{")).map(stripPlural) : [];
 };
-function figure(ctx) {
+function routeFigure(cultureKey, setting, rng) {
   var _a2, _b, _c, _d;
-  if (ctx.culture.figure) return pickOne4(ctx.culture.figure, ctx.rng);
-  const ranks = (_a2 = BYNAMES_DATA.ranks[ctx.culture.key]) != null ? _a2 : BYNAMES_DATA.ranks.general;
+  const culture = findRouteCulture(cultureKey);
+  if (culture == null ? void 0 : culture.figure) return pickOne4(culture.figure, rng);
+  const ranks = (_a2 = BYNAMES_DATA.ranks[cultureKey]) != null ? _a2 : BYNAMES_DATA.ranks.general;
   const items = [];
   for (const r of ranks) {
-    if (r.s && !r.s.includes(ctx.setting)) continue;
+    if (r.s && !r.s.includes(setting)) continue;
     const form = entryForm(r, "male", false);
-    if (form) items.push([form.text, ((_b = r.x) != null ? _b : 1) * ((_d = (_c = r.cx) == null ? void 0 : _c[ctx.culture.key]) != null ? _d : 1)]);
+    if (form) items.push([form.text, ((_b = r.x) != null ? _b : 1) * ((_d = (_c = r.cx) == null ? void 0 : _c[cultureKey]) != null ? _d : 1)]);
   }
-  return pickWeighted5(items, ctx.rng);
+  return pickWeighted5(items, rng);
 }
+var figure = (ctx) => routeFigure(ctx.culture.key, ctx.setting, ctx.rng);
 var FOLK = /* @__PURE__ */ new Map();
 function routeFolk(cultureKey, rng) {
   var _a2, _b, _c;

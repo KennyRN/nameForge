@@ -1,0 +1,235 @@
+{
+  "$comment": "Inns and taverns (docs/inns-and-taverns-brief.md §5–§8, §12). Words come from settlement-vocab.json through src/settlement/vocab.ts.",
+  "version": 1,
+  "any": "houses of any kind",
+  "kinds": [
+    {"key": "inn", "menu": "Inns and lodgings", "plural": "inns", "description": "Houses that lodge travellers", "era": {"AN": 25, "MD": 30, "EM": 30, "ST": 20, "MO": 15, "NF": 10, "IS": 5}},
+    {"key": "tavern", "menu": "Taverns and alehouses", "plural": "taverns", "description": "Drinking houses: taverns, alehouses, mead halls and pubs", "era": {"AN": 30, "MD": 35, "EM": 30, "ST": 25, "MO": 25, "NF": 15, "IS": 10}},
+    {"key": "eating", "menu": "Eating, tea and coffee houses", "plural": "eating houses", "description": "Cookshops, tea houses, coffee houses and cafés", "era": {"AN": 10, "MD": 10, "EM": 15, "ST": 15, "MO": 20, "NF": 15, "IS": 10}},
+    {"key": "wayhouse", "menu": "Way stations and caravan courts", "plural": "way stations", "description": "Post houses, coaching inns and caravan courts on the road", "era": {"AN": 20, "MD": 15, "EM": 15, "ST": 10, "MO": 0, "NF": 0, "IS": 0}},
+    {"key": "rest", "menu": "Rest houses and hostels", "plural": "rest houses", "description": "Charitable and pilgrim lodgings: rest houses, hostels and hospices", "era": {"AN": 15, "MD": 10, "EM": 10, "ST": 5, "MO": 5, "NF": 5, "IS": 5}},
+    {"key": "club", "menu": "Clubs, halls and hotels", "plural": "clubs and hotels", "description": "Gentlemen's clubs, music halls, gin palaces and grand hotels", "era": {"AN": 0, "MD": 0, "EM": 0, "ST": 25, "MO": 15, "NF": 10, "IS": 5}},
+    {"key": "bar", "menu": "Bars and lounges", "plural": "bars", "description": "Bars, lounges and diners, down to station bars in space", "era": {"AN": 0, "MD": 0, "EM": 0, "ST": 0, "MO": 20, "NF": 45, "IS": 65}}
+  ],
+  "settings": [
+    {"key": "anywhere", "text": "anywhere", "kindX": {}, "themes": {}, "roadside": 3},
+    {"key": "town", "text": "in a town", "kindX": {"club": 2, "eating": 1.5, "wayhouse": 0.5}, "themes": {"urban": 3}, "armsX": 2, "roadside": 3},
+    {"key": "country", "text": "in the country", "kindX": {"inn": 1.5, "tavern": 1.5, "club": 0, "eating": 0.5}, "themes": {"rural": 3}, "roadside": 3},
+    {"key": "port", "text": "in a port", "kindX": {"tavern": 2, "wayhouse": 0}, "themes": {"maritime": 4}, "roadside": 3},
+    {"key": "road", "text": "by the road", "kindX": {"wayhouse": 4, "inn": 2, "club": 0}, "themes": {"road": 3}, "roadside": 30}
+  ],
+  "fantasticThemes": {"magical": 2},
+  "forms": {"signs": "as signs", "house": "with a house word", "either": "as signs or with a house word"},
+  "formShare": {"either": 0.4, "innOf": 0.15},
+  "tradition": {
+    "full": ["general", "norman-british"],
+    "fullFrom": {"anglo-saxon": "MD", "celtic": "MD"},
+    "partial": {
+      "roman": [0.4, "AN"],
+      "slavic": [0.4, "AN"],
+      "greek-byzantine": [0.25, "MD"],
+      "norse": [0.3, "MD"]
+    }
+  },
+  "signs": [
+    {"key": "creature", "w": 13, "shapes": [{"p": "the {creature}", "w": 1}]},
+    {"key": "person", "w": 7, "shapes": [{"p": "the {innPerson}", "w": 1}]},
+    {"key": "item", "w": 10, "shapes": [{"p": "the {item}", "w": 1}]},
+    {"key": "arms", "w": 3, "from": "MD", "shapes": [{"p": "the {streetFigure:poss} Arms", "w": 40, "house": false}, {"p": "the {surname} Arms", "w": 30, "house": false}, {"p": "the {trade:poss} Arms", "w": 30, "house": false}]},
+    {"key": "location", "w": 3, "shapes": [{"p": "the {innLocation}", "w": 60}, {"p": "the Old {innLocation}", "w": 40}]},
+    {"key": "owner", "w": 2, "from": "MD", "shapes": [{"p": "{owner:poss} {hw}", "w": 50, "house": false}, {"p": "Mother {owner:poss}", "w": 25, "house": false}, {"p": "Old {owner:poss}", "w": 25, "house": false}]},
+    {"key": "feature", "w": 2, "shapes": [{"p": "the {creatureOrPerson:poss} Head", "w": 5}, {"p": "the {creature:poss} {innFeature}", "w": 1}]},
+    {"key": "description", "w": 30, "shapes": [{"p": "the {innDescription} {creatureOrItem}", "w": 70}, {"p": "the {innNumber} {creatureOrItem:pl}", "w": 30}]},
+    {"key": "combination", "w": 30, "shapes": [{"p": "the {a} and {b}", "w": 70}, {"p": "the {creature} {innWorn}", "w": 8}, {"p": "the {creature:poss} {innHome}", "w": 12}, {"p": "the {innFable}", "w": 10}]},
+    {"key": "roadside", "w": 0, "shapes": [{"p": "the {route} Inn", "w": 10, "house": false}, {"p": "the {travellers:poss} Rest", "w": 10, "house": false}, {"p": "the {destination} Arms", "w": 5, "house": false}, {"p": "the Halfway House", "w": 3, "house": false}, {"p": "the {innNumber} Mile House", "w": 4, "house": false}]}
+  ],
+  "fantastic": [
+    {"p": "the {heraldicBeast:poss} Hoard", "w": 3, "h": true},
+    {"p": "the Wizard's {item}", "w": 3, "h": true},
+    {"p": "the Prancing {heraldicBeast}", "w": 2, "h": true},
+    {"p": "the Drunken Dragon", "w": 1, "h": true},
+    {"p": "the Goblin's Rest", "w": 1, "h": true, "house": false},
+    {"p": "the Troll and Toadstool", "w": 1, "h": true}
+  ],
+  "cultureShapes": {
+    "anglo-saxon": [
+      {"p": "{owner:poss} Mead Hall", "w": 40},
+      {"p": "Mead Hall of {town}", "w": 30},
+      {"p": "the {creature} Hall", "w": 30}
+    ],
+    "celtic": [
+      {"p": "Hostel of {town}", "w": 50},
+      {"p": "{owner:poss} Guest House", "w": 30},
+      {"p": "Hostel of the {creature}", "w": 20}
+    ],
+    "norse": [
+      {"p": "{owner:poss} Hall", "w": 35},
+      {"p": "Guest Hall of {town}", "w": 30},
+      {"p": "the {creature} Hall", "w": 20},
+      {"p": "Mead Hall of {town}", "w": 15}
+    ],
+    "roman": [
+      {"p": "Inn of the {creature}", "w": 30},
+      {"p": "Sign of the {item}", "w": 25},
+      {"p": "Station Inn of {town}", "w": 20, "kinds": ["inn", "wayhouse"]},
+      {"p": "Change Station of {town}", "w": 10, "kinds": ["wayhouse"]},
+      {"p": "{owner:poss} Tavern", "w": 15}
+    ],
+    "greek-byzantine": [
+      {"p": "Wine House of {owner}", "w": 30},
+      {"p": "Guest House of {holy}", "w": 25, "e": ["MD", "EM", "ST", "MO", "NF", "IS"]},
+      {"p": "Guest House of {town}", "w": 25},
+      {"p": "the {creature} Wine House", "w": 20}
+    ],
+    "slavic": [
+      {"p": "Post House of the {route}", "w": 25, "kinds": ["wayhouse"]},
+      {"p": "{holy:poss} Inn", "w": 20},
+      {"p": "the {colour} {item} Tavern", "w": 30},
+      {"p": "{town} Post House", "w": 25}
+    ],
+    "steppe": [
+      {"p": "{ordinal} Post Station", "w": 30},
+      {"p": "Guest Tent of the {figure}", "w": 25},
+      {"p": "{town} Caravan Court", "w": 25},
+      {"p": "the {colour} Tent", "w": 20}
+    ],
+    "arabic-persian": [
+      {"p": "House of the {number} Wells", "w": 20},
+      {"p": "Caravan Court of the {directionAdj} Gate", "w": 20},
+      {"p": "Coffee House of the {oasisAnchor}", "w": 20, "kinds": ["eating"]},
+      {"p": "{oasisAnchor} Coffee House", "w": 15},
+      {"p": "{patron:poss} Caravan Court", "w": 15},
+      {"p": "Inn of the {streetGoods} Merchants", "w": 10}
+    ],
+    "indian": [
+      {"p": "{indianAnchor} Rest House", "w": 30},
+      {"p": "{founder:poss} Rest House", "w": 20},
+      {"p": "Pilgrims' Lodge of the {holySite}", "w": 20},
+      {"p": "{indianAnchor} Inn", "w": 20},
+      {"p": "{town} Caravan Court", "w": 10, "kinds": ["wayhouse"]}
+    ],
+    "chinese": [
+      {"p": "Inn of {auspicious}", "w": 30},
+      {"p": "{welcomePhrase} Inn", "w": 20},
+      {"p": "{eastNature} Tea House", "w": 25, "kinds": ["eating"]},
+      {"p": "{eastNature} Wine House", "w": 15, "kinds": ["tavern"]},
+      {"p": "{town} Post Station", "w": 10, "kinds": ["wayhouse"]}
+    ],
+    "japanese": [
+      {"p": "{eastNature} Inn", "w": 35},
+      {"p": "{eastNature} Tea House", "w": 30, "kinds": ["eating"]},
+      {"p": "Lords' Inn of {town}", "w": 15, "e": ["EM"]},
+      {"p": "{town} Inn", "w": 20}
+    ],
+    "korean": [
+      {"p": "{eastNature} Tavern", "w": 40},
+      {"p": "{town} Station Inn", "w": 30, "kinds": ["wayhouse"]},
+      {"p": "Inn of {auspicious}", "w": 30}
+    ],
+    "egyptian": [
+      {"p": "Beer House of {town}", "w": 35},
+      {"p": "{owner:poss} Beer House", "w": 35},
+      {"p": "House of Beer of {god}", "w": 30}
+    ],
+    "ethiopian": [
+      {"p": "Mead House of {town}", "w": 50},
+      {"p": "{owner:poss} Mead House", "w": 50}
+    ],
+    "west-african": [
+      {"p": "House of {owner}", "w": 30},
+      {"p": "Strangers' Lodge of {town}", "w": 25},
+      {"p": "{weekday} Market Rest", "w": 20},
+      {"p": "Landlord's House of {town}", "w": 25}
+    ],
+    "bantu": [
+      {"p": "Guest House of {town}", "w": 50},
+      {"p": "the {creature} Guest House", "w": 50}
+    ],
+    "aztec": [
+      {"p": "Merchants' House of the {directionAdj} Ward", "w": 50},
+      {"p": "House of {town}", "w": 30},
+      {"p": "the {creature} House", "w": 20}
+    ],
+    "andean": [
+      {"p": "Royal Station of {town}", "w": 60},
+      {"p": "{town} Way Station", "w": 40}
+    ],
+    "polynesian": [
+      {"p": "Guest House of {town}", "w": 100, "e": ["MO", "NF", "IS"]},
+      {"p": "Guest House of {town}", "w": 100, "e": ["AN", "MD", "EM", "ST"], "kinds": ["rest"]}
+    ],
+    "maya": [
+      {"p": "Merchants' House of the {directionAdj} Ward", "w": 50},
+      {"p": "House of {town}", "w": 30},
+      {"p": "the {creature} House", "w": 20}
+    ]
+  },
+  "cultureKinds": ["inn", "tavern", "rest"],
+  "fallback": [
+    {"p": "{owner:poss} {hw}", "w": 50},
+    {"p": "{hw} of {town}", "w": 50}
+  ],
+  "eraShapes": [
+    {"p": "the {grandAdj} Gin Palace", "w": 15, "e": ["ST"], "kinds": ["club"]},
+    {"p": "the {colour} {item} Music Hall", "w": 15, "e": ["ST"], "kinds": ["club"]},
+    {"p": "the Great {directionAdj} Hotel", "w": 15, "e": ["ST"], "kinds": ["club"]},
+    {"p": "{town} Station Hotel", "w": 15, "e": ["ST"], "kinds": ["club"]},
+    {"p": "the {quality} Club", "w": 15, "e": ["ST"], "kinds": ["club"]},
+    {"p": "{town} and County Club", "w": 10, "e": ["ST"], "kinds": ["club"]},
+    {"p": "the {virtue} Temperance Hotel", "w": 15, "e": ["ST"], "kinds": ["club"]},
+    {"p": "{owner:poss} Coffee House", "w": 40, "e": ["ST"], "kinds": ["eating"]},
+    {"p": "the {item} Chop House", "w": 30, "e": ["ST"], "kinds": ["eating"]},
+    {"p": "{owner:poss} Dining Rooms", "w": 30, "e": ["ST"], "kinds": ["eating"]},
+    {"p": "the Brass {creature}", "w": 20, "e": ["ST"], "h": true},
+    {"p": "the Aether and Anchor", "w": 5, "e": ["ST"], "h": true},
+    {"p": "the Clockwork {creature}", "w": 20, "e": ["ST"], "h": true},
+    {"p": "the Gaslight Rooms", "w": 10, "e": ["ST"], "h": true},
+    {"p": "the {colour} Cog", "w": 15, "e": ["ST"], "h": true},
+    {"p": "the Copper Kettle and Boiler", "w": 5, "e": ["ST"], "h": true},
+    {"p": "{owner:poss} Café", "w": 40, "e": ["MO"], "kinds": ["eating"]},
+    {"p": "the {item} Café", "w": 30, "e": ["MO"], "kinds": ["eating"]},
+    {"p": "{town} Tea Rooms", "w": 30, "e": ["MO"], "kinds": ["eating"]},
+    {"p": "the {item} Bar", "w": 25, "e": ["MO"], "kinds": ["bar"]},
+    {"p": "{town} Motel", "w": 15, "e": ["MO"], "kinds": ["bar"], "c": ["general"]},
+    {"p": "{owner:poss} Diner", "w": 15, "e": ["MO"], "kinds": ["bar"], "c": ["general"]},
+    {"p": "the {colour} Room", "w": 25, "e": ["MO"], "kinds": ["bar"]},
+    {"p": "{brandRoot} Inn", "w": 20, "e": ["MO"], "kinds": ["bar"]},
+    {"p": "the {tech} {creature}", "w": 30, "e": ["NF", "IS"], "kinds": ["bar"]},
+    {"p": "Deck {n} Bar", "w": 15, "e": ["NF", "IS"], "kinds": ["bar"]},
+    {"p": "the Last {drink} Before {star}", "w": 15, "e": ["NF", "IS"], "kinds": ["bar"]},
+    {"p": "{star} Lounge", "w": 20, "e": ["NF", "IS"], "kinds": ["bar"]},
+    {"p": "Spacers' Rest", "w": 10, "e": ["NF", "IS"], "kinds": ["bar"]},
+    {"p": "the Airlock", "w": 10, "e": ["NF", "IS"], "kinds": ["bar"]},
+    {"p": "{star} Transit Hostel", "w": 40, "e": ["NF", "IS"], "kinds": ["inn", "rest"]},
+    {"p": "Dock {n} Bunkhouse", "w": 30, "e": ["NF", "IS"], "kinds": ["inn", "rest"]},
+    {"p": "the {spaceLand} Rest", "w": 30, "e": ["NF", "IS"], "kinds": ["inn", "rest"]}
+  ],
+  "eraShare": {"default": 0.4, "futureBar": 0.6},
+  "lists": {
+    "grandAdj": ["Crystal", "Golden", "Palatial", "Royal", "Grand", "Gilded"],
+    "virtue": ["Sober", "Abstainers'", "Prudent", "Total"],
+    "drink": ["Drink", "Round", "Pint", "Glass", "Toast"],
+    "pairs": [["Fox", "Vixen"], ["Hart", "Hind"], ["Cock", "Hen"], ["Bull", "Cow"], ["Ram", "Ewe"], ["Stag", "Hind"], ["Drake", "Duck"]],
+    "creatureLists": ["beast", "bird", "fish", "heraldicBeast"],
+    "itemLists": ["weapon", "worn", "celestial", "plant", "musical", "various", "food"],
+    "abWeights": {"creature": 45, "item": 40, "person": 15},
+    "mateShare": 0.1,
+    "braceShare": 0.2,
+    "componentShare": 0.3,
+    "routeKinds": {"road": 1, "drove": 1, "trade": 1}
+  },
+  "regionRules": {
+    "armsHalf": ["SHH", "NSI"],
+    "dragonDouble": ["WAL"]
+  },
+  "series": {"from": 6},
+  "cap": 7,
+  "safeguards": {
+    "block": ["Prancing Pony", "Green Dragon", "Leaky Cauldron", "Three Broomsticks", "Hog's Head", "Hogs Head", "Winchester", "Slaughtered Lamb", "Admiral Benbow", "Jamaica Inn", "Mended Drum", "Drum", "Broken Drum", "Queen Vic", "Queen Victoria", "Rovers Return", "Woolpack", "Moe's", "Cheers", "Mos Eisley Cantina", "Ten Forward", "Quark's", "Restaurant at the End of the Universe", "Afterlife", "Golden Perch", "Bannered Mare", "Sleeping Giant", "Yawning Portal", "Elfsong Tavern", "Ye Olde Trip to Jerusalem", "Ye Olde Cheshire Cheese", "Ye Olde Fighting Cocks", "Prospect of Whitby", "George Inn", "Raffles", "Savoy", "Ritz", "Langham", "Adelphi", "Crystal Palace", "Café Royal", "Lloyd's", "Garrick Club", "Reform Club", "Athenaeum", "Carlton Club", "White's", "Boodle's", "Hellfire Club"],
+    "flag": ["Red Lion", "White Hart", "Royal Oak", "Crown", "Rose and Crown", "Crown and Anchor", "King's Head", "King's Arms", "Swan", "Bull", "Plough", "Anchor", "Angel", "Bell", "George", "George and Dragon", "Coach and Horses", "New Inn", "White Horse", "Black Bull", "Cross Keys", "Lamb and Flag", "Rusty Anchor", "Fleece", "Wheatsheaf", "Rising Sun", "Halfway House"],
+    "flagListBlocks": false,
+    "banned": ["Harlot", "Strumpet", "Wench", "Gypsy", "Savage", "Barbarian", "Blackamoor", "Negro", "Saracen"],
+    "racialSigns": ["Moor's Head", "Saracen's Head", "Turk's Head", "Black Boy", "Black's Head"],
+    "christian": ["Cross Keys", "Lamb and Flag", "Angel", "George and Dragon", "Saint", "Abbot", "Bishop", "Friar", "Monk", "Nun", "Prior", "Hospice"]
+  }
+}

@@ -270,17 +270,19 @@ export const godNames = (culture: string): string[] =>
   GOD_CULTURES.has(culture) ? (WORLD_CULTURES.find((c) => c.id === culture)?.lists.god ?? []).filter((w) => !w.includes("{")).map(stripPlural) : [];
 
 /** §4.2: `{figure}`: the culture's byname ranks, English men's form, at their weights. */
-function figure(ctx: Ctx): string | undefined {
-  if (ctx.culture.figure) return pickOne(ctx.culture.figure, ctx.rng);
-  const ranks = BYNAMES_DATA.ranks[ctx.culture.key] ?? BYNAMES_DATA.ranks.general;
+export function routeFigure(cultureKey: string, setting: GroupSetting, rng: () => number): string | undefined {
+  const culture = findRouteCulture(cultureKey);
+  if (culture?.figure) return pickOne(culture.figure, rng);
+  const ranks = BYNAMES_DATA.ranks[cultureKey] ?? BYNAMES_DATA.ranks.general;
   const items: [string, number][] = [];
   for (const r of ranks) {
-    if (r.s && !r.s.includes(ctx.setting)) continue;
+    if (r.s && !r.s.includes(setting)) continue;
     const form = entryForm(r, "male", false);
-    if (form) items.push([form.text, (r.x ?? 1) * (r.cx?.[ctx.culture.key] ?? 1)]);
+    if (form) items.push([form.text, (r.x ?? 1) * (r.cx?.[cultureKey] ?? 1)]);
   }
-  return pickWeighted(items, ctx.rng);
+  return pickWeighted(items, rng);
 }
+const figure = (ctx: Ctx) => routeFigure(ctx.culture.key, ctx.setting, ctx.rng);
 
 /** §4.2: one tribes and kin groups name per culture, from a pool made once with a fixed seed. */
 const FOLK = new Map<string, string[]>();
