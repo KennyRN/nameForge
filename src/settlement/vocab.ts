@@ -35,6 +35,8 @@ export interface VocabEntry {
   fn?: string[];
   /** Inns brief §3: themes (rural, urban, maritime, road, magical). */
   th?: string[];
+  /** Deities brief §5: the gender a divine figure or kin word is for (m, f, n; unmarked reads as n). */
+  g?: "m" | "f" | "n";
 }
 
 export interface VocabPool {

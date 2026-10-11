@@ -17,6 +17,7 @@ Every pool in `src/data/settlement-vocab.json`: what it holds, the tags its entr
 | `rx` | region multipliers for the British cultures, e.g. `{"NTH": 3}` | ×1 |
 | `rt` | a route region tag (route names §4.4), on fixed whole route names | – |
 | `th` | themes: rural, urban, maritime, road, magical; the inn and building settings multiply them (other modules ignore them); pack lines add them as ` [maritime]` | none |
+| `g` | the gender a divine figure or kin word is for: m, f or n (neither); unmarked reads as n; read by deities and sacred places | n |
 | `fn` | the district functions a fixed district name serves (`any`: every function) | – |
 
 Vocabulary pack headings can narrow by culture, era and region in any order: `## alleyDialect · SLO`.
@@ -162,3 +163,19 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `eventFixed:disaster` | whole disaster names: Quarantine Years; the fixed shape's weight is the brief's | t, e, c | events and eras |
 | `eventFixed:collapse` | whole collapse names: Collapse, Long Night; the fixed shape's weight is the brief's | t, e, c | events and eras |
 | `eventFixed:era` | whole era names: New Fire; the fixed shape's weight is the brief's | t, e, c | events and eras |
+| `divineFigure` | divine figures by gender: Lord, Lady, One | x, t, g | deities and sacred places |
+| `divineQuality` | divine qualities: Hidden, Laughing, Undying | x, t, h | deities and sacred places |
+| `divineVerb` | “Who …” verbs: Remembers, Keeps the Flame | x, t | deities and sacred places |
+| `bodyNumber` | body numbers: Thousand, Many | x | deities and sacred places |
+| `bodyPart` | body parts: Eyed, Headed | x, t | deities and sacred places |
+| `divineKin` | divine kin by gender: Father, Mother, Kin | x, g | deities and sacred places |
+| `pantheonNoun` | pantheon nouns: Gods, Host, Choir | x | deities and sacred places |
+| `pantheonQuality` | pantheon qualities: Old, Bright, Nameless | x | deities and sacred places |
+| `sacredLand` | sacred lands: Mountain, Grove, Station Shrine | x, e, c, h | deities and sacred places |
+| `sacredQuality` | sacred qualities: Holy, Weeping, Forbidden | x, t | deities and sacred places |
+| `oracleWord` | oracle words: Oracle, Pool of Seeing | x, t | deities and sacred places |
+| `sacredVirtue` | sacred virtues: Mercy, Forgetting | t | deities and sacred places |
+| `cultureDivineAnimal` | divine animals by culture (BT cultureAnimals; general and egyptian their own) | c | deities and sacred places |
+| `deityFixed:deity` | whole deity titles (empty: for packs) | t, e, c | deities and sacred places |
+| `deityFixed:pantheon` | whole pantheon names: the Twins, the Makers, the Elder Kin | t, e, c | deities and sacred places |
+| `deityFixed:place` | whole sacred places (empty: for packs) | t, e, c | deities and sacred places |

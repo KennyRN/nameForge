@@ -1,0 +1,182 @@
+{
+  "$comment": "Deities and sacred places (docs/deities-and-sacred-places-brief.md §3–§7, §11). Words come from settlement-vocab.json through src/settlement/vocab.ts.",
+  "version": 1,
+  "any": "deities of any kind",
+  "kinds": [
+    {"key": "deity", "menu": "Deities and spirits", "plural": "deities", "w": 60, "description": "Gods, goddesses and spirits, named by their titles"},
+    {"key": "pantheon", "menu": "Pantheons and divine courts", "plural": "pantheons", "w": 15, "description": "Collective names for a group of gods or spirits"},
+    {"key": "place", "menu": "Sacred places", "plural": "sacred places", "w": 25, "description": "Holy mountains, groves, springs, stones and oracles"}
+  ],
+  "domains": [
+    {"key": "sky", "label": "storm and sky", "words": [{"w": "Storms", "sg": "Storm", "x": 2}, {"w": "the Sky", "sg": "Sky"}, {"w": "Thunder", "sg": "Thunder"}, {"w": "Lightning", "sg": "Lightning"}, {"w": "the Winds", "sg": "Wind"}, {"w": "Rain", "sg": "Rain"}, {"w": "Clouds", "sg": "Cloud"}, {"w": "the High Air", "sg": "High Air"}], "archetypes": [{"m": "Sky Father", "f": "Sky Mother", "n": "the Sky"}, {"all": "Storm Bringer"}, {"m": "Thunder Lord", "f": "Thunder Lady", "n": "the Thunderer"}, {"m": "Rain Lord", "f": "Rain Mother", "n": "the Rain-Giver"}]},
+    {"key": "earth", "label": "earth and harvest", "words": [{"w": "the Harvest", "sg": "Harvest", "x": 2}, {"w": "the Fields", "sg": "Field"}, {"w": "Grain", "sg": "Grain"}, {"w": "the Earth", "sg": "Earth"}, {"w": "Seeds", "sg": "Seed"}, {"w": "Orchards", "sg": "Orchard"}, {"w": "Herds", "sg": "Herd"}, {"w": "Maize", "sg": "Maize", "c": ["aztec", "maya"]}], "archetypes": [{"m": "Harvest Father", "f": "Harvest Mother", "n": "the Sower"}, {"m": "Maize Father", "f": "Maize Mother", "n": "the Green One", "c": ["aztec", "maya"]}, {"m": "Earth Father", "f": "Earth Mother", "n": "the Deep Root"}]},
+    {"key": "water", "label": "sea and rivers", "words": [{"w": "the Sea", "sg": "Sea", "x": 2}, {"w": "Rivers", "sg": "River"}, {"w": "the Deep", "sg": "Deep"}, {"w": "Tides", "sg": "Tide"}, {"w": "Springs", "sg": "Spring"}, {"w": "Wells", "sg": "Well"}, {"w": "Lakes", "sg": "Lake"}, {"w": "Rain", "sg": "Rain"}], "archetypes": [{"m": "Lord of the Deep", "f": "Sea Mother", "n": "the Tide"}, {"m": "River Lord", "f": "River Mother", "n": "the Flowing One"}, {"m": "Lord of Fish", "f": "Mother of Fish", "n": "the Shoal"}]},
+    {"key": "fire", "label": "fire and forge", "words": [{"w": "the Forge", "sg": "Forge", "x": 2}, {"w": "Fire", "sg": "Fire"}, {"w": "the Hearth", "sg": "Hearth"}, {"w": "Embers", "sg": "Ember"}, {"w": "Iron", "sg": "Iron"}, {"w": "Bronze", "sg": "Bronze"}, {"w": "the Kiln", "sg": "Kiln"}], "archetypes": [{"m": "Forge Father", "f": "Forge Mother", "n": "the Smith"}, {"m": "Hearth Lord", "f": "Hearth Lady", "n": "the Ember"}]},
+    {"key": "war", "label": "war and the hunt", "words": [{"w": "Battle", "sg": "Battle"}, {"w": "the Hunt", "sg": "Hunt", "x": 2}, {"w": "Spears", "sg": "Spear"}, {"w": "Victory", "sg": "Victory"}, {"w": "the Chase", "sg": "Chase"}, {"w": "Shields", "sg": "Shield"}, {"w": "the Bow", "sg": "Bow"}], "archetypes": [{"m": "the Hunter", "f": "the Huntress", "n": "the Hunt"}, {"m": "War Lord", "f": "War Mother", "n": "the Spear"}, {"all": "the Champion"}]},
+    {"key": "death", "label": "death and ancestors", "words": [{"w": "the Dead", "sg": "Death", "x": 2}, {"w": "Ancestors", "sg": "Ancestor"}, {"w": "Graves", "sg": "Grave"}, {"w": "the Last Road", "sg": "Last Road"}, {"w": "Ash", "sg": "Ash"}, {"w": "Silence", "sg": "Silence"}, {"w": "the Underworld", "sg": "Underworld"}], "archetypes": [{"m": "Lord of the Dead", "f": "Lady of the Dead", "n": "the Keeper"}, {"m": "Ancestor King", "f": "Ancestor Queen", "n": "Keeper of Ancestors"}, {"m": "the Ferryman", "f": "the Ferrywoman", "n": "the Ferry"}]},
+    {"key": "wisdom", "label": "wisdom and craft", "words": [{"w": "Wisdom", "sg": "Wisdom"}, {"w": "Secrets", "sg": "Secret"}, {"w": "the Loom", "sg": "Loom"}, {"w": "Letters", "sg": "Letter"}, {"w": "Counting", "sg": "Counting"}, {"w": "Dreams", "sg": "Dream"}, {"w": "Thresholds", "sg": "Threshold"}, {"w": "Keys", "sg": "Key"}], "archetypes": [{"all": "the Wise One"}, {"all": "the Weaver"}, {"all": "the Judge"}, {"all": "the Hidden One"}, {"m": "Lord of Thresholds", "f": "Lady of Thresholds", "n": "the Threshold"}]},
+    {"key": "love", "label": "love and the hearth", "words": [{"w": "the Hearth", "sg": "Hearth", "x": 2}, {"w": "Marriage", "sg": "Marriage"}, {"w": "Children", "sg": "Child"}, {"w": "Kinship", "sg": "Kinship"}, {"w": "Home", "sg": "Home"}, {"w": "Mercy", "sg": "Mercy"}, {"w": "Gardens", "sg": "Garden"}], "archetypes": [{"m": "Hearth Father", "f": "Hearth Mother", "n": "the Kindling"}, {"m": "the Lover", "f": "the Beloved", "n": "the Bond"}]},
+    {"key": "trickery", "label": "tricks and luck", "words": [{"w": "Luck", "sg": "Luck"}, {"w": "Crossroads", "sg": "Crossroads", "x": 2}, {"w": "Masks", "sg": "Mask"}, {"w": "Riddles", "sg": "Riddle"}, {"w": "Thieves", "sg": "Thief"}, {"w": "Doors", "sg": "Door"}, {"w": "Chance", "sg": "Chance"}], "archetypes": [{"all": "the Trickster"}, {"m": "Lord of the Crossroads", "f": "Lady of the Crossroads", "n": "the Crossroads"}, {"all": "the Spider", "c": ["west-african", "bantu", "general"]}, {"all": "the Hare", "c": ["bantu", "general"]}, {"all": "the Raven", "c": ["norse", "general"]}, {"all": "the Fox", "c": ["chinese", "japanese", "korean"]}, {"all": "the Coyote", "c": ["aztec"]}]},
+    {"key": "sun", "label": "sun, moon and stars", "words": [{"w": "the Sun", "sg": "Sun", "x": 2}, {"w": "the Moon", "sg": "Moon", "x": 2}, {"w": "the Stars", "sg": "Star"}, {"w": "Dawn", "sg": "Dawn"}, {"w": "Dusk", "sg": "Dusk"}, {"w": "the Night Sky", "sg": "Night Sky"}, {"w": "Eclipses", "sg": "Eclipse"}], "archetypes": [{"m": "Sun King", "f": "Sun Queen", "n": "the Sun"}, {"m": "Moon Man", "f": "Moon Mother", "n": "the Moon"}, {"m": "Star Father", "f": "Star Mother", "n": "the Star-Keeper"}, {"all": "the Twins", "pantheon": true}]},
+    {"key": "steampunk", "label": "engines and invention", "words": [{"w": "Gears", "sg": "Gear"}, {"w": "the Great Engine", "sg": "Great Engine"}, {"w": "Steam", "sg": "Steam"}, {"w": "Sparks", "sg": "Spark"}, {"w": "Springs", "sg": "Spring"}, {"w": "Clocks", "sg": "Clock"}, {"w": "Invention", "sg": "Invention"}], "archetypes": [{"m": "the Clockmaker", "f": "Lady of Gears", "n": "the Great Engine"}, {"all": "the Spark"}], "e": ["ST"], "h": true},
+    {"key": "machine", "label": "machines and the void", "words": [{"w": "the Void", "sg": "Void", "x": 2}, {"w": "Signals", "sg": "Signal"}, {"w": "the Machine", "sg": "Machine"}, {"w": "Stars", "sg": "Star"}, {"w": "the Long Dark", "sg": "Long Dark"}, {"w": "Code", "sg": "Code"}, {"w": "the Drift", "sg": "Drift"}], "archetypes": [{"all": "the Machine"}, {"all": "the Navigator"}, {"all": "the First Signal"}, {"all": "the Makers", "pantheon": true}, {"all": "the Sleeper"}, {"all": "the Void"}], "e": ["NF", "IS"]}
+  ],
+  "shapes": [
+    {"p": "{archetype}", "w": 15, "kind": "deity", "form": "archetype"},
+    {"p": "{figure} of {domainWord}", "w": 20, "kind": "deity", "form": "A", "t": ["grand"]},
+    {"p": "the {divineQuality} {figure}", "w": 12, "kind": "deity", "form": "B"},
+    {"p": "{pronoun} Who {divineVerb}", "w": 12, "kind": "deity", "form": "C", "t": ["strange"]},
+    {"p": "{domainSg} {kin}", "w": 10, "kind": "deity", "form": "D"},
+    {"p": "the {bodyNumber}-{bodyPart} {figure}", "w": 6, "kind": "deity", "form": "E", "t": ["strange"]},
+    {"p": "{animal} of the {domainWord}", "w": 4, "kind": "deity", "form": "F", "variant": "of"},
+    {"p": "the {animal}-Headed {figure}", "w": 4, "kind": "deity", "form": "F", "variant": "headed"},
+    {"p": "{domainSg}-{kennWord}", "w": 5, "kind": "deity", "form": "G", "c": ["anglo-saxon", "norse", "general"]},
+    {"p": "{figure} of the {colour} {domainSg}", "w": 6, "kind": "deity", "form": "H"},
+    {"p": "the {figure} Below", "w": 2, "kind": "deity", "form": "I", "t": ["strange"]},
+    {"p": "the {figure} Above", "w": 2, "kind": "deity", "form": "I", "t": ["strange"]},
+    {"p": "the {figure} Between", "w": 2, "kind": "deity", "form": "I", "t": ["strange"]},
+    {"p": "{fixed}", "w": 5, "kind": "deity", "form": "fixed"},
+    {"p": "the Clockwork {figure}", "w": 8, "kind": "deity", "form": "era", "e": ["ST"], "h": true},
+    {"p": "{figure} of the Great Engine", "w": 8, "kind": "deity", "form": "era", "e": ["ST"], "h": true},
+    {"p": "the {divineQuality} Signal", "w": 8, "kind": "deity", "form": "era", "e": ["NF", "IS"]},
+    {"p": "{pronoun} Who {divineVerb} in the Void", "w": 8, "kind": "deity", "form": "era", "e": ["NF", "IS"], "t": ["strange"]},
+    {"p": "the {ordinal} Maker", "w": 8, "kind": "deity", "form": "era", "e": ["NF", "IS"]},
+    {"p": "the {number}", "w": 15, "kind": "pantheon", "form": "P1"},
+    {"p": "the {pantheonQuality} {pantheonNoun}", "w": 25, "kind": "pantheon", "form": "P2"},
+    {"p": "the {number} Who {divineVerb}", "w": 10, "kind": "pantheon", "form": "P3", "t": ["strange"]},
+    {"p": "the Court {underAbove} the {sacredLand}", "w": 10, "kind": "pantheon", "form": "P4"},
+    {"p": "the {pantheonNoun} of the {domainSg}", "w": 10, "kind": "pantheon", "form": "P5", "t": ["grand"]},
+    {"p": "Children of the {archetype}", "w": 8, "kind": "pantheon", "form": "P6"},
+    {"p": "the {colour} and the {colour}", "w": 5, "kind": "pantheon", "form": "P7"},
+    {"p": "{fixed}", "w": 7, "kind": "pantheon", "form": "fixed"},
+    {"p": "the {number} {figure:pl} of the {sacredLand}", "w": 10, "kind": "pantheon", "form": "triple"},
+    {"p": "the Brass {pantheonNoun}", "w": 8, "kind": "pantheon", "form": "era", "e": ["ST"], "h": true},
+    {"p": "the Silent Fleet", "w": 8, "kind": "pantheon", "form": "era", "e": ["NF", "IS"]},
+    {"p": "the {number} Signals", "w": 8, "kind": "pantheon", "form": "era", "e": ["NF", "IS"]},
+    {"p": "{sacredLand} of {deityRef}", "w": 20, "kind": "place", "form": "L1", "t": ["grand"]},
+    {"p": "the {sacredQuality} {sacredLand}", "w": 20, "kind": "place", "form": "L2"},
+    {"p": "the {number} {sacredLand:pl}", "w": 10, "kind": "place", "form": "L3"},
+    {"p": "{sacredLand} of {sacredVirtue}", "w": 12, "kind": "place", "form": "L4"},
+    {"p": "the {divineQuality} {oracleWord}", "w": 8, "kind": "place", "form": "L5", "t": ["strange"]},
+    {"p": "{oracleWord} of the {sacredLand}", "w": 6, "kind": "place", "form": "L6", "t": ["strange"]},
+    {"p": "{place:poss} Holy {sacredLand}", "w": 8, "kind": "place", "form": "L7", "t": ["plain"]},
+    {"p": "{holy:poss} {sacredLand}", "w": 8, "kind": "place", "form": "L8", "christian": true},
+    {"p": "{domainSg} {sacredLand}", "w": 8, "kind": "place", "form": "L9"},
+    {"p": "{fixed}", "w": 5, "kind": "place", "form": "fixed"},
+    {"p": "the {sacredQuality} Engine", "w": 8, "kind": "place", "form": "era", "e": ["ST"], "h": true},
+    {"p": "Shrine of the Spark", "w": 8, "kind": "place", "form": "era", "e": ["ST"], "h": true}
+  ],
+  "styles": {
+    "anglo-saxon": {
+      "formX": {"G": 3, "F": 2},
+      "fVariant": "of",
+      "domainX": {"sky": 1.5, "war": 1.5, "death": 1.5}
+    },
+    "norse": {
+      "formX": {"G": 3, "F": 2},
+      "fVariant": "of",
+      "domainX": {"sky": 1.5, "war": 1.5, "death": 1.5}
+    },
+    "celtic": {
+      "formX": {"triple": 3},
+      "tripleThree": true,
+      "domainX": {"water": 1.5},
+      "kindX": {"place": 1.5}
+    },
+    "egyptian": {
+      "formX": {"F": 3},
+      "fVariant": "headed",
+      "domainX": {"sun": 2, "death": 2}
+    },
+    "aztec": {
+      "formX": {"F": 2, "E": 2},
+      "fVariant": "of",
+      "domainX": {"earth": 2, "sun": 2, "death": 2},
+      "extra": [
+        {"p": "the Feathered {animal}", "w": 8, "kind": "deity", "form": "culture"}
+      ]
+    },
+    "maya": {
+      "formX": {"F": 2, "E": 2},
+      "fVariant": "of",
+      "domainX": {"earth": 2, "sun": 2, "death": 2},
+      "extra": [
+        {"p": "the Feathered {animal}", "w": 8, "kind": "deity", "form": "culture"}
+      ]
+    },
+    "chinese": {
+      "formX": {"A": 2},
+      "eastHonour": true,
+      "domainX": {"water": 1.5, "sun": 1.5, "wisdom": 1.5}
+    },
+    "korean": {
+      "formX": {"A": 2},
+      "eastHonour": true,
+      "domainX": {"water": 1.5, "sun": 1.5, "wisdom": 1.5}
+    },
+    "japanese": {
+      "formX": {"A": 2},
+      "eastHonour": true,
+      "domainX": {"water": 1.5, "sun": 1.5, "wisdom": 1.5}
+    },
+    "indian": {
+      "formX": {"E": 2},
+      "domainX": {"water": 1.5, "sun": 1.5}
+    },
+    "arabic-persian": {
+      "formX": {"B": 2, "C": 2},
+      "extra": [
+        {"p": "the {divineQuality} {spiritWord}", "w": 24, "kind": "deity", "form": "culture"}
+      ]
+    },
+    "steppe": {
+      "domainX": {"sky": 2, "sun": 2},
+      "extra": [
+        {"p": "the Eternal {colour} Sky", "w": 15, "kind": "deity", "form": "culture", "domain": "sky"},
+        {"p": "{animal} Mother", "w": 8, "kind": "deity", "form": "culture", "gender": "f"}
+      ]
+    },
+    "west-african": {
+      "formX": {"C": 1.5},
+      "fVariant": "of",
+      "archetypeX": {"Ancestor King": 2}
+    },
+    "bantu": {
+      "formX": {"C": 1.5},
+      "fVariant": "of",
+      "archetypeX": {"Ancestor King": 2}
+    },
+    "roman:AN": {
+      "formX": {"A": 2, "B": 1.5}
+    },
+    "greek-byzantine:AN": {
+      "formX": {"A": 2, "B": 1.5}
+    }
+  },
+  "christian": {
+    "cultures": ["ethiopian"],
+    "genericForms": ["archetype", "A", "B", "C", "D", "H", "I", "fixed", "era"],
+    "placeX": {"Well": 2, "Spring": 2, "Hill": 2}
+  },
+  "unoffered": ["polynesian", "andean"],
+  "lists": {
+    "kennWord": ["Rider", "Breaker", "Bringer", "Wielder", "Keeper", "Walker", "Singer"],
+    "eastHonour": [["Jade", 2], ["Heavenly", 1], ["Celestial", 1], ["August", 1], ["Pearl", 1]],
+    "spiritWord": ["Spirit", "Wind", "Flame", "Watcher"],
+    "underAbove": ["Under", "Above", "Beyond", "Beneath"],
+    "number": [["Two", 1], ["Three", 2], ["Four", 1], ["Five", 1], ["Seven", 2], ["Nine", 2], ["Twelve", 2], ["Thirteen", 1]],
+    "strangeNumber": ["Thirteen"],
+    "pronoun": {"m": "He", "f": "She", "n": "They"},
+    "steppeNoColour": ["Blue"],
+    "livingTricksters": ["the Spider", "the Hare", "the Raven", "the Coyote", "the Fox", "Ancestor King", "Ancestor Queen"]
+  },
+  "series": {"from": 6},
+  "cap": 9,
+  "safeguards": {
+    "block": ["God", "Lord God", "God Almighty", "the Almighty", "Lord of Lords", "King of Kings", "Lord of Hosts", "Lamb of God", "Prince of Peace", "Son of God", "Holy Spirit", "Holy Ghost", "Holy Trinity", "the Trinity", "Father, Son and Holy Spirit", "Mother of God", "Queen of Heaven", "Our Lady", "the Virgin", "the Merciful", "the Compassionate", "the Most Merciful", "the Most High", "the One", "the Creator", "the Preserver", "the Destroyer", "Lord of the Dance", "the Enlightened One", "the Awakened One", "the Compassionate One", "the Blessed One", "the Great Spirit", "Great Spirit", "Sky Woman", "Eternal Blue Sky", "Sun Goddess", "Divine Mother", "Supreme Being", "Holy One", "the Holy One of Israel", "the Name", "Ancient of Days", "Alpha and Omega", "Light of the World", "Good Shepherd", "Lord of the Worlds", "the Seven", "Lord of Light", "R'hllor", "the Drowned God", "the Many-Faced God", "the Old Gods and the New", "the Nine Divines", "the Eight Divines", "the Daedric Princes", "Talos", "Akatosh", "Emperor of Mankind", "Chaos Gods", "Khorne", "Nurgle", "Tzeentch", "Slaanesh", "the Valar", "the Ainur", "Eru Ilúvatar", "Morgoth", "Sauron", "Aslan", "the Great Old Ones", "Cthulhu", "Azathoth", "Nyarlathotep", "Shub-Niggurath", "Mother of Dragons", "Om", "the Traveler", "Lathander", "Mystra", "Bane", "Tyr", "Pelor", "Vecna", "Lolth", "the Raven Queen"],
+    "names": ["Zeus", "Hera", "Athena", "Apollo", "Jupiter", "Mars", "Venus", "Odin", "Thor", "Freyja", "Loki", "Woden", "Thunor", "Ra", "Osiris", "Isis", "Horus", "Anubis", "Thoth", "Quetzalcoatl", "Tezcatlipoca", "Tlaloc", "Huitzilopochtli", "Itzamna", "Kukulkan", "Chaak", "Inti", "Viracocha", "Pachamama", "Amaterasu", "Susanoo", "Inari", "Guanyin", "Mazu", "Jade Emperor", "Shiva", "Vishnu", "Brahma", "Krishna", "Rama", "Ganesha", "Kali", "Durga", "Lakshmi", "Indra", "Agni", "Surya", "Allah", "Yahweh", "Jehovah", "Jesus", "Christ", "Mary", "Buddha", "Anansi", "Olodumare", "Shango", "Yemoja", "Oshun", "Ogun", "Eshu", "Elegua", "Nyame", "Unkulunkulu", "Mwari", "Ngai", "Tengri", "Umay", "Perun", "Veles", "Mokosh", "Svarog", "Dagda", "Brigid", "Lugh", "Morrigan", "Cernunnos", "Baal", "Marduk", "Ishtar", "Inanna", "Ahura Mazda", "Mithra", "Rainbow Serpent", "Baiame", "Tangaroa", "Tāne", "Pele", "Kāne", "Māui", "Olympus", "Asgard", "Valhalla", "Duat", "Mictlan", "Xibalba", "Sinai", "Zion", "Moriah", "Calvary", "Golgotha", "Mecca", "Medina", "Jerusalem", "Kailash", "Meru", "Varanasi", "Bodh Gaya", "Lhasa", "Fuji", "Ise", "Uluru", "Delphi", "Dodona", "Eleusis", "Glastonbury Tor", "Stonehenge", "Avebury", "Iona", "Lindisfarne", "Lourdes", "Santiago", "Canterbury", "Chalice Well", "Mount Athos", "Tai Shan", "Kumano", "Croagh Patrick"],
+    "flag": ["Mother Earth", "Father Time", "Great Mother", "Sky Father", "Earth Mother", "Sea Mother", "Storm Bringer", "the Hunter", "the Trickster", "the Smith", "the Weaver", "the Old Gods", "the Elder Gods", "the Old Ones", "the Maker", "the Makers", "Holy Mountain", "Sacred Mountain", "Holy Island", "Avalon", "the Lady", "the Twins", "the Twelve"],
+    "flagListBlocks": false,
+    "banned": ["Satan", "Devil", "Antichrist", "Lucifer", "Iblis", "Shaitan", "Mara", "Demon", "Infidel", "Heathen", "Pagan", "Idol", "False God"]
+  }
+}
