@@ -76400,7 +76400,7 @@ var settlement_vocab_default = {
     },
     "routeFixed:road": {
       entries: [
-        { w: "Ridgeway", e: ["AN", "MD"], c: ["british"], r: "ridge" },
+        { w: "Ridgeway", e: ["AN", "MD"], c: ["british"], rt: "ridge" },
         { w: "Hollow Way", e: ["MD", "EM", "ST"], c: ["british"] },
         { w: "Green Lane", e: ["MD", "EM", "ST"], c: ["british"] },
         { w: "Old Road", x: 0.5 },
@@ -76419,13 +76419,13 @@ var settlement_vocab_default = {
       entries: [
         { w: "Pilgrims' Way", e: ["MD", "EM", "ST", "MO"] },
         { w: "Sacred Way", e: ["AN"], c: ["roman", "greek-byzantine"] },
-        { w: "Corpse Road", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" },
-        { w: "Coffin Way", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" }
+        { w: "Corpse Road", t: ["grim"], e: ["MD", "EM"], c: ["british"], rt: "corpse" },
+        { w: "Coffin Way", t: ["grim"], e: ["MD", "EM"], c: ["british"], rt: "corpse" }
       ]
     },
     "routeFixed:military": {
       entries: [
-        { w: "Army Way", e: ["MD"], c: ["british"], r: "army" },
+        { w: "Army Way", e: ["MD"], c: ["british"], rt: "army" },
         { w: "Straight Road", e: ["AN"], c: ["chinese", "roman"] },
         { w: "Wall Road", e: ["AN", "MD"], c: ["roman", "chinese"] },
         { w: "Post Road", e: ["AN", "MD", "EM", "ST"], c: ["steppe", "chinese", "slavic"] },
@@ -76435,14 +76435,14 @@ var settlement_vocab_default = {
     "routeFixed:drove": {
       entries: [
         { w: "Drove Road", e: ["MD", "EM", "ST"] },
-        { w: "Packhorse Road", e: ["MD", "EM"], c: ["british"], r: "packhorse" },
+        { w: "Packhorse Road", e: ["MD", "EM"], c: ["british"], rt: "packhorse" },
         { w: "Hollow Way", e: ["MD", "EM", "ST"], c: ["british"] },
         { w: "Green Lane", e: ["MD", "EM", "ST"], c: ["british"] },
         { w: "Old Track" },
         { w: "Cattle Road", c: ["bantu", "celtic", "steppe"] },
-        { w: "Corpse Road", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" },
-        { w: "Peat Road", c: ["celtic", "norse"], r: "peat" },
-        { w: "Summer Pasture Path", c: ["celtic", "norse"], r: "peat" },
+        { w: "Corpse Road", t: ["grim"], e: ["MD", "EM"], c: ["british"], rt: "corpse" },
+        { w: "Peat Road", c: ["celtic", "norse"], rt: "peat" },
+        { w: "Summer Pasture Path", c: ["celtic", "norse"], rt: "peat" },
         { w: "Winter Road", e: ["EM", "ST"], c: ["slavic"] }
       ]
     },
@@ -76469,8 +76469,485 @@ var settlement_vocab_default = {
         { w: "The Quiet Lane", t: ["strange"] },
         { w: "The Narrows" }
       ]
+    },
+    compWater: {
+      entries: [
+        { w: "Well", x: 3 },
+        { w: "Spring", x: 3 },
+        { w: "Conduit" },
+        { w: "Cistern", e: ["AN", "MD", "EM"] },
+        { w: "Fountain" },
+        { w: "Pump", e: ["EM", "ST"] },
+        { w: "Aqueduct", e: ["AN"], c: ["roman", "greek-byzantine", "arabic-persian", "aztec"] },
+        { w: "Step Well", c: ["indian"] },
+        { w: "Water Channel", c: ["arabic-persian"] },
+        { w: "Waterworks", e: ["ST"] },
+        { w: "Reservoir", e: ["ST", "MO"] }
+      ]
+    },
+    compCrossing: {
+      entries: [
+        { w: "Bridge", x: 3 },
+        { w: "Ford", x: 3 },
+        { w: "Ferry" },
+        { w: "Causeway" },
+        { w: "Stepping Stones", t: ["light"] },
+        { w: "Viaduct", e: ["ST"] },
+        { w: "Swing Bridge", e: ["ST"] }
+      ]
+    },
+    compMill: {
+      entries: [
+        { w: "Mill", x: 3 },
+        { w: "Kiln" },
+        { w: "Forge" },
+        { w: "Smithy" },
+        { w: "Quarry" },
+        { w: "Tannery" },
+        { w: "Ropewalk", e: ["EM", "ST"] },
+        { w: "Salt Pans" },
+        { w: "Works", e: ["ST", "MO"] },
+        { w: "Foundry", e: ["ST"] },
+        { w: "Gasworks", e: ["ST"] },
+        { w: "Engine House", e: ["ST"] },
+        { w: "Brickworks", e: ["ST"] }
+      ]
+    },
+    compStorage: {
+      entries: [
+        { w: "Granary" },
+        { w: "Storehouse" },
+        { w: "Barn" },
+        { w: "Tithe Barn", c: ["christian"] },
+        { w: "Warehouse" },
+        { w: "Bonded Store", e: ["ST"] },
+        { w: "Coal Yard", e: ["ST"] }
+      ]
+    },
+    compMarket: {
+      entries: [
+        { w: "Market", x: 3 },
+        { w: "Cross", x: 3, c: ["british"] },
+        { w: "Exchange" },
+        { w: "Hall" },
+        { w: "Guildhall", e: ["MD", "EM"] },
+        { w: "Arcade", e: ["ST"] },
+        { w: "Corn Exchange", e: ["ST"] }
+      ]
+    },
+    compDefence: {
+      entries: [
+        { w: "Gate", x: 2 },
+        { w: "Wall" },
+        { w: "Tower" },
+        { w: "Castle" },
+        { w: "Keep" },
+        { w: "Citadel" },
+        { w: "Bastion" },
+        { w: "Barbican", e: ["MD", "EM"] },
+        { w: "Barracks", e: ["EM", "ST", "MO"] },
+        { w: "Battery", e: ["EM", "ST"] },
+        { w: "Drill Hall", e: ["ST"] }
+      ]
+    },
+    compFaith: {
+      entries: [
+        { w: "Temple" },
+        { w: "Shrine" },
+        { w: "Sanctuary" },
+        { w: "Monastery" },
+        { w: "Holy Well" },
+        { w: "Church", x: 2, c: ["christian"] },
+        { w: "Chapel", x: 2, c: ["christian"] },
+        { w: "Minster", c: ["christian"] },
+        { w: "Abbey", c: ["christian"] },
+        { w: "Priory", c: ["christian"] },
+        { w: "Friary", c: ["christian"] }
+      ]
+    },
+    compRule: {
+      entries: [
+        { w: "Court" },
+        { w: "Hall" },
+        { w: "Treasury" },
+        { w: "Mint" },
+        { w: "Custom House" },
+        { w: "Toll House" },
+        { w: "Moot Hill", c: ["anglo-saxon", "norse"] },
+        { w: "Town Hall", e: ["ST", "MO"] },
+        { w: "Courthouse", e: ["ST", "MO"] }
+      ]
+    },
+    compWaterside: {
+      entries: [
+        { w: "Dock" },
+        { w: "Wharf" },
+        { w: "Quay" },
+        { w: "Harbour" },
+        { w: "Landing" },
+        { w: "Strand" },
+        { w: "Staithe", r: ["EAN", "NTH"] },
+        { w: "Basin", e: ["ST"] },
+        { w: "Pier", e: ["ST", "MO"] },
+        { w: "Lock", e: ["EM", "ST"] }
+      ]
+    },
+    compTravel: {
+      entries: [
+        { w: "Post House" },
+        { w: "Inn" },
+        { w: "Caravan Court", c: ["arabic-persian", "steppe", "indian"] },
+        { w: "Toll Gate", e: ["EM", "ST"] },
+        { w: "Station", x: 2, e: ["ST", "MO"] },
+        { w: "Terminus", e: ["ST"] }
+      ]
+    },
+    compLearning: {
+      entries: [
+        { w: "Library" },
+        { w: "School" },
+        { w: "Academy" },
+        { w: "College" },
+        { w: "Institute", e: ["ST"] },
+        { w: "Museum", e: ["ST", "MO"] }
+      ]
+    },
+    compDeath: {
+      entries: [
+        { w: "Burial Ground" },
+        { w: "Barrow", e: ["AN", "MD"] },
+        { w: "Charnel House", t: ["grim"] },
+        { w: "Cemetery", e: ["ST", "MO"] },
+        { w: "Gallows", t: ["grim"] }
+      ]
+    },
+    compPublic: {
+      entries: [
+        { w: "Green", x: 2, c: ["british"] },
+        { w: "Common", c: ["british"] },
+        { w: "Gardens" },
+        { w: "Bath House" },
+        { w: "Baths", e: ["ST"] },
+        { w: "Park", e: ["ST", "MO"] },
+        { w: "Pleasure Gardens", e: ["ST"] }
+      ]
+    },
+    compSteampunk: {
+      entries: [
+        { w: "Aether Works", e: ["ST"], h: true },
+        { w: "Clock Tower", e: ["ST"], h: true },
+        { w: "Glasshouse", e: ["ST"], h: true },
+        { w: "Airship Mast", e: ["ST"], h: true },
+        { w: "Pneumatic Exchange", e: ["ST"], h: true },
+        { w: "Engine Hall", e: ["ST"], h: true },
+        { w: "Gasometer", e: ["ST"], h: true }
+      ]
+    },
+    compSciFi: {
+      entries: [
+        { w: "Hub", e: ["NF", "IS"] },
+        { w: "Spoke", e: ["NF", "IS"] },
+        { w: "Dock Arm", e: ["NF", "IS"] },
+        { w: "Hydroponics", e: ["NF", "IS"] },
+        { w: "Reactor", e: ["NF", "IS"] },
+        { w: "Airlock", e: ["NF", "IS"] },
+        { w: "Lift", e: ["NF", "IS"] },
+        { w: "Observation Deck", e: ["NF", "IS"] },
+        { w: "Cargo Bay", e: ["NF", "IS"] },
+        { w: "Recycler", t: ["grim"], e: ["NF", "IS"] }
+      ]
+    },
+    streetWord: {
+      entries: [
+        { w: "Street", x: 4 },
+        { w: "Lane", x: 4 },
+        { w: "Road", x: 2 },
+        { w: "Row", x: 2 },
+        { w: "Way" },
+        { w: "Close" },
+        { w: "Walk", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Hill" },
+        { w: "Gate", x: 3, e: ["MD", "EM"], c: ["anglo-saxon", "norse", "norman-british"], rx: { NTH: 3, EMD: 3, EAN: 1.5 } }
+      ]
+    },
+    alleyWord: {
+      entries: [
+        { w: "Alley", x: 2 },
+        { w: "Passage" },
+        { w: "Court" },
+        { w: "Yard" },
+        { w: "Entry" }
+      ]
+    },
+    planned: {
+      entries: [
+        { w: "Terrace", x: 2, e: ["ST", "MO", "NF", "IS"] },
+        { w: "Crescent", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Place", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Avenue", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Gardens", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Grove", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Mews", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Parade", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Drive", e: ["MO", "NF", "IS"] }
+      ]
+    },
+    alleyDialect: {
+      entries: [
+        { w: "Wynd", r: ["SLO", "SBL", "NTH"] },
+        { w: "Vennel", r: ["SLO", "SBL"] },
+        { w: "Close", r: ["SLO"] },
+        { w: "Chare", r: ["NTH", "SBL"] },
+        { w: "Snicket", r: ["NTH"] },
+        { w: "Ginnel", r: ["NTH"] },
+        { w: "Twitten", r: ["SEA"] },
+        { w: "Jitty", r: ["EMD"] },
+        { w: "Entry", r: ["WMM"] },
+        { w: "Gully", r: ["NTH"] },
+        { w: "Opening", r: ["NTH"] },
+        { w: "Ope", r: ["WCY", "COR"] },
+        { w: "Lonning", r: ["NTH", "SBL"] }
+      ]
+    },
+    mainStreet: {
+      entries: [
+        { w: "High Street", x: 3, c: ["british"] },
+        { w: "Main Street", e: ["MO"], c: ["general"] },
+        { w: "Main Street", c: ["celtic"] },
+        { w: "Main Street", c: ["british"], r: ["SLO", "SHH"] },
+        { w: "Broad Street" },
+        { w: "Long Street" },
+        { w: "Middle Street", c: ["greek-byzantine"] },
+        { w: "Great Street", c: ["slavic", "norse"] },
+        { w: "Bell Street", c: ["korean"] }
+      ]
+    },
+    streetTrades: {
+      entries: [
+        { w: "Butchers", x: 2 },
+        { w: "Bakers" },
+        { w: "Coopers" },
+        { w: "Tanners" },
+        { w: "Weavers" },
+        { w: "Dyers" },
+        { w: "Smiths", x: 2 },
+        { w: "Fishers" },
+        { w: "Chandlers" },
+        { w: "Cutlers" },
+        { w: "Glovers" },
+        { w: "Potters" },
+        { w: "Masons" },
+        { w: "Millers" },
+        { w: "Ropemakers" },
+        { w: "Saddlers" },
+        { w: "Shoemakers" },
+        { w: "Tailors" },
+        { w: "Goldsmiths" },
+        { w: "Silversmiths" },
+        { w: "Brewers" },
+        { w: "Vintners" },
+        { w: "Drapers" },
+        { w: "Mercers" },
+        { w: "Fullers" },
+        { w: "Silk Reelers", c: ["chinese", "japanese", "korean"] },
+        { w: "Lacquerers", c: ["chinese", "japanese", "korean"] },
+        { w: "Paper Makers", c: ["chinese", "japanese", "korean"] },
+        { w: "Fan Makers", c: ["chinese", "japanese", "korean"] },
+        { w: "Swordsmiths", c: ["chinese", "japanese", "korean"] },
+        { w: "Sake Brewers", c: ["japanese"] },
+        { w: "Coppersmiths", c: ["arabic-persian"] },
+        { w: "Perfumers", c: ["arabic-persian"] },
+        { w: "Booksellers", c: ["arabic-persian"] },
+        { w: "Carpet Weavers", c: ["arabic-persian"] },
+        { w: "Spice Sellers", c: ["arabic-persian"] },
+        { w: "Featherworkers", c: ["aztec", "maya"] },
+        { w: "Jade Carvers", c: ["aztec", "maya"] },
+        { w: "Mat Makers", c: ["aztec", "maya"] },
+        { w: "Clockmakers", e: ["ST"] },
+        { w: "Printers", e: ["ST"] },
+        { w: "Engine Makers", e: ["ST"] },
+        { w: "Aethersmiths", e: ["ST"], h: true },
+        { w: "Gearwrights", e: ["ST"], h: true }
+      ]
+    },
+    streetGoods: {
+      entries: [
+        { w: "Silver" },
+        { w: "Corn", x: 2 },
+        { w: "Wool" },
+        { w: "Hay" },
+        { w: "Salt" },
+        { w: "Fish" },
+        { w: "Butter" },
+        { w: "Cheese" },
+        { w: "Milk" },
+        { w: "Bread" },
+        { w: "Leather" },
+        { w: "Cloth" },
+        { w: "Silk" },
+        { w: "Horse" },
+        { w: "Cattle" },
+        { w: "Coal", e: ["ST"] }
+      ]
+    },
+    streetFigure: {
+      entries: [
+        { w: "King", x: 2 },
+        { w: "Queen", x: 2 },
+        { w: "Prince" },
+        { w: "Duke" },
+        { w: "Bishop", c: ["christian"] },
+        { w: "Abbot", c: ["christian"] },
+        { w: "Friar", c: ["christian"] },
+        { w: "Mayor", e: ["ST", "MO"] },
+        { w: "Earl", c: ["british"] },
+        { w: "Lord" }
+      ]
+    },
+    streetTree: {
+      entries: [
+        { w: "Elm", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Ash", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Lime", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Cherry", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Oak", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Chestnut", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Willow", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Poplar", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Plane", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Holly", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Laburnum", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Acacia", e: ["ST", "MO", "NF", "IS"] }
+      ]
+    },
+    commemorative: {
+      entries: [
+        { w: "Jubilee", e: ["ST", "MO"] },
+        { w: "Victory", e: ["ST", "MO"] },
+        { w: "Coronation", e: ["ST", "MO"] },
+        { w: "Station", x: 2, e: ["ST", "MO"] },
+        { w: "Railway", e: ["ST", "MO"] },
+        { w: "Peace", e: ["ST", "MO"] },
+        { w: "Exhibition", e: ["ST", "MO"] },
+        { w: "Empire", t: ["grim"], e: ["ST", "MO"] },
+        { w: "Albion", x: 0.3, e: ["ST", "MO"] }
+      ]
+    },
+    streetSteampunk: {
+      entries: [
+        { w: "Piston Street", e: ["ST"], h: true },
+        { w: "Lamplight Row", e: ["ST"], h: true },
+        { w: "Gasworks Lane", e: ["ST"], h: true },
+        { w: "Cog Alley", e: ["ST"], h: true },
+        { w: "Aether Terrace", e: ["ST"], h: true },
+        { w: "Brass Parade", e: ["ST"], h: true },
+        { w: "Gaslight Arcade", e: ["ST"], h: true },
+        { w: "Smog Lane", t: ["grim"], e: ["ST"], h: true },
+        { w: "Pneumatic Row", e: ["ST"], h: true },
+        { w: "Boiler Yard", e: ["ST"], h: true }
+      ]
+    },
+    streetFixed: {
+      entries: [
+        { w: "Back Lane", x: 2 },
+        { w: "Shambles", e: ["MD", "EM"], c: ["british"] },
+        { w: "Market Place", c: ["british"] },
+        { w: "Church Street", c: ["christian"] },
+        { w: "Station Road", e: ["ST", "MO"] },
+        { w: "Water Lane" },
+        { w: "Love Lane", t: ["light"], c: ["british"] },
+        { w: "Cheap Street", e: ["MD"], c: ["british"] },
+        { w: "Friar Street", c: ["christian"] }
+      ]
+    },
+    squareWord: {
+      entries: [
+        { w: "Square", x: 3 },
+        { w: "Place" },
+        { w: "Green", c: ["british"] },
+        { w: "Cross", c: ["british"] },
+        { w: "Plaza", c: ["aztec", "maya"] },
+        { w: "Plaza", e: ["MO"], c: ["general"] },
+        { w: "Court" },
+        { w: "Circus", e: ["ST"], c: ["british"] }
+      ]
+    },
+    marketWord: {
+      entries: [
+        { w: "Market", x: 4 },
+        { w: "Exchange" },
+        { w: "Hall" },
+        { w: "Lanes", c: ["arabic-persian"] },
+        { w: "Court" }
+      ]
+    },
+    squareFixed: {
+      entries: [
+        { w: "Market Square", x: 3 },
+        { w: "Market Place", c: ["british"] },
+        { w: "Old Market" },
+        { w: "New Market" },
+        { w: "Market Cross", c: ["british"] },
+        { w: "Corn Exchange", e: ["ST"] },
+        { w: "Covered Market", c: ["arabic-persian"] },
+        { w: "Caravan Court", c: ["arabic-persian", "steppe"] },
+        { w: "Great Market", c: ["aztec"] },
+        { w: "Great Plaza", c: ["maya"] },
+        { w: "Drum Tower Square", c: ["chinese"] },
+        { w: "Clock Tower Square", e: ["ST"], c: ["indian", "general"] },
+        { w: "Horse Fair", c: ["british"] },
+        { w: "Exhibition Square", e: ["ST"], h: true },
+        { w: "Aether Exchange", e: ["ST"], h: true },
+        { w: "Hub", e: ["NF", "IS"] },
+        { w: "Exchange Deck", e: ["NF", "IS"] }
+      ]
+    },
+    districtWord: {
+      entries: [
+        { w: "Quarter", x: 3 },
+        { w: "Ward", x: 2 },
+        { w: "District" },
+        { w: "Precinct" },
+        { w: "End" },
+        { w: "Side" },
+        { w: "Town" },
+        { w: "Borough", e: ["EM", "ST", "MO", "NF", "IS"], c: ["british"] },
+        { w: "Liberty", e: ["MD", "EM"], c: ["british"] },
+        { w: "Rookery", t: ["grim"], e: ["ST"] },
+        { w: "Estate", e: ["MO"] },
+        { w: "Sector", e: ["NF", "IS"] },
+        { w: "Deck", e: ["NF", "IS"] },
+        { w: "Ring", e: ["NF", "IS"] },
+        { w: "Level", e: ["NF", "IS"] }
+      ]
+    },
+    districtFixed: {
+      entries: [
+        { w: "Old Town", x: 2, fn: ["commercial"] },
+        { w: "New Town", fn: ["commercial"] },
+        { w: "High Town", fn: ["elite"] },
+        { w: "Lower Town", fn: ["any"] },
+        { w: "Below the Wall", t: ["grim"], fn: ["poor"] },
+        { w: "Outer Town", fn: ["poor"] },
+        { w: "Inner City", c: ["chinese"], fn: ["any"] },
+        { w: "Citadel Ward", fn: ["rule"] },
+        { w: "Castle Town", c: ["japanese"], fn: ["rule"] },
+        { w: "Temple Town", c: ["japanese", "indian"], fn: ["religious"] },
+        { w: "Post Town", c: ["japanese"], fn: ["any"] },
+        { w: "Trading Town", c: ["slavic"], fn: ["commercial"] },
+        { w: "Free Settlement", c: ["slavic"], fn: ["commercial"] },
+        { w: "Strangers' Quarter", c: ["west-african", "general"], fn: ["foreign"] },
+        { w: "Golden Camp", c: ["steppe"], fn: ["any"] },
+        { w: "Floating Gardens", c: ["aztec"], fn: ["any"] },
+        { w: "Workers' Village", c: ["egyptian"], fn: ["poor"] },
+        { w: "City of the Dead", t: ["grim"], c: ["egyptian"], fn: ["poor"] },
+        { w: "Royal Enclosure", c: ["bantu"], fn: ["rule"] },
+        { w: "Palace Compound", c: ["ethiopian"], fn: ["rule"] },
+        { w: "Cantonment", e: ["ST"], c: ["indian", "british"], fn: ["military"] }
+      ]
     }
-  }
+  },
+  regions: ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI"]
 };
 
 // src/settlement/vocab.ts
@@ -76479,6 +76956,7 @@ var VOCAB_ERAS = SETTLEMENT_VOCAB.eras;
 var VOCAB_CULTURES = SETTLEMENT_VOCAB.cultures;
 var VOCAB_CULTURE_GROUPS = Object.keys(SETTLEMENT_VOCAB.cultureGroups);
 var VOCAB_REGION_TAGS = SETTLEMENT_VOCAB.regionTags;
+var VOCAB_REGIONS = SETTLEMENT_VOCAB.regions;
 var POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
 var eraIndex = (era) => VOCAB_ERAS.indexOf(era);
 function inCultureGroup(group, culture, era) {
@@ -76496,11 +76974,19 @@ function cultureAllowed(c, culture, era) {
   if (c.some((k) => k.startsWith("!") && matches(k.slice(1)))) return false;
   return positive.length === 0 || positive.some(matches);
 }
+var regionFor = (where) => where.region && inCultureGroup("british", where.culture, where.era) ? where.region : void 0;
 function entryAllowed(e, where) {
   if (e.e && !e.e.includes(where.era)) return false;
   if (e.h !== void 0 && e.h !== where.fantastic) return false;
+  const region = regionFor(where);
+  if (region && e.r && !e.r.includes(region)) return false;
   return cultureAllowed(e.c, where.culture, where.era);
 }
+var regionX = (e, where) => {
+  var _a2, _b;
+  const region = regionFor(where);
+  return region ? (_b = (_a2 = e.rx) == null ? void 0 : _a2[region]) != null ? _b : 1 : 1;
+};
 var BUILT_IN_VOCAB = { pools: SETTLEMENT_VOCAB.pools };
 function poolEntries(vocab, name, where) {
   var _a2, _b, _c, _d;
@@ -76516,7 +77002,7 @@ function poolEntries(vocab, name, where) {
       out.push([e, w]);
     }
   };
-  for (const e of pool3.entries) if (entryAllowed(e, where)) add2(e, (_a2 = e.x) != null ? _a2 : 1);
+  for (const e of pool3.entries) if (entryAllowed(e, where)) add2(e, ((_a2 = e.x) != null ? _a2 : 1) * regionX(e, where));
   for (const e of (_c = (_b = pool3.cultureExtra) == null ? void 0 : _b[where.culture]) != null ? _c : []) {
     if (!entryAllowed(e, where)) continue;
     const i = at.get(e.w);
@@ -76571,6 +77057,7 @@ function parseVocabularyPack(content, note) {
       for (const part of parts) {
         if (VOCAB_ERAS.includes(part)) section.era = part;
         else if (VOCAB_CULTURES.includes(part)) section.culture = part;
+        else if (VOCAB_REGIONS.includes(part)) section.region = part;
         else {
           problems.push(`Unknown culture \u201C${part}\u201D in vocabulary pack \u201C${note}\u201D.`);
           bad = true;
@@ -76599,7 +77086,7 @@ function mergeVocabularyPacks(packs, blocked2 = () => false) {
     for (const s of sections) {
       for (const e of s.entries) {
         if (hasBannedWord(e.w) || blocked2(e.w)) continue;
-        pools[s.pool].entries.push({ ...e, ...s.culture ? { c: [s.culture] } : {}, ...s.era ? { e: [s.era] } : {} });
+        pools[s.pool].entries.push({ ...e, ...s.culture ? { c: [s.culture] } : {}, ...s.era ? { e: [s.era] } : {}, ...s.region ? { r: [s.region] } : {} });
       }
     }
   }
@@ -76610,7 +77097,7 @@ var VOCABULARY_PACK_TEMPLATE = [
   `type: ${VOCABULARY_TYPE}`,
   "---",
   "",
-  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` \xD70.5` or ` (grim)`, and narrow a heading with ` \xB7 japanese` or ` \xB7 MD`.",
+  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` \xD70.5` or ` (grim)`, and narrow a heading with ` \xB7 japanese`, ` \xB7 MD` or ` \xB7 NTH`.",
   "",
   ...POOL_NAMES.flatMap((p) => [`## ${p}`, ""])
 ].join("\n");
@@ -76657,9 +77144,9 @@ function vocabPool(ctx, pool3, token6) {
   const shape = ctx.shape;
   const only = (_a2 = shape == null ? void 0 : shape.only) == null ? void 0 : _a2[token6];
   const cw = (_c = (_b = shape == null ? void 0 : shape.cw) == null ? void 0 : _b[ctx.culture.key]) == null ? void 0 : _c[token6];
-  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t))).map(([e, w]) => {
+  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t))).map(([e, w]) => {
     var _a3, _b2;
-    let n = w * toneFactor((_a3 = e.t) != null ? _a3 : [], ctx.tone) * regionMult(ctx, e.r) * ((_b2 = cw == null ? void 0 : cw[e.w]) != null ? _b2 : 1);
+    let n = w * toneFactor((_a3 = e.t) != null ? _a3 : [], ctx.tone) * regionMult(ctx, e.rt) * ((_b2 = cw == null ? void 0 : cw[e.w]) != null ? _b2 : 1);
     if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token6 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
     return [e, n];
   }).filter(([, n]) => n > 0);

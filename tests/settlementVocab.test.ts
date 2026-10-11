@@ -12,6 +12,7 @@ import {
   VOCAB_CULTURES,
   VOCAB_ERAS,
   VOCAB_REGION_TAGS,
+  VOCAB_REGIONS,
   VOCABULARY_PACK_TEMPLATE,
   type VocabEntry,
   type Vocabulary,
@@ -35,7 +36,8 @@ test("§15.1: every entry has w; tones, eras, cultures and region tags are valid
     for (const t of e.t ?? []) assert.ok(GROUP_TONES.includes(t), `${pool} ${e.w}: tone ${t}`);
     for (const era of e.e ?? []) assert.ok(VOCAB_ERAS.includes(era), `${pool} ${e.w}: era ${era}`);
     for (const c of e.c ?? []) assert.ok(cultureKeys.has(c.replace(/^!/, "")), `${pool} ${e.w}: culture ${c}`);
-    if (e.r) assert.ok(VOCAB_REGION_TAGS.includes(e.r), `${pool} ${e.w}: region ${e.r}`);
+    if (e.rt) assert.ok(VOCAB_REGION_TAGS.includes(e.rt), `${pool} ${e.w}: route region ${e.rt}`);
+    for (const r of [...(e.r ?? []), ...Object.keys(e.rx ?? {})]) assert.ok(VOCAB_REGIONS.includes(r), `${pool} ${e.w}: region ${r}`);
     if (e.x !== undefined) assert.ok(e.x > 0, `${pool} ${e.w}: weight`);
     if (e.h !== undefined) assert.equal(typeof e.h, "boolean");
   };

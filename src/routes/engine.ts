@@ -214,10 +214,10 @@ function vocabPool(ctx: Ctx, pool: string, token: string): [VocabEntry, number][
   const shape = ctx.shape;
   const only = shape?.only?.[token];
   const cw = shape?.cw?.[ctx.culture.key]?.[token];
-  return poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic })
+  return poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region })
     .filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t)))
     .map(([e, w]): [VocabEntry, number] => {
-      let n = w * toneFactor(e.t ?? [], ctx.tone) * regionMult(ctx, e.r) * (cw?.[e.w] ?? 1);
+      let n = w * toneFactor(e.t ?? [], ctx.tone) * regionMult(ctx, e.rt) * (cw?.[e.w] ?? 1);
       if (shape?.rw && shape.rw.token === token && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
       return [e, n];
     })

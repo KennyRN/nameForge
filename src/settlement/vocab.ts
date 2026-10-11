@@ -25,8 +25,14 @@ export interface VocabEntry {
   h?: boolean;
   /** Plural, where `pluralOf` would be wrong. */
   pl?: string;
-  /** Route names §4.4: a region tag on a fixed whole name. */
-  r?: string;
+  /** Streets brief §3.1: region codes where the entry is used (British cultures only; all regions). */
+  r?: string[];
+  /** Region multipliers for the British cultures ("Gate: NTH EMD ×3, EAN ×1.5"). */
+  rx?: Record<string, number>;
+  /** Route names §4.4: a route region tag on a fixed whole name. */
+  rt?: string;
+  /** Streets brief §7.2: the district functions a fixed district name serves ("any": every one). */
+  fn?: string[];
 }
 
 export interface VocabPool {
@@ -40,6 +46,7 @@ interface VocabData {
   cultures: string[];
   cultureGroups: Record<string, { cultures: string[]; from?: Record<string, SettlementEra> }>;
   regionTags: string[];
+  regions: string[];
   pools: Record<string, VocabPool>;
 }
 
@@ -48,6 +55,8 @@ export const VOCAB_ERAS = SETTLEMENT_VOCAB.eras;
 export const VOCAB_CULTURES = SETTLEMENT_VOCAB.cultures;
 export const VOCAB_CULTURE_GROUPS = Object.keys(SETTLEMENT_VOCAB.cultureGroups);
 export const VOCAB_REGION_TAGS = SETTLEMENT_VOCAB.regionTags;
+/** Streets brief §3.1: the place-shape region codes. */
+export const VOCAB_REGIONS = SETTLEMENT_VOCAB.regions;
 /** Every pool name, in file order. */
 export const POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
 
@@ -76,14 +85,27 @@ export interface VocabWhere {
   culture: string;
   era: SettlementEra;
   fantastic: boolean;
+  /** Streets brief §3.1: a region code; only the British cultures read it. */
+  region?: string;
 }
 
-/** §3.1: whether an entry is used here (era, culture, fantastic). */
+/** Streets brief §3.1: the region a culture reads entries for (British cultures only). */
+const regionFor = (where: VocabWhere) => (where.region && inCultureGroup("british", where.culture, where.era) ? where.region : undefined);
+
+/** §3.1: whether an entry is used here (era, culture, fantastic, region). */
 export function entryAllowed(e: VocabEntry, where: VocabWhere): boolean {
   if (e.e && !e.e.includes(where.era)) return false;
   if (e.h !== undefined && e.h !== where.fantastic) return false;
+  const region = regionFor(where);
+  if (region && e.r && !e.r.includes(region)) return false;
   return cultureAllowed(e.c, where.culture, where.era);
 }
+
+/** Streets brief §5.2: an entry's region multiplier here. */
+const regionX = (e: VocabEntry, where: VocabWhere) => {
+  const region = regionFor(where);
+  return region ? e.rx?.[region] ?? 1 : 1;
+};
 
 // ── Merged vocabularies ─────────────────────────────────────────────────────
 
@@ -108,7 +130,7 @@ export function poolEntries(vocab: Vocabulary, name: string, where: VocabWhere):
       out.push([e, w]);
     }
   };
-  for (const e of pool.entries) if (entryAllowed(e, where)) add(e, e.x ?? 1);
+  for (const e of pool.entries) if (entryAllowed(e, where)) add(e, (e.x ?? 1) * regionX(e, where));
   for (const e of pool.cultureExtra?.[where.culture] ?? []) {
     if (!entryAllowed(e, where)) continue;
     const i = at.get(e.w);
@@ -131,6 +153,7 @@ export interface VocabPackSection {
   pool: string;
   culture?: string;
   era?: SettlementEra;
+  region?: string;
   entries: VocabEntry[];
 }
 
@@ -181,6 +204,7 @@ export function parseVocabularyPack(content: string, note: string): { sections: 
       for (const part of parts) {
         if ((VOCAB_ERAS as string[]).includes(part)) section.era = part as SettlementEra;
         else if (VOCAB_CULTURES.includes(part)) section.culture = part;
+        else if (VOCAB_REGIONS.includes(part)) section.region = part;
         else {
           problems.push(`Unknown culture “${part}” in vocabulary pack “${note}”.`);
           bad = true;
@@ -215,7 +239,7 @@ export function mergeVocabularyPacks(
     for (const s of sections) {
       for (const e of s.entries) {
         if (hasBannedWord(e.w) || blocked(e.w)) continue;
-        pools[s.pool].entries.push({ ...e, ...(s.culture ? { c: [s.culture] } : {}), ...(s.era ? { e: [s.era] } : {}) });
+        pools[s.pool].entries.push({ ...e, ...(s.culture ? { c: [s.culture] } : {}), ...(s.era ? { e: [s.era] } : {}), ...(s.region ? { r: [s.region] } : {}) });
       }
     }
   }
@@ -228,7 +252,7 @@ export const VOCABULARY_PACK_TEMPLATE = [
   `type: ${VOCABULARY_TYPE}`,
   "---",
   "",
-  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` ×0.5` or ` (grim)`, and narrow a heading with ` · japanese` or ` · MD`.",
+  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` ×0.5` or ` (grim)`, and narrow a heading with ` · japanese`, ` · MD` or ` · NTH`.",
   "",
   ...POOL_NAMES.flatMap((p) => [`## ${p}`, ""]),
 ].join("\n");
