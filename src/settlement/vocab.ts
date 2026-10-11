@@ -33,6 +33,8 @@ export interface VocabEntry {
   rt?: string;
   /** Streets brief §7.2: the district functions a fixed district name serves ("any": every one). */
   fn?: string[];
+  /** Inns brief §3: themes (rural, urban, maritime, road, magical). */
+  th?: string[];
 }
 
 export interface VocabPool {
@@ -47,6 +49,7 @@ interface VocabData {
   cultureGroups: Record<string, { cultures: string[]; from?: Record<string, SettlementEra> }>;
   regionTags: string[];
   regions: string[];
+  themes: string[];
   pools: Record<string, VocabPool>;
 }
 
@@ -57,6 +60,8 @@ export const VOCAB_CULTURE_GROUPS = Object.keys(SETTLEMENT_VOCAB.cultureGroups);
 export const VOCAB_REGION_TAGS = SETTLEMENT_VOCAB.regionTags;
 /** Streets brief §3.1: the place-shape region codes. */
 export const VOCAB_REGIONS = SETTLEMENT_VOCAB.regions;
+/** Inns brief §3: the themes an entry can carry. */
+export const VOCAB_THEMES = SETTLEMENT_VOCAB.themes;
 /** Every pool name, in file order. */
 export const POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
 
@@ -87,6 +92,8 @@ export interface VocabWhere {
   fantastic: boolean;
   /** Streets brief §3.1: a region code; only the British cultures read it. */
   region?: string;
+  /** Inns brief §3: theme multipliers a module asks for (the inn setting); other modules leave it out. */
+  themes?: Record<string, number>;
 }
 
 /** Streets brief §3.1: the region a culture reads entries for (British cultures only). */
@@ -106,6 +113,9 @@ const regionX = (e: VocabEntry, where: VocabWhere) => {
   const region = regionFor(where);
   return region ? e.rx?.[region] ?? 1 : 1;
 };
+
+/** Inns brief §3: an entry's theme multiplier here (each of its themes the module asks for). */
+const themeX = (e: VocabEntry, where: VocabWhere) => (e.th ?? []).reduce((n, t) => n * (where.themes?.[t] ?? 1), 1);
 
 // ── Merged vocabularies ─────────────────────────────────────────────────────
 
@@ -130,7 +140,7 @@ export function poolEntries(vocab: Vocabulary, name: string, where: VocabWhere):
       out.push([e, w]);
     }
   };
-  for (const e of pool.entries) if (entryAllowed(e, where)) add(e, (e.x ?? 1) * regionX(e, where));
+  for (const e of pool.entries) if (entryAllowed(e, where)) add(e, (e.x ?? 1) * regionX(e, where) * themeX(e, where));
   for (const e of pool.cultureExtra?.[where.culture] ?? []) {
     if (!entryAllowed(e, where)) continue;
     const i = at.get(e.w);
@@ -157,12 +167,19 @@ export interface VocabPackSection {
   entries: VocabEntry[];
 }
 
-/** §3.3: a pack line: `- word`, then ` ×n` and/or ` (tone, tone)` in either order. */
+/** §3.3: a pack line: `- word`, then ` ×n`, ` (tone, tone)` and (Inns brief §3) ` [theme]`, in any order. */
 function parseLine(text: string): VocabEntry | undefined {
   let rest = text.trim();
   let x: number | undefined;
   let t: GroupTone[] | undefined;
-  for (let i = 0; i < 2; i++) {
+  let th: string[] | undefined;
+  for (let i = 0; i < 3; i++) {
+    const themes = rest.match(/\s*\[([^[\]]*)\]$/);
+    if (themes && th === undefined) {
+      th = themes[1].split(/[,\s]+/).map((x) => x.trim().toLowerCase()).filter((x) => VOCAB_THEMES.includes(x));
+      rest = rest.slice(0, themes.index).trim();
+      continue;
+    }
     const weight = rest.match(/\s*×\s*(\d+(?:\.\d+)?)$/);
     if (weight && x === undefined) {
       x = parseFloat(weight[1]);
@@ -179,7 +196,7 @@ function parseLine(text: string): VocabEntry | undefined {
     }
   }
   if (!rest) return undefined;
-  return { w: rest, ...(x !== undefined ? { x } : {}), ...(t && t.length > 0 ? { t } : {}) };
+  return { w: rest, ...(x !== undefined ? { x } : {}), ...(t && t.length > 0 ? { t } : {}), ...(th && th.length > 0 ? { th } : {}) };
 }
 
 /** §3.3: a pack's sections; an unknown pool or culture is reported and its section skipped. */
@@ -252,7 +269,7 @@ export const VOCABULARY_PACK_TEMPLATE = [
   `type: ${VOCABULARY_TYPE}`,
   "---",
   "",
-  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` ×0.5` or ` (grim)`, and narrow a heading with ` · japanese`, ` · MD` or ` · NTH`.",
+  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` ×0.5`, ` (grim)` or ` [maritime]`, and narrow a heading with ` · japanese`, ` · MD` or ` · NTH`.",
   "",
   ...POOL_NAMES.flatMap((p) => [`## ${p}`, ""]),
 ].join("\n");

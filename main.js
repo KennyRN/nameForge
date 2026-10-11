@@ -76945,9 +76945,508 @@ var settlement_vocab_default = {
         { w: "Palace Compound", c: ["ethiopian"], fn: ["rule"] },
         { w: "Cantonment", e: ["ST"], c: ["indian", "british"], fn: ["military"] }
       ]
+    },
+    innCreature: {
+      entries: [
+        { w: "Goose", th: ["rural"] },
+        { w: "Duck", th: ["rural"] },
+        { w: "Drake" },
+        { w: "Lamprey", th: ["maritime"] },
+        { w: "Minnow" },
+        { w: "Roebuck" },
+        { w: "Hind", th: ["rural"] },
+        { w: "Hedgehog" },
+        { w: "Mole" },
+        { w: "Coot" },
+        { w: "Cormorant", th: ["maritime"] },
+        { w: "Herring", th: ["maritime"] },
+        { w: "Pelican", th: ["maritime"] },
+        { w: "Sea-Lion", th: ["maritime"] },
+        { w: "Mermaid", th: ["maritime"] },
+        { w: "Talbot" },
+        { w: "Greyhound" },
+        { w: "Ox" },
+        { w: "Sheep", th: ["rural"] },
+        { w: "Pig", t: ["light"] }
+      ]
+    },
+    innPerson: {
+      entries: [
+        { w: "Hero" },
+        { w: "Hunter", th: ["rural"] },
+        { w: "King", x: 2 },
+        { w: "Knight" },
+        { w: "Maid" },
+        { w: "Queen", x: 2 },
+        { w: "Sailor", th: ["maritime"] },
+        { w: "Shepherd", th: ["rural"] },
+        { w: "Traveller", th: ["road"] },
+        { w: "Baron" },
+        { w: "Duke" },
+        { w: "Earl" },
+        { w: "Lord" },
+        { w: "Lady" },
+        { w: "Prince" },
+        { w: "Princess" },
+        { w: "Archer" },
+        { w: "Bowman" },
+        { w: "Squire" },
+        { w: "Soldier" },
+        { w: "Drover", th: ["rural", "road"] },
+        { w: "Fisher", th: ["maritime"] },
+        { w: "Forester" },
+        { w: "Ploughman", th: ["rural"] },
+        { w: "Goose Girl", t: ["light"], th: ["rural"] },
+        { w: "Goat Boy", t: ["light"], th: ["rural"] },
+        { w: "Constable" },
+        { w: "Judge" },
+        { w: "Champion" },
+        { w: "Executioner", t: ["grim"] },
+        { w: "Blacksmith" },
+        { w: "Cooper" },
+        { w: "Fletcher" },
+        { w: "Mason" },
+        { w: "Weaver" },
+        { w: "Sage" },
+        { w: "Scholar" },
+        { w: "Scribe" },
+        { w: "Doctor" },
+        { w: "Pilgrim", th: ["road"] },
+        { w: "Fiddler", t: ["light"] },
+        { w: "Harper" },
+        { w: "Jester", t: ["light"] },
+        { w: "Minstrel" },
+        { w: "Piper" },
+        { w: "Highwayman", t: ["grim"], th: ["road"] },
+        { w: "Pirate", th: ["maritime"] },
+        { w: "Rogue", t: ["light"] },
+        { w: "Beggar" },
+        { w: "Brewer" },
+        { w: "Cook" },
+        { w: "Ferryman", th: ["maritime"] },
+        { w: "Fishwife", t: ["light"], th: ["maritime"] },
+        { w: "Gardener" },
+        { w: "Greybeard" },
+        { w: "Merchant" },
+        { w: "Miller" },
+        { w: "Miner" },
+        { w: "Tinker", t: ["light"], th: ["road"] },
+        { w: "Vintner" },
+        { w: "Wanderer" },
+        { w: "Old Woman" },
+        { w: "Crone", t: ["light"] },
+        { w: "Lad" },
+        { w: "Abbot", c: ["christian"] },
+        { w: "Bishop", c: ["christian"] },
+        { w: "Friar", c: ["christian"] },
+        { w: "Monk", c: ["christian"] },
+        { w: "Nun", c: ["christian"] },
+        { w: "Prior", c: ["christian"] },
+        { w: "Wizard", h: true, th: ["magical"] },
+        { w: "Enchantress", h: true, th: ["magical"] },
+        { w: "Druid", h: true, th: ["magical"] },
+        { w: "Giant", h: true },
+        { w: "Troll", h: true },
+        { w: "Goblin", h: true }
+      ]
+    },
+    innItem: {
+      entries: [
+        { w: "Cask", th: ["urban"] },
+        { w: "Barrel" },
+        { w: "Firkin" },
+        { w: "Hogshead" },
+        { w: "Tun" },
+        { w: "Cup", th: ["urban"] },
+        { w: "Goblet" },
+        { w: "Horn" },
+        { w: "Tankard" },
+        { w: "Jug" },
+        { w: "Flagon" },
+        { w: "Bottle" },
+        { w: "Crooked Billet" },
+        { w: "Wheatsheaf", th: ["rural"] },
+        { w: "Hops", th: ["rural"] },
+        { w: "Barley Mow", th: ["rural"] },
+        { w: "Plough", th: ["rural"] },
+        { w: "Harrow", th: ["rural"] },
+        { w: "Scythe", th: ["rural"] },
+        { w: "Shears", th: ["rural"] },
+        { w: "Bush", th: ["rural"] },
+        { w: "Stump", th: ["rural"] },
+        { w: "Coach", e: ["EM", "ST", "MO", "NF", "IS"], th: ["road"] },
+        { w: "Wagon", th: ["road"] },
+        { w: "Saddle", th: ["road"] },
+        { w: "Horseshoe", th: ["road"] },
+        { w: "Lantern", th: ["road"] },
+        { w: "Bell", th: ["urban"] },
+        { w: "Portcullis", th: ["urban"] },
+        { w: "Torch", th: ["urban"] },
+        { w: "Gate", th: ["urban"] },
+        { w: "Castle", th: ["urban"] },
+        { w: "Crown", th: ["urban"] },
+        { w: "Anchor", th: ["maritime"] },
+        { w: "Net", th: ["maritime"] },
+        { w: "Shell", th: ["maritime"] },
+        { w: "Ship", th: ["maritime"] },
+        { w: "Oar", th: ["maritime"] },
+        { w: "Compass", th: ["maritime"] },
+        { w: "Book", th: ["magical"] },
+        { w: "Crystal Ball", h: true, th: ["magical"] },
+        { w: "Mandrake", th: ["magical"] },
+        { w: "Pentacle", h: true, th: ["magical"] },
+        { w: "Scroll", th: ["magical"] },
+        { w: "Staff", th: ["magical"] },
+        { w: "Talisman", th: ["magical"] },
+        { w: "Wand", h: true, th: ["magical"] },
+        { w: "Zodiac", th: ["magical"] }
+      ]
+    },
+    innDescription: {
+      entries: [
+        { w: "Black", x: 2 },
+        { w: "White", x: 2 },
+        { w: "Red", x: 2 },
+        { w: "Blue" },
+        { w: "Green" },
+        { w: "Golden", x: 2 },
+        { w: "Grey" },
+        { w: "Royal" },
+        { w: "Jolly", x: 2, t: ["light"] },
+        { w: "Old" },
+        { w: "New" },
+        { w: "Silver" },
+        { w: "Brazen" },
+        { w: "Iron" },
+        { w: "Copper" },
+        { w: "Crystal" },
+        { w: "Pied" },
+        { w: "Spotted" },
+        { w: "Chequered" },
+        { w: "Laughing", t: ["light"] },
+        { w: "Dancing", t: ["light"] },
+        { w: "Drunken", t: ["light"] },
+        { w: "Sleepy", t: ["light"] },
+        { w: "Roaring" },
+        { w: "Leaping" },
+        { w: "Prancing" },
+        { w: "Flying" },
+        { w: "Fighting" },
+        { w: "Hungry" },
+        { w: "Lazy", t: ["light"] },
+        { w: "Little" },
+        { w: "Lucky", t: ["light"] },
+        { w: "Merry", t: ["light"] },
+        { w: "Crooked" },
+        { w: "Mucky", t: ["light"] },
+        { w: "Ragged" },
+        { w: "Rising" },
+        { w: "Running" },
+        { w: "Singing" },
+        { w: "Smiling" },
+        { w: "Wild" },
+        { w: "Wise" },
+        { w: "Blind" },
+        { w: "Broken", t: ["grim"] },
+        { w: "Howling", t: ["grim"] },
+        { w: "Hooded" },
+        { w: "Lone" },
+        { w: "Weeping", t: ["strange"] },
+        { w: "Silent", t: ["strange"] },
+        { w: "Pale", t: ["strange"] }
+      ]
+    },
+    innNumber: {
+      entries: [
+        { w: "Two", x: 5 },
+        { w: "Three", x: 4 },
+        { w: "Four", x: 3 },
+        { w: "Five", x: 3 },
+        { w: "Six" },
+        { w: "Seven", x: 2 },
+        { w: "Eight" },
+        { w: "Nine" }
+      ]
+    },
+    innFeature: {
+      entries: [
+        { w: "Head", x: 10 },
+        { w: "Antlers" },
+        { w: "Paw" },
+        { w: "Talon" },
+        { w: "Tail" },
+        { w: "Foot" }
+      ]
+    },
+    innHome: {
+      entries: [
+        { w: "Den" },
+        { w: "Nest" },
+        { w: "Lair" },
+        { w: "Burrow" },
+        { w: "Sett" },
+        { w: "Rest" },
+        { w: "Haunt" },
+        { w: "Roost" }
+      ]
+    },
+    innWorn: {
+      entries: [
+        { w: "in Armour" },
+        { w: "in Boots" },
+        { w: "in a Doublet" },
+        { w: "in a Hat" },
+        { w: "in a Cloak" }
+      ]
+    },
+    innLocation: {
+      entries: [
+        { w: "Arbour" },
+        { w: "Archway" },
+        { w: "Baths" },
+        { w: "Blasted Oak" },
+        { w: "Boundary Stone" },
+        { w: "Bridge" },
+        { w: "Brook" },
+        { w: "Castle" },
+        { w: "Cave" },
+        { w: "Cellar" },
+        { w: "Cliff" },
+        { w: "Crag" },
+        { w: "Crossroads", th: ["road"] },
+        { w: "Cross" },
+        { w: "Dock", th: ["maritime"] },
+        { w: "Dyke" },
+        { w: "Ferry", th: ["maritime"] },
+        { w: "Forge" },
+        { w: "Fork" },
+        { w: "Gallows", t: ["grim"] },
+        { w: "Gardens" },
+        { w: "Gate" },
+        { w: "Grove" },
+        { w: "Hill" },
+        { w: "Island" },
+        { w: "Lakeshore" },
+        { w: "Market" },
+        { w: "Mill", th: ["rural"] },
+        { w: "Pier", th: ["maritime"] },
+        { w: "Pool" },
+        { w: "Pump" },
+        { w: "Quarry" },
+        { w: "Riverside" },
+        { w: "Ruins" },
+        { w: "Shore", th: ["maritime"] },
+        { w: "Spring" },
+        { w: "Stables", th: ["road"] },
+        { w: "Standing Stone" },
+        { w: "Stocks", t: ["light"] },
+        { w: "Tollgate", th: ["road"] },
+        { w: "Tower" },
+        { w: "Wall" },
+        { w: "Waterfall" },
+        { w: "Wayside", th: ["road"] },
+        { w: "Weir" },
+        { w: "Well" },
+        { w: "Wood" }
+      ]
+    },
+    innFable: {
+      entries: [
+        { w: "Fox and Grapes" },
+        { w: "Hare and Tortoise" },
+        { w: "Bird in Hand" },
+        { w: "Cat and Fiddle", t: ["light"] },
+        { w: "Coach and Horses", e: ["EM", "ST", "MO", "NF", "IS"], th: ["road"] },
+        { w: "Rose and Crown" },
+        { w: "Crown and Anchor", th: ["maritime"] },
+        { w: "Lion and Unicorn" },
+        { w: "Swan with Two Necks" },
+        { w: "Hen and Chickens", th: ["rural"] },
+        { w: "Pig and Whistle", t: ["light"] },
+        { w: "Goat and Compasses" },
+        { w: "Eight Bells", th: ["maritime"] },
+        { w: "Jolly Sailor", th: ["maritime"] },
+        { w: "Crooked Billet" },
+        { w: "Rising Sun" },
+        { w: "Royal Oak" },
+        { w: "Wheatsheaf", th: ["rural"] },
+        { w: "Mucky Duck", t: ["light"] },
+        { w: "Barley Mow", th: ["rural"] },
+        { w: "Plough and Harrow", th: ["rural"] },
+        { w: "Ship and Shovel", th: ["maritime"] },
+        { w: "Bull and Butcher" },
+        { w: "Fleece", th: ["rural"], rx: { NTH: 3 } },
+        { w: "Black Bull", rx: { SLO: 3, SBL: 3, NTH: 3 } },
+        { w: "Red Dragon", rx: { WAL: 4 } },
+        { w: "Cross Keys", c: ["christian"] },
+        { w: "Lamb and Flag", c: ["christian"] },
+        { w: "Angel", c: ["christian"] },
+        { w: "George and Dragon", c: ["christian"] },
+        { w: "Jolly Tinner", rx: { COR: 4 } },
+        { w: "Wherry", th: ["maritime"], rx: { EAN: 3 } }
+      ]
+    },
+    "houseWord:inn": {
+      entries: [
+        { w: "Inn", x: 4 },
+        { w: "Hostelry", e: ["MD", "EM"], c: ["british"] },
+        { w: "Lodging House", e: ["ST"] },
+        { w: "Hotel", e: ["ST", "MO"] },
+        { w: "Guest House", c: ["celtic", "greek-byzantine", "bantu", "polynesian"] },
+        { w: "Guest House", e: ["MO"] },
+        { w: "Guest Hall", c: ["norse"] },
+        { w: "Station Inn", c: ["roman", "korean"] },
+        { w: "Lords' Inn", e: ["EM"], c: ["japanese"] },
+        { w: "Clachan", e: ["MD", "EM", "ST"], c: ["british"], r: ["SHH"] }
+      ]
+    },
+    "houseWord:tavern": {
+      entries: [
+        { w: "Tavern", x: 3 },
+        { w: "Alehouse", e: ["MD", "EM"], c: ["british"] },
+        { w: "Mead Hall", c: ["anglo-saxon", "norse"] },
+        { w: "Wine House", c: ["greek-byzantine", "chinese", "roman"] },
+        { w: "Beer House", c: ["egyptian"] },
+        { w: "Beer House", e: ["ST"], c: ["british"] },
+        { w: "Mead House", c: ["ethiopian"] },
+        { w: "Public House", e: ["EM", "ST", "MO"], c: ["british"] },
+        { w: "Pub", e: ["MO"], c: ["british"] },
+        { w: "Gin Shop", e: ["ST"], c: ["british"] },
+        { w: "Howff", e: ["EM", "ST"], c: ["british"], r: ["SLO", "SBL"] }
+      ]
+    },
+    "houseWord:eating": {
+      entries: [
+        { w: "Cookshop", e: ["MD", "EM"], c: ["british"] },
+        { w: "Chop House", e: ["EM", "ST"] },
+        { w: "Eating House" },
+        { w: "Tea House", c: ["chinese", "japanese", "korean"] },
+        { w: "Tea House", e: ["ST", "MO", "NF", "IS"], c: ["indian", "british"] },
+        { w: "Coffee House", e: ["EM", "ST", "MO", "NF", "IS"], c: ["arabic-persian"] },
+        { w: "Coffee House", e: ["EM", "ST"], c: ["british"] },
+        { w: "Coffee House", e: ["ST"], c: ["slavic"] },
+        { w: "Caf\xE9", e: ["MO"] },
+        { w: "Dining Rooms", e: ["ST"] }
+      ]
+    },
+    "houseWord:wayhouse": {
+      entries: [
+        { w: "Post House", e: ["MD", "EM", "ST"] },
+        { w: "Post Station", c: ["steppe", "chinese", "slavic"] },
+        { w: "Caravan Court", c: ["arabic-persian", "steppe", "indian"] },
+        { w: "Change Station", c: ["roman"] },
+        { w: "Station Inn", c: ["roman"] },
+        { w: "Coaching Inn", e: ["EM", "ST"], c: ["british"] },
+        { w: "Way Station" },
+        { w: "Royal Station", c: ["andean"] }
+      ]
+    },
+    "houseWord:rest": {
+      entries: [
+        { w: "Rest House" },
+        { w: "Pilgrims' Lodge" },
+        { w: "Hostel" },
+        { w: "Hospice", e: ["MD"], c: ["christian"] },
+        { w: "Guest House", c: ["greek-byzantine"] },
+        { w: "Strangers' Lodge", c: ["west-african"] },
+        { w: "Landlord's House", c: ["west-african"] },
+        { w: "Merchants' House", c: ["aztec", "maya"] },
+        { w: "Temperance Hotel", e: ["ST"], c: ["british"] }
+      ]
+    },
+    "houseWord:club": {
+      entries: [
+        { w: "Club", x: 2 },
+        { w: "Rooms" },
+        { w: "Hall" },
+        { w: "Hotel" },
+        { w: "Assembly Rooms", e: ["EM", "ST"], c: ["british"] },
+        { w: "Music Hall", e: ["ST"] },
+        { w: "Gin Palace", e: ["ST"], c: ["british"] },
+        { w: "Railway Hotel", e: ["ST"] }
+      ]
+    },
+    "houseWord:bar": {
+      entries: [
+        { w: "Bar", x: 3 },
+        { w: "Lounge" },
+        { w: "Diner", e: ["MO"], c: ["general"] },
+        { w: "Motel", e: ["MO"], c: ["general"] },
+        { w: "Canteen", e: ["NF", "IS"] },
+        { w: "Rest", e: ["NF", "IS"] }
+      ]
+    },
+    auspicious: {
+      entries: [
+        { w: "Lasting Peace", x: 2, c: ["chinese", "korean"] },
+        { w: "Ten Thousand Blessings", c: ["chinese", "korean"] },
+        { w: "Peace and Plenty", c: ["chinese", "korean"] },
+        { w: "Eternal Spring", c: ["chinese", "korean"] },
+        { w: "Clear Brightness", c: ["chinese", "korean"] },
+        { w: "Harmony", c: ["chinese", "korean"] },
+        { w: "Abundance", c: ["chinese", "korean"] },
+        { w: "Good Fortune", c: ["chinese", "korean"] },
+        { w: "Joyful Arrival", c: ["chinese", "korean"] }
+      ]
+    },
+    welcomePhrase: {
+      entries: [
+        { w: "Welcome Guests", x: 2, c: ["chinese"] },
+        { w: "Guests Return", c: ["chinese"] },
+        { w: "Joyful Arrival", c: ["chinese"] },
+        { w: "Gathered Friends", c: ["chinese"] },
+        { w: "Long Road's End", c: ["chinese"] }
+      ]
+    },
+    eastNature: {
+      entries: [
+        { w: "Jade River", c: ["chinese", "korean", "japanese"] },
+        { w: "Willow Bank", c: ["chinese", "korean", "japanese"] },
+        { w: "Plum Blossom", c: ["chinese", "korean", "japanese"] },
+        { w: "Bamboo Grove", c: ["chinese", "korean", "japanese"] },
+        { w: "Moon Pavilion", c: ["chinese", "korean", "japanese"] },
+        { w: "Golden Crane", c: ["chinese", "korean", "japanese"] },
+        { w: "Pine Wind", c: ["chinese", "korean", "japanese"] },
+        { w: "Maple", c: ["chinese", "korean", "japanese"] },
+        { w: "Cherry Blossom", c: ["chinese", "korean", "japanese"] },
+        { w: "Snow Country", c: ["chinese", "korean", "japanese"] },
+        { w: "Crane", c: ["chinese", "korean", "japanese"] },
+        { w: "Magpie", c: ["chinese", "korean", "japanese"] },
+        { w: "Autumn Moon", c: ["chinese", "korean", "japanese"] },
+        { w: "Spring Rain", c: ["chinese", "korean", "japanese"] },
+        { w: "Mountain Mist", c: ["chinese", "korean", "japanese"] }
+      ]
+    },
+    oasisAnchor: {
+      entries: [
+        { w: "Rose", c: ["arabic-persian"] },
+        { w: "Garden", c: ["arabic-persian"] },
+        { w: "Fountain", c: ["arabic-persian"] },
+        { w: "Cypress", c: ["arabic-persian"] },
+        { w: "Nightingale", c: ["arabic-persian"] },
+        { w: "Pomegranate", c: ["arabic-persian"] },
+        { w: "Crescent", c: ["arabic-persian"] },
+        { w: "Date Palm", c: ["arabic-persian"] },
+        { w: "Two Stars", c: ["arabic-persian"] },
+        { w: "Seven Wells", c: ["arabic-persian"] }
+      ]
+    },
+    indianAnchor: {
+      entries: [
+        { w: "Lotus", x: 2, c: ["indian"] },
+        { w: "Garden", c: ["indian"] },
+        { w: "River", c: ["indian"] },
+        { w: "Peacock", c: ["indian"] },
+        { w: "Mango Grove", c: ["indian"] },
+        { w: "Banyan", c: ["indian"] },
+        { w: "Moonlight", c: ["indian"] },
+        { w: "Jasmine", c: ["indian"] },
+        { w: "Monsoon", c: ["indian"] }
+      ]
     }
   },
-  regions: ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI"]
+  regions: ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI"],
+  themes: ["rural", "urban", "maritime", "road", "magical"]
 };
 
 // src/settlement/vocab.ts
@@ -76957,6 +77456,7 @@ var VOCAB_CULTURES = SETTLEMENT_VOCAB.cultures;
 var VOCAB_CULTURE_GROUPS = Object.keys(SETTLEMENT_VOCAB.cultureGroups);
 var VOCAB_REGION_TAGS = SETTLEMENT_VOCAB.regionTags;
 var VOCAB_REGIONS = SETTLEMENT_VOCAB.regions;
+var VOCAB_THEMES = SETTLEMENT_VOCAB.themes;
 var POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
 var eraIndex = (era) => VOCAB_ERAS.indexOf(era);
 function inCultureGroup(group, culture, era) {
@@ -76987,6 +77487,13 @@ var regionX = (e, where2) => {
   const region = regionFor(where2);
   return region ? (_b = (_a2 = e.rx) == null ? void 0 : _a2[region]) != null ? _b : 1 : 1;
 };
+var themeX = (e, where2) => {
+  var _a2;
+  return ((_a2 = e.th) != null ? _a2 : []).reduce((n, t) => {
+    var _a3, _b;
+    return n * ((_b = (_a3 = where2.themes) == null ? void 0 : _a3[t]) != null ? _b : 1);
+  }, 1);
+};
 var BUILT_IN_VOCAB = { pools: SETTLEMENT_VOCAB.pools };
 function poolEntries(vocab, name, where2) {
   var _a2, _b, _c, _d;
@@ -77002,7 +77509,7 @@ function poolEntries(vocab, name, where2) {
       out.push([e, w]);
     }
   };
-  for (const e of pool3.entries) if (entryAllowed(e, where2)) add2(e, ((_a2 = e.x) != null ? _a2 : 1) * regionX(e, where2));
+  for (const e of pool3.entries) if (entryAllowed(e, where2)) add2(e, ((_a2 = e.x) != null ? _a2 : 1) * regionX(e, where2) * themeX(e, where2));
   for (const e of (_c = (_b = pool3.cultureExtra) == null ? void 0 : _b[where2.culture]) != null ? _c : []) {
     if (!entryAllowed(e, where2)) continue;
     const i = at.get(e.w);
@@ -77020,7 +77527,14 @@ function parseLine(text) {
   let rest = text.trim();
   let x;
   let t;
-  for (let i = 0; i < 2; i++) {
+  let th;
+  for (let i = 0; i < 3; i++) {
+    const themes = rest.match(/\s*\[([^[\]]*)\]$/);
+    if (themes && th === void 0) {
+      th = themes[1].split(/[,\s]+/).map((x2) => x2.trim().toLowerCase()).filter((x2) => VOCAB_THEMES.includes(x2));
+      rest = rest.slice(0, themes.index).trim();
+      continue;
+    }
     const weight = rest.match(/\s*×\s*(\d+(?:\.\d+)?)$/);
     if (weight && x === void 0) {
       x = parseFloat(weight[1]);
@@ -77034,7 +77548,7 @@ function parseLine(text) {
     }
   }
   if (!rest) return void 0;
-  return { w: rest, ...x !== void 0 ? { x } : {}, ...t && t.length > 0 ? { t } : {} };
+  return { w: rest, ...x !== void 0 ? { x } : {}, ...t && t.length > 0 ? { t } : {}, ...th && th.length > 0 ? { th } : {} };
 }
 function parseVocabularyPack(content, note) {
   const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
@@ -77097,7 +77611,7 @@ var VOCABULARY_PACK_TEMPLATE = [
   `type: ${VOCABULARY_TYPE}`,
   "---",
   "",
-  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` \xD70.5` or ` (grim)`, and narrow a heading with ` \xB7 japanese`, ` \xB7 MD` or ` \xB7 NTH`.",
+  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` \xD70.5`, ` (grim)` or ` [maritime]`, and narrow a heading with ` \xB7 japanese`, ` \xB7 MD` or ` \xB7 NTH`.",
   "",
   ...POOL_NAMES.flatMap((p) => [`## ${p}`, ""])
 ].join("\n");

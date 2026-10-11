@@ -16,6 +16,7 @@ Every pool in `src/data/settlement-vocab.json`: what it holds, the tags its entr
 | `r` | region codes (COR … NSI) where the entry is used; read for the British cultures only | all regions |
 | `rx` | region multipliers for the British cultures, e.g. `{"NTH": 3}` | ×1 |
 | `rt` | a route region tag (route names §4.4), on fixed whole route names | – |
+| `th` | themes: rural, urban, maritime, road, magical; the inn setting multiplies them (other modules ignore them); pack lines add them as ` [maritime]` | none |
 | `fn` | the district functions a fixed district name serves (`any`: every function) | – |
 
 Vocabulary pack headings can narrow by culture, era and region in any order: `## alleyDialect · SLO`.
@@ -29,13 +30,13 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | Pool | Holds | Tags used | Read by |
 |---|---|---|---|
 | `direction` | compass points for "‹direction› Road" (diagonals ×0.2) | x | route names, streets and districts |
-| `directionAdj` | Northern, Southern, Eastern, Western | – | route names, streets and districts |
-| `travellers` | plural travellers for "‹travellers›' Way" | x, t, c, e | route names, streets and districts |
+| `directionAdj` | Northern, Southern, Eastern, Western | – | route names, streets and districts, inns and taverns |
+| `travellers` | plural travellers for "‹travellers›' Way" | x, t, c, e | route names, streets and districts, inns and taverns |
 | `routeFeature` | earthworks and markers for "‹feature› Way" | x | route names |
 | `routeMaterial` | road surfaces for "‹material› Street" | x, e | route names |
 | `routeLandform` | country a road crosses, for "‹landform› Way" | c | route names |
 | `routeGoods` | goods carried on a route ("Salt Way", "Amber Road"), with each culture's extra goods | x, e, cultureExtra | route names, streets and districts |
-| `holySite` | a holy destination, read as "the ‹site›" | x, c | route names, streets and districts |
+| `holySite` | a holy destination, read as "the ‹site›" | x, c | route names, streets and districts, inns and taverns |
 | `holySitePl` | plural holy sites for "Road of the ‹number› ‹sites›" | c | route names |
 | `dayNumber` | day counts for "‹n› Days Road" | – | route names |
 | `jFeature` | Japanese road features ("Western Mountain Road") | x, c | route names |
@@ -51,29 +52,29 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `routeFixed:rail` | whole railway and canal names (none built in) | – | route names |
 | `routeFixed:motor` | whole modern road names (none built in) | – | route names |
 | `routeFixed:space` | whole space-lane names ("The Long Haul") | t | route names |
-| `compWater` | water components: Well, Spring, Fountain | x, e, c | streets and districts |
-| `compCrossing` | crossings: Bridge, Ford, Ferry | x, t, e | streets and districts |
-| `compMill` | mills and works: Mill, Kiln, Foundry | x, e | streets and districts |
-| `compStorage` | storage: Granary, Barn, Warehouse | c, e | streets and districts |
-| `compMarket` | trade buildings: Market, Cross, Exchange | x, c, e | streets and districts |
-| `compDefence` | defences: Gate, Wall, Castle | x, e | streets and districts |
-| `compFaith` | faith buildings (christian words for christian cultures only) | x, c | streets and districts |
-| `compRule` | government: Court, Mint, Moot Hill | c, e | streets and districts |
-| `compWaterside` | waterside: Dock, Quay, Staithe | e, r | streets and districts |
-| `compTravel` | travel: Inn, Post House, Station | x, c, e | streets and districts |
-| `compLearning` | learning: Library, School, Museum | e | streets and districts |
-| `compDeath` | burial and execution places | t, e | streets and districts |
-| `compPublic` | public spaces: Green, Gardens, Park | x, c, e | streets and districts |
-| `compSteampunk` | steampunk components (fantastic, steam age) | e, h | streets and districts |
-| `compSciFi` | sci-fi components: Hub, Spoke, Airlock | t, e | streets and districts |
+| `compWater` | water components: Well, Spring, Fountain | x, e, c | streets and districts, inns and taverns |
+| `compCrossing` | crossings: Bridge, Ford, Ferry | x, t, e | streets and districts, inns and taverns |
+| `compMill` | mills and works: Mill, Kiln, Foundry | x, e | streets and districts, inns and taverns |
+| `compStorage` | storage: Granary, Barn, Warehouse | c, e | streets and districts, inns and taverns |
+| `compMarket` | trade buildings: Market, Cross, Exchange | x, c, e | streets and districts, inns and taverns |
+| `compDefence` | defences: Gate, Wall, Castle | x, e | streets and districts, inns and taverns |
+| `compFaith` | faith buildings (christian words for christian cultures only) | x, c | streets and districts, inns and taverns |
+| `compRule` | government: Court, Mint, Moot Hill | c, e | streets and districts, inns and taverns |
+| `compWaterside` | waterside: Dock, Quay, Staithe | e, r | streets and districts, inns and taverns |
+| `compTravel` | travel: Inn, Post House, Station | x, c, e | streets and districts, inns and taverns |
+| `compLearning` | learning: Library, School, Museum | e | streets and districts, inns and taverns |
+| `compDeath` | burial and execution places | t, e | streets and districts, inns and taverns |
+| `compPublic` | public spaces: Green, Gardens, Park | x, c, e | streets and districts, inns and taverns |
+| `compSteampunk` | steampunk components (fantastic, steam age) | e, h | streets and districts, inns and taverns |
+| `compSciFi` | sci-fi components: Hub, Spoke, Airlock | t, e | streets and districts, inns and taverns |
 | `streetWord` | street words: Street, Lane, Row, Gate | x, e, c, rx | streets and districts |
 | `alleyWord` | alley words: Alley, Court, Yard | x | streets and districts |
 | `planned` | planned-street words: Terrace, Crescent, Grove | x, e | streets and districts |
 | `alleyDialect` | British regional alley words: Wynd, Chare, Twitten | r | streets and districts |
 | `mainStreet` | whole main-street names: High Street, Middle Street | x, c, e, r | streets and districts |
-| `streetTrades` | plural trades: Butchers, Weavers (singular drops the -s) | x, c, e, h | streets and districts |
-| `streetGoods` | goods for streets and markets: Corn, Silver (plus routeGoods' culture extras ×2) | x, e | streets and districts |
-| `streetFigure` | figures for King's Street, Bishop's Lane | x, c, e | streets and districts |
+| `streetTrades` | plural trades: Butchers, Weavers (singular drops the -s) | x, c, e, h | streets and districts, inns and taverns |
+| `streetGoods` | goods for streets and markets: Corn, Silver (plus routeGoods' culture extras ×2) | x, e | streets and districts, inns and taverns |
+| `streetFigure` | figures for King's Street, Bishop's Lane | x, c, e | streets and districts, inns and taverns |
 | `streetTree` | trees for planned streets: Laburnum Grove | e | streets and districts |
 | `commemorative` | commemorative words: Jubilee, Victory, Station | x, t, e | streets and districts |
 | `streetSteampunk` | whole steampunk street names: Lamplight Row | t, e, h | streets and districts |
@@ -83,3 +84,25 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `squareFixed` | whole square and market names: Market Square, Caravan Court | x, c, e, h | streets and districts |
 | `districtWord` | district words: Quarter, Ward, End | x, t, e, c | streets and districts |
 | `districtFixed` | whole district names: Old Town, Castle Town | x, t, e, c, fn | streets and districts |
+| `innCreature` | creatures added to GN beast, bird, fish and heraldicBeast for inn signs | t, th | inns and taverns |
+| `innPerson` | sign people: the Jester, the Goose Girl | x, t, c, h, th | inns and taverns |
+| `innItem` | items added to GN emblem items for inn signs | e, h, th | inns and taverns |
+| `innDescription` | sign adjectives: Black, Jolly, Prancing | x, t | inns and taverns |
+| `innNumber` | sign numbers: Two ×5 … Nine | x | inns and taverns |
+| `innFeature` | creature parts: Head, Antlers | x | inns and taverns |
+| `innHome` | creature homes: Den, Nest | – | inns and taverns |
+| `innWorn` | "in Armour", "in Boots" | – | inns and taverns |
+| `innLocation` | sign locations: the Old Bridge (plus SD components ×0.3) | t, th | inns and taverns |
+| `innFable` | whole signs: Fox and Grapes, Rose and Crown | t, e, c, rx, th | inns and taverns |
+| `houseWord:inn` | house words for inns: Inn, Hostelry, Guest Hall | x, e, c, r | inns and taverns |
+| `houseWord:tavern` | house words for taverns: Tavern, Alehouse, Mead Hall | x, e, c, r | inns and taverns |
+| `houseWord:eating` | house words for eating houses: Cookshop, Tea House, Café | e, c | inns and taverns |
+| `houseWord:wayhouse` | house words for way stations: Post House, Caravan Court | e, c | inns and taverns |
+| `houseWord:rest` | house words for rest houses: Rest House, Hostel, Hospice | e, c | inns and taverns |
+| `houseWord:club` | house words for clubs and hotels: Club, Music Hall | x, e, c | inns and taverns |
+| `houseWord:bar` | house words for bars: Bar, Lounge, Canteen | x, e, c | inns and taverns |
+| `auspicious` | Chinese and Korean auspicious phrases: Lasting Peace | x, c | inns and taverns |
+| `welcomePhrase` | Chinese welcome phrases: Welcome Guests | x, c | inns and taverns |
+| `eastNature` | East Asian nature anchors: Pine Wind, Plum Blossom | c | inns and taverns |
+| `oasisAnchor` | Arabic and Persian anchors: Two Stars, Seven Wells | c | inns and taverns |
+| `indianAnchor` | Indian anchors: Lotus, Banyan | x, c | inns and taverns |

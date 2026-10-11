@@ -13,6 +13,7 @@ import {
   VOCAB_ERAS,
   VOCAB_REGION_TAGS,
   VOCAB_REGIONS,
+  VOCAB_THEMES,
   VOCABULARY_PACK_TEMPLATE,
   type VocabEntry,
   type Vocabulary,
@@ -40,6 +41,7 @@ test("§15.1: every entry has w; tones, eras, cultures and region tags are valid
     for (const r of [...(e.r ?? []), ...Object.keys(e.rx ?? {})]) assert.ok(VOCAB_REGIONS.includes(r), `${pool} ${e.w}: region ${r}`);
     if (e.x !== undefined) assert.ok(e.x > 0, `${pool} ${e.w}: weight`);
     if (e.h !== undefined) assert.equal(typeof e.h, "boolean");
+    for (const th of e.th ?? []) assert.ok(VOCAB_THEMES.includes(th), `${pool} ${e.w}: theme ${th}`);
   };
   for (const [name, pool] of Object.entries(SETTLEMENT_VOCAB.pools)) {
     for (const e of pool.entries) check(name, e);
