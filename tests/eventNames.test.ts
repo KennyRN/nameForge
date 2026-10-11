@@ -150,3 +150,56 @@ test("§14.5: 10,000 names across options: no block-list matches, no banned word
   for (const name of many({ culture: "korean", kind: "crisis", tone: "light", people: "invented" }, 1000)) assert.ok(!name.text.startsWith("Purge"), name.text);
   assert.ok(many({ culture: "korean", kind: "crisis", people: "invented" }, 1000).some((x) => x.text.startsWith("Purge")));
 });
+
+// ── §14.6 Sentence and presets ──────────────────────────────────────────────
+
+import { chooseEvent, DEFAULT_EVENT_STATE, eventHistoryLabel, eventSentence, eventSentenceText } from "../src/events/sentence";
+import { modulePresetContent, parseModulePreset, type EventPreset } from "../src/presets";
+import { GROUP_LABELS, historySection, SECTION_GROUPS, SWITCHER_ORDER } from "../src/sections";
+
+test("§14.6: the default sentence's plain text", () => {
+  assert.equal(
+    eventSentenceText(eventSentence(DEFAULT_EVENT_STATE)),
+    "Norman & British events of any kind of the medieval era, in a realistic world, on a realm's scale, of any tone, with placeholders for people and places, each one separate.",
+  );
+  const local = [["kind", "war"], ["scale", "local"], ["series", "on"]].reduce((s, [f, id]) => chooseEvent(s, f as never, id), DEFAULT_EVENT_STATE);
+  assert.equal(
+    eventSentenceText(eventSentence(local)),
+    "Norman & British wars of the medieval era, in a realistic world, on a local scale, of any tone, with placeholders for people and places, as one history.",
+  );
+});
+
+test("§14.6: the lore group, “history and faith”, follows bynames and titles in the switcher", () => {
+  assert.equal(SWITCHER_ORDER[SWITCHER_ORDER.indexOf("bynames") + 1], "lore");
+  assert.equal(GROUP_LABELS.lore, "history and faith");
+  assert.deepEqual(SECTION_GROUPS.lore, ["eventNames"]);
+  const label = eventHistoryLabel({ ...DEFAULT_EVENT_STATE, kind: "war", scale: "world", era: "ST", fantastic: true, tone: "grim", series: true });
+  assert.equal(label, "events and eras · steam age · Norman & British · wars · world · steampunk · grim · one history");
+  assert.equal(historySection(label), "eventNames");
+});
+
+test("§14.6: presets round-trip", () => {
+  const preset: EventPreset = {
+    packName: "Border chronicle",
+    setting: "",
+    description: "Norman & British events of any kind of the medieval era, in a realistic world, on a realm's scale, with a grim edge, with invented people and places, as one history.",
+    culture: "norman-british",
+    eventKind: "any",
+    era: "MD",
+    fantastic: false,
+    scale: "realm",
+    tone: "grim",
+    people: "invented",
+    series: true,
+  };
+  const content = modulePresetContent(preset);
+  assert.ok(content.includes("module: event-names\n") && content.includes("scale: realm\n") && content.includes("kind: any\n"));
+  const parsed = parseModulePreset(content, "x");
+  assert.deepEqual(parsed.event, preset);
+  assert.deepEqual(parsed.problems, []);
+  const state = [["tone", "grim"], ["people", "invented"], ["series", "on"]].reduce((s, [f, id]) => chooseEvent(s, f as never, id), DEFAULT_EVENT_STATE);
+  assert.equal(eventSentenceText(eventSentence(state)), preset.description);
+  const bad = parseModulePreset(modulePresetContent({ ...preset, scale: "galaxy" as never }), "x");
+  assert.equal(bad.event?.scale, "realm");
+  assert.deepEqual(bad.problems, ["Unknown scale “galaxy”."]);
+});

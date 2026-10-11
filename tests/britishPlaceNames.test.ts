@@ -244,6 +244,7 @@ test("line-up: the modules in order, with their labels; river names live in plac
       "epithets and bynames",
       "titles and honorifics",
       "family names",
+      "events and eras",
       "name ageing",
       "name takeover",
       "ships and boats",

@@ -33,6 +33,8 @@ export type NameForgeSection =
   | "buildingNames"
   // Settlement kit §1.1: after buildings and landmarks.
   | "settlementKit"
+  // Events brief §1.1: the history and faith group.
+  | "eventNames"
   | "riverNames"
   | "explorationPlaceShapes"
   | "empireExpansionPlaceShapes"
@@ -88,6 +90,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "realms",
   ...GROUP_NAME_SECTIONS,
   ...BYNAME_SECTIONS,
+  "eventNames",
   "nameAgeing",
   "nameTakeover",
   ...VESSEL_SECTIONS,
@@ -95,12 +98,14 @@ export const SECTION_ORDER: NameForgeSection[] = [
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
  * trigger then chooses between the group's modules. */
-export type SectionGroup = "placeNames" | "groupNames" | "bynames" | "advanced";
+export type SectionGroup = "placeNames" | "groupNames" | "bynames" | "lore" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   placeNames: ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames", "settlementKit", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
   groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
+  // Events brief §1.1 (the deities brief adds its module here).
+  lore: ["eventNames"],
   advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS],
 };
 
@@ -108,11 +113,12 @@ export const GROUP_LABELS: Record<SectionGroup, string> = {
   placeNames: "place names",
   groupNames: "group names",
   bynames: "bynames and titles",
+  lore: "history and faith",
   advanced: "advanced",
 };
 
 /** The switcher's line-up: modules and groups. */
-export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "groupNames", "bynames", "advanced"];
+export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "groupNames", "bynames", "lore", "advanced"];
 
 /** The group a module belongs to, if any. */
 export function sectionGroup(section: NameForgeSection): SectionGroup | undefined {
@@ -128,6 +134,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   innNames: "inns and taverns",
   buildingNames: "buildings and landmarks",
   settlementKit: "settlement kit",
+  eventNames: "events and eras",
   riverNames: "river names",
   explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
@@ -180,6 +187,8 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
   // Settlement kit §1.2: "settlement kit · {settlement name} · {size}…".
   if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
+  // Events brief §1.2: "events and eras · {era} · {culture}…".
+  if (starts(SECTION_LABELS.eventNames)) return "eventNames";
   // Realms brief §1.2: "realms and polities · {setting} · {culture} · {era}…".
   if (starts(SECTION_LABELS.realms)) return "realms";
   // Group brief §1.2: each group-name module's label starts its history rows.

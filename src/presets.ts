@@ -20,6 +20,7 @@ import { findRouteCulture, findRouteKind, kindsOffered, ROUTE_ERAS, routeEraLabe
 import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 import { INN_KINDS, INN_SETTINGS, type InnForm, type InnKind, type InnSetting } from "./inns/engine";
 import { BUILDING_KINDS, type BuildingKind } from "./buildings/engine";
+import { EVENT_KINDS, EVENT_SCALES, type EventKind, type EventScale } from "./events/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
 import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
@@ -74,7 +75,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -97,6 +98,8 @@ export function parseModulePreset(
   if (values.module === BUILDING_PRESET_MODULE) return parseBuildingPreset(values, body, fileName);
   // Settlement kit §11: kit presets too.
   if (values.module === KIT_PRESET_MODULE) return parseKitPreset(values, body, fileName);
+  // Events brief §12: event presets too.
+  if (values.module === EVENT_PRESET_MODULE) return parseEventPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module “${values.module ?? ""}”.`);
     return { problems };
@@ -131,7 +134,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset): string {
+  if ("eventKind" in preset) return eventPresetContent(preset);
   if ("contents" in preset) return kitPresetContent(preset);
   if ("buildingKind" in preset) return buildingPresetContent(preset);
   if ("innKind" in preset) return innPresetContent(preset);
@@ -868,6 +872,85 @@ function kitPresetContent(preset: KitPreset): string {
     `contents: ${preset.contents}`,
     `detail: ${preset.detail}`,
     `people: ${preset.people}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Event presets (Events brief §12) ────────────────────────────────────────
+
+export const EVENT_PRESET_MODULE = "event-names";
+
+export interface EventPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  culture: string;
+  /** "any" or a kind key (the note's `kind`). */
+  eventKind: "any" | EventKind;
+  era: RouteEra;
+  fantastic: boolean;
+  scale: EventScale;
+  tone: GroupToneChoice;
+  people: GroupPeople;
+  series: boolean;
+}
+
+function parseEventPreset(values: Record<string, string>, body: string, fileName: string): { event?: EventPreset; problems: string[] } {
+  const problems: string[] = [];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const flag = (key: string): boolean => {
+    const v = values[key];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key} “${v}”.`);
+    return false;
+  };
+  const era = pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  let kind = pick<"any" | EventKind>("kind", "any", (v) => v === "any" || EVENT_KINDS.some((k) => k.key === v));
+  if (kind !== "any" && !(EVENT_KINDS.find((k) => k.key === kind)!.era[era] > 0)) {
+    problems.push(`Kind “${kind}” isn't offered in the ${routeEraLabel(era)} era.`);
+    kind = "any";
+  }
+  return {
+    event: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      culture: pick("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      eventKind: kind,
+      era,
+      fantastic: flag("fantastic"),
+      scale: pick<EventScale>("scale", "realm", (v) => EVENT_SCALES.some((s) => s.key === v)),
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series: flag("series"),
+    },
+    problems,
+  };
+}
+
+function eventPresetContent(preset: EventPreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${EVENT_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.eventKind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `scale: ${preset.scale}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
     "---",
     "",
     preset.description.trim(),
