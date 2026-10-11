@@ -249,23 +249,24 @@ function gnWord(ctx: Ctx, token: string): string | undefined {
 }
 
 /** §4.2: an invented place: the culture's places (a land compound for Polynesian and Andean). */
-function place(ctx: Ctx): string | undefined {
-  const source = ctx.culture.sensitive ? undefined : townSource(ctx.culture.key);
+export function routePlace(cultureKey: string, setting: GroupSetting, rng: () => number): string | undefined {
+  const culture = findRouteCulture(cultureKey);
+  const source = culture?.sensitive ? undefined : townSource(cultureKey);
   // §12.3 / BT §11.4: no deity or saint names in the no-gods cultures' places.
-  const holy = holyNamesIn(ctx.culture.key);
+  const holy = holyNamesIn(cultureKey);
   for (let i = 0; i < 20; i++) {
-    const t = groupTown(ctx.setting, source, ctx.rng).replace(/^The /, "");
+    const t = groupTown(setting, source, rng).replace(/^The /, "");
     if (!holy || !holy.test(t)) return t;
   }
   return undefined;
 }
 
 /** §4.2: invented people: the world culture's `name` list (anglo-saxon, norse). */
-const personNames = (culture: string): string[] =>
+export const personNames = (culture: string): string[] =>
   (WORLD_CULTURES.find((c) => c.id === culture)?.lists.name ?? []).filter((w) => !w.includes("{")).map(stripPlural);
 
 /** §4.2: `{god}`: the world culture's gods, for the five cultures of §12.3 only. */
-const godNames = (culture: string): string[] =>
+export const godNames = (culture: string): string[] =>
   GOD_CULTURES.has(culture) ? (WORLD_CULTURES.find((c) => c.id === culture)?.lists.god ?? []).filter((w) => !w.includes("{")).map(stripPlural) : [];
 
 /** §4.2: `{figure}`: the culture's byname ranks, English men's form, at their weights. */
@@ -283,8 +284,8 @@ function figure(ctx: Ctx): string | undefined {
 
 /** §4.2: one tribes and kin groups name per culture, from a pool made once with a fixed seed. */
 const FOLK = new Map<string, string[]>();
-function folk(ctx: Ctx): string | undefined {
-  const tradition = ctx.culture.folk ?? REALM_DATA.tribal[ctx.culture.key] ?? "general";
+export function routeFolk(cultureKey: string, rng: () => number): string | undefined {
+  const tradition = findRouteCulture(cultureKey)?.folk ?? REALM_DATA.tribal[cultureKey] ?? "general";
   let pool = FOLK.get(tradition);
   if (!pool) {
     pool = generateTribalNames({ tradition, count: 120, seed: 1789 })
@@ -292,7 +293,7 @@ function folk(ctx: Ctx): string | undefined {
       .filter((n) => !n.includes("["));
     FOLK.set(tradition, pool);
   }
-  return pool.length > 0 ? pickOne(pool, ctx.rng) : undefined;
+  return pool.length > 0 ? pickOne(pool, rng) : undefined;
 }
 
 /** §4.2: `{kingdom}`: a realm's short name (territorial, named for land), from a pool per culture and era. */
@@ -325,9 +326,9 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "town":
       // §7: a borrowed shape's places are stars.
       if (ctx.borrowed) return gnWord(ctx, "star");
-      return placeholders ? "[place]" : place(ctx);
+      return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
     case "folk":
-      return placeholders ? "[folk]" : folk(ctx);
+      return placeholders ? "[folk]" : routeFolk(ctx.culture.key, ctx.rng);
     case "person":
     case "founder":
     case "patron": {
@@ -437,7 +438,7 @@ export function routeCapitals(text: string): string {
 }
 
 /** GN §11.2: content words, a leading "The" and the small words not counted. */
-const countedWords = (text: string) => text.split(" ").filter((w, i) => w && !(i === 0 && w === "The") && !SMALL.has(w.toLowerCase()));
+export const countedWords = (text: string) => text.split(" ").filter((w, i) => w && !(i === 0 && w === "The") && !SMALL.has(w.toLowerCase()));
 
 // ── Safeguards (§12) ────────────────────────────────────────────────────────
 

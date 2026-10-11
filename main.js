@@ -64261,10 +64261,10 @@ function welshPatronymic(father) {
 function greekPatronymic(father) {
   return (/[aeiouAEIOU]$/.test(father) ? father.slice(0, -1) : father) + "ides";
 }
-function nativeOf(culture, place4) {
+function nativeOf(culture, place3) {
   const word = BYNAMES_DATA.titles.nativeOf[culture];
-  if (!word) return `of ${place4}`;
-  return word === "de" && /^[AEIOUaeiouÆæ]/.test(place4) ? `d'${place4}` : `${word} ${place4}`;
+  if (!word) return `of ${place3}`;
+  return word === "de" && /^[AEIOUaeiouÆæ]/.test(place3) ? `d'${place3}` : `${word} ${place3}`;
 }
 function render2(ctx, pattern) {
   let failed = false;
@@ -64486,8 +64486,8 @@ function buildTitle(ctx, kind, length) {
   if (name) {
     const ofAt = firstShape === "{rank} of {town}" ? first.text.search(/ (of|de|d') ?/) : -1;
     const rank = ofAt >= 0 ? first.text.slice(0, ofAt) : first.text;
-    const place4 = ofAt >= 0 ? first.text.slice(ofAt) : "";
-    head = (first.after ? `${name} ${rank}` : `${rank} ${name}`) + place4;
+    const place3 = ofAt >= 0 ? first.text.slice(ofAt) : "";
+    head = (first.after ? `${name} ${rank}` : `${rank} ${name}`) + place3;
   }
   return { part: parts.join(", "), text: `${head}, ${rest}`, kind: "full", shape: "full style", tones: tonesOf([...shapeTones2], ctx.drawn) };
 }
@@ -77170,11 +77170,12 @@ function gnWord2(ctx, token6) {
   ctx.words.push({ pool: list, word: w });
   return w;
 }
-function place3(ctx) {
-  const source = ctx.culture.sensitive ? void 0 : townSource(ctx.culture.key);
-  const holy = holyNamesIn(ctx.culture.key);
+function routePlace(cultureKey, setting, rng) {
+  const culture = findRouteCulture(cultureKey);
+  const source = (culture == null ? void 0 : culture.sensitive) ? void 0 : townSource(cultureKey);
+  const holy = holyNamesIn(cultureKey);
   for (let i = 0; i < 20; i++) {
-    const t = groupTown(ctx.setting, source, ctx.rng).replace(/^The /, "");
+    const t = groupTown(setting, source, rng).replace(/^The /, "");
     if (!holy || !holy.test(t)) return t;
   }
   return void 0;
@@ -77200,15 +77201,15 @@ function figure(ctx) {
   return pickWeighted5(items, ctx.rng);
 }
 var FOLK = /* @__PURE__ */ new Map();
-function folk(ctx) {
-  var _a2, _b;
-  const tradition = (_b = (_a2 = ctx.culture.folk) != null ? _a2 : REALM_DATA.tribal[ctx.culture.key]) != null ? _b : "general";
+function routeFolk(cultureKey, rng) {
+  var _a2, _b, _c;
+  const tradition = (_c = (_b = (_a2 = findRouteCulture(cultureKey)) == null ? void 0 : _a2.folk) != null ? _b : REALM_DATA.tribal[cultureKey]) != null ? _c : "general";
   let pool3 = FOLK.get(tradition);
   if (!pool3) {
     pool3 = generateTribalNames({ tradition, count: 120, seed: 1789 }).names.map((n) => n.name.replace(/^the /i, "")).filter((n) => !n.includes("["));
     FOLK.set(tradition, pool3);
   }
-  return pool3.length > 0 ? pickOne4(pool3, ctx.rng) : void 0;
+  return pool3.length > 0 ? pickOne4(pool3, rng) : void 0;
 }
 var KINGDOMS = /* @__PURE__ */ new Map();
 function kingdom(ctx) {
@@ -77234,9 +77235,9 @@ function token5(ctx, name) {
     case "destination":
     case "town":
       if (ctx.borrowed) return gnWord2(ctx, "star");
-      return placeholders ? "[place]" : place3(ctx);
+      return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
     case "folk":
-      return placeholders ? "[folk]" : folk(ctx);
+      return placeholders ? "[folk]" : routeFolk(ctx.culture.key, ctx.rng);
     case "person":
     case "founder":
     case "patron": {
@@ -82859,8 +82860,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       { code: void 0, label: "All Britain" },
       ...PLACE_SHAPE_REGIONS
     ];
-    const place4 = this.activeSection === "placeShapes";
-    const current = place4 ? this.selectedRegion : this.riverRegion;
+    const place3 = this.activeSection === "placeShapes";
+    const current = place3 ? this.selectedRegion : this.riverRegion;
     for (const { code, label: text, counties } of options) {
       const item = menu.createEl("button", {
         cls: "nameforge-modal__pack-dropdown-item" + (code === current ? " is-active" : ""),
@@ -82868,7 +82869,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       });
       item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text });
       item.addEventListener("click", () => {
-        if (place4) this.selectedRegion = code;
+        if (place3) this.selectedRegion = code;
         else this.riverRegion = code;
         choose();
       });

@@ -1,0 +1,305 @@
+{
+  "$comment": "Streets and districts (docs/streets-and-districts-brief.md §5–§10, §13). Words come from settlement-vocab.json through src/settlement/vocab.ts.",
+  "version": 1,
+  "any": "streets, squares and districts",
+  "kinds": [
+    {"key": "streets", "menu": "Streets and lanes", "plural": "streets and lanes", "description": "Streets, lanes and alleys", "size": {"village": 85, "town": 65, "city": 55, "great": 50}},
+    {"key": "squares", "menu": "Squares and markets", "plural": "squares and markets", "description": "Squares, markets and market places", "size": {"village": 15, "town": 20, "city": 15, "great": 15}},
+    {"key": "districts", "menu": "Districts and quarters", "plural": "districts and quarters", "description": "Districts, quarters and wards", "size": {"village": 0, "town": 15, "city": 30, "great": 35}}
+  ],
+  "sizes": [
+    {"key": "village", "label": "village", "sf": "outpost"},
+    {"key": "town", "label": "town", "sf": "colony"},
+    {"key": "city", "label": "city", "sf": "station"},
+    {"key": "great", "label": "great city", "sf": "megacity"}
+  ],
+  "sizeEffects": {
+    "mainStreet": {"village": 1, "town": 1, "city": 0.5, "great": 0.3},
+    "trade": {"village": 0.3, "town": 1, "city": 1.5, "great": 1.5},
+    "planned": {"village": 0.2, "town": 1, "city": 1.5, "great": 2},
+    "alley": {"village": 0.5, "town": 1, "city": 1.5, "great": 2}
+  },
+  "functions": [
+    {"key": "commercial", "menu": "Commercial", "w": 15, "from": "town"},
+    {"key": "craft", "menu": "Craft", "w": 15, "from": "town"},
+    {"key": "religious", "menu": "Religious", "w": 10, "from": "town"},
+    {"key": "rule", "menu": "Rule and government", "w": 8, "from": "city"},
+    {"key": "learning", "menu": "Learning", "w": 5, "from": "city"},
+    {"key": "foreign", "menu": "Foreign", "w": 8, "from": "city"},
+    {"key": "military", "menu": "Military", "w": 7, "from": "town"},
+    {"key": "industrial", "menu": "Industrial", "w": 10, "from": "town", "eraX": {"ST": 3, "MO": 3}},
+    {"key": "poor", "menu": "Poor and marginal", "w": 10, "from": "town"},
+    {"key": "elite", "menu": "Elite", "w": 7, "from": "city"}
+  ],
+  "components": {"compWater": 15, "compCrossing": 15, "compMill": 15, "compMarket": 12, "compFaith": 10, "compDefence": 8, "compWaterside": 8, "compStorage": 5, "compRule": 5, "compTravel": 4, "compPublic": 4, "compLearning": 2, "compDeath": 1},
+  "steampunkComponents": {"compSteampunk": 10},
+  "scifiComponents": {
+    "keep": ["compMarket", "compPublic", "compLearning"],
+    "compSciFi": 50
+  },
+  "streets": [
+    {"p": "{component} {sw}", "w": 25},
+    {"p": "{trade:poss} {sw}", "w": 10, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["!indian", "!west-african"], "g": ["trade"]},
+    {"p": "{tradeSg} Street", "w": 6, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british", "general"], "t": ["plain"], "g": ["trade"]},
+    {"p": "{mainStreet}", "w": 6, "g": ["mainStreet"]},
+    {"p": "{direction} {sw}", "w": 6, "t": ["plain"]},
+    {"p": "{direction}gate", "w": 4, "e": ["MD", "EM"], "c": ["anglo-saxon", "norse", "norman-british"], "rx": {"NTH": 3, "EMD": 3}},
+    {"p": "{destination} Road", "w": 8, "t": ["plain"]},
+    {"p": "{route}", "w": 4},
+    {"p": "{holy:poss} {sw}", "w": 4, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["christian"]},
+    {"p": "{streetGoods} {sw}", "w": 8, "t": ["plain"]},
+    {"p": "Old {component} {sw}", "w": 4, "e": ["EM", "ST", "MO", "NF", "IS"]},
+    {"p": "{streetFigure:poss} {sw}", "w": 4, "e": ["MD", "EM", "ST", "MO", "NF", "IS"]},
+    {"p": "{streetFigure} {sw}", "w": 3, "e": ["EM", "ST", "MO", "NF", "IS"], "c": ["british", "general"]},
+    {"p": "{component} {aw}", "w": 6, "g": ["alley"]},
+    {"p": "{trade:poss} {aw}", "w": 3, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["!indian", "!west-african"], "g": ["trade", "alley"]},
+    {"p": "{surname} {planned}", "w": 6, "e": ["ST", "MO", "NF", "IS"], "c": ["british", "general"], "t": ["plain"], "g": ["planned"]},
+    {"p": "{streetTree} {planned}", "w": 5, "e": ["ST", "MO", "NF", "IS"], "c": ["british", "general"], "t": ["light"], "g": ["planned"]},
+    {"p": "{commemorative} {sw}", "w": 5, "e": ["ST", "MO"]},
+    {"p": "{royal} {sw}", "w": 1.5, "e": ["ST", "MO"], "c": ["british", "general"], "t": ["grand"]},
+    {"p": "{royal} {planned}", "w": 1.5, "e": ["ST", "MO"], "c": ["british", "general"], "t": ["grand"], "g": ["planned"]},
+    {"p": "{streetFixed}", "w": 6},
+    {"p": "{streetSteampunk}", "w": 15, "e": ["ST"], "h": true}
+  ],
+  "cultureStreets": [
+    {"p": "{trade:poss} Street", "w": 15, "culture": "norse"},
+    {"p": "{component} Street", "w": 15, "culture": "norse"},
+    {"p": "Street of the {people}", "w": 15, "culture": "roman"},
+    {"p": "{trade:poss} Street", "w": 15, "culture": "roman"},
+    {"p": "Long Street", "w": 15, "culture": "roman"},
+    {"p": "Sacred Way", "w": 15, "culture": "roman"},
+    {"p": "Middle Street", "w": 15, "culture": "greek-byzantine"},
+    {"p": "Colonnade of {streetFigure}", "w": 15, "culture": "greek-byzantine"},
+    {"p": "Market of the {trade}", "w": 15, "culture": "arabic-persian"},
+    {"p": "Lane of the {component}", "w": 15, "culture": "arabic-persian"},
+    {"p": "{trade} Street", "w": 15, "culture": "chinese"},
+    {"p": "{streetTree} Lane", "w": 15, "culture": "chinese"},
+    {"p": "{direction} Gate Street", "w": 15, "culture": "chinese"},
+    {"p": "{ordinal} Lane", "w": 15, "culture": "chinese"},
+    {"p": "{trade:poss} Ward Street", "w": 15, "culture": "japanese"},
+    {"p": "{ordinalWord} Block", "w": 15, "culture": "japanese"},
+    {"p": "{holySite} Street", "w": 15, "culture": "japanese"},
+    {"p": "{streetGoods} Street", "w": 15, "culture": "korean"},
+    {"p": "{direction} Gate Road", "w": 15, "culture": "korean"},
+    {"p": "Bell Street", "w": 15, "culture": "korean"},
+    {"p": "{streetGoods} Market", "w": 15, "culture": "indian"},
+    {"p": "{component} Lane", "w": 15, "culture": "indian"},
+    {"p": "Gated Lane of the {component}", "w": 15, "culture": "indian"},
+    {"p": "{trade:poss} End", "w": 15, "culture": "slavic"},
+    {"p": "{destination} Road", "w": 30, "culture": "slavic"},
+    {"p": "{streetGoods} Market", "w": 15, "culture": "west-african"},
+    {"p": "Strangers' Road", "w": 15, "culture": "west-african"},
+    {"p": "{destination} Causeway Street", "w": 15, "culture": "aztec"},
+    {"p": "{directionAdj} Ward Street", "w": 15, "culture": "aztec"},
+    {"p": "White Road to the {component}", "w": 15, "culture": "maya"},
+    {"p": "Road of the {component}", "w": 15, "culture": "egyptian"},
+    {"p": "{god:poss} Way", "w": 15, "culture": "egyptian"},
+    {"p": "{component} Path", "w": 15, "culture": "polynesian"}
+  ],
+  "scifiStreets": {
+    "share": 0.7,
+    "shapes": [
+      {"p": "{ordinal} Corridor", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Deck {n} Concourse", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Spine {greek}", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Ring Road", "w": 10, "e": ["NF", "IS"]},
+      {"p": "{directionAdj} Promenade", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Spinward Walk", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Hydroponics Row", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Reactor Lane", "w": 10, "e": ["NF", "IS"], "t": ["grim"]},
+      {"p": "Gravity Street", "w": 10, "e": ["NF", "IS"], "t": ["light"]},
+      {"p": "{star} Promenade", "w": 10, "e": ["NF", "IS"]}
+    ]
+  },
+  "squares": [
+    {"p": "{squareFixed}", "w": 20},
+    {"p": "{streetGoods} {marketWord}", "w": 20, "t": ["plain"]},
+    {"p": "{weekday} Market", "w": 10, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british", "slavic", "west-african"], "t": ["plain"], "cx": {"west-african": 3}},
+    {"p": "{ordinalWord}-Day Market", "w": 10, "e": ["MD", "EM", "ST"], "c": ["japanese"]},
+    {"p": "{component} {squareWord}", "w": 15},
+    {"p": "{streetFigure:poss} {squareWord}", "w": 8, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "t": ["grand"]},
+    {"p": "{holy:poss} {squareWord}", "w": 5, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["christian"]},
+    {"p": "{commemorative} {squareWord}", "w": 8, "e": ["ST", "MO"]},
+    {"p": "Forum of {founder}", "w": 8, "e": ["AN"], "c": ["roman"], "t": ["grand"]},
+    {"p": "{streetGoods} Forum", "w": 5, "e": ["AN"], "c": ["roman"]},
+    {"p": "{directionAdj} {marketWord}", "w": 6, "c": ["chinese", "aztec", "maya"]},
+    {"p": "{star} Plaza", "w": 7.5, "e": ["NF", "IS"]},
+    {"p": "Concourse {greek}", "w": 7.5, "e": ["NF", "IS"]}
+  ],
+  "districts": {
+    "commercial": [
+      {"p": "{streetGoods} Market {dw}", "w": 20},
+      {"p": "Merchants' {dw}", "w": 20, "t": ["plain"]},
+      {"p": "Dock {dw}", "w": 7.5, "t": ["plain"]},
+      {"p": "Warehouse {dw}", "w": 7.5, "t": ["plain"]},
+      {"p": "Exchange {dw}", "w": 10, "e": ["EM", "ST", "MO", "NF", "IS"]}
+    ],
+    "craft": [
+      {"p": "{trade:poss} {dw}", "w": 40, "c": ["!indian", "!west-african"], "g": ["trade"]},
+      {"p": "{trade:poss} End", "w": 10.0, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british"], "t": ["plain"], "g": ["trade"]},
+      {"p": "{trade:poss} Row", "w": 10.0, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british"], "t": ["plain"], "g": ["trade"]},
+      {"p": "{streetGoods} {dw}", "w": 25, "c": ["indian", "west-african"]}
+    ],
+    "religious": [
+      {"p": "Temple {dw}", "w": 15.0},
+      {"p": "Pilgrims' {dw}", "w": 15.0},
+      {"p": "{holy:poss} Close", "w": 6.6667, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["christian"], "t": ["grand"]},
+      {"p": "Abbey {dw}", "w": 6.6667, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["christian"], "t": ["grand"]},
+      {"p": "Minster {dw}", "w": 6.6667, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["christian"], "t": ["grand"]},
+      {"p": "Shrine {dw}", "w": 7.5, "t": ["strange"]},
+      {"p": "{holySite} {dw}", "w": 7.5, "t": ["strange"]}
+    ],
+    "rule": [
+      {"p": "Palace {dw}", "w": 13.3333, "t": ["grand"]},
+      {"p": "Citadel {dw}", "w": 13.3333, "t": ["grand"]},
+      {"p": "Court {dw}", "w": 13.3333, "t": ["grand"]}
+    ],
+    "learning": [
+      {"p": "Scholars' {dw}", "w": 13.3333},
+      {"p": "College {dw}", "w": 13.3333},
+      {"p": "Library {dw}", "w": 13.3333}
+    ],
+    "foreign": [
+      {"p": "{people} {dw}", "w": 30},
+      {"p": "Merchant Nations' {dw}", "w": 7.5},
+      {"p": "Embassy Row", "w": 7.5, "e": ["ST", "MO", "NF", "IS"]}
+    ],
+    "military": [
+      {"p": "Barracks {dw}", "w": 13.3333, "t": ["plain"]},
+      {"p": "Armoury {dw}", "w": 13.3333, "t": ["plain"]},
+      {"p": "Garrison {dw}", "w": 13.3333, "t": ["plain"]}
+    ],
+    "industrial": [
+      {"p": "Mill {dw}", "w": 10.0, "t": ["plain"]},
+      {"p": "Foundry {dw}", "w": 10.0, "t": ["plain"]},
+      {"p": "Kiln End", "w": 10.0, "t": ["plain"]},
+      {"p": "Tannery Side", "w": 10.0, "t": ["plain"]}
+    ],
+    "poor": [
+      {"p": "Poor {dw}", "w": 8, "t": ["grim"]},
+      {"p": "Rookery", "w": 8, "e": ["ST"], "t": ["grim"]},
+      {"p": "Outer Town", "w": 8, "t": ["grim"]},
+      {"p": "Ruined {dw}", "w": 8, "t": ["grim"]},
+      {"p": "Cemetery {dw}", "w": 8, "t": ["grim"]}
+    ],
+    "elite": [
+      {"p": "High Town", "w": 10, "t": ["grand"]},
+      {"p": "Garden {dw}", "w": 10, "t": ["grand"]},
+      {"p": "Hill {dw}", "w": 10, "t": ["grand"]},
+      {"p": "{surname} Crescent", "w": 10, "e": ["ST", "MO", "NF", "IS"], "t": ["grand"]}
+    ]
+  },
+  "districtFixedWeight": 20,
+  "cultureDistricts": [
+    {"p": "{trade:poss} Market Lanes", "w": 20, "culture": "arabic-persian", "fn": "commercial"},
+    {"p": "Covered Market Quarter", "w": 20, "culture": "arabic-persian", "fn": "commercial"},
+    {"p": "Citadel", "w": 20, "culture": "arabic-persian", "fn": "rule"},
+    {"p": "Outer Town", "w": 20, "culture": "arabic-persian", "fn": "poor"},
+    {"p": "{directionAdj} Ward", "w": 20, "culture": "chinese", "fn": "any"},
+    {"p": "{ordinal} Ward", "w": 20, "culture": "chinese", "fn": "any"},
+    {"p": "Inner City", "w": 20, "culture": "chinese", "fn": "any"},
+    {"p": "Outer City", "w": 20, "culture": "chinese", "fn": "any"},
+    {"p": "Castle Town", "w": 20, "culture": "japanese", "fn": "rule"},
+    {"p": "Retainers' Quarter", "w": 20, "culture": "japanese", "fn": "rule"},
+    {"p": "Merchants' Town", "w": 20, "culture": "japanese", "fn": "commercial"},
+    {"p": "Temple Town", "w": 20, "culture": "japanese", "fn": "religious"},
+    {"p": "{direction} Village", "w": 20, "culture": "korean", "fn": "any"},
+    {"p": "Palace Ward", "w": 20, "culture": "korean", "fn": "any"},
+    {"p": "{streetGoods} Market Ward", "w": 20, "culture": "indian", "fn": "commercial"},
+    {"p": "River Steps Quarter", "w": 20, "culture": "indian", "fn": "religious"},
+    {"p": "Citadel", "w": 20, "culture": "slavic", "fn": "rule"},
+    {"p": "Trading Town", "w": 20, "culture": "slavic", "fn": "commercial"},
+    {"p": "Free Settlement", "w": 20, "culture": "slavic", "fn": "commercial"},
+    {"p": "{trade:poss} End", "w": 20, "culture": "slavic", "fn": "craft"},
+    {"p": "{ordinalWord} Region", "w": 20, "culture": "roman", "fn": "any"},
+    {"p": "Forum Quarter", "w": 20, "culture": "roman", "fn": "any"},
+    {"p": "{hill} Hill", "w": 20, "culture": "roman", "fn": "any"},
+    {"p": "High Town", "w": 20, "culture": "greek-byzantine", "fn": "rule"},
+    {"p": "Harbour Quarter", "w": 20, "culture": "greek-byzantine", "fn": "commercial"},
+    {"p": "Market Square Quarter", "w": 20, "culture": "greek-byzantine", "fn": "commercial"},
+    {"p": "Temple Precinct", "w": 20, "culture": "egyptian", "fn": "religious"},
+    {"p": "Workers' Village", "w": 20, "culture": "egyptian", "fn": "poor"},
+    {"p": "City of the Dead", "w": 20, "t": ["grim"], "culture": "egyptian", "fn": "poor"},
+    {"p": "Palace Compound", "w": 20, "culture": "ethiopian", "fn": "rule"},
+    {"p": "Church Compound", "w": 20, "culture": "ethiopian", "fn": "religious"},
+    {"p": "Royal Enclosure", "w": 20, "culture": "bantu", "fn": "rule"},
+    {"p": "Valley Town", "w": 20, "culture": "bantu", "fn": "rule"},
+    {"p": "Strangers' Quarter", "w": 20, "culture": "west-african", "fn": "foreign"},
+    {"p": "Market Ward", "w": 20, "culture": "west-african", "fn": "commercial"},
+    {"p": "{weekday} Market Ward", "w": 20, "culture": "west-african", "fn": "commercial"},
+    {"p": "{directionAdj} Ward", "w": 20, "culture": "aztec", "fn": "any"},
+    {"p": "Merchants' Ward", "w": 20, "culture": "aztec", "fn": "any"},
+    {"p": "Floating Gardens", "w": 20, "culture": "aztec", "fn": "any"},
+    {"p": "{directionAdj} Plaza Group", "w": 20, "culture": "maya", "fn": "any"},
+    {"p": "Ball Court Quarter", "w": 20, "culture": "maya", "fn": "any"},
+    {"p": "Golden Camp", "w": 20, "culture": "steppe", "fn": "any"},
+    {"p": "Left Wing", "w": 20, "culture": "steppe", "fn": "any"},
+    {"p": "Right Wing", "w": 20, "culture": "steppe", "fn": "any"},
+    {"p": "Horse Lines", "w": 20, "culture": "steppe", "fn": "any"},
+    {"p": "Harbour", "w": 20, "culture": "norse", "fn": "commercial"},
+    {"p": "Assembly Field", "w": 20, "culture": "norse", "fn": "commercial"},
+    {"p": "Canoe Houses", "w": 20, "culture": "polynesian", "fn": "any"},
+    {"p": "Meeting Ground", "w": 20, "culture": "polynesian", "fn": "any"},
+    {"p": "{directionAdj} Quarter", "w": 20, "culture": "andean", "fn": "any"},
+    {"p": "Terrace Quarter", "w": 20, "culture": "andean", "fn": "any"}
+  ],
+  "steampunkDistricts": [
+    {"p": "Engine Quarter", "w": 20, "e": ["ST"], "h": true},
+    {"p": "Brass Quarter", "w": 20, "e": ["ST"], "h": true},
+    {"p": "Aether Works", "w": 20, "e": ["ST"], "h": true},
+    {"p": "Clockmakers' Row", "w": 20, "e": ["ST"], "h": true},
+    {"p": "Glass Arcade", "w": 20, "e": ["ST"], "h": true},
+    {"p": "Exhibition Quarter", "w": 20, "e": ["ST"], "h": true},
+    {"p": "Airship Docks", "w": 20, "e": ["ST"], "h": true},
+    {"p": "Gaslight District", "w": 20, "e": ["ST"], "h": true},
+    {"p": "Smog End", "w": 20, "e": ["ST"], "t": ["grim"], "h": true}
+  ],
+  "scifiDistricts": {
+    "share": 0.6,
+    "shapes": [
+      {"p": "Deck {n}", "w": 10, "e": ["NF", "IS"]},
+      {"p": "{ordinal} Ring", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Spinward Sector", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Antispinward Sector", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Hab Block {greek}", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Undercity", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Upper Spire", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Hydroponics Ring", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Dock Spine", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Old Dome", "w": 10, "e": ["NF", "IS"]},
+      {"p": "Reactor Sector", "w": 10, "e": ["NF", "IS"], "t": ["grim"]}
+    ]
+  },
+  "lists": {
+    "hill": ["Oak", "Laurel", "Cattle", "Palace", "Willow"],
+    "weekday": [["Monday", 1], ["Tuesday", 1], ["Wednesday", 1], ["Thursday", 1.5], ["Friday", 1], ["Saturday", 2], ["Sunday", 1]],
+    "dayOrdinals": ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth"]
+  },
+  "route": {
+    "kinds": {"road": 40, "trade": 25, "drove": 20, "pilgrim": 15},
+    "modern": {"road": 1, "motor": 1}
+  },
+  "surnameCultures": ["general", "celtic", "norman-british"],
+  "dialect": {
+    "laneRegions": ["NTH", "SBL", "SLO"],
+    "laneWords": ["Wynd", "Vennel", "Chare", "Close"],
+    "laneShare": 0.2,
+    "variantShare": 0.4
+  },
+  "series": {
+    "mainMarket": {"default": "Market Square", "anglo-saxon": "Market Place", "celtic": "Market Place", "norman-british": "Market Place", "aztec": "Great Market", "maya": "Great Plaza", "arabic-persian": "Caravan Court", "steppe": "Caravan Court", "scifi": "Hub"},
+    "firstDistrict": {"default": "Old Town", "chinese": "Inner City", "japanese": "Castle Town", "steppe": "Golden Camp", "scifi": "Old Dome"},
+    "scifiMainStreet": "Ring Road",
+    "towns": 6,
+    "routeFrom": 8
+  },
+  "cap": 6,
+  "safeguards": {
+    "block": ["Wall Street", "Downing Street", "Whitehall", "Fleet Street", "Threadneedle Street", "Lombard Street", "Pall Mall", "Park Lane", "Oxford Street", "Regent Street", "Bond Street", "Carnaby Street", "Coronation Street", "Pudding Lane", "Cheapside", "Grub Street", "Bourbon Street", "Broadway", "Champs-Élysées", "Nevsky Prospect", "Unter den Linden", "Royal Mile", "Princes Street", "Grafton Street", "Sauchiehall Street", "Ginza", "Gion", "Pontochō", "Chandni Chowk", "Jongno", "Wangfujing", "The Shambles", "Coppergate", "Forbidden City", "Imperial City", "Kremlin", "Red Square", "Tiananmen", "Trafalgar Square", "Piccadilly Circus", "Times Square", "Grand Bazaar", "Medina of Fez", "Old City of Jerusalem", "Latin Quarter", "Jewish Quarter", "Armenian Quarter", "Christian Quarter", "Muslim Quarter", "Soho", "Montmartre", "Harlem", "Chinatown", "Little Italy", "Barrio", "Bowery", "Five Points", "Diagon Alley", "Knockturn Alley", "Privet Drive", "Spinner's End", "Baker Street 221B", "Ramsay Street", "Albert Square", "Wisteria Lane", "Sesame Street", "Hob's Lane", "The Shades", "Night City", "Midgar", "Flea Bottom", "Street of Steel", "Street of Silk", "Street of the Sisters", "Hill of Rhaenys"],
+    "flag": ["High Street", "Main Street", "Market Street", "Market Square", "Market Place", "Mill Lane", "Church Street", "Station Road", "Back Lane", "Water Lane", "Love Lane", "Baker Street", "Abbey Road", "Elm Street", "King Street", "Queen Street", "Broad Street", "Old Town", "New Town", "Westgate", "Eastgate", "Northgate", "Southgate"],
+    "flagListBlocks": false,
+    "banned": ["Ghetto", "Native Quarter", "Native Town", "Black Town", "White Town", "Slum", "Reservation", "Leper"],
+    "religious": ["Mosque", "Synagogue", "Gurdwara", "Pagoda"],
+    "christian": ["Church", "Chapel", "Abbey", "Minster", "Friar", "Priory", "Friary", "Bishop", "Abbot"]
+  }
+}
