@@ -129,6 +129,8 @@ export const REALM_CHARACTERS = REALM_DATA.characters;
 export const REALM_NAMED_FOR = REALM_DATA.namedFor;
 /** §0: the 20 byname cultures. */
 export const REALM_CULTURES = BYNAME_CULTURES;
+/** §6.1: the cultures whose `{dynasty}` is a house name (buildings brief §6 reads it too). */
+export const DYNASTY_CULTURES = REALM_DATA.dynastyCultures;
 
 export const eraCode = (era: string): EraCode => REALM_ERAS.find((e) => e.key === era)?.code ?? "MD";
 const ERA_ORDER: EraCode[] = ["AN", "MD", "EM", "MO", "NF", "IS"];

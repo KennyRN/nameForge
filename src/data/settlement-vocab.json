@@ -1365,6 +1365,378 @@
         {"w": "Jasmine", "c": ["indian"]},
         {"w": "Monsoon", "c": ["indian"]}
       ]
+    },
+    "buildingWord:defence": {
+      "entries": [
+        {"w": "Castle", "x": 3},
+        {"w": "Tower", "x": 3},
+        {"w": "Keep"},
+        {"w": "Fort"},
+        {"w": "Fortress"},
+        {"w": "Citadel"},
+        {"w": "Bastion"},
+        {"w": "Hold"},
+        {"w": "Watchtower"},
+        {"w": "Gatehouse"},
+        {"w": "Barbican", "e": ["MD", "EM"]},
+        {"w": "Motte", "e": ["MD"], "c": ["british"]},
+        {"w": "Ring Fort", "e": ["AN", "MD"], "c": ["celtic"]},
+        {"w": "Hill Fort", "e": ["AN"]},
+        {"w": "Tower House", "e": ["MD", "EM"], "c": ["british"], "r": ["SBL", "SLO", "NTH"]},
+        {"w": "Peel Tower", "e": ["MD", "EM"], "c": ["british"], "r": ["SBL", "NTH"]},
+        {"w": "Broch", "e": ["AN"], "c": ["british"], "r": ["SHH", "NSI"]},
+        {"w": "Battery", "e": ["EM", "ST"]},
+        {"w": "Redoubt", "e": ["EM", "ST"]},
+        {"w": "Bunker", "e": ["MO"]}
+      ]
+    },
+    "buildingWord:residence": {
+      "entries": [
+        {"w": "Hall", "x": 3},
+        {"w": "Manor", "x": 2},
+        {"w": "House", "x": 2},
+        {"w": "Palace"},
+        {"w": "Court"},
+        {"w": "Grange", "th": ["rural"]},
+        {"w": "Lodge"},
+        {"w": "Villa", "c": ["roman"]},
+        {"w": "Longhouse", "c": ["norse"]},
+        {"w": "Great House"},
+        {"w": "Mead Hall", "e": ["AN", "MD"], "c": ["anglo-saxon", "norse"]},
+        {"w": "Pavilion", "c": ["chinese", "japanese", "korean", "indian"]},
+        {"w": "Courtyard Palace", "c": ["chinese", "arabic-persian"]},
+        {"w": "Palace Compound", "c": ["ethiopian", "west-african"]},
+        {"w": "Royal Enclosure", "c": ["bantu"]},
+        {"w": "Felt Palace", "c": ["steppe"]},
+        {"w": "Mansion", "e": ["EM", "ST", "MO"]},
+        {"w": "Villa", "e": ["MO"]}
+      ]
+    },
+    "buildingWord:faith": {
+      "entries": [
+        {"w": "Temple", "x": 2},
+        {"w": "Shrine", "x": 2},
+        {"w": "Sanctuary"},
+        {"w": "Monastery"},
+        {"w": "Hermitage"},
+        {"w": "Church", "x": 3, "c": ["christian"]},
+        {"w": "Chapel", "x": 2, "c": ["christian"]},
+        {"w": "Minster", "c": ["christian"]},
+        {"w": "Abbey", "c": ["christian"]},
+        {"w": "Priory", "c": ["christian"]},
+        {"w": "Cathedral", "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["christian"]},
+        {"w": "Friary", "c": ["christian"]},
+        {"w": "Pyramid Temple", "c": ["aztec", "maya"]},
+        {"w": "Relic Mound", "c": ["indian", "chinese", "japanese", "korean"]},
+        {"w": "Sky Platform", "c": ["aztec", "maya"]}
+      ]
+    },
+    "buildingWord:civic": {
+      "entries": [
+        {"w": "Hall", "x": 2},
+        {"w": "Guildhall", "e": ["MD", "EM"]},
+        {"w": "Moot Hall", "e": ["MD"], "c": ["british"]},
+        {"w": "Market Hall"},
+        {"w": "Exchange"},
+        {"w": "Court House"},
+        {"w": "Customs House", "th": ["maritime"]},
+        {"w": "Toll House", "th": ["road"]},
+        {"w": "Mint"},
+        {"w": "Treasury"},
+        {"w": "Town Hall", "e": ["ST", "MO"]},
+        {"w": "Corn Exchange", "e": ["ST"]},
+        {"w": "Assembly Rooms", "e": ["EM", "ST"]},
+        {"w": "Civic Centre", "e": ["MO"]},
+        {"w": "Forum", "c": ["roman"]},
+        {"w": "Basilica", "c": ["roman"]},
+        {"w": "Council House", "c": ["maya", "aztec"]},
+        {"w": "Meeting House", "e": ["MO"], "c": ["polynesian"]}
+      ]
+    },
+    "buildingWord:crossing": {
+      "entries": [
+        {"w": "Bridge", "x": 4},
+        {"w": "Ford"},
+        {"w": "Ferry"},
+        {"w": "Causeway"},
+        {"w": "Viaduct", "e": ["ST"]},
+        {"w": "Aqueduct Bridge", "c": ["roman"]},
+        {"w": "Packhorse Bridge", "e": ["MD", "EM"], "c": ["british"]},
+        {"w": "Swing Bridge", "e": ["ST"]},
+        {"w": "Stepping Stones", "t": ["light"]}
+      ]
+    },
+    "buildingWord:water": {
+      "entries": [
+        {"w": "Well", "x": 4},
+        {"w": "Spring", "x": 2},
+        {"w": "Fountain", "x": 2},
+        {"w": "Conduit"},
+        {"w": "Cistern"},
+        {"w": "Pump", "e": ["EM", "ST"]},
+        {"w": "Step Well", "c": ["indian"]},
+        {"w": "Water Tank", "c": ["indian"]},
+        {"w": "Water Channel", "c": ["arabic-persian"]},
+        {"w": "Aqueduct", "c": ["roman", "greek-byzantine", "aztec"]},
+        {"w": "Reservoir", "e": ["ST", "MO"]},
+        {"w": "Waterworks", "e": ["ST"]},
+        {"w": "Baths", "c": ["roman", "arabic-persian"]},
+        {"w": "Baths", "e": ["ST"], "c": ["!roman", "!arabic-persian"]}
+      ]
+    },
+    "buildingWord:works": {
+      "entries": [
+        {"w": "Mill", "x": 4},
+        {"w": "Watermill"},
+        {"w": "Windmill", "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Forge"},
+        {"w": "Kiln"},
+        {"w": "Quarry"},
+        {"w": "Mine"},
+        {"w": "Saltworks"},
+        {"w": "Tannery"},
+        {"w": "Ropewalk", "e": ["EM", "ST"]},
+        {"w": "Brewery"},
+        {"w": "Foundry", "e": ["ST"]},
+        {"w": "Works", "e": ["ST", "MO"]},
+        {"w": "Engine House", "e": ["ST"]},
+        {"w": "Pithead", "e": ["ST"]},
+        {"w": "Gasworks", "e": ["ST"]},
+        {"w": "Factory", "e": ["MO"]}
+      ]
+    },
+    "buildingWord:monument": {
+      "entries": [
+        {"w": "Cross", "x": 2, "c": ["british", "christian"]},
+        {"w": "Column"},
+        {"w": "Obelisk", "c": ["egyptian"]},
+        {"w": "Obelisk", "e": ["ST"], "c": ["!egyptian"]},
+        {"w": "Standing Stone", "e": ["AN", "MD"]},
+        {"w": "Stones", "e": ["AN"]},
+        {"w": "Barrow", "e": ["AN", "MD"]},
+        {"w": "Arch"},
+        {"w": "Memorial", "e": ["ST", "MO"]},
+        {"w": "Statue", "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Folly", "x": 2, "e": ["EM", "ST"], "c": ["british", "general"]},
+        {"w": "Monument"},
+        {"w": "Pillar"},
+        {"w": "Memorial Gate", "c": ["chinese", "japanese"]},
+        {"w": "Stele", "c": ["egyptian", "maya", "ethiopian"]}
+      ]
+    },
+    "buildingWord:learning": {
+      "entries": [
+        {"w": "School", "x": 2},
+        {"w": "College"},
+        {"w": "Academy"},
+        {"w": "Library", "x": 2},
+        {"w": "Scriptorium", "e": ["MD"]},
+        {"w": "House of Learning"},
+        {"w": "Observatory", "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Institute", "e": ["ST"]},
+        {"w": "Museum", "e": ["ST", "MO"]},
+        {"w": "Infirmary", "e": ["EM", "ST"]},
+        {"w": "Hospital", "e": ["ST", "MO"]},
+        {"w": "Almshouse", "e": ["MD", "EM", "ST"], "c": ["christian"]},
+        {"w": "Hospice", "e": ["MD"], "c": ["christian"]},
+        {"w": "House of Life", "c": ["egyptian"]},
+        {"w": "Hall of Learning", "c": ["indian"]}
+      ]
+    },
+    "buildingWord:confinement": {
+      "entries": [
+        {"w": "Gaol", "x": 2},
+        {"w": "Prison"},
+        {"w": "Lock-up"},
+        {"w": "Tolbooth", "c": ["british"], "rx": {"SLO": 3, "SBL": 3, "SHH": 3}},
+        {"w": "Bridewell", "e": ["EM", "ST"], "c": ["british"]},
+        {"w": "Workhouse", "t": ["grim"], "e": ["ST"]},
+        {"w": "Dungeon", "h": true},
+        {"w": "Oubliette", "h": true}
+      ]
+    },
+    "buildingWord:maritime": {
+      "entries": [
+        {"w": "Lighthouse", "x": 3},
+        {"w": "Light", "x": 3},
+        {"w": "Beacon", "x": 2},
+        {"w": "Harbour Light"},
+        {"w": "Lantern"},
+        {"w": "Watch Tower"},
+        {"w": "Daymark"},
+        {"w": "Lightship", "e": ["ST", "MO"]}
+      ]
+    },
+    "buildingQual": {
+      "entries": [
+        {"w": "Old", "x": 3},
+        {"w": "New", "x": 2},
+        {"w": "Great", "x": 2},
+        {"w": "Little"},
+        {"w": "High"},
+        {"w": "Round"},
+        {"w": "Long"},
+        {"w": "White", "x": 2},
+        {"w": "Black"},
+        {"w": "Red", "x": 2},
+        {"w": "Grey", "x": 2},
+        {"w": "Golden"},
+        {"w": "Silver"},
+        {"w": "Green"},
+        {"w": "Upper"},
+        {"w": "Lower"},
+        {"w": "Broken", "t": ["grim"]},
+        {"w": "Ruined", "t": ["grim"]},
+        {"w": "Crooked", "t": ["light"]},
+        {"w": "Leaning", "t": ["light"]},
+        {"w": "Hollow", "t": ["strange"]},
+        {"w": "Burnt", "t": ["grim"]},
+        {"w": "Drowned", "t": ["strange"]},
+        {"w": "King's"},
+        {"w": "Queen's"}
+      ]
+    },
+    "follyOwner": {
+      "entries": [
+        {"w": "Sir {surname}", "x": 2},
+        {"w": "Lady {surname}"},
+        {"w": "Lord {surname}"},
+        {"w": "Squire {surname}"},
+        {"w": "Old {surname}"},
+        {"w": "Mad {surname}", "t": ["light"]},
+        {"w": "Captain {surname}"}
+      ]
+    },
+    "holyWellPrefix": {
+      "entries": [
+        {"w": "Lady", "x": 2, "c": ["christian"]},
+        {"w": "Saint {holy}", "c": ["christian"]},
+        {"w": "Holy", "c": ["christian"]},
+        {"w": "Priest's", "c": ["christian"]},
+        {"w": "Monk's", "c": ["christian"]},
+        {"w": "Hermit's", "c": ["christian"]}
+      ]
+    },
+    "steampunkLandmark": {
+      "entries": [
+        {"w": "Aether Spire", "e": ["ST"], "h": true},
+        {"w": "Clockwork Tower", "e": ["ST"], "h": true},
+        {"w": "Difference Engine Hall", "e": ["ST"], "h": true},
+        {"w": "Airship Mast", "e": ["ST"], "h": true},
+        {"w": "Orrery Hall", "e": ["ST"], "h": true},
+        {"w": "Brass Observatory", "e": ["ST"], "h": true},
+        {"w": "Pneumatic Exchange", "e": ["ST"], "h": true},
+        {"w": "Glass Exhibition Palace", "e": ["ST"], "h": true},
+        {"w": "Gasometer Tower", "e": ["ST"], "h": true}
+      ]
+    },
+    "sciFiLandmark": {
+      "entries": [
+        {"w": "Spire", "e": ["NF", "IS"]},
+        {"w": "Arcology", "e": ["NF", "IS"]},
+        {"w": "Dome", "e": ["NF", "IS"]},
+        {"w": "Hab Module", "e": ["NF", "IS"]},
+        {"w": "Hydroponic Bay", "e": ["NF", "IS"]},
+        {"w": "Sky Elevator", "e": ["NF", "IS"]},
+        {"w": "Landing Tower", "e": ["NF", "IS"]},
+        {"w": "Reactor Hall", "e": ["NF", "IS"]},
+        {"w": "Observation Ring", "e": ["NF", "IS"]},
+        {"w": "Archive Core", "e": ["NF", "IS"]}
+      ]
+    },
+    "eastVirtue": {
+      "entries": [
+        {"w": "Lasting Peace", "c": ["chinese", "korean", "japanese"]},
+        {"w": "Clear Brightness", "c": ["chinese", "korean", "japanese"]},
+        {"w": "Heavenly Calm", "c": ["chinese", "korean", "japanese"]},
+        {"w": "Eternal Spring", "c": ["chinese", "korean", "japanese"]},
+        {"w": "Serene Light", "c": ["chinese", "korean", "japanese"]},
+        {"w": "Pure Harmony", "c": ["chinese", "korean", "japanese"]},
+        {"w": "Gathered Virtue", "c": ["chinese", "korean", "japanese"]},
+        {"w": "Distant Mountains", "c": ["chinese", "korean", "japanese"]},
+        {"w": "Listening Pines", "c": ["chinese", "korean", "japanese"]},
+        {"w": "Silver Moon", "c": ["chinese", "korean", "japanese"]}
+      ]
+    },
+    "castleBird": {
+      "entries": [
+        {"w": "Egret", "c": ["japanese"]},
+        {"w": "Crane", "c": ["japanese"]},
+        {"w": "Heron", "c": ["japanese"]},
+        {"w": "Swallow", "c": ["japanese"]},
+        {"w": "Kite", "c": ["japanese"]},
+        {"w": "Hawk", "c": ["japanese"]}
+      ]
+    },
+    "indianPalaceWord": {
+      "entries": [
+        {"w": "Mirrors", "c": ["indian"]},
+        {"w": "Lotus", "c": ["indian"]},
+        {"w": "Moon", "c": ["indian"]},
+        {"w": "Clouds", "c": ["indian"]},
+        {"w": "Peacock", "c": ["indian"]},
+        {"w": "Pearl", "c": ["indian"]},
+        {"w": "Sun", "c": ["indian"]},
+        {"w": "Jasmine", "c": ["indian"]}
+      ]
+    },
+    "oasisNoun": {
+      "entries": [
+        {"w": "Fountains", "c": ["arabic-persian"]},
+        {"w": "Roses", "c": ["arabic-persian"]},
+        {"w": "Cypresses", "c": ["arabic-persian"]},
+        {"w": "Pomegranates", "c": ["arabic-persian"]},
+        {"w": "Nightingales", "c": ["arabic-persian"]},
+        {"w": "Stars", "c": ["arabic-persian"]},
+        {"w": "Mirrors", "c": ["arabic-persian"]},
+        {"w": "Gardens", "c": ["arabic-persian"]}
+      ]
+    },
+    "buildingFixed:defence": {
+      "entries": [
+        {"w": "Drum Tower", "x": 15, "c": ["chinese"]},
+        {"w": "Bell Tower", "x": 15, "c": ["chinese"]}
+      ]
+    },
+    "buildingFixed:residence": {
+      "entries": [
+        {"w": "Hill Enclosure", "x": 15, "c": ["bantu"]}
+      ]
+    },
+    "buildingFixed:faith": {
+      "entries": []
+    },
+    "buildingFixed:civic": {
+      "entries": [
+        {"w": "Exhibition Palace", "x": 15, "e": ["ST"]}
+      ]
+    },
+    "buildingFixed:crossing": {
+      "entries": [
+        {"w": "Devil's Bridge", "x": 2, "t": ["strange"], "e": ["MD", "EM"], "c": ["british"]}
+      ]
+    },
+    "buildingFixed:water": {
+      "entries": [
+        {"w": "Wishing Well", "x": 2, "t": ["light"], "e": ["EM", "ST", "MO", "NF", "IS"], "c": ["british", "general"]}
+      ]
+    },
+    "buildingFixed:works": {
+      "entries": []
+    },
+    "buildingFixed:monument": {
+      "entries": [
+        {"w": "Market Cross", "x": 5, "e": ["MD", "EM"], "c": ["british"]}
+      ]
+    },
+    "buildingFixed:learning": {
+      "entries": []
+    },
+    "buildingFixed:confinement": {
+      "entries": []
+    },
+    "buildingFixed:maritime": {
+      "entries": []
     }
   },
   "regions": ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI"],
