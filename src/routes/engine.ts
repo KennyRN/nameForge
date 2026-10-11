@@ -310,18 +310,20 @@ export function routeFolk(cultureKey: string, rng: () => number): string | undef
 
 /** §4.2: `{kingdom}`: a realm's short name (territorial, named for land), from a pool per culture and era. */
 const KINGDOMS = new Map<string, string[]>();
-function kingdom(ctx: Ctx): string | undefined {
-  const era = REALM_ERAS.find((e) => e.code === ctx.era)?.key ?? "medieval";
-  const key = `${ctx.culture.key}|${era}`;
+/** Also events and eras' `{realm}` (Events brief §3). */
+export function routeKingdom(cultureKey: string, routeEra: RouteEra, rng: () => number): string | undefined {
+  const era = REALM_ERAS.find((e) => e.code === routeEra)?.key ?? "medieval";
+  const key = `${cultureKey}|${era}`;
   let pool = KINGDOMS.get(key);
   if (!pool) {
-    pool = generateRealmNames({ culture: ctx.culture.key, era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789 })
+    pool = generateRealmNames({ culture: cultureKey, era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789 })
       .names.map((n) => n.text.replace(/^the /i, ""))
       .filter((n) => !n.includes("["));
     KINGDOMS.set(key, pool);
   }
-  return pool.length > 0 ? pickOne(pool, ctx.rng) : undefined;
+  return pool.length > 0 ? pickOne(pool, rng) : undefined;
 }
+const kingdom = (ctx: Ctx) => routeKingdom(ctx.culture.key, ctx.era, ctx.rng);
 
 /** §8.8: a road number from weighted ranges. */
 function roadNumber(ctx: Ctx, which: string): string {

@@ -72,8 +72,8 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `planned` | planned-street words: Terrace, Crescent, Grove | x, e | streets and districts |
 | `alleyDialect` | British regional alley words: Wynd, Chare, Twitten | r | streets and districts |
 | `mainStreet` | whole main-street names: High Street, Middle Street | x, c, e, r | streets and districts |
-| `streetTrades` | plural trades: Butchers, Weavers (singular drops the -s) | x, c, e, h | streets and districts, inns and taverns, buildings and landmarks |
-| `streetGoods` | goods for streets and markets: Corn, Silver (plus routeGoods' culture extras ×2) | x, e | streets and districts, inns and taverns, buildings and landmarks |
+| `streetTrades` | plural trades: Butchers, Weavers (singular drops the -s) | x, c, e, h | streets and districts, inns and taverns, buildings and landmarks, events and eras |
+| `streetGoods` | goods for streets and markets: Corn, Silver (plus routeGoods' culture extras ×2) | x, e | streets and districts, inns and taverns, buildings and landmarks, events and eras |
 | `streetFigure` | figures for King's Street, Bishop's Lane | x, c, e | streets and districts, inns and taverns, buildings and landmarks |
 | `streetTree` | trees for planned streets: Laburnum Grove | e | streets and districts |
 | `commemorative` | commemorative words: Jubilee, Victory, Station | x, t, e | streets and districts |
@@ -137,3 +137,28 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `castleBird` | Japanese castle birds: Egret, Heron | c | buildings and landmarks |
 | `indianPalaceWord` | Indian palace words: Mirrors, Peacock | c | buildings and landmarks |
 | `oasisNoun` | Arabic and Persian palace words: Fountains, Nightingales | c | buildings and landmarks |
+| `warObject` | war causes: Salt Wells, Broken Oath, Stolen Bride | t | events and eras |
+| `warAnimal` | light war animals: Goose War | t | events and eras |
+| `battleSite` | battle sites: Ford, Bridge, Moor | x | events and eras |
+| `rebelGarment` | rising garments: Ribbon, Cockade | – | events and eras |
+| `disaster` | disasters: Fire, Plague, Locusts | x, c | events and eras |
+| `collapseNoun` | collapses: Fall, Sundering, Drowning | t | events and eras |
+| `crisisNoun` | crises: Troubles, Interregnum, Anarchy | t | events and eras |
+| `migrationNoun` | migrations: Long Walk, Exodus, Landing | t | events and eras |
+| `eraNoun` | era nouns (WR §9.2 pools, steam age, modern and sci-fi) | x, e, h | events and eras |
+| `metalAge` | metal ages: Silver, Lead, Steel | t, e | events and eras |
+| `eastEraWord` | East Asian era names: Great Peace, Bright Rule | x, c | events and eras |
+| `cycleElement` | the five elements of the year cycle | c | events and eras |
+| `cycleAnimal` | the twelve animals of the year cycle | c | events and eras |
+| `yearThing` | years named for a thing: Comet, Two Moons | c | events and eras |
+| `sunOrdinal` | Aztec and Maya sun ordinals: Sixth (Fifth ×0.3) | x, c | events and eras |
+| `chronicleSeason` | seasons: Harvest, Midwinter | – | events and eras |
+| `eventFixed:war` | whole war names: Gate Wars, Brothers' War; the fixed shape's weight is the brief's | t, e, c | events and eras |
+| `eventFixed:battle` | whole battle names (empty: for packs); the fixed shape's weight is the brief's | t, e, c | events and eras |
+| `eventFixed:rebellion` | whole rebellion names (empty: for packs); the fixed shape's weight is the brief's | t, e, c | events and eras |
+| `eventFixed:treaty` | whole treaty names (empty: for packs); the fixed shape's weight is the brief's | t, e, c | events and eras |
+| `eventFixed:crisis` | whole crisis names (empty: for packs); the fixed shape's weight is the brief's | t, e, c | events and eras |
+| `eventFixed:migration` | whole migration names: First Contact; the fixed shape's weight is the brief's | t, e, c | events and eras |
+| `eventFixed:disaster` | whole disaster names: Quarantine Years; the fixed shape's weight is the brief's | t, e, c | events and eras |
+| `eventFixed:collapse` | whole collapse names: Collapse, Long Night; the fixed shape's weight is the brief's | t, e, c | events and eras |
+| `eventFixed:era` | whole era names: New Fire; the fixed shape's weight is the brief's | t, e, c | events and eras |

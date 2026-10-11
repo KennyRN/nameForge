@@ -78054,6 +78054,316 @@ var settlement_vocab_default = {
     },
     "buildingFixed:maritime": {
       entries: []
+    },
+    warObject: {
+      entries: [
+        { w: "Salt Wells" },
+        { w: "Crown" },
+        { w: "Bridges" },
+        { w: "Ford" },
+        { w: "Bells" },
+        { w: "Silver Mines" },
+        { w: "Three Rivers" },
+        { w: "Succession" },
+        { w: "Marches" },
+        { w: "Grain" },
+        { w: "Wool" },
+        { w: "Two Queens" },
+        { w: "Broken Oath" },
+        { w: "Stolen Bride", t: ["light"] },
+        { w: "Red Banner" },
+        { w: "Seven Towers" },
+        { w: "Black Ships" },
+        { w: "Lost Heir" },
+        { w: "Mill", t: ["light"] },
+        { w: "Ferry", t: ["light"] },
+        { w: "Pig", t: ["light"] }
+      ]
+    },
+    warAnimal: {
+      entries: [
+        { w: "Pig", t: ["light"] },
+        { w: "Goose", t: ["light"] },
+        { w: "Cow", t: ["light"] },
+        { w: "Goat", t: ["light"] },
+        { w: "Cat", t: ["light"] },
+        { w: "Dog", t: ["light"] },
+        { w: "Pigeon", t: ["light"] }
+      ]
+    },
+    battleSite: {
+      entries: [
+        { w: "Ford", x: 2 },
+        { w: "Bridge", x: 2 },
+        { w: "Hill" },
+        { w: "Field", x: 2 },
+        { w: "Moor" },
+        { w: "Heath" },
+        { w: "Marsh" },
+        { w: "Pass" },
+        { w: "Crossroads" },
+        { w: "Wood" },
+        { w: "Wall" },
+        { w: "Gate" },
+        { w: "Shore" },
+        { w: "Mill" },
+        { w: "Stones" }
+      ]
+    },
+    rebelGarment: {
+      entries: [
+        { w: "Ribbon" },
+        { w: "Cap" },
+        { w: "Sash" },
+        { w: "Scarf" },
+        { w: "Cockade" },
+        { w: "Feather" },
+        { w: "Hood" },
+        { w: "Glove" },
+        { w: "Apron" }
+      ]
+    },
+    disaster: {
+      entries: [
+        { w: "Fire", x: 2 },
+        { w: "Plague", x: 2 },
+        { w: "Flood", x: 2 },
+        { w: "Famine", x: 2 },
+        { w: "Frost" },
+        { w: "Drought" },
+        { w: "Storm" },
+        { w: "Pestilence" },
+        { w: "Hunger" },
+        { w: "Sickness" },
+        { w: "Quake" },
+        { w: "Blight" },
+        { w: "Ash" },
+        { w: "Locusts", c: ["arabic-persian", "egyptian", "west-african", "ethiopian", "indian"] }
+      ]
+    },
+    collapseNoun: {
+      entries: [
+        { w: "Fall" },
+        { w: "Sundering" },
+        { w: "Breaking" },
+        { w: "Burning" },
+        { w: "Sack" },
+        { w: "Ruin" },
+        { w: "Unmaking" },
+        { w: "Scattering" },
+        { w: "Silence" },
+        { w: "Drowning", t: ["strange"] }
+      ]
+    },
+    crisisNoun: {
+      entries: [
+        { w: "Troubles" },
+        { w: "Disturbance" },
+        { w: "Interregnum" },
+        { w: "Anarchy", t: ["grim"] },
+        { w: "Schism" },
+        { w: "Regency" },
+        { w: "Long Winter" },
+        { w: "Hard Years" }
+      ]
+    },
+    migrationNoun: {
+      entries: [
+        { w: "Great Migration" },
+        { w: "Long Walk", t: ["grim"] },
+        { w: "Crossing" },
+        { w: "Exodus" },
+        { w: "Wandering" },
+        { w: "Landing" },
+        { w: "Coming" },
+        { w: "Return" }
+      ]
+    },
+    eraNoun: {
+      entries: [
+        { w: "Gold", x: 2 },
+        { w: "Plenty" },
+        { w: "Peace" },
+        { w: "Commerce" },
+        { w: "Learning" },
+        { w: "Ash" },
+        { w: "Iron", x: 2 },
+        { w: "Storm" },
+        { w: "Silence" },
+        { w: "Hunger" },
+        { w: "Ruin" },
+        { w: "Night" },
+        { w: "Return" },
+        { w: "Rebuilding" },
+        { w: "Thaw" },
+        { w: "Second Dawn" },
+        { w: "Rekindling" },
+        { w: "Origins" },
+        { w: "Dawn" },
+        { w: "Heroes" },
+        { w: "Legends" },
+        { w: "Ancestors" },
+        { w: "First Fire" },
+        { w: "Emergence" },
+        { w: "Flood" },
+        { w: "Crowns" },
+        { w: "Thrones" },
+        { w: "Empire" },
+        { w: "Kings" },
+        { w: "Faith" },
+        { w: "Oaths" },
+        { w: "Revelation" },
+        { w: "Frontier" },
+        { w: "Settlement" },
+        { w: "Roads" },
+        { w: "Crossing" },
+        { w: "Salt" },
+        { w: "Steel" },
+        { w: "Grain" },
+        { w: "Steam", e: ["ST"] },
+        { w: "Smoke", e: ["ST"] },
+        { w: "Progress", e: ["ST"] },
+        { w: "Invention", e: ["ST"] },
+        { w: "Gaslight", e: ["ST"] },
+        { w: "Brass", e: ["ST"] },
+        { w: "Aether", e: ["ST"], h: true },
+        { w: "Machine", e: ["MO"] },
+        { w: "Information", e: ["MO"] },
+        { w: "Reconstruction", e: ["MO"] },
+        { w: "Expansion", e: ["NF", "IS"] },
+        { w: "Contact", e: ["NF", "IS"] },
+        { w: "Diaspora", e: ["NF", "IS"] },
+        { w: "Uplift", e: ["NF", "IS"] },
+        { w: "Long Night", e: ["NF", "IS"] }
+      ]
+    },
+    metalAge: {
+      entries: [
+        { w: "Gold" },
+        { w: "Silver" },
+        { w: "Bronze" },
+        { w: "Iron" },
+        { w: "Copper" },
+        { w: "Lead", t: ["grim"] },
+        { w: "Glass", t: ["strange"] },
+        { w: "Steel", e: ["ST", "MO", "NF", "IS"] }
+      ]
+    },
+    eastEraWord: {
+      entries: [
+        { w: "Great Peace", x: 2, c: ["chinese", "japanese", "korean"] },
+        { w: "Lasting Peace", c: ["chinese", "japanese", "korean"] },
+        { w: "Bright Rule", c: ["chinese", "japanese", "korean"] },
+        { w: "Enlightened Rule", c: ["chinese", "japanese", "korean"] },
+        { w: "Heavenly Harmony", c: ["chinese", "japanese", "korean"] },
+        { w: "Eternal Prosperity", c: ["chinese", "japanese", "korean"] },
+        { w: "Celebrated Peace", c: ["chinese", "japanese", "korean"] },
+        { w: "Shining Virtue", c: ["chinese", "japanese", "korean"] },
+        { w: "Abundant Harvest", c: ["chinese", "japanese", "korean"] },
+        { w: "Restored Order", c: ["chinese", "japanese", "korean"] },
+        { w: "Clear Peace", c: ["chinese", "japanese", "korean"] },
+        { w: "Long Peace", c: ["chinese", "japanese", "korean"] }
+      ]
+    },
+    cycleElement: {
+      entries: [
+        { w: "Wood", c: ["chinese", "japanese", "korean"] },
+        { w: "Fire", c: ["chinese", "japanese", "korean"] },
+        { w: "Earth", c: ["chinese", "japanese", "korean"] },
+        { w: "Metal", c: ["chinese", "japanese", "korean"] },
+        { w: "Water", c: ["chinese", "japanese", "korean"] }
+      ]
+    },
+    cycleAnimal: {
+      entries: [
+        { w: "Rat", c: ["chinese", "japanese", "korean"] },
+        { w: "Ox", c: ["chinese", "japanese", "korean"] },
+        { w: "Tiger", c: ["chinese", "japanese", "korean"] },
+        { w: "Rabbit", c: ["chinese", "japanese", "korean"] },
+        { w: "Dragon", c: ["chinese", "japanese", "korean"] },
+        { w: "Snake", c: ["chinese", "japanese", "korean"] },
+        { w: "Horse", c: ["chinese", "japanese", "korean"] },
+        { w: "Goat", c: ["chinese", "japanese", "korean"] },
+        { w: "Monkey", c: ["chinese", "japanese", "korean"] },
+        { w: "Rooster", c: ["chinese", "japanese", "korean"] },
+        { w: "Dog", c: ["chinese", "japanese", "korean"] },
+        { w: "Pig", c: ["chinese", "japanese", "korean"] }
+      ]
+    },
+    yearThing: {
+      entries: [
+        { w: "Locusts", c: ["arabic-persian", "egyptian", "ethiopian", "west-african"] },
+        { w: "Comet", c: ["arabic-persian", "egyptian", "ethiopian", "west-african"] },
+        { w: "Flood", c: ["arabic-persian", "egyptian", "ethiopian", "west-african"] },
+        { w: "Sandstorm", c: ["arabic-persian", "egyptian", "ethiopian", "west-african"] },
+        { w: "Camels", c: ["arabic-persian", "egyptian", "ethiopian", "west-african"] },
+        { w: "Two Moons", c: ["arabic-persian", "egyptian", "ethiopian", "west-african"] },
+        { w: "Silence", c: ["arabic-persian", "egyptian", "ethiopian", "west-african"] },
+        { w: "Black Rain", c: ["arabic-persian", "egyptian", "ethiopian", "west-african"] },
+        { w: "Falling Stars", c: ["arabic-persian", "egyptian", "ethiopian", "west-african"] },
+        { w: "Salt", c: ["arabic-persian", "egyptian", "ethiopian", "west-african"] }
+      ]
+    },
+    sunOrdinal: {
+      entries: [
+        { w: "Fifth", x: 0.3, c: ["aztec", "maya"] },
+        { w: "Sixth", x: 2, c: ["aztec", "maya"] },
+        { w: "Seventh", c: ["aztec", "maya"] },
+        { w: "Eighth", c: ["aztec", "maya"] },
+        { w: "Ninth", c: ["aztec", "maya"] },
+        { w: "Thirteenth", c: ["aztec", "maya"] }
+      ]
+    },
+    chronicleSeason: {
+      entries: [
+        { w: "Spring" },
+        { w: "Summer" },
+        { w: "Autumn" },
+        { w: "Winter" },
+        { w: "Harvest" },
+        { w: "Midwinter" }
+      ]
+    },
+    "eventFixed:war": {
+      entries: [
+        { w: "Gate Wars", e: ["IS"] },
+        { w: "War of the Long Night", e: ["NF", "IS"] },
+        { w: "Brothers' War" }
+      ]
+    },
+    "eventFixed:battle": {
+      entries: []
+    },
+    "eventFixed:rebellion": {
+      entries: []
+    },
+    "eventFixed:treaty": {
+      entries: []
+    },
+    "eventFixed:crisis": {
+      entries: []
+    },
+    "eventFixed:migration": {
+      entries: [
+        { w: "First Contact", t: ["strange"], e: ["NF", "IS"] }
+      ]
+    },
+    "eventFixed:disaster": {
+      entries: [
+        { w: "Quarantine Years", t: ["grim"], e: ["NF", "IS"] }
+      ]
+    },
+    "eventFixed:collapse": {
+      entries: [
+        { w: "Collapse", t: ["strange"], e: ["NF", "IS"] },
+        { w: "Long Night", t: ["strange"], e: ["NF", "IS"] },
+        { w: "Silence", t: ["strange"], e: ["NF", "IS"] }
+      ]
+    },
+    "eventFixed:era": {
+      entries: [
+        { w: "New Fire", c: ["aztec", "maya"] }
+      ]
     }
   },
   regions: ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI"],
@@ -78340,17 +78650,18 @@ function routeFolk(cultureKey, rng) {
   return pool3.length > 0 ? pickOne4(pool3, rng) : void 0;
 }
 var KINGDOMS = /* @__PURE__ */ new Map();
-function kingdom(ctx) {
+function routeKingdom(cultureKey, routeEra, rng) {
   var _a2, _b;
-  const era = (_b = (_a2 = REALM_ERAS.find((e) => e.code === ctx.era)) == null ? void 0 : _a2.key) != null ? _b : "medieval";
-  const key2 = `${ctx.culture.key}|${era}`;
+  const era = (_b = (_a2 = REALM_ERAS.find((e) => e.code === routeEra)) == null ? void 0 : _a2.key) != null ? _b : "medieval";
+  const key2 = `${cultureKey}|${era}`;
   let pool3 = KINGDOMS.get(key2);
   if (!pool3) {
-    pool3 = generateRealmNames({ culture: ctx.culture.key, era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789 }).names.map((n) => n.text.replace(/^the /i, "")).filter((n) => !n.includes("["));
+    pool3 = generateRealmNames({ culture: cultureKey, era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789 }).names.map((n) => n.text.replace(/^the /i, "")).filter((n) => !n.includes("["));
     KINGDOMS.set(key2, pool3);
   }
-  return pool3.length > 0 ? pickOne4(pool3, ctx.rng) : void 0;
+  return pool3.length > 0 ? pickOne4(pool3, rng) : void 0;
 }
+var kingdom = (ctx) => routeKingdom(ctx.culture.key, ctx.era, ctx.rng);
 function roadNumber(ctx, which) {
   const range2 = pickWeighted5(ROUTE_DATA.roadNumbers[which].map((r) => [r, r[2] * (r[1] - r[0] + 1)]), ctx.rng);
   return String(range2[0] + Math.floor(ctx.rng() * (range2[1] - range2[0] + 1)));
