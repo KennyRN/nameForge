@@ -12,6 +12,7 @@ import { BYNAME_SAFEGUARD_TEMPLATE } from "./bynames/safeguardPacks";
 import { VESSEL_SAFEGUARD_TEMPLATE } from "./vessels/safeguardPacks";
 import { REALM_SAFEGUARD_TEMPLATE } from "./realms/safeguardPacks";
 import { GROUP_SAFEGUARD_TEMPLATE } from "./groups/safeguardPacks";
+import { createVocabularyPack } from "./settlement/vocabPacks";
 
 const DEFAULT_SETTINGS: NameForgeSettings = {
   namesFilePath: "",
@@ -282,6 +283,19 @@ export default class NameForgePlugin extends Plugin {
         }
         await this.app.vault.create(path, VESSEL_SAFEGUARD_TEMPLATE);
         new Notice("nameForge: “Vessel safeguards” created.");
+      },
+    });
+
+    // Route names brief §3.3: a vocabulary pack listing every shared pool, never written over an existing one.
+    this.addCommand({
+      id: "create-vocabulary-pack",
+      name: "Create vocabulary pack",
+      callback: async () => {
+        const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
+        await ensureVaultFolder(this.app, folder);
+        const vault = { exists: (path: string) => !!this.app.vault.getFileByPath(normalizePath(path)), create: (path: string, content: string) => this.app.vault.create(normalizePath(path), content) };
+        const result = await createVocabularyPack(vault, folder);
+        new Notice(result === "exists" ? "nameForge: “Vocabulary” already exists." : "nameForge: “Vocabulary” created.");
       },
     });
 

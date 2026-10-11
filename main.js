@@ -84633,6 +84633,432 @@ ${t.description}
   new import_obsidian14.Notice(`nameForge: installed ${installed} starter templates in ${folder.path || "the vault root"}.${note}`);
 }
 
+// src/data/settlement-vocab.json
+var settlement_vocab_default = {
+  $comment: "Shared settlement vocabulary (docs/route-names-brief.md \xA73, \xA76). Read through src/settlement/vocab.ts; vocabulary packs add to these pools. Every pool is listed in docs/vocabulary-pools.md.",
+  version: 1,
+  eras: ["AN", "MD", "EM", "ST", "MO", "NF", "IS"],
+  cultures: ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya", "polynesian", "andean"],
+  cultureGroups: {
+    british: {
+      cultures: ["anglo-saxon", "celtic", "norman-british"]
+    },
+    christian: {
+      cultures: ["anglo-saxon", "celtic", "norman-british", "slavic"],
+      from: { "greek-byzantine": "MD", roman: "MD" }
+    }
+  },
+  regionTags: ["roman", "drove", "causeway", "corpse", "salt", "ridge", "packhorse", "army", "pedlar", "militaryRoad", "peat"],
+  pools: {
+    direction: {
+      entries: [
+        { w: "North" },
+        { w: "South" },
+        { w: "East" },
+        { w: "West" },
+        { w: "North-East", x: 0.2 },
+        { w: "North-West", x: 0.2 },
+        { w: "South-East", x: 0.2 },
+        { w: "South-West", x: 0.2 }
+      ]
+    },
+    directionAdj: {
+      entries: [
+        { w: "Northern" },
+        { w: "Southern" },
+        { w: "Eastern" },
+        { w: "Western" }
+      ]
+    },
+    travellers: {
+      entries: [
+        { w: "Pedlars", x: 2, t: ["light"] },
+        { w: "Drovers", x: 2 },
+        { w: "Pilgrims", x: 2 },
+        { w: "Carriers" },
+        { w: "Saltmen" },
+        { w: "Packmen" },
+        { w: "Merchants", x: 2 },
+        { w: "Smugglers", t: ["light"] },
+        { w: "Soldiers" },
+        { w: "Tinkers", t: ["light"] },
+        { w: "Shepherds" },
+        { w: "Miners" },
+        { w: "Monks", c: ["christian"] },
+        { w: "Colliers", e: ["ST"] },
+        { w: "Navvies", e: ["ST"] }
+      ]
+    },
+    routeFeature: {
+      entries: [
+        { w: "Ditch", x: 2 },
+        { w: "Dyke" },
+        { w: "Bank" },
+        { w: "Mound" },
+        { w: "Barrow" },
+        { w: "Wall" },
+        { w: "Stone" },
+        { w: "Cross" },
+        { w: "Thorn" },
+        { w: "Beacon" }
+      ]
+    },
+    routeMaterial: {
+      entries: [
+        { w: "Stone", x: 2 },
+        { w: "Flint" },
+        { w: "Chalk" },
+        { w: "Gravel" },
+        { w: "Sand" },
+        { w: "Timber" },
+        { w: "Plank" },
+        { w: "Cobble", e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Brick", e: ["ST", "MO", "NF", "IS"] }
+      ]
+    },
+    routeLandform: {
+      entries: [
+        { w: "Downs" },
+        { w: "Fen" },
+        { w: "Moor" },
+        { w: "Heath" },
+        { w: "Wold" },
+        { w: "Fell" },
+        { w: "Dale" },
+        { w: "Vale" },
+        { w: "Marsh" },
+        { w: "Hill" },
+        { w: "Cliff" },
+        { w: "Shore" },
+        { w: "Forest" },
+        { w: "Desert", c: ["arabic-persian", "egyptian", "west-african", "steppe"] },
+        { w: "Steppe", c: ["steppe"] },
+        { w: "Highland" }
+      ]
+    },
+    routeGoods: {
+      entries: [
+        { w: "Salt", x: 3 },
+        { w: "Wool", x: 2 },
+        { w: "Amber" },
+        { w: "Tin" },
+        { w: "Lead" },
+        { w: "Iron" },
+        { w: "Copper" },
+        { w: "Grain" },
+        { w: "Corn" },
+        { w: "Timber" },
+        { w: "Fish" },
+        { w: "Cloth" },
+        { w: "Silk" },
+        { w: "Spice" },
+        { w: "Gold" },
+        { w: "Silver" },
+        { w: "Furs" },
+        { w: "Horses" },
+        { w: "Coal", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Cotton", e: ["ST", "MO", "NF", "IS"] }
+      ],
+      cultureExtra: {
+        "anglo-saxon": [
+          { w: "Wool" },
+          { w: "Salt" },
+          { w: "Tin" },
+          { w: "Lead" }
+        ],
+        "norman-british": [
+          { w: "Wool" },
+          { w: "Salt" },
+          { w: "Tin" },
+          { w: "Lead" }
+        ],
+        celtic: [
+          { w: "Wool" },
+          { w: "Salt" },
+          { w: "Tin" },
+          { w: "Lead" }
+        ],
+        norse: [
+          { w: "Furs" },
+          { w: "Amber" },
+          { w: "Fish" }
+        ],
+        roman: [
+          { w: "Salt" },
+          { w: "Wine" },
+          { w: "Olive Oil" }
+        ],
+        "greek-byzantine": [
+          { w: "Wine" },
+          { w: "Silk" },
+          { w: "Olive Oil" }
+        ],
+        slavic: [
+          { w: "Furs" },
+          { w: "Amber" },
+          { w: "Wax" },
+          { w: "Honey" }
+        ],
+        steppe: [
+          { w: "Horses" },
+          { w: "Felt" },
+          { w: "Tea" }
+        ],
+        "arabic-persian": [
+          { w: "Incense" },
+          { w: "Spice" },
+          { w: "Pearls" },
+          { w: "Dates" }
+        ],
+        indian: [
+          { w: "Pepper" },
+          { w: "Cotton" },
+          { w: "Spice" }
+        ],
+        chinese: [
+          { w: "Silk" },
+          { w: "Tea" },
+          { w: "Porcelain" },
+          { w: "Jade" }
+        ],
+        japanese: [
+          { w: "Rice" },
+          { w: "Salt" },
+          { w: "Silk" }
+        ],
+        korean: [
+          { w: "Ginseng" },
+          { w: "Paper" },
+          { w: "Silk" }
+        ],
+        egyptian: [
+          { w: "Gold" },
+          { w: "Grain" },
+          { w: "Linen" }
+        ],
+        ethiopian: [
+          { w: "Salt" },
+          { w: "Incense" },
+          { w: "Coffee" }
+        ],
+        bantu: [
+          { w: "Copper" },
+          { w: "Gold" },
+          { w: "Cattle" }
+        ],
+        "west-african": [
+          { w: "Salt" },
+          { w: "Gold" },
+          { w: "Kola" }
+        ],
+        aztec: [
+          { w: "Cacao" },
+          { w: "Jade" },
+          { w: "Obsidian" },
+          { w: "Salt" }
+        ],
+        maya: [
+          { w: "Cacao" },
+          { w: "Jade" },
+          { w: "Obsidian" },
+          { w: "Salt" }
+        ],
+        polynesian: [
+          { w: "Stone" },
+          { w: "Feather" }
+        ],
+        andean: [
+          { w: "Salt" },
+          { w: "Wool" },
+          { w: "Silver" }
+        ]
+      }
+    },
+    holySite: {
+      entries: [
+        { w: "Holy Well", x: 2 },
+        { w: "Shrine", x: 2 },
+        { w: "Oracle" },
+        { w: "Holy Mountain" },
+        { w: "Sacred Spring" },
+        { w: "Standing Stones" },
+        { w: "Sacred Grove" },
+        { w: "Temple" },
+        { w: "Holy Isle" },
+        { w: "Abbey", c: ["christian"] },
+        { w: "Minster", c: ["christian"] }
+      ]
+    },
+    holySitePl: {
+      entries: [
+        { w: "Shrines" },
+        { w: "Temples" },
+        { w: "Wells" },
+        { w: "Springs" },
+        { w: "Stones" },
+        { w: "Monasteries", c: ["christian", "greek-byzantine", "korean", "japanese"] }
+      ]
+    },
+    dayNumber: {
+      entries: [
+        { w: "Seven" },
+        { w: "Ten" },
+        { w: "Twelve" },
+        { w: "Twenty" },
+        { w: "Thirty" }
+      ]
+    },
+    jFeature: {
+      entries: [
+        { w: "Sea", x: 2, c: ["japanese"] },
+        { w: "Mountain", x: 2, c: ["japanese"] },
+        { w: "Province", c: ["japanese"] },
+        { w: "Coast", c: ["japanese"] },
+        { w: "River", c: ["japanese"] },
+        { w: "Pine", c: ["japanese"] }
+      ]
+    },
+    romanRoadNomen: {
+      entries: [
+        { w: "Fabian", c: ["roman"] },
+        { w: "Junian", c: ["roman"] },
+        { w: "Licinian", c: ["roman"] },
+        { w: "Sempronian", c: ["roman"] },
+        { w: "Tullian", c: ["roman"] },
+        { w: "Sulpician", c: ["roman"] },
+        { w: "Caecilian", c: ["roman"] },
+        { w: "Calpurnian", c: ["roman"] },
+        { w: "Antonian", c: ["roman"] },
+        { w: "Octavian", c: ["roman"] },
+        { w: "Livian", c: ["roman"] },
+        { w: "Servilian", c: ["roman"] },
+        { w: "Manlian", c: ["roman"] },
+        { w: "Furian", c: ["roman"] },
+        { w: "Horatian", c: ["roman"] }
+      ]
+    },
+    spaceGoods: {
+      entries: [
+        { w: "Ice", x: 2 },
+        { w: "Helium" },
+        { w: "Ore", x: 2 },
+        { w: "Water" },
+        { w: "Data" },
+        { w: "Salvage" },
+        { w: "Fuel" }
+      ]
+    },
+    skyPath: {
+      entries: [
+        { w: "Morning Star", c: ["polynesian"] },
+        { w: "Evening Star", c: ["polynesian"] },
+        { w: "Rising Swell", c: ["polynesian"] },
+        { w: "Trade Wind", c: ["polynesian"] }
+      ]
+    },
+    "routeFixed:road": {
+      entries: [
+        { w: "Ridgeway", e: ["AN", "MD"], c: ["british"], r: "ridge" },
+        { w: "Hollow Way", e: ["MD", "EM", "ST"], c: ["british"] },
+        { w: "Green Lane", e: ["MD", "EM", "ST"], c: ["british"] },
+        { w: "Old Road", x: 0.5 },
+        { w: "High Road", e: ["EM", "ST"] },
+        { w: "Great Road", e: ["AN", "MD"], c: ["celtic", "indian"] }
+      ]
+    },
+    "routeFixed:trade": {
+      entries: [
+        { w: "Market Way", e: ["MD"], c: ["british"] },
+        { w: "Silk Road", x: 0.2 },
+        { w: "Incense Road", e: ["AN", "MD", "EM"], c: ["arabic-persian", "ethiopian"] }
+      ]
+    },
+    "routeFixed:pilgrim": {
+      entries: [
+        { w: "Pilgrims' Way", e: ["MD", "EM", "ST", "MO"] },
+        { w: "Sacred Way", e: ["AN"], c: ["roman", "greek-byzantine"] },
+        { w: "Corpse Road", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" },
+        { w: "Coffin Way", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" }
+      ]
+    },
+    "routeFixed:military": {
+      entries: [
+        { w: "Army Way", e: ["MD"], c: ["british"], r: "army" },
+        { w: "Straight Road", e: ["AN"], c: ["chinese", "roman"] },
+        { w: "Wall Road", e: ["AN", "MD"], c: ["roman", "chinese"] },
+        { w: "Post Road", e: ["AN", "MD", "EM", "ST"], c: ["steppe", "chinese", "slavic"] },
+        { w: "Frontier Road" }
+      ]
+    },
+    "routeFixed:drove": {
+      entries: [
+        { w: "Drove Road", e: ["MD", "EM", "ST"] },
+        { w: "Packhorse Road", e: ["MD", "EM"], c: ["british"], r: "packhorse" },
+        { w: "Hollow Way", e: ["MD", "EM", "ST"], c: ["british"] },
+        { w: "Green Lane", e: ["MD", "EM", "ST"], c: ["british"] },
+        { w: "Old Track" },
+        { w: "Cattle Road", c: ["bantu", "celtic", "steppe"] },
+        { w: "Corpse Road", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" },
+        { w: "Peat Road", c: ["celtic", "norse"], r: "peat" },
+        { w: "Summer Pasture Path", c: ["celtic", "norse"], r: "peat" },
+        { w: "Winter Road", e: ["EM", "ST"], c: ["slavic"] }
+      ]
+    },
+    "routeFixed:sea": {
+      entries: [
+        { w: "Island Passage" },
+        { w: "Sea Lane", e: ["ST", "MO", "NF"] },
+        { w: "Monsoon Road", c: ["arabic-persian", "indian", "chinese"] },
+        { w: "Whale-Road", t: ["strange"], e: ["AN", "MD"], c: ["anglo-saxon", "norse"] },
+        { w: "Ship-Way", e: ["AN", "MD"], c: ["norse"] }
+      ]
+    },
+    "routeFixed:rail": {
+      entries: []
+    },
+    "routeFixed:motor": {
+      entries: []
+    },
+    "routeFixed:space": {
+      entries: [
+        { w: "The Long Haul" },
+        { w: "The Dark Lane", t: ["grim"] },
+        { w: "The Pilgrim Road" },
+        { w: "The Quiet Lane", t: ["strange"] },
+        { w: "The Narrows" }
+      ]
+    }
+  }
+};
+
+// src/settlement/vocab.ts
+var SETTLEMENT_VOCAB = settlement_vocab_default;
+var VOCAB_ERAS = SETTLEMENT_VOCAB.eras;
+var VOCAB_CULTURES = SETTLEMENT_VOCAB.cultures;
+var VOCAB_CULTURE_GROUPS = Object.keys(SETTLEMENT_VOCAB.cultureGroups);
+var VOCAB_REGION_TAGS = SETTLEMENT_VOCAB.regionTags;
+var POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
+var BUILT_IN_VOCAB = { pools: SETTLEMENT_VOCAB.pools };
+var VOCABULARY_TYPE = "vocabulary";
+var VOCABULARY_PACK_TEMPLATE = [
+  "---",
+  `type: ${VOCABULARY_TYPE}`,
+  "---",
+  "",
+  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` \xD70.5` or ` (grim)`, and narrow a heading with ` \xB7 japanese` or ` \xB7 MD`.",
+  "",
+  ...POOL_NAMES.flatMap((p) => [`## ${p}`, ""])
+].join("\n");
+
+// src/settlement/vocabPacks.ts
+var VOCABULARY_PACK_FILE = "Vocabulary.md";
+async function createVocabularyPack(vault, folder) {
+  const path = folder ? `${folder.replace(/\/+$/, "")}/${VOCABULARY_PACK_FILE}` : VOCABULARY_PACK_FILE;
+  if (vault.exists(path)) return "exists";
+  await vault.create(path, VOCABULARY_PACK_TEMPLATE);
+  return "created";
+}
+
 // src/main.ts
 var DEFAULT_SETTINGS = {
   namesFilePath: "",
@@ -84871,6 +85297,17 @@ var NameForgePlugin = class extends import_obsidian15.Plugin {
         }
         await this.app.vault.create(path, VESSEL_SAFEGUARD_TEMPLATE);
         new import_obsidian15.Notice("nameForge: \u201CVessel safeguards\u201D created.");
+      }
+    });
+    this.addCommand({
+      id: "create-vocabulary-pack",
+      name: "Create vocabulary pack",
+      callback: async () => {
+        const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
+        await ensureVaultFolder(this.app, folder);
+        const vault = { exists: (path) => !!this.app.vault.getFileByPath((0, import_obsidian15.normalizePath)(path)), create: (path, content) => this.app.vault.create((0, import_obsidian15.normalizePath)(path), content) };
+        const result = await createVocabularyPack(vault, folder);
+        new import_obsidian15.Notice(result === "exists" ? "nameForge: \u201CVocabulary\u201D already exists." : "nameForge: \u201CVocabulary\u201D created.");
       }
     });
     this.addCommand({
