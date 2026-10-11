@@ -461,19 +461,19 @@ function stripInlineMarkup(s) {
 function parseNameTokens(text) {
   const tokens = text.split(/[\n,;]/).flatMap((t) => splitOnJoiners(t)).flatMap((t) => splitSpaceSeparatedList(t)).map((t) => t.trim()).filter((t) => t.length > 0);
   const names = [];
-  for (const token8 of tokens) {
-    const cleaned = cleanToken(stripLeadingConjunction(token8));
+  for (const token9 of tokens) {
+    const cleaned = cleanToken(stripLeadingConjunction(token9));
     if (cleaned === "" || isNoise(cleaned)) continue;
     names.push(cleaned);
   }
   return dedupe(names);
 }
-function splitSpaceSeparatedList(token8) {
-  const parts = splitOnUnquotedWhitespace(token8);
+function splitSpaceSeparatedList(token9) {
+  const parts = splitOnUnquotedWhitespace(token9);
   if (parts.length >= 3) return parts;
-  const loose = unwrapOuterQuotes(token8.trim()).split(/\s+/).filter((p) => p.length > 0);
+  const loose = unwrapOuterQuotes(token9.trim()).split(/\s+/).filter((p) => p.length > 0);
   if (loose.length >= 3) return loose;
-  return [token8];
+  return [token9];
 }
 function unwrapOuterQuotes(s) {
   const pairs = [
@@ -489,11 +489,11 @@ function unwrapOuterQuotes(s) {
   }
   return s;
 }
-function splitOnUnquotedWhitespace(token8) {
+function splitOnUnquotedWhitespace(token9) {
   const parts = [];
   let current = "";
   let quote2 = null;
-  for (const char of token8) {
+  for (const char of token9) {
     if (quote2) {
       current += char;
       if (char === matchingQuote(quote2)) quote2 = null;
@@ -519,8 +519,8 @@ function matchingQuote(open) {
   if (open === "\u2018") return "\u2019";
   return open;
 }
-function splitOnJoiners(token8) {
-  let parts = [token8];
+function splitOnJoiners(token9) {
+  let parts = [token9];
   for (const joiner of JOINERS) {
     const next = [];
     for (const part of parts) {
@@ -536,12 +536,12 @@ function splitOnJoiners(token8) {
   }
   return parts;
 }
-function stripLeadingConjunction(token8) {
-  const lower2 = token8.toLowerCase();
+function stripLeadingConjunction(token9) {
+  const lower2 = token9.toLowerCase();
   for (const lead of LEADERS) {
-    if (lower2.startsWith(lead)) return token8.slice(lead.length).trim();
+    if (lower2.startsWith(lead)) return token9.slice(lead.length).trim();
   }
-  return token8;
+  return token9;
 }
 function cleanToken(s) {
   let t = s.trim();
@@ -1544,12 +1544,12 @@ function generateCompoundTitled(parts, options) {
   };
   const out = [];
   const seen = /* @__PURE__ */ new Set();
-  const live3 = titles.map((_, i) => i);
-  while (out.length < count && live3.length > 0) {
-    const pick4 = live3[Math.floor(rng() * live3.length)];
+  const live4 = titles.map((_, i) => i);
+  while (out.length < count && live4.length > 0) {
+    const pick4 = live4[Math.floor(rng() * live4.length)];
     const names = batch(pick4);
     if (cursors[pick4] >= names.length) {
-      live3.splice(live3.indexOf(pick4), 1);
+      live4.splice(live4.indexOf(pick4), 1);
       continue;
     }
     const name = names[cursors[pick4]++];
@@ -30469,15 +30469,15 @@ function findTradition(key2) {
   return TRIBAL_TRADITIONS.find((t) => t.key === key2);
 }
 function pick(items, rng) {
-  const live3 = items.filter(([, w]) => w > 0);
-  if (live3.length === 0) return void 0;
-  const total = live3.reduce((n, [, w]) => n + w, 0);
+  const live4 = items.filter(([, w]) => w > 0);
+  if (live4.length === 0) return void 0;
+  const total = live4.reduce((n, [, w]) => n + w, 0);
   let r = rng() * total;
-  for (const [item2, w] of live3) {
+  for (const [item2, w] of live4) {
     r -= w;
     if (r < 0) return item2;
   }
-  return live3[live3.length - 1][0];
+  return live4[live4.length - 1][0];
 }
 var pickRecord = (weights, rng) => pick(Object.entries(weights), rng);
 var pickPool = (pool3, rng) => pick([...pool3.entries()], rng);
@@ -30999,8 +30999,8 @@ function templateN(ctx, parts) {
   const c = collective(ctx, { personOnly: true });
   if (!a || !c || a.includes("'")) return void 0;
   parts.collective = c;
-  const bare = a.replace(/^the /, "");
-  return `${bare}${bare.endsWith("s") ? "'" : "'s"} ${c}`;
+  const bare2 = a.replace(/^the /, "");
+  return `${bare2}${bare2.endsWith("s") ? "'" : "'s"} ${c}`;
 }
 function templateO(ctx, parts) {
   const r = ctx.rng();
@@ -31629,7 +31629,7 @@ function ancientForm(name, region, rng) {
   return { text: name, form };
 }
 var colonialBiome = (options) => options.setting === "british" ? void 0 : findBiome(options.biome);
-function descriptiveName(options, rng, bare) {
+function descriptiveName(options, rng, bare2) {
   const british = options.setting === "british";
   const biome = colonialBiome(options);
   const categories = RIVER_DATA.descriptiveCategories[british ? "british" : biome ? "colonialWithBiome" : "colonial"];
@@ -31642,11 +31642,11 @@ function descriptiveName(options, rng, bare) {
     const joined = entry.fuses === "yes" ? smoothJoin(word, water) : null;
     const fuses = joined !== null && letterCount2(joined) <= NAMES.maxFusedLetters && rng() < RIVER_DATA.britishFuseChance;
     const name = fuses ? titleCase2(joined.toLowerCase()) : titleCase2(`${word} ${water}`);
-    if (bare) return { text: name, water, form: "bare" };
+    if (bare2) return { text: name, water, form: "bare" };
     const form2 = pickWeighted2(RIVER_DATA.forms.britishDescriptive, rng);
     return { text: form2 === "river-x" ? `River ${name}` : name, water, form: form2 };
   }
-  if (bare) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
+  if (bare2) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
   const form = pickWeighted2(RIVER_DATA.forms.colonialDescriptive, rng);
   return form === "bare" && water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
 }
@@ -55834,14 +55834,14 @@ function findEra(culture, eraId) {
 }
 var pickUniform5 = (items, rng) => items[Math.floor(rng() * items.length)];
 function pickWeighted4(entries, rng) {
-  const live3 = entries.filter(([, w]) => w > 0);
-  const total = live3.reduce((n, [, w]) => n + w, 0);
+  const live4 = entries.filter(([, w]) => w > 0);
+  const total = live4.reduce((n, [, w]) => n + w, 0);
   let r = rng() * total;
-  for (const [item2, w] of live3) {
+  for (const [item2, w] of live4) {
     r -= w;
     if (r < 0) return item2;
   }
-  return live3[live3.length - 1][0];
+  return live4[live4.length - 1][0];
 }
 var letterCount4 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
 function parseEntry(raw) {
@@ -55991,34 +55991,34 @@ var WorldRenderer = class {
     return pickUniform5(source.corpus, rng);
   }
   /** A list word, expanding any template held in the entry. */
-  slot(token8, rng, depth) {
+  slot(token9, rng, depth) {
     var _a2, _b;
-    if (token8.markov) {
-      const name = this.markovName(token8.key, rng);
-      const text2 = token8.form === "pos" ? possessive(name) : name;
-      return { text: text2, etym: `[${this.label(token8.key)}: ${name}]${token8.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
+    if (token9.markov) {
+      const name = this.markovName(token9.key, rng);
+      const text2 = token9.form === "pos" ? possessive(name) : name;
+      return { text: text2, etym: `[${this.label(token9.key)}: ${name}]${token9.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
     }
-    const list = this.lists[token8.key];
+    const list = this.lists[token9.key];
     if (!list || list.length === 0) {
-      this.notices.add(`No word list "${token8.key}" for ${this.culture.label}.`);
-      return { text: `[${token8.key}]`, etym: `[${token8.key}]`, fusable: false };
+      this.notices.add(`No word list "${token9.key}" for ${this.culture.label}.`);
+      return { text: `[${token9.key}]`, etym: `[${token9.key}]`, fusable: false };
     }
-    const entry = parseEntry((_a2 = this.swapEntry(token8.key, rng)) != null ? _a2 : pickUniform5(list, rng));
+    const entry = parseEntry((_a2 = this.swapEntry(token9.key, rng)) != null ? _a2 : pickUniform5(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);
-      const text2 = token8.form === "pos" ? possessive(inner.text) : inner.text;
-      const etym = single ? inner.etym : `[${this.label(token8.key)}: ${inner.text}]`;
-      return { text: text2, etym: token8.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
+      const text2 = token9.form === "pos" ? possessive(inner.text) : inner.text;
+      const etym = single ? inner.etym : `[${this.label(token9.key)}: ${inner.text}]`;
+      return { text: text2, etym: token9.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
     }
     let text = entry.word;
-    if (token8.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
-    if (token8.form === "pos") text = possessive(entry.word);
-    const shown = token8.form === "pos" ? entry.word : text;
+    if (token9.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
+    if (token9.form === "pos") text = possessive(entry.word);
+    const shown = token9.form === "pos" ? entry.word : text;
     return {
       text,
-      etym: `[${this.label(token8.key)}: ${shown}]${token8.form === "pos" ? possessiveTail(entry.word) : ""}`,
-      fusable: !entry.noFuse && token8.form !== "pos"
+      etym: `[${this.label(token9.key)}: ${shown}]${token9.form === "pos" ? possessiveTail(entry.word) : ""}`,
+      fusable: !entry.noFuse && token9.form !== "pos"
     };
   }
   /** Renders a template: slots filled, "+" groups fused or spaced. */
@@ -56032,14 +56032,14 @@ var WorldRenderer = class {
       out.push(group.length === 1 ? group[0] : this.fuse(group, rng));
       group = [];
     };
-    for (const token8 of tokens) {
-      if (token8.kind === "fuse") {
+    for (const token9 of tokens) {
+      if (token9.kind === "fuse") {
         joinNext = true;
         continue;
       }
       let piece;
-      if (token8.kind === "text") piece = { text: token8.text, etym: token8.text.toLowerCase(), fusable: !/\s/.test(token8.text) };
-      else piece = this.slot(token8, rng, depth);
+      if (token9.kind === "text") piece = { text: token9.text, etym: token9.text.toLowerCase(), fusable: !/\s/.test(token9.text) };
+      else piece = this.slot(token9, rng, depth);
       if (!joinNext) flush();
       group.push(piece);
       joinNext = false;
@@ -56361,8 +56361,8 @@ function compositeWord(ctx, name, type) {
     if (w !== void 0 && from) for (const t of wordTones(from[0], w)) ctx.drawn.add(t);
     return w;
   }
-  const live3 = parts.filter(([sub2]) => pool(ctx, sub2, type).length > 0);
-  const sub = pickWeighted5(live3, ctx.rng);
+  const live4 = parts.filter(([sub2]) => pool(ctx, sub2, type).length > 0);
+  const sub = pickWeighted5(live4, ctx.rng);
   return sub ? pick2(ctx, sub, type) : void 0;
 }
 var townPools = /* @__PURE__ */ new Map();
@@ -56499,8 +56499,8 @@ function token(ctx, name, type, shape) {
   }
   const patterns = GROUP_DATA.patterns[name];
   if (patterns) {
-    const live3 = patterns.filter((p) => !p.s || p.s.includes(S)).map((p) => [p.p, p.w]);
-    const pattern = pickWeighted5(live3, rng);
+    const live4 = patterns.filter((p) => !p.s || p.s.includes(S)).map((p) => [p.p, p.w]);
+    const pattern = pickWeighted5(live4, rng);
     const text = pattern === void 0 ? void 0 : renderPattern(ctx, pattern, type, shape);
     return text === void 0 ? void 0 : { text, plural: false };
   }
@@ -56635,10 +56635,10 @@ function commodityFactor(ctx, shape) {
   return factor;
 }
 function byForm(ctx, shapes) {
-  const live3 = shapes.map((s) => [s, shapeWeight(ctx, s)]).filter(([, w]) => w > 0);
+  const live4 = shapes.map((s) => [s, shapeWeight(ctx, s)]).filter(([, w]) => w > 0);
   const wanted = ctx.form === "formal" ? ["F", "B"] : ctx.form === "everyday" ? ["E", "B"] : ["F", "E", "B"];
-  const matching = live3.filter(([s]) => wanted.includes(s.f));
-  return matching.length > 0 ? matching : live3;
+  const matching = live4.filter(([s]) => wanted.includes(s.f));
+  return matching.length > 0 ? matching : live4;
 }
 function plainShapes(ctx, type) {
   var _a2, _b;
@@ -56710,13 +56710,13 @@ function repeatsContent(counted2) {
   let colours = 0;
   let numbers = 0;
   for (const raw of content) {
-    const bare = raw.replace(/'s?$/, "").replace(/[(),.]/g, "");
-    if (!bare) continue;
-    const key2 = bare.toLowerCase().replace(/s$/, "");
+    const bare2 = raw.replace(/'s?$/, "").replace(/[(),.]/g, "");
+    if (!bare2) continue;
+    const key2 = bare2.toLowerCase().replace(/s$/, "");
     if (seen.has(key2)) return true;
     seen.add(key2);
-    if (COLOUR_WORDS.has(bare)) colours++;
-    if (NUMBER_WORDS.has(bare) || /^\d+(st|nd|rd|th)$/.test(bare)) numbers++;
+    if (COLOUR_WORDS.has(bare2)) colours++;
+    if (NUMBER_WORDS.has(bare2) || /^\d+(st|nd|rd|th)$/.test(bare2)) numbers++;
   }
   return colours > 1 || numbers > 1;
 }
@@ -64181,7 +64181,7 @@ function entryForm(e, sex, native) {
 }
 function drawEntries(ctx, entries, opts = {}) {
   var _a2, _b, _c, _d, _e;
-  const live3 = [];
+  const live4 = [];
   for (const e of entries) {
     if (e.s && !e.s.includes(ctx.setting)) continue;
     if (e.bm && !lightOrGrim(ctx.tone)) continue;
@@ -64189,9 +64189,9 @@ function drawEntries(ctx, entries, opts = {}) {
     if (!form) continue;
     if (opts.nativeOnly && !form.native) continue;
     const w = ((_a2 = e.x) != null ? _a2 : 1) * ((_c = (_b = e.cx) == null ? void 0 : _b[ctx.culture]) != null ? _c : 1) * toneFactor((_d = e.t) != null ? _d : [], ctx.tone);
-    if (w > 0) live3.push([{ ...form, entry: e }, w]);
+    if (w > 0) live4.push([{ ...form, entry: e }, w]);
   }
-  const pick4 = pickWeighted5(live3, ctx.rng);
+  const pick4 = pickWeighted5(live4, ctx.rng);
   if (pick4) for (const t of (_e = pick4.entry.t) != null ? _e : []) ctx.drawn.add(t);
   return pick4;
 }
@@ -64310,8 +64310,8 @@ function token2(ctx, raw) {
     case "town": {
       const holy = HOLY_NAMES.get(ctx.culture);
       for (let i = 0; i < 20; i++) {
-        const town2 = groupTown(ctx.setting, townSource(ctx.culture), rng);
-        if (!holy || !holy.test(town2)) return town2;
+        const town3 = groupTown(ctx.setting, townSource(ctx.culture), rng);
+        if (!holy || !holy.test(town3)) return town3;
       }
       return void 0;
     }
@@ -64414,11 +64414,11 @@ var tonesOf = (shapeTones2, drawn) => {
   return GROUP_TONES.filter((t) => all.has(t));
 };
 function pickShape(ctx, shapes, kind) {
-  const live3 = shapes.filter((s) => s.kind === kind && (!s.s || s.s.includes(ctx.setting)) && (!s.gate || lightOrGrim(ctx.tone))).map((s) => {
+  const live4 = shapes.filter((s) => s.kind === kind && (!s.s || s.s.includes(ctx.setting)) && (!s.gate || lightOrGrim(ctx.tone))).map((s) => {
     var _a2;
     return [s, s.w * toneFactor((_a2 = s.t) != null ? _a2 : [], ctx.tone)];
   });
-  return pickWeighted5(live3, ctx.rng);
+  return pickWeighted5(live4, ctx.rng);
 }
 var NUMBER_WORDS2 = new Set(BYNAMES_DATA.lists.dayNumber.flatMap((e) => [e.w, e.n]));
 function joinEpithet(name, part, join2) {
@@ -64443,9 +64443,9 @@ function oneTitle(ctx, kind, forceShape) {
   let text;
   if (shape.p === "{rank} of {town}") {
     const rank = token2(ctx, "rank");
-    const town2 = token2(ctx, "town");
-    if (!rank || !town2) return void 0;
-    text = `${rank} ${ctx.rankNative ? nativeOf(ctx.culture, town2) : `of ${town2}`}`;
+    const town3 = token2(ctx, "town");
+    if (!rank || !town3) return void 0;
+    text = `${rank} ${ctx.rankNative ? nativeOf(ctx.culture, town3) : `of ${town3}`}`;
   } else text = render2(ctx, shape.p);
   if (!text) return void 0;
   return { text, shape, rank: shape.p === "{rank}" || shape.p === "{rank} of {town}", after: ctx.rankAfter };
@@ -64456,8 +64456,8 @@ function buildTitle(ctx, kind, length) {
   if (length === "single") {
     const title = oneTitle(ctx, kind);
     if (!title) return void 0;
-    const bare = title.shape.p === "{rank}";
-    const text = !name ? title.text : bare ? title.after ? `${name} ${title.text}` : `${title.text} ${name}` : `${name}, ${title.text}`;
+    const bare2 = title.shape.p === "{rank}";
+    const text = !name ? title.text : bare2 ? title.after ? `${name} ${title.text}` : `${title.text} ${name}` : `${name}, ${title.text}`;
     return { part: title.text, text, kind, shape: title.shape.p, tones: tonesOf(title.shape.t, ctx.drawn) };
   }
   const r = ctx.rng();
@@ -74762,7 +74762,7 @@ function generateVesselNames(options) {
     return sfPrefixes.get(fn);
   };
   const styleShare = !style ? 0 : style.key === "oceanic" && culture.sensitive ? 1 : culture.key === "general" ? VESSEL_DATA.styleShare.general : VESSEL_DATA.styleShare.default;
-  const newCtx2 = (level, fn) => {
+  const newCtx3 = (level, fn) => {
     var _a3;
     return {
       rng,
@@ -74783,7 +74783,7 @@ function generateVesselNames(options) {
       pools
     };
   };
-  const choosePlan = (ctx) => {
+  const choosePlan2 = (ctx) => {
     if (style && !options.shape && rng() < styleShare) {
       ctx.boost = false;
       return pickWeighted5(stylePlans(ctx), rng);
@@ -74823,8 +74823,8 @@ function generateVesselNames(options) {
       const fn = chosenFn != null ? chosenFn : pickWeighted5(fnChoices(level).map((f) => [f, f.w]), rng);
       if (!fn) continue;
       for (let i = 0; i < 20; i++) {
-        const ctx = newCtx2(level, fn.key);
-        const plan = choosePlan(ctx);
+        const ctx = newCtx3(level, fn.key);
+        const plan = choosePlan2(ctx);
         if (!plan) break;
         const name = result(ctx, renderPlan(ctx, plan));
         if (name) return name;
@@ -74859,8 +74859,8 @@ function generateVesselNames(options) {
     const isPlaceholder = (d) => placeholders && PLACEHOLDER_TOKENS2.has(d.name);
     let first;
     for (let i = 0; i < 40 && !first; i++) {
-      const ctx2 = newCtx2(level, fn);
-      const plan2 = choosePlan(ctx2);
+      const ctx2 = newCtx3(level, fn);
+      const plan2 = choosePlan2(ctx2);
       if (!plan2) continue;
       const built = renderPlan(ctx2, plan2);
       const name = result(ctx2, built);
@@ -74873,7 +74873,7 @@ function generateVesselNames(options) {
     const plan = first.built.plan;
     const rec = first.built.record;
     const draw2 = (hooks, p = plan) => {
-      const ctx2 = newCtx2(level, fn);
+      const ctx2 = newCtx3(level, fn);
       if (p.route === "style") ctx2.boost = false;
       return result(ctx2, renderPlan(ctx2, p, hooks), info);
     };
@@ -74909,7 +74909,7 @@ function generateVesselNames(options) {
     };
     fill(() => draw2({ byIndex: hold }));
     if (!anchor || names.length >= count) return tone;
-    const ctx = newCtx2(level, fn);
+    const ctx = newCtx3(level, fn);
     const others = (plan.route === "style" ? stylePlans(ctx) : plan.route === "hybrid" ? hybridPlans(ctx) : rolePlans(ctx, plan.role)).filter(
       ([p]) => p.p !== plan.p && [...p.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name)
     );
@@ -74953,9 +74953,9 @@ function cultureForms(culture, era) {
   for (const f of (_f = c == null ? void 0 : c.forms) != null ? _f : []) {
     out.push([{ w: f.w, pl: f.pl, g: f.g, t: [], compound: false, peoplesOnly: false, culture: true }, 15 * f.x * (f.eras.includes(era) ? 1 : 0.3)]);
   }
-  const live3 = out.filter(([, w]) => w > 0);
-  FORM_CACHE.set(key2, live3);
-  return live3;
+  const live4 = out.filter(([, w]) => w > 0);
+  FORM_CACHE.set(key2, live4);
+  return live4;
 }
 function characterMult(character, form) {
   var _a2, _b;
@@ -78026,30 +78026,30 @@ function regionMult(ctx, tag, eras) {
   if (eras && !eras.includes(ctx.era)) return 1;
   return (_b = (_a2 = ROUTE_DATA.regions[tag]) == null ? void 0 : _a2[ctx.region]) != null ? _b : 1;
 }
-function vocabPool(ctx, pool3, token8) {
+function vocabPool(ctx, pool3, token9) {
   var _a2, _b, _c;
   const shape = ctx.shape;
-  const only = (_a2 = shape == null ? void 0 : shape.only) == null ? void 0 : _a2[token8];
-  const cw = (_c = (_b = shape == null ? void 0 : shape.cw) == null ? void 0 : _b[ctx.culture.key]) == null ? void 0 : _c[token8];
+  const only = (_a2 = shape == null ? void 0 : shape.only) == null ? void 0 : _a2[token9];
+  const cw = (_c = (_b = shape == null ? void 0 : shape.cw) == null ? void 0 : _b[ctx.culture.key]) == null ? void 0 : _c[token9];
   return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t))).map(([e, w]) => {
     var _a3, _b2;
     let n = w * toneFactor((_a3 = e.t) != null ? _a3 : [], ctx.tone) * regionMult(ctx, e.rt) * ((_b2 = cw == null ? void 0 : cw[e.w]) != null ? _b2 : 1);
-    if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token8 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
+    if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token9 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
     return [e, n];
   }).filter(([, n]) => n > 0);
 }
-function vocabWord(ctx, pool3, token8, keep) {
+function vocabWord(ctx, pool3, token9, keep) {
   var _a2;
-  const items = vocabPool(ctx, pool3, token8).filter(([e2]) => !keep || keep(e2.w));
+  const items = vocabPool(ctx, pool3, token9).filter(([e2]) => !keep || keep(e2.w));
   const e = pickWeighted5(items, ctx.rng);
   if (!e) return void 0;
   for (const t of (_a2 = e.t) != null ? _a2 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
   return e.w;
 }
-function gnWord2(ctx, token8) {
-  const list = GN_LISTS2[token8];
-  const setting = SF_LISTS.has(token8) ? "SF" : ctx.setting;
+function gnWord2(ctx, token9) {
+  const list = GN_LISTS2[token9];
+  const setting = SF_LISTS.has(token9) ? "SF" : ctx.setting;
   const items = groupListWords(list, setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
@@ -78242,9 +78242,9 @@ function shapeWeight2(ctx, kind, s, anyEra = false) {
   if (s.p === "fixed") {
     const prev = ctx.shape;
     ctx.shape = s;
-    const live3 = vocabPool(ctx, `routeFixed:${kind}`, "fixed").length > 0;
+    const live4 = vocabPool(ctx, `routeFixed:${kind}`, "fixed").length > 0;
     ctx.shape = prev;
-    if (!live3) return 0;
+    if (!live4) return 0;
   }
   return s.w * ((_b = (_a2 = s.cx) == null ? void 0 : _a2[c.key]) != null ? _b : 1) * regionMult(ctx, s.r, s.rEra) * toneFactor((_c = s.t) != null ? _c : [], ctx.tone);
 }
@@ -78292,9 +78292,9 @@ var DIRECTION_TOKENS = new Set(Object.keys(COMPASS));
 var PLACEHOLDER_TOKENS3 = /* @__PURE__ */ new Set(["destination", "town", "folk", "person", "founder", "patron", "kingdom", "holy"]);
 var NEVER_ANCHORS3 = /* @__PURE__ */ new Set(["person", "founder", "patron", "holy", "n"]);
 var kindOf3 = (name) => NEVER_ANCHORS3.has(name) ? "never" : name === "destination" ? "owner" : seriesTokenKind(name);
-function compassValues(ctx, token8) {
-  const live3 = poolEntries(ctx.vocab, token8, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
-  return [...COMPASS[token8].filter((w) => live3.includes(w)), ...live3.filter((w) => !COMPASS[token8].includes(w))];
+function compassValues(ctx, token9) {
+  const live4 = poolEntries(ctx.vocab, token9, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
+  return [...COMPASS[token9].filter((w) => live4.includes(w)), ...live4.filter((w) => !COMPASS[token9].includes(w))];
 }
 function generateRouteNames(options) {
   var _a2;
@@ -78314,7 +78314,7 @@ function generateRouteNames(options) {
   }).filter(([, w]) => w > 0);
   const block = routeBlockSet(options.safeguards);
   const count = Math.max(0, Math.floor(options.count));
-  const newCtx2 = () => {
+  const newCtx3 = () => {
     var _a3, _b, _c;
     return {
       rng,
@@ -78331,7 +78331,7 @@ function generateRouteNames(options) {
       words: []
     };
   };
-  const choosePlan = (ctx, kind) => {
+  const choosePlan2 = (ctx, kind) => {
     if (kind === "space" && !options.shape && rng() < ROUTE_DATA.spaceBorrow.share) {
       const plan = pickWeighted5(borrowedPlans(ctx), rng);
       if (plan) return plan;
@@ -78357,8 +78357,8 @@ function generateRouteNames(options) {
       const kind = kindFor != null ? kindFor : drawKind();
       if (!kind) return void 0;
       for (let i = 0; i < 20; i++) {
-        const ctx = newCtx2();
-        const plan = choosePlan(ctx, kind);
+        const ctx = newCtx3();
+        const plan = choosePlan2(ctx, kind);
         if (!plan) break;
         const built = renderPlan2(ctx, plan);
         if (built && acceptable4(built, block)) return built;
@@ -78397,7 +78397,7 @@ function generateRouteNames(options) {
     const plan = first.plan;
     const rec = first.record;
     const draw2 = (hooks, p = plan) => {
-      const ctx2 = newCtx2();
+      const ctx2 = newCtx3();
       const built = renderPlan2(ctx2, p, hooks);
       return built && acceptable4(built, block) ? built : void 0;
     };
@@ -78408,7 +78408,7 @@ function generateRouteNames(options) {
     if (counterAt >= 0) {
       const name = rec[counterAt].name;
       const series2 = { counter: name, varies: null, anchor: null };
-      const values = compassValues(newCtx2(), name);
+      const values = compassValues(newCtx3(), name);
       const start = Math.max(0, values.indexOf(rec[counterAt].text));
       const found = [];
       const locked = new Map(rec.map((d, i) => [i, d]));
@@ -78455,7 +78455,7 @@ function generateRouteNames(options) {
       return b && toName(b, series);
     });
     if (!anchor || names.length >= count) return;
-    const ctx = newCtx2();
+    const ctx = newCtx3();
     const others = (plan.borrowed ? borrowedPlans(ctx) : kindPlans(ctx, plan.kind)).filter(
       ([p]) => p.shape.p !== plan.shape.p && [...p.shape.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name)
     );
@@ -79341,7 +79341,7 @@ function generateStreetNames(options) {
     }))];
     dialectRegion = regions.length > 0 ? pickOne5(regions, rng) : void 0;
   }
-  const newCtx2 = (fn) => {
+  const newCtx3 = (fn) => {
     var _a3;
     return {
       rng,
@@ -79387,7 +79387,7 @@ function generateStreetNames(options) {
     for (let i = 0; i < 40; i++) {
       const fn = k === "districts" ? fnFor() : void 0;
       if (k === "districts" && !fn) return void 0;
-      const ctx = newCtx2(fn);
+      const ctx = newCtx3(fn);
       const s = shape != null ? shape : pickWeighted5(shapesFor2(ctx, k), rng);
       if (!s) continue;
       const built = render3(ctx, s);
@@ -79711,9 +79711,9 @@ function breaksInnWords(text) {
 }
 var hasChristianSign = (text) => CHRISTIAN2.some((re) => re.test(text));
 function innBlockForms(text) {
-  const bare = routeNorm(text).replace(/^the /, "");
-  const out = /* @__PURE__ */ new Set([bare]);
-  const inner = bare.replace(/^(inn|sign) of the /, "");
+  const bare2 = routeNorm(text).replace(/^the /, "");
+  const out = /* @__PURE__ */ new Set([bare2]);
+  const inner = bare2.replace(/^(inn|sign) of the /, "");
   out.add(inner);
   for (const hw of HOUSE_WORDS) {
     const suffix = ` ${hw.toLowerCase()}`;
@@ -79768,8 +79768,8 @@ function culturePlans(ctx, only) {
     var _a3;
     return ((_a3 = s.kinds) != null ? _a3 : INN_DATA.cultureKinds).includes(ctx.kind);
   });
-  const plans = live2(ctx, own, only).map(([s, w]) => [{ tradition: "culture", anchor: "culture", shape: s }, w]);
-  const base = plans.length > 0 ? plans : live2(ctx, INN_DATA.fallback, only).map(([s, w]) => [{ tradition: "culture", anchor: "fallback", shape: s }, w]);
+  const plans2 = live2(ctx, own, only).map(([s, w]) => [{ tradition: "culture", anchor: "culture", shape: s }, w]);
+  const base = plans2.length > 0 ? plans2 : live2(ctx, INN_DATA.fallback, only).map(([s, w]) => [{ tradition: "culture", anchor: "fallback", shape: s }, w]);
   return [...base, ...live2(ctx, INN_DATA.fantastic, only).map(([s, w]) => [{ tradition: "culture", anchor: "fantastic", shape: s }, w])];
 }
 function eraPlans(ctx, only) {
@@ -79801,7 +79801,7 @@ function generateInnNames(options) {
   }).filter(([, w]) => w > 0);
   const themes = { ...settingInfo.themes, ...fantastic ? INN_DATA.fantasticThemes : {} };
   const block = innBlockSet(options.safeguards);
-  const newCtx2 = (kind) => {
+  const newCtx3 = (kind) => {
     var _a3, _b2;
     return {
       rng,
@@ -79822,7 +79822,7 @@ function generateInnNames(options) {
       isRoute: false
     };
   };
-  const choosePlan = (ctx, anchor) => {
+  const choosePlan2 = (ctx, anchor) => {
     var _a3;
     if (anchor) return pickWeighted5(englishPlans(ctx, settingKey, options.shape).filter(([p]) => p.anchor === anchor), rng);
     const era2 = eraPlans(ctx, options.shape);
@@ -79844,8 +79844,8 @@ function generateInnNames(options) {
   const build = (kind, anchor) => {
     var _a3;
     for (let i = 0; i < 20; i++) {
-      const ctx = newCtx2(kind);
-      const plan = choosePlan(ctx, anchor);
+      const ctx = newCtx3(kind);
+      const plan = choosePlan2(ctx, anchor);
       if (!plan) return void 0;
       const raw = renderPattern5(ctx, plan.shape.p);
       if (!raw) continue;
@@ -79950,6 +79950,638 @@ function generateInnNames(options) {
   }
 }
 
+// src/data/building-names.json
+var building_names_default = {
+  $comment: "Buildings and landmarks (docs/buildings-and-landmarks-brief.md \xA75, \xA78, \xA712). Words come from settlement-vocab.json through src/settlement/vocab.ts; settings' text and themes are the inn settings'.",
+  version: 1,
+  any: "buildings and landmarks of any kind",
+  kinds: [
+    { key: "defence", menu: "Defences", plural: "castles, towers and forts", description: "Castles, keeps, towers, forts and gates", era: { AN: 20, MD: 20, EM: 12, ST: 5, MO: 2, NF: 3, IS: 3 } },
+    { key: "residence", menu: "Halls and palaces", plural: "halls and palaces", description: "Halls, manors, palaces and great houses", era: { AN: 15, MD: 15, EM: 15, ST: 10, MO: 8, NF: 8, IS: 8 } },
+    { key: "faith", menu: "Houses of faith", plural: "houses of faith", description: "Churches, temples, shrines and monasteries", era: { AN: 15, MD: 15, EM: 12, ST: 8, MO: 5, NF: 3, IS: 3 } },
+    { key: "civic", menu: "Civic buildings", plural: "civic buildings", description: "Guildhalls, market halls, exchanges, courts and town halls", era: { AN: 8, MD: 10, EM: 12, ST: 15, MO: 15, NF: 10, IS: 10 } },
+    { key: "crossing", menu: "Bridges and crossings", plural: "bridges and crossings", description: "Bridges, fords, ferries and causeways", era: { AN: 8, MD: 10, EM: 10, ST: 10, MO: 8, NF: 5, IS: 0 } },
+    { key: "water", menu: "Wells and water", plural: "wells and springs", description: "Wells, springs, fountains and conduits", era: { AN: 10, MD: 10, EM: 8, ST: 5, MO: 2, NF: 5, IS: 5 } },
+    { key: "works", menu: "Mills and works", plural: "mills and works", description: "Mills, forges, kilns, mines and works", era: { AN: 5, MD: 8, EM: 10, ST: 20, MO: 10, NF: 10, IS: 10 } },
+    { key: "monument", menu: "Monuments and follies", plural: "monuments and follies", description: "Crosses, columns, standing stones, memorials and follies", era: { AN: 10, MD: 5, EM: 10, ST: 10, MO: 10, NF: 5, IS: 5 } },
+    { key: "learning", menu: "Learning and healing", plural: "schools, libraries and infirmaries", description: "Schools, colleges, libraries, infirmaries and hospitals", era: { AN: 4, MD: 4, EM: 6, ST: 10, MO: 15, NF: 10, IS: 10 } },
+    { key: "confinement", menu: "Gaols and lock-ups", plural: "gaols", description: "Gaols, prisons, lock-ups and tolbooths", era: { AN: 2, MD: 2, EM: 3, ST: 5, MO: 5, NF: 3, IS: 3 } },
+    { key: "maritime", menu: "Lighthouses and beacons", plural: "lighthouses and beacons", description: "Lighthouses, lights, beacons and daymarks", era: { AN: 3, MD: 3, EM: 4, ST: 5, MO: 5, NF: 0, IS: 0 } }
+  ],
+  settingX: {
+    anywhere: {},
+    town: { civic: 2, faith: 1.5, learning: 1.5, confinement: 1.5, works: 0.7 },
+    country: { defence: 1.5, works: 1.5, water: 1.5, monument: 1.5, civic: 0.3, learning: 0.3, confinement: 0.3 },
+    port: { maritime: 5, civic: 1.2, crossing: 0.5 },
+    road: { crossing: 3, water: 1.5, monument: 1.5, confinement: 0.5 }
+  },
+  shared: [
+    { p: "{town} {bw}", w: 20, t: ["plain"] },
+    { p: "the {buildingQual} {bw}", w: 20 },
+    { p: "{buildingQual} {bw}", w: 5 },
+    { p: "{streetFigure:poss} {bw}", w: 8, e: ["MD", "EM", "ST", "MO", "NF", "IS"], t: ["grand"] },
+    { p: "{founder:poss} {bw}", w: 8 },
+    { p: "{bw} of {founder}", w: 5, t: ["grand"] },
+    { p: "{surname} {bw}", w: 8, e: ["EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"] },
+    { p: "{holy:poss} {bw}", w: 8, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"], kinds: ["faith", "water", "learning", "crossing"] },
+    { p: "{dynasty} {bw}", w: 4, kinds: ["residence", "defence"], t: ["grand"] },
+    { p: "{creature} {bw}", w: 3 }
+  ],
+  kindShapes: {
+    defence: [
+      { p: "{colour} {bw}", w: 10 },
+      { p: "{town} Gatehouse", w: 4, e: ["MD", "EM"], t: ["plain"] },
+      { p: "{direction} Gate", w: 4, e: ["MD", "EM"], t: ["plain"] },
+      { p: "{founder:poss} Fort", w: 6, e: ["AN", "MD"], c: ["celtic"] },
+      { p: "{fixed}", w: 0 }
+    ],
+    residence: [
+      { p: "{town} Hall", w: 5, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"] },
+      { p: "{town} Manor", w: 5, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"] },
+      { p: "{town} Grange", w: 5, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"] },
+      { p: "Palace of {dynasty}", w: 6, t: ["grand"] },
+      { p: "{fixed}", w: 0 }
+    ],
+    faith: [
+      { p: "{town} {bw}", w: 10, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"], bw: ["Minster", "Abbey", "Priory"] },
+      { p: "Temple of {god}", w: 15, e: ["AN"], c: ["egyptian", "norse", "anglo-saxon", "aztec", "maya"], t: ["grand"] },
+      { p: "Shrine of the {holySite}", w: 6, c: ["!christian"], t: ["strange"] },
+      { p: "{fixed}", w: 0 }
+    ],
+    civic: [
+      { p: "{town} {bw}", w: 15, bw: ["Moot Hall", "Guildhall", "Corn Exchange", "Town Hall"], t: ["plain"] },
+      { p: "{trade:poss} Hall", w: 8, e: ["MD", "EM", "ST"] },
+      { p: "{fixed}", w: 0 }
+    ],
+    crossing: [
+      { p: "{town} Bridge", w: 15, t: ["plain"] },
+      { p: "{figure:poss} Bridge", w: 4, e: ["MD", "EM", "ST", "MO", "NF", "IS"] },
+      { p: "{holy:poss} Bridge", w: 4, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"] },
+      { p: "{creature} Bridge", w: 3 },
+      { p: "{colour} Bridge", w: 3 },
+      { p: "{fixed}", w: 0 }
+    ],
+    water: [
+      { p: "{holyWellPrefix} Well", w: 15, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"] },
+      { p: "{buildingQual} Spring", w: 4 },
+      { p: "{creature} Spring", w: 4 },
+      { p: "Step Well of {patron}", w: 15, e: ["MD", "EM"], c: ["indian"] },
+      { p: "{fixed}", w: 0 }
+    ],
+    works: [
+      { p: "{surname} Mill", w: 7.5, e: ["EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"] },
+      { p: "{surname} Works", w: 7.5, e: ["EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"] },
+      { p: "{goods} Mill", w: 5, e: ["EM", "ST", "MO", "NF", "IS"], t: ["plain"] },
+      { p: "{goods} Works", w: 5, e: ["EM", "ST", "MO", "NF", "IS"], t: ["plain"] },
+      { p: "{town} {bw}", w: 15, t: ["plain"] },
+      { p: "{fixed}", w: 0 }
+    ],
+    monument: [
+      { p: "{follyOwner:poss} Folly", w: 15, e: ["EM", "ST"], c: ["british", "general"], t: ["light"] },
+      { p: "{founder:poss} {bw}", w: 15, bw: ["Column", "Arch", "Cross", "Pillar"], t: ["grand"] },
+      { p: "{town} Cross", w: 5, e: ["MD", "EM"], c: ["british"] },
+      { p: "{event} Memorial", w: 8, e: ["ST", "MO"], t: ["grim"] },
+      { p: "{town} Milestone", w: 3, e: ["EM", "ST"], c: ["british"], t: ["plain"], sx: { road: 3 } },
+      { p: "{number} Mile Stone", w: 3, e: ["EM", "ST"], c: ["british"], t: ["plain"], sx: { road: 3 } },
+      { p: "{fixed}", w: 0 }
+    ],
+    learning: [
+      { p: "{town} {bw}", w: 10, e: ["EM", "ST", "MO", "NF", "IS"], t: ["plain"] },
+      { p: "{surname} {bw}", w: 10, e: ["EM", "ST", "MO", "NF", "IS"], t: ["plain"] },
+      { p: "{holy:poss} {bw}", w: 10, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"] },
+      { p: "{fixed}", w: 0 }
+    ],
+    confinement: [
+      { p: "{town} {bw}", w: 30, t: ["grim"] },
+      { p: "the {buildingQual} {bw}", w: 10, t: ["grim"] },
+      { p: "{fixed}", w: 0 }
+    ],
+    maritime: [
+      { p: "{town} Light", w: 12.5, t: ["plain"] },
+      { p: "{town} Lighthouse", w: 12.5, t: ["plain"] },
+      { p: "{headland} Light", w: 20, e: ["EM", "ST", "MO", "NF", "IS"] },
+      { p: "the {colour} Lantern", w: 10, t: ["strange"] },
+      { p: "{fixed}", w: 0 }
+    ]
+  },
+  cultureShapes: {
+    chinese: [
+      { p: "Hall of {eastVirtue}", w: 15, kind: "residence" },
+      { p: "Pavilion of {eastNature}", w: 15, kind: "residence" },
+      { p: "{direction} Gate", w: 15, kind: "defence" },
+      { p: "{eastNature} Tower", w: 15, kind: "defence" },
+      { p: "Memorial Gate of {founder}", w: 15, kind: "monument" }
+    ],
+    japanese: [
+      { p: "{town} Castle", w: 15, kind: "defence" },
+      { p: "{castleBird} Castle", w: 15, kind: "defence" },
+      { p: "{colour} {castleBird} Castle", w: 15, kind: "defence" },
+      { p: "{eastNature} Villa", w: 15, kind: "residence" },
+      { p: "{eastNature} Pavilion", w: 15, kind: "residence" }
+    ],
+    korean: [
+      { p: "Palace of {eastVirtue}", w: 15, kind: "residence" },
+      { p: "{direction} Palace", w: 15, kind: "residence" },
+      { p: "{direction} Gate", w: 15, kind: "defence" },
+      { p: "{town} Fortress", w: 15, kind: "defence" }
+    ],
+    indian: [
+      { p: "{figure:poss} Palace", w: 15, kind: "residence" },
+      { p: "Palace of {indianPalaceWord}", w: 15, kind: "residence" },
+      { p: "{colour} Fort", w: 15, kind: "defence" },
+      { p: "{town} Fort", w: 15, kind: "defence" },
+      { p: "Pillared Hall of {founder}", w: 15, kind: "civic" },
+      { p: "{town} Clock Tower", w: 15, kind: "civic", e: ["ST"] }
+    ],
+    "arabic-persian": [
+      { p: "{colour} Fortress", w: 15, kind: "defence" },
+      { p: "Citadel of {town}", w: 15, kind: "defence" },
+      { p: "Palace of the {oasisNoun}", w: 15, kind: "residence" },
+      { p: "Garden of {quality}", w: 15, kind: "residence" },
+      { p: "{patron:poss} Caravan Court", w: 15, kind: "civic" },
+      { p: "{town} Covered Market", w: 15, kind: "civic" }
+    ],
+    egyptian: [
+      { p: "House of {god}", w: 15, kind: "faith" },
+      { p: "Mansion of {number} Years", w: 15, kind: "faith" },
+      { p: "Temple of {god}", w: 15, kind: "faith" },
+      { p: "{figure:poss} Granary", w: 15, kind: "works" }
+    ],
+    roman: [
+      { p: "Baths of {founder}", w: 15, kind: "civic" },
+      { p: "Basilica of {founder}", w: 15, kind: "civic" },
+      { p: "Forum of {founder}", w: 15, kind: "civic" },
+      { p: "{romanRoadNomen} Aqueduct", w: 15, kind: "water" }
+    ],
+    "greek-byzantine": [
+      { p: "Colonnade of {founder}", w: 15, kind: "civic" },
+      { p: "Church of {holy}", w: 15, kind: "faith", e: ["MD", "EM", "ST", "MO", "NF", "IS"] }
+    ],
+    norse: [
+      { p: "{owner:poss} Hall", w: 15, kind: "residence" },
+      { p: "Hall of {town}", w: 15, kind: "residence" },
+      { p: "{creature} Hall", w: 15, kind: "residence" }
+    ],
+    celtic: [
+      { p: "{founder:poss} Fort", w: 15, kind: "defence" },
+      { p: "Round Tower of {town}", w: 15, kind: "defence" },
+      { p: "{holy:poss} Well", w: 30, kind: "water", e: ["MD", "EM", "ST", "MO", "NF", "IS"] }
+    ],
+    slavic: [
+      { p: "{colour} Tower", w: 15, kind: "defence" },
+      { p: "Citadel of {town}", w: 15, kind: "defence" },
+      { p: "Church of {holy}", w: 15, kind: "faith" },
+      { p: "{holy} Monastery", w: 15, kind: "faith" }
+    ],
+    steppe: [
+      { p: "{colour} Felt Palace", w: 15, kind: "residence" },
+      { p: "{figure:poss} Tent", w: 15, kind: "residence" }
+    ],
+    "west-african": [
+      { p: "Palace of the {figure}", w: 15, kind: "residence" },
+      { p: "Great House of Prayer of {town}", w: 15, kind: "faith" },
+      { p: "{town} Market Hall", w: 15, kind: "civic" },
+      { p: "{weekday} Market Hall", w: 15, kind: "civic" }
+    ],
+    bantu: [
+      { p: "Royal Enclosure of {town}", w: 15, kind: "residence" }
+    ],
+    ethiopian: [
+      { p: "Palace of the {figure}", w: 15, kind: "residence" },
+      { p: "{town} Castle", w: 15, kind: "residence", e: ["EM"] },
+      { p: "{founder:poss} Stele", w: 15, kind: "monument" }
+    ],
+    aztec: [
+      { p: "Temple of {god}", w: 15, kind: "faith" },
+      { p: "Great Temple of {town}", w: 15, kind: "faith" },
+      { p: "House of the {creature:pl}", w: 15, kind: "residence" }
+    ],
+    maya: [
+      { p: "Temple of the {creature}", w: 15, kind: "faith" },
+      { p: "Temple of {god}", w: 15, kind: "faith" },
+      { p: "Temple of the {number} {creature:pl}", w: 15, kind: "faith" },
+      { p: "{directionAdj} Ball Court", w: 15, kind: "civic" },
+      { p: "Palace of the {number} Lords", w: 15, kind: "civic" }
+    ],
+    andean: [
+      { p: "Royal Storehouse of {town}", w: 15, kind: "works" },
+      { p: "{town} Terraces", w: 15, kind: "works" },
+      { p: "Sun Temple of {town}", w: 15, kind: "faith", e: ["AN", "MD"] }
+    ],
+    polynesian: [
+      { p: "{town} Meeting House", w: 15, kind: "civic" },
+      { p: "Canoe House of {town}", w: 15, kind: "civic" }
+    ]
+  },
+  eraShapes: [
+    { p: "{town} Corn Exchange", w: 15, e: ["ST"], kinds: ["civic"] },
+    { p: "{town} Town Hall", w: 15, e: ["ST"], kinds: ["civic"] },
+    { p: "{surname} Institute", w: 15, e: ["ST"], kinds: ["learning"] },
+    { p: "{town} Infirmary", w: 15, e: ["ST"], kinds: ["learning"] },
+    { p: "{town} Workhouse", w: 15, e: ["ST"], kinds: ["confinement"], t: ["grim"] },
+    { p: "{town} Gaol", w: 15, e: ["ST"], kinds: ["confinement"] },
+    { p: "{town} Station", w: 15, e: ["ST"], kinds: ["civic"] },
+    { p: "{surname} Memorial Library", w: 15, e: ["ST"], kinds: ["learning"] },
+    { p: "{steampunkLandmark}", w: 10, e: ["ST"], h: true },
+    { p: "{town} {steampunkLandmark}", w: 10, e: ["ST"], h: true },
+    { p: "{surname} {steampunkLandmark}", w: 10, e: ["ST"], h: true },
+    { p: "{surname} House", w: 15, e: ["MO"], kinds: ["residence"] },
+    { p: "{town} Tower", w: 15, e: ["MO"], kinds: ["residence", "civic"] },
+    { p: "{brandRoot} Tower", w: 15, e: ["MO"], kinds: ["civic", "works"] },
+    { p: "{town} Civic Centre", w: 15, e: ["MO"], kinds: ["civic"] },
+    { p: "{town} General Hospital", w: 15, e: ["MO"], kinds: ["learning"] },
+    { p: "{town} Power Station", w: 15, e: ["MO"], kinds: ["works"] },
+    { p: "{surname} Building", w: 15, e: ["MO"], kinds: ["civic", "works"] }
+  ],
+  scifi: {
+    share: 0.6,
+    shapes: [
+      { p: "{star} {sciFiLandmark}", w: 25 },
+      { p: "{sciFiLandmark} {greek}", w: 25 },
+      { p: "Hab Module {n}", w: 10 },
+      { p: "{discovery} Dome", w: 10 },
+      { p: "{ordinal} Hydroponic Bay", w: 10 },
+      { p: "{town} Sky Elevator", w: 10 }
+    ]
+  },
+  lists: {
+    discovery: ["Discovery", "Endeavour", "Horizon", "Pathfinder", "Pioneer", "Venture"],
+    event: ["Victory", "Peace", "Jubilee", "Flood", "Fire"],
+    headland: ["Point", "Head", "Ness", "Cape", "Rock"],
+    creatureLists: ["beast", "bird", "heraldicBeast"],
+    godCultures: ["egyptian", "norse", "anglo-saxon", "aztec", "maya"]
+  },
+  sensitive: {
+    noFaith: ["polynesian"],
+    faithOnly: {
+      andean: ["Sun Temple of {town}"]
+    }
+  },
+  series: { founderUses: 3 },
+  cap: 7,
+  safeguards: {
+    block: ["Tower of London", "White Tower", "Bloody Tower", "Windsor Castle", "Edinburgh Castle", "Stirling Castle", "Caernarfon Castle", "Conwy Castle", "Dover Castle", "Warwick Castle", "Bamburgh Castle", "Tintagel", "Glastonbury Tor", "Stonehenge", "Avebury", "Hadrian's Wall", "Offa's Dyke", "Antonine Wall", "Westminster Abbey", "Westminster Hall", "York Minster", "Canterbury Cathedral", "Durham Cathedral", "Saint Paul's", "St Paul's", "Tower Bridge", "London Bridge", "Iron Bridge", "Ironbridge", "Forth Bridge", "Clifton Suspension Bridge", "Royal Exchange", "Mansion House", "the Guildhall", "Old Bailey", "Newgate", "Marshalsea", "Clink", "Bedlam", "Bethlem", "Fleet Prison", "Old Tolbooth", "Eddystone", "Bell Rock", "Longships", "Smeaton's Tower", "Big Ben", "Crystal Palace", "Blackpool Tower", "Martello Tower", "Eleanor Cross", "Charing Cross", "Marble Arch", "Nelson's Column", "Cleopatra's Needle", "Brighton Pavilion", "Royal Pavilion", "Sutton Hoo", "Maeshowe", "Skara Brae", "Forbidden City", "Hall of Supreme Harmony", "Hall of Central Harmony", "Hall of Preserving Harmony", "Palace of Heavenly Purity", "Temple of Heaven", "Yellow Crane Tower", "Great Wall", "Golden Pavilion", "Silver Pavilion", "Himeji Castle", "White Egret Castle", "White Heron Castle", "Crow Castle", "Matsumoto Castle", "Osaka Castle", "Gyeongbokgung", "Palace Greatly Blessed by Heaven", "Red Fort", "Palace of Winds", "Hawa Mahal", "Taj Mahal", "Amber Fort", "Lotus Temple", "Alhambra", "Red Fortress", "Court of the Lions", "Hagia Sophia", "Holy Wisdom", "Great Pyramid", "Sphinx", "Karnak", "Luxor", "Valley of the Kings", "Colosseum", "Pantheon", "Parthenon", "Acropolis", "Tower of the Winds", "Baths of Caracalla", "Pont du Gard", "Kremlin", "Palace of Facets", "Saint Basil's", "Winter Palace", "Hermitage", "Great Enclosure", "Great Zimbabwe", "Fasil Ghebbi", "Lalibela", "Great Mosque of Djenn\xE9", "Temple of the Great Jaguar", "Temple of the Inscriptions", "House of the Eagles", "Templo Mayor", "Pyramid of the Sun", "Pyramid of the Moon", "Coricancha", "Machu Picchu", "Sacsayhuam\xE1n", "Eiffel Tower", "Leaning Tower", "Statue of Liberty", "Empire State", "Kremlin Wall", "Brandenburg Gate", "Arc de Triomphe", "Orthanc", "Barad-d\xFBr", "Minas Tirith", "Helm's Deep", "Hogwarts", "Azkaban", "Gringotts", "Castle Black", "the Red Keep", "Winterfell", "Casterly Rock", "Harrenhal", "Dragonstone", "Unseen University", "Tower of Art", "Castle Greyskull", "Castle Dracula", "Barad Dur", "Isengard", "Weathertop", "Rivendell", "Tower of Sorcery", "High Hrothgar", "Dragonsreach", "Candlekeep", "Baldur's Gate", "Citadel of Ricks"],
+    flag: ["Old Bridge", "Market Cross", "High Cross", "Lady Well", "Holy Well", "Grey Tower", "Red Tower", "Black Tower", "Round Tower", "Old Gaol", "Town Hall", "Corn Exchange", "Devil's Bridge", "King's Hall", "Moot Hall", "Wishing Well", "Gatehouse", "Keep", "Guildhall", "Market Hall", "Folly"],
+    flagListBlocks: false,
+    banned: ["Asylum", "Lunatic", "Madhouse", "Leper House", "Bedlam", "Concentration Camp", "Labour Camp", "Slave", "Plantation"],
+    religious: ["Mosque", "Synagogue", "Gurdwara", "Pagoda", "Stupa", "Mandir", "Wat"],
+    christian: ["Church", "Chapel", "Minster", "Abbey", "Priory", "Cathedral", "Friary", "Saint", "Almshouse", "Hospice", "Holy Well"]
+  }
+};
+
+// src/buildings/engine.ts
+var BUILDING_DATA = building_names_default;
+var BUILDING_KINDS = BUILDING_DATA.kinds;
+var BUILDING_ANY = BUILDING_DATA.any;
+var isFuture3 = (era) => era === "NF" || era === "IS";
+var buildingKindsOffered = (era) => BUILDING_KINDS.filter((k) => k.era[era] > 0);
+var defaultBuildingSafeguards = () => ({
+  block: BUILDING_DATA.safeguards.block,
+  flag: BUILDING_DATA.safeguards.flag,
+  flagListBlocks: BUILDING_DATA.safeguards.flagListBlocks
+});
+var pickOne7 = (items, rng) => items[Math.floor(rng() * items.length)];
+var LIGHT_OR_GRIM4 = (t) => !!t && (t.includes("light") || t.includes("grim"));
+var CASTE2 = /* @__PURE__ */ new Set(["indian", "west-african"]);
+var SURNAME_CULTURES2 = STREET_DATA.surnameCultures;
+var SF_LISTS3 = /* @__PURE__ */ new Set(["star", "greek"]);
+function vocabPool3(ctx, pool3) {
+  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes }).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM4(e.t))).map(([e, w]) => {
+    var _a2;
+    return [e, w * toneFactor((_a2 = e.t) != null ? _a2 : [], ctx.tone)];
+  }).filter(([, w]) => w > 0);
+}
+function fromPool2(ctx, pool3, items, use = false) {
+  var _a2;
+  const e = pickWeighted5(items, ctx.rng);
+  if (!e) return void 0;
+  for (const t of (_a2 = e.t) != null ? _a2 : []) ctx.drawn.add(t);
+  ctx.words.push({ pool: pool3, word: e.w });
+  if (use) ctx.uses.push(`q:${e.w}`);
+  return e.w;
+}
+function gnWord4(ctx, list, use = false) {
+  const items = groupListWords(list, SF_LISTS3.has(list) ? "SF" : ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM4(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  const w = pickWeighted5(items, ctx.rng);
+  if (w === void 0) return void 0;
+  for (const t of wordTones(list, w)) ctx.drawn.add(t);
+  ctx.words.push({ pool: list, word: w });
+  if (use) ctx.uses.push(`q:${w}`);
+  return w;
+}
+var bwItems = (ctx) => vocabPool3(ctx, `buildingWord:${ctx.kind}`).filter(([e]) => {
+  var _a2;
+  return !((_a2 = ctx.shape) == null ? void 0 : _a2.bw) || ctx.shape.bw.includes(e.w);
+});
+function creature2(ctx) {
+  const items = BUILDING_DATA.lists.creatureLists.flatMap(
+    (l) => groupListWords(l, ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM4(wordTones(l, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(l, w2), ctx.tone)])
+  );
+  const w = pickWeighted5(items, ctx.rng);
+  if (w) {
+    ctx.words.push({ pool: "creature", word: w });
+    ctx.uses.push(`q:${w}`);
+  }
+  return w;
+}
+var ownerNames2 = (ctx) => [...personNames(ctx.culture.key), ...SURNAME_CULTURES2.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : []];
+function town2(ctx) {
+  var _a2;
+  const t = (_a2 = ctx.town) != null ? _a2 : ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  if (t) ctx.uses.push(`town:${t}`);
+  return t;
+}
+function founder(ctx) {
+  ctx.uses.push("founder");
+  if (ctx.founder) return ctx.founder;
+  if (ctx.mode === "placeholders") return "[founder]";
+  const names = personNames(ctx.culture.key);
+  return names.length > 0 ? pickOne7(names, ctx.rng) : void 0;
+}
+function token8(ctx, name) {
+  const rng = ctx.rng;
+  const placeholders = ctx.mode === "placeholders";
+  switch (name) {
+    case "bw":
+      return fromPool2(ctx, `buildingWord:${ctx.kind}`, bwItems(ctx));
+    case "fixed":
+      return fromPool2(ctx, `buildingFixed:${ctx.kind}`, vocabPool3(ctx, `buildingFixed:${ctx.kind}`));
+    case "town":
+      return town2(ctx);
+    case "founder":
+      return founder(ctx);
+    case "owner":
+    case "patron": {
+      if (placeholders) return `[${name}]`;
+      const names = name === "owner" ? ownerNames2(ctx) : personNames(ctx.culture.key);
+      return names.length > 0 ? pickOne7(names, rng) : void 0;
+    }
+    case "surname":
+      return placeholders || !SURNAME_CULTURES2.includes(ctx.culture.key) ? "[surname]" : gnWord4(ctx, "surname");
+    case "dynasty":
+      return placeholders || !DYNASTY_CULTURES.includes(ctx.culture.key) ? "[dynasty]" : gnWord4(ctx, "house");
+    case "holy":
+      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "figure":
+      return routeFigure(ctx.culture.key, ctx.setting, rng);
+    case "god": {
+      const gods = godNames(ctx.culture.key);
+      return gods.length > 0 ? pickOne7(gods, rng) : void 0;
+    }
+    case "creature":
+      return creature2(ctx);
+    case "buildingQual":
+      return fromPool2(ctx, name, vocabPool3(ctx, name), true);
+    case "colour":
+      return gnWord4(ctx, name, true);
+    case "number":
+    case "quality":
+    case "brandRoot":
+    case "star":
+    case "greek":
+    case "ordinalWord":
+      return gnWord4(ctx, name);
+    case "ordinal":
+      return gnWord4(ctx, "ordinalWord");
+    case "trade":
+      return fromPool2(ctx, "streetTrades", vocabPool3(ctx, "streetTrades"));
+    case "goods":
+      return fromPool2(ctx, "streetGoods", vocabPool3(ctx, "streetGoods"));
+    case "weekday":
+      return pickWeighted5(STREET_DATA.lists.weekday, rng);
+    case "discovery":
+    case "event":
+    case "headland":
+      return pickOne7(BUILDING_DATA.lists[name], rng);
+    case "n":
+      return String(1 + Math.floor(rng() * 40));
+  }
+  const w = fromPool2(ctx, name, vocabPool3(ctx, name));
+  return (w == null ? void 0 : w.includes("{")) ? renderPattern6(ctx, w) : w;
+}
+function renderPattern6(ctx, pattern) {
+  let failed = false;
+  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
+    if (failed) return "";
+    const [name, mod] = raw.split(":");
+    const piece = token8(ctx, name);
+    if (!piece) {
+      failed = true;
+      return "";
+    }
+    if (mod === "poss") return groupPossessive(piece, name === "trade");
+    if (mod === "pl") return groupPlural(piece);
+    return piece;
+  });
+  if (failed) return void 0;
+  return out.replace(/^the (\S+'s )/, "$1");
+}
+var wordRe9 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
+var BANNED7 = [...BUILDING_DATA.safeguards.banned, ...BUILDING_DATA.safeguards.religious].map(wordRe9);
+var CHRISTIAN3 = BUILDING_DATA.safeguards.christian.map(wordRe9);
+function breaksBuildingWords(text) {
+  return breaksInnWords(text) || BANNED7.some((re) => re.test(text));
+}
+var hasChristianBuilding = (text) => CHRISTIAN3.some((re) => re.test(text));
+var bare = (text) => routeNorm(text).replace(/^the /, "");
+function buildingBlockSet(guards = defaultBuildingSafeguards()) {
+  return new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(bare));
+}
+function buildingWordBlocked(word, guards) {
+  return buildingBlockSet(guards).has(bare(word)) || breaksBuildingWords(word);
+}
+function shapeWeight5(ctx, s) {
+  var _a2, _b, _c, _d;
+  const c = ctx.culture;
+  if (s.e && !s.e.includes(ctx.era)) return 0;
+  if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
+  if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
+  if (c.sensitive && (s.h || LIGHT_OR_GRIM4(s.t))) return 0;
+  if (s.kinds && !s.kinds.includes(ctx.kind)) return 0;
+  if (CASTE2.has(c.key) && s.p.includes("{trade")) return 0;
+  if (ctx.mode === "invented" && !ctx.founder && s.p.includes("{founder") && personNames(c.key).length === 0) return 0;
+  if (ctx.mode === "invented" && s.p.includes("{patron") && personNames(c.key).length === 0) return 0;
+  if (ctx.mode === "invented" && s.p.includes("{owner") && ownerNames2(ctx).length === 0) return 0;
+  if (s.p.includes("{god") && (godNames(c.key).length === 0 || !BUILDING_DATA.lists.godCultures.includes(c.key))) return 0;
+  if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
+  if (s.p.includes("{bw}") && bwItems({ ...ctx, shape: s }).length === 0) return 0;
+  let w = s.w;
+  if (s.p === "{fixed}") w = vocabPool3(ctx, `buildingFixed:${ctx.kind}`).reduce((n, [, x]) => n + x, 0);
+  const pool3 = (_a2 = s.p.match(/^(?:\{\w+\} )?\{(\w+Landmark)\}$/)) == null ? void 0 : _a2[1];
+  if (pool3 && vocabPool3(ctx, pool3).length === 0) return 0;
+  return w * ((_c = (_b = s.sx) == null ? void 0 : _b[ctx.settingKey]) != null ? _c : 1) * toneFactor((_d = s.t) != null ? _d : [], ctx.tone);
+}
+function live3(ctx, shapes, source, only) {
+  const out = [];
+  for (const s of shapes) {
+    if (only && s.p !== only) continue;
+    const w = shapeWeight5(ctx, s);
+    if (w > 0) out.push([{ shape: s, source: s.p === "{fixed}" ? "fixed" : source }, w]);
+  }
+  return out;
+}
+function plans(ctx, only) {
+  var _a2;
+  const d = BUILDING_DATA;
+  const k = ctx.kind;
+  const culture = ((_a2 = d.cultureShapes[ctx.culture.key]) != null ? _a2 : []).filter((s) => s.kind === k);
+  if (k === "faith" && d.sensitive.noFaith.includes(ctx.culture.key)) return [];
+  const faithOnly = d.sensitive.faithOnly[ctx.culture.key];
+  if (k === "faith" && faithOnly) return live3(ctx, culture.filter((s) => faithOnly.includes(s.p)), "culture", only);
+  return [
+    ...live3(ctx, d.shared, "shared", only),
+    ...live3(ctx, d.kindShapes[k], "kind", only),
+    ...live3(ctx, culture, "culture", only),
+    ...live3(ctx, d.eraShapes, "era", only)
+  ];
+}
+function choosePlan(ctx, only) {
+  const sf = isFuture3(ctx.era) ? live3(ctx, BUILDING_DATA.scifi.shapes, "scifi", only) : [];
+  const rest = plans(ctx, only);
+  if (sf.length > 0 && (rest.length === 0 || ctx.rng() < BUILDING_DATA.scifi.share)) return pickWeighted5(sf, ctx.rng);
+  return pickWeighted5(rest, ctx.rng);
+}
+var newCtx2 = (s, kind, extra = {}) => {
+  var _a2, _b;
+  return {
+    rng: s.rng,
+    culture: s.culture,
+    era: s.era,
+    setting: s.setting,
+    settingKey: s.settingKey,
+    fantastic: s.fantastic,
+    mode: s.mode,
+    tone: (_a2 = s.options.tone) != null ? _a2 : "any",
+    vocab: (_b = s.options.vocab) != null ? _b : BUILT_IN_VOCAB,
+    region: s.region,
+    kind,
+    themes: s.themes,
+    drawn: /* @__PURE__ */ new Set(),
+    words: [],
+    uses: [],
+    ...extra
+  };
+};
+function kindWeight(s, kind) {
+  var _a2;
+  const k = BUILDING_KINDS.find((x) => x.key === kind);
+  const w = k.era[s.era] * ((_a2 = BUILDING_DATA.settingX[s.settingKey][kind]) != null ? _a2 : 1);
+  return w > 0 && plans(newCtx2(s, kind)).length + (isFuture3(s.era) ? 1 : 0) > 0 ? w : 0;
+}
+function setup(options, seed = 0) {
+  var _a2, _b;
+  const culture = (_a2 = findRouteCulture(options.culture)) != null ? _a2 : findRouteCulture("norman-british");
+  const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
+  const fantastic = !!options.fantastic;
+  const settingKey = INN_SETTINGS.some((s) => s.key === options.setting) ? options.setting : "anywhere";
+  const settingInfo = INN_SETTINGS.find((s) => s.key === settingKey);
+  return {
+    rng: mulberry32(seed),
+    culture,
+    era,
+    fantastic,
+    setting: routeSetting(era, fantastic),
+    settingKey,
+    mode: (_b = options.people) != null ? _b : "placeholders",
+    region: BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : void 0,
+    // §3: the inn settings' themes, magical ×2 when fantastic.
+    themes: { ...settingInfo.themes, ...fantastic ? INN_DATA.fantasticThemes : {} },
+    options
+  };
+}
+function generateBuildingNames(options) {
+  var _a2;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const s = setup(options, seed);
+  const { rng, culture, era } = s;
+  const notices = [];
+  const count = Math.max(0, Math.floor(options.count));
+  const allowed = (_a2 = options.kinds) != null ? _a2 : BUILDING_KINDS.map((k) => k.key);
+  const weights = BUILDING_KINDS.filter((k) => allowed.includes(k.key)).map((k) => [k.key, kindWeight(s, k.key)]).filter(([, w]) => w > 0);
+  const chosen = options.kind;
+  if (chosen && !buildingKindsOffered(era).some((k) => k.key === chosen)) notices.push(`Kind \u201C${chosen}\u201D isn't offered in the ${ROUTE_ERAS.find((e) => e.code === era).label} era.`);
+  const block = buildingBlockSet(options.safeguards);
+  const series = !!options.series;
+  const base = {};
+  if (series) {
+    base.town = town2(newCtx2(s, "defence"));
+    base.founder = s.mode === "placeholders" ? "[founder]" : personNames(culture.key).length > 0 ? pickOne7(personNames(culture.key), rng) : void 0;
+  }
+  const acceptable5 = (text) => {
+    const counted2 = countedWords2(text);
+    if (counted2.length === 0 || counted2.length > BUILDING_DATA.cap) return false;
+    if (repeatsContent(counted2)) return false;
+    if (block.has(bare(text))) return false;
+    if (breaksBuildingWords(text)) return false;
+    if (hasChristianBuilding(text) && !cultureAllowed(["christian"], culture.key, era)) return false;
+    return true;
+  };
+  const build = (kind) => {
+    var _a3;
+    for (let i = 0; i < 20; i++) {
+      const ctx = newCtx2(s, kind, base);
+      const plan = choosePlan(ctx, options.shape);
+      if (!plan) return void 0;
+      ctx.shape = plan.shape;
+      const raw = renderPattern6(ctx, plan.shape.p);
+      if (!raw) continue;
+      const text = innCapitals(raw);
+      if (!acceptable5(text)) continue;
+      const tones = /* @__PURE__ */ new Set([...(_a3 = plan.shape.t) != null ? _a3 : [], ...ctx.drawn]);
+      return {
+        text,
+        kind,
+        shape: plan.shape.p,
+        source: plan.source,
+        tones: GROUP_TONES.filter((t) => tones.has(t)),
+        words: ctx.words,
+        uses: ctx.uses
+      };
+    }
+    return void 0;
+  };
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  const add2 = (n) => {
+    if (!n || seen.has(n.text.toLowerCase())) return false;
+    seen.add(n.text.toLowerCase());
+    names.push(n);
+    return true;
+  };
+  const drawKind = () => chosen ? weights.some(([k]) => k === chosen) ? chosen : void 0 : pickWeighted5(weights, rng);
+  if (series) {
+    const used = /* @__PURE__ */ new Set();
+    let founders = 0;
+    let round = [];
+    const nextKind = () => {
+      if (chosen) return drawKind();
+      if (round.length === 0) round = [...weights];
+      const k = pickWeighted5(round, rng);
+      return k;
+    };
+    for (let idle = 0; idle < 80 && names.length < count; ) {
+      const k = nextKind();
+      if (!k) break;
+      const n = build(k);
+      const fresh = !!n && !n.uses.some((u) => u.startsWith("q:") && used.has(u)) && (!n.uses.includes("founder") || founders < BUILDING_DATA.series.founderUses);
+      if (fresh && add2(n)) {
+        for (const u of n.uses) used.add(u);
+        if (n.uses.includes("founder")) founders++;
+        round = round.filter(([x]) => x !== k);
+        idle = 0;
+      } else idle++;
+    }
+  } else {
+    for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+      const k = drawKind();
+      if (!k) break;
+      add2(build(k));
+    }
+  }
+  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+  return { names, seed, notices };
+}
+
 // src/presets.ts
 var TRIBAL_PRESET_MODULE = "tribal-names";
 var TRIBAL_PRESET_DEFAULTS = {
@@ -79989,6 +80621,7 @@ function parseModulePreset(content, fileName) {
   if (values.module === ROUTE_PRESET_MODULE) return parseRoutePreset(values, body, fileName);
   if (values.module === STREET_PRESET_MODULE) return parseStreetPreset(values, body, fileName);
   if (values.module === INN_PRESET_MODULE) return parseInnPreset(values, body, fileName);
+  if (values.module === BUILDING_PRESET_MODULE) return parseBuildingPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module \u201C${(_a2 = values.module) != null ? _a2 : ""}\u201D.`);
     return { problems };
@@ -80022,6 +80655,7 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("buildingKind" in preset) return buildingPresetContent(preset);
   if ("innKind" in preset) return innPresetContent(preset);
   if ("streetKind" in preset) return streetPresetContent(preset);
   if ("routeKind" in preset) return routePresetContent(preset);
@@ -80459,6 +81093,67 @@ function innPresetContent(preset) {
     ""
   ].join("\n");
 }
+var BUILDING_PRESET_MODULE = "building-names";
+function parseBuildingPreset(values, body, fileName) {
+  const problems = [];
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const flag = (key2) => {
+    const v = values[key2];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return false;
+  };
+  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  let kind = pick4("kind", "any", (v) => v === "any" || BUILDING_KINDS.some((k) => k.key === v));
+  if (kind !== "any" && !(BUILDING_KINDS.find((k) => k.key === kind).era[era] > 0)) {
+    problems.push(`Kind \u201C${kind}\u201D isn't offered in the ${routeEraLabel(era)} era.`);
+    kind = "any";
+  }
+  return {
+    building: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      buildingKind: kind,
+      era,
+      fantastic: flag("fantastic"),
+      buildingSetting: pick4("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series: flag("series")
+    },
+    problems
+  };
+}
+function buildingPresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${BUILDING_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `region: ${preset.region}`,
+    `kind: ${preset.buildingKind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `setting: ${preset.buildingSetting}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
 var VESSEL_PRESET_MODULE = "vessels";
 function parseVesselPreset(values, body, fileName) {
   var _a2, _b;
@@ -80826,6 +81521,166 @@ Names to allow, though they echo a real or well-known route.
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
 
+// src/buildings/sentence.ts
+var DEFAULT_BUILDING_STATE = {
+  culture: "norman-british",
+  era: "MD",
+  fantastic: false,
+  setting: "anywhere",
+  tone: "any",
+  people: "placeholders",
+  series: false
+};
+var PEOPLE_TEXT5 = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT4 = { off: "each one separate", on: "as one town" };
+var settingText = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
+function buildingSentence(state) {
+  var _a2;
+  const out = [];
+  const culture = (_a2 = findRouteCulture(state.culture)) != null ? _a2 : ROUTE_CULTURES[0];
+  out.push({
+    field: "culture",
+    text: culture.label,
+    title: "Naming culture: whose customs the buildings follow",
+    choices: ROUTE_CULTURES.map((c, i) => {
+      var _a3;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a3 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a3.group) ? { group: c.group } : {} };
+    }),
+    current: culture.key
+  });
+  out.push(" ");
+  const offered = buildingKindsOffered(state.era);
+  const kind = offered.find((k) => k.key === state.kind);
+  out.push({
+    field: "kind",
+    text: kind ? kind.plural : BUILDING_ANY,
+    title: kind ? kind.description : BUILDING_ANY.charAt(0).toUpperCase() + BUILDING_ANY.slice(1),
+    choices: [{ id: void 0, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
+    current: kind == null ? void 0 : kind.key
+  });
+  out.push(" of the ");
+  out.push({
+    field: "era",
+    text: routeEraLabel(state.era),
+    title: "The age: decides which kinds of building exist",
+    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
+    current: state.era
+  });
+  out.push(" era, in a ");
+  const words = fantasticWords(state.era);
+  out.push({
+    field: "fantastic",
+    text: words[state.fantastic ? 1 : 0],
+    title: "Open magic and monsters; in the steam age, steampunk",
+    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
+    current: state.fantastic ? "on" : "off"
+  });
+  out.push(" world, ");
+  if (showsRegion(state)) {
+    out.push({
+      field: "region",
+      text: routeRegionText(state.region),
+      title: "Weights the names towards a region's customs",
+      choices: [
+        { id: void 0, label: routeRegionText(void 0) },
+        ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: routeRegionText(r.code), title: r.counties }))
+      ],
+      current: state.region
+    });
+    out.push(", ");
+  }
+  out.push({
+    field: "setting",
+    text: settingText(state.setting),
+    title: "Where the buildings stand: weights civic, country, harbour or roadside kinds",
+    choices: INN_SETTINGS.map((s) => ({ id: s.key, label: s.text })),
+    current: state.setting
+  });
+  out.push(", ");
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
+  out.push(", with ");
+  out.push({
+    field: "people",
+    text: PEOPLE_TEXT5[state.people],
+    title: "Placeholders like [founder], or invented names",
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT5[p] })),
+    current: state.people
+  });
+  out.push(" people and places, ");
+  out.push({
+    field: "series",
+    text: SERIES_TEXT4[state.series ? "on" : "off"],
+    title: "One town's buildings: one of each kind, one town and one founder, no qualifier twice",
+    choices: [
+      { id: "off", label: SERIES_TEXT4.off },
+      { id: "on", label: SERIES_TEXT4.on }
+    ],
+    current: state.series ? "on" : "off"
+  });
+  return out;
+}
+function buildingSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function chooseBuilding(state, field, id) {
+  const next = { ...state };
+  switch (field) {
+    case "culture":
+      next.culture = id != null ? id : DEFAULT_BUILDING_STATE.culture;
+      break;
+    case "kind":
+      next.kind = id;
+      break;
+    case "era":
+      next.era = ROUTE_ERAS.some((e) => e.code === id) ? id : DEFAULT_BUILDING_STATE.era;
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "region":
+      next.region = id;
+      break;
+    case "setting":
+      next.setting = INN_SETTINGS.some((s) => s.key === id) ? id : "anywhere";
+      break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "people":
+      next.people = id != null ? id : "placeholders";
+      break;
+    case "series":
+      next.series = id === "on";
+      break;
+  }
+  if (next.kind && !buildingKindsOffered(next.era).some((k) => k.key === next.kind)) next.kind = void 0;
+  if (!showsRegion(next)) next.region = void 0;
+  return next;
+}
+function buildingHistoryLabel(state) {
+  var _a2, _b;
+  const culture = (_b = (_a2 = findRouteCulture(state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+  const kind = BUILDING_KINDS.find((k) => k.key === state.kind);
+  return [
+    "buildings and landmarks",
+    routeEraLabel(state.era),
+    culture,
+    ...kind ? [kind.plural] : [],
+    ...state.setting !== "anywhere" ? [settingText(state.setting)] : [],
+    ...state.region && showsRegion(state) ? [regionPhrase(state.region)] : [],
+    ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
+    ...state.tone !== "any" ? [state.tone] : [],
+    ...state.series ? ["one town"] : []
+  ].join(" \xB7 ");
+}
+
 // src/inns/sentence.ts
 var DEFAULT_INN_STATE = {
   culture: "norman-british",
@@ -80837,9 +81692,9 @@ var DEFAULT_INN_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT5 = { placeholders: "placeholders for", invented: "invented" };
-var SERIES_TEXT4 = { off: "each one separate", on: "as one town" };
-var settingText = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
+var PEOPLE_TEXT6 = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT5 = { off: "each one separate", on: "as one town" };
+var settingText2 = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
 var showsForm = (state) => hasSignTradition(state.culture);
 function innSentence(state) {
   var _a2;
@@ -80898,7 +81753,7 @@ function innSentence(state) {
   }
   out.push({
     field: "setting",
-    text: settingText(state.setting),
+    text: settingText2(state.setting),
     title: "Where the house stands: weights country, town, harbour or roadside signs",
     choices: INN_SETTINGS.map((s) => ({ id: s.key, label: s.text })),
     current: state.setting
@@ -80924,19 +81779,19 @@ function innSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT5[state.people],
+    text: PEOPLE_TEXT6[state.people],
     title: "Placeholders like [owner], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT5[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT6[p] })),
     current: state.people
   });
   out.push(" people and places, ");
   out.push({
     field: "series",
-    text: SERIES_TEXT4[state.series ? "on" : "off"],
+    text: SERIES_TEXT5[state.series ? "on" : "off"],
     title: "One town's houses: no sign word twice, one roadside house and one landmark",
     choices: [
-      { id: "off", label: SERIES_TEXT4.off },
-      { id: "on", label: SERIES_TEXT4.on }
+      { id: "off", label: SERIES_TEXT5.off },
+      { id: "on", label: SERIES_TEXT5.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -80994,7 +81849,7 @@ function innHistoryLabel(state) {
     routeEraLabel(state.era),
     culture,
     ...kind ? [kind.plural] : [],
-    ...state.setting !== "anywhere" ? [settingText(state.setting)] : [],
+    ...state.setting !== "anywhere" ? [settingText2(state.setting)] : [],
     ...state.region && showsRegion(state) ? [regionPhrase(state.region)] : [],
     ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
     ...state.tone !== "any" ? [state.tone] : [],
@@ -81013,8 +81868,8 @@ var DEFAULT_STREET_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT6 = { placeholders: "placeholders for", invented: "invented" };
-var SERIES_TEXT5 = { off: "each one separate", on: "as one town" };
+var PEOPLE_TEXT7 = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT6 = { off: "each one separate", on: "as one town" };
 var DIALECT_TEXT = {
   plain: "with plain words only",
   variants: "with dialect words as variants",
@@ -81119,19 +81974,19 @@ function streetSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT6[state.people],
+    text: PEOPLE_TEXT7[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT6[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT7[p] })),
     current: state.people
   });
   out.push(" people and places, ");
   out.push({
     field: "series",
-    text: SERIES_TEXT5[state.series ? "on" : "off"],
+    text: SERIES_TEXT6[state.series ? "on" : "off"],
     title: "One town's streets: a main street first, then no repeats",
     choices: [
-      { id: "off", label: SERIES_TEXT5.off },
-      { id: "on", label: SERIES_TEXT5.on }
+      { id: "off", label: SERIES_TEXT6.off },
+      { id: "on", label: SERIES_TEXT6.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -82420,12 +83275,12 @@ function terrainHeading(heading) {
   const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
   return m ? { terrain: m[1].trim(), part: m[2].toLowerCase() } : null;
 }
-function terrainId(token8, custom) {
+function terrainId(token9, custom) {
   var _a2;
-  const t = norm4(token8);
+  const t = norm4(token9);
   const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm4(x.id) === t || norm4(x.label) === t));
   if (builtIn) return builtIn.id;
-  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab2(token8))) == null ? void 0 : _a2.id;
+  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab2(token9))) == null ? void 0 : _a2.id;
 }
 var key = (words) => words.map(([w, n]) => `${norm4(w)}|${n}`).sort().join("\n");
 var entryKey = (entries) => entries.map((e) => `${norm4(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
@@ -84557,12 +85412,12 @@ function generateLabelledNames(lists, options) {
   };
   const result = [];
   const seen = /* @__PURE__ */ new Set();
-  const live3 = viable.map((_, i) => i);
-  while (result.length < count && live3.length > 0) {
-    const total = live3.reduce((sum, i) => sum + viable[i].names.length, 0);
+  const live4 = viable.map((_, i) => i);
+  while (result.length < count && live4.length > 0) {
+    const total = live4.reduce((sum, i) => sum + viable[i].names.length, 0);
     let roll = masterRng() * total;
-    let pick4 = live3[live3.length - 1];
-    for (const i of live3) {
+    let pick4 = live4[live4.length - 1];
+    for (const i of live4) {
       roll -= viable[i].names.length;
       if (roll < 0) {
         pick4 = i;
@@ -84571,7 +85426,7 @@ function generateLabelledNames(lists, options) {
     }
     const names = pool3(pick4);
     if (cursors[pick4] >= names.length) {
-      live3.splice(live3.indexOf(pick4), 1);
+      live4.splice(live4.indexOf(pick4), 1);
       continue;
     }
     const name = names[cursors[pick4]++];
@@ -84898,6 +85753,7 @@ var SECTION_ORDER = [
   "routeNames",
   "streetNames",
   "innNames",
+  "buildingNames",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "tribalNames",
@@ -84909,7 +85765,7 @@ var SECTION_ORDER = [
   ...VESSEL_SECTIONS
 ];
 var SECTION_GROUPS = {
-  placeNames: ["placeShapes", "routeNames", "streetNames", "innNames", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  placeNames: ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
   groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS]
@@ -84930,6 +85786,7 @@ var SECTION_LABELS = {
   routeNames: "route names",
   streetNames: "streets and districts",
   innNames: "inns and taverns",
+  buildingNames: "buildings and landmarks",
   riverNames: "river names",
   explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
@@ -84963,6 +85820,7 @@ function historySection(packName) {
   if (starts(SECTION_LABELS.routeNames)) return "routeNames";
   if (starts(SECTION_LABELS.streetNames)) return "streetNames";
   if (starts(SECTION_LABELS.innNames)) return "innNames";
+  if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
   if (starts(SECTION_LABELS.realms)) return "realms";
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
@@ -84998,6 +85856,8 @@ var SECTION_ICONS = {
   streetNames: "signpost",
   // Inns brief §1.1.
   innNames: "beer",
+  // Buildings brief §1.1.
+  buildingNames: "landmark",
   riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
@@ -85041,6 +85901,7 @@ function packTypeIconId(packType, subGenerator) {
   if (packType === "routePreset") return "route";
   if (packType === "streetPreset") return "signpost";
   if (packType === "innPreset") return "beer";
+  if (packType === "buildingPreset") return "landmark";
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;
   }
@@ -85281,6 +86142,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.streetState = { ...DEFAULT_STREET_STATE };
     /** Inns brief §2.4: the inns sentence's choices, session only. */
     this.innState = { ...DEFAULT_INN_STATE };
+    /** Buildings brief §2: the buildings sentence's choices, session only. */
+    this.buildingState = { ...DEFAULT_BUILDING_STATE };
     /** Each switcher group's last-used module (session only). */
     this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
@@ -85652,10 +86515,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     (_c = this.packDropdownEl) == null ? void 0 : _c.toggle(section === "markov");
     (_d = this.sectionSentenceEl) == null ? void 0 : _d.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_e = this.editRecipeButton) == null ? void 0 : _e.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset"));
+    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames";
     (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart && !tribal);
     (_i = this.landButton) == null ? void 0 : _i.refresh();
     (_j = this.guideButton) == null ? void 0 : _j.toggle(!!colonialPart);
@@ -85960,6 +86823,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     else if (section === "routeNames") this.renderRouteSentence(row);
     else if (section === "streetNames") this.renderStreetSentence(row);
     else if (section === "innNames") this.renderInnSentence(row);
+    else if (section === "buildingNames") this.renderBuildingSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -86221,7 +87085,12 @@ ${n.origin}${also}${echo}` };
   async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian13.TFile)) return;
-    const { preset, group, byname, vessel, realm, route: route3, street, inn } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, realm, route: route3, street, inn, building } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (building) {
+      this.buildingState = this.buildingPresetState(building);
+      this.switchSection("buildingNames");
+      return;
+    }
     if (inn) {
       this.innState = this.innPresetState(inn);
       this.switchSection("innNames");
@@ -86589,6 +87458,108 @@ ${n.origin}${also}${echo}` };
       return;
     }
     await this.runInns(this.innPresetState(inn), `${SECTION_LABELS.innNames} \xB7 ${inn.packName}`, problems);
+  }
+  // ── Buildings and landmarks (Buildings brief) ────────────────────────────
+  buildingPresetState(p) {
+    const base = {
+      culture: p.culture,
+      kind: p.buildingKind === "any" ? void 0 : p.buildingKind,
+      era: p.era,
+      fantastic: p.fantastic,
+      region: p.region === "all" ? void 0 : p.region,
+      setting: p.buildingSetting,
+      tone: p.tone,
+      people: p.people,
+      series: p.series
+    };
+    return chooseBuilding(base, "kind", base.kind);
+  }
+  /** §2: the sentence. */
+  renderBuildingSentence(row) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment2 of buildingSentence(this.buildingState)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(sentence2, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {
+        this.buildingState = chooseBuilding(this.buildingState, segment2.field, id);
+      });
+    }
+  }
+  /** GN §14: the finished strings only; history "buildings and landmarks · {era} · {culture}…". */
+  async runBuildings(state = this.buildingState, label, problems = []) {
+    var _a2;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
+    const guards = await this.loadSettlementSafeguards(BUILDING_DATA.safeguards);
+    const vocab = await this.loadSettlementVocabulary(guards.safeguards, buildingWordBlocked);
+    const result = generateBuildingNames({
+      culture: state.culture,
+      kind: state.kind,
+      era: state.era,
+      fantastic: state.fantastic,
+      region: state.region,
+      setting: state.setting,
+      tone: state.tone,
+      people: state.people,
+      series: state.series,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards,
+      vocab: vocab.vocab
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
+      "none"
+    );
+    await this.recordGenerationHistory(result.names.length, label != null ? label : buildingHistoryLabel(state));
+    this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
+  }
+  /** §13: "{culture} · {kind or buildings and landmarks}", described by the sentence. */
+  openSaveBuildingPreset() {
+    var _a2, _b;
+    const state = this.buildingState;
+    const culture = (_b = (_a2 = findRouteCulture(state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+    const kind = BUILDING_KINDS.find((k) => k.key === state.kind);
+    const name = [culture, kind ? kind.menu : SECTION_LABELS.buildingNames].join(" \xB7 ");
+    const description = buildingSentenceText(buildingSentence(state));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a3, _b2;
+      if (!presetName) {
+        new import_obsidian13.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        culture: state.culture,
+        region: (_a3 = state.region) != null ? _a3 : "all",
+        buildingKind: (_b2 = state.kind) != null ? _b2 : "any",
+        era: state.era,
+        fantastic: state.fantastic,
+        buildingSetting: state.setting,
+        tone: state.tone,
+        people: state.people,
+        series: state.series
+      });
+      return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).building);
+    }).open();
+  }
+  /** §13: a building preset, run as the module runs; history "buildings and landmarks · {preset}". */
+  async runBuildingPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian13.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { building, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!building) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runBuildings(this.buildingPresetState(building), `${SECTION_LABELS.buildingNames} \xB7 ${building.packName}`, problems);
   }
   // ── Streets and districts (Streets brief) ────────────────────────────────
   streetPresetState(p) {
@@ -87051,7 +88022,7 @@ ${n.origin}${also}${echo}` };
     var _a2;
     const section = this.activeSection;
     (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -87084,6 +88055,10 @@ ${n.origin}${also}${echo}` };
     }
     if (this.activeSection === "innNames") {
       this.openSaveInnPreset();
+      return;
+    }
+    if (this.activeSection === "buildingNames") {
+      this.openSaveBuildingPreset();
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -87842,7 +88817,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -87999,6 +88974,7 @@ ${text}
           else if (parsed.route) packs.push({ path: child.path, packType: "routePreset" });
           else if (parsed.street) packs.push({ path: child.path, packType: "streetPreset" });
           else if (parsed.inn) packs.push({ path: child.path, packType: "innPreset" });
+          else if (parsed.building) packs.push({ path: child.path, packType: "buildingPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -88141,9 +89117,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m;
-    const { preset, group, byname, vessel, realm, route: route3, street, inn, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
+    const { preset, group, byname, vessel, realm, route: route3, street, inn, building, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -88153,9 +89129,9 @@ ${text}
     (_a2 = this.sectionSentenceEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
-    const module2 = inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
+    const module2 = building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
     (_e = this.openPresetButton) == null ? void 0 : _e.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm == null ? void 0 : realm.packName) != null ? _j : route3 == null ? void 0 : route3.packName) != null ? _k : street == null ? void 0 : street.packName) != null ? _l : inn == null ? void 0 : inn.packName) != null ? _m : file.basename;
+    this.plugin.settings.packName = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm == null ? void 0 : realm.packName) != null ? _j : route3 == null ? void 0 : route3.packName) != null ? _k : street == null ? void 0 : street.packName) != null ? _l : inn == null ? void 0 : inn.packName) != null ? _m : building == null ? void 0 : building.packName) != null ? _n : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -88596,6 +89572,10 @@ ${text}
       await this.runInns();
       return;
     }
+    if (this.activeSection === "buildingNames") {
+      await this.runBuildings();
+      return;
+    }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
@@ -88659,6 +89639,10 @@ ${text}
     }
     if (this.currentPackType === "innPreset") {
       await this.runInnPreset();
+      return;
+    }
+    if (this.currentPackType === "buildingPreset") {
+      await this.runBuildingPreset();
       return;
     }
     if (this.currentPackType === "groupPreset") {

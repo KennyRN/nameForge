@@ -19,6 +19,7 @@ import { namedForOffered, REALM_CHARACTERS, REALM_CULTURES, REALM_ERAS, type Rea
 import { findRouteCulture, findRouteKind, kindsOffered, ROUTE_ERAS, routeEraLabel, type RouteEra } from "./routes/engine";
 import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 import { INN_KINDS, INN_SETTINGS, type InnForm, type InnKind, type InnSetting } from "./inns/engine";
+import { BUILDING_KINDS, type BuildingKind } from "./buildings/engine";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
 import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
 import { findCommodity, findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
@@ -72,7 +73,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -91,6 +92,8 @@ export function parseModulePreset(
   if (values.module === STREET_PRESET_MODULE) return parseStreetPreset(values, body, fileName);
   // Inns brief §13: inn presets too.
   if (values.module === INN_PRESET_MODULE) return parseInnPreset(values, body, fileName);
+  // Buildings brief §13: building presets too.
+  if (values.module === BUILDING_PRESET_MODULE) return parseBuildingPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module “${values.module ?? ""}”.`);
     return { problems };
@@ -125,7 +128,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset): string {
+  if ("buildingKind" in preset) return buildingPresetContent(preset);
   if ("innKind" in preset) return innPresetContent(preset);
   if ("streetKind" in preset) return streetPresetContent(preset);
   if ("routeKind" in preset) return routePresetContent(preset);
@@ -698,6 +702,90 @@ function innPresetContent(preset: InnPreset): string {
     `fantastic: ${preset.fantastic}`,
     `setting: ${preset.innSetting}`,
     `form: ${preset.form}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Building presets (Buildings brief §13) ──────────────────────────────────
+
+export const BUILDING_PRESET_MODULE = "building-names";
+
+export interface BuildingPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  culture: string;
+  /** "all" or a place-shape region code. */
+  region: string;
+  /** "any" or a kind key (the note's `kind`). */
+  buildingKind: "any" | BuildingKind;
+  era: RouteEra;
+  fantastic: boolean;
+  /** Where the buildings stand (the note's `setting`, as for inns). */
+  buildingSetting: InnSetting;
+  tone: GroupToneChoice;
+  people: GroupPeople;
+  series: boolean;
+}
+
+function parseBuildingPreset(values: Record<string, string>, body: string, fileName: string): { building?: BuildingPreset; problems: string[] } {
+  const problems: string[] = [];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const flag = (key: string): boolean => {
+    const v = values[key];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key} “${v}”.`);
+    return false;
+  };
+  const era = pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  let kind = pick<"any" | BuildingKind>("kind", "any", (v) => v === "any" || BUILDING_KINDS.some((k) => k.key === v));
+  if (kind !== "any" && !(BUILDING_KINDS.find((k) => k.key === kind)!.era[era] > 0)) {
+    problems.push(`Kind “${kind}” isn't offered in the ${routeEraLabel(era)} era.`);
+    kind = "any";
+  }
+  return {
+    building: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      culture: pick("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      buildingKind: kind,
+      era,
+      fantastic: flag("fantastic"),
+      buildingSetting: pick<InnSetting>("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series: flag("series"),
+    },
+    problems,
+  };
+}
+
+function buildingPresetContent(preset: BuildingPreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${BUILDING_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `region: ${preset.region}`,
+    `kind: ${preset.buildingKind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `setting: ${preset.buildingSetting}`,
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
     `series: ${preset.series}`,

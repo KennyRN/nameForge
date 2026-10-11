@@ -202,3 +202,61 @@ test("§15.5: 5,000 names per culture: no block-list matches, no banned words", 
     }
   }
 });
+
+// ── §15.6 Sentence and presets ──────────────────────────────────────────────
+
+import { buildingHistoryLabel, buildingSentence, buildingSentenceText, chooseBuilding, DEFAULT_BUILDING_STATE, type BuildingSentenceState } from "../src/buildings/sentence";
+import { modulePresetContent, parseModulePreset, type BuildingPreset } from "../src/presets";
+import { historySection, SECTION_GROUPS } from "../src/sections";
+
+test("§15.6: the default sentence's plain text", () => {
+  assert.equal(
+    buildingSentenceText(buildingSentence(DEFAULT_BUILDING_STATE)),
+    "Norman & British buildings and landmarks of any kind of the medieval era, in a realistic world, across all of Britain, anywhere, of any tone, with placeholders for people and places, each one separate.",
+  );
+  const border = [["era", "EM"], ["region", "SBL"], ["setting", "country"], ["people", "invented"], ["series", "on"]].reduce((s, [f, id]) => chooseBuilding(s, f as never, id), DEFAULT_BUILDING_STATE);
+  assert.equal(
+    buildingSentenceText(buildingSentence(border)),
+    "Norman & British buildings and landmarks of any kind of the early modern era, in a realistic world, in the Scottish Borderlands, in the country, of any tone, with invented people and places, as one town.",
+  );
+});
+
+test("§2.3: kinds reset with the era; the region goes away from the British cultures", () => {
+  const lights = chooseBuilding(DEFAULT_BUILDING_STATE, "kind", "maritime");
+  assert.equal(lights.kind, "maritime");
+  assert.equal(chooseBuilding(lights, "era", "IS").kind, undefined);
+  assert.equal(chooseBuilding(chooseBuilding(DEFAULT_BUILDING_STATE, "region", "SBL"), "culture", "chinese").region, undefined);
+});
+
+test("§1: the module follows inns and taverns; history label and section", () => {
+  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 5), ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames"]);
+  assert.equal(buildingHistoryLabel(DEFAULT_BUILDING_STATE), "buildings and landmarks · medieval · Norman & British");
+  const full: BuildingSentenceState = { ...DEFAULT_BUILDING_STATE, era: "ST", kind: "works", setting: "road", region: "NTH", fantastic: true, tone: "grim", series: true };
+  assert.equal(buildingHistoryLabel(full), "buildings and landmarks · steam age · Norman & British · mills and works · by the road · the North · steampunk · grim · one town");
+  assert.equal(historySection(buildingHistoryLabel(full)), "buildingNames");
+});
+
+test("§15.6: presets round-trip", () => {
+  const preset: BuildingPreset = {
+    packName: "Border landmarks",
+    setting: "",
+    description: "Norman & British buildings and landmarks of any kind of the early modern era, in a realistic world, in the Scottish Borderlands, in the country, of any tone, with invented people and places, as one town.",
+    culture: "norman-british",
+    region: "SBL",
+    buildingKind: "any",
+    era: "EM",
+    fantastic: false,
+    buildingSetting: "country",
+    tone: "any",
+    people: "invented",
+    series: true,
+  };
+  const content = modulePresetContent(preset);
+  assert.ok(content.includes("module: building-names\n") && content.includes("setting: country\n") && content.includes("kind: any\n"));
+  const parsed = parseModulePreset(content, "x");
+  assert.deepEqual(parsed.building, preset);
+  assert.deepEqual(parsed.problems, []);
+  const bad = parseModulePreset(modulePresetContent({ ...preset, era: "IS", buildingKind: "maritime" }), "x");
+  assert.equal(bad.building?.buildingKind, "any");
+  assert.deepEqual(bad.problems, ["Kind “maritime” isn't offered in the interstellar era."]);
+});

@@ -228,6 +228,7 @@ test("line-up: the modules in order, with their labels; river names live in plac
       "route names",
       "streets and districts",
       "inns and taverns",
+      "buildings and landmarks",
       "exploration into new lands",
       "expansion into settled lands",
       "tribes and kin groups",

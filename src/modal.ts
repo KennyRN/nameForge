@@ -110,12 +110,14 @@ import { isRealmSafeguardPackContent } from "./realms/safeguardPacks";
 import { generateVesselNames, moduleFunctions, VESSEL_CULTURES, VESSEL_DATA, type VesselModule } from "./vessels/engine";
 import { chooseVessel, defaultVesselState, vesselHistory, vesselSentence, vesselSentenceText, type VesselSentenceState } from "./vessels/sentence";
 import { isVesselSafeguardPackContent } from "./vessels/safeguardPacks";
-import { isModulePresetContent, modulePresetContent, parseModulePreset, type RealmPreset, type RoutePreset, type StreetPreset, type InnPreset, type TribalPreset, type VesselPreset } from "./presets";
+import { isModulePresetContent, modulePresetContent, parseModulePreset, type RealmPreset, type RoutePreset, type StreetPreset, type InnPreset, type BuildingPreset, type TribalPreset, type VesselPreset } from "./presets";
 import { defaultRouteSafeguards, findRouteCulture, findRouteKind, generateRouteNames, ROUTE_DATA, routeWordBlocked } from "./routes/engine";
 import { chooseRoute, DEFAULT_ROUTE_STATE, routeHistoryLabel, routeSentence, routeSentenceText, type RouteSentenceState } from "./routes/sentence";
 import { isSettlementSafeguardPackContent } from "./settlement/safeguardPacks";
 import { generateStreetNames, STREET_DATA, STREET_KINDS, streetWordBlocked } from "./streets/engine";
 import { generateInnNames, INN_DATA, INN_KINDS, innWordBlocked } from "./inns/engine";
+import { BUILDING_DATA, BUILDING_KINDS, buildingWordBlocked, generateBuildingNames } from "./buildings/engine";
+import { buildingHistoryLabel, buildingSentence, buildingSentenceText, chooseBuilding, DEFAULT_BUILDING_STATE, type BuildingSentenceState } from "./buildings/sentence";
 import { chooseInn, DEFAULT_INN_STATE, innFormFor, innHistoryLabel, innSentence, innSentenceText, type InnSentenceState } from "./inns/sentence";
 import { chooseStreet, DEFAULT_STREET_STATE, streetHistoryLabel, streetSentence, streetSentenceText, type StreetSentenceState } from "./streets/sentence";
 import { loadVocabulary } from "./settlement/vocabPacks";
@@ -189,7 +191,7 @@ import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from 
 
 /** `tribalPreset` (Presets brief §9) and `groupPreset` (Group brief §13): module preset notes, run
  * as-is from the pack dropdown. */
-type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack" | "tribalPreset" | "groupPreset" | "bynamePreset" | "vesselPreset" | "realmPreset" | "routePreset" | "streetPreset" | "innPreset";
+type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack" | "tribalPreset" | "groupPreset" | "bynamePreset" | "vesselPreset" | "realmPreset" | "routePreset" | "streetPreset" | "innPreset" | "buildingPreset";
 
 import {
   BRITISH_PLACE_NAMES_HISTORY_NAME,
@@ -235,6 +237,8 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   streetNames: "signpost",
   // Inns brief §1.1.
   innNames: "beer",
+  // Buildings brief §1.1.
+  buildingNames: "landmark",
   riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
@@ -293,6 +297,7 @@ function packTypeIconId(packType: NamePackType, subGenerator?: CompoundGenerator
   if (packType === "routePreset") return "route";
   if (packType === "streetPreset") return "signpost";
   if (packType === "innPreset") return "beer";
+  if (packType === "buildingPreset") return "landmark";
   if (packType === "recipePack") {
     // Presets brief §2.2: recipe packs wear the wizard's pen-in-pin icon.
     return ICON_RECIPE_WIZARD;
@@ -640,6 +645,8 @@ export class NameForgeModal extends Modal {
   private streetState: StreetSentenceState = { ...DEFAULT_STREET_STATE };
   /** Inns brief §2.4: the inns sentence's choices, session only. */
   private innState: InnSentenceState = { ...DEFAULT_INN_STATE };
+  /** Buildings brief §2: the buildings sentence's choices, session only. */
+  private buildingState: BuildingSentenceState = { ...DEFAULT_BUILDING_STATE };
   /** Each switcher group's last-used module (session only). */
   private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", advanced: "nameAgeing" };
   private tribal: {
@@ -1043,14 +1050,14 @@ export class NameForgeModal extends Modal {
     this.packDropdownEl?.toggle(section === "markov");
     this.sectionSentenceEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
     this.editRecipeButton?.toggle(section === "markov" && this.currentPackType === "recipePack");
-    this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset"));
+    this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset"));
     // Pack creation belongs to the markov generator; elsewhere the button keeps its space so the
     // box beside the trigger stays the same size.
     const colonialPart = COLONIAL_SECTION_PART[section];
     this.createPacksButton?.toggleClass("is-placeholder", section !== "markov");
     // In the colonial sections the guide button takes the create button's slot instead.
     // Tribes and kin groups and the group-name modules set everything in their sentences.
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames";
     this.createPacksButton?.toggle(!colonialPart && !tribal);
     this.landButton?.refresh();
     this.guideButton?.toggle(!!colonialPart);
@@ -1368,6 +1375,7 @@ export class NameForgeModal extends Modal {
     else if (section === "routeNames") this.renderRouteSentence(row);
     else if (section === "streetNames") this.renderStreetSentence(row);
     else if (section === "innNames") this.renderInnSentence(row);
+    else if (section === "buildingNames") this.renderBuildingSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]!);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -1636,7 +1644,13 @@ export class NameForgeModal extends Modal {
   private async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof TFile)) return;
-    const { preset, group, byname, vessel, realm, route, street, inn } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, realm, route, street, inn, building } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (building) {
+      // Buildings brief §13: the preset's choices, applied to the module for this session.
+      this.buildingState = this.buildingPresetState(building);
+      this.switchSection("buildingNames");
+      return;
+    }
     if (inn) {
       // Inns brief §13: the preset's choices, applied to the module for this session.
       this.innState = this.innPresetState(inn);
@@ -2023,6 +2037,111 @@ export class NameForgeModal extends Modal {
       return;
     }
     await this.runInns(this.innPresetState(inn), `${SECTION_LABELS.innNames} · ${inn.packName}`, problems);
+  }
+
+  // ── Buildings and landmarks (Buildings brief) ────────────────────────────
+
+  private buildingPresetState(p: BuildingPreset): BuildingSentenceState {
+    const base: BuildingSentenceState = {
+      culture: p.culture,
+      kind: p.buildingKind === "any" ? undefined : p.buildingKind,
+      era: p.era,
+      fantastic: p.fantastic,
+      region: p.region === "all" ? undefined : p.region,
+      setting: p.buildingSetting,
+      tone: p.tone,
+      people: p.people,
+      series: p.series,
+    };
+    return chooseBuilding(base, "kind", base.kind);
+  }
+
+  /** §2: the sentence. */
+  private renderBuildingSentence(row: HTMLElement) {
+    const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment of buildingSentence(this.buildingState)) {
+      if (typeof segment === "string") {
+        sentence.appendText(segment);
+        continue;
+      }
+      this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
+        this.buildingState = chooseBuilding(this.buildingState, segment.field, id);
+      });
+    }
+  }
+
+  /** GN §14: the finished strings only; history "buildings and landmarks · {era} · {culture}…". */
+  private async runBuildings(state = this.buildingState, label?: string, problems: string[] = []) {
+    const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+    const guards = await this.loadSettlementSafeguards(BUILDING_DATA.safeguards);
+    const vocab = await this.loadSettlementVocabulary(guards.safeguards, buildingWordBlocked);
+    const result = generateBuildingNames({
+      culture: state.culture,
+      kind: state.kind,
+      era: state.era,
+      fantastic: state.fantastic,
+      region: state.region,
+      setting: state.setting,
+      tone: state.tone,
+      people: state.people,
+      series: state.series,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards,
+      vocab: vocab.vocab,
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" }) as GeneratedName),
+      "none",
+    );
+    await this.recordGenerationHistory(result.names.length, label ?? buildingHistoryLabel(state));
+    this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
+  }
+
+  /** §13: "{culture} · {kind or buildings and landmarks}", described by the sentence. */
+  private openSaveBuildingPreset() {
+    const state = this.buildingState;
+    const culture = findRouteCulture(state.culture)?.label ?? "General";
+    const kind = BUILDING_KINDS.find((k) => k.key === state.kind);
+    const name = [culture, kind ? kind.menu : SECTION_LABELS.buildingNames].join(" · ");
+    const description = buildingSentenceText(buildingSentence(state));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      if (!presetName) {
+        new Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        culture: state.culture,
+        region: state.region ?? "all",
+        buildingKind: state.kind ?? "any",
+        era: state.era,
+        fantastic: state.fantastic,
+        buildingSetting: state.setting,
+        tone: state.tone,
+        people: state.people,
+        series: state.series,
+      });
+      return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).building);
+    }).open();
+  }
+
+  /** §13: a building preset, run as the module runs; history "buildings and landmarks · {preset}". */
+  private async runBuildingPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { building, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!building) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runBuildings(this.buildingPresetState(building), `${SECTION_LABELS.buildingNames} · ${building.packName}`, problems);
   }
 
   // ── Streets and districts (Streets brief) ────────────────────────────────
@@ -2498,6 +2617,7 @@ export class NameForgeModal extends Modal {
         section === "routeNames" ||
         section === "streetNames" ||
         section === "innNames" ||
+        section === "buildingNames" ||
         !!COLONIAL_SECTION_PART[section] ||
         (section === "placeShapes" && this.placeIsBritain()),
     );
@@ -2532,6 +2652,10 @@ export class NameForgeModal extends Modal {
     }
     if (this.activeSection === "innNames") {
       this.openSaveInnPreset();
+      return;
+    }
+    if (this.activeSection === "buildingNames") {
+      this.openSaveBuildingPreset();
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -3345,7 +3469,7 @@ export class NameForgeModal extends Modal {
     }
 
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -3529,6 +3653,7 @@ export class NameForgeModal extends Modal {
           else if (parsed.route) packs.push({ path: child.path, packType: "routePreset" });
           else if (parsed.street) packs.push({ path: child.path, packType: "streetPreset" });
           else if (parsed.inn) packs.push({ path: child.path, packType: "innPreset" });
+          else if (parsed.building) packs.push({ path: child.path, packType: "buildingPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -3683,8 +3808,8 @@ export class NameForgeModal extends Modal {
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   private async loadTribalPreset(file: TFile, content: string) {
-    const { preset, group, byname, vessel, realm, route, street, inn, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = inn ? "innPreset" : street ? "streetPreset" : route ? "routePreset" : realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    const { preset, group, byname, vessel, realm, route, street, inn, building, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route ? "routePreset" : realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = undefined;
     this.currentNamesText = "";
@@ -3694,9 +3819,9 @@ export class NameForgeModal extends Modal {
     this.sectionSentenceEl?.hide();
     this.editRecipeButton?.hide();
     this.openPresetButton?.toggle(this.activeSection === "markov");
-    const module = inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
+    const module = building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
     this.openPresetButton?.setAttribute("title", `Open in ${module ?? SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = preset?.packName ?? group?.packName ?? byname?.packName ?? vessel?.packName ?? realm?.packName ?? route?.packName ?? street?.packName ?? inn?.packName ?? file.basename;
+    this.plugin.settings.packName = preset?.packName ?? group?.packName ?? byname?.packName ?? vessel?.packName ?? realm?.packName ?? route?.packName ?? street?.packName ?? inn?.packName ?? building?.packName ?? file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -4153,6 +4278,10 @@ export class NameForgeModal extends Modal {
       await this.runInns();
       return;
     }
+    if (this.activeSection === "buildingNames") {
+      await this.runBuildings();
+      return;
+    }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
@@ -4219,6 +4348,10 @@ export class NameForgeModal extends Modal {
     }
     if (this.currentPackType === "innPreset") {
       await this.runInnPreset();
+      return;
+    }
+    if (this.currentPackType === "buildingPreset") {
+      await this.runBuildingPreset();
       return;
     }
     if (this.currentPackType === "groupPreset") {
