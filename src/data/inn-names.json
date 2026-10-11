@@ -36,12 +36,12 @@
     {"key": "person", "w": 7, "shapes": [{"p": "the {innPerson}", "w": 1}]},
     {"key": "item", "w": 10, "shapes": [{"p": "the {item}", "w": 1}]},
     {"key": "arms", "w": 3, "from": "MD", "shapes": [{"p": "the {streetFigure:poss} Arms", "w": 40, "house": false}, {"p": "the {surname} Arms", "w": 30, "house": false}, {"p": "the {trade:poss} Arms", "w": 30, "house": false}]},
-    {"key": "location", "w": 3, "shapes": [{"p": "the {innLocation}", "w": 60}, {"p": "the Old {innLocation}", "w": 40}]},
+    {"key": "location", "w": 3, "shapes": [{"p": "the {innLocation}", "w": 60}, {"p": "the Old {innLocation}", "w": 40}, {"p": "the {landmark}", "w": 25}]},
     {"key": "owner", "w": 2, "from": "MD", "shapes": [{"p": "{owner:poss} {hw}", "w": 50, "house": false}, {"p": "Mother {owner:poss}", "w": 25, "house": false}, {"p": "Old {owner:poss}", "w": 25, "house": false}]},
     {"key": "feature", "w": 2, "shapes": [{"p": "the {creatureOrPerson:poss} Head", "w": 5}, {"p": "the {creature:poss} {innFeature}", "w": 1}]},
     {"key": "description", "w": 30, "shapes": [{"p": "the {innDescription} {creatureOrItem}", "w": 70}, {"p": "the {innNumber} {creatureOrItem:pl}", "w": 30}]},
     {"key": "combination", "w": 30, "shapes": [{"p": "the {a} and {b}", "w": 70}, {"p": "the {creature} {innWorn}", "w": 8}, {"p": "the {creature:poss} {innHome}", "w": 12}, {"p": "the {innFable}", "w": 10}]},
-    {"key": "roadside", "w": 0, "shapes": [{"p": "the {route} Inn", "w": 10, "house": false}, {"p": "the {travellers:poss} Rest", "w": 10, "house": false}, {"p": "the {destination} Arms", "w": 5, "house": false}, {"p": "the Halfway House", "w": 3, "house": false}, {"p": "the {innNumber} Mile House", "w": 4, "house": false}]}
+    {"key": "roadside", "w": 0, "shapes": [{"p": "the {route} Inn", "w": 10, "house": false}, {"p": "the {travellers:poss} Rest", "w": 10, "house": false}, {"p": "the {destination} Arms", "w": 5, "house": false}, {"p": "the Halfway House", "w": 3, "house": false}, {"p": "the {innNumber} Mile House", "w": 4, "house": false}, {"p": "the {roadLandmark} Inn", "w": 3, "house": false}]}
   ],
   "fantastic": [
     {"p": "the {heraldicBeast:poss} Hoard", "w": 3, "h": true},

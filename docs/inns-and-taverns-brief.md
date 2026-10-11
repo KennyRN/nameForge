@@ -459,3 +459,10 @@ Run `npm test` and `npm run build` at the end of each; both must pass before com
 - Drink and food names (ales, wines, dishes) as their own module.
 - Inns placed on a specific street or route from a vault's notes.
 - Sign descriptions (what the painted sign shows) as a details line.
+
+
+---
+
+## Buildings back-link
+
+Added by the buildings and landmarks brief (§11.2): the location anchor gains `the {landmark}` at 20% of location draws (weight 25 beside 60 and 40), with `{landmark}` one `buildingName()` of kind defence, crossing, water or monument, without "the" and of 3 words or fewer (*the Grey Tower*, *the Lady Well*). Roadside shapes gain `the {landmark} Inn` (weight 3, no house word), kinds crossing and monument (*the Old Bridge Inn*, *the Four Mile Stone Inn*). Landmarks pass the building safeguards.

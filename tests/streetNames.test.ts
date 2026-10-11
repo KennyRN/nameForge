@@ -312,3 +312,31 @@ test("§16.8: presets round-trip; districts with a village report and run as str
   assert.equal(odd.street?.dialect, "variants");
   assert.deepEqual(odd.problems, ["Unknown size “hamlet”.", "Unknown dialect “scots”."]);
 });
+
+// ── Buildings brief §11.3: landmark streets ─────────────────────────────────
+
+import { buildingWordBlocked } from "../src/buildings/engine";
+
+test("Buildings §11.3: {landmark} streets: at most 3 words before the street word, passing the building safeguards", () => {
+  let found = 0;
+  for (const culture of ["norman-british", "japanese", "general"]) {
+    for (let seed = 1; seed <= 40; seed++) {
+      for (const n of generateStreetNames({ culture, kind: "streets", people: "invented", shape: "{landmark} {sw}", count: 5, seed }).names) {
+        const lm = n.words.find((w) => w.pool === "landmark");
+        assert.ok(lm, n.text);
+        found++;
+        assert.ok(n.plain.startsWith(`${lm!.word} `), n.text);
+        assert.ok(lm!.word.split(" ").length <= 3 && !/^the /i.test(lm!.word), n.text);
+        assert.ok(!buildingWordBlocked(lm!.word), n.text);
+      }
+    }
+  }
+  assert.ok(found > 100);
+});
+
+test("Buildings §11.1: a one-town series of 8 or more uses {landmark} at most once", () => {
+  for (let seed = 1; seed <= 30; seed++) {
+    const b = generateStreetNames({ culture: "norman-british", kind: "streets", people: "invented", series: true, count: 12, seed });
+    assert.ok(b.names.filter((n) => n.words.some((w) => w.pool === "landmark")).length <= 1, b.names.map((n) => n.text).join(", "));
+  }
+});

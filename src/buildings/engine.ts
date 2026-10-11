@@ -164,7 +164,6 @@ interface Ctx {
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
 const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("light") || t.includes("grim"));
 const CASTE = new Set(["indian", "west-african"]);
-const SURNAME_CULTURES = STREET_DATA.surnameCultures;
 const SF_LISTS = new Set(["star", "greek"]);
 
 /** A shared pool's entries here (region, setting themes, tone; never light or grim for the sensitive cultures). */
@@ -217,7 +216,7 @@ function creature(ctx: Ctx): string | undefined {
 }
 
 /** IT §6.2: `{owner}`: the culture's names or GN surnames. */
-const ownerNames = (ctx: Ctx) => [...personNames(ctx.culture.key), ...(SURNAME_CULTURES.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : [])];
+const ownerNames = (ctx: Ctx) => [...personNames(ctx.culture.key), ...(STREET_DATA.surnameCultures.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : [])];
 
 function town(ctx: Ctx): string | undefined {
   const t = ctx.town ?? (ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng));
@@ -253,7 +252,7 @@ function token(ctx: Ctx, name: string): string | undefined {
       return names.length > 0 ? pickOne(names, rng) : undefined;
     }
     case "surname":
-      return placeholders || !SURNAME_CULTURES.includes(ctx.culture.key) ? "[surname]" : gnWord(ctx, "surname");
+      return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : gnWord(ctx, "surname");
     case "dynasty":
       return placeholders || !DYNASTY_CULTURES.includes(ctx.culture.key) ? "[dynasty]" : gnWord(ctx, "house");
     case "holy":
@@ -319,6 +318,7 @@ function renderPattern(ctx: Ctx, pattern: string): string | undefined {
 // ── Safeguards (§12) ────────────────────────────────────────────────────────
 
 const wordRe = (w: string) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
+// Streets and inns read buildingName() (§11), so nothing here reads their data before a call.
 const BANNED = [...BUILDING_DATA.safeguards.banned, ...BUILDING_DATA.safeguards.religious].map(wordRe);
 const CHRISTIAN = BUILDING_DATA.safeguards.christian.map(wordRe);
 

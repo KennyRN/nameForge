@@ -43,6 +43,7 @@
     {"p": "{tradeSg} Street", "w": 6, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british", "general"], "t": ["plain"], "g": ["trade"]},
     {"p": "{mainStreet}", "w": 6, "g": ["mainStreet"]},
     {"p": "{direction} {sw}", "w": 6, "t": ["plain"]},
+    {"p": "{landmark} {sw}", "w": 4},
     {"p": "{direction}gate", "w": 4, "e": ["MD", "EM"], "c": ["anglo-saxon", "norse", "norman-british"], "rx": {"NTH": 3, "EMD": 3}},
     {"p": "{destination} Road", "w": 8, "t": ["plain"]},
     {"p": "{route}", "w": 4},
@@ -291,7 +292,8 @@
     "firstDistrict": {"default": "Old Town", "chinese": "Inner City", "japanese": "Castle Town", "steppe": "Golden Camp", "scifi": "Old Dome"},
     "scifiMainStreet": "Ring Road",
     "towns": 6,
-    "routeFrom": 8
+    "routeFrom": 8,
+    "landmarkOnceFrom": 8
   },
   "cap": 6,
   "safeguards": {

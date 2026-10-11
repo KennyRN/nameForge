@@ -40,6 +40,7 @@ import {
   type RouteEra,
 } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
+import { buildingName, type BuildingKind } from "../buildings/engine";
 import { breaksStreetWords, STREET_DATA } from "../streets/engine";
 
 // ── Data ────────────────────────────────────────────────────────────────────
@@ -150,6 +151,8 @@ export interface InnOptions {
   safeguards?: GroupSafeguards;
   /** RN §12: merged route safeguard lists, for `{route}`. */
   routeSafeguards?: GroupSafeguards;
+  /** Buildings brief §11: merged building safeguard lists, for `{landmark}`. */
+  landmarkSafeguards?: GroupSafeguards;
   vocab?: Vocabulary;
   /** Tests: only this shape. */
   shape?: string;
@@ -205,7 +208,6 @@ interface Ctx {
 type Word = { w: string; t: GroupTone[] };
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
 const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("light") || t.includes("grim"));
-const SURNAME_CULTURES = STREET_DATA.surnameCultures;
 const COLOURS = new Set([...groupListWords("colour", "FL").map(([w]) => w), "Black", "White", "Red", "Blue", "Green", "Golden", "Grey", "Silver", "Pied", "Copper"]);
 const BIRDS = new Set(groupListWords("bird", "FL").map(([w]) => w));
 
@@ -269,7 +271,7 @@ const person = (ctx: Ctx, keep?: (w: string) => boolean) => draw(ctx, "innPerson
 
 /** §6.2: `{owner}`: invented from the culture's names or GN surnames; undefined where neither exists. */
 function ownerNames(ctx: Ctx): string[] {
-  return [...personNames(ctx.culture.key), ...(SURNAME_CULTURES.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : [])];
+  return [...personNames(ctx.culture.key), ...(STREET_DATA.surnameCultures.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : [])];
 }
 
 /** §6.3: `{route}`: one route name, kind road, drove or trade, without "the". */
@@ -289,6 +291,30 @@ function route(ctx: Ctx): string | undefined {
   }).names[0];
   if (r) ctx.isRoute = true;
   return r?.text.replace(/^the /i, "");
+}
+
+/** Buildings brief §11.2: the landmark kinds for the location anchor, and for roadside houses. */
+export const INN_LANDMARK_KINDS: BuildingKind[] = ["defence", "crossing", "water", "monument"];
+export const INN_ROAD_LANDMARK_KINDS: BuildingKind[] = ["crossing", "monument"];
+
+/** Buildings brief §11.2: `{landmark}`: one building of 3 words or fewer, without "the". */
+function landmark(ctx: Ctx, kinds: BuildingKind[]): string | undefined {
+  const o = ctx.options;
+  const w = buildingName({
+    culture: ctx.culture.key,
+    era: ctx.era,
+    fantastic: ctx.fantastic,
+    region: ctx.region,
+    people: ctx.mode,
+    kinds,
+    rng: ctx.rng,
+    safeguards: o.landmarkSafeguards,
+    vocab: o.vocab,
+  });
+  if (!w) return undefined;
+  ctx.words.push({ pool: "landmark", word: w });
+  ctx.uses.push(`landmark:${w}`);
+  return w;
 }
 
 /** One token; `pl` asks for the plural (§10: "Two" birds may be "Brace of"). */
@@ -318,11 +344,15 @@ function token(ctx: Ctx, name: string): string | undefined {
       return names.length > 0 ? pickOne(names, rng) : undefined;
     }
     case "surname":
-      return placeholders || !SURNAME_CULTURES.includes(ctx.culture.key) ? "[surname]" : draw(ctx, "surname", gnItems(ctx, "surname"));
+      return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : draw(ctx, "surname", gnItems(ctx, "surname"));
     case "hw":
       return draw(ctx, `houseWord:${ctx.kind}`, merged(ctx, [vocabItems(ctx, `houseWord:${ctx.kind}`)]));
     case "route":
       return route(ctx);
+    case "landmark":
+      return landmark(ctx, INN_LANDMARK_KINDS);
+    case "roadLandmark":
+      return landmark(ctx, INN_ROAD_LANDMARK_KINDS);
     case "destination":
     case "town":
       return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng);

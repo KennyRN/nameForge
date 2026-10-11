@@ -39,6 +39,7 @@ import {
   type RouteCulture,
   type RouteEra,
 } from "../routes/engine";
+import { buildingName, type BuildingKind } from "../buildings/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 
 // ── Data ────────────────────────────────────────────────────────────────────
@@ -87,7 +88,7 @@ interface StreetData {
   route: { kinds: Record<string, number>; modern: Record<string, number> };
   surnameCultures: string[];
   dialect: { laneRegions: string[]; laneWords: string[]; laneShare: number; variantShare: number };
-  series: { mainMarket: Record<string, string>; firstDistrict: Record<string, string>; scifiMainStreet: string; towns: number; routeFrom: number };
+  series: { mainMarket: Record<string, string>; firstDistrict: Record<string, string>; scifiMainStreet: string; towns: number; routeFrom: number; landmarkOnceFrom: number };
   cap: number;
   safeguards: { block: string[]; flag: string[]; flagListBlocks: boolean; banned: string[]; religious: string[]; christian: string[] };
 }
@@ -142,6 +143,8 @@ export interface StreetOptions {
   safeguards?: GroupSafeguards;
   /** RN §12: the merged route safeguard lists, for `{route}`. */
   routeSafeguards?: GroupSafeguards;
+  /** Buildings brief §11: merged building safeguard lists, for `{landmark}`. */
+  landmarkSafeguards?: GroupSafeguards;
   /** RN §3.3: the pools merged with vocabulary packs. */
   vocab?: Vocabulary;
   /** Tests: only this shape. */
@@ -310,6 +313,30 @@ function destination(ctx: Ctx): string | undefined {
   return t;
 }
 
+/** Buildings brief §11.1: the landmark kinds a street is named after. */
+export const STREET_LANDMARK_KINDS: BuildingKind[] = ["defence", "faith", "crossing", "water", "monument"];
+
+/** Buildings brief §11.1: `{landmark}`: one building of 3 words or fewer, without "the"; in a series of 8
+ * or more, once. */
+function landmark(ctx: Ctx): string | undefined {
+  const o = ctx.options;
+  const w = buildingName({
+    culture: ctx.culture.key,
+    era: ctx.era,
+    fantastic: ctx.fantastic,
+    region: ctx.region,
+    people: ctx.mode,
+    kinds: STREET_LANDMARK_KINDS,
+    rng: ctx.rng,
+    safeguards: o.landmarkSafeguards,
+    vocab: o.vocab,
+  });
+  if (!w) return undefined;
+  ctx.words.push({ pool: "landmark", word: w });
+  if (o.series && o.count >= STREET_DATA.series.landmarkOnceFrom) ctx.uses.push("landmark");
+  return w;
+}
+
 const directionKey = (w: string) => w.replace(/ern$/, "");
 
 /** One token (§4, §5); `{sw}` and `{aw}` also give their dialect form, through `alt`. */
@@ -373,6 +400,8 @@ function token(ctx: Ctx, name: string, alt: (dialect: string) => void, pattern: 
     case "greek":
     case "star":
       return gnWord(ctx, name);
+    case "landmark":
+      return landmark(ctx);
     case "mainStreet": {
       // §10: a town has one main street.
       const w = vocabWord(ctx, name);

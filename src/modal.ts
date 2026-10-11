@@ -1982,6 +1982,7 @@ export class NameForgeModal extends Modal {
       seed: seedOverride,
       safeguards: guards.safeguards,
       routeSafeguards: routeGuards.safeguards,
+      landmarkSafeguards: (await this.loadSettlementSafeguards(BUILDING_DATA.safeguards)).safeguards,
       vocab: vocab.vocab,
     });
     this.currentSeed = result.seed;
@@ -2199,6 +2200,7 @@ export class NameForgeModal extends Modal {
       seed: seedOverride,
       safeguards: guards.safeguards,
       routeSafeguards: routeGuards.safeguards,
+      landmarkSafeguards: (await this.loadSettlementSafeguards(BUILDING_DATA.safeguards)).safeguards,
       vocab: vocab.vocab,
     });
     this.currentSeed = result.seed;

@@ -572,3 +572,10 @@ Run `npm test` and `npm run build` at the end of each; both must pass before com
 - Streets named after a world's own people and places (linking to a vault's notes).
 - House numbers and addresses.
 - More dialect words (Welsh, Scots Gaelic and Irish street words in English form) through vocabulary packs and a later research pass.
+
+
+---
+
+## Buildings back-link
+
+Added by the buildings and landmarks brief (§11.1): a street shape `{landmark} {streetWord}`, weight 4, all eras. `{landmark}` is one `buildingName()` of kind defence, faith, crossing, water or monument for the same culture, era, fantastic, region and people, without a leading "the" and only if it has 3 words or fewer (*Red Tower Lane*, *Saint Anne's Well Street*). It passes the building safeguards. In the one-town series, a batch of 8 or more uses `{landmark}` at most once.

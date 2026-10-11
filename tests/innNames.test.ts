@@ -246,3 +246,33 @@ test("§15.7: presets round-trip", () => {
   assert.equal(bad.inn?.innKind, "any");
   assert.deepEqual(bad.problems, ["Kind “bar” isn't offered in the early modern era.", "Unknown form “sign”."]);
 });
+
+// ── Buildings brief §11.3: landmark signs ───────────────────────────────────
+
+import { buildingWordBlocked } from "../src/buildings/engine";
+
+test("Buildings §11.3: {landmark} signs: at most 3 words before the house word, passing the building safeguards", () => {
+  let location = 0;
+  let road = 0;
+  for (let seed = 1; seed <= 60; seed++) {
+    for (const shape of ["the {landmark}", "the {roadLandmark} Inn"]) {
+      for (const n of generateInnNames({ culture: "norman-british", era: "EM", people: "invented", shape, count: 4, seed }).names) {
+        const lm = n.words.find((w) => w.pool === "landmark");
+        assert.ok(lm, n.text);
+        if (shape === "the {landmark}") location++;
+        else road++;
+        assert.ok(n.sign === `the ${lm!.word}` || n.sign === `the ${lm!.word} Inn`, n.text);
+        assert.ok(lm!.word.split(" ").length <= 3, n.text);
+        assert.ok(!buildingWordBlocked(lm!.word), n.text);
+      }
+    }
+  }
+  assert.ok(location > 50 && road > 50, `${location} ${road}`);
+});
+
+test("Buildings §11.2: the landmark is a fifth of location draws", () => {
+  const loc = INN_DATA.signs.find((a) => a.key === "location")!.shapes;
+  const total = loc.reduce((n, s) => n + s.w, 0);
+  assert.equal(loc.find((s) => s.p === "the {landmark}")!.w / total, 0.2);
+  assert.equal(INN_DATA.signs.find((a) => a.key === "roadside")!.shapes.find((s) => s.p === "the {roadLandmark} Inn")?.w, 3);
+});
