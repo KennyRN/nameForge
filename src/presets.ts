@@ -17,7 +17,7 @@ import {
 } from "./bynames/engine";
 import { namedForOffered, REALM_CHARACTERS, REALM_CULTURES, REALM_ERAS, type RealmLength, type RealmNamedFor, type RealmOutput } from "./realms/engine";
 import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
-import { findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
+import { findCommodity, findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
 
 export const TRIBAL_PRESET_MODULE = "tribal-names";
 
@@ -161,6 +161,8 @@ export interface GroupPreset {
   /** Tone brief §6.2: older presets without these keys load as "any" and false. */
   tone: GroupToneChoice;
   series: boolean;
+  /** Companies brief §10: trade family only; older presets without the key load as "any". */
+  commodity?: string;
 }
 
 function parseGroupPreset(values: Record<string, string>, body: string, fileName: string): { group?: GroupPreset; problems: string[] } {
@@ -190,6 +192,17 @@ function parseGroupPreset(values: Record<string, string>, body: string, fileName
     problems.push("Series needs a type.");
     series = false;
   }
+  const genre = pick<GroupGenre>("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
+  const fantastic = flag("fantastic");
+  // Companies brief §10: a commodity the preset's setting lacks runs as "any".
+  let commodity: string | undefined;
+  if (family.key === "trade") {
+    commodity = pick("commodity", "any", (v) => v === "any" || !!findCommodity(v));
+    if (commodity !== "any" && !findCommodity(commodity)!.settings.includes(groupSetting(genre, genre === "scifi" ? false : fantastic))) {
+      problems.push(`Commodity “${commodity}” isn't available here.`);
+      commodity = "any";
+    }
+  }
   return {
     group: {
       packName: values.packName || fileName,
@@ -198,13 +211,14 @@ function parseGroupPreset(values: Record<string, string>, body: string, fileName
       family: family.key,
       tradition: pick("tradition", "general", (v) => !!findTradition(v)),
       groupType,
-      genre: pick<GroupGenre>("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
-      fantastic: flag("fantastic"),
+      genre,
+      fantastic,
       form: pick<GroupForm>("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
       front: pick<GroupFront>("front", "say", (v) => ["say", "hide", "may"].includes(v)),
       people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
       series,
+      ...(commodity !== undefined ? { commodity } : {}),
     },
     problems,
   };
@@ -227,6 +241,7 @@ function groupPresetContent(preset: GroupPreset): string {
     `people: ${preset.people}`,
     `tone: ${preset.tone}`,
     `series: ${preset.series}`,
+    ...(preset.family === "trade" ? [`commodity: ${preset.commodity ?? "any"}`] : []),
     "---",
     "",
     preset.description.trim(),

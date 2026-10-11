@@ -696,3 +696,126 @@ test("companies: the trade family never says Territory, Dominion, Authority and 
     for (const n of names) for (const w of words) assert.ok(!hasWord(n.text, w), `${type.key}: ${n.text}`);
   }
 });
+
+// §12.5 Commodity
+
+import { findCommodity, GROUP_COMMODITIES } from "../src/groups/engine";
+
+const COMMODITY_TYPES = ["merchant", "chartered", "resource", "league", "industrial", "caravan"];
+const hasCommodityWord = (text: string, key: string) => findCommodity(key)!.words.some((e) => hasWord(text, e.w));
+
+test("companies sentence: the commodity link shows for Any and the types that deal in goods", () => {
+  assert.ok(fields("trade").includes("commodity"));
+  for (const t of TRADE.types) {
+    const state = { ...DEFAULT_GROUP_STATE, genre: "modern" as const, type: t.key };
+    assert.equal(fields("trade", state).includes("commodity"), COMMODITY_TYPES.includes(t.key), t.key);
+  }
+  assert.ok(!fields("martial").includes("commodity"));
+  const spice = chooseGroup({ ...DEFAULT_GROUP_STATE, type: "chartered" }, "commodity", "spice", TRADE);
+  assert.ok(groupSentenceText(groupSentence(spice, TRADE)).startsWith("General-themed chartered companies dealing in spices and dyes for a fantasy world"));
+  assert.equal(chooseGroup(spice, "genre", "scifi", TRADE).commodity, "any");
+  assert.equal(chooseGroup(spice, "type", "colonial", TRADE).commodity, "any");
+  assert.equal(chooseGroup(spice, "type", "merchant", TRADE).commodity, "spice");
+});
+
+test("companies: a commodity narrows {goods} and lifts the shapes that name goods", () => {
+  const names = Array.from({ length: 100 }, (_, i) => run({ family: "trade", type: "chartered", commodity: "spice" }, "FL", 20, 50 + i).names).flat();
+  assert.equal(names.length, 2000);
+  for (const n of names.filter((x) => x.shape.includes("{goods}"))) assert.ok(hasCommodityWord(n.text, "spice"), n.text);
+  assert.ok(names.filter((n) => hasCommodityWord(n.text, "spice")).length / names.length >= 0.3);
+  // Type Any draws only the types that deal in goods.
+  for (const s of ["FL", "MR", "SF"] as GroupSetting[]) {
+    const commodity = s === "SF" ? "ore" : "metals";
+    for (const n of run({ family: "trade", commodity }, s, 500, 51).names) assert.ok(COMMODITY_TYPES.includes(n.type), `${s}: ${n.type}`);
+  }
+  // Spices share nothing with resGoods: no shape that uses it.
+  for (const s of ["FL", "MR"] as GroupSetting[]) {
+    for (const n of run({ family: "trade", type: "resource", commodity: "spice" }, s, 300, 52).names) assert.ok(!/\{resGoods|\{mineLandPlace/.test(n.shape), n.shape);
+  }
+  const unavailable = run({ family: "trade", type: "chartered", commodity: "ice" }, "FL", 5, 53);
+  assert.ok(unavailable.notices.includes("Commodity “ice” isn't available here."));
+});
+
+test("companies: no commodity or goods list holds a word that is never a commodity", () => {
+  const never = /\b(people|slaves?|opium|ivory|sugar|tobacco|rubber)\b/i;
+  for (const c of GROUP_COMMODITIES) for (const e of c.words) assert.ok(!never.test(e.w), `${c.key}: ${e.w}`);
+  for (const list of ["goods", "resGoods", "resGoodsMetal", "regionQual"]) for (const e of GROUP_DATA.lists[list]) assert.ok(!never.test(e.w), `${list}: ${e.w}`);
+});
+
+// §12.6 Sister companies
+
+test("companies series: sister companies hold the compass word across types", () => {
+  let series = 0;
+  let mixed = 0;
+  for (let seed = 1; seed < 20000 && series < 200; seed++) {
+    const batch = run({ family: "trade", type: "chartered", series: true }, "FL", 5, seed);
+    if (batch.names[0]?.shape !== "{compass} {seaWord} {tradeActivity} Company") continue;
+    series++;
+    const compass = batch.names[0].text.split(" ")[0];
+    assert.equal(batch.names.length, 5);
+    for (const n of batch.names) assert.ok(hasWord(n.text, compass), `${n.text} lacks ${compass}`);
+    if (batch.names.some((n) => n.type !== "chartered")) mixed++;
+  }
+  assert.equal(series, 200);
+  assert.ok(mixed / series >= 0.25, `${mixed} of ${series}`);
+});
+
+test("companies series: with a town anchor every name holds the town", () => {
+  for (const type of TRADE.types) for (const s of type.settings) {
+    let found = 0;
+    for (let seed = 1; seed < 400 && found < 10; seed++) {
+      const batch = run({ family: "trade", type: type.key, series: true, people: "invented" }, s, 5, seed);
+      if (batch.names[0]?.series?.anchor !== "town") continue;
+      found++;
+      const town = batch.names[0].series.value!;
+      for (const n of batch.names) assert.ok(n.text.toLowerCase().includes(town.toLowerCase()), `${type.key} ${s}: ${n.text} lacks ${town}`);
+    }
+  }
+});
+
+// §12.7 Safeguards and presets
+
+test("companies: no block-list match or banned word in 5,000 names per new type", () => {
+  const norm = (s: string) => s.toLowerCase().replace(/^the /, "");
+  const block = new Set(GROUP_DATA.safeguards.block.map(norm));
+  const banned = [...TRIBAL_DATA.safeguards.banned, ...GROUP_DATA.safeguards.banned];
+  for (const type of NEW_TRADE_TYPES) {
+    const settings = TRADE_TYPE.get(type)!.settings;
+    const names = settings.flatMap((s, i) => run({ family: "trade", type, people: "invented" }, s, Math.ceil(5000 / settings.length), 60 + i).names);
+    for (const n of names) {
+      assert.ok(!block.has(norm(n.text)), n.text);
+      for (const b of banned) assert.ok(!hasWord(n.text.toLowerCase(), b.toLowerCase()), `${n.text}: ${b}`);
+    }
+  }
+});
+
+test("companies presets: commodity round trip, unavailable commodity, older presets", () => {
+  const preset = {
+    packName: "Metal Traders",
+    setting: "",
+    description: "x",
+    family: "trade",
+    tradition: "general",
+    groupType: "resource",
+    genre: "fantasy" as const,
+    fantastic: false,
+    form: "any" as const,
+    front: "say" as const,
+    people: "placeholders" as const,
+    tone: "any" as const,
+    series: false,
+    commodity: "metals",
+  };
+  const parsed = parseModulePreset(modulePresetContent(preset), "x");
+  assert.deepEqual(parsed.problems, []);
+  assert.deepEqual(parsed.group, preset);
+  const ice = parseModulePreset(modulePresetContent({ ...preset, commodity: "ice" }), "x");
+  assert.deepEqual(ice.problems, ["Commodity “ice” isn't available here."]);
+  assert.equal(ice.group!.commodity, "any");
+  const older = parseModulePreset("---\ntype: module-preset\nmodule: group-names\nfamily: trade\n---\n", "P");
+  assert.deepEqual(older.problems, []);
+  assert.equal(older.group!.commodity, "any");
+  // Read only for the trade family.
+  const martial = parseModulePreset("---\ntype: module-preset\nmodule: group-names\nfamily: martial\ncommodity: metals\n---\n", "P");
+  assert.equal(martial.group!.commodity, undefined);
+});

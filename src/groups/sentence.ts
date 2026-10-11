@@ -6,6 +6,7 @@
 import { TRIBAL_TRADITIONS } from "../tribes/engine";
 import {
   canFront,
+  commoditiesInSetting,
   type GroupFamily,
   type GroupForm,
   type GroupFront,
@@ -31,9 +32,11 @@ export interface GroupSentenceState {
   /** Tone brief §5: the tone, and whether one press gives one related set. */
   tone: GroupToneChoice;
   series: boolean;
+  /** Companies brief §5.1: "any" or a commodity group key (trade family only). */
+  commodity: string;
 }
 
-export type GroupField = "tradition" | "type" | "genre" | "fantastic" | "form" | "tone" | "front" | "people" | "series";
+export type GroupField = "commodity" | "tradition" | "type" | "genre" | "fantastic" | "form" | "tone" | "front" | "people" | "series";
 
 export interface GroupChoice {
   id: string | undefined;
@@ -51,6 +54,7 @@ export const DEFAULT_GROUP_STATE: GroupSentenceState = {
   people: "placeholders",
   tone: "any",
   series: false,
+  commodity: "any",
 };
 
 export const GENRE_TEXT: Record<GroupGenre, string> = { fantasy: "fantasy", modern: "modern", scifi: "science fiction" };
@@ -73,6 +77,18 @@ export function showsFront(state: GroupSentenceState, family: GroupFamily): bool
 /** §2.2: the front the engine uses: "say" whenever the front link is hidden. */
 export function effectiveFront(state: GroupSentenceState, family: GroupFamily): GroupFront {
   return showsFront(state, family) ? state.front : "say";
+}
+
+/** Companies brief §5.1: the commodity link shows for the trade family with type Any or a type that deals in goods. */
+export function showsCommodity(state: GroupSentenceState, family: GroupFamily): boolean {
+  if (family.key !== "trade") return false;
+  const type = typesInSetting(family, groupSetting(state.genre, state.fantastic)).find((t) => t.key === state.type);
+  return !type || !!type.commodity;
+}
+
+/** Companies brief §5.1: the commodity the engine uses: anything whenever the link is hidden. */
+export function effectiveCommodity(state: GroupSentenceState, family: GroupFamily): string {
+  return showsCommodity(state, family) ? state.commodity : "any";
 }
 
 /** §2.4: supernatural courts offer fantasy and modern only. */
@@ -99,6 +115,18 @@ export function groupSentence(state: GroupSentenceState, family: GroupFamily): G
     choices: [{ id: undefined, label: "Any" }, ...available.map((t) => ({ id: t.key, label: t.menu }))],
     current: type?.key,
   });
+  if (showsCommodity(state, family)) {
+    const groups = commoditiesInSetting(setting);
+    const group = groups.find((c) => c.key === state.commodity);
+    out.push(" dealing in ");
+    out.push({
+      field: "commodity",
+      text: group ? group.label : "anything",
+      title: "What the company trades in: shapes its names where a shape names goods",
+      choices: [{ id: "any", label: "anything" }, ...groups.map((c) => ({ id: c.key, label: c.label }))],
+      current: group ? group.key : "any",
+    });
+  }
   out.push(" for a ");
   out.push({
     field: "genre",
@@ -209,12 +237,20 @@ export function chooseGroup(state: GroupSentenceState, field: GroupField, id: st
     case "series":
       next.series = id === "on";
       break;
+    case "commodity":
+      next.commodity = id ?? "any";
+      break;
   }
   // Genre or fantastic changed: a type the new setting lacks resets to Any.
   const available = typesInSetting(family, groupSetting(next.genre, next.fantastic));
   if (next.type && !available.some((t) => t.key === next.type)) next = { ...next, type: undefined };
   // Type changed: a type that can't take a front resets the front to "say".
   if (field === "type" && next.type && !showsFront(next, family)) next = { ...next, front: "say" };
+  // Companies brief §5.1: a type without commodities, or a setting without the group, resets it to anything.
+  if (next.commodity !== "any") {
+    const offered = commoditiesInSetting(groupSetting(next.genre, next.fantastic)).some((c) => c.key === next.commodity);
+    if (!offered || !showsCommodity(next, family)) next = { ...next, commodity: "any" };
+  }
   // Tone brief §5.3: with type Any, series is off.
   if (!next.type && next.series) next = { ...next, series: false };
   return next;
@@ -231,6 +267,7 @@ export function groupPresetState(preset: {
   people: GroupPeople;
   tone: GroupToneChoice;
   series: boolean;
+  commodity?: string;
 }): GroupSentenceState {
   return {
     tradition: preset.tradition,
@@ -242,5 +279,6 @@ export function groupPresetState(preset: {
     people: preset.people,
     tone: preset.tone,
     series: preset.groupType !== "any" && preset.series,
+    commodity: preset.commodity ?? "any",
   };
 }

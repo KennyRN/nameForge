@@ -54292,7 +54292,371 @@ var group_names_default = {
         w: 1
       }
     ]
-  }
+  },
+  commodities: [
+    {
+      key: "spice",
+      label: "spices and dyes",
+      settings: [
+        "FL",
+        "FH",
+        "MR",
+        "MF"
+      ],
+      words: [
+        {
+          w: "Spice",
+          x: 3
+        },
+        {
+          w: "Pepper"
+        },
+        {
+          w: "Cinnamon"
+        },
+        {
+          w: "Cloves"
+        },
+        {
+          w: "Nutmeg"
+        },
+        {
+          w: "Saffron"
+        },
+        {
+          w: "Indigo"
+        }
+      ]
+    },
+    {
+      key: "cloth",
+      label: "cloth and silk",
+      settings: [
+        "FL",
+        "FH",
+        "MR",
+        "MF"
+      ],
+      words: [
+        {
+          w: "Silk",
+          x: 2
+        },
+        {
+          w: "Wool",
+          x: 2
+        },
+        {
+          w: "Cloth"
+        },
+        {
+          w: "Cotton"
+        },
+        {
+          w: "Linen"
+        }
+      ]
+    },
+    {
+      key: "furs",
+      label: "furs and timber",
+      settings: [
+        "FL",
+        "FH",
+        "MR",
+        "MF"
+      ],
+      words: [
+        {
+          w: "Furs",
+          x: 2
+        },
+        {
+          w: "Timber",
+          x: 2
+        },
+        {
+          w: "Hides"
+        }
+      ]
+    },
+    {
+      key: "metals",
+      label: "metals",
+      settings: [
+        "FL",
+        "FH",
+        "MR",
+        "MF"
+      ],
+      words: [
+        {
+          w: "Iron",
+          x: 2
+        },
+        {
+          w: "Copper",
+          x: 2
+        },
+        {
+          w: "Tin"
+        },
+        {
+          w: "Lead"
+        }
+      ]
+    },
+    {
+      key: "precious",
+      label: "gold, silver and gems",
+      settings: [
+        "FL",
+        "FH",
+        "MR",
+        "MF"
+      ],
+      words: [
+        {
+          w: "Gold"
+        },
+        {
+          w: "Silver",
+          x: 2
+        },
+        {
+          w: "Pearls"
+        },
+        {
+          w: "Amber"
+        },
+        {
+          w: "Jade"
+        }
+      ]
+    },
+    {
+      key: "food",
+      label: "grain, salt and fish",
+      settings: [
+        "FL",
+        "FH",
+        "MR",
+        "MF"
+      ],
+      words: [
+        {
+          w: "Grain",
+          x: 2
+        },
+        {
+          w: "Salt",
+          x: 2
+        },
+        {
+          w: "Fish"
+        },
+        {
+          w: "Herring"
+        },
+        {
+          w: "Wheat"
+        }
+      ]
+    },
+    {
+      key: "drink",
+      label: "wine, tea and coffee",
+      settings: [
+        "FL",
+        "FH",
+        "MR",
+        "MF"
+      ],
+      words: [
+        {
+          w: "Wine",
+          x: 2
+        },
+        {
+          w: "Tea",
+          x: 2
+        },
+        {
+          w: "Coffee"
+        },
+        {
+          w: "Brandy"
+        }
+      ]
+    },
+    {
+      key: "livestock",
+      label: "horses and cattle",
+      settings: [
+        "FL",
+        "FH",
+        "MR",
+        "MF"
+      ],
+      words: [
+        {
+          w: "Horses",
+          x: 2
+        },
+        {
+          w: "Cattle"
+        },
+        {
+          w: "Mules"
+        },
+        {
+          w: "Camels"
+        }
+      ]
+    },
+    {
+      key: "fuel",
+      label: "coal and oil",
+      settings: [
+        "FL",
+        "FH",
+        "MR",
+        "MF"
+      ],
+      words: [
+        {
+          w: "Coal",
+          x: 2,
+          s: [
+            "FL",
+            "FH",
+            "MR",
+            "MF"
+          ],
+          sx: {
+            FL: 0.3,
+            FH: 0.3
+          }
+        },
+        {
+          w: "Oil",
+          s: [
+            "MR",
+            "MF"
+          ]
+        },
+        {
+          w: "Petroleum",
+          s: [
+            "MR",
+            "MF"
+          ]
+        },
+        {
+          w: "Gas",
+          s: [
+            "MR",
+            "MF"
+          ]
+        }
+      ]
+    },
+    {
+      key: "ore",
+      label: "ores and alloys",
+      settings: [
+        "SF"
+      ],
+      words: [
+        {
+          w: "Ore",
+          x: 2
+        },
+        {
+          w: "Alloys"
+        },
+        {
+          w: "Iron"
+        },
+        {
+          w: "Rare Earths"
+        },
+        {
+          w: "Crystal"
+        }
+      ]
+    },
+    {
+      key: "ice",
+      label: "ice and water",
+      settings: [
+        "SF"
+      ],
+      words: [
+        {
+          w: "Ice",
+          x: 2
+        },
+        {
+          w: "Water"
+        }
+      ]
+    },
+    {
+      key: "energy",
+      label: "fuel and energy",
+      settings: [
+        "SF"
+      ],
+      words: [
+        {
+          w: "Fuel"
+        },
+        {
+          w: "Helium"
+        },
+        {
+          w: "Deuterium"
+        }
+      ]
+    },
+    {
+      key: "data",
+      label: "data",
+      settings: [
+        "SF"
+      ],
+      words: [
+        {
+          w: "Data"
+        }
+      ]
+    },
+    {
+      key: "salvage",
+      label: "salvage",
+      settings: [
+        "SF"
+      ],
+      words: [
+        {
+          w: "Salvage"
+        }
+      ]
+    },
+    {
+      key: "medicine",
+      label: "medicines",
+      settings: [
+        "SF"
+      ],
+      words: [
+        {
+          w: "Medicines"
+        }
+      ]
+    }
+  ]
 };
 
 // src/data/world-place-names.json
@@ -55733,6 +56097,15 @@ function worldHistoryLabel(base, cultureId, eraId) {
 var GROUP_DATA = group_names_default;
 var GROUP_FAMILIES = GROUP_DATA.families;
 var SETTING_PHRASES = GROUP_DATA.settings.phrases;
+var GROUP_COMMODITIES = GROUP_DATA.commodities;
+function commoditiesInSetting(setting) {
+  return GROUP_COMMODITIES.filter((c) => c.settings.includes(setting));
+}
+function findCommodity(key2) {
+  return GROUP_COMMODITIES.find((c) => c.key === key2);
+}
+var GOODS_LISTS = ["goods", "resGoods", "resGoodsMetal"];
+var RESOURCE_COMMODITIES = /* @__PURE__ */ new Set(["metals", "precious", "fuel", "ore", "ice", "energy"]);
 var GROUP_TAGS = {
   H: ["FH", "MF"],
   P: ["FL", "FH"],
@@ -55910,7 +56283,7 @@ function listTag(name) {
   return first;
 }
 function pool(ctx, name, type, filter) {
-  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
+  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r;
   const key2 = `${name}|${type.key}|${(_a2 = filter == null ? void 0 : filter.join(",")) != null ? _a2 : ""}|${ctx.tone}`;
   const cached = ctx.pools.get(key2);
   if (cached) return cached;
@@ -55956,10 +56329,20 @@ function pool(ctx, name, type, filter) {
       }
     }
   }
+  if (ctx.commodity && GOODS_LISTS.includes(name)) {
+    const own = /* @__PURE__ */ new Map();
+    for (const e of ctx.commodity.words) {
+      if (!e.s || e.s.includes(S)) own.set(e.w, ((_n = own.get(e.w)) != null ? _n : 0) + ((_o = e.x) != null ? _o : 1) * ((_q = (_p = e.sx) == null ? void 0 : _p[S]) != null ? _q : 1));
+    }
+    if (name === "goods") {
+      weights.clear();
+      for (const [word, w] of own) weights.set(word, w);
+    } else for (const word of [...weights.keys()]) if (!own.has(word)) weights.delete(word);
+  }
   if (ctx.tone !== "any" && !UNTONED_LISTS.has(name)) {
     for (const [word, w] of weights) weights.set(word, w * toneFactor(wordTones(name, word), ctx.tone));
   }
-  const keep = filter != null ? filter : (_n = type.listFilter) == null ? void 0 : _n[name];
+  const keep = filter != null ? filter : (_r = type.listFilter) == null ? void 0 : _r[name];
   const out = [...weights].filter(([w, n]) => n > 0 && (!keep || keep.includes(w)));
   ctx.pools.set(key2, out);
   return out;
@@ -56220,7 +56603,31 @@ function shapeWeight(ctx, shape) {
   }
   const trad = ctx.vocab ? (_d = (_c = GROUP_DATA.traditions.shapeMultipliers[ctx.vocab.key]) == null ? void 0 : _c[shape.p]) != null ? _d : 1 : 1;
   const tone = ctx.tone === "any" ? 1 : toneFactor(shapeTones(shape), ctx.tone);
-  return shape.w * ((_f = (_e = shape.sx) == null ? void 0 : _e[ctx.setting]) != null ? _f : 1) * trad * tone;
+  const commodity = ctx.commodity ? commodityFactor(ctx, shape) : 1;
+  return shape.w * ((_f = (_e = shape.sx) == null ? void 0 : _e[ctx.setting]) != null ? _f : 1) * trad * tone * commodity;
+}
+function deepTokens(pattern) {
+  return [...pattern.matchAll(/\{([^}]+)\}/g)].flatMap(
+    (m) => m[1].split(":")[0].split("/").flatMap((name) => {
+      var _a2;
+      return [name, ...((_a2 = GROUP_DATA.patterns[name]) != null ? _a2 : []).flatMap((p) => deepTokens(p.p))];
+    })
+  );
+}
+function commodityFactor(ctx, shape) {
+  var _a2;
+  const cache = (_a2 = ctx.commodityFactors) != null ? _a2 : ctx.commodityFactors = /* @__PURE__ */ new Map();
+  const found = cache.get(shape.p);
+  if (found !== void 0) return found;
+  const lists = new Set(deepTokens(shape.p).filter((t) => GOODS_LISTS.includes(t)));
+  let factor = lists.size > 0 ? 4 : 1;
+  const own = new Set(ctx.commodity.words.filter((e) => !e.s || e.s.includes(ctx.setting)).map((e) => e.w));
+  for (const list of lists) {
+    if (list === "goods") continue;
+    if (!GROUP_DATA.lists[list].some((e) => (!e.s || e.s.includes(ctx.setting)) && own.has(e.w))) factor = 0;
+  }
+  cache.set(shape.p, factor);
+  return factor;
 }
 function byForm(ctx, shapes) {
   const live = shapes.map((s) => [s, shapeWeight(ctx, s)]).filter(([, w]) => w > 0);
@@ -56334,7 +56741,8 @@ function oneName(ctx, options, chosen, types) {
   return void 0;
 }
 var COUNTERS = /* @__PURE__ */ new Set(["ordinal", "ordinalWord", "greek"]);
-var OWNERS = /* @__PURE__ */ new Set(["town", "surname", "house", "brandRoot", "star"]);
+var OWNERS = /* @__PURE__ */ new Set(["town", "surname", "house", "brandRoot", "star", "commRegion", "sfRegion"]);
+var TRADE_ANCHORS = ["commRegion", "compass", "sfRegion", "town", "surname", "house", "brandRoot"];
 var NEVER_ANCHORS = /* @__PURE__ */ new Set(["person", "holy", "initials"]);
 var PLACEHOLDER_TOKENS = /* @__PURE__ */ new Set(["person", "holy", "town", "surname", "house"]);
 var kindOf = (name) => COUNTERS.has(name) ? "counter" : OWNERS.has(name) ? "owner" : NEVER_ANCHORS.has(name) ? "never" : "list";
@@ -56403,6 +56811,11 @@ function generateSeries(ctx, type, frontChoice, count, toneChoice) {
   let anchorAt = -1;
   const sa = first.shape.sa;
   if (sa) anchorAt = rec.findIndex((r) => r.name === sa && !isPlaceholder(r));
+  const trade = ctx.family.key === "trade";
+  for (const name of trade ? TRADE_ANCHORS : []) {
+    if (anchorAt >= 0) break;
+    anchorAt = rec.findIndex((r) => r.name === name && !isPlaceholder(r));
+  }
   if (anchorAt < 0) anchorAt = rec.findIndex((r) => kindOf(r.name) === "owner" && !isPlaceholder(r));
   const listAt = rec.map((r, i) => kindOf(r.name) === "list" ? i : -1).filter((i) => i >= 0);
   if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
@@ -56415,9 +56828,28 @@ function generateSeries(ctx, type, frontChoice, count, toneChoice) {
   const fill = (draw) => {
     for (let idle = 0; idle < 20 && names.length < count; ) idle = add2(draw(), info) ? 0 : idle + 1;
   };
+  const hasToken = (sh) => !!anchor && [...sh.p.matchAll(/\{([^}]+)\}/g)].some((m) => m[1].split(":")[0].split("/").includes(anchor.name));
+  if (trade && anchor) {
+    const sisters = [];
+    for (const t of typesInSetting(ctx.family, ctx.setting)) {
+      for (const sh of plainShapes(ctx, t)) {
+        const w = hasToken(sh) ? shapeWeight(ctx, sh) * (t.key === type.key ? 3 : 1) : 0;
+        if (w > 0) sisters.push([{ shape: sh, type: t }, w]);
+      }
+    }
+    const wanted = ctx.form === "formal" ? ["F", "B"] : ctx.form === "everyday" ? ["E", "B"] : ["F", "E", "B"];
+    const matching = sisters.filter(([x]) => wanted.includes(x.shape.f));
+    const pool4 = matching.length > 0 ? matching : sisters;
+    if (pool4.length > 0) {
+      fill(() => {
+        const { shape, type: from } = pickWeighted5(pool4, ctx.rng);
+        return renderShape(ctx, from, from, shape, false, { byName: anchor });
+      });
+      return { names, seriesTone };
+    }
+  }
   fill(() => renderShape(ctx, type, first.listType, first.shape, first.name.front, { byIndex: hold }));
   if (!anchor || names.length >= count) return { names, seriesTone };
-  const hasToken = (sh) => [...sh.p.matchAll(/\{([^}]+)\}/g)].some((m) => m[1].split(":")[0].split("/").includes(anchor.name));
   const plain = plainShapes(ctx, type).filter((sh) => sh.p !== first.shape.p && hasToken(sh));
   const fronts = frontChoice !== "say" && canFront(type) ? frontShapes(type).filter((sh) => sh.p !== first.shape.p && hasToken(sh)) : [];
   const pool3 = byForm(ctx, [...plain, ...fronts]);
@@ -56462,6 +56894,12 @@ function generateGroupNames(options) {
   if (options.type && !chosen) {
     notices.push(`\u201C${options.type}\u201D isn't available in ${SETTING_PHRASES[setting]}; using any type.`);
   }
+  const wantsCommodity = options.commodity && options.commodity !== "any" && family.key === "trade" && (!chosen || chosen.commodity);
+  if (wantsCommodity) {
+    const commodity = findCommodity(options.commodity);
+    if (commodity && commodity.settings.includes(setting)) ctx.commodity = commodity;
+    else notices.push(`Commodity \u201C${options.commodity}\u201D isn't available here.`);
+  }
   const front = (_g = options.front) != null ? _g : "say";
   const typeWeight = (t) => {
     var _a3, _b2;
@@ -56469,7 +56907,9 @@ function generateGroupNames(options) {
   };
   let candidates = available.filter((t) => front !== "hide" || canFront(t));
   if (candidates.length === 0) candidates = available;
-  const types = candidates.map((t) => [t, typeWeight(t)]);
+  if (ctx.commodity) candidates = candidates.filter((t) => t.commodity);
+  const resourceBoost = ctx.commodity && RESOURCE_COMMODITIES.has(ctx.commodity.key) ? 3 : 1;
+  const types = candidates.map((t) => [t, typeWeight(t) * (t.key === "resource" ? resourceBoost : 1)]);
   const count = Math.max(0, Math.floor(options.count));
   if (options.series && chosen) {
     const series = generateSeries(ctx, chosen, front, count, (_h = options.tone) != null ? _h : "any");
@@ -56509,7 +56949,8 @@ var DEFAULT_GROUP_STATE = {
   front: "say",
   people: "placeholders",
   tone: "any",
-  series: false
+  series: false,
+  commodity: "any"
 };
 var GENRE_TEXT = { fantasy: "fantasy", modern: "modern", scifi: "science fiction" };
 var FANTASTIC_TEXT = {
@@ -56527,6 +56968,14 @@ function showsFront(state, family) {
 }
 function effectiveFront(state, family) {
   return showsFront(state, family) ? state.front : "say";
+}
+function showsCommodity(state, family) {
+  if (family.key !== "trade") return false;
+  const type = typesInSetting(family, groupSetting(state.genre, state.fantastic)).find((t) => t.key === state.type);
+  return !type || !!type.commodity;
+}
+function effectiveCommodity(state, family) {
+  return showsCommodity(state, family) ? state.commodity : "any";
 }
 var genresFor = (family) => family.key === "supernatural" ? ["fantasy", "modern"] : ["fantasy", "modern", "scifi"];
 function groupSentence(state, family) {
@@ -56551,6 +57000,18 @@ function groupSentence(state, family) {
     choices: [{ id: void 0, label: "Any" }, ...available.map((t) => ({ id: t.key, label: t.menu }))],
     current: type == null ? void 0 : type.key
   });
+  if (showsCommodity(state, family)) {
+    const groups = commoditiesInSetting(setting);
+    const group = groups.find((c) => c.key === state.commodity);
+    out.push(" dealing in ");
+    out.push({
+      field: "commodity",
+      text: group ? group.label : "anything",
+      title: "What the company trades in: shapes its names where a shape names goods",
+      choices: [{ id: "any", label: "anything" }, ...groups.map((c) => ({ id: c.key, label: c.label }))],
+      current: group ? group.key : "any"
+    });
+  }
   out.push(" for a ");
   out.push({
     field: "genre",
@@ -56654,14 +57115,22 @@ function chooseGroup(state, field, id, family) {
     case "series":
       next.series = id === "on";
       break;
+    case "commodity":
+      next.commodity = id != null ? id : "any";
+      break;
   }
   const available = typesInSetting(family, groupSetting(next.genre, next.fantastic));
   if (next.type && !available.some((t) => t.key === next.type)) next = { ...next, type: void 0 };
   if (field === "type" && next.type && !showsFront(next, family)) next = { ...next, front: "say" };
+  if (next.commodity !== "any") {
+    const offered = commoditiesInSetting(groupSetting(next.genre, next.fantastic)).some((c) => c.key === next.commodity);
+    if (!offered || !showsCommodity(next, family)) next = { ...next, commodity: "any" };
+  }
   if (!next.type && next.series) next = { ...next, series: false };
   return next;
 }
 function groupPresetState(preset) {
+  var _a2;
   return {
     tradition: preset.tradition,
     type: preset.groupType === "any" ? void 0 : preset.groupType,
@@ -56671,7 +57140,8 @@ function groupPresetState(preset) {
     front: preset.front,
     people: preset.people,
     tone: preset.tone,
-    series: preset.groupType !== "any" && preset.series
+    series: preset.groupType !== "any" && preset.series,
+    commodity: (_a2 = preset.commodity) != null ? _a2 : "any"
   };
 }
 
@@ -75425,6 +75895,16 @@ function parseGroupPreset(values, body, fileName) {
     problems.push("Series needs a type.");
     series = false;
   }
+  const genre = pick4("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
+  const fantastic = flag("fantastic");
+  let commodity;
+  if (family.key === "trade") {
+    commodity = pick4("commodity", "any", (v) => v === "any" || !!findCommodity(v));
+    if (commodity !== "any" && !findCommodity(commodity).settings.includes(groupSetting(genre, genre === "scifi" ? false : fantastic))) {
+      problems.push(`Commodity \u201C${commodity}\u201D isn't available here.`);
+      commodity = "any";
+    }
+  }
   return {
     group: {
       packName: values.packName || fileName,
@@ -75433,18 +75913,20 @@ function parseGroupPreset(values, body, fileName) {
       family: family.key,
       tradition: pick4("tradition", "general", (v) => !!findTradition(v)),
       groupType,
-      genre: pick4("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
-      fantastic: flag("fantastic"),
+      genre,
+      fantastic,
       form: pick4("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
       front: pick4("front", "say", (v) => ["say", "hide", "may"].includes(v)),
       people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
       tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      series
+      series,
+      ...commodity !== void 0 ? { commodity } : {}
     },
     problems
   };
 }
 function groupPresetContent(preset) {
+  var _a2;
   return [
     "---",
     "type: module-preset",
@@ -75461,6 +75943,7 @@ function groupPresetContent(preset) {
     `people: ${preset.people}`,
     `tone: ${preset.tone}`,
     `series: ${preset.series}`,
+    ...preset.family === "trade" ? [`commodity: ${(_a2 = preset.commodity) != null ? _a2 : "any"}`] : [],
     "---",
     "",
     preset.description.trim(),
@@ -81367,7 +81850,8 @@ ${text}
         front: effectiveFront(state, family),
         people: state.people,
         tone: state.tone,
-        series: !!state.type && state.series
+        series: !!state.type && state.series,
+        ...family.key === "trade" ? { commodity: effectiveCommodity(state, family) } : {}
       });
       return this.writePreset(presetName, content, (existing) => {
         var _a4;
@@ -81449,6 +81933,7 @@ ${text}
         // Tone brief §4: series needs a type; the sentence hides it otherwise.
         tone: state.tone,
         series: !!state.type && state.series,
+        commodity: effectiveCommodity(state, family),
         count: this.generationCount,
         seed: seedOverride,
         safeguards: guards.safeguards

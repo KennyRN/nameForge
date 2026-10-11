@@ -67,6 +67,14 @@ export interface GroupType {
   commodity?: boolean;
 }
 
+/** Companies brief §5.2: what a trading company deals in. */
+export interface GroupCommodity {
+  key: string;
+  label: string;
+  settings: GroupSetting[];
+  words: GroupEntry[];
+}
+
 export interface GroupFamily {
   key: string;
   section: string;
@@ -86,6 +94,7 @@ interface GroupData {
   composites: Record<string, [string, number][]>;
   /** Companies brief §3.1, §4.3: tokens rendered from one of weighted patterns ("{regionQual} {coastWord}"). */
   patterns: Record<string, { p: string; w: number; s?: GroupSetting[] }[]>;
+  commodities: GroupCommodity[];
   nickname: { p: string; w: number }[];
   traditions: {
     signatures: Record<string, Record<string, (string | [string, string])[]>>;
@@ -108,6 +117,20 @@ export const GROUP_DATA = groupData as unknown as GroupData;
 export const GROUP_FAMILIES = GROUP_DATA.families;
 export const GROUP_SETTINGS: GroupSetting[] = ["FL", "FH", "MR", "MF", "SF"];
 export const SETTING_PHRASES = GROUP_DATA.settings.phrases;
+export const GROUP_COMMODITIES = GROUP_DATA.commodities;
+
+/** Companies brief §5.2: the commodity groups offered in a setting, in order. */
+export function commoditiesInSetting(setting: GroupSetting): GroupCommodity[] {
+  return GROUP_COMMODITIES.filter((c) => c.settings.includes(setting));
+}
+
+export function findCommodity(key: string): GroupCommodity | undefined {
+  return GROUP_COMMODITIES.find((c) => c.key === key);
+}
+
+/** Companies brief §5.3: the lists a commodity narrows, and the groups that favour resource companies. */
+const GOODS_LISTS = ["goods", "resGoods", "resGoodsMetal"];
+const RESOURCE_COMMODITIES = new Set(["metals", "precious", "fuel", "ore", "ice", "energy"]);
 
 /** §3.2: the tag codes. */
 export const GROUP_TAGS: Record<string, GroupSetting[]> = {
@@ -320,6 +343,8 @@ export interface GroupOptions {
   tone?: GroupToneChoice;
   /** Tone brief §3, §4: one related set instead of separate names; needs a type. */
   series?: boolean;
+  /** Companies brief §5: the trade family's commodity group; "any" (the default) changes nothing. */
+  commodity?: string;
 }
 
 /** Tone brief §3.7: how a name sits in its series. */
@@ -365,6 +390,9 @@ interface Ctx {
   /** Tone brief §2: the tone for this draw, and the tones of the words drawn so far. */
   tone: GroupToneChoice;
   drawn: Set<GroupTone>;
+  /** Companies brief §5.3: the commodity group, and each shape's commodity factor. */
+  commodity?: GroupCommodity;
+  commodityFactors?: Map<string, number>;
 }
 
 export const pickWeighted = <T>(items: [T, number][], rng: () => number): T | undefined => {
@@ -434,6 +462,17 @@ function pool(ctx: Ctx, name: string, type: GroupType, filter?: string[]): [stri
         for (const word of [s.word, groupPlural(s.word)]) if (weights.has(word)) weights.set(word, weights.get(word)! * s.mult);
       }
     }
+  }
+  // Companies brief §5.3: {goods} draws only the commodity's words; {resGoods} only those it shares.
+  if (ctx.commodity && GOODS_LISTS.includes(name)) {
+    const own = new Map<string, number>();
+    for (const e of ctx.commodity.words) {
+      if (!e.s || e.s.includes(S)) own.set(e.w, (own.get(e.w) ?? 0) + (e.x ?? 1) * (e.sx?.[S] ?? 1));
+    }
+    if (name === "goods") {
+      weights.clear();
+      for (const [word, w] of own) weights.set(word, w);
+    } else for (const word of [...weights.keys()]) if (!own.has(word)) weights.delete(word);
   }
   // Tone brief §2.4: the word factor; tone Any leaves the weights untouched.
   if (ctx.tone !== "any" && !UNTONED_LISTS.has(name)) {
@@ -755,7 +794,31 @@ function shapeWeight(ctx: Ctx, shape: GroupShape): number {
   const trad = ctx.vocab ? GROUP_DATA.traditions.shapeMultipliers[ctx.vocab.key]?.[shape.p] ?? 1 : 1;
   // Tone brief §2.4: the shape factor; tone Any multiplies by nothing.
   const tone = ctx.tone === "any" ? 1 : toneFactor(shapeTones(shape), ctx.tone);
-  return shape.w * (shape.sx?.[ctx.setting] ?? 1) * trad * tone;
+  const commodity = ctx.commodity ? commodityFactor(ctx, shape) : 1;
+  return shape.w * (shape.sx?.[ctx.setting] ?? 1) * trad * tone * commodity;
+}
+
+/** A shape's tokens, with pattern tokens ({mineLandPlace}) opened up. */
+function deepTokens(pattern: string): string[] {
+  return [...pattern.matchAll(/\{([^}]+)\}/g)].flatMap((m) =>
+    m[1].split(":")[0].split("/").flatMap((name) => [name, ...(GROUP_DATA.patterns[name] ?? []).flatMap((p) => deepTokens(p.p))]),
+  );
+}
+
+/** Companies brief §5.3: ×4 for a shape that names goods; 0 when a goods list has none of the commodity's words here. */
+function commodityFactor(ctx: Ctx, shape: GroupShape): number {
+  const cache = (ctx.commodityFactors ??= new Map());
+  const found = cache.get(shape.p);
+  if (found !== undefined) return found;
+  const lists = new Set(deepTokens(shape.p).filter((t) => GOODS_LISTS.includes(t)));
+  let factor = lists.size > 0 ? 4 : 1;
+  const own = new Set(ctx.commodity!.words.filter((e) => !e.s || e.s.includes(ctx.setting)).map((e) => e.w));
+  for (const list of lists) {
+    if (list === "goods") continue;
+    if (!GROUP_DATA.lists[list].some((e) => (!e.s || e.s.includes(ctx.setting)) && own.has(e.w))) factor = 0;
+  }
+  cache.set(shape.p, factor);
+  return factor;
 }
 
 /** §10: shapes for the chosen form, falling back to all of them when the form has none. */
@@ -896,7 +959,10 @@ function oneName(ctx: Ctx, options: Required<Pick<GroupOptions, "front">>, chose
 // ── Series (Tone brief §3) ──────────────────────────────────────────────────
 
 const COUNTERS = new Set(["ordinal", "ordinalWord", "greek"]);
-const OWNERS = new Set(["town", "surname", "house", "brandRoot", "star"]);
+// Companies brief §4.7: the trade family's composite territories count as owners.
+const OWNERS = new Set(["town", "surname", "house", "brandRoot", "star", "commRegion", "sfRegion"]);
+/** Companies brief §6: the trade family's anchor order after a shape's own `sa`. */
+const TRADE_ANCHORS = ["commRegion", "compass", "sfRegion", "town", "surname", "house", "brandRoot"];
 const NEVER_ANCHORS = new Set(["person", "holy", "initials"]);
 /** Owner tokens that render as placeholders in placeholder mode. */
 const PLACEHOLDER_TOKENS = new Set(["person", "holy", "town", "surname", "house"]);
@@ -993,6 +1059,11 @@ function generateSeries(
   let anchorAt = -1;
   const sa = first.shape.sa;
   if (sa) anchorAt = rec.findIndex((r) => r.name === sa && !isPlaceholder(r));
+  const trade = ctx.family.key === "trade";
+  for (const name of trade ? TRADE_ANCHORS : []) {
+    if (anchorAt >= 0) break;
+    anchorAt = rec.findIndex((r) => r.name === name && !isPlaceholder(r));
+  }
   if (anchorAt < 0) anchorAt = rec.findIndex((r) => kindOf(r.name) === "owner" && !isPlaceholder(r));
   const listAt = rec.map((r, i) => (kindOf(r.name) === "list" ? i : -1)).filter((i) => i >= 0);
   if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
@@ -1007,11 +1078,33 @@ function generateSeries(
   const fill = (draw: () => Detailed | undefined) => {
     for (let idle = 0; idle < 20 && names.length < count; ) idle = add(draw(), info) ? 0 : idle + 1;
   };
+  const hasToken = (sh: GroupShape) => !!anchor && [...sh.p.matchAll(/\{([^}]+)\}/g)].some((m) => m[1].split(":")[0].split("/").includes(anchor.name));
+
+  // Companies brief §6: sister companies. The anchor is held while the shape is drawn from every
+  // trade shape with the anchor's token, whatever its type; the picked type's shapes count ×3.
+  if (trade && anchor) {
+    const sisters: [{ shape: GroupShape; type: GroupType }, number][] = [];
+    for (const t of typesInSetting(ctx.family, ctx.setting)) {
+      for (const sh of plainShapes(ctx, t)) {
+        const w = hasToken(sh) ? shapeWeight(ctx, sh) * (t.key === type.key ? 3 : 1) : 0;
+        if (w > 0) sisters.push([{ shape: sh, type: t }, w]);
+      }
+    }
+    const wanted = ctx.form === "formal" ? ["F", "B"] : ctx.form === "everyday" ? ["E", "B"] : ["F", "E", "B"];
+    const matching = sisters.filter(([x]) => wanted.includes(x.shape.f));
+    const pool = matching.length > 0 ? matching : sisters;
+    if (pool.length > 0) {
+      fill(() => {
+        const { shape, type: from } = pickWeighted(pool, ctx.rng)!;
+        return renderShape(ctx, from, from, shape, false, { byName: anchor });
+      });
+      return { names, seriesTone };
+    }
+  }
   fill(() => renderShape(ctx, type, first!.listType, first!.shape, first!.name.front, { byIndex: hold }));
   if (!anchor || names.length >= count) return { names, seriesTone };
 
   // §3.5 step 2: top up from the type's other shapes (and front shapes when fronts may show) with the anchor's token.
-  const hasToken = (sh: GroupShape) => [...sh.p.matchAll(/\{([^}]+)\}/g)].some((m) => m[1].split(":")[0].split("/").includes(anchor.name));
   const plain = plainShapes(ctx, type).filter((sh) => sh.p !== first!.shape.p && hasToken(sh));
   const fronts = frontChoice !== "say" && canFront(type) ? frontShapes(type).filter((sh) => sh.p !== first!.shape.p && hasToken(sh)) : [];
   const pool = byForm(ctx, [...plain, ...fronts]);
@@ -1058,12 +1151,22 @@ export function generateGroupNames(options: GroupOptions): GroupBatch {
   if (options.type && !chosen) {
     notices.push(`“${options.type}” isn't available in ${SETTING_PHRASES[setting]}; using any type.`);
   }
+  // Companies brief §5: a commodity counts for the trade family, with type Any or a type that deals in goods.
+  const wantsCommodity = options.commodity && options.commodity !== "any" && family.key === "trade" && (!chosen || chosen.commodity);
+  if (wantsCommodity) {
+    const commodity = findCommodity(options.commodity!);
+    if (commodity && commodity.settings.includes(setting)) ctx.commodity = commodity;
+    else notices.push(`Commodity “${options.commodity}” isn't available here.`);
+  }
   const front = options.front ?? "say";
   // §10: hiding with type Any draws only front-capable types.
   const typeWeight = (t: GroupType) => t.weight * (vocab ? GROUP_DATA.traditions.typeMultipliers[vocab.key]?.[t.key] ?? 1 : 1);
   let candidates = available.filter((t) => front !== "hide" || canFront(t));
   if (candidates.length === 0) candidates = available;
-  const types = candidates.map((t): [GroupType, number] => [t, typeWeight(t)]);
+  // Companies brief §5.3 step 4: with a commodity, Any draws only the types that deal in goods.
+  if (ctx.commodity) candidates = candidates.filter((t) => t.commodity);
+  const resourceBoost = ctx.commodity && RESOURCE_COMMODITIES.has(ctx.commodity.key) ? 3 : 1;
+  const types = candidates.map((t): [GroupType, number] => [t, typeWeight(t) * (t.key === "resource" ? resourceBoost : 1)]);
 
   const count = Math.max(0, Math.floor(options.count));
   if (options.series && chosen) {

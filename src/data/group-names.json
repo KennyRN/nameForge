@@ -21372,5 +21372,369 @@
     "w": 1.0
    }
   ]
- }
+ },
+ "commodities": [
+  {
+   "key": "spice",
+   "label": "spices and dyes",
+   "settings": [
+    "FL",
+    "FH",
+    "MR",
+    "MF"
+   ],
+   "words": [
+    {
+     "w": "Spice",
+     "x": 3.0
+    },
+    {
+     "w": "Pepper"
+    },
+    {
+     "w": "Cinnamon"
+    },
+    {
+     "w": "Cloves"
+    },
+    {
+     "w": "Nutmeg"
+    },
+    {
+     "w": "Saffron"
+    },
+    {
+     "w": "Indigo"
+    }
+   ]
+  },
+  {
+   "key": "cloth",
+   "label": "cloth and silk",
+   "settings": [
+    "FL",
+    "FH",
+    "MR",
+    "MF"
+   ],
+   "words": [
+    {
+     "w": "Silk",
+     "x": 2.0
+    },
+    {
+     "w": "Wool",
+     "x": 2.0
+    },
+    {
+     "w": "Cloth"
+    },
+    {
+     "w": "Cotton"
+    },
+    {
+     "w": "Linen"
+    }
+   ]
+  },
+  {
+   "key": "furs",
+   "label": "furs and timber",
+   "settings": [
+    "FL",
+    "FH",
+    "MR",
+    "MF"
+   ],
+   "words": [
+    {
+     "w": "Furs",
+     "x": 2.0
+    },
+    {
+     "w": "Timber",
+     "x": 2.0
+    },
+    {
+     "w": "Hides"
+    }
+   ]
+  },
+  {
+   "key": "metals",
+   "label": "metals",
+   "settings": [
+    "FL",
+    "FH",
+    "MR",
+    "MF"
+   ],
+   "words": [
+    {
+     "w": "Iron",
+     "x": 2.0
+    },
+    {
+     "w": "Copper",
+     "x": 2.0
+    },
+    {
+     "w": "Tin"
+    },
+    {
+     "w": "Lead"
+    }
+   ]
+  },
+  {
+   "key": "precious",
+   "label": "gold, silver and gems",
+   "settings": [
+    "FL",
+    "FH",
+    "MR",
+    "MF"
+   ],
+   "words": [
+    {
+     "w": "Gold"
+    },
+    {
+     "w": "Silver",
+     "x": 2.0
+    },
+    {
+     "w": "Pearls"
+    },
+    {
+     "w": "Amber"
+    },
+    {
+     "w": "Jade"
+    }
+   ]
+  },
+  {
+   "key": "food",
+   "label": "grain, salt and fish",
+   "settings": [
+    "FL",
+    "FH",
+    "MR",
+    "MF"
+   ],
+   "words": [
+    {
+     "w": "Grain",
+     "x": 2.0
+    },
+    {
+     "w": "Salt",
+     "x": 2.0
+    },
+    {
+     "w": "Fish"
+    },
+    {
+     "w": "Herring"
+    },
+    {
+     "w": "Wheat"
+    }
+   ]
+  },
+  {
+   "key": "drink",
+   "label": "wine, tea and coffee",
+   "settings": [
+    "FL",
+    "FH",
+    "MR",
+    "MF"
+   ],
+   "words": [
+    {
+     "w": "Wine",
+     "x": 2.0
+    },
+    {
+     "w": "Tea",
+     "x": 2.0
+    },
+    {
+     "w": "Coffee"
+    },
+    {
+     "w": "Brandy"
+    }
+   ]
+  },
+  {
+   "key": "livestock",
+   "label": "horses and cattle",
+   "settings": [
+    "FL",
+    "FH",
+    "MR",
+    "MF"
+   ],
+   "words": [
+    {
+     "w": "Horses",
+     "x": 2.0
+    },
+    {
+     "w": "Cattle"
+    },
+    {
+     "w": "Mules"
+    },
+    {
+     "w": "Camels"
+    }
+   ]
+  },
+  {
+   "key": "fuel",
+   "label": "coal and oil",
+   "settings": [
+    "FL",
+    "FH",
+    "MR",
+    "MF"
+   ],
+   "words": [
+    {
+     "w": "Coal",
+     "x": 2.0,
+     "s": [
+      "FL",
+      "FH",
+      "MR",
+      "MF"
+     ],
+     "sx": {
+      "FL": 0.3,
+      "FH": 0.3
+     }
+    },
+    {
+     "w": "Oil",
+     "s": [
+      "MR",
+      "MF"
+     ]
+    },
+    {
+     "w": "Petroleum",
+     "s": [
+      "MR",
+      "MF"
+     ]
+    },
+    {
+     "w": "Gas",
+     "s": [
+      "MR",
+      "MF"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "ore",
+   "label": "ores and alloys",
+   "settings": [
+    "SF"
+   ],
+   "words": [
+    {
+     "w": "Ore",
+     "x": 2.0
+    },
+    {
+     "w": "Alloys"
+    },
+    {
+     "w": "Iron"
+    },
+    {
+     "w": "Rare Earths"
+    },
+    {
+     "w": "Crystal"
+    }
+   ]
+  },
+  {
+   "key": "ice",
+   "label": "ice and water",
+   "settings": [
+    "SF"
+   ],
+   "words": [
+    {
+     "w": "Ice",
+     "x": 2.0
+    },
+    {
+     "w": "Water"
+    }
+   ]
+  },
+  {
+   "key": "energy",
+   "label": "fuel and energy",
+   "settings": [
+    "SF"
+   ],
+   "words": [
+    {
+     "w": "Fuel"
+    },
+    {
+     "w": "Helium"
+    },
+    {
+     "w": "Deuterium"
+    }
+   ]
+  },
+  {
+   "key": "data",
+   "label": "data",
+   "settings": [
+    "SF"
+   ],
+   "words": [
+    {
+     "w": "Data"
+    }
+   ]
+  },
+  {
+   "key": "salvage",
+   "label": "salvage",
+   "settings": [
+    "SF"
+   ],
+   "words": [
+    {
+     "w": "Salvage"
+    }
+   ]
+  },
+  {
+   "key": "medicine",
+   "label": "medicines",
+   "settings": [
+    "SF"
+   ],
+   "words": [
+    {
+     "w": "Medicines"
+    }
+   ]
+  }
+ ]
 }

@@ -81,7 +81,7 @@ import {
   groupSetting,
   SETTING_PHRASES,
 } from "./groups/engine";
-import { chooseGroup, DEFAULT_GROUP_STATE, effectiveFront, groupPresetState, groupSentence, groupSentenceText, type GroupSentenceState } from "./groups/sentence";
+import { chooseGroup, DEFAULT_GROUP_STATE, effectiveCommodity, effectiveFront, groupPresetState, groupSentence, groupSentenceText, type GroupSentenceState } from "./groups/sentence";
 import { isGroupSafeguardPackContent } from "./groups/safeguardPacks";
 import {
   BYNAME_CULTURES,
@@ -2219,6 +2219,7 @@ export class NameForgeModal extends Modal {
         people: state.people,
         tone: state.tone,
         series: !!state.type && state.series,
+        ...(family.key === "trade" ? { commodity: effectiveCommodity(state, family) } : {}),
       });
       return this.writePreset(presetName, content, (existing) => parseModulePreset(existing, presetName).group?.family === family.key);
     }).open();
@@ -2299,6 +2300,7 @@ export class NameForgeModal extends Modal {
         // Tone brief §4: series needs a type; the sentence hides it otherwise.
         tone: state.tone,
         series: !!state.type && state.series,
+        commodity: effectiveCommodity(state, family),
         count: this.generationCount,
         seed: seedOverride,
         safeguards: guards.safeguards,
