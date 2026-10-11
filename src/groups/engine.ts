@@ -737,6 +737,12 @@ export function groupTown(setting: GroupSetting, source: string | undefined, rng
   return inventedTown(ctx, type);
 }
 
+/** Companies brief §9.2: a commodity coast ("Silver Coast", in sci-fi "Iron Belt"), for realms' company-states. */
+export function groupCommRegion(setting: GroupSetting, rng: () => number): string | undefined {
+  const { ctx, type } = sharedCtx(setting, rng);
+  return token(ctx, "commRegion", type)?.text;
+}
+
 /** A group list's words here, weighted (setting tags and `sx` applied). */
 export function groupListWords(name: string, setting: GroupSetting): [string, number][] {
   const { ctx, type } = sharedCtx(setting, Math.random);

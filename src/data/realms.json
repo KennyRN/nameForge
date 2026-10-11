@@ -1165,14 +1165,14 @@
   },
   {
    "key": "corporate",
-   "menu": "Corporate",
-   "plural": "corporate states",
+   "menu": "Company-states",
+   "plural": "company-states",
    "w": 6,
-   "description": "Authorities, charters and governance zones",
+   "description": "Lands ruled by a chartered company or corporation rather than a crown or people: company territories, charters and governance zones. For the companies themselves, use guilds, companies and trade.",
    "eraMult": {
     "AN": 0,
     "MD": 0,
-    "EM": 0.3
+    "EM": 1
    }
   }
  ],
@@ -2384,6 +2384,58 @@
      "eras": [
       "EM",
       "MO"
+     ]
+    },
+    {
+     "p": "{commRegion} Company Territories",
+     "w": 1,
+     "short": "{commRegion}",
+     "g": "admin",
+     "eras": [
+      "EM",
+      "MO",
+      "NF"
+     ]
+    },
+    {
+     "p": "Territories of the {place} Company",
+     "w": 1,
+     "short": "{place}",
+     "g": "admin",
+     "eras": [
+      "EM",
+      "MO"
+     ]
+    },
+    {
+     "p": "{brandRoot} Corporate Dominion",
+     "w": 1,
+     "short": "{brandRoot}",
+     "g": "admin",
+     "eras": [
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{star} Charter Territory",
+     "w": 1,
+     "short": "{star}",
+     "g": "admin",
+     "eras": [
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{commRegion} Corporate Authority",
+     "w": 1,
+     "short": "{commRegion}",
+     "g": "admin",
+     "eras": [
+      "MO",
+      "NF",
+      "IS"
      ]
     }
    ]

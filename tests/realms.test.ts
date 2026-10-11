@@ -42,7 +42,7 @@ test("§15.1: forms have plurals, groups and six era weights; culture forms' era
 });
 
 test("§15.1: every list and shape named exists; no word holds ( ) § × ? or →", () => {
-  const special = new Set(["form", "federalForm", "modifier", "place", "landCompound", "dynasty", "star", "spaceLand", "tribal", "holy", "beast", "number", "colour", "brandRoot", "landIdentity", "landPl"]);
+  const special = new Set(["form", "federalForm", "modifier", "place", "landCompound", "dynasty", "star", "spaceLand", "tribal", "holy", "beast", "number", "colour", "brandRoot", "landIdentity", "landPl", "commRegion"]);
   const shapes = [...Object.values(REALM_DATA.shapes).flat(), ...Object.values(REALM_DATA.characterShapes).flatMap((c) => c.shapes)];
   const patterns = [...shapes.flatMap((s) => [s.p, s.short]), ...REALM_DATA.landIdentity.map((s) => s.p)];
   for (const p of patterns) {
@@ -315,4 +315,53 @@ test("§12.3: living religions' divine names become [deity]", async () => {
   assert.equal(withDeityPlaceholders("Holy Realm of Shiva's Reach"), "Holy Realm of [deity]'s Reach");
   assert.equal(withDeityPlaceholders("Kingdom of the Maize God"), "Kingdom of the Maize [deity]");
   assert.equal(withDeityPlaceholders("Godwin March"), "Godwin March");
+});
+
+// ── Companies and trading powers brief §12.8: company-states ────────────────
+
+import { realmHistoryLabel } from "../src/realms/engine";
+
+const COMPANY_STATE_SHAPES: [string, string, string[]][] = [
+  ["{commRegion} Company Territories", "{commRegion}", ["EM", "MO", "NF"]],
+  ["Territories of the {place} Company", "{place}", ["EM", "MO"]],
+  ["{brandRoot} Corporate Dominion", "{brandRoot}", ["NF", "IS"]],
+  ["{star} Charter Territory", "{star}", ["NF", "IS"]],
+  ["{commRegion} Corporate Authority", "{commRegion}", ["MO", "NF", "IS"]],
+];
+
+test("companies §12.8: the corporate character reads as company-states", () => {
+  const corporate = REALM_CHARACTERS.find((c) => c.key === "corporate")!;
+  assert.equal(corporate.menu, "Company-states");
+  assert.equal(corporate.plural, "company-states");
+  assert.equal(corporate.eraMult?.EM, 1);
+  assert.equal(realmHistoryLabel("fantasy", false, "general", "earlyModern", "corporate"), "realms and polities · historic or low fantasy · General · early modern · company-states");
+});
+
+test("companies §12.8: early modern company-states generate, with the new shapes", () => {
+  const batch = generateRealmNames({ era: "earlyModern", character: "corporate", people: "invented", count: 2000, seed: 1 });
+  assert.deepEqual(batch.notices, []);
+  assert.equal(batch.names.length, 2000);
+  const shapes = new Set(COMPANY_STATE_SHAPES.map(([p]) => p));
+  assert.ok(batch.names.filter((n) => shapes.has(n.shape)).length / batch.names.length >= 0.1);
+});
+
+test("companies §12.8: the new shapes' eras and short forms match the table", () => {
+  const own = REALM_DATA.characterShapes.corporate.shapes;
+  for (const [p, short, eras] of COMPANY_STATE_SHAPES) {
+    const shape = own.find((s) => s.p === p);
+    assert.ok(shape, p);
+    assert.deepEqual([shape!.short, shape!.eras, shape!.g, shape!.w], [short, eras, "admin", 1], p);
+  }
+  const settings: [string, "fantasy" | "modern" | "scifi"][] = [["earlyModern", "fantasy"], ["modern", "modern"], ["nearFuture", "scifi"], ["interstellar", "scifi"]];
+  let checked = 0;
+  for (const [era, genre] of settings) {
+    for (const n of generateRealmNames({ era, genre, character: "corporate", people: "invented", count: 500, seed: 3 }).names) {
+      const row = COMPANY_STATE_SHAPES.find(([p]) => p === n.shape);
+      if (!row) continue;
+      checked++;
+      const official = row[0].replace(/\{\w+\}/, n.short);
+      assert.equal(n.official, official, `${n.official} / ${n.short}`);
+    }
+  }
+  assert.ok(checked > 50);
 });

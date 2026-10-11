@@ -56559,6 +56559,11 @@ function groupTown(setting, source, rng) {
   if (setting !== "SF") return `${pickWeighted5(pool(ctx, "townPrefix", type), rng)}${pickWeighted5(pool(ctx, "townSuffix", type), rng)}`;
   return inventedTown(ctx, type);
 }
+function groupCommRegion(setting, rng) {
+  var _a2;
+  const { ctx, type } = sharedCtx(setting, rng);
+  return (_a2 = token(ctx, "commRegion", type)) == null ? void 0 : _a2.text;
+}
 function groupListWords(name, setting) {
   const { ctx, type } = sharedCtx(setting, Math.random);
   return pool(ctx, name, type);
@@ -65988,14 +65993,14 @@ var realms_default = {
     },
     {
       key: "corporate",
-      menu: "Corporate",
-      plural: "corporate states",
+      menu: "Company-states",
+      plural: "company-states",
       w: 6,
-      description: "Authorities, charters and governance zones",
+      description: "Lands ruled by a chartered company or corporation rather than a crown or people: company territories, charters and governance zones. For the companies themselves, use guilds, companies and trade.",
       eraMult: {
         AN: 0,
         MD: 0,
-        EM: 0.3
+        EM: 1
       }
     }
   ],
@@ -67207,6 +67212,58 @@ var realms_default = {
           eras: [
             "EM",
             "MO"
+          ]
+        },
+        {
+          p: "{commRegion} Company Territories",
+          w: 1,
+          short: "{commRegion}",
+          g: "admin",
+          eras: [
+            "EM",
+            "MO",
+            "NF"
+          ]
+        },
+        {
+          p: "Territories of the {place} Company",
+          w: 1,
+          short: "{place}",
+          g: "admin",
+          eras: [
+            "EM",
+            "MO"
+          ]
+        },
+        {
+          p: "{brandRoot} Corporate Dominion",
+          w: 1,
+          short: "{brandRoot}",
+          g: "admin",
+          eras: [
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{star} Charter Territory",
+          w: 1,
+          short: "{star}",
+          g: "admin",
+          eras: [
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{commRegion} Corporate Authority",
+          w: 1,
+          short: "{commRegion}",
+          g: "admin",
+          eras: [
+            "MO",
+            "NF",
+            "IS"
           ]
         }
       ]
@@ -75095,6 +75152,8 @@ function token4(ctx, name, shape, kind) {
       return gnWord(ctx, "house");
     case "star":
       return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : gnWord(ctx, "star", void 0, "SF");
+    case "commRegion":
+      return groupCommRegion(ctx.era === "NF" || ctx.era === "IS" ? "SF" : ctx.setting, rng);
     case "spaceLand": {
       const w = gnWord(ctx, "spaceLand", void 0, "SF");
       return w && rng() < 0.3 ? `${gnWord(ctx, "spacePrefix", void 0, "SF")} ${w}` : w;
@@ -75340,7 +75399,8 @@ function realmHistoryLabel(genre, fantastic, culture, era, character, tone = "an
     SETTING_PHRASES[groupSetting(genre, genre === "scifi" ? false : fantastic)],
     label,
     (_d = (_c = REALM_ERAS.find((e) => e.key === era)) == null ? void 0 : _c.label) != null ? _d : era,
-    ...character ? [character] : [],
+    // Companies brief §9.1: the corporate character reads "company-states".
+    ...character ? [character === "corporate" ? "company-states" : character] : [],
     ...tone !== "any" ? [tone] : []
   ].join(" \xB7 ");
 }

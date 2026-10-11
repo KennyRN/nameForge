@@ -251,9 +251,9 @@ safeguards     (§12)
 | `colonial` | Colonial | colonies | 10 | Crown territories, charters and new settlements |
 | `outlaw` | Outlaw | outlaw states | 6 | Free corsair ports and smuggler coasts |
 | `peoples` | Peoples | confederacies of peoples | 10 | Unions and confederacies of tribes and clans |
-| `corporate` | Corporate | corporate states | 6 | Authorities, charters and governance zones |
+| `corporate` | Company-states | company-states | 6 | Lands ruled by a chartered company or corporation rather than a crown or people: company territories, charters and governance zones. For the companies themselves, use guilds, companies and trade. |
 
-"Any" phrase: "realms of any kind". Corporate is weight 0 in AN and MD; ×0.3 in EM (chartered companies).
+"Any" phrase: "realms of any kind". Company-states (key `corporate`) are weight 0 in AN and MD, and full weight from EM (chartered companies). History rows show the character as "company-states". The companies themselves are named by the group family guilds, companies and trade (`docs/companies-and-trading-powers-brief.md`).
 
 ### 5.2 Form multipliers by character
 
@@ -266,7 +266,7 @@ safeguards     (§12)
 | colonial | Colony ×4, Territory ×3, Province ×2, Dominion ×2, Protectorate ×1.5, Colonial Authority ×3; crown ×0.3 |
 | outlaw | Free City ×3, Republic ×2, Free State ×2, League ×1.5; crown, imperial and admin ×0.2 |
 | peoples | Confederacy ×4, Confederation ×3, Union ×3, Alliance ×2, League ×1.5, tribal ×3; republic and admin ×0.2 |
-| corporate | admin ×4, Directorate ×3, Authority ×3, Compact ×2; crown, imperial, tribal ×0 |
+| corporate (company-states) | admin ×4, Directorate ×3, Authority ×3, Compact ×2; crown, imperial, tribal ×0 |
 
 ### 5.3 namedFor weights by character (when namedFor is "anything")
 
@@ -279,7 +279,7 @@ safeguards     (§12)
 | colonial | 30 | 55 | 5 | 0 | 10 |
 | outlaw | 50 | 40 | 0 | 0 | 10 |
 | peoples | 20 | 0 | 0 | 80 | 0 |
-| corporate | 0 | 50 | 0 | 0 | 50 |
+| corporate (company-states) | 0 | 50 | 0 | 0 | 50 |
 
 ---
 
@@ -407,10 +407,11 @@ Each character has its own shapes, drawn at the share shown; otherwise the named
 | military | 50% | `the {landQual} Protectorate` · `the Iron {form}` · `March of {place}` · `{place} March` · `{compassAdj} Military Governorate` (MO NF IS) · `{landQual} Command` (NF IS) | the Frontier Protectorate, the Iron Dominion, March of Stonegate |
 | colonial | 60% | `New {place}` 25 · `Crown Territory of {place}` 15 · `{compassAdj} Colonial Authority` 10 · `Colony of {place}` 10 · `{place} Colony` 10 · `Chartered Territory of {place}` 10 · `Province of New {place}` 10 · `Dominion of {place}` 10 | New Fenwick, Crown Territory of Greenwater, Western Colonial Authority |
 | outlaw | 60% | `the Free {outlawNoun} Ports` · `the {outlawAdj} Coast` · `Republic of {place}` · `the Free {settlementPl} of the {waterSg}` | the Free Corsair Ports, the Smuggler Coast |
-| corporate | 70% | `{brandRoot} {corpForm}` · `{star} {resource} {corpWord}` (NF IS) · `{brandRoot} Commercial Territory` · `{place} Development Charter` · `Chartered Territory of the {brandRoot} Company` (EM, MO) | Helix Governance Zone, Orion Resource Directorate, Atlas Commercial Territory |
+| corporate (company-states) | 70% | `{brandRoot} {corpForm}` · `{star} {resource} {corpWord}` (NF IS) · `{brandRoot} Commercial Territory` · `{place} Development Charter` · `Chartered Territory of the {brandRoot} Company` (EM, MO) · `{commRegion} Company Territories` (EM MO NF) · `Territories of the {place} Company` (EM MO) · `{brandRoot} Corporate Dominion` (NF IS) · `{star} Charter Territory` (NF IS) · `{commRegion} Corporate Authority` (MO NF IS) | Helix Governance Zone, Orion Resource Directorate, Atlas Commercial Territory, Silver Coast Company Territories, Territories of the Fenwick Company, Orion Charter Territory |
 
 - **`holyIdea`**: Dawn, Light, Flame, Covenant, Lamp, Altar, Pilgrims, Seven Shrines, Morning Star, Open Hand. Generic only (§12.3). `{holy}` is GN §8.2 (saints for christian byname cultures; `the {holyTitle}` for others), placeholder `[holy person]`.
 - **`outlawNoun`**: Corsair, Rover, Buccaneer, Smuggler, Reaver. **`outlawAdj`**: Smuggler, Corsair, Pirate, Wrecker, Black, Lawless, Rover.
+- **`{commRegion}`** is GN's commodity coast (`group-names.json`, companies brief §3.1): Silver Coast, Amber Sea; in NF and IS its sci-fi forms (Iron Belt). The five company-state shapes added by the companies brief are all group `admin`, weight 1; their short forms are the territory: `{commRegion}`, `{place}`, `{brandRoot}`, `{star}`.
 - **`corpForm`**: Governance Zone, Development Authority, Resource Directorate, Commercial Territory, Charter Zone, Holdings Authority. **`resource`**: Resource, Mining, Trade, Development, Water, Energy. **`corpWord`**: Directorate, Authority, Charter, Zone.
 
 ---

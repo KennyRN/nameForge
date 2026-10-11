@@ -16,6 +16,7 @@ import {
   type GroupTone,
   type GroupToneChoice,
   GROUP_TONES,
+  groupCommRegion,
   groupListWords,
   groupPlural,
   groupPossessive,
@@ -464,6 +465,9 @@ function token(ctx: Ctx, name: string, shape: RealmShape, kind: string): string 
     case "star":
       // §6.1: GN stars, plus Sol ×0.3; never a placeholder.
       return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : gnWord(ctx, "star", undefined, "SF");
+    case "commRegion":
+      // Companies brief §9.2: GN's commodity coasts, in their sci-fi forms in the near future and beyond.
+      return groupCommRegion(ctx.era === "NF" || ctx.era === "IS" ? "SF" : ctx.setting, rng);
     case "spaceLand": {
       const w = gnWord(ctx, "spaceLand", undefined, "SF");
       return w && rng() < 0.3 ? `${gnWord(ctx, "spacePrefix", undefined, "SF")} ${w}` : w;
@@ -756,7 +760,8 @@ export function realmHistoryLabel(genre: GroupGenre, fantastic: boolean, culture
     SETTING_PHRASES[groupSetting(genre, genre === "scifi" ? false : fantastic)],
     label,
     REALM_ERAS.find((e) => e.key === era)?.label ?? era,
-    ...(character ? [character] : []),
+    // Companies brief §9.1: the corporate character reads "company-states".
+    ...(character ? [character === "corporate" ? "company-states" : character] : []),
     ...(tone !== "any" ? [tone] : []),
   ].join(" · ");
 }
