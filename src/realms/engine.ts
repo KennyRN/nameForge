@@ -32,7 +32,9 @@ import {
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
 import { generateTribalNames } from "../tribes/engine";
-import { VESSEL_DATA } from "../vessels/engine";
+import { withDeityPlaceholders } from "../vessels/engine";
+
+export { withDeityPlaceholders };
 import { WORLD_CULTURES } from "../world/engine";
 
 // ── Data ────────────────────────────────────────────────────────────────────
@@ -534,13 +536,6 @@ const counted = (text: string) => text.split(" ").filter((w, i) => w && !(i === 
 
 const wordRe = (w: string) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
 const BANNED = [...REALM_DATA.safeguards.banned, ...REALM_DATA.safeguards.religious].map(wordRe);
-const DIVINE = new RegExp(`(^|[^\\p{L}])(${VESSEL_DATA.safeguards.divine.join("|")})(?=$|[^\\p{L}])`, "giu");
-
-/** §12.3: a living religion's divine name becomes the placeholder [deity] (the Maize God's Reach → the Maize [deity]'s Reach). */
-export function withDeityPlaceholders(text: string): string {
-  return text.replace(DIVINE, (_m, before: string) => `${before}[deity]`);
-}
-
 /** §12.3: banned words and living religions' terms (divine names are replaced, not redrawn). */
 export function breaksRealmWords(text: string): boolean {
   return hasBannedWord(text) || BANNED.some((re) => re.test(text));

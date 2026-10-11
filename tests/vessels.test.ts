@@ -319,3 +319,10 @@ test("§16.8: presets round-trip; an unavailable style is reported", () => {
   assert.equal(bad.vessel?.style, "none");
   assert.ok(bad.problems.includes("Style “corporate” isn't available here."));
 });
+
+test("§14.3: living religions' divine names become [deity]", async () => {
+  const { withDeityPlaceholders } = await import("../src/vessels/engine");
+  assert.equal(withDeityPlaceholders("The Maize God's Canoe"), "The Maize [deity]'s Canoe");
+  assert.equal(withDeityPlaceholders("Grace of God"), "Grace of [deity]");
+  assert.equal(withDeityPlaceholders("Godwin"), "Godwin");
+});

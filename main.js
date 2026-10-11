@@ -71845,10 +71845,13 @@ function vesselCapitals(text) {
 }
 var countedWords = (text) => text.split(" ").filter((w, i) => w && !(i === 0 && w === "The") && !SMALL4.has(w.toLowerCase()));
 var wordRe4 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
-var BANNED2 = [...VESSEL_DATA.safeguards.banned, ...VESSEL_DATA.safeguards.divine].map(wordRe4);
-var DIVINE_PHRASES = VESSEL_DATA.safeguards.divinePhrases.map(wordRe4);
+var BANNED2 = VESSEL_DATA.safeguards.banned.map(wordRe4);
+var DIVINE = new RegExp(`(^|[^\\p{L}])(${VESSEL_DATA.safeguards.divine.join("|")})(?=$|[^\\p{L}])`, "giu");
+function withDeityPlaceholders(text) {
+  return text.replace(DIVINE, (_m, before) => `${before}[deity]`);
+}
 function breaksVesselWords(text) {
-  return hasBannedWord(text) || BANNED2.some((re) => re.test(text)) || DIVINE_PHRASES.some((re) => re.test(text));
+  return hasBannedWord(text) || BANNED2.some((re) => re.test(text));
 }
 function guardFor(module2, guards) {
   const s = VESSEL_DATA.safeguards;
@@ -71936,7 +71939,7 @@ function renderPlan(ctx, plan, hooks = {}) {
   const record = [];
   const raw = renderPattern2(ctx, plan.p, { ...hooks, record });
   if (!raw) return void 0;
-  const name = vesselCapitals(raw.replace(/\s+/g, " ").trim());
+  const name = vesselCapitals(withDeityPlaceholders(raw).replace(/\s+/g, " ").trim());
   const tones = /* @__PURE__ */ new Set([...plan.tones, ...ctx.drawn]);
   return { name, plan, record, tones: GROUP_TONES.filter((t) => tones.has(t)) };
 }
@@ -72456,10 +72459,6 @@ function realmCapitals(text) {
 var counted = (text) => text.split(" ").filter((w, i) => w && !(i === 0 && w.toLowerCase() === "the") && !SMALL5.has(w.toLowerCase()));
 var wordRe5 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
 var BANNED3 = [...REALM_DATA.safeguards.banned, ...REALM_DATA.safeguards.religious].map(wordRe5);
-var DIVINE = new RegExp(`(^|[^\\p{L}])(${VESSEL_DATA.safeguards.divine.join("|")})(?=$|[^\\p{L}])`, "giu");
-function withDeityPlaceholders(text) {
-  return text.replace(DIVINE, (_m, before) => `${before}[deity]`);
-}
 function breaksRealmWords(text) {
   return hasBannedWord(text) || BANNED3.some((re) => re.test(text));
 }

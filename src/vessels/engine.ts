@@ -586,12 +586,17 @@ const countedWords = (text: string) => text.split(" ").filter((w, i) => w && !(i
 // ── Safeguards (§14) ────────────────────────────────────────────────────────
 
 const wordRe = (w: string) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
-const BANNED = [...VESSEL_DATA.safeguards.banned, ...VESSEL_DATA.safeguards.divine].map(wordRe);
-const DIVINE_PHRASES = VESSEL_DATA.safeguards.divinePhrases.map(wordRe);
+const BANNED = VESSEL_DATA.safeguards.banned.map(wordRe);
+const DIVINE = new RegExp(`(^|[^\\p{L}])(${VESSEL_DATA.safeguards.divine.join("|")})(?=$|[^\\p{L}])`, "giu");
 
-/** §14.3: banned words (GN and vessel lists), living religions' divine names and phrases. */
+/** §14.3: a living religion's divine name becomes the placeholder [deity] ("of God" → "of [deity]"). */
+export function withDeityPlaceholders(text: string): string {
+  return text.replace(DIVINE, (_m, before: string) => `${before}[deity]`);
+}
+
+/** §14.3: banned words (GN and vessel lists); divine names are replaced, not redrawn. */
 export function breaksVesselWords(text: string): boolean {
-  return hasBannedWord(text) || BANNED.some((re) => re.test(text)) || DIVINE_PHRASES.some((re) => re.test(text));
+  return hasBannedWord(text) || BANNED.some((re) => re.test(text));
 }
 
 interface Guard {
@@ -717,7 +722,7 @@ function renderPlan(ctx: Ctx, plan: Plan, hooks: Hooks = {}): Built | undefined 
   const record: Drawn[] = [];
   const raw = renderPattern(ctx, plan.p, { ...hooks, record });
   if (!raw) return undefined;
-  const name = vesselCapitals(raw.replace(/\s+/g, " ").trim());
+  const name = vesselCapitals(withDeityPlaceholders(raw).replace(/\s+/g, " ").trim());
   const tones = new Set<GroupTone>([...plan.tones, ...ctx.drawn]);
   return { name, plan, record, tones: GROUP_TONES.filter((t) => tones.has(t)) };
 }
