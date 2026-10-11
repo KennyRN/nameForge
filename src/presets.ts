@@ -16,6 +16,8 @@ import {
   moduleKinds,
 } from "./bynames/engine";
 import { namedForOffered, REALM_CHARACTERS, REALM_CULTURES, REALM_ERAS, type RealmLength, type RealmNamedFor, type RealmOutput } from "./realms/engine";
+import { findRouteCulture, findRouteKind, kindsOffered, ROUTE_ERAS, routeEraLabel, type RouteEra } from "./routes/engine";
+import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
 import { findCommodity, findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
 
@@ -68,7 +70,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -81,6 +83,8 @@ export function parseModulePreset(
   if (values.module === VESSEL_PRESET_MODULE) return parseVesselPreset(values, body, fileName);
   // Realms brief §13: realm presets too.
   if (values.module === REALM_PRESET_MODULE) return parseRealmPreset(values, body, fileName);
+  // Route names brief §13: route presets too.
+  if (values.module === ROUTE_PRESET_MODULE) return parseRoutePreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module “${values.module ?? ""}”.`);
     return { problems };
@@ -115,7 +119,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset): string {
+  if ("routeKind" in preset) return routePresetContent(preset);
   if ("namedFor" in preset) return realmPresetContent(preset);
   if ("vesselModule" in preset) return vesselPresetContent(preset);
   if ("bynameModule" in preset) return bynamePresetContent(preset);
@@ -426,6 +431,89 @@ function realmPresetContent(preset: RealmPreset): string {
     `length: ${preset.length}`,
     `output: ${preset.output}`,
     `people: ${preset.people}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Route presets (Route names brief §13) ──────────────────────────────────
+
+export const ROUTE_PRESET_MODULE = "route-names";
+
+export interface RoutePreset {
+  packName: string;
+  setting: string;
+  description: string;
+  culture: string;
+  /** "all" or a place-shape region code. */
+  region: string;
+  /** "any" or a kind key (the note's `kind`). */
+  routeKind: string;
+  era: RouteEra;
+  fantastic: boolean;
+  tone: GroupToneChoice;
+  people: GroupPeople;
+  series: boolean;
+}
+
+function parseRoutePreset(values: Record<string, string>, body: string, fileName: string): { route?: RoutePreset; problems: string[] } {
+  const problems: string[] = [];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const flag = (key: string): boolean => {
+    const v = values[key];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key} “${v}”.`);
+    return false;
+  };
+  const era = pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  const fantastic = flag("fantastic");
+  let kind = pick<string>("kind", "any", (v) => v === "any" || !!findRouteKind(v));
+  // §13: a kind not offered in the era runs as any.
+  if (kind !== "any" && !kindsOffered(era, fantastic).some((k) => k.key === kind)) {
+    problems.push(`Kind “${kind}” isn't offered in the ${routeEraLabel(era)} era.`);
+    kind = "any";
+  }
+  return {
+    route: {
+      packName: values.packName || fileName,
+      setting: values.setting ?? "",
+      description: body.trim(),
+      culture: pick("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      routeKind: kind,
+      era,
+      fantastic,
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series: flag("series"),
+    },
+    problems,
+  };
+}
+
+function routePresetContent(preset: RoutePreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${ROUTE_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `region: ${preset.region}`,
+    `kind: ${preset.routeKind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
     "---",
     "",
     preset.description.trim(),

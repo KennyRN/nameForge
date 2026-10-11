@@ -263,3 +263,104 @@ test("§13: a kind not offered in the era runs as any, with a notice", () => {
   assert.equal(b.names.length, 10);
   for (const n of b.names) assert.notEqual(n.kind, "space");
 });
+
+// ── §15.8 Sentence and presets ──────────────────────────────────────────────
+
+import { chooseRoute, DEFAULT_ROUTE_STATE, routeHistoryLabel, routeSentence, routeSentenceText, type RouteSentenceState } from "../src/routes/sentence";
+import { modulePresetContent, parseModulePreset, type RoutePreset } from "../src/presets";
+import { historySection, SECTION_GROUPS, SECTION_ORDER } from "../src/sections";
+import { isSettlementSafeguardPackContent, SETTLEMENT_SAFEGUARD_TEMPLATE } from "../src/settlement/safeguardPacks";
+import { parseSafeguardPack } from "../src/tribes/safeguardPacks";
+
+const field = (state: RouteSentenceState, f: string) => routeSentence(state).find((s) => typeof s !== "string" && s.field === f) as Exclude<ReturnType<typeof routeSentence>[number], string> | undefined;
+
+test("§15.8: the default sentence's plain text", () => {
+  assert.equal(
+    routeSentenceText(routeSentence(DEFAULT_ROUTE_STATE)),
+    "Norman & British routes of any kind of the medieval era, in a realistic world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
+  );
+  const north = chooseRoute(chooseRoute(chooseRoute(chooseRoute(DEFAULT_ROUTE_STATE, "region", "NTH"), "kind", "drove"), "people", "invented"), "series", "on");
+  assert.equal(
+    routeSentenceText(routeSentence(north)),
+    "Norman & British droves and tracks of the medieval era, in a realistic world, in the North, of any tone, with invented people and places, as one network.",
+  );
+});
+
+test("§15.8: the steam age shows steampunk in the fantastic link", () => {
+  const st = chooseRoute(DEFAULT_ROUTE_STATE, "era", "ST");
+  assert.deepEqual(field(st, "fantastic")!.choices.map((c) => c.label), ["realistic", "steampunk"]);
+  assert.equal(field(chooseRoute(st, "fantastic", "on"), "fantastic")!.text, "steampunk");
+  assert.equal(field(chooseRoute(DEFAULT_ROUTE_STATE, "fantastic", "on"), "fantastic")!.text, "fantastic");
+});
+
+test("§15.8: the region link is hidden for japanese, and choosing japanese resets the region", () => {
+  const north = chooseRoute(DEFAULT_ROUTE_STATE, "region", "NTH");
+  assert.ok(field(north, "region"));
+  const japanese = chooseRoute(north, "culture", "japanese");
+  assert.equal(japanese.region, undefined);
+  assert.equal(field(japanese, "region"), undefined);
+  assert.ok(!routeSentenceText(routeSentence(japanese)).includes("Britain"));
+  for (const c of ["anglo-saxon", "celtic", "norman-british"]) assert.ok(field(chooseRoute(DEFAULT_ROUTE_STATE, "culture", c), "region"), c);
+  // The series link always shows.
+  assert.ok(field(japanese, "series"));
+});
+
+test("§2.2–§2.3: the kind menu offers the era's kinds; a kind the new era lacks resets to Any", () => {
+  assert.deepEqual(field(DEFAULT_ROUTE_STATE, "kind")!.choices.map((c) => c.id), [undefined, "road", "trade", "pilgrim", "military", "drove", "sea"]);
+  const rail = chooseRoute(chooseRoute(DEFAULT_ROUTE_STATE, "era", "ST"), "kind", "rail");
+  assert.equal(rail.kind, "rail");
+  assert.equal(chooseRoute(rail, "era", "MD").kind, undefined);
+  assert.equal(chooseRoute(rail, "era", "MO").kind, "rail");
+  // Pilgrim roads in the near future only when fantastic.
+  const nf = chooseRoute(chooseRoute(chooseRoute(DEFAULT_ROUTE_STATE, "era", "NF"), "fantastic", "on"), "kind", "pilgrim");
+  assert.equal(nf.kind, "pilgrim");
+  assert.equal(chooseRoute(nf, "fantastic", "off").kind, undefined);
+  assert.equal(field(DEFAULT_ROUTE_STATE, "culture")!.choices.length, 22);
+});
+
+test("§1: the module sits after native place names; its history label and section", () => {
+  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 2), ["placeShapes", "routeNames"]);
+  assert.equal(SECTION_ORDER[SECTION_ORDER.indexOf("placeShapes") + 1], "routeNames");
+  assert.equal(routeHistoryLabel(DEFAULT_ROUTE_STATE), "route names · medieval · Norman & British");
+  const full: RouteSentenceState = { culture: "norman-british", era: "ST", region: "NTH", kind: "rail", fantastic: true, tone: "grim", people: "invented", series: true };
+  assert.equal(routeHistoryLabel(full), "route names · steam age · Norman & British · the North · railways and canals · steampunk · grim · network");
+  assert.equal(routeHistoryLabel({ ...full, era: "MD", kind: undefined, region: undefined, tone: "any", series: false }), "route names · medieval · Norman & British · fantastic");
+  assert.equal(historySection(routeHistoryLabel(full)), "routeNames");
+  assert.equal(historySection("route names · Northern droves"), "routeNames");
+});
+
+test("§15.8: presets round-trip; a kind not offered in the era is reported and runs as any", () => {
+  const preset: RoutePreset = {
+    packName: "Northern droves",
+    setting: "",
+    description: "Norman & British droves and tracks of the medieval era, in a realistic world, in the North, of any tone, with invented people and places, each one separate.",
+    culture: "norman-british",
+    region: "NTH",
+    routeKind: "drove",
+    era: "MD",
+    fantastic: false,
+    tone: "any",
+    people: "invented",
+    series: false,
+  };
+  const content = modulePresetContent(preset);
+  assert.ok(content.includes("module: route-names\n") && content.includes("kind: drove\n") && content.includes("region: NTH\n"));
+  const parsed = parseModulePreset(content, "x");
+  assert.deepEqual(parsed.route, preset);
+  assert.deepEqual(parsed.problems, []);
+  const space = parseModulePreset(modulePresetContent({ ...preset, routeKind: "space" }), "x");
+  assert.equal(space.route?.routeKind, "any");
+  assert.deepEqual(space.problems, ["Kind “space” isn't offered in the medieval era."]);
+  const odd = parseModulePreset(modulePresetContent({ ...preset, culture: "elvish", era: "XX" as RouteEra, region: "Mars" }), "x");
+  assert.equal(odd.route?.culture, "norman-british");
+  assert.equal(odd.route?.era, "MD");
+  assert.equal(odd.route?.region, "all");
+  assert.deepEqual(odd.problems, ["Unknown era “XX”.", "Unknown culture “elvish”.", "Unknown region “Mars”."]);
+});
+
+test("§12.6: settlement safeguard packs read like group safeguard packs", () => {
+  assert.ok(isSettlementSafeguardPackContent(SETTLEMENT_SAFEGUARD_TEMPLATE));
+  assert.ok(!isSettlementSafeguardPackContent("---\ntype: group-safeguards\n---\n"));
+  const pack = parseSafeguardPack(`${SETTLEMENT_SAFEGUARD_TEMPLATE}\n## Block\n- Wool Way\n`);
+  assert.deepEqual(pack.block.filter((w) => w === "Wool Way"), ["Wool Way"]);
+});

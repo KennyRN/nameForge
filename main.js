@@ -461,19 +461,19 @@ function stripInlineMarkup(s) {
 function parseNameTokens(text) {
   const tokens = text.split(/[\n,;]/).flatMap((t) => splitOnJoiners(t)).flatMap((t) => splitSpaceSeparatedList(t)).map((t) => t.trim()).filter((t) => t.length > 0);
   const names = [];
-  for (const token5 of tokens) {
-    const cleaned = cleanToken(stripLeadingConjunction(token5));
+  for (const token6 of tokens) {
+    const cleaned = cleanToken(stripLeadingConjunction(token6));
     if (cleaned === "" || isNoise(cleaned)) continue;
     names.push(cleaned);
   }
   return dedupe(names);
 }
-function splitSpaceSeparatedList(token5) {
-  const parts = splitOnUnquotedWhitespace(token5);
+function splitSpaceSeparatedList(token6) {
+  const parts = splitOnUnquotedWhitespace(token6);
   if (parts.length >= 3) return parts;
-  const loose = unwrapOuterQuotes(token5.trim()).split(/\s+/).filter((p) => p.length > 0);
+  const loose = unwrapOuterQuotes(token6.trim()).split(/\s+/).filter((p) => p.length > 0);
   if (loose.length >= 3) return loose;
-  return [token5];
+  return [token6];
 }
 function unwrapOuterQuotes(s) {
   const pairs = [
@@ -489,11 +489,11 @@ function unwrapOuterQuotes(s) {
   }
   return s;
 }
-function splitOnUnquotedWhitespace(token5) {
+function splitOnUnquotedWhitespace(token6) {
   const parts = [];
   let current = "";
   let quote2 = null;
-  for (const char of token5) {
+  for (const char of token6) {
     if (quote2) {
       current += char;
       if (char === matchingQuote(quote2)) quote2 = null;
@@ -519,8 +519,8 @@ function matchingQuote(open) {
   if (open === "\u2018") return "\u2019";
   return open;
 }
-function splitOnJoiners(token5) {
-  let parts = [token5];
+function splitOnJoiners(token6) {
+  let parts = [token6];
   for (const joiner of JOINERS) {
     const next = [];
     for (const part of parts) {
@@ -536,12 +536,12 @@ function splitOnJoiners(token5) {
   }
   return parts;
 }
-function stripLeadingConjunction(token5) {
-  const lower2 = token5.toLowerCase();
+function stripLeadingConjunction(token6) {
+  const lower2 = token6.toLowerCase();
   for (const lead of LEADERS) {
-    if (lower2.startsWith(lead)) return token5.slice(lead.length).trim();
+    if (lower2.startsWith(lead)) return token6.slice(lead.length).trim();
   }
-  return token5;
+  return token6;
 }
 function cleanToken(s) {
   let t = s.trim();
@@ -55991,34 +55991,34 @@ var WorldRenderer = class {
     return pickUniform5(source.corpus, rng);
   }
   /** A list word, expanding any template held in the entry. */
-  slot(token5, rng, depth) {
+  slot(token6, rng, depth) {
     var _a2, _b;
-    if (token5.markov) {
-      const name = this.markovName(token5.key, rng);
-      const text2 = token5.form === "pos" ? possessive(name) : name;
-      return { text: text2, etym: `[${this.label(token5.key)}: ${name}]${token5.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
+    if (token6.markov) {
+      const name = this.markovName(token6.key, rng);
+      const text2 = token6.form === "pos" ? possessive(name) : name;
+      return { text: text2, etym: `[${this.label(token6.key)}: ${name}]${token6.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
     }
-    const list = this.lists[token5.key];
+    const list = this.lists[token6.key];
     if (!list || list.length === 0) {
-      this.notices.add(`No word list "${token5.key}" for ${this.culture.label}.`);
-      return { text: `[${token5.key}]`, etym: `[${token5.key}]`, fusable: false };
+      this.notices.add(`No word list "${token6.key}" for ${this.culture.label}.`);
+      return { text: `[${token6.key}]`, etym: `[${token6.key}]`, fusable: false };
     }
-    const entry = parseEntry((_a2 = this.swapEntry(token5.key, rng)) != null ? _a2 : pickUniform5(list, rng));
+    const entry = parseEntry((_a2 = this.swapEntry(token6.key, rng)) != null ? _a2 : pickUniform5(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);
-      const text2 = token5.form === "pos" ? possessive(inner.text) : inner.text;
-      const etym = single ? inner.etym : `[${this.label(token5.key)}: ${inner.text}]`;
-      return { text: text2, etym: token5.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
+      const text2 = token6.form === "pos" ? possessive(inner.text) : inner.text;
+      const etym = single ? inner.etym : `[${this.label(token6.key)}: ${inner.text}]`;
+      return { text: text2, etym: token6.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
     }
     let text = entry.word;
-    if (token5.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
-    if (token5.form === "pos") text = possessive(entry.word);
-    const shown = token5.form === "pos" ? entry.word : text;
+    if (token6.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
+    if (token6.form === "pos") text = possessive(entry.word);
+    const shown = token6.form === "pos" ? entry.word : text;
     return {
       text,
-      etym: `[${this.label(token5.key)}: ${shown}]${token5.form === "pos" ? possessiveTail(entry.word) : ""}`,
-      fusable: !entry.noFuse && token5.form !== "pos"
+      etym: `[${this.label(token6.key)}: ${shown}]${token6.form === "pos" ? possessiveTail(entry.word) : ""}`,
+      fusable: !entry.noFuse && token6.form !== "pos"
     };
   }
   /** Renders a template: slots filled, "+" groups fused or spaced. */
@@ -56032,14 +56032,14 @@ var WorldRenderer = class {
       out.push(group.length === 1 ? group[0] : this.fuse(group, rng));
       group = [];
     };
-    for (const token5 of tokens) {
-      if (token5.kind === "fuse") {
+    for (const token6 of tokens) {
+      if (token6.kind === "fuse") {
         joinNext = true;
         continue;
       }
       let piece;
-      if (token5.kind === "text") piece = { text: token5.text, etym: token5.text.toLowerCase(), fusable: !/\s/.test(token5.text) };
-      else piece = this.slot(token5, rng, depth);
+      if (token6.kind === "text") piece = { text: token6.text, etym: token6.text.toLowerCase(), fusable: !/\s/.test(token6.text) };
+      else piece = this.slot(token6, rng, depth);
       if (!joinNext) flush();
       group.push(piece);
       joinNext = false;
@@ -64261,10 +64261,10 @@ function welshPatronymic(father) {
 function greekPatronymic(father) {
   return (/[aeiouAEIOU]$/.test(father) ? father.slice(0, -1) : father) + "ides";
 }
-function nativeOf(culture, place3) {
+function nativeOf(culture, place4) {
   const word = BYNAMES_DATA.titles.nativeOf[culture];
-  if (!word) return `of ${place3}`;
-  return word === "de" && /^[AEIOUaeiouÆæ]/.test(place3) ? `d'${place3}` : `${word} ${place3}`;
+  if (!word) return `of ${place4}`;
+  return word === "de" && /^[AEIOUaeiouÆæ]/.test(place4) ? `d'${place4}` : `${word} ${place4}`;
 }
 function render2(ctx, pattern) {
   let failed = false;
@@ -64486,8 +64486,8 @@ function buildTitle(ctx, kind, length) {
   if (name) {
     const ofAt = firstShape === "{rank} of {town}" ? first.text.search(/ (of|de|d') ?/) : -1;
     const rank = ofAt >= 0 ? first.text.slice(0, ofAt) : first.text;
-    const place3 = ofAt >= 0 ? first.text.slice(ofAt) : "";
-    head = (first.after ? `${name} ${rank}` : `${rank} ${name}`) + place3;
+    const place4 = ofAt >= 0 ? first.text.slice(ofAt) : "";
+    head = (first.after ? `${name} ${rank}` : `${rank} ${name}`) + place4;
   }
   return { part: parts.join(", "), text: `${head}, ${rest}`, kind: "full", shape: "full style", tones: tonesOf([...shapeTones2], ctx.drawn) };
 }
@@ -75834,6 +75834,1262 @@ Names to allow, though they echo a real or well-known vessel.
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
 
+// src/data/route-names.json
+var route_names_default = {
+  $comment: "Route names (docs/route-names-brief.md \xA74\u2013\xA78, \xA712). Words come from settlement-vocab.json through src/settlement/vocab.ts.",
+  version: 1,
+  any: "routes of any kind",
+  eras: [
+    { code: "AN", label: "ancient", settings: ["FL", "FH"] },
+    { code: "MD", label: "medieval", settings: ["FL", "FH"] },
+    { code: "EM", label: "early modern", settings: ["FL", "FH"] },
+    { code: "ST", label: "steam age", settings: ["MR", "MF"] },
+    { code: "MO", label: "modern", settings: ["MR", "MF"] },
+    { code: "NF", label: "near future", settings: ["SF", "SF"] },
+    { code: "IS", label: "interstellar", settings: ["SF", "SF"] }
+  ],
+  cultures: [
+    { key: "general", label: "General", group: "" },
+    { key: "anglo-saxon", label: "Anglo-Saxon", group: "British Isles and northern Europe" },
+    { key: "norse", label: "Norse", group: "British Isles and northern Europe", kindMult: { sea: 2 } },
+    { key: "celtic", label: "Celtic", group: "British Isles and northern Europe" },
+    { key: "norman-british", label: "Norman & British", group: "British Isles and northern Europe" },
+    { key: "roman", label: "Roman / Italian", group: "Western and southern Europe", kindMult: { military: 1.5, road: 1.5 } },
+    { key: "greek-byzantine", label: "Greek & Byzantine", group: "Western and southern Europe" },
+    { key: "slavic", label: "Slavic", group: "Eastern Europe and the steppe" },
+    { key: "steppe", label: "Turkic & Mongol steppe", group: "Eastern Europe and the steppe", kindMult: { trade: 2, military: 1.5, sea: 0.2 } },
+    { key: "arabic-persian", label: "Arabic & Persian", group: "Middle East, Africa and the Indian Ocean", kindMult: { trade: 2, pilgrim: 1.5 } },
+    { key: "indian", label: "Indian", group: "Middle East, Africa and the Indian Ocean" },
+    { key: "chinese", label: "Chinese", group: "East Asia" },
+    { key: "japanese", label: "Japanese", group: "East Asia", kindMult: { pilgrim: 1.5 } },
+    { key: "korean", label: "Korean", group: "East Asia", kindMult: { pilgrim: 1.5 } },
+    { key: "egyptian", label: "Egyptian", group: "Middle East, Africa and the Indian Ocean", kindMult: { pilgrim: 1.5, sea: 0.5 } },
+    { key: "ethiopian", label: "Ethiopian", group: "Middle East, Africa and the Indian Ocean", kindMult: { trade: 2 } },
+    { key: "bantu", label: "Bantu", group: "Middle East, Africa and the Indian Ocean" },
+    { key: "west-african", label: "West African", group: "Middle East, Africa and the Indian Ocean", kindMult: { trade: 2 } },
+    { key: "aztec", label: "Aztec", group: "The Americas" },
+    { key: "maya", label: "Maya", group: "The Americas" },
+    { key: "polynesian", label: "Polynesian", group: "the Pacific and the Andes", sensitive: true, kindMult: { sea: 4, road: 0.5, drove: 0, military: 0 }, folk: "polynesian", figure: ["Chief", "High Chief"] },
+    { key: "andean", label: "Andean", group: "the Pacific and the Andes", sensitive: true, kindMult: { road: 1.5, military: 0.5, sea: 0.3 }, folk: "andean", figure: ["Lord", "Great Lord"] }
+  ],
+  kinds: [
+    { key: "road", menu: "Roads and ways", plural: "roads and ways", description: "Long-distance roads, old ways and highways", era: { AN: 30, MD: 30, EM: 25, ST: 15, MO: 10, NF: 5, IS: 0 } },
+    { key: "trade", menu: "Trade routes", plural: "trade routes", description: "Salt ways, caravan roads and goods routes", era: { AN: 25, MD: 20, EM: 20, ST: 10, MO: 5, NF: 5, IS: 0 } },
+    { key: "pilgrim", menu: "Pilgrim and holy roads", plural: "pilgrim roads", description: "Pilgrims' ways, sacred ways and corpse roads", era: { AN: 10, MD: 15, EM: 10, ST: 5, MO: 3, NF: 0, IS: 0 }, fantasticEra: { NF: 5, IS: 5 } },
+    { key: "military", menu: "Military roads", plural: "military roads", description: "Army ways, frontier and post roads", era: { AN: 15, MD: 10, EM: 10, ST: 5, MO: 2, NF: 0, IS: 0 } },
+    { key: "drove", menu: "Droves and tracks", plural: "droves and tracks", description: "Drove roads, packhorse ways and old tracks", era: { AN: 10, MD: 15, EM: 15, ST: 10, MO: 2, NF: 0, IS: 0 } },
+    { key: "sea", menu: "Sea routes", plural: "sea routes", description: "Passages, runs and sea roads", era: { AN: 10, MD: 10, EM: 15, ST: 10, MO: 5, NF: 5, IS: 0 } },
+    { key: "rail", menu: "Railways and canals", plural: "railways and canals", description: "Canals from the early modern era; railways from the steam age", era: { AN: 0, MD: 0, EM: 5, ST: 40, MO: 20, NF: 15, IS: 0 } },
+    { key: "motor", menu: "Modern roads", plural: "modern roads", description: "Numbered roads, highways and bypasses", era: { AN: 0, MD: 0, EM: 0, ST: 0, MO: 50, NF: 30, IS: 0 } },
+    { key: "space", menu: "Space lanes", plural: "space lanes", description: "Runs, lanes, corridors and jump routes", era: { AN: 0, MD: 0, EM: 0, ST: 0, MO: 0, NF: 40, IS: 100 } }
+  ],
+  regions: {
+    roman: { COR: 0.3, WCY: 1, SEA: 1.5, EAN: 1.5, WMM: 1.5, WAL: 0.5, EMD: 1.5, NTH: 1.2, SBL: 0.8, SLO: 0.3, SHH: 0, NSI: 0 },
+    drove: { COR: 1, WCY: 1, SEA: 0.5, EAN: 0.5, WMM: 1.5, WAL: 3, EMD: 1, NTH: 2, SBL: 3, SLO: 2, SHH: 3, NSI: 2 },
+    causeway: { COR: 1, WCY: 1.5, SEA: 1, EAN: 3, WMM: 1, WAL: 2, EMD: 1.5, NTH: 1, SBL: 1, SLO: 1, SHH: 1, NSI: 1 },
+    corpse: { COR: 1, WCY: 1, SEA: 0.5, EAN: 0.5, WMM: 1, WAL: 1, EMD: 1, NTH: 3, SBL: 3, SLO: 1, SHH: 1, NSI: 1 },
+    salt: { COR: 1, WCY: 1, SEA: 1, EAN: 1.5, WMM: 3, WAL: 1, EMD: 1.5, NTH: 1, SBL: 1, SLO: 1, SHH: 1, NSI: 1 },
+    ridge: { COR: 1, WCY: 2, SEA: 2, EAN: 1, WMM: 1, WAL: 1, EMD: 1, NTH: 1, SBL: 1, SLO: 1, SHH: 0.3, NSI: 0.3 },
+    packhorse: { COR: 2, WCY: 2, SEA: 0.5, EAN: 0.5, WMM: 1, WAL: 1.5, EMD: 1, NTH: 3, SBL: 1.5, SLO: 1, SHH: 1, NSI: 1 },
+    army: { COR: 1, WCY: 2, SEA: 2, EAN: 1, WMM: 1, WAL: 1, EMD: 1, NTH: 1, SBL: 1, SLO: 1, SHH: 1, NSI: 1 },
+    pedlar: { COR: 1, WCY: 1, SEA: 1, EAN: 2, WMM: 1, WAL: 1, EMD: 1, NTH: 1, SBL: 1, SLO: 1, SHH: 1, NSI: 1 },
+    militaryRoad: { COR: 1, WCY: 1, SEA: 1, EAN: 1, WMM: 1, WAL: 1, EMD: 1, NTH: 1, SBL: 2, SLO: 2, SHH: 3, NSI: 1 },
+    peat: { COR: 1, WCY: 1, SEA: 0, EAN: 0, WMM: 0.5, WAL: 2, EMD: 0, NTH: 1.5, SBL: 1.5, SLO: 1.5, SHH: 3, NSI: 3 }
+  },
+  shapes: {
+    road: [
+      { p: "{direction} Road", w: 10, e: ["AN", "MD", "EM", "ST", "MO", "NF"], t: ["plain"] },
+      { p: "Great {direction} Road", w: 8, e: ["MD", "EM", "ST", "MO"] },
+      { p: "Old {direction} Road", w: 6, e: ["EM", "ST", "MO"] },
+      { p: "{destination} Road", w: 15, t: ["plain"] },
+      { p: "Road to {destination}", w: 5 },
+      { p: "{destination} Street", w: 6, e: ["AN", "MD"], c: ["british", "roman"], r: "roman" },
+      { p: "{figure:poss} Highway", w: 6, e: ["MD", "EM", "ST"], t: ["grand"] },
+      { p: "{figure:poss} Road", w: 6, t: ["grand"] },
+      { p: "{person:poss} Road", w: 4 },
+      { p: "{person:poss} Causeway", w: 2, r: "causeway" },
+      { p: "{folk} Way", w: 10, e: ["AN", "MD"], c: ["british", "norse"] },
+      { p: "Street of {person:poss} People", w: 5, e: ["AN", "MD"], c: ["anglo-saxon", "norman-british"], r: "roman" },
+      { p: "{routeFeature} Way", w: 8, e: ["AN", "MD"], c: ["british"], t: ["plain"] },
+      { p: "{routeMaterial} Street", w: 8, e: ["AN", "MD"], c: ["british"], t: ["plain"], r: "roman" },
+      { p: "{kingdom} Street", w: 3, e: ["MD"], c: ["anglo-saxon", "norman-british"], t: ["grand"], r: "roman" },
+      { p: "{routeLandform} Way", w: 6, rw: { token: "routeLandform", word: "Downs", r: "ridge" } },
+      { p: "{destination} Causeway", w: 3, r: "causeway" },
+      { p: "{destination} Turnpike", w: 6, e: ["EM", "ST"], c: ["british", "general"], t: ["plain"] },
+      { p: "{destination} Mail Road", w: 4, e: ["EM", "ST"], c: ["british", "general"] },
+      { p: "fixed", w: 6 },
+      { p: "{heraldicBeast:poss} Road", w: 4, h: true },
+      { p: "Fey Road", w: 3, h: true },
+      { p: "Road Under the Hill", w: 2, h: true },
+      { p: "Giant's Road", w: 2, h: true },
+      { p: "Witch Way", w: 2, t: ["light"], h: true }
+    ],
+    trade: [
+      { p: "{goods} Way", w: 15, e: ["AN", "MD", "EM"], t: ["plain"], rw: { token: "goods", word: "Salt", r: "salt" } },
+      { p: "{goods} Road", w: 20, t: ["plain"], rw: { token: "goods", word: "Salt", r: "salt" }, cw: { roman: { goods: { Salt: 5 } } } },
+      { p: "{goods} Route", w: 8, e: ["EM", "ST", "MO"] },
+      { p: "{goods} and {goods} Road", w: 4 },
+      { p: "{travellers:poss} Way", w: 10, e: ["MD", "EM"], only: { travellers: ["Merchants", "Carriers", "Pedlars", "Packmen", "Saltmen"] }, rw: { token: "travellers", word: "Pedlars", r: "pedlar" } },
+      { p: "{dayNumber} Days Road", w: 5, e: ["AN", "MD", "EM"], c: ["arabic-persian", "egyptian", "west-african", "ethiopian", "steppe"], t: ["strange"] },
+      { p: "Road of the {number} Wells", w: 5, e: ["AN", "MD", "EM"], c: ["arabic-persian", "west-african", "steppe", "indian"] },
+      { p: "Caravan Road to {destination}", w: 6, e: ["AN", "MD", "EM", "ST"], c: ["arabic-persian", "steppe", "ethiopian", "west-african", "indian", "chinese"] },
+      { p: "fixed", w: 4 }
+    ],
+    pilgrim: [
+      { p: "Pilgrims' Road to {holySite}", w: 15 },
+      { p: "Sacred Way to {holySite}", w: 10, e: ["AN", "MD", "EM"], t: ["grand"] },
+      { p: "Road of the {number} {holySitePl}", w: 8, t: ["strange"] },
+      { p: "Way of {holy}", w: 8, e: ["MD", "EM", "ST", "MO"], c: ["christian"], t: ["grand"] },
+      { p: "Ways of {god}", w: 8, e: ["AN"], c: ["egyptian"], t: ["grand"] },
+      { p: "{destination} Pilgrim Road", w: 8, e: ["MD", "EM", "ST"], c: ["japanese", "korean", "indian", "chinese"] },
+      { p: "White Road to {holySite}", w: 10, e: ["AN", "MD"], c: ["maya"] },
+      { p: "fixed", w: 6 },
+      { p: "Road of the {number} Gods", w: 5, e: ["AN", "MD", "EM"], h: true },
+      { p: "Spirit Road", w: 4, h: true },
+      { p: "Ghost Road", w: 3, t: ["grim"], h: true },
+      { p: "Pilgrim Stars", w: 10, e: ["NF", "IS"], h: true },
+      { p: "Starlit Way", w: 10, e: ["NF", "IS"], h: true },
+      { p: "Road of the {number} Suns", w: 10, e: ["NF", "IS"], h: true }
+    ],
+    military: [
+      { p: "{figure:poss} Army Road", w: 5, e: ["AN", "MD", "EM"], t: ["grim"] },
+      { p: "{destination} Military Road", w: 8, e: ["EM", "ST"], t: ["plain"], r: "militaryRoad", rEra: ["EM"] },
+      { p: "{ordinal} Legion's Road", w: 6, e: ["AN"], c: ["roman"] },
+      { p: "{directionAdj} Frontier Road", w: 8 },
+      { p: "Road of the {number} Forts", w: 6, e: ["AN", "MD", "EM", "ST"] },
+      { p: "{destination} Post Road", w: 8, e: ["AN", "MD", "EM", "ST"], c: ["steppe", "chinese", "roman", "slavic", "arabic-persian", "andean"], t: ["plain"] },
+      { p: "fixed", w: 6 }
+    ],
+    drove: [
+      { p: "{destination} Drove", w: 10, e: ["MD", "EM", "ST"], t: ["plain"], r: "drove" },
+      { p: "{travellers:poss} Way", w: 15, e: ["MD", "EM", "ST"], r: "drove", only: { travellers: ["Drovers", "Shepherds", "Packmen", "Saltmen", "Tinkers", "Miners"] } },
+      { p: "{destination} Packhorse Road", w: 6, e: ["MD", "EM"], c: ["british"], r: "packhorse" },
+      { p: "{goods} Track", w: 8, t: ["plain"] },
+      { p: "{destination} Portage", w: 5, e: ["MD"], c: ["slavic", "norse"] },
+      { p: "fixed", w: 12 }
+    ],
+    sea: [
+      { p: "{directionAdj} Passage", w: 10 },
+      { p: "{goods} Route", w: 10, e: ["MD", "EM", "ST", "MO"] },
+      { p: "Sea Road to {destination}", w: 15 },
+      { p: "{destination} Run", w: 10, e: ["EM", "ST", "MO"] },
+      { p: "{direction} Way", w: 8, e: ["MD"], c: ["norse"] },
+      { p: "Star Path to {destination}", w: 15, c: ["polynesian"] },
+      { p: "{skyPath} Path", w: 10, c: ["polynesian"], t: ["strange"] },
+      { p: "fixed", w: 6 }
+    ],
+    rail: [
+      { p: "{town} and {town} Canal", w: 12, e: ["EM", "ST"], t: ["plain"] },
+      { p: "Grand {directionAdj} Canal", w: 8, e: ["EM", "ST"], t: ["grand"] },
+      { p: "{goods} Canal", w: 5, e: ["EM", "ST"], t: ["plain"] },
+      { p: "{town} and {town} Railway", w: 15, e: ["ST", "MO"], t: ["plain"] },
+      { p: "{town}\u2013{town} Railway", w: 10, e: ["ST", "MO"], c: ["chinese", "korean", "japanese", "slavic", "indian"], t: ["plain"] },
+      { p: "Great {directionAdj} Railway", w: 10, e: ["ST", "MO"], t: ["grand"] },
+      { p: "{directionAdj} Line", w: 8, e: ["ST", "MO", "NF"] },
+      { p: "{directionAdj} Main Line", w: 6, e: ["ST", "MO"], cx: { japanese: 3 } },
+      { p: "{town} Branch", w: 6, e: ["ST", "MO"], t: ["plain"] },
+      { p: "{town} Light Railway", w: 4, e: ["ST", "MO"], c: ["british", "general"], t: ["light"] },
+      { p: "{town} Tramway", w: 5, e: ["ST", "MO"], t: ["plain"] },
+      { p: "{directionAdj} Express", w: 4, e: ["MO", "NF"] },
+      { p: "{town} Skyway", w: 10, e: ["ST"], h: true },
+      { p: "Aether Lane {numberWord}", w: 8, e: ["ST"], h: true },
+      { p: "Imperial Air Road", w: 3, e: ["ST"], h: true },
+      { p: "Pneumatic Line", w: 4, e: ["ST"], h: true },
+      { p: "Brass Line", w: 4, e: ["ST"], h: true },
+      { p: "{town} Overhead", w: 5, e: ["ST"], h: true },
+      { p: "{directionAdj} Airship Road", w: 6, e: ["ST"], h: true },
+      { p: "fixed", w: 4 }
+    ],
+    motor: [
+      { p: "{roadLetter}{n}", w: 15, e: ["MO", "NF"], c: ["british"], t: ["plain"], letters: { A: 3, B: 2, M: 1 } },
+      { p: "Route {n}", w: 10, e: ["MO", "NF"], c: ["general"], t: ["plain"] },
+      { p: "National Road {n}", w: 8, e: ["MO", "NF"], c: ["!british", "!general"], t: ["plain"] },
+      { p: "{directionAdj} Highway", w: 10, e: ["MO", "NF"] },
+      { p: "{town} Bypass", w: 10, e: ["MO", "NF"], t: ["plain"] },
+      { p: "{town} Ring Road", w: 8, e: ["MO", "NF"], t: ["plain"] },
+      { p: "{directionAdj} Circular", w: 5, e: ["MO", "NF"], c: ["british"], t: ["plain"] },
+      { p: "{town} Expressway", w: 6, e: ["MO", "NF"], cx: { chinese: 3, japanese: 3, korean: 3 } },
+      { p: "{directionAdj} Motorway", w: 6, e: ["MO", "NF"], c: ["british", "general"], t: ["plain"] },
+      { p: "{person:poss} Highway", w: 4, e: ["MO"] },
+      { p: "{destination} Trail", w: 5, e: ["MO"], c: ["general"] },
+      { p: "fixed", w: 4 }
+    ],
+    space: [
+      { p: "{star} Run", w: 15, e: ["NF", "IS"] },
+      { p: "{star}\u2013{star} Lane", w: 15, e: ["NF", "IS"] },
+      { p: "{spaceLand} Corridor", w: 10, e: ["NF", "IS"] },
+      { p: "{ordinal} Jump Route", w: 8, e: ["IS"], t: ["plain"] },
+      { p: "Gate Chain {greek}", w: 8, e: ["IS"], t: ["plain"] },
+      { p: "{spaceGoods} Run", w: 8, e: ["NF", "IS"], t: ["plain"] },
+      { p: "fixed", w: 10 }
+    ]
+  },
+  cultureShapes: [
+    { culture: "roman", kind: "road", p: "{romanRoadNomen} Way", w: 20, e: ["AN", "MD"], t: ["grand"] },
+    { culture: "greek-byzantine", kind: "road", p: "Imperial Road to {destination}", w: 10, e: ["MD"], t: ["grand"] },
+    { culture: "greek-byzantine", kind: "pilgrim", p: "Road of the {number} Monasteries", w: 8, e: ["MD", "EM"] },
+    { culture: "arabic-persian", kind: "road", p: "{patron:poss} Road", w: 10, e: ["MD", "EM"] },
+    { culture: "egyptian", kind: "road", p: "Desert Road to {destination}", w: 10, e: ["AN", "MD", "EM"] },
+    { culture: "egyptian", kind: "trade", p: "Road of the {number} Oases", w: 8, e: ["AN", "MD", "EM"] },
+    { culture: "indian", kind: "road", p: "{directionAdj} Road", w: 20, e: ["AN", "MD", "EM"] },
+    { culture: "chinese", kind: "road", p: "Plank Road to {destination}", w: 8, e: ["AN", "MD", "EM"] },
+    { culture: "chinese", kind: "road", p: "Imperial Road to {destination}", w: 10, e: ["AN", "MD", "EM", "ST"], t: ["grand"] },
+    { culture: "japanese", kind: "road", p: "{directionAdj} {jFeature} Road", w: 25, e: ["MD", "EM", "ST"] },
+    { culture: "japanese", kind: "road", p: "Old {destination} Road", w: 15, e: ["EM", "ST"] },
+    { culture: "korean", kind: "road", p: "{directionAdj} Great Road", w: 20, e: ["MD", "EM", "ST"] },
+    { culture: "korean", kind: "road", p: "{destination} Great Road", w: 10, e: ["MD", "EM", "ST"] },
+    { culture: "steppe", kind: "road", p: "Steppe Road", w: 10, e: ["AN", "MD", "EM", "ST"] },
+    { culture: "slavic", kind: "road", p: "Road from the {folk} to the {folk}", w: 6, e: ["MD"], repeats: true },
+    { culture: "slavic", kind: "road", p: "Great {directionAdj} Road", w: 10, e: ["EM", "ST"] },
+    { culture: "slavic", kind: "road", p: "Exiles' Road", w: 3, e: ["EM", "ST"], t: ["grim"] },
+    { culture: "celtic", kind: "road", p: "Great Road of {destination}", w: 10, e: ["AN", "MD"] },
+    { culture: "ethiopian", kind: "road", p: "Highland Road to {destination}", w: 10 },
+    { culture: "west-african", kind: "road", p: "River Road to {destination}", w: 8 },
+    { culture: "west-african", kind: "trade", p: "Desert Road to {destination}", w: 10, e: ["AN", "MD", "EM"] },
+    { culture: "bantu", kind: "road", p: "Road to the Coast", w: 10 },
+    { culture: "aztec", kind: "road", p: "{directionAdj} Causeway", w: 15, e: ["AN", "MD"] },
+    { culture: "aztec", kind: "road", p: "{destination} Causeway", w: 10, e: ["AN", "MD"] },
+    { culture: "aztec", kind: "trade", p: "Merchants' Road to {destination}", w: 10, e: ["AN", "MD"] },
+    { culture: "maya", kind: "road", p: "White Road to {destination}", w: 25, e: ["AN", "MD"] },
+    { culture: "maya", kind: "road", p: "White Road", w: 5, e: ["AN", "MD"] },
+    { culture: "andean", kind: "road", p: "Royal Road to {destination}", w: 20, e: ["AN", "MD"], t: ["grand"] },
+    { culture: "andean", kind: "road", p: "Mountain Road to {destination}", w: 10 },
+    { culture: "polynesian", kind: "road", p: "Coast Path to {destination}", w: 15 }
+  ],
+  spaceBorrow: {
+    share: 0.25,
+    kinds: ["road", "trade", "pilgrim", "sea"]
+  },
+  roadNumbers: {
+    A: [[1, 99, 3], [100, 999, 2], [1e3, 9999, 1]],
+    B: [[1, 99, 3], [100, 999, 2], [1e3, 9999, 1]],
+    M: [[1, 99, 1]],
+    route: [[1, 199, 1]]
+  },
+  cap: 8,
+  safeguards: {
+    block: ["Icknield Way", "Fosse Way", "Watling Street", "Ermine Street", "Stane Street", "Dere Street", "Akeman Street", "Peddars Way", "Sarn Helen", "Great North Road", "Old North Road", "Old Kent Road", "The Ridgeway", "Military Road", "The Corpse Road", "Via Appia", "Appian Way", "Via Flaminia", "Flaminian Way", "Via Aurelia", "Aurelian Way", "Via Aemilia", "Aemilian Way", "Via Egnatia", "Egnatian Way", "Via Salaria", "Salarian Way", "Via Sacra", "Via Maris", "Way of the Sea", "Via Francigena", "Grand Trunk Road", "Tea Horse Road", "Tea and Horse Road", "T\u014Dkaid\u014D", "Tokaido", "Eastern Sea Road", "Nakasend\u014D", "Nakasendo", "Central Mountain Road", "Kumano Kod\u014D", "Camino de Santiago", "Way of Saint James", "Qhapaq \xD1an", "Inca Road", "Darb al-Arba\u02BF\u012Bn", "Forty Days Road", "Darb Zubayda", "Ways of Horus", "Route from the Varangians to the Greeks", "Road from the Varangians to the Greeks", "Vladimirka", "Siberian Trakt", "Great Siberian Road", "Oregon Trail", "Santa Fe Trail", "Chisholm Trail", "Natchez Trace", "Lincoln Highway", "Route 66", "Pan-American Highway", "Burma Road", "Ledo Road", "Ho Chi Minh Trail", "Karakoram Highway", "Trans-Siberian Railway", "Cape to Cairo", "Grand Canal", "Grand Union Canal", "Grand Junction Canal", "Grand Western Canal", "Great Western Railway", "Great Northern Railway", "Great Eastern Railway", "Great Central Railway", "Panama Canal", "Suez Canal", "Kiel Canal", "Southern Cross", "Trail of Tears", "Road of Bones", "Death Railway", "Burma Railway", "Highway of Death", "Via Dolorosa", "Kessel Run", "Hydian Way", "Corellian Run", "Perlemian Trade Route", "Rimma Trade Route", "Yellow Brick Road", "Kingsroad", "Old Forest Road", "Rainbow Road", "Fury Road"],
+    flag: ["Pilgrims' Way", "Silk Road", "Amber Road", "Spice Route", "Incense Road", "Royal Road", "King's Highway", "King's Road", "Salt Road", "Salt Way", "Great West Road", "Great South Road", "Great Road", "Straight Road", "Plank Road", "Post Road", "Market Way", "Portway", "East Road", "Old Road", "Green Lane", "Hollow Way", "Monsoon Road", "Whale-Road"],
+    flagListBlocks: false,
+    banned: ["Slave", "Slaver", "Slavers'", "Trail of Tears"]
+  }
+};
+
+// src/data/settlement-vocab.json
+var settlement_vocab_default = {
+  $comment: "Shared settlement vocabulary (docs/route-names-brief.md \xA73, \xA76). Read through src/settlement/vocab.ts; vocabulary packs add to these pools. Every pool is listed in docs/vocabulary-pools.md.",
+  version: 1,
+  eras: ["AN", "MD", "EM", "ST", "MO", "NF", "IS"],
+  cultures: ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya", "polynesian", "andean"],
+  cultureGroups: {
+    british: {
+      cultures: ["anglo-saxon", "celtic", "norman-british"]
+    },
+    christian: {
+      cultures: ["anglo-saxon", "celtic", "norman-british", "slavic"],
+      from: { "greek-byzantine": "MD", roman: "MD" }
+    }
+  },
+  regionTags: ["roman", "drove", "causeway", "corpse", "salt", "ridge", "packhorse", "army", "pedlar", "militaryRoad", "peat"],
+  pools: {
+    direction: {
+      entries: [
+        { w: "North" },
+        { w: "South" },
+        { w: "East" },
+        { w: "West" },
+        { w: "North-East", x: 0.2 },
+        { w: "North-West", x: 0.2 },
+        { w: "South-East", x: 0.2 },
+        { w: "South-West", x: 0.2 }
+      ]
+    },
+    directionAdj: {
+      entries: [
+        { w: "Northern" },
+        { w: "Southern" },
+        { w: "Eastern" },
+        { w: "Western" }
+      ]
+    },
+    travellers: {
+      entries: [
+        { w: "Pedlars", x: 2, t: ["light"] },
+        { w: "Drovers", x: 2 },
+        { w: "Pilgrims", x: 2 },
+        { w: "Carriers" },
+        { w: "Saltmen" },
+        { w: "Packmen" },
+        { w: "Merchants", x: 2 },
+        { w: "Smugglers", t: ["light"] },
+        { w: "Soldiers" },
+        { w: "Tinkers", t: ["light"] },
+        { w: "Shepherds" },
+        { w: "Miners" },
+        { w: "Monks", c: ["christian"] },
+        { w: "Colliers", e: ["ST"] },
+        { w: "Navvies", e: ["ST"] }
+      ]
+    },
+    routeFeature: {
+      entries: [
+        { w: "Ditch", x: 2 },
+        { w: "Dyke" },
+        { w: "Bank" },
+        { w: "Mound" },
+        { w: "Barrow" },
+        { w: "Wall" },
+        { w: "Stone" },
+        { w: "Cross" },
+        { w: "Thorn" },
+        { w: "Beacon" }
+      ]
+    },
+    routeMaterial: {
+      entries: [
+        { w: "Stone", x: 2 },
+        { w: "Flint" },
+        { w: "Chalk" },
+        { w: "Gravel" },
+        { w: "Sand" },
+        { w: "Timber" },
+        { w: "Plank" },
+        { w: "Cobble", e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Brick", e: ["ST", "MO", "NF", "IS"] }
+      ]
+    },
+    routeLandform: {
+      entries: [
+        { w: "Downs" },
+        { w: "Fen" },
+        { w: "Moor" },
+        { w: "Heath" },
+        { w: "Wold" },
+        { w: "Fell" },
+        { w: "Dale" },
+        { w: "Vale" },
+        { w: "Marsh" },
+        { w: "Hill" },
+        { w: "Cliff" },
+        { w: "Shore" },
+        { w: "Forest" },
+        { w: "Desert", c: ["arabic-persian", "egyptian", "west-african", "steppe"] },
+        { w: "Steppe", c: ["steppe"] },
+        { w: "Highland" }
+      ]
+    },
+    routeGoods: {
+      entries: [
+        { w: "Salt", x: 3 },
+        { w: "Wool", x: 2 },
+        { w: "Amber" },
+        { w: "Tin" },
+        { w: "Lead" },
+        { w: "Iron" },
+        { w: "Copper" },
+        { w: "Grain" },
+        { w: "Corn" },
+        { w: "Timber" },
+        { w: "Fish" },
+        { w: "Cloth" },
+        { w: "Silk" },
+        { w: "Spice" },
+        { w: "Gold" },
+        { w: "Silver" },
+        { w: "Furs" },
+        { w: "Horses" },
+        { w: "Coal", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Cotton", e: ["ST", "MO", "NF", "IS"] }
+      ],
+      cultureExtra: {
+        "anglo-saxon": [
+          { w: "Wool" },
+          { w: "Salt" },
+          { w: "Tin" },
+          { w: "Lead" }
+        ],
+        "norman-british": [
+          { w: "Wool" },
+          { w: "Salt" },
+          { w: "Tin" },
+          { w: "Lead" }
+        ],
+        celtic: [
+          { w: "Wool" },
+          { w: "Salt" },
+          { w: "Tin" },
+          { w: "Lead" }
+        ],
+        norse: [
+          { w: "Furs" },
+          { w: "Amber" },
+          { w: "Fish" }
+        ],
+        roman: [
+          { w: "Salt" },
+          { w: "Wine" },
+          { w: "Olive Oil" }
+        ],
+        "greek-byzantine": [
+          { w: "Wine" },
+          { w: "Silk" },
+          { w: "Olive Oil" }
+        ],
+        slavic: [
+          { w: "Furs" },
+          { w: "Amber" },
+          { w: "Wax" },
+          { w: "Honey" }
+        ],
+        steppe: [
+          { w: "Horses" },
+          { w: "Felt" },
+          { w: "Tea" }
+        ],
+        "arabic-persian": [
+          { w: "Incense" },
+          { w: "Spice" },
+          { w: "Pearls" },
+          { w: "Dates" }
+        ],
+        indian: [
+          { w: "Pepper" },
+          { w: "Cotton" },
+          { w: "Spice" }
+        ],
+        chinese: [
+          { w: "Silk" },
+          { w: "Tea" },
+          { w: "Porcelain" },
+          { w: "Jade" }
+        ],
+        japanese: [
+          { w: "Rice" },
+          { w: "Salt" },
+          { w: "Silk" }
+        ],
+        korean: [
+          { w: "Ginseng" },
+          { w: "Paper" },
+          { w: "Silk" }
+        ],
+        egyptian: [
+          { w: "Gold" },
+          { w: "Grain" },
+          { w: "Linen" }
+        ],
+        ethiopian: [
+          { w: "Salt" },
+          { w: "Incense" },
+          { w: "Coffee" }
+        ],
+        bantu: [
+          { w: "Copper" },
+          { w: "Gold" },
+          { w: "Cattle" }
+        ],
+        "west-african": [
+          { w: "Salt" },
+          { w: "Gold" },
+          { w: "Kola" }
+        ],
+        aztec: [
+          { w: "Cacao" },
+          { w: "Jade" },
+          { w: "Obsidian" },
+          { w: "Salt" }
+        ],
+        maya: [
+          { w: "Cacao" },
+          { w: "Jade" },
+          { w: "Obsidian" },
+          { w: "Salt" }
+        ],
+        polynesian: [
+          { w: "Stone" },
+          { w: "Feather" }
+        ],
+        andean: [
+          { w: "Salt" },
+          { w: "Wool" },
+          { w: "Silver" }
+        ]
+      }
+    },
+    holySite: {
+      entries: [
+        { w: "Holy Well", x: 2 },
+        { w: "Shrine", x: 2 },
+        { w: "Oracle" },
+        { w: "Holy Mountain" },
+        { w: "Sacred Spring" },
+        { w: "Standing Stones" },
+        { w: "Sacred Grove" },
+        { w: "Temple" },
+        { w: "Holy Isle" },
+        { w: "Abbey", c: ["christian"] },
+        { w: "Minster", c: ["christian"] }
+      ]
+    },
+    holySitePl: {
+      entries: [
+        { w: "Shrines" },
+        { w: "Temples" },
+        { w: "Wells" },
+        { w: "Springs" },
+        { w: "Stones" },
+        { w: "Monasteries", c: ["christian", "greek-byzantine", "korean", "japanese"] }
+      ]
+    },
+    dayNumber: {
+      entries: [
+        { w: "Seven" },
+        { w: "Ten" },
+        { w: "Twelve" },
+        { w: "Twenty" },
+        { w: "Thirty" }
+      ]
+    },
+    jFeature: {
+      entries: [
+        { w: "Sea", x: 2, c: ["japanese"] },
+        { w: "Mountain", x: 2, c: ["japanese"] },
+        { w: "Province", c: ["japanese"] },
+        { w: "Coast", c: ["japanese"] },
+        { w: "River", c: ["japanese"] },
+        { w: "Pine", c: ["japanese"] }
+      ]
+    },
+    romanRoadNomen: {
+      entries: [
+        { w: "Fabian", c: ["roman"] },
+        { w: "Junian", c: ["roman"] },
+        { w: "Licinian", c: ["roman"] },
+        { w: "Sempronian", c: ["roman"] },
+        { w: "Tullian", c: ["roman"] },
+        { w: "Sulpician", c: ["roman"] },
+        { w: "Caecilian", c: ["roman"] },
+        { w: "Calpurnian", c: ["roman"] },
+        { w: "Antonian", c: ["roman"] },
+        { w: "Octavian", c: ["roman"] },
+        { w: "Livian", c: ["roman"] },
+        { w: "Servilian", c: ["roman"] },
+        { w: "Manlian", c: ["roman"] },
+        { w: "Furian", c: ["roman"] },
+        { w: "Horatian", c: ["roman"] }
+      ]
+    },
+    spaceGoods: {
+      entries: [
+        { w: "Ice", x: 2 },
+        { w: "Helium" },
+        { w: "Ore", x: 2 },
+        { w: "Water" },
+        { w: "Data" },
+        { w: "Salvage" },
+        { w: "Fuel" }
+      ]
+    },
+    skyPath: {
+      entries: [
+        { w: "Morning Star", c: ["polynesian"] },
+        { w: "Evening Star", c: ["polynesian"] },
+        { w: "Rising Swell", c: ["polynesian"] },
+        { w: "Trade Wind", c: ["polynesian"] }
+      ]
+    },
+    "routeFixed:road": {
+      entries: [
+        { w: "Ridgeway", e: ["AN", "MD"], c: ["british"], r: "ridge" },
+        { w: "Hollow Way", e: ["MD", "EM", "ST"], c: ["british"] },
+        { w: "Green Lane", e: ["MD", "EM", "ST"], c: ["british"] },
+        { w: "Old Road", x: 0.5 },
+        { w: "High Road", e: ["EM", "ST"] },
+        { w: "Great Road", e: ["AN", "MD"], c: ["celtic", "indian"] }
+      ]
+    },
+    "routeFixed:trade": {
+      entries: [
+        { w: "Market Way", e: ["MD"], c: ["british"] },
+        { w: "Silk Road", x: 0.2 },
+        { w: "Incense Road", e: ["AN", "MD", "EM"], c: ["arabic-persian", "ethiopian"] }
+      ]
+    },
+    "routeFixed:pilgrim": {
+      entries: [
+        { w: "Pilgrims' Way", e: ["MD", "EM", "ST", "MO"] },
+        { w: "Sacred Way", e: ["AN"], c: ["roman", "greek-byzantine"] },
+        { w: "Corpse Road", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" },
+        { w: "Coffin Way", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" }
+      ]
+    },
+    "routeFixed:military": {
+      entries: [
+        { w: "Army Way", e: ["MD"], c: ["british"], r: "army" },
+        { w: "Straight Road", e: ["AN"], c: ["chinese", "roman"] },
+        { w: "Wall Road", e: ["AN", "MD"], c: ["roman", "chinese"] },
+        { w: "Post Road", e: ["AN", "MD", "EM", "ST"], c: ["steppe", "chinese", "slavic"] },
+        { w: "Frontier Road" }
+      ]
+    },
+    "routeFixed:drove": {
+      entries: [
+        { w: "Drove Road", e: ["MD", "EM", "ST"] },
+        { w: "Packhorse Road", e: ["MD", "EM"], c: ["british"], r: "packhorse" },
+        { w: "Hollow Way", e: ["MD", "EM", "ST"], c: ["british"] },
+        { w: "Green Lane", e: ["MD", "EM", "ST"], c: ["british"] },
+        { w: "Old Track" },
+        { w: "Cattle Road", c: ["bantu", "celtic", "steppe"] },
+        { w: "Corpse Road", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" },
+        { w: "Peat Road", c: ["celtic", "norse"], r: "peat" },
+        { w: "Summer Pasture Path", c: ["celtic", "norse"], r: "peat" },
+        { w: "Winter Road", e: ["EM", "ST"], c: ["slavic"] }
+      ]
+    },
+    "routeFixed:sea": {
+      entries: [
+        { w: "Island Passage" },
+        { w: "Sea Lane", e: ["ST", "MO", "NF"] },
+        { w: "Monsoon Road", c: ["arabic-persian", "indian", "chinese"] },
+        { w: "Whale-Road", t: ["strange"], e: ["AN", "MD"], c: ["anglo-saxon", "norse"] },
+        { w: "Ship-Way", e: ["AN", "MD"], c: ["norse"] }
+      ]
+    },
+    "routeFixed:rail": {
+      entries: []
+    },
+    "routeFixed:motor": {
+      entries: []
+    },
+    "routeFixed:space": {
+      entries: [
+        { w: "The Long Haul" },
+        { w: "The Dark Lane", t: ["grim"] },
+        { w: "The Pilgrim Road" },
+        { w: "The Quiet Lane", t: ["strange"] },
+        { w: "The Narrows" }
+      ]
+    }
+  }
+};
+
+// src/settlement/vocab.ts
+var SETTLEMENT_VOCAB = settlement_vocab_default;
+var VOCAB_ERAS = SETTLEMENT_VOCAB.eras;
+var VOCAB_CULTURES = SETTLEMENT_VOCAB.cultures;
+var VOCAB_CULTURE_GROUPS = Object.keys(SETTLEMENT_VOCAB.cultureGroups);
+var VOCAB_REGION_TAGS = SETTLEMENT_VOCAB.regionTags;
+var POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
+var eraIndex = (era) => VOCAB_ERAS.indexOf(era);
+function inCultureGroup(group, culture, era) {
+  var _a2;
+  const g = SETTLEMENT_VOCAB.cultureGroups[group];
+  if (!g) return false;
+  if (g.cultures.includes(culture)) return true;
+  const from = (_a2 = g.from) == null ? void 0 : _a2[culture];
+  return !!from && eraIndex(era) >= eraIndex(from);
+}
+function cultureAllowed(c, culture, era) {
+  if (!c || c.length === 0) return true;
+  const matches = (key2) => key2 === culture || inCultureGroup(key2, culture, era);
+  const positive = c.filter((k) => !k.startsWith("!"));
+  if (c.some((k) => k.startsWith("!") && matches(k.slice(1)))) return false;
+  return positive.length === 0 || positive.some(matches);
+}
+function entryAllowed(e, where) {
+  if (e.e && !e.e.includes(where.era)) return false;
+  if (e.h !== void 0 && e.h !== where.fantastic) return false;
+  return cultureAllowed(e.c, where.culture, where.era);
+}
+var BUILT_IN_VOCAB = { pools: SETTLEMENT_VOCAB.pools };
+function poolEntries(vocab, name, where) {
+  var _a2, _b, _c, _d;
+  const pool3 = vocab.pools[name];
+  if (!pool3) throw new Error(`Settlement vocabulary: no pool \u201C${name}\u201D.`);
+  const out = [];
+  const at = /* @__PURE__ */ new Map();
+  const add2 = (e, w) => {
+    const i = at.get(e.w);
+    if (i !== void 0) out[i][1] += w;
+    else {
+      at.set(e.w, out.length);
+      out.push([e, w]);
+    }
+  };
+  for (const e of pool3.entries) if (entryAllowed(e, where)) add2(e, (_a2 = e.x) != null ? _a2 : 1);
+  for (const e of (_c = (_b = pool3.cultureExtra) == null ? void 0 : _b[where.culture]) != null ? _c : []) {
+    if (!entryAllowed(e, where)) continue;
+    const i = at.get(e.w);
+    if (i !== void 0) out[i][1] *= 3;
+    else add2(e, ((_d = e.x) != null ? _d : 1) * 3);
+  }
+  return out.filter(([, w]) => w > 0);
+}
+var VOCABULARY_TYPE = "vocabulary";
+function isVocabularyPackContent(content) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  return !!fm && new RegExp(`^type:\\s*["']?${VOCABULARY_TYPE}["']?\\s*$`, "m").test(fm[1]);
+}
+function parseLine(text) {
+  let rest = text.trim();
+  let x;
+  let t;
+  for (let i = 0; i < 2; i++) {
+    const weight = rest.match(/\s*×\s*(\d+(?:\.\d+)?)$/);
+    if (weight && x === void 0) {
+      x = parseFloat(weight[1]);
+      rest = rest.slice(0, weight.index).trim();
+      continue;
+    }
+    const tones = rest.match(/\s*\(([^()]*)\)$/);
+    if (tones && t === void 0) {
+      t = tones[1].split(/[,\s]+/).map((s) => s.trim().toLowerCase()).filter((s) => GROUP_TONES.includes(s));
+      rest = rest.slice(0, tones.index).trim();
+    }
+  }
+  if (!rest) return void 0;
+  return { w: rest, ...x !== void 0 ? { x } : {}, ...t && t.length > 0 ? { t } : {} };
+}
+function parseVocabularyPack(content, note) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  const body = fm ? content.slice(fm[0].length) : content;
+  const sections = [];
+  const problems = [];
+  let current = null;
+  for (const raw of body.split(/\r?\n/)) {
+    const line = raw.trim();
+    const heading = line.match(/^##\s+(.+?)\s*#*$/);
+    if (heading) {
+      current = null;
+      const [pool3, ...parts] = heading[1].split(/\s*·\s*/).map((p) => p.trim());
+      if (!SETTLEMENT_VOCAB.pools[pool3]) {
+        problems.push(`Unknown pool \u201C${pool3}\u201D in vocabulary pack \u201C${note}\u201D.`);
+        continue;
+      }
+      const section = { pool: pool3, entries: [] };
+      let bad = false;
+      for (const part of parts) {
+        if (VOCAB_ERAS.includes(part)) section.era = part;
+        else if (VOCAB_CULTURES.includes(part)) section.culture = part;
+        else {
+          problems.push(`Unknown culture \u201C${part}\u201D in vocabulary pack \u201C${note}\u201D.`);
+          bad = true;
+        }
+      }
+      if (bad) continue;
+      sections.push(section);
+      current = section;
+      continue;
+    }
+    const bullet = line.match(/^[-*+]\s+(.+)$/);
+    if (!bullet || !current) continue;
+    const entry = parseLine(bullet[1]);
+    if (entry) current.entries.push(entry);
+  }
+  return { sections, problems };
+}
+function mergeVocabularyPacks(packs, blocked2 = () => false) {
+  const notices = [];
+  if (packs.length === 0) return { vocab: BUILT_IN_VOCAB, notices };
+  const pools = {};
+  for (const [name, pool3] of Object.entries(SETTLEMENT_VOCAB.pools)) pools[name] = { ...pool3, entries: [...pool3.entries] };
+  for (const pack of packs) {
+    const { sections, problems } = parseVocabularyPack(pack.content, pack.name);
+    notices.push(...problems);
+    for (const s of sections) {
+      for (const e of s.entries) {
+        if (hasBannedWord(e.w) || blocked2(e.w)) continue;
+        pools[s.pool].entries.push({ ...e, ...s.culture ? { c: [s.culture] } : {}, ...s.era ? { e: [s.era] } : {} });
+      }
+    }
+  }
+  return { vocab: { pools }, notices };
+}
+var VOCABULARY_PACK_TEMPLATE = [
+  "---",
+  `type: ${VOCABULARY_TYPE}`,
+  "---",
+  "",
+  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` \xD70.5` or ` (grim)`, and narrow a heading with ` \xB7 japanese` or ` \xB7 MD`.",
+  "",
+  ...POOL_NAMES.flatMap((p) => [`## ${p}`, ""])
+].join("\n");
+
+// src/routes/engine.ts
+var ROUTE_DATA = route_names_default;
+var ROUTE_ERAS = ROUTE_DATA.eras;
+var ROUTE_CULTURES = ROUTE_DATA.cultures;
+var ROUTE_KINDS = ROUTE_DATA.kinds;
+var ROUTE_ANY = ROUTE_DATA.any;
+var BRITISH_CULTURES = ["anglo-saxon", "celtic", "norman-british"];
+var findRouteCulture = (key2) => ROUTE_CULTURES.find((c) => c.key === key2);
+var findRouteKind = (key2) => ROUTE_KINDS.find((k) => k.key === key2);
+var routeEraLabel = (code) => {
+  var _a2, _b;
+  return (_b = (_a2 = ROUTE_ERAS.find((e) => e.code === code)) == null ? void 0 : _a2.label) != null ? _b : code;
+};
+function routeSetting(era, fantastic) {
+  var _a2;
+  const e = (_a2 = ROUTE_ERAS.find((x) => x.code === era)) != null ? _a2 : ROUTE_ERAS[1];
+  return e.settings[fantastic ? 1 : 0];
+}
+function kindEraWeight(kind, era, fantastic) {
+  var _a2, _b, _c;
+  return (_c = (_b = fantastic ? (_a2 = kind.fantasticEra) == null ? void 0 : _a2[era] : void 0) != null ? _b : kind.era[era]) != null ? _c : 0;
+}
+function kindsOffered(era, fantastic) {
+  return ROUTE_KINDS.filter((k) => kindEraWeight(k, era, fantastic) > 0);
+}
+var pickOne4 = (items, rng) => items[Math.floor(rng() * items.length)];
+var LIGHT_OR_GRIM = (t) => !!t && (t.includes("light") || t.includes("grim"));
+var POOL_OF = { goods: "routeGoods" };
+var GN_LISTS2 = { number: "number", numberWord: "number", colour: "colour", heraldicBeast: "heraldicBeast", star: "star", greek: "greek", spaceLand: "spaceLand" };
+var SF_LISTS = /* @__PURE__ */ new Set(["star", "greek", "spaceLand"]);
+var GOD_CULTURES = /* @__PURE__ */ new Set(["egyptian", "norse", "anglo-saxon", "aztec", "maya"]);
+function regionMult(ctx, tag, eras) {
+  var _a2, _b;
+  if (!tag || !ctx.region) return 1;
+  if (eras && !eras.includes(ctx.era)) return 1;
+  return (_b = (_a2 = ROUTE_DATA.regions[tag]) == null ? void 0 : _a2[ctx.region]) != null ? _b : 1;
+}
+function vocabPool(ctx, pool3, token6) {
+  var _a2, _b, _c;
+  const shape = ctx.shape;
+  const only = (_a2 = shape == null ? void 0 : shape.only) == null ? void 0 : _a2[token6];
+  const cw = (_c = (_b = shape == null ? void 0 : shape.cw) == null ? void 0 : _b[ctx.culture.key]) == null ? void 0 : _c[token6];
+  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t))).map(([e, w]) => {
+    var _a3, _b2;
+    let n = w * toneFactor((_a3 = e.t) != null ? _a3 : [], ctx.tone) * regionMult(ctx, e.r) * ((_b2 = cw == null ? void 0 : cw[e.w]) != null ? _b2 : 1);
+    if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token6 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
+    return [e, n];
+  }).filter(([, n]) => n > 0);
+}
+function vocabWord(ctx, pool3, token6, keep) {
+  var _a2;
+  const items = vocabPool(ctx, pool3, token6).filter(([e2]) => !keep || keep(e2.w));
+  const e = pickWeighted5(items, ctx.rng);
+  if (!e) return void 0;
+  for (const t of (_a2 = e.t) != null ? _a2 : []) ctx.drawn.add(t);
+  ctx.words.push({ pool: pool3, word: e.w });
+  return e.w;
+}
+function gnWord2(ctx, token6) {
+  const list = GN_LISTS2[token6];
+  const setting = SF_LISTS.has(token6) ? "SF" : ctx.setting;
+  const items = groupListWords(list, setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  const w = pickWeighted5(items, ctx.rng);
+  if (w === void 0) return void 0;
+  for (const t of wordTones(list, w)) ctx.drawn.add(t);
+  ctx.words.push({ pool: list, word: w });
+  return w;
+}
+function place3(ctx) {
+  const source = ctx.culture.sensitive ? void 0 : townSource(ctx.culture.key);
+  const holy = holyNamesIn(ctx.culture.key);
+  for (let i = 0; i < 20; i++) {
+    const t = groupTown(ctx.setting, source, ctx.rng).replace(/^The /, "");
+    if (!holy || !holy.test(t)) return t;
+  }
+  return void 0;
+}
+var personNames = (culture) => {
+  var _a2, _b;
+  return ((_b = (_a2 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a2.lists.name) != null ? _b : []).filter((w) => !w.includes("{")).map(stripPlural);
+};
+var godNames = (culture) => {
+  var _a2, _b;
+  return GOD_CULTURES.has(culture) ? ((_b = (_a2 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a2.lists.god) != null ? _b : []).filter((w) => !w.includes("{")).map(stripPlural) : [];
+};
+function figure(ctx) {
+  var _a2, _b, _c, _d;
+  if (ctx.culture.figure) return pickOne4(ctx.culture.figure, ctx.rng);
+  const ranks = (_a2 = BYNAMES_DATA.ranks[ctx.culture.key]) != null ? _a2 : BYNAMES_DATA.ranks.general;
+  const items = [];
+  for (const r of ranks) {
+    if (r.s && !r.s.includes(ctx.setting)) continue;
+    const form = entryForm(r, "male", false);
+    if (form) items.push([form.text, ((_b = r.x) != null ? _b : 1) * ((_d = (_c = r.cx) == null ? void 0 : _c[ctx.culture.key]) != null ? _d : 1)]);
+  }
+  return pickWeighted5(items, ctx.rng);
+}
+var FOLK = /* @__PURE__ */ new Map();
+function folk(ctx) {
+  var _a2, _b;
+  const tradition = (_b = (_a2 = ctx.culture.folk) != null ? _a2 : REALM_DATA.tribal[ctx.culture.key]) != null ? _b : "general";
+  let pool3 = FOLK.get(tradition);
+  if (!pool3) {
+    pool3 = generateTribalNames({ tradition, count: 120, seed: 1789 }).names.map((n) => n.name.replace(/^the /i, "")).filter((n) => !n.includes("["));
+    FOLK.set(tradition, pool3);
+  }
+  return pool3.length > 0 ? pickOne4(pool3, ctx.rng) : void 0;
+}
+var KINGDOMS = /* @__PURE__ */ new Map();
+function kingdom(ctx) {
+  var _a2, _b;
+  const era = (_b = (_a2 = REALM_ERAS.find((e) => e.code === ctx.era)) == null ? void 0 : _a2.key) != null ? _b : "medieval";
+  const key2 = `${ctx.culture.key}|${era}`;
+  let pool3 = KINGDOMS.get(key2);
+  if (!pool3) {
+    pool3 = generateRealmNames({ culture: ctx.culture.key, era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789 }).names.map((n) => n.text.replace(/^the /i, "")).filter((n) => !n.includes("["));
+    KINGDOMS.set(key2, pool3);
+  }
+  return pool3.length > 0 ? pickOne4(pool3, ctx.rng) : void 0;
+}
+function roadNumber(ctx, which) {
+  const range2 = pickWeighted5(ROUTE_DATA.roadNumbers[which].map((r) => [r, r[2] * (r[1] - r[0] + 1)]), ctx.rng);
+  return String(range2[0] + Math.floor(ctx.rng() * (range2[1] - range2[0] + 1)));
+}
+function token5(ctx, name) {
+  var _a2, _b, _c, _d;
+  const rng = ctx.rng;
+  const placeholders = ctx.mode === "placeholders";
+  switch (name) {
+    case "destination":
+    case "town":
+      if (ctx.borrowed) return gnWord2(ctx, "star");
+      return placeholders ? "[place]" : place3(ctx);
+    case "folk":
+      return placeholders ? "[folk]" : folk(ctx);
+    case "person":
+    case "founder":
+    case "patron": {
+      if (placeholders) return `[${name}]`;
+      const names = personNames(ctx.culture.key);
+      return names.length > 0 ? pickOne4(names, rng) : void 0;
+    }
+    case "figure":
+      return figure(ctx);
+    case "kingdom":
+      return placeholders ? "[kingdom]" : kingdom(ctx);
+    case "holy":
+      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "god": {
+      const gods = godNames(ctx.culture.key);
+      return gods.length > 0 ? pickOne4(gods, rng) : void 0;
+    }
+    case "holySite": {
+      const w = vocabWord(ctx, "holySite", name);
+      return w && `the ${w}`;
+    }
+    case "roadLetter": {
+      const letters = Object.entries((_b = (_a2 = ctx.shape) == null ? void 0 : _a2.letters) != null ? _b : { A: 1 });
+      return ctx.letter = pickWeighted5(letters, rng);
+    }
+    case "n":
+      return roadNumber(ctx, (_c = ctx.letter) != null ? _c : "route");
+    case "ordinal": {
+      const choices = [];
+      for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
+      return ordinalText(pickWeighted5(choices, rng));
+    }
+    case "spaceLand": {
+      const w = gnWord2(ctx, "spaceLand");
+      if (!w || rng() >= 0.3) return w;
+      const prefix = pickWeighted5(groupListWords("spacePrefix", "SF"), rng);
+      return prefix ? `${prefix} ${w}` : w;
+    }
+  }
+  if (GN_LISTS2[name]) return gnWord2(ctx, name);
+  return vocabWord(ctx, (_d = POOL_OF[name]) != null ? _d : name, name);
+}
+var withMod2 = (name, text, mod) => mod === "poss" ? groupPossessive(text, name === "travellers") : text;
+function renderPattern3(ctx, pattern, hooks) {
+  let failed = false;
+  let index = -1;
+  let nameUsed = false;
+  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
+    var _a2, _b;
+    if (failed) return "";
+    index++;
+    const [name, mod] = raw.split(":");
+    let piece;
+    const fixed = (_a2 = hooks == null ? void 0 : hooks.byIndex) == null ? void 0 : _a2.get(index);
+    if (fixed) piece = fixed.text;
+    else if ((hooks == null ? void 0 : hooks.byName) && !nameUsed && hooks.byName.name === name) {
+      piece = hooks.byName.text;
+      nameUsed = true;
+    } else piece = token5(ctx, name);
+    if (piece === void 0 || piece === "") {
+      failed = true;
+      return "";
+    }
+    (_b = hooks == null ? void 0 : hooks.record) == null ? void 0 : _b.push({ name, text: piece });
+    return withMod2(name, piece, mod);
+  });
+  return failed ? void 0 : out;
+}
+var SMALL6 = /* @__PURE__ */ new Set(["of", "the", "and", "to", "from", "in", "at", "by", "on", "for"]);
+function routeCapitals(text) {
+  let bracket2 = false;
+  return text.replace(/\s+/g, " ").trim().split(" ").map((word, i) => {
+    const inside = bracket2 || word.startsWith("[");
+    bracket2 = inside && !word.includes("]");
+    if (!word || inside) return word;
+    if (i > 0 && SMALL6.has(word.toLowerCase())) return word.toLowerCase();
+    return word.replace(/(^|[-–])([a-z])/g, (_m, sep, c) => sep + c.toUpperCase());
+  }).join(" ");
+}
+var countedWords2 = (text) => text.split(" ").filter((w, i) => w && !(i === 0 && w === "The") && !SMALL6.has(w.toLowerCase()));
+var routeNorm = (s) => s.toLowerCase().replace(/[’]/g, "'").replace(/\s+/g, " ").trim();
+var wordRe6 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
+var BANNED4 = ROUTE_DATA.safeguards.banned.map(wordRe6);
+function breaksRouteWords(text) {
+  return hasBannedWord(text) || BANNED4.some((re) => re.test(text));
+}
+function routeBlockSet(guards = defaultRouteSafeguards()) {
+  return new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(routeNorm));
+}
+var defaultRouteSafeguards = () => ({
+  block: ROUTE_DATA.safeguards.block,
+  flag: ROUTE_DATA.safeguards.flag,
+  flagListBlocks: ROUTE_DATA.safeguards.flagListBlocks
+});
+function routeWordBlocked(word, guards) {
+  return routeBlockSet(guards).has(routeNorm(word)) || breaksRouteWords(word);
+}
+var PERSON_TOKENS = /\{(person|founder|patron)[}:]/;
+var PLACE_TOKENS = /\{(destination|town)[}:]/;
+function shapesFor(kind, culture) {
+  return [...ROUTE_DATA.shapes[kind], ...ROUTE_DATA.cultureShapes.filter((s) => s.kind === kind && s.culture === culture)];
+}
+function shapeWeight2(ctx, kind, s, anyEra = false) {
+  var _a2, _b, _c;
+  const c = ctx.culture;
+  if (!anyEra && s.e && !s.e.includes(ctx.era)) return 0;
+  if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
+  if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
+  if (c.sensitive && (s.h || LIGHT_OR_GRIM(s.t) || s.p === "fixed" && kind === "pilgrim")) return 0;
+  if (ctx.mode === "invented" && PERSON_TOKENS.test(s.p) && personNames(c.key).length === 0) return 0;
+  if (s.p.includes("{god}") && godNames(c.key).length === 0) return 0;
+  if (s.p.includes("{holy}") && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
+  if (s.p === "fixed") {
+    const prev = ctx.shape;
+    ctx.shape = s;
+    const live = vocabPool(ctx, `routeFixed:${kind}`, "fixed").length > 0;
+    ctx.shape = prev;
+    if (!live) return 0;
+  }
+  return s.w * ((_b = (_a2 = s.cx) == null ? void 0 : _a2[c.key]) != null ? _b : 1) * regionMult(ctx, s.r, s.rEra) * toneFactor((_c = s.t) != null ? _c : [], ctx.tone);
+}
+function kindPlans(ctx, kind, only) {
+  return shapesFor(kind, ctx.culture.key).filter((s) => !only || s.p === only).map((s) => [{ kind, shape: s, borrowed: false }, shapeWeight2(ctx, kind, s)]).filter(([, w]) => w > 0);
+}
+function borrowedPlans(ctx) {
+  return ROUTE_DATA.spaceBorrow.kinds.flatMap(
+    (kind) => shapesFor(kind, ctx.culture.key).filter((s) => PLACE_TOKENS.test(s.p)).map((s) => [{ kind: "space", shape: s, borrowed: true }, shapeWeight2(ctx, kind, s, true)]).filter(([, w]) => w > 0)
+  );
+}
+function renderPlan2(ctx, plan, hooks = {}) {
+  var _a2, _b, _c, _d;
+  ctx.drawn = new Set((_a2 = plan.shape.t) != null ? _a2 : []);
+  ctx.words = [];
+  ctx.shape = plan.shape;
+  ctx.borrowed = plan.borrowed;
+  ctx.letter = void 0;
+  const record = [];
+  let raw;
+  if (plan.shape.p === "fixed") {
+    raw = (_d = (_c = (_b = hooks.byIndex) == null ? void 0 : _b.get(0)) == null ? void 0 : _c.text) != null ? _d : vocabWord(ctx, `routeFixed:${plan.kind}`, "fixed");
+    if (raw) record.push({ name: "fixed", text: raw });
+  } else raw = renderPattern3(ctx, plan.shape.p, { ...hooks, record });
+  if (!raw) return void 0;
+  const tones = new Set(ctx.drawn);
+  return { text: routeCapitals(raw), plan, record, tones: GROUP_TONES.filter((t) => tones.has(t)), words: ctx.words };
+}
+function acceptable4(built, block) {
+  const counted2 = countedWords2(built.text);
+  if (counted2.length === 0 || counted2.length > ROUTE_DATA.cap) return false;
+  if (built.plan.shape.repeats) {
+    const values = built.record.map((d) => d.text.toLowerCase());
+    if (new Set(values).size < values.length) return false;
+  } else if (repeatsContent(counted2)) return false;
+  if (block.has(routeNorm(built.text))) return false;
+  if (breaksRouteWords(built.text)) return false;
+  return true;
+}
+var COMPASS = {
+  direction: ["North", "East", "South", "West", "North-East", "South-East", "South-West", "North-West"],
+  directionAdj: ["Northern", "Eastern", "Southern", "Western"]
+};
+var DIRECTION_TOKENS = new Set(Object.keys(COMPASS));
+var PLACEHOLDER_TOKENS3 = /* @__PURE__ */ new Set(["destination", "town", "folk", "person", "founder", "patron", "kingdom", "holy"]);
+var NEVER_ANCHORS3 = /* @__PURE__ */ new Set(["person", "founder", "patron", "holy", "n"]);
+var kindOf3 = (name) => NEVER_ANCHORS3.has(name) ? "never" : name === "destination" ? "owner" : seriesTokenKind(name);
+function compassValues(ctx, token6) {
+  const live = poolEntries(ctx.vocab, token6, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
+  return [...COMPASS[token6].filter((w) => live.includes(w)), ...live.filter((w) => !COMPASS[token6].includes(w))];
+}
+function generateRouteNames(options) {
+  var _a2;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const notices = [];
+  const culture = (_a2 = findRouteCulture(options.culture)) != null ? _a2 : findRouteCulture("norman-british");
+  const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
+  const fantastic = !!options.fantastic;
+  const setting = routeSetting(era, fantastic);
+  const offered = kindsOffered(era, fantastic);
+  const chosen = options.kind ? offered.find((k) => k.key === options.kind) : void 0;
+  if (options.kind && !chosen) notices.push(`Kind \u201C${options.kind}\u201D isn't offered in the ${routeEraLabel(era)} era.`);
+  const kindWeights = offered.map((k) => {
+    var _a3, _b;
+    return [k, kindEraWeight(k, era, fantastic) * ((_b = (_a3 = culture.kindMult) == null ? void 0 : _a3[k.key]) != null ? _b : 1)];
+  }).filter(([, w]) => w > 0);
+  const block = routeBlockSet(options.safeguards);
+  const count = Math.max(0, Math.floor(options.count));
+  const newCtx2 = () => {
+    var _a3, _b, _c;
+    return {
+      rng,
+      culture,
+      era,
+      setting,
+      fantastic,
+      mode: (_a3 = options.people) != null ? _a3 : "placeholders",
+      tone: (_b = options.tone) != null ? _b : "any",
+      vocab: (_c = options.vocab) != null ? _c : BUILT_IN_VOCAB,
+      region: BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : void 0,
+      borrowed: false,
+      drawn: /* @__PURE__ */ new Set(),
+      words: []
+    };
+  };
+  const choosePlan = (ctx, kind) => {
+    if (kind === "space" && !options.shape && rng() < ROUTE_DATA.spaceBorrow.share) {
+      const plan = pickWeighted5(borrowedPlans(ctx), rng);
+      if (plan) return plan;
+    }
+    return pickWeighted5(kindPlans(ctx, kind, options.shape), rng);
+  };
+  const toName = (built, series) => ({
+    text: built.text,
+    kind: built.plan.kind,
+    shape: built.plan.shape.p,
+    era,
+    tones: built.tones,
+    borrowed: built.plan.borrowed,
+    words: built.words,
+    ...series ? { series } : {}
+  });
+  const drawKind = () => {
+    var _a3, _b;
+    return (_b = chosen == null ? void 0 : chosen.key) != null ? _b : (_a3 = pickWeighted5(kindWeights, rng)) == null ? void 0 : _a3.key;
+  };
+  const oneBuilt = (kindFor) => {
+    for (let round = 0; round < 2; round++) {
+      const kind = kindFor != null ? kindFor : drawKind();
+      if (!kind) return void 0;
+      for (let i = 0; i < 20; i++) {
+        const ctx = newCtx2();
+        const plan = choosePlan(ctx, kind);
+        if (!plan) break;
+        const built = renderPlan2(ctx, plan);
+        if (built && acceptable4(built, block)) return built;
+      }
+    }
+    return void 0;
+  };
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  const add2 = (name) => {
+    if (!name) return false;
+    const key2 = name.text.toLowerCase();
+    if (seen.has(key2)) return false;
+    seen.add(key2);
+    names.push(name);
+    return true;
+  };
+  if (options.series && kindWeights.length + (chosen ? 1 : 0) > 0) drawNetwork();
+  else for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+    const built = oneBuilt();
+    if (built) add2(toName(built));
+  }
+  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+  return { names, seed, notices };
+  function drawNetwork() {
+    var _a3, _b;
+    const placeholders = ((_a3 = options.people) != null ? _a3 : "placeholders") === "placeholders";
+    const isPlaceholder = (d) => placeholders && PLACEHOLDER_TOKENS3.has(d.name);
+    const canVary = (d) => DIRECTION_TOKENS.has(d.name) || kindOf3(d.name) !== "never" && d.name !== "fixed" && !isPlaceholder(d);
+    let first;
+    for (let i = 0; i < 40 && !first; i++) {
+      const built = oneBuilt();
+      if (built && built.record.some(canVary)) first = built;
+    }
+    if (!first) return;
+    const plan = first.plan;
+    const rec = first.record;
+    const draw = (hooks, p = plan) => {
+      const ctx2 = newCtx2();
+      const built = renderPlan2(ctx2, p, hooks);
+      return built && acceptable4(built, block) ? built : void 0;
+    };
+    const fill = (next) => {
+      for (let idle = 0; idle < 30 && names.length < count; ) idle = add2(next()) ? 0 : idle + 1;
+    };
+    const counterAt = rec.findIndex((d) => DIRECTION_TOKENS.has(d.name));
+    if (counterAt >= 0) {
+      const name = rec[counterAt].name;
+      const series2 = { counter: name, varies: null, anchor: null };
+      const values = compassValues(newCtx2(), name);
+      const start = Math.max(0, values.indexOf(rec[counterAt].text));
+      const found = [];
+      const locked = new Map(rec.map((d, i) => [i, d]));
+      for (let step = 0; step < values.length && found.length < count; step++) {
+        const at = (start + step) % values.length;
+        locked.set(counterAt, { name, text: values[at] });
+        const built = step === 0 ? first : draw({ byIndex: new Map(locked) });
+        if (!built || seen.has(built.text.toLowerCase())) continue;
+        seen.add(built.text.toLowerCase());
+        found.push({ at, name: toName(built, series2) });
+      }
+      names.push(...found.sort((a, b) => a.at - b.at).map((f) => f.name));
+      return;
+    }
+    const destAt = rec.findIndex((d) => d.name === "destination" && !isPlaceholder(d));
+    if (destAt >= 0) {
+      const series2 = { counter: null, varies: "destination", anchor: null };
+      add2(toName(first, series2));
+      const hold2 = new Map(rec.map((d, i) => [i, d]).filter(([i]) => i !== destAt));
+      fill(() => {
+        const b = draw({ byIndex: hold2 });
+        return b && toName(b, series2);
+      });
+      return;
+    }
+    let anchorAt = rec.findIndex((d) => kindOf3(d.name) === "owner" && !isPlaceholder(d));
+    const listAt = rec.map((d, i) => kindOf3(d.name) === "list" && !isPlaceholder(d) && d.name !== "fixed" ? i : -1).filter((i) => i >= 0);
+    if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
+    const anchor = anchorAt >= 0 ? rec[anchorAt] : void 0;
+    const series = { counter: null, varies: null, anchor: (_b = anchor == null ? void 0 : anchor.name) != null ? _b : null };
+    add2(toName(first, series));
+    const hold = /* @__PURE__ */ new Map();
+    if (anchor) hold.set(anchorAt, anchor);
+    else if (listAt.length === 1) rec.forEach((d, i) => i !== listAt[0] && hold.set(i, d));
+    else if (plan.shape.p === "fixed") {
+      fill(() => {
+        const b = draw({});
+        return b && toName(b, series);
+      });
+      return;
+    }
+    fill(() => {
+      const b = draw({ byIndex: hold });
+      return b && toName(b, series);
+    });
+    if (!anchor || names.length >= count) return;
+    const ctx = newCtx2();
+    const others = (plan.borrowed ? borrowedPlans(ctx) : kindPlans(ctx, plan.kind)).filter(
+      ([p]) => p.shape.p !== plan.shape.p && [...p.shape.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name)
+    );
+    if (others.length === 0) return;
+    fill(() => {
+      const b = draw({ byName: anchor }, pickWeighted5(others, rng));
+      return b && toName(b, series);
+    });
+  }
+}
+
 // src/presets.ts
 var TRIBAL_PRESET_MODULE = "tribal-names";
 var TRIBAL_PRESET_DEFAULTS = {
@@ -75870,6 +77126,7 @@ function parseModulePreset(content, fileName) {
   if (values.module === BYNAME_PRESET_MODULE) return parseBynamePreset(values, body, fileName);
   if (values.module === VESSEL_PRESET_MODULE) return parseVesselPreset(values, body, fileName);
   if (values.module === REALM_PRESET_MODULE) return parseRealmPreset(values, body, fileName);
+  if (values.module === ROUTE_PRESET_MODULE) return parseRoutePreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module \u201C${(_a2 = values.module) != null ? _a2 : ""}\u201D.`);
     return { problems };
@@ -75903,6 +77160,7 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("routeKind" in preset) return routePresetContent(preset);
   if ("namedFor" in preset) return realmPresetContent(preset);
   if ("vesselModule" in preset) return vesselPresetContent(preset);
   if ("bynameModule" in preset) return bynamePresetContent(preset);
@@ -76145,6 +77403,68 @@ function realmPresetContent(preset) {
     ""
   ].join("\n");
 }
+var ROUTE_PRESET_MODULE = "route-names";
+function parseRoutePreset(values, body, fileName) {
+  var _a2;
+  const problems = [];
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const flag = (key2) => {
+    const v = values[key2];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return false;
+  };
+  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  const fantastic = flag("fantastic");
+  let kind = pick4("kind", "any", (v) => v === "any" || !!findRouteKind(v));
+  if (kind !== "any" && !kindsOffered(era, fantastic).some((k) => k.key === kind)) {
+    problems.push(`Kind \u201C${kind}\u201D isn't offered in the ${routeEraLabel(era)} era.`);
+    kind = "any";
+  }
+  return {
+    route: {
+      packName: values.packName || fileName,
+      setting: (_a2 = values.setting) != null ? _a2 : "",
+      description: body.trim(),
+      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      routeKind: kind,
+      era,
+      fantastic,
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series: flag("series")
+    },
+    problems
+  };
+}
+function routePresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${ROUTE_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `region: ${preset.region}`,
+    `kind: ${preset.routeKind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
 var VESSEL_PRESET_MODULE = "vessels";
 function parseVesselPreset(values, body, fileName) {
   var _a2, _b;
@@ -76244,6 +77564,292 @@ function readTribalPresetSource(name, content) {
 function tribalPresetDraw(preset) {
   const { tradition, ...fields2 } = tribalPresetSlot(preset);
   return (rng) => tribalSlotFill({ tradition, part: "new-land", fields: fields2 }, rng).text;
+}
+
+// src/colonialWording.ts
+var CONTEXT_PHRASES = {
+  "2": [
+    ["wild-and-unsettled", "wild and unsettled lands"],
+    ["sparse-or-weak-native-presence", "lands with a sparse, or weak, native presence"],
+    ["contested-frontier", "a contested frontier"]
+  ],
+  "2a": [
+    ["imposition", "ruling over the locals"],
+    ["accommodation", "living alongside the locals"],
+    ["adoption", "settling in amongst the locals"]
+  ]
+};
+function generalTraditionLabel(part) {
+  return part === "2" ? "General explorers" : "General incomers";
+}
+function traditionLabel(part, id, label) {
+  return id === "general" ? generalTraditionLabel(part) : label;
+}
+function partsNote(parts) {
+  if (parts.length === 2) return "exploration and expansion";
+  return parts[0] === "2" ? "exploration only" : "expansion only";
+}
+
+// src/colonialSentence.ts
+function incomersPhrase(id, label) {
+  if (id === "general") return "General incomers";
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+Imperial$/, "").trim()}-themed incomers`;
+}
+function explorersPhrase(id, label) {
+  if (id === "general") return "General explorers";
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()}-themed explorers`;
+}
+var FEATURES = [
+  { id: "any", label: "Any feature" },
+  { id: "settlement", label: "Settlement" },
+  { id: "landscape", label: "Landscape" },
+  ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label }))
+];
+function featurePhrase(feature) {
+  var _a2;
+  const f = (_a2 = FEATURES.find((x) => x.id === feature)) != null ? _a2 : FEATURES[0];
+  return f.label.charAt(0).toLowerCase() + f.label.slice(1);
+}
+var UNKNOWN_COUNTRY = "unknown country";
+function biomeChoices(part) {
+  const lead = part === "organic" ? [{ id: "unknown", label: "Britain" }] : [{ id: "unknown", label: UNKNOWN_COUNTRY }, { id: BRITAIN.id, label: BRITAIN.phrase }];
+  return [...lead, ...BIOMES.map((b) => ({ id: b.id, label: b.phrase }))];
+}
+function biomePhrase(biome, part = "new-land", custom = []) {
+  var _a2;
+  if (biome == null ? void 0 : biome.startsWith("[[")) {
+    const name = biome.slice(2, -2);
+    const pack = custom.find((b) => {
+      var _a3;
+      return b.label === name || ((_a3 = b.custom) == null ? void 0 : _a3.path) === name;
+    });
+    return (_a2 = pack == null ? void 0 : pack.phrase) != null ? _a2 : name;
+  }
+  const found = findBiome(biome, custom);
+  if (found) return found.phrase;
+  return part === "organic" ? BRITAIN.phrase : UNKNOWN_COUNTRY;
+}
+function terrainPhrase(terrain, custom = []) {
+  var _a2, _b;
+  const all = [...TERRAIN_CHOICES, ...custom.flatMap((b) => {
+    var _a3;
+    return (_a3 = b.customTerrains) != null ? _a3 : [];
+  })];
+  return (_b = (_a2 = all.find((t) => t.id === (terrain || "any"))) == null ? void 0 : _a2.phrase) != null ? _b : "any part";
+}
+var NO_THE_REGIONS = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
+var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function regionPhrase(region) {
+  const r = PLACE_SHAPE_REGIONS.find((x) => x.code === (region != null ? region : "").toUpperCase() || kebab(x.label) === kebab(region != null ? region : ""));
+  if (!r) return "all of Britain";
+  return NO_THE_REGIONS.has(r.label) ? r.label : `the ${r.label}`;
+}
+function wizardSentenceText(part, settings, custom = []) {
+  var _a2, _b, _c, _d;
+  const land = `${terrainPhrase(settings.terrain, custom)} of ${biomePhrase(settings.biome, part, custom)}`;
+  if (part === "organic") {
+    const f = (_a2 = FEATURES.find((x) => x.id === settings.feature)) != null ? _a2 : FEATURES[0];
+    return `${f.label} from ${regionPhrase(settings.region)}, set in ${land}`;
+  }
+  const colonialPart = part === "new-land" ? "2" : "2a";
+  const t = (_b = COLONIAL_TRADITIONS.find((x) => x.id === settings.tradition)) != null ? _b : COLONIAL_TRADITIONS[0];
+  const contexts = CONTEXT_PHRASES[colonialPart];
+  const c = ((_c = contexts.find(([id]) => id === settings.context)) != null ? _c : contexts[0])[1];
+  const lead = part === "new-land" ? `${explorersPhrase(t.id, t.label)} in ${c}` : `${incomersPhrase(t.id, t.label)} who are ${c}`;
+  return `${lead} across ${land}, naming ${featurePhrase((_d = settings.feature) != null ? _d : "any")}`;
+}
+
+// src/routes/sentence.ts
+var DEFAULT_ROUTE_STATE = {
+  culture: "norman-british",
+  era: "MD",
+  fantastic: false,
+  tone: "any",
+  people: "placeholders",
+  series: false
+};
+var PEOPLE_TEXT4 = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT3 = { off: "each one separate", on: "as one network" };
+var fantasticWords = (era) => ["realistic", era === "ST" ? "steampunk" : "fantastic"];
+var showsRegion = (state) => BRITISH_CULTURES.includes(state.culture);
+var routeRegionText = (region) => region ? `in ${regionPhrase(region)}` : "across all of Britain";
+function routeSentence(state) {
+  var _a2;
+  const out = [];
+  const culture = (_a2 = findRouteCulture(state.culture)) != null ? _a2 : ROUTE_CULTURES[0];
+  out.push({
+    field: "culture",
+    text: culture.label,
+    title: "Naming culture: whose customs the routes follow",
+    choices: ROUTE_CULTURES.map((c, i) => {
+      var _a3;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a3 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a3.group) ? { group: c.group } : {} };
+    }),
+    current: culture.key
+  });
+  out.push(" ");
+  const offered = kindsOffered(state.era, state.fantastic);
+  const kind = offered.find((k) => k.key === state.kind);
+  out.push({
+    field: "kind",
+    text: kind ? kind.plural : ROUTE_ANY,
+    title: kind ? kind.description : ROUTE_ANY.charAt(0).toUpperCase() + ROUTE_ANY.slice(1),
+    choices: [{ id: void 0, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
+    current: kind == null ? void 0 : kind.key
+  });
+  out.push(" of the ");
+  out.push({
+    field: "era",
+    text: routeEraLabel(state.era),
+    title: "The age: decides which kinds of route exist",
+    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
+    current: state.era
+  });
+  out.push(" era, in a ");
+  const words = fantasticWords(state.era);
+  out.push({
+    field: "fantastic",
+    text: words[state.fantastic ? 1 : 0],
+    title: "Open magic and monsters; in the steam age, steampunk",
+    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
+    current: state.fantastic ? "on" : "off"
+  });
+  out.push(" world, ");
+  if (showsRegion(state)) {
+    out.push({
+      field: "region",
+      text: routeRegionText(state.region),
+      title: "Weights the routes towards a region's customs",
+      choices: [
+        { id: void 0, label: routeRegionText(void 0) },
+        ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: routeRegionText(r.code), title: r.counties }))
+      ],
+      current: state.region
+    });
+    out.push(", ");
+  }
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
+  out.push(", with ");
+  out.push({
+    field: "people",
+    text: PEOPLE_TEXT4[state.people],
+    title: "Placeholders like [place], or invented names",
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT4[p] })),
+    current: state.people
+  });
+  out.push(" people and places, ");
+  out.push({
+    field: "series",
+    text: SERIES_TEXT3[state.series ? "on" : "off"],
+    title: "A network: roads out of one place in each direction, or to different places",
+    choices: [
+      { id: "off", label: SERIES_TEXT3.off },
+      { id: "on", label: SERIES_TEXT3.on }
+    ],
+    current: state.series ? "on" : "off"
+  });
+  return out;
+}
+function routeSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function chooseRoute(state, field, id) {
+  const next = { ...state };
+  switch (field) {
+    case "culture":
+      next.culture = id != null ? id : DEFAULT_ROUTE_STATE.culture;
+      break;
+    case "kind":
+      next.kind = id;
+      break;
+    case "era":
+      next.era = ROUTE_ERAS.some((e) => e.code === id) ? id : DEFAULT_ROUTE_STATE.era;
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "region":
+      next.region = id;
+      break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "people":
+      next.people = id != null ? id : "placeholders";
+      break;
+    case "series":
+      next.series = id === "on";
+      break;
+  }
+  if (next.kind && !kindsOffered(next.era, next.fantastic).some((k) => k.key === next.kind)) next.kind = void 0;
+  if (!showsRegion(next)) next.region = void 0;
+  return next;
+}
+function routeHistoryLabel(state) {
+  var _a2, _b;
+  const culture = (_b = (_a2 = findRouteCulture(state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+  const kind = findRouteKind(state.kind);
+  return [
+    "route names",
+    routeEraLabel(state.era),
+    culture,
+    ...state.region && showsRegion(state) ? [regionPhrase(state.region)] : [],
+    ...kind ? [kind.plural] : [],
+    ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
+    ...state.tone !== "any" ? [state.tone] : [],
+    ...state.series ? ["network"] : []
+  ].join(" \xB7 ");
+}
+
+// src/settlement/safeguardPacks.ts
+var SETTLEMENT_SAFEGUARD_TYPE = "settlement-safeguards";
+function isSettlementSafeguardPackContent(content) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  return !!fm && new RegExp(`^type:\\s*["']?${SETTLEMENT_SAFEGUARD_TYPE}["']?\\s*$`, "m").test(fm[1]);
+}
+var SETTLEMENT_SAFEGUARD_TEMPLATE = `---
+type: settlement-safeguards
+flag-list-blocks: false
+---
+
+## Block
+
+Route, street and other settlement names never to produce. Each one is added to the built-in block list of real and fictional roads and routes.
+
+## Flag
+
+Names to allow, though they echo a real or well-known route.
+
+## Allow
+
+Names to take off the flag list. Built-in block-list names can't be allowed.
+`;
+
+// src/settlement/vocabPacks.ts
+async function readVocabularyPacks(notes) {
+  const packs = [];
+  for (const note of notes) {
+    const content = await note.read();
+    if (isVocabularyPackContent(content)) packs.push({ name: note.basename, content });
+  }
+  return packs;
+}
+async function loadVocabulary(notes, blocked2) {
+  return mergeVocabularyPacks(await readVocabularyPacks(notes), blocked2);
+}
+var VOCABULARY_PACK_FILE = "Vocabulary.md";
+async function createVocabularyPack(vault, folder) {
+  const path = folder ? `${folder.replace(/\/+$/, "")}/${VOCABULARY_PACK_FILE}` : VOCABULARY_PACK_FILE;
+  if (vault.exists(path)) return "exists";
+  await vault.create(path, VOCABULARY_PACK_TEMPLATE);
+  return "created";
 }
 
 // src/presetModal.ts
@@ -77359,7 +78965,7 @@ var LIST_SECTIONS = [
   ["seasons", "Seasons", ["season"]]
 ];
 var norm4 = (s) => s.trim().toLowerCase();
-var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+var kebab2 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 function weightedItems(text) {
   return text.split(",").map((w) => w.trim()).filter((w) => w.length > 0).map((item) => {
     const m = item.match(/^(.*?)\s*\((\d+(?:\.\d+)?)\)$/);
@@ -77445,12 +79051,12 @@ function terrainHeading(heading) {
   const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
   return m ? { terrain: m[1].trim(), part: m[2].toLowerCase() } : null;
 }
-function terrainId(token5, custom) {
+function terrainId(token6, custom) {
   var _a2;
-  const t = norm4(token5);
+  const t = norm4(token6);
   const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm4(x.id) === t || norm4(x.label) === t));
   if (builtIn) return builtIn.id;
-  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab(token5))) == null ? void 0 : _a2.id;
+  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab2(token6))) == null ? void 0 : _a2.id;
 }
 var key = (words) => words.map(([w, n]) => `${norm4(w)}|${n}`).sort().join("\n");
 var entryKey = (entries) => entries.map((e) => `${norm4(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
@@ -77490,7 +79096,7 @@ function applyBiomePack(base, pack, path) {
       const id = terrainId(name, []);
       if (id) weights[id] = w;
       else {
-        const cid = kebab(name);
+        const cid = kebab2(name);
         custom.push({ id: cid, label: name, phrase: `the ${name.toLowerCase()}`, shapeMultipliers: { groups: {}, generics: {} } });
         weights[cid] = w;
       }
@@ -78141,30 +79747,6 @@ var RecipeHost = class {
   }
 };
 
-// src/colonialWording.ts
-var CONTEXT_PHRASES = {
-  "2": [
-    ["wild-and-unsettled", "wild and unsettled lands"],
-    ["sparse-or-weak-native-presence", "lands with a sparse, or weak, native presence"],
-    ["contested-frontier", "a contested frontier"]
-  ],
-  "2a": [
-    ["imposition", "ruling over the locals"],
-    ["accommodation", "living alongside the locals"],
-    ["adoption", "settling in amongst the locals"]
-  ]
-};
-function generalTraditionLabel(part) {
-  return part === "2" ? "General explorers" : "General incomers";
-}
-function traditionLabel(part, id, label) {
-  return id === "general" ? generalTraditionLabel(part) : label;
-}
-function partsNote(parts) {
-  if (parts.length === 2) return "exploration and expansion";
-  return parts[0] === "2" ? "exploration only" : "expansion only";
-}
-
 // src/recipeEditor.ts
 var import_obsidian11 = require("obsidian");
 
@@ -78274,75 +79856,6 @@ var WordListGuideModal = class extends import_obsidian10.Modal {
     this.contentEl.empty();
   }
 };
-
-// src/colonialSentence.ts
-function incomersPhrase(id, label) {
-  if (id === "general") return "General incomers";
-  return `${label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+Imperial$/, "").trim()}-themed incomers`;
-}
-function explorersPhrase(id, label) {
-  if (id === "general") return "General explorers";
-  return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()}-themed explorers`;
-}
-var FEATURES = [
-  { id: "any", label: "Any feature" },
-  { id: "settlement", label: "Settlement" },
-  { id: "landscape", label: "Landscape" },
-  ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label }))
-];
-function featurePhrase(feature) {
-  var _a2;
-  const f = (_a2 = FEATURES.find((x) => x.id === feature)) != null ? _a2 : FEATURES[0];
-  return f.label.charAt(0).toLowerCase() + f.label.slice(1);
-}
-var UNKNOWN_COUNTRY = "unknown country";
-function biomeChoices(part) {
-  const lead = part === "organic" ? [{ id: "unknown", label: "Britain" }] : [{ id: "unknown", label: UNKNOWN_COUNTRY }, { id: BRITAIN.id, label: BRITAIN.phrase }];
-  return [...lead, ...BIOMES.map((b) => ({ id: b.id, label: b.phrase }))];
-}
-function biomePhrase(biome, part = "new-land", custom = []) {
-  var _a2;
-  if (biome == null ? void 0 : biome.startsWith("[[")) {
-    const name = biome.slice(2, -2);
-    const pack = custom.find((b) => {
-      var _a3;
-      return b.label === name || ((_a3 = b.custom) == null ? void 0 : _a3.path) === name;
-    });
-    return (_a2 = pack == null ? void 0 : pack.phrase) != null ? _a2 : name;
-  }
-  const found = findBiome(biome, custom);
-  if (found) return found.phrase;
-  return part === "organic" ? BRITAIN.phrase : UNKNOWN_COUNTRY;
-}
-function terrainPhrase(terrain, custom = []) {
-  var _a2, _b;
-  const all = [...TERRAIN_CHOICES, ...custom.flatMap((b) => {
-    var _a3;
-    return (_a3 = b.customTerrains) != null ? _a3 : [];
-  })];
-  return (_b = (_a2 = all.find((t) => t.id === (terrain || "any"))) == null ? void 0 : _a2.phrase) != null ? _b : "any part";
-}
-var NO_THE_REGIONS = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
-var kebab2 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-function regionPhrase(region) {
-  const r = PLACE_SHAPE_REGIONS.find((x) => x.code === (region != null ? region : "").toUpperCase() || kebab2(x.label) === kebab2(region != null ? region : ""));
-  if (!r) return "all of Britain";
-  return NO_THE_REGIONS.has(r.label) ? r.label : `the ${r.label}`;
-}
-function wizardSentenceText(part, settings, custom = []) {
-  var _a2, _b, _c, _d;
-  const land = `${terrainPhrase(settings.terrain, custom)} of ${biomePhrase(settings.biome, part, custom)}`;
-  if (part === "organic") {
-    const f = (_a2 = FEATURES.find((x) => x.id === settings.feature)) != null ? _a2 : FEATURES[0];
-    return `${f.label} from ${regionPhrase(settings.region)}, set in ${land}`;
-  }
-  const colonialPart = part === "new-land" ? "2" : "2a";
-  const t = (_b = COLONIAL_TRADITIONS.find((x) => x.id === settings.tradition)) != null ? _b : COLONIAL_TRADITIONS[0];
-  const contexts = CONTEXT_PHRASES[colonialPart];
-  const c = ((_c = contexts.find(([id]) => id === settings.context)) != null ? _c : contexts[0])[1];
-  const lead = part === "new-land" ? `${explorersPhrase(t.id, t.label)} in ${c}` : `${incomersPhrase(t.id, t.label)} who are ${c}`;
-  return `${lead} across ${land}, naming ${featurePhrase((_d = settings.feature) != null ? _d : "any")}`;
-}
 
 // src/names/slotOptions.ts
 var SLOT_TIERS = ["simple", "detailed", "complete"];
@@ -80013,6 +81526,7 @@ var GROUP_NAME_SECTIONS = [
 var SECTION_ORDER = [
   "markov",
   "placeShapes",
+  "routeNames",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "tribalNames",
@@ -80024,7 +81538,7 @@ var SECTION_ORDER = [
   ...VESSEL_SECTIONS
 ];
 var SECTION_GROUPS = {
-  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  placeNames: ["placeShapes", "routeNames", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
   groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS]
@@ -80042,6 +81556,7 @@ function sectionGroup(section) {
 var SECTION_LABELS = {
   markov: "markov generator",
   placeShapes: "native place names",
+  routeNames: "route names",
   riverNames: "river names",
   explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
@@ -80072,6 +81587,7 @@ function historySection(packName) {
   if (starts(RIVER_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
   if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
+  if (starts(SECTION_LABELS.routeNames)) return "routeNames";
   if (starts(SECTION_LABELS.realms)) return "realms";
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
@@ -80101,6 +81617,8 @@ var withRegion = (label, regionCode) => {
 var SECTION_ICONS = {
   markov: ICON_PACKS,
   placeShapes: ICON_NATIVE_PLACE_NAMES,
+  // Route names brief §1.1.
+  routeNames: "route",
   riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
@@ -80141,6 +81659,7 @@ function packTypeIconId(packType, subGenerator) {
   if (packType === "bynamePreset") return ICON_BYNAMES;
   if (packType === "vesselPreset") return ICON_SHIPS;
   if (packType === "realmPreset") return ICON_TRIBAL_NAMES;
+  if (packType === "routePreset") return "route";
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;
   }
@@ -80375,6 +81894,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.vesselStates = {};
     /** Realms brief §2.4: the realms sentence's choices, session only. */
     this.realmState = { ...DEFAULT_REALM_STATE };
+    /** Route names brief §2.4: the route sentence's choices, session only. */
+    this.routeState = { ...DEFAULT_ROUTE_STATE };
     /** Each switcher group's last-used module (session only). */
     this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
@@ -80746,10 +82267,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     (_c = this.packDropdownEl) == null ? void 0 : _c.toggle(section === "markov");
     (_d = this.sectionSentenceEl) == null ? void 0 : _d.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_e = this.editRecipeButton) == null ? void 0 : _e.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset"));
+    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames";
     (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart && !tribal);
     (_i = this.landButton) == null ? void 0 : _i.refresh();
     (_j = this.guideButton) == null ? void 0 : _j.toggle(!!colonialPart);
@@ -80851,8 +82372,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       { code: void 0, label: "All Britain" },
       ...PLACE_SHAPE_REGIONS
     ];
-    const place3 = this.activeSection === "placeShapes";
-    const current = place3 ? this.selectedRegion : this.riverRegion;
+    const place4 = this.activeSection === "placeShapes";
+    const current = place4 ? this.selectedRegion : this.riverRegion;
     for (const { code, label: text, counties } of options) {
       const item = menu.createEl("button", {
         cls: "nameforge-modal__pack-dropdown-item" + (code === current ? " is-active" : ""),
@@ -80860,7 +82381,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       });
       item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text });
       item.addEventListener("click", () => {
-        if (place3) this.selectedRegion = code;
+        if (place4) this.selectedRegion = code;
         else this.riverRegion = code;
         choose();
       });
@@ -81051,6 +82572,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     else if (BYNAME_SECTIONS.includes(section)) this.renderBynameSentence(row, section);
     else if (VESSEL_SECTIONS.includes(section)) this.renderVesselSentence(row, section);
     else if (section === "realms") this.renderRealmSentence(row);
+    else if (section === "routeNames") this.renderRouteSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -81312,7 +82834,12 @@ ${n.origin}${also}${echo}` };
   async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian13.TFile)) return;
-    const { preset, group, byname, vessel, realm } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, realm, route } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (route) {
+      this.routeState = this.routePresetState(route);
+      this.switchSection("routeNames");
+      return;
+    }
     if (realm) {
       this.realmState = this.realmPresetState(realm);
       this.switchSection("realms");
@@ -81478,6 +83005,131 @@ ${n.origin}${also}${echo}` };
       return;
     }
     await this.runRealms(this.realmPresetState(realm), `${SECTION_LABELS.realms} \xB7 ${realm.packName}`, problems);
+  }
+  // ── Route names (Route names brief) ──────────────────────────────────────
+  routePresetState(p) {
+    return chooseRoute(
+      {
+        culture: p.culture,
+        kind: p.routeKind === "any" ? void 0 : p.routeKind,
+        era: p.era,
+        fantastic: p.fantastic,
+        region: p.region === "all" ? void 0 : p.region,
+        tone: p.tone,
+        people: p.people,
+        series: p.series
+      },
+      "culture",
+      p.culture
+    );
+  }
+  /** §2: the sentence. */
+  renderRouteSentence(row) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment2 of routeSentence(this.routeState)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(sentence2, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {
+        this.routeState = chooseRoute(this.routeState, segment2.field, id);
+      });
+    }
+  }
+  /** GN §14: the finished strings only; history "route names · {era} · {culture}…". */
+  async runRoutes(state = this.routeState, label, problems = []) {
+    var _a2;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
+    const guards = await this.loadSettlementSafeguards();
+    const vocab = await this.loadSettlementVocabulary(guards.safeguards);
+    const result = generateRouteNames({
+      culture: state.culture,
+      kind: state.kind,
+      era: state.era,
+      fantastic: state.fantastic,
+      region: state.region,
+      tone: state.tone,
+      people: state.people,
+      series: state.series,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards,
+      vocab: vocab.vocab
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
+      "none"
+    );
+    await this.recordGenerationHistory(result.names.length, label != null ? label : routeHistoryLabel(state));
+    this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
+  }
+  /** The names folder's markdown notes. */
+  namesFolderNotes() {
+    var _a2;
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian13.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    return ((_a2 = folder == null ? void 0 : folder.children) != null ? _a2 : []).filter((c) => c instanceof import_obsidian13.TFile && c.extension === "md");
+  }
+  /** §12.6: every settlement safeguard pack in the names folder, merged with the built-in lists. */
+  async loadSettlementSafeguards() {
+    const packs = [];
+    for (const file of this.namesFolderNotes()) {
+      const content = await this.app.vault.cachedRead(file);
+      if (isSettlementSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
+    }
+    if (packs.length === 0) return { notices: [] };
+    const g = ROUTE_DATA.safeguards;
+    const { notices, block, flag, flagBlocks } = mergeSafeguards({ blockList: g.block, flagList: g.flag, flagListBlocks: g.flagListBlocks }, packs);
+    return { safeguards: { block, flag, flagListBlocks: flagBlocks }, notices };
+  }
+  /** §3.3: the shared pools with every vocabulary pack in the names folder; blocked words dropped. */
+  async loadSettlementVocabulary(safeguards = defaultRouteSafeguards()) {
+    const notes = this.namesFolderNotes().map((file) => ({ basename: file.basename, read: () => this.app.vault.cachedRead(file) }));
+    return loadVocabulary(notes, (word) => routeWordBlocked(word, safeguards));
+  }
+  /** §13: "{culture} · {kind or route names}", described by the sentence. */
+  openSaveRoutePreset() {
+    var _a2, _b;
+    const state = this.routeState;
+    const culture = (_b = (_a2 = findRouteCulture(state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+    const kind = findRouteKind(state.kind);
+    const name = [culture, kind ? kind.menu : SECTION_LABELS.routeNames].join(" \xB7 ");
+    const description = routeSentenceText(routeSentence(state));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a3, _b2;
+      if (!presetName) {
+        new import_obsidian13.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        culture: state.culture,
+        region: (_a3 = state.region) != null ? _a3 : "all",
+        routeKind: (_b2 = state.kind) != null ? _b2 : "any",
+        era: state.era,
+        fantastic: state.fantastic,
+        tone: state.tone,
+        people: state.people,
+        series: state.series
+      });
+      return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).route);
+    }).open();
+  }
+  /** §13: a route preset, run as the module runs; history "route names · {preset}". */
+  async runRoutePreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian13.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { route, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!route) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runRoutes(this.routePresetState(route), `${SECTION_LABELS.routeNames} \xB7 ${route.packName}`, problems);
   }
   // ── Ships and spacecraft (Ships brief) ────────────────────────────────────
   /** §2.4: a vessel module's choices, session only. */
@@ -81786,7 +83438,7 @@ ${n.origin}${also}${echo}` };
     var _a2;
     const section = this.activeSection;
     (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -81807,6 +83459,10 @@ ${n.origin}${also}${echo}` };
     }
     if (this.activeSection === "realms") {
       this.openSaveRealmPreset();
+      return;
+    }
+    if (this.activeSection === "routeNames") {
+      this.openSaveRoutePreset();
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -82565,7 +84221,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -82719,6 +84375,7 @@ ${text}
           else if (parsed.byname) packs.push({ path: child.path, packType: "bynamePreset" });
           else if (parsed.vessel) packs.push({ path: child.path, packType: "vesselPreset" });
           else if (parsed.realm) packs.push({ path: child.path, packType: "realmPreset" });
+          else if (parsed.route) packs.push({ path: child.path, packType: "routePreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -82861,9 +84518,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j;
-    const { preset, group, byname, vessel, realm, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
+    const { preset, group, byname, vessel, realm, route, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = route ? "routePreset" : realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -82873,9 +84530,9 @@ ${text}
     (_a2 = this.sectionSentenceEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
-    const module2 = realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
+    const module2 = route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
     (_e = this.openPresetButton) == null ? void 0 : _e.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm == null ? void 0 : realm.packName) != null ? _j : file.basename;
+    this.plugin.settings.packName = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm == null ? void 0 : realm.packName) != null ? _j : route == null ? void 0 : route.packName) != null ? _k : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -83304,6 +84961,10 @@ ${text}
       await this.runRealms();
       return;
     }
+    if (this.activeSection === "routeNames") {
+      await this.runRoutes();
+      return;
+    }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
@@ -83355,6 +85016,10 @@ ${text}
     }
     if (this.currentPackType === "realmPreset") {
       await this.runRealmPreset();
+      return;
+    }
+    if (this.currentPackType === "routePreset") {
+      await this.runRoutePreset();
       return;
     }
     if (this.currentPackType === "groupPreset") {
@@ -84633,432 +86298,6 @@ ${t.description}
   new import_obsidian14.Notice(`nameForge: installed ${installed} starter templates in ${folder.path || "the vault root"}.${note}`);
 }
 
-// src/data/settlement-vocab.json
-var settlement_vocab_default = {
-  $comment: "Shared settlement vocabulary (docs/route-names-brief.md \xA73, \xA76). Read through src/settlement/vocab.ts; vocabulary packs add to these pools. Every pool is listed in docs/vocabulary-pools.md.",
-  version: 1,
-  eras: ["AN", "MD", "EM", "ST", "MO", "NF", "IS"],
-  cultures: ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya", "polynesian", "andean"],
-  cultureGroups: {
-    british: {
-      cultures: ["anglo-saxon", "celtic", "norman-british"]
-    },
-    christian: {
-      cultures: ["anglo-saxon", "celtic", "norman-british", "slavic"],
-      from: { "greek-byzantine": "MD", roman: "MD" }
-    }
-  },
-  regionTags: ["roman", "drove", "causeway", "corpse", "salt", "ridge", "packhorse", "army", "pedlar", "militaryRoad", "peat"],
-  pools: {
-    direction: {
-      entries: [
-        { w: "North" },
-        { w: "South" },
-        { w: "East" },
-        { w: "West" },
-        { w: "North-East", x: 0.2 },
-        { w: "North-West", x: 0.2 },
-        { w: "South-East", x: 0.2 },
-        { w: "South-West", x: 0.2 }
-      ]
-    },
-    directionAdj: {
-      entries: [
-        { w: "Northern" },
-        { w: "Southern" },
-        { w: "Eastern" },
-        { w: "Western" }
-      ]
-    },
-    travellers: {
-      entries: [
-        { w: "Pedlars", x: 2, t: ["light"] },
-        { w: "Drovers", x: 2 },
-        { w: "Pilgrims", x: 2 },
-        { w: "Carriers" },
-        { w: "Saltmen" },
-        { w: "Packmen" },
-        { w: "Merchants", x: 2 },
-        { w: "Smugglers", t: ["light"] },
-        { w: "Soldiers" },
-        { w: "Tinkers", t: ["light"] },
-        { w: "Shepherds" },
-        { w: "Miners" },
-        { w: "Monks", c: ["christian"] },
-        { w: "Colliers", e: ["ST"] },
-        { w: "Navvies", e: ["ST"] }
-      ]
-    },
-    routeFeature: {
-      entries: [
-        { w: "Ditch", x: 2 },
-        { w: "Dyke" },
-        { w: "Bank" },
-        { w: "Mound" },
-        { w: "Barrow" },
-        { w: "Wall" },
-        { w: "Stone" },
-        { w: "Cross" },
-        { w: "Thorn" },
-        { w: "Beacon" }
-      ]
-    },
-    routeMaterial: {
-      entries: [
-        { w: "Stone", x: 2 },
-        { w: "Flint" },
-        { w: "Chalk" },
-        { w: "Gravel" },
-        { w: "Sand" },
-        { w: "Timber" },
-        { w: "Plank" },
-        { w: "Cobble", e: ["EM", "ST", "MO", "NF", "IS"] },
-        { w: "Brick", e: ["ST", "MO", "NF", "IS"] }
-      ]
-    },
-    routeLandform: {
-      entries: [
-        { w: "Downs" },
-        { w: "Fen" },
-        { w: "Moor" },
-        { w: "Heath" },
-        { w: "Wold" },
-        { w: "Fell" },
-        { w: "Dale" },
-        { w: "Vale" },
-        { w: "Marsh" },
-        { w: "Hill" },
-        { w: "Cliff" },
-        { w: "Shore" },
-        { w: "Forest" },
-        { w: "Desert", c: ["arabic-persian", "egyptian", "west-african", "steppe"] },
-        { w: "Steppe", c: ["steppe"] },
-        { w: "Highland" }
-      ]
-    },
-    routeGoods: {
-      entries: [
-        { w: "Salt", x: 3 },
-        { w: "Wool", x: 2 },
-        { w: "Amber" },
-        { w: "Tin" },
-        { w: "Lead" },
-        { w: "Iron" },
-        { w: "Copper" },
-        { w: "Grain" },
-        { w: "Corn" },
-        { w: "Timber" },
-        { w: "Fish" },
-        { w: "Cloth" },
-        { w: "Silk" },
-        { w: "Spice" },
-        { w: "Gold" },
-        { w: "Silver" },
-        { w: "Furs" },
-        { w: "Horses" },
-        { w: "Coal", e: ["ST", "MO", "NF", "IS"] },
-        { w: "Cotton", e: ["ST", "MO", "NF", "IS"] }
-      ],
-      cultureExtra: {
-        "anglo-saxon": [
-          { w: "Wool" },
-          { w: "Salt" },
-          { w: "Tin" },
-          { w: "Lead" }
-        ],
-        "norman-british": [
-          { w: "Wool" },
-          { w: "Salt" },
-          { w: "Tin" },
-          { w: "Lead" }
-        ],
-        celtic: [
-          { w: "Wool" },
-          { w: "Salt" },
-          { w: "Tin" },
-          { w: "Lead" }
-        ],
-        norse: [
-          { w: "Furs" },
-          { w: "Amber" },
-          { w: "Fish" }
-        ],
-        roman: [
-          { w: "Salt" },
-          { w: "Wine" },
-          { w: "Olive Oil" }
-        ],
-        "greek-byzantine": [
-          { w: "Wine" },
-          { w: "Silk" },
-          { w: "Olive Oil" }
-        ],
-        slavic: [
-          { w: "Furs" },
-          { w: "Amber" },
-          { w: "Wax" },
-          { w: "Honey" }
-        ],
-        steppe: [
-          { w: "Horses" },
-          { w: "Felt" },
-          { w: "Tea" }
-        ],
-        "arabic-persian": [
-          { w: "Incense" },
-          { w: "Spice" },
-          { w: "Pearls" },
-          { w: "Dates" }
-        ],
-        indian: [
-          { w: "Pepper" },
-          { w: "Cotton" },
-          { w: "Spice" }
-        ],
-        chinese: [
-          { w: "Silk" },
-          { w: "Tea" },
-          { w: "Porcelain" },
-          { w: "Jade" }
-        ],
-        japanese: [
-          { w: "Rice" },
-          { w: "Salt" },
-          { w: "Silk" }
-        ],
-        korean: [
-          { w: "Ginseng" },
-          { w: "Paper" },
-          { w: "Silk" }
-        ],
-        egyptian: [
-          { w: "Gold" },
-          { w: "Grain" },
-          { w: "Linen" }
-        ],
-        ethiopian: [
-          { w: "Salt" },
-          { w: "Incense" },
-          { w: "Coffee" }
-        ],
-        bantu: [
-          { w: "Copper" },
-          { w: "Gold" },
-          { w: "Cattle" }
-        ],
-        "west-african": [
-          { w: "Salt" },
-          { w: "Gold" },
-          { w: "Kola" }
-        ],
-        aztec: [
-          { w: "Cacao" },
-          { w: "Jade" },
-          { w: "Obsidian" },
-          { w: "Salt" }
-        ],
-        maya: [
-          { w: "Cacao" },
-          { w: "Jade" },
-          { w: "Obsidian" },
-          { w: "Salt" }
-        ],
-        polynesian: [
-          { w: "Stone" },
-          { w: "Feather" }
-        ],
-        andean: [
-          { w: "Salt" },
-          { w: "Wool" },
-          { w: "Silver" }
-        ]
-      }
-    },
-    holySite: {
-      entries: [
-        { w: "Holy Well", x: 2 },
-        { w: "Shrine", x: 2 },
-        { w: "Oracle" },
-        { w: "Holy Mountain" },
-        { w: "Sacred Spring" },
-        { w: "Standing Stones" },
-        { w: "Sacred Grove" },
-        { w: "Temple" },
-        { w: "Holy Isle" },
-        { w: "Abbey", c: ["christian"] },
-        { w: "Minster", c: ["christian"] }
-      ]
-    },
-    holySitePl: {
-      entries: [
-        { w: "Shrines" },
-        { w: "Temples" },
-        { w: "Wells" },
-        { w: "Springs" },
-        { w: "Stones" },
-        { w: "Monasteries", c: ["christian", "greek-byzantine", "korean", "japanese"] }
-      ]
-    },
-    dayNumber: {
-      entries: [
-        { w: "Seven" },
-        { w: "Ten" },
-        { w: "Twelve" },
-        { w: "Twenty" },
-        { w: "Thirty" }
-      ]
-    },
-    jFeature: {
-      entries: [
-        { w: "Sea", x: 2, c: ["japanese"] },
-        { w: "Mountain", x: 2, c: ["japanese"] },
-        { w: "Province", c: ["japanese"] },
-        { w: "Coast", c: ["japanese"] },
-        { w: "River", c: ["japanese"] },
-        { w: "Pine", c: ["japanese"] }
-      ]
-    },
-    romanRoadNomen: {
-      entries: [
-        { w: "Fabian", c: ["roman"] },
-        { w: "Junian", c: ["roman"] },
-        { w: "Licinian", c: ["roman"] },
-        { w: "Sempronian", c: ["roman"] },
-        { w: "Tullian", c: ["roman"] },
-        { w: "Sulpician", c: ["roman"] },
-        { w: "Caecilian", c: ["roman"] },
-        { w: "Calpurnian", c: ["roman"] },
-        { w: "Antonian", c: ["roman"] },
-        { w: "Octavian", c: ["roman"] },
-        { w: "Livian", c: ["roman"] },
-        { w: "Servilian", c: ["roman"] },
-        { w: "Manlian", c: ["roman"] },
-        { w: "Furian", c: ["roman"] },
-        { w: "Horatian", c: ["roman"] }
-      ]
-    },
-    spaceGoods: {
-      entries: [
-        { w: "Ice", x: 2 },
-        { w: "Helium" },
-        { w: "Ore", x: 2 },
-        { w: "Water" },
-        { w: "Data" },
-        { w: "Salvage" },
-        { w: "Fuel" }
-      ]
-    },
-    skyPath: {
-      entries: [
-        { w: "Morning Star", c: ["polynesian"] },
-        { w: "Evening Star", c: ["polynesian"] },
-        { w: "Rising Swell", c: ["polynesian"] },
-        { w: "Trade Wind", c: ["polynesian"] }
-      ]
-    },
-    "routeFixed:road": {
-      entries: [
-        { w: "Ridgeway", e: ["AN", "MD"], c: ["british"], r: "ridge" },
-        { w: "Hollow Way", e: ["MD", "EM", "ST"], c: ["british"] },
-        { w: "Green Lane", e: ["MD", "EM", "ST"], c: ["british"] },
-        { w: "Old Road", x: 0.5 },
-        { w: "High Road", e: ["EM", "ST"] },
-        { w: "Great Road", e: ["AN", "MD"], c: ["celtic", "indian"] }
-      ]
-    },
-    "routeFixed:trade": {
-      entries: [
-        { w: "Market Way", e: ["MD"], c: ["british"] },
-        { w: "Silk Road", x: 0.2 },
-        { w: "Incense Road", e: ["AN", "MD", "EM"], c: ["arabic-persian", "ethiopian"] }
-      ]
-    },
-    "routeFixed:pilgrim": {
-      entries: [
-        { w: "Pilgrims' Way", e: ["MD", "EM", "ST", "MO"] },
-        { w: "Sacred Way", e: ["AN"], c: ["roman", "greek-byzantine"] },
-        { w: "Corpse Road", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" },
-        { w: "Coffin Way", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" }
-      ]
-    },
-    "routeFixed:military": {
-      entries: [
-        { w: "Army Way", e: ["MD"], c: ["british"], r: "army" },
-        { w: "Straight Road", e: ["AN"], c: ["chinese", "roman"] },
-        { w: "Wall Road", e: ["AN", "MD"], c: ["roman", "chinese"] },
-        { w: "Post Road", e: ["AN", "MD", "EM", "ST"], c: ["steppe", "chinese", "slavic"] },
-        { w: "Frontier Road" }
-      ]
-    },
-    "routeFixed:drove": {
-      entries: [
-        { w: "Drove Road", e: ["MD", "EM", "ST"] },
-        { w: "Packhorse Road", e: ["MD", "EM"], c: ["british"], r: "packhorse" },
-        { w: "Hollow Way", e: ["MD", "EM", "ST"], c: ["british"] },
-        { w: "Green Lane", e: ["MD", "EM", "ST"], c: ["british"] },
-        { w: "Old Track" },
-        { w: "Cattle Road", c: ["bantu", "celtic", "steppe"] },
-        { w: "Corpse Road", t: ["grim"], e: ["MD", "EM"], c: ["british"], r: "corpse" },
-        { w: "Peat Road", c: ["celtic", "norse"], r: "peat" },
-        { w: "Summer Pasture Path", c: ["celtic", "norse"], r: "peat" },
-        { w: "Winter Road", e: ["EM", "ST"], c: ["slavic"] }
-      ]
-    },
-    "routeFixed:sea": {
-      entries: [
-        { w: "Island Passage" },
-        { w: "Sea Lane", e: ["ST", "MO", "NF"] },
-        { w: "Monsoon Road", c: ["arabic-persian", "indian", "chinese"] },
-        { w: "Whale-Road", t: ["strange"], e: ["AN", "MD"], c: ["anglo-saxon", "norse"] },
-        { w: "Ship-Way", e: ["AN", "MD"], c: ["norse"] }
-      ]
-    },
-    "routeFixed:rail": {
-      entries: []
-    },
-    "routeFixed:motor": {
-      entries: []
-    },
-    "routeFixed:space": {
-      entries: [
-        { w: "The Long Haul" },
-        { w: "The Dark Lane", t: ["grim"] },
-        { w: "The Pilgrim Road" },
-        { w: "The Quiet Lane", t: ["strange"] },
-        { w: "The Narrows" }
-      ]
-    }
-  }
-};
-
-// src/settlement/vocab.ts
-var SETTLEMENT_VOCAB = settlement_vocab_default;
-var VOCAB_ERAS = SETTLEMENT_VOCAB.eras;
-var VOCAB_CULTURES = SETTLEMENT_VOCAB.cultures;
-var VOCAB_CULTURE_GROUPS = Object.keys(SETTLEMENT_VOCAB.cultureGroups);
-var VOCAB_REGION_TAGS = SETTLEMENT_VOCAB.regionTags;
-var POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
-var BUILT_IN_VOCAB = { pools: SETTLEMENT_VOCAB.pools };
-var VOCABULARY_TYPE = "vocabulary";
-var VOCABULARY_PACK_TEMPLATE = [
-  "---",
-  `type: ${VOCABULARY_TYPE}`,
-  "---",
-  "",
-  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` \xD70.5` or ` (grim)`, and narrow a heading with ` \xB7 japanese` or ` \xB7 MD`.",
-  "",
-  ...POOL_NAMES.flatMap((p) => [`## ${p}`, ""])
-].join("\n");
-
-// src/settlement/vocabPacks.ts
-var VOCABULARY_PACK_FILE = "Vocabulary.md";
-async function createVocabularyPack(vault, folder) {
-  const path = folder ? `${folder.replace(/\/+$/, "")}/${VOCABULARY_PACK_FILE}` : VOCABULARY_PACK_FILE;
-  if (vault.exists(path)) return "exists";
-  await vault.create(path, VOCABULARY_PACK_TEMPLATE);
-  return "created";
-}
-
 // src/main.ts
 var DEFAULT_SETTINGS = {
   namesFilePath: "",
@@ -85297,6 +86536,21 @@ var NameForgePlugin = class extends import_obsidian15.Plugin {
         }
         await this.app.vault.create(path, VESSEL_SAFEGUARD_TEMPLATE);
         new import_obsidian15.Notice("nameForge: \u201CVessel safeguards\u201D created.");
+      }
+    });
+    this.addCommand({
+      id: "create-settlement-safeguard-list",
+      name: "Create settlement safeguard list",
+      callback: async () => {
+        const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
+        await ensureVaultFolder(this.app, folder);
+        const path = (0, import_obsidian15.normalizePath)(`${folder}/Settlement safeguards.md`);
+        if (this.app.vault.getFileByPath(path)) {
+          new import_obsidian15.Notice("nameForge: \u201CSettlement safeguards\u201D already exists.");
+          return;
+        }
+        await this.app.vault.create(path, SETTLEMENT_SAFEGUARD_TEMPLATE);
+        new import_obsidian15.Notice("nameForge: \u201CSettlement safeguards\u201D created.");
       }
     });
     this.addCommand({
