@@ -140,6 +140,8 @@ export interface StreetOptions {
   seed?: number;
   /** RN §12.6: merged settlement safeguard lists; the built-in lists when absent. */
   safeguards?: GroupSafeguards;
+  /** RN §12: the merged route safeguard lists, for `{route}`. */
+  routeSafeguards?: GroupSafeguards;
   /** RN §3.3: the pools merged with vocabulary packs. */
   vocab?: Vocabulary;
   /** Tests: only this shape. */
@@ -293,7 +295,7 @@ function route(ctx: Ctx): string | undefined {
     kind,
     count: 1,
     seed: Math.floor(ctx.rng() * 0xffffffff),
-    safeguards: o.safeguards,
+    safeguards: o.routeSafeguards,
     vocab: o.vocab,
   }).names[0];
   if (r) ctx.isRoute = true;

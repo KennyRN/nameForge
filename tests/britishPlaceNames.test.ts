@@ -226,6 +226,7 @@ test("line-up: the modules in order, with their labels; river names live in plac
       "markov generator",
       "native place names",
       "route names",
+      "streets and districts",
       "exploration into new lands",
       "expansion into settled lands",
       "tribes and kin groups",

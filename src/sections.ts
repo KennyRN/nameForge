@@ -25,6 +25,8 @@ export type NameForgeSection =
   | "placeShapes"
   // Route names brief §1.1: in place names, after native place names.
   | "routeNames"
+  // Streets brief §1.1: after route names.
+  | "streetNames"
   | "riverNames"
   | "explorationPlaceShapes"
   | "empireExpansionPlaceShapes"
@@ -70,6 +72,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "markov",
   "placeShapes",
   "routeNames",
+  "streetNames",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "tribalNames",
@@ -86,7 +89,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
 export type SectionGroup = "placeNames" | "groupNames" | "bynames" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
-  placeNames: ["placeShapes", "routeNames", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  placeNames: ["placeShapes", "routeNames", "streetNames", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
   groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS],
@@ -112,6 +115,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   markov: "markov generator",
   placeShapes: "native place names",
   routeNames: "route names",
+  streetNames: "streets and districts",
   riverNames: "river names",
   explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
@@ -156,6 +160,8 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
   // Route names brief §1.2: "route names · {era} · {culture}…".
   if (starts(SECTION_LABELS.routeNames)) return "routeNames";
+  // Streets brief §1.2: "streets and districts · {era} · {culture}…".
+  if (starts(SECTION_LABELS.streetNames)) return "streetNames";
   // Realms brief §1.2: "realms and polities · {setting} · {culture} · {era}…".
   if (starts(SECTION_LABELS.realms)) return "realms";
   // Group brief §1.2: each group-name module's label starts its history rows.

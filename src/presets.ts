@@ -18,6 +18,7 @@ import {
 import { namedForOffered, REALM_CHARACTERS, REALM_CULTURES, REALM_ERAS, type RealmLength, type RealmNamedFor, type RealmOutput } from "./realms/engine";
 import { findRouteCulture, findRouteKind, kindsOffered, ROUTE_ERAS, routeEraLabel, type RouteEra } from "./routes/engine";
 import { PLACE_SHAPE_REGIONS } from "./placeShapes";
+import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
 import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
 import { findCommodity, findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
 
@@ -70,7 +71,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -85,6 +86,8 @@ export function parseModulePreset(
   if (values.module === REALM_PRESET_MODULE) return parseRealmPreset(values, body, fileName);
   // Route names brief §13: route presets too.
   if (values.module === ROUTE_PRESET_MODULE) return parseRoutePreset(values, body, fileName);
+  // Streets brief §14: street presets too.
+  if (values.module === STREET_PRESET_MODULE) return parseStreetPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module “${values.module ?? ""}”.`);
     return { problems };
@@ -119,7 +122,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset | StreetPreset): string {
+  if ("streetKind" in preset) return streetPresetContent(preset);
   if ("routeKind" in preset) return routePresetContent(preset);
   if ("namedFor" in preset) return realmPresetContent(preset);
   if ("vesselModule" in preset) return vesselPresetContent(preset);
@@ -511,6 +515,98 @@ function routePresetContent(preset: RoutePreset): string {
     `kind: ${preset.routeKind}`,
     `era: ${preset.era}`,
     `fantastic: ${preset.fantastic}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Street presets (Streets brief §14) ─────────────────────────────────────
+
+export const STREET_PRESET_MODULE = "street-names";
+
+export interface StreetPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  culture: string;
+  /** "all" or a place-shape region code. */
+  region: string;
+  /** "any" or a kind key (the note's `kind`). */
+  streetKind: "any" | StreetKind;
+  /** "any" or a function key. */
+  function: string;
+  era: RouteEra;
+  fantastic: boolean;
+  size: StreetSize;
+  dialect: StreetDialect;
+  tone: GroupToneChoice;
+  people: GroupPeople;
+  series: boolean;
+}
+
+function parseStreetPreset(values: Record<string, string>, body: string, fileName: string): { street?: StreetPreset; problems: string[] } {
+  const problems: string[] = [];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const flag = (key: string): boolean => {
+    const v = values[key];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key} “${v}”.`);
+    return false;
+  };
+  const size = pick<StreetSize>("size", "town", (v) => STREET_SIZES.some((s) => s.key === v));
+  let kind = pick<"any" | StreetKind>("kind", "any", (v) => v === "any" || STREET_KINDS.some((k) => k.key === v));
+  // §14: districts with a village run as streets.
+  if (kind === "districts" && size === "village") {
+    problems.push("A village has no districts.");
+    kind = "streets";
+  }
+  return {
+    street: {
+      packName: values.packName || fileName,
+      setting: values.setting ?? "",
+      description: body.trim(),
+      culture: pick("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      streetKind: kind,
+      function: pick("function", "any", (v) => v === "any" || STREET_FUNCTIONS.some((f) => f.key === v)),
+      era: pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      fantastic: flag("fantastic"),
+      size,
+      dialect: pick<StreetDialect>("dialect", "variants", (v) => ["plain", "variants", "instead"].includes(v)),
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series: flag("series"),
+    },
+    problems,
+  };
+}
+
+function streetPresetContent(preset: StreetPreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${STREET_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `region: ${preset.region}`,
+    `kind: ${preset.streetKind}`,
+    `function: ${preset.function}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `size: ${preset.size}`,
+    `dialect: ${preset.dialect}`,
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
     `series: ${preset.series}`,

@@ -230,3 +230,85 @@ test("§16.7: 5,000 names per culture: no block-list matches (variants too), no 
     }
   }
 });
+
+// ── §16.8 Sentence and presets ──────────────────────────────────────────────
+
+import { chooseStreet, DEFAULT_STREET_STATE, streetHistoryLabel, streetSentence, streetSentenceText, type StreetSentenceState } from "../src/streets/sentence";
+import { modulePresetContent, parseModulePreset, type StreetPreset } from "../src/presets";
+import { historySection, SECTION_GROUPS } from "../src/sections";
+
+const sField = (state: StreetSentenceState, f: string) => streetSentence(state).find((s) => typeof s !== "string" && s.field === f) as Exclude<ReturnType<typeof streetSentence>[number], string> | undefined;
+const set = (state: StreetSentenceState, ...pairs: [Parameters<typeof chooseStreet>[1], string | undefined][]) => pairs.reduce((s, [f, id]) => chooseStreet(s, f, id), state);
+
+test("§16.8: the default sentence's plain text", () => {
+  assert.equal(
+    streetSentenceText(streetSentence(DEFAULT_STREET_STATE)),
+    "Norman & British streets, squares and districts of the medieval era, in a realistic world, across all of Britain, for a town, with dialect words as variants, of any tone, with placeholders for people and places, each one separate.",
+  );
+  const crafty = set(DEFAULT_STREET_STATE, ["kind", "districts"], ["function", "craft"], ["region", "NTH"], ["series", "on"]);
+  assert.equal(
+    streetSentenceText(streetSentence(crafty)),
+    "Norman & British districts for craft of the medieval era, in a realistic world, in the North, for a town, with dialect words as variants, of any tone, with placeholders for people and places, as one town.",
+  );
+  assert.ok(streetSentenceText(streetSentence(set(DEFAULT_STREET_STATE, ["kind", "districts"]))).startsWith("Norman & British districts of any function of the"));
+});
+
+test("§16.8: the function link only with districts; the dialect link hidden for japanese; size labels change in the near future", () => {
+  assert.equal(sField(DEFAULT_STREET_STATE, "function"), undefined);
+  const districts = set(DEFAULT_STREET_STATE, ["kind", "districts"], ["function", "craft"]);
+  assert.ok(sField(districts, "function"));
+  assert.equal(set(districts, ["kind", "streets"]).function, undefined);
+  // A town offers no rule districts; a city does, and a smaller size resets them.
+  assert.ok(!sField(districts, "function")!.choices.some((c) => c.id === "rule"));
+  const rule = set(districts, ["size", "city"], ["function", "rule"]);
+  assert.equal(rule.function, "rule");
+  assert.equal(set(rule, ["size", "town"]).function, undefined);
+  assert.equal(set(rule, ["size", "village"]).kind, undefined);
+  const japanese = set(DEFAULT_STREET_STATE, ["region", "NTH"], ["culture", "japanese"]);
+  assert.equal(sField(japanese, "dialect"), undefined);
+  assert.equal(japanese.region, undefined);
+  assert.ok(!streetSentenceText(streetSentence(japanese)).includes("dialect"));
+  assert.deepEqual(sField(DEFAULT_STREET_STATE, "size")!.choices.map((c) => c.label), ["village", "town", "city", "great city"]);
+  const nf = set(DEFAULT_STREET_STATE, ["era", "NF"]);
+  assert.deepEqual(sField(nf, "size")!.choices.map((c) => c.label), ["outpost", "colony", "station", "megacity"]);
+  assert.ok(streetSentenceText(streetSentence(set(nf, ["size", "village"]))).includes("for an outpost"));
+});
+
+test("§1: the module follows route names; history label and section", () => {
+  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 3), ["placeShapes", "routeNames", "streetNames"]);
+  assert.equal(streetHistoryLabel(DEFAULT_STREET_STATE), "streets and districts · medieval · Norman & British · town");
+  const full = set(DEFAULT_STREET_STATE, ["era", "ST"], ["fantastic", "on"], ["kind", "districts"], ["size", "great"], ["region", "NTH"], ["tone", "grim"], ["series", "on"]);
+  assert.equal(streetHistoryLabel(full), "streets and districts · steam age · Norman & British · districts and quarters · great city · the North · steampunk · grim · one town");
+  assert.equal(historySection(streetHistoryLabel(full)), "streetNames");
+});
+
+test("§16.8: presets round-trip; districts with a village report and run as streets", () => {
+  const preset: StreetPreset = {
+    packName: "Northern market town",
+    setting: "",
+    description: "Norman & British streets, squares and districts of the early modern era, in a realistic world, in the North, for a town, with dialect words as variants, of any tone, with invented people and places, as one town.",
+    culture: "norman-british",
+    region: "NTH",
+    streetKind: "any",
+    function: "any",
+    era: "EM",
+    fantastic: false,
+    size: "town",
+    dialect: "variants",
+    tone: "any",
+    people: "invented",
+    series: true,
+  };
+  const content = modulePresetContent(preset);
+  assert.ok(content.includes("module: street-names\n") && content.includes("kind: any\n") && content.includes("dialect: variants\n"));
+  const parsed = parseModulePreset(content, "x");
+  assert.deepEqual(parsed.street, preset);
+  assert.deepEqual(parsed.problems, []);
+  const village = parseModulePreset(modulePresetContent({ ...preset, streetKind: "districts", size: "village" }), "x");
+  assert.equal(village.street?.streetKind, "streets");
+  assert.deepEqual(village.problems, ["A village has no districts."]);
+  const odd = parseModulePreset(modulePresetContent({ ...preset, size: "hamlet" as StreetSize, dialect: "scots" as never }), "x");
+  assert.equal(odd.street?.size, "town");
+  assert.equal(odd.street?.dialect, "variants");
+  assert.deepEqual(odd.problems, ["Unknown size “hamlet”.", "Unknown dialect “scots”."]);
+});
