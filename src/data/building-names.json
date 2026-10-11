@@ -53,6 +53,8 @@
       {"p": "{town} {bw}", "w": 10, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["christian"], "bw": ["Minster", "Abbey", "Priory"], "self": true},
       {"p": "Temple of {god}", "w": 15, "e": ["AN"], "c": ["egyptian", "norse", "anglo-saxon", "aztec", "maya"], "t": ["grand"]},
       {"p": "Shrine of the {holySite}", "w": 6, "c": ["!christian"], "t": ["strange"]},
+      {"p": "Temple of the {deity}", "w": 15, "deity": true},
+      {"p": "Shrine of the {deity}", "w": 6, "c": ["!christian"], "t": ["strange"], "deity": true},
       {"p": "{fixed}", "w": 0}
     ],
     "civic": [

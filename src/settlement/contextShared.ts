@@ -23,6 +23,8 @@ export interface SettlementContext {
   /** GN's tribal tradition for the culture. */
   tradition: string;
   vesselCulture: string;
+  /** Deities brief §10.4: the settlement's deity (null for christian cultures in realistic worlds). */
+  deity?: string | null;
   /** §7.1: the position's multipliers (buildings' kinds, streets' components, inns' roadside houses). */
   effects?: ContextEffects;
 }

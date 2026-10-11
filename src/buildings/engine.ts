@@ -40,6 +40,10 @@ import {
   type RouteEra,
 } from "../routes/engine";
 import { boostPool, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
+import { deityCultureOffered, deityTitle, isChristianCulture } from "../deities/engine";
+
+/** Deities brief §10.1: the christian cultures' temple weight, with fantastic on. */
+const DEITY_CHRISTIAN_WEIGHT = 3;
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { STREET_DATA } from "../streets/engine";
 
@@ -63,6 +67,8 @@ export interface BuildingShape {
   bw?: string[];
   /** §8.2: setting multipliers (Mile Stone by the road ×3). */
   sx?: Partial<Record<InnSetting, number>>;
+  /** Deities brief §10.1: an invented deity's temple or shrine. */
+  deity?: boolean;
 }
 
 interface BuildingData {
@@ -268,6 +274,12 @@ function token(ctx: Ctx, name: string): string | undefined {
       const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng));
       return ctx.context ? contextSaint(ctx.context, other, rng) : other();
     }
+    case "deity": {
+      // Deities brief §10.1, §10.4: the settlement's deity, or an invented one; without its own "the".
+      const t = ctx.context ? ctx.context.deity ?? undefined : deityTitle({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng, vocab: ctx.vocab });
+      if (t) ctx.words.push({ pool: "deity", word: t });
+      return t?.replace(/^the /, "");
+    }
     case "figure":
       return routeFigure(ctx.culture.key, ctx.setting, rng);
     case "god": {
@@ -380,6 +392,12 @@ function shapeWeight(ctx: Ctx, s: BuildingShape): number {
   if (s.p.includes("{god") && (godNames(c.key).length === 0 || !BUILDING_DATA.lists.godCultures.includes(c.key))) return 0;
   if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
   if (s.p.includes("{bw}") && bwItems({ ...ctx, shape: s }).length === 0) return 0;
+  // Deities brief §10.1: never for the sensitive cultures; christian cultures only with fantastic, at 3.
+  if (s.deity) {
+    if (c.sensitive || !deityCultureOffered(c.key)) return 0;
+    if (ctx.context && !ctx.context.deity) return 0;
+    if (isChristianCulture(c.key, ctx.era)) return ctx.fantastic && s.p.startsWith("Temple") ? DEITY_CHRISTIAN_WEIGHT * toneFactor(s.t ?? [], ctx.tone) : 0;
+  }
   let w = s.w;
   if (s.p === "{fixed}") w = vocabPool(ctx, `buildingFixed:${ctx.kind}`).reduce((n, [, x]) => n + x, 0);
   const pool = s.p.match(/^(?:\{\w+\} )?\{(\w+Landmark)\}$/)?.[1];
