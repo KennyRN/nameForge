@@ -2221,10 +2221,11 @@ export class NameForgeModal extends Modal {
     const byname = await this.loadBynameSafeguards();
     const vessel = await this.loadVesselSafeguards();
     const realm = await this.loadRealmSafeguards();
+    const event = await this.loadSettlementSafeguards(EVENT_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(route.safeguards, routeWordBlocked);
-    const all = [route, street, inn, building, group, byname, vessel, realm];
+    const all = [route, street, inn, building, group, byname, vessel, realm, event];
     return {
-      safeguards: { route: route.safeguards, street: street.safeguards, inn: inn.safeguards, building: building.safeguards, group: group.safeguards, byname: byname.safeguards, vessel: vessel.safeguards, realm: realm.safeguards },
+      safeguards: { route: route.safeguards, street: street.safeguards, inn: inn.safeguards, building: building.safeguards, group: group.safeguards, byname: byname.safeguards, vessel: vessel.safeguards, realm: realm.safeguards, event: event.safeguards },
       vocab,
       notices: [...new Set(all.flatMap((x) => x.notices))],
     };

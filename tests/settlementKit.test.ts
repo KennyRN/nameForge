@@ -152,7 +152,7 @@ test("§13.3: section counts follow §5.1 for every size × detail (a shortfall 
     for (const detail of KIT_DETAILS) {
       for (const seed of [1, 2]) {
         const kit = generateKit({ culture: "norman-british", size, detail, position: "coast", people: "invented", seed });
-        for (const key of ["roads", "districts", "streets", "squares", "inns", "buildings", "groups", "ships"] as KitSectionKey[]) {
+        for (const key of ["roads", "districts", "streets", "squares", "inns", "buildings", "groups", "history", "ships"] as KitSectionKey[]) {
           const wanted = sectionCount(key, size, detail, "coast");
           const got = texts(kit, key).length;
           const where = `${size} ${detail} ${key}: ${got} of ${wanted}`;
@@ -174,10 +174,11 @@ test("§13.3: a village has no districts; places only and people only; inland ha
   assert.equal(places.ruler, null);
   assert.equal(section(places, "groups"), undefined);
   assert.equal(section(places, "ships"), undefined);
+  assert.equal(section(places, "history"), undefined);
   assert.ok(texts(places, "streets").length > 0);
   const people = generateKit({ culture: "norman-british", position: "coast", contents: "people", seed: 4 });
   assert.ok(people.ruler && texts(people, "groups").length === 4);
-  assert.deepEqual(people.sections.map((s) => s.key), ["groups"]);
+  assert.deepEqual(people.sections.map((s) => s.key), ["groups", "history"]);
   assert.equal(section(generateKit({ culture: "norman-british", seed: 4 }), "ships"), undefined);
 });
 
@@ -390,4 +391,31 @@ test("§13.7: presets round-trip", () => {
   const bad = parseModulePreset(modulePresetContent({ ...preset, size: "hamlet" as never, detail: "huge" as never }), "x");
   assert.equal(bad.kit?.size, "town");
   assert.deepEqual(bad.problems, ["Unknown size “hamlet”.", "Unknown detail “huge”."]);
+});
+
+// ── Events brief §10: the History section ───────────────────────────────────
+
+test("Events §10: History follows Groups with §5.1-style counts; a history of 3 or more opens with the founding", () => {
+  const counts = { village: 2, town: 3, city: 4, great: 5 } as const;
+  for (const size of KIT_SIZES) {
+    for (let seed = 1; seed <= 6; seed++) {
+      const kit = generateKit({ culture: "norman-british", size, position: "coast", people: seed % 2 ? "invented" : "placeholders", seed });
+      const history = section(kit, "history")!;
+      const where = `${size} ${seed}: ${kitMarkdown(kit)}`;
+      assert.equal(sectionCount("history", size, "standard"), counts[size]);
+      assert.equal(history.entries.length, counts[size], where);
+      const keys = kit.sections.map((s) => s.key);
+      assert.equal(keys.indexOf("history"), keys.indexOf("groups") + 1, where);
+      if (counts[size] >= 3) assert.equal(history.entries[0].text, `Founding of ${kit.context.town}`, where);
+    }
+  }
+  assert.ok(texts(generateKit({ culture: "japanese", size: "great", detail: "full", seed: 2 }), "history").length === 8);
+});
+
+test("Events §10: rerolling History redoes only History", () => {
+  const kit = generateKit({ culture: "norman-british", size: "city", people: "invented", seed: 4 });
+  const { kit: next, note } = rerollKit(kit, "history");
+  assert.equal(note, undefined);
+  assert.notDeepEqual(texts(next, "history"), texts(kit, "history"));
+  for (const s of kit.sections) if (s.key !== "history") assert.deepEqual(texts(next, s.key), texts(kit, s.key), s.key);
 });

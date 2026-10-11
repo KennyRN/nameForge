@@ -9,7 +9,8 @@
   "inns": {"village": 1, "town": 3, "city": 5, "great": 7},
   "buildings": {"village": 3, "town": 6, "city": 9, "great": 12},
   "groups": {"village": 1, "town": 4, "city": 7, "great": 10},
-  "ships": {"village": 2, "town": 3, "city": 4, "great": 6}
+  "ships": {"village": 2, "town": 3, "city": 4, "great": 6},
+  "history": {"village": 2, "town": 3, "city": 4, "great": 5}
  },
  "detail": {"brief": 0.5, "standard": 1, "full": 1.5},
  "sections": [
@@ -20,6 +21,7 @@
   {"key": "inns", "title": "Inns", "step": 8},
   {"key": "buildings", "title": "Buildings and landmarks", "step": 4},
   {"key": "groups", "title": "Groups", "step": 9},
+  {"key": "history", "title": "History", "step": 11},
   {"key": "ships", "title": "Ships", "step": 10}
  ],
  "groups": [
@@ -48,6 +50,7 @@
    "sfStation": {"setting": "port", "ships": "any", "effects": {"buildingKindX": {"maritime": 5}, "componentX": {"compWaterside": 3}}}}
  ],
  "vessels": {"ships": {"AN": "T2", "MD": "T3", "EM": "T4", "ST": "T5", "MO": "T7", "NF": "T7"}, "spacecraft": {"NF": "S1", "IS": "S3"}},
+ "history": {"localUpTo": "town", "foundingFrom": 3},
  "rulerShapes": "of {town}",
  "villageOfficeWords": ["Reeve", "Headman", "Steward", "Elder"],
  "seedStep": 7919,

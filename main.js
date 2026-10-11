@@ -81766,7 +81766,8 @@ var settlement_kit_default = {
     inns: { village: 1, town: 3, city: 5, great: 7 },
     buildings: { village: 3, town: 6, city: 9, great: 12 },
     groups: { village: 1, town: 4, city: 7, great: 10 },
-    ships: { village: 2, town: 3, city: 4, great: 6 }
+    ships: { village: 2, town: 3, city: 4, great: 6 },
+    history: { village: 2, town: 3, city: 4, great: 5 }
   },
   detail: { brief: 0.5, standard: 1, full: 1.5 },
   sections: [
@@ -81777,6 +81778,7 @@ var settlement_kit_default = {
     { key: "inns", title: "Inns", step: 8 },
     { key: "buildings", title: "Buildings and landmarks", step: 4 },
     { key: "groups", title: "Groups", step: 9 },
+    { key: "history", title: "History", step: 11 },
     { key: "ships", title: "Ships", step: 10 }
   ],
   groups: [
@@ -81829,6 +81831,7 @@ var settlement_kit_default = {
     }
   ],
   vessels: { ships: { AN: "T2", MD: "T3", EM: "T4", ST: "T5", MO: "T7", NF: "T7" }, spacecraft: { NF: "S1", IS: "S3" } },
+  history: { localUpTo: "town", foundingFrom: 3 },
   rulerShapes: "of {town}",
   villageOfficeWords: ["Reeve", "Headman", "Steward", "Elder"],
   seedStep: 7919,
@@ -81953,9 +81956,9 @@ function sectionCount(key2, size, detail, position = "inland") {
 }
 function sectionsFor(contents, position, era) {
   const all = KIT_DATA.sections.map((s) => s.key);
-  if (contents === "people") return ["groups"];
+  if (contents === "people") return ["groups", "history"];
   const water = shipsModule(position, era) !== void 0;
-  return all.filter((k) => !(contents === "places" && (k === "groups" || k === "ships")) && !(k === "ships" && !water));
+  return all.filter((k) => !(contents === "places" && (k === "groups" || k === "ships" || k === "history")) && !(k === "ships" && !water));
 }
 function positionInfo(position, era, size) {
   var _a2;
@@ -81971,7 +81974,7 @@ function shipsModule(position, era) {
   return "ships";
 }
 var norm3 = (s) => s.toLowerCase().replace(/^the /, "").trim();
-var STEPS = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10 };
+var STEPS = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10, history: 11 };
 var LANDMARK_KINDS = ["defence", "crossing", "water", "monument"];
 var THROUGH_KINDS = ["road", "drove", "trade"];
 var subSeed = (seed, step, rerolls = 0) => step * KIT_DATA.seedStep + seed + rerolls * KIT_DATA.rerollStep >>> 0;
@@ -82126,6 +82129,18 @@ function generateKit(options) {
   if (want("groups") > 0) {
     if (kept.has("groups")) sections.set("groups", kept.get("groups"));
     else groupsSection(want("groups"));
+  }
+  if (want("history") > 0) {
+    const scale = KIT_SIZES.indexOf(o.size) <= KIT_SIZES.indexOf(KIT_DATA.history.localUpTo) ? "local" : "realm";
+    const events = (seed, count, extra = {}) => generateEventNames({ ...common, scale, series: !extra.shape, count, seed, safeguards: g.event, ...extra });
+    const wanted = want("history");
+    const founding = wanted >= KIT_DATA.history.foundingFrom;
+    run("history", wanted, (seed, count) => {
+      if (!founding) return events(seed, count);
+      const first = events(seed, 1, { kind: "migration", shape: "Founding of {place}" });
+      const rest = events(seed, count - 1);
+      return { names: [...first.names, ...rest.names], notices: [...first.notices, ...rest.notices] };
+    });
   }
   const module2 = shipsModule(o.position, o.era);
   if (module2 && want("ships") > 0) {
@@ -89819,10 +89834,11 @@ ${n.origin}${also}${echo}` };
     const byname = await this.loadBynameSafeguards();
     const vessel = await this.loadVesselSafeguards();
     const realm2 = await this.loadRealmSafeguards();
+    const event = await this.loadSettlementSafeguards(EVENT_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(route3.safeguards, routeWordBlocked);
-    const all = [route3, street, inn, building, group, byname, vessel, realm2];
+    const all = [route3, street, inn, building, group, byname, vessel, realm2, event];
     return {
-      safeguards: { route: route3.safeguards, street: street.safeguards, inn: inn.safeguards, building: building.safeguards, group: group.safeguards, byname: byname.safeguards, vessel: vessel.safeguards, realm: realm2.safeguards },
+      safeguards: { route: route3.safeguards, street: street.safeguards, inn: inn.safeguards, building: building.safeguards, group: group.safeguards, byname: byname.safeguards, vessel: vessel.safeguards, realm: realm2.safeguards, event: event.safeguards },
       vocab,
       notices: [...new Set(all.flatMap((x) => x.notices))]
     };

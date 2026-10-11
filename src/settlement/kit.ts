@@ -5,6 +5,7 @@
 
 import kitData from "../data/settlement-kit.json";
 import { generateBuildingNames, type BuildingKind } from "../buildings/engine";
+import { generateEventNames, type EventKind } from "../events/engine";
 import { generateBynames } from "../bynames/engine";
 import { GROUP_FAMILIES, generateGroupNames, groupSetting, type GroupPeople, type GroupSafeguards, type GroupToneChoice, typesInSetting } from "../groups/engine";
 import { generateInnNames, type InnSetting } from "../inns/engine";
@@ -21,7 +22,7 @@ export type KitSize = StreetSize;
 export type KitPosition = "inland" | "river" | "coast" | "crossroads";
 export type KitContents = "whole" | "places" | "people";
 export type KitDetail = "brief" | "standard" | "full";
-export type KitSectionKey = "roads" | "districts" | "streets" | "squares" | "inns" | "buildings" | "groups" | "ships";
+export type KitSectionKey = "roads" | "districts" | "streets" | "squares" | "inns" | "buildings" | "groups" | "history" | "ships";
 
 interface PositionData {
   key: KitPosition;
@@ -45,6 +46,7 @@ interface KitData {
   hideFront: string[];
   positions: PositionData[];
   vessels: Record<VesselModule, Partial<Record<RouteEra, string>>>;
+  history: { localUpTo: KitSize; foundingFrom: number };
   rulerShapes: string;
   villageOfficeWords: string[];
   seedStep: number;
@@ -78,6 +80,7 @@ export interface KitSafeguards {
   byname?: GroupSafeguards;
   vessel?: GroupSafeguards;
   realm?: GroupSafeguards;
+  event?: GroupSafeguards;
 }
 
 export interface KitOptions {
@@ -147,9 +150,9 @@ export function sectionCount(key: KitSectionKey, size: KitSize, detail: KitDetai
 /** §5.1: the sections a contents choice keeps. */
 export function sectionsFor(contents: KitContents, position: KitPosition, era: RouteEra): KitSectionKey[] {
   const all = KIT_DATA.sections.map((s) => s.key);
-  if (contents === "people") return ["groups"];
+  if (contents === "people") return ["groups", "history"];
   const water = shipsModule(position, era) !== undefined;
-  return all.filter((k) => !(contents === "places" && (k === "groups" || k === "ships")) && !(k === "ships" && !water));
+  return all.filter((k) => !(contents === "places" && (k === "groups" || k === "ships" || k === "history")) && !(k === "ships" && !water));
 }
 
 /** §7.1: the position's settings and effects (NF–IS: the station counts as the coast). */
@@ -171,7 +174,8 @@ export function shipsModule(position: KitPosition, era: RouteEra): VesselModule 
 // ── Generation (§6) ─────────────────────────────────────────────────────────
 
 const norm = (s: string) => s.toLowerCase().replace(/^the /, "").trim();
-const STEPS: Record<KitSectionKey | "context" | "ruler", number> = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10 };
+// Events brief §10: History runs after Groups and before Ships, on a step of its own.
+const STEPS: Record<KitSectionKey | "context" | "ruler", number> = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10, history: 11 };
 const LANDMARK_KINDS: BuildingKind[] = ["defence", "crossing", "water", "monument"];
 /** §3: the route kinds that run through a town. */
 const THROUGH_KINDS = ["road", "drove", "trade"];
@@ -354,6 +358,21 @@ export function generateKit(options: KitOptions): Kit {
   if (want("groups") > 0) {
     if (kept.has("groups")) sections.set("groups", kept.get("groups")!);
     else groupsSection(want("groups"));
+  }
+
+  // Events brief §10: History, as one history, local for a village or town; founded first.
+  if (want("history") > 0) {
+    const scale = KIT_SIZES.indexOf(o.size) <= KIT_SIZES.indexOf(KIT_DATA.history.localUpTo) ? "local" : "realm";
+    const events = (seed: number, count: number, extra: { kind?: EventKind; shape?: string } = {}) =>
+      generateEventNames({ ...common, scale, series: !extra.shape, count, seed, safeguards: g.event, ...extra });
+    const wanted = want("history");
+    const founding = wanted >= KIT_DATA.history.foundingFrom;
+    run("history", wanted, (seed, count) => {
+      if (!founding) return events(seed, count);
+      const first = events(seed, 1, { kind: "migration", shape: "Founding of {place}" });
+      const rest = events(seed, count - 1);
+      return { names: [...first.names, ...rest.names], notices: [...first.notices, ...rest.notices] };
+    });
   }
 
   // 10. Ships (§7.2).
