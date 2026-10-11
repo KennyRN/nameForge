@@ -232,7 +232,7 @@ test("line-up: the modules in order, with their labels; river names live in plac
       "faiths and mystic orders",
       "armies and martial orders",
       "thieves and the underworld",
-      "guilds and trading houses",
+      "guilds, companies and trade",
       "adventurers and explorers",
       "powers and factions",
       "supernatural courts and hosts",

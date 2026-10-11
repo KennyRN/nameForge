@@ -16,6 +16,8 @@ import { GENERIC_PLACE_NAMES_HISTORY_NAME, PLACE_SHAPES_HISTORY_NAME } from "./p
 export const OLD_HISTORY_PREFIXES = {
   explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
   empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"],
+  // Companies brief §1: the trade family's label before "guilds, companies and trade".
+  tradeGuilds: ["guilds and trading houses"],
 } as const;
 
 export type NameForgeSection =
@@ -116,7 +118,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   mysticOrders: "faiths and mystic orders",
   martialOrders: "armies and martial orders",
   underworldGroups: "thieves and the underworld",
-  tradeGuilds: "guilds and trading houses",
+  tradeGuilds: "guilds, companies and trade",
   adventureCompanies: "adventurers and explorers",
   powerFactions: "powers and factions",
   supernaturalCourts: "supernatural courts and hosts",
@@ -156,6 +158,7 @@ export function historySection(packName: string): NameForgeSection {
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   // Ships brief §1.2: "{module label} · {setting} · {culture} · {technology}…".
   for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  if (OLD_HISTORY_PREFIXES.tradeGuilds.some(starts)) return "tradeGuilds";
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }

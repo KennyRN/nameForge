@@ -34718,9 +34718,9 @@ var group_names_default = {
     {
       key: "trade",
       section: "tradeGuilds",
-      label: "guilds and trading houses",
+      label: "guilds, companies and trade",
       icon: "scale",
-      any: "trading groups of any kind",
+      any: "guilds and companies of any kind",
       types: [
         {
           key: "craft",
@@ -34797,7 +34797,8 @@ var group_names_default = {
                 "SF"
               ]
             }
-          ]
+          ],
+          commodity: false
         },
         {
           key: "merchant",
@@ -34924,8 +34925,599 @@ var group_names_default = {
               t: [
                 "plain"
               ]
+            },
+            {
+              p: "{compass} {goods} Traders",
+              f: "E",
+              w: 8,
+              t: [
+                "plain"
+              ],
+              sa: "compass",
+              filter: {
+                compass: [
+                  "Northern",
+                  "Southern",
+                  "Eastern",
+                  "Western"
+                ]
+              }
+            },
+            {
+              p: "{commRegion} Merchants",
+              f: "E",
+              w: 8,
+              sa: "commRegion"
+            },
+            {
+              p: "{town} Trading House",
+              f: "E",
+              w: 5,
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "the {goods} Road Company",
+              f: "E",
+              w: 3,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
             }
-          ]
+          ],
+          commodity: true
+        },
+        {
+          key: "chartered",
+          menu: "Chartered companies",
+          sentence: "chartered companies",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 15,
+          front: null,
+          person: "governor",
+          description: "Companies granted a charter to trade, and often to rule, a region. For the lands such a company rules, use realms and polities: company-states.",
+          shapes: [
+            {
+              p: "{commRegion} Company",
+              f: "B",
+              w: 20
+            },
+            {
+              p: "{compass} {seaWord} Company",
+              f: "B",
+              w: 15,
+              sa: "compass"
+            },
+            {
+              p: "{compass} {seaWord} {tradeActivity} Company",
+              f: "F",
+              w: 15,
+              sa: "compass"
+            },
+            {
+              p: "Company of the {commRegion}",
+              f: "F",
+              w: 15,
+              t: [
+                "grand"
+              ]
+            },
+            {
+              p: "{charterHonorific} {commRegion} Company",
+              f: "F",
+              w: 10,
+              t: [
+                "grand"
+              ]
+            },
+            {
+              p: "{compass} {goods} Company",
+              f: "E",
+              w: 10,
+              t: [
+                "plain"
+              ],
+              sa: "compass"
+            },
+            {
+              p: "Company of Merchants Trading to the {commRegion}",
+              f: "F",
+              w: 5,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ],
+              t: [
+                "grand"
+              ]
+            },
+            {
+              p: "{town} {tradeActivity} Company",
+              f: "E",
+              w: 10,
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "{sfRegion} {tradeActivity} Company",
+              f: "B",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "{sfRegion} Interstellar Company",
+              f: "F",
+              w: 5,
+              s: [
+                "SF"
+              ],
+              t: [
+                "grand"
+              ]
+            }
+          ],
+          listFilter: {
+            compass: [
+              "Northern",
+              "Southern",
+              "Eastern",
+              "Western"
+            ]
+          },
+          commodity: true
+        },
+        {
+          key: "colonial",
+          menu: "Colonial companies",
+          sentence: "colonial companies",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 8,
+          front: null,
+          person: "governor",
+          description: "Companies founded to settle and govern new land. For the colony itself, use realms and polities.",
+          shapes: [
+            {
+              p: "Company for the Settlement of {colonyTarget}",
+              f: "F",
+              w: 15,
+              t: [
+                "grand"
+              ]
+            },
+            {
+              p: "{compass} Frontier Company",
+              f: "E",
+              w: 15,
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "New {newLand} Company",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "New {town} Company",
+              f: "E",
+              w: 5
+            },
+            {
+              p: "{town} Land Company",
+              f: "E",
+              w: 10,
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "{charterHonorific} Company of {colonyTarget}",
+              f: "F",
+              w: 10,
+              t: [
+                "grand"
+              ]
+            },
+            {
+              p: "{town} Colonial Company",
+              f: "B",
+              w: 10,
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "Society of Adventurers to {colonyTarget}",
+              f: "F",
+              w: 5,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ],
+              t: [
+                "grand"
+              ]
+            },
+            {
+              p: "{sfRegion} Colonial Services",
+              f: "B",
+              w: 10,
+              s: [
+                "SF"
+              ],
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "{sfRegion} Settlement Company",
+              f: "B",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            }
+          ],
+          listFilter: {
+            compass: [
+              "Northern",
+              "Southern",
+              "Eastern",
+              "Western"
+            ]
+          },
+          commodity: false
+        },
+        {
+          key: "resource",
+          menu: "Resource companies",
+          sentence: "resource companies",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 10,
+          front: null,
+          person: "founder",
+          description: "Mining, timber, quarrying and extraction companies",
+          shapes: [
+            {
+              p: "{mineLandPlace} {resourceActivity} Company",
+              f: "B",
+              w: 20,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "{compass} {resGoods} Company",
+              f: "E",
+              w: 15,
+              t: [
+                "plain"
+              ],
+              sa: "compass"
+            },
+            {
+              p: "{commRegion} {resourceActivity} Syndicate",
+              f: "B",
+              w: 10,
+              sa: "commRegion"
+            },
+            {
+              p: "{town} {resGoods} Company",
+              f: "E",
+              w: 15,
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "{resGoods} and {resGoods} Company",
+              f: "E",
+              w: 5,
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "{town} Colliery Company",
+              f: "E",
+              w: 5,
+              s: [
+                "MR",
+                "MF"
+              ],
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "{resGoods} Trust",
+              f: "E",
+              w: 5,
+              s: [
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "{sfRegion} {resourceActivity} Corporation",
+              f: "B",
+              w: 15,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "{spaceLand} {resGoods} Company",
+              f: "E",
+              w: 10,
+              s: [
+                "SF"
+              ],
+              t: [
+                "plain"
+              ]
+            }
+          ],
+          listFilter: {
+            compass: [
+              "Northern",
+              "Southern",
+              "Eastern",
+              "Western"
+            ]
+          },
+          commodity: true
+        },
+        {
+          key: "league",
+          menu: "Merchant leagues",
+          sentence: "merchant leagues",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 8,
+          front: null,
+          person: "founder",
+          description: "Associations of merchants and trading towns",
+          shapes: [
+            {
+              p: "the {leagueQual} League",
+              f: "E",
+              w: 25
+            },
+            {
+              p: "League of Free {leaguePl}",
+              f: "F",
+              w: 20
+            },
+            {
+              p: "the {compass} Merchants' League",
+              f: "E",
+              w: 10,
+              t: [
+                "plain"
+              ],
+              sa: "compass"
+            },
+            {
+              p: "the {town} Merchants' League",
+              f: "E",
+              w: 5,
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "League of {number} {leaguePl}",
+              f: "F",
+              w: 10
+            },
+            {
+              p: "the {goods} Merchants' League",
+              f: "E",
+              w: 10
+            },
+            {
+              p: "{town} {leagueBody}",
+              f: "B",
+              w: 10,
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "the {colour} Pennant League",
+              f: "E",
+              w: 5,
+              t: [
+                "light"
+              ]
+            },
+            {
+              p: "{spaceLand} Traders' League",
+              f: "E",
+              w: 5,
+              s: [
+                "SF"
+              ]
+            }
+          ],
+          listFilter: {
+            compass: [
+              "Northern",
+              "Southern",
+              "Eastern",
+              "Western"
+            ],
+            number: [
+              "Two",
+              "Three",
+              "Four",
+              "Five",
+              "Six",
+              "Seven",
+              "Nine",
+              "Ten",
+              "Twelve",
+              "Thirteen"
+            ]
+          },
+          commodity: true
+        },
+        {
+          key: "industrial",
+          menu: "Syndicates and industrial companies",
+          sentence: "syndicates and combines",
+          settings: [
+            "FL",
+            "FH",
+            "MR",
+            "MF",
+            "SF"
+          ],
+          weight: 8,
+          front: null,
+          person: "founder",
+          description: "Syndicates, combines, trusts and early industrial companies such as railways and canals",
+          shapes: [
+            {
+              p: "{compass} {industry} Syndicate",
+              f: "E",
+              w: 20,
+              t: [
+                "plain"
+              ],
+              sa: "compass"
+            },
+            {
+              p: "{commRegion} Syndicate",
+              f: "E",
+              w: 10,
+              sa: "commRegion"
+            },
+            {
+              p: "{town} Industrial {combineBody}",
+              f: "B",
+              w: 15,
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "the {surname} Trust",
+              f: "E",
+              w: 10,
+              s: [
+                "MR",
+                "MF"
+              ]
+            },
+            {
+              p: "{surname}\u2013{surname} Combine",
+              f: "B",
+              w: 5,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ],
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "{town} {transport} Company",
+              f: "B",
+              w: 15,
+              s: [
+                "FL",
+                "FH",
+                "MR",
+                "MF"
+              ],
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "{town} and {town} {transport}",
+              f: "F",
+              w: 5,
+              s: [
+                "MR",
+                "MF"
+              ],
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "{sfRegion} {industry} Combine",
+              f: "B",
+              w: 15,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "{brandRoot} Consolidated",
+              f: "B",
+              w: 5,
+              s: [
+                "MR",
+                "MF",
+                "SF"
+              ],
+              t: [
+                "plain"
+              ]
+            }
+          ],
+          listFilter: {
+            compass: [
+              "Northern",
+              "Southern",
+              "Eastern",
+              "Western"
+            ]
+          },
+          commodity: true
         },
         {
           key: "bank",
@@ -35018,8 +35610,38 @@ var group_names_default = {
                 "MF",
                 "SF"
               ]
+            },
+            {
+              p: "the {colour} {various} Banking House",
+              f: "E",
+              w: 8,
+              t: [
+                "light"
+              ]
+            },
+            {
+              p: "{town} Banking House",
+              f: "F",
+              w: 5,
+              t: [
+                "plain"
+              ]
+            },
+            {
+              p: "House {house}",
+              f: "B",
+              w: 5,
+              s: [
+                "FL",
+                "FH",
+                "SF"
+              ],
+              t: [
+                "grand"
+              ]
             }
-          ]
+          ],
+          commodity: false
         },
         {
           key: "corp",
@@ -35106,8 +35728,28 @@ var group_names_default = {
               t: [
                 "plain"
               ]
+            },
+            {
+              p: "{sfRegion} {sfCorpWord} Corporation",
+              f: "B",
+              w: 10,
+              s: [
+                "SF"
+              ]
+            },
+            {
+              p: "{sfRegion} Colonial Services",
+              f: "B",
+              w: 8,
+              s: [
+                "SF"
+              ],
+              t: [
+                "plain"
+              ]
             }
-          ]
+          ],
+          commodity: false
         },
         {
           key: "union",
@@ -35204,7 +35846,8 @@ var group_names_default = {
                 "plain"
               ]
             }
-          ]
+          ],
+          commodity: false
         },
         {
           key: "caravan",
@@ -35318,7 +35961,8 @@ var group_names_default = {
                 "SF"
               ]
             }
-          ]
+          ],
+          commodity: true
         }
       ]
     },
@@ -51233,6 +51877,1398 @@ var group_names_default = {
       {
         w: "Sire"
       }
+    ],
+    regionQual: [
+      {
+        w: "Spice",
+        x: 2,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Silver",
+        x: 2,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Amber",
+        x: 2,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Iron",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Jade",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Pearl",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Coral",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Sapphire",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Copper",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Cinnamon",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Saffron",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Tin",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Salt",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Golden",
+        x: 2,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Emerald",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Cedar",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Ice",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Iron",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Helium",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Copper",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Crystal",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Silver",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    coastWord: [
+      {
+        w: "Coast",
+        x: 3,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Shore",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Sea",
+        x: 2,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Ocean",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Isles",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Straits",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Gulf",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Bay",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Sound",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Islands",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Belt",
+        x: 2,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Rim",
+        x: 2,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Reach",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Drift",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Halo",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Ring",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Verge",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Expanse",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Deep",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Void",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Core",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Spur",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Gap",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Shoals",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Cluster",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Frontier",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Dark",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Lanes",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    seaWord: [
+      {
+        w: "Seas",
+        x: 2
+      },
+      {
+        w: "Ocean",
+        x: 2
+      },
+      {
+        w: "Isles"
+      },
+      {
+        w: "Coast"
+      },
+      {
+        w: "Straits"
+      },
+      {
+        w: "Lands"
+      },
+      {
+        w: "Reaches",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Belt",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Rim",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Worlds",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    newLand: [
+      {
+        w: "Albion",
+        x: 0.3
+      },
+      {
+        w: "Caledon",
+        x: 0.3
+      },
+      {
+        w: "Horizon"
+      },
+      {
+        w: "Haven"
+      },
+      {
+        w: "Hope"
+      },
+      {
+        w: "Dawn"
+      },
+      {
+        w: "Arcadia"
+      },
+      {
+        w: "Meridian"
+      },
+      {
+        w: "Harbour"
+      }
+    ],
+    sfBody: [
+      {
+        w: "Sol",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Titan",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Ganymede",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Callisto",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Europa",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Ceres",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Vesta",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Helios",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Perseus",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Proxima",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Arcadia",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Kepler",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    mineLand: [
+      {
+        w: "Mountain",
+        x: 2
+      },
+      {
+        w: "Hills"
+      },
+      {
+        w: "Valley"
+      },
+      {
+        w: "Ridge"
+      },
+      {
+        w: "Fells"
+      },
+      {
+        w: "Peaks"
+      },
+      {
+        w: "Downs"
+      },
+      {
+        w: "Creek"
+      },
+      {
+        w: "River"
+      },
+      {
+        w: "Basin"
+      },
+      {
+        w: "Range"
+      }
+    ],
+    tradeActivity: [
+      {
+        w: "Trading",
+        x: 4
+      },
+      {
+        w: "Merchant",
+        x: 2
+      },
+      {
+        w: "Mercantile"
+      },
+      {
+        w: "Commercial"
+      },
+      {
+        w: "Commerce"
+      },
+      {
+        w: "Exchange"
+      }
+    ],
+    shipActivity: [
+      {
+        w: "Shipping",
+        x: 2
+      },
+      {
+        w: "Navigation"
+      },
+      {
+        w: "Maritime"
+      },
+      {
+        w: "Deepwater"
+      },
+      {
+        w: "Harbour"
+      },
+      {
+        w: "Packet",
+        s: [
+          "MR",
+          "MF"
+        ]
+      }
+    ],
+    exploreActivity: [
+      {
+        w: "Exploration"
+      },
+      {
+        w: "Discovery"
+      },
+      {
+        w: "Expedition"
+      },
+      {
+        w: "Survey"
+      },
+      {
+        w: "Frontier"
+      }
+    ],
+    resourceActivity: [
+      {
+        w: "Mining",
+        x: 3,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Extraction",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Smelting",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Quarrying",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Fisheries",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Refining",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Drilling",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Asteroid Mining",
+        x: 2,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Ice Mining",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Gas Harvesting",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Terraforming",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "System Development",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Orbital Logistics",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Deep Space Exploration",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    industry: [
+      {
+        w: "Shipping",
+        x: 2
+      },
+      {
+        w: "Industrial",
+        x: 2
+      },
+      {
+        w: "Mining"
+      },
+      {
+        w: "Trading"
+      },
+      {
+        w: "Freight"
+      },
+      {
+        w: "Haulage"
+      },
+      {
+        w: "Finance"
+      },
+      {
+        w: "Rail",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Steel",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Canal",
+        x: 0.3,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Salvage",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Orbital Logistics",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Heavy Industries",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    transport: [
+      {
+        w: "Railway",
+        x: 2,
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Canal",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ],
+        sx: {
+          FL: 0.3,
+          FH: 0.3
+        }
+      },
+      {
+        w: "Tramway",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Steam Navigation",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Telegraph",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Water Works",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Turnpike",
+        x: 0.5,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Gas Light",
+        x: 0.3,
+        s: [
+          "MR",
+          "MF"
+        ]
+      }
+    ],
+    charterHonorific: [
+      {
+        w: "Royal",
+        x: 2,
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Chartered",
+        x: 2
+      },
+      {
+        w: "Honourable",
+        x: 2,
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Imperial",
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "United",
+        x: 0.5
+      }
+    ],
+    combineBody: [
+      {
+        w: "Syndicate",
+        x: 2
+      },
+      {
+        w: "Consortium"
+      },
+      {
+        w: "Combine",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Group",
+        s: [
+          "MR",
+          "MF",
+          "SF"
+        ]
+      },
+      {
+        w: "Trust",
+        s: [
+          "MR",
+          "MF"
+        ]
+      }
+    ],
+    leagueQual: [
+      {
+        w: "Maritime",
+        x: 2
+      },
+      {
+        w: "Merchant"
+      },
+      {
+        w: "Northern"
+      },
+      {
+        w: "Southern"
+      },
+      {
+        w: "Eastern"
+      },
+      {
+        w: "Western"
+      },
+      {
+        w: "Amber"
+      },
+      {
+        w: "Salt"
+      },
+      {
+        w: "River"
+      },
+      {
+        w: "Harbour"
+      },
+      {
+        w: "Sea"
+      },
+      {
+        w: "Free"
+      },
+      {
+        w: "Coastal"
+      }
+    ],
+    leaguePl: [
+      {
+        w: "Ports",
+        x: 2
+      },
+      {
+        w: "Harbours"
+      },
+      {
+        w: "Cities"
+      },
+      {
+        w: "Towns"
+      },
+      {
+        w: "Markets"
+      },
+      {
+        w: "Merchants"
+      },
+      {
+        w: "Stations",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Habitats",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Traders",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Worlds",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    leagueBody: [
+      {
+        w: "League",
+        x: 3
+      },
+      {
+        w: "Association"
+      },
+      {
+        w: "Compact"
+      },
+      {
+        w: "Hanse",
+        x: 0.5
+      }
+    ],
+    sfCorpWord: [
+      {
+        w: "Frontier",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Colonial",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Expansion",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Development",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Survey",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Transit",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    resGoods: [
+      {
+        w: "Timber",
+        x: 2,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Copper",
+        x: 2,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Tin",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Iron",
+        x: 2,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Silver",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Gold",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Lead",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Salt",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Marble",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Slate",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Coal",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ],
+        sx: {
+          FL: 0.3,
+          FH: 0.3
+        }
+      },
+      {
+        w: "Oil",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Petroleum",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Gas",
+        s: [
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Amber",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Pearl",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Sulphur",
+        x: 0.3,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Ore",
+        x: 2,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Ice",
+        x: 2,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Helium",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Water",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Crystal",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Alloys",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Rare Earths",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Deuterium",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    resGoodsMetal: [
+      {
+        w: "Copper",
+        x: 2,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Tin",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Iron",
+        x: 2,
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Silver",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Gold",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Lead",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Marble",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Slate",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      },
+      {
+        w: "Coal",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ],
+        sx: {
+          FL: 0.3,
+          FH: 0.3
+        }
+      },
+      {
+        w: "Amber",
+        s: [
+          "FL",
+          "FH",
+          "MR",
+          "MF"
+        ]
+      }
     ]
   },
   composites: {
@@ -51858,7 +53894,115 @@ var group_names_default = {
       "Order of the Phoenix",
       "Death Eaters",
       "Dumbledore's Army",
-      "Brotherhood of Steel"
+      "Brotherhood of Steel",
+      "Dutch East India Company",
+      "United East India Company",
+      "VOC",
+      "West India Company",
+      "Dutch West India Company",
+      "Honourable East India Company",
+      "English East India Company",
+      "French East India Company",
+      "Swedish East India Company",
+      "Danish East India Company",
+      "Ostend Company",
+      "Muscovy Company",
+      "Russia Company",
+      "Levant Company",
+      "Turkey Company",
+      "Eastland Company",
+      "Greenland Company",
+      "Royal African Company",
+      "African Company",
+      "Company of Royal Adventurers Trading to Africa",
+      "British South Africa Company",
+      "Royal Niger Company",
+      "Imperial British East Africa Company",
+      "North Borneo Company",
+      "New Zealand Company",
+      "Plymouth Company",
+      "London Company",
+      "Massachusetts Bay Company",
+      "Ohio Company",
+      "North West Company",
+      "South Sea Company",
+      "Mississippi Company",
+      "Darien Company",
+      "Company of Scotland",
+      "Medici Bank",
+      "House of Medici",
+      "House of Fugger",
+      "Fugger",
+      "Rothschild",
+      "Barings",
+      "Baring Brothers",
+      "Coutts",
+      "Bank of England",
+      "Bank of Scotland",
+      "Lloyd's",
+      "Jardine Matheson",
+      "Butterfield and Swire",
+      "Swire",
+      "Mitsubishi",
+      "Mitsui",
+      "Sumitomo",
+      "Krupp",
+      "Standard Oil",
+      "De Beers",
+      "United Fruit Company",
+      "Anglo-Persian Oil Company",
+      "Union Pacific",
+      "Central Pacific",
+      "Great Western Railway",
+      "Peninsular and Oriental",
+      "P&O",
+      "Cunard",
+      "White Star Line",
+      "Black Ball Line",
+      "Blue Funnel Line",
+      "Hamburg America Line",
+      "Gold Coast",
+      "Ivory Coast",
+      "Slave Coast",
+      "Grain Coast",
+      "Pepper Coast",
+      "Malabar Coast",
+      "Coromandel Coast",
+      "Barbary Coast",
+      "Spanish Main",
+      "New Caledonia",
+      "East India Trading Company",
+      "Weyland Corporation",
+      "Hyperdyne Systems",
+      "Seegson",
+      "CHOAM",
+      "Arasaka",
+      "Militech",
+      "Kang Tao",
+      "Biotechnica",
+      "Petrochem",
+      "Wallace Corporation",
+      "Protogen",
+      "Mao-Kwikowski Mercantile",
+      "Tukera Lines",
+      "Sternmetal Horizons",
+      "General Products",
+      "Ling-Standard Products",
+      "Delgado Trading",
+      "Oberlindes Lines",
+      "ComStar",
+      "Defiance Industries",
+      "Buy n Large",
+      "Omni Consumer Products",
+      "OCP",
+      "Soylent Corporation",
+      "Rekall",
+      "Shinra",
+      "Vault-Tec",
+      "RobCo",
+      "Abstergo",
+      "Massive Dynamic",
+      "Initech"
     ],
     flag: [
       "White Company",
@@ -51896,7 +54040,16 @@ var group_names_default = {
       "Home Fleet",
       "Blues",
       "Greens",
-      "Four Winds"
+      "Four Winds",
+      "New Albion",
+      "New Caledon",
+      "Spice Islands",
+      "Western Seas Company",
+      "Northern Ocean Trading Company",
+      "Silver Coast Company",
+      "Maritime League",
+      "League of Free Ports",
+      "Hanse"
     ],
     flagListBlocks: false,
     banned: [
@@ -51914,7 +54067,14 @@ var group_names_default = {
       "Pogrom",
       "Holocaust",
       "Genocide",
-      "Swastika"
+      "Swastika",
+      "Slave",
+      "Slaves",
+      "Slaver",
+      "Opium",
+      "Plantation",
+      "Blackbirder",
+      "Coolie"
     ],
     personNouns: [
       "Men",
@@ -52083,6 +54243,54 @@ var group_names_default = {
     ],
     folkFixed: [
       "strange"
+    ]
+  },
+  patterns: {
+    commRegion: [
+      {
+        p: "{regionQual} {coastWord}",
+        w: 1
+      }
+    ],
+    colonyTarget: [
+      {
+        p: "{town}",
+        w: 40
+      },
+      {
+        p: "the {compass} Frontier",
+        w: 25
+      },
+      {
+        p: "New {newLand}",
+        w: 20
+      },
+      {
+        p: "New {town}",
+        w: 15
+      }
+    ],
+    sfRegion: [
+      {
+        p: "{star}",
+        w: 50,
+        s: [
+          "SF"
+        ]
+      },
+      {
+        p: "{sfBody}",
+        w: 50,
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    mineLandPlace: [
+      {
+        p: "{resGoodsMetal} {mineLand}",
+        w: 1
+      }
     ]
   }
 };
@@ -53821,7 +56029,7 @@ function renderPattern(ctx, pattern, type, shape, hooks) {
   return out;
 }
 function token(ctx, name, type, shape) {
-  var _a2, _b, _c, _d;
+  var _a2, _b, _c, _d, _e;
   const rng = ctx.rng;
   const S = ctx.setting;
   const placeholders = ctx.mode === "placeholders";
@@ -53900,6 +56108,18 @@ function token(ctx, name, type, shape) {
       return word(ctx.family.key === "supernatural" ? "supernaturalTitle" : "personTitle");
     case "initials":
       return initialsToken(ctx, type);
+    case "spaceLand": {
+      const w = pick2(ctx, "spaceLand", type, (_e = shape == null ? void 0 : shape.filter) == null ? void 0 : _e.spaceLand);
+      if (w === void 0) return void 0;
+      return { text: rng() < 0.3 ? `${pick2(ctx, "spacePrefix", type)} ${w}` : w, plural: false };
+    }
+  }
+  const patterns = GROUP_DATA.patterns[name];
+  if (patterns) {
+    const live = patterns.filter((p) => !p.s || p.s.includes(S)).map((p) => [p.p, p.w]);
+    const pattern = pickWeighted5(live, rng);
+    const text = pattern === void 0 ? void 0 : renderPattern(ctx, pattern, type, shape);
+    return text === void 0 ? void 0 : { text, plural: false };
   }
   if (GROUP_DATA.composites[name]) {
     const w = compositeWord(ctx, name, type);
@@ -77232,7 +79452,9 @@ function formatAgedName(trail, format) {
 // src/sections.ts
 var OLD_HISTORY_PREFIXES = {
   explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
-  empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"]
+  empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"],
+  // Companies brief §1: the trade family's label before "guilds, companies and trade".
+  tradeGuilds: ["guilds and trading houses"]
 };
 var VESSEL_SECTIONS = ["ships", "spacecraft"];
 var BYNAME_SECTIONS = ["epithets", "titles", "familyNames"];
@@ -77287,7 +79509,7 @@ var SECTION_LABELS = {
   mysticOrders: "faiths and mystic orders",
   martialOrders: "armies and martial orders",
   underworldGroups: "thieves and the underworld",
-  tradeGuilds: "guilds and trading houses",
+  tradeGuilds: "guilds, companies and trade",
   adventureCompanies: "adventurers and explorers",
   powerFactions: "powers and factions",
   supernaturalCourts: "supernatural courts and hosts",
@@ -77311,6 +79533,7 @@ function historySection(packName) {
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  if (OLD_HISTORY_PREFIXES.tradeGuilds.some(starts)) return "tradeGuilds";
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }

@@ -50,7 +50,7 @@ test("group names: seven families and their types, in order", () => {
       ["mystic", ["esoteric", "arcane", "holy", "cult", "coven", "school"]],
       ["martial", ["unit", "chivalric", "mercenary", "fleet", "watch", "raiders", "guardians"]],
       ["underworld", ["thieves", "assassins", "gang", "syndicate", "smugglers", "crew"]],
-      ["trade", ["craft", "merchant", "bank", "corp", "union", "caravan"]],
+      ["trade", ["craft", "merchant", "chartered", "colonial", "resource", "league", "industrial", "bank", "corp", "union", "caravan"]],
       ["adventure", ["company", "expedition", "hunters"]],
       ["power", ["council", "faction", "secret", "rebels", "league", "agency", "house"]],
       ["supernatural", ["fey", "blood", "pack", "spirit", "undead", "demon", "celestial"]],
@@ -70,10 +70,11 @@ test("group names: every shape token resolves and every weight is positive", () 
     ...GROUP_DATA.nickname.map((n) => ({ ...n, f: "E" as const })),
     ...GROUP_DATA.people.person.map((n) => ({ ...n, f: "E" as const })),
     ...GROUP_DATA.people.sfTown.map((n) => ({ ...n, f: "E" as const })),
+    ...Object.values(GROUP_DATA.patterns).flat().map((n) => ({ ...n, f: "E" as const })),
   ];
   for (const s of shapes) {
     assert.ok(s.w > 0, s.p);
-    for (const t of tokensOf(s.p)) assert.ok(SPECIAL.has(t) || GROUP_DATA.lists[t] || GROUP_DATA.composites[t] || t === "personTitle", `${s.p}: ${t}`);
+    for (const t of tokensOf(s.p)) assert.ok(SPECIAL.has(t) || GROUP_DATA.lists[t] || GROUP_DATA.composites[t] || GROUP_DATA.patterns[t] || t === "personTitle", `${s.p}: ${t}`);
   }
   for (const [name, entries] of Object.entries(GROUP_DATA.lists)) {
     assert.ok(entries.length > 0, name);
@@ -572,4 +573,126 @@ test("tone history: ' · grim · series' only when set", () => {
     "armies and martial orders · historic or low fantasy · Germanic & Norse · grim · series",
   );
   assert.equal(groupHistoryLabel(family("martial"), "fantasy", false, "germanic", "any", false), "armies and martial orders · historic or low fantasy · Germanic & Norse");
+});
+
+// ── Companies and trading powers brief §12 ──────────────────────────────────
+
+import { historySection, SECTION_LABELS } from "../src/sections";
+
+const CO_BRIEF = readFileSync("docs/companies-and-trading-powers-brief.md", "utf8");
+const coSection = (from: string, to: string) => CO_BRIEF.slice(CO_BRIEF.indexOf(from), CO_BRIEF.indexOf(to));
+const TRADE = family("trade");
+const NEW_TRADE_TYPES = ["chartered", "colonial", "resource", "league", "industrial"];
+// Type keys repeat across families (power's league); look trade types up in the trade family.
+const TRADE_TYPE = new Map(TRADE.types.map((t) => [t.key, t] as const));
+const CODES: Record<string, GroupSetting[] | undefined> = { all: undefined, "FL FH MR MF": ["FL", "FH", "MR", "MF"], "MR MF": ["MR", "MF"], "MR MF SF": ["MR", "MF", "SF"], SF: ["SF"], "FL FH SF": ["FL", "FH", "SF"] };
+
+// §12.1 Data
+
+test("companies: the trade family's eleven types, label and any phrase", () => {
+  assert.equal(TRADE.label, "guilds, companies and trade");
+  assert.equal(TRADE.any, "guilds and companies of any kind");
+  const rows = [...coSection("## 2. Type line-up", "**Descriptions").matchAll(/^\| `(\w+)` \| (.+?) \| (.+?) \| (.+?) \| (\d+) \| – \| (\w+) \| (yes|no) \|$/gm)];
+  assert.deepEqual(TRADE.types.map((t) => t.key), rows.map((r) => r[1]));
+  for (const [, key, menu, sentence, settings, weight, person, commodity] of rows) {
+    const t = TRADE.types.find((x) => x.key === key)!;
+    assert.deepEqual([t.menu, t.sentence, t.weight, t.person, !!t.commodity], [menu, sentence, Number(weight), person, commodity === "yes"], key);
+    assert.deepEqual(t.settings, CODES[settings] ?? GROUP_SETTINGS, key);
+  }
+});
+
+test("companies: every list and shape in §3–§4 exists, as the brief gives it", () => {
+  for (const m of coSection("## 3. Shared lists", "### 3.5").matchAll(/^\| `(\w+)`/gm)) {
+    assert.ok(GROUP_DATA.lists[m[1]] || GROUP_DATA.patterns[m[1]], m[1]);
+  }
+  assert.ok(GROUP_DATA.lists.resGoods && GROUP_DATA.lists.resGoodsMetal && GROUP_DATA.patterns.mineLandPlace);
+  const sections: [string, string, string | undefined][] = [
+    ["### 4.1", "### 4.2", "chartered"],
+    ["### 4.2", "### 4.3", "colonial"],
+    ["### 4.3", "### 4.4", "resource"],
+    ["### 4.4", "### 4.5", "league"],
+    ["### 4.5", "### 4.6", "industrial"],
+    ["### 4.6", "### 4.7", undefined],
+  ];
+  let count = 0;
+  for (const [from, to, typeKey] of sections) {
+    for (const line of coSection(from, to).split("\n")) {
+      const cells = line.split(" | ").map((c) => c.replace(/^\| ?|\s*\|$/g, "").trim());
+      if (!line.startsWith("| ") || !line.includes("`")) continue;
+      const [key, ...rest] = typeKey ? [typeKey, ...cells] : cells;
+      const [p, f, w, s, t] = rest;
+      const shape = TRADE_TYPE.get(key)!.shapes.find((x) => x.p === p.replace(/`/g, ""));
+      assert.ok(shape, `${key}: ${p}`);
+      assert.deepEqual([shape!.f, shape!.w, shape!.s, shape!.t?.[0]], [f, Number(w), CODES[s], t === "–" ? undefined : t], `${key}: ${p}`);
+      count++;
+    }
+  }
+  assert.equal(count, 56);
+  for (const [, entries] of Object.entries(GROUP_DATA.lists)) for (const e of entries) assert.ok((e.x ?? 1) > 0);
+  for (const [, ps] of Object.entries(GROUP_DATA.patterns)) for (const p of ps) assert.ok(p.w > 0);
+});
+
+test("companies: no word holds a stray mark", () => {
+  for (const [name, entries] of Object.entries(GROUP_DATA.lists)) for (const e of entries) assert.ok(!/[()§×?→]/.test(e.w), `${name}: ${e.w}`);
+});
+
+test("companies: every §4.7 series anchor names a token in its shape", () => {
+  let rows = 0;
+  for (const m of coSection("### 4.7", "## 5.").matchAll(/^\| (\w+) \| `(.+?)` \| `(\w+)` \|$/gm)) {
+    const shape = TRADE_TYPE.get(m[1])!.shapes.find((s) => s.p === m[2])!;
+    assert.ok(shape, m[2]);
+    assert.equal(shape.sa, m[3]);
+    assert.ok(tokensOf(shape.p).includes(m[3]), m[2]);
+    rows++;
+  }
+  assert.equal(rows, 10);
+});
+
+// §12.2 Coverage
+
+/** With placeholders the brief's shapes allow fewer than 20 names here: colonial everyday shapes give
+ * 4 frontiers, 9 new lands and three "[place]" names; industrial formal shapes in the past give
+ * "[place] Industrial Syndicate/Consortium" and "[place] Canal/Water Works/Turnpike Company". */
+const PLACEHOLDER_CEILINGS: Record<string, number> = {
+  ...Object.fromEntries(["FL", "FH", "MR", "MF"].map((s) => [`colonial ${s} everyday`, 16])),
+  "industrial FL formal": 5,
+  "industrial FH formal": 5,
+};
+
+test("companies: every new type, setting, form, people mode and tone fills a batch of 20", () => {
+  for (const [key, ceiling] of Object.entries(PLACEHOLDER_CEILINGS)) {
+    const [type, s, form] = key.split(" ") as [string, GroupSetting, GroupForm];
+    assert.equal(run({ family: "trade", type, form }, s, 100, 4).names.length, ceiling, key);
+  }
+  for (const type of NEW_TRADE_TYPES) for (const s of TRADE_TYPE.get(type)!.settings) for (const form of ["any", "formal", "everyday"] as GroupForm[]) {
+    for (const people of ["placeholders", "invented"] as const) for (const tone of ["any", ...GROUP_TONES] as GroupToneChoice[]) {
+      if (people === "placeholders" && PLACEHOLDER_CEILINGS[`${type} ${s} ${form}`]) continue;
+      const batch = run({ family: "trade", type, form, people, tone }, s, 20, 4);
+      assert.equal(batch.names.length, 20, `${type} ${s} ${form} ${people} ${tone}: ${batch.notices.join(" ")}`);
+      assert.equal(new Set(batch.names.map((n) => n.text.toLowerCase())).size, 20);
+      for (const n of batch.names) {
+        const counted = n.text.split(" ").filter((w, i) => w !== "&" && !(i === 0 && w === "the") && !["of", "the", "and", "for", "in", "at", "by", "on", "to", "from"].includes(w.toLowerCase()));
+        assert.ok(counted.length <= (n.form === "E" ? 5 : 8), n.text);
+      }
+    }
+  }
+});
+
+// §12.3 Rename and history
+
+test("companies: the renamed label, and history rows under either label", () => {
+  assert.equal(SECTION_LABELS.tradeGuilds, "guilds, companies and trade");
+  assert.equal(historySection("guilds and trading houses · historic or low fantasy · General"), "tradeGuilds");
+  assert.equal(historySection("guilds, companies and trade · historic or low fantasy · General"), "tradeGuilds");
+  assert.equal(groupHistoryLabel(TRADE, "fantasy", false, "general"), "guilds, companies and trade · historic or low fantasy · General");
+});
+
+// §12.4 Realms-only words
+
+test("companies: the trade family never says Territory, Dominion, Authority and the rest", () => {
+  const words = ["Territory", "Territories", "Dominion", "Authority", "Directorate", "Charter Zone", "Governance Zone", "Protectorate"];
+  for (const type of TRADE.types) {
+    const names = type.settings.flatMap((s, i) => run({ family: "trade", type: type.key, people: "invented" }, s, Math.ceil(5000 / type.settings.length), 30 + i).names);
+    for (const n of names) for (const w of words) assert.ok(!hasWord(n.text, w), `${type.key}: ${n.text}`);
+  }
 });

@@ -63,6 +63,8 @@ export interface GroupType {
   shapes: GroupShape[];
   listFilter?: Record<string, string[]>;
   borrow?: { share: number; types?: string[]; form?: ShapeForm; andTypes?: string[]; own?: boolean }[];
+  /** Companies brief §2: the type deals in goods, so the commodity link shows for it. */
+  commodity?: boolean;
 }
 
 export interface GroupFamily {
@@ -82,6 +84,8 @@ interface GroupData {
   /** Tone brief §2.6: every word in these lists carries the list's tones. */
   listTones: Record<string, GroupTone[]>;
   composites: Record<string, [string, number][]>;
+  /** Companies brief §3.1, §4.3: tokens rendered from one of weighted patterns ("{regionQual} {coastWord}"). */
+  patterns: Record<string, { p: string; w: number; s?: GroupSetting[] }[]>;
   nickname: { p: string; w: number }[];
   traditions: {
     signatures: Record<string, Record<string, (string | [string, string])[]>>;
@@ -616,6 +620,19 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
       return word(ctx.family.key === "supernatural" ? "supernaturalTitle" : "personTitle");
     case "initials":
       return initialsToken(ctx, type);
+    case "spaceLand": {
+      // Companies brief §4.3: a named {spaceLand} takes GN §5.4's prefix rule.
+      const w = pick(ctx, "spaceLand", type, shape?.filter?.spaceLand);
+      if (w === undefined) return undefined;
+      return { text: rng() < 0.3 ? `${pick(ctx, "spacePrefix", type)} ${w}` : w, plural: false };
+    }
+  }
+  const patterns = GROUP_DATA.patterns[name];
+  if (patterns) {
+    const live = patterns.filter((p) => !p.s || p.s.includes(S)).map((p): [string, number] => [p.p, p.w]);
+    const pattern = pickWeighted(live, rng);
+    const text = pattern === undefined ? undefined : renderPattern(ctx, pattern, type, shape);
+    return text === undefined ? undefined : { text, plural: false };
   }
   if (GROUP_DATA.composites[name]) {
     const w = compositeWord(ctx, name, type);
