@@ -41,6 +41,7 @@ import {
 } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { buildingName, type BuildingKind } from "../buildings/engine";
+import { boostPool, contextLandmark, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { breaksStreetWords, STREET_DATA } from "../streets/engine";
 
 // ── Data ────────────────────────────────────────────────────────────────────
@@ -105,6 +106,8 @@ interface InnData {
 }
 
 export const INN_DATA = innData as unknown as InnData;
+/** Settlement kit §4: the shapes whose first `{town}` is the settlement. */
+const INN_SELF = selfPatterns(innData);
 export const INN_KINDS = INN_DATA.kinds;
 export const INN_SETTINGS = INN_DATA.settings;
 export const INN_ANY = INN_DATA.any;
@@ -153,6 +156,8 @@ export interface InnOptions {
   routeSafeguards?: GroupSafeguards;
   /** Buildings brief §11: merged building safeguard lists, for `{landmark}`. */
   landmarkSafeguards?: GroupSafeguards;
+  /** Settlement kit §4: the settlement's town, neighbours, founder, saint, trades, goods, road and landmarks. */
+  context?: SettlementContext;
   vocab?: Vocabulary;
   /** Tests: only this shape. */
   shape?: string;
@@ -203,6 +208,8 @@ interface Ctx {
   words: { pool: string; word: string }[];
   uses: string[];
   isRoute: boolean;
+  /** Settlement kit §4: the `{town}` tokens of the pattern being rendered. */
+  turn?: TownTurn;
 }
 
 type Word = { w: string; t: GroupTone[] };
@@ -213,7 +220,7 @@ const BIRDS = new Set(groupListWords("bird", "FL").map(([w]) => w));
 
 /** A shared pool's words here (region, setting themes, tone; never light or grim for the sensitive cultures). */
 function vocabItems(ctx: Ctx, pool: string, mult = 1): [Word, number][] {
-  return poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })
+  return boostPool(ctx.options.context, pool, poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes }))
     .filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t)))
     .map(([e, w]): [Word, number] => [{ w: e.w, t: e.t ?? [] }, w * mult]);
 }
@@ -276,6 +283,12 @@ function ownerNames(ctx: Ctx): string[] {
 
 /** §6.3: `{route}`: one route name, kind road, drove or trade, without "the". */
 function route(ctx: Ctx): string | undefined {
+  // Settlement kit §4: the road through town.
+  const through = ctx.options.context?.throughRoute;
+  if (through) {
+    ctx.isRoute = true;
+    return through.replace(/^the /i, "");
+  }
   const kind = pickWeighted(Object.entries(INN_DATA.lists.routeKinds), ctx.rng);
   const r = generateRouteNames({
     culture: ctx.culture.key,
@@ -300,7 +313,10 @@ export const INN_ROAD_LANDMARK_KINDS: BuildingKind[] = ["crossing", "monument"];
 /** Buildings brief §11.2: `{landmark}`: one building of 3 words or fewer, without "the". */
 function landmark(ctx: Ctx, kinds: BuildingKind[]): string | undefined {
   const o = ctx.options;
-  const w = buildingName({
+  // Settlement kit §4: one of the settlement's own landmarks, never a fresh building.
+  const w = o.context
+    ? contextLandmark(o.context, ctx.rng)
+    : buildingName({
     culture: ctx.culture.key,
     era: ctx.era,
     fantastic: ctx.fantastic,
@@ -339,6 +355,7 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "owner":
     case "patron":
     case "founder": {
+      if (name === "founder" && ctx.options.context) return ctx.options.context.founder;
       if (placeholders) return `[${name}]`;
       const names = name === "owner" ? ownerNames(ctx) : personNames(ctx.culture.key);
       return names.length > 0 ? pickOne(names, rng) : undefined;
@@ -355,9 +372,13 @@ function token(ctx: Ctx, name: string): string | undefined {
       return landmark(ctx, INN_ROAD_LANDMARK_KINDS);
     case "destination":
     case "town":
+      // Settlement kit §4: this place, or one of its neighbours.
+      if (ctx.turn) return name === "town" ? ctx.turn.next(rng) : ctx.turn.other(rng);
       return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng);
-    case "holy":
-      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "holy": {
+      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng));
+      return ctx.options.context ? contextSaint(ctx.options.context, other, rng) : other();
+    }
     case "figure":
       return routeFigure(ctx.culture.key, ctx.setting, rng);
     case "god": {
@@ -420,6 +441,7 @@ function pairTokens(ctx: Ctx): [string, string] | undefined {
 
 /** Renders a shape's pattern (possessives, plurals, Brace of). */
 function renderPattern(ctx: Ctx, pattern: string): string | undefined {
+  if (ctx.options.context) ctx.turn = new TownTurn(ctx.options.context, INN_SELF.has(pattern));
   let failed = false;
   let pair: [string, string] | undefined;
   let number: string | undefined;
@@ -529,7 +551,8 @@ function englishPlans(ctx: Ctx, settingKey: InnSetting, only?: string): [Plan, n
   const setting = INN_SETTINGS.find((s) => s.key === settingKey)!;
   const out: [Plan, number][] = [];
   for (const a of INN_DATA.signs) {
-    let w = a.key === "roadside" ? setting.roadside : a.w;
+    // Settlement kit §7.1: at a crossroads, roadside houses ×2.
+    let w = a.key === "roadside" ? setting.roadside * (ctx.options.context?.effects?.roadsideX ?? 1) : a.w;
     if (a.from && eraIndex(ctx.era) < eraIndex(a.from)) w = 0;
     if (a.key === "arms") {
       w *= setting.armsX ?? 1;

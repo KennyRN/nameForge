@@ -1,4 +1,5 @@
 {
+ "townSelf": {"self": ["Defender of {town}", "Duc de {town}", "Duke of {town}", "Grand Prince of {town}", "Holy Lord of {town}", "K'uhul Ajaw of {town}", "Light of {town}", "Lord of the Lands of {town}", "Lord of {town}", "Tecuhtli of {town}", "Veliky Knyaz of {town}"], "other": []},
  "version": 1,
  "cultures": [
   {
@@ -5693,6 +5694,7 @@
    {
     "kind": "beast",
     "p": "{beast} of {town}",
+    "self": true,
     "join": "comma",
     "w": 15,
     "t": [
@@ -5725,6 +5727,7 @@
    {
     "kind": "place",
     "p": "of {town}",
+    "self": true,
     "join": "of",
     "w": 50,
     "t": [
@@ -5822,11 +5825,13 @@
    {
     "kind": "office",
     "p": "{officeWord} of {town}",
+    "self": true,
     "w": 20
    },
    {
     "kind": "office",
     "p": "{rank} of {town}",
+    "self": true,
     "w": 15
    },
    {
@@ -5994,6 +5999,7 @@
      "place": [
       {
        "p": "of {town}",
+       "self": true,
        "l": "both",
        "w": 1
       }
@@ -6159,6 +6165,7 @@
       },
       {
        "p": "de {town}",
+       "self": true,
        "l": "n",
        "w": 1
       }
@@ -6194,6 +6201,7 @@
       },
       {
        "p": "de {town}",
+       "self": true,
        "l": "n",
        "w": 1,
        "g": "f"
@@ -6454,6 +6462,7 @@
       },
       {
        "p": "of {town}",
+       "self": true,
        "l": "e",
        "w": 2
       }
@@ -6501,6 +6510,7 @@
      "place": [
       {
        "p": "of {town}",
+       "self": true,
        "l": "both",
        "w": 1
       }
@@ -6584,6 +6594,7 @@
      "place": [
       {
        "p": "of {town}",
+       "self": true,
        "l": "both",
        "w": 1
       }
@@ -6685,6 +6696,7 @@
      "place": [
       {
        "p": "of {town}",
+       "self": true,
        "l": "both",
        "w": 1
       }
@@ -6714,6 +6726,7 @@
      "place": [
       {
        "p": "of {town}",
+       "self": true,
        "l": "both",
        "w": 1
       }
@@ -6743,6 +6756,7 @@
      "place": [
       {
        "p": "of {town}",
+       "self": true,
        "l": "both",
        "w": 1
       }

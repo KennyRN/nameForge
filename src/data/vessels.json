@@ -1,4 +1,5 @@
 {
+ "townSelf": {"self": ["Appearing in {town}", "Crown of {town}", "Lamp of {town}", "Pearl of {town}", "Pride of {town}", "Rose of {town}", "{brandRoot} {town}", "{hNoun} of {town}", "{spNoun} of {town}", "{town} {dpNoun}", "{wrNoun} of {town}"], "other": ["Children of {town}", "New {town}", "Old {town}", "Scourge of {town}", "{town} Road"]},
  "$comment": "Ships and spacecraft (docs/ships-and-spacecraft-brief.md). Built from the brief by build_vessels.py; lists are as the brief writes them.",
  "modules": {
   "ships": "ships and boats",
@@ -587,16 +588,19 @@
     {
      "role": "place",
      "p": "Golden {town}",
+     "self": true,
      "w": 20
     },
     {
      "role": "place",
      "p": "Arms of {town}",
+     "self": true,
      "w": 25
     },
     {
      "role": "place",
      "p": "Lion of {town}",
+     "self": true,
      "w": 15,
      "t": [
       "grand"
@@ -786,6 +790,7 @@
     {
      "role": "place",
      "p": "Lion of {town}",
+     "self": true,
      "w": 15,
      "k": "T3-T5"
     }
@@ -1698,6 +1703,7 @@
     {
      "role": "place",
      "p": "{town} River",
+     "self": false,
      "w": 10
     },
     {
@@ -4127,6 +4133,7 @@
   {
    "role": "virtue",
    "p": "{virtue} of {town}",
+   "self": true,
    "w": 15,
    "t": [
     "grand"
@@ -4227,6 +4234,7 @@
   {
    "role": "beast",
    "p": "{beast} of {town}",
+   "self": true,
    "w": 15,
    "t": [
     "grand"
@@ -4261,6 +4269,7 @@
   {
    "role": "sky",
    "p": "{sky} over {town}",
+   "self": true,
    "w": 20,
    "t": [
     "strange"
@@ -4269,6 +4278,7 @@
   {
    "role": "place",
    "p": "{town}",
+   "self": true,
    "w": 40,
    "t": [
     "plain"
@@ -4277,6 +4287,7 @@
   {
    "role": "place",
    "p": "City of {town}",
+   "self": true,
    "w": 20,
    "k": "T5-T7",
    "fn": [
@@ -4290,6 +4301,7 @@
   {
    "role": "place",
    "p": "Pride of {town}",
+   "self": true,
    "w": 20,
    "t": [
     "plain"
@@ -4298,6 +4310,7 @@
   {
    "role": "place",
    "p": "{town} {commerceNoun}",
+   "self": true,
    "w": 20,
    "fn": [
     "merchant"
@@ -4369,6 +4382,7 @@
   {
    "role": "commerce",
    "p": "{brandRoot} {town}",
+   "self": true,
    "w": 20,
    "k": "T7",
    "s": [
@@ -4432,6 +4446,7 @@
   {
    "role": "affection",
    "p": "{town} {affectionNoun}",
+   "self": true,
    "w": 35,
    "t": [
     "light"
@@ -5857,6 +5872,7 @@
   "station": [
    {
     "p": "{town} Station",
+    "self": true,
     "w": 25
    },
    {
@@ -5877,10 +5893,12 @@
    },
    {
     "p": "New {town}",
+    "self": false,
     "w": 15
    },
    {
     "p": "{ordinal} Ring of {town}",
+    "self": true,
     "w": 5
    },
    {
@@ -5895,10 +5913,12 @@
    },
    {
     "p": "New {town}",
+    "self": false,
     "w": 25
    },
    {
     "p": "Children of {town}",
+    "self": false,
     "w": 15
    },
    {

@@ -39,6 +39,7 @@ import {
   type RouteCulture,
   type RouteEra,
 } from "../routes/engine";
+import { boostPool, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { STREET_DATA } from "../streets/engine";
 
@@ -81,6 +82,8 @@ interface BuildingData {
 }
 
 export const BUILDING_DATA = buildingData as unknown as BuildingData;
+/** Settlement kit §4: the shapes whose first `{town}` is the settlement. */
+const BUILDING_SELF = selfPatterns(buildingData);
 export const BUILDING_KINDS = BUILDING_DATA.kinds;
 export const BUILDING_ANY = BUILDING_DATA.any;
 
@@ -118,6 +121,8 @@ export interface BuildingOptions {
   vocab?: Vocabulary;
   /** Tests: only this shape. */
   shape?: string;
+  /** Settlement kit §4: the settlement's town, neighbours, founder, saint, trades and goods. */
+  context?: SettlementContext;
 }
 
 export interface BuildingName {
@@ -156,6 +161,9 @@ interface Ctx {
   town?: string;
   founder?: string;
   shape?: BuildingShape;
+  /** Settlement kit §4. */
+  context?: SettlementContext;
+  turn?: TownTurn;
   drawn: Set<GroupTone>;
   words: { pool: string; word: string }[];
   uses: string[];
@@ -168,7 +176,7 @@ const SF_LISTS = new Set(["star", "greek"]);
 
 /** A shared pool's entries here (region, setting themes, tone; never light or grim for the sensitive cultures). */
 function vocabPool(ctx: Ctx, pool: string): [VocabEntry, number][] {
-  return poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })
+  return boostPool(ctx.context, pool, poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes }))
     .filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t)))
     .map(([e, w]): [VocabEntry, number] => [e, w * toneFactor(e.t ?? [], ctx.tone)])
     .filter(([, w]) => w > 0);
@@ -219,7 +227,8 @@ function creature(ctx: Ctx): string | undefined {
 const ownerNames = (ctx: Ctx) => [...personNames(ctx.culture.key), ...(STREET_DATA.surnameCultures.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : [])];
 
 function town(ctx: Ctx): string | undefined {
-  const t = ctx.town ?? (ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng));
+  // Settlement kit §4: this place, or one of its neighbours.
+  const t = ctx.turn ? ctx.turn.next(ctx.rng) : ctx.town ?? (ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng));
   if (t) ctx.uses.push(`town:${t}`);
   return t;
 }
@@ -255,8 +264,10 @@ function token(ctx: Ctx, name: string): string | undefined {
       return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : gnWord(ctx, "surname");
     case "dynasty":
       return placeholders || !DYNASTY_CULTURES.includes(ctx.culture.key) ? "[dynasty]" : gnWord(ctx, "house");
-    case "holy":
-      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "holy": {
+      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng));
+      return ctx.context ? contextSaint(ctx.context, other, rng) : other();
+    }
     case "figure":
       return routeFigure(ctx.culture.key, ctx.setting, rng);
     case "god": {
@@ -297,6 +308,16 @@ function token(ctx: Ctx, name: string): string | undefined {
 
 /** Renders a shape's pattern (possessives, plurals); undefined when a token has nothing to offer. */
 function renderPattern(ctx: Ctx, pattern: string): string | undefined {
+  const outer = ctx.turn;
+  if (ctx.context) ctx.turn = new TownTurn(ctx.context, BUILDING_SELF.has(pattern));
+  try {
+    return renderTokens(ctx, pattern);
+  } finally {
+    ctx.turn = outer;
+  }
+}
+
+function renderTokens(ctx: Ctx, pattern: string): string | undefined {
   let failed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw: string) => {
     if (failed) return "";
@@ -433,6 +454,7 @@ const newCtx = (s: Setup, kind: BuildingKind, extra: Partial<Ctx> = {}): Ctx => 
   region: s.region,
   kind,
   themes: s.themes,
+  context: s.options.context,
   drawn: new Set(),
   words: [],
   uses: [],
@@ -442,7 +464,8 @@ const newCtx = (s: Setup, kind: BuildingKind, extra: Partial<Ctx> = {}): Ctx => 
 /** §5: a kind's weight here: era × setting, 0 where the culture has no shapes for it. */
 function kindWeight(s: Setup, kind: BuildingKind): number {
   const k = BUILDING_KINDS.find((x) => x.key === kind)!;
-  const w = k.era[s.era] * (BUILDING_DATA.settingX[s.settingKey][kind] ?? 1);
+  // Settlement kit §7.1: the position's multipliers.
+  const w = k.era[s.era] * (BUILDING_DATA.settingX[s.settingKey][kind] ?? 1) * (s.options.context?.effects?.buildingKindX?.[kind] ?? 1);
   return w > 0 && plans(newCtx(s, kind)).length + (isFuture(s.era) ? 1 : 0) > 0 ? w : 0;
 }
 
@@ -491,7 +514,10 @@ export function generateBuildingNames(options: BuildingOptions): BuildingBatch {
   // §9: one town and one founder for the whole series.
   const series = !!options.series;
   const base: Partial<Ctx> = {};
-  if (series) {
+  // Settlement kit §4: the context's founder for every `{founder}`.
+  if (options.context) base.founder = options.context.founder;
+  if (series && options.context) base.town = options.context.town;
+  else if (series) {
     base.town = town(newCtx(s, "defence"));
     base.founder = s.mode === "placeholders" ? "[founder]" : personNames(culture.key).length > 0 ? pickOne(personNames(culture.key), rng) : undefined;
   }

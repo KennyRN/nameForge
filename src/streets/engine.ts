@@ -40,6 +40,7 @@ import {
   type RouteEra,
 } from "../routes/engine";
 import { buildingName, type BuildingKind } from "../buildings/engine";
+import { boostPool, contextLandmark, contextSaint, contextTown, type SettlementContext } from "../settlement/contextShared";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 
 // ── Data ────────────────────────────────────────────────────────────────────
@@ -145,6 +146,8 @@ export interface StreetOptions {
   routeSafeguards?: GroupSafeguards;
   /** Buildings brief §11: merged building safeguard lists, for `{landmark}`. */
   landmarkSafeguards?: GroupSafeguards;
+  /** Settlement kit §4: the settlement's neighbours, founder, saint, trades, goods, road and landmarks. */
+  context?: SettlementContext;
   /** RN §3.3: the pools merged with vocabulary packs. */
   vocab?: Vocabulary;
   /** Tests: only this shape. */
@@ -213,7 +216,7 @@ const where = (ctx: Ctx, region = ctx.region) => ({ culture: ctx.culture.key, er
 
 /** A pool's words here, tone-weighted; never light or grim for the sensitive cultures. */
 function vocabPool(ctx: Ctx, pool: string, region = ctx.region): [VocabEntry, number][] {
-  return poolEntries(ctx.vocab, pool, where(ctx, region))
+  return boostPool(ctx.options.context, pool, poolEntries(ctx.vocab, pool, where(ctx, region)))
     .filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t)))
     .map(([e, w]): [VocabEntry, number] => [e, w * toneFactor(e.t ?? [], ctx.tone)])
     .filter(([, w]) => w > 0);
@@ -252,7 +255,11 @@ function componentPools(ctx: Ctx): [string, number][] {
     weights = Object.fromEntries(Object.entries(weights).filter(([p]) => d.scifiComponents.keep.includes(p)));
     weights.compSciFi = d.scifiComponents.compSciFi;
   }
-  return Object.entries(weights).filter(([p]) => vocabPool(ctx, p).length > 0);
+  // Settlement kit §7.1: the position's component multipliers.
+  const x = ctx.options.context?.effects?.componentX;
+  return Object.entries(weights)
+    .map(([p, w]): [string, number] => [p, w * (x?.[p] ?? 1)])
+    .filter(([p]) => vocabPool(ctx, p).length > 0);
 }
 
 function component(ctx: Ctx): string | undefined {
@@ -286,6 +293,12 @@ function dialectWord(ctx: Ctx, keep?: (w: string) => boolean): string | undefine
 
 /** §4: `{route}`: one route name for the same culture, era, fantastic, region and people. */
 function route(ctx: Ctx): string | undefined {
+  // Settlement kit §4: the road through town.
+  const through = ctx.options.context?.throughRoute;
+  if (through) {
+    ctx.isRoute = true;
+    return through;
+  }
   const kinds = ROUTE_ERAS.findIndex((e) => e.code === ctx.era) >= ROUTE_ERAS.findIndex((e) => e.code === "MO") ? STREET_DATA.route.modern : STREET_DATA.route.kinds;
   const kind = pickWeighted(Object.entries(kinds), ctx.rng);
   const o = ctx.options;
@@ -307,6 +320,12 @@ function route(ctx: Ctx): string | undefined {
 
 /** §10: a destination: one of the town's neighbours in a series. */
 function destination(ctx: Ctx): string | undefined {
+  const context = ctx.options.context;
+  if (context) {
+    const t = contextTown(context, false, ctx.rng);
+    ctx.uses.push(`destination:${t}`);
+    return t;
+  }
   if (ctx.mode === "placeholders") return "[place]";
   const t = ctx.towns ? pickOne(ctx.towns, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
   if (t) ctx.uses.push(`destination:${t}`);
@@ -320,7 +339,10 @@ export const STREET_LANDMARK_KINDS: BuildingKind[] = ["defence", "faith", "cross
  * or more, once. */
 function landmark(ctx: Ctx): string | undefined {
   const o = ctx.options;
-  const w = buildingName({
+  // Settlement kit §4: one of the settlement's own landmarks, never a fresh building.
+  const w = o.context
+    ? contextLandmark(o.context, ctx.rng)
+    : buildingName({
     culture: ctx.culture.key,
     era: ctx.era,
     fantastic: ctx.fantastic,
@@ -370,9 +392,12 @@ function token(ctx: Ctx, name: string, alt: (dialect: string) => void, pattern: 
       return placeholders ? "[people]" : routeFolk(ctx.culture.key, rng);
     case "royal":
       return "[royal]";
-    case "holy":
-      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "holy": {
+      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng));
+      return ctx.options.context ? contextSaint(ctx.options.context, other, rng) : other();
+    }
     case "founder": {
+      if (ctx.options.context) return ctx.options.context.founder;
       if (placeholders) return "[founder]";
       const names = personNames(ctx.culture.key);
       return names.length > 0 ? pickOne(names, rng) : undefined;

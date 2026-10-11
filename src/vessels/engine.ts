@@ -31,6 +31,7 @@ import {
   wordTones,
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
+import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { findTradition } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
 
@@ -141,6 +142,8 @@ interface VesselData {
 }
 
 export const VESSEL_DATA = vesselData as unknown as VesselData;
+/** Settlement kit §4: the patterns and words whose `{town}` is the home port. */
+const VESSEL_SELF = selfPatterns(vesselData);
 export const VESSEL_CULTURES = VESSEL_DATA.cultures;
 export const VESSEL_MODULE_LABELS = VESSEL_DATA.modules;
 
@@ -249,6 +252,8 @@ export interface VesselOptions {
   safeguards?: GroupSafeguards;
   /** Tests: only this role shape (its pattern) on the role route. */
   shape?: string;
+  /** Settlement kit §4, §7.2: the home port and its neighbours. */
+  context?: SettlementContext;
 }
 
 export type VesselRoute = "style" | "hybrid" | "role";
@@ -300,6 +305,9 @@ interface Ctx {
   drawn: Set<GroupTone>;
   words: { list: string; word: string }[];
   pools: Map<string, [{ w: string; t: GroupTone[] }, number][]>;
+  /** Settlement kit §4. */
+  context?: SettlementContext;
+  turn?: TownTurn;
 }
 
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
@@ -486,6 +494,8 @@ function baseToken(ctx: Ctx, name: string): string | undefined {
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
     case "town":
+      // Settlement kit §7.2: the home port, or one of its neighbours.
+      if (ctx.turn) return ctx.turn.next(rng);
       return placeholders ? "[place]" : town(ctx);
     case "surname":
       return placeholders ? "[surname]" : listWord(ctx, "surname");
@@ -534,6 +544,16 @@ interface Hooks {
 
 /** Renders a pattern's tokens; undefined when one has nothing to offer. */
 function renderPattern(ctx: Ctx, pattern: string, hooks?: Hooks): string | undefined {
+  const outer = ctx.turn;
+  if (ctx.context) ctx.turn = new TownTurn(ctx.context, VESSEL_SELF.has(pattern));
+  try {
+    return renderTokens(ctx, pattern, hooks);
+  } finally {
+    ctx.turn = outer;
+  }
+}
+
+function renderTokens(ctx: Ctx, pattern: string, hooks?: Hooks): string | undefined {
   let failed = false;
   let index = -1;
   let nameUsed = false;
@@ -839,6 +859,7 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
     boost: !!style,
     // §14.4: sensitive cultures' poetic names never go to a style or a light or grim name.
     poeticAllowed: !(culture.sensitive && (lightOrGrim(tone) || !!style)),
+    context: options.context,
     drawn: new Set(),
     words: [],
     pools,

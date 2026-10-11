@@ -5,6 +5,7 @@
 import groupData from "../data/group-names.json";
 import { pluralOf } from "../biomes";
 import { mulberry32 } from "../markov";
+import { boostContext, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { generatePlaceNames } from "../names/engine";
 import { britishPlaceNamesRecipe } from "../names/recipe";
 import { findTradition, TRIBAL_DATA, type TribalTradition } from "../tribes/engine";
@@ -114,6 +115,8 @@ interface GroupData {
 }
 
 export const GROUP_DATA = groupData as unknown as GroupData;
+/** Settlement kit §4: the shapes whose first `{town}` is the settlement. */
+const GROUP_SELF = selfPatterns(groupData);
 export const GROUP_FAMILIES = GROUP_DATA.families;
 export const GROUP_SETTINGS: GroupSetting[] = ["FL", "FH", "MR", "MF", "SF"];
 export const SETTING_PHRASES = GROUP_DATA.settings.phrases;
@@ -345,6 +348,8 @@ export interface GroupOptions {
   series?: boolean;
   /** Companies brief §5: the trade family's commodity group; "any" (the default) changes nothing. */
   commodity?: string;
+  /** Settlement kit §4: the settlement's town, neighbours, saint, trades and goods. */
+  context?: SettlementContext;
 }
 
 /** Tone brief §3.7: how a name sits in its series. */
@@ -393,6 +398,8 @@ interface Ctx {
   /** Companies brief §5.3: the commodity group, and each shape's commodity factor. */
   commodity?: GroupCommodity;
   commodityFactors?: Map<string, number>;
+  /** Settlement kit §4. */
+  context?: SettlementContext;
 }
 
 export const pickWeighted = <T>(items: [T, number][], rng: () => number): T | undefined => {
@@ -485,8 +492,13 @@ function pool(ctx: Ctx, name: string, type: GroupType, filter?: string[]): [stri
 }
 
 /** A word from a list, noting its tones for the name (Tone brief §3.7). */
+/** Settlement kit §4: the lists whose words the context chose (×4 there). */
+const CONTEXT_LISTS: Record<string, "trades" | "goods"> = { tradesmen: "trades", goods: "goods" };
+
 function pick(ctx: Ctx, name: string, type: GroupType, filter?: string[]): string | undefined {
-  const w = pickWeighted(pool(ctx, name, type, filter), ctx.rng);
+  const which = ctx.context && CONTEXT_LISTS[name];
+  const items = which ? boostContext(pool(ctx, name, type, filter), ctx.context![which], (w) => w) : pool(ctx, name, type, filter);
+  const w = pickWeighted(items, ctx.rng);
   if (w !== undefined) for (const t of wordTones(name, w)) ctx.drawn.add(t);
   return w;
 }
@@ -550,6 +562,8 @@ function renderPattern(ctx: Ctx, pattern: string, type: GroupType, shape?: Group
   let m: RegExpExecArray | null;
   let index = -1;
   let nameUsed = false;
+  // Settlement kit §4: the shape's own first `{town}` is the settlement; the rest are neighbours.
+  const turn = ctx.context ? new TownTurn(ctx.context, !!shape && pattern === shape.p && GROUP_SELF.has(pattern)) : undefined;
   while ((m = re.exec(pattern))) {
     index++;
     out += pattern.slice(last, m.index);
@@ -565,7 +579,7 @@ function renderPattern(ctx: Ctx, pattern: string, type: GroupType, shape?: Group
       nameUsed = true;
     } else {
       name = rawName.includes("/") ? pickOne(alternatives, ctx.rng) : rawName;
-      piece = token(ctx, name, type, shape);
+      piece = turn && name === "town" ? { text: turn.next(ctx.rng), plural: false } : token(ctx, name, type, shape);
     }
     if (!piece) return undefined;
     hooks?.record?.push({ name, piece });
@@ -594,6 +608,10 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
       if (placeholders) return { text: `[${type.person}]`, plural: false };
       return { text: inventedPerson(ctx, type) ?? "", plural: false };
     case "holy": {
+      if (ctx.context?.holy) {
+        const other = () => holyText(ctx, type, placeholders);
+        return { text: contextSaint(ctx.context, other, rng), plural: false };
+      }
       if (placeholders) return { text: "[holy person]", plural: false };
       const saints = GROUP_DATA.people.saintTraditions.includes(ctx.people?.key ?? "general");
       if (!saints) return { text: `the ${pick(ctx, "holyTitle", type)}`, plural: false };
@@ -679,6 +697,14 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
   }
   if (!GROUP_DATA.lists[name]) throw new Error(`Group names: no list “${name}”.`);
   return word(name);
+}
+
+/** §8.2: `{holy}` as drawn without a settlement context. */
+function holyText(ctx: Ctx, type: GroupType, placeholders: boolean): string {
+  if (placeholders) return "[holy person]";
+  if (!GROUP_DATA.people.saintTraditions.includes(ctx.people?.key ?? "general")) return `the ${pick(ctx, "holyTitle", type)}`;
+  const saint = pick(ctx, "saintName", type);
+  return ctx.setting === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`;
 }
 
 /** §8.2: an invented person. */
@@ -1152,6 +1178,7 @@ export function generateGroupNames(options: GroupOptions): GroupBatch {
     pools: new Map(),
     tone: options.tone ?? "any",
     drawn: new Set(),
+    context: options.context,
   };
   const chosen = options.type ? available.find((t) => t.key === options.type) : undefined;
   if (options.type && !chosen) {

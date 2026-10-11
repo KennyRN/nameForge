@@ -23,7 +23,7 @@
     "road": {"crossing": 3, "water": 1.5, "monument": 1.5, "confinement": 0.5}
   },
   "shared": [
-    {"p": "{town} {bw}", "w": 20, "t": ["plain"]},
+    {"p": "{town} {bw}", "w": 20, "t": ["plain"], "self": true},
     {"p": "the {buildingQual} {bw}", "w": 20},
     {"p": "{buildingQual} {bw}", "w": 5},
     {"p": "{streetFigure:poss} {bw}", "w": 8, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "t": ["grand"]},
@@ -37,31 +37,31 @@
   "kindShapes": {
     "defence": [
       {"p": "{colour} {bw}", "w": 10},
-      {"p": "{town} Gatehouse", "w": 4, "e": ["MD", "EM"], "t": ["plain"]},
+      {"p": "{town} Gatehouse", "w": 4, "e": ["MD", "EM"], "t": ["plain"], "self": true},
       {"p": "{direction} Gate", "w": 4, "e": ["MD", "EM"], "t": ["plain"]},
       {"p": "{founder:poss} Fort", "w": 6, "e": ["AN", "MD"], "c": ["celtic"]},
       {"p": "{fixed}", "w": 0}
     ],
     "residence": [
-      {"p": "{town} Hall", "w": 5, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british", "general"], "t": ["plain"]},
-      {"p": "{town} Manor", "w": 5, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british", "general"], "t": ["plain"]},
-      {"p": "{town} Grange", "w": 5, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british", "general"], "t": ["plain"]},
+      {"p": "{town} Hall", "w": 5, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british", "general"], "t": ["plain"], "self": true},
+      {"p": "{town} Manor", "w": 5, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british", "general"], "t": ["plain"], "self": true},
+      {"p": "{town} Grange", "w": 5, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british", "general"], "t": ["plain"], "self": true},
       {"p": "Palace of {dynasty}", "w": 6, "t": ["grand"]},
       {"p": "{fixed}", "w": 0}
     ],
     "faith": [
-      {"p": "{town} {bw}", "w": 10, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["christian"], "bw": ["Minster", "Abbey", "Priory"]},
+      {"p": "{town} {bw}", "w": 10, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["christian"], "bw": ["Minster", "Abbey", "Priory"], "self": true},
       {"p": "Temple of {god}", "w": 15, "e": ["AN"], "c": ["egyptian", "norse", "anglo-saxon", "aztec", "maya"], "t": ["grand"]},
       {"p": "Shrine of the {holySite}", "w": 6, "c": ["!christian"], "t": ["strange"]},
       {"p": "{fixed}", "w": 0}
     ],
     "civic": [
-      {"p": "{town} {bw}", "w": 15, "bw": ["Moot Hall", "Guildhall", "Corn Exchange", "Town Hall"], "t": ["plain"]},
+      {"p": "{town} {bw}", "w": 15, "bw": ["Moot Hall", "Guildhall", "Corn Exchange", "Town Hall"], "t": ["plain"], "self": true},
       {"p": "{trade:poss} Hall", "w": 8, "e": ["MD", "EM", "ST"]},
       {"p": "{fixed}", "w": 0}
     ],
     "crossing": [
-      {"p": "{town} Bridge", "w": 15, "t": ["plain"]},
+      {"p": "{town} Bridge", "w": 15, "t": ["plain"], "self": true},
       {"p": "{figure:poss} Bridge", "w": 4, "e": ["MD", "EM", "ST", "MO", "NF", "IS"]},
       {"p": "{holy:poss} Bridge", "w": 4, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["christian"]},
       {"p": "{creature} Bridge", "w": 3},
@@ -80,32 +80,32 @@
       {"p": "{surname} Works", "w": 7.5, "e": ["EM", "ST", "MO", "NF", "IS"], "c": ["british", "general"], "t": ["plain"]},
       {"p": "{goods} Mill", "w": 5, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"]},
       {"p": "{goods} Works", "w": 5, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"]},
-      {"p": "{town} {bw}", "w": 15, "t": ["plain"]},
+      {"p": "{town} {bw}", "w": 15, "t": ["plain"], "self": true},
       {"p": "{fixed}", "w": 0}
     ],
     "monument": [
       {"p": "{follyOwner:poss} Folly", "w": 15, "e": ["EM", "ST"], "c": ["british", "general"], "t": ["light"]},
       {"p": "{founder:poss} {bw}", "w": 15, "bw": ["Column", "Arch", "Cross", "Pillar"], "t": ["grand"]},
-      {"p": "{town} Cross", "w": 5, "e": ["MD", "EM"], "c": ["british"]},
+      {"p": "{town} Cross", "w": 5, "e": ["MD", "EM"], "c": ["british"], "self": true},
       {"p": "{event} Memorial", "w": 8, "e": ["ST", "MO"], "t": ["grim"]},
-      {"p": "{town} Milestone", "w": 3, "e": ["EM", "ST"], "c": ["british"], "t": ["plain"], "sx": {"road": 3}},
+      {"p": "{town} Milestone", "w": 3, "e": ["EM", "ST"], "c": ["british"], "t": ["plain"], "sx": {"road": 3}, "self": true},
       {"p": "{number} Mile Stone", "w": 3, "e": ["EM", "ST"], "c": ["british"], "t": ["plain"], "sx": {"road": 3}},
       {"p": "{fixed}", "w": 0}
     ],
     "learning": [
-      {"p": "{town} {bw}", "w": 10, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"]},
+      {"p": "{town} {bw}", "w": 10, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"], "self": true},
       {"p": "{surname} {bw}", "w": 10, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"]},
       {"p": "{holy:poss} {bw}", "w": 10, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["christian"]},
       {"p": "{fixed}", "w": 0}
     ],
     "confinement": [
-      {"p": "{town} {bw}", "w": 30, "t": ["grim"]},
+      {"p": "{town} {bw}", "w": 30, "t": ["grim"], "self": true},
       {"p": "the {buildingQual} {bw}", "w": 10, "t": ["grim"]},
       {"p": "{fixed}", "w": 0}
     ],
     "maritime": [
-      {"p": "{town} Light", "w": 12.5, "t": ["plain"]},
-      {"p": "{town} Lighthouse", "w": 12.5, "t": ["plain"]},
+      {"p": "{town} Light", "w": 12.5, "t": ["plain"], "self": true},
+      {"p": "{town} Lighthouse", "w": 12.5, "t": ["plain"], "self": true},
       {"p": "{headland} Light", "w": 20, "e": ["EM", "ST", "MO", "NF", "IS"]},
       {"p": "the {colour} Lantern", "w": 10, "t": ["strange"]},
       {"p": "{fixed}", "w": 0}
@@ -120,7 +120,7 @@
       {"p": "Memorial Gate of {founder}", "w": 15, "kind": "monument"}
     ],
     "japanese": [
-      {"p": "{town} Castle", "w": 15, "kind": "defence"},
+      {"p": "{town} Castle", "w": 15, "kind": "defence", "self": true},
       {"p": "{castleBird} Castle", "w": 15, "kind": "defence"},
       {"p": "{colour} {castleBird} Castle", "w": 15, "kind": "defence"},
       {"p": "{eastNature} Villa", "w": 15, "kind": "residence"},
@@ -130,23 +130,23 @@
       {"p": "Palace of {eastVirtue}", "w": 15, "kind": "residence"},
       {"p": "{direction} Palace", "w": 15, "kind": "residence"},
       {"p": "{direction} Gate", "w": 15, "kind": "defence"},
-      {"p": "{town} Fortress", "w": 15, "kind": "defence"}
+      {"p": "{town} Fortress", "w": 15, "kind": "defence", "self": true}
     ],
     "indian": [
       {"p": "{figure:poss} Palace", "w": 15, "kind": "residence"},
       {"p": "Palace of {indianPalaceWord}", "w": 15, "kind": "residence"},
       {"p": "{colour} Fort", "w": 15, "kind": "defence"},
-      {"p": "{town} Fort", "w": 15, "kind": "defence"},
+      {"p": "{town} Fort", "w": 15, "kind": "defence", "self": true},
       {"p": "Pillared Hall of {founder}", "w": 15, "kind": "civic"},
-      {"p": "{town} Clock Tower", "w": 15, "kind": "civic", "e": ["ST"]}
+      {"p": "{town} Clock Tower", "w": 15, "kind": "civic", "e": ["ST"], "self": true}
     ],
     "arabic-persian": [
       {"p": "{colour} Fortress", "w": 15, "kind": "defence"},
-      {"p": "Citadel of {town}", "w": 15, "kind": "defence"},
+      {"p": "Citadel of {town}", "w": 15, "kind": "defence", "self": true},
       {"p": "Palace of the {oasisNoun}", "w": 15, "kind": "residence"},
       {"p": "Garden of {quality}", "w": 15, "kind": "residence"},
       {"p": "{patron:poss} Caravan Court", "w": 15, "kind": "civic"},
-      {"p": "{town} Covered Market", "w": 15, "kind": "civic"}
+      {"p": "{town} Covered Market", "w": 15, "kind": "civic", "self": true}
     ],
     "egyptian": [
       {"p": "House of {god}", "w": 15, "kind": "faith"},
@@ -166,17 +166,17 @@
     ],
     "norse": [
       {"p": "{owner:poss} Hall", "w": 15, "kind": "residence"},
-      {"p": "Hall of {town}", "w": 15, "kind": "residence"},
+      {"p": "Hall of {town}", "w": 15, "kind": "residence", "self": true},
       {"p": "{creature} Hall", "w": 15, "kind": "residence"}
     ],
     "celtic": [
       {"p": "{founder:poss} Fort", "w": 15, "kind": "defence"},
-      {"p": "Round Tower of {town}", "w": 15, "kind": "defence"},
+      {"p": "Round Tower of {town}", "w": 15, "kind": "defence", "self": true},
       {"p": "{holy:poss} Well", "w": 30, "kind": "water", "e": ["MD", "EM", "ST", "MO", "NF", "IS"]}
     ],
     "slavic": [
       {"p": "{colour} Tower", "w": 15, "kind": "defence"},
-      {"p": "Citadel of {town}", "w": 15, "kind": "defence"},
+      {"p": "Citadel of {town}", "w": 15, "kind": "defence", "self": true},
       {"p": "Church of {holy}", "w": 15, "kind": "faith"},
       {"p": "{holy} Monastery", "w": 15, "kind": "faith"}
     ],
@@ -186,21 +186,21 @@
     ],
     "west-african": [
       {"p": "Palace of the {figure}", "w": 15, "kind": "residence"},
-      {"p": "Great House of Prayer of {town}", "w": 15, "kind": "faith"},
-      {"p": "{town} Market Hall", "w": 15, "kind": "civic"},
+      {"p": "Great House of Prayer of {town}", "w": 15, "kind": "faith", "self": true},
+      {"p": "{town} Market Hall", "w": 15, "kind": "civic", "self": true},
       {"p": "{weekday} Market Hall", "w": 15, "kind": "civic"}
     ],
     "bantu": [
-      {"p": "Royal Enclosure of {town}", "w": 15, "kind": "residence"}
+      {"p": "Royal Enclosure of {town}", "w": 15, "kind": "residence", "self": true}
     ],
     "ethiopian": [
       {"p": "Palace of the {figure}", "w": 15, "kind": "residence"},
-      {"p": "{town} Castle", "w": 15, "kind": "residence", "e": ["EM"]},
+      {"p": "{town} Castle", "w": 15, "kind": "residence", "e": ["EM"], "self": true},
       {"p": "{founder:poss} Stele", "w": 15, "kind": "monument"}
     ],
     "aztec": [
       {"p": "Temple of {god}", "w": 15, "kind": "faith"},
-      {"p": "Great Temple of {town}", "w": 15, "kind": "faith"},
+      {"p": "Great Temple of {town}", "w": 15, "kind": "faith", "self": true},
       {"p": "House of the {creature:pl}", "w": 15, "kind": "residence"}
     ],
     "maya": [
@@ -211,33 +211,33 @@
       {"p": "Palace of the {number} Lords", "w": 15, "kind": "civic"}
     ],
     "andean": [
-      {"p": "Royal Storehouse of {town}", "w": 15, "kind": "works"},
-      {"p": "{town} Terraces", "w": 15, "kind": "works"},
-      {"p": "Sun Temple of {town}", "w": 15, "kind": "faith", "e": ["AN", "MD"]}
+      {"p": "Royal Storehouse of {town}", "w": 15, "kind": "works", "self": true},
+      {"p": "{town} Terraces", "w": 15, "kind": "works", "self": true},
+      {"p": "Sun Temple of {town}", "w": 15, "kind": "faith", "e": ["AN", "MD"], "self": true}
     ],
     "polynesian": [
-      {"p": "{town} Meeting House", "w": 15, "kind": "civic"},
-      {"p": "Canoe House of {town}", "w": 15, "kind": "civic"}
+      {"p": "{town} Meeting House", "w": 15, "kind": "civic", "self": true},
+      {"p": "Canoe House of {town}", "w": 15, "kind": "civic", "self": true}
     ]
   },
   "eraShapes": [
-    {"p": "{town} Corn Exchange", "w": 15, "e": ["ST"], "kinds": ["civic"]},
-    {"p": "{town} Town Hall", "w": 15, "e": ["ST"], "kinds": ["civic"]},
+    {"p": "{town} Corn Exchange", "w": 15, "e": ["ST"], "kinds": ["civic"], "self": true},
+    {"p": "{town} Town Hall", "w": 15, "e": ["ST"], "kinds": ["civic"], "self": true},
     {"p": "{surname} Institute", "w": 15, "e": ["ST"], "kinds": ["learning"]},
-    {"p": "{town} Infirmary", "w": 15, "e": ["ST"], "kinds": ["learning"]},
-    {"p": "{town} Workhouse", "w": 15, "e": ["ST"], "kinds": ["confinement"], "t": ["grim"]},
-    {"p": "{town} Gaol", "w": 15, "e": ["ST"], "kinds": ["confinement"]},
-    {"p": "{town} Station", "w": 15, "e": ["ST"], "kinds": ["civic"]},
+    {"p": "{town} Infirmary", "w": 15, "e": ["ST"], "kinds": ["learning"], "self": true},
+    {"p": "{town} Workhouse", "w": 15, "e": ["ST"], "kinds": ["confinement"], "t": ["grim"], "self": true},
+    {"p": "{town} Gaol", "w": 15, "e": ["ST"], "kinds": ["confinement"], "self": true},
+    {"p": "{town} Station", "w": 15, "e": ["ST"], "kinds": ["civic"], "self": true},
     {"p": "{surname} Memorial Library", "w": 15, "e": ["ST"], "kinds": ["learning"]},
     {"p": "{steampunkLandmark}", "w": 10, "e": ["ST"], "h": true},
-    {"p": "{town} {steampunkLandmark}", "w": 10, "e": ["ST"], "h": true},
+    {"p": "{town} {steampunkLandmark}", "w": 10, "e": ["ST"], "h": true, "self": true},
     {"p": "{surname} {steampunkLandmark}", "w": 10, "e": ["ST"], "h": true},
     {"p": "{surname} House", "w": 15, "e": ["MO"], "kinds": ["residence"]},
-    {"p": "{town} Tower", "w": 15, "e": ["MO"], "kinds": ["residence", "civic"]},
+    {"p": "{town} Tower", "w": 15, "e": ["MO"], "kinds": ["residence", "civic"], "self": true},
     {"p": "{brandRoot} Tower", "w": 15, "e": ["MO"], "kinds": ["civic", "works"]},
-    {"p": "{town} Civic Centre", "w": 15, "e": ["MO"], "kinds": ["civic"]},
-    {"p": "{town} General Hospital", "w": 15, "e": ["MO"], "kinds": ["learning"]},
-    {"p": "{town} Power Station", "w": 15, "e": ["MO"], "kinds": ["works"]},
+    {"p": "{town} Civic Centre", "w": 15, "e": ["MO"], "kinds": ["civic"], "self": true},
+    {"p": "{town} General Hospital", "w": 15, "e": ["MO"], "kinds": ["learning"], "self": true},
+    {"p": "{town} Power Station", "w": 15, "e": ["MO"], "kinds": ["works"], "self": true},
     {"p": "{surname} Building", "w": 15, "e": ["MO"], "kinds": ["civic", "works"]}
   ],
   "scifi": {
@@ -248,7 +248,7 @@
       {"p": "Hab Module {n}", "w": 10},
       {"p": "{discovery} Dome", "w": 10},
       {"p": "{ordinal} Hydroponic Bay", "w": 10},
-      {"p": "{town} Sky Elevator", "w": 10}
+      {"p": "{town} Sky Elevator", "w": 10, "self": true}
     ]
   },
   "lists": {
@@ -263,6 +263,10 @@
     "faithOnly": {
       "andean": ["Sun Temple of {town}"]
     }
+  },
+  "townSelf": {
+    "self": ["Sun Temple of {town}"],
+    "other": []
   },
   "series": {"founderUses": 3},
   "cap": 7,

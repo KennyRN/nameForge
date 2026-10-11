@@ -21,6 +21,7 @@ import {
   toneFactor,
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
+import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { WORLD_CULTURES } from "../world/engine";
 
 // ── Data ────────────────────────────────────────────────────────────────────
@@ -105,6 +106,8 @@ interface BynamesData {
 }
 
 export const BYNAMES_DATA = bynamesData as unknown as BynamesData;
+/** Settlement kit §4: the patterns and words whose `{town}` is the settlement. */
+const BYNAME_SELF = selfPatterns(bynamesData);
 
 /** §4.1: the twenty cultures, General first. */
 export const BYNAME_CULTURES = BYNAMES_DATA.cultures.map((c) => {
@@ -169,6 +172,12 @@ export interface BynameOptions {
   seed?: number;
   /** §11.7: merged safeguard lists; the built-in lists when absent. */
   safeguards?: GroupSafeguards;
+  /** Settlement kit §4: the settlement's town and neighbours. */
+  context?: SettlementContext;
+  /** Settlement kit §6 step 2: only the shapes this keeps (the ruler's "… of {town}"). */
+  shapeFilter?: (pattern: string) => boolean;
+  /** Settlement kit §6 step 2: `{officeWord}` limited to these words where the culture has any. */
+  officeWords?: string[];
 }
 
 export interface BynameResult {
@@ -204,6 +213,11 @@ interface Ctx {
   /** The last rank drawn: its position and whether it came out native (§10.2, §10.4). */
   rankAfter: boolean;
   rankNative: boolean;
+  /** Settlement kit §4. */
+  context?: SettlementContext;
+  shapeFilter?: (pattern: string) => boolean;
+  officeWords?: string[];
+  turn?: TownTurn;
 }
 
 const lightOrGrim = (tone: GroupToneChoice) => tone === "light" || tone === "grim";
@@ -341,6 +355,16 @@ export function nativeOf(culture: string, place: string): string {
 
 /** Renders a pattern's tokens; undefined when one has nothing to offer. */
 function render(ctx: Ctx, pattern: string): string | undefined {
+  const outer = ctx.turn;
+  if (ctx.context) ctx.turn = new TownTurn(ctx.context, BYNAME_SELF.has(pattern));
+  try {
+    return renderTokens(ctx, pattern);
+  } finally {
+    ctx.turn = outer;
+  }
+}
+
+function renderTokens(ctx: Ctx, pattern: string): string | undefined {
   let failed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw: string) => {
     if (failed) return "";
@@ -355,8 +379,13 @@ const joinClosed = (a: string, b: string) => a + b.toLowerCase();
 const closeUp = (w: string) => (w.includes("+") ? w.split("+").reduce((x, y) => joinClosed(x, y)) : w);
 
 function listWord(ctx: Ctx, name: string, opts: { nativeOnly?: boolean; englishOnly?: boolean } = {}): string | undefined {
-  const entries = BYNAMES_DATA.lists[name];
+  let entries = BYNAMES_DATA.lists[name];
   if (!entries) throw new Error(`Bynames: no list “${name}”.`);
+  // Settlement kit §6 step 2: a village's office words, where the culture has any of them.
+  if (name === "officeWord" && ctx.officeWords) {
+    const only = entries.filter((e) => [e.w, e.m, e.f, e.n].some((w) => !!w && ctx.officeWords!.includes(w)));
+    if (only.length > 0) entries = only;
+  }
   return drawEntries(ctx, entries, opts)?.text;
 }
 
@@ -383,6 +412,8 @@ function token(ctx: Ctx, raw: string): string | undefined {
     case "child":
       return personName(ctx, "child");
     case "town": {
+      // Settlement kit §4: this place, or one of its neighbours.
+      if (ctx.turn) return ctx.turn.next(rng);
       // §11.4: no deity or saint names in these cultures' places (Ganesha's Plain, Saint George's).
       const holy = HOLY_NAMES.get(ctx.culture);
       for (let i = 0; i < 20; i++) {
@@ -521,7 +552,7 @@ const tonesOf = (shapeTones: GroupTone[] | undefined, drawn: Set<GroupTone>) => 
 /** A weighted shape for the kind; setting, gate and tone applied (§3, §5.4, §8). */
 function pickShape(ctx: Ctx, shapes: Shape[], kind: string): Shape | undefined {
   const live = shapes
-    .filter((s) => s.kind === kind && (!s.s || s.s.includes(ctx.setting)) && (!s.gate || lightOrGrim(ctx.tone)))
+    .filter((s) => s.kind === kind && (!s.s || s.s.includes(ctx.setting)) && (!s.gate || lightOrGrim(ctx.tone)) && (!ctx.shapeFilter || ctx.shapeFilter(s.p)))
     .map((s): [Shape, number] => [s, s.w * toneFactor(s.t ?? [], ctx.tone)]);
   return pickWeighted(live, ctx.rng);
 }
@@ -554,7 +585,9 @@ function oneTitle(ctx: Ctx, kind: string, forceShape?: string): { text: string; 
   let text: string | undefined;
   if (shape.p === "{rank} of {town}") {
     const rank = token(ctx, "rank");
+    if (ctx.context) ctx.turn = new TownTurn(ctx.context, true);
     const town = token(ctx, "town");
+    ctx.turn = undefined;
     if (!rank || !town) return undefined;
     // §10.4: a native rank with a place takes the culture's own "of".
     text = `${rank} ${ctx.rankNative ? nativeOf(ctx.culture, town) : `of ${town}`}`;
@@ -653,7 +686,18 @@ export function generateBynames(options: BynameOptions): BynameBatch {
     block: new Set([...guards.block, ...(guards.flagListBlocks ? guards.flag : [])].map(normForBlock)),
     patterns: BYNAMES_DATA.safeguards.blockPatterns.map((p) => new RegExp(p, "i")),
   };
-  const base = { rng, setting, culture, tone, source: options.source ?? "placeholder", draw: options.draw, packFailed: false };
+  const base = {
+    rng,
+    setting,
+    culture,
+    tone,
+    source: options.source ?? "placeholder",
+    draw: options.draw,
+    packFailed: false,
+    context: options.context,
+    shapeFilter: options.shapeFilter,
+    officeWords: options.officeWords,
+  };
   const kindChoices = kinds.map(({ kind, weight }): [string, number] => [kind.key, weight]);
   const count = Math.max(0, Math.floor(options.count));
   const seen = new Set<string>();

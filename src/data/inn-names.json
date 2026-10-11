@@ -54,43 +54,43 @@
   "cultureShapes": {
     "anglo-saxon": [
       {"p": "{owner:poss} Mead Hall", "w": 40},
-      {"p": "Mead Hall of {town}", "w": 30},
+      {"p": "Mead Hall of {town}", "w": 30, "self": true},
       {"p": "the {creature} Hall", "w": 30}
     ],
     "celtic": [
-      {"p": "Hostel of {town}", "w": 50},
+      {"p": "Hostel of {town}", "w": 50, "self": true},
       {"p": "{owner:poss} Guest House", "w": 30},
       {"p": "Hostel of the {creature}", "w": 20}
     ],
     "norse": [
       {"p": "{owner:poss} Hall", "w": 35},
-      {"p": "Guest Hall of {town}", "w": 30},
+      {"p": "Guest Hall of {town}", "w": 30, "self": true},
       {"p": "the {creature} Hall", "w": 20},
-      {"p": "Mead Hall of {town}", "w": 15}
+      {"p": "Mead Hall of {town}", "w": 15, "self": true}
     ],
     "roman": [
       {"p": "Inn of the {creature}", "w": 30},
       {"p": "Sign of the {item}", "w": 25},
-      {"p": "Station Inn of {town}", "w": 20, "kinds": ["inn", "wayhouse"]},
-      {"p": "Change Station of {town}", "w": 10, "kinds": ["wayhouse"]},
+      {"p": "Station Inn of {town}", "w": 20, "kinds": ["inn", "wayhouse"], "self": true},
+      {"p": "Change Station of {town}", "w": 10, "kinds": ["wayhouse"], "self": true},
       {"p": "{owner:poss} Tavern", "w": 15}
     ],
     "greek-byzantine": [
       {"p": "Wine House of {owner}", "w": 30},
       {"p": "Guest House of {holy}", "w": 25, "e": ["MD", "EM", "ST", "MO", "NF", "IS"]},
-      {"p": "Guest House of {town}", "w": 25},
+      {"p": "Guest House of {town}", "w": 25, "self": true},
       {"p": "the {creature} Wine House", "w": 20}
     ],
     "slavic": [
       {"p": "Post House of the {route}", "w": 25, "kinds": ["wayhouse"]},
       {"p": "{holy:poss} Inn", "w": 20},
       {"p": "the {colour} {item} Tavern", "w": 30},
-      {"p": "{town} Post House", "w": 25}
+      {"p": "{town} Post House", "w": 25, "self": true}
     ],
     "steppe": [
       {"p": "{ordinal} Post Station", "w": 30},
       {"p": "Guest Tent of the {figure}", "w": 25},
-      {"p": "{town} Caravan Court", "w": 25},
+      {"p": "{town} Caravan Court", "w": 25, "self": true},
       {"p": "the {colour} Tent", "w": 20}
     ],
     "arabic-persian": [
@@ -106,76 +106,76 @@
       {"p": "{founder:poss} Rest House", "w": 20},
       {"p": "Pilgrims' Lodge of the {holySite}", "w": 20},
       {"p": "{indianAnchor} Inn", "w": 20},
-      {"p": "{town} Caravan Court", "w": 10, "kinds": ["wayhouse"]}
+      {"p": "{town} Caravan Court", "w": 10, "kinds": ["wayhouse"], "self": true}
     ],
     "chinese": [
       {"p": "Inn of {auspicious}", "w": 30},
       {"p": "{welcomePhrase} Inn", "w": 20},
       {"p": "{eastNature} Tea House", "w": 25, "kinds": ["eating"]},
       {"p": "{eastNature} Wine House", "w": 15, "kinds": ["tavern"]},
-      {"p": "{town} Post Station", "w": 10, "kinds": ["wayhouse"]}
+      {"p": "{town} Post Station", "w": 10, "kinds": ["wayhouse"], "self": true}
     ],
     "japanese": [
       {"p": "{eastNature} Inn", "w": 35},
       {"p": "{eastNature} Tea House", "w": 30, "kinds": ["eating"]},
-      {"p": "Lords' Inn of {town}", "w": 15, "e": ["EM"]},
-      {"p": "{town} Inn", "w": 20}
+      {"p": "Lords' Inn of {town}", "w": 15, "e": ["EM"], "self": true},
+      {"p": "{town} Inn", "w": 20, "self": true}
     ],
     "korean": [
       {"p": "{eastNature} Tavern", "w": 40},
-      {"p": "{town} Station Inn", "w": 30, "kinds": ["wayhouse"]},
+      {"p": "{town} Station Inn", "w": 30, "kinds": ["wayhouse"], "self": true},
       {"p": "Inn of {auspicious}", "w": 30}
     ],
     "egyptian": [
-      {"p": "Beer House of {town}", "w": 35},
+      {"p": "Beer House of {town}", "w": 35, "self": true},
       {"p": "{owner:poss} Beer House", "w": 35},
       {"p": "House of Beer of {god}", "w": 30}
     ],
     "ethiopian": [
-      {"p": "Mead House of {town}", "w": 50},
+      {"p": "Mead House of {town}", "w": 50, "self": true},
       {"p": "{owner:poss} Mead House", "w": 50}
     ],
     "west-african": [
       {"p": "House of {owner}", "w": 30},
-      {"p": "Strangers' Lodge of {town}", "w": 25},
+      {"p": "Strangers' Lodge of {town}", "w": 25, "self": true},
       {"p": "{weekday} Market Rest", "w": 20},
-      {"p": "Landlord's House of {town}", "w": 25}
+      {"p": "Landlord's House of {town}", "w": 25, "self": true}
     ],
     "bantu": [
-      {"p": "Guest House of {town}", "w": 50},
+      {"p": "Guest House of {town}", "w": 50, "self": true},
       {"p": "the {creature} Guest House", "w": 50}
     ],
     "aztec": [
       {"p": "Merchants' House of the {directionAdj} Ward", "w": 50},
-      {"p": "House of {town}", "w": 30},
+      {"p": "House of {town}", "w": 30, "self": true},
       {"p": "the {creature} House", "w": 20}
     ],
     "andean": [
-      {"p": "Royal Station of {town}", "w": 60},
-      {"p": "{town} Way Station", "w": 40}
+      {"p": "Royal Station of {town}", "w": 60, "self": true},
+      {"p": "{town} Way Station", "w": 40, "self": true}
     ],
     "polynesian": [
-      {"p": "Guest House of {town}", "w": 100, "e": ["MO", "NF", "IS"]},
-      {"p": "Guest House of {town}", "w": 100, "e": ["AN", "MD", "EM", "ST"], "kinds": ["rest"]}
+      {"p": "Guest House of {town}", "w": 100, "e": ["MO", "NF", "IS"], "self": true},
+      {"p": "Guest House of {town}", "w": 100, "e": ["AN", "MD", "EM", "ST"], "kinds": ["rest"], "self": true}
     ],
     "maya": [
       {"p": "Merchants' House of the {directionAdj} Ward", "w": 50},
-      {"p": "House of {town}", "w": 30},
+      {"p": "House of {town}", "w": 30, "self": true},
       {"p": "the {creature} House", "w": 20}
     ]
   },
   "cultureKinds": ["inn", "tavern", "rest"],
   "fallback": [
     {"p": "{owner:poss} {hw}", "w": 50},
-    {"p": "{hw} of {town}", "w": 50}
+    {"p": "{hw} of {town}", "w": 50, "self": true}
   ],
   "eraShapes": [
     {"p": "the {grandAdj} Gin Palace", "w": 15, "e": ["ST"], "kinds": ["club"]},
     {"p": "the {colour} {item} Music Hall", "w": 15, "e": ["ST"], "kinds": ["club"]},
     {"p": "the Great {directionAdj} Hotel", "w": 15, "e": ["ST"], "kinds": ["club"]},
-    {"p": "{town} Station Hotel", "w": 15, "e": ["ST"], "kinds": ["club"]},
+    {"p": "{town} Station Hotel", "w": 15, "e": ["ST"], "kinds": ["club"], "self": true},
     {"p": "the {quality} Club", "w": 15, "e": ["ST"], "kinds": ["club"]},
-    {"p": "{town} and County Club", "w": 10, "e": ["ST"], "kinds": ["club"]},
+    {"p": "{town} and County Club", "w": 10, "e": ["ST"], "kinds": ["club"], "self": true},
     {"p": "the {virtue} Temperance Hotel", "w": 15, "e": ["ST"], "kinds": ["club"]},
     {"p": "{owner:poss} Coffee House", "w": 40, "e": ["ST"], "kinds": ["eating"]},
     {"p": "the {item} Chop House", "w": 30, "e": ["ST"], "kinds": ["eating"]},
@@ -188,9 +188,9 @@
     {"p": "the Copper Kettle and Boiler", "w": 5, "e": ["ST"], "h": true},
     {"p": "{owner:poss} Café", "w": 40, "e": ["MO"], "kinds": ["eating"]},
     {"p": "the {item} Café", "w": 30, "e": ["MO"], "kinds": ["eating"]},
-    {"p": "{town} Tea Rooms", "w": 30, "e": ["MO"], "kinds": ["eating"]},
+    {"p": "{town} Tea Rooms", "w": 30, "e": ["MO"], "kinds": ["eating"], "self": true},
     {"p": "the {item} Bar", "w": 25, "e": ["MO"], "kinds": ["bar"]},
-    {"p": "{town} Motel", "w": 15, "e": ["MO"], "kinds": ["bar"], "c": ["general"]},
+    {"p": "{town} Motel", "w": 15, "e": ["MO"], "kinds": ["bar"], "c": ["general"], "self": true},
     {"p": "{owner:poss} Diner", "w": 15, "e": ["MO"], "kinds": ["bar"], "c": ["general"]},
     {"p": "the {colour} Room", "w": 25, "e": ["MO"], "kinds": ["bar"]},
     {"p": "{brandRoot} Inn", "w": 20, "e": ["MO"], "kinds": ["bar"]},

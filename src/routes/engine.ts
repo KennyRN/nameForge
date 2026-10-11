@@ -28,6 +28,7 @@ import {
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
 import { generateRealmNames, REALM_DATA, REALM_ERAS } from "../realms/engine";
+import { boostPool, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type SettlementEra, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateTribalNames } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
@@ -149,6 +150,8 @@ export interface RouteOptions {
   vocab?: Vocabulary;
   /** Tests: only this shape (its pattern; "fixed" for a fixed name). */
   shape?: string;
+  /** Settlement kit §4: the settlement's town, neighbours, founder, saint and goods. */
+  context?: SettlementContext;
 }
 
 export interface RouteName {
@@ -189,10 +192,17 @@ interface Ctx {
   letter?: string;
   drawn: Set<GroupTone>;
   words: { pool: string; word: string }[];
+  /** Settlement kit §4. */
+  context?: SettlementContext;
+  /** Settlement kit §4: the `{town}` tokens of the pattern being rendered. */
+  turn?: TownTurn;
 }
 
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
 const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("light") || t.includes("grim"));
+
+/** Settlement kit §4: the shapes whose first `{town}` is the settlement. */
+const ROUTE_SELF = selfPatterns(routeData);
 
 /** Token names that read a shared pool under another name. */
 const POOL_OF: Record<string, string> = { goods: "routeGoods" };
@@ -225,7 +235,7 @@ function vocabPool(ctx: Ctx, pool: string, token: string): [VocabEntry, number][
 }
 
 function vocabWord(ctx: Ctx, pool: string, token: string, keep?: (w: string) => boolean): string | undefined {
-  const items = vocabPool(ctx, pool, token).filter(([e]) => !keep || keep(e.w));
+  const items = boostPool(ctx.context, pool, vocabPool(ctx, pool, token)).filter(([e]) => !keep || keep(e.w));
   const e = pickWeighted(items, ctx.rng);
   if (!e) return undefined;
   for (const t of e.t ?? []) ctx.drawn.add(t);
@@ -328,12 +338,15 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "town":
       // §7: a borrowed shape's places are stars.
       if (ctx.borrowed) return gnWord(ctx, "star");
+      // Settlement kit §4: this place, or one of its neighbours.
+      if (ctx.turn) return name === "town" ? ctx.turn.next(rng) : ctx.turn.other(rng);
       return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
     case "folk":
       return placeholders ? "[folk]" : routeFolk(ctx.culture.key, ctx.rng);
     case "person":
     case "founder":
     case "patron": {
+      if (name === "founder" && ctx.context) return ctx.context.founder;
       if (placeholders) return `[${name}]`;
       const names = personNames(ctx.culture.key);
       return names.length > 0 ? pickOne(names, rng) : undefined;
@@ -342,8 +355,10 @@ function token(ctx: Ctx, name: string): string | undefined {
       return figure(ctx);
     case "kingdom":
       return placeholders ? "[kingdom]" : kingdom(ctx);
-    case "holy":
-      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "holy": {
+      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng));
+      return ctx.context ? contextSaint(ctx.context, other, rng) : other();
+    }
     case "god": {
       const gods = godNames(ctx.culture.key);
       return gods.length > 0 ? pickOne(gods, rng) : undefined;
@@ -392,6 +407,7 @@ const withMod = (name: string, text: string, mod: string | undefined) => (mod ==
 
 /** Renders a pattern's tokens; undefined when one has nothing to offer. */
 function renderPattern(ctx: Ctx, pattern: string, hooks?: Hooks): string | undefined {
+  if (ctx.context) ctx.turn = new TownTurn(ctx.context, ROUTE_SELF.has(pattern));
   let failed = false;
   let index = -1;
   let nameUsed = false;
@@ -618,6 +634,7 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
     borrowed: false,
     drawn: new Set(),
     words: [],
+    context: options.context,
   });
 
   /** §7: a shape for a kind: 25% of space lanes borrow one of the culture's shapes. */

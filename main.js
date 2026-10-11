@@ -33544,6 +33544,7 @@ var group_names_default = {
             },
             {
               p: "{ordinal} ({town}) Regiment of {regimentOf}",
+              self: true,
               f: "F",
               w: 6,
               s: [
@@ -33556,6 +33557,7 @@ var group_names_default = {
             },
             {
               p: "{ordinal} {town} {arm}",
+              self: true,
               f: "F",
               w: 10,
               t: [
@@ -33576,6 +33578,7 @@ var group_names_default = {
             },
             {
               p: "{ordinal} Battalion, {town} {arm}",
+              self: true,
               f: "F",
               w: 5,
               s: [
@@ -33774,6 +33777,7 @@ var group_names_default = {
             },
             {
               p: "Royal {town} Order",
+              self: true,
               f: "F",
               w: 4,
               s: [
@@ -33785,6 +33789,7 @@ var group_names_default = {
             },
             {
               p: "Order of {town}",
+              self: true,
               f: "F",
               w: 4,
               s: [
@@ -33878,6 +33883,7 @@ var group_names_default = {
             },
             {
               p: "the {town} {mercs}",
+              self: true,
               f: "E",
               w: 5,
               t: [
@@ -33948,6 +33954,7 @@ var group_names_default = {
             },
             {
               p: "the {town} {fleetGroup}",
+              self: true,
               f: "B",
               w: 10,
               t: [
@@ -33956,6 +33963,7 @@ var group_names_default = {
             },
             {
               p: "{town} Navy",
+              self: true,
               f: "F",
               w: 5,
               s: [
@@ -34037,6 +34045,7 @@ var group_names_default = {
           shapes: [
             {
               p: "the {town} Watch",
+              self: true,
               f: "B",
               w: 20,
               s: [
@@ -34051,6 +34060,7 @@ var group_names_default = {
             },
             {
               p: "{town} Constabulary",
+              self: true,
               f: "F",
               w: 10,
               s: [
@@ -34130,6 +34140,7 @@ var group_names_default = {
             },
             {
               p: "{town} Marshals",
+              self: true,
               f: "E",
               w: 8,
               t: [
@@ -34138,6 +34149,7 @@ var group_names_default = {
             },
             {
               p: "{town} {enforcement}",
+              self: true,
               f: "F",
               w: 8,
               s: [
@@ -34340,6 +34352,7 @@ var group_names_default = {
             },
             {
               p: "the {town} {thiefGroup}",
+              self: true,
               f: "E",
               w: 5,
               t: [
@@ -34525,6 +34538,7 @@ var group_names_default = {
             },
             {
               p: "the {town} {firm}",
+              self: true,
               f: "E",
               w: 15,
               t: [
@@ -34599,6 +34613,7 @@ var group_names_default = {
           shapes: [
             {
               p: "the {town} Ring",
+              self: true,
               f: "E",
               w: 20,
               t: [
@@ -34778,6 +34793,7 @@ var group_names_default = {
             },
             {
               p: "the {town} {tradesmen}",
+              self: true,
               f: "E",
               w: 10,
               t: [
@@ -34842,6 +34858,7 @@ var group_names_default = {
             },
             {
               p: "the {town} Company",
+              self: true,
               f: "E",
               w: 8,
               t: [
@@ -34858,6 +34875,7 @@ var group_names_default = {
             },
             {
               p: "{goods} Merchants of {town}",
+              self: true,
               f: "F",
               w: 10,
               t: [
@@ -34875,6 +34893,7 @@ var group_names_default = {
             },
             {
               p: "Merchant Adventurers of {town}",
+              self: true,
               f: "F",
               w: 5,
               s: [
@@ -34887,6 +34906,7 @@ var group_names_default = {
             },
             {
               p: "the {town} {goods} Company",
+              self: true,
               f: "E",
               w: 12,
               t: [
@@ -34915,6 +34935,7 @@ var group_names_default = {
             },
             {
               p: "{town} Trade Consortium",
+              self: true,
               f: "F",
               w: 5,
               s: [
@@ -34951,6 +34972,7 @@ var group_names_default = {
             },
             {
               p: "{town} Trading House",
+              self: true,
               f: "E",
               w: 5,
               t: [
@@ -35045,6 +35067,7 @@ var group_names_default = {
             },
             {
               p: "{town} {tradeActivity} Company",
+              self: true,
               f: "E",
               w: 10,
               t: [
@@ -35120,11 +35143,13 @@ var group_names_default = {
             },
             {
               p: "New {town} Company",
+              self: true,
               f: "E",
               w: 5
             },
             {
               p: "{town} Land Company",
+              self: true,
               f: "E",
               w: 10,
               t: [
@@ -35141,6 +35166,7 @@ var group_names_default = {
             },
             {
               p: "{town} Colonial Company",
+              self: true,
               f: "B",
               w: 10,
               t: [
@@ -35235,6 +35261,7 @@ var group_names_default = {
             },
             {
               p: "{town} {resGoods} Company",
+              self: true,
               f: "E",
               w: 15,
               t: [
@@ -35251,6 +35278,7 @@ var group_names_default = {
             },
             {
               p: "{town} Colliery Company",
+              self: true,
               f: "E",
               w: 5,
               s: [
@@ -35337,6 +35365,7 @@ var group_names_default = {
             },
             {
               p: "the {town} Merchants' League",
+              self: true,
               f: "E",
               w: 5,
               t: [
@@ -35355,6 +35384,7 @@ var group_names_default = {
             },
             {
               p: "{town} {leagueBody}",
+              self: true,
               f: "B",
               w: 10,
               t: [
@@ -35433,6 +35463,7 @@ var group_names_default = {
             },
             {
               p: "{town} Industrial {combineBody}",
+              self: true,
               f: "B",
               w: 15,
               t: [
@@ -35463,6 +35494,7 @@ var group_names_default = {
             },
             {
               p: "{town} {transport} Company",
+              self: true,
               f: "B",
               w: 15,
               s: [
@@ -35477,6 +35509,7 @@ var group_names_default = {
             },
             {
               p: "{town} and {town} {transport}",
+              self: true,
               f: "F",
               w: 5,
               s: [
@@ -35553,6 +35586,7 @@ var group_names_default = {
             },
             {
               p: "Bank of {town}",
+              self: true,
               f: "F",
               w: 15,
               t: [
@@ -35561,6 +35595,7 @@ var group_names_default = {
             },
             {
               p: "{town} {bankWord}",
+              self: true,
               f: "F",
               w: 15,
               t: [
@@ -35621,6 +35656,7 @@ var group_names_default = {
             },
             {
               p: "{town} Banking House",
+              self: true,
               f: "F",
               w: 5,
               t: [
@@ -35679,6 +35715,7 @@ var group_names_default = {
             },
             {
               p: "{town} {corpSuffix}",
+              self: true,
               f: "B",
               w: 15,
               s: [
@@ -35780,6 +35817,7 @@ var group_names_default = {
             },
             {
               p: "the {town} {unionTrade:poss} Union",
+              self: true,
               f: "B",
               w: 25,
               s: [
@@ -35914,6 +35952,7 @@ var group_names_default = {
             },
             {
               p: "{town} Steam Packet Company",
+              self: true,
               f: "F",
               w: 8,
               s: [
@@ -35934,6 +35973,7 @@ var group_names_default = {
             },
             {
               p: "{town} Freight",
+              self: true,
               f: "B",
               w: 10,
               s: [
@@ -36177,6 +36217,7 @@ var group_names_default = {
             },
             {
               p: "{ordinal} {town} Expedition",
+              self: true,
               f: "F",
               w: 5,
               s: [
@@ -36228,6 +36269,7 @@ var group_names_default = {
             },
             {
               p: "the {town} Huntsmen",
+              self: true,
               f: "E",
               w: 10,
               s: [
@@ -36338,6 +36380,7 @@ var group_names_default = {
             },
             {
               p: "Council of {town}",
+              self: true,
               f: "F",
               w: 10,
               t: [
@@ -36362,6 +36405,7 @@ var group_names_default = {
             },
             {
               p: "{town} {assemblyWord}",
+              self: true,
               f: "F",
               w: 15,
               t: [
@@ -36370,6 +36414,7 @@ var group_names_default = {
             },
             {
               p: "the {town} {directorate}",
+              self: true,
               f: "B",
               w: 10,
               s: [
@@ -36433,6 +36478,7 @@ var group_names_default = {
             },
             {
               p: "{town} {ideal} League",
+              self: true,
               f: "F",
               w: 10
             },
@@ -36591,6 +36637,7 @@ var group_names_default = {
             },
             {
               p: "{town} Liberation Front",
+              self: true,
               f: "F",
               w: 10,
               s: [
@@ -36604,6 +36651,7 @@ var group_names_default = {
             },
             {
               p: "Free {town} {rebelGroup}",
+              self: true,
               f: "B",
               w: 12
             },
@@ -36698,6 +36746,7 @@ var group_names_default = {
             },
             {
               p: "{town} {leagueGroup}",
+              self: true,
               f: "F",
               w: 20,
               t: [
@@ -36711,6 +36760,7 @@ var group_names_default = {
             },
             {
               p: "Union of {town} and {town}",
+              self: true,
               f: "F",
               w: 5,
               t: [
@@ -36917,6 +36967,7 @@ var group_names_default = {
             },
             {
               p: "House {house} of {town}",
+              self: true,
               f: "F",
               w: 15,
               t: [
@@ -36925,6 +36976,7 @@ var group_names_default = {
             },
             {
               p: "the {house:pl} of {town}",
+              self: true,
               f: "E",
               w: 10,
               t: [
@@ -37482,6 +37534,7 @@ var group_names_default = {
         },
         {
           p: "{town} Benevolent Society",
+          self: true,
           f: "F",
           w: 10,
           t: [
@@ -37490,6 +37543,7 @@ var group_names_default = {
         },
         {
           p: "{town} Philosophical Society",
+          self: true,
           f: "F",
           w: 10,
           t: [
@@ -37501,6 +37555,7 @@ var group_names_default = {
         pack: [
           {
             p: "the {town} Hunt",
+            self: true,
             f: "E",
             w: 15,
             t: [
@@ -37527,6 +37582,7 @@ var group_names_default = {
         },
         {
           p: "the {town} {thiefEuph}",
+          self: true,
           f: "E",
           w: 20
         },
@@ -37556,6 +37612,7 @@ var group_names_default = {
         },
         {
           p: "the {town} {redress} Society",
+          self: true,
           f: "F",
           w: 15
         },
@@ -37586,6 +37643,7 @@ var group_names_default = {
         },
         {
           p: "{town} {businessTrade} Company",
+          self: true,
           f: "F",
           w: 20,
           t: [
@@ -37594,6 +37652,7 @@ var group_names_default = {
         },
         {
           p: "{town} {businessTrade}",
+          self: true,
           f: "E",
           w: 15,
           t: [
@@ -37602,6 +37661,7 @@ var group_names_default = {
         },
         {
           p: "the {town} Social Club",
+          self: true,
           f: "E",
           w: 15,
           s: [
@@ -37633,6 +37693,7 @@ var group_names_default = {
       shapes: [
         {
           p: "{town} Free Traders",
+          self: true,
           f: "E",
           w: 25,
           t: [
@@ -37641,6 +37702,7 @@ var group_names_default = {
         },
         {
           p: "{town} {fishWord} Company",
+          self: true,
           f: "F",
           w: 25,
           s: [
@@ -37663,6 +37725,7 @@ var group_names_default = {
         },
         {
           p: "{town} Pilots' Association",
+          self: true,
           f: "F",
           w: 15,
           t: [
@@ -37714,6 +37777,7 @@ var group_names_default = {
         },
         {
           p: "the {town} {mundaneOffice}",
+          self: true,
           f: "E",
           w: 25,
           t: [
@@ -37773,6 +37837,7 @@ var group_names_default = {
         },
         {
           p: "{town} Benefactors",
+          self: true,
           f: "E",
           w: 20
         },
@@ -37786,6 +37851,7 @@ var group_names_default = {
         },
         {
           p: "{town} Mutual Assurance Society",
+          self: true,
           f: "F",
           w: 20,
           t: [
@@ -54255,6 +54321,7 @@ var group_names_default = {
     colonyTarget: [
       {
         p: "{town}",
+        self: false,
         w: 40
       },
       {
@@ -54267,6 +54334,7 @@ var group_names_default = {
       },
       {
         p: "New {town}",
+        self: false,
         w: 15
       }
     ],
@@ -54658,6 +54726,72 @@ var group_names_default = {
     }
   ]
 };
+
+// src/settlement/contextShared.ts
+var CONTEXT_WEIGHT = 4;
+function selfPatterns(data) {
+  const out = /* @__PURE__ */ new Set();
+  const walk = (v) => {
+    if (Array.isArray(v)) v.forEach(walk);
+    else if (v && typeof v === "object") {
+      const o = v;
+      if (typeof o.p === "string" && o.self === true) out.add(o.p);
+      const ts = o.townSelf;
+      if (ts == null ? void 0 : ts.self) for (const p of ts.self) out.add(p);
+      Object.values(o).forEach(walk);
+    }
+  };
+  walk(data);
+  return out;
+}
+function contextTown(context, self, rng, avoid = []) {
+  if (self) return context.town;
+  const free = context.neighbours.filter((n) => !avoid.includes(n));
+  const from = free.length > 0 ? free : context.neighbours;
+  return from[Math.floor(rng() * from.length)];
+}
+var TownTurn = class {
+  constructor(context, self) {
+    this.context = context;
+    this.self = self;
+    this.selfDone = false;
+    this.used = [];
+  }
+  /** `{destination}`: always a neighbour. */
+  other(rng) {
+    const t = contextTown(this.context, false, rng, this.used);
+    this.used.push(t);
+    return t;
+  }
+  next(rng) {
+    const isSelf = this.self && !this.selfDone;
+    if (isSelf) this.selfDone = true;
+    const t = contextTown(this.context, isSelf, rng, this.used);
+    this.used.push(t);
+    return t;
+  }
+};
+function boostContext(items, words, wordOf, make) {
+  if (!words || words.length === 0) return items;
+  const out = items.map(([t, n]) => [t, words.includes(wordOf(t)) ? n * CONTEXT_WEIGHT : n]);
+  if (make) {
+    for (const w of words) if (!out.some(([t]) => wordOf(t) === w)) out.push([make(w), CONTEXT_WEIGHT]);
+  }
+  return out;
+}
+var CONTEXT_POOLS = { streetTrades: "trades", streetGoods: "goods", routeGoods: "goods" };
+function boostPool(context, pool3, items) {
+  const which = context && CONTEXT_POOLS[pool3];
+  if (!which) return items;
+  return boostContext(items, context[which], (e) => e.w, (w) => ({ w }));
+}
+function contextSaint(context, other, rng) {
+  if (!context.holy) return other();
+  return rng() < CONTEXT_WEIGHT / (CONTEXT_WEIGHT + 1) ? context.holy : other();
+}
+function contextLandmark(context, rng) {
+  return context.landmarks.length > 0 ? context.landmarks[Math.floor(rng() * context.landmarks.length)] : void 0;
+}
 
 // src/data/world-place-names.json
 var world_place_names_default = {
@@ -56095,6 +56229,7 @@ function worldHistoryLabel(base, cultureId, eraId) {
 
 // src/groups/engine.ts
 var GROUP_DATA = group_names_default;
+var GROUP_SELF = selfPatterns(group_names_default);
 var GROUP_FAMILIES = GROUP_DATA.families;
 var SETTING_PHRASES = GROUP_DATA.settings.phrases;
 var GROUP_COMMODITIES = GROUP_DATA.commodities;
@@ -56347,8 +56482,11 @@ function pool(ctx, name, type, filter) {
   ctx.pools.set(key2, out);
   return out;
 }
+var CONTEXT_LISTS = { tradesmen: "trades", goods: "goods" };
 function pick2(ctx, name, type, filter) {
-  const w = pickWeighted5(pool(ctx, name, type, filter), ctx.rng);
+  const which = ctx.context && CONTEXT_LISTS[name];
+  const items = which ? boostContext(pool(ctx, name, type, filter), ctx.context[which], (w2) => w2) : pool(ctx, name, type, filter);
+  const w = pickWeighted5(items, ctx.rng);
   if (w !== void 0) for (const t of wordTones(name, w)) ctx.drawn.add(t);
   return w;
 }
@@ -56383,6 +56521,7 @@ function renderPattern(ctx, pattern, type, shape, hooks) {
   let m;
   let index = -1;
   let nameUsed = false;
+  const turn = ctx.context ? new TownTurn(ctx.context, !!shape && pattern === shape.p && GROUP_SELF.has(pattern)) : void 0;
   while (m = re.exec(pattern)) {
     index++;
     out += pattern.slice(last, m.index);
@@ -56398,7 +56537,7 @@ function renderPattern(ctx, pattern, type, shape, hooks) {
       nameUsed = true;
     } else {
       name = rawName.includes("/") ? pickOne(alternatives, ctx.rng) : rawName;
-      piece = token(ctx, name, type, shape);
+      piece = turn && name === "town" ? { text: turn.next(ctx.rng), plural: false } : token(ctx, name, type, shape);
     }
     if (!piece) return void 0;
     (_b = hooks == null ? void 0 : hooks.record) == null ? void 0 : _b.push({ name, piece });
@@ -56412,7 +56551,7 @@ function renderPattern(ctx, pattern, type, shape, hooks) {
   return out;
 }
 function token(ctx, name, type, shape) {
-  var _a2, _b, _c, _d, _e;
+  var _a2, _b, _c, _d, _e, _f;
   const rng = ctx.rng;
   const S = ctx.setting;
   const placeholders = ctx.mode === "placeholders";
@@ -56426,8 +56565,12 @@ function token(ctx, name, type, shape) {
       if (placeholders) return { text: `[${type.person}]`, plural: false };
       return { text: (_a2 = inventedPerson(ctx, type)) != null ? _a2 : "", plural: false };
     case "holy": {
+      if ((_b = ctx.context) == null ? void 0 : _b.holy) {
+        const other = () => holyText(ctx, type, placeholders);
+        return { text: contextSaint(ctx.context, other, rng), plural: false };
+      }
       if (placeholders) return { text: "[holy person]", plural: false };
-      const saints = GROUP_DATA.people.saintTraditions.includes((_c = (_b = ctx.people) == null ? void 0 : _b.key) != null ? _c : "general");
+      const saints = GROUP_DATA.people.saintTraditions.includes((_d = (_c = ctx.people) == null ? void 0 : _c.key) != null ? _d : "general");
       if (!saints) return { text: `the ${pick2(ctx, "holyTitle", type)}`, plural: false };
       const saint = pick2(ctx, "saintName", type);
       return { text: S === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`, plural: false };
@@ -56482,7 +56625,7 @@ function token(ctx, name, type, shape) {
     case "britishPlace":
       return { text: pickOne(townPool("britain"), rng), plural: false };
     case "flavourAnimal": {
-      const animals = (_d = ctx.vocab) == null ? void 0 : _d.flavour.animals;
+      const animals = (_e = ctx.vocab) == null ? void 0 : _e.flavour.animals;
       if (animals && animals.length > 0) return { text: pickOne(animals, rng), plural: false };
       const merged2 = [...pool(ctx, "beast", type), ...pool(ctx, "bird", type)];
       return { text: pickWeighted5(merged2, rng), plural: false };
@@ -56492,7 +56635,7 @@ function token(ctx, name, type, shape) {
     case "initials":
       return initialsToken(ctx, type);
     case "spaceLand": {
-      const w = pick2(ctx, "spaceLand", type, (_e = shape == null ? void 0 : shape.filter) == null ? void 0 : _e.spaceLand);
+      const w = pick2(ctx, "spaceLand", type, (_f = shape == null ? void 0 : shape.filter) == null ? void 0 : _f.spaceLand);
       if (w === void 0) return void 0;
       return { text: rng() < 0.3 ? `${pick2(ctx, "spacePrefix", type)} ${w}` : w, plural: false };
     }
@@ -56510,6 +56653,13 @@ function token(ctx, name, type, shape) {
   }
   if (!GROUP_DATA.lists[name]) throw new Error(`Group names: no list \u201C${name}\u201D.`);
   return word(name);
+}
+function holyText(ctx, type, placeholders) {
+  var _a2, _b;
+  if (placeholders) return "[holy person]";
+  if (!GROUP_DATA.people.saintTraditions.includes((_b = (_a2 = ctx.people) == null ? void 0 : _a2.key) != null ? _b : "general")) return `the ${pick2(ctx, "holyTitle", type)}`;
+  const saint = pick2(ctx, "saintName", type);
+  return ctx.setting === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`;
 }
 function inventedPerson(ctx, type) {
   var _a2, _b;
@@ -56893,7 +57043,8 @@ function generateGroupNames(options) {
     block,
     pools: /* @__PURE__ */ new Map(),
     tone: (_f = options.tone) != null ? _f : "any",
-    drawn: /* @__PURE__ */ new Set()
+    drawn: /* @__PURE__ */ new Set(),
+    context: options.context
   };
   const chosen = options.type ? available.find((t) => t.key === options.type) : void 0;
   if (options.type && !chosen) {
@@ -57176,6 +57327,7 @@ Names to take off the flag list. Built-in block-list names can't be allowed.
 
 // src/data/bynames.json
 var bynames_default = {
+  townSelf: { self: ["Defender of {town}", "Duc de {town}", "Duke of {town}", "Grand Prince of {town}", "Holy Lord of {town}", "K'uhul Ajaw of {town}", "Light of {town}", "Lord of the Lands of {town}", "Lord of {town}", "Tecuhtli of {town}", "Veliky Knyaz of {town}"], other: [] },
   version: 1,
   cultures: [
     {
@@ -62870,6 +63022,7 @@ var bynames_default = {
       {
         kind: "beast",
         p: "{beast} of {town}",
+        self: true,
         join: "comma",
         w: 15,
         t: [
@@ -62902,6 +63055,7 @@ var bynames_default = {
       {
         kind: "place",
         p: "of {town}",
+        self: true,
         join: "of",
         w: 50,
         t: [
@@ -62999,11 +63153,13 @@ var bynames_default = {
       {
         kind: "office",
         p: "{officeWord} of {town}",
+        self: true,
         w: 20
       },
       {
         kind: "office",
         p: "{rank} of {town}",
+        self: true,
         w: 15
       },
       {
@@ -63171,6 +63327,7 @@ var bynames_default = {
           place: [
             {
               p: "of {town}",
+              self: true,
               l: "both",
               w: 1
             }
@@ -63336,6 +63493,7 @@ var bynames_default = {
             },
             {
               p: "de {town}",
+              self: true,
               l: "n",
               w: 1
             }
@@ -63371,6 +63529,7 @@ var bynames_default = {
             },
             {
               p: "de {town}",
+              self: true,
               l: "n",
               w: 1,
               g: "f"
@@ -63631,6 +63790,7 @@ var bynames_default = {
             },
             {
               p: "of {town}",
+              self: true,
               l: "e",
               w: 2
             }
@@ -63678,6 +63838,7 @@ var bynames_default = {
           place: [
             {
               p: "of {town}",
+              self: true,
               l: "both",
               w: 1
             }
@@ -63761,6 +63922,7 @@ var bynames_default = {
           place: [
             {
               p: "of {town}",
+              self: true,
               l: "both",
               w: 1
             }
@@ -63862,6 +64024,7 @@ var bynames_default = {
           place: [
             {
               p: "of {town}",
+              self: true,
               l: "both",
               w: 1
             }
@@ -63891,6 +64054,7 @@ var bynames_default = {
           place: [
             {
               p: "of {town}",
+              self: true,
               l: "both",
               w: 1
             }
@@ -63920,6 +64084,7 @@ var bynames_default = {
           place: [
             {
               p: "of {town}",
+              self: true,
               l: "both",
               w: 1
             }
@@ -64131,6 +64296,7 @@ var bynames_default = {
 
 // src/bynames/engine.ts
 var BYNAMES_DATA = bynames_default;
+var BYNAME_SELF = selfPatterns(bynames_default);
 var BYNAME_CULTURES = BYNAMES_DATA.cultures.map((c) => {
   var _a2, _b;
   const world = WORLD_CULTURES.find((w) => w.id === c.key);
@@ -64267,6 +64433,15 @@ function nativeOf(culture, place3) {
   return word === "de" && /^[AEIOUaeiouÆæ]/.test(place3) ? `d'${place3}` : `${word} ${place3}`;
 }
 function render2(ctx, pattern) {
+  const outer = ctx.turn;
+  if (ctx.context) ctx.turn = new TownTurn(ctx.context, BYNAME_SELF.has(pattern));
+  try {
+    return renderTokens(ctx, pattern);
+  } finally {
+    ctx.turn = outer;
+  }
+}
+function renderTokens(ctx, pattern) {
   let failed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
     if (failed) return "";
@@ -64280,8 +64455,12 @@ var joinClosed = (a, b) => a + b.toLowerCase();
 var closeUp = (w) => w.includes("+") ? w.split("+").reduce((x, y) => joinClosed(x, y)) : w;
 function listWord(ctx, name, opts = {}) {
   var _a2;
-  const entries = BYNAMES_DATA.lists[name];
+  let entries = BYNAMES_DATA.lists[name];
   if (!entries) throw new Error(`Bynames: no list \u201C${name}\u201D.`);
+  if (name === "officeWord" && ctx.officeWords) {
+    const only = entries.filter((e) => [e.w, e.m, e.f, e.n].some((w) => !!w && ctx.officeWords.includes(w)));
+    if (only.length > 0) entries = only;
+  }
   return (_a2 = drawEntries(ctx, entries, opts)) == null ? void 0 : _a2.text;
 }
 function token2(ctx, raw) {
@@ -64308,6 +64487,7 @@ function token2(ctx, raw) {
     case "child":
       return personName(ctx, "child");
     case "town": {
+      if (ctx.turn) return ctx.turn.next(rng);
       const holy = HOLY_NAMES.get(ctx.culture);
       for (let i = 0; i < 20; i++) {
         const town3 = groupTown(ctx.setting, townSource(ctx.culture), rng);
@@ -64414,7 +64594,7 @@ var tonesOf = (shapeTones2, drawn) => {
   return GROUP_TONES.filter((t) => all.has(t));
 };
 function pickShape(ctx, shapes, kind) {
-  const live4 = shapes.filter((s) => s.kind === kind && (!s.s || s.s.includes(ctx.setting)) && (!s.gate || lightOrGrim(ctx.tone))).map((s) => {
+  const live4 = shapes.filter((s) => s.kind === kind && (!s.s || s.s.includes(ctx.setting)) && (!s.gate || lightOrGrim(ctx.tone)) && (!ctx.shapeFilter || ctx.shapeFilter(s.p))).map((s) => {
     var _a2;
     return [s, s.w * toneFactor((_a2 = s.t) != null ? _a2 : [], ctx.tone)];
   });
@@ -64443,7 +64623,9 @@ function oneTitle(ctx, kind, forceShape) {
   let text;
   if (shape.p === "{rank} of {town}") {
     const rank = token2(ctx, "rank");
+    if (ctx.context) ctx.turn = new TownTurn(ctx.context, true);
     const town3 = token2(ctx, "town");
+    ctx.turn = void 0;
     if (!rank || !town3) return void 0;
     text = `${rank} ${ctx.rankNative ? nativeOf(ctx.culture, town3) : `of ${town3}`}`;
   } else text = render2(ctx, shape.p);
@@ -64539,7 +64721,18 @@ function generateBynames(options) {
     block: new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock)),
     patterns: BYNAMES_DATA.safeguards.blockPatterns.map((p) => new RegExp(p, "i"))
   };
-  const base = { rng, setting, culture, tone, source: (_g = options.source) != null ? _g : "placeholder", draw: options.draw, packFailed: false };
+  const base = {
+    rng,
+    setting,
+    culture,
+    tone,
+    source: (_g = options.source) != null ? _g : "placeholder",
+    draw: options.draw,
+    packFailed: false,
+    context: options.context,
+    shapeFilter: options.shapeFilter,
+    officeWords: options.officeWords
+  };
   const kindChoices = kinds.map(({ kind, weight }) => [kind.key, weight]);
   const count = Math.max(0, Math.floor(options.count));
   const seen = /* @__PURE__ */ new Set();
@@ -68012,6 +68205,7 @@ var realms_default = {
 
 // src/data/vessels.json
 var vessels_default = {
+  townSelf: { self: ["Appearing in {town}", "Crown of {town}", "Lamp of {town}", "Pearl of {town}", "Pride of {town}", "Rose of {town}", "{brandRoot} {town}", "{hNoun} of {town}", "{spNoun} of {town}", "{town} {dpNoun}", "{wrNoun} of {town}"], other: ["Children of {town}", "New {town}", "Old {town}", "Scourge of {town}", "{town} Road"] },
   $comment: "Ships and spacecraft (docs/ships-and-spacecraft-brief.md). Built from the brief by build_vessels.py; lists are as the brief writes them.",
   modules: {
     ships: "ships and boats",
@@ -68600,16 +68794,19 @@ var vessels_default = {
         {
           role: "place",
           p: "Golden {town}",
+          self: true,
           w: 20
         },
         {
           role: "place",
           p: "Arms of {town}",
+          self: true,
           w: 25
         },
         {
           role: "place",
           p: "Lion of {town}",
+          self: true,
           w: 15,
           t: [
             "grand"
@@ -68799,6 +68996,7 @@ var vessels_default = {
         {
           role: "place",
           p: "Lion of {town}",
+          self: true,
           w: 15,
           k: "T3-T5"
         }
@@ -69711,6 +69909,7 @@ var vessels_default = {
         {
           role: "place",
           p: "{town} River",
+          self: false,
           w: 10
         },
         {
@@ -72140,6 +72339,7 @@ var vessels_default = {
     {
       role: "virtue",
       p: "{virtue} of {town}",
+      self: true,
       w: 15,
       t: [
         "grand"
@@ -72240,6 +72440,7 @@ var vessels_default = {
     {
       role: "beast",
       p: "{beast} of {town}",
+      self: true,
       w: 15,
       t: [
         "grand"
@@ -72274,6 +72475,7 @@ var vessels_default = {
     {
       role: "sky",
       p: "{sky} over {town}",
+      self: true,
       w: 20,
       t: [
         "strange"
@@ -72282,6 +72484,7 @@ var vessels_default = {
     {
       role: "place",
       p: "{town}",
+      self: true,
       w: 40,
       t: [
         "plain"
@@ -72290,6 +72493,7 @@ var vessels_default = {
     {
       role: "place",
       p: "City of {town}",
+      self: true,
       w: 20,
       k: "T5-T7",
       fn: [
@@ -72303,6 +72507,7 @@ var vessels_default = {
     {
       role: "place",
       p: "Pride of {town}",
+      self: true,
       w: 20,
       t: [
         "plain"
@@ -72311,6 +72516,7 @@ var vessels_default = {
     {
       role: "place",
       p: "{town} {commerceNoun}",
+      self: true,
       w: 20,
       fn: [
         "merchant"
@@ -72382,6 +72588,7 @@ var vessels_default = {
     {
       role: "commerce",
       p: "{brandRoot} {town}",
+      self: true,
       w: 20,
       k: "T7",
       s: [
@@ -72445,6 +72652,7 @@ var vessels_default = {
     {
       role: "affection",
       p: "{town} {affectionNoun}",
+      self: true,
       w: 35,
       t: [
         "light"
@@ -73870,6 +74078,7 @@ var vessels_default = {
     station: [
       {
         p: "{town} Station",
+        self: true,
         w: 25
       },
       {
@@ -73890,10 +74099,12 @@ var vessels_default = {
       },
       {
         p: "New {town}",
+        self: false,
         w: 15
       },
       {
         p: "{ordinal} Ring of {town}",
+        self: true,
         w: 5
       },
       {
@@ -73908,10 +74119,12 @@ var vessels_default = {
       },
       {
         p: "New {town}",
+        self: false,
         w: 25
       },
       {
         p: "Children of {town}",
+        self: false,
         w: 15
       },
       {
@@ -74285,6 +74498,7 @@ var vessels_default = {
 
 // src/vessels/engine.ts
 var VESSEL_DATA = vessels_default;
+var VESSEL_SELF = selfPatterns(vessels_default);
 var VESSEL_CULTURES = VESSEL_DATA.cultures;
 var VESSEL_MODULE_LABELS = VESSEL_DATA.modules;
 function findVesselCulture(key2) {
@@ -74501,6 +74715,7 @@ function baseToken(ctx, name) {
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
     case "town":
+      if (ctx.turn) return ctx.turn.next(rng);
       return placeholders ? "[place]" : town(ctx);
     case "surname":
       return placeholders ? "[surname]" : listWord2(ctx, "surname");
@@ -74533,6 +74748,15 @@ function baseToken(ctx, name) {
   return listWord2(ctx, name);
 }
 function renderPattern2(ctx, pattern, hooks) {
+  const outer = ctx.turn;
+  if (ctx.context) ctx.turn = new TownTurn(ctx.context, VESSEL_SELF.has(pattern));
+  try {
+    return renderTokens2(ctx, pattern, hooks);
+  } finally {
+    ctx.turn = outer;
+  }
+}
+function renderTokens2(ctx, pattern, hooks) {
   let failed = false;
   let index = -1;
   let nameUsed = false;
@@ -74778,6 +75002,7 @@ function generateVesselNames(options) {
       boost: !!style,
       // §14.4: sensitive cultures' poetic names never go to a style or a light or grim name.
       poeticAllowed: !(culture.sensitive && (lightOrGrim2(tone) || !!style)),
+      context: options.context,
       drawn: /* @__PURE__ */ new Set(),
       words: [],
       pools
@@ -75142,7 +75367,7 @@ function token4(ctx, name, shape, kind) {
     }
     case "landIdentity": {
       const p = pickWeighted5(REALM_DATA.landIdentity.map((s) => [s.p, s.w]), rng);
-      return renderTokens(ctx, p, shape, kind);
+      return renderTokens3(ctx, p, shape, kind);
     }
     case "place":
       return place2(ctx);
@@ -75180,7 +75405,7 @@ function token4(ctx, name, shape, kind) {
   }
   return listWord3(ctx, name);
 }
-function renderTokens(ctx, pattern, shape, kind) {
+function renderTokens3(ctx, pattern, shape, kind) {
   let failed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
     if (failed) return "";
@@ -75315,7 +75540,7 @@ function generateRealmNames(options) {
       if (shape.upperLower && rng() < REALM_DATA.ceremonial.upperLower) pattern = pattern.replace("{landIdentity}", "Upper and Lower {landPl}");
       else if (shape.pair && rng() < REALM_DATA.ceremonial.pair) pairToken = shape.pair;
     }
-    let raw = renderTokens(ctx, pattern, shape, kind);
+    let raw = renderTokens3(ctx, pattern, shape, kind);
     if (!raw) return void 0;
     const plainOfficial = realmCapitals(withDeityPlaceholders(raw));
     if (pattern !== shape.p) ctx.values.set("landIdentity", raw.slice(raw.indexOf("Upper and Lower")));
@@ -75980,24 +76205,24 @@ var route_names_default = {
       { p: "fixed", w: 6 }
     ],
     rail: [
-      { p: "{town} and {town} Canal", w: 12, e: ["EM", "ST"], t: ["plain"] },
+      { p: "{town} and {town} Canal", w: 12, e: ["EM", "ST"], t: ["plain"], self: false },
       { p: "Grand {directionAdj} Canal", w: 8, e: ["EM", "ST"], t: ["grand"] },
       { p: "{goods} Canal", w: 5, e: ["EM", "ST"], t: ["plain"] },
-      { p: "{town} and {town} Railway", w: 15, e: ["ST", "MO"], t: ["plain"] },
-      { p: "{town}\u2013{town} Railway", w: 10, e: ["ST", "MO"], c: ["chinese", "korean", "japanese", "slavic", "indian"], t: ["plain"] },
+      { p: "{town} and {town} Railway", w: 15, e: ["ST", "MO"], t: ["plain"], self: false },
+      { p: "{town}\u2013{town} Railway", w: 10, e: ["ST", "MO"], c: ["chinese", "korean", "japanese", "slavic", "indian"], t: ["plain"], self: false },
       { p: "Great {directionAdj} Railway", w: 10, e: ["ST", "MO"], t: ["grand"] },
       { p: "{directionAdj} Line", w: 8, e: ["ST", "MO", "NF"] },
       { p: "{directionAdj} Main Line", w: 6, e: ["ST", "MO"], cx: { japanese: 3 } },
-      { p: "{town} Branch", w: 6, e: ["ST", "MO"], t: ["plain"] },
-      { p: "{town} Light Railway", w: 4, e: ["ST", "MO"], c: ["british", "general"], t: ["light"] },
-      { p: "{town} Tramway", w: 5, e: ["ST", "MO"], t: ["plain"] },
+      { p: "{town} Branch", w: 6, e: ["ST", "MO"], t: ["plain"], self: false },
+      { p: "{town} Light Railway", w: 4, e: ["ST", "MO"], c: ["british", "general"], t: ["light"], self: true },
+      { p: "{town} Tramway", w: 5, e: ["ST", "MO"], t: ["plain"], self: true },
       { p: "{directionAdj} Express", w: 4, e: ["MO", "NF"] },
-      { p: "{town} Skyway", w: 10, e: ["ST"], h: true },
+      { p: "{town} Skyway", w: 10, e: ["ST"], h: true, self: true },
       { p: "Aether Lane {numberWord}", w: 8, e: ["ST"], h: true },
       { p: "Imperial Air Road", w: 3, e: ["ST"], h: true },
       { p: "Pneumatic Line", w: 4, e: ["ST"], h: true },
       { p: "Brass Line", w: 4, e: ["ST"], h: true },
-      { p: "{town} Overhead", w: 5, e: ["ST"], h: true },
+      { p: "{town} Overhead", w: 5, e: ["ST"], h: true, self: true },
       { p: "{directionAdj} Airship Road", w: 6, e: ["ST"], h: true },
       { p: "fixed", w: 4 }
     ],
@@ -76006,10 +76231,10 @@ var route_names_default = {
       { p: "Route {n}", w: 10, e: ["MO", "NF"], c: ["general"], t: ["plain"] },
       { p: "National Road {n}", w: 8, e: ["MO", "NF"], c: ["!british", "!general"], t: ["plain"] },
       { p: "{directionAdj} Highway", w: 10, e: ["MO", "NF"] },
-      { p: "{town} Bypass", w: 10, e: ["MO", "NF"], t: ["plain"] },
-      { p: "{town} Ring Road", w: 8, e: ["MO", "NF"], t: ["plain"] },
+      { p: "{town} Bypass", w: 10, e: ["MO", "NF"], t: ["plain"], self: true },
+      { p: "{town} Ring Road", w: 8, e: ["MO", "NF"], t: ["plain"], self: true },
       { p: "{directionAdj} Circular", w: 5, e: ["MO", "NF"], c: ["british"], t: ["plain"] },
-      { p: "{town} Expressway", w: 6, e: ["MO", "NF"], cx: { chinese: 3, japanese: 3, korean: 3 } },
+      { p: "{town} Expressway", w: 6, e: ["MO", "NF"], cx: { chinese: 3, japanese: 3, korean: 3 }, self: true },
       { p: "{directionAdj} Motorway", w: 6, e: ["MO", "NF"], c: ["british", "general"], t: ["plain"] },
       { p: "{person:poss} Highway", w: 4, e: ["MO"] },
       { p: "{destination} Trail", w: 5, e: ["MO"], c: ["general"] },
@@ -78016,6 +78241,7 @@ function kindsOffered(era, fantastic) {
 }
 var pickOne4 = (items, rng) => items[Math.floor(rng() * items.length)];
 var LIGHT_OR_GRIM = (t) => !!t && (t.includes("light") || t.includes("grim"));
+var ROUTE_SELF = selfPatterns(route_names_default);
 var POOL_OF = { goods: "routeGoods" };
 var GN_LISTS2 = { number: "number", numberWord: "number", colour: "colour", heraldicBeast: "heraldicBeast", star: "star", greek: "greek", spaceLand: "spaceLand" };
 var SF_LISTS = /* @__PURE__ */ new Set(["star", "greek", "spaceLand"]);
@@ -78040,7 +78266,7 @@ function vocabPool(ctx, pool3, token9) {
 }
 function vocabWord(ctx, pool3, token9, keep) {
   var _a2;
-  const items = vocabPool(ctx, pool3, token9).filter(([e2]) => !keep || keep(e2.w));
+  const items = boostPool(ctx.context, pool3, vocabPool(ctx, pool3, token9)).filter(([e2]) => !keep || keep(e2.w));
   const e = pickWeighted5(items, ctx.rng);
   if (!e) return void 0;
   for (const t of (_a2 = e.t) != null ? _a2 : []) ctx.drawn.add(t);
@@ -78124,12 +78350,14 @@ function token5(ctx, name) {
     case "destination":
     case "town":
       if (ctx.borrowed) return gnWord2(ctx, "star");
+      if (ctx.turn) return name === "town" ? ctx.turn.next(rng) : ctx.turn.other(rng);
       return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
     case "folk":
       return placeholders ? "[folk]" : routeFolk(ctx.culture.key, ctx.rng);
     case "person":
     case "founder":
     case "patron": {
+      if (name === "founder" && ctx.context) return ctx.context.founder;
       if (placeholders) return `[${name}]`;
       const names = personNames(ctx.culture.key);
       return names.length > 0 ? pickOne4(names, rng) : void 0;
@@ -78138,8 +78366,10 @@ function token5(ctx, name) {
       return figure(ctx);
     case "kingdom":
       return placeholders ? "[kingdom]" : kingdom(ctx);
-    case "holy":
-      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "holy": {
+      const other = () => placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+      return ctx.context ? contextSaint(ctx.context, other, rng) : other();
+    }
     case "god": {
       const gods = godNames(ctx.culture.key);
       return gods.length > 0 ? pickOne4(gods, rng) : void 0;
@@ -78171,6 +78401,7 @@ function token5(ctx, name) {
 }
 var withMod2 = (name, text, mod) => mod === "poss" ? groupPossessive(text, name === "travellers") : text;
 function renderPattern3(ctx, pattern, hooks) {
+  if (ctx.context) ctx.turn = new TownTurn(ctx.context, ROUTE_SELF.has(pattern));
   let failed = false;
   let index = -1;
   let nameUsed = false;
@@ -78328,7 +78559,8 @@ function generateRouteNames(options) {
       region: BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : void 0,
       borrowed: false,
       drawn: /* @__PURE__ */ new Set(),
-      words: []
+      words: [],
+      context: options.context
     };
   };
   const choosePlan2 = (ctx, kind) => {
@@ -78524,43 +78756,43 @@ var inn_names_default = {
   cultureShapes: {
     "anglo-saxon": [
       { p: "{owner:poss} Mead Hall", w: 40 },
-      { p: "Mead Hall of {town}", w: 30 },
+      { p: "Mead Hall of {town}", w: 30, self: true },
       { p: "the {creature} Hall", w: 30 }
     ],
     celtic: [
-      { p: "Hostel of {town}", w: 50 },
+      { p: "Hostel of {town}", w: 50, self: true },
       { p: "{owner:poss} Guest House", w: 30 },
       { p: "Hostel of the {creature}", w: 20 }
     ],
     norse: [
       { p: "{owner:poss} Hall", w: 35 },
-      { p: "Guest Hall of {town}", w: 30 },
+      { p: "Guest Hall of {town}", w: 30, self: true },
       { p: "the {creature} Hall", w: 20 },
-      { p: "Mead Hall of {town}", w: 15 }
+      { p: "Mead Hall of {town}", w: 15, self: true }
     ],
     roman: [
       { p: "Inn of the {creature}", w: 30 },
       { p: "Sign of the {item}", w: 25 },
-      { p: "Station Inn of {town}", w: 20, kinds: ["inn", "wayhouse"] },
-      { p: "Change Station of {town}", w: 10, kinds: ["wayhouse"] },
+      { p: "Station Inn of {town}", w: 20, kinds: ["inn", "wayhouse"], self: true },
+      { p: "Change Station of {town}", w: 10, kinds: ["wayhouse"], self: true },
       { p: "{owner:poss} Tavern", w: 15 }
     ],
     "greek-byzantine": [
       { p: "Wine House of {owner}", w: 30 },
       { p: "Guest House of {holy}", w: 25, e: ["MD", "EM", "ST", "MO", "NF", "IS"] },
-      { p: "Guest House of {town}", w: 25 },
+      { p: "Guest House of {town}", w: 25, self: true },
       { p: "the {creature} Wine House", w: 20 }
     ],
     slavic: [
       { p: "Post House of the {route}", w: 25, kinds: ["wayhouse"] },
       { p: "{holy:poss} Inn", w: 20 },
       { p: "the {colour} {item} Tavern", w: 30 },
-      { p: "{town} Post House", w: 25 }
+      { p: "{town} Post House", w: 25, self: true }
     ],
     steppe: [
       { p: "{ordinal} Post Station", w: 30 },
       { p: "Guest Tent of the {figure}", w: 25 },
-      { p: "{town} Caravan Court", w: 25 },
+      { p: "{town} Caravan Court", w: 25, self: true },
       { p: "the {colour} Tent", w: 20 }
     ],
     "arabic-persian": [
@@ -78576,76 +78808,76 @@ var inn_names_default = {
       { p: "{founder:poss} Rest House", w: 20 },
       { p: "Pilgrims' Lodge of the {holySite}", w: 20 },
       { p: "{indianAnchor} Inn", w: 20 },
-      { p: "{town} Caravan Court", w: 10, kinds: ["wayhouse"] }
+      { p: "{town} Caravan Court", w: 10, kinds: ["wayhouse"], self: true }
     ],
     chinese: [
       { p: "Inn of {auspicious}", w: 30 },
       { p: "{welcomePhrase} Inn", w: 20 },
       { p: "{eastNature} Tea House", w: 25, kinds: ["eating"] },
       { p: "{eastNature} Wine House", w: 15, kinds: ["tavern"] },
-      { p: "{town} Post Station", w: 10, kinds: ["wayhouse"] }
+      { p: "{town} Post Station", w: 10, kinds: ["wayhouse"], self: true }
     ],
     japanese: [
       { p: "{eastNature} Inn", w: 35 },
       { p: "{eastNature} Tea House", w: 30, kinds: ["eating"] },
-      { p: "Lords' Inn of {town}", w: 15, e: ["EM"] },
-      { p: "{town} Inn", w: 20 }
+      { p: "Lords' Inn of {town}", w: 15, e: ["EM"], self: true },
+      { p: "{town} Inn", w: 20, self: true }
     ],
     korean: [
       { p: "{eastNature} Tavern", w: 40 },
-      { p: "{town} Station Inn", w: 30, kinds: ["wayhouse"] },
+      { p: "{town} Station Inn", w: 30, kinds: ["wayhouse"], self: true },
       { p: "Inn of {auspicious}", w: 30 }
     ],
     egyptian: [
-      { p: "Beer House of {town}", w: 35 },
+      { p: "Beer House of {town}", w: 35, self: true },
       { p: "{owner:poss} Beer House", w: 35 },
       { p: "House of Beer of {god}", w: 30 }
     ],
     ethiopian: [
-      { p: "Mead House of {town}", w: 50 },
+      { p: "Mead House of {town}", w: 50, self: true },
       { p: "{owner:poss} Mead House", w: 50 }
     ],
     "west-african": [
       { p: "House of {owner}", w: 30 },
-      { p: "Strangers' Lodge of {town}", w: 25 },
+      { p: "Strangers' Lodge of {town}", w: 25, self: true },
       { p: "{weekday} Market Rest", w: 20 },
-      { p: "Landlord's House of {town}", w: 25 }
+      { p: "Landlord's House of {town}", w: 25, self: true }
     ],
     bantu: [
-      { p: "Guest House of {town}", w: 50 },
+      { p: "Guest House of {town}", w: 50, self: true },
       { p: "the {creature} Guest House", w: 50 }
     ],
     aztec: [
       { p: "Merchants' House of the {directionAdj} Ward", w: 50 },
-      { p: "House of {town}", w: 30 },
+      { p: "House of {town}", w: 30, self: true },
       { p: "the {creature} House", w: 20 }
     ],
     andean: [
-      { p: "Royal Station of {town}", w: 60 },
-      { p: "{town} Way Station", w: 40 }
+      { p: "Royal Station of {town}", w: 60, self: true },
+      { p: "{town} Way Station", w: 40, self: true }
     ],
     polynesian: [
-      { p: "Guest House of {town}", w: 100, e: ["MO", "NF", "IS"] },
-      { p: "Guest House of {town}", w: 100, e: ["AN", "MD", "EM", "ST"], kinds: ["rest"] }
+      { p: "Guest House of {town}", w: 100, e: ["MO", "NF", "IS"], self: true },
+      { p: "Guest House of {town}", w: 100, e: ["AN", "MD", "EM", "ST"], kinds: ["rest"], self: true }
     ],
     maya: [
       { p: "Merchants' House of the {directionAdj} Ward", w: 50 },
-      { p: "House of {town}", w: 30 },
+      { p: "House of {town}", w: 30, self: true },
       { p: "the {creature} House", w: 20 }
     ]
   },
   cultureKinds: ["inn", "tavern", "rest"],
   fallback: [
     { p: "{owner:poss} {hw}", w: 50 },
-    { p: "{hw} of {town}", w: 50 }
+    { p: "{hw} of {town}", w: 50, self: true }
   ],
   eraShapes: [
     { p: "the {grandAdj} Gin Palace", w: 15, e: ["ST"], kinds: ["club"] },
     { p: "the {colour} {item} Music Hall", w: 15, e: ["ST"], kinds: ["club"] },
     { p: "the Great {directionAdj} Hotel", w: 15, e: ["ST"], kinds: ["club"] },
-    { p: "{town} Station Hotel", w: 15, e: ["ST"], kinds: ["club"] },
+    { p: "{town} Station Hotel", w: 15, e: ["ST"], kinds: ["club"], self: true },
     { p: "the {quality} Club", w: 15, e: ["ST"], kinds: ["club"] },
-    { p: "{town} and County Club", w: 10, e: ["ST"], kinds: ["club"] },
+    { p: "{town} and County Club", w: 10, e: ["ST"], kinds: ["club"], self: true },
     { p: "the {virtue} Temperance Hotel", w: 15, e: ["ST"], kinds: ["club"] },
     { p: "{owner:poss} Coffee House", w: 40, e: ["ST"], kinds: ["eating"] },
     { p: "the {item} Chop House", w: 30, e: ["ST"], kinds: ["eating"] },
@@ -78658,9 +78890,9 @@ var inn_names_default = {
     { p: "the Copper Kettle and Boiler", w: 5, e: ["ST"], h: true },
     { p: "{owner:poss} Caf\xE9", w: 40, e: ["MO"], kinds: ["eating"] },
     { p: "the {item} Caf\xE9", w: 30, e: ["MO"], kinds: ["eating"] },
-    { p: "{town} Tea Rooms", w: 30, e: ["MO"], kinds: ["eating"] },
+    { p: "{town} Tea Rooms", w: 30, e: ["MO"], kinds: ["eating"], self: true },
     { p: "the {item} Bar", w: 25, e: ["MO"], kinds: ["bar"] },
-    { p: "{town} Motel", w: 15, e: ["MO"], kinds: ["bar"], c: ["general"] },
+    { p: "{town} Motel", w: 15, e: ["MO"], kinds: ["bar"], c: ["general"], self: true },
     { p: "{owner:poss} Diner", w: 15, e: ["MO"], kinds: ["bar"], c: ["general"] },
     { p: "the {colour} Room", w: 25, e: ["MO"], kinds: ["bar"] },
     { p: "{brandRoot} Inn", w: 20, e: ["MO"], kinds: ["bar"] },
@@ -78730,7 +78962,7 @@ var building_names_default = {
     road: { crossing: 3, water: 1.5, monument: 1.5, confinement: 0.5 }
   },
   shared: [
-    { p: "{town} {bw}", w: 20, t: ["plain"] },
+    { p: "{town} {bw}", w: 20, t: ["plain"], self: true },
     { p: "the {buildingQual} {bw}", w: 20 },
     { p: "{buildingQual} {bw}", w: 5 },
     { p: "{streetFigure:poss} {bw}", w: 8, e: ["MD", "EM", "ST", "MO", "NF", "IS"], t: ["grand"] },
@@ -78744,31 +78976,31 @@ var building_names_default = {
   kindShapes: {
     defence: [
       { p: "{colour} {bw}", w: 10 },
-      { p: "{town} Gatehouse", w: 4, e: ["MD", "EM"], t: ["plain"] },
+      { p: "{town} Gatehouse", w: 4, e: ["MD", "EM"], t: ["plain"], self: true },
       { p: "{direction} Gate", w: 4, e: ["MD", "EM"], t: ["plain"] },
       { p: "{founder:poss} Fort", w: 6, e: ["AN", "MD"], c: ["celtic"] },
       { p: "{fixed}", w: 0 }
     ],
     residence: [
-      { p: "{town} Hall", w: 5, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"] },
-      { p: "{town} Manor", w: 5, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"] },
-      { p: "{town} Grange", w: 5, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"] },
+      { p: "{town} Hall", w: 5, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"], self: true },
+      { p: "{town} Manor", w: 5, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"], self: true },
+      { p: "{town} Grange", w: 5, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"], self: true },
       { p: "Palace of {dynasty}", w: 6, t: ["grand"] },
       { p: "{fixed}", w: 0 }
     ],
     faith: [
-      { p: "{town} {bw}", w: 10, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"], bw: ["Minster", "Abbey", "Priory"] },
+      { p: "{town} {bw}", w: 10, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"], bw: ["Minster", "Abbey", "Priory"], self: true },
       { p: "Temple of {god}", w: 15, e: ["AN"], c: ["egyptian", "norse", "anglo-saxon", "aztec", "maya"], t: ["grand"] },
       { p: "Shrine of the {holySite}", w: 6, c: ["!christian"], t: ["strange"] },
       { p: "{fixed}", w: 0 }
     ],
     civic: [
-      { p: "{town} {bw}", w: 15, bw: ["Moot Hall", "Guildhall", "Corn Exchange", "Town Hall"], t: ["plain"] },
+      { p: "{town} {bw}", w: 15, bw: ["Moot Hall", "Guildhall", "Corn Exchange", "Town Hall"], t: ["plain"], self: true },
       { p: "{trade:poss} Hall", w: 8, e: ["MD", "EM", "ST"] },
       { p: "{fixed}", w: 0 }
     ],
     crossing: [
-      { p: "{town} Bridge", w: 15, t: ["plain"] },
+      { p: "{town} Bridge", w: 15, t: ["plain"], self: true },
       { p: "{figure:poss} Bridge", w: 4, e: ["MD", "EM", "ST", "MO", "NF", "IS"] },
       { p: "{holy:poss} Bridge", w: 4, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"] },
       { p: "{creature} Bridge", w: 3 },
@@ -78787,32 +79019,32 @@ var building_names_default = {
       { p: "{surname} Works", w: 7.5, e: ["EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"] },
       { p: "{goods} Mill", w: 5, e: ["EM", "ST", "MO", "NF", "IS"], t: ["plain"] },
       { p: "{goods} Works", w: 5, e: ["EM", "ST", "MO", "NF", "IS"], t: ["plain"] },
-      { p: "{town} {bw}", w: 15, t: ["plain"] },
+      { p: "{town} {bw}", w: 15, t: ["plain"], self: true },
       { p: "{fixed}", w: 0 }
     ],
     monument: [
       { p: "{follyOwner:poss} Folly", w: 15, e: ["EM", "ST"], c: ["british", "general"], t: ["light"] },
       { p: "{founder:poss} {bw}", w: 15, bw: ["Column", "Arch", "Cross", "Pillar"], t: ["grand"] },
-      { p: "{town} Cross", w: 5, e: ["MD", "EM"], c: ["british"] },
+      { p: "{town} Cross", w: 5, e: ["MD", "EM"], c: ["british"], self: true },
       { p: "{event} Memorial", w: 8, e: ["ST", "MO"], t: ["grim"] },
-      { p: "{town} Milestone", w: 3, e: ["EM", "ST"], c: ["british"], t: ["plain"], sx: { road: 3 } },
+      { p: "{town} Milestone", w: 3, e: ["EM", "ST"], c: ["british"], t: ["plain"], sx: { road: 3 }, self: true },
       { p: "{number} Mile Stone", w: 3, e: ["EM", "ST"], c: ["british"], t: ["plain"], sx: { road: 3 } },
       { p: "{fixed}", w: 0 }
     ],
     learning: [
-      { p: "{town} {bw}", w: 10, e: ["EM", "ST", "MO", "NF", "IS"], t: ["plain"] },
+      { p: "{town} {bw}", w: 10, e: ["EM", "ST", "MO", "NF", "IS"], t: ["plain"], self: true },
       { p: "{surname} {bw}", w: 10, e: ["EM", "ST", "MO", "NF", "IS"], t: ["plain"] },
       { p: "{holy:poss} {bw}", w: 10, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"] },
       { p: "{fixed}", w: 0 }
     ],
     confinement: [
-      { p: "{town} {bw}", w: 30, t: ["grim"] },
+      { p: "{town} {bw}", w: 30, t: ["grim"], self: true },
       { p: "the {buildingQual} {bw}", w: 10, t: ["grim"] },
       { p: "{fixed}", w: 0 }
     ],
     maritime: [
-      { p: "{town} Light", w: 12.5, t: ["plain"] },
-      { p: "{town} Lighthouse", w: 12.5, t: ["plain"] },
+      { p: "{town} Light", w: 12.5, t: ["plain"], self: true },
+      { p: "{town} Lighthouse", w: 12.5, t: ["plain"], self: true },
       { p: "{headland} Light", w: 20, e: ["EM", "ST", "MO", "NF", "IS"] },
       { p: "the {colour} Lantern", w: 10, t: ["strange"] },
       { p: "{fixed}", w: 0 }
@@ -78827,7 +79059,7 @@ var building_names_default = {
       { p: "Memorial Gate of {founder}", w: 15, kind: "monument" }
     ],
     japanese: [
-      { p: "{town} Castle", w: 15, kind: "defence" },
+      { p: "{town} Castle", w: 15, kind: "defence", self: true },
       { p: "{castleBird} Castle", w: 15, kind: "defence" },
       { p: "{colour} {castleBird} Castle", w: 15, kind: "defence" },
       { p: "{eastNature} Villa", w: 15, kind: "residence" },
@@ -78837,23 +79069,23 @@ var building_names_default = {
       { p: "Palace of {eastVirtue}", w: 15, kind: "residence" },
       { p: "{direction} Palace", w: 15, kind: "residence" },
       { p: "{direction} Gate", w: 15, kind: "defence" },
-      { p: "{town} Fortress", w: 15, kind: "defence" }
+      { p: "{town} Fortress", w: 15, kind: "defence", self: true }
     ],
     indian: [
       { p: "{figure:poss} Palace", w: 15, kind: "residence" },
       { p: "Palace of {indianPalaceWord}", w: 15, kind: "residence" },
       { p: "{colour} Fort", w: 15, kind: "defence" },
-      { p: "{town} Fort", w: 15, kind: "defence" },
+      { p: "{town} Fort", w: 15, kind: "defence", self: true },
       { p: "Pillared Hall of {founder}", w: 15, kind: "civic" },
-      { p: "{town} Clock Tower", w: 15, kind: "civic", e: ["ST"] }
+      { p: "{town} Clock Tower", w: 15, kind: "civic", e: ["ST"], self: true }
     ],
     "arabic-persian": [
       { p: "{colour} Fortress", w: 15, kind: "defence" },
-      { p: "Citadel of {town}", w: 15, kind: "defence" },
+      { p: "Citadel of {town}", w: 15, kind: "defence", self: true },
       { p: "Palace of the {oasisNoun}", w: 15, kind: "residence" },
       { p: "Garden of {quality}", w: 15, kind: "residence" },
       { p: "{patron:poss} Caravan Court", w: 15, kind: "civic" },
-      { p: "{town} Covered Market", w: 15, kind: "civic" }
+      { p: "{town} Covered Market", w: 15, kind: "civic", self: true }
     ],
     egyptian: [
       { p: "House of {god}", w: 15, kind: "faith" },
@@ -78873,17 +79105,17 @@ var building_names_default = {
     ],
     norse: [
       { p: "{owner:poss} Hall", w: 15, kind: "residence" },
-      { p: "Hall of {town}", w: 15, kind: "residence" },
+      { p: "Hall of {town}", w: 15, kind: "residence", self: true },
       { p: "{creature} Hall", w: 15, kind: "residence" }
     ],
     celtic: [
       { p: "{founder:poss} Fort", w: 15, kind: "defence" },
-      { p: "Round Tower of {town}", w: 15, kind: "defence" },
+      { p: "Round Tower of {town}", w: 15, kind: "defence", self: true },
       { p: "{holy:poss} Well", w: 30, kind: "water", e: ["MD", "EM", "ST", "MO", "NF", "IS"] }
     ],
     slavic: [
       { p: "{colour} Tower", w: 15, kind: "defence" },
-      { p: "Citadel of {town}", w: 15, kind: "defence" },
+      { p: "Citadel of {town}", w: 15, kind: "defence", self: true },
       { p: "Church of {holy}", w: 15, kind: "faith" },
       { p: "{holy} Monastery", w: 15, kind: "faith" }
     ],
@@ -78893,21 +79125,21 @@ var building_names_default = {
     ],
     "west-african": [
       { p: "Palace of the {figure}", w: 15, kind: "residence" },
-      { p: "Great House of Prayer of {town}", w: 15, kind: "faith" },
-      { p: "{town} Market Hall", w: 15, kind: "civic" },
+      { p: "Great House of Prayer of {town}", w: 15, kind: "faith", self: true },
+      { p: "{town} Market Hall", w: 15, kind: "civic", self: true },
       { p: "{weekday} Market Hall", w: 15, kind: "civic" }
     ],
     bantu: [
-      { p: "Royal Enclosure of {town}", w: 15, kind: "residence" }
+      { p: "Royal Enclosure of {town}", w: 15, kind: "residence", self: true }
     ],
     ethiopian: [
       { p: "Palace of the {figure}", w: 15, kind: "residence" },
-      { p: "{town} Castle", w: 15, kind: "residence", e: ["EM"] },
+      { p: "{town} Castle", w: 15, kind: "residence", e: ["EM"], self: true },
       { p: "{founder:poss} Stele", w: 15, kind: "monument" }
     ],
     aztec: [
       { p: "Temple of {god}", w: 15, kind: "faith" },
-      { p: "Great Temple of {town}", w: 15, kind: "faith" },
+      { p: "Great Temple of {town}", w: 15, kind: "faith", self: true },
       { p: "House of the {creature:pl}", w: 15, kind: "residence" }
     ],
     maya: [
@@ -78918,33 +79150,33 @@ var building_names_default = {
       { p: "Palace of the {number} Lords", w: 15, kind: "civic" }
     ],
     andean: [
-      { p: "Royal Storehouse of {town}", w: 15, kind: "works" },
-      { p: "{town} Terraces", w: 15, kind: "works" },
-      { p: "Sun Temple of {town}", w: 15, kind: "faith", e: ["AN", "MD"] }
+      { p: "Royal Storehouse of {town}", w: 15, kind: "works", self: true },
+      { p: "{town} Terraces", w: 15, kind: "works", self: true },
+      { p: "Sun Temple of {town}", w: 15, kind: "faith", e: ["AN", "MD"], self: true }
     ],
     polynesian: [
-      { p: "{town} Meeting House", w: 15, kind: "civic" },
-      { p: "Canoe House of {town}", w: 15, kind: "civic" }
+      { p: "{town} Meeting House", w: 15, kind: "civic", self: true },
+      { p: "Canoe House of {town}", w: 15, kind: "civic", self: true }
     ]
   },
   eraShapes: [
-    { p: "{town} Corn Exchange", w: 15, e: ["ST"], kinds: ["civic"] },
-    { p: "{town} Town Hall", w: 15, e: ["ST"], kinds: ["civic"] },
+    { p: "{town} Corn Exchange", w: 15, e: ["ST"], kinds: ["civic"], self: true },
+    { p: "{town} Town Hall", w: 15, e: ["ST"], kinds: ["civic"], self: true },
     { p: "{surname} Institute", w: 15, e: ["ST"], kinds: ["learning"] },
-    { p: "{town} Infirmary", w: 15, e: ["ST"], kinds: ["learning"] },
-    { p: "{town} Workhouse", w: 15, e: ["ST"], kinds: ["confinement"], t: ["grim"] },
-    { p: "{town} Gaol", w: 15, e: ["ST"], kinds: ["confinement"] },
-    { p: "{town} Station", w: 15, e: ["ST"], kinds: ["civic"] },
+    { p: "{town} Infirmary", w: 15, e: ["ST"], kinds: ["learning"], self: true },
+    { p: "{town} Workhouse", w: 15, e: ["ST"], kinds: ["confinement"], t: ["grim"], self: true },
+    { p: "{town} Gaol", w: 15, e: ["ST"], kinds: ["confinement"], self: true },
+    { p: "{town} Station", w: 15, e: ["ST"], kinds: ["civic"], self: true },
     { p: "{surname} Memorial Library", w: 15, e: ["ST"], kinds: ["learning"] },
     { p: "{steampunkLandmark}", w: 10, e: ["ST"], h: true },
-    { p: "{town} {steampunkLandmark}", w: 10, e: ["ST"], h: true },
+    { p: "{town} {steampunkLandmark}", w: 10, e: ["ST"], h: true, self: true },
     { p: "{surname} {steampunkLandmark}", w: 10, e: ["ST"], h: true },
     { p: "{surname} House", w: 15, e: ["MO"], kinds: ["residence"] },
-    { p: "{town} Tower", w: 15, e: ["MO"], kinds: ["residence", "civic"] },
+    { p: "{town} Tower", w: 15, e: ["MO"], kinds: ["residence", "civic"], self: true },
     { p: "{brandRoot} Tower", w: 15, e: ["MO"], kinds: ["civic", "works"] },
-    { p: "{town} Civic Centre", w: 15, e: ["MO"], kinds: ["civic"] },
-    { p: "{town} General Hospital", w: 15, e: ["MO"], kinds: ["learning"] },
-    { p: "{town} Power Station", w: 15, e: ["MO"], kinds: ["works"] },
+    { p: "{town} Civic Centre", w: 15, e: ["MO"], kinds: ["civic"], self: true },
+    { p: "{town} General Hospital", w: 15, e: ["MO"], kinds: ["learning"], self: true },
+    { p: "{town} Power Station", w: 15, e: ["MO"], kinds: ["works"], self: true },
     { p: "{surname} Building", w: 15, e: ["MO"], kinds: ["civic", "works"] }
   ],
   scifi: {
@@ -78955,7 +79187,7 @@ var building_names_default = {
       { p: "Hab Module {n}", w: 10 },
       { p: "{discovery} Dome", w: 10 },
       { p: "{ordinal} Hydroponic Bay", w: 10 },
-      { p: "{town} Sky Elevator", w: 10 }
+      { p: "{town} Sky Elevator", w: 10, self: true }
     ]
   },
   lists: {
@@ -78970,6 +79202,10 @@ var building_names_default = {
     faithOnly: {
       andean: ["Sun Temple of {town}"]
     }
+  },
+  townSelf: {
+    self: ["Sun Temple of {town}"],
+    other: []
   },
   series: { founderUses: 3 },
   cap: 7,
@@ -79320,7 +79556,7 @@ var POOL_OF2 = { sw: "streetWord", aw: "alleyWord", dw: "districtWord" };
 var SF_LISTS2 = /* @__PURE__ */ new Set(["star", "greek"]);
 var where = (ctx, region = ctx.region) => ({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region });
 function vocabPool2(ctx, pool3, region = ctx.region) {
-  return poolEntries(ctx.vocab, pool3, where(ctx, region)).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(e.t))).map(([e, w]) => {
+  return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, where(ctx, region))).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(e.t))).map(([e, w]) => {
     var _a2;
     return [e, w * toneFactor((_a2 = e.t) != null ? _a2 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
@@ -79344,6 +79580,7 @@ function gnWord3(ctx, list, keep) {
   return w;
 }
 function componentPools(ctx) {
+  var _a2, _b;
   const d = STREET_DATA;
   let weights = { ...d.components };
   if (ctx.era === "ST" && ctx.fantastic) weights = { ...weights, ...d.steampunkComponents };
@@ -79351,7 +79588,11 @@ function componentPools(ctx) {
     weights = Object.fromEntries(Object.entries(weights).filter(([p]) => d.scifiComponents.keep.includes(p)));
     weights.compSciFi = d.scifiComponents.compSciFi;
   }
-  return Object.entries(weights).filter(([p]) => vocabPool2(ctx, p).length > 0);
+  const x = (_b = (_a2 = ctx.options.context) == null ? void 0 : _a2.effects) == null ? void 0 : _b.componentX;
+  return Object.entries(weights).map(([p, w]) => {
+    var _a3;
+    return [p, w * ((_a3 = x == null ? void 0 : x[p]) != null ? _a3 : 1)];
+  }).filter(([p]) => vocabPool2(ctx, p).length > 0);
 }
 function component(ctx) {
   const pool3 = pickWeighted5(componentPools(ctx), ctx.rng);
@@ -79381,6 +79622,12 @@ function dialectWord(ctx, keep) {
   return fromPool(ctx, "alleyDialect", items);
 }
 function route(ctx) {
+  var _a2;
+  const through = (_a2 = ctx.options.context) == null ? void 0 : _a2.throughRoute;
+  if (through) {
+    ctx.isRoute = true;
+    return through;
+  }
   const kinds = ROUTE_ERAS.findIndex((e) => e.code === ctx.era) >= ROUTE_ERAS.findIndex((e) => e.code === "MO") ? STREET_DATA.route.modern : STREET_DATA.route.kinds;
   const kind = pickWeighted5(Object.entries(kinds), ctx.rng);
   const o = ctx.options;
@@ -79400,6 +79647,12 @@ function route(ctx) {
   return r == null ? void 0 : r.text;
 }
 function destination(ctx) {
+  const context = ctx.options.context;
+  if (context) {
+    const t2 = contextTown(context, false, ctx.rng);
+    ctx.uses.push(`destination:${t2}`);
+    return t2;
+  }
   if (ctx.mode === "placeholders") return "[place]";
   const t = ctx.towns ? pickOne5(ctx.towns, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
   if (t) ctx.uses.push(`destination:${t}`);
@@ -79408,7 +79661,7 @@ function destination(ctx) {
 var STREET_LANDMARK_KINDS = ["defence", "faith", "crossing", "water", "monument"];
 function landmark(ctx) {
   const o = ctx.options;
-  const w = buildingName({
+  const w = o.context ? contextLandmark(o.context, ctx.rng) : buildingName({
     culture: ctx.culture.key,
     era: ctx.era,
     fantastic: ctx.fantastic,
@@ -79455,9 +79708,12 @@ function token6(ctx, name, alt, pattern) {
       return placeholders ? "[people]" : routeFolk(ctx.culture.key, rng);
     case "royal":
       return "[royal]";
-    case "holy":
-      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "holy": {
+      const other = () => placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+      return ctx.options.context ? contextSaint(ctx.options.context, other, rng) : other();
+    }
     case "founder": {
+      if (ctx.options.context) return ctx.options.context.founder;
       if (placeholders) return "[founder]";
       const names = personNames(ctx.culture.key);
       return names.length > 0 ? pickOne5(names, rng) : void 0;
@@ -79791,6 +80047,7 @@ function generateStreetNames(options) {
 
 // src/buildings/engine.ts
 var BUILDING_DATA = building_names_default;
+var BUILDING_SELF = selfPatterns(building_names_default);
 var BUILDING_KINDS = BUILDING_DATA.kinds;
 var BUILDING_ANY = BUILDING_DATA.any;
 var isFuture2 = (era) => era === "NF" || era === "IS";
@@ -79805,7 +80062,7 @@ var LIGHT_OR_GRIM3 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var CASTE2 = /* @__PURE__ */ new Set(["indian", "west-african"]);
 var SF_LISTS3 = /* @__PURE__ */ new Set(["star", "greek"]);
 function vocabPool3(ctx, pool3) {
-  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes }).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM3(e.t))).map(([e, w]) => {
+  return boostPool(ctx.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM3(e.t))).map(([e, w]) => {
     var _a2;
     return [e, w * toneFactor((_a2 = e.t) != null ? _a2 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
@@ -79846,7 +80103,7 @@ function creature(ctx) {
 var ownerNames = (ctx) => [...personNames(ctx.culture.key), ...STREET_DATA.surnameCultures.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : []];
 function town2(ctx) {
   var _a2;
-  const t = (_a2 = ctx.town) != null ? _a2 : ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  const t = ctx.turn ? ctx.turn.next(ctx.rng) : (_a2 = ctx.town) != null ? _a2 : ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
   if (t) ctx.uses.push(`town:${t}`);
   return t;
 }
@@ -79879,8 +80136,10 @@ function token7(ctx, name) {
       return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : gnWord4(ctx, "surname");
     case "dynasty":
       return placeholders || !DYNASTY_CULTURES.includes(ctx.culture.key) ? "[dynasty]" : gnWord4(ctx, "house");
-    case "holy":
-      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "holy": {
+      const other = () => placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+      return ctx.context ? contextSaint(ctx.context, other, rng) : other();
+    }
     case "figure":
       return routeFigure(ctx.culture.key, ctx.setting, rng);
     case "god": {
@@ -79919,6 +80178,15 @@ function token7(ctx, name) {
   return (w == null ? void 0 : w.includes("{")) ? renderPattern5(ctx, w) : w;
 }
 function renderPattern5(ctx, pattern) {
+  const outer = ctx.turn;
+  if (ctx.context) ctx.turn = new TownTurn(ctx.context, BUILDING_SELF.has(pattern));
+  try {
+    return renderTokens4(ctx, pattern);
+  } finally {
+    ctx.turn = outer;
+  }
+}
+function renderTokens4(ctx, pattern) {
   let failed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
     if (failed) return "";
@@ -80015,6 +80283,7 @@ var newCtx2 = (s, kind, extra = {}) => {
     region: s.region,
     kind,
     themes: s.themes,
+    context: s.options.context,
     drawn: /* @__PURE__ */ new Set(),
     words: [],
     uses: [],
@@ -80022,9 +80291,9 @@ var newCtx2 = (s, kind, extra = {}) => {
   };
 };
 function kindWeight(s, kind) {
-  var _a2;
+  var _a2, _b, _c, _d, _e;
   const k = BUILDING_KINDS.find((x) => x.key === kind);
-  const w = k.era[s.era] * ((_a2 = BUILDING_DATA.settingX[s.settingKey][kind]) != null ? _a2 : 1);
+  const w = k.era[s.era] * ((_a2 = BUILDING_DATA.settingX[s.settingKey][kind]) != null ? _a2 : 1) * ((_e = (_d = (_c = (_b = s.options.context) == null ? void 0 : _b.effects) == null ? void 0 : _c.buildingKindX) == null ? void 0 : _d[kind]) != null ? _e : 1);
   return w > 0 && plans(newCtx2(s, kind)).length + (isFuture2(s.era) ? 1 : 0) > 0 ? w : 0;
 }
 function setup(options, seed = 0) {
@@ -80062,7 +80331,9 @@ function generateBuildingNames(options) {
   const block = buildingBlockSet(options.safeguards);
   const series = !!options.series;
   const base = {};
-  if (series) {
+  if (options.context) base.founder = options.context.founder;
+  if (series && options.context) base.town = options.context.town;
+  else if (series) {
     base.town = town2(newCtx2(s, "defence"));
     base.founder = s.mode === "placeholders" ? "[founder]" : personNames(culture.key).length > 0 ? pickOne6(personNames(culture.key), rng) : void 0;
   }
@@ -80151,6 +80422,7 @@ function buildingName(o) {
 
 // src/inns/engine.ts
 var INN_DATA = inn_names_default;
+var INN_SELF = selfPatterns(inn_names_default);
 var INN_KINDS = INN_DATA.kinds;
 var INN_SETTINGS = INN_DATA.settings;
 var INN_ANY = INN_DATA.any;
@@ -80173,7 +80445,7 @@ var LIGHT_OR_GRIM4 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var COLOURS = /* @__PURE__ */ new Set([...groupListWords("colour", "FL").map(([w]) => w), "Black", "White", "Red", "Blue", "Green", "Golden", "Grey", "Silver", "Pied", "Copper"]);
 var BIRDS = new Set(groupListWords("bird", "FL").map(([w]) => w));
 function vocabItems(ctx, pool3, mult = 1) {
-  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes }).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM4(e.t))).map(([e, w]) => {
+  return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM4(e.t))).map(([e, w]) => {
     var _a2;
     return [{ w: e.w, t: (_a2 = e.t) != null ? _a2 : [] }, w * mult];
   });
@@ -80221,6 +80493,12 @@ function ownerNames2(ctx) {
   return [...personNames(ctx.culture.key), ...STREET_DATA.surnameCultures.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : []];
 }
 function route2(ctx) {
+  var _a2;
+  const through = (_a2 = ctx.options.context) == null ? void 0 : _a2.throughRoute;
+  if (through) {
+    ctx.isRoute = true;
+    return through.replace(/^the /i, "");
+  }
   const kind = pickWeighted5(Object.entries(INN_DATA.lists.routeKinds), ctx.rng);
   const r = generateRouteNames({
     culture: ctx.culture.key,
@@ -80241,7 +80519,7 @@ var INN_LANDMARK_KINDS = ["defence", "crossing", "water", "monument"];
 var INN_ROAD_LANDMARK_KINDS = ["crossing", "monument"];
 function landmark2(ctx, kinds) {
   const o = ctx.options;
-  const w = buildingName({
+  const w = o.context ? contextLandmark(o.context, ctx.rng) : buildingName({
     culture: ctx.culture.key,
     era: ctx.era,
     fantastic: ctx.fantastic,
@@ -80278,6 +80556,7 @@ function token8(ctx, name) {
     case "owner":
     case "patron":
     case "founder": {
+      if (name === "founder" && ctx.options.context) return ctx.options.context.founder;
       if (placeholders) return `[${name}]`;
       const names = name === "owner" ? ownerNames2(ctx) : personNames(ctx.culture.key);
       return names.length > 0 ? pickOne7(names, rng) : void 0;
@@ -80294,9 +80573,12 @@ function token8(ctx, name) {
       return landmark2(ctx, INN_ROAD_LANDMARK_KINDS);
     case "destination":
     case "town":
+      if (ctx.turn) return name === "town" ? ctx.turn.next(rng) : ctx.turn.other(rng);
       return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng);
-    case "holy":
-      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "holy": {
+      const other = () => placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+      return ctx.options.context ? contextSaint(ctx.options.context, other, rng) : other();
+    }
     case "figure":
       return routeFigure(ctx.culture.key, ctx.setting, rng);
     case "god": {
@@ -80356,6 +80638,7 @@ function pairTokens(ctx) {
   return b ? [a, b] : void 0;
 }
 function renderPattern6(ctx, pattern) {
+  if (ctx.options.context) ctx.turn = new TownTurn(ctx.options.context, INN_SELF.has(pattern));
   let failed = false;
   let pair;
   let number;
@@ -80429,14 +80712,14 @@ function shapeWeight5(ctx, s) {
 }
 var live3 = (ctx, shapes, only) => shapes.filter((s) => !only || s.p === only).map((s) => [s, shapeWeight5(ctx, s)]).filter(([, w]) => w > 0);
 function englishPlans(ctx, settingKey, only) {
-  var _a2;
+  var _a2, _b, _c, _d;
   const setting = INN_SETTINGS.find((s) => s.key === settingKey);
   const out = [];
   for (const a of INN_DATA.signs) {
-    let w = a.key === "roadside" ? setting.roadside : a.w;
+    let w = a.key === "roadside" ? setting.roadside * ((_c = (_b = (_a2 = ctx.options.context) == null ? void 0 : _a2.effects) == null ? void 0 : _b.roadsideX) != null ? _c : 1) : a.w;
     if (a.from && eraIndex2(ctx.era) < eraIndex2(a.from)) w = 0;
     if (a.key === "arms") {
-      w *= (_a2 = setting.armsX) != null ? _a2 : 1;
+      w *= (_d = setting.armsX) != null ? _d : 1;
       if (ctx.region && INN_DATA.regionRules.armsHalf.includes(ctx.region)) w *= 0.5;
     }
     if (w <= 0) continue;
