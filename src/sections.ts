@@ -35,6 +35,8 @@ export type NameForgeSection =
   | "settlementKit"
   // Events brief §1.1: the history and faith group.
   | "eventNames"
+  // Deities brief §1.1: after events and eras.
+  | "deityNames"
   | "riverNames"
   | "explorationPlaceShapes"
   | "empireExpansionPlaceShapes"
@@ -91,6 +93,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   ...GROUP_NAME_SECTIONS,
   ...BYNAME_SECTIONS,
   "eventNames",
+  "deityNames",
   "nameAgeing",
   "nameTakeover",
   ...VESSEL_SECTIONS,
@@ -105,7 +108,7 @@ export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   // Events brief §1.1 (the deities brief adds its module here).
-  lore: ["eventNames"],
+  lore: ["eventNames", "deityNames"],
   advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS],
 };
 
@@ -135,6 +138,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   buildingNames: "buildings and landmarks",
   settlementKit: "settlement kit",
   eventNames: "events and eras",
+  deityNames: "deities and sacred places",
   riverNames: "river names",
   explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
@@ -189,6 +193,8 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
   // Events brief §1.2: "events and eras · {era} · {culture}…".
   if (starts(SECTION_LABELS.eventNames)) return "eventNames";
+  // Deities brief §1.2: "deities and sacred places · {era} · {culture}…".
+  if (starts(SECTION_LABELS.deityNames)) return "deityNames";
   // Realms brief §1.2: "realms and polities · {setting} · {culture} · {era}…".
   if (starts(SECTION_LABELS.realms)) return "realms";
   // Group brief §1.2: each group-name module's label starts its history rows.

@@ -179,3 +179,58 @@ test("§14.5: 10,000 titles across options: no block-list matches, no banned wor
     assert.deepEqual(generateDeityNames({ culture: k, count: 1, seed: 1 }).notices, ["This culture isn't offered for deities."]);
   }
 });
+
+// ── §14.6 Sentence and presets ──────────────────────────────────────────────
+
+import { chooseDeity, DEFAULT_DEITY_STATE, deityHistoryLabel, deitySentence, deitySentenceText } from "../src/deities/sentence";
+import { modulePresetContent, parseModulePreset, type DeityPreset } from "../src/presets";
+import { historySection, SECTION_GROUPS } from "../src/sections";
+
+test("§14.6: the default sentence's plain text", () => {
+  assert.equal(
+    deitySentenceText(deitySentence(DEFAULT_DEITY_STATE)),
+    "General-themed deities of any kind of any domain, of any gender, of the medieval era, in a realistic world, of any tone, as titles only, each one separate.",
+  );
+});
+
+test("§14.6: the gender and names links are hidden for sacred places", () => {
+  const places = chooseDeity({ ...DEFAULT_DEITY_STATE, gender: "female", names: "placeholder" }, "kind", "place");
+  const fields = deitySentence(places).filter((s) => typeof s !== "string").map((s) => (s as { field: string }).field);
+  assert.ok(!fields.includes("gender") && !fields.includes("names"));
+  assert.equal(deitySentenceText(deitySentence(places)), "General-themed sacred places of any domain, of the medieval era, in a realistic world, of any tone, each one separate.");
+  assert.equal(chooseDeity({ ...DEFAULT_DEITY_STATE, era: "ST", fantastic: true, domain: "steampunk" }, "era", "MD").domain, undefined);
+});
+
+test("§1: the module follows events and eras in the lore group; history label and section", () => {
+  assert.deepEqual(SECTION_GROUPS.lore, ["eventNames", "deityNames"]);
+  const label = deityHistoryLabel({ ...DEFAULT_DEITY_STATE, culture: "norse", kind: "deity", domain: "sky", gender: "female", fantastic: true, tone: "grim", series: true });
+  assert.equal(label, "deities and sacred places · medieval · Norse · deities · storm and sky · female · fantastic · grim · one pantheon");
+  assert.equal(historySection(label), "deityNames");
+});
+
+test("§14.6: presets round-trip; Polynesian reports and runs as General", () => {
+  const preset: DeityPreset = {
+    packName: "Storm pantheon",
+    setting: "",
+    description: "Norse-themed deities of any kind of any domain, of any gender, of the medieval era, in a fantastic world, of any tone, with placeholder names, as one pantheon.",
+    culture: "norse",
+    deityKind: "any",
+    domain: "any",
+    gender: "any",
+    era: "MD",
+    fantastic: true,
+    tone: "any",
+    names: "placeholder",
+    series: true,
+  };
+  const content = modulePresetContent(preset);
+  assert.ok(content.includes("module: deity-names\n") && content.includes("names: placeholder\n") && content.includes("domain: any\n"));
+  const parsed = parseModulePreset(content, "x");
+  assert.deepEqual(parsed.deity, preset);
+  assert.deepEqual(parsed.problems, []);
+  const state = [["culture", "norse"], ["fantastic", "on"], ["names", "placeholder"], ["series", "on"]].reduce((s, [f, id]) => chooseDeity(s, f as never, id), DEFAULT_DEITY_STATE);
+  assert.equal(deitySentenceText(deitySentence(state)), preset.description);
+  const poly = parseModulePreset(modulePresetContent({ ...preset, culture: "polynesian" }), "x");
+  assert.equal(poly.deity?.culture, "general");
+  assert.deepEqual(poly.problems, ["This culture isn't offered for deities."]);
+});

@@ -172,7 +172,7 @@ test("§14.6: the default sentence's plain text", () => {
 test("§14.6: the lore group, “history and faith”, follows bynames and titles in the switcher", () => {
   assert.equal(SWITCHER_ORDER[SWITCHER_ORDER.indexOf("bynames") + 1], "lore");
   assert.equal(GROUP_LABELS.lore, "history and faith");
-  assert.deepEqual(SECTION_GROUPS.lore, ["eventNames"]);
+  assert.deepEqual(SECTION_GROUPS.lore.slice(0, 1), ["eventNames"]);
   const label = eventHistoryLabel({ ...DEFAULT_EVENT_STATE, kind: "war", scale: "world", era: "ST", fantastic: true, tone: "grim", series: true });
   assert.equal(label, "events and eras · steam age · Norman & British · wars · world · steampunk · grim · one history");
   assert.equal(historySection(label), "eventNames");

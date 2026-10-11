@@ -21,6 +21,7 @@ import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 import { INN_KINDS, INN_SETTINGS, type InnForm, type InnKind, type InnSetting } from "./inns/engine";
 import { BUILDING_KINDS, type BuildingKind } from "./buildings/engine";
 import { EVENT_KINDS, EVENT_SCALES, type EventKind, type EventScale } from "./events/engine";
+import { DEITY_KINDS, DEITY_DOMAINS, deityCulture, type DeityGender, type DeityKind, type DeityNames } from "./deities/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
 import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
@@ -75,7 +76,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; deity?: DeityPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -100,6 +101,8 @@ export function parseModulePreset(
   if (values.module === KIT_PRESET_MODULE) return parseKitPreset(values, body, fileName);
   // Events brief §12: event presets too.
   if (values.module === EVENT_PRESET_MODULE) return parseEventPreset(values, body, fileName);
+  // Deities brief §12: deity presets too.
+  if (values.module === DEITY_PRESET_MODULE) return parseDeityPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module “${values.module ?? ""}”.`);
     return { problems };
@@ -134,7 +137,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | DeityPreset): string {
+  if ("deityKind" in preset) return deityPresetContent(preset);
   if ("eventKind" in preset) return eventPresetContent(preset);
   if ("contents" in preset) return kitPresetContent(preset);
   if ("buildingKind" in preset) return buildingPresetContent(preset);
@@ -950,6 +954,94 @@ function eventPresetContent(preset: EventPreset): string {
     `scale: ${preset.scale}`,
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
+    `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Deity presets (Deities brief §12) ───────────────────────────────────────
+
+export const DEITY_PRESET_MODULE = "deity-names";
+
+export interface DeityPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  culture: string;
+  /** "any" or a kind key (the note's `kind`). */
+  deityKind: "any" | DeityKind;
+  /** "any" or a domain key. */
+  domain: string;
+  gender: DeityGender;
+  era: RouteEra;
+  fantastic: boolean;
+  tone: GroupToneChoice;
+  names: DeityNames;
+  /** BT §12: the name pack and its section. */
+  pack?: string;
+  section?: string;
+  series: boolean;
+}
+
+function parseDeityPreset(values: Record<string, string>, body: string, fileName: string): { deity?: DeityPreset; problems: string[] } {
+  const problems: string[] = [];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const flag = (key: string): boolean => {
+    const v = values[key];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key} “${v}”.`);
+    return false;
+  };
+  // §12: Polynesian and Andean report and run as General.
+  const { culture, notice } = deityCulture(values.culture || "general");
+  if (notice) problems.push(notice);
+  else if (values.culture && culture !== values.culture) problems.push(`Unknown culture “${values.culture}”.`);
+  return {
+    deity: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      culture,
+      deityKind: pick<"any" | DeityKind>("kind", "any", (v) => v === "any" || DEITY_KINDS.some((k) => k.key === v)),
+      domain: pick("domain", "any", (v) => v === "any" || DEITY_DOMAINS.some((d) => d.key === v)),
+      gender: pick<DeityGender>("gender", "any", (v) => ["any", "male", "female", "neither"].includes(v)),
+      era: pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      fantastic: flag("fantastic"),
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      names: pick<DeityNames>("names", "titles", (v) => ["titles", "placeholder", "pack"].includes(v)),
+      ...(values.pack ? { pack: values.pack } : {}),
+      ...(values.section ? { section: values.section } : {}),
+      series: flag("series"),
+    },
+    problems,
+  };
+}
+
+function deityPresetContent(preset: DeityPreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${DEITY_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.deityKind}`,
+    `domain: ${preset.domain}`,
+    `gender: ${preset.gender}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `tone: ${preset.tone}`,
+    `names: ${preset.names}`,
+    ...(preset.pack ? [`pack: ${preset.pack}`] : []),
+    ...(preset.section ? [`section: ${preset.section}`] : []),
     `series: ${preset.series}`,
     "---",
     "",

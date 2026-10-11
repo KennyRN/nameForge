@@ -461,19 +461,19 @@ function stripInlineMarkup(s) {
 function parseNameTokens(text) {
   const tokens = text.split(/[\n,;]/).flatMap((t) => splitOnJoiners(t)).flatMap((t) => splitSpaceSeparatedList(t)).map((t) => t.trim()).filter((t) => t.length > 0);
   const names = [];
-  for (const token10 of tokens) {
-    const cleaned = cleanToken(stripLeadingConjunction(token10));
+  for (const token11 of tokens) {
+    const cleaned = cleanToken(stripLeadingConjunction(token11));
     if (cleaned === "" || isNoise(cleaned)) continue;
     names.push(cleaned);
   }
   return dedupe(names);
 }
-function splitSpaceSeparatedList(token10) {
-  const parts = splitOnUnquotedWhitespace(token10);
+function splitSpaceSeparatedList(token11) {
+  const parts = splitOnUnquotedWhitespace(token11);
   if (parts.length >= 3) return parts;
-  const loose = unwrapOuterQuotes(token10.trim()).split(/\s+/).filter((p) => p.length > 0);
+  const loose = unwrapOuterQuotes(token11.trim()).split(/\s+/).filter((p) => p.length > 0);
   if (loose.length >= 3) return loose;
-  return [token10];
+  return [token11];
 }
 function unwrapOuterQuotes(s) {
   const pairs = [
@@ -489,11 +489,11 @@ function unwrapOuterQuotes(s) {
   }
   return s;
 }
-function splitOnUnquotedWhitespace(token10) {
+function splitOnUnquotedWhitespace(token11) {
   const parts = [];
   let current = "";
   let quote2 = null;
-  for (const char of token10) {
+  for (const char of token11) {
     if (quote2) {
       current += char;
       if (char === matchingQuote(quote2)) quote2 = null;
@@ -519,8 +519,8 @@ function matchingQuote(open) {
   if (open === "\u2018") return "\u2019";
   return open;
 }
-function splitOnJoiners(token10) {
-  let parts = [token10];
+function splitOnJoiners(token11) {
+  let parts = [token11];
   for (const joiner of JOINERS) {
     const next = [];
     for (const part of parts) {
@@ -536,12 +536,12 @@ function splitOnJoiners(token10) {
   }
   return parts;
 }
-function stripLeadingConjunction(token10) {
-  const lower2 = token10.toLowerCase();
+function stripLeadingConjunction(token11) {
+  const lower2 = token11.toLowerCase();
   for (const lead of LEADERS) {
-    if (lower2.startsWith(lead)) return token10.slice(lead.length).trim();
+    if (lower2.startsWith(lead)) return token11.slice(lead.length).trim();
   }
-  return token10;
+  return token11;
 }
 function cleanToken(s) {
   let t = s.trim();
@@ -31012,8 +31012,8 @@ function templateN(ctx, parts) {
   const c = collective(ctx, { personOnly: true });
   if (!a || !c || a.includes("'")) return void 0;
   parts.collective = c;
-  const bare3 = a.replace(/^the /, "");
-  return `${bare3}${bare3.endsWith("s") ? "'" : "'s"} ${c}`;
+  const bare4 = a.replace(/^the /, "");
+  return `${bare4}${bare4.endsWith("s") ? "'" : "'s"} ${c}`;
 }
 function templateO(ctx, parts) {
   const r = ctx.rng();
@@ -31642,7 +31642,7 @@ function ancientForm(name, region, rng) {
   return { text: name, form };
 }
 var colonialBiome = (options) => options.setting === "british" ? void 0 : findBiome(options.biome);
-function descriptiveName(options, rng, bare3) {
+function descriptiveName(options, rng, bare4) {
   const british = options.setting === "british";
   const biome = colonialBiome(options);
   const categories = RIVER_DATA.descriptiveCategories[british ? "british" : biome ? "colonialWithBiome" : "colonial"];
@@ -31655,11 +31655,11 @@ function descriptiveName(options, rng, bare3) {
     const joined = entry.fuses === "yes" ? smoothJoin(word, water) : null;
     const fuses = joined !== null && letterCount2(joined) <= NAMES.maxFusedLetters && rng() < RIVER_DATA.britishFuseChance;
     const name = fuses ? titleCase2(joined.toLowerCase()) : titleCase2(`${word} ${water}`);
-    if (bare3) return { text: name, water, form: "bare" };
+    if (bare4) return { text: name, water, form: "bare" };
     const form2 = pickWeighted2(RIVER_DATA.forms.britishDescriptive, rng);
     return { text: form2 === "river-x" ? `River ${name}` : name, water, form: form2 };
   }
-  if (bare3) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
+  if (bare4) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
   const form = pickWeighted2(RIVER_DATA.forms.colonialDescriptive, rng);
   return form === "bare" && water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
 }
@@ -56138,34 +56138,34 @@ var WorldRenderer = class {
     return pickUniform5(source.corpus, rng);
   }
   /** A list word, expanding any template held in the entry. */
-  slot(token10, rng, depth) {
+  slot(token11, rng, depth) {
     var _a2, _b;
-    if (token10.markov) {
-      const name = this.markovName(token10.key, rng);
-      const text2 = token10.form === "pos" ? possessive(name) : name;
-      return { text: text2, etym: `[${this.label(token10.key)}: ${name}]${token10.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
+    if (token11.markov) {
+      const name = this.markovName(token11.key, rng);
+      const text2 = token11.form === "pos" ? possessive(name) : name;
+      return { text: text2, etym: `[${this.label(token11.key)}: ${name}]${token11.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
     }
-    const list = this.lists[token10.key];
+    const list = this.lists[token11.key];
     if (!list || list.length === 0) {
-      this.notices.add(`No word list "${token10.key}" for ${this.culture.label}.`);
-      return { text: `[${token10.key}]`, etym: `[${token10.key}]`, fusable: false };
+      this.notices.add(`No word list "${token11.key}" for ${this.culture.label}.`);
+      return { text: `[${token11.key}]`, etym: `[${token11.key}]`, fusable: false };
     }
-    const entry = parseEntry((_a2 = this.swapEntry(token10.key, rng)) != null ? _a2 : pickUniform5(list, rng));
+    const entry = parseEntry((_a2 = this.swapEntry(token11.key, rng)) != null ? _a2 : pickUniform5(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);
-      const text2 = token10.form === "pos" ? possessive(inner.text) : inner.text;
-      const etym = single ? inner.etym : `[${this.label(token10.key)}: ${inner.text}]`;
-      return { text: text2, etym: token10.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
+      const text2 = token11.form === "pos" ? possessive(inner.text) : inner.text;
+      const etym = single ? inner.etym : `[${this.label(token11.key)}: ${inner.text}]`;
+      return { text: text2, etym: token11.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
     }
     let text = entry.word;
-    if (token10.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
-    if (token10.form === "pos") text = possessive(entry.word);
-    const shown = token10.form === "pos" ? entry.word : text;
+    if (token11.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
+    if (token11.form === "pos") text = possessive(entry.word);
+    const shown = token11.form === "pos" ? entry.word : text;
     return {
       text,
-      etym: `[${this.label(token10.key)}: ${shown}]${token10.form === "pos" ? possessiveTail(entry.word) : ""}`,
-      fusable: !entry.noFuse && token10.form !== "pos"
+      etym: `[${this.label(token11.key)}: ${shown}]${token11.form === "pos" ? possessiveTail(entry.word) : ""}`,
+      fusable: !entry.noFuse && token11.form !== "pos"
     };
   }
   /** Renders a template: slots filled, "+" groups fused or spaced. */
@@ -56179,14 +56179,14 @@ var WorldRenderer = class {
       out.push(group.length === 1 ? group[0] : this.fuse(group, rng));
       group = [];
     };
-    for (const token10 of tokens) {
-      if (token10.kind === "fuse") {
+    for (const token11 of tokens) {
+      if (token11.kind === "fuse") {
         joinNext = true;
         continue;
       }
       let piece;
-      if (token10.kind === "text") piece = { text: token10.text, etym: token10.text.toLowerCase(), fusable: !/\s/.test(token10.text) };
-      else piece = this.slot(token10, rng, depth);
+      if (token11.kind === "text") piece = { text: token11.text, etym: token11.text.toLowerCase(), fusable: !/\s/.test(token11.text) };
+      else piece = this.slot(token11, rng, depth);
       if (!joinNext) flush();
       group.push(piece);
       joinNext = false;
@@ -56873,13 +56873,13 @@ function repeatsContent(counted2) {
   let colours = 0;
   let numbers = 0;
   for (const raw of content) {
-    const bare3 = raw.replace(/'s?$/, "").replace(/[(),.]/g, "");
-    if (!bare3) continue;
-    const key2 = bare3.toLowerCase().replace(/s$/, "");
+    const bare4 = raw.replace(/'s?$/, "").replace(/[(),.]/g, "");
+    if (!bare4) continue;
+    const key2 = bare4.toLowerCase().replace(/s$/, "");
     if (seen.has(key2)) return true;
     seen.add(key2);
-    if (COLOUR_WORDS.has(bare3)) colours++;
-    if (NUMBER_WORDS.has(bare3) || /^\d+(st|nd|rd|th)$/.test(bare3)) numbers++;
+    if (COLOUR_WORDS.has(bare4)) colours++;
+    if (NUMBER_WORDS.has(bare4) || /^\d+(st|nd|rd|th)$/.test(bare4)) numbers++;
   }
   return colours > 1 || numbers > 1;
 }
@@ -64651,8 +64651,8 @@ function buildTitle(ctx, kind, length) {
   if (length === "single") {
     const title = oneTitle(ctx, kind);
     if (!title) return void 0;
-    const bare3 = title.shape.p === "{rank}";
-    const text = !name ? title.text : bare3 ? title.after ? `${name} ${title.text}` : `${title.text} ${name}` : `${name}, ${title.text}`;
+    const bare4 = title.shape.p === "{rank}";
+    const text = !name ? title.text : bare4 ? title.after ? `${name} ${title.text}` : `${title.text} ${name}` : `${name}, ${title.text}`;
     return { part: title.text, text, kind, shape: title.shape.p, tones: tonesOf(title.shape.t, ctx.drawn) };
   }
   const r = ctx.rng();
@@ -78923,30 +78923,30 @@ function regionMult(ctx, tag, eras) {
   if (eras && !eras.includes(ctx.era)) return 1;
   return (_b = (_a2 = ROUTE_DATA.regions[tag]) == null ? void 0 : _a2[ctx.region]) != null ? _b : 1;
 }
-function vocabPool(ctx, pool3, token10) {
+function vocabPool(ctx, pool3, token11) {
   var _a2, _b, _c;
   const shape = ctx.shape;
-  const only = (_a2 = shape == null ? void 0 : shape.only) == null ? void 0 : _a2[token10];
-  const cw = (_c = (_b = shape == null ? void 0 : shape.cw) == null ? void 0 : _b[ctx.culture.key]) == null ? void 0 : _c[token10];
+  const only = (_a2 = shape == null ? void 0 : shape.only) == null ? void 0 : _a2[token11];
+  const cw = (_c = (_b = shape == null ? void 0 : shape.cw) == null ? void 0 : _b[ctx.culture.key]) == null ? void 0 : _c[token11];
   return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t))).map(([e, w]) => {
     var _a3, _b2;
     let n = w * toneFactor((_a3 = e.t) != null ? _a3 : [], ctx.tone) * regionMult(ctx, e.rt) * ((_b2 = cw == null ? void 0 : cw[e.w]) != null ? _b2 : 1);
-    if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token10 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
+    if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token11 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
     return [e, n];
   }).filter(([, n]) => n > 0);
 }
-function vocabWord(ctx, pool3, token10, keep) {
+function vocabWord(ctx, pool3, token11, keep) {
   var _a2;
-  const items = boostPool(ctx.context, pool3, vocabPool(ctx, pool3, token10)).filter(([e2]) => !keep || keep(e2.w));
+  const items = boostPool(ctx.context, pool3, vocabPool(ctx, pool3, token11)).filter(([e2]) => !keep || keep(e2.w));
   const e = pickWeighted5(items, ctx.rng);
   if (!e) return void 0;
   for (const t of (_a2 = e.t) != null ? _a2 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
   return e.w;
 }
-function gnWord2(ctx, token10) {
-  const list = GN_LISTS2[token10];
-  const setting = SF_LISTS.has(token10) ? "SF" : ctx.setting;
+function gnWord2(ctx, token11) {
+  const list = GN_LISTS2[token11];
+  const setting = SF_LISTS.has(token11) ? "SF" : ctx.setting;
   const items = groupListWords(list, setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
@@ -79195,9 +79195,9 @@ var DIRECTION_TOKENS = new Set(Object.keys(COMPASS));
 var PLACEHOLDER_TOKENS3 = /* @__PURE__ */ new Set(["destination", "town", "folk", "person", "founder", "patron", "kingdom", "holy"]);
 var NEVER_ANCHORS3 = /* @__PURE__ */ new Set(["person", "founder", "patron", "holy", "n"]);
 var kindOf3 = (name) => NEVER_ANCHORS3.has(name) ? "never" : name === "destination" ? "owner" : seriesTokenKind(name);
-function compassValues(ctx, token10) {
-  const live4 = poolEntries(ctx.vocab, token10, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
-  return [...COMPASS[token10].filter((w) => live4.includes(w)), ...live4.filter((w) => !COMPASS[token10].includes(w))];
+function compassValues(ctx, token11) {
+  const live4 = poolEntries(ctx.vocab, token11, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
+  return [...COMPASS[token11].filter((w) => live4.includes(w)), ...live4.filter((w) => !COMPASS[token11].includes(w))];
 }
 function generateRouteNames(options) {
   var _a2;
@@ -80612,13 +80612,13 @@ function generateStreetNames(options) {
     }
     return true;
   };
-  const shapesFor2 = (ctx, k) => k === "streets" ? streetShapes(ctx, options.shape) : k === "squares" ? live(ctx, STREET_DATA.squares, options.shape) : districtShapes(ctx, options.shape);
+  const shapesFor3 = (ctx, k) => k === "streets" ? streetShapes(ctx, options.shape) : k === "squares" ? live(ctx, STREET_DATA.squares, options.shape) : districtShapes(ctx, options.shape);
   const draw2 = (k, fnFor, ok = () => true, shape) => {
     for (let i = 0; i < 40; i++) {
       const fn = k === "districts" ? fnFor() : void 0;
       if (k === "districts" && !fn) return void 0;
       const ctx = newCtx3(fn);
-      const s = shape != null ? shape : pickWeighted5(shapesFor2(ctx, k), rng);
+      const s = shape != null ? shape : pickWeighted5(shapesFor3(ctx, k), rng);
       if (!s) continue;
       const built = render3(ctx, s);
       if (built && acceptable5(built) && ok(built)) return { built, fn };
@@ -81351,9 +81351,9 @@ function breaksInnWords(text) {
 }
 var hasChristianSign = (text) => CHRISTIAN3.some((re) => re.test(text));
 function innBlockForms(text) {
-  const bare3 = routeNorm(text).replace(/^the /, "");
-  const out = /* @__PURE__ */ new Set([bare3]);
-  const inner = bare3.replace(/^(inn|sign) of the /, "");
+  const bare4 = routeNorm(text).replace(/^the /, "");
+  const out = /* @__PURE__ */ new Set([bare4]);
+  const inner = bare4.replace(/^(inn|sign) of the /, "");
   out.add(inner);
   for (const hw of HOUSE_WORDS) {
     const suffix = ` ${hw.toLowerCase()}`;
@@ -82102,6 +82102,546 @@ function generateEventNames(options) {
   }
 }
 
+// src/data/deity-names.json
+var deity_names_default = {
+  $comment: "Deities and sacred places (docs/deities-and-sacred-places-brief.md \xA73\u2013\xA77, \xA711). Words come from settlement-vocab.json through src/settlement/vocab.ts.",
+  version: 1,
+  any: "deities of any kind",
+  kinds: [
+    { key: "deity", menu: "Deities and spirits", plural: "deities", w: 60, description: "Gods, goddesses and spirits, named by their titles" },
+    { key: "pantheon", menu: "Pantheons and divine courts", plural: "pantheons", w: 15, description: "Collective names for a group of gods or spirits" },
+    { key: "place", menu: "Sacred places", plural: "sacred places", w: 25, description: "Holy mountains, groves, springs, stones and oracles" }
+  ],
+  domains: [
+    { key: "sky", label: "storm and sky", words: [{ w: "Storms", sg: "Storm", x: 2 }, { w: "the Sky", sg: "Sky" }, { w: "Thunder", sg: "Thunder" }, { w: "Lightning", sg: "Lightning" }, { w: "the Winds", sg: "Wind" }, { w: "Rain", sg: "Rain" }, { w: "Clouds", sg: "Cloud" }, { w: "the High Air", sg: "High Air" }], archetypes: [{ m: "Sky Father", f: "Sky Mother", n: "the Sky" }, { all: "Storm Bringer" }, { m: "Thunder Lord", f: "Thunder Lady", n: "the Thunderer" }, { m: "Rain Lord", f: "Rain Mother", n: "the Rain-Giver" }] },
+    { key: "earth", label: "earth and harvest", words: [{ w: "the Harvest", sg: "Harvest", x: 2 }, { w: "the Fields", sg: "Field" }, { w: "Grain", sg: "Grain" }, { w: "the Earth", sg: "Earth" }, { w: "Seeds", sg: "Seed" }, { w: "Orchards", sg: "Orchard" }, { w: "Herds", sg: "Herd" }, { w: "Maize", sg: "Maize", c: ["aztec", "maya"] }], archetypes: [{ m: "Harvest Father", f: "Harvest Mother", n: "the Sower" }, { m: "Maize Father", f: "Maize Mother", n: "the Green One", c: ["aztec", "maya"] }, { m: "Earth Father", f: "Earth Mother", n: "the Deep Root" }] },
+    { key: "water", label: "sea and rivers", words: [{ w: "the Sea", sg: "Sea", x: 2 }, { w: "Rivers", sg: "River" }, { w: "the Deep", sg: "Deep" }, { w: "Tides", sg: "Tide" }, { w: "Springs", sg: "Spring" }, { w: "Wells", sg: "Well" }, { w: "Lakes", sg: "Lake" }, { w: "Rain", sg: "Rain" }], archetypes: [{ m: "Lord of the Deep", f: "Sea Mother", n: "the Tide" }, { m: "River Lord", f: "River Mother", n: "the Flowing One" }, { m: "Lord of Fish", f: "Mother of Fish", n: "the Shoal" }] },
+    { key: "fire", label: "fire and forge", words: [{ w: "the Forge", sg: "Forge", x: 2 }, { w: "Fire", sg: "Fire" }, { w: "the Hearth", sg: "Hearth" }, { w: "Embers", sg: "Ember" }, { w: "Iron", sg: "Iron" }, { w: "Bronze", sg: "Bronze" }, { w: "the Kiln", sg: "Kiln" }], archetypes: [{ m: "Forge Father", f: "Forge Mother", n: "the Smith" }, { m: "Hearth Lord", f: "Hearth Lady", n: "the Ember" }] },
+    { key: "war", label: "war and the hunt", words: [{ w: "Battle", sg: "Battle" }, { w: "the Hunt", sg: "Hunt", x: 2 }, { w: "Spears", sg: "Spear" }, { w: "Victory", sg: "Victory" }, { w: "the Chase", sg: "Chase" }, { w: "Shields", sg: "Shield" }, { w: "the Bow", sg: "Bow" }], archetypes: [{ m: "the Hunter", f: "the Huntress", n: "the Hunt" }, { m: "War Lord", f: "War Mother", n: "the Spear" }, { all: "the Champion" }] },
+    { key: "death", label: "death and ancestors", words: [{ w: "the Dead", sg: "Death", x: 2 }, { w: "Ancestors", sg: "Ancestor" }, { w: "Graves", sg: "Grave" }, { w: "the Last Road", sg: "Last Road" }, { w: "Ash", sg: "Ash" }, { w: "Silence", sg: "Silence" }, { w: "the Underworld", sg: "Underworld" }], archetypes: [{ m: "Lord of the Dead", f: "Lady of the Dead", n: "the Keeper" }, { m: "Ancestor King", f: "Ancestor Queen", n: "Keeper of Ancestors" }, { m: "the Ferryman", f: "the Ferrywoman", n: "the Ferry" }] },
+    { key: "wisdom", label: "wisdom and craft", words: [{ w: "Wisdom", sg: "Wisdom" }, { w: "Secrets", sg: "Secret" }, { w: "the Loom", sg: "Loom" }, { w: "Letters", sg: "Letter" }, { w: "Counting", sg: "Counting" }, { w: "Dreams", sg: "Dream" }, { w: "Thresholds", sg: "Threshold" }, { w: "Keys", sg: "Key" }], archetypes: [{ all: "the Wise One" }, { all: "the Weaver" }, { all: "the Judge" }, { all: "the Hidden One" }, { m: "Lord of Thresholds", f: "Lady of Thresholds", n: "the Threshold" }] },
+    { key: "love", label: "love and the hearth", words: [{ w: "the Hearth", sg: "Hearth", x: 2 }, { w: "Marriage", sg: "Marriage" }, { w: "Children", sg: "Child" }, { w: "Kinship", sg: "Kinship" }, { w: "Home", sg: "Home" }, { w: "Mercy", sg: "Mercy" }, { w: "Gardens", sg: "Garden" }], archetypes: [{ m: "Hearth Father", f: "Hearth Mother", n: "the Kindling" }, { m: "the Lover", f: "the Beloved", n: "the Bond" }] },
+    { key: "trickery", label: "tricks and luck", words: [{ w: "Luck", sg: "Luck" }, { w: "Crossroads", sg: "Crossroads", x: 2 }, { w: "Masks", sg: "Mask" }, { w: "Riddles", sg: "Riddle" }, { w: "Thieves", sg: "Thief" }, { w: "Doors", sg: "Door" }, { w: "Chance", sg: "Chance" }], archetypes: [{ all: "the Trickster" }, { m: "Lord of the Crossroads", f: "Lady of the Crossroads", n: "the Crossroads" }, { all: "the Spider", c: ["west-african", "bantu", "general"] }, { all: "the Hare", c: ["bantu", "general"] }, { all: "the Raven", c: ["norse", "general"] }, { all: "the Fox", c: ["chinese", "japanese", "korean"] }, { all: "the Coyote", c: ["aztec"] }] },
+    { key: "sun", label: "sun, moon and stars", words: [{ w: "the Sun", sg: "Sun", x: 2 }, { w: "the Moon", sg: "Moon", x: 2 }, { w: "the Stars", sg: "Star" }, { w: "Dawn", sg: "Dawn" }, { w: "Dusk", sg: "Dusk" }, { w: "the Night Sky", sg: "Night Sky" }, { w: "Eclipses", sg: "Eclipse" }], archetypes: [{ m: "Sun King", f: "Sun Queen", n: "the Sun" }, { m: "Moon Man", f: "Moon Mother", n: "the Moon" }, { m: "Star Father", f: "Star Mother", n: "the Star-Keeper" }, { all: "the Twins", pantheon: true }] },
+    { key: "steampunk", label: "engines and invention", words: [{ w: "Gears", sg: "Gear" }, { w: "the Great Engine", sg: "Great Engine" }, { w: "Steam", sg: "Steam" }, { w: "Sparks", sg: "Spark" }, { w: "Springs", sg: "Spring" }, { w: "Clocks", sg: "Clock" }, { w: "Invention", sg: "Invention" }], archetypes: [{ m: "the Clockmaker", f: "Lady of Gears", n: "the Great Engine" }, { all: "the Spark" }], e: ["ST"], h: true },
+    { key: "machine", label: "machines and the void", words: [{ w: "the Void", sg: "Void", x: 2 }, { w: "Signals", sg: "Signal" }, { w: "the Machine", sg: "Machine" }, { w: "Stars", sg: "Star" }, { w: "the Long Dark", sg: "Long Dark" }, { w: "Code", sg: "Code" }, { w: "the Drift", sg: "Drift" }], archetypes: [{ all: "the Machine" }, { all: "the Navigator" }, { all: "the First Signal" }, { all: "the Makers", pantheon: true }, { all: "the Sleeper" }, { all: "the Void" }], e: ["NF", "IS"] }
+  ],
+  shapes: [
+    { p: "{archetype}", w: 15, kind: "deity", form: "archetype" },
+    { p: "{figure} of {domainWord}", w: 20, kind: "deity", form: "A", t: ["grand"] },
+    { p: "the {divineQuality} {figure}", w: 12, kind: "deity", form: "B" },
+    { p: "{pronoun} Who {divineVerb}", w: 12, kind: "deity", form: "C", t: ["strange"] },
+    { p: "{domainSg} {kin}", w: 10, kind: "deity", form: "D" },
+    { p: "the {bodyNumber}-{bodyPart} {figure}", w: 6, kind: "deity", form: "E", t: ["strange"] },
+    { p: "{animal} of the {domainWord}", w: 4, kind: "deity", form: "F", variant: "of" },
+    { p: "the {animal}-Headed {figure}", w: 4, kind: "deity", form: "F", variant: "headed" },
+    { p: "{domainSg}-{kennWord}", w: 5, kind: "deity", form: "G", c: ["anglo-saxon", "norse", "general"] },
+    { p: "{figure} of the {colour} {domainSg}", w: 6, kind: "deity", form: "H" },
+    { p: "the {figure} Below", w: 2, kind: "deity", form: "I", t: ["strange"] },
+    { p: "the {figure} Above", w: 2, kind: "deity", form: "I", t: ["strange"] },
+    { p: "the {figure} Between", w: 2, kind: "deity", form: "I", t: ["strange"] },
+    { p: "{fixed}", w: 5, kind: "deity", form: "fixed" },
+    { p: "the Clockwork {figure}", w: 8, kind: "deity", form: "era", e: ["ST"], h: true },
+    { p: "{figure} of the Great Engine", w: 8, kind: "deity", form: "era", e: ["ST"], h: true },
+    { p: "the {divineQuality} Signal", w: 8, kind: "deity", form: "era", e: ["NF", "IS"] },
+    { p: "{pronoun} Who {divineVerb} in the Void", w: 8, kind: "deity", form: "era", e: ["NF", "IS"], t: ["strange"] },
+    { p: "the {ordinal} Maker", w: 8, kind: "deity", form: "era", e: ["NF", "IS"] },
+    { p: "the {number}", w: 15, kind: "pantheon", form: "P1" },
+    { p: "the {pantheonQuality} {pantheonNoun}", w: 25, kind: "pantheon", form: "P2" },
+    { p: "the {number} Who {divineVerb}", w: 10, kind: "pantheon", form: "P3", t: ["strange"] },
+    { p: "the Court {underAbove} the {sacredLand}", w: 10, kind: "pantheon", form: "P4" },
+    { p: "the {pantheonNoun} of the {domainSg}", w: 10, kind: "pantheon", form: "P5", t: ["grand"] },
+    { p: "Children of the {archetype}", w: 8, kind: "pantheon", form: "P6" },
+    { p: "the {colour} and the {colour}", w: 5, kind: "pantheon", form: "P7" },
+    { p: "{fixed}", w: 7, kind: "pantheon", form: "fixed" },
+    { p: "the {number} {figure:pl} of the {sacredLand}", w: 10, kind: "pantheon", form: "triple" },
+    { p: "the Brass {pantheonNoun}", w: 8, kind: "pantheon", form: "era", e: ["ST"], h: true },
+    { p: "the Silent Fleet", w: 8, kind: "pantheon", form: "era", e: ["NF", "IS"] },
+    { p: "the {number} Signals", w: 8, kind: "pantheon", form: "era", e: ["NF", "IS"] },
+    { p: "{sacredLand} of {deityRef}", w: 20, kind: "place", form: "L1", t: ["grand"] },
+    { p: "the {sacredQuality} {sacredLand}", w: 20, kind: "place", form: "L2" },
+    { p: "the {number} {sacredLand:pl}", w: 10, kind: "place", form: "L3" },
+    { p: "{sacredLand} of {sacredVirtue}", w: 12, kind: "place", form: "L4" },
+    { p: "the {divineQuality} {oracleWord}", w: 8, kind: "place", form: "L5", t: ["strange"] },
+    { p: "{oracleWord} of the {sacredLand}", w: 6, kind: "place", form: "L6", t: ["strange"] },
+    { p: "{place:poss} Holy {sacredLand}", w: 8, kind: "place", form: "L7", t: ["plain"] },
+    { p: "{holy:poss} {sacredLand}", w: 8, kind: "place", form: "L8", christian: true },
+    { p: "{domainSg} {sacredLand}", w: 8, kind: "place", form: "L9" },
+    { p: "{fixed}", w: 5, kind: "place", form: "fixed" },
+    { p: "the {sacredQuality} Engine", w: 8, kind: "place", form: "era", e: ["ST"], h: true },
+    { p: "Shrine of the Spark", w: 8, kind: "place", form: "era", e: ["ST"], h: true }
+  ],
+  styles: {
+    "anglo-saxon": {
+      formX: { G: 3, F: 2 },
+      fVariant: "of",
+      domainX: { sky: 1.5, war: 1.5, death: 1.5 }
+    },
+    norse: {
+      formX: { G: 3, F: 2 },
+      fVariant: "of",
+      domainX: { sky: 1.5, war: 1.5, death: 1.5 }
+    },
+    celtic: {
+      formX: { triple: 3 },
+      tripleThree: true,
+      domainX: { water: 1.5 },
+      kindX: { place: 1.5 }
+    },
+    egyptian: {
+      formX: { F: 3 },
+      fVariant: "headed",
+      domainX: { sun: 2, death: 2 }
+    },
+    aztec: {
+      formX: { F: 2, E: 2 },
+      fVariant: "of",
+      domainX: { earth: 2, sun: 2, death: 2 },
+      extra: [
+        { p: "the Feathered {animal}", w: 8, kind: "deity", form: "culture" }
+      ]
+    },
+    maya: {
+      formX: { F: 2, E: 2 },
+      fVariant: "of",
+      domainX: { earth: 2, sun: 2, death: 2 },
+      extra: [
+        { p: "the Feathered {animal}", w: 8, kind: "deity", form: "culture" }
+      ]
+    },
+    chinese: {
+      formX: { A: 2 },
+      eastHonour: true,
+      domainX: { water: 1.5, sun: 1.5, wisdom: 1.5 }
+    },
+    korean: {
+      formX: { A: 2 },
+      eastHonour: true,
+      domainX: { water: 1.5, sun: 1.5, wisdom: 1.5 }
+    },
+    japanese: {
+      formX: { A: 2 },
+      eastHonour: true,
+      domainX: { water: 1.5, sun: 1.5, wisdom: 1.5 }
+    },
+    indian: {
+      formX: { E: 2 },
+      domainX: { water: 1.5, sun: 1.5 }
+    },
+    "arabic-persian": {
+      formX: { B: 2, C: 2 },
+      extra: [
+        { p: "the {divineQuality} {spiritWord}", w: 24, kind: "deity", form: "culture" }
+      ]
+    },
+    steppe: {
+      domainX: { sky: 2, sun: 2 },
+      extra: [
+        { p: "the Eternal {colour} Sky", w: 15, kind: "deity", form: "culture", domain: "sky" },
+        { p: "{animal} Mother", w: 8, kind: "deity", form: "culture", gender: "f" }
+      ]
+    },
+    "west-african": {
+      formX: { C: 1.5 },
+      fVariant: "of",
+      archetypeX: { "Ancestor King": 2 }
+    },
+    bantu: {
+      formX: { C: 1.5 },
+      fVariant: "of",
+      archetypeX: { "Ancestor King": 2 }
+    },
+    "roman:AN": {
+      formX: { A: 2, B: 1.5 }
+    },
+    "greek-byzantine:AN": {
+      formX: { A: 2, B: 1.5 }
+    }
+  },
+  christian: {
+    cultures: ["ethiopian"],
+    genericForms: ["archetype", "A", "B", "C", "D", "H", "I", "fixed", "era"],
+    placeX: { Well: 2, Spring: 2, Hill: 2 }
+  },
+  unoffered: ["polynesian", "andean"],
+  lists: {
+    kennWord: ["Rider", "Breaker", "Bringer", "Wielder", "Keeper", "Walker", "Singer"],
+    eastHonour: [["Jade", 2], ["Heavenly", 1], ["Celestial", 1], ["August", 1], ["Pearl", 1]],
+    spiritWord: ["Spirit", "Wind", "Flame", "Watcher"],
+    underAbove: ["Under", "Above", "Beyond", "Beneath"],
+    number: [["Two", 1], ["Three", 2], ["Four", 1], ["Five", 1], ["Seven", 2], ["Nine", 2], ["Twelve", 2], ["Thirteen", 1]],
+    strangeNumber: ["Thirteen"],
+    pronoun: { m: "He", f: "She", n: "They" },
+    steppeNoColour: ["Blue"],
+    livingTricksters: ["the Spider", "the Hare", "the Raven", "the Coyote", "the Fox", "Ancestor King", "Ancestor Queen"]
+  },
+  series: { from: 6 },
+  cap: 9,
+  safeguards: {
+    block: ["God", "Lord God", "God Almighty", "the Almighty", "Lord of Lords", "King of Kings", "Lord of Hosts", "Lamb of God", "Prince of Peace", "Son of God", "Holy Spirit", "Holy Ghost", "Holy Trinity", "the Trinity", "Father, Son and Holy Spirit", "Mother of God", "Queen of Heaven", "Our Lady", "the Virgin", "the Merciful", "the Compassionate", "the Most Merciful", "the Most High", "the One", "the Creator", "the Preserver", "the Destroyer", "Lord of the Dance", "the Enlightened One", "the Awakened One", "the Compassionate One", "the Blessed One", "the Great Spirit", "Great Spirit", "Sky Woman", "Eternal Blue Sky", "Sun Goddess", "Divine Mother", "Supreme Being", "Holy One", "the Holy One of Israel", "the Name", "Ancient of Days", "Alpha and Omega", "Light of the World", "Good Shepherd", "Lord of the Worlds", "the Seven", "Lord of Light", "R'hllor", "the Drowned God", "the Many-Faced God", "the Old Gods and the New", "the Nine Divines", "the Eight Divines", "the Daedric Princes", "Talos", "Akatosh", "Emperor of Mankind", "Chaos Gods", "Khorne", "Nurgle", "Tzeentch", "Slaanesh", "the Valar", "the Ainur", "Eru Il\xFAvatar", "Morgoth", "Sauron", "Aslan", "the Great Old Ones", "Cthulhu", "Azathoth", "Nyarlathotep", "Shub-Niggurath", "Mother of Dragons", "Om", "the Traveler", "Lathander", "Mystra", "Bane", "Tyr", "Pelor", "Vecna", "Lolth", "the Raven Queen"],
+    names: ["Zeus", "Hera", "Athena", "Apollo", "Jupiter", "Mars", "Venus", "Odin", "Thor", "Freyja", "Loki", "Woden", "Thunor", "Ra", "Osiris", "Isis", "Horus", "Anubis", "Thoth", "Quetzalcoatl", "Tezcatlipoca", "Tlaloc", "Huitzilopochtli", "Itzamna", "Kukulkan", "Chaak", "Inti", "Viracocha", "Pachamama", "Amaterasu", "Susanoo", "Inari", "Guanyin", "Mazu", "Jade Emperor", "Shiva", "Vishnu", "Brahma", "Krishna", "Rama", "Ganesha", "Kali", "Durga", "Lakshmi", "Indra", "Agni", "Surya", "Allah", "Yahweh", "Jehovah", "Jesus", "Christ", "Mary", "Buddha", "Anansi", "Olodumare", "Shango", "Yemoja", "Oshun", "Ogun", "Eshu", "Elegua", "Nyame", "Unkulunkulu", "Mwari", "Ngai", "Tengri", "Umay", "Perun", "Veles", "Mokosh", "Svarog", "Dagda", "Brigid", "Lugh", "Morrigan", "Cernunnos", "Baal", "Marduk", "Ishtar", "Inanna", "Ahura Mazda", "Mithra", "Rainbow Serpent", "Baiame", "Tangaroa", "T\u0101ne", "Pele", "K\u0101ne", "M\u0101ui", "Olympus", "Asgard", "Valhalla", "Duat", "Mictlan", "Xibalba", "Sinai", "Zion", "Moriah", "Calvary", "Golgotha", "Mecca", "Medina", "Jerusalem", "Kailash", "Meru", "Varanasi", "Bodh Gaya", "Lhasa", "Fuji", "Ise", "Uluru", "Delphi", "Dodona", "Eleusis", "Glastonbury Tor", "Stonehenge", "Avebury", "Iona", "Lindisfarne", "Lourdes", "Santiago", "Canterbury", "Chalice Well", "Mount Athos", "Tai Shan", "Kumano", "Croagh Patrick"],
+    flag: ["Mother Earth", "Father Time", "Great Mother", "Sky Father", "Earth Mother", "Sea Mother", "Storm Bringer", "the Hunter", "the Trickster", "the Smith", "the Weaver", "the Old Gods", "the Elder Gods", "the Old Ones", "the Maker", "the Makers", "Holy Mountain", "Sacred Mountain", "Holy Island", "Avalon", "the Lady", "the Twins", "the Twelve"],
+    flagListBlocks: false,
+    banned: ["Satan", "Devil", "Antichrist", "Lucifer", "Iblis", "Shaitan", "Mara", "Demon", "Infidel", "Heathen", "Pagan", "Idol", "False God"]
+  }
+};
+
+// src/deities/engine.ts
+var DEITY_DATA = deity_names_default;
+var DEITY_KINDS = DEITY_DATA.kinds;
+var DEITY_DOMAINS = DEITY_DATA.domains;
+var DEITY_ANY = DEITY_DATA.any;
+var DEITY_CULTURES = BYNAME_CULTURES.filter((c) => !DEITY_DATA.unoffered.includes(c.key));
+var domainsOffered = (era, fantastic) => DEITY_DOMAINS.filter((d) => (!d.e || d.e.includes(era)) && (d.h === void 0 || d.h === fantastic));
+var isChristianCulture = (culture, era) => inCultureGroup("christian", culture, era) || DEITY_DATA.christian.cultures.includes(culture);
+var defaultDeitySafeguards = () => ({ block: DEITY_DATA.safeguards.block, flag: DEITY_DATA.safeguards.flag, flagListBlocks: DEITY_DATA.safeguards.flagListBlocks });
+var pickOne9 = (items, rng) => items[Math.floor(rng() * items.length)];
+var GENDERS = ["m", "f", "n"];
+var GENDER_OF = { male: "m", female: "f", neither: "n" };
+function vocabPool5(ctx, pool3, keep) {
+  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture, era: ctx.era, fantastic: ctx.fantastic }).filter(([e]) => !keep || keep(e)).map(([e, w]) => {
+    var _a2;
+    return [e, w * toneFactor((_a2 = e.t) != null ? _a2 : [], ctx.tone)];
+  }).filter(([, w]) => w > 0);
+}
+function fromPool4(ctx, pool3, keep, x) {
+  var _a2;
+  const items = vocabPool5(ctx, pool3, keep).map(([e2, w]) => {
+    var _a3;
+    return [e2, w * ((_a3 = x == null ? void 0 : x(e2)) != null ? _a3 : 1)];
+  });
+  const e = pickWeighted5(items, ctx.rng);
+  if (!e) return void 0;
+  for (const t of (_a2 = e.t) != null ? _a2 : []) ctx.drawn.add(t);
+  ctx.words.push({ pool: pool3, word: e.w });
+  return e.w;
+}
+var gendered = (ctx, pool3) => fromPool4(ctx, pool3, (e) => {
+  var _a2;
+  return ((_a2 = e.g) != null ? _a2 : "n") === ctx.gender;
+});
+function archetypes(ctx, domain, pantheon) {
+  var _a2, _b, _c;
+  const out = [];
+  for (const a of domain.archetypes) {
+    if (a.c && !a.c.includes(ctx.culture)) continue;
+    if (a.pantheon && !pantheon) continue;
+    const text = (_a2 = a.all) != null ? _a2 : a[ctx.gender];
+    if (!text) continue;
+    if (ctx.tone === "light" && DEITY_DATA.lists.livingTricksters.includes(text)) continue;
+    out.push([text, (_c = (_b = ctx.style.archetypeX) == null ? void 0 : _b[text]) != null ? _c : 1]);
+  }
+  return out;
+}
+function domainWord(ctx) {
+  const items = ctx.domain.words.filter((w2) => !w2.c || w2.c.includes(ctx.culture)).map((w2) => {
+    var _a2;
+    return [w2, (_a2 = w2.x) != null ? _a2 : 1];
+  });
+  const w = pickWeighted5(items, ctx.rng);
+  if (w) ctx.words.push({ pool: "domainWord", word: w.w });
+  return w;
+}
+function deityRef(ctx) {
+  var _a2;
+  const title = (_a2 = ctx.deityRef) != null ? _a2 : deityTitleIn(ctx, ["archetype", "A", "B", "C", "D"]);
+  if (!title) return void 0;
+  if (/^(He|She|They) Who /.test(title)) return title;
+  return `the ${title.replace(/^the /, "")}`;
+}
+function token10(ctx, name) {
+  var _a2, _b, _c, _d;
+  const rng = ctx.rng;
+  const L = DEITY_DATA.lists;
+  switch (name) {
+    case "figure":
+      return gendered(ctx, "divineFigure");
+    case "kin":
+      return gendered(ctx, "divineKin");
+    case "pronoun":
+      return L.pronoun[ctx.gender];
+    case "domainWord":
+      return (_a2 = domainWord(ctx)) == null ? void 0 : _a2.w;
+    case "domainSg":
+      return (_b = domainWord(ctx)) == null ? void 0 : _b.sg;
+    case "archetype": {
+      const pantheon = ((_c = ctx.shape) == null ? void 0 : _c.kind) === "pantheon";
+      const a = pickWeighted5(archetypes(ctx, ctx.domain, pantheon).filter(([t]) => !pantheon || !/^the /.test(t) || true), rng);
+      if (a) ctx.words.push({ pool: "archetype", word: a });
+      return pantheon ? a == null ? void 0 : a.replace(/^the /, "") : a;
+    }
+    case "animal":
+      return fromPool4(ctx, "cultureDivineAnimal");
+    case "colour": {
+      const items = groupListWords("colour", ctx.setting).filter(([w2]) => {
+        var _a3;
+        return !(((_a3 = ctx.shape) == null ? void 0 : _a3.p.includes("Eternal")) && L.steppeNoColour.includes(w2));
+      });
+      const w = pickWeighted5(items.map(([w2, n]) => [w2, n * toneFactor(wordTones("colour", w2), ctx.tone)]), rng);
+      if (w) ctx.words.push({ pool: "colour", word: w });
+      return w;
+    }
+    case "kennWord":
+    case "spiritWord":
+    case "underAbove":
+      return pickOne9(L[name], rng);
+    case "eastHonour":
+      return pickWeighted5(L.eastHonour, rng);
+    case "number":
+      return pickWeighted5(L.number.map(([w, n]) => [w, n * toneFactor(L.strangeNumber.includes(w) ? ["strange"] : [], ctx.tone)]), rng);
+    case "ordinal": {
+      const w = pickWeighted5(groupListWords("ordinalWord", ctx.setting), rng);
+      return w != null ? w : ordinalText(1 + Math.floor(rng() * 12));
+    }
+    case "divineVerb": {
+      const v = fromPool4(ctx, name);
+      const plural = ctx.gender === "n" || ((_d = ctx.shape) == null ? void 0 : _d.kind) === "pantheon";
+      return v && plural ? v.replace(/^(\w+)/, (w) => /ies$/.test(w) ? w.replace(/ies$/, "y") : /(ch|sh|ss|x)es$/.test(w) ? w.slice(0, -2) : w.replace(/s$/, "")) : v;
+    }
+    case "deityRef":
+      return deityRef(ctx);
+    case "place":
+      return isFuture4(ctx.era) ? pickWeighted5(groupListWords("star", "SF"), rng) : routePlace(ctx.culture, ctx.setting, rng);
+    case "holy":
+      return groupSaint(ctx.setting, rng);
+    case "fixed":
+      return fromPool4(ctx, `deityFixed:${ctx.shape.kind}`);
+    case "sacredLand":
+      return fromPool4(ctx, name, void 0, (e) => {
+        var _a3;
+        return ctx.christian ? (_a3 = DEITY_DATA.christian.placeX[e.w]) != null ? _a3 : 1 : 1;
+      });
+  }
+  return fromPool4(ctx, name);
+}
+var isFuture4 = (era) => era === "NF" || era === "IS";
+function renderPattern8(ctx, pattern) {
+  let failed = false;
+  const colours = [];
+  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
+    if (failed) return "";
+    const [name, mod] = raw.split(":");
+    let piece = token10(ctx, name);
+    if (name === "colour" && piece && colours.includes(piece)) piece = token10(ctx, name);
+    if (!piece || name === "colour" && colours.includes(piece)) {
+      failed = true;
+      return "";
+    }
+    if (name === "colour") colours.push(piece);
+    if (mod === "poss") return groupPossessive(piece, false);
+    if (mod === "pl") return groupPlural(piece);
+    return piece;
+  });
+  return failed ? void 0 : out.replace(/\bthe the\b/gi, "the");
+}
+var deityCapitals = (text) => routeCapitals(text).replace(/^The /, "the ");
+var wordRe11 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
+var NAMES2 = DEITY_DATA.safeguards.names.map(wordRe11);
+var BANNED9 = DEITY_DATA.safeguards.banned.map(wordRe11);
+var bare3 = (text) => routeNorm(text).replace(/^the /, "");
+var hasRealDivineName = (text) => NAMES2.some((re) => re.test(text));
+var breaksDeityWords = (text) => hasBannedWord(text) || BANNED9.some((re) => re.test(text));
+function deityBlockSet(guards = defaultDeitySafeguards()) {
+  return new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(bare3));
+}
+function deityTitleBlocked(text, guards) {
+  return deityBlockSet(guards).has(bare3(text)) || hasRealDivineName(text) || breaksDeityWords(text);
+}
+var deityWordBlocked = (word, guards) => deityTitleBlocked(word, guards);
+function styleFor(culture, era) {
+  var _a2, _b, _c;
+  const base = (_a2 = DEITY_DATA.styles[culture]) != null ? _a2 : {};
+  const ancient = era === "AN" ? DEITY_DATA.styles[`${culture}:AN`] : void 0;
+  if (!ancient) return base;
+  return { ...base, formX: { ...(_b = base.formX) != null ? _b : {}, ...(_c = ancient.formX) != null ? _c : {} } };
+}
+function shapeWeight7(ctx, s) {
+  var _a2, _b, _c, _d;
+  if (s.e && !s.e.includes(ctx.era)) return 0;
+  if (!cultureAllowed(s.c, ctx.culture, ctx.era)) return 0;
+  if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
+  if (s.christian && !ctx.christian) return 0;
+  if (s.domain && s.domain !== ctx.domain.key) return 0;
+  if (s.gender && s.gender !== ctx.gender) return 0;
+  const form = (_a2 = s.form) != null ? _a2 : "";
+  if (ctx.christian && s.kind !== "place" && !DEITY_DATA.christian.genericForms.includes(form) && form !== "culture" && !/^P\d$/.test(form) && form !== "triple") return 0;
+  if (form === "F" && ctx.style.fVariant && s.variant !== ctx.style.fVariant) return 0;
+  if (s.p === "{archetype}" && archetypes(ctx, ctx.domain, false).length === 0) return 0;
+  if (s.p === "{fixed}" && vocabPool5(ctx, `deityFixed:${s.kind}`).length === 0) return 0;
+  let w = s.w * ((_c = (_b = ctx.style.formX) == null ? void 0 : _b[form]) != null ? _c : 1) * (form === "F" && ctx.style.fVariant ? 2 : 1);
+  return w * toneFactor((_d = s.t) != null ? _d : [], ctx.tone);
+}
+var honourPattern = (ctx, s) => ctx.style.eastHonour && s.form === "A" ? "the {eastHonour} {figure} of {domainWord}" : ctx.style.tripleThree && s.form === "triple" ? "the Three {figure:pl} of the {sacredLand}" : s.p;
+function shapesFor2(ctx, kind, forms, only) {
+  var _a2;
+  return [...DEITY_DATA.shapes, ...(_a2 = ctx.style.extra) != null ? _a2 : []].filter((s) => {
+    var _a3;
+    return s.kind === kind && (!forms || forms.includes((_a3 = s.form) != null ? _a3 : "")) && (!only || s.p === only);
+  }).map((s) => [s, shapeWeight7({ ...ctx, shape: s }, s)]).filter(([, w]) => w > 0);
+}
+function deityTitleIn(ctx, forms) {
+  var _a2;
+  for (let i = 0; i < 20; i++) {
+    const sub = { ...ctx, gender: pickOne9(GENDERS, ctx.rng), deityRef: void 0 };
+    sub.domain = (_a2 = pickWeighted5(domainWeights(sub), ctx.rng)) != null ? _a2 : sub.domain;
+    const s = pickWeighted5(shapesFor2(sub, "deity", forms), ctx.rng);
+    if (!s) return void 0;
+    sub.shape = s;
+    const raw = renderPattern8(sub, honourPattern(sub, s));
+    if (!raw) continue;
+    const text = deityCapitals(raw);
+    if (!titleOk(text, sub)) continue;
+    return text;
+  }
+  return void 0;
+}
+function titleOk(text, ctx) {
+  const counted2 = countedWords2(text);
+  if (counted2.length === 0 || counted2.length > DEITY_DATA.cap) return false;
+  if (repeatsContent(counted2)) return false;
+  return !deityTitleBlocked(text, ctx.safeguards);
+}
+function domainWeights(ctx) {
+  return domainsOffered(ctx.era, ctx.fantastic).map((d) => {
+    var _a2, _b;
+    return [d, (_b = (_a2 = ctx.style.domainX) == null ? void 0 : _a2[d.key]) != null ? _b : 1];
+  });
+}
+function deityCulture(key2) {
+  if (key2 && DEITY_DATA.unoffered.includes(key2)) return { culture: "general", notice: "This culture isn't offered for deities." };
+  return { culture: DEITY_CULTURES.some((c) => c.key === key2) ? key2 : "general" };
+}
+function generateDeityNames(options) {
+  var _a2, _b, _c;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const notices = [];
+  const { culture, notice } = deityCulture(options.culture);
+  if (notice) notices.push(notice);
+  const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
+  const fantastic = !!options.fantastic;
+  const count = Math.max(0, Math.floor(options.count));
+  const offered = domainsOffered(era, fantastic);
+  const chosenDomain = options.domain && options.domain !== "any" ? offered.find((d) => d.key === options.domain) : void 0;
+  if (options.domain && options.domain !== "any" && !chosenDomain) notices.push(`The domain \u201C${options.domain}\u201D isn't offered here.`);
+  const style = styleFor(culture, era);
+  const names = (_a2 = options.names) != null ? _a2 : "titles";
+  const base = {
+    rng,
+    culture,
+    era,
+    setting: routeSetting(era, fantastic),
+    fantastic,
+    tone: (_b = options.tone) != null ? _b : "any",
+    vocab: (_c = options.vocab) != null ? _c : BUILT_IN_VOCAB,
+    style,
+    christian: isChristianCulture(culture, era),
+    gender: "n",
+    domain: offered[0],
+    drawn: /* @__PURE__ */ new Set(),
+    words: [],
+    safeguards: options.safeguards
+  };
+  const kindWeights = DEITY_KINDS.map((k) => {
+    var _a3, _b2;
+    return [k.key, k.w * ((_b2 = (_a3 = style.kindX) == null ? void 0 : _a3[k.key]) != null ? _b2 : 1)];
+  });
+  const genderFixed = options.gender && options.gender !== "any" ? GENDER_OF[options.gender] : void 0;
+  const build = (kind, extra = {}) => {
+    var _a3, _b2, _c2;
+    for (let i = 0; i < 20; i++) {
+      const ctx = { ...base, drawn: /* @__PURE__ */ new Set(), words: [], gender: genderFixed != null ? genderFixed : pickOne9(GENDERS, rng), ...extra };
+      if (!extra.domain) ctx.domain = chosenDomain != null ? chosenDomain : pickWeighted5(domainWeights(ctx), rng);
+      const s = pickWeighted5(shapesFor2(ctx, kind, options.forms, options.shape), rng);
+      if (!s) return void 0;
+      ctx.shape = s;
+      const raw = renderPattern8(ctx, honourPattern(ctx, s));
+      if (!raw) continue;
+      const title = deityCapitals(raw);
+      if (!titleOk(title, ctx)) continue;
+      let text = title;
+      if (kind === "deity" && names !== "titles") {
+        const name = names === "placeholder" ? "[deity]" : (_a3 = options.drawName) == null ? void 0 : _a3.call(options, ctx.gender, rng);
+        if (!name) continue;
+        text = `${name}, ${title}`;
+      }
+      const tones = /* @__PURE__ */ new Set([...(_b2 = s.t) != null ? _b2 : [], ...ctx.drawn]);
+      const usesDomain = /\{(domainWord|domainSg|archetype)\}/.test(s.p) || s.form === "A" || !!s.domain;
+      return {
+        text,
+        title,
+        kind,
+        shape: s.p,
+        form: (_c2 = s.form) != null ? _c2 : "",
+        ...usesDomain ? { domain: ctx.domain.key } : {},
+        ...kind === "deity" ? { gender: ctx.gender } : {},
+        tones: GROUP_TONES.filter((t) => tones.has(t)),
+        words: ctx.words
+      };
+    }
+    return void 0;
+  };
+  const seen = /* @__PURE__ */ new Set();
+  const out = [];
+  const add2 = (n) => {
+    if (!n || seen.has(n.text.toLowerCase())) return false;
+    if (names === "pack" && n.text !== n.title && out.some((x) => x.text.split(", ")[0] === n.text.split(", ")[0])) return false;
+    seen.add(n.text.toLowerCase());
+    out.push(n);
+    return true;
+  };
+  const drawKind = () => {
+    var _a3;
+    return (_a3 = options.kind) != null ? _a3 : pickWeighted5(kindWeights, rng);
+  };
+  if (options.series) pantheon();
+  else for (let attempt2 = 0; attempt2 < count * 50 && out.length < count; attempt2++) add2(build(drawKind()));
+  if (out.length < count) notices.push(`Only ${out.length} names could be generated.`);
+  return { names: out, seed, notices };
+  function pantheon() {
+    var _a3;
+    const domainsLeft = () => offered.filter((d) => !out.some((n) => n.kind === "deity" && n.domain === d.key));
+    let turn = 0;
+    if (!options.kind || options.kind === "pantheon") for (let t = 0; t < 20 && out.length === 0; t++) add2(build("pantheon"));
+    for (let idle = 0; idle < 80 && out.length < count; ) {
+      let kind = (_a3 = options.kind) != null ? _a3 : rng() < 25 / 85 ? "place" : "deity";
+      if (kind === "pantheon" && options.kind !== "pantheon") kind = "deity";
+      if (kind === "place" && !options.kind && !out.some((n2) => n2.kind === "deity")) kind = "deity";
+      const extra = {};
+      if (kind === "deity") {
+        const left = domainsLeft();
+        extra.domain = chosenDomain != null ? chosenDomain : left.length > 0 ? pickOne9(left, rng) : pickOne9(offered, rng);
+        if (!genderFixed) extra.gender = GENDERS[turn % 3];
+      }
+      if (kind === "place") {
+        const deities = out.filter((n2) => n2.kind === "deity");
+        if (deities.length > 0) extra.deityRef = pickOne9(deities, rng).title;
+      }
+      const forms = kind === "deity" ? deityForms() : kind === "place" && extra.deityRef ? ["L1"] : void 0;
+      const n = forms ? buildWith(kind, extra, forms) : build(kind, extra);
+      if (n && add2(n)) {
+        if (kind === "deity") turn++;
+        idle = 0;
+      } else idle++;
+    }
+  }
+  function deityForms() {
+    const deities = out.filter((n) => n.kind === "deity");
+    const needC = count >= DEITY_DATA.series.from && !deities.some((n) => n.form === "C") && (deities.length >= 2 || out.length >= count - 2);
+    if (needC) return ["C"];
+    return void 0;
+  }
+  function buildWith(kind, extra, forms) {
+    const saved = options.forms;
+    options.forms = forms;
+    try {
+      return build(kind, extra);
+    } finally {
+      options.forms = saved;
+    }
+  }
+}
+
 // src/data/settlement-kit.json
 var settlement_kit_default = {
   $comment: "Settlement kit (docs/settlement-kit-brief.md \xA75\u2013\xA77): section sizes, the group line-up, positions and the ships section. The kit has no word lists of its own.",
@@ -82204,7 +82744,7 @@ function groupGenreFor(era) {
   const setting = routeSetting(era, false);
   return setting === "SF" ? "scifi" : setting === "MR" || setting === "MF" ? "modern" : "fantasy";
 }
-var isFuture4 = (era) => era === "NF" || era === "IS";
+var isFuture5 = (era) => era === "NF" || era === "IS";
 var CASTE4 = /* @__PURE__ */ new Set(["indian", "west-african"]);
 function defaultBlocked(name) {
   const n = routeNorm(name);
@@ -82234,7 +82774,7 @@ function buildContext(o, rng) {
   const place4 = () => {
     var _a3;
     for (let i = 0; i < 200; i++) {
-      const t2 = isFuture4(o.era) ? groupTown("SF", void 0, rng) : routePlace(o.culture, setting, rng);
+      const t2 = isFuture5(o.era) ? groupTown("SF", void 0, rng) : routePlace(o.culture, setting, rng);
       if (t2 && !t2.includes("[") && !blocked2(t2) && !taken.some((x) => x.toLowerCase() === t2.toLowerCase())) {
         taken.push(t2);
         return t2;
@@ -82253,7 +82793,7 @@ function buildContext(o, rng) {
       era: realmEraFor(o.era),
       genre: groupGenreFor(o.era),
       fantastic: o.fantastic,
-      character: isFuture4(o.era) ? void 0 : "territorial",
+      character: isFuture5(o.era) ? void 0 : "territorial",
       output: "official",
       people: "invented",
       tone: o.tone,
@@ -82290,10 +82830,10 @@ var KIT_POSITIONS = KIT_DATA.positions;
 var KIT_SIZES = ["village", "town", "city", "great"];
 var KIT_CONTENTS = { whole: "the whole settlement", places: "its places only", people: "its people and groups only" };
 var KIT_DETAILS = ["brief", "standard", "full"];
-var isFuture5 = (era) => era === "NF" || era === "IS";
+var isFuture6 = (era) => era === "NF" || era === "IS";
 var positionText = (key2, era) => {
   const p = KIT_POSITIONS.find((x) => x.key === key2);
-  return isFuture5(era) ? p.sf : p.text;
+  return isFuture6(era) ? p.sf : p.text;
 };
 function sectionCount(key2, size, detail, position = "inland") {
   var _a2;
@@ -82311,7 +82851,7 @@ function sectionsFor(contents, position, era) {
 function positionInfo(position, era, size) {
   var _a2;
   const p = KIT_POSITIONS.find((x) => x.key === position);
-  if (isFuture5(era) && p.sfStation) return { ...p.sfStation, roadsExtra: 0 };
+  if (isFuture6(era) && p.sfStation) return { ...p.sfStation, roadsExtra: 0 };
   return { setting: size === "village" && p.villageSetting ? p.villageSetting : p.setting, ships: p.ships, effects: p.effects, roadsExtra: (_a2 = p.roadsExtra) != null ? _a2 : 0 };
 }
 function shipsModule(position, era) {
@@ -82347,7 +82887,7 @@ function resolveKitOptions(o) {
 function kitSummary(o, realm2) {
   const size = sizeLabel(o.size, o.era);
   const p = KIT_POSITIONS.find((x) => x.key === o.position);
-  const where2 = isFuture5(o.era) ? p.sfSummary : p.summary;
+  const where2 = isFuture6(o.era) ? p.sfSummary : p.summary;
   const the = realm2 && !/^the /i.test(realm2) ? `the ${realm2}` : realm2;
   return `${/^[aeiou]/i.test(size) ? "an" : "a"} ${size}${where2 ? ` ${where2}` : ""}${the ? `, in ${the}` : ""}`;
 }
@@ -82494,7 +83034,7 @@ function generateKit(options) {
   if (module2 && want("ships") > 0) {
     const vesselCulture = VESSEL_CULTURES.some((c) => c.key === context.vesselCulture) ? context.vesselCulture : "general";
     const technology = (_g = KIT_DATA.vessels[module2][o.era]) != null ? _g : module2 === "ships" ? "T7" : "S3";
-    const fn = (isFuture5(o.era) && o.position === "crossroads" ? "any" : pos.ships) === "working" ? "working" : void 0;
+    const fn = (isFuture6(o.era) && o.position === "crossroads" ? "any" : pos.ships) === "working" ? "working" : void 0;
     run("ships", want("ships"), (seed, count) => {
       const b = generateVesselNames({ module: module2, culture: vesselCulture, technology, function: fn, genre: groupGenreFor(o.era), fantastic: o.fantastic, tone: o.tone, people: o.people, count, seed, safeguards: g.vessel, context });
       return { names: b.names.map((n) => ({ text: n.text, kind: n.function })), notices: b.notices };
@@ -82639,6 +83179,7 @@ function parseModulePreset(content, fileName) {
   if (values.module === BUILDING_PRESET_MODULE) return parseBuildingPreset(values, body, fileName);
   if (values.module === KIT_PRESET_MODULE) return parseKitPreset(values, body, fileName);
   if (values.module === EVENT_PRESET_MODULE) return parseEventPreset(values, body, fileName);
+  if (values.module === DEITY_PRESET_MODULE) return parseDeityPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module \u201C${(_a2 = values.module) != null ? _a2 : ""}\u201D.`);
     return { problems };
@@ -82672,6 +83213,7 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("deityKind" in preset) return deityPresetContent(preset);
   if ("eventKind" in preset) return eventPresetContent(preset);
   if ("contents" in preset) return kitPresetContent(preset);
   if ("buildingKind" in preset) return buildingPresetContent(preset);
@@ -83285,6 +83827,68 @@ function eventPresetContent(preset) {
     ""
   ].join("\n");
 }
+var DEITY_PRESET_MODULE = "deity-names";
+function parseDeityPreset(values, body, fileName) {
+  const problems = [];
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const flag = (key2) => {
+    const v = values[key2];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return false;
+  };
+  const { culture, notice } = deityCulture(values.culture || "general");
+  if (notice) problems.push(notice);
+  else if (values.culture && culture !== values.culture) problems.push(`Unknown culture \u201C${values.culture}\u201D.`);
+  return {
+    deity: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      culture,
+      deityKind: pick4("kind", "any", (v) => v === "any" || DEITY_KINDS.some((k) => k.key === v)),
+      domain: pick4("domain", "any", (v) => v === "any" || DEITY_DOMAINS.some((d) => d.key === v)),
+      gender: pick4("gender", "any", (v) => ["any", "male", "female", "neither"].includes(v)),
+      era: pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      fantastic: flag("fantastic"),
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      names: pick4("names", "titles", (v) => ["titles", "placeholder", "pack"].includes(v)),
+      ...values.pack ? { pack: values.pack } : {},
+      ...values.section ? { section: values.section } : {},
+      series: flag("series")
+    },
+    problems
+  };
+}
+function deityPresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${DEITY_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.deityKind}`,
+    `domain: ${preset.domain}`,
+    `gender: ${preset.gender}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `tone: ${preset.tone}`,
+    `names: ${preset.names}`,
+    ...preset.pack ? [`pack: ${preset.pack}`] : [],
+    ...preset.section ? [`section: ${preset.section}`] : [],
+    `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
 var VESSEL_PRESET_MODULE = "vessels";
 function parseVesselPreset(values, body, fileName) {
   var _a2, _b;
@@ -83652,6 +84256,180 @@ Names to allow, though they echo a real or well-known route.
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
 
+// src/deities/sentence.ts
+var DEFAULT_DEITY_STATE = {
+  culture: "general",
+  gender: "any",
+  era: "MD",
+  fantastic: false,
+  tone: "any",
+  names: "titles",
+  series: false
+};
+var GENDER_TEXT = { any: "of any gender", male: "male", female: "female", neither: "neither male nor female" };
+var NAMES_TEXT = { titles: "as titles only", placeholder: "with placeholder names", pack: "with names from" };
+var SERIES_TEXT4 = { off: "each one separate", on: "as one pantheon" };
+var showsPersonLinks = (state) => state.kind !== "place";
+function deitySentence(state, packs = []) {
+  var _a2, _b, _c;
+  const out = [];
+  const culture = (_a2 = DEITY_CULTURES.find((c) => c.key === state.culture)) != null ? _a2 : DEITY_CULTURES[0];
+  out.push({
+    field: "culture",
+    text: culture.label,
+    title: "Naming culture: whose customs shape the faith (never its real gods)",
+    choices: DEITY_CULTURES.map((c) => ({ id: c.key, label: c.label })),
+    current: culture.key
+  });
+  out.push("-themed ");
+  const kind = DEITY_KINDS.find((k) => k.key === state.kind);
+  out.push({
+    field: "kind",
+    text: kind ? kind.plural : DEITY_ANY,
+    title: kind ? kind.description : DEITY_ANY.charAt(0).toUpperCase() + DEITY_ANY.slice(1),
+    choices: [{ id: void 0, label: "Any" }, ...DEITY_KINDS.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
+    current: kind == null ? void 0 : kind.key
+  });
+  out.push(" of ");
+  const offered = domainsOffered(state.era, state.fantastic);
+  const domain = offered.find((d) => d.key === state.domain);
+  out.push({
+    field: "domain",
+    text: domain ? domain.label : "any domain",
+    title: "What the deity rules over",
+    choices: [{ id: void 0, label: "any domain" }, ...offered.map((d) => ({ id: d.key, label: d.label }))],
+    current: domain == null ? void 0 : domain.key
+  });
+  out.push(", ");
+  if (showsPersonLinks(state)) {
+    out.push({
+      field: "gender",
+      text: GENDER_TEXT[state.gender],
+      title: "Decides Lord or Lady, He Who or She Who, Father or Mother; neither gives They Who and The One",
+      choices: ["any", "male", "female", "neither"].map((g) => ({ id: g, label: GENDER_TEXT[g] })),
+      current: state.gender
+    });
+    out.push(", ");
+  }
+  out.push("of the ");
+  out.push({
+    field: "era",
+    text: routeEraLabel(state.era),
+    title: "The age: decides which domains exist (engines in the steam age, machines in the future)",
+    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
+    current: state.era
+  });
+  out.push(" era, in a ");
+  const words = fantasticWords(state.era);
+  out.push({
+    field: "fantastic",
+    text: words[state.fantastic ? 1 : 0],
+    title: "Open magic and monsters; in the steam age, steampunk",
+    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
+    current: state.fantastic ? "on" : "off"
+  });
+  out.push(" world, ");
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
+  out.push(", ");
+  if (showsPersonLinks(state)) {
+    out.push({
+      field: "names",
+      text: NAMES_TEXT[state.names],
+      title: "Titles alone, a placeholder before the title, or a name from one of your packs",
+      choices: ["titles", "placeholder", "pack"].map((n) => ({ id: n, label: n === "pack" ? "with names from a pack" : NAMES_TEXT[n] })),
+      current: state.names
+    });
+    if (state.names === "pack") {
+      out.push(" ");
+      out.push({
+        field: "pack",
+        text: (_c = (_b = state.pack) != null ? _b : packs[0]) != null ? _c : "a pack",
+        title: "The name pack the names come from (its section for the gender)",
+        choices: packs.map((p) => ({ id: p, label: p })),
+        current: state.pack
+      });
+    }
+    out.push(", ");
+  }
+  out.push({
+    field: "series",
+    text: SERIES_TEXT4[state.series ? "on" : "off"],
+    title: "A pantheon: one court name, then deities of different domains",
+    choices: [
+      { id: "off", label: SERIES_TEXT4.off },
+      { id: "on", label: SERIES_TEXT4.on }
+    ],
+    current: state.series ? "on" : "off"
+  });
+  return out;
+}
+function deitySentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function chooseDeity(state, field, id) {
+  const next = { ...state };
+  switch (field) {
+    case "culture":
+      next.culture = DEITY_CULTURES.some((c) => c.key === id) ? id : "general";
+      break;
+    case "kind":
+      next.kind = id;
+      break;
+    case "domain":
+      next.domain = id;
+      break;
+    case "gender":
+      next.gender = id != null ? id : "any";
+      break;
+    case "era":
+      next.era = ROUTE_ERAS.some((e) => e.code === id) ? id : DEFAULT_DEITY_STATE.era;
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "names":
+      next.names = id != null ? id : "titles";
+      break;
+    case "pack":
+      next.pack = id;
+      break;
+    case "series":
+      next.series = id === "on";
+      break;
+  }
+  if (next.domain && !domainsOffered(next.era, next.fantastic).some((d) => d.key === next.domain)) next.domain = void 0;
+  return next;
+}
+var effectiveDeityState = (state) => showsPersonLinks(state) ? state : { ...state, gender: "any", names: "titles" };
+function deityHistoryLabel(state) {
+  var _a2, _b;
+  const culture = (_b = (_a2 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+  const kind = DEITY_KINDS.find((k) => k.key === state.kind);
+  const domain = DEITY_DOMAINS.find((d) => d.key === state.domain);
+  const s = effectiveDeityState(state);
+  return [
+    "deities and sacred places",
+    routeEraLabel(state.era),
+    culture,
+    ...kind ? [kind.plural] : [],
+    ...domain ? [domain.label] : [],
+    ...s.gender !== "any" ? [s.gender] : [],
+    ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
+    ...state.tone !== "any" ? [state.tone] : [],
+    ...state.series ? ["one pantheon"] : []
+  ].join(" \xB7 ");
+}
+
 // src/events/sentence.ts
 var DEFAULT_EVENT_STATE = {
   culture: "norman-british",
@@ -83663,7 +84441,7 @@ var DEFAULT_EVENT_STATE = {
   series: false
 };
 var PEOPLE_TEXT5 = { placeholders: "placeholders for", invented: "invented" };
-var SERIES_TEXT4 = { off: "each one separate", on: "as one history" };
+var SERIES_TEXT5 = { off: "each one separate", on: "as one history" };
 var scaleText = (key2) => EVENT_SCALES.find((s) => s.key === key2).text;
 function eventSentence(state) {
   var _a2;
@@ -83733,11 +84511,11 @@ function eventSentence(state) {
   out.push(" people and places, ");
   out.push({
     field: "series",
-    text: SERIES_TEXT4[state.series ? "on" : "off"],
+    text: SERIES_TEXT5[state.series ? "on" : "off"],
     title: "A short chronicle in order, with eras framing the events",
     choices: [
-      { id: "off", label: SERIES_TEXT4.off },
-      { id: "on", label: SERIES_TEXT4.on }
+      { id: "off", label: SERIES_TEXT5.off },
+      { id: "on", label: SERIES_TEXT5.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -84083,7 +84861,7 @@ var DEFAULT_BUILDING_STATE = {
   series: false
 };
 var PEOPLE_TEXT7 = { placeholders: "placeholders for", invented: "invented" };
-var SERIES_TEXT5 = { off: "each one separate", on: "as one town" };
+var SERIES_TEXT6 = { off: "each one separate", on: "as one town" };
 var settingText = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
 function buildingSentence(state) {
   var _a2;
@@ -84166,11 +84944,11 @@ function buildingSentence(state) {
   out.push(" people and places, ");
   out.push({
     field: "series",
-    text: SERIES_TEXT5[state.series ? "on" : "off"],
+    text: SERIES_TEXT6[state.series ? "on" : "off"],
     title: "One town's buildings: one of each kind, one town and one founder, no qualifier twice",
     choices: [
-      { id: "off", label: SERIES_TEXT5.off },
-      { id: "on", label: SERIES_TEXT5.on }
+      { id: "off", label: SERIES_TEXT6.off },
+      { id: "on", label: SERIES_TEXT6.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -84244,7 +85022,7 @@ var DEFAULT_INN_STATE = {
   series: false
 };
 var PEOPLE_TEXT8 = { placeholders: "placeholders for", invented: "invented" };
-var SERIES_TEXT6 = { off: "each one separate", on: "as one town" };
+var SERIES_TEXT7 = { off: "each one separate", on: "as one town" };
 var settingText2 = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
 var showsForm = (state) => hasSignTradition(state.culture);
 function innSentence(state) {
@@ -84338,11 +85116,11 @@ function innSentence(state) {
   out.push(" people and places, ");
   out.push({
     field: "series",
-    text: SERIES_TEXT6[state.series ? "on" : "off"],
+    text: SERIES_TEXT7[state.series ? "on" : "off"],
     title: "One town's houses: no sign word twice, one roadside house and one landmark",
     choices: [
-      { id: "off", label: SERIES_TEXT6.off },
-      { id: "on", label: SERIES_TEXT6.on }
+      { id: "off", label: SERIES_TEXT7.off },
+      { id: "on", label: SERIES_TEXT7.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -84420,7 +85198,7 @@ var DEFAULT_STREET_STATE = {
   series: false
 };
 var PEOPLE_TEXT9 = { placeholders: "placeholders for", invented: "invented" };
-var SERIES_TEXT7 = { off: "each one separate", on: "as one town" };
+var SERIES_TEXT8 = { off: "each one separate", on: "as one town" };
 var DIALECT_TEXT = {
   plain: "with plain words only",
   variants: "with dialect words as variants",
@@ -84533,11 +85311,11 @@ function streetSentence(state) {
   out.push(" people and places, ");
   out.push({
     field: "series",
-    text: SERIES_TEXT7[state.series ? "on" : "off"],
+    text: SERIES_TEXT8[state.series ? "on" : "off"],
     title: "One town's streets: a main street first, then no repeats",
     choices: [
-      { id: "off", label: SERIES_TEXT7.off },
-      { id: "on", label: SERIES_TEXT7.on }
+      { id: "off", label: SERIES_TEXT8.off },
+      { id: "on", label: SERIES_TEXT8.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -85826,12 +86604,12 @@ function terrainHeading(heading) {
   const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
   return m ? { terrain: m[1].trim(), part: m[2].toLowerCase() } : null;
 }
-function terrainId(token10, custom) {
+function terrainId(token11, custom) {
   var _a2;
-  const t = norm5(token10);
+  const t = norm5(token11);
   const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm5(x.id) === t || norm5(x.label) === t));
   if (builtIn) return builtIn.id;
-  return (_a2 = custom.find((x) => norm5(x.label) === t || x.id === kebab2(token10))) == null ? void 0 : _a2.id;
+  return (_a2 = custom.find((x) => norm5(x.label) === t || x.id === kebab2(token11))) == null ? void 0 : _a2.id;
 }
 var key = (words) => words.map(([w, n]) => `${norm5(w)}|${n}`).sort().join("\n");
 var entryKey = (entries) => entries.map((e) => `${norm5(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
@@ -88313,6 +89091,7 @@ var SECTION_ORDER = [
   ...GROUP_NAME_SECTIONS,
   ...BYNAME_SECTIONS,
   "eventNames",
+  "deityNames",
   "nameAgeing",
   "nameTakeover",
   ...VESSEL_SECTIONS
@@ -88322,7 +89101,7 @@ var SECTION_GROUPS = {
   groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   // Events brief §1.1 (the deities brief adds its module here).
-  lore: ["eventNames"],
+  lore: ["eventNames", "deityNames"],
   advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS]
 };
 var GROUP_LABELS = {
@@ -88345,6 +89124,7 @@ var SECTION_LABELS = {
   buildingNames: "buildings and landmarks",
   settlementKit: "settlement kit",
   eventNames: "events and eras",
+  deityNames: "deities and sacred places",
   riverNames: "river names",
   explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
@@ -88381,6 +89161,7 @@ function historySection(packName) {
   if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
   if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
   if (starts(SECTION_LABELS.eventNames)) return "eventNames";
+  if (starts(SECTION_LABELS.deityNames)) return "deityNames";
   if (starts(SECTION_LABELS.realms)) return "realms";
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
@@ -88422,6 +89203,8 @@ var SECTION_ICONS = {
   settlementKit: "building-2",
   // Events brief §1.1.
   eventNames: "scroll-text",
+  // Deities brief §1.1.
+  deityNames: "sun-moon",
   riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
@@ -88469,6 +89252,7 @@ function packTypeIconId(packType, subGenerator) {
   if (packType === "buildingPreset") return "landmark";
   if (packType === "kitPreset") return "building-2";
   if (packType === "eventPreset") return "scroll-text";
+  if (packType === "deityPreset") return "sun-moon";
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;
   }
@@ -88716,6 +89500,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.currentKit = null;
     /** Events brief §2: the events sentence's choices, session only. */
     this.eventState = { ...DEFAULT_EVENT_STATE };
+    /** Deities brief §2: the deities sentence's choices, session only. */
+    this.deityState = { ...DEFAULT_DEITY_STATE };
     /** Each switcher group's last-used module (session only). */
     this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", lore: "eventNames", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
@@ -89087,10 +89873,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     (_c = this.packDropdownEl) == null ? void 0 : _c.toggle(section === "markov");
     (_d = this.sectionSentenceEl) == null ? void 0 : _d.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_e = this.editRecipeButton) == null ? void 0 : _e.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset"));
+    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "deityPreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "deityNames";
     (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart && !tribal);
     (_i = this.landButton) == null ? void 0 : _i.refresh();
     (_j = this.guideButton) == null ? void 0 : _j.toggle(!!colonialPart);
@@ -89398,6 +90184,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     else if (section === "buildingNames") this.renderBuildingSentence(row);
     else if (section === "settlementKit") this.renderKitSentence(row);
     else if (section === "eventNames") this.renderEventSentence(row);
+    else if (section === "deityNames") this.renderDeitySentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -89659,7 +90446,12 @@ ${n.origin}${also}${echo}` };
   async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian13.TFile)) return;
-    const { preset, group, byname, vessel, realm: realm2, route: route3, street, inn, building, kit, event } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, realm: realm2, route: route3, street, inn, building, kit, event, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (deity) {
+      this.deityState = this.deityPresetState(deity);
+      this.switchSection("deityNames");
+      return;
+    }
     if (event) {
       this.eventState = this.eventPresetState(event);
       this.switchSection("eventNames");
@@ -90043,6 +90835,140 @@ ${n.origin}${also}${echo}` };
       return;
     }
     await this.runInns(this.innPresetState(inn), `${SECTION_LABELS.innNames} \xB7 ${inn.packName}`, problems);
+  }
+  // ── Deities and sacred places (Deities brief) ────────────────────────────
+  deityPresetState(p) {
+    const base = {
+      culture: p.culture,
+      kind: p.deityKind === "any" ? void 0 : p.deityKind,
+      domain: p.domain === "any" ? void 0 : p.domain,
+      gender: p.gender,
+      era: p.era,
+      fantastic: p.fantastic,
+      tone: p.tone,
+      names: p.names,
+      ...p.pack ? { pack: p.pack } : {},
+      series: p.series
+    };
+    return chooseDeity(base, "domain", base.domain);
+  }
+  /** §2: the sentence (the pack link lists the name packs, as bynames do). */
+  renderDeitySentence(row) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    if (this.deityState.names === "pack" && !this.bynamePacksLoaded) {
+      this.bynamePacksLoaded = true;
+      void this.loadBynamePacks().then(() => this.renderContextRow());
+    }
+    for (const segment2 of deitySentence(this.deityState, this.bynamePacks.map((p) => p.name))) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      const choices = segment2.field === "pack" ? async () => (await this.loadBynamePacks()).map((p) => ({ id: p.name, label: p.name })) : () => segment2.choices;
+      this.sentenceLink(sentence2, segment2.text, segment2.title, choices, segment2.current, (id) => {
+        var _a2;
+        const next = chooseDeity(this.deityState, segment2.field, id);
+        if (segment2.field === "names" && next.names === "pack" && !next.pack) next.pack = (_a2 = this.bynamePacks[0]) == null ? void 0 : _a2.name;
+        this.deityState = next;
+        if (segment2.field === "names" && next.names === "pack") void this.loadBynamePacks().then(() => this.renderContextRow());
+      });
+    }
+  }
+  /** §7.1: names from a pack through BT's draw, the section by gender (the first section for neither). */
+  async deityDraw(state) {
+    var _a2, _b, _c, _d;
+    if (state.names !== "pack") return { notices: [] };
+    const packs = await this.loadBynamePacks();
+    const name = (_b = state.pack) != null ? _b : (_a2 = packs[0]) == null ? void 0 : _a2.name;
+    if (!name) return { notices: ["No name packs found; placeholders used."] };
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
+    const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian13.normalizePath)(`${folder}/${name}.md`));
+    if (!draw2) return { notices };
+    const headings = (_d = (_c = packs.find((p) => p.name === name)) == null ? void 0 : _c.headings) != null ? _d : [];
+    return {
+      draw: (g, rng) => draw2(g === "n" ? headings[0] ? { section: headings[0] } : {} : sectionRequest({ section: "gender" }, headings, "self", g === "m" ? "male" : "female"), "whole", rng),
+      notices
+    };
+  }
+  /** GN §14: the finished strings only; history "deities and sacred places · {era} · {culture}…". */
+  async runDeities(state = this.deityState, label, problems = []) {
+    var _a2;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
+    const s = effectiveDeityState(state);
+    const guards = await this.loadSettlementSafeguards(DEITY_DATA.safeguards);
+    const vocab = await this.loadSettlementVocabulary(guards.safeguards, deityWordBlocked);
+    const pack = await this.deityDraw(s);
+    const result = generateDeityNames({
+      culture: s.culture,
+      kind: s.kind,
+      domain: s.domain,
+      gender: s.gender,
+      era: s.era,
+      fantastic: s.fantastic,
+      tone: s.tone,
+      // A pack that can't be drawn runs with placeholders (BT §12).
+      names: s.names === "pack" && !pack.draw ? "placeholder" : s.names,
+      drawName: pack.draw,
+      series: s.series,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards,
+      vocab: vocab.vocab
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
+      "none"
+    );
+    await this.recordGenerationHistory(result.names.length, label != null ? label : deityHistoryLabel(state));
+    this.setStatus([...problems, ...result.notices, ...pack.notices, ...guards.notices, ...vocab.notices].join(" "));
+  }
+  /** §12: "{culture} · {kind or deities and sacred places}", described by the sentence. */
+  openSaveDeityPreset() {
+    var _a2, _b;
+    const state = this.deityState;
+    const culture = (_b = (_a2 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+    const kind = DEITY_KINDS.find((k) => k.key === state.kind);
+    const name = [culture, kind ? kind.menu : SECTION_LABELS.deityNames].join(" \xB7 ");
+    const description = deitySentenceText(deitySentence(state, this.bynamePacks.map((p) => p.name)));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a3, _b2;
+      if (!presetName) {
+        new import_obsidian13.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        culture: state.culture,
+        deityKind: (_a3 = state.kind) != null ? _a3 : "any",
+        domain: (_b2 = state.domain) != null ? _b2 : "any",
+        gender: state.gender,
+        era: state.era,
+        fantastic: state.fantastic,
+        tone: state.tone,
+        names: state.names,
+        ...state.names === "pack" && state.pack ? { pack: state.pack } : {},
+        series: state.series
+      });
+      return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).deity);
+    }).open();
+  }
+  /** §12: a deity preset, run as the module runs; history "deities and sacred places · {preset}". */
+  async runDeityPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian13.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { deity, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!deity) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runDeities(this.deityPresetState(deity), `${SECTION_LABELS.deityNames} \xB7 ${deity.packName}`, problems);
   }
   // ── Events and eras (Events brief) ───────────────────────────────────────
   eventPresetState(p) {
@@ -90914,7 +91840,7 @@ ${n.origin}${also}${echo}` };
     var _a2;
     const section = this.activeSection;
     (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "deityNames" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -90959,6 +91885,10 @@ ${n.origin}${also}${echo}` };
     }
     if (this.activeSection === "eventNames") {
       this.openSaveEventPreset();
+      return;
+    }
+    if (this.activeSection === "deityNames") {
+      this.openSaveDeityPreset();
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -91717,7 +92647,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "kitPreset" || packType === "eventPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "kitPreset" || packType === "eventPreset" || packType === "deityPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -91877,6 +92807,7 @@ ${text}
           else if (parsed.building) packs.push({ path: child.path, packType: "buildingPreset" });
           else if (parsed.kit) packs.push({ path: child.path, packType: "kitPreset" });
           else if (parsed.event) packs.push({ path: child.path, packType: "eventPreset" });
+          else if (parsed.deity) packs.push({ path: child.path, packType: "deityPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -92019,9 +92950,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
-    const { preset, group, byname, vessel, realm: realm2, route: route3, street, inn, building, kit, event, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = event ? "eventPreset" : kit ? "kitPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm2 ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q;
+    const { preset, group, byname, vessel, realm: realm2, route: route3, street, inn, building, kit, event, deity, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = deity ? "deityPreset" : event ? "eventPreset" : kit ? "kitPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm2 ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -92031,9 +92962,9 @@ ${text}
     (_a2 = this.sectionSentenceEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
-    const module2 = event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
+    const module2 = deity ? SECTION_LABELS.deityNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
     (_e = this.openPresetButton) == null ? void 0 : _e.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm2 == null ? void 0 : realm2.packName) != null ? _j : route3 == null ? void 0 : route3.packName) != null ? _k : street == null ? void 0 : street.packName) != null ? _l : inn == null ? void 0 : inn.packName) != null ? _m : building == null ? void 0 : building.packName) != null ? _n : kit == null ? void 0 : kit.packName) != null ? _o : event == null ? void 0 : event.packName) != null ? _p : file.basename;
+    this.plugin.settings.packName = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm2 == null ? void 0 : realm2.packName) != null ? _j : route3 == null ? void 0 : route3.packName) != null ? _k : street == null ? void 0 : street.packName) != null ? _l : inn == null ? void 0 : inn.packName) != null ? _m : building == null ? void 0 : building.packName) != null ? _n : kit == null ? void 0 : kit.packName) != null ? _o : event == null ? void 0 : event.packName) != null ? _p : deity == null ? void 0 : deity.packName) != null ? _q : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -92486,6 +93417,10 @@ ${text}
       await this.runEvents();
       return;
     }
+    if (this.activeSection === "deityNames") {
+      await this.runDeities();
+      return;
+    }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
@@ -92561,6 +93496,10 @@ ${text}
     }
     if (this.currentPackType === "eventPreset") {
       await this.runEventPreset();
+      return;
+    }
+    if (this.currentPackType === "deityPreset") {
+      await this.runDeityPreset();
       return;
     }
     if (this.currentPackType === "groupPreset") {
