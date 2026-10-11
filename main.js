@@ -461,19 +461,19 @@ function stripInlineMarkup(s) {
 function parseNameTokens(text) {
   const tokens = text.split(/[\n,;]/).flatMap((t) => splitOnJoiners(t)).flatMap((t) => splitSpaceSeparatedList(t)).map((t) => t.trim()).filter((t) => t.length > 0);
   const names = [];
-  for (const token7 of tokens) {
-    const cleaned = cleanToken(stripLeadingConjunction(token7));
+  for (const token8 of tokens) {
+    const cleaned = cleanToken(stripLeadingConjunction(token8));
     if (cleaned === "" || isNoise(cleaned)) continue;
     names.push(cleaned);
   }
   return dedupe(names);
 }
-function splitSpaceSeparatedList(token7) {
-  const parts = splitOnUnquotedWhitespace(token7);
+function splitSpaceSeparatedList(token8) {
+  const parts = splitOnUnquotedWhitespace(token8);
   if (parts.length >= 3) return parts;
-  const loose = unwrapOuterQuotes(token7.trim()).split(/\s+/).filter((p) => p.length > 0);
+  const loose = unwrapOuterQuotes(token8.trim()).split(/\s+/).filter((p) => p.length > 0);
   if (loose.length >= 3) return loose;
-  return [token7];
+  return [token8];
 }
 function unwrapOuterQuotes(s) {
   const pairs = [
@@ -489,11 +489,11 @@ function unwrapOuterQuotes(s) {
   }
   return s;
 }
-function splitOnUnquotedWhitespace(token7) {
+function splitOnUnquotedWhitespace(token8) {
   const parts = [];
   let current = "";
   let quote2 = null;
-  for (const char of token7) {
+  for (const char of token8) {
     if (quote2) {
       current += char;
       if (char === matchingQuote(quote2)) quote2 = null;
@@ -519,8 +519,8 @@ function matchingQuote(open) {
   if (open === "\u2018") return "\u2019";
   return open;
 }
-function splitOnJoiners(token7) {
-  let parts = [token7];
+function splitOnJoiners(token8) {
+  let parts = [token8];
   for (const joiner of JOINERS) {
     const next = [];
     for (const part of parts) {
@@ -536,12 +536,12 @@ function splitOnJoiners(token7) {
   }
   return parts;
 }
-function stripLeadingConjunction(token7) {
-  const lower2 = token7.toLowerCase();
+function stripLeadingConjunction(token8) {
+  const lower2 = token8.toLowerCase();
   for (const lead of LEADERS) {
-    if (lower2.startsWith(lead)) return token7.slice(lead.length).trim();
+    if (lower2.startsWith(lead)) return token8.slice(lead.length).trim();
   }
-  return token7;
+  return token8;
 }
 function cleanToken(s) {
   let t = s.trim();
@@ -1544,12 +1544,12 @@ function generateCompoundTitled(parts, options) {
   };
   const out = [];
   const seen = /* @__PURE__ */ new Set();
-  const live2 = titles.map((_, i) => i);
-  while (out.length < count && live2.length > 0) {
-    const pick4 = live2[Math.floor(rng() * live2.length)];
+  const live3 = titles.map((_, i) => i);
+  while (out.length < count && live3.length > 0) {
+    const pick4 = live3[Math.floor(rng() * live3.length)];
     const names = batch(pick4);
     if (cursors[pick4] >= names.length) {
-      live2.splice(live2.indexOf(pick4), 1);
+      live3.splice(live3.indexOf(pick4), 1);
       continue;
     }
     const name = names[cursors[pick4]++];
@@ -1677,35 +1677,35 @@ function applyTemplate(derived, template) {
 }
 function mergeWithTemplate(derived, template) {
   var _a2, _b, _c;
-  const merged = { ...derived };
+  const merged2 = { ...derived };
   if (isCompoundPack(derived)) {
     const count = (_b = (_a2 = derived.compoundParts) != null ? _a2 : template.compoundParts) != null ? _b : 2;
-    merged.parts = Array.from({ length: count }, (_, i) => {
+    merged2.parts = Array.from({ length: count }, (_, i) => {
       var _a3, _b2, _c2, _d;
       const own = (_b2 = (_a3 = derived.parts) == null ? void 0 : _a3[i]) != null ? _b2 : [];
       return own.length > 0 ? own : (_d = (_c2 = template.parts) == null ? void 0 : _c2[i]) != null ? _d : [];
     });
-    merged.compoundPartData = Array.from({ length: count }, (_, i) => {
+    merged2.compoundPartData = Array.from({ length: count }, (_, i) => {
       var _a3, _b2, _c2, _d;
       const own = (_b2 = (_a3 = derived.parts) == null ? void 0 : _a3[i]) != null ? _b2 : [];
       const from = own.length > 0 ? derived : template;
-      return (_d = (_c2 = from.compoundPartData) == null ? void 0 : _c2[i]) != null ? _d : { names: merged.parts[i] };
+      return (_d = (_c2 = from.compoundPartData) == null ? void 0 : _c2[i]) != null ? _d : { names: merged2.parts[i] };
     });
-    return merged;
+    return merged2;
   }
   if (derived.packType === "mixPack") {
-    merged.mixSources = ((_c = derived.mixSources) != null ? _c : []).length > 0 ? derived.mixSources : template.mixSources;
-    return merged;
+    merged2.mixSources = ((_c = derived.mixSources) != null ? _c : []).length > 0 ? derived.mixSources : template.mixSources;
+    return merged2;
   }
   const asSections = (p) => {
     var _a3;
     return (_a3 = p.sectioned) != null ? _a3 : { unsectioned: p.names, sections: [] };
   };
   const sectioned = mergeSectionedNames(asSections(derived), asSections(template));
-  merged.names = allSectionedNames(sectioned);
-  if (sectioned.sections.length > 0) merged.sectioned = sectioned;
-  else delete merged.sectioned;
-  return merged;
+  merged2.names = allSectionedNames(sectioned);
+  if (sectioned.sections.length > 0) merged2.sectioned = sectioned;
+  else delete merged2.sectioned;
+  return merged2;
 }
 function createNamesFileContent(packName, names, packType = "breakdownPack", options = {}) {
   const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
@@ -13454,9 +13454,9 @@ function environmentMultipliers(biome, terrain) {
 function pickWeightedPair(items, rng) {
   const total = items.reduce((sum, [, w]) => sum + w, 0);
   let roll = rng() * total;
-  for (const [item, w] of items) {
+  for (const [item2, w] of items) {
     roll -= w;
-    if (roll < 0) return item;
+    if (roll < 0) return item2;
   }
   return items[items.length - 1][0];
 }
@@ -20793,9 +20793,9 @@ function pickUniform(items, rng) {
 function pickWeighted(entries, rng) {
   const total = entries.reduce((sum, [, w]) => sum + w, 0);
   let r = rng() * total;
-  for (const [item, weight] of entries) {
+  for (const [item2, weight] of entries) {
     r -= weight;
-    if (r < 0) return item;
+    if (r < 0) return item2;
   }
   return entries[entries.length - 1][0];
 }
@@ -25830,14 +25830,14 @@ function ageName(input) {
   const finalW = eraWeight(depth, depth);
   const floor = AGEING.depthFloor[depth];
   const best = /* @__PURE__ */ new Map();
-  for (const item of pool3) {
-    if (item.form === source) continue;
-    if (rSource(item.form) < floor) continue;
-    if (plausibility(item.form) < AGEING.minPlausibility) continue;
-    if (Array.from(item.form).some((ch) => !SEPARATOR.test(ch) && !inv.letters.has(ch))) continue;
-    const s = score(item.form, finalW);
-    const existing = best.get(item.form);
-    if (!existing || s > existing.score) best.set(item.form, { ...item, score: s });
+  for (const item2 of pool3) {
+    if (item2.form === source) continue;
+    if (rSource(item2.form) < floor) continue;
+    if (plausibility(item2.form) < AGEING.minPlausibility) continue;
+    if (Array.from(item2.form).some((ch) => !SEPARATOR.test(ch) && !inv.letters.has(ch))) continue;
+    const s = score(item2.form, finalW);
+    const existing = best.get(item2.form);
+    if (!existing || s > existing.score) best.set(item2.form, { ...item2, score: s });
   }
   const ranked = [...best.values()].sort((a, b) => b.score - a.score || a.form.localeCompare(b.form));
   const selected = [];
@@ -25935,14 +25935,14 @@ function adoptName(input) {
   );
   let best = null;
   let bestScore = -Infinity;
-  for (const item of pool3) {
-    if (item.form === source) continue;
-    if (R(item.form) < TAKEOVER.minRecognisability) continue;
-    if (P(item.form) < TAKEOVER.minPlausibility) continue;
-    if (Array.from(content(item.form)).some((ch) => !SEPARATOR.test(ch) && !inv.letters.has(ch))) continue;
-    const s = score(item.form, TAKEOVER.pWeight);
-    if (s > bestScore || s === bestScore && best && item.form.localeCompare(best.form) < 0) {
-      best = item;
+  for (const item2 of pool3) {
+    if (item2.form === source) continue;
+    if (R(item2.form) < TAKEOVER.minRecognisability) continue;
+    if (P(item2.form) < TAKEOVER.minPlausibility) continue;
+    if (Array.from(content(item2.form)).some((ch) => !SEPARATOR.test(ch) && !inv.letters.has(ch))) continue;
+    const s = score(item2.form, TAKEOVER.pWeight);
+    if (s > bestScore || s === bestScore && best && item2.form.localeCompare(best.form) < 0) {
+      best = item2;
       bestScore = s;
     }
   }
@@ -30469,15 +30469,15 @@ function findTradition(key2) {
   return TRIBAL_TRADITIONS.find((t) => t.key === key2);
 }
 function pick(items, rng) {
-  const live2 = items.filter(([, w]) => w > 0);
-  if (live2.length === 0) return void 0;
-  const total = live2.reduce((n, [, w]) => n + w, 0);
+  const live3 = items.filter(([, w]) => w > 0);
+  if (live3.length === 0) return void 0;
+  const total = live3.reduce((n, [, w]) => n + w, 0);
   let r = rng() * total;
-  for (const [item, w] of live2) {
+  for (const [item2, w] of live3) {
     r -= w;
-    if (r < 0) return item;
+    if (r < 0) return item2;
   }
-  return live2[live2.length - 1][0];
+  return live3[live3.length - 1][0];
 }
 var pickRecord = (weights, rng) => pick(Object.entries(weights), rng);
 var pickPool = (pool3, rng) => pick([...pool3.entries()], rng);
@@ -31577,9 +31577,9 @@ function pickWeighted2(weights, rng) {
   const items = Object.entries(weights).filter(([, w]) => w > 0);
   const total = items.reduce((n, [, w]) => n + w, 0);
   let r = rng() * total;
-  for (const [item, w] of items) {
+  for (const [item2, w] of items) {
     r -= w;
-    if (r < 0) return item;
+    if (r < 0) return item2;
   }
   return items[items.length - 1][0];
 }
@@ -31846,9 +31846,9 @@ var placeholderText = (categoryId) => {
 function pickWeighted3(items, rng) {
   const total = items.reduce((n, [, w]) => n + w, 0);
   let r = rng() * total;
-  for (const [item, w] of items) {
+  for (const [item2, w] of items) {
     r -= w;
-    if (r < 0) return item;
+    if (r < 0) return item2;
   }
   return items[items.length - 1][0];
 }
@@ -32094,14 +32094,14 @@ var NameRenderer = class {
       this.notices.add(`${(_b = source.itemsLabel) != null ? _b : "Word list"} has no ${gender} entries; ignoring gender.`);
       items = all;
     }
-    const item = pickItem(items, rng);
+    const item2 = pickItem(items, rng);
     const mode = whole ? "whole" : (_c = slot.mode) != null ? _c : defaultNameMode(categoryId);
-    if (item.draw) {
-      const text = item.draw(gender ? { gender } : {}, mode, rng);
+    if (item2.draw) {
+      const text = item2.draw(gender ? { gender } : {}, mode, rng);
       return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
     }
-    if (NAME_SLOTS.has(categoryId)) return { kind: "name", text: item.entry.modern, mode };
-    return entryFill(item.entry);
+    if (NAME_SLOTS.has(categoryId)) return { kind: "name", text: item2.entry.modern, mode };
+    return entryFill(item2.entry);
   }
   /**
    * Recipe takeover §A3: an adapted native name fill is adopted into the takeover pack's language.
@@ -32112,11 +32112,11 @@ var NameRenderer = class {
     const adaptation = this.adaptation;
     if (!adaptation || treatment !== "adapted" || shape.translated || !NATIVE_CATEGORIES.has(categoryId)) return fill;
     let current = fill;
-    for (let draw = 1; ; draw++) {
+    for (let draw2 = 1; ; draw2++) {
       if (current.kind !== "name") return current;
       const adopted = adaptation.adapt(current.text, adoptionRng(adaptation.seed, current.text));
       if (adopted !== null) return { ...current, text: adopted, native: current.text };
-      if (draw >= ADAPT_ATTEMPTS) return current;
+      if (draw2 >= ADAPT_ATTEMPTS) return current;
       current = this.fill(categoryId, adaptation.redrawRng, whole);
     }
   }
@@ -32567,12 +32567,12 @@ function readSlot(v, problems, id) {
   }
   const raw = Array.isArray(v.sources) ? v.sources : [];
   const sources = [];
-  for (const item of raw) {
-    if (!isObject(item)) continue;
-    const pack = linkTarget(item.pack);
-    const list = linkTarget(item.list);
+  for (const item2 of raw) {
+    if (!isObject(item2)) continue;
+    const pack = linkTarget(item2.pack);
+    const list = linkTarget(item2.list);
     if (!pack && !list) continue;
-    const weight = Number(item.weight);
+    const weight = Number(item2.weight);
     sources.push({ ...pack ? { pack } : {}, ...list ? { list } : {}, weight: Number.isFinite(weight) && weight > 0 ? weight : 1 });
   }
   if (sources.length === 0) {
@@ -55834,14 +55834,14 @@ function findEra(culture, eraId) {
 }
 var pickUniform5 = (items, rng) => items[Math.floor(rng() * items.length)];
 function pickWeighted4(entries, rng) {
-  const live2 = entries.filter(([, w]) => w > 0);
-  const total = live2.reduce((n, [, w]) => n + w, 0);
+  const live3 = entries.filter(([, w]) => w > 0);
+  const total = live3.reduce((n, [, w]) => n + w, 0);
   let r = rng() * total;
-  for (const [item, w] of live2) {
+  for (const [item2, w] of live3) {
     r -= w;
-    if (r < 0) return item;
+    if (r < 0) return item2;
   }
-  return live2[live2.length - 1][0];
+  return live3[live3.length - 1][0];
 }
 var letterCount4 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
 function parseEntry(raw) {
@@ -55991,34 +55991,34 @@ var WorldRenderer = class {
     return pickUniform5(source.corpus, rng);
   }
   /** A list word, expanding any template held in the entry. */
-  slot(token7, rng, depth) {
+  slot(token8, rng, depth) {
     var _a2, _b;
-    if (token7.markov) {
-      const name = this.markovName(token7.key, rng);
-      const text2 = token7.form === "pos" ? possessive(name) : name;
-      return { text: text2, etym: `[${this.label(token7.key)}: ${name}]${token7.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
+    if (token8.markov) {
+      const name = this.markovName(token8.key, rng);
+      const text2 = token8.form === "pos" ? possessive(name) : name;
+      return { text: text2, etym: `[${this.label(token8.key)}: ${name}]${token8.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
     }
-    const list = this.lists[token7.key];
+    const list = this.lists[token8.key];
     if (!list || list.length === 0) {
-      this.notices.add(`No word list "${token7.key}" for ${this.culture.label}.`);
-      return { text: `[${token7.key}]`, etym: `[${token7.key}]`, fusable: false };
+      this.notices.add(`No word list "${token8.key}" for ${this.culture.label}.`);
+      return { text: `[${token8.key}]`, etym: `[${token8.key}]`, fusable: false };
     }
-    const entry = parseEntry((_a2 = this.swapEntry(token7.key, rng)) != null ? _a2 : pickUniform5(list, rng));
+    const entry = parseEntry((_a2 = this.swapEntry(token8.key, rng)) != null ? _a2 : pickUniform5(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);
-      const text2 = token7.form === "pos" ? possessive(inner.text) : inner.text;
-      const etym = single ? inner.etym : `[${this.label(token7.key)}: ${inner.text}]`;
-      return { text: text2, etym: token7.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
+      const text2 = token8.form === "pos" ? possessive(inner.text) : inner.text;
+      const etym = single ? inner.etym : `[${this.label(token8.key)}: ${inner.text}]`;
+      return { text: text2, etym: token8.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
     }
     let text = entry.word;
-    if (token7.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
-    if (token7.form === "pos") text = possessive(entry.word);
-    const shown = token7.form === "pos" ? entry.word : text;
+    if (token8.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
+    if (token8.form === "pos") text = possessive(entry.word);
+    const shown = token8.form === "pos" ? entry.word : text;
     return {
       text,
-      etym: `[${this.label(token7.key)}: ${shown}]${token7.form === "pos" ? possessiveTail(entry.word) : ""}`,
-      fusable: !entry.noFuse && token7.form !== "pos"
+      etym: `[${this.label(token8.key)}: ${shown}]${token8.form === "pos" ? possessiveTail(entry.word) : ""}`,
+      fusable: !entry.noFuse && token8.form !== "pos"
     };
   }
   /** Renders a template: slots filled, "+" groups fused or spaced. */
@@ -56032,14 +56032,14 @@ var WorldRenderer = class {
       out.push(group.length === 1 ? group[0] : this.fuse(group, rng));
       group = [];
     };
-    for (const token7 of tokens) {
-      if (token7.kind === "fuse") {
+    for (const token8 of tokens) {
+      if (token8.kind === "fuse") {
         joinNext = true;
         continue;
       }
       let piece;
-      if (token7.kind === "text") piece = { text: token7.text, etym: token7.text.toLowerCase(), fusable: !/\s/.test(token7.text) };
-      else piece = this.slot(token7, rng, depth);
+      if (token8.kind === "text") piece = { text: token8.text, etym: token8.text.toLowerCase(), fusable: !/\s/.test(token8.text) };
+      else piece = this.slot(token8, rng, depth);
       if (!joinNext) flush();
       group.push(piece);
       joinNext = false;
@@ -56268,9 +56268,9 @@ var pickWeighted5 = (items, rng) => {
   const total = items.reduce((n, [, w]) => n + w, 0);
   if (total <= 0) return void 0;
   let r = rng() * total;
-  for (const [item, w] of items) {
+  for (const [item2, w] of items) {
     r -= w;
-    if (r < 0) return item;
+    if (r < 0) return item2;
   }
   return items[items.length - 1][0];
 };
@@ -56355,14 +56355,14 @@ function pick2(ctx, name, type, filter) {
 function compositeWord(ctx, name, type) {
   const parts = GROUP_DATA.composites[name];
   if (name === "creature") {
-    const merged = parts.flatMap(([sub2]) => pool(ctx, sub2, type));
-    const w = pickWeighted5(merged, ctx.rng);
+    const merged2 = parts.flatMap(([sub2]) => pool(ctx, sub2, type));
+    const w = pickWeighted5(merged2, ctx.rng);
     const from = parts.find(([sub2]) => w !== void 0 && pool(ctx, sub2, type).some(([x]) => x === w));
     if (w !== void 0 && from) for (const t of wordTones(from[0], w)) ctx.drawn.add(t);
     return w;
   }
-  const live2 = parts.filter(([sub2]) => pool(ctx, sub2, type).length > 0);
-  const sub = pickWeighted5(live2, ctx.rng);
+  const live3 = parts.filter(([sub2]) => pool(ctx, sub2, type).length > 0);
+  const sub = pickWeighted5(live3, ctx.rng);
   return sub ? pick2(ctx, sub, type) : void 0;
 }
 var townPools = /* @__PURE__ */ new Map();
@@ -56484,8 +56484,8 @@ function token(ctx, name, type, shape) {
     case "flavourAnimal": {
       const animals = (_d = ctx.vocab) == null ? void 0 : _d.flavour.animals;
       if (animals && animals.length > 0) return { text: pickOne(animals, rng), plural: false };
-      const merged = [...pool(ctx, "beast", type), ...pool(ctx, "bird", type)];
-      return { text: pickWeighted5(merged, rng), plural: false };
+      const merged2 = [...pool(ctx, "beast", type), ...pool(ctx, "bird", type)];
+      return { text: pickWeighted5(merged2, rng), plural: false };
     }
     case "personTitle":
       return word(ctx.family.key === "supernatural" ? "supernaturalTitle" : "personTitle");
@@ -56499,8 +56499,8 @@ function token(ctx, name, type, shape) {
   }
   const patterns = GROUP_DATA.patterns[name];
   if (patterns) {
-    const live2 = patterns.filter((p) => !p.s || p.s.includes(S)).map((p) => [p.p, p.w]);
-    const pattern = pickWeighted5(live2, rng);
+    const live3 = patterns.filter((p) => !p.s || p.s.includes(S)).map((p) => [p.p, p.w]);
+    const pattern = pickWeighted5(live3, rng);
     const text = pattern === void 0 ? void 0 : renderPattern(ctx, pattern, type, shape);
     return text === void 0 ? void 0 : { text, plural: false };
   }
@@ -56635,10 +56635,10 @@ function commodityFactor(ctx, shape) {
   return factor;
 }
 function byForm(ctx, shapes) {
-  const live2 = shapes.map((s) => [s, shapeWeight(ctx, s)]).filter(([, w]) => w > 0);
+  const live3 = shapes.map((s) => [s, shapeWeight(ctx, s)]).filter(([, w]) => w > 0);
   const wanted = ctx.form === "formal" ? ["F", "B"] : ctx.form === "everyday" ? ["E", "B"] : ["F", "E", "B"];
-  const matching = live2.filter(([s]) => wanted.includes(s.f));
-  return matching.length > 0 ? matching : live2;
+  const matching = live3.filter(([s]) => wanted.includes(s.f));
+  return matching.length > 0 ? matching : live3;
 }
 function plainShapes(ctx, type) {
   var _a2, _b;
@@ -56830,8 +56830,8 @@ function generateSeries(ctx, type, frontChoice, count, toneChoice) {
   if (anchor) hold.set(anchorAt, anchor);
   else if (listAt.length === 1) rec.forEach((r, i) => i !== listAt[0] && hold.set(i, r));
   add2(first, info);
-  const fill = (draw) => {
-    for (let idle = 0; idle < 20 && names.length < count; ) idle = add2(draw(), info) ? 0 : idle + 1;
+  const fill = (draw2) => {
+    for (let idle = 0; idle < 20 && names.length < count; ) idle = add2(draw2(), info) ? 0 : idle + 1;
   };
   const hasToken = (sh) => !!anchor && [...sh.p.matchAll(/\{([^}]+)\}/g)].some((m) => m[1].split(":")[0].split("/").includes(anchor.name));
   if (trade && anchor) {
@@ -64181,7 +64181,7 @@ function entryForm(e, sex, native) {
 }
 function drawEntries(ctx, entries, opts = {}) {
   var _a2, _b, _c, _d, _e;
-  const live2 = [];
+  const live3 = [];
   for (const e of entries) {
     if (e.s && !e.s.includes(ctx.setting)) continue;
     if (e.bm && !lightOrGrim(ctx.tone)) continue;
@@ -64189,9 +64189,9 @@ function drawEntries(ctx, entries, opts = {}) {
     if (!form) continue;
     if (opts.nativeOnly && !form.native) continue;
     const w = ((_a2 = e.x) != null ? _a2 : 1) * ((_c = (_b = e.cx) == null ? void 0 : _b[ctx.culture]) != null ? _c : 1) * toneFactor((_d = e.t) != null ? _d : [], ctx.tone);
-    if (w > 0) live2.push([{ ...form, entry: e }, w]);
+    if (w > 0) live3.push([{ ...form, entry: e }, w]);
   }
-  const pick4 = pickWeighted5(live2, ctx.rng);
+  const pick4 = pickWeighted5(live3, ctx.rng);
   if (pick4) for (const t of (_e = pick4.entry.t) != null ? _e : []) ctx.drawn.add(t);
   return pick4;
 }
@@ -64414,11 +64414,11 @@ var tonesOf = (shapeTones2, drawn) => {
   return GROUP_TONES.filter((t) => all.has(t));
 };
 function pickShape(ctx, shapes, kind) {
-  const live2 = shapes.filter((s) => s.kind === kind && (!s.s || s.s.includes(ctx.setting)) && (!s.gate || lightOrGrim(ctx.tone))).map((s) => {
+  const live3 = shapes.filter((s) => s.kind === kind && (!s.s || s.s.includes(ctx.setting)) && (!s.gate || lightOrGrim(ctx.tone))).map((s) => {
     var _a2;
     return [s, s.w * toneFactor((_a2 = s.t) != null ? _a2 : [], ctx.tone)];
   });
-  return pickWeighted5(live2, ctx.rng);
+  return pickWeighted5(live3, ctx.rng);
 }
 var NUMBER_WORDS2 = new Set(BYNAMES_DATA.lists.dayNumber.flatMap((e) => [e.w, e.n]));
 function joinEpithet(name, part, join2) {
@@ -74872,7 +74872,7 @@ function generateVesselNames(options) {
     if (tone === "any") tone = (_b2 = first.built.plan.tones[0]) != null ? _b2 : "any";
     const plan = first.built.plan;
     const rec = first.built.record;
-    const draw = (hooks, p = plan) => {
+    const draw2 = (hooks, p = plan) => {
       const ctx2 = newCtx2(level, fn);
       if (p.route === "style") ctx2.boost = false;
       return result(ctx2, renderPlan(ctx2, p, hooks), info);
@@ -74891,7 +74891,7 @@ function generateVesselNames(options) {
           continue;
         }
         locked.set(counterAt, { name: rec[counterAt].name, text: value });
-        add2(draw({ byIndex: new Map(locked) }));
+        add2(draw2({ byIndex: new Map(locked) }));
       }
       return tone;
     }
@@ -74907,14 +74907,14 @@ function generateVesselNames(options) {
     const fill = (next) => {
       for (let idle = 0; idle < 20 && names.length < count; ) idle = add2(next()) ? 0 : idle + 1;
     };
-    fill(() => draw({ byIndex: hold }));
+    fill(() => draw2({ byIndex: hold }));
     if (!anchor || names.length >= count) return tone;
     const ctx = newCtx2(level, fn);
     const others = (plan.route === "style" ? stylePlans(ctx) : plan.route === "hybrid" ? hybridPlans(ctx) : rolePlans(ctx, plan.role)).filter(
       ([p]) => p.p !== plan.p && [...p.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name)
     );
     if (others.length === 0) return tone;
-    fill(() => draw({ byName: anchor }, pickWeighted5(others, rng)));
+    fill(() => draw2({ byName: anchor }, pickWeighted5(others, rng)));
     return tone;
   }
 }
@@ -74952,9 +74952,9 @@ function cultureForms(culture, era) {
   for (const f of (_f = c == null ? void 0 : c.forms) != null ? _f : []) {
     out.push([{ w: f.w, pl: f.pl, g: f.g, t: [], compound: false, peoplesOnly: false, culture: true }, 15 * f.x * (f.eras.includes(era) ? 1 : 0.3)]);
   }
-  const live2 = out.filter(([, w]) => w > 0);
-  FORM_CACHE.set(key2, live2);
-  return live2;
+  const live3 = out.filter(([, w]) => w > 0);
+  FORM_CACHE.set(key2, live3);
+  return live3;
 }
 function characterMult(character, form) {
   var _a2, _b;
@@ -77653,30 +77653,30 @@ function regionMult(ctx, tag, eras) {
   if (eras && !eras.includes(ctx.era)) return 1;
   return (_b = (_a2 = ROUTE_DATA.regions[tag]) == null ? void 0 : _a2[ctx.region]) != null ? _b : 1;
 }
-function vocabPool(ctx, pool3, token7) {
+function vocabPool(ctx, pool3, token8) {
   var _a2, _b, _c;
   const shape = ctx.shape;
-  const only = (_a2 = shape == null ? void 0 : shape.only) == null ? void 0 : _a2[token7];
-  const cw = (_c = (_b = shape == null ? void 0 : shape.cw) == null ? void 0 : _b[ctx.culture.key]) == null ? void 0 : _c[token7];
+  const only = (_a2 = shape == null ? void 0 : shape.only) == null ? void 0 : _a2[token8];
+  const cw = (_c = (_b = shape == null ? void 0 : shape.cw) == null ? void 0 : _b[ctx.culture.key]) == null ? void 0 : _c[token8];
   return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t))).map(([e, w]) => {
     var _a3, _b2;
     let n = w * toneFactor((_a3 = e.t) != null ? _a3 : [], ctx.tone) * regionMult(ctx, e.rt) * ((_b2 = cw == null ? void 0 : cw[e.w]) != null ? _b2 : 1);
-    if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token7 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
+    if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token8 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
     return [e, n];
   }).filter(([, n]) => n > 0);
 }
-function vocabWord(ctx, pool3, token7, keep) {
+function vocabWord(ctx, pool3, token8, keep) {
   var _a2;
-  const items = vocabPool(ctx, pool3, token7).filter(([e2]) => !keep || keep(e2.w));
+  const items = vocabPool(ctx, pool3, token8).filter(([e2]) => !keep || keep(e2.w));
   const e = pickWeighted5(items, ctx.rng);
   if (!e) return void 0;
   for (const t of (_a2 = e.t) != null ? _a2 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
   return e.w;
 }
-function gnWord2(ctx, token7) {
-  const list = GN_LISTS2[token7];
-  const setting = SF_LISTS.has(token7) ? "SF" : ctx.setting;
+function gnWord2(ctx, token8) {
+  const list = GN_LISTS2[token8];
+  const setting = SF_LISTS.has(token8) ? "SF" : ctx.setting;
   const items = groupListWords(list, setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
@@ -77869,9 +77869,9 @@ function shapeWeight2(ctx, kind, s, anyEra = false) {
   if (s.p === "fixed") {
     const prev = ctx.shape;
     ctx.shape = s;
-    const live2 = vocabPool(ctx, `routeFixed:${kind}`, "fixed").length > 0;
+    const live3 = vocabPool(ctx, `routeFixed:${kind}`, "fixed").length > 0;
     ctx.shape = prev;
-    if (!live2) return 0;
+    if (!live3) return 0;
   }
   return s.w * ((_b = (_a2 = s.cx) == null ? void 0 : _a2[c.key]) != null ? _b : 1) * regionMult(ctx, s.r, s.rEra) * toneFactor((_c = s.t) != null ? _c : [], ctx.tone);
 }
@@ -77919,9 +77919,9 @@ var DIRECTION_TOKENS = new Set(Object.keys(COMPASS));
 var PLACEHOLDER_TOKENS3 = /* @__PURE__ */ new Set(["destination", "town", "folk", "person", "founder", "patron", "kingdom", "holy"]);
 var NEVER_ANCHORS3 = /* @__PURE__ */ new Set(["person", "founder", "patron", "holy", "n"]);
 var kindOf3 = (name) => NEVER_ANCHORS3.has(name) ? "never" : name === "destination" ? "owner" : seriesTokenKind(name);
-function compassValues(ctx, token7) {
-  const live2 = poolEntries(ctx.vocab, token7, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
-  return [...COMPASS[token7].filter((w) => live2.includes(w)), ...live2.filter((w) => !COMPASS[token7].includes(w))];
+function compassValues(ctx, token8) {
+  const live3 = poolEntries(ctx.vocab, token8, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
+  return [...COMPASS[token8].filter((w) => live3.includes(w)), ...live3.filter((w) => !COMPASS[token8].includes(w))];
 }
 function generateRouteNames(options) {
   var _a2;
@@ -78023,7 +78023,7 @@ function generateRouteNames(options) {
     if (!first) return;
     const plan = first.plan;
     const rec = first.record;
-    const draw = (hooks, p = plan) => {
+    const draw2 = (hooks, p = plan) => {
       const ctx2 = newCtx2();
       const built = renderPlan2(ctx2, p, hooks);
       return built && acceptable4(built, block) ? built : void 0;
@@ -78042,7 +78042,7 @@ function generateRouteNames(options) {
       for (let step = 0; step < values.length && found.length < count; step++) {
         const at = (start + step) % values.length;
         locked.set(counterAt, { name, text: values[at] });
-        const built = step === 0 ? first : draw({ byIndex: new Map(locked) });
+        const built = step === 0 ? first : draw2({ byIndex: new Map(locked) });
         if (!built || seen.has(built.text.toLowerCase())) continue;
         seen.add(built.text.toLowerCase());
         found.push({ at, name: toName(built, series2) });
@@ -78056,7 +78056,7 @@ function generateRouteNames(options) {
       add2(toName(first, series2));
       const hold2 = new Map(rec.map((d, i) => [i, d]).filter(([i]) => i !== destAt));
       fill(() => {
-        const b = draw({ byIndex: hold2 });
+        const b = draw2({ byIndex: hold2 });
         return b && toName(b, series2);
       });
       return;
@@ -78072,13 +78072,13 @@ function generateRouteNames(options) {
     else if (listAt.length === 1) rec.forEach((d, i) => i !== listAt[0] && hold.set(i, d));
     else if (plan.shape.p === "fixed") {
       fill(() => {
-        const b = draw({});
+        const b = draw2({});
         return b && toName(b, series);
       });
       return;
     }
     fill(() => {
-      const b = draw({ byIndex: hold });
+      const b = draw2({ byIndex: hold });
       return b && toName(b, series);
     });
     if (!anchor || names.length >= count) return;
@@ -78088,11 +78088,248 @@ function generateRouteNames(options) {
     );
     if (others.length === 0) return;
     fill(() => {
-      const b = draw({ byName: anchor }, pickWeighted5(others, rng));
+      const b = draw2({ byName: anchor }, pickWeighted5(others, rng));
       return b && toName(b, series);
     });
   }
 }
+
+// src/data/inn-names.json
+var inn_names_default = {
+  $comment: "Inns and taverns (docs/inns-and-taverns-brief.md \xA75\u2013\xA78, \xA712). Words come from settlement-vocab.json through src/settlement/vocab.ts.",
+  version: 1,
+  any: "houses of any kind",
+  kinds: [
+    { key: "inn", menu: "Inns and lodgings", plural: "inns", description: "Houses that lodge travellers", era: { AN: 25, MD: 30, EM: 30, ST: 20, MO: 15, NF: 10, IS: 5 } },
+    { key: "tavern", menu: "Taverns and alehouses", plural: "taverns", description: "Drinking houses: taverns, alehouses, mead halls and pubs", era: { AN: 30, MD: 35, EM: 30, ST: 25, MO: 25, NF: 15, IS: 10 } },
+    { key: "eating", menu: "Eating, tea and coffee houses", plural: "eating houses", description: "Cookshops, tea houses, coffee houses and caf\xE9s", era: { AN: 10, MD: 10, EM: 15, ST: 15, MO: 20, NF: 15, IS: 10 } },
+    { key: "wayhouse", menu: "Way stations and caravan courts", plural: "way stations", description: "Post houses, coaching inns and caravan courts on the road", era: { AN: 20, MD: 15, EM: 15, ST: 10, MO: 0, NF: 0, IS: 0 } },
+    { key: "rest", menu: "Rest houses and hostels", plural: "rest houses", description: "Charitable and pilgrim lodgings: rest houses, hostels and hospices", era: { AN: 15, MD: 10, EM: 10, ST: 5, MO: 5, NF: 5, IS: 5 } },
+    { key: "club", menu: "Clubs, halls and hotels", plural: "clubs and hotels", description: "Gentlemen's clubs, music halls, gin palaces and grand hotels", era: { AN: 0, MD: 0, EM: 0, ST: 25, MO: 15, NF: 10, IS: 5 } },
+    { key: "bar", menu: "Bars and lounges", plural: "bars", description: "Bars, lounges and diners, down to station bars in space", era: { AN: 0, MD: 0, EM: 0, ST: 0, MO: 20, NF: 45, IS: 65 } }
+  ],
+  settings: [
+    { key: "anywhere", text: "anywhere", kindX: {}, themes: {}, roadside: 3 },
+    { key: "town", text: "in a town", kindX: { club: 2, eating: 1.5, wayhouse: 0.5 }, themes: { urban: 3 }, armsX: 2, roadside: 3 },
+    { key: "country", text: "in the country", kindX: { inn: 1.5, tavern: 1.5, club: 0, eating: 0.5 }, themes: { rural: 3 }, roadside: 3 },
+    { key: "port", text: "in a port", kindX: { tavern: 2, wayhouse: 0 }, themes: { maritime: 4 }, roadside: 3 },
+    { key: "road", text: "by the road", kindX: { wayhouse: 4, inn: 2, club: 0 }, themes: { road: 3 }, roadside: 30 }
+  ],
+  fantasticThemes: { magical: 2 },
+  forms: { signs: "as signs", house: "with a house word", either: "as signs or with a house word" },
+  formShare: { either: 0.4, innOf: 0.15 },
+  tradition: {
+    full: ["general", "norman-british"],
+    fullFrom: { "anglo-saxon": "MD", celtic: "MD" },
+    partial: {
+      roman: [0.4, "AN"],
+      slavic: [0.4, "AN"],
+      "greek-byzantine": [0.25, "MD"],
+      norse: [0.3, "MD"]
+    }
+  },
+  signs: [
+    { key: "creature", w: 13, shapes: [{ p: "the {creature}", w: 1 }] },
+    { key: "person", w: 7, shapes: [{ p: "the {innPerson}", w: 1 }] },
+    { key: "item", w: 10, shapes: [{ p: "the {item}", w: 1 }] },
+    { key: "arms", w: 3, from: "MD", shapes: [{ p: "the {streetFigure:poss} Arms", w: 40, house: false }, { p: "the {surname} Arms", w: 30, house: false }, { p: "the {trade:poss} Arms", w: 30, house: false }] },
+    { key: "location", w: 3, shapes: [{ p: "the {innLocation}", w: 60 }, { p: "the Old {innLocation}", w: 40 }] },
+    { key: "owner", w: 2, from: "MD", shapes: [{ p: "{owner:poss} {hw}", w: 50, house: false }, { p: "Mother {owner:poss}", w: 25, house: false }, { p: "Old {owner:poss}", w: 25, house: false }] },
+    { key: "feature", w: 2, shapes: [{ p: "the {creatureOrPerson:poss} Head", w: 5 }, { p: "the {creature:poss} {innFeature}", w: 1 }] },
+    { key: "description", w: 30, shapes: [{ p: "the {innDescription} {creatureOrItem}", w: 70 }, { p: "the {innNumber} {creatureOrItem:pl}", w: 30 }] },
+    { key: "combination", w: 30, shapes: [{ p: "the {a} and {b}", w: 70 }, { p: "the {creature} {innWorn}", w: 8 }, { p: "the {creature:poss} {innHome}", w: 12 }, { p: "the {innFable}", w: 10 }] },
+    { key: "roadside", w: 0, shapes: [{ p: "the {route} Inn", w: 10, house: false }, { p: "the {travellers:poss} Rest", w: 10, house: false }, { p: "the {destination} Arms", w: 5, house: false }, { p: "the Halfway House", w: 3, house: false }, { p: "the {innNumber} Mile House", w: 4, house: false }] }
+  ],
+  fantastic: [
+    { p: "the {heraldicBeast:poss} Hoard", w: 3, h: true },
+    { p: "the Wizard's {item}", w: 3, h: true },
+    { p: "the Prancing {heraldicBeast}", w: 2, h: true },
+    { p: "the Drunken Dragon", w: 1, h: true },
+    { p: "the Goblin's Rest", w: 1, h: true, house: false },
+    { p: "the Troll and Toadstool", w: 1, h: true }
+  ],
+  cultureShapes: {
+    "anglo-saxon": [
+      { p: "{owner:poss} Mead Hall", w: 40 },
+      { p: "Mead Hall of {town}", w: 30 },
+      { p: "the {creature} Hall", w: 30 }
+    ],
+    celtic: [
+      { p: "Hostel of {town}", w: 50 },
+      { p: "{owner:poss} Guest House", w: 30 },
+      { p: "Hostel of the {creature}", w: 20 }
+    ],
+    norse: [
+      { p: "{owner:poss} Hall", w: 35 },
+      { p: "Guest Hall of {town}", w: 30 },
+      { p: "the {creature} Hall", w: 20 },
+      { p: "Mead Hall of {town}", w: 15 }
+    ],
+    roman: [
+      { p: "Inn of the {creature}", w: 30 },
+      { p: "Sign of the {item}", w: 25 },
+      { p: "Station Inn of {town}", w: 20, kinds: ["inn", "wayhouse"] },
+      { p: "Change Station of {town}", w: 10, kinds: ["wayhouse"] },
+      { p: "{owner:poss} Tavern", w: 15 }
+    ],
+    "greek-byzantine": [
+      { p: "Wine House of {owner}", w: 30 },
+      { p: "Guest House of {holy}", w: 25, e: ["MD", "EM", "ST", "MO", "NF", "IS"] },
+      { p: "Guest House of {town}", w: 25 },
+      { p: "the {creature} Wine House", w: 20 }
+    ],
+    slavic: [
+      { p: "Post House of the {route}", w: 25, kinds: ["wayhouse"] },
+      { p: "{holy:poss} Inn", w: 20 },
+      { p: "the {colour} {item} Tavern", w: 30 },
+      { p: "{town} Post House", w: 25 }
+    ],
+    steppe: [
+      { p: "{ordinal} Post Station", w: 30 },
+      { p: "Guest Tent of the {figure}", w: 25 },
+      { p: "{town} Caravan Court", w: 25 },
+      { p: "the {colour} Tent", w: 20 }
+    ],
+    "arabic-persian": [
+      { p: "House of the {number} Wells", w: 20 },
+      { p: "Caravan Court of the {directionAdj} Gate", w: 20 },
+      { p: "Coffee House of the {oasisAnchor}", w: 20, kinds: ["eating"] },
+      { p: "{oasisAnchor} Coffee House", w: 15 },
+      { p: "{patron:poss} Caravan Court", w: 15 },
+      { p: "Inn of the {streetGoods} Merchants", w: 10 }
+    ],
+    indian: [
+      { p: "{indianAnchor} Rest House", w: 30 },
+      { p: "{founder:poss} Rest House", w: 20 },
+      { p: "Pilgrims' Lodge of the {holySite}", w: 20 },
+      { p: "{indianAnchor} Inn", w: 20 },
+      { p: "{town} Caravan Court", w: 10, kinds: ["wayhouse"] }
+    ],
+    chinese: [
+      { p: "Inn of {auspicious}", w: 30 },
+      { p: "{welcomePhrase} Inn", w: 20 },
+      { p: "{eastNature} Tea House", w: 25, kinds: ["eating"] },
+      { p: "{eastNature} Wine House", w: 15, kinds: ["tavern"] },
+      { p: "{town} Post Station", w: 10, kinds: ["wayhouse"] }
+    ],
+    japanese: [
+      { p: "{eastNature} Inn", w: 35 },
+      { p: "{eastNature} Tea House", w: 30, kinds: ["eating"] },
+      { p: "Lords' Inn of {town}", w: 15, e: ["EM"] },
+      { p: "{town} Inn", w: 20 }
+    ],
+    korean: [
+      { p: "{eastNature} Tavern", w: 40 },
+      { p: "{town} Station Inn", w: 30, kinds: ["wayhouse"] },
+      { p: "Inn of {auspicious}", w: 30 }
+    ],
+    egyptian: [
+      { p: "Beer House of {town}", w: 35 },
+      { p: "{owner:poss} Beer House", w: 35 },
+      { p: "House of Beer of {god}", w: 30 }
+    ],
+    ethiopian: [
+      { p: "Mead House of {town}", w: 50 },
+      { p: "{owner:poss} Mead House", w: 50 }
+    ],
+    "west-african": [
+      { p: "House of {owner}", w: 30 },
+      { p: "Strangers' Lodge of {town}", w: 25 },
+      { p: "{weekday} Market Rest", w: 20 },
+      { p: "Landlord's House of {town}", w: 25 }
+    ],
+    bantu: [
+      { p: "Guest House of {town}", w: 50 },
+      { p: "the {creature} Guest House", w: 50 }
+    ],
+    aztec: [
+      { p: "Merchants' House of the {directionAdj} Ward", w: 50 },
+      { p: "House of {town}", w: 30 },
+      { p: "the {creature} House", w: 20 }
+    ],
+    andean: [
+      { p: "Royal Station of {town}", w: 60 },
+      { p: "{town} Way Station", w: 40 }
+    ],
+    polynesian: [
+      { p: "Guest House of {town}", w: 100, e: ["MO", "NF", "IS"] },
+      { p: "Guest House of {town}", w: 100, e: ["AN", "MD", "EM", "ST"], kinds: ["rest"] }
+    ],
+    maya: [
+      { p: "Merchants' House of the {directionAdj} Ward", w: 50 },
+      { p: "House of {town}", w: 30 },
+      { p: "the {creature} House", w: 20 }
+    ]
+  },
+  cultureKinds: ["inn", "tavern", "rest"],
+  fallback: [
+    { p: "{owner:poss} {hw}", w: 50 },
+    { p: "{hw} of {town}", w: 50 }
+  ],
+  eraShapes: [
+    { p: "the {grandAdj} Gin Palace", w: 15, e: ["ST"], kinds: ["club"] },
+    { p: "the {colour} {item} Music Hall", w: 15, e: ["ST"], kinds: ["club"] },
+    { p: "the Great {directionAdj} Hotel", w: 15, e: ["ST"], kinds: ["club"] },
+    { p: "{town} Station Hotel", w: 15, e: ["ST"], kinds: ["club"] },
+    { p: "the {quality} Club", w: 15, e: ["ST"], kinds: ["club"] },
+    { p: "{town} and County Club", w: 10, e: ["ST"], kinds: ["club"] },
+    { p: "the {virtue} Temperance Hotel", w: 15, e: ["ST"], kinds: ["club"] },
+    { p: "{owner:poss} Coffee House", w: 40, e: ["ST"], kinds: ["eating"] },
+    { p: "the {item} Chop House", w: 30, e: ["ST"], kinds: ["eating"] },
+    { p: "{owner:poss} Dining Rooms", w: 30, e: ["ST"], kinds: ["eating"] },
+    { p: "the Brass {creature}", w: 20, e: ["ST"], h: true },
+    { p: "the Aether and Anchor", w: 5, e: ["ST"], h: true },
+    { p: "the Clockwork {creature}", w: 20, e: ["ST"], h: true },
+    { p: "the Gaslight Rooms", w: 10, e: ["ST"], h: true },
+    { p: "the {colour} Cog", w: 15, e: ["ST"], h: true },
+    { p: "the Copper Kettle and Boiler", w: 5, e: ["ST"], h: true },
+    { p: "{owner:poss} Caf\xE9", w: 40, e: ["MO"], kinds: ["eating"] },
+    { p: "the {item} Caf\xE9", w: 30, e: ["MO"], kinds: ["eating"] },
+    { p: "{town} Tea Rooms", w: 30, e: ["MO"], kinds: ["eating"] },
+    { p: "the {item} Bar", w: 25, e: ["MO"], kinds: ["bar"] },
+    { p: "{town} Motel", w: 15, e: ["MO"], kinds: ["bar"], c: ["general"] },
+    { p: "{owner:poss} Diner", w: 15, e: ["MO"], kinds: ["bar"], c: ["general"] },
+    { p: "the {colour} Room", w: 25, e: ["MO"], kinds: ["bar"] },
+    { p: "{brandRoot} Inn", w: 20, e: ["MO"], kinds: ["bar"] },
+    { p: "the {tech} {creature}", w: 30, e: ["NF", "IS"], kinds: ["bar"] },
+    { p: "Deck {n} Bar", w: 15, e: ["NF", "IS"], kinds: ["bar"] },
+    { p: "the Last {drink} Before {star}", w: 15, e: ["NF", "IS"], kinds: ["bar"] },
+    { p: "{star} Lounge", w: 20, e: ["NF", "IS"], kinds: ["bar"] },
+    { p: "Spacers' Rest", w: 10, e: ["NF", "IS"], kinds: ["bar"] },
+    { p: "the Airlock", w: 10, e: ["NF", "IS"], kinds: ["bar"] },
+    { p: "{star} Transit Hostel", w: 40, e: ["NF", "IS"], kinds: ["inn", "rest"] },
+    { p: "Dock {n} Bunkhouse", w: 30, e: ["NF", "IS"], kinds: ["inn", "rest"] },
+    { p: "the {spaceLand} Rest", w: 30, e: ["NF", "IS"], kinds: ["inn", "rest"] }
+  ],
+  eraShare: { default: 0.4, futureBar: 0.6 },
+  lists: {
+    grandAdj: ["Crystal", "Golden", "Palatial", "Royal", "Grand", "Gilded"],
+    virtue: ["Sober", "Abstainers'", "Prudent", "Total"],
+    drink: ["Drink", "Round", "Pint", "Glass", "Toast"],
+    pairs: [["Fox", "Vixen"], ["Hart", "Hind"], ["Cock", "Hen"], ["Bull", "Cow"], ["Ram", "Ewe"], ["Stag", "Hind"], ["Drake", "Duck"]],
+    creatureLists: ["beast", "bird", "fish", "heraldicBeast"],
+    itemLists: ["weapon", "worn", "celestial", "plant", "musical", "various", "food"],
+    abWeights: { creature: 45, item: 40, person: 15 },
+    mateShare: 0.1,
+    braceShare: 0.2,
+    componentShare: 0.3,
+    routeKinds: { road: 1, drove: 1, trade: 1 }
+  },
+  regionRules: {
+    armsHalf: ["SHH", "NSI"],
+    dragonDouble: ["WAL"]
+  },
+  series: { from: 6 },
+  cap: 7,
+  safeguards: {
+    block: ["Prancing Pony", "Green Dragon", "Leaky Cauldron", "Three Broomsticks", "Hog's Head", "Hogs Head", "Winchester", "Slaughtered Lamb", "Admiral Benbow", "Jamaica Inn", "Mended Drum", "Drum", "Broken Drum", "Queen Vic", "Queen Victoria", "Rovers Return", "Woolpack", "Moe's", "Cheers", "Mos Eisley Cantina", "Ten Forward", "Quark's", "Restaurant at the End of the Universe", "Afterlife", "Golden Perch", "Bannered Mare", "Sleeping Giant", "Yawning Portal", "Elfsong Tavern", "Ye Olde Trip to Jerusalem", "Ye Olde Cheshire Cheese", "Ye Olde Fighting Cocks", "Prospect of Whitby", "George Inn", "Raffles", "Savoy", "Ritz", "Langham", "Adelphi", "Crystal Palace", "Caf\xE9 Royal", "Lloyd's", "Garrick Club", "Reform Club", "Athenaeum", "Carlton Club", "White's", "Boodle's", "Hellfire Club"],
+    flag: ["Red Lion", "White Hart", "Royal Oak", "Crown", "Rose and Crown", "Crown and Anchor", "King's Head", "King's Arms", "Swan", "Bull", "Plough", "Anchor", "Angel", "Bell", "George", "George and Dragon", "Coach and Horses", "New Inn", "White Horse", "Black Bull", "Cross Keys", "Lamb and Flag", "Rusty Anchor", "Fleece", "Wheatsheaf", "Rising Sun", "Halfway House"],
+    flagListBlocks: false,
+    banned: ["Harlot", "Strumpet", "Wench", "Gypsy", "Savage", "Barbarian", "Blackamoor", "Negro", "Saracen"],
+    racialSigns: ["Moor's Head", "Saracen's Head", "Turk's Head", "Black Boy", "Black's Head"],
+    christian: ["Cross Keys", "Lamb and Flag", "Angel", "George and Dragon", "Saint", "Abbot", "Bishop", "Friar", "Monk", "Nun", "Prior", "Hospice"]
+  }
+};
 
 // src/data/street-names.json
 var street_names_default = {
@@ -78773,7 +79010,7 @@ function generateStreetNames(options) {
     return true;
   };
   const shapesFor2 = (ctx, k) => k === "streets" ? streetShapes(ctx, options.shape) : k === "squares" ? live(ctx, STREET_DATA.squares, options.shape) : districtShapes(ctx, options.shape);
-  const draw = (k, fnFor, ok = () => true, shape) => {
+  const draw2 = (k, fnFor, ok = () => true, shape) => {
     for (let i = 0; i < 40; i++) {
       const fn = k === "districts" ? fnFor() : void 0;
       if (k === "districts" && !fn) return void 0;
@@ -78813,7 +79050,7 @@ function generateStreetNames(options) {
     for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
       const k = drawKind();
       if (!k) break;
-      add2(k, draw(k, anyFn));
+      add2(k, draw2(k, anyFn));
     }
   }
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
@@ -78843,15 +79080,15 @@ function generateStreetNames(options) {
       const future = isFuture(era);
       if (k === "streets") {
         const shape = future ? { p: s.scifiMainStreet, w: 1 } : { p: "{mainStreet}", w: 1 };
-        return draw(k, () => void 0, fresh, shape);
+        return draw2(k, () => void 0, fresh, shape);
       }
       if (k === "squares") {
         const p2 = future ? s.mainMarket.scifi : (_a3 = s.mainMarket[culture.key]) != null ? _a3 : s.mainMarket.default;
-        return draw(k, () => void 0, fresh, { p: p2, w: 1 });
+        return draw2(k, () => void 0, fresh, { p: p2, w: 1 });
       }
       if (chosenFn || size === "village") return void 0;
       const p = future ? s.firstDistrict.scifi : (_b2 = s.firstDistrict[culture.key]) != null ? _b2 : s.firstDistrict.default;
-      return draw(k, () => "commercial", fresh, { p, w: 1 });
+      return draw2(k, () => "commercial", fresh, { p, w: 1 });
     };
     for (let idle = 0; idle < 60 && names.length < count; ) {
       const k = drawKind();
@@ -78863,15 +79100,478 @@ function generateStreetNames(options) {
           continue;
         }
       }
-      idle = keep(k, draw(k, nextFn, fresh)) ? 0 : idle + 1;
+      idle = keep(k, draw2(k, nextFn, fresh)) ? 0 : idle + 1;
     }
     if (!routeUsed && count >= STREET_DATA.series.routeFrom && names.length > 1 && (kind != null ? kind : "streets") === "streets") {
-      const found = draw("streets", () => void 0, (b) => b.isRoute && fresh(b), { p: "{route}", w: 1 });
+      const found = draw2("streets", () => void 0, (b) => b.isRoute && fresh(b), { p: "{route}", w: 1 });
       if (found && !seen.has(found.built.plain.toLowerCase())) {
         const at = 1 + Math.floor(rng() * (names.length - 1));
         seen.delete(names[at].text.toLowerCase());
         seen.add(found.built.plain.toLowerCase());
         names[at] = toName("streets", found.built);
+      }
+    }
+  }
+}
+
+// src/inns/engine.ts
+var INN_DATA = inn_names_default;
+var INN_KINDS = INN_DATA.kinds;
+var INN_SETTINGS = INN_DATA.settings;
+var INN_ANY = INN_DATA.any;
+var INN_FORMS = INN_DATA.forms;
+var eraIndex2 = (era) => ROUTE_ERAS.findIndex((e) => e.code === era);
+var isFuture2 = (era) => era === "NF" || era === "IS";
+var innKindsOffered = (era) => INN_KINDS.filter((k) => k.era[era] > 0);
+function englishShare(culture, era) {
+  const t = INN_DATA.tradition;
+  if (t.full.includes(culture)) return 1;
+  const from = t.fullFrom[culture];
+  if (from) return eraIndex2(era) >= eraIndex2(from) ? 1 : 0;
+  const part = t.partial[culture];
+  return part && eraIndex2(era) >= eraIndex2(part[1]) ? part[0] : 0;
+}
+var hasSignTradition = (culture) => ROUTE_ERAS.some((e) => englishShare(culture, e.code) > 0);
+var defaultInnSafeguards = () => ({ block: INN_DATA.safeguards.block, flag: INN_DATA.safeguards.flag, flagListBlocks: INN_DATA.safeguards.flagListBlocks });
+var pickOne6 = (items, rng) => items[Math.floor(rng() * items.length)];
+var LIGHT_OR_GRIM3 = (t) => !!t && (t.includes("light") || t.includes("grim"));
+var SURNAME_CULTURES = STREET_DATA.surnameCultures;
+var COLOURS = /* @__PURE__ */ new Set([...groupListWords("colour", "FL").map(([w]) => w), "Black", "White", "Red", "Blue", "Green", "Golden", "Grey", "Silver", "Pied", "Copper"]);
+var BIRDS = new Set(groupListWords("bird", "FL").map(([w]) => w));
+function vocabItems(ctx, pool3, mult = 1) {
+  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes }).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM3(e.t))).map(([e, w]) => {
+    var _a2;
+    return [{ w: e.w, t: (_a2 = e.t) != null ? _a2 : [] }, w * mult];
+  });
+}
+function gnItems(ctx, list) {
+  const setting = list === "star" || list === "spaceLand" || list === "tech" ? "SF" : ctx.setting;
+  return groupListWords(list, setting).filter(([w]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM3(wordTones(list, w)))).map(([w, n]) => [{ w, t: wordTones(list, w) }, n]);
+}
+function merged(ctx, parts) {
+  const out = /* @__PURE__ */ new Map();
+  for (const part of parts) {
+    for (const [word, n] of part) {
+      const prev = out.get(word.w);
+      if (prev) prev[1] += n;
+      else out.set(word.w, [word, n]);
+    }
+  }
+  return [...out.values()].map(([word, n]) => [word, n * toneFactor(word.t, ctx.tone)]).filter(([, n]) => n > 0);
+}
+function draw(ctx, pool3, items, use) {
+  const word = pickWeighted5(items, ctx.rng);
+  if (!word) return void 0;
+  for (const t of word.t) ctx.drawn.add(t);
+  ctx.words.push({ pool: pool3, word: word.w });
+  if (use) ctx.uses.push(`${use}:${word.w}`);
+  if (COLOURS.has(word.w)) ctx.uses.push(`colour:${word.w}`);
+  return word.w;
+}
+function creatureItems(ctx) {
+  const items = merged(ctx, [...INN_DATA.lists.creatureLists.map((l) => gnItems(ctx, l)), vocabItems(ctx, "innCreature")]);
+  if (ctx.region && INN_DATA.regionRules.dragonDouble.includes(ctx.region)) {
+    for (const it of items) if (it[0].w === "Dragon") it[1] *= 2;
+  }
+  return items;
+}
+var itemItems = (ctx) => merged(ctx, [...INN_DATA.lists.itemLists.map((l) => gnItems(ctx, l)), vocabItems(ctx, "innItem")]);
+function locationItems(ctx) {
+  const comps = Object.keys(STREET_DATA.components).map((p) => vocabItems(ctx, p, INN_DATA.lists.componentShare));
+  return merged(ctx, [vocabItems(ctx, "innLocation"), ...comps]);
+}
+var creature = (ctx, keep) => draw(ctx, "creature", creatureItems(ctx).filter(([w]) => !keep || keep(w.w)), "creature");
+var item = (ctx, keep) => draw(ctx, "item", itemItems(ctx).filter(([w]) => !keep || keep(w.w)), "item");
+var person = (ctx, keep) => draw(ctx, "innPerson", merged(ctx, [vocabItems(ctx, "innPerson")]).filter(([w]) => !keep || keep(w.w)), "person");
+function ownerNames(ctx) {
+  return [...personNames(ctx.culture.key), ...SURNAME_CULTURES.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : []];
+}
+function route2(ctx) {
+  const kind = pickWeighted5(Object.entries(INN_DATA.lists.routeKinds), ctx.rng);
+  const r = generateRouteNames({
+    culture: ctx.culture.key,
+    era: ctx.era,
+    fantastic: ctx.fantastic,
+    region: ctx.region,
+    people: ctx.mode,
+    kind,
+    count: 1,
+    seed: Math.floor(ctx.rng() * 4294967295),
+    safeguards: ctx.options.routeSafeguards,
+    vocab: ctx.options.vocab
+  }).names[0];
+  if (r) ctx.isRoute = true;
+  return r == null ? void 0 : r.text.replace(/^the /i, "");
+}
+function token7(ctx, name) {
+  const rng = ctx.rng;
+  const placeholders = ctx.mode === "placeholders";
+  switch (name) {
+    case "creature":
+      return creature(ctx);
+    case "item":
+      return item(ctx);
+    case "innPerson":
+      return person(ctx);
+    case "creatureOrItem":
+      return rng() < 0.5 ? creature(ctx) : item(ctx);
+    case "creatureOrPerson":
+      return rng() < 0.5 ? creature(ctx) : person(ctx);
+    case "innLocation":
+      return draw(ctx, "innLocation", locationItems(ctx));
+    case "trade":
+      return draw(ctx, "streetTrades", merged(ctx, [vocabItems(ctx, "streetTrades")]));
+    case "owner":
+    case "patron":
+    case "founder": {
+      if (placeholders) return `[${name}]`;
+      const names = name === "owner" ? ownerNames(ctx) : personNames(ctx.culture.key);
+      return names.length > 0 ? pickOne6(names, rng) : void 0;
+    }
+    case "surname":
+      return placeholders || !SURNAME_CULTURES.includes(ctx.culture.key) ? "[surname]" : draw(ctx, "surname", gnItems(ctx, "surname"));
+    case "hw":
+      return draw(ctx, `houseWord:${ctx.kind}`, merged(ctx, [vocabItems(ctx, `houseWord:${ctx.kind}`)]));
+    case "route":
+      return route2(ctx);
+    case "destination":
+    case "town":
+      return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng);
+    case "holy":
+      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "figure":
+      return routeFigure(ctx.culture.key, ctx.setting, rng);
+    case "god": {
+      const gods = godNames(ctx.culture.key);
+      return gods.length > 0 ? pickOne6(gods, rng) : void 0;
+    }
+    case "ordinal":
+      return draw(ctx, "ordinalWord", gnItems(ctx, "ordinalWord"));
+    case "number":
+    case "colour":
+    case "quality":
+    case "tech":
+    case "brandRoot":
+    case "star":
+    case "heraldicBeast":
+      return draw(ctx, name, merged(ctx, [gnItems(ctx, name)]), name === "heraldicBeast" ? "creature" : void 0);
+    case "spaceLand": {
+      const w = draw(ctx, "spaceLand", gnItems(ctx, "spaceLand"));
+      if (!w || rng() >= 0.3) return w;
+      const prefix = pickWeighted5(groupListWords("spacePrefix", "SF"), rng);
+      return prefix ? `${prefix} ${w}` : w;
+    }
+    case "weekday":
+      return pickWeighted5(STREET_DATA.lists.weekday, rng);
+    case "grandAdj":
+    case "virtue":
+    case "drink":
+      return pickOne6(INN_DATA.lists[name], rng);
+    case "n":
+      return String(1 + Math.floor(rng() * 40));
+    case "auspicious":
+    case "welcomePhrase":
+    case "eastNature":
+    case "oasisAnchor":
+    case "indianAnchor":
+    case "innFable":
+      return draw(ctx, name, merged(ctx, [vocabItems(ctx, name)]), "anchor");
+  }
+  return draw(ctx, name, merged(ctx, [vocabItems(ctx, name)]));
+}
+function pairTokens(ctx) {
+  var _a2;
+  const l = INN_DATA.lists;
+  const kinds = Object.entries(l.abWeights);
+  const one = (k, keep) => k === "creature" ? creature(ctx, keep) : k === "item" ? item(ctx, keep) : person(ctx, keep);
+  const ka = pickWeighted5(kinds, ctx.rng);
+  const a = one(ka);
+  if (!a) return void 0;
+  if (ka === "creature") {
+    const mate = (_a2 = l.pairs.find(([x]) => x === a)) == null ? void 0 : _a2[1];
+    if (mate && ctx.rng() < l.mateShare) {
+      ctx.uses.push(`creature:${mate}`);
+      return [a, mate];
+    }
+  }
+  const b = one(pickWeighted5(kinds, ctx.rng), (w) => w !== a);
+  return b ? [a, b] : void 0;
+}
+function renderPattern5(ctx, pattern) {
+  let failed = false;
+  let pair;
+  let number;
+  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
+    if (failed) return "";
+    const [name, mod] = raw.split(":");
+    let piece;
+    if (name === "a" || name === "b") {
+      pair != null ? pair : pair = pairTokens(ctx);
+      piece = pair == null ? void 0 : pair[name === "a" ? 0 : 1];
+    } else piece = token7(ctx, name);
+    if (!piece) {
+      failed = true;
+      return "";
+    }
+    if (name === "innNumber") number = piece;
+    if (mod === "poss") return groupPossessive(piece, name === "travellers" || name === "trade");
+    if (mod === "pl") {
+      if (number === "Two" && BIRDS.has(piece) && ctx.rng() < INN_DATA.lists.braceShare) return `\0${groupPlural(piece)}`;
+      return groupPlural(piece);
+    }
+    return piece;
+  });
+  return failed ? void 0 : out.replace(/Two \u0000/, "Brace of ").replace(/\u0000/g, "");
+}
+function innCapitals(text) {
+  return routeCapitals(text).replace(/^The /, "the ").replace(/ A /g, " a ");
+}
+var wordRe8 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
+var BANNED6 = INN_DATA.safeguards.banned.map(wordRe8);
+var RACIAL = INN_DATA.safeguards.racialSigns.map(wordRe8);
+var CHRISTIAN2 = INN_DATA.safeguards.christian.map(wordRe8);
+var HOUSE_WORDS = [...new Set(Object.entries(BUILT_IN_VOCAB.pools).filter(([k]) => k.startsWith("houseWord:")).flatMap(([, p]) => p.entries.map((e) => e.w)))].sort(
+  (a, b) => b.length - a.length
+);
+function breaksInnWords(text) {
+  return breaksStreetWords(text) || BANNED6.some((re) => re.test(text)) || RACIAL.some((re) => re.test(text));
+}
+var hasChristianSign = (text) => CHRISTIAN2.some((re) => re.test(text));
+function innBlockForms(text) {
+  const bare = routeNorm(text).replace(/^the /, "");
+  const out = /* @__PURE__ */ new Set([bare]);
+  const inner = bare.replace(/^(inn|sign) of the /, "");
+  out.add(inner);
+  for (const hw of HOUSE_WORDS) {
+    const suffix = ` ${hw.toLowerCase()}`;
+    if (inner.endsWith(suffix)) out.add(inner.slice(0, -suffix.length));
+  }
+  return [...out];
+}
+function innBlockSet(guards = defaultInnSafeguards()) {
+  return new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map((w) => routeNorm(w).replace(/^the /, "")));
+}
+function innWordBlocked(word, guards) {
+  const block = innBlockSet(guards);
+  return innBlockForms(word).some((f) => block.has(f)) || breaksInnWords(word);
+}
+function shapeWeight4(ctx, s) {
+  var _a2;
+  const c = ctx.culture;
+  if (s.e && !s.e.includes(ctx.era)) return 0;
+  if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
+  if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
+  if (c.sensitive && (s.h || LIGHT_OR_GRIM3(s.t))) return 0;
+  if (ctx.mode === "invented" && s.p.includes("{owner") && ownerNames(ctx).length === 0) return 0;
+  if (ctx.mode === "invented" && /\{(patron|founder)/.test(s.p) && personNames(c.key).length === 0) return 0;
+  if (s.p.includes("{god") && godNames(c.key).length === 0) return 0;
+  if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
+  if (s.p.includes("{trade") && (c.key === "indian" || c.key === "west-african")) return 0;
+  return s.w * toneFactor((_a2 = s.t) != null ? _a2 : [], ctx.tone);
+}
+var live2 = (ctx, shapes, only) => shapes.filter((s) => !only || s.p === only).map((s) => [s, shapeWeight4(ctx, s)]).filter(([, w]) => w > 0);
+function englishPlans(ctx, settingKey, only) {
+  var _a2;
+  const setting = INN_SETTINGS.find((s) => s.key === settingKey);
+  const out = [];
+  for (const a of INN_DATA.signs) {
+    let w = a.key === "roadside" ? setting.roadside : a.w;
+    if (a.from && eraIndex2(ctx.era) < eraIndex2(a.from)) w = 0;
+    if (a.key === "arms") {
+      w *= (_a2 = setting.armsX) != null ? _a2 : 1;
+      if (ctx.region && INN_DATA.regionRules.armsHalf.includes(ctx.region)) w *= 0.5;
+    }
+    if (w <= 0) continue;
+    const shapes = live2(ctx, a.shapes, only);
+    const total = shapes.reduce((n, [, x]) => n + x, 0);
+    for (const [s, x] of shapes) out.push([{ tradition: "english", anchor: a.key, shape: s }, w * x / total]);
+  }
+  for (const [s, x] of live2(ctx, INN_DATA.fantastic, only)) out.push([{ tradition: "english", anchor: "fantastic", shape: s }, x]);
+  return out;
+}
+function culturePlans(ctx, only) {
+  var _a2;
+  const own = ((_a2 = INN_DATA.cultureShapes[ctx.culture.key]) != null ? _a2 : []).filter((s) => {
+    var _a3;
+    return ((_a3 = s.kinds) != null ? _a3 : INN_DATA.cultureKinds).includes(ctx.kind);
+  });
+  const plans = live2(ctx, own, only).map(([s, w]) => [{ tradition: "culture", anchor: "culture", shape: s }, w]);
+  const base = plans.length > 0 ? plans : live2(ctx, INN_DATA.fallback, only).map(([s, w]) => [{ tradition: "culture", anchor: "fallback", shape: s }, w]);
+  return [...base, ...live2(ctx, INN_DATA.fantastic, only).map(([s, w]) => [{ tradition: "culture", anchor: "fantastic", shape: s }, w])];
+}
+function eraPlans(ctx, only) {
+  const shapes = INN_DATA.eraShapes.filter((s) => !s.kinds || s.kinds.includes(ctx.kind));
+  return live2(ctx, shapes, only).map(([s, w]) => [{ tradition: "era", anchor: "era", shape: s }, w]);
+}
+function generateInnNames(options) {
+  var _a2, _b, _c, _d;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const notices = [];
+  const culture = (_a2 = findRouteCulture(options.culture)) != null ? _a2 : findRouteCulture("norman-british");
+  const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
+  const fantastic = !!options.fantastic;
+  const setting = routeSetting(era, fantastic);
+  const settingKey = INN_SETTINGS.some((s) => s.key === options.setting) ? options.setting : "anywhere";
+  const settingInfo = INN_SETTINGS.find((s) => s.key === settingKey);
+  const form = (_b = options.form) != null ? _b : "either";
+  const mode = (_c = options.people) != null ? _c : "placeholders";
+  const region = BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : void 0;
+  const count = Math.max(0, Math.floor(options.count));
+  const english = englishShare(culture.key, era);
+  const offered = innKindsOffered(era);
+  const chosen = options.kind ? (_d = offered.find((k) => k.key === options.kind)) == null ? void 0 : _d.key : void 0;
+  if (options.kind && !chosen) notices.push(`Kind \u201C${options.kind}\u201D isn't offered in the ${ROUTE_ERAS.find((e) => e.code === era).label} era.`);
+  const kindWeights = offered.map((k) => {
+    var _a3;
+    return [k.key, k.era[era] * ((_a3 = settingInfo.kindX[k.key]) != null ? _a3 : 1)];
+  }).filter(([, w]) => w > 0);
+  const themes = { ...settingInfo.themes, ...fantastic ? INN_DATA.fantasticThemes : {} };
+  const block = innBlockSet(options.safeguards);
+  const newCtx2 = (kind) => {
+    var _a3, _b2;
+    return {
+      rng,
+      culture,
+      era,
+      setting,
+      fantastic,
+      mode,
+      tone: (_a3 = options.tone) != null ? _a3 : "any",
+      vocab: (_b2 = options.vocab) != null ? _b2 : BUILT_IN_VOCAB,
+      region,
+      kind,
+      themes,
+      options,
+      drawn: /* @__PURE__ */ new Set(),
+      words: [],
+      uses: [],
+      isRoute: false
+    };
+  };
+  const choosePlan = (ctx, anchor) => {
+    var _a3;
+    if (anchor) return pickWeighted5(englishPlans(ctx, settingKey, options.shape).filter(([p]) => p.anchor === anchor), rng);
+    const era2 = eraPlans(ctx, options.shape);
+    const share2 = isFuture2(ctx.era) && ctx.kind === "bar" ? INN_DATA.eraShare.futureBar : INN_DATA.eraShare.default;
+    if (era2.length > 0 && (eraIndex2(ctx.era) >= eraIndex2("ST") || options.shape) && rng() < share2) return pickWeighted5(era2, rng);
+    if (english > 0 && rng() < english) {
+      const plan = pickWeighted5(englishPlans(ctx, settingKey, options.shape), rng);
+      if (plan) return plan;
+    }
+    return (_a3 = pickWeighted5(culturePlans(ctx, options.shape), rng)) != null ? _a3 : pickWeighted5(era2, rng);
+  };
+  const withHouse = (ctx, sign) => {
+    const share2 = form === "signs" ? 0 : form === "house" ? 1 : INN_DATA.formShare.either;
+    if (rng() >= share2) return { text: sign, house: false };
+    if (rng() < INN_DATA.formShare.innOf) return { text: `the ${rng() < 0.5 ? "Inn" : "Sign"} of ${sign}`, house: true };
+    const hw = token7(ctx, "hw");
+    return hw ? { text: `${sign} ${hw}`, house: true } : void 0;
+  };
+  const build = (kind, anchor) => {
+    var _a3;
+    for (let i = 0; i < 20; i++) {
+      const ctx = newCtx2(kind);
+      const plan = choosePlan(ctx, anchor);
+      if (!plan) return void 0;
+      const raw = renderPattern5(ctx, plan.shape.p);
+      if (!raw) continue;
+      const sign = innCapitals(raw);
+      let text = sign;
+      let house = false;
+      if (plan.tradition === "english" && plan.shape.house !== false && sign.startsWith("the ")) {
+        const h = withHouse(ctx, sign);
+        if (!h) continue;
+        text = innCapitals(h.text);
+        house = h.house;
+      }
+      if (!acceptable5(text, ctx.isRoute)) continue;
+      const tones = /* @__PURE__ */ new Set([...(_a3 = plan.shape.t) != null ? _a3 : [], ...ctx.drawn]);
+      return {
+        text,
+        sign,
+        kind,
+        shape: plan.shape.p,
+        tradition: plan.tradition,
+        anchor: plan.anchor,
+        house,
+        tones: GROUP_TONES.filter((t) => tones.has(t)),
+        words: ctx.words,
+        uses: ctx.uses,
+        route: ctx.isRoute
+      };
+    }
+    return void 0;
+  };
+  function acceptable5(text, isRoute) {
+    const counted2 = countedWords2(text);
+    if (counted2.length === 0 || counted2.length > INN_DATA.cap) return false;
+    if (!isRoute && repeatsContent(counted2)) return false;
+    if (innBlockForms(text).some((f) => block.has(f))) return false;
+    if (breaksInnWords(text)) return false;
+    if (hasChristianSign(text) && !cultureAllowed(["christian"], culture.key, era)) return false;
+    return true;
+  }
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  const add2 = (n) => {
+    if (!n) return false;
+    const key2 = n.text.toLowerCase();
+    if (seen.has(key2)) return false;
+    seen.add(key2);
+    names.push(n);
+    return true;
+  };
+  const drawKind = () => chosen != null ? chosen : pickWeighted5(kindWeights, rng);
+  if (options.series) drawTown();
+  else {
+    for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+      const k = drawKind();
+      if (!k) break;
+      add2(build(k));
+    }
+  }
+  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+  return { names, seed, notices };
+  function drawTown() {
+    var _a3;
+    const used = /* @__PURE__ */ new Set();
+    const once = /* @__PURE__ */ new Set(["arms", "owner", "roadside", "location"]);
+    const anchorsUsed = /* @__PURE__ */ new Set();
+    const fresh = (n) => !!n && !n.uses.some((u) => used.has(u)) && !(once.has(n.anchor) && anchorsUsed.has(n.anchor));
+    const keep = (n) => {
+      if (!fresh(n) || !add2(n)) return false;
+      for (const u of n.uses) used.add(u);
+      anchorsUsed.add(n.anchor);
+      return true;
+    };
+    for (let idle = 0; idle < 60 && names.length < count; ) {
+      const k = drawKind();
+      if (!k) break;
+      idle = keep(build(k)) ? 0 : idle + 1;
+    }
+    if (english <= 0 || count < INN_DATA.series.from || names.length < 2) return;
+    const taken = /* @__PURE__ */ new Set([0]);
+    for (const anchor of ["roadside", "location"]) {
+      if (anchorsUsed.has(anchor)) {
+        taken.add(names.findIndex((n) => n.anchor === anchor));
+        continue;
+      }
+      const kind = (_a3 = anchor === "roadside" ? offered.some((k) => k.key === "inn") ? "inn" : chosen : chosen) != null ? _a3 : drawKind();
+      for (let i = 0; i < 20; i++) {
+        const n = build(chosen != null ? chosen : kind, anchor);
+        if (!n || !fresh(n) || seen.has(n.text.toLowerCase())) continue;
+        const free = names.map((_, j) => j).filter((j) => !taken.has(j) && !once.has(names[j].anchor));
+        if (free.length === 0) break;
+        const at = pickOne6(free, rng);
+        seen.delete(names[at].text.toLowerCase());
+        for (const u of names[at].uses) used.delete(u);
+        seen.add(n.text.toLowerCase());
+        for (const u of n.uses) used.add(u);
+        anchorsUsed.add(anchor);
+        names[at] = n;
+        taken.add(at);
+        break;
       }
     }
   }
@@ -78915,6 +79615,7 @@ function parseModulePreset(content, fileName) {
   if (values.module === REALM_PRESET_MODULE) return parseRealmPreset(values, body, fileName);
   if (values.module === ROUTE_PRESET_MODULE) return parseRoutePreset(values, body, fileName);
   if (values.module === STREET_PRESET_MODULE) return parseStreetPreset(values, body, fileName);
+  if (values.module === INN_PRESET_MODULE) return parseInnPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module \u201C${(_a2 = values.module) != null ? _a2 : ""}\u201D.`);
     return { problems };
@@ -78948,6 +79649,7 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("innKind" in preset) return innPresetContent(preset);
   if ("streetKind" in preset) return streetPresetContent(preset);
   if ("routeKind" in preset) return routePresetContent(preset);
   if ("namedFor" in preset) return realmPresetContent(preset);
@@ -79312,6 +80014,69 @@ function streetPresetContent(preset) {
     `fantastic: ${preset.fantastic}`,
     `size: ${preset.size}`,
     `dialect: ${preset.dialect}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
+var INN_PRESET_MODULE = "inn-names";
+function parseInnPreset(values, body, fileName) {
+  const problems = [];
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const flag = (key2) => {
+    const v = values[key2];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return false;
+  };
+  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  let kind = pick4("kind", "any", (v) => v === "any" || INN_KINDS.some((k) => k.key === v));
+  if (kind !== "any" && !(INN_KINDS.find((k) => k.key === kind).era[era] > 0)) {
+    problems.push(`Kind \u201C${kind}\u201D isn't offered in the ${routeEraLabel(era)} era.`);
+    kind = "any";
+  }
+  return {
+    inn: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      innKind: kind,
+      era,
+      fantastic: flag("fantastic"),
+      innSetting: pick4("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
+      form: pick4("form", "either", (v) => ["signs", "house", "either"].includes(v)),
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series: flag("series")
+    },
+    problems
+  };
+}
+function innPresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${INN_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `region: ${preset.region}`,
+    `kind: ${preset.innKind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `setting: ${preset.innSetting}`,
+    `form: ${preset.form}`,
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
     `series: ${preset.series}`,
@@ -79688,6 +80453,182 @@ Names to allow, though they echo a real or well-known route.
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
 
+// src/inns/sentence.ts
+var DEFAULT_INN_STATE = {
+  culture: "norman-british",
+  era: "MD",
+  fantastic: false,
+  setting: "anywhere",
+  form: "either",
+  tone: "any",
+  people: "placeholders",
+  series: false
+};
+var PEOPLE_TEXT5 = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT4 = { off: "each one separate", on: "as one town" };
+var settingText = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
+var showsForm = (state) => hasSignTradition(state.culture);
+function innSentence(state) {
+  var _a2;
+  const out = [];
+  const culture = (_a2 = findRouteCulture(state.culture)) != null ? _a2 : ROUTE_CULTURES[0];
+  out.push({
+    field: "culture",
+    text: culture.label,
+    title: "Naming culture: whose customs the houses follow",
+    choices: ROUTE_CULTURES.map((c, i) => {
+      var _a3;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a3 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a3.group) ? { group: c.group } : {} };
+    }),
+    current: culture.key
+  });
+  out.push(" ");
+  const offered = innKindsOffered(state.era);
+  const kind = offered.find((k) => k.key === state.kind);
+  out.push({
+    field: "kind",
+    text: kind ? kind.plural : INN_ANY,
+    title: kind ? kind.description : INN_ANY.charAt(0).toUpperCase() + INN_ANY.slice(1),
+    choices: [{ id: void 0, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
+    current: kind == null ? void 0 : kind.key
+  });
+  out.push(" of the ");
+  out.push({
+    field: "era",
+    text: routeEraLabel(state.era),
+    title: "The age: decides which kinds of house exist",
+    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
+    current: state.era
+  });
+  out.push(" era, in a ");
+  const words = fantasticWords(state.era);
+  out.push({
+    field: "fantastic",
+    text: words[state.fantastic ? 1 : 0],
+    title: "Open magic and monsters; in the steam age, steampunk",
+    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
+    current: state.fantastic ? "on" : "off"
+  });
+  out.push(" world, ");
+  if (showsRegion(state)) {
+    out.push({
+      field: "region",
+      text: routeRegionText(state.region),
+      title: "Weights the names towards a region's customs",
+      choices: [
+        { id: void 0, label: routeRegionText(void 0) },
+        ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: routeRegionText(r.code), title: r.counties }))
+      ],
+      current: state.region
+    });
+    out.push(", ");
+  }
+  out.push({
+    field: "setting",
+    text: settingText(state.setting),
+    title: "Where the house stands: weights country, town, harbour or roadside signs",
+    choices: INN_SETTINGS.map((s) => ({ id: s.key, label: s.text })),
+    current: state.setting
+  });
+  out.push(", ");
+  if (showsForm(state)) {
+    out.push({
+      field: "form",
+      text: INN_FORMS[state.form],
+      title: "A bare sign name, or the sign with Inn, Tavern and so on",
+      choices: ["signs", "house", "either"].map((f) => ({ id: f, label: INN_FORMS[f] })),
+      current: state.form
+    });
+    out.push(", ");
+  }
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
+  out.push(", with ");
+  out.push({
+    field: "people",
+    text: PEOPLE_TEXT5[state.people],
+    title: "Placeholders like [owner], or invented names",
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT5[p] })),
+    current: state.people
+  });
+  out.push(" people and places, ");
+  out.push({
+    field: "series",
+    text: SERIES_TEXT4[state.series ? "on" : "off"],
+    title: "One town's houses: no sign word twice, one roadside house and one landmark",
+    choices: [
+      { id: "off", label: SERIES_TEXT4.off },
+      { id: "on", label: SERIES_TEXT4.on }
+    ],
+    current: state.series ? "on" : "off"
+  });
+  return out;
+}
+function innSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function chooseInn(state, field, id) {
+  const next = { ...state };
+  switch (field) {
+    case "culture":
+      next.culture = id != null ? id : DEFAULT_INN_STATE.culture;
+      break;
+    case "kind":
+      next.kind = id;
+      break;
+    case "era":
+      next.era = ROUTE_ERAS.some((e) => e.code === id) ? id : DEFAULT_INN_STATE.era;
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "region":
+      next.region = id;
+      break;
+    case "setting":
+      next.setting = INN_SETTINGS.some((s) => s.key === id) ? id : "anywhere";
+      break;
+    case "form":
+      next.form = id != null ? id : "either";
+      break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "people":
+      next.people = id != null ? id : "placeholders";
+      break;
+    case "series":
+      next.series = id === "on";
+      break;
+  }
+  if (next.kind && !innKindsOffered(next.era).some((k) => k.key === next.kind)) next.kind = void 0;
+  if (!showsRegion(next)) next.region = void 0;
+  return next;
+}
+var innFormFor = (state) => showsForm(state) ? state.form : "either";
+function innHistoryLabel(state) {
+  var _a2, _b;
+  const culture = (_b = (_a2 = findRouteCulture(state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+  const kind = INN_KINDS.find((k) => k.key === state.kind);
+  return [
+    "inns and taverns",
+    routeEraLabel(state.era),
+    culture,
+    ...kind ? [kind.plural] : [],
+    ...state.setting !== "anywhere" ? [settingText(state.setting)] : [],
+    ...state.region && showsRegion(state) ? [regionPhrase(state.region)] : [],
+    ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
+    ...state.tone !== "any" ? [state.tone] : [],
+    ...state.series ? ["one town"] : []
+  ].join(" \xB7 ");
+}
+
 // src/streets/sentence.ts
 var DEFAULT_STREET_STATE = {
   culture: "norman-british",
@@ -79699,8 +80640,8 @@ var DEFAULT_STREET_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT5 = { placeholders: "placeholders for", invented: "invented" };
-var SERIES_TEXT4 = { off: "each one separate", on: "as one town" };
+var PEOPLE_TEXT6 = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT5 = { off: "each one separate", on: "as one town" };
 var DIALECT_TEXT = {
   plain: "with plain words only",
   variants: "with dialect words as variants",
@@ -79805,19 +80746,19 @@ function streetSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT5[state.people],
+    text: PEOPLE_TEXT6[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT5[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT6[p] })),
     current: state.people
   });
   out.push(" people and places, ");
   out.push({
     field: "series",
-    text: SERIES_TEXT4[state.series ? "on" : "off"],
+    text: SERIES_TEXT5[state.series ? "on" : "off"],
     title: "One town's streets: a main street first, then no repeats",
     choices: [
-      { id: "off", label: SERIES_TEXT4.off },
-      { id: "on", label: SERIES_TEXT4.on }
+      { id: "off", label: SERIES_TEXT5.off },
+      { id: "on", label: SERIES_TEXT5.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -80727,7 +81668,7 @@ var LandButton = class {
     if (!state) return;
     this.custom = await this.options.customBiomes();
     const menu = new import_obsidian7.Menu();
-    const heading = (title) => menu.addItem((item) => item.setTitle(title).setDisabled(true));
+    const heading = (title) => menu.addItem((item2) => item2.setTitle(title).setDisabled(true));
     const choose = (next) => {
       this.options.set(next);
       this.refresh();
@@ -80740,16 +81681,16 @@ var LandButton = class {
     };
     heading("Biome");
     const defaultLabel = this.options.defaultLabel();
-    menu.addItem((item) => item.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(void 0)));
+    menu.addItem((item2) => item2.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(void 0)));
     menu.addSeparator();
     const builtIn = defaultLabel === BRITAIN.label ? BIOMES : [BRITAIN, ...BIOMES];
-    for (const b of builtIn) menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === b.id).onClick(() => setBiome(b.id)));
+    for (const b of builtIn) menu.addItem((item2) => item2.setTitle(b.label).setChecked(state.biome === b.id).onClick(() => setBiome(b.id)));
     if (this.custom.length > 0) {
       menu.addSeparator();
       heading("Your biomes");
       for (const b of [...this.custom].sort((x, y) => x.label.localeCompare(y.label))) {
         const id = (_b = (_a2 = b.custom) == null ? void 0 : _a2.path) != null ? _b : b.id;
-        menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === id).onClick(() => setBiome(id)));
+        menu.addItem((item2) => item2.setTitle(b.label).setChecked(state.biome === id).onClick(() => setBiome(id)));
       }
     }
     if (this.options.terrain()) {
@@ -80757,9 +81698,9 @@ var LandButton = class {
       heading("Terrain");
       const biome = findBiome(state.biome, this.custom);
       const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
-      menu.addItem((item) => item.setTitle("Any terrain").setChecked(state.terrain === "any").onClick(() => choose({ ...state, terrain: "any" })));
+      menu.addItem((item2) => item2.setTitle("Any terrain").setChecked(state.terrain === "any").onClick(() => choose({ ...state, terrain: "any" })));
       for (const t of terrains) {
-        menu.addItem((item) => item.setTitle(t.label).setChecked(state.terrain === t.id).onClick(() => choose({ ...state, terrain: t.id })));
+        menu.addItem((item2) => item2.setTitle(t.label).setChecked(state.terrain === t.id).onClick(() => choose({ ...state, terrain: t.id })));
       }
     }
     menu.showAtMouseEvent(evt);
@@ -81022,9 +81963,9 @@ var LIST_SECTIONS = [
 var norm4 = (s) => s.trim().toLowerCase();
 var kebab2 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 function weightedItems(text) {
-  return text.split(",").map((w) => w.trim()).filter((w) => w.length > 0).map((item) => {
-    const m = item.match(/^(.*?)\s*\((\d+(?:\.\d+)?)\)$/);
-    return m ? [m[1].trim(), Number(m[2])] : [item, 1];
+  return text.split(",").map((w) => w.trim()).filter((w) => w.length > 0).map((item2) => {
+    const m = item2.match(/^(.*?)\s*\((\d+(?:\.\d+)?)\)$/);
+    return m ? [m[1].trim(), Number(m[2])] : [item2, 1];
   });
 }
 function fusesOf(e) {
@@ -81106,12 +82047,12 @@ function terrainHeading(heading) {
   const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
   return m ? { terrain: m[1].trim(), part: m[2].toLowerCase() } : null;
 }
-function terrainId(token7, custom) {
+function terrainId(token8, custom) {
   var _a2;
-  const t = norm4(token7);
+  const t = norm4(token8);
   const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm4(x.id) === t || norm4(x.label) === t));
   if (builtIn) return builtIn.id;
-  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab2(token7))) == null ? void 0 : _a2.id;
+  return (_a2 = custom.find((x) => norm4(x.label) === t || x.id === kebab2(token8))) == null ? void 0 : _a2.id;
 }
 var key = (words) => words.map(([w, n]) => `${norm4(w)}|${n}`).sort().join("\n");
 var entryKey = (entries) => entries.map((e) => `${norm4(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
@@ -81637,8 +82578,8 @@ var RecipeHost = class {
           const list = await this.wordListSource(ref.list, recipePath, categoryId);
           if (list) sources.push({ weight: ref.weight, ...list });
         } else if (ref.pack) {
-          const draw = await this.packSource(ref.pack, recipePath);
-          if (draw) sources.push({ weight: ref.weight, draw });
+          const draw2 = await this.packSource(ref.pack, recipePath);
+          if (draw2) sources.push({ weight: ref.weight, draw: draw2 });
         }
       }
       out[categoryId] = sources.length > 0 ? { kind: "sources", sources, mode: slot.mode, gender: slot.gender, section: slot.section } : ((_a2 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a2.length) ? { kind: "built-in" } : { kind: "placeholder" };
@@ -81646,8 +82587,8 @@ var RecipeHost = class {
     if (recipe.native && recipe.shape.part !== "organic") {
       for (const categoryId of NATIVE_PACK_CATEGORIES) {
         if (recipe.slots[categoryId]) continue;
-        const draw = await this.packSource(recipe.native, recipePath);
-        if (draw) out[categoryId] = { kind: "sources", sources: [{ weight: 1, draw }] };
+        const draw2 = await this.packSource(recipe.native, recipePath);
+        if (draw2) out[categoryId] = { kind: "sources", sources: [{ weight: 1, draw: draw2 }] };
       }
     }
     return out;
@@ -81687,12 +82628,12 @@ var RecipeHost = class {
       if (isModulePresetContent(packContent)) {
         const preset = parseModulePreset(packContent, packFile.basename).preset;
         if (!preset) return { notPack: true };
-        const draw2 = tribalPresetDraw(preset);
-        return { draw: (_request, _mode, rng) => draw2(rng) };
+        const draw3 = tribalPresetDraw(preset);
+        return { draw: (_request, _mode, rng) => draw3(rng) };
       }
       if (isWordListContent(packContent) || isRecipeContent(packContent)) return { notPack: true };
-      const draw = await this.packSource(pack, listFile.path);
-      return draw ? { draw } : { missing: true };
+      const draw2 = await this.packSource(pack, listFile.path);
+      return draw2 ? { draw: draw2 } : { missing: true };
     });
     for (const n of notices) this.notices.add(n);
     if (items.length === 0) return null;
@@ -81705,9 +82646,9 @@ var RecipeHost = class {
     const packDraws = {};
     for (const [list, lines2] of Object.entries(biome.packLines)) {
       for (const line of lines2 != null ? lines2 : []) {
-        const draw = await this.packSource(line.pack, from);
-        if (!draw) continue;
-        ((_a2 = packDraws[list]) != null ? _a2 : packDraws[list] = []).push({ weight: line.weight, draw: (rng) => draw({}, "whole", rng) });
+        const draw2 = await this.packSource(line.pack, from);
+        if (!draw2) continue;
+        ((_a2 = packDraws[list]) != null ? _a2 : packDraws[list] = []).push({ weight: line.weight, draw: (rng) => draw2({}, "whole", rng) });
       }
     }
     return { ...biome, packDraws };
@@ -81715,8 +82656,8 @@ var RecipeHost = class {
   /** A drawer for one name pack: stem or whole names (§5), honouring section and gender (§10). */
   /** Bynames brief §2.4: a pack's draw, by the same path word-list `//` lines use; notices are kept. */
   async packDraw(target, from) {
-    const draw = await this.packSource(target, from);
-    return { draw, notices: [...this.notices] };
+    const draw2 = await this.packSource(target, from);
+    return { draw: draw2, notices: [...this.notices] };
   }
   async packSource(target, from) {
     var _a2, _b;
@@ -82628,7 +83569,7 @@ var RecipeWizard = class {
         const menu = new import_obsidian11.Menu();
         for (const c of segment2.choices) {
           menu.addItem(
-            (item) => item.setTitle(c.label).setChecked(c.id === segment2.current).onClick(() => {
+            (item2) => item2.setTitle(c.label).setChecked(c.id === segment2.current).onClick(() => {
               const next = chooseTribal(state, segment2.field, c.id, (b) => findBiome(b));
               w.slots[id] = {
                 kind: "tribal",
@@ -82716,7 +83657,7 @@ var RecipeWizard = class {
       const menu = new import_obsidian11.Menu();
       for (const c of choices) {
         menu.addItem(
-          (item) => item.setTitle(c.label).setChecked(c.id === current).onClick(() => {
+          (item2) => item2.setTitle(c.label).setChecked(c.id === current).onClick(() => {
             choose(c.id);
             this.render();
           })
@@ -82842,7 +83783,7 @@ var RecipeWizard = class {
       });
     };
     const choose = (menu, label, checked, apply) => menu.addItem(
-      (item) => item.setTitle(label).setChecked(checked).onClick(() => {
+      (item2) => item2.setTitle(label).setChecked(checked).onClick(() => {
         apply();
         this.render();
       })
@@ -83243,12 +84184,12 @@ function generateLabelledNames(lists, options) {
   };
   const result = [];
   const seen = /* @__PURE__ */ new Set();
-  const live2 = viable.map((_, i) => i);
-  while (result.length < count && live2.length > 0) {
-    const total = live2.reduce((sum, i) => sum + viable[i].names.length, 0);
+  const live3 = viable.map((_, i) => i);
+  while (result.length < count && live3.length > 0) {
+    const total = live3.reduce((sum, i) => sum + viable[i].names.length, 0);
     let roll = masterRng() * total;
-    let pick4 = live2[live2.length - 1];
-    for (const i of live2) {
+    let pick4 = live3[live3.length - 1];
+    for (const i of live3) {
       roll -= viable[i].names.length;
       if (roll < 0) {
         pick4 = i;
@@ -83257,7 +84198,7 @@ function generateLabelledNames(lists, options) {
     }
     const names = pool3(pick4);
     if (cursors[pick4] >= names.length) {
-      live2.splice(live2.indexOf(pick4), 1);
+      live3.splice(live3.indexOf(pick4), 1);
       continue;
     }
     const name = names[cursors[pick4]++];
@@ -83324,8 +84265,8 @@ function nativeDrawer(entry, index, settings) {
     }
     case "placePack": {
       if (parsed.placeGenerator === "list" || parsed.placeGenerator === "compound") {
-        const draw = placePackDraw(parsed, settings);
-        return (rng) => draw({}, "whole", rng);
+        const draw2 = placePackDraw(parsed, settings);
+        return (rng) => draw2({}, "whole", rng);
       }
       const model = PlaceNameModel.build(extractNamesFromMarkdown(parsed.names.join("\n")));
       return (rng) => {
@@ -83438,9 +84379,9 @@ var TakeoverView = class {
     const index = await this.host.scanFolderPacks();
     const nativeEntry = index.find((e) => e.path === this.nativePath);
     const takeoverEntry = index.find((e) => e.path === this.takeoverPath);
-    const draw = nativeEntry ? nativeDrawer(nativeEntry, index, this.host.settings()) : "the native pack was not found";
-    if (typeof draw === "string") {
-      new import_obsidian12.Notice(`nameForge: ${draw}.`);
+    const draw2 = nativeEntry ? nativeDrawer(nativeEntry, index, this.host.settings()) : "the native pack was not found";
+    if (typeof draw2 === "string") {
+      new import_obsidian12.Notice(`nameForge: ${draw2}.`);
       return;
     }
     const reason = takeoverEntry ? this.host.targetReason(takeoverEntry, index) : "the takeover pack was not found";
@@ -83455,7 +84396,7 @@ var TakeoverView = class {
     await waitForPaint();
     const prepared = prepareTakeoverTarget(target.corpus, takeoverScorer((_b = this.host.settings().faithfulness) != null ? _b : 2), target.endings);
     const steps = takeOverSteps({
-      drawNative: draw,
+      drawNative: draw2,
       adopt: (native, rng) => adoptName({ native, target: prepared, rng }),
       batchSize,
       seed: this.host.lockedSeed()
@@ -83516,12 +84457,12 @@ var TakeoverView = class {
       update();
     });
     rows.forEach((row, i) => {
-      const item = list.createEl("li", { attr: { "data-index": String(i) } });
-      item.createSpan({ cls: "nameforge-modal__takeover-native", text: row.native });
-      item.createSpan({ cls: "nameforge-modal__takeover-arrow", text: " \u2192 " });
-      item.createSpan({ cls: "nameforge-modal__takeover-adopted", text: row.adopted });
-      item.addEventListener("click", () => {
-        item.classList.toggle("is-selected");
+      const item2 = list.createEl("li", { attr: { "data-index": String(i) } });
+      item2.createSpan({ cls: "nameforge-modal__takeover-native", text: row.native });
+      item2.createSpan({ cls: "nameforge-modal__takeover-arrow", text: " \u2192 " });
+      item2.createSpan({ cls: "nameforge-modal__takeover-adopted", text: row.adopted });
+      item2.addEventListener("click", () => {
+        item2.classList.toggle("is-selected");
         update();
       });
     });
@@ -83583,6 +84524,7 @@ var SECTION_ORDER = [
   "placeShapes",
   "routeNames",
   "streetNames",
+  "innNames",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "tribalNames",
@@ -83594,7 +84536,7 @@ var SECTION_ORDER = [
   ...VESSEL_SECTIONS
 ];
 var SECTION_GROUPS = {
-  placeNames: ["placeShapes", "routeNames", "streetNames", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  placeNames: ["placeShapes", "routeNames", "streetNames", "innNames", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
   groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS]
@@ -83614,6 +84556,7 @@ var SECTION_LABELS = {
   placeShapes: "native place names",
   routeNames: "route names",
   streetNames: "streets and districts",
+  innNames: "inns and taverns",
   riverNames: "river names",
   explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
@@ -83646,6 +84589,7 @@ function historySection(packName) {
   if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
   if (starts(SECTION_LABELS.routeNames)) return "routeNames";
   if (starts(SECTION_LABELS.streetNames)) return "streetNames";
+  if (starts(SECTION_LABELS.innNames)) return "innNames";
   if (starts(SECTION_LABELS.realms)) return "realms";
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
@@ -83679,6 +84623,8 @@ var SECTION_ICONS = {
   routeNames: "route",
   // Streets brief §1.1.
   streetNames: "signpost",
+  // Inns brief §1.1.
+  innNames: "beer",
   riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
@@ -83721,6 +84667,7 @@ function packTypeIconId(packType, subGenerator) {
   if (packType === "realmPreset") return ICON_TRIBAL_NAMES;
   if (packType === "routePreset") return "route";
   if (packType === "streetPreset") return "signpost";
+  if (packType === "innPreset") return "beer";
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;
   }
@@ -83786,7 +84733,7 @@ function menuLink(sentence2, text, title, choices, current, choose) {
   a.addEventListener("click", (event) => {
     event.preventDefault();
     const menu = new import_obsidian13.Menu();
-    for (const c of choices) menu.addItem((item) => item.setTitle(c.label).setChecked(c.id === current).onClick(() => choose(c.id)));
+    for (const c of choices) menu.addItem((item2) => item2.setTitle(c.label).setChecked(c.id === current).onClick(() => choose(c.id)));
     menu.showAtMouseEvent(event);
   });
 }
@@ -83959,6 +84906,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.routeState = { ...DEFAULT_ROUTE_STATE };
     /** Streets brief §2.4: the streets sentence's choices, session only. */
     this.streetState = { ...DEFAULT_STREET_STATE };
+    /** Inns brief §2.4: the inns sentence's choices, session only. */
+    this.innState = { ...DEFAULT_INN_STATE };
     /** Each switcher group's last-used module (session only). */
     this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
@@ -84294,15 +85243,15 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     for (const entry of SWITCHER_ORDER) {
       const group = entry in SECTION_GROUPS ? entry : void 0;
       const label = group ? GROUP_LABELS[group] : SECTION_LABELS[entry];
-      const item = menu.createDiv({
+      const item2 = menu.createDiv({
         cls: "nameforge-modal__section-menu-item" + (entry === current ? " is-active" : ""),
         attr: { role: "button", tabindex: "0", "aria-label": label }
       });
-      (0, import_obsidian13.setIcon)(item.createSpan({ cls: "nameforge-modal__section-menu-icon" }), group ? GROUP_ICONS[group] : SECTION_ICONS[entry]);
-      item.createSpan({ text: label });
+      (0, import_obsidian13.setIcon)(item2.createSpan({ cls: "nameforge-modal__section-menu-icon" }), group ? GROUP_ICONS[group] : SECTION_ICONS[entry]);
+      item2.createSpan({ text: label });
       const go = () => this.switchSection(group ? this.groupModule[group] : entry);
-      item.addEventListener("click", go);
-      item.addEventListener("keydown", (evt) => {
+      item2.addEventListener("click", go);
+      item2.addEventListener("keydown", (evt) => {
         if (evt.key === "Enter" || evt.key === " ") {
           evt.preventDefault();
           go();
@@ -84330,10 +85279,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     (_c = this.packDropdownEl) == null ? void 0 : _c.toggle(section === "markov");
     (_d = this.sectionSentenceEl) == null ? void 0 : _d.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_e = this.editRecipeButton) == null ? void 0 : _e.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset"));
+    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames";
     (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart && !tribal);
     (_i = this.landButton) == null ? void 0 : _i.refresh();
     (_j = this.guideButton) == null ? void 0 : _j.toggle(!!colonialPart);
@@ -84438,12 +85387,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     const place3 = this.activeSection === "placeShapes";
     const current = place3 ? this.selectedRegion : this.riverRegion;
     for (const { code, label: text, counties } of options) {
-      const item = menu.createEl("button", {
+      const item2 = menu.createEl("button", {
         cls: "nameforge-modal__pack-dropdown-item" + (code === current ? " is-active" : ""),
         attr: { type: "button", title: counties != null ? counties : "No regional weighting" }
       });
-      item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text });
-      item.addEventListener("click", () => {
+      item2.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text });
+      item2.addEventListener("click", () => {
         if (place3) this.selectedRegion = code;
         else this.riverRegion = code;
         choose();
@@ -84576,24 +85525,24 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     const group = sectionGroup(this.activeSection);
     if (group) {
       for (const section of SECTION_GROUPS[group]) {
-        const item = menu.createEl("button", {
+        const item2 = menu.createEl("button", {
           cls: "nameforge-modal__pack-dropdown-item" + (section === this.activeSection ? " is-active" : ""),
           attr: { type: "button" }
         });
-        (0, import_obsidian13.setIcon)(item.createSpan({ cls: "nameforge-modal__section-menu-icon" }), SECTION_ICONS[section]);
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: moduleLabel(section) });
-        item.addEventListener("click", () => this.switchSection(section));
+        (0, import_obsidian13.setIcon)(item2.createSpan({ cls: "nameforge-modal__section-menu-icon" }), SECTION_ICONS[section]);
+        item2.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: moduleLabel(section) });
+        item2.addEventListener("click", () => this.switchSection(section));
       }
       return;
     }
     if (this.activeSection === "riverNames") {
       for (const setting of RIVER_SETTINGS) {
-        const item = menu.createEl("button", {
+        const item2 = menu.createEl("button", {
           cls: "nameforge-modal__pack-dropdown-item" + (setting.id === this.riverSetting ? " is-active" : ""),
           attr: { type: "button" }
         });
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: setting.label });
-        item.addEventListener("click", () => {
+        item2.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: setting.label });
+        item2.addEventListener("click", () => {
           var _a2;
           this.riverSetting = setting.id;
           this.showSecondBox(setting.id === "british");
@@ -84637,6 +85586,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     else if (section === "realms") this.renderRealmSentence(row);
     else if (section === "routeNames") this.renderRouteSentence(row);
     else if (section === "streetNames") this.renderStreetSentence(row);
+    else if (section === "innNames") this.renderInnSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -84649,10 +85599,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       event.preventDefault();
       const menu = new import_obsidian13.Menu();
       const list = await choices();
-      if (list.length === 0) menu.addItem((item) => item.setTitle("No packs found").setDisabled(true));
+      if (list.length === 0) menu.addItem((item2) => item2.setTitle("No packs found").setDisabled(true));
       for (const c of list) {
         menu.addItem(
-          (item) => item.setTitle(c.label).setChecked(c.id === current).onClick(() => {
+          (item2) => item2.setTitle(c.label).setChecked(c.id === current).onClick(() => {
             choose(c.id);
             this.updateRegionLabel();
             this.renderContextRow();
@@ -84898,14 +85848,19 @@ ${n.origin}${also}${echo}` };
   async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian13.TFile)) return;
-    const { preset, group, byname, vessel, realm, route: route2, street } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, realm, route: route3, street, inn } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (inn) {
+      this.innState = this.innPresetState(inn);
+      this.switchSection("innNames");
+      return;
+    }
     if (street) {
       this.streetState = this.streetPresetState(street);
       this.switchSection("streetNames");
       return;
     }
-    if (route2) {
-      this.routeState = this.routePresetState(route2);
+    if (route3) {
+      this.routeState = this.routePresetState(route3);
       this.switchSection("routeNames");
       return;
     }
@@ -85155,6 +86110,113 @@ ${n.origin}${also}${echo}` };
     const notes = this.namesFolderNotes().map((file) => ({ basename: file.basename, read: () => this.app.vault.cachedRead(file) }));
     return loadVocabulary(notes, (word) => blocked2(word, safeguards));
   }
+  // ── Inns and taverns (Inns brief) ────────────────────────────────────────
+  innPresetState(p) {
+    const base = {
+      culture: p.culture,
+      kind: p.innKind === "any" ? void 0 : p.innKind,
+      era: p.era,
+      fantastic: p.fantastic,
+      region: p.region === "all" ? void 0 : p.region,
+      setting: p.innSetting,
+      form: p.form,
+      tone: p.tone,
+      people: p.people,
+      series: p.series
+    };
+    return chooseInn(base, "kind", base.kind);
+  }
+  /** §2: the sentence. */
+  renderInnSentence(row) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment2 of innSentence(this.innState)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(sentence2, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {
+        this.innState = chooseInn(this.innState, segment2.field, id);
+      });
+    }
+  }
+  /** GN §14: the finished strings only; history "inns and taverns · {era} · {culture}…". */
+  async runInns(state = this.innState, label, problems = []) {
+    var _a2;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
+    const guards = await this.loadSettlementSafeguards(INN_DATA.safeguards);
+    const routeGuards = await this.loadSettlementSafeguards();
+    const vocab = await this.loadSettlementVocabulary(guards.safeguards, innWordBlocked);
+    const result = generateInnNames({
+      culture: state.culture,
+      kind: state.kind,
+      era: state.era,
+      fantastic: state.fantastic,
+      region: state.region,
+      setting: state.setting,
+      form: innFormFor(state),
+      tone: state.tone,
+      people: state.people,
+      series: state.series,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards,
+      routeSafeguards: routeGuards.safeguards,
+      vocab: vocab.vocab
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
+      "none"
+    );
+    await this.recordGenerationHistory(result.names.length, label != null ? label : innHistoryLabel(state));
+    this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
+  }
+  /** §13: "{culture} · {kind or inns and taverns}", described by the sentence. */
+  openSaveInnPreset() {
+    var _a2, _b;
+    const state = this.innState;
+    const culture = (_b = (_a2 = findRouteCulture(state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+    const kind = INN_KINDS.find((k) => k.key === state.kind);
+    const name = [culture, kind ? kind.menu : SECTION_LABELS.innNames].join(" \xB7 ");
+    const description = innSentenceText(innSentence(state));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a3, _b2;
+      if (!presetName) {
+        new import_obsidian13.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        culture: state.culture,
+        region: (_a3 = state.region) != null ? _a3 : "all",
+        innKind: (_b2 = state.kind) != null ? _b2 : "any",
+        era: state.era,
+        fantastic: state.fantastic,
+        innSetting: state.setting,
+        form: state.form,
+        tone: state.tone,
+        people: state.people,
+        series: state.series
+      });
+      return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).inn);
+    }).open();
+  }
+  /** §13: an inn preset, run as the module runs; history "inns and taverns · {preset}". */
+  async runInnPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian13.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { inn, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!inn) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runInns(this.innPresetState(inn), `${SECTION_LABELS.innNames} \xB7 ${inn.packName}`, problems);
+  }
   // ── Streets and districts (Streets brief) ────────────────────────────────
   streetPresetState(p) {
     const base = {
@@ -85302,12 +86364,12 @@ ${n.origin}${also}${echo}` };
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
-    const { route: route2, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
-    if (!route2) {
+    const { route: route3, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!route3) {
       this.setStatus(problems.join(" "));
       return;
     }
-    await this.runRoutes(this.routePresetState(route2), `${SECTION_LABELS.routeNames} \xB7 ${route2.packName}`, problems);
+    await this.runRoutes(this.routePresetState(route3), `${SECTION_LABELS.routeNames} \xB7 ${route3.packName}`, problems);
   }
   // ── Ships and spacecraft (Ships brief) ────────────────────────────────────
   /** §2.4: a vessel module's choices, session only. */
@@ -85488,11 +86550,11 @@ ${n.origin}${also}${echo}` };
     if (!name) return { notices: ["No name packs found; placeholders used."] };
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
-    const { draw, notices } = await host.packDraw(name, (0, import_obsidian13.normalizePath)(`${folder}/${name}.md`));
-    if (!draw) return { notices, packName: name };
+    const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian13.normalizePath)(`${folder}/${name}.md`));
+    if (!draw2) return { notices, packName: name };
     const headings = (_d = (_c = packs.find((p) => p.name === name)) == null ? void 0 : _c.headings) != null ? _d : [];
     return {
-      draw: (role, sex, rng) => draw(sectionRequest(state, headings, role, sex), "whole", rng),
+      draw: (role, sex, rng) => draw2(sectionRequest(state, headings, role, sex), "whole", rng),
       notices,
       packName: name
     };
@@ -85616,7 +86678,7 @@ ${n.origin}${also}${echo}` };
     var _a2;
     const section = this.activeSection;
     (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -85645,6 +86707,10 @@ ${n.origin}${also}${echo}` };
     }
     if (this.activeSection === "streetNames") {
       this.openSaveStreetPreset();
+      return;
+    }
+    if (this.activeSection === "innNames") {
+      this.openSaveInnPreset();
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -85934,13 +87000,13 @@ ${text}
   openRiverOptions(evt) {
     const r = this.riverPeoples;
     const menu = new import_obsidian13.Menu();
-    menu.addItem((item) => item.setTitle("Peoples from tribes and kin groups").setChecked(r.mode === "tribal").onClick(() => r.mode = "tribal"));
-    menu.addItem((item) => item.setTitle("Peoples as placeholders").setChecked(r.mode === "placeholder").onClick(() => r.mode = "placeholder"));
+    menu.addItem((item2) => item2.setTitle("Peoples from tribes and kin groups").setChecked(r.mode === "tribal").onClick(() => r.mode = "tribal"));
+    menu.addItem((item2) => item2.setTitle("Peoples as placeholders").setChecked(r.mode === "placeholder").onClick(() => r.mode = "placeholder"));
     if (this.activeSection === "riverNames" && this.riverSetting !== "british") {
       menu.addSeparator();
-      menu.addItem((item) => item.setTitle("Tradition").setDisabled(true));
+      menu.addItem((item2) => item2.setTitle("Tradition").setDisabled(true));
       for (const t of TRIBAL_TRADITIONS) {
-        menu.addItem((item) => item.setTitle(t.label).setChecked(r.tradition === t.key).onClick(() => r.tradition = t.key));
+        menu.addItem((item2) => item2.setTitle(t.label).setChecked(r.tradition === t.key).onClick(() => r.tradition = t.key));
       }
     }
     menu.showAtMouseEvent(evt);
@@ -86136,11 +87202,11 @@ ${text}
       update();
     };
     candidates.forEach((c, i) => {
-      const item = list.createEl("li", { attr: { "data-index": String(i) } });
-      item.createDiv({ cls: "nameforge-modal__ageing-name", text: c.name });
-      item.createDiv({ cls: "nameforge-modal__ageing-trail", text: c.trail.join(TRAIL_SEPARATOR) });
-      item.addEventListener("click", () => {
-        item.classList.toggle("is-selected");
+      const item2 = list.createEl("li", { attr: { "data-index": String(i) } });
+      item2.createDiv({ cls: "nameforge-modal__ageing-name", text: c.name });
+      item2.createDiv({ cls: "nameforge-modal__ageing-trail", text: c.trail.join(TRAIL_SEPARATOR) });
+      item2.addEventListener("click", () => {
+        item2.classList.toggle("is-selected");
         update();
       });
     });
@@ -86320,16 +87386,16 @@ ${text}
     packs.forEach(({ path, packType, compoundGenerator }) => {
       var _a2;
       const label = ((_a2 = path.split("/").pop()) == null ? void 0 : _a2.replace(/\.md$/i, "")) || path;
-      const item = this.packDropdownMenuEl.createEl("button", {
+      const item2 = this.packDropdownMenuEl.createEl("button", {
         cls: "nameforge-modal__pack-dropdown-item",
         attr: { type: "button" }
       });
       (0, import_obsidian13.setIcon)(
-        item.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }),
+        item2.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }),
         packTypeIconId(packType, packSubGenerator(packType, compoundGenerator))
       );
-      item.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
-      item.addEventListener("click", () => {
+      item2.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: label });
+      item2.addEventListener("click", () => {
         this.closePackDropdown();
         this.clearSessionHint();
         void this.loadPack(path);
@@ -86403,7 +87469,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -86559,6 +87625,7 @@ ${text}
           else if (parsed.realm) packs.push({ path: child.path, packType: "realmPreset" });
           else if (parsed.route) packs.push({ path: child.path, packType: "routePreset" });
           else if (parsed.street) packs.push({ path: child.path, packType: "streetPreset" });
+          else if (parsed.inn) packs.push({ path: child.path, packType: "innPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -86701,9 +87768,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
-    const { preset, group, byname, vessel, realm, route: route2, street, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = street ? "streetPreset" : route2 ? "routePreset" : realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m;
+    const { preset, group, byname, vessel, realm, route: route3, street, inn, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm ? "realmPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -86713,9 +87780,9 @@ ${text}
     (_a2 = this.sectionSentenceEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
-    const module2 = street ? SECTION_LABELS.streetNames : route2 ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
+    const module2 = inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
     (_e = this.openPresetButton) == null ? void 0 : _e.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_l = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm == null ? void 0 : realm.packName) != null ? _j : route2 == null ? void 0 : route2.packName) != null ? _k : street == null ? void 0 : street.packName) != null ? _l : file.basename;
+    this.plugin.settings.packName = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm == null ? void 0 : realm.packName) != null ? _j : route3 == null ? void 0 : route3.packName) != null ? _k : street == null ? void 0 : street.packName) != null ? _l : inn == null ? void 0 : inn.packName) != null ? _m : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -86847,16 +87914,16 @@ ${text}
       update();
     };
     names.forEach((n, i) => {
-      const item = list.createEl("li", { attr: { "data-index": String(i) } });
-      const nameEl = item.createDiv({ cls: "nameforge-modal__recipe-name" });
+      const item2 = list.createEl("li", { attr: { "data-index": String(i) } });
+      const nameEl = item2.createDiv({ cls: "nameforge-modal__recipe-name" });
       for (const part of n.text.split(/(\[[^\]]+\])/)) {
         if (!part) continue;
         if (part.startsWith("[")) nameEl.createSpan({ cls: "nameforge-modal__placeholder-part", text: part });
         else nameEl.appendText(part);
       }
-      if (etymology !== "none") item.createDiv({ cls: "nameforge-modal__recipe-etymology", text: n.etymology });
-      item.addEventListener("click", () => {
-        item.classList.toggle("is-selected");
+      if (etymology !== "none") item2.createDiv({ cls: "nameforge-modal__recipe-etymology", text: n.etymology });
+      item2.addEventListener("click", () => {
+        item2.classList.toggle("is-selected");
         update();
       });
     });
@@ -87152,6 +88219,10 @@ ${text}
       await this.runStreets();
       return;
     }
+    if (this.activeSection === "innNames") {
+      await this.runInns();
+      return;
+    }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
@@ -87211,6 +88282,10 @@ ${text}
     }
     if (this.currentPackType === "streetPreset") {
       await this.runStreetPreset();
+      return;
+    }
+    if (this.currentPackType === "innPreset") {
+      await this.runInnPreset();
       return;
     }
     if (this.currentPackType === "groupPreset") {
@@ -87489,11 +88564,11 @@ ${text}
       list.createEl("li", { cls: "nameforge-modal__placeholder", text: placeholderMessage });
     } else {
       names.forEach((name, i) => {
-        const item = list.createEl("li", { text: name, attr: { "data-name": name } });
+        const item2 = list.createEl("li", { text: name, attr: { "data-name": name } });
         const tag = tags == null ? void 0 : tags[i];
-        if (tag) item.createSpan({ cls: "nameforge-modal__result-tag", text: ` \xB7 ${tag}` });
-        item.addEventListener("click", () => {
-          item.classList.toggle("is-selected");
+        if (tag) item2.createSpan({ cls: "nameforge-modal__result-tag", text: ` \xB7 ${tag}` });
+        item2.addEventListener("click", () => {
+          item2.classList.toggle("is-selected");
           updateInsertButtons();
         });
       });

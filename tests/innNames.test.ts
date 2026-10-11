@@ -182,3 +182,67 @@ test("§15.6: 5,000 names per culture: no block-list matches, no banned words or
     }
   }
 });
+
+// ── §15.7 Sentence and presets ──────────────────────────────────────────────
+
+import { chooseInn, DEFAULT_INN_STATE, innHistoryLabel, innSentence, innSentenceText, type InnSentenceState } from "../src/inns/sentence";
+import { modulePresetContent, parseModulePreset, type InnPreset } from "../src/presets";
+import { historySection, SECTION_GROUPS } from "../src/sections";
+
+const iField = (state: InnSentenceState, f: string) => innSentence(state).find((s) => typeof s !== "string" && s.field === f);
+
+test("§15.7: the default sentence's plain text", () => {
+  assert.equal(
+    innSentenceText(innSentence(DEFAULT_INN_STATE)),
+    "Norman & British houses of any kind of the medieval era, in a realistic world, across all of Britain, anywhere, as signs or with a house word, of any tone, with placeholders for people and places, each one separate.",
+  );
+  const port = [["kind", "tavern"], ["era", "EM"], ["setting", "port"], ["people", "invented"], ["series", "on"]].reduce((s, [f, id]) => chooseInn(s, f as never, id), DEFAULT_INN_STATE);
+  assert.equal(
+    innSentenceText(innSentence(port)),
+    "Norman & British taverns of the early modern era, in a realistic world, across all of Britain, in a port, as signs or with a house word, of any tone, with invented people and places, as one town.",
+  );
+});
+
+test("§15.7: the form link is hidden for chinese; kinds reset with the era", () => {
+  const chinese = chooseInn(DEFAULT_INN_STATE, "culture", "chinese");
+  assert.equal(iField(chinese, "form"), undefined);
+  assert.equal(iField(chinese, "region"), undefined);
+  assert.ok(iField(chooseInn(DEFAULT_INN_STATE, "culture", "roman"), "form"));
+  const bar = chooseInn(chooseInn(DEFAULT_INN_STATE, "era", "IS"), "kind", "bar");
+  assert.equal(bar.kind, "bar");
+  assert.equal(chooseInn(bar, "era", "MD").kind, undefined);
+});
+
+test("§1: the module follows streets and districts; history label and section", () => {
+  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 4), ["placeShapes", "routeNames", "streetNames", "innNames"]);
+  assert.equal(innHistoryLabel(DEFAULT_INN_STATE), "inns and taverns · medieval · Norman & British");
+  const full: InnSentenceState = { ...DEFAULT_INN_STATE, era: "ST", kind: "club", setting: "road", region: "NTH", fantastic: true, tone: "grim", series: true };
+  assert.equal(innHistoryLabel(full), "inns and taverns · steam age · Norman & British · clubs and hotels · by the road · the North · steampunk · grim · one town");
+  assert.equal(historySection(innHistoryLabel(full)), "innNames");
+});
+
+test("§15.7: presets round-trip", () => {
+  const preset: InnPreset = {
+    packName: "Harbour taverns",
+    setting: "",
+    description: "Norman & British taverns of the early modern era, in a realistic world, across all of Britain, in a port, as signs or with a house word, of any tone, with invented people and places, as one town.",
+    culture: "norman-british",
+    region: "all",
+    innKind: "tavern",
+    era: "EM",
+    fantastic: false,
+    innSetting: "port",
+    form: "either",
+    tone: "any",
+    people: "invented",
+    series: true,
+  };
+  const content = modulePresetContent(preset);
+  assert.ok(content.includes("module: inn-names\n") && content.includes("setting: port\n") && content.includes("kind: tavern\n"));
+  const parsed = parseModulePreset(content, "x");
+  assert.deepEqual(parsed.inn, preset);
+  assert.deepEqual(parsed.problems, []);
+  const bad = parseModulePreset(modulePresetContent({ ...preset, innKind: "bar", form: "sign" as never }), "x");
+  assert.equal(bad.inn?.innKind, "any");
+  assert.deepEqual(bad.problems, ["Kind “bar” isn't offered in the early modern era.", "Unknown form “sign”."]);
+});
