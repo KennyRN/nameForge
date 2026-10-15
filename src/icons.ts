@@ -159,6 +159,46 @@ export const ICON_SPACECRAFT = "nameforge-spacecraft";
 const ICON_SPACECRAFT_SVG =
   '<g transform="scale(0.15625)"><path d="M0 0h640v640H0z" fill="none" /><path fill="currentColor" d="M32 432v64c0 26.5 21.5 48 48 48h50c40.6 0 80.4-11 115.2-31.9L378.7 432h-93.3l-64.9 38.9c-14 8.4-28.9 14.7-44.5 19v-66.4c9.7-5.6 17.8-13.7 23.4-23.4h198.8c67.1 0 127.8-20.6 170.3-70.6c4.6-5.4 4.6-13.3 0-18.8c-42.5-50.1-103.2-70.6-170.3-70.6H199.4c-5.6-9.7-13.7-17.8-23.4-23.4v-66.4c15.6 4.2 30.6 10.6 44.5 19l64.9 38.9h93.3l-133.5-80.1C210.4 107 170.6 96 130 96H80c-26.5 0-48 21.5-48 48zm96 0v64H80v-64zm0-288v64H80v-64zm320 144c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16v-32c0-8.8 7.2-16 16-16" /></g>';
 
+/** Epithets and bynames (Boxicons quote-left, filled). */
+export const ICON_EPITHETS = "nameforge-epithets";
+const ICON_EPITHETS_SVG =
+  '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M21.01 10h-2.85c.27-1.02 1.01-2.51 3.09-3.03l.76-.19V4h-1c-2.78 0-4.91.77-6.31 2.29c-1.89 2.05-1.7 4.68-1.69 4.71v7c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2v-6c0-1.1-.9-2-2-2m-12 0H6.16c.27-1.02 1.01-2.51 3.09-3.03l.76-.19V4h-1C6.23 4 4.1 4.77 2.7 6.29C.81 8.34 1 10.97 1.01 11v7c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2v-6c0-1.1-.9-2-2-2" /></g>';
+
+/** Realms and polities (Phosphor castle-turret, fill). */
+export const ICON_REALMS = "nameforge-realms";
+const ICON_REALMS_SVG =
+  '<g transform="scale(0.390625)"><path d="M0 0h256v256H0z" fill="none" /><path fill="currentColor" d="M216 216h-16V115.31L211.31 104A15.86 15.86 0 0 0 216 92.69V48a16 16 0 0 0-16-16h-20a8 8 0 0 0-8 8v24h-24V40a8 8 0 0 0-8-8h-24a8 8 0 0 0-8 8v24H84V40a8 8 0 0 0-8-8H56a16 16 0 0 0-16 16v44.69A15.86 15.86 0 0 0 44.69 104L56 115.31V216H40a8 8 0 0 0 0 16h176a8 8 0 0 0 0-16m-104-48a16 16 0 0 1 32 0v48h-32Z" /></g>';
+
+/** Deities and sacred places (Osmic place-of-worship). */
+export const ICON_DEITIES = "nameforge-deities";
+const ICON_DEITIES_SVG =
+  '<g transform="scale(7.142857)"><path d="M0 0h14v14H0z" fill="none" /><path fill="currentColor" d="M6.5 0a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3M1.167 4.573L2.5 7l3-1l1 4l-2 2c-.272.305-.466.459-.5 1c0 1 1 1 1 1h6s1 0 1-1s-1-1-1-1H8l1-1c1-1 .929-1.473.812-2L9 5c-.24-.893-.863-1.33-2-1.15L6 4L3 5.5L2 4c-.442-.588-1.184-.082-.833.573" /></g>';
+
+/** Settlement kit (Griddy city, filled). */
+export const ICON_SETTLEMENT_KIT = "nameforge-settlement-kit";
+const ICON_SETTLEMENT_KIT_SVG =
+  '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M21 5.5h-7.5v5.75H19v8.25h-1.5v-6.75H11v6.75H9.5V4.36L6.25 2.085L3 4.36V19.5H1V21h22v-1.5h-2zm-3 4.25h-1.5v-2H18zM7 16H5.5v-2H7zm0-3.5H5.5v-2H7zM7 9H5.5V7H7zm8.75 7.5h-3V15h3z" /></g>';
+
+/** Buildings and landmarks (Font Awesome monument). */
+export const ICON_BUILDINGS = "nameforge-buildings";
+const ICON_BUILDINGS_SVG =
+  '<g transform="scale(0.15625)"><path d="M0 0h640v640H0z" fill="none" /><path fill="currentColor" d="M337 31c-9.4-9.4-24.6-9.4-33.9 0L223 111c-4.1 4.1-6.5 9.4-7 15.1L186.4 512H176c-17.7 0-32 14.3-32 32s14.3 32 32 32h288c17.7 0 32-14.3 32-32s-14.3-32-32-32h-10.4l-29.7-385.8c-.4-5.7-2.9-11.1-7-15.1zm-81 329c0-13.3 10.7-24 24-24h80c13.3 0 24 10.7 24 24s-10.7 24-24 24h-80c-13.3 0-24-10.7-24-24" /></g>';
+
+/** Inns and taverns (Font Awesome beer: a tankard), centred in the square box. */
+export const ICON_INNS = "nameforge-inns";
+const ICON_INNS_SVG =
+  '<g transform="translate(0 6) scale(0.0625)"><path d="M0 0h1600v1408H0z" fill="none" /><path fill="currentColor" d="M576 768V384H320v256q0 53 37.5 90.5T448 768zm1024 448v192H448v-192l128-192H448q-159 0-271.5-112.5T64 640V320L0 256l32-128h480L544 0h960l32 192l-64 32v800z" /></g>';
+
+/** Streets and districts (Bootstrap signpost-split, fill). */
+export const ICON_STREETS = "nameforge-streets";
+const ICON_STREETS_SVG =
+  '<g transform="scale(6.25)"><path d="M0 0h16v16H0z" fill="none" /><path fill="currentColor" d="M7 16h2V6h5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.8 2.4A1 1 0 0 0 14 2H9v-.586a1 1 0 0 0-2 0V7H2a1 1 0 0 0-.8.4L.225 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4h5z" /></g>';
+
+/** Route names (GIS route). */
+export const ICON_ROUTES = "nameforge-routes";
+const ICON_ROUTES_SVG =
+  '<g transform="scale(1)"><path d="M0 0h100v100H0z" fill="none" /><path fill="currentColor" d="M21 32C9.459 32 0 41.43 0 52.94c0 4.46 1.424 8.605 3.835 12.012l14.603 25.244c2.045 2.672 3.405 2.165 5.106-.14l16.106-27.41c.325-.59.58-1.216.803-1.856A20.7 20.7 0 0 0 42 52.94C42 41.43 32.544 32 21 32m0 9.812c6.216 0 11.16 4.931 11.16 11.129S27.215 64.068 21 64.068S9.84 59.138 9.84 52.941S14.786 41.812 21 41.812M87.75 0C81.018 0 75.5 5.501 75.5 12.216c0 2.601.83 5.019 2.237 7.006l8.519 14.726c1.193 1.558 1.986 1.262 2.978-.082l9.395-15.99c.19-.343.339-.708.468-1.082a12 12 0 0 0 .903-4.578C100 5.5 94.484 0 87.75 0m0 5.724c3.626 0 6.51 2.876 6.51 6.492s-2.884 6.49-6.51 6.49s-6.51-2.875-6.51-6.49s2.885-6.492 6.51-6.492" /><path fill="currentColor" fill-rule="evenodd" d="M88.209 37.412c-2.247.05-4.5.145-6.757.312l.348 5.532a126 126 0 0 1 6.513-.303zm-11.975.82c-3.47.431-6.97 1.045-10.43 2.032l1.303 5.361c3.144-.896 6.402-1.475 9.711-1.886zM60.623 42.12a24.5 24.5 0 0 0-3.004 1.583l-.004.005l-.006.002c-1.375.866-2.824 1.965-4.007 3.562c-.857 1.157-1.558 2.62-1.722 4.35l5.095.565c.038-.406.246-.942.62-1.446h.002v-.002c.603-.816 1.507-1.557 2.582-2.235l.004-.002a20 20 0 0 1 2.388-1.256zM58 54.655l-3.303 4.235c.783.716 1.604 1.266 2.397 1.726l.01.005l.01.006c2.632 1.497 5.346 2.342 7.862 3.144l1.446-5.318c-2.515-.802-4.886-1.576-6.918-2.73c-.582-.338-1.092-.691-1.504-1.068m13.335 5.294l-1.412 5.327l.668.208l.82.262c2.714.883 5.314 1.826 7.638 3.131l2.358-4.92c-2.81-1.579-5.727-2.611-8.538-3.525l-.008-.002l-.842-.269zm14.867 7.7l-3.623 3.92c.856.927 1.497 2.042 1.809 3.194l.002.006l.002.009c.372 1.345.373 2.927.082 4.525l5.024 1.072c.41-2.256.476-4.733-.198-7.178c-.587-2.162-1.707-4.04-3.098-5.548M82.72 82.643a12 12 0 0 1-1.826 1.572h-.002c-1.8 1.266-3.888 2.22-6.106 3.04l1.654 5.244c2.426-.897 4.917-1.997 7.245-3.635l.006-.005l.003-.002a17 17 0 0 0 2.639-2.287zm-12.64 6.089c-3.213.864-6.497 1.522-9.821 2.08l.784 5.479c3.421-.575 6.856-1.262 10.27-2.18zm-14.822 2.836c-3.346.457-6.71.83-10.084 1.148l.442 5.522c3.426-.322 6.858-.701 10.285-1.17zm-15.155 1.583c-3.381.268-6.77.486-10.162.67l.256 5.536c3.425-.185 6.853-.406 10.28-.678zm-15.259.92c-2.033.095-4.071.173-6.114.245l.168 5.541a560 560 0 0 0 6.166-.246z" /></g>';
+
 export const ICON_FOLDER = "nameforge-folder";
 const ICON_FOLDER_SVG =
   '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
@@ -174,6 +214,14 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_SHIPS, ICON_SHIPS_SVG);
   addIcon(ICON_HISTORY, ICON_HISTORY_SVG);
   addIcon(ICON_SPACECRAFT, ICON_SPACECRAFT_SVG);
+  addIcon(ICON_EPITHETS, ICON_EPITHETS_SVG);
+  addIcon(ICON_REALMS, ICON_REALMS_SVG);
+  addIcon(ICON_DEITIES, ICON_DEITIES_SVG);
+  addIcon(ICON_SETTLEMENT_KIT, ICON_SETTLEMENT_KIT_SVG);
+  addIcon(ICON_BUILDINGS, ICON_BUILDINGS_SVG);
+  addIcon(ICON_INNS, ICON_INNS_SVG);
+  addIcon(ICON_STREETS, ICON_STREETS_SVG);
+  addIcon(ICON_ROUTES, ICON_ROUTES_SVG);
   addIcon(ICON_INFO, ICON_INFO_SVG);
   addIcon(ICON_CREATE_PACKS, ICON_CREATE_PACKS_SVG);
   addIcon(ICON_PLUS_SQUARE, ICON_PLUS_SQUARE_SVG);

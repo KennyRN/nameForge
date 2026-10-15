@@ -38,6 +38,14 @@ import {
   ICON_BYNAMES,
   ICON_SHIPS,
   ICON_HISTORY,
+  ICON_ROUTES,
+  ICON_STREETS,
+  ICON_INNS,
+  ICON_BUILDINGS,
+  ICON_SETTLEMENT_KIT,
+  ICON_DEITIES,
+  ICON_REALMS,
+  ICON_EPITHETS,
   ICON_SPACECRAFT,
   ICON_BULLET_INSERT,
   ICON_CANCEL,
@@ -241,19 +249,19 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   markov: ICON_PACKS,
   placeShapes: ICON_NATIVE_PLACE_NAMES,
   // Route names brief §1.1.
-  routeNames: "route",
+  routeNames: ICON_ROUTES,
   // Streets brief §1.1.
-  streetNames: "signpost",
+  streetNames: ICON_STREETS,
   // Inns brief §1.1.
-  innNames: "beer",
+  innNames: ICON_INNS,
   // Buildings brief §1.1.
-  buildingNames: "landmark",
+  buildingNames: ICON_BUILDINGS,
   // Settlement kit §1.1.
-  settlementKit: "building-2",
+  settlementKit: ICON_SETTLEMENT_KIT,
   // Events brief §1.1.
   eventNames: ICON_HISTORY,
   // Deities brief §1.1.
-  deityNames: "sun-moon",
+  deityNames: ICON_DEITIES,
   riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
@@ -261,11 +269,11 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   nameTakeover: ICON_NAME_TAKEOVER,
   tribalNames: ICON_TRIBAL_NAMES,
   // Realms brief §1.1.
-  realms: "castle",
+  realms: ICON_REALMS,
   // Bynames brief §1.1: Lucide icons.
-  epithets: "quote",
+  epithets: ICON_EPITHETS,
   titles: "crown",
-  familyNames: "users",
+  familyNames: ICON_BYNAMES,
   // Ships brief §1.1, with the supplied ship icon for ships and boats.
   ships: ICON_SHIPS,
   spacecraft: ICON_SPACECRAFT,
@@ -310,13 +318,13 @@ function packTypeIconId(packType: NamePackType, subGenerator?: CompoundGenerator
   if (packType === "bynamePreset") return ICON_BYNAMES;
   if (packType === "vesselPreset") return ICON_SHIPS;
   if (packType === "realmPreset") return ICON_TRIBAL_NAMES;
-  if (packType === "routePreset") return "route";
-  if (packType === "streetPreset") return "signpost";
-  if (packType === "innPreset") return "beer";
-  if (packType === "buildingPreset") return "landmark";
-  if (packType === "kitPreset") return "building-2";
+  if (packType === "routePreset") return ICON_ROUTES;
+  if (packType === "streetPreset") return ICON_STREETS;
+  if (packType === "innPreset") return ICON_INNS;
+  if (packType === "buildingPreset") return ICON_BUILDINGS;
+  if (packType === "kitPreset") return ICON_SETTLEMENT_KIT;
   if (packType === "eventPreset") return ICON_HISTORY;
-  if (packType === "deityPreset") return "sun-moon";
+  if (packType === "deityPreset") return ICON_DEITIES;
   if (packType === "recipePack") {
     // Presets brief §2.2: recipe packs wear the wizard's pen-in-pin icon.
     return ICON_RECIPE_WIZARD;
