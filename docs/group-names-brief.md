@@ -1604,3 +1604,10 @@ From the data, build the words exclusive to each tag (words that appear only wit
 - **Place name wizard slots** fed by these modules, e.g. a colonial `[commander]` or `[explorer]` slot, or a holy-person slot from holy orders.
 - Mottos in English.
 - A name pack as a source for `{person}` (the book's "use the name lists to name a unit's commander").
+
+
+---
+
+## Deities back-link
+
+Added by the deities and sacred places brief (§10.3): the mystic family's cult type gains `Children of the {deity}` (8) and `Cult of the {deity}` (6); the holy type gains `{holyMembers} of the {deity}` (6), left out for the christian cultures' traditions (celtic, germanic, mediterranean) unless the setting is fantastic. Never for the Polynesian or Andean traditions. In the settlement kit they use the context's deity.

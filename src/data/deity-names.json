@@ -170,7 +170,10 @@
     "steppeNoColour": ["Blue"],
     "livingTricksters": ["the Spider", "the Hare", "the Raven", "the Coyote", "the Fox", "Ancestor King", "Ancestor Queen"]
   },
-  "series": {"from": 6},
+  "traditionCulture": {"celtic": "celtic", "germanic": "norse", "mediterranean": "roman", "arabian": "arabic-persian", "southAsian": "indian", "eastAsian": "chinese", "mesoamerican": "aztec", "bantu": "bantu", "westAfrican": "west-african", "steppe": "steppe", "general": "general"},
+ "christianTraditions": ["celtic", "germanic", "mediterranean"],
+ "sensitiveTraditions": ["polynesian", "andean"],
+ "series": {"from": 6},
   "cap": 9,
   "safeguards": {
     "block": ["God", "Lord God", "God Almighty", "the Almighty", "Lord of Lords", "King of Kings", "Lord of Hosts", "Lamb of God", "Prince of Peace", "Son of God", "Holy Spirit", "Holy Ghost", "Holy Trinity", "the Trinity", "Father, Son and Holy Spirit", "Mother of God", "Queen of Heaven", "Our Lady", "the Virgin", "the Merciful", "the Compassionate", "the Most Merciful", "the Most High", "the One", "the Creator", "the Preserver", "the Destroyer", "Lord of the Dance", "the Enlightened One", "the Awakened One", "the Compassionate One", "the Blessed One", "the Great Spirit", "Great Spirit", "Sky Woman", "Eternal Blue Sky", "Sun Goddess", "Divine Mother", "Supreme Being", "Holy One", "the Holy One of Israel", "the Name", "Ancient of Days", "Alpha and Omega", "Light of the World", "Good Shepherd", "Lord of the Worlds", "the Seven", "Lord of Light", "R'hllor", "the Drowned God", "the Many-Faced God", "the Old Gods and the New", "the Nine Divines", "the Eight Divines", "the Daedric Princes", "Talos", "Akatosh", "Emperor of Mankind", "Chaos Gods", "Khorne", "Nurgle", "Tzeentch", "Slaanesh", "the Valar", "the Ainur", "Eru Ilúvatar", "Morgoth", "Sauron", "Aslan", "the Great Old Ones", "Cthulhu", "Azathoth", "Nyarlathotep", "Shub-Niggurath", "Mother of Dragons", "Om", "the Traveler", "Lathander", "Mystra", "Bane", "Tyr", "Pelor", "Vecna", "Lolth", "the Raven Queen"],

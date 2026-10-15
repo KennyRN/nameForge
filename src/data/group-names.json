@@ -289,6 +289,12 @@
        ]
       },
       {
+       "p": "{holyMembers} of the {deity}",
+       "f": "B",
+       "w": 6.0,
+       "deity": true
+      },
+      {
        "p": "{holyMembers} of {holy}",
        "f": "F",
        "w": 10.0
@@ -360,6 +366,18 @@
      "person": "prophet",
      "description": "Cults, heresies and doomsday faiths",
      "shapes": [
+      {
+       "p": "Children of the {deity}",
+       "f": "B",
+       "w": 8.0,
+       "deity": true
+      },
+      {
+       "p": "Cult of the {deity}",
+       "f": "B",
+       "w": 6.0,
+       "deity": true
+      },
       {
        "p": "Children of the {cultQuality} {cultEntity}",
        "f": "B",

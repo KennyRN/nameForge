@@ -26,6 +26,7 @@ import {
   toneFactor,
   wordTones,
 } from "../groups/engine";
+import { deityHooks } from "../deities/hook";
 import { mulberry32 } from "../markov";
 import { generateRealmNames, REALM_DATA, REALM_ERAS } from "../realms/engine";
 import { boostPool, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
@@ -365,6 +366,12 @@ function token(ctx: Ctx, name: string): string | undefined {
       const gods = godNames(ctx.culture.key);
       return gods.length > 0 ? pickOne(gods, rng) : undefined;
     }
+    case "sacredPlace": {
+      // Deities brief §10.2: an invented sacred place, without its own "the".
+      const w = deityHooks()?.sacredPlace({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng, vocab: ctx.vocab });
+      if (w) ctx.words.push({ pool: "sacredPlace", word: w });
+      return w;
+    }
     case "holySite": {
       const w = vocabWord(ctx, "holySite", name);
       return w && `the ${w}`;
@@ -511,6 +518,8 @@ function shapeWeight(ctx: Ctx, kind: RouteKind, s: RouteShape, anyEra = false): 
   if (!anyEra && s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
   if (s.h !== undefined && s.h !== ctx.fantastic) return 0;
+  // Deities brief §10.2: invented sacred places only with the deities engine loaded, never for the sensitive cultures.
+  if (s.p.includes("{sacredPlace}") && (c.sensitive || !deityHooks()?.cultureOffered(c.key))) return 0;
   // §12.4: no fantastic shapes, no light or grim shapes, no fixed pilgrim names for the sensitive cultures.
   if (c.sensitive && (s.h || LIGHT_OR_GRIM(s.t) || (s.p === "fixed" && kind === "pilgrim"))) return 0;
   // §4.2: invented people only where the culture has a name list.

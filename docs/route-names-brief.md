@@ -710,3 +710,10 @@ Run `npm test` and `npm run build` at the end of each; both must pass before com
 - Milestones, waystations and inns along a route (the inns module will read routes).
 - A Sahul culture (deliberately not planned; WR §18.4).
 - Further cultures as full rows: Ottoman, Swahili coast, Malay, Northwest Coast.
+
+
+---
+
+## Deities back-link
+
+Added by the deities and sacred places brief (§10.2): the pilgrim kind gains `Sacred Way to the {sacredPlace}` and `Pilgrims' Road to the {sacredPlace}` (weight 8 each), with `{sacredPlace}` from `sacredPlace()` (`{sacredLand} of the {deity}` or `the {sacredQuality} {sacredLand}`, its own "the" dropped). Never for Polynesian or Andean.

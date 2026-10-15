@@ -1,5 +1,7 @@
 // Records group-name batches before the tone and series brief's engine changes (tone Any must match, §9.2).
+// Rewritten for the deities brief's back-links (§10.3), with the deities engine loaded as the app loads it.
 import { writeFileSync } from "node:fs";
+import "../../src/deities/engine";
 import { GROUP_FAMILIES, GROUP_SETTINGS, generateGroupNames, typesInSetting } from "../../src/groups/engine";
 
 const genreOf = { FL: ["fantasy", false], FH: ["fantasy", true], MR: ["modern", false], MF: ["modern", true], SF: ["scifi", false] } as const;

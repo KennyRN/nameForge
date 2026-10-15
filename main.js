@@ -2338,6 +2338,10 @@ var ICON_BYNAMES = "nameforge-bynames";
 var ICON_BYNAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 5a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M4 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M16 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M12 7v4H6v4" /><path d="M12 11h6v4" /></g></g>';
 var ICON_SHIPS = "nameforge-ships";
 var ICON_SHIPS_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M8.75 2a.75.75 0 0 0-.75.75V5H5.75a.75.75 0 0 0-.75.75v4.765l-1.46.534a.75.75 0 0 0-.423 1.02l2.335 5.019a1.75 1.75 0 0 1 2.22 1.143q0 .006.009.027q.018.053.067.165c.068.15.171.344.308.527c.276.367.564.55.944.55s.668-.182.943-.55a2.8 2.8 0 0 0 .384-.718a1.75 1.75 0 0 1 3.342-.005l.01.028q.018.053.067.165c.069.151.172.345.31.529c.278.37.567.551.944.551s.665-.182.943-.55a3 3 0 0 0 .386-.721a1.75 1.75 0 0 1 2.294-1.114l2.468-5.031a.75.75 0 0 0-.421-1.037L19 10.451V5.75a.75.75 0 0 0-.75-.75H16V2.75a.75.75 0 0 0-.75-.75zm5.75 3h-5V3.5h5zm3 1.5v3.416l-4.397-1.569a3.25 3.25 0 0 0-2.21.01L6.5 9.964V6.5zm1.227 12.064l-.003-.01a.75.75 0 0 0-1.441-.023v.002l-.004.009l-.02.058q-.03.082-.096.232c-.09.199-.228.46-.42.718c-.388.515-.94.950-1.743.950s-1.356-.435-1.743-.950a3.9 3.9 0 0 1-.538-1.009l-.003-.009a.75.75 0 0 0-1.435.001v.001l-.004.01l-.02.057a3.8 3.8 0 0 1-.514.950c-.386.514-.937.949-1.743.949s-1.358-.435-1.744-.950a3.8 3.8 0 0 1-.535-1.007l-.003-.011a.75.75 0 0 0-1.441.020l-.003.009l-.018.054a3.3 3.3 0 0 1-.504.922c-.384.490-.996.963-2.002.963a.75.75 0 0 0 0 1.5c1.574 0 2.587-.777 3.183-1.537L6 20.374l.056.076C6.608 21.185 7.556 22 9 22s2.392-.815 2.943-1.55l.057-.078l.058.079C12.610 21.185 13.558 22 15 22s2.390-.815 2.942-1.55l.055-.075q.032.044.066.087c.595.761 1.610 1.538 3.187 1.538a.75.75 0 0 0 0-1.5c-1.012 0-1.623-.473-2.005-.962a3.3 3.3 0 0 1-.518-.974" /></g>';
+var ICON_HISTORY = "nameforge-history";
+var ICON_HISTORY_SVG = '<g transform="scale(0.390625)"><path d="M0 0h256v256H0z" fill="none" /><g fill="currentColor"><path d="M200 176h-96s8 6 8 16a24 24 0 0 1-48 0V64a24 24 0 0 0-24-24h136a24 24 0 0 1 24 24Z" opacity=".2" /><path d="M96 104a8 8 0 0 1 8-8h64a8 8 0 0 1 0 16h-64a8 8 0 0 1-8-8m8 40h64a8 8 0 0 0 0-16h-64a8 8 0 0 0 0 16m128 48a32 32 0 0 1-32 32H88a32 32 0 0 1-32-32V64a16 16 0 0 0-32 0c0 5.74 4.83 9.62 4.88 9.66A8 8 0 0 1 24 88a7.9 7.9 0 0 1-4.79-1.61C18.05 85.54 8 77.61 8 64a32 32 0 0 1 32-32h136a32 32 0 0 1 32 32v104h8a8 8 0 0 1 4.8 1.6c1.2.86 11.2 8.79 11.2 22.4M96.26 173.48A8.07 8.07 0 0 1 104 168h88V64a16 16 0 0 0-16-16H67.69A31.7 31.7 0 0 1 72 64v128a16 16 0 0 0 32 0c0-5.74-4.83-9.62-4.88-9.66a7.82 7.82 0 0 1-2.86-8.86M216 192a12.58 12.58 0 0 0-3.23-8h-94a27 27 0 0 1 1.21 8a31.8 31.8 0 0 1-4.29 16H200a16 16 0 0 0 16-16" /></g></g>';
+var ICON_SPACECRAFT = "nameforge-spacecraft";
+var ICON_SPACECRAFT_SVG = '<g transform="scale(0.15625)"><path d="M0 0h640v640H0z" fill="none" /><path fill="currentColor" d="M32 432v64c0 26.5 21.5 48 48 48h50c40.6 0 80.4-11 115.2-31.9L378.7 432h-93.3l-64.9 38.9c-14 8.4-28.9 14.7-44.5 19v-66.4c9.7-5.6 17.8-13.7 23.4-23.4h198.8c67.1 0 127.8-20.6 170.3-70.6c4.6-5.4 4.6-13.3 0-18.8c-42.5-50.1-103.2-70.6-170.3-70.6H199.4c-5.6-9.7-13.7-17.8-23.4-23.4v-66.4c15.6 4.2 30.6 10.6 44.5 19l64.9 38.9h93.3l-133.5-80.1C210.4 107 170.6 96 130 96H80c-26.5 0-48 21.5-48 48zm96 0v64H80v-64zm0-288v64H80v-64zm320 144c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16v-32c0-8.8 7.2-16 16-16" /></g>';
 var ICON_FOLDER = "nameforge-folder";
 var ICON_FOLDER_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
 var ICON_INFO = "nameforge-info";
@@ -2346,6 +2350,8 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_MEEPLE, MEEPLE_SVG);
   (0, import_obsidian4.addIcon)(ICON_BYNAMES, ICON_BYNAMES_SVG);
   (0, import_obsidian4.addIcon)(ICON_SHIPS, ICON_SHIPS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_HISTORY, ICON_HISTORY_SVG);
+  (0, import_obsidian4.addIcon)(ICON_SPACECRAFT, ICON_SPACECRAFT_SVG);
   (0, import_obsidian4.addIcon)(ICON_INFO, ICON_INFO_SVG);
   (0, import_obsidian4.addIcon)(ICON_CREATE_PACKS, ICON_CREATE_PACKS_SVG);
   (0, import_obsidian4.addIcon)(ICON_PLUS_SQUARE, ICON_PLUS_SQUARE_SVG);
@@ -33222,6 +33228,12 @@ var group_names_default = {
               ]
             },
             {
+              p: "{holyMembers} of the {deity}",
+              f: "B",
+              w: 6,
+              deity: true
+            },
+            {
               p: "{holyMembers} of {holy}",
               f: "F",
               w: 10
@@ -33293,6 +33305,18 @@ var group_names_default = {
           person: "prophet",
           description: "Cults, heresies and doomsday faiths",
           shapes: [
+            {
+              p: "Children of the {deity}",
+              f: "B",
+              w: 8,
+              deity: true
+            },
+            {
+              p: "Cult of the {deity}",
+              f: "B",
+              w: 6,
+              deity: true
+            },
             {
               p: "Children of the {cultQuality} {cultEntity}",
               f: "B",
@@ -54740,6 +54764,13 @@ var group_names_default = {
   ]
 };
 
+// src/deities/hook.ts
+var hooks;
+function setDeityHooks(h) {
+  hooks = h;
+}
+var deityHooks = () => hooks;
+
 // src/settlement/contextShared.ts
 var CONTEXT_WEIGHT = 4;
 function selfPatterns(data) {
@@ -56526,7 +56557,7 @@ function townPool(key2) {
   return found;
 }
 var isGeneral = (t) => !t || t.key === "general";
-function renderPattern(ctx, pattern, type, shape, hooks) {
+function renderPattern(ctx, pattern, type, shape, hooks2) {
   var _a2, _b;
   let out = "";
   const re = /\{([^}]+)\}/g;
@@ -56540,20 +56571,20 @@ function renderPattern(ctx, pattern, type, shape, hooks) {
     out += pattern.slice(last, m.index);
     last = re.lastIndex;
     const [rawName, mod] = m[1].split(":");
-    const fixed = (_a2 = hooks == null ? void 0 : hooks.byIndex) == null ? void 0 : _a2.get(index);
+    const fixed = (_a2 = hooks2 == null ? void 0 : hooks2.byIndex) == null ? void 0 : _a2.get(index);
     const alternatives = rawName.split("/");
     let name;
     let piece;
     if (fixed) ({ name, piece } = fixed);
-    else if ((hooks == null ? void 0 : hooks.byName) && !nameUsed && alternatives.includes(hooks.byName.name)) {
-      ({ name, piece } = hooks.byName);
+    else if ((hooks2 == null ? void 0 : hooks2.byName) && !nameUsed && alternatives.includes(hooks2.byName.name)) {
+      ({ name, piece } = hooks2.byName);
       nameUsed = true;
     } else {
       name = rawName.includes("/") ? pickOne(alternatives, ctx.rng) : rawName;
       piece = turn && name === "town" ? { text: turn.next(ctx.rng), plural: false } : token(ctx, name, type, shape);
     }
     if (!piece) return void 0;
-    (_b = hooks == null ? void 0 : hooks.record) == null ? void 0 : _b.push({ name, piece });
+    (_b = hooks2 == null ? void 0 : hooks2.record) == null ? void 0 : _b.push({ name, piece });
     let text = piece.text;
     if (name === "compound" && pattern.slice(last).startsWith(" Company")) text = text.replace(/s$/, "");
     if (mod === "pl") text = piece.plural ? text : groupPlural(text);
@@ -56564,7 +56595,7 @@ function renderPattern(ctx, pattern, type, shape, hooks) {
   return out;
 }
 function token(ctx, name, type, shape) {
-  var _a2, _b, _c, _d, _e, _f;
+  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
   const rng = ctx.rng;
   const S = ctx.setting;
   const placeholders = ctx.mode === "placeholders";
@@ -56587,6 +56618,10 @@ function token(ctx, name, type, shape) {
       if (!saints) return { text: `the ${pick2(ctx, "holyTitle", type)}`, plural: false };
       const saint = pick2(ctx, "saintName", type);
       return { text: S === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`, plural: false };
+    }
+    case "deity": {
+      const t = (_i = (_e = ctx.context) == null ? void 0 : _e.deity) != null ? _i : (_h = deityHooks()) == null ? void 0 : _h.deityTitleForTradition((_g = (_f = ctx.people) == null ? void 0 : _f.key) != null ? _g : "general", S, rng, ctx.tone);
+      return t ? { text: t.replace(/^the /, ""), plural: false } : void 0;
     }
     case "town":
       if (placeholders) return { text: "[place]", plural: false };
@@ -56638,7 +56673,7 @@ function token(ctx, name, type, shape) {
     case "britishPlace":
       return { text: pickOne(townPool("britain"), rng), plural: false };
     case "flavourAnimal": {
-      const animals = (_e = ctx.vocab) == null ? void 0 : _e.flavour.animals;
+      const animals = (_j = ctx.vocab) == null ? void 0 : _j.flavour.animals;
       if (animals && animals.length > 0) return { text: pickOne(animals, rng), plural: false };
       const merged2 = [...pool(ctx, "beast", type), ...pool(ctx, "bird", type)];
       return { text: pickWeighted5(merged2, rng), plural: false };
@@ -56648,7 +56683,7 @@ function token(ctx, name, type, shape) {
     case "initials":
       return initialsToken(ctx, type);
     case "spaceLand": {
-      const w = pick2(ctx, "spaceLand", type, (_f = shape == null ? void 0 : shape.filter) == null ? void 0 : _f.spaceLand);
+      const w = pick2(ctx, "spaceLand", type, (_k = shape == null ? void 0 : shape.filter) == null ? void 0 : _k.spaceLand);
       if (w === void 0) return void 0;
       return { text: rng() < 0.3 ? `${pick2(ctx, "spacePrefix", type)} ${w}` : w, plural: false };
     }
@@ -56766,6 +56801,7 @@ function initialsToken(ctx, type) {
 function shapeWeight(ctx, shape) {
   var _a2, _b, _c, _d, _e, _f;
   if (shape.s && !shape.s.includes(ctx.setting)) return 0;
+  if (shape.deity && !deityShapeAllowed(ctx, shape)) return 0;
   if (ctx.mode === "invented" && /\{(surname|house)\}/.test(shape.p) && !GROUP_DATA.people.surnameTraditions.includes((_b = (_a2 = ctx.people) == null ? void 0 : _a2.key) != null ? _b : "general")) {
     return 0;
   }
@@ -56773,6 +56809,17 @@ function shapeWeight(ctx, shape) {
   const tone = ctx.tone === "any" ? 1 : toneFactor(shapeTones(shape), ctx.tone);
   const commodity = ctx.commodity ? commodityFactor(ctx, shape) : 1;
   return shape.w * ((_f = (_e = shape.sx) == null ? void 0 : _e[ctx.setting]) != null ? _f : 1) * trad * tone * commodity;
+}
+function deityShapeAllowed(ctx, shape) {
+  var _a2, _b;
+  const hooks2 = deityHooks();
+  if (!hooks2) return false;
+  const tradition = (_b = (_a2 = ctx.people) == null ? void 0 : _a2.key) != null ? _b : "general";
+  if (hooks2.sensitiveTraditions.includes(tradition)) return false;
+  if (ctx.context && !ctx.context.deity) return false;
+  const fantastic = ctx.setting === "FH" || ctx.setting === "MF";
+  if (shape.p.startsWith("{holyMembers}") && hooks2.christianTraditions.includes(tradition) && !fantastic) return false;
+  return true;
 }
 function deepTokens(pattern) {
   return [...pattern.matchAll(/\{([^}]+)\}/g)].flatMap(
@@ -56839,10 +56886,10 @@ function drawDetailed(ctx, type, front) {
   if (!shape) return void 0;
   return renderShape(ctx, type, listType, shape, front, {});
 }
-function renderShape(ctx, type, listType, shape, front, hooks) {
+function renderShape(ctx, type, listType, shape, front, hooks2) {
   ctx.drawn = /* @__PURE__ */ new Set();
   const record = [];
-  const raw = renderPattern(ctx, shape.p, { ...listType, person: type.person }, shape, { ...hooks, record });
+  const raw = renderPattern(ctx, shape.p, { ...listType, person: type.person }, shape, { ...hooks2, record });
   if (!raw) return void 0;
   if (shape.p === "{brandStart}{brandEnd}" && raw.length < 5) return void 0;
   const formal = shape.f === "F" || shape.f === "B" && ctx.form !== "everyday";
@@ -74760,16 +74807,16 @@ function baseToken(ctx, name) {
   }
   return listWord2(ctx, name);
 }
-function renderPattern2(ctx, pattern, hooks) {
+function renderPattern2(ctx, pattern, hooks2) {
   const outer = ctx.turn;
   if (ctx.context) ctx.turn = new TownTurn(ctx.context, VESSEL_SELF.has(pattern));
   try {
-    return renderTokens2(ctx, pattern, hooks);
+    return renderTokens2(ctx, pattern, hooks2);
   } finally {
     ctx.turn = outer;
   }
 }
-function renderTokens2(ctx, pattern, hooks) {
+function renderTokens2(ctx, pattern, hooks2) {
   let failed = false;
   let index = -1;
   let nameUsed = false;
@@ -74779,10 +74826,10 @@ function renderTokens2(ctx, pattern, hooks) {
     index++;
     const [name, mod] = raw.split(":");
     let piece;
-    const fixed = (_a2 = hooks == null ? void 0 : hooks.byIndex) == null ? void 0 : _a2.get(index);
+    const fixed = (_a2 = hooks2 == null ? void 0 : hooks2.byIndex) == null ? void 0 : _a2.get(index);
     if (fixed) piece = fixed.text;
-    else if ((hooks == null ? void 0 : hooks.byName) && !nameUsed && hooks.byName.name === name) {
-      piece = hooks.byName.text;
+    else if ((hooks2 == null ? void 0 : hooks2.byName) && !nameUsed && hooks2.byName.name === name) {
+      piece = hooks2.byName.text;
       nameUsed = true;
     } else piece = token3(ctx, name);
     if (piece && name === "compass" && pattern.slice(0, at).endsWith("of the ")) piece = piece.replace(/ern$/, "");
@@ -74790,7 +74837,7 @@ function renderTokens2(ctx, pattern, hooks) {
       failed = true;
       return "";
     }
-    (_b = hooks == null ? void 0 : hooks.record) == null ? void 0 : _b.push({ name, text: piece });
+    (_b = hooks2 == null ? void 0 : hooks2.record) == null ? void 0 : _b.push({ name, text: piece });
     return withMod(piece, mod);
   });
   return failed ? void 0 : out;
@@ -74917,11 +74964,11 @@ function roleShapes(ctx, role, only) {
   return out;
 }
 var spacePattern = (ctx, p) => ctx.module === "spacecraft" ? p.replace(/^City of /, "Pride of ") : p;
-function renderPlan(ctx, plan, hooks = {}) {
+function renderPlan(ctx, plan, hooks2 = {}) {
   ctx.drawn = /* @__PURE__ */ new Set();
   ctx.words = [];
   const record = [];
-  const raw = renderPattern2(ctx, plan.p, { ...hooks, record });
+  const raw = renderPattern2(ctx, plan.p, { ...hooks2, record });
   if (!raw) return void 0;
   const name = vesselCapitals(withDeityPlaceholders(raw).replace(/\s+/g, " ").trim());
   const tones = /* @__PURE__ */ new Set([...plan.tones, ...ctx.drawn]);
@@ -75110,10 +75157,10 @@ function generateVesselNames(options) {
     if (tone === "any") tone = (_b2 = first.built.plan.tones[0]) != null ? _b2 : "any";
     const plan = first.built.plan;
     const rec = first.built.record;
-    const draw2 = (hooks, p = plan) => {
+    const draw2 = (hooks2, p = plan) => {
       const ctx2 = newCtx3(level, fn);
       if (p.route === "style") ctx2.boost = false;
-      return result(ctx2, renderPlan(ctx2, p, hooks), info);
+      return result(ctx2, renderPlan(ctx2, p, hooks2), info);
     };
     const counterAt = rec.findIndex((d) => kindOf2(d.name) === "counter");
     let info;
@@ -76177,6 +76224,8 @@ var route_names_default = {
     pilgrim: [
       { p: "Pilgrims' Road to {holySite}", w: 15 },
       { p: "Sacred Way to {holySite}", w: 10, e: ["AN", "MD", "EM"], t: ["grand"] },
+      { p: "Sacred Way to the {sacredPlace}", w: 8, c: ["!polynesian", "!andean"] },
+      { p: "Pilgrims' Road to the {sacredPlace}", w: 8, c: ["!polynesian", "!andean"] },
       { p: "Road of the {number} {holySitePl}", w: 8, t: ["strange"] },
       { p: "Way of {holy}", w: 8, e: ["MD", "EM", "ST", "MO"], c: ["christian"], t: ["grand"] },
       { p: "Ways of {god}", w: 8, e: ["AN"], c: ["egyptian"], t: ["grand"] },
@@ -79015,7 +79064,7 @@ function roadNumber(ctx, which) {
   return String(range2[0] + Math.floor(ctx.rng() * (range2[1] - range2[0] + 1)));
 }
 function token5(ctx, name) {
-  var _a2, _b, _c, _d;
+  var _a2, _b, _c, _d, _e;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
@@ -79046,16 +79095,21 @@ function token5(ctx, name) {
       const gods = godNames(ctx.culture.key);
       return gods.length > 0 ? pickOne4(gods, rng) : void 0;
     }
+    case "sacredPlace": {
+      const w = (_a2 = deityHooks()) == null ? void 0 : _a2.sacredPlace({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng, vocab: ctx.vocab });
+      if (w) ctx.words.push({ pool: "sacredPlace", word: w });
+      return w;
+    }
     case "holySite": {
       const w = vocabWord(ctx, "holySite", name);
       return w && `the ${w}`;
     }
     case "roadLetter": {
-      const letters = Object.entries((_b = (_a2 = ctx.shape) == null ? void 0 : _a2.letters) != null ? _b : { A: 1 });
+      const letters = Object.entries((_c = (_b = ctx.shape) == null ? void 0 : _b.letters) != null ? _c : { A: 1 });
       return ctx.letter = pickWeighted5(letters, rng);
     }
     case "n":
-      return roadNumber(ctx, (_c = ctx.letter) != null ? _c : "route");
+      return roadNumber(ctx, (_d = ctx.letter) != null ? _d : "route");
     case "ordinal": {
       const choices = [];
       for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
@@ -79069,10 +79123,10 @@ function token5(ctx, name) {
     }
   }
   if (GN_LISTS2[name]) return gnWord2(ctx, name);
-  return vocabWord(ctx, (_d = POOL_OF[name]) != null ? _d : name, name);
+  return vocabWord(ctx, (_e = POOL_OF[name]) != null ? _e : name, name);
 }
 var withMod2 = (name, text, mod) => mod === "poss" ? groupPossessive(text, name === "travellers") : text;
-function renderPattern3(ctx, pattern, hooks) {
+function renderPattern3(ctx, pattern, hooks2) {
   if (ctx.context) ctx.turn = new TownTurn(ctx.context, ROUTE_SELF.has(pattern));
   let failed = false;
   let index = -1;
@@ -79083,17 +79137,17 @@ function renderPattern3(ctx, pattern, hooks) {
     index++;
     const [name, mod] = raw.split(":");
     let piece;
-    const fixed = (_a2 = hooks == null ? void 0 : hooks.byIndex) == null ? void 0 : _a2.get(index);
+    const fixed = (_a2 = hooks2 == null ? void 0 : hooks2.byIndex) == null ? void 0 : _a2.get(index);
     if (fixed) piece = fixed.text;
-    else if ((hooks == null ? void 0 : hooks.byName) && !nameUsed && hooks.byName.name === name) {
-      piece = hooks.byName.text;
+    else if ((hooks2 == null ? void 0 : hooks2.byName) && !nameUsed && hooks2.byName.name === name) {
+      piece = hooks2.byName.text;
       nameUsed = true;
     } else piece = token5(ctx, name);
     if (piece === void 0 || piece === "") {
       failed = true;
       return "";
     }
-    (_b = hooks == null ? void 0 : hooks.record) == null ? void 0 : _b.push({ name, text: piece });
+    (_b = hooks2 == null ? void 0 : hooks2.record) == null ? void 0 : _b.push({ name, text: piece });
     return withMod2(name, piece, mod);
   });
   return failed ? void 0 : out;
@@ -79133,11 +79187,12 @@ function shapesFor(kind, culture) {
   return [...ROUTE_DATA.shapes[kind], ...ROUTE_DATA.cultureShapes.filter((s) => s.kind === kind && s.culture === culture)];
 }
 function shapeWeight2(ctx, kind, s, anyEra = false) {
-  var _a2, _b, _c;
+  var _a2, _b, _c, _d;
   const c = ctx.culture;
   if (!anyEra && s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
   if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
+  if (s.p.includes("{sacredPlace}") && (c.sensitive || !((_a2 = deityHooks()) == null ? void 0 : _a2.cultureOffered(c.key)))) return 0;
   if (c.sensitive && (s.h || LIGHT_OR_GRIM(s.t) || s.p === "fixed" && kind === "pilgrim")) return 0;
   if (ctx.mode === "invented" && PERSON_TOKENS.test(s.p) && personNames(c.key).length === 0) return 0;
   if (s.p.includes("{god}") && godNames(c.key).length === 0) return 0;
@@ -79149,7 +79204,7 @@ function shapeWeight2(ctx, kind, s, anyEra = false) {
     ctx.shape = prev;
     if (!live4) return 0;
   }
-  return s.w * ((_b = (_a2 = s.cx) == null ? void 0 : _a2[c.key]) != null ? _b : 1) * regionMult(ctx, s.r, s.rEra) * toneFactor((_c = s.t) != null ? _c : [], ctx.tone);
+  return s.w * ((_c = (_b = s.cx) == null ? void 0 : _b[c.key]) != null ? _c : 1) * regionMult(ctx, s.r, s.rEra) * toneFactor((_d = s.t) != null ? _d : [], ctx.tone);
 }
 function kindPlans(ctx, kind, only) {
   return shapesFor(kind, ctx.culture.key).filter((s) => !only || s.p === only).map((s) => [{ kind, shape: s, borrowed: false }, shapeWeight2(ctx, kind, s)]).filter(([, w]) => w > 0);
@@ -79159,7 +79214,7 @@ function borrowedPlans(ctx) {
     (kind) => shapesFor(kind, ctx.culture.key).filter((s) => PLACE_TOKENS.test(s.p)).map((s) => [{ kind: "space", shape: s, borrowed: true }, shapeWeight2(ctx, kind, s, true)]).filter(([, w]) => w > 0)
   );
 }
-function renderPlan2(ctx, plan, hooks = {}) {
+function renderPlan2(ctx, plan, hooks2 = {}) {
   var _a2, _b, _c, _d;
   ctx.drawn = new Set((_a2 = plan.shape.t) != null ? _a2 : []);
   ctx.words = [];
@@ -79169,9 +79224,9 @@ function renderPlan2(ctx, plan, hooks = {}) {
   const record = [];
   let raw;
   if (plan.shape.p === "fixed") {
-    raw = (_d = (_c = (_b = hooks.byIndex) == null ? void 0 : _b.get(0)) == null ? void 0 : _c.text) != null ? _d : vocabWord(ctx, `routeFixed:${plan.kind}`, "fixed");
+    raw = (_d = (_c = (_b = hooks2.byIndex) == null ? void 0 : _b.get(0)) == null ? void 0 : _c.text) != null ? _d : vocabWord(ctx, `routeFixed:${plan.kind}`, "fixed");
     if (raw) record.push({ name: "fixed", text: raw });
-  } else raw = renderPattern3(ctx, plan.shape.p, { ...hooks, record });
+  } else raw = renderPattern3(ctx, plan.shape.p, { ...hooks2, record });
   if (!raw) return void 0;
   const tones = new Set(ctx.drawn);
   return { text: routeCapitals(raw), plan, record, tones: GROUP_TONES.filter((t) => tones.has(t)), words: ctx.words };
@@ -79300,9 +79355,9 @@ function generateRouteNames(options) {
     if (!first) return;
     const plan = first.plan;
     const rec = first.record;
-    const draw2 = (hooks, p = plan) => {
+    const draw2 = (hooks2, p = plan) => {
       const ctx2 = newCtx3();
-      const built = renderPlan2(ctx2, p, hooks);
+      const built = renderPlan2(ctx2, p, hooks2);
       return built && acceptable4(built, block) ? built : void 0;
     };
     const fill = (next) => {
@@ -79664,6 +79719,8 @@ var building_names_default = {
       { p: "{town} {bw}", w: 10, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"], bw: ["Minster", "Abbey", "Priory"], self: true },
       { p: "Temple of {god}", w: 15, e: ["AN"], c: ["egyptian", "norse", "anglo-saxon", "aztec", "maya"], t: ["grand"] },
       { p: "Shrine of the {holySite}", w: 6, c: ["!christian"], t: ["strange"] },
+      { p: "Temple of the {deity}", w: 15, deity: true },
+      { p: "Shrine of the {deity}", w: 6, c: ["!christian"], t: ["strange"], deity: true },
       { p: "{fixed}", w: 0 }
     ],
     civic: [
@@ -80718,6 +80775,7 @@ function generateStreetNames(options) {
 }
 
 // src/buildings/engine.ts
+var DEITY_CHRISTIAN_WEIGHT = 3;
 var BUILDING_DATA = building_names_default;
 var BUILDING_SELF = selfPatterns(building_names_default);
 var BUILDING_KINDS = BUILDING_DATA.kinds;
@@ -80787,6 +80845,7 @@ function founder(ctx) {
   return names.length > 0 ? pickOne6(names, ctx.rng) : void 0;
 }
 function token7(ctx, name) {
+  var _a2, _b;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
@@ -80811,6 +80870,11 @@ function token7(ctx, name) {
     case "holy": {
       const other = () => placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
       return ctx.context ? contextSaint(ctx.context, other, rng) : other();
+    }
+    case "deity": {
+      const t = ctx.context ? (_a2 = ctx.context.deity) != null ? _a2 : void 0 : (_b = deityHooks()) == null ? void 0 : _b.deityTitle({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng, vocab: ctx.vocab });
+      if (t) ctx.words.push({ pool: "deity", word: t });
+      return t == null ? void 0 : t.replace(/^the /, "");
     }
     case "figure":
       return routeFigure(ctx.culture.key, ctx.setting, rng);
@@ -80890,7 +80954,7 @@ function buildingWordBlocked(word, guards) {
   return buildingBlockSet(guards).has(bare(word)) || breaksBuildingWords(word);
 }
 function shapeWeight4(ctx, s) {
-  var _a2, _b, _c, _d;
+  var _a2, _b, _c, _d, _e;
   const c = ctx.culture;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
@@ -80904,11 +80968,17 @@ function shapeWeight4(ctx, s) {
   if (s.p.includes("{god") && (godNames(c.key).length === 0 || !BUILDING_DATA.lists.godCultures.includes(c.key))) return 0;
   if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
   if (s.p.includes("{bw}") && bwItems({ ...ctx, shape: s }).length === 0) return 0;
+  if (s.deity) {
+    const hooks2 = deityHooks();
+    if (!hooks2 || c.sensitive || !hooks2.cultureOffered(c.key)) return 0;
+    if (ctx.context && !ctx.context.deity) return 0;
+    if (hooks2.isChristianCulture(c.key, ctx.era)) return ctx.fantastic && s.p.startsWith("Temple") ? DEITY_CHRISTIAN_WEIGHT * toneFactor((_a2 = s.t) != null ? _a2 : [], ctx.tone) : 0;
+  }
   let w = s.w;
   if (s.p === "{fixed}") w = vocabPool3(ctx, `buildingFixed:${ctx.kind}`).reduce((n, [, x]) => n + x, 0);
-  const pool3 = (_a2 = s.p.match(/^(?:\{\w+\} )?\{(\w+Landmark)\}$/)) == null ? void 0 : _a2[1];
+  const pool3 = (_b = s.p.match(/^(?:\{\w+\} )?\{(\w+Landmark)\}$/)) == null ? void 0 : _b[1];
   if (pool3 && vocabPool3(ctx, pool3).length === 0) return 0;
-  return w * ((_c = (_b = s.sx) == null ? void 0 : _b[ctx.settingKey]) != null ? _c : 1) * toneFactor((_d = s.t) != null ? _d : [], ctx.tone);
+  return w * ((_d = (_c = s.sx) == null ? void 0 : _c[ctx.settingKey]) != null ? _d : 1) * toneFactor((_e = s.t) != null ? _e : [], ctx.tone);
 }
 function live2(ctx, shapes, source, only) {
   const out = [];
@@ -82275,6 +82345,9 @@ var deity_names_default = {
     steppeNoColour: ["Blue"],
     livingTricksters: ["the Spider", "the Hare", "the Raven", "the Coyote", "the Fox", "Ancestor King", "Ancestor Queen"]
   },
+  traditionCulture: { celtic: "celtic", germanic: "norse", mediterranean: "roman", arabian: "arabic-persian", southAsian: "indian", eastAsian: "chinese", mesoamerican: "aztec", bantu: "bantu", westAfrican: "west-african", steppe: "steppe", general: "general" },
+  christianTraditions: ["celtic", "germanic", "mediterranean"],
+  sensitiveTraditions: ["polynesian", "andean"],
   series: { from: 6 },
   cap: 9,
   safeguards: {
@@ -82292,6 +82365,7 @@ var DEITY_KINDS = DEITY_DATA.kinds;
 var DEITY_DOMAINS = DEITY_DATA.domains;
 var DEITY_ANY = DEITY_DATA.any;
 var DEITY_CULTURES = BYNAME_CULTURES.filter((c) => !DEITY_DATA.unoffered.includes(c.key));
+var deityCultureOffered = (key2) => DEITY_CULTURES.some((c) => c.key === key2);
 var domainsOffered = (era, fantastic) => DEITY_DOMAINS.filter((d) => (!d.e || d.e.includes(era)) && (d.h === void 0 || d.h === fantastic));
 var isChristianCulture = (culture, era) => inCultureGroup("christian", culture, era) || DEITY_DATA.christian.cultures.includes(culture);
 var defaultDeitySafeguards = () => ({ block: DEITY_DATA.safeguards.block, flag: DEITY_DATA.safeguards.flag, flagListBlocks: DEITY_DATA.safeguards.flagListBlocks });
@@ -82641,6 +82715,33 @@ function generateDeityNames(options) {
     }
   }
 }
+function deityTitle(o) {
+  var _a2;
+  if (o.culture && DEITY_DATA.unoffered.includes(o.culture)) return void 0;
+  const b = generateDeityNames({ ...o, kind: "deity", forms: ["archetype", "A", "B", "D"], count: 1, seed: Math.floor(o.rng() * 4294967295) });
+  return (_a2 = b.names[0]) == null ? void 0 : _a2.title;
+}
+function sacredPlace(o) {
+  var _a2;
+  if (o.culture && DEITY_DATA.unoffered.includes(o.culture)) return void 0;
+  const b = generateDeityNames({ ...o, kind: "place", forms: ["L1", "L2"], count: 1, seed: Math.floor(o.rng() * 4294967295) });
+  return (_a2 = b.names[0]) == null ? void 0 : _a2.title.replace(/^the /, "");
+}
+function deityTitleForTradition(tradition, setting, rng, tone) {
+  var _a2;
+  if (DEITY_DATA.sensitiveTraditions.includes(tradition)) return void 0;
+  const era = setting === "SF" ? "IS" : setting === "MR" || setting === "MF" ? "MO" : "MD";
+  return deityTitle({ culture: (_a2 = DEITY_DATA.traditionCulture[tradition]) != null ? _a2 : "general", era, fantastic: setting === "FH" || setting === "MF", tone, rng });
+}
+setDeityHooks({
+  deityTitle,
+  sacredPlace,
+  deityTitleForTradition,
+  cultureOffered: deityCultureOffered,
+  isChristianCulture,
+  sensitiveTraditions: DEITY_DATA.sensitiveTraditions,
+  christianTraditions: DEITY_DATA.christianTraditions
+});
 
 // src/data/settlement-kit.json
 var settlement_kit_default = {
@@ -82766,7 +82867,7 @@ function twoWords(vocab, pool3, o, rng, extra = []) {
   return out;
 }
 function buildContext(o, rng) {
-  var _a2, _b, _c, _d, _e;
+  var _a2, _b, _c, _d, _e, _f;
   const vocab = (_a2 = o.vocab) != null ? _a2 : BUILT_IN_VOCAB;
   const setting = routeSetting(o.era, o.fantastic);
   const blocked2 = (_b = o.blocked) != null ? _b : defaultBlocked;
@@ -82808,6 +82909,7 @@ function buildContext(o, rng) {
   const holy = inCultureGroup("christian", o.culture, o.era) ? groupSaint(setting, rng) : null;
   const trades = CASTE4.has(o.culture) ? null : twoWords(vocab, "streetTrades", o, rng);
   const goods = twoWords(vocab, "streetGoods", o, rng, (_e = (_d = (_c = vocab.pools.routeGoods) == null ? void 0 : _c.cultureExtra) == null ? void 0 : _d[o.culture]) != null ? _e : []);
+  const deity = deityCultureOffered(o.culture) && !(isChristianCulture(o.culture, o.era) && !o.fantastic) ? (_f = deityTitle({ culture: o.culture, era: o.era, fantastic: o.fantastic, tone: o.tone, rng, vocab })) != null ? _f : null : null;
   return {
     town: town3,
     neighbours,
@@ -82820,7 +82922,8 @@ function buildContext(o, rng) {
     landmarks: [],
     setting,
     tradition: groupTraditionFor(o.culture),
-    vesselCulture: vesselCultureFor(o.culture)
+    vesselCulture: vesselCultureFor(o.culture),
+    deity
   };
 }
 
@@ -89202,7 +89305,7 @@ var SECTION_ICONS = {
   // Settlement kit §1.1.
   settlementKit: "building-2",
   // Events brief §1.1.
-  eventNames: "scroll-text",
+  eventNames: ICON_HISTORY,
   // Deities brief §1.1.
   deityNames: "sun-moon",
   riverNames: ICON_RIVER_NAMES,
@@ -89219,7 +89322,7 @@ var SECTION_ICONS = {
   familyNames: "users",
   // Ships brief §1.1, with the supplied ship icon for ships and boats.
   ships: ICON_SHIPS,
-  spacecraft: "rocket",
+  spacecraft: ICON_SPACECRAFT,
   // Group brief §1.1: Lucide icons.
   mysticOrders: "sparkles",
   martialOrders: "swords",
@@ -89233,7 +89336,7 @@ var GROUP_ICONS = {
   placeNames: ICON_PLACE_SHAPES,
   groupNames: ICON_TRIBAL_NAMES,
   bynames: ICON_BYNAMES,
-  lore: "scroll-text",
+  lore: ICON_HISTORY,
   advanced: ICON_ADVANCED
 };
 var moduleLabel = (section) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
@@ -89251,7 +89354,7 @@ function packTypeIconId(packType, subGenerator) {
   if (packType === "innPreset") return "beer";
   if (packType === "buildingPreset") return "landmark";
   if (packType === "kitPreset") return "building-2";
-  if (packType === "eventPreset") return "scroll-text";
+  if (packType === "eventPreset") return ICON_HISTORY;
   if (packType === "deityPreset") return "sun-moon";
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;

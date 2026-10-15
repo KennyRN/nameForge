@@ -18,6 +18,7 @@ import { generateRealmNames, REALM_DATA, REALM_ERAS } from "../realms/engine";
 import { breaksRouteWords, findRouteCulture, personNames, routeBlockSet, routeNorm, routePlace, routeSetting, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, inCultureGroup, poolEntries, type Vocabulary } from "./vocab";
 import type { SettlementContext } from "./contextShared";
+import { deityCultureOffered, deityTitle, isChristianCulture } from "../deities/engine";
 
 export * from "./contextShared";
 
@@ -140,6 +141,9 @@ export function buildContext(o: ContextOptions, rng: () => number): SettlementCo
   const holy = inCultureGroup("christian", o.culture, o.era) ? groupSaint(setting, rng) : null;
   const trades = CASTE.has(o.culture) ? null : twoWords(vocab, "streetTrades", o, rng);
   const goods = twoWords(vocab, "streetGoods", o, rng, vocab.pools.routeGoods?.cultureExtra?.[o.culture] ?? []);
+  // Deities brief §10.4: one deity for the faith group and building (drawn last, so the rest stay put);
+  // none for christian cultures in realistic worlds or for the sensitive cultures.
+  const deity = deityCultureOffered(o.culture) && !(isChristianCulture(o.culture, o.era) && !o.fantastic) ? deityTitle({ culture: o.culture, era: o.era, fantastic: o.fantastic, tone: o.tone, rng, vocab }) ?? null : null;
 
   return {
     town,
@@ -154,6 +158,7 @@ export function buildContext(o: ContextOptions, rng: () => number): SettlementCo
     setting,
     tradition: groupTraditionFor(o.culture),
     vesselCulture: vesselCultureFor(o.culture),
+    deity,
   };
 }
 

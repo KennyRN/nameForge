@@ -40,7 +40,7 @@ import {
   type RouteEra,
 } from "../routes/engine";
 import { boostPool, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
-import { deityCultureOffered, deityTitle, isChristianCulture } from "../deities/engine";
+import { deityHooks } from "../deities/hook";
 
 /** Deities brief §10.1: the christian cultures' temple weight, with fantastic on. */
 const DEITY_CHRISTIAN_WEIGHT = 3;
@@ -276,7 +276,7 @@ function token(ctx: Ctx, name: string): string | undefined {
     }
     case "deity": {
       // Deities brief §10.1, §10.4: the settlement's deity, or an invented one; without its own "the".
-      const t = ctx.context ? ctx.context.deity ?? undefined : deityTitle({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng, vocab: ctx.vocab });
+      const t = ctx.context ? ctx.context.deity ?? undefined : deityHooks()?.deityTitle({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng, vocab: ctx.vocab });
       if (t) ctx.words.push({ pool: "deity", word: t });
       return t?.replace(/^the /, "");
     }
@@ -394,9 +394,10 @@ function shapeWeight(ctx: Ctx, s: BuildingShape): number {
   if (s.p.includes("{bw}") && bwItems({ ...ctx, shape: s }).length === 0) return 0;
   // Deities brief §10.1: never for the sensitive cultures; christian cultures only with fantastic, at 3.
   if (s.deity) {
-    if (c.sensitive || !deityCultureOffered(c.key)) return 0;
+    const hooks = deityHooks();
+    if (!hooks || c.sensitive || !hooks.cultureOffered(c.key)) return 0;
     if (ctx.context && !ctx.context.deity) return 0;
-    if (isChristianCulture(c.key, ctx.era)) return ctx.fantastic && s.p.startsWith("Temple") ? DEITY_CHRISTIAN_WEIGHT * toneFactor(s.t ?? [], ctx.tone) : 0;
+    if (hooks.isChristianCulture(c.key, ctx.era)) return ctx.fantastic && s.p.startsWith("Temple") ? DEITY_CHRISTIAN_WEIGHT * toneFactor(s.t ?? [], ctx.tone) : 0;
   }
   let w = s.w;
   if (s.p === "{fixed}") w = vocabPool(ctx, `buildingFixed:${ctx.kind}`).reduce((n, [, x]) => n + x, 0);

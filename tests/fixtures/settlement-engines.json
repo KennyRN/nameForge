@@ -7,7 +7,7 @@
   "Duke's Army Road",
   "Lord's Road",
   "Pilgrims' Road to the Standing Stones",
-  "Pilgrims' Road to the Holy Isle"
+  "Sacred Way to the Holy Isle"
  ],
  "streets norman-british AN placeholders": [
   "Friary Street",
@@ -171,7 +171,7 @@
   "Salt Way",
   "[place] Turnpike",
   "Road to [place]",
-  "Sacred Way to the Oracle",
+  "Sacred Way to the Blessed Spring",
   "East Road",
   "Gold and Lead Road",
   "Pedlars' Way",
@@ -667,9 +667,9 @@
   "Black Mire Tannery",
   "Big Mountain Temple",
   "Palace of Vantrell",
-  "the Great Shrine",
-  "the Long Citadel",
-  "the High Hermitage"
+  "the Old Shrine",
+  "the Red House",
+  "Palace of Wyvenhoe"
  ],
  "routes general MD placeholders": [
   "North-East Road",
@@ -679,7 +679,7 @@
   "Packmen's Way",
   "Gold Route",
   "Marshal's Army Road",
-  "Sacred Way to the Temple"
+  "Sacred Way to the Shrine"
  ],
  "streets general MD placeholders": [
   "Packmen's Way",
@@ -706,10 +706,10 @@
  "buildings general MD placeholders": [
   "the White Customs House",
   "the Grey Lantern",
-  "the Hollow Shrine",
+  "Duke's Shrine",
   "the Crooked Bastion",
   "[founder]'s Manor",
-  "[founder]'s Shrine",
+  "Shrine of the Holy Mountain",
   "King's Fountain",
   "Queen's House"
  ],
@@ -750,10 +750,10 @@
   "the Drowned Market Hall",
   "Queen's Great House",
   "Moss Island Guildhall",
-  "King's Temple",
-  "Lord's Gaol",
-  "Orrin Keep",
-  "Great Little Moor Causeway"
+  "Temple of the Burning Master",
+  "East Gate",
+  "Warm Pool Monument",
+  "the Golden Bridge"
  ],
  "routes general EM placeholders": [
   "Tinkers' Way",
@@ -836,8 +836,8 @@
   "Winship School",
   "Point Light",
   "Green Fortress",
-  "King's Temple",
-  "Golden Windmill"
+  "Lower Whitfield Shrine",
+  "the Golden Bridge"
  ],
  "routes general ST placeholders": [
   "[place] and [place] Canal",
@@ -917,8 +917,8 @@
   "East Farm Well",
   "Duke's Palace",
   "Art Valley Bridge",
-  "Lacey Hermitage",
-  "Corn Works",
+  "Temple of the Lady of Ancestors",
+  "Larkin College",
   "the High Fountain",
   "Abbot Hall Bastion",
   "Bishop Arr Farm Mill"
@@ -959,9 +959,9 @@
   "[founder]'s Monument",
   "the Pale Lantern",
   "[founder]'s Arch",
-  "Drowned Monastery",
-  "[place] Museum",
-  "[place] Town Hall",
+  "[founder]'s Hermitage",
+  "[surname] Observatory",
+  "the Silver School",
   "[founder]'s Cistern",
   "Lord's Causeway"
  ],
@@ -1181,9 +1181,9 @@
   "Old Track",
   "Eastern Frontier Road",
   "Northern Passage",
+  "Sacred Way to the Holy Mountain",
   "Pilgrims' Road to the Holy Mountain",
-  "Emperor's Army Road",
-  "Governor's Road"
+  "Emperor's Army Road"
  ],
  "streets japanese AN placeholders": [
   "Market Square",
@@ -1224,8 +1224,8 @@
   "Sea Road to Hundred Paddies",
   "Old Track",
   "Grain Road",
-  "Road of the Three Temples",
-  "Road of the Twelve Forts"
+  "Pilgrims' Road to the Silent Mountain",
+  "Hill Way"
  ],
  "streets japanese AN invented": [
   "Storehouse Street",
@@ -1295,7 +1295,7 @@
   "Ferry of [founder]",
   "[place] Saltworks",
   "[place] Gatehouse",
-  "Duke's Shrine",
+  "Gull Shrine",
   "[place] Monastery",
   "Bridge of [founder]",
   "[place] Great House",
@@ -1339,19 +1339,19 @@
   "Lower Slope Hermitage",
   "Blue Mountain House",
   "the Golden Hall",
-  "Thousand Years Peak Temple",
+  "the Crooked Temple",
   "Blessing Peak Castle",
   "Cherry Cape Treasury"
  ],
  "routes japanese EM placeholders": [
-  "Pilgrims' Road to the Sacred Grove",
-  "High Road",
-  "Governor's Army Road",
-  "Drovers' Way",
-  "Princess's Road",
-  "Spice Road",
+  "Pilgrims' Road to the Sacred Spring",
   "Sea Road to [place]",
-  "Silk Road"
+  "Western Mountain Road",
+  "Old East Road",
+  "Packmen's Way",
+  "Drove Road",
+  "Silk Road",
+  "Governor's Highway"
  ],
  "streets japanese EM placeholders": [
   "Causeway Lane",
@@ -1380,20 +1380,20 @@
   "[place] Monument",
   "Gull Ropewalk",
   "[place] Memorial Gate",
-  "[founder]'s Monastery",
-  "[place] Bridge",
-  "King's Memorial Gate",
-  "Bronze Redoubt"
+  "Owl Sanctuary",
+  "the Crooked Fortress",
+  "the Black Lantern",
+  "[place] Bridge"
  ],
  "routes japanese EM invented": [
   "Sea Road to Nine Moors",
-  "Pilgrims' Road to the Temple",
-  "Rice Road",
-  "Shepherds' Way",
-  "Old Valley Mouth Road",
-  "Silk Road",
-  "Northern Mountain Road",
-  "Pilgrims' Road to the Holy Isle"
+  "Sacred Way to the Mountain of the Heavenly Eye of Thunder",
+  "Carriers' Way",
+  "Merchants' Way",
+  "Road of the Four Monasteries",
+  "Governor's Highway",
+  "Silk Way",
+  "Grain Road"
  ],
  "streets japanese EM invented": [
   "Old Mill Close",
@@ -1420,22 +1420,22 @@
  "buildings japanese EM invented": [
   "White Mountain Castle Town Redoubt",
   "Bright Mountain Light",
-  "the Drowned Monastery",
+  "Lord's Monastery",
   "the Hollow Toll House",
   "Egret Castle",
-  "Shrine of the Temple",
+  "Temple of the Smith",
   "New Shore Lighthouse",
   "Black Pass Observatory"
  ],
  "routes japanese ST placeholders": [
   "[place] Drove",
-  "Road of the Twelve Temples",
-  "Sea Road to [place]",
+  "Pilgrims' Road to the Sacred Spring",
+  "Corn Road",
   "[place] and [place] Railway",
+  "Sea Road to [place]",
   "[place] and [place] Canal",
   "Eastern Line",
-  "Northern Main Line",
-  "Packmen's Way"
+  "Northern Main Line"
  ],
  "streets japanese ST placeholders": [
   "Eighth Block",
@@ -1484,7 +1484,7 @@
   "Rice Court",
   "Weavers' Ward Street",
   "Sanctuary Entry",
-  "Road of the Four Monasteries",
+  "Sacred Way to the Waterfall of the Hearth Lord",
   "Duke's Place",
   "First Block",
   "Station Street",
@@ -1765,7 +1765,7 @@
  ],
  "routes arabic-persian AN placeholders": [
   "Incense Road",
-  "Pilgrims' Road to the Shrine",
+  "Sacred Way to the Shrine",
   "Pilgrims' Road to the Sacred Grove",
   "Cloth Road",
   "North Road",
@@ -1779,7 +1779,7 @@
   "[place] Road",
   "Corn Hill",
   "Lower Town",
-  "Road of the Six Shrines",
+  "Pilgrims' Road to the Valley of the Eye of Marriage",
   "Fountain Place",
   "Tannery Side",
   "Bread Market",
@@ -1812,7 +1812,7 @@
   "Island Passage",
   "Old Track",
   "Vizier's Army Road",
-  "Sacred Way to the Holy Well",
+  "Pilgrims' Road to the Dreaming Hill",
   "Sea Road to Father of the Camels"
  ],
  "streets arabic-persian AN invented": [
@@ -1839,23 +1839,23 @@
  ],
  "buildings arabic-persian AN invented": [
   "the Hollow Bridge",
-  "Shrine of the Sacred Spring",
+  "Temple of the Hearth Kin",
   "Gold Hill Fort",
-  "the Crooked Hermitage",
+  "Crooked Hermitage",
   "Abode of Wisdom Academy",
   "Bitter Island Spring",
   "Palace of Saif Saltworks",
-  "Radiant City Temple"
+  "the Crooked Temple"
  ],
  "routes arabic-persian MD placeholders": [
   "Shepherds' Way",
   "[person]'s Road",
   "Saltmen's Way",
   "[place] Drove",
-  "Pilgrims' Road to the Sacred Spring",
-  "Road of the Twelve Forts",
-  "Heath Way",
-  "Great South-West Road"
+  "Pilgrims' Road to the Silent Well",
+  "Northern Frontier Road",
+  "[patron]'s Road",
+  "Drove Road"
  ],
  "streets arabic-persian MD placeholders": [
   "[dynasty] Castle Lane",
@@ -1882,7 +1882,7 @@
  "buildings arabic-persian MD placeholders": [
   "[place] Guildhall",
   "[place] Sanctuary",
-  "Hermitage of [founder]",
+  "Temple of the Unsleeping Keeper",
   "King's Gatehouse",
   "[place] Shrine",
   "Garden of Lunar",
@@ -1891,7 +1891,7 @@
  ],
  "routes arabic-persian MD invented": [
   "Vizier's Road",
-  "Sacred Way to the Shrine",
+  "Sacred Way to the Blessed Grove",
   "Southern Frontier Road",
   "Gate of the Sea Road",
   "North-East Road",
@@ -1965,13 +1965,13 @@
  ],
  "buildings arabic-persian EM placeholders": [
   "Gaol of [founder]",
-  "Queen's Temple",
-  "[place] Causeway",
-  "the New Mill",
-  "Queen's Gatehouse",
-  "Garden of Forgotten",
-  "the Long Battery",
-  "Lynx Bridge"
+  "[founder]'s Shrine",
+  "Hall of [founder]",
+  "Arch of [founder]",
+  "[place] Castle",
+  "Crooked Hall",
+  "the Old Gaol",
+  "Temple of the Father of Thunder"
  ],
  "routes arabic-persian EM invented": [
   "Sea Road to Father of the Lion",
@@ -2008,7 +2008,7 @@
  "buildings arabic-persian EM invented": [
   "Garden of Elder",
   "the Round Court House",
-  "New Island Temple",
+  "the New Temple",
   "the Lower Well",
   "Palace of Saif Bridge",
   "Palace of the Fountains",
@@ -2100,14 +2100,14 @@
   "Palace of Khalid Saltworks"
  ],
  "routes arabic-persian MO placeholders": [
-  "Pilgrims' Road to the Holy Mountain",
+  "Sacred Way to the Singing Well",
   "Lead Route",
   "[place] Ring Road",
   "Northern Line",
-  "Pilgrims' Way",
-  "[place] Bypass",
-  "[place] Road",
-  "[person]'s Highway"
+  "Road of the Thirteen Temples",
+  "Eastern Highway",
+  "[place] and [place] Railway",
+  "Western Main Line"
  ],
  "streets arabic-persian MO placeholders": [
   "Lane of the Market",
@@ -2181,7 +2181,7 @@
   "Harbour of Abbas Lock-Up",
   "Palace of [dynasty]",
   "Queen's Hospital",
-  "Gate of the River Shrine"
+  "the Great Shrine"
  ],
  "routes arabic-persian NF placeholders": [
   "[place] Bypass",
@@ -2216,9 +2216,9 @@
   "the Last Round Before Tau Ceti"
  ],
  "buildings arabic-persian NF placeholders": [
-  "Lion Shrine",
-  "Altair Spire",
-  "Pathfinder Dome",
+  "Temple of the Hungry Hand",
+  "the Old Well",
+  "Maia Landing Tower",
   "Endeavour Dome",
   "[place] Sky Elevator",
   "Hab Module Gamma",
@@ -2353,13 +2353,13 @@
  ],
  "routes slavic AN placeholders": [
   "Wax Road",
-  "Sacred Way to the Holy Mountain",
-  "Hetman's Army Road",
-  "[person]'s Causeway",
+  "Sacred Way to the Holy Stone",
+  "Southern Frontier Road",
+  "Furs and Salt Road",
+  "Eastern Passage",
   "Old Road",
   "Voivode's Road",
-  "[place] Road",
-  "Silk Road"
+  "[place] Road"
  ],
  "streets slavic AN placeholders": [
   "[place] Road",
@@ -2443,7 +2443,7 @@
   "[place] Drove",
   "Road to [place]",
   "Vale Way",
-  "Way of [holy person]"
+  "Road of the Nine Temples"
  ],
  "streets slavic MD placeholders": [
   "Amber Market",
@@ -2605,10 +2605,10 @@
  ],
  "routes slavic ST placeholders": [
   "Silk Canal",
-  "Way of [holy person]",
-  "[place] Run",
+  "Road of the Seven Stones",
   "Drovers' Way",
   "Sea Road to [place]",
+  "[place] Run",
   "Great East Road",
   "Honey Track",
   "Old Track"
@@ -2653,7 +2653,7 @@
   "Packmen's Way",
   "Grain Track",
   "Winter Road",
-  "Pilgrims' Road to the Holy Mountain"
+  "Sacred Way to the Singing Grove"
  ],
  "streets slavic ST invented": [
   "Well Alley",
@@ -3533,8 +3533,8 @@
   "Grove of the Birch",
   "Gatherers of the White Moon",
   "the Peacock School",
-  "Children of the Pale Sun",
-  "Silver Dreamers",
+  "Cult of the Last Keeper",
+  "Cabal of the Still Thread",
   "the Crossroads Wise Women",
   "the Grey Canons",
   "Society of the Pillar"
@@ -3544,7 +3544,7 @@
   "Circle of the Occult Lamp",
   "the Grove Students",
   "the Blessed Keepers",
-  "the Pale Congregation",
+  "Church of the Pale Throne",
   "the Spindle Brotherhood",
   "the Crossroads Coven",
   "Hidden Friars of the Olive",
@@ -3554,26 +3554,26 @@
  "groups mystic general placeholders scifi": [
   "the Well Doubters",
   "the Sword School",
-  "Brothers of [holy Person]",
-  "the Black Nuns",
-  "Order of [holy Person]",
-  "Cabal of the Grey Gate",
-  "Assembly of the Lattice",
-  "Society of the Hidden Star",
-  "the Lamp Brothers",
-  "the Open Question"
+  "Brothers of the Sleeper",
+  "[teacher]'s School",
+  "Order of the Poor Bell",
+  "Blessed Brothers of the Still Water",
+  "the Grey Friars",
+  "Temple of the Secret Code",
+  "Choir of the Null Eye",
+  "Little Keepers of the Lamp"
  ],
  "groups mystic general invented fantasy": [
   "Wardens of the Inner Radiance",
-  "the Flame's Covenant",
-  "Ring of the Grey Broom",
-  "Fellowship of the Amber Harmony",
+  "Those Who Keep the Last Flame",
+  "Master Selwyn's School",
+  "Children of the Wise King",
+  "Order of Saint Edith",
   "Grove of the Rowan",
   "Disciples of the Moon",
   "the Common Coven",
   "Sisters of the Grey Moon",
-  "Church of the Seventh Mouth",
-  "Fellowship of the Ruby Knowledge"
+  "Church of the Seventh Mouth"
  ],
  "groups mystic general invented modern": [
   "Barefoot Sisters of the Silence",
@@ -3618,10 +3618,10 @@
   "Conclave of the Gnostic Ember",
   "Followers of the Clear Glass",
   "Society of the Still Robe",
-  "Those Who Speak in Silence",
-  "Children of the Ninth Choir",
-  "Brothers of the Veil",
-  "the Flame's Children"
+  "the Final Followers",
+  "Circle of the Candle",
+  "Walk of the Plain Truth",
+  "Those Who Count the Days"
  ],
  "groups mystic anglo-saxon placeholders scifi": [
   "Order of [holy Person]",
@@ -3629,8 +3629,8 @@
   "the Azure Cabal",
   "Sisters of the Mystic Tree",
   "Secret Sodality of the Azure Grail",
-  "Keepers of [holy Person]",
-  "Association of the Wandering Loom",
+  "Keepers of the Signal Elder",
+  "Silver Walkers",
   "Society of the Sleeping Tide",
   "Friars of the Open Hand",
   "Psions Beyond the Pentacle"
@@ -3648,40 +3648,40 @@
   "the Common Coven"
  ],
  "groups mystic anglo-saxon invented modern": [
-  "Those Who Watch the Sky",
-  "Circle of the Shadow",
-  "Sisterhood of the Doctrine",
-  "the Open Question",
-  "Church of the Twin Sun",
-  "Ethereal Sisters",
-  "Sisters of the Still Dawn",
-  "Wandering Brothers of the Pilgrim Road",
-  "the Garden Students",
-  "Congregation of the Eighth King"
+  "the Drowned Children",
+  "Fellowship of the Dark Dawn",
+  "Order of Saint Wilfrid",
+  "the Rowan School",
+  "the Scorpion School",
+  "Brotherhood of the Russet Path",
+  "the Crossroads Coven",
+  "the Unbound",
+  "the White Friars",
+  "Ring of the Amber Mistletoe"
  ],
  "groups mystic anglo-saxon invented scifi": [
   "Servants of the Gate",
-  "Remnant of the Ninth Dreamer",
-  "Brothers of the Wandering Lamb",
-  "Fellowship of the Sacred Shadow",
-  "Sisters of the Dove",
-  "Still Brothers",
-  "the Spindle Society",
-  "Children of the Tower",
-  "Children of the Hollow Tide",
-  "the Dove Sisterhood"
+  "the Dreamer's Flock",
+  "Followers of the Common Good",
+  "the Opal Circle",
+  "Fellowship of the Green Lantern",
+  "Alliance of the Cosmic Seal",
+  "Children of the Pale Dreamer",
+  "Cult of the Hollow Father",
+  "the Scarlet Order",
+  "Conclave of the White Wisdom"
  ],
  "groups mystic japanese placeholders fantasy": [
   "Devotees of the Occult Path",
   "Society of the Lost Tide",
-  "Those Who Bear the Mark",
-  "Cult of the Burning Dark",
-  "Followers of the Plain Truth",
-  "Children of the Pale Queen",
-  "the Watchful",
+  "the Ninth Followers",
+  "Forgotten League of the Pearl Path",
+  "Cult of the Lady of the Night Sky",
+  "Dreamers of the Moon",
   "the Dagger School",
   "[prophet]'s Congregation",
-  "Followers of the Long View"
+  "Followers of the Long View",
+  "[teacher]'s School"
  ],
  "groups mystic japanese placeholders modern": [
   "Brothers of the Bread",
@@ -3698,21 +3698,21 @@
  "groups mystic japanese placeholders scifi": [
   "Heirs of the Still Path",
   "Brothers of the Dark Chamber",
-  "Church of the Weeping Gate",
-  "the Queen's Children",
-  "Eternal Keepers",
+  "Cult of the Weeping Gate",
+  "Those Who Dream Below",
+  "College of the Eternal Key",
   "Canons of the Mercy",
-  "Sisters of [holy Person]",
-  "Fellowship of the Hidden Rainbow",
-  "Collegium of the Loom",
-  "the Turquoise Circle"
+  "Sisters of the Patient Queen",
+  "Sisterhood of the Emerald Shrine",
+  "the Scarlet Circle",
+  "Academy of the Dark Silence"
  ],
  "groups mystic japanese invented fantasy": [
   "Followers of the Second Thought",
   "Order of Saint Maelor",
   "Circle of the Toad",
-  "Children of the Burning Harvest",
-  "Friars of the Well",
+  "Children of the Wandering Lady",
+  "Brotherhood of the Gnostic Gate",
   "the Blessed Penitents",
   "Grove of the Elder",
   "Sisterhood of the Radiant Word",
@@ -3725,9 +3725,9 @@
   "Violet Followers",
   "the Garden Listeners",
   "the Bridge Doubters",
-  "the Hour's Flock",
-  "Penitents of Saint Maelor",
-  "Order of Saint Leofric",
+  "Those Who Watch the Sky",
+  "the Owl Gathering",
+  "Cult of the Pale Lamb",
   "Mother Selwyn's Followers",
   "School of the Plain Truth"
  ],
@@ -3739,9 +3739,9 @@
   "Sisters of the Blessed Ysolde",
   "Sisters of the Fountain",
   "Those Who Listen to the Deep",
-  "the Marked",
-  "Purple Initiates",
-  "the Holy Sisters"
+  "Flock of the Seventh Worm",
+  "Monks of the Blessed Osyth",
+  "Circle of the Revealed World"
  ],
  "groups martial general placeholders fantasy": [
   "the Swift Flotilla",

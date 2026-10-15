@@ -234,3 +234,74 @@ test("§14.6: presets round-trip; Polynesian reports and runs as General", () =>
   assert.equal(poly.deity?.culture, "general");
   assert.deepEqual(poly.problems, ["This culture isn't offered for deities."]);
 });
+
+// ── §10.5 Back-links ────────────────────────────────────────────────────────
+
+import { generateBuildingNames } from "../src/buildings/engine";
+import { generateRouteNames } from "../src/routes/engine";
+import { generateGroupNames } from "../src/groups/engine";
+import { generateKit } from "../src/settlement/kit";
+
+const deityWords = (words: { pool: string; word: string }[]) => words.filter((w) => w.pool === "deity" || w.pool === "sacredPlace").map((w) => w.word);
+
+test("§10.1: buildings gain temples and shrines of invented deities; not for the sensitive cultures; christian only with fantastic", () => {
+  const temples = (culture: string, fantastic: boolean) => {
+    const out: { text: string; words: { pool: string; word: string }[] }[] = [];
+    for (let seed = 1; seed <= 300; seed++) out.push(...generateBuildingNames({ culture, kind: "faith", fantastic, people: "invented", count: 5, seed }).names.filter((n) => n.shape.includes("{deity}")));
+    return out;
+  };
+  const general = temples("general", false);
+  assert.ok(general.some((n) => n.text.startsWith("Temple of the ")) && general.some((n) => n.text.startsWith("Shrine of the ")));
+  for (const n of general) for (const w of deityWords(n.words)) assert.ok(!deityTitleBlocked(w), n.text);
+  for (const c of ["polynesian", "andean"]) for (const f of [false, true]) assert.equal(temples(c, f).length, 0, c);
+  assert.equal(temples("norman-british", false).length, 0);
+  const christian = temples("norman-british", true);
+  assert.ok(christian.length > 0 && christian.every((n) => n.text.startsWith("Temple of the ")));
+});
+
+test("§10.2: pilgrim roads to invented sacred places; never for Polynesian or Andean", () => {
+  const roads = (culture: string) => {
+    const out: { text: string; words: { pool: string; word: string }[] }[] = [];
+    for (let seed = 1; seed <= 200; seed++) out.push(...generateRouteNames({ culture, kind: "pilgrim", people: "invented", count: 5, seed }).names.filter((n) => n.shape.includes("{sacredPlace}")));
+    return out;
+  };
+  const general = roads("general");
+  assert.ok(general.some((n) => n.text.startsWith("Sacred Way to the ")) && general.some((n) => n.text.startsWith("Pilgrims' Road to the ")));
+  for (const n of general) {
+    assert.ok(!/ the the /i.test(n.text), n.text);
+    for (const w of deityWords(n.words)) assert.ok(!deityTitleBlocked(w), n.text);
+  }
+  for (const c of ["polynesian", "andean"]) assert.equal(roads(c).length, 0, c);
+});
+
+test("§10.3: cults and holy orders devoted to invented deities; holy orders of christian traditions only when fantastic", () => {
+  const groups = (type: string, tradition: string, fantastic: boolean) => {
+    const out: { text: string; shape: string }[] = [];
+    for (let seed = 1; seed <= 200; seed++) out.push(...generateGroupNames({ family: "mystic", type, tradition, genre: "fantasy", fantastic, people: "invented", count: 5, seed }).names.filter((n) => n.shape.includes("{deity}")));
+    return out;
+  };
+  const cults = groups("cult", "general", false);
+  assert.ok(cults.some((n) => n.text.startsWith("Children of the ")) && cults.some((n) => n.text.startsWith("Cult of the ")));
+  for (const n of cults) assert.ok(!hasRealDivineName(n.text), n.text);
+  assert.ok(groups("holy", "general", false).length > 0);
+  assert.equal(groups("holy", "celtic", false).length, 0);
+  assert.ok(groups("holy", "celtic", true).length > 0);
+  for (const t of ["polynesian", "andean"]) assert.equal(groups("cult", t, true).length, 0, t);
+});
+
+test("§10.4: the kit's faith group and buildings share one deity; none for christian cultures in a realistic world", () => {
+  for (let seed = 1; seed <= 20; seed++) {
+    const ctx = generateKit({ culture: "general", size: "great", people: "invented", seed }).context;
+    const deity = ctx.deity!.replace(/^the /, "");
+    assert.ok(deity, `${seed}`);
+    for (const n of generateBuildingNames({ culture: "general", kind: "faith", people: "invented", shape: "Temple of the {deity}", count: 3, seed, context: ctx }).names) assert.equal(n.text, `Temple of the ${deity}`);
+    for (const n of generateGroupNames({ family: "mystic", type: "cult", people: "invented", count: 30, seed, context: ctx }).names) {
+      if (n.shape.includes("{deity}")) assert.ok(n.text.endsWith(`of the ${deity}`), n.text);
+    }
+  }
+  assert.equal(generateKit({ culture: "norman-british", seed: 3 }).context.deity, null);
+  assert.ok(generateKit({ culture: "norman-british", fantastic: true, seed: 3 }).context.deity);
+  assert.equal(generateKit({ culture: "polynesian", seed: 3 }).context.deity, null);
+  const realistic = generateKit({ culture: "norman-british", seed: 3 }).context;
+  assert.equal(generateBuildingNames({ culture: "norman-british", kind: "faith", shape: "Temple of the {deity}", count: 3, seed: 1, context: realistic }).names.length, 0);
+});

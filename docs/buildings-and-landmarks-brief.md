@@ -453,3 +453,10 @@ Run `npm test` and `npm run build` at the end of each; both must pass before com
 - Building details: age, condition, owner, legend.
 - Ruins and lost places (*the Drowned Church*) as their own kind with legends.
 - Country houses and estates as a fuller residence system (*Ashby Park*, *Fenwick Hall and Gardens*).
+
+
+---
+
+## Deities back-link
+
+Added by the deities and sacred places brief (§10.1): a faith shape `Temple of the {deity}` (weight 15) for every culture but the sensitive ones, with `{deity}` from `deityTitle()` (archetype, A, B or D; any gender; the culture's style); christian cultures take it at weight 3 and only with fantastic on. `Shrine of the {deity}` sits beside `Shrine of the {holySite}` at the same weight (6). In the settlement kit both use the context's deity.

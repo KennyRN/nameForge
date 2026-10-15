@@ -38,7 +38,7 @@ const run = (o: Partial<GroupOptions> & { family: string }, setting: GroupSettin
 /** A whole word; a hyphenated compound (Hedge-Witches) counts as one word. */
 const hasWord = (text: string, word: string) => new RegExp(`(^|[^A-Za-z-])${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^A-Za-z-])`).test(text);
 
-const SPECIAL = new Set(["person", "holy", "town", "surname", "house", "initials", "star", "starNumber", "spaceLandPrefixed", "britishPlace", "ordinal", "land", "street", "nickname", "flavourAnimal"]);
+const SPECIAL = new Set(["person", "holy", "town", "surname", "house", "initials", "star", "starNumber", "spaceLandPrefixed", "britishPlace", "ordinal", "land", "street", "nickname", "flavourAnimal", "deity"]);
 const tokensOf = (p: string) => [...p.matchAll(/\{([^}]+)\}/g)].flatMap((m) => m[1].split(":")[0].split("/"));
 
 // ── §16.1 Data ──────────────────────────────────────────────────────────────
@@ -145,6 +145,8 @@ test("group names: words stay in their settings", () => {
     for (const f of GROUP_FAMILIES) for (const s of outside) {
       if (!settingsOf(f.key).includes(s)) continue;
       for (const n of run({ family: f.key }, s, 2000, 11).names) {
+        // Deities brief §10.3: a deity's title comes from the deities engine, not GN's tagged lists.
+        if (n.shape.includes("{deity}")) continue;
         for (const w of words) assert.ok(!hasWord(n.text, w), `${f.key} ${s}: “${n.text}” has ${w}`);
       }
     }

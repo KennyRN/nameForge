@@ -4,6 +4,7 @@
 
 import groupData from "../data/group-names.json";
 import { pluralOf } from "../biomes";
+import { deityHooks } from "../deities/hook";
 import { mulberry32 } from "../markov";
 import { boostContext, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { generatePlaceNames } from "../names/engine";
@@ -49,6 +50,8 @@ export interface GroupShape {
   t?: GroupTone[];
   /** Tone brief §3.6: the series anchor, overriding the automatic choice. */
   sa?: string;
+  /** Deities brief §10.3: devoted to an invented deity. */
+  deity?: boolean;
 }
 
 export interface GroupType {
@@ -618,6 +621,11 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
       const saint = pick(ctx, "saintName", type);
       return { text: S === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`, plural: false };
     }
+    case "deity": {
+      // Deities brief §10.3, §10.4: the settlement's deity, or an invented one; without its own "the".
+      const t = ctx.context?.deity ?? deityHooks()?.deityTitleForTradition(ctx.people?.key ?? "general", S, rng, ctx.tone);
+      return t ? { text: t.replace(/^the /, ""), plural: false } : undefined;
+    }
     case "town":
       if (placeholders) return { text: "[place]", plural: false };
       return { text: inventedTown(ctx, type), plural: false };
@@ -819,6 +827,7 @@ function initialsToken(ctx: Ctx, type: GroupType): Piece | undefined {
 /** A shape's weight here (§3.3, §8.3, §9). */
 function shapeWeight(ctx: Ctx, shape: GroupShape): number {
   if (shape.s && !shape.s.includes(ctx.setting)) return 0;
+  if (shape.deity && !deityShapeAllowed(ctx, shape)) return 0;
   // §8.3: invented surnames and houses only with General, Celtic and Germanic.
   if (ctx.mode === "invented" && /\{(surname|house)\}/.test(shape.p) && !GROUP_DATA.people.surnameTraditions.includes(ctx.people?.key ?? "general")) {
     return 0;
@@ -828,6 +837,18 @@ function shapeWeight(ctx: Ctx, shape: GroupShape): number {
   const tone = ctx.tone === "any" ? 1 : toneFactor(shapeTones(shape), ctx.tone);
   const commodity = ctx.commodity ? commodityFactor(ctx, shape) : 1;
   return shape.w * (shape.sx?.[ctx.setting] ?? 1) * trad * tone * commodity;
+}
+
+/** Deities brief §10.3: never the sensitive traditions; holy orders of christian traditions only when fantastic. */
+function deityShapeAllowed(ctx: Ctx, shape: GroupShape): boolean {
+  const hooks = deityHooks();
+  if (!hooks) return false;
+  const tradition = ctx.people?.key ?? "general";
+  if (hooks.sensitiveTraditions.includes(tradition)) return false;
+  if (ctx.context && !ctx.context.deity) return false;
+  const fantastic = ctx.setting === "FH" || ctx.setting === "MF";
+  if (shape.p.startsWith("{holyMembers}") && hooks.christianTraditions.includes(tradition) && !fantastic) return false;
+  return true;
 }
 
 /** A shape's tokens, with pattern tokens ({mineLandPlace}) opened up. */

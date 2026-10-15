@@ -446,3 +446,10 @@ Run `npm test` and `npm run build` at the end of each; both must pass before com
 ## Events back-link
 
 Added by the events and eras brief (§10): a **History** section after Groups (contents "whole" and "people and groups only"), village 2, town 3, city 4, great city 5 at standard detail (detail multipliers as §5.1). It runs the events engine as one history, on a local scale for a village or town and a realm's scale for a city or great city, with the kit's context: the `self` shapes (`Founding of {place}`, `{place} {disaster}`, `Siege of {place}`, `{collapseNoun} of {place}`) name the town, every other `{place}` a neighbour. A history of 3 or more opens with `Founding of {town}`. It runs after Groups and before Ships; rerolling History redoes only History.
+
+
+---
+
+## Deities back-link
+
+Added by the deities and sacred places brief (§10.4): the context gains `deity`, one invented deity title drawn last (so every other field is unchanged), null for christian cultures in a realistic world and for the sensitive cultures. The faith group's and the faith building's deity shapes use it.

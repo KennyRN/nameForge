@@ -1,6 +1,8 @@
 // Settlement kit brief §13.2: the seven engines' outputs without a context, for a fixed spread of
 // options. tests/settlementKit.test.ts compares the engines against tests/fixtures/settlement-engines.json,
-// written by this function before the context option was added.
+// written by this function before the context option was added, and again for the deities brief's
+// back-links (§10), with the deities engine loaded as the app loads it.
+import "../../src/deities/engine";
 import { generateRouteNames } from "../../src/routes/engine";
 import { generateStreetNames } from "../../src/streets/engine";
 import { generateInnNames } from "../../src/inns/engine";

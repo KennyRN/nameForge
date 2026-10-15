@@ -101,6 +101,8 @@
     "pilgrim": [
       {"p": "Pilgrims' Road to {holySite}", "w": 15},
       {"p": "Sacred Way to {holySite}", "w": 10, "e": ["AN", "MD", "EM"], "t": ["grand"]},
+      {"p": "Sacred Way to the {sacredPlace}", "w": 8, "c": ["!polynesian", "!andean"]},
+      {"p": "Pilgrims' Road to the {sacredPlace}", "w": 8, "c": ["!polynesian", "!andean"]},
       {"p": "Road of the {number} {holySitePl}", "w": 8, "t": ["strange"]},
       {"p": "Way of {holy}", "w": 8, "e": ["MD", "EM", "ST", "MO"], "c": ["christian"], "t": ["grand"]},
       {"p": "Ways of {god}", "w": 8, "e": ["AN"], "c": ["egyptian"], "t": ["grand"]},

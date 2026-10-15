@@ -26,6 +26,7 @@ import {
 import { mulberry32 } from "../markov";
 import { countedWords, ROUTE_ERAS, routeCapitals, routeNorm, routePlace, routeSetting, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, inCultureGroup, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
+import { setDeityHooks } from "./hook";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -98,6 +99,10 @@ interface DeityData {
     livingTricksters: string[];
   };
   series: { from: number };
+  /** §10.3: group names' traditions as a culture, the christian ones, and the sensitive ones. */
+  traditionCulture: Record<string, string>;
+  christianTraditions: string[];
+  sensitiveTraditions: string[];
   cap: number;
   safeguards: { block: string[]; names: string[]; flag: string[]; flagListBlocks: boolean; banned: string[] };
 }
@@ -574,3 +579,21 @@ export function sacredPlace(o: { culture?: string; era?: RouteEra; fantastic?: b
 
 /** §11.4: a deity title passes this module's safeguards (back-link tests). */
 export const deityTitlePasses = (text: string) => !deityTitleBlocked(text);
+
+/** §10.3: one deity title for a group-names tradition and setting (sensitive traditions: none). */
+export function deityTitleForTradition(tradition: string, setting: GroupSetting, rng: () => number, tone?: GroupToneChoice): string | undefined {
+  if (DEITY_DATA.sensitiveTraditions.includes(tradition)) return undefined;
+  const era: RouteEra = setting === "SF" ? "IS" : setting === "MR" || setting === "MF" ? "MO" : "MD";
+  return deityTitle({ culture: DEITY_DATA.traditionCulture[tradition] ?? "general", era, fantastic: setting === "FH" || setting === "MF", tone, rng });
+}
+
+// §10: the back-links' helpers, registered for the engines that can't import this one (hook.ts).
+setDeityHooks({
+  deityTitle,
+  sacredPlace,
+  deityTitleForTradition,
+  cultureOffered: deityCultureOffered,
+  isChristianCulture,
+  sensitiveTraditions: DEITY_DATA.sensitiveTraditions,
+  christianTraditions: DEITY_DATA.christianTraditions,
+});
