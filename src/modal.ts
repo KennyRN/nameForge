@@ -2471,7 +2471,7 @@ export class NameForgeModal extends Modal {
       const head = view.createDiv({ cls: "nameforge-kit__heading" });
       head.createSpan({ text: section.title });
       const reroll = head.createEl("button", { cls: "nameforge-modal__icon-action nameforge-kit__reroll", attr: { type: "button", title: `Reroll ${section.title.toLowerCase()}` } });
-      setIcon(reroll, "refresh-cw");
+      setIcon(reroll, ICON_DICE);
       reroll.addEventListener("click", () => void this.rerollKitSection(section.key));
       const list = view.createEl("ul", { cls: "nameforge-kit__list" });
       for (const e of section.entries) {
@@ -2506,10 +2506,10 @@ export class NameForgeModal extends Modal {
       return b;
     };
     button(ICON_TEXT_INSERT, "Insert", () => this.insertPlainText(block));
-    button("copy", "Copy", () => {
+    button(ICON_SEED_COPY, "Copy", () => {
       void navigator.clipboard.writeText(block).then(() => this.setStatus("Copied."));
     });
-    if (kit) button("file-plus", "Create note", () => void this.createKitNote(kit));
+    if (kit) button(ICON_CREATE_PACKS, "Create note", () => void this.createKitNote(kit));
     if (this.panelMode) {
       const history = this.resultsEl.createEl("button", { cls: "nameforge-modal__panel-action", attr: { type: "button" } });
       setIcon(history.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);

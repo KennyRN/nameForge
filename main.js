@@ -91329,7 +91329,7 @@ ${n.origin}${also}${echo}` };
       const head = view.createDiv({ cls: "nameforge-kit__heading" });
       head.createSpan({ text: section.title });
       const reroll = head.createEl("button", { cls: "nameforge-modal__icon-action nameforge-kit__reroll", attr: { type: "button", title: `Reroll ${section.title.toLowerCase()}` } });
-      (0, import_obsidian13.setIcon)(reroll, "refresh-cw");
+      (0, import_obsidian13.setIcon)(reroll, ICON_DICE);
       reroll.addEventListener("click", () => void this.rerollKitSection(section.key));
       const list = view.createEl("ul", { cls: "nameforge-kit__list" });
       for (const e of section.entries) {
@@ -91362,10 +91362,10 @@ ${n.origin}${also}${echo}` };
       return b;
     };
     button(ICON_TEXT_INSERT, "Insert", () => this.insertPlainText(block));
-    button("copy", "Copy", () => {
+    button(ICON_SEED_COPY, "Copy", () => {
       void navigator.clipboard.writeText(block).then(() => this.setStatus("Copied."));
     });
-    if (kit) button("file-plus", "Create note", () => void this.createKitNote(kit));
+    if (kit) button(ICON_CREATE_PACKS, "Create note", () => void this.createKitNote(kit));
     if (this.panelMode) {
       const history2 = this.resultsEl.createEl("button", { cls: "nameforge-modal__panel-action", attr: { type: "button" } });
       (0, import_obsidian13.setIcon)(history2.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
