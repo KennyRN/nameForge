@@ -37,6 +37,8 @@ import {
   ICON_TRIBAL_NAMES,
   ICON_BYNAMES,
   ICON_SHIPS,
+  ICON_HISTORY,
+  ICON_SPACECRAFT,
   ICON_BULLET_INSERT,
   ICON_CANCEL,
   ICON_CHECKLIST_INSERT,
@@ -249,7 +251,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   // Settlement kit §1.1.
   settlementKit: "building-2",
   // Events brief §1.1.
-  eventNames: "scroll-text",
+  eventNames: ICON_HISTORY,
   // Deities brief §1.1.
   deityNames: "sun-moon",
   riverNames: ICON_RIVER_NAMES,
@@ -266,7 +268,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   familyNames: "users",
   // Ships brief §1.1, with the supplied ship icon for ships and boats.
   ships: ICON_SHIPS,
-  spacecraft: "rocket",
+  spacecraft: ICON_SPACECRAFT,
   // Group brief §1.1: Lucide icons.
   mysticOrders: "sparkles",
   martialOrders: "swords",
@@ -282,7 +284,7 @@ const GROUP_ICONS: Record<SectionGroup, string> = {
   placeNames: ICON_PLACE_SHAPES,
   groupNames: ICON_TRIBAL_NAMES,
   bynames: ICON_BYNAMES,
-  lore: "scroll-text",
+  lore: ICON_HISTORY,
   advanced: ICON_ADVANCED,
 };
 
@@ -313,7 +315,7 @@ function packTypeIconId(packType: NamePackType, subGenerator?: CompoundGenerator
   if (packType === "innPreset") return "beer";
   if (packType === "buildingPreset") return "landmark";
   if (packType === "kitPreset") return "building-2";
-  if (packType === "eventPreset") return "scroll-text";
+  if (packType === "eventPreset") return ICON_HISTORY;
   if (packType === "deityPreset") return "sun-moon";
   if (packType === "recipePack") {
     // Presets brief §2.2: recipe packs wear the wizard's pen-in-pin icon.
