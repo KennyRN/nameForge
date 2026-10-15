@@ -288,8 +288,8 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   underworldGroups: ICON_UNDERWORLD,
   tradeGuilds: ICON_TRADE,
   adventureCompanies: ICON_ADVENTURERS,
-  powerFactions: "landmark",
-  supernaturalCourts: "ghost",
+  powerFactions: "crown",
+  supernaturalCourts: "crown",
 };
 
 // Each switcher group's icon in the switcher menu; the trigger wears the open module's own icon.

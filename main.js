@@ -89368,8 +89368,8 @@ var SECTION_ICONS = {
   underworldGroups: ICON_UNDERWORLD,
   tradeGuilds: ICON_TRADE,
   adventureCompanies: ICON_ADVENTURERS,
-  powerFactions: "landmark",
-  supernaturalCourts: "ghost"
+  powerFactions: "crown",
+  supernaturalCourts: "crown"
 };
 var GROUP_ICONS = {
   placeNames: ICON_PLACE_SHAPES,
