@@ -483,7 +483,7 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
 
 .nameforge-modal__icon-decoration--clickable:hover,
 .nameforge-modal__icon-decoration--clickable:focus-visible {
-  color: var(--text-normal);
+  color: var(--text-muted);
 }
 
 /* The section switcher itself — values ported from titleForge's .titleforge-section-menu. A
@@ -1780,4 +1780,9 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 /* The icons beside the selector boxes rest in the body text colour. */
 body .nameforge-modal .nameforge-modal__option-row button.nameforge-modal__icon-action:not(.is-active) {
   color: var(--text-normal);
+}
+
+body .nameforge-modal .nameforge-modal__option-row button.nameforge-modal__icon-action:not(.is-active):hover,
+body .nameforge-modal .nameforge-modal__option-row button.nameforge-modal__icon-action:not(.is-active):focus-visible {
+  color: var(--text-muted);
 }
