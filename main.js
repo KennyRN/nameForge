@@ -90401,7 +90401,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
   syncPillSpacing() {
     var _a2;
     const row = this.contextRowEl;
-    const joined = !!row && row.hasClass("is-sentence") && row.style.display !== "none" && this.activeSection !== "nameAgeing";
+    const joined = !!row && row.hasClass("is-sentence") && row.isShown() && this.activeSection !== "nameAgeing";
     row == null ? void 0 : row.toggleClass("is-before-pill", joined);
     (_a2 = this.generatePillEl) == null ? void 0 : _a2.toggleClass("is-after-sentence", joined);
   }

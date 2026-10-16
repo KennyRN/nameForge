@@ -634,6 +634,7 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
+  background-color: var(--background-secondary);
   border-radius: var(--nf-pill-radius) var(--nf-pill-radius) 0 0;
 }
 
@@ -643,6 +644,7 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
 
 .nameforge-modal .nameforge-modal__generate-pill.has-quantity .nameforge-modal__generate-button {
   border-radius: 0 0 var(--nf-pill-radius) var(--nf-pill-radius);
+  margin-top: 0;
 }
 
 /* 12px from the bottom of the sentence to the top of the pill. In the modal the options list's own
@@ -650,6 +652,7 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
 .nameforge-modal .nameforge-modal__context-toggle.is-sentence.is-before-pill {
   margin-bottom: 0;
   padding-bottom: 0;
+  line-height: 1.2;
 }
 
 .nameforge-modal .nameforge-modal__generate-pill.is-after-sentence {

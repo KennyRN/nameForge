@@ -1447,7 +1447,7 @@ export class NameForgeModal extends Modal {
    * controls do). */
   private syncPillSpacing() {
     const row = this.contextRowEl;
-    const joined = !!row && row.hasClass("is-sentence") && row.style.display !== "none" && this.activeSection !== "nameAgeing";
+    const joined = !!row && row.hasClass("is-sentence") && row.isShown() && this.activeSection !== "nameAgeing";
     row?.toggleClass("is-before-pill", joined);
     this.generatePillEl?.toggleClass("is-after-sentence", joined);
   }
