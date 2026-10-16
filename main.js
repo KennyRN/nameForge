@@ -89221,13 +89221,12 @@ var GROUP_NAME_SECTIONS = [
 var SECTION_ORDER = [
   "markov",
   "placeShapes",
+  "explorationPlaceShapes",
+  "empireExpansionPlaceShapes",
   "routeNames",
   "streetNames",
   "innNames",
   "buildingNames",
-  "settlementKit",
-  "explorationPlaceShapes",
-  "empireExpansionPlaceShapes",
   "tribalNames",
   "realms",
   ...GROUP_NAME_SECTIONS,
@@ -89236,15 +89235,16 @@ var SECTION_ORDER = [
   "deityNames",
   "nameAgeing",
   "nameTakeover",
-  ...VESSEL_SECTIONS
+  ...VESSEL_SECTIONS,
+  "settlementKit"
 ];
 var SECTION_GROUPS = {
-  placeNames: ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames", "settlementKit", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames"],
   groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   // Events brief §1.1 (the deities brief adds its module here).
   lore: ["eventNames", "deityNames"],
-  advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS]
+  advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS, "settlementKit"]
 };
 var GROUP_LABELS = {
   placeNames: "place names",

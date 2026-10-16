@@ -225,13 +225,12 @@ test("line-up: the modules in order, with their labels; river names live in plac
     [
       "markov generator",
       "native place names",
+      "exploration into new lands",
+      "expansion into settled lands",
       "route names",
       "streets and districts",
       "inns and taverns",
       "buildings and landmarks",
-      "settlement kit",
-      "exploration into new lands",
-      "expansion into settled lands",
       "tribes and kin groups",
       "realms and polities",
       "faiths and mystic orders",
@@ -250,6 +249,7 @@ test("line-up: the modules in order, with their labels; river names live in plac
       "name takeover",
       "ships and boats",
       "spacecraft and stations",
+      "settlement kit",
     ],
   );
   assert.ok(!Object.values(SECTION_LABELS).includes("generic place name generator"));

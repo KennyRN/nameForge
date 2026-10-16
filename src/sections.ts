@@ -81,13 +81,12 @@ export const GROUP_NAME_SECTIONS: NameForgeSection[] = [
 export const SECTION_ORDER: NameForgeSection[] = [
   "markov",
   "placeShapes",
+  "explorationPlaceShapes",
+  "empireExpansionPlaceShapes",
   "routeNames",
   "streetNames",
   "innNames",
   "buildingNames",
-  "settlementKit",
-  "explorationPlaceShapes",
-  "empireExpansionPlaceShapes",
   "tribalNames",
   "realms",
   ...GROUP_NAME_SECTIONS,
@@ -97,6 +96,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "nameAgeing",
   "nameTakeover",
   ...VESSEL_SECTIONS,
+  "settlementKit",
 ];
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
@@ -104,12 +104,12 @@ export const SECTION_ORDER: NameForgeSection[] = [
 export type SectionGroup = "placeNames" | "groupNames" | "bynames" | "lore" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
-  placeNames: ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames", "settlementKit", "explorationPlaceShapes", "empireExpansionPlaceShapes"],
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames"],
   groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
   bynames: BYNAME_SECTIONS,
   // Events brief §1.1 (the deities brief adds its module here).
   lore: ["eventNames", "deityNames"],
-  advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS],
+  advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS, "settlementKit"],
 };
 
 export const GROUP_LABELS: Record<SectionGroup, string> = {

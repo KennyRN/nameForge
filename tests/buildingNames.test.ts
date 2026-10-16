@@ -229,7 +229,7 @@ test("§2.3: kinds reset with the era; the region goes away from the British cul
 });
 
 test("§1: the module follows inns and taverns; history label and section", () => {
-  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 5), ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames"]);
+  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 7), ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames"]);
   assert.equal(buildingHistoryLabel(DEFAULT_BUILDING_STATE), "buildings and landmarks · medieval · Norman & British");
   const full: BuildingSentenceState = { ...DEFAULT_BUILDING_STATE, era: "ST", kind: "works", setting: "road", region: "NTH", fantastic: true, tone: "grim", series: true };
   assert.equal(buildingHistoryLabel(full), "buildings and landmarks · steam age · Norman & British · mills and works · by the road · the North · steampunk · grim · one town");

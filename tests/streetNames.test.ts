@@ -275,7 +275,7 @@ test("§16.8: the function link only with districts; the dialect link hidden for
 });
 
 test("§1: the module follows route names; history label and section", () => {
-  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 3), ["placeShapes", "routeNames", "streetNames"]);
+  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 5), ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames"]);
   assert.equal(streetHistoryLabel(DEFAULT_STREET_STATE), "streets and districts · medieval · Norman & British · town");
   const full = set(DEFAULT_STREET_STATE, ["era", "ST"], ["fantastic", "on"], ["kind", "districts"], ["size", "great"], ["region", "NTH"], ["tone", "grim"], ["series", "on"]);
   assert.equal(streetHistoryLabel(full), "streets and districts · steam age · Norman & British · districts and quarters · great city · the North · steampunk · grim · one town");

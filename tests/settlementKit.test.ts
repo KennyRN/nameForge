@@ -321,8 +321,8 @@ test("§13.7: the default sentence's plain text; “An” before a vowel", () =>
   assert.ok(kitSentenceText(kitSentence(station)).includes(", on a station, "));
 });
 
-test("§1: the module follows buildings and landmarks; history label and section", () => {
-  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 6), ["placeShapes", "routeNames", "streetNames", "innNames", "buildingNames", "settlementKit"]);
+test("§1: the module sits at the bottom of advanced; history label and section", () => {
+  assert.deepEqual(SECTION_GROUPS.advanced.at(-1), "settlementKit");
   const label = kitHistoryLabel("Fenwick", DEFAULT_KIT_STATE);
   assert.equal(label, "settlement kit · Fenwick · town · medieval · Norman & British");
   assert.equal(historySection(label), "settlementKit");

@@ -319,8 +319,8 @@ test("§2.2–§2.3: the kind menu offers the era's kinds; a kind the new era la
 });
 
 test("§1: the module sits after native place names; its history label and section", () => {
-  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 2), ["placeShapes", "routeNames"]);
-  assert.equal(SECTION_ORDER[SECTION_ORDER.indexOf("placeShapes") + 1], "routeNames");
+  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 4), ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames"]);
+  assert.equal(SECTION_ORDER[SECTION_ORDER.indexOf("empireExpansionPlaceShapes") + 1], "routeNames");
   assert.equal(routeHistoryLabel(DEFAULT_ROUTE_STATE), "route names · medieval · Norman & British");
   const full: RouteSentenceState = { culture: "norman-british", era: "ST", region: "NTH", kind: "rail", fantastic: true, tone: "grim", people: "invented", series: true };
   assert.equal(routeHistoryLabel(full), "route names · steam age · Norman & British · the North · railways and canals · steampunk · grim · network");

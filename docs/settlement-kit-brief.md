@@ -1,6 +1,6 @@
 # Settlement kit – brief (first release)
 
-This brief adds a module, **settlement kit**, to the **place names** group, after buildings and landmarks. One press makes a whole settlement in which every part agrees with every other:
+This brief adds a module, **settlement kit**, to the **place names** group, after buildings and landmarks. *(Later change: the module now sits at the bottom of the **advanced** group, and the place names group runs native place names, exploration, expansion, route names, streets, inns, buildings.)* One press makes a whole settlement in which every part agrees with every other:
 
 - the settlement's **name**, the **realm** it belongs to and its **ruler's title**
 - the **roads** out of it, one of which runs through the town
