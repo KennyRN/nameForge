@@ -37,6 +37,8 @@ Everything here is data or a rule with fixed numbers. Where something isn't spec
 
 ## 1. Module
 
+> **Module split (16 October 2026, line-up brief).** This module is now two modules on the same engine. **Deities** (`deityNames`, label "deities") sits last in group names: its kind link offers Any, deities and spirits, and pantheons and divine courts, with Any meaning deities and pantheons (the engine's `kinds` option), and "as one pantheon" gives the pantheon then deities only. **Sacred places** (`sacredPlaces`, label "sacred places") sits last in place names: "‹General›-themed sacred places of ‹any domain›, of the ‹medieval› era, in a ‹realistic› world, ‹of any tone›", with no kind, gender, names, pack or series links. Both use the kneeling-figure icon. History rows are "deities · …" and "sacred places · …"; old "deities and sacred places" rows go to sacred places when they contain "· sacred places" and to deities otherwise. Presets keep the `deity-names` key: `kind: place` opens sacred places, any other kind opens deities. The `lore` group is gone. See `docs/module-lineup-brief.md`.
+
 ### 1.1 Section
 
 - Add `deityNames` to `NameForgeSection`, label **"deities and sacred places"**, Lucide icon `sun-moon`.

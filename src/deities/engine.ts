@@ -138,6 +138,8 @@ export interface DeityOptions {
   drawName?: (gender: G, rng: () => number) => string | null;
   /** §8: as one pantheon. */
   series?: boolean;
+  /** Line-up brief §2.2: with kind Any, draw only these kinds (the deities module leaves places out). */
+  kinds?: DeityKind[];
   count: number;
   seed?: number;
   safeguards?: GroupSafeguards;
@@ -460,7 +462,8 @@ export function generateDeityNames(options: DeityOptions): DeityBatch {
     words: [],
     safeguards: options.safeguards,
   };
-  const kindWeights = DEITY_KINDS.map((k): [DeityKind, number] => [k.key, k.w * (style.kindX?.[k.key] ?? 1)]);
+  const allows = (k: DeityKind) => !options.kinds || options.kinds.includes(k);
+  const kindWeights = DEITY_KINDS.filter((k) => allows(k.key)).map((k): [DeityKind, number] => [k.key, k.w * (style.kindX?.[k.key] ?? 1)]);
   const genderFixed = options.gender && options.gender !== "any" ? GENDER_OF[options.gender] : undefined;
 
   const build = (kind: DeityKind, extra: Partial<Ctx> = {}): DeityName | undefined => {
@@ -521,7 +524,7 @@ export function generateDeityNames(options: DeityOptions): DeityBatch {
     let turn = 0;
     if (!options.kind || options.kind === "pantheon") for (let t = 0; t < 20 && out.length === 0; t++) add(build("pantheon"));
     for (let idle = 0; idle < 80 && out.length < count; ) {
-      let kind: DeityKind = options.kind ?? (rng() < 25 / 85 ? "place" : "deity");
+      let kind: DeityKind = options.kind ?? (rng() < 25 / 85 && allows("place") ? "place" : "deity");
       if (kind === "pantheon" && options.kind !== "pantheon") kind = "deity";
       // §8 rule 4: a sacred place names one of the batch's deities, so it waits for one.
       if (kind === "place" && !options.kind && !out.some((n) => n.kind === "deity")) kind = "deity";

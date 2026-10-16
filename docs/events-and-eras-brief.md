@@ -37,6 +37,8 @@ Everything here is data or a rule with fixed numbers. Where something isn't spec
 
 ### 1.1 Group and section
 
+> *Line-up brief (16 October 2026): the `lore` group is gone; events and eras now sits last in **advanced**.*
+
 - Add `lore` to `SectionGroup`, label **"history and faith"**, and to `SWITCHER_ORDER` after `bynames`.
 - Add `eventNames` to `NameForgeSection`, label **"events and eras"**, Lucide icon `scroll-text`; `SECTION_GROUPS.lore = ["eventNames"]` (the deities brief adds its module here).
 - The group remembers its last-used module (`groupModule.lore`).

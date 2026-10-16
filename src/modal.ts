@@ -38,6 +38,7 @@ import {
   ICON_BYNAMES,
   ICON_SHIPS,
   ICON_HISTORY,
+  ICON_VEHICLES,
   ICON_ROUTES,
   ICON_STREETS,
   ICON_INNS,
@@ -134,7 +135,7 @@ import { generateInnNames, INN_DATA, INN_KINDS, innWordBlocked } from "./inns/en
 import { BUILDING_DATA, BUILDING_KINDS, buildingWordBlocked, generateBuildingNames } from "./buildings/engine";
 import { EVENT_DATA, EVENT_KINDS, eventWordBlocked, generateEventNames } from "./events/engine";
 import { DEITY_CULTURES, DEITY_DATA, DEITY_KINDS, deityWordBlocked, generateDeityNames } from "./deities/engine";
-import { chooseDeity, DEFAULT_DEITY_STATE, deityHistoryLabel, deitySentence, deitySentenceText, effectiveDeityState, type DeitySentenceState } from "./deities/sentence";
+import { chooseDeity, chooseSacredPlace, DEFAULT_DEITY_STATE, DEFAULT_SACRED_PLACE_STATE, DEITIES_MODULE_KINDS, deityHistoryLabel, deityPresetModule, deitySentence, deitySentenceText, effectiveDeityState, sacredPlaceAsDeityState, sacredPlaceHistoryLabel, sacredPlaceSentence, type DeitySentenceState, type SacredPlaceSentenceState } from "./deities/sentence";
 import { chooseEvent, DEFAULT_EVENT_STATE, eventHistoryLabel, eventSentence, eventSentenceText, type EventSentenceState } from "./events/sentence";
 import { generateKit, rerollKit, type Kit, type KitSafeguards, type KitSectionKey } from "./settlement/kit";
 import { freeNotePath, kitMarkdown, kitNoteContent, type KitNoteSettings } from "./settlement/kitFormat";
@@ -267,6 +268,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   eventNames: ICON_HISTORY,
   // Deities brief §1.1.
   deityNames: ICON_DEITIES,
+  sacredPlaces: ICON_DEITIES,
   riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
@@ -297,7 +299,7 @@ const GROUP_ICONS: Record<SectionGroup, string> = {
   placeNames: ICON_PLACE_SHAPES,
   groupNames: ICON_TRIBAL_NAMES,
   bynames: ICON_BYNAMES,
-  lore: ICON_HISTORY,
+  vehicles: ICON_VEHICLES,
   advanced: ICON_ADVANCED,
 };
 
@@ -690,8 +692,10 @@ export class NameForgeModal extends Modal {
   private eventState: EventSentenceState = { ...DEFAULT_EVENT_STATE };
   /** Deities brief §2: the deities sentence's choices, session only. */
   private deityState: DeitySentenceState = { ...DEFAULT_DEITY_STATE };
+  /** Line-up brief §2.3: the sacred places module's own choices. */
+  private sacredPlaceState: SacredPlaceSentenceState = { ...DEFAULT_SACRED_PLACE_STATE };
   /** Each switcher group's last-used module (session only). */
-  private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", lore: "eventNames", advanced: "nameAgeing" };
+  private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", advanced: "nameAgeing" };
   private tribal: {
     tradition: string;
     register: TribalRegister;
@@ -1100,7 +1104,7 @@ export class NameForgeModal extends Modal {
     this.createPacksButton?.toggleClass("is-placeholder", section !== "markov");
     // In the colonial sections the guide button takes the create button's slot instead.
     // Tribes and kin groups and the group-name modules set everything in their sentences.
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "deityNames";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "deityNames" || section === "sacredPlaces";
     this.createPacksButton?.toggle(!colonialPart && !tribal);
     this.landButton?.refresh();
     this.guideButton?.toggle(!!colonialPart);
@@ -1423,6 +1427,7 @@ export class NameForgeModal extends Modal {
     else if (section === "settlementKit") this.renderKitSentence(row);
     else if (section === "eventNames") this.renderEventSentence(row);
     else if (section === "deityNames") this.renderDeitySentence(row);
+    else if (section === "sacredPlaces") this.renderSacredPlaceSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]!);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -1694,8 +1699,14 @@ export class NameForgeModal extends Modal {
     const { preset, group, byname, vessel, realm, route, street, inn, building, kit, event, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
     if (deity) {
       // Deities brief §12: the preset's choices, applied to the module for this session.
-      this.deityState = this.deityPresetState(deity);
-      this.switchSection("deityNames");
+      // Line-up brief §2.5: a place preset opens sacred places; any other kind opens deities.
+      if (deityPresetModule(deity.deityKind) === "sacredPlaces") {
+        this.sacredPlaceState = this.sacredPlacePresetState(deity);
+        this.switchSection("sacredPlaces");
+      } else {
+        this.deityState = this.deityPresetState(deity);
+        this.switchSection("deityNames");
+      }
       return;
     }
     if (event) {
@@ -2105,7 +2116,7 @@ export class NameForgeModal extends Modal {
     await this.runInns(this.innPresetState(inn), `${SECTION_LABELS.innNames} · ${inn.packName}`, problems);
   }
 
-  // ── Deities and sacred places (Deities brief) ────────────────────────────
+  // ── Deities and sacred places (Deities brief; two modules since the line-up brief) ──
 
   private deityPresetState(p: DeityPreset): DeitySentenceState {
     const base: DeitySentenceState = {
@@ -2121,6 +2132,31 @@ export class NameForgeModal extends Modal {
       series: p.series,
     };
     return chooseDeity(base, "domain", base.domain);
+  }
+
+  /** Line-up brief §2.5: a place preset's choices for the sacred places module. */
+  private sacredPlacePresetState(p: DeityPreset): SacredPlaceSentenceState {
+    const base: SacredPlaceSentenceState = { culture: p.culture, domain: p.domain === "any" ? undefined : p.domain, era: p.era, fantastic: p.fantastic, tone: p.tone };
+    return chooseSacredPlace(base, "domain", base.domain);
+  }
+
+  /** Line-up brief §2.3: the sacred places sentence (no kind, gender, names, pack or series links). */
+  private renderSacredPlaceSentence(row: HTMLElement) {
+    const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment of sacredPlaceSentence(this.sacredPlaceState)) {
+      if (typeof segment === "string") {
+        sentence.appendText(segment);
+        continue;
+      }
+      this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
+        this.sacredPlaceState = chooseSacredPlace(this.sacredPlaceState, segment.field as "culture" | "domain" | "era" | "fantastic" | "tone", id);
+      });
+    }
+  }
+
+  /** Line-up brief §2.3: always places, any gender, titles only, each one separate. */
+  private async runSacredPlaces(state = this.sacredPlaceState, label?: string, problems: string[] = []) {
+    await this.runDeities(sacredPlaceAsDeityState(state), label ?? sacredPlaceHistoryLabel(state), problems);
   }
 
   /** §2: the sentence (the pack link lists the name packs, as bynames do). */
@@ -2162,7 +2198,7 @@ export class NameForgeModal extends Modal {
     };
   }
 
-  /** GN §14: the finished strings only; history "deities and sacred places · {era} · {culture}…". */
+  /** GN §14: the finished strings only; history "deities · {era} · {culture}…" (sacred places pass their own). */
   private async runDeities(state = this.deityState, label?: string, problems: string[] = []) {
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
     const s = effectiveDeityState(state);
@@ -2173,6 +2209,8 @@ export class NameForgeModal extends Modal {
     const result = generateDeityNames({
       culture: s.culture,
       kind: s.kind,
+      // Line-up brief §2.2: kind Any in the deities module means deities and pantheons.
+      ...(s.kind ? {} : { kinds: DEITIES_MODULE_KINDS }),
       domain: s.domain,
       gender: s.gender,
       era: s.era,
@@ -2196,13 +2234,14 @@ export class NameForgeModal extends Modal {
     this.setStatus([...problems, ...result.notices, ...pack.notices, ...guards.notices, ...vocab.notices].join(" "));
   }
 
-  /** §12: "{culture} · {kind or deities and sacred places}", described by the sentence. */
-  private openSaveDeityPreset() {
-    const state = this.deityState;
+  /** §12: "{culture} · {kind or Deities}" or "{culture} · Sacred places", described by the sentence. */
+  private openSaveDeityPreset(places = false) {
+    // Line-up brief §2.5: sacred places save kind place, any gender, titles, no series; deities never save place.
+    const state = places ? sacredPlaceAsDeityState(this.sacredPlaceState) : this.deityState;
     const culture = DEITY_CULTURES.find((c) => c.key === state.culture)?.label ?? "General";
     const kind = DEITY_KINDS.find((k) => k.key === state.kind);
-    const name = [culture, kind ? kind.menu : SECTION_LABELS.deityNames].join(" · ");
-    const description = deitySentenceText(deitySentence(state, this.bynamePacks.map((p) => p.name)));
+    const name = [culture, places ? "Sacred places" : kind ? kind.menu : "Deities"].join(" · ");
+    const description = deitySentenceText(places ? sacredPlaceSentence(this.sacredPlaceState) : deitySentence(state, this.bynamePacks.map((p) => p.name)));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       if (!presetName) {
         new Notice("nameForge: give the preset a name.");
@@ -2227,7 +2266,7 @@ export class NameForgeModal extends Modal {
     }).open();
   }
 
-  /** §12: a deity preset, run as the module runs; history "deities and sacred places · {preset}". */
+  /** §12: a deity preset, run as its module runs; history "deities · {preset}" or "sacred places · {preset}". */
   private async runDeityPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof TFile)) {
@@ -2239,7 +2278,8 @@ export class NameForgeModal extends Modal {
       this.setStatus(problems.join(" "));
       return;
     }
-    await this.runDeities(this.deityPresetState(deity), `${SECTION_LABELS.deityNames} · ${deity.packName}`, problems);
+    if (deityPresetModule(deity.deityKind) === "sacredPlaces") await this.runSacredPlaces(this.sacredPlacePresetState(deity), `${SECTION_LABELS.sacredPlaces} · ${deity.packName}`, problems);
+    else await this.runDeities(this.deityPresetState(deity), `${SECTION_LABELS.deityNames} · ${deity.packName}`, problems);
   }
 
   // ── Events and eras (Events brief) ───────────────────────────────────────
@@ -3146,6 +3186,7 @@ export class NameForgeModal extends Modal {
         section === "settlementKit" ||
         section === "eventNames" ||
         section === "deityNames" ||
+        section === "sacredPlaces" ||
         !!COLONIAL_SECTION_PART[section] ||
         (section === "placeShapes" && this.placeIsBritain()),
     );
@@ -3194,8 +3235,8 @@ export class NameForgeModal extends Modal {
       this.openSaveEventPreset();
       return;
     }
-    if (this.activeSection === "deityNames") {
-      this.openSaveDeityPreset();
+    if (this.activeSection === "deityNames" || this.activeSection === "sacredPlaces") {
+      this.openSaveDeityPreset(this.activeSection === "sacredPlaces");
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -4362,7 +4403,7 @@ export class NameForgeModal extends Modal {
     this.sectionSentenceEl?.hide();
     this.editRecipeButton?.hide();
     this.openPresetButton?.toggle(this.activeSection === "markov");
-    const module = deity ? SECTION_LABELS.deityNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
+    const module = deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
     this.openPresetButton?.setAttribute("title", `Open in ${module ?? SECTION_LABELS.tribalNames}`);
     this.plugin.settings.packName = preset?.packName ?? group?.packName ?? byname?.packName ?? vessel?.packName ?? realm?.packName ?? route?.packName ?? street?.packName ?? inn?.packName ?? building?.packName ?? kit?.packName ?? event?.packName ?? deity?.packName ?? file.basename;
     this.plugin.settings.namesFilePath = file.path;
@@ -4835,6 +4876,10 @@ export class NameForgeModal extends Modal {
     }
     if (this.activeSection === "deityNames") {
       await this.runDeities();
+      return;
+    }
+    if (this.activeSection === "sacredPlaces") {
+      await this.runSacredPlaces();
       return;
     }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];

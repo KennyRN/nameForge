@@ -1,6 +1,7 @@
-// The deities and sacred places sentence (Deities brief §2): "‹General›-themed ‹deities of any kind› of
-// ‹any domain›, ‹of any gender›, of the ‹medieval› era, in a ‹realistic› world, ‹of any tone›, as
-// ‹titles only›, ‹each one separate›". Built as segments like the event sentence. No Obsidian imports.
+// The deities sentence (Deities brief §2): "‹General›-themed ‹deities of any kind› of ‹any domain›,
+// ‹of any gender›, of the ‹medieval› era, in a ‹realistic› world, ‹of any tone›, as ‹titles only›,
+// ‹each one separate›"; and, since the line-up brief's split (§2.3), the sacred places sentence on the
+// same engine. Built as segments like the event sentence. No Obsidian imports.
 
 import { type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
@@ -48,6 +49,9 @@ export const NAMES_TEXT: Record<DeityNames, string> = { titles: "as titles only"
 const SERIES_TEXT = { off: "each one separate", on: "as one pantheon" };
 
 /** §2.2: the gender and names links are hidden for sacred places. */
+/** Line-up brief §2.2: the kinds the deities module draws (kind Any means these). */
+export const DEITIES_MODULE_KINDS: DeityKind[] = ["deity", "pantheon"];
+
 export const showsPersonLinks = (state: Pick<DeitySentenceState, "kind">) => state.kind !== "place";
 
 export function deitySentence(state: DeitySentenceState, packs: string[] = []): DeitySegment[] {
@@ -66,7 +70,8 @@ export function deitySentence(state: DeitySentenceState, packs: string[] = []): 
     field: "kind",
     text: kind ? kind.plural : DEITY_ANY,
     title: kind ? kind.description : DEITY_ANY.charAt(0).toUpperCase() + DEITY_ANY.slice(1),
-    choices: [{ id: undefined, label: "Any" }, ...DEITY_KINDS.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
+    // Line-up brief §2.2: sacred places have a module of their own.
+    choices: [{ id: undefined, label: "Any" }, ...DEITY_KINDS.filter((k) => DEITIES_MODULE_KINDS.includes(k.key)).map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
     current: kind?.key,
   });
   out.push(" of ");
@@ -199,14 +204,14 @@ export function chooseDeity(state: DeitySentenceState, field: DeityField, id: st
 export const effectiveDeityState = (state: DeitySentenceState): DeitySentenceState =>
   showsPersonLinks(state) ? state : { ...state, gender: "any", names: "titles" };
 
-/** §1.2: "deities and sacred places · {era} · {culture}", then kind, domain, gender, steampunk or fantastic, tone and one pantheon. */
+/** §1.2 (line-up brief §2.4): "deities · {era} · {culture}", then kind, domain, gender, steampunk or fantastic, tone and one pantheon. */
 export function deityHistoryLabel(state: DeitySentenceState): string {
   const culture = DEITY_CULTURES.find((c) => c.key === state.culture)?.label ?? "General";
   const kind = DEITY_KINDS.find((k) => k.key === state.kind);
   const domain = DEITY_DOMAINS.find((d) => d.key === state.domain);
   const s = effectiveDeityState(state);
   return [
-    "deities and sacred places",
+    "deities",
     routeEraLabel(state.era),
     culture,
     ...(kind ? [kind.plural] : []),
@@ -217,3 +222,68 @@ export function deityHistoryLabel(state: DeitySentenceState): string {
     ...(state.series ? ["one pantheon"] : []),
   ].join(" · ");
 }
+
+// ── Sacred places (line-up brief §2.3) ─────────────────────────────────────
+
+/** "‹General›-themed sacred places of ‹any domain›, of the ‹medieval› era, in a ‹realistic› world, ‹of any tone›." */
+export interface SacredPlaceSentenceState {
+  culture: string;
+  /** A domain key; undefined is any. */
+  domain?: string;
+  era: RouteEra;
+  fantastic: boolean;
+  tone: GroupToneChoice;
+}
+
+export const DEFAULT_SACRED_PLACE_STATE: SacredPlaceSentenceState = { culture: "general", era: "MD", fantastic: false, tone: "any" };
+
+export type SacredPlaceField = "culture" | "domain" | "era" | "fantastic" | "tone";
+
+/** The deity state the engine runs for sacred places: always places, any gender, titles, no series. */
+export const sacredPlaceAsDeityState = (state: SacredPlaceSentenceState): DeitySentenceState => ({
+  ...state,
+  kind: "place",
+  gender: "any",
+  names: "titles",
+  series: false,
+});
+
+const SACRED_PLACE_FIELDS: SacredPlaceField[] = ["culture", "domain", "era", "fantastic", "tone"];
+
+export function sacredPlaceSentence(state: SacredPlaceSentenceState): DeitySegment[] {
+  // The deity sentence for places already hides gender and names; drop its kind and series links too.
+  const out: DeitySegment[] = [];
+  for (const seg of deitySentence(sacredPlaceAsDeityState(state))) {
+    if (typeof seg !== "string" && !SACRED_PLACE_FIELDS.includes(seg.field as SacredPlaceField)) {
+      if (seg.field === "kind") out.push("sacred places");
+      continue;
+    }
+    out.push(seg);
+  }
+  // The series link went last; drop the ", " left before it.
+  while (typeof out[out.length - 1] === "string" && (out[out.length - 1] as string).trim() === ",") out.pop();
+  return out;
+}
+
+/** A sacred places state after one choice, with the deity sentence's resets. */
+export function chooseSacredPlace(state: SacredPlaceSentenceState, field: SacredPlaceField, id: string | undefined): SacredPlaceSentenceState {
+  const next = chooseDeity(sacredPlaceAsDeityState(state), field, id);
+  return { culture: next.culture, ...(next.domain ? { domain: next.domain } : {}), era: next.era, fantastic: next.fantastic, tone: next.tone };
+}
+
+/** "sacred places · {era} · {culture}", then domain, steampunk or fantastic and tone. */
+export function sacredPlaceHistoryLabel(state: SacredPlaceSentenceState): string {
+  const culture = DEITY_CULTURES.find((c) => c.key === state.culture)?.label ?? "General";
+  const domain = DEITY_DOMAINS.find((d) => d.key === state.domain);
+  return [
+    "sacred places",
+    routeEraLabel(state.era),
+    culture,
+    ...(domain ? [domain.label] : []),
+    ...(state.fantastic ? [fantasticWords(state.era)[1]] : []),
+    ...(state.tone !== "any" ? [state.tone] : []),
+  ].join(" · ");
+}
+
+/** Line-up brief §2.5: the module a deity preset opens in, from its kind (place → sacred places). */
+export const deityPresetModule = (kind: DeityKind | "any"): "sacredPlaces" | "deityNames" => (kind === "place" ? "sacredPlaces" : "deityNames");

@@ -149,7 +149,7 @@ export const ICON_SHIPS = "nameforge-ships";
 const ICON_SHIPS_SVG =
   '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M8.75 2a.75.75 0 0 0-.75.75V5H5.75a.75.75 0 0 0-.75.75v4.765l-1.46.534a.75.75 0 0 0-.423 1.02l2.335 5.019a1.75 1.75 0 0 1 2.22 1.143q0 .006.009.027q.018.053.067.165c.068.15.171.344.308.527c.276.367.564.55.944.55s.668-.182.943-.55a2.8 2.8 0 0 0 .384-.718a1.75 1.75 0 0 1 3.342-.005l.01.028q.018.053.067.165c.069.151.172.345.31.529c.278.37.567.551.944.551s.665-.182.943-.55a3 3 0 0 0 .386-.721a1.75 1.75 0 0 1 2.294-1.114l2.468-5.031a.75.75 0 0 0-.421-1.037L19 10.451V5.75a.75.75 0 0 0-.75-.75H16V2.75a.75.75 0 0 0-.75-.75zm5.75 3h-5V3.5h5zm3 1.5v3.416l-4.397-1.569a3.25 3.25 0 0 0-2.21.01L6.5 9.964V6.5zm1.227 12.064l-.003-.01a.75.75 0 0 0-1.441-.023v.002l-.004.009l-.02.058q-.03.082-.096.232c-.09.199-.228.46-.42.718c-.388.515-.94.950-1.743.950s-1.356-.435-1.743-.950a3.9 3.9 0 0 1-.538-1.009l-.003-.009a.75.75 0 0 0-1.435.001v.001l-.004.01l-.02.057a3.8 3.8 0 0 1-.514.950c-.386.514-.937.949-1.743.949s-1.358-.435-1.744-.950a3.8 3.8 0 0 1-.535-1.007l-.003-.011a.75.75 0 0 0-1.441.020l-.003.009l-.018.054a3.3 3.3 0 0 1-.504.922c-.384.490-.996.963-2.002.963a.75.75 0 0 0 0 1.5c1.574 0 2.587-.777 3.183-1.537L6 20.374l.056.076C6.608 21.185 7.556 22 9 22s2.392-.815 2.943-1.55l.057-.078l.058.079C12.610 21.185 13.558 22 15 22s2.390-.815 2.942-1.55l.055-.075q.032.044.066.087c.595.761 1.610 1.538 3.187 1.538a.75.75 0 0 0 0-1.5c-1.012 0-1.623-.473-2.005-.962a3.3 3.3 0 0 1-.518-.974" /></g>';
 
-/** Events and eras, and the history and faith group (Phosphor scroll, duotone). */
+/** Events and eras (Phosphor scroll, duotone). */
 export const ICON_HISTORY = "nameforge-history";
 const ICON_HISTORY_SVG =
   '<g transform="scale(0.390625)"><path d="M0 0h256v256H0z" fill="none" /><g fill="currentColor"><path d="M200 176h-96s8 6 8 16a24 24 0 0 1-48 0V64a24 24 0 0 0-24-24h136a24 24 0 0 1 24 24Z" opacity=".2" /><path d="M96 104a8 8 0 0 1 8-8h64a8 8 0 0 1 0 16h-64a8 8 0 0 1-8-8m8 40h64a8 8 0 0 0 0-16h-64a8 8 0 0 0 0 16m128 48a32 32 0 0 1-32 32H88a32 32 0 0 1-32-32V64a16 16 0 0 0-32 0c0 5.74 4.83 9.62 4.88 9.66A8 8 0 0 1 24 88a7.9 7.9 0 0 1-4.79-1.61C18.05 85.54 8 77.61 8 64a32 32 0 0 1 32-32h136a32 32 0 0 1 32 32v104h8a8 8 0 0 1 4.8 1.6c1.2.86 11.2 8.79 11.2 22.4M96.26 173.48A8.07 8.07 0 0 1 104 168h88V64a16 16 0 0 0-16-16H67.69A31.7 31.7 0 0 1 72 64v128a16 16 0 0 0 32 0c0-5.74-4.83-9.62-4.88-9.66a7.82 7.82 0 0 1-2.86-8.86M216 192a12.58 12.58 0 0 0-3.23-8h-94a27 27 0 0 1 1.21 8a31.8 31.8 0 0 1-4.29 16H200a16 16 0 0 0 16-16" /></g></g>';
@@ -233,6 +233,11 @@ export const ICON_INFO = "nameforge-info";
 const ICON_INFO_SVG =
   '<g transform="scale(0.195313)"><path d="M0 0h512v512H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184s184-82.39 184-184S349.61 64 248 64Z" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M220 220h32v116" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M208 340h88" /><path fill="currentColor" d="M248 130a26 26 0 1 0 26 26a26 26 0 0 0-26-26" /></g>';
 
+export const ICON_VEHICLES = "nameforge-vehicles";
+// Font Awesome 6 solid — car-side (CC BY 4.0). Fitted to Obsidian's 100×100 viewBox from its 640×512 one, centred vertically.
+const ICON_VEHICLES_SVG =
+  '<g transform="translate(0 10) scale(0.15625)"><path d="M0 0h640v512H0z" fill="none" /><path fill="currentColor" d="M171.3 96H224v96H111.3l30.4-75.9C146.5 104 158.2 96 171.3 96M272 192V96h81.2c9.7 0 18.9 4.4 25 12l67.2 84zm256.2 1l-100-125c-18.2-22.8-45.8-36-75-36H171.3C132 32 96.7 55.9 82.2 92.3L40.6 196.4C16.8 205.8 0 228.9 0 256v112c0 17.7 14.3 32 32 32h33.3c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80h130.7c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80h33.3c17.7 0 32-14.3 32-32v-48c0-65.2-48.8-119-111.8-127zm-93.5 175a48 48 0 1 1 90.5 32a48 48 0 1 1-90.5-32M160 336a48 48 0 1 1 0 96a48 48 0 1 1 0-96" /></g>';
+
 export function registerNameForgeIcons(): void {
   addIcon(ICON_MEEPLE, MEEPLE_SVG);
   addIcon(ICON_BYNAMES, ICON_BYNAMES_SVG);
@@ -250,6 +255,7 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_SETTLEMENT_KIT, ICON_SETTLEMENT_KIT_SVG);
   addIcon(ICON_BUILDINGS, ICON_BUILDINGS_SVG);
   addIcon(ICON_INNS, ICON_INNS_SVG);
+  addIcon(ICON_VEHICLES, ICON_VEHICLES_SVG);
   addIcon(ICON_STREETS, ICON_STREETS_SVG);
   addIcon(ICON_ROUTES, ICON_ROUTES_SVG);
   addIcon(ICON_INFO, ICON_INFO_SVG);

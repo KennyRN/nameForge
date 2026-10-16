@@ -182,9 +182,9 @@ test("§14.5: 10,000 titles across options: no block-list matches, no banned wor
 
 // ── §14.6 Sentence and presets ──────────────────────────────────────────────
 
-import { chooseDeity, DEFAULT_DEITY_STATE, deityHistoryLabel, deitySentence, deitySentenceText } from "../src/deities/sentence";
+import { chooseDeity, chooseSacredPlace, DEFAULT_DEITY_STATE, DEFAULT_SACRED_PLACE_STATE, DEITIES_MODULE_KINDS, deityHistoryLabel, deityPresetModule, deitySentence, deitySentenceText, sacredPlaceHistoryLabel, sacredPlaceSentence } from "../src/deities/sentence";
 import { modulePresetContent, parseModulePreset, type DeityPreset } from "../src/presets";
-import { historySection, SECTION_GROUPS } from "../src/sections";
+import { GROUP_LABELS, historySection, SECTION_GROUPS, SECTION_LABELS, SWITCHER_ORDER, VESSEL_SECTIONS } from "../src/sections";
 
 test("§14.6: the default sentence's plain text", () => {
   assert.equal(
@@ -201,10 +201,13 @@ test("§14.6: the gender and names links are hidden for sacred places", () => {
   assert.equal(chooseDeity({ ...DEFAULT_DEITY_STATE, era: "ST", fantastic: true, domain: "steampunk" }, "era", "MD").domain, undefined);
 });
 
-test("§1: the module follows events and eras in the lore group; history label and section", () => {
-  assert.deepEqual(SECTION_GROUPS.lore, ["eventNames", "deityNames"]);
+test("§1 (line-up brief): deities last in group names, sacred places last in place names; history label and section", () => {
+  assert.equal(SECTION_GROUPS.groupNames.at(-1), "deityNames");
+  assert.equal(SECTION_GROUPS.placeNames.at(-1), "sacredPlaces");
+  assert.equal(SECTION_LABELS.deityNames, "deities");
+  assert.equal(SECTION_LABELS.sacredPlaces, "sacred places");
   const label = deityHistoryLabel({ ...DEFAULT_DEITY_STATE, culture: "norse", kind: "deity", domain: "sky", gender: "female", fantastic: true, tone: "grim", series: true });
-  assert.equal(label, "deities and sacred places · medieval · Norse · deities · storm and sky · female · fantastic · grim · one pantheon");
+  assert.equal(label, "deities · medieval · Norse · deities · storm and sky · female · fantastic · grim · one pantheon");
   assert.equal(historySection(label), "deityNames");
 });
 
@@ -304,4 +307,51 @@ test("§10.4: the kit's faith group and buildings share one deity; none for chri
   assert.equal(generateKit({ culture: "polynesian", seed: 3 }).context.deity, null);
   const realistic = generateKit({ culture: "norman-british", seed: 3 }).context;
   assert.equal(generateBuildingNames({ culture: "norman-british", kind: "faith", shape: "Temple of the {deity}", count: 3, seed: 1, context: realistic }).names.length, 0);
+});
+
+// ── Line-up brief: the vehicles group and the deities / sacred places split ──
+
+test("line-up §1: the switcher; vehicles holds the vessel modules, which leave advanced", () => {
+  assert.deepEqual(SWITCHER_ORDER, ["markov", "placeNames", "groupNames", "bynames", "vehicles", "advanced"]);
+  assert.deepEqual(SECTION_GROUPS.vehicles, VESSEL_SECTIONS);
+  assert.equal(GROUP_LABELS.vehicles, "vehicles");
+  for (const v of VESSEL_SECTIONS) assert.ok(!SECTION_GROUPS.advanced.includes(v));
+  assert.deepEqual(SECTION_GROUPS.advanced, ["nameAgeing", "nameTakeover", "settlementKit", "eventNames"]);
+});
+
+test("line-up §2.2: the deities kind link has no sacred places; kind Any never yields a place, nor does a series", () => {
+  const kinds = deitySentence(DEFAULT_DEITY_STATE).find((s) => typeof s !== "string" && s.field === "kind") as { choices: { id?: string }[] };
+  assert.deepEqual(kinds.choices.map((c) => c.id), [undefined, "deity", "pantheon"]);
+  let total = 0;
+  for (const culture of DEITY_CULTURES.map((c) => c.key))
+    for (const era of ROUTE_ERAS.map((e) => e.code) as RouteEra[]) {
+      const b = generateDeityNames({ culture, era, kinds: DEITIES_MODULE_KINDS, count: 40, seed: 7 });
+      total += b.names.length;
+      assert.ok(b.names.every((n) => n.kind !== "place"), `${culture} ${era}`);
+      const series = generateDeityNames({ culture, era, kinds: DEITIES_MODULE_KINDS, series: true, count: 10, seed: 7 });
+      assert.ok(series.names.every((n) => n.kind !== "place"), `${culture} ${era} series`);
+      assert.equal(series.names[0]?.kind, "pantheon");
+    }
+  assert.ok(total >= 2000, `${total}`);
+});
+
+test("line-up §2.3: the sacred places sentence; a domain the era lacks resets", () => {
+  assert.equal(deitySentenceText(sacredPlaceSentence(DEFAULT_SACRED_PLACE_STATE)), "General-themed sacred places of any domain, of the medieval era, in a realistic world, of any tone.");
+  const fields = sacredPlaceSentence(DEFAULT_SACRED_PLACE_STATE).filter((s) => typeof s !== "string").map((s) => (s as { field: string }).field);
+  assert.deepEqual(fields, ["culture", "domain", "era", "fantastic", "tone"]);
+  assert.equal(chooseSacredPlace({ ...DEFAULT_SACRED_PLACE_STATE, era: "ST", fantastic: true, domain: "steampunk" }, "era", "MD").domain, undefined);
+});
+
+test("line-up §2.4: history routes new and old deity and sacred place rows", () => {
+  const places = sacredPlaceHistoryLabel({ ...DEFAULT_SACRED_PLACE_STATE, culture: "norse", tone: "grim" });
+  assert.equal(places, "sacred places · medieval · Norse · grim");
+  assert.equal(historySection(places), "sacredPlaces");
+  assert.equal(historySection(deityHistoryLabel(DEFAULT_DEITY_STATE)), "deityNames");
+  assert.equal(historySection("deities and sacred places · Medieval · Norse · sacred places"), "sacredPlaces");
+  assert.equal(historySection("deities and sacred places · Medieval · Norse"), "deityNames");
+});
+
+test("line-up §2.5: a preset's kind decides its module", () => {
+  assert.equal(deityPresetModule("place"), "sacredPlaces");
+  for (const k of ["any", "deity", "pantheon"] as const) assert.equal(deityPresetModule(k), "deityNames");
 });

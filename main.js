@@ -2372,6 +2372,8 @@ var ICON_FOLDER = "nameforge-folder";
 var ICON_FOLDER_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
 var ICON_INFO = "nameforge-info";
 var ICON_INFO_SVG = '<g transform="scale(0.195313)"><path d="M0 0h512v512H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184s184-82.39 184-184S349.61 64 248 64Z" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M220 220h32v116" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M208 340h88" /><path fill="currentColor" d="M248 130a26 26 0 1 0 26 26a26 26 0 0 0-26-26" /></g>';
+var ICON_VEHICLES = "nameforge-vehicles";
+var ICON_VEHICLES_SVG = '<g transform="translate(0 10) scale(0.15625)"><path d="M0 0h640v512H0z" fill="none" /><path fill="currentColor" d="M171.3 96H224v96H111.3l30.4-75.9C146.5 104 158.2 96 171.3 96M272 192V96h81.2c9.7 0 18.9 4.4 25 12l67.2 84zm256.2 1l-100-125c-18.2-22.8-45.8-36-75-36H171.3C132 32 96.7 55.9 82.2 92.3L40.6 196.4C16.8 205.8 0 228.9 0 256v112c0 17.7 14.3 32 32 32h33.3c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80h130.7c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80h33.3c17.7 0 32-14.3 32-32v-48c0-65.2-48.8-119-111.8-127zm-93.5 175a48 48 0 1 1 90.5 32a48 48 0 1 1-90.5-32M160 336a48 48 0 1 1 0 96a48 48 0 1 1 0-96" /></g>';
 function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_MEEPLE, MEEPLE_SVG);
   (0, import_obsidian4.addIcon)(ICON_BYNAMES, ICON_BYNAMES_SVG);
@@ -2389,6 +2391,7 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_SETTLEMENT_KIT, ICON_SETTLEMENT_KIT_SVG);
   (0, import_obsidian4.addIcon)(ICON_BUILDINGS, ICON_BUILDINGS_SVG);
   (0, import_obsidian4.addIcon)(ICON_INNS, ICON_INNS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_VEHICLES, ICON_VEHICLES_SVG);
   (0, import_obsidian4.addIcon)(ICON_STREETS, ICON_STREETS_SVG);
   (0, import_obsidian4.addIcon)(ICON_ROUTES, ICON_ROUTES_SVG);
   (0, import_obsidian4.addIcon)(ICON_INFO, ICON_INFO_SVG);
@@ -82655,7 +82658,8 @@ function generateDeityNames(options) {
     words: [],
     safeguards: options.safeguards
   };
-  const kindWeights = DEITY_KINDS.map((k) => {
+  const allows = (k) => !options.kinds || options.kinds.includes(k);
+  const kindWeights = DEITY_KINDS.filter((k) => allows(k.key)).map((k) => {
     var _a3, _b2;
     return [k.key, k.w * ((_b2 = (_a3 = style.kindX) == null ? void 0 : _a3[k.key]) != null ? _b2 : 1)];
   });
@@ -82717,7 +82721,7 @@ function generateDeityNames(options) {
     let turn = 0;
     if (!options.kind || options.kind === "pantheon") for (let t = 0; t < 20 && out.length === 0; t++) add2(build("pantheon"));
     for (let idle = 0; idle < 80 && out.length < count; ) {
-      let kind = (_a3 = options.kind) != null ? _a3 : rng() < 25 / 85 ? "place" : "deity";
+      let kind = (_a3 = options.kind) != null ? _a3 : rng() < 25 / 85 && allows("place") ? "place" : "deity";
       if (kind === "pantheon" && options.kind !== "pantheon") kind = "deity";
       if (kind === "place" && !options.kind && !out.some((n2) => n2.kind === "deity")) kind = "deity";
       const extra = {};
@@ -84411,6 +84415,7 @@ var DEFAULT_DEITY_STATE = {
 var GENDER_TEXT = { any: "of any gender", male: "male", female: "female", neither: "neither male nor female" };
 var NAMES_TEXT = { titles: "as titles only", placeholder: "with placeholder names", pack: "with names from" };
 var SERIES_TEXT4 = { off: "each one separate", on: "as one pantheon" };
+var DEITIES_MODULE_KINDS = ["deity", "pantheon"];
 var showsPersonLinks = (state) => state.kind !== "place";
 function deitySentence(state, packs = []) {
   var _a2, _b, _c;
@@ -84429,7 +84434,8 @@ function deitySentence(state, packs = []) {
     field: "kind",
     text: kind ? kind.plural : DEITY_ANY,
     title: kind ? kind.description : DEITY_ANY.charAt(0).toUpperCase() + DEITY_ANY.slice(1),
-    choices: [{ id: void 0, label: "Any" }, ...DEITY_KINDS.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
+    // Line-up brief §2.2: sacred places have a module of their own.
+    choices: [{ id: void 0, label: "Any" }, ...DEITY_KINDS.filter((k) => DEITIES_MODULE_KINDS.includes(k.key)).map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
     current: kind == null ? void 0 : kind.key
   });
   out.push(" of ");
@@ -84560,7 +84566,7 @@ function deityHistoryLabel(state) {
   const domain = DEITY_DOMAINS.find((d) => d.key === state.domain);
   const s = effectiveDeityState(state);
   return [
-    "deities and sacred places",
+    "deities",
     routeEraLabel(state.era),
     culture,
     ...kind ? [kind.plural] : [],
@@ -84571,6 +84577,45 @@ function deityHistoryLabel(state) {
     ...state.series ? ["one pantheon"] : []
   ].join(" \xB7 ");
 }
+var DEFAULT_SACRED_PLACE_STATE = { culture: "general", era: "MD", fantastic: false, tone: "any" };
+var sacredPlaceAsDeityState = (state) => ({
+  ...state,
+  kind: "place",
+  gender: "any",
+  names: "titles",
+  series: false
+});
+var SACRED_PLACE_FIELDS = ["culture", "domain", "era", "fantastic", "tone"];
+function sacredPlaceSentence(state) {
+  const out = [];
+  for (const seg of deitySentence(sacredPlaceAsDeityState(state))) {
+    if (typeof seg !== "string" && !SACRED_PLACE_FIELDS.includes(seg.field)) {
+      if (seg.field === "kind") out.push("sacred places");
+      continue;
+    }
+    out.push(seg);
+  }
+  while (typeof out[out.length - 1] === "string" && out[out.length - 1].trim() === ",") out.pop();
+  return out;
+}
+function chooseSacredPlace(state, field, id) {
+  const next = chooseDeity(sacredPlaceAsDeityState(state), field, id);
+  return { culture: next.culture, ...next.domain ? { domain: next.domain } : {}, era: next.era, fantastic: next.fantastic, tone: next.tone };
+}
+function sacredPlaceHistoryLabel(state) {
+  var _a2, _b;
+  const culture = (_b = (_a2 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
+  const domain = DEITY_DOMAINS.find((d) => d.key === state.domain);
+  return [
+    "sacred places",
+    routeEraLabel(state.era),
+    culture,
+    ...domain ? [domain.label] : [],
+    ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
+    ...state.tone !== "any" ? [state.tone] : []
+  ].join(" \xB7 ");
+}
+var deityPresetModule = (kind) => kind === "place" ? "sacredPlaces" : "deityNames";
 
 // src/events/sentence.ts
 var DEFAULT_EVENT_STATE = {
@@ -89207,7 +89252,9 @@ var OLD_HISTORY_PREFIXES = {
   // Companies brief §1: the trade family's label before "guilds, companies and trade".
   tradeGuilds: ["guilds and trading houses", "guilds, companies and trade"],
   // The titles label before the British spelling.
-  titles: ["titles and honorifics"]
+  titles: ["titles and honorifics"],
+  // Line-up brief §2.4: the deities module before the split; place rows go to sacred places.
+  deityNames: ["deities and sacred places"]
 };
 var VESSEL_SECTIONS = ["ships", "spacecraft"];
 var BYNAME_SECTIONS = ["epithets", "familyNames", "titles"];
@@ -89230,31 +89277,32 @@ var SECTION_ORDER = [
   "streetNames",
   "innNames",
   "buildingNames",
+  "sacredPlaces",
   ...GROUP_NAMES_ORDER,
-  ...BYNAME_SECTIONS,
-  "eventNames",
   "deityNames",
+  ...BYNAME_SECTIONS,
+  ...VESSEL_SECTIONS,
   "nameAgeing",
   "nameTakeover",
-  ...VESSEL_SECTIONS,
-  "settlementKit"
+  "settlementKit",
+  "eventNames"
 ];
 var SECTION_GROUPS = {
-  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames"],
-  groupNames: GROUP_NAMES_ORDER,
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames", "sacredPlaces"],
+  groupNames: [...GROUP_NAMES_ORDER, "deityNames"],
   bynames: BYNAME_SECTIONS,
-  // Events brief §1.1 (the deities brief adds its module here).
-  lore: ["eventNames", "deityNames"],
-  advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS, "settlementKit"]
+  // Line-up brief §1: ships and spacecraft get a group of their own.
+  vehicles: VESSEL_SECTIONS,
+  advanced: ["nameAgeing", "nameTakeover", "settlementKit", "eventNames"]
 };
 var GROUP_LABELS = {
   placeNames: "place names",
   groupNames: "group names",
   bynames: "bynames and titles",
-  lore: "history and faith",
+  vehicles: "vehicles",
   advanced: "advanced"
 };
-var SWITCHER_ORDER = ["markov", "placeNames", "groupNames", "bynames", "lore", "advanced"];
+var SWITCHER_ORDER = ["markov", "placeNames", "groupNames", "bynames", "vehicles", "advanced"];
 function sectionGroup(section) {
   return Object.keys(SECTION_GROUPS).find((g) => SECTION_GROUPS[g].includes(section));
 }
@@ -89267,7 +89315,8 @@ var SECTION_LABELS = {
   buildingNames: "buildings and landmarks",
   settlementKit: "settlement kit",
   eventNames: "events and eras",
-  deityNames: "deities and sacred places",
+  deityNames: "deities",
+  sacredPlaces: "sacred places",
   riverNames: "river names",
   explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
@@ -89304,7 +89353,9 @@ function historySection(packName) {
   if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
   if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
   if (starts(SECTION_LABELS.eventNames)) return "eventNames";
+  if (OLD_HISTORY_PREFIXES.deityNames.some(starts)) return packName.includes("\xB7 sacred places") ? "sacredPlaces" : "deityNames";
   if (starts(SECTION_LABELS.deityNames)) return "deityNames";
+  if (starts(SECTION_LABELS.sacredPlaces)) return "sacredPlaces";
   if (starts(SECTION_LABELS.realms)) return "realms";
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
@@ -89349,6 +89400,7 @@ var SECTION_ICONS = {
   eventNames: ICON_HISTORY,
   // Deities brief §1.1.
   deityNames: ICON_DEITIES,
+  sacredPlaces: ICON_DEITIES,
   riverNames: ICON_RIVER_NAMES,
   explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
   empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
@@ -89377,7 +89429,7 @@ var GROUP_ICONS = {
   placeNames: ICON_PLACE_SHAPES,
   groupNames: ICON_TRIBAL_NAMES,
   bynames: ICON_BYNAMES,
-  lore: ICON_HISTORY,
+  vehicles: ICON_VEHICLES,
   advanced: ICON_ADVANCED
 };
 var moduleLabel = (section) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
@@ -89646,8 +89698,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.eventState = { ...DEFAULT_EVENT_STATE };
     /** Deities brief §2: the deities sentence's choices, session only. */
     this.deityState = { ...DEFAULT_DEITY_STATE };
+    /** Line-up brief §2.3: the sacred places module's own choices. */
+    this.sacredPlaceState = { ...DEFAULT_SACRED_PLACE_STATE };
     /** Each switcher group's last-used module (session only). */
-    this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", lore: "eventNames", advanced: "nameAgeing" };
+    this.groupModule = { placeNames: "placeShapes", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
     /** Land brief §8.1: river names' peoples (session only). */
     this.riverPeoples = { mode: "tribal", tradition: "general" };
@@ -90020,7 +90074,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "deityPreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "deityNames";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "deityNames" || section === "sacredPlaces";
     (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart && !tribal);
     (_i = this.landButton) == null ? void 0 : _i.refresh();
     (_j = this.guideButton) == null ? void 0 : _j.toggle(!!colonialPart);
@@ -90329,6 +90383,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     else if (section === "settlementKit") this.renderKitSentence(row);
     else if (section === "eventNames") this.renderEventSentence(row);
     else if (section === "deityNames") this.renderDeitySentence(row);
+    else if (section === "sacredPlaces") this.renderSacredPlaceSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
@@ -90592,8 +90647,13 @@ ${n.origin}${also}${echo}` };
     if (!(file instanceof import_obsidian13.TFile)) return;
     const { preset, group, byname, vessel, realm: realm2, route: route3, street, inn, building, kit, event, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
     if (deity) {
-      this.deityState = this.deityPresetState(deity);
-      this.switchSection("deityNames");
+      if (deityPresetModule(deity.deityKind) === "sacredPlaces") {
+        this.sacredPlaceState = this.sacredPlacePresetState(deity);
+        this.switchSection("sacredPlaces");
+      } else {
+        this.deityState = this.deityPresetState(deity);
+        this.switchSection("deityNames");
+      }
       return;
     }
     if (event) {
@@ -90980,7 +91040,7 @@ ${n.origin}${also}${echo}` };
     }
     await this.runInns(this.innPresetState(inn), `${SECTION_LABELS.innNames} \xB7 ${inn.packName}`, problems);
   }
-  // ── Deities and sacred places (Deities brief) ────────────────────────────
+  // ── Deities and sacred places (Deities brief; two modules since the line-up brief) ──
   deityPresetState(p) {
     const base = {
       culture: p.culture,
@@ -90995,6 +91055,28 @@ ${n.origin}${also}${echo}` };
       series: p.series
     };
     return chooseDeity(base, "domain", base.domain);
+  }
+  /** Line-up brief §2.5: a place preset's choices for the sacred places module. */
+  sacredPlacePresetState(p) {
+    const base = { culture: p.culture, domain: p.domain === "any" ? void 0 : p.domain, era: p.era, fantastic: p.fantastic, tone: p.tone };
+    return chooseSacredPlace(base, "domain", base.domain);
+  }
+  /** Line-up brief §2.3: the sacred places sentence (no kind, gender, names, pack or series links). */
+  renderSacredPlaceSentence(row) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment2 of sacredPlaceSentence(this.sacredPlaceState)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(sentence2, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {
+        this.sacredPlaceState = chooseSacredPlace(this.sacredPlaceState, segment2.field, id);
+      });
+    }
+  }
+  /** Line-up brief §2.3: always places, any gender, titles only, each one separate. */
+  async runSacredPlaces(state = this.sacredPlaceState, label, problems = []) {
+    await this.runDeities(sacredPlaceAsDeityState(state), label != null ? label : sacredPlaceHistoryLabel(state), problems);
   }
   /** §2: the sentence (the pack link lists the name packs, as bynames do). */
   renderDeitySentence(row) {
@@ -91035,7 +91117,7 @@ ${n.origin}${also}${echo}` };
       notices
     };
   }
-  /** GN §14: the finished strings only; history "deities and sacred places · {era} · {culture}…". */
+  /** GN §14: the finished strings only; history "deities · {era} · {culture}…" (sacred places pass their own). */
   async runDeities(state = this.deityState, label, problems = []) {
     var _a2;
     const seedOverride = this.seedLocked ? parseSeedInput((_a2 = this.seedInputEl) == null ? void 0 : _a2.value) : void 0;
@@ -91046,6 +91128,8 @@ ${n.origin}${also}${echo}` };
     const result = generateDeityNames({
       culture: s.culture,
       kind: s.kind,
+      // Line-up brief §2.2: kind Any in the deities module means deities and pantheons.
+      ...s.kind ? {} : { kinds: DEITIES_MODULE_KINDS },
       domain: s.domain,
       gender: s.gender,
       era: s.era,
@@ -91068,14 +91152,14 @@ ${n.origin}${also}${echo}` };
     await this.recordGenerationHistory(result.names.length, label != null ? label : deityHistoryLabel(state));
     this.setStatus([...problems, ...result.notices, ...pack.notices, ...guards.notices, ...vocab.notices].join(" "));
   }
-  /** §12: "{culture} · {kind or deities and sacred places}", described by the sentence. */
-  openSaveDeityPreset() {
+  /** §12: "{culture} · {kind or Deities}" or "{culture} · Sacred places", described by the sentence. */
+  openSaveDeityPreset(places = false) {
     var _a2, _b;
-    const state = this.deityState;
+    const state = places ? sacredPlaceAsDeityState(this.sacredPlaceState) : this.deityState;
     const culture = (_b = (_a2 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
     const kind = DEITY_KINDS.find((k) => k.key === state.kind);
-    const name = [culture, kind ? kind.menu : SECTION_LABELS.deityNames].join(" \xB7 ");
-    const description = deitySentenceText(deitySentence(state, this.bynamePacks.map((p) => p.name)));
+    const name = [culture, places ? "Sacred places" : kind ? kind.menu : "Deities"].join(" \xB7 ");
+    const description = deitySentenceText(places ? sacredPlaceSentence(this.sacredPlaceState) : deitySentence(state, this.bynamePacks.map((p) => p.name)));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a3, _b2;
       if (!presetName) {
@@ -91100,7 +91184,7 @@ ${n.origin}${also}${echo}` };
       return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).deity);
     }).open();
   }
-  /** §12: a deity preset, run as the module runs; history "deities and sacred places · {preset}". */
+  /** §12: a deity preset, run as its module runs; history "deities · {preset}" or "sacred places · {preset}". */
   async runDeityPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian13.TFile)) {
@@ -91112,7 +91196,8 @@ ${n.origin}${also}${echo}` };
       this.setStatus(problems.join(" "));
       return;
     }
-    await this.runDeities(this.deityPresetState(deity), `${SECTION_LABELS.deityNames} \xB7 ${deity.packName}`, problems);
+    if (deityPresetModule(deity.deityKind) === "sacredPlaces") await this.runSacredPlaces(this.sacredPlacePresetState(deity), `${SECTION_LABELS.sacredPlaces} \xB7 ${deity.packName}`, problems);
+    else await this.runDeities(this.deityPresetState(deity), `${SECTION_LABELS.deityNames} \xB7 ${deity.packName}`, problems);
   }
   // ── Events and eras (Events brief) ───────────────────────────────────────
   eventPresetState(p) {
@@ -91984,7 +92069,7 @@ ${n.origin}${also}${echo}` };
     var _a2;
     const section = this.activeSection;
     (_a2 = this.savePresetButton) == null ? void 0 : _a2.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "deityNames" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "deityNames" || section === "sacredPlaces" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -92031,8 +92116,8 @@ ${n.origin}${also}${echo}` };
       this.openSaveEventPreset();
       return;
     }
-    if (this.activeSection === "deityNames") {
-      this.openSaveDeityPreset();
+    if (this.activeSection === "deityNames" || this.activeSection === "sacredPlaces") {
+      this.openSaveDeityPreset(this.activeSection === "sacredPlaces");
       return;
     }
     if (this.activeSection !== "tribalNames") {
@@ -93106,7 +93191,7 @@ ${text}
     (_a2 = this.sectionSentenceEl) == null ? void 0 : _a2.hide();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
-    const module2 = deity ? SECTION_LABELS.deityNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
+    const module2 = deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
     (_e = this.openPresetButton) == null ? void 0 : _e.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
     this.plugin.settings.packName = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : realm2 == null ? void 0 : realm2.packName) != null ? _j : route3 == null ? void 0 : route3.packName) != null ? _k : street == null ? void 0 : street.packName) != null ? _l : inn == null ? void 0 : inn.packName) != null ? _m : building == null ? void 0 : building.packName) != null ? _n : kit == null ? void 0 : kit.packName) != null ? _o : event == null ? void 0 : event.packName) != null ? _p : deity == null ? void 0 : deity.packName) != null ? _q : file.basename;
     this.plugin.settings.namesFilePath = file.path;
@@ -93563,6 +93648,10 @@ ${text}
     }
     if (this.activeSection === "deityNames") {
       await this.runDeities();
+      return;
+    }
+    if (this.activeSection === "sacredPlaces") {
+      await this.runSacredPlaces();
       return;
     }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];

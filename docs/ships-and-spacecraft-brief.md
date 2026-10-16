@@ -49,6 +49,8 @@ All results are in **translated English**. There are no native-language forms in
 
 ### 1.1 Section group and sections
 
+> *Line-up brief (16 October 2026): ships and spacecraft now sit in their own **vehicles** group (car icon), between bynames and titles and advanced.*
+
 - Add `vessels` to `SectionGroup`, label `"ships and vehicles"`.
 - Add two `NameForgeSection` values:
 

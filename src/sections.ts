@@ -20,6 +20,8 @@ export const OLD_HISTORY_PREFIXES = {
   tradeGuilds: ["guilds and trading houses", "guilds, companies and trade"],
   // The titles label before the British spelling.
   titles: ["titles and honorifics"],
+  // Line-up brief §2.4: the deities module before the split; place rows go to sacred places.
+  deityNames: ["deities and sacred places"],
 } as const;
 
 export type NameForgeSection =
@@ -35,10 +37,12 @@ export type NameForgeSection =
   | "buildingNames"
   // Settlement kit §1.1: after buildings and landmarks.
   | "settlementKit"
-  // Events brief §1.1: the history and faith group.
+  // Events brief §1.1; the line-up brief moves it to the end of advanced.
   | "eventNames"
-  // Deities brief §1.1: after events and eras.
+  // Deities brief §1.1; the line-up brief moves it to the end of group names.
   | "deityNames"
+  // Line-up brief §2.1: the deities engine's places, last in place names.
+  | "sacredPlaces"
   | "riverNames"
   | "explorationPlaceShapes"
   | "empireExpansionPlaceShapes"
@@ -92,39 +96,40 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "streetNames",
   "innNames",
   "buildingNames",
+  "sacredPlaces",
   ...GROUP_NAMES_ORDER,
-  ...BYNAME_SECTIONS,
-  "eventNames",
   "deityNames",
+  ...BYNAME_SECTIONS,
+  ...VESSEL_SECTIONS,
   "nameAgeing",
   "nameTakeover",
-  ...VESSEL_SECTIONS,
   "settlementKit",
+  "eventNames",
 ];
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
  * trigger then chooses between the group's modules. */
-export type SectionGroup = "placeNames" | "groupNames" | "bynames" | "lore" | "advanced";
+export type SectionGroup = "placeNames" | "groupNames" | "bynames" | "vehicles" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
-  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames"],
-  groupNames: GROUP_NAMES_ORDER,
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames", "sacredPlaces"],
+  groupNames: [...GROUP_NAMES_ORDER, "deityNames"],
   bynames: BYNAME_SECTIONS,
-  // Events brief §1.1 (the deities brief adds its module here).
-  lore: ["eventNames", "deityNames"],
-  advanced: ["nameAgeing", "nameTakeover", ...VESSEL_SECTIONS, "settlementKit"],
+  // Line-up brief §1: ships and spacecraft get a group of their own.
+  vehicles: VESSEL_SECTIONS,
+  advanced: ["nameAgeing", "nameTakeover", "settlementKit", "eventNames"],
 };
 
 export const GROUP_LABELS: Record<SectionGroup, string> = {
   placeNames: "place names",
   groupNames: "group names",
   bynames: "bynames and titles",
-  lore: "history and faith",
+  vehicles: "vehicles",
   advanced: "advanced",
 };
 
 /** The switcher's line-up: modules and groups. */
-export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "groupNames", "bynames", "lore", "advanced"];
+export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "groupNames", "bynames", "vehicles", "advanced"];
 
 /** The group a module belongs to, if any. */
 export function sectionGroup(section: NameForgeSection): SectionGroup | undefined {
@@ -141,7 +146,8 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   buildingNames: "buildings and landmarks",
   settlementKit: "settlement kit",
   eventNames: "events and eras",
-  deityNames: "deities and sacred places",
+  deityNames: "deities",
+  sacredPlaces: "sacred places",
   riverNames: "river names",
   explorationPlaceShapes: "exploration into new lands",
   empireExpansionPlaceShapes: "expansion into settled lands",
@@ -196,8 +202,11 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
   // Events brief §1.2: "events and eras · {era} · {culture}…".
   if (starts(SECTION_LABELS.eventNames)) return "eventNames";
-  // Deities brief §1.2: "deities and sacred places · {era} · {culture}…".
+  // Line-up brief §2.4: old "deities and sacred places" rows first, since they also start "deities".
+  if (OLD_HISTORY_PREFIXES.deityNames.some(starts)) return packName.includes("· sacred places") ? "sacredPlaces" : "deityNames";
+  // "deities · {era} · {culture}…" and "sacred places · {era} · {culture}…".
   if (starts(SECTION_LABELS.deityNames)) return "deityNames";
+  if (starts(SECTION_LABELS.sacredPlaces)) return "sacredPlaces";
   // Realms brief §1.2: "realms and polities · {setting} · {culture} · {era}…".
   if (starts(SECTION_LABELS.realms)) return "realms";
   // Group brief §1.2: each group-name module's label starts its history rows.
