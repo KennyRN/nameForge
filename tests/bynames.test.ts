@@ -334,10 +334,10 @@ test("bynames sentence: a pack with Male and Female headings defaults to the gen
 });
 
 test("bynames: the switcher group, history labels and their sections", () => {
-  assert.deepEqual(SECTION_GROUPS.bynames, ["epithets", "titles", "familyNames"]);
+  assert.deepEqual(SECTION_GROUPS.bynames, ["epithets", "familyNames", "titles"]);
   assert.equal(SWITCHER_ORDER[SWITCHER_ORDER.indexOf("groupNames") + 1], "bynames");
   const label = bynameHistoryLabel("titles", "fantasy", true, "norse", "grim", "native");
-  assert.equal(label, "titles and honorifics · high or epic fantasy · Norse · grim · native");
+  assert.equal(label, "titles and honourifics · high or epic fantasy · Norse · grim · native");
   assert.equal(historySection(label), "titles");
   assert.equal(bynameHistoryLabel("epithets", "fantasy", false, "general"), "epithets and bynames · historic or low fantasy · General");
   assert.equal(historySection("family names · real-world modern · Slavic"), "familyNames");

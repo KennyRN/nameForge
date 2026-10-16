@@ -64403,7 +64403,7 @@ var BYNAME_CULTURES = BYNAMES_DATA.cultures.map((c) => {
 });
 var BYNAME_MODULE_LABELS = {
   epithets: "epithets and bynames",
-  titles: "titles and honorifics",
+  titles: "titles and honourifics",
   familyNames: "family names"
 };
 function moduleAny(module2) {
@@ -89205,10 +89205,12 @@ var OLD_HISTORY_PREFIXES = {
   explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
   empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"],
   // Companies brief §1: the trade family's label before "guilds, companies and trade".
-  tradeGuilds: ["guilds and trading houses", "guilds, companies and trade"]
+  tradeGuilds: ["guilds and trading houses", "guilds, companies and trade"],
+  // The titles label before the British spelling.
+  titles: ["titles and honorifics"]
 };
 var VESSEL_SECTIONS = ["ships", "spacecraft"];
-var BYNAME_SECTIONS = ["epithets", "titles", "familyNames"];
+var BYNAME_SECTIONS = ["epithets", "familyNames", "titles"];
 var GROUP_NAME_SECTIONS = [
   "mysticOrders",
   "martialOrders",
@@ -89281,7 +89283,7 @@ var SECTION_LABELS = {
   powerFactions: "powers and factions",
   supernaturalCourts: "supernatural courts and hosts",
   epithets: "epithets and bynames",
-  titles: "titles and honorifics",
+  titles: "titles and honourifics",
   familyNames: "family names",
   ships: "ships and boats",
   spacecraft: "spacecraft and stations"
@@ -89308,6 +89310,7 @@ function historySection(packName) {
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   if (OLD_HISTORY_PREFIXES.tradeGuilds.some(starts)) return "tradeGuilds";
+  if (OLD_HISTORY_PREFIXES.titles.some(starts)) return "titles";
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }

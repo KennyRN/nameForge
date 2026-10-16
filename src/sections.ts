@@ -18,6 +18,8 @@ export const OLD_HISTORY_PREFIXES = {
   empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"],
   // Companies brief §1: the trade family's label before "guilds, companies and trade".
   tradeGuilds: ["guilds and trading houses", "guilds, companies and trade"],
+  // The titles label before the British spelling.
+  titles: ["titles and honorifics"],
 } as const;
 
 export type NameForgeSection =
@@ -65,7 +67,7 @@ export type NameForgeSection =
 export const VESSEL_SECTIONS: NameForgeSection[] = ["ships", "spacecraft"];
 
 /** Bynames brief §1.1: the three bynames modules, in order. */
-export const BYNAME_SECTIONS: NameForgeSection[] = ["epithets", "titles", "familyNames"];
+export const BYNAME_SECTIONS: NameForgeSection[] = ["epithets", "familyNames", "titles"];
 
 /** Group brief §1.1: the seven group-name modules, in order. */
 export const GROUP_NAME_SECTIONS: NameForgeSection[] = [
@@ -155,7 +157,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   powerFactions: "powers and factions",
   supernaturalCourts: "supernatural courts and hosts",
   epithets: "epithets and bynames",
-  titles: "titles and honorifics",
+  titles: "titles and honourifics",
   familyNames: "family names",
   ships: "ships and boats",
   spacecraft: "spacecraft and stations",
@@ -205,6 +207,7 @@ export function historySection(packName: string): NameForgeSection {
   // Ships brief §1.2: "{module label} · {setting} · {culture} · {technology}…".
   for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   if (OLD_HISTORY_PREFIXES.tradeGuilds.some(starts)) return "tradeGuilds";
+  if (OLD_HISTORY_PREFIXES.titles.some(starts)) return "titles";
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
     return "explorationPlaceShapes";
   }

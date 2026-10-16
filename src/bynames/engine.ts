@@ -117,7 +117,7 @@ export const BYNAME_CULTURES = BYNAMES_DATA.cultures.map((c) => {
 
 export const BYNAME_MODULE_LABELS: Record<BynameModule, string> = {
   epithets: "epithets and bynames",
-  titles: "titles and honorifics",
+  titles: "titles and honourifics",
   familyNames: "family names",
 };
 
@@ -737,7 +737,7 @@ export function generateBynames(options: BynameOptions): BynameBatch {
   return { names, seed, notices };
 }
 
-/** §1.2: "titles and honorifics · high or epic fantasy · Norse · grim · native". */
+/** §1.2: "titles and honourifics · high or epic fantasy · Norse · grim · native". */
 export function bynameHistoryLabel(module: BynameModule, genre: GroupGenre, fantastic: boolean, culture: string, tone: GroupToneChoice = "any", language: BynameLanguage = "english"): string {
   const label = BYNAME_CULTURES.find((c) => c.key === culture)?.label ?? "General";
   return [
