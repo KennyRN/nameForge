@@ -476,6 +476,7 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
 /* The pack row's binder icon doubles as the section switcher's trigger (renderSectionMenu) —
    matches titleForge's .titleforge-field-icon--clickable. */
 .nameforge-modal__icon-decoration--clickable {
+  color: var(--text-normal);
   pointer-events: auto;
   cursor: pointer;
 }
@@ -1057,6 +1058,15 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 .nameforge-modal__pack-dropdown-trigger:hover {
   background-color: var(--background-secondary);
   color: var(--text-muted);
+}
+
+/* Only a pointer actually over the box counts: focus (left behind after a pick) and the open menu keep the resting colour. */
+.nameforge-modal__pack-dropdown-trigger:focus:not(:hover),
+.nameforge-modal__pack-dropdown-trigger:active:not(:hover),
+.nameforge-modal__pack-dropdown-trigger[aria-expanded="true"]:not(:hover) {
+  background-color: var(--background-secondary);
+  color: var(--text-normal);
+  box-shadow: none;
 }
 
 .nameforge-modal__pack-dropdown-label {
