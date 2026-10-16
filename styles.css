@@ -1045,7 +1045,7 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   align-items: center;
   gap: 6px;
   padding: 4px 8px;
-  border: 1px solid var(--background-modifier-border);
+  border: none;
   border-radius: var(--radius-m, 6px);
   background-color: var(--background-secondary);
   color: var(--text-normal);
@@ -1053,9 +1053,10 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   text-align: left;
 }
 
+/* Hover wears the unselected quantity buttons' resting colour. */
 .nameforge-modal__pack-dropdown-trigger:hover {
   background-color: var(--background-secondary);
-  color: var(--forge-accent);
+  color: var(--text-muted);
 }
 
 .nameforge-modal__pack-dropdown-label {
@@ -1763,4 +1764,9 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 
 .nameforge-history-modal__row.is-clickable {
   cursor: pointer;
+}
+
+/* The icons beside the selector boxes rest in the body text colour. */
+body .nameforge-modal .nameforge-modal__option-row button.nameforge-modal__icon-action:not(.is-active) {
+  color: var(--text-normal);
 }
