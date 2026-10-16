@@ -1456,9 +1456,14 @@ export class NameForgeModal extends Modal {
    * controls do). */
   private syncPillSpacing() {
     const row = this.contextRowEl;
-    const joined = !!row && row.hasClass("is-sentence") && this.activeSection !== "nameAgeing";
-    row?.toggleClass("is-before-pill", joined);
-    this.generatePillEl?.toggleClass("is-after-sentence", joined);
+    const notAgeing = this.activeSection !== "nameAgeing";
+    const rowJoined = !!row && row.hasClass("is-sentence") && notAgeing;
+    // The markov generator's "Use the ‹list› names" sentence is the one above the pill there.
+    const listEl = this.sectionSentenceEl;
+    const listJoined = !rowJoined && !!listEl && notAgeing && this.activeSection === "markov" && listEl.isShown();
+    row?.toggleClass("is-before-pill", rowJoined);
+    listEl?.toggleClass("is-before-pill", listJoined);
+    this.generatePillEl?.toggleClass("is-after-sentence", rowJoined || listJoined);
   }
 
   /** A sentence link that opens a menu of choices; choosing re-renders the sentence. */
@@ -4429,6 +4434,7 @@ export class NameForgeModal extends Modal {
     this.currentTemplateError = undefined;
     this.sectionChoices = [];
     this.sectionSentenceEl?.hide();
+    this.syncPillSpacing();
     this.editRecipeButton?.hide();
     this.openPresetButton?.toggle(this.activeSection === "markov");
     const module = deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
@@ -4452,6 +4458,7 @@ export class NameForgeModal extends Modal {
     this.currentTemplateError = undefined;
     this.sectionChoices = [];
     this.sectionSentenceEl?.hide();
+    this.syncPillSpacing();
     this.editRecipeButton?.toggle(this.activeSection === "markov");
     this.plugin.settings.packName = file.basename;
     this.plugin.settings.namesFilePath = file.path;
@@ -4714,6 +4721,7 @@ export class NameForgeModal extends Modal {
     el.empty();
     const choice = this.sectionChoice;
     el.toggle(this.activeSection === "markov" && !!choice);
+    this.syncPillSpacing();
     if (!choice) return;
     const rerender = () => this.renderSectionSentence();
     el.appendText("Use the ");

@@ -90409,9 +90409,13 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
   syncPillSpacing() {
     var _a2;
     const row = this.contextRowEl;
-    const joined = !!row && row.hasClass("is-sentence") && this.activeSection !== "nameAgeing";
-    row == null ? void 0 : row.toggleClass("is-before-pill", joined);
-    (_a2 = this.generatePillEl) == null ? void 0 : _a2.toggleClass("is-after-sentence", joined);
+    const notAgeing = this.activeSection !== "nameAgeing";
+    const rowJoined = !!row && row.hasClass("is-sentence") && notAgeing;
+    const listEl = this.sectionSentenceEl;
+    const listJoined = !rowJoined && !!listEl && notAgeing && this.activeSection === "markov" && listEl.isShown();
+    row == null ? void 0 : row.toggleClass("is-before-pill", rowJoined);
+    listEl == null ? void 0 : listEl.toggleClass("is-before-pill", listJoined);
+    (_a2 = this.generatePillEl) == null ? void 0 : _a2.toggleClass("is-after-sentence", rowJoined || listJoined);
   }
   /** A sentence link that opens a menu of choices; choosing re-renders the sentence. */
   sentenceLink(sentence2, text, title, choices, current, choose) {
@@ -93214,6 +93218,7 @@ ${text}
     this.currentTemplateError = void 0;
     this.sectionChoices = [];
     (_a2 = this.sectionSentenceEl) == null ? void 0 : _a2.hide();
+    this.syncPillSpacing();
     (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
     (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
     const module2 = deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
@@ -93237,6 +93242,7 @@ ${text}
     this.currentTemplateError = void 0;
     this.sectionChoices = [];
     (_b = this.sectionSentenceEl) == null ? void 0 : _b.hide();
+    this.syncPillSpacing();
     (_c = this.editRecipeButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
     this.plugin.settings.packName = file.basename;
     this.plugin.settings.namesFilePath = file.path;
@@ -93487,6 +93493,7 @@ ${text}
     el.empty();
     const choice = this.sectionChoice;
     el.toggle(this.activeSection === "markov" && !!choice);
+    this.syncPillSpacing();
     if (!choice) return;
     const rerender = () => this.renderSectionSentence();
     el.appendText("Use the ");
