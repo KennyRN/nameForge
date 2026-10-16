@@ -610,6 +610,11 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
   height: 32px;
 }
 
+/* Hovering the generate button shades the active quantity button the same way. */
+.nameforge-modal__generate-pill:has(.nameforge-modal__generate-button:hover) .nameforge-modal__quantity-toggle .nameforge-modal__toggle-button.is-active {
+  filter: brightness(1.1);
+}
+
 /* The combined pill: a 40px quantity box joined straight onto the top of the 48px generate button.
    The box keeps the toggle panel's own background; its top corners take the button's bottom radius,
    and the button's top corners go square where they meet. Without a quantity choice (ageing, the
