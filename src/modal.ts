@@ -1025,6 +1025,7 @@ export class NameForgeModal extends Modal {
     this.resultsEl = root.createDiv({ cls: "nameforge-modal__results" });
     this.statusEl = root.createDiv({ cls: "nameforge-modal__status" });
     this.renderResults([]);
+    this.syncGeneratePill();
 
     void this.refreshPackDropdown();
   }
@@ -1126,10 +1127,7 @@ export class NameForgeModal extends Modal {
     this.refreshRiverOptions();
     const ageing = section === "nameAgeing";
     // Settlement kit §5: the kit sets its own counts.
-    const quantity = !ageing && section !== "settlementKit";
-    this.quantityToggleEl?.toggle(quantity);
-    this.generatePillEl?.toggleClass("has-quantity", quantity);
-    this.syncPillSpacing();
+    this.syncGeneratePill();
     this.ageingControlsEl?.toggle(ageing);
     const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
     this.generateButtonEl?.setAttribute("title", action);
@@ -1443,11 +1441,22 @@ export class NameForgeModal extends Modal {
     this.syncPillSpacing();
   }
 
+  /** Shows the quantity box where the module has a quantity choice and squares the button's top
+   * corners to match. Runs at mount too, so the first open is right before any section switch.
+   * Decided from the section, not from layout: the pill may not be attached yet. */
+  private syncGeneratePill() {
+    // Settlement kit §5: the kit sets its own counts.
+    const quantity = this.activeSection !== "nameAgeing" && this.activeSection !== "settlementKit";
+    this.quantityToggleEl?.toggle(quantity);
+    this.generatePillEl?.toggleClass("has-quantity", quantity);
+    this.syncPillSpacing();
+  }
+
   /** The sentence sits 12px above the generate pill when nothing comes between them (ageing's
    * controls do). */
   private syncPillSpacing() {
     const row = this.contextRowEl;
-    const joined = !!row && row.hasClass("is-sentence") && row.isShown() && this.activeSection !== "nameAgeing";
+    const joined = !!row && row.hasClass("is-sentence") && this.activeSection !== "nameAgeing";
     row?.toggleClass("is-before-pill", joined);
     this.generatePillEl?.toggleClass("is-after-sentence", joined);
   }

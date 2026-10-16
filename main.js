@@ -90001,6 +90001,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.resultsEl = root.createDiv({ cls: "nameforge-modal__results" });
     this.statusEl = root.createDiv({ cls: "nameforge-modal__status" });
     this.renderResults([]);
+    this.syncGeneratePill();
     void this.refreshPackDropdown();
   }
   toggleSectionMenu() {
@@ -90057,7 +90058,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
   /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
    * dropdown on the shape sections, the placeholder box otherwise. Everything else is left as it is. */
   switchSection(section) {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q;
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
     if (section === "nameAgeing" && this.activeSection === "markov") {
       const selected = (_b = (_a2 = this.resultsEl) == null ? void 0 : _a2.querySelectorAll("li.is-selected")) != null ? _b : [];
       if (selected.length === 1 && this.ageingSourceInput) {
@@ -90092,19 +90093,16 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.renderContextRow();
     this.refreshRiverOptions();
     const ageing = section === "nameAgeing";
-    const quantity = !ageing && section !== "settlementKit";
-    (_l = this.quantityToggleEl) == null ? void 0 : _l.toggle(quantity);
-    (_m = this.generatePillEl) == null ? void 0 : _m.toggleClass("has-quantity", quantity);
-    this.syncPillSpacing();
-    (_n = this.ageingControlsEl) == null ? void 0 : _n.toggle(ageing);
+    this.syncGeneratePill();
+    (_l = this.ageingControlsEl) == null ? void 0 : _l.toggle(ageing);
     const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
-    (_o = this.generateButtonEl) == null ? void 0 : _o.setAttribute("title", action);
-    (_p = this.generateButtonEl) == null ? void 0 : _p.setAttribute("aria-label", action);
+    (_m = this.generateButtonEl) == null ? void 0 : _m.setAttribute("title", action);
+    (_n = this.generateButtonEl) == null ? void 0 : _n.setAttribute("aria-label", action);
     if (ageing) void this.enterAgeingSection();
     if (takeover) void this.takeoverView.refresh();
     if (this.sectionTriggerEl) (0, import_obsidian13.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
-    (_q = this.sectionStubEl) == null ? void 0 : _q.toggle(
+    (_o = this.sectionStubEl) == null ? void 0 : _o.toggle(
       section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover && !tribal
     );
   }
@@ -90396,12 +90394,22 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     else if (section === "nameTakeover") this.renderTakeoverSentence(row);
     this.syncPillSpacing();
   }
+  /** Shows the quantity box where the module has a quantity choice and squares the button's top
+   * corners to match. Runs at mount too, so the first open is right before any section switch.
+   * Decided from the section, not from layout: the pill may not be attached yet. */
+  syncGeneratePill() {
+    var _a2, _b;
+    const quantity = this.activeSection !== "nameAgeing" && this.activeSection !== "settlementKit";
+    (_a2 = this.quantityToggleEl) == null ? void 0 : _a2.toggle(quantity);
+    (_b = this.generatePillEl) == null ? void 0 : _b.toggleClass("has-quantity", quantity);
+    this.syncPillSpacing();
+  }
   /** The sentence sits 12px above the generate pill when nothing comes between them (ageing's
    * controls do). */
   syncPillSpacing() {
     var _a2;
     const row = this.contextRowEl;
-    const joined = !!row && row.hasClass("is-sentence") && row.isShown() && this.activeSection !== "nameAgeing";
+    const joined = !!row && row.hasClass("is-sentence") && this.activeSection !== "nameAgeing";
     row == null ? void 0 : row.toggleClass("is-before-pill", joined);
     (_a2 = this.generatePillEl) == null ? void 0 : _a2.toggleClass("is-after-sentence", joined);
   }

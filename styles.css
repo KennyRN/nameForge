@@ -652,7 +652,12 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
 .nameforge-modal .nameforge-modal__context-toggle.is-sentence.is-before-pill {
   margin-bottom: 0;
   padding-bottom: 0;
-  line-height: 1.2;
+}
+
+/* The sentence's own line-height leaves half-leading under its last line; take it back so the 12px
+   is measured from the text. */
+.nameforge-modal .nameforge-modal__context-toggle.is-sentence.is-before-pill > :last-child {
+  margin-bottom: calc((1lh - 1em) / -2);
 }
 
 .nameforge-modal .nameforge-modal__generate-pill.is-after-sentence {
