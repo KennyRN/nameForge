@@ -89846,6 +89846,23 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     if (this.panelMode) {
       root.addClass("nameforge-modal--panel");
     }
+    const triggerOf = (evt) => {
+      var _a2, _b;
+      return (_b = (_a2 = evt.target) == null ? void 0 : _a2.closest) == null ? void 0 : _b.call(_a2, ".nameforge-modal__pack-dropdown-trigger");
+    };
+    root.addEventListener("mouseover", (evt) => {
+      var _a2;
+      return (_a2 = triggerOf(evt)) == null ? void 0 : _a2.addClass("is-hovered");
+    });
+    root.addEventListener("mouseout", (evt) => {
+      var _a2;
+      return (_a2 = triggerOf(evt)) == null ? void 0 : _a2.removeClass("is-hovered");
+    });
+    root.addEventListener("click", (evt) => {
+      var _a2, _b;
+      if (!((_b = (_a2 = evt.target) == null ? void 0 : _a2.closest) == null ? void 0 : _b.call(_a2, ".nameforge-modal__pack-dropdown-menu"))) return;
+      root.querySelectorAll(".nameforge-modal__pack-dropdown-trigger.is-hovered").forEach((el) => el.removeClass("is-hovered"));
+    });
     const optionsList = root.createDiv({ cls: "nameforge-modal__options-list" });
     const createPacksRow = optionsList.createDiv({ cls: "nameforge-modal__option-row" });
     const sectionTrigger = createPacksRow.createSpan({

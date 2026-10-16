@@ -836,6 +836,16 @@ export class NameForgeModal extends Modal {
       root.addClass("nameforge-modal--panel");
     }
 
+    // The selector boxes' hover is tracked here rather than with :hover, which can stay stuck on a
+    // box after a pick; a pick clears it until the pointer next enters the box.
+    const triggerOf = (evt: Event) => (evt.target as HTMLElement | null)?.closest?.(".nameforge-modal__pack-dropdown-trigger");
+    root.addEventListener("mouseover", (evt) => triggerOf(evt)?.addClass("is-hovered"));
+    root.addEventListener("mouseout", (evt) => triggerOf(evt)?.removeClass("is-hovered"));
+    root.addEventListener("click", (evt) => {
+      if (!(evt.target as HTMLElement | null)?.closest?.(".nameforge-modal__pack-dropdown-menu")) return;
+      root.querySelectorAll(".nameforge-modal__pack-dropdown-trigger.is-hovered").forEach((el) => el.removeClass("is-hovered"));
+    });
+
     const optionsList = root.createDiv({ cls: "nameforge-modal__options-list" });
 
     const createPacksRow = optionsList.createDiv({ cls: "nameforge-modal__option-row" });
