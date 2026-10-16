@@ -724,6 +724,7 @@ export class NameForgeModal extends Modal {
   private selectedContext: Record<ColonialPart, string | undefined> = { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] };
   private contextRowEl: HTMLElement | null = null;
   private quantityToggleEl: HTMLElement | null = null;
+  private generatePillEl: HTMLElement | null = null;
   private generateButtonEl: HTMLButtonElement | null = null;
   /** Name ageing controls and state. Session only. */
   private ageingControlsEl: HTMLElement | null = null;
@@ -989,7 +990,17 @@ export class NameForgeModal extends Modal {
 
     this.buildSecondBox(optionsList);
 
-    const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
+    // Colonial context (frontier type or accommodation level), filled per section.
+    this.contextRowEl = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__context-toggle" });
+    this.contextRowEl.hide();
+
+    this.buildAgeingControls(optionsList);
+
+    // One combined pill: the quantity box (40px) joined straight onto the top of the generate
+    // button (48px). Where a module has no quantity choice, the button stands alone.
+    const generatePill = optionsList.createDiv({ cls: "nameforge-modal__generate-pill" });
+    this.generatePillEl = generatePill;
+    const quantityToggle = generatePill.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityToggleEl = quantityToggle;
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
       const button = quantityToggle.createEl("button", {
@@ -1004,13 +1015,7 @@ export class NameForgeModal extends Modal {
       return button;
     });
 
-    // Colonial context (frontier type or accommodation level), filled per section.
-    this.contextRowEl = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__context-toggle" });
-    this.contextRowEl.hide();
-
-    this.buildAgeingControls(optionsList);
-
-    const generateButton = this.createIconButton(optionsList, ICON_DICE, "Generate names");
+    const generateButton = this.createIconButton(generatePill, ICON_DICE, "Generate names");
     this.generateButtonEl = generateButton;
     generateButton.addClass("nameforge-modal__generate-button");
     generateButton.addEventListener("click", () => {
@@ -1121,7 +1126,10 @@ export class NameForgeModal extends Modal {
     this.refreshRiverOptions();
     const ageing = section === "nameAgeing";
     // Settlement kit §5: the kit sets its own counts.
-    this.quantityToggleEl?.toggle(!ageing && section !== "settlementKit");
+    const quantity = !ageing && section !== "settlementKit";
+    this.quantityToggleEl?.toggle(quantity);
+    this.generatePillEl?.toggleClass("has-quantity", quantity);
+    this.syncPillSpacing();
     this.ageingControlsEl?.toggle(ageing);
     const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
     this.generateButtonEl?.setAttribute("title", action);
@@ -1432,6 +1440,16 @@ export class NameForgeModal extends Modal {
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]!);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
     else if (section === "nameTakeover") this.renderTakeoverSentence(row);
+    this.syncPillSpacing();
+  }
+
+  /** The sentence sits 12px above the generate pill when nothing comes between them (ageing's
+   * controls do). */
+  private syncPillSpacing() {
+    const row = this.contextRowEl;
+    const joined = !!row && row.hasClass("is-sentence") && row.style.display !== "none" && this.activeSection !== "nameAgeing";
+    row?.toggleClass("is-before-pill", joined);
+    this.generatePillEl?.toggleClass("is-after-sentence", joined);
   }
 
   /** A sentence link that opens a menu of choices; choosing re-renders the sentence. */
@@ -3821,6 +3839,7 @@ export class NameForgeModal extends Modal {
     this.secondBoxObserver?.disconnect();
     this.secondBoxObserver = null;
     this.quantityToggleEl = null;
+    this.generatePillEl = null;
     this.generateButtonEl = null;
     this.ageingControlsEl = null;
     this.ageingSourceInput = null;

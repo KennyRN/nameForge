@@ -89725,6 +89725,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.selectedContext = { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] };
     this.contextRowEl = null;
     this.quantityToggleEl = null;
+    this.generatePillEl = null;
     this.generateButtonEl = null;
     /** Name ageing controls and state. Session only. */
     this.ageingControlsEl = null;
@@ -89972,7 +89973,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.sectionSentenceEl = optionsList.createDiv({ cls: "nameforge-modal__tribal-sentence nameforge-modal__section-sentence" });
     this.sectionSentenceEl.hide();
     this.buildSecondBox(optionsList);
-    const quantityToggle = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
+    this.contextRowEl = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__context-toggle" });
+    this.contextRowEl.hide();
+    this.buildAgeingControls(optionsList);
+    const generatePill = optionsList.createDiv({ cls: "nameforge-modal__generate-pill" });
+    this.generatePillEl = generatePill;
+    const quantityToggle = generatePill.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityToggleEl = quantityToggle;
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
       const button = quantityToggle.createEl("button", {
@@ -89986,10 +89992,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       });
       return button;
     });
-    this.contextRowEl = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__context-toggle" });
-    this.contextRowEl.hide();
-    this.buildAgeingControls(optionsList);
-    const generateButton = this.createIconButton(optionsList, ICON_DICE, "Generate names");
+    const generateButton = this.createIconButton(generatePill, ICON_DICE, "Generate names");
     this.generateButtonEl = generateButton;
     generateButton.addClass("nameforge-modal__generate-button");
     generateButton.addEventListener("click", () => {
@@ -90054,7 +90057,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
   /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
    * dropdown on the shape sections, the placeholder box otherwise. Everything else is left as it is. */
   switchSection(section) {
-    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q;
     if (section === "nameAgeing" && this.activeSection === "markov") {
       const selected = (_b = (_a2 = this.resultsEl) == null ? void 0 : _a2.querySelectorAll("li.is-selected")) != null ? _b : [];
       if (selected.length === 1 && this.ageingSourceInput) {
@@ -90089,16 +90092,19 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     this.renderContextRow();
     this.refreshRiverOptions();
     const ageing = section === "nameAgeing";
-    (_l = this.quantityToggleEl) == null ? void 0 : _l.toggle(!ageing && section !== "settlementKit");
-    (_m = this.ageingControlsEl) == null ? void 0 : _m.toggle(ageing);
+    const quantity = !ageing && section !== "settlementKit";
+    (_l = this.quantityToggleEl) == null ? void 0 : _l.toggle(quantity);
+    (_m = this.generatePillEl) == null ? void 0 : _m.toggleClass("has-quantity", quantity);
+    this.syncPillSpacing();
+    (_n = this.ageingControlsEl) == null ? void 0 : _n.toggle(ageing);
     const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
-    (_n = this.generateButtonEl) == null ? void 0 : _n.setAttribute("title", action);
-    (_o = this.generateButtonEl) == null ? void 0 : _o.setAttribute("aria-label", action);
+    (_o = this.generateButtonEl) == null ? void 0 : _o.setAttribute("title", action);
+    (_p = this.generateButtonEl) == null ? void 0 : _p.setAttribute("aria-label", action);
     if (ageing) void this.enterAgeingSection();
     if (takeover) void this.takeoverView.refresh();
     if (this.sectionTriggerEl) (0, import_obsidian13.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
-    (_p = this.sectionStubEl) == null ? void 0 : _p.toggle(
+    (_q = this.sectionStubEl) == null ? void 0 : _q.toggle(
       section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover && !tribal
     );
   }
@@ -90388,6 +90394,16 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
     else if (section === "nameTakeover") this.renderTakeoverSentence(row);
+    this.syncPillSpacing();
+  }
+  /** The sentence sits 12px above the generate pill when nothing comes between them (ageing's
+   * controls do). */
+  syncPillSpacing() {
+    var _a2;
+    const row = this.contextRowEl;
+    const joined = !!row && row.hasClass("is-sentence") && row.style.display !== "none" && this.activeSection !== "nameAgeing";
+    row == null ? void 0 : row.toggleClass("is-before-pill", joined);
+    (_a2 = this.generatePillEl) == null ? void 0 : _a2.toggleClass("is-after-sentence", joined);
   }
   /** A sentence link that opens a menu of choices; choosing re-renders the sentence. */
   sentenceLink(sentence2, text, title, choices, current, choose) {
@@ -92681,6 +92697,7 @@ ${text}
     (_b = this.secondBoxObserver) == null ? void 0 : _b.disconnect();
     this.secondBoxObserver = null;
     this.quantityToggleEl = null;
+    this.generatePillEl = null;
     this.generateButtonEl = null;
     this.ageingControlsEl = null;
     this.ageingSourceInput = null;
