@@ -17,7 +17,7 @@ export const OLD_HISTORY_PREFIXES = {
   explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
   empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"],
   // Companies brief §1: the trade family's label before "guilds, companies and trade".
-  tradeGuilds: ["guilds and trading houses"],
+  tradeGuilds: ["guilds and trading houses", "guilds, companies and trade"],
 } as const;
 
 export type NameForgeSection =
@@ -78,6 +78,9 @@ export const GROUP_NAME_SECTIONS: NameForgeSection[] = [
   "supernaturalCourts",
 ];
 
+/** The group names group's line-up in the switcher and menus. */
+export const GROUP_NAMES_ORDER: NameForgeSection[] = ["powerFactions", "realms", "tribalNames", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts"];
+
 export const SECTION_ORDER: NameForgeSection[] = [
   "markov",
   "placeShapes",
@@ -87,9 +90,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "streetNames",
   "innNames",
   "buildingNames",
-  "tribalNames",
-  "realms",
-  ...GROUP_NAME_SECTIONS,
+  ...GROUP_NAMES_ORDER,
   ...BYNAME_SECTIONS,
   "eventNames",
   "deityNames",
@@ -105,7 +106,7 @@ export type SectionGroup = "placeNames" | "groupNames" | "bynames" | "lore" | "a
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames"],
-  groupNames: ["tribalNames", "realms", ...GROUP_NAME_SECTIONS],
+  groupNames: GROUP_NAMES_ORDER,
   bynames: BYNAME_SECTIONS,
   // Events brief §1.1 (the deities brief adds its module here).
   lore: ["eventNames", "deityNames"],
@@ -149,7 +150,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   mysticOrders: "faiths and mystic orders",
   martialOrders: "armies and martial orders",
   underworldGroups: "thieves and the underworld",
-  tradeGuilds: "guilds, companies and trade",
+  tradeGuilds: "guilds, companies, and trade",
   adventureCompanies: "adventurers and explorers",
   powerFactions: "powers and factions",
   supernaturalCourts: "supernatural courts and hosts",

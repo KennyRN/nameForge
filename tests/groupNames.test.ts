@@ -592,7 +592,7 @@ const CODES: Record<string, GroupSetting[] | undefined> = { all: undefined, "FL 
 // §12.1 Data
 
 test("companies: the trade family's eleven types, label and any phrase", () => {
-  assert.equal(TRADE.label, "guilds, companies and trade");
+  assert.equal(TRADE.label, "guilds, companies, and trade");
   assert.equal(TRADE.any, "guilds and companies of any kind");
   const rows = [...coSection("## 2. Type line-up", "**Descriptions").matchAll(/^\| `(\w+)` \| (.+?) \| (.+?) \| (.+?) \| (\d+) \| – \| (\w+) \| (yes|no) \|$/gm)];
   assert.deepEqual(TRADE.types.map((t) => t.key), rows.map((r) => r[1]));
@@ -683,10 +683,10 @@ test("companies: every new type, setting, form, people mode and tone fills a bat
 // §12.3 Rename and history
 
 test("companies: the renamed label, and history rows under either label", () => {
-  assert.equal(SECTION_LABELS.tradeGuilds, "guilds, companies and trade");
+  assert.equal(SECTION_LABELS.tradeGuilds, "guilds, companies, and trade");
   assert.equal(historySection("guilds and trading houses · historic or low fantasy · General"), "tradeGuilds");
-  assert.equal(historySection("guilds, companies and trade · historic or low fantasy · General"), "tradeGuilds");
-  assert.equal(groupHistoryLabel(TRADE, "fantasy", false, "general"), "guilds, companies and trade · historic or low fantasy · General");
+  assert.equal(historySection("guilds, companies, and trade · historic or low fantasy · General"), "tradeGuilds");
+  assert.equal(groupHistoryLabel(TRADE, "fantasy", false, "general"), "guilds, companies, and trade · historic or low fantasy · General");
 });
 
 // §12.4 Realms-only words

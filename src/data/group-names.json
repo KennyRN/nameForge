@@ -1831,7 +1831,7 @@
   {
    "key": "trade",
    "section": "tradeGuilds",
-   "label": "guilds, companies and trade",
+   "label": "guilds, companies, and trade",
    "icon": "scale",
    "any": "guilds and companies of any kind",
    "types": [
