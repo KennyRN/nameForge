@@ -34,6 +34,7 @@ import {
   ICON_INFO,
   ICON_PACKS,
   ICON_RIVER_NAMES,
+  ICON_GROUP_NAMES,
   ICON_TRIBAL_NAMES,
   ICON_BYNAMES,
   ICON_SHIPS,
@@ -297,7 +298,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
 // Each switcher group's icon in the switcher menu; the trigger wears the open module's own icon.
 const GROUP_ICONS: Record<SectionGroup, string> = {
   placeNames: ICON_PLACE_SHAPES,
-  groupNames: ICON_TRIBAL_NAMES,
+  groupNames: ICON_GROUP_NAMES,
   bynames: ICON_BYNAMES,
   vehicles: ICON_VEHICLES,
   advanced: ICON_ADVANCED,

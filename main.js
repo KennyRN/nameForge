@@ -2334,6 +2334,8 @@ var ICON_RIVER_NAMES = "nameforge-river-names";
 var ICON_RIVER_NAMES_SVG = '<g transform="scale(6.66667)"><path fill="currentColor" d="M12 9c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14q-1.245 0-2.25-1.5Q10.995 13 9.75 13T7.5 11.5Q6.495 13 5.25 13T3 11.5Q1.995 13 .75 13c-.26 0-.51-.05-.75-.14v-2.05c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2m0-4c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14Q13.005 9 12 7.5Q10.995 9 9.75 9T7.5 7.5Q6.495 9 5.25 9T3 7.5Q1.995 9 .75 9C.49 9 .24 8.95 0 8.86V6.81c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2m0-4c.67 1.33 1.42 2 2.25 2c.26 0 .51-.06.75-.19v2.05c-.24.09-.49.14-.75.14Q13.005 5 12 3.5Q10.995 5 9.75 5T7.5 3.5Q6.495 5 5.25 5T3 3.5Q1.995 5 .75 5C.49 5 .24 4.95 0 4.86V2.81c.24.13.49.19.75.19c.83 0 1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2c.67 1.33 1.42 2 2.25 2s1.58-.67 2.25-2" /></g>';
 var ICON_TRIBAL_NAMES = "nameforge-tribal-names";
 var ICON_TRIBAL_NAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 1a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 11 5.79V7H7a2 2 0 0 0-2 2v.71A2.5 2.5 0 0 0 3.5 12A2.5 2.5 0 0 0 5 14.29V15H4a2 2 0 0 0-2 2v1.21A2.5 2.5 0 0 0 .5 20.5A2.5 2.5 0 0 0 3 23a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 4 18.21V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 9 23a2.5 2.5 0 0 0 2.5-2.5a2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2H7v-.71A2.5 2.5 0 0 0 8.5 12A2.5 2.5 0 0 0 7 9.71V9h10v.71A2.5 2.5 0 0 0 15.5 12a2.5 2.5 0 0 0 1.5 2.29V15h-1a2 2 0 0 0-2 2v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 15 23a2.5 2.5 0 0 0 2.5-2.5a2.5 2.5 0 0 0-1.5-2.29V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 21 23a2.5 2.5 0 0 0 2.5-2.5a2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2h-1v-.71A2.5 2.5 0 0 0 20.5 12A2.5 2.5 0 0 0 19 9.71V9a2 2 0 0 0-2-2h-4V5.79a2.5 2.5 0 0 0 1.5-2.29A2.5 2.5 0 0 0 12 1m0 1.5a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1M6 11a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1m12 0a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1M3 19.5a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1" /></g>';
+var ICON_GROUP_NAMES = "nameforge-group-names";
+var ICON_GROUP_NAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m16.719 19.752l-.64-5.124A3 3 0 0 0 13.101 12h-2.204a3 3 0 0 0-2.976 2.628l-.641 5.124A2 2 0 0 0 9.266 22h5.468a2 2 0 0 0 1.985-2.248" /><circle cx="12" cy="5" r="3" /><circle cx="4" cy="9" r="2" /><circle cx="20" cy="9" r="2" /><path stroke-linecap="round" stroke-linejoin="round" d="M4 14h-.306a2 2 0 0 0-1.973 1.671l-.333 2A2 2 0 0 0 3.361 20H7m13-6h.306a2 2 0 0 1 1.973 1.671l.333 2A2 2 0 0 1 20.639 20H17" /></g></g>';
 var ICON_BYNAMES = "nameforge-bynames";
 var ICON_BYNAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 5a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M4 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M16 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M12 7v4H6v4" /><path d="M12 11h6v4" /></g></g>';
 var ICON_SHIPS = "nameforge-ships";
@@ -2377,6 +2379,7 @@ var ICON_VEHICLES_SVG = '<g transform="translate(0 10) scale(0.15625)"><path d="
 function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_MEEPLE, MEEPLE_SVG);
   (0, import_obsidian4.addIcon)(ICON_BYNAMES, ICON_BYNAMES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_GROUP_NAMES, ICON_GROUP_NAMES_SVG);
   (0, import_obsidian4.addIcon)(ICON_SHIPS, ICON_SHIPS_SVG);
   (0, import_obsidian4.addIcon)(ICON_HISTORY, ICON_HISTORY_SVG);
   (0, import_obsidian4.addIcon)(ICON_SPACECRAFT, ICON_SPACECRAFT_SVG);
@@ -89427,7 +89430,7 @@ var SECTION_ICONS = {
 };
 var GROUP_ICONS = {
   placeNames: ICON_PLACE_SHAPES,
-  groupNames: ICON_TRIBAL_NAMES,
+  groupNames: ICON_GROUP_NAMES,
   bynames: ICON_BYNAMES,
   vehicles: ICON_VEHICLES,
   advanced: ICON_ADVANCED
