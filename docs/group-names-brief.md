@@ -24,6 +24,8 @@ Everything here is data or a rule with fixed numbers. Where something isn't spec
 
 ## 1. Module line-up
 
+> *Stellar brief (16 October 2026): sci-fi group names gain a scale link (*at ‹any scale›*) that filters the shared space vocabulary. See `docs/stellar-names-brief.md` §9.*
+
 ### 1.1 Sections
 
 Add seven `NameForgeSection` values and append them, in this order, to `SECTION_GROUPS.groupNames` after `tribalNames`, and to `SECTION_ORDER` after `tribalNames`.

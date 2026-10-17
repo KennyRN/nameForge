@@ -33,6 +33,8 @@ All output is in modern English. Real route names are models, never outputs (§1
 
 ## 1. Module
 
+> *Stellar brief (16 October 2026): in the near-future and interstellar eras, space lanes gain a scale link (planetary system to galaxy-spanning) and, in the interstellar era, a faster-than-light link; ordinary roads, railways, trade and sea routes return at planetary scale. See `docs/stellar-names-brief.md` §6.*
+
 ### 1.1 Section
 
 - Add `routeNames` to `NameForgeSection`, label **"route names"**, Lucide icon `route`.

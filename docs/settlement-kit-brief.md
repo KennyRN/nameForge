@@ -47,6 +47,8 @@ Everything here is a rule with fixed numbers. Where something isn't specified, f
 
 ## 1. Module
 
+> *Stellar brief (16 October 2026): in the future eras the kit derives a scale from its position (a planet is a planetary system, a station a star system) and passes it to routes, groups and realms. See `docs/stellar-names-brief.md` §8.*
+
 ### 1.1 Section
 
 - Add `settlementKit` to `NameForgeSection`, label **"settlement kit"**, Lucide icon `building-2`.

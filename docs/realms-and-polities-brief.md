@@ -43,6 +43,8 @@ All output is in modern English.
 
 ## 1. Module
 
+> *Stellar brief (16 October 2026): the Land menu lists five space biomes under a **Space** heading in the near-future and interstellar eras, and each scale weights the forms (a Sector Government at sector scale, a Planetary Union on one world). See `docs/stellar-names-brief.md` §7.*
+
 ### 1.1 Section
 
 - Add `realms` to `NameForgeSection`, label **"realms and polities"**, Lucide icon `castle`.

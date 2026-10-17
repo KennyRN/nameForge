@@ -35,6 +35,8 @@ Read the whole brief before starting. Work through the milestones in §12 in ord
 
 ## 1. Codebase orientation
 
+> *Stellar brief (16 October 2026): five **space biomes** (one per scale) join exploration, expansion and realms, with an alien life link; world place names gains an **Interstellar** era for every culture, set in space, and `eraUsesLand(culture, era)` decides when the Land clause shows. See `docs/stellar-names-brief.md` §5 and §12.*
+
 Follow the existing conventions: Obsidian-free engines with JSON data, one seeded `mulberry32` stream per batch, tests under `node:test` through `npm test`, British English and OUP punctuation in all user-facing text.
 
 ### 1.1 Files to add

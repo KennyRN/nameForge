@@ -47,6 +47,8 @@ All results are in **translated English**. There are no native-language forms in
 
 ## 1. Module line-up
 
+> *Stellar brief (16 October 2026): station names gain space-land, Lagrange-point, body-ring, anchorage and star-haven patterns. See `docs/stellar-names-brief.md` §11.1.*
+
 ### 1.1 Section group and sections
 
 > *Line-up brief (16 October 2026): ships and spacecraft now sit in their own **vehicles** group (car icon), between bynames and titles and advanced.*

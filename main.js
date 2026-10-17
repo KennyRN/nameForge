@@ -15429,6 +15429,7 @@ var BRITAIN = (() => {
   };
 })();
 var SPACE_BIOMES = BIOME_DATA.spaceBiomes.map(normalise);
+var spaceBiomeFor = (scale) => SPACE_BIOMES.find((b) => b.scale === scale);
 function allBiomes(custom = []) {
   return [BRITAIN, ...BIOMES, ...custom];
 }
@@ -53640,6 +53641,7 @@ var weighted2 = (items, rng) => {
   }
   return items[items.length - 1][0];
 };
+var PROPER_STARS = () => LISTS.star.map((e) => e.w);
 function catalogueName(rng) {
   const row = weighted2(STARS.catalogue.map((c) => [c, c.w]), rng);
   const n = row.min + Math.floor(rng() * (row.max - row.min + 1));
@@ -53681,6 +53683,10 @@ function drawStarKind(scale, rng) {
   var _a2;
   const row = (_a2 = STARS.kindWeights[scale]) != null ? _a2 : STARS.kindWeights.any;
   return weighted2(Object.entries(row).filter(([, w]) => w > 0), rng);
+}
+function drawStar(scale, rng, pickProper, opts) {
+  const proper = pickProper != null ? pickProper : () => PROPER_STARS()[Math.floor(rng() * PROPER_STARS().length)];
+  return drawStarOfKind(drawStarKind(scale, rng), rng, proper, opts);
 }
 function dropStarWord(star) {
   return star.replace(/('s) Star$/, "$1");
@@ -60378,7 +60384,7 @@ function readTribalFields(v, problems, id) {
     if (ok(value)) out[key2] = value;
     else problems.push(`Slot \u201C${id}\u201D has an unknown ${key2} \u201C${value}\u201D.`);
   };
-  check("biome", (b) => !!findBiome(b));
+  check("biome", (b) => !!findBiome(b) && !findBiome(b).space);
   check("terrain", (t) => TERRAIN_CHOICES.some((x) => x.id === t));
   check("groupType", (g) => TRIBAL_GROUP_TYPES.some((x) => x.key === g));
   check("perspective", (p) => TRIBAL_PERSPECTIVES.includes(p));
@@ -60888,7 +60894,14 @@ var world_place_names_default = {
     colourdir: "colour",
     holyword: "holy word",
     new: "new thing",
-    shape: "shape"
+    shape: "shape",
+    "@land": "space feature",
+    "@region": "space region",
+    "@hab": "station word",
+    "@resource": "resource",
+    "@ordinal": "point",
+    "@star": "star",
+    "@direction": "direction"
   },
   cultures: [
     {
@@ -60968,6 +60981,26 @@ var world_place_names_default = {
             ["{aspiration}", 1],
             ["{place} Garden Village", 1]
           ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Fused compounds carried into space: homeland words on rings, wells and gaps; owners' stations and new homes.",
+          lists: {
+            place: ["{spec}+{gen}", "{spec}+{gen}", "{colour}+{gen}"]
+          },
+          templates: [
+            ["{spec}+{@land}", 10],
+            ["{size} {spec}+{@land}", 3],
+            ["{name:pos} {@hab}", 4],
+            ["{name:pos} {@land}", 3],
+            ["New {place}", 3],
+            ["{place} {@hab}", 2],
+            ["{colour} {@region}", 2],
+            ["{saint:pos} {@hab}", 2],
+            ["{god:pos} {@land}", 1],
+            ["Home of {name:pos} People", 1]
+          ]
         }
       ]
     },
@@ -61007,6 +61040,29 @@ var world_place_names_default = {
             ["{name:pos} {land}", 2],
             ["{status} {farm}", 2],
             ["The {landpl}", 1]
+          ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Owners' steadings, god-shrines and blunt space words: gap, ring, well, belt.",
+          lists: {
+            farm: ["Steading", "Steading", "Homestead", "Hold", "Shieling", "Habitat", "Toft"],
+            holy: ["Shrine", "Temple", "Stone", "Beacon", "Ring"],
+            meet: ["Ring", "Station", "Hall", "Dock", "Holm"]
+          },
+          templates: [
+            ["{name:pos} {farm}", 7],
+            ["{adj} {@land}", 5],
+            ["{god:pos} {@land}", 4],
+            ["{animal} {@land}", 4],
+            ["{god:pos} {holy}", 2],
+            ["{animal}+{@land}", 2],
+            ["{adj}+{@land}", 2],
+            ["Assembly {meet}", 2],
+            ["{status} {farm}", 2],
+            ["The {@land:pl}", 1],
+            ["{name:pos} {@region}", 1]
           ]
         }
       ]
@@ -61082,6 +61138,28 @@ var world_place_names_default = {
             ["Meadow of the Sons of {person}", 1],
             ["{saint:pos} Well", 1],
             ["{colour} Pool", 2]
+          ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Head-first naming carried into space: Church of, Cell of, Mouth of, Head of, Fort of.",
+          lists: {
+            god: ["Lugus", "Belenus", "Brigantia", "Taranis", "Epona", "Sulis"],
+            saint: ["Mary", "David", "Patrick", "Columba", "Brigid", "Kentigern"],
+            prep: ["in the", "by the", "beside the", "above the", "under the", "across the"]
+          },
+          templates: [
+            ["Church of {saint}", 4],
+            ["Fort of {god}", 3],
+            ["Mouth of the {@land}", 3],
+            ["Head of the {@land}", 3],
+            ["Cell of {saint}", 2],
+            ["Fort of the {animal:pl}", 2],
+            ["{adj} {@hab}", 2],
+            ["{@land} of {god}", 2],
+            ["Church of {saint} {prep} {@land}", 2],
+            ["{@land} of the {animal:pl}", 2]
           ]
         }
       ]
@@ -61167,6 +61245,31 @@ var world_place_names_default = {
             ["Valley of the {#river}", 1],
             ["{adj} Water", 1]
           ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Gods' harbours and shrines, emperors' colonies, forums of great men, and Lagrange points counted like milestones.",
+          lists: {
+            god: ["Jupiter", "Juno", "Minerva", "Mars", "Venus", "Mercury", "Apollo", "Diana"],
+            person: ["Julius", "Claudius", "Flavius", "Livius", "Cornelius", "Sempronius", "Appius", "Aurelius"],
+            emperor: ["Augustus", "Tiberius", "Claudius", "Vespasian", "Trajan", "Hadrian", "Antoninus", "Severus"],
+            saint: ["Lawrence", "John", "Mark", "Peter", "Paul", "Michael", "Angelo", "Benedict"],
+            homeland: ["Rome", "Naples", "Milan", "Genoa", "Venice", "Turin", "Florence", "Palermo"]
+          },
+          templates: [
+            ["Harbour of {god}", 3],
+            ["Forum of {person}", 3],
+            ["Colony of {emperor}", 3],
+            ["At the {@ordinal} Point", 3],
+            ["Shrine of {god}", 2],
+            ["{emperor:pos} {@hab}", 2],
+            ["Camp at the {@land}", 2],
+            ["Mouth of the {@land}", 2],
+            ["New {homeland}", 2],
+            ["Saint {saint}", 1],
+            ["{@land} of {person}", 1]
+          ]
         }
       ]
     },
@@ -61240,6 +61343,32 @@ var world_place_names_default = {
             ["{slot} {settle}", 2],
             ["{quality} {settle}", 1]
           ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Places named by position (the sunny side of the moon, sunward of the belt), by virtue and slogan, and frontier stations named as orders.",
+          lists: {
+            side: ["Sunny Side", "Shady Side", "Sunward Side", "North Side", "South Side"],
+            direction: ["{@direction}", "{@direction}", "Central", "Northern", "Southern", "Eastern", "Western"],
+            adv: ["Long", "Eternal", "Lasting", "Great", "Universal", "Continuing", "Restored", "Everlasting"],
+            verb: ["Pacify", "Pacify", "Guard", "Subdue", "Calm", "Secure", "Hold"],
+            far: ["Distant", "Frontier", "Far {@region}", "Outer {@region}", "Deep"],
+            slot: ["Red Flag", "Red Star", "Liberation", "Victory", "Friendship", "Unity", "Vanguard", "New Life"]
+          },
+          templates: [
+            ["{side} of the {@land}", 4],
+            ["{adv} {quality}", 3],
+            ["{verb} the {far}", 3],
+            ["{quality} {@hab}", 3],
+            ["{direction} Peace", 2],
+            ["{direction} Capital", 2],
+            ["{beast} {@land}", 2],
+            ["{slot} {@hab}", 2],
+            ["{material} Gate", 1],
+            ["Mount {mountain}", 1],
+            ["{quality} {@region}", 1]
+          ]
         }
       ]
     },
@@ -61303,6 +61432,31 @@ var world_place_names_default = {
             ["Oasis of {god}", 1],
             ["Little City of {ggod}", 1],
             ["Upper City of the {sacred:pl}", 1]
+          ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Houses, horizons and seats of the gods on rings and moons; pharaohs' mansions; the gods' barques.",
+          lists: {
+            pharaoh: ["Ramesses", "Amenemhat", "Senusret", "Thutmose", "Amenhotep", "Sneferu", "Khufu", "Seti", "Merenptah", "Hatshepsut", "Mentuhotep", "Pepi", "Teti", "Sahure", "Khasekhemwy"],
+            lord: ["{god}", "{god}", "{god}", "{pharaoh}"],
+            sacred: ["Crocodile", "Ibis", "Falcon", "Cat", "Cobra", "Hippopotamus|Hippopotamuses", "Jackal", "Ram", "Bull", "Hare", "Oryx|Oryxes", "Vulture", "Scarab", "Lion", "Baboon", "Cow", "Ox|Oxen"],
+            pair: ["Enduring", "Beautiful", "Mighty", "Pure", "Gleaming", "Great", "Established", "Shining", "Holy", "Exalted"],
+            colour: ["White", "Black", "Red", "Gleaming", "Golden"]
+          },
+          templates: [
+            ["House of {lord}", 4],
+            ["Horizon of {god}", 4],
+            ["{god:pos} {@hab}", 3],
+            ["Seat of {god}", 2],
+            ["{@land} of {god}", 2],
+            ["Mansion of {pharaoh}", 2],
+            ["{pair} and {pair}", 2],
+            ["Barque of {god}", 2],
+            ["Nome of the {sacred}", 1],
+            ["The {colour} Walls", 1],
+            ["{@land} of the {sacred:pl}", 1]
           ]
         }
       ]
@@ -61369,6 +61523,29 @@ var world_place_names_default = {
             ["Town of the {holyname}", 1],
             ["Saint {saint} of the {animal:pl}", 1]
           ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Locative names in space: place of eagles, near the rings, in the navel of the moon, Tlaloc's well.",
+          lists: {
+            near: ["{@land:pl}", "{@land:pl}", "Sun", "Stars", "Ice", "Moon"],
+            celestial: ["Moon", "Moon", "Sun", "Sky", "Stars", "Ring"],
+            verb: ["Drinks", "Sings", "Rests", "Hunts", "Stands", "Cries", "Bathes", "Nests"],
+            peak: ["Smoking", "Shining", "Sleeping", "Speaking", "Snowy", "Starry"]
+          },
+          templates: [
+            ["Place of {animal:pl}", 4],
+            ["{animal} {@land}", 3],
+            ["Near the {near}", 2],
+            ["On the {@land}", 2],
+            ["In the Navel of the {celestial}", 2],
+            ["{god:pos} {@land}", 2],
+            ["Place of {plant:pl}", 2],
+            ["Where the {animal} {verb}", 1],
+            ["{peak} {@land}", 1],
+            ["Where {plant:pl} Abound", 1]
+          ]
         }
       ]
     },
@@ -61410,6 +61587,27 @@ var world_place_names_default = {
             ["{adj} Water", 1],
             ["River of the {animal:pl}", 2],
             ["{animal} River", 2]
+          ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "One invented people-name per batch feeds space, place and royal-station names, so a batch reads as one region.",
+          lists: {
+            noun: ["Smoke", "Ice", "Light", "Star", "Ring", "Mist"]
+          },
+          templates: [
+            ["Land of the {#people}", 4],
+            ["{@region} of the {#people}", 3],
+            ["Place of the {#people}", 3],
+            ["Place of {event}", 3],
+            ["Royal Enclosure of {#ruler}", 2],
+            ["{#ruler:pos} {@hab}", 2],
+            ["{@land} of the {animal:pl}", 2],
+            ["At the {@land}", 2],
+            ["The {noun} That {verb}", 1],
+            ["{adj} {@land}", 1],
+            ["Grave of {#ruler}", 1]
           ]
         }
       ]
@@ -61503,6 +61701,37 @@ var world_place_names_default = {
             ["Hammer and Sickle", 1],
             ["{ideal} Path", 1]
           ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "New towns and princes' possessives, tsars' glory on the frontier, and Soviet-style closed stations known by number.",
+          lists: {
+            town: ["Town", "Station", "Settlement", "Habitat", "Fort"],
+            region: ["{@region}", "{@region}", "Stars", "Frontier", "East"],
+            closed: ["Star Town", "Ice Town", "Ring Town", "White Town", "Salt Town", "Iron Town"],
+            red: ["Star", "Ring", "Dawn", "Banner", "Guard", "Moon"],
+            monarch: ["Peter", "Catherine", "Elizabeth", "Paul", "Alexander", "Nicholas", "Anna", "Maria", "Michael", "Alexis", "Constantine"],
+            material: ["Pitch", "Salt", "Iron", "Wax", "Birch-bark", "Oak", "Clay", "Stone", "Honey", "Fur"],
+            ideal: ["Red", "October", "Victory", "Labour", "Friendship", "Peace", "Freedom", "Dawn", "Progress", "Pioneer", "Proletarian", "Komsomol"],
+            num: ["7", "9", "12", "16", "18", "26", "31", "40", "44", "45", "65", "70"]
+          },
+          markov: {
+            hero: { corpus: ["Kirov", "Kuibyshev", "Sverdlov", "Molotov", "Zhdanov", "Voroshilov", "Frunze", "Dzerzhinsky", "Budyonny", "Kalinin", "Ordzhonikidze", "Chkalov", "Gorky", "Chapayev", "Shchors", "Kotovsky", "Lazo", "Uritsky", "Volodarsky", "Bauman", "Kosarev", "Krupskaya", "Zhukov", "Kurchatov", "Gagarin", "Tereshkova", "Pavlov", "Michurin", "Lomonosov", "Mayakovsky", "Ostrovsky", "Fadeyev", "Stakhanov", "Papanin", "Shmidt", "Artyom", "Nogin", "Babushkin", "Zinoviev", "Kamenev", "Lenin", "Stalin", "Trotsky", "Ulyanov", "Brezhnev", "Khrushchev", "Andropov", "Chernenko", "Beria", "Yezhov", "Kaganovich", "Mikoyan", "Suslov", "Kosygin", "Gorbachev", "Tukhachevsky"], min: 4, max: 10, label: "revolutionary" }
+          },
+          templates: [
+            ["New {town}", 3],
+            ["{ideal} {@hab}", 3],
+            ["{prince:pos} {@hab}", 2],
+            ["Glory of {monarch}", 2],
+            ["Ruler of the {region}", 2],
+            ["{#hero:pos} {@hab}", 2],
+            ["{closed}-{num}", 2],
+            ["Red {red}", 2],
+            ["{material} {@hab}", 2],
+            ["Star Town", 1],
+            ["{animal} {@land}", 1]
+          ]
         }
       ]
     },
@@ -61582,6 +61811,40 @@ var world_place_names_default = {
             ["Fortress of the {animal:pl}", 1],
             ["{king:pos} Hunting Ground", 1]
           ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Abodes of peace, mothers and fathers of things, gates of the stars; Persian gardens and kings' glory. Many star names are Arabic already.",
+          lists: {
+            mother: ["Moons", "Rings", "Wells", "Stars", "Springs", "Gardens", "Lights"],
+            father: ["the Ice", "the Rings", "the Falcon", "the Lion", "the Stars"],
+            gate: ["{@star}", "{@star}", "the Stars", "the Sun", "the Deep", "Iron", "Gold", "Victory", "Lamentation"],
+            valley: ["Stones", "Gold", "Fire", "Ice", "Light"],
+            abode: ["Peace", "Victory", "Safety", "Learning", "Kings", "Mercy", "Wisdom", "Plenty", "Faith"],
+            epithet: ["Victorious", "Guarded", "Radiant", "White", "Green", "Red", "Round", "Shining", "Well-Protected", "Fortunate"],
+            person: ["Tariq", "Musa", "Uqba", "Hasan", "Ali", "Umar", "Harun", "Jafar", "Mansur", "Rashid", "Abbas", "Khalid", "Saif", "Zubayda", "Fatima", "Yusuf", "Idris", "Qasim"],
+            day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday"],
+            king: ["Shapur", "Ardashir", "Khosrow", "Kavad", "Bahram", "Darius", "Cyrus", "Peroz", "Yazdegerd", "Hormizd", "Narseh", "Shirin"],
+            plant: ["Rose", "Flower", "Poplar", "Pomegranate", "Cypress", "Tulip", "Plane Tree", "Saffron|Saffron", "Vine"],
+            num: ["Seven", "Three", "Forty", "Two", "Five"],
+            water: ["Springs", "Wells", "Streams", "Channels"]
+          },
+          templates: [
+            ["Abode of {abode}", 3],
+            ["Mother of {mother}", 3],
+            ["Gate of {gate}", 3],
+            ["Father of {father}", 2],
+            ["The {epithet}", 2],
+            ["Harbour of {person}", 2],
+            ["{king:pos} City", 2],
+            ["{plant} Garden", 2],
+            ["Camp of {person}", 1],
+            ["{day} Market", 1],
+            ["{@land} of {valley}", 1],
+            ["Glory of {king}", 1],
+            ["{num} {water}", 1]
+          ]
         }
       ]
     },
@@ -61652,6 +61915,34 @@ var world_place_names_default = {
             ["{god:pos} Town", 2],
             ["{surname} Town", 1]
           ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Gods' cities and abodes, sages' hermitages on lonely moons, the Unconquerable; founders' abodes and markets.",
+          lists: {
+            market: ["Ice", "Ore", "Grain", "Silk", "Spice", "Night"],
+            city: ["Victory", "Elephants", "Flowers", "Lotuses", "Kings", "Gold", "Peacocks", "Learning", "Joy"],
+            epithet: ["Unconquerable", "Victorious", "Fortunate", "Radiant", "Unshakable", "Many-Gated", "Luminous", "Eternal"],
+            sage: ["Vasishtha", "Vishvamitra", "Agastya", "Bharadvaja", "Valmiki", "Gautama", "Kanva", "Atri", "Bhrigu", "Kapila"],
+            plant: ["Basil", "Lotus", "Sandalwood", "Banyan", "Mango", "Kadamba", "Ashoka", "Teak", "Bamboo"],
+            founder: ["Ahmad", "Haidar", "Murshid", "Faiz", "Aurangzeb", "Akbar", "Jahangir", "Tipu", "Firoz", "Ghazi", "Shahjahan", "Bahadur"],
+            raja: ["Jai", "Udai", "Jodha", "Bika", "Raghu", "Man", "Ajit", "Sawai", "Bhoj", "Hari", "Kesari"]
+          },
+          templates: [
+            ["{god:pos} City", 3],
+            ["City of {city}", 3],
+            ["The {epithet}", 2],
+            ["Abode of {god}", 2],
+            ["{sage:pos} Hermitage", 2],
+            ["{founder:pos} Abode", 2],
+            ["{raja:pos} {@hab}", 2],
+            ["{market} Market", 2],
+            ["{god:pos} {@land}", 2],
+            ["Between the {@land:pl}", 1],
+            ["{plant} Garden", 1],
+            ["{animal} City", 1]
+          ]
         }
       ]
     },
@@ -61717,6 +62008,30 @@ var world_place_names_default = {
             ["New {place}", 1],
             ["{kami} {feature}", 1]
           ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Modifier first and generic last: Long Ring, Gap Mouth; auspicious names, gates of the kami, and suburban hopes.",
+          lists: {
+            good: ["Fortune", "Peace", "Long Life", "Prosperity", "Treasure", "Gold", "Pine", "Crane", "Tortoise", "Blessing", "Harmony", "Pine Tree", "Thousand Years"],
+            virtue: ["Peace", "Tranquillity", "Harmony", "Virtue", "Prosperity", "Longevity", "Brightness"],
+            number: ["Eight", "Three", "Seven", "Five", "Hundred", "Thousand", "Ninety-Nine", "Two", "Nine"],
+            pretty: ["Hope", "Cherry", "Plum", "Wisteria", "Star", "Sunny", "Green", "Rainbow", "Morning", "Lily", "Maple", "Camellia", "Bell", "Light"]
+          },
+          templates: [
+            ["{adj} {@land}", 8],
+            ["{good} {@land}", 4],
+            ["{@land} Mouth", 3],
+            ["{animal} {@land}", 3],
+            ["Before {kami:pos} Gate", 2],
+            ["{pretty} {@hab}", 2],
+            ["{kami} {@land}", 1],
+            ["{number} {@land:pl}", 1],
+            ["{@hab} Front", 1],
+            ["Capital of {virtue} and {virtue}", 1],
+            ["Middle of the {@land}", 1]
+          ]
         }
       ]
     },
@@ -61760,6 +62075,28 @@ var world_place_names_default = {
             ["{person:pos} Camp", 1],
             ["Mosque of {person}", 1]
           ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Under the kapok tree, where the ring divides, Buktu's well, grove of Osun; towns of invented peoples, a batch at a time.",
+          lists: {
+            bend: ["Bends", "Widens", "Divides", "Narrows", "Ends", "Turns"],
+            market: ["Salt", "Gold", "Ice", "Ore", "Night", "Cloth"]
+          },
+          templates: [
+            ["{animal} {@land}", 3],
+            ["{person:pos} {@land}", 3],
+            ["Town of the {#people}", 3],
+            ["Under the {tree} Tree", 2],
+            ["Grove of {spirit}", 2],
+            ["{@region} of the {#people}", 2],
+            ["Where the {@land} {bend}", 2],
+            ["{market} Market", 2],
+            ["Beside the {@land}", 2],
+            ["{adj} {@land}", 2],
+            ["{@land} of {spirit}", 1]
+          ]
         }
       ]
     },
@@ -61799,6 +62136,24 @@ var world_place_names_default = {
             ["Sky Place", 1],
             ["Where the {animal} Rises", 1]
           ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Big water, wells of peoples, emblem kingdoms; colour-directions on rings and gaps; seats of the gods.",
+          templates: [
+            ["{colourdir} {@land}", 4],
+            ["{emblem} Kingdom", 3],
+            ["Well of the {people}", 2],
+            ["{holyword} {@land}", 2],
+            ["{animal} {@land}", 2],
+            ["Place of the {animal:pl}", 2],
+            ["{number} Stones", 2],
+            ["Seat of {god}", 2],
+            ["Big {@land}", 1],
+            ["{number} {@land:pl}", 1],
+            ["{god:pos} {@land}", 1]
+          ]
         }
       ]
     },
@@ -61837,6 +62192,24 @@ var world_place_names_default = {
             ["{adj} Fortress", 1],
             ["Fortress of {virtue}", 1]
           ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Big Ring, Cauldron Moon, Ice Source; districts of virtue, and provinces that blend two districts.",
+          templates: [
+            ["{adj} {@land}", 6],
+            ["{jvirtue} District", 4],
+            ["{shape} {@land}", 3],
+            ["{jvirtue}\u2013{jvirtue} Province", 3],
+            ["{animal} {@land}", 2],
+            ["Temple of {buddhist}", 2],
+            ["Gate of {virtue}", 2],
+            ["{direction} {@region}", 1],
+            ["Sunward of the {@land}", 1],
+            ["{@resource} Source", 1],
+            ["{adj} Fortress", 1]
+          ]
         }
       ]
     },
@@ -61872,6 +62245,24 @@ var world_place_names_default = {
             ["Place of the {animal:pl}", 2],
             ["Throne of {king}", 1],
             ["Gate of {holy}", 1]
+          ]
+        },
+        {
+          id: "interstellar",
+          label: "Interstellar",
+          guide: "Mounts of light and of the saints, monasteries on far moons, churches cut from the rock; royal camps of the kings.",
+          templates: [
+            ["Mount of {holy}", 3],
+            ["Mount of {saint}", 3],
+            ["{adj} {@land}", 3],
+            ["Monastery of {saint}", 2],
+            ["Church of {saint} in the Rock", 2],
+            ["New {new}", 2],
+            ["Royal Camp of {king}", 2],
+            ["{king:pos} {@hab}", 2],
+            ["Throne of {king}", 1],
+            ["Gate of {holy}", 1],
+            ["Place of the {animal:pl}", 1]
           ]
         }
       ]
@@ -61937,6 +62328,10 @@ function findCulture(id) {
 function cultureUsesBiomes(cultureId) {
   return WORLD_DATA.biomeSwaps.some((s) => s.culture === cultureId);
 }
+var INTERSTELLAR_ERA = "interstellar";
+function eraUsesLand(cultureId, eraId) {
+  return eraId === INTERSTELLAR_ERA || cultureUsesBiomes(cultureId);
+}
 var LAND_LISTS = /* @__PURE__ */ new Set(["feature", "water", "peak"]);
 function biomeListEntry(word) {
   const lowered = word.toLowerCase();
@@ -61978,10 +62373,10 @@ function parseTemplate(template) {
   let tokens = templateCache.get(template);
   if (tokens) return tokens;
   tokens = [];
-  for (const m of template.matchAll(/\{(#?)([\w-]+)(?::(pl|pos))?\}|\+|[^{+]+/g)) {
+  for (const m of template.matchAll(/\{([#@]?)([\w-]+)(?::(pl|pos))?\}|\+|[^{+]+/g)) {
     if (m[0] === "+") tokens.push({ kind: "fuse" });
     else if (m[2] !== void 0) {
-      tokens.push({ kind: "slot", key: m[2], form: m[3], markov: m[1] === "#" });
+      tokens.push({ kind: "slot", key: m[2], form: m[3], markov: m[1] === "#", ...m[1] === "@" ? { space: true } : {} });
     } else tokens.push({ kind: "text", text: m[0] });
   }
   templateCache.set(template, tokens);
@@ -62008,9 +62403,86 @@ var WorldRenderer = class {
     var _a2, _b, _c;
     this.culture = findCulture(options.culture);
     this.era = findEra(this.culture, options.era);
+    this.interstellar = this.era.id === INTERSTELLAR_ERA;
     this.lists = { ...this.culture.lists, ...(_a2 = this.era.lists) != null ? _a2 : {} };
     this.markov = { ...(_b = this.culture.markov) != null ? _b : {}, ...(_c = this.era.markov) != null ? _c : {} };
-    this.buildSwaps();
+    if (this.interstellar && options.biome && !options.biome.space) this.notices.add("The Interstellar era is set in space.");
+    if (!this.interstellar) this.buildSwaps();
+  }
+  /** Stellar brief §12.3: a scale for one name (drawn before its template), and that scale's biome. */
+  drawSpace(rng) {
+    var _a2, _b, _c;
+    const chosen = ((_a2 = this.options.biome) == null ? void 0 : _a2.space) ? this.options.biome : void 0;
+    const scale = (_b = chosen == null ? void 0 : chosen.scale) != null ? _b : drawScale(void 0, rng);
+    const biome = chosen != null ? chosen : spaceBiomeFor(scale);
+    const wanted = this.options.terrain;
+    const terrain = chosen && wanted && wanted !== "any" && ((_c = biome.customTerrains) == null ? void 0 : _c.some((t) => t.id === wanted)) ? wanted : void 0;
+    return { scale, biome, terrain };
+  }
+  /** Stellar brief §12.5: one space slot, resolved from the name's scale and biome. */
+  spaceSlot(token11, rng) {
+    var _a2;
+    const key2 = `@${token11.key}`;
+    const state = this.space;
+    if (!this.interstellar || !state) {
+      this.notices.add(`Space slot {${key2}} is only used in the Interstellar era.`);
+      return { text: `[${key2}]`, etym: `[${key2}]`, fusable: false };
+    }
+    const { scale, biome } = state;
+    const title = (w) => w.split(" ").map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+    let word;
+    let fusable = true;
+    switch (token11.key) {
+      case "land": {
+        const terrain = (_a2 = state.terrain) != null ? _a2 : pickWeighted4(
+          Object.entries(terrainWeights(biome, "any")).filter(([t, w]) => w > 0 && shortWords(biome, "land", t).length > 0),
+          rng
+        );
+        const words = shortWords(biome, "land", terrain);
+        word = biomeTitleCase(pickWeighted4(words.map(([e, w]) => [e.modern, w]), rng).toLowerCase());
+        break;
+      }
+      case "region": {
+        const entries = scaleFilter(
+          group_names_default.lists.spaceLand.filter((e) => (!e.s || e.s.includes("SF")) && !e.w.includes(" ")),
+          scale
+        );
+        word = pickWeighted4(entries.map((e) => {
+          var _a3;
+          return [e.w, (_a3 = e.x) != null ? _a3 : 1];
+        }), rng);
+        break;
+      }
+      case "hab": {
+        const gate = SPACE_DATA.worldHabGate;
+        const words = [...SPACE_DATA.worldHab, ...scale === "Pl" || scale === "Sy" ? [] : [gate]];
+        word = pickWeighted4(words, rng);
+        break;
+      }
+      case "resource":
+        word = title(pickUniform5(biome.resources, rng)[0]);
+        break;
+      case "ordinal":
+        word = pickUniform5(["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth"].slice(0, scale === "Pl" ? 5 : 12), rng);
+        fusable = false;
+        break;
+      case "star":
+        word = drawStar(scale, rng);
+        fusable = false;
+        break;
+      case "direction":
+        word = pickUniform5(spaceDirections(scale), rng);
+        fusable = false;
+        break;
+      default:
+        this.notices.add(`No space slot "${key2}".`);
+        return { text: `[${key2}]`, etym: `[${key2}]`, fusable: false };
+    }
+    let text = word;
+    if (token11.form === "pl") text = title(pluralOf(word.toLowerCase()));
+    if (token11.form === "pos") text = possessive(word);
+    const shown = token11.form === "pos" ? word : text;
+    return { text, etym: `[${this.label(key2)}: ${shown}]${token11.form === "pos" ? possessiveTail(word) : ""}`, fusable: fusable && !/\s/.test(text) && token11.form !== "pos" };
   }
   buildSwaps() {
     var _a2;
@@ -62056,10 +62528,13 @@ var WorldRenderer = class {
   }
   /** One name: a template by weight, rendered. */
   name(rng) {
+    var _a2;
+    this.space = this.interstellar ? this.drawSpace(rng) : void 0;
+    const scale = (_a2 = this.space) == null ? void 0 : _a2.scale;
     const template = pickWeighted4(this.era.templates, rng);
     const piece = this.render(template, rng, 0);
     const text = piece.text.charAt(0).toUpperCase() + piece.text.slice(1);
-    return { text, etymology: piece.etym, template };
+    return { text, etymology: piece.etym, template, ...scale ? { scale } : {} };
   }
   label(key2) {
     var _a2, _b, _c;
@@ -62107,6 +62582,7 @@ var WorldRenderer = class {
   /** A list word, expanding any template held in the entry. */
   slot(token11, rng, depth) {
     var _a2, _b;
+    if (token11.space) return this.spaceSlot(token11, rng);
     if (token11.markov) {
       const name = this.markovName(token11.key, rng);
       const text2 = token11.form === "pos" ? possessive(name) : name;
@@ -62194,6 +62670,7 @@ function generateWorldPlaceNames(options) {
     const name = renderer.name(rng);
     const key2 = name.text.toLowerCase();
     if (seen.has(key2)) continue;
+    if (renderer.interstellar && hasSpaceBlock(name.text)) continue;
     seen.add(key2);
     names.push(name);
   }
@@ -62204,7 +62681,8 @@ function generateWorldPlaceNames(options) {
 function worldHistoryLabel(base, cultureId, eraId) {
   const culture = findCulture(cultureId);
   const era = findEra(culture, eraId);
-  return culture.eras.length > 1 ? `${base} \xB7 ${culture.label} \xB7 ${era.label}` : `${base} \xB7 ${culture.label}`;
+  const shown = culture.eras.filter((e) => e.id !== INTERSTELLAR_ERA).length > 1 || era.id === INTERSTELLAR_ERA;
+  return shown ? `${base} \xB7 ${culture.label} \xB7 ${era.label}` : `${base} \xB7 ${culture.label}`;
 }
 
 // src/groups/engine.ts
@@ -74269,6 +74747,106 @@ var realms_default = {
   caps: {
     plain: 8,
     ceremonial: 14
+  },
+  spaceForms: {
+    "Planetary Union": {
+      Pl: 3,
+      Sy: 2,
+      Nb: 0.5,
+      Se: 0.2,
+      Ga: 0.1
+    },
+    "Orbital Republic": {
+      Pl: 3,
+      Sy: 1.5,
+      Nb: 0.3,
+      Se: 0.1,
+      Ga: 0
+    },
+    "City-State": {
+      Pl: 2,
+      Sy: 1,
+      Nb: 0.5,
+      Se: 0.2,
+      Ga: 0.1
+    },
+    "Free City": {
+      Pl: 2,
+      Sy: 1,
+      Nb: 0.5,
+      Se: 0.2,
+      Ga: 0.1
+    },
+    "Metropolitan Authority": {
+      Pl: 2,
+      Sy: 1,
+      Nb: 0.5,
+      Se: 0.2,
+      Ga: 0.1
+    },
+    "Free Zone": {
+      Pl: 1.5,
+      Sy: 1.5,
+      Nb: 1,
+      Se: 1,
+      Ga: 1
+    },
+    "Development Zone": {
+      Pl: 1.5,
+      Sy: 1.5,
+      Nb: 1,
+      Se: 1,
+      Ga: 1
+    },
+    "System Hegemony": {
+      Pl: 0.5,
+      Sy: 3,
+      Nb: 1,
+      Se: 0.3,
+      Ga: 0.1
+    },
+    "Colonial Authority": {
+      Pl: 1.5,
+      Sy: 1.5,
+      Nb: 1.5,
+      Se: 1,
+      Ga: 0.5
+    },
+    "Interstellar Federation": {
+      Pl: 0,
+      Sy: 0.3,
+      Nb: 2,
+      Se: 2,
+      Ga: 1.5
+    },
+    "Stellar Commonwealth": {
+      Pl: 0,
+      Sy: 0.5,
+      Nb: 2,
+      Se: 1.5,
+      Ga: 1
+    },
+    "Sector Government": {
+      Pl: 0,
+      Sy: 0,
+      Nb: 1,
+      Se: 3,
+      Ga: 1
+    },
+    Hegemony: {
+      Pl: 0.5,
+      Sy: 1,
+      Nb: 1,
+      Se: 1.5,
+      Ga: 2
+    },
+    Empire: {
+      Pl: 0.5,
+      Sy: 1,
+      Nb: 1,
+      Se: 1.5,
+      Ga: 3
+    }
   }
 };
 
@@ -77431,6 +78009,25 @@ var vessels_default = {
     }
   ],
   lists: {
+    lagrangeWord: [
+      {
+        w: "One"
+      },
+      {
+        w: "Two"
+      },
+      {
+        w: "Three"
+      },
+      {
+        w: "Four",
+        x: 3
+      },
+      {
+        w: "Five",
+        x: 3
+      }
+    ],
     virtue: [
       {
         w: "Resolute",
@@ -80179,6 +80776,26 @@ var vessels_default = {
       {
         p: "{star} Gate",
         w: 10
+      },
+      {
+        p: "{spaceLand} Station",
+        w: 10
+      },
+      {
+        p: "Ell-{lagrangeWord} Station",
+        w: 5
+      },
+      {
+        p: "{sfBody} Ring",
+        w: 8
+      },
+      {
+        p: "{spaceLand} Anchorage",
+        w: 5
+      },
+      {
+        p: "{star} Haven",
+        w: 5
       }
     ],
     colony: [
@@ -80628,7 +81245,7 @@ function availableFunctions(module2, cultureKey, technology, setting) {
   return moduleFunctions(module2).filter((f) => levels.some((l) => functionAvailableAt(f, culture, l)));
 }
 var pickOne2 = (items, rng) => items[Math.floor(rng() * items.length)];
-var GN_LISTS = /* @__PURE__ */ new Set(["colour", "number", "ordinalWord", "greek", "land", "spaceLand", "compass", "star", "brandRoot", "surname", "weapon", "tech", "beast"]);
+var GN_LISTS = /* @__PURE__ */ new Set(["colour", "number", "ordinalWord", "greek", "land", "spaceLand", "sfBody", "compass", "star", "brandRoot", "surname", "weapon", "tech", "beast"]);
 var STYLE_POOLS = new Map(VESSEL_DATA.styles.flatMap((st) => Object.entries(st.pools)));
 var CULTURE_ONLY = /* @__PURE__ */ new Set(["poetic", "menaceExtra"]);
 var UNTONED = /* @__PURE__ */ new Set(["surname"]);
@@ -80843,6 +81460,7 @@ function renderTokens2(ctx, pattern, hooks2) {
       piece = hooks2.byName.text;
       nameUsed = true;
     } else piece = token3(ctx, name);
+    if (piece && name === "star" && pattern === "{star} Haven") piece = piece.replace(/('s) Star$/, "$1");
     if (piece && name === "compass" && pattern.slice(0, at).endsWith("of the ")) piece = piece.replace(/ern$/, "");
     if (piece === void 0 || piece === "") {
       failed = true;
@@ -81306,6 +81924,19 @@ function identityLists(biome, terrain) {
     var _a2;
     return [e, (_a2 = e.x) != null ? _a2 : 1];
   }));
+  if (biome.space && biome.scale) {
+    const chosenTerrains = terrain && terrain !== "any" ? [terrain] : availableTerrains(biome).map((t) => t.id);
+    const phrases = [...new Set(chosenTerrains.flatMap((t) => {
+      var _a2;
+      return ((_a2 = biome.land[t]) != null ? _a2 : []).map(([w]) => w);
+    }))];
+    lists.set("landPl", phrases.map((w) => [{ w }, 1]));
+    lists.set("waterPl", []);
+    lists.set("waterSg", []);
+    lists.set("compassAdj", spaceDirections(biome.scale).map((w) => [{ w }, 1]));
+    byTerrain.set(terrain, lists);
+    return lists;
+  }
   const terrains = terrain && terrain !== "any" ? [terrain] : availableTerrains(biome).map((t) => t.id);
   const add2 = { landPl: [], waterPl: [], waterSg: [] };
   for (const t of terrains) {
@@ -81375,13 +82006,17 @@ function listWord3(ctx, name, keep) {
   return e.w;
 }
 function gnWord(ctx, name, keep, setting = ctx.setting) {
-  const pool3 = groupListWords(name, setting).filter(([w2]) => !keep || keep(w2)).map(([w2, n]) => [w2, n * toneFactor(wordTones(name, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  var _a2;
+  const pool3 = groupListWords(name, setting, (_a2 = ctx.scale) != null ? _a2 : "any").filter(([w2]) => !keep || keep(w2)).map(([w2, n]) => [w2, n * toneFactor(wordTones(name, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(pool3, ctx.rng);
   if (w !== void 0) for (const t of wordTones(name, w)) ctx.drawn.add(t);
   return w;
 }
 function drawForm(ctx, keep) {
-  const pool3 = cultureForms(ctx.culture, ctx.era).filter(([f2]) => keep(f2)).map(([f2, w]) => [f2, w * characterMult(ctx.character, f2) * toneFactor(f2.t, ctx.tone)]).filter(([, w]) => w > 0);
+  const pool3 = cultureForms(ctx.culture, ctx.era).filter(([f2]) => keep(f2)).map(([f2, w]) => {
+    var _a2, _b;
+    return [f2, w * characterMult(ctx.character, f2) * toneFactor(f2.t, ctx.tone) * (ctx.scale ? (_b = (_a2 = REALM_DATA.spaceForms[f2.w]) == null ? void 0 : _a2[ctx.scale]) != null ? _b : 1 : 1)];
+  }).filter(([, w]) => w > 0);
   const f = pickWeighted5(pool3, ctx.rng);
   if (f) for (const t of f.t) ctx.drawn.add(t);
   return f;
@@ -81417,7 +82052,7 @@ function place2(ctx) {
   return void 0;
 }
 function token4(ctx, name, shape, kind) {
-  var _a2, _b;
+  var _a2, _b, _c, _d;
   const rng = ctx.rng;
   switch (name) {
     case "form":
@@ -81438,7 +82073,11 @@ function token4(ctx, name, shape, kind) {
       return ctx.collQual = q;
     }
     case "landIdentity": {
-      const p = pickWeighted5(REALM_DATA.landIdentity.map((s) => [s.p, s.w]), rng);
+      const live4 = REALM_DATA.landIdentity.filter((s) => [...s.p.matchAll(/\{(\w+)\}/g)].every((m) => {
+        var _a3, _b2;
+        return ((_b2 = (_a3 = ctx.lists.get(m[1])) == null ? void 0 : _a3.length) != null ? _b2 : 1) > 0;
+      }));
+      const p = pickWeighted5(live4.map((s) => [s.p, s.w]), rng);
       return renderTokens3(ctx, p, shape, kind);
     }
     case "place":
@@ -81449,12 +82088,12 @@ function token4(ctx, name, shape, kind) {
       if (ctx.mode === "placeholders" || !REALM_DATA.dynastyCultures.includes(ctx.culture)) return "[dynasty]";
       return gnWord(ctx, "house");
     case "star":
-      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : groupStarIn("any", "invented", rng);
+      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : groupStarIn((_c = ctx.scale) != null ? _c : "any", "invented", rng);
     case "commRegion":
       return groupCommRegion(ctx.era === "NF" || ctx.era === "IS" ? "SF" : ctx.setting, rng);
     case "spaceLand": {
       const w = gnWord(ctx, "spaceLand", void 0, "SF");
-      return w && rng() < 0.3 ? groupSpacePrefix(w, rng) : w;
+      return w && rng() < 0.3 ? groupSpacePrefix(w, rng, (_d = ctx.scale) != null ? _d : "any") : w;
     }
     case "tribal": {
       if (ctx.mode === "placeholders") return "[people]";
@@ -81522,7 +82161,7 @@ function tribalPool(tradition, biome, terrain, custom) {
   return found;
 }
 function generateRealmNames(options) {
-  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
+  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
@@ -81541,19 +82180,24 @@ function generateRealmNames(options) {
   }
   const biome = (_j = (_i = options.biomeData) != null ? _i : findBiome(!options.biome || options.biome === "homeland" ? homelandBiome(culture) : options.biome)) != null ? _j : findBiome("temperate");
   const terrain = (_k = options.terrain) != null ? _k : "any";
-  const lists = identityLists(biome, terrain);
+  const spaceOk = !biome.space || era === "NF" || era === "IS";
+  if (!spaceOk) notices.push("Space biomes need the near-future or interstellar era; using their homeland.");
+  const landBiome = spaceOk ? biome : (_l = findBiome(homelandBiome(culture))) != null ? _l : findBiome("temperate");
+  const scale = landBiome.space ? landBiome.scale : void 0;
+  const lists = identityLists(landBiome, spaceOk ? terrain : "any");
   const chosen = options.character ? REALM_CHARACTERS.find((c) => c.key === options.character) : void 0;
   if (options.character && !chosen) notices.push(`\u201C${options.character}\u201D isn't a realm character; using any.`);
   const characters = REALM_CHARACTERS.map((c) => {
     var _a3, _b2;
     return [c.key, c.w * ((_b2 = (_a3 = c.eraMult) == null ? void 0 : _a3[era]) != null ? _b2 : 1)];
   }).filter(([, w]) => w > 0);
-  const guards = (_l = options.safeguards) != null ? _l : { block: REALM_DATA.safeguards.block, flag: REALM_DATA.safeguards.flag, flagListBlocks: REALM_DATA.safeguards.flagListBlocks };
+  const guards = (_m = options.safeguards) != null ? _m : { block: REALM_DATA.safeguards.block, flag: REALM_DATA.safeguards.flag, flagListBlocks: REALM_DATA.safeguards.flagListBlocks };
   const pools = /* @__PURE__ */ new Map();
   const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock));
   const tribal = () => {
-    var _a3;
-    const pool3 = tribalPool((_a3 = REALM_DATA.tribal[culture]) != null ? _a3 : "general", biome, terrain, options.biomeData);
+    var _a3, _b2;
+    const peopleBiome = landBiome.space ? (_a3 = findBiome(homelandBiome(culture))) != null ? _a3 : findBiome("temperate") : biome;
+    const pool3 = tribalPool((_b2 = REALM_DATA.tribal[culture]) != null ? _b2 : "general", peopleBiome, landBiome.space ? "any" : terrain, landBiome.space ? void 0 : options.biomeData);
     return pool3.length > 0 ? pickOne3(pool3, rng) : void 0;
   };
   const namedForWeights = (character) => Object.entries(REALM_DATA.namedForWeights[character]).filter(([k]) => namedForOffered(k, REALM_ERAS.find((e) => e.code === era).key)).map(([k, w]) => {
@@ -81594,7 +82238,7 @@ function generateRealmNames(options) {
   function build(character, choice) {
     var _a3, _b2, _c2, _d2;
     const { shape, kind } = choice;
-    const ctx = { rng, setting, era, culture, character, tone, mode, biome, lists, pools, tribal, drawn: /* @__PURE__ */ new Set(), values: /* @__PURE__ */ new Map() };
+    const ctx = { rng, setting, era, culture, character, tone, mode, biome: landBiome, lists, pools, tribal, drawn: /* @__PURE__ */ new Set(), values: /* @__PURE__ */ new Map(), scale };
     if (/\{(form|federalForm)\}/.test(shape.p)) {
       const keep = shape.p.includes("{federalForm}") ? (f) => f.g === "federal" && !f.peoplesOnly : kind === "dynasty" ? DYNASTY : kind === "people" ? PEOPLES : shape.groups ? (f) => shape.groups.includes(f.g) && PLAIN_FORM(f) : shape.p.includes("{modifier}") ? (f) => PLAIN_FORM(f) && (compatibleModifiers(f.w, era).length > 0 || ideologyFor(f.w, era)) : PLAIN_FORM;
       ctx.form = drawForm(ctx, keep);
@@ -81786,10 +82430,21 @@ function realmSentence(state, limits) {
       field: "biome",
       text: biome ? biome.phrase : "their homeland",
       title: (_d = biome == null ? void 0 : biome.guide) != null ? _d : "Their homeland: the culture's own land",
-      choices: [{ id: void 0, label: "Their homeland" }, ...limits.biomes.map((b) => {
-        var _a3, _b2;
-        return { id: (_b2 = (_a3 = b.custom) == null ? void 0 : _a3.path) != null ? _b2 : b.id, label: b.label };
-      })],
+      choices: [
+        { id: void 0, label: "Their homeland" },
+        ...limits.biomes.map((b) => {
+          var _a3, _b2;
+          return { id: (_b2 = (_a3 = b.custom) == null ? void 0 : _a3.path) != null ? _b2 : b.id, label: b.label };
+        }),
+        // Stellar brief §7.1: in the near future and interstellar eras, the space biomes under a Space heading
+        // (the near future offers only the planetary system and the star system).
+        ...(state.era === "nearFuture" || state.era === "interstellar" ? SPACE_BIOMES.filter((b) => state.era === "interstellar" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({
+          id: b.id,
+          label: b.label,
+          title: b.guide,
+          ...i === 0 ? { heading: "Space" } : {}
+        }))
+      ],
       current: state.biome
     });
     out.push(" ");
@@ -81854,10 +82509,16 @@ function chooseRealm(state, field, id, findBiome2) {
     case "character":
       next.character = id;
       break;
-    case "era":
+    case "era": {
       next.era = id != null ? id : "medieval";
       if (next.namedFor === "stars" && !namedForOffered("stars", next.era)) next.namedFor = "anything";
+      const chosen = findBiome2(next.biome);
+      if ((chosen == null ? void 0 : chosen.space) && !(next.era === "interstellar" || next.era === "nearFuture" && (chosen.scale === "Pl" || chosen.scale === "Sy"))) {
+        next.biome = void 0;
+        next.terrain = "any";
+      }
       break;
+    }
     case "genre":
       next.genre = id != null ? id : "fantasy";
       break;
@@ -84071,7 +84732,16 @@ var settlement_vocab_default = {
         { w: "Landing Tower", e: ["NF", "IS"] },
         { w: "Reactor Hall", e: ["NF", "IS"] },
         { w: "Observation Ring", e: ["NF", "IS"] },
-        { w: "Archive Core", e: ["NF", "IS"] }
+        { w: "Archive Core", e: ["NF", "IS"] },
+        { w: "Relay Mast", e: ["NF", "IS"] },
+        { w: "Beacon", e: ["NF", "IS"] },
+        { w: "Dock Ring", e: ["NF", "IS"] },
+        { w: "Ice Works", e: ["NF", "IS"] },
+        { w: "Refinery", e: ["NF", "IS"] },
+        { w: "Shipyard", e: ["NF", "IS"] },
+        { w: "Array", e: ["NF", "IS"] },
+        { w: "Tether Head", e: ["NF", "IS"] },
+        { w: "Ladder Foot", e: ["NF", "IS"] }
       ]
     },
     eastVirtue: {
@@ -84441,7 +85111,9 @@ var settlement_vocab_default = {
       entries: [
         { w: "Gate Wars", e: ["IS"] },
         { w: "War of the Long Night", e: ["NF", "IS"] },
-        { w: "Brothers' War" }
+        { w: "Brothers' War" },
+        { w: "Belt War", e: ["NF", "IS"] },
+        { w: "Ring War", e: ["NF", "IS"] }
       ]
     },
     "eventFixed:battle": {
@@ -84458,7 +85130,8 @@ var settlement_vocab_default = {
     },
     "eventFixed:migration": {
       entries: [
-        { w: "First Contact", t: ["strange"], e: ["NF", "IS"] }
+        { w: "First Contact", t: ["strange"], e: ["NF", "IS"] },
+        { w: "Great Crossing", e: ["IS"] }
       ]
     },
     "eventFixed:disaster": {
@@ -84470,7 +85143,8 @@ var settlement_vocab_default = {
       entries: [
         { w: "Collapse", t: ["strange"], e: ["NF", "IS"] },
         { w: "Long Night", t: ["strange"], e: ["NF", "IS"] },
-        { w: "Silence", t: ["strange"], e: ["NF", "IS"] }
+        { w: "Silence", t: ["strange"], e: ["NF", "IS"] },
+        { w: "Gate Fall", t: ["strange"], e: ["IS"] }
       ]
     },
     "eventFixed:era": {
@@ -84642,6 +85316,11 @@ var settlement_vocab_default = {
         { w: "Asteroid", e: ["NF", "IS"] },
         { w: "Derelict", e: ["NF", "IS"] },
         { w: "Station Shrine", e: ["NF", "IS"] },
+        { w: "Comet", e: ["NF", "IS"] },
+        { w: "Star", e: ["NF", "IS"] },
+        { w: "Ring", e: ["NF", "IS"] },
+        { w: "Wreck", e: ["NF", "IS"] },
+        { w: "Beacon", e: ["NF", "IS"] },
         { w: "Floating Island", h: true },
         { w: "Sky Well", h: true }
       ]
@@ -86206,7 +86885,9 @@ var street_names_default = {
       { p: "Spine {greek}", w: 10, e: ["NF", "IS"] },
       { p: "Ring Road", w: 10, e: ["NF", "IS"] },
       { p: "{directionAdj} Promenade", w: 10, e: ["NF", "IS"] },
-      { p: "Spinward Walk", w: 10, e: ["NF", "IS"] },
+      { p: "{stationDirection} Walk", w: 10, e: ["NF", "IS"] },
+      { p: "{stationDirection} Concourse", w: 5, e: ["NF", "IS"] },
+      { p: "Hubward Lift", w: 5, e: ["NF", "IS"] },
       { p: "Hydroponics Row", w: 10, e: ["NF", "IS"] },
       { p: "Reactor Lane", w: 10, e: ["NF", "IS"], t: ["grim"] },
       { p: "Gravity Street", w: 10, e: ["NF", "IS"], t: ["light"] },
@@ -86361,8 +87042,7 @@ var street_names_default = {
     shapes: [
       { p: "Deck {n}", w: 10, e: ["NF", "IS"] },
       { p: "{ordinal} Ring", w: 10, e: ["NF", "IS"] },
-      { p: "Spinward Sector", w: 10, e: ["NF", "IS"] },
-      { p: "Antispinward Sector", w: 10, e: ["NF", "IS"] },
+      { p: "{stationDirection} Sector", w: 20, e: ["NF", "IS"] },
       { p: "Hab Block {greek}", w: 10, e: ["NF", "IS"] },
       { p: "Undercity", w: 10, e: ["NF", "IS"] },
       { p: "Upper Spire", w: 10, e: ["NF", "IS"] },
@@ -86432,7 +87112,7 @@ var LIGHT_OR_GRIM2 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var CASTE = /* @__PURE__ */ new Set(["indian", "west-african"]);
 var TRADE_TOKENS = /\{(trade|tradeSg)[}:]/;
 var POOL_OF2 = { sw: "streetWord", aw: "alleyWord", dw: "districtWord" };
-var SF_LISTS2 = /* @__PURE__ */ new Set(["star", "greek"]);
+var SF_LISTS2 = /* @__PURE__ */ new Set(["star", "greek", "stationDirection"]);
 var where = (ctx, region = ctx.region) => ({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region });
 function vocabPool2(ctx, pool3, region = ctx.region) {
   return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, where(ctx, region))).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(e.t))).map(([e, w]) => {
@@ -86623,6 +87303,7 @@ function token6(ctx, name, alt, pattern) {
       return String(1 + Math.floor(rng() * 40));
     case "greek":
     case "star":
+    case "stationDirection":
       return gnWord3(ctx, name);
     case "landmark":
       return landmark(ctx);
@@ -89065,6 +89746,8 @@ function buildContext(o, rng) {
       genre: groupGenreFor(o.era),
       fantastic: o.fantastic,
       character: isFuture5(o.era) ? void 0 : "territorial",
+      // Stellar brief §8: a settlement on a planet is in a planetary system, a station in a star system.
+      ...isFuture5(o.era) && o.scale === "Pl" ? { biome: "planetary-system" } : isFuture5(o.era) && o.scale === "Sy" ? { biome: "star-system" } : {},
       output: "official",
       people: "invented",
       tone: o.tone,
@@ -89177,13 +89860,14 @@ function generateKit(options) {
   };
   const context = {
     ...buildContext(
-      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm },
+      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm, scale: isFuture6(o.era) ? o.position === "crossroads" ? "Sy" : "Pl" : void 0 },
       mulberry32(subSeed(o.seed, STEPS.context))
     ),
     effects: pos.effects
   };
   const keep = sectionsFor(o.contents, o.position, o.era);
-  const common = { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, tone: o.tone, people: o.people, vocab: options.vocab, context };
+  const kitScale = isFuture6(o.era) ? o.position === "crossroads" ? "Sy" : "Pl" : void 0;
+  const common = { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, tone: o.tone, people: o.people, vocab: options.vocab, context, ...kitScale ? { scale: kitScale } : {} };
   const used = /* @__PURE__ */ new Set([norm3(context.town)]);
   const sharedOk = (text) => {
     const n = norm3(text);
@@ -89250,8 +89934,9 @@ function generateKit(options) {
   const roadsWanted = want("roads");
   if (roadsWanted > 0 || keep.includes("streets") || keep.includes("inns")) {
     const roads = generateRouteNames({ ...common, series: true, count: Math.max(roadsWanted, 1), seed: seedFor("roads"), safeguards: g.route });
-    let through = roads.names.find((n) => THROUGH_KINDS.includes(n.kind));
-    for (const kind of through ? [] : THROUGH_KINDS) {
+    const throughKinds = kitScale === "Sy" ? ["space"] : THROUGH_KINDS;
+    let through = roads.names.find((n) => throughKinds.includes(n.kind));
+    for (const kind of through ? [] : throughKinds) {
       through = generateRouteNames({ ...common, kind, count: 1, seed: seedFor("roads") + 1 >>> 0, safeguards: g.route }).names.find((n) => n.kind === kind);
       if (through) break;
     }
@@ -89379,7 +90064,8 @@ function generateKit(options) {
           count: 1,
           seed: seedFor("groups") + index * 31 + t * 104729 >>> 0,
           safeguards: g.group,
-          context
+          context,
+          ...kitScale ? { scale: kitScale } : {}
         }).names[0];
         if (!n || used.has(norm3(n.text))) continue;
         used.add(norm3(n.text));
@@ -89475,7 +90161,8 @@ function parseModulePreset(content, fileName) {
       setting: (_b = values.setting) != null ? _b : "",
       description: body.trim(),
       tradition: pick4("tradition", d.tradition, (v) => !!findTradition(v)),
-      biome: pick4("biome", d.biome, (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
+      // Stellar brief §5.1: space biomes are never tribal biomes.
+      biome: pick4("biome", d.biome, (v) => v === "homeland" || !!findBiome(v) && !findBiome(v).space || /^\[\[.+\]\]$/.test(v)),
       terrain: pick4("terrain", d.terrain, (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
       register: pick4("register", d.register, (v) => TRIBAL_REGISTERS.includes(v)),
       groupType: pick4("groupType", d.groupType, (v) => v === "any" || TRIBAL_GROUP_TYPES.some((g) => g.key === v)),
@@ -96451,9 +97138,15 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     if (this.activeSection === "riverNames") return this.riverSetting === "british" ? void 0 : "river";
     if (this.activeSection === "placeShapes") {
       if (this.placeIsBritain()) return "britain";
-      if (this.placeIsWorld() && cultureUsesBiomes(this.worldCulture)) return `world:${this.worldCulture}`;
+      if (this.placeIsWorld()) return this.worldLandKey();
     }
     return void 0;
+  }
+  /** Stellar brief §12.3: the Interstellar era keeps its land under one key, shared by every culture. */
+  worldLandKey() {
+    const era = findEra(findCulture(this.worldCulture), this.worldEras[this.worldCulture]);
+    if (era.id === INTERSTELLAR_ERA) return "world:interstellar";
+    return cultureUsesBiomes(this.worldCulture) ? `world:${this.worldCulture}` : void 0;
   }
   /** A module's land choice (session only). */
   land(key2) {
@@ -96673,7 +97366,11 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       for (const c of list) {
         if (c.heading) {
           menu.addSeparator();
-          menu.addItem((item2) => item2.setTitle(c.heading).setDisabled(true));
+          menu.addItem((item2) => {
+            var _a2;
+            item2.setTitle(c.heading).setDisabled(true);
+            if (c.headingTip) (_a2 = item2.dom) == null ? void 0 : _a2.setAttribute("aria-label", c.headingTip);
+          });
         }
         menu.addItem(
           (item2) => item2.setTitle(c.label).setChecked(c.id === current).onClick(() => {
@@ -96685,6 +97382,46 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       }
       menu.showAtMouseEvent(event);
     });
+  }
+  /**
+   * Stellar brief §12.3: the Interstellar era's land clause. "‹all of space›" until a space biome is chosen; then
+   * "‹all› of ‹a sector›" or "‹the belts› of ‹a star system›". No earthly biomes and no Homeland.
+   */
+  spaceClause(sentence2, key2) {
+    var _a2;
+    const land = this.land(key2);
+    const biome = findBiome(land.biome, this.customBiomes);
+    const space = (biome == null ? void 0 : biome.space) ? biome : void 0;
+    const allOfSpace = { id: void 0, label: "all of space", title: "Each name is drawn at a scale of its own: a planet's moons, a star system, the local stars, a sector or the galaxy" };
+    if (!space) {
+      this.sentenceLink(
+        sentence2,
+        "all of space",
+        (_a2 = allOfSpace.title) != null ? _a2 : "",
+        () => [allOfSpace, ...SPACE_BIOMES.map((b) => ({ id: b.id, label: `all of ${b.phrase}`, title: b.guide }))],
+        void 0,
+        (id) => this.landStates[key2] = { biome: id, terrain: "any" }
+      );
+      return;
+    }
+    const terrains = availableTerrains(space);
+    this.sentenceLink(
+      sentence2,
+      land.terrain === "any" ? "all" : terrainPhrase(land.terrain, this.customBiomes),
+      "Terrain: the kind of space being named",
+      () => [{ id: "any", label: "all" }, ...terrains.map((t) => ({ id: t.id, label: terrainPhrase(t.id, this.customBiomes) }))],
+      land.terrain,
+      (id) => this.landStates[key2] = { ...this.land(key2), terrain: id != null ? id : "any" }
+    );
+    sentence2.appendText(" of ");
+    this.sentenceLink(
+      sentence2,
+      space.phrase,
+      space.guide,
+      () => [{ ...allOfSpace, label: "all of space" }, ...SPACE_BIOMES.map((b) => ({ id: b.id, label: b.phrase, title: b.guide }))],
+      space.id,
+      (id) => this.landStates[key2] = { biome: id, terrain: id === space.id ? this.land(key2).terrain : "any" }
+    );
   }
   /** "…set in ‹any part› of ‹unknown country›": the land phrases for a module's land key. */
   landClause(sentence2, key2, defaultPhrase, part, britainAsDefault) {
@@ -96771,8 +97508,13 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       );
       sentence2.appendText(" era");
     }
-    if (!cultureUsesBiomes(world.id)) return;
+    const worldEra = findEra(world, this.worldEras[world.id]);
+    if (!eraUsesLand(world.id, worldEra.id)) return;
     sentence2.appendText(", set in ");
+    if (worldEra.id === INTERSTELLAR_ERA) {
+      this.spaceClause(sentence2, "world:interstellar");
+      return;
+    }
     this.landClause(sentence2, `world:${world.id}`, "their homeland", "new-land", false);
   }
   /**
@@ -99876,7 +100618,8 @@ ${text}
     if (this.activeSection === "placeShapes") {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_d = this.seedInputEl) == null ? void 0 : _d.value) : void 0;
       const era = this.worldEras[this.worldCulture];
-      const land = cultureUsesBiomes(this.worldCulture) ? this.land(`world:${this.worldCulture}`) : DEFAULT_LAND;
+      const worldKey = this.worldLandKey();
+      const land = worldKey ? this.land(worldKey) : DEFAULT_LAND;
       const result2 = generateWorldPlaceNames({
         culture: this.worldCulture,
         era,
@@ -100988,7 +101731,7 @@ var NameForgeEditorModal = class extends import_obsidian13.Modal {
     const select = this.biomeBaseSelect;
     if (!select) return;
     select.empty();
-    for (const b of [BRITAIN, ...BIOMES]) select.createEl("option", { text: b.label, value: b.id });
+    for (const b of [BRITAIN, ...BIOMES, ...SPACE_BIOMES]) select.createEl("option", { text: b.label, value: b.id });
     for (const b of custom) select.createEl("option", { text: b.label, value: b.custom.path });
     const name = (_a2 = this.packNameInput) == null ? void 0 : _a2.value.trim().toLowerCase();
     const existing = custom.find((b) => b.label.toLowerCase() === name);
