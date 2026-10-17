@@ -11,7 +11,8 @@ const has = (text: string, word: string) => new RegExp(`(^|[^A-Za-z])${word}($|[
 
 test("world biomes: Homeland with Any terrain matches the snapshots", () => {
   for (const culture of WORLD_CULTURES) {
-    for (const era of culture.eras) {
+    // The Interstellar era (Stellar brief §12) was added after these snapshots; its own tests are in worldInterstellar.test.ts.
+    for (const era of culture.eras.filter((e) => e.id !== "interstellar")) {
       const names = generateWorldPlaceNames({ culture: culture.id, era: era.id, count: 20, seed: 1, terrain: "any" }).names;
       assert.deepEqual(plain(names), SNAP[`world ${culture.id} ${era.id}`], `${culture.id} ${era.id}`);
     }

@@ -112,7 +112,14 @@
     "colourdir": "colour",
     "holyword": "holy word",
     "new": "new thing",
-    "shape": "shape"
+    "shape": "shape",
+    "@land": "space feature",
+    "@region": "space region",
+    "@hab": "station word",
+    "@resource": "resource",
+    "@ordinal": "point",
+    "@star": "star",
+    "@direction": "direction"
   },
   "cultures": [
     {
@@ -192,6 +199,26 @@
             ["{aspiration}", 1],
             ["{place} Garden Village", 1]
           ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Fused compounds carried into space: homeland words on rings, wells and gaps; owners' stations and new homes.",
+          "lists": {
+            "place": ["{spec}+{gen}", "{spec}+{gen}", "{colour}+{gen}"]
+          },
+          "templates": [
+            ["{spec}+{@land}", 10],
+            ["{size} {spec}+{@land}", 3],
+            ["{name:pos} {@hab}", 4],
+            ["{name:pos} {@land}", 3],
+            ["New {place}", 3],
+            ["{place} {@hab}", 2],
+            ["{colour} {@region}", 2],
+            ["{saint:pos} {@hab}", 2],
+            ["{god:pos} {@land}", 1],
+            ["Home of {name:pos} People", 1]
+          ]
         }
       ]
     },
@@ -231,6 +258,29 @@
             ["{name:pos} {land}", 2],
             ["{status} {farm}", 2],
             ["The {landpl}", 1]
+          ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Owners' steadings, god-shrines and blunt space words: gap, ring, well, belt.",
+          "lists": {
+            "farm": ["Steading", "Steading", "Homestead", "Hold", "Shieling", "Habitat", "Toft"],
+            "holy": ["Shrine", "Temple", "Stone", "Beacon", "Ring"],
+            "meet": ["Ring", "Station", "Hall", "Dock", "Holm"]
+          },
+          "templates": [
+            ["{name:pos} {farm}", 7],
+            ["{adj} {@land}", 5],
+            ["{god:pos} {@land}", 4],
+            ["{animal} {@land}", 4],
+            ["{god:pos} {holy}", 2],
+            ["{animal}+{@land}", 2],
+            ["{adj}+{@land}", 2],
+            ["Assembly {meet}", 2],
+            ["{status} {farm}", 2],
+            ["The {@land:pl}", 1],
+            ["{name:pos} {@region}", 1]
           ]
         }
       ]
@@ -306,6 +356,28 @@
             ["Meadow of the Sons of {person}", 1],
             ["{saint:pos} Well", 1],
             ["{colour} Pool", 2]
+          ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Head-first naming carried into space: Church of, Cell of, Mouth of, Head of, Fort of.",
+          "lists": {
+            "god": ["Lugus", "Belenus", "Brigantia", "Taranis", "Epona", "Sulis"],
+            "saint": ["Mary", "David", "Patrick", "Columba", "Brigid", "Kentigern"],
+            "prep": ["in the", "by the", "beside the", "above the", "under the", "across the"]
+          },
+          "templates": [
+            ["Church of {saint}", 4],
+            ["Fort of {god}", 3],
+            ["Mouth of the {@land}", 3],
+            ["Head of the {@land}", 3],
+            ["Cell of {saint}", 2],
+            ["Fort of the {animal:pl}", 2],
+            ["{adj} {@hab}", 2],
+            ["{@land} of {god}", 2],
+            ["Church of {saint} {prep} {@land}", 2],
+            ["{@land} of the {animal:pl}", 2]
           ]
         }
       ]
@@ -391,6 +463,31 @@
             ["Valley of the {#river}", 1],
             ["{adj} Water", 1]
           ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Gods' harbours and shrines, emperors' colonies, forums of great men, and Lagrange points counted like milestones.",
+          "lists": {
+            "god": ["Jupiter", "Juno", "Minerva", "Mars", "Venus", "Mercury", "Apollo", "Diana"],
+            "person": ["Julius", "Claudius", "Flavius", "Livius", "Cornelius", "Sempronius", "Appius", "Aurelius"],
+            "emperor": ["Augustus", "Tiberius", "Claudius", "Vespasian", "Trajan", "Hadrian", "Antoninus", "Severus"],
+            "saint": ["Lawrence", "John", "Mark", "Peter", "Paul", "Michael", "Angelo", "Benedict"],
+            "homeland": ["Rome", "Naples", "Milan", "Genoa", "Venice", "Turin", "Florence", "Palermo"]
+          },
+          "templates": [
+            ["Harbour of {god}", 3],
+            ["Forum of {person}", 3],
+            ["Colony of {emperor}", 3],
+            ["At the {@ordinal} Point", 3],
+            ["Shrine of {god}", 2],
+            ["{emperor:pos} {@hab}", 2],
+            ["Camp at the {@land}", 2],
+            ["Mouth of the {@land}", 2],
+            ["New {homeland}", 2],
+            ["Saint {saint}", 1],
+            ["{@land} of {person}", 1]
+          ]
         }
       ]
     },
@@ -464,6 +561,32 @@
             ["{slot} {settle}", 2],
             ["{quality} {settle}", 1]
           ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Places named by position (the sunny side of the moon, sunward of the belt), by virtue and slogan, and frontier stations named as orders.",
+          "lists": {
+            "side": ["Sunny Side", "Shady Side", "Sunward Side", "North Side", "South Side"],
+            "direction": ["{@direction}", "{@direction}", "Central", "Northern", "Southern", "Eastern", "Western"],
+            "adv": ["Long", "Eternal", "Lasting", "Great", "Universal", "Continuing", "Restored", "Everlasting"],
+            "verb": ["Pacify", "Pacify", "Guard", "Subdue", "Calm", "Secure", "Hold"],
+            "far": ["Distant", "Frontier", "Far {@region}", "Outer {@region}", "Deep"],
+            "slot": ["Red Flag", "Red Star", "Liberation", "Victory", "Friendship", "Unity", "Vanguard", "New Life"]
+          },
+          "templates": [
+            ["{side} of the {@land}", 4],
+            ["{adv} {quality}", 3],
+            ["{verb} the {far}", 3],
+            ["{quality} {@hab}", 3],
+            ["{direction} Peace", 2],
+            ["{direction} Capital", 2],
+            ["{beast} {@land}", 2],
+            ["{slot} {@hab}", 2],
+            ["{material} Gate", 1],
+            ["Mount {mountain}", 1],
+            ["{quality} {@region}", 1]
+          ]
         }
       ]
     },
@@ -527,6 +650,31 @@
             ["Oasis of {god}", 1],
             ["Little City of {ggod}", 1],
             ["Upper City of the {sacred:pl}", 1]
+          ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Houses, horizons and seats of the gods on rings and moons; pharaohs' mansions; the gods' barques.",
+          "lists": {
+            "pharaoh": ["Ramesses", "Amenemhat", "Senusret", "Thutmose", "Amenhotep", "Sneferu", "Khufu", "Seti", "Merenptah", "Hatshepsut", "Mentuhotep", "Pepi", "Teti", "Sahure", "Khasekhemwy"],
+            "lord": ["{god}", "{god}", "{god}", "{pharaoh}"],
+            "sacred": ["Crocodile", "Ibis", "Falcon", "Cat", "Cobra", "Hippopotamus|Hippopotamuses", "Jackal", "Ram", "Bull", "Hare", "Oryx|Oryxes", "Vulture", "Scarab", "Lion", "Baboon", "Cow", "Ox|Oxen"],
+            "pair": ["Enduring", "Beautiful", "Mighty", "Pure", "Gleaming", "Great", "Established", "Shining", "Holy", "Exalted"],
+            "colour": ["White", "Black", "Red", "Gleaming", "Golden"]
+          },
+          "templates": [
+            ["House of {lord}", 4],
+            ["Horizon of {god}", 4],
+            ["{god:pos} {@hab}", 3],
+            ["Seat of {god}", 2],
+            ["{@land} of {god}", 2],
+            ["Mansion of {pharaoh}", 2],
+            ["{pair} and {pair}", 2],
+            ["Barque of {god}", 2],
+            ["Nome of the {sacred}", 1],
+            ["The {colour} Walls", 1],
+            ["{@land} of the {sacred:pl}", 1]
           ]
         }
       ]
@@ -593,6 +741,29 @@
             ["Town of the {holyname}", 1],
             ["Saint {saint} of the {animal:pl}", 1]
           ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Locative names in space: place of eagles, near the rings, in the navel of the moon, Tlaloc's well.",
+          "lists": {
+            "near": ["{@land:pl}", "{@land:pl}", "Sun", "Stars", "Ice", "Moon"],
+            "celestial": ["Moon", "Moon", "Sun", "Sky", "Stars", "Ring"],
+            "verb": ["Drinks", "Sings", "Rests", "Hunts", "Stands", "Cries", "Bathes", "Nests"],
+            "peak": ["Smoking", "Shining", "Sleeping", "Speaking", "Snowy", "Starry"]
+          },
+          "templates": [
+            ["Place of {animal:pl}", 4],
+            ["{animal} {@land}", 3],
+            ["Near the {near}", 2],
+            ["On the {@land}", 2],
+            ["In the Navel of the {celestial}", 2],
+            ["{god:pos} {@land}", 2],
+            ["Place of {plant:pl}", 2],
+            ["Where the {animal} {verb}", 1],
+            ["{peak} {@land}", 1],
+            ["Where {plant:pl} Abound", 1]
+          ]
         }
       ]
     },
@@ -634,6 +805,27 @@
             ["{adj} Water", 1],
             ["River of the {animal:pl}", 2],
             ["{animal} River", 2]
+          ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "One invented people-name per batch feeds space, place and royal-station names, so a batch reads as one region.",
+          "lists": {
+            "noun": ["Smoke", "Ice", "Light", "Star", "Ring", "Mist"]
+          },
+          "templates": [
+            ["Land of the {#people}", 4],
+            ["{@region} of the {#people}", 3],
+            ["Place of the {#people}", 3],
+            ["Place of {event}", 3],
+            ["Royal Enclosure of {#ruler}", 2],
+            ["{#ruler:pos} {@hab}", 2],
+            ["{@land} of the {animal:pl}", 2],
+            ["At the {@land}", 2],
+            ["The {noun} That {verb}", 1],
+            ["{adj} {@land}", 1],
+            ["Grave of {#ruler}", 1]
           ]
         }
       ]
@@ -727,6 +919,37 @@
             ["Hammer and Sickle", 1],
             ["{ideal} Path", 1]
           ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "New towns and princes' possessives, tsars' glory on the frontier, and Soviet-style closed stations known by number.",
+          "lists": {
+            "town": ["Town", "Station", "Settlement", "Habitat", "Fort"],
+            "region": ["{@region}", "{@region}", "Stars", "Frontier", "East"],
+            "closed": ["Star Town", "Ice Town", "Ring Town", "White Town", "Salt Town", "Iron Town"],
+            "red": ["Star", "Ring", "Dawn", "Banner", "Guard", "Moon"],
+            "monarch": ["Peter", "Catherine", "Elizabeth", "Paul", "Alexander", "Nicholas", "Anna", "Maria", "Michael", "Alexis", "Constantine"],
+            "material": ["Pitch", "Salt", "Iron", "Wax", "Birch-bark", "Oak", "Clay", "Stone", "Honey", "Fur"],
+            "ideal": ["Red", "October", "Victory", "Labour", "Friendship", "Peace", "Freedom", "Dawn", "Progress", "Pioneer", "Proletarian", "Komsomol"],
+            "num": ["7", "9", "12", "16", "18", "26", "31", "40", "44", "45", "65", "70"]
+          },
+          "markov": {
+            "hero": {"corpus": ["Kirov", "Kuibyshev", "Sverdlov", "Molotov", "Zhdanov", "Voroshilov", "Frunze", "Dzerzhinsky", "Budyonny", "Kalinin", "Ordzhonikidze", "Chkalov", "Gorky", "Chapayev", "Shchors", "Kotovsky", "Lazo", "Uritsky", "Volodarsky", "Bauman", "Kosarev", "Krupskaya", "Zhukov", "Kurchatov", "Gagarin", "Tereshkova", "Pavlov", "Michurin", "Lomonosov", "Mayakovsky", "Ostrovsky", "Fadeyev", "Stakhanov", "Papanin", "Shmidt", "Artyom", "Nogin", "Babushkin", "Zinoviev", "Kamenev", "Lenin", "Stalin", "Trotsky", "Ulyanov", "Brezhnev", "Khrushchev", "Andropov", "Chernenko", "Beria", "Yezhov", "Kaganovich", "Mikoyan", "Suslov", "Kosygin", "Gorbachev", "Tukhachevsky"], "min": 4, "max": 10, "label": "revolutionary"}
+          },
+          "templates": [
+            ["New {town}", 3],
+            ["{ideal} {@hab}", 3],
+            ["{prince:pos} {@hab}", 2],
+            ["Glory of {monarch}", 2],
+            ["Ruler of the {region}", 2],
+            ["{#hero:pos} {@hab}", 2],
+            ["{closed}-{num}", 2],
+            ["Red {red}", 2],
+            ["{material} {@hab}", 2],
+            ["Star Town", 1],
+            ["{animal} {@land}", 1]
+          ]
         }
       ]
     },
@@ -806,6 +1029,40 @@
             ["Fortress of the {animal:pl}", 1],
             ["{king:pos} Hunting Ground", 1]
           ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Abodes of peace, mothers and fathers of things, gates of the stars; Persian gardens and kings' glory. Many star names are Arabic already.",
+          "lists": {
+            "mother": ["Moons", "Rings", "Wells", "Stars", "Springs", "Gardens", "Lights"],
+            "father": ["the Ice", "the Rings", "the Falcon", "the Lion", "the Stars"],
+            "gate": ["{@star}", "{@star}", "the Stars", "the Sun", "the Deep", "Iron", "Gold", "Victory", "Lamentation"],
+            "valley": ["Stones", "Gold", "Fire", "Ice", "Light"],
+            "abode": ["Peace", "Victory", "Safety", "Learning", "Kings", "Mercy", "Wisdom", "Plenty", "Faith"],
+            "epithet": ["Victorious", "Guarded", "Radiant", "White", "Green", "Red", "Round", "Shining", "Well-Protected", "Fortunate"],
+            "person": ["Tariq", "Musa", "Uqba", "Hasan", "Ali", "Umar", "Harun", "Jafar", "Mansur", "Rashid", "Abbas", "Khalid", "Saif", "Zubayda", "Fatima", "Yusuf", "Idris", "Qasim"],
+            "day": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday"],
+            "king": ["Shapur", "Ardashir", "Khosrow", "Kavad", "Bahram", "Darius", "Cyrus", "Peroz", "Yazdegerd", "Hormizd", "Narseh", "Shirin"],
+            "plant": ["Rose", "Flower", "Poplar", "Pomegranate", "Cypress", "Tulip", "Plane Tree", "Saffron|Saffron", "Vine"],
+            "num": ["Seven", "Three", "Forty", "Two", "Five"],
+            "water": ["Springs", "Wells", "Streams", "Channels"]
+          },
+          "templates": [
+            ["Abode of {abode}", 3],
+            ["Mother of {mother}", 3],
+            ["Gate of {gate}", 3],
+            ["Father of {father}", 2],
+            ["The {epithet}", 2],
+            ["Harbour of {person}", 2],
+            ["{king:pos} City", 2],
+            ["{plant} Garden", 2],
+            ["Camp of {person}", 1],
+            ["{day} Market", 1],
+            ["{@land} of {valley}", 1],
+            ["Glory of {king}", 1],
+            ["{num} {water}", 1]
+          ]
         }
       ]
     },
@@ -876,6 +1133,34 @@
             ["{god:pos} Town", 2],
             ["{surname} Town", 1]
           ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Gods' cities and abodes, sages' hermitages on lonely moons, the Unconquerable; founders' abodes and markets.",
+          "lists": {
+            "market": ["Ice", "Ore", "Grain", "Silk", "Spice", "Night"],
+            "city": ["Victory", "Elephants", "Flowers", "Lotuses", "Kings", "Gold", "Peacocks", "Learning", "Joy"],
+            "epithet": ["Unconquerable", "Victorious", "Fortunate", "Radiant", "Unshakable", "Many-Gated", "Luminous", "Eternal"],
+            "sage": ["Vasishtha", "Vishvamitra", "Agastya", "Bharadvaja", "Valmiki", "Gautama", "Kanva", "Atri", "Bhrigu", "Kapila"],
+            "plant": ["Basil", "Lotus", "Sandalwood", "Banyan", "Mango", "Kadamba", "Ashoka", "Teak", "Bamboo"],
+            "founder": ["Ahmad", "Haidar", "Murshid", "Faiz", "Aurangzeb", "Akbar", "Jahangir", "Tipu", "Firoz", "Ghazi", "Shahjahan", "Bahadur"],
+            "raja": ["Jai", "Udai", "Jodha", "Bika", "Raghu", "Man", "Ajit", "Sawai", "Bhoj", "Hari", "Kesari"]
+          },
+          "templates": [
+            ["{god:pos} City", 3],
+            ["City of {city}", 3],
+            ["The {epithet}", 2],
+            ["Abode of {god}", 2],
+            ["{sage:pos} Hermitage", 2],
+            ["{founder:pos} Abode", 2],
+            ["{raja:pos} {@hab}", 2],
+            ["{market} Market", 2],
+            ["{god:pos} {@land}", 2],
+            ["Between the {@land:pl}", 1],
+            ["{plant} Garden", 1],
+            ["{animal} City", 1]
+          ]
         }
       ]
     },
@@ -941,6 +1226,30 @@
             ["New {place}", 1],
             ["{kami} {feature}", 1]
           ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Modifier first and generic last: Long Ring, Gap Mouth; auspicious names, gates of the kami, and suburban hopes.",
+          "lists": {
+            "good": ["Fortune", "Peace", "Long Life", "Prosperity", "Treasure", "Gold", "Pine", "Crane", "Tortoise", "Blessing", "Harmony", "Pine Tree", "Thousand Years"],
+            "virtue": ["Peace", "Tranquillity", "Harmony", "Virtue", "Prosperity", "Longevity", "Brightness"],
+            "number": ["Eight", "Three", "Seven", "Five", "Hundred", "Thousand", "Ninety-Nine", "Two", "Nine"],
+            "pretty": ["Hope", "Cherry", "Plum", "Wisteria", "Star", "Sunny", "Green", "Rainbow", "Morning", "Lily", "Maple", "Camellia", "Bell", "Light"]
+          },
+          "templates": [
+            ["{adj} {@land}", 8],
+            ["{good} {@land}", 4],
+            ["{@land} Mouth", 3],
+            ["{animal} {@land}", 3],
+            ["Before {kami:pos} Gate", 2],
+            ["{pretty} {@hab}", 2],
+            ["{kami} {@land}", 1],
+            ["{number} {@land:pl}", 1],
+            ["{@hab} Front", 1],
+            ["Capital of {virtue} and {virtue}", 1],
+            ["Middle of the {@land}", 1]
+          ]
         }
       ]
     },
@@ -984,6 +1293,28 @@
             ["{person:pos} Camp", 1],
             ["Mosque of {person}", 1]
           ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Under the kapok tree, where the ring divides, Buktu's well, grove of Osun; towns of invented peoples, a batch at a time.",
+          "lists": {
+            "bend": ["Bends", "Widens", "Divides", "Narrows", "Ends", "Turns"],
+            "market": ["Salt", "Gold", "Ice", "Ore", "Night", "Cloth"]
+          },
+          "templates": [
+            ["{animal} {@land}", 3],
+            ["{person:pos} {@land}", 3],
+            ["Town of the {#people}", 3],
+            ["Under the {tree} Tree", 2],
+            ["Grove of {spirit}", 2],
+            ["{@region} of the {#people}", 2],
+            ["Where the {@land} {bend}", 2],
+            ["{market} Market", 2],
+            ["Beside the {@land}", 2],
+            ["{adj} {@land}", 2],
+            ["{@land} of {spirit}", 1]
+          ]
         }
       ]
     },
@@ -1023,6 +1354,24 @@
             ["Sky Place", 1],
             ["Where the {animal} Rises", 1]
           ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Big water, wells of peoples, emblem kingdoms; colour-directions on rings and gaps; seats of the gods.",
+          "templates": [
+            ["{colourdir} {@land}", 4],
+            ["{emblem} Kingdom", 3],
+            ["Well of the {people}", 2],
+            ["{holyword} {@land}", 2],
+            ["{animal} {@land}", 2],
+            ["Place of the {animal:pl}", 2],
+            ["{number} Stones", 2],
+            ["Seat of {god}", 2],
+            ["Big {@land}", 1],
+            ["{number} {@land:pl}", 1],
+            ["{god:pos} {@land}", 1]
+          ]
         }
       ]
     },
@@ -1061,6 +1410,24 @@
             ["{adj} Fortress", 1],
             ["Fortress of {virtue}", 1]
           ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Big Ring, Cauldron Moon, Ice Source; districts of virtue, and provinces that blend two districts.",
+          "templates": [
+            ["{adj} {@land}", 6],
+            ["{jvirtue} District", 4],
+            ["{shape} {@land}", 3],
+            ["{jvirtue}–{jvirtue} Province", 3],
+            ["{animal} {@land}", 2],
+            ["Temple of {buddhist}", 2],
+            ["Gate of {virtue}", 2],
+            ["{direction} {@region}", 1],
+            ["Sunward of the {@land}", 1],
+            ["{@resource} Source", 1],
+            ["{adj} Fortress", 1]
+          ]
         }
       ]
     },
@@ -1096,6 +1463,24 @@
             ["Place of the {animal:pl}", 2],
             ["Throne of {king}", 1],
             ["Gate of {holy}", 1]
+          ]
+        },
+        {
+          "id": "interstellar",
+          "label": "Interstellar",
+          "guide": "Mounts of light and of the saints, monasteries on far moons, churches cut from the rock; royal camps of the kings.",
+          "templates": [
+            ["Mount of {holy}", 3],
+            ["Mount of {saint}", 3],
+            ["{adj} {@land}", 3],
+            ["Monastery of {saint}", 2],
+            ["Church of {saint} in the Rock", 2],
+            ["New {new}", 2],
+            ["Royal Camp of {king}", 2],
+            ["{king:pos} {@hab}", 2],
+            ["Throne of {king}", 1],
+            ["Gate of {holy}", 1],
+            ["Place of the {animal:pl}", 1]
           ]
         }
       ]

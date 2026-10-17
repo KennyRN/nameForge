@@ -7,9 +7,13 @@
 // from it, as the river engine does.
 
 import worldData from "../data/world-place-names.json";
-import { type Biome, biomeTitleCase, biomeWords, BRITAIN, findBiome, pluralOf, shortWords, terrainWeights } from "../biomes";
+import { type Biome, biomeTitleCase, biomeWords, BRITAIN, findBiome, pluralOf, shortWords, spaceBiomeFor, terrainWeights } from "../biomes";
+import groupData from "../data/group-names.json";
 import { MarkovModel, mulberry32 } from "../markov";
 import { smoothJoin } from "../names/engine";
+import { hasSpaceBlock } from "../space/safeguards";
+import { drawScale, scaleFilter, SPACE_DATA, spaceDirections, type SpaceScale } from "../space/scale";
+import { drawStar } from "../space/stars";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -84,6 +88,12 @@ export function cultureUsesBiomes(cultureId: string): boolean {
   return WORLD_DATA.biomeSwaps.some((s) => s.culture === cultureId);
 }
 
+/** Stellar brief §12.3: the Interstellar era is set in space and always has a Land clause; other eras follow the culture. */
+export const INTERSTELLAR_ERA = "interstellar";
+export function eraUsesLand(cultureId: string, eraId: string | undefined): boolean {
+  return eraId === INTERSTELLAR_ERA || cultureUsesBiomes(cultureId);
+}
+
 /** Land brief §7.3: the swaps that describe land and water, the only ones a Homeland terrain uses. */
 const LAND_LISTS = new Set(["feature", "water", "peak"]);
 
@@ -143,7 +153,7 @@ export function possessive(word: string): string {
 
 // ── Templates ───────────────────────────────────────────────────────────────
 
-type Token = { kind: "slot"; key: string; form?: "pl" | "pos"; markov: boolean } | { kind: "text"; text: string } | { kind: "fuse" };
+type Token = { kind: "slot"; key: string; form?: "pl" | "pos"; markov: boolean; /** Stellar brief §12.5: a space slot, `{@land}`. */ space?: boolean } | { kind: "text"; text: string } | { kind: "fuse" };
 
 const templateCache = new Map<string, Token[]>();
 
@@ -152,10 +162,10 @@ export function parseTemplate(template: string): Token[] {
   let tokens = templateCache.get(template);
   if (tokens) return tokens;
   tokens = [];
-  for (const m of template.matchAll(/\{(#?)([\w-]+)(?::(pl|pos))?\}|\+|[^{+]+/g)) {
+  for (const m of template.matchAll(/\{([#@]?)([\w-]+)(?::(pl|pos))?\}|\+|[^{+]+/g)) {
     if (m[0] === "+") tokens.push({ kind: "fuse" });
     else if (m[2] !== undefined) {
-      tokens.push({ kind: "slot", key: m[2], form: m[3] as "pl" | "pos" | undefined, markov: m[1] === "#" });
+      tokens.push({ kind: "slot", key: m[2], form: m[3] as "pl" | "pos" | undefined, markov: m[1] === "#", ...(m[1] === "@" ? { space: true } : {}) });
     } else tokens.push({ kind: "text", text: m[0] });
   }
   templateCache.set(template, tokens);
@@ -202,13 +212,93 @@ export class WorldRenderer {
   private readonly markov: Record<string, MarkovSource>;
   private readonly pools = new Map<string, string[]>();
   private readonly notices = new Set<string>();
+  /** Stellar brief §12: whether this is the Interstellar era, and the scale and biome of the name being rendered. */
+  readonly interstellar: boolean;
+  private space: { scale: SpaceScale; biome: Biome; terrain?: string } | undefined;
 
   constructor(private readonly options: WorldOptions) {
     this.culture = findCulture(options.culture);
     this.era = findEra(this.culture, options.era);
+    this.interstellar = this.era.id === INTERSTELLAR_ERA;
     this.lists = { ...this.culture.lists, ...(this.era.lists ?? {}) };
     this.markov = { ...(this.culture.markov ?? {}), ...(this.era.markov ?? {}) };
-    this.buildSwaps();
+    // Stellar brief §12.3: an earthly biome has no meaning in space; §12.4: no biome swaps there either.
+    if (this.interstellar && options.biome && !options.biome.space) this.notices.add("The Interstellar era is set in space.");
+    if (!this.interstellar) this.buildSwaps();
+  }
+
+  /** Stellar brief §12.3: a scale for one name (drawn before its template), and that scale's biome. */
+  private drawSpace(rng: () => number) {
+    const chosen = this.options.biome?.space ? this.options.biome : undefined;
+    const scale = chosen?.scale ?? drawScale(undefined, rng);
+    const biome = chosen ?? spaceBiomeFor(scale);
+    const wanted = this.options.terrain;
+    const terrain = chosen && wanted && wanted !== "any" && biome.customTerrains?.some((t) => t.id === wanted) ? wanted : undefined;
+    return { scale, biome, terrain };
+  }
+
+  /** Stellar brief §12.5: one space slot, resolved from the name's scale and biome. */
+  private spaceSlot(token: Extract<Token, { kind: "slot" }>, rng: () => number): Piece {
+    const key = `@${token.key}`;
+    const state = this.space;
+    if (!this.interstellar || !state) {
+      this.notices.add(`Space slot {${key}} is only used in the Interstellar era.`);
+      return { text: `[${key}]`, etym: `[${key}]`, fusable: false };
+    }
+    const { scale, biome } = state;
+    const title = (w: string) => w.split(" ").map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+    let word: string;
+    let fusable = true;
+    switch (token.key) {
+      case "land": {
+        const terrain =
+          state.terrain ??
+          pickWeighted(
+            Object.entries(terrainWeights(biome, "any")).filter(([t, w]) => w > 0 && shortWords(biome, "land", t).length > 0),
+            rng,
+          );
+        const words = shortWords(biome, "land", terrain);
+        word = biomeTitleCase(pickWeighted(words.map(([e, w]): [string, number] => [e.modern, w]), rng).toLowerCase());
+        break;
+      }
+      case "region": {
+        const entries = scaleFilter(
+          (groupData as unknown as { lists: Record<string, { w: string; x?: number; s?: string[]; sc?: string[] }[]> }).lists.spaceLand.filter((e) => (!e.s || e.s.includes("SF")) && !e.w.includes(" ")),
+          scale,
+        );
+        word = pickWeighted(entries.map((e): [string, number] => [e.w, e.x ?? 1]), rng);
+        break;
+      }
+      case "hab": {
+        const gate = SPACE_DATA.worldHabGate;
+        const words = [...SPACE_DATA.worldHab, ...(scale === "Pl" || scale === "Sy" ? [] : [gate])];
+        word = pickWeighted(words, rng);
+        break;
+      }
+      case "resource":
+        word = title(pickUniform(biome.resources, rng)[0]);
+        break;
+      case "ordinal":
+        word = pickUniform(["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth"].slice(0, scale === "Pl" ? 5 : 12), rng);
+        fusable = false;
+        break;
+      case "star":
+        word = drawStar(scale, rng);
+        fusable = false;
+        break;
+      case "direction":
+        word = pickUniform(spaceDirections(scale), rng);
+        fusable = false;
+        break;
+      default:
+        this.notices.add(`No space slot "${key}".`);
+        return { text: `[${key}]`, etym: `[${key}]`, fusable: false };
+    }
+    let text = word;
+    if (token.form === "pl") text = title(pluralOf(word.toLowerCase()));
+    if (token.form === "pos") text = possessive(word);
+    const shown = token.form === "pos" ? word : text;
+    return { text, etym: `[${this.label(key)}: ${shown}]${token.form === "pos" ? possessiveTail(word) : ""}`, fusable: fusable && !/\s/.test(text) && token.form !== "pos" };
   }
 
   /** Land brief §7.3: the swaps for this batch, built once. */
@@ -259,11 +349,14 @@ export class WorldRenderer {
   }
 
   /** One name: a template by weight, rendered. */
-  name(rng: () => number): { text: string; etymology: string; template: string } {
+  name(rng: () => number): { text: string; etymology: string; template: string; scale?: SpaceScale } {
+    // Stellar brief §12.3: the scale is drawn on the batch stream before the template.
+    this.space = this.interstellar ? this.drawSpace(rng) : undefined;
+    const scale = this.space?.scale;
     const template = pickWeighted(this.era.templates, rng);
     const piece = this.render(template, rng, 0);
     const text = piece.text.charAt(0).toUpperCase() + piece.text.slice(1);
-    return { text, etymology: piece.etym, template };
+    return { text, etymology: piece.etym, template, ...(scale ? { scale } : {}) };
   }
 
   private label(key: string): string {
@@ -313,6 +406,7 @@ export class WorldRenderer {
 
   /** A list word, expanding any template held in the entry. */
   private slot(token: Extract<Token, { kind: "slot" }>, rng: () => number, depth: number): Piece {
+    if (token.space) return this.spaceSlot(token, rng);
     if (token.markov) {
       const name = this.markovName(token.key, rng);
       const text = token.form === "pos" ? possessive(name) : name;
@@ -402,6 +496,8 @@ export interface WorldName {
   text: string;
   etymology: string;
   template: string;
+  /** Stellar brief §12.3: the scale the name was drawn at (Interstellar era only). */
+  scale?: SpaceScale;
 }
 
 export interface WorldBatchResult {
@@ -423,6 +519,8 @@ export function generateWorldPlaceNames(options: WorldOptions & { count: number;
     const name = renderer.name(rng);
     const key = name.text.toLowerCase();
     if (seen.has(key)) continue;
+    // Stellar brief §10: a franchise phrase is redrawn within the attempt cap.
+    if (renderer.interstellar && hasSpaceBlock(name.text)) continue;
     seen.add(key);
     names.push(name);
   }
@@ -435,5 +533,7 @@ export function generateWorldPlaceNames(options: WorldOptions & { count: number;
 export function worldHistoryLabel(base: string, cultureId: string, eraId?: string): string {
   const culture = findCulture(cultureId);
   const era = findEra(culture, eraId);
-  return culture.eras.length > 1 ? `${base} · ${culture.label} · ${era.label}` : `${base} · ${culture.label}`;
+  // Stellar brief §12.2: a culture that had one era keeps its old label; the Interstellar era always shows.
+  const shown = culture.eras.filter((e) => e.id !== INTERSTELLAR_ERA).length > 1 || era.id === INTERSTELLAR_ERA;
+  return shown ? `${base} · ${culture.label} · ${era.label}` : `${base} · ${culture.label}`;
 }

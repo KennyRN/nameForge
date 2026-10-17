@@ -23,7 +23,8 @@ test("world: first and second releases plus the expansion pool: sixteen cultures
       "west-african", "maya", "korean", "ethiopian",
     ],
   );
-  assert.equal(ERAS.length, 27);
+  // Stellar brief §12: every culture gained an Interstellar era.
+  assert.equal(ERAS.length, 43);
 });
 
 test("world: every slot in every template and list entry resolves for its era", () => {
@@ -34,6 +35,12 @@ test("world: every slot in every template and list entry resolves for its era", 
     for (const template of templates) {
       for (const token of parseTemplate(template)) {
         if (token.kind !== "slot") continue;
+        // Stellar brief §12.5: a space slot is resolved by the engine, with a label of its own.
+        if (token.space) {
+          assert.equal(era.id, "interstellar", `${culture.id}/${era.id}: "${template}" uses a space slot outside the Interstellar era`);
+          assert.ok(WORLD_DATA.labels[`@${token.key}`], `no label for space slot "@${token.key}"`);
+          continue;
+        }
         const ok = token.markov ? !!markov[token.key] : (lists[token.key]?.length ?? 0) > 0;
         assert.ok(ok, `${culture.id}/${era.id}: "${template}" uses missing {${token.markov ? "#" : ""}${token.key}}`);
         if (!token.markov) assert.ok(WORLD_DATA.labels[token.key], `no label for list "${token.key}"`);

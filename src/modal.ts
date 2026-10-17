@@ -160,7 +160,7 @@ import {
   type TribalRegister,
 } from "./tribes/engine";
 import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/engine";
-import { cultureUsesBiomes, findCulture, findEra, generateWorldPlaceNames, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
+import { cultureUsesBiomes, eraUsesLand, findCulture, findEra, generateWorldPlaceNames, INTERSTELLAR_ERA, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
 import { CONTEXT_PHRASES, contextPhrasesFor, partsNote, traditionLabel } from "./colonialWording";
 import { RecipeEditorModal, type RecipeEditorOptions, RecipeWizard } from "./recipeEditor";
@@ -1260,9 +1260,16 @@ export class NameForgeModal extends Modal {
     if (this.activeSection === "riverNames") return this.riverSetting === "british" ? undefined : "river";
     if (this.activeSection === "placeShapes") {
       if (this.placeIsBritain()) return "britain";
-      if (this.placeIsWorld() && cultureUsesBiomes(this.worldCulture)) return `world:${this.worldCulture}`;
+      if (this.placeIsWorld()) return this.worldLandKey();
     }
     return undefined;
+  }
+
+  /** Stellar brief §12.3: the Interstellar era keeps its land under one key, shared by every culture. */
+  private worldLandKey(): string | undefined {
+    const era = findEra(findCulture(this.worldCulture), this.worldEras[this.worldCulture]);
+    if (era.id === INTERSTELLAR_ERA) return "world:interstellar";
+    return cultureUsesBiomes(this.worldCulture) ? `world:${this.worldCulture}` : undefined;
   }
 
   /** A module's land choice (session only). */
@@ -1514,6 +1521,46 @@ export class NameForgeModal extends Modal {
     });
   }
 
+  /**
+   * Stellar brief §12.3: the Interstellar era's land clause. "‹all of space›" until a space biome is chosen; then
+   * "‹all› of ‹a sector›" or "‹the belts› of ‹a star system›". No earthly biomes and no Homeland.
+   */
+  private spaceClause(sentence: HTMLElement, key: string) {
+    const land = this.land(key);
+    const biome = findBiome(land.biome, this.customBiomes);
+    const space = biome?.space ? biome : undefined;
+    const allOfSpace: SentenceChoice = { id: undefined, label: "all of space", title: "Each name is drawn at a scale of its own: a planet's moons, a star system, the local stars, a sector or the galaxy" };
+    if (!space) {
+      this.sentenceLink(
+        sentence,
+        "all of space",
+        allOfSpace.title ?? "",
+        () => [allOfSpace, ...SPACE_BIOMES.map((b): SentenceChoice => ({ id: b.id, label: `all of ${b.phrase}`, title: b.guide }))],
+        undefined,
+        (id) => (this.landStates[key] = { biome: id, terrain: "any" }),
+      );
+      return;
+    }
+    const terrains = availableTerrains(space);
+    this.sentenceLink(
+      sentence,
+      land.terrain === "any" ? "all" : terrainPhrase(land.terrain, this.customBiomes),
+      "Terrain: the kind of space being named",
+      () => [{ id: "any", label: "all" }, ...terrains.map((t) => ({ id: t.id, label: terrainPhrase(t.id, this.customBiomes) }))],
+      land.terrain,
+      (id) => (this.landStates[key] = { ...this.land(key), terrain: id ?? "any" }),
+    );
+    sentence.appendText(" of ");
+    this.sentenceLink(
+      sentence,
+      space.phrase,
+      space.guide,
+      () => [{ ...allOfSpace, label: "all of space" }, ...SPACE_BIOMES.map((b): SentenceChoice => ({ id: b.id, label: b.phrase, title: b.guide }))],
+      space.id,
+      (id) => (this.landStates[key] = { biome: id, terrain: id === space.id ? this.land(key).terrain : "any" }),
+    );
+  }
+
   /** "…set in ‹any part› of ‹unknown country›": the land phrases for a module's land key. */
   private landClause(sentence: HTMLElement, key: string, defaultPhrase: string, part: "organic" | "new-land" | "established", britainAsDefault: boolean) {
     const land = this.land(key);
@@ -1598,8 +1645,13 @@ export class NameForgeModal extends Modal {
       );
       sentence.appendText(" era");
     }
-    if (!cultureUsesBiomes(world.id)) return;
+    const worldEra = findEra(world, this.worldEras[world.id]);
+    if (!eraUsesLand(world.id, worldEra.id)) return;
     sentence.appendText(", set in ");
+    if (worldEra.id === INTERSTELLAR_ERA) {
+      this.spaceClause(sentence, "world:interstellar");
+      return;
+    }
     this.landClause(sentence, `world:${world.id}`, "their homeland", "new-land", false);
   }
 
@@ -4878,7 +4930,8 @@ export class NameForgeModal extends Modal {
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
       const era = this.worldEras[this.worldCulture];
       // Land brief §7: the culture's own land choice (Homeland and Any terrain change nothing).
-      const land = cultureUsesBiomes(this.worldCulture) ? this.land(`world:${this.worldCulture}`) : DEFAULT_LAND;
+      const worldKey = this.worldLandKey();
+      const land = worldKey ? this.land(worldKey) : DEFAULT_LAND;
       const result = generateWorldPlaceNames({
         culture: this.worldCulture,
         era,
