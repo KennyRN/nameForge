@@ -3,7 +3,7 @@
 // terrain›, ‹of any tone›, as ‹plain› names, giving ‹official names›, with ‹placeholders for› people and
 // places". Built as segments like the group sentence. No Obsidian imports.
 
-import { availableTerrains, type Biome, TERRAIN_CHOICES } from "../biomes";
+import { availableTerrains, type Biome, SPACE_BIOMES, TERRAIN_CHOICES } from "../biomes";
 import { type GroupGenre, type GroupPeople, type GroupToneChoice, GROUP_TONES, groupSetting, SETTING_PHRASES, TONE_PHRASES } from "../groups/engine";
 import { FANTASTIC_TEXT, GENRE_TEXT } from "../groups/sentence";
 import { namedForOffered, REALM_CHARACTERS, REALM_CULTURES, REALM_ERAS, REALM_NAMED_FOR, type RealmLength, type RealmNamedFor, type RealmOutput } from "./engine";
@@ -43,6 +43,9 @@ export type RealmField = "culture" | "character" | "era" | "genre" | "fantastic"
 export interface RealmChoice {
   id: string | undefined;
   label: string;
+  /** A disabled menu heading shown before this choice (the Space heading). */
+  heading?: string;
+  title?: string;
 }
 
 export type RealmSegment = string | { field: RealmField; text: string; title: string; choices: RealmChoice[]; current: string | undefined };
@@ -124,7 +127,18 @@ export function realmSentence(state: RealmSentenceState, limits: RealmSentenceLi
       field: "biome",
       text: biome ? biome.phrase : "their homeland",
       title: biome?.guide ?? "Their homeland: the culture's own land",
-      choices: [{ id: undefined, label: "Their homeland" }, ...limits.biomes.map((b) => ({ id: b.custom?.path ?? b.id, label: b.label }))],
+      choices: [
+        { id: undefined, label: "Their homeland" },
+        ...limits.biomes.map((b) => ({ id: b.custom?.path ?? b.id, label: b.label })),
+        // Stellar brief §7.1: in the near future and interstellar eras, the space biomes under a Space heading
+        // (the near future offers only the planetary system and the star system).
+        ...(state.era === "nearFuture" || state.era === "interstellar" ? SPACE_BIOMES.filter((b) => state.era === "interstellar" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i): RealmChoice => ({
+          id: b.id,
+          label: b.label,
+          title: b.guide,
+          ...(i === 0 ? { heading: "Space" } : {}),
+        })),
+      ],
       current: state.biome,
     });
     out.push(" ");
@@ -190,10 +204,17 @@ export function chooseRealm(state: RealmSentenceState, field: RealmField, id: st
     case "character":
       next.character = id;
       break;
-    case "era":
+    case "era": {
       next.era = id ?? "medieval";
       if (next.namedFor === "stars" && !namedForOffered("stars", next.era)) next.namedFor = "anything";
+      // Stellar brief §7.1: a space biome the new era lacks resets to the homeland.
+      const chosen = findBiome(next.biome);
+      if (chosen?.space && !(next.era === "interstellar" || (next.era === "nearFuture" && (chosen.scale === "Pl" || chosen.scale === "Sy")))) {
+        next.biome = undefined;
+        next.terrain = "any";
+      }
       break;
+    }
     case "genre":
       next.genre = (id as GroupGenre) ?? "fantasy";
       break;

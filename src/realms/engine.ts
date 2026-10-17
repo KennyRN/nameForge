@@ -5,6 +5,7 @@
 // No Obsidian imports.
 
 import { hasSpaceBlock } from "../space/safeguards";
+import { spaceDirections, type SpaceScale } from "../space/scale";
 import realmData from "../data/realms.json";
 import { availableTerrains, type Biome, biomeTitleCase, findBiome, pluralOf, terrainWords } from "../biomes";
 import { BYNAME_CULTURES, cultureAnimals, holyNamesIn, townSource } from "../bynames/engine";
@@ -109,6 +110,8 @@ interface RealmData {
   lists: Record<string, RealmEntry[]>;
   cultQualExtra: Record<string, string[]>;
   wordTones: Record<string, Record<string, GroupTone[]>>;
+  /** Stellar brief §7.2: form multipliers by scale, under a space biome. */
+  spaceForms: Record<string, Record<SpaceScale, number>>;
   landIdentity: { p: string; w: number }[];
   shapes: Record<"land" | "place" | "dynasty" | "stars" | "collective" | "people", RealmShape[]>;
   collectiveShare: number;
@@ -297,6 +300,8 @@ interface Ctx {
   modifier?: string;
   collNoun?: string;
   collQual?: string;
+  /** Stellar brief §7: the scale of a space biome, or undefined for a planet-bound realm. */
+  scale?: SpaceScale;
 }
 
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
@@ -310,6 +315,17 @@ function identityLists(biome: Biome, terrain: string): Map<string, [RealmEntry, 
   if (cached) return cached;
   const lists = new Map<string, [RealmEntry, number][]>();
   for (const [name, entries] of Object.entries(REALM_DATA.lists)) lists.set(name, entries.map((e): [RealmEntry, number] => [e, e.x ?? 1]));
+  // Stellar brief §7.1: a space biome gives its own land phrases, no water, and space directions.
+  if (biome.space && biome.scale) {
+    const chosenTerrains = terrain && terrain !== "any" ? [terrain] : availableTerrains(biome).map((t) => t.id);
+    const phrases = [...new Set(chosenTerrains.flatMap((t) => (biome.land[t] ?? []).map(([w]) => w)))];
+    lists.set("landPl", phrases.map((w): [RealmEntry, number] => [{ w }, 1]));
+    lists.set("waterPl", []);
+    lists.set("waterSg", []);
+    lists.set("compassAdj", spaceDirections(biome.scale).map((w): [RealmEntry, number] => [{ w }, 1]));
+    byTerrain.set(terrain, lists);
+    return lists;
+  }
   const terrains = terrain && terrain !== "any" ? [terrain] : availableTerrains(biome).map((t) => t.id);
   const add = { landPl: [] as string[], waterPl: [] as string[], waterSg: [] as string[] };
   for (const t of terrains) {
@@ -384,7 +400,7 @@ function listWord(ctx: Ctx, name: string, keep?: (w: string) => boolean): string
 
 /** GN lists with their setting tags and tones. */
 function gnWord(ctx: Ctx, name: string, keep?: (w: string) => boolean, setting = ctx.setting): string | undefined {
-  const pool = groupListWords(name, setting)
+  const pool = groupListWords(name, setting, ctx.scale ?? "any")
     .filter(([w]) => !keep || keep(w))
     .map(([w, n]): [string, number] => [w, n * toneFactor(gnWordTones(name, w), ctx.tone)])
     .filter(([, n]) => n > 0);
@@ -397,7 +413,7 @@ function gnWord(ctx: Ctx, name: string, keep?: (w: string) => boolean, setting =
 function drawForm(ctx: Ctx, keep: (f: FormChoice) => boolean): FormChoice | undefined {
   const pool = cultureForms(ctx.culture, ctx.era)
     .filter(([f]) => keep(f))
-    .map(([f, w]): [FormChoice, number] => [f, w * characterMult(ctx.character, f) * toneFactor(f.t, ctx.tone)])
+    .map(([f, w]): [FormChoice, number] => [f, w * characterMult(ctx.character, f) * toneFactor(f.t, ctx.tone) * (ctx.scale ? REALM_DATA.spaceForms[f.w]?.[ctx.scale] ?? 1 : 1)])
     .filter(([, w]) => w > 0);
   const f = pickWeighted(pool, ctx.rng);
   if (f) for (const t of f.t) ctx.drawn.add(t);
@@ -457,7 +473,9 @@ function token(ctx: Ctx, name: string, shape: RealmShape, kind: string): string 
       return (ctx.collQual = q);
     }
     case "landIdentity": {
-      const p = pickWeighted(REALM_DATA.landIdentity.map((s): [string, number] => [s.p, s.w]), rng)!;
+      // Stellar brief §7.1: a pattern whose list is empty (no water in space) drops out.
+      const live = REALM_DATA.landIdentity.filter((s) => [...s.p.matchAll(/\{(\w+)\}/g)].every((m) => (ctx.lists.get(m[1])?.length ?? 1) > 0));
+      const p = pickWeighted(live.map((s): [string, number] => [s.p, s.w]), rng)!;
       return renderTokens(ctx, p, shape, kind);
     }
     case "place":
@@ -469,13 +487,13 @@ function token(ctx: Ctx, name: string, shape: RealmShape, kind: string): string 
       return gnWord(ctx, "house");
     case "star":
       // §6.1: GN stars, plus Sol ×0.3; never a placeholder.
-      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : groupStarIn("any", "invented", rng);
+      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : groupStarIn(ctx.scale ?? "any", "invented", rng);
     case "commRegion":
       // Companies brief §9.2: GN's commodity coasts, in their sci-fi forms in the near future and beyond.
       return groupCommRegion(ctx.era === "NF" || ctx.era === "IS" ? "SF" : ctx.setting, rng);
     case "spaceLand": {
       const w = gnWord(ctx, "spaceLand", undefined, "SF");
-      return w && rng() < 0.3 ? groupSpacePrefix(w, rng) : w;
+      return w && rng() < 0.3 ? groupSpacePrefix(w, rng, ctx.scale ?? "any") : w;
     }
     case "tribal": {
       if (ctx.mode === "placeholders") return "[people]";
@@ -591,7 +609,12 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
   const biome =
     options.biomeData ?? findBiome(!options.biome || options.biome === "homeland" ? homelandBiome(culture) : options.biome) ?? findBiome("temperate")!;
   const terrain = options.terrain ?? "any";
-  const lists = identityLists(biome, terrain);
+  // Stellar brief §7.1: a space biome needs the near future or interstellar era; elsewhere the homeland stands.
+  const spaceOk = !biome.space || era === "NF" || era === "IS";
+  if (!spaceOk) notices.push("Space biomes need the near-future or interstellar era; using their homeland.");
+  const landBiome = spaceOk ? biome : findBiome(homelandBiome(culture)) ?? findBiome("temperate")!;
+  const scale: SpaceScale | undefined = landBiome.space ? landBiome.scale : undefined;
+  const lists = identityLists(landBiome, spaceOk ? terrain : "any");
   const chosen = options.character ? REALM_CHARACTERS.find((c) => c.key === options.character) : undefined;
   if (options.character && !chosen) notices.push(`“${options.character}” isn't a realm character; using any.`);
   const characters = REALM_CHARACTERS.map((c): [string, number] => [c.key, c.w * (c.eraMult?.[era] ?? 1)]).filter(([, w]) => w > 0);
@@ -601,7 +624,9 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
 
   // §6.4: the peoples, from a pool made once per tradition and land with a fixed seed (as GN towns are).
   const tribal = () => {
-    const pool = tribalPool(REALM_DATA.tribal[culture] ?? "general", biome, terrain, options.biomeData);
+    // Peoples have no meaning in a space biome's empty lists: a space realm names its people as at home.
+    const peopleBiome = landBiome.space ? findBiome(homelandBiome(culture)) ?? findBiome("temperate")! : biome;
+    const pool = tribalPool(REALM_DATA.tribal[culture] ?? "general", peopleBiome, landBiome.space ? "any" : terrain, landBiome.space ? undefined : options.biomeData);
     return pool.length > 0 ? pickOne(pool, rng) : undefined;
   };
 
@@ -647,7 +672,7 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
 
   function build(character: string, choice: { shape: RealmShape; kind: ShapeKind; nf: string; t: GroupTone[] }): RealmName | undefined {
     const { shape, kind } = choice;
-    const ctx: Ctx = { rng, setting, era, culture, character, tone, mode, biome, lists, pools, tribal, drawn: new Set(), values: new Map() };
+    const ctx: Ctx = { rng, setting, era, culture, character, tone, mode, biome: landBiome, lists, pools, tribal, drawn: new Set(), values: new Map(), scale };
     // Forms and collective nouns first: modifiers and qualifiers must suit them (§7).
     if (/\{(form|federalForm)\}/.test(shape.p)) {
       const keep = shape.p.includes("{federalForm}")

@@ -222,13 +222,15 @@ export function generateKit(options: KitOptions): Kit {
   // 1. Context (§3).
   const context: SettlementContext = {
     ...buildContext(
-      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm },
+      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm, scale: isFuture(o.era) ? (o.position === "crossroads" ? "Sy" : "Pl") : undefined },
       mulberry32(subSeed(o.seed, STEPS.context)),
     ),
     effects: pos.effects,
   };
   const keep = sectionsFor(o.contents, o.position, o.era);
-  const common = { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, tone: o.tone, people: o.people, vocab: options.vocab, context };
+  // Stellar brief §8: in the future eras the position sets the scale - a station is a star system, anywhere else a planet.
+  const kitScale: "Pl" | "Sy" | undefined = isFuture(o.era) ? (o.position === "crossroads" ? "Sy" : "Pl") : undefined;
+  const common = { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, tone: o.tone, people: o.people, vocab: options.vocab, context, ...(kitScale ? { scale: kitScale } : {}) };
 
   // §8.1: no name twice across sections (the road through town and the landmark back-links are
   // the same places by design, §8.2).
@@ -305,10 +307,12 @@ export function generateKit(options: KitOptions): Kit {
   const roadsWanted = want("roads");
   if (roadsWanted > 0 || keep.includes("streets") || keep.includes("inns")) {
     const roads = generateRouteNames({ ...common, series: true, count: Math.max(roadsWanted, 1), seed: seedFor("roads"), safeguards: g.route });
-    let through = roads.names.find((n) => THROUGH_KINDS.includes(n.kind));
+    // Stellar brief §8: a station keeps space lanes, so its road through town is one of them.
+    const throughKinds = kitScale === "Sy" ? ["space"] : THROUGH_KINDS;
+    let through = roads.names.find((n) => throughKinds.includes(n.kind));
     // A network of one other kind (pilgrim ways, motorways): one road, drove or trade route drawn
     // for the town, standing in for the last road (§8.2: the road through town is in Roads).
-    for (const kind of through ? [] : THROUGH_KINDS) {
+    for (const kind of through ? [] : throughKinds) {
       through = generateRouteNames({ ...common, kind, count: 1, seed: (seedFor("roads") + 1) >>> 0, safeguards: g.route }).names.find((n) => n.kind === kind);
       if (through) break;
     }
@@ -461,6 +465,7 @@ export function generateKit(options: KitOptions): Kit {
           seed: (seedFor("groups") + index * 31 + t * 104729) >>> 0,
           safeguards: g.group,
           context,
+          ...(kitScale ? { scale: kitScale } : {}),
         }).names[0];
         if (!n || used.has(norm(n.text))) continue;
         used.add(norm(n.text));

@@ -3179,5 +3179,105 @@
  "caps": {
   "plain": 8,
   "ceremonial": 14
+ },
+ "spaceForms": {
+  "Planetary Union": {
+   "Pl": 3,
+   "Sy": 2,
+   "Nb": 0.5,
+   "Se": 0.2,
+   "Ga": 0.1
+  },
+  "Orbital Republic": {
+   "Pl": 3,
+   "Sy": 1.5,
+   "Nb": 0.3,
+   "Se": 0.1,
+   "Ga": 0
+  },
+  "City-State": {
+   "Pl": 2,
+   "Sy": 1,
+   "Nb": 0.5,
+   "Se": 0.2,
+   "Ga": 0.1
+  },
+  "Free City": {
+   "Pl": 2,
+   "Sy": 1,
+   "Nb": 0.5,
+   "Se": 0.2,
+   "Ga": 0.1
+  },
+  "Metropolitan Authority": {
+   "Pl": 2,
+   "Sy": 1,
+   "Nb": 0.5,
+   "Se": 0.2,
+   "Ga": 0.1
+  },
+  "Free Zone": {
+   "Pl": 1.5,
+   "Sy": 1.5,
+   "Nb": 1,
+   "Se": 1,
+   "Ga": 1
+  },
+  "Development Zone": {
+   "Pl": 1.5,
+   "Sy": 1.5,
+   "Nb": 1,
+   "Se": 1,
+   "Ga": 1
+  },
+  "System Hegemony": {
+   "Pl": 0.5,
+   "Sy": 3,
+   "Nb": 1,
+   "Se": 0.3,
+   "Ga": 0.1
+  },
+  "Colonial Authority": {
+   "Pl": 1.5,
+   "Sy": 1.5,
+   "Nb": 1.5,
+   "Se": 1,
+   "Ga": 0.5
+  },
+  "Interstellar Federation": {
+   "Pl": 0,
+   "Sy": 0.3,
+   "Nb": 2,
+   "Se": 2,
+   "Ga": 1.5
+  },
+  "Stellar Commonwealth": {
+   "Pl": 0,
+   "Sy": 0.5,
+   "Nb": 2,
+   "Se": 1.5,
+   "Ga": 1
+  },
+  "Sector Government": {
+   "Pl": 0,
+   "Sy": 0,
+   "Nb": 1,
+   "Se": 3,
+   "Ga": 1
+  },
+  "Hegemony": {
+   "Pl": 0.5,
+   "Sy": 1,
+   "Nb": 1,
+   "Se": 1.5,
+   "Ga": 2
+  },
+  "Empire": {
+   "Pl": 0.5,
+   "Sy": 1,
+   "Nb": 1,
+   "Se": 1.5,
+   "Ga": 3
+  }
  }
 }

@@ -17,6 +17,7 @@ import {
 import { generateRealmNames, REALM_DATA, REALM_ERAS } from "../realms/engine";
 import { breaksRouteWords, findRouteCulture, personNames, routeBlockSet, routeNorm, routePlace, routeSetting, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, inCultureGroup, poolEntries, type Vocabulary } from "./vocab";
+import type { SpaceScale } from "../space/scale";
 import type { SettlementContext } from "./contextShared";
 import { deityCultureOffered, deityTitle, isChristianCulture } from "../deities/engine";
 
@@ -37,6 +38,8 @@ export interface ContextOptions {
   blocked?: (name: string) => boolean;
   vocab?: Vocabulary;
   realmSafeguards?: GroupSafeguards;
+  /** Stellar brief §8: the scale the kit's position implies (future eras); realms read it as a space biome. */
+  scale?: SpaceScale;
 }
 
 /** §7.2: the vessel culture for a route culture. */
@@ -124,6 +127,8 @@ export function buildContext(o: ContextOptions, rng: () => number): SettlementCo
       genre: groupGenreFor(o.era),
       fantastic: o.fantastic,
       character: isFuture(o.era) ? undefined : "territorial",
+      // Stellar brief §8: a settlement on a planet is in a planetary system, a station in a star system.
+      ...(isFuture(o.era) && o.scale === "Pl" ? { biome: "planetary-system" } : isFuture(o.era) && o.scale === "Sy" ? { biome: "star-system" } : {}),
       output: "official",
       people: "invented",
       tone: o.tone,
