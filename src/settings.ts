@@ -1,7 +1,40 @@
-import { App, Notice, PluginSettingTab, Setting } from "obsidian";
+import { App, Modal, Notice, PluginSettingTab, Setting } from "obsidian";
 import NameForgePlugin from "./main";
-import { findLegacyPackFolder, migratePacksToDefaultFolder, type LegacyPackFolderInfo } from "./migration";
-import { DEFAULT_NAMES_FOLDER, ensureVaultFolder } from "./paths";
+import { findLegacyPackFolder, migratePacksToConfiguredFolder, type LegacyPackFolderInfo } from "./migration";
+import { cleanFolderInput, commitFolderChoice, DEFAULT_NAMES_FOLDER, resolveNamesFolderPath } from "./paths";
+
+type FolderKey = "folderPath" | "settlementsFolder";
+
+/** Small yes/no prompt; resolves true only on "Create". */
+class ConfirmCreateFolderModal extends Modal {
+  private answered = false;
+
+  constructor(app: App, private readonly path: string, private readonly onAnswer: (create: boolean) => void) {
+    super(app);
+  }
+
+  onOpen(): void {
+    this.setTitle(`Create folder ‘${this.path}’?`);
+    this.contentEl.createEl("p", { text: "It does not exist yet." });
+    new Setting(this.contentEl)
+      .addButton((button) => button.setButtonText("Create").setCta().onClick(() => this.answer(true)))
+      .addButton((button) => button.setButtonText("Cancel").onClick(() => this.answer(false)));
+  }
+
+  onClose(): void {
+    this.answer(false);
+    this.contentEl.empty();
+  }
+
+  private answer(create: boolean): void {
+    if (this.answered) {
+      return;
+    }
+    this.answered = true;
+    this.onAnswer(create);
+    this.close();
+  }
+}
 
 export class NameForgeSettingTab extends PluginSettingTab {
   plugin: NameForgePlugin;
@@ -13,20 +46,26 @@ export class NameForgeSettingTab extends PluginSettingTab {
     void this.refreshLegacyFolder();
   }
 
+  /** Folder text typed but not yet committed with "Use folder". Never touches the vault. */
+  private pendingFolders: Partial<Record<FolderKey, string>> = {};
+
+  getControlValue(key: string): unknown {
+    if (key === "folderPath" || key === "settlementsFolder") {
+      return this.pendingFolders[key] ?? this.plugin.settings[key] ?? "";
+    }
+    return super.getControlValue(key);
+  }
+
   /**
    * Persist through the plugin's markdown config writer rather than raw saveData().
+   * Folder boxes only remember what was typed; "Use folder" commits it.
    */
   async setControlValue(key: string, value: unknown): Promise<void> {
-    if (key === "folderPath" && typeof value === "string") {
-      this.plugin.settings.folderPath = value;
-      if (value.trim()) {
-        await ensureVaultFolder(this.app, value.trim());
-        void this.refreshLegacyFolder();
-      }
-    } else if (key === "settlementsFolder" && typeof value === "string") {
-      // Settlement kit §9.3: created when a settlement note is first written.
-      this.plugin.settings.settlementsFolder = value.trim();
-    } else if (key === "faithfulness" && typeof value === "number") {
+    if ((key === "folderPath" || key === "settlementsFolder") && typeof value === "string") {
+      this.pendingFolders[key] = value;
+      return;
+    }
+    if (key === "faithfulness" && typeof value === "number") {
       this.plugin.settings.faithfulness = value;
     } else if (key === "strictness" && typeof value === "number") {
       this.plugin.settings.strictness = value;
@@ -34,6 +73,52 @@ export class NameForgeSettingTab extends PluginSettingTab {
       return;
     }
     await this.plugin.saveSettings();
+  }
+
+  private confirmCreate(path: string): Promise<boolean> {
+    return new Promise((resolve) => new ConfirmCreateFolderModal(this.app, path, resolve).open());
+  }
+
+  /** Commit the typed folder: use it if it exists, create it only after confirmation. */
+  private async useFolder(key: FolderKey): Promise<void> {
+    const typed = this.pendingFolders[key];
+    if (typed === undefined) {
+      new Notice("nameForge: type or pick a folder first.");
+      return;
+    }
+    try {
+      let chosen: string | null;
+      if (key === "settlementsFolder" && !typed.trim()) {
+        // Empty: back to the names folder plus /Settlements, created when a note is first written.
+        chosen = "";
+      } else {
+        chosen = await commitFolderChoice(this.app, typed, (path) => this.confirmCreate(path));
+      }
+      if (chosen === null) {
+        return;
+      }
+      this.plugin.settings[key] = chosen;
+      delete this.pendingFolders[key];
+      await this.plugin.saveSettings();
+      if (key === "folderPath") {
+        await this.refreshLegacyFolder();
+      }
+      this.update();
+      new Notice(`nameForge: using ${chosen || "the default settlements folder"}.`);
+    } catch (error) {
+      new Notice(`nameForge: ${error instanceof Error ? error.message : "could not use that folder"}`);
+    }
+  }
+
+  private useFolderRow(key: FolderKey) {
+    return {
+      name: "Use folder",
+      desc: "Typing above changes nothing until you press this.",
+      searchable: false,
+      render: (setting: Setting) => {
+        setting.addButton((button) => button.setButtonText("Use folder").onClick(() => void this.useFolder(key)));
+      },
+    };
   }
 
   getSettingDefinitions() {
@@ -49,6 +134,7 @@ export class NameForgeSettingTab extends PluginSettingTab {
           defaultValue: DEFAULT_NAMES_FOLDER,
         },
       },
+      this.useFolderRow("folderPath"),
       {
         name: "Settlements folder",
         desc: "Where the settlement kit's Create note writes settlement notes. Empty: the names folder plus /Settlements.",
@@ -60,6 +146,7 @@ export class NameForgeSettingTab extends PluginSettingTab {
           defaultValue: "",
         },
       },
+      this.useFolderRow("settlementsFolder"),
       {
         name: "Faithfulness",
         desc: "How closely generated names stick to your source list's letter patterns. Lower = more novel, higher = more true to source.",
@@ -85,10 +172,10 @@ export class NameForgeSettingTab extends PluginSettingTab {
         },
       },
       {
-        name: `Move packs to ${DEFAULT_NAMES_FOLDER}`,
+        name: `Move packs to ${this.configuredFolder()}`,
         desc: this.legacyFolder
-          ? `${this.legacyFolder.packCount} name pack(s) are still in “${this.legacyFolder.path}”. Move them into the Forge-family default folder.`
-          : `Move name packs into the Forge-family default folder (${DEFAULT_NAMES_FOLDER}).`,
+          ? `${this.legacyFolder.packCount} name pack(s) are still in “${this.legacyFolder.path}”. Move them into your names folder.`
+          : `Move name packs into your names folder (${this.configuredFolder()}).`,
         visible: () => this.legacyFolder != null,
         searchable: false,
         render: (setting: Setting) => {
@@ -99,7 +186,7 @@ export class NameForgeSettingTab extends PluginSettingTab {
           setting.addButton((button) =>
             button.setButtonText("Migrate").setCta().onClick(async () => {
               try {
-                const result = await migratePacksToDefaultFolder(
+                const result = await migratePacksToConfiguredFolder(
                   this.app,
                   this.plugin.settings,
                   legacy.path
@@ -117,6 +204,10 @@ export class NameForgeSettingTab extends PluginSettingTab {
         },
       },
     ];
+  }
+
+  private configuredFolder(): string {
+    return cleanFolderInput(resolveNamesFolderPath(this.plugin.settings.folderPath, this.plugin.settings.namesFilePath));
   }
 
   private async refreshLegacyFolder(): Promise<void> {

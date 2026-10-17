@@ -17,7 +17,47 @@ export function normalizeFolderPath(path?: string): string {
     return lastSlash > 0 ? configured.substring(0, lastSlash) : "";
   }
 
-  return configured.replace(/\/+$/, "");
+  return configured === "/" ? "/" : configured.replace(/\/+$/, "");
+}
+
+/**
+ * Tidy a folder value the user has chosen: trimmed, slashes normalised, no
+ * trailing slash. "" means nothing was chosen; "/" is the vault root.
+ */
+export function cleanFolderInput(input?: string): string {
+  const trimmed = (input || "").trim();
+  if (!trimmed) {
+    return "";
+  }
+  const normalised = normalizePath(trimmed);
+  return normalised === "/" ? "/" : normalised.replace(/\/+$/, "");
+}
+
+/**
+ * Take a folder value the user has deliberately committed. An existing folder
+ * is used as it is; a missing one is created only after `confirmCreate` agrees.
+ * Returns the path to store, or null when nothing should change.
+ */
+export async function commitFolderChoice(
+  app: App,
+  input: string,
+  confirmCreate: (path: string) => Promise<boolean>
+): Promise<string | null> {
+  const path = cleanFolderInput(input);
+  if (!path) {
+    return null;
+  }
+  if (path === "/" || app.vault.getFolderByPath(path)) {
+    return path;
+  }
+  if (app.vault.getAbstractFileByPath(path)) {
+    throw new Error(`A file already exists at ${path}`);
+  }
+  if (!(await confirmCreate(path))) {
+    return null;
+  }
+  await ensureVaultFolder(app, path);
+  return path;
 }
 
 export function resolveNamesFolderPath(folderPath?: string, namesFilePath?: string): string {

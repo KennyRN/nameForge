@@ -1,10 +1,10 @@
 // Bundles tests/*.test.ts with esbuild and runs them with Node's built-in test runner.
-// Only modules free of the `obsidian` import can be tested this way.
+// `obsidian` resolves to tests/stubs/obsidian.ts, a minimal stand-in.
 import esbuild from "esbuild";
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 
 const entryPoints = readdirSync("tests")
   .filter((file) => file.endsWith(".test.ts"))
@@ -18,6 +18,7 @@ try {
     bundle: true,
     platform: "node",
     format: "esm",
+    alias: { obsidian: resolve("tests", "stubs", "obsidian.ts") },
     outExtension: { ".js": ".mjs" },
     logLevel: "warning",
   });

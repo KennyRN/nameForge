@@ -37,11 +37,33 @@ export function normalizeSettingsFolder(settings: NameForgeSettings): NameForgeS
   };
 }
 
-export async function ensureDefaultNamesFolder(app: App, settings: NameForgeSettings): Promise<NameForgeSettings> {
-  const normalized = normalizeSettingsFolder(settings);
-  const folderPath = normalized.folderPath || DEFAULT_NAMES_FOLDER;
-  await ensureVaultFolder(app, folderPath);
-  return { ...normalized, folderPath };
+/** Folder choices live in data.json so loading never has to find them inside the folder itself. */
+export function folderSettingsData(settings: NameForgeSettings): { folderPath: string; settlementsFolder: string } {
+  return {
+    folderPath: resolveNamesFolderPath(settings.folderPath, settings.namesFilePath),
+    settlementsFolder: (settings.settlementsFolder || "").trim(),
+  };
+}
+
+/**
+ * Combine data.json with a configuration note. The folders in data.json win;
+ * a note's folders are used only when data.json has none (settings saved
+ * before the folders were stored there).
+ */
+export function mergeFolderSettings(
+  stored: Partial<NameForgeSettings> | null | undefined,
+  note: Partial<NameForgeSettings>,
+  current: NameForgeSettings
+): NameForgeSettings {
+  const hasStoredFolder = !!stored?.folderPath?.trim();
+  const hasStoredSettlements = stored != null && typeof stored.settlementsFolder === "string" && "settlementsFolder" in stored;
+  return normalizeSettingsFolder({
+    ...current,
+    ...note,
+    namesFilePath: note.namesFilePath || current.namesFilePath,
+    folderPath: hasStoredFolder ? current.folderPath : note.folderPath || current.folderPath,
+    settlementsFolder: hasStoredSettlements ? current.settlementsFolder : note.settlementsFolder ?? current.settlementsFolder,
+  });
 }
 
 async function countPacksInFolder(app: App, folder: TFolder): Promise<number> {
@@ -66,23 +88,20 @@ async function countPacksInFolder(app: App, folder: TFolder): Promise<number> {
 }
 
 /**
- * Detect a pack folder that still lives outside `_backstage/nameforge` so
- * settings can offer a one-click move. Checks the configured folder first,
- * then known legacy locations from earlier nameForge layouts.
+ * Detect a pack folder left over from an earlier nameForge layout so settings
+ * can offer a one-click move. Only the known legacy locations qualify, and
+ * never the folder the user has configured.
  */
 export async function findLegacyPackFolder(
   app: App,
   settings: NameForgeSettings
 ): Promise<LegacyPackFolderInfo | null> {
-  const candidates = [
-    resolveNamesFolderPath(settings.folderPath, settings.namesFilePath),
-    ...LEGACY_FOLDER_CANDIDATES,
-  ];
+  const configured = normalizeFolderPath(resolveNamesFolderPath(settings.folderPath, settings.namesFilePath));
 
   const seen = new Set<string>();
-  for (const candidate of candidates) {
+  for (const candidate of LEGACY_FOLDER_CANDIDATES) {
     const path = normalizeFolderPath(candidate);
-    if (!path || path === DEFAULT_NAMES_FOLDER || seen.has(path)) {
+    if (!path || path === configured || seen.has(path)) {
       continue;
     }
     seen.add(path);
@@ -119,17 +138,18 @@ function uniqueDestinationPath(app: App, folderPath: string, fileName: string): 
 
 /**
  * Move name packs (and the configuration note, if present) from a legacy
- * folder into `_backstage/nameforge`. Safe to re-run: skips files that would
- * collide by choosing a unique name, and no-ops when the source is already
- * the default.
+ * folder into the configured names folder. Safe to re-run: skips files that
+ * would collide by choosing a unique name, and no-ops when the source is the
+ * configured folder. The configured folder is left as it was.
  */
-export async function migratePacksToDefaultFolder(
+export async function migratePacksToConfiguredFolder(
   app: App,
   settings: NameForgeSettings,
   fromFolderPath: string
 ): Promise<{ moved: number; settings: NameForgeSettings }> {
   const sourcePath = normalizeFolderPath(fromFolderPath);
-  if (!sourcePath || sourcePath === DEFAULT_NAMES_FOLDER) {
+  const targetPath = normalizeFolderPath(resolveNamesFolderPath(settings.folderPath, settings.namesFilePath));
+  if (!sourcePath || sourcePath === targetPath) {
     return { moved: 0, settings };
   }
 
@@ -139,7 +159,7 @@ export async function migratePacksToDefaultFolder(
     return { moved: 0, settings };
   }
 
-  await ensureVaultFolder(app, DEFAULT_NAMES_FOLDER);
+  await ensureVaultFolder(app, targetPath);
 
   let moved = 0;
   const children = [...source.children];
@@ -161,7 +181,7 @@ export async function migratePacksToDefaultFolder(
       }
     }
 
-    const destination = uniqueDestinationPath(app, DEFAULT_NAMES_FOLDER, child.name);
+    const destination = uniqueDestinationPath(app, targetPath, child.name);
     if (normalizePath(previousPath) === destination) {
       continue;
     }
@@ -174,11 +194,10 @@ export async function migratePacksToDefaultFolder(
     }
   }
 
-  settings.folderPath = DEFAULT_NAMES_FOLDER;
   new Notice(
     moved > 0
-      ? `nameForge: moved ${moved} file(s) to ${DEFAULT_NAMES_FOLDER}`
-      : `nameForge: nothing to move into ${DEFAULT_NAMES_FOLDER}`
+      ? `nameForge: moved ${moved} file(s) to ${targetPath}`
+      : `nameForge: nothing to move into ${targetPath}`
   );
 
   return { moved, settings };

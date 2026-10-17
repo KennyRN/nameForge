@@ -2,7 +2,7 @@ import { normalizePath, Notice, Plugin, TFile } from "obsidian";
 import { NameForgeSettingTab } from "./settings";
 import { AgeingHistoryEntry, GenerationHistoryEntry, MAX_HISTORY_ENTRIES, NameForgeModal, NameForgeSettings } from "./modal";
 import { ICON_MEEPLE, registerNameForgeIcons } from "./icons";
-import { ensureDefaultNamesFolder, legacySettingsFileCandidates, normalizeSettingsFolder } from "./migration";
+import { folderSettingsData, legacySettingsFileCandidates, mergeFolderSettings, normalizeSettingsFolder } from "./migration";
 import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from "./paths";
 import { softConnectWithRetry } from "./hostConnectRetry";
 import { getStoryForgeHostApi } from "./storyforgeBridge";
@@ -458,23 +458,17 @@ export default class NameForgePlugin extends Plugin {
       }
 
       const parsed = parseSettingsMarkdownContent(content);
-      this.settings = normalizeSettingsFolder({
-        ...this.settings,
-        ...parsed,
-        namesFilePath: parsed.namesFilePath || this.settings.namesFilePath,
-        folderPath: parsed.folderPath || this.settings.folderPath,
-      });
+      this.settings = mergeFolderSettings(legacySettings, parsed, this.settings);
       break;
     }
-
-    this.settings = await ensureDefaultNamesFolder(this.app, this.settings);
   }
 
   async saveSettings() {
     this.settings = normalizeSettingsFolder(this.settings);
+    // data.json says where the folders are; the note inside holds the rest.
+    await this.saveData(folderSettingsData(this.settings));
     const settingsFilePath = getSettingsFilePath(this.settings);
     if (!settingsFilePath) {
-      await this.saveData(this.settings);
       return;
     }
 

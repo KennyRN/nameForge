@@ -1954,7 +1954,32 @@ function normalizeFolderPath(path) {
     const lastSlash = configured.lastIndexOf("/");
     return lastSlash > 0 ? configured.substring(0, lastSlash) : "";
   }
-  return configured.replace(/\/+$/, "");
+  return configured === "/" ? "/" : configured.replace(/\/+$/, "");
+}
+function cleanFolderInput(input) {
+  const trimmed = (input || "").trim();
+  if (!trimmed) {
+    return "";
+  }
+  const normalised = (0, import_obsidian.normalizePath)(trimmed);
+  return normalised === "/" ? "/" : normalised.replace(/\/+$/, "");
+}
+async function commitFolderChoice(app, input, confirmCreate) {
+  const path = cleanFolderInput(input);
+  if (!path) {
+    return null;
+  }
+  if (path === "/" || app.vault.getFolderByPath(path)) {
+    return path;
+  }
+  if (app.vault.getAbstractFileByPath(path)) {
+    throw new Error(`A file already exists at ${path}`);
+  }
+  if (!await confirmCreate(path)) {
+    return null;
+  }
+  await ensureVaultFolder(app, path);
+  return path;
 }
 function resolveNamesFolderPath(folderPath, namesFilePath) {
   return normalizeFolderPath(folderPath) || normalizeFolderPath(namesFilePath) || DEFAULT_NAMES_FOLDER;
@@ -2022,11 +2047,23 @@ function normalizeSettingsFolder(settings) {
     folderPath
   };
 }
-async function ensureDefaultNamesFolder(app, settings) {
-  const normalized = normalizeSettingsFolder(settings);
-  const folderPath = normalized.folderPath || DEFAULT_NAMES_FOLDER;
-  await ensureVaultFolder(app, folderPath);
-  return { ...normalized, folderPath };
+function folderSettingsData(settings) {
+  return {
+    folderPath: resolveNamesFolderPath(settings.folderPath, settings.namesFilePath),
+    settlementsFolder: (settings.settlementsFolder || "").trim()
+  };
+}
+function mergeFolderSettings(stored, note, current) {
+  var _a2, _b;
+  const hasStoredFolder = !!((_a2 = stored == null ? void 0 : stored.folderPath) == null ? void 0 : _a2.trim());
+  const hasStoredSettlements = stored != null && typeof stored.settlementsFolder === "string" && "settlementsFolder" in stored;
+  return normalizeSettingsFolder({
+    ...current,
+    ...note,
+    namesFilePath: note.namesFilePath || current.namesFilePath,
+    folderPath: hasStoredFolder ? current.folderPath : note.folderPath || current.folderPath,
+    settlementsFolder: hasStoredSettlements ? current.settlementsFolder : (_b = note.settlementsFolder) != null ? _b : current.settlementsFolder
+  });
 }
 async function countPacksInFolder(app, folder) {
   let packCount = 0;
@@ -2049,14 +2086,11 @@ async function countPacksInFolder(app, folder) {
   return packCount;
 }
 async function findLegacyPackFolder(app, settings) {
-  const candidates = [
-    resolveNamesFolderPath(settings.folderPath, settings.namesFilePath),
-    ...LEGACY_FOLDER_CANDIDATES
-  ];
+  const configured = normalizeFolderPath(resolveNamesFolderPath(settings.folderPath, settings.namesFilePath));
   const seen = /* @__PURE__ */ new Set();
-  for (const candidate of candidates) {
+  for (const candidate of LEGACY_FOLDER_CANDIDATES) {
     const path = normalizeFolderPath(candidate);
-    if (!path || path === DEFAULT_NAMES_FOLDER || seen.has(path)) {
+    if (!path || path === configured || seen.has(path)) {
       continue;
     }
     seen.add(path);
@@ -2085,9 +2119,10 @@ function uniqueDestinationPath(app, folderPath, fileName) {
   }
   return (0, import_obsidian2.normalizePath)(`${folderPath}/${stem} ${n}${ext}`);
 }
-async function migratePacksToDefaultFolder(app, settings, fromFolderPath) {
+async function migratePacksToConfiguredFolder(app, settings, fromFolderPath) {
   const sourcePath = normalizeFolderPath(fromFolderPath);
-  if (!sourcePath || sourcePath === DEFAULT_NAMES_FOLDER) {
+  const targetPath = normalizeFolderPath(resolveNamesFolderPath(settings.folderPath, settings.namesFilePath));
+  if (!sourcePath || sourcePath === targetPath) {
     return { moved: 0, settings };
   }
   const source = app.vault.getFolderByPath((0, import_obsidian2.normalizePath)(sourcePath));
@@ -2095,7 +2130,7 @@ async function migratePacksToDefaultFolder(app, settings, fromFolderPath) {
     new import_obsidian2.Notice(`nameForge: folder not found at ${sourcePath}`);
     return { moved: 0, settings };
   }
-  await ensureVaultFolder(app, DEFAULT_NAMES_FOLDER);
+  await ensureVaultFolder(app, targetPath);
   let moved = 0;
   const children = [...source.children];
   for (const child of children) {
@@ -2114,7 +2149,7 @@ async function migratePacksToDefaultFolder(app, settings, fromFolderPath) {
         continue;
       }
     }
-    const destination2 = uniqueDestinationPath(app, DEFAULT_NAMES_FOLDER, child.name);
+    const destination2 = uniqueDestinationPath(app, targetPath, child.name);
     if ((0, import_obsidian2.normalizePath)(previousPath) === destination2) {
       continue;
     }
@@ -2124,9 +2159,8 @@ async function migratePacksToDefaultFolder(app, settings, fromFolderPath) {
       settings.namesFilePath = destination2;
     }
   }
-  settings.folderPath = DEFAULT_NAMES_FOLDER;
   new import_obsidian2.Notice(
-    moved > 0 ? `nameForge: moved ${moved} file(s) to ${DEFAULT_NAMES_FOLDER}` : `nameForge: nothing to move into ${DEFAULT_NAMES_FOLDER}`
+    moved > 0 ? `nameForge: moved ${moved} file(s) to ${targetPath}` : `nameForge: nothing to move into ${targetPath}`
   );
   return { moved, settings };
 }
@@ -2150,26 +2184,57 @@ function legacySettingsFileCandidates(settings) {
 }
 
 // src/settings.ts
+var ConfirmCreateFolderModal = class extends import_obsidian3.Modal {
+  constructor(app, path, onAnswer) {
+    super(app);
+    this.path = path;
+    this.onAnswer = onAnswer;
+    this.answered = false;
+  }
+  onOpen() {
+    this.setTitle(`Create folder \u2018${this.path}\u2019?`);
+    this.contentEl.createEl("p", { text: "It does not exist yet." });
+    new import_obsidian3.Setting(this.contentEl).addButton((button) => button.setButtonText("Create").setCta().onClick(() => this.answer(true))).addButton((button) => button.setButtonText("Cancel").onClick(() => this.answer(false)));
+  }
+  onClose() {
+    this.answer(false);
+    this.contentEl.empty();
+  }
+  answer(create) {
+    if (this.answered) {
+      return;
+    }
+    this.answered = true;
+    this.onAnswer(create);
+    this.close();
+  }
+};
 var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
   constructor(app, plugin) {
     super(app, plugin);
     this.legacyFolder = null;
+    /** Folder text typed but not yet committed with "Use folder". Never touches the vault. */
+    this.pendingFolders = {};
     this.plugin = plugin;
     void this.refreshLegacyFolder();
   }
+  getControlValue(key2) {
+    var _a2, _b;
+    if (key2 === "folderPath" || key2 === "settlementsFolder") {
+      return (_b = (_a2 = this.pendingFolders[key2]) != null ? _a2 : this.plugin.settings[key2]) != null ? _b : "";
+    }
+    return super.getControlValue(key2);
+  }
   /**
    * Persist through the plugin's markdown config writer rather than raw saveData().
+   * Folder boxes only remember what was typed; "Use folder" commits it.
    */
   async setControlValue(key2, value) {
-    if (key2 === "folderPath" && typeof value === "string") {
-      this.plugin.settings.folderPath = value;
-      if (value.trim()) {
-        await ensureVaultFolder(this.app, value.trim());
-        void this.refreshLegacyFolder();
-      }
-    } else if (key2 === "settlementsFolder" && typeof value === "string") {
-      this.plugin.settings.settlementsFolder = value.trim();
-    } else if (key2 === "faithfulness" && typeof value === "number") {
+    if ((key2 === "folderPath" || key2 === "settlementsFolder") && typeof value === "string") {
+      this.pendingFolders[key2] = value;
+      return;
+    }
+    if (key2 === "faithfulness" && typeof value === "number") {
       this.plugin.settings.faithfulness = value;
     } else if (key2 === "strictness" && typeof value === "number") {
       this.plugin.settings.strictness = value;
@@ -2177,6 +2242,48 @@ var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
       return;
     }
     await this.plugin.saveSettings();
+  }
+  confirmCreate(path) {
+    return new Promise((resolve) => new ConfirmCreateFolderModal(this.app, path, resolve).open());
+  }
+  /** Commit the typed folder: use it if it exists, create it only after confirmation. */
+  async useFolder(key2) {
+    const typed = this.pendingFolders[key2];
+    if (typed === void 0) {
+      new import_obsidian3.Notice("nameForge: type or pick a folder first.");
+      return;
+    }
+    try {
+      let chosen;
+      if (key2 === "settlementsFolder" && !typed.trim()) {
+        chosen = "";
+      } else {
+        chosen = await commitFolderChoice(this.app, typed, (path) => this.confirmCreate(path));
+      }
+      if (chosen === null) {
+        return;
+      }
+      this.plugin.settings[key2] = chosen;
+      delete this.pendingFolders[key2];
+      await this.plugin.saveSettings();
+      if (key2 === "folderPath") {
+        await this.refreshLegacyFolder();
+      }
+      this.update();
+      new import_obsidian3.Notice(`nameForge: using ${chosen || "the default settlements folder"}.`);
+    } catch (error) {
+      new import_obsidian3.Notice(`nameForge: ${error instanceof Error ? error.message : "could not use that folder"}`);
+    }
+  }
+  useFolderRow(key2) {
+    return {
+      name: "Use folder",
+      desc: "Typing above changes nothing until you press this.",
+      searchable: false,
+      render: (setting) => {
+        setting.addButton((button) => button.setButtonText("Use folder").onClick(() => void this.useFolder(key2)));
+      }
+    };
   }
   getSettingDefinitions() {
     return [
@@ -2191,6 +2298,7 @@ var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
           defaultValue: DEFAULT_NAMES_FOLDER
         }
       },
+      this.useFolderRow("folderPath"),
       {
         name: "Settlements folder",
         desc: "Where the settlement kit's Create note writes settlement notes. Empty: the names folder plus /Settlements.",
@@ -2202,6 +2310,7 @@ var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
           defaultValue: ""
         }
       },
+      this.useFolderRow("settlementsFolder"),
       {
         name: "Faithfulness",
         desc: "How closely generated names stick to your source list's letter patterns. Lower = more novel, higher = more true to source.",
@@ -2227,8 +2336,8 @@ var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
         }
       },
       {
-        name: `Move packs to ${DEFAULT_NAMES_FOLDER}`,
-        desc: this.legacyFolder ? `${this.legacyFolder.packCount} name pack(s) are still in \u201C${this.legacyFolder.path}\u201D. Move them into the Forge-family default folder.` : `Move name packs into the Forge-family default folder (${DEFAULT_NAMES_FOLDER}).`,
+        name: `Move packs to ${this.configuredFolder()}`,
+        desc: this.legacyFolder ? `${this.legacyFolder.packCount} name pack(s) are still in \u201C${this.legacyFolder.path}\u201D. Move them into your names folder.` : `Move name packs into your names folder (${this.configuredFolder()}).`,
         visible: () => this.legacyFolder != null,
         searchable: false,
         render: (setting) => {
@@ -2239,7 +2348,7 @@ var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
           setting.addButton(
             (button) => button.setButtonText("Migrate").setCta().onClick(async () => {
               try {
-                const result = await migratePacksToDefaultFolder(
+                const result = await migratePacksToConfiguredFolder(
                   this.app,
                   this.plugin.settings,
                   legacy.path
@@ -2257,6 +2366,9 @@ var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
         }
       }
     ];
+  }
+  configuredFolder() {
+    return cleanFolderInput(resolveNamesFolderPath(this.plugin.settings.folderPath, this.plugin.settings.namesFilePath));
   }
   async refreshLegacyFolder() {
     this.legacyFolder = await findLegacyPackFolder(this.app, this.plugin.settings);
@@ -102458,21 +102570,15 @@ var NameForgePlugin = class extends import_obsidian15.Plugin {
         continue;
       }
       const parsed = parseSettingsMarkdownContent(content);
-      this.settings = normalizeSettingsFolder({
-        ...this.settings,
-        ...parsed,
-        namesFilePath: parsed.namesFilePath || this.settings.namesFilePath,
-        folderPath: parsed.folderPath || this.settings.folderPath
-      });
+      this.settings = mergeFolderSettings(legacySettings, parsed, this.settings);
       break;
     }
-    this.settings = await ensureDefaultNamesFolder(this.app, this.settings);
   }
   async saveSettings() {
     this.settings = normalizeSettingsFolder(this.settings);
+    await this.saveData(folderSettingsData(this.settings));
     const settingsFilePath = getSettingsFilePath(this.settings);
     if (!settingsFilePath) {
-      await this.saveData(this.settings);
       return;
     }
     const normalizedPath = (0, import_obsidian15.normalizePath)(settingsFilePath);
