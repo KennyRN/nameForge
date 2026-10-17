@@ -12,7 +12,7 @@
       "from": {"greek-byzantine": "MD", "roman": "MD"}
     }
   },
-  "regionTags": ["roman", "drove", "causeway", "corpse", "salt", "ridge", "packhorse", "army", "pedlar", "militaryRoad", "peat"],
+  "regionTags": ["roman", "drove", "causeway", "corpse", "salt", "ridge", "packhorse", "army", "pedlar", "militaryRoad", "peat", "scar"],
   "pools": {
     "direction": {
       "entries": [
@@ -2425,6 +2425,654 @@
       ]
     },
     "deityFixed:place": {
+      "entries": []
+    },
+    "seaColour": {
+      "entries": [
+        {"w": "Black", "x": 3},
+        {"w": "White", "x": 2},
+        {"w": "Red", "x": 2},
+        {"w": "Green", "x": 2},
+        {"w": "Grey", "x": 2},
+        {"w": "Blue"},
+        {"w": "Yellow"},
+        {"w": "Silver", "t": ["grand"]},
+        {"w": "Golden", "t": ["grand"]}
+      ],
+      "cultureExtra": {
+        "greek-byzantine": [
+          {"w": "Wine-Dark", "t": ["grand","strange"], "e": ["AN"]}
+        ]
+      }
+    },
+    "seaQuality": {
+      "entries": [
+        {"w": "Great", "x": 3},
+        {"w": "Narrow", "x": 2},
+        {"w": "Inner", "x": 2},
+        {"w": "Outer", "x": 2},
+        {"w": "Middle"},
+        {"w": "Long"},
+        {"w": "Broad"},
+        {"w": "Still"},
+        {"w": "Shallow"},
+        {"w": "Quiet"},
+        {"w": "Restless", "t": ["strange"]},
+        {"w": "Hidden", "t": ["strange"]},
+        {"w": "Lonely", "t": ["grim"]},
+        {"w": "Bitter", "t": ["grim"], "bt": "dry"},
+        {"w": "Dead", "x": 0.5, "t": ["grim"]},
+        {"w": "Frozen", "bt": "ice"},
+        {"w": "Warm", "bt": "warm"},
+        {"w": "Peaceful", "t": ["light"]},
+        {"w": "Endless", "t": ["grand"]}
+      ]
+    },
+    "oceanQuality": {
+      "entries": [
+        {"w": "Great", "x": 3},
+        {"w": "Outer", "x": 2},
+        {"w": "Encircling", "t": ["grand","strange"], "e": ["AN","MD"]},
+        {"w": "Endless", "t": ["grand"]},
+        {"w": "Boundless", "t": ["grand"]},
+        {"w": "Peaceful"},
+        {"w": "Silent", "t": ["strange"]},
+        {"w": "Grey"},
+        {"w": "Dark", "t": ["grim"]}
+      ]
+    },
+    "oceanOf": {
+      "entries": [
+        {"w": "Storms", "x": 2},
+        {"w": "Darkness", "t": ["grim"]},
+        {"w": "Mists"},
+        {"w": "Winds"},
+        {"w": "Fogs"},
+        {"w": "the World"},
+        {"w": "the Sunset"},
+        {"w": "Ice", "bt": "ice"},
+        {"w": "the Dead", "x": 0.3, "t": ["grim"]}
+      ]
+    },
+    "seaCreature": {
+      "entries": [
+        {"w": "Seal", "x": 3},
+        {"w": "Whale", "x": 3},
+        {"w": "Gull", "x": 2},
+        {"w": "Cormorant"},
+        {"w": "Gannet"},
+        {"w": "Puffin", "t": ["light"], "bt": "cliff"},
+        {"w": "Otter"},
+        {"w": "Herring", "pl": "Herring"},
+        {"w": "Cod", "pl": "Cod"},
+        {"w": "Salmon", "pl": "Salmon"},
+        {"w": "Mackerel", "pl": "Mackerel"},
+        {"w": "Crab"},
+        {"w": "Lobster"},
+        {"w": "Oyster"},
+        {"w": "Eel"},
+        {"w": "Dolphin"},
+        {"w": "Porpoise"},
+        {"w": "Tern"},
+        {"w": "Kittiwake"},
+        {"w": "Heron"},
+        {"w": "Skua", "t": ["grim"]},
+        {"w": "Eider", "bt": "ice"},
+        {"w": "Walrus", "bt": "ice"},
+        {"w": "Shark", "t": ["grim"], "bt": "warm"},
+        {"w": "Turtle", "bt": "warm"},
+        {"w": "Pelican", "bt": "warm"}
+      ]
+    },
+    "lakeCreature": {
+      "entries": [
+        {"w": "Swan", "x": 3},
+        {"w": "Heron", "x": 2},
+        {"w": "Pike", "pl": "Pike"},
+        {"w": "Trout", "pl": "Trout"},
+        {"w": "Char", "pl": "Char", "bt": "upland"},
+        {"w": "Otter"},
+        {"w": "Crane"},
+        {"w": "Duck"},
+        {"w": "Goose", "pl": "Geese"},
+        {"w": "Grebe"},
+        {"w": "Coot"},
+        {"w": "Kingfisher"},
+        {"w": "Eel"},
+        {"w": "Diver", "bt": "ice"},
+        {"w": "Beaver", "e": ["AN","MD"]},
+        {"w": "Frog", "t": ["light"]},
+        {"w": "Crocodile", "t": ["grim"], "bt": "warm"},
+        {"w": "Hippo", "bt": "warm"},
+        {"w": "Flamingo", "bt": "dry"},
+        {"w": "Pelican", "bt": "warm"}
+      ]
+    },
+    "shoreShape": {
+      "entries": [
+        {"w": "Horn", "x": 2},
+        {"w": "Hook", "x": 2},
+        {"w": "Nose"},
+        {"w": "Tongue"},
+        {"w": "Elbow"},
+        {"w": "Knuckle"},
+        {"w": "Thumb"},
+        {"w": "Tooth"},
+        {"w": "Comb"},
+        {"w": "Saddle"},
+        {"w": "Anvil"},
+        {"w": "Arrow"},
+        {"w": "Crescent"},
+        {"w": "Sleeve"}
+      ]
+    },
+    "lakeShape": {
+      "entries": [
+        {"w": "Moon", "x": 2},
+        {"w": "Crescent"},
+        {"w": "Horseshoe"},
+        {"w": "Mirror"},
+        {"w": "Eye"},
+        {"w": "Harp"},
+        {"w": "Sleeve"}
+      ],
+      "cultureExtra": {
+        "japanese": [
+          {"w": "Lute"},
+          {"w": "Fan"}
+        ],
+        "chinese": [
+          {"w": "Ear"},
+          {"w": "Fan"}
+        ],
+        "korean": [
+          {"w": "Ear"}
+        ]
+      }
+    },
+    "explorerMood": {
+      "entries": [
+        {"w": "Plenty", "x": 2},
+        {"w": "Hope", "x": 2},
+        {"w": "Good Hope"},
+        {"w": "Disappointment", "x": 2},
+        {"w": "Desolation", "x": 2, "t": ["grim"]},
+        {"w": "Farewell", "x": 2},
+        {"w": "Turnagain"},
+        {"w": "Deliverance"},
+        {"w": "Providence"},
+        {"w": "Mercy"},
+        {"w": "Fortune"},
+        {"w": "Patience"},
+        {"w": "Welcome"},
+        {"w": "Refuge"},
+        {"w": "Rescue"},
+        {"w": "Foulweather"},
+        {"w": "Repulse", "t": ["grim"]},
+        {"w": "Despair", "t": ["grim"]},
+        {"w": "Tribulation", "t": ["grim"]},
+        {"w": "Poverty", "t": ["grim"]},
+        {"w": "Flattery", "t": ["light"]},
+        {"w": "Contentment", "t": ["light"]},
+        {"w": "Doubtful", "t": ["light"]}
+      ]
+    },
+    "coastGoods": {
+      "entries": [
+        {"w": "Gold", "x": 3},
+        {"w": "Ivory", "x": 2},
+        {"w": "Pepper"},
+        {"w": "Grain"},
+        {"w": "Spice"},
+        {"w": "Amber"},
+        {"w": "Pearl", "bt": "warm"},
+        {"w": "Coral", "bt": "tropic"},
+        {"w": "Salt"},
+        {"w": "Tin"},
+        {"w": "Silver"}
+      ]
+    },
+    "grimCoast": {
+      "entries": [
+        {"w": "Skeleton", "x": 2, "t": ["grim"], "bt": "dry"},
+        {"w": "Wreckers'", "t": ["grim"]},
+        {"w": "Widow's", "t": ["grim"]},
+        {"w": "Bone", "t": ["grim"]},
+        {"w": "Storm", "t": ["grim"]},
+        {"w": "Shipwreck", "t": ["grim"]},
+        {"w": "Gallows", "t": ["grim"]},
+        {"w": "Drowned", "t": ["grim"]},
+        {"w": "Ghost", "t": ["grim"]}
+      ]
+    },
+    "endWord": {
+      "entries": [
+        {"w": "Land's", "x": 3},
+        {"w": "World's"},
+        {"w": "Earth's"}
+      ]
+    },
+    "stackGroup": {
+      "entries": [
+        {"w": "Needles", "x": 2},
+        {"w": "Maidens", "x": 2},
+        {"w": "Sisters", "x": 2},
+        {"w": "Brothers"},
+        {"w": "Monks"},
+        {"w": "Friars"},
+        {"w": "Bishops"},
+        {"w": "Teeth"},
+        {"w": "Fingers"},
+        {"w": "Sentinels"},
+        {"w": "Giants"},
+        {"w": "Old Women", "t": ["light"]}
+      ]
+    },
+    "coveFolk": {
+      "entries": [
+        {"w": "Smugglers", "x": 2, "t": ["light"]},
+        {"w": "Fishermen", "x": 2},
+        {"w": "Pirates", "t": ["light"]},
+        {"w": "Wreckers", "t": ["grim"]},
+        {"w": "Monks"},
+        {"w": "Pilgrims"}
+      ]
+    },
+    "folkUncanny": {
+      "entries": [
+        {"w": "Devil's", "x": 3},
+        {"w": "Giant's", "x": 2},
+        {"w": "Witch's"},
+        {"w": "Mermaid's"},
+        {"w": "Dead Man's", "t": ["grim"]},
+        {"w": "Hag's", "t": ["grim"]},
+        {"w": "Fiddler's", "t": ["light"]},
+        {"w": "Piper's", "t": ["light"]},
+        {"w": "Wizard's", "t": ["strange"]}
+      ]
+    },
+    "devilFeature": {
+      "entries": [
+        {"w": "Rock", "x": 2},
+        {"w": "Bellows"},
+        {"w": "Frying Pan", "t": ["light"]},
+        {"w": "Chimney"},
+        {"w": "Kitchen"},
+        {"w": "Throat"},
+        {"w": "Punchbowl"},
+        {"w": "Cauldron"},
+        {"w": "Hole"}
+      ]
+    },
+    "narrowsWord": {
+      "entries": [
+        {"w": "Iron", "x": 2},
+        {"w": "Stone"},
+        {"w": "Long"},
+        {"w": "Black"},
+        {"w": "Grey"},
+        {"w": "Crooked"},
+        {"w": "Twin"},
+        {"w": "Upper"},
+        {"w": "Lower"},
+        {"w": "Bitter", "t": ["grim"]},
+        {"w": "Golden", "t": ["grand"]}
+      ]
+    },
+    "gateWord": {
+      "entries": [
+        {"w": "Golden", "x": 2},
+        {"w": "Iron", "x": 2},
+        {"w": "Narrow"},
+        {"w": "Western"},
+        {"w": "Eastern"},
+        {"w": "Brass"},
+        {"w": "Silver"},
+        {"w": "Stone"}
+      ]
+    },
+    "fordBeast": {
+      "entries": [
+        {"w": "Ox", "x": 2},
+        {"w": "Cow"},
+        {"w": "Heifer"},
+        {"w": "Horse"},
+        {"w": "Goat"},
+        {"w": "Ram"}
+      ]
+    },
+    "bayQuality": {
+      "entries": [
+        {"w": "Long", "x": 2},
+        {"w": "Broad", "x": 2},
+        {"w": "Deep"},
+        {"w": "Sandy", "x": 2},
+        {"w": "Stony"},
+        {"w": "Fair"},
+        {"w": "Calm"},
+        {"w": "Shingle"},
+        {"w": "Crooked"},
+        {"w": "Round"},
+        {"w": "Hidden"},
+        {"w": "Quiet"},
+        {"w": "Wide"},
+        {"w": "Little"},
+        {"w": "Shell"},
+        {"w": "Smooth"}
+      ]
+    },
+    "islandQuality": {
+      "entries": [
+        {"w": "Long", "x": 2},
+        {"w": "Flat", "x": 2},
+        {"w": "Green", "x": 2},
+        {"w": "Steep"},
+        {"w": "High"},
+        {"w": "Low"},
+        {"w": "Fair"},
+        {"w": "Burnt"},
+        {"w": "Bare"},
+        {"w": "Rough"},
+        {"w": "Black"},
+        {"w": "White"},
+        {"w": "Round"},
+        {"w": "Little"},
+        {"w": "Great"},
+        {"w": "Holy", "c": ["christian"]},
+        {"w": "Lonely", "t": ["grim"]}
+      ]
+    },
+    "shoreQuality": {
+      "entries": [
+        {"w": "Long", "x": 2},
+        {"w": "Broad"},
+        {"w": "Black"},
+        {"w": "White"},
+        {"w": "Red"},
+        {"w": "Golden"},
+        {"w": "Silver"},
+        {"w": "Shell"},
+        {"w": "Shingle"},
+        {"w": "Pebble"},
+        {"w": "Stony"},
+        {"w": "Sandy"},
+        {"w": "High"},
+        {"w": "Low"},
+        {"w": "Steep"},
+        {"w": "Crooked"},
+        {"w": "Wide"}
+      ]
+    },
+    "lakeQuality": {
+      "entries": [
+        {"w": "Long", "x": 2},
+        {"w": "Round"},
+        {"w": "Still"},
+        {"w": "Deep"},
+        {"w": "Great"},
+        {"w": "Little"},
+        {"w": "Upper"},
+        {"w": "Lower"},
+        {"w": "Silver"},
+        {"w": "Hidden", "t": ["strange"]},
+        {"w": "Glass", "t": ["strange"]},
+        {"w": "Bitter", "bt": "dry"},
+        {"w": "Salt", "bt": "dry"}
+      ]
+    },
+    "lakeFuse": {
+      "entries": [
+        {"w": "Grass"},
+        {"w": "Butter"},
+        {"w": "Reed"},
+        {"w": "Rush"},
+        {"w": "Ash"},
+        {"w": "Alder"},
+        {"w": "Swan"},
+        {"w": "Hern"},
+        {"w": "Crane"},
+        {"w": "Pike"},
+        {"w": "Eel"},
+        {"w": "Mill"},
+        {"w": "Black"},
+        {"w": "Brad"},
+        {"w": "Cold"},
+        {"w": "Thorn"}
+      ]
+    },
+    "boatWord": {
+      "entries": [
+        {"w": "Dogger", "e": ["MD","EM"]},
+        {"w": "Buss", "e": ["MD","EM"]},
+        {"w": "Cog", "e": ["MD"]},
+        {"w": "Smack", "e": ["EM","ST"]},
+        {"w": "Lugger", "e": ["EM","ST"]},
+        {"w": "Hooker", "e": ["EM","ST"]},
+        {"w": "Collier", "e": ["EM","ST"]},
+        {"w": "Coble", "e": ["EM","ST"], "rt": "scar"},
+        {"w": "Drifter", "e": ["ST","MO"]},
+        {"w": "Trawler", "e": ["ST","MO"]}
+      ]
+    },
+    "pitWord": {
+      "entries": [
+        {"w": "Silver", "x": 2},
+        {"w": "Sole"},
+        {"w": "Herring"},
+        {"w": "Ling"},
+        {"w": "Cod"},
+        {"w": "Black"}
+      ]
+    },
+    "depthNumber": {
+      "entries": [
+        {"w": "Fourteens", "x": 2},
+        {"w": "Forties", "x": 2},
+        {"w": "Eighteens"},
+        {"w": "Twenties"},
+        {"w": "Thirties"},
+        {"w": "Fifties"},
+        {"w": "Sixties"}
+      ]
+    },
+    "lengthAdj": {
+      "entries": [
+        {"w": "Broad", "x": 2},
+        {"w": "Long", "x": 2},
+        {"w": "Narrow"},
+        {"w": "Great"},
+        {"w": "Little"},
+        {"w": "Outer"},
+        {"w": "Inner"}
+      ]
+    },
+    "gatTrade": {
+      "entries": [
+        {"w": "Fisherman's", "x": 2},
+        {"w": "Pilot's"},
+        {"w": "Smuggler's", "t": ["light"]},
+        {"w": "Wherryman's"},
+        {"w": "Bargeman's"},
+        {"w": "Oysterman's"},
+        {"w": "Shrimper's", "t": ["light"]}
+      ]
+    },
+    "swallowWord": {
+      "entries": [
+        {"w": "Swallower", "x": 2},
+        {"w": "Grinder"},
+        {"w": "Churn"},
+        {"w": "Cauldron"},
+        {"w": "Boil"},
+        {"w": "Gullet", "t": ["grim"]}
+      ]
+    },
+    "kinCurrent": {
+      "entries": [
+        {"w": "Parent", "x": 2, "c": ["japanese"]},
+        {"w": "Mother", "c": ["japanese"]},
+        {"w": "Child", "c": ["japanese"]}
+      ]
+    },
+    "seaKenning": {
+      "entries": [
+        {"w": "Whale Road", "x": 3, "c": ["anglo-saxon","norse"]},
+        {"w": "Swan Road", "x": 2, "c": ["anglo-saxon","norse"]},
+        {"w": "Gannet's Bath", "x": 2, "c": ["anglo-saxon","norse"]},
+        {"w": "Sail Road", "c": ["anglo-saxon","norse"]},
+        {"w": "Seal's Bath", "c": ["anglo-saxon","norse"]},
+        {"w": "Wave Field", "c": ["anglo-saxon","norse"]},
+        {"w": "Fish Home", "t": ["strange"], "c": ["anglo-saxon","norse"]}
+      ]
+    },
+    "mariaWord": {
+      "entries": [
+        {"w": "Tranquillity", "x": 2},
+        {"w": "Serenity", "x": 2},
+        {"w": "Storms", "x": 2},
+        {"w": "Clouds"},
+        {"w": "Rains"},
+        {"w": "Showers"},
+        {"w": "Crises"},
+        {"w": "Vapours"},
+        {"w": "Cold"},
+        {"w": "Nectar"},
+        {"w": "Fertility"},
+        {"w": "Moisture"},
+        {"w": "Islands"},
+        {"w": "Waves"},
+        {"w": "Foam"},
+        {"w": "Dreams"},
+        {"w": "Hope"},
+        {"w": "Time", "t": ["strange"]},
+        {"w": "Forgetting", "t": ["strange"]},
+        {"w": "Joy", "t": ["light"]},
+        {"w": "Decay", "t": ["grim"]},
+        {"w": "Fear", "t": ["grim"]},
+        {"w": "Sorrow", "t": ["grim"]},
+        {"w": "Death", "x": 0.5, "t": ["grim"]},
+        {"w": "Winter"},
+        {"w": "Summer"},
+        {"w": "Autumn"},
+        {"w": "Spring"}
+      ]
+    },
+    "seaMonster": {
+      "entries": [
+        {"w": "Kraken", "x": 3},
+        {"w": "Leviathan", "x": 2},
+        {"w": "Serpent", "x": 2},
+        {"w": "Siren"},
+        {"w": "Dragon"}
+      ],
+      "cultureExtra": {
+        "celtic": [
+          {"w": "Merrow"},
+          {"w": "Selkie"}
+        ],
+        "norse": [
+          {"w": "Selkie"}
+        ]
+      }
+    },
+    "cosmoSubstance": {
+      "entries": [
+        {"w": "Milk", "x": 2, "c": ["indian"]},
+        {"w": "Salt", "x": 2, "c": ["indian"]},
+        {"w": "Wine", "c": ["indian"]},
+        {"w": "Ghee", "c": ["indian"]},
+        {"w": "Curds", "c": ["indian"]},
+        {"w": "Sugar Cane", "c": ["indian"]},
+        {"w": "Sweet Water", "c": ["indian"]}
+      ]
+    },
+    "euphemism": {
+      "entries": [
+        {"w": "Hospitable", "x": 2, "c": ["greek-byzantine"]},
+        {"w": "Kindly", "c": ["greek-byzantine"]},
+        {"w": "Gentle", "c": ["greek-byzantine"]},
+        {"w": "Friendly", "c": ["greek-byzantine"]},
+        {"w": "Fair", "c": ["greek-byzantine"]},
+        {"w": "Welcoming", "t": ["light"], "c": ["greek-byzantine"]}
+      ]
+    },
+    "hyperColour": {
+      "entries": [
+        {"w": "Black", "x": 2},
+        {"w": "Grey", "x": 2},
+        {"w": "Silver", "x": 2},
+        {"w": "Amber", "x": 2},
+        {"w": "White"},
+        {"w": "Red"},
+        {"w": "Blue"},
+        {"w": "Green"},
+        {"w": "Violet"},
+        {"w": "Gold"},
+        {"w": "Pale"},
+        {"w": "Brass", "t": ["light"]}
+      ]
+    },
+    "hyperAdj": {
+      "entries": [
+        {"w": "Blind", "x": 2},
+        {"w": "Silent", "x": 2},
+        {"w": "Broken", "x": 2},
+        {"w": "Shifting", "x": 2},
+        {"w": "False", "x": 2},
+        {"w": "Long", "x": 2},
+        {"w": "Hollow"},
+        {"w": "Still"},
+        {"w": "Restless", "t": ["strange"]},
+        {"w": "Bitter"},
+        {"w": "Dead", "t": ["grim"]},
+        {"w": "Ghost", "t": ["grim","strange"]},
+        {"w": "Drowned", "t": ["grim"]},
+        {"w": "Glass", "t": ["strange"]}
+      ]
+    },
+    "hyperPhysical": {
+      "entries": [
+        {"w": "Gravity", "x": 3},
+        {"w": "Phase", "x": 2},
+        {"w": "Time", "x": 2},
+        {"w": "Echo", "x": 2},
+        {"w": "Mirror"},
+        {"w": "Mass"},
+        {"w": "Causality", "t": ["strange"]}
+      ]
+    },
+    "weatherAdj": {
+      "entries": [
+        {"w": "Howling", "x": 2},
+        {"w": "Wailing"},
+        {"w": "Grinding"},
+        {"w": "Hissing"},
+        {"w": "Weeping", "t": ["grim"]},
+        {"w": "Shrieking", "t": ["grim"]},
+        {"w": "Singing", "t": ["strange"]},
+        {"w": "Whispering", "t": ["strange"]}
+      ]
+    },
+    "depthBand": {
+      "entries": [
+        {"w": "Forties", "x": 2},
+        {"w": "Twenties"},
+        {"w": "Thirties"},
+        {"w": "Fifties"},
+        {"w": "Sixties"},
+        {"w": "Seventies"}
+      ]
+    },
+    "watersFixed:seas": {
+      "entries": []
+    },
+    "watersFixed:coasts": {
+      "entries": []
+    },
+    "watersFixed:charts": {
+      "entries": []
+    },
+    "watersFixed:hyperspace": {
       "entries": []
     }
   },

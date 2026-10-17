@@ -3,7 +3,7 @@
 // presets are recipes (Presets brief §7.1).
 // No Obsidian imports: the frontmatter is flat `key: value` lines.
 
-import { findBiome, TERRAIN_CHOICES } from "./biomes";
+import { BIOMES, findBiome, TERRAIN_CHOICES } from "./biomes";
 import { findTradition, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS } from "./tribes/engine";
 import { type TribalSlotFields, tribalSlotFill } from "./tribes/slotFill";
 import {
@@ -27,6 +27,7 @@ import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type 
 import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
 import { findCommodity, findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
 import { scalesFor, type ScaleChoice } from "./space/scale";
+import { findHyperKind, findWaterKind, findWatersCulture, HYPER_SCALES, hyperKindsAt, waterEras, WATERS_MEDIA, WATERS_REGISTERS, watersHasSeries, type HyperMedium, type HyperRegister, type WatersEarthly, type WatersEra, type WatersModule, type WatersWhere } from "./waters/engine";
 
 export const TRIBAL_PRESET_MODULE = "tribal-names";
 
@@ -77,7 +78,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; deity?: DeityPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; deity?: DeityPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -88,6 +89,8 @@ export function parseModulePreset(
   if (values.module === BYNAME_PRESET_MODULE) return parseBynamePreset(values, body, fileName);
   // Ships brief §15: vessel presets too.
   if (values.module === VESSEL_PRESET_MODULE) return parseVesselPreset(values, body, fileName);
+  // Seas and coasts brief §15: waters presets too.
+  if (values.module === WATERS_PRESET_MODULE) return parseWatersPreset(values, body, fileName);
   // Realms brief §13: realm presets too.
   if (values.module === REALM_PRESET_MODULE) return parseRealmPreset(values, body, fileName);
   // Route names brief §13: route presets too.
@@ -139,7 +142,7 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | DeityPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | DeityPreset): string {
   if ("deityKind" in preset) return deityPresetContent(preset);
   if ("eventKind" in preset) return eventPresetContent(preset);
   if ("contents" in preset) return kitPresetContent(preset);
@@ -149,6 +152,7 @@ export function modulePresetContent(preset: TribalPreset | GroupPreset | BynameP
   if ("routeKind" in preset) return routePresetContent(preset);
   if ("namedFor" in preset) return realmPresetContent(preset);
   if ("vesselModule" in preset) return vesselPresetContent(preset);
+  if ("watersModule" in preset) return watersPresetContent(preset);
   if ("bynameModule" in preset) return bynamePresetContent(preset);
   if ("family" in preset) return groupPresetContent(preset);
   const quote = (v: string) => (/^\[\[|[:#]/.test(v) ? `"${v}"` : v);
@@ -1159,6 +1163,112 @@ function vesselPresetContent(preset: VesselPreset): string {
     `prefixes: ${preset.prefixes}`,
     `people: ${preset.people}`,
     `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Waters presets (Seas and coasts brief §15) ──────────────────────────────
+
+export const WATERS_PRESET_MODULE = "waters";
+
+export interface WatersPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  watersModule: WatersModule;
+  culture: string;
+  /** "any" or a kind key. */
+  waterKind: string;
+  /** Earthly modules only. */
+  era: WatersEra;
+  where: WatersWhere;
+  fantastic: boolean;
+  /** "all" or a place-shape region code. */
+  region: string;
+  /** "any" or a biome id. */
+  biome: string;
+  tone: GroupToneChoice;
+  people: GroupPeople;
+  series: boolean;
+  /** Hyperspace only. */
+  scale: ScaleChoice;
+  medium: HyperMedium;
+  register: HyperRegister;
+}
+
+function parseWatersPreset(values: Record<string, string>, body: string, fileName: string): { waters?: WatersPreset; problems: string[] } {
+  const problems: string[] = [];
+  const module = values.watersModule as WatersModule;
+  if (module !== "seasLakes" && module !== "coastsIslands" && module !== "seaCharts" && module !== "hyperspaceCharts") {
+    problems.push(`Unknown watersModule “${values.watersModule ?? ""}”.`);
+    return { problems };
+  }
+  const hyper = module === "hyperspaceCharts";
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const flag = (key: string): boolean => {
+    const v = values[key];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key} “${v}”.`);
+    return false;
+  };
+  const scale = hyper ? pick<ScaleChoice>("scale", "any", (v) => v === "any" || (HYPER_SCALES as string[]).includes(v)) : "any";
+  let kind = pick<string>("kind", "any", (v) => v === "any" || !!(hyper ? findHyperKind(v) : findWaterKind(module as WatersEarthly, v)));
+  // §15: a kind not offered here runs as any.
+  if (kind !== "any" && hyper && !hyperKindsAt(scale).some((k) => k.key === kind)) {
+    problems.push(`Kind “${kind}” isn't offered at that scale.`);
+    kind = "any";
+  }
+  const culture = pick("culture", hyper ? "general" : "norman-british", (v) => !!findWatersCulture(v));
+  return {
+    waters: {
+      packName: values.packName || fileName,
+      setting: values.setting ?? "",
+      description: body.trim(),
+      watersModule: module,
+      culture,
+      waterKind: kind,
+      era: hyper ? "IS" : pick<WatersEra>("era", "MD", (v) => waterEras(module as WatersEarthly).includes(v as WatersEra)),
+      where: hyper ? "home" : pick<WatersWhere>("where", "home", (v) => v === "home" || v === "new"),
+      fantastic: hyper ? false : flag("fantastic"),
+      region: hyper ? "all" : pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      biome: hyper ? "any" : pick("biome", "any", (v) => v === "any" || BIOMES.some((b) => b.id === v)),
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series: watersHasSeries(module) ? flag("series") : false,
+      scale,
+      medium: hyper ? pick<HyperMedium>("medium", "sea", (v) => WATERS_MEDIA.some((m) => m.id === v)) : "sea",
+      register: hyper ? pick<HyperRegister>("register", "any", (v) => WATERS_REGISTERS.some((r) => r.id === v)) : "any",
+    },
+    problems,
+  };
+}
+
+function watersPresetContent(preset: WatersPreset): string {
+  const hyper = preset.watersModule === "hyperspaceCharts";
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${WATERS_PRESET_MODULE}`,
+    `watersModule: ${preset.watersModule}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.waterKind}`,
+    ...(hyper
+      ? [`scale: ${preset.scale}`, `medium: ${preset.medium}`, `register: ${preset.register}`]
+      : [`era: ${preset.era}`, `where: ${preset.where}`, `fantastic: ${preset.fantastic}`, `region: ${preset.region}`, `biome: ${preset.biome}`]),
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    ...(watersHasSeries(preset.watersModule) ? [`series: ${preset.series}`] : []),
     "---",
     "",
     preset.description.trim(),

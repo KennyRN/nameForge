@@ -15,7 +15,8 @@ Every pool in `src/data/settlement-vocab.json`: what it holds, the tags its entr
 | `pl` | plural, where `pluralOf` would be wrong | – |
 | `r` | region codes (COR … NSI) where the entry is used; read for the British cultures only | all regions |
 | `rx` | region multipliers for the British cultures, e.g. `{"NTH": 3}` | ×1 |
-| `rt` | a route region tag (route names §4.4), on fixed whole route names | – |
+| `rt` | a region tag (route names §4.4, on fixed whole route names; seas and coasts §3.3, on pool words such as the boat `Coble`) | – |
+| `bt` | a biome tag (seas and coasts §3.4): the chosen biome multiplies the word (`ice`, `dry`, `warm`, `cliff`, `upland`, `tropic`, `fjord`, `sand`, `lowWater`) | ×1 |
 | `th` | themes: rural, urban, maritime, road, magical; the inn and building settings multiply them (other modules ignore them); pack lines add them as ` [maritime]` | none |
 | `g` | the gender a divine figure or kin word is for: m, f or n (neither); unmarked reads as n; read by deities and sacred places | n |
 | `fn` | the district functions a fixed district name serves (`any`: every function) | – |
@@ -30,8 +31,8 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 
 | Pool | Holds | Tags used | Read by |
 |---|---|---|---|
-| `direction` | compass points for "‹direction› Road" (diagonals ×0.2) | x | route names, streets and districts, buildings and landmarks |
-| `directionAdj` | Northern, Southern, Eastern, Western | – | route names, streets and districts, inns and taverns, buildings and landmarks |
+| `direction` | compass points for "‹direction› Road" (diagonals ×0.2) | x | route names, streets and districts, buildings and landmarks, seas and coasts |
+| `directionAdj` | Northern, Southern, Eastern, Western | – | route names, streets and districts, inns and taverns, buildings and landmarks, seas and coasts |
 | `travellers` | plural travellers for "‹travellers›' Way" | x, t, c, e | route names, streets and districts, inns and taverns |
 | `routeFeature` | earthworks and markers for "‹feature› Way" | x | route names |
 | `routeMaterial` | road surfaces for "‹material› Street" | x, e | route names |
@@ -43,7 +44,7 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `jFeature` | Japanese road features ("Western Mountain Road") | x, c | route names |
 | `romanRoadNomen` | Roman family adjectives for "‹nomen› Way" | c | route names, buildings and landmarks |
 | `spaceGoods` | cargoes for "‹goods› Run" | x | route names |
-| `skyPath` | Polynesian sky and sea signs for "‹sign› Path" | c | route names |
+| `skyPath` | Polynesian sky and sea signs for "‹sign› Path" | c | route names, seas and lakes |
 | `routeFixed:road` | whole road names | x, e, c, rt | route names |
 | `routeFixed:trade` | whole trade-route names | x, e, c | route names |
 | `routeFixed:pilgrim` | whole pilgrim and holy road names (never for Polynesian or Andean) | t, e, c, rt | route names |
@@ -179,3 +180,48 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `deityFixed:deity` | whole deity titles (empty: for packs) | t, e, c | deities and sacred places |
 | `deityFixed:pantheon` | whole pantheon names: the Twins, the Makers, the Elder Kin | t, e, c | deities and sacred places |
 | `deityFixed:place` | whole sacred places (empty: for packs) | t, e, c | deities and sacred places |
+| `seaColour` | colour seas: Black, White, Red, Golden; Wine-Dark for Greek-Byzantine | x, t, e, cultureExtra | seas and lakes, coasts and islands, sea charts |
+| `seaQuality` | qualities of a sea: Great, Narrow, Inner, Restless, Frozen | x, t, bt | seas and lakes, sea charts |
+| `oceanQuality` | qualities of an ocean: Great, Outer, Encircling, Silent | x, t, e | seas and lakes |
+| `oceanOf` | "Ocean of ‹…›": Storms, Darkness, Mists, the World | x, t, bt | seas and lakes |
+| `seaCreature` | sea creatures and birds: Seal, Whale, Gull, Puffin, Walrus | x, t, pl, bt | seas and lakes, coasts and islands, sea charts |
+| `lakeCreature` | lake creatures and birds: Swan, Heron, Pike, Crocodile | x, t, e, pl, bt | seas and lakes |
+| `shoreShape` | body shapes a headland resembles: Horn, Hook, Nose, Tongue | x | coasts and islands |
+| `lakeShape` | shapes a lake resembles: Moon, Crescent, Eye; Lute and Fan for Japanese, Ear for Chinese and Korean | x, cultureExtra | seas and lakes |
+| `explorerMood` | explorers' moods: Plenty, Hope, Disappointment, Desolation, Farewell | x, t | seas and lakes, coasts and islands |
+| `coastGoods` | goods a coast is named for: Gold, Ivory, Pepper, Pearl, Coral | x, bt | coasts and islands |
+| `grimCoast` | grim coast words: Skeleton, Wreckers', Widow's, Drowned (all grim) | x, t, bt | coasts and islands |
+| `endWord` | "‹…› End": Land's, World's, Earth's | x | coasts and islands |
+| `stackGroup` | groups of sea stacks: Needles, Maidens, Sisters, Teeth | x, t | coasts and islands, sea charts |
+| `coveFolk` | people a cove is named for: Smugglers, Fishermen, Pirates, Monks | x, t | coasts and islands |
+| `folkUncanny` | folk-supernatural possessives: Devil's, Giant's, Witch's, Mermaid's | x, t | seas and lakes, coasts and islands, sea charts |
+| `devilFeature` | what the Devil owns: Rock, Bellows, Frying Pan, Punchbowl | x, t | coasts and islands |
+| `narrowsWord` | "The ‹…› Narrows": Iron, Stone, Long, Crooked, Twin | x, t | seas and lakes |
+| `gateWord` | "‹…› Gate": Golden, Iron, Narrow, Western | x | seas and lakes |
+| `fordBeast` | beasts of "‹…› Ford" (Bosporus): Ox, Cow, Horse, Goat | x | seas and lakes |
+| `bayQuality` | qualities of a bay or cove: Long, Broad, Sandy, Hidden, Shell | x | seas and lakes, coasts and islands |
+| `islandQuality` | qualities of an island: Long, Flat, Green, Steep, Holy | x, t, c | coasts and islands |
+| `shoreQuality` | qualities of a shore or sand: Long, Black, Golden, Shingle, Steep | x | coasts and islands |
+| `lakeQuality` | qualities of a lake: Long, Still, Deep, Hidden, Salt | x, t, bt | seas and lakes |
+| `lakeFuse` | first halves of fused lake words: Grass- and Reed- (Grassmere, Reedwater) | – | seas and lakes |
+| `boatWord` | fishing boats banks are named for: Dogger, Buss, Cog, Smack, Trawler | e, rt | sea charts |
+| `pitWord` | "‹…› Pit": Silver, Sole, Herring, Ling, Cod | x | sea charts |
+| `depthNumber` | depth-number banks: Fourteens, Forties, Eighteens | x | sea charts |
+| `lengthAdj` | "The ‹…› Fourteens": Broad, Long, Narrow, Great, Outer | x | sea charts |
+| `gatTrade` | trades a gat is named for: Fisherman's, Pilot's, Smuggler's | x, t | sea charts |
+| `swallowWord` | whirlpool words: Swallower, Grinder, Churn, Cauldron, Boil | x, t | sea charts |
+| `kinCurrent` | kin words for currents (Japanese): Parent, Mother, Child | x, c | sea charts |
+| `seaKenning` | kennings for the sea (Anglo-Saxon and Norse): Whale Road, Swan Road, Gannet's Bath | x, t, c | seas and lakes |
+| `mariaWord` | lunar maria words: Tranquillity, Serenity, Storms, Dreams, Decay | x, t | seas and lakes |
+| `seaMonster` | sea monsters: Kraken, Leviathan, Serpent; Merrow and Selkie for Celtic and Norse | x, cultureExtra | seas and lakes, sea charts |
+| `cosmoSubstance` | the seven Puranic oceans' substances (Indian): Milk, Salt, Wine, Ghee | x, c | seas and lakes |
+| `euphemism` | euphemisms for a sea (Greek-Byzantine): Hospitable, Kindly, Gentle | x, t, c | seas and lakes |
+| `hyperColour` | hyperspace colours: Black, Grey, Silver, Amber, Brass | x, t | hyperspace charts |
+| `hyperAdj` | hyperspace qualities: Blind, Silent, Broken, False, Ghost | x, t | hyperspace charts |
+| `hyperPhysical` | what hyperspace hazards are made of: Gravity, Phase, Time, Echo, Mirror | x, t | hyperspace charts |
+| `weatherAdj` | weather adjectives: Howling, Wailing, Grinding, Singing | x, t | hyperspace charts |
+| `depthBand` | hyperspace depth bands, named as the Forties are: Forties to Seventies | x | hyperspace charts |
+| `watersFixed:seas` | whole sea and lake names (empty: for packs) | – | seas and lakes |
+| `watersFixed:coasts` | whole coast and island names (empty: for packs) | – | coasts and islands |
+| `watersFixed:charts` | whole chart-feature names (empty: for packs) | – | sea charts |
+| `watersFixed:hyperspace` | whole hyperspace-feature names (empty: for packs) | – | hyperspace charts |

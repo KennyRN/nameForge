@@ -65,7 +65,15 @@ export type NameForgeSection =
   | "realms"
   // Ships brief §1.1: ships and boats, spacecraft and stations (in the advanced group).
   | "ships"
-  | "spacecraft";
+  | "spacecraft"
+  // Seas and coasts brief §1.1: the seas and coasts group, after place names.
+  | "seasLakes"
+  | "coastsIslands"
+  | "seaCharts"
+  | "hyperspaceCharts";
+
+/** Seas and coasts brief §1.1: the four waters modules, in order. */
+export const WATERS_SECTIONS: NameForgeSection[] = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
 
 /** Ships brief §1.1: the two vessel modules, in order. */
 export const VESSEL_SECTIONS: NameForgeSection[] = ["ships", "spacecraft"];
@@ -97,6 +105,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "innNames",
   "buildingNames",
   "sacredPlaces",
+  ...WATERS_SECTIONS,
   ...GROUP_NAMES_ORDER,
   "deityNames",
   ...BYNAME_SECTIONS,
@@ -109,10 +118,11 @@ export const SECTION_ORDER: NameForgeSection[] = [
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
  * trigger then chooses between the group's modules. */
-export type SectionGroup = "placeNames" | "groupNames" | "bynames" | "vehicles" | "advanced";
+export type SectionGroup = "placeNames" | "seasCoasts" | "groupNames" | "bynames" | "vehicles" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames", "sacredPlaces"],
+  seasCoasts: WATERS_SECTIONS,
   groupNames: [...GROUP_NAMES_ORDER, "deityNames"],
   bynames: BYNAME_SECTIONS,
   // Line-up brief §1: ships and spacecraft get a group of their own.
@@ -122,6 +132,7 @@ export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
 
 export const GROUP_LABELS: Record<SectionGroup, string> = {
   placeNames: "place names",
+  seasCoasts: "seas and coasts",
   groupNames: "group names",
   bynames: "bynames and titles",
   vehicles: "vehicles",
@@ -129,7 +140,7 @@ export const GROUP_LABELS: Record<SectionGroup, string> = {
 };
 
 /** The switcher's line-up: modules and groups. */
-export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "groupNames", "bynames", "vehicles", "advanced"];
+export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "seasCoasts", "groupNames", "bynames", "vehicles", "advanced"];
 
 /** The group a module belongs to, if any. */
 export function sectionGroup(section: NameForgeSection): SectionGroup | undefined {
@@ -167,6 +178,10 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   familyNames: "family names",
   ships: "ships and boats",
   spacecraft: "spacecraft and stations",
+  seasLakes: "seas and lakes",
+  coastsIslands: "coasts and islands",
+  seaCharts: "sea charts",
+  hyperspaceCharts: "hyperspace charts",
 };
 
 /** History labels for new runs of the place-name and river modules. */
@@ -215,6 +230,8 @@ export function historySection(packName: string): NameForgeSection {
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   // Ships brief §1.2: "{module label} · {setting} · {culture} · {technology}…".
   for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  // Seas and coasts brief §1.3: "{module} · {era} · {culture}…".
+  for (const section of WATERS_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   if (OLD_HISTORY_PREFIXES.tradeGuilds.some(starts)) return "tradeGuilds";
   if (OLD_HISTORY_PREFIXES.titles.some(starts)) return "titles";
   if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {

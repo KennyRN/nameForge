@@ -243,6 +243,31 @@ export const ICON_VEHICLES = "nameforge-vehicles";
 const ICON_VEHICLES_SVG =
   '<g transform="translate(0 10) scale(0.15625)"><path d="M0 0h640v512H0z" fill="none" /><path fill="currentColor" d="M171.3 96H224v96H111.3l30.4-75.9C146.5 104 158.2 96 171.3 96M272 192V96h81.2c9.7 0 18.9 4.4 25 12l67.2 84zm256.2 1l-100-125c-18.2-22.8-45.8-36-75-36H171.3C132 32 96.7 55.9 82.2 92.3L40.6 196.4C16.8 205.8 0 228.9 0 256v112c0 17.7 14.3 32 32 32h33.3c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80h130.7c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80h33.3c17.7 0 32-14.3 32-32v-48c0-65.2-48.8-119-111.8-127zm-93.5 175a48 48 0 1 1 90.5 32a48 48 0 1 1-90.5-32M160 336a48 48 0 1 1 0 96a48 48 0 1 1 0-96" /></g>';
 
+export const ICON_SEAS_COASTS = "nameforge-seas-coasts";
+// Phosphor — waves (MIT). Scaled for Obsidian's 100×100 viewBox from its 256×256 one.
+const ICON_SEAS_COASTS_SVG =
+  '<g transform="scale(0.390625)"><path fill="currentColor" d="M222.16 177.25a8 8 0 0 1-1 11.25c-17.36 14.39-32.86 19.5-47 19.5c-18.58 0-34.82-8.82-49.93-17c-25.35-13.76-47.24-25.64-79.07.74a8 8 0 1 1-10.22-12.31c40.17-33.28 70.32-16.92 96.93-2.48c25.35 13.75 47.24 25.63 79.07-.74a8 8 0 0 1 11.22 1.04m-11.27-57c-31.83 26.38-53.72 14.5-79.07.74c-26.61-14.43-56.76-30.79-96.93 2.49a8 8 0 0 0 10.22 12.31c31.83-26.38 53.72-14.5 79.07-.74c15.11 8.19 31.35 17 49.93 17c14.14 0 29.64-5.11 47-19.5a8 8 0 1 0-10.22-12.31ZM45.11 79.8c31.83-26.37 53.72-14.49 79.07-.74c15.11 8.2 31.35 17 49.93 17c14.14 0 29.64-5.12 47-19.5a8 8 0 1 0-10.22-12.31c-31.83 26.38-53.72 14.5-79.07.74c-26.61-14.41-56.76-30.77-96.93 2.51a8 8 0 1 0 10.22 12.3" /></g>';
+
+export const ICON_SEAS_LAKES = "nameforge-seas-lakes";
+// Tabler — ripple (MIT). Scaled for Obsidian's 100×100 viewBox.
+const ICON_SEAS_LAKES_SVG =
+  '<g transform="scale(4.16667)"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7q4.5-3 9 0c4.5 3 6 2 9 0M3 17q4.5-3 9 0c4.5 3 6 2 9 0M3 12q4.5-3 9 0c4.5 3 6 2 9 0" /></g>';
+
+export const ICON_COASTS_ISLANDS = "nameforge-coasts-islands";
+// Tabler — beach (MIT). Scaled for Obsidian's 100×100 viewBox.
+const ICON_COASTS_ISLANDS_SVG =
+  '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M17.553 16.75a7.5 7.5 0 0 0-10.606 0M18 3.804A6 6 0 0 0 9.804 6l10.392 6A6 6 0 0 0 18 3.804" /><path d="M16.732 10C18.39 7.13 18.957 4.356 18 3.804S14.925 5.13 13.268 8M15 9l-3 5.196M3 19.25A2.4 2.4 0 0 1 4 19a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2-1a2.4 2.4 0 0 1 2-1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2-1a2.4 2.4 0 0 1 2-1a2.4 2.4 0 0 1 1 .25" /></g></g>';
+
+export const ICON_SEA_CHARTS = "nameforge-sea-charts";
+// Phosphor — anchor (MIT). Scaled for Obsidian's 100×100 viewBox from its 256×256 one.
+const ICON_SEA_CHARTS_SVG =
+  '<g transform="scale(0.390625)"><path fill="currentColor" d="M216 136a8 8 0 0 0-8 8c0 24.69-13.77 29.64-38.1 36.28c-11.36 3.1-24.12 6.6-33.9 14.34V128h32a8 8 0 0 0 0-16h-32V87a32 32 0 1 0-16 0v25H88a8 8 0 0 0 0 16h32v66.62c-9.78-7.74-22.54-11.24-33.9-14.34C61.77 173.64 48 168.69 48 144a8 8 0 0 0-16 0c0 38.11 27.67 45.66 49.9 51.72c24.33 6.64 38.1 11.59 38.1 36.28a8 8 0 0 0 16 0c0-24.69 13.77-29.64 38.1-36.28c22.23-6.06 49.9-13.61 49.9-51.72a8 8 0 0 0-8-8M112 56a16 16 0 1 1 16 16a16 16 0 0 1-16-16" /></g>';
+
+export const ICON_HYPERSPACE_CHARTS = "nameforge-hyperspace-charts";
+// Iconoven — mist, supplied by Kenny in place of Phosphor's compass-rose. Scaled for Obsidian's 100×100 viewBox.
+const ICON_HYPERSPACE_CHARTS_SVG =
+  '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6.5q2.25-1.5 4.5 0t4.5 0t4.5 0t4.5 0M3 12q2.25-1.5 4.5 0t4.5 0m4.5 0q2.25-1.5 4.5 0M3 17.5q2.25-1.5 4.5 0m4.5 0q2.25-1.5 4.5 0t4.5 0" /></g>';
+
 export function registerNameForgeIcons(): void {
   addIcon(ICON_MEEPLE, MEEPLE_SVG);
   addIcon(ICON_BYNAMES, ICON_BYNAMES_SVG);
@@ -264,6 +289,11 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_VEHICLES, ICON_VEHICLES_SVG);
   addIcon(ICON_STREETS, ICON_STREETS_SVG);
   addIcon(ICON_ROUTES, ICON_ROUTES_SVG);
+  addIcon(ICON_SEAS_COASTS, ICON_SEAS_COASTS_SVG);
+  addIcon(ICON_SEAS_LAKES, ICON_SEAS_LAKES_SVG);
+  addIcon(ICON_COASTS_ISLANDS, ICON_COASTS_ISLANDS_SVG);
+  addIcon(ICON_SEA_CHARTS, ICON_SEA_CHARTS_SVG);
+  addIcon(ICON_HYPERSPACE_CHARTS, ICON_HYPERSPACE_CHARTS_SVG);
   addIcon(ICON_INFO, ICON_INFO_SVG);
   addIcon(ICON_CREATE_PACKS, ICON_CREATE_PACKS_SVG);
   addIcon(ICON_PLUS_SQUARE, ICON_PLUS_SQUARE_SVG);

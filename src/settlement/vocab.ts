@@ -32,6 +32,8 @@ export interface VocabEntry {
   rx?: Record<string, number>;
   /** Route names §4.4: a route region tag on a fixed whole name. */
   rt?: string;
+  /** Seas and coasts brief §3.4: a biome tag, weighted by the chosen biome (and the region tag `rt` by region). */
+  bt?: string;
   /** Streets brief §7.2: the district functions a fixed district name serves ("any": every one). */
   fn?: string[];
   /** Inns brief §3: themes (rural, urban, maritime, road, magical). */
