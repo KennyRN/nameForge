@@ -98,7 +98,7 @@ import {
   groupSetting,
   SETTING_PHRASES,
 } from "./groups/engine";
-import { chooseGroup, DEFAULT_GROUP_STATE, effectiveCommodity, effectiveFront, groupPresetState, groupSentence, groupSentenceText, type GroupSentenceState } from "./groups/sentence";
+import { chooseGroup, DEFAULT_GROUP_STATE, effectiveCommodity, effectiveFront, effectiveScale, groupPresetState, groupSentence, groupSentenceText, type GroupSentenceState } from "./groups/sentence";
 import { isGroupSafeguardPackContent } from "./groups/safeguardPacks";
 import {
   BYNAME_CULTURES,
@@ -3379,6 +3379,7 @@ export class NameForgeModal extends Modal {
         tone: state.tone,
         series: !!state.type && state.series,
         ...(family.key === "trade" ? { commodity: effectiveCommodity(state, family) } : {}),
+        ...(effectiveScale(state) !== "any" ? { scale: effectiveScale(state) } : {}),
       });
       return this.writePreset(presetName, content, (existing) => parseModulePreset(existing, presetName).group?.family === family.key);
     }).open();
@@ -3460,6 +3461,7 @@ export class NameForgeModal extends Modal {
         tone: state.tone,
         series: !!state.type && state.series,
         commodity: effectiveCommodity(state, family),
+        scale: effectiveScale(state),
         count: this.generationCount,
         seed: seedOverride,
         safeguards: guards.safeguards,
@@ -3473,7 +3475,7 @@ export class NameForgeModal extends Modal {
       result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" }) as GeneratedName),
       "none",
     );
-    await this.recordGenerationHistory(result.names.length, label ?? groupHistoryLabel(family, state.genre, state.fantastic, state.tradition, state.tone, !!state.type && state.series));
+    await this.recordGenerationHistory(result.names.length, label ?? groupHistoryLabel(family, state.genre, state.fantastic, state.tradition, state.tone, !!state.type && state.series, effectiveScale(state)));
     this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
   }
 

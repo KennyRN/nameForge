@@ -26,6 +26,7 @@ import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, 
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
 import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
 import { findCommodity, findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
+import { scalesFor, type ScaleChoice } from "./space/scale";
 
 export const TRIBAL_PRESET_MODULE = "tribal-names";
 
@@ -192,6 +193,8 @@ export interface GroupPreset {
   series: boolean;
   /** Companies brief §10: trade family only; older presets without the key load as "any". */
   commodity?: string;
+  /** Stellar brief §13.1: sci-fi only; absent means "any". */
+  scale?: ScaleChoice;
 }
 
 function parseGroupPreset(values: Record<string, string>, body: string, fileName: string): { group?: GroupPreset; problems: string[] } {
@@ -248,6 +251,7 @@ function parseGroupPreset(values: Record<string, string>, body: string, fileName
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
       series,
       ...(commodity !== undefined ? { commodity } : {}),
+      ...(genre === "scifi" ? { scale: pick<ScaleChoice>("scale", "any", (v) => scalesFor(undefined).includes(v as ScaleChoice)) } : {}),
     },
     problems,
   };
@@ -271,6 +275,7 @@ function groupPresetContent(preset: GroupPreset): string {
     `tone: ${preset.tone}`,
     `series: ${preset.series}`,
     ...(preset.family === "trade" ? [`commodity: ${preset.commodity ?? "any"}`] : []),
+    ...(preset.scale && preset.scale !== "any" ? [`scale: ${preset.scale}`] : []),
     "---",
     "",
     preset.description.trim(),

@@ -63,3 +63,37 @@ test("§3.2: a prefix never repeats its space-land word (2,000 draws)", () => {
     assert.equal(new Set(words.map((w) => w.toLowerCase())).size, words.length, text);
   }
 });
+
+// ── Stellar brief §9: the group names scale link ───────────────────────────
+import { findFamily, generateGroupNames, groupHistoryLabel } from "../src/groups/engine";
+import { chooseGroup, DEFAULT_GROUP_STATE, effectiveScale, groupSentence, groupSentenceText } from "../src/groups/sentence";
+
+test("§9: the scale link shows for sci-fi only, and reads 'at any scale'", () => {
+  const family = findFamily("trade")!;
+  const fantasy = groupSentence(DEFAULT_GROUP_STATE, family);
+  assert.ok(!fantasy.some((s) => typeof s !== "string" && s.field === "scale"));
+  const sf = chooseGroup(DEFAULT_GROUP_STATE, "genre", "scifi", family);
+  const segments = groupSentence(sf, family);
+  const link = segments.find((s) => typeof s !== "string" && s.field === "scale");
+  assert.ok(link && typeof link !== "string" && link.choices.length === 6);
+  assert.match(groupSentenceText(segments), /science fiction world at any scale, using/);
+  const sy = chooseGroup(sf, "scale", "Sy", family);
+  assert.match(groupSentenceText(groupSentence(sy, family)), /at a star system, using/);
+  // Leaving sci-fi ignores the stored scale.
+  assert.equal(effectiveScale(chooseGroup(sy, "genre", "fantasy", family)), "any");
+});
+
+test("§9: a planetary-system batch never draws galactic words", () => {
+  for (const famKey of ["power", "trade", "adventure"]) {
+    if (!findFamily(famKey)) continue;
+    const { names } = generateGroupNames({ family: famKey, genre: "scifi", scale: "Pl", count: 60, seed: 12, people: "invented" });
+    for (const n of names) assert.ok(!/\b(Nebula|Arm|Pillars|Rift|Filament|Frostline)\b/.test(n.text), n.text);
+  }
+});
+
+test("§13.2: the history label ends with the scale, only when set", () => {
+  const family = findFamily("trade")!;
+  assert.ok(!groupHistoryLabel(family, "scifi", false, "general").includes("scale"));
+  assert.ok(groupHistoryLabel(family, "scifi", false, "general", "any", false, "Sy").endsWith("star system"));
+  assert.ok(!groupHistoryLabel(family, "fantasy", false, "general", "any", false, "Sy").includes("star system"));
+});

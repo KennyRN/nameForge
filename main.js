@@ -57739,6 +57739,14 @@ var space_default = {
 // src/space/scale.ts
 var SPACE_DATA = space_default;
 var SCALES = SPACE_DATA.scales.order;
+function scaleInfo(choice) {
+  return choice === "any" ? SPACE_DATA.scales.any : SPACE_DATA.scales.list[choice];
+}
+var scaleLabel = (choice) => scaleInfo(choice).label;
+var scalePhrase = (choice) => scaleInfo(choice).phrase;
+function scalesFor(era) {
+  return [...SPACE_DATA.scales.byEra[era != null ? era : "none"]];
+}
 function scaleAllows(entry, scale) {
   if (scale === "any" || !entry.sc) return true;
   return entry.sc.includes(scale);
@@ -58737,14 +58745,15 @@ function generateGroupNames(options) {
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
   return { names, seed, notices };
 }
-function groupHistoryLabel(family, genre, fantastic, tradition, tone = "any", series = false) {
+function groupHistoryLabel(family, genre, fantastic, tradition, tone = "any", series = false, scale = "any") {
   const t = findTradition(tradition);
   return [
     family.label,
     SETTING_PHRASES[groupSetting(genre, fantastic)],
     t && t.key !== "general" ? t.label : "General",
     ...tone !== "any" ? [tone] : [],
-    ...series ? ["series"] : []
+    ...series ? ["series"] : [],
+    ...genre === "scifi" && scale !== "any" ? [scaleLabel(scale).toLowerCase()] : []
   ].join(" \xB7 ");
 }
 
@@ -58758,7 +58767,8 @@ var DEFAULT_GROUP_STATE = {
   people: "placeholders",
   tone: "any",
   series: false,
-  commodity: "any"
+  commodity: "any",
+  scale: "any"
 };
 var GENRE_TEXT = { fantasy: "fantasy", modern: "modern", scifi: "science fiction" };
 var FANTASTIC_TEXT = {
@@ -58787,7 +58797,7 @@ function effectiveCommodity(state, family) {
 }
 var genresFor = (family) => family.key === "supernatural" ? ["fantasy", "modern"] : ["fantasy", "modern", "scifi"];
 function groupSentence(state, family) {
-  var _a2;
+  var _a2, _b;
   const out = [];
   const tradition = (_a2 = TRIBAL_TRADITIONS.find((t) => t.key === state.tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
   out.push({
@@ -58829,6 +58839,17 @@ function groupSentence(state, family) {
     current: state.genre
   });
   out.push(" world");
+  if (state.genre === "scifi") {
+    const scale = (_b = state.scale) != null ? _b : "any";
+    out.push(" at ");
+    out.push({
+      field: "scale",
+      text: scalePhrase(scale),
+      title: scaleInfo(scale).tooltip,
+      choices: scalesFor(void 0).map((c) => ({ id: c, label: scaleInfo(c).label })),
+      current: scale
+    });
+  }
   if (state.genre !== "scifi") {
     const phrases = FANTASTIC_TEXT[state.genre];
     const offered = family.key === "supernatural" && state.genre === "modern" ? [true] : [false, true];
@@ -58926,6 +58947,9 @@ function chooseGroup(state, field, id, family) {
     case "commodity":
       next.commodity = id != null ? id : "any";
       break;
+    case "scale":
+      next.scale = id != null ? id : "any";
+      break;
   }
   const available = typesInSetting(family, groupSetting(next.genre, next.fantastic));
   if (next.type && !available.some((t) => t.key === next.type)) next = { ...next, type: void 0 };
@@ -58938,7 +58962,7 @@ function chooseGroup(state, field, id, family) {
   return next;
 }
 function groupPresetState(preset) {
-  var _a2;
+  var _a2, _b;
   return {
     tradition: preset.tradition,
     type: preset.groupType === "any" ? void 0 : preset.groupType,
@@ -58949,8 +58973,13 @@ function groupPresetState(preset) {
     people: preset.people,
     tone: preset.tone,
     series: preset.groupType !== "any" && preset.series,
-    commodity: (_a2 = preset.commodity) != null ? _a2 : "any"
+    commodity: (_a2 = preset.commodity) != null ? _a2 : "any",
+    scale: (_b = preset.scale) != null ? _b : "any"
   };
+}
+function effectiveScale(state) {
+  var _a2;
+  return state.genre === "scifi" ? (_a2 = state.scale) != null ? _a2 : "any" : "any";
 }
 
 // src/groups/safeguardPacks.ts
@@ -85023,7 +85052,8 @@ function parseGroupPreset(values, body, fileName) {
       people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
       tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
       series,
-      ...commodity !== void 0 ? { commodity } : {}
+      ...commodity !== void 0 ? { commodity } : {},
+      ...genre === "scifi" ? { scale: pick4("scale", "any", (v) => scalesFor(void 0).includes(v)) } : {}
     },
     problems
   };
@@ -85047,6 +85077,7 @@ function groupPresetContent(preset) {
     `tone: ${preset.tone}`,
     `series: ${preset.series}`,
     ...preset.family === "trade" ? [`commodity: ${(_a2 = preset.commodity) != null ? _a2 : "any"}`] : [],
+    ...preset.scale && preset.scale !== "any" ? [`scale: ${preset.scale}`] : [],
     "---",
     "",
     preset.description.trim(),
@@ -93847,7 +93878,8 @@ ${text}
         people: state.people,
         tone: state.tone,
         series: !!state.type && state.series,
-        ...family.key === "trade" ? { commodity: effectiveCommodity(state, family) } : {}
+        ...family.key === "trade" ? { commodity: effectiveCommodity(state, family) } : {},
+        ...effectiveScale(state) !== "any" ? { scale: effectiveScale(state) } : {}
       });
       return this.writePreset(presetName, content, (existing) => {
         var _a4;
@@ -93930,6 +93962,7 @@ ${text}
         tone: state.tone,
         series: !!state.type && state.series,
         commodity: effectiveCommodity(state, family),
+        scale: effectiveScale(state),
         count: this.generationCount,
         seed: seedOverride,
         safeguards: guards.safeguards
@@ -93943,7 +93976,7 @@ ${text}
       result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
       "none"
     );
-    await this.recordGenerationHistory(result.names.length, label != null ? label : groupHistoryLabel(family, state.genre, state.fantastic, state.tradition, state.tone, !!state.type && state.series));
+    await this.recordGenerationHistory(result.names.length, label != null ? label : groupHistoryLabel(family, state.genre, state.fantastic, state.tradition, state.tone, !!state.type && state.series, effectiveScale(state)));
     this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
   }
   /** Group brief §12.6: every group safeguard pack in the names folder, merged with the built-in lists. */

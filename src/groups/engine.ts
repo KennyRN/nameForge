@@ -11,7 +11,7 @@ import { generatePlaceNames } from "../names/engine";
 import { britishPlaceNamesRecipe } from "../names/recipe";
 import { findTradition, TRIBAL_DATA, type TribalTradition } from "../tribes/engine";
 import { generateWorldPlaceNames } from "../world/engine";
-import { scaleAllows, type ScaleChoice, type SpaceScale } from "../space/scale";
+import { scaleAllows, scaleLabel, type ScaleChoice, type SpaceScale } from "../space/scale";
 import { catalogueWorld, drawStarKind, drawStarOfKind, type DrawStarOptions } from "../space/stars";
 import { hasSpaceBlock } from "../space/safeguards";
 
@@ -1326,6 +1326,7 @@ export function groupHistoryLabel(
   tradition: string,
   tone: GroupToneChoice = "any",
   series = false,
+  scale: ScaleChoice = "any",
 ): string {
   const t = findTradition(tradition);
   return [
@@ -1334,5 +1335,6 @@ export function groupHistoryLabel(
     t && t.key !== "general" ? t.label : "General",
     ...(tone !== "any" ? [tone] : []),
     ...(series ? ["series"] : []),
+    ...(genre === "scifi" && scale !== "any" ? [scaleLabel(scale).toLowerCase()] : []),
   ].join(" · ");
 }

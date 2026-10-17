@@ -3,6 +3,7 @@
 // are›, with ‹placeholders for› people and places". Built as segments like the tribal sentence.
 // No Obsidian imports.
 
+import { scalePhrase, scaleInfo, scalesFor, type ScaleChoice } from "../space/scale";
 import { TRIBAL_TRADITIONS } from "../tribes/engine";
 import {
   canFront,
@@ -34,9 +35,11 @@ export interface GroupSentenceState {
   series: boolean;
   /** Companies brief §5.1: "any" or a commodity group key (trade family only). */
   commodity: string;
+  /** Stellar brief §9: the scale of space names; shown, and used, in sci-fi only. */
+  scale?: ScaleChoice;
 }
 
-export type GroupField = "commodity" | "tradition" | "type" | "genre" | "fantastic" | "form" | "tone" | "front" | "people" | "series";
+export type GroupField = "scale" | "commodity" | "tradition" | "type" | "genre" | "fantastic" | "form" | "tone" | "front" | "people" | "series";
 
 export interface GroupChoice {
   id: string | undefined;
@@ -55,6 +58,7 @@ export const DEFAULT_GROUP_STATE: GroupSentenceState = {
   tone: "any",
   series: false,
   commodity: "any",
+  scale: "any",
 };
 
 export const GENRE_TEXT: Record<GroupGenre, string> = { fantasy: "fantasy", modern: "modern", scifi: "science fiction" };
@@ -136,6 +140,18 @@ export function groupSentence(state: GroupSentenceState, family: GroupFamily): G
     current: state.genre,
   });
   out.push(" world");
+  // Stellar brief §9: sci-fi groups name space at a scale.
+  if (state.genre === "scifi") {
+    const scale = state.scale ?? "any";
+    out.push(" at ");
+    out.push({
+      field: "scale",
+      text: scalePhrase(scale),
+      title: scaleInfo(scale).tooltip,
+      choices: scalesFor(undefined).map((c) => ({ id: c, label: scaleInfo(c).label })),
+      current: scale,
+    });
+  }
   if (state.genre !== "scifi") {
     const phrases = FANTASTIC_TEXT[state.genre];
     // §2.4: supernatural modern is always contemporary fantasy.
@@ -240,6 +256,9 @@ export function chooseGroup(state: GroupSentenceState, field: GroupField, id: st
     case "commodity":
       next.commodity = id ?? "any";
       break;
+    case "scale":
+      next.scale = (id as ScaleChoice) ?? "any";
+      break;
   }
   // Genre or fantastic changed: a type the new setting lacks resets to Any.
   const available = typesInSetting(family, groupSetting(next.genre, next.fantastic));
@@ -268,6 +287,7 @@ export function groupPresetState(preset: {
   tone: GroupToneChoice;
   series: boolean;
   commodity?: string;
+  scale?: ScaleChoice;
 }): GroupSentenceState {
   return {
     tradition: preset.tradition,
@@ -280,5 +300,11 @@ export function groupPresetState(preset: {
     tone: preset.tone,
     series: preset.groupType !== "any" && preset.series,
     commodity: preset.commodity ?? "any",
+    scale: preset.scale ?? "any",
   };
+}
+
+/** Stellar brief §9: the scale the engine uses: any whenever the link is hidden (not sci-fi). */
+export function effectiveScale(state: GroupSentenceState): ScaleChoice {
+  return state.genre === "scifi" ? state.scale ?? "any" : "any";
 }
