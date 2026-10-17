@@ -309,7 +309,10 @@
         {"w": "Water"},
         {"w": "Data"},
         {"w": "Salvage"},
-        {"w": "Fuel"}
+        {"w": "Fuel"},
+        {"w": "Nickel"},
+        {"w": "Platinum"},
+        {"w": "Deuterium"}
       ]
     },
     "skyPath": {
@@ -371,7 +374,7 @@
     "routeFixed:sea": {
       "entries": [
         {"w": "Island Passage"},
-        {"w": "Sea Lane", "e": ["ST", "MO", "NF"]},
+        {"w": "Sea Lane", "e": ["ST", "MO", "NF", "IS"]},
         {"w": "Monsoon Road", "c": ["arabic-persian", "indian", "chinese"]},
         {"w": "Whale-Road", "t": ["strange"], "e": ["AN", "MD"], "c": ["anglo-saxon", "norse"]},
         {"w": "Ship-Way", "e": ["AN", "MD"], "c": ["norse"]}
@@ -385,11 +388,21 @@
     },
     "routeFixed:space": {
       "entries": [
-        {"w": "The Long Haul"},
-        {"w": "The Dark Lane", "t": ["grim"]},
-        {"w": "The Pilgrim Road"},
-        {"w": "The Quiet Lane", "t": ["strange"]},
-        {"w": "The Narrows"}
+        {"w": "The Long Haul", "sc": ["Sy"]},
+        {"w": "The Dark Lane", "t": ["grim"], "sc": ["Nb", "Se"]},
+        {"w": "The Pilgrim Road", "sc": ["Nb", "Se"]},
+        {"w": "The Quiet Lane", "t": ["strange"], "sc": ["Nb", "Se"]},
+        {"w": "The Narrows", "sc": ["Sy", "Se"]},
+        {"w": "The Ladder", "sc": ["Pl"]},
+        {"w": "The Long Fall", "t": ["grim"], "sc": ["Pl"]},
+        {"w": "The Shuttle", "t": ["plain"], "sc": ["Pl"]},
+        {"w": "The Ice Road", "sc": ["Sy"]},
+        {"w": "The Crossing", "sc": ["Nb"]},
+        {"w": "The Thread", "t": ["strange"], "sc": ["Se"]},
+        {"w": "The Spine", "sc": ["Se", "Ga"]},
+        {"w": "The Long Run", "sc": ["Ga"]},
+        {"w": "The Great Road", "t": ["grand"], "sc": ["Ga"]},
+        {"w": "The Coreward Road", "sc": ["Ga"]}
       ]
     },
     "compWater": {

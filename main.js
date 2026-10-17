@@ -57747,9 +57747,26 @@ var scalePhrase = (choice) => scaleInfo(choice).phrase;
 function scalesFor(era) {
   return [...SPACE_DATA.scales.byEra[era != null ? era : "none"]];
 }
+function validScale(choice, era) {
+  return choice && scalesFor(era).includes(choice) ? choice : "any";
+}
 function scaleAllows(entry, scale) {
   if (scale === "any" || !entry.sc) return true;
   return entry.sc.includes(scale);
+}
+function anyScaleWeights(era) {
+  const row = SPACE_DATA.scales.anyWeights[era != null ? era : "none"];
+  return SCALES.map((s) => [s, row[s]]);
+}
+function drawScale(era, rng) {
+  const items = anyScaleWeights(era);
+  const total = items.reduce((n, [, w]) => n + w, 0);
+  let r = rng() * total;
+  for (const [s, w] of items) {
+    r -= w;
+    if (r < 0) return s;
+  }
+  return items[items.length - 1][0];
 }
 
 // src/space/stars.ts
@@ -57805,6 +57822,9 @@ function drawStarKind(scale, rng) {
   var _a2;
   const row = (_a2 = STARS.kindWeights[scale]) != null ? _a2 : STARS.kindWeights.any;
   return weighted2(Object.entries(row).filter(([, w]) => w > 0), rng);
+}
+function dropStarWord(star) {
+  return star.replace(/('s) Star$/, "$1");
 }
 
 // src/space/safeguards.ts
@@ -77796,6 +77816,18 @@ var route_names_default = {
     { key: "motor", menu: "Modern roads", plural: "modern roads", description: "Numbered roads, highways and bypasses", era: { AN: 0, MD: 0, EM: 0, ST: 0, MO: 50, NF: 30, IS: 0 } },
     { key: "space", menu: "Space lanes", plural: "space lanes", description: "Runs, lanes, corridors and jump routes", era: { AN: 0, MD: 0, EM: 0, ST: 0, MO: 0, NF: 40, IS: 100 } }
   ],
+  scaleKinds: {
+    NF: {
+      Sy: { space: 100 }
+    },
+    IS: {
+      Pl: { space: 50, motor: 25, rail: 15, trade: 5, sea: 5 },
+      Sy: { space: 100 },
+      Nb: { space: 100 },
+      Se: { space: 100 },
+      Ga: { space: 100 }
+    }
+  },
   regions: {
     roman: { COR: 0.3, WCY: 1, SEA: 1.5, EAN: 1.5, WMM: 1.5, WAL: 0.5, EMD: 1.5, NTH: 1.2, SBL: 0.8, SLO: 0.3, SHH: 0, NSI: 0 },
     drove: { COR: 1, WCY: 1, SEA: 0.5, EAN: 0.5, WMM: 1.5, WAL: 3, EMD: 1, NTH: 2, SBL: 3, SLO: 2, SHH: 3, NSI: 2 },
@@ -77900,12 +77932,12 @@ var route_names_default = {
       { p: "{town} and {town} Railway", w: 15, e: ["ST", "MO"], t: ["plain"], self: false },
       { p: "{town}\u2013{town} Railway", w: 10, e: ["ST", "MO"], c: ["chinese", "korean", "japanese", "slavic", "indian"], t: ["plain"], self: false },
       { p: "Great {directionAdj} Railway", w: 10, e: ["ST", "MO"], t: ["grand"] },
-      { p: "{directionAdj} Line", w: 8, e: ["ST", "MO", "NF"] },
+      { p: "{directionAdj} Line", w: 8, e: ["ST", "MO", "NF", "IS"] },
       { p: "{directionAdj} Main Line", w: 6, e: ["ST", "MO"], cx: { japanese: 3 } },
       { p: "{town} Branch", w: 6, e: ["ST", "MO"], t: ["plain"], self: false },
       { p: "{town} Light Railway", w: 4, e: ["ST", "MO"], c: ["british", "general"], t: ["light"], self: true },
       { p: "{town} Tramway", w: 5, e: ["ST", "MO"], t: ["plain"], self: true },
-      { p: "{directionAdj} Express", w: 4, e: ["MO", "NF"] },
+      { p: "{directionAdj} Express", w: 4, e: ["MO", "NF", "IS"] },
       { p: "{town} Skyway", w: 10, e: ["ST"], h: true, self: true },
       { p: "Aether Lane {numberWord}", w: 8, e: ["ST"], h: true },
       { p: "Imperial Air Road", w: 3, e: ["ST"], h: true },
@@ -77916,27 +77948,53 @@ var route_names_default = {
       { p: "fixed", w: 4 }
     ],
     motor: [
-      { p: "{roadLetter}{n}", w: 15, e: ["MO", "NF"], c: ["british"], t: ["plain"], letters: { A: 3, B: 2, M: 1 } },
-      { p: "Route {n}", w: 10, e: ["MO", "NF"], c: ["general"], t: ["plain"] },
-      { p: "National Road {n}", w: 8, e: ["MO", "NF"], c: ["!british", "!general"], t: ["plain"] },
-      { p: "{directionAdj} Highway", w: 10, e: ["MO", "NF"] },
-      { p: "{town} Bypass", w: 10, e: ["MO", "NF"], t: ["plain"], self: true },
-      { p: "{town} Ring Road", w: 8, e: ["MO", "NF"], t: ["plain"], self: true },
-      { p: "{directionAdj} Circular", w: 5, e: ["MO", "NF"], c: ["british"], t: ["plain"] },
-      { p: "{town} Expressway", w: 6, e: ["MO", "NF"], cx: { chinese: 3, japanese: 3, korean: 3 }, self: true },
-      { p: "{directionAdj} Motorway", w: 6, e: ["MO", "NF"], c: ["british", "general"], t: ["plain"] },
+      { p: "{roadLetter}{n}", w: 15, e: ["MO", "NF", "IS"], c: ["british"], t: ["plain"], letters: { A: 3, B: 2, M: 1 } },
+      { p: "Route {n}", w: 10, e: ["MO", "NF", "IS"], c: ["general"], t: ["plain"] },
+      { p: "National Road {n}", w: 8, e: ["MO", "NF", "IS"], c: ["!british", "!general"], t: ["plain"] },
+      { p: "{directionAdj} Highway", w: 10, e: ["MO", "NF", "IS"] },
+      { p: "{town} Bypass", w: 10, e: ["MO", "NF", "IS"], t: ["plain"], self: true },
+      { p: "{town} Ring Road", w: 8, e: ["MO", "NF", "IS"], t: ["plain"], self: true },
+      { p: "{directionAdj} Circular", w: 5, e: ["MO", "NF", "IS"], c: ["british"], t: ["plain"] },
+      { p: "{town} Expressway", w: 6, e: ["MO", "NF", "IS"], cx: { chinese: 3, japanese: 3, korean: 3 }, self: true },
+      { p: "{directionAdj} Motorway", w: 6, e: ["MO", "NF", "IS"], c: ["british", "general"], t: ["plain"] },
       { p: "{person:poss} Highway", w: 4, e: ["MO"] },
       { p: "{destination} Trail", w: 5, e: ["MO"], c: ["general"] },
       { p: "fixed", w: 4 }
     ],
     space: [
-      { p: "{star} Run", w: 15, e: ["NF", "IS"] },
-      { p: "{star}\u2013{star} Lane", w: 15, e: ["NF", "IS"] },
-      { p: "{spaceLand} Corridor", w: 10, e: ["NF", "IS"] },
-      { p: "{ordinal} Jump Route", w: 8, e: ["IS"], t: ["plain"] },
-      { p: "Gate Chain {greek}", w: 8, e: ["IS"], t: ["plain"] },
-      { p: "{spaceGoods} Run", w: 8, e: ["NF", "IS"], t: ["plain"] },
-      { p: "fixed", w: 10 }
+      { p: "{orbitAdj} Transfer", w: 15, sc: ["Pl"], e: ["NF", "IS"] },
+      { p: "{sfBody} Shuttle", w: 10, sc: ["Pl"], e: ["NF", "IS"] },
+      { p: "{town}\u2013{sfBody} Line", w: 10, sc: ["Pl"], e: ["NF", "IS"], self: true },
+      { p: "{town} Ladder", w: 8, sc: ["Pl"], e: ["NF", "IS"], self: true },
+      { p: "{spaceDirection} Line", w: 8, sc: ["Pl"], e: ["NF", "IS"] },
+      { p: "Tether {greek}", w: 6, sc: ["Pl"], e: ["NF", "IS"] },
+      { p: "{town} Loop", w: 5, sc: ["Pl"], e: ["IS"], self: true },
+      { p: "{spaceDirection} Run", w: 15, sc: ["Sy"], e: ["NF", "IS"] },
+      { p: "{spaceLand} Haul", w: 12, sc: ["Sy"], e: ["NF", "IS"] },
+      { p: "{spaceHazard} Crossing", w: 10, sc: ["Sy"], e: ["NF", "IS"] },
+      { p: "{spaceLand} Run", w: 10, sc: ["Sy"], e: ["NF", "IS"] },
+      { p: "{spaceGoods} Run", w: 8, sc: ["Sy"], e: ["NF", "IS"] },
+      { p: "{spaceGoods} Cycle", w: 8, sc: ["Sy"], e: ["NF", "IS"] },
+      { p: "{town}\u2013{sfBody} Lane", w: 8, sc: ["Sy"], e: ["NF", "IS"], self: true },
+      { p: "{sfBody} Slingshot", w: 6, sc: ["Sy"], e: ["NF", "IS"] },
+      { p: "{star} Run", w: 15, sc: ["Nb"], e: ["IS"] },
+      { p: "{star}\u2013{star} Lane", w: 15, sc: ["Nb", "Se"], e: ["IS"] },
+      { p: "{star} Road", w: 8, sc: ["Nb"], e: ["IS"] },
+      { p: "{spaceLand} Road", w: 8, sc: ["Nb", "Ga"], e: ["IS"] },
+      { p: "{spaceDirection} Lane", w: 6, sc: ["Nb"], e: ["IS"] },
+      { p: "{spaceHazard} Passage", w: 6, sc: ["Nb", "Se"], e: ["IS"] },
+      { p: "{ordinal} Jump Route", w: 8, sc: ["Nb", "Se"], e: ["IS"], ftl: "jump" },
+      { p: "{spaceLand} Corridor", w: 12, sc: ["Se"], e: ["IS"] },
+      { p: "{spaceLand} Passage", w: 10, sc: ["Se"], e: ["IS"] },
+      { p: "{spaceDirection} Corridor", w: 10, sc: ["Se"], e: ["IS"] },
+      { p: "Gate Chain {greek}", w: 8, sc: ["Se", "Ga"], e: ["IS"], ftl: "gate" },
+      { p: "{spaceLand} Hyperlane", w: 6, sc: ["Se", "Ga"], e: ["IS"], ftl: "hyper" },
+      { p: "{spaceLand} Trunk", w: 12, sc: ["Ga"], e: ["IS"] },
+      { p: "{spaceDirection} Line", w: 12, sc: ["Ga"], e: ["IS"] },
+      { p: "{spaceDirection} Trunk", w: 6, sc: ["Ga"], e: ["IS"] },
+      { p: "Great {spaceDirection} Road", w: 5, sc: ["Ga"], e: ["IS"] },
+      { p: "{spaceDirection} Jump Line", w: 6, sc: ["Ga"], e: ["IS"], ftl: "jump" },
+      { p: "fixed", w: 10, e: ["NF", "IS"] }
     ]
   },
   cultureShapes: [
@@ -77972,7 +78030,7 @@ var route_names_default = {
     { culture: "polynesian", kind: "road", p: "Coast Path to {destination}", w: 15 }
   ],
   spaceBorrow: {
-    share: 0.25,
+    share: { Pl: 0.25, Sy: 0.25, Nb: 0.1, Se: 0.1, Ga: 0.1 },
     kinds: ["road", "trade", "pilgrim", "sea"]
   },
   roadNumbers: {
@@ -78302,7 +78360,10 @@ var settlement_vocab_default = {
         { w: "Water" },
         { w: "Data" },
         { w: "Salvage" },
-        { w: "Fuel" }
+        { w: "Fuel" },
+        { w: "Nickel" },
+        { w: "Platinum" },
+        { w: "Deuterium" }
       ]
     },
     skyPath: {
@@ -78364,7 +78425,7 @@ var settlement_vocab_default = {
     "routeFixed:sea": {
       entries: [
         { w: "Island Passage" },
-        { w: "Sea Lane", e: ["ST", "MO", "NF"] },
+        { w: "Sea Lane", e: ["ST", "MO", "NF", "IS"] },
         { w: "Monsoon Road", c: ["arabic-persian", "indian", "chinese"] },
         { w: "Whale-Road", t: ["strange"], e: ["AN", "MD"], c: ["anglo-saxon", "norse"] },
         { w: "Ship-Way", e: ["AN", "MD"], c: ["norse"] }
@@ -78378,11 +78439,21 @@ var settlement_vocab_default = {
     },
     "routeFixed:space": {
       entries: [
-        { w: "The Long Haul" },
-        { w: "The Dark Lane", t: ["grim"] },
-        { w: "The Pilgrim Road" },
-        { w: "The Quiet Lane", t: ["strange"] },
-        { w: "The Narrows" }
+        { w: "The Long Haul", sc: ["Sy"] },
+        { w: "The Dark Lane", t: ["grim"], sc: ["Nb", "Se"] },
+        { w: "The Pilgrim Road", sc: ["Nb", "Se"] },
+        { w: "The Quiet Lane", t: ["strange"], sc: ["Nb", "Se"] },
+        { w: "The Narrows", sc: ["Sy", "Se"] },
+        { w: "The Ladder", sc: ["Pl"] },
+        { w: "The Long Fall", t: ["grim"], sc: ["Pl"] },
+        { w: "The Shuttle", t: ["plain"], sc: ["Pl"] },
+        { w: "The Ice Road", sc: ["Sy"] },
+        { w: "The Crossing", sc: ["Nb"] },
+        { w: "The Thread", t: ["strange"], sc: ["Se"] },
+        { w: "The Spine", sc: ["Se", "Ga"] },
+        { w: "The Long Run", sc: ["Ga"] },
+        { w: "The Great Road", t: ["grand"], sc: ["Ga"] },
+        { w: "The Coreward Road", sc: ["Ga"] }
       ]
     },
     compWater: {
@@ -80423,6 +80494,7 @@ var regionFor = (where2) => where2.region && inCultureGroup("british", where2.cu
 function entryAllowed(e, where2) {
   if (e.e && !e.e.includes(where2.era)) return false;
   if (e.h !== void 0 && e.h !== where2.fantastic) return false;
+  if (where2.scale && !scaleAllows(e, where2.scale)) return false;
   const region = regionFor(where2);
   if (region && e.r && !e.r.includes(region)) return false;
   return cultureAllowed(e.c, where2.culture, where2.era);
@@ -80562,6 +80634,13 @@ var VOCABULARY_PACK_TEMPLATE = [
 ].join("\n");
 
 // src/routes/engine.ts
+var ROUTE_FTL = [
+  { id: "any", text: "with any faster-than-light travel" },
+  { id: "none", text: "with no faster-than-light travel" },
+  { id: "jump", text: "by jump points" },
+  { id: "gate", text: "by gates" },
+  { id: "hyper", text: "by hyperspace lanes" }
+];
 var ROUTE_DATA = route_names_default;
 var ROUTE_ERAS = ROUTE_DATA.eras;
 var ROUTE_CULTURES = ROUTE_DATA.cultures;
@@ -80579,19 +80658,43 @@ function routeSetting(era, fantastic) {
   const e = (_a2 = ROUTE_ERAS.find((x) => x.code === era)) != null ? _a2 : ROUTE_ERAS[1];
   return e.settings[fantastic ? 1 : 0];
 }
-function kindEraWeight(kind, era, fantastic) {
-  var _a2, _b, _c;
-  return (_c = (_b = fantastic ? (_a2 = kind.fantasticEra) == null ? void 0 : _a2[era] : void 0) != null ? _b : kind.era[era]) != null ? _c : 0;
+function kindEraWeight(kind, era, fantastic, scale) {
+  var _a2, _b, _c, _d, _e, _f, _g;
+  const row = (era === "NF" || era === "IS") && scale ? (_a2 = ROUTE_DATA.scaleKinds[era]) == null ? void 0 : _a2[scale] : void 0;
+  if (row) return (_d = (_c = fantastic && scale === "Pl" ? (_b = kind.fantasticEra) == null ? void 0 : _b[era] : void 0) != null ? _c : row[kind.key]) != null ? _d : 0;
+  return (_g = (_f = fantastic ? (_e = kind.fantasticEra) == null ? void 0 : _e[era] : void 0) != null ? _f : kind.era[era]) != null ? _g : 0;
+}
+function routeScales(era) {
+  return era === "NF" || era === "IS" ? scalesFor(era).filter((c) => c !== "any") : [];
 }
 function kindsOffered(era, fantastic) {
-  return ROUTE_KINDS.filter((k) => kindEraWeight(k, era, fantastic) > 0);
+  const scales = routeScales(era).length > 0 ? routeScales(era) : [void 0];
+  return ROUTE_KINDS.filter((k) => scales.some((sc) => kindEraWeight(k, era, fantastic, sc) > 0));
+}
+function showsScale(era, kind) {
+  return (era === "NF" || era === "IS") && (!kind || kind === "space");
+}
+function showsFtl(era, kind, scale) {
+  return era === "IS" && (!kind || kind === "space") && (scale === "any" || scale === "Nb" || scale === "Se" || scale === "Ga");
 }
 var pickOne4 = (items, rng) => items[Math.floor(rng() * items.length)];
 var LIGHT_OR_GRIM = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var ROUTE_SELF = selfPatterns(route_names_default);
 var POOL_OF = { goods: "routeGoods" };
-var GN_LISTS2 = { number: "number", numberWord: "number", colour: "colour", heraldicBeast: "heraldicBeast", star: "star", greek: "greek", spaceLand: "spaceLand" };
-var SF_LISTS = /* @__PURE__ */ new Set(["star", "greek", "spaceLand"]);
+var GN_LISTS2 = {
+  number: "number",
+  numberWord: "number",
+  colour: "colour",
+  heraldicBeast: "heraldicBeast",
+  star: "star",
+  greek: "greek",
+  spaceLand: "spaceLand",
+  sfBody: "sfBody",
+  orbitAdj: "orbitAdj",
+  spaceDirection: "spaceDirection",
+  spaceHazard: "spaceHazard"
+};
+var SF_LISTS = /* @__PURE__ */ new Set(["star", "greek", "spaceLand", "sfBody", "orbitAdj", "spaceDirection", "spaceHazard"]);
 var GOD_CULTURES = /* @__PURE__ */ new Set(["egyptian", "norse", "anglo-saxon", "aztec", "maya"]);
 function regionMult(ctx, tag, eras) {
   var _a2, _b;
@@ -80604,7 +80707,7 @@ function vocabPool(ctx, pool3, token11) {
   const shape = ctx.shape;
   const only = (_a2 = shape == null ? void 0 : shape.only) == null ? void 0 : _a2[token11];
   const cw = (_c = (_b = shape == null ? void 0 : shape.cw) == null ? void 0 : _b[ctx.culture.key]) == null ? void 0 : _c[token11];
-  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t))).map(([e, w]) => {
+  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, scale: ctx.scale }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t))).map(([e, w]) => {
     var _a3, _b2;
     let n = w * toneFactor((_a3 = e.t) != null ? _a3 : [], ctx.tone) * regionMult(ctx, e.rt) * ((_b2 = cw == null ? void 0 : cw[e.w]) != null ? _b2 : 1);
     if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token11 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
@@ -80621,14 +80724,18 @@ function vocabWord(ctx, pool3, token11, keep) {
   return e.w;
 }
 function gnWord2(ctx, token11) {
+  var _a2, _b, _c;
   if (token11 === "star") {
-    const star = groupStarIn("any", ctx.mode, ctx.rng);
+    let star = groupStarIn((_a2 = ctx.scale) != null ? _a2 : "any", ctx.mode, ctx.rng);
+    for (let i = 0; i < 5 && ctx.stars.includes(star); i++) star = groupStarIn((_b = ctx.scale) != null ? _b : "any", ctx.mode, ctx.rng);
+    ctx.stars.push(star);
+    if (ctx.shape && /\{star\} (Run|Road)$/.test(ctx.shape.p)) star = dropStarWord(star);
     ctx.words.push({ pool: "star", word: star });
     return star;
   }
   const list = GN_LISTS2[token11];
   const setting = SF_LISTS.has(token11) ? "SF" : ctx.setting;
-  const items = groupListWords(list, setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  const items = groupListWords(list, setting, (_c = ctx.scale) != null ? _c : "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
@@ -80696,7 +80803,7 @@ function roadNumber(ctx, which) {
   return String(range2[0] + Math.floor(ctx.rng() * (range2[1] - range2[0] + 1)));
 }
 function token5(ctx, name) {
-  var _a2, _b, _c, _d, _e;
+  var _a2, _b, _c, _d, _e, _f;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
@@ -80750,11 +80857,11 @@ function token5(ctx, name) {
     case "spaceLand": {
       const w = gnWord2(ctx, "spaceLand");
       if (!w || rng() >= 0.3) return w;
-      return groupSpacePrefix(w, rng);
+      return groupSpacePrefix(w, rng, (_e = ctx.scale) != null ? _e : "any");
     }
   }
   if (GN_LISTS2[name]) return gnWord2(ctx, name);
-  return vocabWord(ctx, (_e = POOL_OF[name]) != null ? _e : name, name);
+  return vocabWord(ctx, (_f = POOL_OF[name]) != null ? _f : name, name);
 }
 var withMod2 = (name, text, mod) => mod === "poss" ? groupPossessive(text, name === "travellers") : text;
 function renderPattern3(ctx, pattern, hooks2) {
@@ -80821,6 +80928,8 @@ function shapeWeight2(ctx, kind, s, anyEra = false) {
   var _a2, _b, _c, _d;
   const c = ctx.culture;
   if (!anyEra && s.e && !s.e.includes(ctx.era)) return 0;
+  if (s.sc && ctx.scale && !s.sc.includes(ctx.scale)) return 0;
+  if (s.ftl && (ctx.ftl === "none" || ctx.ftl !== "any" && ctx.ftl !== s.ftl)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
   if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
   if (s.p.includes("{sacredPlace}") && (c.sensitive || !((_a2 = deityHooks()) == null ? void 0 : _a2.cultureOffered(c.key)))) return 0;
@@ -80838,17 +80947,18 @@ function shapeWeight2(ctx, kind, s, anyEra = false) {
   return s.w * ((_c = (_b = s.cx) == null ? void 0 : _b[c.key]) != null ? _c : 1) * regionMult(ctx, s.r, s.rEra) * toneFactor((_d = s.t) != null ? _d : [], ctx.tone);
 }
 function kindPlans(ctx, kind, only) {
-  return shapesFor(kind, ctx.culture.key).filter((s) => !only || s.p === only).map((s) => [{ kind, shape: s, borrowed: false }, shapeWeight2(ctx, kind, s)]).filter(([, w]) => w > 0);
+  return shapesFor(kind, ctx.culture.key).filter((s) => !only || s.p === only).map((s) => [{ kind, shape: s, borrowed: false, scale: ctx.scale }, shapeWeight2(ctx, kind, s)]).filter(([, w]) => w > 0);
 }
 function borrowedPlans(ctx) {
   return ROUTE_DATA.spaceBorrow.kinds.flatMap(
-    (kind) => shapesFor(kind, ctx.culture.key).filter((s) => PLACE_TOKENS.test(s.p)).map((s) => [{ kind: "space", shape: s, borrowed: true }, shapeWeight2(ctx, kind, s, true)]).filter(([, w]) => w > 0)
+    (kind) => shapesFor(kind, ctx.culture.key).filter((s) => PLACE_TOKENS.test(s.p)).map((s) => [{ kind: "space", shape: s, borrowed: true, scale: ctx.scale }, shapeWeight2(ctx, kind, s, true)]).filter(([, w]) => w > 0)
   );
 }
 function renderPlan2(ctx, plan, hooks2 = {}) {
   var _a2, _b, _c, _d;
   ctx.drawn = new Set((_a2 = plan.shape.t) != null ? _a2 : []);
   ctx.words = [];
+  ctx.stars = [];
   ctx.shape = plan.shape;
   ctx.borrowed = plan.borrowed;
   ctx.letter = void 0;
@@ -80874,15 +80984,18 @@ function acceptable4(built, block, future = false) {
   if (future && hasSpaceBlock(built.text)) return false;
   return true;
 }
+var GATE_NUMBERS = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
 var COMPASS = {
   direction: ["North", "East", "South", "West", "North-East", "South-East", "South-West", "North-West"],
   directionAdj: ["Northern", "Eastern", "Southern", "Western"]
 };
-var DIRECTION_TOKENS = new Set(Object.keys(COMPASS));
+var DIRECTION_TOKENS = /* @__PURE__ */ new Set([...Object.keys(COMPASS), "spaceDirection"]);
 var PLACEHOLDER_TOKENS3 = /* @__PURE__ */ new Set(["destination", "town", "folk", "person", "founder", "patron", "kingdom", "holy"]);
 var NEVER_ANCHORS3 = /* @__PURE__ */ new Set(["person", "founder", "patron", "holy", "n"]);
 var kindOf3 = (name) => NEVER_ANCHORS3.has(name) ? "never" : name === "destination" ? "owner" : seriesTokenKind(name);
 function compassValues(ctx, token11) {
+  var _a2;
+  if (token11 === "spaceDirection") return SPACE_DATA.directions.compass[(_a2 = ctx.scale) != null ? _a2 : "Pl"];
   const live4 = poolEntries(ctx.vocab, token11, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
   return [...COMPASS[token11].filter((w) => live4.includes(w)), ...live4.filter((w) => !COMPASS[token11].includes(w))];
 }
@@ -80898,13 +81011,18 @@ function generateRouteNames(options) {
   const offered = kindsOffered(era, fantastic);
   const chosen = options.kind ? offered.find((k) => k.key === options.kind) : void 0;
   if (options.kind && !chosen) notices.push(`Kind \u201C${options.kind}\u201D isn't offered in the ${routeEraLabel(era)} era.`);
-  const kindWeights = offered.map((k) => {
+  const future = era === "NF" || era === "IS";
+  const chosenScale = validScale(options.scale, era === "NF" || era === "IS" ? era : void 0);
+  const fixedScale = !future ? void 0 : chosen && chosen.key !== "space" ? "Pl" : chosenScale === "any" ? void 0 : chosenScale;
+  const ftl = era === "IS" && ROUTE_FTL.some((f) => f.id === options.ftl) ? options.ftl : "any";
+  const drawNameScale = () => !future ? void 0 : fixedScale != null ? fixedScale : drawScale(era === "NF" || era === "IS" ? era : void 0, rng);
+  const kindWeightsFor = (scale) => offered.map((k) => {
     var _a3, _b;
-    return [k, kindEraWeight(k, era, fantastic) * ((_b = (_a3 = culture.kindMult) == null ? void 0 : _a3[k.key]) != null ? _b : 1)];
+    return [k, kindEraWeight(k, era, fantastic, scale) * ((_b = (_a3 = culture.kindMult) == null ? void 0 : _a3[k.key]) != null ? _b : 1)];
   }).filter(([, w]) => w > 0);
   const block = routeBlockSet(options.safeguards);
   const count = Math.max(0, Math.floor(options.count));
-  const newCtx3 = () => {
+  const newCtx3 = (scale) => {
     var _a3, _b, _c;
     return {
       rng,
@@ -80919,11 +81037,16 @@ function generateRouteNames(options) {
       borrowed: false,
       drawn: /* @__PURE__ */ new Set(),
       words: [],
-      context: options.context
+      context: options.context,
+      scale,
+      ftl,
+      stars: []
     };
   };
   const choosePlan2 = (ctx, kind) => {
-    if (kind === "space" && !options.shape && rng() < ROUTE_DATA.spaceBorrow.share) {
+    var _a3;
+    const share2 = ROUTE_DATA.spaceBorrow.share;
+    if (kind === "space" && !options.shape && rng() < (typeof share2 === "number" ? share2 : share2[(_a3 = ctx.scale) != null ? _a3 : "Pl"])) {
       const plan = pickWeighted5(borrowedPlans(ctx), rng);
       if (plan) return plan;
     }
@@ -80936,23 +81059,25 @@ function generateRouteNames(options) {
     era,
     tones: built.tones,
     borrowed: built.plan.borrowed,
+    ...built.plan.scale ? { scale: built.plan.scale } : {},
     words: built.words,
     ...series ? { series } : {}
   });
-  const drawKind = () => {
+  const drawKind = (scale) => {
     var _a3, _b;
-    return (_b = chosen == null ? void 0 : chosen.key) != null ? _b : (_a3 = pickWeighted5(kindWeights, rng)) == null ? void 0 : _a3.key;
+    return (_b = chosen == null ? void 0 : chosen.key) != null ? _b : (_a3 = pickWeighted5(kindWeightsFor(scale), rng)) == null ? void 0 : _a3.key;
   };
   const oneBuilt = (kindFor) => {
+    const scale = drawNameScale();
     for (let round = 0; round < 2; round++) {
-      const kind = kindFor != null ? kindFor : drawKind();
+      const kind = kindFor != null ? kindFor : drawKind(scale);
       if (!kind) return void 0;
       for (let i = 0; i < 20; i++) {
-        const ctx = newCtx3();
+        const ctx = newCtx3(scale);
         const plan = choosePlan2(ctx, kind);
         if (!plan) break;
         const built = renderPlan2(ctx, plan);
-        if (built && acceptable4(built, block, era === "NF" || era === "IS")) return built;
+        if (built && acceptable4(built, block, future)) return built;
       }
     }
     return void 0;
@@ -80967,7 +81092,7 @@ function generateRouteNames(options) {
     names.push(name);
     return true;
   };
-  if (options.series && kindWeights.length + (chosen ? 1 : 0) > 0) drawNetwork();
+  if (options.series && offered.length > 0) drawNetwork();
   else for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
     const built = oneBuilt();
     if (built) add2(toName(built));
@@ -80975,7 +81100,7 @@ function generateRouteNames(options) {
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
   return { names, seed, notices };
   function drawNetwork() {
-    var _a3, _b;
+    var _a3, _b, _c, _d, _e;
     const placeholders = ((_a3 = options.people) != null ? _a3 : "placeholders") === "placeholders";
     const isPlaceholder = (d) => placeholders && PLACEHOLDER_TOKENS3.has(d.name);
     const canVary = (d) => DIRECTION_TOKENS.has(d.name) || kindOf3(d.name) !== "never" && d.name !== "fixed" && !isPlaceholder(d);
@@ -80988,18 +81113,45 @@ function generateRouteNames(options) {
     const plan = first.plan;
     const rec = first.record;
     const draw2 = (hooks2, p = plan) => {
-      const ctx2 = newCtx3();
+      const ctx2 = newCtx3(plan.scale);
       const built = renderPlan2(ctx2, p, hooks2);
-      return built && acceptable4(built, block, era === "NF" || era === "IS") ? built : void 0;
+      return built && acceptable4(built, block, future) ? built : void 0;
     };
     const fill = (next) => {
       for (let idle = 0; idle < 30 && names.length < count; ) idle = add2(next()) ? 0 : idle + 1;
     };
+    if (plan.shape.p === "Gate Chain {greek}") {
+      const series2 = { counter: null, varies: null, anchor: "greek" };
+      add2(toName(first, series2));
+      const greek = (_c = (_b = rec.find((d) => d.name === "greek")) == null ? void 0 : _b.text) != null ? _c : "";
+      for (let i = 0; i < GATE_NUMBERS.length && names.length < count; i++) {
+        add2({ ...toName(first, series2), text: `${greek} Gate ${GATE_NUMBERS[i]}`, words: first.words });
+      }
+      return;
+    }
+    if (plan.shape.p === "{spaceGoods} Cycle") {
+      const series2 = { counter: null, varies: "stop", anchor: "spaceGoods" };
+      add2(toName(first, series2));
+      const legs = Math.max(0, count - 1);
+      const closed = legs >= 3;
+      const ctx2 = newCtx3(plan.scale);
+      const stops = [];
+      for (let tries = 0; tries < 200 && stops.length < (closed ? legs : legs + 1); tries++) {
+        const stop = rng() < 0.5 ? gnWord2(ctx2, "sfBody") : token5(ctx2, "town");
+        if (stop && !stops.includes(stop)) stops.push(stop);
+      }
+      for (let i = 0; i < legs && i < stops.length; i++) {
+        const to = (_d = stops[i + 1]) != null ? _d : closed ? stops[0] : void 0;
+        if (!to) break;
+        add2({ ...toName(first, series2), text: `${stops[i]}\u2013${to} Cycle`, words: first.words });
+      }
+      return;
+    }
     const counterAt = rec.findIndex((d) => DIRECTION_TOKENS.has(d.name));
     if (counterAt >= 0) {
       const name = rec[counterAt].name;
       const series2 = { counter: name, varies: null, anchor: null };
-      const values = compassValues(newCtx3(), name);
+      const values = compassValues(newCtx3(plan.scale), name);
       const start = Math.max(0, values.indexOf(rec[counterAt].text));
       const found = [];
       const locked = new Map(rec.map((d, i) => [i, d]));
@@ -81029,7 +81181,7 @@ function generateRouteNames(options) {
     const listAt = rec.map((d, i) => kindOf3(d.name) === "list" && !isPlaceholder(d) && d.name !== "fixed" ? i : -1).filter((i) => i >= 0);
     if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
     const anchor = anchorAt >= 0 ? rec[anchorAt] : void 0;
-    const series = { counter: null, varies: null, anchor: (_b = anchor == null ? void 0 : anchor.name) != null ? _b : null };
+    const series = { counter: null, varies: null, anchor: (_e = anchor == null ? void 0 : anchor.name) != null ? _e : null };
     add2(toName(first, series));
     const hold = /* @__PURE__ */ new Map();
     if (anchor) hold.set(anchorAt, anchor);
@@ -81046,7 +81198,7 @@ function generateRouteNames(options) {
       return b && toName(b, series);
     });
     if (!anchor || names.length >= count) return;
-    const ctx = newCtx3();
+    const ctx = newCtx3(plan.scale);
     const others = (plan.borrowed ? borrowedPlans(ctx) : kindPlans(ctx, plan.kind)).filter(
       ([p]) => p.shape.p !== plan.shape.p && [...p.shape.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name)
     );
@@ -85255,7 +85407,9 @@ function parseRoutePreset(values, body, fileName) {
       fantastic,
       tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
       people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
-      series: flag("series")
+      series: flag("series"),
+      ...values.scale ? { scale: pick4("scale", "any", (v) => scalesFor(era === "NF" || era === "IS" ? era : void 0).includes(v)) } : {},
+      ...values.ftl ? { ftl: pick4("ftl", "any", (v) => ROUTE_FTL.some((f) => f.id === v)) } : {}
     },
     problems
   };
@@ -85275,6 +85429,8 @@ function routePresetContent(preset) {
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
     `series: ${preset.series}`,
+    ...preset.scale && preset.scale !== "any" ? [`scale: ${preset.scale}`] : [],
+    ...preset.ftl && preset.ftl !== "any" ? [`ftl: ${preset.ftl}`] : [],
     "---",
     "",
     preset.description.trim(),
@@ -85855,7 +86011,7 @@ var fantasticWords = (era) => ["realistic", era === "ST" ? "steampunk" : "fantas
 var showsRegion = (state) => BRITISH_CULTURES.includes(state.culture);
 var routeRegionText = (region) => region ? `in ${regionPhrase(region)}` : "across all of Britain";
 function routeSentence(state) {
-  var _a2;
+  var _a2, _b, _c;
   const out = [];
   const culture = (_a2 = findRouteCulture(state.culture)) != null ? _a2 : ROUTE_CULTURES[0];
   out.push({
@@ -85878,6 +86034,17 @@ function routeSentence(state) {
     choices: [{ id: void 0, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
     current: kind == null ? void 0 : kind.key
   });
+  if (showsScale(state.era, state.kind)) {
+    const scale = validScale(state.scale, state.era === "NF" || state.era === "IS" ? state.era : void 0);
+    out.push(" across ");
+    out.push({
+      field: "scale",
+      text: scalePhrase(scale),
+      title: scaleInfo(scale).tooltip,
+      choices: scalesFor(state.era === "NF" || state.era === "IS" ? state.era : void 0).map((c) => ({ id: c, label: scaleInfo(c).label })),
+      current: scale
+    });
+  }
   out.push(" of the ");
   out.push({
     field: "era",
@@ -85896,6 +86063,20 @@ function routeSentence(state) {
     current: state.fantastic ? "on" : "off"
   });
   out.push(" world, ");
+  if (showsFtl(state.era, state.kind, (_b = state.scale) != null ? _b : "any")) {
+    const ftl = (_c = ROUTE_FTL.find((f) => {
+      var _a3;
+      return f.id === ((_a3 = state.ftl) != null ? _a3 : "any");
+    })) != null ? _c : ROUTE_FTL[0];
+    out.push({
+      field: "ftl",
+      text: ftl.text,
+      title: "Which faster-than-light travel the lanes allow; sub-light scales have none",
+      choices: ROUTE_FTL.map((f) => ({ id: f.id, label: f.text })),
+      current: ftl.id
+    });
+    out.push(", ");
+  }
   if (showsRegion(state)) {
     out.push({
       field: "region",
@@ -85942,6 +86123,7 @@ function routeSentenceText(segments) {
   return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
 }
 function chooseRoute(state, field, id) {
+  var _a2;
   const next = { ...state };
   switch (field) {
     case "culture":
@@ -85968,13 +86150,21 @@ function chooseRoute(state, field, id) {
     case "series":
       next.series = id === "on";
       break;
+    case "scale":
+      next.scale = id != null ? id : "any";
+      break;
+    case "ftl":
+      next.ftl = id != null ? id : "any";
+      break;
   }
+  if (next.scale && next.scale !== "any") next.scale = validScale(next.scale, next.era === "NF" || next.era === "IS" ? next.era : void 0);
   if (next.kind && !kindsOffered(next.era, next.fantastic).some((k) => k.key === next.kind)) next.kind = void 0;
   if (!showsRegion(next)) next.region = void 0;
+  if (next.ftl && next.ftl !== "any" && !showsFtl(next.era, next.kind, (_a2 = next.scale) != null ? _a2 : "any")) next.ftl = "any";
   return next;
 }
 function routeHistoryLabel(state) {
-  var _a2, _b;
+  var _a2, _b, _c;
   const culture = (_b = (_a2 = findRouteCulture(state.culture)) == null ? void 0 : _a2.label) != null ? _b : "General";
   const kind = findRouteKind(state.kind);
   return [
@@ -85985,7 +86175,9 @@ function routeHistoryLabel(state) {
     ...kind ? [kind.plural] : [],
     ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
     ...state.tone !== "any" ? [state.tone] : [],
-    ...state.series ? ["network"] : []
+    ...state.series ? ["network"] : [],
+    ...showsScale(state.era, state.kind) && state.scale && state.scale !== "any" ? [scaleLabel(state.scale).toLowerCase()] : [],
+    ...showsFtl(state.era, state.kind, (_c = state.scale) != null ? _c : "any") && state.ftl && state.ftl !== "any" ? [ROUTE_FTL.find((f) => f.id === state.ftl).text] : []
   ].join(" \xB7 ");
 }
 
@@ -92510,6 +92702,7 @@ ${n.origin}${also}${echo}` };
   }
   // ── Route names (Route names brief) ──────────────────────────────────────
   routePresetState(p) {
+    var _a2, _b;
     return chooseRoute(
       {
         culture: p.culture,
@@ -92519,7 +92712,9 @@ ${n.origin}${also}${echo}` };
         region: p.region === "all" ? void 0 : p.region,
         tone: p.tone,
         people: p.people,
-        series: p.series
+        series: p.series,
+        scale: (_a2 = p.scale) != null ? _a2 : "any",
+        ftl: (_b = p.ftl) != null ? _b : "any"
       },
       "culture",
       p.culture
@@ -92553,6 +92748,8 @@ ${n.origin}${also}${echo}` };
       tone: state.tone,
       people: state.people,
       series: state.series,
+      scale: state.scale,
+      ftl: state.ftl,
       count: this.generationCount,
       seed: seedOverride,
       safeguards: guards.safeguards,
@@ -93399,7 +93596,9 @@ ${n.origin}${also}${echo}` };
         fantastic: state.fantastic,
         tone: state.tone,
         people: state.people,
-        series: state.series
+        series: state.series,
+        ...state.scale && state.scale !== "any" ? { scale: state.scale } : {},
+        ...state.ftl && state.ftl !== "any" ? { ftl: state.ftl } : {}
       });
       return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).route);
     }).open();

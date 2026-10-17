@@ -46,6 +46,9 @@ const THIN: Record<string, ("placeholders" | "invented")[]> = {
   "MO rail": ["placeholders"],
   "NF sea": ["placeholders"],
   "NF rail": ["placeholders", "invented"],
+  // Stellar brief §6.3: the interstellar era's planetary routes borrow the near future's shapes.
+  "IS sea": ["placeholders"],
+  "IS rail": ["placeholders", "invented"],
 };
 
 test("§15.3: every culture × era × kind offered × fantastic × people gives 20 unique names within the cap", () => {
@@ -91,9 +94,9 @@ test("§15.4: early modern rail is canals only", () => {
   }
 });
 
-test("§15.4: interstellar is space lanes only, at least 10% borrowed from the culture over 2,000 names", () => {
+test("§15.4: interstellar at star-system scale is space lanes only, at least 10% borrowed from the culture over 2,000 names", () => {
   for (const culture of ["norman-british", "arabic-persian", "polynesian", "general"]) {
-    const names = many({ culture, era: "IS" }, 2000);
+    const names = many({ culture, era: "IS", scale: "Sy" }, 2000);
     assert.equal(names.length, 2000, culture);
     for (const n of names) assert.equal(n.kind, "space", n.text);
     const borrowed = names.filter((n) => n.borrowed);

@@ -420,14 +420,14 @@
   "the Green Cross"
  ],
  "routes norman-british NF placeholders": [
-  "Southern Passage",
-  "Wool Road",
-  "Western Highway",
-  "The Quiet Lane",
   "Salt Road",
-  "HIP 110028 Run",
-  "B4888",
-  "Road to Kepler-191"
+  "Southern Line",
+  "The Narrows",
+  "Gold Road",
+  "Silk Road",
+  "Sea Road to Van Maanen's Star",
+  "Western Express",
+  "[place]–Proxima Line"
  ],
  "streets norman-british NF placeholders": [
   "Western Promenade",
@@ -462,14 +462,14 @@
   "Earl's Shrine"
  ],
  "routes norman-british NF invented": [
-  "Outer Wall Expressway",
-  "Southern Line",
-  "B4073",
-  "Lord's Road",
-  "Northern Line",
+  "Upwell Line",
+  "Eastern Highway",
+  "Southern Highway",
+  "Sol Shuttle",
   "Sea Road to Vantage Station",
-  "Near Spur Corridor",
-  "Hill Way"
+  "Ore Cycle",
+  "Eastern Motorway",
+  "New Boxfold–Helios Line"
  ],
  "streets norman-british NF invented": [
   "Reactor Lane",
@@ -504,14 +504,14 @@
   "Fifth Hydroponic Bay"
  ],
  "routes norman-british IS placeholders": [
-  "Sirius–Delta Centauri Lane",
-  "Delta Hydrae Road",
-  "Xi Cygni Turnpike",
-  "Betelgeuse Run",
-  "Arm Corridor",
-  "Ore Run",
-  "Nunki Street",
-  "Hamal–Kepler-26 Lane"
+  "Upwell Run",
+  "The Dark Lane",
+  "[place] Ladder",
+  "Shell Road",
+  "Road to [person]'s Star",
+  "Bubble Road",
+  "Przybylski's Star–HD 63889 Lane",
+  "Sol Slingshot"
  ],
  "streets norman-british IS placeholders": [
   "Spine Omicron",
@@ -546,14 +546,14 @@
   "[place] Lodge"
  ],
  "routes norman-british IS invented": [
-  "Road to Achernar",
-  "Gate Chain Pi",
-  "Menkar Road",
-  "29th Jump Route",
-  "Barnard's Star Run",
-  "Kepler-1952 Turnpike",
-  "68th Jump Route",
-  "Sea Road to K2-336"
+  "Downwell Run",
+  "Coreward Corridor",
+  "Furs Road",
+  "3rd Jump Route",
+  "High Transfer",
+  "The Crossing",
+  "Trailing Line",
+  "Trailing Jump Line"
  ],
  "streets norman-british IS invented": [
   "Cloth Market",
@@ -1008,14 +1008,14 @@
   "Rook Gaol"
  ],
  "routes general NF placeholders": [
-  "Ore Run",
-  "Gliese 336 Run",
-  "Overseer's Road",
-  "Route 3",
-  "Road to Alphecca",
-  "Sea Road to [place]",
-  "Route 70",
-  "Pillars Corridor"
+  "Bridge Run",
+  "Road to Mizar",
+  "Road to Mintaka",
+  "Western Highway",
+  "[place] Bypass",
+  "Western Line",
+  "The Narrows",
+  "The Long Haul"
  ],
  "streets general NF placeholders": [
   "Reactor Lane",
@@ -1050,14 +1050,14 @@
   "HIP 29177 Arcology"
  ],
  "routes general NF invented": [
-  "Ox's Star Run",
-  "Route 143",
-  "Western Line",
-  "Spice Road",
-  "Western Express",
-  "Sea Road to Betelgeuse",
-  "Timber and Cloth Road",
-  "Kappa Eridani Causeway"
+  "LHS 2061 Turnpike",
+  "Eastern Line",
+  "Hadar Expressway",
+  "Upwell Line",
+  "Outward Run",
+  "Deep Haul",
+  "Rim Haul",
+  "Inner Hollow–Arcadia Lane"
  ],
  "streets general NF invented": [
   "Spinward Walk",
@@ -1092,14 +1092,14 @@
   "Endeavour Dome"
  ],
  "routes general IS placeholders": [
-  "The Dark Lane",
-  "[person]'s Star Run",
-  "Gate Chain Omicron",
-  "Camp Corridor",
-  "Kepler-433 Run",
-  "Zeta Aurigae Mail Road",
-  "Tau Ceti–[person]'s Star Lane",
-  "Rift Corridor"
+  "Chain Haul",
+  "[place] Expressway",
+  "Spinward Corridor",
+  "Rift Hyperlane",
+  "Arcadia Shuttle",
+  "Sunward Reach Run",
+  "Chain Run",
+  "The Quiet Lane"
  ],
  "streets general IS placeholders": [
   "Hydroponics Ring",
@@ -1134,14 +1134,14 @@
   "Kepler-87 Arcology"
  ],
  "routes general IS invented": [
-  "Ross 850–Epsilon Herculis Lane",
-  "Teegarden's Star–Kepler-1526 Lane",
-  "Altair Run",
-  "Sunward Stream Corridor",
-  "HD 100132–Hamal Lane",
-  "Belt Corridor",
-  "Gate Chain Omega",
-  "The Quiet Lane"
+  "The Quiet Lane",
+  "Knot Passage",
+  "Gliese 301–Tau Ceti Lane",
+  "Theta Leonis Run",
+  "Neck Haul",
+  "The Great Road",
+  "Data Run",
+  "42nd Jump Route"
  ],
  "streets general IS invented": [
   "82nd Ring",
@@ -1596,14 +1596,14 @@
   "[surname] House"
  ],
  "routes japanese NF placeholders": [
-  "[place] Expressway",
-  "[place] Ring Road",
-  "Southern Line",
-  "Arcturus–Ross 852 Lane",
-  "Western Express",
-  "Pollux Run",
-  "National Road 90",
-  "Cluster Corridor"
+  "[place] Ladder",
+  "Northern Highway",
+  "Southern Express",
+  "Western Line",
+  "Ross 993 Run",
+  "Algol Road",
+  "Water Run",
+  "Eastern Line"
  ],
  "streets japanese NF placeholders": [
   "East Road",
@@ -1638,14 +1638,14 @@
   "Gliese 622 Archive Core"
  ],
  "routes japanese NF invented": [
-  "Alpha Carinae–Algol Lane",
-  "Southern Line",
-  "Beta Pavonis Run",
-  "Deneb–Gliese 206 Lane",
-  "Northern Line",
-  "Betelgeuse–Capella Lane",
-  "Eastern Express",
-  "West Road"
+  "Ice Cycle",
+  "Sea Road to Betelgeuse",
+  "Sea Road to Shaula",
+  "Shock Crossing",
+  "Road to Alpha Virginis",
+  "Old Capella Road",
+  "High Transfer",
+  "Old Deneb Road"
  ],
  "streets japanese NF invented": [
   "Hydroponics Row",
@@ -1680,14 +1680,14 @@
   "Queen's Bridge"
  ],
  "routes japanese IS placeholders": [
-  "Chi Eridani Run",
-  "The Narrows",
-  "Ore Run",
-  "Far Nebula Corridor",
-  "The Quiet Lane",
+  "Groombridge 1224 Pilgrim Road",
+  "Tau Cephei Run",
+  "3rd Jump Route",
+  "Western Line",
   "Gate Chain Rho",
-  "6th Jump Route",
-  "Gate Chain Psi"
+  "Rift Passage",
+  "Nebula Passage",
+  "Van Maanen's Star–Upsilon Herculis Lane"
  ],
  "streets japanese IS placeholders": [
   "Gravity Street",
@@ -1722,14 +1722,14 @@
   "[place] Sky Elevator"
  ],
  "routes japanese IS invented": [
-  "Altair–Algol Lane",
-  "Ore Run",
-  "Data Run",
-  "28th Jump Route",
-  "Hamal–Epsilon Tucanae Lane",
-  "Helium Run",
-  "Castor Pilgrim Road",
-  "Mira Run"
+  "Pollux Run",
+  "11th Jump Route",
+  "Great Rimward Road",
+  "9th Jump Route",
+  "Ore Cycle",
+  "Coreward Jump Line",
+  "Capella Run",
+  "Old Kepler-1967 Road"
  ],
  "streets japanese IS invented": [
   "Exchange Road",
@@ -2184,14 +2184,14 @@
   "the Great Shrine"
  ],
  "routes arabic-persian NF placeholders": [
-  "[place] Bypass",
-  "Northern Line",
+  "Southern Highway",
   "Western Line",
-  "Silver Road",
-  "Capella Run",
-  "K2-165–Theta Lyrae Lane",
+  "[place] Bypass",
+  "Alphecca Road",
+  "The Narrows",
+  "Silent Frontier Run",
   "Southern Line",
-  "Tau Draconis–Hadar Lane"
+  "Platinum Run"
  ],
  "streets arabic-persian NF placeholders": [
   "[place] Road",
@@ -2226,14 +2226,14 @@
   "Hab Module 35"
  ],
  "routes arabic-persian NF invented": [
-  "Wolf 719 9 Ring Road",
-  "Eastern Highway",
-  "Deep Arm Corridor",
+  "The Long Haul",
+  "Parking Transfer",
   "National Road 165",
-  "TOI-5847–Canopus Lane",
-  "Eastern Line",
-  "Low Cluster Expressway",
-  "Sea Road to Kestrel Station"
+  "The Ice Road",
+  "Verge Haul",
+  "Helios Shuttle",
+  "Old Whitlock's Star Ring Road",
+  "Scarlet Captain's Star Road"
  ],
  "streets arabic-persian NF invented": [
   "Spine Chi",
@@ -2268,14 +2268,14 @@
   "K2-202 Reactor Hall"
  ],
  "routes arabic-persian IS placeholders": [
-  "The Quiet Lane",
-  "Arcturus–Xi Centauri Lane",
-  "Sea Road to HD 96456",
-  "Frontier Corridor",
-  "Gate Chain Pi",
-  "88th Jump Route",
-  "The Pilgrim Road",
-  "Gate Chain Psi"
+  "Trailing Lane",
+  "Knot Passage",
+  "LHS 2563–Beta Tauri Lane",
+  "Omicron Indi Run",
+  "The Spine",
+  "Downwell Run",
+  "Spur Corridor",
+  "Sea Road to Beta Leonis"
  ],
  "streets arabic-persian IS placeholders": [
   "Reactor Sector",
@@ -2310,14 +2310,14 @@
   "Tau Ceti Reactor Hall"
  ],
  "routes arabic-persian IS invented": [
-  "Caravan Road to Lalande 20517",
-  "Chi Cygni Run",
-  "The Long Haul",
-  "Teegarden's Star–Alpha Carinae Lane",
-  "Diphda–Psi Eridani Lane",
-  "Teegarden's Star Road",
-  "Sea Road to Kappa Pavonis",
-  "Halo Corridor"
+  "Rimward Jump Line",
+  "Outward Run",
+  "Trailing Line",
+  "Ceres Shuttle",
+  "Downwell Run",
+  "HIP 113429–Rho Andromedae Lane",
+  "Sea Road to Van Maanen's Star",
+  "Epsilon Aurigae–Delta Orionis Lane"
  ],
  "streets arabic-persian IS invented": [
   "50th Ring",
@@ -2328,7 +2328,7 @@
   "Spine Omicron",
   "Hydroponics Row",
   "Reactor Lane",
-  "57th Jump Route",
+  "Rimward Shell Bypass",
   "Market Square"
  ],
  "inns arabic-persian IS invented": [
@@ -2772,14 +2772,14 @@
   "Fire Memorial"
  ],
  "routes slavic NF placeholders": [
-  "Kepler-1769 Run",
-  "Fuel Run",
-  "National Road 20",
-  "Sea Road to [place]",
-  "[place] Expressway",
-  "[place] Ring Road",
-  "Salvage Run",
-  "Rho Ceti–[person]'s Star Lane"
+  "[place]–Arcadia Lane",
+  "[place]–Kepler Lane",
+  "Iron Road",
+  "The Narrows",
+  "Water Run",
+  "Silent Camp Run",
+  "Sea Road to Achernar",
+  "Parking Transfer"
  ],
  "streets slavic NF placeholders": [
   "Abbot's Square",
@@ -2814,14 +2814,14 @@
   "Pathfinder Dome"
  ],
  "routes slavic NF invented": [
-  "New Bank Building Bypass",
-  "Southern Cloud Road",
-  "Kepler-636 Road",
-  "Iron Road",
-  "Southern Express",
-  "The Pilgrim Road",
-  "Gap Corridor",
-  "Road to LHS 4948"
+  "Castor 9 Expressway",
+  "Road to Golden Duke's Star",
+  "Western Highway",
+  "The Long Fall",
+  "Sheath Haul",
+  "Sunward Warp Ring Road",
+  "Long Transfer",
+  "Outward Run"
  ],
  "streets slavic NF invented": [
   "Reactor Lane",
@@ -2856,20 +2856,20 @@
   "Grey Grange"
  ],
  "routes slavic IS placeholders": [
-  "Achernar–Gliese 197 Lane",
-  "Near Arc Corridor",
-  "Gate Chain Omega",
+  "Spur Road",
+  "Southern Line",
+  "Lalande 37868 Road",
   "Road to Gliese 13",
-  "4th Jump Route",
-  "Ore Run",
-  "58th Jump Route",
-  "Antares Run"
+  "Phi Leonis Run",
+  "Rimward Jump Line",
+  "The Crossing",
+  "5th Jump Route"
  ],
  "streets slavic IS placeholders": [
   "Denebola Promenade",
   "North Walk",
   "Observation Deck Square",
-  "Przybylski's Star–Betelgeuse Lane",
+  "[place] Ring Road",
   "Deck 1 Concourse",
   "[place] Road",
   "Spine Mu",
@@ -2898,14 +2898,14 @@
   "[person]'s Star Landing Tower"
  ],
  "routes slavic IS invented": [
-  "HD 185671 Run",
-  "Alpha Lyrae–Omega Hydrae Lane",
-  "Denebola Run",
-  "The Dark Lane",
-  "Ice Run",
-  "17th Jump Route",
-  "Sea Road to Vega",
-  "HIP 76930 Run"
+  "Gate Chain Xi",
+  "Western Cloud Corridor",
+  "Gliese 45–Sigma Leonis Lane",
+  "Trailing Trunk",
+  "Eastern Highway",
+  "Bubble Passage",
+  "Vesta Shuttle",
+  "Alphecca Road"
  ],
  "streets slavic IS invented": [
   "Concourse Omicron",
@@ -3360,14 +3360,14 @@
   "Duke's Kiln"
  ],
  "routes polynesian NF placeholders": [
-  "The Quiet Lane",
-  "Wool Road",
-  "Delta Carinae–Canopus Lane",
+  "Ice Run",
+  "Evening Star Path",
+  "Ganymede Shuttle",
   "Silk Road",
-  "[place] Ring Road",
+  "The Ladder",
   "[place] Expressway",
-  "Eastern Passage",
-  "Data Run"
+  "High Transfer",
+  "Star Path to Denebola"
  ],
  "streets polynesian NF placeholders": [
   "Butter Market",
@@ -3402,14 +3402,14 @@
   "Dome Upsilon"
  ],
  "routes polynesian NF invented": [
-  "TOI-5024 Bypass",
-  "Zeta Hydrae Run",
-  "Alpha Boötis Road",
+  "Star Path to Kepler-1808",
+  "Camp Run",
+  "Morning Star Path",
   "Wolf 327 Expressway",
-  "Hamal Expressway",
-  "Regulus Run",
-  "Eastern Line",
-  "Deep Reach Corridor"
+  "Coast Path to TOI-4508",
+  "Sea Road to Admiral Brack's Star",
+  "Sea Road to Hamal",
+  "Coast Path to Beta Draconis"
  ],
  "streets polynesian NF invented": [
   "Western Promenade",
@@ -3444,14 +3444,14 @@
   "Ross 750 Arcology"
  ],
  "routes polynesian IS placeholders": [
-  "Fuel Run",
-  "Horizon Corridor",
-  "11th Jump Route",
-  "Salvage Run",
-  "Wolf 596 Run",
+  "The Ice Road",
+  "Ceres Slingshot",
+  "Gate Chain Chi",
+  "Diphda Run",
+  "[place] Ring Road",
   "Gate Chain Kappa",
-  "1st Jump Route",
-  "Van Maanen's Star–Mintaka Lane"
+  "Alpha Pavonis–Gamma Boötis Lane",
+  "Rimward Line"
  ],
  "streets polynesian IS placeholders": [
   "Deck 23 Concourse",
@@ -3486,14 +3486,14 @@
   "Horizon Dome"
  ],
  "routes polynesian IS invented": [
-  "Road to K2-32",
-  "Sea Road to Electra",
-  "Canopus–Chi Persei Lane",
-  "Wall Corridor",
-  "Spur Corridor",
-  "Coast Path to Hamal",
-  "Ore Run",
-  "Expanse Corridor"
+  "Star Path to Gliese 712",
+  "National Road 90",
+  "Horizon Corridor",
+  "Nebula Corridor",
+  "Knot Passage",
+  "Phi Tucanae–Delta Virginis Lane",
+  "The Narrows",
+  "Eastern Highway"
  ],
  "streets polynesian IS invented": [
   "Concourse Phi",

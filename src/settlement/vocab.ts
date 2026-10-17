@@ -5,6 +5,7 @@
 
 import vocabData from "../data/settlement-vocab.json";
 import { GROUP_TONES, type GroupTone, hasBannedWord } from "../groups/engine";
+import { scaleAllows, type ScaleChoice, type SpaceScale } from "../space/scale";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -37,6 +38,8 @@ export interface VocabEntry {
   th?: string[];
   /** Deities brief §5: the gender a divine figure or kin word is for (m, f, n; unmarked reads as n). */
   g?: "m" | "f" | "n";
+  /** Stellar brief §2.4: the space scales the entry is used at (all). */
+  sc?: SpaceScale[];
 }
 
 export interface VocabPool {
@@ -96,6 +99,8 @@ export interface VocabWhere {
   region?: string;
   /** Inns brief §3: theme multipliers a module asks for (the inn setting); other modules leave it out. */
   themes?: Record<string, number>;
+  /** Stellar brief §2.4: a space scale; entries tagged for other scales are left out. */
+  scale?: ScaleChoice;
 }
 
 /** Streets brief §3.1: the region a culture reads entries for (British cultures only). */
@@ -105,6 +110,7 @@ const regionFor = (where: VocabWhere) => (where.region && inCultureGroup("britis
 export function entryAllowed(e: VocabEntry, where: VocabWhere): boolean {
   if (e.e && !e.e.includes(where.era)) return false;
   if (e.h !== undefined && e.h !== where.fantastic) return false;
+  if (where.scale && !scaleAllows(e, where.scale)) return false;
   const region = regionFor(where);
   if (region && e.r && !e.r.includes(region)) return false;
   return cultureAllowed(e.c, where.culture, where.era);

@@ -46,6 +46,18 @@
     {"key": "motor", "menu": "Modern roads", "plural": "modern roads", "description": "Numbered roads, highways and bypasses", "era": {"AN": 0, "MD": 0, "EM": 0, "ST": 0, "MO": 50, "NF": 30, "IS": 0}},
     {"key": "space", "menu": "Space lanes", "plural": "space lanes", "description": "Runs, lanes, corridors and jump routes", "era": {"AN": 0, "MD": 0, "EM": 0, "ST": 0, "MO": 0, "NF": 40, "IS": 100}}
   ],
+  "scaleKinds": {
+    "NF": {
+      "Sy": {"space": 100}
+    },
+    "IS": {
+      "Pl": {"space": 50, "motor": 25, "rail": 15, "trade": 5, "sea": 5},
+      "Sy": {"space": 100},
+      "Nb": {"space": 100},
+      "Se": {"space": 100},
+      "Ga": {"space": 100}
+    }
+  },
   "regions": {
     "roman": {"COR": 0.3, "WCY": 1, "SEA": 1.5, "EAN": 1.5, "WMM": 1.5, "WAL": 0.5, "EMD": 1.5, "NTH": 1.2, "SBL": 0.8, "SLO": 0.3, "SHH": 0, "NSI": 0},
     "drove": {"COR": 1, "WCY": 1, "SEA": 0.5, "EAN": 0.5, "WMM": 1.5, "WAL": 3, "EMD": 1, "NTH": 2, "SBL": 3, "SLO": 2, "SHH": 3, "NSI": 2},
@@ -150,12 +162,12 @@
       {"p": "{town} and {town} Railway", "w": 15, "e": ["ST", "MO"], "t": ["plain"], "self": false},
       {"p": "{town}–{town} Railway", "w": 10, "e": ["ST", "MO"], "c": ["chinese", "korean", "japanese", "slavic", "indian"], "t": ["plain"], "self": false},
       {"p": "Great {directionAdj} Railway", "w": 10, "e": ["ST", "MO"], "t": ["grand"]},
-      {"p": "{directionAdj} Line", "w": 8, "e": ["ST", "MO", "NF"]},
+      {"p": "{directionAdj} Line", "w": 8, "e": ["ST", "MO", "NF", "IS"]},
       {"p": "{directionAdj} Main Line", "w": 6, "e": ["ST", "MO"], "cx": {"japanese": 3}},
       {"p": "{town} Branch", "w": 6, "e": ["ST", "MO"], "t": ["plain"], "self": false},
       {"p": "{town} Light Railway", "w": 4, "e": ["ST", "MO"], "c": ["british", "general"], "t": ["light"], "self": true},
       {"p": "{town} Tramway", "w": 5, "e": ["ST", "MO"], "t": ["plain"], "self": true},
-      {"p": "{directionAdj} Express", "w": 4, "e": ["MO", "NF"]},
+      {"p": "{directionAdj} Express", "w": 4, "e": ["MO", "NF", "IS"]},
       {"p": "{town} Skyway", "w": 10, "e": ["ST"], "h": true, "self": true},
       {"p": "Aether Lane {numberWord}", "w": 8, "e": ["ST"], "h": true},
       {"p": "Imperial Air Road", "w": 3, "e": ["ST"], "h": true},
@@ -166,27 +178,53 @@
       {"p": "fixed", "w": 4}
     ],
     "motor": [
-      {"p": "{roadLetter}{n}", "w": 15, "e": ["MO", "NF"], "c": ["british"], "t": ["plain"], "letters": {"A": 3, "B": 2, "M": 1}},
-      {"p": "Route {n}", "w": 10, "e": ["MO", "NF"], "c": ["general"], "t": ["plain"]},
-      {"p": "National Road {n}", "w": 8, "e": ["MO", "NF"], "c": ["!british", "!general"], "t": ["plain"]},
-      {"p": "{directionAdj} Highway", "w": 10, "e": ["MO", "NF"]},
-      {"p": "{town} Bypass", "w": 10, "e": ["MO", "NF"], "t": ["plain"], "self": true},
-      {"p": "{town} Ring Road", "w": 8, "e": ["MO", "NF"], "t": ["plain"], "self": true},
-      {"p": "{directionAdj} Circular", "w": 5, "e": ["MO", "NF"], "c": ["british"], "t": ["plain"]},
-      {"p": "{town} Expressway", "w": 6, "e": ["MO", "NF"], "cx": {"chinese": 3, "japanese": 3, "korean": 3}, "self": true},
-      {"p": "{directionAdj} Motorway", "w": 6, "e": ["MO", "NF"], "c": ["british", "general"], "t": ["plain"]},
+      {"p": "{roadLetter}{n}", "w": 15, "e": ["MO", "NF", "IS"], "c": ["british"], "t": ["plain"], "letters": {"A": 3, "B": 2, "M": 1}},
+      {"p": "Route {n}", "w": 10, "e": ["MO", "NF", "IS"], "c": ["general"], "t": ["plain"]},
+      {"p": "National Road {n}", "w": 8, "e": ["MO", "NF", "IS"], "c": ["!british", "!general"], "t": ["plain"]},
+      {"p": "{directionAdj} Highway", "w": 10, "e": ["MO", "NF", "IS"]},
+      {"p": "{town} Bypass", "w": 10, "e": ["MO", "NF", "IS"], "t": ["plain"], "self": true},
+      {"p": "{town} Ring Road", "w": 8, "e": ["MO", "NF", "IS"], "t": ["plain"], "self": true},
+      {"p": "{directionAdj} Circular", "w": 5, "e": ["MO", "NF", "IS"], "c": ["british"], "t": ["plain"]},
+      {"p": "{town} Expressway", "w": 6, "e": ["MO", "NF", "IS"], "cx": {"chinese": 3, "japanese": 3, "korean": 3}, "self": true},
+      {"p": "{directionAdj} Motorway", "w": 6, "e": ["MO", "NF", "IS"], "c": ["british", "general"], "t": ["plain"]},
       {"p": "{person:poss} Highway", "w": 4, "e": ["MO"]},
       {"p": "{destination} Trail", "w": 5, "e": ["MO"], "c": ["general"]},
       {"p": "fixed", "w": 4}
     ],
     "space": [
-      {"p": "{star} Run", "w": 15, "e": ["NF", "IS"]},
-      {"p": "{star}–{star} Lane", "w": 15, "e": ["NF", "IS"]},
-      {"p": "{spaceLand} Corridor", "w": 10, "e": ["NF", "IS"]},
-      {"p": "{ordinal} Jump Route", "w": 8, "e": ["IS"], "t": ["plain"]},
-      {"p": "Gate Chain {greek}", "w": 8, "e": ["IS"], "t": ["plain"]},
-      {"p": "{spaceGoods} Run", "w": 8, "e": ["NF", "IS"], "t": ["plain"]},
-      {"p": "fixed", "w": 10}
+      {"p": "{orbitAdj} Transfer", "w": 15, "sc": ["Pl"], "e": ["NF", "IS"]},
+      {"p": "{sfBody} Shuttle", "w": 10, "sc": ["Pl"], "e": ["NF", "IS"]},
+      {"p": "{town}–{sfBody} Line", "w": 10, "sc": ["Pl"], "e": ["NF", "IS"], "self": true},
+      {"p": "{town} Ladder", "w": 8, "sc": ["Pl"], "e": ["NF", "IS"], "self": true},
+      {"p": "{spaceDirection} Line", "w": 8, "sc": ["Pl"], "e": ["NF", "IS"]},
+      {"p": "Tether {greek}", "w": 6, "sc": ["Pl"], "e": ["NF", "IS"]},
+      {"p": "{town} Loop", "w": 5, "sc": ["Pl"], "e": ["IS"], "self": true},
+      {"p": "{spaceDirection} Run", "w": 15, "sc": ["Sy"], "e": ["NF", "IS"]},
+      {"p": "{spaceLand} Haul", "w": 12, "sc": ["Sy"], "e": ["NF", "IS"]},
+      {"p": "{spaceHazard} Crossing", "w": 10, "sc": ["Sy"], "e": ["NF", "IS"]},
+      {"p": "{spaceLand} Run", "w": 10, "sc": ["Sy"], "e": ["NF", "IS"]},
+      {"p": "{spaceGoods} Run", "w": 8, "sc": ["Sy"], "e": ["NF", "IS"]},
+      {"p": "{spaceGoods} Cycle", "w": 8, "sc": ["Sy"], "e": ["NF", "IS"]},
+      {"p": "{town}–{sfBody} Lane", "w": 8, "sc": ["Sy"], "e": ["NF", "IS"], "self": true},
+      {"p": "{sfBody} Slingshot", "w": 6, "sc": ["Sy"], "e": ["NF", "IS"]},
+      {"p": "{star} Run", "w": 15, "sc": ["Nb"], "e": ["IS"]},
+      {"p": "{star}–{star} Lane", "w": 15, "sc": ["Nb", "Se"], "e": ["IS"]},
+      {"p": "{star} Road", "w": 8, "sc": ["Nb"], "e": ["IS"]},
+      {"p": "{spaceLand} Road", "w": 8, "sc": ["Nb", "Ga"], "e": ["IS"]},
+      {"p": "{spaceDirection} Lane", "w": 6, "sc": ["Nb"], "e": ["IS"]},
+      {"p": "{spaceHazard} Passage", "w": 6, "sc": ["Nb", "Se"], "e": ["IS"]},
+      {"p": "{ordinal} Jump Route", "w": 8, "sc": ["Nb", "Se"], "e": ["IS"], "ftl": "jump"},
+      {"p": "{spaceLand} Corridor", "w": 12, "sc": ["Se"], "e": ["IS"]},
+      {"p": "{spaceLand} Passage", "w": 10, "sc": ["Se"], "e": ["IS"]},
+      {"p": "{spaceDirection} Corridor", "w": 10, "sc": ["Se"], "e": ["IS"]},
+      {"p": "Gate Chain {greek}", "w": 8, "sc": ["Se", "Ga"], "e": ["IS"], "ftl": "gate"},
+      {"p": "{spaceLand} Hyperlane", "w": 6, "sc": ["Se", "Ga"], "e": ["IS"], "ftl": "hyper"},
+      {"p": "{spaceLand} Trunk", "w": 12, "sc": ["Ga"], "e": ["IS"]},
+      {"p": "{spaceDirection} Line", "w": 12, "sc": ["Ga"], "e": ["IS"]},
+      {"p": "{spaceDirection} Trunk", "w": 6, "sc": ["Ga"], "e": ["IS"]},
+      {"p": "Great {spaceDirection} Road", "w": 5, "sc": ["Ga"], "e": ["IS"]},
+      {"p": "{spaceDirection} Jump Line", "w": 6, "sc": ["Ga"], "e": ["IS"], "ftl": "jump"},
+      {"p": "fixed", "w": 10, "e": ["NF", "IS"]}
     ]
   },
   "cultureShapes": [
@@ -222,7 +260,7 @@
     {"culture": "polynesian", "kind": "road", "p": "Coast Path to {destination}", "w": 15}
   ],
   "spaceBorrow": {
-    "share": 0.25,
+    "share": {"Pl": 0.25, "Sy": 0.25, "Nb": 0.1, "Se": 0.1, "Ga": 0.1},
     "kinds": ["road", "trade", "pilgrim", "sea"]
   },
   "roadNumbers": {

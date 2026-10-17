@@ -6,7 +6,22 @@
 import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
-import { BRITISH_CULTURES, findRouteCulture, findRouteKind, kindsOffered, ROUTE_ANY, ROUTE_CULTURES, ROUTE_ERAS, routeEraLabel, type RouteEra } from "./engine";
+import { scaleInfo, scaleLabel, scalePhrase, scalesFor, validScale, type ScaleChoice } from "../space/scale";
+import {
+  BRITISH_CULTURES,
+  findRouteCulture,
+  findRouteKind,
+  kindsOffered,
+  ROUTE_ANY,
+  ROUTE_CULTURES,
+  ROUTE_ERAS,
+  ROUTE_FTL,
+  routeEraLabel,
+  showsFtl,
+  showsScale,
+  type RouteEra,
+  type RouteFtl,
+} from "./engine";
 
 export interface RouteSentenceState {
   culture: string;
@@ -19,6 +34,10 @@ export interface RouteSentenceState {
   tone: GroupToneChoice;
   people: GroupPeople;
   series: boolean;
+  /** Stellar brief §6.1: the scale of space lanes; absent means any. */
+  scale?: ScaleChoice;
+  /** Stellar brief §6.2: the faster-than-light travel; absent means any. */
+  ftl?: RouteFtl;
 }
 
 export const DEFAULT_ROUTE_STATE: RouteSentenceState = {
@@ -30,7 +49,7 @@ export const DEFAULT_ROUTE_STATE: RouteSentenceState = {
   series: false,
 };
 
-export type RouteField = "culture" | "kind" | "era" | "fantastic" | "region" | "tone" | "people" | "series";
+export type RouteField = "scale" | "ftl" | "culture" | "kind" | "era" | "fantastic" | "region" | "tone" | "people" | "series";
 
 export interface RouteChoice {
   id: string | undefined;
@@ -74,6 +93,18 @@ export function routeSentence(state: RouteSentenceState): RouteSegment[] {
     choices: [{ id: undefined, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
     current: kind?.key,
   });
+  // Stellar brief §6.1: space lanes are drawn at a scale.
+  if (showsScale(state.era, state.kind)) {
+    const scale = validScale(state.scale, state.era === "NF" || state.era === "IS" ? state.era : undefined);
+    out.push(" across ");
+    out.push({
+      field: "scale",
+      text: scalePhrase(scale),
+      title: scaleInfo(scale).tooltip,
+      choices: scalesFor(state.era === "NF" || state.era === "IS" ? state.era : undefined).map((c) => ({ id: c, label: scaleInfo(c).label })),
+      current: scale,
+    });
+  }
   out.push(" of the ");
   out.push({
     field: "era",
@@ -92,6 +123,18 @@ export function routeSentence(state: RouteSentenceState): RouteSegment[] {
     current: state.fantastic ? "on" : "off",
   });
   out.push(" world, ");
+  // Stellar brief §6.2: faster-than-light travel, in the interstellar era.
+  if (showsFtl(state.era, state.kind, state.scale ?? "any")) {
+    const ftl = ROUTE_FTL.find((f) => f.id === (state.ftl ?? "any")) ?? ROUTE_FTL[0];
+    out.push({
+      field: "ftl",
+      text: ftl.text,
+      title: "Which faster-than-light travel the lanes allow; sub-light scales have none",
+      choices: ROUTE_FTL.map((f) => ({ id: f.id, label: f.text })),
+      current: ftl.id,
+    });
+    out.push(", ");
+  }
   if (showsRegion(state)) {
     out.push({
       field: "region",
@@ -168,10 +211,19 @@ export function chooseRoute(state: RouteSentenceState, field: RouteField, id: st
     case "series":
       next.series = id === "on";
       break;
+    case "scale":
+      next.scale = (id as ScaleChoice) ?? "any";
+      break;
+    case "ftl":
+      next.ftl = (id as RouteFtl) ?? "any";
+      break;
   }
+  // Stellar brief §6.1: a scale the era lacks resets to any; §6.2: FTL resets away from where it shows.
+  if (next.scale && next.scale !== "any") next.scale = validScale(next.scale, next.era === "NF" || next.era === "IS" ? next.era : undefined);
   // §2.3: a kind not offered in the era resets to Any; region resets away from the British cultures.
   if (next.kind && !kindsOffered(next.era, next.fantastic).some((k) => k.key === next.kind)) next.kind = undefined;
   if (!showsRegion(next)) next.region = undefined;
+  if (next.ftl && next.ftl !== "any" && !showsFtl(next.era, next.kind, next.scale ?? "any")) next.ftl = "any";
   return next;
 }
 
@@ -188,5 +240,7 @@ export function routeHistoryLabel(state: RouteSentenceState): string {
     ...(state.fantastic ? [fantasticWords(state.era)[1]] : []),
     ...(state.tone !== "any" ? [state.tone] : []),
     ...(state.series ? ["network"] : []),
+    ...(showsScale(state.era, state.kind) && state.scale && state.scale !== "any" ? [scaleLabel(state.scale).toLowerCase()] : []),
+    ...(showsFtl(state.era, state.kind, state.scale ?? "any") && state.ftl && state.ftl !== "any" ? [ROUTE_FTL.find((f) => f.id === state.ftl)!.text] : []),
   ].join(" · ");
 }

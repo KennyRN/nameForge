@@ -1976,6 +1976,8 @@ export class NameForgeModal extends Modal {
         tone: p.tone,
         people: p.people,
         series: p.series,
+        scale: p.scale ?? "any",
+        ftl: p.ftl ?? "any",
       },
       "culture",
       p.culture,
@@ -2010,6 +2012,8 @@ export class NameForgeModal extends Modal {
       tone: state.tone,
       people: state.people,
       series: state.series,
+      scale: state.scale,
+      ftl: state.ftl,
       count: this.generationCount,
       seed: seedOverride,
       safeguards: guards.safeguards,
@@ -2889,6 +2893,8 @@ export class NameForgeModal extends Modal {
         tone: state.tone,
         people: state.people,
         series: state.series,
+        ...(state.scale && state.scale !== "any" ? { scale: state.scale } : {}),
+        ...(state.ftl && state.ftl !== "any" ? { ftl: state.ftl } : {}),
       });
       return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).route);
     }).open();

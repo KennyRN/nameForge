@@ -16,7 +16,7 @@ import {
   moduleKinds,
 } from "./bynames/engine";
 import { namedForOffered, REALM_CHARACTERS, REALM_CULTURES, REALM_ERAS, type RealmLength, type RealmNamedFor, type RealmOutput } from "./realms/engine";
-import { findRouteCulture, findRouteKind, kindsOffered, ROUTE_ERAS, routeEraLabel, type RouteEra } from "./routes/engine";
+import { findRouteCulture, findRouteKind, kindsOffered, ROUTE_ERAS, ROUTE_FTL, routeEraLabel, type RouteEra, type RouteFtl } from "./routes/engine";
 import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 import { INN_KINDS, INN_SETTINGS, type InnForm, type InnKind, type InnSetting } from "./inns/engine";
 import { BUILDING_KINDS, type BuildingKind } from "./buildings/engine";
@@ -485,6 +485,9 @@ export interface RoutePreset {
   tone: GroupToneChoice;
   people: GroupPeople;
   series: boolean;
+  /** Stellar brief §13.1: absent means "any". */
+  scale?: ScaleChoice;
+  ftl?: RouteFtl;
 }
 
 function parseRoutePreset(values: Record<string, string>, body: string, fileName: string): { route?: RoutePreset; problems: string[] } {
@@ -523,6 +526,8 @@ function parseRoutePreset(values: Record<string, string>, body: string, fileName
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
       people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
       series: flag("series"),
+      ...(values.scale ? { scale: pick<ScaleChoice>("scale", "any", (v) => scalesFor(era === "NF" || era === "IS" ? era : undefined).includes(v as ScaleChoice)) } : {}),
+      ...(values.ftl ? { ftl: pick<RouteFtl>("ftl", "any", (v) => ROUTE_FTL.some((f) => f.id === v)) } : {}),
     },
     problems,
   };
@@ -543,6 +548,8 @@ function routePresetContent(preset: RoutePreset): string {
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
     `series: ${preset.series}`,
+    ...(preset.scale && preset.scale !== "any" ? [`scale: ${preset.scale}`] : []),
+    ...(preset.ftl && preset.ftl !== "any" ? [`ftl: ${preset.ftl}`] : []),
     "---",
     "",
     preset.description.trim(),

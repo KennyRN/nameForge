@@ -6,6 +6,8 @@
 // short names. No Obsidian imports.
 
 import { hasSpaceBlock } from "../space/safeguards";
+import { drawScale, scalesFor, SPACE_DATA, validScale, type ScaleChoice, type SpaceScale } from "../space/scale";
+import { dropStarWord } from "../space/stars";
 import routeData from "../data/route-names.json";
 import { BYNAMES_DATA, entryForm, holyNamesIn, stripPlural, townSource } from "../bynames/engine";
 import {
@@ -67,7 +69,21 @@ export interface RouteShape {
   letters?: Record<string, number>;
   /** The shape repeats a word on purpose (Road from the Reed Folk to the High Folk). */
   repeats?: boolean;
+  /** Stellar brief §6.4: the space scales the shape is drawn at (all). */
+  sc?: SpaceScale[];
+  /** Stellar brief §6.2: a faster-than-light shape, and the kind of travel it needs. */
+  ftl?: RouteFtl;
 }
+
+/** Stellar brief §6.2: the kinds of faster-than-light travel. */
+export type RouteFtl = "any" | "none" | "jump" | "gate" | "hyper";
+export const ROUTE_FTL: { id: RouteFtl; text: string }[] = [
+  { id: "any", text: "with any faster-than-light travel" },
+  { id: "none", text: "with no faster-than-light travel" },
+  { id: "jump", text: "by jump points" },
+  { id: "gate", text: "by gates" },
+  { id: "hyper", text: "by hyperspace lanes" },
+];
 
 export interface RouteCulture {
   key: string;
@@ -98,7 +114,9 @@ interface RouteData {
   regions: Record<string, Record<string, number>>;
   shapes: Record<RouteKind, RouteShape[]>;
   cultureShapes: (RouteShape & { culture: string; kind: RouteKind })[];
-  spaceBorrow: { share: number; kinds: RouteKind[] };
+  spaceBorrow: { share: number | Record<SpaceScale, number>; kinds: RouteKind[] };
+  /** Stellar brief §6.3: the kind weights at each scale of the future eras (absent: the era's own row). */
+  scaleKinds: Partial<Record<RouteEra, Partial<Record<SpaceScale, Partial<Record<RouteKind, number>>>>>>;
   roadNumbers: Record<string, [number, number, number][]>;
   cap: number;
   safeguards: { block: string[]; flag: string[]; flagListBlocks: boolean; banned: string[] };
@@ -123,13 +141,32 @@ export function routeSetting(era: RouteEra, fantastic: boolean): GroupSetting {
 }
 
 /** §5.2: a kind's weight in an era (pilgrim in the near future and beyond only when fantastic). */
-export function kindEraWeight(kind: RouteKindInfo, era: RouteEra, fantastic: boolean): number {
+export function kindEraWeight(kind: RouteKindInfo, era: RouteEra, fantastic: boolean, scale?: SpaceScale): number {
+  // Stellar brief §6.3: in the future eras the scale decides the row; pilgrim roads stay at planetary scale only.
+  const row = (era === "NF" || era === "IS") && scale ? ROUTE_DATA.scaleKinds[era]?.[scale] : undefined;
+  if (row) return (fantastic && scale === "Pl" ? kind.fantasticEra?.[era] : undefined) ?? row[kind.key] ?? 0;
   return (fantastic ? kind.fantasticEra?.[era] : undefined) ?? kind.era[era] ?? 0;
 }
 
-/** §2.2, §5.2: the kinds offered in an era. */
+/** Stellar brief §2.2: the concrete scales an era offers (none before the future). */
+export function routeScales(era: RouteEra): SpaceScale[] {
+  return era === "NF" || era === "IS" ? scalesFor(era).filter((c): c is SpaceScale => c !== "any") : [];
+}
+
+/** §2.2, §5.2: the kinds offered in an era; in the future eras, those with weight at some scale. */
 export function kindsOffered(era: RouteEra, fantastic: boolean): RouteKindInfo[] {
-  return ROUTE_KINDS.filter((k) => kindEraWeight(k, era, fantastic) > 0);
+  const scales: (SpaceScale | undefined)[] = routeScales(era).length > 0 ? routeScales(era) : [undefined];
+  return ROUTE_KINDS.filter((k) => scales.some((sc) => kindEraWeight(k, era, fantastic, sc) > 0));
+}
+
+/** Stellar brief §6.1: the scale link shows in the future eras for Any and Space lanes. */
+export function showsScale(era: RouteEra, kind: string | undefined): boolean {
+  return (era === "NF" || era === "IS") && (!kind || kind === "space");
+}
+
+/** Stellar brief §6.2: the FTL link shows in the interstellar era for Any and Space lanes at any, Nb, Se or Ga. */
+export function showsFtl(era: RouteEra, kind: string | undefined, scale: ScaleChoice): boolean {
+  return era === "IS" && (!kind || kind === "space") && (scale === "any" || scale === "Nb" || scale === "Se" || scale === "Ga");
 }
 
 // ── Options and results ─────────────────────────────────────────────────────
@@ -156,6 +193,10 @@ export interface RouteOptions {
   shape?: string;
   /** Settlement kit §4: the settlement's town, neighbours, founder, saint and goods. */
   context?: SettlementContext;
+  /** Stellar brief §6.1: the scale of space lanes in the future eras; "any" (the default) draws one per name. */
+  scale?: ScaleChoice;
+  /** Stellar brief §6.2: the faster-than-light travel the lanes allow (interstellar era); "any" by default. */
+  ftl?: RouteFtl;
 }
 
 export interface RouteName {
@@ -166,6 +207,8 @@ export interface RouteName {
   tones: GroupTone[];
   /** §7: a space lane on one of the culture's road, trade, pilgrim or sea shapes. */
   borrowed: boolean;
+  /** Stellar brief §2: the scale the name was drawn at (future eras only). */
+  scale?: SpaceScale;
   /** Every pool or list word drawn, with its pool (tests). */
   words: { pool: string; word: string }[];
   series?: { counter: string | null; varies: string | null; anchor: string | null };
@@ -200,6 +243,11 @@ interface Ctx {
   context?: SettlementContext;
   /** Settlement kit §4: the `{town}` tokens of the pattern being rendered. */
   turn?: TownTurn;
+  /** Stellar brief §2: the scale this name is drawn at (future eras), and the FTL travel allowed. */
+  scale?: SpaceScale;
+  ftl: RouteFtl;
+  /** Stars drawn so far in the name (no star twice, §6.4). */
+  stars: string[];
 }
 
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
@@ -211,8 +259,11 @@ const ROUTE_SELF = selfPatterns(routeData);
 /** Token names that read a shared pool under another name. */
 const POOL_OF: Record<string, string> = { goods: "routeGoods" };
 /** §4.2: group-names lists, read through their setting tags (space words always in sci-fi). */
-const GN_LISTS: Record<string, string> = { number: "number", numberWord: "number", colour: "colour", heraldicBeast: "heraldicBeast", star: "star", greek: "greek", spaceLand: "spaceLand" };
-const SF_LISTS = new Set(["star", "greek", "spaceLand"]);
+const GN_LISTS: Record<string, string> = {
+  number: "number", numberWord: "number", colour: "colour", heraldicBeast: "heraldicBeast", star: "star", greek: "greek", spaceLand: "spaceLand",
+  sfBody: "sfBody", orbitAdj: "orbitAdj", spaceDirection: "spaceDirection", spaceHazard: "spaceHazard",
+};
+const SF_LISTS = new Set(["star", "greek", "spaceLand", "sfBody", "orbitAdj", "spaceDirection", "spaceHazard"]);
 /** §4.2: the cultures `{god}` is drawn for (§12.3). */
 const GOD_CULTURES = new Set(["egyptian", "norse", "anglo-saxon", "aztec", "maya"]);
 
@@ -228,7 +279,7 @@ function vocabPool(ctx: Ctx, pool: string, token: string): [VocabEntry, number][
   const shape = ctx.shape;
   const only = shape?.only?.[token];
   const cw = shape?.cw?.[ctx.culture.key]?.[token];
-  return poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region })
+  return poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, scale: ctx.scale })
     .filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t)))
     .map(([e, w]): [VocabEntry, number] => {
       let n = w * toneFactor(e.t ?? [], ctx.tone) * regionMult(ctx, e.rt) * (cw?.[e.w] ?? 1);
@@ -250,13 +301,18 @@ function vocabWord(ctx: Ctx, pool: string, token: string, keep?: (w: string) => 
 /** A group-names list word, tone-weighted; never light or grim for the sensitive cultures. */
 function gnWord(ctx: Ctx, token: string): string | undefined {
   if (token === "star") {
-    const star = groupStarIn("any", ctx.mode, ctx.rng);
+    // Stellar brief §6.4: a name never holds the same star twice (up to 5 redraws).
+    let star = groupStarIn(ctx.scale ?? "any", ctx.mode, ctx.rng);
+    for (let i = 0; i < 5 && ctx.stars.includes(star); i++) star = groupStarIn(ctx.scale ?? "any", ctx.mode, ctx.rng);
+    ctx.stars.push(star);
+    // Stellar brief §6.6: "Barnard's Star" + Run reads "Barnard's Run".
+    if (ctx.shape && /\{star\} (Run|Road)$/.test(ctx.shape.p)) star = dropStarWord(star);
     ctx.words.push({ pool: "star", word: star });
     return star;
   }
   const list = GN_LISTS[token];
   const setting = SF_LISTS.has(token) ? "SF" : ctx.setting;
-  const items = groupListWords(list, setting)
+  const items = groupListWords(list, setting, ctx.scale ?? "any")
     .filter(([w]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w))))
     .map(([w, n]): [string, number] => [w, n * toneFactor(wordTones(list, w), ctx.tone)])
     .filter(([, n]) => n > 0);
@@ -399,7 +455,7 @@ function token(ctx: Ctx, name: string): string | undefined {
       // RP §6.1: a space region, sometimes with a prefix ("Outer Belt").
       const w = gnWord(ctx, "spaceLand");
       if (!w || rng() >= 0.3) return w;
-      return groupSpacePrefix(w, rng);
+      return groupSpacePrefix(w, rng, ctx.scale ?? "any");
     }
   }
   if (GN_LISTS[name]) return gnWord(ctx, name);
@@ -509,6 +565,8 @@ interface Plan {
   kind: RouteKind;
   shape: RouteShape;
   borrowed: boolean;
+  /** Stellar brief §2: the scale the plan was made for. */
+  scale?: SpaceScale;
 }
 
 const PERSON_TOKENS = /\{(person|founder|patron)[}:]/;
@@ -523,6 +581,9 @@ function shapesFor(kind: RouteKind, culture: string): RouteShape[] {
 function shapeWeight(ctx: Ctx, kind: RouteKind, s: RouteShape, anyEra = false): number {
   const c = ctx.culture;
   if (!anyEra && s.e && !s.e.includes(ctx.era)) return 0;
+  // Stellar brief §6.4: a space shape belongs to some scales; §6.2: an FTL shape needs that travel.
+  if (s.sc && ctx.scale && !s.sc.includes(ctx.scale)) return 0;
+  if (s.ftl && (ctx.ftl === "none" || (ctx.ftl !== "any" && ctx.ftl !== s.ftl))) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
   if (s.h !== undefined && s.h !== ctx.fantastic) return 0;
   // Deities brief §10.2: invented sacred places only with the deities engine loaded, never for the sensitive cultures.
@@ -546,7 +607,7 @@ function shapeWeight(ctx: Ctx, kind: RouteKind, s: RouteShape, anyEra = false): 
 function kindPlans(ctx: Ctx, kind: RouteKind, only?: string): [Plan, number][] {
   return shapesFor(kind, ctx.culture.key)
     .filter((s) => !only || s.p === only)
-    .map((s): [Plan, number] => [{ kind, shape: s, borrowed: false }, shapeWeight(ctx, kind, s)])
+    .map((s): [Plan, number] => [{ kind, shape: s, borrowed: false, scale: ctx.scale }, shapeWeight(ctx, kind, s)])
     .filter(([, w]) => w > 0);
 }
 
@@ -555,7 +616,7 @@ function borrowedPlans(ctx: Ctx): [Plan, number][] {
   return ROUTE_DATA.spaceBorrow.kinds.flatMap((kind) =>
     shapesFor(kind, ctx.culture.key)
       .filter((s) => PLACE_TOKENS.test(s.p))
-      .map((s): [Plan, number] => [{ kind: "space", shape: s, borrowed: true }, shapeWeight(ctx, kind, s, true)])
+      .map((s): [Plan, number] => [{ kind: "space", shape: s, borrowed: true, scale: ctx.scale }, shapeWeight(ctx, kind, s, true)])
       .filter(([, w]) => w > 0),
   );
 }
@@ -572,6 +633,7 @@ interface Built {
 function renderPlan(ctx: Ctx, plan: Plan, hooks: Hooks = {}): Built | undefined {
   ctx.drawn = new Set(plan.shape.t ?? []);
   ctx.words = [];
+  ctx.stars = [];
   ctx.shape = plan.shape;
   ctx.borrowed = plan.borrowed;
   ctx.letter = undefined;
@@ -603,12 +665,15 @@ function acceptable(built: Built, block: Set<string>, future = false): boolean {
 
 // ── Series (§9) ─────────────────────────────────────────────────────────────
 
+/** Stellar brief §6.7: the gates of a gate chain, in order. */
+const GATE_NUMBERS = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
+
 /** §9: the compass order the direction counters step through. */
 const COMPASS: Record<string, string[]> = {
   direction: ["North", "East", "South", "West", "North-East", "South-East", "South-West", "North-West"],
   directionAdj: ["Northern", "Eastern", "Southern", "Western"],
 };
-const DIRECTION_TOKENS = new Set(Object.keys(COMPASS));
+const DIRECTION_TOKENS = new Set([...Object.keys(COMPASS), "spaceDirection"]);
 /** TS §3: route tokens that render as placeholders in placeholder mode, and tokens that are never anchors. */
 const PLACEHOLDER_TOKENS = new Set(["destination", "town", "folk", "person", "founder", "patron", "kingdom", "holy"]);
 const NEVER_ANCHORS = new Set(["person", "founder", "patron", "holy", "n"]);
@@ -616,6 +681,8 @@ const kindOf = (name: string) => (NEVER_ANCHORS.has(name) ? "never" : name === "
 
 /** §9: the counter's values: the compass order (then any words packs add), in the pool here. */
 function compassValues(ctx: Ctx, token: string): string[] {
+  // Stellar brief §6.7: space directions turn through their scale's compass order.
+  if (token === "spaceDirection") return SPACE_DATA.directions.compass[ctx.scale ?? "Pl"];
   const live = poolEntries(ctx.vocab, token, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
   return [...COMPASS[token].filter((w) => live.includes(w)), ...live.filter((w) => !COMPASS[token].includes(w))];
 }
@@ -634,13 +701,22 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
   const offered = kindsOffered(era, fantastic);
   const chosen = options.kind ? offered.find((k) => k.key === options.kind) : undefined;
   if (options.kind && !chosen) notices.push(`Kind “${options.kind}” isn't offered in the ${routeEraLabel(era)} era.`);
-  const kindWeights = offered
-    .map((k): [RouteKindInfo, number] => [k, kindEraWeight(k, era, fantastic) * (culture.kindMult?.[k.key] ?? 1)])
-    .filter(([, w]) => w > 0);
+  const future = era === "NF" || era === "IS";
+  // Stellar brief §6.1: a kind other than space lanes is drawn at planetary scale; otherwise the chosen
+  // scale, or (any scale) one per name from §2.3's weights.
+  const chosenScale = validScale(options.scale, era === "NF" || era === "IS" ? era : undefined);
+  const fixedScale: SpaceScale | undefined = !future ? undefined : chosen && chosen.key !== "space" ? "Pl" : chosenScale === "any" ? undefined : chosenScale;
+  const ftl: RouteFtl = era === "IS" && ROUTE_FTL.some((f) => f.id === options.ftl) ? options.ftl! : "any";
+  const drawNameScale = (): SpaceScale | undefined => (!future ? undefined : fixedScale ?? drawScale(era === "NF" || era === "IS" ? era : undefined, rng));
+  /** Stellar brief §6.3: the kinds, weighted for a scale (the era's own row before the future). */
+  const kindWeightsFor = (scale: SpaceScale | undefined) =>
+    offered
+      .map((k): [RouteKindInfo, number] => [k, kindEraWeight(k, era, fantastic, scale) * (culture.kindMult?.[k.key] ?? 1)])
+      .filter(([, w]) => w > 0);
   const block = routeBlockSet(options.safeguards);
   const count = Math.max(0, Math.floor(options.count));
 
-  const newCtx = (): Ctx => ({
+  const newCtx = (scale?: SpaceScale): Ctx => ({
     rng,
     culture,
     era,
@@ -654,11 +730,15 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
     drawn: new Set(),
     words: [],
     context: options.context,
+    scale,
+    ftl,
+    stars: [],
   });
 
-  /** §7: a shape for a kind: 25% of space lanes borrow one of the culture's shapes. */
+  /** §7: a shape for a kind: 25% (10% at the larger scales) of space lanes borrow one of the culture's shapes. */
   const choosePlan = (ctx: Ctx, kind: RouteKind): Plan | undefined => {
-    if (kind === "space" && !options.shape && rng() < ROUTE_DATA.spaceBorrow.share) {
+    const share = ROUTE_DATA.spaceBorrow.share;
+    if (kind === "space" && !options.shape && rng() < (typeof share === "number" ? share : share[ctx.scale ?? "Pl"])) {
       const plan = pickWeighted(borrowedPlans(ctx), rng);
       if (plan) return plan;
     }
@@ -672,23 +752,25 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
     era,
     tones: built.tones,
     borrowed: built.plan.borrowed,
+    ...(built.plan.scale ? { scale: built.plan.scale } : {}),
     words: built.words,
     ...(series ? { series } : {}),
   });
 
-  const drawKind = () => chosen?.key ?? pickWeighted(kindWeights, rng)?.key;
+  const drawKind = (scale: SpaceScale | undefined) => chosen?.key ?? pickWeighted(kindWeightsFor(scale), rng)?.key;
 
   /** GN §4: 20 tries a kind, then a second kind (or the chosen kind again). */
   const oneBuilt = (kindFor?: RouteKind): Built | undefined => {
+    const scale = drawNameScale();
     for (let round = 0; round < 2; round++) {
-      const kind = kindFor ?? drawKind();
+      const kind = kindFor ?? drawKind(scale);
       if (!kind) return undefined;
       for (let i = 0; i < 20; i++) {
-        const ctx = newCtx();
+        const ctx = newCtx(scale);
         const plan = choosePlan(ctx, kind);
         if (!plan) break;
         const built = renderPlan(ctx, plan);
-        if (built && acceptable(built, block, era === "NF" || era === "IS")) return built;
+        if (built && acceptable(built, block, future)) return built;
       }
     }
     return undefined;
@@ -705,7 +787,7 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
     return true;
   };
 
-  if (options.series && kindWeights.length + (chosen ? 1 : 0) > 0) drawNetwork();
+  if (options.series && offered.length > 0) drawNetwork();
   else for (let attempt = 0; attempt < count * 50 && names.length < count; attempt++) {
     const built = oneBuilt();
     if (built) add(toName(built));
@@ -728,20 +810,50 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
     const plan = first.plan;
     const rec = first.record;
     const draw = (hooks: Hooks, p = plan) => {
-      const ctx = newCtx();
+      const ctx = newCtx(plan.scale);
       const built = renderPlan(ctx, p, hooks);
-      return built && acceptable(built, block, era === "NF" || era === "IS") ? built : undefined;
+      return built && acceptable(built, block, future) ? built : undefined;
     };
     const fill = (next: () => RouteName | undefined) => {
       for (let idle = 0; idle < 30 && names.length < count; ) idle = add(next()) ? 0 : idle + 1;
     };
+
+    // Stellar brief §6.7: a gate chain is the chain, then its gates in order.
+    if (plan.shape.p === "Gate Chain {greek}") {
+      const series = { counter: null, varies: null, anchor: "greek" };
+      add(toName(first, series));
+      const greek = rec.find((d) => d.name === "greek")?.text ?? "";
+      for (let i = 0; i < GATE_NUMBERS.length && names.length < count; i++) {
+        add({ ...toName(first, series), text: `${greek} Gate ${GATE_NUMBERS[i]}`, words: first.words });
+      }
+      return;
+    }
+    // Stellar brief §6.7: a cycle is a closed circuit: the circuit's name, then its legs.
+    if (plan.shape.p === "{spaceGoods} Cycle") {
+      const series = { counter: null, varies: "stop", anchor: "spaceGoods" };
+      add(toName(first, series));
+      const legs = Math.max(0, count - 1);
+      const closed = legs >= 3;
+      const ctx = newCtx(plan.scale);
+      const stops: string[] = [];
+      for (let tries = 0; tries < 200 && stops.length < (closed ? legs : legs + 1); tries++) {
+        const stop = rng() < 0.5 ? gnWord(ctx, "sfBody") : token(ctx, "town");
+        if (stop && !stops.includes(stop)) stops.push(stop);
+      }
+      for (let i = 0; i < legs && i < stops.length; i++) {
+        const to = stops[i + 1] ?? (closed ? stops[0] : undefined);
+        if (!to) break;
+        add({ ...toName(first, series), text: `${stops[i]}–${to} Cycle`, words: first.words });
+      }
+      return;
+    }
 
     // §9: directions turn round the compass, the rest locked; returned in compass order.
     const counterAt = rec.findIndex((d) => DIRECTION_TOKENS.has(d.name));
     if (counterAt >= 0) {
       const name = rec[counterAt].name;
       const series = { counter: name, varies: null, anchor: null };
-      const values = compassValues(newCtx(), name);
+      const values = compassValues(newCtx(plan.scale), name);
       const start = Math.max(0, values.indexOf(rec[counterAt].text));
       const found: { at: number; name: RouteName }[] = [];
       const locked = new Map(rec.map((d, i) => [i, d] as const));
@@ -795,7 +907,7 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
     });
     if (!anchor || names.length >= count) return;
     // TS §3.5: top up from the kind's other shapes with the anchor's token.
-    const ctx = newCtx();
+    const ctx = newCtx(plan.scale);
     const others = (plan.borrowed ? borrowedPlans(ctx) : kindPlans(ctx, plan.kind)).filter(
       ([p]) => p.shape.p !== plan.shape.p && [...p.shape.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name),
     );
