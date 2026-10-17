@@ -5,6 +5,7 @@
 // factor, places, saints and safeguards, bynames' ranks, the tribal engine's peoples and realms'
 // short names. No Obsidian imports.
 
+import { hasSpaceBlock } from "../space/safeguards";
 import routeData from "../data/route-names.json";
 import { BYNAMES_DATA, entryForm, holyNamesIn, stripPlural, townSource } from "../bynames/engine";
 import {
@@ -15,6 +16,8 @@ import {
   type GroupToneChoice,
   GROUP_TONES,
   groupListWords,
+  groupSpacePrefix,
+  groupStarIn,
   groupPossessive,
   groupSaint,
   groupTown,
@@ -246,6 +249,11 @@ function vocabWord(ctx: Ctx, pool: string, token: string, keep?: (w: string) => 
 
 /** A group-names list word, tone-weighted; never light or grim for the sensitive cultures. */
 function gnWord(ctx: Ctx, token: string): string | undefined {
+  if (token === "star") {
+    const star = groupStarIn("any", ctx.mode, ctx.rng);
+    ctx.words.push({ pool: "star", word: star });
+    return star;
+  }
   const list = GN_LISTS[token];
   const setting = SF_LISTS.has(token) ? "SF" : ctx.setting;
   const items = groupListWords(list, setting)
@@ -391,8 +399,7 @@ function token(ctx: Ctx, name: string): string | undefined {
       // RP §6.1: a space region, sometimes with a prefix ("Outer Belt").
       const w = gnWord(ctx, "spaceLand");
       if (!w || rng() >= 0.3) return w;
-      const prefix = pickWeighted(groupListWords("spacePrefix", "SF"), rng);
-      return prefix ? `${prefix} ${w}` : w;
+      return groupSpacePrefix(w, rng);
     }
   }
   if (GN_LISTS[name]) return gnWord(ctx, name);
@@ -580,7 +587,7 @@ function renderPlan(ctx: Ctx, plan: Plan, hooks: Hooks = {}): Built | undefined 
 }
 
 /** §7, §12: the cap, repetition and safeguards. */
-function acceptable(built: Built, block: Set<string>): boolean {
+function acceptable(built: Built, block: Set<string>, future = false): boolean {
   const counted = countedWords(built.text);
   if (counted.length === 0 || counted.length > ROUTE_DATA.cap) return false;
   if (built.plan.shape.repeats) {
@@ -590,6 +597,7 @@ function acceptable(built: Built, block: Set<string>): boolean {
   } else if (repeatsContent(counted)) return false;
   if (block.has(routeNorm(built.text))) return false;
   if (breaksRouteWords(built.text)) return false;
+  if (future && hasSpaceBlock(built.text)) return false;
   return true;
 }
 
@@ -680,7 +688,7 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
         const plan = choosePlan(ctx, kind);
         if (!plan) break;
         const built = renderPlan(ctx, plan);
-        if (built && acceptable(built, block)) return built;
+        if (built && acceptable(built, block, era === "NF" || era === "IS")) return built;
       }
     }
     return undefined;
@@ -722,7 +730,7 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
     const draw = (hooks: Hooks, p = plan) => {
       const ctx = newCtx();
       const built = renderPlan(ctx, p, hooks);
-      return built && acceptable(built, block) ? built : undefined;
+      return built && acceptable(built, block, era === "NF" || era === "IS") ? built : undefined;
     };
     const fill = (next: () => RouteName | undefined) => {
       for (let idle = 0; idle < 30 && names.length < count; ) idle = add(next()) ? 0 : idle + 1;

@@ -6431,6 +6431,9 @@
     "x": 2.0,
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Sy"
     ]
    },
    {
@@ -6450,18 +6453,31 @@
     "w": "Drift",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Sy",
+     "Nb",
+     "Se"
     ]
    },
    {
     "w": "Halo",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Sy",
+     "Ga"
     ]
    },
    {
     "w": "Ring",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Pl",
+     "Sy"
     ]
    },
    {
@@ -6472,6 +6488,7 @@
    },
    {
     "w": "Expanse",
+    "x": 0.5,
     "s": [
      "SF"
     ]
@@ -6486,36 +6503,65 @@
     "w": "Void",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Se",
+     "Ga"
+    ],
+    "t": [
+     "grim"
     ]
    },
    {
     "w": "Core",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Se",
+     "Ga"
     ]
    },
    {
     "w": "Spur",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Nb",
+     "Se",
+     "Ga"
     ]
    },
    {
     "w": "Gap",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Pl",
+     "Sy",
+     "Se"
     ]
    },
    {
     "w": "Shoals",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Sy",
+     "Nb"
     ]
    },
    {
     "w": "Cluster",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Se",
+     "Ga"
     ]
    },
    {
@@ -6528,12 +6574,366 @@
     "w": "Dark",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Nb",
+     "Se"
+    ],
+    "t": [
+     "grim"
     ]
    },
    {
     "w": "Lanes",
+    "x": 0.5,
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Horizon",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Well",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl",
+     "Sy"
+    ]
+   },
+   {
+    "w": "Saddle",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Arc",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Camp",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Chain",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Swarm",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Frostline",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Cloud",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy",
+     "Nb",
+     "Se",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Shell",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy",
+     "Nb"
+    ]
+   },
+   {
+    "w": "Sheath",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Pause",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Shock",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ],
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Bow",
+    "x": 0.5,
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Tail",
+    "x": 0.5,
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Wake",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy",
+     "Nb"
+    ]
+   },
+   {
+    "w": "Lobe",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Neck",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Bridge",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Bubble",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb"
+    ]
+   },
+   {
+    "w": "Fluff",
+    "x": 0.5,
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb"
+    ],
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Hollow",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb"
+    ]
+   },
+   {
+    "w": "Wall",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Stream",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Wave",
+    "x": 0.5,
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb"
+    ]
+   },
+   {
+    "w": "Nebula",
+    "x": 1.5,
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Pillars",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Se"
+    ],
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Knot",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Rift",
+    "x": 1.5,
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Filament",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Se",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Arm",
+    "x": 2.0,
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Ga"
+    ]
+   },
+   {
+    "w": "Bar",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Ga"
+    ]
+   },
+   {
+    "w": "Disc",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Ga"
+    ]
+   },
+   {
+    "w": "Warp",
+    "x": 0.5,
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Ga"
+    ],
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Sheet",
+    "x": 0.5,
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Ga"
     ]
    }
   ],
@@ -14606,12 +15006,19 @@
     "w": "Outer Belt",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Sy"
     ]
    },
    {
     "w": "Far Drift",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Sy",
+     "Nb"
     ]
    },
    {
@@ -14627,12 +15034,72 @@
     "w": "Kepler Gap",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Sy"
     ]
    },
    {
     "w": "Inner Halo",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Ga"
+    ]
+   },
+   {
+    "w": "Far Spur",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Coreward Reach",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Ga"
+    ]
+   },
+   {
+    "w": "Bubble Rim",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb"
+    ]
+   },
+   {
+    "w": "Dark Rift",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Trojan Camp",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Long Wake",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
     ]
    }
   ],
@@ -15664,6 +16131,9 @@
     "w": "Moon",
     "s": [
      "SF"
+    ],
+    "sc": [
+     "Pl"
     ]
    },
    {
@@ -17695,7 +18165,28 @@
     "w": "Tau Ceti"
    },
    {
-    "w": "Eridani"
+    "w": "Alphard"
+   },
+   {
+    "w": "Alphecca"
+   },
+   {
+    "w": "Hamal"
+   },
+   {
+    "w": "Diphda"
+   },
+   {
+    "w": "Menkar"
+   },
+   {
+    "w": "Mirfak"
+   },
+   {
+    "w": "Nunki"
+   },
+   {
+    "w": "Sadr"
    }
   ],
   "beast": [
@@ -18891,16 +19382,66 @@
     "w": "Silent"
    },
    {
-    "w": "Northern"
+    "w": "Northern",
+    "x": 0.5
    },
    {
-    "w": "Southern"
+    "w": "Southern",
+    "x": 0.5
    },
    {
-    "w": "Eastern"
+    "w": "Eastern",
+    "x": 0.5
    },
    {
-    "w": "Western"
+    "w": "Western",
+    "x": 0.5
+   },
+   {
+    "w": "High",
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Low",
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Sunward",
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Coreward",
+    "sc": [
+     "Se",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Rimward",
+    "sc": [
+     "Se",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Spinward",
+    "sc": [
+     "Se",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Trailing",
+    "sc": [
+     "Se",
+     "Ga"
+    ]
    }
   ],
   "landPrefix": [
@@ -19320,116 +19861,6 @@
      "MR",
      "MF"
     ]
-   },
-   {
-    "w": "Belt",
-    "x": 2.0,
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Rim",
-    "x": 2.0,
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Reach",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Drift",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Halo",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Ring",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Verge",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Expanse",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Deep",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Void",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Core",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Spur",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Gap",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Shoals",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Cluster",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Frontier",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Dark",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Lanes",
-    "s": [
-     "SF"
-    ]
    }
   ],
   "seaWord": [
@@ -19455,18 +19886,6 @@
    },
    {
     "w": "Reaches",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Belt",
-    "s": [
-     "SF"
-    ]
-   },
-   {
-    "w": "Rim",
     "s": [
      "SF"
     ]
@@ -20433,6 +20852,354 @@
      "MF"
     ]
    }
+  ],
+  "spaceDirection": [
+   {
+    "w": "Upwell",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl",
+     "Sy"
+    ]
+   },
+   {
+    "w": "Downwell",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl",
+     "Sy"
+    ]
+   },
+   {
+    "w": "Polar",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Equatorial",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Sunward",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Outward",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Inward",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Coreward",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb",
+     "Se",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Rimward",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb",
+     "Se",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Spinward",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb",
+     "Se",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Trailing",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb",
+     "Se",
+     "Ga"
+    ]
+   }
+  ],
+  "stationDirection": [
+   {
+    "w": "Spinward",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Antispinward",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Hubward",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Rimward",
+    "s": [
+     "SF"
+    ]
+   }
+  ],
+  "orbitAdj": [
+   {
+    "w": "High",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Low",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Polar",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Equatorial",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Parking",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Long",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Fast",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Pl"
+    ]
+   }
+  ],
+  "spaceHazard": [
+   {
+    "w": "Shock",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Pause",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Sheath",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Frostline",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Corona",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Neck",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Bubble",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb"
+    ]
+   },
+   {
+    "w": "Wall",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb"
+    ]
+   },
+   {
+    "w": "Cloud",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Nb"
+    ]
+   },
+   {
+    "w": "Rift",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Dark",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Knot",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Nebula",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Bar",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Ga"
+    ]
+   },
+   {
+    "w": "Void",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Ga"
+    ]
+   },
+   {
+    "w": "Warp",
+    "s": [
+     "SF"
+    ],
+    "sc": [
+     "Ga"
+    ]
+   }
   ]
  },
  "composites": {
@@ -21333,11 +22100,15 @@
   "sfTown": [
    {
     "p": "{star}",
-    "w": 40
+    "w": 35
    },
    {
     "p": "{star} {starNumber}",
-    "w": 20
+    "w": 15
+   },
+   {
+    "p": "{catalogueWorld}",
+    "w": 10
    },
    {
     "p": "{spaceLandPrefixed}",

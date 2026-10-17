@@ -2,6 +2,7 @@
 // names for twenty cultures, built from shapes and lists. Reuses the group engine's weighted draws,
 // setting tags, tone factor, invented places and safeguards. No Obsidian imports.
 
+import { hasSpaceBlock } from "../space/safeguards";
 import bynamesData from "../data/bynames.json";
 import {
   type GroupGenre,
@@ -11,6 +12,7 @@ import {
   type GroupToneChoice,
   GROUP_TONES,
   groupListWords,
+  groupStarIn,
   groupSetting,
   groupTown,
   hasBannedWord,
@@ -428,10 +430,11 @@ function token(ctx: Ctx, raw: string): string | undefined {
       return gods.length > 0 ? stripPlural(gods[Math.floor(rng() * gods.length)]) : undefined;
     }
     case "number":
-    case "compass":
-    case "star": {
+    case "compass": {
       return pickWeighted(groupListWords(name, ctx.setting), rng);
     }
+    case "star":
+      return groupStarIn("any", "invented", rng);
     case "epPlaceLand":
     case "domainLand":
       return placeLand(ctx);
@@ -715,6 +718,7 @@ export function generateBynames(options: BynameOptions): BynameBatch {
           module === "epithets" ? buildEpithet(ctx, kind) : module === "titles" ? buildTitle(ctx, kind, length) : buildFamily(ctx, kind);
         if (ctx.packFailed) packFailed = true;
         if (!built || !acceptable(guard, built, length === "full" ? 24 : 8)) continue;
+        if (ctx.setting === "SF" && hasSpaceBlock(built.text)) continue;
         return { text: built.text, module, culture, kind: built.kind, shape: built.shape, gender: sex, language: native ? "native" : "english", tones: built.tones };
       }
       if (!chosen) kind = pickWeighted(kindChoices, rng);

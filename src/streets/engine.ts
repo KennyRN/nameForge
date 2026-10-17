@@ -4,6 +4,7 @@
 // places, peoples, people's names, gods and route names come from the route engine, which in turn
 // reuses the group, bynames, tribal and realms engines. No Obsidian imports.
 
+import { hasSpaceBlock } from "../space/safeguards";
 import streetData from "../data/street-names.json";
 import {
   type GroupPeople,
@@ -12,6 +13,7 @@ import {
   type GroupToneChoice,
   GROUP_TONES,
   groupListWords,
+  groupStarIn,
   groupPossessive,
   groupSaint,
   ordinalText,
@@ -234,6 +236,11 @@ const vocabWord = (ctx: Ctx, pool: string, keep?: (e: VocabEntry) => boolean) =>
 
 /** A group-names list word, tone-weighted. */
 function gnWord(ctx: Ctx, list: string, keep?: (w: string) => boolean): string | undefined {
+  if (list === "star") {
+    const star = groupStarIn("any", ctx.mode, ctx.rng);
+    ctx.words.push({ pool: "star", word: star });
+    return star;
+  }
   const items = groupListWords(list, SF_LISTS.has(list) ? "SF" : ctx.setting)
     .filter(([w]) => (!keep || keep(w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w))))
     .map(([w, n]): [string, number] => [w, n * toneFactor(wordTones(list, w), ctx.tone)])
@@ -668,6 +675,7 @@ export function generateStreetNames(options: StreetOptions): StreetBatch {
       // A route through town keeps its own length and words (RN's cap and checks).
       if (!b.isRoute && (counted.length === 0 || counted.length > STREET_DATA.cap || repeatsContent(counted))) return false;
       if (block.has(routeNorm(text)) || breaksStreetWords(text)) return false;
+      if (isFuture(era) && hasSpaceBlock(text)) return false;
       if (hasChristianWord(text) && !cultureAllowed(["christian"], culture.key, era)) return false;
     }
     return true;

@@ -38,7 +38,7 @@ const run = (o: Partial<GroupOptions> & { family: string }, setting: GroupSettin
 /** A whole word; a hyphenated compound (Hedge-Witches) counts as one word. */
 const hasWord = (text: string, word: string) => new RegExp(`(^|[^A-Za-z-])${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^A-Za-z-])`).test(text);
 
-const SPECIAL = new Set(["person", "holy", "town", "surname", "house", "initials", "star", "starNumber", "spaceLandPrefixed", "britishPlace", "ordinal", "land", "street", "nickname", "flavourAnimal", "deity"]);
+const SPECIAL = new Set(["person", "holy", "town", "surname", "house", "initials", "star", "starNumber", "catalogueWorld", "spaceLandPrefixed", "britishPlace", "ordinal", "land", "street", "nickname", "flavourAnimal", "deity"]);
 const tokensOf = (p: string) => [...p.matchAll(/\{([^}]+)\}/g)].flatMap((m) => m[1].split(":")[0].split("/"));
 
 // ── §16.1 Data ──────────────────────────────────────────────────────────────

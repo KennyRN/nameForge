@@ -5,6 +5,7 @@
 // packs); places, people, gods and figures come from the route engine, creatures and colours from
 // group names, dynasties from realms, and the settings and rendering from inns. No Obsidian imports.
 
+import { hasSpaceBlock } from "../space/safeguards";
 import buildingData from "../data/building-names.json";
 import {
   type GroupPeople,
@@ -14,6 +15,7 @@ import {
   type GroupToneChoice,
   GROUP_TONES,
   groupListWords,
+  groupStarIn,
   groupPlural,
   groupPossessive,
   groupSaint,
@@ -199,6 +201,11 @@ function fromPool(ctx: Ctx, pool: string, items: [VocabEntry, number][], use = f
 
 /** A group-names list word, tone-weighted (sci-fi lists in their space setting). */
 function gnWord(ctx: Ctx, list: string, use = false): string | undefined {
+  if (list === "star") {
+    const star = groupStarIn("any", ctx.mode, ctx.rng);
+    ctx.words.push({ pool: "star", word: star });
+    return star;
+  }
   const items = groupListWords(list, SF_LISTS.has(list) ? "SF" : ctx.setting)
     .filter(([w]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w))))
     .map(([w, n]): [string, number] => [w, n * toneFactor(wordTones(list, w), ctx.tone)])
@@ -547,6 +554,7 @@ export function generateBuildingNames(options: BuildingOptions): BuildingBatch {
     if (repeatsContent(counted)) return false;
     if (block.has(bare(text))) return false;
     if (breaksBuildingWords(text)) return false;
+    if (isFuture(era) && hasSpaceBlock(text)) return false;
     if (hasChristianBuilding(text) && !cultureAllowed(["christian"], culture.key, era)) return false;
     return true;
   };

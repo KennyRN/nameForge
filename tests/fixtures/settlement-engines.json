@@ -425,9 +425,9 @@
   "Western Highway",
   "The Quiet Lane",
   "Salt Road",
-  "Mintaka Run",
-  "Sirius–Algol Lane",
-  "[place] Bypass"
+  "HIP 110028 Run",
+  "B4888",
+  "Road to Kepler-191"
  ],
  "streets norman-british NF placeholders": [
   "Western Promenade",
@@ -436,10 +436,10 @@
   "Reactor Lane",
   "Deck 17 Concourse",
   "Deck 37",
-  "Maia Plaza",
-  "Eastern Promenade",
-  "Altair Promenade",
-  "Hydroponics Row"
+  "Ross 623 Plaza",
+  "Smith Street",
+  "Antispinward Sector",
+  "[holy person]'s Square"
  ],
  "inns norman-british NF placeholders": [
   "the Bird in Hand",
@@ -455,20 +455,20 @@
   "the Red Market Hall",
   "Venture Dome",
   "[place] Sky Elevator",
-  "Shaula Landing Tower",
-  "Butter Works",
-  "Observation Ring Eta",
-  "Alnitak Hab Module",
-  "[place] Customs House"
+  "HIP 82107 Landing Tower",
+  "Endeavour Dome",
+  "the New Exchange",
+  "the White Treasury",
+  "Earl's Shrine"
  ],
  "routes norman-british NF invented": [
-  "Southern Belt Expressway",
+  "Outer Wall Expressway",
   "Southern Line",
   "B4073",
   "Lord's Road",
   "Northern Line",
   "Sea Road to Vantage Station",
-  "Far Reach Corridor",
+  "Near Spur Corridor",
   "Hill Way"
  ],
  "streets norman-british NF invented": [
@@ -485,33 +485,33 @@
  ],
  "inns norman-british NF invented": [
   "the Pulsar Hawk",
-  "the Last Pint Before Aldebaran",
-  "Old Garrick's",
-  "the Rogue",
-  "the Dove",
-  "the Moon",
+  "the Last Pint Before Leopard's Star",
+  "the Stag and Prior",
+  "the Crooked Kite Rooms",
   "the Plasma Eagle",
-  "the Spotted Kite"
+  "the Spotted Kite",
+  "the Raven in a Cloak",
+  "the Airlock"
  ],
  "buildings norman-british NF invented": [
   "the Blessed Aldric's Conduit",
-  "Deep Lanes Sky Elevator",
-  "Castor Hab Module",
-  "Tau Ceti 7 House",
-  "Aldebaran Reactor Hall",
-  "Archive Core Chi",
-  "Hab Module 7",
-  "the New Manor"
+  "Trailing Arc Sky Elevator",
+  "Regulus Spire",
+  "Archive Core Nu",
+  "the Little Spring",
+  "Hab Module 16",
+  "Pagett Library",
+  "Fifth Hydroponic Bay"
  ],
  "routes norman-british IS placeholders": [
-  "Sirius–Spica Lane",
-  "Tau Ceti–Altair Lane",
-  "Mira–Betelgeuse Lane",
-  "23rd Jump Route",
-  "Vega–Pollux Lane",
-  "Deep Corridor",
-  "Gate Chain Tau",
-  "Castor Road"
+  "Sirius–Delta Centauri Lane",
+  "Delta Hydrae Road",
+  "Xi Cygni Turnpike",
+  "Betelgeuse Run",
+  "Arm Corridor",
+  "Ore Run",
+  "Nunki Street",
+  "Hamal–Kepler-26 Lane"
  ],
  "streets norman-british IS placeholders": [
   "Spine Omicron",
@@ -529,31 +529,31 @@
   "the Hare and Horn Canteen",
   "the Hydra and Anvil",
   "the Bow Canteen",
-  "Mintaka Lounge",
-  "the Horseshoe and Banner Tea House",
-  "Procyon Lounge",
-  "the Enfield and Prior Canteen",
-  "Spacers' Rest"
+  "Wolf 231 Lounge",
+  "Eta Arietis Lounge",
+  "the White Hazel",
+  "Hamal Lounge",
+  "the Ship"
  ],
  "buildings norman-british IS placeholders": [
-  "Fomalhaut Spire",
-  "Gull Market Hall",
-  "Sirius Hydroponic Bay",
-  "Salt Works",
-  "[place] Sky Elevator",
-  "Discovery Dome",
-  "Observation Ring Epsilon",
-  "Hab Module 7"
+  "Kapteyn's Star Observation Ring",
+  "the Silver Gaol",
+  "Sky Elevator Omicron",
+  "Nunki Archive Core",
+  "[place] Grange",
+  "House of [founder]",
+  "[place] Hall",
+  "[place] Lodge"
  ],
  "routes norman-british IS invented": [
-  "Road to Vega",
-  "Altair Road",
-  "Halo Corridor",
-  "Tau Ceti Road",
-  "Denebola Road",
-  "The Narrows",
-  "Void Corridor",
-  "Sea Road to Alnitak"
+  "Road to Achernar",
+  "Gate Chain Pi",
+  "Menkar Road",
+  "29th Jump Route",
+  "Barnard's Star Run",
+  "Kepler-1952 Turnpike",
+  "68th Jump Route",
+  "Sea Road to K2-336"
  ],
  "streets norman-british IS invented": [
   "Cloth Market",
@@ -563,9 +563,9 @@
   "Kiln End",
   "Silversmiths' Row",
   "4th Corridor",
-  "Capella Promenade",
-  "Spine Theta",
-  "Reactor Lane"
+  "Sirius Promenade",
+  "Spine Epsilon",
+  "Old Market"
  ],
  "inns norman-british IS invented": [
   "the Five Hares",
@@ -575,17 +575,17 @@
   "the Lamprey and Bell",
   "the Meteor Bear",
   "the Cauldron and Swallow Hotel",
-  "the Last Glass Before Capella"
+  "the Last Glass Before Alphard"
  ],
  "buildings norman-british IS invented": [
-  "Electra Sky Elevator",
-  "Canopus Dome",
-  "Antares 11 Sky Elevator",
-  "Hab Module 37",
-  "Pioneer Dome",
-  "Achernar Dome",
-  "Procyon Dome",
-  "Hab Module 40"
+  "Kappa Tauri Spire",
+  "Altair Archive Core",
+  "Thirteenth Hydroponic Bay",
+  "Garrick Hall",
+  "Mira Cross",
+  "Procyon Arcology",
+  "Coreward Disc Sky Elevator",
+  "Pathfinder Dome"
  ],
  "routes general AN placeholders": [
   "Sea Road to [place]",
@@ -1009,13 +1009,13 @@
  ],
  "routes general NF placeholders": [
   "Ore Run",
-  "Hadar Run",
-  "Sea Road to [place]",
+  "Gliese 336 Run",
   "Overseer's Road",
   "Route 3",
-  "Road to Antares",
-  "Sea Road to Canopus",
-  "Iron Road"
+  "Road to Alphecca",
+  "Sea Road to [place]",
+  "Route 70",
+  "Pillars Corridor"
  ],
  "streets general NF placeholders": [
   "Reactor Lane",
@@ -1027,7 +1027,7 @@
   "Spinward Walk",
   "Exchange Square",
   "Exchange Precinct",
-  "Mintaka Promenade"
+  "Wolf 1024 Promenade"
  ],
  "inns general NF placeholders": [
   "the Soldier",
@@ -1046,18 +1046,18 @@
   "Martlet Exchange",
   "Hab Module 29",
   "[surname] Statue",
-  "Mizar Archive Core",
-  "[place] Sky Elevator"
+  "Chi Arietis Sky Elevator",
+  "HIP 29177 Arcology"
  ],
  "routes general NF invented": [
-  "Achernar Run",
-  "Fomalhaut–Sirius Lane",
-  "Betelgeuse Ring Road",
-  "Electra Causeway",
+  "Ox's Star Run",
+  "Route 143",
+  "Western Line",
+  "Spice Road",
   "Western Express",
-  "Sea Road to Vega",
-  "Route 106",
-  "Antares Run"
+  "Sea Road to Betelgeuse",
+  "Timber and Cloth Road",
+  "Kappa Eridani Causeway"
  ],
  "streets general NF invented": [
   "Spinward Walk",
@@ -1075,10 +1075,10 @@
   "the Old Market Canteen",
   "the Crooked Peacock Rest",
   "the Rogue and Harrow",
-  "Canopus Lounge",
-  "the Harper",
-  "Bellatrix Transit Hostel",
-  "the Blind Swan",
+  "Theta Ursae Majoris Lounge",
+  "the Halfway House",
+  "Ross 772 Transit Hostel",
+  "the Sage",
   "the Talisman"
  ],
  "buildings general NF invented": [
@@ -1086,32 +1086,32 @@
   "Thirteenth Hydroponic Bay",
   "Archive Core Nu",
   "Hab Module Chi",
-  "Tau Ceti Reactor Hall",
-  "King's Prison",
-  "Sirius Prison",
+  "LHS 4936 Archive Core",
+  "Hab Module 39",
+  "Arcology Rho",
   "Endeavour Dome"
  ],
  "routes general IS placeholders": [
   "The Dark Lane",
-  "Achernar Run",
-  "21st Jump Route",
-  "Gate Chain Nu",
-  "The Pilgrim Road",
-  "Ice Run",
-  "Algol Mail Road",
-  "Road to Hadar"
+  "[person]'s Star Run",
+  "Gate Chain Omicron",
+  "Camp Corridor",
+  "Kepler-433 Run",
+  "Zeta Aurigae Mail Road",
+  "Tau Ceti–[person]'s Star Lane",
+  "Rift Corridor"
  ],
  "streets general IS placeholders": [
   "Hydroponics Ring",
   "Warehouse Precinct",
-  "Aldebaran Plaza",
-  "Tanners' Row",
+  "Van Maanen's Star Plaza",
+  "Reactor Lane",
   "College Court",
   "Hydroponics Row",
   "Ring Road",
-  "Deneb Promenade",
-  "Gravity Street",
-  "Concourse Lambda"
+  "Altair Promenade",
+  "Deck 27 Concourse",
+  "Lord's Square"
  ],
  "inns general IS placeholders": [
   "the Fiddler",
@@ -1119,29 +1119,29 @@
   "the Eclipse Lion",
   "Deck 21 Bar",
   "the Adder",
-  "Hadar Lounge",
-  "the Airlock",
-  "Eridani Lounge"
+  "Kepler-1011 Lounge",
+  "the Lady and Hound",
+  "the King's Head Eating House"
  ],
  "buildings general IS placeholders": [
-  "Hadar Arcology",
-  "the Round Hall",
-  "Endeavour Dome",
-  "[founder]'s Grange",
-  "Arcology Delta",
-  "Landing Tower Nu",
-  "Hab Module 24",
-  "the Silver Gaol"
+  "Gliese 146 Reactor Hall",
+  "Deneb Reactor Hall",
+  "[place] Sky Elevator",
+  "[place] Watermill",
+  "Alcor Hydroponic Bay",
+  "Sixth Hydroponic Bay",
+  "[founder]'s School",
+  "Kepler-87 Arcology"
  ],
  "routes general IS invented": [
-  "Eridani–Antares Lane",
-  "Deep Corridor",
-  "Rim Corridor",
-  "Ice Run",
-  "Road to Altair",
-  "Northern Shoals Corridor",
-  "Alnitak–Mira Lane",
-  "75th Jump Route"
+  "Ross 850–Epsilon Herculis Lane",
+  "Teegarden's Star–Kepler-1526 Lane",
+  "Altair Run",
+  "Sunward Stream Corridor",
+  "HD 100132–Hamal Lane",
+  "Belt Corridor",
+  "Gate Chain Omega",
+  "The Quiet Lane"
  ],
  "streets general IS invented": [
   "82nd Ring",
@@ -1151,8 +1151,8 @@
   "Undercity",
   "Dock Arm Square",
   "Spinward Walk",
-  "Canopus Promenade",
-  "Reactor Lane",
+  "Kapteyn's Star Promenade",
+  "King's Square",
   "Market Square"
  ],
  "inns general IS invented": [
@@ -1169,11 +1169,11 @@
   "Pathfinder Dome",
   "Spire Eta",
   "Lamb Castle",
-  "Maia Observation Ring",
-  "Procyon Temple",
-  "Capella Hydroponic Bay",
-  "Long Dark Sky Elevator",
-  "Sky Elevator Psi"
+  "Kepler-415 Archive Core",
+  "Betelgeuse Hydroponic Bay",
+  "Arcology Alpha",
+  "Shard Lock-Up",
+  "Archive Core Gamma"
  ],
  "routes japanese AN placeholders": [
   "Lord's Army Road",
@@ -1599,11 +1599,11 @@
   "[place] Expressway",
   "[place] Ring Road",
   "Southern Line",
-  "Arcturus–Capella Lane",
-  "The Long Haul",
-  "Eridani–Maia Lane",
-  "Arcturus Road",
-  "National Road 90"
+  "Arcturus–Ross 852 Lane",
+  "Western Express",
+  "Pollux Run",
+  "National Road 90",
+  "Cluster Corridor"
  ],
  "streets japanese NF placeholders": [
   "East Road",
@@ -1612,20 +1612,20 @@
   "Merchants' Town",
   "Exchange Square",
   "Hab Block Gamma",
-  "Tau Ceti Promenade",
-  "Gravity Street",
+  "Wolf 215 Promenade",
+  "Antispinward Sector",
   "Ring Road",
   "Observation Deck Court"
  ],
  "inns japanese NF placeholders": [
   "the Quantum Gull",
   "Bar of [place]",
-  "the Last Round Before Aldebaran",
-  "Willow Bank Inn",
-  "Club of [place]",
-  "[place] Inn",
-  "Arcturus Lounge",
-  "the Void Hart"
+  "the Last Round Before Teegarden's Star",
+  "Dock 31 Bunkhouse",
+  "the Coreward Stream Rest",
+  "Bamboo Grove Inn",
+  "Pine Wind Inn",
+  "Jade River Inn"
  ],
  "buildings japanese NF placeholders": [
   "Spire Tau",
@@ -1635,59 +1635,59 @@
   "[place] Watermill",
   "[founder]'s Column",
   "Seventh Hydroponic Bay",
-  "Alnitak Spire"
+  "Gliese 622 Archive Core"
  ],
  "routes japanese NF invented": [
-  "Alcor–Deneb Lane",
-  "Eastern Line",
+  "Alpha Carinae–Algol Lane",
   "Southern Line",
-  "Electra Run",
-  "Sea Road to New Lower Bearforest",
-  "Maia Bypass",
-  "Salt Road",
-  "Southern Highway"
+  "Beta Pavonis Run",
+  "Deneb–Gliese 206 Lane",
+  "Northern Line",
+  "Betelgeuse–Capella Lane",
+  "Eastern Express",
+  "West Road"
  ],
  "streets japanese NF invented": [
   "Hydroponics Row",
-  "Capella Promenade",
-  "Eridani Promenade",
-  "Ring Road",
-  "Millers' Ward Street",
-  "Spine Sigma",
+  "Deneb Promenade",
+  "Sacred Spring Street",
+  "Eastern Promenade",
+  "Wool Exchange",
+  "Leather Market",
   "Market Square",
-  "Northern Promenade",
-  "Deck 7 Concourse",
-  "Deck 12 Concourse"
+  "Deck 9 Concourse",
+  "Deck 20 Concourse",
+  "Spine Tau"
  ],
  "inns japanese NF invented": [
   "Snow Country Tea House",
-  "Aldebaran Inn",
-  "Autumn Moon Inn",
-  "Procyon Transit Hostel",
-  "Bar of Spica 10",
-  "Rest of Near Lanes",
-  "the Last Drink Before Denebola",
-  "Lounge of New Honey Saltworks"
+  "Teegarden's Star Inn",
+  "the Laser Panther",
+  "Bar of Tau Ceti 10",
+  "Canteen of LHS 1576",
+  "Hall of New Temples",
+  "Groombridge 878 Inn",
+  "Fomalhaut Inn"
  ],
  "buildings japanese NF invented": [
-  "Tau Ceti Reactor Hall",
-  "Queen's Mill",
-  "the Upper Pillar",
-  "Thirteenth Hydroponic Bay",
-  "Ninth Hydroponic Bay",
-  "Mizar Archive Core",
-  "Alnitak Arcology",
-  "Mizar Monument"
+  "Kepler-1233 Observation Ring",
+  "Psi Draconis Landing Tower",
+  "Wyvern Station Arch",
+  "Palace of [dynasty]",
+  "Chi Hydrae Spire",
+  "Inner Knot Tower",
+  "Hab Module 28",
+  "Queen's Bridge"
  ],
  "routes japanese IS placeholders": [
-  "Mira Run",
-  "Canopus–Hadar Lane",
-  "Sea Road to Alnitak",
-  "The Pilgrim Road",
-  "Rigel Road",
-  "Gate Chain Omega",
-  "Gate Chain Phi",
-  "Vega–Mizar Lane"
+  "Chi Eridani Run",
+  "The Narrows",
+  "Ore Run",
+  "Far Nebula Corridor",
+  "The Quiet Lane",
+  "Gate Chain Rho",
+  "6th Jump Route",
+  "Gate Chain Psi"
  ],
  "streets japanese IS placeholders": [
   "Gravity Street",
@@ -1697,9 +1697,9 @@
   "Dock Arm Place",
   "Shoemakers' Ward Street",
   "King's Place",
-  "Shaula Promenade",
-  "Queen's Place",
-  "Recycler Way"
+  "Kepler-1463 Promenade",
+  "Spine Tau",
+  "K2-96 Promenade"
  ],
  "inns japanese IS placeholders": [
   "[place] Inn",
@@ -1707,61 +1707,61 @@
   "Spacers' Rest",
   "Bar of [place]",
   "[owner]'s Canteen",
-  "the Last Toast Before Betelgeuse",
-  "Deck 31 Bar",
-  "the Zero-G Lamb"
+  "the Last Toast Before Kapteyn's Star",
+  "[owner]'s Bar",
+  "Shaula Lounge"
  ],
  "buildings japanese IS placeholders": [
   "Corn Works",
-  "Capella Hydroponic Bay",
-  "[place] Windmill",
-  "Archive Core Omicron",
-  "the Upper Shrine",
-  "[dynasty] Hall",
-  "Ninth Hydroponic Bay",
-  "[place] Treasury"
+  "Betelgeuse Sky Elevator",
+  "Hab Module Mu",
+  "Great Toll House",
+  "[place] Hall",
+  "[place] Forge",
+  "Bamboo Grove Villa",
+  "[place] Sky Elevator"
  ],
  "routes japanese IS invented": [
-  "Rigel–Altair Lane",
-  "Canopus Run",
-  "The Dark Lane",
-  "Mizar–Canopus Lane",
-  "Castor–Altair Lane",
-  "Shaula–Capella Lane",
-  "Denebola–Vega Lane",
-  "Road to Sirius"
+  "Altair–Algol Lane",
+  "Ore Run",
+  "Data Run",
+  "28th Jump Route",
+  "Hamal–Epsilon Tucanae Lane",
+  "Helium Run",
+  "Castor Pilgrim Road",
+  "Mira Run"
  ],
  "streets japanese IS invented": [
   "Exchange Road",
   "28th Corridor",
   "Gardens Lane",
   "Ring Road",
-  "Altair Promenade",
-  "Deck 36 Concourse",
+  "Betelgeuse Promenade",
+  "Gravity Street",
   "Armoury Quarter",
   "Hab Block Sigma",
   "Silver Market",
-  "Gravity Street"
+  "Queen's Square"
  ],
  "inns japanese IS invented": [
-  "the Last Glass Before Alnitak",
-  "the Last Drink Before Aldebaran",
-  "Rest of Rigel",
-  "Willow Bank Tea House",
-  "Cherry Blossom Inn",
-  "Canopus Lounge",
-  "Altair Lounge",
-  "Pine Wind Tea House"
+  "the Last Glass Before HD 60587",
+  "the Last Glass Before Upsilon Tucanae",
+  "Gliese 46 Transit Hostel",
+  "the Last Glass Before Hadar",
+  "Canteen of Hadar",
+  "Bar of Kepler-1849",
+  "Betelgeuse Lounge",
+  "Spring Rain Inn"
  ],
  "buildings japanese IS invented": [
   "New Bend of the Lamb Sky Elevator",
   "Sky Elevator Omega",
   "New Castle Flax Pit Mill",
-  "Castor 5 Sky Elevator",
-  "Hydroponic Bay Gamma",
-  "King's Exchange",
-  "Bellatrix Landing Tower",
-  "Hab Module 39"
+  "Ross 412 Sky Elevator",
+  "Spire Theta",
+  "Ross 93 10 Library",
+  "Hab Module 39",
+  "Hab Module 12"
  ],
  "routes arabic-persian AN placeholders": [
   "Incense Road",
@@ -2188,94 +2188,94 @@
   "Northern Line",
   "Western Line",
   "Silver Road",
-  "Rigel Run",
-  "Monsoon Road",
-  "[place] Ring Road",
-  "Deep Corridor"
+  "Capella Run",
+  "K2-165–Theta Lyrae Lane",
+  "Southern Line",
+  "Tau Draconis–Hadar Lane"
  ],
  "streets arabic-persian NF placeholders": [
   "[place] Road",
   "Caravan Court",
-  "Spica Promenade",
-  "New Market",
-  "Deck 4 Concourse",
-  "Ring Road",
-  "Spine Sigma",
-  "Bakers' Quarter",
-  "Exchange Square",
-  "Spinward Walk"
+  "Alphecca Promenade",
+  "Hydroponics Row",
+  "13th Corridor",
+  "Deck 7 Concourse",
+  "Lane of the Academy",
+  "Deck 30 Concourse",
+  "Reactor Lane",
+  "Deck 21 Concourse"
  ],
  "inns arabic-persian NF placeholders": [
-  "the Last Drink Before Castor",
-  "Coffee House of the Rose",
-  "the Last Toast Before Mira",
-  "the Hyperspace Pheasant",
-  "[patron]'s Caravan Court",
+  "the Last Drink Before Fomalhaut",
+  "Mira Lounge",
   "Spacers' Rest",
+  "[owner]'s Club",
+  "Gliese 808 Lounge",
   "Dock 21 Bunkhouse",
-  "the Last Round Before Tau Ceti"
+  "the Last Round Before Kepler-1822",
+  "Caravan Court of the Northern Gate"
  ],
  "buildings arabic-persian NF placeholders": [
   "Temple of the Hungry Hand",
   "the Old Well",
-  "Maia Landing Tower",
-  "Endeavour Dome",
-  "[place] Sky Elevator",
+  "HIP 72883 Spire",
+  "Sky Elevator Chi",
   "Hab Module Gamma",
   "[place] House of Learning",
-  "[founder]'s Toll House"
+  "[founder]'s Toll House",
+  "Hab Module 35"
  ],
  "routes arabic-persian NF invented": [
-  "Shaula 4 Ring Road",
-  "Capella 8 Ring Road",
-  "Near Dark Corridor",
+  "Wolf 719 9 Ring Road",
+  "Eastern Highway",
+  "Deep Arm Corridor",
   "National Road 165",
-  "Shaula–Tau Ceti Lane",
-  "Caravan Road to Procyon",
-  "Southern Line",
-  "Denebola–Spica Lane"
+  "TOI-5847–Canopus Lane",
+  "Eastern Line",
+  "Low Cluster Expressway",
+  "Sea Road to Kestrel Station"
  ],
  "streets arabic-persian NF invented": [
   "Spine Chi",
   "Exchange Place",
   "Deck 10",
-  "Betelgeuse Promenade",
-  "Market of the Saddlers",
-  "Deck 20 Concourse",
-  "Western Promenade",
-  "Hab Block Lambda",
-  "Queen's Row",
-  "Hydroponics Row"
+  "Van Maanen's Star Promenade",
+  "Hydroponics Square",
+  "Hydroponics Row",
+  "Lane of the Airlock",
+  "Ring Road",
+  "Hydroponics Ring",
+  "Gravity Street"
  ],
  "inns arabic-persian NF invented": [
   "Caravan Court of the Eastern Gate",
   "Coffee House of the Rose",
   "Inn of the Cattle Merchants",
-  "Maia Lounge",
-  "Rooms of New Grey Grange",
-  "Coffee House of the Cypress",
-  "the Last Pint Before Arcturus",
-  "Crescent Coffee House"
+  "HD 22526 Lounge",
+  "Club of Ross 696",
+  "House of the Ten Wells",
+  "Gliese 850 Lounge",
+  "Hotel of Red Duke's Star"
  ],
  "buildings arabic-persian NF invented": [
-  "Deneb 12 Saltworks",
-  "King's Water Channel",
-  "Northern Shoals Sky Elevator",
-  "Canopus Reactor Hall",
-  "Landing Tower Omega",
-  "Outer Rim Mill",
-  "Butter Works",
-  "Mizar Sky Elevator"
+  "Gliese 998 Forge",
+  "Meridian Station Sky Elevator",
+  "Lower Mint",
+  "Squirrel's Star Hydroponic Bay",
+  "Owl Saltworks",
+  "Mizar Archive Core",
+  "Dome Gamma",
+  "K2-202 Reactor Hall"
  ],
  "routes arabic-persian IS placeholders": [
   "The Quiet Lane",
-  "Spica–Sirius Lane",
-  "Canopus–Rigel Lane",
-  "Eastern Ring Corridor",
-  "The Long Haul",
-  "83rd Jump Route",
-  "1st Jump Route",
-  "The Narrows"
+  "Arcturus–Xi Centauri Lane",
+  "Sea Road to HD 96456",
+  "Frontier Corridor",
+  "Gate Chain Pi",
+  "88th Jump Route",
+  "The Pilgrim Road",
+  "Gate Chain Psi"
  ],
  "streets arabic-persian IS placeholders": [
   "Reactor Sector",
@@ -2291,13 +2291,13 @@
  ],
  "inns arabic-persian IS placeholders": [
   "[owner]'s Bar",
-  "Spica Lounge",
-  "the Drift Rest",
-  "Maia Lounge",
+  "Pollux Lounge",
+  "Coffee House of the Fountain",
+  "[owner]'s Lounge",
   "Canteen of [place]",
-  "[patron]'s Caravan Court",
-  "Seven Wells Coffee House",
-  "Spacers' Rest"
+  "Mizar Lounge",
+  "the Void Mermaid",
+  "[owner]'s Rest"
  ],
  "buildings arabic-persian IS placeholders": [
   "Endeavour Dome",
@@ -2307,17 +2307,17 @@
   "[place] Library",
   "Reactor Hall Tau",
   "[place] Hall",
-  "Regulus Reactor Hall"
+  "Tau Ceti Reactor Hall"
  ],
  "routes arabic-persian IS invented": [
-  "Caravan Road to Bellatrix",
-  "Achernar Run",
-  "The Pilgrim Road",
+  "Caravan Road to Lalande 20517",
+  "Chi Cygni Run",
   "The Long Haul",
-  "Achernar–Regulus Lane",
-  "Arcturus Run",
-  "Spica–Hadar Lane",
-  "Far Shoals Corridor"
+  "Teegarden's Star–Alpha Carinae Lane",
+  "Diphda–Psi Eridani Lane",
+  "Teegarden's Star Road",
+  "Sea Road to Kappa Pavonis",
+  "Halo Corridor"
  ],
  "streets arabic-persian IS invented": [
   "50th Ring",
@@ -2332,23 +2332,23 @@
   "Market Square"
  ],
  "inns arabic-persian IS invented": [
-  "the Northern Frontier Rest",
+  "the Low Knot Rest",
   "Coffee House of the Rose",
-  "Deneb Lounge",
-  "the Graviton Hedgehog",
-  "Bar of Silent Ring",
-  "the Airlock",
-  "Coffee House of the Pomegranate",
-  "Bar of Western Shoals"
+  "Denebola Lounge",
+  "the Zero-G Drake",
+  "Lounge of Sunward Lanes",
+  "Coffee House of the Garden",
+  "Ross 267 Lounge",
+  "Bar of HIP 61172"
  ],
  "buildings arabic-persian IS invented": [
-  "Hadar Hab Module",
-  "Antares Sky Elevator",
-  "the Lower Bastion",
+  "Ross 332 Dome",
+  "Hab Module 2",
+  "Pioneer Dome",
   "the White Kiln",
   "New West Farm Mill",
   "Spire Lambda",
-  "Deep Cluster College",
+  "Coreward Well College",
   "Hab Module Nu"
  ],
  "routes slavic AN placeholders": [
@@ -2772,14 +2772,14 @@
   "Fire Memorial"
  ],
  "routes slavic NF placeholders": [
-  "Bellatrix Run",
-  "Water Run",
-  "Deneb–Alnitak Lane",
-  "Silver Road",
+  "Kepler-1769 Run",
+  "Fuel Run",
+  "National Road 20",
+  "Sea Road to [place]",
   "[place] Expressway",
   "[place] Ring Road",
   "Salvage Run",
-  "Algol–Bellatrix Lane"
+  "Rho Ceti–[person]'s Star Lane"
  ],
  "streets slavic NF placeholders": [
   "Abbot's Square",
@@ -2804,72 +2804,72 @@
   "the Pale Tabor Tavern"
  ],
  "buildings slavic NF placeholders": [
-  "Mintaka Hab Module",
-  "Dome Psi",
+  "Ross 768 Hydroponic Bay",
+  "[place] Sky Elevator",
   "Bread Mill",
   "[place] Causeway",
   "Duke's Saltworks",
+  "Dome Psi",
   "Reactor Hall Psi",
-  "Pathfinder Dome",
-  "[place] Customs House"
+  "Pathfinder Dome"
  ],
  "routes slavic NF invented": [
   "New Bank Building Bypass",
-  "Long Expanse Road",
-  "Hadar 4 Road",
-  "National Road 62",
+  "Southern Cloud Road",
+  "Kepler-636 Road",
+  "Iron Road",
   "Southern Express",
   "The Pilgrim Road",
-  "Drift Corridor",
-  "Road to Bellatrix"
+  "Gap Corridor",
+  "Road to LHS 4948"
  ],
  "streets slavic NF invented": [
   "Reactor Lane",
   "Exchange Deck",
-  "Shaula 7 Road",
-  "Outer Town",
-  "Lord's Court",
-  "Recycler Square",
-  "Southern Promenade",
-  "Deck 36 Concourse",
+  "HD 214118 11 Road",
+  "Greyfield Station Road",
+  "Below the Wall",
+  "Deck 18",
+  "Northern Promenade",
+  "Hydroponics Ring",
   "8th Corridor",
   "Spine Zeta"
  ],
  "inns slavic NF invented": [
-  "Regulus Transit Hostel",
-  "Rigel Lounge",
-  "Club of Mintaka",
-  "Deck 19 Bar",
-  "the Silver Jug Tavern",
-  "Eating House of Alcor",
-  "the Spotted Mole",
-  "the Chequered Jackdaw"
+  "Ashen Count's Star Transit Hostel",
+  "Club of K2-145",
+  "Eating House of Lalande 23773",
+  "Eating House of Gamma Andromedae",
+  "Hotel of Long Cloud",
+  "Eating House of Sunward Wall",
+  "the Deep-Space Boar",
+  "Eating House of Solace Station"
  ],
  "buildings slavic NF invented": [
-  "Maia Sky Elevator",
-  "Canopus Reactor Hall",
-  "Altair Hall",
-  "Prince's Toll House",
-  "the Blessed Cyneburg's Bridge",
-  "Bishop's Castle",
+  "Gliese 313 Sky Elevator",
+  "Fifth Hydroponic Bay",
+  "Spica Hab Module",
+  "the Lower Windmill",
+  "HD 151316 Mill",
   "Cattle Works",
-  "Spica School"
+  "Spica School",
+  "Grey Grange"
  ],
  "routes slavic IS placeholders": [
-  "Rigel–Regulus Lane",
-  "Aldebaran Road",
-  "Eastern Belt Corridor",
-  "The Quiet Lane",
-  "The Long Haul",
-  "Northern Void Corridor",
-  "Mira–Mizar Lane",
-  "Salvage Run"
+  "Achernar–Gliese 197 Lane",
+  "Near Arc Corridor",
+  "Gate Chain Omega",
+  "Road to Gliese 13",
+  "4th Jump Route",
+  "Ore Run",
+  "58th Jump Route",
+  "Antares Run"
  ],
  "streets slavic IS placeholders": [
-  "Capella Promenade",
-  "Gravity Street",
+  "Denebola Promenade",
+  "North Walk",
   "Observation Deck Square",
-  "Fomalhaut–Aldebaran Lane",
+  "Przybylski's Star–Betelgeuse Lane",
   "Deck 1 Concourse",
   "[place] Road",
   "Spine Mu",
@@ -2888,56 +2888,56 @@
   "the Phoenix and Pear Tavern"
  ],
  "buildings slavic IS placeholders": [
-  "Fomalhaut Archive Core",
-  "Observation Ring Phi",
+  "[person]'s Star Dome",
+  "Tenth Hydroponic Bay",
   "the Burnt Lock-Up",
   "[place] Statue",
   "Hydroponic Bay Pi",
   "Pioneer Dome",
   "[founder]'s Mint",
-  "Canopus Landing Tower"
+  "[person]'s Star Landing Tower"
  ],
  "routes slavic IS invented": [
-  "Maia Run",
-  "Pollux Run",
-  "Alcor Run",
-  "4th Jump Route",
-  "Canopus Road",
+  "HD 185671 Run",
+  "Alpha Lyrae–Omega Hydrae Lane",
+  "Denebola Run",
   "The Dark Lane",
   "Ice Run",
-  "17th Jump Route"
+  "17th Jump Route",
+  "Sea Road to Vega",
+  "HIP 76930 Run"
  ],
  "streets slavic IS invented": [
   "Concourse Omicron",
-  "Eridani Promenade",
-  "Reactor Lane",
-  "Spine Gamma",
+  "Groombridge 2117 Promenade",
+  "Dock Arm Square",
   "Gravity Street",
-  "Canopus 6 Road",
-  "Hydroponics Row",
-  "New Long Island Road",
-  "Ring Road",
-  "Deck 22 Concourse"
+  "HD 105093 Road",
+  "Deck 22 Concourse",
+  "Warehouse Level",
+  "Spinward Walk",
+  "3rd Corridor",
+  "2nd Corridor"
  ],
  "inns slavic IS invented": [
   "the Scholar",
   "the Pump Eating House",
-  "Algol Lounge",
-  "the Galactic Talbot",
-  "Canteen of Mizar",
-  "the Three Figs",
-  "the Pale Jug",
-  "the Halfway House"
+  "Zeta Herculis Lounge",
+  "Kepler-825 Transit Hostel",
+  "Eating House of Maia",
+  "Hall of Epsilon Hydrae 12",
+  "Rest of HD 139976",
+  "Eating House of Antares"
  ],
  "buildings slavic IS invented": [
   "Queen's Hall",
   "Round Sanctuary",
-  "Eridani Archive Core",
-  "Hab Module Xi",
-  "Outer Dark Statue",
-  "Palace of [dynasty]",
-  "Spire Mu",
-  "Pollux Sky Elevator"
+  "K2-114 Spire",
+  "Hab Module 30",
+  "Discovery Dome",
+  "Wyvern Station Observatory",
+  "Red Captain's Star Sky Elevator",
+  "Prince's Windmill"
  ],
  "routes polynesian AN placeholders": [
   "Sea Road to [place]",
@@ -3362,12 +3362,12 @@
  "routes polynesian NF placeholders": [
   "The Quiet Lane",
   "Wool Road",
-  "Electra–Pollux Lane",
-  "Sea Road to [place]",
-  "National Road 132",
+  "Delta Carinae–Canopus Lane",
+  "Silk Road",
   "[place] Ring Road",
   "[place] Expressway",
-  "Eastern Passage"
+  "Eastern Passage",
+  "Data Run"
  ],
  "streets polynesian NF placeholders": [
   "Butter Market",
@@ -3378,8 +3378,8 @@
   "Spinward Walk",
   "Queen's Place",
   "Undercity",
-  "Rigel Promenade",
-  "Sirius Plaza"
+  "Hadar Promenade",
+  "Spinward Sector"
  ],
  "inns polynesian NF placeholders": [
   "Guest House of [place]",
@@ -3387,29 +3387,29 @@
   "the Galactic Dragon",
   "[owner]'s Eating House",
   "Club of [place]",
-  "Aldebaran Lounge",
-  "the Last Pint Before Pollux",
-  "[owner]'s Bar"
+  "[person]'s Star Lounge",
+  "[owner]'s Hall",
+  "Deck 8 Bar"
  ],
  "buildings polynesian NF placeholders": [
   "the Grey Fountain",
-  "Maia Landing Tower",
-  "Ninth Hydroponic Bay",
-  "Castor Archive Core",
-  "Sky Elevator Epsilon",
-  "[place] Lock-Up",
+  "HIP 101509 Dome",
+  "the White School",
+  "[place] Market Hall",
+  "Kepler-134 Archive Core",
   "Pathfinder Dome",
-  "Hab Module 13"
+  "Hab Module 13",
+  "Dome Upsilon"
  ],
  "routes polynesian NF invented": [
-  "Shaula Bypass",
-  "The Quiet Lane",
-  "Star Path to Canopus 9",
-  "Eastern Passage",
-  "Spice Road",
-  "The Long Haul",
-  "Star Path to Meridian Station",
-  "Western Express"
+  "TOI-5024 Bypass",
+  "Zeta Hydrae Run",
+  "Alpha Boötis Road",
+  "Wolf 327 Expressway",
+  "Hamal Expressway",
+  "Regulus Run",
+  "Eastern Line",
+  "Deep Reach Corridor"
  ],
  "streets polynesian NF invented": [
   "Western Promenade",
@@ -3424,34 +3424,34 @@
   "Spoke Street"
  ],
  "inns polynesian NF invented": [
-  "Antares Transit Hostel",
-  "Eating House of Altair",
-  "Eating House of Mintaka",
-  "Tau Ceti Lounge",
-  "Guest House of Hadar 11",
-  "Spacers' Rest",
-  "Bar of Rigel",
-  "Dock 11 Bunkhouse"
+  "Regulus Transit Hostel",
+  "the Astral Tiger",
+  "Club of Saltire Station",
+  "Guest House of Groombridge 1909 11",
+  "Canteen of Ironvale Station",
+  "Guest House of Altair",
+  "Guest House of Menkar",
+  "the Airlock"
  ],
  "buildings polynesian NF invented": [
-  "Altair 12 Great House",
-  "Alnitak Hydroponic Bay",
+  "Gliese 966 House",
+  "Seventh Hydroponic Bay",
   "Upper Great House",
   "the High House of Learning",
-  "Antares Landing Tower",
-  "Arcology Kappa",
-  "King's School",
-  "the Silver School"
+  "Electra Observation Ring",
+  "Eagle's Star Arcology",
+  "[dynasty] Fort",
+  "Ross 750 Arcology"
  ],
  "routes polynesian IS placeholders": [
   "Fuel Run",
-  "Ring Corridor",
+  "Horizon Corridor",
   "11th Jump Route",
   "Salvage Run",
-  "Hadar Run",
+  "Wolf 596 Run",
   "Gate Chain Kappa",
-  "Hadar Road",
-  "Alnitak Run"
+  "1st Jump Route",
+  "Van Maanen's Star–Mintaka Lane"
  ],
  "streets polynesian IS placeholders": [
   "Deck 23 Concourse",
@@ -3471,61 +3471,61 @@
   "the Nova Crane",
   "Eating House of [place]",
   "[owner]'s Eating House",
-  "Altair Lounge",
-  "the Last Pint Before Procyon",
-  "Deck 15 Bar"
+  "Mizar Lounge",
+  "the Last Round Before Ross 358",
+  "Canteen of [place]"
  ],
  "buildings polynesian IS placeholders": [
   "Venture Dome",
   "[place] Sky Elevator",
   "the Round Mine",
   "[founder]'s Grange",
-  "Mintaka Dome",
-  "Hab Module 21",
-  "Pathfinder Dome",
-  "Sky Elevator Mu"
+  "Ross 711 Dome",
+  "Seventh Hydroponic Bay",
+  "Dome Theta",
+  "Horizon Dome"
  ],
  "routes polynesian IS invented": [
-  "Road to Shaula",
-  "Sirius Run",
-  "Sea Road to Aldebaran",
-  "Aldebaran–Algol Lane",
-  "Eridani–Achernar Lane",
-  "Gate Chain Sigma",
-  "Sea Road to Mira",
-  "Mintaka–Shaula Lane"
+  "Road to K2-32",
+  "Sea Road to Electra",
+  "Canopus–Chi Persei Lane",
+  "Wall Corridor",
+  "Spur Corridor",
+  "Coast Path to Hamal",
+  "Ore Run",
+  "Expanse Corridor"
  ],
  "streets polynesian IS invented": [
   "Concourse Phi",
   "Cutlers' Yard",
-  "Mira Promenade",
-  "Long Street",
-  "Ring Road",
-  "Spinward Walk",
+  "Mu Tucanae Promenade",
+  "Barnard's Star 9 Road",
   "Water Lane",
   "Canoe Houses",
   "5th Corridor",
-  "11th Ring"
+  "11th Ring",
+  "Delta Andromedae Plaza",
+  "Dock Arm Square"
  ],
  "inns polynesian IS invented": [
-  "Bar of Capella 3",
-  "Deck 40 Bar",
-  "Eating House of Eastern Gap",
+  "Bar of Pollux 9",
+  "the Airlock",
+  "Eating House of Sunward Knot",
   "the Plasma Serpent",
-  "Bar of Near Rim",
+  "Bar of Far Dark",
   "the Laser Wolf",
-  "Alcor Lounge",
-  "Spacers' Rest"
+  "Zeta Aurigae Lounge",
+  "the Last Pint Before Altair"
  ],
  "buildings polynesian IS invented": [
   "New Honey Weir Castle",
   "Tenth Hydroponic Bay",
-  "Achernar Sky Elevator",
-  "the Green Monument",
-  "Arcology Upsilon",
-  "Second Hydroponic Bay",
-  "Landing Tower Psi",
-  "Little Castle"
+  "Gull's Star Sky Elevator",
+  "Little College",
+  "Palace of [dynasty]",
+  "Teegarden's Star 12 Mill",
+  "Bellatrix Reactor Hall",
+  "New Fields School"
  ],
  "groups mystic general placeholders fantasy": [
   "the Bell Brotherhood",
@@ -3805,15 +3805,15 @@
  ],
  "groups martial general invented scifi": [
   "the Amber Knights",
-  "Knights of Antares",
-  "Keepers of the Gap",
-  "the Shaula Watch",
-  "the Long Dark Wardens",
-  "Pell's Phantoms",
-  "the Royal Scythes",
-  "Ardent Station Marshals",
-  "the Expanse Brigands",
-  "the Salt Flotilla"
+  "Knights of Sadr",
+  "Stone Wardens",
+  "Salt Vipers",
+  "Master Callow's Brigands",
+  "the Western Squadron",
+  "the Silver Wolverines",
+  "the Ashen Fleet",
+  "Bureau of Missing Persons",
+  "Axiom Station Navy"
  ],
  "groups martial anglo-saxon placeholders fantasy": [
   "the Thunder Bayonets",
@@ -3885,7 +3885,7 @@
   "the Night Lance Company",
   "Light Devils",
   "Winship Security",
-  "8th Battalion, Silent Lanes Engineers"
+  "8th Battalion, Trailing Shock Engineers"
  ],
  "groups martial japanese placeholders fantasy": [
   "the Night Hounds",
@@ -3912,13 +3912,13 @@
   "the Grey-Coats"
  ],
  "groups martial japanese placeholders scifi": [
-  "Railguns of the Expanse",
+  "Railguns of the Swarm",
   "the [place] Bandits",
-  "Knights of Mira",
-  "10th Legion",
-  "2nd Company",
-  "Order of the Pelican",
-  "59th Eclipse Raiders",
+  "Knights of Delta Eridani",
+  "Knights of the Hart",
+  "the Blood Griffin Company",
+  "the [place] Watch",
+  "the Eclipse Pirates",
   "Light Wardens",
   "the [place] Squadron",
   "[captain]'s Bandits"
@@ -3948,15 +3948,15 @@
   "11th Fleet"
  ],
  "groups martial japanese invented scifi": [
-  "the Shoals Rangers",
+  "the Stream Rangers",
   "Jessop Security",
   "Torch Sharks",
   "26th Battalion, New Golden Church Armoured Infantry",
   "Nova Wolverines",
   "Thunder Guards",
   "the Black Company",
-  "Proctors of the Spur",
-  "Rangers of the Rim",
+  "Proctors of the Neck",
+  "Rangers of the Deep",
   "92nd Guard"
  ],
  "groups underworld general placeholders fantasy": [
@@ -4027,9 +4027,9 @@
   "the Glass Lamplighters",
   "the Six Wharves",
   "the Vosper Cartel",
-  "the Halo Tide-Runners",
-  "the Sirius 12 Ring",
-  "the Level 51 Boys"
+  "the Cluster Tide-Runners",
+  "the Gliese 934 B Ring",
+  "the Three Docks"
  ],
  "groups underworld anglo-saxon placeholders fantasy": [
   "the Blue Coats",
@@ -4093,7 +4093,7 @@
  ],
  "groups underworld anglo-saxon invented scifi": [
   "House of the Long Sleep",
-  "the Rim Runners",
+  "the Halo Runners",
   "the Eels",
   "the Russet Lanterns",
   "the Deck 24 Boys",
@@ -4101,7 +4101,7 @@
   "the Level 28 Lasses",
   "the Lion's Crew",
   "the Deck 27 Lords",
-  "the Tau Ceti Clan"
+  "the Kepler-1416 Syndicate"
  ],
  "groups underworld japanese placeholders fantasy": [
   "[leader]'s Boys",
@@ -4135,7 +4135,7 @@
   "the Level 23 Crew",
   "the Underground Girls",
   "the Canalside Hounds",
-  "the Rim Runners",
+  "the Verge Runners",
   "the Static Alley Cats",
   "Dusk Cutters"
  ],
@@ -4168,7 +4168,7 @@
   "the Nanotech Runners",
   "the Silver Lanterns",
   "Zero Front",
-  "the Void Tide-Runners",
+  "the Sheath Tide-Runners",
   "the Deck 36 Crew",
   "the Ashen Bandanas",
   "Lodge of the Empty Chair",
@@ -4202,7 +4202,7 @@
  "groups trade general placeholders scifi": [
   "the [place] Company",
   "the Northern Merchants' League",
-  "Helium Rim Merchants",
+  "Helium Deep Merchants",
   "Guild of Nova Couriers",
   "Kynica",
   "Kepler Trading Company",
@@ -4236,16 +4236,16 @@
   "the Larkin Trust"
  ],
  "groups trade general invented scifi": [
-  "the Maia 4 Company",
-  "the Grey Shell Bank",
-  "Southern Frontier Company",
-  "Company of the Helium Expanse",
+  "the LHS 1337 Company",
+  "Fairweather & Marchbank",
+  "Data Merchants of Kepler-975",
   "the Tessera Station Data-Brokers",
   "Amalgamated Society of Belt Miners",
   "Honourable Company of Salvage Merchants",
   "the Dock Hands' Collective",
   "Grice–Vosper",
-  "Guild of Pilots"
+  "Guild of Pilots",
+  "the Fuel Merchants' League"
  ],
  "groups trade anglo-saxon placeholders fantasy": [
   "Caravan of the Three Wells",
@@ -4275,10 +4275,10 @@
   "[place] Land Company",
   "the [place] Merchants' League",
   "[surname] Solutions",
-  "Southern Worlds Company",
-  "Southern Drift Deuterium Company",
+  "Southern Sheet Company",
+  "Coreward Shoals Deuterium Company",
   "Northstar Consolidated",
-  "Crystal Dark Company",
+  "Crystal Bar Company",
   "[surname] & [surname]",
   "Company for the Settlement of New [place]",
   "[place] Colonial Company"
@@ -4309,15 +4309,15 @@
  ],
  "groups trade anglo-saxon invented scifi": [
   "the Data-Brokers' Guild",
-  "Far Belt Industrial Syndicate",
+  "Inner Gap Industrial Syndicate",
   "Ventica",
   "Honourable Company of Navigators",
-  "Southern Coast Company",
-  "Cluster Deuterium Company",
-  "Denebola Trade Consortium",
-  "Mintaka Trading House",
-  "Wyvern Lines",
-  "Alnitak Freight"
+  "Southern Frontier Company",
+  "Knot Deuterium Company",
+  "Delta Ursae Majoris Trade Consortium",
+  "Western Salvage Traders",
+  "Castor Transit",
+  "Brightwater Labs"
  ],
  "groups trade japanese placeholders fantasy": [
   "Emerald Coast Company",
@@ -4351,9 +4351,9 @@
   "Prospectors of the Copper Lens",
   "Ironvale Consolidated",
   "the [place] Data-Brokers",
-  "Bellatrix Colonial Services",
-  "Northern Alloys Company",
-  "House [house]"
+  "Lalande 37359 Colonial Services",
+  "Fellowship of Couriers",
+  "the [surname] Line"
  ],
  "groups trade japanese invented fantasy": [
   "House Selden",
@@ -4384,12 +4384,12 @@
   "the Hale Line",
   "Ironvale Station Corporation",
   "Red Lobster Couriers",
-  "the Capella Company",
-  "House Aster",
-  "Guild of Engineers",
-  "the Kestle Line",
-  "the Medics' Guild",
-  "Pollux Settlement Company"
+  "the Regulus Company",
+  "Golden Dove Medics",
+  "Guild of Pilots",
+  "House Marrow",
+  "Kepler Trading Company",
+  "Honourable Company of Alloys Merchants"
  ],
  "groups power general placeholders fantasy": [
   "Brotherhood of the Threshold",
@@ -4453,15 +4453,15 @@
  ],
  "groups power general invented scifi": [
   "the Six",
-  "House Orrin of Procyon",
-  "Council of Seven Horseshoes",
+  "House Orrin of Vega",
+  "the Inner Court",
   "Future and Harvest",
   "the Pale Desk",
   "Council of New Broad Haven",
-  "Rebels of the Cluster",
+  "Rebels of the Nebula",
   "the New Highpool Board",
-  "the Shaula 9 Commission",
-  "the Four"
+  "the K2-273 Directorate",
+  "Society of the Empty Candle"
  ],
  "groups power anglo-saxon placeholders fantasy": [
   "Friends of [founder]",
@@ -4528,12 +4528,12 @@
   "the Last Thread",
   "the Morcants of New Wrenpool",
   "the Copper Window",
-  "Free Electra 5 Rising",
-  "the Greater Court",
-  "the Inner Concord",
+  "Free Epsilon Persei 1 Militia",
+  "House of the Grey Shell",
   "OPS",
   "Daughters of the Fallen Sword",
-  "the Ashen Chamber"
+  "the Ashen Chamber",
+  "Army of the Anchor"
  ],
  "groups power japanese placeholders fantasy": [
   "House [house] of [place]",
@@ -4599,7 +4599,7 @@
   "the Hearth Party",
   "the Plough Compact",
   "Department of External Affairs",
-  "Northern Drift Concord League",
+  "Deep Fluff Concord League",
   "Council of Orrery Station",
   "the Maelis Line",
   "the Plenty Coalition",
@@ -4632,7 +4632,7 @@
   "the Outer Isles Expedition"
  ],
  "groups adventure general placeholders scifi": [
-  "the Inner Halo Expedition",
+  "the Long Wake Expedition",
   "Deep Survey Corps",
   "the Wolf Slayers",
   "[leader]'s Acquisitions",
@@ -4668,11 +4668,11 @@
   "the High Passes Expedition"
  ],
  "groups adventure general invented scifi": [
-  "the Outer Belt Expedition",
-  "the Outer Belt Survey",
+  "the Silent Reach Expedition",
+  "the Silent Reach Survey",
   "the Ashen Doctor's Expedition",
   "Gravedigger Company",
-  "Society for the Exploration of the Kepler Gap",
+  "Society for the Exploration of the Bubble Rim",
   "Dunmore Tactical",
   "Brotherhood of the Lightning Hunt",
   "Lodge of the Crimson Wolf",
@@ -4713,7 +4713,7 @@
   "the Sable Goats",
   "[leader]'s Sisterhood",
   "Society of the Grey Wren",
-  "the Inner Halo Expedition"
+  "the Trojan Camp Expedition"
  ],
  "groups adventure anglo-saxon invented fantasy": [
   "the Red Panthers",
@@ -4741,12 +4741,12 @@
  ],
  "groups adventure anglo-saxon invented scifi": [
   "Xi Expedition",
-  "Society for the Exploration of the Silent Reach",
+  "Society for the Exploration of the Far Spur",
   "Brothers of the Hourglass",
   "the Bear Wardens",
   "Company of Deep Rim Pathfinders",
-  "the Deep Rim Expedition",
-  "the Kepler Gap Survey",
+  "the Outer Belt Expedition",
+  "the Bubble Rim Survey",
   "the Galactic Trackers",
   "Brotherhood of the Flame Hunt",
   "Laser Novas"
@@ -4781,7 +4781,7 @@
   "the Deep Rim Survey",
   "the White Fraternity",
   "Photon Marines",
-  "the Kepler Gap Expedition",
+  "the Dark Rift Expedition",
   "the Orbital Goats",
   "Lodge of the Amber Bear",
   "[leader]'s Expedition",
@@ -4816,10 +4816,10 @@
   "the Red Spiders",
   "the Boar Stalkers",
   "Outer Survey Corps",
-  "7th Aldebaran Expedition",
-  "Kestle Strategic Services",
-  "Company of the Eighth Swift",
-  "the Dove's Recovery Services",
+  "7th Luyten's Star Expedition",
+  "Lodge of the Sable Fox",
+  "Captain Eastlake's Acquisitions",
+  "the Quantum Takers",
   "the Boar Takers",
   "the Plasma Hunters"
  ],
@@ -5108,7 +5108,7 @@
   "Tender 63",
   "[place]",
   "Far Dawn",
-  "Rim Bounty",
+  "Deep Bounty",
   "North Star of Drive"
  ],
  "vessels spacecraft general invented": [
@@ -5139,13 +5139,13 @@
   "Fox of Leap",
   "Ironvale Station Harvest",
   "Eastlake",
-  "Far Drift",
+  "Deep Gap",
   "Edith Ashby",
   "Drone 32",
   "Lunar Protector",
   "Wake Swan",
-  "Mintaka",
-  "Daring"
+  "LHS 45",
+  "HIP 42552"
  ],
  "vessels spacecraft japanese placeholders": [
   "Rocket Heavenly Wind",
@@ -5161,10 +5161,10 @@
  ],
  "vessels spacecraft japanese invented": [
   "Warning",
-  "Pride of Antares",
-  "Evening Snow of the South",
-  "Long Dauntless",
-  "Far Deep",
+  "Pride of Capella",
+  "Gap Prosperity",
+  "Western Evening Snow",
+  "Western Gap",
   "Helix Station",
   "Shuttle Boar",
   "Cherry Blossom",
@@ -5187,12 +5187,12 @@
   "The Russet Captain",
   "Drone 59",
   "Path of the Ancestors",
-  "Trade Wind over Alcor",
-  "Silver Morning Star",
-  "Star Kiwi",
-  "Deep Vigilant",
-  "Ocean of Gladness",
-  "Owl of Leap",
-  "Drone 5"
+  "Trade Wind over Kappa Centauri",
+  "Bright Trade Wind",
+  "Booster Bear",
+  "The Brave",
+  "Surveyor Station",
+  "Rain from the Mountain",
+  "Theta Station"
  ]
 }

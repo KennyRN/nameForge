@@ -4,6 +4,7 @@
 // places and culture animals, the biomes' terrain words and the tribal engine's peoples.
 // No Obsidian imports.
 
+import { hasSpaceBlock } from "../space/safeguards";
 import realmData from "../data/realms.json";
 import { availableTerrains, type Biome, biomeTitleCase, findBiome, pluralOf, terrainWords } from "../biomes";
 import { BYNAME_CULTURES, cultureAnimals, holyNamesIn, townSource } from "../bynames/engine";
@@ -18,6 +19,8 @@ import {
   GROUP_TONES,
   groupCommRegion,
   groupListWords,
+  groupSpacePrefix,
+  groupStarIn,
   groupPlural,
   groupPossessive,
   groupSaint,
@@ -466,13 +469,13 @@ function token(ctx: Ctx, name: string, shape: RealmShape, kind: string): string 
       return gnWord(ctx, "house");
     case "star":
       // §6.1: GN stars, plus Sol ×0.3; never a placeholder.
-      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : gnWord(ctx, "star", undefined, "SF");
+      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : groupStarIn("any", "invented", rng);
     case "commRegion":
       // Companies brief §9.2: GN's commodity coasts, in their sci-fi forms in the near future and beyond.
       return groupCommRegion(ctx.era === "NF" || ctx.era === "IS" ? "SF" : ctx.setting, rng);
     case "spaceLand": {
       const w = gnWord(ctx, "spaceLand", undefined, "SF");
-      return w && rng() < 0.3 ? `${gnWord(ctx, "spacePrefix", undefined, "SF")} ${w}` : w;
+      return w && rng() < 0.3 ? groupSpacePrefix(w, rng) : w;
     }
     case "tribal": {
       if (ctx.mode === "placeholders") return "[people]";
@@ -705,6 +708,7 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
     if (words.length === 0 || words.length > REALM_DATA.caps[length]) return undefined;
     if (repeatsContent(words)) return undefined;
     for (const n of [official, short]) if (block.has(normForBlock(n))) return undefined;
+    if ((ctx.era === "NF" || ctx.era === "IS") && (hasSpaceBlock(official) || hasSpaceBlock(short))) return undefined;
     if (breaksRealmWords(official) || breaksGroupColourRule(official) || COLOUR_BEFORE_PEOPLE.test(official)) return undefined;
     const text = output === "official" ? official : output === "short" ? short : official.toLowerCase() === short.toLowerCase() ? official : `${official} (${short})`;
     const tones = new Set<GroupTone>([...choice.t, ...ctx.drawn, ...(ceremonial ? REALM_DATA.ceremonial.t : [])]);

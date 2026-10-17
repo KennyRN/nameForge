@@ -25271,11 +25271,11 @@ var ColonialShapeGenerator = class {
       treatments: {}
     };
     const pickFrom = (candidates, fallback) => {
-      const weighted2 = candidates.map((c) => {
+      const weighted3 = candidates.map((c) => {
         var _a3;
         return [c, (_a3 = generic.categoryWeight.get(c)) != null ? _a3 : 0];
       }).filter(([, w]) => w > 0);
-      return weighted2.length > 0 ? pickWeighted(weighted2, rng) : fallback;
+      return weighted3.length > 0 ? pickWeighted(weighted3, rng) : fallback;
     };
     if (categoryId === EMPTY_SLOT2) {
       shape.structure = "simplex";
@@ -39415,6 +39415,9 @@ var group_names_default = {
         x: 2,
         s: [
           "SF"
+        ],
+        sc: [
+          "Sy"
         ]
       },
       {
@@ -39434,18 +39437,31 @@ var group_names_default = {
         w: "Drift",
         s: [
           "SF"
+        ],
+        sc: [
+          "Sy",
+          "Nb",
+          "Se"
         ]
       },
       {
         w: "Halo",
         s: [
           "SF"
+        ],
+        sc: [
+          "Sy",
+          "Ga"
         ]
       },
       {
         w: "Ring",
         s: [
           "SF"
+        ],
+        sc: [
+          "Pl",
+          "Sy"
         ]
       },
       {
@@ -39456,6 +39472,7 @@ var group_names_default = {
       },
       {
         w: "Expanse",
+        x: 0.5,
         s: [
           "SF"
         ]
@@ -39470,36 +39487,65 @@ var group_names_default = {
         w: "Void",
         s: [
           "SF"
+        ],
+        sc: [
+          "Se",
+          "Ga"
+        ],
+        t: [
+          "grim"
         ]
       },
       {
         w: "Core",
         s: [
           "SF"
+        ],
+        sc: [
+          "Se",
+          "Ga"
         ]
       },
       {
         w: "Spur",
         s: [
           "SF"
+        ],
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
         ]
       },
       {
         w: "Gap",
         s: [
           "SF"
+        ],
+        sc: [
+          "Pl",
+          "Sy",
+          "Se"
         ]
       },
       {
         w: "Shoals",
         s: [
           "SF"
+        ],
+        sc: [
+          "Sy",
+          "Nb"
         ]
       },
       {
         w: "Cluster",
         s: [
           "SF"
+        ],
+        sc: [
+          "Se",
+          "Ga"
         ]
       },
       {
@@ -39512,12 +39558,366 @@ var group_names_default = {
         w: "Dark",
         s: [
           "SF"
+        ],
+        sc: [
+          "Nb",
+          "Se"
+        ],
+        t: [
+          "grim"
         ]
       },
       {
         w: "Lanes",
+        x: 0.5,
         s: [
           "SF"
+        ],
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Horizon",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Well",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl",
+          "Sy"
+        ]
+      },
+      {
+        w: "Saddle",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Arc",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Camp",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Chain",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Swarm",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Frostline",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Cloud",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy",
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Shell",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy",
+          "Nb"
+        ]
+      },
+      {
+        w: "Sheath",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Pause",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Shock",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ],
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Bow",
+        x: 0.5,
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Tail",
+        x: 0.5,
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Wake",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy",
+          "Nb"
+        ]
+      },
+      {
+        w: "Lobe",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Neck",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Bridge",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy",
+          "Ga"
+        ]
+      },
+      {
+        w: "Bubble",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Fluff",
+        x: 0.5,
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb"
+        ],
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Hollow",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Wall",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb",
+          "Ga"
+        ]
+      },
+      {
+        w: "Stream",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb",
+          "Ga"
+        ]
+      },
+      {
+        w: "Wave",
+        x: 0.5,
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Nebula",
+        x: 1.5,
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Pillars",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Se"
+        ],
+        t: [
+          "grand"
+        ]
+      },
+      {
+        w: "Knot",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Rift",
+        x: 1.5,
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Filament",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Arm",
+        x: 2,
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Ga"
+        ]
+      },
+      {
+        w: "Bar",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Ga"
+        ]
+      },
+      {
+        w: "Disc",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Ga"
+        ]
+      },
+      {
+        w: "Warp",
+        x: 0.5,
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Ga"
+        ],
+        t: [
+          "strange"
+        ]
+      },
+      {
+        w: "Sheet",
+        x: 0.5,
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Ga"
         ]
       }
     ],
@@ -47590,12 +47990,19 @@ var group_names_default = {
         w: "Outer Belt",
         s: [
           "SF"
+        ],
+        sc: [
+          "Sy"
         ]
       },
       {
         w: "Far Drift",
         s: [
           "SF"
+        ],
+        sc: [
+          "Sy",
+          "Nb"
         ]
       },
       {
@@ -47611,12 +48018,72 @@ var group_names_default = {
         w: "Kepler Gap",
         s: [
           "SF"
+        ],
+        sc: [
+          "Sy"
         ]
       },
       {
         w: "Inner Halo",
         s: [
           "SF"
+        ],
+        sc: [
+          "Ga"
+        ]
+      },
+      {
+        w: "Far Spur",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Coreward Reach",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Ga"
+        ]
+      },
+      {
+        w: "Bubble Rim",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Dark Rift",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Trojan Camp",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Long Wake",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
         ]
       }
     ],
@@ -48648,6 +49115,9 @@ var group_names_default = {
         w: "Moon",
         s: [
           "SF"
+        ],
+        sc: [
+          "Pl"
         ]
       },
       {
@@ -50679,7 +51149,28 @@ var group_names_default = {
         w: "Tau Ceti"
       },
       {
-        w: "Eridani"
+        w: "Alphard"
+      },
+      {
+        w: "Alphecca"
+      },
+      {
+        w: "Hamal"
+      },
+      {
+        w: "Diphda"
+      },
+      {
+        w: "Menkar"
+      },
+      {
+        w: "Mirfak"
+      },
+      {
+        w: "Nunki"
+      },
+      {
+        w: "Sadr"
       }
     ],
     beast: [
@@ -51875,16 +52366,66 @@ var group_names_default = {
         w: "Silent"
       },
       {
-        w: "Northern"
+        w: "Northern",
+        x: 0.5
       },
       {
-        w: "Southern"
+        w: "Southern",
+        x: 0.5
       },
       {
-        w: "Eastern"
+        w: "Eastern",
+        x: 0.5
       },
       {
-        w: "Western"
+        w: "Western",
+        x: 0.5
+      },
+      {
+        w: "High",
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Low",
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Sunward",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Coreward",
+        sc: [
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Rimward",
+        sc: [
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Spinward",
+        sc: [
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Trailing",
+        sc: [
+          "Se",
+          "Ga"
+        ]
       }
     ],
     landPrefix: [
@@ -52304,116 +52845,6 @@ var group_names_default = {
           "MR",
           "MF"
         ]
-      },
-      {
-        w: "Belt",
-        x: 2,
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Rim",
-        x: 2,
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Reach",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Drift",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Halo",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Ring",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Verge",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Expanse",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Deep",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Void",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Core",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Spur",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Gap",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Shoals",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Cluster",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Frontier",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Dark",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Lanes",
-        s: [
-          "SF"
-        ]
       }
     ],
     seaWord: [
@@ -52439,18 +52870,6 @@ var group_names_default = {
       },
       {
         w: "Reaches",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Belt",
-        s: [
-          "SF"
-        ]
-      },
-      {
-        w: "Rim",
         s: [
           "SF"
         ]
@@ -53417,6 +53836,354 @@ var group_names_default = {
           "MF"
         ]
       }
+    ],
+    spaceDirection: [
+      {
+        w: "Upwell",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl",
+          "Sy"
+        ]
+      },
+      {
+        w: "Downwell",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl",
+          "Sy"
+        ]
+      },
+      {
+        w: "Polar",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Equatorial",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Sunward",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Outward",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Inward",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Coreward",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Rimward",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Spinward",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Trailing",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      }
+    ],
+    stationDirection: [
+      {
+        w: "Spinward",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Antispinward",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Hubward",
+        s: [
+          "SF"
+        ]
+      },
+      {
+        w: "Rimward",
+        s: [
+          "SF"
+        ]
+      }
+    ],
+    orbitAdj: [
+      {
+        w: "High",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Low",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Polar",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Equatorial",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Parking",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Long",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Fast",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Pl"
+        ]
+      }
+    ],
+    spaceHazard: [
+      {
+        w: "Shock",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Pause",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Sheath",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Frostline",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Corona",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Neck",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Bubble",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Wall",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Cloud",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Rift",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Dark",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Knot",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Nebula",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Bar",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Ga"
+        ]
+      },
+      {
+        w: "Void",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Ga"
+        ]
+      },
+      {
+        w: "Warp",
+        s: [
+          "SF"
+        ],
+        sc: [
+          "Ga"
+        ]
+      }
     ]
   },
   composites: {
@@ -54317,11 +55084,15 @@ var group_names_default = {
     sfTown: [
       {
         p: "{star}",
-        w: 40
+        w: 35
       },
       {
         p: "{star} {starNumber}",
-        w: 20
+        w: 15
+      },
+      {
+        p: "{catalogueWorld}",
+        w: 10
       },
       {
         p: "{spaceLandPrefixed}",
@@ -56316,6 +57087,732 @@ function worldHistoryLabel(base, cultureId, eraId) {
   return culture.eras.length > 1 ? `${base} \xB7 ${culture.label} \xB7 ${era.label}` : `${base} \xB7 ${culture.label}`;
 }
 
+// src/data/space.json
+var space_default = {
+  scales: {
+    order: [
+      "Pl",
+      "Sy",
+      "Nb",
+      "Se",
+      "Ga"
+    ],
+    any: {
+      label: "Any scale",
+      phrase: "any scale",
+      tooltip: "Names from every scale the era allows"
+    },
+    list: {
+      Pl: {
+        label: "Planetary system",
+        phrase: "a planetary system",
+        tooltip: "A planet and its moons: surface, rings, moons and the orbits around them"
+      },
+      Sy: {
+        label: "Star system",
+        phrase: "a star system",
+        tooltip: "One star or binary pair: belts, the frost line, the outer clouds and the edge of the star's wind"
+      },
+      Nb: {
+        label: "Local stellar neighbourhood",
+        phrase: "the local stars",
+        tooltip: "The nearby stars and the clouds and bubbles between them"
+      },
+      Se: {
+        label: "Sector",
+        phrase: "a sector",
+        tooltip: "A stretch of a spiral arm: nebulae, clusters, rifts and spurs"
+      },
+      Ga: {
+        label: "Galaxy-spanning",
+        phrase: "the galaxy",
+        tooltip: "Arms, the core and bar, the disc, the halo and the voids beyond"
+      }
+    },
+    byEra: {
+      NF: [
+        "any",
+        "Pl",
+        "Sy"
+      ],
+      IS: [
+        "any",
+        "Pl",
+        "Sy",
+        "Nb",
+        "Se",
+        "Ga"
+      ],
+      none: [
+        "any",
+        "Pl",
+        "Sy",
+        "Nb",
+        "Se",
+        "Ga"
+      ]
+    },
+    anyWeights: {
+      NF: {
+        Pl: 50,
+        Sy: 50,
+        Nb: 0,
+        Se: 0,
+        Ga: 0
+      },
+      IS: {
+        Pl: 20,
+        Sy: 25,
+        Nb: 20,
+        Se: 20,
+        Ga: 15
+      },
+      none: {
+        Pl: 20,
+        Sy: 25,
+        Nb: 20,
+        Se: 20,
+        Ga: 15
+      }
+    }
+  },
+  stars: {
+    properExtra: [
+      "Alphard",
+      "Alphecca",
+      "Hamal",
+      "Diphda",
+      "Menkar",
+      "Mirfak",
+      "Nunki",
+      "Sadr"
+    ],
+    possessiveReal: [
+      "Barnard's Star",
+      "Kapteyn's Star",
+      "Luyten's Star",
+      "Teegarden's Star",
+      "Van Maanen's Star",
+      "Przybylski's Star"
+    ],
+    possessiveRealShare: 0.5,
+    greekHeavy: {
+      letters: [
+        "Alpha",
+        "Beta",
+        "Gamma",
+        "Delta",
+        "Epsilon"
+      ],
+      weight: 3,
+      other: 1
+    },
+    genitives: [
+      "Andromedae",
+      "Aquilae",
+      "Arietis",
+      "Aurigae",
+      "Bo\xF6tis",
+      "Cancri",
+      "Carinae",
+      "Cassiopeiae",
+      "Centauri",
+      "Cephei",
+      "Ceti",
+      "Cygni",
+      "Draconis",
+      "Eridani",
+      "Herculis",
+      "Hydrae",
+      "Indi",
+      "Leonis",
+      "Lyrae",
+      "Orionis",
+      "Pavonis",
+      "Persei",
+      "Scorpii",
+      "Tauri",
+      "Tucanae",
+      "Ursae Majoris",
+      "Virginis"
+    ],
+    catalogue: [
+      {
+        prefix: "Gliese",
+        joiner: " ",
+        min: 1,
+        max: 1e3,
+        w: 3
+      },
+      {
+        prefix: "Wolf",
+        joiner: " ",
+        min: 1,
+        max: 1500,
+        w: 2
+      },
+      {
+        prefix: "Ross",
+        joiner: " ",
+        min: 1,
+        max: 1e3,
+        w: 2
+      },
+      {
+        prefix: "Lalande",
+        joiner: " ",
+        min: 1e3,
+        max: 5e4,
+        w: 1
+      },
+      {
+        prefix: "Groombridge",
+        joiner: " ",
+        min: 1,
+        max: 4e3,
+        w: 1
+      },
+      {
+        prefix: "HD",
+        joiner: " ",
+        min: 1e3,
+        max: 25e4,
+        w: 2
+      },
+      {
+        prefix: "HIP",
+        joiner: " ",
+        min: 1e3,
+        max: 12e4,
+        w: 2
+      },
+      {
+        prefix: "LHS",
+        joiner: " ",
+        min: 1,
+        max: 5e3,
+        w: 1
+      },
+      {
+        prefix: "Kepler",
+        joiner: "-",
+        min: 1,
+        max: 2e3,
+        w: 2
+      },
+      {
+        prefix: "K2",
+        joiner: "-",
+        min: 1,
+        max: 400,
+        w: 1
+      },
+      {
+        prefix: "TOI",
+        joiner: "-",
+        min: 100,
+        max: 6e3,
+        w: 1
+      }
+    ],
+    planetLetters: {
+      b: 5,
+      c: 4,
+      d: 3,
+      e: 2,
+      f: 1,
+      g: 1,
+      h: 0.5
+    },
+    planetLetterChance: 0.3,
+    letterWords: {
+      b: "Bee",
+      c: "Cee",
+      d: "Dee",
+      e: "Ee",
+      f: "Eff",
+      g: "Gee",
+      h: "Aitch"
+    },
+    kindWeights: {
+      any: {
+        proper: 40,
+        possessive: 15,
+        bayer: 20,
+        catalogue: 25
+      },
+      Pl: {
+        proper: 40,
+        possessive: 15,
+        bayer: 20,
+        catalogue: 25
+      },
+      Sy: {
+        proper: 40,
+        possessive: 15,
+        bayer: 20,
+        catalogue: 25
+      },
+      Nb: {
+        proper: 35,
+        possessive: 25,
+        bayer: 25,
+        catalogue: 15
+      },
+      Se: {
+        proper: 25,
+        possessive: 10,
+        bayer: 20,
+        catalogue: 45
+      },
+      Ga: {
+        proper: 40,
+        possessive: 0,
+        bayer: 10,
+        catalogue: 50
+      }
+    }
+  },
+  directions: {
+    spaceDirection: [
+      {
+        w: "Upwell",
+        sc: [
+          "Pl",
+          "Sy"
+        ]
+      },
+      {
+        w: "Downwell",
+        sc: [
+          "Pl",
+          "Sy"
+        ]
+      },
+      {
+        w: "Polar",
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Equatorial",
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Sunward",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Outward",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Inward",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Coreward",
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Rimward",
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Spinward",
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Trailing",
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      }
+    ],
+    compass: {
+      Pl: [
+        "Upwell",
+        "Equatorial",
+        "Downwell",
+        "Polar"
+      ],
+      Sy: [
+        "Sunward",
+        "Upwell",
+        "Outward",
+        "Downwell",
+        "Inward"
+      ],
+      Nb: [
+        "Coreward",
+        "Spinward",
+        "Rimward",
+        "Trailing"
+      ],
+      Se: [
+        "Coreward",
+        "Spinward",
+        "Rimward",
+        "Trailing"
+      ],
+      Ga: [
+        "Coreward",
+        "Spinward",
+        "Rimward",
+        "Trailing"
+      ],
+      station: [
+        "Hubward",
+        "Spinward",
+        "Rimward",
+        "Antispinward"
+      ]
+    },
+    stationDirection: [
+      "Spinward",
+      "Antispinward",
+      "Hubward",
+      "Rimward"
+    ],
+    orbitAdj: [
+      "High",
+      "Low",
+      "Polar",
+      "Equatorial",
+      "Parking",
+      "Long",
+      "Fast"
+    ],
+    spaceHazard: [
+      {
+        w: "Shock",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Pause",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Sheath",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Frostline",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Corona",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Neck",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Bubble",
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Wall",
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Cloud",
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Rift",
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Dark",
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Knot",
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Nebula",
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Bar",
+        sc: [
+          "Ga"
+        ]
+      },
+      {
+        w: "Void",
+        sc: [
+          "Ga"
+        ]
+      },
+      {
+        w: "Warp",
+        sc: [
+          "Ga"
+        ]
+      }
+    ]
+  },
+  lagrangeWord: [
+    [
+      "One",
+      1
+    ],
+    [
+      "Two",
+      1
+    ],
+    [
+      "Three",
+      1
+    ],
+    [
+      "Four",
+      3
+    ],
+    [
+      "Five",
+      3
+    ]
+  ],
+  worldHab: [
+    [
+      "Station",
+      3
+    ],
+    [
+      "Habitat",
+      2
+    ],
+    [
+      "Colony",
+      2
+    ],
+    [
+      "Outpost",
+      1
+    ],
+    [
+      "Port",
+      1
+    ],
+    [
+      "Haven",
+      1
+    ],
+    [
+      "Anchorage",
+      1
+    ],
+    [
+      "Yard",
+      1
+    ],
+    [
+      "Dock",
+      1
+    ],
+    [
+      "Base",
+      1
+    ],
+    [
+      "Camp",
+      1
+    ],
+    [
+      "Relay",
+      1
+    ],
+    [
+      "Beacon",
+      1
+    ],
+    [
+      "Observatory",
+      1
+    ]
+  ],
+  worldHabGate: [
+    "Gate",
+    1
+  ],
+  spaceBuilt: [
+    "dock",
+    "mast",
+    "array",
+    "dish",
+    "beacon",
+    "relay",
+    "yard",
+    "tether"
+  ],
+  spaceActivity: [
+    "Mining",
+    "Hauling",
+    "Salvage",
+    "Survey",
+    "Docking",
+    "Refuelling"
+  ],
+  safeguards: {
+    block: [
+      "Outer Rim",
+      "Mid Rim",
+      "Inner Rim",
+      "Core Worlds",
+      "Deep Core",
+      "Wild Space",
+      "Unknown Regions",
+      "Kessel Run",
+      "Spinward Marches",
+      "Trailing Marches",
+      "Alpha Quadrant",
+      "Beta Quadrant",
+      "Gamma Quadrant",
+      "Delta Quadrant",
+      "Neutral Zone",
+      "Deep Space Nine",
+      "Deep Space 9",
+      "Terminus",
+      "The Expanse",
+      "Mass Relay",
+      "Halo Array",
+      "Babylon 5",
+      "Babylon Five"
+    ]
+  }
+};
+
+// src/space/scale.ts
+var SPACE_DATA = space_default;
+var SCALES = SPACE_DATA.scales.order;
+function scaleAllows(entry, scale) {
+  if (scale === "any" || !entry.sc) return true;
+  return entry.sc.includes(scale);
+}
+
+// src/space/stars.ts
+var STARS = SPACE_DATA.stars;
+var LISTS = group_names_default.lists;
+var weighted2 = (items, rng) => {
+  const total = items.reduce((n, [, w]) => n + w, 0);
+  let r = rng() * total;
+  for (const [item2, w] of items) {
+    r -= w;
+    if (r < 0) return item2;
+  }
+  return items[items.length - 1][0];
+};
+function catalogueName(rng) {
+  const row = weighted2(STARS.catalogue.map((c) => [c, c.w]), rng);
+  const n = row.min + Math.floor(rng() * (row.max - row.min + 1));
+  return `${row.prefix}${row.joiner}${n}`;
+}
+function planetLetter(rng) {
+  return ` ${weighted2(Object.entries(STARS.planetLetters), rng)}`;
+}
+function catalogueWorld(rng, letters = true) {
+  const name = catalogueName(rng);
+  return letters && rng() < STARS.planetLetterChance ? name + planetLetter(rng) : name;
+}
+function bayerName(rng) {
+  const greek = LISTS.greek.map((e) => [e.w, STARS.greekHeavy.letters.includes(e.w) ? STARS.greekHeavy.weight : STARS.greekHeavy.other]);
+  return `${weighted2(greek, rng)} ${STARS.genitives[Math.floor(rng() * STARS.genitives.length)]}`;
+}
+function possessiveName(rng, opts) {
+  var _a2;
+  const real = STARS.possessiveReal;
+  const person2 = opts == null ? void 0 : opts.person;
+  if (!person2 || rng() < STARS.possessiveRealShare) return real[Math.floor(rng() * real.length)];
+  const who = (_a2 = person2()) == null ? void 0 : _a2.replace(/^the /i, "");
+  if (!who) return real[Math.floor(rng() * real.length)];
+  return `${who}'s Star`;
+}
+function drawStarOfKind(kind, rng, pickProper, opts) {
+  switch (kind) {
+    case "proper":
+      return pickProper();
+    case "possessive":
+      return possessiveName(rng, opts);
+    case "bayer":
+      return bayerName(rng);
+    case "catalogue":
+      return catalogueName(rng);
+  }
+}
+function drawStarKind(scale, rng) {
+  var _a2;
+  const row = (_a2 = STARS.kindWeights[scale]) != null ? _a2 : STARS.kindWeights.any;
+  return weighted2(Object.entries(row).filter(([, w]) => w > 0), rng);
+}
+
+// src/space/safeguards.ts
+var esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+var compile = (phrases) => phrases.map((p) => new RegExp(`(^|[^A-Za-z0-9])${esc(p).replace(/\s+/g, "\\s+")}($|[^A-Za-z0-9])`, "i"));
+var BUILT_IN = compile(SPACE_DATA.safeguards.block);
+function spaceBlocker(extra = []) {
+  const all = extra.length > 0 ? [...BUILT_IN, ...compile(extra)] : BUILT_IN;
+  return (text) => all.some((re) => re.test(text));
+}
+var DEFAULT = spaceBlocker();
+function hasSpaceBlock(text) {
+  return DEFAULT(text);
+}
+var SPACE_BLOCK_PHRASES = SPACE_DATA.safeguards.block;
+
 // src/groups/engine.ts
 var GROUP_DATA = group_names_default;
 var GROUP_SELF = selfPatterns(group_names_default);
@@ -56507,22 +58004,31 @@ function listTag(name) {
   return first;
 }
 function pool(ctx, name, type, filter) {
-  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r;
-  const key2 = `${name}|${type.key}|${(_a2 = filter == null ? void 0 : filter.join(",")) != null ? _a2 : ""}|${ctx.tone}`;
+  var _a2, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
+  const key2 = `${name}|${type.key}|${(_a2 = filter == null ? void 0 : filter.join(",")) != null ? _a2 : ""}|${ctx.tone}|${ctx.scale}`;
   const cached = ctx.pools.get(key2);
   if (cached) return cached;
   const S = ctx.setting;
   const trad = ctx.vocab;
   const weights = /* @__PURE__ */ new Map();
+  const sources = S === "SF" && (name === "coastWord" || name === "seaWord") ? [name, "spaceLand"] : [name];
+  const toneList = /* @__PURE__ */ new Map();
   const add2 = (word, w) => {
     var _a3;
     return weights.set(word, ((_a3 = weights.get(word)) != null ? _a3 : 0) + w);
   };
-  for (const e of (_b = GROUP_DATA.lists[name]) != null ? _b : []) {
-    if (e.s && !e.s.includes(S)) continue;
-    if (e.types && !e.types.includes(type.key)) continue;
-    if (e.only && (!trad || !e.only.includes(trad.key))) continue;
-    add2(e.w, ((_c = e.x) != null ? _c : 1) * ((_e = (_d = e.sx) == null ? void 0 : _d[S]) != null ? _e : 1) * (trad ? (_g = (_f = e.tx) == null ? void 0 : _f[trad.key]) != null ? _g : 1 : 1));
+  for (const scaled of ctx.scale === "any" ? [false] : [true, false]) {
+    for (const src of sources) {
+      for (const e of (_b = GROUP_DATA.lists[src]) != null ? _b : []) {
+        if (e.s && !e.s.includes(S)) continue;
+        if (e.types && !e.types.includes(type.key)) continue;
+        if (e.only && (!trad || !e.only.includes(trad.key))) continue;
+        if (scaled && !scaleAllows(e, ctx.scale)) continue;
+        add2(e.w, ((_c = e.x) != null ? _c : 1) * ((_e = (_d = e.sx) == null ? void 0 : _d[S]) != null ? _e : 1) * (trad ? (_g = (_f = e.tx) == null ? void 0 : _f[trad.key]) != null ? _g : 1 : 1));
+        if (src !== name) toneList.set(e.w, src);
+      }
+    }
+    if (weights.size > 0) break;
   }
   if (trad) {
     const tag = listTag(name);
@@ -56564,9 +58070,9 @@ function pool(ctx, name, type, filter) {
     } else for (const word of [...weights.keys()]) if (!own.has(word)) weights.delete(word);
   }
   if (ctx.tone !== "any" && !UNTONED_LISTS.has(name)) {
-    for (const [word, w] of weights) weights.set(word, w * toneFactor(wordTones(name, word), ctx.tone));
+    for (const [word, w] of weights) weights.set(word, w * toneFactor(wordTones((_r = toneList.get(word)) != null ? _r : name, word), ctx.tone));
   }
-  const keep = filter != null ? filter : (_r = type.listFilter) == null ? void 0 : _r[name];
+  const keep = filter != null ? filter : (_s = type.listFilter) == null ? void 0 : _s[name];
   const out = [...weights].filter(([w, n]) => n > 0 && (!keep || keep.includes(w)));
   ctx.pools.set(key2, out);
   return out;
@@ -56685,8 +58191,7 @@ function token(ctx, name, type, shape) {
     case "land": {
       if (S === "SF") {
         const w2 = pick2(ctx, "spaceLand", type);
-        const prefix = rng() < 0.3 ? `${pick2(ctx, "spacePrefix", type)} ` : "";
-        return { text: prefix + w2, plural: false };
+        return { text: rng() < 0.3 ? spacePrefixed(ctx, type, w2) : w2, plural: false };
       }
       const w = pick2(ctx, "land", type);
       if (!w) return void 0;
@@ -56710,11 +58215,13 @@ function token(ctx, name, type, shape) {
       return text ? { text, plural: true } : void 0;
     }
     case "star":
-      return word("star");
+      return { text: drawGroupStar(ctx, type), plural: false };
+    case "catalogueWorld":
+      return { text: catalogueWorld(rng), plural: false };
     case "starNumber":
       return { text: String(1 + Math.floor(rng() * 12)), plural: false };
     case "spaceLandPrefixed":
-      return { text: `${pick2(ctx, "spacePrefix", type)} ${pick2(ctx, "spaceLand", type)}`, plural: false };
+      return { text: spacePrefixed(ctx, type, pick2(ctx, "spaceLand", type)), plural: false };
     case "britishPlace":
       return { text: pickOne(townPool("britain"), rng), plural: false };
     case "flavourAnimal": {
@@ -56730,7 +58237,7 @@ function token(ctx, name, type, shape) {
     case "spaceLand": {
       const w = pick2(ctx, "spaceLand", type, (_k = shape == null ? void 0 : shape.filter) == null ? void 0 : _k.spaceLand);
       if (w === void 0) return void 0;
-      return { text: rng() < 0.3 ? `${pick2(ctx, "spacePrefix", type)} ${w}` : w, plural: false };
+      return { text: rng() < 0.3 ? spacePrefixed(ctx, type, w) : w, plural: false };
     }
   }
   const patterns = GROUP_DATA.patterns[name];
@@ -56746,6 +58253,24 @@ function token(ctx, name, type, shape) {
   }
   if (!GROUP_DATA.lists[name]) throw new Error(`Group names: no list \u201C${name}\u201D.`);
   return word(name);
+}
+function spacePrefixed(ctx, type, word) {
+  for (let i = 0; i < 5; i++) {
+    const prefix = pick2(ctx, "spacePrefix", type);
+    if (prefix && prefix.toLowerCase() !== word.toLowerCase()) return `${prefix} ${word}`;
+  }
+  return word;
+}
+function drawGroupStar(ctx, type) {
+  const proper = () => {
+    var _a2;
+    return (_a2 = pick2(ctx, "star", type)) != null ? _a2 : "Vega";
+  };
+  const person2 = () => {
+    if (ctx.mode === "placeholders") return `[${type.person}]`;
+    return inventedPerson(ctx, type);
+  };
+  return drawStarOfKind(drawStarKind(ctx.scale, ctx.rng), ctx.rng, proper, { person: person2 });
 }
 function holyText(ctx, type, placeholders) {
   var _a2, _b;
@@ -56782,13 +58307,14 @@ function inventedTown(ctx, type) {
   return `${pick2(ctx, "townPrefix", type)}${pick2(ctx, "townSuffix", type)}`;
 }
 var sharedCtxs = /* @__PURE__ */ new Map();
-function sharedCtx(setting, rng) {
-  let found = sharedCtxs.get(setting);
+function sharedCtx(setting, rng, scale = "any") {
+  const cacheKey = `${setting}|${scale}`;
+  let found = sharedCtxs.get(cacheKey);
   if (!found) {
     const family = GROUP_FAMILIES[0];
-    const ctx = { rng, setting, family, vocab: void 0, people: void 0, mode: "invented", form: "any", block: /* @__PURE__ */ new Set(), pools: /* @__PURE__ */ new Map(), tone: "any", drawn: /* @__PURE__ */ new Set() };
+    const ctx = { rng, setting, family, vocab: void 0, people: void 0, mode: "invented", form: "any", block: /* @__PURE__ */ new Set(), pools: /* @__PURE__ */ new Map(), tone: "any", drawn: /* @__PURE__ */ new Set(), scale };
     found = { ctx, type: family.types[0] };
-    sharedCtxs.set(setting, found);
+    sharedCtxs.set(cacheKey, found);
   }
   found.ctx.rng = rng;
   return found;
@@ -56807,9 +58333,28 @@ function groupCommRegion(setting, rng) {
   const { ctx, type } = sharedCtx(setting, rng);
   return (_a2 = token(ctx, "commRegion", type)) == null ? void 0 : _a2.text;
 }
-function groupListWords(name, setting) {
-  const { ctx, type } = sharedCtx(setting, Math.random);
+function groupListWords(name, setting, scale = "any") {
+  const { ctx, type } = sharedCtx(setting, Math.random, scale);
   return pool(ctx, name, type);
+}
+function groupStar(setting, scale, rng, opts) {
+  const { ctx, type } = sharedCtx(setting, rng, scale);
+  const proper = () => {
+    var _a2;
+    return (_a2 = pickWeighted5(pool(ctx, "star", type), rng)) != null ? _a2 : "Vega";
+  };
+  return drawStarOfKind(drawStarKind(scale, rng), rng, proper, opts);
+}
+function groupStarIn(scale, mode, rng) {
+  return groupStar("SF", scale, rng, { person: () => mode === "placeholders" ? "[person]" : groupPerson("SF", false, rng) });
+}
+function groupSpacePrefix(word, rng, scale = "any") {
+  const prefixes = groupListWords("spacePrefix", "SF", scale);
+  for (let i = 0; i < 5; i++) {
+    const prefix = pickWeighted5(prefixes, rng);
+    if (prefix && prefix.toLowerCase() !== word.toLowerCase()) return `${prefix} ${word}`;
+  }
+  return word;
 }
 function prefixedLand(word, setting, rng) {
   const { ctx, type } = sharedCtx(setting, rng);
@@ -56956,6 +58501,7 @@ function acceptable(ctx, text, formal) {
   const n = norm2(text);
   if (ctx.block.has(n)) return false;
   if (BANNED.some((re) => re.test(text))) return false;
+  if (ctx.setting === "SF" && hasSpaceBlock(text)) return false;
   if (breaksGroupColourRule(text)) return false;
   return true;
 }
@@ -57122,7 +58668,7 @@ function generateSeries(ctx, type, frontChoice, count, toneChoice) {
   return { names, seriesTone };
 }
 function generateGroupNames(options) {
-  var _a2, _b, _c, _d, _e, _f, _g, _h;
+  var _a2, _b, _c, _d, _e, _f, _g, _h, _i;
   const family = findFamily(options.family);
   if (!family) throw new Error(`Unknown family \u201C${options.family}\u201D.`);
   if (options.series && !options.type) throw new Error("Series needs a type.");
@@ -57149,7 +58695,8 @@ function generateGroupNames(options) {
     pools: /* @__PURE__ */ new Map(),
     tone: (_f = options.tone) != null ? _f : "any",
     drawn: /* @__PURE__ */ new Set(),
-    context: options.context
+    context: options.context,
+    scale: setting === "SF" ? (_g = options.scale) != null ? _g : "any" : "any"
   };
   const chosen = options.type ? available.find((t) => t.key === options.type) : void 0;
   if (options.type && !chosen) {
@@ -57161,7 +58708,7 @@ function generateGroupNames(options) {
     if (commodity && commodity.settings.includes(setting)) ctx.commodity = commodity;
     else notices.push(`Commodity \u201C${options.commodity}\u201D isn't available here.`);
   }
-  const front = (_g = options.front) != null ? _g : "say";
+  const front = (_h = options.front) != null ? _h : "say";
   const typeWeight = (t) => {
     var _a3, _b2;
     return t.weight * (vocab ? (_b2 = (_a3 = GROUP_DATA.traditions.typeMultipliers[vocab.key]) == null ? void 0 : _a3[t.key]) != null ? _b2 : 1 : 1);
@@ -57173,7 +58720,7 @@ function generateGroupNames(options) {
   const types = candidates.map((t) => [t, typeWeight(t) * (t.key === "resource" ? resourceBoost : 1)]);
   const count = Math.max(0, Math.floor(options.count));
   if (options.series && chosen) {
-    const series = generateSeries(ctx, chosen, front, count, (_h = options.tone) != null ? _h : "any");
+    const series = generateSeries(ctx, chosen, front, count, (_i = options.tone) != null ? _i : "any");
     if (series.names.length < count) notices.push(`Only ${series.names.length} names could be generated.`);
     return { names: series.names, seed, notices, seriesTone: series.seriesTone };
   }
@@ -64606,10 +66153,11 @@ function token2(ctx, raw) {
       return gods.length > 0 ? stripPlural(gods[Math.floor(rng() * gods.length)]) : void 0;
     }
     case "number":
-    case "compass":
-    case "star": {
+    case "compass": {
       return pickWeighted5(groupListWords(name, ctx.setting), rng);
     }
+    case "star":
+      return groupStarIn("any", "invented", rng);
     case "epPlaceLand":
     case "domainLand":
       return placeLand(ctx);
@@ -64854,6 +66402,7 @@ function generateBynames(options) {
         const built = module2 === "epithets" ? buildEpithet(ctx, kind) : module2 === "titles" ? buildTitle(ctx, kind, length) : buildFamily(ctx, kind);
         if (ctx.packFailed) packFailed = true;
         if (!built || !acceptable2(guard, built, length === "full" ? 24 : 8)) continue;
+        if (ctx.setting === "SF" && hasSpaceBlock(built.text)) continue;
         return { text: built.text, module: module2, culture, kind: built.kind, shape: built.shape, gender: sex, language: native ? "native" : "english", tones: built.tones };
       }
       if (!chosen) kind = pickWeighted5(kindChoices, rng);
@@ -74819,6 +76368,8 @@ function baseToken(ctx, name) {
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
+    case "star":
+      return groupStarIn("any", ctx.mode, rng);
     case "town":
       if (ctx.turn) return ctx.turn.next(rng);
       return placeholders ? "[place]" : town(ctx);
@@ -74950,6 +76501,7 @@ function acceptable3(ctx, guard, name) {
   if (repeatsContent(counted2)) return false;
   if (blocked(ctx, guard, name)) return false;
   if (breaksVesselWords(name)) return false;
+  if (ctx.module === "spacecraft" && hasSpaceBlock(name)) return false;
   return true;
 }
 var SENSITIVE_TOKENS = new RegExp(`\\{(${VESSEL_DATA.safeguards.sensitiveLists.join("|")})[}:]`);
@@ -75482,12 +77034,12 @@ function token4(ctx, name, shape, kind) {
       if (ctx.mode === "placeholders" || !REALM_DATA.dynastyCultures.includes(ctx.culture)) return "[dynasty]";
       return gnWord(ctx, "house");
     case "star":
-      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : gnWord(ctx, "star", void 0, "SF");
+      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : groupStarIn("any", "invented", rng);
     case "commRegion":
       return groupCommRegion(ctx.era === "NF" || ctx.era === "IS" ? "SF" : ctx.setting, rng);
     case "spaceLand": {
       const w = gnWord(ctx, "spaceLand", void 0, "SF");
-      return w && rng() < 0.3 ? `${gnWord(ctx, "spacePrefix", void 0, "SF")} ${w}` : w;
+      return w && rng() < 0.3 ? groupSpacePrefix(w, rng) : w;
     }
     case "tribal": {
       if (ctx.mode === "placeholders") return "[people]";
@@ -75676,6 +77228,7 @@ function generateRealmNames(options) {
     if (words.length === 0 || words.length > REALM_DATA.caps[length]) return void 0;
     if (repeatsContent(words)) return void 0;
     for (const n of [official, short]) if (block.has(normForBlock(n))) return void 0;
+    if ((ctx.era === "NF" || ctx.era === "IS") && (hasSpaceBlock(official) || hasSpaceBlock(short))) return void 0;
     if (breaksRealmWords(official) || breaksGroupColourRule(official) || COLOUR_BEFORE_PEOPLE.test(official)) return void 0;
     const text = output === "official" ? official : output === "short" ? short : official.toLowerCase() === short.toLowerCase() ? official : `${official} (${short})`;
     const tones = /* @__PURE__ */ new Set([...choice.t, ...ctx.drawn, ...ceremonial ? REALM_DATA.ceremonial.t : []]);
@@ -79039,6 +80592,11 @@ function vocabWord(ctx, pool3, token11, keep) {
   return e.w;
 }
 function gnWord2(ctx, token11) {
+  if (token11 === "star") {
+    const star = groupStarIn("any", ctx.mode, ctx.rng);
+    ctx.words.push({ pool: "star", word: star });
+    return star;
+  }
   const list = GN_LISTS2[token11];
   const setting = SF_LISTS.has(token11) ? "SF" : ctx.setting;
   const items = groupListWords(list, setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
@@ -79163,8 +80721,7 @@ function token5(ctx, name) {
     case "spaceLand": {
       const w = gnWord2(ctx, "spaceLand");
       if (!w || rng() >= 0.3) return w;
-      const prefix = pickWeighted5(groupListWords("spacePrefix", "SF"), rng);
-      return prefix ? `${prefix} ${w}` : w;
+      return groupSpacePrefix(w, rng);
     }
   }
   if (GN_LISTS2[name]) return gnWord2(ctx, name);
@@ -79276,7 +80833,7 @@ function renderPlan2(ctx, plan, hooks2 = {}) {
   const tones = new Set(ctx.drawn);
   return { text: routeCapitals(raw), plan, record, tones: GROUP_TONES.filter((t) => tones.has(t)), words: ctx.words };
 }
-function acceptable4(built, block) {
+function acceptable4(built, block, future = false) {
   const counted2 = countedWords2(built.text);
   if (counted2.length === 0 || counted2.length > ROUTE_DATA.cap) return false;
   if (built.plan.shape.repeats) {
@@ -79285,6 +80842,7 @@ function acceptable4(built, block) {
   } else if (repeatsContent(counted2)) return false;
   if (block.has(routeNorm(built.text))) return false;
   if (breaksRouteWords(built.text)) return false;
+  if (future && hasSpaceBlock(built.text)) return false;
   return true;
 }
 var COMPASS = {
@@ -79365,7 +80923,7 @@ function generateRouteNames(options) {
         const plan = choosePlan2(ctx, kind);
         if (!plan) break;
         const built = renderPlan2(ctx, plan);
-        if (built && acceptable4(built, block)) return built;
+        if (built && acceptable4(built, block, era === "NF" || era === "IS")) return built;
       }
     }
     return void 0;
@@ -79403,7 +80961,7 @@ function generateRouteNames(options) {
     const draw2 = (hooks2, p = plan) => {
       const ctx2 = newCtx3();
       const built = renderPlan2(ctx2, p, hooks2);
-      return built && acceptable4(built, block) ? built : void 0;
+      return built && acceptable4(built, block, era === "NF" || era === "IS") ? built : void 0;
     };
     const fill = (next) => {
       for (let idle = 0; idle < 30 && names.length < count; ) idle = add2(next()) ? 0 : idle + 1;
@@ -80345,6 +81903,11 @@ function fromPool(ctx, pool3, items) {
 }
 var vocabWord2 = (ctx, pool3, keep) => fromPool(ctx, pool3, vocabPool2(ctx, pool3).filter(([e]) => !keep || keep(e)));
 function gnWord3(ctx, list, keep) {
+  if (list === "star") {
+    const star = groupStarIn("any", ctx.mode, ctx.rng);
+    ctx.words.push({ pool: "star", word: star });
+    return star;
+  }
   const items = groupListWords(list, SF_LISTS2.has(list) ? "SF" : ctx.setting).filter(([w2]) => (!keep || keep(w2)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM2(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w !== void 0) {
@@ -80710,6 +82273,7 @@ function generateStreetNames(options) {
       const counted2 = countedWords2(text);
       if (!b.isRoute && (counted2.length === 0 || counted2.length > STREET_DATA.cap || repeatsContent(counted2))) return false;
       if (block.has(routeNorm(text)) || breaksStreetWords(text)) return false;
+      if (isFuture(era) && hasSpaceBlock(text)) return false;
       if (hasChristianWord(text) && !cultureAllowed(["christian"], culture.key, era)) return false;
     }
     return true;
@@ -80852,6 +82416,11 @@ function fromPool2(ctx, pool3, items, use = false) {
   return e.w;
 }
 function gnWord4(ctx, list, use = false) {
+  if (list === "star") {
+    const star = groupStarIn("any", ctx.mode, ctx.rng);
+    ctx.words.push({ pool: "star", word: star });
+    return star;
+  }
   const items = groupListWords(list, SF_LISTS3.has(list) ? "SF" : ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM3(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
@@ -81130,6 +82699,7 @@ function generateBuildingNames(options) {
     if (repeatsContent(counted2)) return false;
     if (block.has(bare(text))) return false;
     if (breaksBuildingWords(text)) return false;
+    if (isFuture2(era) && hasSpaceBlock(text)) return false;
     if (hasChristianBuilding(text) && !cultureAllowed(["christian"], culture.key, era)) return false;
     return true;
   };
@@ -81379,14 +82949,14 @@ function token8(ctx, name) {
     case "quality":
     case "tech":
     case "brandRoot":
-    case "star":
     case "heraldicBeast":
       return draw(ctx, name, merged(ctx, [gnItems(ctx, name)]), name === "heraldicBeast" ? "creature" : void 0);
+    case "star":
+      return groupStarIn("any", ctx.mode, rng);
     case "spaceLand": {
       const w = draw(ctx, "spaceLand", gnItems(ctx, "spaceLand"));
       if (!w || rng() >= 0.3) return w;
-      const prefix = pickWeighted5(groupListWords("spacePrefix", "SF"), rng);
-      return prefix ? `${prefix} ${w}` : w;
+      return groupSpacePrefix(w, rng);
     }
     case "weekday":
       return pickWeighted5(STREET_DATA.lists.weekday, rng);
@@ -81637,6 +83207,7 @@ function generateInnNames(options) {
     if (!isRoute && repeatsContent(counted2)) return false;
     if (innBlockForms(text).some((f) => block.has(f))) return false;
     if (breaksInnWords(text)) return false;
+    if (isFuture3(era) && hasSpaceBlock(text)) return false;
     if (hasChristianSign(text) && !cultureAllowed(["christian"], culture.key, era)) return false;
     return true;
   }
@@ -81898,6 +83469,11 @@ function fromPool3(ctx, pool3) {
   return e.w;
 }
 function gnWord5(ctx, list) {
+  if (list === "star") {
+    const star = groupStarIn("any", ctx.mode, ctx.rng);
+    ctx.words.push({ pool: "star", word: star });
+    return star;
+  }
   const items = groupListWords(list, SF_LISTS4.has(list) ? "SF" : ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
@@ -82095,6 +83671,7 @@ function generateEventNames(options) {
     if (repeatsContent(counted2) && !s.p.includes("{colour} and the {colour}")) return false;
     if (block.has(bare2(text))) return false;
     if (breaksEventWords(text, !!s.purge)) return false;
+    if ((era === "NF" || era === "IS") && hasSpaceBlock(text)) return false;
     return true;
   };
   const build = (kind, extra = {}, only) => {
@@ -82520,7 +84097,7 @@ function token10(ctx, name) {
     case "deityRef":
       return deityRef(ctx);
     case "place":
-      return isFuture4(ctx.era) ? pickWeighted5(groupListWords("star", "SF"), rng) : routePlace(ctx.culture, ctx.setting, rng);
+      return isFuture4(ctx.era) ? groupStarIn("any", "invented", rng) : routePlace(ctx.culture, ctx.setting, rng);
     case "holy":
       return groupSaint(ctx.setting, rng);
     case "fixed":

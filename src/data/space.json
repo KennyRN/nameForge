@@ -1,0 +1,647 @@
+{
+ "scales": {
+  "order": [
+   "Pl",
+   "Sy",
+   "Nb",
+   "Se",
+   "Ga"
+  ],
+  "any": {
+   "label": "Any scale",
+   "phrase": "any scale",
+   "tooltip": "Names from every scale the era allows"
+  },
+  "list": {
+   "Pl": {
+    "label": "Planetary system",
+    "phrase": "a planetary system",
+    "tooltip": "A planet and its moons: surface, rings, moons and the orbits around them"
+   },
+   "Sy": {
+    "label": "Star system",
+    "phrase": "a star system",
+    "tooltip": "One star or binary pair: belts, the frost line, the outer clouds and the edge of the star's wind"
+   },
+   "Nb": {
+    "label": "Local stellar neighbourhood",
+    "phrase": "the local stars",
+    "tooltip": "The nearby stars and the clouds and bubbles between them"
+   },
+   "Se": {
+    "label": "Sector",
+    "phrase": "a sector",
+    "tooltip": "A stretch of a spiral arm: nebulae, clusters, rifts and spurs"
+   },
+   "Ga": {
+    "label": "Galaxy-spanning",
+    "phrase": "the galaxy",
+    "tooltip": "Arms, the core and bar, the disc, the halo and the voids beyond"
+   }
+  },
+  "byEra": {
+   "NF": [
+    "any",
+    "Pl",
+    "Sy"
+   ],
+   "IS": [
+    "any",
+    "Pl",
+    "Sy",
+    "Nb",
+    "Se",
+    "Ga"
+   ],
+   "none": [
+    "any",
+    "Pl",
+    "Sy",
+    "Nb",
+    "Se",
+    "Ga"
+   ]
+  },
+  "anyWeights": {
+   "NF": {
+    "Pl": 50,
+    "Sy": 50,
+    "Nb": 0,
+    "Se": 0,
+    "Ga": 0
+   },
+   "IS": {
+    "Pl": 20,
+    "Sy": 25,
+    "Nb": 20,
+    "Se": 20,
+    "Ga": 15
+   },
+   "none": {
+    "Pl": 20,
+    "Sy": 25,
+    "Nb": 20,
+    "Se": 20,
+    "Ga": 15
+   }
+  }
+ },
+ "stars": {
+  "properExtra": [
+   "Alphard",
+   "Alphecca",
+   "Hamal",
+   "Diphda",
+   "Menkar",
+   "Mirfak",
+   "Nunki",
+   "Sadr"
+  ],
+  "possessiveReal": [
+   "Barnard's Star",
+   "Kapteyn's Star",
+   "Luyten's Star",
+   "Teegarden's Star",
+   "Van Maanen's Star",
+   "Przybylski's Star"
+  ],
+  "possessiveRealShare": 0.5,
+  "greekHeavy": {
+   "letters": [
+    "Alpha",
+    "Beta",
+    "Gamma",
+    "Delta",
+    "Epsilon"
+   ],
+   "weight": 3,
+   "other": 1
+  },
+  "genitives": [
+   "Andromedae",
+   "Aquilae",
+   "Arietis",
+   "Aurigae",
+   "Boötis",
+   "Cancri",
+   "Carinae",
+   "Cassiopeiae",
+   "Centauri",
+   "Cephei",
+   "Ceti",
+   "Cygni",
+   "Draconis",
+   "Eridani",
+   "Herculis",
+   "Hydrae",
+   "Indi",
+   "Leonis",
+   "Lyrae",
+   "Orionis",
+   "Pavonis",
+   "Persei",
+   "Scorpii",
+   "Tauri",
+   "Tucanae",
+   "Ursae Majoris",
+   "Virginis"
+  ],
+  "catalogue": [
+   {
+    "prefix": "Gliese",
+    "joiner": " ",
+    "min": 1,
+    "max": 1000,
+    "w": 3
+   },
+   {
+    "prefix": "Wolf",
+    "joiner": " ",
+    "min": 1,
+    "max": 1500,
+    "w": 2
+   },
+   {
+    "prefix": "Ross",
+    "joiner": " ",
+    "min": 1,
+    "max": 1000,
+    "w": 2
+   },
+   {
+    "prefix": "Lalande",
+    "joiner": " ",
+    "min": 1000,
+    "max": 50000,
+    "w": 1
+   },
+   {
+    "prefix": "Groombridge",
+    "joiner": " ",
+    "min": 1,
+    "max": 4000,
+    "w": 1
+   },
+   {
+    "prefix": "HD",
+    "joiner": " ",
+    "min": 1000,
+    "max": 250000,
+    "w": 2
+   },
+   {
+    "prefix": "HIP",
+    "joiner": " ",
+    "min": 1000,
+    "max": 120000,
+    "w": 2
+   },
+   {
+    "prefix": "LHS",
+    "joiner": " ",
+    "min": 1,
+    "max": 5000,
+    "w": 1
+   },
+   {
+    "prefix": "Kepler",
+    "joiner": "-",
+    "min": 1,
+    "max": 2000,
+    "w": 2
+   },
+   {
+    "prefix": "K2",
+    "joiner": "-",
+    "min": 1,
+    "max": 400,
+    "w": 1
+   },
+   {
+    "prefix": "TOI",
+    "joiner": "-",
+    "min": 100,
+    "max": 6000,
+    "w": 1
+   }
+  ],
+  "planetLetters": {
+   "b": 5,
+   "c": 4,
+   "d": 3,
+   "e": 2,
+   "f": 1,
+   "g": 1,
+   "h": 0.5
+  },
+  "planetLetterChance": 0.3,
+  "letterWords": {
+   "b": "Bee",
+   "c": "Cee",
+   "d": "Dee",
+   "e": "Ee",
+   "f": "Eff",
+   "g": "Gee",
+   "h": "Aitch"
+  },
+  "kindWeights": {
+   "any": {
+    "proper": 40,
+    "possessive": 15,
+    "bayer": 20,
+    "catalogue": 25
+   },
+   "Pl": {
+    "proper": 40,
+    "possessive": 15,
+    "bayer": 20,
+    "catalogue": 25
+   },
+   "Sy": {
+    "proper": 40,
+    "possessive": 15,
+    "bayer": 20,
+    "catalogue": 25
+   },
+   "Nb": {
+    "proper": 35,
+    "possessive": 25,
+    "bayer": 25,
+    "catalogue": 15
+   },
+   "Se": {
+    "proper": 25,
+    "possessive": 10,
+    "bayer": 20,
+    "catalogue": 45
+   },
+   "Ga": {
+    "proper": 40,
+    "possessive": 0,
+    "bayer": 10,
+    "catalogue": 50
+   }
+  }
+ },
+ "directions": {
+  "spaceDirection": [
+   {
+    "w": "Upwell",
+    "sc": [
+     "Pl",
+     "Sy"
+    ]
+   },
+   {
+    "w": "Downwell",
+    "sc": [
+     "Pl",
+     "Sy"
+    ]
+   },
+   {
+    "w": "Polar",
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Equatorial",
+    "sc": [
+     "Pl"
+    ]
+   },
+   {
+    "w": "Sunward",
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Outward",
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Inward",
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Coreward",
+    "sc": [
+     "Nb",
+     "Se",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Rimward",
+    "sc": [
+     "Nb",
+     "Se",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Spinward",
+    "sc": [
+     "Nb",
+     "Se",
+     "Ga"
+    ]
+   },
+   {
+    "w": "Trailing",
+    "sc": [
+     "Nb",
+     "Se",
+     "Ga"
+    ]
+   }
+  ],
+  "compass": {
+   "Pl": [
+    "Upwell",
+    "Equatorial",
+    "Downwell",
+    "Polar"
+   ],
+   "Sy": [
+    "Sunward",
+    "Upwell",
+    "Outward",
+    "Downwell",
+    "Inward"
+   ],
+   "Nb": [
+    "Coreward",
+    "Spinward",
+    "Rimward",
+    "Trailing"
+   ],
+   "Se": [
+    "Coreward",
+    "Spinward",
+    "Rimward",
+    "Trailing"
+   ],
+   "Ga": [
+    "Coreward",
+    "Spinward",
+    "Rimward",
+    "Trailing"
+   ],
+   "station": [
+    "Hubward",
+    "Spinward",
+    "Rimward",
+    "Antispinward"
+   ]
+  },
+  "stationDirection": [
+   "Spinward",
+   "Antispinward",
+   "Hubward",
+   "Rimward"
+  ],
+  "orbitAdj": [
+   "High",
+   "Low",
+   "Polar",
+   "Equatorial",
+   "Parking",
+   "Long",
+   "Fast"
+  ],
+  "spaceHazard": [
+   {
+    "w": "Shock",
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Pause",
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Sheath",
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Frostline",
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Corona",
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Neck",
+    "sc": [
+     "Sy"
+    ]
+   },
+   {
+    "w": "Bubble",
+    "sc": [
+     "Nb"
+    ]
+   },
+   {
+    "w": "Wall",
+    "sc": [
+     "Nb"
+    ]
+   },
+   {
+    "w": "Cloud",
+    "sc": [
+     "Nb"
+    ]
+   },
+   {
+    "w": "Rift",
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Dark",
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Knot",
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Nebula",
+    "sc": [
+     "Se"
+    ]
+   },
+   {
+    "w": "Bar",
+    "sc": [
+     "Ga"
+    ]
+   },
+   {
+    "w": "Void",
+    "sc": [
+     "Ga"
+    ]
+   },
+   {
+    "w": "Warp",
+    "sc": [
+     "Ga"
+    ]
+   }
+  ]
+ },
+ "lagrangeWord": [
+  [
+   "One",
+   1
+  ],
+  [
+   "Two",
+   1
+  ],
+  [
+   "Three",
+   1
+  ],
+  [
+   "Four",
+   3
+  ],
+  [
+   "Five",
+   3
+  ]
+ ],
+ "worldHab": [
+  [
+   "Station",
+   3
+  ],
+  [
+   "Habitat",
+   2
+  ],
+  [
+   "Colony",
+   2
+  ],
+  [
+   "Outpost",
+   1
+  ],
+  [
+   "Port",
+   1
+  ],
+  [
+   "Haven",
+   1
+  ],
+  [
+   "Anchorage",
+   1
+  ],
+  [
+   "Yard",
+   1
+  ],
+  [
+   "Dock",
+   1
+  ],
+  [
+   "Base",
+   1
+  ],
+  [
+   "Camp",
+   1
+  ],
+  [
+   "Relay",
+   1
+  ],
+  [
+   "Beacon",
+   1
+  ],
+  [
+   "Observatory",
+   1
+  ]
+ ],
+ "worldHabGate": [
+  "Gate",
+  1
+ ],
+ "spaceBuilt": [
+  "dock",
+  "mast",
+  "array",
+  "dish",
+  "beacon",
+  "relay",
+  "yard",
+  "tether"
+ ],
+ "spaceActivity": [
+  "Mining",
+  "Hauling",
+  "Salvage",
+  "Survey",
+  "Docking",
+  "Refuelling"
+ ],
+ "safeguards": {
+  "block": [
+   "Outer Rim",
+   "Mid Rim",
+   "Inner Rim",
+   "Core Worlds",
+   "Deep Core",
+   "Wild Space",
+   "Unknown Regions",
+   "Kessel Run",
+   "Spinward Marches",
+   "Trailing Marches",
+   "Alpha Quadrant",
+   "Beta Quadrant",
+   "Gamma Quadrant",
+   "Delta Quadrant",
+   "Neutral Zone",
+   "Deep Space Nine",
+   "Deep Space 9",
+   "Terminus",
+   "The Expanse",
+   "Mass Relay",
+   "Halo Array",
+   "Babylon 5",
+   "Babylon Five"
+  ]
+ }
+}

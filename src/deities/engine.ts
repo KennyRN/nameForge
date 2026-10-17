@@ -13,6 +13,7 @@ import {
   type GroupToneChoice,
   GROUP_TONES,
   groupListWords,
+  groupStarIn,
   groupPlural,
   groupPossessive,
   groupSaint,
@@ -294,7 +295,7 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "deityRef":
       return deityRef(ctx);
     case "place":
-      return isFuture(ctx.era) ? pickWeighted(groupListWords("star", "SF"), rng) : routePlace(ctx.culture, ctx.setting, rng);
+      return isFuture(ctx.era) ? groupStarIn("any", "invented", rng) : routePlace(ctx.culture, ctx.setting, rng);
     case "holy":
       return groupSaint(ctx.setting, rng);
     case "fixed":

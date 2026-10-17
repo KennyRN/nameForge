@@ -3,6 +3,7 @@
 // tags, tone factor, invented people and places, possessives, repetition check and safeguards.
 // No Obsidian imports.
 
+import { hasSpaceBlock } from "../space/safeguards";
 import vesselData from "../data/vessels.json";
 import { cultureLand, holyNamesIn, stripPlural, worldAnimals } from "../bynames/engine";
 import {
@@ -14,6 +15,7 @@ import {
   type GroupToneChoice,
   GROUP_TONES,
   groupListWords,
+  groupStarIn,
   groupPerson,
   groupPossessive,
   groupSaint,
@@ -493,6 +495,8 @@ function baseToken(ctx: Ctx, name: string): string | undefined {
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
+    case "star":
+      return groupStarIn("any", ctx.mode, rng);
     case "town":
       // Settlement kit §7.2: the home port, or one of its neighbours.
       if (ctx.turn) return ctx.turn.next(rng);
@@ -649,6 +653,7 @@ function acceptable(ctx: Ctx, guard: Guard, name: string): boolean {
   if (repeatsContent(counted)) return false;
   if (blocked(ctx, guard, name)) return false;
   if (breaksVesselWords(name)) return false;
+  if (ctx.module === "spacecraft" && hasSpaceBlock(name)) return false;
   return true;
 }
 

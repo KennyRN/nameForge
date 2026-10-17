@@ -4,6 +4,7 @@
 // vocabulary packs); places, peoples, realms, people and figures come from the route engine, dynasties
 // from realms, epithets from bynames, colours and numbers from group names. No Obsidian imports.
 
+import { hasSpaceBlock } from "../space/safeguards";
 import eventData from "../data/event-names.json";
 import { BYNAMES_DATA, entryForm } from "../bynames/engine";
 import {
@@ -14,6 +15,7 @@ import {
   type GroupToneChoice,
   GROUP_TONES,
   groupListWords,
+  groupStarIn,
   groupPlural,
   groupPossessive,
   hasBannedWord,
@@ -185,6 +187,11 @@ function fromPool(ctx: Ctx, pool: string): string | undefined {
 }
 
 function gnWord(ctx: Ctx, list: string): string | undefined {
+  if (list === "star") {
+    const star = groupStarIn("any", ctx.mode, ctx.rng);
+    ctx.words.push({ pool: "star", word: star });
+    return star;
+  }
   const items = groupListWords(list, SF_LISTS.has(list) ? "SF" : ctx.setting)
     .filter(([w]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w))))
     .map(([w, n]): [string, number] => [w, n * toneFactor(wordTones(list, w), ctx.tone)])
@@ -415,6 +422,7 @@ export function generateEventNames(options: EventOptions): EventBatch {
     if (repeatsContent(counted) && !s.p.includes("{colour} and the {colour}")) return false;
     if (block.has(bare(text))) return false;
     if (breaksEventWords(text, !!s.purge)) return false;
+    if ((era === "NF" || era === "IS") && hasSpaceBlock(text)) return false;
     return true;
   };
 

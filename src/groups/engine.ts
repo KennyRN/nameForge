@@ -11,6 +11,9 @@ import { generatePlaceNames } from "../names/engine";
 import { britishPlaceNamesRecipe } from "../names/recipe";
 import { findTradition, TRIBAL_DATA, type TribalTradition } from "../tribes/engine";
 import { generateWorldPlaceNames } from "../world/engine";
+import { scaleAllows, type ScaleChoice, type SpaceScale } from "../space/scale";
+import { catalogueWorld, drawStarKind, drawStarOfKind, type DrawStarOptions } from "../space/stars";
+import { hasSpaceBlock } from "../space/safeguards";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -36,6 +39,8 @@ export interface GroupEntry {
   noPrefix?: boolean;
   /** Tone brief §2.3: the word's tones; replaces its list's tones (an empty array is neutral). */
   t?: GroupTone[];
+  /** Stellar brief §2.4: the scales the word belongs to; absent means every scale. */
+  sc?: SpaceScale[];
 }
 
 export interface GroupShape {
@@ -353,6 +358,8 @@ export interface GroupOptions {
   commodity?: string;
   /** Settlement kit §4: the settlement's town, neighbours, saint, trades and goods. */
   context?: SettlementContext;
+  /** Stellar brief §9: the scale of space words in sci-fi; "any" (the default) filters nothing. */
+  scale?: ScaleChoice;
 }
 
 /** Tone brief §3.7: how a name sits in its series. */
@@ -403,6 +410,8 @@ interface Ctx {
   commodityFactors?: Map<string, number>;
   /** Settlement kit §4. */
   context?: SettlementContext;
+  /** Stellar brief §2: the scale that filters scale-tagged space words. */
+  scale: ScaleChoice;
 }
 
 export const pickWeighted = <T>(items: [T, number][], rng: () => number): T | undefined => {
@@ -428,18 +437,29 @@ function listTag(name: string): GroupSetting[] | undefined {
 
 /** The words a list offers here, weighted: setting, type, tradition and flavour applied (§3.3, §9). */
 function pool(ctx: Ctx, name: string, type: GroupType, filter?: string[]): [string, number][] {
-  const key = `${name}|${type.key}|${filter?.join(",") ?? ""}|${ctx.tone}`;
+  const key = `${name}|${type.key}|${filter?.join(",") ?? ""}|${ctx.tone}|${ctx.scale}`;
   const cached = ctx.pools.get(key);
   if (cached) return cached;
   const S = ctx.setting;
   const trad = ctx.vocab;
   const weights = new Map<string, number>();
+  // Stellar brief §3.4: in sci-fi the coast and sea words are the space-land words.
+  const sources = S === "SF" && (name === "coastWord" || name === "seaWord") ? [name, "spaceLand"] : [name];
+  const toneList = new Map<string, string>();
   const add = (word: string, w: number) => weights.set(word, (weights.get(word) ?? 0) + w);
-  for (const e of GROUP_DATA.lists[name] ?? []) {
-    if (e.s && !e.s.includes(S)) continue;
-    if (e.types && !e.types.includes(type.key)) continue;
-    if (e.only && (!trad || !e.only.includes(trad.key))) continue;
-    add(e.w, (e.x ?? 1) * (e.sx?.[S] ?? 1) * (trad ? (e.tx?.[trad.key] ?? 1) : 1));
+  // Stellar brief §2.4: the scale filter, with a fallback to the unfiltered list if it empties.
+  for (const scaled of ctx.scale === "any" ? [false] : [true, false]) {
+    for (const src of sources) {
+      for (const e of GROUP_DATA.lists[src] ?? []) {
+        if (e.s && !e.s.includes(S)) continue;
+        if (e.types && !e.types.includes(type.key)) continue;
+        if (e.only && (!trad || !e.only.includes(trad.key))) continue;
+        if (scaled && !scaleAllows(e, ctx.scale)) continue;
+        add(e.w, (e.x ?? 1) * (e.sx?.[S] ?? 1) * (trad ? (e.tx?.[trad.key] ?? 1) : 1));
+        if (src !== name) toneList.set(e.w, src);
+      }
+    }
+    if (weights.size > 0) break;
   }
   if (trad) {
     // §9.6: signature words ×3, or a word already in the list multiplied ×3.
@@ -486,7 +506,7 @@ function pool(ctx: Ctx, name: string, type: GroupType, filter?: string[]): [stri
   }
   // Tone brief §2.4: the word factor; tone Any leaves the weights untouched.
   if (ctx.tone !== "any" && !UNTONED_LISTS.has(name)) {
-    for (const [word, w] of weights) weights.set(word, w * toneFactor(wordTones(name, word), ctx.tone));
+    for (const [word, w] of weights) weights.set(word, w * toneFactor(wordTones(toneList.get(word) ?? name, word), ctx.tone));
   }
   const keep = filter ?? type.listFilter?.[name];
   const out = [...weights].filter(([w, n]) => n > 0 && (!keep || keep.includes(w)));
@@ -643,8 +663,7 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
     case "land": {
       if (S === "SF") {
         const w = pick(ctx, "spaceLand", type)!;
-        const prefix = rng() < 0.3 ? `${pick(ctx, "spacePrefix", type)} ` : "";
-        return { text: prefix + w, plural: false };
+        return { text: rng() < 0.3 ? spacePrefixed(ctx, type, w) : w, plural: false };
       }
       const w = pick(ctx, "land", type);
       if (!w) return undefined;
@@ -668,11 +687,13 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
       return text ? { text, plural: true } : undefined;
     }
     case "star":
-      return word("star");
+      return { text: drawGroupStar(ctx, type), plural: false };
+    case "catalogueWorld":
+      return { text: catalogueWorld(rng), plural: false };
     case "starNumber":
       return { text: String(1 + Math.floor(rng() * 12)), plural: false };
     case "spaceLandPrefixed":
-      return { text: `${pick(ctx, "spacePrefix", type)} ${pick(ctx, "spaceLand", type)}`, plural: false };
+      return { text: spacePrefixed(ctx, type, pick(ctx, "spaceLand", type)!), plural: false };
     case "britishPlace":
       return { text: pickOne(townPool("britain"), rng), plural: false };
     case "flavourAnimal": {
@@ -689,7 +710,7 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
       // Companies brief §4.3: a named {spaceLand} takes GN §5.4's prefix rule.
       const w = pick(ctx, "spaceLand", type, shape?.filter?.spaceLand);
       if (w === undefined) return undefined;
-      return { text: rng() < 0.3 ? `${pick(ctx, "spacePrefix", type)} ${w}` : w, plural: false };
+      return { text: rng() < 0.3 ? spacePrefixed(ctx, type, w) : w, plural: false };
     }
   }
   const patterns = GROUP_DATA.patterns[name];
@@ -705,6 +726,26 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
   }
   if (!GROUP_DATA.lists[name]) throw new Error(`Group names: no list “${name}”.`);
   return word(name);
+}
+
+/** Stellar brief §3.2: a prefix joined to a space-land word never repeats it ("Deep Deep"): up to
+ * 5 redraws, then the prefix is dropped. */
+export function spacePrefixed(ctx: Ctx, type: GroupType, word: string): string {
+  for (let i = 0; i < 5; i++) {
+    const prefix = pick(ctx, "spacePrefix", type);
+    if (prefix && prefix.toLowerCase() !== word.toLowerCase()) return `${prefix} ${word}`;
+  }
+  return word;
+}
+
+/** Stellar brief §4.7: a star at the batch's scale; the proper names are the tone-aware `star` list. */
+function drawGroupStar(ctx: Ctx, type: GroupType): string {
+  const proper = () => pick(ctx, "star", type) ?? "Vega";
+  const person = () => {
+    if (ctx.mode === "placeholders") return `[${type.person}]`;
+    return inventedPerson(ctx, type);
+  };
+  return drawStarOfKind(drawStarKind(ctx.scale, ctx.rng), ctx.rng, proper, { person });
 }
 
 /** §8.2: `{holy}` as drawn without a settlement context. */
@@ -747,14 +788,15 @@ function inventedTown(ctx: Ctx, type: GroupType): string {
 // ── Shared with other modules (Bynames brief: reuse, don't copy) ────────────
 
 /** A context for drawing outside a group batch: no flavour, invented people, tone Any. */
-const sharedCtxs = new Map<GroupSetting, { ctx: Ctx; type: GroupType }>();
-function sharedCtx(setting: GroupSetting, rng: () => number): { ctx: Ctx; type: GroupType } {
-  let found = sharedCtxs.get(setting);
+const sharedCtxs = new Map<string, { ctx: Ctx; type: GroupType }>();
+function sharedCtx(setting: GroupSetting, rng: () => number, scale: ScaleChoice = "any"): { ctx: Ctx; type: GroupType } {
+  const cacheKey = `${setting}|${scale}`;
+  let found = sharedCtxs.get(cacheKey);
   if (!found) {
     const family = GROUP_FAMILIES[0];
-    const ctx: Ctx = { rng, setting, family, vocab: undefined, people: undefined, mode: "invented", form: "any", block: new Set(), pools: new Map(), tone: "any", drawn: new Set() };
+    const ctx: Ctx = { rng, setting, family, vocab: undefined, people: undefined, mode: "invented", form: "any", block: new Set(), pools: new Map(), tone: "any", drawn: new Set(), scale };
     found = { ctx, type: family.types[0] };
-    sharedCtxs.set(setting, found);
+    sharedCtxs.set(cacheKey, found);
   }
   found.ctx.rng = rng;
   return found;
@@ -778,9 +820,41 @@ export function groupCommRegion(setting: GroupSetting, rng: () => number): strin
 }
 
 /** A group list's words here, weighted (setting tags and `sx` applied). */
-export function groupListWords(name: string, setting: GroupSetting): [string, number][] {
-  const { ctx, type } = sharedCtx(setting, Math.random);
+export function groupListWords(name: string, setting: GroupSetting, scale: ScaleChoice = "any"): [string, number][] {
+  const { ctx, type } = sharedCtx(setting, Math.random, scale);
   return pool(ctx, name, type);
+}
+
+/** Stellar brief §4.7: a star name at a scale, for every module that draws a `{star}`. `person` is
+ * the module's own person token (for "‹person›'s Star"). */
+export function groupStar(setting: GroupSetting, scale: ScaleChoice, rng: () => number, opts?: DrawStarOptions): string {
+  const { ctx, type } = sharedCtx(setting, rng, scale);
+  const proper = () => pickWeighted(pool(ctx, "star", type), rng) ?? "Vega";
+  return drawStarOfKind(drawStarKind(scale, rng), rng, proper, opts);
+}
+
+/** Stellar brief §4.7: a star for another module, honouring its people setting for "‹person›'s Star". */
+export function groupStarIn(scale: ScaleChoice, mode: GroupPeople, rng: () => number): string {
+  return groupStar("SF", scale, rng, { person: () => (mode === "placeholders" ? "[person]" : groupPerson("SF", false, rng)) });
+}
+
+/** Stellar brief §3.2: a prefix for a space-land word at a scale, redrawn up to 5 times if it would
+ * repeat the word, else dropped; the bare word comes back when there is none. */
+export function groupSpacePrefix(word: string, rng: () => number, scale: ScaleChoice = "any"): string {
+  const prefixes = groupListWords("spacePrefix", "SF", scale);
+  for (let i = 0; i < 5; i++) {
+    const prefix = pickWeighted(prefixes, rng);
+    if (prefix && prefix.toLowerCase() !== word.toLowerCase()) return `${prefix} ${word}`;
+  }
+  return word;
+}
+
+/** Stellar brief §3.4: a space-land word with its prefix (30%), at a scale, never repeating itself. */
+export function groupSpaceLand(setting: GroupSetting, scale: ScaleChoice, rng: () => number, prefixed = true): string | undefined {
+  const { ctx, type } = sharedCtx(setting, rng, scale);
+  const w = pickWeighted(pool(ctx, "spaceLand", type), rng);
+  if (w === undefined) return undefined;
+  return prefixed && rng() < 0.3 ? spacePrefixed(ctx, type, w) : w;
 }
 
 /** §5.4: a land word, sometimes with a prefix ("Western Hills", "Red Marches"), unless it holds one already. */
@@ -958,6 +1032,7 @@ function acceptable(ctx: Ctx, text: string, formal: boolean): boolean {
   const n = norm(text);
   if (ctx.block.has(n)) return false;
   if (BANNED.some((re) => re.test(text))) return false;
+  if (ctx.setting === "SF" && hasSpaceBlock(text)) return false;
   if (breaksGroupColourRule(text)) return false;
   return true;
 }
@@ -1200,6 +1275,7 @@ export function generateGroupNames(options: GroupOptions): GroupBatch {
     tone: options.tone ?? "any",
     drawn: new Set(),
     context: options.context,
+    scale: setting === "SF" ? options.scale ?? "any" : "any",
   };
   const chosen = options.type ? available.find((t) => t.key === options.type) : undefined;
   if (options.type && !chosen) {

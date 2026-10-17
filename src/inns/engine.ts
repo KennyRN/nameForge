@@ -5,6 +5,7 @@
 // places, people, gods, figures and routes come from the route engine, trades and goods from the
 // street pools. No Obsidian imports.
 
+import { hasSpaceBlock } from "../space/safeguards";
 import innData from "../data/inn-names.json";
 import {
   type GroupPeople,
@@ -14,6 +15,8 @@ import {
   type GroupToneChoice,
   GROUP_TONES,
   groupListWords,
+  groupSpacePrefix,
+  groupStarIn,
   groupPlural,
   groupPossessive,
   groupSaint,
@@ -393,14 +396,14 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "quality":
     case "tech":
     case "brandRoot":
-    case "star":
     case "heraldicBeast":
       return draw(ctx, name, merged(ctx, [gnItems(ctx, name)]), name === "heraldicBeast" ? "creature" : undefined);
+    case "star":
+      return groupStarIn("any", ctx.mode, rng);
     case "spaceLand": {
       const w = draw(ctx, "spaceLand", gnItems(ctx, "spaceLand"));
       if (!w || rng() >= 0.3) return w;
-      const prefix = pickWeighted(groupListWords("spacePrefix", "SF"), rng);
-      return prefix ? `${prefix} ${w}` : w;
+      return groupSpacePrefix(w, rng);
     }
     case "weekday":
       return pickWeighted(STREET_DATA.lists.weekday, rng);
@@ -694,6 +697,7 @@ export function generateInnNames(options: InnOptions): InnBatch {
     if (!isRoute && repeatsContent(counted)) return false;
     if (innBlockForms(text).some((f) => block.has(f))) return false;
     if (breaksInnWords(text)) return false;
+    if (isFuture(era) && hasSpaceBlock(text)) return false;
     if (hasChristianSign(text) && !cultureAllowed(["christian"], culture.key, era)) return false;
     return true;
   }
