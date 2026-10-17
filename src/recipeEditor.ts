@@ -4,13 +4,13 @@
 import { App, Menu, Modal, normalizePath, Notice, Setting, setIcon, stringifyYaml, TFile } from "obsidian";
 import { ContextGuideModal } from "./contextGuide";
 import { WordListGuideModal } from "./wordListGuide";
-import { CONTEXT_PHRASES, traditionLabel } from "./colonialWording";
+import { CONTEXT_PHRASES, contextPhrasesFor, traditionLabel } from "./colonialWording";
 import { availableTerrains, type Biome, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
 import { chooseTribal, type TribalSentenceState, tribalSentence } from "./tribes/sentence";
 import { tribalSlotConstraints } from "./tribes/slotFill";
 import { type TribalPreset, tribalPresetSlot } from "./presets";
 import { TRIBAL_TRADITIONS } from "./tribes/engine";
-import { biomeChoices, biomePhrase, explorersPhrase, FEATURES, incomersPhrase, terrainPhrase } from "./colonialSentence";
+import { ALIEN_CHOICES, biomeChoices, biomePhrase, explorersPhrase, featuresForBiome, incomersPhrase, spaceBiomeChoices, terrainPhrase } from "./colonialSentence";
 import { ICON_SAVE_PRESET, ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
 import { createWordListFileContent, sanitizePackNameForFilename } from "./nameParser";
 import {
@@ -676,9 +676,11 @@ export class RecipeWizard {
   /** The feature phrase: "Any feature" at the start of a sentence, "any feature" within one. */
   private featureLink(sentence: HTMLElement, start: boolean) {
     const w = this.working;
-    const feature = FEATURES.find((f) => f.id === w.shape.feature) ?? FEATURES[0];
+    // Stellar brief §5.5: under a space biome the feature menu lists the live groups.
+    const features = featuresForBiome(w.shape.part === "organic" ? undefined : this.currentBiome());
+    const feature = features.find((f) => f.id === w.shape.feature) ?? features[0];
     const text = start ? feature.label : feature.label.charAt(0).toLowerCase() + feature.label.slice(1);
-    this.sentenceLink(sentence, text, FEATURES, feature.id, (id) => (w.shape.feature = id));
+    this.sentenceLink(sentence, text, features, feature.id, (id) => (w.shape.feature = id));
   }
 
   /** Place names: "‹Any feature› from ‹all of Britain›" ("the" added where a region needs it). */
@@ -705,7 +707,7 @@ export class RecipeWizard {
     const w = this.working;
     const traditions = COLONIAL_TRADITIONS.filter((t) => t.parts.includes("2"));
     if (!traditions.some((t) => t.id === w.shape.tradition)) w.shape.tradition = traditions[0].id;
-    const contexts = NEW_LANDS_CONTEXTS.filter(([id]) => colonialContexts("2").some((c) => c.id === id));
+    const contexts = contextPhrasesFor("2", !!this.currentBiome()?.space).filter(([id]) => colonialContexts("2").some((c) => c.id === id));
     if (!contexts.some(([id]) => id === w.shape.context)) w.shape.context = contexts[0][0];
 
     const sentence = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
@@ -727,6 +729,7 @@ export class RecipeWizard {
     );
     sentence.appendText(" across ");
     this.landLinks(sentence);
+    this.aliensLink(sentence);
     sentence.appendText(", naming ");
     this.featureLink(sentence, false);
     this.guideIcon(sentence, false);
@@ -759,9 +762,18 @@ export class RecipeWizard {
     );
     sentence.appendText(" across ");
     this.landLinks(sentence);
+    this.aliensLink(sentence);
     sentence.appendText(", naming ");
     this.featureLink(sentence, false);
     this.guideIcon(sentence, true);
+  }
+
+  /** Stellar brief §5.8: ", with ‹no alien life›", shown under a space biome only. */
+  private aliensLink(sentence: HTMLElement) {
+    const w = this.working;
+    if (!this.currentBiome()?.space) return;
+    sentence.appendText(", with ");
+    this.sentenceLink(sentence, ALIEN_CHOICES[w.shape.aliens ? 1 : 0].label, ALIEN_CHOICES, w.shape.aliens ? "on" : "off", (id) => (w.shape.aliens = id === "on"));
   }
 
   /** The user's biome packs (Land brief §9), as the host resolved them. */
@@ -805,8 +817,11 @@ export class RecipeWizard {
           }),
       );
     const biome = this.currentBiome();
-    menuLink(terrainPhrase(w.shape.terrain, custom), (menu) => {
-      choose(menu, "any part", !w.shape.terrain || w.shape.terrain === "any", () => (w.shape.terrain = "any"));
+    // Stellar brief §5.2: under a space biome, Any terrain reads "all of a sector".
+    const spaceLand = !!biome?.space && part !== "organic";
+    const anyText = spaceLand ? "all" : "any part";
+    menuLink(!w.shape.terrain || w.shape.terrain === "any" ? anyText : terrainPhrase(w.shape.terrain, custom), (menu) => {
+      choose(menu, anyText, !w.shape.terrain || w.shape.terrain === "any", () => (w.shape.terrain = "any"));
       menu.addSeparator();
       const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
       for (const t of terrains) choose(menu, t.phrase, w.shape.terrain === t.id, () => (w.shape.terrain = t.id));
@@ -822,6 +837,12 @@ export class RecipeWizard {
       choose(menu, first.label, !w.shape.biome || w.shape.biome === "unknown", set("unknown"));
       menu.addSeparator();
       for (const c of rest) choose(menu, c.label, w.shape.biome === c.id, set(c.id));
+      // Stellar brief §5.1: the space biomes, last, for exploration and expansion.
+      if (part !== "organic") {
+        menu.addSeparator();
+        menu.addItem((item) => item.setTitle("Space").setDisabled(true));
+        for (const c of spaceBiomeChoices()) choose(menu, c.label, w.shape.biome === c.id, set(c.id));
+      }
       if (custom.length > 0) {
         menu.addSeparator();
         for (const b of [...custom].sort((x, y) => x.label.localeCompare(y.label))) {

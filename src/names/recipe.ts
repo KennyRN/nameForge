@@ -42,7 +42,7 @@ export interface RecipeSettings {
   /** `biome` (Tribal brief §19.1): a biome id, or "unknown" for native placeholders. */
   /** `terrain` (Land brief §4.1): a terrain id, a custom terrain id or "any". A biome pack is a
    * link, "[[Salt Marshes]]". */
-  shape: { part: ShapePart; region: string; tradition: string; context: string; biome: string; terrain: string; feature: string };
+  shape: { part: ShapePart; region: string; tradition: string; context: string; biome: string; terrain: string; feature: string; /** Stellar brief §5.8: alien life under a space biome (absent: none). */ aliens?: boolean };
   slots: Record<string, SlotSetting>;
   generics: Record<string, string>;
   register: Register;
@@ -189,8 +189,11 @@ export function readRecipe(fm: Record<string, unknown>): { recipe: RecipePartial
     else if (biome) problems.push(`Unknown biome “${biome}”.`);
     // Land brief §4.1: a terrain id or any; a custom terrain is only known once a pack resolves.
     const terrain = str(fm.shape.terrain);
-    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || shape.biome?.startsWith("[["))) shape.terrain = terrain;
+    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || shape.biome?.startsWith("[[") || findBiome(shape.biome)?.customTerrains?.some((t) => t.id === terrain))) shape.terrain = terrain;
     else if (terrain) problems.push(`Unknown terrain “${terrain}”.`);
+    // Stellar brief §5.8: the alien life link, saved as aliens: true; absent means none.
+    const aliens = bool(fm.shape.aliens);
+    if (aliens !== undefined) shape.aliens = aliens;
     recipe.shape = shape;
   }
   if (isObject(fm.slots)) {
@@ -289,9 +292,10 @@ export function recipeToFrontmatter(r: RecipePartial): Record<string, unknown> {
   if (r.templateOf) out["template-of"] = `[[${r.templateOf}]]`;
   if (r.shape && Object.keys(r.shape).length > 0) {
     // Tribal brief §19.1: "unknown" is the default and is never written.
-    const { biome, terrain, ...rest } = r.shape;
+    const { biome, terrain, aliens, ...rest } = r.shape;
     out.shape = {
       ...rest,
+      ...(aliens ? { aliens: true } : {}),
       ...(biome && biome !== "unknown" ? { biome } : {}),
       // Land brief §4.1: "any" is the default and is never written.
       ...(terrain && terrain !== "any" ? { terrain } : {}),
@@ -362,9 +366,10 @@ export function colonialPlaceNamesRecipe(
   context: string | undefined,
   biome?: string,
   terrain?: string,
+  aliens?: boolean,
 ): RecipeSettings {
   return withDefaults({
-    shape: { part, tradition: tradition ?? "general", context: context ?? "none", biome: biome ?? "unknown", terrain: terrain ?? "any", feature: "any" },
+    shape: { part, tradition: tradition ?? "general", context: context ?? "none", biome: biome ?? "unknown", terrain: terrain ?? "any", feature: "any", ...(aliens ? { aliens: true } : {}) },
     register: "modern",
     render: { joining: "balanced", linkingHyphens: true, etymology: false },
   });

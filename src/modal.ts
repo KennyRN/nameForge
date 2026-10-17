@@ -85,7 +85,7 @@ import {
 import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings, recipeToFrontmatter } from "./names/recipe";
-import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
+import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, SPACE_BIOMES, TERRAIN_CHOICES } from "./biomes";
 import { chooseTribal, type TribalSentenceLimits, type TribalSentenceState, tribalSentence, tribalSentenceText } from "./tribes/sentence";
 import {
   familyForSection,
@@ -162,7 +162,7 @@ import {
 import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/engine";
 import { cultureUsesBiomes, findCulture, findEra, generateWorldPlaceNames, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
-import { CONTEXT_PHRASES, partsNote, traditionLabel } from "./colonialWording";
+import { CONTEXT_PHRASES, contextPhrasesFor, partsNote, traditionLabel } from "./colonialWording";
 import { RecipeEditorModal, type RecipeEditorOptions, RecipeWizard } from "./recipeEditor";
 import {
   parseNameSections,
@@ -233,7 +233,7 @@ import {
   sectionGroup,
   SWITCHER_ORDER,
 } from "./sections";
-import { biomePhrase, explorersPhrase, incomersPhrase, regionPhrase, terrainPhrase, UNKNOWN_COUNTRY, wizardSentenceText } from "./colonialSentence";
+import { ALIEN_CHOICES, biomePhrase, explorersPhrase, incomersPhrase, regionPhrase, SPACE_HEADING_TIP, terrainPhrase, UNKNOWN_COUNTRY, wizardSentenceText } from "./colonialSentence";
 
 /** History label for british place names runs; older "place name shapes" entries keep theirs. */
 
@@ -307,7 +307,7 @@ const GROUP_ICONS: Record<SectionGroup, string> = {
 /** A module's label in the box beside the trigger: "Native place names". */
 const moduleLabel = (section: NameForgeSection) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
 
-type SentenceChoice = { id: string | undefined; label: string; title?: string };
+type SentenceChoice = { id: string | undefined; label: string; title?: string; /** A disabled heading shown before this choice. */ heading?: string; headingTip?: string };
 
 /** Shown in the pack box on the first open of each Obsidian session; the arrow points at the
  * section trigger. */
@@ -722,6 +722,8 @@ export class NameForgeModal extends Modal {
   /** Colonial tradition and context per part; undefined = General / None. Session only. */
   private selectedTradition: Record<ColonialPart, string | undefined> = { "2": undefined, "2a": undefined };
   /** Each part's context, starting on its first (as the wizard does): wild and unsettled lands, ruling over the locals. */
+  /** Stellar brief §5.8: alien life under a space biome, per colonial part (session only). */
+  private colonialAliens: Record<ColonialPart, boolean> = { "2": false, "2a": false };
   private selectedContext: Record<ColonialPart, string | undefined> = { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] };
   private contextRowEl: HTMLElement | null = null;
   private quantityToggleEl: HTMLElement | null = null;
@@ -1493,6 +1495,10 @@ export class NameForgeModal extends Modal {
       const list = await choices();
       if (list.length === 0) menu.addItem((item) => item.setTitle("No packs found").setDisabled(true));
       for (const c of list) {
+        if (c.heading) {
+          menu.addSeparator();
+          menu.addItem((item) => item.setTitle(c.heading!).setDisabled(true));
+        }
         menu.addItem((item) =>
           item
             .setTitle(c.label)
@@ -1513,11 +1519,14 @@ export class NameForgeModal extends Modal {
     const land = this.land(key);
     const biome = findBiome(land.biome, this.customBiomes);
     const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
+    // Stellar brief §5.2: under a space biome, Any terrain reads "all of a sector".
+    const spaceLand = !!biome?.space && part !== "organic";
+    const anyText = spaceLand ? "all" : "any part";
     this.sentenceLink(
       sentence,
-      terrainPhrase(land.terrain, this.customBiomes),
+      land.terrain === "any" ? anyText : terrainPhrase(land.terrain, this.customBiomes),
       "Terrain: the kind of land being named",
-      () => [{ id: "any", label: "any part" }, ...terrains.map((t) => ({ id: t.id, label: terrainPhrase(t.id, this.customBiomes) }))],
+      () => [{ id: "any", label: anyText }, ...terrains.map((t) => ({ id: t.id, label: terrainPhrase(t.id, this.customBiomes) }))],
       land.terrain,
       (id) => (this.landStates[key] = { ...this.land(key), terrain: id ?? "any" }),
     );
@@ -1528,9 +1537,12 @@ export class NameForgeModal extends Modal {
       biome?.guide ?? "Biome: the plants, wildlife, ground and seasons",
       async () => {
         const custom = [...(await this.loadCustomBiomes())].sort((x, y) => x.label.localeCompare(y.label));
+        // Stellar brief §5.1: exploration and expansion list the space biomes last, under a Space heading.
+        const space = part !== "organic" && key.startsWith("colonial:") ? SPACE_BIOMES.map((b, i): SentenceChoice => ({ id: b.id, label: b.phrase, title: b.guide, ...(i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {}) })) : [];
         return [
           { id: undefined, label: defaultPhrase },
           ...[...(britainAsDefault ? [] : [BRITAIN]), ...BIOMES, ...custom].map((b) => ({ id: b.custom?.path ?? b.id, label: b.phrase })),
+          ...space,
         ];
       },
       land.biome,
@@ -1609,7 +1621,8 @@ export class NameForgeModal extends Modal {
       (id) => (this.selectedTradition[part] = id === "general" ? undefined : id),
     );
     sentence.appendText(part === "2" ? " in " : " who are ");
-    const contexts = CONTEXT_PHRASES[part].filter(([id]) => colonialContexts(part).some((c) => c.id === id));
+    const spaceBiome = findBiome(this.land(`colonial:${part}`).biome, this.customBiomes)?.space;
+    const contexts = contextPhrasesFor(part, !!spaceBiome).filter(([id]) => colonialContexts(part).some((c) => c.id === id));
     const context = contexts.find(([id]) => id === this.selectedContext[part]) ?? contexts[0];
     this.sentenceLink(
       sentence,
@@ -1621,6 +1634,18 @@ export class NameForgeModal extends Modal {
     );
     sentence.appendText(" across ");
     this.landClause(sentence, `colonial:${part}`, UNKNOWN_COUNTRY, part === "2" ? "new-land" : "established", false);
+    // Stellar brief §5.8: alien life, under a space biome only.
+    if (spaceBiome) {
+      sentence.appendText(", with ");
+      this.sentenceLink(
+        sentence,
+        ALIEN_CHOICES[this.colonialAliens[part] ? 1 : 0].label,
+        "Alien life: whether native-people and local-god slots name aliens, and half of native places become alien places",
+        () => ALIEN_CHOICES.map((c) => ({ id: c.id, label: c.label })),
+        this.colonialAliens[part] ? "on" : "off",
+        (id) => (this.colonialAliens[part] = id === "on"),
+      );
+    }
   }
 
   /** Name ageing: "Age the name towards ‹target pack›". */
@@ -3338,11 +3363,12 @@ export class NameForgeModal extends Modal {
       const part = colonialPart === "2" ? "new-land" : "established";
       const tradition = this.selectedTradition[colonialPart];
       const context = this.selectedContext[colonialPart];
-      recipe = colonialPlaceNamesRecipe(part, tradition, context, biome, land.terrain);
+      const aliens = !!found?.space && this.colonialAliens[colonialPart];
+      recipe = colonialPlaceNamesRecipe(part, tradition, context, biome, land.terrain, aliens);
       const t = COLONIAL_TRADITIONS.find((x) => x.id === (tradition ?? "general"))!;
       const contextLabel = colonialContexts(colonialPart).find((c) => c.id === context)?.label.toLowerCase();
       name = [traditionLabel(colonialPart, t.id, t.label), contextLabel].filter(Boolean).join(" · ");
-      description = wizardSentenceText(part, { tradition: t.id, context, biome, terrain: land.terrain }, custom);
+      description = wizardSentenceText(part, { tradition: t.id, context, biome, terrain: land.terrain, aliens }, custom);
     } else {
       recipe = britishPlaceNamesRecipe(this.selectedRegion, biome, land.terrain);
       name = ["British", regionPhrase(this.selectedRegion), found ? biomeInline(found) : undefined].filter(Boolean).join(" · ");
@@ -4949,7 +4975,7 @@ export class NameForgeModal extends Modal {
       const biome = custom ? undefined : land.biome;
       // River brief §3: rendered names from the fixed built-in recipe, shown as recipe results.
       const result = this.tryLand(() => generatePlaceNames({
-        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain),
+        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, !!found?.space && this.colonialAliens[colonialPart]),
         biome: custom,
         slots: {},
         count: this.generationCount,
@@ -4963,7 +4989,8 @@ export class NameForgeModal extends Modal {
       await this.recordGenerationHistory(
         result.names.length,
         colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context, custom ? undefined : biome) +
-          landHistorySuffix(land, this.customBiomes, !!custom),
+          landHistorySuffix(land, this.customBiomes, !!custom) +
+          (found?.space && this.colonialAliens[colonialPart] ? " · alien life" : ""),
       );
       this.setStatus("");
       return;

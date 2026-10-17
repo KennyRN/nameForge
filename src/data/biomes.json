@@ -7129,6 +7129,1511 @@
       }
     }
   ],
+  "spaceBiomes": [
+    {
+      "id": "planetary-system",
+      "label": "Planetary system",
+      "phrase": "a planetary system",
+      "guide": "A planet and its moons: the surface, the moons, the rings and the orbits around them. (Astronomers use \"planetary system\" for a star's planets; here it means one planet's neighbourhood.)",
+      "space": true,
+      "scale": "Pl",
+      "terrainWeights": {
+        "surface": 30,
+        "moons": 25,
+        "rings": 20,
+        "orbits": 25
+      },
+      "land": {
+        "surface": [
+          [
+            "Craterlands",
+            1
+          ],
+          [
+            "Dayside",
+            1
+          ],
+          [
+            "Nightside",
+            1
+          ],
+          [
+            "Twilight Band",
+            1
+          ],
+          [
+            "Ice Plains",
+            1
+          ]
+        ],
+        "moons": [
+          [
+            "Moons",
+            1
+          ],
+          [
+            "Moonlets",
+            1
+          ],
+          [
+            "Ice Moons",
+            1
+          ]
+        ],
+        "rings": [
+          [
+            "Rings",
+            1
+          ],
+          [
+            "Ring Gaps",
+            1
+          ],
+          [
+            "Ring Arcs",
+            1
+          ]
+        ],
+        "orbits": [
+          [
+            "High Orbits",
+            1
+          ],
+          [
+            "Wells",
+            1
+          ],
+          [
+            "Saddles",
+            1
+          ]
+        ]
+      },
+      "water": {},
+      "short": {
+        "land": {
+          "surface": [
+            "crater",
+            "ridge",
+            "basin",
+            "plain",
+            "rille",
+            "scarp"
+          ],
+          "moons": [
+            "moon",
+            "moonlet",
+            "crater",
+            "rift"
+          ],
+          "rings": [
+            "ring",
+            "gap",
+            "arc",
+            "ringlet",
+            "spoke"
+          ],
+          "orbits": [
+            "well",
+            "saddle",
+            "node",
+            "point"
+          ]
+        },
+        "water": {}
+      },
+      "shapeMultipliers": {
+        "groups": {},
+        "generics": {}
+      },
+      "universalWords": false,
+      "customTerrains": [
+        {
+          "id": "surface",
+          "label": "Surface",
+          "phrase": "the surface",
+          "shapeMultipliers": {
+            "groups": {
+              "planet-surface": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "moons",
+          "label": "Moons",
+          "phrase": "the moons",
+          "shapeMultipliers": {
+            "groups": {
+              "planet-moons": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "rings",
+          "label": "Rings",
+          "phrase": "the rings",
+          "shapeMultipliers": {
+            "groups": {
+              "planet-rings": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "orbits",
+          "label": "Orbits",
+          "phrase": "the orbits",
+          "shapeMultipliers": {
+            "groups": {
+              "planet-orbits": 4
+            },
+            "generics": {}
+          }
+        }
+      ],
+      "wildAnimals": [],
+      "birds": [],
+      "creatures": [],
+      "trees": [],
+      "plants": [],
+      "livestock": [],
+      "crops": [
+        [
+          "algae",
+          1
+        ],
+        [
+          "kelp",
+          1
+        ],
+        [
+          "soy",
+          1
+        ],
+        [
+          "rice",
+          1
+        ],
+        [
+          "potato",
+          1
+        ],
+        [
+          "wheat",
+          1
+        ]
+      ],
+      "lifeways": [
+        [
+          "Miners",
+          14
+        ],
+        [
+          "Haulers",
+          12
+        ],
+        [
+          "Pilots",
+          10
+        ],
+        [
+          "Riggers",
+          8
+        ],
+        [
+          "Salvagers",
+          8
+        ],
+        [
+          "Prospectors",
+          8
+        ],
+        [
+          "Hydroponic Growers",
+          6
+        ],
+        [
+          "Engineers",
+          6
+        ],
+        [
+          "Surveyors",
+          6
+        ],
+        [
+          "Dock Hands",
+          6
+        ],
+        [
+          "Traders",
+          4
+        ]
+      ],
+      "sacred": [
+        [
+          "Old Beacon",
+          1
+        ],
+        [
+          "First Landing",
+          1
+        ],
+        [
+          "Derelict",
+          1
+        ],
+        [
+          "Wreck",
+          1
+        ],
+        [
+          "Ice Shrine",
+          1
+        ]
+      ],
+      "materials": [
+        [
+          "Ice",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Nickel",
+          1
+        ],
+        [
+          "Carbon",
+          1
+        ],
+        [
+          "Glass",
+          1
+        ],
+        [
+          "Alloy",
+          1
+        ]
+      ],
+      "ground": [
+        "regolith",
+        "dust",
+        "ice",
+        "iron",
+        "basalt",
+        "carbon"
+      ],
+      "resources": [
+        "ice",
+        "water",
+        "helium",
+        "iron",
+        "nickel",
+        "platinum",
+        "deuterium",
+        "silicates"
+      ],
+      "seasons": []
+    },
+    {
+      "id": "star-system",
+      "label": "Star system",
+      "phrase": "a star system",
+      "guide": "One star or a binary pair: the inner system, the belts, the frost line and outer clouds, and the edge of the star's wind.",
+      "space": true,
+      "scale": "Sy",
+      "terrainWeights": {
+        "inner": 20,
+        "belts": 25,
+        "outer": 25,
+        "boundaries": 20,
+        "binaries": 10
+      },
+      "land": {
+        "inner": [
+          [
+            "Corona",
+            1
+          ],
+          [
+            "Inner Worlds",
+            1
+          ],
+          [
+            "Flare Zone",
+            1
+          ]
+        ],
+        "belts": [
+          [
+            "Belts",
+            1
+          ],
+          [
+            "Trojan Camps",
+            1
+          ],
+          [
+            "Swarms",
+            1
+          ],
+          [
+            "Kirkwood Gaps",
+            1
+          ]
+        ],
+        "outer": [
+          [
+            "Outer Worlds",
+            1
+          ],
+          [
+            "Comet Cloud",
+            1
+          ],
+          [
+            "Scattered Disc",
+            1
+          ],
+          [
+            "Ice Giants",
+            1
+          ]
+        ],
+        "boundaries": [
+          [
+            "Shocklands",
+            1
+          ],
+          [
+            "Sheath",
+            1
+          ],
+          [
+            "Pause",
+            1
+          ],
+          [
+            "Bow",
+            1
+          ],
+          [
+            "Tail",
+            1
+          ]
+        ],
+        "binaries": [
+          [
+            "Lobes",
+            1
+          ],
+          [
+            "Neck",
+            1
+          ],
+          [
+            "Bridge",
+            1
+          ]
+        ]
+      },
+      "water": {},
+      "short": {
+        "land": {
+          "inner": [
+            "corona",
+            "spot",
+            "flare"
+          ],
+          "belts": [
+            "belt",
+            "gap",
+            "camp",
+            "swarm",
+            "chain"
+          ],
+          "outer": [
+            "frostline",
+            "cloud",
+            "disc",
+            "deep"
+          ],
+          "boundaries": [
+            "shock",
+            "sheath",
+            "pause",
+            "bow",
+            "tail"
+          ],
+          "binaries": [
+            "lobe",
+            "neck",
+            "bridge",
+            "bary"
+          ]
+        },
+        "water": {}
+      },
+      "shapeMultipliers": {
+        "groups": {},
+        "generics": {}
+      },
+      "universalWords": false,
+      "customTerrains": [
+        {
+          "id": "inner",
+          "label": "Inner system",
+          "phrase": "the inner system",
+          "shapeMultipliers": {
+            "groups": {
+              "system-inner": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "belts",
+          "label": "Belts",
+          "phrase": "the belts",
+          "shapeMultipliers": {
+            "groups": {
+              "system-belts": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "outer",
+          "label": "Outer system",
+          "phrase": "the outer system",
+          "shapeMultipliers": {
+            "groups": {
+              "system-outer": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "boundaries",
+          "label": "Boundaries",
+          "phrase": "the edge of the system",
+          "shapeMultipliers": {
+            "groups": {
+              "system-boundaries": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "binaries",
+          "label": "Binary stars",
+          "phrase": "the binary stars",
+          "shapeMultipliers": {
+            "groups": {
+              "system-binaries": 4
+            },
+            "generics": {}
+          }
+        }
+      ],
+      "wildAnimals": [],
+      "birds": [],
+      "creatures": [],
+      "trees": [],
+      "plants": [],
+      "livestock": [],
+      "crops": [
+        [
+          "algae",
+          1
+        ],
+        [
+          "kelp",
+          1
+        ],
+        [
+          "soy",
+          1
+        ],
+        [
+          "rice",
+          1
+        ],
+        [
+          "potato",
+          1
+        ],
+        [
+          "wheat",
+          1
+        ]
+      ],
+      "lifeways": [
+        [
+          "Miners",
+          14
+        ],
+        [
+          "Haulers",
+          12
+        ],
+        [
+          "Pilots",
+          10
+        ],
+        [
+          "Riggers",
+          8
+        ],
+        [
+          "Salvagers",
+          8
+        ],
+        [
+          "Prospectors",
+          8
+        ],
+        [
+          "Hydroponic Growers",
+          6
+        ],
+        [
+          "Engineers",
+          6
+        ],
+        [
+          "Surveyors",
+          6
+        ],
+        [
+          "Dock Hands",
+          6
+        ],
+        [
+          "Traders",
+          4
+        ]
+      ],
+      "sacred": [
+        [
+          "Old Beacon",
+          1
+        ],
+        [
+          "First Landing",
+          1
+        ],
+        [
+          "Derelict",
+          1
+        ],
+        [
+          "Wreck",
+          1
+        ],
+        [
+          "Ice Shrine",
+          1
+        ]
+      ],
+      "materials": [
+        [
+          "Ice",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Nickel",
+          1
+        ],
+        [
+          "Carbon",
+          1
+        ],
+        [
+          "Glass",
+          1
+        ],
+        [
+          "Alloy",
+          1
+        ]
+      ],
+      "ground": [
+        "regolith",
+        "dust",
+        "ice",
+        "iron",
+        "basalt",
+        "carbon"
+      ],
+      "resources": [
+        "ice",
+        "water",
+        "helium",
+        "iron",
+        "nickel",
+        "platinum",
+        "deuterium",
+        "silicates"
+      ],
+      "seasons": []
+    },
+    {
+      "id": "local-stars",
+      "label": "Local stellar neighbourhood",
+      "phrase": "the local stars",
+      "guide": "The nearby stars and the clouds, bubbles and stellar streams between them.",
+      "space": true,
+      "scale": "Nb",
+      "terrainWeights": {
+        "stars": 35,
+        "clouds": 25,
+        "bubbles": 20,
+        "streams": 20
+      },
+      "land": {
+        "stars": [
+          [
+            "Near Stars",
+            1
+          ],
+          [
+            "Red Dwarfs",
+            1
+          ],
+          [
+            "Pairs",
+            1
+          ]
+        ],
+        "clouds": [
+          [
+            "Clouds",
+            1
+          ],
+          [
+            "Fluff",
+            1
+          ],
+          [
+            "Globules",
+            1
+          ]
+        ],
+        "bubbles": [
+          [
+            "Bubble",
+            1
+          ],
+          [
+            "Shells",
+            1
+          ],
+          [
+            "Hollows",
+            1
+          ],
+          [
+            "Wall",
+            1
+          ]
+        ],
+        "streams": [
+          [
+            "Streams",
+            1
+          ],
+          [
+            "Wave",
+            1
+          ],
+          [
+            "Moving Groups",
+            1
+          ]
+        ]
+      },
+      "water": {},
+      "short": {
+        "land": {
+          "stars": [
+            "star",
+            "pair",
+            "dwarf"
+          ],
+          "clouds": [
+            "cloud",
+            "fluff",
+            "globule",
+            "veil"
+          ],
+          "bubbles": [
+            "bubble",
+            "shell",
+            "hollow",
+            "wall"
+          ],
+          "streams": [
+            "stream",
+            "wave",
+            "group"
+          ]
+        },
+        "water": {}
+      },
+      "shapeMultipliers": {
+        "groups": {},
+        "generics": {}
+      },
+      "universalWords": false,
+      "customTerrains": [
+        {
+          "id": "stars",
+          "label": "Nearby stars",
+          "phrase": "the nearby stars",
+          "shapeMultipliers": {
+            "groups": {
+              "neighbourhood-stars": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "clouds",
+          "label": "Clouds",
+          "phrase": "the clouds",
+          "shapeMultipliers": {
+            "groups": {
+              "neighbourhood-clouds": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "bubbles",
+          "label": "Bubbles and shells",
+          "phrase": "the bubbles and shells",
+          "shapeMultipliers": {
+            "groups": {
+              "neighbourhood-bubbles": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "streams",
+          "label": "Stellar streams",
+          "phrase": "the stellar streams",
+          "shapeMultipliers": {
+            "groups": {
+              "neighbourhood-streams": 4
+            },
+            "generics": {}
+          }
+        }
+      ],
+      "wildAnimals": [],
+      "birds": [],
+      "creatures": [],
+      "trees": [],
+      "plants": [],
+      "livestock": [],
+      "crops": [],
+      "lifeways": [
+        [
+          "Miners",
+          14
+        ],
+        [
+          "Haulers",
+          12
+        ],
+        [
+          "Pilots",
+          10
+        ],
+        [
+          "Riggers",
+          8
+        ],
+        [
+          "Salvagers",
+          8
+        ],
+        [
+          "Prospectors",
+          8
+        ],
+        [
+          "Hydroponic Growers",
+          6
+        ],
+        [
+          "Engineers",
+          6
+        ],
+        [
+          "Surveyors",
+          6
+        ],
+        [
+          "Dock Hands",
+          6
+        ],
+        [
+          "Traders",
+          4
+        ]
+      ],
+      "sacred": [
+        [
+          "Old Beacon",
+          1
+        ],
+        [
+          "First Landing",
+          1
+        ],
+        [
+          "Derelict",
+          1
+        ],
+        [
+          "Wreck",
+          1
+        ],
+        [
+          "Ice Shrine",
+          1
+        ]
+      ],
+      "materials": [
+        [
+          "Ice",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Nickel",
+          1
+        ],
+        [
+          "Carbon",
+          1
+        ],
+        [
+          "Glass",
+          1
+        ],
+        [
+          "Alloy",
+          1
+        ]
+      ],
+      "ground": [
+        "regolith",
+        "dust",
+        "ice",
+        "iron",
+        "basalt",
+        "carbon"
+      ],
+      "resources": [
+        "ice",
+        "water",
+        "helium",
+        "iron",
+        "nickel",
+        "platinum",
+        "deuterium",
+        "silicates"
+      ],
+      "seasons": []
+    },
+    {
+      "id": "sector",
+      "label": "Sector",
+      "phrase": "a sector",
+      "guide": "A stretch of a spiral arm: nebulae, star clusters, dark rifts and spurs.",
+      "space": true,
+      "scale": "Se",
+      "terrainWeights": {
+        "nebulae": 30,
+        "clusters": 25,
+        "rifts": 20,
+        "spurs": 25
+      },
+      "land": {
+        "nebulae": [
+          [
+            "Nebulae",
+            1
+          ],
+          [
+            "Pillars",
+            1
+          ],
+          [
+            "Knots",
+            1
+          ],
+          [
+            "Dark",
+            1
+          ]
+        ],
+        "clusters": [
+          [
+            "Clusters",
+            1
+          ],
+          [
+            "Nurseries",
+            1
+          ]
+        ],
+        "rifts": [
+          [
+            "Rifts",
+            1
+          ],
+          [
+            "Dust Lanes",
+            1
+          ],
+          [
+            "Dark Rift",
+            1
+          ]
+        ],
+        "spurs": [
+          [
+            "Spurs",
+            1
+          ],
+          [
+            "Branches",
+            1
+          ],
+          [
+            "Filaments",
+            1
+          ]
+        ]
+      },
+      "water": {},
+      "short": {
+        "land": {
+          "nebulae": [
+            "nebula",
+            "pillar",
+            "knot",
+            "veil",
+            "dark"
+          ],
+          "clusters": [
+            "cluster",
+            "nursery",
+            "association"
+          ],
+          "rifts": [
+            "rift",
+            "gap",
+            "lane",
+            "void"
+          ],
+          "spurs": [
+            "spur",
+            "branch",
+            "fork",
+            "filament"
+          ]
+        },
+        "water": {}
+      },
+      "shapeMultipliers": {
+        "groups": {},
+        "generics": {}
+      },
+      "universalWords": false,
+      "customTerrains": [
+        {
+          "id": "nebulae",
+          "label": "Nebulae",
+          "phrase": "the nebulae",
+          "shapeMultipliers": {
+            "groups": {
+              "sector-nebulae": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "clusters",
+          "label": "Clusters",
+          "phrase": "the clusters",
+          "shapeMultipliers": {
+            "groups": {
+              "sector-clusters": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "rifts",
+          "label": "Rifts",
+          "phrase": "the rifts",
+          "shapeMultipliers": {
+            "groups": {
+              "sector-rifts": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "spurs",
+          "label": "Spurs and filaments",
+          "phrase": "the spurs and filaments",
+          "shapeMultipliers": {
+            "groups": {
+              "sector-spurs": 4
+            },
+            "generics": {}
+          }
+        }
+      ],
+      "wildAnimals": [],
+      "birds": [],
+      "creatures": [],
+      "trees": [],
+      "plants": [],
+      "livestock": [],
+      "crops": [],
+      "lifeways": [
+        [
+          "Miners",
+          14
+        ],
+        [
+          "Haulers",
+          12
+        ],
+        [
+          "Pilots",
+          10
+        ],
+        [
+          "Riggers",
+          8
+        ],
+        [
+          "Salvagers",
+          8
+        ],
+        [
+          "Prospectors",
+          8
+        ],
+        [
+          "Hydroponic Growers",
+          6
+        ],
+        [
+          "Engineers",
+          6
+        ],
+        [
+          "Surveyors",
+          6
+        ],
+        [
+          "Dock Hands",
+          6
+        ],
+        [
+          "Traders",
+          4
+        ]
+      ],
+      "sacred": [
+        [
+          "Old Beacon",
+          1
+        ],
+        [
+          "First Landing",
+          1
+        ],
+        [
+          "Derelict",
+          1
+        ],
+        [
+          "Wreck",
+          1
+        ],
+        [
+          "Ice Shrine",
+          1
+        ]
+      ],
+      "materials": [
+        [
+          "Ice",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Nickel",
+          1
+        ],
+        [
+          "Carbon",
+          1
+        ],
+        [
+          "Glass",
+          1
+        ],
+        [
+          "Alloy",
+          1
+        ]
+      ],
+      "ground": [
+        "regolith",
+        "dust",
+        "ice",
+        "iron",
+        "basalt",
+        "carbon"
+      ],
+      "resources": [
+        "ice",
+        "water",
+        "helium",
+        "iron",
+        "nickel",
+        "platinum",
+        "deuterium",
+        "silicates"
+      ],
+      "seasons": []
+    },
+    {
+      "id": "galaxy",
+      "label": "Galaxy-spanning",
+      "phrase": "the galaxy",
+      "guide": "The arms, the core and its bar, the disc, the halo, and the voids beyond.",
+      "space": true,
+      "scale": "Ga",
+      "terrainWeights": {
+        "arms": 30,
+        "core": 20,
+        "disc": 20,
+        "halo": 15,
+        "voids": 15
+      },
+      "land": {
+        "arms": [
+          [
+            "Arms",
+            1
+          ],
+          [
+            "Interarm Gaps",
+            1
+          ]
+        ],
+        "core": [
+          [
+            "Core",
+            1
+          ],
+          [
+            "Bar",
+            1
+          ],
+          [
+            "Bulge",
+            1
+          ]
+        ],
+        "disc": [
+          [
+            "Disc",
+            1
+          ],
+          [
+            "Warp",
+            1
+          ],
+          [
+            "Rim",
+            1
+          ]
+        ],
+        "halo": [
+          [
+            "Halo",
+            1
+          ],
+          [
+            "Streams",
+            1
+          ],
+          [
+            "Satellite Clouds",
+            1
+          ]
+        ],
+        "voids": [
+          [
+            "Voids",
+            1
+          ],
+          [
+            "Walls",
+            1
+          ],
+          [
+            "Local Sheet",
+            1
+          ]
+        ]
+      },
+      "water": {},
+      "short": {
+        "land": {
+          "arms": [
+            "arm",
+            "spur",
+            "gap"
+          ],
+          "core": [
+            "core",
+            "bar",
+            "bulge"
+          ],
+          "disc": [
+            "disc",
+            "warp",
+            "flare",
+            "rim",
+            "plane"
+          ],
+          "halo": [
+            "halo",
+            "stream",
+            "cloud",
+            "cluster"
+          ],
+          "voids": [
+            "void",
+            "wall",
+            "sheet"
+          ]
+        },
+        "water": {}
+      },
+      "shapeMultipliers": {
+        "groups": {},
+        "generics": {}
+      },
+      "universalWords": false,
+      "customTerrains": [
+        {
+          "id": "arms",
+          "label": "Arms",
+          "phrase": "the arms",
+          "shapeMultipliers": {
+            "groups": {
+              "galaxy-arms": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "core",
+          "label": "Core",
+          "phrase": "the core",
+          "shapeMultipliers": {
+            "groups": {
+              "galaxy-core": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "disc",
+          "label": "Disc",
+          "phrase": "the disc",
+          "shapeMultipliers": {
+            "groups": {
+              "galaxy-disc": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "halo",
+          "label": "Halo",
+          "phrase": "the halo",
+          "shapeMultipliers": {
+            "groups": {
+              "galaxy-halo": 4
+            },
+            "generics": {}
+          }
+        },
+        {
+          "id": "voids",
+          "label": "Voids",
+          "phrase": "the voids",
+          "shapeMultipliers": {
+            "groups": {
+              "galaxy-voids": 4
+            },
+            "generics": {}
+          }
+        }
+      ],
+      "wildAnimals": [],
+      "birds": [],
+      "creatures": [],
+      "trees": [],
+      "plants": [],
+      "livestock": [],
+      "crops": [],
+      "lifeways": [
+        [
+          "Miners",
+          14
+        ],
+        [
+          "Haulers",
+          12
+        ],
+        [
+          "Pilots",
+          10
+        ],
+        [
+          "Riggers",
+          8
+        ],
+        [
+          "Salvagers",
+          8
+        ],
+        [
+          "Prospectors",
+          8
+        ],
+        [
+          "Hydroponic Growers",
+          6
+        ],
+        [
+          "Engineers",
+          6
+        ],
+        [
+          "Surveyors",
+          6
+        ],
+        [
+          "Dock Hands",
+          6
+        ],
+        [
+          "Traders",
+          4
+        ]
+      ],
+      "sacred": [
+        [
+          "Old Beacon",
+          1
+        ],
+        [
+          "First Landing",
+          1
+        ],
+        [
+          "Derelict",
+          1
+        ],
+        [
+          "Wreck",
+          1
+        ],
+        [
+          "Ice Shrine",
+          1
+        ]
+      ],
+      "materials": [
+        [
+          "Ice",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Nickel",
+          1
+        ],
+        [
+          "Carbon",
+          1
+        ],
+        [
+          "Glass",
+          1
+        ],
+        [
+          "Alloy",
+          1
+        ]
+      ],
+      "ground": [
+        "regolith",
+        "dust",
+        "ice",
+        "iron",
+        "basalt",
+        "carbon"
+      ],
+      "resources": [
+        "ice",
+        "water",
+        "helium",
+        "iron",
+        "nickel",
+        "platinum",
+        "deuterium",
+        "silicates"
+      ],
+      "seasons": []
+    }
+  ],
   "irregularPlurals": {
     "deer": "deer",
     "sheep": "sheep",

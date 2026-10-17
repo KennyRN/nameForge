@@ -27,6 +27,9 @@ import {
   type NativeTreatment,
 } from "../colonialShapes";
 import { adoptionRng } from "../takeover/batch";
+import { hasSpaceBlock } from "../space/safeguards";
+import { SPACE_DATA, spaceDirections } from "../space/scale";
+import { catalogueName, catalogueWorld, spokenCatalogue } from "../space/stars";
 import { riverFill, type RiverSetting } from "../rivers/engine";
 import { type TribalSlotFields, tribalSlotFill } from "../tribes/slotFill";
 
@@ -298,7 +301,7 @@ export interface NameGenerateResult {
 type Fill =
   | { kind: "word"; entry: NameWordEntry; traditional: boolean }
   /** `native`: the native name as drawn, where `text` is its adapted form (recipe takeover §A5). */
-  | { kind: "name"; text: string; mode: NameMode; native?: string }
+  | { kind: "name"; text: string; mode: NameMode; native?: string; /** Stellar brief §5.7: a catalogue name; it bypasses the takeover engine. */ catalogue?: boolean }
   /** `label`: the rendered placeholder text, chosen once (§5); `native`: a native flora or fauna placeholder (§6). */
   | { kind: "placeholder"; categoryId: string; label: string; native?: boolean };
 
@@ -311,6 +314,16 @@ const categoryLabels = new Map([
 /** §9.3 local generics: words come from a linked word list; always fused to the specific. */
 const LOCAL_GENERICS = new Set(["local-settlement-word", "local-market-word"]);
 const DIRECTIONS = ["north", "south", "east", "west"];
+/** Stellar brief §5.6: the positional words a space biome keeps beside its own direction words. */
+const SPACE_POSITIONAL = new Set(["outer", "inner", "upper", "far", "near", "high", "low"]);
+const spaceWord = (word: string): NameWordEntry => ({ modern: word, forms: [word.charAt(0).toUpperCase() + word.slice(1)], fuses: "no" });
+const SPACE_ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth"];
+
+/** Stellar brief §3.2: a name that says the same word twice ("Knot Knot") is redrawn. */
+function repeatsWord(text: string): boolean {
+  const words = text.toLowerCase().split(/[\s-]+/).filter((w) => w.length > 2 && !w.startsWith("["));
+  return new Set(words).size < words.length;
+}
 
 /** Plural of a colonial generic word (§3.2 gives none): words ending in s stay; y → ies; else + s. */
 function pluralise(word: string): string {
@@ -360,11 +373,13 @@ const titleWord = (w: string) => (w.startsWith("[") ? w : w.charAt(0).toUpperCas
 export function capitaliseSpaced(text: string): string {
   const linking = new Set(NAME_WORDS.linkingWords);
   let inPlaceholder = false;
-  return text
-    .split(" ")
+  const words = text.split(" ");
+  return words
     .map((word, i) => {
       if (word.startsWith("[")) inPlaceholder = true;
-      const out = inPlaceholder ? word : i > 0 && linking.has(word.toLowerCase()) ? word.toLowerCase() : titleWord(word);
+      // Stellar brief §4.6: a planet letter after a catalogue number stays lower case ("Kepler-452 b").
+      const planetLetter = i > 0 && /^[b-h]$/.test(word) && /\d$/.test(words[i - 1]);
+      const out = inPlaceholder ? word : planetLetter ? word : i > 0 && linking.has(word.toLowerCase()) ? word.toLowerCase() : titleWord(word);
       if (word.includes("]")) inPlaceholder = false;
       return out;
     })
@@ -467,6 +482,48 @@ export class NameRenderer {
   }
 
   /**
+   * Stellar brief §5.6–§5.8: a fill for a category under a space biome, or undefined to take the
+   * usual path (landform, ground and resource words come from the biome through landFill).
+   */
+  private spaceFill(categoryId: string, rng: () => number): Fill | undefined {
+    const biome = this.options.biome;
+    const scale = biome?.scale;
+    if (!biome || !scale) return undefined;
+    const aliens = !!this.recipe.shape.aliens;
+    const placeholder = (label: string): Fill => ({ kind: "placeholder", categoryId, label, native: true });
+    const word = (entry: NameWordEntry): Fill => ({ kind: "word", entry, traditional: false });
+    switch (categoryId) {
+      case "native-place-name": {
+        // The place's "old name" is its survey designation; with alien life, half are alien names.
+        if (aliens && rng() < 0.5) return placeholder("[alien place]");
+        const text = scale === "Pl" || scale === "Sy" ? catalogueWorld(rng) : catalogueName(rng);
+        return { kind: "name", text, mode: "whole", catalogue: true };
+      }
+      case "native-people-or-tribe":
+        return placeholder(aliens ? "[alien people]" : "[earlier settlers]");
+      case "local-deity":
+        return placeholder("[alien god]");
+      case "position-or-direction": {
+        if (rng() < 0.5) return word(spaceWord(pickUniform(spaceDirections(scale), rng).toLowerCase()));
+        const positional = (NAME_WORDS.categories["position-or-direction"] ?? []).filter((e) => SPACE_POSITIONAL.has(e.modern.toLowerCase()));
+        return positional.length > 0 ? word(pickUniform(positional, rng)) : undefined;
+      }
+      case "built-feature":
+        return word(spaceWord(pickUniform(SPACE_DATA.spaceBuilt, rng)));
+      case "activity":
+        return word(spaceWord(pickUniform(SPACE_DATA.spaceActivity, rng).toLowerCase()));
+      case "distance-or-survey-mark":
+        return word(spaceWord(pickUniform(SPACE_ORDINALS.slice(0, scale === "Pl" ? 5 : 12), rng).toLowerCase()));
+      case "crop":
+      case "produce": {
+        const crops = biome.crops;
+        return crops.length > 0 ? word(spaceWord(pickWeighted(crops, rng))) : undefined;
+      }
+    }
+    return undefined;
+  }
+
+  /**
    * Land brief §5.3–§5.4: a fill from the biome and terrain, or undefined to take today's path
    * (Britain with Any terrain draws today's built-ins uniformly, so seeds are unchanged).
    */
@@ -560,6 +617,11 @@ export class NameRenderer {
       }
       return this.riverWordFill(rng);
     }
+    // Stellar brief §5.6–§5.8: under a space biome, unmapped slots take space fills (a mapped slot's pack still wins).
+    if (!mapped && this.options.biome?.space) {
+      const space = this.spaceFill(categoryId, rng);
+      if (space) return space;
+    }
     // §6.1: in colonial rendering, unmapped native flora and fauna never draw the British lists.
     // An explicit built-in mapping still does; domestic animals and crops are not in the set.
     if (this.colonial && !mapped && NATIVE_LABELS[categoryId]) {
@@ -652,6 +714,8 @@ export class NameRenderer {
     whole: boolean,
     shape: ColonialShape,
   ): Fill {
+    // Stellar brief §5.7: a catalogue name is kept as drawn (adopted) or said aloud (adapted); never the takeover engine.
+    if (fill.kind === "name" && fill.catalogue) return treatment === "adapted" ? { ...fill, text: spokenCatalogue(fill.text), native: fill.text } : fill;
     const adaptation = this.adaptation;
     if (!adaptation || treatment !== "adapted" || shape.translated || !NATIVE_CATEGORIES.has(categoryId)) return fill;
     let current = fill;
@@ -1079,6 +1143,12 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
     notices.push(`Biome pack “${biomeSetting.slice(2, -2)}” wasn't found; using ${organic ? "Britain" : "unknown country"}.`);
   }
   if (organic && biome?.id === "britain") biome = undefined;
+  // Stellar brief §5.1: space biomes are for exploration and expansion; elsewhere the default stands.
+  if (organic && biome?.space) {
+    notices.push("Space biomes are for exploration, expansion and the Interstellar era.");
+    biome = undefined;
+  }
+  const spaceScale = biome?.space ? biome.scale : undefined;
   let terrain = recipe.shape.terrain ?? "any";
   if (terrain !== "any" && biome && !availableTerrains(biome).some((t) => t.id === terrain) && biome.customTerrains) {
     notices.push(`${biome.label} has no “${terrain}” terrain.`);
@@ -1110,6 +1180,7 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
       feature: recipe.shape.feature,
       excludedCategories,
       environment,
+      ...(spaceScale ? { space: { scale: spaceScale, aliens: !!recipe.shape.aliens } } : {}),
     });
     renderOne = (i) => renderer.renderColonial(shapes[i], rng);
     shapeCount = shapes.length;
@@ -1120,7 +1191,8 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
   const names: GeneratedName[] = [];
   for (let i = 0; i < shapeCount; i++) {
     let name = renderOne(i);
-    for (let attempt = 1; seen.has(name.text.toLowerCase()) && attempt < NAMES.duplicateAttempts; attempt++) {
+    // Stellar brief §10: a name holding a franchise phrase is redrawn like a duplicate.
+    for (let attempt = 1; (seen.has(name.text.toLowerCase()) || (!!spaceScale && (hasSpaceBlock(name.text) || repeatsWord(name.text)))) && attempt < NAMES.duplicateAttempts; attempt++) {
       name = renderOne(i);
     }
     seen.add(name.text.toLowerCase());

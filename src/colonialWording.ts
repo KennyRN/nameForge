@@ -17,6 +17,19 @@ export const CONTEXT_PHRASES: Record<ColonialPart, [string, string][]> = {
   ],
 };
 
+/** Stellar brief §5.9: exploration reads "space" under a space biome; expansion's contexts are unchanged. */
+export const SPACE_CONTEXT_PHRASES: Record<ColonialPart, [string, string][]> = {
+  "2": [
+    ["wild-and-unsettled", "wild and unsettled space"],
+    ["sparse-or-weak-native-presence", "space with a sparse, or weak, native presence"],
+    ["contested-frontier", "a contested frontier"],
+  ],
+  "2a": CONTEXT_PHRASES["2a"],
+};
+
+/** A part's context phrases, in their space wording when the biome is a space biome. */
+export const contextPhrasesFor = (part: ColonialPart, space: boolean): [string, string][] => (space ? SPACE_CONTEXT_PHRASES : CONTEXT_PHRASES)[part];
+
 /** The General tradition's name in each part. */
 export function generalTraditionLabel(part: ColonialPart): string {
   return part === "2" ? "General explorers" : "General incomers";

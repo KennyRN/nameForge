@@ -9,6 +9,7 @@ import biomeData from "./data/biomes.json";
 import nameWordData from "./data/name-words.json";
 import terrainData from "./data/terrains.json";
 import type { NameWordEntry } from "./names/engine";
+import type { SpaceScale } from "./space/scale";
 
 export type BiomeId =
   | "temperate"
@@ -83,6 +84,9 @@ export interface Biome extends Record<BiomeList, Weighted[]> {
   universalWords?: boolean;
   /** A user biome pack (Land brief §9). */
   custom?: { path: string; base: string };
+  /** Stellar brief §5.1: a built-in space biome, and the scale it stands for. */
+  space?: boolean;
+  scale?: SpaceScale;
   /** Biome-pack `//` lines by list: a whole name from that pack when picked (Land brief §9.3). */
   packLines?: Partial<Record<string, { pack: string; weight: number }[]>>;
   /** Pack lines resolved by the host to draw functions (engines never read the vault). */
@@ -106,6 +110,7 @@ interface RawBiome {
 }
 
 interface BiomeData {
+  spaceBiomes: RawBiome[];
   terrains: TerrainId[];
   universal: Record<TerrainId, { land: string[]; water: string[] }>;
   universalShort: Record<TerrainId, { land: string[]; water: string[] }>;
@@ -170,6 +175,15 @@ export const BRITAIN: Biome = (() => {
   };
 })();
 
+/** Stellar brief §5.1: the five space biomes, one per scale. They appear only in exploration, expansion,
+ * realms and world place names' Interstellar era, never in the general biome menus. */
+export const SPACE_BIOMES: readonly Biome[] = BIOME_DATA.spaceBiomes.map(normalise);
+
+export const isSpaceBiome = (biome: Pick<Biome, "space"> | undefined): boolean => !!biome?.space;
+
+/** The built-in space biome for a scale. */
+export const spaceBiomeFor = (scale: SpaceScale): Biome => SPACE_BIOMES.find((b) => b.scale === scale)!;
+
 /** Britain, the 12 biomes, then any user biomes. */
 export function allBiomes(custom: readonly Biome[] = []): Biome[] {
   return [BRITAIN, ...BIOMES, ...custom];
@@ -177,7 +191,7 @@ export function allBiomes(custom: readonly Biome[] = []): Biome[] {
 
 export function findBiome(id: string | undefined, custom: readonly Biome[] = []): Biome | undefined {
   if (!id) return undefined;
-  return allBiomes(custom).find((b) => b.id === id || b.custom?.path === id);
+  return allBiomes(custom).find((b) => b.id === id || b.custom?.path === id) ?? SPACE_BIOMES.find((b) => b.id === id);
 }
 
 export function biomeWords(biome: Biome, list: BiomeList): Weighted[] {

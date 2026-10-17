@@ -3144,7 +3144,124 @@
   },
   "multiWordNeverFuse": true,
   "genericFusion": {
-    "hope": 0.5
+    "hope": 0.5,
+    "crater": 0,
+    "basin": 0,
+    "plain": 0,
+    "space-ridge": 0,
+    "terminator": 0,
+    "twilight": 0,
+    "dayside": 0,
+    "nightside": 0,
+    "pole": 0,
+    "sea": 0,
+    "moon": 0,
+    "moonlet": 0,
+    "shepherd": 0,
+    "ring": 0,
+    "gap": 0,
+    "division": 0,
+    "arc": 0,
+    "ringlet": 0,
+    "spokes": 0,
+    "well": 0,
+    "space-hill": 0,
+    "lagrange-point": 0,
+    "saddle": 0,
+    "node": 0,
+    "high-orbit": 0,
+    "roche-limit": 0,
+    "corona": 0,
+    "spot": 0,
+    "prominence": 0,
+    "flare": 0,
+    "habitable-zone": 0,
+    "belt": 0,
+    "trojan-camp": 0,
+    "kirkwood-gap": 0,
+    "resonant-chain": 0,
+    "swarm": 0,
+    "family": 0,
+    "frostline": 0,
+    "comet-cloud": 0,
+    "scattered-disc": 0,
+    "deep": 0,
+    "reach": 0,
+    "shock": 0,
+    "sheath": 0,
+    "pause": 0,
+    "bow": 0,
+    "tail": 0,
+    "wake": 0,
+    "sphere": 0,
+    "roche-lobe": 0,
+    "neck": 0,
+    "space-bridge": 0,
+    "barycentre": 0,
+    "circumbinary-disc": 0,
+    "star": 0,
+    "pair": 0,
+    "dwarf": 0,
+    "cloud": 0,
+    "fluff": 0,
+    "globule": 0,
+    "veil": 0,
+    "bubble": 0,
+    "shell": 0,
+    "cavity": 0,
+    "space-hollow": 0,
+    "space-wall": 0,
+    "stream": 0,
+    "wave": 0,
+    "moving-group": 0,
+    "stellar-association": 0,
+    "nebula": 0,
+    "dark": 0,
+    "pillars": 0,
+    "knot": 0,
+    "clump": 0,
+    "molecular-cloud": 0,
+    "cluster": 0,
+    "ob-association": 0,
+    "nursery": 0,
+    "h-two": 0,
+    "rift": 0,
+    "dust-lane": 0,
+    "void": 0,
+    "spur": 0,
+    "branch": 0,
+    "fork": 0,
+    "filament": 0,
+    "arm": 0,
+    "interarm-gap": 0,
+    "core": 0,
+    "bar": 0,
+    "bulge": 0,
+    "central-zone": 0,
+    "disc": 0,
+    "warp": 0,
+    "disc-flare": 0,
+    "rim": 0,
+    "plane": 0,
+    "halo": 0,
+    "satellite-cloud": 0,
+    "globular": 0,
+    "sheet": 0,
+    "station": 0,
+    "habitat": 0,
+    "space-colony": 0,
+    "outpost": 0,
+    "port": 0,
+    "space-haven": 0,
+    "anchorage": 0,
+    "yard": 0,
+    "dock": 0,
+    "base": 0,
+    "camp": 0,
+    "relay": 0,
+    "space-beacon": 0,
+    "observatory": 0,
+    "gate": 0
   },
   "colonialGenerics": {
     "town": [
@@ -3268,6 +3385,408 @@
     ],
     "religious-lodge": [
       "lodge"
+    ],
+    "crater": [
+      "crater"
+    ],
+    "basin": [
+      "basin"
+    ],
+    "plain": [
+      "plain"
+    ],
+    "space-ridge": [
+      "ridge"
+    ],
+    "terminator": [
+      "terminator"
+    ],
+    "twilight": [
+      "twilight",
+      "twilight band"
+    ],
+    "dayside": [
+      "dayside"
+    ],
+    "nightside": [
+      "nightside"
+    ],
+    "pole": [
+      "pole"
+    ],
+    "sea": [
+      "sea",
+      "mare"
+    ],
+    "moon": [
+      "moon"
+    ],
+    "moonlet": [
+      "moonlet"
+    ],
+    "shepherd": [
+      "shepherd",
+      "shepherd moon"
+    ],
+    "ring": [
+      "ring"
+    ],
+    "gap": [
+      "gap"
+    ],
+    "division": [
+      "division"
+    ],
+    "arc": [
+      "arc"
+    ],
+    "ringlet": [
+      "ringlet"
+    ],
+    "spokes": [
+      "spokes"
+    ],
+    "well": [
+      "well",
+      "gravity well"
+    ],
+    "space-hill": [
+      "hill",
+      "Hill sphere"
+    ],
+    "lagrange-point": [
+      "point",
+      "Lagrange point"
+    ],
+    "saddle": [
+      "saddle"
+    ],
+    "node": [
+      "node"
+    ],
+    "high-orbit": [
+      "orbit",
+      "high orbit"
+    ],
+    "roche-limit": [
+      "limit",
+      "Roche limit"
+    ],
+    "corona": [
+      "corona"
+    ],
+    "spot": [
+      "spot",
+      "starspot"
+    ],
+    "prominence": [
+      "prominence"
+    ],
+    "flare": [
+      "flare",
+      "flare zone"
+    ],
+    "habitable-zone": [
+      "zone",
+      "habitable zone"
+    ],
+    "belt": [
+      "belt",
+      "asteroid belt"
+    ],
+    "trojan-camp": [
+      "camp",
+      "Trojan camp"
+    ],
+    "kirkwood-gap": [
+      "gap",
+      "Kirkwood gap"
+    ],
+    "resonant-chain": [
+      "chain",
+      "resonant chain"
+    ],
+    "swarm": [
+      "swarm"
+    ],
+    "family": [
+      "family",
+      "asteroid family"
+    ],
+    "frostline": [
+      "frostline",
+      "frost line"
+    ],
+    "comet-cloud": [
+      "cloud",
+      "comet cloud"
+    ],
+    "scattered-disc": [
+      "disc",
+      "scattered disc"
+    ],
+    "deep": [
+      "deep"
+    ],
+    "reach": [
+      "reach"
+    ],
+    "shock": [
+      "shock",
+      "termination shock"
+    ],
+    "sheath": [
+      "sheath",
+      "astrosheath"
+    ],
+    "pause": [
+      "pause",
+      "astropause"
+    ],
+    "bow": [
+      "bow",
+      "bow shock"
+    ],
+    "tail": [
+      "tail",
+      "astrotail"
+    ],
+    "wake": [
+      "wake"
+    ],
+    "sphere": [
+      "sphere",
+      "astrosphere"
+    ],
+    "roche-lobe": [
+      "lobe",
+      "Roche lobe"
+    ],
+    "neck": [
+      "neck"
+    ],
+    "space-bridge": [
+      "bridge"
+    ],
+    "barycentre": [
+      "bary",
+      "barycentre"
+    ],
+    "circumbinary-disc": [
+      "disc",
+      "circumbinary disc"
+    ],
+    "star": [
+      "star"
+    ],
+    "pair": [
+      "pair",
+      "binary pair"
+    ],
+    "dwarf": [
+      "dwarf",
+      "red dwarf"
+    ],
+    "cloud": [
+      "cloud",
+      "interstellar cloud"
+    ],
+    "fluff": [
+      "fluff"
+    ],
+    "globule": [
+      "globule",
+      "Bok globule"
+    ],
+    "veil": [
+      "veil"
+    ],
+    "bubble": [
+      "bubble"
+    ],
+    "shell": [
+      "shell"
+    ],
+    "cavity": [
+      "cavity"
+    ],
+    "space-hollow": [
+      "hollow"
+    ],
+    "space-wall": [
+      "wall"
+    ],
+    "stream": [
+      "stream",
+      "stellar stream"
+    ],
+    "wave": [
+      "wave"
+    ],
+    "moving-group": [
+      "group",
+      "moving group"
+    ],
+    "stellar-association": [
+      "association",
+      "stellar association"
+    ],
+    "nebula": [
+      "nebula"
+    ],
+    "dark": [
+      "dark",
+      "dark nebula"
+    ],
+    "pillars": [
+      "pillars"
+    ],
+    "knot": [
+      "knot"
+    ],
+    "clump": [
+      "clump"
+    ],
+    "molecular-cloud": [
+      "cloud",
+      "molecular cloud"
+    ],
+    "cluster": [
+      "cluster",
+      "open cluster"
+    ],
+    "ob-association": [
+      "association",
+      "OB association"
+    ],
+    "nursery": [
+      "nursery",
+      "stellar nursery"
+    ],
+    "h-two": [
+      "region",
+      "H II region"
+    ],
+    "rift": [
+      "rift"
+    ],
+    "dust-lane": [
+      "lane",
+      "dust lane"
+    ],
+    "void": [
+      "void"
+    ],
+    "spur": [
+      "spur"
+    ],
+    "branch": [
+      "branch"
+    ],
+    "fork": [
+      "fork"
+    ],
+    "filament": [
+      "filament"
+    ],
+    "arm": [
+      "arm",
+      "spiral arm"
+    ],
+    "interarm-gap": [
+      "gap",
+      "interarm gap"
+    ],
+    "core": [
+      "core"
+    ],
+    "bar": [
+      "bar"
+    ],
+    "bulge": [
+      "bulge"
+    ],
+    "central-zone": [
+      "zone",
+      "central molecular zone"
+    ],
+    "disc": [
+      "disc",
+      "galactic disc"
+    ],
+    "warp": [
+      "warp"
+    ],
+    "disc-flare": [
+      "flare"
+    ],
+    "rim": [
+      "rim"
+    ],
+    "plane": [
+      "plane"
+    ],
+    "halo": [
+      "halo"
+    ],
+    "satellite-cloud": [
+      "cloud",
+      "satellite galaxy"
+    ],
+    "globular": [
+      "cluster",
+      "globular cluster"
+    ],
+    "sheet": [
+      "sheet"
+    ],
+    "station": [
+      "station"
+    ],
+    "habitat": [
+      "habitat"
+    ],
+    "space-colony": [
+      "colony"
+    ],
+    "outpost": [
+      "outpost"
+    ],
+    "port": [
+      "port"
+    ],
+    "space-haven": [
+      "haven"
+    ],
+    "anchorage": [
+      "anchorage"
+    ],
+    "yard": [
+      "yard",
+      "shipyard"
+    ],
+    "dock": [
+      "dock"
+    ],
+    "base": [
+      "base"
+    ],
+    "camp": [
+      "camp",
+      "mining camp"
+    ],
+    "relay": [
+      "relay"
+    ],
+    "space-beacon": [
+      "beacon"
+    ],
+    "observatory": [
+      "observatory"
+    ],
+    "gate": [
+      "gate",
+      "jump gate"
     ]
   },
   "prefixForms": {

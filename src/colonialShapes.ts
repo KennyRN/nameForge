@@ -7,6 +7,7 @@
 
 import colonialData from "./data/colonial-shapes.json";
 import { biomeInline, findBiome } from "./biomes";
+import type { SpaceScale } from "./space/scale";
 import { mulberry32 } from "./markov";
 import {
   type AffixForm,
@@ -61,6 +62,10 @@ interface ColonialGroup {
   /** New groups: their full profile. */
   profile?: TierLists;
   overrides: ColonialOverride[];
+  /** Stellar brief §5.4: a space group, live only under a space biome of its scale (any scale when absent). */
+  space?: boolean;
+  scale?: SpaceScale;
+  terrain?: string;
 }
 
 interface ColonialCategory {
@@ -114,7 +119,18 @@ interface StructureValues {
   stackedGeneric: { chance: number; sourceGroup: string };
 }
 
+/** Stellar brief §5.5–§5.6: which groups and generics are live under a space biome, and the category layer. */
+interface SpaceRules {
+  groups: Record<string, number>;
+  groupScales: Record<string, SpaceScale[]>;
+  genericOnly: Record<string, string[]>;
+  genericScales: Record<string, SpaceScale[]>;
+  categories: Record<string, number>;
+  cropScales: SpaceScale[];
+}
+
 export interface ColonialData {
+  space: SpaceRules;
   version: number;
   excludedCategories: string[];
   inheritedCategories: { id: string; parts: ColonialPart[] }[];
@@ -242,6 +258,8 @@ export interface ColonialGenerateOptions {
   excludedCategories?: string[];
   /** Land brief §3: biome and terrain multipliers on groups and generics. */
   environment?: { groups: Record<string, number>; generics: Record<string, number> };
+  /** Stellar brief §5: the recipe's biome is a space biome of this scale; `aliens` says whether it has alien life. */
+  space?: { scale: SpaceScale; aliens: boolean };
 }
 
 /** Feature filter "Settlement": share of landscape groups drawn (as in part 1). */
@@ -344,11 +362,12 @@ class ColonialShapeGenerator {
       if (options.groupIds && !options.groupIds.includes(group.id)) continue;
       if (feature === "landscape" && groupSide(group) !== "landscape") continue;
       if (feature && feature !== "landscape" && feature !== "settlement" && group.id !== feature) continue;
-      const groupWeight = this.groupMultiplier(group.id);
+      const groupWeight = this.groupMultiplier(group);
       const generics: [EligibleGeneric, number][] = [];
       for (const entry of group.generics) {
         const id = genericIdOf(entry);
         if (typeof entry !== "string" && !inPart(entry.parts)) continue;
+        if (this.space && !this.spaceGenericLive(group.id, id)) continue;
         const genericWeight = (this.profile.genericMultipliers[id] ?? 1) * (options.environment?.generics[id] ?? 1);
         if (genericWeight <= 0) continue;
         const categories = [...resolveColonialProfile(group, id, data)]
@@ -371,22 +390,26 @@ class ColonialShapeGenerator {
     }
 
     // Stacked generics come from colonial settlement, weighted as in step 3 (by generic weight).
-    const source = data.groups.find((g) => g.id === data.structures.stackedGeneric.sourceGroup)!;
+    // Stellar brief §5.4: under a space biome the stacked generic is a station, habitat or the like.
+    const source = data.groups.find((g) => g.id === (this.space ? "space-settlement" : data.structures.stackedGeneric.sourceGroup))!;
     this.stackSource = source.generics
       .filter((entry) => typeof entry === "string" || inPart(entry.parts))
+      .filter((entry) => !this.space || this.spaceGenericLive(source.id, genericIdOf(entry)))
       .map((entry): [string, number] => [genericIdOf(entry), this.profile.genericMultipliers[genericIdOf(entry)] ?? 1])
       .filter(([, w]) => w > 0);
 
     // Affix types: part 1 baseline types plus City, × the tradition's affix-type multipliers.
     // Forms that output a slot category keep only categories available in this part.
-    const formFits = (f: AffixForm) => !f.slotCategory || inPart(categoryParts.get(f.slotCategory) ?? []);
+    // Stellar brief §5.6: under a space biome, an affix may not name a category the biome rules out (rivers, wetland).
+    const spaceFits = (f: AffixForm) => !this.space || !f.slotCategory || this.spaceCategoryMultiplier(f.slotCategory) > 0;
+    const formFits = (f: AffixForm) => (!f.slotCategory || inPart(categoryParts.get(f.slotCategory) ?? [])) && spaceFits(f);
     const types = [
       ...PLACE_SHAPE_DATA.affixes.map((a) => ({
         id: a.id,
         forms: a.forms.filter(formFits),
         weight: PLACE_SHAPE_REGION_DATA.affixBaseline[a.id] ?? 0,
       })),
-      ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms, weight: a.weight })),
+      ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms.filter(spaceFits), weight: a.weight })),
     ];
     this.affixWeights = types
       .filter((t) => t.forms.length > 0)
@@ -394,12 +417,53 @@ class ColonialShapeGenerator {
       .filter(([, w]) => w > 0);
   }
 
-  private groupMultiplier(id: string): number {
-    return (this.profile.groupMultipliers[id] ?? 1) * (this.context?.groupMultipliers[id] ?? 1) * (this.options.environment?.groups[id] ?? 1);
+  private get space() {
+    return this.options.space;
+  }
+
+  /** Stellar brief §5.5: space groups are live only under a space biome, at their scale; of the rest, only the listed few. */
+  private spaceGroupWeight(group: ColonialGroup): number {
+    const space = this.space;
+    if (!space) return group.space ? 0 : 1;
+    if (group.space) return !group.scale || group.scale === space.scale ? 1 : 0;
+    const rules = this.data.space;
+    const scales = rules.groupScales[group.id];
+    if (scales && !scales.includes(space.scale)) return 0;
+    return rules.groups[group.id] ?? 0;
+  }
+
+  /** Stellar brief §5.5: a generic of a listed group may be limited to some generics or scales. */
+  private spaceGenericLive(groupId: string, genericId: string): boolean {
+    const space = this.space!;
+    const rules = this.data.space;
+    if (rules.genericOnly[groupId] && !rules.genericOnly[groupId].includes(genericId)) return false;
+    const scales = rules.genericScales[genericId];
+    return !scales || scales.includes(space.scale);
+  }
+
+  /** Stellar brief §5.6, §5.8: the category layer under a space biome. */
+  private spaceCategoryMultiplier(id: string): number {
+    const space = this.space;
+    if (!space) return 1;
+    const rules = this.data.space;
+    if (id === "crop" || id === "produce") return rules.cropScales.includes(space.scale) ? 1 : 0;
+    if (id === "native-people-or-tribe") return this.options.part === "2" && !space.aliens ? 0 : 1;
+    if (id === "local-deity") return space.aliens ? 1 : 0;
+    return rules.categories[id] ?? 1;
+  }
+
+  private groupMultiplier(group: ColonialGroup): number {
+    const id = group.id;
+    return (
+      (this.profile.groupMultipliers[id] ?? 1) *
+      (this.context?.groupMultipliers[id] ?? 1) *
+      (this.options.environment?.groups[id] ?? 1) *
+      this.spaceGroupWeight(group)
+    );
   }
 
   private categoryMultiplier(id: string): number {
-    return (this.profile.categoryMultipliers[id] ?? 1) * (this.context?.categoryMultipliers[id] ?? 1);
+    return (this.profile.categoryMultipliers[id] ?? 1) * (this.context?.categoryMultipliers[id] ?? 1) * this.spaceCategoryMultiplier(id);
   }
 
   /** §7 base chance × tradition × context structure multipliers, capped at 1.0. */

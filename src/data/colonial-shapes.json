@@ -1844,6 +1844,2150 @@
       },
       "overrides": [],
       "inherited": false
+    },
+    {
+      "id": "planet-surface",
+      "label": "Planet surface",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "crater",
+          "meaning": "Crater",
+          "sense": "A crater",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "basin",
+          "meaning": "Basin",
+          "sense": "A basin",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "plain",
+          "meaning": "Plain",
+          "sense": "A plain",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "space-ridge",
+          "meaning": "Ridge",
+          "sense": "A ridge",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "terminator",
+          "meaning": "Terminator",
+          "sense": "A terminator",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "twilight",
+          "meaning": "Twilight band",
+          "sense": "A twilight band feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "dayside",
+          "meaning": "Dayside",
+          "sense": "A dayside",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "nightside",
+          "meaning": "Nightside",
+          "sense": "A nightside",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "pole",
+          "meaning": "Pole",
+          "sense": "A pole",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "sea",
+          "meaning": "Mare",
+          "sense": "A mare feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Pl",
+      "terrain": "surface"
+    },
+    {
+      "id": "planet-moons",
+      "label": "Planet moons",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "moon",
+          "meaning": "Moon",
+          "sense": "A moon",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "moonlet",
+          "meaning": "Moonlet",
+          "sense": "A moonlet",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "shepherd",
+          "meaning": "Shepherd moon",
+          "sense": "A shepherd moon feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Pl",
+      "terrain": "moons"
+    },
+    {
+      "id": "planet-rings",
+      "label": "Planet rings",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "ring",
+          "meaning": "Ring",
+          "sense": "A ring",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "gap",
+          "meaning": "Gap",
+          "sense": "A gap",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "division",
+          "meaning": "Division",
+          "sense": "A division",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "arc",
+          "meaning": "Arc",
+          "sense": "A arc",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "ringlet",
+          "meaning": "Ringlet",
+          "sense": "A ringlet",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "spokes",
+          "meaning": "Spokes",
+          "sense": "A spokes",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Pl",
+      "terrain": "rings"
+    },
+    {
+      "id": "planet-orbits",
+      "label": "Planet orbits",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "well",
+          "meaning": "Gravity well",
+          "sense": "A gravity well feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "space-hill",
+          "meaning": "Hill sphere",
+          "sense": "A Hill sphere feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "lagrange-point",
+          "meaning": "Lagrange point",
+          "sense": "A Lagrange point feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "saddle",
+          "meaning": "Saddle",
+          "sense": "A saddle",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "node",
+          "meaning": "Node",
+          "sense": "A node",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "high-orbit",
+          "meaning": "High orbit",
+          "sense": "A high orbit feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "roche-limit",
+          "meaning": "Roche limit",
+          "sense": "A Roche limit feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Pl",
+      "terrain": "orbits"
+    },
+    {
+      "id": "system-inner",
+      "label": "System inner",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "corona",
+          "meaning": "Corona",
+          "sense": "A corona",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "spot",
+          "meaning": "Starspot",
+          "sense": "A starspot feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "prominence",
+          "meaning": "Prominence",
+          "sense": "A prominence",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "flare",
+          "meaning": "Flare zone",
+          "sense": "A flare zone feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "habitable-zone",
+          "meaning": "Habitable zone",
+          "sense": "A habitable zone feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Sy",
+      "terrain": "inner"
+    },
+    {
+      "id": "system-belts",
+      "label": "System belts",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "belt",
+          "meaning": "Asteroid belt",
+          "sense": "A asteroid belt feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "trojan-camp",
+          "meaning": "Trojan camp",
+          "sense": "A Trojan camp feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "kirkwood-gap",
+          "meaning": "Kirkwood gap",
+          "sense": "A Kirkwood gap feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "resonant-chain",
+          "meaning": "Resonant chain",
+          "sense": "A resonant chain feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "swarm",
+          "meaning": "Swarm",
+          "sense": "A swarm",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "family",
+          "meaning": "Asteroid family",
+          "sense": "A asteroid family feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Sy",
+      "terrain": "belts"
+    },
+    {
+      "id": "system-outer",
+      "label": "System outer",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "frostline",
+          "meaning": "Frost line",
+          "sense": "A frost line feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "comet-cloud",
+          "meaning": "Comet cloud",
+          "sense": "A comet cloud feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "scattered-disc",
+          "meaning": "Scattered disc",
+          "sense": "A scattered disc feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "deep",
+          "meaning": "Deep",
+          "sense": "A deep",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "reach",
+          "meaning": "Reach",
+          "sense": "A reach",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Sy",
+      "terrain": "outer"
+    },
+    {
+      "id": "system-boundaries",
+      "label": "System boundaries",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "shock",
+          "meaning": "Termination shock",
+          "sense": "A termination shock feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "sheath",
+          "meaning": "Astrosheath",
+          "sense": "A astrosheath feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "pause",
+          "meaning": "Astropause",
+          "sense": "A astropause feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "bow",
+          "meaning": "Bow shock",
+          "sense": "A bow shock feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "tail",
+          "meaning": "Astrotail",
+          "sense": "A astrotail feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "wake",
+          "meaning": "Wake",
+          "sense": "A wake",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "sphere",
+          "meaning": "Astrosphere",
+          "sense": "A astrosphere feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Sy",
+      "terrain": "boundaries"
+    },
+    {
+      "id": "system-binaries",
+      "label": "System binaries",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "roche-lobe",
+          "meaning": "Roche lobe",
+          "sense": "A Roche lobe feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "neck",
+          "meaning": "Neck",
+          "sense": "A neck",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "space-bridge",
+          "meaning": "Bridge",
+          "sense": "A bridge",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "barycentre",
+          "meaning": "Barycentre",
+          "sense": "A barycentre feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "circumbinary-disc",
+          "meaning": "Circumbinary disc",
+          "sense": "A circumbinary disc feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Sy",
+      "terrain": "binaries"
+    },
+    {
+      "id": "neighbourhood-stars",
+      "label": "Neighbourhood stars",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "star",
+          "meaning": "Star",
+          "sense": "A star",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "pair",
+          "meaning": "Binary pair",
+          "sense": "A binary pair feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "dwarf",
+          "meaning": "Red dwarf",
+          "sense": "A red dwarf feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Nb",
+      "terrain": "stars"
+    },
+    {
+      "id": "neighbourhood-clouds",
+      "label": "Neighbourhood clouds",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "cloud",
+          "meaning": "Interstellar cloud",
+          "sense": "A interstellar cloud feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "fluff",
+          "meaning": "Fluff",
+          "sense": "A fluff",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "globule",
+          "meaning": "Bok globule",
+          "sense": "A Bok globule feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "veil",
+          "meaning": "Veil",
+          "sense": "A veil",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Nb",
+      "terrain": "clouds"
+    },
+    {
+      "id": "neighbourhood-bubbles",
+      "label": "Neighbourhood bubbles",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "bubble",
+          "meaning": "Bubble",
+          "sense": "A bubble",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "shell",
+          "meaning": "Shell",
+          "sense": "A shell",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "cavity",
+          "meaning": "Cavity",
+          "sense": "A cavity",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "space-hollow",
+          "meaning": "Hollow",
+          "sense": "A hollow",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "space-wall",
+          "meaning": "Wall",
+          "sense": "A wall",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Nb",
+      "terrain": "bubbles"
+    },
+    {
+      "id": "neighbourhood-streams",
+      "label": "Neighbourhood streams",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "stream",
+          "meaning": "Stellar stream",
+          "sense": "A stellar stream feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "wave",
+          "meaning": "Wave",
+          "sense": "A wave",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "moving-group",
+          "meaning": "Moving group",
+          "sense": "A moving group feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "stellar-association",
+          "meaning": "Stellar association",
+          "sense": "A stellar association feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Nb",
+      "terrain": "streams"
+    },
+    {
+      "id": "sector-nebulae",
+      "label": "Sector nebulae",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "nebula",
+          "meaning": "Nebula",
+          "sense": "A nebula",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "dark",
+          "meaning": "Dark nebula",
+          "sense": "A dark nebula feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "pillars",
+          "meaning": "Pillars",
+          "sense": "A pillars",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "knot",
+          "meaning": "Knot",
+          "sense": "A knot",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "clump",
+          "meaning": "Clump",
+          "sense": "A clump",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "veil",
+          "meaning": "Veil",
+          "sense": "A veil",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "molecular-cloud",
+          "meaning": "Molecular cloud",
+          "sense": "A molecular cloud feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Se",
+      "terrain": "nebulae"
+    },
+    {
+      "id": "sector-clusters",
+      "label": "Sector clusters",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "cluster",
+          "meaning": "Open cluster",
+          "sense": "A open cluster feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "ob-association",
+          "meaning": "OB association",
+          "sense": "A OB association feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "nursery",
+          "meaning": "Stellar nursery",
+          "sense": "A stellar nursery feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "h-two",
+          "meaning": "H II region",
+          "sense": "A H II region feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Se",
+      "terrain": "clusters"
+    },
+    {
+      "id": "sector-rifts",
+      "label": "Sector rifts",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "rift",
+          "meaning": "Rift",
+          "sense": "A rift",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "gap",
+          "meaning": "Gap",
+          "sense": "A gap",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "dust-lane",
+          "meaning": "Dust lane",
+          "sense": "A dust lane feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "void",
+          "meaning": "Void",
+          "sense": "A void",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Se",
+      "terrain": "rifts"
+    },
+    {
+      "id": "sector-spurs",
+      "label": "Sector spurs",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "spur",
+          "meaning": "Spur",
+          "sense": "A spur",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "branch",
+          "meaning": "Branch",
+          "sense": "A branch",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "fork",
+          "meaning": "Fork",
+          "sense": "A fork",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "filament",
+          "meaning": "Filament",
+          "sense": "A filament",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Se",
+      "terrain": "spurs"
+    },
+    {
+      "id": "galaxy-arms",
+      "label": "Galaxy arms",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "arm",
+          "meaning": "Spiral arm",
+          "sense": "A spiral arm feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "spur",
+          "meaning": "Spur",
+          "sense": "A spur",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "interarm-gap",
+          "meaning": "Interarm gap",
+          "sense": "A interarm gap feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Ga",
+      "terrain": "arms"
+    },
+    {
+      "id": "galaxy-core",
+      "label": "Galaxy core",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "core",
+          "meaning": "Core",
+          "sense": "A core",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "bar",
+          "meaning": "Bar",
+          "sense": "A bar",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "bulge",
+          "meaning": "Bulge",
+          "sense": "A bulge",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "central-zone",
+          "meaning": "Central molecular zone",
+          "sense": "A central molecular zone feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Ga",
+      "terrain": "core"
+    },
+    {
+      "id": "galaxy-disc",
+      "label": "Galaxy disc",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "disc",
+          "meaning": "Galactic disc",
+          "sense": "A galactic disc feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "warp",
+          "meaning": "Warp",
+          "sense": "A warp",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "disc-flare",
+          "meaning": "Flare",
+          "sense": "A flare",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "rim",
+          "meaning": "Rim",
+          "sense": "A rim",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "plane",
+          "meaning": "Plane",
+          "sense": "A plane",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Ga",
+      "terrain": "disc"
+    },
+    {
+      "id": "galaxy-halo",
+      "label": "Galaxy halo",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "halo",
+          "meaning": "Halo",
+          "sense": "A halo",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "stream",
+          "meaning": "Stellar stream",
+          "sense": "A stellar stream feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "space-bridge",
+          "meaning": "Bridge",
+          "sense": "A bridge",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "satellite-cloud",
+          "meaning": "Satellite galaxy",
+          "sense": "A satellite galaxy feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "globular",
+          "meaning": "Globular cluster",
+          "sense": "A globular cluster feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Ga",
+      "terrain": "halo"
+    },
+    {
+      "id": "galaxy-voids",
+      "label": "Galaxy voids",
+      "side": "landscape",
+      "generics": [
+        {
+          "id": "void",
+          "meaning": "Void",
+          "sense": "A void",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "space-wall",
+          "meaning": "Wall",
+          "sense": "A wall",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "sheet",
+          "meaning": "Sheet",
+          "sense": "A sheet",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "filament",
+          "meaning": "Filament",
+          "sense": "A filament",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        "occasional": [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        "rare": [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true,
+      "scale": "Ga",
+      "terrain": "voids"
+    },
+    {
+      "id": "space-settlement",
+      "label": "Space settlement",
+      "side": "settlement",
+      "generics": [
+        {
+          "id": "station",
+          "meaning": "Station",
+          "sense": "A station",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "habitat",
+          "meaning": "Habitat",
+          "sense": "A habitat",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "space-colony",
+          "meaning": "Colony",
+          "sense": "A colony",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "outpost",
+          "meaning": "Outpost",
+          "sense": "A outpost",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "port",
+          "meaning": "Port",
+          "sense": "A port",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "space-haven",
+          "meaning": "Haven",
+          "sense": "A haven",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "anchorage",
+          "meaning": "Anchorage",
+          "sense": "A anchorage",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "yard",
+          "meaning": "Shipyard",
+          "sense": "A shipyard feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "dock",
+          "meaning": "Dock",
+          "sense": "A dock",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "base",
+          "meaning": "Base",
+          "sense": "A base",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "camp",
+          "meaning": "Mining camp",
+          "sense": "A mining camp feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "relay",
+          "meaning": "Relay",
+          "sense": "A relay",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "space-beacon",
+          "meaning": "Beacon",
+          "sense": "A beacon",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "observatory",
+          "meaning": "Observatory",
+          "sense": "A observatory",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          "id": "gate",
+          "meaning": "Jump gate",
+          "sense": "A jump gate feature",
+          "parts": [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      "profile": {
+        "common": [
+          "monarch-ruler-or-dynasty",
+          "royal-woman",
+          "official-patron-or-sponsor",
+          "explorer-or-founder",
+          "homeland-place-name",
+          "native-place-name",
+          "saint-or-holy-person"
+        ],
+        "occasional": [
+          "honorific-title",
+          "commander-or-conqueror",
+          "settler-group",
+          "classical-biblical-or-legendary-name",
+          "native-people-or-tribe",
+          "personal-name",
+          "river-or-stream-name",
+          "status-or-role",
+          "religious-association",
+          "emotion-or-aspiration",
+          "resource",
+          "age",
+          "position-or-direction",
+          "colour"
+        ],
+        "rare": [
+          "calendar-date-or-feast",
+          "event-or-incident",
+          "ship",
+          "distance-or-survey-mark",
+          "colonial-deity",
+          "size",
+          "quality-or-condition",
+          "landform",
+          "water-or-wetland-feature",
+          "tree",
+          "wild-animal",
+          "produce"
+        ]
+      },
+      "overrides": [],
+      "inherited": false,
+      "space": true
     }
   ],
   "structures": {
@@ -3965,5 +6109,62 @@
         "generic-first-linked": 0
       }
     }
-  ]
+  ],
+  "space": {
+    "$comment": "Stellar brief §5.5–§5.6: which groups and generics are live under a space biome, and the category layer.",
+    "groups": {
+      "territories": 0.5,
+      "military-and-administrative": 0.3,
+      "colonial-settlement": 0.5,
+      "space-settlement": 1
+    },
+    "groupScales": {
+      "colonial-settlement": [
+        "Pl"
+      ]
+    },
+    "genericOnly": {
+      "military-and-administrative": [
+        "garrison-camp",
+        "frontier-post"
+      ]
+    },
+    "genericScales": {
+      "gate": [
+        "Nb",
+        "Se",
+        "Ga"
+      ]
+    },
+    "categories": {
+      "wild-animal": 0,
+      "bird": 0,
+      "fish-and-other-creatures": 0,
+      "tree": 0,
+      "wild-plant": 0,
+      "domestic-animal": 0,
+      "season": 0,
+      "river-or-stream-name": 0,
+      "water-or-wetland-feature": 0,
+      "crop": 1,
+      "produce": 1,
+      "landform": 1.5,
+      "soil-or-ground": 1,
+      "resource": 2,
+      "position-or-direction": 1,
+      "built-feature": 1,
+      "activity": 1,
+      "distance-or-survey-mark": 2,
+      "ship": 2,
+      "explorer-or-founder": 1.5,
+      "official-patron-or-sponsor": 1.5,
+      "homeland-place-name": 1.5,
+      "native-place-name": 1,
+      "supernatural-being": 0.5
+    },
+    "cropScales": [
+      "Pl",
+      "Sy"
+    ]
+  }
 }

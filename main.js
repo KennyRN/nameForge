@@ -5640,7 +5640,124 @@ var name_words_default = {
   },
   multiWordNeverFuse: true,
   genericFusion: {
-    hope: 0.5
+    hope: 0.5,
+    crater: 0,
+    basin: 0,
+    plain: 0,
+    "space-ridge": 0,
+    terminator: 0,
+    twilight: 0,
+    dayside: 0,
+    nightside: 0,
+    pole: 0,
+    sea: 0,
+    moon: 0,
+    moonlet: 0,
+    shepherd: 0,
+    ring: 0,
+    gap: 0,
+    division: 0,
+    arc: 0,
+    ringlet: 0,
+    spokes: 0,
+    well: 0,
+    "space-hill": 0,
+    "lagrange-point": 0,
+    saddle: 0,
+    node: 0,
+    "high-orbit": 0,
+    "roche-limit": 0,
+    corona: 0,
+    spot: 0,
+    prominence: 0,
+    flare: 0,
+    "habitable-zone": 0,
+    belt: 0,
+    "trojan-camp": 0,
+    "kirkwood-gap": 0,
+    "resonant-chain": 0,
+    swarm: 0,
+    family: 0,
+    frostline: 0,
+    "comet-cloud": 0,
+    "scattered-disc": 0,
+    deep: 0,
+    reach: 0,
+    shock: 0,
+    sheath: 0,
+    pause: 0,
+    bow: 0,
+    tail: 0,
+    wake: 0,
+    sphere: 0,
+    "roche-lobe": 0,
+    neck: 0,
+    "space-bridge": 0,
+    barycentre: 0,
+    "circumbinary-disc": 0,
+    star: 0,
+    pair: 0,
+    dwarf: 0,
+    cloud: 0,
+    fluff: 0,
+    globule: 0,
+    veil: 0,
+    bubble: 0,
+    shell: 0,
+    cavity: 0,
+    "space-hollow": 0,
+    "space-wall": 0,
+    stream: 0,
+    wave: 0,
+    "moving-group": 0,
+    "stellar-association": 0,
+    nebula: 0,
+    dark: 0,
+    pillars: 0,
+    knot: 0,
+    clump: 0,
+    "molecular-cloud": 0,
+    cluster: 0,
+    "ob-association": 0,
+    nursery: 0,
+    "h-two": 0,
+    rift: 0,
+    "dust-lane": 0,
+    void: 0,
+    spur: 0,
+    branch: 0,
+    fork: 0,
+    filament: 0,
+    arm: 0,
+    "interarm-gap": 0,
+    core: 0,
+    bar: 0,
+    bulge: 0,
+    "central-zone": 0,
+    disc: 0,
+    warp: 0,
+    "disc-flare": 0,
+    rim: 0,
+    plane: 0,
+    halo: 0,
+    "satellite-cloud": 0,
+    globular: 0,
+    sheet: 0,
+    station: 0,
+    habitat: 0,
+    "space-colony": 0,
+    outpost: 0,
+    port: 0,
+    "space-haven": 0,
+    anchorage: 0,
+    yard: 0,
+    dock: 0,
+    base: 0,
+    camp: 0,
+    relay: 0,
+    "space-beacon": 0,
+    observatory: 0,
+    gate: 0
   },
   colonialGenerics: {
     town: [
@@ -5764,6 +5881,408 @@ var name_words_default = {
     ],
     "religious-lodge": [
       "lodge"
+    ],
+    crater: [
+      "crater"
+    ],
+    basin: [
+      "basin"
+    ],
+    plain: [
+      "plain"
+    ],
+    "space-ridge": [
+      "ridge"
+    ],
+    terminator: [
+      "terminator"
+    ],
+    twilight: [
+      "twilight",
+      "twilight band"
+    ],
+    dayside: [
+      "dayside"
+    ],
+    nightside: [
+      "nightside"
+    ],
+    pole: [
+      "pole"
+    ],
+    sea: [
+      "sea",
+      "mare"
+    ],
+    moon: [
+      "moon"
+    ],
+    moonlet: [
+      "moonlet"
+    ],
+    shepherd: [
+      "shepherd",
+      "shepherd moon"
+    ],
+    ring: [
+      "ring"
+    ],
+    gap: [
+      "gap"
+    ],
+    division: [
+      "division"
+    ],
+    arc: [
+      "arc"
+    ],
+    ringlet: [
+      "ringlet"
+    ],
+    spokes: [
+      "spokes"
+    ],
+    well: [
+      "well",
+      "gravity well"
+    ],
+    "space-hill": [
+      "hill",
+      "Hill sphere"
+    ],
+    "lagrange-point": [
+      "point",
+      "Lagrange point"
+    ],
+    saddle: [
+      "saddle"
+    ],
+    node: [
+      "node"
+    ],
+    "high-orbit": [
+      "orbit",
+      "high orbit"
+    ],
+    "roche-limit": [
+      "limit",
+      "Roche limit"
+    ],
+    corona: [
+      "corona"
+    ],
+    spot: [
+      "spot",
+      "starspot"
+    ],
+    prominence: [
+      "prominence"
+    ],
+    flare: [
+      "flare",
+      "flare zone"
+    ],
+    "habitable-zone": [
+      "zone",
+      "habitable zone"
+    ],
+    belt: [
+      "belt",
+      "asteroid belt"
+    ],
+    "trojan-camp": [
+      "camp",
+      "Trojan camp"
+    ],
+    "kirkwood-gap": [
+      "gap",
+      "Kirkwood gap"
+    ],
+    "resonant-chain": [
+      "chain",
+      "resonant chain"
+    ],
+    swarm: [
+      "swarm"
+    ],
+    family: [
+      "family",
+      "asteroid family"
+    ],
+    frostline: [
+      "frostline",
+      "frost line"
+    ],
+    "comet-cloud": [
+      "cloud",
+      "comet cloud"
+    ],
+    "scattered-disc": [
+      "disc",
+      "scattered disc"
+    ],
+    deep: [
+      "deep"
+    ],
+    reach: [
+      "reach"
+    ],
+    shock: [
+      "shock",
+      "termination shock"
+    ],
+    sheath: [
+      "sheath",
+      "astrosheath"
+    ],
+    pause: [
+      "pause",
+      "astropause"
+    ],
+    bow: [
+      "bow",
+      "bow shock"
+    ],
+    tail: [
+      "tail",
+      "astrotail"
+    ],
+    wake: [
+      "wake"
+    ],
+    sphere: [
+      "sphere",
+      "astrosphere"
+    ],
+    "roche-lobe": [
+      "lobe",
+      "Roche lobe"
+    ],
+    neck: [
+      "neck"
+    ],
+    "space-bridge": [
+      "bridge"
+    ],
+    barycentre: [
+      "bary",
+      "barycentre"
+    ],
+    "circumbinary-disc": [
+      "disc",
+      "circumbinary disc"
+    ],
+    star: [
+      "star"
+    ],
+    pair: [
+      "pair",
+      "binary pair"
+    ],
+    dwarf: [
+      "dwarf",
+      "red dwarf"
+    ],
+    cloud: [
+      "cloud",
+      "interstellar cloud"
+    ],
+    fluff: [
+      "fluff"
+    ],
+    globule: [
+      "globule",
+      "Bok globule"
+    ],
+    veil: [
+      "veil"
+    ],
+    bubble: [
+      "bubble"
+    ],
+    shell: [
+      "shell"
+    ],
+    cavity: [
+      "cavity"
+    ],
+    "space-hollow": [
+      "hollow"
+    ],
+    "space-wall": [
+      "wall"
+    ],
+    stream: [
+      "stream",
+      "stellar stream"
+    ],
+    wave: [
+      "wave"
+    ],
+    "moving-group": [
+      "group",
+      "moving group"
+    ],
+    "stellar-association": [
+      "association",
+      "stellar association"
+    ],
+    nebula: [
+      "nebula"
+    ],
+    dark: [
+      "dark",
+      "dark nebula"
+    ],
+    pillars: [
+      "pillars"
+    ],
+    knot: [
+      "knot"
+    ],
+    clump: [
+      "clump"
+    ],
+    "molecular-cloud": [
+      "cloud",
+      "molecular cloud"
+    ],
+    cluster: [
+      "cluster",
+      "open cluster"
+    ],
+    "ob-association": [
+      "association",
+      "OB association"
+    ],
+    nursery: [
+      "nursery",
+      "stellar nursery"
+    ],
+    "h-two": [
+      "region",
+      "H II region"
+    ],
+    rift: [
+      "rift"
+    ],
+    "dust-lane": [
+      "lane",
+      "dust lane"
+    ],
+    void: [
+      "void"
+    ],
+    spur: [
+      "spur"
+    ],
+    branch: [
+      "branch"
+    ],
+    fork: [
+      "fork"
+    ],
+    filament: [
+      "filament"
+    ],
+    arm: [
+      "arm",
+      "spiral arm"
+    ],
+    "interarm-gap": [
+      "gap",
+      "interarm gap"
+    ],
+    core: [
+      "core"
+    ],
+    bar: [
+      "bar"
+    ],
+    bulge: [
+      "bulge"
+    ],
+    "central-zone": [
+      "zone",
+      "central molecular zone"
+    ],
+    disc: [
+      "disc",
+      "galactic disc"
+    ],
+    warp: [
+      "warp"
+    ],
+    "disc-flare": [
+      "flare"
+    ],
+    rim: [
+      "rim"
+    ],
+    plane: [
+      "plane"
+    ],
+    halo: [
+      "halo"
+    ],
+    "satellite-cloud": [
+      "cloud",
+      "satellite galaxy"
+    ],
+    globular: [
+      "cluster",
+      "globular cluster"
+    ],
+    sheet: [
+      "sheet"
+    ],
+    station: [
+      "station"
+    ],
+    habitat: [
+      "habitat"
+    ],
+    "space-colony": [
+      "colony"
+    ],
+    outpost: [
+      "outpost"
+    ],
+    port: [
+      "port"
+    ],
+    "space-haven": [
+      "haven"
+    ],
+    anchorage: [
+      "anchorage"
+    ],
+    yard: [
+      "yard",
+      "shipyard"
+    ],
+    dock: [
+      "dock"
+    ],
+    base: [
+      "base"
+    ],
+    camp: [
+      "camp",
+      "mining camp"
+    ],
+    relay: [
+      "relay"
+    ],
+    "space-beacon": [
+      "beacon"
+    ],
+    observatory: [
+      "observatory"
+    ],
+    gate: [
+      "gate",
+      "jump gate"
     ]
   },
   prefixForms: {
@@ -12927,6 +13446,1511 @@ var biomes_default = {
       }
     }
   ],
+  spaceBiomes: [
+    {
+      id: "planetary-system",
+      label: "Planetary system",
+      phrase: "a planetary system",
+      guide: `A planet and its moons: the surface, the moons, the rings and the orbits around them. (Astronomers use "planetary system" for a star's planets; here it means one planet's neighbourhood.)`,
+      space: true,
+      scale: "Pl",
+      terrainWeights: {
+        surface: 30,
+        moons: 25,
+        rings: 20,
+        orbits: 25
+      },
+      land: {
+        surface: [
+          [
+            "Craterlands",
+            1
+          ],
+          [
+            "Dayside",
+            1
+          ],
+          [
+            "Nightside",
+            1
+          ],
+          [
+            "Twilight Band",
+            1
+          ],
+          [
+            "Ice Plains",
+            1
+          ]
+        ],
+        moons: [
+          [
+            "Moons",
+            1
+          ],
+          [
+            "Moonlets",
+            1
+          ],
+          [
+            "Ice Moons",
+            1
+          ]
+        ],
+        rings: [
+          [
+            "Rings",
+            1
+          ],
+          [
+            "Ring Gaps",
+            1
+          ],
+          [
+            "Ring Arcs",
+            1
+          ]
+        ],
+        orbits: [
+          [
+            "High Orbits",
+            1
+          ],
+          [
+            "Wells",
+            1
+          ],
+          [
+            "Saddles",
+            1
+          ]
+        ]
+      },
+      water: {},
+      short: {
+        land: {
+          surface: [
+            "crater",
+            "ridge",
+            "basin",
+            "plain",
+            "rille",
+            "scarp"
+          ],
+          moons: [
+            "moon",
+            "moonlet",
+            "crater",
+            "rift"
+          ],
+          rings: [
+            "ring",
+            "gap",
+            "arc",
+            "ringlet",
+            "spoke"
+          ],
+          orbits: [
+            "well",
+            "saddle",
+            "node",
+            "point"
+          ]
+        },
+        water: {}
+      },
+      shapeMultipliers: {
+        groups: {},
+        generics: {}
+      },
+      universalWords: false,
+      customTerrains: [
+        {
+          id: "surface",
+          label: "Surface",
+          phrase: "the surface",
+          shapeMultipliers: {
+            groups: {
+              "planet-surface": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "moons",
+          label: "Moons",
+          phrase: "the moons",
+          shapeMultipliers: {
+            groups: {
+              "planet-moons": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "rings",
+          label: "Rings",
+          phrase: "the rings",
+          shapeMultipliers: {
+            groups: {
+              "planet-rings": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "orbits",
+          label: "Orbits",
+          phrase: "the orbits",
+          shapeMultipliers: {
+            groups: {
+              "planet-orbits": 4
+            },
+            generics: {}
+          }
+        }
+      ],
+      wildAnimals: [],
+      birds: [],
+      creatures: [],
+      trees: [],
+      plants: [],
+      livestock: [],
+      crops: [
+        [
+          "algae",
+          1
+        ],
+        [
+          "kelp",
+          1
+        ],
+        [
+          "soy",
+          1
+        ],
+        [
+          "rice",
+          1
+        ],
+        [
+          "potato",
+          1
+        ],
+        [
+          "wheat",
+          1
+        ]
+      ],
+      lifeways: [
+        [
+          "Miners",
+          14
+        ],
+        [
+          "Haulers",
+          12
+        ],
+        [
+          "Pilots",
+          10
+        ],
+        [
+          "Riggers",
+          8
+        ],
+        [
+          "Salvagers",
+          8
+        ],
+        [
+          "Prospectors",
+          8
+        ],
+        [
+          "Hydroponic Growers",
+          6
+        ],
+        [
+          "Engineers",
+          6
+        ],
+        [
+          "Surveyors",
+          6
+        ],
+        [
+          "Dock Hands",
+          6
+        ],
+        [
+          "Traders",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Old Beacon",
+          1
+        ],
+        [
+          "First Landing",
+          1
+        ],
+        [
+          "Derelict",
+          1
+        ],
+        [
+          "Wreck",
+          1
+        ],
+        [
+          "Ice Shrine",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Ice",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Nickel",
+          1
+        ],
+        [
+          "Carbon",
+          1
+        ],
+        [
+          "Glass",
+          1
+        ],
+        [
+          "Alloy",
+          1
+        ]
+      ],
+      ground: [
+        "regolith",
+        "dust",
+        "ice",
+        "iron",
+        "basalt",
+        "carbon"
+      ],
+      resources: [
+        "ice",
+        "water",
+        "helium",
+        "iron",
+        "nickel",
+        "platinum",
+        "deuterium",
+        "silicates"
+      ],
+      seasons: []
+    },
+    {
+      id: "star-system",
+      label: "Star system",
+      phrase: "a star system",
+      guide: "One star or a binary pair: the inner system, the belts, the frost line and outer clouds, and the edge of the star's wind.",
+      space: true,
+      scale: "Sy",
+      terrainWeights: {
+        inner: 20,
+        belts: 25,
+        outer: 25,
+        boundaries: 20,
+        binaries: 10
+      },
+      land: {
+        inner: [
+          [
+            "Corona",
+            1
+          ],
+          [
+            "Inner Worlds",
+            1
+          ],
+          [
+            "Flare Zone",
+            1
+          ]
+        ],
+        belts: [
+          [
+            "Belts",
+            1
+          ],
+          [
+            "Trojan Camps",
+            1
+          ],
+          [
+            "Swarms",
+            1
+          ],
+          [
+            "Kirkwood Gaps",
+            1
+          ]
+        ],
+        outer: [
+          [
+            "Outer Worlds",
+            1
+          ],
+          [
+            "Comet Cloud",
+            1
+          ],
+          [
+            "Scattered Disc",
+            1
+          ],
+          [
+            "Ice Giants",
+            1
+          ]
+        ],
+        boundaries: [
+          [
+            "Shocklands",
+            1
+          ],
+          [
+            "Sheath",
+            1
+          ],
+          [
+            "Pause",
+            1
+          ],
+          [
+            "Bow",
+            1
+          ],
+          [
+            "Tail",
+            1
+          ]
+        ],
+        binaries: [
+          [
+            "Lobes",
+            1
+          ],
+          [
+            "Neck",
+            1
+          ],
+          [
+            "Bridge",
+            1
+          ]
+        ]
+      },
+      water: {},
+      short: {
+        land: {
+          inner: [
+            "corona",
+            "spot",
+            "flare"
+          ],
+          belts: [
+            "belt",
+            "gap",
+            "camp",
+            "swarm",
+            "chain"
+          ],
+          outer: [
+            "frostline",
+            "cloud",
+            "disc",
+            "deep"
+          ],
+          boundaries: [
+            "shock",
+            "sheath",
+            "pause",
+            "bow",
+            "tail"
+          ],
+          binaries: [
+            "lobe",
+            "neck",
+            "bridge",
+            "bary"
+          ]
+        },
+        water: {}
+      },
+      shapeMultipliers: {
+        groups: {},
+        generics: {}
+      },
+      universalWords: false,
+      customTerrains: [
+        {
+          id: "inner",
+          label: "Inner system",
+          phrase: "the inner system",
+          shapeMultipliers: {
+            groups: {
+              "system-inner": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "belts",
+          label: "Belts",
+          phrase: "the belts",
+          shapeMultipliers: {
+            groups: {
+              "system-belts": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "outer",
+          label: "Outer system",
+          phrase: "the outer system",
+          shapeMultipliers: {
+            groups: {
+              "system-outer": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "boundaries",
+          label: "Boundaries",
+          phrase: "the edge of the system",
+          shapeMultipliers: {
+            groups: {
+              "system-boundaries": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "binaries",
+          label: "Binary stars",
+          phrase: "the binary stars",
+          shapeMultipliers: {
+            groups: {
+              "system-binaries": 4
+            },
+            generics: {}
+          }
+        }
+      ],
+      wildAnimals: [],
+      birds: [],
+      creatures: [],
+      trees: [],
+      plants: [],
+      livestock: [],
+      crops: [
+        [
+          "algae",
+          1
+        ],
+        [
+          "kelp",
+          1
+        ],
+        [
+          "soy",
+          1
+        ],
+        [
+          "rice",
+          1
+        ],
+        [
+          "potato",
+          1
+        ],
+        [
+          "wheat",
+          1
+        ]
+      ],
+      lifeways: [
+        [
+          "Miners",
+          14
+        ],
+        [
+          "Haulers",
+          12
+        ],
+        [
+          "Pilots",
+          10
+        ],
+        [
+          "Riggers",
+          8
+        ],
+        [
+          "Salvagers",
+          8
+        ],
+        [
+          "Prospectors",
+          8
+        ],
+        [
+          "Hydroponic Growers",
+          6
+        ],
+        [
+          "Engineers",
+          6
+        ],
+        [
+          "Surveyors",
+          6
+        ],
+        [
+          "Dock Hands",
+          6
+        ],
+        [
+          "Traders",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Old Beacon",
+          1
+        ],
+        [
+          "First Landing",
+          1
+        ],
+        [
+          "Derelict",
+          1
+        ],
+        [
+          "Wreck",
+          1
+        ],
+        [
+          "Ice Shrine",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Ice",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Nickel",
+          1
+        ],
+        [
+          "Carbon",
+          1
+        ],
+        [
+          "Glass",
+          1
+        ],
+        [
+          "Alloy",
+          1
+        ]
+      ],
+      ground: [
+        "regolith",
+        "dust",
+        "ice",
+        "iron",
+        "basalt",
+        "carbon"
+      ],
+      resources: [
+        "ice",
+        "water",
+        "helium",
+        "iron",
+        "nickel",
+        "platinum",
+        "deuterium",
+        "silicates"
+      ],
+      seasons: []
+    },
+    {
+      id: "local-stars",
+      label: "Local stellar neighbourhood",
+      phrase: "the local stars",
+      guide: "The nearby stars and the clouds, bubbles and stellar streams between them.",
+      space: true,
+      scale: "Nb",
+      terrainWeights: {
+        stars: 35,
+        clouds: 25,
+        bubbles: 20,
+        streams: 20
+      },
+      land: {
+        stars: [
+          [
+            "Near Stars",
+            1
+          ],
+          [
+            "Red Dwarfs",
+            1
+          ],
+          [
+            "Pairs",
+            1
+          ]
+        ],
+        clouds: [
+          [
+            "Clouds",
+            1
+          ],
+          [
+            "Fluff",
+            1
+          ],
+          [
+            "Globules",
+            1
+          ]
+        ],
+        bubbles: [
+          [
+            "Bubble",
+            1
+          ],
+          [
+            "Shells",
+            1
+          ],
+          [
+            "Hollows",
+            1
+          ],
+          [
+            "Wall",
+            1
+          ]
+        ],
+        streams: [
+          [
+            "Streams",
+            1
+          ],
+          [
+            "Wave",
+            1
+          ],
+          [
+            "Moving Groups",
+            1
+          ]
+        ]
+      },
+      water: {},
+      short: {
+        land: {
+          stars: [
+            "star",
+            "pair",
+            "dwarf"
+          ],
+          clouds: [
+            "cloud",
+            "fluff",
+            "globule",
+            "veil"
+          ],
+          bubbles: [
+            "bubble",
+            "shell",
+            "hollow",
+            "wall"
+          ],
+          streams: [
+            "stream",
+            "wave",
+            "group"
+          ]
+        },
+        water: {}
+      },
+      shapeMultipliers: {
+        groups: {},
+        generics: {}
+      },
+      universalWords: false,
+      customTerrains: [
+        {
+          id: "stars",
+          label: "Nearby stars",
+          phrase: "the nearby stars",
+          shapeMultipliers: {
+            groups: {
+              "neighbourhood-stars": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "clouds",
+          label: "Clouds",
+          phrase: "the clouds",
+          shapeMultipliers: {
+            groups: {
+              "neighbourhood-clouds": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "bubbles",
+          label: "Bubbles and shells",
+          phrase: "the bubbles and shells",
+          shapeMultipliers: {
+            groups: {
+              "neighbourhood-bubbles": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "streams",
+          label: "Stellar streams",
+          phrase: "the stellar streams",
+          shapeMultipliers: {
+            groups: {
+              "neighbourhood-streams": 4
+            },
+            generics: {}
+          }
+        }
+      ],
+      wildAnimals: [],
+      birds: [],
+      creatures: [],
+      trees: [],
+      plants: [],
+      livestock: [],
+      crops: [],
+      lifeways: [
+        [
+          "Miners",
+          14
+        ],
+        [
+          "Haulers",
+          12
+        ],
+        [
+          "Pilots",
+          10
+        ],
+        [
+          "Riggers",
+          8
+        ],
+        [
+          "Salvagers",
+          8
+        ],
+        [
+          "Prospectors",
+          8
+        ],
+        [
+          "Hydroponic Growers",
+          6
+        ],
+        [
+          "Engineers",
+          6
+        ],
+        [
+          "Surveyors",
+          6
+        ],
+        [
+          "Dock Hands",
+          6
+        ],
+        [
+          "Traders",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Old Beacon",
+          1
+        ],
+        [
+          "First Landing",
+          1
+        ],
+        [
+          "Derelict",
+          1
+        ],
+        [
+          "Wreck",
+          1
+        ],
+        [
+          "Ice Shrine",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Ice",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Nickel",
+          1
+        ],
+        [
+          "Carbon",
+          1
+        ],
+        [
+          "Glass",
+          1
+        ],
+        [
+          "Alloy",
+          1
+        ]
+      ],
+      ground: [
+        "regolith",
+        "dust",
+        "ice",
+        "iron",
+        "basalt",
+        "carbon"
+      ],
+      resources: [
+        "ice",
+        "water",
+        "helium",
+        "iron",
+        "nickel",
+        "platinum",
+        "deuterium",
+        "silicates"
+      ],
+      seasons: []
+    },
+    {
+      id: "sector",
+      label: "Sector",
+      phrase: "a sector",
+      guide: "A stretch of a spiral arm: nebulae, star clusters, dark rifts and spurs.",
+      space: true,
+      scale: "Se",
+      terrainWeights: {
+        nebulae: 30,
+        clusters: 25,
+        rifts: 20,
+        spurs: 25
+      },
+      land: {
+        nebulae: [
+          [
+            "Nebulae",
+            1
+          ],
+          [
+            "Pillars",
+            1
+          ],
+          [
+            "Knots",
+            1
+          ],
+          [
+            "Dark",
+            1
+          ]
+        ],
+        clusters: [
+          [
+            "Clusters",
+            1
+          ],
+          [
+            "Nurseries",
+            1
+          ]
+        ],
+        rifts: [
+          [
+            "Rifts",
+            1
+          ],
+          [
+            "Dust Lanes",
+            1
+          ],
+          [
+            "Dark Rift",
+            1
+          ]
+        ],
+        spurs: [
+          [
+            "Spurs",
+            1
+          ],
+          [
+            "Branches",
+            1
+          ],
+          [
+            "Filaments",
+            1
+          ]
+        ]
+      },
+      water: {},
+      short: {
+        land: {
+          nebulae: [
+            "nebula",
+            "pillar",
+            "knot",
+            "veil",
+            "dark"
+          ],
+          clusters: [
+            "cluster",
+            "nursery",
+            "association"
+          ],
+          rifts: [
+            "rift",
+            "gap",
+            "lane",
+            "void"
+          ],
+          spurs: [
+            "spur",
+            "branch",
+            "fork",
+            "filament"
+          ]
+        },
+        water: {}
+      },
+      shapeMultipliers: {
+        groups: {},
+        generics: {}
+      },
+      universalWords: false,
+      customTerrains: [
+        {
+          id: "nebulae",
+          label: "Nebulae",
+          phrase: "the nebulae",
+          shapeMultipliers: {
+            groups: {
+              "sector-nebulae": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "clusters",
+          label: "Clusters",
+          phrase: "the clusters",
+          shapeMultipliers: {
+            groups: {
+              "sector-clusters": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "rifts",
+          label: "Rifts",
+          phrase: "the rifts",
+          shapeMultipliers: {
+            groups: {
+              "sector-rifts": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "spurs",
+          label: "Spurs and filaments",
+          phrase: "the spurs and filaments",
+          shapeMultipliers: {
+            groups: {
+              "sector-spurs": 4
+            },
+            generics: {}
+          }
+        }
+      ],
+      wildAnimals: [],
+      birds: [],
+      creatures: [],
+      trees: [],
+      plants: [],
+      livestock: [],
+      crops: [],
+      lifeways: [
+        [
+          "Miners",
+          14
+        ],
+        [
+          "Haulers",
+          12
+        ],
+        [
+          "Pilots",
+          10
+        ],
+        [
+          "Riggers",
+          8
+        ],
+        [
+          "Salvagers",
+          8
+        ],
+        [
+          "Prospectors",
+          8
+        ],
+        [
+          "Hydroponic Growers",
+          6
+        ],
+        [
+          "Engineers",
+          6
+        ],
+        [
+          "Surveyors",
+          6
+        ],
+        [
+          "Dock Hands",
+          6
+        ],
+        [
+          "Traders",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Old Beacon",
+          1
+        ],
+        [
+          "First Landing",
+          1
+        ],
+        [
+          "Derelict",
+          1
+        ],
+        [
+          "Wreck",
+          1
+        ],
+        [
+          "Ice Shrine",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Ice",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Nickel",
+          1
+        ],
+        [
+          "Carbon",
+          1
+        ],
+        [
+          "Glass",
+          1
+        ],
+        [
+          "Alloy",
+          1
+        ]
+      ],
+      ground: [
+        "regolith",
+        "dust",
+        "ice",
+        "iron",
+        "basalt",
+        "carbon"
+      ],
+      resources: [
+        "ice",
+        "water",
+        "helium",
+        "iron",
+        "nickel",
+        "platinum",
+        "deuterium",
+        "silicates"
+      ],
+      seasons: []
+    },
+    {
+      id: "galaxy",
+      label: "Galaxy-spanning",
+      phrase: "the galaxy",
+      guide: "The arms, the core and its bar, the disc, the halo, and the voids beyond.",
+      space: true,
+      scale: "Ga",
+      terrainWeights: {
+        arms: 30,
+        core: 20,
+        disc: 20,
+        halo: 15,
+        voids: 15
+      },
+      land: {
+        arms: [
+          [
+            "Arms",
+            1
+          ],
+          [
+            "Interarm Gaps",
+            1
+          ]
+        ],
+        core: [
+          [
+            "Core",
+            1
+          ],
+          [
+            "Bar",
+            1
+          ],
+          [
+            "Bulge",
+            1
+          ]
+        ],
+        disc: [
+          [
+            "Disc",
+            1
+          ],
+          [
+            "Warp",
+            1
+          ],
+          [
+            "Rim",
+            1
+          ]
+        ],
+        halo: [
+          [
+            "Halo",
+            1
+          ],
+          [
+            "Streams",
+            1
+          ],
+          [
+            "Satellite Clouds",
+            1
+          ]
+        ],
+        voids: [
+          [
+            "Voids",
+            1
+          ],
+          [
+            "Walls",
+            1
+          ],
+          [
+            "Local Sheet",
+            1
+          ]
+        ]
+      },
+      water: {},
+      short: {
+        land: {
+          arms: [
+            "arm",
+            "spur",
+            "gap"
+          ],
+          core: [
+            "core",
+            "bar",
+            "bulge"
+          ],
+          disc: [
+            "disc",
+            "warp",
+            "flare",
+            "rim",
+            "plane"
+          ],
+          halo: [
+            "halo",
+            "stream",
+            "cloud",
+            "cluster"
+          ],
+          voids: [
+            "void",
+            "wall",
+            "sheet"
+          ]
+        },
+        water: {}
+      },
+      shapeMultipliers: {
+        groups: {},
+        generics: {}
+      },
+      universalWords: false,
+      customTerrains: [
+        {
+          id: "arms",
+          label: "Arms",
+          phrase: "the arms",
+          shapeMultipliers: {
+            groups: {
+              "galaxy-arms": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "core",
+          label: "Core",
+          phrase: "the core",
+          shapeMultipliers: {
+            groups: {
+              "galaxy-core": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "disc",
+          label: "Disc",
+          phrase: "the disc",
+          shapeMultipliers: {
+            groups: {
+              "galaxy-disc": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "halo",
+          label: "Halo",
+          phrase: "the halo",
+          shapeMultipliers: {
+            groups: {
+              "galaxy-halo": 4
+            },
+            generics: {}
+          }
+        },
+        {
+          id: "voids",
+          label: "Voids",
+          phrase: "the voids",
+          shapeMultipliers: {
+            groups: {
+              "galaxy-voids": 4
+            },
+            generics: {}
+          }
+        }
+      ],
+      wildAnimals: [],
+      birds: [],
+      creatures: [],
+      trees: [],
+      plants: [],
+      livestock: [],
+      crops: [],
+      lifeways: [
+        [
+          "Miners",
+          14
+        ],
+        [
+          "Haulers",
+          12
+        ],
+        [
+          "Pilots",
+          10
+        ],
+        [
+          "Riggers",
+          8
+        ],
+        [
+          "Salvagers",
+          8
+        ],
+        [
+          "Prospectors",
+          8
+        ],
+        [
+          "Hydroponic Growers",
+          6
+        ],
+        [
+          "Engineers",
+          6
+        ],
+        [
+          "Surveyors",
+          6
+        ],
+        [
+          "Dock Hands",
+          6
+        ],
+        [
+          "Traders",
+          4
+        ]
+      ],
+      sacred: [
+        [
+          "Old Beacon",
+          1
+        ],
+        [
+          "First Landing",
+          1
+        ],
+        [
+          "Derelict",
+          1
+        ],
+        [
+          "Wreck",
+          1
+        ],
+        [
+          "Ice Shrine",
+          1
+        ]
+      ],
+      materials: [
+        [
+          "Ice",
+          1
+        ],
+        [
+          "Iron",
+          1
+        ],
+        [
+          "Nickel",
+          1
+        ],
+        [
+          "Carbon",
+          1
+        ],
+        [
+          "Glass",
+          1
+        ],
+        [
+          "Alloy",
+          1
+        ]
+      ],
+      ground: [
+        "regolith",
+        "dust",
+        "ice",
+        "iron",
+        "basalt",
+        "carbon"
+      ],
+      resources: [
+        "ice",
+        "water",
+        "helium",
+        "iron",
+        "nickel",
+        "platinum",
+        "deuterium",
+        "silicates"
+      ],
+      seasons: []
+    }
+  ],
   irregularPlurals: {
     deer: "deer",
     sheep: "sheep",
@@ -13404,15 +15428,17 @@ var BRITAIN = (() => {
     terrainTags: b.terrainTags
   };
 })();
+var SPACE_BIOMES = BIOME_DATA.spaceBiomes.map(normalise);
 function allBiomes(custom = []) {
   return [BRITAIN, ...BIOMES, ...custom];
 }
 function findBiome(id, custom = []) {
+  var _a2;
   if (!id) return void 0;
-  return allBiomes(custom).find((b) => {
-    var _a2;
-    return b.id === id || ((_a2 = b.custom) == null ? void 0 : _a2.path) === id;
-  });
+  return (_a2 = allBiomes(custom).find((b) => {
+    var _a3;
+    return b.id === id || ((_a3 = b.custom) == null ? void 0 : _a3.path) === id;
+  })) != null ? _a2 : SPACE_BIOMES.find((b) => b.id === id);
 }
 function biomeWords(biome, list) {
   var _a2;
@@ -22959,6 +24985,2150 @@ var colonial_shapes_default = {
       },
       overrides: [],
       inherited: false
+    },
+    {
+      id: "planet-surface",
+      label: "Planet surface",
+      side: "landscape",
+      generics: [
+        {
+          id: "crater",
+          meaning: "Crater",
+          sense: "A crater",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "basin",
+          meaning: "Basin",
+          sense: "A basin",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "plain",
+          meaning: "Plain",
+          sense: "A plain",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "space-ridge",
+          meaning: "Ridge",
+          sense: "A ridge",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "terminator",
+          meaning: "Terminator",
+          sense: "A terminator",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "twilight",
+          meaning: "Twilight band",
+          sense: "A twilight band feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "dayside",
+          meaning: "Dayside",
+          sense: "A dayside",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "nightside",
+          meaning: "Nightside",
+          sense: "A nightside",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "pole",
+          meaning: "Pole",
+          sense: "A pole",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "sea",
+          meaning: "Mare",
+          sense: "A mare feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Pl",
+      terrain: "surface"
+    },
+    {
+      id: "planet-moons",
+      label: "Planet moons",
+      side: "landscape",
+      generics: [
+        {
+          id: "moon",
+          meaning: "Moon",
+          sense: "A moon",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "moonlet",
+          meaning: "Moonlet",
+          sense: "A moonlet",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "shepherd",
+          meaning: "Shepherd moon",
+          sense: "A shepherd moon feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Pl",
+      terrain: "moons"
+    },
+    {
+      id: "planet-rings",
+      label: "Planet rings",
+      side: "landscape",
+      generics: [
+        {
+          id: "ring",
+          meaning: "Ring",
+          sense: "A ring",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "gap",
+          meaning: "Gap",
+          sense: "A gap",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "division",
+          meaning: "Division",
+          sense: "A division",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "arc",
+          meaning: "Arc",
+          sense: "A arc",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "ringlet",
+          meaning: "Ringlet",
+          sense: "A ringlet",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "spokes",
+          meaning: "Spokes",
+          sense: "A spokes",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Pl",
+      terrain: "rings"
+    },
+    {
+      id: "planet-orbits",
+      label: "Planet orbits",
+      side: "landscape",
+      generics: [
+        {
+          id: "well",
+          meaning: "Gravity well",
+          sense: "A gravity well feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "space-hill",
+          meaning: "Hill sphere",
+          sense: "A Hill sphere feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "lagrange-point",
+          meaning: "Lagrange point",
+          sense: "A Lagrange point feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "saddle",
+          meaning: "Saddle",
+          sense: "A saddle",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "node",
+          meaning: "Node",
+          sense: "A node",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "high-orbit",
+          meaning: "High orbit",
+          sense: "A high orbit feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "roche-limit",
+          meaning: "Roche limit",
+          sense: "A Roche limit feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Pl",
+      terrain: "orbits"
+    },
+    {
+      id: "system-inner",
+      label: "System inner",
+      side: "landscape",
+      generics: [
+        {
+          id: "corona",
+          meaning: "Corona",
+          sense: "A corona",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "spot",
+          meaning: "Starspot",
+          sense: "A starspot feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "prominence",
+          meaning: "Prominence",
+          sense: "A prominence",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "flare",
+          meaning: "Flare zone",
+          sense: "A flare zone feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "habitable-zone",
+          meaning: "Habitable zone",
+          sense: "A habitable zone feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Sy",
+      terrain: "inner"
+    },
+    {
+      id: "system-belts",
+      label: "System belts",
+      side: "landscape",
+      generics: [
+        {
+          id: "belt",
+          meaning: "Asteroid belt",
+          sense: "A asteroid belt feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "trojan-camp",
+          meaning: "Trojan camp",
+          sense: "A Trojan camp feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "kirkwood-gap",
+          meaning: "Kirkwood gap",
+          sense: "A Kirkwood gap feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "resonant-chain",
+          meaning: "Resonant chain",
+          sense: "A resonant chain feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "swarm",
+          meaning: "Swarm",
+          sense: "A swarm",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "family",
+          meaning: "Asteroid family",
+          sense: "A asteroid family feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Sy",
+      terrain: "belts"
+    },
+    {
+      id: "system-outer",
+      label: "System outer",
+      side: "landscape",
+      generics: [
+        {
+          id: "frostline",
+          meaning: "Frost line",
+          sense: "A frost line feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "comet-cloud",
+          meaning: "Comet cloud",
+          sense: "A comet cloud feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "scattered-disc",
+          meaning: "Scattered disc",
+          sense: "A scattered disc feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "deep",
+          meaning: "Deep",
+          sense: "A deep",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "reach",
+          meaning: "Reach",
+          sense: "A reach",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Sy",
+      terrain: "outer"
+    },
+    {
+      id: "system-boundaries",
+      label: "System boundaries",
+      side: "landscape",
+      generics: [
+        {
+          id: "shock",
+          meaning: "Termination shock",
+          sense: "A termination shock feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "sheath",
+          meaning: "Astrosheath",
+          sense: "A astrosheath feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "pause",
+          meaning: "Astropause",
+          sense: "A astropause feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "bow",
+          meaning: "Bow shock",
+          sense: "A bow shock feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "tail",
+          meaning: "Astrotail",
+          sense: "A astrotail feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "wake",
+          meaning: "Wake",
+          sense: "A wake",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "sphere",
+          meaning: "Astrosphere",
+          sense: "A astrosphere feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Sy",
+      terrain: "boundaries"
+    },
+    {
+      id: "system-binaries",
+      label: "System binaries",
+      side: "landscape",
+      generics: [
+        {
+          id: "roche-lobe",
+          meaning: "Roche lobe",
+          sense: "A Roche lobe feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "neck",
+          meaning: "Neck",
+          sense: "A neck",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "space-bridge",
+          meaning: "Bridge",
+          sense: "A bridge",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "barycentre",
+          meaning: "Barycentre",
+          sense: "A barycentre feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "circumbinary-disc",
+          meaning: "Circumbinary disc",
+          sense: "A circumbinary disc feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Sy",
+      terrain: "binaries"
+    },
+    {
+      id: "neighbourhood-stars",
+      label: "Neighbourhood stars",
+      side: "landscape",
+      generics: [
+        {
+          id: "star",
+          meaning: "Star",
+          sense: "A star",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "pair",
+          meaning: "Binary pair",
+          sense: "A binary pair feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "dwarf",
+          meaning: "Red dwarf",
+          sense: "A red dwarf feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Nb",
+      terrain: "stars"
+    },
+    {
+      id: "neighbourhood-clouds",
+      label: "Neighbourhood clouds",
+      side: "landscape",
+      generics: [
+        {
+          id: "cloud",
+          meaning: "Interstellar cloud",
+          sense: "A interstellar cloud feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "fluff",
+          meaning: "Fluff",
+          sense: "A fluff",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "globule",
+          meaning: "Bok globule",
+          sense: "A Bok globule feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "veil",
+          meaning: "Veil",
+          sense: "A veil",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Nb",
+      terrain: "clouds"
+    },
+    {
+      id: "neighbourhood-bubbles",
+      label: "Neighbourhood bubbles",
+      side: "landscape",
+      generics: [
+        {
+          id: "bubble",
+          meaning: "Bubble",
+          sense: "A bubble",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "shell",
+          meaning: "Shell",
+          sense: "A shell",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "cavity",
+          meaning: "Cavity",
+          sense: "A cavity",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "space-hollow",
+          meaning: "Hollow",
+          sense: "A hollow",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "space-wall",
+          meaning: "Wall",
+          sense: "A wall",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Nb",
+      terrain: "bubbles"
+    },
+    {
+      id: "neighbourhood-streams",
+      label: "Neighbourhood streams",
+      side: "landscape",
+      generics: [
+        {
+          id: "stream",
+          meaning: "Stellar stream",
+          sense: "A stellar stream feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "wave",
+          meaning: "Wave",
+          sense: "A wave",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "moving-group",
+          meaning: "Moving group",
+          sense: "A moving group feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "stellar-association",
+          meaning: "Stellar association",
+          sense: "A stellar association feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Nb",
+      terrain: "streams"
+    },
+    {
+      id: "sector-nebulae",
+      label: "Sector nebulae",
+      side: "landscape",
+      generics: [
+        {
+          id: "nebula",
+          meaning: "Nebula",
+          sense: "A nebula",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "dark",
+          meaning: "Dark nebula",
+          sense: "A dark nebula feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "pillars",
+          meaning: "Pillars",
+          sense: "A pillars",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "knot",
+          meaning: "Knot",
+          sense: "A knot",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "clump",
+          meaning: "Clump",
+          sense: "A clump",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "veil",
+          meaning: "Veil",
+          sense: "A veil",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "molecular-cloud",
+          meaning: "Molecular cloud",
+          sense: "A molecular cloud feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Se",
+      terrain: "nebulae"
+    },
+    {
+      id: "sector-clusters",
+      label: "Sector clusters",
+      side: "landscape",
+      generics: [
+        {
+          id: "cluster",
+          meaning: "Open cluster",
+          sense: "A open cluster feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "ob-association",
+          meaning: "OB association",
+          sense: "A OB association feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "nursery",
+          meaning: "Stellar nursery",
+          sense: "A stellar nursery feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "h-two",
+          meaning: "H II region",
+          sense: "A H II region feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Se",
+      terrain: "clusters"
+    },
+    {
+      id: "sector-rifts",
+      label: "Sector rifts",
+      side: "landscape",
+      generics: [
+        {
+          id: "rift",
+          meaning: "Rift",
+          sense: "A rift",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "gap",
+          meaning: "Gap",
+          sense: "A gap",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "dust-lane",
+          meaning: "Dust lane",
+          sense: "A dust lane feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "void",
+          meaning: "Void",
+          sense: "A void",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Se",
+      terrain: "rifts"
+    },
+    {
+      id: "sector-spurs",
+      label: "Sector spurs",
+      side: "landscape",
+      generics: [
+        {
+          id: "spur",
+          meaning: "Spur",
+          sense: "A spur",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "branch",
+          meaning: "Branch",
+          sense: "A branch",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "fork",
+          meaning: "Fork",
+          sense: "A fork",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "filament",
+          meaning: "Filament",
+          sense: "A filament",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Se",
+      terrain: "spurs"
+    },
+    {
+      id: "galaxy-arms",
+      label: "Galaxy arms",
+      side: "landscape",
+      generics: [
+        {
+          id: "arm",
+          meaning: "Spiral arm",
+          sense: "A spiral arm feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "spur",
+          meaning: "Spur",
+          sense: "A spur",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "interarm-gap",
+          meaning: "Interarm gap",
+          sense: "A interarm gap feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Ga",
+      terrain: "arms"
+    },
+    {
+      id: "galaxy-core",
+      label: "Galaxy core",
+      side: "landscape",
+      generics: [
+        {
+          id: "core",
+          meaning: "Core",
+          sense: "A core",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "bar",
+          meaning: "Bar",
+          sense: "A bar",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "bulge",
+          meaning: "Bulge",
+          sense: "A bulge",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "central-zone",
+          meaning: "Central molecular zone",
+          sense: "A central molecular zone feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Ga",
+      terrain: "core"
+    },
+    {
+      id: "galaxy-disc",
+      label: "Galaxy disc",
+      side: "landscape",
+      generics: [
+        {
+          id: "disc",
+          meaning: "Galactic disc",
+          sense: "A galactic disc feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "warp",
+          meaning: "Warp",
+          sense: "A warp",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "disc-flare",
+          meaning: "Flare",
+          sense: "A flare",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "rim",
+          meaning: "Rim",
+          sense: "A rim",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "plane",
+          meaning: "Plane",
+          sense: "A plane",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Ga",
+      terrain: "disc"
+    },
+    {
+      id: "galaxy-halo",
+      label: "Galaxy halo",
+      side: "landscape",
+      generics: [
+        {
+          id: "halo",
+          meaning: "Halo",
+          sense: "A halo",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "stream",
+          meaning: "Stellar stream",
+          sense: "A stellar stream feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "space-bridge",
+          meaning: "Bridge",
+          sense: "A bridge",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "satellite-cloud",
+          meaning: "Satellite galaxy",
+          sense: "A satellite galaxy feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "globular",
+          meaning: "Globular cluster",
+          sense: "A globular cluster feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Ga",
+      terrain: "halo"
+    },
+    {
+      id: "galaxy-voids",
+      label: "Galaxy voids",
+      side: "landscape",
+      generics: [
+        {
+          id: "void",
+          meaning: "Void",
+          sense: "A void",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "space-wall",
+          meaning: "Wall",
+          sense: "A wall",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "sheet",
+          meaning: "Sheet",
+          sense: "A sheet",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "filament",
+          meaning: "Filament",
+          sense: "A filament",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "explorer-or-founder",
+          "native-place-name",
+          "ship",
+          "position-or-direction"
+        ],
+        occasional: [
+          "official-patron-or-sponsor",
+          "homeland-place-name",
+          "monarch-ruler-or-dynasty",
+          "commander-or-conqueror",
+          "number",
+          "size",
+          "age",
+          "quality-or-condition",
+          "colour",
+          "distance-or-survey-mark",
+          "resource",
+          "event-or-incident",
+          "classical-biblical-or-legendary-name",
+          "landform"
+        ],
+        rare: [
+          "honorific-title",
+          "emotion-or-aspiration",
+          "soil-or-ground",
+          "shape",
+          "supernatural-being",
+          "native-people-or-tribe"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true,
+      scale: "Ga",
+      terrain: "voids"
+    },
+    {
+      id: "space-settlement",
+      label: "Space settlement",
+      side: "settlement",
+      generics: [
+        {
+          id: "station",
+          meaning: "Station",
+          sense: "A station",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "habitat",
+          meaning: "Habitat",
+          sense: "A habitat",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "space-colony",
+          meaning: "Colony",
+          sense: "A colony",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "outpost",
+          meaning: "Outpost",
+          sense: "A outpost",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "port",
+          meaning: "Port",
+          sense: "A port",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "space-haven",
+          meaning: "Haven",
+          sense: "A haven",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "anchorage",
+          meaning: "Anchorage",
+          sense: "A anchorage",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "yard",
+          meaning: "Shipyard",
+          sense: "A shipyard feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "dock",
+          meaning: "Dock",
+          sense: "A dock",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "base",
+          meaning: "Base",
+          sense: "A base",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "camp",
+          meaning: "Mining camp",
+          sense: "A mining camp feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "relay",
+          meaning: "Relay",
+          sense: "A relay",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "space-beacon",
+          meaning: "Beacon",
+          sense: "A beacon",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "observatory",
+          meaning: "Observatory",
+          sense: "A observatory",
+          parts: [
+            "2",
+            "2a"
+          ]
+        },
+        {
+          id: "gate",
+          meaning: "Jump gate",
+          sense: "A jump gate feature",
+          parts: [
+            "2",
+            "2a"
+          ]
+        }
+      ],
+      profile: {
+        common: [
+          "monarch-ruler-or-dynasty",
+          "royal-woman",
+          "official-patron-or-sponsor",
+          "explorer-or-founder",
+          "homeland-place-name",
+          "native-place-name",
+          "saint-or-holy-person"
+        ],
+        occasional: [
+          "honorific-title",
+          "commander-or-conqueror",
+          "settler-group",
+          "classical-biblical-or-legendary-name",
+          "native-people-or-tribe",
+          "personal-name",
+          "river-or-stream-name",
+          "status-or-role",
+          "religious-association",
+          "emotion-or-aspiration",
+          "resource",
+          "age",
+          "position-or-direction",
+          "colour"
+        ],
+        rare: [
+          "calendar-date-or-feast",
+          "event-or-incident",
+          "ship",
+          "distance-or-survey-mark",
+          "colonial-deity",
+          "size",
+          "quality-or-condition",
+          "landform",
+          "water-or-wetland-feature",
+          "tree",
+          "wild-animal",
+          "produce"
+        ]
+      },
+      overrides: [],
+      inherited: false,
+      space: true
     }
   ],
   structures: {
@@ -25080,7 +29250,64 @@ var colonial_shapes_default = {
         "generic-first-linked": 0
       }
     }
-  ]
+  ],
+  space: {
+    $comment: "Stellar brief \xA75.5\u2013\xA75.6: which groups and generics are live under a space biome, and the category layer.",
+    groups: {
+      territories: 0.5,
+      "military-and-administrative": 0.3,
+      "colonial-settlement": 0.5,
+      "space-settlement": 1
+    },
+    groupScales: {
+      "colonial-settlement": [
+        "Pl"
+      ]
+    },
+    genericOnly: {
+      "military-and-administrative": [
+        "garrison-camp",
+        "frontier-post"
+      ]
+    },
+    genericScales: {
+      gate: [
+        "Nb",
+        "Se",
+        "Ga"
+      ]
+    },
+    categories: {
+      "wild-animal": 0,
+      bird: 0,
+      "fish-and-other-creatures": 0,
+      tree: 0,
+      "wild-plant": 0,
+      "domestic-animal": 0,
+      season: 0,
+      "river-or-stream-name": 0,
+      "water-or-wetland-feature": 0,
+      crop: 1,
+      produce: 1,
+      landform: 1.5,
+      "soil-or-ground": 1,
+      resource: 2,
+      "position-or-direction": 1,
+      "built-feature": 1,
+      activity: 1,
+      "distance-or-survey-mark": 2,
+      ship: 2,
+      "explorer-or-founder": 1.5,
+      "official-patron-or-sponsor": 1.5,
+      "homeland-place-name": 1.5,
+      "native-place-name": 1,
+      "supernatural-being": 0.5
+    },
+    cropScales: [
+      "Pl",
+      "Sy"
+    ]
+  }
 };
 
 // src/colonialShapes.ts
@@ -25190,11 +29417,12 @@ var ColonialShapeGenerator = class {
       if (options.groupIds && !options.groupIds.includes(group.id)) continue;
       if (feature === "landscape" && groupSide(group) !== "landscape") continue;
       if (feature && feature !== "landscape" && feature !== "settlement" && group.id !== feature) continue;
-      const groupWeight = this.groupMultiplier(group.id);
+      const groupWeight = this.groupMultiplier(group);
       const generics = [];
       for (const entry of group.generics) {
         const id = genericIdOf(entry);
         if (typeof entry !== "string" && !inPart(entry.parts)) continue;
+        if (this.space && !this.spaceGenericLive(group.id, id)) continue;
         const genericWeight = ((_b = this.profile.genericMultipliers[id]) != null ? _b : 1) * ((_d = (_c = options.environment) == null ? void 0 : _c.generics[id]) != null ? _d : 1);
         if (genericWeight <= 0) continue;
         const categories = [...resolveColonialProfile(group, id, data)].filter(([c]) => inPart(categoryParts.get(c)) && !excluded.has(c)).map(([c, tier]) => [c, PLACE_SHAPE_WEIGHTS.tier[tier] * this.categoryMultiplier(c)]).filter(([, w]) => w > 0);
@@ -25212,14 +29440,15 @@ var ColonialShapeGenerator = class {
         landscape: this.groups.filter(([g]) => g.side === "landscape")
       };
     }
-    const source = data.groups.find((g) => g.id === data.structures.stackedGeneric.sourceGroup);
-    this.stackSource = source.generics.filter((entry) => typeof entry === "string" || inPart(entry.parts)).map((entry) => {
+    const source = data.groups.find((g) => g.id === (this.space ? "space-settlement" : data.structures.stackedGeneric.sourceGroup));
+    this.stackSource = source.generics.filter((entry) => typeof entry === "string" || inPart(entry.parts)).filter((entry) => !this.space || this.spaceGenericLive(source.id, genericIdOf(entry))).map((entry) => {
       var _a3;
       return [genericIdOf(entry), (_a3 = this.profile.genericMultipliers[genericIdOf(entry)]) != null ? _a3 : 1];
     }).filter(([, w]) => w > 0);
+    const spaceFits = (f) => !this.space || !f.slotCategory || this.spaceCategoryMultiplier(f.slotCategory) > 0;
     const formFits = (f) => {
       var _a3;
-      return !f.slotCategory || inPart((_a3 = categoryParts.get(f.slotCategory)) != null ? _a3 : []);
+      return (!f.slotCategory || inPart((_a3 = categoryParts.get(f.slotCategory)) != null ? _a3 : [])) && spaceFits(f);
     };
     const types = [
       ...PLACE_SHAPE_DATA.affixes.map((a) => {
@@ -25230,20 +29459,54 @@ var ColonialShapeGenerator = class {
           weight: (_a3 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a3 : 0
         };
       }),
-      ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms, weight: a.weight }))
+      ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms.filter(spaceFits), weight: a.weight }))
     ];
     this.affixWeights = types.filter((t) => t.forms.length > 0).map((t) => {
       var _a3;
       return [t, t.weight * ((_a3 = this.profile.affixTypeMultipliers[t.id]) != null ? _a3 : 1)];
     }).filter(([, w]) => w > 0);
   }
-  groupMultiplier(id) {
+  get space() {
+    return this.options.space;
+  }
+  /** Stellar brief §5.5: space groups are live only under a space biome, at their scale; of the rest, only the listed few. */
+  spaceGroupWeight(group) {
+    var _a2;
+    const space = this.space;
+    if (!space) return group.space ? 0 : 1;
+    if (group.space) return !group.scale || group.scale === space.scale ? 1 : 0;
+    const rules = this.data.space;
+    const scales = rules.groupScales[group.id];
+    if (scales && !scales.includes(space.scale)) return 0;
+    return (_a2 = rules.groups[group.id]) != null ? _a2 : 0;
+  }
+  /** Stellar brief §5.5: a generic of a listed group may be limited to some generics or scales. */
+  spaceGenericLive(groupId, genericId) {
+    const space = this.space;
+    const rules = this.data.space;
+    if (rules.genericOnly[groupId] && !rules.genericOnly[groupId].includes(genericId)) return false;
+    const scales = rules.genericScales[genericId];
+    return !scales || scales.includes(space.scale);
+  }
+  /** Stellar brief §5.6, §5.8: the category layer under a space biome. */
+  spaceCategoryMultiplier(id) {
+    var _a2;
+    const space = this.space;
+    if (!space) return 1;
+    const rules = this.data.space;
+    if (id === "crop" || id === "produce") return rules.cropScales.includes(space.scale) ? 1 : 0;
+    if (id === "native-people-or-tribe") return this.options.part === "2" && !space.aliens ? 0 : 1;
+    if (id === "local-deity") return space.aliens ? 1 : 0;
+    return (_a2 = rules.categories[id]) != null ? _a2 : 1;
+  }
+  groupMultiplier(group) {
     var _a2, _b, _c, _d, _e;
-    return ((_a2 = this.profile.groupMultipliers[id]) != null ? _a2 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.groupMultipliers[id]) != null ? _c : 1) * ((_e = (_d = this.options.environment) == null ? void 0 : _d.groups[id]) != null ? _e : 1);
+    const id = group.id;
+    return ((_a2 = this.profile.groupMultipliers[id]) != null ? _a2 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.groupMultipliers[id]) != null ? _c : 1) * ((_e = (_d = this.options.environment) == null ? void 0 : _d.groups[id]) != null ? _e : 1) * this.spaceGroupWeight(group);
   }
   categoryMultiplier(id) {
     var _a2, _b, _c;
-    return ((_a2 = this.profile.categoryMultipliers[id]) != null ? _a2 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.categoryMultipliers[id]) != null ? _c : 1);
+    return ((_a2 = this.profile.categoryMultipliers[id]) != null ? _a2 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.categoryMultipliers[id]) != null ? _c : 1) * this.spaceCategoryMultiplier(id);
   }
   /** §7 base chance × tradition × context structure multipliers, capped at 1.0. */
   chance(key2, base) {
@@ -26062,6924 +30325,709 @@ function* takeOverSteps(input) {
   return { rows, seed, notice };
 }
 
-// src/data/river-names.json
-var river_names_default = {
-  $comment: "River names module (river brief \xA76). Corpora are real river names used only to train the ancient-name Markov model; a generated name identical to any of them is rejected.",
-  corpora: {
-    england: [
-      "Thames",
-      "Severn",
-      "Trent",
-      "Avon",
-      "Ouse",
-      "Tyne",
-      "Tees",
-      "Wear",
-      "Swale",
-      "Ure",
-      "Nidd",
-      "Wharfe",
-      "Aire",
-      "Calder",
-      "Don",
-      "Derwent",
-      "Hull",
-      "Humber",
-      "Witham",
-      "Welland",
-      "Nene",
-      "Cam",
-      "Granta",
-      "Lark",
-      "Wensum",
-      "Yare",
-      "Waveney",
-      "Bure",
-      "Stour",
-      "Orwell",
-      "Deben",
-      "Gipping",
-      "Colne",
-      "Chelmer",
-      "Lea",
-      "Roding",
-      "Medway",
-      "Wey",
-      "Mole",
-      "Arun",
-      "Adur",
-      "Rother",
-      "Test",
-      "Itchen",
-      "Frome",
-      "Piddle",
-      "Axe",
-      "Exe",
-      "Teign",
-      "Dart",
-      "Tamar",
-      "Fowey",
-      "Fal",
-      "Camel",
-      "Taw",
-      "Torridge",
-      "Parrett",
-      "Tone",
-      "Brue",
-      "Yeo",
-      "Lugg",
-      "Teme",
-      "Mersey",
-      "Ribble",
-      "Lune",
-      "Kent",
-      "Eden",
-      "Esk",
-      "Irwell",
-      "Weaver",
-      "Dane",
-      "Tame",
-      "Rea",
-      "Sow",
-      "Penk",
-      "Dove",
-      "Churnet",
-      "Soar",
-      "Wreake",
-      "Idle",
-      "Rye",
-      "Leven",
-      "Coquet",
-      "Aln",
-      "Wansbeck",
-      "Blyth",
-      "Till",
-      "Glen",
-      "Tweed",
-      "Kennet",
-      "Thame",
-      "Cherwell",
-      "Evenlode",
-      "Windrush",
-      "Coln",
-      "Churn",
-      "Ock",
-      "Pang",
-      "Loddon",
-      "Wylye",
-      "Nadder",
-      "Ebble",
-      "Sid",
-      "Yealm",
-      "Erme",
-      "Plym",
-      "Tavy",
-      "Lyn",
-      "Barle",
-      "Arrow",
-      "Wyre",
-      "Hodder"
+// src/data/space.json
+var space_default = {
+  scales: {
+    order: [
+      "Pl",
+      "Sy",
+      "Nb",
+      "Se",
+      "Ga"
     ],
-    wales: [
-      "Teifi",
-      "Tywi",
-      "Taf",
-      "Tawe",
-      "Nedd",
-      "Afan",
-      "Ogwr",
-      "Rhondda",
-      "Rhymni",
-      "Ebwy",
-      "Sirhywi",
-      "Cynon",
-      "Llwyd",
-      "Mynwy",
-      "Honddu",
-      "Irfon",
-      "Ieithon",
-      "Elan",
-      "Claerwen",
-      "Rheidol",
-      "Ystwyth",
-      "Aeron",
-      "Arth",
-      "Dyfi",
-      "Dulas",
-      "Mawddach",
-      "Wnion",
-      "Dysynni",
-      "Dwyryd",
-      "Glaslyn",
-      "Dwyfor",
-      "Erch",
-      "Seiont",
-      "Ogwen",
-      "Conwy",
-      "Lledr",
-      "Llugwy",
-      "Elwy",
-      "Clwyd",
-      "Alun",
-      "Dyfrdwy",
-      "Ceiriog",
-      "Tanad",
-      "Efyrnwy",
-      "Banw",
-      "Hafren",
-      "Cleddau",
-      "Gwaun",
-      "Nyfer",
-      "Cothi",
-      "Gwili",
-      "Gwendraeth",
-      "Llwchwr",
-      "Aman",
-      "Twrch",
-      "Senni",
-      "Tarell",
-      "Grwyne",
-      "Gefenni",
-      "Troddi",
-      "Aled",
-      "Alaw",
-      "Cefni",
-      "Braint",
-      "Gwy",
-      "Wysg"
-    ],
-    scotland: [
-      "Clyde",
-      "Forth",
-      "Tay",
-      "Spey",
-      "Dee",
-      "Don",
-      "Deveron",
-      "Ythan",
-      "Ugie",
-      "Findhorn",
-      "Nairn",
-      "Ness",
-      "Beauly",
-      "Conon",
-      "Oykel",
-      "Carron",
-      "Shin",
-      "Naver",
-      "Halladale",
-      "Thurso",
-      "Wick",
-      "Helmsdale",
-      "Brora",
-      "Fleet",
-      "Earn",
-      "Almond",
-      "Isla",
-      "Ericht",
-      "Tummel",
-      "Garry",
-      "Lyon",
-      "Lochay",
-      "Dochart",
-      "Teith",
-      "Allan",
-      "Devon",
-      "Leven",
-      "Eden",
-      "Annan",
-      "Nith",
-      "Esk",
-      "Liddel",
-      "Ken",
-      "Cree",
-      "Bladnoch",
-      "Urr",
-      "Doon",
-      "Ayr",
-      "Irvine",
-      "Garnock",
-      "Girvan",
-      "Stinchar",
-      "Teviot",
-      "Ettrick",
-      "Yarrow",
-      "Tweed",
-      "Gala",
-      "Leader",
-      "Tyne",
-      "Lossie",
-      "Bervie",
-      "Avon",
-      "Livet",
-      "Feshie",
-      "Truim",
-      "Spean",
-      "Lochy",
-      "Nevis",
-      "Orchy",
-      "Awe",
-      "Etive",
-      "Shiel",
-      "Morar",
-      "Lyne",
-      "Kelvin",
-      "Cart",
-      "Calder"
-    ]
-  },
-  regionCorpora: {
-    all: [
-      "england",
-      "wales",
-      "scotland"
-    ],
-    COR: [
-      "england"
-    ],
-    WCY: [
-      "england"
-    ],
-    SEA: [
-      "england"
-    ],
-    EAN: [
-      "england"
-    ],
-    EMD: [
-      "england"
-    ],
-    NTH: [
-      "england"
-    ],
-    WMM: [
-      "england",
-      "wales"
-    ],
-    WAL: [
-      "wales"
-    ],
-    SBL: [
-      "scotland",
-      "england"
-    ],
-    SLO: [
-      "scotland"
-    ],
-    SHH: [
-      "scotland"
-    ],
-    NSI: [
-      "scotland"
-    ]
-  },
-  ancient: {
-    minLetters: 3,
-    maxLetters: 8,
-    draws: 20
-  },
-  kindWeights: {
-    british: {
-      ancient: 40,
-      descriptive: 45,
-      pattern: 15
+    any: {
+      label: "Any scale",
+      phrase: "any scale",
+      tooltip: "Names from every scale the era allows"
     },
-    "new-land": {
-      ancient: 0,
-      descriptive: 60,
-      pattern: 40
-    },
-    established: {
-      ancient: 0,
-      descriptive: 35,
-      pattern: 65
-    }
-  },
-  waterWords: {
-    british: {
-      all: {
-        brook: 30,
-        water: 20,
-        burn: 15,
-        beck: 15,
-        bourne: 10,
-        stream: 5,
-        fleet: 5
+    list: {
+      Pl: {
+        label: "Planetary system",
+        phrase: "a planetary system",
+        tooltip: "A planet and its moons: surface, rings, moons and the orbits around them"
       },
-      COR: {
-        brook: 35,
-        water: 35,
-        bourne: 10,
-        stream: 15,
-        fleet: 5
+      Sy: {
+        label: "Star system",
+        phrase: "a star system",
+        tooltip: "One star or binary pair: belts, the frost line, the outer clouds and the edge of the star's wind"
       },
-      WCY: {
-        brook: 35,
-        water: 25,
-        bourne: 20,
-        stream: 10,
-        fleet: 10
+      Nb: {
+        label: "Local stellar neighbourhood",
+        phrase: "the local stars",
+        tooltip: "The nearby stars and the clouds and bubbles between them"
       },
-      SEA: {
-        brook: 30,
-        water: 15,
-        bourne: 35,
-        stream: 10,
-        fleet: 10
+      Se: {
+        label: "Sector",
+        phrase: "a sector",
+        tooltip: "A stretch of a spiral arm: nebulae, clusters, rifts and spurs"
       },
-      EAN: {
-        brook: 30,
-        water: 25,
-        beck: 15,
-        bourne: 5,
-        stream: 10,
-        fleet: 15
-      },
-      WMM: {
-        brook: 50,
-        water: 25,
-        bourne: 10,
-        stream: 15
-      },
-      WAL: {
-        brook: 40,
-        water: 40,
-        stream: 20
-      },
-      EMD: {
-        brook: 40,
-        water: 20,
-        beck: 20,
-        bourne: 10,
-        stream: 10
-      },
-      NTH: {
-        brook: 15,
-        water: 20,
-        burn: 15,
-        beck: 45,
-        stream: 5
-      },
-      SBL: {
-        water: 30,
-        burn: 50,
-        beck: 10,
-        stream: 10
-      },
-      SLO: {
-        water: 35,
-        burn: 50,
-        stream: 15
-      },
-      SHH: {
-        water: 35,
-        burn: 50,
-        stream: 15
-      },
-      NSI: {
-        water: 40,
-        burn: 45,
-        stream: 15
+      Ga: {
+        label: "Galaxy-spanning",
+        phrase: "the galaxy",
+        tooltip: "Arms, the core and bar, the disc, the halo and the voids beyond"
       }
     },
-    "new-land": {
-      river: 40,
-      creek: 30,
-      run: 10,
-      fork: 10,
-      branch: 10
-    },
-    established: {
-      river: 75,
-      creek: 15,
-      stream: 10
-    }
-  },
-  descriptiveCategories: {
-    british: {
-      colour: 20,
-      tree: 15,
-      bird: 12,
-      "wild-animal": 10,
-      "wild-plant": 10,
-      "soil-or-ground": 10,
-      "quality-or-condition": 10,
-      "fish-and-other-creatures": 8,
-      season: 5
-    },
-    colonial: {
-      colour: 50,
-      "quality-or-condition": 30,
-      shape: 20
-    },
-    colonialWithBiome: {
-      colour: 35,
-      "quality-or-condition": 20,
-      shape: 12,
-      bird: 10,
-      "wild-animal": 8,
-      tree: 8,
-      "wild-plant": 4,
-      "fish-and-other-creatures": 3
-    }
-  },
-  britishFuseChance: 0.75,
-  forms: {
-    ancient: {
-      scottishRegions: [
-        "SBL",
-        "SLO",
-        "SHH",
-        "NSI"
-      ],
-      scottish: {
-        "river-x": 45,
-        "x-water": 25,
-        "water-of-x": 15,
-        bare: 15
-      },
-      other: {
-        "river-x": 85,
-        bare: 15
-      }
-    },
-    britishDescriptive: {
-      bare: 80,
-      "river-x": 20
-    },
-    colonialDescriptive: {
-      "x-water": 80,
-      bare: 20
-    }
-  },
-  patterns: {
-    british: [
-      {
-        pattern: "[personal name]'s {water}",
-        weight: 25
-      },
-      {
-        pattern: "River [deity]",
-        weight: 20
-      },
-      {
-        pattern: "[tribal name] River",
-        weight: 20
-      },
-      {
-        pattern: "[earlier or district name] Water",
-        weight: 15
-      },
-      {
-        pattern: "[tribal name] Water",
-        weight: 10
-      },
-      {
-        pattern: "River of the [tribal name]",
-        weight: 10
-      }
-    ],
-    "new-land": [
-      {
-        pattern: "[native people] River",
-        weight: 18
-      },
-      {
-        pattern: "[explorer] River",
-        weight: 12
-      },
-      {
-        pattern: "[personal name]'s Creek",
-        weight: 10
-      },
-      {
-        pattern: "[personal name] River",
-        weight: 8
-      },
-      {
-        pattern: "[holy person] River",
-        weight: 8
-      },
-      {
-        pattern: "River of the [native people]",
-        weight: 8
-      },
-      {
-        pattern: "[monarch] River",
-        weight: 7
-      },
-      {
-        pattern: "[native people] Creek",
-        weight: 7
-      },
-      {
-        pattern: "[native bird] River",
-        weight: 7
-      },
-      {
-        pattern: "[native wild animal] Creek",
-        weight: 6
-      },
-      {
-        pattern: "[native fish or creature] River",
-        weight: 3
-      },
-      {
-        pattern: "[native tree] Creek",
-        weight: 3
-      },
-      {
-        pattern: "[native plant] Creek",
-        weight: 3
-      }
-    ],
-    established: [
-      {
-        pattern: "[native people] River",
-        weight: 30
-      },
-      {
-        pattern: "River of the [native people]",
-        weight: 12
-      },
-      {
-        pattern: "[monarch] River",
-        weight: 12
-      },
-      {
-        pattern: "[personal name] River",
-        weight: 10
-      },
-      {
-        pattern: "[holy person] River",
-        weight: 8
-      },
-      {
-        pattern: "[personal name]'s Creek",
-        weight: 8
-      },
-      {
-        pattern: "[native bird] River",
-        weight: 6
-      },
-      {
-        pattern: "[native wild animal] River",
-        weight: 6
-      },
-      {
-        pattern: "[native tree] River",
-        weight: 4
-      },
-      {
-        pattern: "[native fish or creature] River",
-        weight: 2
-      },
-      {
-        pattern: "[native plant] River",
-        weight: 2
-      }
-    ]
-  }
-};
-
-// src/data/tribal-names.json
-var tribal_names_default = {
-  traditions: [
-    {
-      key: "general",
-      label: "General",
-      group: "General",
-      drawsOn: "Patterns shared by a majority of traditions",
-      homeland: {
-        temperate: 8,
-        moorland: 4,
-        boreal: 8,
-        "cool-rainforest": 8,
-        mediterranean: 9,
-        steppe: 9,
-        desert: 9,
-        savannah: 9,
-        rainforest: 10,
-        monsoon: 9,
-        "tropical-islands": 9,
-        highland: 8
-      },
-      terrainMultipliers: {},
-      flavour: {},
-      favouredLifeways: [],
-      orientation: [
-        {
-          system: "compass",
-          mult: 1
-        },
-        {
-          system: "relative",
-          mult: 1,
-          words: [
-            "Upper",
-            "Lower",
-            "Inner",
-            "Outer"
-          ]
-        },
-        {
-          system: "seaAxis",
-          mult: 1
-        }
-      ],
-      lineage: {
-        bilateral: 100
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "Folk",
-        "People",
-        "Kin",
-        "Children"
-      ],
-      themes: {
-        relationship: 1.5,
-        number: 1.2
-      },
-      templates: {},
-      groupTypes: {},
-      numbers: [
-        "Three",
-        "Five",
-        "Seven",
-        "Nine"
-      ],
-      suppress: [],
-      special: {}
-    },
-    {
-      key: "celtic",
-      label: "Celtic Britain & Gaul",
-      group: "First release",
-      drawsOn: "Iron Age Britain and Gaul; early Irish kin vocabulary",
-      homeland: {
-        temperate: 80,
-        moorland: 20
-      },
-      terrainMultipliers: {
-        mountains: 0.6,
-        coast: 1.2
-      },
-      flavour: {
-        animals: [
-          "Hound",
-          "Boar",
-          "Salmon",
-          "Raven",
-          "Bull",
-          "Horse"
-        ],
-        plants: [
-          "Oak",
-          "Yew",
-          "Rowan",
-          "Mistletoe"
-        ],
-        land: [
-          "Chalkland",
-          "Downs",
-          "Moor"
-        ],
-        lifeways: [
-          "Horse Breeders",
-          "Cattle Keepers"
-        ]
-      },
-      favouredLifeways: [
-        "Cattle Keepers",
-        "Horse Breeders",
-        "Smiths",
-        "Ploughmen"
-      ],
-      orientation: [
-        {
-          system: "compass",
-          mult: 1
-        },
-        {
-          system: "relative",
-          mult: 1
-        }
-      ],
-      lineage: {
-        patrilineal: 90,
-        bilateral: 10
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "Folk",
-        "People",
-        "Kindred",
-        "Descendants",
-        "Seed",
-        "Portion",
-        "Host"
-      ],
-      themes: {
-        landscape: 1.4,
-        warfare: 1.3,
-        qualities: 1.5,
-        animals: 1.2,
-        vessel: 0.3
-      },
-      templates: {
-        O: 1.5,
-        A: 1.3
-      },
-      groupTypes: {
-        confederation: 1.3,
-        warband: 1.2,
-        dynasty: 1.2
-      },
-      numbers: [
-        "Three",
-        "Seven"
-      ],
-      suppress: [],
-      special: {}
-    },
-    {
-      key: "germanic",
-      label: "Germanic & Norse",
-      group: "First release",
-      drawsOn: "Migration-era Germanic peoples; Scandinavian folk districts",
-      homeland: {
-        temperate: 55,
-        boreal: 30,
-        moorland: 15
-      },
-      terrainMultipliers: {
-        coast: 1.3,
-        islands: 1.3
-      },
-      flavour: {
-        animals: [
-          "Wolf",
-          "Raven",
-          "Boar",
-          "Bear",
-          "Stag",
-          "Eagle"
-        ],
-        plants: [
-          "Ash",
-          "Yew",
-          "Oak",
-          "Birch"
-        ],
-        land: [
-          "Heath"
-        ],
-        water: [
-          "Fjord",
-          "Long Inlet"
-        ],
-        lifeways: [
-          "Seafarers",
-          "Boatwrights"
-        ]
-      },
-      favouredLifeways: [
-        "Cattle Keepers",
-        "Ploughmen",
-        "Boatwrights",
-        "Smiths"
-      ],
-      orientation: [
-        {
-          system: "compass",
-          mult: 1
-        },
-        {
-          system: "relative",
-          mult: 1
-        },
-        {
-          system: "seaAxis",
-          mult: 1,
-          words: [
-            "Inland",
-            "Seaward"
-          ]
-        }
-      ],
-      lineage: {
-        patrilineal: 90,
-        bilateral: 10
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "Folk",
-        "Men",
-        "Kin",
-        "Host",
-        "Sons"
-      ],
-      themes: {
-        warfare: 1.5,
-        dress: 2,
-        relationship: 1.5,
-        vessel: 1.5,
-        sacred: 0.8
-      },
-      templates: {
-        A: 1.3,
-        L: 1.2
-      },
-      groupTypes: {
-        warband: 1.5,
-        migrant: 1.3,
-        confederation: 1.2
-      },
-      numbers: [
-        "Two",
-        "Three",
-        "Nine",
-        "Twelve"
-      ],
-      suppress: [],
-      special: {
-        longship: true
-      }
-    },
-    {
-      key: "steppe",
-      label: "Steppe",
-      group: "First release",
-      drawsOn: "Scythian, Turkic and Mongol peoples",
-      homeland: {
-        steppe: 80,
-        desert: 10,
-        highland: 10
-      },
-      terrainMultipliers: {
-        rivers: 1.2,
-        coast: 0,
-        islands: 0
-      },
-      flavour: {
-        animals: [
-          "Horse",
-          "Wolf",
-          "Eagle",
-          "Falcon",
-          "Snow Leopard",
-          "Ram",
-          "Camel",
-          "Deer"
-        ],
-        plants: [
-          "Feather Grass",
-          "Wormwood"
-        ],
-        land: [
-          "Black Earth",
-          "Salt Flats"
-        ],
-        water: [
-          "Salt Lakes"
-        ],
-        lifeways: [
-          "Horse Herders",
-          "Felt Makers"
-        ]
-      },
-      favouredLifeways: [
-        "Horse Herders",
-        "Riders",
-        "Ploughmen",
-        "Felt Makers"
-      ],
-      orientation: [
-        {
-          system: "colourDirection",
-          mult: 2
-        },
-        {
-          system: "moietyAxis",
-          mult: 1,
-          words: [
-            "Left-Hand",
-            "Right-Hand"
-          ]
-        },
-        {
-          system: "compass",
-          mult: 1
-        }
-      ],
-      lineage: {
-        patrilineal: 100
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "Host",
-        "Horde",
-        "Arrows",
-        "Tents",
-        "Bone",
-        "Riders"
-      ],
-      themes: {
-        number: 3,
-        lifeway: 2,
-        dress: 1.3,
-        water: 0.7,
-        plants: 0.4,
-        vessel: 0
-      },
-      templates: {
-        J: 3,
-        F: 1.5,
-        A: 1.2
-      },
-      groupTypes: {
-        confederation: 2,
-        moiety: 2,
-        warband: 1.5,
-        settlement: 0.4
-      },
-      numbers: [
-        "Nine",
-        "Ten",
-        "Twelve",
-        "Thirty",
-        "Hundred"
-      ],
-      suppress: [],
-      special: {
-        colourCollectives: [
-          "Host",
-          "Horde",
-          "Tents",
-          "Arrows",
-          "Bone"
-        ]
-      }
-    },
-    {
-      key: "arabian",
-      label: "Arabian & Saharan",
-      group: "First release",
-      drawsOn: "Bedouin tribes; Amazigh and Tuareg confederations",
-      homeland: {
-        desert: 80,
-        mediterranean: 10,
-        highland: 5,
-        steppe: 5
-      },
-      terrainMultipliers: {
-        rivers: 1.3,
-        coast: 0.8
-      },
-      flavour: {
-        animals: [
-          "Camel",
-          "Lion",
-          "Oryx",
-          "Gazelle",
-          "Falcon",
-          "Mare",
-          "Hound"
-        ],
-        plants: [
-          "Date Palm",
-          "Acacia"
-        ],
-        water: [
-          "Wells",
-          "Oasis",
-          "Seven Wells"
-        ],
-        lifeways: [
-          "Camel Herders",
-          "Caravaneers"
-        ]
-      },
-      favouredLifeways: [
-        "Camel Herders",
-        "Caravaneers",
-        "Oasis Farmers",
-        "Riders"
-      ],
-      orientation: [
-        {
-          system: "sunriseSunset",
-          mult: 2
-        },
-        {
-          system: "compass",
-          mult: 1
-        }
-      ],
-      lineage: {
-        patrilineal: 100
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "Sons",
-        "House",
-        "Family",
-        "People",
-        "Riders",
-        "Tents"
-      ],
-      themes: {
-        ancestor: 2.5,
-        water: 1.3,
-        animals: 1.3,
-        qualities: 1.3,
-        landscape: 1.2,
-        plants: 0.6,
-        vessel: 0.2
-      },
-      templates: {
-        G: 2.5,
-        N: 2,
-        C: 1.3
-      },
-      groupTypes: {
-        kin: 2,
-        dynasty: 1.3,
-        confederation: 1.2,
-        settlement: 0.7
-      },
-      numbers: [
-        "Three",
-        "Seven"
-      ],
-      suppress: [],
-      special: {}
-    },
-    {
-      key: "bantu",
-      label: "Bantu Africa",
-      group: "First release",
-      drawsOn: "Central, eastern and southern Bantu-speaking peoples",
-      homeland: {
-        savannah: 70,
-        rainforest: 15,
-        highland: 15
-      },
-      terrainMultipliers: {
-        rivers: 1.2,
-        wetland: 1.2
-      },
-      flavour: {
-        animals: [
-          "Lion",
-          "Leopard",
-          "Elephant",
-          "Buffalo",
-          "Crocodile",
-          "Python",
-          "Eagle",
-          "Bull",
-          "Crane"
-        ],
-        plants: [
-          "Fig Tree",
-          "Baobab",
-          "Millet"
-        ],
-        land: [
-          "Red Hills"
-        ],
-        lifeways: [
-          "Cattle Keepers",
-          "Iron Smelters"
-        ]
-      },
-      favouredLifeways: [
-        "Cattle Keepers",
-        "Millet Growers",
-        "Iron Smelters",
-        "Smiths"
-      ],
-      orientation: [
-        {
-          system: "compass",
-          mult: 1
-        },
-        {
-          system: "sunriseSunset",
-          mult: 1
-        },
-        {
-          system: "relative",
-          mult: 1,
-          words: [
-            "Upland",
-            "Lowland"
-          ]
-        }
-      ],
-      lineage: {
-        patrilineal: 70,
-        matrilineal: 30
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "People",
-        "Children",
-        "House",
-        "Followers"
-      ],
-      themes: {
-        ancestor: 2,
-        lifeway: 1.6,
-        plants: 1.6,
-        speech: 1.5,
-        sacred: 1.2,
-        vessel: 0.3
-      },
-      templates: {
-        N: 2,
-        G: 1.5,
-        M: 1.5,
-        B: 1.2
-      },
-      groupTypes: {
-        dynasty: 1.5,
-        kin: 1.3,
-        confederation: 1.2
-      },
-      numbers: [
-        "Two",
-        "Three",
-        "Four"
-      ],
-      suppress: [],
-      special: {}
-    },
-    {
-      key: "northAmerican",
-      label: "North American Woodlands & Plains",
-      group: "First release",
-      drawsOn: "Eastern Woodlands, Great Lakes and Plains nations",
-      homeland: {
-        temperate: 65,
-        steppe: 25,
-        boreal: 10
-      },
-      terrainMultipliers: {
-        rivers: 1.3,
-        wetland: 1.2
-      },
-      flavour: {
-        animals: [
-          "Turtle",
-          "Beaver",
-          "Bison",
-          "Elk",
-          "Snipe",
-          "Bear",
-          "Wolf",
-          "Heron",
-          "Hawk",
-          "Deer"
-        ],
-        plants: [
-          "Maize",
-          "Wild Rice",
-          "Pine",
-          "Cedar",
-          "Elm"
-        ],
-        land: [
-          "Prairie"
-        ],
-        water: [
-          "Long Lake",
-          "Wild Rice Lakes"
-        ],
-        lifeways: [
-          "Maize Growers",
-          "Bison Hunters",
-          "Wild Rice Gatherers"
-        ]
-      },
-      favouredLifeways: [
-        "Hunters",
-        "Fishers",
-        "Maize Growers"
-      ],
-      orientation: [
-        {
-          system: "compass",
-          mult: 1
-        },
-        {
-          system: "sunriseSunset",
-          mult: 1
-        }
-      ],
-      lineage: {
-        matrilineal: 60,
-        patrilineal: 40
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "People",
-        "Nation",
-        "Clan",
-        "Fires",
-        "Allies"
-      ],
-      themes: {
-        relationship: 2,
-        number: 1.8,
-        animals: 1.5,
-        speech: 1.5,
-        dress: 1.3,
-        landscape: 1.2,
-        plants: 1.2,
-        vessel: 0.4
-      },
-      templates: {
-        O: 2,
-        C: 1.5,
-        J: 1.5,
-        M: 1.5
-      },
-      groupTypes: {
-        confederation: 1.5,
-        kin: 1.3,
-        moiety: 1.2,
-        dynasty: 0.6
-      },
-      numbers: [
-        "Three",
-        "Five",
-        "Six",
-        "Seven"
-      ],
-      suppress: [
-        {
-          word: "Braves",
-          mult: 0,
-          kind: "culture"
-        },
-        {
-          word: "Chiefs",
-          mult: 0,
-          kind: "culture"
-        },
-        {
-          word: "Spirit",
-          mult: 0,
-          kind: "culture"
-        },
-        {
-          word: "Feather",
-          mult: 0,
-          kind: "culture"
-        },
-        {
-          word: "Tomahawk",
-          mult: 0,
-          kind: "culture"
-        },
-        {
-          word: "Horse",
-          mult: 0.6,
-          kind: "homeland"
-        }
-      ],
-      special: {
-        paintedMoccasin: true,
-        clanAnimal: true
-      }
-    },
-    {
-      key: "polynesian",
-      label: "Polynesian",
-      group: "First release",
-      drawsOn: "M\u0101ori, Hawaiian, Samoan and Tongan societies",
-      homeland: {
-        "tropical-islands": 80,
-        "cool-rainforest": 20
-      },
-      terrainMultipliers: {
-        coast: 1.5,
-        islands: 1.5,
-        mountains: 1.2
-      },
-      flavour: {
-        animals: [
-          "Shark",
-          "Turtle",
-          "Octopus",
-          "Whale",
-          "Frigatebird",
-          "Heron",
-          "Owl",
-          "Lizard",
-          "Kiwi"
-        ],
-        plants: [
-          "Breadfruit",
-          "Coconut Palm",
-          "Pandanus",
-          "Taro",
-          "Flax",
-          "Tree Fern"
-        ],
-        water: [
-          "Lagoon",
-          "Reef"
-        ],
-        lifeways: [
-          "Voyagers",
-          "Navigators",
-          "Taro Planters"
-        ]
-      },
-      favouredLifeways: [
-        "Voyagers",
-        "Navigators",
-        "Reef Fishers",
-        "Taro Planters"
-      ],
-      orientation: [
-        {
-          system: "seaAxis",
-          mult: 2
-        },
-        {
-          system: "relative",
-          mult: 1
-        }
-      ],
-      lineage: {
-        bilateral: 100
-      },
-      lineageMultipliers: {
-        Sons: 0.3,
-        Daughters: 0.3
-      },
-      signatureCollectives: [
-        "Descendants",
-        "Children",
-        "People",
-        "Family",
-        "Kin"
-      ],
-      themes: {
-        ancestor: 3,
-        vessel: 3,
-        sacred: 1.3,
-        water: 1.3,
-        plants: 1.3,
-        warfare: 0.8,
-        number: 0.6
-      },
-      templates: {
-        G: 2.5,
-        C: 2,
-        N: 1.5,
-        E: 1.3
-      },
-      groupTypes: {
-        kin: 2,
-        dynasty: 1.5,
-        migrant: 1.5,
-        frontier: 0.4
-      },
-      numbers: [
-        "Two",
-        "Three"
-      ],
-      suppress: [
-        {
-          word: "Horse",
-          mult: 0,
-          kind: "homeland"
-        },
-        {
-          word: "Chariot",
-          mult: 0,
-          kind: "culture"
-        },
-        {
-          word: "Sword",
-          mult: 0,
-          kind: "culture"
-        },
-        {
-          word: "Bow",
-          mult: 0.3,
-          kind: "culture"
-        }
-      ],
-      special: {
-        ancestorAnimal: 2
-      }
-    },
-    {
-      key: "eastAsian",
-      label: "East Asian",
-      group: "First release",
-      drawsOn: "Chinese, Japanese and Korean clans; frontier peoples seen from the centre",
-      homeland: {
-        temperate: 50,
-        monsoon: 35,
-        steppe: 10,
-        highland: 5
-      },
-      terrainMultipliers: {
-        rivers: 1.3,
-        wetland: 1.3,
-        mountains: 1.2
-      },
-      flavour: {
-        animals: [
-          "Tiger",
-          "Crane",
-          "Carp",
-          "Ox",
-          "Magpie",
-          "Horse",
-          "Falcon",
-          "Bear"
-        ],
-        plants: [
-          "Plum",
-          "Pine",
-          "Bamboo",
-          "Mulberry",
-          "Lotus"
-        ],
-        lifeways: [
-          "Rice Growers",
-          "Silk Weavers",
-          "Ritualists"
-        ]
-      },
-      favouredLifeways: [
-        "Rice Growers",
-        "Weavers",
-        "Silk Weavers",
-        "Ritualists",
-        "Smiths"
-      ],
-      orientation: [
-        {
-          system: "compass",
-          mult: 2
-        },
-        {
-          system: "centre",
-          mult: 2,
-          words: [
-            "Central"
-          ]
-        },
-        {
-          system: "relative",
-          mult: 1
-        }
-      ],
-      lineage: {
-        patrilineal: 100
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "House",
-        "Clan",
-        "Line",
-        "Guild",
-        "Folk"
-      ],
-      themes: {
-        lifeway: 2.5,
-        direction: 2,
-        plants: 1.5,
-        ancestor: 1.3,
-        number: 1.3
-      },
-      templates: {
-        P: 4,
-        L: 2,
-        E: 1.5,
-        J: 1.3
-      },
-      groupTypes: {
-        occupational: 3,
-        dynasty: 1.5,
-        kin: 1.5,
-        regional: 0.8
-      },
-      numbers: [
-        "Five",
-        "Hundred"
-      ],
-      suppress: [],
-      special: {
-        dragon: 2
-      }
-    },
-    {
-      key: "mesoamerican",
-      label: "Mesoamerican",
-      group: "Second release",
-      drawsOn: "Nahua, Mixtec, Zapotec and Maya city-states",
-      homeland: {
-        highland: 40,
-        rainforest: 40,
-        desert: 10,
-        savannah: 10
-      },
-      terrainMultipliers: {
-        wetland: 1.5,
-        mountains: 1.3
-      },
-      flavour: {
-        animals: [
-          "Jaguar",
-          "Eagle",
-          "Serpent",
-          "Hummingbird",
-          "Quetzal",
-          "Coyote",
-          "Heron",
-          "Deer",
-          "Monkey"
-        ],
-        plants: [
-          "Maize",
-          "Cacao",
-          "Agave",
-          "Cotton",
-          "Reed"
-        ],
-        water: [
-          "Reed Lake"
-        ],
-        lifeways: [
-          "Maize Growers",
-          "Featherworkers",
-          "Cacao Growers"
-        ]
-      },
-      favouredLifeways: [
-        "Featherworkers",
-        "Traders",
-        "Maize Growers"
-      ],
-      orientation: [
-        {
-          system: "compass",
-          mult: 1
-        },
-        {
-          system: "centre",
-          mult: 1,
-          words: [
-            "Central"
-          ]
-        },
-        {
-          system: "sunriseSunset",
-          mult: 1
-        }
-      ],
-      lineage: {
-        patrilineal: 60,
-        bilateral: 40
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "People",
-        "House",
-        "Lords",
-        "Warriors",
-        "Great House"
-      ],
-      themes: {
-        sacred: 2,
-        lifeway: 1.5,
-        animals: 1.5,
-        plants: 1.3,
-        number: 1.2
-      },
-      templates: {
-        Q: 4,
-        I: 1.5,
-        F: 1.3,
-        R: 1.3
-      },
-      groupTypes: {
-        dynasty: 1.5,
-        warband: 1.5,
-        settlement: 1.5,
-        occupational: 1.3
-      },
-      numbers: [
-        "Four",
-        "Seven",
-        "Thirteen"
-      ],
-      suppress: [
-        {
-          word: "Horse",
-          mult: 0,
-          kind: "homeland"
-        },
-        {
-          word: "Chariot",
-          mult: 0,
-          kind: "culture"
-        },
-        {
-          word: "Sword",
-          mult: 0,
-          kind: "culture"
-        }
-      ],
-      special: {
-        waterHill: 0.3
-      }
-    },
-    {
-      key: "andean",
-      label: "Andean & Southern Cone",
-      group: "Second release",
-      drawsOn: "Andean kin communities; Mapuche and neighbours",
-      homeland: {
-        highland: 60,
-        desert: 15,
-        "cool-rainforest": 10,
-        mediterranean: 10,
-        steppe: 5
-      },
-      terrainMultipliers: {
-        mountains: 1.3,
-        rivers: 1.2
-      },
-      flavour: {
-        animals: [
-          "Condor",
-          "Puma",
-          "Llama",
-          "Fox",
-          "Vicuna",
-          "Hummingbird",
-          "Serpent"
-        ],
-        plants: [
-          "Monkey-Puzzle",
-          "Maize",
-          "Potato"
-        ],
-        lifeways: [
-          "Llama Herders",
-          "Terrace Farmers"
-        ]
-      },
-      favouredLifeways: [
-        "Llama Herders",
-        "Terrace Farmers",
-        "Weavers",
-        "Potato Growers"
-      ],
-      orientation: [
-        {
-          system: "moietyAxis",
-          mult: 3,
-          words: [
-            "Upper Half",
-            "Lower Half"
-          ]
-        },
-        {
-          system: "compass",
-          mult: 1
-        }
-      ],
-      lineage: {
-        bilateral: 60,
-        patrilineal: 40
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "Kin",
-        "People",
-        "House",
-        "Half",
-        "Quarter"
-      ],
-      themes: {
-        direction: 2.5,
-        landscape: 1.5,
-        sacred: 1.5,
-        lifeway: 1.4,
-        animals: 1.2,
-        plants: 1.2
-      },
-      templates: {
-        E: 2,
-        C: 1.5,
-        G: 1.3,
-        K: 1.3
-      },
-      groupTypes: {
-        moiety: 3,
-        kin: 1.5,
-        confederation: 1.2
-      },
-      numbers: [
-        "Two",
-        "Four"
-      ],
-      suppress: [
-        {
-          word: "Horse",
-          mult: 0,
-          kind: "homeland"
-        },
-        {
-          word: "Chariot",
-          mult: 0,
-          kind: "culture"
-        },
-        {
-          word: "Sword",
-          mult: 0,
-          kind: "culture"
-        }
-      ],
-      special: {}
-    },
-    {
-      key: "maritimeSEA",
-      label: "Maritime South-East Asian",
-      group: "Second release",
-      drawsOn: "Malay world, Borneo, Philippines",
-      homeland: {
-        rainforest: 55,
-        "tropical-islands": 30,
-        monsoon: 15
-      },
-      terrainMultipliers: {
-        rivers: 1.5,
-        coast: 1.3,
-        islands: 1.2
-      },
-      flavour: {
-        animals: [
-          "Hornbill",
-          "Crocodile",
-          "Tiger",
-          "Python",
-          "Monkey",
-          "Monitor Lizard",
-          "Dugong"
-        ],
-        plants: [
-          "Banyan",
-          "Bamboo",
-          "Sago Palm",
-          "Mangrove",
-          "Rattan"
-        ],
-        lifeways: [
-          "Sea Nomads",
-          "Sago Makers",
-          "River Traders"
-        ]
-      },
-      favouredLifeways: [
-        "River Fishers",
-        "Reef Fishers",
-        "Traders",
-        "Sago Makers"
-      ],
-      orientation: [
-        {
-          system: "riverAxis",
-          mult: 2
-        },
-        {
-          system: "seaAxis",
-          mult: 1
-        }
-      ],
-      lineage: {
-        bilateral: 100
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "People",
-        "Folk",
-        "House",
-        "Kin"
-      ],
-      themes: {
-        water: 2,
-        direction: 2,
-        lifeway: 1.6,
-        relationship: 1.5,
-        vessel: 1.5,
-        animals: 1.2
-      },
-      templates: {
-        B: 2,
-        E: 1.5,
-        L: 1.3
-      },
-      groupTypes: {
-        regional: 1.3,
-        settlement: 1.3,
-        migrant: 1.3
-      },
-      numbers: [
-        "Two",
-        "Three",
-        "Seven"
-      ],
-      suppress: [],
-      special: {
-        longhouse: true
-      }
-    },
-    {
-      key: "mediterranean",
-      label: "Ancient Mediterranean",
-      group: "Second release",
-      drawsOn: "Italic peoples and Greek communities",
-      homeland: {
-        mediterranean: 90,
-        temperate: 10
-      },
-      terrainMultipliers: {
-        coast: 1.3,
-        islands: 1.3,
-        mountains: 1.2
-      },
-      flavour: {
-        animals: [
-          "Woodpecker",
-          "Wolf",
-          "Bull",
-          "Ram",
-          "Heron",
-          "Dolphin",
-          "Owl",
-          "Eagle",
-          "Boar"
-        ],
-        plants: [
-          "Olive",
-          "Laurel",
-          "Cypress",
-          "Vine",
-          "Oak"
-        ],
-        lifeways: [
-          "Seafarers",
-          "Vine Growers"
-        ]
-      },
-      favouredLifeways: [
-        "Shepherds",
-        "Seafarers",
-        "Olive Growers",
-        "Vine Growers"
-      ],
-      orientation: [
-        {
-          system: "compass",
-          mult: 1
-        },
-        {
-          system: "relative",
-          mult: 1
-        },
-        {
-          system: "centre",
-          mult: 1,
-          words: [
-            "Around"
-          ]
-        }
-      ],
-      lineage: {
-        patrilineal: 100
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "People",
-        "Dwellers",
-        "Settlers",
-        "Followers",
-        "Sons"
-      ],
-      themes: {
-        relationship: 2,
-        animals: 1.3,
-        sacred: 1.3,
-        vessel: 1.3,
-        lifeway: 1.2
-      },
-      templates: {
-        R: 4,
-        D: 1.3,
-        H: 1.3,
-        C: 1.2
-      },
-      groupTypes: {
-        migrant: 2,
-        settlement: 1.3,
-        confederation: 1.2
-      },
-      numbers: [
-        "Three",
-        "Four",
-        "Twelve"
-      ],
-      suppress: [],
-      special: {
-        migrationGuide: 30
-      }
-    },
-    {
-      key: "northernPacific",
-      label: "Pacific Northwest & Arctic",
-      group: "Expansion",
-      drawsOn: "Northwest Coast houses and moieties; Arctic peoples",
-      homeland: {
-        "cool-rainforest": 60,
-        boreal: 40
-      },
-      terrainMultipliers: {
-        coast: 1.5,
-        rivers: 1.3
-      },
-      flavour: {
-        animals: [
-          "Raven",
-          "Eagle",
-          "Wolf",
-          "Bear",
-          "Killer Whale",
-          "Salmon",
-          "Beaver",
-          "Frog",
-          "Seal"
-        ],
-        plants: [
-          "Cedar",
-          "Spruce"
-        ],
-        lifeways: [
-          "Salmon Fishers",
-          "Cedar Carvers",
-          "Whalers"
-        ]
-      },
-      favouredLifeways: [
-        "Salmon Fishers",
-        "Cedar Carvers",
-        "Whalers",
-        "Sealers"
-      ],
-      orientation: [
-        {
-          system: "riverAxis",
-          mult: 1
-        },
-        {
-          system: "seaAxis",
-          mult: 1
-        }
-      ],
-      lineage: {
-        matrilineal: 70,
-        bilateral: 30
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "House",
-        "Side",
-        "Clan",
-        "People"
-      ],
-      themes: {
-        animals: 2,
-        vessel: 1.5,
-        water: 1.5,
-        lifeway: 1.5,
-        relationship: 1.5,
-        plants: 0.8
-      },
-      templates: {
-        G: 1.5,
-        F: 1.5,
-        O: 1.3
-      },
-      groupTypes: {
-        moiety: 3,
-        kin: 1.5,
-        dynasty: 1.2,
-        warband: 0.6
-      },
-      numbers: [
-        "Two",
-        "Four"
-      ],
-      suppress: [
-        {
-          word: "Horse",
-          mult: 0,
-          kind: "homeland"
-        },
-        {
-          word: "Chariot",
-          mult: 0,
-          kind: "culture"
-        }
-      ],
-      special: {
-        ancestorAnimal: 2
-      }
-    },
-    {
-      key: "westAfrican",
-      label: "West African",
-      group: "Expansion",
-      drawsOn: "Mande, Akan, Yoruba and Sahelian societies",
-      homeland: {
-        savannah: 50,
-        rainforest: 35,
-        desert: 15
-      },
-      terrainMultipliers: {
-        rivers: 1.3
-      },
-      flavour: {
-        animals: [
-          "Python",
-          "Leopard",
-          "Crocodile",
-          "Elephant",
-          "Lion",
-          "Hornbill",
-          "Spider",
-          "Tortoise",
-          "Buffalo"
-        ],
-        plants: [
-          "Kola Tree",
-          "Baobab",
-          "Oil Palm",
-          "Silk-Cotton Tree"
-        ],
-        lifeways: [
-          "Traders",
-          "Smiths",
-          "Hunters"
-        ]
-      },
-      favouredLifeways: [
-        "Traders",
-        "Smiths",
-        "Hunters",
-        "Millet Growers"
-      ],
-      orientation: [
-        {
-          system: "compass",
-          mult: 1
-        },
-        {
-          system: "riverAxis",
-          mult: 1
-        }
-      ],
-      lineage: {
-        patrilineal: 60,
-        matrilineal: 40
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "People",
-        "House",
-        "Line",
-        "Children"
-      ],
-      themes: {
-        ancestor: 2,
-        animals: 1.5,
-        water: 1.3,
-        plants: 1.2,
-        sacred: 1.2
-      },
-      templates: {
-        K: 2,
-        N: 1.5,
-        G: 1.5,
-        C: 1.3
-      },
-      groupTypes: {
-        dynasty: 1.5,
-        kin: 1.5,
-        settlement: 1.3
-      },
-      numbers: [],
-      suppress: [],
-      special: {
-        clanTaboo: 4
-      }
-    },
-    {
-      key: "southAsian",
-      label: "South Asian",
-      group: "Expansion",
-      drawsOn: "Vedic peoples; dynastic lineages",
-      homeland: {
-        monsoon: 65,
-        highland: 15,
-        desert: 10,
-        rainforest: 10
-      },
-      terrainMultipliers: {
-        rivers: 1.5
-      },
-      flavour: {
-        animals: [
-          "Tiger",
-          "Elephant",
-          "Peacock",
-          "Cobra",
-          "Bull",
-          "Horse",
-          "Deer",
-          "Crane"
-        ],
-        plants: [
-          "Lotus",
-          "Banyan",
-          "Sacred Fig",
-          "Mango",
-          "Sandalwood"
-        ],
-        water: [
-          "Seven Rivers"
-        ]
-      },
-      favouredLifeways: [],
-      orientation: [
-        {
-          system: "compass",
-          mult: 1
-        }
-      ],
-      lineage: {
-        patrilineal: 100
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "Line",
-        "House",
-        "Peoples",
-        "Kin"
-      ],
-      themes: {
-        sacred: 2.5,
-        number: 1.8,
-        water: 1.5,
-        ancestor: 1.5,
-        landscape: 1.2,
-        lifeway: 0
-      },
-      templates: {
-        G: 2,
-        J: 1.8,
-        C: 1.3
-      },
-      groupTypes: {
-        dynasty: 2,
-        confederation: 1.3,
-        occupational: 0
-      },
-      numbers: [
-        "Five",
-        "Seven",
-        "Ten"
-      ],
-      suppress: [],
-      special: {
-        lineageSacred: [
-          "Sun",
-          "Moon",
-          "Fire"
-        ]
-      }
-    },
-    {
-      key: "sahul",
-      label: "Australia & New Guinea",
-      group: "Expansion",
-      drawsOn: "Aboriginal Australian and New Guinea communities",
-      homeland: {
-        desert: 40,
-        savannah: 30,
-        rainforest: 15,
-        highland: 10,
-        "tropical-islands": 5
-      },
-      terrainMultipliers: {
-        coast: 1.3,
-        rivers: 1.3
-      },
-      flavour: {
-        animals: [
-          "Kangaroo",
-          "Emu",
-          "Crocodile",
-          "Dingo",
-          "Eagle",
-          "Goanna",
-          "Barramundi",
-          "Cassowary",
-          "Bird of Paradise",
-          "Pig"
-        ],
-        plants: [
-          "Gum Tree",
-          "Spinifex",
-          "Wattle",
-          "Pandanus",
-          "Sago Palm"
-        ],
-        water: [
-          "Billabong",
-          "Saltwater",
-          "Freshwater"
-        ],
-        lifeways: [
-          "Foragers",
-          "Gardeners",
-          "Pig Keepers"
-        ]
-      },
-      favouredLifeways: [
-        "Hunters",
-        "Fishers",
-        "Gardeners"
-      ],
-      orientation: [
-        {
-          system: "compass",
-          mult: 1
-        },
-        {
-          system: "seaAxis",
-          mult: 1
-        },
-        {
-          system: "waterType",
-          mult: 1
-        }
-      ],
-      lineage: {
-        patrilineal: 50,
-        matrilineal: 30,
-        bilateral: 20
-      },
-      lineageMultipliers: {},
-      signatureCollectives: [
-        "People",
-        "Clan",
-        "Kin"
-      ],
-      themes: {
-        water: 2.5,
-        landscape: 2,
-        speech: 1.5,
-        relationship: 1.2,
-        sacred: 0.5,
-        warfare: 0.5,
-        number: 0.5
-      },
-      templates: {
-        B: 2.5,
-        M: 1.5,
-        C: 1.3
-      },
-      groupTypes: {
-        regional: 1.5,
-        moiety: 1.5,
-        kin: 1.3,
-        warband: 0.5,
-        dynasty: 0.2
-      },
-      numbers: [],
-      suppress: [
-        {
-          word: "Horse",
-          mult: 0,
-          kind: "homeland"
-        },
-        {
-          word: "Chariot",
-          mult: 0,
-          kind: "culture"
-        },
-        {
-          word: "Sword",
-          mult: 0,
-          kind: "culture"
-        },
-        {
-          word: "Bow",
-          mult: 0,
-          kind: "culture"
-        }
-      ],
-      special: {
-        sacredOnly: [
-          "Sun",
-          "Moon",
-          "Rain",
-          "Springs"
-        ]
-      }
-    }
-  ],
-  groupTypes: [
-    {
-      key: "regional",
-      label: "Regional people",
-      weight: 22
-    },
-    {
-      key: "settlement",
-      label: "Local settlement community",
-      weight: 12
-    },
-    {
-      key: "kin",
-      label: "Kin group or lineage",
-      weight: 14
-    },
-    {
-      key: "dynasty",
-      label: "Ruling dynasty",
-      weight: 9
-    },
-    {
-      key: "confederation",
-      label: "Confederation",
-      weight: 10
-    },
-    {
-      key: "warband",
-      label: "War-band or warrior society",
-      weight: 9
-    },
-    {
-      key: "migrant",
-      label: "Migrant or settler community",
-      weight: 6
-    },
-    {
-      key: "frontier",
-      label: "Frontier guardians",
-      weight: 5
-    },
-    {
-      key: "sanctuary",
-      label: "Religious or sanctuary community",
-      weight: 5
-    },
-    {
-      key: "moiety",
-      label: "Moiety or clan division",
-      weight: 4
-    },
-    {
-      key: "occupational",
-      label: "Occupational or craft community",
-      weight: 4
-    }
-  ],
-  groupTypeThemes: {
-    regional: {
-      landscape: 2,
-      water: 2,
-      warfare: 1,
-      animals: 1,
-      plants: 1,
-      sacred: 1,
-      direction: 2,
-      qualities: 1,
-      number: 1,
-      lifeway: 2,
-      speech: 1,
-      dress: 1,
-      ancestor: 0,
-      vessel: 1,
-      relationship: 2
-    },
-    settlement: {
-      landscape: 2,
-      water: 2,
-      warfare: 0,
-      animals: 0,
-      plants: 2,
-      sacred: 1,
-      direction: 1,
-      qualities: 0,
-      number: 0,
-      lifeway: 1,
-      speech: 0,
-      dress: 0,
-      ancestor: 0,
-      vessel: 0,
-      relationship: 1
-    },
-    kin: {
-      landscape: 1,
-      water: 1,
-      warfare: 1,
-      animals: 2,
-      plants: 2,
-      sacred: 1,
-      direction: 0,
-      qualities: 1,
-      number: 0,
-      lifeway: 0,
-      speech: 0,
-      dress: 1,
-      ancestor: 2,
-      vessel: 2,
-      relationship: 0
-    },
-    dynasty: {
-      landscape: 1,
-      water: 1,
-      warfare: 2,
-      animals: 2,
-      plants: 1,
-      sacred: 2,
-      direction: 0,
-      qualities: 2,
-      number: 0,
-      lifeway: 0,
-      speech: 0,
-      dress: 0,
-      ancestor: 2,
-      vessel: 1,
-      relationship: 0
-    },
-    confederation: {
-      landscape: 2,
-      water: 2,
-      warfare: 1,
-      animals: 1,
-      plants: 0,
-      sacred: 1,
-      direction: 2,
-      qualities: 1,
-      number: 2,
-      lifeway: 1,
-      speech: 1,
-      dress: 0,
-      ancestor: 1,
-      vessel: 1,
-      relationship: 1
-    },
-    warband: {
-      landscape: 1,
-      water: 0,
-      warfare: 2,
-      animals: 2,
-      plants: 0,
-      sacred: 1,
-      direction: 1,
-      qualities: 2,
-      number: 1,
-      lifeway: 0,
-      speech: 0,
-      dress: 2,
-      ancestor: 1,
-      vessel: 1,
-      relationship: 0
-    },
-    migrant: {
-      landscape: 2,
-      water: 2,
-      warfare: 0,
-      animals: 0,
-      plants: 1,
-      sacred: 0,
-      direction: 2,
-      qualities: 0,
-      number: 0,
-      lifeway: 1,
-      speech: 1,
-      dress: 1,
-      ancestor: 0,
-      vessel: 2,
-      relationship: 2
-    },
-    frontier: {
-      landscape: 2,
-      water: 2,
-      warfare: 2,
-      animals: 1,
-      plants: 0,
-      sacred: 0,
-      direction: 2,
-      qualities: 1,
-      number: 0,
-      lifeway: 0,
-      speech: 0,
-      dress: 0,
-      ancestor: 0,
-      vessel: 0,
-      relationship: 2
-    },
-    sanctuary: {
-      landscape: 1,
-      water: 2,
-      warfare: 0,
-      animals: 1,
-      plants: 2,
-      sacred: 2,
-      direction: 0,
-      qualities: 1,
-      number: 1,
-      lifeway: 0,
-      speech: 0,
-      dress: 0,
-      ancestor: 1,
-      vessel: 0,
-      relationship: 0
-    },
-    moiety: {
-      landscape: 1,
-      water: 1,
-      warfare: 0,
-      animals: 2,
-      plants: 1,
-      sacred: 1,
-      direction: 2,
-      qualities: 1,
-      number: 0,
-      lifeway: 0,
-      speech: 0,
-      dress: 0,
-      ancestor: 1,
-      vessel: 0,
-      relationship: 0
-    },
-    occupational: {
-      landscape: 1,
-      water: 1,
-      warfare: 1,
-      animals: 0,
-      plants: 1,
-      sacred: 1,
-      direction: 0,
-      qualities: 0,
-      number: 0,
-      lifeway: 2,
-      speech: 0,
-      dress: 0,
-      ancestor: 0,
-      vessel: 1,
-      relationship: 0
-    }
-  },
-  perspectives: {
-    self: 38,
-    neighbour: 27,
-    geographical: 10,
-    dynastic: 10,
-    ceremonial: 5,
-    later: 5,
-    imposed: 5
-  },
-  perspectiveLabels: {
-    self: "self-name",
-    neighbour: "neighbour-name",
-    geographical: "geographical description",
-    dynastic: "dynastic or ancestral",
-    ceremonial: "ceremonial title",
-    later: "later or administrative",
-    imposed: "imposed"
-  },
-  perspectiveByGroupType: {
-    dynasty: {
-      dynastic: 2.5
-    },
-    warband: {
-      ceremonial: 2
-    },
-    sanctuary: {
-      ceremonial: 2
-    },
-    migrant: {
-      neighbour: 2,
-      imposed: 1.5
-    },
-    frontier: {
-      geographical: 1.5,
-      imposed: 1.5
-    },
-    occupational: {
-      later: 2
-    }
-  },
-  tones: {
-    toned: {
-      respectful: 25,
-      neutral: 60,
-      hostile: 15
-    },
-    plain: {
-      respectful: 30,
-      neutral: 70
-    }
-  },
-  themes: {
-    landscape: 16,
-    water: 14,
-    warfare: 9,
-    animals: 12,
-    plants: 5,
-    sacred: 6,
-    direction: 7,
-    qualities: 7,
-    number: 3,
-    lifeway: 7,
-    speech: 2,
-    dress: 3,
-    ancestor: 5,
-    vessel: 1,
-    relationship: 3
-  },
-  parityCap: 40,
-  vocabulary: {
-    warfareUniversal: [
-      "Battle",
-      "War",
-      "Spear",
-      "Shield",
-      "Victory",
-      "Fort",
-      "Stronghold",
-      "Guard",
-      "Frontier",
-      "March",
-      "Long Shields"
-    ],
-    warfareRestricted: {
-      Sword: {
-        celtic: 1,
-        germanic: 1,
-        steppe: 1,
-        arabian: 1,
-        eastAsian: 1,
-        mediterranean: 1,
-        southAsian: 1,
-        westAfrican: 1,
-        general: 1
-      },
-      Chariot: {
-        celtic: 1,
-        mediterranean: 1,
-        southAsian: 1,
-        eastAsian: 1,
-        general: 0.3
-      },
-      Bow: {
-        "*": 1,
-        polynesian: 0.3,
-        sahul: 0
-      },
-      Arrow: {
-        "*": 1,
-        polynesian: 0.3,
-        sahul: 0
-      },
-      Bowmen: {
-        "*": 1,
-        polynesian: 0.3,
-        sahul: 0
-      },
-      Axe: {
-        celtic: 1,
-        germanic: 1,
-        northAmerican: 1,
-        northernPacific: 1,
-        general: 1
-      },
-      Club: {
-        polynesian: 1,
-        northAmerican: 1,
-        mesoamerican: 1,
-        sahul: 1,
-        general: 0.3
-      },
-      Sling: {
-        mediterranean: 1,
-        andean: 1,
-        general: 0.3
-      },
-      "Obsidian Blade": {
-        mesoamerican: 1
-      },
-      "War Canoe": {
-        polynesian: 1,
-        maritimeSEA: 1,
-        northernPacific: 1
-      }
-    },
-    warfareObjects: [
-      "Spear",
-      "Shield",
-      "Axe",
-      "Bow",
-      "Sword",
-      "Club"
-    ],
-    sacredUniversal: [
-      "Sun",
-      "Moon",
-      "Thunder",
-      "Sky",
-      "Rain",
-      "First Fire",
-      "Ancestors",
-      "Sacred Hill",
-      "Sacred Spring",
-      "Great Tree",
-      "Morning Star",
-      "Old Shrine",
-      "Cloud",
-      "Mist"
-    ],
-    mythic: {
-      Dragon: {
-        eastAsian: 2,
-        germanic: 1.5
-      },
-      "Great Serpent": {},
-      Giants: {},
-      "Sky Bird": {}
-    },
-    directions: {
-      compass: [
-        "Northern",
-        "Southern",
-        "Eastern",
-        "Western",
-        "North",
-        "South",
-        "East",
-        "West"
-      ],
-      relative: [
-        "Upper",
-        "Lower",
-        "Inner",
-        "Outer",
-        "Near",
-        "Far",
-        "Beyond",
-        "Across",
-        "Between"
-      ],
-      centre: [
-        "Central",
-        "Middle",
-        "Border",
-        "Frontier",
-        "Around"
-      ],
-      sunriseSunset: [
-        "Sunrise",
-        "Sunset",
-        "Dawn",
-        "Evening"
-      ],
-      riverAxis: [
-        "Upriver",
-        "Downriver",
-        "Upstream",
-        "Downstream"
-      ],
-      seaAxis: [
-        "Inland",
-        "Seaward",
-        "Mountainward",
-        "Windward",
-        "Leeward"
-      ],
-      moietyAxis: [
-        "Upper Half",
-        "Lower Half",
-        "Left-Hand",
-        "Right-Hand"
-      ],
-      waterType: [
-        "Saltwater",
-        "Freshwater"
-      ],
-      colourDirection: [
-        "Black",
-        "Blue",
-        "Red",
-        "White",
-        "Golden"
+    byEra: {
+      NF: [
+        "any",
+        "Pl",
+        "Sy"
+      ],
+      IS: [
+        "any",
+        "Pl",
+        "Sy",
+        "Nb",
+        "Se",
+        "Ga"
+      ],
+      none: [
+        "any",
+        "Pl",
+        "Sy",
+        "Nb",
+        "Se",
+        "Ga"
       ]
     },
-    colourDirections: {
-      Black: "north",
-      Blue: "east",
-      Red: "south",
-      White: "west",
-      Golden: "centre"
+    anyWeights: {
+      NF: {
+        Pl: 50,
+        Sy: 50,
+        Nb: 0,
+        Se: 0,
+        Ga: 0
+      },
+      IS: {
+        Pl: 20,
+        Sy: 25,
+        Nb: 20,
+        Se: 20,
+        Ga: 15
+      },
+      none: {
+        Pl: 20,
+        Sy: 25,
+        Nb: 20,
+        Se: 20,
+        Ga: 15
+      }
+    }
+  },
+  stars: {
+    properExtra: [
+      "Alphard",
+      "Alphecca",
+      "Hamal",
+      "Diphda",
+      "Menkar",
+      "Mirfak",
+      "Nunki",
+      "Sadr"
+    ],
+    possessiveReal: [
+      "Barnard's Star",
+      "Kapteyn's Star",
+      "Luyten's Star",
+      "Teegarden's Star",
+      "Van Maanen's Star",
+      "Przybylski's Star"
+    ],
+    possessiveRealShare: 0.5,
+    greekHeavy: {
+      letters: [
+        "Alpha",
+        "Beta",
+        "Gamma",
+        "Delta",
+        "Epsilon"
+      ],
+      weight: 3,
+      other: 1
     },
-    qualities: [
+    genitives: [
+      "Andromedae",
+      "Aquilae",
+      "Arietis",
+      "Aurigae",
+      "Bo\xF6tis",
+      "Cancri",
+      "Carinae",
+      "Cassiopeiae",
+      "Centauri",
+      "Cephei",
+      "Ceti",
+      "Cygni",
+      "Draconis",
+      "Eridani",
+      "Herculis",
+      "Hydrae",
+      "Indi",
+      "Leonis",
+      "Lyrae",
+      "Orionis",
+      "Pavonis",
+      "Persei",
+      "Scorpii",
+      "Tauri",
+      "Tucanae",
+      "Ursae Majoris",
+      "Virginis"
+    ],
+    catalogue: [
+      {
+        prefix: "Gliese",
+        joiner: " ",
+        min: 1,
+        max: 1e3,
+        w: 3
+      },
+      {
+        prefix: "Wolf",
+        joiner: " ",
+        min: 1,
+        max: 1500,
+        w: 2
+      },
+      {
+        prefix: "Ross",
+        joiner: " ",
+        min: 1,
+        max: 1e3,
+        w: 2
+      },
+      {
+        prefix: "Lalande",
+        joiner: " ",
+        min: 1e3,
+        max: 5e4,
+        w: 1
+      },
+      {
+        prefix: "Groombridge",
+        joiner: " ",
+        min: 1,
+        max: 4e3,
+        w: 1
+      },
+      {
+        prefix: "HD",
+        joiner: " ",
+        min: 1e3,
+        max: 25e4,
+        w: 2
+      },
+      {
+        prefix: "HIP",
+        joiner: " ",
+        min: 1e3,
+        max: 12e4,
+        w: 2
+      },
+      {
+        prefix: "LHS",
+        joiner: " ",
+        min: 1,
+        max: 5e3,
+        w: 1
+      },
+      {
+        prefix: "Kepler",
+        joiner: "-",
+        min: 1,
+        max: 2e3,
+        w: 2
+      },
+      {
+        prefix: "K2",
+        joiner: "-",
+        min: 1,
+        max: 400,
+        w: 1
+      },
+      {
+        prefix: "TOI",
+        joiner: "-",
+        min: 100,
+        max: 6e3,
+        w: 1
+      }
+    ],
+    planetLetters: {
+      b: 5,
+      c: 4,
+      d: 3,
+      e: 2,
+      f: 1,
+      g: 1,
+      h: 0.5
+    },
+    planetLetterChance: 0.3,
+    letterWords: {
+      b: "Bee",
+      c: "Cee",
+      d: "Dee",
+      e: "Ee",
+      f: "Eff",
+      g: "Gee",
+      h: "Aitch"
+    },
+    kindWeights: {
+      any: {
+        proper: 40,
+        possessive: 15,
+        bayer: 20,
+        catalogue: 25
+      },
+      Pl: {
+        proper: 40,
+        possessive: 15,
+        bayer: 20,
+        catalogue: 25
+      },
+      Sy: {
+        proper: 40,
+        possessive: 15,
+        bayer: 20,
+        catalogue: 25
+      },
+      Nb: {
+        proper: 35,
+        possessive: 25,
+        bayer: 25,
+        catalogue: 15
+      },
+      Se: {
+        proper: 25,
+        possessive: 10,
+        bayer: 20,
+        catalogue: 45
+      },
+      Ga: {
+        proper: 40,
+        possessive: 0,
+        bayer: 10,
+        catalogue: 50
+      }
+    }
+  },
+  directions: {
+    spaceDirection: [
+      {
+        w: "Upwell",
+        sc: [
+          "Pl",
+          "Sy"
+        ]
+      },
+      {
+        w: "Downwell",
+        sc: [
+          "Pl",
+          "Sy"
+        ]
+      },
+      {
+        w: "Polar",
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Equatorial",
+        sc: [
+          "Pl"
+        ]
+      },
+      {
+        w: "Sunward",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Outward",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Inward",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Coreward",
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Rimward",
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Spinward",
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      },
+      {
+        w: "Trailing",
+        sc: [
+          "Nb",
+          "Se",
+          "Ga"
+        ]
+      }
+    ],
+    compass: {
+      Pl: [
+        "Upwell",
+        "Equatorial",
+        "Downwell",
+        "Polar"
+      ],
+      Sy: [
+        "Sunward",
+        "Upwell",
+        "Outward",
+        "Downwell",
+        "Inward"
+      ],
+      Nb: [
+        "Coreward",
+        "Spinward",
+        "Rimward",
+        "Trailing"
+      ],
+      Se: [
+        "Coreward",
+        "Spinward",
+        "Rimward",
+        "Trailing"
+      ],
+      Ga: [
+        "Coreward",
+        "Spinward",
+        "Rimward",
+        "Trailing"
+      ],
+      station: [
+        "Hubward",
+        "Spinward",
+        "Rimward",
+        "Antispinward"
+      ]
+    },
+    stationDirection: [
+      "Spinward",
+      "Antispinward",
+      "Hubward",
+      "Rimward"
+    ],
+    orbitAdj: [
       "High",
-      "Great",
-      "Strong",
-      "Bold",
-      "Watchful",
-      "Swift",
-      "Enduring",
-      "Ancient",
-      "New",
-      "Old",
-      "Fierce",
-      "Steadfast",
-      "Many"
+      "Low",
+      "Polar",
+      "Equatorial",
+      "Parking",
+      "Long",
+      "Fast"
     ],
-    interpretiveQualities: [
-      "Free",
-      "Noble",
-      "True",
-      "Real",
-      "Unconquered",
-      "Proud"
+    spaceHazard: [
+      {
+        w: "Shock",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Pause",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Sheath",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Frostline",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Corona",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Neck",
+        sc: [
+          "Sy"
+        ]
+      },
+      {
+        w: "Bubble",
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Wall",
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Cloud",
+        sc: [
+          "Nb"
+        ]
+      },
+      {
+        w: "Rift",
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Dark",
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Knot",
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Nebula",
+        sc: [
+          "Se"
+        ]
+      },
+      {
+        w: "Bar",
+        sc: [
+          "Ga"
+        ]
+      },
+      {
+        w: "Void",
+        sc: [
+          "Ga"
+        ]
+      },
+      {
+        w: "Warp",
+        sc: [
+          "Ga"
+        ]
+      }
+    ]
+  },
+  lagrangeWord: [
+    [
+      "One",
+      1
     ],
-    nominalQualities: [
-      "Unconquered",
-      "Free",
-      "Proud",
-      "Bold",
-      "Fierce",
-      "Steadfast",
-      "Watchful",
-      "Swift",
-      "Strong"
-    ],
-    colours: [
-      "Red",
-      "White",
-      "Black",
-      "Golden",
-      "Grey",
-      "Blue",
-      "Green",
-      "Copper",
-      "Silver",
-      "Iron"
-    ],
-    numbers: [
+    [
       "Two",
+      1
+    ],
+    [
       "Three",
+      1
+    ],
+    [
       "Four",
+      3
+    ],
+    [
       "Five",
-      "Six",
-      "Seven",
-      "Nine",
-      "Ten",
-      "Twelve",
-      "Thirteen",
-      "Thirty",
-      "Hundred"
-    ],
-    countedNouns: [
-      "Rivers",
-      "Hills",
-      "Fires",
-      "Arrows",
-      "Peoples",
-      "Tents",
-      "Houses",
-      "Clans",
-      "Valleys",
-      "Islands",
-      "Canoes",
-      "Wells",
-      "Lakes",
-      "Streams",
-      "Kindreds"
-    ],
-    countedFeatures: [
-      "Rivers",
-      "Hills",
-      "Valleys",
-      "Islands",
-      "Wells",
-      "Lakes",
-      "Streams"
-    ],
-    speech: {
-      whole: [
-        "People of the Word",
-        "Plain Speakers"
-      ],
-      tongues: [
-        "Quick",
-        "Old",
-        "River",
-        "Hill"
-      ],
-      descriptor: "Strange-Speech",
-      hostile: [
-        "Babblers",
-        "Mumblers",
-        "The Mute Ones"
-      ]
-    },
-    dress: [
-      "Long-Beard",
-      "Long-Hair",
-      "Painted",
-      "Black-Cloak",
-      "Red-Cloak",
-      "Bear-Cloak",
-      "Shaven",
-      "Topknot",
-      "Tattooed",
-      "Bright-Shield",
-      "Black-Shield",
-      "Painted-Moccasin",
-      "Fur-Cloak",
-      "Feather-Cloak",
-      "Veiled"
-    ],
-    ancestors: [
-      "the Navigator",
-      "the Far Navigator",
-      "the Hunter",
-      "the Smith",
-      "the Red King",
-      "the Grey King",
-      "the Iron King",
-      "the Hill King",
-      "the Bear-Born",
-      "the First Mother",
-      "the Elder Brother",
-      "the Twins",
-      "the Star-Born",
-      "the Old Woman",
-      "the One-Eyed",
-      "the Wanderer",
-      "the Hunter's Son"
-    ],
-    canoes: [
-      "the Swift Canoe",
-      "the Long Canoe",
-      "the White Heron Canoe",
-      "the Red Wave Canoe",
-      "the Star Path Canoe",
-      "the Shark Canoe",
-      "the Two Hulls"
-    ],
-    voyages: [
-      "the Long Voyage",
-      "the Far Shore",
-      "Landfall"
-    ],
-    relationship: [
-      "True People",
-      "Real People",
-      "The People",
-      "First People",
-      "Dwellers Around",
-      "Outer Peoples",
-      "Inner Peoples",
-      "Allies",
-      "Friends",
-      "Latecomers",
-      "Old Settlers",
-      "New People",
-      "Folk Between",
-      "Tributaries",
-      "Original People"
-    ],
-    hostile: {
-      "Mud Folk": "landscape",
-      "Marsh Crawlers": "landscape",
-      "Hill Thieves": "landscape",
-      "Broken Shields": "warfare",
-      "Horse Stealers": "lifeway",
-      "Fish-Eaters": "lifeway",
-      "Goat Folk": "lifeway",
-      Latecomers: "relationship",
-      Babblers: "speech",
-      Mumblers: "speech",
-      "The Mute Ones": "speech"
-    },
-    origins: [
-      "Origin Lake",
-      "Ancestor Cave",
-      "Red Cave",
-      "Far Shore"
-    ],
-    kPhrases: [
-      {
-        theme: "landscape",
-        verb: "Dwell Beneath the",
-        slot: "land"
-      },
-      {
-        theme: "water",
-        verb: "Fish the",
-        slot: "water"
-      },
-      {
-        theme: "sacred",
-        verb: "Came from the",
-        slot: "origin"
-      },
-      {
-        theme: "landscape",
-        verb: "Came from the",
-        slot: "origin"
-      },
-      {
-        theme: "animals",
-        verb: "Spare the",
-        slot: "animal"
-      },
-      {
-        theme: "sacred",
-        verb: "Keep the",
-        slot: "sacred"
-      },
-      {
-        theme: "landscape",
-        verb: "Ride the",
-        slot: "land",
-        gate: "mounts"
-      },
-      {
-        theme: "animals",
-        verb: "Walk Before the",
-        slot: "emblem"
-      },
-      {
-        theme: "warfare",
-        verb: "Walk Before the",
-        slot: "emblem"
-      },
-      {
-        theme: "warfare",
-        verb: "Hold the",
-        slot: "place"
-      },
-      {
-        theme: "water",
-        verb: "Hold the",
-        slot: "place"
-      }
+      3
     ]
-  },
-  collectives: [
-    {
-      word: "Folk",
-      groupTypes: [
-        "regional",
-        "settlement",
-        "confederation",
-        "kin"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "People",
-      groupTypes: [
-        "regional",
-        "settlement",
-        "kin",
-        "sanctuary"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "Peoples",
-      groupTypes: [
-        "confederation"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "Dwellers",
-      groupTypes: [
-        "regional",
-        "settlement"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "Inhabitants",
-      groupTypes: [
-        "regional",
-        "settlement"
-      ],
-      registers: [
-        "historical",
-        "administrative"
-      ],
-      person: true
-    },
-    {
-      word: "Nation",
-      groupTypes: [
-        "regional",
-        "confederation"
-      ],
-      registers: [
-        "historical",
-        "administrative"
-      ],
-      person: true,
-      perspectives: [
-        "later"
-      ],
-      traditionMult: {
-        northAmerican: 2
-      }
-    },
-    {
-      word: "Settlers",
-      groupTypes: [
-        "settlement",
-        "migrant"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "Newcomers",
-      groupTypes: [
-        "migrant"
-      ],
-      registers: "all",
-      person: true,
-      mult: 0.33
-    },
-    {
-      word: "Arrivals",
-      groupTypes: [
-        "migrant"
-      ],
-      registers: "all",
-      person: true,
-      mult: 0.33
-    },
-    {
-      word: "Wanderers",
-      groupTypes: [
-        "migrant"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "Exiles",
-      groupTypes: [
-        "migrant"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "Followers",
-      groupTypes: [
-        "migrant",
-        "dynasty"
-      ],
-      registers: "all",
-      person: true,
-      traditions: [
-        "mediterranean",
-        "bantu"
-      ],
-      lineage: true
-    },
-    {
-      word: "Kin",
-      groupTypes: [
-        "kin",
-        "moiety"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "Kindred",
-      groupTypes: [
-        "kin"
-      ],
-      registers: "all",
-      person: true,
-      traditions: [
-        "celtic"
-      ],
-      lineage: true
-    },
-    {
-      word: "Children",
-      groupTypes: [
-        "kin",
-        "sanctuary",
-        "dynasty"
-      ],
-      registers: "all",
-      person: true,
-      lineage: true
-    },
-    {
-      word: "Descendants",
-      groupTypes: [
-        "kin",
-        "dynasty"
-      ],
-      registers: "all",
-      person: true,
-      lineage: true
-    },
-    {
-      word: "Sons",
-      groupTypes: [
-        "kin",
-        "dynasty"
-      ],
-      registers: "all",
-      person: true,
-      lineage: true,
-      descent: "patrilineal"
-    },
-    {
-      word: "Daughters",
-      groupTypes: [
-        "kin"
-      ],
-      registers: "all",
-      person: true,
-      lineage: true,
-      descent: "matrilineal"
-    },
-    {
-      word: "Seed",
-      groupTypes: [
-        "kin"
-      ],
-      registers: [
-        "historical",
-        "legendary"
-      ],
-      traditions: [
-        "celtic"
-      ],
-      lineage: true
-    },
-    {
-      word: "Portion",
-      groupTypes: [
-        "kin"
-      ],
-      registers: [
-        "historical",
-        "legendary"
-      ],
-      traditions: [
-        "celtic"
-      ],
-      lineage: true
-    },
-    {
-      word: "Bone",
-      groupTypes: [
-        "kin",
-        "dynasty"
-      ],
-      registers: "all",
-      traditions: [
-        "steppe"
-      ],
-      lineage: true
-    },
-    {
-      word: "Family",
-      groupTypes: [
-        "kin"
-      ],
-      registers: "all",
-      person: true,
-      traditions: [
-        "arabian",
-        "polynesian"
-      ],
-      lineage: true
-    },
-    {
-      word: "House",
-      groupTypes: [
-        "kin",
-        "dynasty",
-        "settlement"
-      ],
-      registers: "all",
-      lineage: true,
-      singular: true
-    },
-    {
-      word: "Line",
-      groupTypes: [
-        "kin",
-        "dynasty"
-      ],
-      registers: "all",
-      lineage: true,
-      singular: true
-    },
-    {
-      word: "Clan",
-      groupTypes: [
-        "kin",
-        "moiety",
-        "occupational"
-      ],
-      registers: "all",
-      lineage: true,
-      singular: true
-    },
-    {
-      word: "Lords",
-      groupTypes: [
-        "dynasty",
-        "warband"
-      ],
-      registers: "all",
-      person: true,
-      groupMult: {
-        dynasty: 2
-      },
-      mult: 0.5,
-      role: true
-    },
-    {
-      word: "Masters",
-      groupTypes: [
-        "dynasty",
-        "warband"
-      ],
-      registers: "all",
-      person: true,
-      groupMult: {
-        dynasty: 2
-      },
-      mult: 0.5,
-      role: true
-    },
-    {
-      word: "Heirs",
-      groupTypes: [
-        "dynasty",
-        "warband"
-      ],
-      registers: "all",
-      person: true,
-      groupMult: {
-        dynasty: 2
-      },
-      mult: 0.5,
-      role: true
-    },
-    {
-      word: "Warriors",
-      groupTypes: [
-        "warband"
-      ],
-      registers: "all",
-      person: true,
-      role: true
-    },
-    {
-      word: "Companions",
-      groupTypes: [
-        "warband"
-      ],
-      registers: "all",
-      person: true,
-      role: true
-    },
-    {
-      word: "Spears",
-      groupTypes: [
-        "warband"
-      ],
-      registers: "all"
-    },
-    {
-      word: "Shields",
-      groupTypes: [
-        "warband"
-      ],
-      registers: "all"
-    },
-    {
-      word: "Guard",
-      groupTypes: [
-        "warband"
-      ],
-      registers: "all",
-      person: true,
-      role: true
-    },
-    {
-      word: "Host",
-      groupTypes: [
-        "warband",
-        "confederation"
-      ],
-      registers: "all"
-    },
-    {
-      word: "Horde",
-      groupTypes: [
-        "warband",
-        "confederation"
-      ],
-      registers: "all",
-      traditions: [
-        "steppe"
-      ]
-    },
-    {
-      word: "Riders",
-      groupTypes: [
-        "warband",
-        "regional"
-      ],
-      registers: "all",
-      person: true,
-      traditions: [
-        "steppe",
-        "arabian",
-        "northAmerican"
-      ],
-      traditionMult: {
-        northAmerican: 0.6
-      },
-      gate: "mounts",
-      horse: true,
-      role: true
-    },
-    {
-      word: "Arrows",
-      groupTypes: [
-        "confederation",
-        "kin"
-      ],
-      registers: "all",
-      traditions: [
-        "steppe"
-      ],
-      gate: "arrows"
-    },
-    {
-      word: "Tents",
-      groupTypes: [
-        "confederation",
-        "kin"
-      ],
-      registers: "all",
-      traditions: [
-        "steppe",
-        "arabian"
-      ],
-      gate: "tents"
-    },
-    {
-      word: "Fires",
-      groupTypes: [
-        "confederation"
-      ],
-      registers: "all",
-      traditions: [
-        "northAmerican"
-      ]
-    },
-    {
-      word: "Allies",
-      groupTypes: [
-        "confederation"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "Allied Houses",
-      groupTypes: [
-        "confederation"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "United Kindreds",
-      groupTypes: [
-        "confederation"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "Tribes",
-      groupTypes: [
-        "confederation"
-      ],
-      registers: [
-        "administrative"
-      ],
-      perspectives: [
-        "later"
-      ]
-    },
-    {
-      word: "Confederacy",
-      groupTypes: [
-        "confederation"
-      ],
-      registers: [
-        "administrative"
-      ],
-      singular: true
-    },
-    {
-      word: "Confederation",
-      groupTypes: [
-        "confederation"
-      ],
-      registers: [
-        "administrative"
-      ],
-      singular: true
-    },
-    {
-      word: "Guardians",
-      groupTypes: [
-        "frontier"
-      ],
-      registers: "all",
-      person: true,
-      role: true
-    },
-    {
-      word: "Defenders",
-      groupTypes: [
-        "frontier"
-      ],
-      registers: "all",
-      person: true,
-      role: true
-    },
-    {
-      word: "Watchers",
-      groupTypes: [
-        "frontier"
-      ],
-      registers: "all",
-      person: true,
-      role: true
-    },
-    {
-      word: "Borderers",
-      groupTypes: [
-        "frontier"
-      ],
-      registers: "all",
-      person: true,
-      role: true
-    },
-    {
-      word: "March Folk",
-      groupTypes: [
-        "frontier"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "Defenders",
-      groupTypes: [
-        "warband"
-      ],
-      registers: "all",
-      person: true,
-      role: true
-    },
-    {
-      word: "Wardens",
-      groupTypes: [
-        "frontier",
-        "sanctuary"
-      ],
-      registers: [
-        "historical",
-        "legendary"
-      ],
-      person: true,
-      mult: 0.5,
-      role: true
-    },
-    {
-      word: "Keepers",
-      groupTypes: [
-        "sanctuary"
-      ],
-      registers: "all",
-      person: true,
-      role: true
-    },
-    {
-      word: "Guardians",
-      groupTypes: [
-        "sanctuary"
-      ],
-      registers: "all",
-      person: true,
-      role: true
-    },
-    {
-      word: "Servants",
-      groupTypes: [
-        "sanctuary"
-      ],
-      registers: "all",
-      person: true,
-      mult: 0.5,
-      role: true
-    },
-    {
-      word: "Side",
-      groupTypes: [
-        "moiety"
-      ],
-      registers: "all",
-      singular: true
-    },
-    {
-      word: "Half",
-      groupTypes: [
-        "moiety"
-      ],
-      registers: "all",
-      singular: true
-    },
-    {
-      word: "Hand",
-      groupTypes: [
-        "moiety"
-      ],
-      registers: "all",
-      singular: true
-    },
-    {
-      word: "Quarter",
-      groupTypes: [
-        "moiety"
-      ],
-      registers: "all",
-      singular: true
-    },
-    {
-      word: "Guild",
-      groupTypes: [
-        "occupational"
-      ],
-      registers: [
-        "historical",
-        "administrative"
-      ],
-      traditions: [
-        "eastAsian"
-      ],
-      singular: true
-    },
-    {
-      word: "Folk",
-      groupTypes: [
-        "occupational"
-      ],
-      registers: "all",
-      person: true
-    },
-    {
-      word: "Great House",
-      groupTypes: [
-        "settlement"
-      ],
-      registers: [
-        "historical"
-      ],
-      traditions: [
-        "mesoamerican"
-      ],
-      singular: true
-    },
-    {
-      word: "Men",
-      groupTypes: [
-        "regional",
-        "warband"
-      ],
-      registers: "all",
-      person: true,
-      traditionMult: {
-        germanic: 2
-      },
-      mult: 0.3
-    }
   ],
-  lineageCollectives: [
-    "Children",
-    "Descendants",
-    "Sons",
-    "Daughters",
-    "Seed",
-    "Portion",
-    "Bone",
-    "House",
-    "Line",
-    "Family",
-    "Kindred",
-    "Clan",
-    "Followers"
-  ],
-  templates: {
-    weights: {
-      A: [
-        18,
-        6,
-        4,
-        8
-      ],
-      B: [
-        17,
-        8,
-        3,
-        16
-      ],
-      C: [
-        12,
-        18,
-        16,
-        12
-      ],
-      D: [
-        3,
-        8,
-        4,
-        4
-      ],
-      E: [
-        9,
-        8,
-        2,
-        16
-      ],
-      F: [
-        6,
-        5,
-        6,
-        4
-      ],
-      G: [
-        7,
-        12,
-        14,
-        5
-      ],
-      H: [
-        3,
-        6,
-        5,
-        2
-      ],
-      I: [
-        4,
-        7,
-        9,
-        6
-      ],
-      J: [
-        4,
-        5,
-        5,
-        10
-      ],
-      K: [
-        1,
-        2,
-        13,
-        0
-      ],
-      L: [
-        6,
-        3,
-        1,
-        8
-      ],
-      M: [
-        2,
-        2,
-        2,
-        1
-      ],
-      N: [
-        2,
-        3,
-        2,
-        2
-      ],
-      O: [
-        3,
-        2,
-        7,
-        0
-      ],
-      P: [
-        1,
-        2,
-        1,
-        4
-      ],
-      Q: [
-        1,
-        2,
-        3,
-        1
-      ],
-      R: [
-        1,
-        1,
-        3,
-        1
-      ]
-    },
-    themes: {
-      A: [
-        "qualities",
-        "warfare",
-        "dress",
-        "direction",
-        "animals",
-        "plants",
-        "sacred",
-        "relationship"
-      ],
-      B: [
-        "landscape",
-        "water",
-        "plants"
-      ],
-      C: [
-        "landscape",
-        "water",
-        "plants",
-        "sacred",
-        "vessel"
-      ],
-      D: [
-        "landscape",
-        "water"
-      ],
-      E: [
-        "direction",
-        "landscape",
-        "water"
-      ],
-      F: [
-        "warfare",
-        "animals",
-        "plants"
-      ],
-      G: [
-        "animals",
-        "plants",
-        "sacred",
-        "ancestor",
-        "vessel"
-      ],
-      H: [
-        "landscape",
-        "water"
-      ],
-      I: [
-        "landscape",
-        "water",
-        "sacred",
-        "warfare"
-      ],
-      J: [
-        "number"
-      ],
-      K: [
-        "landscape",
-        "water",
-        "animals",
-        "sacred",
-        "warfare"
-      ],
-      L: [
-        "lifeway"
-      ],
-      M: [
-        "speech"
-      ],
-      N: [
-        "ancestor"
-      ],
-      O: [
-        "qualities",
-        "relationship"
-      ],
-      P: [
-        "plants",
-        "animals",
-        "lifeway"
-      ],
-      Q: [
-        "landscape",
-        "plants",
-        "animals"
-      ],
-      R: [
-        "animals"
-      ]
-    },
-    groupTypes: {
-      G: [
-        "kin",
-        "dynasty",
-        "sanctuary",
-        "moiety"
-      ],
-      N: [
-        "kin",
-        "dynasty",
-        "sanctuary",
-        "moiety"
-      ],
-      J: [
-        "confederation",
-        "regional",
-        "kin"
-      ],
-      K: [
-        "regional",
-        "settlement",
-        "kin",
-        "dynasty",
-        "confederation",
-        "warband",
-        "migrant",
-        "frontier",
-        "sanctuary",
-        "moiety"
-      ],
-      L: [
-        "regional",
-        "settlement",
-        "occupational",
-        "migrant"
-      ],
-      M: [
-        "regional",
-        "confederation"
-      ],
-      P: [
-        "kin",
-        "dynasty",
-        "occupational"
-      ],
-      R: [
-        "migrant"
-      ]
-    },
-    perspectives: {
-      O: [
-        "self",
-        "ceremonial"
-      ]
-    },
-    traditions: {
-      P: {
-        eastAsian: 1,
-        general: 0.2
-      },
-      Q: {
-        mesoamerican: 1,
-        general: 0.2
-      }
-    },
-    tail: [
-      "A",
-      "B",
-      "E",
-      "F",
-      "L",
-      "P"
-    ]
-  },
-  registers: [
-    "plain",
-    "historical",
-    "legendary",
-    "administrative"
-  ],
-  registerLabels: {
-    plain: "Plain translated",
-    historical: "Historical narrative",
-    legendary: "Legendary",
-    administrative: "Administrative"
-  },
-  lengthCaps: {
-    plain: 6,
-    historical: 8,
-    administrative: 7,
-    legendary: 9
-  },
-  personCollectives: [
-    "People",
-    "Peoples",
-    "Folk",
-    "Men",
-    "Kin",
-    "Kindred",
-    "Children",
-    "Sons",
-    "Daughters",
-    "Nation",
-    "Dwellers",
-    "Ones",
-    "Inhabitants",
-    "Settlers",
-    "Newcomers",
-    "Arrivals",
-    "Wanderers",
-    "Exiles",
-    "Followers",
-    "Descendants",
-    "Family",
-    "Lords",
-    "Masters",
-    "Heirs",
-    "Warriors",
-    "Companions",
-    "Riders",
-    "Guardians",
-    "Defenders",
-    "Watchers",
-    "Borderers",
-    "Wardens",
-    "Keepers",
-    "Servants",
-    "Allies",
-    "Tribes",
-    "Clan",
-    "Seed",
-    "Portion"
-  ],
-  history: {
-    coinage: {
-      self: [
-        "The name was their own, used at gatherings and in the recitation of descent.",
-        "They called themselves this long before anyone wrote it down.",
-        "Elders taught the name to children as the first thing they should know about who they were."
-      ],
-      "neighbour.respectful": [
-        "Their neighbours coined the name out of respect for {custom}.",
-        "Those who traded with them named them for {feature}, and meant it kindly."
-      ],
-      "neighbour.neutral": [
-        "Communities nearby first used the name for the people of the {feature}.",
-        "Travellers gave them the name because it was the plainest way to say where they lived."
-      ],
-      "neighbour.hostile": [
-        "Rivals coined the name as a jibe at {custom}.",
-        "It began as an insult shouted across a disputed border."
-      ],
-      geographical: [
-        "The name began as a plain description of the settlements around the {feature}.",
-        "It named the country first and the people second."
-      ],
-      dynastic: [
-        "The ruling house traced its line to {ancestor}, and the name proclaimed it.",
-        "The name was taken by the heirs of {ancestor} to set them above other families."
-      ],
-      ceremonial: [
-        "The title was spoken at councils and in war-songs, never in ordinary speech.",
-        "Priests and singers used the name; most people used something plainer."
-      ],
-      later: [
-        "Chroniclers applied the name to several communities they could not tell apart.",
-        "Map-makers wrote the name across a region they knew only from report."
-      ],
-      imposed: [
-        "Imperial officials recorded the name when the region was brought under tribute.",
-        "Conquerors used the name in their tax rolls, and it stuck."
-      ]
-    },
-    meaning: {
-      landscape: "It refers to the {feature} at the heart of their lands.",
-      water: "It recalls the {feature} on which their lives depended.",
-      warfare: "It boasts of {emblem} and the battles fought with it.",
-      animals: "The {animal} was their {interpretation}.",
-      plants: "The {plant} stood at the centre of their oldest settlement.",
-      sacred: "It names the {sacred} they held holy.",
-      direction: "It placed them {direction}.",
-      qualities: "It marks them out as {quality}.",
-      number: "It counts {number} groups bound together by oath.",
-      lifeway: "It names the work that fed them: they were {lifeway}.",
-      speech: "It turns on how they spoke, which was the first thing strangers noticed.",
-      dress: "It describes how they looked to others: {dress}.",
-      ancestor: "It claims descent from {ancestor}.",
-      vessel: "It remembers {vessel}, which first brought them to this land.",
-      relationship: "It sets them in relation to the centre of the known world."
-    },
-    qualityGloss: {
-      High: "the people of the high ground",
-      Great: "a great and numerous people",
-      Strong: "a strong people",
-      Bold: "a bold people",
-      Watchful: "a watchful people, slow to trust",
-      Swift: "swift travellers",
-      Enduring: "a people who endure",
-      Ancient: "an ancient people",
-      New: "newcomers",
-      Old: "the oldest settled people",
-      Fierce: "a fierce people",
-      Steadfast: "a steadfast people",
-      Many: "a numerous people",
-      Free: "a free people, subject to no one",
-      Noble: "a noble people",
-      True: "the true people",
-      Real: "the real people",
-      Unconquered: "a people never conquered",
-      Proud: "a proud people"
-    },
-    directionGloss: {
-      Northern: "to the north",
-      North: "to the north",
-      Southern: "to the south",
-      South: "to the south",
-      Eastern: "to the east",
-      East: "to the east",
-      Western: "to the west",
-      West: "to the west",
-      Upper: "upstream or uphill",
-      Lower: "downstream or downhill",
-      Inner: "nearer the centre",
-      Outer: "out on the edges",
-      Near: "close at hand",
-      Far: "far off",
-      Beyond: "beyond the borders",
-      Across: "across the water",
-      Between: "between two greater peoples",
-      Central: "at the centre",
-      Middle: "at the centre",
-      Border: "on the frontier",
-      Frontier: "on the frontier",
-      Around: "around the city",
-      Sunrise: "towards the sunrise",
-      Dawn: "towards the sunrise",
-      Sunset: "towards the sunset",
-      Evening: "towards the sunset",
-      Upriver: "upriver",
-      Upstream: "upriver",
-      Downriver: "downriver",
-      Downstream: "downriver",
-      Inland: "inland",
-      Seaward: "towards the sea",
-      Mountainward: "towards the mountains",
-      Windward: "on the windward side",
-      Leeward: "on the leeward side",
-      "Upper Half": "in the upper half of a divided people",
-      "Lower Half": "in the lower half of a divided people",
-      "Left-Hand": "on the left hand of the ruler",
-      "Right-Hand": "on the right hand of the ruler",
-      Saltwater: "by the salt water",
-      Freshwater: "by the fresh water",
-      Upland: "in the uplands",
-      Lowland: "in the lowlands"
-    },
-    dressGloss: {
-      "Long-Beard": "long beards",
-      "Long-Hair": "long hair",
-      Painted: "painted skin",
-      "Black-Cloak": "black cloaks",
-      "Red-Cloak": "red cloaks",
-      "Bear-Cloak": "bearskin cloaks",
-      Shaven: "shaven heads",
-      Topknot: "topknots",
-      Tattooed: "tattoos",
-      "Bright-Shield": "bright shields",
-      "Black-Shield": "black shields",
-      "Painted-Moccasin": "painted moccasins",
-      "Fur-Cloak": "fur cloaks",
-      "Feather-Cloak": "feather cloaks",
-      Veiled: "veiled faces"
-    },
-    acceptance: {
-      embraced: "They took the name as their own and use it with pride.",
-      accepted: "They accepted the name without complaint.",
-      tolerated: "They tolerated the name but rarely used it among themselves.",
-      resented: "They resented the name and corrected anyone who used it.",
-      reclaimed: "Later generations took up the insult and wore it with pride.",
-      unknown: "Whether they ever used the name themselves is not recorded."
-    },
-    acceptanceWeights: {
-      self: {
-        embraced: 80,
-        accepted: 20
-      },
-      "neighbour.respectful": {
-        embraced: 25,
-        accepted: 50,
-        tolerated: 25
-      },
-      "neighbour.neutral": {
-        embraced: 10,
-        accepted: 50,
-        tolerated: 30,
-        resented: 10
-      },
-      "neighbour.hostile": {
-        accepted: 10,
-        tolerated: 25,
-        resented: 45,
-        reclaimed: 20
-      },
-      geographical: {
-        embraced: 20,
-        accepted: 60,
-        tolerated: 20
-      },
-      dynastic: {
-        embraced: 70,
-        accepted: 30
-      },
-      ceremonial: {
-        embraced: 90,
-        accepted: 10
-      },
-      later: {
-        accepted: 40,
-        tolerated: 30,
-        unknown: 30
-      },
-      imposed: {
-        accepted: 20,
-        tolerated: 35,
-        resented: 35,
-        reclaimed: 10
-      }
-    },
-    drift: {
-      none: "Its meaning has not changed.",
-      broadened: "In time it came to cover the whole of the surrounding region.",
-      narrowed: "In time it came to mean only the ruling families.",
-      "passed to the land": "The land itself now bears the name.",
-      outlived: "The name has outlived the people it once described.",
-      transferred: "The people who replaced them took the name over.",
-      "became a title": "It survives as a title rather than the name of a people."
-    },
-    driftWeights: {
-      none: 40,
-      broadened: 15,
-      narrowed: 10,
-      "passed to the land": 15,
-      outlived: 8,
-      transferred: 7,
-      "became a title": 5
-    },
-    interpretations: [
-      {
-        key: "ancestor",
-        weight: 25,
-        text: "legendary ancestor"
-      },
-      {
-        key: "regional",
-        weight: 20,
-        text: "emblem across the region"
-      },
-      {
-        key: "warrior",
-        weight: 15,
-        text: "warriors' badge"
-      },
-      {
-        key: "nickname",
-        weight: 15,
-        text: "nickname among outsiders"
-      },
-      {
-        key: "royal",
-        weight: 10,
-        text: "royal symbol"
-      },
-      {
-        key: "sacred",
-        weight: 10,
-        text: "sacred companion"
-      },
-      {
-        key: "taboo",
-        weight: 5,
-        text: "sacred animal, which they must never harm or eat"
-      }
+  worldHab: [
+    [
+      "Station",
+      3
     ],
-    transplanted: "Their ancestors brought the old ways of naming with them into {biome}.",
-    echo: "The name echoes that of a real historical people."
-  },
+    [
+      "Habitat",
+      2
+    ],
+    [
+      "Colony",
+      2
+    ],
+    [
+      "Outpost",
+      1
+    ],
+    [
+      "Port",
+      1
+    ],
+    [
+      "Haven",
+      1
+    ],
+    [
+      "Anchorage",
+      1
+    ],
+    [
+      "Yard",
+      1
+    ],
+    [
+      "Dock",
+      1
+    ],
+    [
+      "Base",
+      1
+    ],
+    [
+      "Camp",
+      1
+    ],
+    [
+      "Relay",
+      1
+    ],
+    [
+      "Beacon",
+      1
+    ],
+    [
+      "Observatory",
+      1
+    ]
+  ],
+  worldHabGate: [
+    "Gate",
+    1
+  ],
+  spaceBuilt: [
+    "dock",
+    "mast",
+    "array",
+    "dish",
+    "beacon",
+    "relay",
+    "yard",
+    "tether"
+  ],
+  spaceActivity: [
+    "Mining",
+    "Hauling",
+    "Salvage",
+    "Survey",
+    "Docking",
+    "Refuelling"
+  ],
   safeguards: {
-    blockList: [
-      "Blackfoot",
-      "Crow",
-      "People of the Longhouse",
-      "People of the Standing Stone",
-      "People of the Flint",
-      "People of the Great Hill",
-      "People of the Great Swamp",
-      "People of the Dawn Land",
-      "Dawn Land People",
-      "Children of the Mist",
-      "Cloud People",
-      "People of the Rain",
-      "Original People",
-      "Seven Council Fires",
-      "People of the Veil"
-    ],
-    flagList: [
-      "Ten Arrows",
-      "Nine Tribes",
-      "Golden Horde",
-      "White Horde",
-      "Blue Horde",
-      "Royal Scythians",
-      "Black Cloaks",
-      "Long Beards",
-      "All Men",
-      "Painted People",
-      "Sea Peoples",
-      "Sons of the Lion",
-      "Sons of the Dog",
-      "Followers of the Woodpecker",
-      "Followers of the Bull",
-      "Falcon People",
-      "Shark Canoe"
-    ],
-    flagListBlocks: false,
-    banned: [
-      "Savages",
-      "Barbarians",
-      "Primitives",
-      "Heathens",
-      "Redskins",
-      "Squaw",
-      "Bushmen",
-      "Hottentots",
-      "Eskimos",
-      "Head-Hunters",
-      "Cannibals",
-      "Natives"
+    block: [
+      "Outer Rim",
+      "Mid Rim",
+      "Inner Rim",
+      "Core Worlds",
+      "Deep Core",
+      "Wild Space",
+      "Unknown Regions",
+      "Kessel Run",
+      "Spinward Marches",
+      "Trailing Marches",
+      "Alpha Quadrant",
+      "Beta Quadrant",
+      "Gamma Quadrant",
+      "Delta Quadrant",
+      "Neutral Zone",
+      "Deep Space Nine",
+      "Deep Space 9",
+      "Terminus",
+      "The Expanse",
+      "Mass Relay",
+      "Halo Array",
+      "Babylon 5",
+      "Babylon Five"
     ]
   }
 };
 
-// src/tribes/engine.ts
-var TRIBAL_DATA = tribal_names_default;
-var V = TRIBAL_DATA.vocabulary;
-var TRIBAL_TRADITIONS = TRIBAL_DATA.traditions;
-var TRIBAL_REGISTERS = TRIBAL_DATA.registers;
-var TRIBAL_GROUP_TYPES = TRIBAL_DATA.groupTypes;
-var TRIBAL_PERSPECTIVES = Object.keys(TRIBAL_DATA.perspectives);
-var PERSON_COLLECTIVES = TRIBAL_DATA.personCollectives;
-function findTradition(key2) {
-  return TRIBAL_TRADITIONS.find((t) => t.key === key2);
-}
-function pick(items, rng) {
-  const live4 = items.filter(([, w]) => w > 0);
-  if (live4.length === 0) return void 0;
-  const total = live4.reduce((n, [, w]) => n + w, 0);
-  let r = rng() * total;
-  for (const [item2, w] of live4) {
-    r -= w;
-    if (r < 0) return item2;
-  }
-  return live4[live4.length - 1][0];
-}
-var pickRecord = (weights, rng) => pick(Object.entries(weights), rng);
-var pickPool = (pool3, rng) => pick([...pool3.entries()], rng);
-var pickUniform2 = (items, rng) => items[Math.floor(rng() * items.length)];
-var add = (pool3, word, weight) => {
-  var _a2;
-  if (weight > 0) pool3.set(word, ((_a2 = pool3.get(word)) != null ? _a2 : 0) + weight);
-};
-var lower = (s) => s.toLowerCase();
-var wordRe = (w) => new RegExp(`(^|[^A-Za-z])${w.replace(/[-']/g, "\\$&")}s?($|[^A-Za-z])`, "i");
-var SMALL = /* @__PURE__ */ new Set(["a", "an", "and", "at", "by", "in", "of", "on", "the", "to"]);
-function tribalTitleCase(text) {
-  return text.split(" ").map((word, i) => {
-    if (i > 0 && SMALL.has(word.toLowerCase())) return word.toLowerCase();
-    return word.split("-").map((part) => part ? part.charAt(0).toUpperCase() + part.slice(1) : part).join("-");
-  }).join(" ");
-}
-var share = (ctx, ...terrains) => terrains.reduce((n, t) => {
-  var _a2;
-  return n + ((_a2 = ctx.terrainWeights[t]) != null ? _a2 : 0);
-}, 0);
-function effectiveTerrains(trad, biome, terrain) {
-  var _a2;
-  const zero = Object.fromEntries(TERRAINS.map((t) => [t, 0]));
-  if (terrain && terrain !== "any" && ((_a2 = biome.terrainWeights[terrain]) != null ? _a2 : 0) > 0) return { ...zero, [terrain]: 100 };
-  const keys = Object.keys(biome.terrainWeights);
-  const raw = Object.fromEntries(keys.map((t) => {
-    var _a3;
-    return [t, biome.terrainWeights[t] * ((_a3 = trad.terrainMultipliers[t]) != null ? _a3 : 1)];
-  }));
-  const total = Object.values(raw).reduce((n, w) => n + w, 0) || 1;
-  return { ...zero, ...Object.fromEntries(keys.map((t) => [t, raw[t] * 100 / total])) };
-}
-function suppression(ctx, word) {
-  let m = 1;
-  for (const s of ctx.trad.suppress) {
-    if (s.kind === "homeland" && ctx.mode === "chosen") continue;
-    const hit = s.word === "Horse" ? isHorseWord(word) : wordRe(s.word).test(word);
-    if (hit) m *= s.mult;
-  }
-  return m;
-}
-var isHorseWord = (word) => /(^|[^a-z])(horse|horses|mare)($|[^a-z])/i.test(word);
-function mounts(ctx) {
-  return biomeWords(ctx.biome, "livestock").filter(([w, n]) => ["horse", "camel", "reindeer", "yak", "llama"].includes(w) && n >= 1).map(([w]) => w).filter((w) => w !== "horse" || suppression(ctx, "Horse") > 0);
-}
-var hasLivestock = (ctx, animal2) => biomeWords(ctx.biome, "livestock").some(([w, n]) => w === animal2 && n >= 1);
-function filtered(ctx, word, weight) {
-  if (weight <= 0) return 0;
-  if (TRIBAL_DATA.safeguards.banned.some((b) => wordRe(b).test(word))) return 0;
-  return weight * suppression(ctx, word);
-}
-function landPool(ctx, kind, terrain) {
-  var _a2;
-  const pool3 = /* @__PURE__ */ new Map();
-  for (const [w, n] of terrainWords(ctx.biome, kind, terrain)) add(pool3, w, filtered(ctx, w, n));
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour[kind]) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 3));
-  return pool3;
-}
-function featureWord(ctx, kind) {
-  var _a2;
-  const pinned = (_a2 = ctx.pin.get(kind === "any" ? "feature" : kind)) != null ? _a2 : ctx.pin.get("feature");
-  if (pinned) return pinned;
-  const k = kind === "any" ? ctx.rng() < 0.5 ? "land" : "water" : kind;
-  const terrains = Object.keys(ctx.terrainWeights).map((t) => [t, landPool(ctx, k, t).size > 0 ? ctx.terrainWeights[t] : 0]);
-  const terrain = pick(terrains, ctx.rng);
-  if (!terrain) return kind === "any" ? featureWord(ctx, k === "land" ? "water" : "land") : void 0;
-  ctx.terrain = terrain;
-  return pickPool(landPool(ctx, k, terrain), ctx.rng);
-}
-var hasColour = (word) => V.colours.some((c) => word.toLowerCase().includes(c.toLowerCase())) || /yellow/i.test(word);
-function withColour(ctx, word) {
-  if (ctx.rng() >= 0.2 || hasColour(word)) return word;
-  return `${pickUniform2(V.colours, ctx.rng)} ${word}`;
-}
-function animalPool(ctx, wild = false) {
-  var _a2, _b;
-  const pool3 = /* @__PURE__ */ new Map();
-  const b = ctx.biome;
-  const lists = wild ? [["wildAnimals", 1], ["birds", 1]] : [["wildAnimals", 1], ["birds", 1], ["creatures", 0.7], ["livestock", 0.5]];
-  for (const [list, factor] of lists) {
-    for (const [w, n] of biomeWords(b, list)) {
-      const word = biomeTitleCase(w);
-      add(pool3, word, filtered(ctx, word, 2 * factor * n));
-    }
-  }
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.animals) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 3));
-  if (!wild && ctx.register === "legendary") {
-    for (const [w, mults] of Object.entries(V.mythic)) add(pool3, w, filtered(ctx, w, 0.5 * ((_b = mults[ctx.trad.key]) != null ? _b : 1)));
-  }
-  return pool3;
-}
-function plantPool(ctx) {
-  var _a2;
-  const pool3 = /* @__PURE__ */ new Map();
-  for (const [list, factor] of [["trees", 1], ["plants", 1], ["crops", 0.5]]) {
-    for (const [w, n] of biomeWords(ctx.biome, list)) {
-      const word = biomeTitleCase(w);
-      add(pool3, word, filtered(ctx, word, 2 * factor * n));
-    }
-  }
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.plants) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 3));
-  return pool3;
-}
-function sacredPool(ctx) {
-  const pool3 = /* @__PURE__ */ new Map();
-  const only = ctx.trad.special.sacredOnly;
-  if (only) {
-    for (const w of only) add(pool3, w, 1);
-    return pool3;
-  }
-  for (const w of V.sacredUniversal) add(pool3, w, filtered(ctx, w, 1));
-  for (const [w, n] of biomeWords(ctx.biome, "sacred")) add(pool3, w, filtered(ctx, w, 2 * n));
-  return pool3;
-}
-function lifewayPool(ctx) {
-  var _a2;
-  const pool3 = /* @__PURE__ */ new Map();
-  const canRide = mounts(ctx).length > 0;
-  const fav = new Set(ctx.trad.favouredLifeways);
-  const gate = (w) => w === "Riders" && !canRide ? 0 : 1;
-  for (const [w, n] of biomeWords(ctx.biome, "lifeways")) add(pool3, w, filtered(ctx, w, n * (fav.has(w) ? 2 : 1) * gate(w)));
-  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.lifeways) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 10 * gate(w)));
-  return pool3;
-}
-var materials = (ctx) => {
-  const pool3 = /* @__PURE__ */ new Map();
-  for (const [w, n] of biomeWords(ctx.biome, "materials")) add(pool3, w, filtered(ctx, w, n));
-  return pool3;
-};
-function warfarePool(ctx, objectsOnly = false) {
-  const pool3 = /* @__PURE__ */ new Map();
-  const restricted = (w) => {
-    var _a2, _b;
-    const allowed = V.warfareRestricted[w];
-    if (!allowed) return 1;
-    const m = (_b = (_a2 = allowed[ctx.trad.key]) != null ? _a2 : allowed["*"]) != null ? _b : 0;
-    if (w === "War Canoe" && share(ctx, "coast", "rivers", "islands") < 20) return m * 0.2;
-    return m;
-  };
-  const words = objectsOnly ? V.warfareObjects : [...V.warfareUniversal, ...Object.keys(V.warfareRestricted)];
-  for (const w of words) add(pool3, w, filtered(ctx, w, restricted(w)));
-  return pool3;
-}
-function directionPool(ctx, { halves = false, colours = true } = {}) {
-  var _a2, _b;
-  const pool3 = /* @__PURE__ */ new Map();
-  for (const o of ctx.trad.orientation) {
-    let words = (_b = (_a2 = o.words) != null ? _a2 : V.directions[o.system]) != null ? _b : [];
-    if (!halves) words = words.filter((w) => !w.endsWith(" Half"));
-    if (!colours && o.system === "colourDirection") continue;
-    let m = o.mult;
-    if (o.system === "seaAxis" && share(ctx, "coast", "islands") < 10) m *= 0.2;
-    if (o.system === "riverAxis" && share(ctx, "rivers") < 15) m *= 0.2;
-    for (const w of words) add(pool3, w, filtered(ctx, w, m));
-  }
-  return pool3;
-}
-function qualityPool(ctx) {
-  const pool3 = /* @__PURE__ */ new Map();
-  for (const w of V.qualities) add(pool3, w, 1);
-  if (["self", "dynastic", "ceremonial"].includes(ctx.perspective)) for (const w of V.interpretiveQualities) add(pool3, w, 1);
-  return pool3;
-}
-function dressPool(ctx) {
-  const pool3 = /* @__PURE__ */ new Map();
-  const id = ctx.biome.id;
-  const gate = {
-    "Bear-Cloak": biomeWords(ctx.biome, "wildAnimals").some(([w]) => w === "bear"),
-    "Fur-Cloak": id === "boreal" || id === "highland",
-    "Feather-Cloak": id === "rainforest" || id === "tropical-islands",
-    Veiled: id === "desert",
-    "Painted-Moccasin": !!ctx.trad.special.paintedMoccasin
-  };
-  for (const w of V.dress) add(pool3, w, filtered(ctx, w, gate[w] === false ? 0 : 1));
-  return pool3;
-}
-function numberWord(ctx) {
-  const preferred = new Set(ctx.trad.numbers);
-  return pick(V.numbers.map((n) => [n, preferred.has(n) ? 3 : 0.3]), ctx.rng);
-}
-function countedOk(ctx, noun) {
-  var _a2, _b;
-  const id = ctx.biome.id;
-  switch (noun) {
-    case "Islands":
-      return share(ctx, "islands") >= 5 ? 1 : 0;
-    case "Canoes":
-      return share(ctx, "coast", "rivers") >= 20 ? 1 : 0;
-    case "Rivers":
-    case "Streams":
-    case "Lakes":
-      return share(ctx, "rivers") >= 15 ? 1 : 0;
-    case "Wells":
-      return id === "desert" || id === "steppe" ? 1 : 0;
-    case "Tents":
-      return id === "steppe" || id === "desert" || id === "boreal" ? 1 : 0;
-    case "Arrows": {
-      const allowed = V.warfareRestricted.Arrow;
-      return (_b = (_a2 = allowed[ctx.trad.key]) != null ? _a2 : allowed["*"]) != null ? _b : 0;
-    }
-    case "Fires":
-      return ctx.trad.key === "northAmerican" ? 3 : 1;
-    default:
-      return 1;
-  }
-}
-function vesselWord(ctx) {
-  const pinned = ctx.pin.get("vessel");
-  if (pinned) return pinned;
-  const rng = ctx.rng;
-  if (ctx.mode === "chosen" && rng() < 1 / 3) {
-    const pool4 = /* @__PURE__ */ new Map();
-    for (const list of ["birds", "creatures"]) for (const [w, n] of biomeWords(ctx.biome, list)) add(pool4, biomeTitleCase(w), filtered(ctx, w, n));
-    const animal2 = pickPool(pool4, rng);
-    if (animal2) return `the ${pickUniform2(V.colours, rng)} ${animal2} Canoe`;
-  }
-  const pool3 = /* @__PURE__ */ new Map();
-  for (const c of V.canoes) add(pool3, c, 2);
-  for (const v of V.voyages) add(pool3, v, 1);
-  if (ctx.trad.special.longship) add(pool3, "the Longship", 2);
-  if (share(ctx, "rivers") >= 25) add(pool3, "the Raft", 1);
-  return pickPool(pool3, rng);
-}
-function collectivePool(ctx, filter = {}) {
-  var _a2, _b, _c, _d, _e, _f;
-  const pool3 = /* @__PURE__ */ new Map();
-  const lineageSet = new Set(TRIBAL_DATA.lineageCollectives);
-  const signature = new Set(ctx.trad.signatureCollectives);
-  for (const row of TRIBAL_DATA.collectives) {
-    if (!row.groupTypes.includes(ctx.groupType)) continue;
-    if (row.registers !== "all" && !row.registers.includes(ctx.register)) continue;
-    if (row.perspectives && !row.perspectives.includes(ctx.perspective)) continue;
-    if (row.descent && row.descent !== ctx.lineage) continue;
-    if (filter.lineageOnly && !lineageSet.has(row.word)) continue;
-    if (filter.roleOnly && !row.role) continue;
-    if (filter.personOnly && !row.person) continue;
-    if (filter.only && !filter.only.includes(row.word)) continue;
-    let w = (_c = (_b = (_a2 = row.groupMult) == null ? void 0 : _a2[ctx.groupType]) != null ? _b : row.mult) != null ? _c : 1;
-    if (row.traditions && !row.traditions.includes(ctx.trad.key)) w *= ctx.trad.key === "general" ? 0.3 : 0;
-    w *= (_e = (_d = row.traditionMult) == null ? void 0 : _d[ctx.trad.key]) != null ? _e : 1;
-    if (signature.has(row.word)) w *= 2;
-    w *= (_f = ctx.trad.lineageMultipliers[row.word]) != null ? _f : 1;
-    if (row.gate === "mounts" && mounts(ctx).length === 0) w = 0;
-    if (row.gate === "arrows" || row.gate === "tents") w *= countedOk(ctx, row.gate === "arrows" ? "Arrows" : "Tents");
-    add(pool3, row.word, filtered(ctx, row.word, w));
-  }
-  return pool3;
-}
-var collective = (ctx, filter) => pickPool(collectivePool(ctx, filter), ctx.rng);
-function traditionThemeWeights(trad) {
-  const raw = Object.fromEntries(Object.entries(TRIBAL_DATA.themes).map(([k, w]) => {
-    var _a2;
-    return [k, w * ((_a2 = trad.themes[k]) != null ? _a2 : 1)];
-  }));
-  const total = Object.values(raw).reduce((n, w) => n + w, 0);
-  const pct = Object.fromEntries(Object.entries(raw).map(([k, w]) => [k, w * 100 / total]));
-  const capped = pct.animals + pct.sacred;
-  const cap2 = TRIBAL_DATA.parityCap;
-  if (capped <= cap2) return pct;
-  const scale = cap2 / capped;
-  const others = 100 - capped;
-  const lift = (100 - cap2) / others;
-  return Object.fromEntries(Object.entries(pct).map(([k, w]) => [k, k === "animals" || k === "sacred" ? w * scale : w * lift]));
-}
-function traditionGroupTypeWeights(trad) {
-  return Object.fromEntries(TRIBAL_DATA.groupTypes.map((g) => {
-    var _a2;
-    return [g.key, g.weight * ((_a2 = trad.groupTypes[g.key]) != null ? _a2 : 1)];
-  }));
-}
-function themeWeights(ctx) {
-  var _a2;
-  const base = traditionThemeWeights(ctx.trad);
-  const matrix = TRIBAL_DATA.groupTypeThemes[ctx.groupType];
-  const out = {};
-  for (const [theme, w] of Object.entries(base)) {
-    let m = w * ((_a2 = matrix[theme]) != null ? _a2 : 0);
-    if (theme === "vessel" && share(ctx, "coast", "rivers", "islands") < 20) m *= 0.2;
-    out[theme] = m;
-  }
-  return out;
-}
-function templateWeights(ctx) {
-  var _a2, _b, _c, _d;
-  const T = TRIBAL_DATA.templates;
-  const ri = TRIBAL_REGISTERS.indexOf(ctx.register);
-  const fixed = (_a2 = ctx.opts.constraints) == null ? void 0 : _a2.templates;
-  const out = {};
-  for (const [key2, weights] of Object.entries(T.weights)) {
-    let w = fixed ? (_b = fixed[key2]) != null ? _b : 0 : weights[ri] * ((_c = ctx.trad.templates[key2]) != null ? _c : 1);
-    if (!T.themes[key2].includes(ctx.theme)) w = 0;
-    if (T.groupTypes[key2] && !T.groupTypes[key2].includes(ctx.groupType)) w = 0;
-    if (T.perspectives[key2] && !T.perspectives[key2].includes(ctx.perspective)) w = 0;
-    if (T.traditions[key2]) w *= (_d = T.traditions[key2][ctx.trad.key]) != null ? _d : 0;
-    out[key2] = w;
-  }
-  return out;
-}
-function animal(ctx, wild = false) {
-  var _a2;
-  return (_a2 = ctx.pin.get("animal")) != null ? _a2 : pickPool(animalPool(ctx, wild), ctx.rng);
-}
-function plant(ctx) {
-  var _a2;
-  return (_a2 = ctx.pin.get("plant")) != null ? _a2 : pickPool(plantPool(ctx), ctx.rng);
-}
-function sacred(ctx) {
-  var _a2;
-  return (_a2 = ctx.pin.get("sacred")) != null ? _a2 : pickPool(sacredPool(ctx), ctx.rng);
-}
-var LEADING_DIRECTION = /^(Upper|Lower|Outer|Inner|Far|Near|North|South|East|West|Northern|Southern|Eastern|Western|Central|Middle)\b/;
-function place(ctx, kind = "any", directionChance = 0.25) {
-  const f = featureWord(ctx, kind);
-  if (!f) return void 0;
-  if (ctx.rng() < directionChance && !LEADING_DIRECTION.test(f) && !/^(Twin|Three|Seven|Thousand|Hundred)\b/.test(f)) {
-    const d = pickPool(directionPool(ctx, { colours: false }), ctx.rng);
-    if (d && !/[ -]/.test(d) && !["Beyond", "Across", "Between", "Around"].includes(d)) return `${d} ${f}`;
-  }
-  return f;
-}
-function themedWord(ctx, parts) {
-  switch (ctx.theme) {
-    case "landscape":
-      return parts.feature = featureWord(ctx, "land");
-    case "water":
-      return parts.feature = featureWord(ctx, "water");
-    case "animals":
-      return parts.animal = animal(ctx);
-    case "plants":
-      return parts.plant = plant(ctx);
-    case "sacred":
-      return parts.sacred = sacred(ctx);
-    default:
-      return void 0;
-  }
-}
-function templateA(ctx, parts) {
-  var _a2, _b, _c, _d, _e, _f, _g, _h;
-  const rng = ctx.rng;
-  switch (ctx.theme) {
-    case "relationship": {
-      const pool3 = /* @__PURE__ */ new Map();
-      for (const w of V.relationship) add(pool3, w, w === "Tributaries" && !["imposed", "later"].includes(ctx.perspective) ? 0 : 1);
-      return parts.keyword = (_a2 = pickPool(pool3, rng)) != null ? _a2 : "";
-    }
-    case "qualities":
-      parts.quality = pickPool(qualityPool(ctx), rng);
-      break;
-    case "warfare":
-      parts.emblem = pickPool(warfarePool(ctx), rng);
-      break;
-    case "dress":
-      parts.dress = pickPool(dressPool(ctx), rng);
-      break;
-    case "direction": {
-      const d = pickPool(directionPool(ctx, { halves: ctx.groupType === "moiety" }), rng);
-      parts.direction = d;
-      if (d == null ? void 0 : d.endsWith(" Half")) return d;
-      break;
-    }
-    default:
-      themedWord(ctx, parts);
-  }
-  const lead = (_h = (_g = (_f = (_e = (_d = (_c = (_b = parts.quality) != null ? _b : parts.emblem) != null ? _c : parts.dress) != null ? _d : parts.direction) != null ? _e : parts.feature) != null ? _f : parts.animal) != null ? _g : parts.plant) != null ? _h : parts.sacred;
-  const c = collective(ctx);
-  if (!lead || !c) return void 0;
-  parts.collective = c;
-  return `${lead} ${c}`;
-}
-function templateB(ctx, parts) {
-  const w = themedWord(ctx, parts);
-  const c = collective(ctx);
-  if (!w || !c) return void 0;
-  parts.collective = c;
-  return `${withColour(ctx, w)} ${c}`;
-}
-function ofTarget(ctx, parts) {
-  if (ctx.theme === "vessel") {
-    const v = parts.vessel = vesselWord(ctx);
-    return v;
-  }
-  const w = themedWord(ctx, parts);
-  return w ? `the ${withColour(ctx, w)}` : void 0;
-}
-function templateC(ctx, parts) {
-  const target = ofTarget(ctx, parts);
-  const c = collective(ctx);
-  if (!target || !c) return void 0;
-  parts.collective = c;
-  return `${c} of ${target}`;
-}
-function templateDH(ctx, parts, linker) {
-  const w = themedWord(ctx, parts);
-  const c = collective(ctx);
-  if (!w || !c) return void 0;
-  parts.collective = c;
-  return `${c} ${linker} the ${w}`;
-}
-function templateE(ctx, parts) {
-  const d = pickPool(directionPool(ctx), ctx.rng);
-  const f = ctx.theme === "water" ? featureWord(ctx, "water") : ctx.theme === "landscape" ? featureWord(ctx, "land") : featureWord(ctx, "any");
-  const c = collective(ctx);
-  if (!d || !f || !c || /^(Beyond|Across|Between|Around)$/.test(d) || LEADING_DIRECTION.test(f)) return void 0;
-  parts.direction = d;
-  parts.feature = f;
-  parts.collective = c;
-  return `${d} ${f} ${c}`;
-}
-function templateF(ctx, parts) {
-  let emblem;
-  if (ctx.theme === "warfare") {
-    emblem = ctx.rng() < 0.8 ? pickPool(warfarePool(ctx, true), ctx.rng) : pickPool(materials(ctx), ctx.rng);
-    parts.emblem = emblem;
-  } else if (ctx.theme === "animals") emblem = parts.animal = animal(ctx);
-  else emblem = parts.plant = plant(ctx);
-  const c = collective(ctx);
-  if (!emblem || !c || hasColour(emblem)) return void 0;
-  parts.collective = c;
-  return `${pickUniform2(V.colours, ctx.rng)} ${emblem} ${c}`;
-}
-function templateG(ctx, parts) {
-  var _a2;
-  let target;
-  if (ctx.theme === "ancestor") target = parts.ancestor = (_a2 = ctx.pin.get("ancestor")) != null ? _a2 : pickUniform2(V.ancestors, ctx.rng);
-  else target = ofTarget(ctx, parts);
-  const c = collective(ctx, { lineageOnly: true });
-  if (!target || !c) return void 0;
-  parts.collective = c;
-  return `${c} of ${target}`;
-}
-function templateI(ctx, parts) {
-  const c = collective(ctx, { roleOnly: true });
-  if (!c) return void 0;
-  let p;
-  if (ctx.theme === "sacred") p = parts.sacred = sacred(ctx);
-  else if (ctx.theme === "warfare") p = parts.emblem = pickUniform2(["Fort", "Stronghold", "Frontier", "March"], ctx.rng);
-  else p = parts.feature = place(ctx, ctx.theme === "water" ? "water" : "land", 0.3);
-  if (!p) return void 0;
-  parts.collective = c;
-  return `${c} of the ${p}`;
-}
-function templateJ(ctx, parts) {
-  var _a2;
-  const n = parts.number = numberWord(ctx);
-  if (((_a2 = ctx.opts.constraints) == null ? void 0 : _a2.jFirstFormOnly) || ctx.rng() < 0.5) {
-    const noun2 = pick(V.countedNouns.map((w) => [w, countedOk(ctx, w)]), ctx.rng);
-    if (!noun2) return void 0;
-    return `${n} ${noun2}`;
-  }
-  const noun = pick(V.countedFeatures.map((w) => [w, countedOk(ctx, w)]), ctx.rng);
-  const c = collective(ctx);
-  if (!noun || !c) return void 0;
-  parts.collective = c;
-  parts.feature = `${n} ${noun}`;
-  return `${c} of the ${n} ${noun}`;
-}
-function templateK(ctx, parts) {
-  const phrases = V.kPhrases.filter((p) => p.theme === ctx.theme && (p.gate !== "mounts" || mounts(ctx).length > 0));
-  const phrase = pickUniform2(phrases, ctx.rng);
-  if (!phrase) return void 0;
-  let w;
-  switch (phrase.slot) {
-    case "land":
-      w = parts.feature = featureWord(ctx, "land");
-      break;
-    case "water":
-      w = parts.feature = featureWord(ctx, "water");
-      break;
-    case "origin": {
-      const land = featureWord(ctx, "land");
-      w = ctx.rng() < 0.5 || !land ? pickUniform2(V.origins, ctx.rng) : `${pickUniform2(V.colours, ctx.rng)} ${land}`;
-      if (hasColour(land != null ? land : "") && !V.origins.includes(w)) w = land;
-      parts.feature = w;
-      break;
-    }
-    case "animal":
-      w = parts.animal = animal(ctx);
-      break;
-    case "sacred":
-      w = parts.sacred = sacred(ctx);
-      break;
-    case "emblem":
-      w = ctx.theme === "animals" ? parts.animal = animal(ctx) : parts.emblem = pickPool(warfarePool(ctx, true), ctx.rng);
-      break;
-    default:
-      w = parts.feature = place(ctx, ctx.theme === "water" ? "water" : "land", 0.3);
-  }
-  if (!w) return void 0;
-  return `Those Who ${phrase.verb} ${w}`;
-}
-function templateL(ctx, parts) {
-  var _a2;
-  const agent = parts.lifeway = (_a2 = ctx.pin.get("lifeway")) != null ? _a2 : pickPool(lifewayPool(ctx), ctx.rng);
-  if (!agent) return void 0;
-  if (!agent.includes(" ") && ctx.rng() < 0.6) {
-    const f = featureWord(ctx, "any");
-    if (f && !f.includes(" ")) {
-      parts.feature = f;
-      return `${f} ${agent}`;
-    }
-  }
-  return agent;
-}
-function templateM(ctx, parts) {
-  const s = V.speech;
-  const r = ctx.rng();
-  if (r < 0.3) return pickUniform2(s.whole, ctx.rng);
-  if (r < 0.65) return `Speakers of the ${pickUniform2(s.tongues, ctx.rng)} Tongue`;
-  const c = collective(ctx);
-  if (!c) return void 0;
-  parts.collective = c;
-  return `${s.descriptor} ${c}`;
-}
-function templateN(ctx, parts) {
-  var _a2;
-  const epithets = V.ancestors.filter((a2) => !a2.includes("'"));
-  const a = parts.ancestor = (_a2 = ctx.pin.get("ancestor")) != null ? _a2 : pickUniform2(epithets, ctx.rng);
-  const c = collective(ctx, { personOnly: true });
-  if (!a || !c || a.includes("'")) return void 0;
-  parts.collective = c;
-  const bare4 = a.replace(/^the /, "");
-  return `${bare4}${bare4.endsWith("s") ? "'" : "'s"} ${c}`;
-}
-function templateO(ctx, parts) {
-  const r = ctx.rng();
-  if (ctx.theme === "relationship" || r >= 0.8) {
-    parts.keyword = "True People";
-    return "The True People";
-  }
-  if (r < 0.5) {
-    const q2 = parts.quality = pickPool(qualityPool(ctx), ctx.rng);
-    return q2 ? `The ${q2} Ones` : void 0;
-  }
-  const pool3 = /* @__PURE__ */ new Map();
-  for (const w of V.nominalQualities) add(pool3, w, ["Free", "Proud", "Unconquered"].includes(w) && !["self", "dynastic", "ceremonial"].includes(ctx.perspective) ? 0 : 1);
-  const q = parts.quality = pickPool(pool3, ctx.rng);
-  return q ? `The ${q}` : void 0;
-}
-function templateP(ctx, parts) {
-  var _a2;
-  let emblem;
-  if (ctx.theme === "lifeway") {
-    const agent = parts.lifeway = pickPool(lifewayPool(ctx), ctx.rng);
-    emblem = agent ? `${agent}'` : void 0;
-  } else if (ctx.theme === "animals") emblem = parts.animal = animal(ctx);
-  else emblem = parts.plant = plant(ctx);
-  const house = (_a2 = collective(ctx, { only: ["House", "Clan"] })) != null ? _a2 : ctx.groupType === "occupational" ? "Clan" : void 0;
-  const p = place(ctx, "any", 0.5);
-  if (!emblem || !house || !p) return void 0;
-  parts.collective = house;
-  parts.feature = p;
-  return `${emblem} ${house} of the ${p}`;
-}
-function templateQ(ctx, parts) {
-  let noun;
-  if (ctx.theme === "animals") {
-    const a = parts.animal = animal(ctx);
-    noun = a ? biomeTitleCase(pluralOf(a.toLowerCase())) : void 0;
-  } else if (ctx.theme === "plants") {
-    const p = parts.plant = plant(ctx);
-    noun = p ? biomeTitleCase(pluralOf(p.toLowerCase())) : void 0;
-  } else noun = parts.feature = pickPool(materials(ctx), ctx.rng);
-  const c = collective(ctx);
-  if (!noun || !c) return void 0;
-  parts.collective = c;
-  const wh = ctx.trad.special.waterHill;
-  if (wh && ctx.register === "legendary" && ["settlement", "dynasty"].includes(ctx.groupType) && ctx.rng() < wh) {
-    return `${c} of the Water-Hill of ${noun}`;
-  }
-  return `${c} of the Place of ${noun}`;
-}
-function templateR(ctx, parts) {
-  const a = parts.animal = animal(ctx, true);
-  return a ? `Followers of the ${a}` : void 0;
-}
-function buildTemplate(ctx, template, parts) {
-  switch (template) {
-    case "A":
-      return templateA(ctx, parts);
-    case "B":
-      return templateB(ctx, parts);
-    case "C":
-      return templateC(ctx, parts);
-    case "D":
-      return templateDH(ctx, parts, "by");
-    case "E":
-      return templateE(ctx, parts);
-    case "F":
-      return templateF(ctx, parts);
-    case "G":
-      return templateG(ctx, parts);
-    case "H":
-      return templateDH(ctx, parts, pickUniform2(["Beyond", "Across", "Between"], ctx.rng));
-    case "I":
-      return templateI(ctx, parts);
-    case "J":
-      return templateJ(ctx, parts);
-    case "K":
-      return templateK(ctx, parts);
-    case "L":
-      return templateL(ctx, parts);
-    case "M":
-      return templateM(ctx, parts);
-    case "N":
-      return templateN(ctx, parts);
-    case "O":
-      return templateO(ctx, parts);
-    case "P":
-      return templateP(ctx, parts);
-    case "Q":
-      return templateQ(ctx, parts);
-    case "R":
-      return templateR(ctx, parts);
-  }
-  return void 0;
-}
-function hostileWord(ctx) {
-  const pool3 = /* @__PURE__ */ new Map();
-  for (const [w, theme] of Object.entries(V.hostile)) {
-    if (theme !== ctx.theme) continue;
-    let ok = true;
-    if (w === "Horse Stealers") ok = hasLivestock(ctx, "horse") && suppression(ctx, "Horse") > 0;
-    if (w === "Goat Folk") ok = hasLivestock(ctx, "goat");
-    if (w === "Fish-Eaters") ok = share(ctx, "coast", "rivers") >= 15;
-    if (w === "Mud Folk" || w === "Marsh Crawlers") ok = share(ctx, "wetland") >= 5;
-    add(pool3, w, ok ? filtered(ctx, w, 1) : 0);
-  }
-  return pickPool(pool3, ctx.rng);
-}
-var norm = (s) => s.toLowerCase().replace(/^the /, "").trim();
-var BUILT_IN_GUARDS = {
-  block: new Set(TRIBAL_DATA.safeguards.blockList.map(norm)),
-  flag: new Set(TRIBAL_DATA.safeguards.flagList.map(norm)),
-  flagBlocks: TRIBAL_DATA.safeguards.flagListBlocks
-};
-var guardCache = /* @__PURE__ */ new WeakMap();
-function safeguardSets(opts) {
-  const s = opts.safeguards;
-  if (!s) return BUILT_IN_GUARDS;
-  let sets = guardCache.get(s);
-  if (!sets) {
-    sets = { block: new Set(s.block.map(norm)), flag: new Set(s.flag.map(norm)), flagBlocks: s.flagBlocks };
-    guardCache.set(s, sets);
-  }
-  return sets;
-}
-function breaksColourRule(name, traditionKey) {
-  var _a2, _b;
-  const words = name.split(" ");
-  const colours = /* @__PURE__ */ new Set([...V.colours, "Yellow"]);
-  const exceptions = new Set((_b = (_a2 = findTradition(traditionKey)) == null ? void 0 : _a2.special.colourCollectives) != null ? _b : []);
-  const persons = new Set(PERSON_COLLECTIVES);
-  for (let i = 0; i < words.length - 1; i++) {
-    if (colours.has(words[i]) && persons.has(words[i + 1]) && !exceptions.has(words[i + 1])) return true;
-  }
-  return false;
-}
-var ENGLISH = /^[A-Za-z' -]+$/;
-function render(ctx, template, text, parts) {
-  var _a2, _b, _c, _d;
-  let base = text;
-  let tail = false;
-  if (TRIBAL_DATA.templates.tail.includes(template) && // P already ends "of the [PLACE]".
-  template !== "P" && !((_a2 = ctx.opts.constraints) == null ? void 0 : _a2.noTail) && !/ (of|by|beyond|across|between) /i.test(base) && ctx.rng() < (ctx.register === "plain" ? 0.15 : 0.25)) {
-    const f = place(ctx, "any", 0.25);
-    if (f && !base.includes(f)) {
-      parts.tailAt = base.length;
-      parts.feature = (_b = parts.feature) != null ? _b : f;
-      base = `${base} of the ${f}`;
-      tail = true;
-    }
-  }
-  let headword = tribalTitleCase(base);
-  if (ctx.register === "historical" && !/^(The|Those) /.test(headword)) headword = `The ${headword}`;
-  const cap2 = Math.min(TRIBAL_DATA.lengthCaps[ctx.register], (_d = (_c = ctx.opts.constraints) == null ? void 0 : _c.maxWords) != null ? _d : Infinity);
-  if (headword.split(" ").length > cap2) {
-    if (!tail || parts.tailAt === void 0) return null;
-    headword = tribalTitleCase(base.slice(0, parts.tailAt));
-    if (ctx.register === "historical" && !/^(The|Those) /.test(headword)) headword = `The ${headword}`;
-    tail = false;
-    if (headword.split(" ").length > cap2) return null;
-  }
-  if (!ENGLISH.test(headword)) return null;
-  if (breaksColourRule(headword, ctx.trad.key)) return null;
-  if (TRIBAL_DATA.safeguards.banned.some((b) => wordRe(b).test(headword))) return null;
-  const guards = safeguardSets(ctx.opts);
-  if (guards.block.has(norm(headword))) return null;
-  if (guards.flagBlocks && guards.flag.has(norm(headword))) return null;
-  return { headword, tail };
-}
-function historyPerspectiveKey(ctx) {
-  return ctx.perspective === "neighbour" ? `neighbour.${ctx.tone}` : ctx.perspective === "imposed" ? "imposed" : ctx.perspective;
-}
-function directionGloss(ctx, d) {
-  var _a2;
-  const colour = V.colourDirections[d];
-  if (colour && ctx.trad.orientation.some((o) => o.system === "colourDirection")) return `in the ${colour}, whose colour is ${d.toLowerCase()}`;
-  return (_a2 = TRIBAL_DATA.history.directionGloss[d]) != null ? _a2 : "apart from their neighbours";
-}
-function interpretationFor(ctx, template) {
-  const special = ctx.trad.special;
-  const items = TRIBAL_DATA.history.interpretations.map((i) => {
-    let w = i.weight;
-    let text = i.text;
-    if (i.key === "taboo" && special.clanTaboo) w *= special.clanTaboo;
-    if (i.key === "ancestor" && special.ancestorAnimal) w *= special.ancestorAnimal;
-    if (i.key === "regional" && special.clanAnimal) {
-      w *= 1.5;
-      text = "clan animal";
-    }
-    return [text, w];
-  });
-  if (template === "R" && special.migrationGuide) items.push(["guide on the long migration", special.migrationGuide]);
-  return pick(items, ctx.rng);
-}
-function sentence(text, fills) {
-  return text.replace(/\{(\w+)\}/g, (_, k) => {
-    var _a2;
-    return (_a2 = fills[k]) != null ? _a2 : k;
-  });
-}
-function history(ctx, template, parts) {
-  var _a2, _b, _c, _d, _e;
-  const H = TRIBAL_DATA.history;
-  const rng = ctx.rng;
-  const feature = (_b = (_a2 = parts.feature) != null ? _a2 : featureWord(ctx, "land")) != null ? _b : "hills";
-  const lifeway = parts.lifeway ? lower(parts.lifeway) : void 0;
-  const custom = ctx.theme === "lifeway" && lifeway ? `their work as ${lifeway}` : ctx.theme === "dress" && parts.dress ? `their ${H.dressGloss[parts.dress]}` : ctx.theme === "speech" ? "the way they spoke" : ctx.theme === "warfare" ? "their skill in war" : ctx.theme === "animals" && parts.animal ? `their ${lower(parts.animal)} emblem` : "their ways";
-  const ancestor = (_c = parts.ancestor) != null ? _c : "a founding ancestor";
-  const interpretation = ctx.theme === "animals" ? interpretationFor(ctx, template) : null;
-  const fills = {
-    feature,
-    custom,
-    ancestor,
-    emblem: parts.emblem ? `the ${lower(parts.emblem)}` : "their weapons",
-    animal: parts.animal ? lower(parts.animal) : "animal",
-    plant: parts.plant ? lower(parts.plant) : "great tree",
-    sacred: (_d = parts.sacred) != null ? _d : "sacred places",
-    direction: parts.direction ? directionGloss(ctx, parts.direction) : "apart from their neighbours",
-    quality: parts.quality ? H.qualityGloss[parts.quality] : "a people apart",
-    number: parts.number ? lower(parts.number) : "several",
-    lifeway: lifeway != null ? lifeway : "farmers",
-    dress: parts.dress ? H.dressGloss[parts.dress] : "their dress",
-    vessel: (_e = parts.vessel) != null ? _e : "the canoe",
-    interpretation: interpretation != null ? interpretation : void 0
-  };
-  const pkey = historyPerspectiveKey(ctx);
-  const coinage = sentence(pickUniform2(H.coinage[pkey], rng), fills);
-  let meaning = sentence(H.meaning[ctx.theme], fills);
-  if (ctx.mode === "chosen" && !(ctx.trad.homeland[ctx.biome.id] > 0) && rng() < 0.3) {
-    meaning = sentence(H.transplanted, { biome: ctx.biome.phrase });
-  }
-  const acceptance = pickRecord(H.acceptanceWeights[pkey], rng);
-  const drift = pickRecord(H.driftWeights, rng);
-  return {
-    origin: `${coinage} ${meaning} ${H.acceptance[acceptance]} ${H.drift[drift]}`.replace(/ {2,}/g, " "),
-    meaning,
-    interpretation,
-    acceptance,
-    drift
-  };
-}
-function literalMeaning(ctx, parts) {
-  var _a2, _b, _c, _d, _e, _f, _g, _h;
-  const H = TRIBAL_DATA.history;
-  switch (ctx.theme) {
-    case "landscape":
-    case "water":
-      return `The people associated with the ${(_a2 = parts.feature) != null ? _a2 : "land"}`;
-    case "animals":
-      return `The people of the ${lower((_b = parts.animal) != null ? _b : "animal")}`;
-    case "plants":
-      return `The people of the ${lower((_c = parts.plant) != null ? _c : "tree")}`;
-    case "sacred":
-      return `Those who hold the ${(_d = parts.sacred) != null ? _d : "sacred places"} holy`;
-    case "direction":
-      return `The people living ${parts.direction ? directionGloss(ctx, parts.direction) : "apart"}`;
-    case "qualities": {
-      const g = parts.quality ? H.qualityGloss[parts.quality] : "a people apart";
-      return g.charAt(0).toUpperCase() + g.slice(1);
-    }
-    case "number":
-      return `${(_e = parts.number) != null ? _e : "Several"} groups bound together`;
-    case "lifeway":
-      return `The ${lower((_f = parts.lifeway) != null ? _f : "workers")}`;
-    case "speech":
-      return "A people known by their speech";
-    case "dress":
-      return `The people with ${parts.dress ? H.dressGloss[parts.dress] : "distinctive dress"}`;
-    case "ancestor":
-      return `Descendants of ${(_g = parts.ancestor) != null ? _g : "a founding ancestor"}`;
-    case "vessel":
-      return `Descendants of those who arrived on ${(_h = parts.vessel) != null ? _h : "the canoe"}`;
-    case "relationship":
-      return "A people defined by their place in the wider world";
-    case "warfare":
-      return `The people known for ${parts.emblem ? `the ${lower(parts.emblem)}` : "war"}`;
-  }
-  return "A people";
-}
-var HOSTILE_PERSPECTIVES = /* @__PURE__ */ new Set(["neighbour", "imposed"]);
-function attempt(ctx, fixed) {
-  var _a2, _b, _c, _d, _e, _f, _g, _h, _i;
-  const rng = ctx.rng;
-  const opts = ctx.opts;
-  const perspectiveWeights = {};
-  for (const [p, w] of Object.entries(TRIBAL_DATA.perspectives)) {
-    perspectiveWeights[p] = w * ((_b = (_a2 = TRIBAL_DATA.perspectiveByGroupType[ctx.groupType]) == null ? void 0 : _a2[p]) != null ? _b : 1) * ((_e = (_d = (_c = opts.constraints) == null ? void 0 : _c.perspectiveMultipliers) == null ? void 0 : _d[p]) != null ? _e : 1);
-  }
-  const wanted = (_f = fixed == null ? void 0 : fixed.perspective) != null ? _f : opts.perspective;
-  ctx.perspective = wanted != null ? wanted : pickRecord(perspectiveWeights, rng);
-  const toned = HOSTILE_PERSPECTIVES.has(ctx.perspective);
-  let tone = pickRecord(toned ? TRIBAL_DATA.tones.toned : TRIBAL_DATA.tones.plain, rng);
-  if (tone === "hostile" && !opts.hostile) tone = "neutral";
-  ctx.tone = tone;
-  ctx.lineage = pickRecord(ctx.trad.lineage, rng);
-  ctx.theme = (_h = (_g = fixed == null ? void 0 : fixed.theme) != null ? _g : pickRecord(themeWeights(ctx), rng)) != null ? _h : "";
-  if (!ctx.theme) return null;
-  const parts = { keyword: "" };
-  let template;
-  let text;
-  if (ctx.tone === "hostile") {
-    const h = hostileWord(ctx);
-    if (h) {
-      template = ctx.theme === "speech" ? "M" : "A";
-      text = h;
-      parts.keyword = h;
-    } else ctx.tone = "neutral";
-  }
-  if (!text) {
-    const weights = templateWeights(ctx);
-    for (const t of (_i = fixed == null ? void 0 : fixed.avoidTemplates) != null ? _i : []) weights[t] = 0;
-    template = pickRecord(weights, rng);
-    if (!template) return null;
-    text = buildTemplate(ctx, template, parts);
-  }
-  if (!text || !template) return null;
-  parts.keyword = parts.keyword || parts.lifeway || parts.animal || parts.plant || parts.sacred || parts.ancestor || parts.vessel || parts.quality || parts.dress || parts.direction || parts.number || parts.emblem || parts.feature || text;
-  const rendered = render(ctx, template, text, parts);
-  if (!rendered) return null;
-  return { headword: rendered.headword, template, parts };
-}
-function makeCtx(trad, biome, mode, groupType, register, options, rng) {
-  return {
-    trad,
-    biome,
-    mode,
-    terrainWeights: effectiveTerrains(trad, biome, options.terrain),
-    register,
-    groupType,
-    perspective: "self",
-    tone: "neutral",
-    theme: "",
-    lineage: "bilateral",
-    rng,
-    opts: options,
-    terrain: null,
-    pin: /* @__PURE__ */ new Map()
-  };
-}
-function inTextOf(headword) {
-  return headword.startsWith("The ") ? `the ${headword.slice(4)}` : headword.startsWith("Those ") ? headword : `the ${headword}`;
-}
-function groupTypeChoices(trad, options) {
-  var _a2;
-  const weights = traditionGroupTypeWeights(trad);
-  const allowed = (_a2 = options.constraints) == null ? void 0 : _a2.groupTypes;
-  for (const key2 of Object.keys(weights)) {
-    if (options.groupType && key2 !== options.groupType) weights[key2] = 0;
-    if (allowed && !allowed.includes(key2)) weights[key2] = 0;
-  }
-  return weights;
-}
-function tribalName(options, rng) {
-  var _a2, _b, _c;
-  const trad = (_a2 = findTradition(options.tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
-  const chosen = (_b = options.biomeData) != null ? _b : findBiome(options.biome);
-  const mode = chosen ? "chosen" : "homeland";
-  const biome = chosen != null ? chosen : findBiome(pickRecord(trad.homeland, rng));
-  const groupType = pickRecord(groupTypeChoices(trad, options), rng);
-  if (!groupType) return null;
-  const registerWeights = (_c = options.constraints) == null ? void 0 : _c.registers;
-  const register = registerWeights ? pickRecord(registerWeights, rng) : options.register;
-  const reg = register != null ? register : "plain";
-  const general = TRIBAL_TRADITIONS[0];
-  for (const t of trad === general ? [trad] : [trad, general]) {
-    const ctx = makeCtx(t, biome, mode, groupType, reg, options, rng);
-    for (let i = 0; i < 20; i++) {
-      const a = attempt(ctx);
-      if (a) return finish(ctx, a, trad, options);
-    }
-  }
-  return null;
-}
-function finish(ctx, a, requested, options) {
-  var _a2;
-  const parts = a.parts;
-  const headwordOnly = (_a2 = options.constraints) == null ? void 0 : _a2.headwordOnly;
-  const echoesReal = safeguardSets(options).flag.has(norm(a.headword));
-  const base = {
-    name: a.headword,
-    inText: inTextOf(a.headword),
-    tradition: requested.key,
-    biome: ctx.biome.id,
-    biomeMode: ctx.mode,
-    terrain: ctx.terrain,
-    groupType: ctx.groupType,
-    perspective: ctx.perspective,
-    tone: ctx.tone,
-    register: ctx.register,
-    theme: ctx.theme,
-    template: a.template,
-    keyword: parts.keyword,
-    slots: [],
-    echoesReal,
-    historicity: `Fictional modern-English name inspired by ${requested.label} naming patterns` + (ctx.mode === "chosen" && !(requested.homeland[ctx.biome.id] > 0) ? `, set in ${ctx.biome.phrase}` : "")
-  };
-  if (headwordOnly) {
-    return { ...base, literalMeaning: "", interpretation: null, acceptance: "", drift: "", origin: "", alternativeNames: [] };
-  }
-  const h = history(ctx, a.template, parts);
-  let origin = h.origin;
-  if (echoesReal) origin += ` ${TRIBAL_DATA.history.echo}`;
-  const alternatives = alternativeNames(ctx, a);
-  if (alternatives.other) origin += ` ${alternatives.other}`;
-  return {
-    ...base,
-    literalMeaning: literalMeaning(ctx, parts),
-    interpretation: h.interpretation,
-    acceptance: h.acceptance,
-    drift: h.drift,
-    origin,
-    alternativeNames: alternatives.names
-  };
-}
-function alternativeNames(ctx, a) {
-  const rng = ctx.rng;
-  const want = 2 + Math.floor(rng() * 3);
-  const saved = { perspective: ctx.perspective, tone: ctx.tone, theme: ctx.theme, terrain: ctx.terrain, lineage: ctx.lineage };
-  const pinKinds = ["feature", "animal", "plant", "sacred", "lifeway", "ancestor", "vessel"];
-  ctx.pin = new Map(pinKinds.filter((k) => a.parts[k]).map((k) => [k, a.parts[k]]));
-  const names = [];
-  const seen = /* @__PURE__ */ new Set([a.headword.toLowerCase()]);
-  const used = /* @__PURE__ */ new Set([a.template]);
-  let other;
-  const otherPerspective = rng() < 0.3 ? saved.perspective === "self" ? "neighbour" : "self" : void 0;
-  for (let i = 0; i < want * 4 && names.length < want; i++) {
-    const flip = otherPerspective && !other && names.length === want - 1;
-    const alt = attempt(ctx, { perspective: flip ? otherPerspective : saved.perspective, theme: saved.theme, avoidTemplates: used });
-    if (!alt || seen.has(alt.headword.toLowerCase()) || alt.parts.keyword === "") continue;
-    seen.add(alt.headword.toLowerCase());
-    used.add(alt.template);
-    if (used.size >= Object.keys(TRIBAL_DATA.templates.weights).length) used.clear();
-    names.push(alt.headword);
-    if (flip) other = otherPerspective === "self" ? `They called themselves ${inTextOf(alt.headword)}.` : `Their neighbours called them ${inTextOf(alt.headword)}.`;
-  }
-  ctx.pin = /* @__PURE__ */ new Map();
-  Object.assign(ctx, saved);
-  return { names, other };
-}
-function generateTribalNames(options) {
-  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
-  const rng = mulberry32(seed);
-  const count = Math.max(0, Math.floor(options.count));
-  const seen = /* @__PURE__ */ new Set();
-  const names = [];
-  let skipped = 0;
-  for (let i = 0; i < count * 50 && names.length < count; i++) {
-    const name = tribalName(options, rng);
-    if (!name) {
-      skipped++;
-      if (skipped >= count * 5) break;
-      continue;
-    }
-    const key2 = name.name.toLowerCase();
-    if (seen.has(key2)) continue;
-    seen.add(key2);
-    names.push(name);
-  }
-  const notices = [];
-  if (names.length < count) {
-    notices.push(
-      names.length === 0 ? "No names could be made with these choices." : `Only ${names.length} different names could be made with these choices${skipped ? ` (${skipped} skipped)` : ""}.`
-    );
-  }
-  return { names, seed, notices };
-}
-function tribalHistoryLabel(sectionLabel, tradition, biome, register, terrain = "any", custom = []) {
-  var _a2, _b;
-  const t = (_a2 = findTradition(tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
-  const b = findBiome(biome, custom);
-  const land = [...TERRAIN_CHOICES, ...(_b = b == null ? void 0 : b.customTerrains) != null ? _b : []].find((x) => x.id === terrain && x.id !== "any");
-  return [sectionLabel, t.label, b ? biomeInline(b) : "homeland", ...land ? [land.label.toLowerCase()] : [], register].join(" \xB7 ");
-}
-function homelandSummary(tradition) {
-  var _a2;
-  const t = (_a2 = findTradition(tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
-  const parts = Object.entries(t.homeland).sort((a, b) => b[1] - a[1]).map(([id, w]) => {
-    var _a3, _b;
-    return `${((_b = (_a3 = findBiome(id)) == null ? void 0 : _a3.label) != null ? _b : id).toLowerCase()} ${w}%`;
-  });
-  return `Homeland: ${parts.join(", ")}`;
-}
-function tribalDetailsLine(name) {
-  const g = TRIBAL_GROUP_TYPES.find((x) => x.key === name.groupType);
-  const short = g.label.replace(/ or .*$/, "");
-  const persp = TRIBAL_DATA.perspectiveLabels[name.perspective] + (HOSTILE_PERSPECTIVES.has(name.perspective) ? ` (${name.tone})` : "");
-  const biome = findBiome(name.biome);
-  return `${short} \xB7 ${persp} \xB7 ${biome.label}${name.biomeMode === "homeland" ? " (homeland)" : ""}`;
-}
-
-// src/tribes/slotFill.ts
-function tribalSlotConstraints(part) {
-  return part === "river-british" ? RIVER_BRITISH : part === "river-colonial" ? RIVER_COLONIAL : part === "organic" ? ORGANIC : COLONIAL;
-}
-var COLONIAL = {
-  templates: { A: 35, B: 35, F: 10, L: 10, J: 10 },
-  jFirstFormOnly: true,
-  noTail: true,
-  maxWords: 3,
-  registers: { plain: 70, administrative: 30 },
-  perspectiveMultipliers: { imposed: 3, neighbour: 2 },
-  groupTypes: ["regional", "settlement", "kin", "confederation"],
-  headwordOnly: true
-};
-var ORGANIC = {
-  templates: { A: 50, B: 50 },
-  noTail: true,
-  maxWords: 2,
-  registers: { plain: 100 },
-  groupTypes: ["regional", "settlement", "kin"],
-  headwordOnly: true
-};
-var RIVER_BRITISH = {
-  templates: { A: 50, B: 50 },
-  noTail: true,
-  maxWords: 2,
-  registers: { plain: 100 },
-  groupTypes: ["regional", "settlement", "kin"],
-  headwordOnly: true
-};
-var RIVER_COLONIAL = {
-  templates: { A: 40, B: 40, F: 20 },
-  noTail: true,
-  maxWords: 2,
-  registers: { plain: 70, administrative: 30 },
-  perspectiveMultipliers: { imposed: 3, neighbour: 2 },
-  groupTypes: ["regional", "settlement", "kin", "confederation"],
-  headwordOnly: true
-};
-function autoTradition(region, rng) {
-  const code = (region != null ? region : "").toUpperCase();
-  if (["COR", "WAL", "SHH", "SLO"].includes(code)) return "celtic";
-  if (code === "SBL") return rng() < 0.5 ? "celtic" : "germanic";
-  if (!region || code === "ALL-BRITAIN" || code === "ALL") return rng() < 0.7 ? "germanic" : "celtic";
-  return "germanic";
-}
-function tribalSlotFill(options, rng) {
-  var _a2, _b, _c, _d;
-  const organic = options.part === "organic";
-  let tradition = options.tradition;
-  if (tradition === "auto") tradition = organic ? autoTradition(options.region, rng) : "general";
-  if (!findTradition(tradition)) tradition = "general";
-  const fields2 = (_a2 = options.fields) != null ? _a2 : {};
-  let constraints = tribalSlotConstraints(options.part);
-  if (fields2.register && constraints.registers && fields2.register in constraints.registers) {
-    constraints = { ...constraints, registers: { [fields2.register]: 100 } };
-  }
-  const groupType = fields2.groupType && (!constraints.groupTypes || constraints.groupTypes.includes(fields2.groupType)) ? fields2.groupType : void 0;
-  const biome = (_b = fields2.biome) != null ? _b : organic ? void 0 : options.biome;
-  const name = tribalName(
-    {
-      tradition,
-      ...typeof biome === "string" ? { biome } : biome ? { biomeData: biome } : {},
-      terrain: (_c = fields2.terrain) != null ? _c : options.terrain,
-      ...groupType ? { groupType } : {},
-      ...fields2.perspective ? { perspective: fields2.perspective } : {},
-      hostile: false,
-      constraints
-    },
-    rng
-  );
-  const text = ((_d = name == null ? void 0 : name.name) != null ? _d : "People").replace(/^The /, "");
-  return { text, tradition };
-}
-
-// src/rivers/engine.ts
-var RIVER_SETTINGS = [
-  { id: "british", label: "British River Names" },
-  { id: "new-land", label: "New Land" },
-  { id: "established", label: "Established" }
-];
-var RIVER_DATA = river_names_default;
-var REAL_NAMES = new Set(Object.values(RIVER_DATA.corpora).flat().map((n) => n.toLowerCase()));
-function pickWeighted2(weights, rng) {
-  const items = Object.entries(weights).filter(([, w]) => w > 0);
+// src/space/scale.ts
+var SPACE_DATA = space_default;
+var SCALES = SPACE_DATA.scales.order;
+function scaleInfo(choice) {
+  return choice === "any" ? SPACE_DATA.scales.any : SPACE_DATA.scales.list[choice];
+}
+var scaleLabel = (choice) => scaleInfo(choice).label;
+var scalePhrase = (choice) => scaleInfo(choice).phrase;
+function scalesFor(era) {
+  return [...SPACE_DATA.scales.byEra[era != null ? era : "none"]];
+}
+function validScale(choice, era) {
+  return choice && scalesFor(era).includes(choice) ? choice : "any";
+}
+function scaleAllows(entry, scale) {
+  if (scale === "any" || !entry.sc) return true;
+  return entry.sc.includes(scale);
+}
+function scaleFilter(entries, scale) {
+  if (scale === "any") return entries;
+  const kept = entries.filter((e) => scaleAllows(e, scale));
+  return kept.length > 0 ? kept : entries;
+}
+function anyScaleWeights(era) {
+  const row = SPACE_DATA.scales.anyWeights[era != null ? era : "none"];
+  return SCALES.map((s) => [s, row[s]]);
+}
+function drawScale(era, rng) {
+  const items = anyScaleWeights(era);
   const total = items.reduce((n, [, w]) => n + w, 0);
   let r = rng() * total;
-  for (const [item2, w] of items) {
+  for (const [s, w] of items) {
     r -= w;
-    if (r < 0) return item2;
+    if (r < 0) return s;
   }
   return items[items.length - 1][0];
 }
-var pickUniform3 = (items, rng) => items[Math.floor(rng() * items.length)];
-var titleCase2 = (text) => text.replace(/(^|[\s-])(\p{L})/gu, (_, sep, ch) => sep + ch.toUpperCase());
-var letterCount2 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
-var regionKey = (region) => region && RIVER_DATA.regionCorpora[region] ? region : "all";
-function waterWordWeights(setting, region) {
-  return setting === "british" ? RIVER_DATA.waterWords.british[regionKey(region)] : RIVER_DATA.waterWords[setting];
-}
-var modelCache = /* @__PURE__ */ new Map();
-function ancientModel(region) {
-  const corpora = RIVER_DATA.regionCorpora[regionKey(region)];
-  const key2 = corpora.join("+");
-  let model = modelCache.get(key2);
-  if (!model) {
-    model = MarkovModel.build(corpora.flatMap((c) => RIVER_DATA.corpora[c]));
-    modelCache.set(key2, model);
-  }
-  return model;
-}
-function ancientName(options, rng) {
-  var _a2, _b;
-  const model = ancientModel(options.region);
-  const { minLetters, maxLetters, draws } = RIVER_DATA.ancient;
-  for (let i = 0; i < draws; i++) {
-    const seed = Math.floor(rng() * 4294967296) >>> 0;
-    const name = model.generateDetailed({
-      count: 1,
-      faithfulness: (_a2 = options.faithfulness) != null ? _a2 : 2,
-      strictness: (_b = options.strictness) != null ? _b : 3,
-      seed
-    }).names[0];
-    if (!name) continue;
-    const letters = letterCount2(name);
-    if (letters < minLetters || letters > maxLetters || REAL_NAMES.has(name.trim().toLowerCase())) continue;
-    return titleCase2(name.trim().toLowerCase());
-  }
-  return null;
-}
-function ancientForm(name, region, rng) {
-  const { scottishRegions, scottish, other } = RIVER_DATA.forms.ancient;
-  const form = pickWeighted2(region && scottishRegions.includes(region) ? scottish : other, rng);
-  if (form === "river-x") return { text: `River ${name}`, form };
-  if (form === "x-water") return { text: `${name} Water`, form };
-  if (form === "water-of-x") return { text: `Water of ${name}`, form };
-  return { text: name, form };
-}
-var colonialBiome = (options) => options.setting === "british" ? void 0 : findBiome(options.biome);
-function descriptiveName(options, rng, bare4) {
-  const british = options.setting === "british";
-  const biome = colonialBiome(options);
-  const categories = RIVER_DATA.descriptiveCategories[british ? "british" : biome ? "colonialWithBiome" : "colonial"];
-  const category = pickWeighted2(categories, rng);
-  const native = biome ? biomeEntries(biome, category) : void 0;
-  const entry = native ? pickWeightedPair(native, rng) : pickUniform3(NAME_WORDS.categories[category], rng);
-  const word = entry.modern;
-  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
-  if (british) {
-    const joined = entry.fuses === "yes" ? smoothJoin(word, water) : null;
-    const fuses = joined !== null && letterCount2(joined) <= NAMES.maxFusedLetters && rng() < RIVER_DATA.britishFuseChance;
-    const name = fuses ? titleCase2(joined.toLowerCase()) : titleCase2(`${word} ${water}`);
-    if (bare4) return { text: name, water, form: "bare" };
-    const form2 = pickWeighted2(RIVER_DATA.forms.britishDescriptive, rng);
-    return { text: form2 === "river-x" ? `River ${name}` : name, water, form: form2 };
-  }
-  if (bare4) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
-  const form = pickWeighted2(RIVER_DATA.forms.colonialDescriptive, rng);
-  return form === "bare" && water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
-}
-var NATIVE_PLACEHOLDERS = {
-  "[native bird]": "bird",
-  "[native wild animal]": "wild-animal",
-  "[native fish or creature]": "fish-and-other-creatures",
-  "[native tree]": "tree",
-  "[native plant]": "wild-plant"
-};
-function patternName(options, rng) {
-  const items = RIVER_DATA.patterns[options.setting];
-  const picked = pickWeighted2(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
-  const pattern = options.peoples === "tribal" ? picked.replace(/\[(tribal name|native people)\]/g, () => {
-    var _a2;
-    const british = options.setting === "british";
-    return tribalSlotFill(
-      british ? { tradition: "celtic", part: "river-british", biome: "britain" } : { tradition: (_a2 = options.peoplesTradition) != null ? _a2 : "general", part: "river-colonial", biome: options.biome },
-      rng
-    ).text;
-  }) : picked;
-  const biome = colonialBiome(options);
-  const filled = biome ? pattern.replace(/\[native [^\]]+\]/g, (slot) => {
-    const entries = NATIVE_PLACEHOLDERS[slot] ? biomeEntries(biome, NATIVE_PLACEHOLDERS[slot]) : void 0;
-    return entries ? titleCase2(pickWeightedPair(entries, rng).modern) : slot;
-  }) : pattern;
-  if (!filled.includes("{water}")) return { text: filled, form: picked };
-  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
-  return { text: filled.replace("{water}", titleCase2(water)), water, form: picked };
-}
-function riverName(options, rng) {
-  const kind = pickWeighted2(RIVER_DATA.kindWeights[options.setting], rng);
-  if (kind === "pattern") {
-    const built = patternName(options, rng);
-    return { ...built, hasPlaceholder: /\[[^\]]+\]/.test(built.text), kind };
-  }
-  if (kind === "ancient") {
-    const name = ancientName(options, rng);
-    if (name) return { ...ancientForm(name, options.region, rng), hasPlaceholder: false, kind, ancient: name };
-  }
-  return { ...descriptiveName(options, rng, false), hasPlaceholder: false, kind };
-}
-function riverFill(options, rng) {
-  const { pattern: _pattern, ...weights } = RIVER_DATA.kindWeights[options.setting];
-  const kind = pickWeighted2(weights, rng);
-  if (kind === "ancient") {
-    const name = ancientName(options, rng);
-    if (name) return name;
-  }
-  return descriptiveName(options, rng, true).text;
-}
-function generateRiverNames(options) {
-  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
-  const rng = mulberry32(seed);
-  const count = Math.max(0, Math.floor(options.count));
-  const seen = /* @__PURE__ */ new Set();
-  const names = [];
-  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
-    const name = riverName(options, rng);
-    const key2 = name.text.toLowerCase();
-    if (seen.has(key2)) continue;
-    seen.add(key2);
-    names.push(name);
-  }
-  const notice = names.length < count ? `Only ${names.length} river names could be generated.` : void 0;
-  return { names, seed, notice };
+function spaceDirections(scale) {
+  return scaleFilter(SPACE_DATA.directions.spaceDirection, scale).map((e) => e.w);
 }
 
-// src/names/engine.ts
-var NAMES = {
-  /** Land brief §8.2: share of colonial river fills drawn from the native pack, when one is set. */
-  nativeRiverShare: 0.4,
-  /** §4.1 fuse-chance modifiers and cap. */
-  traditionalWord: 1.5,
-  modernWord: 0.6,
-  packStem: 1,
-  joining: { fused: 1.5, balanced: 1, spaced: 0.5 },
-  fuseCap: 0.95,
-  maxFusedLetters: 13,
-  /** §4.2 linking -s- for person names. */
-  linkingS: 0.5,
-  /** §4.3 rule 3: this many consonants at the join falls back to spaced. */
-  maxJoinConsonants: 4,
-  /** §6.5 mixed register. */
-  mixedTraditional: 0.5,
-  /** §13 attempts to avoid a duplicate name before allowing it. */
-  duplicateAttempts: 20,
-  /** Default fusion class for a generic word §3.3 doesn't list (usually spaced). */
-  unlistedFusion: 0.15
-};
-var FILL_SALT = 1514052375;
-var REDRAW_SALT = 1016189605;
-var ADAPT_ATTEMPTS = 5;
-var OF_THE_SALT = 1374733287;
-var OF_THE_KEEP = 0.65;
-var OF_THE_KEEP_SET = /* @__PURE__ */ new Set([
-  "bird",
-  "wild-animal",
-  "domestic-animal",
-  "fish-and-other-creatures",
-  "tree",
-  "wild-plant",
-  "supernatural-being",
-  "status-or-role",
-  "activity"
-]);
-var RIVER_CATEGORY = "river-or-stream-name";
-var RENDER_LABELS = {
-  "saint-or-holy-person": "holy person",
-  "native-people-or-tribe": "native people",
-  "native-place-name": "native place"
-};
-var SPLIT_LABELS = {
-  "monarch-ruler-or-dynasty": ["monarch", "ruler", "dynasty"],
-  "official-patron-or-sponsor": ["official", "patron", "sponsor"],
-  "explorer-or-founder": ["explorer", "founder"],
-  "commander-or-conqueror": ["commander", "conqueror"]
-};
-var SPLIT_SALT = 729650369;
-var LAND_BIOME_SLOTS = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant", "soil-or-ground", "resource", "season", "domestic-animal", "crop"]);
-var NATIVE_LABELS = {
-  bird: "native bird",
-  "wild-animal": "native wild animal",
-  "fish-and-other-creatures": "native fish or creature",
-  tree: "native tree",
-  "wild-plant": "native plant"
-};
-var NATIVE_CATEGORIES = /* @__PURE__ */ new Set(["native-place-name", "native-people-or-tribe", "river-or-stream-name"]);
-var WHOLE_BY_DEFAULT = /* @__PURE__ */ new Set(["native-place-name", "native-people-or-tribe", "homeland-place-name"]);
-function defaultNameMode(categoryId) {
-  return WHOLE_BY_DEFAULT.has(categoryId) ? "whole" : "stem";
+// src/space/safeguards.ts
+var esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+var compile = (phrases) => phrases.map((p) => new RegExp(`(^|[^A-Za-z0-9])${esc(p).replace(/\s+/g, "\\s+")}($|[^A-Za-z0-9])`, "i"));
+var BUILT_IN = compile(SPACE_DATA.safeguards.block);
+function spaceBlocker(extra = []) {
+  const all = extra.length > 0 ? [...BUILT_IN, ...compile(extra)] : BUILT_IN;
+  return (text) => all.some((re) => re.test(text));
 }
-var PERSON_CATEGORIES = /* @__PURE__ */ new Set([
-  "personal-name",
-  "monarch-ruler-or-dynasty",
-  "royal-woman",
-  "official-patron-or-sponsor",
-  "commander-or-conqueror",
-  "explorer-or-founder"
-]);
-var DEFAULT_GENDER = {
-  "royal-woman": { male: 0, female: 100 },
-  "monarch-ruler-or-dynasty": { male: 85, female: 15 },
-  "personal-name": { male: 75, female: 25 },
-  "saint-or-holy-person": { male: 70, female: 30 },
-  deity: { male: 50, female: 50 },
-  "colonial-deity": { male: 50, female: 50 },
-  "local-deity": { male: 50, female: 50 },
-  "official-patron-or-sponsor": { male: 95, female: 5 },
-  "commander-or-conqueror": { male: 95, female: 5 },
-  "explorer-or-founder": { male: 95, female: 5 }
-};
-var NAME_SLOTS = /* @__PURE__ */ new Set([
-  "personal-name",
-  "folk-group",
-  "monarch-ruler-or-dynasty",
-  "royal-woman",
-  "official-patron-or-sponsor",
-  "commander-or-conqueror",
-  "explorer-or-founder",
-  "saint-or-holy-person",
-  "deity",
-  "colonial-deity",
-  "local-deity",
-  "native-place-name",
-  "native-people-or-tribe",
-  "homeland-place-name",
-  "earlier-or-district-name",
-  "river-or-stream-name"
-]);
-function hasGenderDefault(categoryId) {
-  return categoryId in DEFAULT_GENDER;
+var DEFAULT = spaceBlocker();
+function hasSpaceBlock(text) {
+  return DEFAULT(text);
 }
-var NAME_WORDS = name_words_default;
-function hasBuiltInList(categoryId) {
-  var _a2, _b;
-  return ((_b = (_a2 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a2.length) != null ? _b : 0) > 0;
-}
-var categoryLabels = new Map([
-  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label.toLowerCase()]),
-  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label.toLowerCase()]),
-  ["local-settlement-word", "local settlement word"],
-  ["local-market-word", "local market word"]
-]);
-var LOCAL_GENERICS = /* @__PURE__ */ new Set(["local-settlement-word", "local-market-word"]);
-var DIRECTIONS = ["north", "south", "east", "west"];
-function pluralise(word) {
-  const parts = word.split(" ");
-  const last = parts.pop();
-  const plural = /s$/i.test(last) ? last : /[^aeiou]y$/i.test(last) ? `${last.slice(0, -1)}ies` : `${last}s`;
-  return [...parts, plural].join(" ");
-}
-var placeholderText = (categoryId) => {
-  var _a2, _b;
-  return `[${(_b = (_a2 = RENDER_LABELS[categoryId]) != null ? _a2 : categoryLabels.get(categoryId)) != null ? _b : categoryId}]`;
-};
-function pickWeighted3(items, rng) {
-  const total = items.reduce((n, [, w]) => n + w, 0);
-  let r = rng() * total;
-  for (const [item2, w] of items) {
-    r -= w;
-    if (r < 0) return item2;
-  }
-  return items[items.length - 1][0];
-}
-var pickUniform4 = (items, rng) => items[Math.floor(rng() * items.length)];
-function pickItem(items, rng) {
-  return items.every((i) => i.weight === items[0].weight) ? pickUniform4(items, rng) : pickWeighted3(items.map((i) => [i, i.weight]), rng);
-}
-function fillWord(fill) {
-  if (fill.kind === "placeholder") return fill.label;
-  if (fill.kind === "name") return fill.text;
-  return fill.traditional && fill.entry.traditional ? fill.entry.traditional : fill.entry.modern;
-}
-function fillEtymology(fill) {
-  var _a2;
-  if (fill.kind === "placeholder") return void 0;
-  return fill.kind === "name" ? (_a2 = fill.native) != null ? _a2 : fill.text : fill.entry.modern;
-}
-var VOWELS3 = /[aeiouy]/i;
-var isConsonant = (ch) => /[a-z]/i.test(ch) && !VOWELS3.test(ch);
-var titleWord = (w) => w.startsWith("[") ? w : w.charAt(0).toUpperCase() + w.slice(1);
-function capitaliseSpaced(text) {
-  const linking = new Set(NAME_WORDS.linkingWords);
-  let inPlaceholder = false;
-  return text.split(" ").map((word, i) => {
-    if (word.startsWith("[")) inPlaceholder = true;
-    const out = inPlaceholder ? word : i > 0 && linking.has(word.toLowerCase()) ? word.toLowerCase() : titleWord(word);
-    if (word.includes("]")) inPlaceholder = false;
-    return out;
-  }).join(" ");
-}
-function smoothJoin(specific, generic) {
-  var _a2, _b, _c, _d;
-  let a = specific;
-  let b = generic.toLowerCase();
-  if (a.length > 0 && b.length > 0 && a.slice(-1).toLowerCase() === b.charAt(0)) b = b.slice(1);
-  if (/e$/i.test(a) && VOWELS3.test(b.charAt(0))) a = a.slice(0, -1);
-  const tail = (_b = (_a2 = a.match(/[^aeiouy]*$/i)) == null ? void 0 : _a2[0]) != null ? _b : "";
-  const head = (_d = (_c = b.match(/^[^aeiouy]*/i)) == null ? void 0 : _c[0]) != null ? _d : "";
-  if (Array.from(tail + head).filter(isConsonant).length >= NAMES.maxJoinConsonants) return null;
-  return (a + b).replace(/(.)\1{2,}/gi, "$1$1");
-}
-var fusedCase = (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
-var letterCount3 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
-var _a;
-var NameRenderer = class {
-  constructor(recipe, slots, regionCode, options = {}) {
-    this.recipe = recipe;
-    this.slots = slots;
-    this.options = options;
-    this.formatter = new PlaceShapeFormatter();
-    this.notices = /* @__PURE__ */ new Set();
-    /** Split-label choices (§5.2) never touch the fill stream. */
-    this.labelRng = (_a = this.options.labelRng) != null ? _a : mulberry32(SPLIT_SALT);
-    /** True while a colonial shape renders: unmapped flora and fauna become native placeholders (§6). */
-    this.colonial = false;
-    this.region = regionCode;
-  }
-  get adaptation() {
-    return this.options.adaptation;
-  }
-  /** A placeholder fill with its rendered label: one component for split categories (§5.2). */
-  placeholder(categoryId) {
-    const split = SPLIT_LABELS[categoryId];
-    const label = split ? `[${split[Math.floor(this.labelRng() * split.length)]}]` : placeholderText(categoryId);
-    return { kind: "placeholder", categoryId, label };
-  }
-  getNotices() {
-    return [...this.notices];
-  }
-  /** §6.3: unmapped categories use their built-in list, else a placeholder. */
-  slotFor(categoryId) {
-    const slot = this.slots[categoryId];
-    if (slot) return slot;
-    return hasBuiltInList(categoryId) ? { kind: "built-in" } : { kind: "placeholder" };
-  }
-  chooseRegister(entry, rng) {
-    if (!entry.traditional) return false;
-    if (this.recipe.register === "modern") return false;
-    if (this.recipe.register === "traditional") return true;
-    return rng() < NAMES.mixedTraditional;
-  }
-  /**
-   * River brief §6.9: an unmapped (or built-in) river slot is a bare river from the river engine,
-   * drawn on the fill stream as a spaced word fill — British (with the region) for organic shapes,
-   * New Land or Established for colonial ones.
-   */
-  riverWordFill(rng) {
-    const part = this.recipe.shape.part;
-    const setting = part === "new-land" ? "new-land" : part === "established" ? "established" : "british";
-    const text = riverFill(
-      {
-        setting,
-        region: setting === "british" ? this.region : void 0,
-        // Tribal brief §19.5: colonial parts pass the recipe's biome.
-        biome: setting === "british" ? void 0 : this.recipe.shape.biome,
-        faithfulness: this.options.faithfulness,
-        strictness: this.options.strictness
-      },
-      rng
-    );
-    return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
-  }
-  /**
-   * Land brief §5.3–§5.4: a fill from the biome and terrain, or undefined to take today's path
-   * (Britain with Any terrain draws today's built-ins uniformly, so seeds are unchanged).
-   */
-  landFill(categoryId, rng, chosenBiome) {
-    var _a2;
-    const biome = ((_a2 = this.options.biome) == null ? void 0 : _a2.id) === "britain" ? void 0 : this.options.biome;
-    const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
-    const word = (entry) => ({ kind: "word", entry, traditional: this.chooseRegister(entry, rng) });
-    if (categoryId === "landform" || categoryId === "water-or-wetland-feature") {
-      const kind = categoryId === "landform" ? "land" : "water";
-      if (!biome) {
-        if (!terrain) return void 0;
-        const tagged = shortWords(BRITAIN, kind, terrain).map(([e]) => e);
-        if (tagged.length > 0) return word(pickUniform4(tagged, rng));
-        return word(pickUniform4(shortWords(BRITAIN, kind, "plains").map(([e]) => e), rng));
-      }
-      let t = terrain;
-      if (!t) {
-        const weights = Object.entries(terrainWeights(biome, "any")).filter(([id, w]) => w > 0 && shortWords(biome, kind, id).length > 0);
-        t = pickWeighted3(weights, rng);
-      }
-      let entries2 = shortWords(biome, kind, t);
-      if (entries2.length === 0) {
-        this.notices.add(`\u201C${t}\u201D has no short ${kind} words; using the plains.`);
-        entries2 = shortWords(biome, kind, "plains");
-      }
-      return entries2.length > 0 ? word(pickWeighted3(entries2, rng)) : void 0;
-    }
-    if (!LAND_BIOME_SLOTS.has(categoryId)) return void 0;
-    if (this.colonial && (categoryId === "domestic-animal" || categoryId === "crop") && !chosenBiome) return void 0;
-    if (!biome) return void 0;
-    const entries = biomeEntries(biome, categoryId);
-    return entries && entries.length > 0 ? this.biomePick(biome, categoryId, entries, rng, true) : void 0;
-  }
-  /**
-   * A weighted pick from a biome list, counting its pack lines (Land brief §9.3): a pack line
-   * draws a whole name from that pack, used as an open, named word.
-   */
-  biomePick(biome, categoryId, entries, rng, register) {
-    var _a2, _b;
-    const draws = (_b = (_a2 = biome.packDraws) == null ? void 0 : _a2[SLOT_LISTS[categoryId]]) != null ? _b : [];
-    const asWord = (entry) => ({ kind: "word", entry, traditional: register ? this.chooseRegister(entry, rng) : false });
-    if (draws.length === 0) return asWord(pickWeighted3(entries, rng));
-    const choice = pickWeighted3([...entries.map(([entry, w]) => [{ entry }, w]), ...draws.map((d) => [{ draw: d.draw }, d.weight])], rng);
-    if ("entry" in choice) return asWord(choice.entry);
-    const text = choice.draw(rng);
-    return text ? { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false } : asWord(pickWeighted3(entries, rng));
-  }
-  /** Tribal brief §20.2: a short tribal name on the fill stream, as riverWordFill. */
-  tribalWordFill(slot, rng) {
-    const part = this.recipe.shape.part;
-    const { kind: _kind, tradition, ...fields2 } = slot;
-    const { text } = tribalSlotFill(
-      {
-        tradition,
-        part,
-        region: this.region,
-        biome: part === "organic" ? void 0 : this.options.biome,
-        terrain: this.options.terrain,
-        ...Object.keys(fields2).length > 0 ? { fields: fields2 } : {}
-      },
-      rng
-    );
-    return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
-  }
-  /**
-   * River brief §3: a keep-set word in a linked generic-first order keeps "{Generic} of the {Word}"
-   * with probability 0.65 on its own stream; null means flip and join as before.
-   */
-  ofThe(fill, categoryId, genericId, rng) {
-    const ofTheRng = this.options.ofTheRng;
-    const eligible = fill.kind === "word" && OF_THE_KEEP_SET.has(categoryId) || fill.kind === "placeholder" && fill.native;
-    if (!ofTheRng || !eligible) return null;
-    if (!(ofTheRng() < OF_THE_KEEP)) return null;
-    return capitaliseSpaced(`${this.genericWord(genericId, false, rng)} of the ${fillWord(fill)}`);
-  }
-  /** Stage 2: fill one slot. `whole` forces whole names for pack sources (§5.3). */
-  fill(categoryId, rng, whole = false) {
-    var _a2, _b;
-    const mapped = this.slots[categoryId];
-    if (categoryId === RIVER_CATEGORY && (!mapped || mapped.kind === "built-in")) {
-      const native = this.slots["native-place-name"];
-      if (this.colonial && !mapped && this.recipe.native && (native == null ? void 0 : native.kind) === "sources" && rng() < NAMES.nativeRiverShare) {
-        const fill = this.fill("native-place-name", rng, true);
-        if (fill.kind === "name") return fill;
-      }
-      return this.riverWordFill(rng);
-    }
-    if (this.colonial && !mapped && NATIVE_LABELS[categoryId]) {
-      const biome = this.options.biome;
-      const entries = biome ? biomeEntries(biome, categoryId) : void 0;
-      if (biome && entries) return this.biomePick(biome, categoryId, entries, rng, false);
-      return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
-    }
-    const slot = this.slotFor(categoryId);
-    if (!mapped || mapped.kind === "biome") {
-      const land = this.landFill(categoryId, rng, (mapped == null ? void 0 : mapped.kind) === "biome");
-      if (land) return land;
-    }
-    if (slot.kind === "tribal") return this.tribalWordFill(slot, rng);
-    const wordFill = (entries) => {
-      if (!entries || entries.length === 0) return this.placeholder(categoryId);
-      return entryFill(pickUniform4(entries, rng));
-    };
-    const entryFill = (picked) => {
-      let entry = picked;
-      if (entry.modern.includes("[direction]")) entry = { ...entry, modern: entry.modern.replace("[direction]", pickUniform4(DIRECTIONS, rng)) };
-      return { kind: "word", entry, traditional: this.chooseRegister(entry, rng) };
-    };
-    if (slot.kind === "placeholder" && this.colonial && NATIVE_LABELS[categoryId]) {
-      return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
-    }
-    if (slot.kind === "placeholder" || slot.kind === "ignore") return this.placeholder(categoryId);
-    if (slot.kind === "built-in" || slot.kind === "biome") return wordFill(NAME_WORDS.categories[categoryId]);
-    const source = pickWeighted3(slot.sources.map((s) => [s, s.weight]), rng);
-    if (source.items) return this.itemFill(source, slot, categoryId, rng, whole, entryFill);
-    if (source.entries) return wordFill(source.entries);
-    if (!source.draw) return this.placeholder(categoryId);
-    const mode = whole ? "whole" : (_a2 = slot.mode) != null ? _a2 : defaultNameMode(categoryId);
-    const ratio = (_b = slot.gender) != null ? _b : DEFAULT_GENDER[categoryId];
-    const request = {};
-    if (slot.section) request.section = slot.section;
-    if (ratio) request.gender = rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female";
-    const text = source.draw(request, mode, rng);
-    return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
-  }
-  /**
-   * A word list section's weighted items: the gender (slot ratio, else the category default) is
-   * drawn first and filters tagged items; a pack item draws a name, a word is a name in a name slot
-   * and a word fill elsewhere.
-   */
-  itemFill(source, slot, categoryId, rng, whole, entryFill) {
-    var _a2, _b, _c;
-    const all = source.items;
-    if (all.length === 0) return this.placeholder(categoryId);
-    const ratio = (_a2 = slot.gender) != null ? _a2 : DEFAULT_GENDER[categoryId];
-    const gender = ratio ? rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female" : void 0;
-    let items = gender ? all.filter((i) => !i.gender || i.gender === gender) : all;
-    if (items.length === 0) {
-      this.notices.add(`${(_b = source.itemsLabel) != null ? _b : "Word list"} has no ${gender} entries; ignoring gender.`);
-      items = all;
-    }
-    const item2 = pickItem(items, rng);
-    const mode = whole ? "whole" : (_c = slot.mode) != null ? _c : defaultNameMode(categoryId);
-    if (item2.draw) {
-      const text = item2.draw(gender ? { gender } : {}, mode, rng);
-      return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
-    }
-    if (NAME_SLOTS.has(categoryId)) return { kind: "name", text: item2.entry.modern, mode };
-    return entryFill(item2.entry);
-  }
-  /**
-   * Recipe takeover §A3: an adapted native name fill is adopted into the takeover pack's language.
-   * A failed adoption redraws the slot on the redraw stream, up to five draws in all; after that the
-   * last native name is used unchanged. Word fills and placeholders pass through untouched.
-   */
-  adaptFill(fill, categoryId, treatment, whole, shape) {
-    const adaptation = this.adaptation;
-    if (!adaptation || treatment !== "adapted" || shape.translated || !NATIVE_CATEGORIES.has(categoryId)) return fill;
-    let current = fill;
-    for (let draw2 = 1; ; draw2++) {
-      if (current.kind !== "name") return current;
-      const adopted = adaptation.adapt(current.text, adoptionRng(adaptation.seed, current.text));
-      if (adopted !== null) return { ...current, text: adopted, native: current.text };
-      if (draw2 >= ADAPT_ATTEMPTS) return current;
-      current = this.fill(categoryId, adaptation.redrawRng, whole);
-    }
-  }
-  /** The generic's word (§3.1): variant replaces the plain word in its regions; recipe overrides last. */
-  genericWord(genericId, plural, rng) {
-    var _a2, _b, _c;
-    if (LOCAL_GENERICS.has(genericId)) return this.localGeneric(genericId, rng);
-    const colonial = NAME_WORDS.colonialGenerics[genericId];
-    if (colonial) {
-      const word2 = pickUniform4(colonial, rng);
-      const chosen = plural ? pluralise(word2) : word2;
-      return (_a2 = this.recipe.generics[chosen.toLowerCase()]) != null ? _a2 : chosen;
-    }
-    const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === genericId);
-    let word;
-    if (rewrite) {
-      word = plural ? rewrite.plural || rewrite.word : rewrite.word;
-    } else {
-      const entry = PLACE_SHAPE_WORD_DATA.words[genericId];
-      const i = entry && entry.words.length > 1 ? Math.floor(rng() * entry.words.length) : 0;
-      word = entry ? plural && entry.plurals[i] ? entry.plurals[i] : entry.words[i] : genericId;
-      const variant = this.region ? PLACE_SHAPE_WORD_DATA.variants.find((v) => v.generic === genericId && v.regions.includes(this.region)) : void 0;
-      if (variant) word = plural && ((_b = entry == null ? void 0 : entry.plurals[i]) != null ? _b : "") !== "" ? variant.plural : variant.variant;
-    }
-    return (_c = this.recipe.generics[word.toLowerCase()]) != null ? _c : word;
-  }
-  /** §9.3: the local word from the recipe's linked word list (Modern column only), or a placeholder. */
-  localGeneric(genericId, rng) {
-    const slot = this.slots[genericId];
-    const wordsOf = (s) => {
-      var _a2;
-      return s.entries ? s.entries.map((entry) => ({ weight: 1, entry })) : ((_a2 = s.items) != null ? _a2 : []).filter((i) => i.entry);
-    };
-    const sources = (slot == null ? void 0 : slot.kind) === "sources" ? slot.sources.filter((s) => wordsOf(s).length > 0) : [];
-    if (sources.length === 0) return placeholderText(genericId);
-    const source = pickWeighted3(sources.map((s) => [s, s.weight]), rng);
-    return pickItem(wordsOf(source), rng).entry.modern;
-  }
-  fusionClass(word, genericId) {
-    if (genericId && NAME_WORDS.genericFusion[genericId] !== void 0 && NAME_WORDS.colonialGenerics[genericId]) {
-      return NAME_WORDS.genericFusion[genericId];
-    }
-    if (word.includes(" ")) return 0;
-    const known = NAME_WORDS.fusion[word.toLowerCase()];
-    if (known !== void 0) return known;
-    this.notices.add(`\u201C${word}\u201D has no fusion class; it is treated as usually spaced.`);
-    return NAMES.unlistedFusion;
-  }
-  /** The combining form used when a word fill fuses. */
-  combiningForm(fill, rng) {
-    const forms = fill.traditional && fill.entry.traditionalForms ? fill.entry.traditionalForms : fill.entry.forms;
-    return forms.length > 0 ? pickUniform4(forms, rng) : fillWord(fill);
-  }
-  /**
-   * §4.1–§4.3, §4.6: specific + generic, fused or spaced. Returns the joined text and whether it
-   * fused (stacked generics only fuse onto an already fused name).
-   */
-  join(fill, categoryId, genericId, rng) {
-    var _a2;
-    let plural = false;
-    let forceFuse = false;
-    let neverFuse = false;
-    let modifier = NAMES.packStem;
-    if (fill.kind === "placeholder") neverFuse = true;
-    else if (fill.kind === "name") neverFuse = fill.mode === "whole";
-    else {
-      const f = fill.entry.fuses;
-      if (f === "no" || f === "traditional-only" && !fill.traditional) neverFuse = true;
-      const word = fill.entry.modern.toLowerCase();
-      const fusedNumber = f === "number-fused" || categoryId === "number" && ["two", "three"].includes(word);
-      const spacedNumber = f === "number-spaced" || categoryId === "number" && ["five", "seven", "nine"].includes(word);
-      if (fusedNumber) {
-        forceFuse = true;
-        neverFuse = false;
-      }
-      if (spacedNumber) {
-        neverFuse = true;
-        plural = true;
-      }
-      if (f === "mile") {
-        const generic2 = this.genericWord(genericId, false, rng);
-        return { text: capitaliseSpaced(`${fillWord(fill)} Mile ${generic2}`), fused: false };
-      }
-      modifier = fill.traditional ? NAMES.traditionalWord : NAMES.modernWord;
-    }
-    const generic = this.genericWord(genericId, plural, rng);
-    const spaced = { text: capitaliseSpaced(`${fillWord(fill)} ${generic}`), fused: false };
-    if (LOCAL_GENERICS.has(genericId) && fill.kind !== "placeholder" && !generic.startsWith("[")) {
-      const specific2 = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
-      return { text: fusedCase((_a2 = smoothJoin(specific2, generic)) != null ? _a2 : `${specific2}${generic.toLowerCase()}`), fused: true };
-    }
-    if (fill.kind === "word" && fill.entry.fuses === "town-only" && generic.toLowerCase() !== "town") return spaced;
-    if (neverFuse && !forceFuse) return spaced;
-    if (!forceFuse) {
-      const chance = Math.min(NAMES.fuseCap, this.fusionClass(generic, genericId) * modifier * NAMES.joining[this.recipe.render.joining]);
-      if (!(rng() < chance)) return spaced;
-    }
-    if (generic.includes(" ")) return spaced;
-    let specific = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
-    if (fill.kind === "name" && PERSON_CATEGORIES.has(categoryId) && rng() < NAMES.linkingS && !/s$/i.test(specific)) {
-      specific += "s";
-    }
-    const joined = smoothJoin(specific, generic);
-    if (joined === null || letterCount3(joined) > NAMES.maxFusedLetters) return spaced;
-    return { text: fusedCase(joined), fused: true };
-  }
-  /** §4.4: a name or placeholder with a generic-first order stays generic first. */
-  genericFirst(fill, genericId, linked, rng) {
-    var _a2;
-    const generic = this.genericWord(genericId, false, rng);
-    const variantPrefix = NAME_WORDS.prefixVariantForms[genericId];
-    const prefix = (_a2 = NAME_WORDS.prefixForms[genericId]) != null ? _a2 : variantPrefix && generic.toLowerCase() === variantPrefix.variant ? variantPrefix.prefix : void 0;
-    const name = fillWord(fill);
-    if (prefix) return `${prefix} ${titleWord(name)}`;
-    return capitaliseSpaced(`${generic} of ${name}`);
-  }
-  /** §4.5: -ing- connectives, fused to the name; the generic joins if its class allows. */
-  connective(fill, genericId, rng) {
-    const generic = this.genericWord(genericId, false, rng);
-    const base = fill.kind === "placeholder" ? `${fill.label}ing` : `${fusedCase(fillWord(fill))}ing`;
-    if (fill.kind !== "placeholder" && this.fusionClass(generic) >= 0.5 && !generic.includes(" ")) {
-      const joined = smoothJoin(base, generic);
-      if (joined && letterCount3(joined) <= NAMES.maxFusedLetters) return fusedCase(joined);
-    }
-    return `${base} ${titleWord(generic)}`;
-  }
-  /** §4.8: the shape's affix, with its slot filled; an ignored category redraws the affix type. */
-  affix(shape, rng) {
-    if (!shape.affix) return void 0;
-    const ignored = (form2) => !!form2.slotCategory && this.slotFor(form2.slotCategory).kind === "ignore";
-    let { typeId, form } = shape.affix;
-    if (ignored(form)) {
-      const options = PLACE_SHAPE_DATA.affixes.map((a) => {
-        var _a2;
-        return [
-          { id: a.id, forms: a.forms.filter((f) => !ignored(f)) },
-          (_a2 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a2 : 0
-        ];
-      }).filter(([a, w]) => a.forms.length > 0 && w > 0);
-      if (options.length === 0) return void 0;
-      const type = pickWeighted3(options, rng);
-      typeId = type.id;
-      form = pickUniform4(type.forms, rng);
-    }
-    const fill = form.slotCategory ? this.fill(form.slotCategory, rng, true) : void 0;
-    return { typeId, form, fill };
-  }
-  /** Colonial shapes (parts 2 and 2a): the structures of colonial-shapes §6, rendered by §4. */
-  renderColonial(shape, rng) {
-    this.colonial = true;
-    try {
-      return this.renderColonialShape(shape, rng);
-    } finally {
-      this.colonial = false;
-    }
-  }
-  renderColonialShape(shape, rng) {
-    const whole = (categoryId) => this.fill(categoryId, rng, true);
-    const specific = (f, isWhole) => this.adaptFill(f, shape.categoryId, shape.treatments.specific, isWhole, shape);
-    const secondOf = (f) => this.adaptFill(f, shape.secondCategoryId, shape.treatments.second, true, shape);
-    const named = (fill2) => titleWord(fillWord(fill2));
-    const the = (text2) => shape.definite ? `The ${text2}` : text2;
-    let fill;
-    let second;
-    let text;
-    switch (shape.structure) {
-      case "simplex":
-        text = the(capitaliseSpaced(this.genericWord(shape.genericId, !!shape.plural, rng)));
-        break;
-      case "bare-specific":
-        fill = specific(whole(shape.categoryId), true);
-        text = the(capitaliseSpaced(fillWord(fill)));
-        break;
-      case "possessive":
-        fill = specific(whole(shape.categoryId), true);
-        text = capitaliseSpaced(`${fillWord(fill)}'s ${this.genericWord(shape.genericId, false, rng)}`);
-        break;
-      case "new-transfer":
-        fill = specific(whole(shape.categoryId), true);
-        text = `New ${named(fill)}`;
-        break;
-      case "twin":
-        fill = specific(whole(shape.categoryId), true);
-        text = `${shape.twin === "old" ? "Old" : "New"} ${named(fill)}`;
-        break;
-      case "double-specific":
-        fill = specific(whole(shape.categoryId), true);
-        second = secondOf(whole(shape.secondCategoryId));
-        text = capitaliseSpaced(`${fillWord(fill)} of ${fillWord(second)}`);
-        break;
-      case "position-of-landmark":
-        fill = specific(this.fill(shape.categoryId, rng), false);
-        second = secondOf(whole(shape.secondCategoryId));
-        text = capitaliseSpaced(`${fillWord(fill)} of the ${fillWord(second)}`);
-        break;
-      case "locative":
-        text = capitaliseSpaced(`at the ${this.genericWord(shape.genericId, false, rng)}`);
-        break;
-      default: {
-        const genericFirst = shape.wordOrder === "generic-first-direct" || shape.wordOrder === "generic-first-linked";
-        const slot = this.slotFor(shape.categoryId);
-        const mayBeName = slot.kind === "sources" && slot.sources.some((s) => s.draw);
-        const drawWhole = genericFirst && mayBeName;
-        fill = specific(this.fill(shape.categoryId, rng, drawWhole), drawWhole);
-        const native = fill.kind === "placeholder" && !!fill.native;
-        if (genericFirst && fill.kind !== "word" && !native && !LOCAL_GENERICS.has(shape.genericId)) {
-          text = this.genericFirst(fill, shape.genericId, shape.wordOrder === "generic-first-linked", rng);
-          break;
-        }
-        const kept = shape.wordOrder === "generic-first-linked" && shape.structure === "two-part-compound" ? this.ofThe(fill, shape.categoryId, shape.genericId, rng) : null;
-        if (kept) {
-          text = kept;
-          break;
-        }
-        const first = this.join(fill, shape.categoryId, shape.genericId, rng);
-        text = first.text;
-        if (shape.structure === "stacked-generic" && shape.stackedGenericId) {
-          const nextWord = this.genericWord(shape.stackedGenericId, false, rng);
-          const chance = Math.min(
-            NAMES.fuseCap,
-            this.fusionClass(nextWord, shape.stackedGenericId) * NAMES.joining[this.recipe.render.joining]
-          );
-          const fused = first.fused && rng() < chance ? smoothJoin(text, nextWord) : null;
-          text = fused && letterCount3(fused) <= NAMES.maxFusedLetters ? fusedCase(fused) : capitaliseSpaced(`${text} ${nextWord}`);
-        }
-      }
-    }
-    const affix = this.affix(shape, rng);
-    let affixFill;
-    if (affix) {
-      const { form } = affix;
-      const filledText = affix.fill ? titleWord(fillWord(affix.fill)) : "";
-      affixFill = affix.fill ? fillEtymology(affix.fill) : void 0;
-      const words = [form.text, filledText].filter((w) => w.length > 0).join(" ");
-      if (form.position === "before") text = `${titleWord(words)} ${text}`;
-      else if (form.text && form.slotCategory && this.recipe.render.linkingHyphens) text = `${text}-${form.text.replace(/ /g, "-")}-${filledText}`;
-      else text = `${text} ${words}`;
-    }
-    const shown = { ...shape, affix: affix ? { typeId: affix.typeId, form: affix.form } : void 0 };
-    if (!affix) delete shown.affix;
-    return {
-      text,
-      hasPlaceholder: /\[[^\]]+\]/.test(text),
-      etymology: formatColonialShape(shown, {
-        specific: fill ? fillEtymology(fill) : void 0,
-        second: second ? fillEtymology(second) : void 0,
-        affix: affixFill
-      }),
-      shape
-    };
-  }
-  /** Stage 3: one shape → one name. */
-  render(shape, rng) {
-    var _a2;
-    const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === shape.genericId);
-    const effective = rewrite ? {
-      ...shape,
-      categoryId: rewrite.category,
-      structure: (_a2 = rewrite.structure) != null ? _a2 : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
-    } : shape;
-    const { categoryId, genericId } = effective;
-    let text;
-    let fill;
-    switch (effective.structure) {
-      case "simplex":
-        text = titleWord(this.genericWord(genericId, false, rng));
-        text = capitaliseSpaced(text);
-        break;
-      case "plural-simplex":
-        text = capitaliseSpaced(this.genericWord(genericId, true, rng));
-        break;
-      case "folk-connective":
-      case "associative-connective":
-        fill = this.fill(categoryId, rng);
-        text = this.connective(fill, genericId, rng);
-        break;
-      default: {
-        if (genericId === "folk-group-territory") {
-          fill = this.fill(categoryId, rng);
-          text = fill.kind === "placeholder" ? `${fill.label}ings` : `${fusedCase(fillWord(fill))}ings`;
-          break;
-        }
-        const genericFirst = effective.wordOrder !== "germanic" && effective.structure === "two-part-compound";
-        const slot = this.slotFor(categoryId);
-        const mayBeName = slot.kind === "sources" && slot.sources.some((s) => s.draw);
-        fill = this.fill(categoryId, rng, genericFirst && mayBeName);
-        if (genericFirst && fill.kind !== "word") {
-          text = this.genericFirst(fill, genericId, effective.wordOrder === "celtic-linked", rng);
-          break;
-        }
-        const kept = effective.wordOrder === "celtic-linked" && effective.structure === "two-part-compound" ? this.ofThe(fill, categoryId, genericId, rng) : null;
-        if (kept) {
-          text = kept;
-          break;
-        }
-        const first = this.join(fill, categoryId, genericId, rng);
-        text = first.text;
-        if (effective.structure === "stacked-generic" && effective.stackedGenericId) {
-          const second = this.genericWord(effective.stackedGenericId, false, rng);
-          const chance = Math.min(NAMES.fuseCap, this.fusionClass(second) * NAMES.joining[this.recipe.render.joining]);
-          const fused = first.fused && rng() < chance ? smoothJoin(text, second) : null;
-          text = fused && letterCount3(fused) <= NAMES.maxFusedLetters ? fusedCase(fused) : capitaliseSpaced(`${text} ${second}`);
-        }
-      }
-    }
-    const affix = this.affix(effective, rng);
-    let affixFill;
-    if (affix) {
-      const { form } = affix;
-      const filled = affix.fill ? titleWord(fillWord(affix.fill)) : "";
-      affixFill = affix.fill ? fillEtymology(affix.fill) : void 0;
-      const words = [form.text, filled].filter((w) => w.length > 0).join(" ");
-      if (form.position === "before") text = `${titleWord(words)} ${text}`;
-      else if (form.text && form.slotCategory && this.recipe.render.linkingHyphens) {
-        text = `${text}-${form.text.replace(/ /g, "-")}-${filled}`;
-      } else text = `${text} ${words}`;
-    }
-    const shown = { ...effective, affix: affix ? { typeId: affix.typeId, form: affix.form } : void 0 };
-    if (!affix) delete shown.affix;
-    return {
-      text,
-      hasPlaceholder: /\[[^\]]+\]/.test(text),
-      etymology: this.formatter.formatEtymology(shown, fill ? fillEtymology(fill) : void 0, affixFill),
-      shape: effective
-    };
-  }
-};
-function resolveRegionSetting(value) {
-  if (!value || value === "all-britain") return void 0;
-  const kebab4 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  const region = PLACE_SHAPE_REGIONS.find((r) => r.code === value.toUpperCase() || kebab4(r.label) === kebab4(value));
-  return region == null ? void 0 : region.code;
-}
-function generatePlaceNames(options) {
-  const steps = generatePlaceNamesSteps(options);
-  for (; ; ) {
-    const next = steps.next();
-    if (next.done) return next.value;
-  }
-}
-function* generatePlaceNamesSteps(options) {
-  var _a2, _b;
-  const { recipe } = options;
-  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
-  const organic = recipe.shape.part === "organic";
-  const region = organic ? resolveRegionSetting(recipe.shape.region) : void 0;
-  const notices = [];
-  if (organic && recipe.shape.region !== "all-britain" && !region) {
-    notices.push(`Unknown region \u201C${recipe.shape.region}\u201D; using all Britain.`);
-  }
-  const excludedCategories = Object.entries(options.slots).filter(([, slot]) => slot.kind === "ignore").map(([id]) => id);
-  const rng = mulberry32((seed ^ FILL_SALT) >>> 0);
-  const adaptation = options.adapt && !organic ? { adapt: options.adapt, seed, redrawRng: mulberry32((seed ^ REDRAW_SALT) >>> 0) } : void 0;
-  const biomeSetting = recipe.shape.biome;
-  let biome = (_a2 = options.biome) != null ? _a2 : (biomeSetting == null ? void 0 : biomeSetting.startsWith("[[")) ? void 0 : findBiome(biomeSetting);
-  if (!biome && (biomeSetting == null ? void 0 : biomeSetting.startsWith("[["))) {
-    notices.push(`Biome pack \u201C${biomeSetting.slice(2, -2)}\u201D wasn't found; using ${organic ? "Britain" : "unknown country"}.`);
-  }
-  if (organic && (biome == null ? void 0 : biome.id) === "britain") biome = void 0;
-  let terrain = (_b = recipe.shape.terrain) != null ? _b : "any";
-  if (terrain !== "any" && biome && !availableTerrains(biome).some((t) => t.id === terrain) && biome.customTerrains) {
-    notices.push(`${biome.label} has no \u201C${terrain}\u201D terrain.`);
-    terrain = "any";
-  }
-  const environment = environmentMultipliers(biome, terrain);
-  const renderer = new NameRenderer(recipe, options.slots, region, {
-    biome,
-    terrain,
-    adaptation,
-    ofTheRng: mulberry32((seed ^ OF_THE_SALT) >>> 0),
-    labelRng: mulberry32((seed ^ SPLIT_SALT) >>> 0),
-    faithfulness: options.faithfulness,
-    strictness: options.strictness
-  });
-  let renderOne;
-  let shapeCount;
-  if (organic) {
-    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment });
-    renderOne = (i) => renderer.render(shapes[i], rng);
-    shapeCount = shapes.length;
-  } else {
-    const { shapes } = generateColonialShapesDetailed({
-      count: options.count,
-      seed,
-      part: recipe.shape.part === "new-land" ? "2" : "2a",
-      tradition: recipe.shape.tradition === "general" ? void 0 : recipe.shape.tradition,
-      context: recipe.shape.context === "none" ? void 0 : recipe.shape.context,
-      feature: recipe.shape.feature,
-      excludedCategories,
-      environment
-    });
-    renderOne = (i) => renderer.renderColonial(shapes[i], rng);
-    shapeCount = shapes.length;
-  }
-  const seen = /* @__PURE__ */ new Set();
-  const names = [];
-  for (let i = 0; i < shapeCount; i++) {
-    let name = renderOne(i);
-    for (let attempt2 = 1; seen.has(name.text.toLowerCase()) && attempt2 < NAMES.duplicateAttempts; attempt2++) {
-      name = renderOne(i);
-    }
-    seen.add(name.text.toLowerCase());
-    names.push(name);
-    yield names.length;
-  }
-  return { names, seed, notices: [...notices, ...renderer.getNotices()] };
-}
-
-// src/names/recipe.ts
-var RECIPE_DEFAULTS = {
-  setting: "",
-  template: false,
-  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", biome: "unknown", terrain: "any", feature: "any" },
-  slots: {},
-  generics: {},
-  register: "mixed",
-  render: { joining: "balanced", linkingHyphens: true, etymology: false }
-};
-var PARTS = ["organic", "new-land", "established"];
-var REGISTERS = ["modern", "mixed", "traditional"];
-var JOININGS = ["fused", "balanced", "spaced"];
-var isObject = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
-var str = (v) => typeof v === "string" ? v.trim() : typeof v === "number" ? String(v) : void 0;
-var bool = (v) => typeof v === "boolean" ? v : v === "true" ? true : v === "false" ? false : void 0;
-function linkTarget(v) {
-  const s = str(v);
-  if (!s) return void 0;
-  const target = s.replace(/^\[\[|\]\]$/g, "").split("|")[0].trim();
-  return target || void 0;
-}
-function readSlot(v, problems, id) {
-  if (v === "built-in" || v === "ignore" || v === "placeholder" || v === "biome") return { kind: v };
-  if (!isObject(v)) {
-    problems.push(`Slot \u201C${id}\u201D isn't built-in, ignore, placeholder or a list of sources.`);
-    return void 0;
-  }
-  if (typeof v.tribal === "string") {
-    const tradition = v.tribal.trim();
-    if (tradition.startsWith("[[")) {
-      const preset = linkTarget(tradition);
-      if (preset) return { kind: "tribal", tradition: "general", preset };
-    }
-    if (!(tradition === "auto" || findTradition(tradition))) {
-      problems.push(`Slot \u201C${id}\u201D names an unknown tradition \u201C${tradition}\u201D.`);
-      return void 0;
-    }
-    return { kind: "tribal", tradition, ...readTribalFields(v, problems, id) };
-  }
-  const raw = Array.isArray(v.sources) ? v.sources : [];
-  const sources = [];
-  for (const item2 of raw) {
-    if (!isObject(item2)) continue;
-    const pack = linkTarget(item2.pack);
-    const list = linkTarget(item2.list);
-    if (!pack && !list) continue;
-    const weight = Number(item2.weight);
-    sources.push({ ...pack ? { pack } : {}, ...list ? { list } : {}, weight: Number.isFinite(weight) && weight > 0 ? weight : 1 });
-  }
-  if (sources.length === 0) {
-    problems.push(`Slot \u201C${id}\u201D has no usable sources.`);
-    return void 0;
-  }
-  const slot = { kind: "sources", sources };
-  if (v.mode === "stem" || v.mode === "whole") slot.mode = v.mode;
-  if (isObject(v.gender)) {
-    const male = Number(v.gender.male);
-    const female = Number(v.gender.female);
-    if (Number.isFinite(male) && Number.isFinite(female) && male + female > 0) slot.gender = { male, female };
-  }
-  const section = str(v.section);
-  if (section) slot.section = section;
-  return slot;
-}
-function readTribalFields(v, problems, id) {
-  const out = {};
-  const check = (key2, ok) => {
-    const value = str(v[key2]);
-    if (!value) return;
-    if (ok(value)) out[key2] = value;
-    else problems.push(`Slot \u201C${id}\u201D has an unknown ${key2} \u201C${value}\u201D.`);
-  };
-  check("biome", (b) => !!findBiome(b));
-  check("terrain", (t) => TERRAIN_CHOICES.some((x) => x.id === t));
-  check("groupType", (g) => TRIBAL_GROUP_TYPES.some((x) => x.key === g));
-  check("perspective", (p) => TRIBAL_PERSPECTIVES.includes(p));
-  check("register", (r) => TRIBAL_REGISTERS.includes(r));
-  return out;
-}
-function readRecipe(fm) {
-  var _a2;
-  const problems = [];
-  const recipe = {};
-  const setting = str(fm.setting);
-  if (setting !== void 0) recipe.setting = setting;
-  const template = bool(fm.template);
-  if (template !== void 0) recipe.template = template;
-  const templateOf = linkTarget(fm["template-of"]);
-  if (templateOf) recipe.templateOf = templateOf;
-  if (isObject(fm.shape)) {
-    const shape = {};
-    const part = str(fm.shape.part);
-    if (part && PARTS.includes(part)) shape.part = part;
-    else if (part) problems.push(`Unknown shape part \u201C${part}\u201D.`);
-    for (const key2 of ["region", "tradition", "context", "feature"]) {
-      const value = str(fm.shape[key2]);
-      if (value) shape[key2] = value;
-    }
-    const biome = str(fm.shape.biome);
-    if (biome && /^\[\[/.test(biome)) {
-      const target = linkTarget(biome);
-      if (target) shape.biome = `[[${target}]]`;
-    } else if (biome && (biome === "unknown" || findBiome(biome))) shape.biome = biome;
-    else if (biome) problems.push(`Unknown biome \u201C${biome}\u201D.`);
-    const terrain = str(fm.shape.terrain);
-    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || ((_a2 = shape.biome) == null ? void 0 : _a2.startsWith("[[")))) shape.terrain = terrain;
-    else if (terrain) problems.push(`Unknown terrain \u201C${terrain}\u201D.`);
-    recipe.shape = shape;
-  }
-  if (isObject(fm.slots)) {
-    recipe.slots = {};
-    for (const [id, value] of Object.entries(fm.slots)) {
-      const slot = readSlot(value, problems, id);
-      if (slot) recipe.slots[id] = slot;
-    }
-  }
-  if (isObject(fm.generics)) {
-    recipe.generics = {};
-    for (const [word, replacement] of Object.entries(fm.generics)) {
-      const r = str(replacement);
-      if (r) recipe.generics[word.trim().toLowerCase()] = r;
-    }
-  }
-  const takeover = linkTarget(fm.takeover);
-  if (takeover) recipe.takeover = takeover;
-  const native = linkTarget(fm.native);
-  if (native) recipe.native = native;
-  const words = linkTarget(fm.words);
-  if (words) recipe.words = words;
-  const register = str(fm.register);
-  if (register && REGISTERS.includes(register)) recipe.register = register;
-  else if (register) problems.push(`Unknown register \u201C${register}\u201D.`);
-  if (isObject(fm.render)) {
-    const render3 = {};
-    const joining = str(fm.render.joining);
-    if (joining && JOININGS.includes(joining)) render3.joining = joining;
-    else if (joining) problems.push(`Unknown joining \u201C${joining}\u201D.`);
-    const hyphens = bool(fm.render["linking-hyphens"]);
-    if (hyphens !== void 0) render3.linkingHyphens = hyphens;
-    const etymology = bool(fm.render.etymology);
-    if (etymology !== void 0) render3.etymology = etymology;
-    recipe.render = render3;
-  }
-  return { recipe, problems };
-}
-function mergeRecipe(derived, template) {
-  var _a2, _b, _c, _d;
-  return {
-    setting: (_a2 = derived.setting) != null ? _a2 : template.setting,
-    template: derived.template,
-    templateOf: derived.templateOf,
-    shape: { ...template.shape, ...derived.shape },
-    slots: { ...template.slots, ...derived.slots },
-    generics: { ...template.generics, ...derived.generics },
-    register: (_b = derived.register) != null ? _b : template.register,
-    render: { ...template.render, ...derived.render },
-    takeover: (_c = derived.takeover) != null ? _c : template.takeover,
-    native: (_d = derived.native) != null ? _d : template.native,
-    // Presets brief §6.1: each recipe has its own word-list note.
-    ...derived.words ? { words: derived.words } : {}
-  };
-}
-function withDefaults(r) {
-  var _a2, _b, _c;
-  return {
-    setting: (_a2 = r.setting) != null ? _a2 : RECIPE_DEFAULTS.setting,
-    template: (_b = r.template) != null ? _b : false,
-    ...r.templateOf ? { templateOf: r.templateOf } : {},
-    shape: { ...RECIPE_DEFAULTS.shape, ...r.shape },
-    slots: { ...r.slots },
-    generics: { ...r.generics },
-    register: (_c = r.register) != null ? _c : RECIPE_DEFAULTS.register,
-    render: { ...RECIPE_DEFAULTS.render, ...r.render },
-    ...r.takeover ? { takeover: r.takeover } : {},
-    ...r.native ? { native: r.native } : {},
-    ...r.words ? { words: r.words } : {}
-  };
-}
-function applyRecipeTemplate(derived, template, name) {
-  if (!derived.templateOf) return { recipe: derived };
-  if (derived.template) return { recipe: derived, error: `\u201C${name}\u201D is a template, so it can't use template-of.` };
-  if (!template) return { recipe: derived, error: `Template \u201C${derived.templateOf}\u201D is missing.` };
-  if (template.templateOf) {
-    return { recipe: derived, error: `Template \u201C${derived.templateOf}\u201D has its own template; only one level is allowed.` };
-  }
-  return { recipe: mergeRecipe(derived, template) };
-}
-function recipeToFrontmatter(r) {
-  var _a2;
-  const out = { type: "recipe", setting: (_a2 = r.setting) != null ? _a2 : "" };
-  if (r.template) out.template = true;
-  if (r.templateOf) out["template-of"] = `[[${r.templateOf}]]`;
-  if (r.shape && Object.keys(r.shape).length > 0) {
-    const { biome, terrain, ...rest } = r.shape;
-    out.shape = {
-      ...rest,
-      ...biome && biome !== "unknown" ? { biome } : {},
-      // Land brief §4.1: "any" is the default and is never written.
-      ...terrain && terrain !== "any" ? { terrain } : {}
-    };
-  }
-  if (r.slots && Object.keys(r.slots).length > 0) {
-    out.slots = Object.fromEntries(
-      Object.entries(r.slots).map(([id, slot]) => {
-        if (slot.kind === "tribal") {
-          if (slot.preset) return [id, { tribal: `[[${slot.preset}]]` }];
-          const { kind: _kind, tradition, preset: _preset, ...fields2 } = slot;
-          const own = Object.fromEntries(Object.entries(fields2).filter(([, value2]) => value2 !== void 0 && value2 !== "" && value2 !== "any"));
-          return [id, { tribal: tradition, ...own }];
-        }
-        if (slot.kind !== "sources") return [id, slot.kind];
-        const value = {
-          sources: slot.sources.map((s) => ({
-            ...s.pack ? { pack: `[[${s.pack}]]` } : {},
-            ...s.list ? { list: `[[${s.list}]]` } : {},
-            weight: s.weight
-          }))
-        };
-        if (slot.mode) value.mode = slot.mode;
-        if (slot.section) value.section = slot.section;
-        if (slot.gender) value.gender = { ...slot.gender };
-        return [id, value];
-      })
-    );
-  }
-  if (r.generics && Object.keys(r.generics).length > 0) out.generics = { ...r.generics };
-  if (r.register) out.register = r.register;
-  if (r.render && Object.keys(r.render).length > 0) {
-    const render3 = {};
-    if (r.render.joining) render3.joining = r.render.joining;
-    if (r.render.linkingHyphens !== void 0) render3["linking-hyphens"] = r.render.linkingHyphens;
-    if (r.render.etymology !== void 0) render3.etymology = r.render.etymology;
-    out.render = render3;
-  }
-  if (r.takeover) out.takeover = `[[${r.takeover}]]`;
-  if (r.native) out.native = `[[${r.native}]]`;
-  if (r.words) out.words = `[[${r.words}]]`;
-  return out;
-}
-function britishPlaceNamesRecipe(region, biome, terrain) {
-  return withDefaults({
-    shape: { part: "organic", region: region != null ? region : "all-britain", biome: biome != null ? biome : "unknown", terrain: terrain != null ? terrain : "any", feature: "any" },
-    register: "modern",
-    render: { joining: "balanced", linkingHyphens: true, etymology: false }
-  });
-}
-function colonialPlaceNamesRecipe(part, tradition, context, biome, terrain) {
-  return withDefaults({
-    shape: { part, tradition: tradition != null ? tradition : "general", context: context != null ? context : "none", biome: biome != null ? biome : "unknown", terrain: terrain != null ? terrain : "any", feature: "any" },
-    register: "modern",
-    render: { joining: "balanced", linkingHyphens: true, etymology: false }
-  });
-}
-
-// src/tribes/sentence.ts
-var TERRAIN_PHRASES = {
-  any: "in any terrain",
-  plains: "on the plains",
-  hills: "in hilly terrain",
-  mountains: "in mountainous terrain",
-  forest: "in a forest",
-  coast: "on the coast",
-  rivers: "by rivers and lakes",
-  wetland: "in wetlands",
-  islands: "on islands"
-};
-var PERSPECTIVE_PHRASES = {
-  any: "given to or used by them",
-  self: "used by them as their self-name",
-  neighbour: "given to them by their neighbours",
-  geographical: "given to them for where they live",
-  dynastic: "used by them for their line of descent",
-  ceremonial: "used by them as a ceremonial title",
-  later: "given to them by later writers and officials",
-  imposed: "imposed on them by outsiders"
-};
-var perspectivePhrase = (id) => {
-  var _a2, _b, _c;
-  return (_c = (_b = (_a2 = PERSPECTIVE_PHRASES[id != null ? id : "any"]) != null ? _a2 : TRIBAL_DATA.perspectiveLabels[id]) != null ? _b : id) != null ? _c : "";
-};
-function tribalSentence(state, limits) {
-  var _a2, _b, _c, _d, _e, _f, _g, _h;
-  const out = [];
-  const extra = (_a2 = limits.extraTraditions) != null ? _a2 : [];
-  const tradition = findTradition(state.tradition);
-  out.push({
-    field: "tradition",
-    text: (_d = (_c = tradition == null ? void 0 : tradition.label) != null ? _c : (_b = extra.find((t) => t.id === state.tradition)) == null ? void 0 : _b.label) != null ? _d : state.tradition,
-    title: (_e = tradition == null ? void 0 : tradition.drawsOn) != null ? _e : "The tradition follows the recipe's region",
-    choices: [...extra, ...TRIBAL_TRADITIONS.map((t) => ({ id: t.key, label: t.label }))],
-    current: state.tradition
-  });
-  out.push("-themed ");
-  const groupTypes = TRIBAL_GROUP_TYPES.filter((g) => !limits.groupTypes || limits.groupTypes.includes(g.key));
-  const group = groupTypes.find((g) => g.key === state.groupType);
-  out.push({
-    field: "groupType",
-    text: group ? group.label.toLowerCase() : "groups of any kind",
-    title: "Group type: what kind of group is being named",
-    choices: [{ id: void 0, label: "Any group type" }, ...groupTypes.map((g) => ({ id: g.key, label: g.label }))],
-    current: group == null ? void 0 : group.key
-  });
-  out.push(" in ");
-  const biome = limits.findBiome(state.biome);
-  const inline = biome && biomeInline(biome);
-  const fallback = (_f = limits.defaultBiome) != null ? _f : "their original";
-  out.push({
-    field: "biome",
-    text: inline ? `${/^[aeiou]/i.test(inline) ? "an" : "a"} ${inline}` : fallback,
-    title: (_g = biome == null ? void 0 : biome.guide) != null ? _g : tradition ? homelandSummary(tradition.key) : "Biome",
-    choices: [
-      { id: void 0, label: fallback.charAt(0).toUpperCase() + fallback.slice(1) },
-      ...limits.biomes.map((b) => {
-        var _a3, _b2;
-        return { id: (_b2 = (_a3 = b.custom) == null ? void 0 : _a3.path) != null ? _b2 : b.id, label: b.label };
-      })
-    ],
-    current: state.biome
-  });
-  out.push(" environment ");
-  const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
-  const terrainText = (id) => {
-    var _a3, _b2, _c2;
-    return (_c2 = TERRAIN_PHRASES[id]) != null ? _c2 : `in ${(_b2 = (_a3 = [...terrains, ...TERRAIN_CHOICES].find((t) => t.id === id)) == null ? void 0 : _a3.label.toLowerCase()) != null ? _b2 : "any terrain"}`;
-  };
-  out.push({
-    field: "terrain",
-    text: terrainText(state.terrain || "any"),
-    title: "Terrain: the kind of land they live in",
-    choices: [{ id: "any", label: terrainText("any") }, ...terrains.map((t) => ({ id: t.id, label: terrainText(t.id) }))],
-    current: state.terrain || "any"
-  });
-  out.push(" using ");
-  const registers = TRIBAL_REGISTERS.filter((r) => !limits.registers || limits.registers.includes(r));
-  const register = registers.includes(state.register) ? state.register : registers[0];
-  out.push({
-    field: "register",
-    text: register,
-    title: (_h = TRIBAL_DATA.registerLabels[register]) != null ? _h : register,
-    choices: registers.map((r) => ({ id: r, label: TRIBAL_DATA.registerLabels[r] })),
-    current: register
-  });
-  out.push(" names ");
-  out.push({
-    field: "perspective",
-    text: perspectivePhrase(state.perspective),
-    title: "Perspective: who uses the name",
-    choices: [void 0, ...TRIBAL_PERSPECTIVES].map((p) => ({ id: p, label: perspectivePhrase(p) })),
-    current: state.perspective
-  });
-  if (limits.hostile) {
-    out.push(", ");
-    out.push({
-      field: "hostile",
-      text: state.hostile ? "insults and all" : "no insults",
-      title: "Hostile names: insults one people used for another",
-      choices: [
-        { id: void 0, label: "no insults" },
-        { id: "hostile", label: "insults and all" }
-      ],
-      current: state.hostile ? "hostile" : void 0
-    });
-  }
-  return out;
-}
-function tribalSentenceText(segments) {
-  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
-  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
-}
-function chooseTribal(state, field, id, findBiome2) {
-  switch (field) {
-    case "tradition":
-      return { ...state, tradition: id != null ? id : "general" };
-    case "groupType":
-      return { ...state, groupType: id };
-    case "biome": {
-      const next = findBiome2(id);
-      const keep = !next || state.terrain === "any" || availableTerrains(next).some((t) => t.id === state.terrain);
-      return { ...state, biome: id, terrain: keep ? state.terrain : "any" };
-    }
-    case "terrain":
-      return { ...state, terrain: id != null ? id : "any" };
-    case "register":
-      return { ...state, register: id != null ? id : "plain" };
-    case "perspective":
-      return { ...state, perspective: id };
-    case "hostile":
-      return { ...state, hostile: id === "hostile" };
-  }
-}
+var SPACE_BLOCK_PHRASES = SPACE_DATA.safeguards.block;
 
 // src/data/group-names.json
 var group_names_default = {
@@ -55580,6 +53628,7078 @@ var group_names_default = {
   ]
 };
 
+// src/space/stars.ts
+var STARS = SPACE_DATA.stars;
+var LISTS = group_names_default.lists;
+var weighted2 = (items, rng) => {
+  const total = items.reduce((n, [, w]) => n + w, 0);
+  let r = rng() * total;
+  for (const [item2, w] of items) {
+    r -= w;
+    if (r < 0) return item2;
+  }
+  return items[items.length - 1][0];
+};
+function catalogueName(rng) {
+  const row = weighted2(STARS.catalogue.map((c) => [c, c.w]), rng);
+  const n = row.min + Math.floor(rng() * (row.max - row.min + 1));
+  return `${row.prefix}${row.joiner}${n}`;
+}
+function planetLetter(rng) {
+  return ` ${weighted2(Object.entries(STARS.planetLetters), rng)}`;
+}
+function catalogueWorld(rng, letters = true) {
+  const name = catalogueName(rng);
+  return letters && rng() < STARS.planetLetterChance ? name + planetLetter(rng) : name;
+}
+function bayerName(rng) {
+  const greek = LISTS.greek.map((e) => [e.w, STARS.greekHeavy.letters.includes(e.w) ? STARS.greekHeavy.weight : STARS.greekHeavy.other]);
+  return `${weighted2(greek, rng)} ${STARS.genitives[Math.floor(rng() * STARS.genitives.length)]}`;
+}
+function possessiveName(rng, opts) {
+  var _a2;
+  const real = STARS.possessiveReal;
+  const person2 = opts == null ? void 0 : opts.person;
+  if (!person2 || rng() < STARS.possessiveRealShare) return real[Math.floor(rng() * real.length)];
+  const who = (_a2 = person2()) == null ? void 0 : _a2.replace(/^the /i, "");
+  if (!who) return real[Math.floor(rng() * real.length)];
+  return `${who}'s Star`;
+}
+function drawStarOfKind(kind, rng, pickProper, opts) {
+  switch (kind) {
+    case "proper":
+      return pickProper();
+    case "possessive":
+      return possessiveName(rng, opts);
+    case "bayer":
+      return bayerName(rng);
+    case "catalogue":
+      return catalogueName(rng);
+  }
+}
+function drawStarKind(scale, rng) {
+  var _a2;
+  const row = (_a2 = STARS.kindWeights[scale]) != null ? _a2 : STARS.kindWeights.any;
+  return weighted2(Object.entries(row).filter(([, w]) => w > 0), rng);
+}
+function dropStarWord(star) {
+  return star.replace(/('s) Star$/, "$1");
+}
+var ONES = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+var TENS = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+function small(n) {
+  if (n < 20) return ONES[n];
+  const tens = Math.floor(n / 10);
+  return n % 10 === 0 ? TENS[tens] : `${TENS[tens]}-${ONES[n % 10]}`;
+}
+function pair(n) {
+  return n < 10 ? `Oh-${ONES[n]}` : small(n);
+}
+function spokenNumber(n) {
+  if (n >= 1e4) return spokenNumber(n % 1e3 === 0 ? 1e3 : n % 1e3);
+  if (n <= 99) return small(n);
+  if (n < 1e3) {
+    const hundreds = Math.floor(n / 100);
+    const rest = n % 100;
+    return rest === 0 ? `${ONES[hundreds]} Hundred` : `${ONES[hundreds]}-${pair(rest)}`;
+  }
+  const high = Math.floor(n / 100);
+  const low = n % 100;
+  if (n % 1e3 === 0) return `${ONES[n / 1e3]} Thousand`;
+  if (low === 0) return `${small(high)} Hundred`;
+  return `${small(high)}-${pair(low)}`;
+}
+function spokenCatalogue(name) {
+  var _a2;
+  const m = /^.*?[ -](\d+)(?: ([b-h]))?$/.exec(name.trim());
+  if (!m) return name;
+  const base = spokenNumber(Number(m[1]));
+  return m[2] ? `${base} ${(_a2 = STARS.letterWords[m[2]]) != null ? _a2 : m[2]}` : base;
+}
+
+// src/data/river-names.json
+var river_names_default = {
+  $comment: "River names module (river brief \xA76). Corpora are real river names used only to train the ancient-name Markov model; a generated name identical to any of them is rejected.",
+  corpora: {
+    england: [
+      "Thames",
+      "Severn",
+      "Trent",
+      "Avon",
+      "Ouse",
+      "Tyne",
+      "Tees",
+      "Wear",
+      "Swale",
+      "Ure",
+      "Nidd",
+      "Wharfe",
+      "Aire",
+      "Calder",
+      "Don",
+      "Derwent",
+      "Hull",
+      "Humber",
+      "Witham",
+      "Welland",
+      "Nene",
+      "Cam",
+      "Granta",
+      "Lark",
+      "Wensum",
+      "Yare",
+      "Waveney",
+      "Bure",
+      "Stour",
+      "Orwell",
+      "Deben",
+      "Gipping",
+      "Colne",
+      "Chelmer",
+      "Lea",
+      "Roding",
+      "Medway",
+      "Wey",
+      "Mole",
+      "Arun",
+      "Adur",
+      "Rother",
+      "Test",
+      "Itchen",
+      "Frome",
+      "Piddle",
+      "Axe",
+      "Exe",
+      "Teign",
+      "Dart",
+      "Tamar",
+      "Fowey",
+      "Fal",
+      "Camel",
+      "Taw",
+      "Torridge",
+      "Parrett",
+      "Tone",
+      "Brue",
+      "Yeo",
+      "Lugg",
+      "Teme",
+      "Mersey",
+      "Ribble",
+      "Lune",
+      "Kent",
+      "Eden",
+      "Esk",
+      "Irwell",
+      "Weaver",
+      "Dane",
+      "Tame",
+      "Rea",
+      "Sow",
+      "Penk",
+      "Dove",
+      "Churnet",
+      "Soar",
+      "Wreake",
+      "Idle",
+      "Rye",
+      "Leven",
+      "Coquet",
+      "Aln",
+      "Wansbeck",
+      "Blyth",
+      "Till",
+      "Glen",
+      "Tweed",
+      "Kennet",
+      "Thame",
+      "Cherwell",
+      "Evenlode",
+      "Windrush",
+      "Coln",
+      "Churn",
+      "Ock",
+      "Pang",
+      "Loddon",
+      "Wylye",
+      "Nadder",
+      "Ebble",
+      "Sid",
+      "Yealm",
+      "Erme",
+      "Plym",
+      "Tavy",
+      "Lyn",
+      "Barle",
+      "Arrow",
+      "Wyre",
+      "Hodder"
+    ],
+    wales: [
+      "Teifi",
+      "Tywi",
+      "Taf",
+      "Tawe",
+      "Nedd",
+      "Afan",
+      "Ogwr",
+      "Rhondda",
+      "Rhymni",
+      "Ebwy",
+      "Sirhywi",
+      "Cynon",
+      "Llwyd",
+      "Mynwy",
+      "Honddu",
+      "Irfon",
+      "Ieithon",
+      "Elan",
+      "Claerwen",
+      "Rheidol",
+      "Ystwyth",
+      "Aeron",
+      "Arth",
+      "Dyfi",
+      "Dulas",
+      "Mawddach",
+      "Wnion",
+      "Dysynni",
+      "Dwyryd",
+      "Glaslyn",
+      "Dwyfor",
+      "Erch",
+      "Seiont",
+      "Ogwen",
+      "Conwy",
+      "Lledr",
+      "Llugwy",
+      "Elwy",
+      "Clwyd",
+      "Alun",
+      "Dyfrdwy",
+      "Ceiriog",
+      "Tanad",
+      "Efyrnwy",
+      "Banw",
+      "Hafren",
+      "Cleddau",
+      "Gwaun",
+      "Nyfer",
+      "Cothi",
+      "Gwili",
+      "Gwendraeth",
+      "Llwchwr",
+      "Aman",
+      "Twrch",
+      "Senni",
+      "Tarell",
+      "Grwyne",
+      "Gefenni",
+      "Troddi",
+      "Aled",
+      "Alaw",
+      "Cefni",
+      "Braint",
+      "Gwy",
+      "Wysg"
+    ],
+    scotland: [
+      "Clyde",
+      "Forth",
+      "Tay",
+      "Spey",
+      "Dee",
+      "Don",
+      "Deveron",
+      "Ythan",
+      "Ugie",
+      "Findhorn",
+      "Nairn",
+      "Ness",
+      "Beauly",
+      "Conon",
+      "Oykel",
+      "Carron",
+      "Shin",
+      "Naver",
+      "Halladale",
+      "Thurso",
+      "Wick",
+      "Helmsdale",
+      "Brora",
+      "Fleet",
+      "Earn",
+      "Almond",
+      "Isla",
+      "Ericht",
+      "Tummel",
+      "Garry",
+      "Lyon",
+      "Lochay",
+      "Dochart",
+      "Teith",
+      "Allan",
+      "Devon",
+      "Leven",
+      "Eden",
+      "Annan",
+      "Nith",
+      "Esk",
+      "Liddel",
+      "Ken",
+      "Cree",
+      "Bladnoch",
+      "Urr",
+      "Doon",
+      "Ayr",
+      "Irvine",
+      "Garnock",
+      "Girvan",
+      "Stinchar",
+      "Teviot",
+      "Ettrick",
+      "Yarrow",
+      "Tweed",
+      "Gala",
+      "Leader",
+      "Tyne",
+      "Lossie",
+      "Bervie",
+      "Avon",
+      "Livet",
+      "Feshie",
+      "Truim",
+      "Spean",
+      "Lochy",
+      "Nevis",
+      "Orchy",
+      "Awe",
+      "Etive",
+      "Shiel",
+      "Morar",
+      "Lyne",
+      "Kelvin",
+      "Cart",
+      "Calder"
+    ]
+  },
+  regionCorpora: {
+    all: [
+      "england",
+      "wales",
+      "scotland"
+    ],
+    COR: [
+      "england"
+    ],
+    WCY: [
+      "england"
+    ],
+    SEA: [
+      "england"
+    ],
+    EAN: [
+      "england"
+    ],
+    EMD: [
+      "england"
+    ],
+    NTH: [
+      "england"
+    ],
+    WMM: [
+      "england",
+      "wales"
+    ],
+    WAL: [
+      "wales"
+    ],
+    SBL: [
+      "scotland",
+      "england"
+    ],
+    SLO: [
+      "scotland"
+    ],
+    SHH: [
+      "scotland"
+    ],
+    NSI: [
+      "scotland"
+    ]
+  },
+  ancient: {
+    minLetters: 3,
+    maxLetters: 8,
+    draws: 20
+  },
+  kindWeights: {
+    british: {
+      ancient: 40,
+      descriptive: 45,
+      pattern: 15
+    },
+    "new-land": {
+      ancient: 0,
+      descriptive: 60,
+      pattern: 40
+    },
+    established: {
+      ancient: 0,
+      descriptive: 35,
+      pattern: 65
+    }
+  },
+  waterWords: {
+    british: {
+      all: {
+        brook: 30,
+        water: 20,
+        burn: 15,
+        beck: 15,
+        bourne: 10,
+        stream: 5,
+        fleet: 5
+      },
+      COR: {
+        brook: 35,
+        water: 35,
+        bourne: 10,
+        stream: 15,
+        fleet: 5
+      },
+      WCY: {
+        brook: 35,
+        water: 25,
+        bourne: 20,
+        stream: 10,
+        fleet: 10
+      },
+      SEA: {
+        brook: 30,
+        water: 15,
+        bourne: 35,
+        stream: 10,
+        fleet: 10
+      },
+      EAN: {
+        brook: 30,
+        water: 25,
+        beck: 15,
+        bourne: 5,
+        stream: 10,
+        fleet: 15
+      },
+      WMM: {
+        brook: 50,
+        water: 25,
+        bourne: 10,
+        stream: 15
+      },
+      WAL: {
+        brook: 40,
+        water: 40,
+        stream: 20
+      },
+      EMD: {
+        brook: 40,
+        water: 20,
+        beck: 20,
+        bourne: 10,
+        stream: 10
+      },
+      NTH: {
+        brook: 15,
+        water: 20,
+        burn: 15,
+        beck: 45,
+        stream: 5
+      },
+      SBL: {
+        water: 30,
+        burn: 50,
+        beck: 10,
+        stream: 10
+      },
+      SLO: {
+        water: 35,
+        burn: 50,
+        stream: 15
+      },
+      SHH: {
+        water: 35,
+        burn: 50,
+        stream: 15
+      },
+      NSI: {
+        water: 40,
+        burn: 45,
+        stream: 15
+      }
+    },
+    "new-land": {
+      river: 40,
+      creek: 30,
+      run: 10,
+      fork: 10,
+      branch: 10
+    },
+    established: {
+      river: 75,
+      creek: 15,
+      stream: 10
+    }
+  },
+  descriptiveCategories: {
+    british: {
+      colour: 20,
+      tree: 15,
+      bird: 12,
+      "wild-animal": 10,
+      "wild-plant": 10,
+      "soil-or-ground": 10,
+      "quality-or-condition": 10,
+      "fish-and-other-creatures": 8,
+      season: 5
+    },
+    colonial: {
+      colour: 50,
+      "quality-or-condition": 30,
+      shape: 20
+    },
+    colonialWithBiome: {
+      colour: 35,
+      "quality-or-condition": 20,
+      shape: 12,
+      bird: 10,
+      "wild-animal": 8,
+      tree: 8,
+      "wild-plant": 4,
+      "fish-and-other-creatures": 3
+    }
+  },
+  britishFuseChance: 0.75,
+  forms: {
+    ancient: {
+      scottishRegions: [
+        "SBL",
+        "SLO",
+        "SHH",
+        "NSI"
+      ],
+      scottish: {
+        "river-x": 45,
+        "x-water": 25,
+        "water-of-x": 15,
+        bare: 15
+      },
+      other: {
+        "river-x": 85,
+        bare: 15
+      }
+    },
+    britishDescriptive: {
+      bare: 80,
+      "river-x": 20
+    },
+    colonialDescriptive: {
+      "x-water": 80,
+      bare: 20
+    }
+  },
+  patterns: {
+    british: [
+      {
+        pattern: "[personal name]'s {water}",
+        weight: 25
+      },
+      {
+        pattern: "River [deity]",
+        weight: 20
+      },
+      {
+        pattern: "[tribal name] River",
+        weight: 20
+      },
+      {
+        pattern: "[earlier or district name] Water",
+        weight: 15
+      },
+      {
+        pattern: "[tribal name] Water",
+        weight: 10
+      },
+      {
+        pattern: "River of the [tribal name]",
+        weight: 10
+      }
+    ],
+    "new-land": [
+      {
+        pattern: "[native people] River",
+        weight: 18
+      },
+      {
+        pattern: "[explorer] River",
+        weight: 12
+      },
+      {
+        pattern: "[personal name]'s Creek",
+        weight: 10
+      },
+      {
+        pattern: "[personal name] River",
+        weight: 8
+      },
+      {
+        pattern: "[holy person] River",
+        weight: 8
+      },
+      {
+        pattern: "River of the [native people]",
+        weight: 8
+      },
+      {
+        pattern: "[monarch] River",
+        weight: 7
+      },
+      {
+        pattern: "[native people] Creek",
+        weight: 7
+      },
+      {
+        pattern: "[native bird] River",
+        weight: 7
+      },
+      {
+        pattern: "[native wild animal] Creek",
+        weight: 6
+      },
+      {
+        pattern: "[native fish or creature] River",
+        weight: 3
+      },
+      {
+        pattern: "[native tree] Creek",
+        weight: 3
+      },
+      {
+        pattern: "[native plant] Creek",
+        weight: 3
+      }
+    ],
+    established: [
+      {
+        pattern: "[native people] River",
+        weight: 30
+      },
+      {
+        pattern: "River of the [native people]",
+        weight: 12
+      },
+      {
+        pattern: "[monarch] River",
+        weight: 12
+      },
+      {
+        pattern: "[personal name] River",
+        weight: 10
+      },
+      {
+        pattern: "[holy person] River",
+        weight: 8
+      },
+      {
+        pattern: "[personal name]'s Creek",
+        weight: 8
+      },
+      {
+        pattern: "[native bird] River",
+        weight: 6
+      },
+      {
+        pattern: "[native wild animal] River",
+        weight: 6
+      },
+      {
+        pattern: "[native tree] River",
+        weight: 4
+      },
+      {
+        pattern: "[native fish or creature] River",
+        weight: 2
+      },
+      {
+        pattern: "[native plant] River",
+        weight: 2
+      }
+    ]
+  }
+};
+
+// src/data/tribal-names.json
+var tribal_names_default = {
+  traditions: [
+    {
+      key: "general",
+      label: "General",
+      group: "General",
+      drawsOn: "Patterns shared by a majority of traditions",
+      homeland: {
+        temperate: 8,
+        moorland: 4,
+        boreal: 8,
+        "cool-rainforest": 8,
+        mediterranean: 9,
+        steppe: 9,
+        desert: 9,
+        savannah: 9,
+        rainforest: 10,
+        monsoon: 9,
+        "tropical-islands": 9,
+        highland: 8
+      },
+      terrainMultipliers: {},
+      flavour: {},
+      favouredLifeways: [],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1,
+          words: [
+            "Upper",
+            "Lower",
+            "Inner",
+            "Outer"
+          ]
+        },
+        {
+          system: "seaAxis",
+          mult: 1
+        }
+      ],
+      lineage: {
+        bilateral: 100
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Folk",
+        "People",
+        "Kin",
+        "Children"
+      ],
+      themes: {
+        relationship: 1.5,
+        number: 1.2
+      },
+      templates: {},
+      groupTypes: {},
+      numbers: [
+        "Three",
+        "Five",
+        "Seven",
+        "Nine"
+      ],
+      suppress: [],
+      special: {}
+    },
+    {
+      key: "celtic",
+      label: "Celtic Britain & Gaul",
+      group: "First release",
+      drawsOn: "Iron Age Britain and Gaul; early Irish kin vocabulary",
+      homeland: {
+        temperate: 80,
+        moorland: 20
+      },
+      terrainMultipliers: {
+        mountains: 0.6,
+        coast: 1.2
+      },
+      flavour: {
+        animals: [
+          "Hound",
+          "Boar",
+          "Salmon",
+          "Raven",
+          "Bull",
+          "Horse"
+        ],
+        plants: [
+          "Oak",
+          "Yew",
+          "Rowan",
+          "Mistletoe"
+        ],
+        land: [
+          "Chalkland",
+          "Downs",
+          "Moor"
+        ],
+        lifeways: [
+          "Horse Breeders",
+          "Cattle Keepers"
+        ]
+      },
+      favouredLifeways: [
+        "Cattle Keepers",
+        "Horse Breeders",
+        "Smiths",
+        "Ploughmen"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 90,
+        bilateral: 10
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Folk",
+        "People",
+        "Kindred",
+        "Descendants",
+        "Seed",
+        "Portion",
+        "Host"
+      ],
+      themes: {
+        landscape: 1.4,
+        warfare: 1.3,
+        qualities: 1.5,
+        animals: 1.2,
+        vessel: 0.3
+      },
+      templates: {
+        O: 1.5,
+        A: 1.3
+      },
+      groupTypes: {
+        confederation: 1.3,
+        warband: 1.2,
+        dynasty: 1.2
+      },
+      numbers: [
+        "Three",
+        "Seven"
+      ],
+      suppress: [],
+      special: {}
+    },
+    {
+      key: "germanic",
+      label: "Germanic & Norse",
+      group: "First release",
+      drawsOn: "Migration-era Germanic peoples; Scandinavian folk districts",
+      homeland: {
+        temperate: 55,
+        boreal: 30,
+        moorland: 15
+      },
+      terrainMultipliers: {
+        coast: 1.3,
+        islands: 1.3
+      },
+      flavour: {
+        animals: [
+          "Wolf",
+          "Raven",
+          "Boar",
+          "Bear",
+          "Stag",
+          "Eagle"
+        ],
+        plants: [
+          "Ash",
+          "Yew",
+          "Oak",
+          "Birch"
+        ],
+        land: [
+          "Heath"
+        ],
+        water: [
+          "Fjord",
+          "Long Inlet"
+        ],
+        lifeways: [
+          "Seafarers",
+          "Boatwrights"
+        ]
+      },
+      favouredLifeways: [
+        "Cattle Keepers",
+        "Ploughmen",
+        "Boatwrights",
+        "Smiths"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1
+        },
+        {
+          system: "seaAxis",
+          mult: 1,
+          words: [
+            "Inland",
+            "Seaward"
+          ]
+        }
+      ],
+      lineage: {
+        patrilineal: 90,
+        bilateral: 10
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Folk",
+        "Men",
+        "Kin",
+        "Host",
+        "Sons"
+      ],
+      themes: {
+        warfare: 1.5,
+        dress: 2,
+        relationship: 1.5,
+        vessel: 1.5,
+        sacred: 0.8
+      },
+      templates: {
+        A: 1.3,
+        L: 1.2
+      },
+      groupTypes: {
+        warband: 1.5,
+        migrant: 1.3,
+        confederation: 1.2
+      },
+      numbers: [
+        "Two",
+        "Three",
+        "Nine",
+        "Twelve"
+      ],
+      suppress: [],
+      special: {
+        longship: true
+      }
+    },
+    {
+      key: "steppe",
+      label: "Steppe",
+      group: "First release",
+      drawsOn: "Scythian, Turkic and Mongol peoples",
+      homeland: {
+        steppe: 80,
+        desert: 10,
+        highland: 10
+      },
+      terrainMultipliers: {
+        rivers: 1.2,
+        coast: 0,
+        islands: 0
+      },
+      flavour: {
+        animals: [
+          "Horse",
+          "Wolf",
+          "Eagle",
+          "Falcon",
+          "Snow Leopard",
+          "Ram",
+          "Camel",
+          "Deer"
+        ],
+        plants: [
+          "Feather Grass",
+          "Wormwood"
+        ],
+        land: [
+          "Black Earth",
+          "Salt Flats"
+        ],
+        water: [
+          "Salt Lakes"
+        ],
+        lifeways: [
+          "Horse Herders",
+          "Felt Makers"
+        ]
+      },
+      favouredLifeways: [
+        "Horse Herders",
+        "Riders",
+        "Ploughmen",
+        "Felt Makers"
+      ],
+      orientation: [
+        {
+          system: "colourDirection",
+          mult: 2
+        },
+        {
+          system: "moietyAxis",
+          mult: 1,
+          words: [
+            "Left-Hand",
+            "Right-Hand"
+          ]
+        },
+        {
+          system: "compass",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 100
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Host",
+        "Horde",
+        "Arrows",
+        "Tents",
+        "Bone",
+        "Riders"
+      ],
+      themes: {
+        number: 3,
+        lifeway: 2,
+        dress: 1.3,
+        water: 0.7,
+        plants: 0.4,
+        vessel: 0
+      },
+      templates: {
+        J: 3,
+        F: 1.5,
+        A: 1.2
+      },
+      groupTypes: {
+        confederation: 2,
+        moiety: 2,
+        warband: 1.5,
+        settlement: 0.4
+      },
+      numbers: [
+        "Nine",
+        "Ten",
+        "Twelve",
+        "Thirty",
+        "Hundred"
+      ],
+      suppress: [],
+      special: {
+        colourCollectives: [
+          "Host",
+          "Horde",
+          "Tents",
+          "Arrows",
+          "Bone"
+        ]
+      }
+    },
+    {
+      key: "arabian",
+      label: "Arabian & Saharan",
+      group: "First release",
+      drawsOn: "Bedouin tribes; Amazigh and Tuareg confederations",
+      homeland: {
+        desert: 80,
+        mediterranean: 10,
+        highland: 5,
+        steppe: 5
+      },
+      terrainMultipliers: {
+        rivers: 1.3,
+        coast: 0.8
+      },
+      flavour: {
+        animals: [
+          "Camel",
+          "Lion",
+          "Oryx",
+          "Gazelle",
+          "Falcon",
+          "Mare",
+          "Hound"
+        ],
+        plants: [
+          "Date Palm",
+          "Acacia"
+        ],
+        water: [
+          "Wells",
+          "Oasis",
+          "Seven Wells"
+        ],
+        lifeways: [
+          "Camel Herders",
+          "Caravaneers"
+        ]
+      },
+      favouredLifeways: [
+        "Camel Herders",
+        "Caravaneers",
+        "Oasis Farmers",
+        "Riders"
+      ],
+      orientation: [
+        {
+          system: "sunriseSunset",
+          mult: 2
+        },
+        {
+          system: "compass",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 100
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Sons",
+        "House",
+        "Family",
+        "People",
+        "Riders",
+        "Tents"
+      ],
+      themes: {
+        ancestor: 2.5,
+        water: 1.3,
+        animals: 1.3,
+        qualities: 1.3,
+        landscape: 1.2,
+        plants: 0.6,
+        vessel: 0.2
+      },
+      templates: {
+        G: 2.5,
+        N: 2,
+        C: 1.3
+      },
+      groupTypes: {
+        kin: 2,
+        dynasty: 1.3,
+        confederation: 1.2,
+        settlement: 0.7
+      },
+      numbers: [
+        "Three",
+        "Seven"
+      ],
+      suppress: [],
+      special: {}
+    },
+    {
+      key: "bantu",
+      label: "Bantu Africa",
+      group: "First release",
+      drawsOn: "Central, eastern and southern Bantu-speaking peoples",
+      homeland: {
+        savannah: 70,
+        rainforest: 15,
+        highland: 15
+      },
+      terrainMultipliers: {
+        rivers: 1.2,
+        wetland: 1.2
+      },
+      flavour: {
+        animals: [
+          "Lion",
+          "Leopard",
+          "Elephant",
+          "Buffalo",
+          "Crocodile",
+          "Python",
+          "Eagle",
+          "Bull",
+          "Crane"
+        ],
+        plants: [
+          "Fig Tree",
+          "Baobab",
+          "Millet"
+        ],
+        land: [
+          "Red Hills"
+        ],
+        lifeways: [
+          "Cattle Keepers",
+          "Iron Smelters"
+        ]
+      },
+      favouredLifeways: [
+        "Cattle Keepers",
+        "Millet Growers",
+        "Iron Smelters",
+        "Smiths"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "sunriseSunset",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1,
+          words: [
+            "Upland",
+            "Lowland"
+          ]
+        }
+      ],
+      lineage: {
+        patrilineal: 70,
+        matrilineal: 30
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "People",
+        "Children",
+        "House",
+        "Followers"
+      ],
+      themes: {
+        ancestor: 2,
+        lifeway: 1.6,
+        plants: 1.6,
+        speech: 1.5,
+        sacred: 1.2,
+        vessel: 0.3
+      },
+      templates: {
+        N: 2,
+        G: 1.5,
+        M: 1.5,
+        B: 1.2
+      },
+      groupTypes: {
+        dynasty: 1.5,
+        kin: 1.3,
+        confederation: 1.2
+      },
+      numbers: [
+        "Two",
+        "Three",
+        "Four"
+      ],
+      suppress: [],
+      special: {}
+    },
+    {
+      key: "northAmerican",
+      label: "North American Woodlands & Plains",
+      group: "First release",
+      drawsOn: "Eastern Woodlands, Great Lakes and Plains nations",
+      homeland: {
+        temperate: 65,
+        steppe: 25,
+        boreal: 10
+      },
+      terrainMultipliers: {
+        rivers: 1.3,
+        wetland: 1.2
+      },
+      flavour: {
+        animals: [
+          "Turtle",
+          "Beaver",
+          "Bison",
+          "Elk",
+          "Snipe",
+          "Bear",
+          "Wolf",
+          "Heron",
+          "Hawk",
+          "Deer"
+        ],
+        plants: [
+          "Maize",
+          "Wild Rice",
+          "Pine",
+          "Cedar",
+          "Elm"
+        ],
+        land: [
+          "Prairie"
+        ],
+        water: [
+          "Long Lake",
+          "Wild Rice Lakes"
+        ],
+        lifeways: [
+          "Maize Growers",
+          "Bison Hunters",
+          "Wild Rice Gatherers"
+        ]
+      },
+      favouredLifeways: [
+        "Hunters",
+        "Fishers",
+        "Maize Growers"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "sunriseSunset",
+          mult: 1
+        }
+      ],
+      lineage: {
+        matrilineal: 60,
+        patrilineal: 40
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "People",
+        "Nation",
+        "Clan",
+        "Fires",
+        "Allies"
+      ],
+      themes: {
+        relationship: 2,
+        number: 1.8,
+        animals: 1.5,
+        speech: 1.5,
+        dress: 1.3,
+        landscape: 1.2,
+        plants: 1.2,
+        vessel: 0.4
+      },
+      templates: {
+        O: 2,
+        C: 1.5,
+        J: 1.5,
+        M: 1.5
+      },
+      groupTypes: {
+        confederation: 1.5,
+        kin: 1.3,
+        moiety: 1.2,
+        dynasty: 0.6
+      },
+      numbers: [
+        "Three",
+        "Five",
+        "Six",
+        "Seven"
+      ],
+      suppress: [
+        {
+          word: "Braves",
+          mult: 0,
+          kind: "culture"
+        },
+        {
+          word: "Chiefs",
+          mult: 0,
+          kind: "culture"
+        },
+        {
+          word: "Spirit",
+          mult: 0,
+          kind: "culture"
+        },
+        {
+          word: "Feather",
+          mult: 0,
+          kind: "culture"
+        },
+        {
+          word: "Tomahawk",
+          mult: 0,
+          kind: "culture"
+        },
+        {
+          word: "Horse",
+          mult: 0.6,
+          kind: "homeland"
+        }
+      ],
+      special: {
+        paintedMoccasin: true,
+        clanAnimal: true
+      }
+    },
+    {
+      key: "polynesian",
+      label: "Polynesian",
+      group: "First release",
+      drawsOn: "M\u0101ori, Hawaiian, Samoan and Tongan societies",
+      homeland: {
+        "tropical-islands": 80,
+        "cool-rainforest": 20
+      },
+      terrainMultipliers: {
+        coast: 1.5,
+        islands: 1.5,
+        mountains: 1.2
+      },
+      flavour: {
+        animals: [
+          "Shark",
+          "Turtle",
+          "Octopus",
+          "Whale",
+          "Frigatebird",
+          "Heron",
+          "Owl",
+          "Lizard",
+          "Kiwi"
+        ],
+        plants: [
+          "Breadfruit",
+          "Coconut Palm",
+          "Pandanus",
+          "Taro",
+          "Flax",
+          "Tree Fern"
+        ],
+        water: [
+          "Lagoon",
+          "Reef"
+        ],
+        lifeways: [
+          "Voyagers",
+          "Navigators",
+          "Taro Planters"
+        ]
+      },
+      favouredLifeways: [
+        "Voyagers",
+        "Navigators",
+        "Reef Fishers",
+        "Taro Planters"
+      ],
+      orientation: [
+        {
+          system: "seaAxis",
+          mult: 2
+        },
+        {
+          system: "relative",
+          mult: 1
+        }
+      ],
+      lineage: {
+        bilateral: 100
+      },
+      lineageMultipliers: {
+        Sons: 0.3,
+        Daughters: 0.3
+      },
+      signatureCollectives: [
+        "Descendants",
+        "Children",
+        "People",
+        "Family",
+        "Kin"
+      ],
+      themes: {
+        ancestor: 3,
+        vessel: 3,
+        sacred: 1.3,
+        water: 1.3,
+        plants: 1.3,
+        warfare: 0.8,
+        number: 0.6
+      },
+      templates: {
+        G: 2.5,
+        C: 2,
+        N: 1.5,
+        E: 1.3
+      },
+      groupTypes: {
+        kin: 2,
+        dynasty: 1.5,
+        migrant: 1.5,
+        frontier: 0.4
+      },
+      numbers: [
+        "Two",
+        "Three"
+      ],
+      suppress: [
+        {
+          word: "Horse",
+          mult: 0,
+          kind: "homeland"
+        },
+        {
+          word: "Chariot",
+          mult: 0,
+          kind: "culture"
+        },
+        {
+          word: "Sword",
+          mult: 0,
+          kind: "culture"
+        },
+        {
+          word: "Bow",
+          mult: 0.3,
+          kind: "culture"
+        }
+      ],
+      special: {
+        ancestorAnimal: 2
+      }
+    },
+    {
+      key: "eastAsian",
+      label: "East Asian",
+      group: "First release",
+      drawsOn: "Chinese, Japanese and Korean clans; frontier peoples seen from the centre",
+      homeland: {
+        temperate: 50,
+        monsoon: 35,
+        steppe: 10,
+        highland: 5
+      },
+      terrainMultipliers: {
+        rivers: 1.3,
+        wetland: 1.3,
+        mountains: 1.2
+      },
+      flavour: {
+        animals: [
+          "Tiger",
+          "Crane",
+          "Carp",
+          "Ox",
+          "Magpie",
+          "Horse",
+          "Falcon",
+          "Bear"
+        ],
+        plants: [
+          "Plum",
+          "Pine",
+          "Bamboo",
+          "Mulberry",
+          "Lotus"
+        ],
+        lifeways: [
+          "Rice Growers",
+          "Silk Weavers",
+          "Ritualists"
+        ]
+      },
+      favouredLifeways: [
+        "Rice Growers",
+        "Weavers",
+        "Silk Weavers",
+        "Ritualists",
+        "Smiths"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 2
+        },
+        {
+          system: "centre",
+          mult: 2,
+          words: [
+            "Central"
+          ]
+        },
+        {
+          system: "relative",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 100
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "House",
+        "Clan",
+        "Line",
+        "Guild",
+        "Folk"
+      ],
+      themes: {
+        lifeway: 2.5,
+        direction: 2,
+        plants: 1.5,
+        ancestor: 1.3,
+        number: 1.3
+      },
+      templates: {
+        P: 4,
+        L: 2,
+        E: 1.5,
+        J: 1.3
+      },
+      groupTypes: {
+        occupational: 3,
+        dynasty: 1.5,
+        kin: 1.5,
+        regional: 0.8
+      },
+      numbers: [
+        "Five",
+        "Hundred"
+      ],
+      suppress: [],
+      special: {
+        dragon: 2
+      }
+    },
+    {
+      key: "mesoamerican",
+      label: "Mesoamerican",
+      group: "Second release",
+      drawsOn: "Nahua, Mixtec, Zapotec and Maya city-states",
+      homeland: {
+        highland: 40,
+        rainforest: 40,
+        desert: 10,
+        savannah: 10
+      },
+      terrainMultipliers: {
+        wetland: 1.5,
+        mountains: 1.3
+      },
+      flavour: {
+        animals: [
+          "Jaguar",
+          "Eagle",
+          "Serpent",
+          "Hummingbird",
+          "Quetzal",
+          "Coyote",
+          "Heron",
+          "Deer",
+          "Monkey"
+        ],
+        plants: [
+          "Maize",
+          "Cacao",
+          "Agave",
+          "Cotton",
+          "Reed"
+        ],
+        water: [
+          "Reed Lake"
+        ],
+        lifeways: [
+          "Maize Growers",
+          "Featherworkers",
+          "Cacao Growers"
+        ]
+      },
+      favouredLifeways: [
+        "Featherworkers",
+        "Traders",
+        "Maize Growers"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "centre",
+          mult: 1,
+          words: [
+            "Central"
+          ]
+        },
+        {
+          system: "sunriseSunset",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 60,
+        bilateral: 40
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "People",
+        "House",
+        "Lords",
+        "Warriors",
+        "Great House"
+      ],
+      themes: {
+        sacred: 2,
+        lifeway: 1.5,
+        animals: 1.5,
+        plants: 1.3,
+        number: 1.2
+      },
+      templates: {
+        Q: 4,
+        I: 1.5,
+        F: 1.3,
+        R: 1.3
+      },
+      groupTypes: {
+        dynasty: 1.5,
+        warband: 1.5,
+        settlement: 1.5,
+        occupational: 1.3
+      },
+      numbers: [
+        "Four",
+        "Seven",
+        "Thirteen"
+      ],
+      suppress: [
+        {
+          word: "Horse",
+          mult: 0,
+          kind: "homeland"
+        },
+        {
+          word: "Chariot",
+          mult: 0,
+          kind: "culture"
+        },
+        {
+          word: "Sword",
+          mult: 0,
+          kind: "culture"
+        }
+      ],
+      special: {
+        waterHill: 0.3
+      }
+    },
+    {
+      key: "andean",
+      label: "Andean & Southern Cone",
+      group: "Second release",
+      drawsOn: "Andean kin communities; Mapuche and neighbours",
+      homeland: {
+        highland: 60,
+        desert: 15,
+        "cool-rainforest": 10,
+        mediterranean: 10,
+        steppe: 5
+      },
+      terrainMultipliers: {
+        mountains: 1.3,
+        rivers: 1.2
+      },
+      flavour: {
+        animals: [
+          "Condor",
+          "Puma",
+          "Llama",
+          "Fox",
+          "Vicuna",
+          "Hummingbird",
+          "Serpent"
+        ],
+        plants: [
+          "Monkey-Puzzle",
+          "Maize",
+          "Potato"
+        ],
+        lifeways: [
+          "Llama Herders",
+          "Terrace Farmers"
+        ]
+      },
+      favouredLifeways: [
+        "Llama Herders",
+        "Terrace Farmers",
+        "Weavers",
+        "Potato Growers"
+      ],
+      orientation: [
+        {
+          system: "moietyAxis",
+          mult: 3,
+          words: [
+            "Upper Half",
+            "Lower Half"
+          ]
+        },
+        {
+          system: "compass",
+          mult: 1
+        }
+      ],
+      lineage: {
+        bilateral: 60,
+        patrilineal: 40
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Kin",
+        "People",
+        "House",
+        "Half",
+        "Quarter"
+      ],
+      themes: {
+        direction: 2.5,
+        landscape: 1.5,
+        sacred: 1.5,
+        lifeway: 1.4,
+        animals: 1.2,
+        plants: 1.2
+      },
+      templates: {
+        E: 2,
+        C: 1.5,
+        G: 1.3,
+        K: 1.3
+      },
+      groupTypes: {
+        moiety: 3,
+        kin: 1.5,
+        confederation: 1.2
+      },
+      numbers: [
+        "Two",
+        "Four"
+      ],
+      suppress: [
+        {
+          word: "Horse",
+          mult: 0,
+          kind: "homeland"
+        },
+        {
+          word: "Chariot",
+          mult: 0,
+          kind: "culture"
+        },
+        {
+          word: "Sword",
+          mult: 0,
+          kind: "culture"
+        }
+      ],
+      special: {}
+    },
+    {
+      key: "maritimeSEA",
+      label: "Maritime South-East Asian",
+      group: "Second release",
+      drawsOn: "Malay world, Borneo, Philippines",
+      homeland: {
+        rainforest: 55,
+        "tropical-islands": 30,
+        monsoon: 15
+      },
+      terrainMultipliers: {
+        rivers: 1.5,
+        coast: 1.3,
+        islands: 1.2
+      },
+      flavour: {
+        animals: [
+          "Hornbill",
+          "Crocodile",
+          "Tiger",
+          "Python",
+          "Monkey",
+          "Monitor Lizard",
+          "Dugong"
+        ],
+        plants: [
+          "Banyan",
+          "Bamboo",
+          "Sago Palm",
+          "Mangrove",
+          "Rattan"
+        ],
+        lifeways: [
+          "Sea Nomads",
+          "Sago Makers",
+          "River Traders"
+        ]
+      },
+      favouredLifeways: [
+        "River Fishers",
+        "Reef Fishers",
+        "Traders",
+        "Sago Makers"
+      ],
+      orientation: [
+        {
+          system: "riverAxis",
+          mult: 2
+        },
+        {
+          system: "seaAxis",
+          mult: 1
+        }
+      ],
+      lineage: {
+        bilateral: 100
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "People",
+        "Folk",
+        "House",
+        "Kin"
+      ],
+      themes: {
+        water: 2,
+        direction: 2,
+        lifeway: 1.6,
+        relationship: 1.5,
+        vessel: 1.5,
+        animals: 1.2
+      },
+      templates: {
+        B: 2,
+        E: 1.5,
+        L: 1.3
+      },
+      groupTypes: {
+        regional: 1.3,
+        settlement: 1.3,
+        migrant: 1.3
+      },
+      numbers: [
+        "Two",
+        "Three",
+        "Seven"
+      ],
+      suppress: [],
+      special: {
+        longhouse: true
+      }
+    },
+    {
+      key: "mediterranean",
+      label: "Ancient Mediterranean",
+      group: "Second release",
+      drawsOn: "Italic peoples and Greek communities",
+      homeland: {
+        mediterranean: 90,
+        temperate: 10
+      },
+      terrainMultipliers: {
+        coast: 1.3,
+        islands: 1.3,
+        mountains: 1.2
+      },
+      flavour: {
+        animals: [
+          "Woodpecker",
+          "Wolf",
+          "Bull",
+          "Ram",
+          "Heron",
+          "Dolphin",
+          "Owl",
+          "Eagle",
+          "Boar"
+        ],
+        plants: [
+          "Olive",
+          "Laurel",
+          "Cypress",
+          "Vine",
+          "Oak"
+        ],
+        lifeways: [
+          "Seafarers",
+          "Vine Growers"
+        ]
+      },
+      favouredLifeways: [
+        "Shepherds",
+        "Seafarers",
+        "Olive Growers",
+        "Vine Growers"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1
+        },
+        {
+          system: "centre",
+          mult: 1,
+          words: [
+            "Around"
+          ]
+        }
+      ],
+      lineage: {
+        patrilineal: 100
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "People",
+        "Dwellers",
+        "Settlers",
+        "Followers",
+        "Sons"
+      ],
+      themes: {
+        relationship: 2,
+        animals: 1.3,
+        sacred: 1.3,
+        vessel: 1.3,
+        lifeway: 1.2
+      },
+      templates: {
+        R: 4,
+        D: 1.3,
+        H: 1.3,
+        C: 1.2
+      },
+      groupTypes: {
+        migrant: 2,
+        settlement: 1.3,
+        confederation: 1.2
+      },
+      numbers: [
+        "Three",
+        "Four",
+        "Twelve"
+      ],
+      suppress: [],
+      special: {
+        migrationGuide: 30
+      }
+    },
+    {
+      key: "northernPacific",
+      label: "Pacific Northwest & Arctic",
+      group: "Expansion",
+      drawsOn: "Northwest Coast houses and moieties; Arctic peoples",
+      homeland: {
+        "cool-rainforest": 60,
+        boreal: 40
+      },
+      terrainMultipliers: {
+        coast: 1.5,
+        rivers: 1.3
+      },
+      flavour: {
+        animals: [
+          "Raven",
+          "Eagle",
+          "Wolf",
+          "Bear",
+          "Killer Whale",
+          "Salmon",
+          "Beaver",
+          "Frog",
+          "Seal"
+        ],
+        plants: [
+          "Cedar",
+          "Spruce"
+        ],
+        lifeways: [
+          "Salmon Fishers",
+          "Cedar Carvers",
+          "Whalers"
+        ]
+      },
+      favouredLifeways: [
+        "Salmon Fishers",
+        "Cedar Carvers",
+        "Whalers",
+        "Sealers"
+      ],
+      orientation: [
+        {
+          system: "riverAxis",
+          mult: 1
+        },
+        {
+          system: "seaAxis",
+          mult: 1
+        }
+      ],
+      lineage: {
+        matrilineal: 70,
+        bilateral: 30
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "House",
+        "Side",
+        "Clan",
+        "People"
+      ],
+      themes: {
+        animals: 2,
+        vessel: 1.5,
+        water: 1.5,
+        lifeway: 1.5,
+        relationship: 1.5,
+        plants: 0.8
+      },
+      templates: {
+        G: 1.5,
+        F: 1.5,
+        O: 1.3
+      },
+      groupTypes: {
+        moiety: 3,
+        kin: 1.5,
+        dynasty: 1.2,
+        warband: 0.6
+      },
+      numbers: [
+        "Two",
+        "Four"
+      ],
+      suppress: [
+        {
+          word: "Horse",
+          mult: 0,
+          kind: "homeland"
+        },
+        {
+          word: "Chariot",
+          mult: 0,
+          kind: "culture"
+        }
+      ],
+      special: {
+        ancestorAnimal: 2
+      }
+    },
+    {
+      key: "westAfrican",
+      label: "West African",
+      group: "Expansion",
+      drawsOn: "Mande, Akan, Yoruba and Sahelian societies",
+      homeland: {
+        savannah: 50,
+        rainforest: 35,
+        desert: 15
+      },
+      terrainMultipliers: {
+        rivers: 1.3
+      },
+      flavour: {
+        animals: [
+          "Python",
+          "Leopard",
+          "Crocodile",
+          "Elephant",
+          "Lion",
+          "Hornbill",
+          "Spider",
+          "Tortoise",
+          "Buffalo"
+        ],
+        plants: [
+          "Kola Tree",
+          "Baobab",
+          "Oil Palm",
+          "Silk-Cotton Tree"
+        ],
+        lifeways: [
+          "Traders",
+          "Smiths",
+          "Hunters"
+        ]
+      },
+      favouredLifeways: [
+        "Traders",
+        "Smiths",
+        "Hunters",
+        "Millet Growers"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "riverAxis",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 60,
+        matrilineal: 40
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "People",
+        "House",
+        "Line",
+        "Children"
+      ],
+      themes: {
+        ancestor: 2,
+        animals: 1.5,
+        water: 1.3,
+        plants: 1.2,
+        sacred: 1.2
+      },
+      templates: {
+        K: 2,
+        N: 1.5,
+        G: 1.5,
+        C: 1.3
+      },
+      groupTypes: {
+        dynasty: 1.5,
+        kin: 1.5,
+        settlement: 1.3
+      },
+      numbers: [],
+      suppress: [],
+      special: {
+        clanTaboo: 4
+      }
+    },
+    {
+      key: "southAsian",
+      label: "South Asian",
+      group: "Expansion",
+      drawsOn: "Vedic peoples; dynastic lineages",
+      homeland: {
+        monsoon: 65,
+        highland: 15,
+        desert: 10,
+        rainforest: 10
+      },
+      terrainMultipliers: {
+        rivers: 1.5
+      },
+      flavour: {
+        animals: [
+          "Tiger",
+          "Elephant",
+          "Peacock",
+          "Cobra",
+          "Bull",
+          "Horse",
+          "Deer",
+          "Crane"
+        ],
+        plants: [
+          "Lotus",
+          "Banyan",
+          "Sacred Fig",
+          "Mango",
+          "Sandalwood"
+        ],
+        water: [
+          "Seven Rivers"
+        ]
+      },
+      favouredLifeways: [],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 100
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Line",
+        "House",
+        "Peoples",
+        "Kin"
+      ],
+      themes: {
+        sacred: 2.5,
+        number: 1.8,
+        water: 1.5,
+        ancestor: 1.5,
+        landscape: 1.2,
+        lifeway: 0
+      },
+      templates: {
+        G: 2,
+        J: 1.8,
+        C: 1.3
+      },
+      groupTypes: {
+        dynasty: 2,
+        confederation: 1.3,
+        occupational: 0
+      },
+      numbers: [
+        "Five",
+        "Seven",
+        "Ten"
+      ],
+      suppress: [],
+      special: {
+        lineageSacred: [
+          "Sun",
+          "Moon",
+          "Fire"
+        ]
+      }
+    },
+    {
+      key: "sahul",
+      label: "Australia & New Guinea",
+      group: "Expansion",
+      drawsOn: "Aboriginal Australian and New Guinea communities",
+      homeland: {
+        desert: 40,
+        savannah: 30,
+        rainforest: 15,
+        highland: 10,
+        "tropical-islands": 5
+      },
+      terrainMultipliers: {
+        coast: 1.3,
+        rivers: 1.3
+      },
+      flavour: {
+        animals: [
+          "Kangaroo",
+          "Emu",
+          "Crocodile",
+          "Dingo",
+          "Eagle",
+          "Goanna",
+          "Barramundi",
+          "Cassowary",
+          "Bird of Paradise",
+          "Pig"
+        ],
+        plants: [
+          "Gum Tree",
+          "Spinifex",
+          "Wattle",
+          "Pandanus",
+          "Sago Palm"
+        ],
+        water: [
+          "Billabong",
+          "Saltwater",
+          "Freshwater"
+        ],
+        lifeways: [
+          "Foragers",
+          "Gardeners",
+          "Pig Keepers"
+        ]
+      },
+      favouredLifeways: [
+        "Hunters",
+        "Fishers",
+        "Gardeners"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "seaAxis",
+          mult: 1
+        },
+        {
+          system: "waterType",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 50,
+        matrilineal: 30,
+        bilateral: 20
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "People",
+        "Clan",
+        "Kin"
+      ],
+      themes: {
+        water: 2.5,
+        landscape: 2,
+        speech: 1.5,
+        relationship: 1.2,
+        sacred: 0.5,
+        warfare: 0.5,
+        number: 0.5
+      },
+      templates: {
+        B: 2.5,
+        M: 1.5,
+        C: 1.3
+      },
+      groupTypes: {
+        regional: 1.5,
+        moiety: 1.5,
+        kin: 1.3,
+        warband: 0.5,
+        dynasty: 0.2
+      },
+      numbers: [],
+      suppress: [
+        {
+          word: "Horse",
+          mult: 0,
+          kind: "homeland"
+        },
+        {
+          word: "Chariot",
+          mult: 0,
+          kind: "culture"
+        },
+        {
+          word: "Sword",
+          mult: 0,
+          kind: "culture"
+        },
+        {
+          word: "Bow",
+          mult: 0,
+          kind: "culture"
+        }
+      ],
+      special: {
+        sacredOnly: [
+          "Sun",
+          "Moon",
+          "Rain",
+          "Springs"
+        ]
+      }
+    }
+  ],
+  groupTypes: [
+    {
+      key: "regional",
+      label: "Regional people",
+      weight: 22
+    },
+    {
+      key: "settlement",
+      label: "Local settlement community",
+      weight: 12
+    },
+    {
+      key: "kin",
+      label: "Kin group or lineage",
+      weight: 14
+    },
+    {
+      key: "dynasty",
+      label: "Ruling dynasty",
+      weight: 9
+    },
+    {
+      key: "confederation",
+      label: "Confederation",
+      weight: 10
+    },
+    {
+      key: "warband",
+      label: "War-band or warrior society",
+      weight: 9
+    },
+    {
+      key: "migrant",
+      label: "Migrant or settler community",
+      weight: 6
+    },
+    {
+      key: "frontier",
+      label: "Frontier guardians",
+      weight: 5
+    },
+    {
+      key: "sanctuary",
+      label: "Religious or sanctuary community",
+      weight: 5
+    },
+    {
+      key: "moiety",
+      label: "Moiety or clan division",
+      weight: 4
+    },
+    {
+      key: "occupational",
+      label: "Occupational or craft community",
+      weight: 4
+    }
+  ],
+  groupTypeThemes: {
+    regional: {
+      landscape: 2,
+      water: 2,
+      warfare: 1,
+      animals: 1,
+      plants: 1,
+      sacred: 1,
+      direction: 2,
+      qualities: 1,
+      number: 1,
+      lifeway: 2,
+      speech: 1,
+      dress: 1,
+      ancestor: 0,
+      vessel: 1,
+      relationship: 2
+    },
+    settlement: {
+      landscape: 2,
+      water: 2,
+      warfare: 0,
+      animals: 0,
+      plants: 2,
+      sacred: 1,
+      direction: 1,
+      qualities: 0,
+      number: 0,
+      lifeway: 1,
+      speech: 0,
+      dress: 0,
+      ancestor: 0,
+      vessel: 0,
+      relationship: 1
+    },
+    kin: {
+      landscape: 1,
+      water: 1,
+      warfare: 1,
+      animals: 2,
+      plants: 2,
+      sacred: 1,
+      direction: 0,
+      qualities: 1,
+      number: 0,
+      lifeway: 0,
+      speech: 0,
+      dress: 1,
+      ancestor: 2,
+      vessel: 2,
+      relationship: 0
+    },
+    dynasty: {
+      landscape: 1,
+      water: 1,
+      warfare: 2,
+      animals: 2,
+      plants: 1,
+      sacred: 2,
+      direction: 0,
+      qualities: 2,
+      number: 0,
+      lifeway: 0,
+      speech: 0,
+      dress: 0,
+      ancestor: 2,
+      vessel: 1,
+      relationship: 0
+    },
+    confederation: {
+      landscape: 2,
+      water: 2,
+      warfare: 1,
+      animals: 1,
+      plants: 0,
+      sacred: 1,
+      direction: 2,
+      qualities: 1,
+      number: 2,
+      lifeway: 1,
+      speech: 1,
+      dress: 0,
+      ancestor: 1,
+      vessel: 1,
+      relationship: 1
+    },
+    warband: {
+      landscape: 1,
+      water: 0,
+      warfare: 2,
+      animals: 2,
+      plants: 0,
+      sacred: 1,
+      direction: 1,
+      qualities: 2,
+      number: 1,
+      lifeway: 0,
+      speech: 0,
+      dress: 2,
+      ancestor: 1,
+      vessel: 1,
+      relationship: 0
+    },
+    migrant: {
+      landscape: 2,
+      water: 2,
+      warfare: 0,
+      animals: 0,
+      plants: 1,
+      sacred: 0,
+      direction: 2,
+      qualities: 0,
+      number: 0,
+      lifeway: 1,
+      speech: 1,
+      dress: 1,
+      ancestor: 0,
+      vessel: 2,
+      relationship: 2
+    },
+    frontier: {
+      landscape: 2,
+      water: 2,
+      warfare: 2,
+      animals: 1,
+      plants: 0,
+      sacred: 0,
+      direction: 2,
+      qualities: 1,
+      number: 0,
+      lifeway: 0,
+      speech: 0,
+      dress: 0,
+      ancestor: 0,
+      vessel: 0,
+      relationship: 2
+    },
+    sanctuary: {
+      landscape: 1,
+      water: 2,
+      warfare: 0,
+      animals: 1,
+      plants: 2,
+      sacred: 2,
+      direction: 0,
+      qualities: 1,
+      number: 1,
+      lifeway: 0,
+      speech: 0,
+      dress: 0,
+      ancestor: 1,
+      vessel: 0,
+      relationship: 0
+    },
+    moiety: {
+      landscape: 1,
+      water: 1,
+      warfare: 0,
+      animals: 2,
+      plants: 1,
+      sacred: 1,
+      direction: 2,
+      qualities: 1,
+      number: 0,
+      lifeway: 0,
+      speech: 0,
+      dress: 0,
+      ancestor: 1,
+      vessel: 0,
+      relationship: 0
+    },
+    occupational: {
+      landscape: 1,
+      water: 1,
+      warfare: 1,
+      animals: 0,
+      plants: 1,
+      sacred: 1,
+      direction: 0,
+      qualities: 0,
+      number: 0,
+      lifeway: 2,
+      speech: 0,
+      dress: 0,
+      ancestor: 0,
+      vessel: 1,
+      relationship: 0
+    }
+  },
+  perspectives: {
+    self: 38,
+    neighbour: 27,
+    geographical: 10,
+    dynastic: 10,
+    ceremonial: 5,
+    later: 5,
+    imposed: 5
+  },
+  perspectiveLabels: {
+    self: "self-name",
+    neighbour: "neighbour-name",
+    geographical: "geographical description",
+    dynastic: "dynastic or ancestral",
+    ceremonial: "ceremonial title",
+    later: "later or administrative",
+    imposed: "imposed"
+  },
+  perspectiveByGroupType: {
+    dynasty: {
+      dynastic: 2.5
+    },
+    warband: {
+      ceremonial: 2
+    },
+    sanctuary: {
+      ceremonial: 2
+    },
+    migrant: {
+      neighbour: 2,
+      imposed: 1.5
+    },
+    frontier: {
+      geographical: 1.5,
+      imposed: 1.5
+    },
+    occupational: {
+      later: 2
+    }
+  },
+  tones: {
+    toned: {
+      respectful: 25,
+      neutral: 60,
+      hostile: 15
+    },
+    plain: {
+      respectful: 30,
+      neutral: 70
+    }
+  },
+  themes: {
+    landscape: 16,
+    water: 14,
+    warfare: 9,
+    animals: 12,
+    plants: 5,
+    sacred: 6,
+    direction: 7,
+    qualities: 7,
+    number: 3,
+    lifeway: 7,
+    speech: 2,
+    dress: 3,
+    ancestor: 5,
+    vessel: 1,
+    relationship: 3
+  },
+  parityCap: 40,
+  vocabulary: {
+    warfareUniversal: [
+      "Battle",
+      "War",
+      "Spear",
+      "Shield",
+      "Victory",
+      "Fort",
+      "Stronghold",
+      "Guard",
+      "Frontier",
+      "March",
+      "Long Shields"
+    ],
+    warfareRestricted: {
+      Sword: {
+        celtic: 1,
+        germanic: 1,
+        steppe: 1,
+        arabian: 1,
+        eastAsian: 1,
+        mediterranean: 1,
+        southAsian: 1,
+        westAfrican: 1,
+        general: 1
+      },
+      Chariot: {
+        celtic: 1,
+        mediterranean: 1,
+        southAsian: 1,
+        eastAsian: 1,
+        general: 0.3
+      },
+      Bow: {
+        "*": 1,
+        polynesian: 0.3,
+        sahul: 0
+      },
+      Arrow: {
+        "*": 1,
+        polynesian: 0.3,
+        sahul: 0
+      },
+      Bowmen: {
+        "*": 1,
+        polynesian: 0.3,
+        sahul: 0
+      },
+      Axe: {
+        celtic: 1,
+        germanic: 1,
+        northAmerican: 1,
+        northernPacific: 1,
+        general: 1
+      },
+      Club: {
+        polynesian: 1,
+        northAmerican: 1,
+        mesoamerican: 1,
+        sahul: 1,
+        general: 0.3
+      },
+      Sling: {
+        mediterranean: 1,
+        andean: 1,
+        general: 0.3
+      },
+      "Obsidian Blade": {
+        mesoamerican: 1
+      },
+      "War Canoe": {
+        polynesian: 1,
+        maritimeSEA: 1,
+        northernPacific: 1
+      }
+    },
+    warfareObjects: [
+      "Spear",
+      "Shield",
+      "Axe",
+      "Bow",
+      "Sword",
+      "Club"
+    ],
+    sacredUniversal: [
+      "Sun",
+      "Moon",
+      "Thunder",
+      "Sky",
+      "Rain",
+      "First Fire",
+      "Ancestors",
+      "Sacred Hill",
+      "Sacred Spring",
+      "Great Tree",
+      "Morning Star",
+      "Old Shrine",
+      "Cloud",
+      "Mist"
+    ],
+    mythic: {
+      Dragon: {
+        eastAsian: 2,
+        germanic: 1.5
+      },
+      "Great Serpent": {},
+      Giants: {},
+      "Sky Bird": {}
+    },
+    directions: {
+      compass: [
+        "Northern",
+        "Southern",
+        "Eastern",
+        "Western",
+        "North",
+        "South",
+        "East",
+        "West"
+      ],
+      relative: [
+        "Upper",
+        "Lower",
+        "Inner",
+        "Outer",
+        "Near",
+        "Far",
+        "Beyond",
+        "Across",
+        "Between"
+      ],
+      centre: [
+        "Central",
+        "Middle",
+        "Border",
+        "Frontier",
+        "Around"
+      ],
+      sunriseSunset: [
+        "Sunrise",
+        "Sunset",
+        "Dawn",
+        "Evening"
+      ],
+      riverAxis: [
+        "Upriver",
+        "Downriver",
+        "Upstream",
+        "Downstream"
+      ],
+      seaAxis: [
+        "Inland",
+        "Seaward",
+        "Mountainward",
+        "Windward",
+        "Leeward"
+      ],
+      moietyAxis: [
+        "Upper Half",
+        "Lower Half",
+        "Left-Hand",
+        "Right-Hand"
+      ],
+      waterType: [
+        "Saltwater",
+        "Freshwater"
+      ],
+      colourDirection: [
+        "Black",
+        "Blue",
+        "Red",
+        "White",
+        "Golden"
+      ]
+    },
+    colourDirections: {
+      Black: "north",
+      Blue: "east",
+      Red: "south",
+      White: "west",
+      Golden: "centre"
+    },
+    qualities: [
+      "High",
+      "Great",
+      "Strong",
+      "Bold",
+      "Watchful",
+      "Swift",
+      "Enduring",
+      "Ancient",
+      "New",
+      "Old",
+      "Fierce",
+      "Steadfast",
+      "Many"
+    ],
+    interpretiveQualities: [
+      "Free",
+      "Noble",
+      "True",
+      "Real",
+      "Unconquered",
+      "Proud"
+    ],
+    nominalQualities: [
+      "Unconquered",
+      "Free",
+      "Proud",
+      "Bold",
+      "Fierce",
+      "Steadfast",
+      "Watchful",
+      "Swift",
+      "Strong"
+    ],
+    colours: [
+      "Red",
+      "White",
+      "Black",
+      "Golden",
+      "Grey",
+      "Blue",
+      "Green",
+      "Copper",
+      "Silver",
+      "Iron"
+    ],
+    numbers: [
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Nine",
+      "Ten",
+      "Twelve",
+      "Thirteen",
+      "Thirty",
+      "Hundred"
+    ],
+    countedNouns: [
+      "Rivers",
+      "Hills",
+      "Fires",
+      "Arrows",
+      "Peoples",
+      "Tents",
+      "Houses",
+      "Clans",
+      "Valleys",
+      "Islands",
+      "Canoes",
+      "Wells",
+      "Lakes",
+      "Streams",
+      "Kindreds"
+    ],
+    countedFeatures: [
+      "Rivers",
+      "Hills",
+      "Valleys",
+      "Islands",
+      "Wells",
+      "Lakes",
+      "Streams"
+    ],
+    speech: {
+      whole: [
+        "People of the Word",
+        "Plain Speakers"
+      ],
+      tongues: [
+        "Quick",
+        "Old",
+        "River",
+        "Hill"
+      ],
+      descriptor: "Strange-Speech",
+      hostile: [
+        "Babblers",
+        "Mumblers",
+        "The Mute Ones"
+      ]
+    },
+    dress: [
+      "Long-Beard",
+      "Long-Hair",
+      "Painted",
+      "Black-Cloak",
+      "Red-Cloak",
+      "Bear-Cloak",
+      "Shaven",
+      "Topknot",
+      "Tattooed",
+      "Bright-Shield",
+      "Black-Shield",
+      "Painted-Moccasin",
+      "Fur-Cloak",
+      "Feather-Cloak",
+      "Veiled"
+    ],
+    ancestors: [
+      "the Navigator",
+      "the Far Navigator",
+      "the Hunter",
+      "the Smith",
+      "the Red King",
+      "the Grey King",
+      "the Iron King",
+      "the Hill King",
+      "the Bear-Born",
+      "the First Mother",
+      "the Elder Brother",
+      "the Twins",
+      "the Star-Born",
+      "the Old Woman",
+      "the One-Eyed",
+      "the Wanderer",
+      "the Hunter's Son"
+    ],
+    canoes: [
+      "the Swift Canoe",
+      "the Long Canoe",
+      "the White Heron Canoe",
+      "the Red Wave Canoe",
+      "the Star Path Canoe",
+      "the Shark Canoe",
+      "the Two Hulls"
+    ],
+    voyages: [
+      "the Long Voyage",
+      "the Far Shore",
+      "Landfall"
+    ],
+    relationship: [
+      "True People",
+      "Real People",
+      "The People",
+      "First People",
+      "Dwellers Around",
+      "Outer Peoples",
+      "Inner Peoples",
+      "Allies",
+      "Friends",
+      "Latecomers",
+      "Old Settlers",
+      "New People",
+      "Folk Between",
+      "Tributaries",
+      "Original People"
+    ],
+    hostile: {
+      "Mud Folk": "landscape",
+      "Marsh Crawlers": "landscape",
+      "Hill Thieves": "landscape",
+      "Broken Shields": "warfare",
+      "Horse Stealers": "lifeway",
+      "Fish-Eaters": "lifeway",
+      "Goat Folk": "lifeway",
+      Latecomers: "relationship",
+      Babblers: "speech",
+      Mumblers: "speech",
+      "The Mute Ones": "speech"
+    },
+    origins: [
+      "Origin Lake",
+      "Ancestor Cave",
+      "Red Cave",
+      "Far Shore"
+    ],
+    kPhrases: [
+      {
+        theme: "landscape",
+        verb: "Dwell Beneath the",
+        slot: "land"
+      },
+      {
+        theme: "water",
+        verb: "Fish the",
+        slot: "water"
+      },
+      {
+        theme: "sacred",
+        verb: "Came from the",
+        slot: "origin"
+      },
+      {
+        theme: "landscape",
+        verb: "Came from the",
+        slot: "origin"
+      },
+      {
+        theme: "animals",
+        verb: "Spare the",
+        slot: "animal"
+      },
+      {
+        theme: "sacred",
+        verb: "Keep the",
+        slot: "sacred"
+      },
+      {
+        theme: "landscape",
+        verb: "Ride the",
+        slot: "land",
+        gate: "mounts"
+      },
+      {
+        theme: "animals",
+        verb: "Walk Before the",
+        slot: "emblem"
+      },
+      {
+        theme: "warfare",
+        verb: "Walk Before the",
+        slot: "emblem"
+      },
+      {
+        theme: "warfare",
+        verb: "Hold the",
+        slot: "place"
+      },
+      {
+        theme: "water",
+        verb: "Hold the",
+        slot: "place"
+      }
+    ]
+  },
+  collectives: [
+    {
+      word: "Folk",
+      groupTypes: [
+        "regional",
+        "settlement",
+        "confederation",
+        "kin"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "People",
+      groupTypes: [
+        "regional",
+        "settlement",
+        "kin",
+        "sanctuary"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "Peoples",
+      groupTypes: [
+        "confederation"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "Dwellers",
+      groupTypes: [
+        "regional",
+        "settlement"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "Inhabitants",
+      groupTypes: [
+        "regional",
+        "settlement"
+      ],
+      registers: [
+        "historical",
+        "administrative"
+      ],
+      person: true
+    },
+    {
+      word: "Nation",
+      groupTypes: [
+        "regional",
+        "confederation"
+      ],
+      registers: [
+        "historical",
+        "administrative"
+      ],
+      person: true,
+      perspectives: [
+        "later"
+      ],
+      traditionMult: {
+        northAmerican: 2
+      }
+    },
+    {
+      word: "Settlers",
+      groupTypes: [
+        "settlement",
+        "migrant"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "Newcomers",
+      groupTypes: [
+        "migrant"
+      ],
+      registers: "all",
+      person: true,
+      mult: 0.33
+    },
+    {
+      word: "Arrivals",
+      groupTypes: [
+        "migrant"
+      ],
+      registers: "all",
+      person: true,
+      mult: 0.33
+    },
+    {
+      word: "Wanderers",
+      groupTypes: [
+        "migrant"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "Exiles",
+      groupTypes: [
+        "migrant"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "Followers",
+      groupTypes: [
+        "migrant",
+        "dynasty"
+      ],
+      registers: "all",
+      person: true,
+      traditions: [
+        "mediterranean",
+        "bantu"
+      ],
+      lineage: true
+    },
+    {
+      word: "Kin",
+      groupTypes: [
+        "kin",
+        "moiety"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "Kindred",
+      groupTypes: [
+        "kin"
+      ],
+      registers: "all",
+      person: true,
+      traditions: [
+        "celtic"
+      ],
+      lineage: true
+    },
+    {
+      word: "Children",
+      groupTypes: [
+        "kin",
+        "sanctuary",
+        "dynasty"
+      ],
+      registers: "all",
+      person: true,
+      lineage: true
+    },
+    {
+      word: "Descendants",
+      groupTypes: [
+        "kin",
+        "dynasty"
+      ],
+      registers: "all",
+      person: true,
+      lineage: true
+    },
+    {
+      word: "Sons",
+      groupTypes: [
+        "kin",
+        "dynasty"
+      ],
+      registers: "all",
+      person: true,
+      lineage: true,
+      descent: "patrilineal"
+    },
+    {
+      word: "Daughters",
+      groupTypes: [
+        "kin"
+      ],
+      registers: "all",
+      person: true,
+      lineage: true,
+      descent: "matrilineal"
+    },
+    {
+      word: "Seed",
+      groupTypes: [
+        "kin"
+      ],
+      registers: [
+        "historical",
+        "legendary"
+      ],
+      traditions: [
+        "celtic"
+      ],
+      lineage: true
+    },
+    {
+      word: "Portion",
+      groupTypes: [
+        "kin"
+      ],
+      registers: [
+        "historical",
+        "legendary"
+      ],
+      traditions: [
+        "celtic"
+      ],
+      lineage: true
+    },
+    {
+      word: "Bone",
+      groupTypes: [
+        "kin",
+        "dynasty"
+      ],
+      registers: "all",
+      traditions: [
+        "steppe"
+      ],
+      lineage: true
+    },
+    {
+      word: "Family",
+      groupTypes: [
+        "kin"
+      ],
+      registers: "all",
+      person: true,
+      traditions: [
+        "arabian",
+        "polynesian"
+      ],
+      lineage: true
+    },
+    {
+      word: "House",
+      groupTypes: [
+        "kin",
+        "dynasty",
+        "settlement"
+      ],
+      registers: "all",
+      lineage: true,
+      singular: true
+    },
+    {
+      word: "Line",
+      groupTypes: [
+        "kin",
+        "dynasty"
+      ],
+      registers: "all",
+      lineage: true,
+      singular: true
+    },
+    {
+      word: "Clan",
+      groupTypes: [
+        "kin",
+        "moiety",
+        "occupational"
+      ],
+      registers: "all",
+      lineage: true,
+      singular: true
+    },
+    {
+      word: "Lords",
+      groupTypes: [
+        "dynasty",
+        "warband"
+      ],
+      registers: "all",
+      person: true,
+      groupMult: {
+        dynasty: 2
+      },
+      mult: 0.5,
+      role: true
+    },
+    {
+      word: "Masters",
+      groupTypes: [
+        "dynasty",
+        "warband"
+      ],
+      registers: "all",
+      person: true,
+      groupMult: {
+        dynasty: 2
+      },
+      mult: 0.5,
+      role: true
+    },
+    {
+      word: "Heirs",
+      groupTypes: [
+        "dynasty",
+        "warband"
+      ],
+      registers: "all",
+      person: true,
+      groupMult: {
+        dynasty: 2
+      },
+      mult: 0.5,
+      role: true
+    },
+    {
+      word: "Warriors",
+      groupTypes: [
+        "warband"
+      ],
+      registers: "all",
+      person: true,
+      role: true
+    },
+    {
+      word: "Companions",
+      groupTypes: [
+        "warband"
+      ],
+      registers: "all",
+      person: true,
+      role: true
+    },
+    {
+      word: "Spears",
+      groupTypes: [
+        "warband"
+      ],
+      registers: "all"
+    },
+    {
+      word: "Shields",
+      groupTypes: [
+        "warband"
+      ],
+      registers: "all"
+    },
+    {
+      word: "Guard",
+      groupTypes: [
+        "warband"
+      ],
+      registers: "all",
+      person: true,
+      role: true
+    },
+    {
+      word: "Host",
+      groupTypes: [
+        "warband",
+        "confederation"
+      ],
+      registers: "all"
+    },
+    {
+      word: "Horde",
+      groupTypes: [
+        "warband",
+        "confederation"
+      ],
+      registers: "all",
+      traditions: [
+        "steppe"
+      ]
+    },
+    {
+      word: "Riders",
+      groupTypes: [
+        "warband",
+        "regional"
+      ],
+      registers: "all",
+      person: true,
+      traditions: [
+        "steppe",
+        "arabian",
+        "northAmerican"
+      ],
+      traditionMult: {
+        northAmerican: 0.6
+      },
+      gate: "mounts",
+      horse: true,
+      role: true
+    },
+    {
+      word: "Arrows",
+      groupTypes: [
+        "confederation",
+        "kin"
+      ],
+      registers: "all",
+      traditions: [
+        "steppe"
+      ],
+      gate: "arrows"
+    },
+    {
+      word: "Tents",
+      groupTypes: [
+        "confederation",
+        "kin"
+      ],
+      registers: "all",
+      traditions: [
+        "steppe",
+        "arabian"
+      ],
+      gate: "tents"
+    },
+    {
+      word: "Fires",
+      groupTypes: [
+        "confederation"
+      ],
+      registers: "all",
+      traditions: [
+        "northAmerican"
+      ]
+    },
+    {
+      word: "Allies",
+      groupTypes: [
+        "confederation"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "Allied Houses",
+      groupTypes: [
+        "confederation"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "United Kindreds",
+      groupTypes: [
+        "confederation"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "Tribes",
+      groupTypes: [
+        "confederation"
+      ],
+      registers: [
+        "administrative"
+      ],
+      perspectives: [
+        "later"
+      ]
+    },
+    {
+      word: "Confederacy",
+      groupTypes: [
+        "confederation"
+      ],
+      registers: [
+        "administrative"
+      ],
+      singular: true
+    },
+    {
+      word: "Confederation",
+      groupTypes: [
+        "confederation"
+      ],
+      registers: [
+        "administrative"
+      ],
+      singular: true
+    },
+    {
+      word: "Guardians",
+      groupTypes: [
+        "frontier"
+      ],
+      registers: "all",
+      person: true,
+      role: true
+    },
+    {
+      word: "Defenders",
+      groupTypes: [
+        "frontier"
+      ],
+      registers: "all",
+      person: true,
+      role: true
+    },
+    {
+      word: "Watchers",
+      groupTypes: [
+        "frontier"
+      ],
+      registers: "all",
+      person: true,
+      role: true
+    },
+    {
+      word: "Borderers",
+      groupTypes: [
+        "frontier"
+      ],
+      registers: "all",
+      person: true,
+      role: true
+    },
+    {
+      word: "March Folk",
+      groupTypes: [
+        "frontier"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "Defenders",
+      groupTypes: [
+        "warband"
+      ],
+      registers: "all",
+      person: true,
+      role: true
+    },
+    {
+      word: "Wardens",
+      groupTypes: [
+        "frontier",
+        "sanctuary"
+      ],
+      registers: [
+        "historical",
+        "legendary"
+      ],
+      person: true,
+      mult: 0.5,
+      role: true
+    },
+    {
+      word: "Keepers",
+      groupTypes: [
+        "sanctuary"
+      ],
+      registers: "all",
+      person: true,
+      role: true
+    },
+    {
+      word: "Guardians",
+      groupTypes: [
+        "sanctuary"
+      ],
+      registers: "all",
+      person: true,
+      role: true
+    },
+    {
+      word: "Servants",
+      groupTypes: [
+        "sanctuary"
+      ],
+      registers: "all",
+      person: true,
+      mult: 0.5,
+      role: true
+    },
+    {
+      word: "Side",
+      groupTypes: [
+        "moiety"
+      ],
+      registers: "all",
+      singular: true
+    },
+    {
+      word: "Half",
+      groupTypes: [
+        "moiety"
+      ],
+      registers: "all",
+      singular: true
+    },
+    {
+      word: "Hand",
+      groupTypes: [
+        "moiety"
+      ],
+      registers: "all",
+      singular: true
+    },
+    {
+      word: "Quarter",
+      groupTypes: [
+        "moiety"
+      ],
+      registers: "all",
+      singular: true
+    },
+    {
+      word: "Guild",
+      groupTypes: [
+        "occupational"
+      ],
+      registers: [
+        "historical",
+        "administrative"
+      ],
+      traditions: [
+        "eastAsian"
+      ],
+      singular: true
+    },
+    {
+      word: "Folk",
+      groupTypes: [
+        "occupational"
+      ],
+      registers: "all",
+      person: true
+    },
+    {
+      word: "Great House",
+      groupTypes: [
+        "settlement"
+      ],
+      registers: [
+        "historical"
+      ],
+      traditions: [
+        "mesoamerican"
+      ],
+      singular: true
+    },
+    {
+      word: "Men",
+      groupTypes: [
+        "regional",
+        "warband"
+      ],
+      registers: "all",
+      person: true,
+      traditionMult: {
+        germanic: 2
+      },
+      mult: 0.3
+    }
+  ],
+  lineageCollectives: [
+    "Children",
+    "Descendants",
+    "Sons",
+    "Daughters",
+    "Seed",
+    "Portion",
+    "Bone",
+    "House",
+    "Line",
+    "Family",
+    "Kindred",
+    "Clan",
+    "Followers"
+  ],
+  templates: {
+    weights: {
+      A: [
+        18,
+        6,
+        4,
+        8
+      ],
+      B: [
+        17,
+        8,
+        3,
+        16
+      ],
+      C: [
+        12,
+        18,
+        16,
+        12
+      ],
+      D: [
+        3,
+        8,
+        4,
+        4
+      ],
+      E: [
+        9,
+        8,
+        2,
+        16
+      ],
+      F: [
+        6,
+        5,
+        6,
+        4
+      ],
+      G: [
+        7,
+        12,
+        14,
+        5
+      ],
+      H: [
+        3,
+        6,
+        5,
+        2
+      ],
+      I: [
+        4,
+        7,
+        9,
+        6
+      ],
+      J: [
+        4,
+        5,
+        5,
+        10
+      ],
+      K: [
+        1,
+        2,
+        13,
+        0
+      ],
+      L: [
+        6,
+        3,
+        1,
+        8
+      ],
+      M: [
+        2,
+        2,
+        2,
+        1
+      ],
+      N: [
+        2,
+        3,
+        2,
+        2
+      ],
+      O: [
+        3,
+        2,
+        7,
+        0
+      ],
+      P: [
+        1,
+        2,
+        1,
+        4
+      ],
+      Q: [
+        1,
+        2,
+        3,
+        1
+      ],
+      R: [
+        1,
+        1,
+        3,
+        1
+      ]
+    },
+    themes: {
+      A: [
+        "qualities",
+        "warfare",
+        "dress",
+        "direction",
+        "animals",
+        "plants",
+        "sacred",
+        "relationship"
+      ],
+      B: [
+        "landscape",
+        "water",
+        "plants"
+      ],
+      C: [
+        "landscape",
+        "water",
+        "plants",
+        "sacred",
+        "vessel"
+      ],
+      D: [
+        "landscape",
+        "water"
+      ],
+      E: [
+        "direction",
+        "landscape",
+        "water"
+      ],
+      F: [
+        "warfare",
+        "animals",
+        "plants"
+      ],
+      G: [
+        "animals",
+        "plants",
+        "sacred",
+        "ancestor",
+        "vessel"
+      ],
+      H: [
+        "landscape",
+        "water"
+      ],
+      I: [
+        "landscape",
+        "water",
+        "sacred",
+        "warfare"
+      ],
+      J: [
+        "number"
+      ],
+      K: [
+        "landscape",
+        "water",
+        "animals",
+        "sacred",
+        "warfare"
+      ],
+      L: [
+        "lifeway"
+      ],
+      M: [
+        "speech"
+      ],
+      N: [
+        "ancestor"
+      ],
+      O: [
+        "qualities",
+        "relationship"
+      ],
+      P: [
+        "plants",
+        "animals",
+        "lifeway"
+      ],
+      Q: [
+        "landscape",
+        "plants",
+        "animals"
+      ],
+      R: [
+        "animals"
+      ]
+    },
+    groupTypes: {
+      G: [
+        "kin",
+        "dynasty",
+        "sanctuary",
+        "moiety"
+      ],
+      N: [
+        "kin",
+        "dynasty",
+        "sanctuary",
+        "moiety"
+      ],
+      J: [
+        "confederation",
+        "regional",
+        "kin"
+      ],
+      K: [
+        "regional",
+        "settlement",
+        "kin",
+        "dynasty",
+        "confederation",
+        "warband",
+        "migrant",
+        "frontier",
+        "sanctuary",
+        "moiety"
+      ],
+      L: [
+        "regional",
+        "settlement",
+        "occupational",
+        "migrant"
+      ],
+      M: [
+        "regional",
+        "confederation"
+      ],
+      P: [
+        "kin",
+        "dynasty",
+        "occupational"
+      ],
+      R: [
+        "migrant"
+      ]
+    },
+    perspectives: {
+      O: [
+        "self",
+        "ceremonial"
+      ]
+    },
+    traditions: {
+      P: {
+        eastAsian: 1,
+        general: 0.2
+      },
+      Q: {
+        mesoamerican: 1,
+        general: 0.2
+      }
+    },
+    tail: [
+      "A",
+      "B",
+      "E",
+      "F",
+      "L",
+      "P"
+    ]
+  },
+  registers: [
+    "plain",
+    "historical",
+    "legendary",
+    "administrative"
+  ],
+  registerLabels: {
+    plain: "Plain translated",
+    historical: "Historical narrative",
+    legendary: "Legendary",
+    administrative: "Administrative"
+  },
+  lengthCaps: {
+    plain: 6,
+    historical: 8,
+    administrative: 7,
+    legendary: 9
+  },
+  personCollectives: [
+    "People",
+    "Peoples",
+    "Folk",
+    "Men",
+    "Kin",
+    "Kindred",
+    "Children",
+    "Sons",
+    "Daughters",
+    "Nation",
+    "Dwellers",
+    "Ones",
+    "Inhabitants",
+    "Settlers",
+    "Newcomers",
+    "Arrivals",
+    "Wanderers",
+    "Exiles",
+    "Followers",
+    "Descendants",
+    "Family",
+    "Lords",
+    "Masters",
+    "Heirs",
+    "Warriors",
+    "Companions",
+    "Riders",
+    "Guardians",
+    "Defenders",
+    "Watchers",
+    "Borderers",
+    "Wardens",
+    "Keepers",
+    "Servants",
+    "Allies",
+    "Tribes",
+    "Clan",
+    "Seed",
+    "Portion"
+  ],
+  history: {
+    coinage: {
+      self: [
+        "The name was their own, used at gatherings and in the recitation of descent.",
+        "They called themselves this long before anyone wrote it down.",
+        "Elders taught the name to children as the first thing they should know about who they were."
+      ],
+      "neighbour.respectful": [
+        "Their neighbours coined the name out of respect for {custom}.",
+        "Those who traded with them named them for {feature}, and meant it kindly."
+      ],
+      "neighbour.neutral": [
+        "Communities nearby first used the name for the people of the {feature}.",
+        "Travellers gave them the name because it was the plainest way to say where they lived."
+      ],
+      "neighbour.hostile": [
+        "Rivals coined the name as a jibe at {custom}.",
+        "It began as an insult shouted across a disputed border."
+      ],
+      geographical: [
+        "The name began as a plain description of the settlements around the {feature}.",
+        "It named the country first and the people second."
+      ],
+      dynastic: [
+        "The ruling house traced its line to {ancestor}, and the name proclaimed it.",
+        "The name was taken by the heirs of {ancestor} to set them above other families."
+      ],
+      ceremonial: [
+        "The title was spoken at councils and in war-songs, never in ordinary speech.",
+        "Priests and singers used the name; most people used something plainer."
+      ],
+      later: [
+        "Chroniclers applied the name to several communities they could not tell apart.",
+        "Map-makers wrote the name across a region they knew only from report."
+      ],
+      imposed: [
+        "Imperial officials recorded the name when the region was brought under tribute.",
+        "Conquerors used the name in their tax rolls, and it stuck."
+      ]
+    },
+    meaning: {
+      landscape: "It refers to the {feature} at the heart of their lands.",
+      water: "It recalls the {feature} on which their lives depended.",
+      warfare: "It boasts of {emblem} and the battles fought with it.",
+      animals: "The {animal} was their {interpretation}.",
+      plants: "The {plant} stood at the centre of their oldest settlement.",
+      sacred: "It names the {sacred} they held holy.",
+      direction: "It placed them {direction}.",
+      qualities: "It marks them out as {quality}.",
+      number: "It counts {number} groups bound together by oath.",
+      lifeway: "It names the work that fed them: they were {lifeway}.",
+      speech: "It turns on how they spoke, which was the first thing strangers noticed.",
+      dress: "It describes how they looked to others: {dress}.",
+      ancestor: "It claims descent from {ancestor}.",
+      vessel: "It remembers {vessel}, which first brought them to this land.",
+      relationship: "It sets them in relation to the centre of the known world."
+    },
+    qualityGloss: {
+      High: "the people of the high ground",
+      Great: "a great and numerous people",
+      Strong: "a strong people",
+      Bold: "a bold people",
+      Watchful: "a watchful people, slow to trust",
+      Swift: "swift travellers",
+      Enduring: "a people who endure",
+      Ancient: "an ancient people",
+      New: "newcomers",
+      Old: "the oldest settled people",
+      Fierce: "a fierce people",
+      Steadfast: "a steadfast people",
+      Many: "a numerous people",
+      Free: "a free people, subject to no one",
+      Noble: "a noble people",
+      True: "the true people",
+      Real: "the real people",
+      Unconquered: "a people never conquered",
+      Proud: "a proud people"
+    },
+    directionGloss: {
+      Northern: "to the north",
+      North: "to the north",
+      Southern: "to the south",
+      South: "to the south",
+      Eastern: "to the east",
+      East: "to the east",
+      Western: "to the west",
+      West: "to the west",
+      Upper: "upstream or uphill",
+      Lower: "downstream or downhill",
+      Inner: "nearer the centre",
+      Outer: "out on the edges",
+      Near: "close at hand",
+      Far: "far off",
+      Beyond: "beyond the borders",
+      Across: "across the water",
+      Between: "between two greater peoples",
+      Central: "at the centre",
+      Middle: "at the centre",
+      Border: "on the frontier",
+      Frontier: "on the frontier",
+      Around: "around the city",
+      Sunrise: "towards the sunrise",
+      Dawn: "towards the sunrise",
+      Sunset: "towards the sunset",
+      Evening: "towards the sunset",
+      Upriver: "upriver",
+      Upstream: "upriver",
+      Downriver: "downriver",
+      Downstream: "downriver",
+      Inland: "inland",
+      Seaward: "towards the sea",
+      Mountainward: "towards the mountains",
+      Windward: "on the windward side",
+      Leeward: "on the leeward side",
+      "Upper Half": "in the upper half of a divided people",
+      "Lower Half": "in the lower half of a divided people",
+      "Left-Hand": "on the left hand of the ruler",
+      "Right-Hand": "on the right hand of the ruler",
+      Saltwater: "by the salt water",
+      Freshwater: "by the fresh water",
+      Upland: "in the uplands",
+      Lowland: "in the lowlands"
+    },
+    dressGloss: {
+      "Long-Beard": "long beards",
+      "Long-Hair": "long hair",
+      Painted: "painted skin",
+      "Black-Cloak": "black cloaks",
+      "Red-Cloak": "red cloaks",
+      "Bear-Cloak": "bearskin cloaks",
+      Shaven: "shaven heads",
+      Topknot: "topknots",
+      Tattooed: "tattoos",
+      "Bright-Shield": "bright shields",
+      "Black-Shield": "black shields",
+      "Painted-Moccasin": "painted moccasins",
+      "Fur-Cloak": "fur cloaks",
+      "Feather-Cloak": "feather cloaks",
+      Veiled: "veiled faces"
+    },
+    acceptance: {
+      embraced: "They took the name as their own and use it with pride.",
+      accepted: "They accepted the name without complaint.",
+      tolerated: "They tolerated the name but rarely used it among themselves.",
+      resented: "They resented the name and corrected anyone who used it.",
+      reclaimed: "Later generations took up the insult and wore it with pride.",
+      unknown: "Whether they ever used the name themselves is not recorded."
+    },
+    acceptanceWeights: {
+      self: {
+        embraced: 80,
+        accepted: 20
+      },
+      "neighbour.respectful": {
+        embraced: 25,
+        accepted: 50,
+        tolerated: 25
+      },
+      "neighbour.neutral": {
+        embraced: 10,
+        accepted: 50,
+        tolerated: 30,
+        resented: 10
+      },
+      "neighbour.hostile": {
+        accepted: 10,
+        tolerated: 25,
+        resented: 45,
+        reclaimed: 20
+      },
+      geographical: {
+        embraced: 20,
+        accepted: 60,
+        tolerated: 20
+      },
+      dynastic: {
+        embraced: 70,
+        accepted: 30
+      },
+      ceremonial: {
+        embraced: 90,
+        accepted: 10
+      },
+      later: {
+        accepted: 40,
+        tolerated: 30,
+        unknown: 30
+      },
+      imposed: {
+        accepted: 20,
+        tolerated: 35,
+        resented: 35,
+        reclaimed: 10
+      }
+    },
+    drift: {
+      none: "Its meaning has not changed.",
+      broadened: "In time it came to cover the whole of the surrounding region.",
+      narrowed: "In time it came to mean only the ruling families.",
+      "passed to the land": "The land itself now bears the name.",
+      outlived: "The name has outlived the people it once described.",
+      transferred: "The people who replaced them took the name over.",
+      "became a title": "It survives as a title rather than the name of a people."
+    },
+    driftWeights: {
+      none: 40,
+      broadened: 15,
+      narrowed: 10,
+      "passed to the land": 15,
+      outlived: 8,
+      transferred: 7,
+      "became a title": 5
+    },
+    interpretations: [
+      {
+        key: "ancestor",
+        weight: 25,
+        text: "legendary ancestor"
+      },
+      {
+        key: "regional",
+        weight: 20,
+        text: "emblem across the region"
+      },
+      {
+        key: "warrior",
+        weight: 15,
+        text: "warriors' badge"
+      },
+      {
+        key: "nickname",
+        weight: 15,
+        text: "nickname among outsiders"
+      },
+      {
+        key: "royal",
+        weight: 10,
+        text: "royal symbol"
+      },
+      {
+        key: "sacred",
+        weight: 10,
+        text: "sacred companion"
+      },
+      {
+        key: "taboo",
+        weight: 5,
+        text: "sacred animal, which they must never harm or eat"
+      }
+    ],
+    transplanted: "Their ancestors brought the old ways of naming with them into {biome}.",
+    echo: "The name echoes that of a real historical people."
+  },
+  safeguards: {
+    blockList: [
+      "Blackfoot",
+      "Crow",
+      "People of the Longhouse",
+      "People of the Standing Stone",
+      "People of the Flint",
+      "People of the Great Hill",
+      "People of the Great Swamp",
+      "People of the Dawn Land",
+      "Dawn Land People",
+      "Children of the Mist",
+      "Cloud People",
+      "People of the Rain",
+      "Original People",
+      "Seven Council Fires",
+      "People of the Veil"
+    ],
+    flagList: [
+      "Ten Arrows",
+      "Nine Tribes",
+      "Golden Horde",
+      "White Horde",
+      "Blue Horde",
+      "Royal Scythians",
+      "Black Cloaks",
+      "Long Beards",
+      "All Men",
+      "Painted People",
+      "Sea Peoples",
+      "Sons of the Lion",
+      "Sons of the Dog",
+      "Followers of the Woodpecker",
+      "Followers of the Bull",
+      "Falcon People",
+      "Shark Canoe"
+    ],
+    flagListBlocks: false,
+    banned: [
+      "Savages",
+      "Barbarians",
+      "Primitives",
+      "Heathens",
+      "Redskins",
+      "Squaw",
+      "Bushmen",
+      "Hottentots",
+      "Eskimos",
+      "Head-Hunters",
+      "Cannibals",
+      "Natives"
+    ]
+  }
+};
+
+// src/tribes/engine.ts
+var TRIBAL_DATA = tribal_names_default;
+var V = TRIBAL_DATA.vocabulary;
+var TRIBAL_TRADITIONS = TRIBAL_DATA.traditions;
+var TRIBAL_REGISTERS = TRIBAL_DATA.registers;
+var TRIBAL_GROUP_TYPES = TRIBAL_DATA.groupTypes;
+var TRIBAL_PERSPECTIVES = Object.keys(TRIBAL_DATA.perspectives);
+var PERSON_COLLECTIVES = TRIBAL_DATA.personCollectives;
+function findTradition(key2) {
+  return TRIBAL_TRADITIONS.find((t) => t.key === key2);
+}
+function pick(items, rng) {
+  const live4 = items.filter(([, w]) => w > 0);
+  if (live4.length === 0) return void 0;
+  const total = live4.reduce((n, [, w]) => n + w, 0);
+  let r = rng() * total;
+  for (const [item2, w] of live4) {
+    r -= w;
+    if (r < 0) return item2;
+  }
+  return live4[live4.length - 1][0];
+}
+var pickRecord = (weights, rng) => pick(Object.entries(weights), rng);
+var pickPool = (pool3, rng) => pick([...pool3.entries()], rng);
+var pickUniform2 = (items, rng) => items[Math.floor(rng() * items.length)];
+var add = (pool3, word, weight) => {
+  var _a2;
+  if (weight > 0) pool3.set(word, ((_a2 = pool3.get(word)) != null ? _a2 : 0) + weight);
+};
+var lower = (s) => s.toLowerCase();
+var wordRe = (w) => new RegExp(`(^|[^A-Za-z])${w.replace(/[-']/g, "\\$&")}s?($|[^A-Za-z])`, "i");
+var SMALL = /* @__PURE__ */ new Set(["a", "an", "and", "at", "by", "in", "of", "on", "the", "to"]);
+function tribalTitleCase(text) {
+  return text.split(" ").map((word, i) => {
+    if (i > 0 && SMALL.has(word.toLowerCase())) return word.toLowerCase();
+    return word.split("-").map((part) => part ? part.charAt(0).toUpperCase() + part.slice(1) : part).join("-");
+  }).join(" ");
+}
+var share = (ctx, ...terrains) => terrains.reduce((n, t) => {
+  var _a2;
+  return n + ((_a2 = ctx.terrainWeights[t]) != null ? _a2 : 0);
+}, 0);
+function effectiveTerrains(trad, biome, terrain) {
+  var _a2;
+  const zero = Object.fromEntries(TERRAINS.map((t) => [t, 0]));
+  if (terrain && terrain !== "any" && ((_a2 = biome.terrainWeights[terrain]) != null ? _a2 : 0) > 0) return { ...zero, [terrain]: 100 };
+  const keys = Object.keys(biome.terrainWeights);
+  const raw = Object.fromEntries(keys.map((t) => {
+    var _a3;
+    return [t, biome.terrainWeights[t] * ((_a3 = trad.terrainMultipliers[t]) != null ? _a3 : 1)];
+  }));
+  const total = Object.values(raw).reduce((n, w) => n + w, 0) || 1;
+  return { ...zero, ...Object.fromEntries(keys.map((t) => [t, raw[t] * 100 / total])) };
+}
+function suppression(ctx, word) {
+  let m = 1;
+  for (const s of ctx.trad.suppress) {
+    if (s.kind === "homeland" && ctx.mode === "chosen") continue;
+    const hit = s.word === "Horse" ? isHorseWord(word) : wordRe(s.word).test(word);
+    if (hit) m *= s.mult;
+  }
+  return m;
+}
+var isHorseWord = (word) => /(^|[^a-z])(horse|horses|mare)($|[^a-z])/i.test(word);
+function mounts(ctx) {
+  return biomeWords(ctx.biome, "livestock").filter(([w, n]) => ["horse", "camel", "reindeer", "yak", "llama"].includes(w) && n >= 1).map(([w]) => w).filter((w) => w !== "horse" || suppression(ctx, "Horse") > 0);
+}
+var hasLivestock = (ctx, animal2) => biomeWords(ctx.biome, "livestock").some(([w, n]) => w === animal2 && n >= 1);
+function filtered(ctx, word, weight) {
+  if (weight <= 0) return 0;
+  if (TRIBAL_DATA.safeguards.banned.some((b) => wordRe(b).test(word))) return 0;
+  return weight * suppression(ctx, word);
+}
+function landPool(ctx, kind, terrain) {
+  var _a2;
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const [w, n] of terrainWords(ctx.biome, kind, terrain)) add(pool3, w, filtered(ctx, w, n));
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour[kind]) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 3));
+  return pool3;
+}
+function featureWord(ctx, kind) {
+  var _a2;
+  const pinned = (_a2 = ctx.pin.get(kind === "any" ? "feature" : kind)) != null ? _a2 : ctx.pin.get("feature");
+  if (pinned) return pinned;
+  const k = kind === "any" ? ctx.rng() < 0.5 ? "land" : "water" : kind;
+  const terrains = Object.keys(ctx.terrainWeights).map((t) => [t, landPool(ctx, k, t).size > 0 ? ctx.terrainWeights[t] : 0]);
+  const terrain = pick(terrains, ctx.rng);
+  if (!terrain) return kind === "any" ? featureWord(ctx, k === "land" ? "water" : "land") : void 0;
+  ctx.terrain = terrain;
+  return pickPool(landPool(ctx, k, terrain), ctx.rng);
+}
+var hasColour = (word) => V.colours.some((c) => word.toLowerCase().includes(c.toLowerCase())) || /yellow/i.test(word);
+function withColour(ctx, word) {
+  if (ctx.rng() >= 0.2 || hasColour(word)) return word;
+  return `${pickUniform2(V.colours, ctx.rng)} ${word}`;
+}
+function animalPool(ctx, wild = false) {
+  var _a2, _b;
+  const pool3 = /* @__PURE__ */ new Map();
+  const b = ctx.biome;
+  const lists = wild ? [["wildAnimals", 1], ["birds", 1]] : [["wildAnimals", 1], ["birds", 1], ["creatures", 0.7], ["livestock", 0.5]];
+  for (const [list, factor] of lists) {
+    for (const [w, n] of biomeWords(b, list)) {
+      const word = biomeTitleCase(w);
+      add(pool3, word, filtered(ctx, word, 2 * factor * n));
+    }
+  }
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.animals) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 3));
+  if (!wild && ctx.register === "legendary") {
+    for (const [w, mults] of Object.entries(V.mythic)) add(pool3, w, filtered(ctx, w, 0.5 * ((_b = mults[ctx.trad.key]) != null ? _b : 1)));
+  }
+  return pool3;
+}
+function plantPool(ctx) {
+  var _a2;
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const [list, factor] of [["trees", 1], ["plants", 1], ["crops", 0.5]]) {
+    for (const [w, n] of biomeWords(ctx.biome, list)) {
+      const word = biomeTitleCase(w);
+      add(pool3, word, filtered(ctx, word, 2 * factor * n));
+    }
+  }
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.plants) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 3));
+  return pool3;
+}
+function sacredPool(ctx) {
+  const pool3 = /* @__PURE__ */ new Map();
+  const only = ctx.trad.special.sacredOnly;
+  if (only) {
+    for (const w of only) add(pool3, w, 1);
+    return pool3;
+  }
+  for (const w of V.sacredUniversal) add(pool3, w, filtered(ctx, w, 1));
+  for (const [w, n] of biomeWords(ctx.biome, "sacred")) add(pool3, w, filtered(ctx, w, 2 * n));
+  return pool3;
+}
+function lifewayPool(ctx) {
+  var _a2;
+  const pool3 = /* @__PURE__ */ new Map();
+  const canRide = mounts(ctx).length > 0;
+  const fav = new Set(ctx.trad.favouredLifeways);
+  const gate = (w) => w === "Riders" && !canRide ? 0 : 1;
+  for (const [w, n] of biomeWords(ctx.biome, "lifeways")) add(pool3, w, filtered(ctx, w, n * (fav.has(w) ? 2 : 1) * gate(w)));
+  if (ctx.mode === "homeland") for (const w of (_a2 = ctx.trad.flavour.lifeways) != null ? _a2 : []) add(pool3, w, filtered(ctx, w, 10 * gate(w)));
+  return pool3;
+}
+var materials = (ctx) => {
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const [w, n] of biomeWords(ctx.biome, "materials")) add(pool3, w, filtered(ctx, w, n));
+  return pool3;
+};
+function warfarePool(ctx, objectsOnly = false) {
+  const pool3 = /* @__PURE__ */ new Map();
+  const restricted = (w) => {
+    var _a2, _b;
+    const allowed = V.warfareRestricted[w];
+    if (!allowed) return 1;
+    const m = (_b = (_a2 = allowed[ctx.trad.key]) != null ? _a2 : allowed["*"]) != null ? _b : 0;
+    if (w === "War Canoe" && share(ctx, "coast", "rivers", "islands") < 20) return m * 0.2;
+    return m;
+  };
+  const words = objectsOnly ? V.warfareObjects : [...V.warfareUniversal, ...Object.keys(V.warfareRestricted)];
+  for (const w of words) add(pool3, w, filtered(ctx, w, restricted(w)));
+  return pool3;
+}
+function directionPool(ctx, { halves = false, colours = true } = {}) {
+  var _a2, _b;
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const o of ctx.trad.orientation) {
+    let words = (_b = (_a2 = o.words) != null ? _a2 : V.directions[o.system]) != null ? _b : [];
+    if (!halves) words = words.filter((w) => !w.endsWith(" Half"));
+    if (!colours && o.system === "colourDirection") continue;
+    let m = o.mult;
+    if (o.system === "seaAxis" && share(ctx, "coast", "islands") < 10) m *= 0.2;
+    if (o.system === "riverAxis" && share(ctx, "rivers") < 15) m *= 0.2;
+    for (const w of words) add(pool3, w, filtered(ctx, w, m));
+  }
+  return pool3;
+}
+function qualityPool(ctx) {
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const w of V.qualities) add(pool3, w, 1);
+  if (["self", "dynastic", "ceremonial"].includes(ctx.perspective)) for (const w of V.interpretiveQualities) add(pool3, w, 1);
+  return pool3;
+}
+function dressPool(ctx) {
+  const pool3 = /* @__PURE__ */ new Map();
+  const id = ctx.biome.id;
+  const gate = {
+    "Bear-Cloak": biomeWords(ctx.biome, "wildAnimals").some(([w]) => w === "bear"),
+    "Fur-Cloak": id === "boreal" || id === "highland",
+    "Feather-Cloak": id === "rainforest" || id === "tropical-islands",
+    Veiled: id === "desert",
+    "Painted-Moccasin": !!ctx.trad.special.paintedMoccasin
+  };
+  for (const w of V.dress) add(pool3, w, filtered(ctx, w, gate[w] === false ? 0 : 1));
+  return pool3;
+}
+function numberWord(ctx) {
+  const preferred = new Set(ctx.trad.numbers);
+  return pick(V.numbers.map((n) => [n, preferred.has(n) ? 3 : 0.3]), ctx.rng);
+}
+function countedOk(ctx, noun) {
+  var _a2, _b;
+  const id = ctx.biome.id;
+  switch (noun) {
+    case "Islands":
+      return share(ctx, "islands") >= 5 ? 1 : 0;
+    case "Canoes":
+      return share(ctx, "coast", "rivers") >= 20 ? 1 : 0;
+    case "Rivers":
+    case "Streams":
+    case "Lakes":
+      return share(ctx, "rivers") >= 15 ? 1 : 0;
+    case "Wells":
+      return id === "desert" || id === "steppe" ? 1 : 0;
+    case "Tents":
+      return id === "steppe" || id === "desert" || id === "boreal" ? 1 : 0;
+    case "Arrows": {
+      const allowed = V.warfareRestricted.Arrow;
+      return (_b = (_a2 = allowed[ctx.trad.key]) != null ? _a2 : allowed["*"]) != null ? _b : 0;
+    }
+    case "Fires":
+      return ctx.trad.key === "northAmerican" ? 3 : 1;
+    default:
+      return 1;
+  }
+}
+function vesselWord(ctx) {
+  const pinned = ctx.pin.get("vessel");
+  if (pinned) return pinned;
+  const rng = ctx.rng;
+  if (ctx.mode === "chosen" && rng() < 1 / 3) {
+    const pool4 = /* @__PURE__ */ new Map();
+    for (const list of ["birds", "creatures"]) for (const [w, n] of biomeWords(ctx.biome, list)) add(pool4, biomeTitleCase(w), filtered(ctx, w, n));
+    const animal2 = pickPool(pool4, rng);
+    if (animal2) return `the ${pickUniform2(V.colours, rng)} ${animal2} Canoe`;
+  }
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const c of V.canoes) add(pool3, c, 2);
+  for (const v of V.voyages) add(pool3, v, 1);
+  if (ctx.trad.special.longship) add(pool3, "the Longship", 2);
+  if (share(ctx, "rivers") >= 25) add(pool3, "the Raft", 1);
+  return pickPool(pool3, rng);
+}
+function collectivePool(ctx, filter = {}) {
+  var _a2, _b, _c, _d, _e, _f;
+  const pool3 = /* @__PURE__ */ new Map();
+  const lineageSet = new Set(TRIBAL_DATA.lineageCollectives);
+  const signature = new Set(ctx.trad.signatureCollectives);
+  for (const row of TRIBAL_DATA.collectives) {
+    if (!row.groupTypes.includes(ctx.groupType)) continue;
+    if (row.registers !== "all" && !row.registers.includes(ctx.register)) continue;
+    if (row.perspectives && !row.perspectives.includes(ctx.perspective)) continue;
+    if (row.descent && row.descent !== ctx.lineage) continue;
+    if (filter.lineageOnly && !lineageSet.has(row.word)) continue;
+    if (filter.roleOnly && !row.role) continue;
+    if (filter.personOnly && !row.person) continue;
+    if (filter.only && !filter.only.includes(row.word)) continue;
+    let w = (_c = (_b = (_a2 = row.groupMult) == null ? void 0 : _a2[ctx.groupType]) != null ? _b : row.mult) != null ? _c : 1;
+    if (row.traditions && !row.traditions.includes(ctx.trad.key)) w *= ctx.trad.key === "general" ? 0.3 : 0;
+    w *= (_e = (_d = row.traditionMult) == null ? void 0 : _d[ctx.trad.key]) != null ? _e : 1;
+    if (signature.has(row.word)) w *= 2;
+    w *= (_f = ctx.trad.lineageMultipliers[row.word]) != null ? _f : 1;
+    if (row.gate === "mounts" && mounts(ctx).length === 0) w = 0;
+    if (row.gate === "arrows" || row.gate === "tents") w *= countedOk(ctx, row.gate === "arrows" ? "Arrows" : "Tents");
+    add(pool3, row.word, filtered(ctx, row.word, w));
+  }
+  return pool3;
+}
+var collective = (ctx, filter) => pickPool(collectivePool(ctx, filter), ctx.rng);
+function traditionThemeWeights(trad) {
+  const raw = Object.fromEntries(Object.entries(TRIBAL_DATA.themes).map(([k, w]) => {
+    var _a2;
+    return [k, w * ((_a2 = trad.themes[k]) != null ? _a2 : 1)];
+  }));
+  const total = Object.values(raw).reduce((n, w) => n + w, 0);
+  const pct = Object.fromEntries(Object.entries(raw).map(([k, w]) => [k, w * 100 / total]));
+  const capped = pct.animals + pct.sacred;
+  const cap2 = TRIBAL_DATA.parityCap;
+  if (capped <= cap2) return pct;
+  const scale = cap2 / capped;
+  const others = 100 - capped;
+  const lift = (100 - cap2) / others;
+  return Object.fromEntries(Object.entries(pct).map(([k, w]) => [k, k === "animals" || k === "sacred" ? w * scale : w * lift]));
+}
+function traditionGroupTypeWeights(trad) {
+  return Object.fromEntries(TRIBAL_DATA.groupTypes.map((g) => {
+    var _a2;
+    return [g.key, g.weight * ((_a2 = trad.groupTypes[g.key]) != null ? _a2 : 1)];
+  }));
+}
+function themeWeights(ctx) {
+  var _a2;
+  const base = traditionThemeWeights(ctx.trad);
+  const matrix = TRIBAL_DATA.groupTypeThemes[ctx.groupType];
+  const out = {};
+  for (const [theme, w] of Object.entries(base)) {
+    let m = w * ((_a2 = matrix[theme]) != null ? _a2 : 0);
+    if (theme === "vessel" && share(ctx, "coast", "rivers", "islands") < 20) m *= 0.2;
+    out[theme] = m;
+  }
+  return out;
+}
+function templateWeights(ctx) {
+  var _a2, _b, _c, _d;
+  const T = TRIBAL_DATA.templates;
+  const ri = TRIBAL_REGISTERS.indexOf(ctx.register);
+  const fixed = (_a2 = ctx.opts.constraints) == null ? void 0 : _a2.templates;
+  const out = {};
+  for (const [key2, weights] of Object.entries(T.weights)) {
+    let w = fixed ? (_b = fixed[key2]) != null ? _b : 0 : weights[ri] * ((_c = ctx.trad.templates[key2]) != null ? _c : 1);
+    if (!T.themes[key2].includes(ctx.theme)) w = 0;
+    if (T.groupTypes[key2] && !T.groupTypes[key2].includes(ctx.groupType)) w = 0;
+    if (T.perspectives[key2] && !T.perspectives[key2].includes(ctx.perspective)) w = 0;
+    if (T.traditions[key2]) w *= (_d = T.traditions[key2][ctx.trad.key]) != null ? _d : 0;
+    out[key2] = w;
+  }
+  return out;
+}
+function animal(ctx, wild = false) {
+  var _a2;
+  return (_a2 = ctx.pin.get("animal")) != null ? _a2 : pickPool(animalPool(ctx, wild), ctx.rng);
+}
+function plant(ctx) {
+  var _a2;
+  return (_a2 = ctx.pin.get("plant")) != null ? _a2 : pickPool(plantPool(ctx), ctx.rng);
+}
+function sacred(ctx) {
+  var _a2;
+  return (_a2 = ctx.pin.get("sacred")) != null ? _a2 : pickPool(sacredPool(ctx), ctx.rng);
+}
+var LEADING_DIRECTION = /^(Upper|Lower|Outer|Inner|Far|Near|North|South|East|West|Northern|Southern|Eastern|Western|Central|Middle)\b/;
+function place(ctx, kind = "any", directionChance = 0.25) {
+  const f = featureWord(ctx, kind);
+  if (!f) return void 0;
+  if (ctx.rng() < directionChance && !LEADING_DIRECTION.test(f) && !/^(Twin|Three|Seven|Thousand|Hundred)\b/.test(f)) {
+    const d = pickPool(directionPool(ctx, { colours: false }), ctx.rng);
+    if (d && !/[ -]/.test(d) && !["Beyond", "Across", "Between", "Around"].includes(d)) return `${d} ${f}`;
+  }
+  return f;
+}
+function themedWord(ctx, parts) {
+  switch (ctx.theme) {
+    case "landscape":
+      return parts.feature = featureWord(ctx, "land");
+    case "water":
+      return parts.feature = featureWord(ctx, "water");
+    case "animals":
+      return parts.animal = animal(ctx);
+    case "plants":
+      return parts.plant = plant(ctx);
+    case "sacred":
+      return parts.sacred = sacred(ctx);
+    default:
+      return void 0;
+  }
+}
+function templateA(ctx, parts) {
+  var _a2, _b, _c, _d, _e, _f, _g, _h;
+  const rng = ctx.rng;
+  switch (ctx.theme) {
+    case "relationship": {
+      const pool3 = /* @__PURE__ */ new Map();
+      for (const w of V.relationship) add(pool3, w, w === "Tributaries" && !["imposed", "later"].includes(ctx.perspective) ? 0 : 1);
+      return parts.keyword = (_a2 = pickPool(pool3, rng)) != null ? _a2 : "";
+    }
+    case "qualities":
+      parts.quality = pickPool(qualityPool(ctx), rng);
+      break;
+    case "warfare":
+      parts.emblem = pickPool(warfarePool(ctx), rng);
+      break;
+    case "dress":
+      parts.dress = pickPool(dressPool(ctx), rng);
+      break;
+    case "direction": {
+      const d = pickPool(directionPool(ctx, { halves: ctx.groupType === "moiety" }), rng);
+      parts.direction = d;
+      if (d == null ? void 0 : d.endsWith(" Half")) return d;
+      break;
+    }
+    default:
+      themedWord(ctx, parts);
+  }
+  const lead = (_h = (_g = (_f = (_e = (_d = (_c = (_b = parts.quality) != null ? _b : parts.emblem) != null ? _c : parts.dress) != null ? _d : parts.direction) != null ? _e : parts.feature) != null ? _f : parts.animal) != null ? _g : parts.plant) != null ? _h : parts.sacred;
+  const c = collective(ctx);
+  if (!lead || !c) return void 0;
+  parts.collective = c;
+  return `${lead} ${c}`;
+}
+function templateB(ctx, parts) {
+  const w = themedWord(ctx, parts);
+  const c = collective(ctx);
+  if (!w || !c) return void 0;
+  parts.collective = c;
+  return `${withColour(ctx, w)} ${c}`;
+}
+function ofTarget(ctx, parts) {
+  if (ctx.theme === "vessel") {
+    const v = parts.vessel = vesselWord(ctx);
+    return v;
+  }
+  const w = themedWord(ctx, parts);
+  return w ? `the ${withColour(ctx, w)}` : void 0;
+}
+function templateC(ctx, parts) {
+  const target = ofTarget(ctx, parts);
+  const c = collective(ctx);
+  if (!target || !c) return void 0;
+  parts.collective = c;
+  return `${c} of ${target}`;
+}
+function templateDH(ctx, parts, linker) {
+  const w = themedWord(ctx, parts);
+  const c = collective(ctx);
+  if (!w || !c) return void 0;
+  parts.collective = c;
+  return `${c} ${linker} the ${w}`;
+}
+function templateE(ctx, parts) {
+  const d = pickPool(directionPool(ctx), ctx.rng);
+  const f = ctx.theme === "water" ? featureWord(ctx, "water") : ctx.theme === "landscape" ? featureWord(ctx, "land") : featureWord(ctx, "any");
+  const c = collective(ctx);
+  if (!d || !f || !c || /^(Beyond|Across|Between|Around)$/.test(d) || LEADING_DIRECTION.test(f)) return void 0;
+  parts.direction = d;
+  parts.feature = f;
+  parts.collective = c;
+  return `${d} ${f} ${c}`;
+}
+function templateF(ctx, parts) {
+  let emblem;
+  if (ctx.theme === "warfare") {
+    emblem = ctx.rng() < 0.8 ? pickPool(warfarePool(ctx, true), ctx.rng) : pickPool(materials(ctx), ctx.rng);
+    parts.emblem = emblem;
+  } else if (ctx.theme === "animals") emblem = parts.animal = animal(ctx);
+  else emblem = parts.plant = plant(ctx);
+  const c = collective(ctx);
+  if (!emblem || !c || hasColour(emblem)) return void 0;
+  parts.collective = c;
+  return `${pickUniform2(V.colours, ctx.rng)} ${emblem} ${c}`;
+}
+function templateG(ctx, parts) {
+  var _a2;
+  let target;
+  if (ctx.theme === "ancestor") target = parts.ancestor = (_a2 = ctx.pin.get("ancestor")) != null ? _a2 : pickUniform2(V.ancestors, ctx.rng);
+  else target = ofTarget(ctx, parts);
+  const c = collective(ctx, { lineageOnly: true });
+  if (!target || !c) return void 0;
+  parts.collective = c;
+  return `${c} of ${target}`;
+}
+function templateI(ctx, parts) {
+  const c = collective(ctx, { roleOnly: true });
+  if (!c) return void 0;
+  let p;
+  if (ctx.theme === "sacred") p = parts.sacred = sacred(ctx);
+  else if (ctx.theme === "warfare") p = parts.emblem = pickUniform2(["Fort", "Stronghold", "Frontier", "March"], ctx.rng);
+  else p = parts.feature = place(ctx, ctx.theme === "water" ? "water" : "land", 0.3);
+  if (!p) return void 0;
+  parts.collective = c;
+  return `${c} of the ${p}`;
+}
+function templateJ(ctx, parts) {
+  var _a2;
+  const n = parts.number = numberWord(ctx);
+  if (((_a2 = ctx.opts.constraints) == null ? void 0 : _a2.jFirstFormOnly) || ctx.rng() < 0.5) {
+    const noun2 = pick(V.countedNouns.map((w) => [w, countedOk(ctx, w)]), ctx.rng);
+    if (!noun2) return void 0;
+    return `${n} ${noun2}`;
+  }
+  const noun = pick(V.countedFeatures.map((w) => [w, countedOk(ctx, w)]), ctx.rng);
+  const c = collective(ctx);
+  if (!noun || !c) return void 0;
+  parts.collective = c;
+  parts.feature = `${n} ${noun}`;
+  return `${c} of the ${n} ${noun}`;
+}
+function templateK(ctx, parts) {
+  const phrases = V.kPhrases.filter((p) => p.theme === ctx.theme && (p.gate !== "mounts" || mounts(ctx).length > 0));
+  const phrase = pickUniform2(phrases, ctx.rng);
+  if (!phrase) return void 0;
+  let w;
+  switch (phrase.slot) {
+    case "land":
+      w = parts.feature = featureWord(ctx, "land");
+      break;
+    case "water":
+      w = parts.feature = featureWord(ctx, "water");
+      break;
+    case "origin": {
+      const land = featureWord(ctx, "land");
+      w = ctx.rng() < 0.5 || !land ? pickUniform2(V.origins, ctx.rng) : `${pickUniform2(V.colours, ctx.rng)} ${land}`;
+      if (hasColour(land != null ? land : "") && !V.origins.includes(w)) w = land;
+      parts.feature = w;
+      break;
+    }
+    case "animal":
+      w = parts.animal = animal(ctx);
+      break;
+    case "sacred":
+      w = parts.sacred = sacred(ctx);
+      break;
+    case "emblem":
+      w = ctx.theme === "animals" ? parts.animal = animal(ctx) : parts.emblem = pickPool(warfarePool(ctx, true), ctx.rng);
+      break;
+    default:
+      w = parts.feature = place(ctx, ctx.theme === "water" ? "water" : "land", 0.3);
+  }
+  if (!w) return void 0;
+  return `Those Who ${phrase.verb} ${w}`;
+}
+function templateL(ctx, parts) {
+  var _a2;
+  const agent = parts.lifeway = (_a2 = ctx.pin.get("lifeway")) != null ? _a2 : pickPool(lifewayPool(ctx), ctx.rng);
+  if (!agent) return void 0;
+  if (!agent.includes(" ") && ctx.rng() < 0.6) {
+    const f = featureWord(ctx, "any");
+    if (f && !f.includes(" ")) {
+      parts.feature = f;
+      return `${f} ${agent}`;
+    }
+  }
+  return agent;
+}
+function templateM(ctx, parts) {
+  const s = V.speech;
+  const r = ctx.rng();
+  if (r < 0.3) return pickUniform2(s.whole, ctx.rng);
+  if (r < 0.65) return `Speakers of the ${pickUniform2(s.tongues, ctx.rng)} Tongue`;
+  const c = collective(ctx);
+  if (!c) return void 0;
+  parts.collective = c;
+  return `${s.descriptor} ${c}`;
+}
+function templateN(ctx, parts) {
+  var _a2;
+  const epithets = V.ancestors.filter((a2) => !a2.includes("'"));
+  const a = parts.ancestor = (_a2 = ctx.pin.get("ancestor")) != null ? _a2 : pickUniform2(epithets, ctx.rng);
+  const c = collective(ctx, { personOnly: true });
+  if (!a || !c || a.includes("'")) return void 0;
+  parts.collective = c;
+  const bare4 = a.replace(/^the /, "");
+  return `${bare4}${bare4.endsWith("s") ? "'" : "'s"} ${c}`;
+}
+function templateO(ctx, parts) {
+  const r = ctx.rng();
+  if (ctx.theme === "relationship" || r >= 0.8) {
+    parts.keyword = "True People";
+    return "The True People";
+  }
+  if (r < 0.5) {
+    const q2 = parts.quality = pickPool(qualityPool(ctx), ctx.rng);
+    return q2 ? `The ${q2} Ones` : void 0;
+  }
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const w of V.nominalQualities) add(pool3, w, ["Free", "Proud", "Unconquered"].includes(w) && !["self", "dynastic", "ceremonial"].includes(ctx.perspective) ? 0 : 1);
+  const q = parts.quality = pickPool(pool3, ctx.rng);
+  return q ? `The ${q}` : void 0;
+}
+function templateP(ctx, parts) {
+  var _a2;
+  let emblem;
+  if (ctx.theme === "lifeway") {
+    const agent = parts.lifeway = pickPool(lifewayPool(ctx), ctx.rng);
+    emblem = agent ? `${agent}'` : void 0;
+  } else if (ctx.theme === "animals") emblem = parts.animal = animal(ctx);
+  else emblem = parts.plant = plant(ctx);
+  const house = (_a2 = collective(ctx, { only: ["House", "Clan"] })) != null ? _a2 : ctx.groupType === "occupational" ? "Clan" : void 0;
+  const p = place(ctx, "any", 0.5);
+  if (!emblem || !house || !p) return void 0;
+  parts.collective = house;
+  parts.feature = p;
+  return `${emblem} ${house} of the ${p}`;
+}
+function templateQ(ctx, parts) {
+  let noun;
+  if (ctx.theme === "animals") {
+    const a = parts.animal = animal(ctx);
+    noun = a ? biomeTitleCase(pluralOf(a.toLowerCase())) : void 0;
+  } else if (ctx.theme === "plants") {
+    const p = parts.plant = plant(ctx);
+    noun = p ? biomeTitleCase(pluralOf(p.toLowerCase())) : void 0;
+  } else noun = parts.feature = pickPool(materials(ctx), ctx.rng);
+  const c = collective(ctx);
+  if (!noun || !c) return void 0;
+  parts.collective = c;
+  const wh = ctx.trad.special.waterHill;
+  if (wh && ctx.register === "legendary" && ["settlement", "dynasty"].includes(ctx.groupType) && ctx.rng() < wh) {
+    return `${c} of the Water-Hill of ${noun}`;
+  }
+  return `${c} of the Place of ${noun}`;
+}
+function templateR(ctx, parts) {
+  const a = parts.animal = animal(ctx, true);
+  return a ? `Followers of the ${a}` : void 0;
+}
+function buildTemplate(ctx, template, parts) {
+  switch (template) {
+    case "A":
+      return templateA(ctx, parts);
+    case "B":
+      return templateB(ctx, parts);
+    case "C":
+      return templateC(ctx, parts);
+    case "D":
+      return templateDH(ctx, parts, "by");
+    case "E":
+      return templateE(ctx, parts);
+    case "F":
+      return templateF(ctx, parts);
+    case "G":
+      return templateG(ctx, parts);
+    case "H":
+      return templateDH(ctx, parts, pickUniform2(["Beyond", "Across", "Between"], ctx.rng));
+    case "I":
+      return templateI(ctx, parts);
+    case "J":
+      return templateJ(ctx, parts);
+    case "K":
+      return templateK(ctx, parts);
+    case "L":
+      return templateL(ctx, parts);
+    case "M":
+      return templateM(ctx, parts);
+    case "N":
+      return templateN(ctx, parts);
+    case "O":
+      return templateO(ctx, parts);
+    case "P":
+      return templateP(ctx, parts);
+    case "Q":
+      return templateQ(ctx, parts);
+    case "R":
+      return templateR(ctx, parts);
+  }
+  return void 0;
+}
+function hostileWord(ctx) {
+  const pool3 = /* @__PURE__ */ new Map();
+  for (const [w, theme] of Object.entries(V.hostile)) {
+    if (theme !== ctx.theme) continue;
+    let ok = true;
+    if (w === "Horse Stealers") ok = hasLivestock(ctx, "horse") && suppression(ctx, "Horse") > 0;
+    if (w === "Goat Folk") ok = hasLivestock(ctx, "goat");
+    if (w === "Fish-Eaters") ok = share(ctx, "coast", "rivers") >= 15;
+    if (w === "Mud Folk" || w === "Marsh Crawlers") ok = share(ctx, "wetland") >= 5;
+    add(pool3, w, ok ? filtered(ctx, w, 1) : 0);
+  }
+  return pickPool(pool3, ctx.rng);
+}
+var norm = (s) => s.toLowerCase().replace(/^the /, "").trim();
+var BUILT_IN_GUARDS = {
+  block: new Set(TRIBAL_DATA.safeguards.blockList.map(norm)),
+  flag: new Set(TRIBAL_DATA.safeguards.flagList.map(norm)),
+  flagBlocks: TRIBAL_DATA.safeguards.flagListBlocks
+};
+var guardCache = /* @__PURE__ */ new WeakMap();
+function safeguardSets(opts) {
+  const s = opts.safeguards;
+  if (!s) return BUILT_IN_GUARDS;
+  let sets = guardCache.get(s);
+  if (!sets) {
+    sets = { block: new Set(s.block.map(norm)), flag: new Set(s.flag.map(norm)), flagBlocks: s.flagBlocks };
+    guardCache.set(s, sets);
+  }
+  return sets;
+}
+function breaksColourRule(name, traditionKey) {
+  var _a2, _b;
+  const words = name.split(" ");
+  const colours = /* @__PURE__ */ new Set([...V.colours, "Yellow"]);
+  const exceptions = new Set((_b = (_a2 = findTradition(traditionKey)) == null ? void 0 : _a2.special.colourCollectives) != null ? _b : []);
+  const persons = new Set(PERSON_COLLECTIVES);
+  for (let i = 0; i < words.length - 1; i++) {
+    if (colours.has(words[i]) && persons.has(words[i + 1]) && !exceptions.has(words[i + 1])) return true;
+  }
+  return false;
+}
+var ENGLISH = /^[A-Za-z' -]+$/;
+function render(ctx, template, text, parts) {
+  var _a2, _b, _c, _d;
+  let base = text;
+  let tail = false;
+  if (TRIBAL_DATA.templates.tail.includes(template) && // P already ends "of the [PLACE]".
+  template !== "P" && !((_a2 = ctx.opts.constraints) == null ? void 0 : _a2.noTail) && !/ (of|by|beyond|across|between) /i.test(base) && ctx.rng() < (ctx.register === "plain" ? 0.15 : 0.25)) {
+    const f = place(ctx, "any", 0.25);
+    if (f && !base.includes(f)) {
+      parts.tailAt = base.length;
+      parts.feature = (_b = parts.feature) != null ? _b : f;
+      base = `${base} of the ${f}`;
+      tail = true;
+    }
+  }
+  let headword = tribalTitleCase(base);
+  if (ctx.register === "historical" && !/^(The|Those) /.test(headword)) headword = `The ${headword}`;
+  const cap2 = Math.min(TRIBAL_DATA.lengthCaps[ctx.register], (_d = (_c = ctx.opts.constraints) == null ? void 0 : _c.maxWords) != null ? _d : Infinity);
+  if (headword.split(" ").length > cap2) {
+    if (!tail || parts.tailAt === void 0) return null;
+    headword = tribalTitleCase(base.slice(0, parts.tailAt));
+    if (ctx.register === "historical" && !/^(The|Those) /.test(headword)) headword = `The ${headword}`;
+    tail = false;
+    if (headword.split(" ").length > cap2) return null;
+  }
+  if (!ENGLISH.test(headword)) return null;
+  if (breaksColourRule(headword, ctx.trad.key)) return null;
+  if (TRIBAL_DATA.safeguards.banned.some((b) => wordRe(b).test(headword))) return null;
+  const guards = safeguardSets(ctx.opts);
+  if (guards.block.has(norm(headword))) return null;
+  if (guards.flagBlocks && guards.flag.has(norm(headword))) return null;
+  return { headword, tail };
+}
+function historyPerspectiveKey(ctx) {
+  return ctx.perspective === "neighbour" ? `neighbour.${ctx.tone}` : ctx.perspective === "imposed" ? "imposed" : ctx.perspective;
+}
+function directionGloss(ctx, d) {
+  var _a2;
+  const colour = V.colourDirections[d];
+  if (colour && ctx.trad.orientation.some((o) => o.system === "colourDirection")) return `in the ${colour}, whose colour is ${d.toLowerCase()}`;
+  return (_a2 = TRIBAL_DATA.history.directionGloss[d]) != null ? _a2 : "apart from their neighbours";
+}
+function interpretationFor(ctx, template) {
+  const special = ctx.trad.special;
+  const items = TRIBAL_DATA.history.interpretations.map((i) => {
+    let w = i.weight;
+    let text = i.text;
+    if (i.key === "taboo" && special.clanTaboo) w *= special.clanTaboo;
+    if (i.key === "ancestor" && special.ancestorAnimal) w *= special.ancestorAnimal;
+    if (i.key === "regional" && special.clanAnimal) {
+      w *= 1.5;
+      text = "clan animal";
+    }
+    return [text, w];
+  });
+  if (template === "R" && special.migrationGuide) items.push(["guide on the long migration", special.migrationGuide]);
+  return pick(items, ctx.rng);
+}
+function sentence(text, fills) {
+  return text.replace(/\{(\w+)\}/g, (_, k) => {
+    var _a2;
+    return (_a2 = fills[k]) != null ? _a2 : k;
+  });
+}
+function history(ctx, template, parts) {
+  var _a2, _b, _c, _d, _e;
+  const H = TRIBAL_DATA.history;
+  const rng = ctx.rng;
+  const feature = (_b = (_a2 = parts.feature) != null ? _a2 : featureWord(ctx, "land")) != null ? _b : "hills";
+  const lifeway = parts.lifeway ? lower(parts.lifeway) : void 0;
+  const custom = ctx.theme === "lifeway" && lifeway ? `their work as ${lifeway}` : ctx.theme === "dress" && parts.dress ? `their ${H.dressGloss[parts.dress]}` : ctx.theme === "speech" ? "the way they spoke" : ctx.theme === "warfare" ? "their skill in war" : ctx.theme === "animals" && parts.animal ? `their ${lower(parts.animal)} emblem` : "their ways";
+  const ancestor = (_c = parts.ancestor) != null ? _c : "a founding ancestor";
+  const interpretation = ctx.theme === "animals" ? interpretationFor(ctx, template) : null;
+  const fills = {
+    feature,
+    custom,
+    ancestor,
+    emblem: parts.emblem ? `the ${lower(parts.emblem)}` : "their weapons",
+    animal: parts.animal ? lower(parts.animal) : "animal",
+    plant: parts.plant ? lower(parts.plant) : "great tree",
+    sacred: (_d = parts.sacred) != null ? _d : "sacred places",
+    direction: parts.direction ? directionGloss(ctx, parts.direction) : "apart from their neighbours",
+    quality: parts.quality ? H.qualityGloss[parts.quality] : "a people apart",
+    number: parts.number ? lower(parts.number) : "several",
+    lifeway: lifeway != null ? lifeway : "farmers",
+    dress: parts.dress ? H.dressGloss[parts.dress] : "their dress",
+    vessel: (_e = parts.vessel) != null ? _e : "the canoe",
+    interpretation: interpretation != null ? interpretation : void 0
+  };
+  const pkey = historyPerspectiveKey(ctx);
+  const coinage = sentence(pickUniform2(H.coinage[pkey], rng), fills);
+  let meaning = sentence(H.meaning[ctx.theme], fills);
+  if (ctx.mode === "chosen" && !(ctx.trad.homeland[ctx.biome.id] > 0) && rng() < 0.3) {
+    meaning = sentence(H.transplanted, { biome: ctx.biome.phrase });
+  }
+  const acceptance = pickRecord(H.acceptanceWeights[pkey], rng);
+  const drift = pickRecord(H.driftWeights, rng);
+  return {
+    origin: `${coinage} ${meaning} ${H.acceptance[acceptance]} ${H.drift[drift]}`.replace(/ {2,}/g, " "),
+    meaning,
+    interpretation,
+    acceptance,
+    drift
+  };
+}
+function literalMeaning(ctx, parts) {
+  var _a2, _b, _c, _d, _e, _f, _g, _h;
+  const H = TRIBAL_DATA.history;
+  switch (ctx.theme) {
+    case "landscape":
+    case "water":
+      return `The people associated with the ${(_a2 = parts.feature) != null ? _a2 : "land"}`;
+    case "animals":
+      return `The people of the ${lower((_b = parts.animal) != null ? _b : "animal")}`;
+    case "plants":
+      return `The people of the ${lower((_c = parts.plant) != null ? _c : "tree")}`;
+    case "sacred":
+      return `Those who hold the ${(_d = parts.sacred) != null ? _d : "sacred places"} holy`;
+    case "direction":
+      return `The people living ${parts.direction ? directionGloss(ctx, parts.direction) : "apart"}`;
+    case "qualities": {
+      const g = parts.quality ? H.qualityGloss[parts.quality] : "a people apart";
+      return g.charAt(0).toUpperCase() + g.slice(1);
+    }
+    case "number":
+      return `${(_e = parts.number) != null ? _e : "Several"} groups bound together`;
+    case "lifeway":
+      return `The ${lower((_f = parts.lifeway) != null ? _f : "workers")}`;
+    case "speech":
+      return "A people known by their speech";
+    case "dress":
+      return `The people with ${parts.dress ? H.dressGloss[parts.dress] : "distinctive dress"}`;
+    case "ancestor":
+      return `Descendants of ${(_g = parts.ancestor) != null ? _g : "a founding ancestor"}`;
+    case "vessel":
+      return `Descendants of those who arrived on ${(_h = parts.vessel) != null ? _h : "the canoe"}`;
+    case "relationship":
+      return "A people defined by their place in the wider world";
+    case "warfare":
+      return `The people known for ${parts.emblem ? `the ${lower(parts.emblem)}` : "war"}`;
+  }
+  return "A people";
+}
+var HOSTILE_PERSPECTIVES = /* @__PURE__ */ new Set(["neighbour", "imposed"]);
+function attempt(ctx, fixed) {
+  var _a2, _b, _c, _d, _e, _f, _g, _h, _i;
+  const rng = ctx.rng;
+  const opts = ctx.opts;
+  const perspectiveWeights = {};
+  for (const [p, w] of Object.entries(TRIBAL_DATA.perspectives)) {
+    perspectiveWeights[p] = w * ((_b = (_a2 = TRIBAL_DATA.perspectiveByGroupType[ctx.groupType]) == null ? void 0 : _a2[p]) != null ? _b : 1) * ((_e = (_d = (_c = opts.constraints) == null ? void 0 : _c.perspectiveMultipliers) == null ? void 0 : _d[p]) != null ? _e : 1);
+  }
+  const wanted = (_f = fixed == null ? void 0 : fixed.perspective) != null ? _f : opts.perspective;
+  ctx.perspective = wanted != null ? wanted : pickRecord(perspectiveWeights, rng);
+  const toned = HOSTILE_PERSPECTIVES.has(ctx.perspective);
+  let tone = pickRecord(toned ? TRIBAL_DATA.tones.toned : TRIBAL_DATA.tones.plain, rng);
+  if (tone === "hostile" && !opts.hostile) tone = "neutral";
+  ctx.tone = tone;
+  ctx.lineage = pickRecord(ctx.trad.lineage, rng);
+  ctx.theme = (_h = (_g = fixed == null ? void 0 : fixed.theme) != null ? _g : pickRecord(themeWeights(ctx), rng)) != null ? _h : "";
+  if (!ctx.theme) return null;
+  const parts = { keyword: "" };
+  let template;
+  let text;
+  if (ctx.tone === "hostile") {
+    const h = hostileWord(ctx);
+    if (h) {
+      template = ctx.theme === "speech" ? "M" : "A";
+      text = h;
+      parts.keyword = h;
+    } else ctx.tone = "neutral";
+  }
+  if (!text) {
+    const weights = templateWeights(ctx);
+    for (const t of (_i = fixed == null ? void 0 : fixed.avoidTemplates) != null ? _i : []) weights[t] = 0;
+    template = pickRecord(weights, rng);
+    if (!template) return null;
+    text = buildTemplate(ctx, template, parts);
+  }
+  if (!text || !template) return null;
+  parts.keyword = parts.keyword || parts.lifeway || parts.animal || parts.plant || parts.sacred || parts.ancestor || parts.vessel || parts.quality || parts.dress || parts.direction || parts.number || parts.emblem || parts.feature || text;
+  const rendered = render(ctx, template, text, parts);
+  if (!rendered) return null;
+  return { headword: rendered.headword, template, parts };
+}
+function makeCtx(trad, biome, mode, groupType, register, options, rng) {
+  return {
+    trad,
+    biome,
+    mode,
+    terrainWeights: effectiveTerrains(trad, biome, options.terrain),
+    register,
+    groupType,
+    perspective: "self",
+    tone: "neutral",
+    theme: "",
+    lineage: "bilateral",
+    rng,
+    opts: options,
+    terrain: null,
+    pin: /* @__PURE__ */ new Map()
+  };
+}
+function inTextOf(headword) {
+  return headword.startsWith("The ") ? `the ${headword.slice(4)}` : headword.startsWith("Those ") ? headword : `the ${headword}`;
+}
+function groupTypeChoices(trad, options) {
+  var _a2;
+  const weights = traditionGroupTypeWeights(trad);
+  const allowed = (_a2 = options.constraints) == null ? void 0 : _a2.groupTypes;
+  for (const key2 of Object.keys(weights)) {
+    if (options.groupType && key2 !== options.groupType) weights[key2] = 0;
+    if (allowed && !allowed.includes(key2)) weights[key2] = 0;
+  }
+  return weights;
+}
+function tribalName(options, rng) {
+  var _a2, _b, _c;
+  const trad = (_a2 = findTradition(options.tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
+  const chosen = (_b = options.biomeData) != null ? _b : findBiome(options.biome);
+  const mode = chosen ? "chosen" : "homeland";
+  const biome = chosen != null ? chosen : findBiome(pickRecord(trad.homeland, rng));
+  const groupType = pickRecord(groupTypeChoices(trad, options), rng);
+  if (!groupType) return null;
+  const registerWeights = (_c = options.constraints) == null ? void 0 : _c.registers;
+  const register = registerWeights ? pickRecord(registerWeights, rng) : options.register;
+  const reg = register != null ? register : "plain";
+  const general = TRIBAL_TRADITIONS[0];
+  for (const t of trad === general ? [trad] : [trad, general]) {
+    const ctx = makeCtx(t, biome, mode, groupType, reg, options, rng);
+    for (let i = 0; i < 20; i++) {
+      const a = attempt(ctx);
+      if (a) return finish(ctx, a, trad, options);
+    }
+  }
+  return null;
+}
+function finish(ctx, a, requested, options) {
+  var _a2;
+  const parts = a.parts;
+  const headwordOnly = (_a2 = options.constraints) == null ? void 0 : _a2.headwordOnly;
+  const echoesReal = safeguardSets(options).flag.has(norm(a.headword));
+  const base = {
+    name: a.headword,
+    inText: inTextOf(a.headword),
+    tradition: requested.key,
+    biome: ctx.biome.id,
+    biomeMode: ctx.mode,
+    terrain: ctx.terrain,
+    groupType: ctx.groupType,
+    perspective: ctx.perspective,
+    tone: ctx.tone,
+    register: ctx.register,
+    theme: ctx.theme,
+    template: a.template,
+    keyword: parts.keyword,
+    slots: [],
+    echoesReal,
+    historicity: `Fictional modern-English name inspired by ${requested.label} naming patterns` + (ctx.mode === "chosen" && !(requested.homeland[ctx.biome.id] > 0) ? `, set in ${ctx.biome.phrase}` : "")
+  };
+  if (headwordOnly) {
+    return { ...base, literalMeaning: "", interpretation: null, acceptance: "", drift: "", origin: "", alternativeNames: [] };
+  }
+  const h = history(ctx, a.template, parts);
+  let origin = h.origin;
+  if (echoesReal) origin += ` ${TRIBAL_DATA.history.echo}`;
+  const alternatives = alternativeNames(ctx, a);
+  if (alternatives.other) origin += ` ${alternatives.other}`;
+  return {
+    ...base,
+    literalMeaning: literalMeaning(ctx, parts),
+    interpretation: h.interpretation,
+    acceptance: h.acceptance,
+    drift: h.drift,
+    origin,
+    alternativeNames: alternatives.names
+  };
+}
+function alternativeNames(ctx, a) {
+  const rng = ctx.rng;
+  const want = 2 + Math.floor(rng() * 3);
+  const saved = { perspective: ctx.perspective, tone: ctx.tone, theme: ctx.theme, terrain: ctx.terrain, lineage: ctx.lineage };
+  const pinKinds = ["feature", "animal", "plant", "sacred", "lifeway", "ancestor", "vessel"];
+  ctx.pin = new Map(pinKinds.filter((k) => a.parts[k]).map((k) => [k, a.parts[k]]));
+  const names = [];
+  const seen = /* @__PURE__ */ new Set([a.headword.toLowerCase()]);
+  const used = /* @__PURE__ */ new Set([a.template]);
+  let other;
+  const otherPerspective = rng() < 0.3 ? saved.perspective === "self" ? "neighbour" : "self" : void 0;
+  for (let i = 0; i < want * 4 && names.length < want; i++) {
+    const flip = otherPerspective && !other && names.length === want - 1;
+    const alt = attempt(ctx, { perspective: flip ? otherPerspective : saved.perspective, theme: saved.theme, avoidTemplates: used });
+    if (!alt || seen.has(alt.headword.toLowerCase()) || alt.parts.keyword === "") continue;
+    seen.add(alt.headword.toLowerCase());
+    used.add(alt.template);
+    if (used.size >= Object.keys(TRIBAL_DATA.templates.weights).length) used.clear();
+    names.push(alt.headword);
+    if (flip) other = otherPerspective === "self" ? `They called themselves ${inTextOf(alt.headword)}.` : `Their neighbours called them ${inTextOf(alt.headword)}.`;
+  }
+  ctx.pin = /* @__PURE__ */ new Map();
+  Object.assign(ctx, saved);
+  return { names, other };
+}
+function generateTribalNames(options) {
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const count = Math.max(0, Math.floor(options.count));
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  let skipped = 0;
+  for (let i = 0; i < count * 50 && names.length < count; i++) {
+    const name = tribalName(options, rng);
+    if (!name) {
+      skipped++;
+      if (skipped >= count * 5) break;
+      continue;
+    }
+    const key2 = name.name.toLowerCase();
+    if (seen.has(key2)) continue;
+    seen.add(key2);
+    names.push(name);
+  }
+  const notices = [];
+  if (names.length < count) {
+    notices.push(
+      names.length === 0 ? "No names could be made with these choices." : `Only ${names.length} different names could be made with these choices${skipped ? ` (${skipped} skipped)` : ""}.`
+    );
+  }
+  return { names, seed, notices };
+}
+function tribalHistoryLabel(sectionLabel, tradition, biome, register, terrain = "any", custom = []) {
+  var _a2, _b;
+  const t = (_a2 = findTradition(tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
+  const b = findBiome(biome, custom);
+  const land = [...TERRAIN_CHOICES, ...(_b = b == null ? void 0 : b.customTerrains) != null ? _b : []].find((x) => x.id === terrain && x.id !== "any");
+  return [sectionLabel, t.label, b ? biomeInline(b) : "homeland", ...land ? [land.label.toLowerCase()] : [], register].join(" \xB7 ");
+}
+function homelandSummary(tradition) {
+  var _a2;
+  const t = (_a2 = findTradition(tradition)) != null ? _a2 : TRIBAL_TRADITIONS[0];
+  const parts = Object.entries(t.homeland).sort((a, b) => b[1] - a[1]).map(([id, w]) => {
+    var _a3, _b;
+    return `${((_b = (_a3 = findBiome(id)) == null ? void 0 : _a3.label) != null ? _b : id).toLowerCase()} ${w}%`;
+  });
+  return `Homeland: ${parts.join(", ")}`;
+}
+function tribalDetailsLine(name) {
+  const g = TRIBAL_GROUP_TYPES.find((x) => x.key === name.groupType);
+  const short = g.label.replace(/ or .*$/, "");
+  const persp = TRIBAL_DATA.perspectiveLabels[name.perspective] + (HOSTILE_PERSPECTIVES.has(name.perspective) ? ` (${name.tone})` : "");
+  const biome = findBiome(name.biome);
+  return `${short} \xB7 ${persp} \xB7 ${biome.label}${name.biomeMode === "homeland" ? " (homeland)" : ""}`;
+}
+
+// src/tribes/slotFill.ts
+function tribalSlotConstraints(part) {
+  return part === "river-british" ? RIVER_BRITISH : part === "river-colonial" ? RIVER_COLONIAL : part === "organic" ? ORGANIC : COLONIAL;
+}
+var COLONIAL = {
+  templates: { A: 35, B: 35, F: 10, L: 10, J: 10 },
+  jFirstFormOnly: true,
+  noTail: true,
+  maxWords: 3,
+  registers: { plain: 70, administrative: 30 },
+  perspectiveMultipliers: { imposed: 3, neighbour: 2 },
+  groupTypes: ["regional", "settlement", "kin", "confederation"],
+  headwordOnly: true
+};
+var ORGANIC = {
+  templates: { A: 50, B: 50 },
+  noTail: true,
+  maxWords: 2,
+  registers: { plain: 100 },
+  groupTypes: ["regional", "settlement", "kin"],
+  headwordOnly: true
+};
+var RIVER_BRITISH = {
+  templates: { A: 50, B: 50 },
+  noTail: true,
+  maxWords: 2,
+  registers: { plain: 100 },
+  groupTypes: ["regional", "settlement", "kin"],
+  headwordOnly: true
+};
+var RIVER_COLONIAL = {
+  templates: { A: 40, B: 40, F: 20 },
+  noTail: true,
+  maxWords: 2,
+  registers: { plain: 70, administrative: 30 },
+  perspectiveMultipliers: { imposed: 3, neighbour: 2 },
+  groupTypes: ["regional", "settlement", "kin", "confederation"],
+  headwordOnly: true
+};
+function autoTradition(region, rng) {
+  const code = (region != null ? region : "").toUpperCase();
+  if (["COR", "WAL", "SHH", "SLO"].includes(code)) return "celtic";
+  if (code === "SBL") return rng() < 0.5 ? "celtic" : "germanic";
+  if (!region || code === "ALL-BRITAIN" || code === "ALL") return rng() < 0.7 ? "germanic" : "celtic";
+  return "germanic";
+}
+function tribalSlotFill(options, rng) {
+  var _a2, _b, _c, _d;
+  const organic = options.part === "organic";
+  let tradition = options.tradition;
+  if (tradition === "auto") tradition = organic ? autoTradition(options.region, rng) : "general";
+  if (!findTradition(tradition)) tradition = "general";
+  const fields2 = (_a2 = options.fields) != null ? _a2 : {};
+  let constraints = tribalSlotConstraints(options.part);
+  if (fields2.register && constraints.registers && fields2.register in constraints.registers) {
+    constraints = { ...constraints, registers: { [fields2.register]: 100 } };
+  }
+  const groupType = fields2.groupType && (!constraints.groupTypes || constraints.groupTypes.includes(fields2.groupType)) ? fields2.groupType : void 0;
+  const biome = (_b = fields2.biome) != null ? _b : organic ? void 0 : options.biome;
+  const name = tribalName(
+    {
+      tradition,
+      ...typeof biome === "string" ? { biome } : biome ? { biomeData: biome } : {},
+      terrain: (_c = fields2.terrain) != null ? _c : options.terrain,
+      ...groupType ? { groupType } : {},
+      ...fields2.perspective ? { perspective: fields2.perspective } : {},
+      hostile: false,
+      constraints
+    },
+    rng
+  );
+  const text = ((_d = name == null ? void 0 : name.name) != null ? _d : "People").replace(/^The /, "");
+  return { text, tradition };
+}
+
+// src/rivers/engine.ts
+var RIVER_SETTINGS = [
+  { id: "british", label: "British River Names" },
+  { id: "new-land", label: "New Land" },
+  { id: "established", label: "Established" }
+];
+var RIVER_DATA = river_names_default;
+var REAL_NAMES = new Set(Object.values(RIVER_DATA.corpora).flat().map((n) => n.toLowerCase()));
+function pickWeighted2(weights, rng) {
+  const items = Object.entries(weights).filter(([, w]) => w > 0);
+  const total = items.reduce((n, [, w]) => n + w, 0);
+  let r = rng() * total;
+  for (const [item2, w] of items) {
+    r -= w;
+    if (r < 0) return item2;
+  }
+  return items[items.length - 1][0];
+}
+var pickUniform3 = (items, rng) => items[Math.floor(rng() * items.length)];
+var titleCase2 = (text) => text.replace(/(^|[\s-])(\p{L})/gu, (_, sep, ch) => sep + ch.toUpperCase());
+var letterCount2 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
+var regionKey = (region) => region && RIVER_DATA.regionCorpora[region] ? region : "all";
+function waterWordWeights(setting, region) {
+  return setting === "british" ? RIVER_DATA.waterWords.british[regionKey(region)] : RIVER_DATA.waterWords[setting];
+}
+var modelCache = /* @__PURE__ */ new Map();
+function ancientModel(region) {
+  const corpora = RIVER_DATA.regionCorpora[regionKey(region)];
+  const key2 = corpora.join("+");
+  let model = modelCache.get(key2);
+  if (!model) {
+    model = MarkovModel.build(corpora.flatMap((c) => RIVER_DATA.corpora[c]));
+    modelCache.set(key2, model);
+  }
+  return model;
+}
+function ancientName(options, rng) {
+  var _a2, _b;
+  const model = ancientModel(options.region);
+  const { minLetters, maxLetters, draws } = RIVER_DATA.ancient;
+  for (let i = 0; i < draws; i++) {
+    const seed = Math.floor(rng() * 4294967296) >>> 0;
+    const name = model.generateDetailed({
+      count: 1,
+      faithfulness: (_a2 = options.faithfulness) != null ? _a2 : 2,
+      strictness: (_b = options.strictness) != null ? _b : 3,
+      seed
+    }).names[0];
+    if (!name) continue;
+    const letters = letterCount2(name);
+    if (letters < minLetters || letters > maxLetters || REAL_NAMES.has(name.trim().toLowerCase())) continue;
+    return titleCase2(name.trim().toLowerCase());
+  }
+  return null;
+}
+function ancientForm(name, region, rng) {
+  const { scottishRegions, scottish, other } = RIVER_DATA.forms.ancient;
+  const form = pickWeighted2(region && scottishRegions.includes(region) ? scottish : other, rng);
+  if (form === "river-x") return { text: `River ${name}`, form };
+  if (form === "x-water") return { text: `${name} Water`, form };
+  if (form === "water-of-x") return { text: `Water of ${name}`, form };
+  return { text: name, form };
+}
+var colonialBiome = (options) => options.setting === "british" ? void 0 : findBiome(options.biome);
+function descriptiveName(options, rng, bare4) {
+  const british = options.setting === "british";
+  const biome = colonialBiome(options);
+  const categories = RIVER_DATA.descriptiveCategories[british ? "british" : biome ? "colonialWithBiome" : "colonial"];
+  const category = pickWeighted2(categories, rng);
+  const native = biome ? biomeEntries(biome, category) : void 0;
+  const entry = native ? pickWeightedPair(native, rng) : pickUniform3(NAME_WORDS.categories[category], rng);
+  const word = entry.modern;
+  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
+  if (british) {
+    const joined = entry.fuses === "yes" ? smoothJoin(word, water) : null;
+    const fuses = joined !== null && letterCount2(joined) <= NAMES.maxFusedLetters && rng() < RIVER_DATA.britishFuseChance;
+    const name = fuses ? titleCase2(joined.toLowerCase()) : titleCase2(`${word} ${water}`);
+    if (bare4) return { text: name, water, form: "bare" };
+    const form2 = pickWeighted2(RIVER_DATA.forms.britishDescriptive, rng);
+    return { text: form2 === "river-x" ? `River ${name}` : name, water, form: form2 };
+  }
+  if (bare4) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
+  const form = pickWeighted2(RIVER_DATA.forms.colonialDescriptive, rng);
+  return form === "bare" && water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
+}
+var NATIVE_PLACEHOLDERS = {
+  "[native bird]": "bird",
+  "[native wild animal]": "wild-animal",
+  "[native fish or creature]": "fish-and-other-creatures",
+  "[native tree]": "tree",
+  "[native plant]": "wild-plant"
+};
+function patternName(options, rng) {
+  const items = RIVER_DATA.patterns[options.setting];
+  const picked = pickWeighted2(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
+  const pattern = options.peoples === "tribal" ? picked.replace(/\[(tribal name|native people)\]/g, () => {
+    var _a2;
+    const british = options.setting === "british";
+    return tribalSlotFill(
+      british ? { tradition: "celtic", part: "river-british", biome: "britain" } : { tradition: (_a2 = options.peoplesTradition) != null ? _a2 : "general", part: "river-colonial", biome: options.biome },
+      rng
+    ).text;
+  }) : picked;
+  const biome = colonialBiome(options);
+  const filled = biome ? pattern.replace(/\[native [^\]]+\]/g, (slot) => {
+    const entries = NATIVE_PLACEHOLDERS[slot] ? biomeEntries(biome, NATIVE_PLACEHOLDERS[slot]) : void 0;
+    return entries ? titleCase2(pickWeightedPair(entries, rng).modern) : slot;
+  }) : pattern;
+  if (!filled.includes("{water}")) return { text: filled, form: picked };
+  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
+  return { text: filled.replace("{water}", titleCase2(water)), water, form: picked };
+}
+function riverName(options, rng) {
+  const kind = pickWeighted2(RIVER_DATA.kindWeights[options.setting], rng);
+  if (kind === "pattern") {
+    const built = patternName(options, rng);
+    return { ...built, hasPlaceholder: /\[[^\]]+\]/.test(built.text), kind };
+  }
+  if (kind === "ancient") {
+    const name = ancientName(options, rng);
+    if (name) return { ...ancientForm(name, options.region, rng), hasPlaceholder: false, kind, ancient: name };
+  }
+  return { ...descriptiveName(options, rng, false), hasPlaceholder: false, kind };
+}
+function riverFill(options, rng) {
+  const { pattern: _pattern, ...weights } = RIVER_DATA.kindWeights[options.setting];
+  const kind = pickWeighted2(weights, rng);
+  if (kind === "ancient") {
+    const name = ancientName(options, rng);
+    if (name) return name;
+  }
+  return descriptiveName(options, rng, true).text;
+}
+function generateRiverNames(options) {
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const count = Math.max(0, Math.floor(options.count));
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+    const name = riverName(options, rng);
+    const key2 = name.text.toLowerCase();
+    if (seen.has(key2)) continue;
+    seen.add(key2);
+    names.push(name);
+  }
+  const notice = names.length < count ? `Only ${names.length} river names could be generated.` : void 0;
+  return { names, seed, notice };
+}
+
+// src/names/engine.ts
+var NAMES = {
+  /** Land brief §8.2: share of colonial river fills drawn from the native pack, when one is set. */
+  nativeRiverShare: 0.4,
+  /** §4.1 fuse-chance modifiers and cap. */
+  traditionalWord: 1.5,
+  modernWord: 0.6,
+  packStem: 1,
+  joining: { fused: 1.5, balanced: 1, spaced: 0.5 },
+  fuseCap: 0.95,
+  maxFusedLetters: 13,
+  /** §4.2 linking -s- for person names. */
+  linkingS: 0.5,
+  /** §4.3 rule 3: this many consonants at the join falls back to spaced. */
+  maxJoinConsonants: 4,
+  /** §6.5 mixed register. */
+  mixedTraditional: 0.5,
+  /** §13 attempts to avoid a duplicate name before allowing it. */
+  duplicateAttempts: 20,
+  /** Default fusion class for a generic word §3.3 doesn't list (usually spaced). */
+  unlistedFusion: 0.15
+};
+var FILL_SALT = 1514052375;
+var REDRAW_SALT = 1016189605;
+var ADAPT_ATTEMPTS = 5;
+var OF_THE_SALT = 1374733287;
+var OF_THE_KEEP = 0.65;
+var OF_THE_KEEP_SET = /* @__PURE__ */ new Set([
+  "bird",
+  "wild-animal",
+  "domestic-animal",
+  "fish-and-other-creatures",
+  "tree",
+  "wild-plant",
+  "supernatural-being",
+  "status-or-role",
+  "activity"
+]);
+var RIVER_CATEGORY = "river-or-stream-name";
+var RENDER_LABELS = {
+  "saint-or-holy-person": "holy person",
+  "native-people-or-tribe": "native people",
+  "native-place-name": "native place"
+};
+var SPLIT_LABELS = {
+  "monarch-ruler-or-dynasty": ["monarch", "ruler", "dynasty"],
+  "official-patron-or-sponsor": ["official", "patron", "sponsor"],
+  "explorer-or-founder": ["explorer", "founder"],
+  "commander-or-conqueror": ["commander", "conqueror"]
+};
+var SPLIT_SALT = 729650369;
+var LAND_BIOME_SLOTS = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant", "soil-or-ground", "resource", "season", "domestic-animal", "crop"]);
+var NATIVE_LABELS = {
+  bird: "native bird",
+  "wild-animal": "native wild animal",
+  "fish-and-other-creatures": "native fish or creature",
+  tree: "native tree",
+  "wild-plant": "native plant"
+};
+var NATIVE_CATEGORIES = /* @__PURE__ */ new Set(["native-place-name", "native-people-or-tribe", "river-or-stream-name"]);
+var WHOLE_BY_DEFAULT = /* @__PURE__ */ new Set(["native-place-name", "native-people-or-tribe", "homeland-place-name"]);
+function defaultNameMode(categoryId) {
+  return WHOLE_BY_DEFAULT.has(categoryId) ? "whole" : "stem";
+}
+var PERSON_CATEGORIES = /* @__PURE__ */ new Set([
+  "personal-name",
+  "monarch-ruler-or-dynasty",
+  "royal-woman",
+  "official-patron-or-sponsor",
+  "commander-or-conqueror",
+  "explorer-or-founder"
+]);
+var DEFAULT_GENDER = {
+  "royal-woman": { male: 0, female: 100 },
+  "monarch-ruler-or-dynasty": { male: 85, female: 15 },
+  "personal-name": { male: 75, female: 25 },
+  "saint-or-holy-person": { male: 70, female: 30 },
+  deity: { male: 50, female: 50 },
+  "colonial-deity": { male: 50, female: 50 },
+  "local-deity": { male: 50, female: 50 },
+  "official-patron-or-sponsor": { male: 95, female: 5 },
+  "commander-or-conqueror": { male: 95, female: 5 },
+  "explorer-or-founder": { male: 95, female: 5 }
+};
+var NAME_SLOTS = /* @__PURE__ */ new Set([
+  "personal-name",
+  "folk-group",
+  "monarch-ruler-or-dynasty",
+  "royal-woman",
+  "official-patron-or-sponsor",
+  "commander-or-conqueror",
+  "explorer-or-founder",
+  "saint-or-holy-person",
+  "deity",
+  "colonial-deity",
+  "local-deity",
+  "native-place-name",
+  "native-people-or-tribe",
+  "homeland-place-name",
+  "earlier-or-district-name",
+  "river-or-stream-name"
+]);
+function hasGenderDefault(categoryId) {
+  return categoryId in DEFAULT_GENDER;
+}
+var NAME_WORDS = name_words_default;
+function hasBuiltInList(categoryId) {
+  var _a2, _b;
+  return ((_b = (_a2 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a2.length) != null ? _b : 0) > 0;
+}
+var categoryLabels = new Map([
+  ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label.toLowerCase()]),
+  ...COLONIAL_DATA.categories.map((c) => [c.id, c.label.toLowerCase()]),
+  ["local-settlement-word", "local settlement word"],
+  ["local-market-word", "local market word"]
+]);
+var LOCAL_GENERICS = /* @__PURE__ */ new Set(["local-settlement-word", "local-market-word"]);
+var DIRECTIONS = ["north", "south", "east", "west"];
+var SPACE_POSITIONAL = /* @__PURE__ */ new Set(["outer", "inner", "upper", "far", "near", "high", "low"]);
+var spaceWord = (word) => ({ modern: word, forms: [word.charAt(0).toUpperCase() + word.slice(1)], fuses: "no" });
+var SPACE_ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth"];
+function repeatsWord(text) {
+  const words = text.toLowerCase().split(/[\s-]+/).filter((w) => w.length > 2 && !w.startsWith("["));
+  return new Set(words).size < words.length;
+}
+function pluralise(word) {
+  const parts = word.split(" ");
+  const last = parts.pop();
+  const plural = /s$/i.test(last) ? last : /[^aeiou]y$/i.test(last) ? `${last.slice(0, -1)}ies` : `${last}s`;
+  return [...parts, plural].join(" ");
+}
+var placeholderText = (categoryId) => {
+  var _a2, _b;
+  return `[${(_b = (_a2 = RENDER_LABELS[categoryId]) != null ? _a2 : categoryLabels.get(categoryId)) != null ? _b : categoryId}]`;
+};
+function pickWeighted3(items, rng) {
+  const total = items.reduce((n, [, w]) => n + w, 0);
+  let r = rng() * total;
+  for (const [item2, w] of items) {
+    r -= w;
+    if (r < 0) return item2;
+  }
+  return items[items.length - 1][0];
+}
+var pickUniform4 = (items, rng) => items[Math.floor(rng() * items.length)];
+function pickItem(items, rng) {
+  return items.every((i) => i.weight === items[0].weight) ? pickUniform4(items, rng) : pickWeighted3(items.map((i) => [i, i.weight]), rng);
+}
+function fillWord(fill) {
+  if (fill.kind === "placeholder") return fill.label;
+  if (fill.kind === "name") return fill.text;
+  return fill.traditional && fill.entry.traditional ? fill.entry.traditional : fill.entry.modern;
+}
+function fillEtymology(fill) {
+  var _a2;
+  if (fill.kind === "placeholder") return void 0;
+  return fill.kind === "name" ? (_a2 = fill.native) != null ? _a2 : fill.text : fill.entry.modern;
+}
+var VOWELS3 = /[aeiouy]/i;
+var isConsonant = (ch) => /[a-z]/i.test(ch) && !VOWELS3.test(ch);
+var titleWord = (w) => w.startsWith("[") ? w : w.charAt(0).toUpperCase() + w.slice(1);
+function capitaliseSpaced(text) {
+  const linking = new Set(NAME_WORDS.linkingWords);
+  let inPlaceholder = false;
+  const words = text.split(" ");
+  return words.map((word, i) => {
+    if (word.startsWith("[")) inPlaceholder = true;
+    const planetLetter2 = i > 0 && /^[b-h]$/.test(word) && /\d$/.test(words[i - 1]);
+    const out = inPlaceholder ? word : planetLetter2 ? word : i > 0 && linking.has(word.toLowerCase()) ? word.toLowerCase() : titleWord(word);
+    if (word.includes("]")) inPlaceholder = false;
+    return out;
+  }).join(" ");
+}
+function smoothJoin(specific, generic) {
+  var _a2, _b, _c, _d;
+  let a = specific;
+  let b = generic.toLowerCase();
+  if (a.length > 0 && b.length > 0 && a.slice(-1).toLowerCase() === b.charAt(0)) b = b.slice(1);
+  if (/e$/i.test(a) && VOWELS3.test(b.charAt(0))) a = a.slice(0, -1);
+  const tail = (_b = (_a2 = a.match(/[^aeiouy]*$/i)) == null ? void 0 : _a2[0]) != null ? _b : "";
+  const head = (_d = (_c = b.match(/^[^aeiouy]*/i)) == null ? void 0 : _c[0]) != null ? _d : "";
+  if (Array.from(tail + head).filter(isConsonant).length >= NAMES.maxJoinConsonants) return null;
+  return (a + b).replace(/(.)\1{2,}/gi, "$1$1");
+}
+var fusedCase = (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+var letterCount3 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
+var _a;
+var NameRenderer = class {
+  constructor(recipe, slots, regionCode, options = {}) {
+    this.recipe = recipe;
+    this.slots = slots;
+    this.options = options;
+    this.formatter = new PlaceShapeFormatter();
+    this.notices = /* @__PURE__ */ new Set();
+    /** Split-label choices (§5.2) never touch the fill stream. */
+    this.labelRng = (_a = this.options.labelRng) != null ? _a : mulberry32(SPLIT_SALT);
+    /** True while a colonial shape renders: unmapped flora and fauna become native placeholders (§6). */
+    this.colonial = false;
+    this.region = regionCode;
+  }
+  get adaptation() {
+    return this.options.adaptation;
+  }
+  /** A placeholder fill with its rendered label: one component for split categories (§5.2). */
+  placeholder(categoryId) {
+    const split = SPLIT_LABELS[categoryId];
+    const label = split ? `[${split[Math.floor(this.labelRng() * split.length)]}]` : placeholderText(categoryId);
+    return { kind: "placeholder", categoryId, label };
+  }
+  getNotices() {
+    return [...this.notices];
+  }
+  /** §6.3: unmapped categories use their built-in list, else a placeholder. */
+  slotFor(categoryId) {
+    const slot = this.slots[categoryId];
+    if (slot) return slot;
+    return hasBuiltInList(categoryId) ? { kind: "built-in" } : { kind: "placeholder" };
+  }
+  chooseRegister(entry, rng) {
+    if (!entry.traditional) return false;
+    if (this.recipe.register === "modern") return false;
+    if (this.recipe.register === "traditional") return true;
+    return rng() < NAMES.mixedTraditional;
+  }
+  /**
+   * River brief §6.9: an unmapped (or built-in) river slot is a bare river from the river engine,
+   * drawn on the fill stream as a spaced word fill — British (with the region) for organic shapes,
+   * New Land or Established for colonial ones.
+   */
+  riverWordFill(rng) {
+    const part = this.recipe.shape.part;
+    const setting = part === "new-land" ? "new-land" : part === "established" ? "established" : "british";
+    const text = riverFill(
+      {
+        setting,
+        region: setting === "british" ? this.region : void 0,
+        // Tribal brief §19.5: colonial parts pass the recipe's biome.
+        biome: setting === "british" ? void 0 : this.recipe.shape.biome,
+        faithfulness: this.options.faithfulness,
+        strictness: this.options.strictness
+      },
+      rng
+    );
+    return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
+  }
+  /**
+   * Stellar brief §5.6–§5.8: a fill for a category under a space biome, or undefined to take the
+   * usual path (landform, ground and resource words come from the biome through landFill).
+   */
+  spaceFill(categoryId, rng) {
+    var _a2;
+    const biome = this.options.biome;
+    const scale = biome == null ? void 0 : biome.scale;
+    if (!biome || !scale) return void 0;
+    const aliens = !!this.recipe.shape.aliens;
+    const placeholder = (label) => ({ kind: "placeholder", categoryId, label, native: true });
+    const word = (entry) => ({ kind: "word", entry, traditional: false });
+    switch (categoryId) {
+      case "native-place-name": {
+        if (aliens && rng() < 0.5) return placeholder("[alien place]");
+        const text = scale === "Pl" || scale === "Sy" ? catalogueWorld(rng) : catalogueName(rng);
+        return { kind: "name", text, mode: "whole", catalogue: true };
+      }
+      case "native-people-or-tribe":
+        return placeholder(aliens ? "[alien people]" : "[earlier settlers]");
+      case "local-deity":
+        return placeholder("[alien god]");
+      case "position-or-direction": {
+        if (rng() < 0.5) return word(spaceWord(pickUniform4(spaceDirections(scale), rng).toLowerCase()));
+        const positional = ((_a2 = NAME_WORDS.categories["position-or-direction"]) != null ? _a2 : []).filter((e) => SPACE_POSITIONAL.has(e.modern.toLowerCase()));
+        return positional.length > 0 ? word(pickUniform4(positional, rng)) : void 0;
+      }
+      case "built-feature":
+        return word(spaceWord(pickUniform4(SPACE_DATA.spaceBuilt, rng)));
+      case "activity":
+        return word(spaceWord(pickUniform4(SPACE_DATA.spaceActivity, rng).toLowerCase()));
+      case "distance-or-survey-mark":
+        return word(spaceWord(pickUniform4(SPACE_ORDINALS.slice(0, scale === "Pl" ? 5 : 12), rng).toLowerCase()));
+      case "crop":
+      case "produce": {
+        const crops = biome.crops;
+        return crops.length > 0 ? word(spaceWord(pickWeighted3(crops, rng))) : void 0;
+      }
+    }
+    return void 0;
+  }
+  /**
+   * Land brief §5.3–§5.4: a fill from the biome and terrain, or undefined to take today's path
+   * (Britain with Any terrain draws today's built-ins uniformly, so seeds are unchanged).
+   */
+  landFill(categoryId, rng, chosenBiome) {
+    var _a2;
+    const biome = ((_a2 = this.options.biome) == null ? void 0 : _a2.id) === "britain" ? void 0 : this.options.biome;
+    const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
+    const word = (entry) => ({ kind: "word", entry, traditional: this.chooseRegister(entry, rng) });
+    if (categoryId === "landform" || categoryId === "water-or-wetland-feature") {
+      const kind = categoryId === "landform" ? "land" : "water";
+      if (!biome) {
+        if (!terrain) return void 0;
+        const tagged = shortWords(BRITAIN, kind, terrain).map(([e]) => e);
+        if (tagged.length > 0) return word(pickUniform4(tagged, rng));
+        return word(pickUniform4(shortWords(BRITAIN, kind, "plains").map(([e]) => e), rng));
+      }
+      let t = terrain;
+      if (!t) {
+        const weights = Object.entries(terrainWeights(biome, "any")).filter(([id, w]) => w > 0 && shortWords(biome, kind, id).length > 0);
+        t = pickWeighted3(weights, rng);
+      }
+      let entries2 = shortWords(biome, kind, t);
+      if (entries2.length === 0) {
+        this.notices.add(`\u201C${t}\u201D has no short ${kind} words; using the plains.`);
+        entries2 = shortWords(biome, kind, "plains");
+      }
+      return entries2.length > 0 ? word(pickWeighted3(entries2, rng)) : void 0;
+    }
+    if (!LAND_BIOME_SLOTS.has(categoryId)) return void 0;
+    if (this.colonial && (categoryId === "domestic-animal" || categoryId === "crop") && !chosenBiome) return void 0;
+    if (!biome) return void 0;
+    const entries = biomeEntries(biome, categoryId);
+    return entries && entries.length > 0 ? this.biomePick(biome, categoryId, entries, rng, true) : void 0;
+  }
+  /**
+   * A weighted pick from a biome list, counting its pack lines (Land brief §9.3): a pack line
+   * draws a whole name from that pack, used as an open, named word.
+   */
+  biomePick(biome, categoryId, entries, rng, register) {
+    var _a2, _b;
+    const draws = (_b = (_a2 = biome.packDraws) == null ? void 0 : _a2[SLOT_LISTS[categoryId]]) != null ? _b : [];
+    const asWord = (entry) => ({ kind: "word", entry, traditional: register ? this.chooseRegister(entry, rng) : false });
+    if (draws.length === 0) return asWord(pickWeighted3(entries, rng));
+    const choice = pickWeighted3([...entries.map(([entry, w]) => [{ entry }, w]), ...draws.map((d) => [{ draw: d.draw }, d.weight])], rng);
+    if ("entry" in choice) return asWord(choice.entry);
+    const text = choice.draw(rng);
+    return text ? { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false } : asWord(pickWeighted3(entries, rng));
+  }
+  /** Tribal brief §20.2: a short tribal name on the fill stream, as riverWordFill. */
+  tribalWordFill(slot, rng) {
+    const part = this.recipe.shape.part;
+    const { kind: _kind, tradition, ...fields2 } = slot;
+    const { text } = tribalSlotFill(
+      {
+        tradition,
+        part,
+        region: this.region,
+        biome: part === "organic" ? void 0 : this.options.biome,
+        terrain: this.options.terrain,
+        ...Object.keys(fields2).length > 0 ? { fields: fields2 } : {}
+      },
+      rng
+    );
+    return { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false };
+  }
+  /**
+   * River brief §3: a keep-set word in a linked generic-first order keeps "{Generic} of the {Word}"
+   * with probability 0.65 on its own stream; null means flip and join as before.
+   */
+  ofThe(fill, categoryId, genericId, rng) {
+    const ofTheRng = this.options.ofTheRng;
+    const eligible = fill.kind === "word" && OF_THE_KEEP_SET.has(categoryId) || fill.kind === "placeholder" && fill.native;
+    if (!ofTheRng || !eligible) return null;
+    if (!(ofTheRng() < OF_THE_KEEP)) return null;
+    return capitaliseSpaced(`${this.genericWord(genericId, false, rng)} of the ${fillWord(fill)}`);
+  }
+  /** Stage 2: fill one slot. `whole` forces whole names for pack sources (§5.3). */
+  fill(categoryId, rng, whole = false) {
+    var _a2, _b, _c;
+    const mapped = this.slots[categoryId];
+    if (categoryId === RIVER_CATEGORY && (!mapped || mapped.kind === "built-in")) {
+      const native = this.slots["native-place-name"];
+      if (this.colonial && !mapped && this.recipe.native && (native == null ? void 0 : native.kind) === "sources" && rng() < NAMES.nativeRiverShare) {
+        const fill = this.fill("native-place-name", rng, true);
+        if (fill.kind === "name") return fill;
+      }
+      return this.riverWordFill(rng);
+    }
+    if (!mapped && ((_a2 = this.options.biome) == null ? void 0 : _a2.space)) {
+      const space = this.spaceFill(categoryId, rng);
+      if (space) return space;
+    }
+    if (this.colonial && !mapped && NATIVE_LABELS[categoryId]) {
+      const biome = this.options.biome;
+      const entries = biome ? biomeEntries(biome, categoryId) : void 0;
+      if (biome && entries) return this.biomePick(biome, categoryId, entries, rng, false);
+      return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
+    }
+    const slot = this.slotFor(categoryId);
+    if (!mapped || mapped.kind === "biome") {
+      const land = this.landFill(categoryId, rng, (mapped == null ? void 0 : mapped.kind) === "biome");
+      if (land) return land;
+    }
+    if (slot.kind === "tribal") return this.tribalWordFill(slot, rng);
+    const wordFill = (entries) => {
+      if (!entries || entries.length === 0) return this.placeholder(categoryId);
+      return entryFill(pickUniform4(entries, rng));
+    };
+    const entryFill = (picked) => {
+      let entry = picked;
+      if (entry.modern.includes("[direction]")) entry = { ...entry, modern: entry.modern.replace("[direction]", pickUniform4(DIRECTIONS, rng)) };
+      return { kind: "word", entry, traditional: this.chooseRegister(entry, rng) };
+    };
+    if (slot.kind === "placeholder" && this.colonial && NATIVE_LABELS[categoryId]) {
+      return { kind: "placeholder", categoryId, label: `[${NATIVE_LABELS[categoryId]}]`, native: true };
+    }
+    if (slot.kind === "placeholder" || slot.kind === "ignore") return this.placeholder(categoryId);
+    if (slot.kind === "built-in" || slot.kind === "biome") return wordFill(NAME_WORDS.categories[categoryId]);
+    const source = pickWeighted3(slot.sources.map((s) => [s, s.weight]), rng);
+    if (source.items) return this.itemFill(source, slot, categoryId, rng, whole, entryFill);
+    if (source.entries) return wordFill(source.entries);
+    if (!source.draw) return this.placeholder(categoryId);
+    const mode = whole ? "whole" : (_b = slot.mode) != null ? _b : defaultNameMode(categoryId);
+    const ratio = (_c = slot.gender) != null ? _c : DEFAULT_GENDER[categoryId];
+    const request = {};
+    if (slot.section) request.section = slot.section;
+    if (ratio) request.gender = rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female";
+    const text = source.draw(request, mode, rng);
+    return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
+  }
+  /**
+   * A word list section's weighted items: the gender (slot ratio, else the category default) is
+   * drawn first and filters tagged items; a pack item draws a name, a word is a name in a name slot
+   * and a word fill elsewhere.
+   */
+  itemFill(source, slot, categoryId, rng, whole, entryFill) {
+    var _a2, _b, _c;
+    const all = source.items;
+    if (all.length === 0) return this.placeholder(categoryId);
+    const ratio = (_a2 = slot.gender) != null ? _a2 : DEFAULT_GENDER[categoryId];
+    const gender = ratio ? rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female" : void 0;
+    let items = gender ? all.filter((i) => !i.gender || i.gender === gender) : all;
+    if (items.length === 0) {
+      this.notices.add(`${(_b = source.itemsLabel) != null ? _b : "Word list"} has no ${gender} entries; ignoring gender.`);
+      items = all;
+    }
+    const item2 = pickItem(items, rng);
+    const mode = whole ? "whole" : (_c = slot.mode) != null ? _c : defaultNameMode(categoryId);
+    if (item2.draw) {
+      const text = item2.draw(gender ? { gender } : {}, mode, rng);
+      return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
+    }
+    if (NAME_SLOTS.has(categoryId)) return { kind: "name", text: item2.entry.modern, mode };
+    return entryFill(item2.entry);
+  }
+  /**
+   * Recipe takeover §A3: an adapted native name fill is adopted into the takeover pack's language.
+   * A failed adoption redraws the slot on the redraw stream, up to five draws in all; after that the
+   * last native name is used unchanged. Word fills and placeholders pass through untouched.
+   */
+  adaptFill(fill, categoryId, treatment, whole, shape) {
+    if (fill.kind === "name" && fill.catalogue) return treatment === "adapted" ? { ...fill, text: spokenCatalogue(fill.text), native: fill.text } : fill;
+    const adaptation = this.adaptation;
+    if (!adaptation || treatment !== "adapted" || shape.translated || !NATIVE_CATEGORIES.has(categoryId)) return fill;
+    let current = fill;
+    for (let draw2 = 1; ; draw2++) {
+      if (current.kind !== "name") return current;
+      const adopted = adaptation.adapt(current.text, adoptionRng(adaptation.seed, current.text));
+      if (adopted !== null) return { ...current, text: adopted, native: current.text };
+      if (draw2 >= ADAPT_ATTEMPTS) return current;
+      current = this.fill(categoryId, adaptation.redrawRng, whole);
+    }
+  }
+  /** The generic's word (§3.1): variant replaces the plain word in its regions; recipe overrides last. */
+  genericWord(genericId, plural, rng) {
+    var _a2, _b, _c;
+    if (LOCAL_GENERICS.has(genericId)) return this.localGeneric(genericId, rng);
+    const colonial = NAME_WORDS.colonialGenerics[genericId];
+    if (colonial) {
+      const word2 = pickUniform4(colonial, rng);
+      const chosen = plural ? pluralise(word2) : word2;
+      return (_a2 = this.recipe.generics[chosen.toLowerCase()]) != null ? _a2 : chosen;
+    }
+    const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === genericId);
+    let word;
+    if (rewrite) {
+      word = plural ? rewrite.plural || rewrite.word : rewrite.word;
+    } else {
+      const entry = PLACE_SHAPE_WORD_DATA.words[genericId];
+      const i = entry && entry.words.length > 1 ? Math.floor(rng() * entry.words.length) : 0;
+      word = entry ? plural && entry.plurals[i] ? entry.plurals[i] : entry.words[i] : genericId;
+      const variant = this.region ? PLACE_SHAPE_WORD_DATA.variants.find((v) => v.generic === genericId && v.regions.includes(this.region)) : void 0;
+      if (variant) word = plural && ((_b = entry == null ? void 0 : entry.plurals[i]) != null ? _b : "") !== "" ? variant.plural : variant.variant;
+    }
+    return (_c = this.recipe.generics[word.toLowerCase()]) != null ? _c : word;
+  }
+  /** §9.3: the local word from the recipe's linked word list (Modern column only), or a placeholder. */
+  localGeneric(genericId, rng) {
+    const slot = this.slots[genericId];
+    const wordsOf = (s) => {
+      var _a2;
+      return s.entries ? s.entries.map((entry) => ({ weight: 1, entry })) : ((_a2 = s.items) != null ? _a2 : []).filter((i) => i.entry);
+    };
+    const sources = (slot == null ? void 0 : slot.kind) === "sources" ? slot.sources.filter((s) => wordsOf(s).length > 0) : [];
+    if (sources.length === 0) return placeholderText(genericId);
+    const source = pickWeighted3(sources.map((s) => [s, s.weight]), rng);
+    return pickItem(wordsOf(source), rng).entry.modern;
+  }
+  fusionClass(word, genericId) {
+    if (genericId && NAME_WORDS.genericFusion[genericId] !== void 0 && NAME_WORDS.colonialGenerics[genericId]) {
+      return NAME_WORDS.genericFusion[genericId];
+    }
+    if (word.includes(" ")) return 0;
+    const known = NAME_WORDS.fusion[word.toLowerCase()];
+    if (known !== void 0) return known;
+    this.notices.add(`\u201C${word}\u201D has no fusion class; it is treated as usually spaced.`);
+    return NAMES.unlistedFusion;
+  }
+  /** The combining form used when a word fill fuses. */
+  combiningForm(fill, rng) {
+    const forms = fill.traditional && fill.entry.traditionalForms ? fill.entry.traditionalForms : fill.entry.forms;
+    return forms.length > 0 ? pickUniform4(forms, rng) : fillWord(fill);
+  }
+  /**
+   * §4.1–§4.3, §4.6: specific + generic, fused or spaced. Returns the joined text and whether it
+   * fused (stacked generics only fuse onto an already fused name).
+   */
+  join(fill, categoryId, genericId, rng) {
+    var _a2;
+    let plural = false;
+    let forceFuse = false;
+    let neverFuse = false;
+    let modifier = NAMES.packStem;
+    if (fill.kind === "placeholder") neverFuse = true;
+    else if (fill.kind === "name") neverFuse = fill.mode === "whole";
+    else {
+      const f = fill.entry.fuses;
+      if (f === "no" || f === "traditional-only" && !fill.traditional) neverFuse = true;
+      const word = fill.entry.modern.toLowerCase();
+      const fusedNumber = f === "number-fused" || categoryId === "number" && ["two", "three"].includes(word);
+      const spacedNumber = f === "number-spaced" || categoryId === "number" && ["five", "seven", "nine"].includes(word);
+      if (fusedNumber) {
+        forceFuse = true;
+        neverFuse = false;
+      }
+      if (spacedNumber) {
+        neverFuse = true;
+        plural = true;
+      }
+      if (f === "mile") {
+        const generic2 = this.genericWord(genericId, false, rng);
+        return { text: capitaliseSpaced(`${fillWord(fill)} Mile ${generic2}`), fused: false };
+      }
+      modifier = fill.traditional ? NAMES.traditionalWord : NAMES.modernWord;
+    }
+    const generic = this.genericWord(genericId, plural, rng);
+    const spaced = { text: capitaliseSpaced(`${fillWord(fill)} ${generic}`), fused: false };
+    if (LOCAL_GENERICS.has(genericId) && fill.kind !== "placeholder" && !generic.startsWith("[")) {
+      const specific2 = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
+      return { text: fusedCase((_a2 = smoothJoin(specific2, generic)) != null ? _a2 : `${specific2}${generic.toLowerCase()}`), fused: true };
+    }
+    if (fill.kind === "word" && fill.entry.fuses === "town-only" && generic.toLowerCase() !== "town") return spaced;
+    if (neverFuse && !forceFuse) return spaced;
+    if (!forceFuse) {
+      const chance = Math.min(NAMES.fuseCap, this.fusionClass(generic, genericId) * modifier * NAMES.joining[this.recipe.render.joining]);
+      if (!(rng() < chance)) return spaced;
+    }
+    if (generic.includes(" ")) return spaced;
+    let specific = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
+    if (fill.kind === "name" && PERSON_CATEGORIES.has(categoryId) && rng() < NAMES.linkingS && !/s$/i.test(specific)) {
+      specific += "s";
+    }
+    const joined = smoothJoin(specific, generic);
+    if (joined === null || letterCount3(joined) > NAMES.maxFusedLetters) return spaced;
+    return { text: fusedCase(joined), fused: true };
+  }
+  /** §4.4: a name or placeholder with a generic-first order stays generic first. */
+  genericFirst(fill, genericId, linked, rng) {
+    var _a2;
+    const generic = this.genericWord(genericId, false, rng);
+    const variantPrefix = NAME_WORDS.prefixVariantForms[genericId];
+    const prefix = (_a2 = NAME_WORDS.prefixForms[genericId]) != null ? _a2 : variantPrefix && generic.toLowerCase() === variantPrefix.variant ? variantPrefix.prefix : void 0;
+    const name = fillWord(fill);
+    if (prefix) return `${prefix} ${titleWord(name)}`;
+    return capitaliseSpaced(`${generic} of ${name}`);
+  }
+  /** §4.5: -ing- connectives, fused to the name; the generic joins if its class allows. */
+  connective(fill, genericId, rng) {
+    const generic = this.genericWord(genericId, false, rng);
+    const base = fill.kind === "placeholder" ? `${fill.label}ing` : `${fusedCase(fillWord(fill))}ing`;
+    if (fill.kind !== "placeholder" && this.fusionClass(generic) >= 0.5 && !generic.includes(" ")) {
+      const joined = smoothJoin(base, generic);
+      if (joined && letterCount3(joined) <= NAMES.maxFusedLetters) return fusedCase(joined);
+    }
+    return `${base} ${titleWord(generic)}`;
+  }
+  /** §4.8: the shape's affix, with its slot filled; an ignored category redraws the affix type. */
+  affix(shape, rng) {
+    if (!shape.affix) return void 0;
+    const ignored = (form2) => !!form2.slotCategory && this.slotFor(form2.slotCategory).kind === "ignore";
+    let { typeId, form } = shape.affix;
+    if (ignored(form)) {
+      const options = PLACE_SHAPE_DATA.affixes.map((a) => {
+        var _a2;
+        return [
+          { id: a.id, forms: a.forms.filter((f) => !ignored(f)) },
+          (_a2 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a2 : 0
+        ];
+      }).filter(([a, w]) => a.forms.length > 0 && w > 0);
+      if (options.length === 0) return void 0;
+      const type = pickWeighted3(options, rng);
+      typeId = type.id;
+      form = pickUniform4(type.forms, rng);
+    }
+    const fill = form.slotCategory ? this.fill(form.slotCategory, rng, true) : void 0;
+    return { typeId, form, fill };
+  }
+  /** Colonial shapes (parts 2 and 2a): the structures of colonial-shapes §6, rendered by §4. */
+  renderColonial(shape, rng) {
+    this.colonial = true;
+    try {
+      return this.renderColonialShape(shape, rng);
+    } finally {
+      this.colonial = false;
+    }
+  }
+  renderColonialShape(shape, rng) {
+    const whole = (categoryId) => this.fill(categoryId, rng, true);
+    const specific = (f, isWhole) => this.adaptFill(f, shape.categoryId, shape.treatments.specific, isWhole, shape);
+    const secondOf = (f) => this.adaptFill(f, shape.secondCategoryId, shape.treatments.second, true, shape);
+    const named = (fill2) => titleWord(fillWord(fill2));
+    const the = (text2) => shape.definite ? `The ${text2}` : text2;
+    let fill;
+    let second;
+    let text;
+    switch (shape.structure) {
+      case "simplex":
+        text = the(capitaliseSpaced(this.genericWord(shape.genericId, !!shape.plural, rng)));
+        break;
+      case "bare-specific":
+        fill = specific(whole(shape.categoryId), true);
+        text = the(capitaliseSpaced(fillWord(fill)));
+        break;
+      case "possessive":
+        fill = specific(whole(shape.categoryId), true);
+        text = capitaliseSpaced(`${fillWord(fill)}'s ${this.genericWord(shape.genericId, false, rng)}`);
+        break;
+      case "new-transfer":
+        fill = specific(whole(shape.categoryId), true);
+        text = `New ${named(fill)}`;
+        break;
+      case "twin":
+        fill = specific(whole(shape.categoryId), true);
+        text = `${shape.twin === "old" ? "Old" : "New"} ${named(fill)}`;
+        break;
+      case "double-specific":
+        fill = specific(whole(shape.categoryId), true);
+        second = secondOf(whole(shape.secondCategoryId));
+        text = capitaliseSpaced(`${fillWord(fill)} of ${fillWord(second)}`);
+        break;
+      case "position-of-landmark":
+        fill = specific(this.fill(shape.categoryId, rng), false);
+        second = secondOf(whole(shape.secondCategoryId));
+        text = capitaliseSpaced(`${fillWord(fill)} of the ${fillWord(second)}`);
+        break;
+      case "locative":
+        text = capitaliseSpaced(`at the ${this.genericWord(shape.genericId, false, rng)}`);
+        break;
+      default: {
+        const genericFirst = shape.wordOrder === "generic-first-direct" || shape.wordOrder === "generic-first-linked";
+        const slot = this.slotFor(shape.categoryId);
+        const mayBeName = slot.kind === "sources" && slot.sources.some((s) => s.draw);
+        const drawWhole = genericFirst && mayBeName;
+        fill = specific(this.fill(shape.categoryId, rng, drawWhole), drawWhole);
+        const native = fill.kind === "placeholder" && !!fill.native;
+        if (genericFirst && fill.kind !== "word" && !native && !LOCAL_GENERICS.has(shape.genericId)) {
+          text = this.genericFirst(fill, shape.genericId, shape.wordOrder === "generic-first-linked", rng);
+          break;
+        }
+        const kept = shape.wordOrder === "generic-first-linked" && shape.structure === "two-part-compound" ? this.ofThe(fill, shape.categoryId, shape.genericId, rng) : null;
+        if (kept) {
+          text = kept;
+          break;
+        }
+        const first = this.join(fill, shape.categoryId, shape.genericId, rng);
+        text = first.text;
+        if (shape.structure === "stacked-generic" && shape.stackedGenericId) {
+          const nextWord = this.genericWord(shape.stackedGenericId, false, rng);
+          const chance = Math.min(
+            NAMES.fuseCap,
+            this.fusionClass(nextWord, shape.stackedGenericId) * NAMES.joining[this.recipe.render.joining]
+          );
+          const fused = first.fused && rng() < chance ? smoothJoin(text, nextWord) : null;
+          text = fused && letterCount3(fused) <= NAMES.maxFusedLetters ? fusedCase(fused) : capitaliseSpaced(`${text} ${nextWord}`);
+        }
+      }
+    }
+    const affix = this.affix(shape, rng);
+    let affixFill;
+    if (affix) {
+      const { form } = affix;
+      const filledText = affix.fill ? titleWord(fillWord(affix.fill)) : "";
+      affixFill = affix.fill ? fillEtymology(affix.fill) : void 0;
+      const words = [form.text, filledText].filter((w) => w.length > 0).join(" ");
+      if (form.position === "before") text = `${titleWord(words)} ${text}`;
+      else if (form.text && form.slotCategory && this.recipe.render.linkingHyphens) text = `${text}-${form.text.replace(/ /g, "-")}-${filledText}`;
+      else text = `${text} ${words}`;
+    }
+    const shown = { ...shape, affix: affix ? { typeId: affix.typeId, form: affix.form } : void 0 };
+    if (!affix) delete shown.affix;
+    return {
+      text,
+      hasPlaceholder: /\[[^\]]+\]/.test(text),
+      etymology: formatColonialShape(shown, {
+        specific: fill ? fillEtymology(fill) : void 0,
+        second: second ? fillEtymology(second) : void 0,
+        affix: affixFill
+      }),
+      shape
+    };
+  }
+  /** Stage 3: one shape → one name. */
+  render(shape, rng) {
+    var _a2;
+    const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === shape.genericId);
+    const effective = rewrite ? {
+      ...shape,
+      categoryId: rewrite.category,
+      structure: (_a2 = rewrite.structure) != null ? _a2 : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
+    } : shape;
+    const { categoryId, genericId } = effective;
+    let text;
+    let fill;
+    switch (effective.structure) {
+      case "simplex":
+        text = titleWord(this.genericWord(genericId, false, rng));
+        text = capitaliseSpaced(text);
+        break;
+      case "plural-simplex":
+        text = capitaliseSpaced(this.genericWord(genericId, true, rng));
+        break;
+      case "folk-connective":
+      case "associative-connective":
+        fill = this.fill(categoryId, rng);
+        text = this.connective(fill, genericId, rng);
+        break;
+      default: {
+        if (genericId === "folk-group-territory") {
+          fill = this.fill(categoryId, rng);
+          text = fill.kind === "placeholder" ? `${fill.label}ings` : `${fusedCase(fillWord(fill))}ings`;
+          break;
+        }
+        const genericFirst = effective.wordOrder !== "germanic" && effective.structure === "two-part-compound";
+        const slot = this.slotFor(categoryId);
+        const mayBeName = slot.kind === "sources" && slot.sources.some((s) => s.draw);
+        fill = this.fill(categoryId, rng, genericFirst && mayBeName);
+        if (genericFirst && fill.kind !== "word") {
+          text = this.genericFirst(fill, genericId, effective.wordOrder === "celtic-linked", rng);
+          break;
+        }
+        const kept = effective.wordOrder === "celtic-linked" && effective.structure === "two-part-compound" ? this.ofThe(fill, categoryId, genericId, rng) : null;
+        if (kept) {
+          text = kept;
+          break;
+        }
+        const first = this.join(fill, categoryId, genericId, rng);
+        text = first.text;
+        if (effective.structure === "stacked-generic" && effective.stackedGenericId) {
+          const second = this.genericWord(effective.stackedGenericId, false, rng);
+          const chance = Math.min(NAMES.fuseCap, this.fusionClass(second) * NAMES.joining[this.recipe.render.joining]);
+          const fused = first.fused && rng() < chance ? smoothJoin(text, second) : null;
+          text = fused && letterCount3(fused) <= NAMES.maxFusedLetters ? fusedCase(fused) : capitaliseSpaced(`${text} ${second}`);
+        }
+      }
+    }
+    const affix = this.affix(effective, rng);
+    let affixFill;
+    if (affix) {
+      const { form } = affix;
+      const filled = affix.fill ? titleWord(fillWord(affix.fill)) : "";
+      affixFill = affix.fill ? fillEtymology(affix.fill) : void 0;
+      const words = [form.text, filled].filter((w) => w.length > 0).join(" ");
+      if (form.position === "before") text = `${titleWord(words)} ${text}`;
+      else if (form.text && form.slotCategory && this.recipe.render.linkingHyphens) {
+        text = `${text}-${form.text.replace(/ /g, "-")}-${filled}`;
+      } else text = `${text} ${words}`;
+    }
+    const shown = { ...effective, affix: affix ? { typeId: affix.typeId, form: affix.form } : void 0 };
+    if (!affix) delete shown.affix;
+    return {
+      text,
+      hasPlaceholder: /\[[^\]]+\]/.test(text),
+      etymology: this.formatter.formatEtymology(shown, fill ? fillEtymology(fill) : void 0, affixFill),
+      shape: effective
+    };
+  }
+};
+function resolveRegionSetting(value) {
+  if (!value || value === "all-britain") return void 0;
+  const kebab4 = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const region = PLACE_SHAPE_REGIONS.find((r) => r.code === value.toUpperCase() || kebab4(r.label) === kebab4(value));
+  return region == null ? void 0 : region.code;
+}
+function generatePlaceNames(options) {
+  const steps = generatePlaceNamesSteps(options);
+  for (; ; ) {
+    const next = steps.next();
+    if (next.done) return next.value;
+  }
+}
+function* generatePlaceNamesSteps(options) {
+  var _a2, _b;
+  const { recipe } = options;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const organic = recipe.shape.part === "organic";
+  const region = organic ? resolveRegionSetting(recipe.shape.region) : void 0;
+  const notices = [];
+  if (organic && recipe.shape.region !== "all-britain" && !region) {
+    notices.push(`Unknown region \u201C${recipe.shape.region}\u201D; using all Britain.`);
+  }
+  const excludedCategories = Object.entries(options.slots).filter(([, slot]) => slot.kind === "ignore").map(([id]) => id);
+  const rng = mulberry32((seed ^ FILL_SALT) >>> 0);
+  const adaptation = options.adapt && !organic ? { adapt: options.adapt, seed, redrawRng: mulberry32((seed ^ REDRAW_SALT) >>> 0) } : void 0;
+  const biomeSetting = recipe.shape.biome;
+  let biome = (_a2 = options.biome) != null ? _a2 : (biomeSetting == null ? void 0 : biomeSetting.startsWith("[[")) ? void 0 : findBiome(biomeSetting);
+  if (!biome && (biomeSetting == null ? void 0 : biomeSetting.startsWith("[["))) {
+    notices.push(`Biome pack \u201C${biomeSetting.slice(2, -2)}\u201D wasn't found; using ${organic ? "Britain" : "unknown country"}.`);
+  }
+  if (organic && (biome == null ? void 0 : biome.id) === "britain") biome = void 0;
+  if (organic && (biome == null ? void 0 : biome.space)) {
+    notices.push("Space biomes are for exploration, expansion and the Interstellar era.");
+    biome = void 0;
+  }
+  const spaceScale = (biome == null ? void 0 : biome.space) ? biome.scale : void 0;
+  let terrain = (_b = recipe.shape.terrain) != null ? _b : "any";
+  if (terrain !== "any" && biome && !availableTerrains(biome).some((t) => t.id === terrain) && biome.customTerrains) {
+    notices.push(`${biome.label} has no \u201C${terrain}\u201D terrain.`);
+    terrain = "any";
+  }
+  const environment = environmentMultipliers(biome, terrain);
+  const renderer = new NameRenderer(recipe, options.slots, region, {
+    biome,
+    terrain,
+    adaptation,
+    ofTheRng: mulberry32((seed ^ OF_THE_SALT) >>> 0),
+    labelRng: mulberry32((seed ^ SPLIT_SALT) >>> 0),
+    faithfulness: options.faithfulness,
+    strictness: options.strictness
+  });
+  let renderOne;
+  let shapeCount;
+  if (organic) {
+    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment });
+    renderOne = (i) => renderer.render(shapes[i], rng);
+    shapeCount = shapes.length;
+  } else {
+    const { shapes } = generateColonialShapesDetailed({
+      count: options.count,
+      seed,
+      part: recipe.shape.part === "new-land" ? "2" : "2a",
+      tradition: recipe.shape.tradition === "general" ? void 0 : recipe.shape.tradition,
+      context: recipe.shape.context === "none" ? void 0 : recipe.shape.context,
+      feature: recipe.shape.feature,
+      excludedCategories,
+      environment,
+      ...spaceScale ? { space: { scale: spaceScale, aliens: !!recipe.shape.aliens } } : {}
+    });
+    renderOne = (i) => renderer.renderColonial(shapes[i], rng);
+    shapeCount = shapes.length;
+  }
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  for (let i = 0; i < shapeCount; i++) {
+    let name = renderOne(i);
+    for (let attempt2 = 1; (seen.has(name.text.toLowerCase()) || !!spaceScale && (hasSpaceBlock(name.text) || repeatsWord(name.text))) && attempt2 < NAMES.duplicateAttempts; attempt2++) {
+      name = renderOne(i);
+    }
+    seen.add(name.text.toLowerCase());
+    names.push(name);
+    yield names.length;
+  }
+  return { names, seed, notices: [...notices, ...renderer.getNotices()] };
+}
+
+// src/names/recipe.ts
+var RECIPE_DEFAULTS = {
+  setting: "",
+  template: false,
+  shape: { part: "organic", region: "all-britain", tradition: "general", context: "none", biome: "unknown", terrain: "any", feature: "any" },
+  slots: {},
+  generics: {},
+  register: "mixed",
+  render: { joining: "balanced", linkingHyphens: true, etymology: false }
+};
+var PARTS = ["organic", "new-land", "established"];
+var REGISTERS = ["modern", "mixed", "traditional"];
+var JOININGS = ["fused", "balanced", "spaced"];
+var isObject = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
+var str = (v) => typeof v === "string" ? v.trim() : typeof v === "number" ? String(v) : void 0;
+var bool = (v) => typeof v === "boolean" ? v : v === "true" ? true : v === "false" ? false : void 0;
+function linkTarget(v) {
+  const s = str(v);
+  if (!s) return void 0;
+  const target = s.replace(/^\[\[|\]\]$/g, "").split("|")[0].trim();
+  return target || void 0;
+}
+function readSlot(v, problems, id) {
+  if (v === "built-in" || v === "ignore" || v === "placeholder" || v === "biome") return { kind: v };
+  if (!isObject(v)) {
+    problems.push(`Slot \u201C${id}\u201D isn't built-in, ignore, placeholder or a list of sources.`);
+    return void 0;
+  }
+  if (typeof v.tribal === "string") {
+    const tradition = v.tribal.trim();
+    if (tradition.startsWith("[[")) {
+      const preset = linkTarget(tradition);
+      if (preset) return { kind: "tribal", tradition: "general", preset };
+    }
+    if (!(tradition === "auto" || findTradition(tradition))) {
+      problems.push(`Slot \u201C${id}\u201D names an unknown tradition \u201C${tradition}\u201D.`);
+      return void 0;
+    }
+    return { kind: "tribal", tradition, ...readTribalFields(v, problems, id) };
+  }
+  const raw = Array.isArray(v.sources) ? v.sources : [];
+  const sources = [];
+  for (const item2 of raw) {
+    if (!isObject(item2)) continue;
+    const pack = linkTarget(item2.pack);
+    const list = linkTarget(item2.list);
+    if (!pack && !list) continue;
+    const weight = Number(item2.weight);
+    sources.push({ ...pack ? { pack } : {}, ...list ? { list } : {}, weight: Number.isFinite(weight) && weight > 0 ? weight : 1 });
+  }
+  if (sources.length === 0) {
+    problems.push(`Slot \u201C${id}\u201D has no usable sources.`);
+    return void 0;
+  }
+  const slot = { kind: "sources", sources };
+  if (v.mode === "stem" || v.mode === "whole") slot.mode = v.mode;
+  if (isObject(v.gender)) {
+    const male = Number(v.gender.male);
+    const female = Number(v.gender.female);
+    if (Number.isFinite(male) && Number.isFinite(female) && male + female > 0) slot.gender = { male, female };
+  }
+  const section = str(v.section);
+  if (section) slot.section = section;
+  return slot;
+}
+function readTribalFields(v, problems, id) {
+  const out = {};
+  const check = (key2, ok) => {
+    const value = str(v[key2]);
+    if (!value) return;
+    if (ok(value)) out[key2] = value;
+    else problems.push(`Slot \u201C${id}\u201D has an unknown ${key2} \u201C${value}\u201D.`);
+  };
+  check("biome", (b) => !!findBiome(b));
+  check("terrain", (t) => TERRAIN_CHOICES.some((x) => x.id === t));
+  check("groupType", (g) => TRIBAL_GROUP_TYPES.some((x) => x.key === g));
+  check("perspective", (p) => TRIBAL_PERSPECTIVES.includes(p));
+  check("register", (r) => TRIBAL_REGISTERS.includes(r));
+  return out;
+}
+function readRecipe(fm) {
+  var _a2, _b, _c;
+  const problems = [];
+  const recipe = {};
+  const setting = str(fm.setting);
+  if (setting !== void 0) recipe.setting = setting;
+  const template = bool(fm.template);
+  if (template !== void 0) recipe.template = template;
+  const templateOf = linkTarget(fm["template-of"]);
+  if (templateOf) recipe.templateOf = templateOf;
+  if (isObject(fm.shape)) {
+    const shape = {};
+    const part = str(fm.shape.part);
+    if (part && PARTS.includes(part)) shape.part = part;
+    else if (part) problems.push(`Unknown shape part \u201C${part}\u201D.`);
+    for (const key2 of ["region", "tradition", "context", "feature"]) {
+      const value = str(fm.shape[key2]);
+      if (value) shape[key2] = value;
+    }
+    const biome = str(fm.shape.biome);
+    if (biome && /^\[\[/.test(biome)) {
+      const target = linkTarget(biome);
+      if (target) shape.biome = `[[${target}]]`;
+    } else if (biome && (biome === "unknown" || findBiome(biome))) shape.biome = biome;
+    else if (biome) problems.push(`Unknown biome \u201C${biome}\u201D.`);
+    const terrain = str(fm.shape.terrain);
+    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || ((_a2 = shape.biome) == null ? void 0 : _a2.startsWith("[[")) || ((_c = (_b = findBiome(shape.biome)) == null ? void 0 : _b.customTerrains) == null ? void 0 : _c.some((t) => t.id === terrain)))) shape.terrain = terrain;
+    else if (terrain) problems.push(`Unknown terrain \u201C${terrain}\u201D.`);
+    const aliens = bool(fm.shape.aliens);
+    if (aliens !== void 0) shape.aliens = aliens;
+    recipe.shape = shape;
+  }
+  if (isObject(fm.slots)) {
+    recipe.slots = {};
+    for (const [id, value] of Object.entries(fm.slots)) {
+      const slot = readSlot(value, problems, id);
+      if (slot) recipe.slots[id] = slot;
+    }
+  }
+  if (isObject(fm.generics)) {
+    recipe.generics = {};
+    for (const [word, replacement] of Object.entries(fm.generics)) {
+      const r = str(replacement);
+      if (r) recipe.generics[word.trim().toLowerCase()] = r;
+    }
+  }
+  const takeover = linkTarget(fm.takeover);
+  if (takeover) recipe.takeover = takeover;
+  const native = linkTarget(fm.native);
+  if (native) recipe.native = native;
+  const words = linkTarget(fm.words);
+  if (words) recipe.words = words;
+  const register = str(fm.register);
+  if (register && REGISTERS.includes(register)) recipe.register = register;
+  else if (register) problems.push(`Unknown register \u201C${register}\u201D.`);
+  if (isObject(fm.render)) {
+    const render3 = {};
+    const joining = str(fm.render.joining);
+    if (joining && JOININGS.includes(joining)) render3.joining = joining;
+    else if (joining) problems.push(`Unknown joining \u201C${joining}\u201D.`);
+    const hyphens = bool(fm.render["linking-hyphens"]);
+    if (hyphens !== void 0) render3.linkingHyphens = hyphens;
+    const etymology = bool(fm.render.etymology);
+    if (etymology !== void 0) render3.etymology = etymology;
+    recipe.render = render3;
+  }
+  return { recipe, problems };
+}
+function mergeRecipe(derived, template) {
+  var _a2, _b, _c, _d;
+  return {
+    setting: (_a2 = derived.setting) != null ? _a2 : template.setting,
+    template: derived.template,
+    templateOf: derived.templateOf,
+    shape: { ...template.shape, ...derived.shape },
+    slots: { ...template.slots, ...derived.slots },
+    generics: { ...template.generics, ...derived.generics },
+    register: (_b = derived.register) != null ? _b : template.register,
+    render: { ...template.render, ...derived.render },
+    takeover: (_c = derived.takeover) != null ? _c : template.takeover,
+    native: (_d = derived.native) != null ? _d : template.native,
+    // Presets brief §6.1: each recipe has its own word-list note.
+    ...derived.words ? { words: derived.words } : {}
+  };
+}
+function withDefaults(r) {
+  var _a2, _b, _c;
+  return {
+    setting: (_a2 = r.setting) != null ? _a2 : RECIPE_DEFAULTS.setting,
+    template: (_b = r.template) != null ? _b : false,
+    ...r.templateOf ? { templateOf: r.templateOf } : {},
+    shape: { ...RECIPE_DEFAULTS.shape, ...r.shape },
+    slots: { ...r.slots },
+    generics: { ...r.generics },
+    register: (_c = r.register) != null ? _c : RECIPE_DEFAULTS.register,
+    render: { ...RECIPE_DEFAULTS.render, ...r.render },
+    ...r.takeover ? { takeover: r.takeover } : {},
+    ...r.native ? { native: r.native } : {},
+    ...r.words ? { words: r.words } : {}
+  };
+}
+function applyRecipeTemplate(derived, template, name) {
+  if (!derived.templateOf) return { recipe: derived };
+  if (derived.template) return { recipe: derived, error: `\u201C${name}\u201D is a template, so it can't use template-of.` };
+  if (!template) return { recipe: derived, error: `Template \u201C${derived.templateOf}\u201D is missing.` };
+  if (template.templateOf) {
+    return { recipe: derived, error: `Template \u201C${derived.templateOf}\u201D has its own template; only one level is allowed.` };
+  }
+  return { recipe: mergeRecipe(derived, template) };
+}
+function recipeToFrontmatter(r) {
+  var _a2;
+  const out = { type: "recipe", setting: (_a2 = r.setting) != null ? _a2 : "" };
+  if (r.template) out.template = true;
+  if (r.templateOf) out["template-of"] = `[[${r.templateOf}]]`;
+  if (r.shape && Object.keys(r.shape).length > 0) {
+    const { biome, terrain, aliens, ...rest } = r.shape;
+    out.shape = {
+      ...rest,
+      ...aliens ? { aliens: true } : {},
+      ...biome && biome !== "unknown" ? { biome } : {},
+      // Land brief §4.1: "any" is the default and is never written.
+      ...terrain && terrain !== "any" ? { terrain } : {}
+    };
+  }
+  if (r.slots && Object.keys(r.slots).length > 0) {
+    out.slots = Object.fromEntries(
+      Object.entries(r.slots).map(([id, slot]) => {
+        if (slot.kind === "tribal") {
+          if (slot.preset) return [id, { tribal: `[[${slot.preset}]]` }];
+          const { kind: _kind, tradition, preset: _preset, ...fields2 } = slot;
+          const own = Object.fromEntries(Object.entries(fields2).filter(([, value2]) => value2 !== void 0 && value2 !== "" && value2 !== "any"));
+          return [id, { tribal: tradition, ...own }];
+        }
+        if (slot.kind !== "sources") return [id, slot.kind];
+        const value = {
+          sources: slot.sources.map((s) => ({
+            ...s.pack ? { pack: `[[${s.pack}]]` } : {},
+            ...s.list ? { list: `[[${s.list}]]` } : {},
+            weight: s.weight
+          }))
+        };
+        if (slot.mode) value.mode = slot.mode;
+        if (slot.section) value.section = slot.section;
+        if (slot.gender) value.gender = { ...slot.gender };
+        return [id, value];
+      })
+    );
+  }
+  if (r.generics && Object.keys(r.generics).length > 0) out.generics = { ...r.generics };
+  if (r.register) out.register = r.register;
+  if (r.render && Object.keys(r.render).length > 0) {
+    const render3 = {};
+    if (r.render.joining) render3.joining = r.render.joining;
+    if (r.render.linkingHyphens !== void 0) render3["linking-hyphens"] = r.render.linkingHyphens;
+    if (r.render.etymology !== void 0) render3.etymology = r.render.etymology;
+    out.render = render3;
+  }
+  if (r.takeover) out.takeover = `[[${r.takeover}]]`;
+  if (r.native) out.native = `[[${r.native}]]`;
+  if (r.words) out.words = `[[${r.words}]]`;
+  return out;
+}
+function britishPlaceNamesRecipe(region, biome, terrain) {
+  return withDefaults({
+    shape: { part: "organic", region: region != null ? region : "all-britain", biome: biome != null ? biome : "unknown", terrain: terrain != null ? terrain : "any", feature: "any" },
+    register: "modern",
+    render: { joining: "balanced", linkingHyphens: true, etymology: false }
+  });
+}
+function colonialPlaceNamesRecipe(part, tradition, context, biome, terrain, aliens) {
+  return withDefaults({
+    shape: { part, tradition: tradition != null ? tradition : "general", context: context != null ? context : "none", biome: biome != null ? biome : "unknown", terrain: terrain != null ? terrain : "any", feature: "any", ...aliens ? { aliens: true } : {} },
+    register: "modern",
+    render: { joining: "balanced", linkingHyphens: true, etymology: false }
+  });
+}
+
+// src/tribes/sentence.ts
+var TERRAIN_PHRASES = {
+  any: "in any terrain",
+  plains: "on the plains",
+  hills: "in hilly terrain",
+  mountains: "in mountainous terrain",
+  forest: "in a forest",
+  coast: "on the coast",
+  rivers: "by rivers and lakes",
+  wetland: "in wetlands",
+  islands: "on islands"
+};
+var PERSPECTIVE_PHRASES = {
+  any: "given to or used by them",
+  self: "used by them as their self-name",
+  neighbour: "given to them by their neighbours",
+  geographical: "given to them for where they live",
+  dynastic: "used by them for their line of descent",
+  ceremonial: "used by them as a ceremonial title",
+  later: "given to them by later writers and officials",
+  imposed: "imposed on them by outsiders"
+};
+var perspectivePhrase = (id) => {
+  var _a2, _b, _c;
+  return (_c = (_b = (_a2 = PERSPECTIVE_PHRASES[id != null ? id : "any"]) != null ? _a2 : TRIBAL_DATA.perspectiveLabels[id]) != null ? _b : id) != null ? _c : "";
+};
+function tribalSentence(state, limits) {
+  var _a2, _b, _c, _d, _e, _f, _g, _h;
+  const out = [];
+  const extra = (_a2 = limits.extraTraditions) != null ? _a2 : [];
+  const tradition = findTradition(state.tradition);
+  out.push({
+    field: "tradition",
+    text: (_d = (_c = tradition == null ? void 0 : tradition.label) != null ? _c : (_b = extra.find((t) => t.id === state.tradition)) == null ? void 0 : _b.label) != null ? _d : state.tradition,
+    title: (_e = tradition == null ? void 0 : tradition.drawsOn) != null ? _e : "The tradition follows the recipe's region",
+    choices: [...extra, ...TRIBAL_TRADITIONS.map((t) => ({ id: t.key, label: t.label }))],
+    current: state.tradition
+  });
+  out.push("-themed ");
+  const groupTypes = TRIBAL_GROUP_TYPES.filter((g) => !limits.groupTypes || limits.groupTypes.includes(g.key));
+  const group = groupTypes.find((g) => g.key === state.groupType);
+  out.push({
+    field: "groupType",
+    text: group ? group.label.toLowerCase() : "groups of any kind",
+    title: "Group type: what kind of group is being named",
+    choices: [{ id: void 0, label: "Any group type" }, ...groupTypes.map((g) => ({ id: g.key, label: g.label }))],
+    current: group == null ? void 0 : group.key
+  });
+  out.push(" in ");
+  const biome = limits.findBiome(state.biome);
+  const inline = biome && biomeInline(biome);
+  const fallback = (_f = limits.defaultBiome) != null ? _f : "their original";
+  out.push({
+    field: "biome",
+    text: inline ? `${/^[aeiou]/i.test(inline) ? "an" : "a"} ${inline}` : fallback,
+    title: (_g = biome == null ? void 0 : biome.guide) != null ? _g : tradition ? homelandSummary(tradition.key) : "Biome",
+    choices: [
+      { id: void 0, label: fallback.charAt(0).toUpperCase() + fallback.slice(1) },
+      ...limits.biomes.map((b) => {
+        var _a3, _b2;
+        return { id: (_b2 = (_a3 = b.custom) == null ? void 0 : _a3.path) != null ? _b2 : b.id, label: b.label };
+      })
+    ],
+    current: state.biome
+  });
+  out.push(" environment ");
+  const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
+  const terrainText = (id) => {
+    var _a3, _b2, _c2;
+    return (_c2 = TERRAIN_PHRASES[id]) != null ? _c2 : `in ${(_b2 = (_a3 = [...terrains, ...TERRAIN_CHOICES].find((t) => t.id === id)) == null ? void 0 : _a3.label.toLowerCase()) != null ? _b2 : "any terrain"}`;
+  };
+  out.push({
+    field: "terrain",
+    text: terrainText(state.terrain || "any"),
+    title: "Terrain: the kind of land they live in",
+    choices: [{ id: "any", label: terrainText("any") }, ...terrains.map((t) => ({ id: t.id, label: terrainText(t.id) }))],
+    current: state.terrain || "any"
+  });
+  out.push(" using ");
+  const registers = TRIBAL_REGISTERS.filter((r) => !limits.registers || limits.registers.includes(r));
+  const register = registers.includes(state.register) ? state.register : registers[0];
+  out.push({
+    field: "register",
+    text: register,
+    title: (_h = TRIBAL_DATA.registerLabels[register]) != null ? _h : register,
+    choices: registers.map((r) => ({ id: r, label: TRIBAL_DATA.registerLabels[r] })),
+    current: register
+  });
+  out.push(" names ");
+  out.push({
+    field: "perspective",
+    text: perspectivePhrase(state.perspective),
+    title: "Perspective: who uses the name",
+    choices: [void 0, ...TRIBAL_PERSPECTIVES].map((p) => ({ id: p, label: perspectivePhrase(p) })),
+    current: state.perspective
+  });
+  if (limits.hostile) {
+    out.push(", ");
+    out.push({
+      field: "hostile",
+      text: state.hostile ? "insults and all" : "no insults",
+      title: "Hostile names: insults one people used for another",
+      choices: [
+        { id: void 0, label: "no insults" },
+        { id: "hostile", label: "insults and all" }
+      ],
+      current: state.hostile ? "hostile" : void 0
+    });
+  }
+  return out;
+}
+function tribalSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function chooseTribal(state, field, id, findBiome2) {
+  switch (field) {
+    case "tradition":
+      return { ...state, tradition: id != null ? id : "general" };
+    case "groupType":
+      return { ...state, groupType: id };
+    case "biome": {
+      const next = findBiome2(id);
+      const keep = !next || state.terrain === "any" || availableTerrains(next).some((t) => t.id === state.terrain);
+      return { ...state, biome: id, terrain: keep ? state.terrain : "any" };
+    }
+    case "terrain":
+      return { ...state, terrain: id != null ? id : "any" };
+    case "register":
+      return { ...state, register: id != null ? id : "plain" };
+    case "perspective":
+      return { ...state, perspective: id };
+    case "hostile":
+      return { ...state, hostile: id === "hostile" };
+  }
+}
+
 // src/deities/hook.ts
 var hooks;
 function setDeityHooks(h) {
@@ -57086,760 +62206,6 @@ function worldHistoryLabel(base, cultureId, eraId) {
   const era = findEra(culture, eraId);
   return culture.eras.length > 1 ? `${base} \xB7 ${culture.label} \xB7 ${era.label}` : `${base} \xB7 ${culture.label}`;
 }
-
-// src/data/space.json
-var space_default = {
-  scales: {
-    order: [
-      "Pl",
-      "Sy",
-      "Nb",
-      "Se",
-      "Ga"
-    ],
-    any: {
-      label: "Any scale",
-      phrase: "any scale",
-      tooltip: "Names from every scale the era allows"
-    },
-    list: {
-      Pl: {
-        label: "Planetary system",
-        phrase: "a planetary system",
-        tooltip: "A planet and its moons: surface, rings, moons and the orbits around them"
-      },
-      Sy: {
-        label: "Star system",
-        phrase: "a star system",
-        tooltip: "One star or binary pair: belts, the frost line, the outer clouds and the edge of the star's wind"
-      },
-      Nb: {
-        label: "Local stellar neighbourhood",
-        phrase: "the local stars",
-        tooltip: "The nearby stars and the clouds and bubbles between them"
-      },
-      Se: {
-        label: "Sector",
-        phrase: "a sector",
-        tooltip: "A stretch of a spiral arm: nebulae, clusters, rifts and spurs"
-      },
-      Ga: {
-        label: "Galaxy-spanning",
-        phrase: "the galaxy",
-        tooltip: "Arms, the core and bar, the disc, the halo and the voids beyond"
-      }
-    },
-    byEra: {
-      NF: [
-        "any",
-        "Pl",
-        "Sy"
-      ],
-      IS: [
-        "any",
-        "Pl",
-        "Sy",
-        "Nb",
-        "Se",
-        "Ga"
-      ],
-      none: [
-        "any",
-        "Pl",
-        "Sy",
-        "Nb",
-        "Se",
-        "Ga"
-      ]
-    },
-    anyWeights: {
-      NF: {
-        Pl: 50,
-        Sy: 50,
-        Nb: 0,
-        Se: 0,
-        Ga: 0
-      },
-      IS: {
-        Pl: 20,
-        Sy: 25,
-        Nb: 20,
-        Se: 20,
-        Ga: 15
-      },
-      none: {
-        Pl: 20,
-        Sy: 25,
-        Nb: 20,
-        Se: 20,
-        Ga: 15
-      }
-    }
-  },
-  stars: {
-    properExtra: [
-      "Alphard",
-      "Alphecca",
-      "Hamal",
-      "Diphda",
-      "Menkar",
-      "Mirfak",
-      "Nunki",
-      "Sadr"
-    ],
-    possessiveReal: [
-      "Barnard's Star",
-      "Kapteyn's Star",
-      "Luyten's Star",
-      "Teegarden's Star",
-      "Van Maanen's Star",
-      "Przybylski's Star"
-    ],
-    possessiveRealShare: 0.5,
-    greekHeavy: {
-      letters: [
-        "Alpha",
-        "Beta",
-        "Gamma",
-        "Delta",
-        "Epsilon"
-      ],
-      weight: 3,
-      other: 1
-    },
-    genitives: [
-      "Andromedae",
-      "Aquilae",
-      "Arietis",
-      "Aurigae",
-      "Bo\xF6tis",
-      "Cancri",
-      "Carinae",
-      "Cassiopeiae",
-      "Centauri",
-      "Cephei",
-      "Ceti",
-      "Cygni",
-      "Draconis",
-      "Eridani",
-      "Herculis",
-      "Hydrae",
-      "Indi",
-      "Leonis",
-      "Lyrae",
-      "Orionis",
-      "Pavonis",
-      "Persei",
-      "Scorpii",
-      "Tauri",
-      "Tucanae",
-      "Ursae Majoris",
-      "Virginis"
-    ],
-    catalogue: [
-      {
-        prefix: "Gliese",
-        joiner: " ",
-        min: 1,
-        max: 1e3,
-        w: 3
-      },
-      {
-        prefix: "Wolf",
-        joiner: " ",
-        min: 1,
-        max: 1500,
-        w: 2
-      },
-      {
-        prefix: "Ross",
-        joiner: " ",
-        min: 1,
-        max: 1e3,
-        w: 2
-      },
-      {
-        prefix: "Lalande",
-        joiner: " ",
-        min: 1e3,
-        max: 5e4,
-        w: 1
-      },
-      {
-        prefix: "Groombridge",
-        joiner: " ",
-        min: 1,
-        max: 4e3,
-        w: 1
-      },
-      {
-        prefix: "HD",
-        joiner: " ",
-        min: 1e3,
-        max: 25e4,
-        w: 2
-      },
-      {
-        prefix: "HIP",
-        joiner: " ",
-        min: 1e3,
-        max: 12e4,
-        w: 2
-      },
-      {
-        prefix: "LHS",
-        joiner: " ",
-        min: 1,
-        max: 5e3,
-        w: 1
-      },
-      {
-        prefix: "Kepler",
-        joiner: "-",
-        min: 1,
-        max: 2e3,
-        w: 2
-      },
-      {
-        prefix: "K2",
-        joiner: "-",
-        min: 1,
-        max: 400,
-        w: 1
-      },
-      {
-        prefix: "TOI",
-        joiner: "-",
-        min: 100,
-        max: 6e3,
-        w: 1
-      }
-    ],
-    planetLetters: {
-      b: 5,
-      c: 4,
-      d: 3,
-      e: 2,
-      f: 1,
-      g: 1,
-      h: 0.5
-    },
-    planetLetterChance: 0.3,
-    letterWords: {
-      b: "Bee",
-      c: "Cee",
-      d: "Dee",
-      e: "Ee",
-      f: "Eff",
-      g: "Gee",
-      h: "Aitch"
-    },
-    kindWeights: {
-      any: {
-        proper: 40,
-        possessive: 15,
-        bayer: 20,
-        catalogue: 25
-      },
-      Pl: {
-        proper: 40,
-        possessive: 15,
-        bayer: 20,
-        catalogue: 25
-      },
-      Sy: {
-        proper: 40,
-        possessive: 15,
-        bayer: 20,
-        catalogue: 25
-      },
-      Nb: {
-        proper: 35,
-        possessive: 25,
-        bayer: 25,
-        catalogue: 15
-      },
-      Se: {
-        proper: 25,
-        possessive: 10,
-        bayer: 20,
-        catalogue: 45
-      },
-      Ga: {
-        proper: 40,
-        possessive: 0,
-        bayer: 10,
-        catalogue: 50
-      }
-    }
-  },
-  directions: {
-    spaceDirection: [
-      {
-        w: "Upwell",
-        sc: [
-          "Pl",
-          "Sy"
-        ]
-      },
-      {
-        w: "Downwell",
-        sc: [
-          "Pl",
-          "Sy"
-        ]
-      },
-      {
-        w: "Polar",
-        sc: [
-          "Pl"
-        ]
-      },
-      {
-        w: "Equatorial",
-        sc: [
-          "Pl"
-        ]
-      },
-      {
-        w: "Sunward",
-        sc: [
-          "Sy"
-        ]
-      },
-      {
-        w: "Outward",
-        sc: [
-          "Sy"
-        ]
-      },
-      {
-        w: "Inward",
-        sc: [
-          "Sy"
-        ]
-      },
-      {
-        w: "Coreward",
-        sc: [
-          "Nb",
-          "Se",
-          "Ga"
-        ]
-      },
-      {
-        w: "Rimward",
-        sc: [
-          "Nb",
-          "Se",
-          "Ga"
-        ]
-      },
-      {
-        w: "Spinward",
-        sc: [
-          "Nb",
-          "Se",
-          "Ga"
-        ]
-      },
-      {
-        w: "Trailing",
-        sc: [
-          "Nb",
-          "Se",
-          "Ga"
-        ]
-      }
-    ],
-    compass: {
-      Pl: [
-        "Upwell",
-        "Equatorial",
-        "Downwell",
-        "Polar"
-      ],
-      Sy: [
-        "Sunward",
-        "Upwell",
-        "Outward",
-        "Downwell",
-        "Inward"
-      ],
-      Nb: [
-        "Coreward",
-        "Spinward",
-        "Rimward",
-        "Trailing"
-      ],
-      Se: [
-        "Coreward",
-        "Spinward",
-        "Rimward",
-        "Trailing"
-      ],
-      Ga: [
-        "Coreward",
-        "Spinward",
-        "Rimward",
-        "Trailing"
-      ],
-      station: [
-        "Hubward",
-        "Spinward",
-        "Rimward",
-        "Antispinward"
-      ]
-    },
-    stationDirection: [
-      "Spinward",
-      "Antispinward",
-      "Hubward",
-      "Rimward"
-    ],
-    orbitAdj: [
-      "High",
-      "Low",
-      "Polar",
-      "Equatorial",
-      "Parking",
-      "Long",
-      "Fast"
-    ],
-    spaceHazard: [
-      {
-        w: "Shock",
-        sc: [
-          "Sy"
-        ]
-      },
-      {
-        w: "Pause",
-        sc: [
-          "Sy"
-        ]
-      },
-      {
-        w: "Sheath",
-        sc: [
-          "Sy"
-        ]
-      },
-      {
-        w: "Frostline",
-        sc: [
-          "Sy"
-        ]
-      },
-      {
-        w: "Corona",
-        sc: [
-          "Sy"
-        ]
-      },
-      {
-        w: "Neck",
-        sc: [
-          "Sy"
-        ]
-      },
-      {
-        w: "Bubble",
-        sc: [
-          "Nb"
-        ]
-      },
-      {
-        w: "Wall",
-        sc: [
-          "Nb"
-        ]
-      },
-      {
-        w: "Cloud",
-        sc: [
-          "Nb"
-        ]
-      },
-      {
-        w: "Rift",
-        sc: [
-          "Se"
-        ]
-      },
-      {
-        w: "Dark",
-        sc: [
-          "Se"
-        ]
-      },
-      {
-        w: "Knot",
-        sc: [
-          "Se"
-        ]
-      },
-      {
-        w: "Nebula",
-        sc: [
-          "Se"
-        ]
-      },
-      {
-        w: "Bar",
-        sc: [
-          "Ga"
-        ]
-      },
-      {
-        w: "Void",
-        sc: [
-          "Ga"
-        ]
-      },
-      {
-        w: "Warp",
-        sc: [
-          "Ga"
-        ]
-      }
-    ]
-  },
-  lagrangeWord: [
-    [
-      "One",
-      1
-    ],
-    [
-      "Two",
-      1
-    ],
-    [
-      "Three",
-      1
-    ],
-    [
-      "Four",
-      3
-    ],
-    [
-      "Five",
-      3
-    ]
-  ],
-  worldHab: [
-    [
-      "Station",
-      3
-    ],
-    [
-      "Habitat",
-      2
-    ],
-    [
-      "Colony",
-      2
-    ],
-    [
-      "Outpost",
-      1
-    ],
-    [
-      "Port",
-      1
-    ],
-    [
-      "Haven",
-      1
-    ],
-    [
-      "Anchorage",
-      1
-    ],
-    [
-      "Yard",
-      1
-    ],
-    [
-      "Dock",
-      1
-    ],
-    [
-      "Base",
-      1
-    ],
-    [
-      "Camp",
-      1
-    ],
-    [
-      "Relay",
-      1
-    ],
-    [
-      "Beacon",
-      1
-    ],
-    [
-      "Observatory",
-      1
-    ]
-  ],
-  worldHabGate: [
-    "Gate",
-    1
-  ],
-  spaceBuilt: [
-    "dock",
-    "mast",
-    "array",
-    "dish",
-    "beacon",
-    "relay",
-    "yard",
-    "tether"
-  ],
-  spaceActivity: [
-    "Mining",
-    "Hauling",
-    "Salvage",
-    "Survey",
-    "Docking",
-    "Refuelling"
-  ],
-  safeguards: {
-    block: [
-      "Outer Rim",
-      "Mid Rim",
-      "Inner Rim",
-      "Core Worlds",
-      "Deep Core",
-      "Wild Space",
-      "Unknown Regions",
-      "Kessel Run",
-      "Spinward Marches",
-      "Trailing Marches",
-      "Alpha Quadrant",
-      "Beta Quadrant",
-      "Gamma Quadrant",
-      "Delta Quadrant",
-      "Neutral Zone",
-      "Deep Space Nine",
-      "Deep Space 9",
-      "Terminus",
-      "The Expanse",
-      "Mass Relay",
-      "Halo Array",
-      "Babylon 5",
-      "Babylon Five"
-    ]
-  }
-};
-
-// src/space/scale.ts
-var SPACE_DATA = space_default;
-var SCALES = SPACE_DATA.scales.order;
-function scaleInfo(choice) {
-  return choice === "any" ? SPACE_DATA.scales.any : SPACE_DATA.scales.list[choice];
-}
-var scaleLabel = (choice) => scaleInfo(choice).label;
-var scalePhrase = (choice) => scaleInfo(choice).phrase;
-function scalesFor(era) {
-  return [...SPACE_DATA.scales.byEra[era != null ? era : "none"]];
-}
-function validScale(choice, era) {
-  return choice && scalesFor(era).includes(choice) ? choice : "any";
-}
-function scaleAllows(entry, scale) {
-  if (scale === "any" || !entry.sc) return true;
-  return entry.sc.includes(scale);
-}
-function anyScaleWeights(era) {
-  const row = SPACE_DATA.scales.anyWeights[era != null ? era : "none"];
-  return SCALES.map((s) => [s, row[s]]);
-}
-function drawScale(era, rng) {
-  const items = anyScaleWeights(era);
-  const total = items.reduce((n, [, w]) => n + w, 0);
-  let r = rng() * total;
-  for (const [s, w] of items) {
-    r -= w;
-    if (r < 0) return s;
-  }
-  return items[items.length - 1][0];
-}
-
-// src/space/stars.ts
-var STARS = SPACE_DATA.stars;
-var LISTS = group_names_default.lists;
-var weighted2 = (items, rng) => {
-  const total = items.reduce((n, [, w]) => n + w, 0);
-  let r = rng() * total;
-  for (const [item2, w] of items) {
-    r -= w;
-    if (r < 0) return item2;
-  }
-  return items[items.length - 1][0];
-};
-function catalogueName(rng) {
-  const row = weighted2(STARS.catalogue.map((c) => [c, c.w]), rng);
-  const n = row.min + Math.floor(rng() * (row.max - row.min + 1));
-  return `${row.prefix}${row.joiner}${n}`;
-}
-function planetLetter(rng) {
-  return ` ${weighted2(Object.entries(STARS.planetLetters), rng)}`;
-}
-function catalogueWorld(rng, letters = true) {
-  const name = catalogueName(rng);
-  return letters && rng() < STARS.planetLetterChance ? name + planetLetter(rng) : name;
-}
-function bayerName(rng) {
-  const greek = LISTS.greek.map((e) => [e.w, STARS.greekHeavy.letters.includes(e.w) ? STARS.greekHeavy.weight : STARS.greekHeavy.other]);
-  return `${weighted2(greek, rng)} ${STARS.genitives[Math.floor(rng() * STARS.genitives.length)]}`;
-}
-function possessiveName(rng, opts) {
-  var _a2;
-  const real = STARS.possessiveReal;
-  const person2 = opts == null ? void 0 : opts.person;
-  if (!person2 || rng() < STARS.possessiveRealShare) return real[Math.floor(rng() * real.length)];
-  const who = (_a2 = person2()) == null ? void 0 : _a2.replace(/^the /i, "");
-  if (!who) return real[Math.floor(rng() * real.length)];
-  return `${who}'s Star`;
-}
-function drawStarOfKind(kind, rng, pickProper, opts) {
-  switch (kind) {
-    case "proper":
-      return pickProper();
-    case "possessive":
-      return possessiveName(rng, opts);
-    case "bayer":
-      return bayerName(rng);
-    case "catalogue":
-      return catalogueName(rng);
-  }
-}
-function drawStarKind(scale, rng) {
-  var _a2;
-  const row = (_a2 = STARS.kindWeights[scale]) != null ? _a2 : STARS.kindWeights.any;
-  return weighted2(Object.entries(row).filter(([, w]) => w > 0), rng);
-}
-function dropStarWord(star) {
-  return star.replace(/('s) Star$/, "$1");
-}
-
-// src/space/safeguards.ts
-var esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-var compile = (phrases) => phrases.map((p) => new RegExp(`(^|[^A-Za-z0-9])${esc(p).replace(/\s+/g, "\\s+")}($|[^A-Za-z0-9])`, "i"));
-var BUILT_IN = compile(SPACE_DATA.safeguards.block);
-function spaceBlocker(extra = []) {
-  const all = extra.length > 0 ? [...BUILT_IN, ...compile(extra)] : BUILT_IN;
-  return (text) => all.some((re) => re.test(text));
-}
-var DEFAULT = spaceBlocker();
-function hasSpaceBlock(text) {
-  return DEFAULT(text);
-}
-var SPACE_BLOCK_PHRASES = SPACE_DATA.safeguards.block;
 
 // src/groups/engine.ts
 var GROUP_DATA = group_names_default;
@@ -83178,15 +87544,15 @@ function pairTokens(ctx) {
 function renderPattern6(ctx, pattern) {
   if (ctx.options.context) ctx.turn = new TownTurn(ctx.options.context, INN_SELF.has(pattern));
   let failed = false;
-  let pair;
+  let pair2;
   let number;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
     if (failed) return "";
     const [name, mod] = raw.split(":");
     let piece;
     if (name === "a" || name === "b") {
-      pair != null ? pair : pair = pairTokens(ctx);
-      piece = pair == null ? void 0 : pair[name === "a" ? 0 : 1];
+      pair2 != null ? pair2 : pair2 = pairTokens(ctx);
+      piece = pair2 == null ? void 0 : pair2[name === "a" ? 0 : 1];
     } else piece = token8(ctx, name);
     if (!piece) {
       failed = true;
@@ -85916,6 +90282,15 @@ var CONTEXT_PHRASES = {
     ["adoption", "settling in amongst the locals"]
   ]
 };
+var SPACE_CONTEXT_PHRASES = {
+  "2": [
+    ["wild-and-unsettled", "wild and unsettled space"],
+    ["sparse-or-weak-native-presence", "space with a sparse, or weak, native presence"],
+    ["contested-frontier", "a contested frontier"]
+  ],
+  "2a": CONTEXT_PHRASES["2a"]
+};
+var contextPhrasesFor = (part, space) => (space ? SPACE_CONTEXT_PHRASES : CONTEXT_PHRASES)[part];
 function generalTraditionLabel(part) {
   return part === "2" ? "General explorers" : "General incomers";
 }
@@ -85947,7 +90322,30 @@ function featurePhrase(feature) {
   const f = (_a2 = FEATURES.find((x) => x.id === feature)) != null ? _a2 : FEATURES[0];
   return f.label.charAt(0).toLowerCase() + f.label.slice(1);
 }
+function featuresForBiome(biome) {
+  if (!(biome == null ? void 0 : biome.space)) return FEATURES;
+  const rules = COLONIAL_DATA.space;
+  const live4 = COLONIAL_DATA.groups.filter((g) => {
+    var _a2;
+    return g.space ? !g.scale || g.scale === biome.scale : ((_a2 = rules.groups[g.id]) != null ? _a2 : 0) > 0 && (!rules.groupScales[g.id] || rules.groupScales[g.id].includes(biome.scale));
+  }).map((g) => {
+    var _a2;
+    return { id: g.id, label: (_a2 = g.label) != null ? _a2 : g.id };
+  });
+  return [FEATURES[0], FEATURES[1], FEATURES[2], ...live4];
+}
+function featurePhraseFor(feature, biome) {
+  var _a2;
+  const f = (_a2 = featuresForBiome(biome).find((x) => x.id === feature)) != null ? _a2 : FEATURES[0];
+  return f.label.charAt(0).toLowerCase() + f.label.slice(1);
+}
 var UNKNOWN_COUNTRY = "unknown country";
+var spaceBiomeChoices = () => SPACE_BIOMES.map((b) => ({ id: b.id, label: b.phrase, title: b.guide }));
+var SPACE_HEADING_TIP = "Traditions name space as they named new lands: rulers, founders, sponsors, ships and homeland names.";
+var ALIEN_CHOICES = [
+  { id: "off", label: "no alien life" },
+  { id: "on", label: "alien life" }
+];
 function biomeChoices(part) {
   const lead = part === "organic" ? [{ id: "unknown", label: "Britain" }] : [{ id: "unknown", label: UNKNOWN_COUNTRY }, { id: BRITAIN.id, label: BRITAIN.phrase }];
   return [...lead, ...BIOMES.map((b) => ({ id: b.id, label: b.phrase }))];
@@ -85971,6 +90369,9 @@ function terrainPhrase(terrain, custom = []) {
   const all = [...TERRAIN_CHOICES, ...custom.flatMap((b) => {
     var _a3;
     return (_a3 = b.customTerrains) != null ? _a3 : [];
+  }), ...SPACE_BIOMES.flatMap((b) => {
+    var _a3;
+    return (_a3 = b.customTerrains) != null ? _a3 : [];
   })];
   return (_b = (_a2 = all.find((t) => t.id === (terrain || "any"))) == null ? void 0 : _a2.phrase) != null ? _b : "any part";
 }
@@ -85982,18 +90383,21 @@ function regionPhrase(region) {
   return NO_THE_REGIONS.has(r.label) ? r.label : `the ${r.label}`;
 }
 function wizardSentenceText(part, settings, custom = []) {
-  var _a2, _b, _c, _d;
-  const land = `${terrainPhrase(settings.terrain, custom)} of ${biomePhrase(settings.biome, part, custom)}`;
+  var _a2, _b, _c, _d, _e;
+  const biome = findBiome(settings.biome, custom);
+  const space = !!(biome == null ? void 0 : biome.space) && part !== "organic";
+  const land = space && (!settings.terrain || settings.terrain === "any") ? `all of ${biomePhrase(settings.biome, part, custom)}` : `${terrainPhrase(settings.terrain, custom)} of ${biomePhrase(settings.biome, part, custom)}`;
   if (part === "organic") {
     const f = (_a2 = FEATURES.find((x) => x.id === settings.feature)) != null ? _a2 : FEATURES[0];
     return `${f.label} from ${regionPhrase(settings.region)}, set in ${land}`;
   }
   const colonialPart = part === "new-land" ? "2" : "2a";
   const t = (_b = COLONIAL_TRADITIONS.find((x) => x.id === settings.tradition)) != null ? _b : COLONIAL_TRADITIONS[0];
-  const contexts = CONTEXT_PHRASES[colonialPart];
+  const contexts = contextPhrasesFor(colonialPart, space);
   const c = ((_c = contexts.find(([id]) => id === settings.context)) != null ? _c : contexts[0])[1];
   const lead = part === "new-land" ? `${explorersPhrase(t.id, t.label)} in ${c}` : `${incomersPhrase(t.id, t.label)} who are ${c}`;
-  return `${lead} across ${land}, naming ${featurePhrase((_d = settings.feature) != null ? _d : "any")}`;
+  const life = space ? `, with ${settings.aliens ? "alien life" : "no alien life"}` : "";
+  return `${lead} across ${land}${life}, naming ${space ? featurePhraseFor((_d = settings.feature) != null ? _d : "any", biome) : featurePhrase((_e = settings.feature) != null ? _e : "any")}`;
 }
 
 // src/routes/sentence.ts
@@ -90217,9 +94621,10 @@ var RecipeWizard = class {
   featureLink(sentence2, start) {
     var _a2;
     const w = this.working;
-    const feature = (_a2 = FEATURES.find((f) => f.id === w.shape.feature)) != null ? _a2 : FEATURES[0];
+    const features = featuresForBiome(w.shape.part === "organic" ? void 0 : this.currentBiome());
+    const feature = (_a2 = features.find((f) => f.id === w.shape.feature)) != null ? _a2 : features[0];
     const text = start ? feature.label : feature.label.charAt(0).toLowerCase() + feature.label.slice(1);
-    this.sentenceLink(sentence2, text, FEATURES, feature.id, (id) => w.shape.feature = id);
+    this.sentenceLink(sentence2, text, features, feature.id, (id) => w.shape.feature = id);
   }
   /** Place names: "‹Any feature› from ‹all of Britain›" ("the" added where a region needs it). */
   renderPlaceNamesSentence(el) {
@@ -90242,10 +94647,11 @@ var RecipeWizard = class {
    * each underlined phrase opening a menu of its choices.
    */
   renderNewLandsSentence(el) {
+    var _a2;
     const w = this.working;
     const traditions = COLONIAL_TRADITIONS.filter((t) => t.parts.includes("2"));
     if (!traditions.some((t) => t.id === w.shape.tradition)) w.shape.tradition = traditions[0].id;
-    const contexts = NEW_LANDS_CONTEXTS.filter(([id]) => colonialContexts("2").some((c) => c.id === id));
+    const contexts = contextPhrasesFor("2", !!((_a2 = this.currentBiome()) == null ? void 0 : _a2.space)).filter(([id]) => colonialContexts("2").some((c) => c.id === id));
     if (!contexts.some(([id]) => id === w.shape.context)) w.shape.context = contexts[0][0];
     const sentence2 = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
     const tradition = traditions.find((t) => t.id === w.shape.tradition);
@@ -90266,6 +94672,7 @@ var RecipeWizard = class {
     );
     sentence2.appendText(" across ");
     this.landLinks(sentence2);
+    this.aliensLink(sentence2);
     sentence2.appendText(", naming ");
     this.featureLink(sentence2, false);
     this.guideIcon(sentence2, false);
@@ -90296,9 +94703,18 @@ var RecipeWizard = class {
     );
     sentence2.appendText(" across ");
     this.landLinks(sentence2);
+    this.aliensLink(sentence2);
     sentence2.appendText(", naming ");
     this.featureLink(sentence2, false);
     this.guideIcon(sentence2, true);
+  }
+  /** Stellar brief §5.8: ", with ‹no alien life›", shown under a space biome only. */
+  aliensLink(sentence2) {
+    var _a2;
+    const w = this.working;
+    if (!((_a2 = this.currentBiome()) == null ? void 0 : _a2.space)) return;
+    sentence2.appendText(", with ");
+    this.sentenceLink(sentence2, ALIEN_CHOICES[w.shape.aliens ? 1 : 0].label, ALIEN_CHOICES, w.shape.aliens ? "on" : "off", (id) => w.shape.aliens = id === "on");
   }
   /** The user's biome packs (Land brief §9), as the host resolved them. */
   get customBiomes() {
@@ -90336,8 +94752,10 @@ var RecipeWizard = class {
       })
     );
     const biome = this.currentBiome();
-    menuLink2(terrainPhrase(w.shape.terrain, custom), (menu) => {
-      choose(menu, "any part", !w.shape.terrain || w.shape.terrain === "any", () => w.shape.terrain = "any");
+    const spaceLand = !!(biome == null ? void 0 : biome.space) && part !== "organic";
+    const anyText = spaceLand ? "all" : "any part";
+    menuLink2(!w.shape.terrain || w.shape.terrain === "any" ? anyText : terrainPhrase(w.shape.terrain, custom), (menu) => {
+      choose(menu, anyText, !w.shape.terrain || w.shape.terrain === "any", () => w.shape.terrain = "any");
       menu.addSeparator();
       const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
       for (const t of terrains) choose(menu, t.phrase, w.shape.terrain === t.id, () => w.shape.terrain = t.id);
@@ -90353,6 +94771,11 @@ var RecipeWizard = class {
       choose(menu, first.label, !w.shape.biome || w.shape.biome === "unknown", set("unknown"));
       menu.addSeparator();
       for (const c of rest) choose(menu, c.label, w.shape.biome === c.id, set(c.id));
+      if (part !== "organic") {
+        menu.addSeparator();
+        menu.addItem((item2) => item2.setTitle("Space").setDisabled(true));
+        for (const c of spaceBiomeChoices()) choose(menu, c.label, w.shape.biome === c.id, set(c.id));
+      }
       if (custom.length > 0) {
         menu.addSeparator();
         for (const b of [...custom].sort((x, y) => x.label.localeCompare(y.label))) {
@@ -90702,8 +95125,8 @@ function generateLabelledNames(lists, options) {
   const count = Math.max(0, Math.floor(options.count));
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const viable = lists.filter((l) => l.names.length > 0);
-  const small = [];
-  if (count === 0 || viable.length === 0) return { names: [], seed, small };
+  const small2 = [];
+  if (count === 0 || viable.length === 0) return { names: [], seed, small: small2 };
   const masterRng = mulberry32(seed);
   const subSeeds = viable.map(() => Math.floor(masterRng() * 4294967295) >>> 0);
   const pools = viable.map(() => void 0);
@@ -90718,7 +95141,7 @@ function generateLabelledNames(lists, options) {
       pools[i] = generator.generateMultiple(count, mulberry32(subSeeds[i]));
     } else {
       const loosened = breakdownSettingsFor(list.names.length, (_a2 = options.strictness) != null ? _a2 : 3);
-      if (loosened.allowSourceCopies) small.push({ tag: list.tag, count: list.names.length });
+      if (loosened.allowSourceCopies) small2.push({ tag: list.tag, count: list.names.length });
       const model = options.generator === "place" ? PlaceNameModel.build(list.names) : MarkovModel.build(list.names);
       pools[i] = model.generateDetailed({
         count,
@@ -90754,7 +95177,7 @@ function generateLabelledNames(lists, options) {
     seen.add(key2);
     result.push({ name, ...viable[pick4].tag !== void 0 ? { tag: viable[pick4].tag } : {} });
   }
-  return { names: result, seed, small };
+  return { names: result, seed, small: small2 };
 }
 
 // src/takeoverView.ts
@@ -91525,6 +95948,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     /** Colonial tradition and context per part; undefined = General / None. Session only. */
     this.selectedTradition = { "2": void 0, "2a": void 0 };
     /** Each part's context, starting on its first (as the wizard does): wild and unsettled lands, ruling over the locals. */
+    /** Stellar brief §5.8: alien life under a space biome, per colonial part (session only). */
+    this.colonialAliens = { "2": false, "2a": false };
     this.selectedContext = { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] };
     this.contextRowEl = null;
     this.quantityToggleEl = null;
@@ -92246,6 +96671,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       const list = await choices();
       if (list.length === 0) menu.addItem((item2) => item2.setTitle("No packs found").setDisabled(true));
       for (const c of list) {
+        if (c.heading) {
+          menu.addSeparator();
+          menu.addItem((item2) => item2.setTitle(c.heading).setDisabled(true));
+        }
         menu.addItem(
           (item2) => item2.setTitle(c.label).setChecked(c.id === current).onClick(() => {
             choose(c.id);
@@ -92263,11 +96692,13 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
     const land = this.land(key2);
     const biome = findBiome(land.biome, this.customBiomes);
     const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
+    const spaceLand = !!(biome == null ? void 0 : biome.space) && part !== "organic";
+    const anyText = spaceLand ? "all" : "any part";
     this.sentenceLink(
       sentence2,
-      terrainPhrase(land.terrain, this.customBiomes),
+      land.terrain === "any" ? anyText : terrainPhrase(land.terrain, this.customBiomes),
       "Terrain: the kind of land being named",
-      () => [{ id: "any", label: "any part" }, ...terrains.map((t) => ({ id: t.id, label: terrainPhrase(t.id, this.customBiomes) }))],
+      () => [{ id: "any", label: anyText }, ...terrains.map((t) => ({ id: t.id, label: terrainPhrase(t.id, this.customBiomes) }))],
       land.terrain,
       (id) => this.landStates[key2] = { ...this.land(key2), terrain: id != null ? id : "any" }
     );
@@ -92278,12 +96709,14 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       (_a2 = biome == null ? void 0 : biome.guide) != null ? _a2 : "Biome: the plants, wildlife, ground and seasons",
       async () => {
         const custom = [...await this.loadCustomBiomes()].sort((x, y) => x.label.localeCompare(y.label));
+        const space = part !== "organic" && key2.startsWith("colonial:") ? SPACE_BIOMES.map((b, i) => ({ id: b.id, label: b.phrase, title: b.guide, ...i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {} })) : [];
         return [
           { id: void 0, label: defaultPhrase },
           ...[...britainAsDefault ? [] : [BRITAIN], ...BIOMES, ...custom].map((b) => {
             var _a3, _b;
             return { id: (_b = (_a3 = b.custom) == null ? void 0 : _a3.path) != null ? _b : b.id, label: b.phrase };
-          })
+          }),
+          ...space
         ];
       },
       land.biome,
@@ -92348,7 +96781,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
    * the locals› across…".
    */
   renderColonialSentence(row, part) {
-    var _a2, _b, _c;
+    var _a2, _b, _c, _d;
     const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     const phrase = part === "2" ? explorersPhrase : incomersPhrase;
     const tradition = COLONIAL_TRADITIONS.find((t) => {
@@ -92364,18 +96797,30 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian13.Modal {
       (id) => this.selectedTradition[part] = id === "general" ? void 0 : id
     );
     sentence2.appendText(part === "2" ? " in " : " who are ");
-    const contexts = CONTEXT_PHRASES[part].filter(([id]) => colonialContexts(part).some((c) => c.id === id));
-    const context = (_a2 = contexts.find(([id]) => id === this.selectedContext[part])) != null ? _a2 : contexts[0];
+    const spaceBiome = (_a2 = findBiome(this.land(`colonial:${part}`).biome, this.customBiomes)) == null ? void 0 : _a2.space;
+    const contexts = contextPhrasesFor(part, !!spaceBiome).filter(([id]) => colonialContexts(part).some((c) => c.id === id));
+    const context = (_b = contexts.find(([id]) => id === this.selectedContext[part])) != null ? _b : contexts[0];
     this.sentenceLink(
       sentence2,
       context[1],
-      (_c = (_b = colonialContexts(part).find((c) => c.id === context[0])) == null ? void 0 : _b.label) != null ? _c : "",
+      (_d = (_c = colonialContexts(part).find((c) => c.id === context[0])) == null ? void 0 : _c.label) != null ? _d : "",
       () => contexts.map(([id, text]) => ({ id, label: text })),
       context[0],
       (id) => this.selectedContext[part] = id
     );
     sentence2.appendText(" across ");
     this.landClause(sentence2, `colonial:${part}`, UNKNOWN_COUNTRY, part === "2" ? "new-land" : "established", false);
+    if (spaceBiome) {
+      sentence2.appendText(", with ");
+      this.sentenceLink(
+        sentence2,
+        ALIEN_CHOICES[this.colonialAliens[part] ? 1 : 0].label,
+        "Alien life: whether native-people and local-god slots name aliens, and half of native places become alien places",
+        () => ALIEN_CHOICES.map((c) => ({ id: c.id, label: c.label })),
+        this.colonialAliens[part] ? "on" : "off",
+        (id) => this.colonialAliens[part] = id === "on"
+      );
+    }
   }
   /** Name ageing: "Age the name towards ‹target pack›". */
   renderAgeingSentence(row) {
@@ -94026,11 +98471,12 @@ ${n.origin}${also}${echo}` };
       const part = colonialPart === "2" ? "new-land" : "established";
       const tradition = this.selectedTradition[colonialPart];
       const context = this.selectedContext[colonialPart];
-      recipe = colonialPlaceNamesRecipe(part, tradition, context, biome, land.terrain);
+      const aliens = !!(found == null ? void 0 : found.space) && this.colonialAliens[colonialPart];
+      recipe = colonialPlaceNamesRecipe(part, tradition, context, biome, land.terrain, aliens);
       const t = COLONIAL_TRADITIONS.find((x) => x.id === (tradition != null ? tradition : "general"));
       const contextLabel = (_a2 = colonialContexts(colonialPart).find((c) => c.id === context)) == null ? void 0 : _a2.label.toLowerCase();
       name = [traditionLabel(colonialPart, t.id, t.label), contextLabel].filter(Boolean).join(" \xB7 ");
-      description = wizardSentenceText(part, { tradition: t.id, context, biome, terrain: land.terrain }, custom);
+      description = wizardSentenceText(part, { tradition: t.id, context, biome, terrain: land.terrain, aliens }, custom);
     } else {
       recipe = britishPlaceNamesRecipe(this.selectedRegion, biome, land.terrain);
       name = ["British", regionPhrase(this.selectedRegion), found ? biomeInline(found) : void 0].filter(Boolean).join(" \xB7 ");
@@ -95526,7 +99972,7 @@ ${text}
       const custom = (found == null ? void 0 : found.custom) ? await this.readyBiome(found) : void 0;
       const biome = custom ? void 0 : land.biome;
       const result2 = this.tryLand(() => generatePlaceNames({
-        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain),
+        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, !!(found == null ? void 0 : found.space) && this.colonialAliens[colonialPart]),
         biome: custom,
         slots: {},
         count: this.generationCount,
@@ -95539,7 +99985,7 @@ ${text}
       this.renderRecipeResults(result2.names, "module");
       await this.recordGenerationHistory(
         result2.names.length,
-        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context, custom ? void 0 : biome) + landHistorySuffix(land, this.customBiomes, !!custom)
+        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context, custom ? void 0 : biome) + landHistorySuffix(land, this.customBiomes, !!custom) + ((found == null ? void 0 : found.space) && this.colonialAliens[colonialPart] ? " \xB7 alien life" : "")
       );
       this.setStatus("");
       return;
@@ -95620,20 +100066,20 @@ ${text}
       let names;
       let tags;
       let seed;
-      let small;
+      let small2;
       if ((choice2 == null ? void 0 : choice2.whole) && this.sectionLabelsShown) {
         const result2 = generateCompoundTitled(data, options);
         names = result2.names.map((n) => n.name);
         tags = result2.names.map((n) => n.tag);
         seed = result2.seed;
-        small = result2.loosened.map((l) => smallListNotice(`Part ${l.part} \u201C${l.title}\u201D`, l.count));
+        small2 = result2.loosened.map((l) => smallListNotice(`Part ${l.part} \u201C${l.title}\u201D`, l.count));
       } else {
         const title = choice2 && !choice2.whole ? choice2.label : void 0;
         const parts = compoundPartsFor(data, title);
         const result2 = generateCompoundNamesDetailed(parts, options);
         names = result2.names;
         seed = result2.seed;
-        small = ((_i = result2.loosened) != null ? _i : []).map((i) => smallListNotice(`Part ${i + 1}${title ? ` \u201C${title}\u201D` : ""}`, parts[i].length));
+        small2 = ((_i = result2.loosened) != null ? _i : []).map((i) => smallListNotice(`Part ${i + 1}${title ? ` \u201C${title}\u201D` : ""}`, parts[i].length));
       }
       if (names.length === 0) {
         this.renderResults([], "Select a pack with names to generate from.");
@@ -95643,7 +100089,7 @@ ${text}
       this.currentSeed = seed;
       this.renderResults(names, void 0, tags);
       await this.recordGenerationHistory(names.length);
-      this.setStatus(small.join(" "));
+      this.setStatus(small2.join(" "));
       return;
     }
     if (this.currentPackType === "mixPack") {
