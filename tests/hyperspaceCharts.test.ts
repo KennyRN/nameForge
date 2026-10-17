@@ -1,6 +1,8 @@
 // Seas and coasts: hyperspace charts (Seas and coasts brief §17.4, §17.5).
 import { test } from "node:test";
 import assert from "node:assert/strict";
+// The deities engine registers the hooks `{god}` reads, as the app loads it.
+import "../src/deities/engine";
 import {
   findHyperKind,
   generateWatersNames,

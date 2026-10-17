@@ -1,6 +1,8 @@
 // Seas and coasts: seas and lakes, coasts and islands, sea charts (Seas and coasts brief §17.1–§17.3, §17.5).
 import { test } from "node:test";
 import assert from "node:assert/strict";
+// The deities engine registers the hooks `{god}` reads, as the app loads it.
+import "../src/deities/engine";
 import {
   EARTHLY_MODULES,
   findWatersCulture,
@@ -14,6 +16,8 @@ import {
   type WatersName,
   type WatersOptions,
   type WatersShape,
+  watersBlocked,
+  watersWordBlocked,
 } from "../src/waters/engine";
 import { chooseWaters, defaultWatersState, watersHistoryLabel, watersSentence, watersSentenceText } from "../src/waters/sentence";
 import { isModulePresetContent, modulePresetContent, parseModulePreset } from "../src/presets";
@@ -311,6 +315,21 @@ test("§14: no blocked phrase appears", () => {
       }
     }
   }
+});
+
+test("§14: exact phrases are blocked with and without The; merged safeguard lists and packs' words are honoured", () => {
+  for (const phrase of WATERS_DATA.safeguards.earthly) {
+    assert.ok(watersBlocked(phrase, false), phrase);
+    assert.ok(watersBlocked(`The ${phrase}`, false), phrase);
+    assert.ok(watersWordBlocked(phrase.toLowerCase()), phrase);
+  }
+  assert.ok(!watersBlocked("Black Sea", false));
+  assert.ok(!watersBlocked("Grey Havens Bay", false));
+  // A merged list blocks a name that would otherwise come: every Black Sea is redrawn.
+  const guards = { block: ["Black Sea", "North Sea"], flag: [], flagListBlocks: false };
+  const names = many({ module: "seasLakes", kind: "sea", safeguards: guards }, 1500, 20);
+  assert.ok(names.every((n) => !["black sea", "north sea"].includes(n.text.toLowerCase())));
+  assert.ok(many({ module: "seasLakes", kind: "sea" }, 1500, 20).some((n) => n.text === "Black Sea"));
 });
 
 test("§11: culture shapes appear for their culture and kind", () => {
