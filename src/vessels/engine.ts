@@ -315,7 +315,7 @@ interface Ctx {
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
 
 /** Lists that come from group-names.json (§8.1), with their setting tags and tones. */
-const GN_LISTS = new Set(["colour", "number", "ordinalWord", "greek", "land", "spaceLand", "compass", "star", "brandRoot", "surname", "weapon", "tech", "beast"]);
+const GN_LISTS = new Set(["colour", "number", "ordinalWord", "greek", "land", "spaceLand", "sfBody", "compass", "star", "brandRoot", "surname", "weapon", "tech", "beast"]);
 /** §10.3: every style's pools by name (the colony shapes of §11.2 draw on the colony style's). */
 const STYLE_POOLS = new Map(VESSEL_DATA.styles.flatMap((st) => Object.entries(st.pools)));
 /** Lists only some cultures have (§8.3); empty elsewhere. */
@@ -572,6 +572,8 @@ function renderTokens(ctx: Ctx, pattern: string, hooks?: Hooks): string | undefi
       piece = hooks.byName.text;
       nameUsed = true;
     } else piece = token(ctx, name);
+    // Stellar brief §11.1: "Kapteyn's Star" + Haven reads "Kapteyn's Haven".
+    if (piece && name === "star" && pattern === "{star} Haven") piece = piece.replace(/('s) Star$/, "$1");
     // "Star of the West", as §8.2's example has it: the compass word's noun after "of the".
     if (piece && name === "compass" && pattern.slice(0, at).endsWith("of the ")) piece = piece.replace(/ern$/, "");
     if (piece === undefined || piece === "") {

@@ -438,8 +438,8 @@
   "Deck 37",
   "Ross 623 Plaza",
   "Smith Street",
-  "Antispinward Sector",
-  "[holy person]'s Square"
+  "Hubward Sector",
+  "Market Place"
  ],
  "inns norman-british NF placeholders": [
   "the Bird in Hand",
@@ -455,7 +455,7 @@
   "the Red Market Hall",
   "Venture Dome",
   "[place] Sky Elevator",
-  "HIP 82107 Landing Tower",
+  "HIP 82107 Beacon",
   "Endeavour Dome",
   "the New Exchange",
   "the White Treasury",
@@ -472,16 +472,16 @@
   "New Boxfold–Helios Line"
  ],
  "streets norman-british NF invented": [
-  "Reactor Lane",
-  "Spinward Walk",
+  "Hydroponics Row",
+  "Hubward Lift",
   "Butchers' Ward",
   "Deck 10 Concourse",
   "67th Ring",
   "Concourse Rho",
-  "Hydroponics Row",
   "Market Place",
-  "Lord's Green",
-  "Recycler Street"
+  "Rimward Walk",
+  "Recycler Street",
+  "Cross Court"
  ],
  "inns norman-british NF invented": [
   "the Pulsar Hawk",
@@ -496,8 +496,8 @@
  "buildings norman-british NF invented": [
   "the Blessed Aldric's Conduit",
   "Trailing Arc Sky Elevator",
-  "Regulus Spire",
-  "Archive Core Nu",
+  "Regulus Arcology",
+  "Ladder Foot Nu",
   "the Little Spring",
   "Hab Module 16",
   "Pagett Library",
@@ -516,11 +516,11 @@
  "streets norman-british IS placeholders": [
   "Spine Omicron",
   "Drapers' Entry (Drapers' Opening)",
-  "Deck 16 Concourse",
+  "Spine Kappa",
   "Prince's Green",
   "Reactor Lane",
   "[holy person]'s Place",
-  "Deck 18 Concourse",
+  "Spine Lambda",
   "Market Place",
   "[holy person]'s Walk",
   "Warehouse Quarter"
@@ -536,10 +536,10 @@
   "the Ship"
  ],
  "buildings norman-british IS placeholders": [
-  "Kapteyn's Star Observation Ring",
+  "Kapteyn's Star Shipyard",
   "the Silver Gaol",
-  "Sky Elevator Omicron",
-  "Nunki Archive Core",
+  "Relay Mast Omicron",
+  "Nunki Tether Head",
   "[place] Grange",
   "House of [founder]",
   "[place] Hall",
@@ -562,10 +562,10 @@
   "Cargo Bay Lane",
   "Kiln End",
   "Silversmiths' Row",
-  "4th Corridor",
+  "Deck 6 Concourse",
   "Sirius Promenade",
-  "Spine Epsilon",
-  "Old Market"
+  "Ring Road",
+  "Reactor Lane"
  ],
  "inns norman-british IS invented": [
   "the Five Hares",
@@ -579,11 +579,11 @@
  ],
  "buildings norman-british IS invented": [
   "Kappa Tauri Spire",
-  "Altair Archive Core",
+  "Altair Ladder Foot",
   "Thirteenth Hydroponic Bay",
   "Garrick Hall",
   "Mira Cross",
-  "Procyon Arcology",
+  "Procyon Dome",
   "Coreward Disc Sky Elevator",
   "Pathfinder Dome"
  ],
@@ -1022,12 +1022,12 @@
   "Reactor Square",
   "[place] Road",
   "Deck 33",
-  "Spine Rho",
-  "Deck 10",
-  "Spinward Walk",
-  "Exchange Square",
-  "Exchange Precinct",
-  "Wolf 1024 Promenade"
+  "Ring Road",
+  "Concourse Psi",
+  "Spine Kappa",
+  "Lift Lane",
+  "Wolf 1024 Promenade",
+  "Spine Epsilon"
  ],
  "inns general NF placeholders": [
   "the Soldier",
@@ -1041,13 +1041,13 @@
  ],
  "buildings general NF placeholders": [
   "[place] Hall",
-  "Reactor Hall Beta",
+  "Ice Works Beta",
   "[place] Observatory",
   "Martlet Exchange",
   "Hab Module 29",
   "[surname] Statue",
-  "Chi Arietis Sky Elevator",
-  "HIP 29177 Arcology"
+  "Chi Arietis Relay Mast",
+  "HIP 29177 Dome"
  ],
  "routes general NF invented": [
   "LHS 2061 Turnpike",
@@ -1060,16 +1060,16 @@
   "Inner Hollow–Arcadia Lane"
  ],
  "streets general NF invented": [
-  "Spinward Walk",
+  "Antispinward Concourse",
+  "Long Street",
+  "Concourse Gamma",
+  "Spine Zeta",
+  "Betelgeuse Promenade",
   "Reactor Lane",
-  "Old Spoke Lane",
-  "Spine Kappa",
-  "Dock Arm Lane",
-  "Hub",
-  "Gravity Street",
-  "Hay Market",
-  "Spoke Place",
-  "Cargo Bay Road"
+  "Cargo Bay Way",
+  "Rimward Walk",
+  "Exchange Square",
+  "New Town"
  ],
  "inns general NF invented": [
   "the Old Market Canteen",
@@ -1084,11 +1084,11 @@
  "buildings general NF invented": [
   "Tenth Hydroponic Bay",
   "Thirteenth Hydroponic Bay",
-  "Archive Core Nu",
-  "Hab Module Chi",
-  "LHS 4936 Archive Core",
+  "Ladder Foot Nu",
+  "Landing Tower Chi",
+  "LHS 4936 Ladder Foot",
   "Hab Module 39",
-  "Arcology Rho",
+  "Hab Module Rho",
   "Endeavour Dome"
  ],
  "routes general IS placeholders": [
@@ -1105,13 +1105,13 @@
   "Hydroponics Ring",
   "Warehouse Precinct",
   "Van Maanen's Star Plaza",
-  "Reactor Lane",
-  "College Court",
   "Hydroponics Row",
+  "College Court",
   "Ring Road",
   "Altair Promenade",
   "Deck 27 Concourse",
-  "Lord's Square"
+  "Lord's Square",
+  "Old Hub Road"
  ],
  "inns general IS placeholders": [
   "the Fiddler",
@@ -1124,14 +1124,14 @@
   "the King's Head Eating House"
  ],
  "buildings general IS placeholders": [
-  "Gliese 146 Reactor Hall",
-  "Deneb Reactor Hall",
+  "Gliese 146 Ice Works",
+  "Deneb Ice Works",
   "[place] Sky Elevator",
   "[place] Watermill",
-  "Alcor Hydroponic Bay",
+  "Alcor Observation Ring",
   "Sixth Hydroponic Bay",
   "[founder]'s School",
-  "Kepler-87 Arcology"
+  "Kepler-87 Hab Module"
  ],
  "routes general IS invented": [
   "The Quiet Lane",
@@ -1150,10 +1150,10 @@
   "Gravity Street",
   "Undercity",
   "Dock Arm Square",
-  "Spinward Walk",
-  "Kapteyn's Star Promenade",
-  "King's Square",
-  "Market Square"
+  "Hubward Walk",
+  "Hadar 10 Road",
+  "Hydroponics Row",
+  "Antispinward Walk"
  ],
  "inns general IS invented": [
   "the King's Arms",
@@ -1167,13 +1167,13 @@
  ],
  "buildings general IS invented": [
   "Pathfinder Dome",
-  "Spire Eta",
+  "Arcology Eta",
   "Lamb Castle",
-  "Kepler-415 Archive Core",
-  "Betelgeuse Hydroponic Bay",
-  "Arcology Alpha",
+  "Kepler-415 Tether Head",
+  "Betelgeuse Reactor Hall",
+  "Dome Alpha",
   "Shard Lock-Up",
-  "Archive Core Gamma"
+  "Ladder Foot Gamma"
  ],
  "routes japanese AN placeholders": [
   "Lord's Army Road",
@@ -1613,9 +1613,9 @@
   "Exchange Square",
   "Hab Block Gamma",
   "Wolf 215 Promenade",
-  "Antispinward Sector",
-  "Ring Road",
-  "Observation Deck Court"
+  "Spinward Sector",
+  "Horse Market",
+  "Lord's Square"
  ],
  "inns japanese NF placeholders": [
   "the Quantum Gull",
@@ -1628,14 +1628,14 @@
   "Jade River Inn"
  ],
  "buildings japanese NF placeholders": [
-  "Spire Tau",
+  "Arcology Tau",
   "Hab Module 1",
   "[place] Sky Elevator",
   "[place] Well",
   "[place] Watermill",
   "[founder]'s Column",
   "Seventh Hydroponic Bay",
-  "Gliese 622 Archive Core"
+  "Gliese 622 Ladder Foot"
  ],
  "routes japanese NF invented": [
   "Ice Cycle",
@@ -1657,7 +1657,7 @@
   "Market Square",
   "Deck 9 Concourse",
   "Deck 20 Concourse",
-  "Spine Tau"
+  "Ring Road"
  ],
  "inns japanese NF invented": [
   "Snow Country Tea House",
@@ -1670,8 +1670,8 @@
   "Fomalhaut Inn"
  ],
  "buildings japanese NF invented": [
-  "Kepler-1233 Observation Ring",
-  "Psi Draconis Landing Tower",
+  "Kepler-1233 Array",
+  "Psi Draconis Dock Ring",
   "Wyvern Station Arch",
   "Palace of [dynasty]",
   "Chi Hydrae Spire",
@@ -1691,15 +1691,15 @@
  ],
  "streets japanese IS placeholders": [
   "Gravity Street",
-  "Southern Promenade",
+  "Antispinward Walk",
   "Reactor Lane",
-  "Hydroponics Row",
+  "Hubward Lift",
   "Dock Arm Place",
   "Shoemakers' Ward Street",
   "King's Place",
-  "Kepler-1463 Promenade",
-  "Spine Tau",
-  "K2-96 Promenade"
+  "Tannery Side",
+  "K2-96 Promenade",
+  "Recycler Court"
  ],
  "inns japanese IS placeholders": [
   "[place] Inn",
@@ -1713,8 +1713,8 @@
  ],
  "buildings japanese IS placeholders": [
   "Corn Works",
-  "Betelgeuse Sky Elevator",
-  "Hab Module Mu",
+  "Betelgeuse Archive Core",
+  "Landing Tower Mu",
   "Great Toll House",
   "[place] Hall",
   "[place] Forge",
@@ -1755,10 +1755,10 @@
  ],
  "buildings japanese IS invented": [
   "New Bend of the Lamb Sky Elevator",
-  "Sky Elevator Omega",
+  "Relay Mast Omega",
   "New Castle Flax Pit Mill",
   "Ross 412 Sky Elevator",
-  "Spire Theta",
+  "Arcology Theta",
   "Ross 93 10 Library",
   "Hab Module 39",
   "Hab Module 12"
@@ -2196,14 +2196,14 @@
  "streets arabic-persian NF placeholders": [
   "[place] Road",
   "Caravan Court",
-  "Alphecca Promenade",
-  "Hydroponics Row",
-  "13th Corridor",
-  "Deck 7 Concourse",
-  "Lane of the Academy",
-  "Deck 30 Concourse",
-  "Reactor Lane",
-  "Deck 21 Concourse"
+  "Gravity Street",
+  "Lift Street",
+  "Antispinward Walk",
+  "Deck 12 Concourse",
+  "Concourse Zeta",
+  "5th Corridor",
+  "Exchange Square",
+  "Rimward Walk"
  ],
  "inns arabic-persian NF placeholders": [
   "the Last Drink Before Fomalhaut",
@@ -2219,8 +2219,8 @@
   "Temple of the Hungry Hand",
   "the Old Well",
   "HIP 72883 Spire",
-  "Sky Elevator Chi",
-  "Hab Module Gamma",
+  "Relay Mast Chi",
+  "Reactor Hall Gamma",
   "[place] House of Learning",
   "[founder]'s Toll House",
   "Hab Module 35"
@@ -2236,16 +2236,16 @@
   "Scarlet Captain's Star Road"
  ],
  "streets arabic-persian NF invented": [
-  "Spine Chi",
-  "Exchange Place",
-  "Deck 10",
-  "Van Maanen's Star Promenade",
+  "Ring Road",
+  "Deck 26",
+  "Zeta Aquilae Plaza",
+  "Deck 39 Concourse",
+  "Reactor Lane",
   "Hydroponics Square",
   "Hydroponics Row",
   "Lane of the Airlock",
-  "Ring Road",
   "Hydroponics Ring",
-  "Gravity Street"
+  "Southern Promenade"
  ],
  "inns arabic-persian NF invented": [
   "Caravan Court of the Eastern Gate",
@@ -2261,11 +2261,11 @@
   "Gliese 998 Forge",
   "Meridian Station Sky Elevator",
   "Lower Mint",
-  "Squirrel's Star Hydroponic Bay",
+  "Squirrel's Star Observation Ring",
   "Owl Saltworks",
-  "Mizar Archive Core",
-  "Dome Gamma",
-  "K2-202 Reactor Hall"
+  "Mizar Ladder Foot",
+  "Hydroponic Bay Gamma",
+  "K2-202 Ice Works"
  ],
  "routes arabic-persian IS placeholders": [
   "Trailing Lane",
@@ -2285,9 +2285,9 @@
   "Upper Spire",
   "Dock Arm Hill",
   "13th Corridor",
-  "Spine Iota",
-  "Queen's Court",
-  "Ring Road"
+  "Ring Road",
+  "[place] Road",
+  "Reactor Entry"
  ],
  "inns arabic-persian IS placeholders": [
   "[owner]'s Bar",
@@ -2305,9 +2305,9 @@
   "Garden of Timeless",
   "Pathfinder Dome",
   "[place] Library",
-  "Reactor Hall Tau",
+  "Ice Works Tau",
   "[place] Hall",
-  "Tau Ceti Reactor Hall"
+  "Tau Ceti Refinery"
  ],
  "routes arabic-persian IS invented": [
   "Rimward Jump Line",
@@ -2322,11 +2322,11 @@
  "streets arabic-persian IS invented": [
   "50th Ring",
   "Temple Town",
-  "Spinward Walk",
-  "Horse Lanes",
+  "Hubward Walk",
+  "Gravity Street",
   "Market Street",
   "Spine Omicron",
-  "Hydroponics Row",
+  "Hubward Lift",
   "Reactor Lane",
   "Rimward Shell Bypass",
   "Market Square"
@@ -2342,14 +2342,14 @@
   "Bar of HIP 61172"
  ],
  "buildings arabic-persian IS invented": [
-  "Ross 332 Dome",
+  "Ross 332 Sky Elevator",
   "Hab Module 2",
   "Pioneer Dome",
   "the White Kiln",
   "New West Farm Mill",
-  "Spire Lambda",
+  "Arcology Lambda",
   "Coreward Well College",
-  "Hab Module Nu"
+  "Landing Tower Nu"
  ],
  "routes slavic AN placeholders": [
   "Wax Road",
@@ -2804,13 +2804,13 @@
   "the Pale Tabor Tavern"
  ],
  "buildings slavic NF placeholders": [
-  "Ross 768 Hydroponic Bay",
+  "Ross 768 Observation Ring",
   "[place] Sky Elevator",
   "Bread Mill",
   "[place] Causeway",
   "Duke's Saltworks",
-  "Dome Psi",
-  "Reactor Hall Psi",
+  "Sky Elevator Psi",
+  "Ice Works Psi",
   "Pathfinder Dome"
  ],
  "routes slavic NF invented": [
@@ -2848,7 +2848,7 @@
  "buildings slavic NF invented": [
   "Gliese 313 Sky Elevator",
   "Fifth Hydroponic Bay",
-  "Spica Hab Module",
+  "Spica Sky Elevator",
   "the Lower Windmill",
   "HD 151316 Mill",
   "Cattle Works",
@@ -2872,8 +2872,8 @@
   "[place] Ring Road",
   "Deck 1 Concourse",
   "[place] Road",
-  "Spine Mu",
-  "Free Settlement",
+  "Ring Road",
+  "Cargo Bay Walk",
   "Long Street",
   "Upper Spire"
  ],
@@ -2888,14 +2888,14 @@
   "the Phoenix and Pear Tavern"
  ],
  "buildings slavic IS placeholders": [
-  "[person]'s Star Dome",
+  "[person]'s Star Hydroponic Bay",
   "Tenth Hydroponic Bay",
   "the Burnt Lock-Up",
   "[place] Statue",
-  "Hydroponic Bay Pi",
+  "Reactor Hall Pi",
   "Pioneer Dome",
   "[founder]'s Mint",
-  "[person]'s Star Landing Tower"
+  "[person]'s Star Dock Ring"
  ],
  "routes slavic IS invented": [
   "Gate Chain Xi",
@@ -2915,9 +2915,9 @@
   "HD 105093 Road",
   "Deck 22 Concourse",
   "Warehouse Level",
-  "Spinward Walk",
-  "3rd Corridor",
-  "2nd Corridor"
+  "Antispinward Walk",
+  "2nd Corridor",
+  "Garrison Quarter"
  ],
  "inns slavic IS invented": [
   "the Scholar",
@@ -2932,11 +2932,11 @@
  "buildings slavic IS invented": [
   "Queen's Hall",
   "Round Sanctuary",
-  "K2-114 Spire",
+  "K2-114 Arcology",
   "Hab Module 30",
   "Discovery Dome",
   "Wyvern Station Observatory",
-  "Red Captain's Star Sky Elevator",
+  "Red Captain's Star Archive Core",
   "Prince's Windmill"
  ],
  "routes polynesian AN placeholders": [
@@ -3375,11 +3375,11 @@
   "Hydroponics Ring",
   "Lift Row",
   "Market Square",
-  "Spinward Walk",
-  "Queen's Place",
-  "Undercity",
-  "Hadar Promenade",
-  "Spinward Sector"
+  "Hubward Walk",
+  "Cattle Court",
+  "Eastern Promenade",
+  "Concourse Gamma",
+  "Alcor Plaza"
  ],
  "inns polynesian NF placeholders": [
   "Guest House of [place]",
@@ -3393,13 +3393,13 @@
  ],
  "buildings polynesian NF placeholders": [
   "the Grey Fountain",
-  "HIP 101509 Dome",
+  "HIP 101509 Hydroponic Bay",
   "the White School",
   "[place] Market Hall",
-  "Kepler-134 Archive Core",
+  "Kepler-134 Ladder Foot",
   "Pathfinder Dome",
   "Hab Module 13",
-  "Dome Upsilon"
+  "Hydroponic Bay Upsilon"
  ],
  "routes polynesian NF invented": [
   "Star Path to Kepler-1808",
@@ -3412,9 +3412,9 @@
   "Coast Path to Beta Draconis"
  ],
  "streets polynesian NF invented": [
-  "Western Promenade",
+  "Rimward Walk",
   "Concourse Eta",
-  "Eastern Promenade",
+  "Hubward Walk",
   "Spine Pi",
   "Fish Hall",
   "Airlock Path",
@@ -3438,10 +3438,10 @@
   "Seventh Hydroponic Bay",
   "Upper Great House",
   "the High House of Learning",
-  "Electra Observation Ring",
-  "Eagle's Star Arcology",
+  "Electra Array",
+  "Eagle's Star Dome",
   "[dynasty] Fort",
-  "Ross 750 Arcology"
+  "Ross 750 Dome"
  ],
  "routes polynesian IS placeholders": [
   "The Ice Road",
@@ -3456,13 +3456,13 @@
  "streets polynesian IS placeholders": [
   "Deck 23 Concourse",
   "Hydroponics Ring",
-  "Spinward Walk",
+  "Hubward Lift",
   "King's Square",
   "9th Corridor",
   "Canoe Houses",
-  "Market Square",
-  "Eastern Promenade",
-  "Hydroponics Row",
+  "Antispinward Concourse",
+  "21st Corridor",
+  "Saddlers' Close",
   "Bath House Path"
  ],
  "inns polynesian IS placeholders": [
@@ -3480,9 +3480,9 @@
   "[place] Sky Elevator",
   "the Round Mine",
   "[founder]'s Grange",
-  "Ross 711 Dome",
+  "Ross 711 Sky Elevator",
   "Seventh Hydroponic Bay",
-  "Dome Theta",
+  "Sky Elevator Theta",
   "Horizon Dome"
  ],
  "routes polynesian IS invented": [
@@ -3520,11 +3520,11 @@
  "buildings polynesian IS invented": [
   "New Honey Weir Castle",
   "Tenth Hydroponic Bay",
-  "Gull's Star Sky Elevator",
+  "Gull's Star Archive Core",
   "Little College",
   "Palace of [dynasty]",
   "Teegarden's Star 12 Mill",
-  "Bellatrix Reactor Hall",
+  "Bellatrix Shipyard",
   "New Fields School"
  ],
  "groups mystic general placeholders fantasy": [
@@ -5180,8 +5180,8 @@
   "Drive Resolute",
   "The Sea Remembers",
   "Sail Intrepid",
-  "Discovery Station",
-  "Long Ocean of Gladness"
+  "New [place]",
+  "Morning Star"
  ],
  "vessels spacecraft hawaiian invented": [
   "The Russet Captain",
@@ -5191,8 +5191,8 @@
   "Bright Trade Wind",
   "Booster Bear",
   "The Brave",
-  "Surveyor Station",
-  "Rain from the Mountain",
-  "Theta Station"
+  "New Bastion Station",
+  "Leap Ocean of Gladness",
+  "Interstellar Ocean of Gladness"
  ]
 }

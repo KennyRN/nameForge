@@ -1504,7 +1504,11 @@ export class NameForgeModal extends Modal {
       for (const c of list) {
         if (c.heading) {
           menu.addSeparator();
-          menu.addItem((item) => item.setTitle(c.heading!).setDisabled(true));
+          menu.addItem((item) => {
+            item.setTitle(c.heading!).setDisabled(true);
+            // Stellar brief §5.10: the Space heading's tooltip.
+            if (c.headingTip) (item as unknown as { dom?: HTMLElement }).dom?.setAttribute("aria-label", c.headingTip);
+          });
         }
         menu.addItem((item) =>
           item
@@ -6202,7 +6206,8 @@ class NameForgeEditorModal extends Modal {
     const select = this.biomeBaseSelect;
     if (!select) return;
     select.empty();
-    for (const b of [BRITAIN, ...BIOMES]) select.createEl("option", { text: b.label, value: b.id });
+    // Stellar brief §5.1: a pack may copy a space biome; it inherits its scale.
+    for (const b of [BRITAIN, ...BIOMES, ...SPACE_BIOMES]) select.createEl("option", { text: b.label, value: b.id });
     for (const b of custom) select.createEl("option", { text: b.label, value: b.custom!.path });
     const name = this.packNameInput?.value.trim().toLowerCase();
     const existing = custom.find((b) => b.label.toLowerCase() === name);

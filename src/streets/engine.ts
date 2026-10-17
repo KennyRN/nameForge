@@ -212,7 +212,7 @@ const CASTE = new Set(["indian", "west-african"]);
 const TRADE_TOKENS = /\{(trade|tradeSg)[}:]/;
 /** Tokens that name a pool of their own under another name. */
 const POOL_OF: Record<string, string> = { sw: "streetWord", aw: "alleyWord", dw: "districtWord" };
-const SF_LISTS = new Set(["star", "greek"]);
+const SF_LISTS = new Set(["star", "greek", "stationDirection"]);
 
 const where = (ctx: Ctx, region = ctx.region) => ({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region });
 
@@ -432,6 +432,7 @@ function token(ctx: Ctx, name: string, alt: (dialect: string) => void, pattern: 
       return String(1 + Math.floor(rng() * 40));
     case "greek":
     case "star":
+    case "stationDirection":
       return gnWord(ctx, name);
     case "landmark":
       return landmark(ctx);

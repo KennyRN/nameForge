@@ -62,7 +62,7 @@ test("§16.1: every role and list named exists; weights are positive but for §7
   const shapes = [...VESSEL_DATA.shapes, ...VESSEL_CULTURES.flatMap((c) => c.shapes ?? [])];
   for (const s of shapes) assert.ok(roles.has(s.role) && s.w > 0, `${s.role} ${s.p}`);
   const special = new Set(["town", "surname", "womanName", "person", "president", "scientist", "holy", "n", "ordinal", "poetic", "god", "cultureNoun", "techAdj", "techNoun", "name", "colonyName", "numberWord", "menaceExtra"]);
-  const gn = new Set(["colour", "number", "ordinalWord", "greek", "land", "spaceLand", "compass", "star", "brandRoot", "surname", "weapon", "tech", "beast"]);
+  const gn = new Set(["colour", "number", "ordinalWord", "greek", "land", "spaceLand", "sfBody", "compass", "star", "brandRoot", "surname", "weapon", "tech", "beast"]);
   const stylePools = new Set(VESSEL_DATA.styles.flatMap((s) => Object.keys(s.pools)));
   const patterns = [
     ...shapes.map((s) => s.p),

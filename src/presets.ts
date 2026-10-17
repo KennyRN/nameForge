@@ -126,7 +126,8 @@ export function parseModulePreset(
       setting: values.setting ?? "",
       description: body.trim(),
       tradition: pick("tradition", d.tradition, (v) => !!findTradition(v)),
-      biome: pick("biome", d.biome, (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
+      // Stellar brief §5.1: space biomes are never tribal biomes.
+      biome: pick("biome", d.biome, (v) => v === "homeland" || (!!findBiome(v) && !findBiome(v)!.space) || /^\[\[.+\]\]$/.test(v)),
       terrain: pick("terrain", d.terrain, (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
       register: pick("register", d.register, (v) => (TRIBAL_REGISTERS as readonly string[]).includes(v)),
       groupType: pick("groupType", d.groupType, (v) => v === "any" || TRIBAL_GROUP_TYPES.some((g) => g.key === v)),

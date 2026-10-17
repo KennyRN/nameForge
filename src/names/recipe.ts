@@ -151,7 +151,7 @@ function readTribalFields(v: Record<string, unknown>, problems: string[], id: st
     if (ok(value)) out[key] = value;
     else problems.push(`Slot “${id}” has an unknown ${key} “${value}”.`);
   };
-  check("biome", (b) => !!findBiome(b));
+  check("biome", (b) => !!findBiome(b) && !findBiome(b)!.space);
   check("terrain", (t) => TERRAIN_CHOICES.some((x) => x.id === t));
   check("groupType", (g) => TRIBAL_GROUP_TYPES.some((x) => x.key === g));
   check("perspective", (p) => TRIBAL_PERSPECTIVES.includes(p));

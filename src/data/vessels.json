@@ -3156,6 +3156,25 @@
   }
  ],
  "lists": {
+  "lagrangeWord": [
+   {
+    "w": "One"
+   },
+   {
+    "w": "Two"
+   },
+   {
+    "w": "Three"
+   },
+   {
+    "w": "Four",
+    "x": 3
+   },
+   {
+    "w": "Five",
+    "x": 3
+   }
+  ],
   "virtue": [
    {
     "w": "Resolute",
@@ -5904,6 +5923,26 @@
    {
     "p": "{star} Gate",
     "w": 10
+   },
+   {
+    "p": "{spaceLand} Station",
+    "w": 10
+   },
+   {
+    "p": "Ell-{lagrangeWord} Station",
+    "w": 5
+   },
+   {
+    "p": "{sfBody} Ring",
+    "w": 8
+   },
+   {
+    "p": "{spaceLand} Anchorage",
+    "w": 5
+   },
+   {
+    "p": "{star} Haven",
+    "w": 5
    }
   ],
   "colony": [

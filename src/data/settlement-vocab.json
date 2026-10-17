@@ -1654,7 +1654,16 @@
         {"w": "Landing Tower", "e": ["NF", "IS"]},
         {"w": "Reactor Hall", "e": ["NF", "IS"]},
         {"w": "Observation Ring", "e": ["NF", "IS"]},
-        {"w": "Archive Core", "e": ["NF", "IS"]}
+        {"w": "Archive Core", "e": ["NF", "IS"]},
+        {"w": "Relay Mast", "e": ["NF", "IS"]},
+        {"w": "Beacon", "e": ["NF", "IS"]},
+        {"w": "Dock Ring", "e": ["NF", "IS"]},
+        {"w": "Ice Works", "e": ["NF", "IS"]},
+        {"w": "Refinery", "e": ["NF", "IS"]},
+        {"w": "Shipyard", "e": ["NF", "IS"]},
+        {"w": "Array", "e": ["NF", "IS"]},
+        {"w": "Tether Head", "e": ["NF", "IS"]},
+        {"w": "Ladder Foot", "e": ["NF", "IS"]}
       ]
     },
     "eastVirtue": {
@@ -2024,7 +2033,9 @@
       "entries": [
         {"w": "Gate Wars", "e": ["IS"]},
         {"w": "War of the Long Night", "e": ["NF", "IS"]},
-        {"w": "Brothers' War"}
+        {"w": "Brothers' War"},
+        {"w": "Belt War", "e": ["NF", "IS"]},
+        {"w": "Ring War", "e": ["NF", "IS"]}
       ]
     },
     "eventFixed:battle": {
@@ -2041,7 +2052,8 @@
     },
     "eventFixed:migration": {
       "entries": [
-        {"w": "First Contact", "t": ["strange"], "e": ["NF", "IS"]}
+        {"w": "First Contact", "t": ["strange"], "e": ["NF", "IS"]},
+        {"w": "Great Crossing", "e": ["IS"]}
       ]
     },
     "eventFixed:disaster": {
@@ -2053,7 +2065,8 @@
       "entries": [
         {"w": "Collapse", "t": ["strange"], "e": ["NF", "IS"]},
         {"w": "Long Night", "t": ["strange"], "e": ["NF", "IS"]},
-        {"w": "Silence", "t": ["strange"], "e": ["NF", "IS"]}
+        {"w": "Silence", "t": ["strange"], "e": ["NF", "IS"]},
+        {"w": "Gate Fall", "t": ["strange"], "e": ["IS"]}
       ]
     },
     "eventFixed:era": {
@@ -2225,6 +2238,11 @@
         {"w": "Asteroid", "e": ["NF", "IS"]},
         {"w": "Derelict", "e": ["NF", "IS"]},
         {"w": "Station Shrine", "e": ["NF", "IS"]},
+        {"w": "Comet", "e": ["NF", "IS"]},
+        {"w": "Star", "e": ["NF", "IS"]},
+        {"w": "Ring", "e": ["NF", "IS"]},
+        {"w": "Wreck", "e": ["NF", "IS"]},
+        {"w": "Beacon", "e": ["NF", "IS"]},
         {"w": "Floating Island", "h": true},
         {"w": "Sky Well", "h": true}
       ]
