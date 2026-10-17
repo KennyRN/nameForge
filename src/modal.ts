@@ -132,6 +132,7 @@ import { isRealmSafeguardPackContent } from "./realms/safeguardPacks";
 import { generateVesselNames, moduleFunctions, VESSEL_CULTURES, VESSEL_DATA, type VesselModule } from "./vessels/engine";
 import { chooseVessel, defaultVesselState, vesselHistory, vesselSentence, vesselSentenceText, type VesselSentenceState } from "./vessels/sentence";
 import { isVesselSafeguardPackContent } from "./vessels/safeguardPacks";
+import { HyperspaceGuideModal } from "./waters/guide";
 import { generateWatersNames, WATERS_DATA, watersWordBlocked, type WatersModule } from "./waters/engine";
 import { chooseWaters, defaultWatersState, watersHistoryLabel, watersSentence, watersSentenceText, type WatersSentenceState } from "./waters/sentence";
 import { isModulePresetContent, modulePresetContent, parseModulePreset, type RealmPreset, type RoutePreset, type StreetPreset, type InnPreset, type BuildingPreset, type KitPreset, type EventPreset, type DeityPreset, type TribalPreset, type VesselPreset, type WatersPreset } from "./presets";
@@ -975,6 +976,11 @@ export class NameForgeModal extends Modal {
     });
     setIcon(this.guideButton, ICON_INFO);
     this.guideButton.addEventListener("click", () => {
+      // Seas and coasts brief §12.1: hyperspace charts have a guide of their own.
+      if (this.activeSection === "hyperspaceCharts") {
+        new HyperspaceGuideModal(this.app).open();
+        return;
+      }
       const part = COLONIAL_SECTION_PART[this.activeSection];
       if (!part) return;
       new TraditionGuideModal(this.app, part, (id) => {
@@ -1143,7 +1149,8 @@ export class NameForgeModal extends Modal {
     const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "deityNames" || section === "sacredPlaces";
     this.createPacksButton?.toggle(!colonialPart && !tribal);
     this.landButton?.refresh();
-    this.guideButton?.toggle(!!colonialPart);
+    this.guideButton?.toggle(!!colonialPart || section === "hyperspaceCharts");
+    this.guideButton?.setAttribute("title", section === "hyperspaceCharts" ? "Hyperspace guide" : "Tradition guide");
     this.refreshSavePreset();
     this.clearSessionHint();
     const takeover = section === "nameTakeover";
