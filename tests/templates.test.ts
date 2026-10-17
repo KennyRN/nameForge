@@ -40,12 +40,25 @@ test("templates: Anglo-Saxon holds ## male and ## female lists, unique and alpha
   assert.deepEqual(female, [...female].sort((a, b) => a.localeCompare(b, "en")));
 });
 
+test("templates: Old Cornish holds ## male and ## female lists, unique and alphabetical", () => {
+  const male = section("Old Cornish", "male");
+  assert.equal(male.length, 149);
+  assert.equal(male[0], "Anaoc");
+  const female = section("Old Cornish", "female");
+  assert.equal(female.length, 73);
+  assert.equal(female[0], "Adwen");
+  for (const list of [male, female]) {
+    assert.equal(new Set(list).size, list.length);
+    assert.deepEqual(list, [...list].sort((a, b) => a.localeCompare(b, "en")));
+  }
+});
+
 test("templates: a sectioned template fills the box as ## lists the pack reads back", () => {
   const t = builtinTemplates("people").find((x) => x.name === "Anglo-Saxon")!;
   assert.equal(templateNameCount(t), 102);
   const parsed = parseNameSections(templateText(t))!;
   assert.deepEqual(parsed.sections.map((s) => [s.name, s.names.length]), [["male", 77], ["female", 25]]);
-  assert.deepEqual(builtinTemplates("people").map((x) => x.name), ["Victorian, England", "Anglo-Saxon"]);
+  assert.deepEqual(builtinTemplates("people").map((x) => x.name), ["Victorian, England", "Anglo-Saxon", "Old Cornish"]);
 });
 
 import { templatePartTexts } from "../src/templates";
