@@ -1,0 +1,910 @@
+{
+  "$comment": "Money and coins (docs/money-and-coins-brief.md). Culture names, kinds, shapes, ladders and safeguards; the words come from the shared pools in settlement-vocab.json.",
+  "version": 1,
+  "any": "money of any kind",
+  "cultures": [
+    {
+      "key": "french",
+      "label": "French",
+      "group": "Western and southern Europe",
+      "town": "compound",
+      "figure": ["King", "Queen", "Duke", "Prince"],
+      "after": "greek-byzantine",
+      "moneyOnly": true
+    },
+    {
+      "key": "dutch",
+      "label": "Dutch",
+      "group": "Western and southern Europe",
+      "town": "compound",
+      "figure": ["Prince", "Count"],
+      "after": "greek-byzantine",
+      "moneyOnly": true
+    },
+    {
+      "key": "iberian",
+      "label": "Spanish & Portuguese",
+      "group": "Western and southern Europe",
+      "town": "compound",
+      "figure": ["King", "Queen", "Duke", "Prince"],
+      "after": "greek-byzantine",
+      "moneyOnly": true
+    },
+    {"key": "american", "label": "American", "group": "The Americas", "town": "britain", "figure": [], "after": "maya", "moneyOnly": true}
+  ],
+  "notOffered": ["polynesian", "andean"],
+  "kinds": [
+    {
+      "key": "coin",
+      "menu": "Coins",
+      "plural": "coins",
+      "description": "Struck and cast coins, from gold to copper",
+      "series": true,
+      "era": {"AN": 40, "MD": 45, "EM": 40, "ST": 35, "MO": 25, "NF": 10, "IS": 10}
+    },
+    {
+      "key": "early",
+      "menu": "Early and shaped money",
+      "plural": "early and shaped money",
+      "description": "Ingots, rings, bars, hacksilver and money in the shape of tools",
+      "series": true,
+      "era": {"AN": 15, "MD": 8, "EM": 3, "ST": 0, "MO": 0, "NF": 0, "IS": 0}
+    },
+    {
+      "key": "goods",
+      "menu": "Goods money",
+      "plural": "goods money",
+      "description": "Shells, beans, cloth, pelts, salt and cattle used as money",
+      "series": true,
+      "era": {"AN": 15, "MD": 10, "EM": 8, "ST": 4, "MO": 2, "NF": 5, "IS": 5}
+    },
+    {
+      "key": "paper",
+      "menu": "Paper and credit",
+      "plural": "notes and credit",
+      "description": "Bank notes, bills of exchange, tallies and bonds",
+      "series": false,
+      "era": {"AN": 0, "MD": 4, "EM": 10, "ST": 15, "MO": 20, "NF": 20, "IS": 15}
+    },
+    {
+      "key": "scrip",
+      "menu": "Scrip and tokens",
+      "plural": "scrip and tokens",
+      "description": "Company scrip, store credit, trade tokens, siege money and rations",
+      "series": false,
+      "era": {"AN": 0, "MD": 2, "EM": 5, "ST": 12, "MO": 10, "NF": 15, "IS": 20}
+    },
+    {
+      "key": "currency",
+      "menu": "Currencies",
+      "plural": "currencies",
+      "description": "The name of a whole money system",
+      "series": false,
+      "era": {"AN": 10, "MD": 12, "EM": 14, "ST": 14, "MO": 18, "NF": 25, "IS": 25}
+    },
+    {
+      "key": "nickname",
+      "menu": "Nicknames",
+      "plural": "nicknames for money",
+      "description": "Slang and everyday names for coins and money",
+      "series": false,
+      "era": {"AN": 5, "MD": 7, "EM": 10, "ST": 10, "MO": 15, "NF": 10, "IS": 10}
+    }
+  ],
+  "values": [
+    {"key": "any", "text": "of any value"},
+    {"key": "high", "text": "of high value"},
+    {"key": "middle", "text": "of middle value"},
+    {"key": "low", "text": "of low value"}
+  ],
+  "words": [{"key": "translated", "text": "in translated names"}, {"key": "loanwords", "text": "with familiar loanwords"}],
+  "cultureMult": {
+    "aztec": {"coin": {"AN": 0, "MD": 0, "EM": 0.5, "ST": 0.5, "MO": 0.5, "NF": 0.5, "IS": 0.5}, "early": 1.5, "goods": 3},
+    "maya": {"coin": {"AN": 0, "MD": 0, "EM": 0.5, "ST": 0.5, "MO": 0.5, "NF": 0.5, "IS": 0.5}, "early": 1.5, "goods": 3},
+    "bantu": {"coin": {"AN": 0, "MD": 0.5, "EM": 0.5}, "early": 2, "goods": 3},
+    "west-african": {"coin": {"AN": 0, "MD": 0, "EM": 0}, "early": 2, "goods": 3},
+    "egyptian": {"coin": {"AN": 0.5, "MD": 0.5}, "early": 1.5, "goods": 2},
+    "ethiopian": {"early": 1, "goods": 2},
+    "steppe": {"coin": 0.7, "early": 1.5, "goods": 2},
+    "norse": {"coin": {"AN": 0.5}, "early": 2, "goods": 1.5},
+    "anglo-saxon": {"coin": {"AN": 0.5}, "early": 2, "goods": 1.5},
+    "celtic": {"early": 1.5, "goods": 1.5},
+    "korean": {"coin": {"AN": 0.5}, "early": 1, "goods": 2},
+    "japanese": {"coin": {"AN": 0.5}, "early": 1, "goods": 2},
+    "french": {"coin": {"AN": 0}, "early": {"AN": 0}, "goods": {"AN": 0}},
+    "dutch": {"coin": {"AN": 0}, "early": {"AN": 0}, "goods": {"AN": 0}},
+    "iberian": {"coin": {"AN": 0}, "early": {"AN": 0}, "goods": {"AN": 0}},
+    "american": {"coin": {"AN": 0, "MD": 0, "EM": 0.5}, "early": 0, "goods": {"AN": 0, "MD": 0, "EM": 2}, "paper": {"AN": 0, "MD": 0}, "scrip": {"AN": 0, "MD": 0}}
+  },
+  "paperMiddleAges": ["chinese", "arabic-persian", "indian", "roman", "norman-british"],
+  "shapes": [
+    {"kind": "coin", "p": "{fixed}", "w": 30},
+    {"kind": "coin", "p": "{metal} {emblem}", "w": 20},
+    {"kind": "coin", "p": "{emblem}", "w": 6},
+    {"kind": "coin", "p": "{emblem} {coinWord}", "w": 12},
+    {"kind": "coin", "p": "{metal} {coinWord}", "w": 10, "t": ["plain"]},
+    {"kind": "coin", "p": "{fraction}{coinWord}", "w": 6},
+    {"kind": "coin", "p": "{figure:poss} {coinWord}", "w": 6, "e": ["AN", "MD", "EM", "ST"], "t": ["grand"]},
+    {"kind": "coin", "p": "{figure:poss} Gold", "w": 3, "e": ["AN", "MD", "EM", "ST"], "t": ["grand"], "tier": "h"},
+    {"kind": "coin", "p": "{town} {coinWord}", "w": 8, "t": ["plain"]},
+    {"kind": "coin", "p": "{realm} {coinWord}", "w": 3, "e": ["MD", "EM", "ST", "MO", "NF", "IS"]},
+    {"kind": "coin", "p": "{dynasty} {coinWord}", "w": 2, "e": ["AN", "MD", "EM", "ST"]},
+    {"kind": "coin", "p": "{holy} {coinWord}", "w": 3, "e": ["MD", "EM"], "c": ["christian"]},
+    {"kind": "coin", "p": "{god:poss} {emblem}", "w": 6, "e": ["AN"], "c": ["roman", "greek-byzantine"], "t": ["grand"]},
+    {"kind": "coin", "p": "{metal} {shapeWord}", "w": 5, "c": ["chinese", "japanese", "korean", "indian", "general"]},
+    {"kind": "coin", "p": "Piece of {numberWord}", "w": 3, "e": ["EM", "ST"], "c": ["iberian", "general"]},
+    {"kind": "coin", "p": "{numberWord}-{coinWord} Piece", "w": 4, "e": ["ST", "MO", "NF", "IS"], "t": ["plain"]},
+    {"kind": "coin", "p": "Trade {coinWord}", "w": 2, "e": ["EM", "ST"], "t": ["plain"]},
+    {"kind": "coin", "p": "Iron {coinWord}", "w": 2, "t": ["grim"], "tier": "l"},
+    {"kind": "coin", "p": "{fixed}", "w": 10, "h": true, "fx": "fantasy-coin"},
+    {"kind": "coin", "p": "Brass {emblem}", "w": 10, "e": ["ST"], "h": true, "tier": "l"},
+    {"kind": "coin", "p": "{gearWord}-{coinWord}", "w": 6, "e": ["ST"], "h": true},
+    {"kind": "coin", "p": "{fixed}", "w": 4, "e": ["ST"], "h": true, "fx": "steam-coin"},
+    {"kind": "coin", "p": "{fixed}", "w": 10, "e": ["NF"], "fx": "nf-coin"},
+    {"kind": "coin", "p": "{cryptoRoot}coin", "w": 10, "e": ["NF"], "t": ["light"]},
+    {"kind": "coin", "p": "e-{coinWord}", "w": 10, "e": ["NF"], "t": ["plain"]},
+    {"kind": "coin", "p": "{sfMetal} {sfMoney}", "w": 10, "e": ["IS"]},
+    {"kind": "coin", "p": "Kilo{sfMoneyLower}", "w": 4, "e": ["IS"]},
+    {"kind": "coin", "p": "{star} {sfMoney}", "w": 10, "e": ["IS"]},
+    {"kind": "coin", "p": "{fixed}", "w": 6, "e": ["IS"], "fx": "is-coin"},
+    {"kind": "early", "p": "{fixed}", "w": 40},
+    {
+      "kind": "early",
+      "p": "{metal} {earlyMoney}",
+      "w": 15,
+      "e": ["AN", "MD", "EM"],
+      "t": ["plain"],
+      "only": {"earlyMoney": ["Ingot", "Bar"]},
+      "rest": true
+    },
+    {"kind": "early", "p": "{metal} {earlyMoney}", "w": 10, "e": ["AN", "MD"], "only": {"earlyMoney": ["Ring"]}},
+    {"kind": "early", "p": "{metal} {earlyMoney}", "w": 6, "e": ["AN", "MD"], "t": ["plain"], "only": {"earlyMoney": ["Wire", "Rod"]}},
+    {"kind": "early", "p": "Weight of {metal}", "w": 8, "e": ["AN", "MD"]},
+    {"kind": "early", "p": "{emblem}-Stamped Bar", "w": 5, "e": ["AN", "MD"]},
+    {"kind": "early", "p": "{fixed}", "w": 10, "e": ["AN", "MD"], "c": ["general"], "fx": "general-early"},
+    {"kind": "goods", "p": "{fixed}", "w": 50},
+    {"kind": "goods", "p": "Bolt of {cloth}", "w": 8, "e": ["AN", "MD", "EM"], "t": ["plain"]},
+    {"kind": "goods", "p": "Measure of {grain}", "w": 8, "e": ["AN", "MD", "EM"], "t": ["plain"]},
+    {"kind": "goods", "p": "{goodsAnimal} Pelt", "w": 5, "e": ["AN", "MD", "EM"], "c": ["slavic", "norse", "steppe", "american", "general"]},
+    {
+      "kind": "goods",
+      "p": "{goodsMoney}",
+      "w": 5,
+      "e": ["AN", "MD", "EM", "ST"],
+      "t": ["plain"],
+      "only": {"goodsMoney": ["Cake of Salt", "Salt Bar"]},
+      "rest": true
+    },
+    {"kind": "goods", "p": "{goodsMoney}", "w": 5, "e": ["AN", "MD"], "only": {"goodsMoney": ["Head of Cattle"]}},
+    {
+      "kind": "goods",
+      "p": "{fixed}",
+      "w": 3,
+      "e": ["MO"],
+      "c": ["general", "norman-british", "american", "french", "slavic"],
+      "t": ["grim"],
+      "fx": "mo-grim"
+    },
+    {"kind": "goods", "p": "{fixed}", "w": 15, "e": ["NF", "IS"], "fx": "sf-goods"},
+    {"kind": "goods", "p": "{fixed}", "w": 8, "h": true, "fx": "fantasy-goods"},
+    {"kind": "paper", "p": "{fixed}", "w": 25},
+    {"kind": "paper", "p": "{town} {paperWord}", "w": 12, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"]},
+    {"kind": "paper", "p": "{town} Bank Note", "w": 12, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"]},
+    {"kind": "paper", "p": "Treasury {paperWord}", "w": 8, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"]},
+    {"kind": "paper", "p": "{figure:poss} Note", "w": 4, "e": ["EM", "ST"], "t": ["grand"]},
+    {"kind": "paper", "p": "{metal} Certificate", "w": 4, "e": ["ST", "MO"], "t": ["plain"]},
+    {"kind": "paper", "p": "{colourShort}back", "w": 4, "e": ["ST", "MO"], "t": ["light"]},
+    {"kind": "paper", "p": "{numberWord}-{coinWord} Note", "w": 8, "e": ["ST", "MO", "NF", "IS"], "t": ["plain"]},
+    {"kind": "paper", "p": "{fixed}", "w": 6, "e": ["MD", "EM", "ST"], "fx": "std-paper"},
+    {"kind": "paper", "p": "{star} Bond", "w": 5, "e": ["NF", "IS"]},
+    {"kind": "paper", "p": "{spaceLand} Credit Bond", "w": 5, "e": ["NF", "IS"]},
+    {"kind": "paper", "p": "{fixed}", "w": 6, "e": ["NF", "IS"], "t": ["grim"], "fx": "sf-paper"},
+    {"kind": "paper", "p": "{fixed}", "w": 8, "e": ["ST"], "h": true, "fx": "steam-paper"},
+    {"kind": "scrip", "p": "{fixed}", "w": 15},
+    {"kind": "scrip", "p": "{company} Scrip", "w": 15, "e": ["ST", "MO"], "t": ["plain"]},
+    {"kind": "scrip", "p": "{company} {tokenWord}", "w": 10, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"]},
+    {"kind": "scrip", "p": "{company} Store Credit", "w": 6, "e": ["ST", "MO", "NF", "IS"], "t": ["grim"]},
+    {"kind": "scrip", "p": "{town} {tokenWord}", "w": 10, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"]},
+    {"kind": "scrip", "p": "{trade:poss} {tokenWord}", "w": 8, "e": ["EM", "ST"], "t": ["plain"]},
+    {"kind": "scrip", "p": "{fixed}", "w": 6, "e": ["ST", "MO"], "t": ["grim"], "fx": "grim-scrip"},
+    {"kind": "scrip", "p": "{fixed}", "w": 6, "e": ["EM", "ST", "MO"], "t": ["light"], "fx": "light-scrip"},
+    {"kind": "scrip", "p": "{fixed}", "w": 4, "e": ["EM", "ST", "MO"], "t": ["grim"], "fx": "siege"},
+    {"kind": "scrip", "p": "{fixed}", "w": 2, "e": ["MO"], "t": ["light"], "fx": "arcade"},
+    {"kind": "scrip", "p": "{fixed}", "w": 30, "e": ["NF", "IS"], "fx": "sf-scrip"},
+    {"kind": "scrip", "p": "{fixed}", "w": 4, "e": ["ST"], "h": true, "fx": "steam-scrip"},
+    {"kind": "scrip", "p": "{fixed}", "w": 6, "e": ["IS"], "fx": "is-scrip"},
+    {"kind": "currency", "p": "{fixed}", "w": 25},
+    {"kind": "currency", "p": "the {town} {unitWord}", "w": 15, "t": ["plain"]},
+    {"kind": "currency", "p": "the {realm} {unitWord}", "w": 10, "e": ["MD", "EM", "ST", "MO", "NF", "IS"]},
+    {"kind": "currency", "p": "the {metal} Standard", "w": 8, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"]},
+    {"kind": "currency", "p": "Imperial {metal}", "w": 6, "e": ["AN", "MD", "EM", "ST"], "t": ["grand"]},
+    {"kind": "currency", "p": "the {figure:poss} Standard", "w": 4, "e": ["AN", "MD", "EM", "ST"], "t": ["grand"]},
+    {"kind": "currency", "p": "the {town} Weight", "w": 6, "e": ["AN", "MD", "EM"]},
+    {"kind": "currency", "p": "the Free Port {coinWord}", "w": 4, "e": ["MD", "EM", "ST"]},
+    {"kind": "currency", "p": "the {compass} {coinWord}", "w": 4},
+    {"kind": "currency", "p": "the New {coinWord}", "w": 3, "e": ["ST", "MO", "NF", "IS"], "t": ["plain"]},
+    {"kind": "currency", "p": "the Hard {coinWord}", "w": 3, "e": ["ST", "MO", "NF", "IS"], "t": ["plain"]},
+    {"kind": "currency", "p": "the Common {coinWord}", "w": 4, "e": ["MO", "NF", "IS"]},
+    {"kind": "currency", "p": "the {star} Credit", "w": 10, "e": ["NF", "IS"]},
+    {"kind": "currency", "p": "the Solar Credit", "w": 10, "e": ["NF", "IS"]},
+    {"kind": "currency", "p": "the {spaceLand} {sfMoney}", "w": 10, "e": ["NF", "IS"]},
+    {"kind": "currency", "p": "the {fixed}", "w": 5, "e": ["NF", "IS"], "t": ["plain"], "fx": "std-credit"},
+    {"kind": "nickname", "p": "{fixed}", "w": 40, "t": ["light"]},
+    {"kind": "nickname", "p": "{emblem:pl}", "w": 15, "t": ["light"]},
+    {"kind": "nickname", "p": "{metal:pl}", "w": 10, "t": ["light"]},
+    {"kind": "nickname", "p": "Little {emblem:pl}", "w": 5, "t": ["light"]},
+    {"kind": "nickname", "p": "{moneyNickname}", "w": 10, "t": ["light"]},
+    {"kind": "nickname", "p": "{fixed}", "w": 20, "e": ["NF", "IS"], "t": ["light"], "fx": "sf-nick"}
+  ],
+  "lists": {
+    "numberWord": ["Two", "Three", "Four", "Five", "Six", "Ten", "Twenty"],
+    "colourShort": ["Green", "Grey", "Red", "Blue", "Brown", "Yellow"],
+    "gearWord": ["Gear", "Cog", "Spring", "Piston"],
+    "cryptoRoot": ["Star", "Salt", "Iron", "Sky", "Ice", "Grain", "Tide"],
+    "sfMetal": ["Iridium", "Palladium", "Titanium", "Polymer"],
+    "cloth": [{"w": "Linen"}, {"w": "Wool"}, {"w": "Cotton"}, {"w": "Silk", "c": ["chinese", "steppe", "arabic-persian"]}, {"w": "Hemp"}],
+    "grain": [
+      {"w": "Barley"},
+      {"w": "Wheat"},
+      {"w": "Rice", "c": ["chinese", "japanese", "korean", "indian"]},
+      {"w": "Millet"},
+      {"w": "Maize", "c": ["aztec", "maya"]}
+    ],
+    "goodsAnimal": [{"w": "Sable"}, {"w": "Marten"}, {"w": "Squirrel"}, {"w": "Beaver", "c": ["american", "general"]}, {"w": "Fox"}, {"w": "Ermine"}],
+    "animalEmblems": [
+      "Lion",
+      "Eagle",
+      "Hart",
+      "Boar",
+      "Horse",
+      "Bull",
+      "Owl",
+      "Dolphin",
+      "Griffin",
+      "Elephant",
+      "Tiger",
+      "Dragon",
+      "Phoenix",
+      "Crane",
+      "Turtle",
+      "Bee",
+      "Crab",
+      "Ox",
+      "Lamb",
+      "Bison",
+      "Wyvern",
+      "Unicorn",
+      "Basilisk",
+      "Kraken"
+    ],
+    "holyEmblems": ["Cross", "Angel", "Lamb"],
+    "metalPlurals": {"Gold": "Goldies", "Brass": "Brass"},
+    "sacredAnimals": {"indian": ["Bull", "Cow", "Ox", "Boar", "Monkey", "Snake", "Cobra", "Peacock", "Baboon"]}
+  },
+  "companyTypes": [{"key": "resource", "w": 40}, {"key": "industrial", "w": 30}, {"key": "chartered", "w": 20}, {"key": "colonial", "w": 10}],
+  "companyDrop": ["Company", "Companies", "Syndicate", "Corporation", "Combine", "Trust", "Services"],
+  "nicknameTone": {"grand": 0.2, "other": 0.5},
+  "loanShare": 0.7,
+  "series": {
+    "steps": [[3, 2], [4, 3], [5, 2]],
+    "tiers": {"1": ["h"], "2": ["h", "l"], "3": ["h", "m", "l"], "4": ["h", "m", "m", "l"], "5": ["h", "m", "m", "l", "l"]},
+    "themes": [
+      {"key": "beasts", "w": 30},
+      {"key": "emblems", "w": 20},
+      {"key": "rulers", "w": 15},
+      {"key": "place", "w": 15},
+      {"key": "holy", "w": 5},
+      {"key": "gods", "w": 5},
+      {"key": "names", "w": 10}
+    ],
+    "realShare": 0.25,
+    "realShareValues": 0.4,
+    "currencyFrom": 6
+  },
+  "ladders": [
+    {
+      "key": "roman-augustan",
+      "source": "Roman coinage of Augustus",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Golden", "loan": "Aureus", "tier": "h", "metal": "Gold", "v": 1600},
+        {"n": "Ten-Piece", "loan": "Denarius", "tier": "m", "metal": "Silver", "v": 64},
+        {"n": "Two-and-a-Half", "loan": "Sesterce", "tier": "l", "metal": "low", "v": 16, "pl": "Two-and-a-Halfs"},
+        {"n": "Unit", "loan": "As", "tier": "l", "metal": "low", "v": 4},
+        {"n": "Quarter", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "roman-late",
+      "source": "Late Roman gold coinage of Constantine",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Solid", "loan": "Solidus", "tier": "h", "metal": "Gold", "v": 24},
+        {"n": "Third", "loan": "Tremissis", "tier": "h", "metal": "Gold", "v": 8},
+        {"n": "Carob Seed", "loan": "Siliqua", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "athenian",
+      "source": "Athenian drachma system",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Four-Handful", "loan": "Tetradrachm", "tier": "h", "metal": "Silver", "v": 192},
+        {"n": "Handful", "loan": "Drachma", "tier": "m", "metal": "Silver", "v": 48},
+        {"n": "Spit", "loan": "Obol", "tier": "l", "metal": "low", "v": 8},
+        {"n": "Copper", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "achaemenid",
+      "source": "Achaemenid Persian coinage",
+      "serves": ["any", "coin"],
+      "steps": [{"n": "Archer", "loan": "Daric", "tier": "h", "metal": "Gold", "v": 20}, {"n": "Weight", "loan": "Siglos", "tier": "m", "metal": "Silver", "v": 1}]
+    },
+    {
+      "key": "mesopotamian",
+      "source": "Mesopotamian weights of silver",
+      "serves": ["any", "coin", "early"],
+      "steps": [
+        {"n": "Balance", "loan": "Talent", "tier": "h", "metal": "Silver", "v": 648000},
+        {"n": "Measure", "loan": "Mina", "tier": "m", "metal": "Silver", "v": 10800},
+        {"n": "Weight", "tier": "m", "metal": "Silver", "v": 180},
+        {"n": "Grain", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "deben-kite",
+      "source": "New Kingdom Egyptian copper reckoning",
+      "serves": ["any", "goods"],
+      "steps": [{"n": "Weight", "loan": "Deben", "tier": "h", "v": 10}, {"n": "Tenth", "tier": "m", "v": 1}]
+    },
+    {
+      "key": "irish-cattle",
+      "source": "Early Irish law",
+      "serves": ["any", "goods"],
+      "steps": [{"n": "Milch Cow", "tier": "h", "v": 2}, {"n": "Treasure", "tier": "m", "v": 1}]
+    },
+    {
+      "key": "icelandic-homespun",
+      "source": "Medieval Icelandic reckoning",
+      "serves": ["any", "goods"],
+      "steps": [{"n": "Cow-Value", "tier": "h", "v": 120}, {"n": "Ell of Homespun", "tier": "m", "v": 1}]
+    },
+    {
+      "key": "west-saxon",
+      "source": "West Saxon reckoning (shilling of five pence)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Engraved Piece", "tier": "h", "metal": "Gold", "v": 60},
+        {"n": "Shilling", "tier": "m", "metal": "Silver", "v": 10},
+        {"n": "Penny", "tier": "l", "metal": "low", "v": 2, "pl": "Pence"},
+        {"n": "Halfpenny", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "norwegian-mark",
+      "source": "Medieval Norwegian mark reckoning",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Mark", "tier": "h", "metal": "Silver", "v": 240},
+        {"n": "Ounce", "loan": "Ore", "tier": "m", "metal": "Silver", "v": 30},
+        {"n": "Third", "tier": "l", "metal": "low", "v": 10},
+        {"n": "Penny", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "danish-rigsdaler",
+      "source": "Danish-Norwegian rigsdaler (from 1625)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Realm Piece", "loan": "Rix-Dollar", "tier": "m", "metal": "Silver", "v": 96},
+        {"n": "Mark", "tier": "m", "metal": "Silver", "v": 16},
+        {"n": "Shilling", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "scandinavian-krone",
+      "source": "Scandinavian Monetary Union (1873)",
+      "serves": ["any", "coin"],
+      "steps": [{"n": "Crown", "loan": "Krone", "tier": "m", "metal": "Silver", "v": 100}, {"n": "Ounce", "tier": "l", "metal": "low", "v": 1, "loan": "Ore"}]
+    },
+    {
+      "key": "english-md",
+      "source": "Medieval English coinage (1351–1464)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Noble", "tier": "h", "metal": "Gold", "v": 320},
+        {"n": "Groat", "tier": "m", "metal": "Silver", "v": 16},
+        {"n": "Penny", "tier": "l", "metal": "low", "v": 4, "pl": "Pence"},
+        {"n": "Farthing", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "english-em",
+      "source": "English coinage after 1717",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Guinea", "tier": "h", "metal": "Gold", "v": 1008},
+        {"n": "Crown", "tier": "m", "metal": "Silver", "v": 240},
+        {"n": "Shilling", "tier": "m", "metal": "Silver", "v": 48},
+        {"n": "Penny", "tier": "l", "metal": "low", "v": 4, "pl": "Pence"},
+        {"n": "Farthing", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "english-st",
+      "source": "English pounds, shillings and pence (1817–1971)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Sovereign", "tier": "h", "metal": "Gold", "v": 960},
+        {"n": "Half-Crown", "tier": "m", "metal": "Silver", "v": 120},
+        {"n": "Sixpence", "tier": "m", "metal": "Silver", "v": 24},
+        {"n": "Penny", "tier": "l", "metal": "low", "v": 4, "pl": "Pence"},
+        {"n": "Farthing", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "uk-decimal",
+      "source": "British decimal coinage (from 1971)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Pound", "tier": "m", "metal": "Silver", "v": 100, "pl": "Pound"},
+        {"n": "Fifty Pence", "tier": "m", "metal": "Silver", "v": 50, "pl": "Fifty Pence"},
+        {"n": "Ten Pence", "tier": "l", "metal": "low", "v": 10, "pl": "Ten Pence"},
+        {"n": "Penny", "tier": "l", "metal": "low", "v": 1, "pl": "Pence"}
+      ]
+    },
+    {
+      "key": "byzantine",
+      "source": "Byzantine coinage (8th–10th centuries)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Coin", "loan": "Bezant", "tier": "h", "metal": "Gold", "v": 288},
+        {"n": "Thousandth", "tier": "m", "metal": "Silver", "v": 24},
+        {"n": "Purse", "loan": "Follis", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "italian-lira",
+      "source": "Venetian and Florentine lira (15th–16th centuries)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Pound", "loan": "Lira", "tier": "m", "metal": "Silver", "v": 240},
+        {"n": "Solid", "loan": "Soldo", "tier": "l", "metal": "low", "v": 12},
+        {"n": "Little Four", "tier": "l", "metal": "low", "v": 4},
+        {"n": "Penny", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "rus-grivna",
+      "source": "Rus' reckoning of the Russkaya Pravda",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Neck-Ring", "tier": "l", "metal": "low", "v": 50},
+        {"n": "Marten", "tier": "l", "metal": "low", "v": 2},
+        {"n": "Cut Piece", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "russian-rouble",
+      "source": "Russian rouble of Peter the Great (from 1704)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Imperial", "tier": "h", "metal": "Gold", "v": 2000},
+        {"n": "Chopped Bar", "loan": "Rouble", "tier": "m", "metal": "Silver", "v": 200},
+        {"n": "Half", "loan": "Poltina", "tier": "m", "metal": "Silver", "v": 100},
+        {"n": "Spear Penny", "loan": "Kopek", "tier": "l", "metal": "low", "v": 2},
+        {"n": "Stamp", "loan": "Denga", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "yuan-ingot",
+      "source": "Yuan silver ingots of fifty ounces",
+      "serves": ["any", "coin", "early"],
+      "steps": [
+        {"n": "Axe", "tier": "h", "metal": "Silver", "v": 500},
+        {"n": "Ounce", "loan": "Tael", "tier": "m", "metal": "Silver", "v": 10},
+        {"n": "Coin Weight", "loan": "Mace", "tier": "m", "metal": "Silver", "v": 1}
+      ]
+    },
+    {
+      "key": "dinar-dirham",
+      "source": "Early Islamic-era standard of the caliphates",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Ten-Piece", "loan": "Dinar", "tier": "m", "metal": "Silver", "v": 60},
+        {"n": "Handful", "loan": "Dirham", "tier": "m", "metal": "Silver", "v": 6},
+        {"n": "Share", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "ottoman",
+      "source": "Ottoman piastre (18th century)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Great Piece", "loan": "Piastre", "tier": "m", "metal": "Silver", "v": 120},
+        {"n": "Piece", "loan": "Para", "tier": "l", "metal": "low", "v": 3},
+        {"n": "Little White", "loan": "Asper", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "indian-1835",
+      "source": "Indian rupee of 1835",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Seal", "loan": "Mohur", "tier": "h", "metal": "Gold", "v": 960},
+        {"n": "Wrought Silver", "loan": "Rupee", "tier": "m", "metal": "Silver", "v": 64},
+        {"n": "Sixteenth", "loan": "Anna", "tier": "l", "metal": "low", "v": 4},
+        {"n": "Quarter Part", "loan": "Pice", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "cash-string",
+      "source": "Chinese strings of cash",
+      "serves": ["any", "coin"],
+      "steps": [{"n": "String", "tier": "l", "metal": "low", "v": 1000}, {"n": "Cash", "tier": "l", "metal": "low", "v": 1, "pl": "Cash"}]
+    },
+    {
+      "key": "qing-tael",
+      "source": "Qing silver weights",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Ounce", "loan": "Tael", "tier": "m", "metal": "Silver", "v": 1000},
+        {"n": "Coin Weight", "loan": "Mace", "tier": "m", "metal": "Silver", "v": 100},
+        {"n": "Part", "loan": "Candareen", "tier": "l", "metal": "low", "v": 10},
+        {"n": "Cash", "tier": "l", "metal": "low", "v": 1, "pl": "Cash"}
+      ]
+    },
+    {
+      "key": "chinese-yuan",
+      "source": "Chinese yuan (from 1889)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Round", "loan": "Yuan", "tier": "m", "metal": "Silver", "v": 100},
+        {"n": "Horn", "tier": "l", "metal": "low", "v": 10},
+        {"n": "Part", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "tokugawa",
+      "source": "Tokugawa coinage at the official rates of 1700",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Small Oval", "loan": "Koban", "tier": "h", "metal": "Gold", "v": 4000},
+        {"n": "Part", "tier": "h", "metal": "Gold", "v": 1000},
+        {"n": "Vermilion", "tier": "m", "metal": "Silver", "v": 250},
+        {"n": "Pattern", "loan": "Mon", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "japanese-rice",
+      "source": "Japanese rice measures",
+      "serves": ["any", "goods"],
+      "steps": [{"n": "Rice Measure", "loan": "Koku", "tier": "h", "v": 100}, {"n": "Dipper", "tier": "m", "v": 10}, {"n": "Measure", "tier": "l", "v": 1}]
+    },
+    {
+      "key": "meiji-yen",
+      "source": "Japanese yen of 1871",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Round", "loan": "Yen", "tier": "m", "metal": "Silver", "v": 1000},
+        {"n": "Coin", "loan": "Sen", "tier": "l", "metal": "low", "v": 10},
+        {"n": "Fraction", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "joseon",
+      "source": "Joseon reckoning",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Ounce", "tier": "m", "metal": "Silver", "v": 100},
+        {"n": "Coin", "tier": "l", "metal": "low", "v": 10},
+        {"n": "Part", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "egyptian-pound",
+      "source": "Egyptian pound (from 1885)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Pound", "tier": "m", "metal": "Silver", "v": 1000},
+        {"n": "Plate", "loan": "Piastre", "tier": "l", "metal": "low", "v": 10},
+        {"n": "Thousandth", "loan": "Millieme", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "cowrie-lagos",
+      "source": "West African cowrie counts (Lagos, 19th century)",
+      "serves": ["any", "goods"],
+      "steps": [
+        {"n": "Bag", "tier": "h", "v": 20000},
+        {"n": "Head", "tier": "m", "v": 2000},
+        {"n": "String", "tier": "l", "v": 40},
+        {"n": "Cowrie", "tier": "l", "v": 1}
+      ]
+    },
+    {
+      "key": "aztec-cacao",
+      "source": "Aztec counts of cacao",
+      "serves": ["any", "goods"],
+      "steps": [
+        {"n": "Load", "tier": "h", "v": 24000},
+        {"n": "Bag", "tier": "m", "v": 8000},
+        {"n": "Count", "tier": "l", "v": 400},
+        {"n": "Cacao Bean", "tier": "l", "v": 1}
+      ]
+    },
+    {
+      "key": "french-md",
+      "source": "French livre tournois (medieval)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Groat of Tours", "tier": "m", "metal": "Silver", "v": 24},
+        {"n": "Penny", "loan": "Denier", "tier": "l", "metal": "low", "v": 2},
+        {"n": "Halfpenny", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "french-livre",
+      "source": "French livre tournois (1726–1785)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "King's Gold", "loan": "Louis", "tier": "h", "metal": "Gold", "v": 5760},
+        {"n": "Shield", "loan": "Écu", "tier": "m", "metal": "Silver", "v": 1440},
+        {"n": "Solid", "loan": "Sou", "tier": "l", "metal": "low", "v": 12},
+        {"n": "Double", "tier": "l", "metal": "low", "v": 2},
+        {"n": "Penny", "loan": "Denier", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "french-franc",
+      "source": "French franc (1803–1914)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Gold Twenty", "loan": "Napoleon", "tier": "h", "metal": "Gold", "v": 2000},
+        {"n": "Shield", "loan": "Écu", "tier": "m", "metal": "Silver", "v": 500},
+        {"n": "Free Piece", "loan": "Franc", "tier": "m", "metal": "Silver", "v": 100},
+        {"n": "Solid", "loan": "Sou", "tier": "l", "metal": "low", "v": 5},
+        {"n": "Hundredth", "loan": "Centime", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "dutch-guilder",
+      "source": "Dutch guilder (17th–18th centuries)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Silver Rider", "tier": "h", "metal": "Silver", "v": 504},
+        {"n": "Realm Piece", "loan": "Rix-Dollar", "tier": "m", "metal": "Silver", "v": 400},
+        {"n": "Golden", "loan": "Guilder", "tier": "m", "metal": "Silver", "v": 160},
+        {"n": "Stiver", "tier": "l", "metal": "low", "v": 8},
+        {"n": "Cut Piece", "loan": "Doit", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "dutch-decimal",
+      "source": "Dutch guilder (from 1817)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Golden", "loan": "Guilder", "tier": "m", "metal": "Silver", "v": 100},
+        {"n": "Little Quarter", "tier": "l", "metal": "low", "v": 25},
+        {"n": "Cent", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "spanish-real",
+      "source": "Spanish dollar system (18th century)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Double", "loan": "Doubloon", "tier": "h", "metal": "Gold", "v": 1088},
+        {"n": "Piece of Eight", "tier": "m", "metal": "Silver", "v": 272},
+        {"n": "Royal", "loan": "Real", "tier": "m", "metal": "Silver", "v": 34},
+        {"n": "Garrison Piece", "loan": "Maravedi", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "us-dollar",
+      "source": "United States dollar (Coinage Act of 1792)",
+      "serves": ["any", "coin"],
+      "steps": [
+        {"n": "Eagle", "tier": "h", "metal": "Gold", "v": 1000},
+        {"n": "Dollar", "tier": "m", "metal": "Silver", "v": 100},
+        {"n": "Quarter", "tier": "m", "metal": "Silver", "v": 25},
+        {"n": "Dime", "tier": "m", "metal": "Silver", "v": 10},
+        {"n": "Cent", "tier": "l", "metal": "low", "v": 1}
+      ]
+    },
+    {
+      "key": "decimal",
+      "source": "Modern decimal currency",
+      "serves": ["any", "coin"],
+      "decimal": true,
+      "steps": [
+        {"n": "Unit", "tier": "m", "metal": "Silver", "v": 100},
+        {"n": "Tenth", "tier": "l", "metal": "low", "v": 10},
+        {"n": "Hundredth", "tier": "l", "metal": "low", "v": 1}
+      ]
+    }
+  ],
+  "ladderCells": {
+    "general": {"AN": ["athenian"], "MD": ["english-md"], "EM": ["english-em"], "ST": ["english-st"], "MO": ["decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "anglo-saxon": {
+      "AN": ["west-saxon"],
+      "MD": ["west-saxon"],
+      "EM": ["english-em"],
+      "ST": ["english-st"],
+      "MO": ["english-st", "uk-decimal"],
+      "NF": ["decimal"],
+      "IS": ["decimal"]
+    },
+    "norse": {
+      "AN": ["icelandic-homespun"],
+      "MD": ["norwegian-mark"],
+      "EM": ["danish-rigsdaler"],
+      "ST": ["scandinavian-krone"],
+      "MO": ["scandinavian-krone"],
+      "NF": ["decimal"],
+      "IS": ["decimal"]
+    },
+    "celtic": {
+      "AN": ["irish-cattle"],
+      "MD": ["english-md"],
+      "EM": ["english-em"],
+      "ST": ["english-st"],
+      "MO": ["english-st", "uk-decimal"],
+      "NF": ["decimal"],
+      "IS": ["decimal"]
+    },
+    "norman-british": {
+      "AN": ["roman-augustan"],
+      "MD": ["english-md"],
+      "EM": ["english-em"],
+      "ST": ["english-st"],
+      "MO": ["english-st", "uk-decimal"],
+      "NF": ["decimal"],
+      "IS": ["decimal"]
+    },
+    "roman": {
+      "AN": ["roman-augustan", "roman-late"],
+      "MD": ["italian-lira"],
+      "EM": ["italian-lira"],
+      "ST": ["decimal"],
+      "MO": ["decimal"],
+      "NF": ["decimal"],
+      "IS": ["decimal"]
+    },
+    "greek-byzantine": {"AN": ["athenian"], "MD": ["byzantine"], "EM": ["ottoman"], "ST": ["decimal"], "MO": ["decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "slavic": {"AN": [], "MD": ["rus-grivna"], "EM": ["russian-rouble"], "ST": ["russian-rouble"], "MO": ["decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "steppe": {"AN": [], "MD": ["yuan-ingot"], "EM": ["qing-tael"], "ST": ["qing-tael"], "MO": ["decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "arabic-persian": {
+      "AN": ["achaemenid", "mesopotamian"],
+      "MD": ["dinar-dirham"],
+      "EM": ["ottoman"],
+      "ST": ["ottoman"],
+      "MO": ["decimal"],
+      "NF": ["decimal"],
+      "IS": ["decimal"]
+    },
+    "indian": {"AN": [], "MD": [], "EM": [], "ST": ["indian-1835"], "MO": ["indian-1835", "decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "chinese": {"AN": [], "MD": ["cash-string"], "EM": ["qing-tael"], "ST": ["qing-tael"], "MO": ["chinese-yuan"], "NF": ["decimal"], "IS": ["decimal"]},
+    "japanese": {"AN": [], "MD": ["japanese-rice"], "EM": ["tokugawa"], "ST": ["meiji-yen"], "MO": ["meiji-yen"], "NF": ["decimal"], "IS": ["decimal"]},
+    "korean": {"AN": [], "MD": [], "EM": ["joseon"], "ST": ["joseon"], "MO": ["decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "egyptian": {"AN": ["deben-kite"], "MD": [], "EM": ["ottoman"], "ST": ["egyptian-pound"], "MO": ["egyptian-pound"], "NF": ["decimal"], "IS": ["decimal"]},
+    "ethiopian": {"AN": [], "MD": [], "EM": [], "ST": [], "MO": ["decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "bantu": {"AN": [], "MD": [], "EM": [], "ST": [], "MO": ["decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "west-african": {"AN": [], "MD": [], "EM": ["cowrie-lagos"], "ST": ["cowrie-lagos"], "MO": ["decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "aztec": {"AN": ["aztec-cacao"], "MD": ["aztec-cacao"], "EM": ["spanish-real"], "ST": ["decimal"], "MO": ["decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "maya": {"AN": [], "MD": [], "EM": ["spanish-real"], "ST": ["decimal"], "MO": ["decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "french": {
+      "AN": [],
+      "MD": ["french-md"],
+      "EM": ["french-livre"],
+      "ST": ["french-franc"],
+      "MO": ["french-franc", "decimal"],
+      "NF": ["decimal"],
+      "IS": ["decimal"]
+    },
+    "dutch": {"AN": [], "MD": [], "EM": ["dutch-guilder"], "ST": ["dutch-decimal"], "MO": ["dutch-decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "iberian": {"AN": [], "MD": [], "EM": ["spanish-real"], "ST": ["spanish-real"], "MO": ["decimal"], "NF": ["decimal"], "IS": ["decimal"]},
+    "american": {"AN": [], "MD": [], "EM": ["spanish-real"], "ST": ["us-dollar"], "MO": ["us-dollar"], "NF": ["decimal"], "IS": ["decimal"]}
+  },
+  "cap": 7,
+  "safeguards": {
+    "block": [
+      "Gold Dragon",
+      "Golden Dragon",
+      "Silver Stag",
+      "Silver Moon",
+      "Copper Star",
+      "Galleon",
+      "Sickle",
+      "Knut",
+      "Septim",
+      "Gil",
+      "Orens",
+      "Florens",
+      "Throne Gelt",
+      "Gold-Pressed Latinum",
+      "Latinum",
+      "Imperial Credit",
+      "Republic Credit",
+      "Galactic Standard Credit",
+      "Galactic Credit",
+      "Federation Credit",
+      "Wupiupi",
+      "Peggat",
+      "Truguts",
+      "Solari",
+      "Bottle Caps",
+      "Caps",
+      "NCR Dollar",
+      "Ankh-Morpork Dollar",
+      "Mithril",
+      "Mithril Coin",
+      "Interstellar Kredit",
+      "Euro",
+      "Bitcoin",
+      "Ethereum",
+      "Ether",
+      "Litecoin",
+      "Dogecoin",
+      "Tether",
+      "Monero",
+      "Ripple",
+      "Solana",
+      "Libra",
+      "Diem",
+      "Universal Credit",
+      "Pound Sterling Note",
+      "Thirty Pieces of Silver",
+      "Pieces of Silver",
+      "Blood Money",
+      "Judas Money"
+    ],
+    "flag": [
+      "Gold Piece",
+      "Silver Piece",
+      "Copper Piece",
+      "Credit",
+      "Credits",
+      "the Gold Standard",
+      "Crown",
+      "Mark",
+      "Sovereign",
+      "Sterling",
+      "Dollar",
+      "Pound",
+      "Penny",
+      "Piece of Eight",
+      "Doubloon",
+      "Ducat",
+      "Florin",
+      "Guinea",
+      "Talent"
+    ],
+    "flagListBlocks": false,
+    "banned": [
+      "Slave",
+      "Slaves",
+      "Bondmaid",
+      "Thrall",
+      "Cumal",
+      "Jew",
+      "Jews",
+      "Shylock",
+      "Yid",
+      "Gyp",
+      "Gypsy",
+      "Chink",
+      "Coolie",
+      "Injun",
+      "Wampum",
+      "Crusade",
+      "Jihad",
+      "Buddha",
+      "Rama",
+      "Lakshmi",
+      "Varaha"
+    ],
+    "neverGoods": ["Tobacco", "Opium", "Ivory", "Cigarette", "Cigar"]
+  }
+}
