@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "weights": {
+    "general": { "ian": 22, "an": 15, "er": 15, "ish": 15, "ese": 10, "ite": 10, "i": 5, "clip": 5, "ine": 3 },
+    "anglo-saxon": { "ish": 30, "er": 15, "clip": 15, "folk": 15, "ings": 15, "man": 10 },
+    "norse": { "er": 30, "ish": 25, "clip": 25, "man": 10, "ian": 10 },
+    "celtic": { "ish": 30, "clip": 20, "man": 15, "ian": 15, "an": 10, "er": 10 },
+    "norman-british": { "er": 40, "man": 15, "ian": 15, "learned": 10, "ish": 10, "ite": 10 },
+    "roman": { "an": 30, "ian": 20, "ese": 20, "ine": 15, "ite": 10, "itan": 5 },
+    "greek-byzantine": { "ian": 30, "an": 20, "ite": 15, "iot": 15, "ine": 10, "ene": 10 },
+    "slavic": { "ian": 45, "clip": 20, "ite": 15, "ish": 10, "er": 5, "an": 5 },
+    "steppe": { "clip": 35, "i": 25, "ian": 20, "ish": 10, "an": 10 },
+    "arabic-persian": { "i": 60, "ite": 15, "ian": 15, "ene": 5, "an": 5 },
+    "indian": { "i": 60, "an": 15, "ese": 10, "ian": 10, "ite": 5 },
+    "chinese": { "ese": 70, "an": 15, "er": 15 },
+    "japanese": { "ese": 75, "an": 15, "ite": 10 },
+    "korean": { "an": 60, "ese": 25, "ite": 15 },
+    "egyptian": { "ian": 50, "ite": 30, "an": 20 },
+    "ethiopian": { "an": 40, "ian": 30, "i": 30 },
+    "bantu": { "an": 60, "ese": 25, "ian": 15 },
+    "west-african": { "ese": 40, "an": 30, "ian": 25, "i": 5 },
+    "aztec": { "an": 50, "ec": 30, "ese": 10, "ian": 10 },
+    "maya": { "an": 60, "ec": 25, "ian": 15 }
+  },
+  "suffixes": {
+    "an": "an", "ian": "ian", "ese": "ese", "i": "i", "ite": "ite", "ine": "ine", "iot": "iot", "ene": "ene", "itan": "itan", "ec": "ec"
+  },
+  "ic": { "celtic": 25, "ethiopian": 30, "steppe": 20, "arabic-persian": 15, "norse": 20, "slavic": 10, "egyptian": 10, "general": 10 },
+  "icLandOnly": ["norse"],
+  "adjectiveIc": 30,
+  "erAdjective": { "place": 60, "ish": 25, "ic": 15 },
+  "endings": [
+    {
+      "id": "british",
+      "ends": ["ton", "don", "ham", "by", "ford", "wich", "wick", "bury", "mouth", "port", "ster", "chester", "cester", "caster", "shire", "set", "field", "well", "ley", "worth", "stead", "thorpe", "gate", "stow", "stowe", "burgh", "borough"],
+      "mult": { "er": 3, "learned": 1 },
+      "others": 0.5,
+      "endMult": { "shire": { "man": 2 }, "set": { "man": 2 }, "by": { "ite": 3 } }
+    },
+    { "id": "land", "ends": ["land"], "mult": { "er": 3, "clip": 2, "ish": 2 }, "others": 0.2 },
+    { "id": "mark", "ends": ["mark"], "mult": { "clip": 3, "er": 2 }, "others": 0.3 },
+    { "id": "stan", "ends": ["istan", "stan"], "mult": { "clip": 3, "i": 3 }, "others": 0.1 },
+    { "id": "ia", "ends": ["ia"], "mult": { "ian": 4, "ite": 1, "clip": 1 }, "others": 0.1 },
+    { "id": "double", "ends": ["ee", "ie", "oo", "ae"], "mult": { "ite": 3 }, "others": 0.3 },
+    { "id": "a", "ends": ["a"], "mult": { "an": 4, "ese": 1, "i": 1, "ian": 0 }, "others": 0.3 },
+    { "id": "ey", "ends": ["ey"], "mult": { "ish": 2, "clip": 2, "man": 2 }, "others": 0.3 },
+    { "id": "y", "ends": ["y"], "mult": { "ian": 4, "an": 1 }, "others": 0.3 },
+    { "id": "o", "ends": ["o"], "mult": { "an": 3, "ese": 2, "ite": 1 }, "others": 0.3 },
+    { "id": "u", "ends": ["u"], "mult": { "ian": 2, "an": 2 }, "others": 0.3 },
+    { "id": "i", "ends": ["i"], "mult": { "an": 4, "i": 0 }, "others": 0.2 },
+    { "id": "e", "ends": ["e"], "mult": {}, "others": 1 },
+    { "id": "us", "ends": ["us"], "mult": { "ian": 2, "iot": 2, "ene": 2, "an": 1 }, "others": 0.2 },
+    { "id": "s", "ends": ["s"], "mult": { "ian": 3, "ite": 1 }, "others": 0.3 },
+    { "id": "n", "ends": ["an", "en", "in", "on", "un"], "mult": { "ese": 2, "ian": 2, "er": 1.5, "i": 1 }, "others": 1 },
+    { "id": "other", "ends": [], "mult": {}, "others": 1 }
+  ],
+  "clipEnds": ["land", "mark", "istan", "stan", "ia", "ey", "y", "a"],
+  "learned": [
+    { "ends": ["chester", "cester"], "add": "cestrian", "strip": true },
+    { "ends": ["caster"], "add": "castrian", "strip": true },
+    { "ends": ["mouth"], "add": "mothian", "strip": true },
+    { "ends": ["bury"], "add": "burian", "strip": true },
+    { "ends": ["ford"], "add": "ian", "strip": false },
+    { "ends": ["ton", "don"], "add": "ian", "strip": false },
+    { "ends": ["burgh", "borough"], "add": "burgian", "strip": true }
+  ],
+  "eraBoost": { "add": { "born": 10, "sider": 5 }, "mult": { "ite": 2, "er": 1.5, "ian": 1.5 } },
+  "toneMult": {
+    "grand": { "learned": 2, "ine": 1.5, "ian": 1.2 },
+    "plain": { "er": 1.5, "an": 1.2 },
+    "light": { "er": 1.5, "ite": 1.5, "clip": 1.5 },
+    "strange": { "ec": 1.5, "iot": 1.5, "ene": 1.5 },
+    "grim": {}
+  },
+  "generics": [
+    { "words": ["isles", "islands", "isle", "island"], "person": "Islander", "people": ["Islanders"] },
+    { "words": ["fells"], "person": "Fellsman", "people": ["Fellsmen", "Fellsfolk"] },
+    { "words": ["dales", "dale"], "person": "Dalesman", "people": ["Dalesmen"] },
+    { "words": ["hills"], "person": "Hillman", "people": ["Hillmen"] },
+    { "words": ["highlands", "mountains"], "person": "Highlander", "people": ["Highlanders"] },
+    { "words": ["lowlands"], "person": "Lowlander", "people": ["Lowlanders"] },
+    { "words": ["midlands"], "person": "Midlander", "people": ["Midlanders"] },
+    { "words": ["marches", "march"], "person": "Marcher", "people": ["Marchers"] },
+    { "words": ["fens"], "person": "Fenman", "people": ["Fenmen"] },
+    { "words": ["moors"], "person": "Moorlander", "people": ["Moorlanders"] },
+    { "words": ["wolds"], "person": "Woldsman", "people": ["Woldsmen"] },
+    { "words": ["downs"], "person": "Downsman", "people": ["Downsmen"] },
+    { "words": ["coast"], "person": "Coaster", "people": ["Coasters"] },
+    { "words": ["shore", "shores"], "person": "Shoreman", "people": ["Shorefolk"] },
+    { "words": ["plains"], "person": "Plainsman", "people": ["Plainsmen"] },
+    { "words": ["valley", "vale"], "person": "Valleyman", "people": ["Valleymen"] },
+    { "words": ["forest", "woods"], "person": "Forester", "people": ["Foresters"] },
+    { "words": ["weald"], "person": "Wealdsman", "people": ["Wealdsmen"] },
+    { "words": ["lakes"], "person": "Lakelander", "people": ["Lakelanders"] },
+    { "words": ["river", "rivers"], "person": "Riverman", "people": ["Riverfolk"] },
+    { "words": ["reach", "reaches"], "person": "Reachman", "people": ["Reachfolk"] },
+    { "words": ["worlds"], "person": "Worlder", "people": ["Worlders"] },
+    { "words": ["ring"], "person": "Ringsider", "people": ["Ringsiders"], "eras": ["NF", "IS"] }
+  ],
+  "genericLanguage": [
+    { "p": "the speech of {name}", "w": 40 },
+    { "p": "{bare} speech", "w": 30 },
+    { "p": "{bare} dialect", "w": 30 }
+  ],
+  "landWords": ["barrens", "wastes", "peaks", "heights", "steppes", "steppe", "deserts", "desert", "marshes", "swamp", "sands", "cliffs", "sound", "straits", "gulf", "bay", "wilds", "badlands", "uplands", "heath", "heaths", "tundra", "glades", "meres", "mere", "fjords", "channel"],
+  "colonistShare": 0.5,
+  "sun": [
+    { "names": ["earth", "terra"], "person": ["Terran", "Earther"], "adjective": "Terran", "people": ["the Terrans", "the Earthers"], "language": "Terran" },
+    { "names": ["moon", "luna"], "person": ["Lunarian"], "adjective": "Lunar", "people": ["the Lunarians"], "language": "Lunarian" },
+    { "names": ["mars"], "person": ["Martian"], "adjective": "Martian", "people": ["the Martians"], "language": "Martian" },
+    { "names": ["venus"], "person": ["Venusian"], "adjective": "Venusian", "people": ["the Venusians"], "language": "Venusian" },
+    { "names": ["mercury"], "person": ["Mercurian"], "adjective": "Mercurian", "people": ["the Mercurians"], "language": "Mercurian" },
+    { "names": ["jupiter"], "person": ["Jovian"], "adjective": "Jovian", "people": ["the Jovians"], "language": "Jovian" },
+    { "names": ["saturn"], "person": ["Saturnian"], "adjective": "Saturnian", "people": ["the Saturnians"], "language": "Saturnian" },
+    { "names": ["titan"], "person": ["Titanian"], "adjective": "Titanian", "people": ["the Titanians"], "language": "Titanian" },
+    { "names": ["europa"], "person": ["Europan"], "adjective": "Europan", "people": ["the Europans"], "language": "Europan" },
+    { "names": ["ganymede"], "person": ["Ganymedean"], "adjective": "Ganymedean", "people": ["the Ganymedeans"], "language": "Ganymedean" },
+    { "names": ["callisto"], "person": ["Callistan"], "adjective": "Callistan", "people": ["the Callistans"], "language": "Callistan" },
+    { "names": ["io"], "person": ["Ionian"], "adjective": "Ionian", "people": ["the Ionians"], "language": "Ionian" },
+    { "names": ["ceres"], "person": ["Cererian"], "adjective": "Cererian", "people": ["the Cererians"], "language": "Cererian" },
+    { "names": ["pluto"], "person": ["Plutonian"], "adjective": "Plutonian", "people": ["the Plutonians"], "language": "Plutonian" },
+    { "names": ["triton"], "person": ["Tritonian"], "adjective": "Tritonian", "people": ["the Tritonians"], "language": "Tritonian" },
+    { "names": ["enceladus"], "person": ["Enceladean"], "adjective": "Enceladean", "people": ["the Enceladeans"], "language": "Enceladean" }
+  ],
+  "languageShapes": [
+    { "p": "{L}", "w": 50 },
+    { "p": "the {L} tongue", "w": 10 },
+    { "p": "Old {L}", "w": 8, "from": "MD" },
+    { "p": "High {L}", "w": 4 },
+    { "p": "Low {L}", "w": 4 },
+    { "p": "Common {L}", "w": 4, "t": ["plain"] },
+    { "p": "Court {L}", "w": 3, "t": ["grand"] },
+    { "p": "Classical {L}", "w": 3, "from": "MD", "t": ["grand"] },
+    { "p": "Trade {L}", "w": 4, "from": "EM", "t": ["plain"] },
+    { "p": "{L} Pidgin", "w": 2, "from": "EM", "t": ["light"] },
+    { "p": "{L} Cant", "w": 1, "from": "MD", "t": ["grim", "light"] },
+    { "p": "{harbourWord} Cant", "w": 1, "from": "MD", "t": ["grim", "light"] },
+    { "p": "{L} Standard", "w": 8, "from": "NF", "t": ["plain"] },
+    { "p": "Spacers' {L}", "w": 3, "from": "NF" }
+  ],
+  "harbourWords": ["Harbour", "Dock", "Gutter", "Thieves'", "Tinkers'"],
+  "older": {
+    "AN": ["Early {L}", "Archaic {L}"],
+    "MD": ["Middle {L}", "Old {L}"],
+    "EM": ["Middle {L}", "Old {L}"],
+    "ST": ["Early Modern {L}", "Middle {L}", "Old {L}"],
+    "MO": ["Early Modern {L}", "Middle {L}", "Old {L}"],
+    "NF": ["Early Modern {L}", "Middle {L}", "Old {L}"],
+    "IS": ["Early Modern {L}", "Middle {L}", "Old {L}"]
+  },
+  "dialectWords": ["Northern", "Southern", "Eastern", "Western", "Highland", "Lowland", "Hill", "Coast", "River", "Island", "Town", "Court", "Common"],
+  "dialectWordsSpace": ["Station", "Colony", "Orbital", "Deep"],
+  "safeguards": {
+    "block": [
+      "Belter", "Belters", "Hobbit", "Hobbits", "Gondorian", "Rohirrim", "Westerosi", "Dothraki", "Valyrian", "High Valyrian", "Klingon", "Vulcan", "Romulan", "Corellian", "Mandalorian", "Na'vi", "Fremen", "Arrakeen", "Quenya", "Sindarin", "Westron", "Black Speech", "Khuzdul", "Adûnaic", "Huttese", "Newspeak", "Nadsat", "Ankh-Morporkian", "Loonie", "Gallifreyan", "Kryptonian", "Lilliputian", "Brobdingnagian", "Houyhnhnm", "Morlock", "Eloi", "Wakandan", "Latverian", "Genovian", "Ruritanian", "Freedonian", "Elbonian", "Narnian", "Calormene", "Archenlander"
+    ],
+    "flag": ["Elvish", "Dwarvish", "Common Tongue", "Earther", "Spacer", "Terran", "Atlantean", "Lemurian", "Thieves' Cant", "Martian"],
+    "flagListBlocks": false,
+    "banned": [
+      "Jap", "Japs", "Nip", "Nips", "Paki", "Pakis", "Chink", "Chinks", "Gook", "Gooks", "Wog", "Wogs", "Kraut", "Krauts", "Spic", "Spics", "Dago", "Dagos", "Wop", "Wops", "Gyppo", "Pikey", "Polack", "Kike", "Coon", "Darkie", "Negro", "Abo", "Abos", "Boong", "Taig", "Redskin", "Squaw", "Wetback", "Raghead", "Towelhead", "Paddy", "Mick", "Taffy", "Limey", "Gringo", "Hottentot", "Bushman", "Bushmen", "Kaffir"
+    ]
+  }
+}
