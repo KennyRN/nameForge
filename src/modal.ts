@@ -801,6 +801,7 @@ export class NameForgeModal extends Modal {
   private generateButtonEl: HTMLButtonElement | null = null;
   /** Name ageing controls and state. Session only. */
   private ageingControlsEl: HTMLElement | null = null;
+  private ageingQuantityEl: HTMLElement | null = null;
   private ageingSourceInput: HTMLInputElement | null = null;
   private ageingDepth: number = AGEING.depth.default;
   private ageingCount: number = AGEING.count.default;
@@ -1082,12 +1083,13 @@ export class NameForgeModal extends Modal {
     this.contextRowEl = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__context-toggle" });
     this.contextRowEl.hide();
 
-    this.buildAgeingControls(optionsList);
 
     // One combined pill: the quantity box (40px) joined straight onto the top of the generate
     // button (48px). Where a module has no quantity choice, the button stands alone.
     const generatePill = optionsList.createDiv({ cls: "nameforge-modal__generate-pill" });
     this.generatePillEl = generatePill;
+    // Name ageing's rows sit at the top of the same pill; they only show in that section.
+    this.buildAgeingControls(generatePill);
     const quantityToggle = generatePill.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityToggleEl = quantityToggle;
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
@@ -1225,7 +1227,6 @@ export class NameForgeModal extends Modal {
     const ageing = section === "nameAgeing";
     // Settlement kit §5: the kit sets its own counts.
     this.syncGeneratePill();
-    this.ageingControlsEl?.toggle(ageing);
     const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
     this.generateButtonEl?.setAttribute("title", action);
     this.generateButtonEl?.setAttribute("aria-label", action);
@@ -1555,9 +1556,13 @@ export class NameForgeModal extends Modal {
    * Decided from the section, not from layout: the pill may not be attached yet. */
   private syncGeneratePill() {
     // Settlement kit §5: the kit sets its own counts.
-    const quantity = this.activeSection !== "nameAgeing" && this.activeSection !== "settlementKit";
+    const ageing = this.activeSection === "nameAgeing";
+    const quantity = !ageing && this.activeSection !== "settlementKit";
     this.quantityToggleEl?.toggle(quantity);
-    this.generatePillEl?.toggleClass("has-quantity", quantity);
+    // Ageing swaps in its own 1–5 quantity row under the name and age row.
+    this.ageingControlsEl?.toggle(ageing);
+    this.ageingQuantityEl?.toggle(ageing);
+    this.generatePillEl?.toggleClass("has-quantity", quantity || ageing);
     this.syncPillSpacing();
   }
 
@@ -4526,22 +4531,21 @@ export class NameForgeModal extends Modal {
     menu.showAtMouseEvent(evt);
   }
 
-  /** Source field with the depth buttons (new 1, moderate 3, ancient 5) beside it, then the count row. */
-  private buildAgeingControls(container: HTMLElement) {
-    const controls = (this.ageingControlsEl = container.createDiv({ cls: "nameforge-modal__ageing-controls" }));
-    // The source field and the depth buttons share one row.
-    const sourceRow = controls.createDiv({ cls: "nameforge-modal__ageing-source-row" });
-    this.ageingSourceInput = sourceRow.createEl("input", {
+  /** Name ageing's rows inside the generate pill: the original name box with the three age buttons
+   * (one row in the modal, two in the panel), then a 1–5 quantity row built like the other modules'. */
+  private buildAgeingControls(pill: HTMLElement) {
+    const controls = (this.ageingControlsEl = pill.createDiv({ cls: "nameforge-modal__ageing-top-row" }));
+    this.ageingSourceInput = controls.createEl("input", {
       cls: "nameforge-modal__ageing-source",
-      attr: { type: "text", placeholder: "Old name, e.g. Londinium", "aria-label": "Source name", spellcheck: "false" },
+      attr: { type: "text", placeholder: "Original name", "aria-label": "Original name", spellcheck: "false" },
     });
 
     // Three depths only: 1, 3 and 5 eras.
-    const depthRow = sourceRow.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__ageing-toggle" });
+    const depthRow = controls.createDiv({ cls: "nameforge-modal__ageing-depth" });
     const depthOptions: [number, string][] = [
-      [1, "new"],
-      [3, "moderate"],
-      [5, "ancient"],
+      [1, "lightly aged"],
+      [3, "well aged"],
+      [5, "deeply aged"],
     ];
     const depthButtons = depthOptions.map(([d, label]) => {
       const button = depthRow.createEl("button", {
@@ -4556,12 +4560,14 @@ export class NameForgeModal extends Modal {
       return button;
     });
 
-    const countRow = controls.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__ageing-toggle" });
+    const countRow = (this.ageingQuantityEl = pill.createDiv({
+      cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle nameforge-modal__quantity-toggle--ageing",
+    }));
     const countButtons = AGEING.count.options.map((c) => {
       const button = countRow.createEl("button", {
         cls: "nameforge-modal__toggle-button",
         text: String(c),
-        attr: { type: "button", title: `${c} candidates` },
+        attr: { type: "button", title: `${c} candidate${c === 1 ? "" : "s"}` },
       });
       button.addEventListener("click", () => {
         this.ageingCount = c;
@@ -4584,6 +4590,7 @@ export class NameForgeModal extends Modal {
     };
     sync();
     controls.hide();
+    countRow.hide();
   }
 
   /** Lists the folder's packs for the target dropdown, marking ineligible ones with a reason. */
@@ -4814,6 +4821,7 @@ export class NameForgeModal extends Modal {
     this.generatePillEl = null;
     this.generateButtonEl = null;
     this.ageingControlsEl = null;
+    this.ageingQuantityEl = null;
     this.ageingSourceInput = null;
     this.seedInputEl = null;
     this.seedLockButton = null;

@@ -122,3 +122,12 @@ test("performance: a depth-5, two-word run completes in under a second", () => {
   run("Aquae Sulis", { depth: 5 });
   assert.ok(performance.now() - t0 < 1000);
 });
+
+test("quantity: the options run 1 to 5 and counts 1 and 2 return exactly that many, each with a trail", () => {
+  assert.deepEqual([...AGEING.count.options], [1, 2, 3, 4, 5]);
+  for (const count of [1, 2]) {
+    const { candidates } = run("Londinium", { count });
+    assert.equal(candidates.length, count);
+    for (const c of candidates) assert.ok(c.trail.length > 0);
+  }
+});

@@ -29836,7 +29836,7 @@ var AGEING = {
   minWordLetters: 3,
   /** §1: depth range and default; count options and default. */
   depth: { min: 1, max: 5, default: 3 },
-  count: { options: [3, 4, 5], default: 5 },
+  count: { options: [1, 2, 3, 4, 5], default: 5 },
   /** §2.2: multi-letter consonant units, longest match first. */
   consonantUnits: ["sch", "th", "sh", "ch", "gh", "ph", "wh", "ck", "ng", "qu"],
   /** §2.4: target inventories. */
@@ -123164,6 +123164,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     this.generateButtonEl = null;
     /** Name ageing controls and state. Session only. */
     this.ageingControlsEl = null;
+    this.ageingQuantityEl = null;
     this.ageingSourceInput = null;
     this.ageingDepth = AGEING.depth.default;
     this.ageingCount = AGEING.count.default;
@@ -123431,9 +123432,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     this.buildSecondBox(optionsList);
     this.contextRowEl = optionsList.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__context-toggle" });
     this.contextRowEl.hide();
-    this.buildAgeingControls(optionsList);
     const generatePill = optionsList.createDiv({ cls: "nameforge-modal__generate-pill" });
     this.generatePillEl = generatePill;
+    this.buildAgeingControls(generatePill);
     const quantityToggle = generatePill.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle" });
     this.quantityToggleEl = quantityToggle;
     this.quantityButtons = [10, 15, 25, 50, 100].map((value) => {
@@ -123517,7 +123518,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
   /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
    * dropdown on the shape sections, the placeholder box otherwise. Everything else is left as it is. */
   switchSection(section) {
-    var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r;
+    var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q;
     if (section === "nameAgeing" && this.activeSection === "markov") {
       const selected = (_b3 = (_a5 = this.resultsEl) == null ? void 0 : _a5.querySelectorAll("li.is-selected")) != null ? _b3 : [];
       if (selected.length === 1 && this.ageingSourceInput) {
@@ -123558,15 +123559,14 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     this.refreshRiverOptions();
     const ageing = section === "nameAgeing";
     this.syncGeneratePill();
-    (_o = this.ageingControlsEl) == null ? void 0 : _o.toggle(ageing);
     const action = ageing ? "Age" : takeover ? "Take over" : "Generate names";
-    (_p = this.generateButtonEl) == null ? void 0 : _p.setAttribute("title", action);
-    (_q = this.generateButtonEl) == null ? void 0 : _q.setAttribute("aria-label", action);
+    (_o = this.generateButtonEl) == null ? void 0 : _o.setAttribute("title", action);
+    (_p = this.generateButtonEl) == null ? void 0 : _p.setAttribute("aria-label", action);
     if (ageing) void this.enterAgeingSection();
     if (takeover) void this.takeoverView.refresh();
     if (this.sectionTriggerEl) (0, import_obsidian14.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
-    (_r = this.sectionStubEl) == null ? void 0 : _r.toggle(
+    (_q = this.sectionStubEl) == null ? void 0 : _q.toggle(
       section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover && !tribal
     );
   }
@@ -123873,10 +123873,13 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
    * corners to match. Runs at mount too, so the first open is right before any section switch.
    * Decided from the section, not from layout: the pill may not be attached yet. */
   syncGeneratePill() {
-    var _a5, _b3;
-    const quantity = this.activeSection !== "nameAgeing" && this.activeSection !== "settlementKit";
+    var _a5, _b3, _c3, _d3;
+    const ageing = this.activeSection === "nameAgeing";
+    const quantity = !ageing && this.activeSection !== "settlementKit";
     (_a5 = this.quantityToggleEl) == null ? void 0 : _a5.toggle(quantity);
-    (_b3 = this.generatePillEl) == null ? void 0 : _b3.toggleClass("has-quantity", quantity);
+    (_b3 = this.ageingControlsEl) == null ? void 0 : _b3.toggle(ageing);
+    (_c3 = this.ageingQuantityEl) == null ? void 0 : _c3.toggle(ageing);
+    (_d3 = this.generatePillEl) == null ? void 0 : _d3.toggleClass("has-quantity", quantity || ageing);
     this.syncPillSpacing();
   }
   /** The sentence sits 12px above the generate pill when nothing comes between them (ageing's
@@ -126733,19 +126736,19 @@ ${text}
     }
     menu.showAtMouseEvent(evt);
   }
-  /** Source field with the depth buttons (new 1, moderate 3, ancient 5) beside it, then the count row. */
-  buildAgeingControls(container) {
-    const controls = this.ageingControlsEl = container.createDiv({ cls: "nameforge-modal__ageing-controls" });
-    const sourceRow = controls.createDiv({ cls: "nameforge-modal__ageing-source-row" });
-    this.ageingSourceInput = sourceRow.createEl("input", {
+  /** Name ageing's rows inside the generate pill: the original name box with the three age buttons
+   * (one row in the modal, two in the panel), then a 1–5 quantity row built like the other modules'. */
+  buildAgeingControls(pill) {
+    const controls = this.ageingControlsEl = pill.createDiv({ cls: "nameforge-modal__ageing-top-row" });
+    this.ageingSourceInput = controls.createEl("input", {
       cls: "nameforge-modal__ageing-source",
-      attr: { type: "text", placeholder: "Old name, e.g. Londinium", "aria-label": "Source name", spellcheck: "false" }
+      attr: { type: "text", placeholder: "Original name", "aria-label": "Original name", spellcheck: "false" }
     });
-    const depthRow = sourceRow.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__ageing-toggle" });
+    const depthRow = controls.createDiv({ cls: "nameforge-modal__ageing-depth" });
     const depthOptions = [
-      [1, "new"],
-      [3, "moderate"],
-      [5, "ancient"]
+      [1, "lightly aged"],
+      [3, "well aged"],
+      [5, "deeply aged"]
     ];
     const depthButtons = depthOptions.map(([d, label]) => {
       const button = depthRow.createEl("button", {
@@ -126759,12 +126762,14 @@ ${text}
       });
       return button;
     });
-    const countRow = controls.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__ageing-toggle" });
+    const countRow = this.ageingQuantityEl = pill.createDiv({
+      cls: "nameforge-modal__toggle-panel nameforge-modal__quantity-toggle nameforge-modal__quantity-toggle--ageing"
+    });
     const countButtons = AGEING.count.options.map((c) => {
       const button = countRow.createEl("button", {
         cls: "nameforge-modal__toggle-button",
         text: String(c),
-        attr: { type: "button", title: `${c} candidates` }
+        attr: { type: "button", title: `${c} candidate${c === 1 ? "" : "s"}` }
       });
       button.addEventListener("click", () => {
         this.ageingCount = c;
@@ -126786,6 +126791,7 @@ ${text}
     };
     sync();
     controls.hide();
+    countRow.hide();
   }
   /** Lists the folder's packs for the target dropdown, marking ineligible ones with a reason. */
   async enterAgeingSection() {
@@ -126999,6 +127005,7 @@ ${text}
     this.generatePillEl = null;
     this.generateButtonEl = null;
     this.ageingControlsEl = null;
+    this.ageingQuantityEl = null;
     this.ageingSourceInput = null;
     this.seedInputEl = null;
     this.seedLockButton = null;

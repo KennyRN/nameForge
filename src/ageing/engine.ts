@@ -16,7 +16,7 @@ export const AGEING = {
   minWordLetters: 3,
   /** §1: depth range and default; count options and default. */
   depth: { min: 1, max: 5, default: 3 },
-  count: { options: [3, 4, 5] as const, default: 5 },
+  count: { options: [1, 2, 3, 4, 5] as const, default: 5 },
   /** §2.2: multi-letter consonant units, longest match first. */
   consonantUnits: ["sch", "th", "sh", "ch", "gh", "ph", "wh", "ck", "ng", "qu"],
   /** §2.4: target inventories. */
