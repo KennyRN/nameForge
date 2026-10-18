@@ -23,6 +23,7 @@ import { BUILDING_KINDS, type BuildingKind } from "./buildings/engine";
 import { EVENT_KINDS, EVENT_SCALES, type EventKind, type EventScale } from "./events/engine";
 import { findMoneyCulture, MONEY_KINDS, MONEY_VALUES, MONEY_WORDS, type MoneyKind, type MoneySeries, type MoneyValue, type MoneyWords } from "./money/engine";
 import { normaliseMoney } from "./money/sentence";
+import { findTimeCulture, findTimeKind, kindsOffered as timeKindsOffered, TIME_SKY, type TimeKind, type TimeModule, type TimeWords } from "./timesky/data";
 import { DEITY_KINDS, DEITY_DOMAINS, deityCulture, type DeityGender, type DeityKind, type DeityNames } from "./deities/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
@@ -80,7 +81,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; deity?: DeityPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; time?: TimePreset; deity?: DeityPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -109,6 +110,8 @@ export function parseModulePreset(
   if (values.module === EVENT_PRESET_MODULE) return parseEventPreset(values, body, fileName);
   // Money brief §14: money presets too.
   if (values.module === MONEY_PRESET_MODULE) return parseMoneyPreset(values, body, fileName);
+  // Time and sky brief §14: calendar and sky presets too.
+  if (values.module === CALENDAR_PRESET_MODULE || values.module === SKY_PRESET_MODULE) return parseTimePreset(values, body, fileName);
   // Deities brief §12: deity presets too.
   if (values.module === DEITY_PRESET_MODULE) return parseDeityPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
@@ -146,7 +149,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | MoneyPreset | DeityPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | MoneyPreset | TimePreset | DeityPreset): string {
+  if ("timeModule" in preset) return timePresetContent(preset);
   if ("deityKind" in preset) return deityPresetContent(preset);
   if ("moneyKind" in preset) return moneyPresetContent(preset);
   if ("eventKind" in preset) return eventPresetContent(preset);
@@ -1392,4 +1396,94 @@ export function readTribalPresetSource(name: string, content: string | null): { 
 export function tribalPresetDraw(preset: TribalPreset): (rng: () => number) => string {
   const { tradition, ...fields } = tribalPresetSlot(preset);
   return (rng) => tribalSlotFill({ tradition, part: "new-land", fields }, rng).text;
+}
+
+// ── Calendar and sky presets (Time and sky brief §14) ───────────────────────
+
+export const CALENDAR_PRESET_MODULE = "calendar-names";
+export const SKY_PRESET_MODULE = "sky-names";
+
+export interface TimePreset {
+  packName: string;
+  setting: string;
+  description: string;
+  timeModule: TimeModule;
+  culture: string;
+  kind: TimeKind;
+  era: RouteEra;
+  fantastic: boolean;
+  /** "homeland", a biome id or a pack path. */
+  biome: string;
+  /** "own" or a season key. */
+  start: string;
+  words: TimeWords;
+  tone: GroupToneChoice;
+  people: GroupPeople;
+  series: boolean;
+}
+
+function parseTimePreset(values: Record<string, string>, body: string, fileName: string): { time?: TimePreset; problems: string[] } {
+  const problems: string[] = [];
+  const timeModule: TimeModule = values.module === SKY_PRESET_MODULE ? "sky" : "calendar";
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const era = pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  const culture = pick("culture", "norman-british", (v) => !!findTimeCulture(v));
+  const fallbackKind: TimeKind = timeModule === "calendar" ? "month" : "constellation";
+  const kind = pick<TimeKind>("kind", fallbackKind, (v) => findTimeKind(v)?.module === timeModule);
+  const fantasticRaw = values.fantastic;
+  if (fantasticRaw && fantasticRaw !== "true" && fantasticRaw !== "false") problems.push(`Unknown fantastic “${fantasticRaw}”.`);
+  const sensitive = TIME_SKY.sensitive.includes(culture);
+  let tone = pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v));
+  if (sensitive && (tone === "light" || tone === "grim")) tone = "any";
+  const seriesRaw = pick<"on" | "off">("series", "off", (v) => v === "on" || v === "off");
+  const draft: TimePreset = {
+    packName: values.packName || fileName,
+    setting: "",
+    description: body.trim(),
+    timeModule,
+    culture,
+    kind,
+    era,
+    fantastic: !sensitive && fantasticRaw === "true",
+    biome: pick("biome", "homeland", (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
+    start: pick("start", "own", (v) => v === "own" || Object.keys(TIME_SKY.seasons).includes(v)),
+    words: pick<TimeWords>("words", "translated", (v) => v === "translated" || v === "loanwords"),
+    tone,
+    people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+    series: seriesRaw === "on",
+  };
+  // Fall-backs as the sentence makes them (§14): a kind the era doesn't offer, and the start the land lacks, are checked by the module.
+  if (!timeKindsOffered(timeModule, culture, era).some((k) => k.key === kind)) {
+    problems.push(`Kind “${kind}” isn't offered here.`);
+    draft.kind = fallbackKind;
+  }
+  return { time: draft, problems };
+}
+
+function timePresetContent(preset: TimePreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${preset.timeModule === "sky" ? SKY_PRESET_MODULE : CALENDAR_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.kind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `biome: ${preset.biome}`,
+    ...(preset.timeModule === "calendar" ? [`start: ${preset.start}`, `words: ${preset.words}`] : []),
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series ? "on" : "off"}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
 }

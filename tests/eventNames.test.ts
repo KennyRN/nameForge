@@ -170,7 +170,7 @@ test("§14.6: the default sentence's plain text", () => {
 });
 
 test("§14.6 (line-up brief): events and eras sits in advanced, before money and coins; the lore group is gone", () => {
-  assert.equal(SECTION_GROUPS.advanced.at(-2), "eventNames");
+  assert.equal(SECTION_GROUPS.advanced.at(-4), "eventNames");
   assert.ok(!("lore" in SECTION_GROUPS) && !("lore" in GROUP_LABELS));
   assert.ok(!(SWITCHER_ORDER as string[]).includes("lore"));
   const label = eventHistoryLabel({ ...DEFAULT_EVENT_STATE, kind: "war", scale: "world", era: "ST", fantastic: true, tone: "grim", series: true });

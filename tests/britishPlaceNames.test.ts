@@ -256,6 +256,8 @@ test("line-up: the modules in order, with their labels; river names live in plac
       "settlement kit",
       "events and eras",
       "money and coins",
+      "calendars and festivals",
+      "sky lore",
     ],
   );
   assert.ok(!Object.values(SECTION_LABELS).includes("generic place name generator"));

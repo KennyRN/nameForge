@@ -918,11 +918,11 @@ test("§2.2: the kind link lists the kinds offered for the culture and era", () 
   assert.ok(culture.choices.some((c) => c.id === "american"));
 });
 
-test("§16.8: moneyNames is last in advanced; the label, icon section and order", () => {
-  assert.equal(SECTION_GROUPS.advanced.at(-1), "moneyNames");
-  assert.equal(SECTION_GROUPS.advanced.at(-2), "eventNames");
+test("§16.8: moneyNames follows events and eras in advanced (time and sky come after); the label, icon section and order", () => {
+  assert.equal(SECTION_GROUPS.advanced.at(-3), "moneyNames");
+  assert.equal(SECTION_GROUPS.advanced.at(-4), "eventNames");
   assert.equal(SECTION_LABELS.moneyNames, "money and coins");
-  assert.equal(SECTION_ORDER.at(-1), "moneyNames");
+  assert.equal(SECTION_ORDER.at(-3), "moneyNames");
   assert.equal(SECTION_ORDER.indexOf("moneyNames"), SECTION_ORDER.indexOf("eventNames") + 1);
   assert.ok(GROUP_LABELS.advanced && (SWITCHER_ORDER as string[]).includes("advanced"));
 });

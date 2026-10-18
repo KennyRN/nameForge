@@ -494,3 +494,159 @@ test("§16.6: 10,000 names across options: no block-list or banned words, no god
 function findKind(k: TimeKind) {
   return SKY_KINDS.includes(k) ? ("sky" as const) : ("calendar" as const);
 }
+
+// ── §16.7 Sentences and presets ─────────────────────────────────────────────
+
+import { SECTION_GROUPS, SECTION_LABELS, SECTION_ORDER, historySection } from "../src/sections";
+import {
+  calendarSentence,
+  chooseTime,
+  DEFAULT_CALENDAR_STATE,
+  DEFAULT_SKY_STATE,
+  normaliseTime,
+  showsTimeStart,
+  showsTimeWords,
+  timeHistoryLabel,
+  timeSentenceText,
+  type TimeSentenceState,
+} from "../src/timesky/calendarSentence";
+import { skySentence } from "../src/timesky/skySentence";
+import { isModulePresetContent, modulePresetContent, parseModulePreset } from "../src/presets";
+
+const LIMITS = { biomes: [BRITAIN, ...BIOMES], findBiome: (id: string | undefined) => findBiome(id) };
+const calText = (s: TimeSentenceState) => timeSentenceText(calendarSentence(s, LIMITS));
+const skyText = (s: TimeSentenceState) => timeSentenceText(skySentence(s, LIMITS));
+
+test("§16.7: the default sentences read as the brief gives them", () => {
+  assert.equal(calText(DEFAULT_CALENDAR_STATE), "Norman & British months of the medieval era, in a realistic world, set in their homeland, of any tone, with placeholders for gods and people, each one separate.");
+  assert.equal(skyText(DEFAULT_SKY_STATE), "Norman & British constellations of the medieval era, in a realistic world, seen from their homeland, of any tone, with placeholders for gods and people, each one separate.");
+  assert.equal(
+    calText({ ...DEFAULT_CALENDAR_STATE, culture: "anglo-saxon", series: true }),
+    "Anglo-Saxon months of the medieval era, in a realistic world, set in their homeland, starting in their own new year, of any tone, with placeholders for gods and people, as one calendar.",
+  );
+});
+
+test("§16.7: the start link shows only with a series of months, festivals or full moons, outside space biomes", () => {
+  const base = { ...DEFAULT_CALENDAR_STATE, series: true };
+  assert.ok(showsTimeStart(base, LIMITS));
+  assert.ok(showsTimeStart({ ...base, kind: "festival" }, LIMITS) && showsTimeStart({ ...base, kind: "moon" }, LIMITS));
+  assert.ok(!showsTimeStart({ ...base, kind: "day" }, LIMITS));
+  assert.ok(!showsTimeStart({ ...base, series: false }, LIMITS));
+  assert.ok(!showsTimeStart({ ...base, era: "IS", biome: "star-system" }, LIMITS));
+  assert.match(calText({ ...base, start: "spring", biome: "temperate" }), /starting in spring,/);
+});
+
+test("§16.7: the words link shows only for festivals in the eight cultures with a loan form", () => {
+  const withLoans = TIME_CULTURES.filter((c) => showsTimeWords({ ...DEFAULT_CALENDAR_STATE, kind: "festival", culture: c.key })).map((c) => c.key);
+  assert.deepEqual(withLoans.sort(), ["arabic-persian", "celtic", "egyptian", "greek-byzantine", "japanese", "korean", "roman", "slavic"].sort());
+  assert.ok(!showsTimeWords({ ...DEFAULT_CALENDAR_STATE, kind: "month", culture: "celtic" }));
+  assert.match(calText({ ...DEFAULT_CALENDAR_STATE, kind: "festival", culture: "celtic", words: "loanwords" }), /with familiar loanwords/);
+});
+
+test("§16.7: calendarNames and skyNames are the last two entries of advanced, after moneyNames", () => {
+  assert.deepEqual(SECTION_GROUPS.advanced.slice(-3), ["moneyNames", "calendarNames", "skyNames"]);
+  assert.deepEqual(SECTION_ORDER.slice(-3), ["moneyNames", "calendarNames", "skyNames"]);
+  assert.equal(SECTION_LABELS.calendarNames, "calendars and festivals");
+  assert.equal(SECTION_LABELS.skyNames, "sky lore");
+  assert.equal(historySection("calendars and festivals · medieval · Norse · months"), "calendarNames");
+  assert.equal(historySection("sky lore · medieval · Norse · constellations"), "skyNames");
+  for (const french of ["french", "dutch", "iberian", "american"]) assert.ok(!TIME_CULTURES.some((c) => c.key === french));
+});
+
+test("§16.7: resets as §2.4", () => {
+  const choose = (module: "calendar" | "sky", s: TimeSentenceState, field: Parameters<typeof chooseTime>[2], id: string | undefined) => chooseTime(module, s, field, id, LIMITS);
+  // A kind not offered resets to the default kind.
+  let s: TimeSentenceState = { ...DEFAULT_CALENDAR_STATE, culture: "celtic", era: "MD", kind: "day" };
+  s = choose("calendar", s, "era", "AN");
+  assert.equal(s.kind, "month");
+  // Series not offered resets to separate.
+  s = { ...DEFAULT_SKY_STATE, culture: "norse", era: "MD", kind: "sign", series: true };
+  s = choose("sky", s, "era", "AN");
+  assert.equal(s.series, false);
+  s = choose("sky", { ...s, kind: "constellation", series: true }, "culture", "norse");
+  assert.equal(s.series, false);
+  // A start season the new land lacks resets to their own new year.
+  s = { ...DEFAULT_CALENDAR_STATE, series: true, start: "spring", biome: "temperate" };
+  s = choose("calendar", s, "biome", "savannah");
+  assert.equal(s.start, "own");
+  // Leaving the future eras resets a space biome.
+  s = { ...DEFAULT_CALENDAR_STATE, era: "IS", biome: "star-system" };
+  s = choose("calendar", s, "era", "MD");
+  assert.equal(s.biome, undefined);
+  // Polynesian and andean: fantastic and light or grim tones reset.
+  s = { ...DEFAULT_CALENDAR_STATE, fantastic: true, tone: "grim" };
+  for (const c of ["polynesian", "andean"]) {
+    const r = choose("calendar", s, "culture", c);
+    assert.equal(r.fantastic, false);
+    assert.equal(r.tone, "any");
+    assert.ok(!calendarSentence(r, LIMITS).some((seg) => typeof seg === "object" && seg.field === "fantastic"));
+    const tones = (calendarSentence(r, LIMITS).find((seg) => typeof seg === "object" && seg.field === "tone") as { choices: { id: string }[] }).choices.map((x) => x.id);
+    assert.deepEqual(tones, ["any", "grand", "plain", "strange"]);
+  }
+  assert.equal(normaliseTime("calendar", { ...DEFAULT_CALENDAR_STATE, kind: "constellation" }, LIMITS).kind, "month");
+});
+
+test("§16.7: history labels follow §1.2", () => {
+  assert.equal(timeHistoryLabel("calendar", { ...DEFAULT_CALENDAR_STATE, culture: "anglo-saxon", series: true }, LIMITS), "calendars and festivals · medieval · Anglo-Saxon · months · as one calendar");
+  assert.equal(timeHistoryLabel("sky", { ...DEFAULT_SKY_STATE, culture: "norse", fantastic: true, tone: "grand" }, LIMITS), "sky lore · medieval · Norse · constellations · fantastic · grand");
+  assert.equal(timeHistoryLabel("calendar", { ...DEFAULT_CALENDAR_STATE, series: true, biome: "temperate", start: "spring" }, LIMITS), "calendars and festivals · medieval · Norman & British · months · Temperate · from spring · as one calendar");
+});
+
+test("§16.7: presets round-trip, with the fall-backs of §14", () => {
+  const calendar = `---
+type: module-preset
+module: calendar-names
+packName: Danelaw year
+culture: anglo-saxon
+kind: month
+era: MD
+fantastic: false
+biome: homeland
+start: own
+words: translated
+tone: any
+people: placeholders
+series: on
+---
+
+Anglo-Saxon months of the medieval era, in a realistic world, set in their homeland, starting in their own new year, of any tone, with placeholders for gods and people, as one calendar.
+`;
+  const sky = `---
+type: module-preset
+module: sky-names
+packName: Steppe sky
+culture: steppe
+kind: sign
+era: MD
+fantastic: false
+biome: homeland
+tone: any
+people: invented
+series: on
+---
+
+Turkic & Mongol steppe star signs of the medieval era, in a realistic world, seen from their homeland, of any tone, with invented gods and people, as one zodiac.
+`;
+  assert.ok(isModulePresetContent(calendar) && isModulePresetContent(sky));
+  const c = parseModulePreset(calendar, "x");
+  assert.deepEqual(c.problems, []);
+  assert.equal(c.time?.timeModule, "calendar");
+  assert.equal(c.time?.series, true);
+  const roundC = parseModulePreset(modulePresetContent(c.time!), "x").time!;
+  assert.deepEqual({ ...roundC, description: "" }, { ...c.time!, description: "" });
+  const k = parseModulePreset(sky, "x");
+  assert.deepEqual(k.problems, []);
+  assert.equal(k.time?.timeModule, "sky");
+  assert.equal(k.time?.kind, "sign");
+  assert.equal(k.time?.people, "invented");
+  assert.deepEqual({ ...parseModulePreset(modulePresetContent(k.time!), "x").time!, description: "" }, { ...k.time!, description: "" });
+  // Fall-backs: a sensitive culture's tone, a kind the era doesn't offer.
+  const odd = parseModulePreset(calendar.replace("culture: anglo-saxon", "culture: polynesian").replace("tone: any", "tone: grim").replace("kind: month", "kind: day").replace("era: MD", "era: MD"), "x");
+  assert.equal(odd.time?.tone, "any");
+  const nodays = parseModulePreset(calendar.replace("culture: anglo-saxon", "culture: andean").replace("kind: month", "kind: day").replace("era: MD", "era: AN"), "x");
+  assert.equal(nodays.time?.kind, "month");
+  assert.ok(nodays.problems.length > 0);
+  // A series where the kind has none runs as separate (the module normalises); a start the land lacks runs as own.
+  const s = normaliseTime("sky", { ...DEFAULT_SKY_STATE, kind: "constellation", series: true }, LIMITS);
+  assert.equal(s.series, false);
+});

@@ -60,7 +60,7 @@ var MarkovModel = class _MarkovModel {
    * casing is reapplied (first letter only) at generation time.
    */
   static build(names) {
-    var _a3;
+    var _a4;
     const tables = [
       /* @__PURE__ */ new Map(),
       /* @__PURE__ */ new Map(),
@@ -94,7 +94,7 @@ var MarkovModel = class _MarkovModel {
             table = /* @__PURE__ */ new Map();
             tables[k].set(ctx, table);
           }
-          table.set(ch, ((_a3 = table.get(ch)) != null ? _a3 : 0) + 1);
+          table.set(ch, ((_a4 = table.get(ch)) != null ? _a4 : 0) + 1);
         }
       }
     }
@@ -125,12 +125,12 @@ var MarkovModel = class _MarkovModel {
    * reproduced later by passing the same seed back in.
    */
   generateDetailed(options) {
-    var _a3, _b, _c, _d;
+    var _a4, _b2, _c2, _d2;
     const count = Math.max(0, Math.floor(options.count));
-    const faithfulness = clampInt((_a3 = options.faithfulness) != null ? _a3 : 2, 1, 3);
-    const strictness = clampInt((_b = options.strictness) != null ? _b : 3, 1, 5);
-    const allowCopies = (_c = options.allowSourceCopies) != null ? _c : false;
-    const novelty = clampInt((_d = options.novelty) != null ? _d : 0, 0, 3);
+    const faithfulness = clampInt((_a4 = options.faithfulness) != null ? _a4 : 2, 1, 3);
+    const strictness = clampInt((_b2 = options.strictness) != null ? _b2 : 3, 1, 5);
+    const allowCopies = (_c2 = options.allowSourceCopies) != null ? _c2 : false;
+    const novelty = clampInt((_d2 = options.novelty) != null ? _d2 : 0, 0, 3);
     const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
     const rng = mulberry32(seed);
     const wbase = [2.5, 4, 7][faithfulness - 1];
@@ -251,7 +251,7 @@ var MarkovModel = class _MarkovModel {
    * blend (the main cause of verbatim source copies).
    */
   getDist(context, wbase) {
-    var _a3;
+    var _a4;
     const key2 = context.length <= KMAX ? context.join("") : context.slice(-KMAX).join("");
     const cached = this.distCache.get(key2);
     if (cached !== void 0) return cached;
@@ -267,7 +267,7 @@ var MarkovModel = class _MarkovModel {
       const confidence = tot / (tot + d.size);
       const w = Math.pow(wbase, k) * confidence;
       for (const [ch, cnt] of d) {
-        scores.set(ch, ((_a3 = scores.get(ch)) != null ? _a3 : 0) + w * cnt / tot);
+        scores.set(ch, ((_a4 = scores.get(ch)) != null ? _a4 : 0) + w * cnt / tot);
       }
     }
     let dist = null;
@@ -461,19 +461,19 @@ function stripInlineMarkup(s) {
 function parseNameTokens(text) {
   const tokens = text.split(/[\n,;]/).flatMap((t) => splitOnJoiners(t)).flatMap((t) => splitSpaceSeparatedList(t)).map((t) => t.trim()).filter((t) => t.length > 0);
   const names = [];
-  for (const token13 of tokens) {
-    const cleaned = cleanToken(stripLeadingConjunction(token13));
+  for (const token14 of tokens) {
+    const cleaned = cleanToken(stripLeadingConjunction(token14));
     if (cleaned === "" || isNoise(cleaned)) continue;
     names.push(cleaned);
   }
   return dedupe(names);
 }
-function splitSpaceSeparatedList(token13) {
-  const parts = splitOnUnquotedWhitespace(token13);
+function splitSpaceSeparatedList(token14) {
+  const parts = splitOnUnquotedWhitespace(token14);
   if (parts.length >= 3) return parts;
-  const loose = unwrapOuterQuotes(token13.trim()).split(/\s+/).filter((p) => p.length > 0);
+  const loose = unwrapOuterQuotes(token14.trim()).split(/\s+/).filter((p) => p.length > 0);
   if (loose.length >= 3) return loose;
-  return [token13];
+  return [token14];
 }
 function unwrapOuterQuotes(s) {
   const pairs = [
@@ -489,11 +489,11 @@ function unwrapOuterQuotes(s) {
   }
   return s;
 }
-function splitOnUnquotedWhitespace(token13) {
+function splitOnUnquotedWhitespace(token14) {
   const parts = [];
   let current = "";
   let quote2 = null;
-  for (const char of token13) {
+  for (const char of token14) {
     if (quote2) {
       current += char;
       if (char === matchingQuote(quote2)) quote2 = null;
@@ -519,8 +519,8 @@ function matchingQuote(open) {
   if (open === "\u2018") return "\u2019";
   return open;
 }
-function splitOnJoiners(token13) {
-  let parts = [token13];
+function splitOnJoiners(token14) {
+  let parts = [token14];
   for (const joiner of JOINERS) {
     const next = [];
     for (const part of parts) {
@@ -536,12 +536,12 @@ function splitOnJoiners(token13) {
   }
   return parts;
 }
-function stripLeadingConjunction(token13) {
-  const lower2 = token13.toLowerCase();
+function stripLeadingConjunction(token14) {
+  const lower2 = token14.toLowerCase();
   for (const lead of LEADERS) {
-    if (lower2.startsWith(lead)) return token13.slice(lead.length).trim();
+    if (lower2.startsWith(lead)) return token14.slice(lead.length).trim();
   }
-  return token13;
+  return token14;
 }
 function cleanToken(s) {
   let t = s.trim();
@@ -735,11 +735,11 @@ var PlaceNameModel = class _PlaceNameModel {
     this.templateTot = trun;
   }
   static build(names, options) {
-    var _a3, _b, _c, _d, _e, _f;
-    const minSuffixCount = Math.max(1, (_a3 = options == null ? void 0 : options.minSuffixCount) != null ? _a3 : 2);
-    const minStemLength = Math.max(1, (_b = options == null ? void 0 : options.minStemLength) != null ? _b : 2);
+    var _a4, _b2, _c2, _d2, _e2, _f;
+    const minSuffixCount = Math.max(1, (_a4 = options == null ? void 0 : options.minSuffixCount) != null ? _a4 : 2);
+    const minStemLength = Math.max(1, (_b2 = options == null ? void 0 : options.minStemLength) != null ? _b2 : 2);
     const gazetteer = new Set(PLACE_SUFFIX_GAZETTEER);
-    for (const s of (_c = options == null ? void 0 : options.knownSuffixes) != null ? _c : []) {
+    for (const s of (_c2 = options == null ? void 0 : options.knownSuffixes) != null ? _c2 : []) {
       const t = s.trim().toLowerCase();
       if (t.length > 0) gazetteer.add(t);
     }
@@ -752,7 +752,7 @@ var PlaceNameModel = class _PlaceNameModel {
       normalised.push(n.core);
       templateCounts.set(
         n.template,
-        ((_d = templateCounts.get(n.template)) != null ? _d : 0) + 1
+        ((_d2 = templateCounts.get(n.template)) != null ? _d2 : 0) + 1
       );
       rawSet.add(raw.trim().toLowerCase().replace(/\s+/g, " "));
     }
@@ -778,12 +778,12 @@ var PlaceNameModel = class _PlaceNameModel {
       for (let L = SUFFIX_MIN_LEN; L <= SUFFIX_MAX_LEN; L++) {
         if (chars.length - L < minStemLength) break;
         const suffix = chars.slice(chars.length - L).join("");
-        endingCounts.set(suffix, ((_e = endingCounts.get(suffix)) != null ? _e : 0) + 1);
+        endingCounts.set(suffix, ((_e2 = endingCounts.get(suffix)) != null ? _e2 : 0) + 1);
       }
     }
     const qualifies = (suffix) => {
-      var _a4;
-      return gazetteer.has(suffix) || ((_a4 = endingCounts.get(suffix)) != null ? _a4 : 0) >= minSuffixCount;
+      var _a5;
+      return gazetteer.has(suffix) || ((_a5 = endingCounts.get(suffix)) != null ? _a5 : 0) >= minSuffixCount;
     };
     const stems = [];
     const chosen = /* @__PURE__ */ new Map();
@@ -844,13 +844,13 @@ var PlaceNameModel = class _PlaceNameModel {
     return null;
   }
   generateDetailed(options) {
-    var _a3, _b, _c, _d, _e;
+    var _a4, _b2, _c2, _d2, _e2;
     const count = Math.max(0, Math.floor(options.count));
-    const faithfulness = clampInt((_a3 = options.faithfulness) != null ? _a3 : 2, 1, 3);
-    const strictness = clampInt((_b = options.strictness) != null ? _b : 3, 1, 5);
-    const allowCopies = (_c = options.allowSourceCopies) != null ? _c : false;
-    const novelty = clampInt((_d = options.novelty) != null ? _d : 0, 0, 3);
-    const affixes = (_e = options.affixes) != null ? _e : true;
+    const faithfulness = clampInt((_a4 = options.faithfulness) != null ? _a4 : 2, 1, 3);
+    const strictness = clampInt((_b2 = options.strictness) != null ? _b2 : 3, 1, 5);
+    const allowCopies = (_c2 = options.allowSourceCopies) != null ? _c2 : false;
+    const novelty = clampInt((_d2 = options.novelty) != null ? _d2 : 0, 0, 3);
+    const affixes = (_e2 = options.affixes) != null ? _e2 : true;
     const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
     const rng = mulberry32(seed);
     const wbase = [2.5, 4, 7][faithfulness - 1];
@@ -908,13 +908,13 @@ var PlaceNameModel = class _PlaceNameModel {
   }
   /** Seeded weighted pick over the discovered endings ("" possible). */
   pickEnding(rng) {
-    var _a3;
+    var _a4;
     if (this.endingTot <= 0) return "";
     const r = rng() * this.endingTot;
     for (let i = 0; i < this.endingCum.length; i++) {
       if (r < this.endingCum[i]) return this.endingChars[i];
     }
-    return (_a3 = this.endingChars[this.endingChars.length - 1]) != null ? _a3 : "";
+    return (_a4 = this.endingChars[this.endingChars.length - 1]) != null ? _a4 : "";
   }
 };
 function normalisePlaceName(raw, gazetteer) {
@@ -967,9 +967,9 @@ function renderPlaceName(lower2) {
   let firstWord = true;
   return parts.map((p, i) => {
     if (i % 2 === 1 || p.length === 0) return p;
-    const cap2 = firstWord || !PLACE_CONNECTIVES.has(p);
+    const cap3 = firstWord || !PLACE_CONNECTIVES.has(p);
     firstWord = false;
-    return cap2 ? capitaliseFirst(p) : p;
+    return cap3 ? capitaliseFirst(p) : p;
   }).join("");
 }
 var VOWELS = /* @__PURE__ */ new Set(["a", "e", "i", "o", "u", "y"]);
@@ -1022,9 +1022,9 @@ function generateCompoundNamesDetailed(parts, options) {
   const poolSize = Math.max(count, 30);
   const loosened = [];
   const pools = parts.map((part, index) => {
-    var _a3, _b, _c, _d, _e;
+    var _a4, _b2, _c2, _d2, _e2;
     if (part.length === 0) return [];
-    const partGenerator = options.generator === "combined" ? (_b = (_a3 = options.partGenerators) == null ? void 0 : _a3[index]) != null ? _b : "breakdown" : options.generator;
+    const partGenerator = options.generator === "combined" ? (_b2 = (_a4 = options.partGenerators) == null ? void 0 : _a4[index]) != null ? _b2 : "breakdown" : options.generator;
     if (partGenerator === "list") {
       const generator = new ListGenerator();
       generator.train(part);
@@ -1032,13 +1032,13 @@ function generateCompoundNamesDetailed(parts, options) {
     }
     const model = options.breakdownModel === "place" ? PlaceNameModel.build(part) : MarkovModel.build(part);
     const subSeed3 = nextSubSeed();
-    const strictness = (_c = options.strictness) != null ? _c : 3;
-    const pool3 = model.generateDetailed({ count: poolSize, faithfulness: (_d = options.faithfulness) != null ? _d : 2, strictness, seed: subSeed3 }).names;
+    const strictness = (_c2 = options.strictness) != null ? _c2 : 3;
+    const pool3 = model.generateDetailed({ count: poolSize, faithfulness: (_d2 = options.faithfulness) != null ? _d2 : 2, strictness, seed: subSeed3 }).names;
     if (pool3.length > 0 || part.length >= BREAKDOWN_MIN_NAMES) return pool3;
     loosened.push(index);
     return model.generateDetailed({
       count: poolSize,
-      faithfulness: (_e = options.faithfulness) != null ? _e : 2,
+      faithfulness: (_e2 = options.faithfulness) != null ? _e2 : 2,
       strictness: Math.max(1, strictness - 1),
       allowSourceCopies: true,
       seed: subSeed3
@@ -1050,8 +1050,8 @@ function generateCompoundNamesDetailed(parts, options) {
   let tries = 0;
   const maxTries = Math.max(1e3, count * 300);
   const use = pools.map((_, i) => {
-    var _a3, _b;
-    return (_b = (_a3 = options.partUse) == null ? void 0 : _a3[i]) != null ? _b : 100;
+    var _a4, _b2;
+    return (_b2 = (_a4 = options.partUse) == null ? void 0 : _a4[i]) != null ? _b2 : 100;
   });
   while (result.length < count && tries < maxTries) {
     tries++;
@@ -1083,18 +1083,18 @@ function buildWeightedCorpus(sources) {
   return out;
 }
 function generateMixNamesDetailed(sources, options) {
-  var _a3, _b;
+  var _a4, _b2;
   const count = Math.max(0, Math.floor(options.count));
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
-  const viable = sources.filter((source) => source.names.length > 0 && source.weight > 0);
-  if (count === 0 || viable.length === 0) return { names: [], seed };
-  const corpus = buildWeightedCorpus(viable);
+  const viable2 = sources.filter((source) => source.names.length > 0 && source.weight > 0);
+  if (count === 0 || viable2.length === 0) return { names: [], seed };
+  const corpus = buildWeightedCorpus(viable2);
   if (corpus.length === 0) return { names: [], seed };
   const model = MarkovModel.build(corpus);
   const result = model.generateDetailed({
     count,
-    faithfulness: (_a3 = options.faithfulness) != null ? _a3 : 2,
-    strictness: (_b = options.strictness) != null ? _b : 3,
+    faithfulness: (_a4 = options.faithfulness) != null ? _a4 : 2,
+    strictness: (_b2 = options.strictness) != null ? _b2 : 3,
     seed
   });
   return { names: result.names, seed };
@@ -1176,9 +1176,9 @@ function labelledLists(s) {
   return lists;
 }
 var labelOf = (r, s) => {
-  var _a3, _b;
+  var _a4, _b2;
   if (!r.section && !r.gender) return "the whole pack";
-  const section = r.section ? (_b = (_a3 = s.sections.find((x) => same(x.name, r.section))) == null ? void 0 : _a3.name) != null ? _b : r.section : void 0;
+  const section = r.section ? (_b2 = (_a4 = s.sections.find((x) => same(x.name, r.section))) == null ? void 0 : _a4.name) != null ? _b2 : r.section : void 0;
   const gender = r.gender ? r.gender.charAt(0).toUpperCase() + r.gender.slice(1) : void 0;
   return [section, gender].filter(Boolean).join(" \xB7 ");
 };
@@ -1248,8 +1248,8 @@ function mergeSectionedNames(derived, template) {
     const d = derived.sections.find((x) => same(x.name, t.name));
     if (!d) return t;
     const subsections = t.subsections.map((ts) => {
-      var _a3;
-      return (_a3 = d.subsections.find((ds) => same(ds.name, ts.name))) != null ? _a3 : ts;
+      var _a4;
+      return (_a4 = d.subsections.find((ds) => same(ds.name, ts.name))) != null ? _a4 : ts;
     });
     for (const ds of d.subsections) if (!t.subsections.some((ts) => same(ts.name, ds.name))) subsections.push(ds);
     return { name: t.name, names: d.names.length > 0 ? d.names : t.names, subsections };
@@ -1397,8 +1397,8 @@ function wordListSection(list, categoryLabel) {
 }
 function mergeWordLists(derived, template) {
   const sections = template.sections.map((t) => {
-    var _a3;
-    return (_a3 = derived.sections.find((d) => same2(d.name, t.name))) != null ? _a3 : t;
+    var _a4;
+    return (_a4 = derived.sections.find((d) => same2(d.name, t.name))) != null ? _a4 : t;
   });
   for (const d of derived.sections) if (!template.sections.some((t) => same2(t.name, d.name))) sections.push(d);
   const ownUnsectioned = derived.unsectioned.length > 0 || derived.unsectionedPacks.length > 0;
@@ -1427,8 +1427,8 @@ function parseCompoundGenerator(raw) {
 function parseCompoundUse(raw, count) {
   const words = unquote(raw != null ? raw : "").split(",").map((w) => w.trim().toLowerCase());
   return Array.from({ length: count }, (_, i) => {
-    var _a3;
-    return COMPOUND_USES.includes((_a3 = words[i]) != null ? _a3 : "") ? words[i] : "all";
+    var _a4;
+    return COMPOUND_USES.includes((_a4 = words[i]) != null ? _a4 : "") ? words[i] : "all";
   });
 }
 function parseCompoundPartGenerators(raw, count) {
@@ -1447,10 +1447,10 @@ function parseCompoundBody(body, partCount) {
   const matches = [...body.matchAll(H1_PART)];
   const texts = Array.from({ length: partCount }, () => "");
   matches.forEach((m, i) => {
-    var _a3, _b;
+    var _a4, _b2;
     const n = Number(m[1]) - 1;
     if (n >= partCount || m.index === void 0) return;
-    const end = (_b = (_a3 = matches[i + 1]) == null ? void 0 : _a3.index) != null ? _b : body.length;
+    const end = (_b2 = (_a4 = matches[i + 1]) == null ? void 0 : _a4.index) != null ? _b2 : body.length;
     texts[n] += body.slice(m.index + m[0].length, end);
   });
   return texts.map((text) => {
@@ -1462,10 +1462,10 @@ function parseCompoundBody(body, partCount) {
 function splitOldParts(body, partCount) {
   const matches = [...body.matchAll(H2_PART)];
   return Array.from({ length: partCount }, (_, i) => {
-    var _a3, _b;
+    var _a4, _b2;
     const match = matches[i];
     if (!match || match.index === void 0) return "";
-    const end = (_b = (_a3 = matches[i + 1]) == null ? void 0 : _a3.index) != null ? _b : body.length;
+    const end = (_b2 = (_a4 = matches[i + 1]) == null ? void 0 : _a4.index) != null ? _b2 : body.length;
     return body.slice(match.index + match[0].length, end);
   });
 }
@@ -1479,11 +1479,11 @@ function compoundPartFromText(text) {
   return { names: allSectionedNames(sectioned), sectioned };
 }
 function compoundTitles(parts) {
-  var _a3, _b;
+  var _a4, _b2;
   const seen = /* @__PURE__ */ new Set();
   const titles = [];
   for (const part of parts) {
-    for (const section of (_b = (_a3 = part.sectioned) == null ? void 0 : _a3.sections) != null ? _b : []) {
+    for (const section of (_b2 = (_a4 = part.sectioned) == null ? void 0 : _a4.sections) != null ? _b2 : []) {
       const key2 = section.name.trim().toLowerCase();
       if (seen.has(key2)) continue;
       seen.add(key2);
@@ -1496,31 +1496,31 @@ function compoundPartsFor(parts, title) {
   if (!title) return parts.map((p) => p.names);
   const key2 = title.trim().toLowerCase();
   return parts.map((p) => {
-    var _a3;
-    const section = (_a3 = p.sectioned) == null ? void 0 : _a3.sections.find((s) => s.name.trim().toLowerCase() === key2);
+    var _a4;
+    const section = (_a4 = p.sectioned) == null ? void 0 : _a4.sections.find((s) => s.name.trim().toLowerCase() === key2);
     return section ? sectionNames(section) : p.names;
   });
 }
 function partIsBreakdown(generator, partGenerators, index) {
-  var _a3;
-  if (generator === "combined") return ((_a3 = partGenerators == null ? void 0 : partGenerators[index]) != null ? _a3 : "breakdown") === "breakdown";
+  var _a4;
+  if (generator === "combined") return ((_a4 = partGenerators == null ? void 0 : partGenerators[index]) != null ? _a4 : "breakdown") === "breakdown";
   return generator === "breakdown";
 }
 function compoundUsePercents(uses) {
   return uses == null ? void 0 : uses.map((u) => COMPOUND_USE_PERCENT[u]);
 }
 function compoundSettings(parsed) {
-  var _a3, _b;
+  var _a4, _b2;
   return {
-    generator: (_a3 = parsed.compoundGenerator) != null ? _a3 : "breakdown",
-    joining: (_b = parsed.compoundJoining) != null ? _b : "joined",
+    generator: (_a4 = parsed.compoundGenerator) != null ? _a4 : "breakdown",
+    joining: (_b2 = parsed.compoundJoining) != null ? _b2 : "joined",
     partUse: compoundUsePercents(parsed.compoundPartUse),
     partGenerators: parsed.compoundPartGenerators
   };
 }
 function compoundPartData(parsed) {
-  var _a3, _b;
-  return (_b = parsed.compoundPartData) != null ? _b : ((_a3 = parsed.parts) != null ? _a3 : []).map((names) => ({ names }));
+  var _a4, _b2;
+  return (_b2 = parsed.compoundPartData) != null ? _b2 : ((_a4 = parsed.parts) != null ? _a4 : []).map((names) => ({ names }));
 }
 function generateCompoundTitled(parts, options) {
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
@@ -1533,11 +1533,11 @@ function generateCompoundTitled(parts, options) {
   const batches = titles.map(() => void 0);
   const cursors = titles.map(() => 0);
   const batch = (i) => {
-    var _a3;
+    var _a4;
     if (!batches[i]) {
       const resolved = compoundPartsFor(parts, titles[i]);
       const result = generateCompoundNamesDetailed(resolved, { ...options, count, seed: subSeeds[i] });
-      for (const p of (_a3 = result.loosened) != null ? _a3 : []) loosened.push({ title: titles[i], part: p + 1, count: resolved[p].length });
+      for (const p of (_a4 = result.loosened) != null ? _a4 : []) loosened.push({ title: titles[i], part: p + 1, count: resolved[p].length });
       batches[i] = result.names;
     }
     return batches[i];
@@ -1589,7 +1589,7 @@ function isValidNamePackContent(content) {
   return /^type:\s*namePack\s*$/m.test(frontmatter) && hasName;
 }
 function parseNamesFileContent(content) {
-  var _a3, _b, _c, _d, _e, _f;
+  var _a4, _b2, _c2, _d2, _e2, _f;
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   let packName = "nameForge";
   let body = content;
@@ -1615,17 +1615,17 @@ function parseNamesFileContent(content) {
     }
     templateFields = parseTemplateFields(frontmatter);
     body = content.slice(frontmatterMatch[0].length);
-    packName = (_a3 = packNameFromBody(body)) != null ? _a3 : packName;
-    const placeGenerator2 = packType === "placePack" ? parsePlaceGenerator((_b = frontmatter.match(/^placeGenerator:\s*(.*)$/m)) == null ? void 0 : _b[1]) : void 0;
+    packName = (_a4 = packNameFromBody(body)) != null ? _a4 : packName;
+    const placeGenerator2 = packType === "placePack" ? parsePlaceGenerator((_b2 = frontmatter.match(/^placeGenerator:\s*(.*)$/m)) == null ? void 0 : _b2[1]) : void 0;
     if (packType === "compoundPack" || placeGenerator2 === "compound") {
       const compoundPartsMatch = frontmatter.match(/^compoundParts:\s*(.+)$/m);
       const compoundParts = compoundPartsMatch && compoundPartsMatch[1].trim() === "3" ? 3 : 2;
-      const compoundGenerator = parseCompoundGenerator((_c = frontmatter.match(/^compoundGenerator:\s*(.+)$/m)) == null ? void 0 : _c[1]);
+      const compoundGenerator = parseCompoundGenerator((_c2 = frontmatter.match(/^compoundGenerator:\s*(.+)$/m)) == null ? void 0 : _c2[1]);
       const compoundJoiningMatch = frontmatter.match(/^compoundJoining:\s*(.+)$/m);
       const compoundJoining = compoundJoiningMatch && compoundJoiningMatch[1].trim().replace(/^['"]|['"]$/g, "") === "spaced" ? "spaced" : "joined";
       const partData = parseCompoundBody(body, compoundParts);
-      const partUse = parseCompoundUse((_d = frontmatter.match(/^compoundPartUse:\s*(.*)$/m)) == null ? void 0 : _d[1], compoundParts);
-      const partGenerators = compoundGenerator === "combined" ? parseCompoundPartGenerators((_e = frontmatter.match(/^compoundPartGenerators:\s*(.*)$/m)) == null ? void 0 : _e[1], compoundParts) : void 0;
+      const partUse = parseCompoundUse((_d2 = frontmatter.match(/^compoundPartUse:\s*(.*)$/m)) == null ? void 0 : _d2[1], compoundParts);
+      const partGenerators = compoundGenerator === "combined" ? parseCompoundPartGenerators((_e2 = frontmatter.match(/^compoundPartGenerators:\s*(.*)$/m)) == null ? void 0 : _e2[1], compoundParts) : void 0;
       return {
         packName,
         names: [],
@@ -1685,30 +1685,30 @@ function applyTemplate(derived, template) {
   return { parsed: mergeWithTemplate(derived, template) };
 }
 function mergeWithTemplate(derived, template) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const merged2 = { ...derived };
   if (isCompoundPack(derived)) {
-    const count = (_b = (_a3 = derived.compoundParts) != null ? _a3 : template.compoundParts) != null ? _b : 2;
+    const count = (_b2 = (_a4 = derived.compoundParts) != null ? _a4 : template.compoundParts) != null ? _b2 : 2;
     merged2.parts = Array.from({ length: count }, (_, i) => {
-      var _a4, _b2, _c2, _d;
-      const own = (_b2 = (_a4 = derived.parts) == null ? void 0 : _a4[i]) != null ? _b2 : [];
-      return own.length > 0 ? own : (_d = (_c2 = template.parts) == null ? void 0 : _c2[i]) != null ? _d : [];
+      var _a5, _b3, _c3, _d2;
+      const own = (_b3 = (_a5 = derived.parts) == null ? void 0 : _a5[i]) != null ? _b3 : [];
+      return own.length > 0 ? own : (_d2 = (_c3 = template.parts) == null ? void 0 : _c3[i]) != null ? _d2 : [];
     });
     merged2.compoundPartData = Array.from({ length: count }, (_, i) => {
-      var _a4, _b2, _c2, _d;
-      const own = (_b2 = (_a4 = derived.parts) == null ? void 0 : _a4[i]) != null ? _b2 : [];
+      var _a5, _b3, _c3, _d2;
+      const own = (_b3 = (_a5 = derived.parts) == null ? void 0 : _a5[i]) != null ? _b3 : [];
       const from = own.length > 0 ? derived : template;
-      return (_d = (_c2 = from.compoundPartData) == null ? void 0 : _c2[i]) != null ? _d : { names: merged2.parts[i] };
+      return (_d2 = (_c3 = from.compoundPartData) == null ? void 0 : _c3[i]) != null ? _d2 : { names: merged2.parts[i] };
     });
     return merged2;
   }
   if (derived.packType === "mixPack") {
-    merged2.mixSources = ((_c = derived.mixSources) != null ? _c : []).length > 0 ? derived.mixSources : template.mixSources;
+    merged2.mixSources = ((_c2 = derived.mixSources) != null ? _c2 : []).length > 0 ? derived.mixSources : template.mixSources;
     return merged2;
   }
   const asSections = (p) => {
-    var _a4;
-    return (_a4 = p.sectioned) != null ? _a4 : { unsectioned: p.names, sections: [] };
+    var _a5;
+    return (_a5 = p.sectioned) != null ? _a5 : { unsectioned: p.names, sections: [] };
   };
   const sectioned = mergeSectionedNames(asSections(derived), asSections(template));
   merged2.names = allSectionedNames(sectioned);
@@ -1746,14 +1746,14 @@ function createCompoundNamesFileContent(packName, parts, generator, joining, tem
 ${text}` : `# Part ${index + 1}`;
   }).join("\n\n");
   const use = parts.map((_, i) => {
-    var _a3, _b;
-    return (_b = (_a3 = options.partUse) == null ? void 0 : _a3[i]) != null ? _b : "all";
+    var _a4, _b2;
+    return (_b2 = (_a4 = options.partUse) == null ? void 0 : _a4[i]) != null ? _b2 : "all";
   });
   const useLine = use.some((u) => u !== "all") ? `compoundPartUse: ${use.join(", ")}
 ` : "";
   const gens = parts.map((_, i) => {
-    var _a3, _b;
-    return (_b = (_a3 = options.partGenerators) == null ? void 0 : _a3[i]) != null ? _b : "breakdown";
+    var _a4, _b2;
+    return (_b2 = (_a4 = options.partGenerators) == null ? void 0 : _a4[i]) != null ? _b2 : "breakdown";
   });
   const gensLine = generator === "combined" && gens.some((g) => g !== "breakdown") ? `compoundPartGenerators: ${gens.join(", ")}
 ` : "";
@@ -1854,11 +1854,11 @@ function findPackInIndex(index, ref) {
   if (!normalized) return void 0;
   const fileName = normalized.split("/").pop() || normalized;
   return index.find((entry) => {
-    var _a3;
+    var _a4;
     if (entry.parsed.packName === normalized || entry.parsed.packName === fileName) {
       return true;
     }
-    const entryFile = ((_a3 = entry.path.split("/").pop()) == null ? void 0 : _a3.replace(/\.md$/i, "")) || "";
+    const entryFile = ((_a4 = entry.path.split("/").pop()) == null ? void 0 : _a4.replace(/\.md$/i, "")) || "";
     if (entryFile === fileName || entryFile === normalized) {
       return true;
     }
@@ -1866,20 +1866,20 @@ function findPackInIndex(index, ref) {
   });
 }
 function namesFromParsedPack(parsed) {
-  var _a3;
+  var _a4;
   if (isCompoundPack(parsed)) {
-    return ((_a3 = parsed.parts) != null ? _a3 : []).flat().filter((name) => name.trim().length > 0);
+    return ((_a4 = parsed.parts) != null ? _a4 : []).flat().filter((name) => name.trim().length > 0);
   }
   return parsed.names.filter((name) => name.trim().length > 0);
 }
 function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ new Set(), sectionRequest2) {
-  var _a3;
+  var _a4;
   if (visiting.has(mixPath)) {
     return { sources: [], error: `Mix pack cycle involving ${mixData.packName || mixPath}.` };
   }
   visiting.add(mixPath);
   const sources = [];
-  const refs = (_a3 = mixData.mixSources) != null ? _a3 : [];
+  const refs = (_a4 = mixData.mixSources) != null ? _a4 : [];
   for (const ref of refs) {
     const found = findPackInIndex(index, ref.packName);
     if (!found) {
@@ -1927,8 +1927,8 @@ function parseWordListFileContent(content, fallbackName = "Word list") {
   const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   const frontmatter = fm ? fm[1] : "";
   const field = (key2) => {
-    var _a3, _b;
-    return (_b = (_a3 = frontmatter.match(new RegExp(`^${key2}:\\s*(.*)$`, "m"))) == null ? void 0 : _a3[1].trim().replace(/^['"]|['"]$/g, "")) != null ? _b : "";
+    var _a4, _b2;
+    return (_b2 = (_a4 = frontmatter.match(new RegExp(`^${key2}:\\s*(.*)$`, "m"))) == null ? void 0 : _a4[1].trim().replace(/^['"]|['"]$/g, "")) != null ? _b2 : "";
   };
   return {
     packName: field("packName") || fallbackName,
@@ -2067,15 +2067,15 @@ function folderSettingsData(settings) {
   };
 }
 function mergeFolderSettings(stored, note2, current) {
-  var _a3, _b;
-  const hasStoredFolder = !!((_a3 = stored == null ? void 0 : stored.folderPath) == null ? void 0 : _a3.trim());
+  var _a4, _b2;
+  const hasStoredFolder = !!((_a4 = stored == null ? void 0 : stored.folderPath) == null ? void 0 : _a4.trim());
   const hasStoredSettlements = stored != null && typeof stored.settlementsFolder === "string" && "settlementsFolder" in stored;
   return normalizeSettingsFolder({
     ...current,
     ...note2,
     namesFilePath: note2.namesFilePath || current.namesFilePath,
     folderPath: hasStoredFolder ? current.folderPath : note2.folderPath || current.folderPath,
-    settlementsFolder: hasStoredSettlements ? current.settlementsFolder : (_b = note2.settlementsFolder) != null ? _b : current.settlementsFolder
+    settlementsFolder: hasStoredSettlements ? current.settlementsFolder : (_b2 = note2.settlementsFolder) != null ? _b2 : current.settlementsFolder
   });
 }
 async function countPacksInFolder(app, folder) {
@@ -2232,9 +2232,9 @@ var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
     void this.refreshLegacyFolder();
   }
   getControlValue(key2) {
-    var _a3, _b;
+    var _a4, _b2;
     if (key2 === "folderPath" || key2 === "settlementsFolder") {
-      return (_b = (_a3 = this.pendingFolders[key2]) != null ? _a3 : this.plugin.settings[key2]) != null ? _b : "";
+      return (_b2 = (_a4 = this.pendingFolders[key2]) != null ? _a4 : this.plugin.settings[key2]) != null ? _b2 : "";
     }
     return super.getControlValue(key2);
   }
@@ -2615,8 +2615,8 @@ var EnterFolderPathModal = class extends import_obsidian5.Modal {
     cancelButton.addEventListener("click", () => this.close());
   }
   async submit() {
-    var _a3, _b;
-    const rawValue = ((_b = (_a3 = this.inputEl) == null ? void 0 : _a3.value) == null ? void 0 : _b.trim()) || "";
+    var _a4, _b2;
+    const rawValue = ((_b2 = (_a4 = this.inputEl) == null ? void 0 : _a4.value) == null ? void 0 : _b2.trim()) || "";
     const cleaned = rawValue.replace(/^\/+|\/+$/g, "");
     const targetPath = (0, import_obsidian5.normalizePath)(cleaned || DEFAULT_NAMES_FOLDER);
     try {
@@ -15546,13 +15546,13 @@ function normalise(raw) {
 }
 var BIOMES = BIOME_DATA.biomes.map(normalise);
 var BRITAIN = (() => {
-  var _a3;
+  var _a4;
   const b = BIOME_DATA.britain;
   const base = BIOMES.find((x) => x.id === b.inherits);
   const entries = {};
   const lists = {};
   for (const [list, category] of Object.entries(b.builtInLists)) {
-    const items = (_a3 = NAME_WORD_LISTS[category]) != null ? _a3 : [];
+    const items = (_a4 = NAME_WORD_LISTS[category]) != null ? _a4 : [];
     entries[list] = items;
     if (list !== "shortLand" && list !== "shortWater") lists[list] = items.map((e) => [e.modern, 1]);
   }
@@ -15569,44 +15569,45 @@ var BRITAIN = (() => {
   };
 })();
 var SPACE_BIOMES = BIOME_DATA.spaceBiomes.map(normalise);
+var isSpaceBiome = (biome) => !!(biome == null ? void 0 : biome.space);
 var spaceBiomeFor = (scale) => SPACE_BIOMES.find((b) => b.scale === scale);
 function allBiomes(custom = []) {
   return [BRITAIN, ...BIOMES, ...custom];
 }
 function findBiome(id, custom = []) {
-  var _a3;
+  var _a4;
   if (!id) return void 0;
-  return (_a3 = allBiomes(custom).find((b) => {
-    var _a4;
-    return b.id === id || ((_a4 = b.custom) == null ? void 0 : _a4.path) === id;
-  })) != null ? _a3 : SPACE_BIOMES.find((b) => b.id === id);
+  return (_a4 = allBiomes(custom).find((b) => {
+    var _a5;
+    return b.id === id || ((_a5 = b.custom) == null ? void 0 : _a5.path) === id;
+  })) != null ? _a4 : SPACE_BIOMES.find((b) => b.id === id);
 }
 function biomeWords(biome, list) {
-  var _a3;
-  return (_a3 = biome[list]) != null ? _a3 : [];
+  var _a4;
+  return (_a4 = biome[list]) != null ? _a4 : [];
 }
 function terrainWords(biome, kind, terrain) {
-  var _a3, _b, _c;
-  const universal = biome.universalWords === false ? [] : ((_b = (_a3 = BIOME_DATA.universal[terrain]) == null ? void 0 : _a3[kind]) != null ? _b : []).map((w) => [w, 1]);
-  const own = ((_c = biome[kind][terrain]) != null ? _c : []).map(([w, n]) => [w, 2 * n]);
+  var _a4, _b2, _c2;
+  const universal = biome.universalWords === false ? [] : ((_b2 = (_a4 = BIOME_DATA.universal[terrain]) == null ? void 0 : _a4[kind]) != null ? _b2 : []).map((w) => [w, 1]);
+  const own = ((_c2 = biome[kind][terrain]) != null ? _c2 : []).map(([w, n]) => [w, 2 * n]);
   return [...universal, ...own];
 }
 function availableTerrains(biome) {
-  var _a3;
+  var _a4;
   const builtIn = TERRAIN_CHOICES.filter((t) => {
-    var _a4;
-    return t.id !== "any" && ((_a4 = biome.terrainWeights[t.id]) != null ? _a4 : 0) > 0;
+    var _a5;
+    return t.id !== "any" && ((_a5 = biome.terrainWeights[t.id]) != null ? _a5 : 0) > 0;
   });
-  return [...builtIn, ...((_a3 = biome.customTerrains) != null ? _a3 : []).filter((t) => {
-    var _a4;
-    return ((_a4 = biome.terrainWeights[t.id]) != null ? _a4 : 0) > 0;
+  return [...builtIn, ...((_a4 = biome.customTerrains) != null ? _a4 : []).filter((t) => {
+    var _a5;
+    return ((_a5 = biome.terrainWeights[t.id]) != null ? _a5 : 0) > 0;
   })];
 }
 function terrainWeights(biome, choice, multipliers = {}) {
   if (choice && choice !== "any") return { [choice]: 100 };
   return Object.fromEntries(Object.entries(biome.terrainWeights).map(([t, w]) => {
-    var _a3;
-    return [t, w * ((_a3 = multipliers[t]) != null ? _a3 : 1)];
+    var _a4;
+    return [t, w * ((_a4 = multipliers[t]) != null ? _a4 : 1)];
   }));
 }
 var biomeTitleCase = (word) => word.replace(/(^|[\s-])([a-z])/g, (_, sep, c) => sep + c.toUpperCase());
@@ -15627,16 +15628,16 @@ function pluralOf(word) {
 }
 var wordEntry = (word) => ({ modern: word, plural: pluralOf(word), forms: [biomeTitleCase(word)], fuses: "no" });
 function shortWords(biome, kind, terrain) {
-  var _a3, _b, _c, _d, _e, _f, _g;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g;
   if (biome.terrainTags) {
-    const list = (_b = (_a3 = biome.entries) == null ? void 0 : _a3[kind === "land" ? "shortLand" : "shortWater"]) != null ? _b : [];
+    const list = (_b2 = (_a4 = biome.entries) == null ? void 0 : _a4[kind === "land" ? "shortLand" : "shortWater"]) != null ? _b2 : [];
     return list.filter((e) => {
-      var _a4;
-      return (_a4 = biome.terrainTags[e.modern]) == null ? void 0 : _a4.includes(terrain);
+      var _a5;
+      return (_a5 = biome.terrainTags[e.modern]) == null ? void 0 : _a5.includes(terrain);
     }).map((e) => [e, 1]);
   }
   const out = /* @__PURE__ */ new Map();
-  if (biome.universalWords !== false) for (const w of (_d = (_c = BIOME_DATA.universalShort[terrain]) == null ? void 0 : _c[kind]) != null ? _d : []) out.set(w, ((_e = out.get(w)) != null ? _e : 0) + 1);
+  if (biome.universalWords !== false) for (const w of (_d2 = (_c2 = BIOME_DATA.universalShort[terrain]) == null ? void 0 : _c2[kind]) != null ? _d2 : []) out.set(w, ((_e2 = out.get(w)) != null ? _e2 : 0) + 1);
   for (const [w, n] of (_f = biome.short[kind][terrain]) != null ? _f : []) out.set(w, ((_g = out.get(w)) != null ? _g : 0) + 2 * n);
   return [...out.entries()].map(([w, n]) => [wordEntry(w), n]);
 }
@@ -15653,27 +15654,27 @@ var SLOT_LISTS = {
   season: "seasons"
 };
 function biomeEntries(biome, categoryId, terrain) {
-  var _a3;
+  var _a4;
   if (categoryId === "landform" || categoryId === "water-or-wetland-feature") {
     if (!terrain) return void 0;
     return shortWords(biome, categoryId === "landform" ? "land" : "water", terrain);
   }
   const list = SLOT_LISTS[categoryId];
   if (!list) return void 0;
-  const full = (_a3 = biome.entries) == null ? void 0 : _a3[list];
+  const full = (_a4 = biome.entries) == null ? void 0 : _a4[list];
   if (full) return full.map((e) => [e, 1]);
   return biome[list].map(([word, weight]) => [wordEntry(word), weight]);
 }
 function environmentMultipliers(biome, terrain) {
-  var _a3, _b;
+  var _a4, _b2;
   const t = terrain && terrain !== "any" ? terrain : void 0;
   const plainBiome = !biome || biome.id === "britain";
   if (plainBiome && !t) return void 0;
-  const terrainEntry = t ? (_b = TERRAIN_CHOICES.find((x) => x.id === t)) != null ? _b : (_a3 = biome == null ? void 0 : biome.customTerrains) == null ? void 0 : _a3.find((x) => x.id === t) : void 0;
+  const terrainEntry = t ? (_b2 = TERRAIN_CHOICES.find((x) => x.id === t)) != null ? _b2 : (_a4 = biome == null ? void 0 : biome.customTerrains) == null ? void 0 : _a4.find((x) => x.id === t) : void 0;
   const merge = (a = {}, b = {}) => {
-    var _a4;
+    var _a5;
     const out = { ...a };
-    for (const [k, v] of Object.entries(b)) out[k] = ((_a4 = out[k]) != null ? _a4 : 1) * v;
+    for (const [k, v] of Object.entries(b)) out[k] = ((_a5 = out[k]) != null ? _a5 : 1) * v;
     return out;
   };
   const own = plainBiome ? void 0 : biome.shapeMultipliers;
@@ -22975,12 +22976,12 @@ var PLAIN_WORDING_SALT = 437918234;
 var PLACE_SHAPE_DATA = place_shapes_default;
 var TIER_ORDER = ["dominant", "common", "occasional", "rare", "unlikely"];
 function resolveProfile(group, genericId, source = PLACE_SHAPE_DATA) {
-  var _a3;
+  var _a4;
   const tiers = new Map(source.categories.map((c) => [c.id, "unlikely"]));
   const apply = (profile) => {
-    var _a4;
+    var _a5;
     for (const tier of TIER_ORDER) {
-      for (const id of (_a4 = profile[tier]) != null ? _a4 : []) tiers.set(id, tier);
+      for (const id of (_a5 = profile[tier]) != null ? _a5 : []) tiers.set(id, tier);
     }
   };
   if (group.profile) apply(group.profile);
@@ -22990,14 +22991,14 @@ function resolveProfile(group, genericId, source = PLACE_SHAPE_DATA) {
       for (const id of tiers.keys()) tiers.set(id, "unlikely");
       apply(override.replace);
     }
-    for (const [id, tier] of Object.entries((_a3 = override.set) != null ? _a3 : {})) tiers.set(id, tier);
+    for (const [id, tier] of Object.entries((_a4 = override.set) != null ? _a4 : {})) tiers.set(id, tier);
   }
   return tiers;
 }
 var PLACE_SHAPE_REGION_DATA = place_shape_regions_default;
 var PLACE_SHAPE_REGIONS = PLACE_SHAPE_REGION_DATA.regions;
 function resolveRegion(code, regions) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   if (!regions.regions.some((r) => r.code === code)) throw new Error(`Unknown place-shape region: ${code}`);
   const genericMultiplier = /* @__PURE__ */ new Map();
   for (const tied of regions.tiedGenerics) {
@@ -23006,15 +23007,15 @@ function resolveRegion(code, regions) {
   }
   const structure = regions.structure[code];
   return {
-    groupMultiplier: (_a3 = regions.groupMultipliers[code]) != null ? _a3 : {},
+    groupMultiplier: (_a4 = regions.groupMultipliers[code]) != null ? _a4 : {},
     genericMultiplier,
-    categoryMultiplier: (_b = regions.categoryMultipliers[code]) != null ? _b : {},
+    categoryMultiplier: (_b2 = regions.categoryMultipliers[code]) != null ? _b2 : {},
     wordOrder: Object.entries(regions.wordOrder[code]).filter(([, w]) => w > 0),
     connectiveChance: structure.connectiveChance,
     folkConnectiveShare: regions.connectiveSplit.folk,
     stackedGenericChance: structure.stackedGenericChance,
     affixChance: structure.affixChance,
-    affixMultiplier: (_c = regions.affixMultipliers[code]) != null ? _c : {},
+    affixMultiplier: (_c2 = regions.affixMultipliers[code]) != null ? _c2 : {},
     landscapeShareSettlement: structure.landscapeShareSettlement
   };
 }
@@ -23040,8 +23041,8 @@ var PlaceShapeGenerator = class {
     this.genericWeights = /* @__PURE__ */ new Map();
     /** Feature filter "settlement": the two sides and the landscape share. */
     this.sides = null;
-    var _a3, _b, _c;
-    this.excluded = new Set((_a3 = filters.excludedCategories) != null ? _a3 : []);
+    var _a4, _b2, _c2;
+    this.excluded = new Set((_a4 = filters.excludedCategories) != null ? _a4 : []);
     let groups = filters.groupIds ? source.groups.filter((g) => filters.groupIds.includes(g.id)) : source.groups;
     const feature = filters.feature && filters.feature !== "any" ? filters.feature : void 0;
     if (feature === "landscape") groups = groups.filter((g) => g.side === "landscape");
@@ -23058,7 +23059,7 @@ var PlaceShapeGenerator = class {
       this.sides = {
         settlement: groups.filter((g) => g.side === "settlement"),
         landscape: groups.filter((g) => g.side === "landscape"),
-        landscapeShare: (_b = region == null ? void 0 : region.landscapeShareSettlement) != null ? _b : PLACE_SHAPE_WEIGHTS.landscapeShareSettlement
+        landscapeShare: (_b2 = region == null ? void 0 : region.landscapeShareSettlement) != null ? _b2 : PLACE_SHAPE_WEIGHTS.landscapeShareSettlement
       };
     }
     if (this.weighted) {
@@ -23071,10 +23072,10 @@ var PlaceShapeGenerator = class {
       }
     }
     const stackGroup = source.groups.find((g) => g.id === STACK_SOURCE_GROUP);
-    this.stackGenerics = ((_c = stackGroup == null ? void 0 : stackGroup.generics) != null ? _c : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id));
+    this.stackGenerics = ((_c2 = stackGroup == null ? void 0 : stackGroup.generics) != null ? _c2 : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id));
     this.affixWeights = source.affixes.filter((a) => a.forms.length > 0).map((a) => {
-      var _a4, _b2;
-      return [a, ((_a4 = regions.affixBaseline[a.id]) != null ? _a4 : 0) * ((_b2 = region == null ? void 0 : region.affixMultiplier[a.id]) != null ? _b2 : 1)];
+      var _a5, _b3;
+      return [a, ((_a5 = regions.affixBaseline[a.id]) != null ? _a5 : 0) * ((_b3 = region == null ? void 0 : region.affixMultiplier[a.id]) != null ? _b3 : 1)];
     }).filter(([, w]) => w > 0);
   }
   /** Weighted picks with a region or an environment; otherwise part 1's uniform picks. */
@@ -23082,12 +23083,12 @@ var PlaceShapeGenerator = class {
     return !!this.region || !!this.environment;
   }
   groupWeight(id) {
-    var _a3, _b, _c, _d;
-    return ((_b = (_a3 = this.region) == null ? void 0 : _a3.groupMultiplier[id]) != null ? _b : 1) * ((_d = (_c = this.environment) == null ? void 0 : _c.groups[id]) != null ? _d : 1);
+    var _a4, _b2, _c2, _d2;
+    return ((_b2 = (_a4 = this.region) == null ? void 0 : _a4.groupMultiplier[id]) != null ? _b2 : 1) * ((_d2 = (_c2 = this.environment) == null ? void 0 : _c2.groups[id]) != null ? _d2 : 1);
   }
   genericWeight(id) {
-    var _a3, _b, _c, _d;
-    return ((_b = (_a3 = this.region) == null ? void 0 : _a3.genericMultiplier.get(id)) != null ? _b : 1) * ((_d = (_c = this.environment) == null ? void 0 : _c.generics[id]) != null ? _d : 1);
+    var _a4, _b2, _c2, _d2;
+    return ((_b2 = (_a4 = this.region) == null ? void 0 : _a4.genericMultiplier.get(id)) != null ? _b2 : 1) * ((_d2 = (_c2 = this.environment) == null ? void 0 : _c2.generics[id]) != null ? _d2 : 1);
   }
   /** Tier weight × regional category multiplier. Unlikely is 0 and stays 0. */
   categoryWeights(group, genericId) {
@@ -23095,10 +23096,10 @@ var PlaceShapeGenerator = class {
     let weights = this.profiles.get(key2);
     if (!weights) {
       weights = [...resolveProfile(group, genericId, this.source)].map(([id, tier]) => {
-        var _a3, _b;
+        var _a4, _b2;
         return [
           id,
-          this.excluded.has(id) ? 0 : PLACE_SHAPE_WEIGHTS.tier[tier] * ((_b = (_a3 = this.region) == null ? void 0 : _a3.categoryMultiplier[id]) != null ? _b : 1)
+          this.excluded.has(id) ? 0 : PLACE_SHAPE_WEIGHTS.tier[tier] * ((_b2 = (_a4 = this.region) == null ? void 0 : _a4.categoryMultiplier[id]) != null ? _b2 : 1)
         ];
       }).filter(([, w]) => w > 0);
       this.profiles.set(key2, weights);
@@ -23116,7 +23117,7 @@ var PlaceShapeGenerator = class {
     return this.weighted ? pickWeighted(this.groupWeights, rng) : pickUniform(this.groups, rng);
   }
   next(rng) {
-    var _a3, _b, _c, _d, _e;
+    var _a4, _b2, _c2, _d2, _e2;
     const region = this.region;
     const group = this.pickGroup(rng);
     const generic = this.weighted ? pickWeighted(this.genericWeights.get(group.id), rng) : pickUniform(group.generics, rng);
@@ -23128,20 +23129,20 @@ var PlaceShapeGenerator = class {
       structure: "two-part-compound",
       wordOrder: "germanic"
     };
-    const connectiveChance = (_a3 = region == null ? void 0 : region.connectiveChance) != null ? _a3 : PLACE_SHAPE_WEIGHTS.connectiveChance;
-    const stackedGenericChance = (_b = region == null ? void 0 : region.stackedGenericChance) != null ? _b : PLACE_SHAPE_WEIGHTS.stackedGenericChance;
-    const affixChance = (_c = region == null ? void 0 : region.affixChance) != null ? _c : PLACE_SHAPE_WEIGHTS.affixChance;
+    const connectiveChance = (_a4 = region == null ? void 0 : region.connectiveChance) != null ? _a4 : PLACE_SHAPE_WEIGHTS.connectiveChance;
+    const stackedGenericChance = (_b2 = region == null ? void 0 : region.stackedGenericChance) != null ? _b2 : PLACE_SHAPE_WEIGHTS.stackedGenericChance;
+    const affixChance = (_c2 = region == null ? void 0 : region.affixChance) != null ? _c2 : PLACE_SHAPE_WEIGHTS.affixChance;
     if (categoryId === EMPTY_SLOT) {
       shape.structure = rng() < PLACE_SHAPE_WEIGHTS.pluralSimplexChance ? "plural-simplex" : "simplex";
     } else if (categoryId === PERSONAL_NAME && !FOLK_GROUP_GENERICS.has(generic.id) && rng() < connectiveChance) {
-      const folkShare = (_d = region == null ? void 0 : region.folkConnectiveShare) != null ? _d : PLACE_SHAPE_WEIGHTS.folkConnectiveShare;
+      const folkShare = (_d2 = region == null ? void 0 : region.folkConnectiveShare) != null ? _d2 : PLACE_SHAPE_WEIGHTS.folkConnectiveShare;
       shape.structure = rng() < folkShare ? "folk-connective" : "associative-connective";
     } else if (group.side === "landscape" && this.stackGenerics.length > 0 && rng() < stackedGenericChance) {
       shape.structure = "stacked-generic";
       shape.stackedGenericId = pickUniform(this.stackGenerics, rng);
     } else {
       shape.wordOrder = pickWeighted(
-        (_e = region == null ? void 0 : region.wordOrder) != null ? _e : Object.entries(PLACE_SHAPE_WEIGHTS.wordOrder),
+        (_e2 = region == null ? void 0 : region.wordOrder) != null ? _e2 : Object.entries(PLACE_SHAPE_WEIGHTS.wordOrder),
         rng
       );
     }
@@ -23208,12 +23209,12 @@ var PlaceShapeFormatter = class {
    * variants added. `pick` is the secondary RNG; it is only drawn when a generic has two words.
    */
   formatPlain(shape, region, pick4) {
-    var _a3;
+    var _a4;
     const rewrite = this.words.rewrites.find((r) => r.generic === shape.genericId);
     const effective = rewrite ? {
       ...shape,
       categoryId: rewrite.category,
-      structure: (_a3 = rewrite.structure) != null ? _a3 : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
+      structure: (_a4 = rewrite.structure) != null ? _a4 : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
     } : shape;
     return this.layout(effective, (id, plural2) => {
       if (rewrite && id === shape.genericId) return plural2 ? rewrite.plural || rewrite.word : rewrite.word;
@@ -23231,20 +23232,20 @@ var PlaceShapeFormatter = class {
    * inside its brackets, e.g. "[domestic animal: ox] + [river crossing]".
    */
   formatEtymology(shape, specificFill, affixFill) {
-    var _a3;
+    var _a4;
     const withFill = (id, fill) => {
-      var _a4;
-      return fill ? `[${((_a4 = this.categories.get(id)) != null ? _a4 : "?").toLowerCase()}: ${fill}]` : bracket(this.categories.get(id));
+      var _a5;
+      return fill ? `[${((_a5 = this.categories.get(id)) != null ? _a5 : "?").toLowerCase()}: ${fill}]` : bracket(this.categories.get(id));
     };
     return this.layout(
       shape,
       (id, plural2) => `${bracket(this.generics.get(id))}${plural2 ? " (plural)" : ""}`,
       withFill(shape.categoryId, specificFill),
-      ((_a3 = shape.affix) == null ? void 0 : _a3.form.slotCategory) ? withFill(shape.affix.form.slotCategory, affixFill) : void 0
+      ((_a4 = shape.affix) == null ? void 0 : _a4.form.slotCategory) ? withFill(shape.affix.form.slotCategory, affixFill) : void 0
     );
   }
   layout(shape, genericText, specificOverride, affixCategoryOverride) {
-    var _a3;
+    var _a4;
     const specific = specificOverride != null ? specificOverride : bracket(this.categories.get(shape.categoryId));
     let text;
     switch (shape.structure) {
@@ -23262,7 +23263,7 @@ var PlaceShapeFormatter = class {
         break;
       case "stacked-generic": {
         const generic = genericText(shape.genericId, false);
-        text = `${specific} + ${generic} + ${genericText((_a3 = shape.stackedGenericId) != null ? _a3 : "", false)}`;
+        text = `${specific} + ${generic} + ${genericText((_a4 = shape.stackedGenericId) != null ? _a4 : "", false)}`;
         break;
       }
       default: {
@@ -29458,13 +29459,13 @@ function colonialContexts(part) {
   return COLONIAL_DATA.contexts[part];
 }
 function isTraditionAvailable(traditionId, part) {
-  var _a3, _b;
-  return (_b = (_a3 = COLONIAL_TRADITIONS.find((t) => t.id === traditionId)) == null ? void 0 : _a3.parts.includes(part)) != null ? _b : false;
+  var _a4, _b2;
+  return (_b2 = (_a4 = COLONIAL_TRADITIONS.find((t) => t.id === traditionId)) == null ? void 0 : _a4.parts.includes(part)) != null ? _b2 : false;
 }
 var NEW_GROUP_SIDES = new Map(
   COLONIAL_DATA.groups.filter((g) => !g.inherited).map((g) => {
-    var _a3;
-    return [g.id, (_a3 = g.side) != null ? _a3 : "settlement"];
+    var _a4;
+    return [g.id, (_a4 = g.side) != null ? _a4 : "settlement"];
   })
 );
 var PART1_GROUPS = new Map(PLACE_SHAPE_DATA.groups.map((g) => [g.id, g]));
@@ -29475,14 +29476,14 @@ function groupSide(group) {
   return group.inherited ? PART1_GROUPS.get(group.id).side : NEW_GROUP_SIDES.get(group.id);
 }
 function resolveColonialProfile(group, genericId, data = COLONIAL_DATA) {
-  var _a3;
+  var _a4;
   const tiers = /* @__PURE__ */ new Map();
   for (const c of data.inheritedCategories) tiers.set(c.id, "unlikely");
   for (const c of data.categories) tiers.set(c.id, "unlikely");
   if (group.inherited) {
     const part1 = resolveProfile(PART1_GROUPS.get(group.id), genericId);
     for (const [id, tier] of part1) if (tiers.has(id)) tiers.set(id, tier);
-    for (const [id, tier] of Object.entries((_a3 = group.set) != null ? _a3 : {})) tiers.set(id, tier);
+    for (const [id, tier] of Object.entries((_a4 = group.set) != null ? _a4 : {})) tiers.set(id, tier);
   } else if (group.profile) {
     for (const tier of ["common", "occasional", "rare"]) {
       for (const id of group.profile[tier]) tiers.set(id, tier);
@@ -29517,8 +29518,8 @@ function deriveRenamingType(shape, data = COLONIAL_DATA) {
   const hasNative = used.some((c) => native.has(c));
   const colonialSpecific = used.some(
     (c) => {
-      var _a3;
-      return colonialCategoryIds.has(c) && COLONIAL_SPECIFIC_FAMILIES.has((_a3 = categoryFamily.get(c)) != null ? _a3 : "") || c === "colonial-deity";
+      var _a4;
+      return colonialCategoryIds.has(c) && COLONIAL_SPECIFIC_FAMILIES.has((_a4 = categoryFamily.get(c)) != null ? _a4 : "") || c === "colonial-deity";
     }
   );
   const colonialGeneric = COLONIAL_GENERIC_GROUPS.has(shape.groupId);
@@ -29538,7 +29539,7 @@ var ColonialShapeGenerator = class {
     this.data = data;
     this.groups = [];
     this.sides = null;
-    var _a3, _b, _c, _d;
+    var _a4, _b2, _c2, _d2;
     const { part } = options;
     const tradition = options.tradition ? data.traditions.find((t) => t.id === options.tradition) : data.general;
     if (!tradition) throw new Error(`Unknown colonial tradition: ${options.tradition}`);
@@ -29551,7 +29552,7 @@ var ColonialShapeGenerator = class {
       ...data.categories.map((c) => [c.id, c.parts])
     ]);
     const inPart = (parts) => (parts != null ? parts : ["2", "2a"]).includes(part);
-    const excluded = new Set((_a3 = options.excludedCategories) != null ? _a3 : []);
+    const excluded = new Set((_a4 = options.excludedCategories) != null ? _a4 : []);
     const feature = options.feature && options.feature !== "any" ? options.feature : void 0;
     const eligibleByGroup = /* @__PURE__ */ new Map();
     for (const group of data.groups) {
@@ -29564,7 +29565,7 @@ var ColonialShapeGenerator = class {
         const id = genericIdOf(entry);
         if (typeof entry !== "string" && !inPart(entry.parts)) continue;
         if (this.space && !this.spaceGenericLive(group.id, id)) continue;
-        const genericWeight = ((_b = this.profile.genericMultipliers[id]) != null ? _b : 1) * ((_d = (_c = options.environment) == null ? void 0 : _c.generics[id]) != null ? _d : 1);
+        const genericWeight = ((_b2 = this.profile.genericMultipliers[id]) != null ? _b2 : 1) * ((_d2 = (_c2 = options.environment) == null ? void 0 : _c2.generics[id]) != null ? _d2 : 1);
         if (genericWeight <= 0) continue;
         const categories = [...resolveColonialProfile(group, id, data)].filter(([c]) => inPart(categoryParts.get(c)) && !excluded.has(c)).map(([c, tier]) => [c, PLACE_SHAPE_WEIGHTS.tier[tier] * this.categoryMultiplier(c)]).filter(([, w]) => w > 0);
         if (categories.length === 0) continue;
@@ -29583,28 +29584,28 @@ var ColonialShapeGenerator = class {
     }
     const source = data.groups.find((g) => g.id === (this.space ? "space-settlement" : data.structures.stackedGeneric.sourceGroup));
     this.stackSource = source.generics.filter((entry) => typeof entry === "string" || inPart(entry.parts)).filter((entry) => !this.space || this.spaceGenericLive(source.id, genericIdOf(entry))).map((entry) => {
-      var _a4;
-      return [genericIdOf(entry), (_a4 = this.profile.genericMultipliers[genericIdOf(entry)]) != null ? _a4 : 1];
+      var _a5;
+      return [genericIdOf(entry), (_a5 = this.profile.genericMultipliers[genericIdOf(entry)]) != null ? _a5 : 1];
     }).filter(([, w]) => w > 0);
     const spaceFits = (f) => !this.space || !f.slotCategory || this.spaceCategoryMultiplier(f.slotCategory) > 0;
     const formFits = (f) => {
-      var _a4;
-      return (!f.slotCategory || inPart((_a4 = categoryParts.get(f.slotCategory)) != null ? _a4 : [])) && spaceFits(f);
+      var _a5;
+      return (!f.slotCategory || inPart((_a5 = categoryParts.get(f.slotCategory)) != null ? _a5 : [])) && spaceFits(f);
     };
     const types = [
       ...PLACE_SHAPE_DATA.affixes.map((a) => {
-        var _a4;
+        var _a5;
         return {
           id: a.id,
           forms: a.forms.filter(formFits),
-          weight: (_a4 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a4 : 0
+          weight: (_a5 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a5 : 0
         };
       }),
       ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms.filter(spaceFits), weight: a.weight }))
     ];
     this.affixWeights = types.filter((t) => t.forms.length > 0).map((t) => {
-      var _a4;
-      return [t, t.weight * ((_a4 = this.profile.affixTypeMultipliers[t.id]) != null ? _a4 : 1)];
+      var _a5;
+      return [t, t.weight * ((_a5 = this.profile.affixTypeMultipliers[t.id]) != null ? _a5 : 1)];
     }).filter(([, w]) => w > 0);
   }
   get space() {
@@ -29612,14 +29613,14 @@ var ColonialShapeGenerator = class {
   }
   /** Stellar brief §5.5: space groups are live only under a space biome, at their scale; of the rest, only the listed few. */
   spaceGroupWeight(group) {
-    var _a3;
+    var _a4;
     const space = this.space;
     if (!space) return group.space ? 0 : 1;
     if (group.space) return !group.scale || group.scale === space.scale ? 1 : 0;
     const rules = this.data.space;
     const scales = rules.groupScales[group.id];
     if (scales && !scales.includes(space.scale)) return 0;
-    return (_a3 = rules.groups[group.id]) != null ? _a3 : 0;
+    return (_a4 = rules.groups[group.id]) != null ? _a4 : 0;
   }
   /** Stellar brief §5.5: a generic of a listed group may be limited to some generics or scales. */
   spaceGenericLive(groupId, genericId) {
@@ -29631,31 +29632,31 @@ var ColonialShapeGenerator = class {
   }
   /** Stellar brief §5.6, §5.8: the category layer under a space biome. */
   spaceCategoryMultiplier(id) {
-    var _a3;
+    var _a4;
     const space = this.space;
     if (!space) return 1;
     const rules = this.data.space;
     if (id === "crop" || id === "produce") return rules.cropScales.includes(space.scale) ? 1 : 0;
     if (id === "native-people-or-tribe") return this.options.part === "2" && !space.aliens ? 0 : 1;
     if (id === "local-deity") return space.aliens ? 1 : 0;
-    return (_a3 = rules.categories[id]) != null ? _a3 : 1;
+    return (_a4 = rules.categories[id]) != null ? _a4 : 1;
   }
   groupMultiplier(group) {
-    var _a3, _b, _c, _d, _e;
+    var _a4, _b2, _c2, _d2, _e2;
     const id = group.id;
-    return ((_a3 = this.profile.groupMultipliers[id]) != null ? _a3 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.groupMultipliers[id]) != null ? _c : 1) * ((_e = (_d = this.options.environment) == null ? void 0 : _d.groups[id]) != null ? _e : 1) * this.spaceGroupWeight(group);
+    return ((_a4 = this.profile.groupMultipliers[id]) != null ? _a4 : 1) * ((_c2 = (_b2 = this.context) == null ? void 0 : _b2.groupMultipliers[id]) != null ? _c2 : 1) * ((_e2 = (_d2 = this.options.environment) == null ? void 0 : _d2.groups[id]) != null ? _e2 : 1) * this.spaceGroupWeight(group);
   }
   categoryMultiplier(id) {
-    var _a3, _b, _c;
-    return ((_a3 = this.profile.categoryMultipliers[id]) != null ? _a3 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.categoryMultipliers[id]) != null ? _c : 1) * this.spaceCategoryMultiplier(id);
+    var _a4, _b2, _c2;
+    return ((_a4 = this.profile.categoryMultipliers[id]) != null ? _a4 : 1) * ((_c2 = (_b2 = this.context) == null ? void 0 : _b2.categoryMultipliers[id]) != null ? _c2 : 1) * this.spaceCategoryMultiplier(id);
   }
   /** §7 base chance × tradition × context structure multipliers, capped at 1.0. */
   chance(key2, base) {
-    var _a3, _b, _c;
-    return cap(base * ((_a3 = this.profile.structureMultipliers[key2]) != null ? _a3 : 1) * ((_c = (_b = this.context) == null ? void 0 : _b.structureMultipliers[key2]) != null ? _c : 1));
+    var _a4, _b2, _c2;
+    return cap(base * ((_a4 = this.profile.structureMultipliers[key2]) != null ? _a4 : 1) * ((_c2 = (_b2 = this.context) == null ? void 0 : _b2.structureMultipliers[key2]) != null ? _c2 : 1));
   }
   next(rng) {
-    var _a3, _b, _c;
+    var _a4, _b2, _c2;
     const s = this.data.structures;
     const { part } = this.options;
     let pool3 = this.groups;
@@ -29676,8 +29677,8 @@ var ColonialShapeGenerator = class {
     };
     const pickFrom = (candidates, fallback) => {
       const weighted3 = candidates.map((c) => {
-        var _a4;
-        return [c, (_a4 = generic.categoryWeight.get(c)) != null ? _a4 : 0];
+        var _a5;
+        return [c, (_a5 = generic.categoryWeight.get(c)) != null ? _a5 : 0];
       }).filter(([, w]) => w > 0);
       return weighted3.length > 0 ? pickWeighted(weighted3, rng) : fallback;
     };
@@ -29716,14 +29717,14 @@ var ColonialShapeGenerator = class {
       const orders = ["specific-first", "generic-first-direct", "generic-first-linked"].map((o) => [o, distribution[o]]).filter(([, w]) => w > 0);
       shape.wordOrder = pickWeighted(orders, rng);
     }
-    const split = (_b = (_a3 = this.context) == null ? void 0 : _a3.nativeTreatment) != null ? _b : this.profile.nativeTreatment;
+    const split = (_b2 = (_a4 = this.context) == null ? void 0 : _a4.nativeTreatment) != null ? _b2 : this.profile.nativeTreatment;
     const native = s.nativeTreatment.categories;
     const usesSpecific = shape.structure !== "locative" && shape.structure !== "simplex";
     if (usesSpecific && native.includes(shape.categoryId)) shape.treatments.specific = rng() < split.adopted ? "adopted" : "adapted";
     if (shape.secondCategoryId && native.includes(shape.secondCategoryId)) {
       shape.treatments.second = rng() < split.adopted ? "adopted" : "adapted";
     }
-    if (usesSpecific && s.translationTag.categoryFamilies.includes((_c = categoryFamily.get(shape.categoryId)) != null ? _c : "")) {
+    if (usesSpecific && s.translationTag.categoryFamilies.includes((_c2 = categoryFamily.get(shape.categoryId)) != null ? _c2 : "")) {
       shape.translated = rng() < this.chance("translationTag", s.translationTag.chanceByPart[part]);
     }
     if (this.affixWeights.length > 0 && rng() < this.chance("affix", s.affix.chance)) {
@@ -29747,12 +29748,12 @@ var genericLabels = new Map([
 function formatColonialShape(shape, fills = {}) {
   const fillFor = (id) => id === shape.categoryId ? fills.specific : id === shape.secondCategoryId ? fills.second : void 0;
   const category = (id, treatment, fill = fillFor(id)) => {
-    var _a3;
-    return `[${((_a3 = labels.get(id)) != null ? _a3 : "?").toLowerCase()}${treatment ? `, ${treatment}` : ""}${fill ? `: ${fill}` : ""}]`;
+    var _a4;
+    return `[${((_a4 = labels.get(id)) != null ? _a4 : "?").toLowerCase()}${treatment ? `, ${treatment}` : ""}${fill ? `: ${fill}` : ""}]`;
   };
   const generic = (id) => {
-    var _a3;
-    return `[${((_a3 = genericLabels.get(id)) != null ? _a3 : "?").toLowerCase()}]`;
+    var _a4;
+    return `[${((_a4 = genericLabels.get(id)) != null ? _a4 : "?").toLowerCase()}]`;
   };
   const specific = category(shape.categoryId, shape.treatments.specific);
   const the = (text2) => shape.definite ? `The ${text2}` : text2;
@@ -30000,7 +30001,7 @@ function recognisability(a, b) {
   return Math.max(0, 1 - normalisedDistance(a, b));
 }
 function buildInventory(targetNames, extraEndings = []) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const names = targetNames.map((n) => n.trim().toLowerCase()).filter((n) => n.length > 0);
   const vowelCounts = /* @__PURE__ */ new Map();
   const consonantUnits = /* @__PURE__ */ new Set();
@@ -30013,20 +30014,20 @@ function buildInventory(targetNames, extraEndings = []) {
       for (const seg of segment(word)) {
         if (seg.vowel) {
           const run = seg.units.join("");
-          vowelCounts.set(run, ((_a3 = vowelCounts.get(run)) != null ? _a3 : 0) + 1);
+          vowelCounts.set(run, ((_a4 = vowelCounts.get(run)) != null ? _a4 : 0) + 1);
         } else {
           for (const u of seg.units) consonantUnits.add(u);
         }
       }
     }
-    const last = Array.from((_b = words[words.length - 1]) != null ? _b : "");
+    const last = Array.from((_b2 = words[words.length - 1]) != null ? _b2 : "");
     const seen = /* @__PURE__ */ new Set();
     for (const len of AGEING.endingLengths) {
       if (last.length < len) continue;
       const ending = last.slice(-len).join("");
       if (seen.has(ending)) continue;
       seen.add(ending);
-      endingCounts.set(ending, ((_c = endingCounts.get(ending)) != null ? _c : 0) + 1);
+      endingCounts.set(ending, ((_c2 = endingCounts.get(ending)) != null ? _c2 : 0) + 1);
     }
   }
   const byCount = (m) => [...m].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
@@ -30039,8 +30040,8 @@ function buildInventory(targetNames, extraEndings = []) {
 var AGEING_MOVES = /* @__PURE__ */ new Set(["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9"]);
 var TAKEOVER_MOVES = /* @__PURE__ */ new Set(["M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11"]);
 function firstUnit(segments) {
-  var _a3, _b;
-  return (_b = (_a3 = segments[0]) == null ? void 0 : _a3.units[0]) != null ? _b : "";
+  var _a4, _b2;
+  return (_b2 = (_a4 = segments[0]) == null ? void 0 : _a4.units[0]) != null ? _b2 : "";
 }
 function valid(before, after, firstMayChange) {
   if (Array.from(after).length < AGEING.minLetters) return false;
@@ -30443,15 +30444,15 @@ function samePackNotice(nativePath, takeoverPath) {
   return nativePath && nativePath === takeoverPath ? "Choose a different takeover pack." : null;
 }
 function* takeOverSteps(input) {
-  var _a3;
-  const seed = ((_a3 = input.seed) != null ? _a3 : Math.floor(Math.random() * 4294967296)) >>> 0;
+  var _a4;
+  const seed = ((_a4 = input.seed) != null ? _a4 : Math.floor(Math.random() * 4294967296)) >>> 0;
   const batchSize = Math.max(0, Math.floor(input.batchSize));
   const nativeRng = mulberry32(seed);
-  const cap2 = TAKEOVER.nativeCapFactor * batchSize;
+  const cap3 = TAKEOVER.nativeCapFactor * batchSize;
   const seen = /* @__PURE__ */ new Set();
   const rows = [];
   let generated = 0;
-  while (rows.length < batchSize && generated < cap2) {
+  while (rows.length < batchSize && generated < cap3) {
     const native = input.drawNative(nativeRng);
     generated++;
     if (!native) continue;
@@ -53799,11 +53800,11 @@ function bayerName(rng) {
   return `${weighted2(greek, rng)} ${STARS.genitives[Math.floor(rng() * STARS.genitives.length)]}`;
 }
 function possessiveName(rng, opts) {
-  var _a3;
+  var _a4;
   const real = STARS.possessiveReal;
   const person2 = opts == null ? void 0 : opts.person;
   if (!person2 || rng() < STARS.possessiveRealShare) return real[Math.floor(rng() * real.length)];
-  const who = (_a3 = person2()) == null ? void 0 : _a3.replace(/^the /i, "");
+  const who = (_a4 = person2()) == null ? void 0 : _a4.replace(/^the /i, "");
   if (!who) return real[Math.floor(rng() * real.length)];
   return `${who}'s Star`;
 }
@@ -53820,8 +53821,8 @@ function drawStarOfKind(kind, rng, pickProper, opts) {
   }
 }
 function drawStarKind(scale, rng) {
-  var _a3;
-  const row = (_a3 = STARS.kindWeights[scale]) != null ? _a3 : STARS.kindWeights.any;
+  var _a4;
+  const row = (_a4 = STARS.kindWeights[scale]) != null ? _a4 : STARS.kindWeights.any;
   return weighted2(Object.entries(row).filter(([, w]) => w > 0), rng);
 }
 function drawStar(scale, rng, pickProper, opts) {
@@ -53856,11 +53857,11 @@ function spokenNumber(n) {
   return `${small(high)}-${pair(low)}`;
 }
 function spokenCatalogue(name) {
-  var _a3;
+  var _a4;
   const m = /^.*?[ -](\d+)(?: ([b-h]))?$/.exec(name.trim());
   if (!m) return name;
   const base = spokenNumber(Number(m[1]));
-  return m[2] ? `${base} ${(_a3 = STARS.letterWords[m[2]]) != null ? _a3 : m[2]}` : base;
+  return m[2] ? `${base} ${(_a4 = STARS.letterWords[m[2]]) != null ? _a4 : m[2]}` : base;
 }
 
 // src/data/river-names.json
@@ -58348,8 +58349,8 @@ var pickRecord = (weights, rng) => pick(Object.entries(weights), rng);
 var pickPool = (pool3, rng) => pick([...pool3.entries()], rng);
 var pickUniform2 = (items, rng) => items[Math.floor(rng() * items.length)];
 var add = (pool3, word, weight) => {
-  var _a3;
-  if (weight > 0) pool3.set(word, ((_a3 = pool3.get(word)) != null ? _a3 : 0) + weight);
+  var _a4;
+  if (weight > 0) pool3.set(word, ((_a4 = pool3.get(word)) != null ? _a4 : 0) + weight);
 };
 var lower = (s) => s.toLowerCase();
 var wordRe = (w) => new RegExp(`(^|[^A-Za-z])${w.replace(/[-']/g, "\\$&")}s?($|[^A-Za-z])`, "i");
@@ -58361,17 +58362,17 @@ function tribalTitleCase(text) {
   }).join(" ");
 }
 var share = (ctx, ...terrains) => terrains.reduce((n, t) => {
-  var _a3;
-  return n + ((_a3 = ctx.terrainWeights[t]) != null ? _a3 : 0);
+  var _a4;
+  return n + ((_a4 = ctx.terrainWeights[t]) != null ? _a4 : 0);
 }, 0);
 function effectiveTerrains(trad, biome, terrain) {
-  var _a3;
+  var _a4;
   const zero = Object.fromEntries(TERRAINS.map((t) => [t, 0]));
-  if (terrain && terrain !== "any" && ((_a3 = biome.terrainWeights[terrain]) != null ? _a3 : 0) > 0) return { ...zero, [terrain]: 100 };
+  if (terrain && terrain !== "any" && ((_a4 = biome.terrainWeights[terrain]) != null ? _a4 : 0) > 0) return { ...zero, [terrain]: 100 };
   const keys = Object.keys(biome.terrainWeights);
   const raw = Object.fromEntries(keys.map((t) => {
-    var _a4;
-    return [t, biome.terrainWeights[t] * ((_a4 = trad.terrainMultipliers[t]) != null ? _a4 : 1)];
+    var _a5;
+    return [t, biome.terrainWeights[t] * ((_a5 = trad.terrainMultipliers[t]) != null ? _a5 : 1)];
   }));
   const total = Object.values(raw).reduce((n, w) => n + w, 0) || 1;
   return { ...zero, ...Object.fromEntries(keys.map((t) => [t, raw[t] * 100 / total])) };
@@ -58396,15 +58397,15 @@ function filtered(ctx, word, weight) {
   return weight * suppression(ctx, word);
 }
 function landPool(ctx, kind, terrain) {
-  var _a3;
+  var _a4;
   const pool3 = /* @__PURE__ */ new Map();
   for (const [w, n] of terrainWords(ctx.biome, kind, terrain)) add(pool3, w, filtered(ctx, w, n));
-  if (ctx.mode === "homeland") for (const w of (_a3 = ctx.trad.flavour[kind]) != null ? _a3 : []) add(pool3, w, filtered(ctx, w, 3));
+  if (ctx.mode === "homeland") for (const w of (_a4 = ctx.trad.flavour[kind]) != null ? _a4 : []) add(pool3, w, filtered(ctx, w, 3));
   return pool3;
 }
 function featureWord(ctx, kind) {
-  var _a3;
-  const pinned = (_a3 = ctx.pin.get(kind === "any" ? "feature" : kind)) != null ? _a3 : ctx.pin.get("feature");
+  var _a4;
+  const pinned = (_a4 = ctx.pin.get(kind === "any" ? "feature" : kind)) != null ? _a4 : ctx.pin.get("feature");
   if (pinned) return pinned;
   const k = kind === "any" ? ctx.rng() < 0.5 ? "land" : "water" : kind;
   const terrains = Object.keys(ctx.terrainWeights).map((t) => [t, landPool(ctx, k, t).size > 0 ? ctx.terrainWeights[t] : 0]);
@@ -58419,7 +58420,7 @@ function withColour(ctx, word) {
   return `${pickUniform2(V.colours, ctx.rng)} ${word}`;
 }
 function animalPool(ctx, wild = false) {
-  var _a3, _b;
+  var _a4, _b2;
   const pool3 = /* @__PURE__ */ new Map();
   const b = ctx.biome;
   const lists = wild ? [["wildAnimals", 1], ["birds", 1]] : [["wildAnimals", 1], ["birds", 1], ["creatures", 0.7], ["livestock", 0.5]];
@@ -58429,14 +58430,14 @@ function animalPool(ctx, wild = false) {
       add(pool3, word, filtered(ctx, word, 2 * factor * n));
     }
   }
-  if (ctx.mode === "homeland") for (const w of (_a3 = ctx.trad.flavour.animals) != null ? _a3 : []) add(pool3, w, filtered(ctx, w, 3));
+  if (ctx.mode === "homeland") for (const w of (_a4 = ctx.trad.flavour.animals) != null ? _a4 : []) add(pool3, w, filtered(ctx, w, 3));
   if (!wild && ctx.register === "legendary") {
-    for (const [w, mults] of Object.entries(V.mythic)) add(pool3, w, filtered(ctx, w, 0.5 * ((_b = mults[ctx.trad.key]) != null ? _b : 1)));
+    for (const [w, mults] of Object.entries(V.mythic)) add(pool3, w, filtered(ctx, w, 0.5 * ((_b2 = mults[ctx.trad.key]) != null ? _b2 : 1)));
   }
   return pool3;
 }
 function plantPool(ctx) {
-  var _a3;
+  var _a4;
   const pool3 = /* @__PURE__ */ new Map();
   for (const [list, factor] of [["trees", 1], ["plants", 1], ["crops", 0.5]]) {
     for (const [w, n] of biomeWords(ctx.biome, list)) {
@@ -58444,7 +58445,7 @@ function plantPool(ctx) {
       add(pool3, word, filtered(ctx, word, 2 * factor * n));
     }
   }
-  if (ctx.mode === "homeland") for (const w of (_a3 = ctx.trad.flavour.plants) != null ? _a3 : []) add(pool3, w, filtered(ctx, w, 3));
+  if (ctx.mode === "homeland") for (const w of (_a4 = ctx.trad.flavour.plants) != null ? _a4 : []) add(pool3, w, filtered(ctx, w, 3));
   return pool3;
 }
 function sacredPool(ctx) {
@@ -58459,13 +58460,13 @@ function sacredPool(ctx) {
   return pool3;
 }
 function lifewayPool(ctx) {
-  var _a3;
+  var _a4;
   const pool3 = /* @__PURE__ */ new Map();
   const canRide = mounts(ctx).length > 0;
   const fav = new Set(ctx.trad.favouredLifeways);
   const gate = (w) => w === "Riders" && !canRide ? 0 : 1;
   for (const [w, n] of biomeWords(ctx.biome, "lifeways")) add(pool3, w, filtered(ctx, w, n * (fav.has(w) ? 2 : 1) * gate(w)));
-  if (ctx.mode === "homeland") for (const w of (_a3 = ctx.trad.flavour.lifeways) != null ? _a3 : []) add(pool3, w, filtered(ctx, w, 10 * gate(w)));
+  if (ctx.mode === "homeland") for (const w of (_a4 = ctx.trad.flavour.lifeways) != null ? _a4 : []) add(pool3, w, filtered(ctx, w, 10 * gate(w)));
   return pool3;
 }
 var materials = (ctx) => {
@@ -58476,10 +58477,10 @@ var materials = (ctx) => {
 function warfarePool(ctx, objectsOnly = false) {
   const pool3 = /* @__PURE__ */ new Map();
   const restricted = (w) => {
-    var _a3, _b;
+    var _a4, _b2;
     const allowed = V.warfareRestricted[w];
     if (!allowed) return 1;
-    const m = (_b = (_a3 = allowed[ctx.trad.key]) != null ? _a3 : allowed["*"]) != null ? _b : 0;
+    const m = (_b2 = (_a4 = allowed[ctx.trad.key]) != null ? _a4 : allowed["*"]) != null ? _b2 : 0;
     if (w === "War Canoe" && share(ctx, "coast", "rivers", "islands") < 20) return m * 0.2;
     return m;
   };
@@ -58488,10 +58489,10 @@ function warfarePool(ctx, objectsOnly = false) {
   return pool3;
 }
 function directionPool(ctx, { halves = false, colours = true } = {}) {
-  var _a3, _b;
+  var _a4, _b2;
   const pool3 = /* @__PURE__ */ new Map();
   for (const o of ctx.trad.orientation) {
-    let words = (_b = (_a3 = o.words) != null ? _a3 : V.directions[o.system]) != null ? _b : [];
+    let words = (_b2 = (_a4 = o.words) != null ? _a4 : V.directions[o.system]) != null ? _b2 : [];
     if (!halves) words = words.filter((w) => !w.endsWith(" Half"));
     if (!colours && o.system === "colourDirection") continue;
     let m = o.mult;
@@ -58525,7 +58526,7 @@ function numberWord(ctx) {
   return pick(V.numbers.map((n) => [n, preferred.has(n) ? 3 : 0.3]), ctx.rng);
 }
 function countedOk(ctx, noun) {
-  var _a3, _b;
+  var _a4, _b2;
   const id = ctx.biome.id;
   switch (noun) {
     case "Islands":
@@ -58542,7 +58543,7 @@ function countedOk(ctx, noun) {
       return id === "steppe" || id === "desert" || id === "boreal" ? 1 : 0;
     case "Arrows": {
       const allowed = V.warfareRestricted.Arrow;
-      return (_b = (_a3 = allowed[ctx.trad.key]) != null ? _a3 : allowed["*"]) != null ? _b : 0;
+      return (_b2 = (_a4 = allowed[ctx.trad.key]) != null ? _a4 : allowed["*"]) != null ? _b2 : 0;
     }
     case "Fires":
       return ctx.trad.key === "northAmerican" ? 3 : 1;
@@ -58568,7 +58569,7 @@ function vesselWord(ctx) {
   return pickPool(pool3, rng);
 }
 function collectivePool(ctx, filter = {}) {
-  var _a3, _b, _c, _d, _e, _f;
+  var _a4, _b2, _c2, _d2, _e2, _f;
   const pool3 = /* @__PURE__ */ new Map();
   const lineageSet = new Set(TRIBAL_DATA.lineageCollectives);
   const signature = new Set(ctx.trad.signatureCollectives);
@@ -58581,9 +58582,9 @@ function collectivePool(ctx, filter = {}) {
     if (filter.roleOnly && !row.role) continue;
     if (filter.personOnly && !row.person) continue;
     if (filter.only && !filter.only.includes(row.word)) continue;
-    let w = (_c = (_b = (_a3 = row.groupMult) == null ? void 0 : _a3[ctx.groupType]) != null ? _b : row.mult) != null ? _c : 1;
+    let w = (_c2 = (_b2 = (_a4 = row.groupMult) == null ? void 0 : _a4[ctx.groupType]) != null ? _b2 : row.mult) != null ? _c2 : 1;
     if (row.traditions && !row.traditions.includes(ctx.trad.key)) w *= ctx.trad.key === "general" ? 0.3 : 0;
-    w *= (_e = (_d = row.traditionMult) == null ? void 0 : _d[ctx.trad.key]) != null ? _e : 1;
+    w *= (_e2 = (_d2 = row.traditionMult) == null ? void 0 : _d2[ctx.trad.key]) != null ? _e2 : 1;
     if (signature.has(row.word)) w *= 2;
     w *= (_f = ctx.trad.lineageMultipliers[row.word]) != null ? _f : 1;
     if (row.gate === "mounts" && mounts(ctx).length === 0) w = 0;
@@ -58595,64 +58596,64 @@ function collectivePool(ctx, filter = {}) {
 var collective = (ctx, filter) => pickPool(collectivePool(ctx, filter), ctx.rng);
 function traditionThemeWeights(trad) {
   const raw = Object.fromEntries(Object.entries(TRIBAL_DATA.themes).map(([k, w]) => {
-    var _a3;
-    return [k, w * ((_a3 = trad.themes[k]) != null ? _a3 : 1)];
+    var _a4;
+    return [k, w * ((_a4 = trad.themes[k]) != null ? _a4 : 1)];
   }));
   const total = Object.values(raw).reduce((n, w) => n + w, 0);
   const pct = Object.fromEntries(Object.entries(raw).map(([k, w]) => [k, w * 100 / total]));
   const capped = pct.animals + pct.sacred;
-  const cap2 = TRIBAL_DATA.parityCap;
-  if (capped <= cap2) return pct;
-  const scale = cap2 / capped;
+  const cap3 = TRIBAL_DATA.parityCap;
+  if (capped <= cap3) return pct;
+  const scale = cap3 / capped;
   const others = 100 - capped;
-  const lift = (100 - cap2) / others;
+  const lift = (100 - cap3) / others;
   return Object.fromEntries(Object.entries(pct).map(([k, w]) => [k, k === "animals" || k === "sacred" ? w * scale : w * lift]));
 }
 function traditionGroupTypeWeights(trad) {
   return Object.fromEntries(TRIBAL_DATA.groupTypes.map((g) => {
-    var _a3;
-    return [g.key, g.weight * ((_a3 = trad.groupTypes[g.key]) != null ? _a3 : 1)];
+    var _a4;
+    return [g.key, g.weight * ((_a4 = trad.groupTypes[g.key]) != null ? _a4 : 1)];
   }));
 }
 function themeWeights(ctx) {
-  var _a3;
+  var _a4;
   const base = traditionThemeWeights(ctx.trad);
   const matrix = TRIBAL_DATA.groupTypeThemes[ctx.groupType];
   const out = {};
   for (const [theme, w] of Object.entries(base)) {
-    let m = w * ((_a3 = matrix[theme]) != null ? _a3 : 0);
+    let m = w * ((_a4 = matrix[theme]) != null ? _a4 : 0);
     if (theme === "vessel" && share(ctx, "coast", "rivers", "islands") < 20) m *= 0.2;
     out[theme] = m;
   }
   return out;
 }
 function templateWeights(ctx) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const T = TRIBAL_DATA.templates;
   const ri = TRIBAL_REGISTERS.indexOf(ctx.register);
-  const fixed = (_a3 = ctx.opts.constraints) == null ? void 0 : _a3.templates;
+  const fixed = (_a4 = ctx.opts.constraints) == null ? void 0 : _a4.templates;
   const out = {};
   for (const [key2, weights] of Object.entries(T.weights)) {
-    let w = fixed ? (_b = fixed[key2]) != null ? _b : 0 : weights[ri] * ((_c = ctx.trad.templates[key2]) != null ? _c : 1);
+    let w = fixed ? (_b2 = fixed[key2]) != null ? _b2 : 0 : weights[ri] * ((_c2 = ctx.trad.templates[key2]) != null ? _c2 : 1);
     if (!T.themes[key2].includes(ctx.theme)) w = 0;
     if (T.groupTypes[key2] && !T.groupTypes[key2].includes(ctx.groupType)) w = 0;
     if (T.perspectives[key2] && !T.perspectives[key2].includes(ctx.perspective)) w = 0;
-    if (T.traditions[key2]) w *= (_d = T.traditions[key2][ctx.trad.key]) != null ? _d : 0;
+    if (T.traditions[key2]) w *= (_d2 = T.traditions[key2][ctx.trad.key]) != null ? _d2 : 0;
     out[key2] = w;
   }
   return out;
 }
 function animal(ctx, wild = false) {
-  var _a3;
-  return (_a3 = ctx.pin.get("animal")) != null ? _a3 : pickPool(animalPool(ctx, wild), ctx.rng);
+  var _a4;
+  return (_a4 = ctx.pin.get("animal")) != null ? _a4 : pickPool(animalPool(ctx, wild), ctx.rng);
 }
 function plant(ctx) {
-  var _a3;
-  return (_a3 = ctx.pin.get("plant")) != null ? _a3 : pickPool(plantPool(ctx), ctx.rng);
+  var _a4;
+  return (_a4 = ctx.pin.get("plant")) != null ? _a4 : pickPool(plantPool(ctx), ctx.rng);
 }
 function sacred(ctx) {
-  var _a3;
-  return (_a3 = ctx.pin.get("sacred")) != null ? _a3 : pickPool(sacredPool(ctx), ctx.rng);
+  var _a4;
+  return (_a4 = ctx.pin.get("sacred")) != null ? _a4 : pickPool(sacredPool(ctx), ctx.rng);
 }
 var LEADING_DIRECTION = /^(Upper|Lower|Outer|Inner|Far|Near|North|South|East|West|Northern|Southern|Eastern|Western|Central|Middle)\b/;
 function place(ctx, kind = "any", directionChance = 0.25) {
@@ -58681,13 +58682,13 @@ function themedWord(ctx, parts) {
   }
 }
 function templateA(ctx, parts) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h;
   const rng = ctx.rng;
   switch (ctx.theme) {
     case "relationship": {
       const pool3 = /* @__PURE__ */ new Map();
       for (const w of V.relationship) add(pool3, w, w === "Tributaries" && !["imposed", "later"].includes(ctx.perspective) ? 0 : 1);
-      return parts.keyword = (_a3 = pickPool(pool3, rng)) != null ? _a3 : "";
+      return parts.keyword = (_a4 = pickPool(pool3, rng)) != null ? _a4 : "";
     }
     case "qualities":
       parts.quality = pickPool(qualityPool(ctx), rng);
@@ -58707,7 +58708,7 @@ function templateA(ctx, parts) {
     default:
       themedWord(ctx, parts);
   }
-  const lead = (_h = (_g = (_f = (_e = (_d = (_c = (_b = parts.quality) != null ? _b : parts.emblem) != null ? _c : parts.dress) != null ? _d : parts.direction) != null ? _e : parts.feature) != null ? _f : parts.animal) != null ? _g : parts.plant) != null ? _h : parts.sacred;
+  const lead = (_h = (_g = (_f = (_e2 = (_d2 = (_c2 = (_b2 = parts.quality) != null ? _b2 : parts.emblem) != null ? _c2 : parts.dress) != null ? _d2 : parts.direction) != null ? _e2 : parts.feature) != null ? _f : parts.animal) != null ? _g : parts.plant) != null ? _h : parts.sacred;
   const c = collective(ctx);
   if (!lead || !c) return void 0;
   parts.collective = c;
@@ -58765,9 +58766,9 @@ function templateF(ctx, parts) {
   return `${pickUniform2(V.colours, ctx.rng)} ${emblem2} ${c}`;
 }
 function templateG(ctx, parts) {
-  var _a3;
+  var _a4;
   let target;
-  if (ctx.theme === "ancestor") target = parts.ancestor = (_a3 = ctx.pin.get("ancestor")) != null ? _a3 : pickUniform2(V.ancestors, ctx.rng);
+  if (ctx.theme === "ancestor") target = parts.ancestor = (_a4 = ctx.pin.get("ancestor")) != null ? _a4 : pickUniform2(V.ancestors, ctx.rng);
   else target = ofTarget(ctx, parts);
   const c = collective(ctx, { lineageOnly: true });
   if (!target || !c) return void 0;
@@ -58786,9 +58787,9 @@ function templateI(ctx, parts) {
   return `${c} of the ${p}`;
 }
 function templateJ(ctx, parts) {
-  var _a3;
+  var _a4;
   const n = parts.number = numberWord(ctx);
-  if (((_a3 = ctx.opts.constraints) == null ? void 0 : _a3.jFirstFormOnly) || ctx.rng() < 0.5) {
+  if (((_a4 = ctx.opts.constraints) == null ? void 0 : _a4.jFirstFormOnly) || ctx.rng() < 0.5) {
     const noun2 = pick(V.countedNouns.map((w) => [w, countedOk(ctx, w)]), ctx.rng);
     if (!noun2) return void 0;
     return `${n} ${noun2}`;
@@ -58835,8 +58836,8 @@ function templateK(ctx, parts) {
   return `Those Who ${phrase.verb} ${w}`;
 }
 function templateL(ctx, parts) {
-  var _a3;
-  const agent = parts.lifeway = (_a3 = ctx.pin.get("lifeway")) != null ? _a3 : pickPool(lifewayPool(ctx), ctx.rng);
+  var _a4;
+  const agent = parts.lifeway = (_a4 = ctx.pin.get("lifeway")) != null ? _a4 : pickPool(lifewayPool(ctx), ctx.rng);
   if (!agent) return void 0;
   if (!agent.includes(" ") && ctx.rng() < 0.6) {
     const f = featureWord(ctx, "any");
@@ -58858,14 +58859,14 @@ function templateM(ctx, parts) {
   return `${s.descriptor} ${c}`;
 }
 function templateN(ctx, parts) {
-  var _a3;
+  var _a4;
   const epithets = V.ancestors.filter((a2) => !a2.includes("'"));
-  const a = parts.ancestor = (_a3 = ctx.pin.get("ancestor")) != null ? _a3 : pickUniform2(epithets, ctx.rng);
+  const a = parts.ancestor = (_a4 = ctx.pin.get("ancestor")) != null ? _a4 : pickUniform2(epithets, ctx.rng);
   const c = collective(ctx, { personOnly: true });
   if (!a || !c || a.includes("'")) return void 0;
   parts.collective = c;
-  const bare5 = a.replace(/^the /, "");
-  return `${bare5}${bare5.endsWith("s") ? "'" : "'s"} ${c}`;
+  const bare6 = a.replace(/^the /, "");
+  return `${bare6}${bare6.endsWith("s") ? "'" : "'s"} ${c}`;
 }
 function templateO(ctx, parts) {
   const r = ctx.rng();
@@ -58883,14 +58884,14 @@ function templateO(ctx, parts) {
   return q ? `The ${q}` : void 0;
 }
 function templateP(ctx, parts) {
-  var _a3;
+  var _a4;
   let emblem2;
   if (ctx.theme === "lifeway") {
     const agent = parts.lifeway = pickPool(lifewayPool(ctx), ctx.rng);
     emblem2 = agent ? `${agent}'` : void 0;
   } else if (ctx.theme === "animals") emblem2 = parts.animal = animal(ctx);
   else emblem2 = parts.plant = plant(ctx);
-  const house = (_a3 = collective(ctx, { only: ["House", "Clan"] })) != null ? _a3 : ctx.groupType === "occupational" ? "Clan" : void 0;
+  const house = (_a4 = collective(ctx, { only: ["House", "Clan"] })) != null ? _a4 : ctx.groupType === "occupational" ? "Clan" : void 0;
   const p = place(ctx, "any", 0.5);
   if (!emblem2 || !house || !p) return void 0;
   parts.collective = house;
@@ -58991,10 +58992,10 @@ function safeguardSets(opts) {
   return sets;
 }
 function breaksColourRule(name, traditionKey) {
-  var _a3, _b;
+  var _a4, _b2;
   const words = name.split(" ");
   const colours = /* @__PURE__ */ new Set([...V.colours, "Yellow"]);
-  const exceptions = new Set((_b = (_a3 = findTradition(traditionKey)) == null ? void 0 : _a3.special.colourCollectives) != null ? _b : []);
+  const exceptions = new Set((_b2 = (_a4 = findTradition(traditionKey)) == null ? void 0 : _a4.special.colourCollectives) != null ? _b2 : []);
   const persons = new Set(PERSON_COLLECTIVES);
   for (let i = 0; i < words.length - 1; i++) {
     if (colours.has(words[i]) && persons.has(words[i + 1]) && !exceptions.has(words[i + 1])) return true;
@@ -59003,28 +59004,28 @@ function breaksColourRule(name, traditionKey) {
 }
 var ENGLISH = /^[A-Za-z' -]+$/;
 function render(ctx, template, text, parts) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   let base = text;
   let tail = false;
   if (TRIBAL_DATA.templates.tail.includes(template) && // P already ends "of the [PLACE]".
-  template !== "P" && !((_a3 = ctx.opts.constraints) == null ? void 0 : _a3.noTail) && !/ (of|by|beyond|across|between) /i.test(base) && ctx.rng() < (ctx.register === "plain" ? 0.15 : 0.25)) {
+  template !== "P" && !((_a4 = ctx.opts.constraints) == null ? void 0 : _a4.noTail) && !/ (of|by|beyond|across|between) /i.test(base) && ctx.rng() < (ctx.register === "plain" ? 0.15 : 0.25)) {
     const f = place(ctx, "any", 0.25);
     if (f && !base.includes(f)) {
       parts.tailAt = base.length;
-      parts.feature = (_b = parts.feature) != null ? _b : f;
+      parts.feature = (_b2 = parts.feature) != null ? _b2 : f;
       base = `${base} of the ${f}`;
       tail = true;
     }
   }
   let headword = tribalTitleCase(base);
   if (ctx.register === "historical" && !/^(The|Those) /.test(headword)) headword = `The ${headword}`;
-  const cap2 = Math.min(TRIBAL_DATA.lengthCaps[ctx.register], (_d = (_c = ctx.opts.constraints) == null ? void 0 : _c.maxWords) != null ? _d : Infinity);
-  if (headword.split(" ").length > cap2) {
+  const cap3 = Math.min(TRIBAL_DATA.lengthCaps[ctx.register], (_d2 = (_c2 = ctx.opts.constraints) == null ? void 0 : _c2.maxWords) != null ? _d2 : Infinity);
+  if (headword.split(" ").length > cap3) {
     if (!tail || parts.tailAt === void 0) return null;
     headword = tribalTitleCase(base.slice(0, parts.tailAt));
     if (ctx.register === "historical" && !/^(The|Those) /.test(headword)) headword = `The ${headword}`;
     tail = false;
-    if (headword.split(" ").length > cap2) return null;
+    if (headword.split(" ").length > cap3) return null;
   }
   if (!ENGLISH.test(headword)) return null;
   if (breaksColourRule(headword, ctx.trad.key)) return null;
@@ -59038,10 +59039,10 @@ function historyPerspectiveKey(ctx) {
   return ctx.perspective === "neighbour" ? `neighbour.${ctx.tone}` : ctx.perspective === "imposed" ? "imposed" : ctx.perspective;
 }
 function directionGloss(ctx, d) {
-  var _a3;
+  var _a4;
   const colour = V.colourDirections[d];
   if (colour && ctx.trad.orientation.some((o) => o.system === "colourDirection")) return `in the ${colour}, whose colour is ${d.toLowerCase()}`;
-  return (_a3 = TRIBAL_DATA.history.directionGloss[d]) != null ? _a3 : "apart from their neighbours";
+  return (_a4 = TRIBAL_DATA.history.directionGloss[d]) != null ? _a4 : "apart from their neighbours";
 }
 function interpretationFor(ctx, template) {
   const special = ctx.trad.special;
@@ -59061,18 +59062,18 @@ function interpretationFor(ctx, template) {
 }
 function sentence(text, fills) {
   return text.replace(/\{(\w+)\}/g, (_, k) => {
-    var _a3;
-    return (_a3 = fills[k]) != null ? _a3 : k;
+    var _a4;
+    return (_a4 = fills[k]) != null ? _a4 : k;
   });
 }
 function history(ctx, template, parts) {
-  var _a3, _b, _c, _d, _e;
+  var _a4, _b2, _c2, _d2, _e2;
   const H = TRIBAL_DATA.history;
   const rng = ctx.rng;
-  const feature = (_b = (_a3 = parts.feature) != null ? _a3 : featureWord(ctx, "land")) != null ? _b : "hills";
+  const feature = (_b2 = (_a4 = parts.feature) != null ? _a4 : featureWord(ctx, "land")) != null ? _b2 : "hills";
   const lifeway = parts.lifeway ? lower(parts.lifeway) : void 0;
   const custom = ctx.theme === "lifeway" && lifeway ? `their work as ${lifeway}` : ctx.theme === "dress" && parts.dress ? `their ${H.dressGloss[parts.dress]}` : ctx.theme === "speech" ? "the way they spoke" : ctx.theme === "warfare" ? "their skill in war" : ctx.theme === "animals" && parts.animal ? `their ${lower(parts.animal)} emblem` : "their ways";
-  const ancestor = (_c = parts.ancestor) != null ? _c : "a founding ancestor";
+  const ancestor = (_c2 = parts.ancestor) != null ? _c2 : "a founding ancestor";
   const interpretation = ctx.theme === "animals" ? interpretationFor(ctx, template) : null;
   const fills = {
     feature,
@@ -59081,13 +59082,13 @@ function history(ctx, template, parts) {
     emblem: parts.emblem ? `the ${lower(parts.emblem)}` : "their weapons",
     animal: parts.animal ? lower(parts.animal) : "animal",
     plant: parts.plant ? lower(parts.plant) : "great tree",
-    sacred: (_d = parts.sacred) != null ? _d : "sacred places",
+    sacred: (_d2 = parts.sacred) != null ? _d2 : "sacred places",
     direction: parts.direction ? directionGloss(ctx, parts.direction) : "apart from their neighbours",
     quality: parts.quality ? H.qualityGloss[parts.quality] : "a people apart",
     number: parts.number ? lower(parts.number) : "several",
     lifeway: lifeway != null ? lifeway : "farmers",
     dress: parts.dress ? H.dressGloss[parts.dress] : "their dress",
-    vessel: (_e = parts.vessel) != null ? _e : "the canoe",
+    vessel: (_e2 = parts.vessel) != null ? _e2 : "the canoe",
     interpretation: interpretation != null ? interpretation : void 0
   };
   const pkey = historyPerspectiveKey(ctx);
@@ -59107,18 +59108,18 @@ function history(ctx, template, parts) {
   };
 }
 function literalMeaning(ctx, parts) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h;
   const H = TRIBAL_DATA.history;
   switch (ctx.theme) {
     case "landscape":
     case "water":
-      return `The people associated with the ${(_a3 = parts.feature) != null ? _a3 : "land"}`;
+      return `The people associated with the ${(_a4 = parts.feature) != null ? _a4 : "land"}`;
     case "animals":
-      return `The people of the ${lower((_b = parts.animal) != null ? _b : "animal")}`;
+      return `The people of the ${lower((_b2 = parts.animal) != null ? _b2 : "animal")}`;
     case "plants":
-      return `The people of the ${lower((_c = parts.plant) != null ? _c : "tree")}`;
+      return `The people of the ${lower((_c2 = parts.plant) != null ? _c2 : "tree")}`;
     case "sacred":
-      return `Those who hold the ${(_d = parts.sacred) != null ? _d : "sacred places"} holy`;
+      return `Those who hold the ${(_d2 = parts.sacred) != null ? _d2 : "sacred places"} holy`;
     case "direction":
       return `The people living ${parts.direction ? directionGloss(ctx, parts.direction) : "apart"}`;
     case "qualities": {
@@ -59126,7 +59127,7 @@ function literalMeaning(ctx, parts) {
       return g.charAt(0).toUpperCase() + g.slice(1);
     }
     case "number":
-      return `${(_e = parts.number) != null ? _e : "Several"} groups bound together`;
+      return `${(_e2 = parts.number) != null ? _e2 : "Several"} groups bound together`;
     case "lifeway":
       return `The ${lower((_f = parts.lifeway) != null ? _f : "workers")}`;
     case "speech":
@@ -59146,12 +59147,12 @@ function literalMeaning(ctx, parts) {
 }
 var HOSTILE_PERSPECTIVES = /* @__PURE__ */ new Set(["neighbour", "imposed"]);
 function attempt(ctx, fixed) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h, _i;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i;
   const rng = ctx.rng;
   const opts = ctx.opts;
   const perspectiveWeights = {};
   for (const [p, w] of Object.entries(TRIBAL_DATA.perspectives)) {
-    perspectiveWeights[p] = w * ((_b = (_a3 = TRIBAL_DATA.perspectiveByGroupType[ctx.groupType]) == null ? void 0 : _a3[p]) != null ? _b : 1) * ((_e = (_d = (_c = opts.constraints) == null ? void 0 : _c.perspectiveMultipliers) == null ? void 0 : _d[p]) != null ? _e : 1);
+    perspectiveWeights[p] = w * ((_b2 = (_a4 = TRIBAL_DATA.perspectiveByGroupType[ctx.groupType]) == null ? void 0 : _a4[p]) != null ? _b2 : 1) * ((_e2 = (_d2 = (_c2 = opts.constraints) == null ? void 0 : _c2.perspectiveMultipliers) == null ? void 0 : _d2[p]) != null ? _e2 : 1);
   }
   const wanted = (_f = fixed == null ? void 0 : fixed.perspective) != null ? _f : opts.perspective;
   ctx.perspective = wanted != null ? wanted : pickRecord(perspectiveWeights, rng);
@@ -59208,9 +59209,9 @@ function inTextOf(headword) {
   return headword.startsWith("The ") ? `the ${headword.slice(4)}` : headword.startsWith("Those ") ? headword : `the ${headword}`;
 }
 function groupTypeChoices(trad, options) {
-  var _a3;
+  var _a4;
   const weights = traditionGroupTypeWeights(trad);
-  const allowed = (_a3 = options.constraints) == null ? void 0 : _a3.groupTypes;
+  const allowed = (_a4 = options.constraints) == null ? void 0 : _a4.groupTypes;
   for (const key2 of Object.keys(weights)) {
     if (options.groupType && key2 !== options.groupType) weights[key2] = 0;
     if (allowed && !allowed.includes(key2)) weights[key2] = 0;
@@ -59218,14 +59219,14 @@ function groupTypeChoices(trad, options) {
   return weights;
 }
 function tribalName(options, rng) {
-  var _a3, _b, _c;
-  const trad = (_a3 = findTradition(options.tradition)) != null ? _a3 : TRIBAL_TRADITIONS[0];
-  const chosen = (_b = options.biomeData) != null ? _b : findBiome(options.biome);
+  var _a4, _b2, _c2;
+  const trad = (_a4 = findTradition(options.tradition)) != null ? _a4 : TRIBAL_TRADITIONS[0];
+  const chosen = (_b2 = options.biomeData) != null ? _b2 : findBiome(options.biome);
   const mode = chosen ? "chosen" : "homeland";
   const biome = chosen != null ? chosen : findBiome(pickRecord(trad.homeland, rng));
   const groupType = pickRecord(groupTypeChoices(trad, options), rng);
   if (!groupType) return null;
-  const registerWeights = (_c = options.constraints) == null ? void 0 : _c.registers;
+  const registerWeights = (_c2 = options.constraints) == null ? void 0 : _c2.registers;
   const register = registerWeights ? pickRecord(registerWeights, rng) : options.register;
   const reg = register != null ? register : "plain";
   const general = TRIBAL_TRADITIONS[0];
@@ -59239,9 +59240,9 @@ function tribalName(options, rng) {
   return null;
 }
 function finish(ctx, a, requested, options) {
-  var _a3;
+  var _a4;
   const parts = a.parts;
-  const headwordOnly = (_a3 = options.constraints) == null ? void 0 : _a3.headwordOnly;
+  const headwordOnly = (_a4 = options.constraints) == null ? void 0 : _a4.headwordOnly;
   const echoesReal = safeguardSets(options).flag.has(norm(a.headword));
   const base = {
     name: a.headword,
@@ -59332,18 +59333,18 @@ function generateTribalNames(options) {
   return { names, seed, notices };
 }
 function tribalHistoryLabel(sectionLabel, tradition, biome, register, terrain = "any", custom = []) {
-  var _a3, _b;
-  const t = (_a3 = findTradition(tradition)) != null ? _a3 : TRIBAL_TRADITIONS[0];
+  var _a4, _b2;
+  const t = (_a4 = findTradition(tradition)) != null ? _a4 : TRIBAL_TRADITIONS[0];
   const b = findBiome(biome, custom);
-  const land = [...TERRAIN_CHOICES, ...(_b = b == null ? void 0 : b.customTerrains) != null ? _b : []].find((x) => x.id === terrain && x.id !== "any");
+  const land = [...TERRAIN_CHOICES, ...(_b2 = b == null ? void 0 : b.customTerrains) != null ? _b2 : []].find((x) => x.id === terrain && x.id !== "any");
   return [sectionLabel, t.label, b ? biomeInline(b) : "homeland", ...land ? [land.label.toLowerCase()] : [], register].join(" \xB7 ");
 }
 function homelandSummary(tradition) {
-  var _a3;
-  const t = (_a3 = findTradition(tradition)) != null ? _a3 : TRIBAL_TRADITIONS[0];
+  var _a4;
+  const t = (_a4 = findTradition(tradition)) != null ? _a4 : TRIBAL_TRADITIONS[0];
   const parts = Object.entries(t.homeland).sort((a, b) => b[1] - a[1]).map(([id, w]) => {
-    var _a4, _b;
-    return `${((_b = (_a4 = findBiome(id)) == null ? void 0 : _a4.label) != null ? _b : id).toLowerCase()} ${w}%`;
+    var _a5, _b2;
+    return `${((_b2 = (_a5 = findBiome(id)) == null ? void 0 : _a5.label) != null ? _b2 : id).toLowerCase()} ${w}%`;
   });
   return `Homeland: ${parts.join(", ")}`;
 }
@@ -59402,23 +59403,23 @@ function autoTradition(region, rng) {
   return "germanic";
 }
 function tribalSlotFill(options, rng) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const organic = options.part === "organic";
   let tradition = options.tradition;
   if (tradition === "auto") tradition = organic ? autoTradition(options.region, rng) : "general";
   if (!findTradition(tradition)) tradition = "general";
-  const fields2 = (_a3 = options.fields) != null ? _a3 : {};
+  const fields2 = (_a4 = options.fields) != null ? _a4 : {};
   let constraints = tribalSlotConstraints(options.part);
   if (fields2.register && constraints.registers && fields2.register in constraints.registers) {
     constraints = { ...constraints, registers: { [fields2.register]: 100 } };
   }
   const groupType = fields2.groupType && (!constraints.groupTypes || constraints.groupTypes.includes(fields2.groupType)) ? fields2.groupType : void 0;
-  const biome = (_b = fields2.biome) != null ? _b : organic ? void 0 : options.biome;
+  const biome = (_b2 = fields2.biome) != null ? _b2 : organic ? void 0 : options.biome;
   const name = tribalName(
     {
       tradition,
       ...typeof biome === "string" ? { biome } : biome ? { biomeData: biome } : {},
-      terrain: (_c = fields2.terrain) != null ? _c : options.terrain,
+      terrain: (_c2 = fields2.terrain) != null ? _c2 : options.terrain,
       ...groupType ? { groupType } : {},
       ...fields2.perspective ? { perspective: fields2.perspective } : {},
       hostile: false,
@@ -59426,7 +59427,7 @@ function tribalSlotFill(options, rng) {
     },
     rng
   );
-  const text = ((_d = name == null ? void 0 : name.name) != null ? _d : "People").replace(/^The /, "");
+  const text = ((_d2 = name == null ? void 0 : name.name) != null ? _d2 : "People").replace(/^The /, "");
   return { text, tradition };
 }
 
@@ -59467,15 +59468,15 @@ function ancientModel(region) {
   return model;
 }
 function ancientName(options, rng) {
-  var _a3, _b;
+  var _a4, _b2;
   const model = ancientModel(options.region);
   const { minLetters, maxLetters, draws } = RIVER_DATA.ancient;
   for (let i = 0; i < draws; i++) {
     const seed = Math.floor(rng() * 4294967296) >>> 0;
     const name = model.generateDetailed({
       count: 1,
-      faithfulness: (_a3 = options.faithfulness) != null ? _a3 : 2,
-      strictness: (_b = options.strictness) != null ? _b : 3,
+      faithfulness: (_a4 = options.faithfulness) != null ? _a4 : 2,
+      strictness: (_b2 = options.strictness) != null ? _b2 : 3,
       seed
     }).names[0];
     if (!name) continue;
@@ -59494,7 +59495,7 @@ function ancientForm(name, region, rng) {
   return { text: name, form };
 }
 var colonialBiome = (options) => options.setting === "british" ? void 0 : findBiome(options.biome);
-function descriptiveName(options, rng, bare5) {
+function descriptiveName(options, rng, bare6) {
   const british = options.setting === "british";
   const biome = colonialBiome(options);
   const categories = RIVER_DATA.descriptiveCategories[british ? "british" : biome ? "colonialWithBiome" : "colonial"];
@@ -59507,11 +59508,11 @@ function descriptiveName(options, rng, bare5) {
     const joined = entry.fuses === "yes" ? smoothJoin(word, water) : null;
     const fuses = joined !== null && letterCount2(joined) <= NAMES.maxFusedLetters && rng() < RIVER_DATA.britishFuseChance;
     const name = fuses ? titleCase2(joined.toLowerCase()) : titleCase2(`${word} ${water}`);
-    if (bare5) return { text: name, water, form: "bare" };
+    if (bare6) return { text: name, water, form: "bare" };
     const form2 = pickWeighted2(RIVER_DATA.forms.britishDescriptive, rng);
     return { text: form2 === "river-x" ? `River ${name}` : name, water, form: form2 };
   }
-  if (bare5) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
+  if (bare6) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
   const form = pickWeighted2(RIVER_DATA.forms.colonialDescriptive, rng);
   return form === "bare" && water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
 }
@@ -59526,10 +59527,10 @@ function patternName(options, rng) {
   const items = RIVER_DATA.patterns[options.setting];
   const picked = pickWeighted2(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
   const pattern = options.peoples === "tribal" ? picked.replace(/\[(tribal name|native people)\]/g, () => {
-    var _a3;
+    var _a4;
     const british = options.setting === "british";
     return tribalSlotFill(
-      british ? { tradition: "celtic", part: "river-british", biome: "britain" } : { tradition: (_a3 = options.peoplesTradition) != null ? _a3 : "general", part: "river-colonial", biome: options.biome },
+      british ? { tradition: "celtic", part: "river-british", biome: "britain" } : { tradition: (_a4 = options.peoplesTradition) != null ? _a4 : "general", part: "river-colonial", biome: options.biome },
       rng
     ).text;
   }) : picked;
@@ -59687,8 +59688,8 @@ function hasGenderDefault(categoryId) {
 }
 var NAME_WORDS = name_words_default;
 function hasBuiltInList(categoryId) {
-  var _a3, _b;
-  return ((_b = (_a3 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a3.length) != null ? _b : 0) > 0;
+  var _a4, _b2;
+  return ((_b2 = (_a4 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a4.length) != null ? _b2 : 0) > 0;
 }
 var categoryLabels = new Map([
   ...PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label.toLowerCase()]),
@@ -59712,8 +59713,8 @@ function pluralise(word) {
   return [...parts, plural2].join(" ");
 }
 var placeholderText = (categoryId) => {
-  var _a3, _b;
-  return `[${(_b = (_a3 = RENDER_LABELS[categoryId]) != null ? _a3 : categoryLabels.get(categoryId)) != null ? _b : categoryId}]`;
+  var _a4, _b2;
+  return `[${(_b2 = (_a4 = RENDER_LABELS[categoryId]) != null ? _a4 : categoryLabels.get(categoryId)) != null ? _b2 : categoryId}]`;
 };
 function pickWeighted3(items, rng) {
   const total = items.reduce((n, [, w]) => n + w, 0);
@@ -59734,9 +59735,9 @@ function fillWord(fill) {
   return fill.traditional && fill.entry.traditional ? fill.entry.traditional : fill.entry.modern;
 }
 function fillEtymology(fill) {
-  var _a3;
+  var _a4;
   if (fill.kind === "placeholder") return void 0;
-  return fill.kind === "name" ? (_a3 = fill.native) != null ? _a3 : fill.text : fill.entry.modern;
+  return fill.kind === "name" ? (_a4 = fill.native) != null ? _a4 : fill.text : fill.entry.modern;
 }
 var VOWELS3 = /[aeiouy]/i;
 var isConsonant = (ch) => /[a-z]/i.test(ch) && !VOWELS3.test(ch);
@@ -59754,13 +59755,13 @@ function capitaliseSpaced(text) {
   }).join(" ");
 }
 function smoothJoin(specific, generic) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   let a = specific;
   let b = generic.toLowerCase();
   if (a.length > 0 && b.length > 0 && a.slice(-1).toLowerCase() === b.charAt(0)) b = b.slice(1);
   if (/e$/i.test(a) && VOWELS3.test(b.charAt(0))) a = a.slice(0, -1);
-  const tail = (_b = (_a3 = a.match(/[^aeiouy]*$/i)) == null ? void 0 : _a3[0]) != null ? _b : "";
-  const head = (_d = (_c = b.match(/^[^aeiouy]*/i)) == null ? void 0 : _c[0]) != null ? _d : "";
+  const tail = (_b2 = (_a4 = a.match(/[^aeiouy]*$/i)) == null ? void 0 : _a4[0]) != null ? _b2 : "";
+  const head = (_d2 = (_c2 = b.match(/^[^aeiouy]*/i)) == null ? void 0 : _c2[0]) != null ? _d2 : "";
   if (Array.from(tail + head).filter(isConsonant).length >= NAMES.maxJoinConsonants) return null;
   return (a + b).replace(/(.)\1{2,}/gi, "$1$1");
 }
@@ -59830,7 +59831,7 @@ var NameRenderer = class {
    * usual path (landform, ground and resource words come from the biome through landFill).
    */
   spaceFill(categoryId, rng) {
-    var _a3;
+    var _a4;
     const biome = this.options.biome;
     const scale = biome == null ? void 0 : biome.scale;
     if (!biome || !scale) return void 0;
@@ -59849,7 +59850,7 @@ var NameRenderer = class {
         return placeholder("[alien god]");
       case "position-or-direction": {
         if (rng() < 0.5) return word(spaceWord(pickUniform4(spaceDirections(scale), rng).toLowerCase()));
-        const positional = ((_a3 = NAME_WORDS.categories["position-or-direction"]) != null ? _a3 : []).filter((e) => SPACE_POSITIONAL.has(e.modern.toLowerCase()));
+        const positional = ((_a4 = NAME_WORDS.categories["position-or-direction"]) != null ? _a4 : []).filter((e) => SPACE_POSITIONAL.has(e.modern.toLowerCase()));
         return positional.length > 0 ? word(pickUniform4(positional, rng)) : void 0;
       }
       case "built-feature":
@@ -59871,8 +59872,8 @@ var NameRenderer = class {
    * (Britain with Any terrain draws today's built-ins uniformly, so seeds are unchanged).
    */
   landFill(categoryId, rng, chosenBiome) {
-    var _a3;
-    const biome = ((_a3 = this.options.biome) == null ? void 0 : _a3.id) === "britain" ? void 0 : this.options.biome;
+    var _a4;
+    const biome = ((_a4 = this.options.biome) == null ? void 0 : _a4.id) === "britain" ? void 0 : this.options.biome;
     const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
     const word = (entry) => ({ kind: "word", entry, traditional: this.chooseRegister(entry, rng) });
     if (categoryId === "landform" || categoryId === "water-or-wetland-feature") {
@@ -59906,8 +59907,8 @@ var NameRenderer = class {
    * draws a whole name from that pack, used as an open, named word.
    */
   biomePick(biome, categoryId, entries, rng, register) {
-    var _a3, _b;
-    const draws = (_b = (_a3 = biome.packDraws) == null ? void 0 : _a3[SLOT_LISTS[categoryId]]) != null ? _b : [];
+    var _a4, _b2;
+    const draws = (_b2 = (_a4 = biome.packDraws) == null ? void 0 : _a4[SLOT_LISTS[categoryId]]) != null ? _b2 : [];
     const asWord = (entry) => ({ kind: "word", entry, traditional: register ? this.chooseRegister(entry, rng) : false });
     if (draws.length === 0) return asWord(pickWeighted3(entries, rng));
     const choice = pickWeighted3([...entries.map(([entry, w]) => [{ entry }, w]), ...draws.map((d) => [{ draw: d.draw }, d.weight])], rng);
@@ -59945,7 +59946,7 @@ var NameRenderer = class {
   }
   /** Stage 2: fill one slot. `whole` forces whole names for pack sources (§5.3). */
   fill(categoryId, rng, whole = false) {
-    var _a3, _b, _c;
+    var _a4, _b2, _c2;
     const mapped = this.slots[categoryId];
     if (categoryId === RIVER_CATEGORY && (!mapped || mapped.kind === "built-in")) {
       const native = this.slots["native-place-name"];
@@ -59955,7 +59956,7 @@ var NameRenderer = class {
       }
       return this.riverWordFill(rng);
     }
-    if (!mapped && ((_a3 = this.options.biome) == null ? void 0 : _a3.space)) {
+    if (!mapped && ((_a4 = this.options.biome) == null ? void 0 : _a4.space)) {
       const space = this.spaceFill(categoryId, rng);
       if (space) return space;
     }
@@ -59989,8 +59990,8 @@ var NameRenderer = class {
     if (source.items) return this.itemFill(source, slot, categoryId, rng, whole, entryFill);
     if (source.entries) return wordFill(source.entries);
     if (!source.draw) return this.placeholder(categoryId);
-    const mode = whole ? "whole" : (_b = slot.mode) != null ? _b : defaultNameMode(categoryId);
-    const ratio = (_c = slot.gender) != null ? _c : DEFAULT_GENDER[categoryId];
+    const mode = whole ? "whole" : (_b2 = slot.mode) != null ? _b2 : defaultNameMode(categoryId);
+    const ratio = (_c2 = slot.gender) != null ? _c2 : DEFAULT_GENDER[categoryId];
     const request = {};
     if (slot.section) request.section = slot.section;
     if (ratio) request.gender = rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female";
@@ -60003,18 +60004,18 @@ var NameRenderer = class {
    * and a word fill elsewhere.
    */
   itemFill(source, slot, categoryId, rng, whole, entryFill) {
-    var _a3, _b, _c;
+    var _a4, _b2, _c2;
     const all = source.items;
     if (all.length === 0) return this.placeholder(categoryId);
-    const ratio = (_a3 = slot.gender) != null ? _a3 : DEFAULT_GENDER[categoryId];
+    const ratio = (_a4 = slot.gender) != null ? _a4 : DEFAULT_GENDER[categoryId];
     const gender = ratio ? rng() * (ratio.male + ratio.female) < ratio.male ? "male" : "female" : void 0;
     let items = gender ? all.filter((i) => !i.gender || i.gender === gender) : all;
     if (items.length === 0) {
-      this.notices.add(`${(_b = source.itemsLabel) != null ? _b : "Word list"} has no ${gender} entries; ignoring gender.`);
+      this.notices.add(`${(_b2 = source.itemsLabel) != null ? _b2 : "Word list"} has no ${gender} entries; ignoring gender.`);
       items = all;
     }
     const item2 = pickItem(items, rng);
-    const mode = whole ? "whole" : (_c = slot.mode) != null ? _c : defaultNameMode(categoryId);
+    const mode = whole ? "whole" : (_c2 = slot.mode) != null ? _c2 : defaultNameMode(categoryId);
     if (item2.draw) {
       const text = item2.draw(gender ? { gender } : {}, mode, rng);
       return text ? { kind: "name", text, mode } : this.placeholder(categoryId);
@@ -60042,13 +60043,13 @@ var NameRenderer = class {
   }
   /** The generic's word (§3.1): variant replaces the plain word in its regions; recipe overrides last. */
   genericWord(genericId, plural2, rng) {
-    var _a3, _b, _c;
+    var _a4, _b2, _c2;
     if (LOCAL_GENERICS.has(genericId)) return this.localGeneric(genericId, rng);
     const colonial = NAME_WORDS.colonialGenerics[genericId];
     if (colonial) {
       const word2 = pickUniform4(colonial, rng);
       const chosen = plural2 ? pluralise(word2) : word2;
-      return (_a3 = this.recipe.generics[chosen.toLowerCase()]) != null ? _a3 : chosen;
+      return (_a4 = this.recipe.generics[chosen.toLowerCase()]) != null ? _a4 : chosen;
     }
     const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === genericId);
     let word;
@@ -60059,16 +60060,16 @@ var NameRenderer = class {
       const i = entry && entry.words.length > 1 ? Math.floor(rng() * entry.words.length) : 0;
       word = entry ? plural2 && entry.plurals[i] ? entry.plurals[i] : entry.words[i] : genericId;
       const variant = this.region ? PLACE_SHAPE_WORD_DATA.variants.find((v) => v.generic === genericId && v.regions.includes(this.region)) : void 0;
-      if (variant) word = plural2 && ((_b = entry == null ? void 0 : entry.plurals[i]) != null ? _b : "") !== "" ? variant.plural : variant.variant;
+      if (variant) word = plural2 && ((_b2 = entry == null ? void 0 : entry.plurals[i]) != null ? _b2 : "") !== "" ? variant.plural : variant.variant;
     }
-    return (_c = this.recipe.generics[word.toLowerCase()]) != null ? _c : word;
+    return (_c2 = this.recipe.generics[word.toLowerCase()]) != null ? _c2 : word;
   }
   /** §9.3: the local word from the recipe's linked word list (Modern column only), or a placeholder. */
   localGeneric(genericId, rng) {
     const slot = this.slots[genericId];
     const wordsOf = (s) => {
-      var _a3;
-      return s.entries ? s.entries.map((entry) => ({ weight: 1, entry })) : ((_a3 = s.items) != null ? _a3 : []).filter((i) => i.entry);
+      var _a4;
+      return s.entries ? s.entries.map((entry) => ({ weight: 1, entry })) : ((_a4 = s.items) != null ? _a4 : []).filter((i) => i.entry);
     };
     const sources = (slot == null ? void 0 : slot.kind) === "sources" ? slot.sources.filter((s) => wordsOf(s).length > 0) : [];
     if (sources.length === 0) return placeholderText(genericId);
@@ -60095,7 +60096,7 @@ var NameRenderer = class {
    * fused (stacked generics only fuse onto an already fused name).
    */
   join(fill, categoryId, genericId, rng) {
-    var _a3;
+    var _a4;
     let plural2 = false;
     let forceFuse = false;
     let neverFuse = false;
@@ -60126,7 +60127,7 @@ var NameRenderer = class {
     const spaced = { text: capitaliseSpaced(`${fillWord(fill)} ${generic}`), fused: false };
     if (LOCAL_GENERICS.has(genericId) && fill.kind !== "placeholder" && !generic.startsWith("[")) {
       const specific2 = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
-      return { text: fusedCase((_a3 = smoothJoin(specific2, generic)) != null ? _a3 : `${specific2}${generic.toLowerCase()}`), fused: true };
+      return { text: fusedCase((_a4 = smoothJoin(specific2, generic)) != null ? _a4 : `${specific2}${generic.toLowerCase()}`), fused: true };
     }
     if (fill.kind === "word" && fill.entry.fuses === "town-only" && generic.toLowerCase() !== "town") return spaced;
     if (neverFuse && !forceFuse) return spaced;
@@ -60145,10 +60146,10 @@ var NameRenderer = class {
   }
   /** §4.4: a name or placeholder with a generic-first order stays generic first. */
   genericFirst(fill, genericId, linked, rng) {
-    var _a3;
+    var _a4;
     const generic = this.genericWord(genericId, false, rng);
     const variantPrefix = NAME_WORDS.prefixVariantForms[genericId];
-    const prefix = (_a3 = NAME_WORDS.prefixForms[genericId]) != null ? _a3 : variantPrefix && generic.toLowerCase() === variantPrefix.variant ? variantPrefix.prefix : void 0;
+    const prefix = (_a4 = NAME_WORDS.prefixForms[genericId]) != null ? _a4 : variantPrefix && generic.toLowerCase() === variantPrefix.variant ? variantPrefix.prefix : void 0;
     const name = fillWord(fill);
     if (prefix) return `${prefix} ${titleWord(name)}`;
     return capitaliseSpaced(`${generic} of ${name}`);
@@ -60170,10 +60171,10 @@ var NameRenderer = class {
     let { typeId, form } = shape.affix;
     if (ignored(form)) {
       const options = PLACE_SHAPE_DATA.affixes.map((a) => {
-        var _a3;
+        var _a4;
         return [
           { id: a.id, forms: a.forms.filter((f) => !ignored(f)) },
-          (_a3 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a3 : 0
+          (_a4 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a4 : 0
         ];
       }).filter(([a, w]) => a.forms.length > 0 && w > 0);
       if (options.length === 0) return void 0;
@@ -60290,12 +60291,12 @@ var NameRenderer = class {
   }
   /** Stage 3: one shape → one name. */
   render(shape, rng) {
-    var _a3;
+    var _a4;
     const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === shape.genericId);
     const effective = rewrite ? {
       ...shape,
       categoryId: rewrite.category,
-      structure: (_a3 = rewrite.structure) != null ? _a3 : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
+      structure: (_a4 = rewrite.structure) != null ? _a4 : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
     } : shape;
     const { categoryId, genericId } = effective;
     let text;
@@ -60378,7 +60379,7 @@ function generatePlaceNames(options) {
   }
 }
 function* generatePlaceNamesSteps(options) {
-  var _a3, _b;
+  var _a4, _b2;
   const { recipe } = options;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const organic = recipe.shape.part === "organic";
@@ -60391,7 +60392,7 @@ function* generatePlaceNamesSteps(options) {
   const rng = mulberry32((seed ^ FILL_SALT) >>> 0);
   const adaptation = options.adapt && !organic ? { adapt: options.adapt, seed, redrawRng: mulberry32((seed ^ REDRAW_SALT) >>> 0) } : void 0;
   const biomeSetting = recipe.shape.biome;
-  let biome = (_a3 = options.biome) != null ? _a3 : (biomeSetting == null ? void 0 : biomeSetting.startsWith("[[")) ? void 0 : findBiome(biomeSetting);
+  let biome = (_a4 = options.biome) != null ? _a4 : (biomeSetting == null ? void 0 : biomeSetting.startsWith("[[")) ? void 0 : findBiome(biomeSetting);
   if (!biome && (biomeSetting == null ? void 0 : biomeSetting.startsWith("[["))) {
     notices.push(`Biome pack \u201C${biomeSetting.slice(2, -2)}\u201D wasn't found; using ${organic ? "Britain" : "unknown country"}.`);
   }
@@ -60401,7 +60402,7 @@ function* generatePlaceNamesSteps(options) {
     biome = void 0;
   }
   const spaceScale = (biome == null ? void 0 : biome.space) ? biome.scale : void 0;
-  let terrain = (_b = recipe.shape.terrain) != null ? _b : "any";
+  let terrain = (_b2 = recipe.shape.terrain) != null ? _b2 : "any";
   if (terrain !== "any" && biome && !availableTerrains(biome).some((t) => t.id === terrain) && biome.customTerrains) {
     notices.push(`${biome.label} has no \u201C${terrain}\u201D terrain.`);
     terrain = "any";
@@ -60532,7 +60533,7 @@ function readTribalFields(v, problems, id) {
   return out;
 }
 function readRecipe(fm) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const problems = [];
   const recipe = {};
   const setting = str(fm.setting);
@@ -60557,7 +60558,7 @@ function readRecipe(fm) {
     } else if (biome && (biome === "unknown" || findBiome(biome))) shape.biome = biome;
     else if (biome) problems.push(`Unknown biome \u201C${biome}\u201D.`);
     const terrain = str(fm.shape.terrain);
-    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || ((_a3 = shape.biome) == null ? void 0 : _a3.startsWith("[[")) || ((_c = (_b = findBiome(shape.biome)) == null ? void 0 : _b.customTerrains) == null ? void 0 : _c.some((t) => t.id === terrain)))) shape.terrain = terrain;
+    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || ((_a4 = shape.biome) == null ? void 0 : _a4.startsWith("[[")) || ((_c2 = (_b2 = findBiome(shape.biome)) == null ? void 0 : _b2.customTerrains) == null ? void 0 : _c2.some((t) => t.id === terrain)))) shape.terrain = terrain;
     else if (terrain) problems.push(`Unknown terrain \u201C${terrain}\u201D.`);
     const aliens = bool(fm.shape.aliens);
     if (aliens !== void 0) shape.aliens = aliens;
@@ -60600,32 +60601,32 @@ function readRecipe(fm) {
   return { recipe, problems };
 }
 function mergeRecipe(derived, template) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   return {
-    setting: (_a3 = derived.setting) != null ? _a3 : template.setting,
+    setting: (_a4 = derived.setting) != null ? _a4 : template.setting,
     template: derived.template,
     templateOf: derived.templateOf,
     shape: { ...template.shape, ...derived.shape },
     slots: { ...template.slots, ...derived.slots },
     generics: { ...template.generics, ...derived.generics },
-    register: (_b = derived.register) != null ? _b : template.register,
+    register: (_b2 = derived.register) != null ? _b2 : template.register,
     render: { ...template.render, ...derived.render },
-    takeover: (_c = derived.takeover) != null ? _c : template.takeover,
-    native: (_d = derived.native) != null ? _d : template.native,
+    takeover: (_c2 = derived.takeover) != null ? _c2 : template.takeover,
+    native: (_d2 = derived.native) != null ? _d2 : template.native,
     // Presets brief §6.1: each recipe has its own word-list note.
     ...derived.words ? { words: derived.words } : {}
   };
 }
 function withDefaults(r) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   return {
-    setting: (_a3 = r.setting) != null ? _a3 : RECIPE_DEFAULTS.setting,
-    template: (_b = r.template) != null ? _b : false,
+    setting: (_a4 = r.setting) != null ? _a4 : RECIPE_DEFAULTS.setting,
+    template: (_b2 = r.template) != null ? _b2 : false,
     ...r.templateOf ? { templateOf: r.templateOf } : {},
     shape: { ...RECIPE_DEFAULTS.shape, ...r.shape },
     slots: { ...r.slots },
     generics: { ...r.generics },
-    register: (_c = r.register) != null ? _c : RECIPE_DEFAULTS.register,
+    register: (_c2 = r.register) != null ? _c2 : RECIPE_DEFAULTS.register,
     render: { ...RECIPE_DEFAULTS.render, ...r.render },
     ...r.takeover ? { takeover: r.takeover } : {},
     ...r.native ? { native: r.native } : {},
@@ -60642,8 +60643,8 @@ function applyRecipeTemplate(derived, template, name) {
   return { recipe: mergeRecipe(derived, template) };
 }
 function recipeToFrontmatter(r) {
-  var _a3;
-  const out = { type: "recipe", setting: (_a3 = r.setting) != null ? _a3 : "" };
+  var _a4;
+  const out = { type: "recipe", setting: (_a4 = r.setting) != null ? _a4 : "" };
   if (r.template) out.template = true;
   if (r.templateOf) out["template-of"] = `[[${r.templateOf}]]`;
   if (r.shape && Object.keys(r.shape).length > 0) {
@@ -60732,18 +60733,18 @@ var PERSPECTIVE_PHRASES = {
   imposed: "imposed on them by outsiders"
 };
 var perspectivePhrase = (id) => {
-  var _a3, _b, _c;
-  return (_c = (_b = (_a3 = PERSPECTIVE_PHRASES[id != null ? id : "any"]) != null ? _a3 : TRIBAL_DATA.perspectiveLabels[id]) != null ? _b : id) != null ? _c : "";
+  var _a4, _b2, _c2;
+  return (_c2 = (_b2 = (_a4 = PERSPECTIVE_PHRASES[id != null ? id : "any"]) != null ? _a4 : TRIBAL_DATA.perspectiveLabels[id]) != null ? _b2 : id) != null ? _c2 : "";
 };
 function tribalSentence(state, limits) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h;
   const out = [];
-  const extra = (_a3 = limits.extraTraditions) != null ? _a3 : [];
+  const extra = (_a4 = limits.extraTraditions) != null ? _a4 : [];
   const tradition = findTradition(state.tradition);
   out.push({
     field: "tradition",
-    text: (_d = (_c = tradition == null ? void 0 : tradition.label) != null ? _c : (_b = extra.find((t) => t.id === state.tradition)) == null ? void 0 : _b.label) != null ? _d : state.tradition,
-    title: (_e = tradition == null ? void 0 : tradition.drawsOn) != null ? _e : "The tradition follows the recipe's region",
+    text: (_d2 = (_c2 = tradition == null ? void 0 : tradition.label) != null ? _c2 : (_b2 = extra.find((t) => t.id === state.tradition)) == null ? void 0 : _b2.label) != null ? _d2 : state.tradition,
+    title: (_e2 = tradition == null ? void 0 : tradition.drawsOn) != null ? _e2 : "The tradition follows the recipe's region",
     choices: [...extra, ...TRIBAL_TRADITIONS.map((t) => ({ id: t.key, label: t.label }))],
     current: state.tradition
   });
@@ -60768,8 +60769,8 @@ function tribalSentence(state, limits) {
     choices: [
       { id: void 0, label: fallback.charAt(0).toUpperCase() + fallback.slice(1) },
       ...limits.biomes.map((b) => {
-        var _a4, _b2;
-        return { id: (_b2 = (_a4 = b.custom) == null ? void 0 : _a4.path) != null ? _b2 : b.id, label: b.label };
+        var _a5, _b3;
+        return { id: (_b3 = (_a5 = b.custom) == null ? void 0 : _a5.path) != null ? _b3 : b.id, label: b.label };
       })
     ],
     current: state.biome
@@ -60777,8 +60778,8 @@ function tribalSentence(state, limits) {
   out.push(" environment ");
   const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
   const terrainText = (id) => {
-    var _a4, _b2, _c2;
-    return (_c2 = TERRAIN_PHRASES[id]) != null ? _c2 : `in ${(_b2 = (_a4 = [...terrains, ...TERRAIN_CHOICES].find((t) => t.id === id)) == null ? void 0 : _a4.label.toLowerCase()) != null ? _b2 : "any terrain"}`;
+    var _a5, _b3, _c3;
+    return (_c3 = TERRAIN_PHRASES[id]) != null ? _c3 : `in ${(_b3 = (_a5 = [...terrains, ...TERRAIN_CHOICES].find((t) => t.id === id)) == null ? void 0 : _a5.label.toLowerCase()) != null ? _b3 : "any terrain"}`;
   };
   out.push({
     field: "terrain",
@@ -62462,8 +62463,8 @@ var WORLD_PLACE_NAMES = {
   maxDepth: 4
 };
 function findCulture(id) {
-  var _a3;
-  return (_a3 = WORLD_CULTURES.find((c) => c.id === id)) != null ? _a3 : WORLD_CULTURES[0];
+  var _a4;
+  return (_a4 = WORLD_CULTURES.find((c) => c.id === id)) != null ? _a4 : WORLD_CULTURES[0];
 }
 function cultureUsesBiomes(cultureId) {
   return WORLD_DATA.biomeSwaps.some((s) => s.culture === cultureId);
@@ -62478,8 +62479,8 @@ function biomeListEntry(word) {
   return `${biomeTitleCase(lowered)}|${biomeTitleCase(pluralOf(lowered))}`;
 }
 function findEra(culture, eraId) {
-  var _a3;
-  return (_a3 = culture.eras.find((e) => e.id === eraId)) != null ? _a3 : culture.eras[0];
+  var _a4;
+  return (_a4 = culture.eras.find((e) => e.id === eraId)) != null ? _a4 : culture.eras[0];
 }
 var pickUniform5 = (items, rng) => items[Math.floor(rng() * items.length)];
 function pickWeighted4(entries, rng) {
@@ -62540,29 +62541,29 @@ var WorldRenderer = class {
     this.notices = /* @__PURE__ */ new Set();
     /** Land brief §7.3: the swaps for this batch, built once. */
     this.swaps = /* @__PURE__ */ new Map();
-    var _a3, _b, _c;
+    var _a4, _b2, _c2;
     this.culture = findCulture(options.culture);
     this.era = findEra(this.culture, options.era);
     this.interstellar = this.era.id === INTERSTELLAR_ERA;
-    this.lists = { ...this.culture.lists, ...(_a3 = this.era.lists) != null ? _a3 : {} };
-    this.markov = { ...(_b = this.culture.markov) != null ? _b : {}, ...(_c = this.era.markov) != null ? _c : {} };
+    this.lists = { ...this.culture.lists, ...(_a4 = this.era.lists) != null ? _a4 : {} };
+    this.markov = { ...(_b2 = this.culture.markov) != null ? _b2 : {}, ...(_c2 = this.era.markov) != null ? _c2 : {} };
     if (this.interstellar && options.biome && !options.biome.space) this.notices.add("The Interstellar era is set in space.");
     if (!this.interstellar) this.buildSwaps();
   }
   /** Stellar brief §12.3: a scale for one name (drawn before its template), and that scale's biome. */
   drawSpace(rng) {
-    var _a3, _b, _c;
-    const chosen = ((_a3 = this.options.biome) == null ? void 0 : _a3.space) ? this.options.biome : void 0;
-    const scale = (_b = chosen == null ? void 0 : chosen.scale) != null ? _b : drawScale(void 0, rng);
+    var _a4, _b2, _c2;
+    const chosen = ((_a4 = this.options.biome) == null ? void 0 : _a4.space) ? this.options.biome : void 0;
+    const scale = (_b2 = chosen == null ? void 0 : chosen.scale) != null ? _b2 : drawScale(void 0, rng);
     const biome = chosen != null ? chosen : spaceBiomeFor(scale);
     const wanted = this.options.terrain;
-    const terrain = chosen && wanted && wanted !== "any" && ((_c = biome.customTerrains) == null ? void 0 : _c.some((t) => t.id === wanted)) ? wanted : void 0;
+    const terrain = chosen && wanted && wanted !== "any" && ((_c2 = biome.customTerrains) == null ? void 0 : _c2.some((t) => t.id === wanted)) ? wanted : void 0;
     return { scale, biome, terrain };
   }
   /** Stellar brief §12.5: one space slot, resolved from the name's scale and biome. */
-  spaceSlot(token13, rng) {
-    var _a3;
-    const key2 = `@${token13.key}`;
+  spaceSlot(token14, rng) {
+    var _a4;
+    const key2 = `@${token14.key}`;
     const state = this.space;
     if (!this.interstellar || !state) {
       this.notices.add(`Space slot {${key2}} is only used in the Interstellar era.`);
@@ -62572,9 +62573,9 @@ var WorldRenderer = class {
     const title = (w) => w.split(" ").map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
     let word;
     let fusable = true;
-    switch (token13.key) {
+    switch (token14.key) {
       case "land": {
-        const terrain = (_a3 = state.terrain) != null ? _a3 : pickWeighted4(
+        const terrain = (_a4 = state.terrain) != null ? _a4 : pickWeighted4(
           Object.entries(terrainWeights(biome, "any")).filter(([t, w]) => w > 0 && shortWords(biome, "land", t).length > 0),
           rng
         );
@@ -62588,8 +62589,8 @@ var WorldRenderer = class {
           scale
         );
         word = pickWeighted4(entries.map((e) => {
-          var _a4;
-          return [e.w, (_a4 = e.x) != null ? _a4 : 1];
+          var _a5;
+          return [e.w, (_a5 = e.x) != null ? _a5 : 1];
         }), rng);
         break;
       }
@@ -62619,17 +62620,17 @@ var WorldRenderer = class {
         return { text: `[${key2}]`, etym: `[${key2}]`, fusable: false };
     }
     let text = word;
-    if (token13.form === "pl") text = title(pluralOf(word.toLowerCase()));
-    if (token13.form === "pos") text = possessive(word);
-    const shown = token13.form === "pos" ? word : text;
-    return { text, etym: `[${this.label(key2)}: ${shown}]${token13.form === "pos" ? possessiveTail(word) : ""}`, fusable: fusable && !/\s/.test(text) && token13.form !== "pos" };
+    if (token14.form === "pl") text = title(pluralOf(word.toLowerCase()));
+    if (token14.form === "pos") text = possessive(word);
+    const shown = token14.form === "pos" ? word : text;
+    return { text, etym: `[${this.label(key2)}: ${shown}]${token14.form === "pos" ? possessiveTail(word) : ""}`, fusable: fusable && !/\s/.test(text) && token14.form !== "pos" };
   }
   buildSwaps() {
-    var _a3;
+    var _a4;
     const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
     const chosen = this.options.biome;
     if (!chosen && !terrain) return;
-    const biome = (_a3 = chosen != null ? chosen : findBiome(this.culture.homelandBiome)) != null ? _a3 : BRITAIN;
+    const biome = (_a4 = chosen != null ? chosen : findBiome(this.culture.homelandBiome)) != null ? _a4 : BRITAIN;
     for (const swap of WORLD_DATA.biomeSwaps) {
       if (swap.culture !== this.culture.id || swap.era && swap.era !== this.era.id) continue;
       if (!chosen && !LAND_LISTS.has(swap.list)) continue;
@@ -62642,7 +62643,7 @@ var WorldRenderer = class {
   }
   /** One entry from a swapped list: a kept entry, or a word from the biome. */
   swapEntry(key2, rng) {
-    var _a3;
+    var _a4;
     const s = this.swaps.get(key2);
     if (!s) return void 0;
     const pick4 = pickWeighted4([...s.kept.map((e) => [e, 1]), [null, s.slotWeight]], rng);
@@ -62651,7 +62652,7 @@ var WorldRenderer = class {
     const source = sources.length === 1 ? sources[0][0] : pickWeighted4(sources, rng);
     if (source === "shortLand" || source === "shortWater") {
       const kind = source === "shortLand" ? "land" : "water";
-      const fixed = (_a3 = s.swap.replacedBy.terrain) != null ? _a3 : this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
+      const fixed = (_a4 = s.swap.replacedBy.terrain) != null ? _a4 : this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
       const terrain = fixed != null ? fixed : pickWeighted4(
         Object.entries(terrainWeights(s.biome, "any")).filter(([t, w]) => w > 0 && shortWords(s.biome, kind, t).length > 0),
         rng
@@ -62668,17 +62669,17 @@ var WorldRenderer = class {
   }
   /** One name: a template by weight, rendered. */
   name(rng) {
-    var _a3;
+    var _a4;
     this.space = this.interstellar ? this.drawSpace(rng) : void 0;
-    const scale = (_a3 = this.space) == null ? void 0 : _a3.scale;
+    const scale = (_a4 = this.space) == null ? void 0 : _a4.scale;
     const template = pickWeighted4(this.era.templates, rng);
     const piece = this.render(template, rng, 0);
     const text = piece.text.charAt(0).toUpperCase() + piece.text.slice(1);
     return { text, etymology: piece.etym, template, ...scale ? { scale } : {} };
   }
   label(key2) {
-    var _a3, _b, _c;
-    return ((_c = (_b = (_a3 = this.markov[key2]) == null ? void 0 : _a3.label) != null ? _b : WORLD_DATA.labels[key2]) != null ? _c : key2).toLowerCase();
+    var _a4, _b2, _c2;
+    return ((_c2 = (_b2 = (_a4 = this.markov[key2]) == null ? void 0 : _a4.label) != null ? _b2 : WORLD_DATA.labels[key2]) != null ? _c2 : key2).toLowerCase();
   }
   /** A new proper name from a Markov corpus, never one of the corpus's own names. */
   markovName(key2, rng) {
@@ -62699,15 +62700,15 @@ var WorldRenderer = class {
     return this.drawMarkov(source, rng, []);
   }
   drawMarkov(source, rng, avoid) {
-    var _a3, _b;
+    var _a4, _b2;
     const real = new Set(source.corpus.map((n) => n.toLowerCase()));
     const model = modelFor(source);
     for (let i = 0; i < WORLD_PLACE_NAMES.markovDraws; i++) {
       const seed = Math.floor(rng() * 4294967296) >>> 0;
       const raw = model.generateDetailed({
         count: 1,
-        faithfulness: (_a3 = this.options.faithfulness) != null ? _a3 : 2,
-        strictness: (_b = this.options.strictness) != null ? _b : 3,
+        faithfulness: (_a4 = this.options.faithfulness) != null ? _a4 : 2,
+        strictness: (_b2 = this.options.strictness) != null ? _b2 : 3,
         seed
       }).names[0];
       if (!raw) continue;
@@ -62720,35 +62721,35 @@ var WorldRenderer = class {
     return pickUniform5(source.corpus, rng);
   }
   /** A list word, expanding any template held in the entry. */
-  slot(token13, rng, depth) {
-    var _a3, _b;
-    if (token13.space) return this.spaceSlot(token13, rng);
-    if (token13.markov) {
-      const name = this.markovName(token13.key, rng);
-      const text2 = token13.form === "pos" ? possessive(name) : name;
-      return { text: text2, etym: `[${this.label(token13.key)}: ${name}]${token13.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
+  slot(token14, rng, depth) {
+    var _a4, _b2;
+    if (token14.space) return this.spaceSlot(token14, rng);
+    if (token14.markov) {
+      const name = this.markovName(token14.key, rng);
+      const text2 = token14.form === "pos" ? possessive(name) : name;
+      return { text: text2, etym: `[${this.label(token14.key)}: ${name}]${token14.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
     }
-    const list = this.lists[token13.key];
+    const list = this.lists[token14.key];
     if (!list || list.length === 0) {
-      this.notices.add(`No word list "${token13.key}" for ${this.culture.label}.`);
-      return { text: `[${token13.key}]`, etym: `[${token13.key}]`, fusable: false };
+      this.notices.add(`No word list "${token14.key}" for ${this.culture.label}.`);
+      return { text: `[${token14.key}]`, etym: `[${token14.key}]`, fusable: false };
     }
-    const entry = parseEntry((_a3 = this.swapEntry(token13.key, rng)) != null ? _a3 : pickUniform5(list, rng));
+    const entry = parseEntry((_a4 = this.swapEntry(token14.key, rng)) != null ? _a4 : pickUniform5(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);
-      const text2 = token13.form === "pos" ? possessive(inner.text) : inner.text;
-      const etym = single ? inner.etym : `[${this.label(token13.key)}: ${inner.text}]`;
-      return { text: text2, etym: token13.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
+      const text2 = token14.form === "pos" ? possessive(inner.text) : inner.text;
+      const etym = single ? inner.etym : `[${this.label(token14.key)}: ${inner.text}]`;
+      return { text: text2, etym: token14.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
     }
     let text = entry.word;
-    if (token13.form === "pl") text = (_b = entry.plural) != null ? _b : pluralise2(entry.word);
-    if (token13.form === "pos") text = possessive(entry.word);
-    const shown = token13.form === "pos" ? entry.word : text;
+    if (token14.form === "pl") text = (_b2 = entry.plural) != null ? _b2 : pluralise2(entry.word);
+    if (token14.form === "pos") text = possessive(entry.word);
+    const shown = token14.form === "pos" ? entry.word : text;
     return {
       text,
-      etym: `[${this.label(token13.key)}: ${shown}]${token13.form === "pos" ? possessiveTail(entry.word) : ""}`,
-      fusable: !entry.noFuse && token13.form !== "pos"
+      etym: `[${this.label(token14.key)}: ${shown}]${token14.form === "pos" ? possessiveTail(entry.word) : ""}`,
+      fusable: !entry.noFuse && token14.form !== "pos"
     };
   }
   /** Renders a template: slots filled, "+" groups fused or spaced. */
@@ -62762,14 +62763,14 @@ var WorldRenderer = class {
       out.push(group.length === 1 ? group[0] : this.fuse(group, rng));
       group = [];
     };
-    for (const token13 of tokens) {
-      if (token13.kind === "fuse") {
+    for (const token14 of tokens) {
+      if (token14.kind === "fuse") {
         joinNext = true;
         continue;
       }
       let piece;
-      if (token13.kind === "text") piece = { text: token13.text, etym: token13.text.toLowerCase(), fusable: !/\s/.test(token13.text) };
-      else piece = this.slot(token13, rng, depth);
+      if (token14.kind === "text") piece = { text: token14.text, etym: token14.text.toLowerCase(), fusable: !/\s/.test(token14.text) };
+      else piece = this.slot(token14, rng, depth);
       if (!joinNext) flush();
       group.push(piece);
       joinNext = false;
@@ -62879,13 +62880,13 @@ for (const [list, entries] of Object.entries(GROUP_DATA.lists)) {
   }
 }
 function wordTones(list, word) {
-  var _a3, _b, _c;
-  return (_c = (_b = (_a3 = WORD_TONES.get(list)) == null ? void 0 : _a3.get(word)) != null ? _b : GROUP_DATA.listTones[list]) != null ? _c : [];
+  var _a4, _b2, _c2;
+  return (_c2 = (_b2 = (_a4 = WORD_TONES.get(list)) == null ? void 0 : _a4.get(word)) != null ? _b2 : GROUP_DATA.listTones[list]) != null ? _c2 : [];
 }
 var SHAPE_TONES = /* @__PURE__ */ new Map();
 function shapeTones(shape) {
-  var _a3;
-  const key2 = `${shape.p}|${((_a3 = shape.t) != null ? _a3 : []).join(",")}`;
+  var _a4;
+  const key2 = `${shape.p}|${((_a4 = shape.t) != null ? _a4 : []).join(",")}`;
   const cached = SHAPE_TONES.get(key2);
   if (cached) return cached;
   const result = computeShapeTones(shape);
@@ -62893,10 +62894,10 @@ function shapeTones(shape) {
   return result;
 }
 function computeShapeTones(shape) {
-  var _a3, _b;
-  const out = new Set((_a3 = shape.t) != null ? _a3 : []);
+  var _a4, _b2;
+  const out = new Set((_a4 = shape.t) != null ? _a4 : []);
   for (const m of shape.p.matchAll(/\{([^}]+)\}/g)) {
-    for (const name of m[1].split(":")[0].split("/")) for (const t of (_b = GROUP_DATA.listTones[name]) != null ? _b : []) out.add(t);
+    for (const name of m[1].split(":")[0].split("/")) for (const t of (_b2 = GROUP_DATA.listTones[name]) != null ? _b2 : []) out.add(t);
   }
   return GROUP_TONES.filter((t) => out.has(t));
 }
@@ -63009,15 +63010,15 @@ var pickWeighted5 = (items, rng) => {
 };
 var pickOne = (items, rng) => items[Math.floor(rng() * items.length)];
 function listTag(name) {
-  var _a3, _b;
-  const entries = (_a3 = GROUP_DATA.lists[name]) != null ? _a3 : [];
-  const first = (_b = entries[0]) == null ? void 0 : _b.s;
+  var _a4, _b2;
+  const entries = (_a4 = GROUP_DATA.lists[name]) != null ? _a4 : [];
+  const first = (_b2 = entries[0]) == null ? void 0 : _b2.s;
   if (!first || entries.some((e) => !e.s || e.s.join() !== first.join())) return void 0;
   return first;
 }
 function pool(ctx, name, type, filter) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
-  const key2 = `${name}|${type.key}|${(_a3 = filter == null ? void 0 : filter.join(",")) != null ? _a3 : ""}|${ctx.tone}|${ctx.scale}`;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
+  const key2 = `${name}|${type.key}|${(_a4 = filter == null ? void 0 : filter.join(",")) != null ? _a4 : ""}|${ctx.tone}|${ctx.scale}`;
   const cached = ctx.pools.get(key2);
   if (cached) return cached;
   const S = ctx.setting;
@@ -63026,17 +63027,17 @@ function pool(ctx, name, type, filter) {
   const sources = S === "SF" && (name === "coastWord" || name === "seaWord") ? [name, "spaceLand"] : [name];
   const toneList = /* @__PURE__ */ new Map();
   const add2 = (word, w) => {
-    var _a4;
-    return weights.set(word, ((_a4 = weights.get(word)) != null ? _a4 : 0) + w);
+    var _a5;
+    return weights.set(word, ((_a5 = weights.get(word)) != null ? _a5 : 0) + w);
   };
   for (const scaled of ctx.scale === "any" ? [false] : [true, false]) {
     for (const src of sources) {
-      for (const e of (_b = GROUP_DATA.lists[src]) != null ? _b : []) {
+      for (const e of (_b2 = GROUP_DATA.lists[src]) != null ? _b2 : []) {
         if (e.s && !e.s.includes(S)) continue;
         if (e.types && !e.types.includes(type.key)) continue;
         if (e.only && (!trad || !e.only.includes(trad.key))) continue;
         if (scaled && !scaleAllows(e, ctx.scale)) continue;
-        add2(e.w, ((_c = e.x) != null ? _c : 1) * ((_e = (_d = e.sx) == null ? void 0 : _d[S]) != null ? _e : 1) * (trad ? (_g = (_f = e.tx) == null ? void 0 : _f[trad.key]) != null ? _g : 1 : 1));
+        add2(e.w, ((_c2 = e.x) != null ? _c2 : 1) * ((_e2 = (_d2 = e.sx) == null ? void 0 : _d2[S]) != null ? _e2 : 1) * (trad ? (_g = (_f = e.tx) == null ? void 0 : _f[trad.key]) != null ? _g : 1 : 1));
         if (src !== name) toneList.set(e.w, src);
       }
     }
@@ -63121,7 +63122,7 @@ function townPool(key2) {
 }
 var isGeneral = (t) => !t || t.key === "general";
 function renderPattern(ctx, pattern, type, shape, hooks2) {
-  var _a3, _b;
+  var _a4, _b2;
   let out = "";
   const re = /\{([^}]+)\}/g;
   let last = 0;
@@ -63134,7 +63135,7 @@ function renderPattern(ctx, pattern, type, shape, hooks2) {
     out += pattern.slice(last, m.index);
     last = re.lastIndex;
     const [rawName, mod] = m[1].split(":");
-    const fixed = (_a3 = hooks2 == null ? void 0 : hooks2.byIndex) == null ? void 0 : _a3.get(index);
+    const fixed = (_a4 = hooks2 == null ? void 0 : hooks2.byIndex) == null ? void 0 : _a4.get(index);
     const alternatives = rawName.split("/");
     let name;
     let piece;
@@ -63147,7 +63148,7 @@ function renderPattern(ctx, pattern, type, shape, hooks2) {
       piece = turn && name === "town" ? { text: turn.next(ctx.rng), plural: false } : token(ctx, name, type, shape);
     }
     if (!piece) return void 0;
-    (_b = hooks2 == null ? void 0 : hooks2.record) == null ? void 0 : _b.push({ name, piece });
+    (_b2 = hooks2 == null ? void 0 : hooks2.record) == null ? void 0 : _b2.push({ name, piece });
     let text = piece.text;
     if (name === "compound" && pattern.slice(last).startsWith(" Company")) text = text.replace(/s$/, "");
     if (mod === "pl") text = piece.plural ? text : groupPlural(text);
@@ -63158,32 +63159,32 @@ function renderPattern(ctx, pattern, type, shape, hooks2) {
   return out;
 }
 function token(ctx, name, type, shape) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j, _k;
   const rng = ctx.rng;
   const S = ctx.setting;
   const placeholders = ctx.mode === "placeholders";
   const word = (list) => {
-    var _a4;
-    const w = pick2(ctx, list, type, (_a4 = shape == null ? void 0 : shape.filter) == null ? void 0 : _a4[list]);
+    var _a5;
+    const w = pick2(ctx, list, type, (_a5 = shape == null ? void 0 : shape.filter) == null ? void 0 : _a5[list]);
     return w === void 0 ? void 0 : { text: w, plural: PLURAL_LISTS.has(list) };
   };
   switch (name) {
     case "person":
       if (placeholders) return { text: `[${type.person}]`, plural: false };
-      return { text: (_a3 = inventedPerson(ctx, type)) != null ? _a3 : "", plural: false };
+      return { text: (_a4 = inventedPerson(ctx, type)) != null ? _a4 : "", plural: false };
     case "holy": {
-      if ((_b = ctx.context) == null ? void 0 : _b.holy) {
+      if ((_b2 = ctx.context) == null ? void 0 : _b2.holy) {
         const other = () => holyText(ctx, type, placeholders);
         return { text: contextSaint(ctx.context, other, rng), plural: false };
       }
       if (placeholders) return { text: "[holy person]", plural: false };
-      const saints = GROUP_DATA.people.saintTraditions.includes((_d = (_c = ctx.people) == null ? void 0 : _c.key) != null ? _d : "general");
+      const saints = GROUP_DATA.people.saintTraditions.includes((_d2 = (_c2 = ctx.people) == null ? void 0 : _c2.key) != null ? _d2 : "general");
       if (!saints) return { text: `the ${pick2(ctx, "holyTitle", type)}`, plural: false };
       const saint = pick2(ctx, "saintName", type);
       return { text: S === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`, plural: false };
     }
     case "deity": {
-      const t = (_i = (_e = ctx.context) == null ? void 0 : _e.deity) != null ? _i : (_h = deityHooks()) == null ? void 0 : _h.deityTitleForTradition((_g = (_f = ctx.people) == null ? void 0 : _f.key) != null ? _g : "general", S, rng, ctx.tone);
+      const t = (_i = (_e2 = ctx.context) == null ? void 0 : _e2.deity) != null ? _i : (_h = deityHooks()) == null ? void 0 : _h.deityTitleForTradition((_g = (_f = ctx.people) == null ? void 0 : _f.key) != null ? _g : "general", S, rng, ctx.tone);
       return t ? { text: t.replace(/^the /, ""), plural: false } : void 0;
     }
     case "town":
@@ -63275,8 +63276,8 @@ function spacePrefixed(ctx, type, word) {
 }
 function drawGroupStar(ctx, type) {
   const proper = () => {
-    var _a3;
-    return (_a3 = pick2(ctx, "star", type)) != null ? _a3 : "Vega";
+    var _a4;
+    return (_a4 = pick2(ctx, "star", type)) != null ? _a4 : "Vega";
   };
   const person2 = () => {
     if (ctx.mode === "placeholders") return `[${type.person}]`;
@@ -63285,27 +63286,27 @@ function drawGroupStar(ctx, type) {
   return drawStarOfKind(drawStarKind(ctx.scale, ctx.rng), ctx.rng, proper, { person: person2 });
 }
 function holyText(ctx, type, placeholders) {
-  var _a3, _b;
+  var _a4, _b2;
   if (placeholders) return "[holy person]";
-  if (!GROUP_DATA.people.saintTraditions.includes((_b = (_a3 = ctx.people) == null ? void 0 : _a3.key) != null ? _b : "general")) return `the ${pick2(ctx, "holyTitle", type)}`;
+  if (!GROUP_DATA.people.saintTraditions.includes((_b2 = (_a4 = ctx.people) == null ? void 0 : _a4.key) != null ? _b2 : "general")) return `the ${pick2(ctx, "holyTitle", type)}`;
   const saint = pick2(ctx, "saintName", type);
   return ctx.setting === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`;
 }
 function inventedPerson(ctx, type) {
-  var _a3, _b;
-  const surnames = GROUP_DATA.people.surnameTraditions.includes((_b = (_a3 = ctx.people) == null ? void 0 : _a3.key) != null ? _b : "general");
+  var _a4, _b2;
+  const surnames = GROUP_DATA.people.surnameTraditions.includes((_b2 = (_a4 = ctx.people) == null ? void 0 : _a4.key) != null ? _b2 : "general");
   const shapes = surnames ? GROUP_DATA.people.person : GROUP_DATA.people.personOther;
   const pattern = pickWeighted5(shapes.map((s) => [s.p, s.w]), ctx.rng);
   return renderPattern(ctx, pattern, type);
 }
 function inventedTown(ctx, type) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const rng = ctx.rng;
   if (ctx.setting === "SF") {
     const pattern = pickWeighted5(GROUP_DATA.people.sfTown.map((s) => [s.p, s.w]), rng);
-    return (_a3 = renderPattern(ctx, pattern, type)) != null ? _a3 : "Vega";
+    return (_a4 = renderPattern(ctx, pattern, type)) != null ? _a4 : "Vega";
   }
-  const key2 = (_c = (_b = ctx.people) == null ? void 0 : _b.key) != null ? _c : "general";
+  const key2 = (_c2 = (_b2 = ctx.people) == null ? void 0 : _b2.key) != null ? _c2 : "general";
   let source;
   if (GROUP_DATA.people.surnameTraditions.includes(key2)) source = "britain";
   else {
@@ -63341,9 +63342,9 @@ function groupTown(setting, source, rng) {
   return inventedTown(ctx, type);
 }
 function groupCommRegion(setting, rng) {
-  var _a3;
+  var _a4;
   const { ctx, type } = sharedCtx(setting, rng);
-  return (_a3 = token(ctx, "commRegion", type)) == null ? void 0 : _a3.text;
+  return (_a4 = token(ctx, "commRegion", type)) == null ? void 0 : _a4.text;
 }
 function groupListWords(name, setting, scale = "any") {
   const { ctx, type } = sharedCtx(setting, Math.random, scale);
@@ -63352,8 +63353,8 @@ function groupListWords(name, setting, scale = "any") {
 function groupStar(setting, scale, rng, opts) {
   const { ctx, type } = sharedCtx(setting, rng, scale);
   const proper = () => {
-    var _a3;
-    return (_a3 = pickWeighted5(pool(ctx, "star", type), rng)) != null ? _a3 : "Vega";
+    var _a4;
+    return (_a4 = pickWeighted5(pool(ctx, "star", type), rng)) != null ? _a4 : "Vega";
   };
   return drawStarOfKind(drawStarKind(scale, rng), rng, proper, opts);
 }
@@ -63401,22 +63402,22 @@ function initialsToken(ctx, type) {
   return void 0;
 }
 function shapeWeight(ctx, shape) {
-  var _a3, _b, _c, _d, _e, _f;
+  var _a4, _b2, _c2, _d2, _e2, _f;
   if (shape.s && !shape.s.includes(ctx.setting)) return 0;
   if (shape.deity && !deityShapeAllowed(ctx, shape)) return 0;
-  if (ctx.mode === "invented" && /\{(surname|house)\}/.test(shape.p) && !GROUP_DATA.people.surnameTraditions.includes((_b = (_a3 = ctx.people) == null ? void 0 : _a3.key) != null ? _b : "general")) {
+  if (ctx.mode === "invented" && /\{(surname|house)\}/.test(shape.p) && !GROUP_DATA.people.surnameTraditions.includes((_b2 = (_a4 = ctx.people) == null ? void 0 : _a4.key) != null ? _b2 : "general")) {
     return 0;
   }
-  const trad = ctx.vocab ? (_d = (_c = GROUP_DATA.traditions.shapeMultipliers[ctx.vocab.key]) == null ? void 0 : _c[shape.p]) != null ? _d : 1 : 1;
+  const trad = ctx.vocab ? (_d2 = (_c2 = GROUP_DATA.traditions.shapeMultipliers[ctx.vocab.key]) == null ? void 0 : _c2[shape.p]) != null ? _d2 : 1 : 1;
   const tone = ctx.tone === "any" ? 1 : toneFactor(shapeTones(shape), ctx.tone);
   const commodity = ctx.commodity ? commodityFactor(ctx, shape) : 1;
-  return shape.w * ((_f = (_e = shape.sx) == null ? void 0 : _e[ctx.setting]) != null ? _f : 1) * trad * tone * commodity;
+  return shape.w * ((_f = (_e2 = shape.sx) == null ? void 0 : _e2[ctx.setting]) != null ? _f : 1) * trad * tone * commodity;
 }
 function deityShapeAllowed(ctx, shape) {
-  var _a3, _b;
+  var _a4, _b2;
   const hooks2 = deityHooks();
   if (!hooks2) return false;
-  const tradition = (_b = (_a3 = ctx.people) == null ? void 0 : _a3.key) != null ? _b : "general";
+  const tradition = (_b2 = (_a4 = ctx.people) == null ? void 0 : _a4.key) != null ? _b2 : "general";
   if (hooks2.sensitiveTraditions.includes(tradition)) return false;
   if (ctx.context && !ctx.context.deity) return false;
   const fantastic = ctx.setting === "FH" || ctx.setting === "MF";
@@ -63426,14 +63427,14 @@ function deityShapeAllowed(ctx, shape) {
 function deepTokens(pattern) {
   return [...pattern.matchAll(/\{([^}]+)\}/g)].flatMap(
     (m) => m[1].split(":")[0].split("/").flatMap((name) => {
-      var _a3;
-      return [name, ...((_a3 = GROUP_DATA.patterns[name]) != null ? _a3 : []).flatMap((p) => deepTokens(p.p))];
+      var _a4;
+      return [name, ...((_a4 = GROUP_DATA.patterns[name]) != null ? _a4 : []).flatMap((p) => deepTokens(p.p))];
     })
   );
 }
 function commodityFactor(ctx, shape) {
-  var _a3;
-  const cache = (_a3 = ctx.commodityFactors) != null ? _a3 : ctx.commodityFactors = /* @__PURE__ */ new Map();
+  var _a4;
+  const cache = (_a4 = ctx.commodityFactors) != null ? _a4 : ctx.commodityFactors = /* @__PURE__ */ new Map();
   const found = cache.get(shape.p);
   if (found !== void 0) return found;
   const lists = new Set(deepTokens(shape.p).filter((t) => GOODS_LISTS.includes(t)));
@@ -63453,29 +63454,29 @@ function byForm(ctx, shapes) {
   return matching.length > 0 ? matching : live4;
 }
 function plainShapes(ctx, type) {
-  var _a3, _b;
-  const extra = ctx.vocab ? (_b = (_a3 = GROUP_DATA.traditions.extraShapes[ctx.vocab.key]) == null ? void 0 : _a3[type.key]) != null ? _b : [] : [];
+  var _a4, _b2;
+  const extra = ctx.vocab ? (_b2 = (_a4 = GROUP_DATA.traditions.extraShapes[ctx.vocab.key]) == null ? void 0 : _a4[type.key]) != null ? _b2 : [] : [];
   return [...type.shapes, ...extra];
 }
 function frontShapes(type) {
-  var _a3, _b, _c;
-  const front = GROUP_DATA.fronts[(_a3 = type.front) != null ? _a3 : ""];
+  var _a4, _b2, _c2;
+  const front = GROUP_DATA.fronts[(_a4 = type.front) != null ? _a4 : ""];
   if (!front) return [];
-  return [...front.shapes, ...(_c = (_b = front.typeShapes) == null ? void 0 : _b[type.key]) != null ? _c : []];
+  return [...front.shapes, ...(_c2 = (_b2 = front.typeShapes) == null ? void 0 : _b2[type.key]) != null ? _c2 : []];
 }
 function companySource(ctx, type) {
-  var _a3, _b;
-  const share2 = pickWeighted5(((_a3 = type.borrow) != null ? _a3 : []).map((b) => [b, b.share]), ctx.rng);
+  var _a4, _b2;
+  const share2 = pickWeighted5(((_a4 = type.borrow) != null ? _a4 : []).map((b) => [b, b.share]), ctx.rng);
   if (!share2 || share2.own) return { shapes: type.shapes, listType: type };
   const family = (key2) => GROUP_FAMILIES.flatMap((f) => f.types).find((t) => t.key === key2);
   const source = family(share2.types[0]);
   const shapes = source.shapes.filter((s) => !share2.form || s.f === share2.form);
-  for (const extra of (_b = share2.andTypes) != null ? _b : []) shapes.push(...family(extra).shapes);
+  for (const extra of (_b2 = share2.andTypes) != null ? _b2 : []) shapes.push(...family(extra).shapes);
   return { shapes, listType: source };
 }
 function drawName(ctx, type, front) {
-  var _a3;
-  return (_a3 = drawDetailed(ctx, type, front)) == null ? void 0 : _a3.name;
+  var _a4;
+  return (_a4 = drawDetailed(ctx, type, front)) == null ? void 0 : _a4.name;
 }
 function drawDetailed(ctx, type, front) {
   let shapes;
@@ -63523,13 +63524,13 @@ function repeatsContent(counted2) {
   let colours = 0;
   let numbers = 0;
   for (const raw of content) {
-    const bare5 = raw.replace(/'s?$/, "").replace(/[(),.]/g, "");
-    if (!bare5) continue;
-    const key2 = bare5.toLowerCase().replace(/s$/, "");
+    const bare6 = raw.replace(/'s?$/, "").replace(/[(),.]/g, "");
+    if (!bare6) continue;
+    const key2 = bare6.toLowerCase().replace(/s$/, "");
     if (seen.has(key2)) return true;
     seen.add(key2);
-    if (COLOUR_WORDS.has(bare5)) colours++;
-    if (NUMBER_WORDS.has(bare5) || /^\d+(st|nd|rd|th)$/.test(bare5)) numbers++;
+    if (COLOUR_WORDS.has(bare6)) colours++;
+    if (NUMBER_WORDS.has(bare6) || /^\d+(st|nd|rd|th)$/.test(bare6)) numbers++;
   }
   return colours > 1 || numbers > 1;
 }
@@ -63589,7 +63590,7 @@ function* counterValues(ctx, name, first) {
   }
 }
 function generateSeries(ctx, type, frontChoice, count, toneChoice) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const placeholders = ctx.mode === "placeholders";
   const varies = (d) => !(placeholders && PLACEHOLDER_TOKENS.has(d.name));
   const hideFirst = frontChoice === "hide" && canFront(type);
@@ -63601,7 +63602,7 @@ function generateSeries(ctx, type, frontChoice, count, toneChoice) {
     first = d;
   }
   if (!first) return { names: [], seriesTone: toneChoice };
-  const seriesTone = toneChoice !== "any" ? toneChoice : (_a3 = shapeTones(first.shape)[0]) != null ? _a3 : "any";
+  const seriesTone = toneChoice !== "any" ? toneChoice : (_a4 = shapeTones(first.shape)[0]) != null ? _a4 : "any";
   ctx.tone = seriesTone;
   const names = [];
   const seen = /* @__PURE__ */ new Set();
@@ -63638,7 +63639,7 @@ function generateSeries(ctx, type, frontChoice, count, toneChoice) {
   const listAt = rec.map((r, i) => kindOf(r.name) === "list" ? i : -1).filter((i) => i >= 0);
   if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
   const anchor = anchorAt >= 0 ? rec[anchorAt] : void 0;
-  const info = { anchor: (_b = anchor == null ? void 0 : anchor.name) != null ? _b : null, value: (_c = anchor == null ? void 0 : anchor.piece.text) != null ? _c : null, counter: null };
+  const info = { anchor: (_b2 = anchor == null ? void 0 : anchor.name) != null ? _b2 : null, value: (_c2 = anchor == null ? void 0 : anchor.piece.text) != null ? _c2 : null, counter: null };
   const hold = /* @__PURE__ */ new Map();
   if (anchor) hold.set(anchorAt, anchor);
   else if (listAt.length === 1) rec.forEach((r, i) => i !== listAt[0] && hold.set(i, r));
@@ -63680,20 +63681,20 @@ function generateSeries(ctx, type, frontChoice, count, toneChoice) {
   return { names, seriesTone };
 }
 function generateGroupNames(options) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h, _i;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i;
   const family = findFamily(options.family);
   if (!family) throw new Error(`Unknown family \u201C${options.family}\u201D.`);
   if (options.series && !options.type) throw new Error("Series needs a type.");
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
-  const genre = (_a3 = options.genre) != null ? _a3 : "fantasy";
+  const genre = (_a4 = options.genre) != null ? _a4 : "fantasy";
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
   const notices = [];
   const available = typesInSetting(family, setting);
   if (available.length === 0) throw new Error(`${family.label} aren't offered in ${SETTING_PHRASES[setting]}.`);
-  const tradition = findTradition((_b = options.tradition) != null ? _b : "general");
+  const tradition = findTradition((_b2 = options.tradition) != null ? _b2 : "general");
   const people2 = isGeneral(tradition) ? void 0 : tradition;
   const vocab = people2 && !(people2.key === "southAsian" && family.key === "trade") ? people2 : void 0;
-  const guards = (_c = options.safeguards) != null ? _c : { block: GROUP_DATA.safeguards.block, flag: GROUP_DATA.safeguards.flag, flagListBlocks: GROUP_DATA.safeguards.flagListBlocks };
+  const guards = (_c2 = options.safeguards) != null ? _c2 : { block: GROUP_DATA.safeguards.block, flag: GROUP_DATA.safeguards.flag, flagListBlocks: GROUP_DATA.safeguards.flagListBlocks };
   const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(norm2));
   const ctx = {
     rng: mulberry32(seed),
@@ -63701,8 +63702,8 @@ function generateGroupNames(options) {
     family,
     vocab,
     people: people2,
-    mode: (_d = options.people) != null ? _d : "placeholders",
-    form: (_e = options.form) != null ? _e : "any",
+    mode: (_d2 = options.people) != null ? _d2 : "placeholders",
+    form: (_e2 = options.form) != null ? _e2 : "any",
     block,
     pools: /* @__PURE__ */ new Map(),
     tone: (_f = options.tone) != null ? _f : "any",
@@ -63722,8 +63723,8 @@ function generateGroupNames(options) {
   }
   const front = (_h = options.front) != null ? _h : "say";
   const typeWeight = (t) => {
-    var _a4, _b2;
-    return t.weight * (vocab ? (_b2 = (_a4 = GROUP_DATA.traditions.typeMultipliers[vocab.key]) == null ? void 0 : _a4[t.key]) != null ? _b2 : 1 : 1);
+    var _a5, _b3;
+    return t.weight * (vocab ? (_b3 = (_a5 = GROUP_DATA.traditions.typeMultipliers[vocab.key]) == null ? void 0 : _a5[t.key]) != null ? _b3 : 1 : 1);
   };
   let candidates = available.filter((t) => front !== "hide" || canFront(t));
   if (candidates.length === 0) candidates = available;
@@ -63801,9 +63802,9 @@ function effectiveCommodity(state, family) {
 }
 var genresFor = (family) => family.key === "supernatural" ? ["fantasy", "modern"] : ["fantasy", "modern", "scifi"];
 function groupSentence(state, family) {
-  var _a3, _b;
+  var _a4, _b2;
   const out = [];
-  const tradition = (_a3 = TRIBAL_TRADITIONS.find((t) => t.key === state.tradition)) != null ? _a3 : TRIBAL_TRADITIONS[0];
+  const tradition = (_a4 = TRIBAL_TRADITIONS.find((t) => t.key === state.tradition)) != null ? _a4 : TRIBAL_TRADITIONS[0];
   out.push({
     field: "tradition",
     text: tradition.label,
@@ -63844,7 +63845,7 @@ function groupSentence(state, family) {
   });
   out.push(" world");
   if (state.genre === "scifi") {
-    const scale = (_b = state.scale) != null ? _b : "any";
+    const scale = (_b2 = state.scale) != null ? _b2 : "any";
     out.push(" at ");
     out.push({
       field: "scale",
@@ -63966,7 +63967,7 @@ function chooseGroup(state, field, id, family) {
   return next;
 }
 function groupPresetState(preset) {
-  var _a3, _b;
+  var _a4, _b2;
   return {
     tradition: preset.tradition,
     type: preset.groupType === "any" ? void 0 : preset.groupType,
@@ -63977,13 +63978,13 @@ function groupPresetState(preset) {
     people: preset.people,
     tone: preset.tone,
     series: preset.groupType !== "any" && preset.series,
-    commodity: (_a3 = preset.commodity) != null ? _a3 : "any",
-    scale: (_b = preset.scale) != null ? _b : "any"
+    commodity: (_a4 = preset.commodity) != null ? _a4 : "any",
+    scale: (_b2 = preset.scale) != null ? _b2 : "any"
   };
 }
 function effectiveScale(state) {
-  var _a3;
-  return state.genre === "scifi" ? (_a3 = state.scale) != null ? _a3 : "any" : "any";
+  var _a4;
+  return state.genre === "scifi" ? (_a4 = state.scale) != null ? _a4 : "any" : "any";
 }
 
 // src/groups/safeguardPacks.ts
@@ -70983,9 +70984,9 @@ var bynames_default = {
 var BYNAMES_DATA = bynames_default;
 var BYNAME_SELF = selfPatterns(bynames_default);
 var BYNAME_CULTURES = BYNAMES_DATA.cultures.map((c) => {
-  var _a3, _b;
+  var _a4, _b2;
   const world = WORLD_CULTURES.find((w) => w.id === c.key);
-  return { key: c.key, label: c.label, guide: (_b = (_a3 = c.guide) != null ? _a3 : world == null ? void 0 : world.guide) != null ? _b : "" };
+  return { key: c.key, label: c.label, guide: (_b2 = (_a4 = c.guide) != null ? _a4 : world == null ? void 0 : world.guide) != null ? _b2 : "" };
 });
 var BYNAME_MODULE_LABELS = {
   epithets: "epithets and bynames",
@@ -71006,8 +71007,8 @@ function availableKinds(module2, culture, setting) {
   }
   const shapes = module2 === "epithets" ? BYNAMES_DATA.epithets.shapes : BYNAMES_DATA.titles.shapes;
   return kinds.filter((k) => shapes.some((s) => s.kind === k.key && (!s.s || s.s.includes(setting)))).map((kind) => {
-    var _a3;
-    return { kind, weight: (_a3 = kind.w) != null ? _a3 : 1 };
+    var _a4;
+    return { kind, weight: (_a4 = kind.w) != null ? _a4 : 1 };
   });
 }
 function showsLanguage(module2, culture) {
@@ -71031,7 +71032,7 @@ function entryForm(e, sex, native) {
   return e.w !== void 0 ? { text: e.w, native: false } : void 0;
 }
 function drawEntries(ctx, entries, opts = {}) {
-  var _a3, _b, _c, _d, _e;
+  var _a4, _b2, _c2, _d2, _e2;
   const live4 = [];
   for (const e of entries) {
     if (e.s && !e.s.includes(ctx.setting)) continue;
@@ -71039,11 +71040,11 @@ function drawEntries(ctx, entries, opts = {}) {
     const form = entryForm(e, ctx.sex, opts.englishOnly ? false : ctx.native || !!opts.nativeOnly);
     if (!form) continue;
     if (opts.nativeOnly && !form.native) continue;
-    const w = ((_a3 = e.x) != null ? _a3 : 1) * ((_c = (_b = e.cx) == null ? void 0 : _b[ctx.culture]) != null ? _c : 1) * toneFactor((_d = e.t) != null ? _d : [], ctx.tone);
+    const w = ((_a4 = e.x) != null ? _a4 : 1) * ((_c2 = (_b2 = e.cx) == null ? void 0 : _b2[ctx.culture]) != null ? _c2 : 1) * toneFactor((_d2 = e.t) != null ? _d2 : [], ctx.tone);
     if (w > 0) live4.push([{ ...form, entry: e }, w]);
   }
   const pick4 = pickWeighted5(live4, ctx.rng);
-  if (pick4) for (const t of (_e = pick4.entry.t) != null ? _e : []) ctx.drawn.add(t);
+  if (pick4) for (const t of (_e2 = pick4.entry.t) != null ? _e2 : []) ctx.drawn.add(t);
   return pick4;
 }
 var stripPlural = (raw) => raw.split("|")[0].replace(/~$/, "");
@@ -71052,26 +71053,26 @@ function cultureAnimals(culture) {
   return worldAnimals(culture);
 }
 function worldAnimals(culture) {
-  var _a3, _b;
+  var _a4, _b2;
   const world = WORLD_CULTURES.find((c) => c.id === culture);
   if (!world) return [];
-  const raw = (_b = (_a3 = world.lists.animal) != null ? _a3 : world.lists.beast) != null ? _b : [];
+  const raw = (_b2 = (_a4 = world.lists.animal) != null ? _a4 : world.lists.beast) != null ? _b2 : [];
   return raw.flatMap((w) => {
-    var _a4;
+    var _a5;
     const ref = w.match(/^\{(\w+)\}$/);
-    return ref ? ((_a4 = world.lists[ref[1]]) != null ? _a4 : []).filter((x) => !x.includes("{")) : [w];
+    return ref ? ((_a5 = world.lists[ref[1]]) != null ? _a5 : []).filter((x) => !x.includes("{")) : [w];
   }).map(stripPlural);
 }
 function cultureLand(culture) {
-  var _a3;
+  var _a4;
   const world = WORLD_CULTURES.find((c) => c.id === culture);
-  return ((_a3 = world == null ? void 0 : world.lists.land) != null ? _a3 : []).filter((w) => !w.includes("{")).map(stripPlural);
+  return ((_a4 = world == null ? void 0 : world.lists.land) != null ? _a4 : []).filter((w) => !w.includes("{")).map(stripPlural);
 }
 var HOLY_NAMES = new Map(
   BYNAMES_DATA.safeguards.noGods.flatMap((key2) => {
-    var _a3, _b;
+    var _a4, _b2;
     const world = WORLD_CULTURES.find((c) => c.id === key2);
-    const words = [...(_a3 = world == null ? void 0 : world.lists.god) != null ? _a3 : [], ...(_b = world == null ? void 0 : world.lists.saint) != null ? _b : []].map(stripPlural).filter((w) => !w.includes("{"));
+    const words = [...(_a4 = world == null ? void 0 : world.lists.god) != null ? _a4 : [], ...(_b2 = world == null ? void 0 : world.lists.saint) != null ? _b2 : []].map(stripPlural).filter((w) => !w.includes("{"));
     return words.length > 0 ? [[key2, new RegExp(`(^|[^\\p{L}])(${words.join("|")})($|[^\\p{L}])`, "u")]] : [];
   })
 );
@@ -71139,17 +71140,17 @@ function renderTokens(ctx, pattern) {
 var joinClosed = (a, b) => a + b.toLowerCase();
 var closeUp = (w) => w.includes("+") ? w.split("+").reduce((x, y) => joinClosed(x, y)) : w;
 function listWord(ctx, name, opts = {}) {
-  var _a3;
+  var _a4;
   let entries = BYNAMES_DATA.lists[name];
   if (!entries) throw new Error(`Bynames: no list \u201C${name}\u201D.`);
   if (name === "officeWord" && ctx.officeWords) {
     const only = entries.filter((e) => [e.w, e.m, e.f, e.n].some((w) => !!w && ctx.officeWords.includes(w)));
     if (only.length > 0) entries = only;
   }
-  return (_a3 = drawEntries(ctx, entries, opts)) == null ? void 0 : _a3.text;
+  return (_a4 = drawEntries(ctx, entries, opts)) == null ? void 0 : _a4.text;
 }
 function token2(ctx, raw) {
-  var _a3, _b, _c, _d, _e;
+  var _a4, _b2, _c2, _d2, _e2;
   const [name, mod] = raw.split(":");
   if (name.includes("+")) {
     const [a, b] = name.split("+");
@@ -71175,14 +71176,14 @@ function token2(ctx, raw) {
       if (ctx.turn) return ctx.turn.next(rng);
       const holy = HOLY_NAMES.get(ctx.culture);
       for (let i = 0; i < 20; i++) {
-        const town4 = groupTown(ctx.setting, townSource(ctx.culture), rng);
-        if (!holy || !holy.test(town4)) return town4;
+        const town5 = groupTown(ctx.setting, townSource(ctx.culture), rng);
+        if (!holy || !holy.test(town5)) return town5;
       }
       return void 0;
     }
     case "god": {
       if (BYNAMES_DATA.safeguards.noGods.includes(ctx.culture)) return void 0;
-      const gods = (_b = (_a3 = WORLD_CULTURES.find((c) => c.id === ctx.culture)) == null ? void 0 : _a3.lists.god) != null ? _b : [];
+      const gods = (_b2 = (_a4 = WORLD_CULTURES.find((c) => c.id === ctx.culture)) == null ? void 0 : _a4.lists.god) != null ? _b2 : [];
       return gods.length > 0 ? stripPlural(gods[Math.floor(rng() * gods.length)]) : void 0;
     }
     case "number":
@@ -71196,7 +71197,7 @@ function token2(ctx, raw) {
       return placeLand(ctx);
     case "beast": {
       const extra = cultureAnimals(ctx.culture).map((w) => ({ w, x: 3 }));
-      return (_c = drawEntries(ctx, ctx.culture === "general" ? BYNAMES_DATA.lists.beast : [...BYNAMES_DATA.lists.beast, ...extra])) == null ? void 0 : _c.text;
+      return (_c2 = drawEntries(ctx, ctx.culture === "general" ? BYNAMES_DATA.lists.beast : [...BYNAMES_DATA.lists.beast, ...extra])) == null ? void 0 : _c2.text;
     }
     case "clanBorn": {
       const half = rng() < 0.5 ? listWord(ctx, "material") : listWord(ctx, "element");
@@ -71215,14 +71216,14 @@ function token2(ctx, raw) {
       return half ? joinClosed(half, suffix) : void 0;
     }
     case "rank": {
-      const pick4 = drawEntries(ctx, (_d = BYNAMES_DATA.ranks[ctx.culture]) != null ? _d : []);
+      const pick4 = drawEntries(ctx, (_d2 = BYNAMES_DATA.ranks[ctx.culture]) != null ? _d2 : []);
       if (!pick4) return void 0;
       ctx.rankAfter = pick4.entry.pos === "after";
       ctx.rankNative = pick4.native;
       return pick4.text;
     }
     case "style": {
-      const pick4 = drawEntries(ctx, (_e = BYNAMES_DATA.styles[ctx.culture]) != null ? _e : []);
+      const pick4 = drawEntries(ctx, (_e2 = BYNAMES_DATA.styles[ctx.culture]) != null ? _e2 : []);
       return pick4 ? render2(ctx, pick4.text) : void 0;
     }
   }
@@ -71231,15 +71232,15 @@ function token2(ctx, raw) {
   return word === void 0 ? void 0 : closeUp(word);
 }
 function placeLand(ctx) {
-  var _a3;
+  var _a4;
   const rng = ctx.rng;
   const extras = (name) => BYNAMES_DATA.lists[name].map((e) => {
-    var _a4, _b, _c;
-    return [{ word: e.w, gn: false }, ((_a4 = e.x) != null ? _a4 : 1) * ((_c = (_b = e.cx) == null ? void 0 : _b[ctx.culture]) != null ? _c : 1)];
+    var _a5, _b2, _c2;
+    return [{ word: e.w, gn: false }, ((_a5 = e.x) != null ? _a5 : 1) * ((_c2 = (_b2 = e.cx) == null ? void 0 : _b2[ctx.culture]) != null ? _c2 : 1)];
   });
   if (ctx.setting === "SF") {
     const pool4 = [...groupListWords("spaceLand", "SF").map(([w, n]) => [{ word: w, gn: false }, n]), ...extras("epPlaceSpaceExtra")];
-    return (_a3 = pickWeighted5(pool4, rng)) == null ? void 0 : _a3.word;
+    return (_a4 = pickWeighted5(pool4, rng)) == null ? void 0 : _a4.word;
   }
   const pool3 = [
     ...groupListWords("land", ctx.setting).map(([w, n]) => [{ word: w, gn: true }, n]),
@@ -71256,7 +71257,7 @@ var wordRe3 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g,
 var BANNED_WORDS = BYNAMES_DATA.safeguards.banned.map(wordRe3);
 var BANNED_EPITHETS = new Set(BYNAMES_DATA.safeguards.bannedEpithets.map((w) => w.toLowerCase()));
 var SACRED = BYNAMES_DATA.safeguards.sacred.map((w) => w.toLowerCase());
-function acceptable2(guard, built, cap2) {
+function acceptable2(guard, built, cap3) {
   const name = built.text.replace(/\[(name|father|mother|child)\]/g, "").trim();
   for (const candidate of [built.text, built.part, name]) {
     const n = normForBlock(candidate.replace(/^,\s*/, "").replace(/[“”]/g, ""));
@@ -71267,7 +71268,7 @@ function acceptable2(guard, built, cap2) {
   if (BANNED_EPITHETS.has(built.part.toLowerCase())) return false;
   const lower2 = built.text.toLowerCase();
   if (SACRED.some((w) => lower2.includes(w))) return false;
-  if (contentWords(built.part).length > cap2) return false;
+  if (contentWords(built.part).length > cap3) return false;
   const words = contentWords(built.part);
   if (new Set(words).size !== words.length) return false;
   return true;
@@ -71281,8 +71282,8 @@ var tonesOf = (shapeTones2, drawn) => {
 };
 function pickShape(ctx, shapes, kind) {
   const live4 = shapes.filter((s) => s.kind === kind && (!s.s || s.s.includes(ctx.setting)) && (!s.gate || lightOrGrim(ctx.tone)) && (!ctx.shapeFilter || ctx.shapeFilter(s.p))).map((s) => {
-    var _a3;
-    return [s, s.w * toneFactor((_a3 = s.t) != null ? _a3 : [], ctx.tone)];
+    var _a4;
+    return [s, s.w * toneFactor((_a4 = s.t) != null ? _a4 : [], ctx.tone)];
   });
   return pickWeighted5(live4, ctx.rng);
 }
@@ -71310,22 +71311,22 @@ function oneTitle(ctx, kind, forceShape) {
   if (shape.p === "{rank} of {town}") {
     const rank = token2(ctx, "rank");
     if (ctx.context) ctx.turn = new TownTurn(ctx.context, true);
-    const town4 = token2(ctx, "town");
+    const town5 = token2(ctx, "town");
     ctx.turn = void 0;
-    if (!rank || !town4) return void 0;
-    text = `${rank} ${ctx.rankNative ? nativeOf(ctx.culture, town4) : `of ${town4}`}`;
+    if (!rank || !town5) return void 0;
+    text = `${rank} ${ctx.rankNative ? nativeOf(ctx.culture, town5) : `of ${town5}`}`;
   } else text = render2(ctx, shape.p);
   if (!text) return void 0;
   return { text, shape, rank: shape.p === "{rank}" || shape.p === "{rank} of {town}", after: ctx.rankAfter };
 }
 function buildTitle(ctx, kind, length) {
-  var _a3, _b;
+  var _a4, _b2;
   const name = ctx.source === "none" ? void 0 : personName(ctx, "self");
   if (length === "single") {
     const title = oneTitle(ctx, kind);
     if (!title) return void 0;
-    const bare5 = title.shape.p === "{rank}";
-    const text = !name ? title.text : bare5 ? title.after ? `${name} ${title.text}` : `${title.text} ${name}` : `${name}, ${title.text}`;
+    const bare6 = title.shape.p === "{rank}";
+    const text = !name ? title.text : bare6 ? title.after ? `${name} ${title.text}` : `${title.text} ${name}` : `${name}, ${title.text}`;
     return { part: title.text, text, kind, shape: title.shape.p, tones: tonesOf(title.shape.t, ctx.drawn) };
   }
   const r = ctx.rng();
@@ -71336,7 +71337,7 @@ function buildTitle(ctx, kind, length) {
   const parts = [first.text];
   const used = new Set(contentWords(first.text));
   let offices = 0;
-  const shapeTones2 = new Set((_a3 = first.shape.t) != null ? _a3 : []);
+  const shapeTones2 = new Set((_a4 = first.shape.t) != null ? _a4 : []);
   for (let tries = 0; parts.length < size && tries < 40; tries++) {
     const kindPick = offices > 0 ? "style" : pickWeighted5([["style", 20], ["office", 40]], ctx.rng);
     const next = oneTitle(ctx, kindPick);
@@ -71346,7 +71347,7 @@ function buildTitle(ctx, kind, length) {
     parts.push(next.text);
     words.forEach((w) => used.add(w));
     if (kindPick === "office") offices++;
-    for (const t of (_b = next.shape.t) != null ? _b : []) shapeTones2.add(t);
+    for (const t of (_b2 = next.shape.t) != null ? _b2 : []) shapeTones2.add(t);
   }
   if (parts.length < size) return void 0;
   const rest = parts.slice(1).join(", ");
@@ -71361,16 +71362,16 @@ function buildTitle(ctx, kind, length) {
 }
 var SON_OF = /^(son|daughter|grandson|father|mother) of /;
 function buildFamily(ctx, kind) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const system = BYNAMES_DATA.family.cultures[ctx.culture];
-  const forms = ((_a3 = system == null ? void 0 : system.forms[kind]) != null ? _a3 : []).filter(
+  const forms = ((_a4 = system == null ? void 0 : system.forms[kind]) != null ? _a4 : []).filter(
     (f) => (f.l === "both" || f.l === (ctx.native ? "n" : "e")) && (!f.g || f.g === (ctx.sex === "male" ? "m" : "f"))
   );
-  const kindTones = (_c = (_b = BYNAMES_DATA.family.kinds.find((k) => k.key === kind)) == null ? void 0 : _b.t) != null ? _c : [];
+  const kindTones = (_c2 = (_b2 = BYNAMES_DATA.family.kinds.find((k) => k.key === kind)) == null ? void 0 : _b2.t) != null ? _c2 : [];
   const form = pickWeighted5(
     forms.map((f) => {
-      var _a4;
-      return [f, f.w * toneFactor([...kindTones, ...(_a4 = f.t) != null ? _a4 : []], ctx.tone)];
+      var _a5;
+      return [f, f.w * toneFactor([...kindTones, ...(_a5 = f.t) != null ? _a5 : []], ctx.tone)];
     }),
     ctx.rng
   );
@@ -71384,20 +71385,20 @@ function buildFamily(ctx, kind) {
     else if (SON_OF.test(part)) text = `${name}, ${part}`;
     else text = `${name} ${part}`;
   }
-  return { part, text, kind, shape: form.p, tones: tonesOf([...kindTones, ...(_d = form.t) != null ? _d : []], ctx.drawn) };
+  return { part, text, kind, shape: form.p, tones: tonesOf([...kindTones, ...(_d2 = form.t) != null ? _d2 : []], ctx.drawn) };
 }
 function generateBynames(options) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const module2 = options.module;
   const culture = BYNAME_CULTURES.some((c) => c.key === options.culture) ? options.culture : "general";
-  const genre = (_a3 = options.genre) != null ? _a3 : "fantasy";
+  const genre = (_a4 = options.genre) != null ? _a4 : "fantasy";
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
-  const tone = (_b = options.tone) != null ? _b : "any";
-  const language = showsLanguage(module2, culture) ? (_c = options.language) != null ? _c : "english" : "english";
-  const gender = (_d = options.gender) != null ? _d : "anyone";
-  const length = module2 === "titles" ? (_e = options.length) != null ? _e : "single" : "single";
+  const tone = (_b2 = options.tone) != null ? _b2 : "any";
+  const language = showsLanguage(module2, culture) ? (_c2 = options.language) != null ? _c2 : "english" : "english";
+  const gender = (_d2 = options.gender) != null ? _d2 : "anyone";
+  const length = module2 === "titles" ? (_e2 = options.length) != null ? _e2 : "single" : "single";
   const notices = [];
   const kinds = availableKinds(module2, culture, setting);
   const chosen = options.kind ? kinds.find((k) => k.kind.key === options.kind) : void 0;
@@ -71425,10 +71426,10 @@ function generateBynames(options) {
   const names = [];
   let packFailed = false;
   const oneName2 = () => {
-    var _a4;
+    var _a5;
     const sex = gender === "men" ? "male" : gender === "women" ? "female" : rng() < 0.5 ? "male" : "female";
     const native = language === "native" || language === "mixed" && rng() < 0.5;
-    let kind = (_a4 = chosen == null ? void 0 : chosen.kind.key) != null ? _a4 : length === "full" ? "rank" : pickWeighted5(kindChoices, rng);
+    let kind = (_a5 = chosen == null ? void 0 : chosen.kind.key) != null ? _a5 : length === "full" ? "rank" : pickWeighted5(kindChoices, rng);
     for (let round = 0; round < 2 && kind; round++) {
       for (let i = 0; i < 20; i++) {
         const ctx = newCtx(base, sex, native);
@@ -71457,8 +71458,8 @@ function generateBynames(options) {
   return { names, seed, notices };
 }
 function bynameHistoryLabel(module2, genre, fantastic, culture, tone = "any", language = "english") {
-  var _a3, _b;
-  const label = (_b = (_a3 = BYNAME_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  var _a4, _b2;
+  const label = (_b2 = (_a4 = BYNAME_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   return [
     BYNAME_MODULE_LABELS[module2],
     SETTING_PHRASES[groupSetting(genre, fantastic)],
@@ -71503,9 +71504,9 @@ var sectionText = (state, headings) => {
   return hasGenderSections(headings) ? "its section for the gender" : `its ${headings[0]} section`;
 };
 function bynameSentence(state, module2, packs = []) {
-  var _a3, _b, _c, _d, _e;
+  var _a4, _b2, _c2, _d2, _e2;
   const out = [];
-  const culture = (_a3 = BYNAME_CULTURES.find((c) => c.key === state.culture)) != null ? _a3 : BYNAME_CULTURES[0];
+  const culture = (_a4 = BYNAME_CULTURES.find((c) => c.key === state.culture)) != null ? _a4 : BYNAME_CULTURES[0];
   out.push({
     field: "culture",
     text: culture.label,
@@ -71516,7 +71517,7 @@ function bynameSentence(state, module2, packs = []) {
   out.push("-themed ");
   const setting = groupSetting(state.genre, state.fantastic);
   const kinds = availableKinds(module2, culture.key, setting);
-  const kind = (_b = kinds.find((k) => k.kind.key === state.kind)) == null ? void 0 : _b.kind;
+  const kind = (_b2 = kinds.find((k) => k.kind.key === state.kind)) == null ? void 0 : _b2.kind;
   out.push({
     field: "kind",
     text: kind ? kind.plural : moduleAny(module2),
@@ -71589,11 +71590,11 @@ function bynameSentence(state, module2, packs = []) {
     current: state.source
   });
   if (state.source === "pack") {
-    const pack = (_c = packs.find((p) => p.name === state.pack)) != null ? _c : packs[0];
+    const pack = (_c2 = packs.find((p) => p.name === state.pack)) != null ? _c2 : packs[0];
     out.push(" ");
     out.push({
       field: "pack",
-      text: (_d = pack == null ? void 0 : pack.name) != null ? _d : "a pack",
+      text: (_d2 = pack == null ? void 0 : pack.name) != null ? _d2 : "a pack",
       title: "The name pack the names come from",
       choices: packs.map((p) => ({ id: p.name, label: p.name })),
       current: pack == null ? void 0 : pack.name
@@ -71609,7 +71610,7 @@ function bynameSentence(state, module2, packs = []) {
           ...pack.headings.map((h) => ({ id: h, label: `its ${h} section` })),
           { id: "whole", label: "the whole pack" }
         ],
-        current: (_e = state.section) != null ? _e : hasGenderSections(pack.headings) ? "gender" : pack.headings[0]
+        current: (_e2 = state.section) != null ? _e2 : hasGenderSections(pack.headings) ? "gender" : pack.headings[0]
       });
     }
   }
@@ -81357,8 +81358,8 @@ function inSpan(culture, level) {
   return level.startsWith("T") && inRange(culture.span, level);
 }
 function techLabel(module2, code) {
-  var _a3, _b;
-  return (_b = (_a3 = VESSEL_DATA.technology[module2].find((t) => t.code === code)) == null ? void 0 : _a3.label) != null ? _b : code;
+  var _a4, _b2;
+  return (_b2 = (_a4 = VESSEL_DATA.technology[module2].find((t) => t.code === code)) == null ? void 0 : _a4.label) != null ? _b2 : code;
 }
 function techChoices(module2, setting) {
   const all = VESSEL_DATA.technology[module2].map((t) => t.code);
@@ -81379,8 +81380,8 @@ function functionAvailableAt(fn, culture, level) {
   return level.charAt(0) === fn.min.charAt(0) && levelNumber(level) >= levelNumber(fn.min);
 }
 function availableFunctions(module2, cultureKey, technology, setting) {
-  var _a3;
-  const culture = (_a3 = findVesselCulture(cultureKey)) != null ? _a3 : VESSEL_CULTURES[0];
+  var _a4;
+  const culture = (_a4 = findVesselCulture(cultureKey)) != null ? _a4 : VESSEL_CULTURES[0];
   const levels = technology === "any" ? anyLevels(module2, culture, setting) : [technology];
   return moduleFunctions(module2).filter((f) => levels.some((l) => functionAvailableAt(f, culture, l)));
 }
@@ -81391,43 +81392,43 @@ var CULTURE_ONLY = /* @__PURE__ */ new Set(["poetic", "menaceExtra"]);
 var UNTONED = /* @__PURE__ */ new Set(["surname"]);
 var ANIMALS = /* @__PURE__ */ new Map();
 function flavourAnimals(culture) {
-  var _a3, _b;
+  var _a4, _b2;
   let found = ANIMALS.get(culture.key);
   if (found) return found;
   const f = culture.flavour;
   if (!f) found = [];
   else if (Array.isArray(f)) found = f;
   else if ("world" in f) found = worldAnimals(f.world);
-  else found = [...(_b = (_a3 = findTradition(f.tribal)) == null ? void 0 : _a3.flavour.animals) != null ? _b : []];
+  else found = [...(_b2 = (_a4 = findTradition(f.tribal)) == null ? void 0 : _a4.flavour.animals) != null ? _b2 : []];
   ANIMALS.set(culture.key, found);
   return found;
 }
 function landWords(culture) {
-  var _a3, _b;
+  var _a4, _b2;
   const f = culture.flavour;
   if (f && !Array.isArray(f) && "tribal" in f) {
     const t = findTradition(f.tribal);
-    return [...(_a3 = t == null ? void 0 : t.flavour.land) != null ? _a3 : [], ...(_b = t == null ? void 0 : t.flavour.water) != null ? _b : []];
+    return [...(_a4 = t == null ? void 0 : t.flavour.land) != null ? _a4 : [], ...(_b2 = t == null ? void 0 : t.flavour.water) != null ? _b2 : []];
   }
   if (f && !Array.isArray(f) && "world" in f) return cultureLand(f.world);
   return [];
 }
 function godWords(culture) {
-  var _a3;
+  var _a4;
   const gods = culture.gods;
   if (!gods) return [];
   if (gods.list) return gods.list;
   const world = WORLD_CULTURES.find((c) => c.id === gods.world);
-  return ((_a3 = world == null ? void 0 : world.lists.god) != null ? _a3 : []).map((w) => ({ w: stripPlural(w) }));
+  return ((_a4 = world == null ? void 0 : world.lists.god) != null ? _a4 : []).map((w) => ({ w: stripPlural(w) }));
 }
 function holyType(ctx) {
-  var _a3;
+  var _a4;
   const c = ctx.culture;
-  if ((_a3 = c.gods) == null ? void 0 : _a3.k) return inRange(c.gods.k, ctx.customs) ? "gods" : c.holy;
+  if ((_a4 = c.gods) == null ? void 0 : _a4.k) return inRange(c.gods.k, ctx.customs) ? "gods" : c.holy;
   return c.holy;
 }
 function pool2(ctx, name) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h;
   const key2 = `${name}|${ctx.customs}|${ctx.level}|${ctx.boost}|${ctx.tone}`;
   const cached = ctx.pools.get(key2);
   if (cached) return cached;
@@ -81438,16 +81439,16 @@ function pool2(ctx, name) {
     else weights.set(word, { w, t });
   };
   const addEntries = (list, entries, mult = 1) => {
-    var _a4, _b2, _c2;
+    var _a5, _b3, _c3;
     for (const e of entries != null ? entries : []) {
       if (!inRange(e.k, ctx.customs)) continue;
-      add2(e.w, ((_a4 = e.x) != null ? _a4 : 1) * mult, (_c2 = (_b2 = e.t) != null ? _b2 : VESSEL_DATA.listTones[list]) != null ? _c2 : []);
+      add2(e.w, ((_a5 = e.x) != null ? _a5 : 1) * mult, (_c3 = (_b3 = e.t) != null ? _b3 : VESSEL_DATA.listTones[list]) != null ? _c3 : []);
     }
   };
-  const own = (_a3 = ctx.culture.lists) != null ? _a3 : {};
+  const own = (_a4 = ctx.culture.lists) != null ? _a4 : {};
   const space = ctx.module === "spacecraft";
   if (name === "techAdj" || name === "techNoun") {
-    for (const e of (_c = (_b = VESSEL_DATA.techWords[ctx.level]) == null ? void 0 : _b[name]) != null ? _c : []) add2(e.w, (_d = e.x) != null ? _d : 1, (_e = e.t) != null ? _e : []);
+    for (const e of (_c2 = (_b2 = VESSEL_DATA.techWords[ctx.level]) == null ? void 0 : _b2[name]) != null ? _c2 : []) add2(e.w, (_d2 = e.x) != null ? _d2 : 1, (_e2 = e.t) != null ? _e2 : []);
   } else if (name === "god") {
     addEntries(name, godWords(ctx.culture));
   } else if (name === "beast") {
@@ -81519,8 +81520,8 @@ function town(ctx) {
   return void 0;
 }
 var personLabel = (ctx) => {
-  var _a3;
-  return (_a3 = VESSEL_DATA.personLabels[ctx.fn]) != null ? _a3 : "owner";
+  var _a4;
+  return (_a4 = VESSEL_DATA.personLabels[ctx.fn]) != null ? _a4 : "owner";
 };
 function inventedPerson2(ctx) {
   return groupPerson(ctx.setting, !!ctx.culture.surnames, ctx.rng, flavourAnimals(ctx.culture));
@@ -81589,12 +81590,12 @@ function renderTokens2(ctx, pattern, hooks2) {
   let index = -1;
   let nameUsed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw, at) => {
-    var _a3, _b;
+    var _a4, _b2;
     if (failed) return "";
     index++;
     const [name, mod] = raw.split(":");
     let piece;
-    const fixed = (_a3 = hooks2 == null ? void 0 : hooks2.byIndex) == null ? void 0 : _a3.get(index);
+    const fixed = (_a4 = hooks2 == null ? void 0 : hooks2.byIndex) == null ? void 0 : _a4.get(index);
     if (fixed) piece = fixed.text;
     else if ((hooks2 == null ? void 0 : hooks2.byName) && !nameUsed && hooks2.byName.name === name) {
       piece = hooks2.byName.text;
@@ -81606,7 +81607,7 @@ function renderTokens2(ctx, pattern, hooks2) {
       failed = true;
       return "";
     }
-    (_b = hooks2 == null ? void 0 : hooks2.record) == null ? void 0 : _b.push({ name, text: piece });
+    (_b2 = hooks2 == null ? void 0 : hooks2.record) == null ? void 0 : _b2.push({ name, text: piece });
     return withMod(piece, mod);
   });
   return failed ? void 0 : out;
@@ -81679,23 +81680,23 @@ function acceptable3(ctx, guard, name) {
 }
 var SENSITIVE_TOKENS = new RegExp(`\\{(${VESSEL_DATA.safeguards.sensitiveLists.join("|")})[}:]`);
 function vesselShapeTones(p, own = []) {
-  var _a3;
+  var _a4;
   const out = new Set(own);
-  for (const m of p.matchAll(/\{([^}:+]+)/g)) for (const t of (_a3 = VESSEL_DATA.listTones[m[1]]) != null ? _a3 : []) out.add(t);
+  for (const m of p.matchAll(/\{([^}:+]+)/g)) for (const t of (_a4 = VESSEL_DATA.listTones[m[1]]) != null ? _a4 : []) out.add(t);
   return GROUP_TONES.filter((t) => out.has(t));
 }
 function roleWeights(ctx) {
-  var _a3, _b, _c, _d, _e;
+  var _a4, _b2, _c2, _d2, _e2;
   const c = ctx.culture;
   const base = { ...VESSEL_DATA.roleWeights[ctx.module][ctx.fn] };
   for (const e of VESSEL_DATA.roleExtras) {
-    if (e.module === ctx.module && e.function === ctx.fn && inRange(e.k, ctx.customs)) base[e.role] = ((_a3 = base[e.role]) != null ? _a3 : 0) + e.w;
+    if (e.module === ctx.module && e.function === ctx.fn && inRange(e.k, ctx.customs)) base[e.role] = ((_a4 = base[e.role]) != null ? _a4 : 0) + e.w;
   }
   if (ctx.module === "spacecraft" && (ctx.fn === "station" || ctx.fn === "colony")) base[ctx.fn] = 100;
   const out = [];
   for (const [role, w] of Object.entries(base)) {
-    let n = w * ((_c = (_b = c.roles) == null ? void 0 : _b[role]) != null ? _c : 1);
-    for (const [k, mults] of Object.entries((_d = c.techRoles) != null ? _d : {})) if (inRange(k, ctx.customs)) n *= (_e = mults[role]) != null ? _e : 1;
+    let n = w * ((_c2 = (_b2 = c.roles) == null ? void 0 : _b2[role]) != null ? _c2 : 1);
+    for (const [k, mults] of Object.entries((_d2 = c.techRoles) != null ? _d2 : {})) if (inRange(k, ctx.customs)) n *= (_e2 = mults[role]) != null ? _e2 : 1;
     if (role === "holy" && holyType(ctx) === "none") n = 0;
     if (c.sensitive && ["affection", "menace", "leisure"].includes(role)) n = 0;
     if (role === "poetic" && !ctx.poeticAllowed) n = 0;
@@ -81704,12 +81705,12 @@ function roleWeights(ctx) {
   return out;
 }
 function roleShapes(ctx, role, only) {
-  var _a3, _b, _c, _d, _e, _f, _g;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g;
   const c = ctx.culture;
   const holy = holyType(ctx);
-  const shapes = [...VESSEL_DATA.shapes.filter((s) => s.role === role), ...((_a3 = c.shapes) != null ? _a3 : []).filter((s) => s.role === role)];
+  const shapes = [...VESSEL_DATA.shapes.filter((s) => s.role === role), ...((_a4 = c.shapes) != null ? _a4 : []).filter((s) => s.role === role)];
   if (role === "station" || role === "colony") for (const sh of VESSEL_DATA.space[role]) shapes.push({ role, p: sh.p, w: sh.w });
-  if (role === "holy" && holy === "gods") for (const g of (_c = (_b = c.gods) == null ? void 0 : _b.shapes) != null ? _c : []) shapes.push({ role, p: g.p, w: g.w });
+  if (role === "holy" && holy === "gods") for (const g of (_c2 = (_b2 = c.gods) == null ? void 0 : _b2.shapes) != null ? _c2 : []) shapes.push({ role, p: g.p, w: g.w });
   const out = [];
   for (const shape of shapes) {
     if (only && shape.p !== only) continue;
@@ -81721,8 +81722,8 @@ function roleShapes(ctx, role, only) {
       const saints = holy === "christian" && !c.noSaints;
       const ok = shape.holy === "saint" ? saints : shape.holy === "marian" ? saints && !!c.marian : shape.holy === "blessing" ? holy !== "none" : holy === "christian" || holy === "blessing";
       if (!ok) continue;
-      if (shape.holy === "saint") w *= (_d = c.holyX) != null ? _d : 1;
-      if (shape.holy === "marian") w *= (_e = c.marian) != null ? _e : 1;
+      if (shape.holy === "saint") w *= (_d2 = c.holyX) != null ? _d2 : 1;
+      if (shape.holy === "marian") w *= (_e2 = c.marian) != null ? _e2 : 1;
     }
     if (shape.p.includes("{poetic}") && (!ctx.poeticAllowed || !((_g = (_f = c.lists) == null ? void 0 : _f.poetic) == null ? void 0 : _g.length))) continue;
     if (ctx.mode === "invented" && shape.p.includes("{womanName}") && !c.womanNames) continue;
@@ -81765,8 +81766,8 @@ function realPrefix(ctx) {
     (r) => (!r.cultures || r.cultures.includes(ctx.culture.key)) && r.fn.includes(ctx.fn) && inRange(r.k, ctx.level)
   );
   return pickWeighted5(rows.map((r) => {
-    var _a3;
-    return [r.p, (_a3 = r.x) != null ? _a3 : 1];
+    var _a4;
+    return [r.p, (_a4 = r.x) != null ? _a4 : 1];
   }), ctx.rng);
 }
 var PLACEHOLDER_TOKENS2 = /* @__PURE__ */ new Set(["town", "surname", "womanName", "person", "president", "scientist", "holy"]);
@@ -81782,17 +81783,17 @@ function* counterValues2(ctx, name, first) {
 }
 var lightOrGrim2 = (tone) => tone === "light" || tone === "grim";
 function generateVesselNames(options) {
-  var _a3, _b, _c, _d, _e;
+  var _a4, _b2, _c2, _d2, _e2;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const module2 = options.module;
   const notices = [];
-  const culture = (_a3 = findVesselCulture(options.culture)) != null ? _a3 : VESSEL_CULTURES[0];
-  const genre = (_b = options.genre) != null ? _b : module2 === "spacecraft" ? "scifi" : "fantasy";
+  const culture = (_a4 = findVesselCulture(options.culture)) != null ? _a4 : VESSEL_CULTURES[0];
+  const genre = (_b2 = options.genre) != null ? _b2 : module2 === "spacecraft" ? "scifi" : "fantasy";
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
-  let tone = (_c = options.tone) != null ? _c : "any";
+  let tone = (_c2 = options.tone) != null ? _c2 : "any";
   const levels = techChoices(module2, setting);
-  let technology = (_d = options.technology) != null ? _d : "any";
+  let technology = (_d2 = options.technology) != null ? _d2 : "any";
   if (technology !== "any" && !levels.includes(technology)) {
     notices.push(`\u201C${technology}\u201D isn't available here; using any technology.`);
     technology = "any";
@@ -81802,7 +81803,7 @@ function generateVesselNames(options) {
   if (options.function && !chosenFn) notices.push(`\u201C${options.function}\u201D isn't available here; using any function.`);
   let style = options.style && options.style !== "none" ? availableStyles(module2, setting).find((st) => st.key === options.style) : void 0;
   if (options.style && options.style !== "none" && !style) notices.push(`Style \u201C${options.style}\u201D isn't available here.`);
-  const guards = (_e = options.safeguards) != null ? _e : { block: VESSEL_DATA.safeguards.block, flag: VESSEL_DATA.safeguards.flag, flagListBlocks: VESSEL_DATA.safeguards.flagListBlocks };
+  const guards = (_e2 = options.safeguards) != null ? _e2 : { block: VESSEL_DATA.safeguards.block, flag: VESSEL_DATA.safeguards.flag, flagListBlocks: VESSEL_DATA.safeguards.flagListBlocks };
   const guard = guardFor(module2, guards);
   const pools = /* @__PURE__ */ new Map();
   const count = Math.max(0, Math.floor(options.count));
@@ -81817,13 +81818,13 @@ function generateVesselNames(options) {
   };
   const styleShare = !style ? 0 : style.key === "oceanic" && culture.sensitive ? 1 : culture.key === "general" ? VESSEL_DATA.styleShare.general : VESSEL_DATA.styleShare.default;
   const newCtx3 = (level, fn) => {
-    var _a4;
+    var _a5;
     return {
       rng,
       module: module2,
       setting,
       culture,
-      mode: (_a4 = options.people) != null ? _a4 : "placeholders",
+      mode: (_a5 = options.people) != null ? _a5 : "placeholders",
       tone,
       level,
       customs: customsLevel(culture, level),
@@ -81907,10 +81908,10 @@ function generateVesselNames(options) {
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
   return { names, seed, notices };
   function drawClass() {
-    var _a4, _b2, _c2, _d2;
+    var _a5, _b3, _c3, _d3;
     const level = pickOne2(levelPool, rng);
     const fn = chosenFn.key;
-    const placeholders = ((_a4 = options.people) != null ? _a4 : "placeholders") === "placeholders";
+    const placeholders = ((_a5 = options.people) != null ? _a5 : "placeholders") === "placeholders";
     const isPlaceholder = (d) => placeholders && PLACEHOLDER_TOKENS2.has(d.name);
     let first;
     for (let i = 0; i < 40 && !first; i++) {
@@ -81924,7 +81925,7 @@ function generateVesselNames(options) {
       first = { ctx: ctx2, built, name };
     }
     if (!first) return tone;
-    if (tone === "any") tone = (_b2 = first.built.plan.tones[0]) != null ? _b2 : "any";
+    if (tone === "any") tone = (_b3 = first.built.plan.tones[0]) != null ? _b3 : "any";
     const plan = first.built.plan;
     const rec = first.built.record;
     const draw2 = (hooks2, p = plan) => {
@@ -81954,7 +81955,7 @@ function generateVesselNames(options) {
     const listAt = rec.map((d, i) => kindOf2(d.name) === "list" && !isPlaceholder(d) ? i : -1).filter((i) => i >= 0);
     if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
     const anchor = anchorAt >= 0 ? rec[anchorAt] : void 0;
-    info = { anchor: (_c2 = anchor == null ? void 0 : anchor.name) != null ? _c2 : null, value: (_d2 = anchor == null ? void 0 : anchor.text) != null ? _d2 : null, counter: null };
+    info = { anchor: (_c3 = anchor == null ? void 0 : anchor.name) != null ? _c3 : null, value: (_d3 = anchor == null ? void 0 : anchor.text) != null ? _d3 : null, counter: null };
     const hold = /* @__PURE__ */ new Map();
     if (anchor) hold.set(anchorAt, anchor);
     else if (listAt.length === 1) rec.forEach((d, i) => i !== listAt[0] && hold.set(i, d));
@@ -81982,28 +81983,28 @@ var REALM_NAMED_FOR = REALM_DATA.namedFor;
 var REALM_CULTURES = BYNAME_CULTURES;
 var DYNASTY_CULTURES = REALM_DATA.dynastyCultures;
 var eraCode = (era) => {
-  var _a3, _b;
-  return (_b = (_a3 = REALM_ERAS.find((e) => e.key === era)) == null ? void 0 : _a3.code) != null ? _b : "MD";
+  var _a4, _b2;
+  return (_b2 = (_a4 = REALM_ERAS.find((e) => e.key === era)) == null ? void 0 : _a4.code) != null ? _b2 : "MD";
 };
 function namedForOffered(key2, era) {
   const n = REALM_NAMED_FOR.find((x) => x.key === key2);
   return !!n && (!n.eras || n.eras.includes(eraCode(era)));
 }
 function homelandBiome(culture) {
-  var _a3, _b, _c;
-  return (_c = (_b = (_a3 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a3.homelandBiome) != null ? _b : REALM_DATA.homeland[culture]) != null ? _c : "temperate";
+  var _a4, _b2, _c2;
+  return (_c2 = (_b2 = (_a4 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a4.homelandBiome) != null ? _b2 : REALM_DATA.homeland[culture]) != null ? _c2 : "temperate";
 }
 var FORM_CACHE = /* @__PURE__ */ new Map();
 function cultureForms(culture, era) {
-  var _a3, _b, _c, _d, _e, _f;
+  var _a4, _b2, _c2, _d2, _e2, _f;
   const key2 = `${culture}|${era}`;
   const cached = FORM_CACHE.get(key2);
   if (cached) return cached;
   const c = REALM_DATA.cultures[culture];
   const out = [];
   for (const f of REALM_DATA.forms) {
-    let w = f.era[era] * ((_a3 = c == null ? void 0 : c.mult[f.w]) != null ? _a3 : 1) * ((_d = (_c = (_b = c == null ? void 0 : c.eraMult) == null ? void 0 : _b[era]) == null ? void 0 : _c[f.w]) != null ? _d : 1);
-    out.push([{ w: f.w, pl: f.pl, g: f.g, t: (_e = f.t) != null ? _e : [], compound: !!f.compound, peoplesOnly: !!f.peoplesOnly, culture: false }, w]);
+    let w = f.era[era] * ((_a4 = c == null ? void 0 : c.mult[f.w]) != null ? _a4 : 1) * ((_d2 = (_c2 = (_b2 = c == null ? void 0 : c.eraMult) == null ? void 0 : _b2[era]) == null ? void 0 : _c2[f.w]) != null ? _d2 : 1);
+    out.push([{ w: f.w, pl: f.pl, g: f.g, t: (_e2 = f.t) != null ? _e2 : [], compound: !!f.compound, peoplesOnly: !!f.peoplesOnly, culture: false }, w]);
   }
   for (const f of (_f = c == null ? void 0 : c.forms) != null ? _f : []) {
     out.push([{ w: f.w, pl: f.pl, g: f.g, t: [], compound: false, peoplesOnly: false, culture: true }, 15 * f.x * (f.eras.includes(era) ? 1 : 0.3)]);
@@ -82013,22 +82014,22 @@ function cultureForms(culture, era) {
   return live4;
 }
 function characterMult(character, form) {
-  var _a3, _b;
+  var _a4, _b2;
   const m = REALM_DATA.characterMult[character];
   if (!m) return 1;
-  return (_b = (_a3 = m.forms[form.w]) != null ? _a3 : m.groups[form.g]) != null ? _b : 1;
+  return (_b2 = (_a4 = m.forms[form.w]) != null ? _a4 : m.groups[form.g]) != null ? _b2 : 1;
 }
 var ALL_FORMS = [.../* @__PURE__ */ new Set([...REALM_DATA.forms.map((f) => f.w), ...Object.values(REALM_DATA.cultures).flatMap((c) => {
-  var _a3;
-  return ((_a3 = c.forms) != null ? _a3 : []).map((f) => f.w);
+  var _a4;
+  return ((_a4 = c.forms) != null ? _a4 : []).map((f) => f.w);
 })])];
 var COMPOUND_FORMS = REALM_DATA.forms.filter((f) => f.compound).map((f) => f.w);
 var formGroup = (w) => {
-  var _a3, _b, _c;
-  return (_c = (_a3 = REALM_DATA.forms.find((f) => f.w === w)) == null ? void 0 : _a3.g) != null ? _c : (_b = Object.values(REALM_DATA.cultures).flatMap((c) => {
-    var _a4;
-    return (_a4 = c.forms) != null ? _a4 : [];
-  }).find((f) => f.w === w)) == null ? void 0 : _b.g;
+  var _a4, _b2, _c2;
+  return (_c2 = (_a4 = REALM_DATA.forms.find((f) => f.w === w)) == null ? void 0 : _a4.g) != null ? _c2 : (_b2 = Object.values(REALM_DATA.cultures).flatMap((c) => {
+    var _a5;
+    return (_a5 = c.forms) != null ? _a5 : [];
+  }).find((f) => f.w === w)) == null ? void 0 : _b2.g;
 };
 function compatibleModifiers(form, era) {
   const g = formGroup(form);
@@ -82061,14 +82062,14 @@ function identityLists(biome, terrain) {
   if (cached) return cached;
   const lists = /* @__PURE__ */ new Map();
   for (const [name, entries] of Object.entries(REALM_DATA.lists)) lists.set(name, entries.map((e) => {
-    var _a3;
-    return [e, (_a3 = e.x) != null ? _a3 : 1];
+    var _a4;
+    return [e, (_a4 = e.x) != null ? _a4 : 1];
   }));
   if (biome.space && biome.scale) {
     const chosenTerrains = terrain && terrain !== "any" ? [terrain] : availableTerrains(biome).map((t) => t.id);
     const phrases = [...new Set(chosenTerrains.flatMap((t) => {
-      var _a3;
-      return ((_a3 = biome.land[t]) != null ? _a3 : []).map(([w]) => w);
+      var _a4;
+      return ((_a4 = biome.land[t]) != null ? _a4 : []).map(([w]) => w);
     }))];
     lists.set("landPl", phrases.map((w) => [{ w }, 1]));
     lists.set("waterPl", []);
@@ -82101,8 +82102,8 @@ function identityLists(biome, terrain) {
   return lists;
 }
 var wordToneOf = (list, e) => {
-  var _a3, _b, _c;
-  return (_c = (_b = (_a3 = REALM_DATA.wordTones[list]) == null ? void 0 : _a3[e.w]) != null ? _b : e.t) != null ? _c : [];
+  var _a4, _b2, _c2;
+  return (_c2 = (_b2 = (_a4 = REALM_DATA.wordTones[list]) == null ? void 0 : _a4[e.w]) != null ? _b2 : e.t) != null ? _c2 : [];
 };
 function listPool(ctx, name) {
   const key2 = `${name}|${ctx.character}`;
@@ -82113,16 +82114,16 @@ function listPool(ctx, name) {
   return result;
 }
 function buildListPool(ctx, name) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const out = [];
-  for (const [e, w] of (_a3 = ctx.lists.get(name)) != null ? _a3 : []) {
+  for (const [e, w] of (_a4 = ctx.lists.get(name)) != null ? _a4 : []) {
     if (e.eras && !e.eras.includes(ctx.era)) continue;
     if (e.biome && e.biome !== ctx.biome.id) continue;
     if (e.character && e.character !== ctx.character) continue;
-    out.push([e, w * ((_c = (_b = e.cx) == null ? void 0 : _b[ctx.culture]) != null ? _c : 1)]);
+    out.push([e, w * ((_c2 = (_b2 = e.cx) == null ? void 0 : _b2[ctx.culture]) != null ? _c2 : 1)]);
   }
   if (name === "cultQual") {
-    for (const w of (_d = REALM_DATA.cultQualExtra[ctx.culture]) != null ? _d : []) {
+    for (const w of (_d2 = REALM_DATA.cultQualExtra[ctx.culture]) != null ? _d2 : []) {
       const found = out.find(([e]) => e.w === w);
       if (found) found[1] *= 3;
       else out.push([{ w }, 3]);
@@ -82146,36 +82147,36 @@ function listWord3(ctx, name, keep) {
   return e.w;
 }
 function gnWord(ctx, name, keep, setting = ctx.setting) {
-  var _a3;
-  const pool3 = groupListWords(name, setting, (_a3 = ctx.scale) != null ? _a3 : "any").filter(([w2]) => !keep || keep(w2)).map(([w2, n]) => [w2, n * toneFactor(wordTones(name, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  var _a4;
+  const pool3 = groupListWords(name, setting, (_a4 = ctx.scale) != null ? _a4 : "any").filter(([w2]) => !keep || keep(w2)).map(([w2, n]) => [w2, n * toneFactor(wordTones(name, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(pool3, ctx.rng);
   if (w !== void 0) for (const t of wordTones(name, w)) ctx.drawn.add(t);
   return w;
 }
 function drawForm(ctx, keep) {
   const pool3 = cultureForms(ctx.culture, ctx.era).filter(([f2]) => keep(f2)).map(([f2, w]) => {
-    var _a3, _b;
-    return [f2, w * characterMult(ctx.character, f2) * toneFactor(f2.t, ctx.tone) * (ctx.scale ? (_b = (_a3 = REALM_DATA.spaceForms[f2.w]) == null ? void 0 : _a3[ctx.scale]) != null ? _b : 1 : 1)];
+    var _a4, _b2;
+    return [f2, w * characterMult(ctx.character, f2) * toneFactor(f2.t, ctx.tone) * (ctx.scale ? (_b2 = (_a4 = REALM_DATA.spaceForms[f2.w]) == null ? void 0 : _a4[ctx.scale]) != null ? _b2 : 1 : 1)];
   }).filter(([, w]) => w > 0);
   const f = pickWeighted5(pool3, ctx.rng);
   if (f) for (const t of f.t) ctx.drawn.add(t);
   return f;
 }
 function drawModifier(ctx) {
-  var _a3, _b;
-  const form = (_a3 = ctx.form) == null ? void 0 : _a3.w;
+  var _a4, _b2;
+  const form = (_a4 = ctx.form) == null ? void 0 : _a4.w;
   if (!form) return void 0;
   const plain = compatibleModifiers(form, ctx.era);
   const ideology = ideologyFor(form, ctx.era);
   const fromIdeology = ideology && (plain.length === 0 || ctx.rng() < REALM_DATA.ideology.share);
   const entries = fromIdeology ? REALM_DATA.ideology.words : plain;
   const pool3 = entries.map((e2) => {
-    var _a4, _b2;
-    return [e2, ((_a4 = e2.x) != null ? _a4 : 1) * toneFactor((_b2 = e2.t) != null ? _b2 : [], ctx.tone)];
+    var _a5, _b3;
+    return [e2, ((_a5 = e2.x) != null ? _a5 : 1) * toneFactor((_b3 = e2.t) != null ? _b3 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
   const e = pickWeighted5(pool3, ctx.rng);
   if (!e) return void 0;
-  for (const t of (_b = e.t) != null ? _b : []) ctx.drawn.add(t);
+  for (const t of (_b2 = e.t) != null ? _b2 : []) ctx.drawn.add(t);
   return e.w;
 }
 var DYNASTY = (f) => (f.g === "crown" || f.g === "imperial") && !f.compound && !f.peoplesOnly;
@@ -82192,18 +82193,18 @@ function place2(ctx) {
   return void 0;
 }
 function token4(ctx, name, shape, kind) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const rng = ctx.rng;
   switch (name) {
     case "form":
     case "federalForm":
-      return (_a3 = ctx.form) == null ? void 0 : _a3.w;
+      return (_a4 = ctx.form) == null ? void 0 : _a4.w;
     case "modifier":
       return ctx.modifier = drawModifier(ctx);
     case "collNoun":
       return ctx.collNoun;
     case "collQual": {
-      const ok = compatibleCollQuals((_b = ctx.collNoun) != null ? _b : "");
+      const ok = compatibleCollQuals((_b2 = ctx.collNoun) != null ? _b2 : "");
       const pool3 = ok.map((w) => {
         const t = w === "Free" && ctx.collNoun === "Ports" ? ["light"] : [];
         return [w, toneFactor(t, ctx.tone)];
@@ -82214,8 +82215,8 @@ function token4(ctx, name, shape, kind) {
     }
     case "landIdentity": {
       const live4 = REALM_DATA.landIdentity.filter((s) => [...s.p.matchAll(/\{(\w+)\}/g)].every((m) => {
-        var _a4, _b2;
-        return ((_b2 = (_a4 = ctx.lists.get(m[1])) == null ? void 0 : _a4.length) != null ? _b2 : 1) > 0;
+        var _a5, _b3;
+        return ((_b3 = (_a5 = ctx.lists.get(m[1])) == null ? void 0 : _a5.length) != null ? _b3 : 1) > 0;
       }));
       const p = pickWeighted5(live4.map((s) => [s.p, s.w]), rng);
       return renderTokens3(ctx, p, shape, kind);
@@ -82228,12 +82229,12 @@ function token4(ctx, name, shape, kind) {
       if (ctx.mode === "placeholders" || !REALM_DATA.dynastyCultures.includes(ctx.culture)) return "[dynasty]";
       return gnWord(ctx, "house");
     case "star":
-      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : groupStarIn((_c = ctx.scale) != null ? _c : "any", "invented", rng);
+      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : groupStarIn((_c2 = ctx.scale) != null ? _c2 : "any", "invented", rng);
     case "commRegion":
       return groupCommRegion(ctx.era === "NF" || ctx.era === "IS" ? "SF" : ctx.setting, rng);
     case "spaceLand": {
       const w = gnWord(ctx, "spaceLand", void 0, "SF");
-      return w && rng() < 0.3 ? groupSpacePrefix(w, rng, (_d = ctx.scale) != null ? _d : "any") : w;
+      return w && rng() < 0.3 ? groupSpacePrefix(w, rng, (_d2 = ctx.scale) != null ? _d2 : "any") : w;
     }
     case "tribal": {
       if (ctx.mode === "placeholders") return "[people]";
@@ -82291,8 +82292,8 @@ function breaksRealmWords(text) {
 var COLOUR_BEFORE_PEOPLE = new RegExp(`\\b(${groupListWords("colour", "FL").map(([w]) => w).join("|")}) (Peoples|Folk|Kin)\\b`);
 var TRIBAL_POOLS = /* @__PURE__ */ new Map();
 function tribalPool(tradition, biome, terrain, custom) {
-  var _a3, _b;
-  const key2 = `${tradition}|${custom ? (_b = (_a3 = custom.custom) == null ? void 0 : _a3.path) != null ? _b : biome.id : biome.id}|${terrain}`;
+  var _a4, _b2;
+  const key2 = `${tradition}|${custom ? (_b2 = (_a4 = custom.custom) == null ? void 0 : _a4.path) != null ? _b2 : biome.id : biome.id}|${terrain}`;
   let found = TRIBAL_POOLS.get(key2);
   if (!found) {
     found = generateTribalNames({ tradition, ...custom ? { biomeData: custom } : { biome: biome.id }, terrain, count: 120, seed: 1789 }).names.map((n) => n.name).filter((n) => !n.includes("["));
@@ -82301,17 +82302,17 @@ function tribalPool(tradition, biome, terrain, custom) {
   return found;
 }
 function generateRealmNames(options) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j, _k, _l, _m;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
   const culture = REALM_CULTURES.some((c) => c.key === options.culture) ? options.culture : "general";
-  const era = eraCode((_a3 = options.era) != null ? _a3 : "medieval");
-  const genre = (_b = options.genre) != null ? _b : "fantasy";
+  const era = eraCode((_a4 = options.era) != null ? _a4 : "medieval");
+  const genre = (_b2 = options.genre) != null ? _b2 : "fantasy";
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
-  const tone = (_c = options.tone) != null ? _c : "any";
-  const length = (_d = options.length) != null ? _d : "plain";
-  const output = (_e = options.output) != null ? _e : "official";
+  const tone = (_c2 = options.tone) != null ? _c2 : "any";
+  const length = (_d2 = options.length) != null ? _d2 : "plain";
+  const output = (_e2 = options.output) != null ? _e2 : "official";
   const mode = (_f = options.people) != null ? _f : "placeholders";
   let namedFor = (_g = options.namedFor) != null ? _g : "anything";
   if (namedFor === "stars" && !namedForOffered("stars", (_h = options.era) != null ? _h : "medieval")) {
@@ -82322,49 +82323,49 @@ function generateRealmNames(options) {
   const terrain = (_k = options.terrain) != null ? _k : "any";
   const spaceOk = !biome.space || era === "NF" || era === "IS";
   if (!spaceOk) notices.push("Space biomes need the near-future or interstellar era; using their homeland.");
-  const landBiome = spaceOk ? biome : (_l = findBiome(homelandBiome(culture))) != null ? _l : findBiome("temperate");
-  const scale = landBiome.space ? landBiome.scale : void 0;
-  const lists = identityLists(landBiome, spaceOk ? terrain : "any");
+  const landBiome2 = spaceOk ? biome : (_l = findBiome(homelandBiome(culture))) != null ? _l : findBiome("temperate");
+  const scale = landBiome2.space ? landBiome2.scale : void 0;
+  const lists = identityLists(landBiome2, spaceOk ? terrain : "any");
   const chosen = options.character ? REALM_CHARACTERS.find((c) => c.key === options.character) : void 0;
   if (options.character && !chosen) notices.push(`\u201C${options.character}\u201D isn't a realm character; using any.`);
   const characters = REALM_CHARACTERS.map((c) => {
-    var _a4, _b2;
-    return [c.key, c.w * ((_b2 = (_a4 = c.eraMult) == null ? void 0 : _a4[era]) != null ? _b2 : 1)];
+    var _a5, _b3;
+    return [c.key, c.w * ((_b3 = (_a5 = c.eraMult) == null ? void 0 : _a5[era]) != null ? _b3 : 1)];
   }).filter(([, w]) => w > 0);
   const guards = (_m = options.safeguards) != null ? _m : { block: REALM_DATA.safeguards.block, flag: REALM_DATA.safeguards.flag, flagListBlocks: REALM_DATA.safeguards.flagListBlocks };
   const pools = /* @__PURE__ */ new Map();
   const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock));
   const tribal = () => {
-    var _a4, _b2;
-    const peopleBiome = landBiome.space ? (_a4 = findBiome(homelandBiome(culture))) != null ? _a4 : findBiome("temperate") : biome;
-    const pool3 = tribalPool((_b2 = REALM_DATA.tribal[culture]) != null ? _b2 : "general", peopleBiome, landBiome.space ? "any" : terrain, landBiome.space ? void 0 : options.biomeData);
+    var _a5, _b3;
+    const peopleBiome = landBiome2.space ? (_a5 = findBiome(homelandBiome(culture))) != null ? _a5 : findBiome("temperate") : biome;
+    const pool3 = tribalPool((_b3 = REALM_DATA.tribal[culture]) != null ? _b3 : "general", peopleBiome, landBiome2.space ? "any" : terrain, landBiome2.space ? void 0 : options.biomeData);
     return pool3.length > 0 ? pickOne3(pool3, rng) : void 0;
   };
   const namedForWeights = (character) => Object.entries(REALM_DATA.namedForWeights[character]).filter(([k]) => namedForOffered(k, REALM_ERAS.find((e) => e.code === era).key)).map(([k, w]) => {
-    var _a4, _b2;
-    return [k, w * (k === "people" ? (_b2 = (_a4 = REALM_DATA.cultures[culture]) == null ? void 0 : _a4.peoplesMult) != null ? _b2 : 1 : 1)];
+    var _a5, _b3;
+    return [k, w * (k === "people" ? (_b3 = (_a5 = REALM_DATA.cultures[culture]) == null ? void 0 : _a5.peoplesMult) != null ? _b3 : 1 : 1)];
   }).filter(([, w]) => w > 0);
   const chooseShape = (character, nf) => {
-    var _a4, _b2, _c2;
+    var _a5, _b3, _c3;
     const weigh = (shapes, extra = []) => shapes.filter((s2) => (!s2.eras || s2.eras.includes(era)) && (!s2.ceremonialOnly || length === "ceremonial")).map((s2) => {
-      var _a5;
-      return [s2, s2.w * toneFactor([...extra, ...(_a5 = s2.t) != null ? _a5 : []], tone)];
+      var _a6;
+      return [s2, s2.w * toneFactor([...extra, ...(_a6 = s2.t) != null ? _a6 : []], tone)];
     }).filter(([, w]) => w > 0);
     const own = REALM_DATA.characterShapes[character];
     if (namedFor === "anything" && own && rng() < own.share) {
       const s2 = pickWeighted5(weigh(own.shapes, own.t), rng);
-      if (s2) return { shape: s2, kind: "character", nf: "character", t: [...(_a4 = own.t) != null ? _a4 : [], ...(_b2 = s2.t) != null ? _b2 : []] };
+      if (s2) return { shape: s2, kind: "character", nf: "character", t: [...(_a5 = own.t) != null ? _a5 : [], ...(_b3 = s2.t) != null ? _b3 : []] };
     }
     const resolved = nf === "anything" ? pickWeighted5(namedForWeights(character), rng) : nf;
     if (!resolved || resolved === "anything") return void 0;
     const kind = (resolved === "land" || resolved === "place") && rng() < REALM_DATA.collectiveShare ? "collective" : resolved;
     const s = pickWeighted5(weigh(REALM_DATA.shapes[kind]), rng);
-    return s ? { shape: s, kind, nf: resolved, t: (_c2 = s.t) != null ? _c2 : [] } : void 0;
+    return s ? { shape: s, kind, nf: resolved, t: (_c3 = s.t) != null ? _c3 : [] } : void 0;
   };
   const oneName2 = () => {
-    var _a4;
+    var _a5;
     for (let round = 0; round < 2; round++) {
-      const character = (_a4 = chosen == null ? void 0 : chosen.key) != null ? _a4 : pickWeighted5(characters, rng);
+      const character = (_a5 = chosen == null ? void 0 : chosen.key) != null ? _a5 : pickWeighted5(characters, rng);
       if (!character) return void 0;
       for (let i = 0; i < 20; i++) {
         const choice = chooseShape(character, namedFor);
@@ -82376,9 +82377,9 @@ function generateRealmNames(options) {
     return void 0;
   };
   function build(character, choice) {
-    var _a4, _b2, _c2, _d2;
+    var _a5, _b3, _c3, _d3;
     const { shape, kind } = choice;
-    const ctx = { rng, setting, era, culture, character, tone, mode, biome: landBiome, lists, pools, tribal, drawn: /* @__PURE__ */ new Set(), values: /* @__PURE__ */ new Map(), scale };
+    const ctx = { rng, setting, era, culture, character, tone, mode, biome: landBiome2, lists, pools, tribal, drawn: /* @__PURE__ */ new Set(), values: /* @__PURE__ */ new Map(), scale };
     if (/\{(form|federalForm)\}/.test(shape.p)) {
       const keep = shape.p.includes("{federalForm}") ? (f) => f.g === "federal" && !f.peoplesOnly : kind === "dynasty" ? DYNASTY : kind === "people" ? PEOPLES : shape.groups ? (f) => shape.groups.includes(f.g) && PLAIN_FORM(f) : shape.p.includes("{modifier}") ? (f) => PLAIN_FORM(f) && (compatibleModifiers(f.w, era).length > 0 || ideologyFor(f.w, era)) : PLAIN_FORM;
       ctx.form = drawForm(ctx, keep);
@@ -82411,15 +82412,15 @@ function generateRealmNames(options) {
     let official = realmCapitals(raw);
     let honorific;
     if (ceremonial && !shape.honorific) {
-      const group = (_c2 = (_b2 = (_a4 = ctx.form) == null ? void 0 : _a4.g) != null ? _b2 : shape.g) != null ? _c2 : "federal";
+      const group = (_c3 = (_b3 = (_a5 = ctx.form) == null ? void 0 : _a5.g) != null ? _b3 : shape.g) != null ? _c3 : "federal";
       const pool3 = REALM_DATA.honorifics[group].map((e) => {
-        var _a5, _b3;
-        return [e, ((_a5 = e.x) != null ? _a5 : 1) * toneFactor((_b3 = e.t) != null ? _b3 : [], tone)];
+        var _a6, _b4;
+        return [e, ((_a6 = e.x) != null ? _a6 : 1) * toneFactor((_b4 = e.t) != null ? _b4 : [], tone)];
       }).filter(([, w]) => w > 0);
       const h = pickWeighted5(pool3, rng);
       if (!h) return void 0;
       honorific = h.w;
-      for (const t of (_d2 = h.t) != null ? _d2 : []) ctx.drawn.add(t);
+      for (const t of (_d3 = h.t) != null ? _d3 : []) ctx.drawn.add(t);
       official = realmCapitals(`${honorific} ${official.replace(/^the /, "")}`);
     } else if (shape.honorific) honorific = "Most Serene";
     const short = realmCapitals(withDeityPlaceholders(renderShort(ctx, shape.short, plainOfficial)));
@@ -82465,9 +82466,9 @@ function renderShort(ctx, template, plain) {
   if (template === "same") return plain;
   const keepThe = template.startsWith("the ");
   const out = template.replace(/\{([^}]+)\}/g, (_m, raw) => {
-    var _a3;
+    var _a4;
     const [name, mod] = raw.split(":");
-    const v = (_a3 = ctx.values.get(name)) != null ? _a3 : "";
+    const v = (_a4 = ctx.values.get(name)) != null ? _a4 : "";
     if (mod === "poss") return groupPossessive(v, false);
     if (mod === "pl") return v.startsWith("[") ? v : groupPlural(v);
     return v;
@@ -82475,13 +82476,13 @@ function renderShort(ctx, template, plain) {
   return keepThe ? out : out.replace(/^the /i, "");
 }
 function realmHistoryLabel(genre, fantastic, culture, era, character, tone = "any") {
-  var _a3, _b, _c, _d;
-  const label = (_b = (_a3 = REALM_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  var _a4, _b2, _c2, _d2;
+  const label = (_b2 = (_a4 = REALM_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   return [
     "realms and polities",
     SETTING_PHRASES[groupSetting(genre, genre === "scifi" ? false : fantastic)],
     label,
-    (_d = (_c = REALM_ERAS.find((e) => e.key === era)) == null ? void 0 : _c.label) != null ? _d : era,
+    (_d2 = (_c2 = REALM_ERAS.find((e) => e.key === era)) == null ? void 0 : _c2.label) != null ? _d2 : era,
     // Companies brief §9.1: the corporate character reads "company-states".
     ...character ? [character === "corporate" ? "company-states" : character] : [],
     ...tone !== "any" ? [tone] : []
@@ -82505,9 +82506,9 @@ var OUTPUT_TEXT = { official: "official names", short: "short names", both: "off
 var PEOPLE_TEXT2 = { placeholders: "placeholders for", invented: "invented" };
 var showsLand = (state) => state.namedFor === "anything" || state.namedFor === "land";
 function realmSentence(state, limits) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const out = [];
-  const culture = (_a3 = REALM_CULTURES.find((c) => c.key === state.culture)) != null ? _a3 : REALM_CULTURES[0];
+  const culture = (_a4 = REALM_CULTURES.find((c) => c.key === state.culture)) != null ? _a4 : REALM_CULTURES[0];
   out.push({
     field: "culture",
     text: culture.label,
@@ -82525,7 +82526,7 @@ function realmSentence(state, limits) {
     current: character == null ? void 0 : character.key
   });
   out.push(" of the ");
-  const era = (_b = REALM_ERAS.find((e) => e.key === state.era)) != null ? _b : REALM_ERAS[1];
+  const era = (_b2 = REALM_ERAS.find((e) => e.key === state.era)) != null ? _b2 : REALM_ERAS[1];
   out.push({
     field: "era",
     text: era.label,
@@ -82555,7 +82556,7 @@ function realmSentence(state, limits) {
     });
   }
   out.push(", named for ");
-  const nf = (_c = REALM_NAMED_FOR.find((n) => n.key === state.namedFor)) != null ? _c : REALM_NAMED_FOR[0];
+  const nf = (_c2 = REALM_NAMED_FOR.find((n) => n.key === state.namedFor)) != null ? _c2 : REALM_NAMED_FOR[0];
   out.push({
     field: "namedFor",
     text: nf.label,
@@ -82569,12 +82570,12 @@ function realmSentence(state, limits) {
     out.push({
       field: "biome",
       text: biome ? biome.phrase : "their homeland",
-      title: (_d = biome == null ? void 0 : biome.guide) != null ? _d : "Their homeland: the culture's own land",
+      title: (_d2 = biome == null ? void 0 : biome.guide) != null ? _d2 : "Their homeland: the culture's own land",
       choices: [
         { id: void 0, label: "Their homeland" },
         ...limits.biomes.map((b) => {
-          var _a4, _b2;
-          return { id: (_b2 = (_a4 = b.custom) == null ? void 0 : _a4.path) != null ? _b2 : b.id, label: b.label };
+          var _a5, _b3;
+          return { id: (_b3 = (_a5 = b.custom) == null ? void 0 : _a5.path) != null ? _b3 : b.id, label: b.label };
         }),
         // Stellar brief §7.1: in the near future and interstellar eras, the space biomes under a Space heading
         // (the near future offers only the planetary system and the star system).
@@ -82590,8 +82591,8 @@ function realmSentence(state, limits) {
     out.push(" ");
     const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
     const terrainText = (id) => {
-      var _a4, _b2;
-      return `of ${id === "any" ? "any terrain" : (_b2 = (_a4 = [...terrains, ...TERRAIN_CHOICES].find((t) => t.id === id)) == null ? void 0 : _a4.label.toLowerCase()) != null ? _b2 : id}`;
+      var _a5, _b3;
+      return `of ${id === "any" ? "any terrain" : (_b3 = (_a5 = [...terrains, ...TERRAIN_CHOICES].find((t) => t.id === id)) == null ? void 0 : _a5.label.toLowerCase()) != null ? _b3 : id}`;
     };
     out.push({
       field: "terrain",
@@ -82741,17 +82742,17 @@ function vesselSetting(state) {
 }
 var showsPrefixes = (state) => prefixSetting(vesselSetting(state));
 function vesselSentence(state, module2) {
-  var _a3, _b;
+  var _a4, _b2;
   const out = [];
-  const culture = (_a3 = VESSEL_CULTURES.find((c) => c.key === state.culture)) != null ? _a3 : VESSEL_CULTURES[0];
+  const culture = (_a4 = VESSEL_CULTURES.find((c) => c.key === state.culture)) != null ? _a4 : VESSEL_CULTURES[0];
   const setting = vesselSetting(state);
   out.push({
     field: "culture",
     text: culture.label,
     title: "Naming culture: what its people name vessels after",
     choices: VESSEL_CULTURES.map((c, i) => {
-      var _a4;
-      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a4 = VESSEL_CULTURES[i - 1]) == null ? void 0 : _a4.group) ? { group: c.group } : {} };
+      var _a5;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a5 = VESSEL_CULTURES[i - 1]) == null ? void 0 : _a5.group) ? { group: c.group } : {} };
     }),
     current: culture.key
   });
@@ -82802,7 +82803,7 @@ function vesselSentence(state, module2) {
     text: style ? `${article(style.label)} ${style.label}` : "no particular",
     title: style ? style.description : "Style: genre flavour",
     choices: [{ id: "none", label: "no particular" }, ...styles.map((s) => ({ id: s.key, label: s.label }))],
-    current: (_b = style == null ? void 0 : style.key) != null ? _b : "none"
+    current: (_b2 = style == null ? void 0 : style.key) != null ? _b2 : "none"
   });
   out.push(" style, ");
   out.push({
@@ -82895,9 +82896,9 @@ function chooseVessel(state, field, id, module2) {
   return next;
 }
 function vesselHistory(module2, state, label) {
-  var _a3, _b;
+  var _a4, _b2;
   const setting = vesselSetting(state);
-  const culture = (_b = (_a3 = VESSEL_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  const culture = (_b2 = (_a4 = VESSEL_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   const style = availableStyles(module2, setting).find((s) => s.key === state.style);
   return [
     label,
@@ -87944,6 +87945,370 @@ var settlement_vocab_default = {
         { w: "Units", t: ["light"], e: ["NF", "IS"], fx: "sf-nick" },
         { w: "Scrap", t: ["light"], e: ["NF", "IS"], fx: "sf-nick" }
       ]
+    },
+    seasonWord: {
+      entries: [
+        { w: "Sowing", x: 2, s: ["spring"] },
+        { w: "Lambing", x: 2, s: ["spring"] },
+        { w: "Blossom", x: 2, s: ["spring"] },
+        { w: "Budding", s: ["spring"] },
+        { w: "Ploughing", x: 2, s: ["spring"] },
+        { w: "Cuckoo", s: ["spring"] },
+        { w: "Swallow", s: ["spring"] },
+        { w: "Birch", s: ["spring"] },
+        { w: "Green", s: ["spring"] },
+        { w: "Mud", s: ["spring"] },
+        { w: "Planting", s: ["spring"] },
+        { w: "Seed", s: ["spring"] },
+        { w: "Hare", s: ["spring"] },
+        { w: "Grass", s: ["spring"] },
+        { w: "Calving", s: ["spring"] },
+        { w: "Nesting", s: ["spring"] },
+        { w: "Hay", x: 2, s: ["summer"] },
+        { w: "Haymaking", s: ["summer"] },
+        { w: "Sun", x: 2, s: ["summer"] },
+        { w: "Rose", s: ["summer"] },
+        { w: "Honey", s: ["summer"] },
+        { w: "Shearing", x: 2, s: ["summer"] },
+        { w: "Long-Day", s: ["summer"] },
+        { w: "Heat", x: 2, s: ["summer"] },
+        { w: "Lime", s: ["summer"] },
+        { w: "Midsummer", s: ["summer"] },
+        { w: "Weeding", s: ["summer"] },
+        { w: "Swarming", s: ["summer"] },
+        { w: "Bright", s: ["summer"] },
+        { w: "Harvest", x: 3, s: ["autumn"] },
+        { w: "Reaping", x: 2, s: ["autumn"] },
+        { w: "Leaf-Fall", x: 2, s: ["autumn"] },
+        { w: "Yellowing", s: ["autumn"] },
+        { w: "Slaughter", x: 2, s: ["autumn"] },
+        { w: "Rut", s: ["autumn"] },
+        { w: "Apple", s: ["autumn"] },
+        { w: "Nut", s: ["autumn"] },
+        { w: "Gathering", s: ["autumn"] },
+        { w: "Mist", s: ["autumn"] },
+        { w: "Fog", s: ["autumn"] },
+        { w: "Acorn", s: ["autumn"] },
+        { w: "Threshing", s: ["autumn"] },
+        { w: "Brewing", s: ["autumn"] },
+        { w: "Wine", s: ["autumn", "harvest"] },
+        { w: "Frost", x: 2, s: ["winter"] },
+        { w: "Snow", x: 2, s: ["winter"] },
+        { w: "Ice", x: 2, s: ["winter"] },
+        { w: "Wolf", x: 2, s: ["winter"] },
+        { w: "Dark", x: 2, s: ["winter"] },
+        { w: "Hearth", s: ["winter"] },
+        { w: "Yule", c: ["anglo-saxon", "norse", "norman-british", "celtic", "general"], s: ["winter"] },
+        { w: "Long-Night", s: ["winter"] },
+        { w: "Cold", x: 2, s: ["winter"] },
+        { w: "Hunger", t: ["grim"], s: ["winter"] },
+        { w: "Suet", s: ["winter"] },
+        { w: "Fasting", s: ["winter"] },
+        { w: "Storytelling", s: ["winter"] },
+        { w: "Clod", s: ["winter"] },
+        { w: "Thaw", x: 3, s: ["thaw"] },
+        { w: "Meltwater", x: 2, s: ["thaw"] },
+        { w: "Break-Up", s: ["thaw"] },
+        { w: "Slush", s: ["thaw"] },
+        { w: "Return", s: ["thaw"] },
+        { w: "Mud", s: ["thaw"] },
+        { w: "Rain", x: 3, s: ["rain"] },
+        { w: "Cloud", s: ["rain"] },
+        { w: "Frog", x: 2, s: ["rain"] },
+        { w: "Green", x: 2, s: ["rain"] },
+        { w: "Downpour", s: ["rain"] },
+        { w: "Mushroom", s: ["rain"] },
+        { w: "Sprouting", s: ["rain"] },
+        { w: "Thunder", s: ["rain"] },
+        { w: "Monsoon", x: 3, s: ["monsoon"] },
+        { w: "Storm", x: 2, s: ["monsoon"] },
+        { w: "Downpour", s: ["monsoon"] },
+        { w: "Deluge", s: ["monsoon"] },
+        { w: "Thunder", s: ["monsoon"] },
+        { w: "Peacock", c: ["indian"], s: ["monsoon"] },
+        { w: "Cloud", s: ["monsoon"] },
+        { w: "Flood", x: 3, s: ["flood"] },
+        { w: "Inundation", x: 2, s: ["flood"] },
+        { w: "Silt", x: 2, s: ["flood"] },
+        { w: "Rising Water", s: ["flood"] },
+        { w: "High Water", s: ["flood"] },
+        { w: "Black Earth", s: ["flood"] },
+        { w: "Dust", x: 2, s: ["drought"] },
+        { w: "Dry", x: 2, s: ["drought"] },
+        { w: "Thirst", s: ["drought"] },
+        { w: "Burning", t: ["grim"], s: ["drought"] },
+        { w: "Cracked Earth", s: ["drought"] },
+        { w: "Fire", x: 2, s: ["drought"] },
+        { w: "Bare", s: ["drought"] },
+        { w: "Smoke", s: ["drought"] },
+        { w: "Harvest", x: 3, s: ["harvest"] },
+        { w: "Threshing", x: 2, s: ["harvest"] },
+        { w: "Granary", s: ["harvest"] },
+        { w: "Winnowing", s: ["harvest"] },
+        { w: "Gleaning", s: ["harvest"] },
+        { w: "Plenty", s: ["harvest"] },
+        { w: "First Fruits", s: ["harvest"] },
+        { w: "Yam", x: 3, c: ["west-african", "bantu"], s: ["harvest"] },
+        { w: "Maize", x: 3, c: ["aztec", "maya"], s: ["harvest"] },
+        { w: "Rice", x: 3, c: ["chinese", "japanese", "korean", "indian"], s: ["harvest"] },
+        { w: "Gale", x: 2, s: ["storm"] },
+        { w: "Storm", x: 3, s: ["storm"] },
+        { w: "Wreck", t: ["grim"], s: ["storm"] },
+        { w: "Spray", s: ["storm"] },
+        { w: "Squall", s: ["storm"] },
+        { w: "Frost", x: 3, s: ["frost"] },
+        { w: "Rime", x: 2, s: ["frost"] },
+        { w: "Hard Frost", s: ["frost"] },
+        { w: "Hail", s: ["frost"] },
+        { w: "White", s: ["frost"] }
+      ]
+    },
+    workWord: {
+      entries: [
+        { w: "Ploughing", s: ["spring"], wk: true },
+        { w: "Sowing", s: ["spring"], wk: true },
+        { w: "Planting", s: ["spring"], wk: true },
+        { w: "Lambing", s: ["spring"], wk: true },
+        { w: "Calving", s: ["spring"], wk: true },
+        { w: "Shearing", s: ["summer"], wk: true },
+        { w: "Hay", s: ["summer"], wk: true },
+        { w: "Haymaking", s: ["summer"], wk: true },
+        { w: "Weeding", s: ["summer"], wk: true },
+        { w: "Reaping", s: ["autumn"], wk: true },
+        { w: "Harvest", s: ["autumn", "harvest"], wk: true },
+        { w: "Threshing", s: ["autumn", "harvest"], wk: true },
+        { w: "Winnowing", s: ["harvest"], wk: true },
+        { w: "Gleaning", s: ["harvest"], wk: true },
+        { w: "Slaughter", s: ["autumn"], wk: true },
+        { w: "Brewing", s: ["autumn"], wk: true },
+        { w: "Wine", s: ["autumn", "harvest"], wk: true }
+      ]
+    },
+    dayWork: {
+      entries: [
+        { w: "Market", x: 3 },
+        { w: "Wash", x: 2 },
+        { w: "Baking" },
+        { w: "Rest", x: 2 },
+        { w: "Fast" },
+        { w: "Hunting" },
+        { w: "Bath" },
+        { w: "Moot", c: ["anglo-saxon", "norse", "norman-british"] },
+        { w: "Assembly" },
+        { w: "Pay", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Mending" },
+        { w: "Spinning" },
+        { w: "Fishing" },
+        { w: "Prayer", x: 0.5 },
+        { w: "Court" },
+        { w: "Dancing", t: ["light"] }
+      ]
+    },
+    dayElement: {
+      entries: [
+        { w: "Fire", c: ["chinese", "japanese", "korean", "steppe"] },
+        { w: "Water", c: ["chinese", "japanese", "korean", "steppe"] },
+        { w: "Wood", c: ["chinese", "japanese", "korean", "steppe"] },
+        { w: "Metal", c: ["chinese", "japanese", "korean", "steppe"] },
+        { w: "Earth", c: ["chinese", "japanese", "korean", "steppe"] }
+      ]
+    },
+    skyFigure: {
+      entries: [
+        { w: "Hunter", x: 2 },
+        { w: "Herdsman" },
+        { w: "Weaver", x: 2 },
+        { w: "Ploughman" },
+        { w: "Fisherman" },
+        { w: "Archer" },
+        { w: "Maiden" },
+        { w: "Twins" },
+        { w: "Smith" },
+        { w: "Warrior" },
+        { w: "King" },
+        { w: "Queen" },
+        { w: "Old Woman" },
+        { w: "Wanderer" },
+        { w: "Shepherd" },
+        { w: "Ferryman" },
+        { w: "Drummer" },
+        { w: "Sleeper", t: ["strange"] },
+        { w: "Dancer" },
+        { w: "Mourner", t: ["grim"] },
+        { w: "Thief" },
+        { w: "Rider" },
+        { w: "Giant" }
+      ]
+    },
+    skyObject: {
+      entries: [
+        { w: "Plough", x: 2 },
+        { w: "Sickle" },
+        { w: "Wain", x: 2 },
+        { w: "Ship" },
+        { w: "Canoe", x: 3, c: ["polynesian"] },
+        { w: "Canoe", c: ["maya", "aztec"] },
+        { w: "Harp" },
+        { w: "Crown" },
+        { w: "Spear" },
+        { w: "Ladle" },
+        { w: "Net" },
+        { w: "Hearth" },
+        { w: "Loom" },
+        { w: "Drum" },
+        { w: "Bow" },
+        { w: "Arrow" },
+        { w: "Sword" },
+        { w: "Shield" },
+        { w: "Fishhook", x: 2, c: ["polynesian"] },
+        { w: "Fire Drill", x: 3, c: ["aztec"] },
+        { w: "Scales" },
+        { w: "Cup" },
+        { w: "Key" },
+        { w: "Gate" },
+        { w: "Chair" },
+        { w: "Bowl" },
+        { w: "Basket" },
+        { w: "Kite" },
+        { w: "Kettle" },
+        { w: "Comb" },
+        { w: "Spindle" },
+        { w: "Distaff" },
+        { w: "Anvil" },
+        { w: "Tent", x: 2, c: ["steppe", "arabic-persian"] },
+        { w: "Stake", x: 2, c: ["steppe"] },
+        { w: "Bier", c: ["arabic-persian"] },
+        { w: "Ball Court", c: ["aztec", "maya"] }
+      ]
+    },
+    skyBodyPart: {
+      entries: [
+        { w: "Eye", x: 2 },
+        { w: "Eyes" },
+        { w: "Tail" },
+        { w: "Horn" },
+        { w: "Heart" },
+        { w: "Belt" },
+        { w: "Head" },
+        { w: "Hand" },
+        { w: "Foot" },
+        { w: "Mane" },
+        { w: "Claw" },
+        { w: "Wing" },
+        { w: "Jaw" },
+        { w: "Spine" },
+        { w: "Tongue", t: ["strange"] }
+      ]
+    },
+    skyQuality: {
+      entries: [
+        { w: "Pale", x: 2 },
+        { w: "Red", x: 2 },
+        { w: "Slow" },
+        { w: "Swift" },
+        { w: "Bright", x: 2 },
+        { w: "Dim" },
+        { w: "Restless" },
+        { w: "Lonely" },
+        { w: "Faithful" },
+        { w: "Fierce" },
+        { w: "Gentle" },
+        { w: "Hidden" },
+        { w: "Weeping", t: ["strange"] },
+        { w: "Smoking", t: ["strange"] },
+        { w: "Silver" },
+        { w: "Golden" }
+      ]
+    },
+    skyKin: {
+      entries: [
+        { w: "Sister", x: 2 },
+        { w: "Brother", x: 2 },
+        { w: "Mother" },
+        { w: "Father" },
+        { w: "Child" },
+        { w: "Twin" },
+        { w: "Bride" },
+        { w: "Widow", t: ["grim"] },
+        { w: "Guest" },
+        { w: "Stranger" }
+      ]
+    },
+    skyRiver: {
+      entries: [
+        { w: "River" },
+        { w: "Road", x: 2 },
+        { w: "Path" },
+        { w: "Way" },
+        { w: "Seam" },
+        { w: "Stream" },
+        { w: "Bridge" },
+        { w: "Trail" },
+        { w: "Spine", t: ["strange"] }
+      ]
+    },
+    skyHeaven: {
+      entries: [
+        { w: "Heaven", x: 2 },
+        { w: "the Sky", x: 2 },
+        { w: "the Night" },
+        { w: "Souls", t: ["strange"] },
+        { w: "the Dead", t: ["grim"] },
+        { w: "Birds" },
+        { w: "Straw" },
+        { w: "Milk" },
+        { w: "the Gods", c: ["!polynesian", "!andean"] }
+      ]
+    },
+    festNoun: {
+      entries: [
+        { w: "Lanterns", x: 2 },
+        { w: "Masks" },
+        { w: "Bonfires", x: 2 },
+        { w: "Bells" },
+        { w: "Candles" },
+        { w: "Mirrors" },
+        { w: "Wolves" },
+        { w: "Ancestors", x: 2 },
+        { w: "Stars" },
+        { w: "Kites" },
+        { w: "Drums" },
+        { w: "Boats" },
+        { w: "Flowers" },
+        { w: "Ribbons" },
+        { w: "Torches" },
+        { w: "Ashes", t: ["grim"] },
+        { w: "Fools", t: ["light"] },
+        { w: "Kings" },
+        { w: "Queens" },
+        { w: "Spirits", t: ["strange"] }
+      ]
+    },
+    festBlessing: {
+      entries: [
+        { w: "the Boats" },
+        { w: "the Ploughs" },
+        { w: "the Herds" },
+        { w: "the Waters" },
+        { w: "the Fields" },
+        { w: "the Nets" },
+        { w: "the Hives" },
+        { w: "the Wells" },
+        { w: "the Bread" },
+        { w: "the Looms" }
+      ]
+    },
+    extraDays: {
+      entries: [
+        { w: "Empty", x: 2 },
+        { w: "Lost" },
+        { w: "Spare", t: ["light"] },
+        { w: "Nameless", x: 2 },
+        { w: "Dark", t: ["grim"] },
+        { w: "Waiting" },
+        { w: "Short" },
+        { w: "Idle" }
+      ]
     }
   },
   regions: ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI"],
@@ -87965,11 +88330,11 @@ var VOCAB_THEMES = SETTLEMENT_VOCAB.themes;
 var POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
 var eraIndex = (era) => VOCAB_ERAS.indexOf(era);
 function inCultureGroup(group, culture, era) {
-  var _a3;
+  var _a4;
   const g = SETTLEMENT_VOCAB.cultureGroups[group];
   if (!g) return false;
   if (g.cultures.includes(culture)) return true;
-  const from = (_a3 = g.from) == null ? void 0 : _a3[culture];
+  const from = (_a4 = g.from) == null ? void 0 : _a4[culture];
   return !!from && eraIndex(era) >= eraIndex(from);
 }
 function cultureAllowed(c, culture, era) {
@@ -87989,20 +88354,20 @@ function entryAllowed(e, where2) {
   return cultureAllowed(e.c, where2.culture, where2.era);
 }
 var regionX = (e, where2) => {
-  var _a3, _b;
+  var _a4, _b2;
   const region = regionFor(where2);
-  return region ? (_b = (_a3 = e.rx) == null ? void 0 : _a3[region]) != null ? _b : 1 : 1;
+  return region ? (_b2 = (_a4 = e.rx) == null ? void 0 : _a4[region]) != null ? _b2 : 1 : 1;
 };
 var themeX = (e, where2) => {
-  var _a3;
-  return ((_a3 = e.th) != null ? _a3 : []).reduce((n, t) => {
-    var _a4, _b;
-    return n * ((_b = (_a4 = where2.themes) == null ? void 0 : _a4[t]) != null ? _b : 1);
+  var _a4;
+  return ((_a4 = e.th) != null ? _a4 : []).reduce((n, t) => {
+    var _a5, _b2;
+    return n * ((_b2 = (_a5 = where2.themes) == null ? void 0 : _a5[t]) != null ? _b2 : 1);
   }, 1);
 };
 var BUILT_IN_VOCAB = { pools: SETTLEMENT_VOCAB.pools };
 function poolEntries(vocab, name, where2) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const pool3 = vocab.pools[name];
   if (!pool3) throw new Error(`Settlement vocabulary: no pool \u201C${name}\u201D.`);
   const out = [];
@@ -88015,12 +88380,12 @@ function poolEntries(vocab, name, where2) {
       out.push([e, w]);
     }
   };
-  for (const e of pool3.entries) if (entryAllowed(e, where2)) add2(e, ((_a3 = e.x) != null ? _a3 : 1) * regionX(e, where2) * themeX(e, where2));
-  for (const e of (_c = (_b = pool3.cultureExtra) == null ? void 0 : _b[where2.culture]) != null ? _c : []) {
+  for (const e of pool3.entries) if (entryAllowed(e, where2)) add2(e, ((_a4 = e.x) != null ? _a4 : 1) * regionX(e, where2) * themeX(e, where2));
+  for (const e of (_c2 = (_b2 = pool3.cultureExtra) == null ? void 0 : _b2[where2.culture]) != null ? _c2 : []) {
     if (!entryAllowed(e, where2)) continue;
     const i = at.get(e.w);
     if (i !== void 0) out[i][1] *= 3;
-    else add2(e, ((_d = e.x) != null ? _d : 1) * 3);
+    else add2(e, ((_d2 = e.x) != null ? _d2 : 1) * 3);
   }
   return out.filter(([, w]) => w > 0);
 }
@@ -88030,6 +88395,8 @@ function isVocabularyPackContent(content) {
   return !!fm && new RegExp(`^type:\\s*["']?${VOCABULARY_TYPE}["']?\\s*$`, "m").test(fm[1]);
 }
 var isMoneyPool = (pool3) => pool3.startsWith("moneyFixed:") || MONEY_WORD_POOLS.includes(pool3);
+var SEASON_POOLS = ["seasonWord", "workWord"];
+var SEASON_KEYS = ["spring", "summer", "autumn", "winter", "thaw", "rain", "monsoon", "flood", "drought", "harvest", "storm", "frost"];
 var MONEY_WORD_POOLS = ["coinMetal", "coinWord", "coinEmblem", "coinFraction", "coinShapeWord", "earlyMoney", "goodsMoney", "paperWord", "tokenWord", "unitWord", "moneyNickname", "sfMoney"];
 function parseLine(text, pool3 = "") {
   const money = isMoneyPool(pool3);
@@ -88039,6 +88406,7 @@ function parseLine(text, pool3 = "") {
   let th;
   let loan;
   let v;
+  let seasons;
   for (let i = 0; i < 3; i++) {
     const themes = rest.match(/\s*\[([^[\]]*)\]$/);
     if (themes && money && loan === void 0) {
@@ -88062,6 +88430,7 @@ function parseLine(text, pool3 = "") {
       const words = tones[1].split(/[,\s]+/).map((s) => s.trim().toLowerCase());
       t = words.filter((s) => GROUP_TONES.includes(s));
       if (money) v = words.filter((s) => VALUE_TIERS.includes(s));
+      if (SEASON_POOLS.includes(pool3)) seasons = words.filter((s) => SEASON_KEYS.includes(s));
       rest = rest.slice(0, tones.index).trim();
     }
   }
@@ -88072,7 +88441,8 @@ function parseLine(text, pool3 = "") {
     ...t && t.length > 0 ? { t } : {},
     ...th && th.length > 0 ? { th } : {},
     ...v && v.length > 0 ? { v } : {},
-    ...loan ? { loan } : {}
+    ...loan ? { loan } : {},
+    ...seasons && seasons.length > 0 ? { s: seasons } : {}
   };
 }
 function parseVocabularyPack(content, note2) {
@@ -88158,19 +88528,19 @@ var BRITISH_CULTURES = ["anglo-saxon", "celtic", "norman-british"];
 var findRouteCulture = (key2) => ROUTE_CULTURES.find((c) => c.key === key2);
 var findRouteKind = (key2) => ROUTE_KINDS.find((k) => k.key === key2);
 var routeEraLabel = (code) => {
-  var _a3, _b;
-  return (_b = (_a3 = ROUTE_ERAS.find((e) => e.code === code)) == null ? void 0 : _a3.label) != null ? _b : code;
+  var _a4, _b2;
+  return (_b2 = (_a4 = ROUTE_ERAS.find((e) => e.code === code)) == null ? void 0 : _a4.label) != null ? _b2 : code;
 };
 function routeSetting(era, fantastic) {
-  var _a3;
-  const e = (_a3 = ROUTE_ERAS.find((x) => x.code === era)) != null ? _a3 : ROUTE_ERAS[1];
+  var _a4;
+  const e = (_a4 = ROUTE_ERAS.find((x) => x.code === era)) != null ? _a4 : ROUTE_ERAS[1];
   return e.settings[fantastic ? 1 : 0];
 }
 function kindEraWeight(kind, era, fantastic, scale) {
-  var _a3, _b, _c, _d, _e, _f, _g;
-  const row = (era === "NF" || era === "IS") && scale ? (_a3 = ROUTE_DATA.scaleKinds[era]) == null ? void 0 : _a3[scale] : void 0;
-  if (row) return (_d = (_c = fantastic && scale === "Pl" ? (_b = kind.fantasticEra) == null ? void 0 : _b[era] : void 0) != null ? _c : row[kind.key]) != null ? _d : 0;
-  return (_g = (_f = fantastic ? (_e = kind.fantasticEra) == null ? void 0 : _e[era] : void 0) != null ? _f : kind.era[era]) != null ? _g : 0;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g;
+  const row = (era === "NF" || era === "IS") && scale ? (_a4 = ROUTE_DATA.scaleKinds[era]) == null ? void 0 : _a4[scale] : void 0;
+  if (row) return (_d2 = (_c2 = fantastic && scale === "Pl" ? (_b2 = kind.fantasticEra) == null ? void 0 : _b2[era] : void 0) != null ? _c2 : row[kind.key]) != null ? _d2 : 0;
+  return (_g = (_f = fantastic ? (_e2 = kind.fantasticEra) == null ? void 0 : _e2[era] : void 0) != null ? _f : kind.era[era]) != null ? _g : 0;
 }
 function routeScales(era) {
   return era === "NF" || era === "IS" ? scalesFor(era).filter((c) => c !== "any") : [];
@@ -88205,45 +88575,45 @@ var GN_LISTS2 = {
 var SF_LISTS = /* @__PURE__ */ new Set(["star", "greek", "spaceLand", "sfBody", "orbitAdj", "spaceDirection", "spaceHazard"]);
 var GOD_CULTURES = /* @__PURE__ */ new Set(["egyptian", "norse", "anglo-saxon", "aztec", "maya"]);
 function regionMult(ctx, tag, eras) {
-  var _a3, _b;
+  var _a4, _b2;
   if (!tag || !ctx.region) return 1;
   if (eras && !eras.includes(ctx.era)) return 1;
-  return (_b = (_a3 = ROUTE_DATA.regions[tag]) == null ? void 0 : _a3[ctx.region]) != null ? _b : 1;
+  return (_b2 = (_a4 = ROUTE_DATA.regions[tag]) == null ? void 0 : _a4[ctx.region]) != null ? _b2 : 1;
 }
-function vocabPool(ctx, pool3, token13) {
-  var _a3, _b, _c;
+function vocabPool(ctx, pool3, token14) {
+  var _a4, _b2, _c2;
   const shape = ctx.shape;
-  const only = (_a3 = shape == null ? void 0 : shape.only) == null ? void 0 : _a3[token13];
-  const cw = (_c = (_b = shape == null ? void 0 : shape.cw) == null ? void 0 : _b[ctx.culture.key]) == null ? void 0 : _c[token13];
+  const only = (_a4 = shape == null ? void 0 : shape.only) == null ? void 0 : _a4[token14];
+  const cw = (_c2 = (_b2 = shape == null ? void 0 : shape.cw) == null ? void 0 : _b2[ctx.culture.key]) == null ? void 0 : _c2[token14];
   return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, scale: ctx.scale }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t))).map(([e, w]) => {
-    var _a4, _b2;
-    let n = w * toneFactor((_a4 = e.t) != null ? _a4 : [], ctx.tone) * regionMult(ctx, e.rt) * ((_b2 = cw == null ? void 0 : cw[e.w]) != null ? _b2 : 1);
-    if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token13 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
+    var _a5, _b3;
+    let n = w * toneFactor((_a5 = e.t) != null ? _a5 : [], ctx.tone) * regionMult(ctx, e.rt) * ((_b3 = cw == null ? void 0 : cw[e.w]) != null ? _b3 : 1);
+    if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token14 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
     return [e, n];
   }).filter(([, n]) => n > 0);
 }
-function vocabWord(ctx, pool3, token13, keep) {
-  var _a3;
-  const items = boostPool(ctx.context, pool3, vocabPool(ctx, pool3, token13)).filter(([e2]) => !keep || keep(e2.w));
+function vocabWord(ctx, pool3, token14, keep) {
+  var _a4;
+  const items = boostPool(ctx.context, pool3, vocabPool(ctx, pool3, token14)).filter(([e2]) => !keep || keep(e2.w));
   const e = pickWeighted5(items, ctx.rng);
   if (!e) return void 0;
-  for (const t of (_a3 = e.t) != null ? _a3 : []) ctx.drawn.add(t);
+  for (const t of (_a4 = e.t) != null ? _a4 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
   return e.w;
 }
-function gnWord2(ctx, token13) {
-  var _a3, _b, _c;
-  if (token13 === "star") {
-    let star = groupStarIn((_a3 = ctx.scale) != null ? _a3 : "any", ctx.mode, ctx.rng);
-    for (let i = 0; i < 5 && ctx.stars.includes(star); i++) star = groupStarIn((_b = ctx.scale) != null ? _b : "any", ctx.mode, ctx.rng);
+function gnWord2(ctx, token14) {
+  var _a4, _b2, _c2;
+  if (token14 === "star") {
+    let star = groupStarIn((_a4 = ctx.scale) != null ? _a4 : "any", ctx.mode, ctx.rng);
+    for (let i = 0; i < 5 && ctx.stars.includes(star); i++) star = groupStarIn((_b2 = ctx.scale) != null ? _b2 : "any", ctx.mode, ctx.rng);
     ctx.stars.push(star);
     if (ctx.shape && /\{star\} (Run|Road)$/.test(ctx.shape.p)) star = dropStarWord(star);
     ctx.words.push({ pool: "star", word: star });
     return star;
   }
-  const list = GN_LISTS2[token13];
-  const setting = SF_LISTS.has(token13) ? "SF" : ctx.setting;
-  const items = groupListWords(list, setting, (_c = ctx.scale) != null ? _c : "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  const list = GN_LISTS2[token14];
+  const setting = SF_LISTS.has(token14) ? "SF" : ctx.setting;
+  const items = groupListWords(list, setting, (_c2 = ctx.scale) != null ? _c2 : "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
@@ -88261,31 +88631,31 @@ function routePlace(cultureKey, setting, rng) {
   return void 0;
 }
 var personNames = (culture) => {
-  var _a3, _b;
-  return ((_b = (_a3 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a3.lists.name) != null ? _b : []).filter((w) => !w.includes("{")).map(stripPlural);
+  var _a4, _b2;
+  return ((_b2 = (_a4 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a4.lists.name) != null ? _b2 : []).filter((w) => !w.includes("{")).map(stripPlural);
 };
 var godNames = (culture) => {
-  var _a3, _b;
-  return GOD_CULTURES.has(culture) ? ((_b = (_a3 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a3.lists.god) != null ? _b : []).filter((w) => !w.includes("{")).map(stripPlural) : [];
+  var _a4, _b2;
+  return GOD_CULTURES.has(culture) ? ((_b2 = (_a4 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a4.lists.god) != null ? _b2 : []).filter((w) => !w.includes("{")).map(stripPlural) : [];
 };
 function routeFigure(cultureKey, setting, rng) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const culture = findRouteCulture(cultureKey);
   if (culture == null ? void 0 : culture.figure) return pickOne4(culture.figure, rng);
-  const ranks = (_a3 = BYNAMES_DATA.ranks[cultureKey]) != null ? _a3 : BYNAMES_DATA.ranks.general;
+  const ranks = (_a4 = BYNAMES_DATA.ranks[cultureKey]) != null ? _a4 : BYNAMES_DATA.ranks.general;
   const items = [];
   for (const r of ranks) {
     if (r.s && !r.s.includes(setting)) continue;
     const form = entryForm(r, "male", false);
-    if (form) items.push([form.text, ((_b = r.x) != null ? _b : 1) * ((_d = (_c = r.cx) == null ? void 0 : _c[cultureKey]) != null ? _d : 1)]);
+    if (form) items.push([form.text, ((_b2 = r.x) != null ? _b2 : 1) * ((_d2 = (_c2 = r.cx) == null ? void 0 : _c2[cultureKey]) != null ? _d2 : 1)]);
   }
   return pickWeighted5(items, rng);
 }
 var figure = (ctx) => routeFigure(ctx.culture.key, ctx.setting, ctx.rng);
 var FOLK = /* @__PURE__ */ new Map();
 function routeFolk(cultureKey, rng) {
-  var _a3, _b, _c;
-  const tradition = (_c = (_b = (_a3 = findRouteCulture(cultureKey)) == null ? void 0 : _a3.folk) != null ? _b : REALM_DATA.tribal[cultureKey]) != null ? _c : "general";
+  var _a4, _b2, _c2;
+  const tradition = (_c2 = (_b2 = (_a4 = findRouteCulture(cultureKey)) == null ? void 0 : _a4.folk) != null ? _b2 : REALM_DATA.tribal[cultureKey]) != null ? _c2 : "general";
   let pool3 = FOLK.get(tradition);
   if (!pool3) {
     pool3 = generateTribalNames({ tradition, count: 120, seed: 1789 }).names.map((n) => n.name.replace(/^the /i, "")).filter((n) => !n.includes("["));
@@ -88295,8 +88665,8 @@ function routeFolk(cultureKey, rng) {
 }
 var KINGDOMS = /* @__PURE__ */ new Map();
 function routeKingdom(cultureKey, routeEra, rng) {
-  var _a3, _b;
-  const era = (_b = (_a3 = REALM_ERAS.find((e) => e.code === routeEra)) == null ? void 0 : _a3.key) != null ? _b : "medieval";
+  var _a4, _b2;
+  const era = (_b2 = (_a4 = REALM_ERAS.find((e) => e.code === routeEra)) == null ? void 0 : _a4.key) != null ? _b2 : "medieval";
   const key2 = `${cultureKey}|${era}`;
   let pool3 = KINGDOMS.get(key2);
   if (!pool3) {
@@ -88311,7 +88681,7 @@ function roadNumber(ctx, which) {
   return String(range2[0] + Math.floor(ctx.rng() * (range2[1] - range2[0] + 1)));
 }
 function token5(ctx, name) {
-  var _a3, _b, _c, _d, _e, _f;
+  var _a4, _b2, _c2, _d2, _e2, _f;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
@@ -88343,7 +88713,7 @@ function token5(ctx, name) {
       return gods.length > 0 ? pickOne4(gods, rng) : void 0;
     }
     case "sacredPlace": {
-      const w = (_a3 = deityHooks()) == null ? void 0 : _a3.sacredPlace({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng, vocab: ctx.vocab });
+      const w = (_a4 = deityHooks()) == null ? void 0 : _a4.sacredPlace({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng, vocab: ctx.vocab });
       if (w) ctx.words.push({ pool: "sacredPlace", word: w });
       return w;
     }
@@ -88352,11 +88722,11 @@ function token5(ctx, name) {
       return w && `the ${w}`;
     }
     case "roadLetter": {
-      const letters = Object.entries((_c = (_b = ctx.shape) == null ? void 0 : _b.letters) != null ? _c : { A: 1 });
+      const letters = Object.entries((_c2 = (_b2 = ctx.shape) == null ? void 0 : _b2.letters) != null ? _c2 : { A: 1 });
       return ctx.letter = pickWeighted5(letters, rng);
     }
     case "n":
-      return roadNumber(ctx, (_d = ctx.letter) != null ? _d : "route");
+      return roadNumber(ctx, (_d2 = ctx.letter) != null ? _d2 : "route");
     case "ordinal": {
       const choices = [];
       for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
@@ -88365,7 +88735,7 @@ function token5(ctx, name) {
     case "spaceLand": {
       const w = gnWord2(ctx, "spaceLand");
       if (!w || rng() >= 0.3) return w;
-      return groupSpacePrefix(w, rng, (_e = ctx.scale) != null ? _e : "any");
+      return groupSpacePrefix(w, rng, (_e2 = ctx.scale) != null ? _e2 : "any");
     }
   }
   if (GN_LISTS2[name]) return gnWord2(ctx, name);
@@ -88378,12 +88748,12 @@ function renderPattern3(ctx, pattern, hooks2) {
   let index = -1;
   let nameUsed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
-    var _a3, _b;
+    var _a4, _b2;
     if (failed) return "";
     index++;
     const [name, mod] = raw.split(":");
     let piece;
-    const fixed = (_a3 = hooks2 == null ? void 0 : hooks2.byIndex) == null ? void 0 : _a3.get(index);
+    const fixed = (_a4 = hooks2 == null ? void 0 : hooks2.byIndex) == null ? void 0 : _a4.get(index);
     if (fixed) piece = fixed.text;
     else if ((hooks2 == null ? void 0 : hooks2.byName) && !nameUsed && hooks2.byName.name === name) {
       piece = hooks2.byName.text;
@@ -88393,7 +88763,7 @@ function renderPattern3(ctx, pattern, hooks2) {
       failed = true;
       return "";
     }
-    (_b = hooks2 == null ? void 0 : hooks2.record) == null ? void 0 : _b.push({ name, text: piece });
+    (_b2 = hooks2 == null ? void 0 : hooks2.record) == null ? void 0 : _b2.push({ name, text: piece });
     return withMod2(name, piece, mod);
   });
   return failed ? void 0 : out;
@@ -88433,14 +88803,14 @@ function shapesFor(kind, culture) {
   return [...ROUTE_DATA.shapes[kind], ...ROUTE_DATA.cultureShapes.filter((s) => s.kind === kind && s.culture === culture)];
 }
 function shapeWeight2(ctx, kind, s, anyEra = false) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const c = ctx.culture;
   if (!anyEra && s.e && !s.e.includes(ctx.era)) return 0;
   if (s.sc && ctx.scale && !s.sc.includes(ctx.scale)) return 0;
   if (s.ftl && (ctx.ftl === "none" || ctx.ftl !== "any" && ctx.ftl !== s.ftl)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
   if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
-  if (s.p.includes("{sacredPlace}") && (c.sensitive || !((_a3 = deityHooks()) == null ? void 0 : _a3.cultureOffered(c.key)))) return 0;
+  if (s.p.includes("{sacredPlace}") && (c.sensitive || !((_a4 = deityHooks()) == null ? void 0 : _a4.cultureOffered(c.key)))) return 0;
   if (c.sensitive && (s.h || LIGHT_OR_GRIM(s.t) || s.p === "fixed" && kind === "pilgrim")) return 0;
   if (ctx.mode === "invented" && PERSON_TOKENS.test(s.p) && personNames(c.key).length === 0) return 0;
   if (s.p.includes("{god}") && godNames(c.key).length === 0) return 0;
@@ -88452,7 +88822,7 @@ function shapeWeight2(ctx, kind, s, anyEra = false) {
     ctx.shape = prev;
     if (!live4) return 0;
   }
-  return s.w * ((_c = (_b = s.cx) == null ? void 0 : _b[c.key]) != null ? _c : 1) * regionMult(ctx, s.r, s.rEra) * toneFactor((_d = s.t) != null ? _d : [], ctx.tone);
+  return s.w * ((_c2 = (_b2 = s.cx) == null ? void 0 : _b2[c.key]) != null ? _c2 : 1) * regionMult(ctx, s.r, s.rEra) * toneFactor((_d2 = s.t) != null ? _d2 : [], ctx.tone);
 }
 function kindPlans(ctx, kind, only) {
   return shapesFor(kind, ctx.culture.key).filter((s) => !only || s.p === only).map((s) => [{ kind, shape: s, borrowed: false, scale: ctx.scale }, shapeWeight2(ctx, kind, s)]).filter(([, w]) => w > 0);
@@ -88463,8 +88833,8 @@ function borrowedPlans(ctx) {
   );
 }
 function renderPlan2(ctx, plan, hooks2 = {}) {
-  var _a3, _b, _c, _d;
-  ctx.drawn = new Set((_a3 = plan.shape.t) != null ? _a3 : []);
+  var _a4, _b2, _c2, _d2;
+  ctx.drawn = new Set((_a4 = plan.shape.t) != null ? _a4 : []);
   ctx.words = [];
   ctx.stars = [];
   ctx.shape = plan.shape;
@@ -88473,7 +88843,7 @@ function renderPlan2(ctx, plan, hooks2 = {}) {
   const record = [];
   let raw;
   if (plan.shape.p === "fixed") {
-    raw = (_d = (_c = (_b = hooks2.byIndex) == null ? void 0 : _b.get(0)) == null ? void 0 : _c.text) != null ? _d : vocabWord(ctx, `routeFixed:${plan.kind}`, "fixed");
+    raw = (_d2 = (_c2 = (_b2 = hooks2.byIndex) == null ? void 0 : _b2.get(0)) == null ? void 0 : _c2.text) != null ? _d2 : vocabWord(ctx, `routeFixed:${plan.kind}`, "fixed");
     if (raw) record.push({ name: "fixed", text: raw });
   } else raw = renderPattern3(ctx, plan.shape.p, { ...hooks2, record });
   if (!raw) return void 0;
@@ -88501,18 +88871,18 @@ var DIRECTION_TOKENS = /* @__PURE__ */ new Set([...Object.keys(COMPASS), "spaceD
 var PLACEHOLDER_TOKENS3 = /* @__PURE__ */ new Set(["destination", "town", "folk", "person", "founder", "patron", "kingdom", "holy"]);
 var NEVER_ANCHORS3 = /* @__PURE__ */ new Set(["person", "founder", "patron", "holy", "n"]);
 var kindOf3 = (name) => NEVER_ANCHORS3.has(name) ? "never" : name === "destination" ? "owner" : seriesTokenKind(name);
-function compassValues(ctx, token13) {
-  var _a3;
-  if (token13 === "spaceDirection") return SPACE_DATA.directions.compass[(_a3 = ctx.scale) != null ? _a3 : "Pl"];
-  const live4 = poolEntries(ctx.vocab, token13, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
-  return [...COMPASS[token13].filter((w) => live4.includes(w)), ...live4.filter((w) => !COMPASS[token13].includes(w))];
+function compassValues(ctx, token14) {
+  var _a4;
+  if (token14 === "spaceDirection") return SPACE_DATA.directions.compass[(_a4 = ctx.scale) != null ? _a4 : "Pl"];
+  const live4 = poolEntries(ctx.vocab, token14, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
+  return [...COMPASS[token14].filter((w) => live4.includes(w)), ...live4.filter((w) => !COMPASS[token14].includes(w))];
 }
 function generateRouteNames(options) {
-  var _a3;
+  var _a4;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
-  const culture = (_a3 = findRouteCulture(options.culture)) != null ? _a3 : findRouteCulture("norman-british");
+  const culture = (_a4 = findRouteCulture(options.culture)) != null ? _a4 : findRouteCulture("norman-british");
   const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
   const fantastic = !!options.fantastic;
   const setting = routeSetting(era, fantastic);
@@ -88525,22 +88895,22 @@ function generateRouteNames(options) {
   const ftl = era === "IS" && ROUTE_FTL.some((f) => f.id === options.ftl) ? options.ftl : "any";
   const drawNameScale = () => !future ? void 0 : fixedScale != null ? fixedScale : drawScale(era === "NF" || era === "IS" ? era : void 0, rng);
   const kindWeightsFor = (scale) => offered.map((k) => {
-    var _a4, _b;
-    return [k, kindEraWeight(k, era, fantastic, scale) * ((_b = (_a4 = culture.kindMult) == null ? void 0 : _a4[k.key]) != null ? _b : 1)];
+    var _a5, _b2;
+    return [k, kindEraWeight(k, era, fantastic, scale) * ((_b2 = (_a5 = culture.kindMult) == null ? void 0 : _a5[k.key]) != null ? _b2 : 1)];
   }).filter(([, w]) => w > 0);
   const block = routeBlockSet(options.safeguards);
   const count = Math.max(0, Math.floor(options.count));
   const newCtx3 = (scale) => {
-    var _a4, _b, _c;
+    var _a5, _b2, _c2;
     return {
       rng,
       culture,
       era,
       setting,
       fantastic,
-      mode: (_a4 = options.people) != null ? _a4 : "placeholders",
-      tone: (_b = options.tone) != null ? _b : "any",
-      vocab: (_c = options.vocab) != null ? _c : BUILT_IN_VOCAB,
+      mode: (_a5 = options.people) != null ? _a5 : "placeholders",
+      tone: (_b2 = options.tone) != null ? _b2 : "any",
+      vocab: (_c2 = options.vocab) != null ? _c2 : BUILT_IN_VOCAB,
       region: BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : void 0,
       borrowed: false,
       drawn: /* @__PURE__ */ new Set(),
@@ -88552,9 +88922,9 @@ function generateRouteNames(options) {
     };
   };
   const choosePlan2 = (ctx, kind) => {
-    var _a4;
+    var _a5;
     const share2 = ROUTE_DATA.spaceBorrow.share;
-    if (kind === "space" && !options.shape && rng() < (typeof share2 === "number" ? share2 : share2[(_a4 = ctx.scale) != null ? _a4 : "Pl"])) {
+    if (kind === "space" && !options.shape && rng() < (typeof share2 === "number" ? share2 : share2[(_a5 = ctx.scale) != null ? _a5 : "Pl"])) {
       const plan = pickWeighted5(borrowedPlans(ctx), rng);
       if (plan) return plan;
     }
@@ -88572,8 +88942,8 @@ function generateRouteNames(options) {
     ...series ? { series } : {}
   });
   const drawKind = (scale) => {
-    var _a4, _b;
-    return (_b = chosen == null ? void 0 : chosen.key) != null ? _b : (_a4 = pickWeighted5(kindWeightsFor(scale), rng)) == null ? void 0 : _a4.key;
+    var _a5, _b2;
+    return (_b2 = chosen == null ? void 0 : chosen.key) != null ? _b2 : (_a5 = pickWeighted5(kindWeightsFor(scale), rng)) == null ? void 0 : _a5.key;
   };
   const oneBuilt = (kindFor) => {
     const scale = drawNameScale();
@@ -88608,8 +88978,8 @@ function generateRouteNames(options) {
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
   return { names, seed, notices };
   function drawNetwork() {
-    var _a4, _b, _c, _d, _e;
-    const placeholders = ((_a4 = options.people) != null ? _a4 : "placeholders") === "placeholders";
+    var _a5, _b2, _c2, _d2, _e2;
+    const placeholders = ((_a5 = options.people) != null ? _a5 : "placeholders") === "placeholders";
     const isPlaceholder = (d) => placeholders && PLACEHOLDER_TOKENS3.has(d.name);
     const canVary = (d) => DIRECTION_TOKENS.has(d.name) || kindOf3(d.name) !== "never" && d.name !== "fixed" && !isPlaceholder(d);
     let first;
@@ -88631,7 +89001,7 @@ function generateRouteNames(options) {
     if (plan.shape.p === "Gate Chain {greek}") {
       const series2 = { counter: null, varies: null, anchor: "greek" };
       add2(toName(first, series2));
-      const greek = (_c = (_b = rec.find((d) => d.name === "greek")) == null ? void 0 : _b.text) != null ? _c : "";
+      const greek = (_c2 = (_b2 = rec.find((d) => d.name === "greek")) == null ? void 0 : _b2.text) != null ? _c2 : "";
       for (let i = 0; i < GATE_NUMBERS.length && names.length < count; i++) {
         add2({ ...toName(first, series2), text: `${greek} Gate ${GATE_NUMBERS[i]}`, words: first.words });
       }
@@ -88649,7 +89019,7 @@ function generateRouteNames(options) {
         if (stop && !stops.includes(stop)) stops.push(stop);
       }
       for (let i = 0; i < legs && i < stops.length; i++) {
-        const to = (_d = stops[i + 1]) != null ? _d : closed ? stops[0] : void 0;
+        const to = (_d2 = stops[i + 1]) != null ? _d2 : closed ? stops[0] : void 0;
         if (!to) break;
         add2({ ...toName(first, series2), text: `${stops[i]}\u2013${to} Cycle`, words: first.words });
       }
@@ -88689,7 +89059,7 @@ function generateRouteNames(options) {
     const listAt = rec.map((d, i) => kindOf3(d.name) === "list" && !isPlaceholder(d) && d.name !== "fixed" ? i : -1).filter((i) => i >= 0);
     if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
     const anchor = anchorAt >= 0 ? rec[anchorAt] : void 0;
-    const series = { counter: null, varies: null, anchor: (_e = anchor == null ? void 0 : anchor.name) != null ? _e : null };
+    const series = { counter: null, varies: null, anchor: (_e2 = anchor == null ? void 0 : anchor.name) != null ? _e2 : null };
     add2(toName(first, series));
     const hold = /* @__PURE__ */ new Map();
     if (anchor) hold.set(anchorAt, anchor);
@@ -88744,8 +89114,8 @@ var waterAny = (module2) => WATERS_DATA.modules[module2].any;
 var findHyperKind = (key2) => HYPER_KINDS.find((k) => k.key === key2);
 var hyperKindsAt = (scale) => !scale || scale === "any" ? HYPER_KINDS : HYPER_KINDS.filter((k) => k.scales.includes(scale));
 var watersEraLabel = (code) => {
-  var _a3, _b;
-  return (_b = (_a3 = ROUTE_ERAS.find((e) => e.code === code)) == null ? void 0 : _a3.label) != null ? _b : code;
+  var _a4, _b2;
+  return (_b2 = (_a4 = ROUTE_ERAS.find((e) => e.code === code)) == null ? void 0 : _a4.label) != null ? _b2 : code;
 };
 var showsWatersRegion = (culture, where2) => isBritishCulture(culture) && where2 === "home";
 var FIXED_POOLS = {
@@ -88760,37 +89130,37 @@ var LIGHT_OR_GRIM2 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var pickOne5 = (items, rng) => items[Math.floor(rng() * items.length)];
 var MEAN_CACHE = /* @__PURE__ */ new Map();
 function regionMult2(ctx, tag) {
-  var _a3;
+  var _a4;
   if (!tag || !ctx.homeBritish) return 1;
   const row = WATERS_DATA.regionTags[tag];
   if (!row) return 1;
-  if (ctx.region) return (_a3 = row[ctx.region]) != null ? _a3 : 1;
+  if (ctx.region) return (_a4 = row[ctx.region]) != null ? _a4 : 1;
   let mean = MEAN_CACHE.get(tag);
   if (mean === void 0) {
     mean = WATERS_DATA.regions.reduce((n, code) => {
-      var _a4;
-      return n + ((_a4 = row[code]) != null ? _a4 : 1);
+      var _a5;
+      return n + ((_a5 = row[code]) != null ? _a5 : 1);
     }, 0) / WATERS_DATA.regions.length;
     MEAN_CACHE.set(tag, mean);
   }
   return mean;
 }
 function biomeMult(ctx, tag) {
-  var _a3, _b;
+  var _a4, _b2;
   if (!tag || ctx.homeBritish || !ctx.biome) return 1;
-  return (_b = (_a3 = WATERS_DATA.biomeTags[tag]) == null ? void 0 : _a3[ctx.biome]) != null ? _b : 1;
+  return (_b2 = (_a4 = WATERS_DATA.biomeTags[tag]) == null ? void 0 : _a4[ctx.biome]) != null ? _b2 : 1;
 }
 function vocabPool2(ctx, pool3) {
   return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(e.t))).map(([e, w]) => {
-    var _a3;
-    return [e, w * toneFactor((_a3 = e.t) != null ? _a3 : [], ctx.tone) * regionMult2(ctx, e.rt) * biomeMult(ctx, e.bt)];
+    var _a4;
+    return [e, w * toneFactor((_a4 = e.t) != null ? _a4 : [], ctx.tone) * regionMult2(ctx, e.rt) * biomeMult(ctx, e.bt)];
   }).filter(([, n]) => n > 0);
 }
 function drawEntry(ctx, pool3) {
-  var _a3;
+  var _a4;
   const e = pickWeighted5(vocabPool2(ctx, pool3), ctx.rng);
   if (!e) return void 0;
-  for (const t of (_a3 = e.t) != null ? _a3 : []) ctx.drawn.add(t);
+  for (const t of (_a4 = e.t) != null ? _a4 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
   return e;
 }
@@ -88803,8 +89173,8 @@ function godName(ctx) {
   return hooks2.deityTitle({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng: ctx.rng, vocab: ctx.vocab });
 }
 var godAvailable = (ctx) => {
-  var _a3;
-  return !ctx.culture.sensitive && (godNames(ctx.culture.key).length > 0 || !!((_a3 = deityHooks()) == null ? void 0 : _a3.cultureOffered(ctx.culture.key)));
+  var _a4;
+  return !ctx.culture.sensitive && (godNames(ctx.culture.key).length > 0 || !!((_a4 = deityHooks()) == null ? void 0 : _a4.cultureOffered(ctx.culture.key)));
 };
 function riverName2(ctx) {
   if (ctx.mode === "placeholders") return "[river]";
@@ -88816,7 +89186,7 @@ var VESSEL_CULTURE = { polynesian: "hawaiian" };
 var SHIP_TECH = { AN: "T2", MD: "T3", EM: "T4", ST: "T5", MO: "T7", NF: "T7", IS: "T7" };
 var SHIP_POOLS = /* @__PURE__ */ new Map();
 function shipName(ctx) {
-  var _a3;
+  var _a4;
   if (ctx.mode === "placeholders") return "[ship]";
   const key2 = `${ctx.culture.key}|${ctx.era}|${ctx.fantastic}`;
   let pool3 = SHIP_POOLS.get(key2);
@@ -88824,7 +89194,7 @@ function shipName(ctx) {
     const genre = ctx.era === "ST" || ctx.era === "MO" ? "modern" : ctx.era === "NF" || ctx.era === "IS" ? "scifi" : "fantasy";
     pool3 = generateVesselNames({
       module: "ships",
-      culture: (_a3 = VESSEL_CULTURE[ctx.culture.key]) != null ? _a3 : ctx.culture.key,
+      culture: (_a4 = VESSEL_CULTURE[ctx.culture.key]) != null ? _a4 : ctx.culture.key,
       function: "explore",
       technology: SHIP_TECH[ctx.era],
       genre,
@@ -88839,20 +89209,20 @@ function shipName(ctx) {
   return pool3.length > 0 ? pickOne5(pool3, ctx.rng) : void 0;
 }
 function starName(ctx) {
-  var _a3, _b;
-  const scale = (_a3 = ctx.scale) != null ? _a3 : "Nb";
-  const row = (_b = SPACE_DATA.stars.kindWeights[scale]) != null ? _b : SPACE_DATA.stars.kindWeights.any;
+  var _a4, _b2;
+  const scale = (_a4 = ctx.scale) != null ? _a4 : "Nb";
+  const row = (_b2 = SPACE_DATA.stars.kindWeights[scale]) != null ? _b2 : SPACE_DATA.stars.kindWeights.any;
   const kinds = ["proper", "possessive"].map((k) => {
-    var _a4;
-    return [k, (_a4 = row[k]) != null ? _a4 : 0];
+    var _a5;
+    return [k, (_a5 = row[k]) != null ? _a5 : 0];
   }).filter(([, w]) => w > 0);
   const draw2 = () => {
-    var _a4;
-    const kind = (_a4 = pickWeighted5(kinds, ctx.rng)) != null ? _a4 : "proper";
+    var _a5;
+    const kind = (_a5 = pickWeighted5(kinds, ctx.rng)) != null ? _a5 : "proper";
     const proper = () => {
-      var _a5;
+      var _a6;
       const words = groupListWords("star", "SF", scale).map(([w, n]) => [w, n * toneFactor(wordTones("star", w), ctx.tone)]).filter(([, n]) => n > 0);
-      return (_a5 = pickWeighted5(words, ctx.rng)) != null ? _a5 : "Vega";
+      return (_a6 = pickWeighted5(words, ctx.rng)) != null ? _a6 : "Vega";
     };
     return dropStarWord(drawStarOfKind(kind, ctx.rng, proper, { person: () => groupPerson("SF", false, ctx.rng) }));
   };
@@ -88871,8 +89241,8 @@ function anchored(ctx, free) {
   return free();
 }
 function listWord4(ctx, list) {
-  var _a3;
-  const items = groupListWords(list, ctx.setting, (_a3 = ctx.scale) != null ? _a3 : "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  var _a4;
+  const items = groupListWords(list, ctx.setting, (_a4 = ctx.scale) != null ? _a4 : "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
@@ -88929,8 +89299,8 @@ function token6(ctx, name) {
 }
 var SOURCES = /* @__PURE__ */ new Set(["town", "star", "spaceDirection", "number", "folk", "person", "kingdom", "holy", "god", "river", "ship", "ordinal"]);
 var plural = (e) => {
-  var _a3;
-  return (_a3 = e.pl) != null ? _a3 : biomeTitleCase(pluralOf(e.w.toLowerCase()));
+  var _a4;
+  return (_a4 = e.pl) != null ? _a4 : biomeTitleCase(pluralOf(e.w.toLowerCase()));
 };
 function renderPattern4(ctx, pattern) {
   ctx.anchorDecided = false;
@@ -88954,8 +89324,8 @@ function renderPattern4(ctx, pattern) {
 }
 var stripThe = (s) => s.replace(/^the /, "");
 function blockSet(hyper, guards) {
-  var _a3;
-  const phrases = [...hyper ? WATERS_DATA.safeguards.hyper : WATERS_DATA.safeguards.earthly, ...(_a3 = guards == null ? void 0 : guards.block) != null ? _a3 : [], ...(guards == null ? void 0 : guards.flagListBlocks) ? guards.flag : []];
+  var _a4;
+  const phrases = [...hyper ? WATERS_DATA.safeguards.hyper : WATERS_DATA.safeguards.earthly, ...(_a4 = guards == null ? void 0 : guards.block) != null ? _a4 : [], ...(guards == null ? void 0 : guards.flagListBlocks) ? guards.flag : []];
   const set = /* @__PURE__ */ new Set();
   for (const p of phrases) {
     const n = routeNorm(p);
@@ -88972,12 +89342,12 @@ function watersBlocked(text, hyper, guards) {
 var watersWordBlocked = (word, guards) => watersBlocked(word, false, guards) || breaksRouteWords(word);
 var tokensOf = (p) => [...p.matchAll(/\{([^}:]+)/g)].map((m) => m[1]);
 function tokensLive(ctx, p) {
-  var _a3;
+  var _a4;
   for (const t of tokensOf(p)) {
     if (SOURCES.has(t)) {
       if (t === "god" && ctx.mode === "invented" && !godAvailable(ctx)) return false;
       if (t === "god" && ctx.mode === "placeholders" && ctx.culture.sensitive) return false;
-      if (t === "god" && ctx.mode === "placeholders" && godNames(ctx.culture.key).length === 0 && !((_a3 = deityHooks()) == null ? void 0 : _a3.cultureOffered(ctx.culture.key))) return false;
+      if (t === "god" && ctx.mode === "placeholders" && godNames(ctx.culture.key).length === 0 && !((_a4 = deityHooks()) == null ? void 0 : _a4.cultureOffered(ctx.culture.key))) return false;
       if (t === "person" && ctx.mode === "invented" && personNames(ctx.culture.key).length === 0) return false;
       if (t === "holy" && !cultureAllowed(["christian"], ctx.culture.key, ctx.era)) return false;
       continue;
@@ -88987,49 +89357,49 @@ function tokensLive(ctx, p) {
   return true;
 }
 function earthlyWeight(ctx, s, hardOnly = false) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j, _k, _l;
   const c = ctx.culture;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
   if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
   const british = isBritishCulture(c.key);
-  if (((_a3 = s.c) == null ? void 0 : _a3.includes("british")) && s.rt && british && ctx.where !== "home") return 0;
+  if (((_a4 = s.c) == null ? void 0 : _a4.includes("british")) && s.rt && british && ctx.where !== "home") return 0;
   if (s.nb && ctx.homeBritish) return 0;
   if (c.sensitive && (s.h || LIGHT_OR_GRIM2(s.t))) return 0;
   if (!tokensLive(ctx, s.p)) return 0;
   if (hardOnly) return s.w;
-  const cm = (_b = WATERS_DATA.cultureMult[c.key]) != null ? _b : {};
-  const family = ((_c = cm[s.f]) != null ? _c : 1) * (s.of ? (_d = cm.of) != null ? _d : 1 : 1);
-  const where2 = (_f = (_e = WATERS_DATA.where[s.f]) == null ? void 0 : _e[ctx.where]) != null ? _f : 1;
+  const cm = (_b2 = WATERS_DATA.cultureMult[c.key]) != null ? _b2 : {};
+  const family = ((_c2 = cm[s.f]) != null ? _c2 : 1) * (s.of ? (_d2 = cm.of) != null ? _d2 : 1 : 1);
+  const where2 = (_f = (_e2 = WATERS_DATA.where[s.f]) == null ? void 0 : _e2[ctx.where]) != null ? _f : 1;
   const era = (_h = (_g = WATERS_DATA.eraMult[s.f]) == null ? void 0 : _g[ctx.era]) != null ? _h : 1;
   const extra = ((_j = (_i = s.cx) == null ? void 0 : _i[c.key]) != null ? _j : 1) * (ctx.where === "new" ? (_k = s.nx) != null ? _k : 1 : 1);
   return s.w * family * where2 * era * extra * regionMult2(ctx, s.rt) * biomeMult(ctx, s.bt) * toneFactor((_l = s.t) != null ? _l : [], ctx.tone);
 }
 function hyperWeight(ctx, s, register, medium) {
-  var _a3, _b, _c, _d, _e, _f;
+  var _a4, _b2, _c2, _d2, _e2, _f;
   const c = ctx.culture;
   if (s.sc && ctx.scale && !s.sc.includes(ctx.scale)) return 0;
   if (s.m && medium !== "both" && s.m !== medium) return 0;
   if (c.sensitive && LIGHT_OR_GRIM2(s.t)) return 0;
   if (!tokensLive(ctx, s.p)) return 0;
-  const cm = (_a3 = WATERS_DATA.cultureMult[c.key]) != null ? _a3 : {};
+  const cm = (_a4 = WATERS_DATA.cultureMult[c.key]) != null ? _a4 : {};
   let family = 1;
-  if (s.p.includes("{person")) family *= (_b = cm.per) != null ? _b : 1;
-  if (s.p.includes("{god")) family *= (_c = cm.god) != null ? _c : 1;
-  if (s.p.includes("{folk")) family *= (_d = cm.ppl) != null ? _d : 1;
-  if (s.p.includes("{holy")) family *= (_e = cm.sai) != null ? _e : 1;
+  if (s.p.includes("{person")) family *= (_b2 = cm.per) != null ? _b2 : 1;
+  if (s.p.includes("{god")) family *= (_c2 = cm.god) != null ? _c2 : 1;
+  if (s.p.includes("{folk")) family *= (_d2 = cm.ppl) != null ? _d2 : 1;
+  if (s.p.includes("{holy")) family *= (_e2 = cm.sai) != null ? _e2 : 1;
   return s.w * WATERS_DATA.hyper.register[register][s.reg] * family * toneFactor((_f = s.t) != null ? _f : [], ctx.tone);
 }
 var SERIES_MODULES = /* @__PURE__ */ new Set(["coastsIslands", "seaCharts", "hyperspaceCharts"]);
 var watersHasSeries = (module2) => SERIES_MODULES.has(module2);
 function generateWatersNames(options) {
-  var _a3, _b;
+  var _a4, _b2;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
   const module2 = options.module;
   const hyper = module2 === "hyperspaceCharts";
-  const culture = (_a3 = findWatersCulture(options.culture)) != null ? _a3 : findWatersCulture(hyper ? "general" : "norman-british");
+  const culture = (_a4 = findWatersCulture(options.culture)) != null ? _a4 : findWatersCulture(hyper ? "general" : "norman-british");
   const earthlyModule = hyper ? void 0 : module2;
   const eras = earthlyModule ? waterEras(earthlyModule) : ["IS"];
   const era = eras.includes(options.era) ? options.era : hyper ? "IS" : "MD";
@@ -89040,12 +89410,12 @@ function generateWatersNames(options) {
   const biome = !homeBritish && !hyper && options.biome && BIOMES.some((b) => b.id === options.biome) ? options.biome : void 0;
   const medium = options.medium === "wind" || options.medium === "both" ? options.medium : "sea";
   const register = WATERS_REGISTERS.some((r) => r.id === options.register) ? options.register : "any";
-  const mode = (_b = options.people) != null ? _b : "placeholders";
+  const mode = (_b2 = options.people) != null ? _b2 : "placeholders";
   const count = Math.max(0, Math.floor(options.count));
   const block = blockSet(hyper, options.safeguards);
   const chosenScale = hyper && HYPER_SCALES.includes(options.scale) ? options.scale : void 0;
   const newCtx3 = (scale) => {
-    var _a4, _b2;
+    var _a5, _b3;
     return {
       rng,
       module: module2,
@@ -89059,8 +89429,8 @@ function generateWatersNames(options) {
       region,
       biome,
       mode,
-      tone: (_a4 = options.tone) != null ? _a4 : "any",
-      vocab: (_b2 = options.vocab) != null ? _b2 : BUILT_IN_VOCAB,
+      tone: (_a5 = options.tone) != null ? _a5 : "any",
+      vocab: (_b3 = options.vocab) != null ? _b3 : BUILT_IN_VOCAB,
       scale,
       drawn: /* @__PURE__ */ new Set(),
       words: [],
@@ -89071,7 +89441,7 @@ function generateWatersNames(options) {
   };
   const planCache = /* @__PURE__ */ new Map();
   const plansAt = (scale) => {
-    var _a4, _b2;
+    var _a5, _b3;
     const key2 = scale != null ? scale : "-";
     let plans4 = planCache.get(key2);
     if (plans4) return plans4;
@@ -89079,13 +89449,13 @@ function generateWatersNames(options) {
     const ctx = newCtx3(scale);
     if (earthlyModule) {
       for (const kind of waterKinds(earthlyModule)) {
-        const shapes = [...(_a4 = WATERS_DATA.shapes[earthlyModule][kind.key]) != null ? _a4 : [], ...WATERS_DATA.cultureShapes.filter((s) => s.module === earthlyModule && s.kind === kind.key && s.culture === culture.key)];
+        const shapes = [...(_a5 = WATERS_DATA.shapes[earthlyModule][kind.key]) != null ? _a5 : [], ...WATERS_DATA.cultureShapes.filter((s) => s.module === earthlyModule && s.kind === kind.key && s.culture === culture.key)];
         const live4 = shapes.filter((s) => !options.shape || s.p === options.shape).map((s) => [{ kind: kind.key, shape: s }, earthlyWeight(ctx, s)]).filter(([, w]) => w > 0);
         if (live4.length > 0) plans4.set(kind.key, live4);
       }
     } else {
       for (const kind of hyperKindsAt(scale)) {
-        const live4 = ((_b2 = WATERS_DATA.hyper.shapes[kind.key]) != null ? _b2 : []).filter((s) => !options.shape || s.p === options.shape).map((s) => [{ kind: kind.key, shape: s }, hyperWeight(ctx, s, register, medium)]).filter(([, w]) => w > 0);
+        const live4 = ((_b3 = WATERS_DATA.hyper.shapes[kind.key]) != null ? _b3 : []).filter((s) => !options.shape || s.p === options.shape).map((s) => [{ kind: kind.key, shape: s }, hyperWeight(ctx, s, register, medium)]).filter(([, w]) => w > 0);
         if (live4.length > 0) plans4.set(kind.key, live4);
       }
     }
@@ -89136,7 +89506,7 @@ function generateWatersNames(options) {
     const items = HYPER_SCALES.map((s) => [s, WATERS_DATA.hyper.scaleWeights[s]]);
     return pickWeighted5(items, rng);
   }
-  const acceptable5 = (text) => {
+  const acceptable6 = (text) => {
     const counted2 = countedWords2(text);
     if (counted2.length === 0 || counted2.length > WATERS_DATA.cap) return false;
     if (repeatsContent(counted2)) return false;
@@ -89147,7 +89517,7 @@ function generateWatersNames(options) {
     return true;
   };
   const oneName2 = () => {
-    var _a4;
+    var _a5;
     let scale;
     if (hyper) {
       if (chosenScale) scale = chosenScale;
@@ -89196,8 +89566,8 @@ function generateWatersNames(options) {
         }
         if (!raw || !plan) continue;
         const text = routeCapitals(raw);
-        if (!acceptable5(text)) continue;
-        const tones = /* @__PURE__ */ new Set([...(_a4 = plan.shape.t) != null ? _a4 : [], ...ctx.drawn]);
+        if (!acceptable6(text)) continue;
+        const tones = /* @__PURE__ */ new Set([...(_a5 = plan.shape.t) != null ? _a5 : [], ...ctx.drawn]);
         return {
           text,
           kind: plan.kind,
@@ -89278,25 +89648,25 @@ var FEATURES = [
   ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label }))
 ];
 function featurePhrase(feature) {
-  var _a3;
-  const f = (_a3 = FEATURES.find((x) => x.id === feature)) != null ? _a3 : FEATURES[0];
+  var _a4;
+  const f = (_a4 = FEATURES.find((x) => x.id === feature)) != null ? _a4 : FEATURES[0];
   return f.label.charAt(0).toLowerCase() + f.label.slice(1);
 }
 function featuresForBiome(biome) {
   if (!(biome == null ? void 0 : biome.space)) return FEATURES;
   const rules = COLONIAL_DATA.space;
   const live4 = COLONIAL_DATA.groups.filter((g) => {
-    var _a3;
-    return g.space ? !g.scale || g.scale === biome.scale : ((_a3 = rules.groups[g.id]) != null ? _a3 : 0) > 0 && (!rules.groupScales[g.id] || rules.groupScales[g.id].includes(biome.scale));
+    var _a4;
+    return g.space ? !g.scale || g.scale === biome.scale : ((_a4 = rules.groups[g.id]) != null ? _a4 : 0) > 0 && (!rules.groupScales[g.id] || rules.groupScales[g.id].includes(biome.scale));
   }).map((g) => {
-    var _a3;
-    return { id: g.id, label: (_a3 = g.label) != null ? _a3 : g.id };
+    var _a4;
+    return { id: g.id, label: (_a4 = g.label) != null ? _a4 : g.id };
   });
   return [FEATURES[0], FEATURES[1], FEATURES[2], ...live4];
 }
 function featurePhraseFor(feature, biome) {
-  var _a3;
-  const f = (_a3 = featuresForBiome(biome).find((x) => x.id === feature)) != null ? _a3 : FEATURES[0];
+  var _a4;
+  const f = (_a4 = featuresForBiome(biome).find((x) => x.id === feature)) != null ? _a4 : FEATURES[0];
   return f.label.charAt(0).toLowerCase() + f.label.slice(1);
 }
 var UNKNOWN_COUNTRY = "unknown country";
@@ -89311,29 +89681,29 @@ function biomeChoices(part) {
   return [...lead, ...BIOMES.map((b) => ({ id: b.id, label: b.phrase }))];
 }
 function biomePhrase(biome, part = "new-land", custom = []) {
-  var _a3;
+  var _a4;
   if (biome == null ? void 0 : biome.startsWith("[[")) {
     const name = biome.slice(2, -2);
     const pack = custom.find((b) => {
-      var _a4;
-      return b.label === name || ((_a4 = b.custom) == null ? void 0 : _a4.path) === name;
+      var _a5;
+      return b.label === name || ((_a5 = b.custom) == null ? void 0 : _a5.path) === name;
     });
-    return (_a3 = pack == null ? void 0 : pack.phrase) != null ? _a3 : name;
+    return (_a4 = pack == null ? void 0 : pack.phrase) != null ? _a4 : name;
   }
   const found = findBiome(biome, custom);
   if (found) return found.phrase;
   return part === "organic" ? BRITAIN.phrase : UNKNOWN_COUNTRY;
 }
 function terrainPhrase(terrain, custom = []) {
-  var _a3, _b;
+  var _a4, _b2;
   const all = [...TERRAIN_CHOICES, ...custom.flatMap((b) => {
-    var _a4;
-    return (_a4 = b.customTerrains) != null ? _a4 : [];
+    var _a5;
+    return (_a5 = b.customTerrains) != null ? _a5 : [];
   }), ...SPACE_BIOMES.flatMap((b) => {
-    var _a4;
-    return (_a4 = b.customTerrains) != null ? _a4 : [];
+    var _a5;
+    return (_a5 = b.customTerrains) != null ? _a5 : [];
   })];
-  return (_b = (_a3 = all.find((t) => t.id === (terrain || "any"))) == null ? void 0 : _a3.phrase) != null ? _b : "any part";
+  return (_b2 = (_a4 = all.find((t) => t.id === (terrain || "any"))) == null ? void 0 : _a4.phrase) != null ? _b2 : "any part";
 }
 var NO_THE_REGIONS = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
 var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -89343,21 +89713,21 @@ function regionPhrase(region) {
   return NO_THE_REGIONS.has(r.label) ? r.label : `the ${r.label}`;
 }
 function wizardSentenceText(part, settings, custom = []) {
-  var _a3, _b, _c, _d, _e;
+  var _a4, _b2, _c2, _d2, _e2;
   const biome = findBiome(settings.biome, custom);
   const space = !!(biome == null ? void 0 : biome.space) && part !== "organic";
   const land = space && (!settings.terrain || settings.terrain === "any") ? `all of ${biomePhrase(settings.biome, part, custom)}` : `${terrainPhrase(settings.terrain, custom)} of ${biomePhrase(settings.biome, part, custom)}`;
   if (part === "organic") {
-    const f = (_a3 = FEATURES.find((x) => x.id === settings.feature)) != null ? _a3 : FEATURES[0];
+    const f = (_a4 = FEATURES.find((x) => x.id === settings.feature)) != null ? _a4 : FEATURES[0];
     return `${f.label} from ${regionPhrase(settings.region)}, set in ${land}`;
   }
   const colonialPart = part === "new-land" ? "2" : "2a";
-  const t = (_b = COLONIAL_TRADITIONS.find((x) => x.id === settings.tradition)) != null ? _b : COLONIAL_TRADITIONS[0];
+  const t = (_b2 = COLONIAL_TRADITIONS.find((x) => x.id === settings.tradition)) != null ? _b2 : COLONIAL_TRADITIONS[0];
   const contexts = contextPhrasesFor(colonialPart, space);
-  const c = ((_c = contexts.find(([id]) => id === settings.context)) != null ? _c : contexts[0])[1];
+  const c = ((_c2 = contexts.find(([id]) => id === settings.context)) != null ? _c2 : contexts[0])[1];
   const lead = part === "new-land" ? `${explorersPhrase(t.id, t.label)} in ${c}` : `${incomersPhrase(t.id, t.label)} who are ${c}`;
   const life = space ? `, with ${settings.aliens ? "alien life" : "no alien life"}` : "";
-  return `${lead} across ${land}${life}, naming ${space ? featurePhraseFor((_d = settings.feature) != null ? _d : "any", biome) : featurePhrase((_e = settings.feature) != null ? _e : "any")}`;
+  return `${lead} across ${land}${life}, naming ${space ? featurePhraseFor((_d2 = settings.feature) != null ? _d2 : "any", biome) : featurePhrase((_e2 = settings.feature) != null ? _e2 : "any")}`;
 }
 
 // src/routes/sentence.ts
@@ -89375,16 +89745,16 @@ var fantasticWords = (era) => ["realistic", era === "ST" ? "steampunk" : "fantas
 var showsRegion = (state) => BRITISH_CULTURES.includes(state.culture);
 var routeRegionText = (region) => region ? `in ${regionPhrase(region)}` : "across all of Britain";
 function routeSentence(state) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const out = [];
-  const culture = (_a3 = findRouteCulture(state.culture)) != null ? _a3 : ROUTE_CULTURES[0];
+  const culture = (_a4 = findRouteCulture(state.culture)) != null ? _a4 : ROUTE_CULTURES[0];
   out.push({
     field: "culture",
     text: culture.label,
     title: "Naming culture: whose customs the routes follow",
     choices: ROUTE_CULTURES.map((c, i) => {
-      var _a4;
-      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a4 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a4.group) ? { group: c.group } : {} };
+      var _a5;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a5 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a5.group) ? { group: c.group } : {} };
     }),
     current: culture.key
   });
@@ -89427,11 +89797,11 @@ function routeSentence(state) {
     current: state.fantastic ? "on" : "off"
   });
   out.push(" world, ");
-  if (showsFtl(state.era, state.kind, (_b = state.scale) != null ? _b : "any")) {
-    const ftl = (_c = ROUTE_FTL.find((f) => {
-      var _a4;
-      return f.id === ((_a4 = state.ftl) != null ? _a4 : "any");
-    })) != null ? _c : ROUTE_FTL[0];
+  if (showsFtl(state.era, state.kind, (_b2 = state.scale) != null ? _b2 : "any")) {
+    const ftl = (_c2 = ROUTE_FTL.find((f) => {
+      var _a5;
+      return f.id === ((_a5 = state.ftl) != null ? _a5 : "any");
+    })) != null ? _c2 : ROUTE_FTL[0];
     out.push({
       field: "ftl",
       text: ftl.text,
@@ -89487,7 +89857,7 @@ function routeSentenceText(segments) {
   return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
 }
 function chooseRoute(state, field, id) {
-  var _a3;
+  var _a4;
   const next = { ...state };
   switch (field) {
     case "culture":
@@ -89524,12 +89894,12 @@ function chooseRoute(state, field, id) {
   if (next.scale && next.scale !== "any") next.scale = validScale(next.scale, next.era === "NF" || next.era === "IS" ? next.era : void 0);
   if (next.kind && !kindsOffered(next.era, next.fantastic).some((k) => k.key === next.kind)) next.kind = void 0;
   if (!showsRegion(next)) next.region = void 0;
-  if (next.ftl && next.ftl !== "any" && !showsFtl(next.era, next.kind, (_a3 = next.scale) != null ? _a3 : "any")) next.ftl = "any";
+  if (next.ftl && next.ftl !== "any" && !showsFtl(next.era, next.kind, (_a4 = next.scale) != null ? _a4 : "any")) next.ftl = "any";
   return next;
 }
 function routeHistoryLabel(state) {
-  var _a3, _b, _c;
-  const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  var _a4, _b2, _c2;
+  const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   const kind = findRouteKind(state.kind);
   return [
     "route names",
@@ -89541,7 +89911,7 @@ function routeHistoryLabel(state) {
     ...state.tone !== "any" ? [state.tone] : [],
     ...state.series ? ["network"] : [],
     ...showsScale(state.era, state.kind) && state.scale && state.scale !== "any" ? [scaleLabel(state.scale).toLowerCase()] : [],
-    ...showsFtl(state.era, state.kind, (_c = state.scale) != null ? _c : "any") && state.ftl && state.ftl !== "any" ? [ROUTE_FTL.find((f) => f.id === state.ftl).text] : []
+    ...showsFtl(state.era, state.kind, (_c2 = state.scale) != null ? _c2 : "any") && state.ftl && state.ftl !== "any" ? [ROUTE_FTL.find((f) => f.id === state.ftl).text] : []
   ].join(" \xB7 ");
 }
 
@@ -89576,17 +89946,17 @@ var watersBiomeText = (biome) => {
 };
 var hyperScales = () => ["any", ...HYPER_SCALES];
 function watersSentence(state, module2) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const out = [];
   const hyper = module2 === "hyperspaceCharts";
-  const culture = (_a3 = findWatersCulture(state.culture)) != null ? _a3 : WATERS_CULTURES[0];
+  const culture = (_a4 = findWatersCulture(state.culture)) != null ? _a4 : WATERS_CULTURES[0];
   out.push({
     field: "culture",
     text: culture.label,
     title: `Naming culture: whose customs the ${NOUN[module2]} follow`,
     choices: WATERS_CULTURES.map((c, i) => {
-      var _a4;
-      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a4 = WATERS_CULTURES[i - 1]) == null ? void 0 : _a4.group) ? { group: c.group } : {} };
+      var _a5;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a5 = WATERS_CULTURES[i - 1]) == null ? void 0 : _a5.group) ? { group: c.group } : {} };
     }),
     current: culture.key
   });
@@ -89612,7 +89982,7 @@ function watersSentence(state, module2) {
       current: scale
     });
     out.push(", where hyperspace flows ");
-    const medium = (_b = WATERS_MEDIA.find((m) => m.id === state.medium)) != null ? _b : WATERS_MEDIA[0];
+    const medium = (_b2 = WATERS_MEDIA.find((m) => m.id === state.medium)) != null ? _b2 : WATERS_MEDIA[0];
     out.push({
       field: "medium",
       text: medium.text,
@@ -89621,7 +89991,7 @@ function watersSentence(state, module2) {
       current: medium.id
     });
     out.push(", ");
-    const register = (_c = WATERS_REGISTERS.find((r) => r.id === state.register)) != null ? _c : WATERS_REGISTERS[0];
+    const register = (_c2 = WATERS_REGISTERS.find((r) => r.id === state.register)) != null ? _c2 : WATERS_REGISTERS[0];
     out.push({
       field: "register",
       text: register.text,
@@ -89773,14 +90143,14 @@ function chooseWaters(state, field, id, module2) {
   return next;
 }
 function watersHistoryLabel(module2, state, moduleLabel2) {
-  var _a3, _b, _c;
-  const culture = (_b = (_a3 = findWatersCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  var _a4, _b2, _c2;
+  const culture = (_b2 = (_a4 = findWatersCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   if (module2 === "hyperspaceCharts") {
     const kind2 = findHyperKind(state.kind);
     const register = WATERS_REGISTERS.find((r) => r.id === state.register);
     return [
       moduleLabel2,
-      scaleLabel((_c = state.scale) != null ? _c : "any"),
+      scaleLabel((_c2 = state.scale) != null ? _c2 : "any"),
       culture,
       ...state.register !== "any" && register ? [register.label] : [],
       ...state.medium === "wind" ? ["like the wind"] : state.medium === "both" ? ["sea or wind"] : [],
@@ -90647,8 +91017,8 @@ var STREET_ANY = STREET_DATA.any;
 var SIZE_ORDER = ["village", "town", "city", "great"];
 var isFuture = (era) => era === "NF" || era === "IS";
 function sizeLabel(size, era) {
-  var _a3;
-  const s = (_a3 = STREET_SIZES.find((x) => x.key === size)) != null ? _a3 : STREET_SIZES[1];
+  var _a4;
+  const s = (_a4 = STREET_SIZES.find((x) => x.key === size)) != null ? _a4 : STREET_SIZES[1];
   return isFuture(era) ? s.sf : s.label;
 }
 var kindsForSize = (size) => STREET_KINDS.filter((k) => k.size[size] > 0);
@@ -90667,15 +91037,15 @@ var SF_LISTS2 = /* @__PURE__ */ new Set(["star", "greek", "stationDirection"]);
 var where = (ctx, region = ctx.region) => ({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region });
 function vocabPool3(ctx, pool3, region = ctx.region) {
   return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, where(ctx, region))).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM3(e.t))).map(([e, w]) => {
-    var _a3;
-    return [e, w * toneFactor((_a3 = e.t) != null ? _a3 : [], ctx.tone)];
+    var _a4;
+    return [e, w * toneFactor((_a4 = e.t) != null ? _a4 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
 }
 function fromPool(ctx, pool3, items) {
-  var _a3;
+  var _a4;
   const e = pickWeighted5(items, ctx.rng);
   if (!e) return void 0;
-  for (const t of (_a3 = e.t) != null ? _a3 : []) ctx.drawn.add(t);
+  for (const t of (_a4 = e.t) != null ? _a4 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
   return e.w;
 }
@@ -90695,7 +91065,7 @@ function gnWord3(ctx, list, keep) {
   return w;
 }
 function componentPools(ctx) {
-  var _a3, _b;
+  var _a4, _b2;
   const d = STREET_DATA;
   let weights = { ...d.components };
   if (ctx.era === "ST" && ctx.fantastic) weights = { ...weights, ...d.steampunkComponents };
@@ -90703,10 +91073,10 @@ function componentPools(ctx) {
     weights = Object.fromEntries(Object.entries(weights).filter(([p]) => d.scifiComponents.keep.includes(p)));
     weights.compSciFi = d.scifiComponents.compSciFi;
   }
-  const x = (_b = (_a3 = ctx.options.context) == null ? void 0 : _a3.effects) == null ? void 0 : _b.componentX;
+  const x = (_b2 = (_a4 = ctx.options.context) == null ? void 0 : _a4.effects) == null ? void 0 : _b2.componentX;
   return Object.entries(weights).map(([p, w]) => {
-    var _a4;
-    return [p, w * ((_a4 = x == null ? void 0 : x[p]) != null ? _a4 : 1)];
+    var _a5;
+    return [p, w * ((_a5 = x == null ? void 0 : x[p]) != null ? _a5 : 1)];
   }).filter(([p]) => vocabPool3(ctx, p).length > 0);
 }
 function component(ctx) {
@@ -90716,9 +91086,9 @@ function component(ctx) {
   return w;
 }
 function streetGoods(ctx) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const items = vocabPool3(ctx, "streetGoods");
-  for (const e of (_c = (_b = (_a3 = ctx.vocab.pools.routeGoods) == null ? void 0 : _a3.cultureExtra) == null ? void 0 : _b[ctx.culture.key]) != null ? _c : []) {
+  for (const e of (_c2 = (_b2 = (_a4 = ctx.vocab.pools.routeGoods) == null ? void 0 : _a4.cultureExtra) == null ? void 0 : _b2[ctx.culture.key]) != null ? _c2 : []) {
     const found = items.find(([x]) => x.w === e.w);
     if (found) found[1] *= 2;
     else items.push([e, 2]);
@@ -90728,11 +91098,11 @@ function streetGoods(ctx) {
   return w;
 }
 function dialectWord(ctx, keep) {
-  var _a3;
-  const region = (_a3 = ctx.dialectRegion) != null ? _a3 : ctx.region;
+  var _a4;
+  const region = (_a4 = ctx.dialectRegion) != null ? _a4 : ctx.region;
   const items = vocabPool3(ctx, "alleyDialect", region).filter(([e]) => !keep || keep(e.w)).map(([e, w]) => {
-    var _a4, _b;
-    return [e, region ? w : w * ((_b = (_a4 = e.r) == null ? void 0 : _a4.length) != null ? _b : 1)];
+    var _a5, _b2;
+    return [e, region ? w : w * ((_b2 = (_a5 = e.r) == null ? void 0 : _a5.length) != null ? _b2 : 1)];
   });
   return fromPool(ctx, "alleyDialect", items);
 }
@@ -90794,7 +91164,7 @@ function landmark(ctx) {
 }
 var directionKey = (w) => w.replace(/ern$/, "");
 function token7(ctx, name, alt, pattern) {
-  var _a3, _b;
+  var _a4, _b2;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
@@ -90875,7 +91245,7 @@ function token7(ctx, name, alt, pattern) {
     }
     case "sw": {
       const w = vocabWord2(ctx, "streetWord");
-      const region = (_a3 = ctx.dialectRegion) != null ? _a3 : ctx.region;
+      const region = (_a4 = ctx.dialectRegion) != null ? _a4 : ctx.region;
       const d = STREET_DATA.dialect;
       if (w === "Lane" && ctx.dialect && pattern === "{component} {sw}" && region && d.laneRegions.includes(region) && rng() < d.laneShare) {
         const lane = dialectWord(ctx, (x) => d.laneWords.includes(x));
@@ -90884,7 +91254,7 @@ function token7(ctx, name, alt, pattern) {
       return w;
     }
   }
-  return vocabWord2(ctx, (_b = POOL_OF2[name]) != null ? _b : name);
+  return vocabWord2(ctx, (_b2 = POOL_OF2[name]) != null ? _b2 : name);
 }
 function renderPattern5(ctx, pattern) {
   let failed = false;
@@ -90929,7 +91299,7 @@ function streetWordBlocked(word, guards) {
   return streetBlockSet(guards).has(routeNorm(word)) || breaksStreetWords(word);
 }
 function shapeWeight3(ctx, s) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h;
   const c = ctx.culture;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
@@ -90940,10 +91310,10 @@ function shapeWeight3(ctx, s) {
   if (s.p.includes("{god") && godNames(c.key).length === 0) return 0;
   if (s.p.includes("{holy:") && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
   if (s.p === "{districtFixed}" && !vocabPool3(ctx, "districtFixed").some(([e]) => !e.fn || e.fn.includes("any") || !!ctx.fn && e.fn.includes(ctx.fn))) return 0;
-  const pool3 = (_a3 = s.p.match(/^\{(\w+)\}$/)) == null ? void 0 : _a3[1];
+  const pool3 = (_a4 = s.p.match(/^\{(\w+)\}$/)) == null ? void 0 : _a4[1];
   if (pool3 && ctx.vocab.pools[pool3] && vocabPool3(ctx, pool3).length === 0) return 0;
-  let w = s.w * ((_c = (_b = s.cx) == null ? void 0 : _b[c.key]) != null ? _c : 1) * toneFactor((_d = s.t) != null ? _d : [], ctx.tone);
-  for (const g of (_e = s.g) != null ? _e : []) w *= (_g = (_f = STREET_DATA.sizeEffects[g]) == null ? void 0 : _f[ctx.size]) != null ? _g : 1;
+  let w = s.w * ((_c2 = (_b2 = s.cx) == null ? void 0 : _b2[c.key]) != null ? _c2 : 1) * toneFactor((_d2 = s.t) != null ? _d2 : [], ctx.tone);
+  for (const g of (_e2 = s.g) != null ? _e2 : []) w *= (_g = (_f = STREET_DATA.sizeEffects[g]) == null ? void 0 : _f[ctx.size]) != null ? _g : 1;
   if (ctx.region && s.rx) w *= (_h = s.rx[ctx.region]) != null ? _h : 1;
   return w;
 }
@@ -90954,14 +91324,14 @@ function streetShapes(ctx, only) {
   return live(ctx, [...d.streets, ...d.cultureStreets.filter((s) => s.culture === ctx.culture.key), ...only ? d.scifiStreets.shapes : []], only);
 }
 function districtShapes(ctx, only) {
-  var _a3;
+  var _a4;
   const d = STREET_DATA;
   if (isFuture(ctx.era) && !only && ctx.rng() < d.scifiDistricts.share) return live(ctx, d.scifiDistricts.shapes);
   const fn = ctx.fn;
   return live(
     ctx,
     [
-      ...(_a3 = d.districts[fn]) != null ? _a3 : [],
+      ...(_a4 = d.districts[fn]) != null ? _a4 : [],
       ...d.cultureDistricts.filter((s) => s.culture === ctx.culture.key && (s.fn === fn || s.fn === "any")),
       ...d.steampunkDistricts,
       { p: "{districtFixed}", w: d.districtFixedWeight },
@@ -90972,25 +91342,25 @@ function districtShapes(ctx, only) {
 }
 function functionWeights(size, era) {
   return functionsForSize(size).map((f) => {
-    var _a3, _b;
-    return [f.key, f.w * ((_b = (_a3 = f.eraX) == null ? void 0 : _a3[era]) != null ? _b : 1)];
+    var _a4, _b2;
+    return [f.key, f.w * ((_b2 = (_a4 = f.eraX) == null ? void 0 : _a4[era]) != null ? _b2 : 1)];
   });
 }
 function generateStreetNames(options) {
-  var _a3, _b, _c, _d, _e, _f, _g;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
-  const culture = (_a3 = findRouteCulture(options.culture)) != null ? _a3 : findRouteCulture("norman-british");
+  const culture = (_a4 = findRouteCulture(options.culture)) != null ? _a4 : findRouteCulture("norman-british");
   const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
   const fantastic = !!options.fantastic;
   const setting = routeSetting(era, fantastic);
   const size = SIZE_ORDER.includes(options.size) ? options.size : "town";
   const british = BRITISH_CULTURES.includes(culture.key);
   const region = british && options.region && options.region !== "all" ? options.region : void 0;
-  const dialectSetting = british ? (_b = options.dialect) != null ? _b : "variants" : "plain";
-  const mode = (_c = options.people) != null ? _c : "placeholders";
-  const tone = (_d = options.tone) != null ? _d : "any";
+  const dialectSetting = british ? (_b2 = options.dialect) != null ? _b2 : "variants" : "plain";
+  const mode = (_c2 = options.people) != null ? _c2 : "placeholders";
+  const tone = (_d2 = options.tone) != null ? _d2 : "any";
   const count = Math.max(0, Math.floor(options.count));
   let kind = options.kind;
   if (kind === "districts" && size === "village") {
@@ -91000,7 +91370,7 @@ function generateStreetNames(options) {
   const fns = functionsForSize(size);
   let chosenFn = kind === "districts" || !kind ? options.function : void 0;
   if (chosenFn && !fns.some((f) => f.key === chosenFn)) {
-    notices.push(`\u201C${(_f = (_e = STREET_FUNCTIONS.find((f) => f.key === chosenFn)) == null ? void 0 : _e.menu) != null ? _f : chosenFn}\u201D districts aren't offered for a ${sizeLabel(size, era)}.`);
+    notices.push(`\u201C${(_f = (_e2 = STREET_FUNCTIONS.find((f) => f.key === chosenFn)) == null ? void 0 : _e2.menu) != null ? _f : chosenFn}\u201D districts aren't offered for a ${sizeLabel(size, era)}.`);
     chosenFn = void 0;
   }
   const kindWeights = kindsForSize(size).map((k) => [k.key, k.size[size]]);
@@ -91010,13 +91380,13 @@ function generateStreetNames(options) {
   let dialectRegion = region;
   if (series && !region && dialectSetting !== "plain") {
     const regions = [...new Set(((_g = options.vocab) != null ? _g : BUILT_IN_VOCAB).pools.alleyDialect.entries.flatMap((e) => {
-      var _a4;
-      return (_a4 = e.r) != null ? _a4 : [];
+      var _a5;
+      return (_a5 = e.r) != null ? _a5 : [];
     }))];
     dialectRegion = regions.length > 0 ? pickOne6(regions, rng) : void 0;
   }
   const newCtx3 = (fn) => {
-    var _a4;
+    var _a5;
     return {
       rng,
       culture,
@@ -91025,7 +91395,7 @@ function generateStreetNames(options) {
       fantastic,
       mode,
       tone,
-      vocab: (_a4 = options.vocab) != null ? _a4 : BUILT_IN_VOCAB,
+      vocab: (_a5 = options.vocab) != null ? _a5 : BUILT_IN_VOCAB,
       region,
       size,
       fn,
@@ -91041,13 +91411,13 @@ function generateStreetNames(options) {
   };
   const patternOf = (s) => mode === "invented" && s.p.includes("{royal}") ? "{streetFigure} {sw}" : s.p;
   const render3 = (ctx, s) => {
-    var _a4;
+    var _a5;
     const out = renderPattern5(ctx, patternOf(s));
     if (!out) return void 0;
-    const tones = /* @__PURE__ */ new Set([...(_a4 = s.t) != null ? _a4 : [], ...ctx.drawn]);
+    const tones = /* @__PURE__ */ new Set([...(_a5 = s.t) != null ? _a5 : [], ...ctx.drawn]);
     return { ...out, shape: s, tones: GROUP_TONES.filter((t) => tones.has(t)), words: ctx.words, uses: ctx.uses, isRoute: ctx.isRoute };
   };
-  const acceptable5 = (b) => {
+  const acceptable6 = (b) => {
     for (const text of [b.plain, ...b.dialect ? [b.dialect] : []]) {
       const counted2 = countedWords2(text);
       if (!b.isRoute && (counted2.length === 0 || counted2.length > STREET_DATA.cap || repeatsContent(counted2))) return false;
@@ -91066,7 +91436,7 @@ function generateStreetNames(options) {
       const s = shape != null ? shape : pickWeighted5(shapesFor3(ctx, k), rng);
       if (!s) continue;
       const built = render3(ctx, s);
-      if (built && acceptable5(built) && ok(built)) return { built, fn };
+      if (built && acceptable6(built) && ok(built)) return { built, fn };
     }
     return void 0;
   };
@@ -91123,7 +91493,7 @@ function generateStreetNames(options) {
       return true;
     };
     const first = (k) => {
-      var _a4, _b2;
+      var _a5, _b3;
       const s = STREET_DATA.series;
       const future = isFuture(era);
       if (k === "streets") {
@@ -91131,11 +91501,11 @@ function generateStreetNames(options) {
         return draw2(k, () => void 0, fresh, shape);
       }
       if (k === "squares") {
-        const p2 = future ? s.mainMarket.scifi : (_a4 = s.mainMarket[culture.key]) != null ? _a4 : s.mainMarket.default;
+        const p2 = future ? s.mainMarket.scifi : (_a5 = s.mainMarket[culture.key]) != null ? _a5 : s.mainMarket.default;
         return draw2(k, () => void 0, fresh, { p: p2, w: 1 });
       }
       if (chosenFn || size === "village") return void 0;
-      const p = future ? s.firstDistrict.scifi : (_b2 = s.firstDistrict[culture.key]) != null ? _b2 : s.firstDistrict.default;
+      const p = future ? s.firstDistrict.scifi : (_b3 = s.firstDistrict[culture.key]) != null ? _b3 : s.firstDistrict.default;
       return draw2(k, () => "commercial", fresh, { p, w: 1 });
     };
     for (let idle = 0; idle < 60 && names.length < count; ) {
@@ -91181,15 +91551,15 @@ var CASTE2 = /* @__PURE__ */ new Set(["indian", "west-african"]);
 var SF_LISTS3 = /* @__PURE__ */ new Set(["star", "greek"]);
 function vocabPool4(ctx, pool3) {
   return boostPool(ctx.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM4(e.t))).map(([e, w]) => {
-    var _a3;
-    return [e, w * toneFactor((_a3 = e.t) != null ? _a3 : [], ctx.tone)];
+    var _a4;
+    return [e, w * toneFactor((_a4 = e.t) != null ? _a4 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
 }
 function fromPool2(ctx, pool3, items, use = false) {
-  var _a3;
+  var _a4;
   const e = pickWeighted5(items, ctx.rng);
   if (!e) return void 0;
-  for (const t of (_a3 = e.t) != null ? _a3 : []) ctx.drawn.add(t);
+  for (const t of (_a4 = e.t) != null ? _a4 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
   if (use) ctx.uses.push(`q:${e.w}`);
   return e.w;
@@ -91209,8 +91579,8 @@ function gnWord4(ctx, list, use = false) {
   return w;
 }
 var bwItems = (ctx) => vocabPool4(ctx, `buildingWord:${ctx.kind}`).filter(([e]) => {
-  var _a3;
-  return !((_a3 = ctx.shape) == null ? void 0 : _a3.bw) || ctx.shape.bw.includes(e.w);
+  var _a4;
+  return !((_a4 = ctx.shape) == null ? void 0 : _a4.bw) || ctx.shape.bw.includes(e.w);
 });
 function creature(ctx) {
   const items = BUILDING_DATA.lists.creatureLists.flatMap(
@@ -91225,8 +91595,8 @@ function creature(ctx) {
 }
 var ownerNames = (ctx) => [...personNames(ctx.culture.key), ...STREET_DATA.surnameCultures.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : []];
 function town2(ctx) {
-  var _a3;
-  const t = ctx.turn ? ctx.turn.next(ctx.rng) : (_a3 = ctx.town) != null ? _a3 : ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  var _a4;
+  const t = ctx.turn ? ctx.turn.next(ctx.rng) : (_a4 = ctx.town) != null ? _a4 : ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
   if (t) ctx.uses.push(`town:${t}`);
   return t;
 }
@@ -91238,7 +91608,7 @@ function founder(ctx) {
   return names.length > 0 ? pickOne7(names, ctx.rng) : void 0;
 }
 function token8(ctx, name) {
-  var _a3, _b;
+  var _a4, _b2;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
@@ -91265,7 +91635,7 @@ function token8(ctx, name) {
       return ctx.context ? contextSaint(ctx.context, other, rng) : other();
     }
     case "deity": {
-      const t = ctx.context ? (_a3 = ctx.context.deity) != null ? _a3 : void 0 : (_b = deityHooks()) == null ? void 0 : _b.deityTitle({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng, vocab: ctx.vocab });
+      const t = ctx.context ? (_a4 = ctx.context.deity) != null ? _a4 : void 0 : (_b2 = deityHooks()) == null ? void 0 : _b2.deityTitle({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng, vocab: ctx.vocab });
       if (t) ctx.words.push({ pool: "deity", word: t });
       return t == null ? void 0 : t.replace(/^the /, "");
     }
@@ -91347,7 +91717,7 @@ function buildingWordBlocked(word, guards) {
   return buildingBlockSet(guards).has(bare(word)) || breaksBuildingWords(word);
 }
 function shapeWeight4(ctx, s) {
-  var _a3, _b, _c, _d, _e;
+  var _a4, _b2, _c2, _d2, _e2;
   const c = ctx.culture;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
@@ -91365,13 +91735,13 @@ function shapeWeight4(ctx, s) {
     const hooks2 = deityHooks();
     if (!hooks2 || c.sensitive || !hooks2.cultureOffered(c.key)) return 0;
     if (ctx.context && !ctx.context.deity) return 0;
-    if (hooks2.isChristianCulture(c.key, ctx.era)) return ctx.fantastic && s.p.startsWith("Temple") ? DEITY_CHRISTIAN_WEIGHT * toneFactor((_a3 = s.t) != null ? _a3 : [], ctx.tone) : 0;
+    if (hooks2.isChristianCulture(c.key, ctx.era)) return ctx.fantastic && s.p.startsWith("Temple") ? DEITY_CHRISTIAN_WEIGHT * toneFactor((_a4 = s.t) != null ? _a4 : [], ctx.tone) : 0;
   }
   let w = s.w;
   if (s.p === "{fixed}") w = vocabPool4(ctx, `buildingFixed:${ctx.kind}`).reduce((n, [, x]) => n + x, 0);
-  const pool3 = (_b = s.p.match(/^(?:\{\w+\} )?\{(\w+Landmark)\}$/)) == null ? void 0 : _b[1];
+  const pool3 = (_b2 = s.p.match(/^(?:\{\w+\} )?\{(\w+Landmark)\}$/)) == null ? void 0 : _b2[1];
   if (pool3 && vocabPool4(ctx, pool3).length === 0) return 0;
-  return w * ((_d = (_c = s.sx) == null ? void 0 : _c[ctx.settingKey]) != null ? _d : 1) * toneFactor((_e = s.t) != null ? _e : [], ctx.tone);
+  return w * ((_d2 = (_c2 = s.sx) == null ? void 0 : _c2[ctx.settingKey]) != null ? _d2 : 1) * toneFactor((_e2 = s.t) != null ? _e2 : [], ctx.tone);
 }
 function live2(ctx, shapes, source, only) {
   const out = [];
@@ -91383,10 +91753,10 @@ function live2(ctx, shapes, source, only) {
   return out;
 }
 function plans(ctx, only) {
-  var _a3;
+  var _a4;
   const d = BUILDING_DATA;
   const k = ctx.kind;
-  const culture = ((_a3 = d.cultureShapes[ctx.culture.key]) != null ? _a3 : []).filter((s) => s.kind === k);
+  const culture = ((_a4 = d.cultureShapes[ctx.culture.key]) != null ? _a4 : []).filter((s) => s.kind === k);
   if (k === "faith" && d.sensitive.noFaith.includes(ctx.culture.key)) return [];
   const faithOnly = d.sensitive.faithOnly[ctx.culture.key];
   if (k === "faith" && faithOnly) return live2(ctx, culture.filter((s) => faithOnly.includes(s.p)), "culture", only);
@@ -91404,7 +91774,7 @@ function choosePlan(ctx, only) {
   return pickWeighted5(rest, ctx.rng);
 }
 var newCtx2 = (s, kind, extra = {}) => {
-  var _a3, _b;
+  var _a4, _b2;
   return {
     rng: s.rng,
     culture: s.culture,
@@ -91413,8 +91783,8 @@ var newCtx2 = (s, kind, extra = {}) => {
     settingKey: s.settingKey,
     fantastic: s.fantastic,
     mode: s.mode,
-    tone: (_a3 = s.options.tone) != null ? _a3 : "any",
-    vocab: (_b = s.options.vocab) != null ? _b : BUILT_IN_VOCAB,
+    tone: (_a4 = s.options.tone) != null ? _a4 : "any",
+    vocab: (_b2 = s.options.vocab) != null ? _b2 : BUILT_IN_VOCAB,
     region: s.region,
     kind,
     themes: s.themes,
@@ -91426,14 +91796,14 @@ var newCtx2 = (s, kind, extra = {}) => {
   };
 };
 function kindWeight(s, kind) {
-  var _a3, _b, _c, _d, _e;
+  var _a4, _b2, _c2, _d2, _e2;
   const k = BUILDING_KINDS.find((x) => x.key === kind);
-  const w = k.era[s.era] * ((_a3 = BUILDING_DATA.settingX[s.settingKey][kind]) != null ? _a3 : 1) * ((_e = (_d = (_c = (_b = s.options.context) == null ? void 0 : _b.effects) == null ? void 0 : _c.buildingKindX) == null ? void 0 : _d[kind]) != null ? _e : 1);
+  const w = k.era[s.era] * ((_a4 = BUILDING_DATA.settingX[s.settingKey][kind]) != null ? _a4 : 1) * ((_e2 = (_d2 = (_c2 = (_b2 = s.options.context) == null ? void 0 : _b2.effects) == null ? void 0 : _c2.buildingKindX) == null ? void 0 : _d2[kind]) != null ? _e2 : 1);
   return w > 0 && plans(newCtx2(s, kind)).length + (isFuture2(s.era) ? 1 : 0) > 0 ? w : 0;
 }
 function setup(options, seed = 0) {
-  var _a3, _b;
-  const culture = (_a3 = findRouteCulture(options.culture)) != null ? _a3 : findRouteCulture("norman-british");
+  var _a4, _b2;
+  const culture = (_a4 = findRouteCulture(options.culture)) != null ? _a4 : findRouteCulture("norman-british");
   const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
   const fantastic = !!options.fantastic;
   const settingKey = INN_SETTINGS.some((s) => s.key === options.setting) ? options.setting : "anywhere";
@@ -91445,7 +91815,7 @@ function setup(options, seed = 0) {
     fantastic,
     setting: routeSetting(era, fantastic),
     settingKey,
-    mode: (_b = options.people) != null ? _b : "placeholders",
+    mode: (_b2 = options.people) != null ? _b2 : "placeholders",
     region: BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : void 0,
     // §3: the inn settings' themes, magical ×2 when fantastic.
     themes: { ...settingInfo.themes, ...fantastic ? INN_DATA.fantasticThemes : {} },
@@ -91453,13 +91823,13 @@ function setup(options, seed = 0) {
   };
 }
 function generateBuildingNames(options) {
-  var _a3;
+  var _a4;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const s = setup(options, seed);
   const { rng, culture, era } = s;
   const notices = [];
   const count = Math.max(0, Math.floor(options.count));
-  const allowed = (_a3 = options.kinds) != null ? _a3 : BUILDING_KINDS.map((k) => k.key);
+  const allowed = (_a4 = options.kinds) != null ? _a4 : BUILDING_KINDS.map((k) => k.key);
   const weights = BUILDING_KINDS.filter((k) => allowed.includes(k.key)).map((k) => [k.key, kindWeight(s, k.key)]).filter(([, w]) => w > 0);
   const chosen = options.kind;
   if (chosen && !buildingKindsOffered(era).some((k) => k.key === chosen)) notices.push(`Kind \u201C${chosen}\u201D isn't offered in the ${ROUTE_ERAS.find((e) => e.code === era).label} era.`);
@@ -91472,7 +91842,7 @@ function generateBuildingNames(options) {
     base.town = town2(newCtx2(s, "defence"));
     base.founder = s.mode === "placeholders" ? "[founder]" : personNames(culture.key).length > 0 ? pickOne7(personNames(culture.key), rng) : void 0;
   }
-  const acceptable5 = (text) => {
+  const acceptable6 = (text) => {
     const counted2 = countedWords2(text);
     if (counted2.length === 0 || counted2.length > BUILDING_DATA.cap) return false;
     if (repeatsContent(counted2)) return false;
@@ -91483,7 +91853,7 @@ function generateBuildingNames(options) {
     return true;
   };
   const build = (kind) => {
-    var _a4;
+    var _a5;
     for (let i = 0; i < 20; i++) {
       const ctx = newCtx2(s, kind, base);
       const plan = choosePlan(ctx, options.shape);
@@ -91492,8 +91862,8 @@ function generateBuildingNames(options) {
       const raw = renderPattern6(ctx, plan.shape.p);
       if (!raw) continue;
       const text = innCapitals(raw);
-      if (!acceptable5(text)) continue;
-      const tones = /* @__PURE__ */ new Set([...(_a4 = plan.shape.t) != null ? _a4 : [], ...ctx.drawn]);
+      if (!acceptable6(text)) continue;
+      const tones = /* @__PURE__ */ new Set([...(_a5 = plan.shape.t) != null ? _a5 : [], ...ctx.drawn]);
       return {
         text,
         kind,
@@ -91582,8 +91952,8 @@ var COLOURS = /* @__PURE__ */ new Set([...groupListWords("colour", "FL").map(([w
 var BIRDS = new Set(groupListWords("bird", "FL").map(([w]) => w));
 function vocabItems(ctx, pool3, mult = 1) {
   return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(e.t))).map(([e, w]) => {
-    var _a3;
-    return [{ w: e.w, t: (_a3 = e.t) != null ? _a3 : [] }, w * mult];
+    var _a4;
+    return [{ w: e.w, t: (_a4 = e.t) != null ? _a4 : [] }, w * mult];
   });
 }
 function gnItems(ctx, list) {
@@ -91756,7 +92126,7 @@ function token9(ctx, name) {
   return draw(ctx, name, merged(ctx, [vocabItems(ctx, name)]));
 }
 function pairTokens(ctx) {
-  var _a3;
+  var _a4;
   const l = INN_DATA.lists;
   const kinds = Object.entries(l.abWeights);
   const one = (k, keep) => k === "creature" ? creature2(ctx, keep) : k === "item" ? item(ctx, keep) : person(ctx, keep);
@@ -91764,7 +92134,7 @@ function pairTokens(ctx) {
   const a = one(ka);
   if (!a) return void 0;
   if (ka === "creature") {
-    const mate = (_a3 = l.pairs.find(([x]) => x === a)) == null ? void 0 : _a3[1];
+    const mate = (_a4 = l.pairs.find(([x]) => x === a)) == null ? void 0 : _a4[1];
     if (mate && ctx.rng() < l.mateShare) {
       ctx.uses.push(`creature:${mate}`);
       return [a, mate];
@@ -91815,9 +92185,9 @@ function breaksInnWords(text) {
 }
 var hasChristianSign = (text) => CHRISTIAN3.some((re) => re.test(text));
 function innBlockForms(text) {
-  const bare5 = routeNorm(text).replace(/^the /, "");
-  const out = /* @__PURE__ */ new Set([bare5]);
-  const inner = bare5.replace(/^(inn|sign) of the /, "");
+  const bare6 = routeNorm(text).replace(/^the /, "");
+  const out = /* @__PURE__ */ new Set([bare6]);
+  const inner = bare6.replace(/^(inn|sign) of the /, "");
   out.add(inner);
   for (const hw of HOUSE_WORDS) {
     const suffix = ` ${hw.toLowerCase()}`;
@@ -91833,7 +92203,7 @@ function innWordBlocked(word, guards) {
   return innBlockForms(word).some((f) => block.has(f)) || breaksInnWords(word);
 }
 function shapeWeight5(ctx, s) {
-  var _a3;
+  var _a4;
   const c = ctx.culture;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
@@ -91844,18 +92214,18 @@ function shapeWeight5(ctx, s) {
   if (s.p.includes("{god") && godNames(c.key).length === 0) return 0;
   if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
   if (s.p.includes("{trade") && (c.key === "indian" || c.key === "west-african")) return 0;
-  return s.w * toneFactor((_a3 = s.t) != null ? _a3 : [], ctx.tone);
+  return s.w * toneFactor((_a4 = s.t) != null ? _a4 : [], ctx.tone);
 }
 var live3 = (ctx, shapes, only) => shapes.filter((s) => !only || s.p === only).map((s) => [s, shapeWeight5(ctx, s)]).filter(([, w]) => w > 0);
 function englishPlans(ctx, settingKey, only) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const setting = INN_SETTINGS.find((s) => s.key === settingKey);
   const out = [];
   for (const a of INN_DATA.signs) {
-    let w = a.key === "roadside" ? setting.roadside * ((_c = (_b = (_a3 = ctx.options.context) == null ? void 0 : _a3.effects) == null ? void 0 : _b.roadsideX) != null ? _c : 1) : a.w;
+    let w = a.key === "roadside" ? setting.roadside * ((_c2 = (_b2 = (_a4 = ctx.options.context) == null ? void 0 : _a4.effects) == null ? void 0 : _b2.roadsideX) != null ? _c2 : 1) : a.w;
     if (a.from && eraIndex2(ctx.era) < eraIndex2(a.from)) w = 0;
     if (a.key === "arms") {
-      w *= (_d = setting.armsX) != null ? _d : 1;
+      w *= (_d2 = setting.armsX) != null ? _d2 : 1;
       if (ctx.region && INN_DATA.regionRules.armsHalf.includes(ctx.region)) w *= 0.5;
     }
     if (w <= 0) continue;
@@ -91867,10 +92237,10 @@ function englishPlans(ctx, settingKey, only) {
   return out;
 }
 function culturePlans(ctx, only) {
-  var _a3;
-  const own = ((_a3 = INN_DATA.cultureShapes[ctx.culture.key]) != null ? _a3 : []).filter((s) => {
-    var _a4;
-    return ((_a4 = s.kinds) != null ? _a4 : INN_DATA.cultureKinds).includes(ctx.kind);
+  var _a4;
+  const own = ((_a4 = INN_DATA.cultureShapes[ctx.culture.key]) != null ? _a4 : []).filter((s) => {
+    var _a5;
+    return ((_a5 = s.kinds) != null ? _a5 : INN_DATA.cultureKinds).includes(ctx.kind);
   });
   const plans4 = live3(ctx, own, only).map(([s, w]) => [{ tradition: "culture", anchor: "culture", shape: s }, w]);
   const base = plans4.length > 0 ? plans4 : live3(ctx, INN_DATA.fallback, only).map(([s, w]) => [{ tradition: "culture", anchor: "fallback", shape: s }, w]);
@@ -91881,32 +92251,32 @@ function eraPlans(ctx, only) {
   return live3(ctx, shapes, only).map(([s, w]) => [{ tradition: "era", anchor: "era", shape: s }, w]);
 }
 function generateInnNames(options) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
-  const culture = (_a3 = findRouteCulture(options.culture)) != null ? _a3 : findRouteCulture("norman-british");
+  const culture = (_a4 = findRouteCulture(options.culture)) != null ? _a4 : findRouteCulture("norman-british");
   const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
   const fantastic = !!options.fantastic;
   const setting = routeSetting(era, fantastic);
   const settingKey = INN_SETTINGS.some((s) => s.key === options.setting) ? options.setting : "anywhere";
   const settingInfo = INN_SETTINGS.find((s) => s.key === settingKey);
-  const form = (_b = options.form) != null ? _b : "either";
-  const mode = (_c = options.people) != null ? _c : "placeholders";
+  const form = (_b2 = options.form) != null ? _b2 : "either";
+  const mode = (_c2 = options.people) != null ? _c2 : "placeholders";
   const region = BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : void 0;
   const count = Math.max(0, Math.floor(options.count));
   const english = englishShare(culture.key, era);
   const offered = innKindsOffered(era);
-  const chosen = options.kind ? (_d = offered.find((k) => k.key === options.kind)) == null ? void 0 : _d.key : void 0;
+  const chosen = options.kind ? (_d2 = offered.find((k) => k.key === options.kind)) == null ? void 0 : _d2.key : void 0;
   if (options.kind && !chosen) notices.push(`Kind \u201C${options.kind}\u201D isn't offered in the ${ROUTE_ERAS.find((e) => e.code === era).label} era.`);
   const kindWeights = offered.map((k) => {
-    var _a4;
-    return [k.key, k.era[era] * ((_a4 = settingInfo.kindX[k.key]) != null ? _a4 : 1)];
+    var _a5;
+    return [k.key, k.era[era] * ((_a5 = settingInfo.kindX[k.key]) != null ? _a5 : 1)];
   }).filter(([, w]) => w > 0);
   const themes = { ...settingInfo.themes, ...fantastic ? INN_DATA.fantasticThemes : {} };
   const block = innBlockSet(options.safeguards);
   const newCtx3 = (kind) => {
-    var _a4, _b2;
+    var _a5, _b3;
     return {
       rng,
       culture,
@@ -91914,8 +92284,8 @@ function generateInnNames(options) {
       setting,
       fantastic,
       mode,
-      tone: (_a4 = options.tone) != null ? _a4 : "any",
-      vocab: (_b2 = options.vocab) != null ? _b2 : BUILT_IN_VOCAB,
+      tone: (_a5 = options.tone) != null ? _a5 : "any",
+      vocab: (_b3 = options.vocab) != null ? _b3 : BUILT_IN_VOCAB,
       region,
       kind,
       themes,
@@ -91927,7 +92297,7 @@ function generateInnNames(options) {
     };
   };
   const choosePlan2 = (ctx, anchor) => {
-    var _a4;
+    var _a5;
     if (anchor) return pickWeighted5(englishPlans(ctx, settingKey, options.shape).filter(([p]) => p.anchor === anchor), rng);
     const era2 = eraPlans(ctx, options.shape);
     const share2 = isFuture3(ctx.era) && ctx.kind === "bar" ? INN_DATA.eraShare.futureBar : INN_DATA.eraShare.default;
@@ -91936,7 +92306,7 @@ function generateInnNames(options) {
       const plan = pickWeighted5(englishPlans(ctx, settingKey, options.shape), rng);
       if (plan) return plan;
     }
-    return (_a4 = pickWeighted5(culturePlans(ctx, options.shape), rng)) != null ? _a4 : pickWeighted5(era2, rng);
+    return (_a5 = pickWeighted5(culturePlans(ctx, options.shape), rng)) != null ? _a5 : pickWeighted5(era2, rng);
   };
   const withHouse = (ctx, sign) => {
     const share2 = form === "signs" ? 0 : form === "house" ? 1 : INN_DATA.formShare.either;
@@ -91946,7 +92316,7 @@ function generateInnNames(options) {
     return hw ? { text: `${sign} ${hw}`, house: true } : void 0;
   };
   const build = (kind, anchor) => {
-    var _a4;
+    var _a5;
     for (let i = 0; i < 20; i++) {
       const ctx = newCtx3(kind);
       const plan = choosePlan2(ctx, anchor);
@@ -91962,8 +92332,8 @@ function generateInnNames(options) {
         text = innCapitals(h.text);
         house = h.house;
       }
-      if (!acceptable5(text, ctx.isRoute)) continue;
-      const tones = /* @__PURE__ */ new Set([...(_a4 = plan.shape.t) != null ? _a4 : [], ...ctx.drawn]);
+      if (!acceptable6(text, ctx.isRoute)) continue;
+      const tones = /* @__PURE__ */ new Set([...(_a5 = plan.shape.t) != null ? _a5 : [], ...ctx.drawn]);
       return {
         text,
         sign,
@@ -91980,7 +92350,7 @@ function generateInnNames(options) {
     }
     return void 0;
   };
-  function acceptable5(text, isRoute) {
+  function acceptable6(text, isRoute) {
     const counted2 = countedWords2(text);
     if (counted2.length === 0 || counted2.length > INN_DATA.cap) return false;
     if (!isRoute && repeatsContent(counted2)) return false;
@@ -92012,7 +92382,7 @@ function generateInnNames(options) {
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
   return { names, seed, notices };
   function drawTown() {
-    var _a4;
+    var _a5;
     const used = /* @__PURE__ */ new Set();
     const once = /* @__PURE__ */ new Set(["arms", "owner", "roadside", "location"]);
     const anchorsUsed = /* @__PURE__ */ new Set();
@@ -92035,7 +92405,7 @@ function generateInnNames(options) {
         taken.add(names.findIndex((n) => n.anchor === anchor));
         continue;
       }
-      const kind = (_a4 = anchor === "roadside" ? offered.some((k) => k.key === "inn") ? "inn" : chosen : chosen) != null ? _a4 : drawKind();
+      const kind = (_a5 = anchor === "roadside" ? offered.some((k) => k.key === "inn") ? "inn" : chosen : chosen) != null ? _a5 : drawKind();
       for (let i = 0; i < 20; i++) {
         const n = build(chosen != null ? chosen : kind, anchor);
         if (!n || !fresh(n) || seen.has(n.text.toLowerCase())) continue;
@@ -92232,18 +92602,18 @@ var LIGHT_OR_GRIM6 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var CASTE3 = /* @__PURE__ */ new Set(["indian", "west-african"]);
 var SF_LISTS4 = /* @__PURE__ */ new Set(["star", "spaceLand"]);
 function vocabPool5(ctx, pool3) {
-  var _a3, _b;
-  const only = (_b = (_a3 = ctx.shape) == null ? void 0 : _a3.only) == null ? void 0 : _b[pool3];
+  var _a4, _b2;
+  const only = (_b2 = (_a4 = ctx.shape) == null ? void 0 : _a4.only) == null ? void 0 : _b2[pool3];
   return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM6(e.t))).map(([e, w]) => {
-    var _a4;
-    return [e, w * toneFactor((_a4 = e.t) != null ? _a4 : [], ctx.tone)];
+    var _a5;
+    return [e, w * toneFactor((_a5 = e.t) != null ? _a5 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
 }
 function fromPool3(ctx, pool3) {
-  var _a3;
+  var _a4;
   const e = pickWeighted5(vocabPool5(ctx, pool3), ctx.rng);
   if (!e) return void 0;
-  for (const t of (_a3 = e.t) != null ? _a3 : []) ctx.drawn.add(t);
+  for (const t of (_a4 = e.t) != null ? _a4 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
   return e.w;
 }
@@ -92261,39 +92631,39 @@ function gnWord5(ctx, list) {
   return w;
 }
 function place3(ctx) {
-  var _a3, _b;
-  const p = ctx.turn ? ctx.turn.next(ctx.rng) : ctx.carryPlace && ((_a3 = ctx.shape) == null ? void 0 : _a3.kind) === "treaty" && ctx.rng() < EVENT_DATA.series.carryPlace ? ctx.carryPlace : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
-  if (p) (_b = ctx.place) != null ? _b : ctx.place = p;
+  var _a4, _b2;
+  const p = ctx.turn ? ctx.turn.next(ctx.rng) : ctx.carryPlace && ((_a4 = ctx.shape) == null ? void 0 : _a4.kind) === "treaty" && ctx.rng() < EVENT_DATA.series.carryPlace ? ctx.carryPlace : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  if (p) (_b2 = ctx.place) != null ? _b2 : ctx.place = p;
   return p;
 }
 function people(ctx) {
-  var _a3, _b;
+  var _a4, _b2;
   const fresh = () => ctx.mode === "placeholders" ? "[people]" : routeFolk(ctx.culture.key, ctx.rng);
-  const r = (_a3 = ctx.recurring) != null ? _a3 : EVENT_DATA.series.recurring;
+  const r = (_a4 = ctx.recurring) != null ? _a4 : EVENT_DATA.series.recurring;
   const p = ctx.seriesPeople && (r === Infinity || ctx.rng() < r / (r + 1)) ? ctx.seriesPeople : fresh();
-  if (p) (_b = ctx.people) != null ? _b : ctx.people = p;
+  if (p) (_b2 = ctx.people) != null ? _b2 : ctx.people = p;
   return p;
 }
 function realm(ctx) {
-  var _a3;
+  var _a4;
   const fresh = () => ctx.mode === "placeholders" ? "[realm]" : routeKingdom(ctx.culture.key, ctx.era, ctx.rng);
   const r = EVENT_DATA.series.recurring;
   const p = ctx.seriesRealm && !ctx.realm && ctx.rng() < r / (r + 1) ? ctx.seriesRealm : fresh();
-  if (p) (_a3 = ctx.realm) != null ? _a3 : ctx.realm = p;
+  if (p) (_a4 = ctx.realm) != null ? _a4 : ctx.realm = p;
   return p;
 }
 function epithet(ctx) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const items = [];
-  for (const e of (_a3 = BYNAMES_DATA.lists.epCharacter) != null ? _a3 : []) {
+  for (const e of (_a4 = BYNAMES_DATA.lists.epCharacter) != null ? _a4 : []) {
     if (e.s && !e.s.includes(ctx.setting)) continue;
     const form = entryForm(e, "male", false);
-    if (form) items.push([form.text, ((_b = e.x) != null ? _b : 1) * toneFactor((_c = e.t) != null ? _c : [], ctx.tone)]);
+    if (form) items.push([form.text, ((_b2 = e.x) != null ? _b2 : 1) * toneFactor((_c2 = e.t) != null ? _c2 : [], ctx.tone)]);
   }
   return pickWeighted5(items.filter(([, w]) => w > 0), ctx.rng);
 }
 function token10(ctx, name) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
@@ -92322,7 +92692,7 @@ function token10(ctx, name) {
     case "goods":
       return fromPool3(ctx, "streetGoods");
     case "realmForm":
-      return pickOne9((_c = (_b = (_a3 = ctx.shape) == null ? void 0 : _a3.only) == null ? void 0 : _b.realmForm) != null ? _c : ["Kingdom"], rng);
+      return pickOne9((_c2 = (_b2 = (_a4 = ctx.shape) == null ? void 0 : _a4.only) == null ? void 0 : _b2.realmForm) != null ? _c2 : ["Kingdom"], rng);
     case "crisisFeeling":
       return pickOne9(EVENT_DATA.lists.crisisFeeling, rng);
     case "year": {
@@ -92384,7 +92754,7 @@ var PEOPLE_SHAPES = [
 ];
 var GREAT = /(^|\s)(Great|World)(\s|$)/;
 function shapeWeight6(ctx, s) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const c = ctx.culture;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
@@ -92398,7 +92768,7 @@ function shapeWeight6(ctx, s) {
   if (s.p === "{fixed}") {
     if (vocabPool5({ ...ctx, shape: s }, `eventFixed:${s.kind}`).length === 0) return 0;
   } else {
-    const single = (_a3 = s.p.match(/^(?:the )?\{(\w+)\}$/)) == null ? void 0 : _a3[1];
+    const single = (_a4 = s.p.match(/^(?:the )?\{(\w+)\}$/)) == null ? void 0 : _a4[1];
     if (single && ctx.vocab.pools[single] && vocabPool5({ ...ctx, shape: s }, single).length === 0) return 0;
   }
   const r = EVENT_DATA.scaleRules;
@@ -92409,21 +92779,21 @@ function shapeWeight6(ctx, s) {
     if (GREAT.test(s.p)) w *= r.world.great;
     if (s.p.includes("{realm")) w *= r.world.realm;
   }
-  return w * toneFactor((_b = s.t) != null ? _b : [], ctx.tone) * ((_d = (_c = ctx.boost) == null ? void 0 : _c.call(ctx, s)) != null ? _d : 1);
+  return w * toneFactor((_b2 = s.t) != null ? _b2 : [], ctx.tone) * ((_d2 = (_c2 = ctx.boost) == null ? void 0 : _c2.call(ctx, s)) != null ? _d2 : 1);
 }
 function plans2(ctx, kind, only) {
   return ALL_SHAPES.filter((s) => s.kind === kind && (!only || s.p === only)).map((s) => [s, shapeWeight6({ ...ctx, shape: s }, s)]).filter(([, w]) => w > 0);
 }
 function generateEventNames(options) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
-  const culture = (_a3 = findRouteCulture(options.culture)) != null ? _a3 : findRouteCulture("norman-british");
+  const culture = (_a4 = findRouteCulture(options.culture)) != null ? _a4 : findRouteCulture("norman-british");
   const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
   const fantastic = !!options.fantastic;
   const scale = EVENT_SCALES.some((s) => s.key === options.scale) ? options.scale : "realm";
-  const mode = (_b = options.people) != null ? _b : "placeholders";
+  const mode = (_b2 = options.people) != null ? _b2 : "placeholders";
   const count = Math.max(0, Math.floor(options.count));
   const offered = eventKindsOffered(era);
   const chosen = options.kind && offered.some((k) => k.key === options.kind) ? options.kind : void 0;
@@ -92435,8 +92805,8 @@ function generateEventNames(options) {
     setting: routeSetting(era, fantastic),
     fantastic,
     mode,
-    tone: (_c = options.tone) != null ? _c : "any",
-    vocab: (_d = options.vocab) != null ? _d : BUILT_IN_VOCAB,
+    tone: (_c2 = options.tone) != null ? _c2 : "any",
+    vocab: (_d2 = options.vocab) != null ? _d2 : BUILT_IN_VOCAB,
     scale,
     context: options.context,
     drawn: /* @__PURE__ */ new Set(),
@@ -92444,7 +92814,7 @@ function generateEventNames(options) {
   };
   const newCtx3 = (extra = {}) => ({ ...base, drawn: /* @__PURE__ */ new Set(), words: [], ...extra });
   const kindWeights = offered.map((k) => [k.key, k.era[era]]).filter(([k]) => plans2(newCtx3(), k).length > 0);
-  const acceptable5 = (text, s) => {
+  const acceptable6 = (text, s) => {
     const counted2 = countedWords2(text);
     if (counted2.length === 0 || counted2.length > EVENT_DATA.cap) return false;
     if (repeatsContent(counted2) && !s.p.includes("{colour} and the {colour}")) return false;
@@ -92454,7 +92824,7 @@ function generateEventNames(options) {
     return true;
   };
   const build = (kind, extra = {}, only) => {
-    var _a4;
+    var _a5;
     for (let i = 0; i < 20; i++) {
       const ctx = newCtx3(extra);
       const s = pickWeighted5(plans2(ctx, kind, only != null ? only : options.shape), rng);
@@ -92464,8 +92834,8 @@ function generateEventNames(options) {
       if (!raw) continue;
       if (scale === "local" && s.p === "{place} War" && rng() < EVENT_DATA.scaleRules.local.riotShare) raw = raw.replace(/ War$/, " Riot");
       const text = eventCapitals(raw);
-      if (!acceptable5(text, s)) continue;
-      const tones = /* @__PURE__ */ new Set([...(_a4 = s.t) != null ? _a4 : [], ...ctx.drawn]);
+      if (!acceptable6(text, s)) continue;
+      const tones = /* @__PURE__ */ new Set([...(_a5 = s.t) != null ? _a5 : [], ...ctx.drawn]);
       return {
         text,
         kind,
@@ -93509,27 +93879,27 @@ var ALL_SHAPES2 = MONEY_DATA.shapes;
 var defaultMoneySafeguards = () => ({ block: MONEY_DATA.safeguards.block, flag: MONEY_DATA.safeguards.flag, flagListBlocks: MONEY_DATA.safeguards.flagListBlocks });
 var findMoneyKind = (key2) => MONEY_KINDS.find((k) => k.key === key2);
 function moneyKindWeight(kind, culture, era) {
-  var _a3, _b;
+  var _a4, _b2;
   const info = findMoneyKind(kind);
   let w = info.era[era];
   if (kind === "paper" && era === "MD" && !MONEY_DATA.paperMiddleAges.includes(culture)) return 0;
-  const mult = (_a3 = MONEY_DATA.cultureMult[culture]) == null ? void 0 : _a3[kind];
+  const mult = (_a4 = MONEY_DATA.cultureMult[culture]) == null ? void 0 : _a4[kind];
   if (typeof mult === "number") w *= mult;
-  else if (mult) w *= (_b = mult[era]) != null ? _b : 1;
+  else if (mult) w *= (_b2 = mult[era]) != null ? _b2 : 1;
   return w;
 }
 var moneyKindsOffered = (culture, era) => MONEY_KINDS.filter((k) => moneyKindWeight(k.key, culture, era) > 0);
 var nicknameToneFactor = (tone) => tone === "any" ? 1 : tone === "light" ? toneFactor(["light"], tone) : tone === "grand" ? MONEY_DATA.nicknameTone.grand : MONEY_DATA.nicknameTone.other;
 var LOAN_CULTURES = /* @__PURE__ */ new Map();
 function moneyHasLoans(culture, vocab = BUILT_IN_VOCAB) {
-  var _a3;
+  var _a4;
   let set = LOAN_CULTURES.get(vocab);
   if (!set) {
     set = /* @__PURE__ */ new Set();
     for (const [name, pool3] of Object.entries(vocab.pools)) {
       if (!name.startsWith("moneyFixed:")) continue;
       for (const e of pool3.entries) if (e.loan) {
-        for (const c of (_a3 = e.c) != null ? _a3 : []) if (!c.startsWith("!")) set.add(c);
+        for (const c of (_a4 = e.c) != null ? _a4 : []) if (!c.startsWith("!")) set.add(c);
       }
     }
     LOAN_CULTURES.set(vocab, set);
@@ -93557,21 +93927,21 @@ function cachedPool(ctx, pool3) {
   return items;
 }
 var builtInWords = (pool3) => {
-  var _a3, _b;
-  return new Set(((_b = (_a3 = BUILT_IN_VOCAB.pools[pool3]) == null ? void 0 : _a3.entries) != null ? _b : []).map((e) => e.w));
+  var _a4, _b2;
+  return new Set(((_b2 = (_a4 = BUILT_IN_VOCAB.pools[pool3]) == null ? void 0 : _a4.entries) != null ? _b2 : []).map((e) => e.w));
 };
 function drawable(ctx, pool3, keep) {
-  var _a3, _b, _c;
-  const only = (_b = (_a3 = ctx.shape) == null ? void 0 : _a3.only) == null ? void 0 : _b[pool3];
-  const own = only && ((_c = ctx.shape) == null ? void 0 : _c.rest) ? builtInWords(pool3) : void 0;
+  var _a4, _b2, _c2;
+  const only = (_b2 = (_a4 = ctx.shape) == null ? void 0 : _a4.only) == null ? void 0 : _b2[pool3];
+  const own = only && ((_c2 = ctx.shape) == null ? void 0 : _c2.rest) ? builtInWords(pool3) : void 0;
   return cachedPool(ctx, pool3).filter(([e]) => (!only || only.includes(e.w) || own && !own.has(e.w)) && (!keep || keep(e))).map(([e, w]) => {
-    var _a4;
-    return [e, ctx.kind === "nickname" ? w : w * toneFactor((_a4 = e.t) != null ? _a4 : [], ctx.tone)];
+    var _a5;
+    return [e, ctx.kind === "nickname" ? w : w * toneFactor((_a5 = e.t) != null ? _a5 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
 }
 function note(ctx, pool3, e) {
-  var _a3;
-  for (const t of (_a3 = e.t) != null ? _a3 : []) ctx.drawn.add(t);
+  var _a4;
+  for (const t of (_a4 = e.t) != null ? _a4 : []) ctx.drawn.add(t);
   ctx.log.push({ pool: pool3, word: e.w });
 }
 function fromPool4(ctx, pool3, opts = {}) {
@@ -93602,8 +93972,8 @@ function pluralName(name, pl) {
 }
 var COMPANIES = /* @__PURE__ */ new Map();
 function companyPool(ctx, type) {
-  var _a3;
-  const tradition = (_a3 = REALM_DATA.tribal[ctx.culture.key]) != null ? _a3 : "general";
+  var _a4;
+  const tradition = (_a4 = REALM_DATA.tribal[ctx.culture.key]) != null ? _a4 : "general";
   const key2 = `${ctx.setting}|${tradition}|${ctx.tone}|${type}`;
   let pool3 = COMPANIES.get(key2);
   if (!pool3) {
@@ -93655,8 +94025,8 @@ function town3(ctx) {
   return found;
 }
 function metalPool(ctx) {
-  var _a3, _b;
-  const sf = (_a3 = ctx.shape) == null ? void 0 : _a3.p.includes("{sfMetal}");
+  var _a4, _b2;
+  const sf = (_a4 = ctx.shape) == null ? void 0 : _a4.p.includes("{sfMetal}");
   const keep = (e2) => {
     if (sf) return MONEY_DATA.lists.sfMetal.includes(e2.w);
     if (ctx.exactMetal === "low") return !!e2.v && e2.v.includes("l");
@@ -93669,20 +94039,20 @@ function metalPool(ctx) {
   if (!e) return void 0;
   note(ctx, "coinMetal", e);
   const tiers = e.v && e.v.length > 0 ? e.v : void 0;
-  if (ctx.exactMetal) ctx.tier = ctx.exactMetal === "low" ? "l" : (_b = ctx.want) != null ? _b : tiers ? tiers[0] : void 0;
+  if (ctx.exactMetal) ctx.tier = ctx.exactMetal === "low" ? "l" : (_b2 = ctx.want) != null ? _b2 : tiers ? tiers[0] : void 0;
   else if (tiered) ctx.tier = ctx.want;
   else if (tiers) ctx.tier = tiers.length === 1 ? tiers[0] : pickOne10(tiers, ctx.rng);
   return e;
 }
 function emblem(ctx) {
-  var _a3, _b, _c;
-  if (ctx.kind === "nickname" && ctx.batchEmblems.length > 0 && ((_a3 = ctx.shape) == null ? void 0 : _a3.p.includes("{emblem"))) {
+  var _a4, _b2, _c2;
+  if (ctx.kind === "nickname" && ctx.batchEmblems.length > 0 && ((_a4 = ctx.shape) == null ? void 0 : _a4.p.includes("{emblem"))) {
     const w2 = pickOne10(ctx.batchEmblems, ctx.rng);
     ctx.emblems.push(w2);
     ctx.log.push({ pool: "coinEmblem", word: w2 });
     return w2;
   }
-  const sacred2 = new Set((_b = MONEY_DATA.lists.sacredAnimals[ctx.culture.key]) != null ? _b : []);
+  const sacred2 = new Set((_b2 = MONEY_DATA.lists.sacredAnimals[ctx.culture.key]) != null ? _b2 : []);
   const ok = (w2) => !sacred2.has(w2) && (!ctx.emblemFilter || ctx.emblemFilter(w2));
   const items = drawable(ctx, "coinEmblem", (e2) => ok(e2.w));
   const animals = [...new Set(cultureAnimals(ctx.culture.key))].filter((w2) => !w2.includes("{") && ok(w2)).map((w2) => [w2, 1]);
@@ -93690,7 +94060,7 @@ function emblem(ctx) {
   for (const [e2, w2] of items) merged2.set(e2.w, [e2, w2]);
   for (const [w2, n] of animals) {
     const have = merged2.get(w2);
-    merged2.set(w2, [have == null ? void 0 : have[0], ((_c = have == null ? void 0 : have[1]) != null ? _c : 0) + n]);
+    merged2.set(w2, [have == null ? void 0 : have[0], ((_c2 = have == null ? void 0 : have[1]) != null ? _c2 : 0) + n]);
   }
   const used = ctx.used;
   const w = pickWeighted5(
@@ -93714,23 +94084,23 @@ function coinWord(ctx) {
   return e == null ? void 0 : e.w;
 }
 function fraction(ctx) {
-  var _a3;
+  var _a4;
   const coins = cachedPool(ctx, "coinWord");
   const e = pickWeighted5(
     drawable(ctx, "coinFraction", (f) => (!ctx.lowerOnly || f.ts === 1) && (!ctx.want || coins.some(([c]) => {
-      var _a4;
-      return tiersReaching(c.v, (_a4 = f.ts) != null ? _a4 : 0, ctx.want).length > 0;
+      var _a5;
+      return tiersReaching(c.v, (_a5 = f.ts) != null ? _a5 : 0, ctx.want).length > 0;
     }))),
     ctx.rng
   );
   if (!e) return void 0;
   note(ctx, "coinFraction", e);
-  ctx.shift = (_a3 = e.ts) != null ? _a3 : 0;
+  ctx.shift = (_a4 = e.ts) != null ? _a4 : 0;
   return HYPHEN_FRACTIONS.has(e.w) ? `${e.w}-` : `${e.w} `;
 }
 function godName2(ctx) {
-  var _a3, _b, _c;
-  const list = (_c = (_b = (_a3 = findVesselCulture(ctx.culture.key)) == null ? void 0 : _a3.gods) == null ? void 0 : _b.list) != null ? _c : [];
+  var _a4, _b2, _c2;
+  const list = (_c2 = (_b2 = (_a4 = findVesselCulture(ctx.culture.key)) == null ? void 0 : _a4.gods) == null ? void 0 : _b2.list) != null ? _c2 : [];
   return list.length > 0 ? pickOne10(list, ctx.rng).w : void 0;
 }
 function fixedWord(ctx) {
@@ -93749,7 +94119,7 @@ function fixedWord(ctx) {
   return e.w;
 }
 function token11(ctx, name, mod) {
-  var _a3, _b, _c, _d, _e, _f, _g;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
@@ -93760,7 +94130,7 @@ function token11(ctx, name, mod) {
     case "metal": {
       const e = metalPool(ctx);
       if (!e) return void 0;
-      return mod === "pl" ? (_a3 = MONEY_DATA.lists.metalPlurals[e.w]) != null ? _a3 : pluralName(e.w) : e.w;
+      return mod === "pl" ? (_a4 = MONEY_DATA.lists.metalPlurals[e.w]) != null ? _a4 : pluralName(e.w) : e.w;
     }
     case "sfMetal": {
       const e = metalPool(ctx);
@@ -93775,17 +94145,17 @@ function token11(ctx, name, mod) {
     case "fraction":
       return fraction(ctx);
     case "shapeWord":
-      return (_b = fromPool4(ctx, "coinShapeWord")) == null ? void 0 : _b.w;
+      return (_b2 = fromPool4(ctx, "coinShapeWord")) == null ? void 0 : _b2.w;
     case "earlyMoney":
     case "goodsMoney":
     case "paperWord":
     case "tokenWord":
     case "unitWord":
-      return (_c = fromPool4(ctx, name)) == null ? void 0 : _c.w;
+      return (_c2 = fromPool4(ctx, name)) == null ? void 0 : _c2.w;
     case "moneyNickname":
-      return (_d = fromPool4(ctx, "moneyNickname")) == null ? void 0 : _d.w;
+      return (_d2 = fromPool4(ctx, "moneyNickname")) == null ? void 0 : _d2.w;
     case "sfMoney":
-      return (_e = fromPool4(ctx, "sfMoney")) == null ? void 0 : _e.w;
+      return (_e2 = fromPool4(ctx, "sfMoney")) == null ? void 0 : _e2.w;
     case "sfMoneyLower":
       return (_f = fromPool4(ctx, "sfMoney")) == null ? void 0 : _f.w.toLowerCase();
     case "town":
@@ -93869,16 +94239,16 @@ function cultureFactor(ctx, s) {
   return cultureAllowed(s.c, ctx.culture.key, ctx.era) ? 1 : 0;
 }
 function shapeWeight7(ctx, s) {
-  var _a3, _b, _c, _d, _e, _f;
+  var _a4, _b2, _c2, _d2, _e2, _f;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   const cf = cultureFactor(ctx, s);
   if (cf === 0) return 0;
   if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
   const c = ctx.culture;
   if (c.moneyOnly && s.p.includes("{realm")) return 0;
-  if (s.p.includes("{figure") && c.moneyOnly && ((_a3 = c.figure) != null ? _a3 : []).length === 0) return 0;
+  if (s.p.includes("{figure") && c.moneyOnly && ((_a4 = c.figure) != null ? _a4 : []).length === 0) return 0;
   if (s.p.includes("{god")) {
-    if (((_d = (_c = (_b = findVesselCulture(c.key)) == null ? void 0 : _b.gods) == null ? void 0 : _c.list) != null ? _d : []).length === 0) return 0;
+    if (((_d2 = (_c2 = (_b2 = findVesselCulture(c.key)) == null ? void 0 : _b2.gods) == null ? void 0 : _c2.list) != null ? _d2 : []).length === 0) return 0;
   }
   if (CASTE4.has(c.key) && s.p.includes("{trade")) return 0;
   if (s.tier && ctx.want && s.tier !== ctx.want) return 0;
@@ -93886,7 +94256,7 @@ function shapeWeight7(ctx, s) {
     const items = drawable({ ...ctx, kind: s.kind, shape: s }, `moneyFixed:${s.kind}`, (e) => e.fx === s.fx && (!ctx.want || s.kind === "currency" || tiersReaching(e.v, 0, ctx.want).length > 0));
     if (items.length === 0) return 0;
   } else {
-    const single = (_e = s.p.match(/^\{(\w+)\}$/)) == null ? void 0 : _e[1];
+    const single = (_e2 = s.p.match(/^\{(\w+)\}$/)) == null ? void 0 : _e2[1];
     if (single && ctx.vocab.pools[single] && drawable({ ...ctx, shape: s }, single).length === 0) return 0;
   }
   return s.w * cf * (s.kind === "nickname" ? 1 : toneFactor((_f = s.t) != null ? _f : [], ctx.tone));
@@ -93899,10 +94269,10 @@ var findMoneyLadder = (key2) => key2 ? LADDER_BY_KEY.get(key2) : void 0;
 var SERIES_KINDS = [void 0, "coin", "early", "goods"];
 var kindHasSeries = (kind) => SERIES_KINDS.includes(kind);
 function moneyLaddersFor(culture, era, kind) {
-  var _a3, _b;
+  var _a4, _b2;
   if (!kindHasSeries(kind)) return [];
   const serve = kind != null ? kind : "any";
-  return ((_b = (_a3 = MONEY_DATA.ladderCells[culture]) == null ? void 0 : _a3[era]) != null ? _b : []).map((k) => LADDER_BY_KEY.get(k)).filter((l) => l.serves.includes(serve));
+  return ((_b2 = (_a4 = MONEY_DATA.ladderCells[culture]) == null ? void 0 : _a4[era]) != null ? _b2 : []).map((k) => LADDER_BY_KEY.get(k)).filter((l) => l.serves.includes(serve));
 }
 var moneyHasLadder = (culture, era, kind) => moneyLaddersFor(culture, era, kind).length > 0;
 var ladderKind = (l) => l.serves.includes("goods") ? "goods" : l.serves.includes("early") ? "early" : "coin";
@@ -93925,17 +94295,17 @@ function drawTheme(S) {
   const christian = cultureAllowed(["christian"], S.culture.key, S.era);
   const names = cachedPool(ctx, "moneyFixed:coin").some(([e]) => !e.fx);
   const options = MONEY_DATA.series.themes.filter((t) => {
-    var _a3, _b, _c, _d;
+    var _a4, _b2, _c2, _d2;
     if (t.key === "holy") return christian;
-    if (t.key === "gods") return S.era === "AN" && ((_c = (_b = (_a3 = findVesselCulture(S.culture.key)) == null ? void 0 : _a3.gods) == null ? void 0 : _b.list) != null ? _c : []).length > 0 && THEME_SHAPES.gods.some((p) => ALL_SHAPES2.some((s) => s.p === p && shapeWeight7(ctx, s) > 0));
-    if (t.key === "rulers") return !S.culture.moneyOnly || ((_d = S.culture.figure) != null ? _d : []).length > 0;
+    if (t.key === "gods") return S.era === "AN" && ((_c2 = (_b2 = (_a4 = findVesselCulture(S.culture.key)) == null ? void 0 : _a4.gods) == null ? void 0 : _b2.list) != null ? _c2 : []).length > 0 && THEME_SHAPES.gods.some((p) => ALL_SHAPES2.some((s) => s.p === p && shapeWeight7(ctx, s) > 0));
+    if (t.key === "rulers") return !S.culture.moneyOnly || ((_d2 = S.culture.figure) != null ? _d2 : []).length > 0;
     if (t.key === "names") return names;
     return true;
   });
   return pickWeighted5(options.map((t) => [t.key, t.w]), S.rng);
 }
 function generatedStep(S, kind, tier, lay, exactMetal) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   for (let attempt2 = 0; attempt2 < 40; attempt2++) {
     const extra = { want: tier, exactMetal, used: lay.used, town: lay.town, batchEmblems: S.base.batchEmblems };
     const animal2 = animalEmblem(S.culture.key);
@@ -93951,10 +94321,10 @@ function generatedStep(S, kind, tier, lay, exactMetal) {
     }
     const ctx = S.newCtx(kind, extra);
     const theme = relaxed ? kind === "coin" ? "beasts" : void 0 : lay.theme;
-    const wanted = kind === "coin" && theme && theme !== "names" ? (_a3 = THEME_SHAPES[theme]) != null ? _a3 : [] : void 0;
+    const wanted = kind === "coin" && theme && theme !== "names" ? (_a4 = THEME_SHAPES[theme]) != null ? _a4 : [] : void 0;
     const pool3 = ALL_SHAPES2.filter((x) => x.kind === kind && (wanted ? wanted.includes(x.p) : theme === "names" ? x.p === "{fixed}" && !x.fx : true));
     const shapes = pool3.map((x) => [x, stepShapeWeight(ctx, x, exactMetal)]).filter(([, w]) => w > 0);
-    if (kind === "coin" && lay.theme !== "names" && !lay.fractionUsed && ((_b = lay.prev) == null ? void 0 : _b.coinWord) && lay.prev.tier && shiftTier(lay.prev.tier, 1) === tier && !exactMetal) {
+    if (kind === "coin" && lay.theme !== "names" && !lay.fractionUsed && ((_b2 = lay.prev) == null ? void 0 : _b2.coinWord) && lay.prev.tier && shiftTier(lay.prev.tier, 1) === tier && !exactMetal) {
       const f = ALL_SHAPES2.find((x) => x.kind === "coin" && x.p === FRACTION_SHAPE);
       const w = shapeWeight7(ctx, f);
       if (w > 0) shapes.push([f, w]);
@@ -93981,9 +94351,9 @@ function generatedStep(S, kind, tier, lay, exactMetal) {
       if (w.pool === "coinWord" && !ctx.shift) lay.used.add(`coin:${w.word}`);
     }
     if (s.p === FRACTION_SHAPE) lay.fractionUsed = true;
-    lay.prev = { coinWord: (_c = ctx.log.find((w) => w.pool === "coinWord")) == null ? void 0 : _c.word, tier };
+    lay.prev = { coinWord: (_c2 = ctx.log.find((w) => w.pool === "coinWord")) == null ? void 0 : _c2.word, tier };
     for (const e of ctx.emblems) if (kind === "coin" && !S.base.batchEmblems.includes(e)) S.base.batchEmblems.push(e);
-    const tones = /* @__PURE__ */ new Set([...(_d = s.t) != null ? _d : [], ...ctx.drawn]);
+    const tones = /* @__PURE__ */ new Set([...(_d2 = s.t) != null ? _d2 : [], ...ctx.drawn]);
     return { text, name: text, kind, shape: s.p, tones: GROUP_TONES.filter((t) => tones.has(t)), words: ctx.log, tier, ...ctx.loan ? { loan: true } : {} };
   }
   return void 0;
@@ -94029,7 +94399,7 @@ function coinageExtras(S, room) {
   return out;
 }
 function coinage(S, ladder, notices) {
-  var _a3, _b;
+  var _a4, _b2;
   const names = [];
   let room = S.count;
   const any = S.chosen === void 0;
@@ -94044,7 +94414,7 @@ function coinage(S, ladder, notices) {
       room--;
     }
   }
-  const kind = ladder ? ladderKind(ladder) : (_a3 = S.chosen) != null ? _a3 : "coin";
+  const kind = ladder ? ladderKind(ladder) : (_a4 = S.chosen) != null ? _a4 : "coin";
   const lay = { used: /* @__PURE__ */ new Set(), fractionUsed: false };
   const ctx0 = S.newCtx(kind);
   if (kind === "coin") {
@@ -94052,11 +94422,11 @@ function coinage(S, ladder, notices) {
     if (lay.theme === "place") lay.town = town3(ctx0);
   }
   const steps = ladder ? ladder.steps.slice(0, Math.max(0, room)) : (() => {
-    var _a4, _b2;
+    var _a5, _b3;
     const n = Math.min(pickWeighted5(MONEY_DATA.series.steps.map(([k, w]) => [k, w]), S.rng), Math.max(0, room));
-    return (_b2 = (_a4 = MONEY_DATA.series.tiers[String(n)]) == null ? void 0 : _a4.map((tier) => ({ tier }))) != null ? _b2 : [];
+    return (_b3 = (_a5 = MONEY_DATA.series.tiers[String(n)]) == null ? void 0 : _a5.map((tier) => ({ tier }))) != null ? _b3 : [];
   })();
-  const share2 = (_b = S.options.realShare) != null ? _b : ladder ? MONEY_DATA.series.realShareValues : MONEY_DATA.series.realShare;
+  const share2 = (_b2 = S.options.realShare) != null ? _b2 : ladder ? MONEY_DATA.series.realShareValues : MONEY_DATA.series.realShare;
   const coins = [];
   steps.forEach((step, i) => {
     let n;
@@ -94101,7 +94471,7 @@ function ladderRealStep(S, ladder, step, kind, lay) {
   return { text, name: text, kind, shape: "ladder", tones: [], words, tier: step.tier, real: true, ...loan ? { loan: true } : {}, ...pl ? { pl } : {} };
 }
 function decimalName(S, ladder, step) {
-  var _a3;
+  var _a4;
   const index = ladder.steps.indexOf(step);
   if (index === 1 || (S.era === "NF" || S.era === "IS")) return void 0;
   const ctx = S.newCtx("coin");
@@ -94110,7 +94480,7 @@ function decimalName(S, ladder, step) {
   for (const pool3 of pools) {
     for (const [e2] of cachedPool(ctx, pool3)) {
       if (e2.fx || e2.w.includes("{")) continue;
-      if (index === 0 ? pool3 === "moneyFixed:currency" || ((_a3 = e2.v) != null ? _a3 : []).includes("m") : e2.w === "Hundredth") entries.push(e2);
+      if (index === 0 ? pool3 === "moneyFixed:currency" || ((_a4 = e2.v) != null ? _a4 : []).includes("m") : e2.w === "Hundredth") entries.push(e2);
     }
   }
   if (entries.length === 0) return void 0;
@@ -94132,11 +94502,11 @@ function applyValues(ladder, coins) {
   });
 }
 function generateMoneyNames(options) {
-  var _a3, _b, _c, _d, _e, _f;
+  var _a4, _b2, _c2, _d2, _e2, _f;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
-  const culture = (_a3 = findMoneyCulture(options.culture)) != null ? _a3 : findMoneyCulture(DEFAULT_CULTURE);
+  const culture = (_a4 = findMoneyCulture(options.culture)) != null ? _a4 : findMoneyCulture(DEFAULT_CULTURE);
   const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
   const fantastic = !!options.fantastic;
   const count = Math.max(0, Math.floor(options.count));
@@ -94144,17 +94514,17 @@ function generateMoneyNames(options) {
   const chosen = options.kind && offered.some((k) => k.key === options.kind) ? options.kind : void 0;
   const want = options.value && options.value !== "any" ? VALUE_TIER[options.value] : void 0;
   const block = moneyBlockSet(options.safeguards);
-  const tone = (_b = options.tone) != null ? _b : "any";
+  const tone = (_b2 = options.tone) != null ? _b2 : "any";
   const base = {
     rng,
     culture,
     era,
     setting: routeSetting(era, fantastic),
     fantastic,
-    mode: (_c = options.people) != null ? _c : "placeholders",
+    mode: (_c2 = options.people) != null ? _c2 : "placeholders",
     tone,
-    vocab: (_d = options.vocab) != null ? _d : BUILT_IN_VOCAB,
-    words: (_e = options.words) != null ? _e : "translated",
+    vocab: (_d2 = options.vocab) != null ? _d2 : BUILT_IN_VOCAB,
+    words: (_e2 = options.words) != null ? _e2 : "translated",
     kind: chosen != null ? chosen : "coin",
     shift: 0,
     drawn: /* @__PURE__ */ new Set(),
@@ -94165,15 +94535,15 @@ function generateMoneyNames(options) {
   let activeWant = want;
   const newCtx3 = (kind, extra = {}) => ({ ...base, kind, want: kind === "currency" ? void 0 : activeWant, shift: 0, drawn: /* @__PURE__ */ new Set(), log: [], emblems: [], ...extra });
   const planCache = /* @__PURE__ */ new Map();
-  const plansFor = (kind) => {
-    var _a4;
-    const key2 = `${kind}|${(_a4 = options.shape) != null ? _a4 : ""}`;
+  const plansFor2 = (kind) => {
+    var _a5;
+    const key2 = `${kind}|${(_a5 = options.shape) != null ? _a5 : ""}`;
     let p = planCache.get(key2);
     if (!p) planCache.set(key2, p = plans3(newCtx3(kind), kind, options.shape));
     return p;
   };
-  const kindWeights = offered.map((k) => [k.key, moneyKindWeight(k.key, culture.key, era) * (k.key === "nickname" ? nicknameToneFactor(tone) : 1)]).filter(([k]) => plansFor(k).length > 0);
-  const acceptable5 = (text, kind) => {
+  const kindWeights = offered.map((k) => [k.key, moneyKindWeight(k.key, culture.key, era) * (k.key === "nickname" ? nicknameToneFactor(tone) : 1)]).filter(([k]) => plansFor2(k).length > 0);
+  const acceptable6 = (text, kind) => {
     const counted2 = countedWords2(text);
     if (counted2.length === 0 || counted2.length > MONEY_DATA.cap) return false;
     if (repeatsContent(counted2)) return false;
@@ -94183,19 +94553,19 @@ function generateMoneyNames(options) {
     return true;
   };
   const build = (kind) => {
-    var _a4, _b2;
+    var _a5, _b3;
     for (let i = 0; i < 30; i++) {
       const ctx = newCtx3(kind, { batchEmblems: base.batchEmblems });
-      const s = pickWeighted5(plansFor(kind), rng);
+      const s = pickWeighted5(plansFor2(kind), rng);
       if (!s) return void 0;
       ctx.shape = s;
       const raw = renderPattern9(ctx, s.p);
       if (!raw) continue;
       const text = moneyCapitals(raw);
-      if (!acceptable5(text, kind)) continue;
+      if (!acceptable6(text, kind)) continue;
       for (const e of ctx.emblems) if (kind === "coin" && !base.batchEmblems.includes(e)) base.batchEmblems.push(e);
-      const tones = /* @__PURE__ */ new Set([...(_a4 = s.t) != null ? _a4 : [], ...ctx.drawn]);
-      const tier = (_b2 = ctx.tier) != null ? _b2 : s.tier;
+      const tones = /* @__PURE__ */ new Set([...(_a5 = s.t) != null ? _a5 : [], ...ctx.drawn]);
+      const tier = (_b3 = ctx.tier) != null ? _b3 : s.tier;
       return {
         text,
         name: text,
@@ -94210,7 +94580,7 @@ function generateMoneyNames(options) {
     return void 0;
   };
   const seen = /* @__PURE__ */ new Set();
-  const S = { rng, options, culture, era, count, chosen, want, tone, base, newCtx: newCtx3, acceptable: acceptable5, build, seen };
+  const S = { rng, options, culture, era, count, chosen, want, tone, base, newCtx: newCtx3, acceptable: acceptable6, build, seen };
   let series = (_f = options.series) != null ? _f : "separate";
   if (!kindHasSeries(chosen)) series = "separate";
   let ladder;
@@ -94235,7 +94605,7 @@ function generateMoneyNames(options) {
   };
   for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
     const k = chosen != null ? chosen : pickWeighted5(kindWeights, rng);
-    if (!k || chosen && plansFor(chosen).length === 0) break;
+    if (!k || chosen && plansFor2(chosen).length === 0) break;
     add2(build(k));
   }
   if (names.length < count) {
@@ -94267,16 +94637,16 @@ var showsMoneyValue = (state) => state.kind !== "currency";
 var showsMoneyWords = (state) => moneyHasLoans(state.culture);
 var showsMoneySeries = (state) => kindHasSeries(state.kind);
 function moneySentence(state) {
-  var _a3;
+  var _a4;
   const out = [];
-  const culture = (_a3 = findMoneyCulture(state.culture)) != null ? _a3 : MONEY_CULTURES[0];
+  const culture = (_a4 = findMoneyCulture(state.culture)) != null ? _a4 : MONEY_CULTURES[0];
   out.push({
     field: "culture",
     text: culture.label,
     title: "Naming culture: whose money, and whose customs, the names follow",
     choices: MONEY_CULTURES.map((c, i) => {
-      var _a4;
-      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a4 = MONEY_CULTURES[i - 1]) == null ? void 0 : _a4.group) ? { group: c.group } : {} };
+      var _a5;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a5 = MONEY_CULTURES[i - 1]) == null ? void 0 : _a5.group) ? { group: c.group } : {} };
     }),
     current: culture.key
   });
@@ -94405,8 +94775,8 @@ function chooseMoney(state, field, id) {
 }
 var VALUE_LABEL = { high: "high", middle: "middle", low: "low" };
 function moneyHistoryLabel(state) {
-  var _a3, _b;
-  const culture = (_b = (_a3 = findMoneyCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  var _a4, _b2;
+  const culture = (_b2 = (_a4 = findMoneyCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   const kind = findMoneyKind(state.kind);
   return [
     "money and coins",
@@ -94420,6 +94790,6540 @@ function moneyHistoryLabel(state) {
     ...showsMoneySeries(state) && state.series === "coinage" ? ["one coinage"] : [],
     ...showsMoneySeries(state) && state.series === "values" ? ["one coinage with values"] : []
   ].join(" \xB7 ");
+}
+
+// src/data/time-sky.json
+var time_sky_default = {
+  $comment: "Time and sky (docs/time-and-sky-brief.md): systems, the system table, season cycles, culture names, shapes, themes and safeguards. Read through src/timesky/engine.ts. Eras are strings: all, AN, AN-MD, MD+ (MD on), ST+ \u2026; weights and counts are the brief's.",
+  version: 1,
+  sensitive: [
+    "polynesian",
+    "andean"
+  ],
+  homeland: {
+    polynesian: "tropical-islands",
+    andean: "highland"
+  },
+  kinds: [
+    {
+      key: "month",
+      module: "calendar",
+      menu: "Months",
+      plural: "months",
+      description: "The months of the year"
+    },
+    {
+      key: "day",
+      module: "calendar",
+      menu: "Days of the week",
+      plural: "days of the week",
+      description: "The days of a week or market cycle"
+    },
+    {
+      key: "festival",
+      module: "calendar",
+      menu: "Festivals and holy days",
+      plural: "festivals and holy days",
+      description: "Feasts, fairs, fires and days of remembrance"
+    },
+    {
+      key: "moon",
+      module: "calendar",
+      menu: "Full moons",
+      plural: "full moons",
+      description: "The names of each full moon of the year"
+    },
+    {
+      key: "constellation",
+      module: "sky",
+      menu: "Constellations",
+      plural: "constellations",
+      description: "Star pictures and patterns"
+    },
+    {
+      key: "sign",
+      module: "sky",
+      menu: "Star signs",
+      plural: "star signs",
+      description: "The signs of a zodiac or a day count"
+    },
+    {
+      key: "light",
+      module: "sky",
+      menu: "Wanderers and lights",
+      plural: "wanderers and lights",
+      description: "Planets, moons, comets, the morning and evening stars and the Milky Way"
+    }
+  ],
+  series: {
+    month: {
+      text: "as one calendar",
+      line: "Calendar"
+    },
+    day: {
+      text: "as one week",
+      line: "Week"
+    },
+    festival: {
+      text: "as one year",
+      line: "Festivals"
+    },
+    moon: {
+      text: "as one year of moons",
+      line: "Calendar"
+    },
+    sign: {
+      text: "as one zodiac",
+      line: "Zodiac"
+    },
+    light: {
+      text: "as one sky",
+      line: "Sky"
+    }
+  },
+  leapShare: [
+    7,
+    19
+  ],
+  realShare: 0.25,
+  loanShare: 0.7,
+  cap: 7,
+  years: {
+    "julian-12": {
+      source: "Julian and Gregorian calendars",
+      months: 12
+    },
+    "romulus-10": {
+      source: "The ten-month calendar of Romulus (Roman legend)",
+      months: 10,
+      extra: {
+        count: null
+      }
+    },
+    "numa-12": {
+      source: "Republican Roman calendar",
+      months: 12,
+      leap: {
+        after: [
+          12
+        ]
+      }
+    },
+    "attic-12": {
+      source: "Athenian festival calendar",
+      months: 12,
+      leap: {
+        after: [
+          6
+        ]
+      }
+    },
+    "bede-12": {
+      source: "Anglo-Saxon year, as Bede describes it",
+      months: 12,
+      leap: {
+        after: [
+          7
+        ]
+      }
+    },
+    "coligny-12": {
+      source: "Gaulish calendar of Coligny",
+      months: 12,
+      leap: {
+        after: [
+          0,
+          6
+        ]
+      }
+    },
+    "icelandic-12": {
+      source: "Old Icelandic calendar",
+      months: 12,
+      extra: {
+        count: 4
+      },
+      leapHidden: "an extra week"
+    },
+    "egyptian-civil": {
+      source: "Egyptian civil calendar",
+      months: 12,
+      seasons: [
+        4,
+        4,
+        4
+      ],
+      extra: {
+        count: 5
+      }
+    },
+    "ethiopian-13": {
+      source: "Ethiopian calendar",
+      months: 13
+    },
+    "lunar-12": {
+      source: "Twelve-month lunar year",
+      months: 12
+    },
+    "persian-solar": {
+      source: "Persian solar year",
+      months: 12
+    },
+    "babylonian-12": {
+      source: "Babylonian lunisolar year",
+      months: 12,
+      leap: {
+        after: [
+          12,
+          6
+        ]
+      }
+    },
+    "chinese-lunisolar": {
+      source: "Chinese lunisolar calendar",
+      months: 12,
+      leap: {
+        uniform: true
+      }
+    },
+    "indian-lunisolar": {
+      source: "Indian lunisolar calendar",
+      months: 12,
+      leap: {
+        uniform: true
+      }
+    },
+    "lunar-12-13": {
+      source: "Twelve lunar months, with a thirteenth in some years",
+      months: 12,
+      leap: {
+        after: [
+          12
+        ]
+      }
+    },
+    "aztec-18": {
+      source: "Aztec solar year of 365 days",
+      months: 18,
+      extra: {
+        count: 5
+      }
+    },
+    "maya-haab": {
+      source: "Maya solar year of 365 days",
+      months: 18,
+      extra: {
+        count: 5
+      }
+    },
+    "fixed-13": {
+      source: "International Fixed Calendar (proposed 1902)",
+      months: 13,
+      extra: {
+        count: 1
+      }
+    },
+    "darian-24": {
+      source: "Darian calendar for Mars (proposed 1985)",
+      months: 24
+    }
+  },
+  weeks: {
+    "week-7": {
+      source: "Seven-day week",
+      days: 7,
+      planets: [
+        "Sun",
+        "Moon",
+        "Mars",
+        "Mercury",
+        "Jupiter",
+        "Venus",
+        "Saturn"
+      ]
+    },
+    "nundinal-8": {
+      source: "Roman market week of eight days",
+      days: 8,
+      market: [
+        1
+      ]
+    },
+    "decade-10": {
+      source: "Ten-day week",
+      days: 10,
+      rest: 10
+    },
+    "market-4": {
+      source: "Four-day market week",
+      days: 4,
+      market: [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "rokuyo-6": {
+      source: "Japanese six-day cycle",
+      days: 6
+    },
+    "day-signs-20": {
+      source: "Twenty day signs of the 260-day count",
+      days: 20
+    },
+    "moon-nights-30": {
+      source: "Nights of the moon",
+      days: 30,
+      full: 15
+    },
+    "soviet-5": {
+      source: "Soviet continuous week (1929\u20131931)",
+      days: 5
+    }
+  },
+  festivals: {
+    "quarters-4": {
+      source: "The four quarters of the year",
+      count: 4,
+      placed: "quarters"
+    },
+    "season-starts-4": {
+      source: "Four festivals at the start of each season",
+      count: 4,
+      placed: "season-starts"
+    },
+    seasons: {
+      source: "One festival for each season of the land",
+      count: "seasons",
+      placed: "season-starts"
+    },
+    monthly: {
+      source: "One festival in each month",
+      count: "months",
+      placed: "months"
+    },
+    "sekku-5": {
+      source: "Five seasonal festivals of Japan",
+      count: 5,
+      placed: "months",
+      months: [
+        1,
+        3,
+        5,
+        7,
+        9
+      ]
+    },
+    "ritu-6": {
+      source: "Six seasons of India",
+      count: 6,
+      placed: "months",
+      months: [
+        1,
+        3,
+        5,
+        7,
+        9,
+        11
+      ]
+    },
+    "solar-terms-24": {
+      source: "Twenty-four solar terms",
+      count: 24,
+      placed: "pairs"
+    },
+    "egyptian-3": {
+      source: "Three seasons of the Egyptian year",
+      count: 3,
+      placed: "season-starts"
+    }
+  },
+  skies: {
+    "zodiac-12": {
+      source: "Babylonian and Hellenistic zodiac",
+      count: 12
+    },
+    "animals-12": {
+      source: "Twelve animals of the Chinese cycle",
+      count: 12
+    },
+    "mansions-28": {
+      source: "Twenty-eight lunar mansions",
+      count: 28
+    },
+    "nakshatras-27": {
+      source: "Twenty-seven lunar mansions of India",
+      count: 27
+    },
+    "day-signs-20": {
+      source: "Twenty day signs of the 260-day count",
+      count: 20
+    },
+    "decans-36": {
+      source: "Thirty-six Egyptian decans",
+      count: 36
+    },
+    "classical-7": {
+      source: "The seven classical lights",
+      count: 7,
+      order: [
+        "Saturn",
+        "Jupiter",
+        "Mars",
+        "Sun",
+        "Venus",
+        "Mercury",
+        "Moon"
+      ]
+    }
+  },
+  cells: {
+    months: {
+      general: [
+        "lunar-12-13",
+        "lunar-12-13",
+        "julian-12",
+        "julian-12",
+        "julian-12 80 \xB7 fixed-13 20"
+      ],
+      "anglo-saxon": [
+        "bede-12",
+        "bede-12",
+        "julian-12",
+        "julian-12",
+        "julian-12"
+      ],
+      norse: [
+        "icelandic-12",
+        "icelandic-12",
+        "icelandic-12",
+        "julian-12",
+        "julian-12"
+      ],
+      celtic: [
+        "coligny-12",
+        "julian-12",
+        "julian-12",
+        "julian-12",
+        "julian-12"
+      ],
+      "norman-british": [
+        "julian-12",
+        "julian-12",
+        "julian-12",
+        "julian-12",
+        "julian-12"
+      ],
+      roman: [
+        "romulus-10 20 \xB7 numa-12 40 \xB7 julian-12 40",
+        "julian-12",
+        "julian-12",
+        "julian-12",
+        "julian-12"
+      ],
+      "greek-byzantine": [
+        "attic-12",
+        "julian-12",
+        "julian-12",
+        "julian-12",
+        "julian-12"
+      ],
+      slavic: [
+        "lunar-12-13",
+        "julian-12",
+        "julian-12",
+        "julian-12",
+        "julian-12"
+      ],
+      steppe: [
+        "chinese-lunisolar",
+        "chinese-lunisolar",
+        "chinese-lunisolar",
+        "chinese-lunisolar",
+        "julian-12"
+      ],
+      "arabic-persian": [
+        "babylonian-12",
+        "lunar-12 50 \xB7 persian-solar 50",
+        "lunar-12 50 \xB7 persian-solar 50",
+        "lunar-12 50 \xB7 persian-solar 50",
+        "persian-solar 50 \xB7 julian-12 50"
+      ],
+      indian: [
+        "indian-lunisolar",
+        "indian-lunisolar",
+        "indian-lunisolar",
+        "indian-lunisolar",
+        "indian-lunisolar 50 \xB7 julian-12 50"
+      ],
+      chinese: [
+        "chinese-lunisolar",
+        "chinese-lunisolar",
+        "chinese-lunisolar",
+        "chinese-lunisolar",
+        "julian-12"
+      ],
+      japanese: [
+        "chinese-lunisolar",
+        "chinese-lunisolar",
+        "chinese-lunisolar",
+        "julian-12",
+        "julian-12"
+      ],
+      korean: [
+        "chinese-lunisolar",
+        "chinese-lunisolar",
+        "chinese-lunisolar",
+        "chinese-lunisolar",
+        "julian-12"
+      ],
+      egyptian: [
+        "egyptian-civil",
+        "egyptian-civil",
+        "egyptian-civil",
+        "julian-12",
+        "julian-12"
+      ],
+      ethiopian: [
+        "ethiopian-13",
+        "ethiopian-13",
+        "ethiopian-13",
+        "ethiopian-13",
+        "ethiopian-13"
+      ],
+      bantu: [
+        "lunar-12-13",
+        "lunar-12-13",
+        "lunar-12-13",
+        "lunar-12-13",
+        "julian-12"
+      ],
+      "west-african": [
+        "lunar-12-13",
+        "lunar-12-13",
+        "lunar-12-13",
+        "lunar-12-13",
+        "julian-12"
+      ],
+      aztec: [
+        "aztec-18",
+        "aztec-18",
+        "aztec-18 50 \xB7 julian-12 50",
+        "julian-12",
+        "julian-12"
+      ],
+      maya: [
+        "maya-haab",
+        "maya-haab",
+        "maya-haab 50 \xB7 julian-12 50",
+        "julian-12",
+        "julian-12"
+      ],
+      polynesian: [
+        "lunar-12-13",
+        "lunar-12-13",
+        "lunar-12-13",
+        "lunar-12-13",
+        "julian-12"
+      ],
+      andean: [
+        "lunar-12-13",
+        "lunar-12-13",
+        "julian-12",
+        "julian-12",
+        "julian-12"
+      ]
+    },
+    monthsFuture: "julian-12 70 \xB7 fixed-13 30",
+    monthsPlanetary: "julian-12 50 \xB7 fixed-13 20 \xB7 darian-24 30",
+    days: {
+      general: [
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      "anglo-saxon": [
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      norse: [
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      "norman-british": [
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      ethiopian: [
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      "arabic-persian": [
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      indian: [
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      celtic: [
+        "-",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      "greek-byzantine": [
+        "-",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      slavic: [
+        "-",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7 80 \xB7 soviet-5 20",
+        "week-7"
+      ],
+      roman: [
+        "nundinal-8 50 \xB7 week-7 50",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      steppe: [
+        "-",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      chinese: [
+        "decade-10",
+        "decade-10",
+        "decade-10",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      japanese: [
+        "decade-10",
+        "rokuyo-6",
+        "rokuyo-6",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      korean: [
+        "decade-10",
+        "decade-10",
+        "decade-10",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      egyptian: [
+        "decade-10",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      bantu: [
+        "market-4",
+        "market-4",
+        "market-4",
+        "market-4 50 \xB7 week-7 50",
+        "week-7",
+        "week-7"
+      ],
+      "west-african": [
+        "market-4",
+        "market-4",
+        "market-4",
+        "market-4 50 \xB7 week-7 50",
+        "week-7",
+        "week-7"
+      ],
+      aztec: [
+        "day-signs-20",
+        "day-signs-20",
+        "day-signs-20 50 \xB7 week-7 50",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      maya: [
+        "day-signs-20",
+        "day-signs-20",
+        "day-signs-20 50 \xB7 week-7 50",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      polynesian: [
+        "moon-nights-30",
+        "moon-nights-30",
+        "moon-nights-30",
+        "week-7",
+        "week-7",
+        "week-7"
+      ],
+      andean: [
+        "-",
+        "-",
+        "week-7",
+        "week-7",
+        "week-7",
+        "week-7"
+      ]
+    },
+    festivals: {
+      general: "quarters-4",
+      "anglo-saxon": "quarters-4",
+      norse: "quarters-4",
+      "norman-british": "quarters-4",
+      slavic: "quarters-4",
+      steppe: "quarters-4",
+      "arabic-persian": "quarters-4",
+      celtic: "season-starts-4",
+      roman: "monthly",
+      "greek-byzantine": "monthly",
+      indian: "ritu-6",
+      chinese: "solar-terms-24",
+      korean: "solar-terms-24",
+      japanese: "sekku-5 50 \xB7 solar-terms-24 50",
+      egyptian: "egyptian-3",
+      aztec: "monthly",
+      maya: "monthly",
+      ethiopian: "seasons",
+      bantu: "seasons",
+      "west-african": "seasons",
+      polynesian: "seasons",
+      andean: "seasons"
+    },
+    festivalsFuture: "seasons",
+    festivalsSpace: "quarters-4",
+    signs: {
+      general: [
+        "zodiac-12",
+        "zodiac-12"
+      ],
+      "norman-british": [
+        "zodiac-12",
+        "zodiac-12"
+      ],
+      roman: [
+        "zodiac-12",
+        "zodiac-12"
+      ],
+      "greek-byzantine": [
+        "zodiac-12",
+        "zodiac-12"
+      ],
+      "anglo-saxon": [
+        "-",
+        "zodiac-12"
+      ],
+      celtic: [
+        "-",
+        "zodiac-12"
+      ],
+      norse: [
+        "-",
+        "zodiac-12"
+      ],
+      slavic: [
+        "-",
+        "zodiac-12"
+      ],
+      ethiopian: [
+        "-",
+        "zodiac-12"
+      ],
+      "arabic-persian": [
+        "zodiac-12 70 \xB7 mansions-28 30",
+        "zodiac-12 70 \xB7 mansions-28 30"
+      ],
+      indian: [
+        "zodiac-12 60 \xB7 nakshatras-27 40",
+        "zodiac-12 60 \xB7 nakshatras-27 40"
+      ],
+      chinese: [
+        "animals-12 70 \xB7 mansions-28 30",
+        "animals-12 70 \xB7 mansions-28 30"
+      ],
+      japanese: [
+        "animals-12",
+        "animals-12"
+      ],
+      korean: [
+        "animals-12",
+        "animals-12"
+      ],
+      steppe: [
+        "animals-12",
+        "animals-12"
+      ],
+      egyptian: [
+        "decans-36",
+        "zodiac-12"
+      ],
+      aztec: [
+        "day-signs-20",
+        "day-signs-20"
+      ],
+      maya: [
+        "day-signs-20",
+        "day-signs-20"
+      ],
+      bantu: [
+        "-",
+        "-"
+      ],
+      "west-african": [
+        "-",
+        "-"
+      ],
+      polynesian: [
+        "-",
+        "-"
+      ],
+      andean: [
+        "-",
+        "-"
+      ]
+    },
+    lights: "classical-7"
+  },
+  seasonCycles: {
+    temperate: "spring 3 \xB7 summer 3 \xB7 autumn 3 \xB7 winter 3",
+    britain: "spring 3 \xB7 summer 3 \xB7 autumn 3 \xB7 winter 3",
+    moorland: "spring 2 \xB7 summer 3 \xB7 storm 3 \xB7 winter 4",
+    boreal: "thaw 2 \xB7 summer 4 \xB7 winter 6",
+    "cool-rainforest": "summer 4 \xB7 rain 4 \xB7 winter 4",
+    mediterranean: "winter 4 \xB7 summer 5 \xB7 harvest 3",
+    steppe: "spring 2 \xB7 summer 4 \xB7 winter 6",
+    desert: "winter 4 \xB7 summer 6 \xB7 rain 2",
+    savannah: "rain 5 \xB7 harvest 2 \xB7 drought 5",
+    rainforest: "rain 7 \xB7 flood 5",
+    monsoon: "rain 3 \xB7 monsoon 4 \xB7 flood 2 \xB7 harvest 3",
+    "tropical-islands": "rain 5 \xB7 storm 2 \xB7 harvest 5",
+    highland: "thaw 2 \xB7 summer 3 \xB7 frost 2 \xB7 winter 5"
+  },
+  homelandCycles: {
+    egyptian: "flood 4 \xB7 winter 4 \xB7 harvest 4",
+    aztec: "drought 6 \xB7 rain 6",
+    maya: "drought 6 \xB7 rain 6",
+    ethiopian: "rain 3 \xB7 harvest 3 \xB7 drought 6",
+    andean: "rain 4 \xB7 harvest 3 \xB7 frost 5"
+  },
+  seasons: {
+    spring: {
+      phrase: "spring",
+      noun: "Spring"
+    },
+    summer: {
+      phrase: "summer",
+      noun: "Summer"
+    },
+    autumn: {
+      phrase: "autumn",
+      noun: "Autumn"
+    },
+    winter: {
+      phrase: "winter",
+      noun: "Winter"
+    },
+    thaw: {
+      phrase: "the thaw",
+      noun: "Thaw"
+    },
+    rain: {
+      phrase: "the rains",
+      noun: "Rain"
+    },
+    monsoon: {
+      phrase: "the monsoon",
+      noun: "Monsoon"
+    },
+    flood: {
+      phrase: "the flood",
+      noun: "Flood"
+    },
+    drought: {
+      phrase: "the dry season",
+      noun: "Dry"
+    },
+    harvest: {
+      phrase: "harvest",
+      noun: "Harvest"
+    },
+    storm: {
+      phrase: "the storms",
+      noun: "Storm"
+    },
+    frost: {
+      phrase: "the frosts",
+      noun: "Frost"
+    }
+  },
+  newYear: {
+    general: "spring 0",
+    "anglo-saxon": "winter 1",
+    norse: "summer 0",
+    celtic: "winter 0",
+    "norman-british": "winter 1",
+    roman: "winter 3",
+    "greek-byzantine": {
+      AN: "summer 2",
+      "*": "summer 4"
+    },
+    slavic: {
+      AN: "spring 0",
+      MD: "spring 0",
+      "*": "winter 1"
+    },
+    steppe: "spring 0",
+    "arabic-persian": "winter 3",
+    indian: "rain 0",
+    chinese: "spring 0",
+    japanese: "spring 0",
+    korean: "spring 0",
+    egyptian: "flood 0",
+    ethiopian: "harvest 0",
+    bantu: "rain 0",
+    "west-african": "harvest 0",
+    aztec: "drought 3",
+    maya: "drought 0",
+    polynesian: "rain 0",
+    andean: "rain 0"
+  },
+  janShift: {
+    slavic: {
+      MD: 2
+    }
+  },
+  seasonalMonths: {
+    steppe: [
+      "chinese-lunisolar"
+    ],
+    chinese: [
+      "chinese-lunisolar",
+      "julian-12"
+    ],
+    korean: [
+      "chinese-lunisolar",
+      "julian-12"
+    ]
+  },
+  cultureNames: {
+    "anglo-saxon": {
+      month: [
+        {
+          n: "After Yule",
+          p: 1,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "Cake Month",
+          p: 2,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "Hretha's Month",
+          p: 3,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "Eostre's Month",
+          p: 4,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "Three-Milkings Month",
+          p: 5,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "Before Midsummer",
+          p: 6,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "After Midsummer",
+          p: 7,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "Third Midsummer",
+          p: "leap",
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "Weed Month",
+          p: 8,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "Holy Month",
+          p: 9,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "Winter Full Moon",
+          p: 10,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "Sacrifice Month",
+          p: 11,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        },
+        {
+          n: "Before Yule",
+          p: 12,
+          e: "AN-MD",
+          sys: [
+            "bede-12"
+          ]
+        }
+      ],
+      day: [
+        {
+          n: "Sun's Day",
+          p: 1,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Moon's Day",
+          p: 2,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Tiw's Day",
+          p: 3,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Woden's Day",
+          p: 4,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Thunor's Day",
+          p: 5,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Frige's Day",
+          p: 6,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Saturn's Day",
+          p: 7,
+          sys: [
+            "week-7"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "Mothers' Night",
+          s: "winter"
+        },
+        {
+          n: "Yule",
+          s: "winter"
+        },
+        {
+          n: "Eostre's Feast",
+          s: "spring",
+          e: "AN"
+        },
+        {
+          n: "Midsummer",
+          s: "summer"
+        },
+        {
+          n: "Loaf Mass",
+          s: "autumn",
+          e: "MD+"
+        },
+        {
+          n: "Winter Nights",
+          s: "autumn"
+        }
+      ]
+    },
+    norse: {
+      month: [
+        {
+          n: "Sun Month",
+          p: 3,
+          e: "AN-EM",
+          sys: [
+            "icelandic-12"
+          ]
+        },
+        {
+          n: "Hay Month",
+          p: 4,
+          e: "AN-EM",
+          sys: [
+            "icelandic-12"
+          ]
+        },
+        {
+          n: "Two-Month",
+          p: 5,
+          e: "AN-EM",
+          sys: [
+            "icelandic-12"
+          ]
+        },
+        {
+          n: "Autumn Month",
+          p: 6,
+          e: "AN-EM",
+          sys: [
+            "icelandic-12"
+          ]
+        },
+        {
+          n: "Slaughter Month",
+          p: 7,
+          e: "AN-EM",
+          sys: [
+            "icelandic-12"
+          ]
+        },
+        {
+          n: "Yule Month",
+          p: 8,
+          e: "AN-EM",
+          sys: [
+            "icelandic-12"
+          ]
+        },
+        {
+          n: "Suet Month",
+          p: 9,
+          e: "AN-EM",
+          sys: [
+            "icelandic-12"
+          ]
+        },
+        {
+          n: "Lone Month",
+          p: 12,
+          e: "AN-EM",
+          sys: [
+            "icelandic-12"
+          ]
+        },
+        {
+          n: "Extra Nights",
+          p: "extra",
+          e: "AN-EM",
+          sys: [
+            "icelandic-12"
+          ]
+        }
+      ],
+      day: [
+        {
+          n: "Sun's Day",
+          p: 1,
+          e: "AN-MD",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Moon's Day",
+          p: 2,
+          e: "AN-MD",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Tyr's Day",
+          p: 3,
+          e: "AN-MD",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Odin's Day",
+          p: 4,
+          e: "AN-MD",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Thor's Day",
+          p: 5,
+          e: "AN-MD",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Frigg's Day",
+          p: 6,
+          e: "AN-MD",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Washing Day",
+          p: 7,
+          e: "AN-MD",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Third Day",
+          p: 3,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Midweek",
+          p: 4,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Fifth Day",
+          p: 5,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Fast Day",
+          p: 6,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "Winter Nights",
+          s: "autumn"
+        },
+        {
+          n: "Yule",
+          s: "winter"
+        },
+        {
+          n: "Sacrifice of the Disir",
+          s: "winter"
+        },
+        {
+          n: "Thorri's Feast",
+          s: "winter"
+        },
+        {
+          n: "First Day of Summer",
+          s: "summer"
+        },
+        {
+          n: "Midsummer",
+          s: "summer"
+        },
+        {
+          n: "Assembly Days",
+          s: "summer"
+        }
+      ]
+    },
+    celtic: {
+      month: [
+        {
+          n: "Bright Fire",
+          p: 5,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Midsummer Month",
+          p: 6,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Summer's End",
+          p: 7,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Lugh's Assembly",
+          p: 8,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Reaping Month",
+          p: 9,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "End of Harvest",
+          p: 10,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Slaughter Month",
+          p: 11,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Before Yule",
+          p: 12,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ]
+        }
+      ],
+      day: [
+        {
+          n: "Lord's Day",
+          p: 1,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Moon's Day",
+          p: 2,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Mars's Day",
+          p: 3,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "First Fast",
+          p: 4,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Between the Fasts",
+          p: 5,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Fast Day",
+          p: 6,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Saturn's Day",
+          p: 7,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "Summer's End",
+          s: "winter",
+          loan: "Samhain"
+        },
+        {
+          n: "Ewe's Milk",
+          s: "spring",
+          loan: "Imbolc"
+        },
+        {
+          n: "Bright Fire",
+          s: "summer",
+          loan: "Beltane"
+        },
+        {
+          n: "Lugh's Assembly",
+          s: "autumn",
+          loan: "Lughnasadh"
+        }
+      ]
+    },
+    "norman-british": {
+      festival: [
+        {
+          n: "Plough Monday",
+          s: "winter",
+          e: "MD+"
+        },
+        {
+          n: "Candlemas",
+          s: "winter",
+          e: "MD+"
+        },
+        {
+          n: "Lady Day",
+          s: "spring",
+          e: "MD+"
+        },
+        {
+          n: "May Day",
+          s: "spring",
+          e: "MD+"
+        },
+        {
+          n: "Midsummer Day",
+          s: "summer",
+          e: "MD+"
+        },
+        {
+          n: "Lammas",
+          s: "summer",
+          e: "MD+"
+        },
+        {
+          n: "Harvest Home",
+          s: "autumn",
+          e: "MD+"
+        },
+        {
+          n: "Michaelmas",
+          s: "autumn",
+          e: "MD+"
+        },
+        {
+          n: "Martinmas",
+          s: "autumn",
+          e: "MD+"
+        },
+        {
+          n: "Hocktide",
+          s: "spring",
+          e: "MD+"
+        },
+        {
+          n: "Shrovetide",
+          s: "winter",
+          e: "MD+"
+        },
+        {
+          n: "Twelfth Night",
+          s: "winter",
+          e: "MD+"
+        },
+        {
+          n: "Wakes Week",
+          s: "summer",
+          e: "ST+"
+        },
+        {
+          n: "Bank Holiday",
+          s: "summer",
+          e: "ST+"
+        },
+        {
+          n: "Bonfire Night",
+          s: "autumn",
+          e: "ST+"
+        }
+      ]
+    },
+    roman: {
+      month: [
+        {
+          n: "Mars's Month",
+          p: 1,
+          e: "AN",
+          sys: [
+            "romulus-10",
+            "numa-12",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Maia's Month",
+          p: 3,
+          e: "AN",
+          sys: [
+            "romulus-10",
+            "numa-12",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Juno's Month",
+          p: 4,
+          e: "AN",
+          sys: [
+            "romulus-10",
+            "numa-12",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Fifth Month",
+          p: 5,
+          e: "AN",
+          sys: [
+            "romulus-10",
+            "numa-12",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Sixth Month",
+          p: 6,
+          e: "AN",
+          sys: [
+            "romulus-10",
+            "numa-12",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Seventh Month",
+          p: 7,
+          e: "AN",
+          sys: [
+            "romulus-10",
+            "numa-12",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Eighth Month",
+          p: 8,
+          e: "AN",
+          sys: [
+            "romulus-10",
+            "numa-12",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Ninth Month",
+          p: 9,
+          e: "AN",
+          sys: [
+            "romulus-10",
+            "numa-12",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Tenth Month",
+          p: 10,
+          e: "AN",
+          sys: [
+            "romulus-10",
+            "numa-12",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Janus's Month",
+          p: 11,
+          e: "AN",
+          sys: [
+            "numa-12",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Purification Month",
+          p: 12,
+          e: "AN",
+          sys: [
+            "numa-12",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Wages Month",
+          p: "leap",
+          e: "AN",
+          sys: [
+            "numa-12"
+          ]
+        },
+        {
+          n: "the Winter Days",
+          p: "extra",
+          e: "AN",
+          sys: [
+            "romulus-10"
+          ]
+        }
+      ],
+      day: [
+        {
+          n: "Ninth Day",
+          p: 1,
+          sys: [
+            "nundinal-8"
+          ]
+        },
+        {
+          n: "Sun's Day",
+          p: 1,
+          e: "AN",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Lord's Day",
+          p: 1,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Moon's Day",
+          p: 2,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Mars's Day",
+          p: 3,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Mercury's Day",
+          p: 4,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Jupiter's Day",
+          p: 5,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Venus's Day",
+          p: 6,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Saturn's Day",
+          p: 7,
+          sys: [
+            "week-7"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "Saturn's Feast",
+          s: "winter",
+          e: "AN",
+          loan: "Saturnalia"
+        },
+        {
+          n: "Wolf Festival",
+          s: "winter",
+          e: "AN",
+          loan: "Lupercalia"
+        },
+        {
+          n: "Flower Games",
+          s: "spring",
+          e: "AN",
+          loan: "Floralia"
+        },
+        {
+          n: "Shepherds' Feast",
+          s: "spring",
+          e: "AN"
+        },
+        {
+          n: "Rust Festival",
+          s: "spring",
+          e: "AN"
+        },
+        {
+          n: "Mothers' Feast",
+          s: "spring",
+          e: "AN"
+        },
+        {
+          n: "Vesta's Feast",
+          s: "summer",
+          e: "AN"
+        },
+        {
+          n: "Wine Feast",
+          s: "autumn",
+          e: "AN",
+          loan: "Vinalia"
+        },
+        {
+          n: "Boundary Feast",
+          s: "winter",
+          e: "AN",
+          loan: "Terminalia"
+        },
+        {
+          n: "Oven Feast",
+          s: "winter",
+          e: "AN"
+        },
+        {
+          n: "Harvest-Store Feast",
+          s: "summer",
+          e: "AN"
+        }
+      ]
+    },
+    "greek-byzantine": {
+      month: [
+        {
+          n: "Hundred-Ox Month",
+          p: 1,
+          e: "AN",
+          sys: [
+            "attic-12"
+          ]
+        },
+        {
+          n: "Neighbour-Moving Month",
+          p: 2,
+          e: "AN",
+          sys: [
+            "attic-12"
+          ]
+        },
+        {
+          n: "Running-to-Help Month",
+          p: 3,
+          e: "AN",
+          sys: [
+            "attic-12"
+          ]
+        },
+        {
+          n: "Bean-Boiling Month",
+          p: 4,
+          e: "AN",
+          sys: [
+            "attic-12"
+          ]
+        },
+        {
+          n: "Blustering Month",
+          p: 5,
+          e: "AN",
+          sys: [
+            "attic-12"
+          ]
+        },
+        {
+          n: "Poseidon's Month",
+          p: 6,
+          e: "AN",
+          sys: [
+            "attic-12"
+          ]
+        },
+        {
+          n: "Second Poseidon's Month",
+          p: "leap",
+          e: "AN",
+          sys: [
+            "attic-12"
+          ]
+        },
+        {
+          n: "Wedding Month",
+          p: 7,
+          e: "AN",
+          sys: [
+            "attic-12"
+          ]
+        },
+        {
+          n: "Flower Month",
+          p: 8,
+          e: "AN",
+          sys: [
+            "attic-12"
+          ]
+        },
+        {
+          n: "Deer-Hunt Month",
+          p: 9,
+          e: "AN",
+          sys: [
+            "attic-12"
+          ]
+        },
+        {
+          n: "First-Loaf Month",
+          p: 11,
+          e: "AN",
+          sys: [
+            "attic-12"
+          ]
+        }
+      ],
+      day: [
+        {
+          n: "Lord's Day",
+          p: 1,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Second Day",
+          p: 2,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Third Day",
+          p: 3,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Fourth Day",
+          p: 4,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Fifth Day",
+          p: 5,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Preparation Day",
+          p: 6,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Sabbath",
+          p: 7,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "All-City Festival",
+          s: "summer",
+          e: "AN",
+          loan: "Panathenaia"
+        },
+        {
+          n: "Flower Festival",
+          s: "winter",
+          e: "AN",
+          loan: "Anthesteria"
+        },
+        {
+          n: "Dionysus's Festival",
+          s: "spring",
+          e: "AN",
+          loan: "Dionysia"
+        },
+        {
+          n: "Bean Feast",
+          s: "autumn",
+          e: "AN"
+        },
+        {
+          n: "Lawgiving Feast",
+          s: "autumn",
+          e: "AN",
+          loan: "Thesmophoria"
+        },
+        {
+          n: "First-Loaf Feast",
+          s: "summer",
+          e: "AN"
+        },
+        {
+          n: "Threshing-Floor Feast",
+          s: "winter",
+          e: "AN"
+        }
+      ]
+    },
+    slavic: {
+      month: [
+        {
+          n: "Cutting Month",
+          p: 1,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Ice Month",
+          p: 1,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Fierce Month",
+          p: 2,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Birch Month",
+          p: 3,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Blossom Month",
+          p: 4,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Oak Month",
+          p: 4,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Grass Month",
+          p: 5,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Red Month",
+          p: 6,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Lime Month",
+          p: 7,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Sickle Month",
+          p: 8,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Heather Month",
+          p: 9,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Yellowing Month",
+          p: 10,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Leaf-Fall",
+          p: 11,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        },
+        {
+          n: "Clod Month",
+          p: 12,
+          e: "MD+",
+          sys: [
+            "julian-12"
+          ],
+          jan: true
+        }
+      ],
+      day: [
+        {
+          n: "Rest Day",
+          p: 1,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "After-Rest",
+          p: 2,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Second Day",
+          p: 3,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Midweek",
+          p: 4,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Fourth Day",
+          p: 5,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Fifth Day",
+          p: 6,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Sabbath",
+          p: 7,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Yellow Day",
+          p: 1,
+          e: "MO",
+          sys: [
+            "soviet-5"
+          ]
+        },
+        {
+          n: "Pink Day",
+          p: 2,
+          e: "MO",
+          sys: [
+            "soviet-5"
+          ]
+        },
+        {
+          n: "Red Day",
+          p: 3,
+          e: "MO",
+          sys: [
+            "soviet-5"
+          ]
+        },
+        {
+          n: "Purple Day",
+          p: 4,
+          e: "MO",
+          sys: [
+            "soviet-5"
+          ]
+        },
+        {
+          n: "Green Day",
+          p: 5,
+          e: "MO",
+          sys: [
+            "soviet-5"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "Butter Week",
+          s: "winter"
+        },
+        {
+          n: "Bathing Night",
+          s: "summer",
+          loan: "Kupala"
+        },
+        {
+          n: "Forefathers' Night",
+          s: "autumn"
+        },
+        {
+          n: "Green Week",
+          s: "spring"
+        },
+        {
+          n: "Carol Night",
+          s: "winter"
+        }
+      ]
+    },
+    steppe: {
+      month: [
+        {
+          n: "White Month",
+          p: 1,
+          e: "MD+",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "White Month",
+          s: "spring"
+        },
+        {
+          n: "New Day",
+          s: "spring"
+        },
+        {
+          n: "Three Games",
+          s: "summer"
+        },
+        {
+          n: "Horse-Milk Feast",
+          s: "summer"
+        }
+      ]
+    },
+    "arabic-persian": {
+      day: [
+        {
+          n: "Sabbath",
+          p: 1,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "One-Sabbath",
+          p: 2,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Two-Sabbath",
+          p: 3,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Three-Sabbath",
+          p: 4,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Four-Sabbath",
+          p: 5,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Five-Sabbath",
+          p: 6,
+          e: "MD+",
+          sys: [
+            "week-7"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "New Day",
+          s: "spring",
+          loan: "Nowruz"
+        },
+        {
+          n: "Longest Night",
+          s: "winter"
+        },
+        {
+          n: "Feast of Roses",
+          s: "spring"
+        },
+        {
+          n: "Water-Throwing Feast",
+          s: "summer"
+        }
+      ]
+    },
+    indian: {
+      month: [
+        {
+          n: "Extra Month",
+          p: "leap",
+          sys: [
+            "indian-lunisolar"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "Kite Festival",
+          s: "winter"
+        },
+        {
+          n: "Monsoon Welcome",
+          s: "monsoon"
+        },
+        {
+          n: "Harvest of Rice",
+          s: "harvest"
+        }
+      ]
+    },
+    egyptian: {
+      month: [
+        {
+          n: "First Month of the Flood",
+          p: 1,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Second Month of the Flood",
+          p: 2,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Third Month of the Flood",
+          p: 3,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Fourth Month of the Flood",
+          p: 4,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "First Month of Sowing",
+          p: 5,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Second Month of Sowing",
+          p: 6,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Third Month of Sowing",
+          p: 7,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Fourth Month of Sowing",
+          p: 8,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "First Month of Harvest",
+          p: 9,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Second Month of Harvest",
+          p: 10,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Third Month of Harvest",
+          p: 11,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Fourth Month of Harvest",
+          p: 12,
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Thoth's Month",
+          p: 1,
+          e: "MD-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Hathor's Month",
+          p: 3,
+          e: "MD-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        },
+        {
+          n: "Days upon the Year",
+          p: "extra",
+          e: "AN-EM",
+          sys: [
+            "egyptian-civil"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "Opening of the Year",
+          s: "flood"
+        },
+        {
+          n: "Feast of the Valley",
+          s: "harvest"
+        },
+        {
+          n: "Opet Festival",
+          s: "flood",
+          loan: "Opet"
+        },
+        {
+          n: "Feast of Drunkenness",
+          s: "flood"
+        },
+        {
+          n: "Rising of the Dog Star",
+          s: "flood"
+        }
+      ]
+    },
+    ethiopian: {
+      month: [
+        {
+          n: "Added Month",
+          p: 13,
+          sys: [
+            "ethiopian-13"
+          ]
+        }
+      ],
+      day: [
+        {
+          n: "First Day",
+          p: 1,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Second Day",
+          p: 2,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Third Day",
+          p: 3,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Fourth Day",
+          p: 4,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Fifth Day",
+          p: 5,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Preparation Day",
+          p: 6,
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Sabbath",
+          p: 7,
+          sys: [
+            "week-7"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "Gift of Jewels",
+          s: "harvest"
+        },
+        {
+          n: "Bonfire of the Flowers",
+          s: "harvest"
+        }
+      ]
+    },
+    bantu: {
+      month: [
+        {
+          n: "Aloe Month",
+          s: "drought",
+          sys: [
+            "lunar-12-13"
+          ]
+        },
+        {
+          n: "New-Grass Month",
+          s: "drought",
+          sys: [
+            "lunar-12-13"
+          ]
+        },
+        {
+          n: "First-Ploughing Month",
+          s: "rain",
+          sys: [
+            "lunar-12-13"
+          ]
+        },
+        {
+          n: "Budding Month",
+          s: "rain",
+          sys: [
+            "lunar-12-13"
+          ]
+        },
+        {
+          n: "Overgrown Paths",
+          s: "rain",
+          sys: [
+            "lunar-12-13"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "First Fruits",
+          s: "harvest"
+        },
+        {
+          n: "Reed Festival",
+          s: "rain"
+        },
+        {
+          n: "Rain Calling",
+          s: "drought"
+        }
+      ]
+    },
+    "west-african": {
+      festival: [
+        {
+          n: "New Yam Festival",
+          s: "harvest"
+        },
+        {
+          n: "Festival of the River",
+          s: "rain"
+        },
+        {
+          n: "Fishing Festival",
+          s: "drought"
+        },
+        {
+          n: "Masquerade",
+          s: "drought"
+        }
+      ]
+    },
+    chinese: {
+      month: [
+        {
+          n: "Principal Month",
+          p: 1,
+          e: "AN-ST",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Apricot Month",
+          p: 2,
+          e: "AN-ST",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Peach Month",
+          p: 3,
+          e: "AN-ST",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Pomegranate Month",
+          p: 5,
+          e: "AN-ST",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Lotus Month",
+          p: 6,
+          e: "AN-ST",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Osmanthus Month",
+          p: 8,
+          e: "AN-ST",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Chrysanthemum Month",
+          p: 9,
+          e: "AN-ST",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Sacrifice Month",
+          p: 12,
+          e: "AN-ST",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "First Month",
+          p: 1,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Second Month",
+          p: 2,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Third Month",
+          p: 3,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Fourth Month",
+          p: 4,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Fifth Month",
+          p: 5,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Sixth Month",
+          p: 6,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Seventh Month",
+          p: 7,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Eighth Month",
+          p: 8,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Ninth Month",
+          p: 9,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Tenth Month",
+          p: 10,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Eleventh Month",
+          p: 11,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Twelfth Month",
+          p: 12,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Leap {ordinal} Month",
+          p: "leap",
+          e: "AN-ST",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        }
+      ],
+      day: [
+        {
+          n: "Sky Day",
+          p: 1,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Day One",
+          p: 2,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Day Two",
+          p: 3,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Day Three",
+          p: 4,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Day Four",
+          p: 5,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Day Five",
+          p: 6,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Day Six",
+          p: 7,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "Start of Spring",
+          p: 1,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Rain Water",
+          p: 2,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Waking of Insects",
+          p: 3,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Spring Equinox",
+          p: 4,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Clear and Bright",
+          p: 5,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Grain Rain",
+          p: 6,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Start of Summer",
+          p: 7,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Grain Full",
+          p: 8,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Grain in Ear",
+          p: 9,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Summer Solstice",
+          p: 10,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Lesser Heat",
+          p: 11,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Greater Heat",
+          p: 12,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Start of Autumn",
+          p: 13,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "End of Heat",
+          p: 14,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "White Dew",
+          p: 15,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Autumn Equinox",
+          p: 16,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Cold Dew",
+          p: 17,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Frost's Descent",
+          p: 18,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Start of Winter",
+          p: 19,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Lesser Snow",
+          p: 20,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Greater Snow",
+          p: 21,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Winter Solstice",
+          p: 22,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Lesser Cold",
+          p: 23,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Greater Cold",
+          p: 24,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Spring Festival",
+          s: "spring"
+        },
+        {
+          n: "Lantern Festival",
+          s: "spring"
+        },
+        {
+          n: "Dragon Boat Festival",
+          s: "summer"
+        },
+        {
+          n: "Double Seventh",
+          s: "summer"
+        },
+        {
+          n: "Mid-Autumn Festival",
+          s: "autumn"
+        },
+        {
+          n: "Double Ninth",
+          s: "autumn"
+        },
+        {
+          n: "Cold Food Day",
+          s: "spring"
+        }
+      ]
+    },
+    japanese: {
+      month: [
+        {
+          n: "Affection Month",
+          p: 1,
+          e: "AN-EM",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Extra-Clothes Month",
+          p: 2,
+          e: "AN-EM",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Growing Month",
+          p: 3,
+          e: "AN-EM",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Deutzia Month",
+          p: 4,
+          e: "AN-EM",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Planting Month",
+          p: 5,
+          e: "AN-EM",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Water Month",
+          p: 6,
+          e: "AN-EM",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Letter Month",
+          p: 7,
+          e: "AN-EM",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Leaf Month",
+          p: 8,
+          e: "AN-EM",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Long Month",
+          p: 9,
+          e: "AN-EM",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Frost Month",
+          p: 11,
+          e: "AN-EM",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "Teachers-Running Month",
+          p: 12,
+          e: "AN-EM",
+          sys: [
+            "chinese-lunisolar"
+          ]
+        },
+        {
+          n: "First Month",
+          p: 1,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Second Month",
+          p: 2,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Third Month",
+          p: 3,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Fourth Month",
+          p: 4,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Fifth Month",
+          p: 5,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Sixth Month",
+          p: 6,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Seventh Month",
+          p: 7,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Eighth Month",
+          p: 8,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Ninth Month",
+          p: 9,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Tenth Month",
+          p: 10,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Eleventh Month",
+          p: 11,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        },
+        {
+          n: "Twelfth Month",
+          p: 12,
+          e: "ST+",
+          sys: [
+            "julian-12"
+          ]
+        }
+      ],
+      day: [
+        {
+          n: "First Win",
+          p: 1,
+          sys: [
+            "rokuyo-6"
+          ]
+        },
+        {
+          n: "Friend-Pulling",
+          p: 2,
+          sys: [
+            "rokuyo-6"
+          ]
+        },
+        {
+          n: "First Loss",
+          p: 3,
+          sys: [
+            "rokuyo-6"
+          ]
+        },
+        {
+          n: "Great Peace",
+          p: 5,
+          sys: [
+            "rokuyo-6"
+          ]
+        },
+        {
+          n: "Red Mouth",
+          p: 6,
+          sys: [
+            "rokuyo-6"
+          ]
+        },
+        {
+          n: "Sun Day",
+          p: 1,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Moon Day",
+          p: 2,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Fire Day",
+          p: 3,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Water Day",
+          p: 4,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Wood Day",
+          p: 5,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Metal Day",
+          p: 6,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Earth Day",
+          p: 7,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "Seven Herbs Day",
+          p: 1,
+          cyc: "sekku-5"
+        },
+        {
+          n: "Doll Festival",
+          p: 2,
+          cyc: "sekku-5"
+        },
+        {
+          n: "Boys' Day",
+          p: 3,
+          cyc: "sekku-5"
+        },
+        {
+          n: "Star Festival",
+          p: 4,
+          cyc: "sekku-5",
+          loan: "Tanabata"
+        },
+        {
+          n: "Chrysanthemum Festival",
+          p: 5,
+          cyc: "sekku-5"
+        },
+        {
+          n: "Season's Division",
+          s: "winter",
+          loan: "Setsubun"
+        },
+        {
+          n: "Blossom Viewing",
+          s: "spring",
+          loan: "Hanami"
+        },
+        {
+          n: "Moon Viewing",
+          s: "autumn"
+        },
+        {
+          n: "Start of Spring",
+          p: 1,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Rain Water",
+          p: 2,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Waking of Insects",
+          p: 3,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Spring Equinox",
+          p: 4,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Clear and Bright",
+          p: 5,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Grain Rain",
+          p: 6,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Start of Summer",
+          p: 7,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Grain Full",
+          p: 8,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Grain in Ear",
+          p: 9,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Summer Solstice",
+          p: 10,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Lesser Heat",
+          p: 11,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Greater Heat",
+          p: 12,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Start of Autumn",
+          p: 13,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "End of Heat",
+          p: 14,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "White Dew",
+          p: 15,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Autumn Equinox",
+          p: 16,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Cold Dew",
+          p: 17,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Frost's Descent",
+          p: 18,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Start of Winter",
+          p: 19,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Lesser Snow",
+          p: 20,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Greater Snow",
+          p: 21,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Winter Solstice",
+          p: 22,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Lesser Cold",
+          p: 23,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Greater Cold",
+          p: 24,
+          cyc: "solar-terms-24"
+        }
+      ]
+    },
+    korean: {
+      month: [
+        {
+          n: "First Month",
+          p: 1,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Second Month",
+          p: 2,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Third Month",
+          p: 3,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Fourth Month",
+          p: 4,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Fifth Month",
+          p: 5,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Sixth Month",
+          p: 6,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Seventh Month",
+          p: 7,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Eighth Month",
+          p: 8,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Ninth Month",
+          p: 9,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Tenth Month",
+          p: 10,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Eleventh Month",
+          p: 11,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Twelfth Month",
+          p: 12,
+          sys: [
+            "chinese-lunisolar",
+            "julian-12"
+          ]
+        }
+      ],
+      day: [
+        {
+          n: "Sun Day",
+          p: 1,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Moon Day",
+          p: 2,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Fire Day",
+          p: 3,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Water Day",
+          p: 4,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Wood Day",
+          p: 5,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Metal Day",
+          p: 6,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        },
+        {
+          n: "Earth Day",
+          p: 7,
+          e: "ST+",
+          sys: [
+            "week-7"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "New Year's Morning",
+          s: "spring"
+        },
+        {
+          n: "Great Full Moon",
+          s: "spring"
+        },
+        {
+          n: "Cold Food Day",
+          s: "spring"
+        },
+        {
+          n: "Double Fifth",
+          s: "summer"
+        },
+        {
+          n: "Autumn Eve",
+          s: "autumn",
+          loan: "Chuseok"
+        },
+        {
+          n: "Winter Solstice Day",
+          s: "winter"
+        },
+        {
+          n: "Start of Spring",
+          p: 1,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Rain Water",
+          p: 2,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Waking of Insects",
+          p: 3,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Spring Equinox",
+          p: 4,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Clear and Bright",
+          p: 5,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Grain Rain",
+          p: 6,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Start of Summer",
+          p: 7,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Grain Full",
+          p: 8,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Grain in Ear",
+          p: 9,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Summer Solstice",
+          p: 10,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Lesser Heat",
+          p: 11,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Greater Heat",
+          p: 12,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Start of Autumn",
+          p: 13,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "End of Heat",
+          p: 14,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "White Dew",
+          p: 15,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Autumn Equinox",
+          p: 16,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Cold Dew",
+          p: 17,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Frost's Descent",
+          p: 18,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Start of Winter",
+          p: 19,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Lesser Snow",
+          p: 20,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Greater Snow",
+          p: 21,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Winter Solstice",
+          p: 22,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Lesser Cold",
+          p: 23,
+          cyc: "solar-terms-24"
+        },
+        {
+          n: "Greater Cold",
+          p: 24,
+          cyc: "solar-terms-24"
+        }
+      ]
+    },
+    aztec: {
+      month: [
+        {
+          n: "Ceasing of Water",
+          p: 1,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Little Vigil",
+          p: 3,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Great Vigil",
+          p: 4,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Dryness",
+          p: 5,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Eating of Maize and Beans",
+          p: 6,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Little Feast of the Lords",
+          p: 7,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Great Feast of the Lords",
+          p: 8,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Offering of Flowers",
+          p: 9,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Fall of the Fruit",
+          p: 10,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Sweeping",
+          p: 11,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Return of the Gods",
+          p: 12,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Feast of the Mountains",
+          p: 13,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Precious Feather",
+          p: 14,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Raising of Banners",
+          p: 15,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Falling of Water",
+          p: 16,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Stretching",
+          p: 17,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Growth",
+          p: 18,
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        },
+        {
+          n: "Empty Days",
+          p: "extra",
+          e: "AN-EM",
+          sys: [
+            "aztec-18"
+          ]
+        }
+      ],
+      festival: [
+        {
+          n: "Ceasing of Water",
+          p: 1,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Little Vigil",
+          p: 3,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Great Vigil",
+          p: 4,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Dryness",
+          p: 5,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Eating of Maize and Beans",
+          p: 6,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Little Feast of the Lords",
+          p: 7,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Great Feast of the Lords",
+          p: 8,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Offering of Flowers",
+          p: 9,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Fall of the Fruit",
+          p: 10,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Sweeping",
+          p: 11,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Return of the Gods",
+          p: 12,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Feast of the Mountains",
+          p: 13,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Precious Feather",
+          p: 14,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Raising of Banners",
+          p: 15,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Falling of Water",
+          p: 16,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Stretching",
+          p: 17,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "Growth",
+          p: 18,
+          e: "AN-EM",
+          cyc: "monthly"
+        },
+        {
+          n: "New Fire",
+          s: "drought"
+        }
+      ]
+    },
+    maya: {
+      month: [
+        {
+          n: "Nameless Days",
+          p: "extra",
+          e: "AN-EM",
+          sys: [
+            "maya-haab"
+          ]
+        }
+      ]
+    },
+    polynesian: {
+      day: [
+        {
+          n: "Faint Thread",
+          p: 1,
+          sys: [
+            "moon-nights-30"
+          ]
+        },
+        {
+          n: "Crescent",
+          p: 2,
+          sys: [
+            "moon-nights-30"
+          ]
+        },
+        {
+          n: "Hidden",
+          p: 7,
+          sys: [
+            "moon-nights-30"
+          ]
+        },
+        {
+          n: "Unfolding",
+          p: 8,
+          sys: [
+            "moon-nights-30"
+          ]
+        },
+        {
+          n: "Fruit",
+          p: 13,
+          sys: [
+            "moon-nights-30"
+          ]
+        },
+        {
+          n: "Star",
+          p: 14,
+          sys: [
+            "moon-nights-30"
+          ]
+        },
+        {
+          n: "Full",
+          p: 15,
+          sys: [
+            "moon-nights-30"
+          ]
+        },
+        {
+          n: "Dripping",
+          p: 17,
+          sys: [
+            "moon-nights-30"
+          ]
+        },
+        {
+          n: "Overshadowed",
+          p: 29,
+          sys: [
+            "moon-nights-30"
+          ]
+        },
+        {
+          n: "Cut Off",
+          p: 30,
+          sys: [
+            "moon-nights-30"
+          ]
+        }
+      ]
+    },
+    andean: {
+      month: [
+        {
+          n: "Great Ripening",
+          s: "rain",
+          sys: [
+            "lunar-12-13",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Earth Ripening",
+          s: "rain",
+          sys: [
+            "lunar-12-13",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Maize Harvest",
+          s: "harvest",
+          sys: [
+            "lunar-12-13",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Harvest Month",
+          s: "harvest",
+          sys: [
+            "lunar-12-13",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Earth-Breaking",
+          s: "frost",
+          sys: [
+            "lunar-12-13",
+            "julian-12"
+          ]
+        },
+        {
+          n: "Water Month",
+          s: "frost",
+          sys: [
+            "lunar-12-13",
+            "julian-12"
+          ]
+        }
+      ]
+    }
+  },
+  daySigns: {
+    aztec: [
+      "Crocodile",
+      "Wind",
+      "House",
+      "Lizard",
+      "Serpent",
+      "Death",
+      "Deer",
+      "Rabbit",
+      "Water",
+      "Dog",
+      "Monkey",
+      "Grass",
+      "Reed",
+      "Jaguar",
+      "Eagle",
+      "Vulture",
+      "Movement",
+      "Flint",
+      "Rain",
+      "Flower"
+    ],
+    maya: [
+      "Crocodile",
+      "Wind",
+      "Night",
+      "Seed",
+      "Serpent",
+      "Death",
+      "Deer",
+      "Star",
+      "Water",
+      "Dog",
+      "Monkey",
+      "Road",
+      "Reed",
+      "Jaguar",
+      "Eagle",
+      "Owl",
+      "Earth",
+      "Flint",
+      "Storm",
+      "Lord"
+    ]
+  },
+  signNames: {
+    "zodiac-12": [
+      "the Ram",
+      "the Bull",
+      "the Twins",
+      "the Crab",
+      "the Lion",
+      "the Maiden",
+      "the Scales",
+      "the Scorpion",
+      "the Archer",
+      "the Sea-Goat",
+      "the Water-Bearer",
+      "the Fishes"
+    ],
+    "animals-12": {
+      "*": [
+        "Rat",
+        "Ox",
+        "Tiger",
+        "Rabbit",
+        "Dragon",
+        "Snake",
+        "Horse",
+        "Goat",
+        "Monkey",
+        "Rooster",
+        "Dog",
+        "Pig"
+      ],
+      japanese: [
+        "Rat",
+        "Ox",
+        "Tiger",
+        "Rabbit",
+        "Dragon",
+        "Snake",
+        "Horse",
+        "Goat",
+        "Monkey",
+        "Rooster",
+        "Dog",
+        "Boar"
+      ],
+      steppe: [
+        "Mouse",
+        "Ox",
+        "Tiger",
+        "Hare",
+        "Dragon",
+        "Snake",
+        "Horse",
+        "Sheep",
+        "Monkey",
+        "Hen",
+        "Dog",
+        "Pig"
+      ]
+    },
+    "mansions-28": {
+      chinese: [
+        "Horn",
+        "Neck",
+        "Root",
+        "Room",
+        "Heart",
+        "Tail",
+        "Winnowing Basket",
+        "Dipper",
+        "Ox",
+        "Girl",
+        "Emptiness",
+        "Rooftop",
+        "Encampment",
+        "Wall",
+        "Legs",
+        "Bond",
+        "Stomach",
+        "Hairy Head",
+        "Net",
+        "Turtle Beak",
+        "Three Stars",
+        "Well",
+        "Ghost",
+        "Willow",
+        "Star",
+        "Extended Net",
+        "Wings",
+        "Chariot"
+      ],
+      "arabic-persian": [
+        "the Two Signs",
+        "the Little Belly",
+        "the Many Little Ones",
+        "the Follower",
+        "the White Spot",
+        "the Brand",
+        "the Forearm",
+        "the Gap",
+        "the Glance",
+        "the Forehead",
+        "the Mane",
+        "the Changer",
+        "the Barker",
+        "the Unarmed",
+        "the Covering",
+        "the Claws",
+        "the Crown",
+        "the Heart",
+        "the Sting",
+        "the Ostriches",
+        "the City",
+        "Luck of the Slaughterer",
+        "Luck of the Swallower",
+        "Luck of Lucks",
+        "Luck of the Tents",
+        "the First Spout",
+        "the Second Spout",
+        "Belly of the Fish"
+      ]
+    },
+    "day-signs-20": {
+      aztec: [
+        "Crocodile",
+        "Wind",
+        "House",
+        "Lizard",
+        "Serpent",
+        "Death",
+        "Deer",
+        "Rabbit",
+        "Water",
+        "Dog",
+        "Monkey",
+        "Grass",
+        "Reed",
+        "Jaguar",
+        "Eagle",
+        "Vulture",
+        "Movement",
+        "Flint",
+        "Rain",
+        "Flower"
+      ],
+      maya: [
+        "Crocodile",
+        "Wind",
+        "Night",
+        "Seed",
+        "Serpent",
+        "Death",
+        "Deer",
+        "Star",
+        "Water",
+        "Dog",
+        "Monkey",
+        "Road",
+        "Reed",
+        "Jaguar",
+        "Eagle",
+        "Owl",
+        "Earth",
+        "Flint",
+        "Storm",
+        "Lord"
+      ]
+    }
+  },
+  constellations: {
+    general: [
+      "the Great Bear",
+      "the Little Bear",
+      "the Plough",
+      "the Hunter",
+      "the Seven Sisters",
+      "the Swan",
+      "the Eagle",
+      "the Dragon",
+      "the Lyre",
+      "the Crown",
+      "the Cup",
+      "the Crow",
+      "the Arrow",
+      "the Dolphin",
+      "the Southern Cross"
+    ],
+    "norman-british": [
+      "the Great Bear",
+      "the Little Bear",
+      "the Plough",
+      "the Hunter",
+      "the Seven Sisters",
+      "the Swan",
+      "the Eagle",
+      "the Dragon",
+      "the Lyre",
+      "the Crown",
+      "the Cup",
+      "the Crow",
+      "the Arrow",
+      "the Dolphin",
+      "the Southern Cross"
+    ],
+    "anglo-saxon": [
+      "the Wain"
+    ],
+    norse: [
+      "the Wain",
+      "Frigg's Distaff",
+      "Thiazi's Eyes",
+      "Aurvandil's Toe"
+    ],
+    celtic: [
+      "the Court of D\xF4n",
+      "Arianrhod's Castle"
+    ],
+    roman: [
+      "the Ram",
+      "the Bull",
+      "the Twins",
+      "the Crab",
+      "the Lion",
+      "the Maiden",
+      "the Scales",
+      "the Scorpion",
+      "the Archer",
+      "the Sea-Goat",
+      "the Water-Bearer",
+      "the Fishes",
+      "the Great Bear",
+      "the Little Bear",
+      "the Plough",
+      "the Hunter",
+      "the Seven Sisters",
+      "the Swan",
+      "the Eagle",
+      "the Dragon",
+      "the Lyre",
+      "the Crown",
+      "the Cup",
+      "the Crow",
+      "the Arrow",
+      "the Dolphin",
+      "the Southern Cross"
+    ],
+    "greek-byzantine": [
+      "the Ram",
+      "the Bull",
+      "the Twins",
+      "the Crab",
+      "the Lion",
+      "the Maiden",
+      "the Scales",
+      "the Scorpion",
+      "the Archer",
+      "the Sea-Goat",
+      "the Water-Bearer",
+      "the Fishes",
+      "the Great Bear",
+      "the Little Bear",
+      "the Plough",
+      "the Hunter",
+      "the Seven Sisters",
+      "the Swan",
+      "the Eagle",
+      "the Dragon",
+      "the Lyre",
+      "the Crown",
+      "the Cup",
+      "the Crow",
+      "the Arrow",
+      "the Dolphin",
+      "the Southern Cross"
+    ],
+    slavic: [
+      "the Great Ladle",
+      "the Sieve"
+    ],
+    steppe: [
+      "the Golden Stake",
+      "the Iron Stake",
+      "the Seven Robbers",
+      "the Two Horses"
+    ],
+    "arabic-persian": [
+      "the Daughters of the Bier",
+      "the Many Little Ones",
+      "the Follower"
+    ],
+    chinese: [
+      "the Northern Dipper",
+      "the Weaving Girl",
+      "the Ox Herd",
+      "the Heavenly Market Enclosure",
+      "the Supreme Palace Enclosure"
+    ],
+    egyptian: [
+      "the Bull's Foreleg",
+      "the Hippopotamus",
+      "the Crocodile"
+    ],
+    bantu: [
+      "the Digging Stars",
+      "the Three Zebras"
+    ],
+    aztec: [
+      "the Fire Drill",
+      "the Scorpion",
+      "the Ball Court"
+    ],
+    maya: [
+      "the Turtle",
+      "the Scorpion"
+    ],
+    polynesian: [
+      "the Fishhook",
+      "the Canoe",
+      "the Bird"
+    ],
+    andean: [
+      "the Llama",
+      "the Toad",
+      "the Serpent",
+      "the Partridge",
+      "the Fox"
+    ]
+  },
+  lights: {
+    chinese: {
+      planets: {
+        "1": "Earth Star",
+        "2": "Wood Star",
+        "3": "Fire Star",
+        "5": "Metal Star",
+        "6": "Water Star"
+      },
+      comet: "Broom Star",
+      nova: "Guest Star",
+      milky: "River of Heaven"
+    },
+    japanese: {
+      planets: {
+        "1": "Earth Star",
+        "2": "Wood Star",
+        "3": "Fire Star",
+        "5": "Metal Star",
+        "6": "Water Star"
+      },
+      comet: "Broom Star",
+      nova: "Guest Star",
+      milky: "Silver River"
+    },
+    korean: {
+      planets: {
+        "1": "Earth Star",
+        "2": "Wood Star",
+        "3": "Fire Star",
+        "5": "Metal Star",
+        "6": "Water Star"
+      },
+      comet: "Broom Star",
+      nova: "Guest Star",
+      milky: "Silver River"
+    },
+    "greek-byzantine": {
+      planets: {
+        "1": [
+          "the Shining"
+        ],
+        "2": [
+          "the Blazing"
+        ],
+        "3": [
+          "the Fiery"
+        ],
+        "5": [
+          "the Light-Bringer",
+          "the Evening Star"
+        ],
+        "6": [
+          "the Gleaming"
+        ]
+      }
+    },
+    egyptian: {
+      planets: {
+        "3": [
+          "Red Horus"
+        ]
+      },
+      bare: [
+        "Red Horus"
+      ]
+    },
+    maya: {
+      planets: {
+        "5": [
+          "the Great Star"
+        ]
+      }
+    },
+    aztec: {
+      comet: "the Smoking Star"
+    },
+    norse: {
+      milky: "the Winter Way"
+    },
+    steppe: {
+      milky: "the Seam of the Sky"
+    },
+    "arabic-persian": {
+      milky: "the Straw Road"
+    },
+    andean: {
+      milky: "the River"
+    },
+    general: {
+      planets: {
+        "5": [
+          "the Morning Star",
+          "the Evening Star"
+        ]
+      }
+    },
+    "anglo-saxon": {
+      planets: {
+        "5": [
+          "the Morning Star",
+          "the Evening Star"
+        ]
+      }
+    },
+    "norman-british": {
+      planets: {
+        "5": [
+          "the Morning Star",
+          "the Evening Star"
+        ]
+      }
+    },
+    celtic: {
+      planets: {
+        "5": [
+          "the Morning Star",
+          "the Evening Star"
+        ]
+      }
+    },
+    roman: {
+      planets: {
+        "5": [
+          "the Morning Star",
+          "the Evening Star"
+        ]
+      }
+    },
+    slavic: {
+      planets: {
+        "5": [
+          "the Morning Star",
+          "the Evening Star"
+        ]
+      }
+    }
+  },
+  shapes: [
+    {
+      k: "month",
+      p: "@cn",
+      w: 25,
+      cn: true
+    },
+    {
+      k: "month",
+      p: "{seasonWord} Month",
+      w: 25,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      k: "month",
+      p: "Month of {seasonWord}",
+      w: 6,
+      t: [
+        "grand"
+      ]
+    },
+    {
+      k: "month",
+      p: "{season} Month",
+      w: 4,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      k: "month",
+      p: "{position} Month of {season}",
+      w: 4,
+      t: [
+        "plain"
+      ],
+      cx: {
+        chinese: 3,
+        korean: 3,
+        steppe: 3,
+        egyptian: 3
+      }
+    },
+    {
+      k: "month",
+      p: "{seasonWord}",
+      w: 6,
+      t: [
+        "strange"
+      ]
+    },
+    {
+      k: "month",
+      p: [
+        "{crop}-Sowing",
+        "{crop} Harvest"
+      ],
+      w: 5,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      k: "month",
+      p: "{tree} Month",
+      w: 4
+    },
+    {
+      k: "month",
+      p: [
+        "{wildAnimal} Month",
+        "{bird} Month"
+      ],
+      w: 5
+    },
+    {
+      k: "month",
+      p: "{god:poss} Month",
+      w: 6,
+      t: [
+        "grand"
+      ],
+      ns: true,
+      sl: true
+    },
+    {
+      k: "month",
+      p: "{ordinal} Month",
+      w: 4,
+      t: [
+        "plain"
+      ],
+      cx: {
+        roman: 3,
+        chinese: 3,
+        korean: 3,
+        japanese: 3
+      },
+      sl: true
+    },
+    {
+      k: "month",
+      p: [
+        "Before {turning}",
+        "After {turning}"
+      ],
+      w: 4,
+      e: "AN-MD",
+      c: [
+        "anglo-saxon",
+        "celtic",
+        "norse"
+      ],
+      cx: {
+        "anglo-saxon": 3
+      },
+      pairs: true
+    },
+    {
+      k: "month",
+      p: [
+        "Little {pairFeast}",
+        "Great {pairFeast}"
+      ],
+      w: 4,
+      e: "AN-EM",
+      c: [
+        "aztec",
+        "maya"
+      ],
+      cx: {
+        aztec: 3
+      }
+    },
+    {
+      k: "month",
+      p: "Month of the {festival}",
+      w: 4,
+      e: "AN",
+      c: [
+        "greek-byzantine",
+        "roman"
+      ],
+      cx: {
+        "greek-byzantine": 3,
+        roman: 3
+      },
+      t: [
+        "grand"
+      ],
+      sl: true
+    },
+    {
+      k: "month",
+      p: [
+        "Hungry Month",
+        "Lean Month",
+        "Dead Month"
+      ],
+      w: 2,
+      t: [
+        "grim"
+      ],
+      sl: true
+    },
+    {
+      k: "month",
+      p: "{ordinal} Cycle",
+      w: 20,
+      sp: true
+    },
+    {
+      k: "month",
+      p: "{star} Month",
+      w: 10,
+      sp: true
+    },
+    {
+      k: "month",
+      p: "Month of {founder}",
+      w: 5,
+      sp: true
+    },
+    {
+      k: "month",
+      p: "{spaceLand} Month",
+      w: 8,
+      sp: true
+    },
+    {
+      k: "month",
+      p: [
+        "Witch Month",
+        "Dragon Month",
+        "Fair Folk Month"
+      ],
+      w: 8,
+      h: true,
+      sl: true
+    },
+    {
+      k: "leap",
+      p: "@cn",
+      w: 50,
+      cn: true
+    },
+    {
+      k: "leap",
+      p: "Second {previous}",
+      w: 20
+    },
+    {
+      k: "leap",
+      p: "Leap {previous}",
+      w: 10
+    },
+    {
+      k: "leap",
+      p: [
+        "Extra Month",
+        "Added Month",
+        "Thirteenth Month"
+      ],
+      w: 20
+    },
+    {
+      k: "extra",
+      p: "@cn",
+      w: 50,
+      cn: true
+    },
+    {
+      k: "extra",
+      p: "the {extraDays} Days",
+      w: 30
+    },
+    {
+      k: "extra",
+      p: "{seasonWord} Days",
+      w: 10
+    },
+    {
+      k: "day",
+      p: "@cn",
+      w: 25,
+      cn: true
+    },
+    {
+      k: "day",
+      p: "{dayWork} Day",
+      w: 20,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      k: "day",
+      p: "{god:poss} Day",
+      w: 12,
+      t: [
+        "grand"
+      ],
+      ns: true
+    },
+    {
+      k: "day",
+      p: "{light} Day",
+      w: 10
+    },
+    {
+      k: "day",
+      p: "{dayElement} Day",
+      w: 10,
+      c: [
+        "chinese",
+        "japanese",
+        "korean",
+        "steppe"
+      ]
+    },
+    {
+      k: "day",
+      p: "{ordinal} Day",
+      w: 8,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      k: "day",
+      p: "{goods} Market Day",
+      w: 10,
+      t: [
+        "plain"
+      ],
+      c: [
+        "bantu",
+        "west-african",
+        "roman"
+      ],
+      sys: [
+        "market-4",
+        "nundinal-8"
+      ]
+    },
+    {
+      k: "day",
+      p: "{town} Market Day",
+      w: 6,
+      t: [
+        "plain"
+      ],
+      c: [
+        "bantu",
+        "west-african",
+        "roman"
+      ],
+      sys: [
+        "market-4",
+        "nundinal-8"
+      ]
+    },
+    {
+      k: "day",
+      p: [
+        "{wildAnimal}",
+        "{bird}",
+        "{daySign}"
+      ],
+      w: 15,
+      c: [
+        "aztec",
+        "maya"
+      ]
+    },
+    {
+      k: "day",
+      p: "{number} {daySign}",
+      w: 8,
+      c: [
+        "aztec",
+        "maya"
+      ]
+    },
+    {
+      k: "day",
+      p: "{moonPhase}",
+      w: 15,
+      c: [
+        "polynesian"
+      ]
+    },
+    {
+      k: "day",
+      p: [
+        [
+          "Shift {ordinal}"
+        ],
+        [
+          "{ordinal} Sol"
+        ],
+        [
+          "Rest Cycle"
+        ],
+        [
+          "Port Day"
+        ],
+        [
+          "Maintenance Day",
+          [
+            "light"
+          ]
+        ],
+        [
+          "Ration Day",
+          [
+            "grim"
+          ]
+        ]
+      ],
+      w: 20,
+      e: "NF-IS"
+    },
+    {
+      k: "day",
+      p: "Gear Day",
+      w: 2,
+      h: true,
+      e: "ST",
+      t: [
+        "light"
+      ]
+    },
+    {
+      k: "festival",
+      p: "@cn",
+      w: 25,
+      cn: true
+    },
+    {
+      k: "festival",
+      p: "Feast of {seasonWord}",
+      w: 10
+    },
+    {
+      k: "festival",
+      p: "{seasonWord} Home",
+      w: 3,
+      t: [
+        "light"
+      ]
+    },
+    {
+      k: "festival",
+      p: [
+        "{season} Fire",
+        "{seasonWord} Fires"
+      ],
+      w: 5,
+      e: "AN-EM"
+    },
+    {
+      k: "festival",
+      p: "Night of {festNoun}",
+      w: 8,
+      t: [
+        "strange"
+      ]
+    },
+    {
+      k: "festival",
+      p: "Day of the {festNoun}",
+      w: 5
+    },
+    {
+      k: "festival",
+      p: "Festival of {festNoun}",
+      w: 6
+    },
+    {
+      k: "festival",
+      p: "{crop} Festival",
+      w: 6,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      k: "festival",
+      p: [
+        "Feast of {god}",
+        "{god:poss} Day"
+      ],
+      w: 8,
+      t: [
+        "grand"
+      ],
+      ns: true
+    },
+    {
+      k: "festival",
+      p: [
+        "Feast of {holy}",
+        "{holy:poss} Day",
+        "{holy:poss} Eve"
+      ],
+      w: 8,
+      e: "MD+",
+      ch: true
+    },
+    {
+      k: "festival",
+      p: "Blessing of {festBlessing}",
+      w: 4,
+      cm: {
+        christian: 1,
+        other: 0.5
+      }
+    },
+    {
+      k: "festival",
+      p: "{kin}' Night",
+      w: 3
+    },
+    {
+      k: "festival",
+      p: "Burning of the {thing}",
+      w: 3,
+      t: [
+        "strange"
+      ]
+    },
+    {
+      k: "festival",
+      p: "Running of the {livestock:pl}",
+      w: 3,
+      t: [
+        "light"
+      ]
+    },
+    {
+      k: "festival",
+      p: "{figure:poss} Games",
+      w: 3,
+      e: "AN-EM",
+      t: [
+        "grand"
+      ]
+    },
+    {
+      k: "festival",
+      p: "{town} Fair",
+      w: 6,
+      e: "MD+",
+      t: [
+        "plain"
+      ]
+    },
+    {
+      k: "festival",
+      p: "{town} Wakes",
+      w: 2,
+      e: "ST",
+      c: [
+        "norman-british",
+        "general"
+      ],
+      t: [
+        "plain"
+      ]
+    },
+    {
+      k: "festival",
+      p: [
+        "Founders' Day",
+        "Charter Day",
+        "Landing Day"
+      ],
+      w: 4,
+      e: "EM+",
+      t: [
+        "plain"
+      ],
+      commem: true
+    },
+    {
+      k: "festival",
+      p: "{founder} Day",
+      w: 4,
+      e: "ST+",
+      commem: true
+    },
+    {
+      k: "festival",
+      p: "{event} Day",
+      w: 4,
+      e: "ST+",
+      commem: true
+    },
+    {
+      k: "festival",
+      p: "{realm} Day",
+      w: 3,
+      e: "ST+",
+      t: [
+        "grand"
+      ],
+      commem: true
+    },
+    {
+      k: "festival",
+      p: [
+        [
+          "Landfall Day"
+        ],
+        [
+          "Launch Day"
+        ],
+        [
+          "First Light"
+        ],
+        [
+          "Signal Day"
+        ],
+        [
+          "Long Dark",
+          [
+            "grim"
+          ]
+        ],
+        [
+          "Quarantine's End"
+        ]
+      ],
+      w: 20,
+      e: "NF-IS"
+    },
+    {
+      k: "festival",
+      p: [
+        "{star} Night",
+        "Perihelion Night"
+      ],
+      w: 8,
+      e: "NF-IS",
+      t: [
+        "strange"
+      ]
+    },
+    {
+      k: "festival",
+      p: [
+        "Night of the Fair Folk",
+        "Night of the Wild Hunt",
+        "Night of Ghosts"
+      ],
+      w: 8,
+      h: true
+    },
+    {
+      k: "festival",
+      p: [
+        "Moon-Dark Eve",
+        "Eclipse Feast"
+      ],
+      w: 4,
+      h: true
+    },
+    {
+      k: "festival",
+      p: [
+        "Exhibition Day",
+        "Engine Day",
+        "Aether Night"
+      ],
+      w: 6,
+      h: true,
+      e: "ST"
+    },
+    {
+      k: "moon",
+      p: "{seasonWord} Moon",
+      w: 30
+    },
+    {
+      k: "moon",
+      p: [
+        "{wildAnimal} Moon",
+        "{bird} Moon"
+      ],
+      w: 12
+    },
+    {
+      k: "moon",
+      p: [
+        "{tree} Moon",
+        "{crop} Moon"
+      ],
+      w: 8
+    },
+    {
+      k: "moon",
+      p: "Moon of {seasonWord}",
+      w: 6,
+      t: [
+        "grand"
+      ]
+    },
+    {
+      k: "moon",
+      p: "{skyFigure:poss} Moon",
+      w: 4
+    },
+    {
+      k: "moon",
+      p: "{colour} Moon",
+      w: 4,
+      t: [
+        "strange"
+      ]
+    },
+    {
+      k: "moon",
+      p: "{god:poss} Moon",
+      w: 3,
+      t: [
+        "grand"
+      ],
+      ns: true
+    },
+    {
+      k: "moon",
+      p: [
+        "Dragon Moon",
+        "Witch Moon",
+        "Ghost Moon"
+      ],
+      w: 6,
+      h: true
+    },
+    {
+      k: "moonleap",
+      p: [
+        [
+          "Lone Moon"
+        ],
+        [
+          "Extra Moon"
+        ],
+        [
+          "Wandering Moon"
+        ],
+        [
+          "Spare Moon",
+          [
+            "light"
+          ]
+        ],
+        [
+          "Stolen Moon",
+          [
+            "strange"
+          ]
+        ],
+        [
+          "Blue Moon"
+        ]
+      ],
+      w: 1
+    },
+    {
+      k: "constellation",
+      p: "@cn",
+      w: 15,
+      cn: true
+    },
+    {
+      k: "constellation",
+      p: [
+        "the {wildAnimal}",
+        "the {bird}",
+        "the {creature}"
+      ],
+      w: 18
+    },
+    {
+      k: "constellation",
+      p: [
+        "the Great {beast}",
+        "the Little {beast}"
+      ],
+      w: 8
+    },
+    {
+      k: "constellation",
+      p: "the {skyFigure}",
+      w: 12
+    },
+    {
+      k: "constellation",
+      p: "the {skyObject}",
+      w: 12,
+      t: [
+        "plain"
+      ]
+    },
+    {
+      k: "constellation",
+      p: "the {skyFigure:poss} {skyObject}",
+      w: 10,
+      poss: true
+    },
+    {
+      k: "constellation",
+      p: "the {beast:poss} {skyBodyPart}",
+      w: 6,
+      poss: true
+    },
+    {
+      k: "constellation",
+      p: "the {numberWord} {group}",
+      w: 6,
+      numbered: true
+    },
+    {
+      k: "constellation",
+      p: "{god:poss} {skyObject}",
+      w: 6,
+      t: [
+        "grand"
+      ],
+      ns: true,
+      poss: true
+    },
+    {
+      k: "constellation",
+      p: "the {colour} {beast}",
+      w: 4,
+      t: [
+        "strange"
+      ]
+    },
+    {
+      k: "constellation",
+      p: "the {skyObject} of the {skyFigure}",
+      w: 4,
+      cx: {
+        polynesian: 3
+      },
+      all: true
+    },
+    {
+      k: "constellation",
+      p: [
+        "the Dragon's {skyBodyPart}",
+        "the Wyrm",
+        "the Unicorn",
+        "the Witch's {skyObject}",
+        "the Giant's {skyObject}"
+      ],
+      w: 10,
+      h: true,
+      ns: true
+    },
+    {
+      k: "constellation",
+      p: [
+        "the Ark",
+        "the Lander",
+        "the Antenna",
+        "the Old Sun",
+        "the Home Star",
+        "the Probe"
+      ],
+      w: 15,
+      e: "NF-IS"
+    },
+    {
+      k: "light",
+      p: "@cn",
+      w: 20,
+      cn: true
+    },
+    {
+      k: "light",
+      p: "the {skyQuality} Wanderer",
+      w: 15
+    },
+    {
+      k: "light",
+      p: "the {skyQuality} {skyKin}",
+      w: 12
+    },
+    {
+      k: "light",
+      p: [
+        "{god:poss} Lamp",
+        "{god:poss} Star"
+      ],
+      w: 6,
+      t: [
+        "grand"
+      ],
+      ns: true,
+      god: true
+    },
+    {
+      k: "light",
+      p: [
+        "the Morning {herald}",
+        "the Evening {herald}"
+      ],
+      w: 6
+    },
+    {
+      k: "light",
+      p: [
+        "the {skyQuality} Moon",
+        "the Little Moon",
+        "the {skyKin} Moon"
+      ],
+      w: 6
+    },
+    {
+      k: "light",
+      p: "the {skyRiver} of {skyHeaven}",
+      w: 10
+    },
+    {
+      k: "light",
+      p: "the {colour} {skyRiver}",
+      w: 4
+    },
+    {
+      k: "light",
+      p: [
+        "the {colour} Comet",
+        "the {beast}-Tail Star"
+      ],
+      w: 6,
+      t: [
+        "strange"
+      ]
+    },
+    {
+      k: "light",
+      p: "the {skyQuality} Guest",
+      w: 4,
+      t: [
+        "strange"
+      ]
+    },
+    {
+      k: "light",
+      p: [
+        "the Day Eye",
+        "the Great Lamp",
+        "the Night Eye"
+      ],
+      w: 3,
+      t: [
+        "grand"
+      ]
+    },
+    {
+      k: "light",
+      p: [
+        [
+          "Old Sun",
+          [
+            "light"
+          ]
+        ],
+        [
+          "Home Star",
+          [
+            "light"
+          ]
+        ],
+        [
+          "the Bright Neighbour",
+          [
+            "light"
+          ]
+        ],
+        [
+          "the Gas Giant",
+          [
+            "light"
+          ]
+        ],
+        [
+          "the Ring World",
+          [
+            "light"
+          ]
+        ]
+      ],
+      w: 15,
+      e: "NF-IS"
+    }
+  ],
+  themes: {
+    month: [
+      [
+        "seasons",
+        40
+      ],
+      [
+        "work",
+        15
+      ],
+      [
+        "nature",
+        15
+      ],
+      [
+        "gods",
+        10
+      ],
+      [
+        "ordinal",
+        5
+      ],
+      [
+        "positions",
+        5
+      ],
+      [
+        "festivals",
+        10
+      ]
+    ],
+    monthMult: {
+      ordinal: {
+        roman: 3,
+        chinese: 3,
+        korean: 3,
+        japanese: 3
+      },
+      positions: {
+        chinese: 4,
+        korean: 4,
+        steppe: 4,
+        egyptian: 4
+      },
+      festivals: {
+        "greek-byzantine": 3,
+        roman: 3
+      }
+    },
+    day: [
+      [
+        "planets",
+        30
+      ],
+      [
+        "gods",
+        20
+      ],
+      [
+        "work",
+        25
+      ],
+      [
+        "ordinal",
+        15
+      ],
+      [
+        "elements",
+        10
+      ]
+    ],
+    market: [
+      [
+        "towns",
+        40
+      ],
+      [
+        "goods",
+        40
+      ],
+      [
+        "ordinal",
+        20
+      ]
+    ],
+    festival: [
+      [
+        "seasons",
+        40
+      ],
+      [
+        "gods",
+        20
+      ],
+      [
+        "work",
+        20
+      ],
+      [
+        "commemorations",
+        20
+      ]
+    ],
+    moon: [
+      [
+        "seasons",
+        50
+      ],
+      [
+        "nature",
+        35
+      ],
+      [
+        "mixed",
+        15
+      ]
+    ],
+    sign: [
+      [
+        "beasts",
+        40
+      ],
+      [
+        "figures",
+        30
+      ],
+      [
+        "objects",
+        30
+      ]
+    ],
+    mansions: [
+      [
+        "objects",
+        50
+      ],
+      [
+        "bodyParts",
+        50
+      ]
+    ],
+    light: [
+      [
+        "kin",
+        40
+      ],
+      [
+        "wanderers",
+        40
+      ],
+      [
+        "gods",
+        20
+      ]
+    ],
+    mixedZodiac: 0.3,
+    pairShare: 0.5
+  },
+  lists: {
+    turning: [
+      "Yule",
+      "Midsummer",
+      "Midwinter",
+      "the Thaw",
+      "the Rains",
+      "the Flood",
+      "the Harvest"
+    ],
+    turningOf: {
+      winter: [
+        "Yule",
+        "Midwinter"
+      ],
+      summer: [
+        "Midsummer"
+      ],
+      spring: [
+        "the Thaw"
+      ],
+      autumn: [
+        "the Harvest"
+      ],
+      thaw: [
+        "the Thaw"
+      ],
+      rain: [
+        "the Rains"
+      ],
+      monsoon: [
+        "the Rains"
+      ],
+      flood: [
+        "the Flood"
+      ],
+      harvest: [
+        "the Harvest"
+      ],
+      drought: [
+        "Midsummer"
+      ],
+      storm: [
+        "the Thaw"
+      ],
+      frost: [
+        "Midwinter"
+      ]
+    },
+    pairFeast: [
+      "Vigil",
+      "Feast of the Lords",
+      "Feast of the {skyFigure:pl}",
+      "Dance",
+      "Rains",
+      "Offering"
+    ],
+    position: [
+      "First",
+      "Middle",
+      "Last"
+    ],
+    daySign: [
+      "Reed",
+      "Flint",
+      "House",
+      "Wind",
+      "Rain",
+      "Flower",
+      "Movement",
+      "Water",
+      "Grass",
+      "Earth",
+      "Storm",
+      "Road",
+      "Seed",
+      "Star",
+      "Night",
+      "Death",
+      "Smoke",
+      "Mirror",
+      "Knife",
+      "Shell"
+    ],
+    daySignTone: {
+      Death: [
+        "grim"
+      ]
+    },
+    moonPhase: [
+      "Thin Moon",
+      "Bow Moon",
+      "Rising Night",
+      "Half Night",
+      "Round Night",
+      "Bright Night",
+      "Fading Night",
+      "Dark Night",
+      "Last Light",
+      "Sleeping Moon"
+    ],
+    moonWaxing: [
+      "Thin Moon",
+      "Bow Moon",
+      "Rising Night",
+      "Half Night",
+      "Bright Night"
+    ],
+    moonFull: [
+      "Round Night",
+      "Full"
+    ],
+    moonFading: [
+      "Fading Night",
+      "Dark Night",
+      "Last Light",
+      "Sleeping Moon"
+    ],
+    kin: [
+      "Mothers",
+      "Fathers",
+      "Grandmothers",
+      "Ancestors",
+      "Sisters",
+      "Maidens",
+      "Shepherds",
+      "Fishers"
+    ],
+    thing: [
+      "Old Year",
+      "Boats",
+      "Winter",
+      "Straw Man",
+      "Ploughs",
+      "Brooms"
+    ],
+    group: [
+      "Brothers",
+      "Sisters",
+      "Kings",
+      "Dancers",
+      "Hunters",
+      "Maidens",
+      "Thieves",
+      "Old Men",
+      "Hounds",
+      "Geese"
+    ],
+    numberWord: [
+      "Three",
+      "Five",
+      "Seven",
+      "Nine"
+    ],
+    herald: [
+      "Star",
+      "Lamp",
+      "Herald",
+      "Lady",
+      "Watcher",
+      "Bringer"
+    ],
+    weather: [
+      "Lesser",
+      "Greater",
+      "Cold",
+      "Warm",
+      "White",
+      "Clear"
+    ],
+    lightQualities: {
+      "1": [
+        "Slow",
+        "Dim",
+        "Golden"
+      ],
+      "2": [
+        "Bright",
+        "Faithful"
+      ],
+      "3": [
+        "Red",
+        "Fierce",
+        "Restless"
+      ],
+      "5": [
+        "Bright",
+        "Silver"
+      ],
+      "6": [
+        "Swift",
+        "Hidden",
+        "Restless"
+      ]
+    }
+  },
+  safeguards: {
+    block: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+      "Aries",
+      "Taurus",
+      "Gemini",
+      "Cancer",
+      "Leo",
+      "Virgo",
+      "Libra",
+      "Scorpio",
+      "Sagittarius",
+      "Capricorn",
+      "Aquarius",
+      "Pisces",
+      "Mercury",
+      "Venus",
+      "Mars",
+      "Jupiter",
+      "Saturn",
+      "Uranus",
+      "Neptune",
+      "Pluto",
+      "the Sun",
+      "the Moon",
+      "the Milky Way",
+      "Orion",
+      "Orion's Belt",
+      "Cassiopeia",
+      "Andromeda",
+      "Perseus",
+      "Pegasus",
+      "Hercules",
+      "Cepheus",
+      "Draco",
+      "Argo",
+      "the Pleiades",
+      "Charles's Wain",
+      "Arthur's Wain",
+      "Christmas",
+      "Easter",
+      "Good Friday",
+      "Ash Wednesday",
+      "Pentecost",
+      "Whitsun",
+      "Epiphany",
+      "All Souls",
+      "Ramadan",
+      "Eid",
+      "Eid al-Fitr",
+      "Eid al-Adha",
+      "Mawlid",
+      "Ashura",
+      "Passover",
+      "Pesach",
+      "Yom Kippur",
+      "Rosh Hashanah",
+      "Hanukkah",
+      "Purim",
+      "Sukkot",
+      "Shavuot",
+      "Diwali",
+      "Deepavali",
+      "Holi",
+      "Navaratri",
+      "Durga Puja",
+      "Dussehra",
+      "Pongal",
+      "Onam",
+      "Raksha Bandhan",
+      "Makar Sankranti",
+      "Vaisakhi",
+      "Baisakhi",
+      "Vesak",
+      "Bodhi Day",
+      "Obon",
+      "Bon",
+      "Ghost Festival",
+      "Mehregan",
+      "Sadeh",
+      "Festival of Lights",
+      "Day of the Dead",
+      "Inti Raymi",
+      "Matariki",
+      "Makahiki",
+      "Puanga",
+      "Sun Dance",
+      "Umhlanga",
+      "Guy Fawkes Night",
+      "Burns Night",
+      "Bastille Day",
+      "Anzac Day",
+      "Australia Day",
+      "Canada Day",
+      "Juneteenth",
+      "Kwanzaa",
+      "Cinco de Mayo",
+      "Oktoberfest",
+      "Valentine's Day",
+      "Saint Patrick's Day",
+      "Subaru",
+      "Afteryule",
+      "Foreyule",
+      "Solmath",
+      "Rethe",
+      "Astron",
+      "Thrimidge",
+      "Forelithe",
+      "Afterlithe",
+      "Wedmath",
+      "Halimath",
+      "Winterfilth",
+      "Blotmath",
+      "Lithe",
+      "Sterday",
+      "Trewsday",
+      "Hevensday",
+      "Mersday",
+      "Highday",
+      "Sun's Dawn",
+      "First Seed",
+      "Rain's Hand",
+      "Second Seed",
+      "Mid Year",
+      "Sun's Height",
+      "Last Seed",
+      "Hearthfire",
+      "Frostfall",
+      "Sun's Dusk",
+      "Sundas",
+      "Morndas",
+      "Tirdas",
+      "Middas",
+      "Turdas",
+      "Fredas",
+      "Loredas",
+      "Hammer",
+      "Alturiak",
+      "Ches",
+      "Tarsakh",
+      "Mirtul",
+      "Kythorn",
+      "Flamerule",
+      "Eleasis",
+      "Eleint",
+      "Marpenoth",
+      "Uktar",
+      "Nightal",
+      "Greengrass",
+      "Highharvestide",
+      "Shieldmeet",
+      "Feast of the Moon",
+      "Fireseek",
+      "Coldeven",
+      "Growfest",
+      "Flocktime",
+      "Wealsun",
+      "Richfest",
+      "Goodmonth",
+      "Patchwall",
+      "Ready'reat",
+      "Sunsebb",
+      "Needfest",
+      "Hogswatch",
+      "Hogswatchnight",
+      "Octeday",
+      "Soul Cake Tuesday",
+      "Sektober",
+      "Juvember",
+      "Febtober",
+      "Spune",
+      "Grune",
+      "Offle",
+      "Sickle of the Valar",
+      "Swordsman of the Sky",
+      "the Netted Stars",
+      "the Ice Dragon",
+      "the Crone's Lantern",
+      "the Moonmaid",
+      "Stardate"
+    ],
+    flag: [
+      "Midsummer",
+      "Midwinter",
+      "Yule",
+      "Harvest Moon",
+      "Hunter's Moon",
+      "Wolf Moon",
+      "Blue Moon",
+      "Harvest Home",
+      "May Day",
+      "Lammas",
+      "Michaelmas",
+      "Candlemas",
+      "Martinmas",
+      "Lady Day",
+      "Plough Monday",
+      "Hocktide",
+      "Shrovetide",
+      "Twelfth Night",
+      "Wakes Week",
+      "Bank Holiday",
+      "Bonfire Night",
+      "Hallowe'en",
+      "Hogmanay",
+      "Walpurgis Night",
+      "Thanksgiving",
+      "Mother's Day",
+      "Boxing Day",
+      "New Year's Day",
+      "Independence Day",
+      "Victory Day",
+      "Labour Day",
+      "Remembrance Day",
+      "Armistice Day",
+      "Mardi Gras",
+      "Carnival",
+      "Night of the Wild Hunt",
+      "Samhain",
+      "Beltane",
+      "Imbolc",
+      "Lughnasadh",
+      "Nowruz",
+      "Chuseok",
+      "Spring Festival",
+      "Mid-Autumn Festival",
+      "Lantern Festival",
+      "Dragon Boat Festival",
+      "the Morning Star",
+      "the Evening Star",
+      "the Ram",
+      "the Bull",
+      "the Twins",
+      "the Crab",
+      "the Lion",
+      "the Maiden",
+      "the Scales",
+      "the Scorpion",
+      "the Archer",
+      "the Sea-Goat",
+      "the Water-Bearer",
+      "the Fishes",
+      "the Great Bear",
+      "the Little Bear",
+      "the Plough",
+      "the Hunter",
+      "the Seven Sisters",
+      "the Swan",
+      "the Eagle",
+      "the Dragon",
+      "the Lyre",
+      "the Crown",
+      "the Cup",
+      "the Crow",
+      "the Arrow",
+      "the Dolphin",
+      "the Southern Cross",
+      "the Seven Sisters",
+      "the Three Kings",
+      "the Long Night",
+      "Sabbath"
+    ],
+    flagListBlocks: false,
+    banned: [
+      "Christ",
+      "Jesus",
+      "Allah",
+      "Muhammad",
+      "Krishna",
+      "Shiva",
+      "Vishnu",
+      "Rama",
+      "Lakshmi",
+      "Ganesh",
+      "Durga",
+      "Kali",
+      "Buddha",
+      "Bodhisattva",
+      "Guru",
+      "Nanak",
+      "Kami",
+      "Amaterasu",
+      "Inari",
+      "Ahura",
+      "Mazda",
+      "Olodumare",
+      "Orisha",
+      "Obatala",
+      "Ogun",
+      "Shango",
+      "Ifa",
+      "Yemoja",
+      "Oshun",
+      "Pele",
+      "Pachamama",
+      "Inti",
+      "Viracocha",
+      "Kanaloa",
+      "Tangaroa",
+      "Tengri"
+    ],
+    bannedFromMoney: true,
+    kindBlock: {
+      month: [
+        "Morning Star",
+        "Evening Star"
+      ]
+    },
+    zodiacSet: [
+      "the Warrior",
+      "the Mage",
+      "the Thief",
+      "the Lady",
+      "the Steed",
+      "the Lord",
+      "the Lover",
+      "the Shadow",
+      "the Tower",
+      "the Serpent",
+      "the Ritual",
+      "the Atronach",
+      "the Apprentice"
+    ],
+    zodiacSetLimit: 4
+  }
+};
+
+// src/timesky/data.ts
+var TIME_SKY = time_sky_default;
+var TIME_KINDS = TIME_SKY.kinds;
+var findTimeKind = (key2) => TIME_KINDS.find((k) => k.key === key2);
+var timeKindDefaultOf = (module2) => module2 === "calendar" ? "month" : "constellation";
+var kindsOfModule = (module2) => TIME_KINDS.filter((k) => k.module === module2);
+var TIME_CULTURES = ROUTE_CULTURES;
+var findTimeCulture = (key2) => TIME_CULTURES.find((c) => c.key === key2);
+var isSensitive = (culture) => TIME_SKY.sensitive.includes(culture);
+var ERA_ORDER = ROUTE_ERAS.map((e) => e.code);
+function eraSpan(spec) {
+  if (!spec || spec === "all") return ERA_ORDER;
+  if (spec.endsWith("+")) return ERA_ORDER.slice(ERA_ORDER.indexOf(spec.slice(0, -1)));
+  const [a, b] = spec.split("-");
+  const from = ERA_ORDER.indexOf(a);
+  return ERA_ORDER.slice(from, (b ? ERA_ORDER.indexOf(b) : from) + 1);
+}
+var inEras = (spec, era) => eraSpan(spec).includes(era);
+var isFutureEra = (era) => era === "NF" || era === "IS";
+function parseCell(cell) {
+  if (!cell || cell.trim() === "-") return [];
+  return cell.split("\xB7").map((part) => {
+    const [key2, share2] = part.trim().split(/\s+/);
+    return [key2, share2 === void 0 ? 100 : Number(share2)];
+  });
+}
+var ERA_COLUMN = { AN: 0, MD: 1, EM: 2, ST: 3, MO: 4 };
+var landKind = (biome) => ({ space: isSpaceBiome(biome), scale: biome == null ? void 0 : biome.scale });
+function monthSystems(culture, era, land = { space: false }) {
+  var _a4;
+  if (isFutureEra(era)) return parseCell(land.space && land.scale === "Pl" ? TIME_SKY.cells.monthsPlanetary : TIME_SKY.cells.monthsFuture);
+  return parseCell((_a4 = TIME_SKY.cells.months[culture]) == null ? void 0 : _a4[ERA_COLUMN[era]]);
+}
+function weekSystems(culture, era) {
+  const row = TIME_SKY.cells.days[culture];
+  if (!row) return [];
+  return parseCell(isFutureEra(era) ? row[5] : row[ERA_COLUMN[era]]);
+}
+function festivalCycles(culture, era, land = { space: false }) {
+  if (isFutureEra(era)) return parseCell(land.space ? TIME_SKY.cells.festivalsSpace : TIME_SKY.cells.festivalsFuture);
+  return parseCell(TIME_SKY.cells.festivals[culture]);
+}
+function signSystems(culture, era) {
+  var _a4;
+  return parseCell((_a4 = TIME_SKY.cells.signs[culture]) == null ? void 0 : _a4[era === "AN" ? 0 : 1]);
+}
+function kindsOffered2(module2, culture, era, land = { space: false }) {
+  return kindsOfModule(module2).filter((k) => {
+    if (k.key === "day") return weekSystems(culture, era).length > 0;
+    if (k.key === "moon") return !land.space;
+    return true;
+  });
+}
+function seriesOffered(kind, culture, era, land = { space: false }) {
+  switch (kind) {
+    case "constellation":
+      return false;
+    case "day":
+      return weekSystems(culture, era).length > 0;
+    case "sign":
+      return signSystems(culture, era).length > 0;
+    case "moon":
+      return !land.space;
+    default:
+      return true;
+  }
+}
+var seasonPhrase = (season) => {
+  var _a4, _b2;
+  return (_b2 = (_a4 = TIME_SKY.seasons[season]) == null ? void 0 : _a4.phrase) != null ? _b2 : season;
+};
+var seasonNoun = (season) => {
+  var _a4, _b2;
+  return (_b2 = (_a4 = TIME_SKY.seasons[season]) == null ? void 0 : _a4.noun) != null ? _b2 : season;
+};
+var SEASON_KEYS2 = Object.keys(TIME_SKY.seasons);
+function parseCycle(text) {
+  return text.split("\xB7").map((part) => {
+    const [key2, share2] = part.trim().split(/\s+/);
+    return [key2, Number(share2)];
+  });
+}
+var homelandOf = (culture) => {
+  var _a4;
+  return (_a4 = TIME_SKY.homeland[culture]) != null ? _a4 : homelandBiome(culture);
+};
+function seasonCycle(biome, culture, atHome) {
+  var _a4;
+  if (isSpaceBiome(biome)) return null;
+  if (atHome && TIME_SKY.homelandCycles[culture]) return parseCycle(TIME_SKY.homelandCycles[culture]);
+  const temperate = parseCycle(TIME_SKY.seasonCycles.temperate);
+  if (!biome) return temperate;
+  if (biome.seasonCycle && biome.seasonCycle.length > 0) return biome.seasonCycle.filter(([k]) => SEASON_KEYS2.includes(k));
+  if (TIME_SKY.seasonCycles[biome.id]) return parseCycle(TIME_SKY.seasonCycles[biome.id]);
+  if (biome.custom) {
+    const own = ((_a4 = biome.seasons) != null ? _a4 : []).map(([w]) => w.toLowerCase()).filter((w) => SEASON_KEYS2.includes(w));
+    if (own.length > 0) return own.map((k) => [k, 1]);
+    if (TIME_SKY.seasonCycles[biome.custom.base]) return parseCycle(TIME_SKY.seasonCycles[biome.custom.base]);
+  }
+  return temperate;
+}
+function layoutRing(n, cycle) {
+  if (!cycle || cycle.length === 0) return Array.from({ length: n }, () => ({ season: null, pos: "middle" }));
+  const total = cycle.reduce((sum, [, share2]) => sum + share2, 0);
+  const exact = cycle.map(([, share2]) => n * share2 / total);
+  const counts = exact.map(Math.floor);
+  let left = n - counts.reduce((a, b) => a + b, 0);
+  const order = exact.map((x, i) => [i, x - Math.floor(x)]).sort((a, b) => b[1] - a[1] || a[0] - b[0]);
+  for (let i = 0; left > 0; i = (i + 1) % order.length, left--) counts[order[i][0]]++;
+  if (n >= cycle.length) {
+    for (let i = 0; i < counts.length; i++) {
+      if (counts[i] > 0) continue;
+      let donor = 0;
+      counts.forEach((c, j) => {
+        if (c > counts[donor]) donor = j;
+      });
+      counts[donor]--;
+      counts[i]++;
+    }
+  }
+  const slots = [];
+  cycle.forEach(([season], i) => {
+    for (let j = 0; j < counts[i]; j++) slots.push({ season, pos: counts[i] === 1 ? "middle" : j === 0 ? "first" : j === counts[i] - 1 ? "last" : "middle" });
+  });
+  return slots;
+}
+function ownYearStart(culture, era, ring) {
+  var _a4;
+  const spec = TIME_SKY.newYear[culture];
+  const text = typeof spec === "string" ? spec : (_a4 = spec == null ? void 0 : spec[era]) != null ? _a4 : spec == null ? void 0 : spec["*"];
+  if (!text || ring.length === 0 || ring[0].season === null) return 0;
+  const [season, offset] = text.split(/\s+/);
+  const first = ring.findIndex((s) => s.season === season);
+  if (first < 0) return 0;
+  return (first + Number(offset)) % ring.length;
+}
+var cultureRows = (culture, kind) => {
+  var _a4, _b2;
+  return (_b2 = (_a4 = TIME_SKY.cultureNames[culture]) == null ? void 0 : _a4[kind]) != null ? _b2 : [];
+};
+function ownPosition(row, culture, era, months) {
+  var _a4, _b2;
+  if (typeof row.p !== "number") return void 0;
+  const shift = row.jan ? (_b2 = (_a4 = TIME_SKY.janShift[culture]) == null ? void 0 : _a4[era]) != null ? _b2 : 0 : 0;
+  return ((row.p - shift - 1) % months + months) % months + 1;
 }
 
 // src/data/deity-names.json
@@ -94624,57 +101528,57 @@ var GENDERS = ["m", "f", "n"];
 var GENDER_OF = { male: "m", female: "f", neither: "n" };
 function vocabPool6(ctx, pool3, keep) {
   return poolEntries(ctx.vocab, pool3, { culture: ctx.culture, era: ctx.era, fantastic: ctx.fantastic }).filter(([e]) => !keep || keep(e)).map(([e, w]) => {
-    var _a3;
-    return [e, w * toneFactor((_a3 = e.t) != null ? _a3 : [], ctx.tone)];
+    var _a4;
+    return [e, w * toneFactor((_a4 = e.t) != null ? _a4 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
 }
 function fromPool5(ctx, pool3, keep, x) {
-  var _a3;
+  var _a4;
   const items = vocabPool6(ctx, pool3, keep).map(([e2, w]) => {
-    var _a4;
-    return [e2, w * ((_a4 = x == null ? void 0 : x(e2)) != null ? _a4 : 1)];
+    var _a5;
+    return [e2, w * ((_a5 = x == null ? void 0 : x(e2)) != null ? _a5 : 1)];
   });
   const e = pickWeighted5(items, ctx.rng);
   if (!e) return void 0;
-  for (const t of (_a3 = e.t) != null ? _a3 : []) ctx.drawn.add(t);
+  for (const t of (_a4 = e.t) != null ? _a4 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
   return e.w;
 }
 var gendered = (ctx, pool3) => fromPool5(ctx, pool3, (e) => {
-  var _a3;
-  return ((_a3 = e.g) != null ? _a3 : "n") === ctx.gender;
+  var _a4;
+  return ((_a4 = e.g) != null ? _a4 : "n") === ctx.gender;
 });
 function archetypes(ctx, domain, pantheon) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const out = [];
   for (const a of domain.archetypes) {
     if (a.c && !a.c.includes(ctx.culture)) continue;
     if (a.pantheon && !pantheon) continue;
-    const text = (_a3 = a.all) != null ? _a3 : a[ctx.gender];
+    const text = (_a4 = a.all) != null ? _a4 : a[ctx.gender];
     if (!text) continue;
     if (ctx.tone === "light" && DEITY_DATA.lists.livingTricksters.includes(text)) continue;
-    out.push([text, (_c = (_b = ctx.style.archetypeX) == null ? void 0 : _b[text]) != null ? _c : 1]);
+    out.push([text, (_c2 = (_b2 = ctx.style.archetypeX) == null ? void 0 : _b2[text]) != null ? _c2 : 1]);
   }
   return out;
 }
 function domainWord(ctx) {
   const items = ctx.domain.words.filter((w2) => !w2.c || w2.c.includes(ctx.culture)).map((w2) => {
-    var _a3;
-    return [w2, (_a3 = w2.x) != null ? _a3 : 1];
+    var _a4;
+    return [w2, (_a4 = w2.x) != null ? _a4 : 1];
   });
   const w = pickWeighted5(items, ctx.rng);
   if (w) ctx.words.push({ pool: "domainWord", word: w.w });
   return w;
 }
 function deityRef(ctx) {
-  var _a3;
-  const title = (_a3 = ctx.deityRef) != null ? _a3 : deityTitleIn(ctx, ["archetype", "A", "B", "C", "D"]);
+  var _a4;
+  const title = (_a4 = ctx.deityRef) != null ? _a4 : deityTitleIn(ctx, ["archetype", "A", "B", "C", "D"]);
   if (!title) return void 0;
   if (/^(He|She|They) Who /.test(title)) return title;
   return `the ${title.replace(/^the /, "")}`;
 }
 function token12(ctx, name) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const rng = ctx.rng;
   const L = DEITY_DATA.lists;
   switch (name) {
@@ -94685,11 +101589,11 @@ function token12(ctx, name) {
     case "pronoun":
       return L.pronoun[ctx.gender];
     case "domainWord":
-      return (_a3 = domainWord(ctx)) == null ? void 0 : _a3.w;
+      return (_a4 = domainWord(ctx)) == null ? void 0 : _a4.w;
     case "domainSg":
-      return (_b = domainWord(ctx)) == null ? void 0 : _b.sg;
+      return (_b2 = domainWord(ctx)) == null ? void 0 : _b2.sg;
     case "archetype": {
-      const pantheon = ((_c = ctx.shape) == null ? void 0 : _c.kind) === "pantheon";
+      const pantheon = ((_c2 = ctx.shape) == null ? void 0 : _c2.kind) === "pantheon";
       const a = pickWeighted5(archetypes(ctx, ctx.domain, pantheon).filter(([t]) => !pantheon || !/^the /.test(t) || true), rng);
       if (a) ctx.words.push({ pool: "archetype", word: a });
       return pantheon ? a == null ? void 0 : a.replace(/^the /, "") : a;
@@ -94698,8 +101602,8 @@ function token12(ctx, name) {
       return fromPool5(ctx, "cultureDivineAnimal");
     case "colour": {
       const items = groupListWords("colour", ctx.setting).filter(([w2]) => {
-        var _a4;
-        return !(((_a4 = ctx.shape) == null ? void 0 : _a4.p.includes("Eternal")) && L.steppeNoColour.includes(w2));
+        var _a5;
+        return !(((_a5 = ctx.shape) == null ? void 0 : _a5.p.includes("Eternal")) && L.steppeNoColour.includes(w2));
       });
       const w = pickWeighted5(items.map(([w2, n]) => [w2, n * toneFactor(wordTones("colour", w2), ctx.tone)]), rng);
       if (w) ctx.words.push({ pool: "colour", word: w });
@@ -94719,7 +101623,7 @@ function token12(ctx, name) {
     }
     case "divineVerb": {
       const v = fromPool5(ctx, name);
-      const plural2 = ctx.gender === "n" || ((_d = ctx.shape) == null ? void 0 : _d.kind) === "pantheon";
+      const plural2 = ctx.gender === "n" || ((_d2 = ctx.shape) == null ? void 0 : _d2.kind) === "pantheon";
       return v && plural2 ? v.replace(/^(\w+)/, (w) => /ies$/.test(w) ? w.replace(/ies$/, "y") : /(ch|sh|ss|x)es$/.test(w) ? w.slice(0, -2) : w.replace(/s$/, "")) : v;
     }
     case "deityRef":
@@ -94732,8 +101636,8 @@ function token12(ctx, name) {
       return fromPool5(ctx, `deityFixed:${ctx.shape.kind}`);
     case "sacredLand":
       return fromPool5(ctx, name, void 0, (e) => {
-        var _a4;
-        return ctx.christian ? (_a4 = DEITY_DATA.christian.placeX[e.w]) != null ? _a4 : 1 : 1;
+        var _a5;
+        return ctx.christian ? (_a5 = DEITY_DATA.christian.placeX[e.w]) != null ? _a5 : 1 : 1;
       });
   }
   return fromPool5(ctx, name);
@@ -94773,41 +101677,41 @@ function deityTitleBlocked(text, guards) {
 }
 var deityWordBlocked = (word, guards) => deityTitleBlocked(word, guards);
 function styleFor(culture, era) {
-  var _a3, _b, _c;
-  const base = (_a3 = DEITY_DATA.styles[culture]) != null ? _a3 : {};
+  var _a4, _b2, _c2;
+  const base = (_a4 = DEITY_DATA.styles[culture]) != null ? _a4 : {};
   const ancient = era === "AN" ? DEITY_DATA.styles[`${culture}:AN`] : void 0;
   if (!ancient) return base;
-  return { ...base, formX: { ...(_b = base.formX) != null ? _b : {}, ...(_c = ancient.formX) != null ? _c : {} } };
+  return { ...base, formX: { ...(_b2 = base.formX) != null ? _b2 : {}, ...(_c2 = ancient.formX) != null ? _c2 : {} } };
 }
 function shapeWeight8(ctx, s) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, ctx.culture, ctx.era)) return 0;
   if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
   if (s.christian && !ctx.christian) return 0;
   if (s.domain && s.domain !== ctx.domain.key) return 0;
   if (s.gender && s.gender !== ctx.gender) return 0;
-  const form = (_a3 = s.form) != null ? _a3 : "";
+  const form = (_a4 = s.form) != null ? _a4 : "";
   if (ctx.christian && s.kind !== "place" && !DEITY_DATA.christian.genericForms.includes(form) && form !== "culture" && !/^P\d$/.test(form) && form !== "triple") return 0;
   if (form === "F" && ctx.style.fVariant && s.variant !== ctx.style.fVariant) return 0;
   if (s.p === "{archetype}" && archetypes(ctx, ctx.domain, false).length === 0) return 0;
   if (s.p === "{fixed}" && vocabPool6(ctx, `deityFixed:${s.kind}`).length === 0) return 0;
-  let w = s.w * ((_c = (_b = ctx.style.formX) == null ? void 0 : _b[form]) != null ? _c : 1) * (form === "F" && ctx.style.fVariant ? 2 : 1);
-  return w * toneFactor((_d = s.t) != null ? _d : [], ctx.tone);
+  let w = s.w * ((_c2 = (_b2 = ctx.style.formX) == null ? void 0 : _b2[form]) != null ? _c2 : 1) * (form === "F" && ctx.style.fVariant ? 2 : 1);
+  return w * toneFactor((_d2 = s.t) != null ? _d2 : [], ctx.tone);
 }
 var honourPattern = (ctx, s) => ctx.style.eastHonour && s.form === "A" ? "the {eastHonour} {figure} of {domainWord}" : ctx.style.tripleThree && s.form === "triple" ? "the Three {figure:pl} of the {sacredLand}" : s.p;
 function shapesFor2(ctx, kind, forms, only) {
-  var _a3;
-  return [...DEITY_DATA.shapes, ...(_a3 = ctx.style.extra) != null ? _a3 : []].filter((s) => {
-    var _a4;
-    return s.kind === kind && (!forms || forms.includes((_a4 = s.form) != null ? _a4 : "")) && (!only || s.p === only);
+  var _a4;
+  return [...DEITY_DATA.shapes, ...(_a4 = ctx.style.extra) != null ? _a4 : []].filter((s) => {
+    var _a5;
+    return s.kind === kind && (!forms || forms.includes((_a5 = s.form) != null ? _a5 : "")) && (!only || s.p === only);
   }).map((s) => [s, shapeWeight8({ ...ctx, shape: s }, s)]).filter(([, w]) => w > 0);
 }
 function deityTitleIn(ctx, forms) {
-  var _a3;
+  var _a4;
   for (let i = 0; i < 20; i++) {
     const sub = { ...ctx, gender: pickOne11(GENDERS, ctx.rng), deityRef: void 0 };
-    sub.domain = (_a3 = pickWeighted5(domainWeights(sub), ctx.rng)) != null ? _a3 : sub.domain;
+    sub.domain = (_a4 = pickWeighted5(domainWeights(sub), ctx.rng)) != null ? _a4 : sub.domain;
     const s = pickWeighted5(shapesFor2(sub, "deity", forms), ctx.rng);
     if (!s) return void 0;
     sub.shape = s;
@@ -94827,8 +101731,8 @@ function titleOk(text, ctx) {
 }
 function domainWeights(ctx) {
   return domainsOffered(ctx.era, ctx.fantastic).map((d) => {
-    var _a3, _b;
-    return [d, (_b = (_a3 = ctx.style.domainX) == null ? void 0 : _a3[d.key]) != null ? _b : 1];
+    var _a4, _b2;
+    return [d, (_b2 = (_a4 = ctx.style.domainX) == null ? void 0 : _a4[d.key]) != null ? _b2 : 1];
   });
 }
 function deityCulture(key2) {
@@ -94836,7 +101740,7 @@ function deityCulture(key2) {
   return { culture: DEITY_CULTURES.some((c) => c.key === key2) ? key2 : "general" };
 }
 function generateDeityNames(options) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
@@ -94849,15 +101753,15 @@ function generateDeityNames(options) {
   const chosenDomain = options.domain && options.domain !== "any" ? offered.find((d) => d.key === options.domain) : void 0;
   if (options.domain && options.domain !== "any" && !chosenDomain) notices.push(`The domain \u201C${options.domain}\u201D isn't offered here.`);
   const style = styleFor(culture, era);
-  const names = (_a3 = options.names) != null ? _a3 : "titles";
+  const names = (_a4 = options.names) != null ? _a4 : "titles";
   const base = {
     rng,
     culture,
     era,
     setting: routeSetting(era, fantastic),
     fantastic,
-    tone: (_b = options.tone) != null ? _b : "any",
-    vocab: (_c = options.vocab) != null ? _c : BUILT_IN_VOCAB,
+    tone: (_b2 = options.tone) != null ? _b2 : "any",
+    vocab: (_c2 = options.vocab) != null ? _c2 : BUILT_IN_VOCAB,
     style,
     christian: isChristianCulture(culture, era),
     gender: "n",
@@ -94868,12 +101772,12 @@ function generateDeityNames(options) {
   };
   const allows = (k) => !options.kinds || options.kinds.includes(k);
   const kindWeights = DEITY_KINDS.filter((k) => allows(k.key)).map((k) => {
-    var _a4, _b2;
-    return [k.key, k.w * ((_b2 = (_a4 = style.kindX) == null ? void 0 : _a4[k.key]) != null ? _b2 : 1)];
+    var _a5, _b3;
+    return [k.key, k.w * ((_b3 = (_a5 = style.kindX) == null ? void 0 : _a5[k.key]) != null ? _b3 : 1)];
   });
   const genderFixed = options.gender && options.gender !== "any" ? GENDER_OF[options.gender] : void 0;
   const build = (kind, extra = {}) => {
-    var _a4, _b2, _c2;
+    var _a5, _b3, _c3;
     for (let i = 0; i < 20; i++) {
       const ctx = { ...base, drawn: /* @__PURE__ */ new Set(), words: [], gender: genderFixed != null ? genderFixed : pickOne11(GENDERS, rng), ...extra };
       if (!extra.domain) ctx.domain = chosenDomain != null ? chosenDomain : pickWeighted5(domainWeights(ctx), rng);
@@ -94886,18 +101790,18 @@ function generateDeityNames(options) {
       if (!titleOk(title, ctx)) continue;
       let text = title;
       if (kind === "deity" && names !== "titles") {
-        const name = names === "placeholder" ? "[deity]" : (_a4 = options.drawName) == null ? void 0 : _a4.call(options, ctx.gender, rng);
+        const name = names === "placeholder" ? "[deity]" : (_a5 = options.drawName) == null ? void 0 : _a5.call(options, ctx.gender, rng);
         if (!name) continue;
         text = `${name}, ${title}`;
       }
-      const tones = /* @__PURE__ */ new Set([...(_b2 = s.t) != null ? _b2 : [], ...ctx.drawn]);
+      const tones = /* @__PURE__ */ new Set([...(_b3 = s.t) != null ? _b3 : [], ...ctx.drawn]);
       const usesDomain = /\{(domainWord|domainSg|archetype)\}/.test(s.p) || s.form === "A" || !!s.domain;
       return {
         text,
         title,
         kind,
         shape: s.p,
-        form: (_c2 = s.form) != null ? _c2 : "",
+        form: (_c3 = s.form) != null ? _c3 : "",
         ...usesDomain ? { domain: ctx.domain.key } : {},
         ...kind === "deity" ? { gender: ctx.gender } : {},
         tones: GROUP_TONES.filter((t) => tones.has(t)),
@@ -94916,20 +101820,20 @@ function generateDeityNames(options) {
     return true;
   };
   const drawKind = () => {
-    var _a4;
-    return (_a4 = options.kind) != null ? _a4 : pickWeighted5(kindWeights, rng);
+    var _a5;
+    return (_a5 = options.kind) != null ? _a5 : pickWeighted5(kindWeights, rng);
   };
   if (options.series) pantheon();
   else for (let attempt2 = 0; attempt2 < count * 50 && out.length < count; attempt2++) add2(build(drawKind()));
   if (out.length < count) notices.push(`Only ${out.length} names could be generated.`);
   return { names: out, seed, notices };
   function pantheon() {
-    var _a4;
+    var _a5;
     const domainsLeft = () => offered.filter((d) => !out.some((n) => n.kind === "deity" && n.domain === d.key));
     let turn = 0;
     if (!options.kind || options.kind === "pantheon") for (let t = 0; t < 20 && out.length === 0; t++) add2(build("pantheon"));
     for (let idle = 0; idle < 80 && out.length < count; ) {
-      let kind = (_a4 = options.kind) != null ? _a4 : rng() < 25 / 85 && allows("place") ? "place" : "deity";
+      let kind = (_a5 = options.kind) != null ? _a5 : rng() < 25 / 85 && allows("place") ? "place" : "deity";
       if (kind === "pantheon" && options.kind !== "pantheon") kind = "deity";
       if (kind === "place" && !options.kind && !out.some((n2) => n2.kind === "deity")) kind = "deity";
       const extra = {};
@@ -94967,22 +101871,22 @@ function generateDeityNames(options) {
   }
 }
 function deityTitle(o) {
-  var _a3;
+  var _a4;
   if (o.culture && DEITY_DATA.unoffered.includes(o.culture)) return void 0;
   const b = generateDeityNames({ ...o, kind: "deity", forms: ["archetype", "A", "B", "D"], count: 1, seed: Math.floor(o.rng() * 4294967295) });
-  return (_a3 = b.names[0]) == null ? void 0 : _a3.title;
+  return (_a4 = b.names[0]) == null ? void 0 : _a4.title;
 }
 function sacredPlace(o) {
-  var _a3;
+  var _a4;
   if (o.culture && DEITY_DATA.unoffered.includes(o.culture)) return void 0;
   const b = generateDeityNames({ ...o, kind: "place", forms: ["L1", "L2"], count: 1, seed: Math.floor(o.rng() * 4294967295) });
-  return (_a3 = b.names[0]) == null ? void 0 : _a3.title.replace(/^the /, "");
+  return (_a4 = b.names[0]) == null ? void 0 : _a4.title.replace(/^the /, "");
 }
 function deityTitleForTradition(tradition, setting, rng, tone) {
-  var _a3;
+  var _a4;
   if (DEITY_DATA.sensitiveTraditions.includes(tradition)) return void 0;
   const era = setting === "SF" ? "IS" : setting === "MR" || setting === "MF" ? "MO" : "MD";
-  return deityTitle({ culture: (_a3 = DEITY_DATA.traditionCulture[tradition]) != null ? _a3 : "general", era, fantastic: setting === "FH" || setting === "MF", tone, rng });
+  return deityTitle({ culture: (_a4 = DEITY_DATA.traditionCulture[tradition]) != null ? _a4 : "general", era, fantastic: setting === "FH" || setting === "MF", tone, rng });
 }
 setDeityHooks({
   deityTitle,
@@ -95084,13 +101988,13 @@ function vesselCultureFor(culture) {
   return culture === "polynesian" ? "hawaiian" : culture;
 }
 function groupTraditionFor(culture) {
-  var _a3;
+  var _a4;
   if (culture === "polynesian" || culture === "andean") return culture;
-  return (_a3 = REALM_DATA.tribal[culture]) != null ? _a3 : "general";
+  return (_a4 = REALM_DATA.tribal[culture]) != null ? _a4 : "general";
 }
 function realmEraFor(era) {
-  var _a3;
-  return ((_a3 = REALM_ERAS.find((e) => e.code === era)) != null ? _a3 : REALM_ERAS.find((e) => e.code === "MO")).key;
+  var _a4;
+  return ((_a4 = REALM_ERAS.find((e) => e.code === era)) != null ? _a4 : REALM_ERAS.find((e) => e.code === "MO")).key;
 }
 function groupGenreFor(era) {
   const setting = routeSetting(era, false);
@@ -95118,13 +102022,13 @@ function twoWords(vocab, pool3, o, rng, extra = []) {
   return out;
 }
 function buildContext(o, rng) {
-  var _a3, _b, _c, _d, _e, _f;
-  const vocab = (_a3 = o.vocab) != null ? _a3 : BUILT_IN_VOCAB;
+  var _a4, _b2, _c2, _d2, _e2, _f;
+  const vocab = (_a4 = o.vocab) != null ? _a4 : BUILT_IN_VOCAB;
   const setting = routeSetting(o.era, o.fantastic);
-  const blocked2 = (_b = o.blocked) != null ? _b : defaultBlocked;
+  const blocked2 = (_b2 = o.blocked) != null ? _b2 : defaultBlocked;
   const taken = [];
   const place4 = () => {
-    var _a4;
+    var _a5;
     for (let i = 0; i < 200; i++) {
       const t2 = isFuture5(o.era) ? groupTown("SF", void 0, rng) : routePlace(o.culture, setting, rng);
       if (t2 && !t2.includes("[") && !blocked2(t2) && !taken.some((x) => x.toLowerCase() === t2.toLowerCase())) {
@@ -95132,11 +102036,11 @@ function buildContext(o, rng) {
         return t2;
       }
     }
-    const t = `${(_a4 = taken[0]) != null ? _a4 : "Newtown"} ${taken.length + 1}`;
+    const t = `${(_a5 = taken[0]) != null ? _a5 : "Newtown"} ${taken.length + 1}`;
     taken.push(t);
     return t;
   };
-  const town4 = place4();
+  const town5 = place4();
   const neighbours = Array.from({ length: 6 }, place4);
   let realm2 = null;
   if (!(o.village && rng() < 0.5)) {
@@ -95161,10 +102065,10 @@ function buildContext(o, rng) {
   const founder2 = o.people === "invented" && people2.length > 0 ? people2[Math.floor(rng() * people2.length)] : "[founder]";
   const holy = inCultureGroup("christian", o.culture, o.era) ? groupSaint(setting, rng) : null;
   const trades = CASTE5.has(o.culture) ? null : twoWords(vocab, "streetTrades", o, rng);
-  const goods = twoWords(vocab, "streetGoods", o, rng, (_e = (_d = (_c = vocab.pools.routeGoods) == null ? void 0 : _c.cultureExtra) == null ? void 0 : _d[o.culture]) != null ? _e : []);
+  const goods = twoWords(vocab, "streetGoods", o, rng, (_e2 = (_d2 = (_c2 = vocab.pools.routeGoods) == null ? void 0 : _c2.cultureExtra) == null ? void 0 : _d2[o.culture]) != null ? _e2 : []);
   const deity = deityCultureOffered(o.culture) && !(isChristianCulture(o.culture, o.era) && !o.fantastic) ? (_f = deityTitle({ culture: o.culture, era: o.era, fantastic: o.fantastic, tone: o.tone, rng, vocab })) != null ? _f : null : null;
   return {
-    town: town4,
+    town: town5,
     neighbours,
     realm: realm2,
     founder: founder2,
@@ -95192,10 +102096,10 @@ var positionText = (key2, era) => {
   return isFuture6(era) ? p.sf : p.text;
 };
 function sectionCount(key2, size, detail, position = "inland") {
-  var _a3;
+  var _a4;
   const base = KIT_DATA.sizes[key2][size];
   if (base === 0) return 0;
-  const extra = key2 === "roads" ? (_a3 = KIT_POSITIONS.find((p) => p.key === position).roadsExtra) != null ? _a3 : 0 : 0;
+  const extra = key2 === "roads" ? (_a4 = KIT_POSITIONS.find((p) => p.key === position).roadsExtra) != null ? _a4 : 0 : 0;
   return Math.ceil(base * KIT_DATA.detail[detail]) + extra;
 }
 function sectionsFor(contents, position, era) {
@@ -95205,10 +102109,10 @@ function sectionsFor(contents, position, era) {
   return all.filter((k) => !(contents === "places" && (k === "groups" || k === "ships" || k === "history")) && !(k === "ships" && !water));
 }
 function positionInfo(position, era, size) {
-  var _a3;
+  var _a4;
   const p = KIT_POSITIONS.find((x) => x.key === position);
   if (isFuture6(era) && p.sfStation) return { ...p.sfStation, roadsExtra: 0 };
-  return { setting: size === "village" && p.villageSetting ? p.villageSetting : p.setting, ships: p.ships, effects: p.effects, roadsExtra: (_a3 = p.roadsExtra) != null ? _a3 : 0 };
+  return { setting: size === "village" && p.villageSetting ? p.villageSetting : p.setting, ships: p.ships, effects: p.effects, roadsExtra: (_a4 = p.roadsExtra) != null ? _a4 : 0 };
 }
 function shipsModule(position, era) {
   if (position === "inland") return void 0;
@@ -95223,8 +102127,8 @@ var LANDMARK_KINDS = ["defence", "crossing", "water", "monument"];
 var THROUGH_KINDS = ["road", "drove", "trade"];
 var subSeed = (seed, step, rerolls = 0) => step * KIT_DATA.seedStep + seed + rerolls * KIT_DATA.rerollStep >>> 0;
 function resolveKitOptions(o) {
-  var _a3, _b, _c, _d;
-  const culture = (_b = (_a3 = findRouteCulture(o.culture)) == null ? void 0 : _a3.key) != null ? _b : "norman-british";
+  var _a4, _b2, _c2, _d2;
+  const culture = (_b2 = (_a4 = findRouteCulture(o.culture)) == null ? void 0 : _a4.key) != null ? _b2 : "norman-british";
   const era = ROUTE_ERAS.some((e) => e.code === o.era) ? o.era : "MD";
   return {
     culture,
@@ -95233,10 +102137,10 @@ function resolveKitOptions(o) {
     region: ["anglo-saxon", "celtic", "norman-british"].includes(culture) && o.region && o.region !== "all" ? o.region : void 0,
     size: KIT_SIZES.includes(o.size) ? o.size : "town",
     position: KIT_POSITIONS.some((p) => p.key === o.position) ? o.position : "inland",
-    tone: (_c = o.tone) != null ? _c : "any",
+    tone: (_c2 = o.tone) != null ? _c2 : "any",
     contents: o.contents && o.contents in KIT_CONTENTS ? o.contents : "whole",
     detail: KIT_DETAILS.includes(o.detail) ? o.detail : "standard",
-    people: (_d = o.people) != null ? _d : "placeholders",
+    people: (_d2 = o.people) != null ? _d2 : "placeholders",
     seed: o.seed !== void 0 && Number.isFinite(o.seed) ? o.seed >>> 0 : Math.random() * 4294967295 >>> 0
   };
 }
@@ -95248,15 +102152,15 @@ function kitSummary(o, realm2) {
   return `${/^[aeiou]/i.test(size) ? "an" : "a"} ${size}${where2 ? ` ${where2}` : ""}${the ? `, in ${the}` : ""}`;
 }
 function generateKit(options) {
-  var _a3, _b, _c, _d, _e, _f, _g;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g;
   const o = resolveKitOptions(options);
-  const rerolls = { ...(_a3 = options.rerolls) != null ? _a3 : {} };
+  const rerolls = { ...(_a4 = options.rerolls) != null ? _a4 : {} };
   const notices = [];
-  const g = (_b = options.safeguards) != null ? _b : {};
+  const g = (_b2 = options.safeguards) != null ? _b2 : {};
   const pos = positionInfo(o.position, o.era, o.size);
   const seedFor = (key2) => {
-    var _a4;
-    return subSeed(o.seed, STEPS[key2], key2 === "ruler" ? 0 : (_a4 = rerolls[key2]) != null ? _a4 : 0);
+    var _a5;
+    return subSeed(o.seed, STEPS[key2], key2 === "ruler" ? 0 : (_a5 = rerolls[key2]) != null ? _a5 : 0);
   };
   const context = {
     ...buildContext(
@@ -95274,7 +102178,7 @@ function generateKit(options) {
     return !!context.throughRoute && n === norm3(context.throughRoute) || context.landmarks.some((l) => norm3(l) === n || norm3(`${l} Inn`) === n);
   };
   const sections = /* @__PURE__ */ new Map();
-  const kept = new Map(((_d = (_c = options.keep) == null ? void 0 : _c.sections) != null ? _d : []).map((sec) => [sec.key, sec]));
+  const kept = new Map(((_d2 = (_c2 = options.keep) == null ? void 0 : _c2.sections) != null ? _d2 : []).map((sec) => [sec.key, sec]));
   for (const sec of kept.values()) for (const e of sec.entries) used.add(norm3(e.text));
   const title = (key2) => key2 === "ships" && shipsModule(o.position, o.era) === "spacecraft" ? "Spacecraft" : KIT_DATA.sections.find((s) => s.key === key2).title;
   const run = (key2, wanted, batch) => {
@@ -95329,7 +102233,7 @@ function generateKit(options) {
       shapeFilter: (p) => p.endsWith(KIT_DATA.rulerShapes),
       officeWords: o.size === "village" ? KIT_DATA.villageOfficeWords : void 0
     }).names[0];
-    ruler = (_e = r == null ? void 0 : r.text) != null ? _e : null;
+    ruler = (_e2 = r == null ? void 0 : r.text) != null ? _e2 : null;
   }
   const roadsWanted = want("roads");
   if (roadsWanted > 0 || keep.includes("streets") || keep.includes("inns")) {
@@ -95485,9 +102389,9 @@ function rerollTargets(key2) {
   return [key2];
 }
 function rerollKit(kit, key2, options = {}) {
-  var _a3;
+  var _a4;
   const rerolls = { ...kit.rerolls };
-  for (const k of rerollTargets(key2)) rerolls[k] = ((_a3 = rerolls[k]) != null ? _a3 : 0) + 1;
+  for (const k of rerollTargets(key2)) rerolls[k] = ((_a4 = rerolls[k]) != null ? _a4 : 0) + 1;
   const redo = rerollTargets(key2);
   const keep = { sections: kit.sections.filter((s) => !redo.includes(s.key)), ruler: kit.ruler, throughRoute: kit.context.throughRoute, landmarks: kit.context.landmarks };
   const next = generateKit({ ...kit.options, ...options, rerolls, keep });
@@ -95519,11 +102423,11 @@ function fields(content) {
   return { values, body: content.slice(fm[0].length) };
 }
 function isModulePresetContent(content) {
-  var _a3;
-  return ((_a3 = fields(content)) == null ? void 0 : _a3.values.type) === "module-preset";
+  var _a4;
+  return ((_a4 = fields(content)) == null ? void 0 : _a4.values.type) === "module-preset";
 }
 function parseModulePreset(content, fileName) {
-  var _a3, _b;
+  var _a4, _b2;
   const parsed = fields(content);
   const problems = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -95540,9 +102444,10 @@ function parseModulePreset(content, fileName) {
   if (values.module === KIT_PRESET_MODULE) return parseKitPreset(values, body, fileName);
   if (values.module === EVENT_PRESET_MODULE) return parseEventPreset(values, body, fileName);
   if (values.module === MONEY_PRESET_MODULE) return parseMoneyPreset(values, body, fileName);
+  if (values.module === CALENDAR_PRESET_MODULE || values.module === SKY_PRESET_MODULE) return parseTimePreset(values, body, fileName);
   if (values.module === DEITY_PRESET_MODULE) return parseDeityPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
-    problems.push(`Unknown module \u201C${(_a3 = values.module) != null ? _a3 : ""}\u201D.`);
+    problems.push(`Unknown module \u201C${(_a4 = values.module) != null ? _a4 : ""}\u201D.`);
     return { problems };
   }
   const d = TRIBAL_PRESET_DEFAULTS;
@@ -95560,7 +102465,7 @@ function parseModulePreset(content, fileName) {
   return {
     preset: {
       packName: values.packName || fileName,
-      setting: (_b = values.setting) != null ? _b : "",
+      setting: (_b2 = values.setting) != null ? _b2 : "",
       description: body.trim(),
       tradition: pick4("tradition", d.tradition, (v) => !!findTradition(v)),
       // Stellar brief §5.1: space biomes are never tribal biomes.
@@ -95575,6 +102480,7 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("timeModule" in preset) return timePresetContent(preset);
   if ("deityKind" in preset) return deityPresetContent(preset);
   if ("moneyKind" in preset) return moneyPresetContent(preset);
   if ("eventKind" in preset) return eventPresetContent(preset);
@@ -95610,11 +102516,11 @@ function modulePresetContent(preset) {
 }
 var GROUP_PRESET_MODULE = "group-names";
 function parseGroupPreset(values, body, fileName) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const problems = [];
-  const family = findFamily((_a3 = values.family) != null ? _a3 : "");
+  const family = findFamily((_a4 = values.family) != null ? _a4 : "");
   if (!family) {
-    problems.push(`Unknown family \u201C${(_b = values.family) != null ? _b : ""}\u201D.`);
+    problems.push(`Unknown family \u201C${(_b2 = values.family) != null ? _b2 : ""}\u201D.`);
     return { problems };
   }
   const pick4 = (key2, fallback, ok) => {
@@ -95649,7 +102555,7 @@ function parseGroupPreset(values, body, fileName) {
   return {
     group: {
       packName: values.packName || fileName,
-      setting: (_c = values.setting) != null ? _c : "",
+      setting: (_c2 = values.setting) != null ? _c2 : "",
       description: body.trim(),
       family: family.key,
       tradition: pick4("tradition", "general", (v) => !!findTradition(v)),
@@ -95668,7 +102574,7 @@ function parseGroupPreset(values, body, fileName) {
   };
 }
 function groupPresetContent(preset) {
-  var _a3;
+  var _a4;
   return [
     "---",
     "type: module-preset",
@@ -95685,7 +102591,7 @@ function groupPresetContent(preset) {
     `people: ${preset.people}`,
     `tone: ${preset.tone}`,
     `series: ${preset.series}`,
-    ...preset.family === "trade" ? [`commodity: ${(_a3 = preset.commodity) != null ? _a3 : "any"}`] : [],
+    ...preset.family === "trade" ? [`commodity: ${(_a4 = preset.commodity) != null ? _a4 : "any"}`] : [],
     ...preset.scale && preset.scale !== "any" ? [`scale: ${preset.scale}`] : [],
     "---",
     "",
@@ -95695,11 +102601,11 @@ function groupPresetContent(preset) {
 }
 var BYNAME_PRESET_MODULE = "bynames";
 function parseBynamePreset(values, body, fileName) {
-  var _a3, _b;
+  var _a4, _b2;
   const problems = [];
   const module2 = values.bynameModule;
   if (!["epithets", "titles", "familyNames"].includes(module2)) {
-    problems.push(`Unknown bynameModule \u201C${(_a3 = values.bynameModule) != null ? _a3 : ""}\u201D.`);
+    problems.push(`Unknown bynameModule \u201C${(_a4 = values.bynameModule) != null ? _a4 : ""}\u201D.`);
     return { problems };
   }
   const pick4 = (key2, fallback, ok) => {
@@ -95715,7 +102621,7 @@ function parseBynamePreset(values, body, fileName) {
   return {
     byname: {
       packName: values.packName || fileName,
-      setting: (_b = values.setting) != null ? _b : "",
+      setting: (_b2 = values.setting) != null ? _b2 : "",
       description: body.trim(),
       bynameModule: module2,
       culture,
@@ -95760,7 +102666,7 @@ function bynamePresetContent(preset) {
 }
 var REALM_PRESET_MODULE = "realms";
 function parseRealmPreset(values, body, fileName) {
-  var _a3;
+  var _a4;
   const problems = [];
   const pick4 = (key2, fallback, ok) => {
     const v = values[key2];
@@ -95784,7 +102690,7 @@ function parseRealmPreset(values, body, fileName) {
   return {
     realm: {
       packName: values.packName || fileName,
-      setting: (_a3 = values.setting) != null ? _a3 : "",
+      setting: (_a4 = values.setting) != null ? _a4 : "",
       description: body.trim(),
       culture: pick4("culture", "general", (v) => REALM_CULTURES.some((c) => c.key === v)),
       character: pick4("character", "any", (v) => v === "any" || REALM_CHARACTERS.some((c) => c.key === v)),
@@ -95830,7 +102736,7 @@ function realmPresetContent(preset) {
 }
 var ROUTE_PRESET_MODULE = "route-names";
 function parseRoutePreset(values, body, fileName) {
-  var _a3;
+  var _a4;
   const problems = [];
   const pick4 = (key2, fallback, ok) => {
     const v = values[key2];
@@ -95855,7 +102761,7 @@ function parseRoutePreset(values, body, fileName) {
   return {
     route: {
       packName: values.packName || fileName,
-      setting: (_a3 = values.setting) != null ? _a3 : "",
+      setting: (_a4 = values.setting) != null ? _a4 : "",
       description: body.trim(),
       culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
       region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
@@ -95896,7 +102802,7 @@ function routePresetContent(preset) {
 }
 var STREET_PRESET_MODULE = "street-names";
 function parseStreetPreset(values, body, fileName) {
-  var _a3;
+  var _a4;
   const problems = [];
   const pick4 = (key2, fallback, ok) => {
     const v = values[key2];
@@ -95920,7 +102826,7 @@ function parseStreetPreset(values, body, fileName) {
   return {
     street: {
       packName: values.packName || fileName,
-      setting: (_a3 = values.setting) != null ? _a3 : "",
+      setting: (_a4 = values.setting) != null ? _a4 : "",
       description: body.trim(),
       culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
       region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
@@ -96200,7 +103106,7 @@ function eventPresetContent(preset) {
 var MONEY_PRESET_MODULE = "money-names";
 var MONEY_SERIES = ["separate", "coinage", "values"];
 function parseMoneyPreset(values, body, fileName) {
-  var _a3;
+  var _a4;
   const problems = [];
   const pick4 = (key2, fallback, ok) => {
     const v = values[key2];
@@ -96230,7 +103136,7 @@ function parseMoneyPreset(values, body, fileName) {
   };
   const state = normaliseMoney({ ...draft, kind: draft.moneyKind === "any" ? void 0 : draft.moneyKind });
   if (draft.moneyKind !== "any" && state.kind === void 0) problems.push(`Kind \u201C${draft.moneyKind}\u201D isn't offered here.`);
-  kind = (_a3 = state.kind) != null ? _a3 : "any";
+  kind = (_a4 = state.kind) != null ? _a4 : "any";
   return { money: { ...draft, moneyKind: kind, words: state.words, series: state.series }, problems };
 }
 function moneyPresetContent(preset) {
@@ -96318,11 +103224,11 @@ function deityPresetContent(preset) {
 }
 var VESSEL_PRESET_MODULE = "vessels";
 function parseVesselPreset(values, body, fileName) {
-  var _a3, _b;
+  var _a4, _b2;
   const problems = [];
   const module2 = values.vesselModule;
   if (module2 !== "ships" && module2 !== "spacecraft") {
-    problems.push(`Unknown vesselModule \u201C${(_a3 = values.vesselModule) != null ? _a3 : ""}\u201D.`);
+    problems.push(`Unknown vesselModule \u201C${(_a4 = values.vesselModule) != null ? _a4 : ""}\u201D.`);
     return { problems };
   }
   const pick4 = (key2, fallback, ok) => {
@@ -96355,7 +103261,7 @@ function parseVesselPreset(values, body, fileName) {
   return {
     vessel: {
       packName: values.packName || fileName,
-      setting: (_b = values.setting) != null ? _b : "",
+      setting: (_b2 = values.setting) != null ? _b2 : "",
       description: body.trim(),
       vesselModule: module2,
       culture: pick4("culture", "general", (v) => !!findVesselCulture(v)),
@@ -96398,11 +103304,11 @@ function vesselPresetContent(preset) {
 }
 var WATERS_PRESET_MODULE = "waters";
 function parseWatersPreset(values, body, fileName) {
-  var _a3, _b;
+  var _a4, _b2;
   const problems = [];
   const module2 = values.watersModule;
   if (module2 !== "seasLakes" && module2 !== "coastsIslands" && module2 !== "seaCharts" && module2 !== "hyperspaceCharts") {
-    problems.push(`Unknown watersModule \u201C${(_a3 = values.watersModule) != null ? _a3 : ""}\u201D.`);
+    problems.push(`Unknown watersModule \u201C${(_a4 = values.watersModule) != null ? _a4 : ""}\u201D.`);
     return { problems };
   }
   const hyper = module2 === "hyperspaceCharts";
@@ -96429,7 +103335,7 @@ function parseWatersPreset(values, body, fileName) {
   return {
     waters: {
       packName: values.packName || fileName,
-      setting: (_b = values.setting) != null ? _b : "",
+      setting: (_b2 = values.setting) != null ? _b2 : "",
       description: body.trim(),
       watersModule: module2,
       culture,
@@ -96490,6 +103396,74 @@ function tribalPresetDraw(preset) {
   const { tradition, ...fields2 } = tribalPresetSlot(preset);
   return (rng) => tribalSlotFill({ tradition, part: "new-land", fields: fields2 }, rng).text;
 }
+var CALENDAR_PRESET_MODULE = "calendar-names";
+var SKY_PRESET_MODULE = "sky-names";
+function parseTimePreset(values, body, fileName) {
+  const problems = [];
+  const timeModule = values.module === SKY_PRESET_MODULE ? "sky" : "calendar";
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  const culture = pick4("culture", "norman-british", (v) => !!findTimeCulture(v));
+  const fallbackKind = timeModule === "calendar" ? "month" : "constellation";
+  const kind = pick4("kind", fallbackKind, (v) => {
+    var _a4;
+    return ((_a4 = findTimeKind(v)) == null ? void 0 : _a4.module) === timeModule;
+  });
+  const fantasticRaw = values.fantastic;
+  if (fantasticRaw && fantasticRaw !== "true" && fantasticRaw !== "false") problems.push(`Unknown fantastic \u201C${fantasticRaw}\u201D.`);
+  const sensitive = TIME_SKY.sensitive.includes(culture);
+  let tone = pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v));
+  if (sensitive && (tone === "light" || tone === "grim")) tone = "any";
+  const seriesRaw = pick4("series", "off", (v) => v === "on" || v === "off");
+  const draft = {
+    packName: values.packName || fileName,
+    setting: "",
+    description: body.trim(),
+    timeModule,
+    culture,
+    kind,
+    era,
+    fantastic: !sensitive && fantasticRaw === "true",
+    biome: pick4("biome", "homeland", (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
+    start: pick4("start", "own", (v) => v === "own" || Object.keys(TIME_SKY.seasons).includes(v)),
+    words: pick4("words", "translated", (v) => v === "translated" || v === "loanwords"),
+    tone,
+    people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+    series: seriesRaw === "on"
+  };
+  if (!kindsOffered2(timeModule, culture, era).some((k) => k.key === kind)) {
+    problems.push(`Kind \u201C${kind}\u201D isn't offered here.`);
+    draft.kind = fallbackKind;
+  }
+  return { time: draft, problems };
+}
+function timePresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${preset.timeModule === "sky" ? SKY_PRESET_MODULE : CALENDAR_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.kind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `biome: ${preset.biome}`,
+    ...preset.timeModule === "calendar" ? [`start: ${preset.start}`, `words: ${preset.words}`] : [],
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series ? "on" : "off"}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
 
 // src/settlement/safeguardPacks.ts
 var SETTLEMENT_SAFEGUARD_TYPE = "settlement-safeguards";
@@ -96515,6 +103489,1587 @@ Names to allow, though they echo a real or well-known route.
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
 
+// src/timesky/engine.ts
+var defaultTimeSafeguards = () => ({ block: TIME_SKY.safeguards.block, flag: TIME_SKY.safeguards.flag, flagListBlocks: TIME_SKY.safeguards.flagListBlocks });
+var wordRe13 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
+var BANNED11 = [...TIME_SKY.safeguards.banned, ...TIME_SKY.safeguards.bannedFromMoney ? MONEY_DATA.safeguards.banned : []].map(wordRe13);
+var bare5 = (text) => routeNorm(text).replace(/^the /, "");
+var breaksTimeWords = (text) => hasBannedWord(text) || BANNED11.some((re) => re.test(text)) || breaksDeityWords(text);
+function timeBlockSet(guards = defaultTimeSafeguards(), kind) {
+  var _a4;
+  return new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : [], ...kind ? (_a4 = TIME_SKY.safeguards.kindBlock[kind]) != null ? _a4 : [] : []].map(bare5));
+}
+var timeWordBlocked = (word, guards) => timeBlockSet(guards).has(bare5(word)) || breaksTimeWords(word);
+var pickOne12 = (items, rng) => items[Math.floor(rng() * items.length)];
+var cap2 = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+var ARTICLE_KINDS = ["constellation", "sign", "light"];
+var NO_LIGHT_GRIM = ["light", "grim"];
+var blockedTone = (ctx, tones) => ctx.sensitive && (tones != null ? tones : []).some((t) => NO_LIGHT_GRIM.includes(t));
+var POOL_CACHE2 = /* @__PURE__ */ new WeakMap();
+function poolWords(ctx, pool3, season) {
+  var _a4, _b2, _c2, _d2;
+  const seasons = ctx.cycle ? ctx.cycle.map(([s]) => s) : [];
+  const key2 = `${pool3}|${ctx.culture}|${ctx.era}|${ctx.fantastic}|${season != null ? season : "*"}|${seasons.join()}|${ctx.tone}|${ctx.sensitive}`;
+  let cache = POOL_CACHE2.get(ctx.vocab);
+  if (!cache) POOL_CACHE2.set(ctx.vocab, cache = /* @__PURE__ */ new Map());
+  const hit = cache.get(key2);
+  if (hit) return hit;
+  const where2 = { culture: ctx.culture, era: ctx.era, fantastic: ctx.fantastic };
+  const source = ctx.vocab.pools[pool3];
+  const out = [];
+  if (source) {
+    const all = [...source.entries.map((e) => [e, 1]), ...((_b2 = (_a4 = source.cultureExtra) == null ? void 0 : _a4[ctx.culture]) != null ? _b2 : []).map((e) => [e, 3])];
+    for (const [e, mult] of all) {
+      if (!entryAllowed(e, where2) || blockedTone(ctx, e.t)) continue;
+      if (e.s) {
+        const fits = season ? e.s.includes(season) : e.s.some((s) => seasons.includes(s));
+        if (!fits) continue;
+      }
+      const w = ((_c2 = e.x) != null ? _c2 : 1) * mult * toneFactor((_d2 = e.t) != null ? _d2 : [], ctx.tone);
+      if (w > 0) out.push([e, w]);
+    }
+  }
+  cache.set(key2, out);
+  return out;
+}
+function drawWord(ctx, cls, pool3, opts = {}) {
+  var _a4;
+  const items = poolWords(ctx, pool3, opts.season === void 0 ? ctx.season : opts.season).filter(([e2]) => (!opts.keep || opts.keep(e2)) && !(ctx.distinct && ctx.used.has(`${cls}:${e2.w}`)));
+  const e = pickWeighted5(items, ctx.rng);
+  if (!e) return void 0;
+  for (const t of (_a4 = e.t) != null ? _a4 : []) ctx.drawn.add(t);
+  ctx.log.push({ pool: pool3, word: e.w });
+  if (ctx.distinct) ctx.used.add(`${cls}:${e.w}`);
+  return e;
+}
+function drawFrom(ctx, cls, pool3, items, tones) {
+  var _a4;
+  const ok = items.filter(([w2, n]) => n > 0 && !(ctx.distinct && ctx.used.has(`${cls}:${w2}`)) && !blockedTone(ctx, tones == null ? void 0 : tones(w2)));
+  const w = pickWeighted5(ok, ctx.rng);
+  if (w === void 0) return void 0;
+  for (const t of (_a4 = tones == null ? void 0 : tones(w)) != null ? _a4 : []) ctx.drawn.add(t);
+  ctx.log.push({ pool: pool3, word: w });
+  if (ctx.distinct) ctx.used.add(`${cls}:${w}`);
+  return w;
+}
+var plainList = (words) => words.map((w) => [w, 1]);
+function gnWord7(ctx, list, setting = ctx.setting) {
+  const items = groupListWords(list, setting).map(([w, n]) => [w, n * toneFactor(wordTones(list, w), ctx.tone)]);
+  return drawFrom(ctx, list, list, items, (w) => wordTones(list, w));
+}
+var BIOME_LISTS = { wildAnimal: "wildAnimals", bird: "birds", creature: "creatures", tree: "trees", plant: "plants", crop: "crops", livestock: "livestock" };
+function landBiome(ctx) {
+  var _a4, _b2;
+  return (_b2 = (_a4 = ctx.biome) != null ? _a4 : findBiome(homelandOf(ctx.culture))) != null ? _b2 : BRITAIN;
+}
+function biomeItems(ctx, token14) {
+  const biome = landBiome(ctx);
+  if (!biome || ctx.land.space) return [];
+  const lists = token14 === "beast" ? ["wildAnimal", "bird", "creature", "livestock"] : [token14];
+  return lists.flatMap((t) => biomeWords(biome, BIOME_LISTS[t]).filter(([w]) => !w.includes("{")).map(([w, n]) => [biomeTitleCase(w), n]));
+}
+function biomeWord(ctx, token14) {
+  return drawFrom(ctx, token14 === "beast" ? "beast" : token14 === "wildAnimal" || token14 === "bird" || token14 === "creature" || token14 === "livestock" ? "beast" : token14, token14, biomeItems(ctx, token14));
+}
+var EVENT_POOLS = /* @__PURE__ */ new Map();
+function eventName(ctx) {
+  if (ctx.mode === "placeholders") return "[event]";
+  const kind = pickOne12(["treaty", "battle", "rebellion"], ctx.rng);
+  const key2 = `${ctx.culture}|${ctx.era}|${kind}`;
+  let pool3 = EVENT_POOLS.get(key2);
+  if (!pool3) {
+    const batch = generateEventNames({ culture: ctx.culture, era: ctx.era, kind, count: 40, seed: 1789, people: "invented" });
+    pool3 = batch.names.map((n) => n.text.replace(/^the /i, "").replace(/^(Battle|Treaty) of /i, "")).filter((n) => n && !n.includes("[") && !n.includes(" of the ") && countedWords2(n).length <= 2);
+    EVENT_POOLS.set(key2, pool3);
+  }
+  return pool3.length > 0 ? pickOne12(pool3, ctx.rng) : void 0;
+}
+function godTitle(ctx) {
+  if (ctx.sensitive) return void 0;
+  if (ctx.mode === "placeholders") return "[god]";
+  for (let i = 0; i < 6; i++) {
+    const g = deityTitle({ culture: ctx.culture, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng: ctx.rng });
+    if (g && !(ctx.distinct && ctx.used.has(`god:${g}`))) {
+      if (ctx.distinct) ctx.used.add(`god:${g}`);
+      ctx.log.push({ pool: "god", word: g });
+      return g;
+    }
+  }
+  return void 0;
+}
+function town4(ctx) {
+  var _a4;
+  if (ctx.mode === "placeholders") return "[place]";
+  return groupTown(ctx.setting, ctx.setting === "SF" ? void 0 : ((_a4 = findTimeCulture(ctx.culture)) == null ? void 0 : _a4.sensitive) ? void 0 : townSource(ctx.culture), ctx.rng).replace(/^The /, "");
+}
+var ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth", "Thirteenth"];
+var ordinalWord = (n) => {
+  var _a4;
+  return (_a4 = ORDINALS[n - 1]) != null ? _a4 : ordinalText(n);
+};
+function token13(ctx, name, mod) {
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
+  const placeholders = ctx.mode === "placeholders";
+  const pl = (w) => mod === "pl" ? pluralName(w) : w;
+  switch (name) {
+    case "seasonWord": {
+      const e = drawWord(ctx, "season", "seasonWord");
+      return e == null ? void 0 : e.w;
+    }
+    case "workWord":
+      return (_a4 = drawWord(ctx, "season", "workWord")) == null ? void 0 : _a4.w;
+    case "season": {
+      const s = (_b2 = ctx.season) != null ? _b2 : ctx.cycle ? pickOne12(ctx.cycle, ctx.rng)[0] : void 0;
+      return s ? seasonNoun(s) : void 0;
+    }
+    case "seasonPhrase": {
+      const s = (_c2 = ctx.season) != null ? _c2 : ctx.cycle ? pickOne12(ctx.cycle, ctx.rng)[0] : void 0;
+      return s ? seasonPhrase(s) : void 0;
+    }
+    case "position":
+      return ctx.season === null && ctx.cycle === null ? void 0 : cap2((_d2 = ctx.position) != null ? _d2 : pickOne12(TIME_SKY.lists.position, ctx.rng).toLowerCase());
+    case "dayWork":
+      return (_e2 = drawWord(ctx, "day", "dayWork")) == null ? void 0 : _e2.w;
+    case "dayElement":
+      return (_f = drawWord(ctx, "day", "dayElement")) == null ? void 0 : _f.w;
+    case "extraDays":
+      return (_g = drawWord(ctx, "extra", "extraDays")) == null ? void 0 : _g.w;
+    case "skyFigure": {
+      const e = drawWord(ctx, "figure", "skyFigure", { season: null });
+      if (!e) return void 0;
+      return mod === "poss" ? groupPossessive(e.w, /s$/.test(e.w)) : pl(e.w);
+    }
+    case "skyObject":
+      return (_h = drawWord(ctx, "object", "skyObject", { season: null })) == null ? void 0 : _h.w;
+    case "skyBodyPart":
+      return (_i = drawWord(ctx, "part", "skyBodyPart", { season: null })) == null ? void 0 : _i.w;
+    case "skyQuality":
+      return (_j = drawWord(ctx, "quality", "skyQuality", { season: null })) == null ? void 0 : _j.w;
+    case "skyKin":
+      return (_k = drawWord(ctx, "kin", "skyKin", { season: null })) == null ? void 0 : _k.w;
+    case "skyRiver":
+      return (_l = drawWord(ctx, "river", "skyRiver", { season: null })) == null ? void 0 : _l.w;
+    case "skyHeaven":
+      return (_m = drawWord(ctx, "heaven", "skyHeaven", { season: null })) == null ? void 0 : _m.w;
+    case "festNoun":
+      return (_n = drawWord(ctx, "noun", "festNoun", { season: null })) == null ? void 0 : _n.w;
+    case "festBlessing":
+      return (_o = drawWord(ctx, "noun", "festBlessing", { season: null })) == null ? void 0 : _o.w;
+    case "wildAnimal":
+    case "bird":
+    case "creature":
+    case "tree":
+    case "plant":
+    case "crop":
+    case "livestock": {
+      const w = biomeWord(ctx, name);
+      return w === void 0 ? void 0 : pl(w);
+    }
+    case "beast": {
+      const w = biomeWord(ctx, "beast");
+      if (w === void 0) return void 0;
+      return mod === "poss" ? groupPossessive(w, false) : w;
+    }
+    case "god": {
+      const g = godTitle(ctx);
+      if (g === void 0) return void 0;
+      if (mod !== "poss") return g;
+      const plural2 = /^the .+s$/i.test(g);
+      return groupPossessive(g.replace(/^the /i, ""), plural2);
+    }
+    case "holy": {
+      const h = placeholders ? "[holy person]" : groupSaint(ctx.setting, ctx.rng);
+      return mod === "poss" ? groupPossessive(h, false) : h;
+    }
+    case "figure": {
+      const f = routeFigure(ctx.culture, ctx.setting, ctx.rng);
+      return f && mod === "poss" ? groupPossessive(f, false) : f;
+    }
+    case "founder":
+      return placeholders ? "[founder]" : groupPerson(ctx.setting, true, ctx.rng);
+    case "town":
+      return town4(ctx);
+    case "realm":
+      return placeholders ? "[realm]" : routeKingdom(ctx.culture, ctx.era, ctx.rng);
+    case "event":
+      return eventName(ctx);
+    case "star":
+      return groupStarIn("any", ctx.mode, ctx.rng);
+    case "spaceLand":
+      return ctx.setting === "SF" ? gnWord7(ctx, "spaceLand", "SF") : void 0;
+    case "colour":
+      return gnWord7(ctx, "colour");
+    case "number":
+      return gnWord7(ctx, "number");
+    case "ordinal": {
+      if (ctx.ownPos !== void 0) return ordinalWord(ctx.ownPos);
+      return gnWord7(ctx, "ordinalWord");
+    }
+    case "numberWord":
+      return pickOne12(TIME_SKY.lists.numberWord, ctx.rng);
+    case "group":
+      return pickOne12(TIME_SKY.lists.group, ctx.rng);
+    case "kin":
+      return pickOne12(TIME_SKY.lists.kin, ctx.rng);
+    case "thing":
+      return pickOne12(TIME_SKY.lists.thing, ctx.rng);
+    case "herald":
+      return pickOne12(TIME_SKY.lists.herald, ctx.rng);
+    case "weather":
+      return pickOne12(TIME_SKY.lists.weather, ctx.rng);
+    case "turning":
+      return (_p = ctx.fixed.turning) != null ? _p : pickOne12(TIME_SKY.lists.turning, ctx.rng);
+    case "pairFeast": {
+      const raw = (_q = ctx.fixed.pairFeast) != null ? _q : pickOne12(TIME_SKY.lists.pairFeast, ctx.rng);
+      return raw.includes("{") ? renderPattern11(ctx, raw) : raw;
+    }
+    case "daySign": {
+      const w = drawFrom(ctx, "daySign", "daySign", plainList(TIME_SKY.lists.daySign), (x) => {
+        var _a5;
+        return (_a5 = TIME_SKY.lists.daySignTone[x]) != null ? _a5 : [];
+      });
+      return w;
+    }
+    case "moonPhase":
+      return pickOne12(TIME_SKY.lists.moonPhase, ctx.rng);
+    case "goods":
+      return gnWord7(ctx, "goods");
+    case "previous":
+      return ctx.previous;
+    case "festival": {
+      if (ctx.depth > 0) return void 0;
+      const inner = { ...ctx, kind: "festival", depth: 1, season: ctx.season, drawn: /* @__PURE__ */ new Set(), log: [], distinct: false };
+      const n = buildName(inner, "festival", (pl2) => !pl2.shape.cn);
+      return (_r = n == null ? void 0 : n.text.replace(/^(Feast|Festival) of /, "").replace(/^the /, "")) != null ? _r : void 0;
+    }
+    case "light": {
+      const n = neutralLightName(ctx);
+      if (!n) return void 0;
+      const text = n.replace(/^the /, "");
+      const last = (_s = text.split(" ").pop()) != null ? _s : "";
+      const kin = ((_u = (_t = BUILT_IN_VOCAB.pools.skyKin) == null ? void 0 : _t.entries) != null ? _u : []).some((e) => e.w === last);
+      return kin ? groupPossessive(text, false) : text;
+    }
+  }
+  return void 0;
+}
+function renderPattern11(ctx, pattern) {
+  let failed = false;
+  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
+    if (failed) return "";
+    const [name, mod] = raw.split(":");
+    const piece = token13(ctx, name, mod);
+    if (piece === void 0 || piece === "") {
+      failed = true;
+      return "";
+    }
+    return piece;
+  });
+  return failed ? void 0 : out;
+}
+var timeCapitals = (text) => routeCapitals(text).replace(/^The /, "the ");
+var PLANS = {};
+var _a3, _b, _c, _d, _e;
+for (const shape of TIME_SKY.shapes) {
+  const patterns = Array.isArray(shape.p) ? shape.p : [shape.p];
+  for (const raw of patterns) {
+    const [p, tones] = typeof raw === "string" ? [raw, (_a3 = shape.t) != null ? _a3 : []] : [raw[0], (_c = (_b = raw[1]) != null ? _b : shape.t) != null ? _c : []];
+    ((_e = PLANS[_d = shape.k]) != null ? _e : PLANS[_d] = []).push({ shape, p, tones, w: shape.w / patterns.length });
+  }
+}
+var TOKEN_RE = /\{([^}:]+)(?::[^}]*)?\}/g;
+function viable(ctx, p) {
+  for (const m of p.matchAll(TOKEN_RE)) {
+    const name = m[1];
+    switch (name) {
+      case "seasonWord":
+      case "workWord":
+        if (ctx.land.space || poolWords(ctx, name, ctx.season).length === 0) return false;
+        break;
+      case "season":
+      case "seasonPhrase":
+      case "position":
+        if (ctx.land.space || !ctx.cycle) return false;
+        break;
+      case "wildAnimal":
+      case "bird":
+      case "creature":
+      case "tree":
+      case "plant":
+      case "crop":
+      case "livestock":
+      case "beast":
+        if (biomeItems(ctx, name).length === 0) return false;
+        break;
+      case "god":
+        if (ctx.sensitive) return false;
+        break;
+      case "previous":
+        if (!ctx.previous) return false;
+        break;
+      case "spaceLand":
+        if (ctx.setting !== "SF") return false;
+        break;
+      case "dayWork":
+      case "dayElement":
+      case "extraDays":
+      case "skyFigure":
+      case "skyObject":
+      case "skyBodyPart":
+      case "skyQuality":
+      case "skyKin":
+      case "skyRiver":
+      case "skyHeaven":
+      case "festNoun":
+      case "festBlessing":
+        if (poolWords(ctx, name, null).length === 0) return false;
+        break;
+    }
+  }
+  return true;
+}
+function planWeight(ctx, plan) {
+  var _a4;
+  const s = plan.shape;
+  if (s.e && !inEras(s.e, ctx.era)) return 0;
+  if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
+  if (s.sp && !ctx.land.space) return 0;
+  if (s.sys && (!ctx.system || !s.sys.includes(ctx.system))) return 0;
+  if (s.ns && ctx.sensitive) return 0;
+  if (s.ch && !isChristianCulture(ctx.culture, ctx.era)) return 0;
+  if (blockedTone(ctx, plan.tones)) return 0;
+  let mult = 1;
+  if (s.c) {
+    if (!s.c.includes(ctx.culture) && !s.all) return 0;
+  }
+  if (s.cx) mult *= (_a4 = s.cx[ctx.culture]) != null ? _a4 : 1;
+  if (s.cm) mult *= isChristianCulture(ctx.culture, ctx.era) ? s.cm.christian : s.cm.other;
+  if (ctx.sensitive && /\{(god|holy)/.test(plan.p)) return 0;
+  if (!viable(ctx, plan.p)) return 0;
+  return plan.w * mult * toneFactor(plan.tones, ctx.tone);
+}
+function plansFor(ctx, kind, filter) {
+  var _a4;
+  return ((_a4 = PLANS[kind]) != null ? _a4 : []).filter((p) => !p.shape.cn && !p.p.startsWith("@") && (!filter || filter(p))).map((p) => [p, planWeight(ctx, p)]).filter(([, w]) => w > 0);
+}
+var RULES = { block: timeBlockSet() };
+function acceptable5(ctx, text, kind, culture = false) {
+  var _a4;
+  const counted2 = countedWords2(text);
+  if (counted2.length === 0 || counted2.length > TIME_SKY.cap) return false;
+  if (repeatsContent(counted2)) return false;
+  if (RULES.block.has(bare5(text)) || ((_a4 = TIME_SKY.safeguards.kindBlock[kind]) == null ? void 0 : _a4.some((b) => bare5(b) === bare5(text)))) return false;
+  if (breaksTimeWords(text)) return false;
+  if (!culture && hasRealDivineName(text)) return false;
+  if (isFutureEra(ctx.era) && hasSpaceBlock(text)) return false;
+  return true;
+}
+function finish2(ctx, kind, raw) {
+  let text = raw;
+  if (ARTICLE_KINDS.includes(kind) && !/^(the |\[)/i.test(text)) text = `the ${text}`;
+  return timeCapitals(text);
+}
+function buildName(ctx, kind, filter, only) {
+  for (let i = 0; i < 30; i++) {
+    ctx.drawn = /* @__PURE__ */ new Set();
+    ctx.log = [];
+    const plans4 = plansFor(ctx, kind, only ? (p) => p.p === only : filter);
+    const plan = pickWeighted5(plans4, ctx.rng);
+    if (!plan) return void 0;
+    const raw = renderPattern11(ctx, plan.p);
+    if (!raw) continue;
+    const text = finish2(ctx, kind, raw);
+    if (!acceptable5(ctx, text, kind)) continue;
+    const tones = /* @__PURE__ */ new Set([...plan.tones, ...ctx.drawn]);
+    return { text, kind, shape: plan.p, tones: GROUP_TONES.filter((t) => tones.has(t)), words: ctx.log, ...ctx.season ? { season: ctx.season } : {} };
+  }
+  return void 0;
+}
+function rowsFor(ctx, kind, systems) {
+  return cultureRows(ctx.culture, kind).filter((r) => inEras(r.e, ctx.era) && (!r.sys || r.sys.some((s) => systems.includes(s))));
+}
+function seasonalForms(ctx, systems) {
+  var _a4, _b2;
+  const allowed = TIME_SKY.seasonalMonths[ctx.culture];
+  if (!allowed || !allowed.some((s) => systems.includes(s)) || !ctx.cycle) return [];
+  const months = (_b2 = (_a4 = TIME_SKY.years[systems[0]]) == null ? void 0 : _a4.months) != null ? _b2 : 12;
+  const ring = layoutRing(months, ctx.cycle);
+  return [...new Set(ring.map((slot) => `${cap2(TIME_SKY.lists.position[slot.pos === "first" ? 0 : slot.pos === "middle" ? 1 : 2].toLowerCase())} Month of ${seasonPhrase(slot.season)}`))];
+}
+function cultureNameCandidates(ctx, kind, systems) {
+  const rows = rowsFor(ctx, kind, systems).filter((r) => r.p !== "leap" && r.p !== "extra");
+  const out = rows.map((row) => ({ text: row.n, row, ...row.loan ? { loan: row.loan } : {} }));
+  if (kind === "month") for (const text of seasonalForms(ctx, systems)) out.push({ text });
+  return out;
+}
+function cultureName(ctx, kind, systems) {
+  const items = cultureNameCandidates(ctx, kind, systems).filter((c) => !blockedTone(ctx, void 0));
+  for (let i = 0; i < 20 && items.length > 0; i++) {
+    const c = pickOne12(items, ctx.rng);
+    const useLoan = !!c.loan && ctx.words === "loanwords" && ctx.rng() < TIME_SKY.loanShare;
+    const text = c.row ? useLoan ? c.loan : c.text : timeCapitals(c.text);
+    if (!acceptable5(ctx, text, kind, true)) continue;
+    return { text, kind, shape: "culture names", tones: [], words: [], real: true, ...useLoan ? { loan: true } : {} };
+  }
+  return void 0;
+}
+function drawSystem(ctx, cell) {
+  if (cell.length === 0) return void 0;
+  return cell.length === 1 ? cell[0][0] : pickWeighted5(cell, ctx.rng);
+}
+function kindSystems(ctx, kind) {
+  switch (kind) {
+    case "month":
+    case "moon":
+      return monthSystems(ctx.culture, ctx.era, ctx.land).map(([k]) => k);
+    case "day":
+      return weekSystems(ctx.culture, ctx.era).map(([k]) => k);
+    case "festival":
+      return festivalCycles(ctx.culture, ctx.era, ctx.land).map(([k]) => k);
+    case "sign":
+      return signSystems(ctx.culture, ctx.era).map(([k]) => k);
+    default:
+      return [];
+  }
+}
+var SKY_CULTURE_NAMES = /* @__PURE__ */ new Set(["constellation", "sign", "light"]);
+function separateName(ctx, kind, only) {
+  var _a4, _b2;
+  const systems = kindSystems(ctx, kind);
+  const sys = kind === "day" || kind === "month" ? drawSystem(ctx, kind === "day" ? weekSystems(ctx.culture, ctx.era) : monthSystems(ctx.culture, ctx.era, ctx.land)) : void 0;
+  const c = { ...ctx, kind, system: sys, season: null, position: void 0, ownPos: void 0, distinct: false, fixed: {} };
+  if (SKY_CULTURE_NAMES.has(kind)) {
+    const cnPlan = ((_a4 = PLANS[kind]) != null ? _a4 : []).find((p) => p.shape.cn);
+    const others = plansFor(c, kind, only ? (p) => p.p === only : void 0).reduce((n, [, w]) => n + w, 0);
+    const cnW = !only && cnPlan ? kind === "sign" ? 30 : cnPlan.w : 0;
+    if (cnW > 0 && skyNamesFor(c, kind).length > 0 && c.rng() * (cnW + others) < cnW) {
+      const n = skyCultureName(c, kind);
+      if (n) return n;
+    }
+    return kind === "sign" ? buildSign(c, only) : buildName(c, kind, void 0, only);
+  }
+  if (kind !== "moon" && !only) {
+    const cnPlan = ((_b2 = PLANS[kind]) != null ? _b2 : []).find((p) => p.shape.cn);
+    const others = plansFor(c, kind).reduce((n, [, w]) => n + w, 0);
+    if (cnPlan && cultureNameCandidates(c, kind, systems).length > 0 && c.rng() * (cnPlan.w + others) < cnPlan.w) {
+      const n = cultureName(c, kind, systems);
+      if (n) return n;
+    }
+  }
+  return buildName(c, kind, void 0, only);
+}
+var SIGN_WEIGHT = { "the {wildAnimal}": 0, "the {beast}": 25, "the {skyFigure}": 15, "the {skyObject}": 15 };
+function signPlans(ctx) {
+  const base = plansFor(ctx, "constellation", (p) => !p.shape.poss && !p.shape.numbered && !/:poss|'s /.test(p.p) && !p.p.startsWith("the {wildAnimal}"));
+  const beast = { shape: { k: "sign", p: "the {beast}", w: 25 }, p: "the {beast}", tones: [], w: 25 };
+  const out = base.map(([p, w]) => [p.p in SIGN_WEIGHT ? { ...p, w: SIGN_WEIGHT[p.p] } : p, p.p in SIGN_WEIGHT ? w / p.w * SIGN_WEIGHT[p.p] : w]);
+  if (planWeight(ctx, beast) > 0) out.push([beast, planWeight(ctx, beast)]);
+  return out.filter(([, w]) => w > 0);
+}
+function buildSign(ctx, only) {
+  for (let i = 0; i < 30; i++) {
+    ctx.drawn = /* @__PURE__ */ new Set();
+    ctx.log = [];
+    const plans4 = signPlans(ctx).filter(([p]) => !only || p.p === only);
+    const plan = pickWeighted5(plans4, ctx.rng);
+    if (!plan) return void 0;
+    const raw = renderPattern11(ctx, plan.p);
+    if (!raw) continue;
+    const text = finish2(ctx, "sign", raw);
+    if (!acceptable5(ctx, text, "sign")) continue;
+    const tones = /* @__PURE__ */ new Set([...plan.tones, ...ctx.drawn]);
+    return { text, kind: "sign", shape: plan.p, tones: GROUP_TONES.filter((t) => tones.has(t)), words: ctx.log };
+  }
+  return void 0;
+}
+var shuffle = (items, rng) => {
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+};
+var isLeapYear = (rng) => rng() < TIME_SKY.leapShare[0] / TIME_SKY.leapShare[1];
+function applyReal(S, lines2) {
+  const cap3 = Math.floor(lines2.length / 2);
+  let real = 0;
+  for (const i of shuffle(lines2.map((_, k) => k), S.ctx.rng)) {
+    if (real >= cap3) break;
+    const options = lines2[i].candidates().filter((n2) => !S.seen.has(n2.text.toLowerCase()));
+    if (options.length === 0 || S.ctx.rng() >= S.realShare) continue;
+    const n = pickOne12(options, S.ctx.rng);
+    S.seen.add(n.text.toLowerCase());
+    lines2[i].set(n);
+    real++;
+  }
+}
+function monthCandidates(S, system, line, kind = "month") {
+  const ctx = S.ctx;
+  const rows = rowsFor(ctx, "month", [system]);
+  const months = TIME_SKY.years[system].months;
+  const out = rows.filter((r) => {
+    var _a4;
+    if (line.type === "leap") return r.p === "leap";
+    if (line.type === "extra") return r.p === "extra";
+    if (r.p === "leap" || r.p === "extra") return false;
+    if (typeof r.p === "number") return ownPosition(r, ctx.culture, ctx.era, months) === line.own;
+    return !!r.s && r.s === ((_a4 = line.slot) == null ? void 0 : _a4.season);
+  });
+  const names = out.filter((r) => !r.n.includes("{ordinal}") || !!line.after).map((r) => {
+    var _a4;
+    return { text: r.n.replace("{ordinal}", ordinalWord((_a4 = line.after) != null ? _a4 : 1)), row: r };
+  });
+  if (line.type === "month" && kind === "month") {
+    for (const text of seasonalForms(ctx, [system])) {
+      const slotText = line.slot ? `${cap2(TIME_SKY.lists.position[line.slot.pos === "first" ? 0 : line.slot.pos === "middle" ? 1 : 2].toLowerCase())} Month of ${seasonPhrase(line.slot.season)}` : "";
+      if (text === slotText) names.push({ text: timeCapitals(text), row: void 0 });
+    }
+  }
+  const seenText = /* @__PURE__ */ new Set();
+  return names.filter((n) => !seenText.has(n.text) && acceptable5(ctx, n.text, "month", true)).map((n) => {
+    var _a4;
+    seenText.add(n.text);
+    return { text: n.text, kind: "month", shape: "culture names", tones: [], words: [], real: true, ...typeof ((_a4 = n.row) == null ? void 0 : _a4.p) === "number" ? { position: line.own } : {} };
+  });
+}
+var NUMBER_START = /^(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|eleventh|twelfth|thirteenth|one|two|three|four|five|six|seven|eight|nine|ten|\d)/i;
+function monthTheme(S, lines2) {
+  var _a4;
+  const ctx = S.ctx;
+  const mult = TIME_SKY.themes.monthMult;
+  const options = TIME_SKY.themes.month.filter(([t]) => {
+    if (ctx.land.space) return t === "ordinal" || t === "gods" || t === "festivals";
+    return true;
+  }).filter(([t]) => {
+    if (t === "gods") return !ctx.sensitive && ctx.mode === "invented";
+    if (t === "festivals") return ctx.era === "AN" && ["greek-byzantine", "roman"].includes(ctx.culture);
+    if (t === "nature") return biomeItems(ctx, "tree").length + biomeItems(ctx, "wildAnimal").length > 0;
+    if (t === "seasons" || t === "work" || t === "positions") return !ctx.land.space && !!ctx.cycle;
+    return true;
+  }).map(([t, w]) => {
+    var _a5, _b2;
+    return [t, w * ((_b2 = (_a5 = mult[t]) == null ? void 0 : _a5[ctx.culture]) != null ? _b2 : 1)];
+  });
+  return (_a4 = pickWeighted5(options, ctx.rng)) != null ? _a4 : "ordinal";
+}
+var THEME_PATTERNS = {
+  seasons: ["{seasonWord} Month", "Month of {seasonWord}", "{seasonWord}"],
+  work: ["{workWord} Month"],
+  nature: ["{tree} Month", "{wildAnimal} Month", "{bird} Month", "{crop}-Sowing", "{crop} Harvest"],
+  gods: ["{god:poss} Month"],
+  ordinal: ["{ordinal} Month", "{ordinal} Cycle"],
+  positions: ["{position} Month of {season}"],
+  festivals: ["Month of the {festival}"]
+};
+function themedLine(S, kind, line, patterns, extraFilter) {
+  var _a4;
+  for (let attempt2 = 0; attempt2 < 60; attempt2++) {
+    const relaxed = attempt2 >= 20;
+    const ctx = { ...S.ctx, kind, season: line.season, position: line.position, ownPos: line.ownPos, previous: line.previous, system: (_a4 = line.system) != null ? _a4 : S.ctx.system, distinct: !relaxed, drawn: /* @__PURE__ */ new Set(), log: [], fixed: {} };
+    const filter = (p) => !p.shape.pairs && (relaxed || !patterns || patterns.includes(p.p)) && (!extraFilter || extraFilter(p));
+    const n = buildName(ctx, kind, filter);
+    if (!n) continue;
+    if (S.seen.has(n.text.toLowerCase())) continue;
+    if (ctx.distinct) for (const k of ctx.used) S.ctx.used.add(k);
+    S.seen.add(n.text.toLowerCase());
+    return line.season && !n.season ? { ...n, season: line.season } : n;
+  }
+  return void 0;
+}
+function monthSeries(S, systemKey, forMoons) {
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i;
+  const ctx = S.ctx;
+  const sys = TIME_SKY.years[systemKey];
+  const months = forMoons ? 12 : sys.months;
+  const ring = layoutRing(months, ctx.cycle);
+  const own = ownYearStart(ctx.culture, ctx.era, ring);
+  let start = own;
+  if (S.options.start && S.options.start !== "own" && ctx.cycle) {
+    const i = ring.findIndex((s) => s.season === S.options.start);
+    if (i >= 0) start = i;
+  }
+  const lines2 = [];
+  const leap = isLeapYear(ctx.rng);
+  let after;
+  if (forMoons) {
+    const lunar = !["julian-12", "egyptian-civil", "ethiopian-13", "persian-solar", "aztec-18", "maya-haab", "fixed-13", "icelandic-12", "darian-24"].includes(systemKey);
+    if (leap && (!lunar || sys.leap || !lunar)) {
+      if ((_a4 = sys.leap) == null ? void 0 : _a4.after) after = pickOne12(sys.leap.after, ctx.rng);
+      else if ((_b2 = sys.leap) == null ? void 0 : _b2.uniform) after = 1 + Math.floor(ctx.rng() * months);
+      else after = months;
+    }
+  } else if (sys.leap && leap) {
+    after = sys.leap.after ? pickOne12(sys.leap.after, ctx.rng) : 1 + Math.floor(ctx.rng() * months);
+  }
+  const extraSys = forMoons ? void 0 : sys.extra;
+  for (let k = 0; k < months; k++) {
+    const idx = (start + k) % months;
+    const q = (idx - own + months) % months + 1;
+    if (after === 0 && q === 1) lines2.push({ type: "leap", slot: ring[idx], after: 0, idx });
+    lines2.push({ type: "month", slot: ring[idx], idx, own: q });
+    if (after === q && after > 0) lines2.push({ type: "leap", slot: ring[idx], after: q, idx });
+    if (extraSys && q === months) lines2.push({ type: "extra", slot: ring[idx], idx, days: extraSys.count });
+  }
+  if (forMoons) return moonSeries(S, lines2, ring);
+  applyReal(
+    S,
+    lines2.map((line) => ({ candidates: () => monthCandidates(S, systemKey, line), set: (n) => {
+      var _a5;
+      return line.name = { ...n, ...((_a5 = line.slot) == null ? void 0 : _a5.season) ? { season: line.slot.season } : {} };
+    } }))
+  );
+  const theme = monthTheme(S, lines2);
+  S.ctx.fixed = {};
+  const monthLines = lines2.filter((l) => l.type === "month");
+  const pairShare = TIME_SKY.themes.pairShare;
+  const wantsPair = theme === "seasons" && ["anglo-saxon", "celtic", "norse"].includes(ctx.culture) && inEras("AN-MD", ctx.era) || ["aztec", "maya"].includes(ctx.culture) && inEras("AN-EM", ctx.era);
+  if (wantsPair && ctx.rng() < pairShare) {
+    const spots = [];
+    for (let i = 0; i + 1 < lines2.length; i++) if (lines2[i].type === "month" && lines2[i + 1].type === "month" && !lines2[i].name && !lines2[i + 1].name) spots.push(i);
+    if (spots.length > 0) {
+      const i = pickOne12(spots, ctx.rng);
+      const aztec = ["aztec", "maya"].includes(ctx.culture);
+      let a, b;
+      if (aztec) {
+        const pf = (_c2 = token13({ ...ctx, fixed: {}, season: null, distinct: false, drawn: /* @__PURE__ */ new Set(), log: [] }, "pairFeast")) != null ? _c2 : "Vigil";
+        [a, b] = [`Little ${pf}`, `Great ${pf}`];
+      } else {
+        const season = (_e2 = (_d2 = lines2[i].slot) == null ? void 0 : _d2.season) != null ? _e2 : "winter";
+        const turning = pickOne12((_f = TIME_SKY.lists.turningOf[season]) != null ? _f : TIME_SKY.lists.turning, ctx.rng);
+        [a, b] = [`Before ${turning}`, `After ${turning}`];
+      }
+      const texts = [timeCapitals(a), timeCapitals(b)];
+      if (texts.every((t) => acceptable5(ctx, t, "month") && !S.seen.has(t.toLowerCase()))) {
+        texts.forEach((t, k) => {
+          var _a5, _b3;
+          S.seen.add(t.toLowerCase());
+          lines2[i + k].name = { text: t, kind: "month", shape: k === 0 ? aztec ? "Little {pairFeast}" : "Before {turning}" : aztec ? "Great {pairFeast}" : "After {turning}", tones: [], words: [], season: (_b3 = (_a5 = lines2[i + k].slot) == null ? void 0 : _a5.season) != null ? _b3 : void 0 };
+        });
+      }
+    }
+  }
+  for (const line of lines2) {
+    if (line.name || line.type !== "month") continue;
+    const patterns = THEME_PATTERNS[theme];
+    const n = themedLine(S, "month", { season: (_h = (_g = line.slot) == null ? void 0 : _g.season) != null ? _h : null, position: cap2(TIME_SKY.lists.position[line.slot.pos === "first" ? 0 : line.slot.pos === "middle" ? 1 : 2].toLowerCase()), ownPos: line.own }, patterns, themePlanFilter("month", theme, ctx));
+    line.name = n != null ? n : { text: timeCapitals(`${ordinalWord(line.own)} Month`), kind: "month", shape: "{ordinal} Month", tones: [], words: [] };
+    if (!n) S.seen.add(line.name.text.toLowerCase());
+  }
+  for (let i = 0; i < lines2.length; i++) {
+    const line = lines2[i];
+    if (line.name || line.type === "month") continue;
+    const prev = i > 0 ? (_i = lines2[i - 1].name) == null ? void 0 : _i.text : void 0;
+    const real = lines2.filter((l) => {
+      var _a5;
+      return (_a5 = l.name) == null ? void 0 : _a5.real;
+    }).length;
+    line.name = nameSpecial(S, line, systemKey, prev, real < Math.floor(lines2.length / 2));
+  }
+  S.ctx.fixed = {};
+  return lines2.map((line) => {
+    var _a5, _b3;
+    const n = line.name;
+    const season = (_b3 = (_a5 = line.slot) == null ? void 0 : _a5.season) != null ? _b3 : void 0;
+    const tag = line.type === "leap" ? "leap month" : line.type === "extra" ? line.days ? `extra days, ${line.days}` : "extra days" : season ? seasonPhrase(season) : void 0;
+    return { ...n, ...season ? { season } : {}, ...line.type === "leap" ? { leap: true } : {}, ...line.type === "extra" ? { extra: true } : {}, ...tag ? { tag } : {} };
+  });
+}
+function themePlanFilter(_kind, _theme, _ctx) {
+  return void 0;
+}
+function nameSpecial(S, line, systemKey, previous, allowReal) {
+  var _a4, _b2;
+  const ctx = S.ctx;
+  const fixed = (text2, shape) => {
+    S.seen.add(text2.toLowerCase());
+    return { text: timeCapitals(text2), kind: "month", shape, tones: [], words: [] };
+  };
+  if (line.type === "extra") {
+    if (systemKey === "fixed-13") return fixed("Year Day", "Year Day");
+    if (systemKey === "romulus-10") return fixed("the Winter Days", "the Winter Days");
+  }
+  const rows = monthCandidates(S, systemKey, line).filter((n) => !S.seen.has(n.text.toLowerCase()));
+  const weights = line.type === "leap" ? { cn: 50, kinds: [["Second {previous}", 20], ["Leap {previous}", 10], ["@fixed", 20]] } : { cn: 50, kinds: [["the {extraDays} Days", 30], ["{seasonWord} Days", 10]] };
+  const options = [];
+  if (rows.length > 0 && allowReal) options.push(["@cn", weights.cn]);
+  for (const [p, w] of weights.kinds) {
+    if (p.includes("{previous}") && (!previous || NUMBER_START.test(previous) || /^(second|leap)\b/i.test(previous))) continue;
+    options.push([p, w]);
+  }
+  for (let attempt2 = 0; attempt2 < 30; attempt2++) {
+    const choice = pickWeighted5(options, ctx.rng);
+    if (choice === "@cn") {
+      const n = pickOne12(rows, ctx.rng);
+      S.seen.add(n.text.toLowerCase());
+      return n;
+    }
+    if (choice === "@fixed") {
+      const text3 = timeCapitals(pickOne12(["Extra Month", "Added Month", "Thirteenth Month"], ctx.rng));
+      if (!S.seen.has(text3.toLowerCase())) return fixed(text3, "Extra Month");
+      continue;
+    }
+    if (!choice) break;
+    const c = { ...ctx, season: (_b2 = (_a4 = line.slot) == null ? void 0 : _a4.season) != null ? _b2 : null, previous, distinct: false, drawn: /* @__PURE__ */ new Set(), log: [], fixed: {} };
+    const raw = renderPattern11(c, choice);
+    if (!raw) continue;
+    const text2 = timeCapitals(raw);
+    if (acceptable5(ctx, text2, "month") && !S.seen.has(text2.toLowerCase())) {
+      S.seen.add(text2.toLowerCase());
+      return { text: text2, kind: "month", shape: choice, tones: [], words: c.log };
+    }
+  }
+  const text = line.type === "leap" ? "Extra Month" : "Extra Days";
+  return fixed(S.seen.has(text.toLowerCase()) ? `${text} Again` : text, text);
+}
+function moonSeries(S, lines2, _ring) {
+  var _a4, _b2, _c2, _d2, _e2, _f, _g;
+  const ctx = S.ctx;
+  const theme = (_a4 = pickWeighted5(TIME_SKY.themes.moon.map(([t, w]) => [t, ctx.cycle ? w : t === "mixed" ? w : 0]), ctx.rng)) != null ? _a4 : "mixed";
+  const patterns = {
+    seasons: ["{seasonWord} Moon", "Moon of {seasonWord}"],
+    nature: ["{wildAnimal} Moon", "{bird} Moon", "{tree} Moon", "{crop} Moon"],
+    mixed: void 0
+  };
+  const out = [];
+  for (const line of lines2) {
+    if (line.type === "leap") {
+      const options = ((_b2 = PLANS.moonleap) != null ? _b2 : []).filter((p2) => !blockedTone(ctx, p2.tones));
+      const p = pickWeighted5(options.map((x) => [x, toneFactor(x.tones, ctx.tone)]), ctx.rng);
+      let text = p ? timeCapitals(p.p) : "Lone Moon";
+      if (S.seen.has(text.toLowerCase())) text = "Lone Moon";
+      S.seen.add(text.toLowerCase());
+      out.push({ text, kind: "moon", shape: (_c2 = p == null ? void 0 : p.p) != null ? _c2 : "Lone Moon", tones: (_d2 = p == null ? void 0 : p.tones) != null ? _d2 : [], words: [], leap: true, tag: "leap moon" });
+      continue;
+    }
+    const n = themedLine(S, "moon", { season: (_f = (_e2 = line.slot) == null ? void 0 : _e2.season) != null ? _f : null }, patterns[theme]);
+    const name = n != null ? n : { text: timeCapitals(`${ordinalWord(line.own)} Moon`), kind: "moon", shape: "{ordinal} Moon", tones: [], words: [] };
+    out.push({ ...name, kind: "moon", ...((_g = line.slot) == null ? void 0 : _g.season) ? { tag: seasonPhrase(line.slot.season) } : {} });
+  }
+  return out;
+}
+var PLANET_SLOT = { Sun: 4, Moon: 7, Mars: 3, Mercury: 6, Jupiter: 2, Venus: 5, Saturn: 1 };
+var ELEMENT_OF = { Mars: "Fire", Mercury: "Water", Jupiter: "Wood", Venus: "Metal", Saturn: "Earth" };
+var kinPossessive = (name) => {
+  var _a4, _b2, _c2;
+  const text = name.replace(/^the /, "");
+  const last = (_a4 = text.split(" ").pop()) != null ? _a4 : "";
+  return ((_c2 = (_b2 = BUILT_IN_VOCAB.pools.skyKin) == null ? void 0 : _b2.entries) != null ? _c2 : []).some((e) => e.w === last) ? groupPossessive(text, false) : text;
+};
+function dayRows(S, system, n) {
+  const out = Array.from({ length: n }, () => []);
+  for (const r of rowsFor(S.ctx, "day", [system])) if (typeof r.p === "number" && r.p <= n) out[r.p - 1].push(r);
+  return out;
+}
+function daySeries(S, systemKey) {
+  var _a4, _b2;
+  const ctx = S.ctx;
+  const sys = TIME_SKY.weeks[systemKey];
+  const n = sys.days;
+  const rowsBySlot = dayRows(S, systemKey, n);
+  const lines2 = Array.from({ length: n }, () => void 0);
+  const set = (i, name) => lines2[i] = name;
+  const plain = (text, shape, extra = {}) => ({ text: timeCapitals(text), kind: "day", shape, tones: [], words: [], slot: 0, ...extra });
+  applyReal(
+    S,
+    lines2.map((_, i) => ({
+      candidates: () => rowsBySlot[i].map((r) => ({ ...{ ...plain(r.n, "culture names", { real: true }), text: r.n }, slot: i + 1 })).filter((c) => acceptable5(ctx, c.text, "day", true)),
+      set: (nm) => set(i, nm)
+    }))
+  );
+  const open = () => lines2.map((l, i) => l ? -1 : i).filter((i) => i >= 0);
+  const fill = (i, text, shape, tones = []) => {
+    const t = timeCapitals(text);
+    if (!acceptable5(ctx, t, "day") || S.seen.has(t.toLowerCase())) return false;
+    S.seen.add(t.toLowerCase());
+    set(i, { ...plain(t, shape), tones, slot: i + 1 });
+    return true;
+  };
+  const themed = (i, patterns, extra = {}) => {
+    const nm = themedLine(S, "day", { season: null, ownPos: i + 1, system: systemKey }, patterns);
+    if (nm) set(i, { ...nm, slot: i + 1 });
+    return !!nm;
+  };
+  let theme;
+  let themeOpts;
+  if (systemKey === "market-4" || systemKey === "nundinal-8") themeOpts = TIME_SKY.themes.market;
+  else if (systemKey === "day-signs-20") themeOpts = [["signs", 1]];
+  else if (systemKey === "moon-nights-30") themeOpts = [["moon", 1]];
+  else if (systemKey === "rokuyo-6" || systemKey === "soviet-5") themeOpts = [["ordinal", 1], ["colour", 1]];
+  else themeOpts = TIME_SKY.themes.day;
+  themeOpts = themeOpts.filter(([t]) => {
+    if (t === "planets") return systemKey === "week-7";
+    if (t === "elements") return systemKey === "week-7" && ["chinese", "japanese", "korean", "steppe"].includes(ctx.culture);
+    if (t === "gods") return !ctx.sensitive && ctx.mode === "invented";
+    if (t === "towns" || t === "goods") return true;
+    return true;
+  });
+  theme = (_a4 = pickWeighted5(themeOpts, ctx.rng)) != null ? _a4 : "ordinal";
+  let skyNames;
+  const planetsFor = (slotList) => {
+    skyNames != null ? skyNames : skyNames = S.sky = lightSeries(neutralCtx(S), S, true).map((x) => x.text);
+    if (!skyNames) return;
+    for (const i of slotList) {
+      if (lines2[i]) continue;
+      const planet = sys.planets[i];
+      const light = skyNames[PLANET_SLOT[planet] - 1];
+      if (light) fill(i, `${kinPossessive(light)} Day`, "{light} Day");
+    }
+  };
+  const restDay = sys.rest ? sys.rest - 1 : -1;
+  switch (theme) {
+    case "planets":
+      planetsFor(open());
+      break;
+    case "elements": {
+      planetsFor(open().filter((i) => ["Sun", "Moon"].includes(sys.planets[i])));
+      for (const i of open()) {
+        const el = ELEMENT_OF[sys.planets[i]];
+        if (el) fill(i, `${el} Day`, "{dayElement} Day");
+      }
+      break;
+    }
+    case "gods":
+      for (const i of open()) themed(i, ["{god:poss} Day"]);
+      break;
+    case "work": {
+      let rest = 0;
+      let market = 0;
+      for (const i of open()) {
+        for (let k = 0; k < 40 && !lines2[i]; k++) {
+          const nm = themedLine(S, "day", { season: null, ownPos: i + 1, system: systemKey }, ["{dayWork} Day"]);
+          if (!nm) break;
+          if (/^Rest Day$/.test(nm.text) && rest++ > 0) {
+            S.seen.delete(nm.text.toLowerCase());
+            continue;
+          }
+          if (/^Market Day$/.test(nm.text) && market++ > 0) {
+            S.seen.delete(nm.text.toLowerCase());
+            continue;
+          }
+          set(i, { ...nm, slot: i + 1 });
+        }
+      }
+      break;
+    }
+    case "towns":
+    case "goods": {
+      const pattern = theme === "towns" ? "{town} Market Day" : "{goods} Market Day";
+      const market = systemKey === "market-4" ? open() : open().filter((i) => i === 0);
+      for (const i of market) themed(i, [pattern]);
+      break;
+    }
+    case "signs":
+      for (const i of open()) themed(i, ["{wildAnimal}", "{bird}", "{daySign}"]);
+      break;
+    case "moon": {
+      const used = /* @__PURE__ */ new Map();
+      for (const i of open()) {
+        const night = i + 1;
+        const list = night < 15 ? TIME_SKY.lists.moonWaxing : night === 15 ? TIME_SKY.lists.moonFull : TIME_SKY.lists.moonFading;
+        const at = night < 15 ? Math.floor((night - 1) * list.length / 14) : night === 15 ? Math.floor(ctx.rng() * list.length) : Math.floor((night - 16) * list.length / 15);
+        const word = list[at];
+        const seen = ((_b2 = used.get(word)) != null ? _b2 : 0) + 1;
+        used.set(word, seen);
+        const text = seen > 1 ? `${ordinalWord(seen)} ${word}` : word;
+        const t = timeCapitals(text);
+        if (acceptable5(ctx, t, "day")) {
+          S.seen.add(t.toLowerCase());
+          set(i, { ...plain(t, "{moonPhase}"), slot: night });
+        }
+      }
+      break;
+    }
+    case "colour":
+      for (const i of open()) themed(i, ["{colour} Day"]);
+      break;
+    default: {
+      const marketWeek = systemKey === "market-4";
+      for (const i of open()) {
+        if (i === n - 1 && (restDay === i || sys.rest === void 0 && ctx.rng() < 0.5) && fill(i, "Rest Day", "Rest Day")) continue;
+        if (systemKey === "nundinal-8" && i === 0 && fill(i, "Market Day", "Market Day")) continue;
+        fill(i, `${ordinalWord(i + 1)} ${marketWeek ? "Market Day" : "Day"}`, "{ordinal} Day");
+      }
+    }
+  }
+  for (const i of open()) {
+    if (systemKey === "nundinal-8" && i > 0 && (theme === "towns" || theme === "goods")) fill(i, `${ordinalWord(i + 1)} Day`, "{ordinal} Day");
+    if (!lines2[i]) {
+      const nm = themedLine(S, "day", { season: null, ownPos: i + 1, system: systemKey }, void 0);
+      if (nm) set(i, { ...nm, slot: i + 1 });
+    }
+    if (!lines2[i]) fill(i, `${ordinalWord(i + 1)} Day`, "{ordinal} Day") || fill(i, `${ordinalWord(i + 1)} Day of the Week`, "{ordinal} Day");
+  }
+  S.ctx.fixed = {};
+  return lines2.map((l, i) => ({ ...l, slot: i + 1 }));
+}
+function festivalSlots(S, cycleKey) {
+  var _a4, _b2;
+  const ctx = S.ctx;
+  const cyc = TIME_SKY.festivals[cycleKey];
+  let ringSize = 12;
+  if (cyc.count === "months") {
+    const sys = (_a4 = drawSystem(ctx, monthSystems(ctx.culture, ctx.era, ctx.land))) != null ? _a4 : "julian-12";
+    ringSize = TIME_SKY.years[sys].months;
+    ctx.system = sys;
+  }
+  const ring = layoutRing(ringSize, ctx.cycle);
+  const own = ownYearStart(ctx.culture, ctx.era, ring);
+  const slots = [];
+  const at = (idx, item2) => slots.push({ idx: idx % ringSize, item: item2, season: ring[idx % ringSize].season });
+  const starts = (count) => {
+    const firsts = ring.map((s, i) => i === 0 || ring[i - 1].season !== s.season ? i : -1).filter((i) => i >= 0);
+    return firsts.length === count ? firsts : Array.from({ length: count }, (_, k) => Math.round(k * ringSize / count));
+  };
+  switch (cyc.placed) {
+    case "quarters":
+      for (let k = 0; k < 4; k++) at(own + Math.round(k * ringSize / 4), k + 1);
+      break;
+    case "season-starts": {
+      const count = cyc.count === "seasons" ? new Set(ring.map((s) => s.season)).size : cyc.count;
+      starts(count).forEach((i, k) => at(i, k + 1));
+      break;
+    }
+    case "months": {
+      const ms = (_b2 = cyc.months) != null ? _b2 : Array.from({ length: ringSize }, (_, k) => k + 1);
+      ms.forEach((m, k) => at(own + m - 1, k + 1));
+      break;
+    }
+    case "pairs":
+      for (let t = 0; t < 24; t++) at(own + Math.floor(t / 2), t + 1);
+      break;
+  }
+  let start = own;
+  if (S.options.start && S.options.start !== "own" && ctx.cycle) {
+    const i = ring.findIndex((s) => s.season === S.options.start);
+    if (i >= 0) start = i;
+  }
+  slots.sort((a, b) => (a.idx - start + ringSize) % ringSize - (b.idx - start + ringSize) % ringSize || a.item - b.item);
+  return { slots, ringSize, own, start };
+}
+var FESTIVAL_THEME_PATTERNS = {
+  seasons: ["Feast of {seasonWord}", "{seasonWord} Home", "{season} Fire", "{seasonWord} Fires"],
+  gods: ["Feast of {god}", "{god:poss} Day"],
+  holy: ["Feast of {holy}", "{holy:poss} Day", "{holy:poss} Eve"],
+  work: ["Feast of {workWord}", "{crop} Festival", "Blessing of {festBlessing}", "Running of the {livestock:pl}"]
+};
+function festivalSeries(S, cycleKey) {
+  var _a4;
+  const ctx = S.ctx;
+  const { slots } = festivalSlots(S, cycleKey);
+  const space = ctx.land.space;
+  const christian = isChristianCulture(ctx.culture, ctx.era) && inEras("MD+", ctx.era);
+  const themes = TIME_SKY.themes.festival.filter(([t]) => {
+    if (t === "seasons" || t === "work") return !space && !!ctx.cycle;
+    if (t === "gods") return !ctx.sensitive && ctx.mode === "invented" || christian && ctx.mode === "invented";
+    if (t === "commemorations") return inEras("ST+", ctx.era);
+    return true;
+  });
+  const theme = (_a4 = pickWeighted5(themes, ctx.rng)) != null ? _a4 : "seasons";
+  const rows = rowsFor(ctx, "festival", [cycleKey]);
+  const used = /* @__PURE__ */ new Set();
+  const names = slots.map(() => void 0);
+  const candidatesFor = (slot) => rows.filter((r) => !used.has(r) && (r.cyc ? r.cyc === cycleKey && r.p === slot.item : !r.cyc && r.s !== void 0 && r.s === slot.season));
+  applyReal(
+    S,
+    slots.map((slot, i) => ({
+      candidates: () => candidatesFor(slot).map((r) => {
+        const loan = !!r.loan && ctx.words === "loanwords" && ctx.rng() < TIME_SKY.loanShare;
+        return { text: loan ? r.loan : r.n, kind: "festival", shape: "culture names", tones: [], words: [], real: true, ...loan ? { loan: true } : {}, _row: r };
+      }).filter((n) => acceptable5(ctx, n.text, "festival", true)),
+      set: (n) => {
+        used.add(n._row);
+        const { _row, ...rest } = n;
+        names[i] = rest;
+      }
+    }))
+  );
+  const patternsFor = () => {
+    if (theme === "gods") return christian ? FESTIVAL_THEME_PATTERNS.holy : FESTIVAL_THEME_PATTERNS.gods;
+    if (theme === "commemorations") return void 0;
+    return FESTIVAL_THEME_PATTERNS[theme];
+  };
+  const patterns = patternsFor();
+  const filterFor = theme === "commemorations" ? (p) => !!p.shape.commem || isFutureEra(ctx.era) && p.shape.e === "NF-IS" : void 0;
+  const solar = cycleKey === "solar-terms-24";
+  const sekku = cycleKey === "sekku-5";
+  slots.forEach((slot, i) => {
+    if (names[i]) return;
+    let nm;
+    if (solar) {
+      const w = TIME_SKY.lists.weather;
+      const seasonKey = slot.season;
+      const options = [`Start of ${seasonKey ? seasonNoun(seasonKey) : "Season"}`, `${pickOne12(w, ctx.rng)} ${seasonKey ? seasonNoun(seasonKey) : "Season"}`];
+      for (const text of shuffle(options, ctx.rng)) {
+        const t = timeCapitals(text);
+        if (acceptable5(ctx, t, "festival") && !S.seen.has(t.toLowerCase())) {
+          S.seen.add(t.toLowerCase());
+          nm = { text: t, kind: "festival", shape: text.startsWith("Start") ? "Start of {season}" : "{weather} {season}", tones: [], words: [] };
+          break;
+        }
+      }
+      nm != null ? nm : nm = themedLine(S, "festival", { season: slot.season }, ["Feast of {seasonWord}"]);
+    } else if (sekku) {
+      nm = themedLine(S, "festival", { season: slot.season }, ["{tree} Festival", "{bird} Day", "Festival of {festNoun}"].filter(() => true));
+    } else {
+      nm = themedLine(S, "festival", { season: slot.season }, patterns, filterFor);
+    }
+    nm != null ? nm : nm = themedLine(S, "festival", { season: slot.season }, void 0);
+    names[i] = nm != null ? nm : { text: timeCapitals(`${ordinalWord(i + 1)} Feast`), kind: "festival", shape: "{ordinal} Feast", tones: [], words: [] };
+    S.seen.add(names[i].text.toLowerCase());
+  });
+  return names.map((n, i) => ({ ...n, ...slots[i].season ? { season: slots[i].season, tag: seasonPhrase(slots[i].season) } : {} }));
+}
+function generateTimeSkyNames(options) {
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const notices = [];
+  const culture = (_b2 = (_a4 = findTimeCulture(options.culture)) == null ? void 0 : _a4.key) != null ? _b2 : "norman-british";
+  const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
+  const sensitive = isSensitive(culture);
+  const fantastic = !sensitive && !!options.fantastic;
+  const biome = options.biome;
+  const home = homelandOf(culture);
+  const atHome = !biome || biome.id === home;
+  const land = landKind(biome);
+  const resolved = biome != null ? biome : findBiome(home);
+  const kinds = kindsOffered2(options.kind && ((_c2 = findTimeKind(options.kind)) == null ? void 0 : _c2.module) === "sky" ? "sky" : "calendar", culture, era, land);
+  const kind = options.kind && kinds.some((k) => k.key === options.kind) ? options.kind : kinds[0].key;
+  const guards = (_d2 = options.safeguards) != null ? _d2 : defaultTimeSafeguards();
+  RULES = { block: timeBlockSet(guards, kind) };
+  const tone = sensitive && (options.tone === "light" || options.tone === "grim") ? "any" : (_e2 = options.tone) != null ? _e2 : "any";
+  const count = Math.max(0, Math.floor(options.count));
+  const ctx = {
+    rng,
+    culture,
+    era,
+    setting: routeSetting(era, fantastic),
+    fantastic,
+    mode: (_f = options.people) != null ? _f : "placeholders",
+    tone,
+    vocab: (_g = options.vocab) != null ? _g : BUILT_IN_VOCAB,
+    words: kind === "festival" ? (_h = options.words) != null ? _h : "translated" : "translated",
+    biome: resolved,
+    atHome,
+    land,
+    cycle: seasonCycle(resolved, culture, atHome),
+    sensitive,
+    kind,
+    season: null,
+    distinct: false,
+    used: /* @__PURE__ */ new Set(),
+    drawn: /* @__PURE__ */ new Set(),
+    log: [],
+    fixed: {},
+    neutral: false,
+    depth: 0
+  };
+  const series = !!options.series && seriesOffered(kind, culture, era, land);
+  if (series) {
+    const S = { seed, ctx, options, seen: /* @__PURE__ */ new Set(), notices, realShare: (_i = options.realShare) != null ? _i : TIME_SKY.realShare };
+    const batch = runSeries(S, kind, seed);
+    return batch;
+  }
+  const names = [];
+  const seen = /* @__PURE__ */ new Set();
+  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+    const n = kind === "moon" ? separateMoon(ctx) : separateName(ctx, kind, options.shape);
+    if (!n || seen.has(n.text.toLowerCase())) continue;
+    seen.add(n.text.toLowerCase());
+    names.push(n);
+  }
+  if (names.length < count) {
+    const info = findTimeKind(kind);
+    notices.push(names.length === 0 && info ? `There are no ${info.plural} names for this culture and era yet: a vocabulary pack can add some.` : `Only ${names.length} names could be generated.`);
+  }
+  return { names, seed, notices };
+}
+function separateMoon(ctx) {
+  return separateName({ ...ctx, kind: "moon" }, "moon");
+}
+function runSeries(S, kind, seed) {
+  const ctx = S.ctx;
+  const notices = S.notices;
+  const line = (key2, source) => notices.push(`${TIME_SKY.series[key2].line}: ${source}.`);
+  if (kind === "month" || kind === "moon") {
+    const sys = drawSystem(ctx, monthSystems(ctx.culture, ctx.era, ctx.land));
+    const names = monthSeries(S, sys, kind === "moon");
+    line(kind, TIME_SKY.years[sys].source);
+    return { names, seed, notices, system: sys };
+  }
+  if (kind === "day") {
+    const sys = drawSystem(ctx, weekSystems(ctx.culture, ctx.era));
+    const names = daySeries(S, sys);
+    line("day", TIME_SKY.weeks[sys].source);
+    return { names, seed, notices, system: sys, ...S.sky ? { sky: S.sky } : {} };
+  }
+  if (kind === "festival") {
+    const cyc = drawSystem(ctx, festivalCycles(ctx.culture, ctx.era, ctx.land));
+    const names = festivalSeries(S, cyc);
+    line("festival", TIME_SKY.festivals[cyc].source);
+    return { names, seed, notices, system: cyc };
+  }
+  if (kind === "light") {
+    const names = lightSeries(ctx, S, !!S.options.neutral);
+    line("light", TIME_SKY.skies["classical-7"].source);
+    return { names, seed, notices, system: "classical-7" };
+  }
+  if (kind === "sign") {
+    const sys = drawSystem(ctx, signSystems(ctx.culture, ctx.era));
+    const names = signSeries(S, sys);
+    line("sign", TIME_SKY.skies[sys].source);
+    return { names, seed, notices, system: sys };
+  }
+  return { names: [], seed, notices: [...notices, "No series could be made for this culture and era."] };
+}
+function signSystemNames(system, culture) {
+  var _a4;
+  const names = TIME_SKY.signNames;
+  switch (system) {
+    case "zodiac-12":
+      return names["zodiac-12"];
+    case "animals-12": {
+      const t = names["animals-12"];
+      return (_a4 = t[culture]) != null ? _a4 : t["*"];
+    }
+    case "mansions-28":
+      return names["mansions-28"][culture];
+    case "day-signs-20":
+      return TIME_SKY.daySigns[culture];
+  }
+  return void 0;
+}
+var bareSystem = (system) => system === "animals-12" || system === "day-signs-20";
+var signText = (system, name) => bareSystem(system) || /^the /i.test(name) ? name : `the ${name}`;
+function skyNamesFor(ctx, kind) {
+  var _a4, _b2;
+  switch (kind) {
+    case "constellation":
+      return (_a4 = TIME_SKY.constellations[ctx.culture]) != null ? _a4 : [];
+    case "sign":
+      return signSystems(ctx.culture, ctx.era).flatMap(([sys]) => {
+        var _a5;
+        return ((_a5 = signSystemNames(sys, ctx.culture)) != null ? _a5 : []).map((n) => signText(sys, n));
+      });
+    case "light": {
+      const l = TIME_SKY.lights[ctx.culture];
+      if (!l) return [];
+      const all = [...Object.values((_b2 = l.planets) != null ? _b2 : {}).flat(), l.milky, l.comet, l.nova].filter((x) => !!x);
+      return all.map((n) => {
+        var _a5;
+        return ((_a5 = l.bare) == null ? void 0 : _a5.includes(n)) || /^the /i.test(n) ? n : `the ${n}`;
+      });
+    }
+  }
+  return [];
+}
+function skyCultureName(ctx, kind) {
+  const names = skyNamesFor(ctx, kind);
+  for (let i = 0; i < 20 && names.length > 0; i++) {
+    const text = pickOne12(names, ctx.rng);
+    if (acceptable5(ctx, text, kind, true)) return { text, kind, shape: "culture names", tones: [], words: [], real: true };
+  }
+  return void 0;
+}
+function neutralLightName(ctx) {
+  var _a4;
+  if (ctx.depth > 1) return void 0;
+  const c = { ...ctx, kind: "light", depth: ctx.depth + 1, distinct: false, season: null, drawn: /* @__PURE__ */ new Set(), log: [], fixed: {} };
+  const names = skyNamesFor(c, "light");
+  const others = plansFor(c, "light", (p) => !p.shape.god).reduce((n, [, w]) => n + w, 0);
+  if (names.length > 0 && c.rng() * (20 + others) < 20) return pickOne12(names, c.rng);
+  return (_a4 = buildName(c, "light", (p) => !p.shape.god && !p.shape.cn)) == null ? void 0 : _a4.text;
+}
+function neutralCtx(S) {
+  return { ...S.ctx, kind: "light", rng: mulberry32(S.seed), season: null, distinct: false, used: /* @__PURE__ */ new Set(), drawn: /* @__PURE__ */ new Set(), log: [], fixed: {}, system: "classical-7" };
+}
+var LIGHT_SLOT_ORDER = TIME_SKY.skies["classical-7"].order;
+function lightSeries(base, S, neutral) {
+  var _a4, _b2, _c2, _d2;
+  const ctx = { ...base, kind: "light", distinct: true, used: /* @__PURE__ */ new Set(), season: null };
+  const gods = !neutral && !ctx.sensitive && ctx.mode === "invented";
+  const theme = pickWeighted5(TIME_SKY.themes.light.map(([t, w]) => [t, t === "gods" && !gods ? 0 : w]), ctx.rng);
+  const seen = /* @__PURE__ */ new Set();
+  const out = Array.from({ length: 7 }, () => void 0);
+  const culture = TIME_SKY.lights[ctx.culture];
+  const cap3 = Math.floor(7 / 2);
+  let real = 0;
+  for (const i of shuffle([0, 1, 2, 3, 4, 5, 6], ctx.rng)) {
+    if (real >= cap3) break;
+    const options = [].concat((_b2 = (_a4 = culture == null ? void 0 : culture.planets) == null ? void 0 : _a4[String(i + 1)]) != null ? _b2 : []).map((n) => {
+      var _a5;
+      return ((_a5 = culture == null ? void 0 : culture.bare) == null ? void 0 : _a5.includes(n)) || /^the /i.test(n) ? n : `the ${n}`;
+    }).filter((t) => acceptable5(ctx, t, "light", true) && !seen.has(t.toLowerCase()));
+    if (options.length === 0 || ctx.rng() >= S.realShare) continue;
+    const text = pickOne12(options, ctx.rng);
+    seen.add(text.toLowerCase());
+    out[i] = { text, kind: "light", shape: "culture names", tones: [], words: [], real: true, slot: i + 1 };
+    real++;
+  }
+  const accept = (i, raw, shape, c) => {
+    if (!raw) return false;
+    const text = finish2(c, "light", raw);
+    if (!acceptable5(c, text, "light") || seen.has(text.toLowerCase())) return false;
+    seen.add(text.toLowerCase());
+    const tones = new Set(c.drawn);
+    out[i] = { text, kind: "light", shape, tones: GROUP_TONES.filter((t) => tones.has(t)), words: c.log, slot: i + 1 };
+    return true;
+  };
+  const quality = (c, slot) => {
+    const list = TIME_SKY.lists.lightQualities[String(slot)];
+    return list ? drawFrom(c, "quality", "skyQuality", plainList(list)) : token13(c, "skyQuality");
+  };
+  for (let i = 0; i < 7; i++) {
+    if (out[i]) continue;
+    const slot = i + 1;
+    for (let attempt2 = 0; attempt2 < 40 && !out[i]; attempt2++) {
+      const c = { ...ctx, distinct: attempt2 < 20, drawn: /* @__PURE__ */ new Set(), log: [] };
+      let raw;
+      let shape;
+      if (slot === 4 && theme !== "gods") {
+        raw = pickOne12(["the Day Eye", "the Great Lamp"], c.rng);
+        shape = "the Day Eye";
+      } else if (slot === 4) {
+        raw = `${(_c2 = token13(c, "god", "poss")) != null ? _c2 : ""} Lamp`;
+        shape = "{god:poss} Lamp";
+      } else if (slot === 5) {
+        const herald = token13(c, "herald");
+        raw = herald ? `the ${c.rng() < 0.5 ? "Morning" : "Evening"} ${herald}` : void 0;
+        shape = "the Morning {herald}";
+      } else if (slot === 7 && c.rng() < 0.5) {
+        raw = "the Night Eye";
+        shape = "the Night Eye";
+      } else if (slot === 7) {
+        const q = theme === "kin" ? token13(c, "skyKin") : token13(c, "skyQuality");
+        raw = q ? `the ${q} Moon` : void 0;
+        shape = theme === "kin" ? "the {skyKin} Moon" : "the {skyQuality} Moon";
+      } else if (theme === "gods") {
+        raw = `${(_d2 = token13(c, "god", "poss")) != null ? _d2 : ""} Star`;
+        shape = "{god:poss} Star";
+      } else if (theme === "kin") {
+        const q = quality(c, slot);
+        const k = token13(c, "skyKin");
+        raw = q && k ? `the ${q} ${k}` : void 0;
+        shape = "the {skyQuality} {skyKin}";
+      } else {
+        const q = quality(c, slot);
+        raw = q ? `the ${q} Wanderer` : void 0;
+        shape = "the {skyQuality} Wanderer";
+      }
+      if ((raw == null ? void 0 : raw.startsWith(" ")) || (raw == null ? void 0 : raw.startsWith("undefined"))) raw = void 0;
+      if (accept(i, raw, shape, c) && attempt2 < 20) for (const k of c.used) ctx.used.add(k);
+    }
+    if (!out[i]) accept(i, `the ${ordinalWord(slot)} Light`, "the {ordinal} Light", { ...ctx, drawn: /* @__PURE__ */ new Set(), log: [] });
+  }
+  return out.map((n, i) => ({ ...n, slot: i + 1, tag: LIGHT_SLOT_ORDER[i] }));
+}
+var breaksZodiacSet = (names) => names.filter((n) => TIME_SKY.safeguards.zodiacSet.some((z) => bare5(z) === bare5(n))).length >= TIME_SKY.safeguards.zodiacSetLimit;
+function signSeries(S, system) {
+  const ctx0 = { ...S.ctx, kind: "sign", system };
+  const count = TIME_SKY.skies[system].count;
+  const real = signSystemNames(system, ctx0.culture);
+  for (let redraw = 0; redraw < 20; redraw++) {
+    const ctx = { ...ctx0, distinct: true, used: /* @__PURE__ */ new Set(), drawn: /* @__PURE__ */ new Set(), log: [], season: null };
+    const seen = /* @__PURE__ */ new Set();
+    const lines2 = Array.from({ length: count }, () => void 0);
+    const cap22 = Math.floor(count / 2);
+    let realCount = 0;
+    for (const i of shuffle(Array.from({ length: count }, (_, k) => k), ctx.rng)) {
+      if (realCount >= cap22) break;
+      const base = real == null ? void 0 : real[i];
+      if (!base || ctx.rng() >= S.realShare) continue;
+      const text = signText(system, base);
+      if (!acceptable5(ctx, text, "sign", true) || seen.has(text.toLowerCase())) continue;
+      seen.add(text.toLowerCase());
+      lines2[i] = { text, kind: "sign", shape: "culture names", tones: [], words: [], real: true, slot: i + 1 };
+      realCount++;
+    }
+    let theme;
+    if (system === "animals-12") theme = "animals";
+    else if (system === "day-signs-20") theme = "daysigns";
+    else if (system === "mansions-28") theme = pickWeighted5(TIME_SKY.themes.mansions, ctx.rng);
+    else {
+      theme = pickWeighted5(TIME_SKY.themes.sign, ctx.rng);
+      if (system === "zodiac-12" && ctx.rng() < TIME_SKY.themes.mixedZodiac) theme = "mixed";
+    }
+    const flavour = [...new Set(cultureAnimals(ctx.culture))].filter((w) => !w.includes("{")).map((w) => biomeTitleCase(w));
+    const patternsFor = () => {
+      switch (theme) {
+        case "beasts":
+          return ["the {beast}"];
+        case "figures":
+          return ["the {skyFigure}"];
+        case "objects":
+          return ["the {skyObject}"];
+        case "mixed":
+          return ["the {beast}", "the {skyFigure}"];
+        case "bodyParts":
+          return ["the {skyBodyPart}", "the {beast:poss} {skyBodyPart}"];
+        case "daysigns":
+          return ["{wildAnimal}", "{bird}", "{daySign}"];
+      }
+      return [];
+    };
+    for (let i = 0; i < count; i++) {
+      if (lines2[i]) continue;
+      for (let attempt2 = 0; attempt2 < 60 && !lines2[i]; attempt2++) {
+        const c = { ...ctx, distinct: attempt2 < 30, drawn: /* @__PURE__ */ new Set(), log: [] };
+        let raw;
+        let shape;
+        if (theme === "animals") {
+          const items = [...biomeItems(c, "wildAnimal"), ...biomeItems(c, "livestock"), ...flavour.map((w) => [w, 3])];
+          raw = drawFrom(c, "beast", "animals", items);
+          shape = "{beast}";
+        } else {
+          shape = pickOne12(patternsFor(), c.rng);
+          raw = renderPattern11(c, shape);
+        }
+        if (!raw) continue;
+        const text = bareSystem(system) ? timeCapitals(raw) : finish2(c, "sign", raw);
+        if (!acceptable5(c, text, "sign") || seen.has(text.toLowerCase())) continue;
+        seen.add(text.toLowerCase());
+        if (c.distinct) for (const k of c.used) ctx.used.add(k);
+        const tones = new Set(c.drawn);
+        lines2[i] = { text, kind: "sign", shape, tones: GROUP_TONES.filter((t) => tones.has(t)), words: c.log, slot: i + 1 };
+      }
+      if (!lines2[i]) {
+        const text = timeCapitals(`${bareSystem(system) ? "" : "the "}${ordinalText(i + 1)} Sign`);
+        seen.add(text.toLowerCase());
+        lines2[i] = { text, kind: "sign", shape: "{ordinal} Sign", tones: [], words: [], slot: i + 1 };
+      }
+    }
+    const final = lines2.map((l) => l);
+    if (system === "zodiac-12" || system === "nakshatras-27" || system === "decans-36") {
+      if (breaksZodiacSet(final.map((n) => n.text))) continue;
+    }
+    return final;
+  }
+  return [];
+}
+
+// src/timesky/calendarSentence.ts
+var DEFAULT_CALENDAR_STATE = {
+  culture: "norman-british",
+  kind: "month",
+  era: "MD",
+  fantastic: false,
+  start: "own",
+  words: "translated",
+  tone: "any",
+  people: "placeholders",
+  series: false
+};
+var DEFAULT_SKY_STATE = { ...DEFAULT_CALENDAR_STATE, kind: "constellation" };
+var PEOPLE_TEXT7 = { placeholders: "placeholders for", invented: "invented" };
+var WORDS_TEXT = { translated: "in translated names", loanwords: "with familiar loanwords" };
+function timeHasLoans(culture) {
+  var _a4, _b2;
+  return ((_b2 = (_a4 = TIME_SKY.cultureNames[culture]) == null ? void 0 : _a4.festival) != null ? _b2 : []).some((r) => !!r.loan);
+}
+var biomeOf = (state, limits) => state.biome ? limits.findBiome(state.biome) : void 0;
+var timeLandOf = (state, limits) => landKind(biomeOf(state, limits));
+function showsTimeStart(state, limits) {
+  return state.series && ["month", "festival", "moon"].includes(state.kind) && !timeLandOf(state, limits).space;
+}
+var showsTimeWords = (state) => state.kind === "festival" && timeHasLoans(state.culture);
+function startSeasons(state, limits) {
+  var _a4;
+  const biome = biomeOf(state, limits);
+  const atHome = !state.biome || state.biome === homelandOf(state.culture);
+  return ((_a4 = seasonCycle(biome, state.culture, atHome)) != null ? _a4 : []).map(([s]) => s);
+}
+function timeSentence(module2, state, limits) {
+  var _a4, _b2, _c2, _d2;
+  const out = [];
+  const culture = (_a4 = findTimeCulture(state.culture)) != null ? _a4 : TIME_CULTURES[0];
+  out.push({
+    field: "culture",
+    text: culture.label,
+    title: "Naming culture: whose calendar and sky, and whose customs, the names follow",
+    choices: TIME_CULTURES.map((c, i) => {
+      var _a5;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a5 = TIME_CULTURES[i - 1]) == null ? void 0 : _a5.group) ? { group: c.group } : {} };
+    }),
+    current: culture.key
+  });
+  out.push(" ");
+  const land = timeLandOf(state, limits);
+  const offered = kindsOffered2(module2, state.culture, state.era, land);
+  const kind = (_b2 = offered.find((k) => k.key === state.kind)) != null ? _b2 : offered[0];
+  out.push({
+    field: "kind",
+    text: kind.plural,
+    title: kind.description,
+    choices: offered.map((k) => ({ id: k.key, label: k.menu, title: k.description })),
+    current: kind.key
+  });
+  out.push(" of the ");
+  out.push({
+    field: "era",
+    text: routeEraLabel(state.era),
+    title: "The age: decides which calendars and skies exist",
+    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
+    current: state.era
+  });
+  out.push(" era, in a ");
+  const sensitive = isSensitive(state.culture);
+  const worlds = fantasticWords(state.era);
+  if (sensitive) out.push(worlds[0]);
+  else {
+    out.push({
+      field: "fantastic",
+      text: worlds[state.fantastic ? 1 : 0],
+      title: "Open magic and monsters; in the steam age, steampunk",
+      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: worlds[on ? 1 : 0] })),
+      current: state.fantastic ? "on" : "off"
+    });
+  }
+  out.push(module2 === "calendar" ? " world, set in " : " world, seen from ");
+  const biome = biomeOf(state, limits);
+  out.push({
+    field: "biome",
+    text: biome ? biome.phrase : "their homeland",
+    title: (_c2 = biome == null ? void 0 : biome.guide) != null ? _c2 : "Their homeland: the culture's own land",
+    choices: [
+      { id: void 0, label: "Their homeland" },
+      ...limits.biomes.map((b) => {
+        var _a5, _b3;
+        return { id: (_b3 = (_a5 = b.custom) == null ? void 0 : _a5.path) != null ? _b3 : b.id, label: b.label };
+      }),
+      ...(isFutureEra(state.era) ? SPACE_BIOMES.filter((b) => state.era === "IS" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({ id: b.id, label: b.label, title: b.guide, ...i === 0 ? { heading: "Space" } : {} }))
+    ],
+    current: state.biome
+  });
+  if (showsTimeStart(state, limits)) {
+    out.push(", starting in ");
+    const seasons = startSeasons(state, limits);
+    const current = state.start !== "own" && seasons.includes(state.start) ? state.start : "own";
+    out.push({
+      field: "start",
+      text: current === "own" ? "their own new year" : seasonPhrase(current),
+      title: "Which season the list starts in. Their own new year starts where the culture's year began (midwinter for the Anglo-Saxons, spring for the Romans).",
+      choices: [{ id: "own", label: "Their own new year" }, ...seasons.map((s) => ({ id: s, label: seasonPhrase(s) }))],
+      current
+    });
+  }
+  if (showsTimeWords(state)) {
+    out.push(", ");
+    out.push({
+      field: "words",
+      text: WORDS_TEXT[state.words],
+      title: "Real festival names are given in English by meaning (Samhain: Summer's End). Loanwords keep the familiar English borrowing where there is one.",
+      choices: ["translated", "loanwords"].map((w) => ({ id: w, label: WORDS_TEXT[w] })),
+      current: state.words
+    });
+  }
+  out.push(", ");
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].filter((t) => !sensitive || t !== "light" && t !== "grim").map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
+  out.push(", with ");
+  out.push({
+    field: "people",
+    text: PEOPLE_TEXT7[state.people],
+    title: "Placeholders like [god], or invented names",
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT7[p] })),
+    current: state.people
+  });
+  out.push(" gods and people, ");
+  const seriesText = (_d2 = TIME_SKY.series[kind.key]) == null ? void 0 : _d2.text;
+  const canSeries = seriesOffered(kind.key, state.culture, state.era, land);
+  out.push({
+    field: "series",
+    text: state.series && canSeries ? seriesText : "each one separate",
+    title: "A whole set in order. The number of months, days or signs always comes from a real system, named under the batch.",
+    choices: [{ id: "off", label: "each one separate" }, ...canSeries ? [{ id: "on", label: seriesText }] : []],
+    current: state.series && canSeries ? "on" : "off"
+  });
+  return out;
+}
+function timeSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function normaliseTime(module2, state, limits) {
+  const next = { ...state };
+  if (!findTimeCulture(next.culture)) next.culture = DEFAULT_CALENDAR_STATE.culture;
+  const sensitive = isSensitive(next.culture);
+  if (sensitive) {
+    next.fantastic = false;
+    if (next.tone === "light" || next.tone === "grim") next.tone = "any";
+  }
+  if (next.biome && !limits.findBiome(next.biome)) next.biome = void 0;
+  if (next.biome && !isFutureEra(next.era) && isSpaceBiome(limits.findBiome(next.biome))) next.biome = void 0;
+  const land = timeLandOf(next, limits);
+  const offered = kindsOffered2(module2, next.culture, next.era, land);
+  if (!offered.some((k) => k.key === next.kind)) next.kind = offered.some((k) => k.key === timeKindDefaultOf(module2)) ? timeKindDefaultOf(module2) : offered[0].key;
+  if (next.series && !seriesOffered(next.kind, next.culture, next.era, land)) next.series = false;
+  if (next.start !== "own" && !startSeasons(next, limits).includes(next.start)) next.start = "own";
+  if (!showsTimeWords(next)) next.words = "translated";
+  return next;
+}
+function chooseTime(module2, state, field, id, limits) {
+  var _a4, _b2;
+  const next = { ...state };
+  switch (field) {
+    case "culture":
+      next.culture = id != null ? id : DEFAULT_CALENDAR_STATE.culture;
+      break;
+    case "kind":
+      next.kind = (_b2 = (_a4 = findTimeKind(id)) == null ? void 0 : _a4.key) != null ? _b2 : next.kind;
+      break;
+    case "era":
+      next.era = ROUTE_ERAS.some((e) => e.code === id) ? id : DEFAULT_CALENDAR_STATE.era;
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "biome":
+      next.biome = id;
+      break;
+    case "start":
+      next.start = id != null ? id : "own";
+      break;
+    case "words":
+      next.words = id === "loanwords" ? "loanwords" : "translated";
+      break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "people":
+      next.people = id != null ? id : "placeholders";
+      break;
+    case "series":
+      next.series = id === "on";
+      break;
+  }
+  return normaliseTime(module2, next, limits);
+}
+var timeBiomeResetNotice = (before, after) => before.biome && !after.biome && isFutureEra(before.era) !== isFutureEra(after.era) ? "The space biome was reset to their homeland." : "";
+function timeHistoryLabel(module2, state, limits) {
+  var _a4, _b2, _c2;
+  const culture = (_b2 = (_a4 = findTimeCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
+  const kind = findTimeKind(state.kind);
+  const biome = biomeOf(state, limits);
+  return [
+    module2 === "calendar" ? "calendars and festivals" : "sky lore",
+    routeEraLabel(state.era),
+    culture,
+    (_c2 = kind == null ? void 0 : kind.plural) != null ? _c2 : state.kind,
+    ...biome ? [biome.label] : [],
+    ...module2 === "calendar" && showsTimeStart(state, limits) && state.start !== "own" ? [`from ${seasonPhrase(state.start)}`] : [],
+    ...showsTimeWords(state) && state.words === "loanwords" ? ["loanwords"] : [],
+    ...!isSensitive(state.culture) && state.fantastic ? [fantasticWords(state.era)[1]] : [],
+    ...state.tone !== "any" ? [state.tone] : [],
+    ...state.series && seriesOffered(state.kind, state.culture, state.era, landKind(biome)) ? [TIME_SKY.series[state.kind].text] : []
+  ].join(" \xB7 ");
+}
+
 // src/deities/sentence.ts
 var DEFAULT_DEITY_STATE = {
   culture: "general",
@@ -96531,9 +105086,9 @@ var SERIES_TEXT6 = { off: "each one separate", on: "as one pantheon" };
 var DEITIES_MODULE_KINDS = ["deity", "pantheon"];
 var showsPersonLinks = (state) => state.kind !== "place";
 function deitySentence(state, packs = []) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const out = [];
-  const culture = (_a3 = DEITY_CULTURES.find((c) => c.key === state.culture)) != null ? _a3 : DEITY_CULTURES[0];
+  const culture = (_a4 = DEITY_CULTURES.find((c) => c.key === state.culture)) != null ? _a4 : DEITY_CULTURES[0];
   out.push({
     field: "culture",
     text: culture.label,
@@ -96610,7 +105165,7 @@ function deitySentence(state, packs = []) {
       out.push(" ");
       out.push({
         field: "pack",
-        text: (_c = (_b = state.pack) != null ? _b : packs[0]) != null ? _c : "a pack",
+        text: (_c2 = (_b2 = state.pack) != null ? _b2 : packs[0]) != null ? _c2 : "a pack",
         title: "The name pack the names come from (its section for the gender)",
         choices: packs.map((p) => ({ id: p, label: p })),
         current: state.pack
@@ -96673,8 +105228,8 @@ function chooseDeity(state, field, id) {
 }
 var effectiveDeityState = (state) => showsPersonLinks(state) ? state : { ...state, gender: "any", names: "titles" };
 function deityHistoryLabel(state) {
-  var _a3, _b;
-  const culture = (_b = (_a3 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  var _a4, _b2;
+  const culture = (_b2 = (_a4 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   const kind = DEITY_KINDS.find((k) => k.key === state.kind);
   const domain = DEITY_DOMAINS.find((d) => d.key === state.domain);
   const s = effectiveDeityState(state);
@@ -96716,8 +105271,8 @@ function chooseSacredPlace(state, field, id) {
   return { culture: next.culture, ...next.domain ? { domain: next.domain } : {}, era: next.era, fantastic: next.fantastic, tone: next.tone };
 }
 function sacredPlaceHistoryLabel(state) {
-  var _a3, _b;
-  const culture = (_b = (_a3 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  var _a4, _b2;
+  const culture = (_b2 = (_a4 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   const domain = DEITY_DOMAINS.find((d) => d.key === state.domain);
   return [
     "sacred places",
@@ -96740,20 +105295,20 @@ var DEFAULT_EVENT_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT7 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT8 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT7 = { off: "each one separate", on: "as one history" };
 var scaleText = (key2) => EVENT_SCALES.find((s) => s.key === key2).text;
 function eventSentence(state) {
-  var _a3;
+  var _a4;
   const out = [];
-  const culture = (_a3 = findRouteCulture(state.culture)) != null ? _a3 : ROUTE_CULTURES[0];
+  const culture = (_a4 = findRouteCulture(state.culture)) != null ? _a4 : ROUTE_CULTURES[0];
   out.push({
     field: "culture",
     text: culture.label,
     title: "Naming culture: whose customs the history follows",
     choices: ROUTE_CULTURES.map((c, i) => {
-      var _a4;
-      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a4 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a4.group) ? { group: c.group } : {} };
+      var _a5;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a5 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a5.group) ? { group: c.group } : {} };
     }),
     current: culture.key
   });
@@ -96803,9 +105358,9 @@ function eventSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT7[state.people],
+    text: PEOPLE_TEXT8[state.people],
     title: "Placeholders like [leader], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT7[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT8[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -96857,8 +105412,8 @@ function chooseEvent(state, field, id) {
   return next;
 }
 function eventHistoryLabel(state) {
-  var _a3, _b;
-  const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  var _a4, _b2;
+  const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   const kind = EVENT_KINDS.find((k) => k.key === state.kind);
   return [
     "events and eras",
@@ -96890,7 +105445,7 @@ function kitMarkdown(kit) {
 }
 var SETTLEMENT_NOTE_TYPE = "settlement";
 function kitNoteContent(kit) {
-  var _a3;
+  var _a4;
   const o = kit.options;
   return [
     "---",
@@ -96898,7 +105453,7 @@ function kitNoteContent(kit) {
     `culture: ${o.culture}`,
     `era: ${o.era}`,
     `fantastic: ${o.fantastic}`,
-    `region: ${(_a3 = o.region) != null ? _a3 : "all"}`,
+    `region: ${(_a4 = o.region) != null ? _a4 : "all"}`,
     `size: ${o.size}`,
     `position: ${o.position}`,
     `tone: ${o.tone}`,
@@ -96913,7 +105468,7 @@ function kitNoteContent(kit) {
   ].join("\n");
 }
 function parseKitNote(content) {
-  var _a3;
+  var _a4;
   const fm = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!fm) return { problems: ["This note has no frontmatter."] };
   const values = {};
@@ -96931,7 +105486,7 @@ function parseKitNote(content) {
     return fallback;
   };
   const seed = Number(values.seed);
-  if (!Number.isInteger(seed) || seed < 0) problems.push(`Unknown seed \u201C${(_a3 = values.seed) != null ? _a3 : ""}\u201D.`);
+  if (!Number.isInteger(seed) || seed < 0) problems.push(`Unknown seed \u201C${(_a4 = values.seed) != null ? _a4 : ""}\u201D.`);
   const fantastic = values.fantastic === "true";
   if (values.fantastic && values.fantastic !== "true" && values.fantastic !== "false") problems.push(`Unknown fantastic \u201C${values.fantastic}\u201D.`);
   return {
@@ -96951,8 +105506,8 @@ function parseKitNote(content) {
     problems
   };
 }
-function freeNotePath(folder, town4, exists) {
-  const base = town4.replace(/[\\/:*?"<>|#^[\]]/g, "").trim() || "Settlement";
+function freeNotePath(folder, town5, exists) {
+  const base = town5.replace(/[\\/:*?"<>|#^[\]]/g, "").trim() || "Settlement";
   const dir = folder.replace(/\/+$/, "");
   const at = (name) => dir ? `${dir}/${name}.md` : `${name}.md`;
   if (!exists(at(base))) return at(base);
@@ -97007,19 +105562,19 @@ var DEFAULT_KIT_STATE = {
   detail: "standard",
   people: "placeholders"
 };
-var PEOPLE_TEXT8 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT9 = { placeholders: "placeholders for", invented: "invented" };
 function kitSentence(state) {
-  var _a3;
+  var _a4;
   const out = [];
-  const culture = (_a3 = findRouteCulture(state.culture)) != null ? _a3 : ROUTE_CULTURES[0];
+  const culture = (_a4 = findRouteCulture(state.culture)) != null ? _a4 : ROUTE_CULTURES[0];
   out.push(/^[aeiou]/i.test(culture.label) ? "an " : "a ");
   out.push({
     field: "culture",
     text: culture.label,
     title: "Naming culture: whose customs the settlement follows",
     choices: ROUTE_CULTURES.map((c, i) => {
-      var _a4;
-      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a4 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a4.group) ? { group: c.group } : {} };
+      var _a5;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a5 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a5.group) ? { group: c.group } : {} };
     }),
     current: culture.key
   });
@@ -97096,9 +105651,9 @@ function kitSentence(state) {
   out.push(" detail, with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT8[state.people],
+    text: PEOPLE_TEXT9[state.people],
     title: "Placeholders like [founder], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT8[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT9[p] })),
     current: state.people
   });
   out.push(" people and places");
@@ -97145,9 +105700,9 @@ function chooseKit(state, field, id) {
   if (!showsRegion(next)) next.region = void 0;
   return next;
 }
-function kitHistoryLabel(town4, state) {
-  var _a3, _b;
-  return ["settlement kit", town4, sizeLabel(state.size, state.era), routeEraLabel(state.era), (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General"].join(" \xB7 ");
+function kitHistoryLabel(town5, state) {
+  var _a4, _b2;
+  return ["settlement kit", town5, sizeLabel(state.size, state.era), routeEraLabel(state.era), (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General"].join(" \xB7 ");
 }
 
 // src/buildings/sentence.ts
@@ -97160,20 +105715,20 @@ var DEFAULT_BUILDING_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT9 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT10 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT8 = { off: "each one separate", on: "as one town" };
 var settingText = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
 function buildingSentence(state) {
-  var _a3;
+  var _a4;
   const out = [];
-  const culture = (_a3 = findRouteCulture(state.culture)) != null ? _a3 : ROUTE_CULTURES[0];
+  const culture = (_a4 = findRouteCulture(state.culture)) != null ? _a4 : ROUTE_CULTURES[0];
   out.push({
     field: "culture",
     text: culture.label,
     title: "Naming culture: whose customs the buildings follow",
     choices: ROUTE_CULTURES.map((c, i) => {
-      var _a4;
-      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a4 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a4.group) ? { group: c.group } : {} };
+      var _a5;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a5 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a5.group) ? { group: c.group } : {} };
     }),
     current: culture.key
   });
@@ -97236,9 +105791,9 @@ function buildingSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT9[state.people],
+    text: PEOPLE_TEXT10[state.people],
     title: "Placeholders like [founder], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT9[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT10[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -97294,8 +105849,8 @@ function chooseBuilding(state, field, id) {
   return next;
 }
 function buildingHistoryLabel(state) {
-  var _a3, _b;
-  const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  var _a4, _b2;
+  const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   const kind = BUILDING_KINDS.find((k) => k.key === state.kind);
   return [
     "buildings and landmarks",
@@ -97321,21 +105876,21 @@ var DEFAULT_INN_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT10 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT11 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT9 = { off: "each one separate", on: "as one town" };
 var settingText2 = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
 var showsForm = (state) => hasSignTradition(state.culture);
 function innSentence(state) {
-  var _a3;
+  var _a4;
   const out = [];
-  const culture = (_a3 = findRouteCulture(state.culture)) != null ? _a3 : ROUTE_CULTURES[0];
+  const culture = (_a4 = findRouteCulture(state.culture)) != null ? _a4 : ROUTE_CULTURES[0];
   out.push({
     field: "culture",
     text: culture.label,
     title: "Naming culture: whose customs the houses follow",
     choices: ROUTE_CULTURES.map((c, i) => {
-      var _a4;
-      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a4 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a4.group) ? { group: c.group } : {} };
+      var _a5;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a5 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a5.group) ? { group: c.group } : {} };
     }),
     current: culture.key
   });
@@ -97408,9 +105963,9 @@ function innSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT10[state.people],
+    text: PEOPLE_TEXT11[state.people],
     title: "Placeholders like [owner], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT10[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT11[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -97470,8 +106025,8 @@ function chooseInn(state, field, id) {
 }
 var innFormFor = (state) => showsForm(state) ? state.form : "either";
 function innHistoryLabel(state) {
-  var _a3, _b;
-  const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  var _a4, _b2;
+  const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   const kind = INN_KINDS.find((k) => k.key === state.kind);
   return [
     "inns and taverns",
@@ -97497,7 +106052,7 @@ var DEFAULT_STREET_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT11 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT12 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT10 = { off: "each one separate", on: "as one town" };
 var DIALECT_TEXT = {
   plain: "with plain words only",
@@ -97507,16 +106062,16 @@ var DIALECT_TEXT = {
 var article2 = (word) => /^[aeiou]/i.test(word) ? "an" : "a";
 var kindText = (kind) => !kind ? STREET_ANY : kind === "districts" ? "districts" : STREET_KINDS.find((k) => k.key === kind).plural;
 function streetSentence(state) {
-  var _a3;
+  var _a4;
   const out = [];
-  const culture = (_a3 = findRouteCulture(state.culture)) != null ? _a3 : ROUTE_CULTURES[0];
+  const culture = (_a4 = findRouteCulture(state.culture)) != null ? _a4 : ROUTE_CULTURES[0];
   out.push({
     field: "culture",
     text: culture.label,
     title: "Naming culture: whose customs the streets follow",
     choices: ROUTE_CULTURES.map((c, i) => {
-      var _a4;
-      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a4 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a4.group) ? { group: c.group } : {} };
+      var _a5;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a5 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a5.group) ? { group: c.group } : {} };
     }),
     current: culture.key
   });
@@ -97603,9 +106158,9 @@ function streetSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT11[state.people],
+    text: PEOPLE_TEXT12[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT11[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT12[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -97668,8 +106223,8 @@ function chooseStreet(state, field, id) {
   return next;
 }
 function streetHistoryLabel(state) {
-  var _a3, _b;
-  const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+  var _a4, _b2;
+  const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
   const kind = STREET_KINDS.find((k) => k.key === state.kind);
   return [
     "streets and districts",
@@ -98755,20 +107310,20 @@ function builtinTemplates(type) {
   return BUILTIN_TEMPLATES.filter((t) => t.type === type);
 }
 function templateText(t) {
-  var _a3;
+  var _a4;
   if (t.sections) return t.sections.map((s) => `## ${s.name}
 ${s.items.join("\n")}`).join("\n\n");
-  return ((_a3 = t.items) != null ? _a3 : []).join("\n");
+  return ((_a4 = t.items) != null ? _a4 : []).join("\n");
 }
 function templateNameCount(t) {
-  var _a3, _b;
-  return t.sections ? t.sections.reduce((n, s) => n + s.items.length, 0) : (_b = (_a3 = t.items) == null ? void 0 : _a3.length) != null ? _b : 0;
+  var _a4, _b2;
+  return t.sections ? t.sections.reduce((n, s) => n + s.items.length, 0) : (_b2 = (_a4 = t.items) == null ? void 0 : _a4.length) != null ? _b2 : 0;
 }
 function templatePartTexts(t) {
-  var _a3;
-  return (_a3 = t.parts) == null ? void 0 : _a3.map((part, i) => {
-    var _a4;
-    const sections = (_a4 = t.partSections) == null ? void 0 : _a4[i];
+  var _a4;
+  return (_a4 = t.parts) == null ? void 0 : _a4.map((part, i) => {
+    var _a5;
+    const sections = (_a5 = t.partSections) == null ? void 0 : _a5[i];
     return sections ? sections.map((s) => `## ${s.name}
 ${s.items.join("\n")}`).join("\n\n") : part.join("\n");
   });
@@ -98776,25 +107331,25 @@ ${s.items.join("\n")}`).join("\n\n") : part.join("\n");
 var EXAMPLE_PACK_PREFIX = "nameforge-example:/";
 var builtin = (name) => BUILTIN_TEMPLATES.find((t) => t.name === name);
 function examplePacks() {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const victorian = builtin("Victorian, England");
-  const sectioned = (_a3 = parseNameSections(templateText(victorian))) != null ? _a3 : void 0;
-  const names = ((_b = victorian.sections) != null ? _b : []).flatMap((s) => s.items);
+  const sectioned = (_a4 = parseNameSections(templateText(victorian))) != null ? _a4 : void 0;
+  const names = ((_b2 = victorian.sections) != null ? _b2 : []).flatMap((s) => s.items);
   const orc = builtin("Orc");
   return [
     { path: `${EXAMPLE_PACK_PREFIX}Victorian, England (list)`, content: createNamesFileContent("Victorian, England (list)", names, "listPack", { sectioned }) },
     { path: `${EXAMPLE_PACK_PREFIX}Victorian, England (breakdown)`, content: createNamesFileContent("Victorian, England (breakdown)", names, "breakdownPack", { sectioned }) },
     {
       path: `${EXAMPLE_PACK_PREFIX}Orc`,
-      content: createCompoundNamesFileContent("Orc", ((_c = templatePartTexts(orc)) != null ? _c : []).map(compoundPartFromText), "combined", "joined", void 0, {
+      content: createCompoundNamesFileContent("Orc", ((_c2 = templatePartTexts(orc)) != null ? _c2 : []).map(compoundPartFromText), "combined", "joined", void 0, {
         partUse: ["all", "sometimes", "all"],
         partGenerators: ["breakdown", "breakdown", "list"]
       })
     },
     ...BUILTIN_TEMPLATES.filter((t) => t.name !== victorian.name && t.name !== orc.name && t.type !== "people-compound").map((t) => {
-      var _a4, _b2;
-      const sectioned2 = t.sections ? (_a4 = parseNameSections(templateText(t))) != null ? _a4 : void 0 : void 0;
-      const names2 = t.sections ? t.sections.flatMap((s) => s.items) : (_b2 = t.items) != null ? _b2 : [];
+      var _a5, _b3;
+      const sectioned2 = t.sections ? (_a5 = parseNameSections(templateText(t))) != null ? _a5 : void 0 : void 0;
+      const names2 = t.sections ? t.sections.flatMap((s) => s.items) : (_b3 = t.items) != null ? _b3 : [];
       return {
         path: `${EXAMPLE_PACK_PREFIX}${t.name}`,
         content: createNamesFileContent(t.name, names2, t.type === "place" ? "placePack" : "breakdownPack", { sectioned: sectioned2 })
@@ -98821,20 +107376,20 @@ var LandButton = class {
   }
   /** Shows or hides the button and updates its tooltip and active state. */
   refresh() {
-    var _a3, _b, _c;
+    var _a4, _b2, _c2;
     const state = this.options.state();
     this.el.toggle(!!state);
     if (!state) return;
     const biome = findBiome(state.biome, this.custom);
-    const terrain = [...TERRAIN_CHOICES, ...(_a3 = biome == null ? void 0 : biome.customTerrains) != null ? _a3 : []].find((t) => t.id === state.terrain);
-    const biomeLabel = (_b = biome == null ? void 0 : biome.label) != null ? _b : this.options.defaultLabel();
-    const parts = [biomeLabel, ...this.options.terrain() ? [(_c = terrain == null ? void 0 : terrain.label) != null ? _c : "Any terrain"] : []];
+    const terrain = [...TERRAIN_CHOICES, ...(_a4 = biome == null ? void 0 : biome.customTerrains) != null ? _a4 : []].find((t) => t.id === state.terrain);
+    const biomeLabel = (_b2 = biome == null ? void 0 : biome.label) != null ? _b2 : this.options.defaultLabel();
+    const parts = [biomeLabel, ...this.options.terrain() ? [(_c2 = terrain == null ? void 0 : terrain.label) != null ? _c2 : "Any terrain"] : []];
     this.el.setAttribute("title", `Land: ${parts.join(" \xB7 ")}`);
     this.el.setAttribute("aria-label", `Land: ${parts.join(" \xB7 ")}`);
     this.el.toggleClass("is-active", !!state.biome || state.terrain !== "any");
   }
   async open(evt) {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.options.state();
     if (!state) return;
     this.custom = await this.options.customBiomes();
@@ -98860,7 +107415,7 @@ var LandButton = class {
       menu.addSeparator();
       heading("Your biomes");
       for (const b of [...this.custom].sort((x, y) => x.label.localeCompare(y.label))) {
-        const id = (_b = (_a3 = b.custom) == null ? void 0 : _a3.path) != null ? _b : b.id;
+        const id = (_b2 = (_a4 = b.custom) == null ? void 0 : _a4.path) != null ? _b2 : b.id;
         menu.addItem((item2) => item2.setTitle(b.label).setChecked(state.biome === id).onClick(() => setBiome(id)));
       }
     }
@@ -98878,10 +107433,10 @@ var LandButton = class {
   }
 };
 function landHistorySuffix(state, custom = [], withBiome = true) {
-  var _a3;
+  var _a4;
   if (!state) return "";
   const biome = findBiome(state.biome, custom);
-  const terrain = [...TERRAIN_CHOICES, ...(_a3 = biome == null ? void 0 : biome.customTerrains) != null ? _a3 : []].find((t) => t.id === state.terrain && t.id !== "any");
+  const terrain = [...TERRAIN_CHOICES, ...(_a4 = biome == null ? void 0 : biome.customTerrains) != null ? _a4 : []].find((t) => t.id === state.terrain && t.id !== "any");
   return `${withBiome && biome ? ` \xB7 ${biomeInline(biome)}` : ""}${terrain ? ` \xB7 ${terrain.label.toLowerCase()}` : ""}`;
 }
 
@@ -99097,18 +107652,18 @@ var FUSES_COLUMN = {
 };
 function wordTable(entries) {
   const rows = entries.map((e) => {
-    var _a3, _b, _c;
-    const forms = [...e.forms, ...(_a3 = e.traditionalForms) != null ? _a3 : []].map((f) => `${f}-`).join(", ");
-    return `| ${e.modern} | ${(_b = e.traditional) != null ? _b : "\u2014"} | ${(_c = e.plural) != null ? _c : "\u2014"} | ${forms || "\u2014"} | ${FUSES_COLUMN[e.fuses]} |`;
+    var _a4, _b2, _c2;
+    const forms = [...e.forms, ...(_a4 = e.traditionalForms) != null ? _a4 : []].map((f) => `${f}-`).join(", ");
+    return `| ${e.modern} | ${(_b2 = e.traditional) != null ? _b2 : "\u2014"} | ${(_c2 = e.plural) != null ? _c2 : "\u2014"} | ${forms || "\u2014"} | ${FUSES_COLUMN[e.fuses]} |`;
   });
   return ["| Modern | Traditional | Plural | Combining forms | Fuses |", "|---|---|---|---|---|", ...rows].join("\n");
 }
 function starterWordListBody(list) {
   const sections = list.categories.map((id) => {
-    var _a3, _b;
-    return `## ${(_a3 = LABELS.get(id)) != null ? _a3 : id}
+    var _a4, _b2;
+    return `## ${(_a4 = LABELS.get(id)) != null ? _a4 : id}
 
-${wordTable((_b = NAME_WORDS.categories[id]) != null ? _b : [])}`;
+${wordTable((_b2 = NAME_WORDS.categories[id]) != null ? _b2 : [])}`;
   });
   return `${list.description}
 
@@ -99146,8 +107701,8 @@ function parseBiomePackContent(content, fallbackName = "Biome") {
   const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   const frontmatter = fm ? fm[1] : "";
   const field = (key2) => {
-    var _a3, _b;
-    return (_b = (_a3 = frontmatter.match(new RegExp(`^${key2}:\\s*(.*)$`, "m"))) == null ? void 0 : _a3[1].trim().replace(/^['"]|['"]$/g, "")) != null ? _b : "";
+    var _a4, _b2;
+    return (_b2 = (_a4 = frontmatter.match(new RegExp(`^${key2}:\\s*(.*)$`, "m"))) == null ? void 0 : _a4[1].trim().replace(/^['"]|['"]$/g, "")) != null ? _b2 : "";
   };
   const body = fm ? content.slice(fm[0].length) : content;
   const guideLines = [];
@@ -99155,11 +107710,11 @@ function parseBiomePackContent(content, fallbackName = "Biome") {
   let current = null;
   let tableLines = [];
   const flushTable = () => {
-    var _a3;
+    var _a4;
     if (current && tableLines.length > 0) {
       const rows = parseWordList(tableLines.join("\n")).unsectioned;
       current.entries = [
-        ...(_a3 = current.entries) != null ? _a3 : [],
+        ...(_a4 = current.entries) != null ? _a4 : [],
         ...rows.map((r) => ({
           modern: r.modern,
           ...r.traditional ? { traditional: r.traditional } : {},
@@ -99218,12 +107773,12 @@ function terrainHeading(heading) {
   const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
   return m ? { terrain: m[1].trim(), part: m[2].toLowerCase() } : null;
 }
-function terrainId(token13, custom) {
-  var _a3;
-  const t = norm5(token13);
+function terrainId(token14, custom) {
+  var _a4;
+  const t = norm5(token14);
   const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm5(x.id) === t || norm5(x.label) === t));
   if (builtIn) return builtIn.id;
-  return (_a3 = custom.find((x) => norm5(x.label) === t || x.id === kebab2(token13))) == null ? void 0 : _a3.id;
+  return (_a4 = custom.find((x) => norm5(x.label) === t || x.id === kebab2(token14))) == null ? void 0 : _a4.id;
 }
 var key = (words) => words.map(([w, n]) => `${norm5(w)}|${n}`).sort().join("\n");
 var entryKey = (entries) => entries.map((e) => `${norm5(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
@@ -99232,7 +107787,7 @@ function fusesKey(f) {
 }
 var recordKey = (r) => Object.entries(r).map(([k, v]) => `${k}|${v}`).sort().join("\n");
 function applyBiomePack(base, pack, path) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
   const problems = [];
   const b = {
     ...base,
@@ -99245,16 +107800,16 @@ function applyBiomePack(base, pack, path) {
   };
   if (path) {
     b.id = `pack:${path}`;
-    b.custom = { path, base: (_b = (_a3 = base.custom) == null ? void 0 : _a3.path) != null ? _b : base.id };
+    b.custom = { path, base: (_b2 = (_a4 = base.custom) == null ? void 0 : _a4.path) != null ? _b2 : base.id };
     b.label = pack.packName;
-    b.phrase = (_c = pack.phrase) != null ? _c : /^the\b/i.test(pack.packName) ? pack.packName : `the ${pack.packName.toLowerCase()}`;
+    b.phrase = (_c2 = pack.phrase) != null ? _c2 : /^the\b/i.test(pack.packName) ? pack.packName : `the ${pack.packName.toLowerCase()}`;
     b.guide = pack.guide || `Based on ${base.label}.`;
   } else {
     if (pack.phrase) b.phrase = pack.phrase;
     if (pack.guide) b.guide = pack.guide;
   }
   if (!pack.universalWords) b.universalWords = false;
-  const packLines = { ...(_d = base.packLines) != null ? _d : {} };
+  const packLines = { ...(_d2 = base.packLines) != null ? _d2 : {} };
   const weightsSection = pack.sections.find((s) => ["terrain weights", "terrains"].includes(norm5(s.heading)));
   if (weightsSection) {
     const weights = {};
@@ -99270,15 +107825,15 @@ function applyBiomePack(base, pack, path) {
     }
     if (recordKey(weights) !== recordKey(Object.fromEntries(Object.entries(base.terrainWeights).filter(([, w]) => w > 0)))) {
       b.terrainWeights = Object.fromEntries(TERRAIN_CHOICES.filter((t) => t.id !== "any").map((t) => {
-        var _a4;
-        return [t.id, (_a4 = weights[t.id]) != null ? _a4 : 0];
+        var _a5;
+        return [t.id, (_a5 = weights[t.id]) != null ? _a5 : 0];
       }));
       for (const t of custom) b.terrainWeights[t.id] = weights[t.id];
       if (custom.length > 0) b.customTerrains = custom;
       else delete b.customTerrains;
     }
   }
-  const customTerrains = (_e = b.customTerrains) != null ? _e : [];
+  const customTerrains = (_e2 = b.customTerrains) != null ? _e2 : [];
   for (const section of pack.sections) {
     const h = norm5(section.heading);
     if (section === weightsSection) continue;
@@ -99303,8 +107858,8 @@ function applyBiomePack(base, pack, path) {
     }
     if (h === "shape groups" || h === "shape generics") {
       const record = Object.fromEntries(section.words.map(([w, n]) => {
-        var _a4;
-        return [h === "shape groups" ? (_a4 = groupIds.get(norm5(w))) != null ? _a4 : w : w, n];
+        var _a5;
+        return [h === "shape groups" ? (_a5 = groupIds.get(norm5(w))) != null ? _a5 : w : w, n];
       }));
       const target = h === "shape groups" ? "groups" : "generics";
       if (recordKey(record) !== recordKey(base.shapeMultipliers[target])) b.shapeMultipliers[target] = record;
@@ -99329,8 +107884,8 @@ function applyBiomePack(base, pack, path) {
       if (base.terrainTags && section.entries) {
         const listKey = kind === "land" ? "shortLand" : "shortWater";
         const baseTagged = ((_k = (_j = base.entries) == null ? void 0 : _j[listKey]) != null ? _k : []).filter((e) => {
-          var _a4;
-          return (_a4 = base.terrainTags[e.modern]) == null ? void 0 : _a4.includes(tid);
+          var _a5;
+          return (_a5 = base.terrainTags[e.modern]) == null ? void 0 : _a5.includes(tid);
         });
         if (entryKey(section.entries) !== entryKey(baseTagged)) {
           b.terrainTags = { ...b.terrainTags };
@@ -99353,8 +107908,8 @@ function applyBiomePack(base, pack, path) {
       const custom = customTerrains.find((t) => t.id === tid);
       if (!custom) continue;
       const record = Object.fromEntries(section.words.map(([w, n]) => {
-        var _a4;
-        return [th.part === "shape groups" ? (_a4 = groupIds.get(norm5(w))) != null ? _a4 : w : w, n];
+        var _a5;
+        return [th.part === "shape groups" ? (_a5 = groupIds.get(norm5(w))) != null ? _a5 : w : w, n];
       }));
       custom.shapeMultipliers = { ...custom.shapeMultipliers, [th.part === "shape groups" ? "groups" : "generics"]: record };
     }
@@ -99378,31 +107933,31 @@ function lines(words, alwaysWeights = false) {
   return out.join("\n");
 }
 var terrainName = (id, custom) => {
-  var _a3, _b, _c, _d;
-  return (_d = (_c = (_a3 = TERRAIN_CHOICES.find((t) => t.id === id)) == null ? void 0 : _a3.label) != null ? _c : (_b = custom.find((t) => t.id === id)) == null ? void 0 : _b.label) != null ? _d : id;
+  var _a4, _b2, _c2, _d2;
+  return (_d2 = (_c2 = (_a4 = TERRAIN_CHOICES.find((t) => t.id === id)) == null ? void 0 : _a4.label) != null ? _c2 : (_b2 = custom.find((t) => t.id === id)) == null ? void 0 : _b2.label) != null ? _d2 : id;
 };
 function biomeSections(b) {
-  var _a3, _b, _c, _d, _e, _f, _g, _h, _i, _j;
-  const custom = (_a3 = b.customTerrains) != null ? _a3 : [];
+  var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j;
+  const custom = (_a4 = b.customTerrains) != null ? _a4 : [];
   const out = [];
   const terrains = [...TERRAIN_CHOICES.filter((t) => t.id !== "any").map((t) => t.id), ...custom.map((t) => t.id)];
   out.push({
     heading: "Terrain weights",
     body: lines(terrains.filter((t) => {
-      var _a4;
-      return ((_a4 = b.terrainWeights[t]) != null ? _a4 : 0) > 0;
+      var _a5;
+      return ((_a5 = b.terrainWeights[t]) != null ? _a5 : 0) > 0;
     }).map((t) => [terrainName(t, custom), b.terrainWeights[t]]), true)
   });
   for (const t of terrains) {
-    if (((_b = b.terrainWeights[t]) != null ? _b : 0) <= 0) continue;
+    if (((_b2 = b.terrainWeights[t]) != null ? _b2 : 0) <= 0) continue;
     const name = terrainName(t, custom);
-    if ((_c = b.land[t]) == null ? void 0 : _c.length) out.push({ heading: `${name}: land`, body: lines(b.land[t]) });
-    if ((_d = b.water[t]) == null ? void 0 : _d.length) out.push({ heading: `${name}: water`, body: lines(b.water[t]) });
+    if ((_c2 = b.land[t]) == null ? void 0 : _c2.length) out.push({ heading: `${name}: land`, body: lines(b.land[t]) });
+    if ((_d2 = b.water[t]) == null ? void 0 : _d2.length) out.push({ heading: `${name}: water`, body: lines(b.water[t]) });
     for (const kind of ["land", "water"]) {
       if (b.terrainTags) {
-        const entries = ((_f = (_e = b.entries) == null ? void 0 : _e[kind === "land" ? "shortLand" : "shortWater"]) != null ? _f : []).filter((e) => {
-          var _a4;
-          return (_a4 = b.terrainTags[e.modern]) == null ? void 0 : _a4.includes(t);
+        const entries = ((_f = (_e2 = b.entries) == null ? void 0 : _e2[kind === "land" ? "shortLand" : "shortWater"]) != null ? _f : []).filter((e) => {
+          var _a5;
+          return (_a5 = b.terrainTags[e.modern]) == null ? void 0 : _a5.includes(t);
         });
         if (entries.length) out.push({ heading: `${name}: short ${kind}`, body: wordTable(entries) });
       } else if ((_g = b.short[kind][t]) == null ? void 0 : _g.length) out.push({ heading: `${name}: short ${kind}`, body: lines(b.short[kind][t]) });
@@ -99436,10 +107991,10 @@ ${sections.join("\n\n")}
 `;
 }
 function diffAgainstBase(content, base) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const pack = parseBiomePackContent(content);
   const baseText = new Map(parseBiomePackContent(biomeToText(base)).sections.map((s) => [norm5(s.heading), s]));
-  const fm = (_b = (_a3 = content.match(/^---\s*\n[\s\S]*?\n---\s*/)) == null ? void 0 : _a3[0]) != null ? _b : "";
+  const fm = (_b2 = (_a4 = content.match(/^---\s*\n[\s\S]*?\n---\s*/)) == null ? void 0 : _a4[0]) != null ? _b2 : "";
   const kept = [];
   const bodyLines = content.slice(fm.length).split(/\r?\n/);
   const written = /* @__PURE__ */ new Map();
@@ -99464,7 +108019,7 @@ function diffAgainstBase(content, base) {
     const same6 = b && (s.entries && b.entries ? entryKey(s.entries) === entryKey(b.entries) : key(s.words) === key(b.words)) && s.packs.length === b.packs.length;
     if (!same6) kept.push(`## ${s.heading}
 
-${(_c = written.get(s.heading)) != null ? _c : ""}`.trim());
+${(_c2 = written.get(s.heading)) != null ? _c2 : ""}`.trim());
   }
   const guide = pack.guide ? `${pack.guide}
 
@@ -99481,14 +108036,14 @@ function resolveBiomePacks(files) {
   const problems = [];
   const temperate = BIOMES.find((b) => b.id === "temperate");
   const resolve = (path, seen) => {
-    var _a3, _b;
+    var _a4, _b2;
     const cached = done.get(path);
     if (cached) return cached;
     const pack = parsed.get(path);
-    const link = (_a3 = pack.basedOn.match(/^\[\[([^\]|]+)/)) == null ? void 0 : _a3[1];
+    const link = (_a4 = pack.basedOn.match(/^\[\[([^\]|]+)/)) == null ? void 0 : _a4[1];
     let base;
     if (link) {
-      const basePath = (_b = byName.get(norm5(link))) != null ? _b : [...parsed.keys()].find((p) => p.replace(/\.md$/, "").endsWith(link));
+      const basePath = (_b2 = byName.get(norm5(link))) != null ? _b2 : [...parsed.keys()].find((p) => p.replace(/\.md$/, "").endsWith(link));
       if (basePath && !seen.includes(basePath) && seen.length < 5) base = resolve(basePath, [...seen, path]);
     } else {
       base = pack.basedOn === "britain" ? BRITAIN : findBiome(pack.basedOn);
@@ -99518,30 +108073,30 @@ var seedFrom = (rng) => Math.floor(rng() * 4294967296) >>> 0;
 var pick3 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
 function placePackDraw(parsed, settings, notice = () => {
 }) {
-  var _a3, _b;
-  const faithfulness = (_a3 = settings.faithfulness) != null ? _a3 : 2;
-  const strictness = (_b = settings.strictness) != null ? _b : 3;
+  var _a4, _b2;
+  const faithfulness = (_a4 = settings.faithfulness) != null ? _a4 : 2;
+  const strictness = (_b2 = settings.strictness) != null ? _b2 : 3;
   const models = /* @__PURE__ */ new Map();
   const model = (key2, names) => {
     if (!models.has(key2)) models.set(key2, PlaceNameModel.build(names));
     return models.get(key2);
   };
   const keyOf = (r) => {
-    var _a4, _b2;
-    return `${(_a4 = r.section) != null ? _a4 : ""}|${(_b2 = r.gender) != null ? _b2 : ""}`;
+    var _a5, _b3;
+    return `${(_a5 = r.section) != null ? _a5 : ""}|${(_b3 = r.gender) != null ? _b3 : ""}`;
   };
   if (parsed.placeGenerator === "compound") {
     const data = compoundPartData(parsed);
     const options = { ...compoundSettings(parsed), breakdownModel: "place", faithfulness, strictness };
     return (request, mode, rng) => {
-      var _a4, _b2, _c;
-      const parts = compoundPartsFor(data, (_a4 = request.section) != null ? _a4 : request.gender);
+      var _a5, _b3, _c2;
+      const parts = compoundPartsFor(data, (_a5 = request.section) != null ? _a5 : request.gender);
       if (mode === "stem") {
-        const first = (_b2 = parts[0]) != null ? _b2 : [];
+        const first = (_b3 = parts[0]) != null ? _b3 : [];
         if (first.length === 0) return null;
         return partIsBreakdown(options.generator, parsed.compoundPartGenerators, 0) ? model(`part1|${keyOf(request)}`, first).sampleStem(rng, faithfulness, strictness) : pick3(first, rng);
       }
-      return (_c = generateCompoundNamesDetailed(parts, { count: 1, ...options, seed: seedFrom(rng) }).names[0]) != null ? _c : null;
+      return (_c2 = generateCompoundNamesDetailed(parts, { count: 1, ...options, seed: seedFrom(rng) }).names[0]) != null ? _c2 : null;
     };
   }
   const wholeNames = extractNamesFromMarkdown(parsed.names.join("\n"));
@@ -99556,21 +108111,21 @@ function placePackDraw(parsed, settings, notice = () => {
   if (parsed.placeGenerator === "list") {
     const generator = new ListGenerator();
     return (request, _mode, rng) => {
-      var _a4;
+      var _a5;
       const { names } = namesFor2(request);
       generator.train(names);
-      return (_a4 = generator.generateMultiple(1, mulberry32(seedFrom(rng)))[0]) != null ? _a4 : null;
+      return (_a5 = generator.generateMultiple(1, mulberry32(seedFrom(rng)))[0]) != null ? _a5 : null;
     };
   }
   return (request, mode, rng) => {
-    var _a4;
+    var _a5;
     const { names, label } = namesFor2(request);
     if (names.length === 0) return null;
     const m = model(keyOf(request), names);
     if (mode === "stem") return m.sampleStem(rng, faithfulness, strictness);
     const loosened = label ? breakdownSettingsFor(names.length, strictness) : { allowSourceCopies: false, strictness };
     if (label && loosened.allowSourceCopies) notice(`${parsed.packName}: ${smallListNotice(label, names.length)}`);
-    return (_a4 = m.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom(rng) }).names[0]) != null ? _a4 : null;
+    return (_a5 = m.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom(rng) }).names[0]) != null ? _a5 : null;
   };
 }
 
@@ -99590,9 +108145,9 @@ function needsItems(section) {
 async function resolveWordListItems(section, listName, resolvePack) {
   const notices = [];
   const items = section.entries.map((e) => {
-    var _a3;
+    var _a4;
     return {
-      weight: (_a3 = e.weight) != null ? _a3 : 1,
+      weight: (_a4 = e.weight) != null ? _a4 : 1,
       ...e.gender ? { gender: e.gender } : {},
       entry: toNameWordEntry(e)
     };
@@ -99631,8 +108186,8 @@ function resolveRecipeTakeover(input) {
   }
   const prepared = prepareTakeoverTarget(target.corpus, takeoverScorer(input.faithfulness), target.endings);
   return { adapt: (native, rng) => {
-    var _a3, _b;
-    return (_b = (_a3 = adoptName({ native, target: prepared, rng })) == null ? void 0 : _a3.adopted) != null ? _b : null;
+    var _a4, _b2;
+    return (_b2 = (_a4 = adoptName({ native, target: prepared, rng })) == null ? void 0 : _a4.adopted) != null ? _b2 : null;
   } };
 }
 
@@ -99703,7 +108258,7 @@ var RecipeHost = class {
    * ineligible pack adds a notice and generation goes ahead as if none were set.
    */
   resolveTakeover(recipe, recipePath) {
-    var _a3;
+    var _a4;
     if (!recipe.takeover || recipe.shape.part === "organic" || !this.targets) return void 0;
     const file = this.resolveLink(recipe.takeover, recipePath);
     const resolved = resolveRecipeTakeover({
@@ -99711,7 +108266,7 @@ var RecipeHost = class {
       entry: file ? this.index.find((e) => e.path === file.path) : void 0,
       index: this.index,
       ...this.targets,
-      faithfulness: (_a3 = this.settings.faithfulness) != null ? _a3 : 2
+      faithfulness: (_a4 = this.settings.faithfulness) != null ? _a4 : 2
     });
     if ("notice" in resolved) {
       this.notices.add(resolved.notice);
@@ -99721,7 +108276,7 @@ var RecipeHost = class {
   }
   /** Resolves every slot setting to engine-ready sources (§6.2). */
   async resolveSlots(recipe, recipePath) {
-    var _a3;
+    var _a4;
     const out = {};
     for (const [categoryId, slot] of Object.entries(recipe.slots)) {
       if (slot.kind === "tribal") {
@@ -99753,7 +108308,7 @@ var RecipeHost = class {
           if (draw2) sources.push({ weight: ref.weight, draw: draw2 });
         }
       }
-      out[categoryId] = sources.length > 0 ? { kind: "sources", sources, mode: slot.mode, gender: slot.gender, section: slot.section } : ((_a3 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a3.length) ? { kind: "built-in" } : { kind: "placeholder" };
+      out[categoryId] = sources.length > 0 ? { kind: "sources", sources, mode: slot.mode, gender: slot.gender, section: slot.section } : ((_a4 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a4.length) ? { kind: "built-in" } : { kind: "placeholder" };
     }
     if (recipe.native && recipe.shape.part !== "organic") {
       for (const categoryId of NATIVE_PACK_CATEGORIES) {
@@ -99766,7 +108321,7 @@ var RecipeHost = class {
   }
   /** §9.2: the matching section, the whole list if it has none, else the built-in list with a notice. */
   async wordListSource(target, from, categoryId) {
-    var _a3;
+    var _a4;
     const file = this.resolveLink(target, from);
     const content = file ? await this.read(file) : null;
     if (!file || content === null || !isWordListContent(content)) {
@@ -99783,7 +108338,7 @@ var RecipeHost = class {
         this.notices.add(`Template \u201C${list.templateOf}\u201D for word list \u201C${target}\u201D is missing.`);
       }
     }
-    const label = (_a3 = categoryLabels2.get(categoryId)) != null ? _a3 : categoryId;
+    const label = (_a4 = categoryLabels2.get(categoryId)) != null ? _a4 : categoryId;
     const section = wordListSection(list.list, label);
     if (section === null) {
       this.notices.add(`\u201C${target}\u201D has no \u201C${label}\u201D section; using the built-in list.`);
@@ -99812,14 +108367,14 @@ var RecipeHost = class {
   }
   /** Land brief §9.5: a biome with its `//` pack lines resolved to draws (whole names). */
   async withPackDraws(biome, from) {
-    var _a3;
+    var _a4;
     if (!biome.packLines) return biome;
     const packDraws = {};
     for (const [list, lines2] of Object.entries(biome.packLines)) {
       for (const line of lines2 != null ? lines2 : []) {
         const draw2 = await this.packSource(line.pack, from);
         if (!draw2) continue;
-        ((_a3 = packDraws[list]) != null ? _a3 : packDraws[list] = []).push({ weight: line.weight, draw: (rng) => draw2({}, "whole", rng) });
+        ((_a4 = packDraws[list]) != null ? _a4 : packDraws[list] = []).push({ weight: line.weight, draw: (rng) => draw2({}, "whole", rng) });
       }
     }
     return { ...biome, packDraws };
@@ -99831,7 +108386,7 @@ var RecipeHost = class {
     return { draw: draw2, notices: [...this.notices] };
   }
   async packSource(target, from) {
-    var _a3, _b;
+    var _a4, _b2;
     const file = this.resolveLink(target, from);
     const content = file ? await this.read(file) : null;
     if (!file || content === null) {
@@ -99849,8 +108404,8 @@ var RecipeHost = class {
       }
       parsed = applied.parsed;
     }
-    const faithfulness = (_a3 = this.settings.faithfulness) != null ? _a3 : 2;
-    const strictness = (_b = this.settings.strictness) != null ? _b : 3;
+    const faithfulness = (_a4 = this.settings.faithfulness) != null ? _a4 : 2;
+    const strictness = (_b2 = this.settings.strictness) != null ? _b2 : 3;
     const seedFrom2 = (rng) => Math.floor(rng() * 4294967296) >>> 0;
     const pick4 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
     const cache = /* @__PURE__ */ new Map();
@@ -99869,17 +108424,17 @@ var RecipeHost = class {
     };
     const listLabels = /* @__PURE__ */ new Map();
     const markovName = (names, key2, rng) => {
-      var _a4;
+      var _a5;
       if (names.length === 0) return null;
       const model = cached(key2, () => MarkovModel.build(names));
       const label = listLabels.get(key2);
       const loosened = label ? breakdownSettingsFor(names.length, strictness) : { allowSourceCopies: false, strictness };
       if (label && loosened.allowSourceCopies) this.notices.add(`${parsed.packName}: ${smallListNotice(label, names.length)}`);
-      return (_a4 = model.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom2(rng) }).names[0]) != null ? _a4 : pick4(names, rng);
+      return (_a5 = model.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom2(rng) }).names[0]) != null ? _a5 : pick4(names, rng);
     };
     const requestKey = (r) => {
-      var _a4, _b2;
-      return `${(_a4 = r.section) != null ? _a4 : ""}|${(_b2 = r.gender) != null ? _b2 : ""}`;
+      var _a5, _b3;
+      return `${(_a5 = r.section) != null ? _a5 : ""}|${(_b3 = r.gender) != null ? _b3 : ""}`;
     };
     switch (parsed.packType) {
       case "listPack":
@@ -99892,13 +108447,13 @@ var RecipeHost = class {
         const data = compoundPartData(parsed);
         const settings = compoundSettings(parsed);
         return (request, mode, rng) => {
-          var _a4, _b2, _c;
-          const parts = compoundPartsFor(data, (_a4 = request.section) != null ? _a4 : request.gender);
+          var _a5, _b3, _c2;
+          const parts = compoundPartsFor(data, (_a5 = request.section) != null ? _a5 : request.gender);
           if (mode === "stem") {
-            const first = (_b2 = parts[0]) != null ? _b2 : [];
+            const first = (_b3 = parts[0]) != null ? _b3 : [];
             return partIsBreakdown(settings.generator, parsed.compoundPartGenerators, 0) ? markovName(first, `part1|${requestKey(request)}`, rng) : pick4(first, rng);
           }
-          return (_c = generateCompoundNamesDetailed(parts, { count: 1, ...settings, faithfulness, strictness, seed: seedFrom2(rng) }).names[0]) != null ? _c : null;
+          return (_c2 = generateCompoundNamesDetailed(parts, { count: 1, ...settings, faithfulness, strictness, seed: seedFrom2(rng) }).names[0]) != null ? _c2 : null;
         };
       }
       case "mixPack":
@@ -99969,8 +108524,8 @@ var ContextGuideModal = class extends import_obsidian10.Modal {
     for (const biome of [BRITAIN, ...BIOMES]) entry(biome.label, biome.guide);
     el.createEl("h3", { cls: "nameforge-context-guide__heading", text: "Terrain" });
     const groupLabel = (id) => {
-      var _a3, _b;
-      return ((_b = (_a3 = PLACE_SHAPE_DATA.groups.find((g) => g.id === id)) == null ? void 0 : _a3.label) != null ? _b : id).toLowerCase();
+      var _a4, _b2;
+      return ((_b2 = (_a4 = PLACE_SHAPE_DATA.groups.find((g) => g.id === id)) == null ? void 0 : _a4.label) != null ? _b2 : id).toLowerCase();
     };
     for (const t of TERRAIN_CHOICES.filter((x) => x.id !== "any")) {
       const top = Object.entries(t.shapeMultipliers.groups).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([id]) => groupLabel(id));
@@ -100032,8 +108587,8 @@ function slotCategories(part) {
   const code = part === "new-land" ? "2" : "2a";
   const out = [
     ...COLONIAL_DATA.inheritedCategories.filter((c) => c.parts.includes(code) && c.id !== "empty-slot").map((c) => {
-      var _a3;
-      return { id: c.id, label: (_a3 = part1.get(c.id)) != null ? _a3 : c.id };
+      var _a4;
+      return { id: c.id, label: (_a4 = part1.get(c.id)) != null ? _a4 : c.id };
     }),
     ...COLONIAL_DATA.categories.filter((c) => c.parts.includes(code)).map((c) => ({ id: c.id, label: c.label }))
   ];
@@ -100079,9 +108634,9 @@ var TIER_TABLE = {
   }
 };
 function slotTier(part, categoryId) {
-  var _a3, _b;
-  if ((_a3 = TIER_TABLE.simple[categoryId]) == null ? void 0 : _a3.includes(part)) return "simple";
-  if ((_b = TIER_TABLE.detailed[categoryId]) == null ? void 0 : _b.includes(part)) return "detailed";
+  var _a4, _b2;
+  if ((_a4 = TIER_TABLE.simple[categoryId]) == null ? void 0 : _a4.includes(part)) return "simple";
+  if ((_b2 = TIER_TABLE.detailed[categoryId]) == null ? void 0 : _b2.includes(part)) return "detailed";
   return "complete";
 }
 function tierIncludes(chosen, slot) {
@@ -100177,7 +108732,7 @@ function terrainWords2(biome, kind, terrain) {
   return out;
 }
 function slotBaselineSource(part, id, slot, biome, terrain) {
-  var _a3;
+  var _a4;
   const own = biome && biome.id !== BRITAIN.id ? biome : void 0;
   const unset = !slot;
   const colonial = part !== "organic";
@@ -100198,7 +108753,7 @@ function slotBaselineSource(part, id, slot, biome, terrain) {
       if (entries.length > 0) return { from: "biome", entries };
     }
   }
-  if (hasBuiltInList(id)) return { from: "built-in", entries: (_a3 = NAME_WORDS.categories[id]) != null ? _a3 : [] };
+  if (hasBuiltInList(id)) return { from: "built-in", entries: (_a4 = NAME_WORDS.categories[id]) != null ? _a4 : [] };
   return { from: "placeholder", entries: [] };
 }
 function baselineText(source) {
@@ -100214,8 +108769,8 @@ function slotWordsView(args) {
     return { ...base, status: "native", statusText: "Native pack", sources: [{ pack: native, weight: 1 }] };
   }
   const describe = (source2) => {
-    var _a3;
-    return source2.from === "biome" ? `${(_a3 = biome == null ? void 0 : biome.label) != null ? _a3 : "Biome"} list` : source2.from === "built-in" ? "Built-in" : "Placeholder";
+    var _a4;
+    return source2.from === "biome" ? `${(_a4 = biome == null ? void 0 : biome.label) != null ? _a4 : "Biome"} list` : source2.from === "built-in" ? "Built-in" : "Placeholder";
   };
   if ((slot == null ? void 0 : slot.kind) === "sources") {
     const only = slot.sources.length === 1 ? slot.sources[0] : void 0;
@@ -100248,13 +108803,13 @@ function contentKeys(text) {
   return [
     ...entries.map(
       (e) => {
-        var _a3, _b, _c;
-        return ["w", e.modern, (_a3 = e.traditional) != null ? _a3 : "", e.plural, [...e.combiningForms].sort().join(","), e.fuses, (_b = e.weight) != null ? _b : 1, (_c = e.gender) != null ? _c : ""].join("|").toLowerCase();
+        var _a4, _b2, _c2;
+        return ["w", e.modern, (_a4 = e.traditional) != null ? _a4 : "", e.plural, [...e.combiningForms].sort().join(","), e.fuses, (_b2 = e.weight) != null ? _b2 : 1, (_c2 = e.gender) != null ? _c2 : ""].join("|").toLowerCase();
       }
     ),
     ...packs.map((p) => {
-      var _a3;
-      return ["p", p.pack, p.weight, (_a3 = p.gender) != null ? _a3 : ""].join("|").toLowerCase();
+      var _a4;
+      return ["p", p.pack, p.weight, (_a4 = p.gender) != null ? _a4 : ""].join("|").toLowerCase();
     })
   ].sort();
 }
@@ -100366,33 +108921,33 @@ var RecipeWizard = class {
     this.render();
   }
   async loadTemplate(name) {
-    var _a3, _b;
+    var _a4, _b2;
     this.template = void 0;
     if (!name) return;
-    const file = this.app.metadataCache.getFirstLinkpathDest(name, (_b = (_a3 = this.options.file) == null ? void 0 : _a3.path) != null ? _b : this.options.folderPath);
+    const file = this.app.metadataCache.getFirstLinkpathDest(name, (_b2 = (_a4 = this.options.file) == null ? void 0 : _a4.path) != null ? _b2 : this.options.folderPath);
     if (!(file instanceof import_obsidian12.TFile)) return;
     const content = await this.app.vault.cachedRead(file);
     if (isRecipeContent(content)) this.template = parseRecipeContent(content).recipe;
   }
   /** Presets brief §6.1: the recipe's word-list note's body, for page 4's edited sections. */
   async loadWords(name) {
-    var _a3, _b;
+    var _a4, _b2;
     this.wordsBody = void 0;
-    const file = this.app.metadataCache.getFirstLinkpathDest(name, (_b = (_a3 = this.options.file) == null ? void 0 : _a3.path) != null ? _b : this.options.folderPath);
+    const file = this.app.metadataCache.getFirstLinkpathDest(name, (_b2 = (_a4 = this.options.file) == null ? void 0 : _a4.path) != null ? _b2 : this.options.folderPath);
     if (!(file instanceof import_obsidian12.TFile)) return;
     const content = await this.app.vault.cachedRead(file);
     const fm = content.match(/^---\s*\n[\s\S]*?\n---\s*/);
     this.wordsBody = fm ? content.slice(fm[0].length) : content;
   }
   rebuildWorking() {
-    var _a3;
+    var _a4;
     this.working = withDefaults(this.template ? mergeRecipe(this.own, this.template) : this.own);
-    this.explicitSlots = new Set(Object.keys((_a3 = this.own.slots) != null ? _a3 : {}));
+    this.explicitSlots = new Set(Object.keys((_a4 = this.own.slots) != null ? _a4 : {}));
   }
   /** The current page and the Back/Next row, rebuilt after each change (keeping the scroll position). */
   render() {
-    var _a3, _b;
-    const scrollTop = (_b = (_a3 = this.pageEl) == null ? void 0 : _a3.scrollTop) != null ? _b : 0;
+    var _a4, _b2;
+    const scrollTop = (_b2 = (_a4 = this.pageEl) == null ? void 0 : _a4.scrollTop) != null ? _b2 : 0;
     this.hostEl.empty();
     if (this.page === 0) this.renderPartButtons(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
     if (this.page === SLOTS_PAGE) this.renderSlotsHeader(this.hostEl.createDiv({ cls: "nameforge-recipe-editor__parts" }));
@@ -100421,8 +108976,8 @@ var RecipeWizard = class {
       });
       (0, import_obsidian12.setIcon)(save, ICON_SAVE);
       save.addEventListener("click", () => {
-        var _a4, _b2;
-        return (_b2 = (_a4 = this.options).requestSave) == null ? void 0 : _b2.call(_a4);
+        var _a5, _b3;
+        return (_b3 = (_a5 = this.options).requestSave) == null ? void 0 : _b3.call(_a5);
       });
       const template = actions.createEl("button", {
         cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
@@ -100443,7 +108998,7 @@ var RecipeWizard = class {
   }
   /** The optional Template page: description, template and starting template. */
   renderTemplatePage(el) {
-    var _a3, _b;
+    var _a4, _b2;
     const w = this.working;
     new import_obsidian12.Setting(el).setName("Description").setDesc("Shown when choosing this recipe as a template.").addTextArea((t) => {
       t.setValue(this.body).onChange((v) => {
@@ -100459,11 +109014,11 @@ var RecipeWizard = class {
       })
     );
     if (!w.template) {
-      new import_obsidian12.Setting(el).setName("Start from template").setDesc((_b = (_a3 = this.options.templates.find((t) => t.name === w.templateOf)) == null ? void 0 : _a3.description) != null ? _b : "Settings you leave alone come from the template.").addDropdown((d) => {
-        var _a4;
+      new import_obsidian12.Setting(el).setName("Start from template").setDesc((_b2 = (_a4 = this.options.templates.find((t) => t.name === w.templateOf)) == null ? void 0 : _a4.description) != null ? _b2 : "Settings you leave alone come from the template.").addDropdown((d) => {
+        var _a5;
         d.addOption("", "None");
         for (const t of this.options.templates) d.addOption(t.name, t.name);
-        d.setValue((_a4 = w.templateOf) != null ? _a4 : "").onChange(async (v) => {
+        d.setValue((_a5 = w.templateOf) != null ? _a5 : "").onChange(async (v) => {
           this.own = { ...this.collect(), templateOf: v || void 0 };
           await this.loadTemplate(v || void 0);
           this.rebuildWorking();
@@ -100512,7 +109067,7 @@ var RecipeWizard = class {
     }
     if (w.shape.part !== "organic") {
       new import_obsidian12.Setting(el).setName(w.shape.part === "new-land" ? "Explorers pack" : "Incomers pack").setDesc("Adapted native names are reshaped into this pack's language.").addDropdown((d) => {
-        var _a3;
+        var _a4;
         d.addOption("", "None");
         for (const pack of this.options.takeoverPacks) {
           d.addOption(pack.name, pack.reason ? `${pack.name} \u2014 ${pack.reason}` : pack.name);
@@ -100523,7 +109078,7 @@ var RecipeWizard = class {
           }
         }
         if (w.takeover && !this.options.takeoverPacks.some((p) => p.name === w.takeover)) d.addOption(w.takeover, w.takeover);
-        d.setValue((_a3 = w.takeover) != null ? _a3 : "").onChange((v) => {
+        d.setValue((_a4 = w.takeover) != null ? _a4 : "").onChange((v) => {
           w.takeover = v || void 0;
         });
       });
@@ -100636,7 +109191,7 @@ var RecipeWizard = class {
   }
   /** One page 4 section's body (§4.1). */
   renderWordsBody(el, view, status) {
-    var _a3, _b;
+    var _a4, _b2;
     const body = el.createDiv({ cls: "nameforge-recipe-editor__words-body" });
     if (view.status === "tribal") {
       body.addClass("is-stacked");
@@ -100655,16 +109210,16 @@ var RecipeWizard = class {
     if (view.status === "sources") {
       const line = body.createDiv({ cls: "setting-item-description", text: "From " });
       view.sources.forEach((s, i) => {
-        var _a4, _b2;
+        var _a5, _b3;
         if (i > 0) line.appendText(", ");
-        this.noteLink(line, (_b2 = (_a4 = s.list) != null ? _a4 : s.pack) != null ? _b2 : "");
+        this.noteLink(line, (_b3 = (_a5 = s.list) != null ? _a5 : s.pack) != null ? _b3 : "");
         if (view.sources.length > 1) line.appendText(` (${s.weight})`);
       });
       line.appendText(". Edit these on the slots page.");
       return;
     }
     const textarea = body.createEl("textarea", { cls: "nameforge-modal__textarea nameforge-recipe-editor__words-text", attr: { rows: "8" } });
-    textarea.value = (_b = (_a3 = this.wordsEdits.get(view.id)) != null ? _a3 : view.text) != null ? _b : "";
+    textarea.value = (_b2 = (_a4 = this.wordsEdits.get(view.id)) != null ? _a4 : view.text) != null ? _b2 : "";
     if (view.status === "placeholder") textarea.placeholder = "Leave empty to keep the placeholder. Add a table, - words or // pack lines.";
     textarea.addEventListener("input", () => this.wordsEdits.set(view.id, textarea.value));
     if (view.status === "edited") {
@@ -100674,10 +109229,10 @@ var RecipeWizard = class {
       });
       (0, import_obsidian12.setIcon)(reset, "rotate-ccw");
       reset.addEventListener("click", () => {
-        var _a4, _b2, _c;
-        textarea.value = (_a4 = view.baseline) != null ? _a4 : "";
+        var _a5, _b3, _c2;
+        textarea.value = (_a5 = view.baseline) != null ? _a5 : "";
         this.wordsEdits.set(view.id, textarea.value);
-        status.setText(view.resetTo === "placeholder" ? "Placeholder" : view.resetTo === "biome" ? `${(_c = (_b2 = this.currentBiome()) == null ? void 0 : _b2.label) != null ? _c : "Biome"} list` : "Built-in");
+        status.setText(view.resetTo === "placeholder" ? "Placeholder" : view.resetTo === "biome" ? `${(_c2 = (_b3 = this.currentBiome()) == null ? void 0 : _b3.label) != null ? _c2 : "Biome"} list` : "Built-in");
       });
     }
   }
@@ -100686,20 +109241,20 @@ var RecipeWizard = class {
    * can use (§20.2): its group types and registers, and no insults.
    */
   renderTribalSentence(el, id) {
-    var _a3, _b, _c, _d, _e, _f, _g;
+    var _a4, _b2, _c2, _d2, _e2, _f, _g;
     const w = this.working;
     const slot = w.slots[id];
     if ((slot == null ? void 0 : slot.kind) !== "tribal") return;
     const part = w.shape.part;
     const constraints = tribalSlotConstraints(part);
-    const presets = (_a3 = this.options.tribalPresets) != null ? _a3 : [];
+    const presets = (_a4 = this.options.tribalPresets) != null ? _a4 : [];
     const linked = slot.preset ? presets.find((p) => p.name.toLowerCase() === slot.preset.toLowerCase()) : void 0;
-    new import_obsidian12.Setting((_b = el.parentElement) != null ? _b : el).setName("Use preset").addDropdown((d) => {
-      var _a4;
+    new import_obsidian12.Setting((_b2 = el.parentElement) != null ? _b2 : el).setName("Use preset").addDropdown((d) => {
+      var _a5;
       d.addOption("", "None");
       for (const p of presets) d.addOption(p.name, p.name);
       if (slot.preset && !linked) d.addOption(slot.preset, `${slot.preset} (missing)`);
-      d.setValue((_a4 = slot.preset) != null ? _a4 : "").onChange((v) => {
+      d.setValue((_a5 = slot.preset) != null ? _a5 : "").onChange((v) => {
         const chosen = presets.find((p) => p.name === v);
         if (chosen) w.slots[id] = { kind: "tribal", tradition: chosen.preset.tradition, preset: chosen.name };
         else w.slots[id] = linked ? { kind: "tribal", ...tribalPresetSlot(linked.preset) } : { kind: "tribal", tradition: slot.tradition };
@@ -100707,14 +109262,14 @@ var RecipeWizard = class {
         this.render();
       });
     }).settingEl.addClass("nameforge-recipe-editor__preset");
-    (_c = el.parentElement) == null ? void 0 : _c.appendChild(el);
+    (_c2 = el.parentElement) == null ? void 0 : _c2.appendChild(el);
     const fields2 = linked ? tribalPresetSlot(linked.preset) : slot;
     const state = {
       tradition: part !== "organic" && fields2.tradition === "auto" ? "general" : fields2.tradition,
       groupType: fields2.groupType,
       biome: fields2.biome,
-      terrain: (_d = fields2.terrain) != null ? _d : "any",
-      register: (_f = fields2.register) != null ? _f : Object.keys((_e = constraints.registers) != null ? _e : { plain: 1 })[0],
+      terrain: (_d2 = fields2.terrain) != null ? _d2 : "any",
+      register: (_f = fields2.register) != null ? _f : Object.keys((_e2 = constraints.registers) != null ? _e2 : { plain: 1 })[0],
       perspective: fields2.perspective
     };
     const segments = tribalSentence(state, {
@@ -100764,9 +109319,9 @@ var RecipeWizard = class {
   noteLink(el, name) {
     const a = el.createEl("a", { cls: "internal-link", text: name, attr: { href: "#" } });
     a.addEventListener("click", (event) => {
-      var _a3, _b;
+      var _a4, _b2;
       event.preventDefault();
-      void this.app.workspace.openLinkText(name, (_b = (_a3 = this.options.file) == null ? void 0 : _a3.path) != null ? _b : this.options.folderPath, "tab");
+      void this.app.workspace.openLinkText(name, (_b2 = (_a4 = this.options.file) == null ? void 0 : _a4.path) != null ? _b2 : this.options.folderPath, "tab");
     });
   }
   /** A slot dropdown's choice, applied to the working recipe. */
@@ -100789,14 +109344,14 @@ var RecipeWizard = class {
   }
   /** Land brief §5.2: the muted line under a land slot. */
   landSlotDescription(part, id, fromBiome) {
-    var _a3, _b;
+    var _a4, _b2;
     if (id === "river-or-stream-name") return "";
     const biome = this.currentBiome();
     const colonial = part !== "organic";
     const shown = biome != null ? biome : colonial ? void 0 : BRITAIN;
     if (id === "landform" || id === "water-or-wetland-feature") {
-      const terrain = [...TERRAIN_CHOICES, ...(_a3 = biome == null ? void 0 : biome.customTerrains) != null ? _a3 : []].find((t) => t.id === (this.working.shape.terrain || "any"));
-      return `${(shown != null ? shown : BRITAIN).label} \xB7 ${(_b = terrain == null ? void 0 : terrain.label) != null ? _b : "Any terrain"}`;
+      const terrain = [...TERRAIN_CHOICES, ...(_a4 = biome == null ? void 0 : biome.customTerrains) != null ? _a4 : []].find((t) => t.id === (this.working.shape.terrain || "any"));
+      return `${(shown != null ? shown : BRITAIN).label} \xB7 ${(_b2 = terrain == null ? void 0 : terrain.label) != null ? _b2 : "Any terrain"}`;
     }
     if (colonial && (id === "domestic-animal" || id === "crop")) {
       if (!fromBiome) return "The incomers' own animals and crops (Britain list)";
@@ -100839,23 +109394,23 @@ var RecipeWizard = class {
   }
   /** The feature phrase: "Any feature" at the start of a sentence, "any feature" within one. */
   featureLink(sentence2, start) {
-    var _a3;
+    var _a4;
     const w = this.working;
     const features = featuresForBiome(w.shape.part === "organic" ? void 0 : this.currentBiome());
-    const feature = (_a3 = features.find((f) => f.id === w.shape.feature)) != null ? _a3 : features[0];
+    const feature = (_a4 = features.find((f) => f.id === w.shape.feature)) != null ? _a4 : features[0];
     const text = start ? feature.label : feature.label.charAt(0).toLowerCase() + feature.label.slice(1);
     this.sentenceLink(sentence2, text, features, feature.id, (id) => w.shape.feature = id);
   }
   /** Place names: "‹Any feature› from ‹all of Britain›" ("the" added where a region needs it). */
   renderPlaceNamesSentence(el) {
-    var _a3;
+    var _a4;
     const w = this.working;
     const sentence2 = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
     this.featureLink(sentence2, true);
     sentence2.appendText(" from ");
     const regions = [{ id: "all-britain", label: "All of Britain" }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: kebab3(r.label), label: r.label }))];
     const current = kebab3(w.shape.region) === "all-britain" ? "all-britain" : this.regionValue(w.shape.region);
-    const region = (_a3 = regions.find((r) => r.id === current)) != null ? _a3 : regions[0];
+    const region = (_a4 = regions.find((r) => r.id === current)) != null ? _a4 : regions[0];
     const text = region.id === "all-britain" ? "all of Britain" : NO_THE_REGIONS2.has(region.label) ? region.label : `the ${region.label}`;
     this.sentenceLink(sentence2, text, regions, region.id, (id) => w.shape.region = id);
     sentence2.appendText(", set in ");
@@ -100867,11 +109422,11 @@ var RecipeWizard = class {
    * each underlined phrase opening a menu of its choices.
    */
   renderNewLandsSentence(el) {
-    var _a3;
+    var _a4;
     const w = this.working;
     const traditions = COLONIAL_TRADITIONS.filter((t) => t.parts.includes("2"));
     if (!traditions.some((t) => t.id === w.shape.tradition)) w.shape.tradition = traditions[0].id;
-    const contexts = contextPhrasesFor("2", !!((_a3 = this.currentBiome()) == null ? void 0 : _a3.space)).filter(([id]) => colonialContexts("2").some((c) => c.id === id));
+    const contexts = contextPhrasesFor("2", !!((_a4 = this.currentBiome()) == null ? void 0 : _a4.space)).filter(([id]) => colonialContexts("2").some((c) => c.id === id));
     if (!contexts.some(([id]) => id === w.shape.context)) w.shape.context = contexts[0][0];
     const sentence2 = el.createDiv({ cls: "nameforge-recipe-editor__sentence" });
     const tradition = traditions.find((t) => t.id === w.shape.tradition);
@@ -100930,16 +109485,16 @@ var RecipeWizard = class {
   }
   /** Stellar brief §5.8: ", with ‹no alien life›", shown under a space biome only. */
   aliensLink(sentence2) {
-    var _a3;
+    var _a4;
     const w = this.working;
-    if (!((_a3 = this.currentBiome()) == null ? void 0 : _a3.space)) return;
+    if (!((_a4 = this.currentBiome()) == null ? void 0 : _a4.space)) return;
     sentence2.appendText(", with ");
     this.sentenceLink(sentence2, ALIEN_CHOICES[w.shape.aliens ? 1 : 0].label, ALIEN_CHOICES, w.shape.aliens ? "on" : "off", (id) => w.shape.aliens = id === "on");
   }
   /** The user's biome packs (Land brief §9), as the host resolved them. */
   get customBiomes() {
-    var _a3;
-    return (_a3 = this.options.biomes) != null ? _a3 : [];
+    var _a4;
+    return (_a4 = this.options.biomes) != null ? _a4 : [];
   }
   /** The current biome setting as a Biome, if it is one (built in or a pack). */
   currentBiome() {
@@ -101016,11 +109571,11 @@ var RecipeWizard = class {
   }
   /** Whether a slot is set explicitly, in the recipe or its template. */
   isSlotSet(id) {
-    var _a3, _b;
-    return this.explicitSlots.has(id) || ((_b = (_a3 = this.template) == null ? void 0 : _a3.slots) == null ? void 0 : _b[id]) !== void 0;
+    var _a4, _b2;
+    return this.explicitSlots.has(id) || ((_b2 = (_a4 = this.template) == null ? void 0 : _a4.slots) == null ? void 0 : _b2[id]) !== void 0;
   }
   renderSlot(el, id, label, outsideTier = false) {
-    var _a3;
+    var _a4;
     const w = this.working;
     const part = w.shape.part;
     const slot = this.isSlotSet(id) ? w.slots[id] : void 0;
@@ -101029,9 +109584,9 @@ var RecipeWizard = class {
     const nativeDefault = usesNativeDefault(part, id);
     const choices = slotChoices(part, id);
     const setting = new import_obsidian12.Setting(el).setName(label).addDropdown((d) => {
-      var _a4, _b;
+      var _a5, _b2;
       if (choices) {
-        const shown2 = !slot ? "default" : slot.kind === "sources" ? ((_a4 = slot.sources[0]) == null ? void 0 : _a4.list) !== void 0 ? "lists" : "packs" : slot.kind;
+        const shown2 = !slot ? "default" : slot.kind === "sources" ? ((_a5 = slot.sources[0]) == null ? void 0 : _a5.list) !== void 0 ? "lists" : "packs" : slot.kind;
         const legacy = (value, text) => {
           if (shown2 === value) d.addOption(value, `${text} (not recommended)`);
         };
@@ -101049,7 +109604,7 @@ var RecipeWizard = class {
         d.setValue(shown2).onChange((v) => this.setSlotChoice(id, part, v));
         return;
       }
-      const shown = !slot || slot.kind === fallback && !(nativeDefault && slot.kind === "built-in") ? "default" : slot.kind === "sources" ? ((_b = slot.sources[0]) == null ? void 0 : _b.list) !== void 0 ? "lists" : "packs" : slot.kind;
+      const shown = !slot || slot.kind === fallback && !(nativeDefault && slot.kind === "built-in") ? "default" : slot.kind === "sources" ? ((_b2 = slot.sources[0]) == null ? void 0 : _b2.list) !== void 0 ? "lists" : "packs" : slot.kind;
       const offer = (value, text, allowed) => {
         if (allowed) d.addOption(value, text);
         else if (shown === value) d.addOption(value, `${text} (not recommended)`);
@@ -101075,7 +109630,7 @@ var RecipeWizard = class {
     }
     if (!slot || slot.kind !== "sources") return;
     const box = el.createDiv({ cls: "nameforge-recipe-editor__sources" });
-    const lists = ((_a3 = slot.sources[0]) == null ? void 0 : _a3.list) !== void 0;
+    const lists = ((_a4 = slot.sources[0]) == null ? void 0 : _a4.list) !== void 0;
     const mixed = slot.sources.some((source) => source.list !== void 0 !== lists);
     slot.sources.forEach((source, i) => {
       const row = new import_obsidian12.Setting(box);
@@ -101088,10 +109643,10 @@ var RecipeWizard = class {
         );
       }
       row.addDropdown((d) => {
-        var _a4, _b;
+        var _a5, _b2;
         const options = source.list !== void 0 ? this.options.lists : this.options.packs;
         for (const o of options) d.addOption(o, o);
-        const current = (_b = (_a4 = source.list) != null ? _a4 : source.pack) != null ? _b : "";
+        const current = (_b2 = (_a5 = source.list) != null ? _a5 : source.pack) != null ? _b2 : "";
         if (current && !options.includes(current)) d.addOption(current, `${current} (missing)`);
         d.setValue(current).onChange((v) => {
           if (source.list !== void 0) source.list = v;
@@ -101135,8 +109690,8 @@ var RecipeWizard = class {
     if (!listsOnly) {
       footer.addText(
         (t) => {
-          var _a4;
-          return t.setPlaceholder("Section").setValue((_a4 = slot.section) != null ? _a4 : "").onChange((v) => {
+          var _a5;
+          return t.setPlaceholder("Section").setValue((_a5 = slot.section) != null ? _a5 : "").onChange((v) => {
             slot.section = v.trim() || void 0;
           });
         }
@@ -101162,14 +109717,14 @@ var RecipeWizard = class {
    * template for a derived one (§7).
    */
   collect() {
-    var _a3;
+    var _a4;
     const w = this.working;
     const slots = {};
     for (const id of this.explicitSlots) if (w.slots[id]) slots[id] = w.slots[id];
     const full = {
       setting: w.setting,
       template: w.template || void 0,
-      templateOf: w.template ? void 0 : (_a3 = this.own.templateOf) != null ? _a3 : w.templateOf,
+      templateOf: w.template ? void 0 : (_a4 = this.own.templateOf) != null ? _a4 : w.templateOf,
       shape: { ...w.shape },
       slots,
       generics: { ...w.generics },
@@ -101202,25 +109757,25 @@ var RecipeWizard = class {
    * return to their slots page setting. False when the note couldn't be written.
    */
   async saveWords(name) {
-    var _a3, _b, _c, _d, _e, _f;
+    var _a4, _b2, _c2, _d2, _e2, _f;
     const w = this.working;
     const views = this.shownSlots().map(({ id, label }) => this.wordsView(id, label)).filter((v) => !!v && v.baseline !== void 0);
     const results = views.map((v) => {
-      var _a4, _b2, _c2;
-      const text = (_b2 = (_a4 = this.wordsEdits.get(v.id)) != null ? _a4 : v.text) != null ? _b2 : "";
+      var _a5, _b3, _c3;
+      const text = (_b3 = (_a5 = this.wordsEdits.get(v.id)) != null ? _a5 : v.text) != null ? _b3 : "";
       const previous = v.status === "edited" || !this.isSlotSet(v.id) ? void 0 : w.slots[v.id];
-      return { view: v, text, changed: sectionChanged(text, (_c2 = v.baseline) != null ? _c2 : ""), previous };
+      return { view: v, text, changed: sectionChanged(text, (_c3 = v.baseline) != null ? _c3 : ""), previous };
     });
     const changed = results.filter((r) => r.changed);
     if (changed.length === 0) {
-      if (results.some((r) => r.view.status === "edited")) this.applyWords(results, (_a3 = w.words) != null ? _a3 : "");
+      if (results.some((r) => r.view.status === "edited")) this.applyWords(results, (_a4 = w.words) != null ? _a4 : "");
       if (w.words) new import_obsidian12.Notice(`nameForge: no words changed, so \u201C${w.words}\u201D is no longer linked to this recipe. The note is kept.`);
       w.words = void 0;
       return true;
     }
-    const folder = (_d = (_c = (_b = this.options.file) == null ? void 0 : _b.parent) == null ? void 0 : _c.path) != null ? _d : this.options.folderPath;
+    const folder = (_d2 = (_c2 = (_b2 = this.options.file) == null ? void 0 : _b2.parent) == null ? void 0 : _c2.path) != null ? _d2 : this.options.folderPath;
     const exists = (n) => !!this.app.vault.getFileByPath((0, import_obsidian12.normalizePath)(`${folder}/${sanitizePackNameForFilename(n)}.md`));
-    const own = w.words && this.app.metadataCache.getFirstLinkpathDest(w.words, (_f = (_e = this.options.file) == null ? void 0 : _e.path) != null ? _f : folder);
+    const own = w.words && this.app.metadataCache.getFirstLinkpathDest(w.words, (_f = (_e2 = this.options.file) == null ? void 0 : _e2.path) != null ? _f : folder);
     const noteName = wordsNoteName(name, exists, own instanceof import_obsidian12.TFile ? w.words : void 0);
     const body = assembleWordsNote(
       own instanceof import_obsidian12.TFile ? this.wordsBody : void 0,
@@ -101260,14 +109815,14 @@ ${body.trim()}
   }
   /** Writes the recipe; the saved path, or null when it couldn't be saved (a notice says why). */
   async save() {
-    var _a3;
+    var _a4;
     const name = (this.nameSource ? this.nameSource() : this.name).trim();
     if (!name) {
       new import_obsidian12.Notice("nameForge: give the recipe a name.");
       return null;
     }
     const path = (0, import_obsidian12.normalizePath)(`${this.options.folderPath}/${sanitizePackNameForFilename(name)}.md`);
-    if (this.app.vault.getFileByPath(path) && ((_a3 = this.options.file) == null ? void 0 : _a3.path) !== path) {
+    if (this.app.vault.getFileByPath(path) && ((_a4 = this.options.file) == null ? void 0 : _a4.path) !== path) {
       new import_obsidian12.Notice("nameForge: a file with that name already exists.");
       return null;
     }
@@ -101344,28 +109899,28 @@ var RecipeEditorModal = class extends import_obsidian12.Modal {
 function generateLabelledNames(lists, options) {
   const count = Math.max(0, Math.floor(options.count));
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
-  const viable = lists.filter((l) => l.names.length > 0);
+  const viable2 = lists.filter((l) => l.names.length > 0);
   const small2 = [];
-  if (count === 0 || viable.length === 0) return { names: [], seed, small: small2 };
+  if (count === 0 || viable2.length === 0) return { names: [], seed, small: small2 };
   const masterRng = mulberry32(seed);
-  const subSeeds = viable.map(() => Math.floor(masterRng() * 4294967295) >>> 0);
-  const pools = viable.map(() => void 0);
-  const cursors = viable.map(() => 0);
+  const subSeeds = viable2.map(() => Math.floor(masterRng() * 4294967295) >>> 0);
+  const pools = viable2.map(() => void 0);
+  const cursors = viable2.map(() => 0);
   const pool3 = (i) => {
-    var _a3, _b;
+    var _a4, _b2;
     if (pools[i]) return pools[i];
-    const list = viable[i];
+    const list = viable2[i];
     if (options.generator === "list") {
       const generator = new ListGenerator();
       generator.train(list.names);
       pools[i] = generator.generateMultiple(count, mulberry32(subSeeds[i]));
     } else {
-      const loosened = breakdownSettingsFor(list.names.length, (_a3 = options.strictness) != null ? _a3 : 3);
+      const loosened = breakdownSettingsFor(list.names.length, (_a4 = options.strictness) != null ? _a4 : 3);
       if (loosened.allowSourceCopies) small2.push({ tag: list.tag, count: list.names.length });
       const model = options.generator === "place" ? PlaceNameModel.build(list.names) : MarkovModel.build(list.names);
       pools[i] = model.generateDetailed({
         count,
-        faithfulness: (_b = options.faithfulness) != null ? _b : 2,
+        faithfulness: (_b2 = options.faithfulness) != null ? _b2 : 2,
         ...loosened,
         seed: subSeeds[i]
       }).names;
@@ -101374,13 +109929,13 @@ function generateLabelledNames(lists, options) {
   };
   const result = [];
   const seen = /* @__PURE__ */ new Set();
-  const live4 = viable.map((_, i) => i);
+  const live4 = viable2.map((_, i) => i);
   while (result.length < count && live4.length > 0) {
-    const total = live4.reduce((sum, i) => sum + viable[i].names.length, 0);
+    const total = live4.reduce((sum, i) => sum + viable2[i].names.length, 0);
     let roll = masterRng() * total;
     let pick4 = live4[live4.length - 1];
     for (const i of live4) {
-      roll -= viable[i].names.length;
+      roll -= viable2[i].names.length;
       if (roll < 0) {
         pick4 = i;
         break;
@@ -101395,7 +109950,7 @@ function generateLabelledNames(lists, options) {
     const key2 = name.toLowerCase();
     if (seen.has(key2)) continue;
     seen.add(key2);
-    result.push({ name, ...viable[pick4].tag !== void 0 ? { tag: viable[pick4].tag } : {} });
+    result.push({ name, ...viable2[pick4].tag !== void 0 ? { tag: viable2[pick4].tag } : {} });
   }
   return { names: result, seed, small: small2 };
 }
@@ -101440,17 +109995,17 @@ function waitForTask() {
 var SEED_MASK = 4294967296;
 var subSeed2 = (rng) => Math.floor(rng() * SEED_MASK) >>> 0;
 function nativeDrawer(entry, index, settings) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const { parsed } = entry;
-  const faithfulness = (_a3 = settings.faithfulness) != null ? _a3 : 2;
-  const strictness = (_b = settings.strictness) != null ? _b : 3;
+  const faithfulness = (_a4 = settings.faithfulness) != null ? _a4 : 2;
+  const strictness = (_b2 = settings.strictness) != null ? _b2 : 3;
   switch (parsed.packType) {
     case "listPack": {
       const generator = new ListGenerator();
       generator.train(extractNamesFromMarkdown(parsed.names.join("\n")));
       return (rng) => {
-        var _a4;
-        return (_a4 = generator.generateMultiple(1, mulberry32(subSeed2(rng)))[0]) != null ? _a4 : null;
+        var _a5;
+        return (_a5 = generator.generateMultiple(1, mulberry32(subSeed2(rng)))[0]) != null ? _a5 : null;
       };
     }
     case "placePack": {
@@ -101460,21 +110015,21 @@ function nativeDrawer(entry, index, settings) {
       }
       const model = PlaceNameModel.build(extractNamesFromMarkdown(parsed.names.join("\n")));
       return (rng) => {
-        var _a4;
-        return (_a4 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed2(rng) }).names[0]) != null ? _a4 : null;
+        var _a5;
+        return (_a5 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed2(rng) }).names[0]) != null ? _a5 : null;
       };
     }
     case "compoundPack": {
-      const parts = (_c = parsed.parts) != null ? _c : [];
+      const parts = (_c2 = parsed.parts) != null ? _c2 : [];
       return (rng) => {
-        var _a4;
-        return (_a4 = generateCompoundNamesDetailed(parts, {
+        var _a5;
+        return (_a5 = generateCompoundNamesDetailed(parts, {
           count: 1,
           ...compoundSettings(parsed),
           faithfulness,
           strictness,
           seed: subSeed2(rng)
-        }).names[0]) != null ? _a4 : null;
+        }).names[0]) != null ? _a5 : null;
       };
     }
     case "mixPack": {
@@ -101484,8 +110039,8 @@ function nativeDrawer(entry, index, settings) {
       if (corpus.length === 0) return "the mix pack has no names";
       const model = MarkovModel.build(corpus);
       return (rng) => {
-        var _a4;
-        return (_a4 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed2(rng) }).names[0]) != null ? _a4 : null;
+        var _a5;
+        return (_a5 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed2(rng) }).names[0]) != null ? _a5 : null;
       };
     }
     default: {
@@ -101493,15 +110048,15 @@ function nativeDrawer(entry, index, settings) {
       if (names.length === 0) return "the pack has no names";
       const model = MarkovModel.build(names);
       return (rng) => {
-        var _a4;
-        return (_a4 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed2(rng) }).names[0]) != null ? _a4 : null;
+        var _a5;
+        return (_a5 = model.generateDetailed({ count: 1, faithfulness, strictness, seed: subSeed2(rng) }).names[0]) != null ? _a5 : null;
       };
     }
   }
 }
 var packLabel = (entry) => {
-  var _a3;
-  return entry.parsed.packName || ((_a3 = entry.path.split("/").pop()) == null ? void 0 : _a3.replace(/\.md$/i, "")) || entry.path;
+  var _a4;
+  return entry.parsed.packName || ((_a4 = entry.path.split("/").pop()) == null ? void 0 : _a4.replace(/\.md$/i, "")) || entry.path;
 };
 var TakeoverView = class {
   constructor(host) {
@@ -101518,8 +110073,8 @@ var TakeoverView = class {
     const usable = index.filter((entry) => !entry.parsed.template);
     const byLabel = (a, b) => a.label.localeCompare(b.label);
     this.nativePacks = usable.map((entry) => {
-      var _a3;
-      return { path: entry.path, label: packLabel(entry), reason: (_a3 = entry.templateError) == null ? void 0 : _a3.replace(/\.$/, "") };
+      var _a4;
+      return { path: entry.path, label: packLabel(entry), reason: (_a4 = entry.templateError) == null ? void 0 : _a4.replace(/\.$/, "") };
     }).sort(byLabel);
     this.takeoverPacks = usable.map((entry) => ({ path: entry.path, label: packLabel(entry), reason: this.host.targetReason(entry, index) })).sort(byLabel);
     if (this.nativePath && !this.nativePacks.some((p) => p.path === this.nativePath && !p.reason)) this.nativePath = void 0;
@@ -101534,8 +110089,8 @@ var TakeoverView = class {
     this.showSamePackNotice();
   }
   takeoverLabel() {
-    var _a3, _b;
-    return (_b = (_a3 = this.takeoverPacks.find((p) => p.path === this.takeoverPath)) == null ? void 0 : _a3.label) != null ? _b : "choose a takeover pack";
+    var _a4, _b2;
+    return (_b2 = (_a4 = this.takeoverPacks.find((p) => p.path === this.takeoverPath)) == null ? void 0 : _a4.label) != null ? _b2 : "choose a takeover pack";
   }
   selectNative(path) {
     this.nativePath = path;
@@ -101543,15 +110098,15 @@ var TakeoverView = class {
     this.showSamePackNotice();
   }
   nativeLabel() {
-    var _a3, _b;
-    return (_b = (_a3 = this.nativePacks.find((p) => p.path === this.nativePath)) == null ? void 0 : _a3.label) != null ? _b : "choose a native pack";
+    var _a4, _b2;
+    return (_b2 = (_a4 = this.nativePacks.find((p) => p.path === this.nativePath)) == null ? void 0 : _a4.label) != null ? _b2 : "choose a native pack";
   }
   showSamePackNotice() {
-    var _a3;
-    this.host.setStatus((_a3 = samePackNotice(this.nativePath, this.takeoverPath)) != null ? _a3 : "");
+    var _a4;
+    this.host.setStatus((_a4 = samePackNotice(this.nativePath, this.takeoverPath)) != null ? _a4 : "");
   }
   async run(batchSize) {
-    var _a3, _b, _c;
+    var _a4, _b2, _c2;
     if (!this.nativePath) {
       new import_obsidian13.Notice("nameForge: choose a native pack to generate names from.");
       return;
@@ -101582,9 +110137,9 @@ var TakeoverView = class {
     }
     this.host.setStatus("");
     renderLoading(this.resultsEl, `Taking over 0 of ${batchSize}\u2026`);
-    const loadingText = (_a3 = this.resultsEl) == null ? void 0 : _a3.querySelector(".nameforge-modal__loading-text");
+    const loadingText = (_a4 = this.resultsEl) == null ? void 0 : _a4.querySelector(".nameforge-modal__loading-text");
     await waitForPaint();
-    const prepared = prepareTakeoverTarget(target.corpus, takeoverScorer((_b = this.host.settings().faithfulness) != null ? _b : 2), target.endings);
+    const prepared = prepareTakeoverTarget(target.corpus, takeoverScorer((_b2 = this.host.settings().faithfulness) != null ? _b2 : 2), target.endings);
     const steps = takeOverSteps({
       drawNative: draw2,
       adopt: (native, rng) => adoptName({ native, target: prepared, rng }),
@@ -101603,7 +110158,7 @@ var TakeoverView = class {
     }
     this.host.setCurrentSeed(result.seed);
     this.renderResults(this.resultsEl, result.rows);
-    this.host.setStatus((_c = result.notice) != null ? _c : "");
+    this.host.setStatus((_c2 = result.notice) != null ? _c2 : "");
   }
   /** One row per adoption: native muted, then →, then the adopted name; selectable and insertable. */
   renderResults(container, rows) {
@@ -101734,7 +110289,9 @@ var SECTION_ORDER = [
   "nameTakeover",
   "settlementKit",
   "eventNames",
-  "moneyNames"
+  "moneyNames",
+  "calendarNames",
+  "skyNames"
 ];
 var SECTION_GROUPS = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames", "sacredPlaces"],
@@ -101743,7 +110300,7 @@ var SECTION_GROUPS = {
   bynames: BYNAME_SECTIONS,
   // Line-up brief §1: ships and spacecraft get a group of their own.
   vehicles: VESSEL_SECTIONS,
-  advanced: ["nameAgeing", "nameTakeover", "settlementKit", "eventNames", "moneyNames"]
+  advanced: ["nameAgeing", "nameTakeover", "settlementKit", "eventNames", "moneyNames", "calendarNames", "skyNames"]
 };
 var GROUP_LABELS = {
   placeNames: "place names",
@@ -101767,6 +110324,8 @@ var SECTION_LABELS = {
   settlementKit: "settlement kit",
   eventNames: "events and eras",
   moneyNames: "money and coins",
+  calendarNames: "calendars and festivals",
+  skyNames: "sky lore",
   deityNames: "deities",
   sacredPlaces: "sacred places",
   riverNames: "river names",
@@ -101810,6 +110369,8 @@ function historySection(packName) {
   if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
   if (starts(SECTION_LABELS.eventNames)) return "eventNames";
   if (starts(SECTION_LABELS.moneyNames)) return "moneyNames";
+  if (starts(SECTION_LABELS.calendarNames)) return "calendarNames";
+  if (starts(SECTION_LABELS.skyNames)) return "skyNames";
   if (OLD_HISTORY_PREFIXES.deityNames.some(starts)) return packName.includes("\xB7 sacred places") ? "sacredPlaces" : "deityNames";
   if (starts(SECTION_LABELS.deityNames)) return "deityNames";
   if (starts(SECTION_LABELS.sacredPlaces)) return "sacredPlaces";
@@ -101863,6 +110424,9 @@ var SECTION_ICONS = {
   eventNames: ICON_HISTORY,
   // Money brief §1.1: the Lucide coins icon.
   moneyNames: "coins",
+  // Time and sky brief §1.1: Lucide calendar-days and moon-star.
+  calendarNames: "calendar-days",
+  skyNames: "moon-star",
   // Deities brief §1.1.
   deityNames: ICON_DEITIES,
   sacredPlaces: ICON_DEITIES,
@@ -101916,6 +110480,8 @@ function packTypeIconId(packType, subGenerator) {
   if (packType === "kitPreset") return ICON_SETTLEMENT_KIT;
   if (packType === "eventPreset") return ICON_HISTORY;
   if (packType === "moneyPreset") return "coins";
+  if (packType === "calendarPreset") return "calendar-days";
+  if (packType === "skyPreset") return "moon-star";
   if (packType === "deityPreset") return ICON_DEITIES;
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;
@@ -101939,7 +110505,7 @@ function resolveSeed3(seed) {
   return seed !== void 0 && Number.isFinite(seed) ? Math.floor(seed) >>> 0 : Math.random() * 4294967295 >>> 0;
 }
 function generateNamesFromSource(namesText, packType, count = 6, settings = {}, seed, breakdown, placeGenerator) {
-  var _a3, _b, _c, _d;
+  var _a4, _b2, _c2, _d2;
   const names = extractNamesFromMarkdown(namesText);
   const resolvedSeed = resolveSeed3(seed);
   if (names.length === 0) {
@@ -101954,8 +110520,8 @@ function generateNamesFromSource(namesText, packType, count = 6, settings = {}, 
     const model2 = PlaceNameModel.build(names);
     const result2 = model2.generateDetailed({
       count,
-      faithfulness: (_a3 = settings.faithfulness) != null ? _a3 : 2,
-      strictness: (_b = settings.strictness) != null ? _b : 3,
+      faithfulness: (_a4 = settings.faithfulness) != null ? _a4 : 2,
+      strictness: (_b2 = settings.strictness) != null ? _b2 : 3,
       ...breakdown,
       seed: resolvedSeed
     });
@@ -101964,8 +110530,8 @@ function generateNamesFromSource(namesText, packType, count = 6, settings = {}, 
   const model = MarkovModel.build(names);
   const result = model.generateDetailed({
     count,
-    faithfulness: (_c = settings.faithfulness) != null ? _c : 2,
-    strictness: (_d = settings.strictness) != null ? _d : 3,
+    faithfulness: (_c2 = settings.faithfulness) != null ? _c2 : 2,
+    strictness: (_d2 = settings.strictness) != null ? _d2 : 3,
     ...breakdown,
     seed: resolvedSeed
   });
@@ -102062,7 +110628,7 @@ The pack separator is used to divide a part into titles such as male, female or 
     this.render();
   }
   render() {
-    var _a3;
+    var _a4;
     const sentence2 = this.sentenceEl;
     sentence2.empty();
     sentence2.appendText("Names have ");
@@ -102102,12 +110668,12 @@ The pack separator is used to divide a part into titles such as male, female or 
         this.render();
       });
     });
-    (_a3 = this.wrappers[2]) == null ? void 0 : _a3.toggle(this.count === 3);
+    (_a4 = this.wrappers[2]) == null ? void 0 : _a4.toggle(this.count === 3);
   }
 };
 function resultName(el) {
-  var _a3, _b;
-  return (_b = (_a3 = el.getAttribute("data-name")) != null ? _a3 : el.textContent) != null ? _b : "";
+  var _a4, _b2;
+  return (_b2 = (_a4 = el.getAttribute("data-name")) != null ? _a4 : el.textContent) != null ? _b2 : "";
 }
 function parseSeedInput(value) {
   if (!value || !value.trim()) return void 0;
@@ -102187,6 +110753,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     this.eventState = { ...DEFAULT_EVENT_STATE };
     /** Money brief §2: the money and coins sentence's choices, session only. */
     this.moneyState = { ...DEFAULT_MONEY_STATE };
+    /** Time and sky brief §2: the calendars and sky lore sentences' choices, session only. */
+    this.calendarState = { ...DEFAULT_CALENDAR_STATE };
+    this.skyState = { ...DEFAULT_SKY_STATE };
     /** Deities brief §2: the deities sentence's choices, session only. */
     this.deityState = { ...DEFAULT_DEITY_STATE };
     /** Line-up brief §2.3: the sacred places module's own choices. */
@@ -102235,8 +110804,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
       targetNames: (entry, index) => this.ageingTargetNames(entry, index),
       targetReason: (entry, index) => this.targetPackReason(entry, index),
       lockedSeed: () => {
-        var _a3;
-        return this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+        var _a4;
+        return this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
       },
       setCurrentSeed: (seed) => {
         this.currentSeed = seed;
@@ -102337,20 +110906,20 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
       root.addClass("nameforge-modal--panel");
     }
     const triggerOf = (evt) => {
-      var _a3, _b;
-      return (_b = (_a3 = evt.target) == null ? void 0 : _a3.closest) == null ? void 0 : _b.call(_a3, ".nameforge-modal__pack-dropdown-trigger");
+      var _a4, _b2;
+      return (_b2 = (_a4 = evt.target) == null ? void 0 : _a4.closest) == null ? void 0 : _b2.call(_a4, ".nameforge-modal__pack-dropdown-trigger");
     };
     root.addEventListener("mouseover", (evt) => {
-      var _a3;
-      return (_a3 = triggerOf(evt)) == null ? void 0 : _a3.addClass("is-hovered");
+      var _a4;
+      return (_a4 = triggerOf(evt)) == null ? void 0 : _a4.addClass("is-hovered");
     });
     root.addEventListener("mouseout", (evt) => {
-      var _a3;
-      return (_a3 = triggerOf(evt)) == null ? void 0 : _a3.removeClass("is-hovered");
+      var _a4;
+      return (_a4 = triggerOf(evt)) == null ? void 0 : _a4.removeClass("is-hovered");
     });
     root.addEventListener("click", (evt) => {
-      var _a3, _b;
-      if (!((_b = (_a3 = evt.target) == null ? void 0 : _a3.closest) == null ? void 0 : _b.call(_a3, ".nameforge-modal__pack-dropdown-menu"))) return;
+      var _a4, _b2;
+      if (!((_b2 = (_a4 = evt.target) == null ? void 0 : _a4.closest) == null ? void 0 : _b2.call(_a4, ".nameforge-modal__pack-dropdown-menu"))) return;
       root.querySelectorAll(".nameforge-modal__pack-dropdown-trigger.is-hovered").forEach((el) => el.removeClass("is-hovered"));
     });
     const optionsList = root.createDiv({ cls: "nameforge-modal__options-list" });
@@ -102525,31 +111094,31 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
    * the menu adds (measured, so gaps/margins in modal vs panel mode are included) via
    * --nf-section-menu-height, so the modal itself doesn't grow. */
   setSectionMenuOpen(open) {
-    var _a3, _b, _c, _d, _e;
+    var _a4, _b2, _c2, _d2, _e2;
     const menu = this.sectionMenuEl;
     if (!menu) return;
     this.isSectionMenuOpen = open;
     const optionsList = menu.parentElement;
-    const before = (_a3 = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _a3 : 0;
+    const before = (_a4 = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _a4 : 0;
     if (open) {
       this.closePackDropdown();
       this.setRegionMenuOpen(false);
       this.renderSectionMenu();
     }
     menu.toggle(open);
-    const added = open ? Math.max(0, ((_b = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _b : 0) - before) : 0;
-    (_c = this.rootEl) == null ? void 0 : _c.style.setProperty("--nf-section-menu-height", `${added}px`);
-    (_d = this.rootEl) == null ? void 0 : _d.toggleClass("is-section-menu-open", open);
-    (_e = this.sectionTriggerEl) == null ? void 0 : _e.setAttribute("aria-expanded", String(open));
+    const added = open ? Math.max(0, ((_b2 = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _b2 : 0) - before) : 0;
+    (_c2 = this.rootEl) == null ? void 0 : _c2.style.setProperty("--nf-section-menu-height", `${added}px`);
+    (_d2 = this.rootEl) == null ? void 0 : _d2.toggleClass("is-section-menu-open", open);
+    (_e2 = this.sectionTriggerEl) == null ? void 0 : _e2.setAttribute("aria-expanded", String(open));
   }
   /** The section switcher, opened by clicking the binder icon — a port of titleForge's
    * renderSectionPicker. Rebuilt on each open so the active item's highlight is current. */
   renderSectionMenu() {
-    var _a3;
+    var _a4;
     const menu = this.sectionMenuEl;
     if (!menu) return;
     menu.empty();
-    const current = (_a3 = sectionGroup(this.activeSection)) != null ? _a3 : this.activeSection;
+    const current = (_a4 = sectionGroup(this.activeSection)) != null ? _a4 : this.activeSection;
     for (const entry of SWITCHER_ORDER) {
       const group = entry in SECTION_GROUPS ? entry : void 0;
       const label = group ? GROUP_LABELS[group] : SECTION_LABELS[entry];
@@ -102572,9 +111141,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
   /** Swaps only the box beside the section trigger — the pack dropdown on "markov", the region
    * dropdown on the shape sections, the placeholder box otherwise. Everything else is left as it is. */
   switchSection(section) {
-    var _a3, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
+    var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
     if (section === "nameAgeing" && this.activeSection === "markov") {
-      const selected = (_b = (_a3 = this.resultsEl) == null ? void 0 : _a3.querySelectorAll("li.is-selected")) != null ? _b : [];
+      const selected = (_b2 = (_a4 = this.resultsEl) == null ? void 0 : _a4.querySelectorAll("li.is-selected")) != null ? _b2 : [];
       if (selected.length === 1 && this.ageingSourceInput) {
         this.ageingSourceInput.value = resultName(selected[0]);
       }
@@ -102586,13 +111155,13 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     this.activeSection = section;
     const group = sectionGroup(section);
     if (group) this.groupModule[group] = section;
-    (_c = this.packDropdownEl) == null ? void 0 : _c.toggle(section === "markov");
-    (_d = this.sectionSentenceEl) == null ? void 0 : _d.toggle(section === "markov" && this.sectionChoices.length > 0);
-    (_e = this.editRecipeButton) == null ? void 0 : _e.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "deityPreset"));
+    (_c2 = this.packDropdownEl) == null ? void 0 : _c2.toggle(section === "markov");
+    (_d2 = this.sectionSentenceEl) == null ? void 0 : _d2.toggle(section === "markov" && this.sectionChoices.length > 0);
+    (_e2 = this.editRecipeButton) == null ? void 0 : _e2.toggle(section === "markov" && this.currentPackType === "recipePack");
+    (_f = this.openPresetButton) == null ? void 0 : _f.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "deityPreset"));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_g = this.createPacksButton) == null ? void 0 : _g.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "deityNames" || section === "sacredPlaces";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || section === "deityNames" || section === "sacredPlaces";
     (_h = this.createPacksButton) == null ? void 0 : _h.toggle(!colonialPart && !tribal);
     (_i = this.landButton) == null ? void 0 : _i.refresh();
     (_j = this.guideButton) == null ? void 0 : _j.toggle(!!colonialPart || section === "hyperspaceCharts");
@@ -102640,7 +111209,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
    * below; the results box gives up its height so the modal keeps its size (showSecondBox).
    */
   buildSecondBox(container) {
-    var _a3;
+    var _a4;
     const row = this.secondBoxRowEl = container.createDiv({ cls: "nameforge-modal__second-box" });
     const dropdown = this.secondBoxDropdownEl = row.createDiv({ cls: "nameforge-modal__pack-dropdown" });
     const trigger = this.secondBoxTriggerEl = dropdown.createEl("button", {
@@ -102665,21 +111234,21 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     });
     this.updateSecondBoxLabel();
     row.hide();
-    (_a3 = this.secondBoxObserver) == null ? void 0 : _a3.disconnect();
+    (_a4 = this.secondBoxObserver) == null ? void 0 : _a4.disconnect();
     this.secondBoxObserver = new ResizeObserver(() => this.alignSecondBox());
     if (this.regionDropdownEl) this.secondBoxObserver.observe(this.regionDropdownEl);
     this.secondBoxObserver.observe(row);
   }
   /** The second box's label and tooltip for the active module. */
   updateSecondBoxLabel() {
-    var _a3, _b;
+    var _a4, _b2;
     const label = this.secondBoxLabelEl;
     const trigger = this.secondBoxTriggerEl;
     if (!label || !trigger) return;
     const regionCode = this.activeSection === "placeShapes" ? this.selectedRegion : this.riverRegion;
     const region = PLACE_SHAPE_REGIONS.find((r) => r.code === regionCode);
-    label.textContent = (_a3 = region == null ? void 0 : region.label) != null ? _a3 : "All Britain";
-    trigger.setAttribute("title", `Region: ${(_b = region == null ? void 0 : region.counties) != null ? _b : "no regional weighting"}`);
+    label.textContent = (_a4 = region == null ? void 0 : region.label) != null ? _a4 : "All Britain";
+    trigger.setAttribute("title", `Region: ${(_b2 = region == null ? void 0 : region.counties) != null ? _b2 : "no regional weighting"}`);
   }
   /**
    * River names and place names' Britain: All Britain, then the regions. Place names' world cultures:
@@ -102733,13 +111302,13 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
   }
   /** A module's land choice (session only). */
   land(key2) {
-    var _a3;
-    return (_a3 = this.landStates[key2]) != null ? _a3 : DEFAULT_LAND;
+    var _a4;
+    return (_a4 = this.landStates[key2]) != null ? _a4 : DEFAULT_LAND;
   }
   /** The module's default biome as the Land menu shows it. */
   landDefaultLabel() {
-    var _a3;
-    const key2 = (_a3 = this.landKey()) != null ? _a3 : "";
+    var _a4;
+    const key2 = (_a4 = this.landKey()) != null ? _a4 : "";
     if (key2 === "britain") return BRITAIN.label;
     if (key2 === "tribal" || key2.startsWith("world:")) return "Homeland";
     return "Unknown country";
@@ -102761,9 +111330,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
    * cached by the files' modification times.
    */
   async loadCustomBiomes() {
-    var _a3;
+    var _a4;
     const folder = this.app.vault.getFolderByPath((0, import_obsidian14.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
-    const files = ((_a3 = folder == null ? void 0 : folder.children) != null ? _a3 : []).filter((c) => c instanceof import_obsidian14.TFile && c.extension === "md");
+    const files = ((_a4 = folder == null ? void 0 : folder.children) != null ? _a4 : []).filter((c) => c instanceof import_obsidian14.TFile && c.extension === "md");
     const stamp = files.map((f) => `${f.path}:${f.stat.mtime}`).join("|");
     if (stamp === this.biomeStamp) return this.customBiomes;
     const sources = [];
@@ -102807,31 +111376,31 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
    * box gives up exactly the height the row adds (measured), via --nf-second-box-height.
    */
   showSecondBox(show) {
-    var _a3, _b, _c, _d, _e;
+    var _a4, _b2, _c2, _d2, _e2;
     const row = this.secondBoxRowEl;
     if (!row) return;
     const optionsList = row.parentElement;
     const wasShown = row.isShown();
-    const before = (_a3 = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _a3 : 0;
+    const before = (_a4 = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _a4 : 0;
     row.toggle(show);
     if (show && !wasShown) {
-      const added = Math.max(0, ((_b = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _b : 0) - before);
-      (_c = this.rootEl) == null ? void 0 : _c.style.setProperty("--nf-second-box-height", `${added}px`);
+      const added = Math.max(0, ((_b2 = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _b2 : 0) - before);
+      (_c2 = this.rootEl) == null ? void 0 : _c2.style.setProperty("--nf-second-box-height", `${added}px`);
     }
-    if (!show) (_d = this.rootEl) == null ? void 0 : _d.style.setProperty("--nf-second-box-height", "0px");
-    (_e = this.rootEl) == null ? void 0 : _e.toggleClass("is-second-box-open", show);
+    if (!show) (_d2 = this.rootEl) == null ? void 0 : _d2.style.setProperty("--nf-second-box-height", "0px");
+    (_e2 = this.rootEl) == null ? void 0 : _e2.toggleClass("is-second-box-open", show);
     if (show) this.alignSecondBox();
   }
   setRegionMenuOpen(open) {
-    var _a3, _b;
+    var _a4, _b2;
     this.isRegionMenuOpen = open;
     if (open) {
       this.setSecondBoxMenuOpen(false);
       this.closePackDropdown();
       this.renderRegionMenu();
     }
-    (_a3 = this.regionMenuEl) == null ? void 0 : _a3.toggle(open);
-    (_b = this.regionTriggerEl) == null ? void 0 : _b.setAttribute("aria-expanded", String(open));
+    (_a4 = this.regionMenuEl) == null ? void 0 : _a4.toggle(open);
+    (_b2 = this.regionTriggerEl) == null ? void 0 : _b2.setAttribute("aria-expanded", String(open));
   }
   /** Part 1 sections: All Britain, then the regions, with historic counties as tooltips.
    * Colonial sections: General, then every tradition; ones not in this part are greyed out. */
@@ -102860,10 +111429,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
         });
         item2.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: setting.label });
         item2.addEventListener("click", () => {
-          var _a3;
+          var _a4;
           this.riverSetting = setting.id;
           this.showSecondBox(setting.id === "british");
-          (_a3 = this.landButton) == null ? void 0 : _a3.refresh();
+          (_a4 = this.landButton) == null ? void 0 : _a4.refresh();
           this.updateRegionLabel();
           this.setRegionMenuOpen(false);
         });
@@ -102872,16 +111441,16 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     }
   }
   updateRegionLabel() {
-    var _a3, _b;
+    var _a4, _b2;
     if (sectionGroup(this.activeSection)) {
       if (this.regionLabelEl) this.regionLabelEl.textContent = moduleLabel(this.activeSection);
-      (_a3 = this.regionTriggerEl) == null ? void 0 : _a3.setAttribute("title", "Module");
+      (_a4 = this.regionTriggerEl) == null ? void 0 : _a4.setAttribute("title", "Module");
       this.renderContextRow();
       return;
     }
     if (this.activeSection === "riverNames") {
       if (this.regionLabelEl) this.regionLabelEl.textContent = RIVER_SETTINGS.find((s) => s.id === this.riverSetting).label;
-      (_b = this.regionTriggerEl) == null ? void 0 : _b.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
+      (_b2 = this.regionTriggerEl) == null ? void 0 : _b2.setAttribute("title", "Setting: British rivers, or New Land or Established colonial rivers");
       return;
     }
   }
@@ -102909,6 +111478,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     else if (section === "settlementKit") this.renderKitSentence(row);
     else if (section === "eventNames") this.renderEventSentence(row);
     else if (section === "moneyNames") this.renderMoneySentence(row);
+    else if (section === "calendarNames" || section === "skyNames") this.renderTimeSentence(row, section);
     else if (section === "deityNames") this.renderDeitySentence(row);
     else if (section === "sacredPlaces") this.renderSacredPlaceSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
@@ -102921,16 +111491,16 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
    * corners to match. Runs at mount too, so the first open is right before any section switch.
    * Decided from the section, not from layout: the pill may not be attached yet. */
   syncGeneratePill() {
-    var _a3, _b;
+    var _a4, _b2;
     const quantity = this.activeSection !== "nameAgeing" && this.activeSection !== "settlementKit";
-    (_a3 = this.quantityToggleEl) == null ? void 0 : _a3.toggle(quantity);
-    (_b = this.generatePillEl) == null ? void 0 : _b.toggleClass("has-quantity", quantity);
+    (_a4 = this.quantityToggleEl) == null ? void 0 : _a4.toggle(quantity);
+    (_b2 = this.generatePillEl) == null ? void 0 : _b2.toggleClass("has-quantity", quantity);
     this.syncPillSpacing();
   }
   /** The sentence sits 12px above the generate pill when nothing comes between them (ageing's
    * controls do). */
   syncPillSpacing() {
-    var _a3;
+    var _a4;
     const row = this.contextRowEl;
     const notAgeing = this.activeSection !== "nameAgeing";
     const rowJoined = !!row && row.hasClass("is-sentence") && notAgeing;
@@ -102938,7 +111508,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     const listJoined = !rowJoined && !!listEl && notAgeing && this.activeSection === "markov" && listEl.isShown();
     row == null ? void 0 : row.toggleClass("is-before-pill", rowJoined);
     listEl == null ? void 0 : listEl.toggleClass("is-before-pill", listJoined);
-    (_a3 = this.generatePillEl) == null ? void 0 : _a3.toggleClass("is-after-sentence", rowJoined || listJoined);
+    (_a4 = this.generatePillEl) == null ? void 0 : _a4.toggleClass("is-after-sentence", rowJoined || listJoined);
   }
   /** A sentence link that opens a menu of choices; choosing re-renders the sentence. */
   sentenceLink(sentence2, text, title, choices, current, choose) {
@@ -102952,9 +111522,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
         if (c.heading) {
           menu.addSeparator();
           menu.addItem((item2) => {
-            var _a3;
+            var _a4;
             item2.setTitle(c.heading).setDisabled(true);
-            if (c.headingTip) (_a3 = item2.dom) == null ? void 0 : _a3.setAttribute("aria-label", c.headingTip);
+            if (c.headingTip) (_a4 = item2.dom) == null ? void 0 : _a4.setAttribute("aria-label", c.headingTip);
           });
         }
         menu.addItem(
@@ -102973,7 +111543,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
    * "‹all› of ‹a sector›" or "‹the belts› of ‹a star system›". No earthly biomes and no Homeland.
    */
   spaceClause(sentence2, key2) {
-    var _a3;
+    var _a4;
     const land = this.land(key2);
     const biome = findBiome(land.biome, this.customBiomes);
     const space = (biome == null ? void 0 : biome.space) ? biome : void 0;
@@ -102982,7 +111552,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
       this.sentenceLink(
         sentence2,
         "all of space",
-        (_a3 = allOfSpace.title) != null ? _a3 : "",
+        (_a4 = allOfSpace.title) != null ? _a4 : "",
         () => [allOfSpace, ...SPACE_BIOMES.map((b) => ({ id: b.id, label: `all of ${b.phrase}`, title: b.guide }))],
         void 0,
         (id) => this.landStates[key2] = { biome: id, terrain: "any" }
@@ -103010,7 +111580,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
   }
   /** "…set in ‹any part› of ‹unknown country›": the land phrases for a module's land key. */
   landClause(sentence2, key2, defaultPhrase, part, britainAsDefault) {
-    var _a3;
+    var _a4;
     const land = this.land(key2);
     const biome = findBiome(land.biome, this.customBiomes);
     const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
@@ -103028,15 +111598,15 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     this.sentenceLink(
       sentence2,
       biome ? biomePhrase(land.biome, part, this.customBiomes) : defaultPhrase,
-      (_a3 = biome == null ? void 0 : biome.guide) != null ? _a3 : "Biome: the plants, wildlife, ground and seasons",
+      (_a4 = biome == null ? void 0 : biome.guide) != null ? _a4 : "Biome: the plants, wildlife, ground and seasons",
       async () => {
         const custom = [...await this.loadCustomBiomes()].sort((x, y) => x.label.localeCompare(y.label));
         const space = part !== "organic" && key2.startsWith("colonial:") ? SPACE_BIOMES.map((b, i) => ({ id: b.id, label: b.phrase, title: b.guide, ...i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {} })) : [];
         return [
           { id: void 0, label: defaultPhrase },
           ...[...britainAsDefault ? [] : [BRITAIN], ...BIOMES, ...custom].map((b) => {
-            var _a4, _b;
-            return { id: (_b = (_a4 = b.custom) == null ? void 0 : _a4.path) != null ? _b : b.id, label: b.phrase };
+            var _a5, _b2;
+            return { id: (_b2 = (_a5 = b.custom) == null ? void 0 : _a5.path) != null ? _b2 : b.id, label: b.phrase };
           }),
           ...space
         ];
@@ -103055,14 +111625,14 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
    * "‹British river› names from ‹all of Britain›", "‹Chinese› place names from the ‹Imperial› era, set in…".
    */
   renderNativeSentence(row) {
-    var _a3, _b;
+    var _a4, _b2;
     const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     const cultures = [
       { id: PLACE_BRITAIN, label: "British" },
       { id: PLACE_BRITISH_RIVERS, label: "British river" },
       ...WORLD_CULTURES.map((c) => ({ id: c.id, label: c.label, title: c.guide }))
     ];
-    const culture = (_a3 = cultures.find((c) => c.id === this.worldCulture)) != null ? _a3 : cultures[0];
+    const culture = (_a4 = cultures.find((c) => c.id === this.worldCulture)) != null ? _a4 : cultures[0];
     this.sentenceLink(sentence2, culture.label, "Culture", () => cultures, this.worldCulture, (id) => {
       this.worldCulture = id != null ? id : PLACE_BRITAIN;
       this.refreshRiverOptions();
@@ -103084,7 +111654,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
       this.sentenceLink(
         sentence2,
         era.label,
-        (_b = era.guide) != null ? _b : "Era",
+        (_b2 = era.guide) != null ? _b2 : "Era",
         () => world.eras.map((e) => ({ id: e.id, label: e.label, title: e.guide })),
         era.id,
         (id) => {
@@ -103108,12 +111678,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
    * the locals› across…".
    */
   renderColonialSentence(row, part) {
-    var _a3, _b, _c, _d;
+    var _a4, _b2, _c2, _d2;
     const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     const phrase = part === "2" ? explorersPhrase : incomersPhrase;
     const tradition = COLONIAL_TRADITIONS.find((t) => {
-      var _a4;
-      return t.id === ((_a4 = this.selectedTradition[part]) != null ? _a4 : "general");
+      var _a5;
+      return t.id === ((_a5 = this.selectedTradition[part]) != null ? _a5 : "general");
     });
     this.sentenceLink(
       sentence2,
@@ -103124,13 +111694,13 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
       (id) => this.selectedTradition[part] = id === "general" ? void 0 : id
     );
     sentence2.appendText(part === "2" ? " in " : " who are ");
-    const spaceBiome = (_a3 = findBiome(this.land(`colonial:${part}`).biome, this.customBiomes)) == null ? void 0 : _a3.space;
+    const spaceBiome = (_a4 = findBiome(this.land(`colonial:${part}`).biome, this.customBiomes)) == null ? void 0 : _a4.space;
     const contexts = contextPhrasesFor(part, !!spaceBiome).filter(([id]) => colonialContexts(part).some((c) => c.id === id));
-    const context = (_b = contexts.find(([id]) => id === this.selectedContext[part])) != null ? _b : contexts[0];
+    const context = (_b2 = contexts.find(([id]) => id === this.selectedContext[part])) != null ? _b2 : contexts[0];
     this.sentenceLink(
       sentence2,
       context[1],
-      (_d = (_c = colonialContexts(part).find((c) => c.id === context[0])) == null ? void 0 : _c.label) != null ? _d : "",
+      (_d2 = (_c2 = colonialContexts(part).find((c) => c.id === context[0])) == null ? void 0 : _c2.label) != null ? _d2 : "",
       () => contexts.map(([id, text]) => ({ id, label: text })),
       context[0],
       (id) => this.selectedContext[part] = id
@@ -103208,8 +111778,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
   }
   /** Runs the tribal engine for a sentence state and shows the results as the module does. */
   async runTribal(state, label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     await this.loadCustomBiomes();
     const chosen = findBiome(state.biome, this.customBiomes);
     const guards = await this.loadSafeguards();
@@ -103240,16 +111810,16 @@ ${n.origin}${also}${echo}` };
   }
   /** A preset's values as a sentence state; a biome pack link is looked up among the user's packs. */
   async presetState(preset, from) {
-    var _a3;
+    var _a4;
     let biome = preset.biome === "homeland" ? void 0 : preset.biome;
     if (biome == null ? void 0 : biome.startsWith("[[")) {
       const name = biome.slice(2, -2);
       const target = this.app.metadataCache.getFirstLinkpathDest(name, from);
       const found = (await this.loadCustomBiomes()).find((b) => {
-        var _a4;
-        return ((_a4 = b.custom) == null ? void 0 : _a4.path) === (target == null ? void 0 : target.path) || b.label === name;
+        var _a5;
+        return ((_a5 = b.custom) == null ? void 0 : _a5.path) === (target == null ? void 0 : target.path) || b.label === name;
       });
-      biome = (_a3 = found == null ? void 0 : found.custom) == null ? void 0 : _a3.path;
+      biome = (_a4 = found == null ? void 0 : found.custom) == null ? void 0 : _a4.path;
     }
     return {
       tradition: preset.tradition,
@@ -103265,7 +111835,13 @@ ${n.origin}${also}${echo}` };
   async openPresetInModule() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian14.TFile)) return;
-    const { preset, group, byname, vessel, waters, realm: realm2, route: route3, street, inn, building, kit, event, money, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, waters, realm: realm2, route: route3, street, inn, building, kit, event, money, time, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (time) {
+      if (time.timeModule === "sky") this.skyState = this.timePresetState(time);
+      else this.calendarState = this.timePresetState(time);
+      this.switchSection(time.timeModule === "sky" ? "skyNames" : "calendarNames");
+      return;
+    }
     if (money) {
       this.moneyState = this.moneyPresetState(money);
       this.switchSection("moneyNames");
@@ -103387,8 +111963,8 @@ ${n.origin}${also}${echo}` };
   }
   /** GN §14: the finished strings only; history "realms and polities · {setting} · {culture} · {era}…". */
   async runRealms(state = this.realmState, label, problems = []) {
-    var _a3, _b;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4, _b2;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const guards = await this.loadRealmSafeguards();
     const custom = await this.loadCustomBiomes();
     const biome = state.biome ? findBiome(state.biome, custom) : void 0;
@@ -103414,17 +111990,17 @@ ${n.origin}${also}${echo}` };
       result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
       "none"
     );
-    const character = (_b = REALM_CHARACTERS.find((c) => c.key === state.character)) == null ? void 0 : _b.key;
+    const character = (_b2 = REALM_CHARACTERS.find((c) => c.key === state.character)) == null ? void 0 : _b2.key;
     const history2 = label != null ? label : realmHistoryLabel(state.genre, state.fantastic, state.culture, state.era, character, state.tone);
     await this.recordGenerationHistory(result.names.length, history2);
     this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
   }
   /** §12.4: every realm safeguard pack in the names folder, merged with the built-in lists. */
   async loadRealmSafeguards() {
-    var _a3;
+    var _a4;
     const folder = this.app.vault.getFolderByPath((0, import_obsidian14.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
-    for (const child of (_a3 = folder == null ? void 0 : folder.children) != null ? _a3 : []) {
+    for (const child of (_a4 = folder == null ? void 0 : folder.children) != null ? _a4 : []) {
       if (!(child instanceof import_obsidian14.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isRealmSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
@@ -103436,14 +112012,14 @@ ${n.origin}${also}${echo}` };
   }
   /** §13: "{culture} · {character or module} · {era}", described by the sentence. */
   openSaveRealmPreset() {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.realmState;
-    const culture = (_b = (_a3 = REALM_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = REALM_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const character = REALM_CHARACTERS.find((c) => c.key === state.character);
     const name = [culture, character ? character.menu : SECTION_LABELS.realms].join(" \xB7 ");
     const description = realmSentenceText(realmSentence(state, this.realmLimits(this.customBiomes)));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4, _b2;
+      var _a5, _b3;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -103453,12 +112029,12 @@ ${n.origin}${also}${echo}` };
         setting: "",
         description: text,
         culture: state.culture,
-        character: (_a4 = state.character) != null ? _a4 : "any",
+        character: (_a5 = state.character) != null ? _a5 : "any",
         era: state.era,
         genre: state.genre,
         fantastic: state.fantastic,
         namedFor: state.namedFor,
-        biome: (_b2 = state.biome) != null ? _b2 : "homeland",
+        biome: (_b3 = state.biome) != null ? _b3 : "homeland",
         terrain: state.terrain,
         tone: state.tone,
         length: state.length,
@@ -103484,7 +112060,7 @@ ${n.origin}${also}${echo}` };
   }
   // ── Route names (Route names brief) ──────────────────────────────────────
   routePresetState(p) {
-    var _a3, _b;
+    var _a4, _b2;
     return chooseRoute(
       {
         culture: p.culture,
@@ -103495,8 +112071,8 @@ ${n.origin}${also}${echo}` };
         tone: p.tone,
         people: p.people,
         series: p.series,
-        scale: (_a3 = p.scale) != null ? _a3 : "any",
-        ftl: (_b = p.ftl) != null ? _b : "any"
+        scale: (_a4 = p.scale) != null ? _a4 : "any",
+        ftl: (_b2 = p.ftl) != null ? _b2 : "any"
       },
       "culture",
       p.culture
@@ -103517,8 +112093,8 @@ ${n.origin}${also}${echo}` };
   }
   /** GN §14: the finished strings only; history "route names · {era} · {culture}…". */
   async runRoutes(state = this.routeState, label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const guards = await this.loadSettlementSafeguards();
     const vocab = await this.loadSettlementVocabulary(guards.safeguards);
     const result = generateRouteNames({
@@ -103547,9 +112123,9 @@ ${n.origin}${also}${echo}` };
   }
   /** The names folder's markdown notes. */
   namesFolderNotes() {
-    var _a3;
+    var _a4;
     const folder = this.app.vault.getFolderByPath((0, import_obsidian14.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
-    return ((_a3 = folder == null ? void 0 : folder.children) != null ? _a3 : []).filter((c) => c instanceof import_obsidian14.TFile && c.extension === "md");
+    return ((_a4 = folder == null ? void 0 : folder.children) != null ? _a4 : []).filter((c) => c instanceof import_obsidian14.TFile && c.extension === "md");
   }
   /** §12.6: every settlement safeguard pack in the names folder, merged with the built-in lists. */
   async loadSettlementSafeguards(g = ROUTE_DATA.safeguards) {
@@ -103598,8 +112174,8 @@ ${n.origin}${also}${echo}` };
   }
   /** GN §14: the finished strings only; history "inns and taverns · {era} · {culture}…". */
   async runInns(state = this.innState, label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const guards = await this.loadSettlementSafeguards(INN_DATA.safeguards);
     const routeGuards = await this.loadSettlementSafeguards();
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, innWordBlocked);
@@ -103631,14 +112207,14 @@ ${n.origin}${also}${echo}` };
   }
   /** §13: "{culture} · {kind or inns and taverns}", described by the sentence. */
   openSaveInnPreset() {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.innState;
-    const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const kind = INN_KINDS.find((k) => k.key === state.kind);
     const name = [culture, kind ? kind.menu : SECTION_LABELS.innNames].join(" \xB7 ");
     const description = innSentenceText(innSentence(state));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4, _b2;
+      var _a5, _b3;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -103648,8 +112224,8 @@ ${n.origin}${also}${echo}` };
         setting: "",
         description: text,
         culture: state.culture,
-        region: (_a4 = state.region) != null ? _a4 : "all",
-        innKind: (_b2 = state.kind) != null ? _b2 : "any",
+        region: (_a5 = state.region) != null ? _a5 : "all",
+        innKind: (_b3 = state.kind) != null ? _b3 : "any",
         era: state.era,
         fantastic: state.fantastic,
         innSetting: state.setting,
@@ -103727,9 +112303,9 @@ ${n.origin}${also}${echo}` };
       }
       const choices = segment2.field === "pack" ? async () => (await this.loadBynamePacks()).map((p) => ({ id: p.name, label: p.name })) : () => segment2.choices;
       this.sentenceLink(sentence2, segment2.text, segment2.title, choices, segment2.current, (id) => {
-        var _a3;
+        var _a4;
         const next = chooseDeity(this.deityState, segment2.field, id);
-        if (segment2.field === "names" && next.names === "pack" && !next.pack) next.pack = (_a3 = this.bynamePacks[0]) == null ? void 0 : _a3.name;
+        if (segment2.field === "names" && next.names === "pack" && !next.pack) next.pack = (_a4 = this.bynamePacks[0]) == null ? void 0 : _a4.name;
         this.deityState = next;
         if (segment2.field === "names" && next.names === "pack") void this.loadBynamePacks().then(() => this.renderContextRow());
       });
@@ -103737,16 +112313,16 @@ ${n.origin}${also}${echo}` };
   }
   /** §7.1: names from a pack through BT's draw, the section by gender (the first section for neither). */
   async deityDraw(state) {
-    var _a3, _b, _c, _d;
+    var _a4, _b2, _c2, _d2;
     if (state.names !== "pack") return { notices: [] };
     const packs = await this.loadBynamePacks();
-    const name = (_b = state.pack) != null ? _b : (_a3 = packs[0]) == null ? void 0 : _a3.name;
+    const name = (_b2 = state.pack) != null ? _b2 : (_a4 = packs[0]) == null ? void 0 : _a4.name;
     if (!name) return { notices: ["No name packs found; placeholders used."] };
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian14.normalizePath)(`${folder}/${name}.md`));
     if (!draw2) return { notices };
-    const headings = (_d = (_c = packs.find((p) => p.name === name)) == null ? void 0 : _c.headings) != null ? _d : [];
+    const headings = (_d2 = (_c2 = packs.find((p) => p.name === name)) == null ? void 0 : _c2.headings) != null ? _d2 : [];
     return {
       draw: (g, rng) => draw2(g === "n" ? headings[0] ? { section: headings[0] } : {} : sectionRequest({ section: "gender" }, headings, "self", g === "m" ? "male" : "female"), "whole", rng),
       notices
@@ -103754,8 +112330,8 @@ ${n.origin}${also}${echo}` };
   }
   /** GN §14: the finished strings only; history "deities · {era} · {culture}…" (sacred places pass their own). */
   async runDeities(state = this.deityState, label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const s = effectiveDeityState(state);
     const guards = await this.loadSettlementSafeguards(DEITY_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, deityWordBlocked);
@@ -103789,14 +112365,14 @@ ${n.origin}${also}${echo}` };
   }
   /** §12: "{culture} · {kind or Deities}" or "{culture} · Sacred places", described by the sentence. */
   openSaveDeityPreset(places = false) {
-    var _a3, _b;
+    var _a4, _b2;
     const state = places ? sacredPlaceAsDeityState(this.sacredPlaceState) : this.deityState;
-    const culture = (_b = (_a3 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const kind = DEITY_KINDS.find((k) => k.key === state.kind);
     const name = [culture, places ? "Sacred places" : kind ? kind.menu : "Deities"].join(" \xB7 ");
     const description = deitySentenceText(places ? sacredPlaceSentence(this.sacredPlaceState) : deitySentence(state, this.bynamePacks.map((p) => p.name)));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4, _b2;
+      var _a5, _b3;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -103806,8 +112382,8 @@ ${n.origin}${also}${echo}` };
         setting: "",
         description: text,
         culture: state.culture,
-        deityKind: (_a4 = state.kind) != null ? _a4 : "any",
-        domain: (_b2 = state.domain) != null ? _b2 : "any",
+        deityKind: (_a5 = state.kind) != null ? _a5 : "any",
+        domain: (_b3 = state.domain) != null ? _b3 : "any",
         gender: state.gender,
         era: state.era,
         fantastic: state.fantastic,
@@ -103863,8 +112439,8 @@ ${n.origin}${also}${echo}` };
   }
   /** GN §14: the finished strings only; history "events and eras · {era} · {culture}…". */
   async runEvents(state = this.eventState, label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const guards = await this.loadSettlementSafeguards(EVENT_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, eventWordBlocked);
     const result = generateEventNames({
@@ -103891,14 +112467,14 @@ ${n.origin}${also}${echo}` };
   }
   /** §12: "{culture} · {kind or events and eras}", described by the sentence. */
   openSaveEventPreset() {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.eventState;
-    const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const kind = EVENT_KINDS.find((k) => k.key === state.kind);
     const name = [culture, kind ? kind.menu : SECTION_LABELS.eventNames].join(" \xB7 ");
     const description = eventSentenceText(eventSentence(state));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4;
+      var _a5;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -103908,7 +112484,7 @@ ${n.origin}${also}${echo}` };
         setting: "",
         description: text,
         culture: state.culture,
-        eventKind: (_a4 = state.kind) != null ? _a4 : "any",
+        eventKind: (_a5 = state.kind) != null ? _a5 : "any",
         era: state.era,
         fantastic: state.fantastic,
         scale: state.scale,
@@ -103962,8 +112538,8 @@ ${n.origin}${also}${echo}` };
   }
   /** GN §14: the finished strings only; history "money and coins · {era} · {culture}…". A valued coinage's source line is a notice, not a name. */
   async runMoney(state = this.moneyState, label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const guards = await this.loadSettlementSafeguards(MONEY_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, moneyWordBlocked);
     const result = generateMoneyNames({
@@ -103991,14 +112567,14 @@ ${n.origin}${also}${echo}` };
   }
   /** §14: "{culture} · {kind or Money}", described by the sentence. */
   openSaveMoneyPreset() {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.moneyState;
-    const culture = (_b = (_a3 = findMoneyCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = findMoneyCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const kind = findMoneyKind(state.kind);
     const name = [culture, kind ? kind.menu : "Money"].join(" \xB7 ");
     const description = moneySentenceText(moneySentence(state));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4;
+      var _a5;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -104008,7 +112584,7 @@ ${n.origin}${also}${echo}` };
         setting: "",
         description: text,
         culture: state.culture,
-        moneyKind: (_a4 = state.kind) != null ? _a4 : "any",
+        moneyKind: (_a5 = state.kind) != null ? _a5 : "any",
         era: state.era,
         fantastic: state.fantastic,
         value: state.value,
@@ -104033,6 +112609,143 @@ ${n.origin}${also}${echo}` };
       return;
     }
     await this.runMoney(this.moneyPresetState(money), `${SECTION_LABELS.moneyNames} \xB7 ${money.packName}`, problems);
+  }
+  // ── Calendars and festivals, and sky lore (Time and sky brief) ───────────
+  timeStateOf(module2) {
+    return module2 === "sky" ? this.skyState : this.calendarState;
+  }
+  setTimeState(module2, state) {
+    if (module2 === "sky") this.skyState = state;
+    else this.calendarState = state;
+  }
+  timeLimits(custom) {
+    return this.realmLimits(custom);
+  }
+  timePresetState(p) {
+    const limits = this.timeLimits(this.customBiomes);
+    return normaliseTime(p.timeModule, {
+      culture: p.culture,
+      kind: p.kind,
+      era: p.era,
+      fantastic: p.fantastic,
+      biome: p.biome === "homeland" ? void 0 : p.biome,
+      start: p.start,
+      words: p.words,
+      tone: p.tone,
+      people: p.people,
+      series: p.series
+    }, limits);
+  }
+  /** §2: the sentence; the biome menu reads the biome packs afresh when it opens. */
+  renderTimeSentence(row, section) {
+    const module2 = section === "skyNames" ? "sky" : "calendar";
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    const segments = (custom) => timeSentence(module2, this.timeStateOf(module2), this.timeLimits(custom));
+    for (const segment2 of segments(this.customBiomes)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(
+        sentence2,
+        segment2.text,
+        segment2.title,
+        async () => {
+          const found = segments(await this.loadCustomBiomes()).find((s) => typeof s !== "string" && s.field === segment2.field);
+          return typeof found === "object" ? found.choices : segment2.choices;
+        },
+        segment2.current,
+        (id) => {
+          const before = this.timeStateOf(module2);
+          const after = chooseTime(module2, before, segment2.field, id, this.timeLimits(this.customBiomes));
+          this.setTimeState(module2, after);
+          const notice = timeBiomeResetNotice(before, after);
+          if (notice) this.setStatus(notice);
+        }
+      );
+    }
+  }
+  /** GN §14: the finished names; the season and leap tags are display only, and the system line a notice. History "calendars and festivals · …" / "sky lore · …". */
+  async runTime(module2, state = this.timeStateOf(module2), label, problems = []) {
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
+    const guards = await this.loadSettlementSafeguards(TIME_SKY.safeguards);
+    const vocab = await this.loadSettlementVocabulary(guards.safeguards, timeWordBlocked);
+    const custom = await this.loadCustomBiomes();
+    const limits = this.timeLimits(custom);
+    const biome = state.biome ? findBiome(state.biome, custom) : void 0;
+    const result = generateTimeSkyNames({
+      culture: state.culture,
+      kind: state.kind,
+      era: state.era,
+      fantastic: state.fantastic,
+      biome,
+      start: state.start,
+      words: state.words,
+      tone: state.tone,
+      people: state.people,
+      series: state.series,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards,
+      vocab: vocab.vocab
+    });
+    this.currentSeed = result.seed;
+    this.renderResults(
+      result.names.map((n) => n.text),
+      void 0,
+      result.names.map((n) => n.tag)
+    );
+    await this.recordGenerationHistory(result.names.length, label != null ? label : timeHistoryLabel(module2, state, limits));
+    this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
+  }
+  /** §14: "{culture} · {kind menu}", described by the sentence. */
+  openSaveTimePreset(module2) {
+    var _a4, _b2, _c2, _d2;
+    const state = this.timeStateOf(module2);
+    const limits = this.timeLimits(this.customBiomes);
+    const culture = (_b2 = (_a4 = findTimeCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
+    const name = [culture, (_d2 = (_c2 = findTimeKind(state.kind)) == null ? void 0 : _c2.menu) != null ? _d2 : state.kind].join(" \xB7 ");
+    const description = timeSentenceText(timeSentence(module2, state, limits));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a5;
+      if (!presetName) {
+        new import_obsidian14.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        timeModule: module2,
+        culture: state.culture,
+        kind: state.kind,
+        era: state.era,
+        fantastic: state.fantastic,
+        biome: (_a5 = state.biome) != null ? _a5 : "homeland",
+        start: state.start,
+        words: state.words,
+        tone: state.tone,
+        people: state.people,
+        series: state.series
+      });
+      return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).time);
+    }).open();
+  }
+  /** §14: a time or sky preset, run as the module runs; history "calendars and festivals · {preset}". */
+  async runTimePreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian14.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { time, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!time) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.loadCustomBiomes();
+    await this.runTime(time.timeModule, this.timePresetState(time), `${SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"]} \xB7 ${time.packName}`, problems);
   }
   // ── Settlement kit (Settlement kit brief) ────────────────────────────────
   kitPresetState(p) {
@@ -104084,8 +112797,8 @@ ${n.origin}${also}${echo}` };
   }
   /** §6: a new kit; history "settlement kit · {name} · {size} · {era} · {culture}" with the whole block. */
   async runKit(state = this.kitState, label, problems = [], seed) {
-    var _a3;
-    const seedOverride = seed != null ? seed : this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = seed != null ? seed : this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const inputs = await this.kitInputs();
     const kit = generateKit({ ...state, seed: seedOverride, safeguards: inputs.safeguards, vocab: inputs.vocab.vocab });
     this.currentSeed = kit.options.seed;
@@ -104106,8 +112819,8 @@ ${n.origin}${also}${echo}` };
   }
   /** §9.3: the settlements folder: the setting, or the names folder plus /Settlements. */
   settlementsFolder() {
-    var _a3;
-    const set = (_a3 = this.plugin.settings.settlementsFolder) == null ? void 0 : _a3.trim();
+    var _a4;
+    const set = (_a4 = this.plugin.settings.settlementsFolder) == null ? void 0 : _a4.trim();
     return (0, import_obsidian14.normalizePath)(set || `${this.getFolderPath() || DEFAULT_NAMES_FOLDER}/Settlements`);
   }
   /** §9.3: "{town}.md" (or "{town} 2.md" …) with frontmatter and the block; never overwrites; opens it. */
@@ -104198,13 +112911,13 @@ ${n.origin}${also}${echo}` };
   }
   /** §11: "{culture} · settlement kit", described by the sentence. */
   openSaveKitPreset() {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.kitState;
-    const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const name = [culture, SECTION_LABELS.settlementKit].join(" \xB7 ");
     const description = kitSentenceText(kitSentence(state));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4;
+      var _a5;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -104214,7 +112927,7 @@ ${n.origin}${also}${echo}` };
         setting: "",
         description: text,
         culture: state.culture,
-        region: (_a4 = state.region) != null ? _a4 : "all",
+        region: (_a5 = state.region) != null ? _a5 : "all",
         era: state.era,
         fantastic: state.fantastic,
         size: state.size,
@@ -104271,8 +112984,8 @@ ${n.origin}${also}${echo}` };
   }
   /** GN §14: the finished strings only; history "buildings and landmarks · {era} · {culture}…". */
   async runBuildings(state = this.buildingState, label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const guards = await this.loadSettlementSafeguards(BUILDING_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, buildingWordBlocked);
     const result = generateBuildingNames({
@@ -104300,14 +113013,14 @@ ${n.origin}${also}${echo}` };
   }
   /** §13: "{culture} · {kind or buildings and landmarks}", described by the sentence. */
   openSaveBuildingPreset() {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.buildingState;
-    const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const kind = BUILDING_KINDS.find((k) => k.key === state.kind);
     const name = [culture, kind ? kind.menu : SECTION_LABELS.buildingNames].join(" \xB7 ");
     const description = buildingSentenceText(buildingSentence(state));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4, _b2;
+      var _a5, _b3;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -104317,8 +113030,8 @@ ${n.origin}${also}${echo}` };
         setting: "",
         description: text,
         culture: state.culture,
-        region: (_a4 = state.region) != null ? _a4 : "all",
-        buildingKind: (_b2 = state.kind) != null ? _b2 : "any",
+        region: (_a5 = state.region) != null ? _a5 : "all",
+        buildingKind: (_b3 = state.kind) != null ? _b3 : "any",
         era: state.era,
         fantastic: state.fantastic,
         buildingSetting: state.setting,
@@ -104375,8 +113088,8 @@ ${n.origin}${also}${echo}` };
   }
   /** GN §14: the finished strings only; history "streets and districts · {era} · {culture}…". */
   async runStreets(state = this.streetState, label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const guards = await this.loadSettlementSafeguards(STREET_DATA.safeguards);
     const routeGuards = await this.loadSettlementSafeguards();
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, streetWordBlocked);
@@ -104409,14 +113122,14 @@ ${n.origin}${also}${echo}` };
   }
   /** §14: "{culture} · {kind or streets and districts}", described by the sentence. */
   openSaveStreetPreset() {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.streetState;
-    const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const kind = STREET_KINDS.find((k) => k.key === state.kind);
     const name = [culture, kind ? kind.menu : SECTION_LABELS.streetNames].join(" \xB7 ");
     const description = streetSentenceText(streetSentence(state));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4, _b2, _c;
+      var _a5, _b3, _c2;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -104426,9 +113139,9 @@ ${n.origin}${also}${echo}` };
         setting: "",
         description: text,
         culture: state.culture,
-        region: (_a4 = state.region) != null ? _a4 : "all",
-        streetKind: (_b2 = state.kind) != null ? _b2 : "any",
-        function: (_c = state.function) != null ? _c : "any",
+        region: (_a5 = state.region) != null ? _a5 : "all",
+        streetKind: (_b3 = state.kind) != null ? _b3 : "any",
+        function: (_c2 = state.function) != null ? _c2 : "any",
         era: state.era,
         fantastic: state.fantastic,
         size: state.size,
@@ -104456,14 +113169,14 @@ ${n.origin}${also}${echo}` };
   }
   /** §13: "{culture} · {kind or route names}", described by the sentence. */
   openSaveRoutePreset() {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.routeState;
-    const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const kind = findRouteKind(state.kind);
     const name = [culture, kind ? kind.menu : SECTION_LABELS.routeNames].join(" \xB7 ");
     const description = routeSentenceText(routeSentence(state));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4, _b2;
+      var _a5, _b3;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -104473,8 +113186,8 @@ ${n.origin}${also}${echo}` };
         setting: "",
         description: text,
         culture: state.culture,
-        region: (_a4 = state.region) != null ? _a4 : "all",
-        routeKind: (_b2 = state.kind) != null ? _b2 : "any",
+        region: (_a5 = state.region) != null ? _a5 : "all",
+        routeKind: (_b3 = state.kind) != null ? _b3 : "any",
         era: state.era,
         fantastic: state.fantastic,
         tone: state.tone,
@@ -104503,8 +113216,8 @@ ${n.origin}${also}${echo}` };
   // ── Seas and coasts (Seas and coasts brief) ───────────────────────────────
   /** §2: a waters module's choices, session only. */
   watersState(module2) {
-    var _a3, _b;
-    return (_b = (_a3 = this.watersStates)[module2]) != null ? _b : _a3[module2] = defaultWatersState(module2);
+    var _a4, _b2;
+    return (_b2 = (_a4 = this.watersStates)[module2]) != null ? _b2 : _a4[module2] = defaultWatersState(module2);
   }
   watersPresetState(p) {
     return chooseWaters(
@@ -104543,8 +113256,8 @@ ${n.origin}${also}${echo}` };
   }
   /** GN §14: the finished strings only; history "{module} · {era or scale} · {culture}…". */
   async runWaters(module2, state = this.watersState(module2), label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const guards = await this.loadSettlementSafeguards({ block: module2 === "hyperspaceCharts" ? WATERS_DATA.safeguards.hyper : WATERS_DATA.safeguards.earthly, flag: [], flagListBlocks: false });
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, watersWordBlocked);
     const result = generateWatersNames({
@@ -104577,13 +113290,13 @@ ${n.origin}${also}${echo}` };
   }
   /** §15: "{culture} · {module}", described by the sentence. */
   openSaveWatersPreset(module2) {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.watersState(module2);
-    const culture = (_b = (_a3 = findRouteCulture(state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = findRouteCulture(state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const name = [culture, SECTION_LABELS[module2]].join(" \xB7 ");
     const description = watersSentenceText(watersSentence(state, module2));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4, _b2, _c, _d;
+      var _a5, _b3, _c2, _d2;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -104594,22 +113307,22 @@ ${n.origin}${also}${echo}` };
         description: text,
         watersModule: module2,
         culture: state.culture,
-        waterKind: (_a4 = state.kind) != null ? _a4 : "any",
+        waterKind: (_a5 = state.kind) != null ? _a5 : "any",
         era: state.era,
         where: state.where,
         fantastic: state.fantastic,
-        region: (_b2 = state.region) != null ? _b2 : "all",
-        biome: (_c = state.biome) != null ? _c : "any",
+        region: (_b3 = state.region) != null ? _b3 : "all",
+        biome: (_c2 = state.biome) != null ? _c2 : "any",
         tone: state.tone,
         people: state.people,
         series: state.series,
-        scale: (_d = state.scale) != null ? _d : "any",
+        scale: (_d2 = state.scale) != null ? _d2 : "any",
         medium: state.medium,
         register: state.register
       });
       return this.writePreset(presetName, content, (existing) => {
-        var _a5;
-        return ((_a5 = parseModulePreset(existing, presetName).waters) == null ? void 0 : _a5.watersModule) === module2;
+        var _a6;
+        return ((_a6 = parseModulePreset(existing, presetName).waters) == null ? void 0 : _a6.watersModule) === module2;
       });
     }).open();
   }
@@ -104630,8 +113343,8 @@ ${n.origin}${also}${echo}` };
   // ── Ships and spacecraft (Ships brief) ────────────────────────────────────
   /** §2.4: a vessel module's choices, session only. */
   vesselState(module2) {
-    var _a3, _b;
-    return (_b = (_a3 = this.vesselStates)[module2]) != null ? _b : _a3[module2] = defaultVesselState(module2);
+    var _a4, _b2;
+    return (_b2 = (_a4 = this.vesselStates)[module2]) != null ? _b2 : _a4[module2] = defaultVesselState(module2);
   }
   vesselPresetState(p) {
     return {
@@ -104662,8 +113375,8 @@ ${n.origin}${also}${echo}` };
   }
   /** GN §14: the finished strings only; history "{module} · {setting} · {culture} · {technology}…". */
   async runVessels(module2, state = this.vesselState(module2), label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const guards = await this.loadVesselSafeguards();
     const result = generateVesselNames({
       module: module2,
@@ -104692,10 +113405,10 @@ ${n.origin}${also}${echo}` };
   }
   /** §14.5: every vessel safeguard pack in the names folder, merged with the built-in lists. */
   async loadVesselSafeguards() {
-    var _a3;
+    var _a4;
     const folder = this.app.vault.getFolderByPath((0, import_obsidian14.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
-    for (const child of (_a3 = folder == null ? void 0 : folder.children) != null ? _a3 : []) {
+    for (const child of (_a4 = folder == null ? void 0 : folder.children) != null ? _a4 : []) {
       if (!(child instanceof import_obsidian14.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isVesselSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
@@ -104707,14 +113420,14 @@ ${n.origin}${also}${echo}` };
   }
   /** §15: "{culture} · {function or module}", described by the sentence. */
   openSaveVesselPreset(module2) {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.vesselState(module2);
-    const culture = (_b = (_a3 = VESSEL_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = VESSEL_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const fn = moduleFunctions(module2).find((f) => f.key === state.function);
     const name = [culture, fn ? fn.menu : SECTION_LABELS[module2]].join(" \xB7 ");
     const description = vesselSentenceText(vesselSentence(state, module2));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4;
+      var _a5;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -104725,7 +113438,7 @@ ${n.origin}${also}${echo}` };
         description: text,
         vesselModule: module2,
         culture: state.culture,
-        function: (_a4 = state.function) != null ? _a4 : "any",
+        function: (_a5 = state.function) != null ? _a5 : "any",
         technology: state.technology,
         genre: state.genre,
         fantastic: state.fantastic,
@@ -104736,8 +113449,8 @@ ${n.origin}${also}${echo}` };
         series: state.series && !!state.function
       });
       return this.writePreset(presetName, content, (existing) => {
-        var _a5;
-        return ((_a5 = parseModulePreset(existing, presetName).vessel) == null ? void 0 : _a5.vesselModule) === module2;
+        var _a6;
+        return ((_a6 = parseModulePreset(existing, presetName).vessel) == null ? void 0 : _a6.vesselModule) === module2;
       });
     }).open();
   }
@@ -104758,17 +113471,17 @@ ${n.origin}${also}${echo}` };
   // ── Bynames and titles (Bynames brief) ────────────────────────────────────
   /** §2.5: a bynames module's choices, session only. */
   bynameState(module2) {
-    var _a3, _b;
-    return (_b = (_a3 = this.bynameStates)[module2]) != null ? _b : _a3[module2] = { ...DEFAULT_BYNAME_STATE };
+    var _a4, _b2;
+    return (_b2 = (_a4 = this.bynameStates)[module2]) != null ? _b2 : _a4[module2] = { ...DEFAULT_BYNAME_STATE };
   }
   /** §2.2: the vault's people packs (not place packs, word lists or recipes) and their `##` headings. */
   async loadBynamePacks() {
     const index = await this.scanFolderPacks();
     const packs = index.filter((e) => !e.parsed.template && ["breakdownPack", "listPack", "compoundPack", "mixPack"].includes(e.parsed.packType)).map((e) => {
-      var _a3, _b;
+      var _a4, _b2;
       return {
         name: e.path.split("/").pop().replace(/\.md$/i, ""),
-        headings: e.parsed.packType === "compoundPack" ? compoundTitles(compoundPartData(e.parsed)) : ((_b = (_a3 = e.parsed.sectioned) == null ? void 0 : _a3.sections) != null ? _b : []).map((s) => s.name)
+        headings: e.parsed.packType === "compoundPack" ? compoundTitles(compoundPartData(e.parsed)) : ((_b2 = (_a4 = e.parsed.sectioned) == null ? void 0 : _a4.sections) != null ? _b2 : []).map((s) => s.name)
       };
     }).sort((a, b) => a.name.localeCompare(b.name));
     this.bynamePacks = packs;
@@ -104789,9 +113502,9 @@ ${n.origin}${also}${echo}` };
       }
       const choices = segment2.field === "pack" ? async () => (await this.loadBynamePacks()).map((p) => ({ id: p.name, label: p.name })) : () => segment2.choices;
       this.sentenceLink(sentence2, segment2.text, segment2.title, choices, segment2.current, (id) => {
-        var _a3;
+        var _a4;
         const next = chooseByname(this.bynameState(module2), segment2.field, id, module2);
-        if (segment2.field === "source" && next.source === "pack" && !next.pack) next.pack = (_a3 = this.bynamePacks[0]) == null ? void 0 : _a3.name;
+        if (segment2.field === "source" && next.source === "pack" && !next.pack) next.pack = (_a4 = this.bynamePacks[0]) == null ? void 0 : _a4.name;
         this.bynameStates[module2] = next;
         if (segment2.field === "source" && next.source === "pack") void this.loadBynamePacks().then(() => this.renderContextRow());
       });
@@ -104799,16 +113512,16 @@ ${n.origin}${also}${echo}` };
   }
   /** §2.4: the pack's draw through the word-list `//` path, with the section by role and sex. */
   async bynameDraw(state) {
-    var _a3, _b, _c, _d;
+    var _a4, _b2, _c2, _d2;
     if (state.source !== "pack") return { notices: [] };
     const packs = await this.loadBynamePacks();
-    const name = (_b = state.pack) != null ? _b : (_a3 = packs[0]) == null ? void 0 : _a3.name;
+    const name = (_b2 = state.pack) != null ? _b2 : (_a4 = packs[0]) == null ? void 0 : _a4.name;
     if (!name) return { notices: ["No name packs found; placeholders used."] };
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian14.normalizePath)(`${folder}/${name}.md`));
     if (!draw2) return { notices, packName: name };
-    const headings = (_d = (_c = packs.find((p) => p.name === name)) == null ? void 0 : _c.headings) != null ? _d : [];
+    const headings = (_d2 = (_c2 = packs.find((p) => p.name === name)) == null ? void 0 : _c2.headings) != null ? _d2 : [];
     return {
       draw: (role, sex, rng) => draw2(sectionRequest(state, headings, role, sex), "whole", rng),
       notices,
@@ -104817,8 +113530,8 @@ ${n.origin}${also}${echo}` };
   }
   /** §13: the finished strings only; history "{module} · {setting} · {culture}…". */
   async runBynames(module2, state = this.bynameState(module2), label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const guards = await this.loadBynameSafeguards();
     const pack = await this.bynameDraw(state);
     const result = generateBynames({
@@ -104850,10 +113563,10 @@ ${n.origin}${also}${echo}` };
   }
   /** §11.7: every byname safeguard pack in the names folder, merged with the built-in lists. */
   async loadBynameSafeguards() {
-    var _a3;
+    var _a4;
     const folder = this.app.vault.getFolderByPath((0, import_obsidian14.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
-    for (const child of (_a3 = folder == null ? void 0 : folder.children) != null ? _a3 : []) {
+    for (const child of (_a4 = folder == null ? void 0 : folder.children) != null ? _a4 : []) {
       if (!(child instanceof import_obsidian14.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isBynameSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
@@ -104865,14 +113578,14 @@ ${n.origin}${also}${echo}` };
   }
   /** §12: "{culture} · {kind or module}", described by the sentence. */
   openSaveBynamePreset(module2) {
-    var _a3, _b;
+    var _a4, _b2;
     const state = this.bynameState(module2);
-    const culture = (_b = (_a3 = BYNAME_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a3.label) != null ? _b : "General";
+    const culture = (_b2 = (_a4 = BYNAME_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a4.label) != null ? _b2 : "General";
     const kind = moduleKinds(module2).find((k) => k.key === state.kind);
     const name = [culture, kind ? kind.menu : SECTION_LABELS[module2]].join(" \xB7 ");
     const description = bynameSentenceText(bynameSentence(state, module2, this.bynamePacks));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4, _b2;
+      var _a5, _b3;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -104883,7 +113596,7 @@ ${n.origin}${also}${echo}` };
         description: text,
         bynameModule: module2,
         culture: state.culture,
-        kind: (_a4 = state.kind) != null ? _a4 : "any",
+        kind: (_a5 = state.kind) != null ? _a5 : "any",
         genre: state.genre,
         fantastic: state.fantastic,
         tone: state.tone,
@@ -104892,11 +113605,11 @@ ${n.origin}${also}${echo}` };
         length: state.length,
         source: state.source,
         ...state.source === "pack" && state.pack ? { pack: state.pack } : {},
-        section: (_b2 = state.section) != null ? _b2 : "gender"
+        section: (_b3 = state.section) != null ? _b3 : "gender"
       });
       return this.writePreset(presetName, content, (existing) => {
-        var _a5;
-        return ((_a5 = parseModulePreset(existing, presetName).byname) == null ? void 0 : _a5.bynameModule) === module2;
+        var _a6;
+        return ((_a6 = parseModulePreset(existing, presetName).byname) == null ? void 0 : _a6.bynameModule) === module2;
       });
     }).open();
   }
@@ -104931,15 +113644,15 @@ ${n.origin}${also}${echo}` };
   }
   /** Presets brief §8.1: the Save as preset button, for the modules that have presets. */
   refreshSavePreset() {
-    var _a3;
+    var _a4;
     const section = this.activeSection;
-    (_a3 = this.savePresetButton) == null ? void 0 : _a3.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "deityNames" || section === "sacredPlaces" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+    (_a4 = this.savePresetButton) == null ? void 0 : _a4.toggle(
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || section === "deityNames" || section === "sacredPlaces" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
   async openSavePreset() {
-    var _a3;
+    var _a4;
     const groupFamily = familyForSection(this.activeSection);
     if (groupFamily) {
       this.openSaveGroupPreset(groupFamily);
@@ -104989,6 +113702,10 @@ ${n.origin}${also}${echo}` };
       this.openSaveMoneyPreset();
       return;
     }
+    if (this.activeSection === "calendarNames" || this.activeSection === "skyNames") {
+      this.openSaveTimePreset(this.activeSection === "skyNames" ? "sky" : "calendar");
+      return;
+    }
     if (this.activeSection === "deityNames" || this.activeSection === "sacredPlaces") {
       this.openSaveDeityPreset(this.activeSection === "sacredPlaces");
       return;
@@ -104999,12 +113716,12 @@ ${n.origin}${also}${echo}` };
     }
     const custom = await this.loadCustomBiomes();
     const state = this.tribalState();
-    const tradition = (_a3 = findTradition(state.tradition)) != null ? _a3 : TRIBAL_TRADITIONS[0];
+    const tradition = (_a4 = findTradition(state.tradition)) != null ? _a4 : TRIBAL_TRADITIONS[0];
     const biome = findBiome(state.biome, custom);
     const name = `${tradition.label} \xB7 ${biome ? biomeInline(biome) : "homeland"}`;
     const description = tribalSentenceText(tribalSentence(state, this.tribalLimits(custom)));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4, _b;
+      var _a5, _b2;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -105017,8 +113734,8 @@ ${n.origin}${also}${echo}` };
         biome: biome ? biome.custom ? `[[${biome.label}]]` : biome.id : "homeland",
         terrain: state.terrain || "any",
         register: state.register,
-        groupType: (_a4 = state.groupType) != null ? _a4 : "any",
-        perspective: (_b = state.perspective) != null ? _b : "any",
+        groupType: (_a5 = state.groupType) != null ? _a5 : "any",
+        perspective: (_b2 = state.perspective) != null ? _b2 : "any",
         hostile: !!state.hostile
       });
       return this.writePreset(presetName, content, (existing) => isModulePresetContent(existing) && !!parseModulePreset(existing, presetName).preset);
@@ -105029,7 +113746,7 @@ ${n.origin}${also}${echo}` };
    * recipe the module builds; a biome pack is kept as a link.
    */
   async openSaveRecipePreset() {
-    var _a3;
+    var _a4;
     const custom = await this.loadCustomBiomes();
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (!colonialPart && !(this.activeSection === "placeShapes" && this.placeIsBritain())) return;
@@ -105047,7 +113764,7 @@ ${n.origin}${also}${echo}` };
       const aliens = !!(found == null ? void 0 : found.space) && this.colonialAliens[colonialPart];
       recipe = colonialPlaceNamesRecipe(part, tradition, context, biome, land.terrain, aliens);
       const t = COLONIAL_TRADITIONS.find((x) => x.id === (tradition != null ? tradition : "general"));
-      const contextLabel = (_a3 = colonialContexts(colonialPart).find((c) => c.id === context)) == null ? void 0 : _a3.label.toLowerCase();
+      const contextLabel = (_a4 = colonialContexts(colonialPart).find((c) => c.id === context)) == null ? void 0 : _a4.label.toLowerCase();
       name = [traditionLabel(colonialPart, t.id, t.label), contextLabel].filter(Boolean).join(" \xB7 ");
       description = wizardSentenceText(part, { tradition: t.id, context, biome, terrain: land.terrain, aliens }, custom);
     } else {
@@ -105070,14 +113787,14 @@ ${text}
   }
   /** Group brief §13: "{tradition} · {type or family} · {setting}", described by the sentence. */
   openSaveGroupPreset(family) {
-    var _a3;
+    var _a4;
     const state = this.groupState(family);
-    const tradition = (_a3 = findTradition(state.tradition)) != null ? _a3 : TRIBAL_TRADITIONS[0];
+    const tradition = (_a4 = findTradition(state.tradition)) != null ? _a4 : TRIBAL_TRADITIONS[0];
     const type = family.types.find((t) => t.key === state.type);
     const name = [tradition.label, type ? type.menu : family.label, SETTING_PHRASES[groupSetting(state.genre, state.fantastic)]].join(" \xB7 ");
     const description = groupSentenceText(groupSentence(state, family));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
-      var _a4;
+      var _a5;
       if (!presetName) {
         new import_obsidian14.Notice("nameForge: give the preset a name.");
         return false;
@@ -105088,7 +113805,7 @@ ${text}
         description: text,
         family: family.key,
         tradition: state.tradition,
-        groupType: (_a4 = state.type) != null ? _a4 : "any",
+        groupType: (_a5 = state.type) != null ? _a5 : "any",
         genre: state.genre,
         fantastic: state.genre === "scifi" ? false : state.fantastic,
         form: state.form,
@@ -105100,8 +113817,8 @@ ${text}
         ...effectiveScale(state) !== "any" ? { scale: effectiveScale(state) } : {}
       });
       return this.writePreset(presetName, content, (existing) => {
-        var _a5;
-        return ((_a5 = parseModulePreset(existing, presetName).group) == null ? void 0 : _a5.family) === family.key;
+        var _a6;
+        return ((_a6 = parseModulePreset(existing, presetName).group) == null ? void 0 : _a6.family) === family.key;
       });
     }).open();
   }
@@ -105143,8 +113860,8 @@ ${text}
   }
   /** Group brief §2: a group-name module's choices (session only), per family. */
   groupState(family) {
-    var _a3, _b, _c;
-    return (_c = (_a3 = this.groupStates)[_b = family.key]) != null ? _c : _a3[_b] = { ...DEFAULT_GROUP_STATE };
+    var _a4, _b2, _c2;
+    return (_c2 = (_a4 = this.groupStates)[_b2 = family.key]) != null ? _c2 : _a4[_b2] = { ...DEFAULT_GROUP_STATE };
   }
   /** Group brief §2: the module's sentence, rendered as tribes and kin groups' is. */
   renderGroupSentence(row, family) {
@@ -105162,8 +113879,8 @@ ${text}
   }
   /** Group brief §14: names only, no details; history "{module} · {setting} · {tradition}". */
   async runGroupNames(family, state = this.groupState(family), label, problems = []) {
-    var _a3;
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    var _a4;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     const guards = await this.loadGroupSafeguards();
     let result;
     try {
@@ -105199,10 +113916,10 @@ ${text}
   }
   /** Group brief §12.6: every group safeguard pack in the names folder, merged with the built-in lists. */
   async loadGroupSafeguards() {
-    var _a3;
+    var _a4;
     const folder = this.app.vault.getFolderByPath((0, import_obsidian14.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
-    for (const child of (_a3 = folder == null ? void 0 : folder.children) != null ? _a3 : []) {
+    for (const child of (_a4 = folder == null ? void 0 : folder.children) != null ? _a4 : []) {
       if (!(child instanceof import_obsidian14.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isGroupSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
@@ -105214,10 +113931,10 @@ ${text}
   }
   /** Land brief §10: every tribal safeguard pack in the names folder, merged with the built-in lists. */
   async loadSafeguards() {
-    var _a3;
+    var _a4;
     const folder = this.app.vault.getFolderByPath((0, import_obsidian14.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
-    for (const child of (_a3 = folder == null ? void 0 : folder.children) != null ? _a3 : []) {
+    for (const child of (_a4 = folder == null ? void 0 : folder.children) != null ? _a4 : []) {
       if (!(child instanceof import_obsidian14.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
@@ -105276,8 +113993,8 @@ ${text}
   }
   /** The river options button: river names, and place names' British river names. */
   refreshRiverOptions() {
-    var _a3;
-    (_a3 = this.riverOptionsButton) == null ? void 0 : _a3.toggle(this.activeSection === "riverNames" || this.activeSection === "placeShapes" && this.placeIsRivers());
+    var _a4;
+    (_a4 = this.riverOptionsButton) == null ? void 0 : _a4.toggle(this.activeSection === "riverNames" || this.activeSection === "placeShapes" && this.placeIsRivers());
   }
   /** Land brief §8.1: river names' options menu. */
   openRiverOptions(evt) {
@@ -105352,8 +114069,8 @@ ${text}
   async enterAgeingSection() {
     const index = await this.scanFolderPacks();
     this.ageingPacks = index.filter((entry) => !entry.parsed.template).map((entry) => {
-      var _a3;
-      const label = entry.parsed.packName || ((_a3 = entry.path.split("/").pop()) == null ? void 0 : _a3.replace(/\.md$/i, "")) || entry.path;
+      var _a4;
+      const label = entry.parsed.packName || ((_a4 = entry.path.split("/").pop()) == null ? void 0 : _a4.replace(/\.md$/i, "")) || entry.path;
       return { path: entry.path, label, reason: this.targetPackReason(entry, index) };
     }).sort((a, b) => a.label.localeCompare(b.label));
     if (this.ageingTargetPath && !this.ageingPacks.some((p) => p.path === this.ageingTargetPath && !p.reason)) {
@@ -105378,7 +114095,7 @@ ${text}
    * names for Breakdown, List and Place; the weighted blend for Mix. Returns a reason on failure.
    */
   ageingTargetNames(entry, index) {
-    var _a3;
+    var _a4;
     const { parsed } = entry;
     if (parsed.packType === "mixPack") {
       const resolved = resolveMixSources((0, import_obsidian14.normalizePath)(entry.path), parsed, index);
@@ -105387,12 +114104,12 @@ ${text}
       return { names: distinct, corpus: buildWeightedCorpus(resolved.sources), endings: [] };
     }
     const names = extractNamesFromMarkdown(parsed.names.join("\n"));
-    const endings = parsed.packType === "placePack" && ((_a3 = parsed.placeGenerator) != null ? _a3 : "breakdown") === "breakdown" ? PlaceNameModel.build(names).endings.map((e) => e.suffix).filter((x) => x) : [];
+    const endings = parsed.packType === "placePack" && ((_a4 = parsed.placeGenerator) != null ? _a4 : "breakdown") === "breakdown" ? PlaceNameModel.build(names).endings.map((e) => e.suffix).filter((x) => x) : [];
     return { names, corpus: names, endings };
   }
   async runAgeing() {
-    var _a3, _b, _c, _d, _e, _f, _g;
-    const source = (_b = (_a3 = this.ageingSourceInput) == null ? void 0 : _a3.value.trim()) != null ? _b : "";
+    var _a4, _b2, _c2, _d2, _e2, _f, _g;
+    const source = (_b2 = (_a4 = this.ageingSourceInput) == null ? void 0 : _a4.value.trim()) != null ? _b2 : "";
     const problem = validateSource(source);
     if (problem) {
       new import_obsidian14.Notice(`nameForge: ${problem}`);
@@ -105413,9 +114130,9 @@ ${text}
       new import_obsidian14.Notice(`nameForge: the target pack needs at least ${AGEING.minTargetNames} names.`);
       return;
     }
-    const seedOverride = this.seedLocked ? parseSeedInput((_c = this.seedInputEl) == null ? void 0 : _c.value) : void 0;
+    const seedOverride = this.seedLocked ? parseSeedInput((_c2 = this.seedInputEl) == null ? void 0 : _c2.value) : void 0;
     const seed = resolveSeed3(seedOverride);
-    const faithfulness = (_d = this.plugin.settings.faithfulness) != null ? _d : 2;
+    const faithfulness = (_d2 = this.plugin.settings.faithfulness) != null ? _d2 : 2;
     renderLoading(this.resultsEl, "Ageing\u2026");
     await waitForPaint();
     const result = ageName({
@@ -105432,15 +114149,15 @@ ${text}
     });
     this.currentSeed = seed;
     this.renderAgeingResults(result.candidates);
-    const packLabel2 = (_f = (_e = this.ageingPacks.find((p) => p.path === this.ageingTargetPath)) == null ? void 0 : _e.label) != null ? _f : "target pack";
+    const packLabel2 = (_f = (_e2 = this.ageingPacks.find((p) => p.path === this.ageingTargetPath)) == null ? void 0 : _e2.label) != null ? _f : "target pack";
     await this.recordAgeingHistory(`${source} \u2192 ${packLabel2} (depth ${this.ageingDepth}, count ${this.ageingCount})`);
     this.setStatus((_g = result.notice) != null ? _g : "");
   }
   async recordAgeingHistory(label) {
-    var _a3;
+    var _a4;
     if (this.currentSeed === null) return;
     const entry = { timestamp: formatHistoryTimestamp(/* @__PURE__ */ new Date()), seed: this.currentSeed, label };
-    this.plugin.settings.ageingHistory = [entry, ...(_a3 = this.plugin.settings.ageingHistory) != null ? _a3 : []].slice(0, MAX_HISTORY_ENTRIES);
+    this.plugin.settings.ageingHistory = [entry, ...(_a4 = this.plugin.settings.ageingHistory) != null ? _a4 : []].slice(0, MAX_HISTORY_ENTRIES);
     await this.plugin.saveSettings();
   }
   /** Ageing results: final name with its trail beneath, selectable and insertable like Generate's. */
@@ -105516,10 +114233,10 @@ ${text}
     update();
   }
   unmount() {
-    var _a3, _b;
+    var _a4, _b2;
     activeDocument.removeEventListener("click", this.handlePackDropdownOutsideClick);
     this.closePackDropdown();
-    (_a3 = this.rootEl) == null ? void 0 : _a3.empty();
+    (_a4 = this.rootEl) == null ? void 0 : _a4.empty();
     this.rootEl = null;
     this.resultsEl = null;
     this.statusEl = null;
@@ -105554,7 +114271,7 @@ ${text}
     this.isSecondBoxMenuOpen = false;
     this.setSecondBoxMenuOpen = () => {
     };
-    (_b = this.secondBoxObserver) == null ? void 0 : _b.disconnect();
+    (_b2 = this.secondBoxObserver) == null ? void 0 : _b2.disconnect();
     this.secondBoxObserver = null;
     this.quantityToggleEl = null;
     this.generatePillEl = null;
@@ -105567,7 +114284,7 @@ ${text}
   }
   /** Parks the active module's results, seed and status, then shows `section`'s (empty the first time). */
   swapSectionView(section) {
-    var _a3, _b;
+    var _a4, _b2;
     if (!this.rootEl || !this.resultsEl || section === this.activeSection) return;
     this.sectionViews.set(this.activeSection, {
       resultsEl: this.resultsEl,
@@ -105575,7 +114292,7 @@ ${text}
       seedLocked: this.seedLocked,
       seedInputEl: this.seedInputEl,
       seedLockButton: this.seedLockButton,
-      status: (_b = (_a3 = this.statusEl) == null ? void 0 : _a3.textContent) != null ? _b : ""
+      status: (_b2 = (_a4 = this.statusEl) == null ? void 0 : _a4.textContent) != null ? _b2 : ""
     });
     this.resultsEl.hide();
     const view = this.sectionViews.get(section);
@@ -105614,16 +114331,16 @@ ${text}
     }
   }
   openPackDropdown() {
-    var _a3, _b;
+    var _a4, _b2;
     this.isPackDropdownOpen = true;
-    (_a3 = this.packDropdownMenuEl) == null ? void 0 : _a3.show();
-    (_b = this.packDropdownTrigger) == null ? void 0 : _b.setAttribute("aria-expanded", "true");
+    (_a4 = this.packDropdownMenuEl) == null ? void 0 : _a4.show();
+    (_b2 = this.packDropdownTrigger) == null ? void 0 : _b2.setAttribute("aria-expanded", "true");
   }
   closePackDropdown() {
-    var _a3, _b;
+    var _a4, _b2;
     this.isPackDropdownOpen = false;
-    (_a3 = this.packDropdownMenuEl) == null ? void 0 : _a3.hide();
-    (_b = this.packDropdownTrigger) == null ? void 0 : _b.setAttribute("aria-expanded", "false");
+    (_a4 = this.packDropdownMenuEl) == null ? void 0 : _a4.hide();
+    (_b2 = this.packDropdownTrigger) == null ? void 0 : _b2.setAttribute("aria-expanded", "false");
   }
   updatePackDropdownTrigger(packPath, packType, subGenerator) {
     this.packTrigger = { path: packPath, type: packType, sub: subGenerator };
@@ -105631,8 +114348,8 @@ ${text}
   }
   /** The pack box label: the session hint while it is showing, otherwise the loaded pack. */
   renderPackTrigger() {
-    var _a3, _b;
-    (_a3 = this.packDropdownIconEl) == null ? void 0 : _a3.toggle(!this.showSessionHint);
+    var _a4, _b2;
+    (_a4 = this.packDropdownIconEl) == null ? void 0 : _a4.toggle(!this.showSessionHint);
     if (this.showSessionHint) {
       if (this.packDropdownLabelEl) this.packDropdownLabelEl.textContent = SESSION_HINT;
       return;
@@ -105641,7 +114358,7 @@ ${text}
     if (!pack) return;
     if (this.packDropdownIconEl) (0, import_obsidian14.setIcon)(this.packDropdownIconEl, packTypeIconId(pack.type, pack.sub));
     if (this.packDropdownLabelEl) {
-      this.packDropdownLabelEl.textContent = ((_b = pack.path.split("/").pop()) == null ? void 0 : _b.replace(/\.md$/i, "")) || pack.path;
+      this.packDropdownLabelEl.textContent = ((_b2 = pack.path.split("/").pop()) == null ? void 0 : _b2.replace(/\.md$/i, "")) || pack.path;
     }
   }
   clearSessionHint() {
@@ -105668,8 +114385,8 @@ ${text}
       return;
     }
     packs.forEach(({ path, packType, compoundGenerator }) => {
-      var _a3;
-      const label = ((_a3 = path.split("/").pop()) == null ? void 0 : _a3.replace(/\.md$/i, "")) || path;
+      var _a4;
+      const label = ((_a4 = path.split("/").pop()) == null ? void 0 : _a4.replace(/\.md$/i, "")) || path;
       const item2 = this.packDropdownMenuEl.createEl("button", {
         cls: "nameforge-modal__pack-dropdown-item",
         attr: { type: "button" }
@@ -105705,8 +114422,8 @@ ${text}
     return resolveNamesFolderPath(this.plugin.settings.folderPath, this.plugin.settings.namesFilePath);
   }
   getResolvedFilePath() {
-    var _a3;
-    const configured = (_a3 = this.plugin.settings.namesFilePath) == null ? void 0 : _a3.trim();
+    var _a4;
+    const configured = (_a4 = this.plugin.settings.namesFilePath) == null ? void 0 : _a4.trim();
     if (configured == null ? void 0 : configured.toLowerCase().endsWith(".md")) {
       return configured;
     }
@@ -105734,7 +114451,7 @@ ${text}
     });
   }
   async saveToConfiguredFile(namesText, templateOf, placeGenerator) {
-    var _a3;
+    var _a4;
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
@@ -105745,7 +114462,7 @@ ${text}
       this.setStatus("No names to save. Enter at least one name.");
       return;
     }
-    const sectioned = this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" || this.currentPackType === "placePack" ? (_a3 = parseNameSections(namesText)) != null ? _a3 : void 0 : void 0;
+    const sectioned = this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" || this.currentPackType === "placePack" ? (_a4 = parseNameSections(namesText)) != null ? _a4 : void 0 : void 0;
     const normalizedFilePath = (0, import_obsidian14.normalizePath)(filePath);
     const folderPath = normalizedFilePath.includes("/") ? normalizedFilePath.substring(0, normalizedFilePath.lastIndexOf("/")) : "";
     if (folderPath && !this.app.vault.getFolderByPath(folderPath)) {
@@ -105753,7 +114470,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "watersPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "kitPreset" || packType === "eventPreset" || packType === "moneyPreset" || packType === "deityPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "watersPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "kitPreset" || packType === "eventPreset" || packType === "moneyPreset" || packType === "calendarPreset" || packType === "skyPreset" || packType === "deityPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -105915,6 +114632,7 @@ ${text}
           else if (parsed.kit) packs.push({ path: child.path, packType: "kitPreset" });
           else if (parsed.event) packs.push({ path: child.path, packType: "eventPreset" });
           else if (parsed.money) packs.push({ path: child.path, packType: "moneyPreset" });
+          else if (parsed.time) packs.push({ path: child.path, packType: parsed.time.timeModule === "sky" ? "skyPreset" : "calendarPreset" });
           else if (parsed.deity) packs.push({ path: child.path, packType: "deityPreset" });
           continue;
         }
@@ -105955,14 +114673,14 @@ ${text}
   }
   /** No packs of the user's own: the built-in example packs, with a note saying so. */
   async showExamplePacks(options) {
-    var _a3;
+    var _a4;
     const examples = examplePacks().map((e) => {
       const parsed = parseNamesFileContent(e.content);
       return { path: e.path, packType: parsed.packType, compoundGenerator: parsed.compoundGenerator };
     });
     this.renderPackDropdownMenu(examples, true);
     const lastUsed = this.plugin.settings.namesFilePath;
-    const selected = (_a3 = examples.find((e) => e.path === lastUsed)) != null ? _a3 : examples[0];
+    const selected = (_a4 = examples.find((e) => e.path === lastUsed)) != null ? _a4 : examples[0];
     if (options.preserveSelection && selected.path === lastUsed) {
       this.updatePackDropdownTrigger(selected.path, selected.packType, packSubGenerator(selected.packType, selected.compoundGenerator));
       return;
@@ -105970,7 +114688,7 @@ ${text}
     await this.loadPack(selected.path);
   }
   async loadPack(packPath) {
-    var _a3, _b, _c, _d, _e;
+    var _a4, _b2, _c2, _d2, _e2;
     const example = isExamplePackPath(packPath) ? examplePacks().find((e) => e.path === packPath) : void 0;
     const file = example ? null : this.app.vault.getFileByPath((0, import_obsidian14.normalizePath)(packPath));
     if (!example && !(file instanceof import_obsidian14.TFile)) {
@@ -105994,8 +114712,8 @@ ${text}
     }
     this.currentRecipePath = void 0;
     this.currentPresetPath = void 0;
-    (_a3 = this.editRecipeButton) == null ? void 0 : _a3.hide();
-    (_b = this.openPresetButton) == null ? void 0 : _b.hide();
+    (_a4 = this.editRecipeButton) == null ? void 0 : _a4.hide();
+    (_b2 = this.openPresetButton) == null ? void 0 : _b2.hide();
     const resolved = await this.resolvePackTemplate(packPath, parseNamesFileContent(content));
     const parsed = resolved.parsed;
     this.currentTemplateError = resolved.error;
@@ -106005,13 +114723,13 @@ ${text}
     this.currentPackType = parsed.packType;
     this.currentSectioned = parsed.sectioned;
     await this.updateSectionChoices(parsed);
-    this.currentPlaceGenerator = parsed.packType === "placePack" ? (_c = parsed.placeGenerator) != null ? _c : "breakdown" : void 0;
+    this.currentPlaceGenerator = parsed.packType === "placePack" ? (_c2 = parsed.placeGenerator) != null ? _c2 : "breakdown" : void 0;
     if (isCompoundPack(parsed)) {
       this.currentCompound = parsed;
       this.currentMixSources = [];
       this.currentNamesText = "";
     } else if (parsed.packType === "mixPack") {
-      this.currentMixSources = (_d = parsed.mixSources) != null ? _d : [];
+      this.currentMixSources = (_d2 = parsed.mixSources) != null ? _d2 : [];
       this.currentCompound = void 0;
       this.currentNamesText = "";
     } else {
@@ -106027,7 +114745,7 @@ ${text}
       parsed.packType,
       packSubGenerator(parsed.packType, parsed.compoundGenerator)
     );
-    this.setStatus((_e = resolved.error) != null ? _e : "");
+    this.setStatus((_e2 = resolved.error) != null ? _e2 : "");
   }
   /**
    * §7: applies a pack's template. A missing template, a template that itself has a template, or
@@ -106058,22 +114776,22 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a3, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
-    const { preset, group, byname, vessel, waters, realm: realm2, route: route3, street, inn, building, kit, event, money, deity, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = deity ? "deityPreset" : money ? "moneyPreset" : event ? "eventPreset" : kit ? "kitPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm2 ? "realmPreset" : waters ? "watersPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t;
+    const { preset, group, byname, vessel, waters, realm: realm2, route: route3, street, inn, building, kit, event, money, time, deity, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = deity ? "deityPreset" : time ? time.timeModule === "sky" ? "skyPreset" : "calendarPreset" : money ? "moneyPreset" : event ? "eventPreset" : kit ? "kitPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm2 ? "realmPreset" : waters ? "watersPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
     this.currentSectioned = void 0;
     this.currentTemplateError = void 0;
     this.sectionChoices = [];
-    (_a3 = this.sectionSentenceEl) == null ? void 0 : _a3.hide();
+    (_a4 = this.sectionSentenceEl) == null ? void 0 : _a4.hide();
     this.syncPillSpacing();
-    (_b = this.editRecipeButton) == null ? void 0 : _b.hide();
-    (_c = this.openPresetButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
-    const module2 = deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d = findFamily(group.family)) == null ? void 0 : _d.label : SECTION_LABELS.tribalNames;
-    (_e = this.openPresetButton) == null ? void 0 : _e.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_s = (_r = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : waters == null ? void 0 : waters.packName) != null ? _j : realm2 == null ? void 0 : realm2.packName) != null ? _k : route3 == null ? void 0 : route3.packName) != null ? _l : street == null ? void 0 : street.packName) != null ? _m : inn == null ? void 0 : inn.packName) != null ? _n : building == null ? void 0 : building.packName) != null ? _o : kit == null ? void 0 : kit.packName) != null ? _p : event == null ? void 0 : event.packName) != null ? _q : money == null ? void 0 : money.packName) != null ? _r : deity == null ? void 0 : deity.packName) != null ? _s : file.basename;
+    (_b2 = this.editRecipeButton) == null ? void 0 : _b2.hide();
+    (_c2 = this.openPresetButton) == null ? void 0 : _c2.toggle(this.activeSection === "markov");
+    const module2 = deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d2 = findFamily(group.family)) == null ? void 0 : _d2.label : SECTION_LABELS.tribalNames;
+    (_e2 = this.openPresetButton) == null ? void 0 : _e2.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
+    this.plugin.settings.packName = (_t = (_s = (_r = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = preset == null ? void 0 : preset.packName) != null ? _f : group == null ? void 0 : group.packName) != null ? _g : byname == null ? void 0 : byname.packName) != null ? _h : vessel == null ? void 0 : vessel.packName) != null ? _i : waters == null ? void 0 : waters.packName) != null ? _j : realm2 == null ? void 0 : realm2.packName) != null ? _k : route3 == null ? void 0 : route3.packName) != null ? _l : street == null ? void 0 : street.packName) != null ? _m : inn == null ? void 0 : inn.packName) != null ? _n : building == null ? void 0 : building.packName) != null ? _o : kit == null ? void 0 : kit.packName) != null ? _p : event == null ? void 0 : event.packName) != null ? _q : money == null ? void 0 : money.packName) != null ? _r : time == null ? void 0 : time.packName) != null ? _s : deity == null ? void 0 : deity.packName) != null ? _t : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -106081,19 +114799,19 @@ ${text}
     this.setStatus(problems.join(" "));
   }
   async loadRecipePack(file) {
-    var _a3, _b, _c;
+    var _a4, _b2, _c2;
     this.currentPackType = "recipePack";
     this.currentRecipePath = file.path;
     this.currentPresetPath = void 0;
-    (_a3 = this.openPresetButton) == null ? void 0 : _a3.hide();
+    (_a4 = this.openPresetButton) == null ? void 0 : _a4.hide();
     this.recipeEtymology = void 0;
     this.currentNamesText = "";
     this.currentSectioned = void 0;
     this.currentTemplateError = void 0;
     this.sectionChoices = [];
-    (_b = this.sectionSentenceEl) == null ? void 0 : _b.hide();
+    (_b2 = this.sectionSentenceEl) == null ? void 0 : _b2.hide();
     this.syncPillSpacing();
-    (_c = this.editRecipeButton) == null ? void 0 : _c.toggle(this.activeSection === "markov");
+    (_c2 = this.editRecipeButton) == null ? void 0 : _c2.toggle(this.activeSection === "markov");
     this.plugin.settings.packName = file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
@@ -106103,7 +114821,7 @@ ${text}
     this.setStatus(problems.join(" "));
   }
   async runRecipe() {
-    var _a3;
+    var _a4;
     const file = this.currentRecipePath ? this.app.vault.getFileByPath(this.currentRecipePath) : null;
     if (!(file instanceof import_obsidian14.TFile)) {
       this.setStatus("Recipe not found. Reselect it from the pack list.");
@@ -106126,12 +114844,12 @@ ${text}
       const packs = await this.loadCustomBiomes();
       const target = this.app.metadataCache.getFirstLinkpathDest(name, file.path);
       const found = packs.find((b) => {
-        var _a4;
-        return ((_a4 = b.custom) == null ? void 0 : _a4.path) === (target == null ? void 0 : target.path) || b.label === name;
+        var _a5;
+        return ((_a5 = b.custom) == null ? void 0 : _a5.path) === (target == null ? void 0 : target.path) || b.label === name;
       });
       biome = found ? await host.withPackDraws(found, file.path) : void 0;
     }
-    const seedOverride = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
     renderLoading(this.resultsEl);
     await waitForPaint();
     let result;
@@ -106246,7 +114964,7 @@ ${text}
   }
   /** What the place name wizard needs: this folder's packs, lists, recipe templates and takeover packs. */
   async recipeEditorOptions(path) {
-    var _a3;
+    var _a4;
     const folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const folder = this.app.vault.getFolderByPath((0, import_obsidian14.normalizePath)(folderPath));
     const packs = [];
@@ -106255,13 +114973,13 @@ ${text}
     const tribalPresets = [];
     const index = await this.scanFolderPacks();
     const takeoverPacks = index.filter((entry) => !entry.parsed.template).map((entry) => {
-      var _a4;
+      var _a5;
       return {
-        name: ((_a4 = entry.path.split("/").pop()) == null ? void 0 : _a4.replace(/\.md$/i, "")) || entry.path,
+        name: ((_a5 = entry.path.split("/").pop()) == null ? void 0 : _a5.replace(/\.md$/i, "")) || entry.path,
         reason: this.targetPackReason(entry, index)
       };
     }).sort((a, b) => a.name.localeCompare(b.name));
-    for (const child of (_a3 = folder == null ? void 0 : folder.children) != null ? _a3 : []) {
+    for (const child of (_a4 = folder == null ? void 0 : folder.children) != null ? _a4 : []) {
       if (!(child instanceof import_obsidian14.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isRecipeContent(content)) {
@@ -106295,7 +115013,7 @@ ${text}
   /** Compound brief §1: the sections sentence's choices — the pack's `##` headings (for Mix packs,
    * its sources' headings), then whole pack. The first heading is chosen on every load. */
   async updateSectionChoices(parsed) {
-    var _a3;
+    var _a4;
     let choices = [];
     if (parsed.sectioned && parsed.sectioned.sections.length > 0) {
       choices = sectionOptions(parsed.sectioned);
@@ -106305,7 +115023,7 @@ ${text}
     } else if (parsed.packType === "mixPack") {
       const index = await this.scanFolderPacks();
       const seen = /* @__PURE__ */ new Set();
-      for (const ref of (_a3 = parsed.mixSources) != null ? _a3 : []) {
+      for (const ref of (_a4 = parsed.mixSources) != null ? _a4 : []) {
         const source = findPackInIndex(index, ref.packName);
         for (const option of (source == null ? void 0 : source.parsed.sectioned) ? headingOptions(source.parsed.sectioned) : []) {
           if (seen.has(option.label.toLowerCase())) continue;
@@ -106354,9 +115072,9 @@ ${text}
       () => this.sectionChoices.map((c, i) => ({ id: String(i), label: c.label })),
       String(this.sectionChoiceIndex),
       (id) => {
-        var _a3;
+        var _a4;
         this.sectionChoiceIndex = Number(id != null ? id : 0);
-        if ((_a3 = this.sectionChoice) == null ? void 0 : _a3.whole) this.sectionLabelsShown = true;
+        if ((_a4 = this.sectionChoice) == null ? void 0 : _a4.whole) this.sectionLabelsShown = true;
         rerender();
       }
     );
@@ -106382,20 +115100,20 @@ ${text}
   }
   /** The bracketed example: the pack's first heading and one of its names. */
   sectionExample() {
-    var _a3;
+    var _a4;
     if (this.currentCompound && this.compoundLoaded()) {
       const data = compoundPartData(this.currentCompound);
       const title = compoundTitles(data)[0];
       const fragments = compoundPartsFor(data, title).map((names) => names[0]).filter((n) => n !== void 0);
-      if (title && fragments.length > 0) return { name: joinCompoundParts(fragments, (_a3 = this.currentCompound.compoundJoining) != null ? _a3 : "joined"), tag: title };
+      if (title && fragments.length > 0) return { name: joinCompoundParts(fragments, (_a4 = this.currentCompound.compoundJoining) != null ? _a4 : "joined"), tag: title };
     }
     const first = this.currentSectioned ? labelledLists(this.currentSectioned).find((l) => l.tag) : void 0;
     return first ? { name: first.names[0], tag: first.tag } : { name: "Alfred", tag: "male" };
   }
   async generateSelectedCount() {
-    var _a3, _b, _c, _d, _e, _f, _g, _h, _i, _j;
+    var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j;
     if (this.activeSection === "placeShapes" && this.placeIsBritain()) {
-      const seedOverride2 = this.seedLocked ? parseSeedInput((_a3 = this.seedInputEl) == null ? void 0 : _a3.value) : void 0;
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_a4 = this.seedInputEl) == null ? void 0 : _a4.value) : void 0;
       const land = this.land("britain");
       await this.loadCustomBiomes();
       const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
@@ -106420,7 +115138,7 @@ ${text}
     }
     const placeRivers = this.activeSection === "placeShapes" && this.placeIsRivers();
     if (this.activeSection === "riverNames" || placeRivers) {
-      const seedOverride2 = this.seedLocked ? parseSeedInput((_b = this.seedInputEl) == null ? void 0 : _b.value) : void 0;
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_b2 = this.seedInputEl) == null ? void 0 : _b2.value) : void 0;
       const setting = placeRivers ? "british" : this.riverSetting;
       const british = setting === "british";
       const region = placeRivers ? this.selectedRegion : this.riverRegion;
@@ -106445,11 +115163,11 @@ ${text}
       const peoples = this.riverPeoples.mode === "placeholder" ? " \xB7 peoples as placeholders" : "";
       const label = `${RIVER_NAMES_HISTORY_NAME} \xB7 ${settingLabel}${biome ? ` \xB7 ${biomeInline(biome)}` : ""}${peoples}`;
       await this.recordGenerationHistory(result2.names.length, british ? withRegion(label, region) : label);
-      this.setStatus((_c = result2.notice) != null ? _c : "");
+      this.setStatus((_c2 = result2.notice) != null ? _c2 : "");
       return;
     }
     if (this.activeSection === "placeShapes") {
-      const seedOverride2 = this.seedLocked ? parseSeedInput((_d = this.seedInputEl) == null ? void 0 : _d.value) : void 0;
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_d2 = this.seedInputEl) == null ? void 0 : _d2.value) : void 0;
       const era = this.worldEras[this.worldCulture];
       const worldKey = this.worldLandKey();
       const land = worldKey ? this.land(worldKey) : DEFAULT_LAND;
@@ -106537,6 +115255,10 @@ ${text}
       await this.runMoney();
       return;
     }
+    if (this.activeSection === "calendarNames" || this.activeSection === "skyNames") {
+      await this.runTime(this.activeSection === "skyNames" ? "sky" : "calendar");
+      return;
+    }
     if (this.activeSection === "deityNames") {
       await this.runDeities();
       return;
@@ -106547,7 +115269,7 @@ ${text}
     }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
-      const seedOverride2 = this.seedLocked ? parseSeedInput((_e = this.seedInputEl) == null ? void 0 : _e.value) : void 0;
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_e2 = this.seedInputEl) == null ? void 0 : _e2.value) : void 0;
       const tradition = this.selectedTradition[colonialPart];
       const context = this.selectedContext[colonialPart];
       const land = this.land(`colonial:${colonialPart}`);
@@ -106628,6 +115350,10 @@ ${text}
     }
     if (this.currentPackType === "moneyPreset") {
       await this.runMoneyPreset();
+      return;
+    }
+    if (this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset") {
+      await this.runTimePreset();
       return;
     }
     if (this.currentPackType === "deityPreset") {
@@ -106746,8 +115472,8 @@ ${text}
       this.renderResults(result2.names.map((n) => n.name), void 0, result2.names.map((n) => n.tag));
       await this.recordGenerationHistory(result2.names.length);
       this.setStatus(result2.small.map((l) => {
-        var _a4;
-        return smallListNotice((_a4 = l.tag) != null ? _a4 : "untitled", l.count);
+        var _a5;
+        return smallListNotice((_a5 = l.tag) != null ? _a5 : "untitled", l.count);
       }).join(" "));
       return;
     }
@@ -106799,7 +115525,7 @@ ${text}
     return this.activeSection;
   }
   async recordGenerationHistory(count, packName, block) {
-    var _a3;
+    var _a4;
     if (this.currentSeed === null) return;
     const entry = {
       packName: packName != null ? packName : this.plugin.settings.packName || "nameForge",
@@ -106810,13 +115536,13 @@ ${text}
     };
     this.plugin.settings.previousGenerations = [
       entry,
-      ...(_a3 = this.plugin.settings.previousGenerations) != null ? _a3 : []
+      ...(_a4 = this.plugin.settings.previousGenerations) != null ? _a4 : []
     ].slice(0, MAX_HISTORY_ENTRIES);
     await this.plugin.saveSettings();
   }
   async copySeedToClipboard() {
-    var _a3, _b;
-    const value = (_b = (_a3 = this.seedInputEl) == null ? void 0 : _a3.value) == null ? void 0 : _b.trim();
+    var _a4, _b2;
+    const value = (_b2 = (_a4 = this.seedInputEl) == null ? void 0 : _a4.value) == null ? void 0 : _b2.trim();
     if (!value) {
       this.setStatus("No seed to copy yet.");
       return;
@@ -106964,8 +115690,8 @@ ${text}
     updateInsertButtons();
   }
   getActiveEditor() {
-    var _a3;
-    return (_a3 = this.app.workspace.activeEditor) == null ? void 0 : _a3.editor;
+    var _a4;
+    return (_a4 = this.app.workspace.activeEditor) == null ? void 0 : _a4.editor;
   }
   insertPlainText(name) {
     const editor = this.getActiveEditor();
@@ -106978,7 +115704,7 @@ ${text}
     this.dismissAfterInsert();
   }
   insertNamesAsList(names, listType) {
-    var _a3, _b;
+    var _a4, _b2;
     if (names.length === 0) {
       return;
     }
@@ -106996,7 +115722,7 @@ ${text}
     if (/^\s*$/.test(lineText)) {
       insertion = names.map((name) => `${marker}${name}`).join("\n");
     } else if (cursor.ch === lineText.length && emptyMarkerPattern.test(lineText)) {
-      const indent = (_b = (_a3 = lineText.match(emptyMarkerPattern)) == null ? void 0 : _a3[1]) != null ? _b : "";
+      const indent = (_b2 = (_a4 = lineText.match(emptyMarkerPattern)) == null ? void 0 : _a4[1]) != null ? _b2 : "";
       const [first, ...rest] = names;
       insertion = first + rest.map((name) => `
 ${indent}${marker}${name}`).join("");
@@ -107068,7 +115794,7 @@ ${indent}${marker}${name}`).join("");
   /** Template packs of one type (or word lists), for "Start from template" in the editor. */
   /** The user's own template notes of the given pack types, with their names or parts, for the templates pane. */
   async listTemplates(kinds) {
-    var _a3;
+    var _a4;
     const folderPath = this.getFolderPath();
     const folder = folderPath ? this.app.vault.getFolderByPath((0, import_obsidian14.normalizePath)(folderPath)) : null;
     if (!folder) return [];
@@ -107081,7 +115807,7 @@ ${indent}${marker}${name}`).join("");
         const parsed = parseNamesFileContent(content);
         if (!parsed.template || !kinds.includes(parsed.packType)) continue;
         out.push(
-          isCompoundPack(parsed) ? { name: child.basename, parts: (_a3 = parsed.parts) != null ? _a3 : [], partTexts: compoundPartData(parsed).map(serialiseCompoundPart) } : { name: child.basename, names: parsed.names, placeGenerator: parsed.placeGenerator }
+          isCompoundPack(parsed) ? { name: child.basename, parts: (_a4 = parsed.parts) != null ? _a4 : [], partTexts: compoundPartData(parsed).map(serialiseCompoundPart) } : { name: child.basename, names: parsed.names, placeGenerator: parsed.placeGenerator }
         );
       } catch (e) {
         continue;
@@ -107092,10 +115818,10 @@ ${indent}${marker}${name}`).join("");
   async listFolderPacks() {
     const index = await this.scanFolderPacks();
     return index.filter((entry) => !entry.parsed.template).map((entry) => {
-      var _a3;
+      var _a4;
       return {
         path: entry.path,
-        packName: entry.parsed.packName || ((_a3 = entry.path.split("/").pop()) == null ? void 0 : _a3.replace(/\.md$/i, "")) || entry.path,
+        packName: entry.parsed.packName || ((_a4 = entry.path.split("/").pop()) == null ? void 0 : _a4.replace(/\.md$/i, "")) || entry.path,
         packType: entry.parsed.packType,
         compoundGenerator: entry.parsed.compoundGenerator
       };
@@ -107142,12 +115868,12 @@ var AgeingHistoryModal = class extends import_obsidian14.Modal {
     this.parent = parent;
   }
   onOpen() {
-    var _a3;
+    var _a4;
     this.titleEl.setText("Ageing history");
     this.modalEl.addClass("nameforge-history-modal");
     const { contentEl } = this;
     contentEl.addClass("nameforge-history-modal__content");
-    const history2 = (_a3 = this.parent.plugin.settings.ageingHistory) != null ? _a3 : [];
+    const history2 = (_a4 = this.parent.plugin.settings.ageingHistory) != null ? _a4 : [];
     if (history2.length === 0) {
       contentEl.createDiv({ cls: "nameforge-history-modal__empty", text: "No ageing runs yet." });
       return;
@@ -107188,9 +115914,9 @@ var PreviousGenerationsModal = class extends import_obsidian14.Modal {
     this.contentEl.empty();
   }
   async renderList(container) {
-    var _a3, _b;
+    var _a4, _b2;
     const section = this.parent.historySectionShown();
-    const history2 = ((_a3 = this.parent.plugin.settings.previousGenerations) != null ? _a3 : []).filter(
+    const history2 = ((_a4 = this.parent.plugin.settings.previousGenerations) != null ? _a4 : []).filter(
       (entry) => historySection(entry.packName) === section
     );
     if (history2.length === 0) {
@@ -107208,7 +115934,7 @@ var PreviousGenerationsModal = class extends import_obsidian14.Modal {
       const entrySection = historySection(entry.packName);
       (0, import_obsidian14.setIcon)(
         iconEl,
-        entrySection === "markov" ? (_b = iconsByName.get(entry.packName)) != null ? _b : ICON_BREAKDOWN_PACK : entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME) ? ICON_GENERIC_PLACE_NAMES : SECTION_ICONS[entrySection]
+        entrySection === "markov" ? (_b2 = iconsByName.get(entry.packName)) != null ? _b2 : ICON_BREAKDOWN_PACK : entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME) ? ICON_GENERIC_PLACE_NAMES : SECTION_ICONS[entrySection]
       );
       row.createSpan({
         cls: "nameforge-history-modal__pack-name",
@@ -107495,7 +116221,7 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
     const percents = this.mixPercents();
     const selectedNames = this.mixSources.map((source) => source.packName).filter(Boolean);
     this.mixSources.forEach((source, index) => {
-      var _a3;
+      var _a4;
       const row = this.mixSourcesEl.createDiv({ cls: "nameforge-modal__mix-source-row" });
       const select = row.createEl("select", { cls: "nameforge-modal__mix-source-select" });
       select.createEl("option", { text: "Select a pack\u2026", attr: { value: "" } });
@@ -107532,7 +116258,7 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
       });
       row.createSpan({
         cls: "nameforge-modal__mix-percent",
-        text: `${(_a3 = percents[index]) != null ? _a3 : 0}%`
+        text: `${(_a4 = percents[index]) != null ? _a4 : 0}%`
       });
       const removeButton = row.createEl("button", {
         cls: "nameforge-modal__mix-remove",
@@ -107552,8 +116278,8 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
     const percents = this.mixPercents();
     const labels2 = this.mixSourcesEl.querySelectorAll(".nameforge-modal__mix-percent");
     labels2.forEach((label, index) => {
-      var _a3;
-      label.textContent = `${(_a3 = percents[index]) != null ? _a3 : 0}%`;
+      var _a4;
+      label.textContent = `${(_a4 = percents[index]) != null ? _a4 : 0}%`;
     });
   }
   setPackType(type) {
@@ -107564,9 +116290,9 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
   }
   /** The chosen base: a built-in id, or a user pack's path. */
   biomeBase() {
-    var _a3, _b, _c;
-    const value = (_b = (_a3 = this.biomeBaseSelect) == null ? void 0 : _a3.value) != null ? _b : "temperate";
-    return (_c = findBiome(value, this.parent.customBiomesCache())) != null ? _c : BIOMES[0];
+    var _a4, _b2, _c2;
+    const value = (_b2 = (_a4 = this.biomeBaseSelect) == null ? void 0 : _a4.value) != null ? _b2 : "temperate";
+    return (_c2 = findBiome(value, this.parent.customBiomesCache())) != null ? _c2 : BIOMES[0];
   }
   /** The base as editable text: its sections, without frontmatter or guide. */
   biomeBody(b) {
@@ -107575,16 +116301,16 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
   }
   /** Land brief §9.4: fills the base choices, and loads an existing pack of the same name merged. */
   async enterBiomeMode() {
-    var _a3, _b;
+    var _a4, _b2;
     const custom = await this.parent.loadCustomBiomes();
     const select = this.biomeBaseSelect;
     if (!select) return;
     select.empty();
     for (const b of [BRITAIN, ...BIOMES, ...SPACE_BIOMES]) select.createEl("option", { text: b.label, value: b.id });
     for (const b of custom) select.createEl("option", { text: b.label, value: b.custom.path });
-    const name = (_a3 = this.packNameInput) == null ? void 0 : _a3.value.trim().toLowerCase();
+    const name = (_a4 = this.packNameInput) == null ? void 0 : _a4.value.trim().toLowerCase();
     const existing = custom.find((b) => b.label.toLowerCase() === name);
-    this.biomeEditing = (_b = existing == null ? void 0 : existing.custom) == null ? void 0 : _b.path;
+    this.biomeEditing = (_b2 = existing == null ? void 0 : existing.custom) == null ? void 0 : _b2.path;
     if (existing) {
       select.value = existing.custom.base;
       if (!select.value) select.value = "temperate";
@@ -107600,9 +116326,9 @@ ${this.biomeBody(existing)}`;
   }
   /** Refills the textarea from the base, unless it has been edited since it was last filled. */
   refillBiome() {
-    var _a3;
+    var _a4;
     const base = this.biomeBase();
-    if (this.biomePhraseInput) this.biomePhraseInput.placeholder = `the ${(((_a3 = this.packNameInput) == null ? void 0 : _a3.value.trim()) || base.label).toLowerCase()}`;
+    if (this.biomePhraseInput) this.biomePhraseInput.placeholder = `the ${(((_a4 = this.packNameInput) == null ? void 0 : _a4.value.trim()) || base.label).toLowerCase()}`;
     if (!this.inputEl) return;
     if (this.inputEl.value.trim() && this.inputEl.value !== this.biomeFilled) {
       this.parent.setStatus("Your edits are kept; sections you haven't changed come from the new base.");
@@ -107612,21 +116338,21 @@ ${this.biomeBody(existing)}`;
   }
   /** Land brief §9.4: saves only the sections that differ from the base, with the guide text. */
   async saveBiome(packName) {
-    var _a3, _b, _c, _d;
+    var _a4, _b2, _c2, _d2;
     const base = this.biomeBase();
     const basedOn = base.custom ? `[[${base.label}]]` : base.id;
-    const phrase = (_a3 = this.biomePhraseInput) == null ? void 0 : _a3.value.trim();
+    const phrase = (_a4 = this.biomePhraseInput) == null ? void 0 : _a4.value.trim();
     const front = ["---", "type: biome", `packName: ${packName}`, "setting: ", `based-on: "${basedOn}"`, ...phrase ? [`phrase: ${phrase}`] : [], "---"].join("\n");
     const { text, own } = diffAgainstBase(`${front}
 
-${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, base);
+${(_c2 = (_b2 = this.inputEl) == null ? void 0 : _b2.value) != null ? _c2 : ""}`, base);
     let folderPath = this.parent.getFolderPath();
     if (!folderPath) {
       const folder = await this.parent.promptForFolderSelection();
       if (!folder) return;
       folderPath = folder.path;
     }
-    const path = (_d = this.biomeEditing) != null ? _d : (0, import_obsidian14.normalizePath)(`${folderPath}/${sanitizePackNameForFilename(packName)}.md`);
+    const path = (_d2 = this.biomeEditing) != null ? _d2 : (0, import_obsidian14.normalizePath)(`${folderPath}/${sanitizePackNameForFilename(packName)}.md`);
     try {
       const existing = this.app.vault.getFileByPath(path);
       if (existing instanceof import_obsidian14.TFile) await this.app.vault.modify(existing, text);
@@ -107644,26 +116370,26 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     this.close();
   }
   updateTypeButtons() {
-    var _a3, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z;
+    var _a4, _b2, _c2, _d2, _e2, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z;
     const isWizard = this.wizardMode;
     const isBiome = !isWizard && this.biomeMode;
     const other = isWizard || isBiome;
-    (_a3 = this.biomeButton) == null ? void 0 : _a3.classList.toggle("is-active", isBiome);
-    (_b = this.biomeButton) == null ? void 0 : _b.setAttribute("aria-pressed", String(isBiome));
-    (_c = this.biomeRowEl) == null ? void 0 : _c.toggle(isBiome);
+    (_a4 = this.biomeButton) == null ? void 0 : _a4.classList.toggle("is-active", isBiome);
+    (_b2 = this.biomeButton) == null ? void 0 : _b2.setAttribute("aria-pressed", String(isBiome));
+    (_c2 = this.biomeRowEl) == null ? void 0 : _c2.toggle(isBiome);
     const row = this.biomeRowEl;
     let shrink = 0;
     if (isBiome && row) {
       const style = getComputedStyle(row);
       shrink = row.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
     }
-    (_d = this.stageEl) == null ? void 0 : _d.style.setProperty("--nf-stage-shrink", `${shrink}px`);
+    (_d2 = this.stageEl) == null ? void 0 : _d2.style.setProperty("--nf-stage-shrink", `${shrink}px`);
     const isBreakdown = !other && this.selectedPackType === "breakdownPack";
     const isList = !other && this.selectedPackType === "listPack";
     const isCompound = !other && this.selectedPackType === "compoundPack";
     const isPlace = !other && this.selectedPackType === "placePack";
     const isMix = !other && this.selectedPackType === "mixPack";
-    (_e = this.wizardButton) == null ? void 0 : _e.classList.toggle("is-active", isWizard);
+    (_e2 = this.wizardButton) == null ? void 0 : _e2.classList.toggle("is-active", isWizard);
     (_f = this.wizardButton) == null ? void 0 : _f.setAttribute("aria-pressed", String(isWizard));
     const templateType = other ? void 0 : templateTypeFor(this.selectedPackType);
     if (this.templatesButton) this.templatesButton.disabled = !templateType;
@@ -107695,7 +116421,7 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
   }
   /** Lists the built-in templates, then the user's own, for the pack type's kind of template. */
   async renderTemplatesPane(type) {
-    var _a3, _b, _c;
+    var _a4, _b2, _c2;
     const pane = this.templatesPaneEl;
     if (!pane) return;
     const kinds = type === "people" ? ["breakdownPack", "listPack"] : type === "people-compound" ? ["compoundPack"] : ["placePack"];
@@ -107710,24 +116436,24 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     for (const entry of entries) {
       const row = pane.createEl("button", { cls: "nameforge-editor-modal__template-item", attr: { type: "button" } });
       row.createSpan({ cls: "nameforge-editor-modal__template-name", text: entry.name });
-      const count = entry.parts ? `${entry.parts.length} parts` : `${(_c = (_b = entry.count) != null ? _b : (_a3 = entry.names) == null ? void 0 : _a3.length) != null ? _c : 0} names`;
+      const count = entry.parts ? `${entry.parts.length} parts` : `${(_c2 = (_b2 = entry.count) != null ? _b2 : (_a4 = entry.names) == null ? void 0 : _a4.length) != null ? _c2 : 0} names`;
       row.createSpan({ cls: "nameforge-editor-modal__template-count", text: count });
       row.addEventListener("click", () => void this.useTemplate(entry));
     }
   }
   /** Fills the box (or the compound parts) from a template, asking first if there is text to replace. */
   async useTemplate(entry) {
-    var _a3, _b;
+    var _a4, _b2;
     if (entry.parts) {
       const editor = this.selectedPackType === "placePack" ? this.placeCompound : this.peopleCompound;
       if (!editor) return;
       const parts = entry.parts.slice(0, 3);
       if (editor.hasText(parts.length) && !await confirmReplace(this.app, "Replace what's in the parts?")) return;
       editor.fill(parts.map((part, i) => {
-        var _a4, _b2;
+        var _a5, _b3;
         return `${i === 0 ? `# ${entry.name}
 
-` : ""}${(_b2 = (_a4 = entry.partTexts) == null ? void 0 : _a4[i]) != null ? _b2 : part.join("\n")}`;
+` : ""}${(_b3 = (_a5 = entry.partTexts) == null ? void 0 : _a5[i]) != null ? _b3 : part.join("\n")}`;
       }));
       return;
     }
@@ -107736,7 +116462,7 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     if (box.value.trim() && !await confirmReplace(this.app, "Replace what's in the box?")) return;
     box.value = `# ${entry.name}
 
-${(_b = entry.text) != null ? _b : ((_a3 = entry.names) != null ? _a3 : []).join("\n")}`;
+${(_b2 = entry.text) != null ? _b2 : ((_a4 = entry.names) != null ? _a4 : []).join("\n")}`;
     if (this.selectedPackType === "placePack" && entry.placeGenerator && entry.placeGenerator !== "compound") this.setPlaceGenerator(entry.placeGenerator);
   }
   /** The text box a pack type writes in; compound and mix have their own sections instead. */
@@ -107750,18 +116476,18 @@ ${(_b = entry.text) != null ? _b : ((_a3 = entry.names) != null ? _a3 : []).join
     const options = await this.parent.recipeEditorOptions();
     options.requestSave = () => void this.saveNames();
     this.wizard = new RecipeWizard(this.app, options, pane, () => {
-      var _a3, _b;
-      return (_b = (_a3 = this.packNameInput) == null ? void 0 : _a3.value) != null ? _b : "";
+      var _a4, _b2;
+      return (_b2 = (_a4 = this.packNameInput) == null ? void 0 : _a4.value) != null ? _b2 : "";
     });
     await this.wizard.load();
   }
   async saveNames() {
-    var _a3, _b, _c, _d, _e;
+    var _a4, _b2, _c2, _d2, _e2;
     if (this.wizardMode) {
       if (this.wizard && await this.wizard.save()) this.close();
       return;
     }
-    const boxName = (_b = (_a3 = this.packNameInput) == null ? void 0 : _a3.value) == null ? void 0 : _b.trim();
+    const boxName = (_b2 = (_a4 = this.packNameInput) == null ? void 0 : _a4.value) == null ? void 0 : _b2.trim();
     const templateOf = void 0;
     if (this.biomeMode) {
       await this.saveBiome(boxName || "nameForge");
@@ -107769,7 +116495,7 @@ ${(_b = entry.text) != null ? _b : ((_a3 = entry.names) != null ? _a3 : []).join
     }
     const placeCompound = this.selectedPackType === "placePack" && this.placeGenerator === "compound";
     const compoundEditor = placeCompound ? this.placeCompound : this.selectedPackType === "compoundPack" ? this.peopleCompound : null;
-    const pastedName = this.selectedPackType === "mixPack" ? void 0 : compoundEditor ? compoundEditor.packName() : packNameFromBody((_d = (_c = this.inputEl) == null ? void 0 : _c.value) != null ? _d : "");
+    const pastedName = this.selectedPackType === "mixPack" ? void 0 : compoundEditor ? compoundEditor.packName() : packNameFromBody((_d2 = (_c2 = this.inputEl) == null ? void 0 : _c2.value) != null ? _d2 : "");
     const packName = pastedName || boxName || "nameForge";
     if (compoundEditor) {
       const values = compoundEditor.values();
@@ -107831,7 +116557,7 @@ ${(_b = entry.text) != null ? _b : ((_a3 = entry.names) != null ? _a3 : []).join
       this.close();
       return;
     }
-    const namesText = ((_e = this.inputEl) == null ? void 0 : _e.value) || "";
+    const namesText = ((_e2 = this.inputEl) == null ? void 0 : _e2.value) || "";
     if (!namesText.trim() && !templateOf) {
       this.parent.setStatus("No names to save. Enter at least one name.");
       return;
@@ -107859,9 +116585,9 @@ ${(_b = entry.text) != null ? _b : ((_a3 = entry.names) != null ? _a3 : []).join
 
 // src/hostConnectRetry.ts
 function softConnectWithRetry(tryConnect, opts) {
-  var _a3, _b;
-  const intervalMs = (_a3 = opts.intervalMs) != null ? _a3 : 1e3;
-  const setIntervalFn = (_b = opts.setIntervalFn) != null ? _b : (handler, timeout) => window.setInterval(handler, timeout);
+  var _a4, _b2;
+  const intervalMs = (_a4 = opts.intervalMs) != null ? _a4 : 1e3;
+  const setIntervalFn = (_b2 = opts.setIntervalFn) != null ? _b2 : (handler, timeout) => window.setInterval(handler, timeout);
   tryConnect();
   const handle = setIntervalFn(() => {
     tryConnect();
@@ -108062,7 +116788,7 @@ function parseSettingsMarkdownContent(content) {
   return parsed;
 }
 function createSettingsMarkdownContent(settings) {
-  var _a3, _b, _c;
+  var _a4, _b2, _c2;
   const folderPath = resolveNamesFolderPath(settings.folderPath, settings.namesFilePath);
   const lines2 = [`folder: ${folderPath || DEFAULT_NAMES_FOLDER}`, `namesFilePath: ${settings.namesFilePath || ""}`];
   const trimmedPackName = (settings.packName || "").trim().replace(/\s+/g, " ");
@@ -108073,14 +116799,14 @@ function createSettingsMarkdownContent(settings) {
   if (settlements) {
     lines2.push(`settlementsFolder: ${settlements}`);
   }
-  lines2.push(`faithfulness: ${(_a3 = settings.faithfulness) != null ? _a3 : DEFAULT_SETTINGS.faithfulness}`);
-  lines2.push(`strictness: ${(_b = settings.strictness) != null ? _b : DEFAULT_SETTINGS.strictness}`);
+  lines2.push(`faithfulness: ${(_a4 = settings.faithfulness) != null ? _a4 : DEFAULT_SETTINGS.faithfulness}`);
+  lines2.push(`strictness: ${(_b2 = settings.strictness) != null ? _b2 : DEFAULT_SETTINGS.strictness}`);
   const frontmatter = `---
 type: configurationFile
 ${lines2.join("\n")}
 ---
 `;
-  return frontmatter + createGenerationHistorySection(settings.previousGenerations) + createAgeingHistorySection(settings.ageingHistory) + kitHistorySection(((_c = settings.previousGenerations) != null ? _c : []).slice(0, MAX_HISTORY_ENTRIES));
+  return frontmatter + createGenerationHistorySection(settings.previousGenerations) + createAgeingHistorySection(settings.ageingHistory) + kitHistorySection(((_c2 = settings.previousGenerations) != null ? _c2 : []).slice(0, MAX_HISTORY_ENTRIES));
 }
 var NameForgePlugin = class extends import_obsidian16.Plugin {
   constructor() {
@@ -108241,9 +116967,9 @@ var NameForgePlugin = class extends import_obsidian16.Plugin {
     this.connectToStoryForge();
   }
   onunload() {
-    var _a3;
+    var _a4;
     try {
-      (_a3 = this.unregisterCompanionPanel) == null ? void 0 : _a3.call(this);
+      (_a4 = this.unregisterCompanionPanel) == null ? void 0 : _a4.call(this);
     } catch (e) {
     }
     this.unregisterCompanionPanel = null;
@@ -108259,7 +116985,7 @@ var NameForgePlugin = class extends import_obsidian16.Plugin {
    */
   connectToStoryForge() {
     const tryConnect = () => {
-      var _a3;
+      var _a4;
       const api = getStoryForgeHostApi(this.app);
       if (!(api == null ? void 0 : api.registerCompanionPanel)) {
         this.unregisterCompanionPanel = null;
@@ -108270,7 +116996,7 @@ var NameForgePlugin = class extends import_obsidian16.Plugin {
         return true;
       }
       try {
-        (_a3 = this.unregisterCompanionPanel) == null ? void 0 : _a3.call(this);
+        (_a4 = this.unregisterCompanionPanel) == null ? void 0 : _a4.call(this);
       } catch (e) {
       }
       registerNameForgeIcons();

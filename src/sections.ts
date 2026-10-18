@@ -41,6 +41,9 @@ export type NameForgeSection =
   | "eventNames"
   // Money brief §1.1: last in advanced, after events and eras.
   | "moneyNames"
+  // Time and sky brief §1.1: after money and coins.
+  | "calendarNames"
+  | "skyNames"
   // Deities brief §1.1; the line-up brief moves it to the end of group names.
   | "deityNames"
   // Line-up brief §2.1: the deities engine's places, last in place names.
@@ -117,6 +120,8 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "settlementKit",
   "eventNames",
   "moneyNames",
+  "calendarNames",
+  "skyNames",
 ];
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
@@ -130,7 +135,7 @@ export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   bynames: BYNAME_SECTIONS,
   // Line-up brief §1: ships and spacecraft get a group of their own.
   vehicles: VESSEL_SECTIONS,
-  advanced: ["nameAgeing", "nameTakeover", "settlementKit", "eventNames", "moneyNames"],
+  advanced: ["nameAgeing", "nameTakeover", "settlementKit", "eventNames", "moneyNames", "calendarNames", "skyNames"],
 };
 
 export const GROUP_LABELS: Record<SectionGroup, string> = {
@@ -161,6 +166,8 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   settlementKit: "settlement kit",
   eventNames: "events and eras",
   moneyNames: "money and coins",
+  calendarNames: "calendars and festivals",
+  skyNames: "sky lore",
   deityNames: "deities",
   sacredPlaces: "sacred places",
   riverNames: "river names",
@@ -223,6 +230,9 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(SECTION_LABELS.eventNames)) return "eventNames";
   // Money brief §1.2: "money and coins · {era} · {culture}…".
   if (starts(SECTION_LABELS.moneyNames)) return "moneyNames";
+  // Time and sky brief §1.1: "calendars and festivals · …" and "sky lore · …".
+  if (starts(SECTION_LABELS.calendarNames)) return "calendarNames";
+  if (starts(SECTION_LABELS.skyNames)) return "skyNames";
   // Line-up brief §2.4: old "deities and sacred places" rows first, since they also start "deities".
   if (OLD_HISTORY_PREFIXES.deityNames.some(starts)) return packName.includes("· sacred places") ? "sacredPlaces" : "deityNames";
   // "deities · {era} · {culture}…" and "sacred places · {era} · {culture}…".

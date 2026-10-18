@@ -177,6 +177,7 @@ export interface TimeSkyData {
 export const TIME_SKY = timeSkyData as unknown as TimeSkyData;
 export const TIME_KINDS = TIME_SKY.kinds;
 export const findTimeKind = (key: string | undefined) => TIME_KINDS.find((k) => k.key === key);
+export const timeKindDefaultOf = (module: TimeModule): TimeKind => (module === "calendar" ? "month" : "constellation");
 export const kindsOfModule = (module: TimeModule) => TIME_KINDS.filter((k) => k.module === module);
 
 /** §3.1: RN's cultures bar the four money-only ones (route names' own list already leaves them out). */

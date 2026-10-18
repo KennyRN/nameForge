@@ -316,7 +316,7 @@ test("line-up §1: the switcher; vehicles holds the vessel modules, which leave 
   assert.deepEqual(SECTION_GROUPS.vehicles, VESSEL_SECTIONS);
   assert.equal(GROUP_LABELS.vehicles, "vehicles");
   for (const v of VESSEL_SECTIONS) assert.ok(!SECTION_GROUPS.advanced.includes(v));
-  assert.deepEqual(SECTION_GROUPS.advanced, ["nameAgeing", "nameTakeover", "settlementKit", "eventNames", "moneyNames"]);
+  assert.deepEqual(SECTION_GROUPS.advanced, ["nameAgeing", "nameTakeover", "settlementKit", "eventNames", "moneyNames", "calendarNames", "skyNames"]);
 });
 
 test("line-up §2.2: the deities kind link has no sacred places; kind Any never yields a place, nor does a series", () => {
