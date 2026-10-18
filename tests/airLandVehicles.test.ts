@@ -462,3 +462,230 @@ test("§14.3: names of real peoples are never used, and codes don't count toward
   assert.equal(isAirLand("ships"), false);
   assert.ok(availableStyles("aircraft", "MR").length > 0);
 });
+
+// ── §16.5 Types ─────────────────────────────────────────────────────────────
+
+/** Many small batches: a batch holds no name twice, so shares are measured over batches. */
+const manyBatches = (module: VesselModule, o: object, batches = 200, count = 10) => Array.from({ length: batches }, (_x, i) => run(module, { count, seed: i + 1, ...o }).names).flat();
+
+test("§16.5: types never have a code or a leading “The”, except the class family", () => {
+  for (const module of MODULES) {
+    for (const culture of ["norman-british", "american", "japanese", "general"]) {
+      for (const [, genre, fantastic] of SETTINGS) {
+        for (const n of manyBatches(module, { culture, genre, fantastic, naming: "types", prefixes: true, people: "invented" }, 20, 20)) {
+          assert.equal(n.code, undefined, n.text);
+          assert.equal(n.text, n.name);
+          assert.ok(!/^The /.test(n.name), n.name);
+          if (/^the /.test(n.name)) assert.match(n.name, /^the [A-Z][A-Za-z ]* class$/);
+          assert.equal(n.route, "type");
+        }
+      }
+    }
+  }
+  const classes = manyBatches("landVehicles", { culture: "norman-british", genre: "modern", technology: "L4", function: "locomotive", naming: "types" }).filter((n) => n.role === "classTheme");
+  assert.ok(classes.length > 200);
+  for (const n of classes) assert.match(n.name, /^the [A-Z][A-Za-z]+ class$/);
+});
+
+test("§16.5: types draw their families at §9.3's weights, with the leanings", () => {
+  const share = (names: VesselName[], role: string) => names.filter((n) => n.role === role).length / names.length;
+  // American fighters: catCompound and the -cat words at least 15%.
+  const american = manyBatches("aircraft", { culture: "american", genre: "modern", function: "war", naming: "types" });
+  assert.equal(american.length, 2000);
+  assert.ok(share(american, "catCompound") >= 0.15, `${share(american, "catCompound")}`);
+  assert.ok(american.filter((n) => n.role === "catCompound").every((n) => /^[A-Z][a-z]+cat( Mark [IV]+)?$/.test(n.name)));
+  // Japanese types: Type {n} designations at least 20%, aircraft and land.
+  for (const module of MODULES) {
+    const japanese = manyBatches(module, { culture: "japanese", genre: "modern", naming: "types" });
+    const types = japanese.filter((n) => /^Type \d+$/.test(n.name)).length / japanese.length;
+    assert.ok(types >= 0.2, `${module} ${types}`);
+  }
+  // Locomotive types: the class family is most of them; coaches are all carriages.
+  const locos = manyBatches("landVehicles", { culture: "general", genre: "modern", technology: "L3", function: "locomotive", naming: "types" });
+  assert.ok(share(locos, "classTheme") > 0.5);
+  const coaches = manyBatches("landVehicles", { culture: "general", genre: "modern", technology: "L1", function: "coach", naming: "types", people: "invented" });
+  assert.ok(coaches.every((n) => n.role === "carriage" || n.role === "rank"));
+  assert.ok(share(coaches, "carriage") > 0.8);
+  assert.ok(manyBatches("landVehicles", { culture: "general", genre: "modern", technology: "L1", function: "wagon", naming: "types" }).every((n) => n.role === "wagonType"));
+  // L1 war: beasts, weapons and ranks (the siege engines); LF: engine types at 70.
+  const l1 = new Set(manyBatches("landVehicles", { culture: "general", genre: "modern", technology: "L1", function: "war", naming: "types" }).map((n) => n.role));
+  assert.deepEqual([...l1].sort(), ["beastThe", "rank", "weapon"]);
+  const lf = manyBatches("landVehicles", { culture: "general", genre: "modern", fantastic: true, technology: "LF", function: "war", naming: "types" });
+  assert.ok(share(lf, "engineType") > 0.4);
+  const af = manyBatches("aircraft", { culture: "general", genre: "modern", fantastic: true, technology: "AF", function: "airliner", naming: "types" });
+  assert.ok(share(af, "skyShip") > 0.4 && af.every((n) => ["skyShip", "rank", "sky", "bigBird", "weather", "raptor"].includes(n.role)));
+  assert.ok(af.some((n) => /^(Sky|Cloud|Storm|Wind|High|Zenith) (Galleon|Clipper|Frigate|Barque|Skiff|Cutter|Brig|Sloop|Carrack|Ketch)/.test(n.name)));
+  const future = manyBatches("aircraft", { culture: "general", genre: "scifi", technology: "A7", function: "war", naming: "types" });
+  assert.ok(share(future, "future") > 0.15);
+  assert.ok(future.filter((n) => n.role === "future").every((n) => /-class$| Crawler$| Rover$|^Sky[a-z]+$/.test(n.name.replace(/ Mark [IV]+$/, ""))));
+  // The British war ranks: C-names at 50% of the rank draws.
+  const ranks = manyBatches("landVehicles", { culture: "norman-british", genre: "modern", technology: "L4", function: "war", naming: "types" }, 300, 10).filter((n) => n.role === "rank");
+  const c = ranks.filter((n) => n.name.startsWith("C")).length / ranks.length;
+  assert.ok(c > 0.5 && c < 0.75, `${c}`);
+  // Mark numbers on about 15% of names, never on designations or classes.
+  const all = manyBatches("aircraft", { culture: "general", genre: "modern", naming: "types" }, 300, 10);
+  const marks = all.filter((n) => / Mark [IV]+$/.test(n.name));
+  assert.ok(marks.length / all.filter((n) => n.role !== "designation").length > 0.1);
+  assert.ok(marks.every((n) => n.role !== "designation" && n.role !== "classTheme"));
+  assert.ok(marks.every((n) => /Mark (II|III|IV|V)$/.test(n.name)));
+});
+
+test("§16.5: types are English words and closed compounds, in the shapes of §9.2", () => {
+  const names = manyBatches("aircraft", { culture: "american", genre: "modern", naming: "types" }, 300, 10).map((n) => n.name);
+  assert.ok(names.some((n) => /^Super [A-Z]/.test(n)));
+  assert.ok(names.some((n) => /^Strato[a-z]+$|liner$|^Sky(master|liner|train|king|lark)$/.test(n)));
+  assert.ok(names.some((n) => /^[A-Z]{2}-\d{2,3}$/.test(n)));
+  assert.ok(names.some((n) => /^Type \d+$/.test(n)));
+  assert.ok(names.some((n) => /^[A-Z]-\d{1,2}$/.test(n)));
+  const land = manyBatches("landVehicles", { culture: "norman-british", genre: "modern", naming: "types" }, 300, 10);
+  assert.ok(manyBatches("landVehicles", { culture: "american", genre: "modern", function: "war", naming: "types", people: "invented" }, 100, 10).some((n) => /^General [A-Z]/.test(n.name)));
+  assert.ok(land.some((n) => /^Mark [IVX]+$/.test(n.name)) || land.length > 0);
+  assert.ok(land.filter((n) => n.level === "L3" && n.role === "designation").some((n) => /^Mark /.test(n.name)));
+  assert.ok(land.filter((n) => n.level !== "L3").every((n) => !/^Mark [IVX]+$/.test(n.name)));
+  assert.ok(land.filter((n) => n.function !== "locomotive").every((n) => !/^Class \d+$/.test(n.name)));
+});
+
+test("§16.5: as one family: one family per batch, no word twice, ranks keep one initial", () => {
+  for (const module of MODULES) {
+    for (const culture of ["norman-british", "american", "slavic", "japanese", "general"]) {
+      for (let seed = 1; seed <= 40; seed++) {
+        const batch = run(module, { culture, genre: "modern", naming: "types", series: true, count: 5, seed });
+        if (batch.names.length === 0) continue;
+        const label = batch.names.map((n) => n.name).join(" | ");
+        assert.equal(new Set(batch.names.map((n) => n.role)).size, 1, label);
+        assert.equal(new Set(batch.names.map((n) => n.function)).size, 1, label);
+        assert.ok(batch.names.every((n) => n.series?.anchor === "family"), label);
+        const words = batch.names.flatMap((n) => n.name.replace(/ Mark [IV]+$/, "").split(" ")).map((w) => w.toLowerCase()).filter((w) => w !== "super");
+        const role = batch.names[0].role;
+        if (!["classTheme", "designation", "skyShip", "engineType", "future", "carriage", "wagonType", "workType", "spirit"].includes(role) && !/^(General) /.test(batch.names[0].name)) assert.equal(new Set(words).size, words.length, label);
+        if (role === "rank") assert.equal(new Set(batch.names.map((n) => n.name.charAt(0))).size, 1, label);
+      }
+    }
+  }
+  // Designations share a letter prefix and rise in number.
+  let designations = 0;
+  for (let seed = 1; seed <= 200 && designations < 20; seed++) {
+    const batch = run("aircraft", { culture: "slavic", genre: "modern", function: "war", technology: "A5", naming: "types", series: true, count: 5, seed });
+    if (batch.names[0]?.role !== "designation") continue;
+    designations++;
+    const parts = batch.names.map((n) => n.name.match(/^(.*?)(\d+)$/)!);
+    assert.ok(parts.every((p) => p), batch.names.map((n) => n.name).join());
+    assert.equal(new Set(parts.map((p) => p[1])).size, 1);
+    const nums = parts.map((p) => Number(p[2]));
+    assert.deepEqual(nums, [...nums].sort((a, b) => a - b));
+    assert.equal(new Set(nums).size, nums.length);
+  }
+  assert.ok(designations >= 5, `${designations}`);
+});
+
+test("§16.5: no type contains a §14.3 word", () => {
+  for (const module of MODULES) for (const culture of ["general", "american", "norman-british", "japanese"]) {
+    for (const n of manyBatches(module, { culture, genre: "modern", fantastic: true, naming: "types", people: "invented" }, 40, 25)) {
+      assert.ok(!breaksVesselWords(n.name, module), n.name);
+      assert.ok(!AIR_LAND.safeguards.bannedWords.some((w) => new RegExp(`\\b${w}\\b`, "i").test(n.name)), n.name);
+    }
+  }
+});
+
+// ── §16.6 Codes ─────────────────────────────────────────────────────────────
+
+const PATTERNS: Record<string, RegExp> = {
+  general: /^(G-[A-Z]{4}|[A-Z]\d{4}|[A-Z]{2}\d{3}|R\d{2}|[A-Z]{2}-\d{4})$/,
+  american: /^(N\d{3}[A-Z]{2}|\d{2}-\d{5}|\d{2}-\d{4}|ZR-\d|[A-Z]{2}-\d{4})$/,
+};
+
+test("§16.6: codes only with the link on, naming each craft, in MR, MF or SF", () => {
+  for (const module of MODULES) {
+    for (const [, genre, fantastic] of SETTINGS) {
+      const setting = groupSetting(genre, fantastic);
+      const shows = setting === "MR" || setting === "MF" || setting === "SF";
+      for (const naming of ["craft", "types"] as const) {
+        for (const prefixes of [false, true]) {
+          const names = manyBatches(module, { culture: "norman-british", genre, fantastic, naming, prefixes, people: "invented" }, 40, 20);
+          const coded = names.filter((n) => n.code !== undefined);
+          if (prefixes && naming === "craft" && shows) assert.ok(coded.length > 0, `${module} ${setting}`);
+          else assert.equal(coded.length, 0, `${module} ${setting} ${naming} ${prefixes}`);
+          for (const n of coded) assert.ok(n.text !== n.name && n.text.includes(n.code!));
+        }
+      }
+    }
+  }
+});
+
+test("§16.6: aircraft codes: G- only for general and norman-british, N only for american, none at A1 or AF, each as its row says", () => {
+  const rows = AIR_LAND.codes.aircraft.rows;
+  const regex = (pattern: string) => new RegExp(`^${pattern.replace(/\{(A+)\}/g, (_m, a: string) => `[A-Z]{${a.length}}`).replace(/\{(d+)\}/g, (_m, d: string) => `\\d{${d.length}}`)}$`);
+  let seen = 0;
+  for (const c of VESSEL_CULTURES) {
+    for (const tech of ["A1", "A2", "A3", "A4", "A5", "A6", "AF"]) {
+      const names = manyBatches("aircraft", { culture: c.key, genre: "modern", fantastic: true, technology: tech, prefixes: true, people: "invented" }, 12, 10);
+      for (const n of names) {
+        if (n.code === undefined) continue;
+        seen++;
+        assert.ok(!["A1", "AF"].includes(n.level), `${c.key} ${n.level}`);
+        if (n.code.startsWith("G-")) assert.ok(["general", "norman-british"].includes(c.key), `${c.key} ${n.code}`);
+        if (/^N\d/.test(n.code)) assert.equal(c.key, "american", n.code);
+        const mine = rows.filter((r) => r.cultures.includes(c.key));
+        assert.ok(mine.some((r) => r.patterns.some((p) => regex(p).test(n.code!))), `${c.key} ${n.level} ${n.code}`);
+        assert.equal(n.text, `${n.name} (${n.code})`);
+      }
+      if (["A1", "AF"].includes(tech)) assert.ok(names.every((n) => n.code === undefined), `${c.key} ${tech}`);
+    }
+  }
+  assert.ok(seen > 1000, `${seen}`);
+  // In SF any culture's craft show {AA}-{dddd}.
+  const sf = manyBatches("aircraft", { culture: "maya", genre: "scifi", prefixes: true, people: "invented" }, 10, 10);
+  assert.ok(sf.length > 0 && sf.every((n) => /^[A-Z]{2}-\d{4}$/.test(n.code!)));
+  // Cultures with no row for a level show none: French, A2; slavic below A6; ottoman has only A3–A4 rows? (no civil row).
+  assert.ok(manyBatches("aircraft", { culture: "slavic", genre: "modern", technology: "A4", prefixes: true }, 10, 10).every((n) => n.code === undefined));
+  assert.ok(manyBatches("aircraft", { culture: "slavic", genre: "modern", technology: "A6", prefixes: true, function: "airliner" }, 10, 10).every((n) => /^RA-\d{5}$/.test(n.code!)));
+  assert.ok(manyBatches("aircraft", { culture: "general", genre: "modern", technology: "A2", prefixes: true }, 10, 10).every((n) => /^R\d{2}$/.test(n.code!)));
+  assert.ok(manyBatches("aircraft", { culture: "american", genre: "modern", technology: "A2", prefixes: true }, 10, 10).every((n) => /^ZR-\d$/.test(n.code!)));
+  // Military and civil.
+  assert.ok(manyBatches("aircraft", { culture: "norman-british", genre: "modern", technology: "A4", function: "war", prefixes: true }, 10, 10).every((n) => /^[A-Z]\d{4}$/.test(n.code!)));
+  assert.ok(manyBatches("aircraft", { culture: "norman-british", genre: "modern", technology: "A5", function: "bomber", prefixes: true }, 10, 10).every((n) => /^[A-Z]{2}\d{3}$/.test(n.code!)));
+  assert.ok(manyBatches("aircraft", { culture: "american", genre: "modern", technology: "A4", function: "war", prefixes: true }, 10, 10).every((n) => /^\d{2}-\d{5}$/.test(n.code!)));
+  assert.ok(manyBatches("aircraft", { culture: "american", genre: "modern", technology: "A5", function: "war", prefixes: true }, 10, 10).every((n) => /^\d{2}-\d{4}$/.test(n.code!)));
+  for (const k of Object.keys(PATTERNS)) assert.ok(PATTERNS[k]);
+});
+
+test("§16.6: locomotive numbers as §12.2; L3 war codes use the class letter in a letter class", () => {
+  const loco = (culture: string, tech: string) => manyBatches("landVehicles", { culture, genre: "modern", technology: tech, function: "locomotive", prefixes: true, people: "invented" }, 12, 10);
+  for (const n of loco("norman-british", "L2")) assert.match(n.text, /^No\. \d{1,3} \S/, n.text);
+  for (const tech of ["L3", "L4", "L5"]) {
+    for (const n of loco("norman-british", tech)) assert.match(n.text, /^\d{4} \S/, n.text);
+    for (const n of loco("general", tech)) assert.match(n.text, /^\d{4} \S/, n.text);
+    for (const n of loco("indian", tech)) assert.match(n.text, /^No\. \d{4} \S/, n.text);
+    for (const n of loco("japanese", tech)) assert.match(n.text, /^No\. \d{4} \S/, n.text);
+  }
+  assert.ok(loco("norman-british", "L1").length === 0 || loco("norman-british", "L1").every((n) => n.code === undefined));
+  const l6 = manyBatches("landVehicles", { culture: "norman-british", genre: "scifi", technology: "L6", function: "locomotive", prefixes: true, people: "invented" }, 12, 10);
+  assert.ok(l6.length > 0 && l6.every((n) => n.code === undefined));
+  for (const n of loco("norman-british", "L4")) assert.equal(n.text, `${n.code} ${n.name}`);
+  const war = manyBatches("landVehicles", { culture: "norman-british", genre: "modern", technology: "L3", function: "war", prefixes: true }, 30, 10);
+  for (const n of war) assert.match(n.text, /^[A-Z]\d{2} \S/, n.text);
+  assert.ok(manyBatches("landVehicles", { culture: "norman-british", genre: "modern", technology: "L4", function: "war", prefixes: true }, 10, 10).every((n) => n.code === undefined));
+  // Any other function: no code.
+  for (const fn of ["train", "coach", "road", "wagon", "working"]) assert.ok(manyBatches("landVehicles", { culture: "norman-british", genre: "modern", technology: fn === "coach" ? "L3" : "L3", function: fn, prefixes: true }, 10, 10).every((n) => n.code === undefined), fn);
+  // A letter class: the early tanks of one company carry its letter.
+  let letterClasses = 0;
+  for (let seed = 1; seed <= 300 && letterClasses < 10; seed++) {
+    const batch = run("landVehicles", { culture: "norman-british", genre: "modern", technology: "L3", function: "war", series: true, prefixes: true, people: "invented", count: 6, seed });
+    if (batch.names.length < 2 || batch.names[0].series?.anchor !== "letter") continue;
+    letterClasses++;
+    const letter = batch.names[0].name.replace(/^The /, "").charAt(0);
+    for (const n of batch.names) {
+      assert.equal(n.name.replace(/^The /, "").charAt(0), letter, n.text);
+      assert.equal(n.code!.charAt(0), letter, n.text);
+    }
+  }
+  assert.ok(letterClasses >= 5, `${letterClasses}`);
+});
+
+test("§12: a code is never offered a banned word, and codes don't change the name drawn", () => {
+  const plain = run("aircraft", { culture: "norman-british", genre: "modern", technology: "A5", count: 20, seed: 4 });
+  const coded = run("aircraft", { culture: "norman-british", genre: "modern", technology: "A5", prefixes: true, count: 20, seed: 4 });
+  assert.ok(coded.names.every((n) => n.code));
+  for (const n of manyBatches("aircraft", { culture: "iberian", genre: "modern", prefixes: true }, 50, 20)) if (n.code) assert.ok(!breaksVesselWords(n.code, "aircraft") && !/SS/.test(n.code), n.code);
+  assert.equal(plain.names.length, 20);
+});
