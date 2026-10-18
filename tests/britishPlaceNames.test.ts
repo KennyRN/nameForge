@@ -238,6 +238,7 @@ test("line-up: the modules in order, with their labels; river names live in plac
       "hyperspace charts",
       "powers and factions",
       "realms and polities",
+      "peoples and tongues",
       "tribes and kin groups",
       "guilds, companies, and trade",
       "armies and martial orders",

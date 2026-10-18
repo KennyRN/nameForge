@@ -24,6 +24,8 @@ import { EVENT_KINDS, EVENT_SCALES, type EventKind, type EventScale } from "./ev
 import { findMoneyCulture, MONEY_KINDS, MONEY_VALUES, MONEY_WORDS, type MoneyKind, type MoneySeries, type MoneyValue, type MoneyWords } from "./money/engine";
 import { normaliseMoney } from "./money/sentence";
 import { findThingCulture, findThingKind, thingKindsOffered, type ThingModule } from "./things/engine";
+import { PEOPLE_CULTURES, type PeopleDetail, type PeopleGiving } from "./peoples/engine";
+import { placesOffered, type PeopleSource } from "./peoples/sentence";
 import { findTimeCulture, findTimeKind, kindsOffered as timeKindsOffered, TIME_SKY, type TimeKind, type TimeModule, type TimeWords } from "./timesky/data";
 import { DEITY_KINDS, DEITY_DOMAINS, deityCulture, type DeityGender, type DeityKind, type DeityNames } from "./deities/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
@@ -67,9 +69,17 @@ function fields(content: string): { values: Record<string, string>; body: string
   const fm = content.match(FRONTMATTER);
   if (!fm) return undefined;
   const values: Record<string, string> = {};
+  let listKey: string | undefined;
   for (const line of fm[1].split(/\r?\n/)) {
     const m = line.match(/^([A-Za-z][\w-]*):\s*(.*)$/);
-    if (m) values[m[1]] = m[2].trim().replace(/^(['"])(.*)\1$/, "$2");
+    if (m) {
+      values[m[1]] = m[2].trim().replace(/^(['"])(.*)\1$/, "$2");
+      listKey = values[m[1]] === "" ? m[1] : undefined;
+      continue;
+    }
+    // A block list under an empty key (`names:` then `  - Saltgate`) reads as one value, a line per item.
+    const item = line.match(/^\s+-\s+(.*)$/);
+    if (item && listKey) values[listKey] = [values[listKey], item[1].trim().replace(/^(['"])(.*)\1$/, "$2")].filter((x) => x !== "").join("\n");
   }
   return { values, body: content.slice(fm[0].length) };
 }
@@ -82,7 +92,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; time?: TimePreset; thing?: ThingPreset; deity?: DeityPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; time?: TimePreset; thing?: ThingPreset; peoples?: PeoplePreset; deity?: DeityPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -115,6 +125,8 @@ export function parseModulePreset(
   if (values.module === CALENDAR_PRESET_MODULE || values.module === SKY_PRESET_MODULE) return parseTimePreset(values, body, fileName);
   // Named things brief §14: arms, treasure and book presets too.
   if (THING_PRESET_MODULES.includes(values.module)) return parseThingPreset(values, body, fileName);
+  // Peoples and tongues brief §13: peoples presets too.
+  if (values.module === PEOPLE_PRESET_MODULE) return parsePeoplePreset(values, body, fileName);
   // Deities brief §12: deity presets too.
   if (values.module === DEITY_PRESET_MODULE) return parseDeityPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
@@ -152,7 +164,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | MoneyPreset | TimePreset | ThingPreset | DeityPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | MoneyPreset | TimePreset | ThingPreset | PeoplePreset | DeityPreset): string {
+  if ("peopleSource" in preset) return peoplePresetContent(preset);
   if ("thingModule" in preset) return thingPresetContent(preset);
   if ("timeModule" in preset) return timePresetContent(preset);
   if ("deityKind" in preset) return deityPresetContent(preset);
@@ -1574,6 +1587,96 @@ function thingPresetContent(preset: ThingPreset): string {
     `owner: ${pack ? `"[[${preset.owner}]]"` : preset.owner}`,
     ...(pack && preset.ownerSection ? [`ownerSection: ${preset.ownerSection}`] : []),
     `describe: ${preset.describe ? "on" : "off"}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Peoples and tongues presets (Peoples and tongues brief §13) ─────────────
+
+export const PEOPLE_PRESET_MODULE = "peoples-tongues";
+
+export interface PeoplePreset {
+  packName: string;
+  setting: string;
+  description: string;
+  culture: string;
+  /** "typed", "realms", "places" or "pack". */
+  peopleSource: PeopleSource;
+  /** The pack's name, for source pack (written as a link). */
+  pack?: string;
+  /** The pack's `##` heading, or "whole"; empty is the first heading. */
+  section: string;
+  names: string[];
+  era: RouteEra;
+  giving: PeopleGiving;
+  tone: GroupToneChoice;
+  detail: PeopleDetail;
+}
+
+function parsePeoplePreset(values: Record<string, string>, body: string, fileName: string): { peoples?: PeoplePreset; problems: string[] } {
+  const problems: string[] = [];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const culture = pick("culture", "norman-british", (v) => PEOPLE_CULTURES.some((c) => c.key === v));
+  const rawSource = (values.source ?? "").trim();
+  const link = rawSource.match(/^\[\[(.+)\]\]$/);
+  let peopleSource: PeopleSource = "typed";
+  let pack: string | undefined;
+  if (link) {
+    peopleSource = "pack";
+    pack = link[1].split("|")[0];
+  } else if (rawSource === "realms" || rawSource === "places" || rawSource === "typed") peopleSource = rawSource;
+  else if (rawSource) problems.push(`Unknown source “${rawSource}”.`);
+  // §13: new place names for a culture with no place names module runs as new realms.
+  if (peopleSource === "places" && !placesOffered(culture)) {
+    problems.push("New place names isn't offered for this culture; using new realms.");
+    peopleSource = "realms";
+  }
+  const giving = pick<PeopleGiving>("giving", "both", (v) => ["both", "peoples", "languages"].includes(v));
+  const detail = pick<PeopleDetail>("detail", "one", (v) => v === "one" || v === "older" || v === "dialects");
+  return {
+    peoples: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      culture,
+      peopleSource,
+      ...(pack ? { pack } : {}),
+      section: values.section || "",
+      names: (values.names ?? "").split("\n").map((n) => n.trim()).filter(Boolean),
+      era: pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      giving,
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      detail: giving === "peoples" ? "one" : detail,
+    },
+    problems,
+  };
+}
+
+function peoplePresetContent(preset: PeoplePreset): string {
+  const quote = (v: string) => (/^[\s"'\[\-]|[:#]|\s$/.test(v) ? `"${v.replace(/"/g, "'")}"` : v);
+  const source = preset.peopleSource === "pack" ? `"[[${preset.pack ?? ""}]]"` : preset.peopleSource;
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${PEOPLE_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `source: ${source}`,
+    ...(preset.peopleSource === "typed" && preset.names.length > 0 ? ["names:", ...preset.names.map((n) => `  - ${quote(n)}`)] : []),
+    ...(preset.peopleSource === "pack" && preset.section ? [`section: ${preset.section}`] : []),
+    `era: ${preset.era}`,
+    `giving: ${preset.giving}`,
+    `tone: ${preset.tone}`,
+    `detail: ${preset.detail}`,
     "---",
     "",
     preset.description.trim(),

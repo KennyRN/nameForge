@@ -19,6 +19,9 @@ import {
   parseTypedNames,
   syllables,
 } from "../src/peoples/engine";
+import { GROUP_NAMES_ORDER, historySection, SECTION_GROUPS, SECTION_LABELS, SECTION_ORDER } from "../src/sections";
+import { choosePeoples, DEFAULT_PEOPLE_STATE, peopleHistory, peopleSentence, peopleSentenceText, placesOffered, type PeopleSentenceState } from "../src/peoples/sentence";
+import { modulePresetContent, parseModulePreset } from "../src/presets";
 
 const rowFor = (name: string, culture: string, seed: number, era: PeopleEra = "MD", extra: { detail?: "one" | "older" | "dialects"; tone?: "any" } = {}) =>
   makePeopleDrawer({ culture, era, rng: mulberry32(seed), detail: extra.detail })(name);
@@ -425,4 +428,138 @@ test("§10.2: the second stream's seed", () => {
   const b = generatePeopleRows({ names: ["Saltgate", "Velloria"], seed: 12345 });
   assert.deepEqual(a.rows, b.rows);
   assert.equal(PEOPLE_FAMILIES.length, 19);
+});
+
+// ── §15.5 Module ────────────────────────────────────────────────────────────
+
+
+const sentenceOf = (state: PeopleSentenceState, packs: { name: string; headings: string[] }[] = []) => peopleSentenceText(peopleSentence(state, packs));
+
+test("§15.5: the default plain text", () => {
+  assert.equal(sentenceOf(DEFAULT_PEOPLE_STATE), "Norman & British peoples and tongues for names I type, of the medieval era, giving peoples and languages, of any tone, one language name each.");
+});
+
+test("§1.1: peoplesTongues directly follows realms in GROUP_NAMES_ORDER, and the label and history routing", () => {
+  assert.equal(GROUP_NAMES_ORDER[GROUP_NAMES_ORDER.indexOf("realms") + 1], "peoplesTongues");
+  assert.equal(SECTION_LABELS.peoplesTongues, "peoples and tongues");
+  assert.deepEqual(SECTION_GROUPS.groupNames.slice(0, 3), ["powerFactions", "realms", "peoplesTongues"]);
+  assert.equal(SECTION_ORDER[SECTION_ORDER.indexOf("realms") + 1], "peoplesTongues");
+  assert.equal(historySection("peoples and tongues · medieval · Norman & British · names I type"), "peoplesTongues");
+  assert.equal(historySection("realms and polities · historic or low fantasy · General · medieval"), "realms");
+});
+
+test("§1.2: the history label", () => {
+  const state: PeopleSentenceState = { ...DEFAULT_PEOPLE_STATE };
+  assert.equal(peopleHistory(state), "peoples and tongues · medieval · Norman & British · names I type");
+  assert.equal(peopleHistory({ ...state, giving: "peoples", source: "realms" }), "peoples and tongues · medieval · Norman & British · new realms · peoples");
+  assert.equal(peopleHistory({ ...state, giving: "languages", detail: "older", tone: "grim", source: "places" }), "peoples and tongues · medieval · Norman & British · new place names · languages · older forms · grim");
+  assert.equal(peopleHistory({ ...state, detail: "dialects", source: "pack", pack: "Fen Towns" }), "peoples and tongues · medieval · Norman & British · names from Fen Towns · dialects");
+});
+
+test("§2.2: the sentence shows the pack, its section and the detail; the detail hides for peoples", () => {
+  const packs = [{ name: "Fen Towns", headings: ["Towns", "Villages"] }];
+  const pack: PeopleSentenceState = { ...DEFAULT_PEOPLE_STATE, source: "pack", pack: "Fen Towns" };
+  assert.equal(sentenceOf(pack, packs), "Norman & British peoples and tongues for names from Fen Towns, its Towns section, of the medieval era, giving peoples and languages, of any tone, one language name each.");
+  assert.equal(sentenceOf({ ...pack, section: "whole" }, packs), "Norman & British peoples and tongues for names from Fen Towns, the whole pack, of the medieval era, giving peoples and languages, of any tone, one language name each.");
+  assert.equal(sentenceOf({ ...DEFAULT_PEOPLE_STATE, giving: "peoples", era: "IS", source: "realms" }), "Norman & British peoples and tongues for new realms, of the interstellar era, giving peoples, of any tone.");
+  assert.equal(sentenceOf({ ...DEFAULT_PEOPLE_STATE, giving: "languages", detail: "dialects", tone: "grim" }), "Norman & British peoples and tongues for names I type, of the medieval era, giving languages, with a grim edge, with dialects.");
+});
+
+test("§2.3, §2.4: new place names isn't offered for greek-byzantine and steppe, and resets", () => {
+  const source = (culture: string) => {
+    const seg = peopleSentence({ ...DEFAULT_PEOPLE_STATE, culture }).find((s) => typeof s !== "string" && s.field === "source");
+    return typeof seg === "object" ? seg.choices.map((c) => c.id) : [];
+  };
+  assert.deepEqual(source("norman-british"), ["typed", "pack", "realms", "places"]);
+  assert.deepEqual(source("greek-byzantine"), ["typed", "pack", "realms"]);
+  assert.deepEqual(source("steppe"), ["typed", "pack", "realms"]);
+  assert.equal(placesOffered("greek-byzantine"), false);
+  const places = choosePeoples(DEFAULT_PEOPLE_STATE, "source", "places");
+  assert.equal(places.source, "places");
+  assert.equal(choosePeoples(places, "culture", "steppe").source, "realms");
+  assert.equal(choosePeoples(places, "culture", "greek-byzantine").source, "realms");
+  assert.equal(choosePeoples(places, "culture", "chinese").source, "places");
+  const dialects = choosePeoples(DEFAULT_PEOPLE_STATE, "detail", "dialects");
+  assert.equal(dialects.detail, "dialects");
+  assert.equal(choosePeoples(dialects, "giving", "peoples").detail, "one");
+  assert.equal(choosePeoples(dialects, "giving", "languages").detail, "dialects");
+});
+
+test("§2.3: choosing a pack source picks the first pack, and a new pack clears the section", () => {
+  const packs = [{ name: "A", headings: ["One"] }, { name: "B", headings: [] }];
+  const s = choosePeoples(DEFAULT_PEOPLE_STATE, "source", "pack", packs);
+  assert.equal(s.pack, "A");
+  assert.equal(choosePeoples({ ...s, section: "One" }, "pack", "B", packs).section, undefined);
+});
+
+test("§2.3: typed names give one row per name, in order, duplicates removed, at most 50; the batch size is ignored", () => {
+  const names = parseTypedNames("Saltgate\nFenmouth, the Western Fells\nSaltgate\n");
+  const rows = generatePeopleRows({ names, culture: "norman-british", seed: 1 }).rows;
+  assert.deepEqual(rows.map((r) => r.name), ["Saltgate", "Fenmouth", "the Western Fells"]);
+  const many = parseTypedNames(Array.from({ length: 60 }, (_, i) => `Town${String.fromCharCode(97 + (i % 26))}${i}`).join("\n"));
+  assert.equal(generatePeopleRows({ names: many, seed: 1 }).rows.length, 50);
+});
+
+test("§9: rows follow the layout for each giving and detail", () => {
+  const base = { names: ["Saltgate"], culture: "norman-british", era: "MD", seed: 5 };
+  for (let seed = 1; seed <= 100; seed++) {
+    const both = generatePeopleRows({ ...base, seed, giving: "both", detail: "older" }).rows[0];
+    assert.match(both.text, /^Saltgate: .+ \(person\), .+ \(adjective\), the .+ \(people\), .+ \(language(; earlier [^)]+)?\)$/);
+    const dia = generatePeopleRows({ ...base, seed, giving: "languages", detail: "dialects" }).rows[0];
+    // The man family's "the speech of …" is a finished phrase: it has no older forms or dialects.
+    if (dia.language.startsWith("the speech of")) assert.equal(dia.text, "Saltgate: the speech of Saltgate (language)");
+    else assert.match(dia.text, /^Saltgate: .+ \(language; dialects [^,]+, [^,]+, [^)]+\)$/);
+    const peoples = generatePeopleRows({ ...base, seed, giving: "peoples", detail: "dialects" }).rows[0];
+    assert.doesNotMatch(peoples.text, /language/);
+  }
+  const folk = generatePeopleRows({ names: ["Saltgate"], culture: "anglo-saxon", seed: 1 });
+  for (let seed = 1; seed <= 200; seed++) {
+    const r = generatePeopleRows({ names: ["Saltgate"], culture: "anglo-saxon", seed, giving: "peoples" }).rows[0];
+    if (r.family === "folk") assert.doesNotMatch(r.text, /\(person\)/);
+  }
+  assert.ok(folk.rows.length === 1);
+});
+
+test("§13: the preset round trip, with names and the fall-backs", () => {
+  const preset = {
+    packName: "Saltmarsh peoples",
+    setting: "",
+    description: "Norman & British peoples and tongues for names I type, of the medieval era, giving peoples and languages, of any tone, with older forms.",
+    culture: "norman-british",
+    peopleSource: "typed" as const,
+    section: "",
+    names: ["Saltgate", "Fenmouth", "the Western Fells"],
+    era: "MD" as const,
+    giving: "both" as const,
+    tone: "any" as const,
+    detail: "older" as const,
+  };
+  const text = modulePresetContent(preset);
+  assert.match(text, /module: peoples-tongues/);
+  assert.match(text, /names:\n {2}- Saltgate\n {2}- Fenmouth\n {2}- the Western Fells\n/);
+  const back = parseModulePreset(text, "x").peoples!;
+  assert.deepEqual(back.names, preset.names);
+  assert.deepEqual({ ...back, setting: "" }, preset);
+  assert.deepEqual(parseModulePreset(text, "x").problems, []);
+  // A pack link, with a section.
+  const packText = modulePresetContent({ ...preset, peopleSource: "pack", pack: "Fen Towns", section: "Towns", names: [] });
+  assert.match(packText, /source: "\[\[Fen Towns\]\]"/);
+  const pack = parseModulePreset(packText, "x").peoples!;
+  assert.equal(pack.peopleSource, "pack");
+  assert.equal(pack.pack, "Fen Towns");
+  assert.equal(pack.section, "Towns");
+  // New place names for greek-byzantine and steppe runs as realms.
+  const places = parseModulePreset("---\ntype: module-preset\nmodule: peoples-tongues\nculture: steppe\nsource: places\n---\n", "x");
+  assert.equal(places.peoples!.peopleSource, "realms");
+  // Defaults: a bare preset.
+  const bare = parseModulePreset("---\ntype: module-preset\nmodule: peoples-tongues\n---\n", "Bare").peoples!;
+  assert.deepEqual({ ...bare, description: "" }, { packName: "Bare", setting: "", description: "", culture: "norman-british", peopleSource: "typed", section: "", names: [], era: "MD", giving: "both", tone: "any", detail: "one" });
+  // Unknown values are reported and take their defaults; peoples resets the detail.
+  const odd = parseModulePreset("---\ntype: module-preset\nmodule: peoples-tongues\nculture: nowhere\ngiving: peoples\ndetail: dialects\nsource: sideways\n---\n", "x");
+  assert.equal(odd.peoples!.culture, "norman-british");
+  assert.equal(odd.peoples!.detail, "one");
+  assert.equal(odd.problems.length, 2);
+  // A name that needs quoting survives.
+  const quoted = modulePresetContent({ ...preset, names: ["Port: Saltgate", "Saint Aldhelm's", "#7"] });
+  assert.deepEqual(parseModulePreset(quoted, "x").peoples!.names, ["Port: Saltgate", "Saint Aldhelm's", "#7"]);
 });

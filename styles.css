@@ -694,6 +694,18 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
   margin-top: 4px;
 }
 
+/* Peoples and tongues: the typed names box sits under the sentence, on a line of its own. */
+.nameforge-modal__people-names {
+  flex: 1 0 100%;
+  min-width: 260px;
+  margin: 8px 0 0;
+  resize: vertical;
+}
+
+.nameforge-modal .nameforge-modal__context-toggle.is-sentence.is-before-pill > .nameforge-modal__people-names {
+  margin-bottom: 0;
+}
+
 .nameforge-modal--panel .nameforge-modal__generate-pill.is-after-sentence {
   margin-top: 12px;
 }

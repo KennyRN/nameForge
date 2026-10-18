@@ -72,6 +72,8 @@ export type NameForgeSection =
   | "familyNames"
   // Realms brief §1.1: realms and polities, after tribes and kin groups.
   | "realms"
+  // Peoples and tongues brief §1.1: in group names, directly after realms and polities.
+  | "peoplesTongues"
   // Ships brief §1.1: ships and boats, spacecraft and stations (in the advanced group).
   | "ships"
   | "spacecraft"
@@ -105,7 +107,7 @@ export const GROUP_NAME_SECTIONS: NameForgeSection[] = [
 ];
 
 /** The group names group's line-up in the switcher and menus. */
-export const GROUP_NAMES_ORDER: NameForgeSection[] = ["powerFactions", "realms", "tribalNames", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts"];
+export const GROUP_NAMES_ORDER: NameForgeSection[] = ["powerFactions", "realms", "peoplesTongues", "tribalNames", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts"];
 
 export const SECTION_ORDER: NameForgeSection[] = [
   "markov",
@@ -191,6 +193,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   nameTakeover: "name takeover",
   tribalNames: "tribes and kin groups",
   realms: "realms and polities",
+  peoplesTongues: "peoples and tongues",
   mysticOrders: "faiths and mystic orders",
   martialOrders: "armies and martial orders",
   underworldGroups: "thieves and the underworld",
@@ -256,6 +259,8 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(SECTION_LABELS.sacredPlaces)) return "sacredPlaces";
   // Realms brief §1.2: "realms and polities · {setting} · {culture} · {era}…".
   if (starts(SECTION_LABELS.realms)) return "realms";
+  // Peoples and tongues brief §1.1: "peoples and tongues · {era} · {culture}…".
+  if (starts(SECTION_LABELS.peoplesTongues)) return "peoplesTongues";
   // Group brief §1.2: each group-name module's label starts its history rows.
   for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   // Bynames brief §1.2: "{module label} · {setting} · {culture}…".
