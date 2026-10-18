@@ -617,7 +617,8 @@ function token(ctx: Ctx, name: string, mod?: string): string | undefined {
       return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
     case "god": {
       const g = godName(ctx);
-      return g && mod === "poss" ? groupPossessive(g, false) : g;
+      // "the Twins" is plural: the Twins' Bull (OUP).
+      return g && mod === "poss" ? groupPossessive(g, /^the .+s$/i.test(g)) : g;
     }
     case "company":
       return company(ctx);

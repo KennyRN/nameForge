@@ -1021,3 +1021,10 @@ test("§14: other modules' presets are not read as money presets", () => {
   assert.equal(parseModulePreset(event, "E").money, undefined);
   assert.ok(parseModulePreset(event, "E").event);
 });
+
+test("§11: a plural god takes the OUP apostrophe: the Twins' Bull, Venus's Laurel", () => {
+  const names = many({ culture: "roman", era: "AN", kind: "coin", shape: "{god:poss} {emblem}" }, 600).map((n) => n.text);
+  assert.ok(names.some((n) => n.startsWith("the Twins' ")), "no Twins name in 600");
+  for (const n of names) assert.ok(!/Twins's/.test(n), n);
+  assert.ok(names.some((n) => /^Venus's /.test(n)));
+});

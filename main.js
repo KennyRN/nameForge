@@ -93790,7 +93790,7 @@ function token11(ctx, name, mod) {
       return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
     case "god": {
       const g = godName2(ctx);
-      return g && mod === "poss" ? groupPossessive(g, false) : g;
+      return g && mod === "poss" ? groupPossessive(g, /^the .+s$/i.test(g)) : g;
     }
     case "company":
       return company(ctx);
