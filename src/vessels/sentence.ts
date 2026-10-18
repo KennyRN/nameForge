@@ -6,14 +6,17 @@
 import { type GroupGenre, type GroupPeople, type GroupToneChoice, GROUP_TONES, groupSetting, SETTING_PHRASES, TONE_PHRASES } from "../groups/engine";
 import { FANTASTIC_TEXT, GENRE_TEXT } from "../groups/sentence";
 import {
+  AIR_LAND,
   availableFunctions,
   availableStyles,
   functionAny,
+  isAirLand,
   prefixSetting,
   techChoices,
   techLabel,
   VESSEL_CULTURES,
   type VesselModule,
+  type VesselNaming,
 } from "./engine";
 
 export interface VesselSentenceState {
@@ -29,23 +32,27 @@ export interface VesselSentenceState {
   prefixes: boolean;
   people: GroupPeople;
   series: boolean;
+  /** Aircraft and land brief §2.2: individual craft, or types and models (the new modules only). */
+  naming?: VesselNaming;
 }
 
 export function defaultVesselState(module: VesselModule): VesselSentenceState {
   return {
-    culture: "general",
+    // Aircraft and land brief §2.2: aircraft default to General, land vehicles to Norman & British, in a modern world.
+    culture: module === "landVehicles" ? "norman-british" : "general",
     technology: "any",
-    genre: module === "spacecraft" ? "scifi" : "fantasy",
+    genre: module === "spacecraft" ? "scifi" : isAirLand(module) ? "modern" : "fantasy",
     fantastic: false,
     style: "none",
     tone: "any",
     prefixes: false,
     people: "placeholders",
     series: false,
+    ...(isAirLand(module) ? { naming: "craft" as VesselNaming } : {}),
   };
 }
 
-export type VesselField = "culture" | "function" | "technology" | "genre" | "fantastic" | "style" | "tone" | "prefixes" | "people" | "series";
+export type VesselField = "naming" | "culture" | "function" | "technology" | "genre" | "fantastic" | "style" | "tone" | "prefixes" | "people" | "series";
 
 export interface VesselChoice {
   id: string | undefined;
@@ -68,6 +75,13 @@ export function vesselSetting(state: Pick<VesselSentenceState, "genre" | "fantas
 /** §2.2: whether the prefix link shows (MR, MF and SF). */
 export const showsPrefixes = (state: VesselSentenceState) => prefixSetting(vesselSetting(state));
 
+/** Aircraft and land brief §2.2: the codes link shows only in MR, MF and SF, and only naming each craft. */
+export const showsCodes = (state: VesselSentenceState, module: VesselModule) => isAirLand(module) && showsPrefixes(state) && (state.naming ?? "craft") === "craft";
+
+/** Aircraft and land brief §5.1: at AF the private function reads "sky yachts". */
+const airLandFunction = (f: { menu: string; plural: string; afMenu?: string; afPlural?: string }, technology: string) =>
+  technology === "AF" && f.afMenu ? { menu: f.afMenu, plural: f.afPlural ?? f.plural } : { menu: f.menu, plural: f.plural };
+
 export function vesselSentence(state: VesselSentenceState, module: VesselModule): VesselSegment[] {
   const out: VesselSegment[] = [];
   const culture = VESSEL_CULTURES.find((c) => c.key === state.culture) ?? VESSEL_CULTURES[0];
@@ -80,13 +94,15 @@ export function vesselSentence(state: VesselSentenceState, module: VesselModule)
     current: culture.key,
   });
   out.push("-themed ");
-  const fns = availableFunctions(module, culture.key, state.technology, setting);
+  const airLand = isAirLand(module);
+  const naming = state.naming ?? "craft";
+  const fns = availableFunctions(module, culture.key, state.technology, setting, naming);
   const fn = fns.find((f) => f.key === state.function);
   out.push({
     field: "function",
-    text: fn ? fn.plural : functionAny(module),
+    text: fn ? (airLand ? airLandFunction(fn, state.technology).plural : fn.plural) : functionAny(module),
     title: fn ? fn.description : functionAny(module),
-    choices: [{ id: undefined, label: "Any" }, ...fns.map((f) => ({ id: f.key, label: f.menu }))],
+    choices: [{ id: undefined, label: "Any" }, ...fns.map((f) => ({ id: f.key, label: airLand ? airLandFunction(f, state.technology).menu : f.menu }))],
     current: fn?.key,
   });
   out.push(" with ");
@@ -108,7 +124,8 @@ export function vesselSentence(state: VesselSentenceState, module: VesselModule)
   });
   out.push(" world");
   if (state.genre !== "scifi") {
-    const phrases = FANTASTIC_TEXT[state.genre];
+    // Aircraft and land brief §2.1: a modern world reads "of the real world" in the new modules.
+    const phrases: [string, string] = airLand && state.genre === "modern" ? ["of the real world", FANTASTIC_TEXT.modern[1]] : FANTASTIC_TEXT[state.genre];
     out.push(" ");
     out.push({
       field: "fantastic",
@@ -118,8 +135,19 @@ export function vesselSentence(state: VesselSentenceState, module: VesselModule)
       current: state.fantastic ? "on" : "off",
     });
   }
+  if (airLand) {
+    // Aircraft and land brief §2.1: "naming ‹each craft›".
+    out.push(", naming ");
+    out.push({
+      field: "naming",
+      text: AIR_LAND.naming[module][naming],
+      title: "Name single craft (Lucky Kate, Ashby Castle), or the types and models they belong to (Kestrel, the Castle class).",
+      choices: (["craft", "types"] as VesselNaming[]).map((n) => ({ id: n, label: AIR_LAND.naming[module][n] })),
+      current: naming,
+    });
+  }
   out.push(", in ");
-  const styles = availableStyles(module, setting);
+  const styles = availableStyles(module, setting, state.technology);
   const style = styles.find((s) => s.key === state.style);
   out.push({
     field: "style",
@@ -136,15 +164,17 @@ export function vesselSentence(state: VesselSentenceState, module: VesselModule)
     choices: (["any", ...GROUP_TONES] as GroupToneChoice[]).map((t) => ({ id: t, label: TONE_PHRASES[t] })),
     current: state.tone,
   });
-  if (showsPrefixes(state)) {
+  if (airLand ? showsCodes(state, module) : showsPrefixes(state)) {
+    // Aircraft and land brief §2.2: the prefix link becomes the codes link, with its own words.
+    const words = airLand ? AIR_LAND.codes.words[module] : PREFIX_TEXT;
     out.push(", ");
     out.push({
       field: "prefixes",
-      text: PREFIX_TEXT[state.prefixes ? "on" : "off"],
-      title: "Prefixes such as HMS or SS, where the culture and period used them",
+      text: words[state.prefixes ? "on" : "off"],
+      title: airLand ? "Registrations, serials and running numbers where the culture and period used them." : "Prefixes such as HMS or SS, where the culture and period used them",
       choices: [
-        { id: "off", label: PREFIX_TEXT.off },
-        { id: "on", label: PREFIX_TEXT.on },
+        { id: "off", label: words.off },
+        { id: "on", label: words.on },
       ],
       current: state.prefixes ? "on" : "off",
     });
@@ -158,15 +188,16 @@ export function vesselSentence(state: VesselSentenceState, module: VesselModule)
     current: state.people,
   });
   out.push(" people and places, ");
-  // §2.2: the class link shows only with a function; the text still ends "each one separate" (§16.8).
-  if (fn) {
+  // §2.2: the class link shows only with a function (types: always, as one family); the text still ends "each one separate" (§16.8).
+  if (fn || naming === "types") {
+    const words = naming === "types" ? { off: SERIES_TEXT.off, on: "as one family" } : SERIES_TEXT;
     out.push({
       field: "series",
-      text: SERIES_TEXT[state.series ? "on" : "off"],
-      title: "A class: one shape, sharing a word, an owner or a number sequence",
+      text: words[state.series ? "on" : "off"],
+      title: naming === "types" ? "A family: one maker's line of types, all on one pattern, with no word twice" : "A class: one shape, sharing a word, an owner or a number sequence",
       choices: [
-        { id: "off", label: SERIES_TEXT.off },
-        { id: "on", label: SERIES_TEXT.on },
+        { id: "off", label: words.off },
+        { id: "on", label: words.on },
       ],
       current: state.series ? "on" : "off",
     });
@@ -215,12 +246,17 @@ export function chooseVessel(state: VesselSentenceState, field: VesselField, id:
     case "series":
       next.series = id === "on";
       break;
+    case "naming":
+      // Aircraft and land brief §2.3: a change of naming resets the series; a function not offered for it resets to Any.
+      next.naming = id === "types" ? "types" : "craft";
+      next.series = false;
+      break;
   }
   const setting = vesselSetting(next);
   if (!techChoices(module, setting).includes(next.technology) && next.technology !== "any") next.technology = "any";
-  if (next.function && !availableFunctions(module, next.culture, next.technology, setting).some((f) => f.key === next.function)) next.function = undefined;
-  if (!next.function) next.series = false;
-  if (next.style !== "none" && !availableStyles(module, setting).some((s) => s.key === next.style)) next.style = "none";
+  if (next.function && !availableFunctions(module, next.culture, next.technology, setting, next.naming ?? "craft").some((f) => f.key === next.function)) next.function = undefined;
+  if (!next.function && (next.naming ?? "craft") !== "types") next.series = false;
+  if (next.style !== "none" && !availableStyles(module, setting, next.technology).some((s) => s.key === next.style)) next.style = "none";
   return next;
 }
 
@@ -228,7 +264,9 @@ export function chooseVessel(state: VesselSentenceState, field: VesselField, id:
 export function vesselHistory(module: VesselModule, state: VesselSentenceState, label: string): string {
   const setting = vesselSetting(state);
   const culture = VESSEL_CULTURES.find((c) => c.key === state.culture)?.label ?? "General";
-  const style = availableStyles(module, setting).find((s) => s.key === state.style);
+  const style = availableStyles(module, setting, state.technology).find((s) => s.key === state.style);
+  const airLand = isAirLand(module);
+  const types = airLand && state.naming === "types";
   return [
     label,
     SETTING_PHRASES[setting],
@@ -236,6 +274,9 @@ export function vesselHistory(module: VesselModule, state: VesselSentenceState, 
     state.technology === "any" ? "any technology" : techLabel(module, state.technology),
     ...(style ? [style.label] : []),
     ...(state.tone !== "any" ? [state.tone] : []),
-    ...(state.series && state.function ? ["class"] : []),
+    // Aircraft and land brief §1.2: types, codes, then class or family.
+    ...(types ? ["types"] : []),
+    ...(airLand && state.prefixes && showsCodes(state, module) ? ["codes"] : []),
+    ...(types ? (state.series ? ["family"] : []) : state.series && state.function ? ["class"] : []),
   ].join(" · ");
 }

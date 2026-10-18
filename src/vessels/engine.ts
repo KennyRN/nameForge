@@ -1450,11 +1450,12 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
     const varies = (record: Drawn[]) => record.some((d) => !(placeholders && PLACEHOLDER_TOKENS.has(d.name)));
     const accept = (built: Built | undefined, name: VesselName | undefined) => {
       if (!built || !name || !varies(built.record)) return undefined;
-      if (drawnWords(built.record).some((w) => used.has(w))) return undefined;
+      // A class draws no token twice (two saints may both be "Saint …", two towns are two names).
+      if (built.record.some((d) => used.has(d.text.toLowerCase()))) return undefined;
       return name;
     };
     const take = (built: Built, name: VesselName) => {
-      for (const w of drawnWords(built.record)) used.add(w);
+      for (const d of built.record) used.add(d.text.toLowerCase());
       add({ ...name, series: info });
     };
     const initial = (name: string) => name.replace(/^The /, "").charAt(0).toUpperCase();

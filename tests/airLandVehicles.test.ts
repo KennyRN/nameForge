@@ -4,6 +4,9 @@ import assert from "node:assert/strict";
 import { groupSetting, hasBannedWord, normForBlock } from "../src/groups/engine";
 import { breaksMoneyWords } from "../src/money/engine";
 import "../src/realms/engine";
+import { historySection, SECTION_GROUPS, SECTION_LABELS, SECTION_ORDER, VESSEL_SECTIONS } from "../src/sections";
+import { modulePresetContent, parseModulePreset, type VesselPreset } from "../src/presets";
+import { chooseVessel, defaultVesselState, showsCodes, vesselHistory, vesselSentence, vesselSentenceText, type VesselSentenceState } from "../src/vessels/sentence";
 import {
   AIR_LAND,
   anyLevels,
@@ -688,4 +691,189 @@ test("§12: a code is never offered a banned word, and codes don't change the na
   assert.ok(coded.names.every((n) => n.code));
   for (const n of manyBatches("aircraft", { culture: "iberian", genre: "modern", prefixes: true }, 50, 20)) if (n.code) assert.ok(!breaksVesselWords(n.code, "aircraft") && !/SS/.test(n.code), n.code);
   assert.equal(plain.names.length, 20);
+});
+
+// ── §16.8 Sentences and presets ─────────────────────────────────────────────
+
+const text = (module: VesselModule, state: VesselSentenceState = defaultVesselState(module)) => vesselSentenceText(vesselSentence(state, module));
+const link = (module: VesselModule, state: VesselSentenceState, field: string) => vesselSentence(state, module).find((x) => typeof x !== "string" && x.field === field) as { text: string; choices: { id?: string; label: string }[]; title: string; current?: string } | undefined;
+
+test("§16.8: the default sentences", () => {
+  assert.equal(text("aircraft"), "General-themed aircraft of any kind with any technology, for a modern world of the real world, naming each craft, in no particular style, of any tone, without codes, with placeholders for people and places, each one separate.");
+  assert.equal(text("landVehicles"), "Norman & British-themed land vehicles of any kind with any technology, for a modern world of the real world, naming each vehicle, in no particular style, of any tone, without numbers, with placeholders for people and places, each one separate.");
+  // Ships and spacecraft read as they did.
+  assert.equal(text("ships"), "General-themed ships and boats of any kind with any technology, for a fantasy world of historic or low fantasy, in no particular style, of any tone, with placeholders for people and places, each one separate.");
+});
+
+test("§16.8: aircraft and landVehicles follow spacecraft in VESSEL_SECTIONS, with their labels and history", () => {
+  assert.deepEqual(VESSEL_SECTIONS, ["ships", "spacecraft", "aircraft", "landVehicles"]);
+  assert.deepEqual(SECTION_GROUPS.vehicles, VESSEL_SECTIONS);
+  assert.equal(SECTION_ORDER[SECTION_ORDER.indexOf("spacecraft") + 1], "aircraft");
+  assert.equal(SECTION_ORDER[SECTION_ORDER.indexOf("spacecraft") + 2], "landVehicles");
+  assert.equal(SECTION_LABELS.aircraft, "aircraft and airships");
+  assert.equal(SECTION_LABELS.landVehicles, "land vehicles");
+  assert.equal(historySection("aircraft and airships · real-world modern · General · any technology"), "aircraft");
+  assert.equal(historySection("land vehicles · real-world modern · Norman & British · steam"), "landVehicles");
+  assert.equal(historySection("spacecraft and stations · science fiction · General · any technology"), "spacecraft");
+  assert.equal(historySection("ships and boats · modern · General · any technology"), "ships");
+});
+
+test("§2.2: the naming, codes and series links", () => {
+  const air = defaultVesselState("aircraft");
+  assert.equal(link("aircraft", air, "naming")!.text, "each craft");
+  assert.equal(link("landVehicles", defaultVesselState("landVehicles"), "naming")!.text, "each vehicle");
+  assert.deepEqual(link("aircraft", air, "naming")!.choices.map((c) => c.label), ["each craft", "types and models"]);
+  assert.equal(link("aircraft", air, "naming")!.title, "Name single craft (Lucky Kate, Ashby Castle), or the types and models they belong to (Kestrel, the Castle class).");
+  // Codes: MR, MF and SF, and only naming each craft.
+  assert.equal(link("aircraft", air, "prefixes")!.text, "without codes");
+  assert.deepEqual(link("aircraft", air, "prefixes")!.choices.map((c) => c.label), ["without codes", "with registrations"]);
+  assert.deepEqual(link("landVehicles", defaultVesselState("landVehicles"), "prefixes")!.choices.map((c) => c.label), ["without numbers", "with numbers"]);
+  assert.equal(link("aircraft", air, "prefixes")!.title, "Registrations, serials and running numbers where the culture and period used them.");
+  assert.equal(link("aircraft", { ...air, genre: "fantasy" }, "prefixes"), undefined);
+  assert.ok(link("aircraft", { ...air, genre: "fantasy", fantastic: true }, "prefixes") === undefined);
+  assert.ok(link("aircraft", { ...air, genre: "modern", fantastic: true }, "prefixes"));
+  assert.ok(link("aircraft", { ...air, genre: "scifi" }, "prefixes"));
+  assert.equal(link("aircraft", { ...air, naming: "types" }, "prefixes"), undefined);
+  assert.equal(showsCodes({ ...air, naming: "types" }, "aircraft"), false);
+  assert.equal(showsCodes(air, "ships"), false);
+  // Series: with a function; types always, as one family.
+  assert.equal(link("aircraft", air, "series"), undefined);
+  assert.equal(link("aircraft", { ...air, function: "war" }, "series")!.choices[1].label, "as one class");
+  assert.equal(link("aircraft", { ...air, naming: "types" }, "series")!.choices[1].label, "as one family");
+  assert.equal(text("aircraft", { ...air, naming: "types", series: true }), "General-themed aircraft of any kind with any technology, for a modern world of the real world, naming types and models, in no particular style, of any tone, with placeholders for people and places, as one family.");
+  assert.equal(text("landVehicles", { ...defaultVesselState("landVehicles"), function: "locomotive", technology: "L3", prefixes: true, series: true, people: "invented" }), "Norman & British-themed locomotives with early motor technology, for a modern world of the real world, naming each vehicle, in no particular style, of any tone, with numbers, with invented people and places, as one class.");
+  // Sky yachts at AF.
+  const af = { ...air, genre: "modern" as const, fantastic: true, technology: "AF" };
+  assert.deepEqual(link("aircraft", af, "function")!.choices.map((c) => c.label).filter((l) => /yacht/i.test(l)), ["Sky yachts"]);
+  assert.ok(link("aircraft", { ...af, technology: "A4" }, "function")!.choices.some((c) => c.label === "Private and sport"));
+});
+
+test("§2.3: resets", () => {
+  const air = { ...defaultVesselState("aircraft"), function: "war", series: true };
+  const types = chooseVessel(air, "naming", "types", "aircraft");
+  assert.equal(types.naming, "types");
+  assert.equal(types.series, false);
+  assert.equal(types.function, "war");
+  // A function not offered for the naming resets to Any: named trains aren't types.
+  const train = { ...defaultVesselState("landVehicles"), function: "train", series: true };
+  const trainTypes = chooseVessel(train, "naming", "types", "landVehicles");
+  assert.equal(trainTypes.function, undefined);
+  assert.equal(trainTypes.series, false);
+  assert.equal(chooseVessel(train, "series", "off", "landVehicles").series, false);
+  // A family needs no function.
+  assert.equal(chooseVessel(types, "function", undefined, "aircraft").series, false);
+  assert.equal(chooseVessel(chooseVessel({ ...defaultVesselState("aircraft"), naming: "types" }, "series", "on", "aircraft"), "tone", "grim", "aircraft").series, true);
+  // Fantastic off: AF and LF go back to any.
+  const fantastic = { ...defaultVesselState("aircraft"), genre: "fantasy" as const, fantastic: true, technology: "AF" };
+  assert.equal(chooseVessel(fantastic, "fantastic", "off", "aircraft").technology, "any");
+  assert.equal(chooseVessel({ ...fantastic, technology: "A1" }, "fantastic", "off", "aircraft").technology, "A1");
+  const lf = { ...defaultVesselState("landVehicles"), genre: "fantasy" as const, fantastic: true, technology: "LF" };
+  assert.equal(chooseVessel(lf, "fantastic", "off", "landVehicles").technology, "any");
+  assert.equal(chooseVessel(lf, "genre", "scifi", "landVehicles").technology, "any");
+  // Styles that need AF or LF drop out with it.
+  const heroic = { ...fantastic, style: "heroic" };
+  assert.equal(chooseVessel(heroic, "technology", "A1", "aircraft").style, "none");
+  assert.equal(chooseVessel(heroic, "culture", "norse", "aircraft").style, "heroic");
+});
+
+test("§13: styles by module", () => {
+  const keys = (module: VesselModule, setting: "FH" | "MR" | "MF" | "SF", tech?: string) => availableStyles(module, groupSetting(setting === "FH" ? "fantasy" : setting === "SF" ? "scifi" : "modern", setting === "FH" || setting === "MF"), tech).map((s) => s.key);
+  assert.deepEqual(keys("aircraft", "FH", "AF").sort(), ["dark", "dwarven", "elven", "fpirate", "heroic", "steampunk"].sort());
+  assert.deepEqual(keys("aircraft", "FH", "A1").sort(), ["dark", "steampunk"].sort());
+  assert.deepEqual(keys("landVehicles", "FH", "LF").sort(), ["dark", "dwarven", "elven", "heroic", "steampunk"].sort());
+  assert.deepEqual(keys("landVehicles", "FH", "L1").sort(), ["dark", "steampunk"].sort());
+  assert.ok(!keys("aircraft", "MR").includes("oceanic") && !keys("landVehicles", "SF").includes("oceanic"));
+  assert.ok(keys("aircraft", "SF").includes("sfexplore") && !keys("landVehicles", "SF").includes("sfexplore"));
+  for (const k of ["sfmilitary", "corporate", "colony", "ai", "alien", "outlaw"]) assert.ok(keys("aircraft", "SF").includes(k) && keys("landVehicles", "SF").includes(k), k);
+  for (const k of ["dieselpunk", "postapoc", "wasteland"]) assert.ok(keys("aircraft", "MF").includes(k) && keys("landVehicles", "MF").includes(k), k);
+  assert.equal(availableStyles("aircraft", "FH", "AF").find((s) => s.key === "fpirate")!.label, "sky pirate");
+  assert.equal(availableStyles("landVehicles", "FH", "LF").some((s) => s.key === "fpirate"), false);
+  // A style draws its names: sky pirate, dwarven war engines.
+  const pirate = run("aircraft", { culture: "general", genre: "fantasy", fantastic: true, technology: "AF", style: "fpirate", count: 200, seed: 8 });
+  assert.ok(pirate.names.some((n) => n.route === "style"));
+  const dwarven = run("landVehicles", { culture: "general", genre: "fantasy", fantastic: true, technology: "LF", style: "dwarven", count: 200, seed: 8 });
+  assert.ok(dwarven.names.some((n) => n.route === "style"));
+  const none = run("aircraft", { culture: "general", genre: "modern", technology: "A4", style: "heroic" });
+  assert.ok(none.notices.some((n) => /isn't available/.test(n)));
+});
+
+test("§1.2: history labels", () => {
+  const air = defaultVesselState("aircraft");
+  const label = (module: VesselModule, state: VesselSentenceState) => vesselHistory(module, state, SECTION_LABELS[module]);
+  assert.equal(label("aircraft", air), "aircraft and airships · real-world modern · General · any technology");
+  assert.equal(label("aircraft", { ...air, naming: "types" }), "aircraft and airships · real-world modern · General · any technology · types");
+  assert.equal(label("aircraft", { ...air, prefixes: true, tone: "grim", function: "war", series: true }), "aircraft and airships · real-world modern · General · any technology · grim · codes · class");
+  assert.equal(label("aircraft", { ...air, naming: "types", series: true }), "aircraft and airships · real-world modern · General · any technology · types · family");
+  assert.equal(label("landVehicles", { ...defaultVesselState("landVehicles"), technology: "L2", prefixes: true }), "land vehicles · real-world modern · Norman & British · steam · codes");
+  // No codes where the link is hidden.
+  assert.equal(label("aircraft", { ...air, genre: "fantasy", prefixes: true }), "aircraft and airships · historic or low fantasy · General · any technology");
+  // Ships are unchanged.
+  assert.equal(label("ships", { ...defaultVesselState("ships"), prefixes: true, series: true, function: "war" }), "ships and boats · historic or low fantasy · General · any technology · class");
+});
+
+const PRESET: VesselPreset = {
+  packName: "Western Region engines", setting: "", description: "Norman & British-themed locomotives with early motor technology, for a modern world of the real world, naming each vehicle, in no particular style, of any tone, with numbers, with invented people and places, as one class.",
+  vesselModule: "landVehicles", culture: "norman-british", function: "locomotive", technology: "L3", genre: "modern", fantastic: false, style: "none", tone: "any", prefixes: true, people: "invented", series: true, naming: "craft",
+};
+
+test("§15: presets round-trip for the new modules, with naming", () => {
+  const content = modulePresetContent(PRESET);
+  assert.match(content, /vesselModule: landVehicles/);
+  assert.match(content, /\nnaming: craft\n/);
+  const back = parseModulePreset(content, "x");
+  assert.deepEqual(back.problems, []);
+  assert.deepEqual(back.vessel, PRESET);
+  for (const preset of [
+    { ...PRESET, vesselModule: "aircraft" as const, culture: "american", function: "airliner", technology: "A4", naming: "types" as const, series: true },
+    { ...PRESET, vesselModule: "aircraft" as const, culture: "general", function: "any", technology: "any", naming: "types" as const, series: true },
+    { ...PRESET, vesselModule: "aircraft" as const, genre: "fantasy" as const, fantastic: true, technology: "AF", function: "war", style: "fpirate", prefixes: false, series: false },
+    { ...PRESET, genre: "fantasy" as const, fantastic: true, technology: "LF", function: "war", style: "dwarven", prefixes: false },
+  ]) {
+    const round = parseModulePreset(modulePresetContent(preset), "x");
+    assert.deepEqual(round.problems, [], JSON.stringify(preset));
+    assert.deepEqual(round.vessel, preset);
+  }
+  // The runs of a preset agree with the module.
+  const names = run("landVehicles", { culture: back.vessel!.culture, function: back.vessel!.function, technology: back.vessel!.technology, prefixes: back.vessel!.prefixes, people: back.vessel!.people, series: back.vessel!.series, naming: back.vessel!.naming });
+  assert.equal(names.names.length, 20);
+  assert.ok(names.names.every((n) => /^\d{4} /.test(n.text)));
+});
+
+test("§15: a preset with AF or LF in a world without fantastic runs with technology any, and says so; defaults for the new modules", () => {
+  const af = parseModulePreset(modulePresetContent({ ...PRESET, vesselModule: "aircraft", culture: "general", technology: "AF", function: "any", fantastic: false, prefixes: false, series: false }), "x");
+  assert.equal(af.vessel!.technology, "any");
+  assert.deepEqual(af.problems, ["Technology “AF” isn't available here; using any technology."]);
+  const lf = parseModulePreset(modulePresetContent({ ...PRESET, technology: "LF", fantastic: false, function: "any", series: false, prefixes: false }), "x");
+  assert.equal(lf.vessel!.technology, "any");
+  assert.equal(lf.problems.length, 1);
+  const bare = parseModulePreset("---\ntype: module-preset\nmodule: vessels\nvesselModule: aircraft\n---\n", "Bare").vessel!;
+  assert.equal(bare.culture, "general");
+  assert.equal(bare.genre, "modern");
+  assert.equal(bare.naming, "craft");
+  assert.equal(parseModulePreset("---\ntype: module-preset\nmodule: vessels\nvesselModule: landVehicles\n---\n", "Bare").vessel!.culture, "norman-british");
+  const odd = parseModulePreset("---\ntype: module-preset\nmodule: vessels\nvesselModule: aircraft\nnaming: sideways\nstyle: heroic\ntechnology: A4\ngenre: fantasy\nfantastic: true\n---\n", "x");
+  assert.equal(odd.vessel!.naming, "craft");
+  assert.equal(odd.vessel!.style, "none");
+  assert.equal(odd.problems.length, 2);
+  // A types preset can be a family without a function.
+  const family = parseModulePreset(modulePresetContent({ ...PRESET, vesselModule: "aircraft", function: "any", technology: "any", naming: "types", series: true, prefixes: false }), "x");
+  assert.equal(family.vessel!.series, true);
+  assert.deepEqual(family.problems, []);
+  const needsFn = parseModulePreset(modulePresetContent({ ...PRESET, vesselModule: "aircraft", function: "any", technology: "any", naming: "craft", series: true, prefixes: false }), "x");
+  assert.deepEqual(needsFn.problems, ["Series needs a type."]);
+});
+
+test("§15: old ships and spacecraft presets (without naming) are unchanged", () => {
+  const ships: VesselPreset = { packName: "Polynesian steamers", setting: "", description: "x", vesselModule: "ships", culture: "hawaiian", function: "merchant", technology: "T5", genre: "fantasy", fantastic: false, style: "none", tone: "any", prefixes: false, people: "placeholders", series: false };
+  const content = modulePresetContent(ships);
+  assert.ok(!/naming/.test(content));
+  const back = parseModulePreset(content, "x");
+  assert.deepEqual(back.vessel, ships);
+  assert.equal("naming" in back.vessel!, false);
+  const old = "---\ntype: module-preset\nmodule: vessels\nvesselModule: spacecraft\nculture: arctic\ntechnology: S3\n---\n";
+  const parsed = parseModulePreset(old, "Old");
+  assert.equal(parsed.vessel!.vesselModule, "spacecraft");
+  assert.equal(parsed.vessel!.technology, "S3");
+  assert.equal("naming" in parsed.vessel!, false);
+  assert.deepEqual(parsed.problems, []);
 });

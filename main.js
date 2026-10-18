@@ -81323,1430 +81323,5544 @@ var vessels_default = {
   }
 };
 
-// src/vessels/engine.ts
-var VESSEL_DATA = vessels_default;
-var VESSEL_SELF = selfPatterns(vessels_default);
-var VESSEL_CULTURES = VESSEL_DATA.cultures;
-var VESSEL_MODULE_LABELS = VESSEL_DATA.modules;
-function findVesselCulture(key2) {
-  return VESSEL_CULTURES.find((c) => c.key === key2);
-}
-var levelNumber = (code) => parseInt(code.slice(1), 10);
-function range(k) {
-  const [lo, hi] = k.split("-");
-  return [levelNumber(lo), levelNumber(hi != null ? hi : lo)];
-}
-function inRange(k, level) {
-  if (!k) return true;
-  if (k.charAt(0) !== level.charAt(0)) return false;
-  const [lo, hi] = range(k);
-  const n = levelNumber(level);
-  return n >= lo && n <= hi;
-}
-function spanLevels(culture) {
-  const [lo, hi] = range(culture.span);
-  const out = [];
-  for (let n = lo; n <= hi; n++) out.push(`T${n}`);
-  return out;
-}
-function customsLevel(culture, level) {
-  const [lo, hi] = range(culture.span);
-  if (level.startsWith("S")) return `T${hi}`;
-  return `T${Math.min(hi, Math.max(lo, levelNumber(level)))}`;
-}
-function inSpan(culture, level) {
-  return level.startsWith("T") && inRange(culture.span, level);
-}
-function techLabel(module2, code) {
-  var _a5, _b3;
-  return (_b3 = (_a5 = VESSEL_DATA.technology[module2].find((t) => t.code === code)) == null ? void 0 : _a5.label) != null ? _b3 : code;
-}
-function techChoices(module2, setting) {
-  const all = VESSEL_DATA.technology[module2].map((t) => t.code);
-  return module2 === "spacecraft" && setting !== "SF" ? ["S1"] : all;
-}
-function anyLevels(module2, culture, setting) {
-  return module2 === "ships" ? spanLevels(culture) : techChoices(module2, setting);
-}
-function moduleFunctions(module2) {
-  return VESSEL_DATA.functions[module2].list;
-}
-function functionAny(module2) {
-  return VESSEL_DATA.functions[module2].any;
-}
-function functionAvailableAt(fn, culture, level) {
-  if (fn.noSensitive && culture.sensitive) return false;
-  if (!fn.min) return true;
-  return level.charAt(0) === fn.min.charAt(0) && levelNumber(level) >= levelNumber(fn.min);
-}
-function availableFunctions(module2, cultureKey, technology, setting) {
-  var _a5;
-  const culture = (_a5 = findVesselCulture(cultureKey)) != null ? _a5 : VESSEL_CULTURES[0];
-  const levels = technology === "any" ? anyLevels(module2, culture, setting) : [technology];
-  return moduleFunctions(module2).filter((f) => levels.some((l) => functionAvailableAt(f, culture, l)));
-}
-var pickOne2 = (items, rng) => items[Math.floor(rng() * items.length)];
-var GN_LISTS = /* @__PURE__ */ new Set(["colour", "number", "ordinalWord", "greek", "land", "spaceLand", "sfBody", "compass", "star", "brandRoot", "surname", "weapon", "tech", "beast"]);
-var STYLE_POOLS = new Map(VESSEL_DATA.styles.flatMap((st) => Object.entries(st.pools)));
-var CULTURE_ONLY = /* @__PURE__ */ new Set(["poetic", "menaceExtra"]);
-var UNTONED = /* @__PURE__ */ new Set(["surname"]);
-var ANIMALS = /* @__PURE__ */ new Map();
-function flavourAnimals(culture) {
-  var _a5, _b3;
-  let found = ANIMALS.get(culture.key);
-  if (found) return found;
-  const f = culture.flavour;
-  if (!f) found = [];
-  else if (Array.isArray(f)) found = f;
-  else if ("world" in f) found = worldAnimals(f.world);
-  else found = [...(_b3 = (_a5 = findTradition(f.tribal)) == null ? void 0 : _a5.flavour.animals) != null ? _b3 : []];
-  ANIMALS.set(culture.key, found);
-  return found;
-}
-function landWords(culture) {
-  var _a5, _b3;
-  const f = culture.flavour;
-  if (f && !Array.isArray(f) && "tribal" in f) {
-    const t = findTradition(f.tribal);
-    return [...(_a5 = t == null ? void 0 : t.flavour.land) != null ? _a5 : [], ...(_b3 = t == null ? void 0 : t.flavour.water) != null ? _b3 : []];
-  }
-  if (f && !Array.isArray(f) && "world" in f) return cultureLand(f.world);
-  return [];
-}
-function godWords(culture) {
-  var _a5;
-  const gods = culture.gods;
-  if (!gods) return [];
-  if (gods.list) return gods.list;
-  const world = WORLD_CULTURES.find((c) => c.id === gods.world);
-  return ((_a5 = world == null ? void 0 : world.lists.god) != null ? _a5 : []).map((w) => ({ w: stripPlural(w) }));
-}
-function holyType(ctx) {
-  var _a5;
-  const c = ctx.culture;
-  if ((_a5 = c.gods) == null ? void 0 : _a5.k) return inRange(c.gods.k, ctx.customs) ? "gods" : c.holy;
-  return c.holy;
-}
-function pool2(ctx, name) {
-  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h;
-  const key2 = `${name}|${ctx.customs}|${ctx.level}|${ctx.boost}|${ctx.tone}`;
-  const cached = ctx.pools.get(key2);
-  if (cached) return cached;
-  const weights = /* @__PURE__ */ new Map();
-  const add2 = (word, w, t) => {
-    const prev = weights.get(word);
-    if (prev) prev.w += w;
-    else weights.set(word, { w, t });
-  };
-  const addEntries = (list, entries, mult = 1) => {
-    var _a6, _b4, _c4;
-    for (const e of entries != null ? entries : []) {
-      if (!inRange(e.k, ctx.customs)) continue;
-      add2(e.w, ((_a6 = e.x) != null ? _a6 : 1) * mult, (_c4 = (_b4 = e.t) != null ? _b4 : VESSEL_DATA.listTones[list]) != null ? _c4 : []);
-    }
-  };
-  const own = (_a5 = ctx.culture.lists) != null ? _a5 : {};
-  const space = ctx.module === "spacecraft";
-  if (name === "techAdj" || name === "techNoun") {
-    for (const e of (_c3 = (_b3 = VESSEL_DATA.techWords[ctx.level]) == null ? void 0 : _b3[name]) != null ? _c3 : []) add2(e.w, (_d3 = e.x) != null ? _d3 : 1, (_e3 = e.t) != null ? _e3 : []);
-  } else if (name === "god") {
-    addEntries(name, godWords(ctx.culture));
-  } else if (name === "beast") {
-    for (const [w, n] of groupListWords("beast", ctx.setting)) add2(w, n, wordTones("beast", w));
-    for (const w of flavourAnimals(ctx.culture)) {
-      const prev = weights.get(w);
-      if (prev) prev.w *= 3;
-      else add2(w, 3, []);
-    }
-    addEntries("beast", own.beastExtra);
-  } else if (name === "seaLand" && space) {
-    for (const [w, n] of groupListWords("spaceLand", "SF")) add2(w, n, wordTones("spaceLand", w));
-  } else if (name === "seaLand") {
-    addEntries(name, VESSEL_DATA.lists.seaLand);
-    for (const w of landWords(ctx.culture)) add2(stripPlural(w), 2, []);
-  } else if (name === "seaAdj" && space) {
-    addEntries(name, VESSEL_DATA.lists.spaceSeaAdj);
-  } else if (name === "designationWord" && space) {
-    addEntries(name, VESSEL_DATA.lists.spaceDesignationWord);
-  } else if (name === "numberWord") {
-    for (const [w, n] of groupListWords("number", ctx.setting)) add2(w, n, wordTones("number", w));
-  } else if (own[name]) {
-    addEntries(name, own[name]);
-  } else if (VESSEL_DATA.lists[name]) {
-    addEntries(name, VESSEL_DATA.lists[name]);
-  } else if (GN_LISTS.has(name)) {
-    for (const [w, n] of groupListWords(name, ctx.setting)) add2(w, n, wordTones(name, w));
-  } else if (name === "name" && ctx.style) {
-    addEntries(name, ctx.style.name);
-  } else if (name === "colonyName") {
-    addEntries(name, (_f = VESSEL_DATA.styles.find((st) => st.key === "colony")) == null ? void 0 : _f.name);
-  } else if (STYLE_POOLS.has(name)) {
-    addEntries(name, (_h = (_g = ctx.style) == null ? void 0 : _g.pools[name]) != null ? _h : STYLE_POOLS.get(name));
-  } else if (!CULTURE_ONLY.has(name)) {
-    throw new Error(`Vessels: no list \u201C${name}\u201D.`);
-  }
-  if (ctx.boost && ctx.style) {
-    const suffix = name === "virtueAdj" || name === "skyAdj" ? "Adj" : name === "virtue" || name === "sky" ? "Noun" : void 0;
-    if (suffix) {
-      for (const [pool3, entries] of Object.entries(ctx.style.pools)) {
-        if (!new RegExp(`${suffix}\\d*$`).test(pool3)) continue;
-        for (const e of entries) add2(e.w, VESSEL_DATA.styleShare.poolMultiplier, ctx.style.tone ? [ctx.style.tone] : []);
-      }
-    }
-  }
-  const tone = !UNTONED.has(name) && ctx.tone !== "any";
-  const out = [...weights].map(([w, { w: n, t }]) => [{ w, t }, tone ? n * toneFactor(t, ctx.tone) : n]).filter(([, n]) => n > 0);
-  ctx.pools.set(key2, out);
-  return out;
-}
-function listWord2(ctx, name, filter) {
-  const items = filter ? pool2(ctx, name).filter(([e]) => filter(e.w)) : pool2(ctx, name);
-  const pick4 = pickWeighted5(items, ctx.rng);
-  if (!pick4) return void 0;
-  for (const t of pick4.t) ctx.drawn.add(t);
-  ctx.words.push({ list: name, word: pick4.w });
-  return pick4.w.includes("{") ? renderPattern2(ctx, pick4.w) : pick4.w;
-}
-function town(ctx) {
-  const rng = ctx.rng;
-  if (ctx.module === "spacecraft" && ctx.setting === "SF") return groupTown("SF", void 0, rng);
-  const source = ctx.culture.town === "compound" ? void 0 : ctx.culture.town;
-  const setting = ctx.setting === "SF" ? "MR" : ctx.setting;
-  const holy = holyNamesIn(ctx.culture.key);
-  for (let i = 0; i < 20; i++) {
-    const t = groupTown(setting, source, rng);
-    if (!holy || !holy.test(t)) return t;
-  }
-  return void 0;
-}
-var personLabel = (ctx) => {
-  var _a5;
-  return (_a5 = VESSEL_DATA.personLabels[ctx.fn]) != null ? _a5 : "owner";
-};
-function inventedPerson2(ctx) {
-  return groupPerson(ctx.setting, !!ctx.culture.surnames, ctx.rng, flavourAnimals(ctx.culture));
-}
-var POETIC_SHORT = (w) => w.split(" ").length <= 5 && !/^(The|We|Where) /.test(w);
-function token3(ctx, name) {
-  if (name.includes("+")) {
-    const [a, b] = name.split("+");
-    const first = token3(ctx, a);
-    const second = VESSEL_DATA.lists[b] || STYLE_POOLS.has(b) ? token3(ctx, b) : b;
-    return first && second ? first + second.toLowerCase() : void 0;
-  }
-  return baseToken(ctx, name);
-}
-var withMod = (text, mod) => mod === "poss" ? groupPossessive(text, false) : text;
-function baseToken(ctx, name) {
-  const rng = ctx.rng;
-  const placeholders = ctx.mode === "placeholders";
-  switch (name) {
-    case "star":
-      return groupStarIn("any", ctx.mode, rng);
-    case "town":
-      if (ctx.turn) return ctx.turn.next(rng);
-      return placeholders ? "[place]" : town(ctx);
-    case "surname":
-      return placeholders ? "[surname]" : listWord2(ctx, "surname");
-    case "womanName":
-      return placeholders ? "[woman's name]" : listWord2(ctx, "womanName");
-    case "person":
-      return placeholders ? `[${personLabel(ctx)}]` : inventedPerson2(ctx);
-    case "president":
-      return placeholders ? "[president]" : inventedPerson2(ctx);
-    case "scientist":
-      return placeholders ? "[scientist]" : inventedPerson2(ctx);
-    case "holy":
-      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
-    case "n":
-      return String(1 + Math.floor(rng() * 99));
-    case "ordinal": {
-      const choices = [];
-      for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
-      return ordinalText(pickWeighted5(choices, rng));
-    }
-    case "poetic":
-      return ctx.poeticAllowed ? listWord2(ctx, "poetic") : void 0;
-    case "poeticShort":
-      return ctx.poeticAllowed ? listWord2(ctx, "poetic", POETIC_SHORT) : void 0;
-    case "cultureNoun": {
-      const sources = ["beast", "sky", "virtue", ...ctx.poeticAllowed && pool2(ctx, "poetic").length > 0 ? ["poetic"] : []];
-      return listWord2(ctx, pickOne2(sources, rng));
-    }
-  }
-  return listWord2(ctx, name);
-}
-function renderPattern2(ctx, pattern, hooks2) {
-  const outer = ctx.turn;
-  if (ctx.context) ctx.turn = new TownTurn(ctx.context, VESSEL_SELF.has(pattern));
-  try {
-    return renderTokens2(ctx, pattern, hooks2);
-  } finally {
-    ctx.turn = outer;
-  }
-}
-function renderTokens2(ctx, pattern, hooks2) {
-  let failed = false;
-  let index = -1;
-  let nameUsed = false;
-  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw, at) => {
-    var _a5, _b3;
-    if (failed) return "";
-    index++;
-    const [name, mod] = raw.split(":");
-    let piece;
-    const fixed = (_a5 = hooks2 == null ? void 0 : hooks2.byIndex) == null ? void 0 : _a5.get(index);
-    if (fixed) piece = fixed.text;
-    else if ((hooks2 == null ? void 0 : hooks2.byName) && !nameUsed && hooks2.byName.name === name) {
-      piece = hooks2.byName.text;
-      nameUsed = true;
-    } else piece = token3(ctx, name);
-    if (piece && name === "star" && pattern === "{star} Haven") piece = piece.replace(/('s) Star$/, "$1");
-    if (piece && name === "compass" && pattern.slice(0, at).endsWith("of the ")) piece = piece.replace(/ern$/, "");
-    if (piece === void 0 || piece === "") {
-      failed = true;
-      return "";
-    }
-    (_b3 = hooks2 == null ? void 0 : hooks2.record) == null ? void 0 : _b3.push({ name, text: piece });
-    return withMod(piece, mod);
-  });
-  return failed ? void 0 : out;
-}
-var SMALL4 = /* @__PURE__ */ new Set([
-  "of",
-  "the",
-  "and",
-  "for",
-  "in",
-  "at",
-  "by",
-  "on",
-  "to",
-  "from",
-  "over",
-  "upon",
-  "beyond",
-  "beneath",
-  "among",
-  "across",
-  "through",
-  "between",
-  "above",
-  "into",
-  "with",
-  "before"
-]);
-function vesselCapitals(text) {
-  return text.split(" ").map((word, i) => {
-    if (!word || word.startsWith("[")) return word;
-    const lower3 = word.toLowerCase();
-    if (SMALL4.has(lower3) && i > 0) return lower3;
-    return word.replace(/(^|[-–])([a-z])/g, (_m, sep, c) => sep + c.toUpperCase());
-  }).join(" ");
-}
-var countedWords = (text) => text.split(" ").filter((w, i) => w && !(i === 0 && w === "The") && !SMALL4.has(w.toLowerCase()));
-var wordRe4 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
-var BANNED2 = VESSEL_DATA.safeguards.banned.map(wordRe4);
-var DIVINE = new RegExp(`(^|[^\\p{L}])(${VESSEL_DATA.safeguards.divine.join("|")})(?=$|[^\\p{L}])`, "giu");
-function withDeityPlaceholders(text) {
-  return text.replace(DIVINE, (_m, before) => `${before}[deity]`);
-}
-function breaksVesselWords(text) {
-  return hasBannedWord(text) || BANNED2.some((re) => re.test(text));
-}
-function guardFor(module2, guards) {
-  const s = VESSEL_DATA.safeguards;
-  const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock));
-  if (module2 === "spacecraft") for (const w of s.blockSpacecraft) block.add(normForBlock(w));
-  return { block, prefixed: new Set(s.blockPrefixed.map(normForBlock)) };
-}
-function blocked(ctx, guard, name, prefix) {
-  const n = normForBlock(name);
-  if (guard.block.has(n)) return true;
-  for (const u of VESSEL_DATA.safeguards.blockUnless) {
-    if (n === normForBlock(u.w) && !(ctx.culture.key === u.culture && inRange(u.k, ctx.customs))) return true;
-  }
-  if (prefix && (guard.prefixed.has(normForBlock(`${prefix} ${name}`)) || VESSEL_DATA.safeguards.blockPrefixes.includes(prefix))) return true;
-  return false;
-}
-function acceptable3(ctx, guard, name) {
-  const counted3 = countedWords(name);
-  if (counted3.length === 0 || counted3.length > 8) return false;
-  if (repeatsContent(counted3)) return false;
-  if (blocked(ctx, guard, name)) return false;
-  if (breaksVesselWords(name)) return false;
-  if (ctx.module === "spacecraft" && hasSpaceBlock(name)) return false;
-  return true;
-}
-var SENSITIVE_TOKENS = new RegExp(`\\{(${VESSEL_DATA.safeguards.sensitiveLists.join("|")})[}:]`);
-function vesselShapeTones(p, own = []) {
-  var _a5;
-  const out = new Set(own);
-  for (const m of p.matchAll(/\{([^}:+]+)/g)) for (const t of (_a5 = VESSEL_DATA.listTones[m[1]]) != null ? _a5 : []) out.add(t);
-  return GROUP_TONES.filter((t) => out.has(t));
-}
-function roleWeights(ctx) {
-  var _a5, _b3, _c3, _d3, _e3;
-  const c = ctx.culture;
-  const base = { ...VESSEL_DATA.roleWeights[ctx.module][ctx.fn] };
-  for (const e of VESSEL_DATA.roleExtras) {
-    if (e.module === ctx.module && e.function === ctx.fn && inRange(e.k, ctx.customs)) base[e.role] = ((_a5 = base[e.role]) != null ? _a5 : 0) + e.w;
-  }
-  if (ctx.module === "spacecraft" && (ctx.fn === "station" || ctx.fn === "colony")) base[ctx.fn] = 100;
-  const out = [];
-  for (const [role, w] of Object.entries(base)) {
-    let n = w * ((_c3 = (_b3 = c.roles) == null ? void 0 : _b3[role]) != null ? _c3 : 1);
-    for (const [k, mults] of Object.entries((_d3 = c.techRoles) != null ? _d3 : {})) if (inRange(k, ctx.customs)) n *= (_e3 = mults[role]) != null ? _e3 : 1;
-    if (role === "holy" && holyType(ctx) === "none") n = 0;
-    if (c.sensitive && ["affection", "menace", "leisure"].includes(role)) n = 0;
-    if (role === "poetic" && !ctx.poeticAllowed) n = 0;
-    if (n > 0) out.push([role, n]);
-  }
-  return out;
-}
-function roleShapes(ctx, role, only) {
-  var _a5, _b3, _c3, _d3, _e3, _f, _g;
-  const c = ctx.culture;
-  const holy = holyType(ctx);
-  const shapes = [...VESSEL_DATA.shapes.filter((s) => s.role === role), ...((_a5 = c.shapes) != null ? _a5 : []).filter((s) => s.role === role)];
-  if (role === "station" || role === "colony") for (const sh of VESSEL_DATA.space[role]) shapes.push({ role, p: sh.p, w: sh.w });
-  if (role === "holy" && holy === "gods") for (const g of (_c3 = (_b3 = c.gods) == null ? void 0 : _b3.shapes) != null ? _c3 : []) shapes.push({ role, p: g.p, w: g.w });
-  const out = [];
-  for (const shape of shapes) {
-    if (only && shape.p !== only) continue;
-    if (!inRange(shape.k, ctx.customs)) continue;
-    if (shape.s && !shape.s.includes(ctx.setting)) continue;
-    if (shape.fn && !shape.fn.includes(ctx.fn)) continue;
-    let w = shape.w;
-    if (shape.holy) {
-      const saints = holy === "christian" && !c.noSaints;
-      const ok = shape.holy === "saint" ? saints : shape.holy === "marian" ? saints && !!c.marian : shape.holy === "blessing" ? holy !== "none" : holy === "christian" || holy === "blessing";
-      if (!ok) continue;
-      if (shape.holy === "saint") w *= (_d3 = c.holyX) != null ? _d3 : 1;
-      if (shape.holy === "marian") w *= (_e3 = c.marian) != null ? _e3 : 1;
-    }
-    if (shape.p.includes("{poetic}") && (!ctx.poeticAllowed || !((_g = (_f = c.lists) == null ? void 0 : _f.poetic) == null ? void 0 : _g.length))) continue;
-    if (ctx.mode === "invented" && shape.p.includes("{womanName}") && !c.womanNames) continue;
-    if (ctx.mode === "invented" && shape.p.includes("{surname}") && !c.surnames) continue;
-    if (c.sensitive && SENSITIVE_TOKENS.test(shape.p)) continue;
-    w *= toneFactor(vesselShapeTones(shape.p, shape.t), ctx.tone);
-    if (w > 0) out.push([shape, w]);
-  }
-  return out;
-}
-var spacePattern = (ctx, p) => ctx.module === "spacecraft" ? p.replace(/^City of /, "Pride of ") : p;
-function renderPlan(ctx, plan, hooks2 = {}) {
-  ctx.drawn = /* @__PURE__ */ new Set();
-  ctx.words = [];
-  const record = [];
-  const raw = renderPattern2(ctx, plan.p, { ...hooks2, record });
-  if (!raw) return void 0;
-  const name = vesselCapitals(withDeityPlaceholders(raw).replace(/\s+/g, " ").trim());
-  const tones = /* @__PURE__ */ new Set([...plan.tones, ...ctx.drawn]);
-  return { name, plan, record, tones: GROUP_TONES.filter((t) => tones.has(t)) };
-}
-function rolePlans(ctx, role, only) {
-  return roleShapes(ctx, role, only).map(([s, w]) => [{ route: "role", role, p: spacePattern(ctx, s.p), tones: vesselShapeTones(s.p, s.t) }, w]);
-}
-function hybridPlans(ctx) {
-  const poetic = ctx.poeticAllowed && pool2(ctx, "poetic").some(([e]) => POETIC_SHORT(e.w));
-  return VESSEL_DATA.hybrids.shapes.filter((s) => poetic || !s.p.includes("{poetic}")).map((s) => [{ route: "hybrid", role: "hybrid", p: s.p.replace("{poetic}", "{poeticShort}"), tones: [] }, s.w]);
-}
-function stylePlans(ctx) {
-  const st = ctx.style;
-  const tones = st.tone ? [st.tone] : [];
-  return st.shapes.filter((p) => !(ctx.culture.sensitive && SENSITIVE_TOKENS.test(p))).map((p) => [{ route: "style", role: st.key, p, tones: vesselShapeTones(p, tones) }, toneFactor(vesselShapeTones(p, tones), ctx.tone)]).filter(([, w]) => w > 0);
-}
-function availableStyles(module2, setting) {
-  return VESSEL_DATA.styles.filter((st) => st.modules.includes(module2) && st.settings.includes(setting));
-}
-var prefixSetting = (setting) => setting === "MR" || setting === "MF" || setting === "SF";
-function realPrefix(ctx) {
-  const rows = VESSEL_DATA.prefixes.real.filter(
-    (r) => (!r.cultures || r.cultures.includes(ctx.culture.key)) && r.fn.includes(ctx.fn) && inRange(r.k, ctx.level)
-  );
-  return pickWeighted5(rows.map((r) => {
-    var _a5;
-    return [r.p, (_a5 = r.x) != null ? _a5 : 1];
-  }), ctx.rng);
-}
-var PLACEHOLDER_TOKENS2 = /* @__PURE__ */ new Set(["town", "surname", "womanName", "person", "president", "scientist", "holy"]);
-var NEVER_ANCHORS2 = /* @__PURE__ */ new Set(["person", "president", "scientist", "holy"]);
-var kindOf2 = (name) => NEVER_ANCHORS2.has(name) ? "never" : seriesTokenKind(name);
-function* counterValues2(ctx, name, first) {
-  if (name === "ordinal") {
-    for (let n = parseInt(first, 10); n <= 99; n += counterGap(ctx.rng)) yield ordinalText(n);
-    return;
-  }
-  const words = [...new Set(groupListWords(name, ctx.setting).map(([w]) => w))];
-  for (let i = words.indexOf(first); i >= 0 && i < words.length; i += counterGap(ctx.rng)) yield words[i];
-}
-var lightOrGrim2 = (tone) => tone === "light" || tone === "grim";
-function generateVesselNames(options) {
-  var _a5, _b3, _c3, _d3, _e3;
-  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
-  const rng = mulberry32(seed);
-  const module2 = options.module;
-  const notices = [];
-  const culture = (_a5 = findVesselCulture(options.culture)) != null ? _a5 : VESSEL_CULTURES[0];
-  const genre = (_b3 = options.genre) != null ? _b3 : module2 === "spacecraft" ? "scifi" : "fantasy";
-  const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
-  let tone = (_c3 = options.tone) != null ? _c3 : "any";
-  const levels = techChoices(module2, setting);
-  let technology = (_d3 = options.technology) != null ? _d3 : "any";
-  if (technology !== "any" && !levels.includes(technology)) {
-    notices.push(`\u201C${technology}\u201D isn't available here; using any technology.`);
-    technology = "any";
-  }
-  const functions = availableFunctions(module2, culture.key, technology, setting);
-  const chosenFn = options.function ? functions.find((f) => f.key === options.function) : void 0;
-  if (options.function && !chosenFn) notices.push(`\u201C${options.function}\u201D isn't available here; using any function.`);
-  let style = options.style && options.style !== "none" ? availableStyles(module2, setting).find((st) => st.key === options.style) : void 0;
-  if (options.style && options.style !== "none" && !style) notices.push(`Style \u201C${options.style}\u201D isn't available here.`);
-  const guards = (_e3 = options.safeguards) != null ? _e3 : { block: VESSEL_DATA.safeguards.block, flag: VESSEL_DATA.safeguards.flag, flagListBlocks: VESSEL_DATA.safeguards.flagListBlocks };
-  const guard = guardFor(module2, guards);
-  const pools = /* @__PURE__ */ new Map();
-  const count = Math.max(0, Math.floor(options.count));
-  const prefixes = !!options.prefixes && prefixSetting(setting);
-  const sfPrefixes = /* @__PURE__ */ new Map();
-  const sfPrefix = (fn) => {
-    if (!sfPrefixes.has(fn)) {
-      const list = VESSEL_DATA.prefixes.sf[fn];
-      sfPrefixes.set(fn, list ? pickOne2(list, rng) : void 0);
-    }
-    return sfPrefixes.get(fn);
-  };
-  const styleShare = !style ? 0 : style.key === "oceanic" && culture.sensitive ? 1 : culture.key === "general" ? VESSEL_DATA.styleShare.general : VESSEL_DATA.styleShare.default;
-  const newCtx3 = (level, fn) => {
-    var _a6;
-    return {
-      rng,
-      module: module2,
-      setting,
-      culture,
-      mode: (_a6 = options.people) != null ? _a6 : "placeholders",
-      tone,
-      level,
-      customs: customsLevel(culture, level),
-      fn,
-      style,
-      boost: !!style,
-      // §14.4: sensitive cultures' poetic names never go to a style or a light or grim name.
-      poeticAllowed: !(culture.sensitive && (lightOrGrim2(tone) || !!style)),
-      context: options.context,
-      drawn: /* @__PURE__ */ new Set(),
-      words: [],
-      pools
-    };
-  };
-  const choosePlan2 = (ctx) => {
-    if (style && !options.shape && rng() < styleShare) {
-      ctx.boost = false;
-      return pickWeighted5(stylePlans(ctx), rng);
-    }
-    const role = pickWeighted5(roleWeights(ctx), rng);
-    if (!role) return void 0;
-    const share2 = inSpan(culture, ctx.level) ? VESSEL_DATA.hybrids.share.inSpan : VESSEL_DATA.hybrids.share.outOfSpan;
-    if (!options.shape && role !== "designation" && role !== "leisure" && rng() < share2) return pickWeighted5(hybridPlans(ctx), rng);
-    return pickWeighted5(rolePlans(ctx, role, options.shape), rng);
-  };
-  const result = (ctx, built, series) => {
-    if (!built || !acceptable3(ctx, guard, built.name)) return void 0;
-    let prefix;
-    if (prefixes && !built.name.startsWith("The ")) prefix = setting === "SF" ? sfPrefix(ctx.fn) : module2 === "ships" ? realPrefix(ctx) : void 0;
-    if (prefix && blocked(ctx, guard, built.name, prefix)) return void 0;
-    return {
-      text: prefix ? `${prefix} ${built.name}` : built.name,
-      name: built.name,
-      ...prefix ? { prefix } : {},
-      route: built.plan.route,
-      role: built.plan.role,
-      shape: built.plan.p,
-      function: ctx.fn,
-      level: ctx.level,
-      customs: ctx.customs,
-      tones: built.tones,
-      words: ctx.words,
-      ...series ? { series } : {}
-    };
-  };
-  const levelPool = technology === "any" ? anyLevels(module2, culture, setting).filter((l) => !chosenFn || functionAvailableAt(chosenFn, culture, l)) : [technology];
-  const fnChoices = (level) => functions.filter((f) => functionAvailableAt(f, culture, level));
-  const oneName2 = () => {
-    if (levelPool.length === 0) return void 0;
-    for (let round = 0; round < 2; round++) {
-      const level = pickOne2(levelPool, rng);
-      const fn = chosenFn != null ? chosenFn : pickWeighted5(fnChoices(level).map((f) => [f, f.w]), rng);
-      if (!fn) continue;
-      for (let i = 0; i < 20; i++) {
-        const ctx = newCtx3(level, fn.key);
-        const plan = choosePlan2(ctx);
-        if (!plan) break;
-        const name = result(ctx, renderPlan(ctx, plan));
-        if (name) return name;
-      }
-    }
-    return void 0;
-  };
-  const seen = /* @__PURE__ */ new Set();
-  const names = [];
-  const add2 = (name) => {
-    if (!name) return false;
-    const key2 = name.text.toLowerCase();
-    if (seen.has(key2)) return false;
-    seen.add(key2);
-    names.push(name);
-    return true;
-  };
-  if (options.series && chosenFn && levelPool.length > 0) {
-    const seriesTone = drawClass();
-    if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
-    return { names, seed, notices, seriesTone };
-  }
-  if (options.series && !chosenFn) notices.push("A class needs a function.");
-  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) add2(oneName2());
-  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
-  return { names, seed, notices };
-  function drawClass() {
-    var _a6, _b4, _c4, _d4;
-    const level = pickOne2(levelPool, rng);
-    const fn = chosenFn.key;
-    const placeholders = ((_a6 = options.people) != null ? _a6 : "placeholders") === "placeholders";
-    const isPlaceholder = (d) => placeholders && PLACEHOLDER_TOKENS2.has(d.name);
-    let first;
-    for (let i = 0; i < 40 && !first; i++) {
-      const ctx2 = newCtx3(level, fn);
-      const plan2 = choosePlan2(ctx2);
-      if (!plan2) continue;
-      const built = renderPlan(ctx2, plan2);
-      const name = result(ctx2, built);
-      if (!built || !name) continue;
-      if (!built.record.some((d) => kindOf2(d.name) === "counter") && !built.record.some((d) => !isPlaceholder(d))) continue;
-      first = { ctx: ctx2, built, name };
-    }
-    if (!first) return tone;
-    if (tone === "any") tone = (_b4 = first.built.plan.tones[0]) != null ? _b4 : "any";
-    const plan = first.built.plan;
-    const rec = first.built.record;
-    const draw2 = (hooks2, p = plan) => {
-      const ctx2 = newCtx3(level, fn);
-      if (p.route === "style") ctx2.boost = false;
-      return result(ctx2, renderPlan(ctx2, p, hooks2), info);
-    };
-    const counterAt = rec.findIndex((d) => kindOf2(d.name) === "counter");
-    let info;
-    if (counterAt >= 0) {
-      info = { anchor: null, value: null, counter: rec[counterAt].name };
-      add2({ ...first.name, series: info });
-      const locked = new Map(rec.map((d, i) => [i, d]));
-      let firstValue = true;
-      for (const value of counterValues2(first.ctx, rec[counterAt].name, rec[counterAt].text)) {
-        if (names.length >= count) break;
-        if (firstValue) {
-          firstValue = false;
-          continue;
-        }
-        locked.set(counterAt, { name: rec[counterAt].name, text: value });
-        add2(draw2({ byIndex: new Map(locked) }));
-      }
-      return tone;
-    }
-    let anchorAt = rec.findIndex((d) => kindOf2(d.name) === "owner" && !isPlaceholder(d));
-    const listAt = rec.map((d, i) => kindOf2(d.name) === "list" && !isPlaceholder(d) ? i : -1).filter((i) => i >= 0);
-    if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
-    const anchor = anchorAt >= 0 ? rec[anchorAt] : void 0;
-    info = { anchor: (_c4 = anchor == null ? void 0 : anchor.name) != null ? _c4 : null, value: (_d4 = anchor == null ? void 0 : anchor.text) != null ? _d4 : null, counter: null };
-    const hold = /* @__PURE__ */ new Map();
-    if (anchor) hold.set(anchorAt, anchor);
-    else if (listAt.length === 1) rec.forEach((d, i) => i !== listAt[0] && hold.set(i, d));
-    add2({ ...first.name, series: info });
-    const fill = (next) => {
-      for (let idle = 0; idle < 20 && names.length < count; ) idle = add2(next()) ? 0 : idle + 1;
-    };
-    fill(() => draw2({ byIndex: hold }));
-    if (!anchor || names.length >= count) return tone;
-    const ctx = newCtx3(level, fn);
-    const others = (plan.route === "style" ? stylePlans(ctx) : plan.route === "hybrid" ? hybridPlans(ctx) : rolePlans(ctx, plan.role)).filter(
-      ([p]) => p.p !== plan.p && [...p.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name)
-    );
-    if (others.length === 0) return tone;
-    fill(() => draw2({ byName: anchor }, pickWeighted5(others, rng)));
-    return tone;
-  }
-}
-
-// src/realms/engine.ts
-var REALM_DATA = realms_default;
-var REALM_ERAS = REALM_DATA.eras;
-var REALM_CHARACTERS = REALM_DATA.characters;
-var REALM_NAMED_FOR = REALM_DATA.namedFor;
-var REALM_CULTURES = BYNAME_CULTURES;
-var DYNASTY_CULTURES = REALM_DATA.dynastyCultures;
-var eraCode = (era) => {
-  var _a5, _b3;
-  return (_b3 = (_a5 = REALM_ERAS.find((e) => e.key === era)) == null ? void 0 : _a5.code) != null ? _b3 : "MD";
-};
-function namedForOffered(key2, era) {
-  const n = REALM_NAMED_FOR.find((x) => x.key === key2);
-  return !!n && (!n.eras || n.eras.includes(eraCode(era)));
-}
-function homelandBiome(culture) {
-  var _a5, _b3, _c3;
-  return (_c3 = (_b3 = (_a5 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a5.homelandBiome) != null ? _b3 : REALM_DATA.homeland[culture]) != null ? _c3 : "temperate";
-}
-var FORM_CACHE = /* @__PURE__ */ new Map();
-function cultureForms(culture, era) {
-  var _a5, _b3, _c3, _d3, _e3, _f;
-  const key2 = `${culture}|${era}`;
-  const cached = FORM_CACHE.get(key2);
-  if (cached) return cached;
-  const c = REALM_DATA.cultures[culture];
-  const out = [];
-  for (const f of REALM_DATA.forms) {
-    let w = f.era[era] * ((_a5 = c == null ? void 0 : c.mult[f.w]) != null ? _a5 : 1) * ((_d3 = (_c3 = (_b3 = c == null ? void 0 : c.eraMult) == null ? void 0 : _b3[era]) == null ? void 0 : _c3[f.w]) != null ? _d3 : 1);
-    out.push([{ w: f.w, pl: f.pl, g: f.g, t: (_e3 = f.t) != null ? _e3 : [], compound: !!f.compound, peoplesOnly: !!f.peoplesOnly, culture: false }, w]);
-  }
-  for (const f of (_f = c == null ? void 0 : c.forms) != null ? _f : []) {
-    out.push([{ w: f.w, pl: f.pl, g: f.g, t: [], compound: false, peoplesOnly: false, culture: true }, 15 * f.x * (f.eras.includes(era) ? 1 : 0.3)]);
-  }
-  const live4 = out.filter(([, w]) => w > 0);
-  FORM_CACHE.set(key2, live4);
-  return live4;
-}
-function characterMult(character, form) {
-  var _a5, _b3;
-  const m = REALM_DATA.characterMult[character];
-  if (!m) return 1;
-  return (_b3 = (_a5 = m.forms[form.w]) != null ? _a5 : m.groups[form.g]) != null ? _b3 : 1;
-}
-var ALL_FORMS = [.../* @__PURE__ */ new Set([...REALM_DATA.forms.map((f) => f.w), ...Object.values(REALM_DATA.cultures).flatMap((c) => {
-  var _a5;
-  return ((_a5 = c.forms) != null ? _a5 : []).map((f) => f.w);
-})])];
-var COMPOUND_FORMS = REALM_DATA.forms.filter((f) => f.compound).map((f) => f.w);
-var formGroup = (w) => {
-  var _a5, _b3, _c3;
-  return (_c3 = (_a5 = REALM_DATA.forms.find((f) => f.w === w)) == null ? void 0 : _a5.g) != null ? _c3 : (_b3 = Object.values(REALM_DATA.cultures).flatMap((c) => {
-    var _a6;
-    return (_a6 = c.forms) != null ? _a6 : [];
-  }).find((f) => f.w === w)) == null ? void 0 : _b3.g;
-};
-function compatibleModifiers(form, era) {
-  const g = formGroup(form);
-  const out = [];
-  for (const m of REALM_DATA.modifiers) {
-    if (!m.with.includes(form) || !m.eras.includes(era)) continue;
-    if (form.split(/[\s-]/).includes(m.w)) continue;
-    if (m.w === "Free" && (g === "crown" || g === "imperial")) continue;
-    if ((m.w === "Royal" || m.w === "Imperial") && (g === "republic" || g === "federal")) continue;
-    out.push({ w: m.w, t: m.t });
-  }
-  return out;
-}
-var ideologyFor = (form, era) => REALM_DATA.ideology.with.includes(form) && REALM_DATA.ideology.eras.includes(era);
-function compatibleCollQuals(noun) {
-  const out = [];
-  for (const q of REALM_DATA.collQual) {
-    if (!q.with.includes(noun)) continue;
-    if (q.w) out.push(q.w);
-    else out.push(...REALM_DATA.lists[q.list].map((e) => e.w));
-  }
-  return out;
-}
-var pickOne3 = (items, rng) => items[Math.floor(rng() * items.length)];
-var LIST_CACHE = /* @__PURE__ */ new Map();
-function identityLists(biome, terrain) {
-  let byTerrain = LIST_CACHE.get(biome);
-  if (!byTerrain) LIST_CACHE.set(biome, byTerrain = /* @__PURE__ */ new Map());
-  const cached = byTerrain.get(terrain);
-  if (cached) return cached;
-  const lists = /* @__PURE__ */ new Map();
-  for (const [name, entries] of Object.entries(REALM_DATA.lists)) lists.set(name, entries.map((e) => {
-    var _a5;
-    return [e, (_a5 = e.x) != null ? _a5 : 1];
-  }));
-  if (biome.space && biome.scale) {
-    const chosenTerrains = terrain && terrain !== "any" ? [terrain] : availableTerrains(biome).map((t) => t.id);
-    const phrases = [...new Set(chosenTerrains.flatMap((t) => {
-      var _a5;
-      return ((_a5 = biome.land[t]) != null ? _a5 : []).map(([w]) => w);
-    }))];
-    lists.set("landPl", phrases.map((w) => [{ w }, 1]));
-    lists.set("waterPl", []);
-    lists.set("waterSg", []);
-    lists.set("compassAdj", spaceDirections(biome.scale).map((w) => [{ w }, 1]));
-    byTerrain.set(terrain, lists);
-    return lists;
-  }
-  const terrains = terrain && terrain !== "any" ? [terrain] : availableTerrains(biome).map((t) => t.id);
-  const add2 = { landPl: [], waterPl: [], waterSg: [] };
-  for (const t of terrains) {
-    for (const [w] of terrainWords(biome, "land", t)) {
-      if (w.includes("{")) continue;
-      add2.landPl.push(/s$/.test(w) ? w : biomeTitleCase(pluralOf(w.toLowerCase())));
-    }
-    for (const [w] of terrainWords(biome, "water", t)) {
-      if (w.includes("{")) continue;
-      (/s$/.test(w) ? add2.waterPl : add2.waterSg).push(w);
-    }
-  }
-  const chosen = terrain && terrain !== "any";
-  for (const [name, words] of Object.entries(add2)) {
-    const unique = [...new Set(words)];
-    if (unique.length === 0) continue;
-    const biomeWords2 = unique.map((w) => [{ w }, 3]);
-    if (chosen && name !== "waterSg") lists.set(name, biomeWords2);
-    else lists.set(name, [...lists.get(name).filter(([e]) => !unique.includes(e.w)), ...biomeWords2]);
-  }
-  byTerrain.set(terrain, lists);
-  return lists;
-}
-var wordToneOf = (list, e) => {
-  var _a5, _b3, _c3;
-  return (_c3 = (_b3 = (_a5 = REALM_DATA.wordTones[list]) == null ? void 0 : _a5[e.w]) != null ? _b3 : e.t) != null ? _c3 : [];
-};
-function listPool(ctx, name) {
-  const key2 = `${name}|${ctx.character}`;
-  const cached = ctx.pools.get(key2);
-  if (cached) return cached;
-  const result = buildListPool(ctx, name);
-  ctx.pools.set(key2, result);
-  return result;
-}
-function buildListPool(ctx, name) {
-  var _a5, _b3, _c3, _d3;
-  const out = [];
-  for (const [e, w] of (_a5 = ctx.lists.get(name)) != null ? _a5 : []) {
-    if (e.eras && !e.eras.includes(ctx.era)) continue;
-    if (e.biome && e.biome !== ctx.biome.id) continue;
-    if (e.character && e.character !== ctx.character) continue;
-    out.push([e, w * ((_c3 = (_b3 = e.cx) == null ? void 0 : _b3[ctx.culture]) != null ? _c3 : 1)]);
-  }
-  if (name === "cultQual") {
-    for (const w of (_d3 = REALM_DATA.cultQualExtra[ctx.culture]) != null ? _d3 : []) {
-      const found = out.find(([e]) => e.w === w);
-      if (found) found[1] *= 3;
-      else out.push([{ w }, 3]);
-    }
-  }
-  if (name === "peopleQual") {
-    for (const w of cultureAnimals(ctx.culture)) {
-      const found = out.find(([e]) => e.w === w);
-      if (found) found[1] *= 2;
-      else out.push([{ w }, 2]);
-    }
-    for (const [w, n] of groupListWords("colour", ctx.setting)) out.push([{ w, t: wordTones("colour", w) }, n * 0.3]);
-  }
-  return out.map(([e, w]) => [e, w * toneFactor(wordToneOf(name, e), ctx.tone)]).filter(([, w]) => w > 0);
-}
-function listWord3(ctx, name, keep) {
-  const pool3 = keep ? listPool(ctx, name).filter(([e2]) => keep(e2.w)) : listPool(ctx, name);
-  const e = pickWeighted5(pool3, ctx.rng);
-  if (!e) return void 0;
-  for (const t of wordToneOf(name, e)) ctx.drawn.add(t);
-  return e.w;
-}
-function gnWord(ctx, name, keep, setting = ctx.setting) {
-  var _a5;
-  const pool3 = groupListWords(name, setting, (_a5 = ctx.scale) != null ? _a5 : "any").filter(([w2]) => !keep || keep(w2)).map(([w2, n]) => [w2, n * toneFactor(wordTones(name, w2), ctx.tone)]).filter(([, n]) => n > 0);
-  const w = pickWeighted5(pool3, ctx.rng);
-  if (w !== void 0) for (const t of wordTones(name, w)) ctx.drawn.add(t);
-  return w;
-}
-function drawForm(ctx, keep) {
-  const pool3 = cultureForms(ctx.culture, ctx.era).filter(([f2]) => keep(f2)).map(([f2, w]) => {
-    var _a5, _b3;
-    return [f2, w * characterMult(ctx.character, f2) * toneFactor(f2.t, ctx.tone) * (ctx.scale ? (_b3 = (_a5 = REALM_DATA.spaceForms[f2.w]) == null ? void 0 : _a5[ctx.scale]) != null ? _b3 : 1 : 1)];
-  }).filter(([, w]) => w > 0);
-  const f = pickWeighted5(pool3, ctx.rng);
-  if (f) for (const t of f.t) ctx.drawn.add(t);
-  return f;
-}
-function drawModifier(ctx) {
-  var _a5, _b3;
-  const form = (_a5 = ctx.form) == null ? void 0 : _a5.w;
-  if (!form) return void 0;
-  const plain = compatibleModifiers(form, ctx.era);
-  const ideology = ideologyFor(form, ctx.era);
-  const fromIdeology = ideology && (plain.length === 0 || ctx.rng() < REALM_DATA.ideology.share);
-  const entries = fromIdeology ? REALM_DATA.ideology.words : plain;
-  const pool3 = entries.map((e2) => {
-    var _a6, _b4;
-    return [e2, ((_a6 = e2.x) != null ? _a6 : 1) * toneFactor((_b4 = e2.t) != null ? _b4 : [], ctx.tone)];
-  }).filter(([, w]) => w > 0);
-  const e = pickWeighted5(pool3, ctx.rng);
-  if (!e) return void 0;
-  for (const t of (_b3 = e.t) != null ? _b3 : []) ctx.drawn.add(t);
-  return e.w;
-}
-var DYNASTY = (f) => (f.g === "crown" || f.g === "imperial") && !f.compound && !f.peoplesOnly;
-var PEOPLES = (f) => f.g === "federal" || f.g === "tribal" || ["Kingdom", "Realm", "Nation"].includes(f.w);
-var PLAIN_FORM = (f) => !f.peoplesOnly;
-var CHRISTIAN = /* @__PURE__ */ new Set(["general", "anglo-saxon", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "ethiopian"]);
-function place2(ctx) {
-  if (ctx.mode === "placeholders") return "[place]";
-  const holy = holyNamesIn(ctx.culture);
-  for (let i = 0; i < 20; i++) {
-    const t = groupTown(ctx.setting, townSource(ctx.culture), ctx.rng).replace(/^The /, "");
-    if (!holy || !holy.test(t)) return t;
-  }
-  return void 0;
-}
-function token4(ctx, name, shape, kind) {
-  var _a5, _b3, _c3, _d3;
-  const rng = ctx.rng;
-  switch (name) {
-    case "form":
-    case "federalForm":
-      return (_a5 = ctx.form) == null ? void 0 : _a5.w;
-    case "modifier":
-      return ctx.modifier = drawModifier(ctx);
-    case "collNoun":
-      return ctx.collNoun;
-    case "collQual": {
-      const ok = compatibleCollQuals((_b3 = ctx.collNoun) != null ? _b3 : "");
-      const pool3 = ok.map((w) => {
-        const t = w === "Free" && ctx.collNoun === "Ports" ? ["light"] : [];
-        return [w, toneFactor(t, ctx.tone)];
-      });
-      const q = pickWeighted5(pool3, rng);
-      if (q === "Free" && ctx.collNoun === "Ports") ctx.drawn.add("light");
-      return ctx.collQual = q;
-    }
-    case "landIdentity": {
-      const live4 = REALM_DATA.landIdentity.filter((s) => [...s.p.matchAll(/\{(\w+)\}/g)].every((m) => {
-        var _a6, _b4;
-        return ((_b4 = (_a6 = ctx.lists.get(m[1])) == null ? void 0 : _a6.length) != null ? _b4 : 1) > 0;
-      }));
-      const p = pickWeighted5(live4.map((s) => [s.p, s.w]), rng);
-      return renderTokens3(ctx, p, shape, kind);
-    }
-    case "place":
-      return place2(ctx);
-    case "landCompound":
-      return ctx.mode === "placeholders" ? "[place]" : groupTown("FL", void 0, rng);
-    case "dynasty":
-      if (ctx.mode === "placeholders" || !REALM_DATA.dynastyCultures.includes(ctx.culture)) return "[dynasty]";
-      return gnWord(ctx, "house");
-    case "star":
-      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : groupStarIn((_c3 = ctx.scale) != null ? _c3 : "any", "invented", rng);
-    case "commRegion":
-      return groupCommRegion(ctx.era === "NF" || ctx.era === "IS" ? "SF" : ctx.setting, rng);
-    case "spaceLand": {
-      const w = gnWord(ctx, "spaceLand", void 0, "SF");
-      return w && rng() < 0.3 ? groupSpacePrefix(w, rng, (_d3 = ctx.scale) != null ? _d3 : "any") : w;
-    }
-    case "tribal": {
-      if (ctx.mode === "placeholders") return "[people]";
-      const t = ctx.tribal();
-      return t ? /^the /i.test(t) ? t : `the ${t}` : void 0;
-    }
-    case "holy":
-      if (ctx.mode === "placeholders") return "[holy person]";
-      return CHRISTIAN.has(ctx.culture) ? groupSaint(ctx.setting, rng) : `the ${gnWord(ctx, "holyTitle")}`;
-    case "beast": {
-      const animals = cultureAnimals(ctx.culture);
-      const pool3 = [...groupListWords("beast", ctx.setting), ...animals.map((a) => [a, 3])];
-      return pickWeighted5(pool3, rng);
-    }
-    case "number":
-      return gnWord(ctx, "number", (w) => !["Two", "Hundred", "Thousand"].includes(w));
-    case "colour":
-    case "brandRoot":
-      return gnWord(ctx, name);
-  }
-  return listWord3(ctx, name);
-}
-function renderTokens3(ctx, pattern, shape, kind) {
-  let failed = false;
-  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
-    if (failed) return "";
-    const [name, mod] = raw.split(":");
-    const text = token4(ctx, name, shape, kind);
-    if (!text) {
-      failed = true;
-      return "";
-    }
-    if (!ctx.values.has(name)) ctx.values.set(name, text);
-    if (mod === "poss") return groupPossessive(text, false);
-    if (mod === "pl") return text.startsWith("[") ? text : groupPlural(text);
-    return text;
-  });
-  return failed ? void 0 : out;
-}
-var SMALL5 = /* @__PURE__ */ new Set(["of", "the", "and", "for", "in", "at", "by", "on", "to", "from"]);
-function realmCapitals(text) {
-  return text.replace(/\bthe the\b/gi, "the").replace(/\s+/g, " ").trim().split(" ").map((word, i) => {
-    if (!word || word.startsWith("[")) return word;
-    const lower3 = word.toLowerCase();
-    if (SMALL5.has(lower3) && (i > 0 || lower3 === "the")) return lower3;
-    return word.replace(/(^|[-–])([a-z])/g, (_m, sep, c) => sep + c.toUpperCase());
-  }).join(" ");
-}
-var counted = (text) => text.split(" ").filter((w, i) => w && !(i === 0 && w.toLowerCase() === "the") && !SMALL5.has(w.toLowerCase()));
-var wordRe5 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
-var BANNED3 = [...REALM_DATA.safeguards.banned, ...REALM_DATA.safeguards.religious].map(wordRe5);
-function breaksRealmWords(text) {
-  return hasBannedWord(text) || BANNED3.some((re) => re.test(text));
-}
-var COLOUR_BEFORE_PEOPLE = new RegExp(`\\b(${groupListWords("colour", "FL").map(([w]) => w).join("|")}) (Peoples|Folk|Kin)\\b`);
-var TRIBAL_POOLS = /* @__PURE__ */ new Map();
-function tribalPool(tradition, biome, terrain, custom) {
-  var _a5, _b3;
-  const key2 = `${tradition}|${custom ? (_b3 = (_a5 = custom.custom) == null ? void 0 : _a5.path) != null ? _b3 : biome.id : biome.id}|${terrain}`;
-  let found = TRIBAL_POOLS.get(key2);
-  if (!found) {
-    found = generateTribalNames({ tradition, ...custom ? { biomeData: custom } : { biome: biome.id }, terrain, count: 120, seed: 1789 }).names.map((n) => n.name).filter((n) => !n.includes("["));
-    TRIBAL_POOLS.set(key2, found);
-  }
-  return found;
-}
-function generateRealmNames(options) {
-  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m;
-  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
-  const rng = mulberry32(seed);
-  const notices = [];
-  const culture = REALM_CULTURES.some((c) => c.key === options.culture) ? options.culture : "general";
-  const era = eraCode((_a5 = options.era) != null ? _a5 : "medieval");
-  const genre = (_b3 = options.genre) != null ? _b3 : "fantasy";
-  const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
-  const tone = (_c3 = options.tone) != null ? _c3 : "any";
-  const length = (_d3 = options.length) != null ? _d3 : "plain";
-  const output = (_e3 = options.output) != null ? _e3 : "official";
-  const mode = (_f = options.people) != null ? _f : "placeholders";
-  let namedFor = (_g = options.namedFor) != null ? _g : "anything";
-  if (namedFor === "stars" && !namedForOffered("stars", (_h = options.era) != null ? _h : "medieval")) {
-    notices.push("\u201CThe stars\u201D needs the near-future or interstellar era.");
-    namedFor = "anything";
-  }
-  const biome = (_j = (_i = options.biomeData) != null ? _i : findBiome(!options.biome || options.biome === "homeland" ? homelandBiome(culture) : options.biome)) != null ? _j : findBiome("temperate");
-  const terrain = (_k = options.terrain) != null ? _k : "any";
-  const spaceOk = !biome.space || era === "NF" || era === "IS";
-  if (!spaceOk) notices.push("Space biomes need the near-future or interstellar era; using their homeland.");
-  const landBiome2 = spaceOk ? biome : (_l = findBiome(homelandBiome(culture))) != null ? _l : findBiome("temperate");
-  const scale = landBiome2.space ? landBiome2.scale : void 0;
-  const lists = identityLists(landBiome2, spaceOk ? terrain : "any");
-  const chosen = options.character ? REALM_CHARACTERS.find((c) => c.key === options.character) : void 0;
-  if (options.character && !chosen) notices.push(`\u201C${options.character}\u201D isn't a realm character; using any.`);
-  const characters = REALM_CHARACTERS.map((c) => {
-    var _a6, _b4;
-    return [c.key, c.w * ((_b4 = (_a6 = c.eraMult) == null ? void 0 : _a6[era]) != null ? _b4 : 1)];
-  }).filter(([, w]) => w > 0);
-  const guards = (_m = options.safeguards) != null ? _m : { block: REALM_DATA.safeguards.block, flag: REALM_DATA.safeguards.flag, flagListBlocks: REALM_DATA.safeguards.flagListBlocks };
-  const pools = /* @__PURE__ */ new Map();
-  const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock));
-  const tribal = () => {
-    var _a6, _b4;
-    const peopleBiome = landBiome2.space ? (_a6 = findBiome(homelandBiome(culture))) != null ? _a6 : findBiome("temperate") : biome;
-    const pool3 = tribalPool((_b4 = REALM_DATA.tribal[culture]) != null ? _b4 : "general", peopleBiome, landBiome2.space ? "any" : terrain, landBiome2.space ? void 0 : options.biomeData);
-    return pool3.length > 0 ? pickOne3(pool3, rng) : void 0;
-  };
-  const namedForWeights = (character) => Object.entries(REALM_DATA.namedForWeights[character]).filter(([k]) => namedForOffered(k, REALM_ERAS.find((e) => e.code === era).key)).map(([k, w]) => {
-    var _a6, _b4;
-    return [k, w * (k === "people" ? (_b4 = (_a6 = REALM_DATA.cultures[culture]) == null ? void 0 : _a6.peoplesMult) != null ? _b4 : 1 : 1)];
-  }).filter(([, w]) => w > 0);
-  const chooseShape = (character, nf) => {
-    var _a6, _b4, _c4;
-    const weigh = (shapes, extra = []) => shapes.filter((s2) => (!s2.eras || s2.eras.includes(era)) && (!s2.ceremonialOnly || length === "ceremonial")).map((s2) => {
-      var _a7;
-      return [s2, s2.w * toneFactor([...extra, ...(_a7 = s2.t) != null ? _a7 : []], tone)];
-    }).filter(([, w]) => w > 0);
-    const own = REALM_DATA.characterShapes[character];
-    if (namedFor === "anything" && own && rng() < own.share) {
-      const s2 = pickWeighted5(weigh(own.shapes, own.t), rng);
-      if (s2) return { shape: s2, kind: "character", nf: "character", t: [...(_a6 = own.t) != null ? _a6 : [], ...(_b4 = s2.t) != null ? _b4 : []] };
-    }
-    const resolved = nf === "anything" ? pickWeighted5(namedForWeights(character), rng) : nf;
-    if (!resolved || resolved === "anything") return void 0;
-    const kind = (resolved === "land" || resolved === "place") && rng() < REALM_DATA.collectiveShare ? "collective" : resolved;
-    const s = pickWeighted5(weigh(REALM_DATA.shapes[kind]), rng);
-    return s ? { shape: s, kind, nf: resolved, t: (_c4 = s.t) != null ? _c4 : [] } : void 0;
-  };
-  const oneName2 = () => {
-    var _a6;
-    for (let round = 0; round < 2; round++) {
-      const character = (_a6 = chosen == null ? void 0 : chosen.key) != null ? _a6 : pickWeighted5(characters, rng);
-      if (!character) return void 0;
-      for (let i = 0; i < 20; i++) {
-        const choice = chooseShape(character, namedFor);
-        if (!choice) continue;
-        const built = build(character, choice);
-        if (built) return built;
-      }
-    }
-    return void 0;
-  };
-  function build(character, choice) {
-    var _a6, _b4, _c4, _d4;
-    const { shape, kind } = choice;
-    const ctx = { rng, setting, era, culture, character, tone, mode, biome: landBiome2, lists, pools, tribal, drawn: /* @__PURE__ */ new Set(), values: /* @__PURE__ */ new Map(), scale };
-    if (/\{(form|federalForm)\}/.test(shape.p)) {
-      const keep = shape.p.includes("{federalForm}") ? (f) => f.g === "federal" && !f.peoplesOnly : kind === "dynasty" ? DYNASTY : kind === "people" ? PEOPLES : shape.groups ? (f) => shape.groups.includes(f.g) && PLAIN_FORM(f) : shape.p.includes("{modifier}") ? (f) => PLAIN_FORM(f) && (compatibleModifiers(f.w, era).length > 0 || ideologyFor(f.w, era)) : PLAIN_FORM;
-      ctx.form = drawForm(ctx, keep);
-      if (!ctx.form) return void 0;
-    }
-    if (shape.p.includes("{collNoun}")) {
-      const keep = shape.collQual ? (w) => compatibleCollQuals(w).includes(shape.collQual) : (w) => compatibleCollQuals(w).length > 0 || !shape.p.includes("{collQual}");
-      ctx.collNoun = listWord3(ctx, "collNoun", keep);
-      if (!ctx.collNoun) return void 0;
-    }
-    const ceremonial = length === "ceremonial";
-    let pattern = shape.p;
-    let pairToken;
-    if (ceremonial) {
-      if (shape.upperLower && rng() < REALM_DATA.ceremonial.upperLower) pattern = pattern.replace("{landIdentity}", "Upper and Lower {landPl}");
-      else if (shape.pair && rng() < REALM_DATA.ceremonial.pair) pairToken = shape.pair;
-    }
-    let raw = renderTokens3(ctx, pattern, shape, kind);
-    if (!raw) return void 0;
-    const plainOfficial = realmCapitals(withDeityPlaceholders(raw));
-    if (pattern !== shape.p) ctx.values.set("landIdentity", raw.slice(raw.indexOf("Upper and Lower")));
-    if (pairToken) {
-      const first = ctx.values.get(pairToken);
-      const second = token4(ctx, pairToken, shape, kind);
-      if (!second || second === first) return void 0;
-      const the = new RegExp(`of the ${first.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`).test(raw);
-      raw = raw.replace(first, `${first} and ${the ? "the " : ""}${second.replace(/^the /, "")}`);
-    }
-    raw = withDeityPlaceholders(raw);
-    let official = realmCapitals(raw);
-    let honorific;
-    if (ceremonial && !shape.honorific) {
-      const group = (_c4 = (_b4 = (_a6 = ctx.form) == null ? void 0 : _a6.g) != null ? _b4 : shape.g) != null ? _c4 : "federal";
-      const pool3 = REALM_DATA.honorifics[group].map((e) => {
-        var _a7, _b5;
-        return [e, ((_a7 = e.x) != null ? _a7 : 1) * toneFactor((_b5 = e.t) != null ? _b5 : [], tone)];
-      }).filter(([, w]) => w > 0);
-      const h = pickWeighted5(pool3, rng);
-      if (!h) return void 0;
-      honorific = h.w;
-      for (const t of (_d4 = h.t) != null ? _d4 : []) ctx.drawn.add(t);
-      official = realmCapitals(`${honorific} ${official.replace(/^the /, "")}`);
-    } else if (shape.honorific) honorific = "Most Serene";
-    const short = realmCapitals(withDeityPlaceholders(renderShort(ctx, shape.short, plainOfficial)));
-    const words = counted(official);
-    if (words.length === 0 || words.length > REALM_DATA.caps[length]) return void 0;
-    if (repeatsContent(words)) return void 0;
-    for (const n of [official, short]) if (block.has(normForBlock(n))) return void 0;
-    if ((ctx.era === "NF" || ctx.era === "IS") && (hasSpaceBlock(official) || hasSpaceBlock(short))) return void 0;
-    if (breaksRealmWords(official) || breaksGroupColourRule(official) || COLOUR_BEFORE_PEOPLE.test(official)) return void 0;
-    const text = output === "official" ? official : output === "short" ? short : official.toLowerCase() === short.toLowerCase() ? official : `${official} (${short})`;
-    const tones = /* @__PURE__ */ new Set([...choice.t, ...ctx.drawn, ...ceremonial ? REALM_DATA.ceremonial.t : []]);
-    return {
-      text,
-      official,
-      short,
-      character,
-      namedFor: choice.nf,
-      kind,
-      shape: shape.p,
-      ...ctx.form ? { form: ctx.form.w, formGroup: ctx.form.g } : shape.g ? { formGroup: shape.g } : {},
-      ...ctx.modifier ? { modifier: ctx.modifier } : {},
-      ...honorific ? { honorific } : {},
-      ...ctx.collQual ? { collQual: ctx.collQual } : shape.collQual ? { collQual: shape.collQual } : {},
-      ...ctx.collNoun ? { collNoun: ctx.collNoun } : {},
-      tones: GROUP_TONES.filter((t) => tones.has(t))
-    };
-  }
-  const seen = /* @__PURE__ */ new Set();
-  const names = [];
-  const count = Math.max(0, Math.floor(options.count));
-  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
-    const name = oneName2();
-    if (!name) continue;
-    const key2 = name.text.toLowerCase();
-    if (seen.has(key2)) continue;
-    seen.add(key2);
-    names.push(name);
-  }
-  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
-  return { names, seed, notices };
-}
-function renderShort(ctx, template, plain) {
-  if (template === "same") return plain;
-  const keepThe = template.startsWith("the ");
-  const out = template.replace(/\{([^}]+)\}/g, (_m, raw) => {
-    var _a5;
-    const [name, mod] = raw.split(":");
-    const v = (_a5 = ctx.values.get(name)) != null ? _a5 : "";
-    if (mod === "poss") return groupPossessive(v, false);
-    if (mod === "pl") return v.startsWith("[") ? v : groupPlural(v);
-    return v;
-  });
-  return keepThe ? out : out.replace(/^the /i, "");
-}
-function realmHistoryLabel(genre, fantastic, culture, era, character, tone = "any") {
-  var _a5, _b3, _c3, _d3;
-  const label = (_b3 = (_a5 = REALM_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
-  return [
-    "realms and polities",
-    SETTING_PHRASES[groupSetting(genre, genre === "scifi" ? false : fantastic)],
-    label,
-    (_d3 = (_c3 = REALM_ERAS.find((e) => e.key === era)) == null ? void 0 : _c3.label) != null ? _d3 : era,
-    // Companies brief §9.1: the corporate character reads "company-states".
-    ...character ? [character === "corporate" ? "company-states" : character] : [],
-    ...tone !== "any" ? [tone] : []
-  ].join(" \xB7 ");
-}
-
-// src/data/peoples-tongues.json
-var peoples_tongues_default = {
-  version: 1,
-  weights: {
-    general: { ian: 22, an: 15, er: 15, ish: 15, ese: 10, ite: 10, i: 5, clip: 5, ine: 3 },
-    "anglo-saxon": { ish: 30, er: 15, clip: 15, folk: 15, ings: 15, man: 10 },
-    norse: { er: 30, ish: 25, clip: 25, man: 10, ian: 10 },
-    celtic: { ish: 30, clip: 20, man: 15, ian: 15, an: 10, er: 10 },
-    "norman-british": { er: 40, man: 15, ian: 15, learned: 10, ish: 10, ite: 10 },
-    roman: { an: 30, ian: 20, ese: 20, ine: 15, ite: 10, itan: 5 },
-    "greek-byzantine": { ian: 30, an: 20, ite: 15, iot: 15, ine: 10, ene: 10 },
-    slavic: { ian: 45, clip: 20, ite: 15, ish: 10, er: 5, an: 5 },
-    steppe: { clip: 35, i: 25, ian: 20, ish: 10, an: 10 },
-    "arabic-persian": { i: 60, ite: 15, ian: 15, ene: 5, an: 5 },
-    indian: { i: 60, an: 15, ese: 10, ian: 10, ite: 5 },
-    chinese: { ese: 70, an: 15, er: 15 },
-    japanese: { ese: 75, an: 15, ite: 10 },
-    korean: { an: 60, ese: 25, ite: 15 },
-    egyptian: { ian: 50, ite: 30, an: 20 },
-    ethiopian: { an: 40, ian: 30, i: 30 },
-    bantu: { an: 60, ese: 25, ian: 15 },
-    "west-african": { ese: 40, an: 30, ian: 25, i: 5 },
-    aztec: { an: 50, ec: 30, ese: 10, ian: 10 },
-    maya: { an: 60, ec: 25, ian: 15 }
+// src/data/vehicles-air-land.json
+var vehicles_air_land_default = {
+  $comment: "Aircraft and land vehicles (docs/aircraft-and-land-vehicles-brief.md). Built from the brief; merged by module key with vessels.json at load.",
+  modules: {
+    aircraft: "aircraft and airships",
+    landVehicles: "land vehicles"
   },
-  suffixes: {
-    an: "an",
-    ian: "ian",
-    ese: "ese",
-    i: "i",
-    ite: "ite",
-    ine: "ine",
-    iot: "iot",
-    ene: "ene",
-    itan: "itan",
-    ec: "ec"
+  technology: {
+    aircraft: [
+      {
+        code: "A1",
+        label: "balloons and kites"
+      },
+      {
+        code: "A2",
+        label: "airships"
+      },
+      {
+        code: "A3",
+        label: "pioneer and biplane"
+      },
+      {
+        code: "A4",
+        label: "piston age"
+      },
+      {
+        code: "A5",
+        label: "jet age"
+      },
+      {
+        code: "A6",
+        label: "modern and drones"
+      },
+      {
+        code: "A7",
+        label: "future"
+      },
+      {
+        code: "AF",
+        label: "sky ships",
+        fantastic: true
+      }
+    ],
+    landVehicles: [
+      {
+        code: "L1",
+        label: "animal-drawn"
+      },
+      {
+        code: "L2",
+        label: "steam"
+      },
+      {
+        code: "L3",
+        label: "early motor"
+      },
+      {
+        code: "L4",
+        label: "mid-century"
+      },
+      {
+        code: "L5",
+        label: "modern"
+      },
+      {
+        code: "L6",
+        label: "future"
+      },
+      {
+        code: "LF",
+        label: "war engines and wonders",
+        fantastic: true
+      }
+    ]
   },
-  ic: { celtic: 25, ethiopian: 30, steppe: 20, "arabic-persian": 15, norse: 20, slavic: 10, egyptian: 10, general: 10 },
-  icLandOnly: ["norse"],
-  adjectiveIc: 30,
-  erAdjective: { place: 60, ish: 25, ic: 15 },
-  endings: [
-    {
-      id: "british",
-      ends: ["ton", "don", "ham", "by", "ford", "wich", "wick", "bury", "mouth", "port", "ster", "chester", "cester", "caster", "shire", "set", "field", "well", "ley", "worth", "stead", "thorpe", "gate", "stow", "stowe", "burgh", "borough"],
-      mult: { er: 3, learned: 1 },
-      others: 0.5,
-      endMult: { shire: { man: 2 }, set: { man: 2 }, by: { ite: 3 } }
+  settings: {
+    aircraft: {
+      FL: [
+        "A1"
+      ],
+      FH: [
+        "A1",
+        "AF"
+      ],
+      MR: [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5",
+        "A6"
+      ],
+      MF: [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5",
+        "A6",
+        "AF"
+      ],
+      SF: [
+        "A6",
+        "A7"
+      ]
     },
-    { id: "land", ends: ["land"], mult: { er: 3, clip: 2, ish: 2 }, others: 0.2 },
-    { id: "mark", ends: ["mark"], mult: { clip: 3, er: 2 }, others: 0.3 },
-    { id: "stan", ends: ["istan", "stan"], mult: { clip: 3, i: 3 }, others: 0.1 },
-    { id: "ia", ends: ["ia"], mult: { ian: 4, ite: 1, clip: 1 }, others: 0.1 },
-    { id: "double", ends: ["ee", "ie", "oo", "ae"], mult: { ite: 3 }, others: 0.3 },
-    { id: "a", ends: ["a"], mult: { an: 4, ese: 1, i: 1, ian: 0 }, others: 0.3 },
-    { id: "ey", ends: ["ey"], mult: { ish: 2, clip: 2, man: 2 }, others: 0.3 },
-    { id: "y", ends: ["y"], mult: { ian: 4, an: 1 }, others: 0.3 },
-    { id: "o", ends: ["o"], mult: { an: 3, ese: 2, ite: 1 }, others: 0.3 },
-    { id: "u", ends: ["u"], mult: { ian: 2, an: 2 }, others: 0.3 },
-    { id: "i", ends: ["i"], mult: { an: 4, i: 0 }, others: 0.2 },
-    { id: "e", ends: ["e"], mult: {}, others: 1 },
-    { id: "us", ends: ["us"], mult: { ian: 2, iot: 2, ene: 2, an: 1 }, others: 0.2 },
-    { id: "s", ends: ["s"], mult: { ian: 3, ite: 1 }, others: 0.3 },
-    { id: "n", ends: ["an", "en", "in", "on", "un"], mult: { ese: 2, ian: 2, er: 1.5, i: 1 }, others: 1 },
-    { id: "other", ends: [], mult: {}, others: 1 }
-  ],
-  clipEnds: ["land", "mark", "istan", "stan", "ia", "ey", "y", "a"],
-  learned: [
-    { ends: ["chester", "cester"], add: "cestrian", strip: true },
-    { ends: ["caster"], add: "castrian", strip: true },
-    { ends: ["mouth"], add: "mothian", strip: true },
-    { ends: ["bury"], add: "burian", strip: true },
-    { ends: ["ford"], add: "ian", strip: false },
-    { ends: ["ton", "don"], add: "ian", strip: false },
-    { ends: ["burgh", "borough"], add: "burgian", strip: true }
-  ],
-  eraBoost: { add: { born: 10, sider: 5 }, mult: { ite: 2, er: 1.5, ian: 1.5 } },
-  toneMult: {
-    grand: { learned: 2, ine: 1.5, ian: 1.2 },
-    plain: { er: 1.5, an: 1.2 },
-    light: { er: 1.5, ite: 1.5, clip: 1.5 },
-    strange: { ec: 1.5, iot: 1.5, ene: 1.5 },
-    grim: {}
+    landVehicles: {
+      FL: [
+        "L1"
+      ],
+      FH: [
+        "L1",
+        "LF"
+      ],
+      MR: [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5"
+      ],
+      MF: [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "LF"
+      ],
+      SF: [
+        "L5",
+        "L6"
+      ]
+    }
   },
-  generics: [
-    { words: ["isles", "islands", "isle", "island"], person: "Islander", people: ["Islanders"] },
-    { words: ["fells"], person: "Fellsman", people: ["Fellsmen", "Fellsfolk"] },
-    { words: ["dales", "dale"], person: "Dalesman", people: ["Dalesmen"] },
-    { words: ["hills"], person: "Hillman", people: ["Hillmen"] },
-    { words: ["highlands", "mountains"], person: "Highlander", people: ["Highlanders"] },
-    { words: ["lowlands"], person: "Lowlander", people: ["Lowlanders"] },
-    { words: ["midlands"], person: "Midlander", people: ["Midlanders"] },
-    { words: ["marches", "march"], person: "Marcher", people: ["Marchers"] },
-    { words: ["fens"], person: "Fenman", people: ["Fenmen"] },
-    { words: ["moors"], person: "Moorlander", people: ["Moorlanders"] },
-    { words: ["wolds"], person: "Woldsman", people: ["Woldsmen"] },
-    { words: ["downs"], person: "Downsman", people: ["Downsmen"] },
-    { words: ["coast"], person: "Coaster", people: ["Coasters"] },
-    { words: ["shore", "shores"], person: "Shoreman", people: ["Shorefolk"] },
-    { words: ["plains"], person: "Plainsman", people: ["Plainsmen"] },
-    { words: ["valley", "vale"], person: "Valleyman", people: ["Valleymen"] },
-    { words: ["forest", "woods"], person: "Forester", people: ["Foresters"] },
-    { words: ["weald"], person: "Wealdsman", people: ["Wealdsmen"] },
-    { words: ["lakes"], person: "Lakelander", people: ["Lakelanders"] },
-    { words: ["river", "rivers"], person: "Riverman", people: ["Riverfolk"] },
-    { words: ["reach", "reaches"], person: "Reachman", people: ["Reachfolk"] },
-    { words: ["worlds"], person: "Worlder", people: ["Worlders"] },
-    { words: ["ring"], person: "Ringsider", people: ["Ringsiders"], eras: ["NF", "IS"] }
-  ],
-  genericLanguage: [
-    { p: "the speech of {name}", w: 40 },
-    { p: "{bare} speech", w: 30 },
-    { p: "{bare} dialect", w: 30 }
-  ],
-  landWords: ["barrens", "wastes", "peaks", "heights", "steppes", "steppe", "deserts", "desert", "marshes", "swamp", "sands", "cliffs", "sound", "straits", "gulf", "bay", "wilds", "badlands", "uplands", "heath", "heaths", "tundra", "glades", "meres", "mere", "fjords", "channel"],
-  colonistShare: 0.5,
-  sun: [
-    { names: ["earth", "terra"], person: ["Terran", "Earther"], adjective: "Terran", people: ["the Terrans", "the Earthers"], language: "Terran" },
-    { names: ["moon", "luna"], person: ["Lunarian"], adjective: "Lunar", people: ["the Lunarians"], language: "Lunarian" },
-    { names: ["mars"], person: ["Martian"], adjective: "Martian", people: ["the Martians"], language: "Martian" },
-    { names: ["venus"], person: ["Venusian"], adjective: "Venusian", people: ["the Venusians"], language: "Venusian" },
-    { names: ["mercury"], person: ["Mercurian"], adjective: "Mercurian", people: ["the Mercurians"], language: "Mercurian" },
-    { names: ["jupiter"], person: ["Jovian"], adjective: "Jovian", people: ["the Jovians"], language: "Jovian" },
-    { names: ["saturn"], person: ["Saturnian"], adjective: "Saturnian", people: ["the Saturnians"], language: "Saturnian" },
-    { names: ["titan"], person: ["Titanian"], adjective: "Titanian", people: ["the Titanians"], language: "Titanian" },
-    { names: ["europa"], person: ["Europan"], adjective: "Europan", people: ["the Europans"], language: "Europan" },
-    { names: ["ganymede"], person: ["Ganymedean"], adjective: "Ganymedean", people: ["the Ganymedeans"], language: "Ganymedean" },
-    { names: ["callisto"], person: ["Callistan"], adjective: "Callistan", people: ["the Callistans"], language: "Callistan" },
-    { names: ["io"], person: ["Ionian"], adjective: "Ionian", people: ["the Ionians"], language: "Ionian" },
-    { names: ["ceres"], person: ["Cererian"], adjective: "Cererian", people: ["the Cererians"], language: "Cererian" },
-    { names: ["pluto"], person: ["Plutonian"], adjective: "Plutonian", people: ["the Plutonians"], language: "Plutonian" },
-    { names: ["triton"], person: ["Tritonian"], adjective: "Tritonian", people: ["the Tritonians"], language: "Tritonian" },
-    { names: ["enceladus"], person: ["Enceladean"], adjective: "Enceladean", people: ["the Enceladeans"], language: "Enceladean" }
-  ],
-  languageShapes: [
-    { p: "{L}", w: 50 },
-    { p: "the {L} tongue", w: 10 },
-    { p: "Old {L}", w: 8, from: "MD" },
-    { p: "High {L}", w: 4 },
-    { p: "Low {L}", w: 4 },
-    { p: "Common {L}", w: 4, t: ["plain"] },
-    { p: "Court {L}", w: 3, t: ["grand"] },
-    { p: "Classical {L}", w: 3, from: "MD", t: ["grand"] },
-    { p: "Trade {L}", w: 4, from: "EM", t: ["plain"] },
-    { p: "{L} Pidgin", w: 2, from: "EM", t: ["light"] },
-    { p: "{L} Cant", w: 1, from: "MD", t: ["grim", "light"] },
-    { p: "{harbourWord} Cant", w: 1, from: "MD", t: ["grim", "light"] },
-    { p: "{L} Standard", w: 8, from: "NF", t: ["plain"] },
-    { p: "Spacers' {L}", w: 3, from: "NF" }
-  ],
-  harbourWords: ["Harbour", "Dock", "Gutter", "Thieves'", "Tinkers'"],
-  older: {
-    AN: ["Early {L}", "Archaic {L}"],
-    MD: ["Middle {L}", "Old {L}"],
-    EM: ["Middle {L}", "Old {L}"],
-    ST: ["Early Modern {L}", "Middle {L}", "Old {L}"],
-    MO: ["Early Modern {L}", "Middle {L}", "Old {L}"],
-    NF: ["Early Modern {L}", "Middle {L}", "Old {L}"],
-    IS: ["Early Modern {L}", "Middle {L}", "Old {L}"]
+  spans: {
+    general: {
+      airSpan: "A1-A6",
+      landSpan: "L1-L5"
+    },
+    "anglo-saxon": {
+      airSpan: "",
+      landSpan: "L1"
+    },
+    norse: {
+      airSpan: "",
+      landSpan: "L1"
+    },
+    celtic: {
+      airSpan: "",
+      landSpan: "L1"
+    },
+    "greek-byzantine": {
+      airSpan: "",
+      landSpan: "L1"
+    },
+    steppe: {
+      airSpan: "",
+      landSpan: "L1"
+    },
+    "norman-british": {
+      airSpan: "A1-A6",
+      landSpan: "L1-L5"
+    },
+    french: {
+      airSpan: "A1-A6",
+      landSpan: "L1-L5"
+    },
+    american: {
+      airSpan: "A1-A6",
+      landSpan: "L1-L5"
+    },
+    slavic: {
+      airSpan: "A1-A6",
+      landSpan: "L1-L5"
+    },
+    roman: {
+      airSpan: "A2-A6",
+      landSpan: "L1-L5"
+    },
+    dutch: {
+      airSpan: "A3-A6",
+      landSpan: "L1-L5"
+    },
+    iberian: {
+      airSpan: "A3-A6",
+      landSpan: "L1-L5"
+    },
+    japanese: {
+      airSpan: "A3-A6",
+      landSpan: "L1-L5"
+    },
+    chinese: {
+      airSpan: "A4-A6",
+      landSpan: "L1-L5"
+    },
+    indian: {
+      airSpan: "A4-A6",
+      landSpan: "L1-L5"
+    },
+    ethiopian: {
+      airSpan: "A4-A6",
+      landSpan: "L1-L5"
+    },
+    korean: {
+      airSpan: "A5-A6",
+      landSpan: "L1-L5"
+    },
+    "arabic-persian": {
+      airSpan: "A5-A6",
+      landSpan: "L1-L5"
+    },
+    egyptian: {
+      airSpan: "A5-A6",
+      landSpan: "L1-L5"
+    },
+    ottoman: {
+      airSpan: "A3-A4",
+      landSpan: "L1-L3"
+    },
+    "swahili-omani": {
+      airSpan: "",
+      landSpan: "L1"
+    },
+    malay: {
+      airSpan: "",
+      landSpan: "L1-L4"
+    },
+    bantu: {
+      airSpan: "",
+      landSpan: "L3-L5"
+    },
+    "west-african": {
+      airSpan: "",
+      landSpan: "L3-L5"
+    },
+    arctic: {
+      airSpan: "",
+      landSpan: "L1"
+    },
+    "na-woodlands": {
+      airSpan: "",
+      landSpan: "L1"
+    },
+    hawaiian: {
+      airSpan: "",
+      landSpan: ""
+    },
+    maori: {
+      airSpan: "",
+      landSpan: ""
+    },
+    "w-polynesian": {
+      airSpan: "",
+      landSpan: ""
+    },
+    "nw-coast": {
+      airSpan: "",
+      landSpan: ""
+    },
+    aztec: {
+      airSpan: "",
+      landSpan: ""
+    },
+    maya: {
+      airSpan: "",
+      landSpan: ""
+    },
+    andean: {
+      airSpan: "",
+      landSpan: ""
+    }
   },
-  dialectWords: ["Northern", "Southern", "Eastern", "Western", "Highland", "Lowland", "Hill", "Coast", "River", "Island", "Town", "Court", "Common"],
-  dialectWordsSpace: ["Station", "Colony", "Orbital", "Deep"],
+  techWords: {
+    A1: {
+      techAdj: [
+        {
+          w: "Lofty"
+        },
+        {
+          w: "Silken"
+        },
+        {
+          w: "Rising"
+        },
+        {
+          w: "Buoyant"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Balloon"
+        },
+        {
+          w: "Basket"
+        },
+        {
+          w: "Ascent"
+        },
+        {
+          w: "Kite"
+        },
+        {
+          w: "Updraft"
+        }
+      ]
+    },
+    A2: {
+      techAdj: [
+        {
+          w: "Great"
+        },
+        {
+          w: "Silver"
+        },
+        {
+          w: "Stately"
+        },
+        {
+          w: "Rigid"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Envelope"
+        },
+        {
+          w: "Gondola"
+        },
+        {
+          w: "Airship"
+        },
+        {
+          w: "Mooring"
+        }
+      ]
+    },
+    A3: {
+      techAdj: [
+        {
+          w: "Wooden"
+        },
+        {
+          w: "Daring"
+        },
+        {
+          w: "Flying"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Wing"
+        },
+        {
+          w: "Propeller"
+        },
+        {
+          w: "Strut"
+        },
+        {
+          w: "Loop"
+        }
+      ]
+    },
+    A4: {
+      techAdj: [
+        {
+          w: "Roaring"
+        },
+        {
+          w: "Silver"
+        },
+        {
+          w: "Twin-Engined"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Engine"
+        },
+        {
+          w: "Prop"
+        },
+        {
+          w: "Wing"
+        },
+        {
+          w: "Clipper"
+        }
+      ]
+    },
+    A5: {
+      techAdj: [
+        {
+          w: "Jet",
+          x: 2
+        },
+        {
+          w: "Swept"
+        },
+        {
+          w: "Supersonic"
+        },
+        {
+          w: "Silver"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Jet"
+        },
+        {
+          w: "Contrail"
+        },
+        {
+          w: "Turbine"
+        },
+        {
+          w: "Thunder"
+        }
+      ]
+    },
+    A6: {
+      techAdj: [
+        {
+          w: "Swift"
+        },
+        {
+          w: "Global"
+        },
+        {
+          w: "Silent"
+        },
+        {
+          w: "Stealth"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Drone"
+        },
+        {
+          w: "Wing"
+        },
+        {
+          w: "Jet"
+        },
+        {
+          w: "Rotor"
+        }
+      ]
+    },
+    A7: {
+      techAdj: [
+        {
+          w: "Hover"
+        },
+        {
+          w: "Ion"
+        },
+        {
+          w: "Skyward"
+        },
+        {
+          w: "Silent"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Skimmer"
+        },
+        {
+          w: "Flyer"
+        },
+        {
+          w: "Lifter"
+        },
+        {
+          w: "Thruster"
+        }
+      ]
+    },
+    AF: {
+      techAdj: [
+        {
+          w: "Sky",
+          x: 2
+        },
+        {
+          w: "Cloud"
+        },
+        {
+          w: "Wind-Borne"
+        },
+        {
+          w: "High"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Sky"
+        },
+        {
+          w: "Cloud"
+        },
+        {
+          w: "Gale"
+        },
+        {
+          w: "Keel"
+        },
+        {
+          w: "Zenith"
+        }
+      ]
+    },
+    L1: {
+      techAdj: [
+        {
+          w: "Swift"
+        },
+        {
+          w: "Painted"
+        },
+        {
+          w: "Iron-Shod"
+        },
+        {
+          w: "Creaking",
+          t: [
+            "light"
+          ]
+        }
+      ],
+      techNoun: [
+        {
+          w: "Wheel"
+        },
+        {
+          w: "Axle"
+        },
+        {
+          w: "Whip"
+        },
+        {
+          w: "Team"
+        },
+        {
+          w: "Road"
+        }
+      ]
+    },
+    L2: {
+      techAdj: [
+        {
+          w: "Iron",
+          x: 2
+        },
+        {
+          w: "Steam"
+        },
+        {
+          w: "Brass"
+        },
+        {
+          w: "Coal-Black"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Engine"
+        },
+        {
+          w: "Boiler"
+        },
+        {
+          w: "Piston"
+        },
+        {
+          w: "Smoke"
+        },
+        {
+          w: "Firebox"
+        }
+      ]
+    },
+    L3: {
+      techAdj: [
+        {
+          w: "Motor"
+        },
+        {
+          w: "Iron"
+        },
+        {
+          w: "Rattling",
+          t: [
+            "light"
+          ]
+        }
+      ],
+      techNoun: [
+        {
+          w: "Motor"
+        },
+        {
+          w: "Engine"
+        },
+        {
+          w: "Track"
+        },
+        {
+          w: "Crank"
+        }
+      ]
+    },
+    L4: {
+      techAdj: [
+        {
+          w: "Diesel"
+        },
+        {
+          w: "Steel",
+          x: 2
+        },
+        {
+          w: "Streamlined"
+        },
+        {
+          w: "Chrome"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Diesel"
+        },
+        {
+          w: "Track"
+        },
+        {
+          w: "Turret"
+        },
+        {
+          w: "Express"
+        }
+      ]
+    },
+    L5: {
+      techAdj: [
+        {
+          w: "Electric"
+        },
+        {
+          w: "High-Speed"
+        },
+        {
+          w: "Steel"
+        },
+        {
+          w: "Swift"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Current"
+        },
+        {
+          w: "Track"
+        },
+        {
+          w: "Express"
+        },
+        {
+          w: "Turbine"
+        }
+      ]
+    },
+    L6: {
+      techAdj: [
+        {
+          w: "Hover"
+        },
+        {
+          w: "Ion"
+        },
+        {
+          w: "Silent"
+        },
+        {
+          w: "Magnetic"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Maglev"
+        },
+        {
+          w: "Crawler"
+        },
+        {
+          w: "Walker"
+        },
+        {
+          w: "Track"
+        }
+      ]
+    },
+    LF: {
+      techAdj: [
+        {
+          w: "Iron",
+          x: 2
+        },
+        {
+          w: "Rune"
+        },
+        {
+          w: "Stone"
+        },
+        {
+          w: "Walking"
+        },
+        {
+          w: "Brass"
+        }
+      ],
+      techNoun: [
+        {
+          w: "Engine"
+        },
+        {
+          w: "Strider"
+        },
+        {
+          w: "Juggernaut"
+        },
+        {
+          w: "Colossus"
+        },
+        {
+          w: "Golem"
+        }
+      ]
+    }
+  },
+  functions: {
+    aircraft: {
+      any: "aircraft of any kind",
+      list: [
+        {
+          key: "war",
+          menu: "Fighters and warplanes",
+          plural: "fighters and warplanes",
+          w: 20,
+          description: "Fighters, war balloons and sky warships"
+        },
+        {
+          key: "bomber",
+          menu: "Bombers",
+          plural: "bombers",
+          w: 10,
+          description: "Bombers and heavy warplanes",
+          needs: [
+            "A3-A7",
+            "AF"
+          ]
+        },
+        {
+          key: "airliner",
+          menu: "Airliners",
+          plural: "airliners",
+          w: 15,
+          description: "Passenger airships, flying boats and airliners",
+          needs: [
+            "A2-A7",
+            "AF"
+          ]
+        },
+        {
+          key: "transport",
+          menu: "Transport and cargo",
+          plural: "transport and cargo aircraft",
+          w: 12,
+          description: "Freighters, transports and sky traders",
+          needs: [
+            "A2-A7",
+            "AF"
+          ]
+        },
+        {
+          key: "explore",
+          menu: "Survey and record-breaking",
+          plural: "survey and record-breaking craft",
+          w: 10,
+          description: "Survey craft, expedition balloons and record-breakers"
+        },
+        {
+          key: "private",
+          menu: "Private and sport",
+          plural: "private and sport craft",
+          w: 10,
+          description: "Private aircraft, sport balloons and sky yachts",
+          noSensitive: true,
+          afMenu: "Sky yachts",
+          afPlural: "sky yachts"
+        },
+        {
+          key: "working",
+          menu: "Working aircraft",
+          plural: "working aircraft",
+          w: 10,
+          description: "Bush planes, crop sprayers, air ambulances and fire-fighting aircraft",
+          needs: [
+            "A3-A7",
+            "AF"
+          ]
+        },
+        {
+          key: "state",
+          menu: "State and ceremonial",
+          plural: "state craft",
+          w: 5,
+          description: "State aircraft, flagships and royal sky barges",
+          needs: [
+            "A2-A7",
+            "AF"
+          ]
+        },
+        {
+          key: "raider",
+          menu: "Raiders and smugglers",
+          plural: "raiders and smugglers",
+          w: 8,
+          description: "Smugglers, rum-runners and sky pirates"
+        }
+      ]
+    },
+    landVehicles: {
+      any: "land vehicles of any kind",
+      list: [
+        {
+          key: "locomotive",
+          menu: "Locomotives",
+          plural: "locomotives",
+          w: 20,
+          description: "Steam, diesel and electric locomotives, and rune engines",
+          needs: [
+            "L2-L6",
+            "LF"
+          ]
+        },
+        {
+          key: "train",
+          menu: "Named trains",
+          plural: "named trains",
+          w: 10,
+          description: "Named services: expresses, mails and limiteds",
+          needs: [
+            "L2-L6"
+          ],
+          noTypes: true
+        },
+        {
+          key: "war",
+          menu: "War machines",
+          plural: "war machines",
+          w: 20,
+          description: "Chariots, siege engines, war wagons, tanks and armour"
+        },
+        {
+          key: "coach",
+          menu: "Coaches and carriages",
+          plural: "coaches and carriages",
+          w: 15,
+          description: "Mail and stage coaches, state coaches and carriages",
+          needs: [
+            "L1-L3",
+            "LF"
+          ]
+        },
+        {
+          key: "road",
+          menu: "Road vehicles",
+          plural: "road vehicles",
+          w: 15,
+          description: "Cars, lorries, buses and motorcycles",
+          needs: [
+            "L3-L6"
+          ]
+        },
+        {
+          key: "wagon",
+          menu: "Wagons and caravans",
+          plural: "wagons and caravans",
+          w: 10,
+          description: "Wagons, sledges, living vans and circus wagons",
+          needs: [
+            "L1-L4",
+            "LF"
+          ]
+        },
+        {
+          key: "working",
+          menu: "Working engines",
+          plural: "working engines",
+          w: 10,
+          description: "Traction engines, steamrollers, showmen's engines and tractors",
+          needs: [
+            "L2-L6",
+            "LF"
+          ]
+        }
+      ]
+    }
+  },
+  roles: [
+    "nose",
+    "call",
+    "classSet",
+    "speed",
+    "service",
+    "siege",
+    "fair"
+  ],
+  roleWeights: {
+    aircraft: {
+      war: {
+        virtue: 15,
+        royal: 5,
+        beast: 20,
+        sky: 15,
+        place: 5,
+        person: 5,
+        menace: 10,
+        affection: 5,
+        designation: 5,
+        nose: 10,
+        call: 5
+      },
+      bomber: {
+        virtue: 10,
+        royal: 2,
+        beast: 10,
+        sky: 10,
+        place: 10,
+        person: 5,
+        menace: 10,
+        affection: 8,
+        designation: 5,
+        nose: 25,
+        call: 10
+      },
+      airliner: {
+        virtue: 5,
+        royal: 10,
+        holy: 5,
+        beast: 10,
+        sky: 20,
+        place: 30,
+        person: 10,
+        commerce: 10
+      },
+      transport: {
+        virtue: 5,
+        royal: 2,
+        holy: 2,
+        beast: 5,
+        sky: 10,
+        place: 25,
+        person: 5,
+        commerce: 25,
+        discovery: 5,
+        affection: 5,
+        designation: 10,
+        nose: 2
+      },
+      explore: {
+        virtue: 10,
+        beast: 5,
+        sky: 15,
+        place: 5,
+        person: 20,
+        poetic: 5,
+        discovery: 35,
+        designation: 5
+      },
+      private: {
+        virtue: 2,
+        royal: 2,
+        beast: 5,
+        sky: 15,
+        place: 5,
+        person: 10,
+        poetic: 5,
+        commerce: 5,
+        discovery: 5,
+        affection: 20,
+        leisure: 25,
+        nose: 5
+      },
+      working: {
+        virtue: 5,
+        holy: 5,
+        beast: 5,
+        sky: 10,
+        place: 15,
+        person: 10,
+        commerce: 5,
+        affection: 25,
+        designation: 15,
+        nose: 5
+      },
+      state: {
+        virtue: 10,
+        royal: 25,
+        holy: 10,
+        beast: 5,
+        sky: 15,
+        place: 15,
+        person: 15,
+        poetic: 5
+      },
+      raider: {
+        virtue: 5,
+        beast: 10,
+        sky: 10,
+        person: 5,
+        commerce: 5,
+        menace: 45,
+        affection: 5,
+        nose: 15
+      }
+    },
+    landVehicles: {
+      locomotive: {
+        virtue: 10,
+        royal: 10,
+        holy: 5,
+        beast: 5,
+        sky: 5,
+        place: 15,
+        person: 15,
+        affection: 5,
+        designation: 5,
+        classSet: 30
+      },
+      train: {
+        virtue: 5,
+        royal: 5,
+        sky: 10,
+        place: 10,
+        service: 70
+      },
+      war: {
+        virtue: 15,
+        beast: 15,
+        place: 10,
+        person: 5,
+        menace: 15,
+        affection: 10,
+        designation: 10,
+        nose: 10,
+        siege: 20
+      },
+      coach: {
+        virtue: 15,
+        royal: 15,
+        holy: 5,
+        sky: 10,
+        place: 10,
+        speed: 45
+      },
+      road: {
+        virtue: 10,
+        beast: 10,
+        place: 15,
+        person: 15,
+        commerce: 10,
+        affection: 30,
+        leisure: 10
+      },
+      wagon: {
+        virtue: 10,
+        beast: 5,
+        place: 25,
+        poetic: 10,
+        affection: 30,
+        fair: 20
+      },
+      working: {
+        virtue: 10,
+        royal: 10,
+        place: 15,
+        person: 10,
+        affection: 20,
+        fair: 35
+      }
+    }
+  },
+  roleRules: {
+    aircraft: {
+      zeroOutside: {
+        call: [
+          "A4"
+        ]
+      },
+      zeroAt: {
+        AF: [
+          "nose",
+          "call",
+          "designation"
+        ]
+      },
+      multAt: {
+        AF: {
+          poetic: 2
+        }
+      }
+    },
+    landVehicles: {
+      zeroOutside: {
+        siege: [
+          "L1",
+          "LF"
+        ]
+      },
+      zeroAt: {},
+      zeroInFn: {
+        nose: {
+          war: [
+            "L1"
+          ]
+        }
+      }
+    }
+  },
+  cultureRoles: {
+    aircraft: {
+      "norman-british": {
+        nose: 1.5,
+        call: 2
+      },
+      american: {
+        nose: 3,
+        place: 1.5
+      },
+      slavic: {
+        person: 2
+      },
+      japanese: {
+        nose: 0.3
+      },
+      chinese: {
+        nose: 0.3
+      },
+      korean: {
+        nose: 0.3
+      },
+      celtic: {
+        holy: 3
+      },
+      dutch: {
+        beast: 2
+      }
+    },
+    landVehicles: {
+      "norman-british": {
+        classSet: 3,
+        speed: 3,
+        fair: 3,
+        service: 1.5
+      },
+      american: {
+        service: 2,
+        nose: 2
+      },
+      french: {
+        service: 1.5
+      },
+      slavic: {
+        service: 1.5
+      },
+      japanese: {
+        classSet: 0.3,
+        designation: 3,
+        service: 1.5
+      },
+      chinese: {
+        classSet: 0.3,
+        designation: 3,
+        service: 1.5
+      },
+      korean: {
+        classSet: 0.3,
+        designation: 3,
+        service: 1.5
+      },
+      indian: {
+        service: 2
+      }
+    }
+  },
+  sensitiveRoles: {
+    aircraft: [
+      "nose",
+      "call"
+    ],
+    landVehicles: [
+      "nose",
+      "fair",
+      "siege"
+    ]
+  },
+  personLabels: {},
+  lists: {
+    manName: [
+      {
+        w: "Edward",
+        x: 2
+      },
+      {
+        w: "Henry"
+      },
+      {
+        w: "William"
+      },
+      {
+        w: "George"
+      },
+      {
+        w: "Richard"
+      },
+      {
+        w: "Charles"
+      },
+      {
+        w: "James"
+      },
+      {
+        w: "John"
+      },
+      {
+        w: "Arthur"
+      },
+      {
+        w: "Alfred"
+      },
+      {
+        w: "Harold"
+      },
+      {
+        w: "Edgar"
+      },
+      {
+        w: "Edmund"
+      },
+      {
+        w: "Albert"
+      },
+      {
+        w: "Robert"
+      },
+      {
+        w: "Thomas"
+      },
+      {
+        w: "Walter"
+      },
+      {
+        w: "Hugh"
+      },
+      {
+        w: "Ned"
+      },
+      {
+        w: "Jack"
+      }
+    ],
+    romanNumeral: [
+      {
+        w: "I"
+      },
+      {
+        w: "II"
+      },
+      {
+        w: "III"
+      },
+      {
+        w: "IV"
+      },
+      {
+        w: "V"
+      },
+      {
+        w: "VI"
+      },
+      {
+        w: "VII"
+      },
+      {
+        w: "VIII"
+      }
+    ],
+    noseName: [
+      {
+        w: "Lucky Lady"
+      },
+      {
+        w: "Second Chance"
+      },
+      {
+        w: "Homeward Bound"
+      },
+      {
+        w: "Return Ticket"
+      },
+      {
+        w: "Bad Penny"
+      },
+      {
+        w: "Sack Time"
+      },
+      {
+        w: "Ready Teddy"
+      },
+      {
+        w: "Lady Luck"
+      },
+      {
+        w: "Night Owl"
+      },
+      {
+        w: "Wee Bonnie"
+      },
+      {
+        w: "Sky Lark"
+      },
+      {
+        w: "Old Reliable"
+      },
+      {
+        w: "Sweet Pea"
+      },
+      {
+        w: "Snake Eyes"
+      },
+      {
+        w: "Sitting Pretty"
+      },
+      {
+        w: "Miss Behave"
+      },
+      {
+        w: "Dinah Might"
+      },
+      {
+        w: "Home Sweet Home"
+      },
+      {
+        w: "Last Laugh"
+      }
+    ],
+    noseAdj: [
+      {
+        w: "Lucky",
+        x: 2
+      },
+      {
+        w: "Sweet"
+      },
+      {
+        w: "Wicked",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Lonesome"
+      },
+      {
+        w: "Little"
+      },
+      {
+        w: "Hot"
+      },
+      {
+        w: "Iron"
+      },
+      {
+        w: "Brazen"
+      },
+      {
+        w: "Bonny"
+      }
+    ],
+    noseNoun: [
+      {
+        w: "Lady",
+        x: 2
+      },
+      {
+        w: "Lass"
+      },
+      {
+        w: "Penny"
+      },
+      {
+        w: "Ticket"
+      },
+      {
+        w: "Angel"
+      },
+      {
+        w: "Devil",
+        t: [
+          "grim"
+        ]
+      },
+      {
+        w: "Duchess"
+      },
+      {
+        w: "Ace"
+      },
+      {
+        w: "Belle"
+      },
+      {
+        w: "Jinx"
+      }
+    ],
+    speedWord: [
+      {
+        w: "Telegraph"
+      },
+      {
+        w: "Tally-Ho"
+      },
+      {
+        w: "Wonder"
+      },
+      {
+        w: "Comet"
+      },
+      {
+        w: "Highflyer"
+      },
+      {
+        w: "Regulator"
+      },
+      {
+        w: "Tantivy"
+      },
+      {
+        w: "Lightning"
+      },
+      {
+        w: "Magnet"
+      },
+      {
+        w: "Courier"
+      },
+      {
+        w: "Swiftsure"
+      },
+      {
+        w: "Nimrod"
+      },
+      {
+        w: "Phoenix"
+      },
+      {
+        w: "Hope"
+      },
+      {
+        w: "Independent"
+      },
+      {
+        w: "Defiance"
+      },
+      {
+        w: "Rapid"
+      }
+    ],
+    metal: [
+      {
+        w: "Gold"
+      },
+      {
+        w: "Silver"
+      },
+      {
+        w: "Glass"
+      },
+      {
+        w: "Crystal"
+      }
+    ],
+    raceA: [
+      {
+        w: "Dancing"
+      },
+      {
+        w: "Flying"
+      },
+      {
+        w: "Royal"
+      },
+      {
+        w: "Silver"
+      },
+      {
+        w: "Golden"
+      },
+      {
+        w: "Lucky"
+      },
+      {
+        w: "Gallant"
+      },
+      {
+        w: "Merry"
+      },
+      {
+        w: "Blink"
+      }
+    ],
+    raceB: [
+      {
+        w: "Lad"
+      },
+      {
+        w: "Bonnie"
+      },
+      {
+        w: "Fox"
+      },
+      {
+        w: "Dancer"
+      },
+      {
+        w: "Prince"
+      },
+      {
+        w: "Arrow"
+      },
+      {
+        w: "Lancer"
+      },
+      {
+        w: "Lass"
+      },
+      {
+        w: "Rover"
+      },
+      {
+        w: "Jester"
+      }
+    ],
+    serviceObj: [
+      {
+        w: "Arrow"
+      },
+      {
+        w: "Train"
+      },
+      {
+        w: "Star"
+      },
+      {
+        w: "Ribbon"
+      },
+      {
+        w: "Comet"
+      },
+      {
+        w: "Bird"
+      }
+    ],
+    limitedNoun: [
+      {
+        w: "Capitals"
+      },
+      {
+        w: "Overland"
+      },
+      {
+        w: "Lakes"
+      },
+      {
+        w: "Mountain"
+      },
+      {
+        w: "Valley"
+      },
+      {
+        w: "Plains"
+      }
+    ],
+    natureWord: [
+      {
+        w: "Light"
+      },
+      {
+        w: "Hope"
+      },
+      {
+        w: "Echo"
+      },
+      {
+        w: "Swallow"
+      },
+      {
+        w: "Pigeon"
+      },
+      {
+        w: "Crane"
+      },
+      {
+        w: "Cherry Blossom"
+      },
+      {
+        w: "Morning Sun"
+      },
+      {
+        w: "Lightning"
+      },
+      {
+        w: "Wind"
+      },
+      {
+        w: "Wave"
+      },
+      {
+        w: "Falcon"
+      }
+    ],
+    nightObj: [
+      {
+        w: "Ferry"
+      },
+      {
+        w: "Mail"
+      },
+      {
+        w: "Express"
+      },
+      {
+        w: "Owl",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Riviera"
+      }
+    ],
+    trade: [
+      {
+        w: "Weaver"
+      },
+      {
+        w: "Brewer"
+      },
+      {
+        w: "Potter"
+      },
+      {
+        w: "Mason"
+      },
+      {
+        w: "Smith"
+      },
+      {
+        w: "Miller"
+      }
+    ],
+    agentNoun: [
+      {
+        w: "Pathfinder"
+      },
+      {
+        w: "Pioneer"
+      },
+      {
+        w: "Talisman"
+      },
+      {
+        w: "Ranger"
+      },
+      {
+        w: "Chief"
+      },
+      {
+        w: "Voyager"
+      },
+      {
+        w: "Pilgrim"
+      }
+    ],
+    kin: [
+      {
+        w: "Cousin"
+      },
+      {
+        w: "Guest"
+      },
+      {
+        w: "Brother"
+      },
+      {
+        w: "Uncle"
+      },
+      {
+        w: "Bride"
+      },
+      {
+        w: "Stranger"
+      },
+      {
+        w: "Neighbour"
+      }
+    ],
+    wallWord: [
+      {
+        w: "Walls"
+      },
+      {
+        w: "Towers"
+      },
+      {
+        w: "Gates"
+      },
+      {
+        w: "Castles"
+      }
+    ],
+    siegeAgent: [
+      {
+        w: "Thunderer"
+      },
+      {
+        w: "Wall-Eater"
+      },
+      {
+        w: "Stone-Thrower"
+      },
+      {
+        w: "Grinder"
+      },
+      {
+        w: "Roarer"
+      },
+      {
+        w: "Sorrow"
+      },
+      {
+        w: "Answer"
+      }
+    ],
+    siegeNoun: [
+      {
+        w: "Stone"
+      },
+      {
+        w: "Hammer"
+      },
+      {
+        w: "Answer"
+      },
+      {
+        w: "Gift"
+      },
+      {
+        w: "Word"
+      }
+    ],
+    tower: [
+      {
+        w: "Tower"
+      },
+      {
+        w: "Hill"
+      },
+      {
+        w: "Keep"
+      },
+      {
+        w: "Fortress"
+      }
+    ],
+    fairWhole: [
+      {
+        w: "Majestic"
+      },
+      {
+        w: "Supreme"
+      },
+      {
+        w: "The Busy Bee"
+      },
+      {
+        w: "King of the Road"
+      },
+      {
+        w: "Queen of the Fair"
+      },
+      {
+        w: "Pride of the Road"
+      },
+      {
+        w: "Old Timer"
+      },
+      {
+        w: "Little Wonder"
+      },
+      {
+        w: "Goliath"
+      },
+      {
+        w: "Samson"
+      },
+      {
+        w: "Hero"
+      },
+      {
+        w: "Marvel"
+      }
+    ],
+    fairPlace: [
+      {
+        w: "Fair"
+      },
+      {
+        w: "Road"
+      },
+      {
+        w: "Show"
+      },
+      {
+        w: "Ring"
+      },
+      {
+        w: "Midway",
+        only: [
+          "american"
+        ]
+      }
+    ],
+    fairNoun: [
+      {
+        w: "Pride"
+      },
+      {
+        w: "Wonder"
+      },
+      {
+        w: "Marvel"
+      },
+      {
+        w: "Delight"
+      },
+      {
+        w: "Glory"
+      }
+    ],
+    fairAdj: [
+      {
+        w: "Royal"
+      },
+      {
+        w: "Golden"
+      },
+      {
+        w: "Little"
+      },
+      {
+        w: "Mighty"
+      },
+      {
+        w: "Dazzling"
+      }
+    ],
+    wagonWhole: [
+      {
+        w: "Wanderer"
+      },
+      {
+        w: "Rover"
+      },
+      {
+        w: "Rambler"
+      },
+      {
+        w: "Long Road"
+      },
+      {
+        w: "Open Road"
+      },
+      {
+        w: "Hearth on Wheels",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Journey's End"
+      },
+      {
+        w: "Roadside Rest"
+      },
+      {
+        w: "Far Meadow"
+      }
+    ],
+    cloudNoun: [
+      {
+        w: "Runner"
+      },
+      {
+        w: "Splitter"
+      },
+      {
+        w: "Dancer"
+      },
+      {
+        w: "Rider"
+      },
+      {
+        w: "Treader"
+      }
+    ],
+    weatherWord: [
+      {
+        w: "Cyclone"
+      },
+      {
+        w: "Monsoon"
+      },
+      {
+        w: "Squall"
+      },
+      {
+        w: "Gale"
+      },
+      {
+        w: "Blizzard"
+      },
+      {
+        w: "Mistral"
+      },
+      {
+        w: "Sirocco"
+      },
+      {
+        w: "Thunderhead"
+      },
+      {
+        w: "Downburst"
+      },
+      {
+        w: "Hailstorm"
+      },
+      {
+        w: "Waterspout"
+      },
+      {
+        w: "Northerly"
+      },
+      {
+        w: "Williwaw"
+      }
+    ],
+    raptor: [
+      {
+        w: "Kestrel"
+      },
+      {
+        w: "Falcon"
+      },
+      {
+        w: "Eagle"
+      },
+      {
+        w: "Osprey"
+      },
+      {
+        w: "Merlin"
+      },
+      {
+        w: "Hobby"
+      },
+      {
+        w: "Buzzard"
+      },
+      {
+        w: "Kite"
+      },
+      {
+        w: "Condor"
+      },
+      {
+        w: "Goshawk"
+      },
+      {
+        w: "Sparrowhawk"
+      },
+      {
+        w: "Peregrine"
+      }
+    ],
+    insect: [
+      {
+        w: "Hornet"
+      },
+      {
+        w: "Wasp"
+      },
+      {
+        w: "Gnat"
+      },
+      {
+        w: "Dragonfly"
+      },
+      {
+        w: "Horsefly"
+      },
+      {
+        w: "Cicada"
+      },
+      {
+        w: "Mayfly"
+      },
+      {
+        w: "Damselfly"
+      }
+    ],
+    bigBird: [
+      {
+        w: "Albatross"
+      },
+      {
+        w: "Pelican"
+      },
+      {
+        w: "Stork"
+      },
+      {
+        w: "Heron"
+      },
+      {
+        w: "Crane"
+      },
+      {
+        w: "Swan"
+      },
+      {
+        w: "Gull"
+      },
+      {
+        w: "Petrel"
+      },
+      {
+        w: "Cormorant"
+      }
+    ],
+    smallBird: [
+      {
+        w: "Swift"
+      },
+      {
+        w: "Swallow"
+      },
+      {
+        w: "Martin"
+      },
+      {
+        w: "Lark"
+      },
+      {
+        w: "Linnet"
+      },
+      {
+        w: "Wren"
+      },
+      {
+        w: "Finch"
+      },
+      {
+        w: "Robin"
+      },
+      {
+        w: "Moth"
+      }
+    ],
+    workBeast: [
+      {
+        w: "Otter"
+      },
+      {
+        w: "Beaver"
+      },
+      {
+        w: "Moose"
+      },
+      {
+        w: "Caribou"
+      },
+      {
+        w: "Musk Ox"
+      },
+      {
+        w: "Marten"
+      },
+      {
+        w: "Mink"
+      },
+      {
+        w: "Bison"
+      },
+      {
+        w: "Wolverine"
+      }
+    ],
+    bigCat: [
+      {
+        w: "Cheetah"
+      },
+      {
+        w: "Ocelot"
+      },
+      {
+        w: "Caracal"
+      },
+      {
+        w: "Serval"
+      },
+      {
+        w: "Margay"
+      },
+      {
+        w: "Clouded Leopard"
+      },
+      {
+        w: "Snow Leopard"
+      }
+    ],
+    smallFierce: [
+      {
+        w: "Stoat"
+      },
+      {
+        w: "Weasel"
+      },
+      {
+        w: "Badger"
+      },
+      {
+        w: "Polecat"
+      },
+      {
+        w: "Mongoose"
+      },
+      {
+        w: "Marten"
+      }
+    ],
+    horse: [
+      {
+        w: "Stallion"
+      },
+      {
+        w: "Courser"
+      },
+      {
+        w: "Destrier"
+      },
+      {
+        w: "Palomino"
+      },
+      {
+        w: "Thoroughbred"
+      },
+      {
+        w: "Filly",
+        t: [
+          "light"
+        ]
+      },
+      {
+        w: "Hackney"
+      }
+    ],
+    draughtBeast: [
+      {
+        w: "Ox"
+      },
+      {
+        w: "Bullock"
+      },
+      {
+        w: "Mule"
+      },
+      {
+        w: "Shire"
+      },
+      {
+        w: "Carthorse"
+      },
+      {
+        w: "Packhorse"
+      },
+      {
+        w: "Elephant"
+      },
+      {
+        w: "Yak"
+      },
+      {
+        w: "Camel",
+        only: [
+          "steppe",
+          "arabic-persian"
+        ],
+        x: 2
+      }
+    ],
+    catPrefix: [
+      {
+        w: "Storm"
+      },
+      {
+        w: "Iron"
+      },
+      {
+        w: "Sky"
+      },
+      {
+        w: "Sea"
+      },
+      {
+        w: "Thunder"
+      },
+      {
+        w: "Fire"
+      },
+      {
+        w: "Night"
+      },
+      {
+        w: "Sand"
+      },
+      {
+        w: "Ice"
+      },
+      {
+        w: "Wolf"
+      },
+      {
+        w: "Ghost"
+      }
+    ],
+    rank: [
+      {
+        w: "Consul"
+      },
+      {
+        w: "Ambassador"
+      },
+      {
+        w: "Viceroy"
+      },
+      {
+        w: "Envoy"
+      },
+      {
+        w: "Senator"
+      },
+      {
+        w: "Sovereign"
+      },
+      {
+        w: "Monarch"
+      },
+      {
+        w: "Marshal"
+      },
+      {
+        w: "Vanguard"
+      },
+      {
+        w: "Defender"
+      },
+      {
+        w: "Champion"
+      },
+      {
+        w: "Warden"
+      },
+      {
+        w: "Ranger"
+      },
+      {
+        w: "Courier"
+      },
+      {
+        w: "Pathfinder"
+      },
+      {
+        w: "Commander"
+      },
+      {
+        w: "Captain"
+      },
+      {
+        w: "Constable"
+      },
+      {
+        w: "Castellan"
+      },
+      {
+        w: "Chancellor"
+      },
+      {
+        w: "Seneschal"
+      },
+      {
+        w: "Steward"
+      },
+      {
+        w: "Provost"
+      }
+    ],
+    titan: [
+      {
+        w: "Titan"
+      },
+      {
+        w: "Atlas"
+      },
+      {
+        w: "Colossus"
+      },
+      {
+        w: "Goliath"
+      },
+      {
+        w: "Samson"
+      },
+      {
+        w: "Mammoth"
+      },
+      {
+        w: "Giant"
+      },
+      {
+        w: "Leviathan"
+      },
+      {
+        w: "Behemoth"
+      },
+      {
+        w: "Hercules"
+      }
+    ],
+    spirit: [
+      {
+        w: "Ghost"
+      },
+      {
+        w: "Shadow"
+      },
+      {
+        w: "Wraith"
+      },
+      {
+        w: "Spectre"
+      },
+      {
+        w: "Phantom"
+      },
+      {
+        w: "Spirit"
+      },
+      {
+        w: "Shade"
+      },
+      {
+        w: "Seraph"
+      }
+    ],
+    spiritMetal: [
+      {
+        w: "Silver"
+      },
+      {
+        w: "Golden"
+      },
+      {
+        w: "Bronze"
+      },
+      {
+        w: "Iron"
+      }
+    ],
+    typeWeapon: [
+      {
+        w: "Lance"
+      },
+      {
+        w: "Javelin"
+      },
+      {
+        w: "Arrow"
+      },
+      {
+        w: "Dart"
+      },
+      {
+        w: "Halberd"
+      },
+      {
+        w: "Claymore"
+      },
+      {
+        w: "Bolt"
+      },
+      {
+        w: "Pike"
+      },
+      {
+        w: "Glaive"
+      },
+      {
+        w: "Partisan"
+      },
+      {
+        w: "Falchion"
+      }
+    ],
+    typeSky: [
+      {
+        w: "Nova"
+      },
+      {
+        w: "Aurora"
+      },
+      {
+        w: "Zenith"
+      },
+      {
+        w: "Orbit"
+      },
+      {
+        w: "Polaris"
+      },
+      {
+        w: "Starling"
+      },
+      {
+        w: "Quasar"
+      },
+      {
+        w: "Halo"
+      },
+      {
+        w: "Solstice"
+      },
+      {
+        w: "Equinox"
+      }
+    ],
+    prettyWord: [
+      {
+        w: "Charm"
+      },
+      {
+        w: "Clover"
+      },
+      {
+        w: "Bloom"
+      },
+      {
+        w: "Cherry"
+      },
+      {
+        w: "Merry"
+      },
+      {
+        w: "Harmony"
+      },
+      {
+        w: "Symphony"
+      },
+      {
+        w: "Serene"
+      },
+      {
+        w: "Breeze"
+      },
+      {
+        w: "Melody"
+      },
+      {
+        w: "Prima"
+      },
+      {
+        w: "Joy"
+      },
+      {
+        w: "Fortune"
+      },
+      {
+        w: "Grace"
+      },
+      {
+        w: "Daybreak"
+      },
+      {
+        w: "Bonny"
+      }
+    ],
+    greekLetter: [
+      {
+        w: "Alpha"
+      },
+      {
+        w: "Gamma"
+      },
+      {
+        w: "Epsilon"
+      },
+      {
+        w: "Zeta"
+      },
+      {
+        w: "Theta"
+      },
+      {
+        w: "Iota"
+      },
+      {
+        w: "Kappa"
+      },
+      {
+        w: "Sigma"
+      },
+      {
+        w: "Omega"
+      }
+    ],
+    classTheme: [
+      {
+        w: "Castle"
+      },
+      {
+        w: "Hall"
+      },
+      {
+        w: "Grange"
+      },
+      {
+        w: "Manor"
+      },
+      {
+        w: "King"
+      },
+      {
+        w: "Queen"
+      },
+      {
+        w: "Saint"
+      },
+      {
+        w: "Star"
+      },
+      {
+        w: "School"
+      },
+      {
+        w: "Regiment"
+      },
+      {
+        w: "County"
+      },
+      {
+        w: "Bird"
+      },
+      {
+        w: "Racehorse"
+      },
+      {
+        w: "Footballer"
+      },
+      {
+        w: "Merchant"
+      },
+      {
+        w: "Patriot"
+      },
+      {
+        w: "Jubilee"
+      }
+    ],
+    workWord: [
+      {
+        w: "Tractor"
+      },
+      {
+        w: "Roller"
+      },
+      {
+        w: "Engine"
+      },
+      {
+        w: "Steamer"
+      },
+      {
+        w: "Digger"
+      },
+      {
+        w: "Hauler"
+      },
+      {
+        w: "Ploughman"
+      }
+    ],
+    skyPrefix: [
+      {
+        w: "Sky"
+      },
+      {
+        w: "Cloud"
+      },
+      {
+        w: "Storm"
+      },
+      {
+        w: "Wind"
+      },
+      {
+        w: "High"
+      },
+      {
+        w: "Zenith"
+      }
+    ],
+    skyShip: [
+      {
+        w: "Galleon"
+      },
+      {
+        w: "Clipper"
+      },
+      {
+        w: "Frigate"
+      },
+      {
+        w: "Barque"
+      },
+      {
+        w: "Skiff"
+      },
+      {
+        w: "Cutter"
+      },
+      {
+        w: "Brig"
+      },
+      {
+        w: "Sloop"
+      },
+      {
+        w: "Carrack"
+      },
+      {
+        w: "Ketch"
+      }
+    ],
+    strato: [
+      {
+        w: "cruiser"
+      },
+      {
+        w: "liner"
+      },
+      {
+        w: "master"
+      },
+      {
+        w: "lifter"
+      },
+      {
+        w: "jet"
+      }
+    ],
+    skyPart: [
+      {
+        w: "master"
+      },
+      {
+        w: "liner"
+      },
+      {
+        w: "train"
+      },
+      {
+        w: "king"
+      },
+      {
+        w: "lark"
+      }
+    ],
+    landWord: [
+      {
+        w: "Steppe"
+      },
+      {
+        w: "Desert"
+      },
+      {
+        w: "Plains"
+      },
+      {
+        w: "Tundra"
+      },
+      {
+        w: "Veld"
+      }
+    ],
+    designationWord: []
+  },
+  moduleLists: {
+    aircraft: {
+      seaAdj: [
+        {
+          w: "Sky",
+          x: 2
+        },
+        {
+          w: "Cloud"
+        },
+        {
+          w: "Wind"
+        },
+        {
+          w: "Storm"
+        },
+        {
+          w: "High"
+        },
+        {
+          w: "Silver"
+        }
+      ],
+      seaLand: [
+        {
+          w: "Skies",
+          x: 2
+        },
+        {
+          w: "Clouds"
+        },
+        {
+          w: "Winds"
+        },
+        {
+          w: "Heights"
+        },
+        {
+          w: "Air"
+        }
+      ],
+      designationWord: [
+        {
+          w: "Type",
+          x: 2
+        },
+        {
+          w: "Mark"
+        },
+        {
+          w: "Series"
+        },
+        {
+          w: "Model"
+        }
+      ],
+      leisureName: [
+        {
+          w: "Second Wind"
+        },
+        {
+          w: "No Hurry"
+        },
+        {
+          w: "One More Day"
+        },
+        {
+          w: "Afternoon Off"
+        },
+        {
+          w: "Well Earned"
+        },
+        {
+          w: "Why Not"
+        },
+        {
+          w: "Plan B"
+        },
+        {
+          w: "Pension Pot"
+        },
+        {
+          w: "Fair Weather"
+        },
+        {
+          w: "Gone Fishing"
+        }
+      ]
+    },
+    landVehicles: {
+      seaAdj: [
+        {
+          w: "Road",
+          x: 2
+        },
+        {
+          w: "Iron"
+        },
+        {
+          w: "Steel",
+          k: "L3-L6"
+        },
+        {
+          w: "Steam",
+          k: "L2"
+        },
+        {
+          w: "Dust"
+        },
+        {
+          w: "Rail",
+          k: "L2-L6"
+        }
+      ],
+      seaLand: [
+        {
+          w: "Road",
+          x: 2
+        },
+        {
+          w: "Rails",
+          k: "L2-L6"
+        },
+        {
+          w: "Plains"
+        },
+        {
+          w: "Hills"
+        },
+        {
+          w: "North"
+        },
+        {
+          w: "South"
+        },
+        {
+          w: "East"
+        },
+        {
+          w: "West"
+        },
+        {
+          w: "Highlands"
+        }
+      ],
+      designationWord: [
+        {
+          w: "Type",
+          x: 2
+        },
+        {
+          w: "Class"
+        },
+        {
+          w: "Mark"
+        }
+      ],
+      leisureName: [
+        {
+          w: "Second Wind"
+        },
+        {
+          w: "No Hurry"
+        },
+        {
+          w: "One More Day"
+        },
+        {
+          w: "Afternoon Off"
+        },
+        {
+          w: "Well Earned"
+        },
+        {
+          w: "Why Not"
+        },
+        {
+          w: "Plan B"
+        },
+        {
+          w: "Pension Pot"
+        },
+        {
+          w: "Fair Weather"
+        },
+        {
+          w: "Gone Fishing"
+        }
+      ]
+    }
+  },
+  listTones: {
+    noseName: [
+      "light"
+    ],
+    wagonWhole: [],
+    fairWhole: []
+  },
+  phonetic: [
+    "Able",
+    "Baker",
+    "Charlie",
+    "Dog",
+    "Easy",
+    "Fox",
+    "George",
+    "How",
+    "Item",
+    "Johnny",
+    "King",
+    "Love",
+    "Mike",
+    "Nan",
+    "Oboe",
+    "Peter",
+    "Queen",
+    "Roger",
+    "Sugar",
+    "Tare",
+    "Uncle",
+    "Victor",
+    "William",
+    "X-ray",
+    "Yoke",
+    "Zebra"
+  ],
+  manNameCultures: [
+    "general",
+    "norman-british",
+    "american",
+    "celtic"
+  ],
+  shapes: [
+    {
+      role: "nose",
+      p: "{noseName}",
+      w: 30,
+      mod: [
+        "aircraft",
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "nose",
+      p: "Lucky {womanName}",
+      w: 15,
+      mod: [
+        "aircraft",
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "nose",
+      p: "{town} Belle",
+      w: 10,
+      mod: [
+        "aircraft",
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "nose",
+      p: "Miss {town}",
+      w: 10,
+      mod: [
+        "aircraft",
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "nose",
+      p: "{womanName} of {town}",
+      w: 10,
+      mod: [
+        "aircraft",
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "nose",
+      p: "{noseAdj} {noseNoun}",
+      w: 15,
+      mod: [
+        "aircraft",
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "nose",
+      p: "Old {manName}",
+      w: 5,
+      mod: [
+        "aircraft",
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "nose",
+      p: "{womanName}",
+      w: 5,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "war"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "call",
+      p: "{call}",
+      w: 100,
+      mod: [
+        "aircraft"
+      ],
+      k: "A4",
+      t: [
+        "plain"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{town} Castle",
+      w: 15,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "castle",
+      cx: {
+        "norman-british": 2
+      }
+    },
+    {
+      role: "classSet",
+      p: "{town} Hall",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "hall",
+      cult: [
+        "norman-british",
+        "general",
+        "american"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{town} Manor",
+      w: 4,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "manor",
+      cult: [
+        "norman-british",
+        "general"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{town} Grange",
+      w: 4,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "manor",
+      cult: [
+        "norman-british",
+        "general"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "King {manName}",
+      w: 3,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "king",
+      cult: [
+        "general",
+        "norman-british"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "King {manName} {romanNumeral}",
+      w: 3,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "king",
+      cult: [
+        "general",
+        "norman-british"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "Queen {womanName}",
+      w: 4,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "queen",
+      cult: [
+        "general",
+        "norman-british"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{holy}",
+      w: 6,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "saint",
+      holy: "saint"
+    },
+    {
+      role: "classSet",
+      p: "{skyAdj} Star",
+      w: 3,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "star"
+    },
+    {
+      role: "classSet",
+      p: "{colour} Star",
+      w: 3,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "star"
+    },
+    {
+      role: "classSet",
+      p: "{town}",
+      w: 6,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "school",
+      cult: [
+        "norman-british"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "The {town} Regiment",
+      w: 2.666667,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "regiment",
+      cult: [
+        "norman-british",
+        "general"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{town} Fusilier",
+      w: 2.666667,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "regiment",
+      cult: [
+        "norman-british",
+        "general"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "Royal {town} Rifleman",
+      w: 2.666667,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "regiment",
+      cult: [
+        "norman-british",
+        "general"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "County of {town}",
+      w: 6,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "county",
+      cult: [
+        "norman-british",
+        "american"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{bird}",
+      w: 4,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "bird"
+    },
+    {
+      role: "classSet",
+      p: "Golden {bird}",
+      w: 4,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "bird"
+    },
+    {
+      role: "classSet",
+      p: "{raceA} {raceB}",
+      w: 6,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "racehorse",
+      cult: [
+        "norman-british",
+        "american",
+        "general"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{town} United",
+      w: 1,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "football",
+      cult: [
+        "norman-british"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{town} Rovers",
+      w: 1,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "football",
+      cult: [
+        "norman-british"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{town} Wanderers",
+      w: 1,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "football",
+      cult: [
+        "norman-british"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{town} Athletic",
+      w: 1,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "football",
+      cult: [
+        "norman-british"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{colour} Funnel Line",
+      w: 2,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "shipping",
+      cult: [
+        "norman-british",
+        "dutch"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{town} Line",
+      w: 2,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "shipping",
+      cult: [
+        "norman-british",
+        "dutch"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "Sir {manName} {surname}",
+      w: 2.666667,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "people",
+      cult: [
+        "general",
+        "norman-british",
+        "american"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "Lord {surname}",
+      w: 2.666667,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "people",
+      cult: [
+        "general",
+        "norman-british",
+        "american"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "{manName} {surname}",
+      w: 2.666667,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "people",
+      cult: [
+        "general",
+        "norman-british",
+        "american"
+      ]
+    },
+    {
+      role: "classSet",
+      p: "General {surname}",
+      w: 3.333333,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "earlyAmerican",
+      cult: [
+        "american"
+      ],
+      k: "L2"
+    },
+    {
+      role: "classSet",
+      p: "{town}",
+      w: 3.333333,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "earlyAmerican",
+      cult: [
+        "american"
+      ],
+      k: "L2"
+    },
+    {
+      role: "classSet",
+      p: "{virtue}",
+      w: 3.333333,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "earlyAmerican",
+      cult: [
+        "american"
+      ],
+      k: "L2"
+    },
+    {
+      role: "classSet",
+      p: "{star}",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "locomotive"
+      ],
+      theme: "stars",
+      k: "L6"
+    },
+    {
+      role: "speed",
+      p: "The {speedWord}",
+      w: 40,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "coach"
+      ]
+    },
+    {
+      role: "speed",
+      p: "The {town} {speedWord}",
+      w: 25,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "coach"
+      ]
+    },
+    {
+      role: "speed",
+      p: "The {compass} {speedWord}",
+      w: 15,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "coach"
+      ]
+    },
+    {
+      role: "speed",
+      p: "The {colour} Rover",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "coach"
+      ]
+    },
+    {
+      role: "speed",
+      p: "The Royal {speedWord}",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "coach"
+      ]
+    },
+    {
+      role: "royal",
+      p: "The {metal} State Coach",
+      w: 40,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "coach"
+      ],
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "royal",
+      p: "The {realm} State Coach",
+      w: 30,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "coach"
+      ],
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "royal",
+      p: "The {colour} Coach",
+      w: 30,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "coach"
+      ],
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "service",
+      p: "The {town} Express",
+      w: 7.5,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ]
+    },
+    {
+      role: "service",
+      p: "The {compass} Express",
+      w: 7.5,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ]
+    },
+    {
+      role: "service",
+      p: "The {town} Flyer",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ]
+    },
+    {
+      role: "service",
+      p: "The {town} Mail",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ],
+      cult: [
+        "indian"
+      ],
+      cx: {
+        indian: 3
+      }
+    },
+    {
+      role: "service",
+      p: "The {colour} {serviceObj}",
+      w: 15,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ],
+      cult: [
+        "slavic",
+        "french"
+      ],
+      cx: {
+        slavic: 3,
+        french: 2
+      }
+    },
+    {
+      role: "service",
+      p: "The {town} Limited",
+      w: 5,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ],
+      cult: [
+        "american"
+      ],
+      cx: {
+        american: 3
+      }
+    },
+    {
+      role: "service",
+      p: "The {limitedNoun} Limited",
+      w: 5,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ],
+      cult: [
+        "american"
+      ],
+      cx: {
+        american: 3
+      }
+    },
+    {
+      role: "service",
+      p: "The {town} Pullman",
+      w: 5,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ],
+      cult: [
+        "norman-british",
+        "american"
+      ]
+    },
+    {
+      role: "service",
+      p: "The {town} Queen",
+      w: 5,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ],
+      cult: [
+        "indian"
+      ],
+      cx: {
+        indian: 3
+      }
+    },
+    {
+      role: "service",
+      p: "The {town} Riviera",
+      w: 3,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ],
+      cult: [
+        "norman-british",
+        "french"
+      ]
+    },
+    {
+      role: "service",
+      p: "The {natureWord}",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ],
+      cult: [
+        "japanese",
+        "chinese",
+        "korean"
+      ],
+      cx: {
+        japanese: 4,
+        chinese: 3,
+        korean: 3
+      }
+    },
+    {
+      role: "service",
+      p: "The Night {nightObj}",
+      w: 5,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ]
+    },
+    {
+      role: "service",
+      p: "The Master {trade}",
+      w: 3,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ],
+      cult: [
+        "norman-british"
+      ],
+      cx: {
+        "norman-british": 2
+      }
+    },
+    {
+      role: "service",
+      p: "The {agentNoun}",
+      w: 5,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ]
+    },
+    {
+      role: "service",
+      p: "The {town}\u2013{town} Express",
+      w: 5,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ]
+    },
+    {
+      role: "service",
+      p: "The {spaceLand} Express",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ],
+      k: "L6"
+    },
+    {
+      role: "service",
+      p: "The {star} Maglev",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "train"
+      ],
+      k: "L6"
+    },
+    {
+      role: "siege",
+      p: "War {beast}",
+      w: 20,
+      mod: [
+        "landVehicles"
+      ],
+      t: [
+        "grim"
+      ]
+    },
+    {
+      role: "siege",
+      p: "Bad {kin}",
+      w: 15,
+      mod: [
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "siege",
+      p: "Taker of {wallWord}",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "siege",
+      p: "{town}-Breaker",
+      w: 15,
+      mod: [
+        "landVehicles"
+      ],
+      t: [
+        "grim"
+      ]
+    },
+    {
+      role: "siege",
+      p: "The {siegeAgent}",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ]
+    },
+    {
+      role: "siege",
+      p: "{figure:poss} {siegeNoun}",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      t: [
+        "grim"
+      ]
+    },
+    {
+      role: "siege",
+      p: "The {colour} {siegeNoun}",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ]
+    },
+    {
+      role: "siege",
+      p: "{beast} Strider",
+      w: 3.333333,
+      mod: [
+        "landVehicles"
+      ],
+      k: "LF",
+      t: [
+        "strange"
+      ],
+      atx: {
+        LF: 2
+      }
+    },
+    {
+      role: "siege",
+      p: "The Walking {tower}",
+      w: 3.333333,
+      mod: [
+        "landVehicles"
+      ],
+      k: "LF",
+      t: [
+        "strange"
+      ],
+      atx: {
+        LF: 2
+      }
+    },
+    {
+      role: "siege",
+      p: "Iron {figure}",
+      w: 3.333333,
+      mod: [
+        "landVehicles"
+      ],
+      k: "LF",
+      t: [
+        "strange"
+      ],
+      atx: {
+        LF: 2
+      }
+    },
+    {
+      role: "fair",
+      p: "{fairWhole}",
+      w: 30,
+      mod: [
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "fair",
+      p: "Queen of the {fairPlace}",
+      w: 15,
+      mod: [
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "fair",
+      p: "{surname:poss} {fairNoun}",
+      w: 20,
+      mod: [
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "fair",
+      p: "The {town} Wonder",
+      w: 15,
+      mod: [
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "fair",
+      p: "{fairAdj} {fairNoun}",
+      w: 20,
+      mod: [
+        "landVehicles"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "affection",
+      p: "{wagonWhole}",
+      w: 15,
+      mod: [
+        "landVehicles"
+      ],
+      fn: [
+        "wagon"
+      ],
+      t: [
+        "light"
+      ]
+    },
+    {
+      role: "place",
+      p: "Clipper {town}",
+      w: 8.333333,
+      mod: [
+        "aircraft"
+      ],
+      k: "A4",
+      cult: [
+        "american"
+      ],
+      cx: {
+        american: 3
+      }
+    },
+    {
+      role: "place",
+      p: "Clipper {virtue}",
+      w: 8.333333,
+      mod: [
+        "aircraft"
+      ],
+      k: "A4",
+      cult: [
+        "american"
+      ],
+      cx: {
+        american: 3
+      }
+    },
+    {
+      role: "place",
+      p: "Clipper {sky}",
+      w: 8.333333,
+      mod: [
+        "aircraft"
+      ],
+      k: "A4",
+      cult: [
+        "american"
+      ],
+      cx: {
+        american: 3
+      }
+    },
+    {
+      role: "place",
+      p: "Spirit of {town}",
+      w: 15,
+      mod: [
+        "aircraft"
+      ],
+      k: "A3-A7"
+    },
+    {
+      role: "place",
+      p: "City of {town}",
+      w: 20,
+      mod: [
+        "aircraft"
+      ],
+      k: "A2-A7"
+    },
+    {
+      role: "place",
+      p: "{realm}",
+      w: 10,
+      mod: [
+        "aircraft"
+      ],
+      k: "A2"
+    },
+    {
+      role: "place",
+      p: "Count {surname}",
+      w: 5,
+      mod: [
+        "aircraft"
+      ],
+      k: "A2"
+    },
+    {
+      role: "place",
+      p: "{ruler} of the Skies",
+      w: 5,
+      mod: [
+        "aircraft"
+      ],
+      k: "A2-A4"
+    },
+    {
+      role: "place",
+      p: "{colour} Mountain",
+      w: 10,
+      mod: [
+        "aircraft"
+      ],
+      k: "A4-A7",
+      cult: [
+        "japanese"
+      ],
+      cx: {
+        japanese: 3
+      }
+    },
+    {
+      role: "person",
+      p: "{surname}",
+      w: 20,
+      mod: [
+        "aircraft"
+      ],
+      cult: [
+        "slavic"
+      ],
+      cx: {
+        slavic: 2
+      }
+    },
+    {
+      role: "beast",
+      p: "{bird}",
+      w: 10,
+      mod: [
+        "aircraft"
+      ],
+      fn: [
+        "airliner"
+      ],
+      cult: [
+        "dutch"
+      ],
+      cx: {
+        dutch: 3
+      }
+    },
+    {
+      role: "beast",
+      p: "{beast} of the Clouds",
+      w: 15,
+      mod: [
+        "aircraft"
+      ],
+      k: "AF"
+    },
+    {
+      role: "sky",
+      p: "Cloud-{cloudNoun}",
+      w: 15,
+      mod: [
+        "aircraft"
+      ],
+      k: "AF"
+    },
+    {
+      role: "virtue",
+      p: "Sky {virtue}",
+      w: 10,
+      mod: [
+        "aircraft"
+      ],
+      k: "AF"
+    },
+    {
+      role: "royal",
+      p: "{royal} of the Upper Air",
+      w: 10,
+      mod: [
+        "aircraft"
+      ],
+      k: "AF",
+      t: [
+        "grand"
+      ]
+    },
+    {
+      role: "place",
+      p: "{town} in the Clouds",
+      w: 5,
+      mod: [
+        "aircraft"
+      ],
+      k: "AF"
+    },
+    {
+      role: "person",
+      p: "Clan {wNoun}",
+      w: 15,
+      mod: [
+        "landVehicles"
+      ],
+      k: "LF"
+    },
+    {
+      role: "royal",
+      p: "{wAdj} {figure}",
+      w: 15,
+      mod: [
+        "landVehicles"
+      ],
+      k: "LF"
+    },
+    {
+      role: "virtue",
+      p: "Rune {wNoun}",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      k: "LF"
+    },
+    {
+      role: "beast",
+      p: "The {beast} Engine",
+      w: 10,
+      mod: [
+        "landVehicles"
+      ],
+      k: "LF"
+    }
+  ],
+  cultureAdds: [
+    {
+      culture: "norman-british",
+      module: "aircraft",
+      fn: [
+        "war",
+        "bomber"
+      ],
+      list: "virtue",
+      words: [
+        {
+          w: "Dauntless"
+        },
+        {
+          w: "Defiant"
+        },
+        {
+          w: "Vigilant"
+        },
+        {
+          w: "Steadfast"
+        },
+        {
+          w: "Gallant"
+        }
+      ]
+    }
+  ],
+  types: {
+    families: {
+      weather: [
+        "{weatherWord}"
+      ],
+      raptor: [
+        "{raptor}"
+      ],
+      insect: [
+        "{insect}"
+      ],
+      bigBird: [
+        "{bigBird}"
+      ],
+      smallBird: [
+        "{smallBird}"
+      ],
+      workBeast: [
+        "{workBeast}"
+      ],
+      bigCat: [
+        "{bigCat}"
+      ],
+      smallFierce: [
+        "{smallFierce}"
+      ],
+      horse: [
+        "{horse}"
+      ],
+      draughtBeast: [
+        "{draughtBeast}"
+      ],
+      catCompound: [
+        "{catPrefix}cat"
+      ],
+      town: [
+        "{town}"
+      ],
+      exoticTown: [
+        "{exoticTown}"
+      ],
+      rank: [
+        "{rank}"
+      ],
+      titan: [
+        "{titan}"
+      ],
+      spirit: [
+        "{spiritMetal} {spirit}",
+        "{colour} {spirit}"
+      ],
+      weapon: [
+        "{typeWeapon}"
+      ],
+      sky: [
+        {
+          p: "{typeSky}",
+          w: 90
+        },
+        {
+          p: "Super {typeSky}",
+          w: 10
+        }
+      ],
+      airliner: [
+        "Strato{strato}",
+        "{typeSky}liner",
+        "Sky{skyPart}"
+      ],
+      pretty: [
+        "{prettyWord}"
+      ],
+      greek: [
+        "{greekLetter}"
+      ],
+      general: [
+        "{surname}",
+        "General {surname}"
+      ],
+      classTheme: [
+        "the {classTheme} class"
+      ],
+      carriage: [
+        "{town}",
+        "{surname}"
+      ],
+      wagonType: [
+        "{town} Wagon",
+        "{landWord} Schooner",
+        "{town} Van"
+      ],
+      workType: [
+        "{titan}",
+        "{surname} {workWord}",
+        {
+          p: "Little {colour} {surname}",
+          t: [
+            "light"
+          ]
+        },
+        "{draughtBeast}"
+      ],
+      skyShip: [
+        "{skyPrefix} {skyShip}"
+      ],
+      engineType: [
+        "{wAdj} {wNoun}",
+        "{beast} Strider",
+        "Rune {wNoun}"
+      ],
+      future: [
+        "{star}-class",
+        "{beast} Crawler",
+        "{spaceLand} Rover",
+        "Sky{weatherWord:lower}"
+      ],
+      beastThe: [
+        "{beast}"
+      ]
+    },
+    designation: {
+      aircraft: {
+        aa: "{AA}-{n23}",
+        type: "Type {n100}",
+        a: "{A}-{n}"
+      },
+      landVehicles: {
+        a: "{A}-{n}",
+        type: "Type {n}",
+        mark: {
+          p: "Mark {romanNumeral}",
+          k: "L3"
+        },
+        class: {
+          p: "Class {n}",
+          fn: [
+            "locomotive"
+          ]
+        }
+      }
+    },
+    weights: {
+      aircraft: {
+        war: {
+          weather: 25,
+          raptor: 20,
+          insect: 10,
+          catCompound: 10,
+          horse: 5,
+          rank: 5,
+          weapon: 10,
+          designation: 15
+        },
+        bomber: {
+          weather: 10,
+          raptor: 5,
+          insect: 5,
+          town: 30,
+          rank: 10,
+          sky: 10,
+          weapon: 5,
+          designation: 20
+        },
+        airliner: {
+          bigBird: 10,
+          town: 10,
+          rank: 25,
+          sky: 25,
+          airliner: 30,
+          designation: 10
+        },
+        transport: {
+          bigBird: 20,
+          rank: 20,
+          sky: 15,
+          airliner: 10,
+          designation: 25
+        },
+        explore: {
+          weather: 15,
+          bigBird: 15,
+          rank: 20,
+          sky: 30,
+          designation: 20
+        },
+        private: {
+          weather: 15,
+          insect: 5,
+          bigBird: 15,
+          smallBird: 35,
+          horse: 10,
+          rank: 10,
+          sky: 15,
+          designation: 15
+        },
+        working: {
+          bigBird: 20,
+          smallBird: 10,
+          workBeast: 20,
+          rank: 20,
+          designation: 30
+        },
+        state: {
+          town: 15,
+          rank: 40,
+          sky: 30,
+          airliner: 15
+        },
+        raider: {
+          weather: 20,
+          raptor: 15,
+          insect: 15,
+          catCompound: 10,
+          sky: 20,
+          weapon: 20
+        }
+      },
+      landVehicles: {
+        locomotive: {
+          classTheme: 60,
+          designation: 30,
+          rank: 10
+        },
+        war: {
+          designation: 20,
+          rank: 25,
+          bigCat: 15,
+          smallFierce: 10,
+          general: 15,
+          weapon: 5
+        },
+        coach: {
+          rank: 10,
+          carriage: 90
+        },
+        road: {
+          designation: 5,
+          rank: 15,
+          bigCat: 10,
+          weapon: 5,
+          town: 15,
+          exoticTown: 10,
+          spirit: 10,
+          weather: 10,
+          horse: 5,
+          sky: 10,
+          pretty: 5,
+          greek: 5
+        },
+        wagon: {
+          wagonType: 100
+        },
+        working: {
+          designation: 10,
+          titan: 30,
+          workType: 60
+        }
+      }
+    },
+    levelRules: {
+      aircraft: {
+        AF: {
+          keep: [
+            "weather",
+            "raptor",
+            "bigBird",
+            "rank",
+            "sky"
+          ],
+          add: {
+            skyShip: 70
+          }
+        },
+        A7: {
+          add: {
+            future: 40
+          }
+        }
+      },
+      landVehicles: {
+        LF: {
+          add: {
+            engineType: 70
+          }
+        },
+        L6: {
+          add: {
+            future: 40
+          }
+        },
+        "L1:war": {
+          replace: {
+            beastThe: 60,
+            weapon: 20,
+            rank: 20
+          }
+        }
+      }
+    },
+    leanings: {
+      "norman-british": {
+        weather: 2,
+        town: 2,
+        rank: 2,
+        spirit: 2,
+        classTheme: 2
+      },
+      american: {
+        catCompound: 3,
+        general: 3,
+        horse: 2,
+        airliner: 2,
+        designation: 1.5
+      },
+      slavic: {
+        designation: 3,
+        general: 0.5
+      },
+      japanese: {
+        designation: 3,
+        pretty: 3,
+        weather: 1.5
+      },
+      chinese: {
+        pretty: 3,
+        designation: 2
+      },
+      korean: {
+        pretty: 3,
+        designation: 2
+      },
+      roman: {
+        greek: 3,
+        exoticTown: 0.5
+      },
+      french: {
+        general: 2,
+        designation: 1.5
+      },
+      steppe: {
+        draughtBeast: 2,
+        horse: 2
+      },
+      "arabic-persian": {
+        draughtBeast: 2,
+        horse: 2
+      }
+    },
+    designationLean: {
+      japanese: [
+        "type"
+      ]
+    },
+    mark: {
+      share: 0.15,
+      numerals: [
+        "II",
+        "III",
+        "IV",
+        "V"
+      ],
+      never: [
+        "designation",
+        "classTheme"
+      ]
+    },
+    rankInitial: {
+      culture: "norman-british",
+      fn: "war",
+      share: 0.5,
+      letter: "C"
+    }
+  },
+  codes: {
+    aircraft: {
+      civil: [
+        "airliner",
+        "transport",
+        "private",
+        "working",
+        "explore",
+        "state",
+        "raider"
+      ],
+      military: [
+        "war",
+        "bomber"
+      ],
+      rows: [
+        {
+          cultures: [
+            "general",
+            "norman-british"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "G-{AAAA}"
+          ]
+        },
+        {
+          cultures: [
+            "general",
+            "norman-british"
+          ],
+          kind: "military",
+          k: "A3-A4",
+          patterns: [
+            "{A}{dddd}"
+          ]
+        },
+        {
+          cultures: [
+            "general",
+            "norman-british"
+          ],
+          kind: "military",
+          k: "A5-A7",
+          patterns: [
+            "{AA}{ddd}"
+          ]
+        },
+        {
+          cultures: [
+            "american"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "N{ddd}{AA}"
+          ]
+        },
+        {
+          cultures: [
+            "american"
+          ],
+          kind: "military",
+          k: "A4",
+          patterns: [
+            "{dd}-{ddddd}"
+          ]
+        },
+        {
+          cultures: [
+            "american"
+          ],
+          kind: "military",
+          k: "A5-A7",
+          patterns: [
+            "{dd}-{dddd}"
+          ]
+        },
+        {
+          cultures: [
+            "french"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "F-{AAAA}"
+          ]
+        },
+        {
+          cultures: [
+            "dutch"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "PH-{AAA}"
+          ]
+        },
+        {
+          cultures: [
+            "roman"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "I-{AAAA}"
+          ]
+        },
+        {
+          cultures: [
+            "iberian"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "EC-{AAA}",
+            "CS-{AAA}"
+          ]
+        },
+        {
+          cultures: [
+            "slavic"
+          ],
+          kind: "civil",
+          k: "A6",
+          patterns: [
+            "RA-{ddddd}"
+          ]
+        },
+        {
+          cultures: [
+            "japanese"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "JA{dddd}"
+          ]
+        },
+        {
+          cultures: [
+            "chinese"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "B-{dddd}"
+          ]
+        },
+        {
+          cultures: [
+            "korean"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "HL{dddd}"
+          ]
+        },
+        {
+          cultures: [
+            "indian"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "VT-{AAA}"
+          ]
+        },
+        {
+          cultures: [
+            "arabic-persian"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "EP-{AAA}"
+          ]
+        },
+        {
+          cultures: [
+            "egyptian"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "SU-{AAA}"
+          ]
+        },
+        {
+          cultures: [
+            "ethiopian"
+          ],
+          kind: "civil",
+          k: "A3-A7",
+          patterns: [
+            "ET-{AAA}"
+          ]
+        },
+        {
+          cultures: [
+            "general",
+            "norman-british"
+          ],
+          kind: "any",
+          k: "A2",
+          patterns: [
+            "R{dd}"
+          ]
+        },
+        {
+          cultures: [
+            "american"
+          ],
+          kind: "any",
+          k: "A2",
+          patterns: [
+            "ZR-{d}"
+          ]
+        }
+      ],
+      sf: [
+        "{AA}-{dddd}"
+      ]
+    },
+    landVehicles: {
+      rows: [
+        {
+          fn: [
+            "locomotive"
+          ],
+          k: "L2",
+          patterns: [
+            "No. {n999} "
+          ]
+        },
+        {
+          fn: [
+            "locomotive"
+          ],
+          k: "L3-L5",
+          cultures: [
+            "norman-british",
+            "general"
+          ],
+          patterns: [
+            "{dddd} "
+          ]
+        },
+        {
+          fn: [
+            "locomotive"
+          ],
+          k: "L3-L5",
+          notCultures: [
+            "norman-british",
+            "general"
+          ],
+          patterns: [
+            "No. {dddd} "
+          ]
+        },
+        {
+          fn: [
+            "war"
+          ],
+          k: "L3",
+          patterns: [
+            "{L}{dd} "
+          ]
+        }
+      ]
+    },
+    words: {
+      aircraft: {
+        off: "without codes",
+        on: "with registrations"
+      },
+      landVehicles: {
+        off: "without numbers",
+        on: "with numbers"
+      }
+    }
+  },
+  shipOnlyShapes: [
+    "{god:poss} Canoe",
+    "{god:poss} Barque"
+  ],
+  naming: {
+    aircraft: {
+      craft: "each craft",
+      types: "types and models"
+    },
+    landVehicles: {
+      craft: "each vehicle",
+      types: "types and models"
+    }
+  },
+  styles: {
+    heroic: {
+      aircraft: "AF",
+      landVehicles: "LF"
+    },
+    elven: {
+      aircraft: "AF",
+      landVehicles: "LF"
+    },
+    dwarven: {
+      aircraft: "AF",
+      landVehicles: [
+        "LF",
+        "L2"
+      ]
+    },
+    dark: {
+      aircraft: true,
+      landVehicles: true
+    },
+    fpirate: {
+      aircraft: "AF"
+    },
+    steampunk: {
+      aircraft: true,
+      landVehicles: true
+    },
+    dieselpunk: {
+      aircraft: true,
+      landVehicles: true
+    },
+    postapoc: {
+      aircraft: true,
+      landVehicles: true
+    },
+    wasteland: {
+      aircraft: true,
+      landVehicles: true
+    },
+    sfmilitary: {
+      aircraft: true,
+      landVehicles: true
+    },
+    corporate: {
+      aircraft: true,
+      landVehicles: true
+    },
+    colony: {
+      aircraft: true,
+      landVehicles: true
+    },
+    ai: {
+      aircraft: true,
+      landVehicles: true
+    },
+    alien: {
+      aircraft: true,
+      landVehicles: true
+    },
+    outlaw: {
+      aircraft: true,
+      landVehicles: true
+    },
+    sfexplore: {
+      aircraft: true
+    }
+  },
+  styleLabels: {
+    aircraft: {
+      fpirate: "sky pirate"
+    }
+  },
   safeguards: {
     block: [
-      "Belter",
-      "Belters",
-      "Hobbit",
-      "Hobbits",
-      "Gondorian",
-      "Rohirrim",
-      "Westerosi",
-      "Dothraki",
-      "Valyrian",
-      "High Valyrian",
-      "Klingon",
+      "Memphis Belle",
+      "Enola Gay",
+      "Bockscar",
+      "Spirit of St. Louis",
+      "Spirit of St Louis",
+      "Winnie Mae",
+      "Glamorous Glennis",
+      "Sentimental Journey",
+      "Swoose",
+      "Lady Be Good",
+      "Lucky Strike",
+      "G for George",
+      "G-George",
+      "S for Sugar",
+      "S-Sugar",
+      "Air Force One",
+      "Spruce Goose",
+      "Hindenburg",
+      "Graf Zeppelin",
+      "Norge",
+      "Italia",
+      "R100",
+      "R101",
+      "Shenandoah",
+      "Akron",
+      "Macon",
+      "Los Angeles",
+      "Le G\xE9ant",
+      "Double Eagle",
+      "Breitling Orbiter",
+      "Kitty Hawk",
+      "Wright Flyer",
+      "Queen of the Skies",
+      "Clipper America",
+      "China Clipper",
+      "Yankee Clipper",
+      "Dixie Clipper",
+      "Spitfire",
+      "Seafire",
+      "Lancaster",
+      "Halifax",
+      "Stirling",
+      "Wellington",
+      "Blenheim",
+      "Lincoln",
       "Vulcan",
-      "Romulan",
-      "Corellian",
-      "Mandalorian",
-      "Na'vi",
-      "Fremen",
-      "Arrakeen",
-      "Quenya",
-      "Sindarin",
-      "Westron",
-      "Black Speech",
-      "Khuzdul",
-      "Ad\xFBnaic",
-      "Huttese",
-      "Newspeak",
-      "Nadsat",
-      "Ankh-Morporkian",
-      "Loonie",
-      "Gallifreyan",
-      "Kryptonian",
-      "Lilliputian",
-      "Brobdingnagian",
-      "Houyhnhnm",
-      "Morlock",
-      "Eloi",
-      "Wakandan",
-      "Latverian",
-      "Genovian",
-      "Ruritanian",
-      "Freedonian",
-      "Elbonian",
-      "Narnian",
-      "Calormene",
-      "Archenlander"
+      "Tiger Moth",
+      "Gipsy Moth",
+      "Swordfish",
+      "Sunderland",
+      "Catalina",
+      "Dakota",
+      "Super Constellation",
+      "Stratocruiser",
+      "Stratoliner",
+      "Stratofortress",
+      "Kittyhawk",
+      "Airacobra",
+      "Flying Fortress",
+      "Superfortress",
+      "Mitchell",
+      "Globemaster",
+      "Starlifter",
+      "Shiden",
+      "Fishbed",
+      "Foxbat",
+      "Backfire",
+      "Gripen",
+      "Viggen",
+      "Draken",
+      "Rafale",
+      "Tucano",
+      "Twin Otter",
+      "Learjet",
+      "Concorde",
+      "Jumbo Jet",
+      "Dreamliner",
+      "Starliner",
+      "Skyhawk",
+      "Skymaster",
+      "Skyraider",
+      "Skyknight",
+      "Stratojet",
+      "Flying Scotsman",
+      "Mallard",
+      "Rocket",
+      "Puffing Billy",
+      "Locomotion",
+      "Tom Thumb",
+      "John Bull",
+      "Best Friend of Charleston",
+      "DeWitt Clinton",
+      "General",
+      "Texas",
+      "Fairy Queen",
+      "Evening Star",
+      "City of Truro",
+      "Caerphilly Castle",
+      "King George V",
+      "Sir Nigel Gresley",
+      "Duchess of Hamilton",
+      "Big Boy",
+      "Flying Hamburger",
+      "Orient Express",
+      "Simplon-Orient-Express",
+      "Train Bleu",
+      "Blue Train",
+      "Golden Arrow",
+      "Red Arrow",
+      "Royal Scot",
+      "Coronation Scot",
+      "Silver Jubilee",
+      "Cornish Riviera",
+      "Night Ferry",
+      "Master Cutler",
+      "Talisman",
+      "Elizabethan",
+      "Twentieth Century Limited",
+      "Broadway Limited",
+      "Golden State Limited",
+      "Prairie Limited",
+      "Super Chief",
+      "Empire Builder",
+      "California Zephyr",
+      "Rheingold",
+      "Frontier Mail",
+      "Deccan Queen",
+      "Palace on Wheels",
+      "Hikari",
+      "Nozomi",
+      "Kodama",
+      "Tsubame",
+      "Hato",
+      "Rossiya",
+      "Trans-Siberian",
+      "Ghan",
+      "Indian Pacific",
+      "Blue Funnel Line",
+      "Castle class",
+      "King class",
+      "War Wolf",
+      "Warwolf",
+      "Malvoisin",
+      "Bad Neighbour",
+      "Helepolis",
+      "Taker of Cities",
+      "Little Willie",
+      "Big Willie",
+      "Fray Bentos",
+      "Cr\xE8me de Menthe",
+      "Dinnaken",
+      "Cobra King",
+      "King Tiger",
+      "Maus",
+      "Elefant",
+      "Ferdinand",
+      "Sherman",
+      "Pershing",
+      "Patton",
+      "Abrams",
+      "Bradley",
+      "Churchill",
+      "Cromwell",
+      "Saladin",
+      "Leclerc",
+      "Merkava",
+      "Arjun",
+      "Black Prince",
+      "Gold State Coach",
+      "Irish State Coach",
+      "Glass Coach",
+      "Scottish State Coach",
+      "Australian State Coach",
+      "Diamond Jubilee State Coach",
+      "Silver Ghost",
+      "Silver Shadow",
+      "Silver Wraith",
+      "Silver Spirit",
+      "Silver Seraph",
+      "Silver Dawn",
+      "Silver Spur",
+      "Silver Cloud",
+      "Cullinan",
+      "Black Shadow",
+      "Black Lightning",
+      "Model T",
+      "Tin Lizzie",
+      "Cortina",
+      "Bel Air",
+      "Camry",
+      "Celica",
+      "Fairlady",
+      "Cedric",
+      "Punto",
+      "Giulietta",
+      "Bonneville",
+      "Gold Star",
+      "Routemaster",
+      "Conestoga",
+      "Prairie Schooner",
+      "Golden Arrow",
+      "Spirit of America",
+      "Thrust2",
+      "Thrust SSC",
+      "Thunderbird 1",
+      "Thunderbird 2",
+      "Thunderbird 3",
+      "Thunderbird 4",
+      "Thunderbird 5",
+      "Airwolf",
+      "Blue Thunder",
+      "Firefox",
+      "Snowspeeder",
+      "X-wing",
+      "TIE Fighter",
+      "Batwing",
+      "Quinjet",
+      "Helicarrier",
+      "Nimbus Two Thousand",
+      "Firebolt",
+      "Flying Ford Anglia",
+      "Sandcrawler",
+      "AT-AT",
+      "AT-ST",
+      "Landmaster",
+      "Warthog",
+      "Mako",
+      "Hogwarts Express",
+      "Polar Express",
+      "Snowpiercer",
+      "Interceptor",
+      "War Rig",
+      "Doof Wagon",
+      "Gigahorse",
+      "Laputa",
+      "Highwind",
+      "Ragnarok",
+      "Chitty Chitty Bang Bang",
+      "Genevieve",
+      "General Lee",
+      "Herbie",
+      "KITT",
+      "Batmobile",
+      "Ecto-1",
+      "DeLorean",
+      "Mystery Machine",
+      "Bumblebee",
+      "Optimus Prime",
+      "Lightning McQueen",
+      "Christine",
+      "Eleanor",
+      "Thomas the Tank Engine",
+      "Deadwood Stage",
+      "Black Pearl",
+      "Flying Dutchman"
     ],
-    flag: ["Elvish", "Dwarvish", "Common Tongue", "Earther", "Spacer", "Terran", "Atlantean", "Lemurian", "Thieves' Cant", "Martian"],
+    blockTypesOnly: [
+      "Hurricane",
+      "Typhoon",
+      "Tempest",
+      "Tornado",
+      "Lightning",
+      "Meteor",
+      "Vampire",
+      "Venom",
+      "Hunter",
+      "Harrier",
+      "Hawk",
+      "Mosquito",
+      "Victor",
+      "Valiant",
+      "Camel",
+      "Snipe",
+      "Moth",
+      "Comet",
+      "Constellation",
+      "Viscount",
+      "Britannia",
+      "Trident",
+      "Mustang",
+      "Thunderbolt",
+      "Corsair",
+      "Wildcat",
+      "Hellcat",
+      "Bearcat",
+      "Tomcat",
+      "Tigercat",
+      "Warhawk",
+      "Liberator",
+      "Marauder",
+      "Sabre",
+      "Phantom",
+      "Starfighter",
+      "Nighthawk",
+      "Blackbird",
+      "Galaxy",
+      "Hercules",
+      "Zero",
+      "Flanker",
+      "Fulcrum",
+      "Blackjack",
+      "Mirage",
+      "Otter",
+      "Beaver",
+      "Caribou",
+      "Buffalo",
+      "Cub",
+      "Jumbo",
+      "Skytrain",
+      "Tiger",
+      "Panther",
+      "Leopard",
+      "Puma",
+      "Grant",
+      "Lee",
+      "Stuart",
+      "Matilda",
+      "Valentine",
+      "Crusader",
+      "Cavalier",
+      "Centurion",
+      "Conqueror",
+      "Chieftain",
+      "Challenger",
+      "Scorpion",
+      "Scimitar",
+      "Saracen",
+      "Ferret",
+      "Warrior",
+      "Firefly",
+      "Onager",
+      "Mangonel",
+      "Mother",
+      "Deborah",
+      "Ghost",
+      "Wraith",
+      "Spectre",
+      "Beetle",
+      "Mini",
+      "Minor",
+      "Zephyr",
+      "Zodiac",
+      "Anglia",
+      "Prefect",
+      "Thunderbird",
+      "Corvette",
+      "Camaro",
+      "Impala",
+      "Fury",
+      "Charger",
+      "Viper",
+      "Cobra",
+      "Stingray",
+      "Corolla",
+      "Corona",
+      "Crown",
+      "Supra",
+      "Civic",
+      "Accord",
+      "Prelude",
+      "Sunny",
+      "Bluebird",
+      "Skyline",
+      "Panda",
+      "Lambda",
+      "Delta",
+      "Herald",
+      "Dolomite",
+      "Stag",
+      "Rapier",
+      "Alpine",
+      "Minx",
+      "Imp",
+      "Avenger",
+      "Viva",
+      "Astra",
+      "Cresta",
+      "Velox",
+      "Jaguar",
+      "Commando",
+      "Bullet",
+      "Atlantean",
+      "Olympian",
+      "Regent",
+      "Escort",
+      "Fiesta",
+      "Capri",
+      "Granada",
+      "Sierra",
+      "Gloria",
+      "Silvia",
+      "Eldorado",
+      "Seville",
+      "Babs"
+    ],
+    flag: [
+      "Eagle",
+      "Falcon",
+      "Raptor",
+      "Hornet",
+      "Kestrel",
+      "Vanguard",
+      "Consul",
+      "Titan",
+      "Juggernaut",
+      "Walker",
+      "Goliath",
+      "Samson",
+      "Defiant",
+      "Dauntless",
+      "Intrepid",
+      "Spirit of Saltgate",
+      "King of the Road",
+      "Queen of the Fair"
+    ],
     flagListBlocks: false,
-    banned: [
-      "Jap",
-      "Japs",
-      "Nip",
-      "Nips",
-      "Paki",
-      "Pakis",
-      "Chink",
-      "Chinks",
-      "Gook",
-      "Gooks",
-      "Wog",
-      "Wogs",
-      "Kraut",
-      "Krauts",
-      "Spic",
-      "Spics",
-      "Dago",
-      "Dagos",
-      "Wop",
-      "Wops",
-      "Gyppo",
-      "Pikey",
-      "Polack",
-      "Kike",
-      "Coon",
-      "Darkie",
-      "Negro",
-      "Abo",
-      "Abos",
-      "Boong",
-      "Taig",
-      "Redskin",
-      "Squaw",
-      "Wetback",
-      "Raghead",
-      "Towelhead",
-      "Paddy",
-      "Mick",
-      "Taffy",
-      "Limey",
-      "Gringo",
-      "Hottentot",
-      "Bushman",
-      "Bushmen",
-      "Kaffir"
+    bannedWords: [
+      "Apache",
+      "Comanche",
+      "Cheyenne",
+      "Kiowa",
+      "Lakota",
+      "Dakota",
+      "Sioux",
+      "Chinook",
+      "Mohawk",
+      "Iroquois",
+      "Shawnee",
+      "Seminole",
+      "Navajo",
+      "Navaho",
+      "Cherokee",
+      "Pawnee",
+      "Huron",
+      "Ute",
+      "Arapaho",
+      "Blackfoot",
+      "Mescalero",
+      "Hiawatha",
+      "Pontiac",
+      "Winnebago",
+      "Geronimo",
+      "Tomahawk",
+      "Zulu",
+      "Maori",
+      "Inuit",
+      "Eskimo",
+      "Gurkha",
+      "Gipsy"
+    ],
+    bannedNames: [
+      "Black Hawk",
+      "Sitting Bull",
+      "Crazy Horse",
+      "Red Cloud"
     ]
   }
 };
@@ -83660,6 +87774,1843 @@ var money_names_default = {
       "Varaha"
     ],
     neverGoods: ["Tobacco", "Opium", "Ivory", "Cigarette", "Cigar"]
+  }
+};
+
+// src/vessels/engine.ts
+var isAirLand = (module2) => module2 === "aircraft" || module2 === "landVehicles";
+var VESSEL_DATA = vessels_default;
+var VESSEL_SELF = selfPatterns(vessels_default);
+var VESSEL_CULTURES = VESSEL_DATA.cultures;
+var AIR_LAND = vehicles_air_land_default;
+var VESSEL_MODULE_LABELS = { ...VESSEL_DATA.modules, ...AIR_LAND.modules };
+function findVesselCulture(key2) {
+  return VESSEL_CULTURES.find((c) => c.key === key2);
+}
+var levelNumber = (code) => /^[AL]F$/.test(code) ? NaN : parseInt(code.slice(1), 10);
+function range(k) {
+  const [lo, hi] = k.split("-");
+  return [levelNumber(lo), levelNumber(hi != null ? hi : lo)];
+}
+function inRange(k, level) {
+  if (!k) return true;
+  if (k === level) return true;
+  if (k.charAt(0) !== level.charAt(0)) return false;
+  const [lo, hi] = range(k);
+  const n = levelNumber(level);
+  return n >= lo && n <= hi;
+}
+function spanLevels(culture) {
+  const [lo, hi] = range(culture.span);
+  const out = [];
+  for (let n = lo; n <= hi; n++) out.push(`T${n}`);
+  return out;
+}
+function moduleSpanLevels(module2, culture) {
+  if (!isAirLand(module2)) return spanLevels(culture);
+  const row = AIR_LAND.spans[culture.key];
+  const span = row ? module2 === "aircraft" ? row.airSpan : row.landSpan : "";
+  if (!span) return [];
+  const [lo, hi] = range(span);
+  const letter = module2 === "aircraft" ? "A" : "L";
+  const out = [];
+  for (let n = lo; n <= hi; n++) out.push(`${letter}${n}`);
+  return out;
+}
+function customsLevel(culture, level, module2) {
+  if (module2 && isAirLand(module2)) {
+    const span = moduleSpanLevels(module2, culture);
+    if (span.length === 0) return level;
+    const n = Number.isNaN(levelNumber(level)) ? Infinity : levelNumber(level);
+    const nums = span.map(levelNumber);
+    const nearest = nums.reduce((best, m) => Math.abs(m - n) < Math.abs(best - n) || Math.abs(m - n) === Math.abs(best - n) && m > best ? m : best);
+    return `${level.charAt(0)}${nearest}`;
+  }
+  const [lo, hi] = range(culture.span);
+  if (level.startsWith("S")) return `T${hi}`;
+  return `T${Math.min(hi, Math.max(lo, levelNumber(level)))}`;
+}
+function inSpan(culture, level, module2) {
+  if (module2 && isAirLand(module2)) return moduleSpanLevels(module2, culture).includes(level);
+  return level.startsWith("T") && inRange(culture.span, level);
+}
+var technologyList = (module2) => isAirLand(module2) ? AIR_LAND.technology[module2] : VESSEL_DATA.technology[module2];
+function techLabel(module2, code) {
+  var _a5, _b3;
+  return (_b3 = (_a5 = technologyList(module2).find((t) => t.code === code)) == null ? void 0 : _a5.label) != null ? _b3 : code;
+}
+function techChoices(module2, setting) {
+  var _a5;
+  if (isAirLand(module2)) return (_a5 = AIR_LAND.settings[module2][setting]) != null ? _a5 : [];
+  const all = VESSEL_DATA.technology[module2].map((t) => t.code);
+  return module2 === "spacecraft" && setting !== "SF" ? ["S1"] : all;
+}
+function anyLevels(module2, culture, setting) {
+  if (isAirLand(module2)) {
+    const offered = techChoices(module2, setting);
+    const native = moduleSpanLevels(module2, culture).filter((l) => offered.includes(l));
+    return native.length > 0 ? native : offered;
+  }
+  return module2 === "ships" ? spanLevels(culture) : techChoices(module2, setting);
+}
+function moduleFunctions(module2) {
+  return isAirLand(module2) ? AIR_LAND.functions[module2].list : VESSEL_DATA.functions[module2].list;
+}
+function functionAny(module2) {
+  return isAirLand(module2) ? AIR_LAND.functions[module2].any : VESSEL_DATA.functions[module2].any;
+}
+function functionAvailableAt(fn, culture, level) {
+  if (fn.noSensitive && culture.sensitive) return false;
+  if (fn.needs) return fn.needs.some((r) => inRange(r, level));
+  if (!fn.min) return true;
+  return level.charAt(0) === fn.min.charAt(0) && levelNumber(level) >= levelNumber(fn.min);
+}
+function availableFunctions(module2, cultureKey, technology, setting, naming = "craft") {
+  var _a5;
+  const culture = (_a5 = findVesselCulture(cultureKey)) != null ? _a5 : VESSEL_CULTURES[0];
+  const levels = technology === "any" ? anyLevels(module2, culture, setting) : [technology];
+  return moduleFunctions(module2).filter((f) => !(naming === "types" && f.noTypes) && levels.some((l) => functionAvailableAt(f, culture, l)));
+}
+function tagOk(ctx, k) {
+  if (!k) return true;
+  if (!isAirLand(ctx.module)) return inRange(k, ctx.customs);
+  if (k === "AF" || k === "LF") return ctx.level === k;
+  if (k.charAt(0) === "T") return inRange(k, ctx.shipCustoms);
+  return inRange(k, ctx.customs);
+}
+function shapeTagOk(ctx, k) {
+  if (isAirLand(ctx.module) && k && (k.charAt(0) === "T" || k.charAt(0) === "S")) return false;
+  return tagOk(ctx, k);
+}
+var pickOne2 = (items, rng) => items[Math.floor(rng() * items.length)];
+var GN_LISTS = /* @__PURE__ */ new Set(["colour", "number", "ordinalWord", "greek", "land", "spaceLand", "sfBody", "compass", "star", "brandRoot", "surname", "weapon", "tech", "beast"]);
+var STYLE_POOLS = new Map(VESSEL_DATA.styles.flatMap((st) => Object.entries(st.pools)));
+var CULTURE_ONLY = /* @__PURE__ */ new Set(["poetic", "menaceExtra"]);
+var UNTONED = /* @__PURE__ */ new Set(["surname"]);
+var ANIMALS = /* @__PURE__ */ new Map();
+function flavourAnimals(culture) {
+  var _a5, _b3;
+  let found = ANIMALS.get(culture.key);
+  if (found) return found;
+  const f = culture.flavour;
+  if (!f) found = [];
+  else if (Array.isArray(f)) found = f;
+  else if ("world" in f) found = worldAnimals(f.world);
+  else found = [...(_b3 = (_a5 = findTradition(f.tribal)) == null ? void 0 : _a5.flavour.animals) != null ? _b3 : []];
+  ANIMALS.set(culture.key, found);
+  return found;
+}
+function landWords(culture) {
+  var _a5, _b3;
+  const f = culture.flavour;
+  if (f && !Array.isArray(f) && "tribal" in f) {
+    const t = findTradition(f.tribal);
+    return [...(_a5 = t == null ? void 0 : t.flavour.land) != null ? _a5 : [], ...(_b3 = t == null ? void 0 : t.flavour.water) != null ? _b3 : []];
+  }
+  if (f && !Array.isArray(f) && "world" in f) return cultureLand(f.world);
+  return [];
+}
+function godWords(culture) {
+  var _a5;
+  const gods = culture.gods;
+  if (!gods) return [];
+  if (gods.list) return gods.list;
+  const world = WORLD_CULTURES.find((c) => c.id === gods.world);
+  return ((_a5 = world == null ? void 0 : world.lists.god) != null ? _a5 : []).map((w) => ({ w: stripPlural(w) }));
+}
+function holyType(ctx) {
+  var _a5;
+  const c = ctx.culture;
+  if ((_a5 = c.gods) == null ? void 0 : _a5.k) return tagOk(ctx, c.gods.k) ? "gods" : c.holy;
+  return c.holy;
+}
+function pool2(ctx, name) {
+  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k;
+  const key2 = `${name}|${ctx.customs}|${ctx.level}|${ctx.boost}|${ctx.tone}${isAirLand(ctx.module) ? `|${ctx.fn}` : ""}`;
+  const cached = ctx.pools.get(key2);
+  if (cached) return cached;
+  const weights = /* @__PURE__ */ new Map();
+  const add2 = (word, w, t) => {
+    const prev = weights.get(word);
+    if (prev) prev.w += w;
+    else weights.set(word, { w, t });
+  };
+  const addEntries = (list, entries, mult = 1) => {
+    var _a6, _b4, _c4, _d4;
+    for (const e of entries != null ? entries : []) {
+      if (!tagOk(ctx, e.k)) continue;
+      if (e.only && !e.only.includes(ctx.culture.key)) continue;
+      add2(e.w, ((_a6 = e.x) != null ? _a6 : 1) * mult, (_d4 = (_c4 = (_b4 = e.t) != null ? _b4 : VESSEL_DATA.listTones[list]) != null ? _c4 : AIR_LAND.listTones[list]) != null ? _d4 : []);
+    }
+  };
+  const own = (_a5 = ctx.culture.lists) != null ? _a5 : {};
+  const space = ctx.module === "spacecraft";
+  const airLand = isAirLand(ctx.module);
+  if (name === "techAdj" || name === "techNoun") {
+    for (const e of (_c3 = (_b3 = (airLand ? AIR_LAND.techWords : VESSEL_DATA.techWords)[ctx.level]) == null ? void 0 : _b3[name]) != null ? _c3 : []) add2(e.w, (_d3 = e.x) != null ? _d3 : 1, (_e3 = e.t) != null ? _e3 : []);
+  } else if (airLand && ((_f = AIR_LAND.moduleLists[ctx.module]) == null ? void 0 : _f[name])) {
+    addEntries(name, AIR_LAND.moduleLists[ctx.module][name]);
+  } else if (airLand && AIR_LAND.lists[name]) {
+    addEntries(name, AIR_LAND.lists[name]);
+  } else if (name === "god") {
+    addEntries(name, godWords(ctx.culture));
+  } else if (name === "beast") {
+    for (const [w, n] of groupListWords("beast", ctx.setting)) add2(w, n, wordTones("beast", w));
+    for (const w of flavourAnimals(ctx.culture)) {
+      const prev = weights.get(w);
+      if (prev) prev.w *= 3;
+      else add2(w, 3, []);
+    }
+    addEntries("beast", own.beastExtra);
+  } else if (name === "seaLand" && space) {
+    for (const [w, n] of groupListWords("spaceLand", "SF")) add2(w, n, wordTones("spaceLand", w));
+  } else if (name === "seaLand") {
+    addEntries(name, VESSEL_DATA.lists.seaLand);
+    for (const w of landWords(ctx.culture)) add2(stripPlural(w), 2, []);
+  } else if (name === "seaAdj" && space) {
+    addEntries(name, VESSEL_DATA.lists.spaceSeaAdj);
+  } else if (name === "designationWord" && space) {
+    addEntries(name, VESSEL_DATA.lists.spaceDesignationWord);
+  } else if (name === "numberWord") {
+    for (const [w, n] of groupListWords("number", ctx.setting)) add2(w, n, wordTones("number", w));
+  } else if (own[name]) {
+    addEntries(name, own[name]);
+  } else if (VESSEL_DATA.lists[name]) {
+    addEntries(name, VESSEL_DATA.lists[name]);
+  } else if (GN_LISTS.has(name)) {
+    for (const [w, n] of groupListWords(name, ctx.setting)) add2(w, n, wordTones(name, w));
+  } else if (name === "name" && ctx.style) {
+    addEntries(name, ctx.style.name);
+  } else if (name === "colonyName") {
+    addEntries(name, (_g = VESSEL_DATA.styles.find((st) => st.key === "colony")) == null ? void 0 : _g.name);
+  } else if (STYLE_POOLS.has(name)) {
+    addEntries(name, (_i = (_h = ctx.style) == null ? void 0 : _h.pools[name]) != null ? _i : STYLE_POOLS.get(name));
+  } else if (!CULTURE_ONLY.has(name)) {
+    throw new Error(`Vessels: no list \u201C${name}\u201D.`);
+  }
+  if (airLand) {
+    for (const a of AIR_LAND.cultureAdds) {
+      if (a.culture === ctx.culture.key && a.module === ctx.module && a.list === name && a.fn.includes(ctx.fn)) addEntries(name, a.words);
+    }
+    if (ctx.level === "LF" && (name === "virtue" || name === "beast")) {
+      const dwarven = VESSEL_DATA.styles.find((st) => st.key === "dwarven");
+      for (const entries of Object.values(dwarven.pools)) for (const e of entries) add2(e.w, ((_j = e.x) != null ? _j : 1) * 2, (_k = e.t) != null ? _k : []);
+    }
+  }
+  if (ctx.boost && ctx.style) {
+    const suffix = name === "virtueAdj" || name === "skyAdj" ? "Adj" : name === "virtue" || name === "sky" ? "Noun" : void 0;
+    if (suffix) {
+      for (const [pool3, entries] of Object.entries(ctx.style.pools)) {
+        if (!new RegExp(`${suffix}\\d*$`).test(pool3)) continue;
+        for (const e of entries) add2(e.w, VESSEL_DATA.styleShare.poolMultiplier, ctx.style.tone ? [ctx.style.tone] : []);
+      }
+    }
+  }
+  const tone = !UNTONED.has(name) && ctx.tone !== "any";
+  const out = [...weights].map(([w, { w: n, t }]) => [{ w, t }, tone ? n * toneFactor(t, ctx.tone) : n]).filter(([, n]) => n > 0);
+  ctx.pools.set(key2, out);
+  return out;
+}
+function listWord2(ctx, name, filter) {
+  const items = filter ? pool2(ctx, name).filter(([e]) => filter(e.w)) : pool2(ctx, name);
+  const pick4 = pickWeighted5(items, ctx.rng);
+  if (!pick4) return void 0;
+  for (const t of pick4.t) ctx.drawn.add(t);
+  ctx.words.push({ list: name, word: pick4.w });
+  return pick4.w.includes("{") ? renderPattern2(ctx, pick4.w) : pick4.w;
+}
+function town(ctx) {
+  const rng = ctx.rng;
+  if (ctx.module === "spacecraft" && ctx.setting === "SF") return groupTown("SF", void 0, rng);
+  const source = ctx.culture.town === "compound" ? void 0 : ctx.culture.town;
+  const setting = ctx.setting === "SF" ? "MR" : ctx.setting;
+  const holy = holyNamesIn(ctx.culture.key);
+  for (let i = 0; i < 20; i++) {
+    const t = groupTown(setting, source, rng);
+    if (!holy || !holy.test(t)) return t;
+  }
+  return void 0;
+}
+var personLabel = (ctx) => {
+  var _a5;
+  return (_a5 = VESSEL_DATA.personLabels[ctx.fn]) != null ? _a5 : "owner";
+};
+function inventedPerson2(ctx) {
+  return groupPerson(ctx.setting, !!ctx.culture.surnames, ctx.rng, flavourAnimals(ctx.culture));
+}
+var POETIC_SHORT = (w) => w.split(" ").length <= 5 && !/^(The|We|Where) /.test(w);
+function token3(ctx, name) {
+  if (name.includes("+")) {
+    const [a, b] = name.split("+");
+    const first = token3(ctx, a);
+    const second = VESSEL_DATA.lists[b] || STYLE_POOLS.has(b) ? token3(ctx, b) : b;
+    return first && second ? first + second.toLowerCase() : void 0;
+  }
+  return baseToken(ctx, name);
+}
+var withMod = (text, mod) => mod === "poss" ? groupPossessive(text, false) : mod === "lower" ? text.toLowerCase() : text;
+var LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var BIRD_SET = new Set(BIOMES.flatMap((b) => b.birds.map(([w]) => w.toLowerCase())));
+var BIRDS = /* @__PURE__ */ new Map();
+function birdWords(culture) {
+  var _a5, _b3;
+  let found = BIRDS.get(culture.key);
+  if (!found) {
+    const own = [...cultureAnimals(culture.key), ...flavourAnimals(culture)].filter((w) => BIRD_SET.has(w.toLowerCase()));
+    found = [...new Set(own.length > 0 ? own : ((_b3 = (_a5 = findBiome("temperate")) == null ? void 0 : _a5.birds) != null ? _b3 : []).map(([w]) => w))];
+    BIRDS.set(culture.key, found);
+  }
+  return found;
+}
+function baseToken(ctx, name) {
+  const rng = ctx.rng;
+  const placeholders = ctx.mode === "placeholders";
+  switch (name) {
+    case "star":
+      return groupStarIn("any", ctx.mode, rng);
+    case "town":
+      if (ctx.turn) return ctx.turn.next(rng);
+      return placeholders ? "[place]" : town(ctx);
+    case "surname":
+      return placeholders ? "[surname]" : listWord2(ctx, "surname");
+    case "womanName":
+      return placeholders ? "[woman's name]" : listWord2(ctx, "womanName");
+    case "person":
+      return placeholders ? `[${personLabel(ctx)}]` : inventedPerson2(ctx);
+    case "president":
+      return placeholders ? "[president]" : inventedPerson2(ctx);
+    case "scientist":
+      return placeholders ? "[scientist]" : inventedPerson2(ctx);
+    case "holy":
+      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "n":
+      return String(1 + Math.floor(rng() * 99));
+    case "ordinal": {
+      const choices = [];
+      for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
+      return ordinalText(pickWeighted5(choices, rng));
+    }
+    case "poetic":
+      return ctx.poeticAllowed ? listWord2(ctx, "poetic") : void 0;
+    case "poeticShort":
+      return ctx.poeticAllowed ? listWord2(ctx, "poetic", POETIC_SHORT) : void 0;
+    case "bird": {
+      const birds = birdWords(ctx.culture);
+      return birds.length > 0 ? pickOne2(birds, rng) : void 0;
+    }
+    case "manName":
+      return placeholders ? "[man's name]" : AIR_LAND.manNameCultures.includes(ctx.culture.key) ? listWord2(ctx, "manName") : void 0;
+    case "realm": {
+      if (placeholders) return "[realm]";
+      const seed = Math.floor(rng() * 4294967296);
+      const era = ctx.setting === "SF" ? "interstellar" : ctx.setting === "MR" || ctx.setting === "MF" ? "modern" : "medieval";
+      const genre = ctx.setting === "SF" ? "scifi" : ctx.setting === "MR" || ctx.setting === "MF" ? "modern" : "fantasy";
+      const realmCulture = ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya"].includes(ctx.culture.key) ? ctx.culture.key : "general";
+      return realmSource == null ? void 0 : realmSource({ culture: realmCulture, era, genre, seed });
+    }
+    case "exoticTown":
+      return placeholders ? "[place]" : groupTown(ctx.setting === "SF" ? "MR" : ctx.setting, "roman", rng);
+    case "call": {
+      const word = pickOne2(AIR_LAND.phonetic, rng);
+      return `${word.charAt(0)}${rng() < 0.5 ? " for " : "-"}${word}`;
+    }
+    case "A":
+    case "AA": {
+      for (let i = 0; i < 20; i++) {
+        const text = Array.from({ length: name.length }, () => LETTERS[Math.floor(rng() * 26)]).join("");
+        if (text !== "SS") return text;
+      }
+      return "KA";
+    }
+    case "n23":
+      return String(10 + Math.floor(rng() * 990));
+    case "n100":
+      return String(1 + Math.floor(rng() * 100));
+    case "rank":
+      return listWord2(ctx, "rank", ctx.rankInitial ? (w) => w.startsWith(ctx.rankInitial) : void 0);
+    case "cultureNoun": {
+      const sources = ["beast", "sky", "virtue", ...ctx.poeticAllowed && pool2(ctx, "poetic").length > 0 ? ["poetic"] : []];
+      return listWord2(ctx, pickOne2(sources, rng));
+    }
+  }
+  return listWord2(ctx, name);
+}
+var drawnWords = (record) => record.flatMap((d) => d.text.toLowerCase().split(/[\s-]+/)).filter((w) => w && !SMALL4.has(w));
+function renderPattern2(ctx, pattern, hooks2) {
+  const outer = ctx.turn;
+  if (ctx.context) ctx.turn = new TownTurn(ctx.context, VESSEL_SELF.has(pattern));
+  try {
+    return renderTokens2(ctx, pattern, hooks2);
+  } finally {
+    ctx.turn = outer;
+  }
+}
+function renderTokens2(ctx, pattern, hooks2) {
+  let failed = false;
+  let index = -1;
+  let nameUsed = false;
+  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw, at) => {
+    var _a5, _b3;
+    if (failed) return "";
+    index++;
+    const [name, mod] = raw.split(":");
+    let piece;
+    const fixed = (_a5 = hooks2 == null ? void 0 : hooks2.byIndex) == null ? void 0 : _a5.get(index);
+    if (fixed) piece = fixed.text;
+    else if ((hooks2 == null ? void 0 : hooks2.byName) && !nameUsed && hooks2.byName.name === name) {
+      piece = hooks2.byName.text;
+      nameUsed = true;
+    } else piece = token3(ctx, name);
+    if (piece && name === "star" && pattern === "{star} Haven") piece = piece.replace(/('s) Star$/, "$1");
+    if (piece && name === "compass" && pattern.slice(0, at).endsWith("of the ")) piece = piece.replace(/ern$/, "");
+    if (piece === void 0 || piece === "") {
+      failed = true;
+      return "";
+    }
+    (_b3 = hooks2 == null ? void 0 : hooks2.record) == null ? void 0 : _b3.push({ name, text: piece });
+    return withMod(piece, mod);
+  });
+  return failed ? void 0 : out;
+}
+var SMALL4 = /* @__PURE__ */ new Set([
+  "of",
+  "the",
+  "and",
+  "for",
+  "in",
+  "at",
+  "by",
+  "on",
+  "to",
+  "from",
+  "over",
+  "upon",
+  "beyond",
+  "beneath",
+  "among",
+  "across",
+  "through",
+  "between",
+  "above",
+  "into",
+  "with",
+  "before"
+]);
+function vesselCapitals(text) {
+  return text.split(" ").map((word, i) => {
+    if (!word || word.startsWith("[")) return word;
+    const lower3 = word.toLowerCase();
+    if (SMALL4.has(lower3) && i > 0) return lower3;
+    return word.replace(/(^|[-–])([a-z])/g, (_m, sep, c) => sep + c.toUpperCase());
+  }).join(" ");
+}
+var countedWords = (text) => text.split(" ").filter((w, i) => w && !(i === 0 && w === "The") && !SMALL4.has(w.toLowerCase()));
+var wordRe4 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
+var BANNED2 = VESSEL_DATA.safeguards.banned.map(wordRe4);
+var DIVINE = new RegExp(`(^|[^\\p{L}])(${VESSEL_DATA.safeguards.divine.join("|")})(?=$|[^\\p{L}])`, "giu");
+function withDeityPlaceholders(text) {
+  return text.replace(DIVINE, (_m, before) => `${before}[deity]`);
+}
+function breaksVesselWords(text, module2) {
+  if (hasBannedWord(text) || BANNED2.some((re) => re.test(text))) return true;
+  if (module2 && isAirLand(module2)) return MONEY_BANNED.some((re) => re.test(text)) || AL_BANNED.some((re) => re.test(text)) || AL_BANNED_NAMES.has(normForBlock(text));
+  return false;
+}
+var MONEY_BANNED = money_names_default.safeguards.banned.map(wordRe4);
+var realmSource;
+function registerRealmSource(source) {
+  realmSource = source;
+}
+var AL_BANNED = AIR_LAND.safeguards.bannedWords.map(wordRe4);
+var AL_BANNED_NAMES = new Set(AIR_LAND.safeguards.bannedNames.map(normForBlock));
+function guardFor(module2, guards) {
+  const s = VESSEL_DATA.safeguards;
+  const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock));
+  if (module2 === "spacecraft") for (const w of s.blockSpacecraft) block.add(normForBlock(w));
+  if (isAirLand(module2)) for (const w of AIR_LAND.safeguards.block) block.add(normForBlock(w));
+  return { block, prefixed: new Set(s.blockPrefixed.map(normForBlock)), typesOnly: new Set(isAirLand(module2) ? AIR_LAND.safeguards.blockTypesOnly.map(normForBlock) : []) };
+}
+function blocked(ctx, guard, name, prefix) {
+  const n = normForBlock(name);
+  if (guard.block.has(n)) return true;
+  if (ctx.naming === "types" && guard.typesOnly.has(n)) return true;
+  for (const u of VESSEL_DATA.safeguards.blockUnless) {
+    if (n === normForBlock(u.w) && !(ctx.culture.key === u.culture && tagOk(ctx, u.k))) return true;
+  }
+  if (prefix && (guard.prefixed.has(normForBlock(`${prefix} ${name}`)) || VESSEL_DATA.safeguards.blockPrefixes.includes(prefix))) return true;
+  return false;
+}
+function acceptable3(ctx, guard, name) {
+  const counted3 = countedWords(name);
+  if (counted3.length === 0 || counted3.length > 8) return false;
+  if (repeatsContent(counted3)) return false;
+  if (blocked(ctx, guard, name)) return false;
+  if (breaksVesselWords(name, ctx.module)) return false;
+  if (ctx.module === "spacecraft" && hasSpaceBlock(name)) return false;
+  return true;
+}
+var SENSITIVE_TOKENS = new RegExp(`\\{(${VESSEL_DATA.safeguards.sensitiveLists.join("|")})[}:]`);
+function vesselShapeTones(p, own = []) {
+  var _a5;
+  const out = new Set(own);
+  for (const m of p.matchAll(/\{([^}:+]+)/g)) for (const t of (_a5 = VESSEL_DATA.listTones[m[1]]) != null ? _a5 : []) out.add(t);
+  return GROUP_TONES.filter((t) => out.has(t));
+}
+function roleWeights(ctx) {
+  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
+  const c = ctx.culture;
+  const airLand = isAirLand(ctx.module);
+  const base = airLand ? { ...AIR_LAND.roleWeights[ctx.module][ctx.fn] } : { ...VESSEL_DATA.roleWeights[ctx.module][ctx.fn] };
+  if (airLand) {
+    const rules = AIR_LAND.roleRules[ctx.module];
+    for (const [role, levels] of Object.entries((_a5 = rules.zeroOutside) != null ? _a5 : {})) if (!levels.includes(ctx.level)) delete base[role];
+    for (const role of (_c3 = (_b3 = rules.zeroAt) == null ? void 0 : _b3[ctx.level]) != null ? _c3 : []) delete base[role];
+    for (const [role, m] of Object.entries((_e3 = (_d3 = rules.multAt) == null ? void 0 : _d3[ctx.level]) != null ? _e3 : {})) if (base[role] !== void 0) base[role] *= m;
+    for (const [role, fns] of Object.entries((_f = rules.zeroInFn) != null ? _f : {})) if ((_g = fns[ctx.fn]) == null ? void 0 : _g.includes(ctx.level)) delete base[role];
+  }
+  for (const e of airLand ? [] : VESSEL_DATA.roleExtras) {
+    if (e.module === ctx.module && e.function === ctx.fn && tagOk(ctx, e.k)) base[e.role] = ((_h = base[e.role]) != null ? _h : 0) + e.w;
+  }
+  if (ctx.module === "spacecraft" && (ctx.fn === "station" || ctx.fn === "colony")) base[ctx.fn] = 100;
+  const out = [];
+  for (const [role, w] of Object.entries(base)) {
+    let n = w * ((_j = (_i = c.roles) == null ? void 0 : _i[role]) != null ? _j : 1);
+    if (airLand) n *= (_m = (_l = (_k = AIR_LAND.cultureRoles[ctx.module]) == null ? void 0 : _k[c.key]) == null ? void 0 : _l[role]) != null ? _m : 1;
+    for (const [k, mults] of Object.entries((_n = c.techRoles) != null ? _n : {})) if (tagOk(ctx, k)) n *= (_o = mults[role]) != null ? _o : 1;
+    if (role === "holy" && holyType(ctx) === "none") n = 0;
+    if (c.sensitive && ["affection", "menace", "leisure", ...airLand ? AIR_LAND.sensitiveRoles[ctx.module] : []].includes(role)) n = 0;
+    if (role === "poetic" && !ctx.poeticAllowed) n = 0;
+    if (n > 0) out.push([role, n]);
+  }
+  return out;
+}
+function roleShapes(ctx, role, only) {
+  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l;
+  const c = ctx.culture;
+  const holy = holyType(ctx);
+  const shapes = [...VESSEL_DATA.shapes.filter((s) => s.role === role), ...((_a5 = c.shapes) != null ? _a5 : []).filter((s) => s.role === role)];
+  const airLand = isAirLand(ctx.module);
+  if (airLand) {
+    for (const sh of AIR_LAND.shapes) if (sh.role === role && ((_b3 = sh.mod) == null ? void 0 : _b3.includes(ctx.module))) shapes.push(sh);
+  }
+  if (role === "station" || role === "colony") for (const sh of VESSEL_DATA.space[role]) shapes.push({ role, p: sh.p, w: sh.w });
+  if (role === "holy" && holy === "gods") {
+    for (const g of (_d3 = (_c3 = c.gods) == null ? void 0 : _c3.shapes) != null ? _d3 : []) if (!(isAirLand(ctx.module) && AIR_LAND.shipOnlyShapes.includes(g.p))) shapes.push({ role, p: g.p, w: g.w });
+  }
+  const out = [];
+  for (const shape of shapes) {
+    if (only && shape.p !== only) continue;
+    if (shape.cult && !shape.cult.includes(c.key)) continue;
+    if (!(shape.mod ? tagOk(ctx, shape.k) : shapeTagOk(ctx, shape.k))) continue;
+    if (shape.s && !shape.s.includes(ctx.setting)) continue;
+    if (shape.fn && !shape.fn.includes(ctx.fn)) continue;
+    let w = shape.w * ((_f = (_e3 = shape.cx) == null ? void 0 : _e3[c.key]) != null ? _f : 1) * ((_h = (_g = shape.atx) == null ? void 0 : _g[ctx.level]) != null ? _h : 1);
+    if (shape.holy) {
+      const saints = holy === "christian" && !c.noSaints;
+      const ok = shape.holy === "saint" ? saints : shape.holy === "marian" ? saints && !!c.marian : shape.holy === "blessing" ? holy !== "none" : holy === "christian" || holy === "blessing";
+      if (!ok) continue;
+      if (shape.holy === "saint") w *= (_i = c.holyX) != null ? _i : 1;
+      if (shape.holy === "marian") w *= (_j = c.marian) != null ? _j : 1;
+    }
+    if (shape.p.includes("{poetic}") && (!ctx.poeticAllowed || !((_l = (_k = c.lists) == null ? void 0 : _k.poetic) == null ? void 0 : _l.length))) continue;
+    if (ctx.mode === "invented" && shape.p.includes("{womanName}") && !c.womanNames) continue;
+    if (ctx.mode === "invented" && shape.p.includes("{surname}") && !c.surnames) continue;
+    if (ctx.mode === "invented" && shape.p.includes("{manName}") && !AIR_LAND.manNameCultures.includes(c.key)) continue;
+    if (c.sensitive && SENSITIVE_TOKENS.test(shape.p)) continue;
+    w *= toneFactor(vesselShapeTones(shape.p, shape.t), ctx.tone);
+    if (w > 0) out.push([shape, w]);
+  }
+  return out;
+}
+var spacePattern = (ctx, p) => ctx.module === "spacecraft" ? p.replace(/^City of /, "Pride of ") : p;
+function renderPlan(ctx, plan, hooks2 = {}) {
+  ctx.drawn = /* @__PURE__ */ new Set();
+  ctx.words = [];
+  const record = [];
+  const raw = renderPattern2(ctx, plan.p, { ...hooks2, record });
+  if (!raw) return void 0;
+  const name = vesselCapitals(withDeityPlaceholders(raw).replace(/\s+/g, " ").trim());
+  const tones = /* @__PURE__ */ new Set([...plan.tones, ...ctx.drawn]);
+  return { name, plan, record, tones: GROUP_TONES.filter((t) => tones.has(t)) };
+}
+function rolePlans(ctx, role, only) {
+  return roleShapes(ctx, role, only).map(([s, w]) => [{ route: "role", role, p: spacePattern(ctx, s.p), tones: vesselShapeTones(s.p, s.t), ...s.theme ? { theme: s.theme } : {} }, w]);
+}
+function hybridPlans(ctx) {
+  const poetic = ctx.poeticAllowed && pool2(ctx, "poetic").some(([e]) => POETIC_SHORT(e.w));
+  return VESSEL_DATA.hybrids.shapes.filter((s) => poetic || !s.p.includes("{poetic}")).map((s) => [{ route: "hybrid", role: "hybrid", p: s.p.replace("{poetic}", "{poeticShort}"), tones: [] }, s.w]);
+}
+function stylePlans(ctx) {
+  const st = ctx.style;
+  const tones = st.tone ? [st.tone] : [];
+  return st.shapes.filter((p) => !(ctx.culture.sensitive && SENSITIVE_TOKENS.test(p))).map((p) => [{ route: "style", role: st.key, p, tones: vesselShapeTones(p, tones) }, toneFactor(vesselShapeTones(p, tones), ctx.tone)]).filter(([, w]) => w > 0);
+}
+function availableStyles(module2, setting, technology) {
+  if (isAirLand(module2)) {
+    return VESSEL_DATA.styles.filter((st) => {
+      var _a5;
+      const rule = (_a5 = AIR_LAND.styles[st.key]) == null ? void 0 : _a5[module2];
+      if (!rule || !st.settings.includes(setting)) return false;
+      if (rule === true) return true;
+      return (Array.isArray(rule) ? rule : [rule]).includes(technology != null ? technology : "");
+    }).map((st) => {
+      var _a5;
+      return ((_a5 = AIR_LAND.styleLabels[module2]) == null ? void 0 : _a5[st.key]) ? { ...st, label: AIR_LAND.styleLabels[module2][st.key] } : st;
+    });
+  }
+  return VESSEL_DATA.styles.filter((st) => st.modules.includes(module2) && st.settings.includes(setting));
+}
+var prefixSetting = (setting) => setting === "MR" || setting === "MF" || setting === "SF";
+function realPrefix(ctx) {
+  const rows = VESSEL_DATA.prefixes.real.filter(
+    (r) => (!r.cultures || r.cultures.includes(ctx.culture.key)) && r.fn.includes(ctx.fn) && inRange(r.k, ctx.level)
+  );
+  return pickWeighted5(rows.map((r) => {
+    var _a5;
+    return [r.p, (_a5 = r.x) != null ? _a5 : 1];
+  }), ctx.rng);
+}
+var PLACEHOLDER_TOKENS2 = /* @__PURE__ */ new Set(["town", "surname", "womanName", "person", "president", "scientist", "holy", "manName", "realm"]);
+var NEVER_ANCHORS2 = /* @__PURE__ */ new Set(["person", "president", "scientist", "holy"]);
+var kindOf2 = (name) => NEVER_ANCHORS2.has(name) ? "never" : seriesTokenKind(name);
+function* counterValues2(ctx, name, first) {
+  if (name === "ordinal") {
+    for (let n = parseInt(first, 10); n <= 99; n += counterGap(ctx.rng)) yield ordinalText(n);
+    return;
+  }
+  const words = [...new Set(groupListWords(name, ctx.setting).map(([w]) => w))];
+  for (let i = words.indexOf(first); i >= 0 && i < words.length; i += counterGap(ctx.rng)) yield words[i];
+}
+var lightOrGrim2 = (tone) => tone === "light" || tone === "grim";
+function fillCode(pattern, rng) {
+  return pattern.replace(/\{(A+)\}/g, (_m, a) => Array.from({ length: a.length }, () => LETTERS[Math.floor(rng() * 26)]).join("")).replace(/\{(d+)\}/g, (_m, d) => Array.from({ length: d.length }, (_x, i) => String(i === 0 ? 1 + Math.floor(rng() * 9) : Math.floor(rng() * 10))).join("")).replace("{n999}", () => String(1 + Math.floor(rng() * 999))).replace("{L}", () => LETTERS[Math.floor(rng() * 26)]);
+}
+function makeCode(ctx, rng, classLetter) {
+  const level = ctx.level;
+  const clean = (code2) => !breaksVesselWords(code2, ctx.module) && !/SS|KKK/.test(code2);
+  const draw2 = (patterns, letter) => {
+    for (let i = 0; i < 12; i++) {
+      const code2 = fillCode(pickOne2(patterns, rng), rng);
+      const lettered = letter ? code2.replace(/^[A-Z]/, letter) : code2;
+      if (clean(lettered)) return lettered;
+    }
+    return void 0;
+  };
+  if (ctx.module === "aircraft") {
+    const codes = AIR_LAND.codes.aircraft;
+    if (level === "A1" || level === "AF") return void 0;
+    if (ctx.setting === "SF") {
+      const code3 = draw2(codes.sf);
+      return code3 ? { after: code3 } : void 0;
+    }
+    const military = codes.military.includes(ctx.fn);
+    const row2 = codes.rows.find((r) => r.cultures.includes(ctx.culture.key) && inRange(r.k, level) && (r.kind === "any" ? level === "A2" : r.kind === (military ? "military" : "civil")));
+    const code2 = row2 ? draw2(row2.patterns) : void 0;
+    return code2 ? { after: code2 } : void 0;
+  }
+  const row = AIR_LAND.codes.landVehicles.rows.find(
+    (r) => {
+      var _a5;
+      return r.fn.includes(ctx.fn) && inRange(r.k, level) && (!r.cultures || r.cultures.includes(ctx.culture.key)) && !((_a5 = r.notCultures) == null ? void 0 : _a5.includes(ctx.culture.key));
+    }
+  );
+  if (!row) return void 0;
+  const code = draw2(row.patterns, row.patterns[0].startsWith("{L}") ? classLetter : void 0);
+  return code ? { before: code } : void 0;
+}
+function typeFamilyPool(ctx) {
+  var _a5, _b3, _c3, _d3, _e3;
+  const T = AIR_LAND.types;
+  const rules = (_a5 = T.levelRules[ctx.module]) != null ? _a5 : {};
+  let w = { ...(_b3 = T.weights[ctx.module][ctx.fn]) != null ? _b3 : {} };
+  const replace = rules[`${ctx.level}:${ctx.fn}`];
+  if (replace == null ? void 0 : replace.replace) w = { ...replace.replace };
+  else {
+    const rule = rules[ctx.level];
+    if (rule == null ? void 0 : rule.keep) w = Object.fromEntries(Object.entries(w).filter(([f]) => rule.keep.includes(f)));
+    for (const [f, n] of Object.entries((_c3 = rule == null ? void 0 : rule.add) != null ? _c3 : {})) w[f] = ((_d3 = w[f]) != null ? _d3 : 0) + n;
+  }
+  const lean = (_e3 = T.leanings[ctx.culture.key]) != null ? _e3 : {};
+  return Object.entries(w).map(([f, n]) => {
+    var _a6;
+    return [f, n * ((_a6 = lean[f]) != null ? _a6 : 1)];
+  }).filter(([, n]) => n > 0);
+}
+function typeShapes(ctx, family) {
+  var _a5, _b3;
+  const T = AIR_LAND.types;
+  if (family === "designation") {
+    const lean = T.designationLean[ctx.culture.key];
+    const all = Object.entries((_a5 = T.designation[ctx.module]) != null ? _a5 : {}).map(([key2, v]) => typeof v === "string" ? { key: key2, p: v, w: 1, t: ["plain"] } : { key: key2, p: v.p, w: 1, t: ["plain"], k: v.k, fn: v.fn }).filter((sh) => tagOk(ctx, sh.k) && (!sh.fn || sh.fn.includes(ctx.fn)));
+    const leaned = lean ? all.filter((sh) => lean.includes(sh.key)) : [];
+    return leaned.length > 0 ? leaned : all;
+  }
+  return ((_b3 = T.families[family]) != null ? _b3 : []).map((v) => {
+    var _a6, _b4;
+    return typeof v === "string" ? { p: v, w: 1, t: [] } : { p: v.p, w: (_a6 = v.w) != null ? _a6 : 1, t: (_b4 = v.t) != null ? _b4 : [] };
+  });
+}
+function generateVesselNames(options) {
+  var _a5, _b3, _c3, _d3, _e3;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const module2 = options.module;
+  const notices = [];
+  const culture = (_a5 = findVesselCulture(options.culture)) != null ? _a5 : VESSEL_CULTURES[0];
+  const genre = (_b3 = options.genre) != null ? _b3 : module2 === "spacecraft" ? "scifi" : isAirLand(module2) ? "modern" : "fantasy";
+  const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
+  let tone = (_c3 = options.tone) != null ? _c3 : "any";
+  const naming = isAirLand(module2) && options.naming === "types" ? "types" : "craft";
+  const levels = techChoices(module2, setting);
+  let technology = (_d3 = options.technology) != null ? _d3 : "any";
+  if (technology !== "any" && !levels.includes(technology)) {
+    notices.push(`\u201C${technology}\u201D isn't available here; using any technology.`);
+    technology = "any";
+  }
+  const functions = availableFunctions(module2, culture.key, technology, setting, naming);
+  const chosenFn = options.function ? functions.find((f) => f.key === options.function) : void 0;
+  if (options.function && !chosenFn) notices.push(`\u201C${options.function}\u201D isn't available here; using any function.`);
+  let style = options.style && options.style !== "none" ? availableStyles(module2, setting, technology).find((st) => st.key === options.style) : void 0;
+  if (options.style && options.style !== "none" && !style) notices.push(`Style \u201C${options.style}\u201D isn't available here.`);
+  if (style && naming === "types") {
+    notices.push("Styles don't apply to types and models.");
+    style = void 0;
+  }
+  const guards = (_e3 = options.safeguards) != null ? _e3 : isAirLand(module2) ? { block: AIR_LAND.safeguards.block, flag: AIR_LAND.safeguards.flag, flagListBlocks: AIR_LAND.safeguards.flagListBlocks } : { block: VESSEL_DATA.safeguards.block, flag: VESSEL_DATA.safeguards.flag, flagListBlocks: VESSEL_DATA.safeguards.flagListBlocks };
+  const guard = guardFor(module2, guards);
+  const pools = /* @__PURE__ */ new Map();
+  const count = Math.max(0, Math.floor(options.count));
+  const prefixes = !!options.prefixes && prefixSetting(setting);
+  const sfPrefixes = /* @__PURE__ */ new Map();
+  const sfPrefix = (fn) => {
+    if (!sfPrefixes.has(fn)) {
+      const list = VESSEL_DATA.prefixes.sf[fn];
+      sfPrefixes.set(fn, list ? pickOne2(list, rng) : void 0);
+    }
+    return sfPrefixes.get(fn);
+  };
+  const styleShare = !style ? 0 : style.key === "oceanic" && culture.sensitive ? 1 : culture.key === "general" ? VESSEL_DATA.styleShare.general : VESSEL_DATA.styleShare.default;
+  const newCtx3 = (level, fn) => {
+    var _a6;
+    return {
+      rng,
+      module: module2,
+      setting,
+      culture,
+      mode: (_a6 = options.people) != null ? _a6 : "placeholders",
+      tone,
+      level,
+      customs: customsLevel(culture, level, module2),
+      shipCustoms: `T${range(culture.span)[1]}`,
+      naming,
+      fn,
+      style,
+      boost: !!style,
+      // §14.4: sensitive cultures' poetic names never go to a style or a light or grim name.
+      poeticAllowed: !(culture.sensitive && (lightOrGrim2(tone) || !!style)),
+      context: options.context,
+      drawn: /* @__PURE__ */ new Set(),
+      words: [],
+      pools
+    };
+  };
+  const choosePlan2 = (ctx) => {
+    if (style && !options.shape && rng() < styleShare) {
+      ctx.boost = false;
+      return pickWeighted5(stylePlans(ctx), rng);
+    }
+    const role = pickWeighted5(roleWeights(ctx), rng);
+    if (!role) return void 0;
+    const share2 = inSpan(culture, ctx.level, module2) ? VESSEL_DATA.hybrids.share.inSpan : VESSEL_DATA.hybrids.share.outOfSpan;
+    if (!options.shape && role !== "designation" && role !== "leisure" && rng() < share2) return pickWeighted5(hybridPlans(ctx), rng);
+    return pickWeighted5(rolePlans(ctx, role, options.shape), rng);
+  };
+  let classLetter;
+  const result = (ctx, built, series) => {
+    if (!built || !acceptable3(ctx, guard, built.name)) return void 0;
+    let prefix;
+    if (prefixes && !isAirLand(module2) && !built.name.startsWith("The ")) prefix = setting === "SF" ? sfPrefix(ctx.fn) : module2 === "ships" ? realPrefix(ctx) : void 0;
+    if (prefix && blocked(ctx, guard, built.name, prefix)) return void 0;
+    const code = isAirLand(module2) && !!options.prefixes && naming === "craft" && prefixSetting(setting) ? makeCode(ctx, rng, classLetter) : void 0;
+    return {
+      text: code ? code.before ? `${code.before}${built.name}` : `${built.name} (${code.after})` : prefix ? `${prefix} ${built.name}` : built.name,
+      name: built.name,
+      ...prefix ? { prefix } : {},
+      ...code ? { code: code.before ? code.before.trim() : code.after } : {},
+      route: built.plan.route,
+      role: built.plan.role,
+      shape: built.plan.p,
+      function: ctx.fn,
+      level: ctx.level,
+      customs: ctx.customs,
+      tones: built.tones,
+      words: ctx.words,
+      ...series ? { series } : {}
+    };
+  };
+  const levelPool = technology === "any" ? anyLevels(module2, culture, setting).filter((l) => !chosenFn || functionAvailableAt(chosenFn, culture, l)) : [technology];
+  const fnChoices = (level) => functions.filter((f) => functionAvailableAt(f, culture, level));
+  const oneName2 = () => {
+    if (levelPool.length === 0) return void 0;
+    for (let round = 0; round < 2; round++) {
+      const level = pickOne2(levelPool, rng);
+      const fn = chosenFn != null ? chosenFn : pickWeighted5(fnChoices(level).map((f) => [f, f.w]), rng);
+      if (!fn) continue;
+      for (let i = 0; i < 20; i++) {
+        const ctx = newCtx3(level, fn.key);
+        const plan = choosePlan2(ctx);
+        if (!plan) break;
+        const name = result(ctx, renderPlan(ctx, plan));
+        if (name) return name;
+      }
+    }
+    return void 0;
+  };
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  const add2 = (name) => {
+    if (!name) return false;
+    const key2 = name.text.toLowerCase();
+    if (seen.has(key2)) return false;
+    seen.add(key2);
+    names.push(name);
+    return true;
+  };
+  if (naming === "types") {
+    if (options.series && levelPool.length > 0) typeFamilyBatch();
+    else for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) add2(oneType());
+    if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+    return { names, seed, notices };
+  }
+  if (options.series && chosenFn && levelPool.length > 0) {
+    const seriesTone = drawRuleClass() ? tone : drawClass();
+    if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+    return { names, seed, notices, seriesTone };
+  }
+  if (options.series && !chosenFn) notices.push("A class needs a function.");
+  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) add2(oneName2());
+  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+  return { names, seed, notices };
+  function renderType(ctx, family, shape) {
+    const built = renderPlan(ctx, { route: "type", role: family, p: shape.p, tones: shape.t });
+    if (!built) return void 0;
+    const T = AIR_LAND.types;
+    if (family === "classTheme") built.name = built.name.replace(/^The /, "the ").replace(/ Class$/, " class");
+    else if (family === "future") built.name = built.name.replace(/-Class$/, "-class");
+    else if (!T.mark.never.includes(family) && rng() < T.mark.share) built.name += ` Mark ${pickOne2(T.mark.numerals, rng)}`;
+    return built;
+  }
+  function oneType() {
+    if (levelPool.length === 0) return void 0;
+    for (let round = 0; round < 2; round++) {
+      const level = pickOne2(levelPool, rng);
+      const fn = chosenFn != null ? chosenFn : pickWeighted5(fnChoices(level).map((f) => [f, f.w]), rng);
+      if (!fn) continue;
+      for (let i = 0; i < 20; i++) {
+        const ctx = newCtx3(level, fn.key);
+        const family = pickWeighted5(typeFamilyPool(ctx), rng);
+        if (!family) break;
+        const shape = pickWeighted5(typeShapes(ctx, family).map((sh) => [sh, sh.w]), rng);
+        if (!shape) continue;
+        const R = AIR_LAND.types.rankInitial;
+        if (family === "rank" && culture.key === R.culture && fn.key === R.fn && rng() < R.share) ctx.rankInitial = R.letter;
+        const name = result(ctx, renderType(ctx, family, shape));
+        if (name) return name;
+      }
+    }
+    return void 0;
+  }
+  function typeFamilyBatch() {
+    var _a6, _b4, _c4;
+    const level = pickOne2(levelPool, rng);
+    const fn = chosenFn != null ? chosenFn : pickWeighted5(fnChoices(level).map((f) => [f, f.w]), rng);
+    if (!fn) return;
+    const info = { anchor: "family", value: null, counter: null };
+    const used = /* @__PURE__ */ new Set();
+    let family;
+    let first;
+    let letter;
+    for (let i = 0; i < 40 && !first; i++) {
+      const ctx = newCtx3(level, fn.key);
+      family = pickWeighted5(typeFamilyPool(ctx), rng);
+      if (!family) return;
+      if (family === "designation") break;
+      const shape = pickWeighted5(typeShapes(ctx, family).map((sh) => [sh, sh.w]), rng);
+      if (!shape) continue;
+      const R = AIR_LAND.types.rankInitial;
+      if (family === "rank") {
+        const initials = /* @__PURE__ */ new Map();
+        for (const [e] of pool2(ctx, "rank")) initials.set(e.w.charAt(0), ((_a6 = initials.get(e.w.charAt(0))) != null ? _a6 : 0) + 1);
+        const enough = [...initials].filter(([, n]) => n >= count);
+        const choices = enough.length > 0 ? enough : [...initials].sort((a, b) => b[1] - a[1]).slice(0, 1);
+        letter = culture.key === R.culture && fn.key === R.fn && rng() < R.share && initials.has(R.letter) ? R.letter : pickWeighted5(choices, rng);
+        ctx.rankInitial = letter;
+      }
+      const built = renderType(ctx, family, shape);
+      first = result(ctx, built, info);
+      if (first && built) {
+        for (const w of drawnWords(built.record)) used.add(w);
+        add2(first);
+      }
+    }
+    if (!family) return;
+    if (family === "designation") {
+      const ctx = newCtx3(level, fn.key);
+      const shapes = typeShapes(ctx, "designation");
+      for (let tries = 0; tries < 10 && names.length < count; tries++) {
+        const shape = pickOne2(shapes, rng);
+        const range2 = /\{romanNumeral\}/.test(shape.p) ? [1, 8] : /\{n23\}/.test(shape.p) ? [10, 999] : /\{n100\}/.test(shape.p) ? [1, 100] : [1, 99];
+        if (range2[1] - range2[0] + 1 < count) continue;
+        const letters = shape.p.includes("{AA}") ? baseTokenLetters(2) : shape.p.includes("{A}") ? baseTokenLetters(1) : "";
+        const pool3 = Array.from({ length: range2[1] - range2[0] + 1 }, (_x, i) => range2[0] + i);
+        for (let i = pool3.length - 1; i > 0; i--) {
+          const j = Math.floor(rng() * (i + 1));
+          [pool3[i], pool3[j]] = [pool3[j], pool3[i]];
+        }
+        for (const n of pool3.slice(0, count).sort((a, b) => a - b)) {
+          const text = shape.p.replace(/\{AA?\}/, letters).replace(/\{(n|n23|n100)\}/, String(n)).replace("{romanNumeral}", (_c4 = (_b4 = AIR_LAND.lists.romanNumeral[n - 1]) == null ? void 0 : _b4.w) != null ? _c4 : "");
+          const built = { name: vesselCapitals(text), plan: { route: "type", role: "designation", p: shape.p, tones: shape.t }, tones: [], record: [] };
+          add2(result(ctx, built, info));
+        }
+        if (names.length > 0) break;
+      }
+      return;
+    }
+    for (let idle = 0; idle < 60 && names.length < count; ) {
+      const ctx = newCtx3(level, fn.key);
+      if (letter) ctx.rankInitial = letter;
+      const shape = pickWeighted5(typeShapes(ctx, family).map((sh) => [sh, sh.w]), rng);
+      const built = shape ? renderType(ctx, family, shape) : void 0;
+      const fresh = !!built && drawnWords(built.record).every((w) => !used.has(w));
+      const name = fresh ? result(ctx, built, info) : void 0;
+      if (name && add2(name)) {
+        for (const w of drawnWords(built.record)) used.add(w);
+        idle = 0;
+      } else idle++;
+    }
+  }
+  function baseTokenLetters(n) {
+    for (let i = 0; i < 20; i++) {
+      const text = Array.from({ length: n }, () => LETTERS[Math.floor(rng() * 26)]).join("");
+      if (text !== "SS") return text;
+    }
+    return "KA";
+  }
+  function drawRuleClass() {
+    var _a6;
+    if (!isAirLand(module2) || !chosenFn) return false;
+    const fn = chosenFn.key;
+    const level = pickOne2(levelPool, rng);
+    const forced = module2 === "landVehicles" ? { locomotive: "classSet", train: "service", working: "fair" }[fn] : void 0;
+    let kind = forced ? forced === "classSet" ? "theme" : "shape" : void 0;
+    if (!kind && module2 === "aircraft" && fn === "airliner" && culture.key === "american" && level === "A4" && rng() < 0.5) kind = "clipper";
+    if (!kind && (module2 === "aircraft" && (fn === "airliner" || fn === "bomber") || module2 === "landVehicles" && fn === "war" && (level === "L3" || level === "L4")) && rng() < 0.4) kind = "letter";
+    if (!kind) return false;
+    const placeholders = ((_a6 = options.people) != null ? _a6 : "placeholders") === "placeholders";
+    const info = { anchor: kind, value: null, counter: null };
+    const used = /* @__PURE__ */ new Set();
+    const varies = (record) => record.some((d) => !(placeholders && PLACEHOLDER_TOKENS2.has(d.name)));
+    const accept = (built, name) => {
+      if (!built || !name || !varies(built.record)) return void 0;
+      if (built.record.some((d) => used.has(d.text.toLowerCase()))) return void 0;
+      return name;
+    };
+    const take = (built, name) => {
+      for (const d of built.record) used.add(d.text.toLowerCase());
+      add2({ ...name, series: info });
+    };
+    const initial = (name) => name.replace(/^The /, "").charAt(0).toUpperCase();
+    if (kind === "letter") {
+      let letter;
+      for (let attempt2 = 0; attempt2 < count * 80 && names.length < count; attempt2++) {
+        const ctx = newCtx3(level, fn);
+        const plan = choosePlan2(ctx);
+        if (!plan) continue;
+        if (letter && module2 === "landVehicles") classLetter = letter;
+        const built = renderPlan(ctx, plan);
+        const name = accept(built, result(ctx, built));
+        if (!name || !built) continue;
+        if (!letter) {
+          letter = initial(name.name);
+          classLetter = letter;
+          if (name.code && module2 === "landVehicles") {
+            name.code = letter + name.code.slice(1);
+            name.text = letter + name.text.slice(1);
+          }
+        } else if (initial(name.name) !== letter) continue;
+        take(built, name);
+      }
+      classLetter = void 0;
+      return true;
+    }
+    const ctx0 = newCtx3(level, fn);
+    const plans4 = kind === "clipper" ? rolePlans(ctx0, "place").filter(([p]) => p.p.startsWith("Clipper ")) : rolePlans(ctx0, forced);
+    if (plans4.length === 0) return false;
+    let allowed;
+    for (let i = 0; i < 40 && !allowed; i++) {
+      const plan = pickWeighted5(plans4, rng);
+      const keep = kind === "theme" ? plans4.filter(([p]) => p.theme === plan.theme) : kind === "shape" ? plans4.filter(([p]) => p.p === plan.p) : plans4;
+      const ctx = newCtx3(level, fn);
+      const probe = renderPlan(ctx, plan);
+      if (probe && varies(probe.record) && result(ctx, probe)) allowed = keep;
+    }
+    if (!allowed) return false;
+    for (let idle = 0; idle < 40 && names.length < count; ) {
+      const ctx = newCtx3(level, fn);
+      const built = renderPlan(ctx, pickWeighted5(allowed, rng));
+      const name = accept(built, result(ctx, built));
+      if (name && built && !seen.has(name.text.toLowerCase())) {
+        take(built, name);
+        idle = 0;
+      } else idle++;
+    }
+    return true;
+  }
+  function drawClass() {
+    var _a6, _b4, _c4, _d4;
+    const level = pickOne2(levelPool, rng);
+    const fn = chosenFn.key;
+    const placeholders = ((_a6 = options.people) != null ? _a6 : "placeholders") === "placeholders";
+    const isPlaceholder = (d) => placeholders && PLACEHOLDER_TOKENS2.has(d.name);
+    let first;
+    for (let i = 0; i < 40 && !first; i++) {
+      const ctx2 = newCtx3(level, fn);
+      const plan2 = choosePlan2(ctx2);
+      if (!plan2) continue;
+      const built = renderPlan(ctx2, plan2);
+      const name = result(ctx2, built);
+      if (!built || !name) continue;
+      if (!built.record.some((d) => kindOf2(d.name) === "counter") && !built.record.some((d) => !isPlaceholder(d))) continue;
+      first = { ctx: ctx2, built, name };
+    }
+    if (!first) return tone;
+    if (tone === "any") tone = (_b4 = first.built.plan.tones[0]) != null ? _b4 : "any";
+    const plan = first.built.plan;
+    const rec = first.built.record;
+    const draw2 = (hooks2, p = plan) => {
+      const ctx2 = newCtx3(level, fn);
+      if (p.route === "style") ctx2.boost = false;
+      return result(ctx2, renderPlan(ctx2, p, hooks2), info);
+    };
+    const counterAt = rec.findIndex((d) => kindOf2(d.name) === "counter");
+    let info;
+    if (counterAt >= 0) {
+      info = { anchor: null, value: null, counter: rec[counterAt].name };
+      add2({ ...first.name, series: info });
+      const locked = new Map(rec.map((d, i) => [i, d]));
+      let firstValue = true;
+      for (const value of counterValues2(first.ctx, rec[counterAt].name, rec[counterAt].text)) {
+        if (names.length >= count) break;
+        if (firstValue) {
+          firstValue = false;
+          continue;
+        }
+        locked.set(counterAt, { name: rec[counterAt].name, text: value });
+        add2(draw2({ byIndex: new Map(locked) }));
+      }
+      return tone;
+    }
+    let anchorAt = rec.findIndex((d) => kindOf2(d.name) === "owner" && !isPlaceholder(d));
+    const listAt = rec.map((d, i) => kindOf2(d.name) === "list" && !isPlaceholder(d) ? i : -1).filter((i) => i >= 0);
+    if (anchorAt < 0 && listAt.length >= 2) anchorAt = listAt[0];
+    const anchor = anchorAt >= 0 ? rec[anchorAt] : void 0;
+    info = { anchor: (_c4 = anchor == null ? void 0 : anchor.name) != null ? _c4 : null, value: (_d4 = anchor == null ? void 0 : anchor.text) != null ? _d4 : null, counter: null };
+    const hold = /* @__PURE__ */ new Map();
+    if (anchor) hold.set(anchorAt, anchor);
+    else if (listAt.length === 1) rec.forEach((d, i) => i !== listAt[0] && hold.set(i, d));
+    add2({ ...first.name, series: info });
+    const fill = (next) => {
+      for (let idle = 0; idle < 20 && names.length < count; ) idle = add2(next()) ? 0 : idle + 1;
+    };
+    fill(() => draw2({ byIndex: hold }));
+    if (!anchor || names.length >= count) return tone;
+    const ctx = newCtx3(level, fn);
+    const others = (plan.route === "style" ? stylePlans(ctx) : plan.route === "hybrid" ? hybridPlans(ctx) : rolePlans(ctx, plan.role)).filter(
+      ([p]) => p.p !== plan.p && [...p.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name)
+    );
+    if (others.length === 0) return tone;
+    fill(() => draw2({ byName: anchor }, pickWeighted5(others, rng)));
+    return tone;
+  }
+}
+
+// src/realms/engine.ts
+var REALM_DATA = realms_default;
+var REALM_ERAS = REALM_DATA.eras;
+var REALM_CHARACTERS = REALM_DATA.characters;
+var REALM_NAMED_FOR = REALM_DATA.namedFor;
+var REALM_CULTURES = BYNAME_CULTURES;
+var DYNASTY_CULTURES = REALM_DATA.dynastyCultures;
+var eraCode = (era) => {
+  var _a5, _b3;
+  return (_b3 = (_a5 = REALM_ERAS.find((e) => e.key === era)) == null ? void 0 : _a5.code) != null ? _b3 : "MD";
+};
+function namedForOffered(key2, era) {
+  const n = REALM_NAMED_FOR.find((x) => x.key === key2);
+  return !!n && (!n.eras || n.eras.includes(eraCode(era)));
+}
+function homelandBiome(culture) {
+  var _a5, _b3, _c3;
+  return (_c3 = (_b3 = (_a5 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a5.homelandBiome) != null ? _b3 : REALM_DATA.homeland[culture]) != null ? _c3 : "temperate";
+}
+var FORM_CACHE = /* @__PURE__ */ new Map();
+function cultureForms(culture, era) {
+  var _a5, _b3, _c3, _d3, _e3, _f;
+  const key2 = `${culture}|${era}`;
+  const cached = FORM_CACHE.get(key2);
+  if (cached) return cached;
+  const c = REALM_DATA.cultures[culture];
+  const out = [];
+  for (const f of REALM_DATA.forms) {
+    let w = f.era[era] * ((_a5 = c == null ? void 0 : c.mult[f.w]) != null ? _a5 : 1) * ((_d3 = (_c3 = (_b3 = c == null ? void 0 : c.eraMult) == null ? void 0 : _b3[era]) == null ? void 0 : _c3[f.w]) != null ? _d3 : 1);
+    out.push([{ w: f.w, pl: f.pl, g: f.g, t: (_e3 = f.t) != null ? _e3 : [], compound: !!f.compound, peoplesOnly: !!f.peoplesOnly, culture: false }, w]);
+  }
+  for (const f of (_f = c == null ? void 0 : c.forms) != null ? _f : []) {
+    out.push([{ w: f.w, pl: f.pl, g: f.g, t: [], compound: false, peoplesOnly: false, culture: true }, 15 * f.x * (f.eras.includes(era) ? 1 : 0.3)]);
+  }
+  const live4 = out.filter(([, w]) => w > 0);
+  FORM_CACHE.set(key2, live4);
+  return live4;
+}
+function characterMult(character, form) {
+  var _a5, _b3;
+  const m = REALM_DATA.characterMult[character];
+  if (!m) return 1;
+  return (_b3 = (_a5 = m.forms[form.w]) != null ? _a5 : m.groups[form.g]) != null ? _b3 : 1;
+}
+var ALL_FORMS = [.../* @__PURE__ */ new Set([...REALM_DATA.forms.map((f) => f.w), ...Object.values(REALM_DATA.cultures).flatMap((c) => {
+  var _a5;
+  return ((_a5 = c.forms) != null ? _a5 : []).map((f) => f.w);
+})])];
+var COMPOUND_FORMS = REALM_DATA.forms.filter((f) => f.compound).map((f) => f.w);
+var formGroup = (w) => {
+  var _a5, _b3, _c3;
+  return (_c3 = (_a5 = REALM_DATA.forms.find((f) => f.w === w)) == null ? void 0 : _a5.g) != null ? _c3 : (_b3 = Object.values(REALM_DATA.cultures).flatMap((c) => {
+    var _a6;
+    return (_a6 = c.forms) != null ? _a6 : [];
+  }).find((f) => f.w === w)) == null ? void 0 : _b3.g;
+};
+function compatibleModifiers(form, era) {
+  const g = formGroup(form);
+  const out = [];
+  for (const m of REALM_DATA.modifiers) {
+    if (!m.with.includes(form) || !m.eras.includes(era)) continue;
+    if (form.split(/[\s-]/).includes(m.w)) continue;
+    if (m.w === "Free" && (g === "crown" || g === "imperial")) continue;
+    if ((m.w === "Royal" || m.w === "Imperial") && (g === "republic" || g === "federal")) continue;
+    out.push({ w: m.w, t: m.t });
+  }
+  return out;
+}
+var ideologyFor = (form, era) => REALM_DATA.ideology.with.includes(form) && REALM_DATA.ideology.eras.includes(era);
+function compatibleCollQuals(noun) {
+  const out = [];
+  for (const q of REALM_DATA.collQual) {
+    if (!q.with.includes(noun)) continue;
+    if (q.w) out.push(q.w);
+    else out.push(...REALM_DATA.lists[q.list].map((e) => e.w));
+  }
+  return out;
+}
+var pickOne3 = (items, rng) => items[Math.floor(rng() * items.length)];
+var LIST_CACHE = /* @__PURE__ */ new Map();
+function identityLists(biome, terrain) {
+  let byTerrain = LIST_CACHE.get(biome);
+  if (!byTerrain) LIST_CACHE.set(biome, byTerrain = /* @__PURE__ */ new Map());
+  const cached = byTerrain.get(terrain);
+  if (cached) return cached;
+  const lists = /* @__PURE__ */ new Map();
+  for (const [name, entries] of Object.entries(REALM_DATA.lists)) lists.set(name, entries.map((e) => {
+    var _a5;
+    return [e, (_a5 = e.x) != null ? _a5 : 1];
+  }));
+  if (biome.space && biome.scale) {
+    const chosenTerrains = terrain && terrain !== "any" ? [terrain] : availableTerrains(biome).map((t) => t.id);
+    const phrases = [...new Set(chosenTerrains.flatMap((t) => {
+      var _a5;
+      return ((_a5 = biome.land[t]) != null ? _a5 : []).map(([w]) => w);
+    }))];
+    lists.set("landPl", phrases.map((w) => [{ w }, 1]));
+    lists.set("waterPl", []);
+    lists.set("waterSg", []);
+    lists.set("compassAdj", spaceDirections(biome.scale).map((w) => [{ w }, 1]));
+    byTerrain.set(terrain, lists);
+    return lists;
+  }
+  const terrains = terrain && terrain !== "any" ? [terrain] : availableTerrains(biome).map((t) => t.id);
+  const add2 = { landPl: [], waterPl: [], waterSg: [] };
+  for (const t of terrains) {
+    for (const [w] of terrainWords(biome, "land", t)) {
+      if (w.includes("{")) continue;
+      add2.landPl.push(/s$/.test(w) ? w : biomeTitleCase(pluralOf(w.toLowerCase())));
+    }
+    for (const [w] of terrainWords(biome, "water", t)) {
+      if (w.includes("{")) continue;
+      (/s$/.test(w) ? add2.waterPl : add2.waterSg).push(w);
+    }
+  }
+  const chosen = terrain && terrain !== "any";
+  for (const [name, words] of Object.entries(add2)) {
+    const unique = [...new Set(words)];
+    if (unique.length === 0) continue;
+    const biomeWords2 = unique.map((w) => [{ w }, 3]);
+    if (chosen && name !== "waterSg") lists.set(name, biomeWords2);
+    else lists.set(name, [...lists.get(name).filter(([e]) => !unique.includes(e.w)), ...biomeWords2]);
+  }
+  byTerrain.set(terrain, lists);
+  return lists;
+}
+var wordToneOf = (list, e) => {
+  var _a5, _b3, _c3;
+  return (_c3 = (_b3 = (_a5 = REALM_DATA.wordTones[list]) == null ? void 0 : _a5[e.w]) != null ? _b3 : e.t) != null ? _c3 : [];
+};
+function listPool(ctx, name) {
+  const key2 = `${name}|${ctx.character}`;
+  const cached = ctx.pools.get(key2);
+  if (cached) return cached;
+  const result = buildListPool(ctx, name);
+  ctx.pools.set(key2, result);
+  return result;
+}
+function buildListPool(ctx, name) {
+  var _a5, _b3, _c3, _d3;
+  const out = [];
+  for (const [e, w] of (_a5 = ctx.lists.get(name)) != null ? _a5 : []) {
+    if (e.eras && !e.eras.includes(ctx.era)) continue;
+    if (e.biome && e.biome !== ctx.biome.id) continue;
+    if (e.character && e.character !== ctx.character) continue;
+    out.push([e, w * ((_c3 = (_b3 = e.cx) == null ? void 0 : _b3[ctx.culture]) != null ? _c3 : 1)]);
+  }
+  if (name === "cultQual") {
+    for (const w of (_d3 = REALM_DATA.cultQualExtra[ctx.culture]) != null ? _d3 : []) {
+      const found = out.find(([e]) => e.w === w);
+      if (found) found[1] *= 3;
+      else out.push([{ w }, 3]);
+    }
+  }
+  if (name === "peopleQual") {
+    for (const w of cultureAnimals(ctx.culture)) {
+      const found = out.find(([e]) => e.w === w);
+      if (found) found[1] *= 2;
+      else out.push([{ w }, 2]);
+    }
+    for (const [w, n] of groupListWords("colour", ctx.setting)) out.push([{ w, t: wordTones("colour", w) }, n * 0.3]);
+  }
+  return out.map(([e, w]) => [e, w * toneFactor(wordToneOf(name, e), ctx.tone)]).filter(([, w]) => w > 0);
+}
+function listWord3(ctx, name, keep) {
+  const pool3 = keep ? listPool(ctx, name).filter(([e2]) => keep(e2.w)) : listPool(ctx, name);
+  const e = pickWeighted5(pool3, ctx.rng);
+  if (!e) return void 0;
+  for (const t of wordToneOf(name, e)) ctx.drawn.add(t);
+  return e.w;
+}
+function gnWord(ctx, name, keep, setting = ctx.setting) {
+  var _a5;
+  const pool3 = groupListWords(name, setting, (_a5 = ctx.scale) != null ? _a5 : "any").filter(([w2]) => !keep || keep(w2)).map(([w2, n]) => [w2, n * toneFactor(wordTones(name, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  const w = pickWeighted5(pool3, ctx.rng);
+  if (w !== void 0) for (const t of wordTones(name, w)) ctx.drawn.add(t);
+  return w;
+}
+function drawForm(ctx, keep) {
+  const pool3 = cultureForms(ctx.culture, ctx.era).filter(([f2]) => keep(f2)).map(([f2, w]) => {
+    var _a5, _b3;
+    return [f2, w * characterMult(ctx.character, f2) * toneFactor(f2.t, ctx.tone) * (ctx.scale ? (_b3 = (_a5 = REALM_DATA.spaceForms[f2.w]) == null ? void 0 : _a5[ctx.scale]) != null ? _b3 : 1 : 1)];
+  }).filter(([, w]) => w > 0);
+  const f = pickWeighted5(pool3, ctx.rng);
+  if (f) for (const t of f.t) ctx.drawn.add(t);
+  return f;
+}
+function drawModifier(ctx) {
+  var _a5, _b3;
+  const form = (_a5 = ctx.form) == null ? void 0 : _a5.w;
+  if (!form) return void 0;
+  const plain = compatibleModifiers(form, ctx.era);
+  const ideology = ideologyFor(form, ctx.era);
+  const fromIdeology = ideology && (plain.length === 0 || ctx.rng() < REALM_DATA.ideology.share);
+  const entries = fromIdeology ? REALM_DATA.ideology.words : plain;
+  const pool3 = entries.map((e2) => {
+    var _a6, _b4;
+    return [e2, ((_a6 = e2.x) != null ? _a6 : 1) * toneFactor((_b4 = e2.t) != null ? _b4 : [], ctx.tone)];
+  }).filter(([, w]) => w > 0);
+  const e = pickWeighted5(pool3, ctx.rng);
+  if (!e) return void 0;
+  for (const t of (_b3 = e.t) != null ? _b3 : []) ctx.drawn.add(t);
+  return e.w;
+}
+var DYNASTY = (f) => (f.g === "crown" || f.g === "imperial") && !f.compound && !f.peoplesOnly;
+var PEOPLES = (f) => f.g === "federal" || f.g === "tribal" || ["Kingdom", "Realm", "Nation"].includes(f.w);
+var PLAIN_FORM = (f) => !f.peoplesOnly;
+var CHRISTIAN = /* @__PURE__ */ new Set(["general", "anglo-saxon", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "ethiopian"]);
+function place2(ctx) {
+  if (ctx.mode === "placeholders") return "[place]";
+  const holy = holyNamesIn(ctx.culture);
+  for (let i = 0; i < 20; i++) {
+    const t = groupTown(ctx.setting, townSource(ctx.culture), ctx.rng).replace(/^The /, "");
+    if (!holy || !holy.test(t)) return t;
+  }
+  return void 0;
+}
+function token4(ctx, name, shape, kind) {
+  var _a5, _b3, _c3, _d3;
+  const rng = ctx.rng;
+  switch (name) {
+    case "form":
+    case "federalForm":
+      return (_a5 = ctx.form) == null ? void 0 : _a5.w;
+    case "modifier":
+      return ctx.modifier = drawModifier(ctx);
+    case "collNoun":
+      return ctx.collNoun;
+    case "collQual": {
+      const ok = compatibleCollQuals((_b3 = ctx.collNoun) != null ? _b3 : "");
+      const pool3 = ok.map((w) => {
+        const t = w === "Free" && ctx.collNoun === "Ports" ? ["light"] : [];
+        return [w, toneFactor(t, ctx.tone)];
+      });
+      const q = pickWeighted5(pool3, rng);
+      if (q === "Free" && ctx.collNoun === "Ports") ctx.drawn.add("light");
+      return ctx.collQual = q;
+    }
+    case "landIdentity": {
+      const live4 = REALM_DATA.landIdentity.filter((s) => [...s.p.matchAll(/\{(\w+)\}/g)].every((m) => {
+        var _a6, _b4;
+        return ((_b4 = (_a6 = ctx.lists.get(m[1])) == null ? void 0 : _a6.length) != null ? _b4 : 1) > 0;
+      }));
+      const p = pickWeighted5(live4.map((s) => [s.p, s.w]), rng);
+      return renderTokens3(ctx, p, shape, kind);
+    }
+    case "place":
+      return place2(ctx);
+    case "landCompound":
+      return ctx.mode === "placeholders" ? "[place]" : groupTown("FL", void 0, rng);
+    case "dynasty":
+      if (ctx.mode === "placeholders" || !REALM_DATA.dynastyCultures.includes(ctx.culture)) return "[dynasty]";
+      return gnWord(ctx, "house");
+    case "star":
+      return rng() < 0.3 / (groupListWords("star", "SF").length + 0.3) ? "Sol" : groupStarIn((_c3 = ctx.scale) != null ? _c3 : "any", "invented", rng);
+    case "commRegion":
+      return groupCommRegion(ctx.era === "NF" || ctx.era === "IS" ? "SF" : ctx.setting, rng);
+    case "spaceLand": {
+      const w = gnWord(ctx, "spaceLand", void 0, "SF");
+      return w && rng() < 0.3 ? groupSpacePrefix(w, rng, (_d3 = ctx.scale) != null ? _d3 : "any") : w;
+    }
+    case "tribal": {
+      if (ctx.mode === "placeholders") return "[people]";
+      const t = ctx.tribal();
+      return t ? /^the /i.test(t) ? t : `the ${t}` : void 0;
+    }
+    case "holy":
+      if (ctx.mode === "placeholders") return "[holy person]";
+      return CHRISTIAN.has(ctx.culture) ? groupSaint(ctx.setting, rng) : `the ${gnWord(ctx, "holyTitle")}`;
+    case "beast": {
+      const animals = cultureAnimals(ctx.culture);
+      const pool3 = [...groupListWords("beast", ctx.setting), ...animals.map((a) => [a, 3])];
+      return pickWeighted5(pool3, rng);
+    }
+    case "number":
+      return gnWord(ctx, "number", (w) => !["Two", "Hundred", "Thousand"].includes(w));
+    case "colour":
+    case "brandRoot":
+      return gnWord(ctx, name);
+  }
+  return listWord3(ctx, name);
+}
+function renderTokens3(ctx, pattern, shape, kind) {
+  let failed = false;
+  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
+    if (failed) return "";
+    const [name, mod] = raw.split(":");
+    const text = token4(ctx, name, shape, kind);
+    if (!text) {
+      failed = true;
+      return "";
+    }
+    if (!ctx.values.has(name)) ctx.values.set(name, text);
+    if (mod === "poss") return groupPossessive(text, false);
+    if (mod === "pl") return text.startsWith("[") ? text : groupPlural(text);
+    return text;
+  });
+  return failed ? void 0 : out;
+}
+var SMALL5 = /* @__PURE__ */ new Set(["of", "the", "and", "for", "in", "at", "by", "on", "to", "from"]);
+function realmCapitals(text) {
+  return text.replace(/\bthe the\b/gi, "the").replace(/\s+/g, " ").trim().split(" ").map((word, i) => {
+    if (!word || word.startsWith("[")) return word;
+    const lower3 = word.toLowerCase();
+    if (SMALL5.has(lower3) && (i > 0 || lower3 === "the")) return lower3;
+    return word.replace(/(^|[-–])([a-z])/g, (_m, sep, c) => sep + c.toUpperCase());
+  }).join(" ");
+}
+var counted = (text) => text.split(" ").filter((w, i) => w && !(i === 0 && w.toLowerCase() === "the") && !SMALL5.has(w.toLowerCase()));
+var wordRe5 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
+var BANNED3 = [...REALM_DATA.safeguards.banned, ...REALM_DATA.safeguards.religious].map(wordRe5);
+function breaksRealmWords(text) {
+  return hasBannedWord(text) || BANNED3.some((re) => re.test(text));
+}
+var COLOUR_BEFORE_PEOPLE = new RegExp(`\\b(${groupListWords("colour", "FL").map(([w]) => w).join("|")}) (Peoples|Folk|Kin)\\b`);
+var TRIBAL_POOLS = /* @__PURE__ */ new Map();
+function tribalPool(tradition, biome, terrain, custom) {
+  var _a5, _b3;
+  const key2 = `${tradition}|${custom ? (_b3 = (_a5 = custom.custom) == null ? void 0 : _a5.path) != null ? _b3 : biome.id : biome.id}|${terrain}`;
+  let found = TRIBAL_POOLS.get(key2);
+  if (!found) {
+    found = generateTribalNames({ tradition, ...custom ? { biomeData: custom } : { biome: biome.id }, terrain, count: 120, seed: 1789 }).names.map((n) => n.name).filter((n) => !n.includes("["));
+    TRIBAL_POOLS.set(key2, found);
+  }
+  return found;
+}
+function generateRealmNames(options) {
+  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const notices = [];
+  const culture = REALM_CULTURES.some((c) => c.key === options.culture) ? options.culture : "general";
+  const era = eraCode((_a5 = options.era) != null ? _a5 : "medieval");
+  const genre = (_b3 = options.genre) != null ? _b3 : "fantasy";
+  const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
+  const tone = (_c3 = options.tone) != null ? _c3 : "any";
+  const length = (_d3 = options.length) != null ? _d3 : "plain";
+  const output = (_e3 = options.output) != null ? _e3 : "official";
+  const mode = (_f = options.people) != null ? _f : "placeholders";
+  let namedFor = (_g = options.namedFor) != null ? _g : "anything";
+  if (namedFor === "stars" && !namedForOffered("stars", (_h = options.era) != null ? _h : "medieval")) {
+    notices.push("\u201CThe stars\u201D needs the near-future or interstellar era.");
+    namedFor = "anything";
+  }
+  const biome = (_j = (_i = options.biomeData) != null ? _i : findBiome(!options.biome || options.biome === "homeland" ? homelandBiome(culture) : options.biome)) != null ? _j : findBiome("temperate");
+  const terrain = (_k = options.terrain) != null ? _k : "any";
+  const spaceOk = !biome.space || era === "NF" || era === "IS";
+  if (!spaceOk) notices.push("Space biomes need the near-future or interstellar era; using their homeland.");
+  const landBiome2 = spaceOk ? biome : (_l = findBiome(homelandBiome(culture))) != null ? _l : findBiome("temperate");
+  const scale = landBiome2.space ? landBiome2.scale : void 0;
+  const lists = identityLists(landBiome2, spaceOk ? terrain : "any");
+  const chosen = options.character ? REALM_CHARACTERS.find((c) => c.key === options.character) : void 0;
+  if (options.character && !chosen) notices.push(`\u201C${options.character}\u201D isn't a realm character; using any.`);
+  const characters = REALM_CHARACTERS.map((c) => {
+    var _a6, _b4;
+    return [c.key, c.w * ((_b4 = (_a6 = c.eraMult) == null ? void 0 : _a6[era]) != null ? _b4 : 1)];
+  }).filter(([, w]) => w > 0);
+  const guards = (_m = options.safeguards) != null ? _m : { block: REALM_DATA.safeguards.block, flag: REALM_DATA.safeguards.flag, flagListBlocks: REALM_DATA.safeguards.flagListBlocks };
+  const pools = /* @__PURE__ */ new Map();
+  const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock));
+  const tribal = () => {
+    var _a6, _b4;
+    const peopleBiome = landBiome2.space ? (_a6 = findBiome(homelandBiome(culture))) != null ? _a6 : findBiome("temperate") : biome;
+    const pool3 = tribalPool((_b4 = REALM_DATA.tribal[culture]) != null ? _b4 : "general", peopleBiome, landBiome2.space ? "any" : terrain, landBiome2.space ? void 0 : options.biomeData);
+    return pool3.length > 0 ? pickOne3(pool3, rng) : void 0;
+  };
+  const namedForWeights = (character) => Object.entries(REALM_DATA.namedForWeights[character]).filter(([k]) => namedForOffered(k, REALM_ERAS.find((e) => e.code === era).key)).map(([k, w]) => {
+    var _a6, _b4;
+    return [k, w * (k === "people" ? (_b4 = (_a6 = REALM_DATA.cultures[culture]) == null ? void 0 : _a6.peoplesMult) != null ? _b4 : 1 : 1)];
+  }).filter(([, w]) => w > 0);
+  const chooseShape = (character, nf) => {
+    var _a6, _b4, _c4;
+    const weigh = (shapes, extra = []) => shapes.filter((s2) => (!s2.eras || s2.eras.includes(era)) && (!s2.ceremonialOnly || length === "ceremonial")).map((s2) => {
+      var _a7;
+      return [s2, s2.w * toneFactor([...extra, ...(_a7 = s2.t) != null ? _a7 : []], tone)];
+    }).filter(([, w]) => w > 0);
+    const own = REALM_DATA.characterShapes[character];
+    if (namedFor === "anything" && own && rng() < own.share) {
+      const s2 = pickWeighted5(weigh(own.shapes, own.t), rng);
+      if (s2) return { shape: s2, kind: "character", nf: "character", t: [...(_a6 = own.t) != null ? _a6 : [], ...(_b4 = s2.t) != null ? _b4 : []] };
+    }
+    const resolved = nf === "anything" ? pickWeighted5(namedForWeights(character), rng) : nf;
+    if (!resolved || resolved === "anything") return void 0;
+    const kind = (resolved === "land" || resolved === "place") && rng() < REALM_DATA.collectiveShare ? "collective" : resolved;
+    const s = pickWeighted5(weigh(REALM_DATA.shapes[kind]), rng);
+    return s ? { shape: s, kind, nf: resolved, t: (_c4 = s.t) != null ? _c4 : [] } : void 0;
+  };
+  const oneName2 = () => {
+    var _a6;
+    for (let round = 0; round < 2; round++) {
+      const character = (_a6 = chosen == null ? void 0 : chosen.key) != null ? _a6 : pickWeighted5(characters, rng);
+      if (!character) return void 0;
+      for (let i = 0; i < 20; i++) {
+        const choice = chooseShape(character, namedFor);
+        if (!choice) continue;
+        const built = build(character, choice);
+        if (built) return built;
+      }
+    }
+    return void 0;
+  };
+  function build(character, choice) {
+    var _a6, _b4, _c4, _d4;
+    const { shape, kind } = choice;
+    const ctx = { rng, setting, era, culture, character, tone, mode, biome: landBiome2, lists, pools, tribal, drawn: /* @__PURE__ */ new Set(), values: /* @__PURE__ */ new Map(), scale };
+    if (/\{(form|federalForm)\}/.test(shape.p)) {
+      const keep = shape.p.includes("{federalForm}") ? (f) => f.g === "federal" && !f.peoplesOnly : kind === "dynasty" ? DYNASTY : kind === "people" ? PEOPLES : shape.groups ? (f) => shape.groups.includes(f.g) && PLAIN_FORM(f) : shape.p.includes("{modifier}") ? (f) => PLAIN_FORM(f) && (compatibleModifiers(f.w, era).length > 0 || ideologyFor(f.w, era)) : PLAIN_FORM;
+      ctx.form = drawForm(ctx, keep);
+      if (!ctx.form) return void 0;
+    }
+    if (shape.p.includes("{collNoun}")) {
+      const keep = shape.collQual ? (w) => compatibleCollQuals(w).includes(shape.collQual) : (w) => compatibleCollQuals(w).length > 0 || !shape.p.includes("{collQual}");
+      ctx.collNoun = listWord3(ctx, "collNoun", keep);
+      if (!ctx.collNoun) return void 0;
+    }
+    const ceremonial = length === "ceremonial";
+    let pattern = shape.p;
+    let pairToken;
+    if (ceremonial) {
+      if (shape.upperLower && rng() < REALM_DATA.ceremonial.upperLower) pattern = pattern.replace("{landIdentity}", "Upper and Lower {landPl}");
+      else if (shape.pair && rng() < REALM_DATA.ceremonial.pair) pairToken = shape.pair;
+    }
+    let raw = renderTokens3(ctx, pattern, shape, kind);
+    if (!raw) return void 0;
+    const plainOfficial = realmCapitals(withDeityPlaceholders(raw));
+    if (pattern !== shape.p) ctx.values.set("landIdentity", raw.slice(raw.indexOf("Upper and Lower")));
+    if (pairToken) {
+      const first = ctx.values.get(pairToken);
+      const second = token4(ctx, pairToken, shape, kind);
+      if (!second || second === first) return void 0;
+      const the = new RegExp(`of the ${first.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`).test(raw);
+      raw = raw.replace(first, `${first} and ${the ? "the " : ""}${second.replace(/^the /, "")}`);
+    }
+    raw = withDeityPlaceholders(raw);
+    let official = realmCapitals(raw);
+    let honorific;
+    if (ceremonial && !shape.honorific) {
+      const group = (_c4 = (_b4 = (_a6 = ctx.form) == null ? void 0 : _a6.g) != null ? _b4 : shape.g) != null ? _c4 : "federal";
+      const pool3 = REALM_DATA.honorifics[group].map((e) => {
+        var _a7, _b5;
+        return [e, ((_a7 = e.x) != null ? _a7 : 1) * toneFactor((_b5 = e.t) != null ? _b5 : [], tone)];
+      }).filter(([, w]) => w > 0);
+      const h = pickWeighted5(pool3, rng);
+      if (!h) return void 0;
+      honorific = h.w;
+      for (const t of (_d4 = h.t) != null ? _d4 : []) ctx.drawn.add(t);
+      official = realmCapitals(`${honorific} ${official.replace(/^the /, "")}`);
+    } else if (shape.honorific) honorific = "Most Serene";
+    const short = realmCapitals(withDeityPlaceholders(renderShort(ctx, shape.short, plainOfficial)));
+    const words = counted(official);
+    if (words.length === 0 || words.length > REALM_DATA.caps[length]) return void 0;
+    if (repeatsContent(words)) return void 0;
+    for (const n of [official, short]) if (block.has(normForBlock(n))) return void 0;
+    if ((ctx.era === "NF" || ctx.era === "IS") && (hasSpaceBlock(official) || hasSpaceBlock(short))) return void 0;
+    if (breaksRealmWords(official) || breaksGroupColourRule(official) || COLOUR_BEFORE_PEOPLE.test(official)) return void 0;
+    const text = output === "official" ? official : output === "short" ? short : official.toLowerCase() === short.toLowerCase() ? official : `${official} (${short})`;
+    const tones = /* @__PURE__ */ new Set([...choice.t, ...ctx.drawn, ...ceremonial ? REALM_DATA.ceremonial.t : []]);
+    return {
+      text,
+      official,
+      short,
+      character,
+      namedFor: choice.nf,
+      kind,
+      shape: shape.p,
+      ...ctx.form ? { form: ctx.form.w, formGroup: ctx.form.g } : shape.g ? { formGroup: shape.g } : {},
+      ...ctx.modifier ? { modifier: ctx.modifier } : {},
+      ...honorific ? { honorific } : {},
+      ...ctx.collQual ? { collQual: ctx.collQual } : shape.collQual ? { collQual: shape.collQual } : {},
+      ...ctx.collNoun ? { collNoun: ctx.collNoun } : {},
+      tones: GROUP_TONES.filter((t) => tones.has(t))
+    };
+  }
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  const count = Math.max(0, Math.floor(options.count));
+  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+    const name = oneName2();
+    if (!name) continue;
+    const key2 = name.text.toLowerCase();
+    if (seen.has(key2)) continue;
+    seen.add(key2);
+    names.push(name);
+  }
+  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+  return { names, seed, notices };
+}
+registerRealmSource(({ culture, era, genre, seed }) => {
+  var _a5;
+  return (_a5 = generateRealmNames({ culture, era, genre, namedFor: "anything", output: "short", people: "invented", count: 1, seed }).names[0]) == null ? void 0 : _a5.short;
+});
+function renderShort(ctx, template, plain) {
+  if (template === "same") return plain;
+  const keepThe = template.startsWith("the ");
+  const out = template.replace(/\{([^}]+)\}/g, (_m, raw) => {
+    var _a5;
+    const [name, mod] = raw.split(":");
+    const v = (_a5 = ctx.values.get(name)) != null ? _a5 : "";
+    if (mod === "poss") return groupPossessive(v, false);
+    if (mod === "pl") return v.startsWith("[") ? v : groupPlural(v);
+    return v;
+  });
+  return keepThe ? out : out.replace(/^the /i, "");
+}
+function realmHistoryLabel(genre, fantastic, culture, era, character, tone = "any") {
+  var _a5, _b3, _c3, _d3;
+  const label = (_b3 = (_a5 = REALM_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  return [
+    "realms and polities",
+    SETTING_PHRASES[groupSetting(genre, genre === "scifi" ? false : fantastic)],
+    label,
+    (_d3 = (_c3 = REALM_ERAS.find((e) => e.key === era)) == null ? void 0 : _c3.label) != null ? _d3 : era,
+    // Companies brief §9.1: the corporate character reads "company-states".
+    ...character ? [character === "corporate" ? "company-states" : character] : [],
+    ...tone !== "any" ? [tone] : []
+  ].join(" \xB7 ");
+}
+
+// src/data/peoples-tongues.json
+var peoples_tongues_default = {
+  version: 1,
+  weights: {
+    general: { ian: 22, an: 15, er: 15, ish: 15, ese: 10, ite: 10, i: 5, clip: 5, ine: 3 },
+    "anglo-saxon": { ish: 30, er: 15, clip: 15, folk: 15, ings: 15, man: 10 },
+    norse: { er: 30, ish: 25, clip: 25, man: 10, ian: 10 },
+    celtic: { ish: 30, clip: 20, man: 15, ian: 15, an: 10, er: 10 },
+    "norman-british": { er: 40, man: 15, ian: 15, learned: 10, ish: 10, ite: 10 },
+    roman: { an: 30, ian: 20, ese: 20, ine: 15, ite: 10, itan: 5 },
+    "greek-byzantine": { ian: 30, an: 20, ite: 15, iot: 15, ine: 10, ene: 10 },
+    slavic: { ian: 45, clip: 20, ite: 15, ish: 10, er: 5, an: 5 },
+    steppe: { clip: 35, i: 25, ian: 20, ish: 10, an: 10 },
+    "arabic-persian": { i: 60, ite: 15, ian: 15, ene: 5, an: 5 },
+    indian: { i: 60, an: 15, ese: 10, ian: 10, ite: 5 },
+    chinese: { ese: 70, an: 15, er: 15 },
+    japanese: { ese: 75, an: 15, ite: 10 },
+    korean: { an: 60, ese: 25, ite: 15 },
+    egyptian: { ian: 50, ite: 30, an: 20 },
+    ethiopian: { an: 40, ian: 30, i: 30 },
+    bantu: { an: 60, ese: 25, ian: 15 },
+    "west-african": { ese: 40, an: 30, ian: 25, i: 5 },
+    aztec: { an: 50, ec: 30, ese: 10, ian: 10 },
+    maya: { an: 60, ec: 25, ian: 15 }
+  },
+  suffixes: {
+    an: "an",
+    ian: "ian",
+    ese: "ese",
+    i: "i",
+    ite: "ite",
+    ine: "ine",
+    iot: "iot",
+    ene: "ene",
+    itan: "itan",
+    ec: "ec"
+  },
+  ic: { celtic: 25, ethiopian: 30, steppe: 20, "arabic-persian": 15, norse: 20, slavic: 10, egyptian: 10, general: 10 },
+  icLandOnly: ["norse"],
+  adjectiveIc: 30,
+  erAdjective: { place: 60, ish: 25, ic: 15 },
+  endings: [
+    {
+      id: "british",
+      ends: ["ton", "don", "ham", "by", "ford", "wich", "wick", "bury", "mouth", "port", "ster", "chester", "cester", "caster", "shire", "set", "field", "well", "ley", "worth", "stead", "thorpe", "gate", "stow", "stowe", "burgh", "borough"],
+      mult: { er: 3, learned: 1 },
+      others: 0.5,
+      endMult: { shire: { man: 2 }, set: { man: 2 }, by: { ite: 3 } }
+    },
+    { id: "land", ends: ["land"], mult: { er: 3, clip: 2, ish: 2 }, others: 0.2 },
+    { id: "mark", ends: ["mark"], mult: { clip: 3, er: 2 }, others: 0.3 },
+    { id: "stan", ends: ["istan", "stan"], mult: { clip: 3, i: 3 }, others: 0.1 },
+    { id: "ia", ends: ["ia"], mult: { ian: 4, ite: 1, clip: 1 }, others: 0.1 },
+    { id: "double", ends: ["ee", "ie", "oo", "ae"], mult: { ite: 3 }, others: 0.3 },
+    { id: "a", ends: ["a"], mult: { an: 4, ese: 1, i: 1, ian: 0 }, others: 0.3 },
+    { id: "ey", ends: ["ey"], mult: { ish: 2, clip: 2, man: 2 }, others: 0.3 },
+    { id: "y", ends: ["y"], mult: { ian: 4, an: 1 }, others: 0.3 },
+    { id: "o", ends: ["o"], mult: { an: 3, ese: 2, ite: 1 }, others: 0.3 },
+    { id: "u", ends: ["u"], mult: { ian: 2, an: 2 }, others: 0.3 },
+    { id: "i", ends: ["i"], mult: { an: 4, i: 0 }, others: 0.2 },
+    { id: "e", ends: ["e"], mult: {}, others: 1 },
+    { id: "us", ends: ["us"], mult: { ian: 2, iot: 2, ene: 2, an: 1 }, others: 0.2 },
+    { id: "s", ends: ["s"], mult: { ian: 3, ite: 1 }, others: 0.3 },
+    { id: "n", ends: ["an", "en", "in", "on", "un"], mult: { ese: 2, ian: 2, er: 1.5, i: 1 }, others: 1 },
+    { id: "other", ends: [], mult: {}, others: 1 }
+  ],
+  clipEnds: ["land", "mark", "istan", "stan", "ia", "ey", "y", "a"],
+  learned: [
+    { ends: ["chester", "cester"], add: "cestrian", strip: true },
+    { ends: ["caster"], add: "castrian", strip: true },
+    { ends: ["mouth"], add: "mothian", strip: true },
+    { ends: ["bury"], add: "burian", strip: true },
+    { ends: ["ford"], add: "ian", strip: false },
+    { ends: ["ton", "don"], add: "ian", strip: false },
+    { ends: ["burgh", "borough"], add: "burgian", strip: true }
+  ],
+  eraBoost: { add: { born: 10, sider: 5 }, mult: { ite: 2, er: 1.5, ian: 1.5 } },
+  toneMult: {
+    grand: { learned: 2, ine: 1.5, ian: 1.2 },
+    plain: { er: 1.5, an: 1.2 },
+    light: { er: 1.5, ite: 1.5, clip: 1.5 },
+    strange: { ec: 1.5, iot: 1.5, ene: 1.5 },
+    grim: {}
+  },
+  generics: [
+    { words: ["isles", "islands", "isle", "island"], person: "Islander", people: ["Islanders"] },
+    { words: ["fells"], person: "Fellsman", people: ["Fellsmen", "Fellsfolk"] },
+    { words: ["dales", "dale"], person: "Dalesman", people: ["Dalesmen"] },
+    { words: ["hills"], person: "Hillman", people: ["Hillmen"] },
+    { words: ["highlands", "mountains"], person: "Highlander", people: ["Highlanders"] },
+    { words: ["lowlands"], person: "Lowlander", people: ["Lowlanders"] },
+    { words: ["midlands"], person: "Midlander", people: ["Midlanders"] },
+    { words: ["marches", "march"], person: "Marcher", people: ["Marchers"] },
+    { words: ["fens"], person: "Fenman", people: ["Fenmen"] },
+    { words: ["moors"], person: "Moorlander", people: ["Moorlanders"] },
+    { words: ["wolds"], person: "Woldsman", people: ["Woldsmen"] },
+    { words: ["downs"], person: "Downsman", people: ["Downsmen"] },
+    { words: ["coast"], person: "Coaster", people: ["Coasters"] },
+    { words: ["shore", "shores"], person: "Shoreman", people: ["Shorefolk"] },
+    { words: ["plains"], person: "Plainsman", people: ["Plainsmen"] },
+    { words: ["valley", "vale"], person: "Valleyman", people: ["Valleymen"] },
+    { words: ["forest", "woods"], person: "Forester", people: ["Foresters"] },
+    { words: ["weald"], person: "Wealdsman", people: ["Wealdsmen"] },
+    { words: ["lakes"], person: "Lakelander", people: ["Lakelanders"] },
+    { words: ["river", "rivers"], person: "Riverman", people: ["Riverfolk"] },
+    { words: ["reach", "reaches"], person: "Reachman", people: ["Reachfolk"] },
+    { words: ["worlds"], person: "Worlder", people: ["Worlders"] },
+    { words: ["ring"], person: "Ringsider", people: ["Ringsiders"], eras: ["NF", "IS"] }
+  ],
+  genericLanguage: [
+    { p: "the speech of {name}", w: 40 },
+    { p: "{bare} speech", w: 30 },
+    { p: "{bare} dialect", w: 30 }
+  ],
+  landWords: ["barrens", "wastes", "peaks", "heights", "steppes", "steppe", "deserts", "desert", "marshes", "swamp", "sands", "cliffs", "sound", "straits", "gulf", "bay", "wilds", "badlands", "uplands", "heath", "heaths", "tundra", "glades", "meres", "mere", "fjords", "channel"],
+  colonistShare: 0.5,
+  sun: [
+    { names: ["earth", "terra"], person: ["Terran", "Earther"], adjective: "Terran", people: ["the Terrans", "the Earthers"], language: "Terran" },
+    { names: ["moon", "luna"], person: ["Lunarian"], adjective: "Lunar", people: ["the Lunarians"], language: "Lunarian" },
+    { names: ["mars"], person: ["Martian"], adjective: "Martian", people: ["the Martians"], language: "Martian" },
+    { names: ["venus"], person: ["Venusian"], adjective: "Venusian", people: ["the Venusians"], language: "Venusian" },
+    { names: ["mercury"], person: ["Mercurian"], adjective: "Mercurian", people: ["the Mercurians"], language: "Mercurian" },
+    { names: ["jupiter"], person: ["Jovian"], adjective: "Jovian", people: ["the Jovians"], language: "Jovian" },
+    { names: ["saturn"], person: ["Saturnian"], adjective: "Saturnian", people: ["the Saturnians"], language: "Saturnian" },
+    { names: ["titan"], person: ["Titanian"], adjective: "Titanian", people: ["the Titanians"], language: "Titanian" },
+    { names: ["europa"], person: ["Europan"], adjective: "Europan", people: ["the Europans"], language: "Europan" },
+    { names: ["ganymede"], person: ["Ganymedean"], adjective: "Ganymedean", people: ["the Ganymedeans"], language: "Ganymedean" },
+    { names: ["callisto"], person: ["Callistan"], adjective: "Callistan", people: ["the Callistans"], language: "Callistan" },
+    { names: ["io"], person: ["Ionian"], adjective: "Ionian", people: ["the Ionians"], language: "Ionian" },
+    { names: ["ceres"], person: ["Cererian"], adjective: "Cererian", people: ["the Cererians"], language: "Cererian" },
+    { names: ["pluto"], person: ["Plutonian"], adjective: "Plutonian", people: ["the Plutonians"], language: "Plutonian" },
+    { names: ["triton"], person: ["Tritonian"], adjective: "Tritonian", people: ["the Tritonians"], language: "Tritonian" },
+    { names: ["enceladus"], person: ["Enceladean"], adjective: "Enceladean", people: ["the Enceladeans"], language: "Enceladean" }
+  ],
+  languageShapes: [
+    { p: "{L}", w: 50 },
+    { p: "the {L} tongue", w: 10 },
+    { p: "Old {L}", w: 8, from: "MD" },
+    { p: "High {L}", w: 4 },
+    { p: "Low {L}", w: 4 },
+    { p: "Common {L}", w: 4, t: ["plain"] },
+    { p: "Court {L}", w: 3, t: ["grand"] },
+    { p: "Classical {L}", w: 3, from: "MD", t: ["grand"] },
+    { p: "Trade {L}", w: 4, from: "EM", t: ["plain"] },
+    { p: "{L} Pidgin", w: 2, from: "EM", t: ["light"] },
+    { p: "{L} Cant", w: 1, from: "MD", t: ["grim", "light"] },
+    { p: "{harbourWord} Cant", w: 1, from: "MD", t: ["grim", "light"] },
+    { p: "{L} Standard", w: 8, from: "NF", t: ["plain"] },
+    { p: "Spacers' {L}", w: 3, from: "NF" }
+  ],
+  harbourWords: ["Harbour", "Dock", "Gutter", "Thieves'", "Tinkers'"],
+  older: {
+    AN: ["Early {L}", "Archaic {L}"],
+    MD: ["Middle {L}", "Old {L}"],
+    EM: ["Middle {L}", "Old {L}"],
+    ST: ["Early Modern {L}", "Middle {L}", "Old {L}"],
+    MO: ["Early Modern {L}", "Middle {L}", "Old {L}"],
+    NF: ["Early Modern {L}", "Middle {L}", "Old {L}"],
+    IS: ["Early Modern {L}", "Middle {L}", "Old {L}"]
+  },
+  dialectWords: ["Northern", "Southern", "Eastern", "Western", "Highland", "Lowland", "Hill", "Coast", "River", "Island", "Town", "Court", "Common"],
+  dialectWordsSpace: ["Station", "Colony", "Orbital", "Deep"],
+  safeguards: {
+    block: [
+      "Belter",
+      "Belters",
+      "Hobbit",
+      "Hobbits",
+      "Gondorian",
+      "Rohirrim",
+      "Westerosi",
+      "Dothraki",
+      "Valyrian",
+      "High Valyrian",
+      "Klingon",
+      "Vulcan",
+      "Romulan",
+      "Corellian",
+      "Mandalorian",
+      "Na'vi",
+      "Fremen",
+      "Arrakeen",
+      "Quenya",
+      "Sindarin",
+      "Westron",
+      "Black Speech",
+      "Khuzdul",
+      "Ad\xFBnaic",
+      "Huttese",
+      "Newspeak",
+      "Nadsat",
+      "Ankh-Morporkian",
+      "Loonie",
+      "Gallifreyan",
+      "Kryptonian",
+      "Lilliputian",
+      "Brobdingnagian",
+      "Houyhnhnm",
+      "Morlock",
+      "Eloi",
+      "Wakandan",
+      "Latverian",
+      "Genovian",
+      "Ruritanian",
+      "Freedonian",
+      "Elbonian",
+      "Narnian",
+      "Calormene",
+      "Archenlander"
+    ],
+    flag: ["Elvish", "Dwarvish", "Common Tongue", "Earther", "Spacer", "Terran", "Atlantean", "Lemurian", "Thieves' Cant", "Martian"],
+    flagListBlocks: false,
+    banned: [
+      "Jap",
+      "Japs",
+      "Nip",
+      "Nips",
+      "Paki",
+      "Pakis",
+      "Chink",
+      "Chinks",
+      "Gook",
+      "Gooks",
+      "Wog",
+      "Wogs",
+      "Kraut",
+      "Krauts",
+      "Spic",
+      "Spics",
+      "Dago",
+      "Dagos",
+      "Wop",
+      "Wops",
+      "Gyppo",
+      "Pikey",
+      "Polack",
+      "Kike",
+      "Coon",
+      "Darkie",
+      "Negro",
+      "Abo",
+      "Abos",
+      "Boong",
+      "Taig",
+      "Redskin",
+      "Squaw",
+      "Wetback",
+      "Raghead",
+      "Towelhead",
+      "Paddy",
+      "Mick",
+      "Taffy",
+      "Limey",
+      "Gringo",
+      "Hottentot",
+      "Bushman",
+      "Bushmen",
+      "Kaffir"
+    ]
   }
 };
 
@@ -96751,15 +102702,17 @@ Names to take off the flag list. Built-in block-list names can't be allowed.
 // src/vessels/sentence.ts
 function defaultVesselState(module2) {
   return {
-    culture: "general",
+    // Aircraft and land brief §2.2: aircraft default to General, land vehicles to Norman & British, in a modern world.
+    culture: module2 === "landVehicles" ? "norman-british" : "general",
     technology: "any",
-    genre: module2 === "spacecraft" ? "scifi" : "fantasy",
+    genre: module2 === "spacecraft" ? "scifi" : isAirLand(module2) ? "modern" : "fantasy",
     fantastic: false,
     style: "none",
     tone: "any",
     prefixes: false,
     people: "placeholders",
-    series: false
+    series: false,
+    ...isAirLand(module2) ? { naming: "craft" } : {}
   };
 }
 var PEOPLE_TEXT5 = { placeholders: "placeholders for", invented: "invented" };
@@ -96770,8 +102723,16 @@ function vesselSetting(state) {
   return groupSetting(state.genre, state.genre === "scifi" ? false : state.fantastic);
 }
 var showsPrefixes = (state) => prefixSetting(vesselSetting(state));
+var showsCodes = (state, module2) => {
+  var _a5;
+  return isAirLand(module2) && showsPrefixes(state) && ((_a5 = state.naming) != null ? _a5 : "craft") === "craft";
+};
+var airLandFunction = (f, technology) => {
+  var _a5;
+  return technology === "AF" && f.afMenu ? { menu: f.afMenu, plural: (_a5 = f.afPlural) != null ? _a5 : f.plural } : { menu: f.menu, plural: f.plural };
+};
 function vesselSentence(state, module2) {
-  var _a5, _b3;
+  var _a5, _b3, _c3;
   const out = [];
   const culture = (_a5 = VESSEL_CULTURES.find((c) => c.key === state.culture)) != null ? _a5 : VESSEL_CULTURES[0];
   const setting = vesselSetting(state);
@@ -96786,13 +102747,15 @@ function vesselSentence(state, module2) {
     current: culture.key
   });
   out.push("-themed ");
-  const fns = availableFunctions(module2, culture.key, state.technology, setting);
+  const airLand = isAirLand(module2);
+  const naming = (_b3 = state.naming) != null ? _b3 : "craft";
+  const fns = availableFunctions(module2, culture.key, state.technology, setting, naming);
   const fn = fns.find((f) => f.key === state.function);
   out.push({
     field: "function",
-    text: fn ? fn.plural : functionAny(module2),
+    text: fn ? airLand ? airLandFunction(fn, state.technology).plural : fn.plural : functionAny(module2),
     title: fn ? fn.description : functionAny(module2),
-    choices: [{ id: void 0, label: "Any" }, ...fns.map((f) => ({ id: f.key, label: f.menu }))],
+    choices: [{ id: void 0, label: "Any" }, ...fns.map((f) => ({ id: f.key, label: airLand ? airLandFunction(f, state.technology).menu : f.menu }))],
     current: fn == null ? void 0 : fn.key
   });
   out.push(" with ");
@@ -96814,7 +102777,7 @@ function vesselSentence(state, module2) {
   });
   out.push(" world");
   if (state.genre !== "scifi") {
-    const phrases = FANTASTIC_TEXT[state.genre];
+    const phrases = airLand && state.genre === "modern" ? ["of the real world", FANTASTIC_TEXT.modern[1]] : FANTASTIC_TEXT[state.genre];
     out.push(" ");
     out.push({
       field: "fantastic",
@@ -96824,15 +102787,25 @@ function vesselSentence(state, module2) {
       current: state.fantastic ? "on" : "off"
     });
   }
+  if (airLand) {
+    out.push(", naming ");
+    out.push({
+      field: "naming",
+      text: AIR_LAND.naming[module2][naming],
+      title: "Name single craft (Lucky Kate, Ashby Castle), or the types and models they belong to (Kestrel, the Castle class).",
+      choices: ["craft", "types"].map((n) => ({ id: n, label: AIR_LAND.naming[module2][n] })),
+      current: naming
+    });
+  }
   out.push(", in ");
-  const styles = availableStyles(module2, setting);
+  const styles = availableStyles(module2, setting, state.technology);
   const style = styles.find((s) => s.key === state.style);
   out.push({
     field: "style",
     text: style ? `${article(style.label)} ${style.label}` : "no particular",
     title: style ? style.description : "Style: genre flavour",
     choices: [{ id: "none", label: "no particular" }, ...styles.map((s) => ({ id: s.key, label: s.label }))],
-    current: (_b3 = style == null ? void 0 : style.key) != null ? _b3 : "none"
+    current: (_c3 = style == null ? void 0 : style.key) != null ? _c3 : "none"
   });
   out.push(" style, ");
   out.push({
@@ -96842,15 +102815,16 @@ function vesselSentence(state, module2) {
     choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
     current: state.tone
   });
-  if (showsPrefixes(state)) {
+  if (airLand ? showsCodes(state, module2) : showsPrefixes(state)) {
+    const words = airLand ? AIR_LAND.codes.words[module2] : PREFIX_TEXT;
     out.push(", ");
     out.push({
       field: "prefixes",
-      text: PREFIX_TEXT[state.prefixes ? "on" : "off"],
-      title: "Prefixes such as HMS or SS, where the culture and period used them",
+      text: words[state.prefixes ? "on" : "off"],
+      title: airLand ? "Registrations, serials and running numbers where the culture and period used them." : "Prefixes such as HMS or SS, where the culture and period used them",
       choices: [
-        { id: "off", label: PREFIX_TEXT.off },
-        { id: "on", label: PREFIX_TEXT.on }
+        { id: "off", label: words.off },
+        { id: "on", label: words.on }
       ],
       current: state.prefixes ? "on" : "off"
     });
@@ -96864,14 +102838,15 @@ function vesselSentence(state, module2) {
     current: state.people
   });
   out.push(" people and places, ");
-  if (fn) {
+  if (fn || naming === "types") {
+    const words = naming === "types" ? { off: SERIES_TEXT3.off, on: "as one family" } : SERIES_TEXT3;
     out.push({
       field: "series",
-      text: SERIES_TEXT3[state.series ? "on" : "off"],
-      title: "A class: one shape, sharing a word, an owner or a number sequence",
+      text: words[state.series ? "on" : "off"],
+      title: naming === "types" ? "A family: one maker's line of types, all on one pattern, with no word twice" : "A class: one shape, sharing a word, an owner or a number sequence",
       choices: [
-        { id: "off", label: SERIES_TEXT3.off },
-        { id: "on", label: SERIES_TEXT3.on }
+        { id: "off", label: words.off },
+        { id: "on", label: words.on }
       ],
       current: state.series ? "on" : "off"
     });
@@ -96883,6 +102858,7 @@ function vesselSentenceText(segments) {
   return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
 }
 function chooseVessel(state, field, id, module2) {
+  var _a5, _b3;
   const next = { ...state };
   switch (field) {
     case "culture":
@@ -96916,19 +102892,25 @@ function chooseVessel(state, field, id, module2) {
     case "series":
       next.series = id === "on";
       break;
+    case "naming":
+      next.naming = id === "types" ? "types" : "craft";
+      next.series = false;
+      break;
   }
   const setting = vesselSetting(next);
   if (!techChoices(module2, setting).includes(next.technology) && next.technology !== "any") next.technology = "any";
-  if (next.function && !availableFunctions(module2, next.culture, next.technology, setting).some((f) => f.key === next.function)) next.function = void 0;
-  if (!next.function) next.series = false;
-  if (next.style !== "none" && !availableStyles(module2, setting).some((s) => s.key === next.style)) next.style = "none";
+  if (next.function && !availableFunctions(module2, next.culture, next.technology, setting, (_a5 = next.naming) != null ? _a5 : "craft").some((f) => f.key === next.function)) next.function = void 0;
+  if (!next.function && ((_b3 = next.naming) != null ? _b3 : "craft") !== "types") next.series = false;
+  if (next.style !== "none" && !availableStyles(module2, setting, next.technology).some((s) => s.key === next.style)) next.style = "none";
   return next;
 }
 function vesselHistory(module2, state, label) {
   var _a5, _b3;
   const setting = vesselSetting(state);
   const culture = (_b3 = (_a5 = VESSEL_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
-  const style = availableStyles(module2, setting).find((s) => s.key === state.style);
+  const style = availableStyles(module2, setting, state.technology).find((s) => s.key === state.style);
+  const airLand = isAirLand(module2);
+  const types = airLand && state.naming === "types";
   return [
     label,
     SETTING_PHRASES[setting],
@@ -96936,7 +102918,10 @@ function vesselHistory(module2, state, label) {
     state.technology === "any" ? "any technology" : techLabel(module2, state.technology),
     ...style ? [style.label] : [],
     ...state.tone !== "any" ? [state.tone] : [],
-    ...state.series && state.function ? ["class"] : []
+    // Aircraft and land brief §1.2: types, codes, then class or family.
+    ...types ? ["types"] : [],
+    ...airLand && state.prefixes && showsCodes(state, module2) ? ["codes"] : [],
+    ...types ? state.series ? ["family"] : [] : state.series && state.function ? ["class"] : []
   ].join(" \xB7 ");
 }
 
@@ -100383,7 +106368,7 @@ var defaultInnSafeguards = () => ({ block: INN_DATA.safeguards.block, flag: INN_
 var pickOne11 = (items, rng) => items[Math.floor(rng() * items.length)];
 var LIGHT_OR_GRIM5 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var COLOURS = /* @__PURE__ */ new Set([...groupListWords("colour", "FL").map(([w]) => w), "Black", "White", "Red", "Blue", "Green", "Golden", "Grey", "Silver", "Pied", "Copper"]);
-var BIRDS = new Set(groupListWords("bird", "FL").map(([w]) => w));
+var BIRDS2 = new Set(groupListWords("bird", "FL").map(([w]) => w));
 function vocabItems(ctx, pool3, mult = 1) {
   return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(e.t))).map(([e, w]) => {
     var _a5;
@@ -100597,7 +106582,7 @@ function renderPattern10(ctx, pattern) {
     if (name === "innNumber") number = piece;
     if (mod === "poss") return groupPossessive(piece, name === "travellers" || name === "trade");
     if (mod === "pl") {
-      if (number === "Two" && BIRDS.has(piece) && ctx.rng() < INN_DATA.lists.braceShare) return `\0${groupPlural(piece)}`;
+      if (number === "Two" && BIRDS2.has(piece) && ctx.rng() < INN_DATA.lists.braceShare) return `\0${groupPlural(piece)}`;
       return groupPlural(piece);
     }
     return piece;
@@ -109429,7 +115414,7 @@ function parseVesselPreset(values, body, fileName) {
   var _a5, _b3;
   const problems = [];
   const module2 = values.vesselModule;
-  if (module2 !== "ships" && module2 !== "spacecraft") {
+  if (module2 !== "ships" && module2 !== "spacecraft" && module2 !== "aircraft" && module2 !== "landVehicles") {
     problems.push(`Unknown vesselModule \u201C${(_a5 = values.vesselModule) != null ? _a5 : ""}\u201D.`);
     return { problems };
   }
@@ -109446,17 +115431,24 @@ function parseVesselPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const genre = pick4("genre", module2 === "spacecraft" ? "scifi" : "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
+  const airLand = isAirLand(module2);
+  const genre = pick4("genre", module2 === "spacecraft" ? "scifi" : airLand ? "modern" : "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
   const fantastic = flag("fantastic");
   const setting = groupSetting(genre, genre === "scifi" ? false : fantastic);
+  const naming = airLand ? pick4("naming", "craft", (v) => v === "craft" || v === "types") : void 0;
   const fn = pick4("function", "any", (v) => v === "any" || moduleFunctions(module2).some((f) => f.key === v));
+  let technology = pick4("technology", "any", (v) => v === "any" || (airLand ? AIR_LAND.technology[module2].some((t) => t.code === v) : techChoices(module2, "SF").includes(v)));
+  if (airLand && technology !== "any" && /F$/.test(technology) && !techChoices(module2, setting).includes(technology)) {
+    problems.push(`Technology \u201C${technology}\u201D isn't available here; using any technology.`);
+    technology = "any";
+  }
   let style = pick4("style", "none", (v) => v === "none" || VESSEL_DATA.styles.some((st) => st.key === v));
-  if (style !== "none" && !availableStyles(module2, setting).some((s) => s.key === style)) {
+  if (style !== "none" && !availableStyles(module2, setting, technology).some((s) => s.key === style)) {
     problems.push(`Style \u201C${style}\u201D isn't available here.`);
     style = "none";
   }
   let series = flag("series");
-  if (series && fn === "any") {
+  if (series && fn === "any" && naming !== "types") {
     problems.push("Series needs a type.");
     series = false;
   }
@@ -109466,16 +115458,17 @@ function parseVesselPreset(values, body, fileName) {
       setting: (_b3 = values.setting) != null ? _b3 : "",
       description: body.trim(),
       vesselModule: module2,
-      culture: pick4("culture", "general", (v) => !!findVesselCulture(v)),
+      culture: pick4("culture", module2 === "landVehicles" ? "norman-british" : "general", (v) => !!findVesselCulture(v)),
       function: fn,
-      technology: pick4("technology", "any", (v) => v === "any" || techChoices(module2, "SF").includes(v)),
+      technology,
       genre,
       fantastic,
       style,
       tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
       prefixes: flag("prefixes"),
       people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
-      series
+      series,
+      ...naming ? { naming } : {}
     },
     problems
   };
@@ -109493,6 +115486,7 @@ function vesselPresetContent(preset) {
     `technology: ${preset.technology}`,
     `genre: ${preset.genre}`,
     `fantastic: ${preset.fantastic}`,
+    ...preset.naming ? [`naming: ${preset.naming}`] : [],
     `style: ${preset.style}`,
     `tone: ${preset.tone}`,
     `prefixes: ${preset.prefixes}`,
@@ -116597,7 +122591,7 @@ var OLD_HISTORY_PREFIXES = {
   deityNames: ["deities and sacred places"]
 };
 var WATERS_SECTIONS = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
-var VESSEL_SECTIONS = ["ships", "spacecraft"];
+var VESSEL_SECTIONS = ["ships", "spacecraft", "aircraft", "landVehicles"];
 var THING_SECTIONS = ["armsNames", "treasureNames", "bookNames"];
 var BYNAME_SECTIONS = ["epithets", "familyNames", "titles"];
 var GROUP_NAME_SECTIONS = [
@@ -116695,6 +122689,8 @@ var SECTION_LABELS = {
   familyNames: "family names",
   ships: "ships and boats",
   spacecraft: "spacecraft and stations",
+  aircraft: "aircraft and airships",
+  landVehicles: "land vehicles",
   seasLakes: "seas and lakes",
   coastsIslands: "coasts and islands",
   seaCharts: "sea charts",
@@ -116801,6 +122797,9 @@ var SECTION_ICONS = {
   // Ships brief §1.1, with the supplied ship icon for ships and boats.
   ships: ICON_SHIPS,
   spacecraft: ICON_SPACECRAFT,
+  // Aircraft and land vehicles brief §1.1: Lucide plane and train-front.
+  aircraft: "plane",
+  landVehicles: "train-front",
   // Group brief §1.1: Lucide icons.
   mysticOrders: ICON_MYSTIC,
   martialOrders: ICON_MARTIAL,
@@ -120059,7 +126058,8 @@ ${n.origin}${also}${echo}` };
       tone: p.tone,
       prefixes: p.prefixes,
       people: p.people,
-      series: p.series
+      series: p.series,
+      ...p.naming ? { naming: p.naming } : {}
     };
   }
   /** §2: the module's sentence. */
@@ -120079,10 +126079,11 @@ ${n.origin}${also}${echo}` };
   async runVessels(module2, state = this.vesselState(module2), label, problems = []) {
     var _a5;
     const seedOverride = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
-    const guards = await this.loadVesselSafeguards();
+    const guards = await this.loadVesselSafeguards(module2);
     const result = generateVesselNames({
       module: module2,
       culture: state.culture,
+      naming: state.naming,
       function: state.function,
       technology: state.technology,
       genre: state.genre,
@@ -120091,7 +126092,7 @@ ${n.origin}${also}${echo}` };
       tone: state.tone,
       prefixes: state.prefixes,
       people: state.people,
-      series: state.series && !!state.function,
+      series: state.series && (!!state.function || state.naming === "types"),
       count: this.generationCount,
       seed: seedOverride,
       safeguards: guards.safeguards
@@ -120106,7 +126107,7 @@ ${n.origin}${also}${echo}` };
     this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
   }
   /** §14.5: every vessel safeguard pack in the names folder, merged with the built-in lists. */
-  async loadVesselSafeguards() {
+  async loadVesselSafeguards(module2) {
     var _a5;
     const folder = this.app.vault.getFolderByPath((0, import_obsidian14.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
@@ -120116,7 +126117,7 @@ ${n.origin}${also}${echo}` };
       if (isVesselSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
     }
     if (packs.length === 0) return { notices: [] };
-    const g = VESSEL_DATA.safeguards;
+    const g = module2 === "aircraft" || module2 === "landVehicles" ? AIR_LAND.safeguards : VESSEL_DATA.safeguards;
     const { notices, block, flag, flagBlocks } = mergeSafeguards({ blockList: g.block, flagList: g.flag, flagListBlocks: g.flagListBlocks }, packs);
     return { safeguards: { block, flag, flagListBlocks: flagBlocks }, notices };
   }
@@ -120148,7 +126149,8 @@ ${n.origin}${also}${echo}` };
         tone: state.tone,
         prefixes: state.prefixes,
         people: state.people,
-        series: state.series && !!state.function
+        series: state.series && (!!state.function || state.naming === "types"),
+        ...state.naming ? { naming: state.naming } : {}
       });
       return this.writePreset(presetName, content, (existing) => {
         var _a7;

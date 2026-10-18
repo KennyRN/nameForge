@@ -30,7 +30,7 @@ import { findTimeCulture, findTimeKind, kindsOffered as timeKindsOffered, TIME_S
 import { DEITY_KINDS, DEITY_DOMAINS, deityCulture, type DeityGender, type DeityKind, type DeityNames } from "./deities/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
-import { availableStyles, findVesselCulture, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule } from "./vessels/engine";
+import { AIR_LAND, availableStyles, findVesselCulture, isAirLand, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule, type VesselNaming } from "./vessels/engine";
 import { findCommodity, findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
 import { scalesFor, type ScaleChoice } from "./space/scale";
 import { findHyperKind, findWaterKind, findWatersCulture, HYPER_SCALES, hyperKindsAt, waterEras, WATERS_MEDIA, WATERS_REGISTERS, watersHasSeries, type HyperMedium, type HyperRegister, type WatersEarthly, type WatersEra, type WatersModule, type WatersWhere } from "./waters/engine";
@@ -1198,12 +1198,14 @@ export interface VesselPreset {
   prefixes: boolean;
   people: GroupPeople;
   series: boolean;
+  /** Aircraft and land brief §15: only in the new modules' presets; absent means individual craft. */
+  naming?: VesselNaming;
 }
 
 function parseVesselPreset(values: Record<string, string>, body: string, fileName: string): { vessel?: VesselPreset; problems: string[] } {
   const problems: string[] = [];
   const module = values.vesselModule as VesselModule;
-  if (module !== "ships" && module !== "spacecraft") {
+  if (module !== "ships" && module !== "spacecraft" && module !== "aircraft" && module !== "landVehicles") {
     problems.push(`Unknown vesselModule “${values.vesselModule ?? ""}”.`);
     return { problems };
   }
@@ -1220,18 +1222,26 @@ function parseVesselPreset(values: Record<string, string>, body: string, fileNam
     if (v) problems.push(`Unknown ${key} “${v}”.`);
     return false;
   };
-  const genre = pick<GroupGenre>("genre", module === "spacecraft" ? "scifi" : "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
+  const airLand = isAirLand(module);
+  const genre = pick<GroupGenre>("genre", module === "spacecraft" ? "scifi" : airLand ? "modern" : "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
   const fantastic = flag("fantastic");
   const setting = groupSetting(genre, genre === "scifi" ? false : fantastic);
+  const naming = airLand ? pick<VesselNaming>("naming", "craft", (v) => v === "craft" || v === "types") : undefined;
   const fn = pick("function", "any", (v) => v === "any" || moduleFunctions(module).some((f) => f.key === v));
+  let technology = pick("technology", "any", (v) => v === "any" || (airLand ? AIR_LAND.technology[module].some((t) => t.code === v) : techChoices(module, "SF").includes(v)));
+  // Aircraft and land brief §15: AF or LF in a world without fantastic runs with technology any, and says so.
+  if (airLand && technology !== "any" && /F$/.test(technology) && !techChoices(module, setting).includes(technology)) {
+    problems.push(`Technology “${technology}” isn't available here; using any technology.`);
+    technology = "any";
+  }
   let style = pick("style", "none", (v) => v === "none" || VESSEL_DATA.styles.some((st) => st.key === v));
   // §15: a style not offered in the preset's setting runs as none.
-  if (style !== "none" && !availableStyles(module, setting).some((s) => s.key === style)) {
+  if (style !== "none" && !availableStyles(module, setting, technology).some((s) => s.key === style)) {
     problems.push(`Style “${style}” isn't available here.`);
     style = "none";
   }
   let series = flag("series");
-  if (series && fn === "any") {
+  if (series && fn === "any" && naming !== "types") {
     problems.push("Series needs a type.");
     series = false;
   }
@@ -1241,9 +1251,9 @@ function parseVesselPreset(values: Record<string, string>, body: string, fileNam
       setting: values.setting ?? "",
       description: body.trim(),
       vesselModule: module,
-      culture: pick("culture", "general", (v) => !!findVesselCulture(v)),
+      culture: pick("culture", module === "landVehicles" ? "norman-british" : "general", (v) => !!findVesselCulture(v)),
       function: fn,
-      technology: pick("technology", "any", (v) => v === "any" || techChoices(module, "SF").includes(v)),
+      technology,
       genre,
       fantastic,
       style,
@@ -1251,6 +1261,7 @@ function parseVesselPreset(values: Record<string, string>, body: string, fileNam
       prefixes: flag("prefixes"),
       people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
       series,
+      ...(naming ? { naming } : {}),
     },
     problems,
   };
@@ -1269,6 +1280,7 @@ function vesselPresetContent(preset: VesselPreset): string {
     `technology: ${preset.technology}`,
     `genre: ${preset.genre}`,
     `fantastic: ${preset.fantastic}`,
+    ...(preset.naming ? [`naming: ${preset.naming}`] : []),
     `style: ${preset.style}`,
     `tone: ${preset.tone}`,
     `prefixes: ${preset.prefixes}`,

@@ -132,7 +132,7 @@ import { generatePeopleRows, parseTypedNames, PEOPLE_CULTURES, PEOPLES_DATA, rea
 import { choosePeoples, DEFAULT_PEOPLE_STATE, normalisePeoples, peopleHistory, peopleSectionRequest, peopleSentence, peopleSentenceText, type PeopleSentenceState } from "./peoples/sentence";
 import { chooseRealm, DEFAULT_REALM_STATE, realmSentence, realmSentenceText, type RealmSentenceState } from "./realms/sentence";
 import { isRealmSafeguardPackContent } from "./realms/safeguardPacks";
-import { generateVesselNames, moduleFunctions, VESSEL_CULTURES, VESSEL_DATA, type VesselModule } from "./vessels/engine";
+import { AIR_LAND, generateVesselNames, moduleFunctions, VESSEL_CULTURES, VESSEL_DATA, type VesselModule } from "./vessels/engine";
 import { chooseVessel, defaultVesselState, vesselHistory, vesselSentence, vesselSentenceText, type VesselSentenceState } from "./vessels/sentence";
 import { isVesselSafeguardPackContent } from "./vessels/safeguardPacks";
 import { HyperspaceGuideModal } from "./waters/guide";
@@ -3839,6 +3839,7 @@ export class NameForgeModal extends Modal {
       prefixes: p.prefixes,
       people: p.people,
       series: p.series,
+      ...(p.naming ? { naming: p.naming } : {}),
     };
   }
 
@@ -3859,10 +3860,11 @@ export class NameForgeModal extends Modal {
   /** GN §14: the finished strings only; history "{module} · {setting} · {culture} · {technology}…". */
   private async runVessels(module: VesselModule, state = this.vesselState(module), label?: string, problems: string[] = []) {
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
-    const guards = await this.loadVesselSafeguards();
+    const guards = await this.loadVesselSafeguards(module);
     const result = generateVesselNames({
       module,
       culture: state.culture,
+      naming: state.naming,
       function: state.function,
       technology: state.technology,
       genre: state.genre,
@@ -3871,7 +3873,7 @@ export class NameForgeModal extends Modal {
       tone: state.tone,
       prefixes: state.prefixes,
       people: state.people,
-      series: state.series && !!state.function,
+      series: state.series && (!!state.function || state.naming === "types"),
       count: this.generationCount,
       seed: seedOverride,
       safeguards: guards.safeguards,
@@ -3887,7 +3889,7 @@ export class NameForgeModal extends Modal {
   }
 
   /** §14.5: every vessel safeguard pack in the names folder, merged with the built-in lists. */
-  private async loadVesselSafeguards(): Promise<{ safeguards?: GroupSafeguards; notices: string[] }> {
+  private async loadVesselSafeguards(module?: VesselModule): Promise<{ safeguards?: GroupSafeguards; notices: string[] }> {
     const folder = this.app.vault.getFolderByPath(normalizePath(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
     for (const child of folder?.children ?? []) {
@@ -3896,7 +3898,8 @@ export class NameForgeModal extends Modal {
       if (isVesselSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
     }
     if (packs.length === 0) return { notices: [] };
-    const g = VESSEL_DATA.safeguards;
+    // Aircraft and land brief §14.1: the new modules' own lists, with the pack's words added.
+    const g = module === "aircraft" || module === "landVehicles" ? AIR_LAND.safeguards : VESSEL_DATA.safeguards;
     const { notices, block, flag, flagBlocks } = mergeSafeguards({ blockList: g.block, flagList: g.flag, flagListBlocks: g.flagListBlocks }, packs);
     return { safeguards: { block, flag, flagListBlocks: flagBlocks }, notices };
   }
@@ -3927,7 +3930,8 @@ export class NameForgeModal extends Modal {
         tone: state.tone,
         prefixes: state.prefixes,
         people: state.people,
-        series: state.series && !!state.function,
+        series: state.series && (!!state.function || state.naming === "types"),
+        ...(state.naming ? { naming: state.naming } : {}),
       });
       return this.writePreset(presetName, content, (existing) => parseModulePreset(existing, presetName).vessel?.vesselModule === module);
     }).open();
