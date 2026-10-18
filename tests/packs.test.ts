@@ -5,6 +5,8 @@ import {
   createCompoundNamesFileContent,
   createMixNamesFileContent,
   createNamesFileContent,
+  isValidNamePackContent,
+  packNameFromBody,
   applyTemplate,
   mergeWithTemplate,
   parseNamesFileContent,
@@ -35,7 +37,7 @@ test("unchanged: packs without headings parse and save exactly as before", () =>
   assert.equal(parsed.template, undefined);
   assert.equal(
     createNamesFileContent("Old", ["A", "B"], "listPack"),
-    "---\ntype: namePack\npackType: listPack\npackName: Old\nsetting: \n---\n\nA\nB\n",
+    "---\ntype: namePack\npackType: listPack\npackName: Old\nsetting: \n---\n\n# Old\n\nA\nB\n",
   );
   assert.equal(
     createMixNamesFileContent("M", [{ packName: "A", weight: 1 }, { packName: "B", weight: 2 }]),
@@ -168,4 +170,29 @@ test("templates: missing, chained, self-templated and mismatched templates stop 
   assert.match(applyTemplate(derived, place).error!, /different pack type/);
   assert.equal(applyTemplate(derived, template).error, undefined);
   assert.deepEqual(applyTemplate(derived, template).parsed.names, ["Ann"]);
+});
+
+test("pack name: a # line names the pack, YAML packName is the fallback", () => {
+  const withH1 = parseNamesFileContent(pack("packType: listPack\npackName: Yaml Name", "# Hash Name\n\nKeelin\nOsbert"));
+  assert.equal(withH1.packName, "Hash Name");
+  assert.deepEqual(withH1.names, ["Keelin", "Osbert"]);
+  assert.equal(parseNamesFileContent(pack("packType: listPack\npackName: Yaml Name", "Keelin")).packName, "Yaml Name");
+});
+
+test("pack name: # Part N is a compound part, not the name; ## is a section", () => {
+  assert.equal(packNameFromBody("# Part 1\n\nWulf\n\n# Part 2\n\nric"), undefined);
+  assert.equal(packNameFromBody("## Male\nKeelin"), undefined);
+  assert.equal(packNameFromBody("# Orcs\n\n# Part 1\n\nGra"), "Orcs");
+  const written = createCompoundNamesFileContent("Orcs", [["Gra"], ["mok"]], "list", "joined");
+  const parsed = parseNamesFileContent(written);
+  assert.equal(parsed.packName, "Orcs");
+  assert.deepEqual(parsed.parts, [["Gra"], ["mok"]]);
+});
+
+test("pack name: a pack named only by # is still a pack; sections still parse", () => {
+  assert.ok(isValidNamePackContent(pack("packType: listPack", "# Cornish\n\n## Male\nJago")));
+  assert.ok(!isValidNamePackContent(pack("packType: listPack", "Jago")));
+  const parsed = parseNamesFileContent(pack("packType: listPack", "# Cornish\n\n## Male\nJago\n\n## Female\nDemelza"));
+  assert.equal(parsed.packName, "Cornish");
+  assert.deepEqual(parsed.sectioned?.sections.map((s) => s.name), ["Male", "Female"]);
 });

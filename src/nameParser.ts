@@ -110,6 +110,18 @@ export function namesToPattern(names: string[]): string[] {
   return names.map((name) => parseName(name).pattern);
 }
 
+/**
+ * The pack name from a `# Name` line: the first H1 that isn't a compound `# Part N` heading.
+ * Undefined when the text has none.
+ */
+export function packNameFromBody(text: string): string | undefined {
+  for (const raw of text.split(/\r?\n/)) {
+    const m = raw.trim().match(/^#\s+(.+?)\s*#*$/);
+    if (m && !/^Part\s*[123]$/i.test(m[1])) return m[1].trim();
+  }
+  return undefined;
+}
+
 export function isValidNamePackContent(content: string): boolean {
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   if (!frontmatterMatch) {
@@ -117,7 +129,9 @@ export function isValidNamePackContent(content: string): boolean {
   }
 
   const frontmatter = frontmatterMatch[1];
-  return /^type:\s*namePack\s*$/m.test(frontmatter) && /^packName:\s*(.+)$/m.test(frontmatter);
+  // The name is a `# Name` line, or `packName:` when the body has none.
+  const hasName = /^packName:\s*(.+)$/m.test(frontmatter) || packNameFromBody(content.slice(frontmatterMatch[0].length)) !== undefined;
+  return /^type:\s*namePack\s*$/m.test(frontmatter) && hasName;
 }
 
 export function parseNamesFileContent(content: string): NamesFileData {
@@ -150,6 +164,8 @@ export function parseNamesFileContent(content: string): NamesFileData {
     templateFields = parseTemplateFields(frontmatter);
 
     body = content.slice(frontmatterMatch[0].length);
+    // A `# Name` line is the pack name; `packName:` is used when there isn't one.
+    packName = packNameFromBody(body) ?? packName;
 
     // Place generators brief §1: `placeGenerator` on place packs; a compound place pack reads as a compound.
     const placeGenerator = packType === "placePack" ? parsePlaceGenerator(frontmatter.match(/^placeGenerator:\s*(.*)$/m)?.[1]) : undefined;
@@ -286,7 +302,7 @@ export function createNamesFileContent(
   const body = options.sectioned ? serialiseNameSections(options.sectioned) : names.join("\n");
   // Place generators brief §1.1: written only when it isn't breakdown.
   const placeLine = packType === "placePack" && options.placeGenerator && options.placeGenerator !== "breakdown" ? `placeGenerator: ${options.placeGenerator}\n` : "";
-  return `---\ntype: namePack\npackType: ${packType}\n${placeLine}packName: ${safePackName}\nsetting: \n${templateLine}---\n\n${body}\n`;
+  return `---\ntype: namePack\npackType: ${packType}\n${placeLine}packName: ${safePackName}\nsetting: \n${templateLine}---\n\n# ${safePackName}\n\n${body}\n`;
 }
 
 /**
@@ -316,7 +332,7 @@ export function createCompoundNamesFileContent(
 
   // Place generators brief §1.2: a compound place pack keeps `packType: placePack`.
   const typeLines = options.place ? "packType: placePack\nplaceGenerator: compound" : "packType: compoundPack";
-  return `---\ntype: namePack\n${typeLines}\ncompoundParts: ${parts.length}\ncompoundGenerator: ${generator}\ncompoundJoining: ${joining}\n${useLine}${gensLine}packName: ${safePackName}\nsetting: \n${templateLine}---\n\n${partsSections}\n`;
+  return `---\ntype: namePack\n${typeLines}\ncompoundParts: ${parts.length}\ncompoundGenerator: ${generator}\ncompoundJoining: ${joining}\n${useLine}${gensLine}packName: ${safePackName}\nsetting: \n${templateLine}---\n\n# ${safePackName}\n\n${partsSections}\n`;
 }
 
 export function createMixNamesFileContent(packName: string, sources: MixSourceRef[], templateOf?: string): string {

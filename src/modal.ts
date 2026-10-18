@@ -17,6 +17,7 @@ import {
   type PlaceGenerator,
   createMixNamesFileContent,
   createNamesFileContent,
+  packNameFromBody,
   isWordListContent,
   applyTemplate,
   parseTemplateFields,
@@ -505,7 +506,7 @@ class CompoundPartsEditor {
         wrapper.createEl("textarea", {
           cls: "nameforge-modal__textarea",
           attr: {
-            placeholder: `Paste name elements as CSV, one per line, or space-separated. Start a line with ## to add a title.\n\n${placeholderExample}`,
+            placeholder: `Paste name elements as CSV, one per line, or space-separated. Start a line with # to name the pack, and with ## to add a separator.\n\n${placeholderExample}\n\n---\n\n# pack name\nThe name of the pack. Put it in any part box; it's used instead of the Pack Name box, which can be left empty. Without it, the Pack Name box (or YAML packName) names the pack.\n\n# Part N\nThe heading nameForge writes above each part (# Part 1, # Part 2, # Part 3) in a saved pack. It's never read as the pack name.\n\n## pack separator\nThe pack separator is used to divide a part into titles such as male, female or child.`,
             rows: "6",
           },
         }),
@@ -524,6 +525,15 @@ class CompoundPartsEditor {
       partUse: this.partUse.slice(0, this.count),
       partGenerators: this.generator === "combined" ? this.partGenerators.slice(0, this.count) : undefined,
     };
+  }
+
+  /** The first `# Name` line across the part boxes in use. */
+  packName(): string | undefined {
+    for (const t of this.textareas.slice(0, this.count)) {
+      const name = packNameFromBody(t.value || "");
+      if (name) return name;
+    }
+    return undefined;
   }
 
   hasText(count: number): boolean {
@@ -4359,7 +4369,7 @@ export class NameForgeModal extends Modal {
     if (examples) {
       this.packDropdownMenuEl.createDiv({
         cls: "nameforge-modal__pack-dropdown-examples-note",
-        text: "These are built-in example packs. They're removed from this list once you create your own packs.",
+        text: "These are built-in example packs. They're removed from this list once you create your own packs. Each example pack is also available as a template on the Create Pack page.",
       });
     }
 
@@ -6109,9 +6119,9 @@ class PreviousGenerationsModal extends Modal {
 }
 
 const NAME_TEXTAREA_PLACEHOLDER =
-  "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa";
+  "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa\n\n---\n\n# pack name\nThe name of the pack. It's used instead of the Pack Name box, which can be left empty. Without it, the Pack Name box (or YAML packName) names the pack.\n\n## pack separator\nThe pack separator is used to divide a name pack into various segments such as male, female, noble, saints, child, or other types of names.";
 const PLACE_TEXTAREA_PLACEHOLDER =
-  "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
+  "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim\n\n---\n\n# pack name\nThe name of the pack. It's used instead of the Pack Name box, which can be left empty. Without it, the Pack Name box (or YAML packName) names the pack.\n\n## pack separator\nThe pack separator is used to divide a name pack into various segments such as towns, villages, ports, rivers, or other types of place names.";
 
 /** The editor's text boxes: one per text tab. */
 type TextPane = "breakdownPack" | "listPack" | "placePack" | "biome";
@@ -6657,14 +6667,15 @@ class NameForgeEditorModal extends Modal {
       if (!editor) return;
       const parts = entry.parts.slice(0, 3);
       if (editor.hasText(parts.length) && !(await confirmReplace(this.app, "Replace what's in the parts?"))) return;
-      // §5.3: a pack's titles come into the boxes with its names.
-      editor.fill(parts.map((part, i) => entry.partTexts?.[i] ?? part.join("\n")));
+      // §5.3: a pack's titles come into the boxes with its names; part 1 opens with the `# Name` line.
+      editor.fill(parts.map((part, i) => `${i === 0 ? `# ${entry.name}\n\n` : ""}${entry.partTexts?.[i] ?? part.join("\n")}`));
       return;
     }
     const box = this.inputEl;
     if (!box) return;
     if (box.value.trim() && !(await confirmReplace(this.app, "Replace what's in the box?"))) return;
-    box.value = entry.text ?? (entry.names ?? []).join("\n");
+    // The template's name comes in as the `# Name` line, so it names the pack when saved.
+    box.value = `# ${entry.name}\n\n${entry.text ?? (entry.names ?? []).join("\n")}`;
     // Place generators brief §4.4: a place template sets the sentence from its generator.
     if (this.selectedPackType === "placePack" && entry.placeGenerator && entry.placeGenerator !== "compound") this.setPlaceGenerator(entry.placeGenerator);
   }
@@ -6690,16 +6701,20 @@ class NameForgeEditorModal extends Modal {
       if (this.wizard && (await this.wizard.save())) this.close();
       return;
     }
-    const packName = this.packNameInput?.value?.trim() || "nameForge";
+    const boxName = this.packNameInput?.value?.trim();
     const templateOf = undefined;
     if (this.biomeMode) {
-      await this.saveBiome(packName);
+      await this.saveBiome(boxName || "nameForge");
       return;
     }
 
     // Compound brief §5.3, Place generators brief §4.4: people compound packs and compound place packs.
     const placeCompound = this.selectedPackType === "placePack" && this.placeGenerator === "compound";
     const compoundEditor = placeCompound ? this.placeCompound : this.selectedPackType === "compoundPack" ? this.peopleCompound : null;
+    // A `# Name` line in the pasted text names the pack and wins over the Pack Name box.
+    const pastedName =
+      this.selectedPackType === "mixPack" ? undefined : compoundEditor ? compoundEditor.packName() : packNameFromBody(this.inputEl?.value ?? "");
+    const packName = pastedName || boxName || "nameForge";
     if (compoundEditor) {
       const values = compoundEditor.values();
       const parts = values.parts;

@@ -93,3 +93,30 @@ test("example packs: Victorian as list and breakdown, Orc as combined; each offe
   assert.deepEqual(orc.compoundPartUse, ["all", "sometimes", "all"]);
   assert.deepEqual(compoundTitles(orc.compoundPartData!), ["Male", "Female", "Child"]);
 });
+
+test("templates: Old Cornish Place Names is a place template, unique and alphabetical", () => {
+  assert.deepEqual(builtinTemplates("place").map((x) => x.name), ["Old Cornish Place Names"]);
+  const items = builtinTemplates("place")[0].items!;
+  assert.equal(items.length, 61);
+  assert.equal(new Set(items).size, items.length);
+  assert.ok(items.includes("Fonton Morgeonec"));
+  assert.deepEqual(items, [...items].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())));
+});
+
+test("example packs: every built-in template is in the pack list", () => {
+  const packs = examplePacks().map((e) => parseNamesFileContent(e.content));
+  assert.deepEqual(
+    packs.map((p) => [p.packName, p.packType]),
+    [
+      ["Victorian, England (list)", "listPack"],
+      ["Victorian, England (breakdown)", "breakdownPack"],
+      ["Orc", "compoundPack"],
+      ["Anglo-Saxon", "breakdownPack"],
+      ["Old Cornish", "breakdownPack"],
+      ["Old Cornish Place Names", "placePack"],
+    ],
+  );
+  const cornish = packs.find((p) => p.packName === "Old Cornish")!;
+  assert.deepEqual(sectionOptions(cornish.sectioned!).map((o) => o.label), ["male", "female", "whole pack"]);
+  assert.equal(packs.at(-1)!.names.length, 61);
+});

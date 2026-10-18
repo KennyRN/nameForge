@@ -69,7 +69,8 @@ const builtin = (name: string) => BUILTIN_TEMPLATES.find((t) => t.name === name)
 /**
  * Victorian, England as a List pack and as a Breakdown pack, and Orc as a combined compound pack
  * (part 2 used sometimes). Each keeps its titles, so the sections sentence offers male, female
- * and (for Orc) child.
+ * and (for Orc) child. Every other built-in template follows as a Breakdown pack (people) or a
+ * breakdown place pack, so each template is in the pack list.
  */
 export function examplePacks(): ExamplePack[] {
   const victorian = builtin("Victorian, England");
@@ -86,6 +87,14 @@ export function examplePacks(): ExamplePack[] {
         partGenerators: ["breakdown", "breakdown", "list"],
       }),
     },
+    ...BUILTIN_TEMPLATES.filter((t) => t.name !== victorian.name && t.name !== orc.name && t.type !== "people-compound").map((t) => {
+      const sectioned = t.sections ? parseNameSections(templateText(t)) ?? undefined : undefined;
+      const names = t.sections ? t.sections.flatMap((s) => s.items) : t.items ?? [];
+      return {
+        path: `${EXAMPLE_PACK_PREFIX}${t.name}`,
+        content: createNamesFileContent(t.name, names, t.type === "place" ? "placePack" : "breakdownPack", { sectioned }),
+      };
+    }),
   ];
 }
 

@@ -1572,16 +1572,24 @@ var PACK_TYPES = ["breakdownPack", "listPack", "compoundPack", "placePack", "mix
 function isPackType(value) {
   return PACK_TYPES.includes(value);
 }
+function packNameFromBody(text) {
+  for (const raw of text.split(/\r?\n/)) {
+    const m = raw.trim().match(/^#\s+(.+?)\s*#*$/);
+    if (m && !/^Part\s*[123]$/i.test(m[1])) return m[1].trim();
+  }
+  return void 0;
+}
 function isValidNamePackContent(content) {
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   if (!frontmatterMatch) {
     return false;
   }
   const frontmatter = frontmatterMatch[1];
-  return /^type:\s*namePack\s*$/m.test(frontmatter) && /^packName:\s*(.+)$/m.test(frontmatter);
+  const hasName = /^packName:\s*(.+)$/m.test(frontmatter) || packNameFromBody(content.slice(frontmatterMatch[0].length)) !== void 0;
+  return /^type:\s*namePack\s*$/m.test(frontmatter) && hasName;
 }
 function parseNamesFileContent(content) {
-  var _a3, _b, _c, _d, _e;
+  var _a3, _b, _c, _d, _e, _f;
   const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
   let packName = "nameForge";
   let body = content;
@@ -1607,16 +1615,17 @@ function parseNamesFileContent(content) {
     }
     templateFields = parseTemplateFields(frontmatter);
     body = content.slice(frontmatterMatch[0].length);
-    const placeGenerator2 = packType === "placePack" ? parsePlaceGenerator((_a3 = frontmatter.match(/^placeGenerator:\s*(.*)$/m)) == null ? void 0 : _a3[1]) : void 0;
+    packName = (_a3 = packNameFromBody(body)) != null ? _a3 : packName;
+    const placeGenerator2 = packType === "placePack" ? parsePlaceGenerator((_b = frontmatter.match(/^placeGenerator:\s*(.*)$/m)) == null ? void 0 : _b[1]) : void 0;
     if (packType === "compoundPack" || placeGenerator2 === "compound") {
       const compoundPartsMatch = frontmatter.match(/^compoundParts:\s*(.+)$/m);
       const compoundParts = compoundPartsMatch && compoundPartsMatch[1].trim() === "3" ? 3 : 2;
-      const compoundGenerator = parseCompoundGenerator((_b = frontmatter.match(/^compoundGenerator:\s*(.+)$/m)) == null ? void 0 : _b[1]);
+      const compoundGenerator = parseCompoundGenerator((_c = frontmatter.match(/^compoundGenerator:\s*(.+)$/m)) == null ? void 0 : _c[1]);
       const compoundJoiningMatch = frontmatter.match(/^compoundJoining:\s*(.+)$/m);
       const compoundJoining = compoundJoiningMatch && compoundJoiningMatch[1].trim().replace(/^['"]|['"]$/g, "") === "spaced" ? "spaced" : "joined";
       const partData = parseCompoundBody(body, compoundParts);
-      const partUse = parseCompoundUse((_c = frontmatter.match(/^compoundPartUse:\s*(.*)$/m)) == null ? void 0 : _c[1], compoundParts);
-      const partGenerators = compoundGenerator === "combined" ? parseCompoundPartGenerators((_d = frontmatter.match(/^compoundPartGenerators:\s*(.*)$/m)) == null ? void 0 : _d[1], compoundParts) : void 0;
+      const partUse = parseCompoundUse((_d = frontmatter.match(/^compoundPartUse:\s*(.*)$/m)) == null ? void 0 : _d[1], compoundParts);
+      const partGenerators = compoundGenerator === "combined" ? parseCompoundPartGenerators((_e = frontmatter.match(/^compoundPartGenerators:\s*(.*)$/m)) == null ? void 0 : _e[1], compoundParts) : void 0;
       return {
         packName,
         names: [],
@@ -1645,7 +1654,7 @@ function parseNamesFileContent(content) {
     }
   }
   const sectioned = packType === "listPack" || packType === "breakdownPack" || packType === "placePack" ? parseNameSections(body) : null;
-  const placeGenerator = packType === "placePack" && frontmatterMatch ? parsePlaceGenerator((_e = frontmatterMatch[1].match(/^placeGenerator:\s*(.*)$/m)) == null ? void 0 : _e[1]) : void 0;
+  const placeGenerator = packType === "placePack" && frontmatterMatch ? parsePlaceGenerator((_f = frontmatterMatch[1].match(/^placeGenerator:\s*(.*)$/m)) == null ? void 0 : _f[1]) : void 0;
   return {
     packName,
     names: extractNamesFromMarkdown(body),
@@ -1721,6 +1730,8 @@ ${placeLine}packName: ${safePackName}
 setting: 
 ${templateLine}---
 
+# ${safePackName}
+
 ${body}
 `;
 }
@@ -1756,6 +1767,8 @@ compoundJoining: ${joining}
 ${useLine}${gensLine}packName: ${safePackName}
 setting: 
 ${templateLine}---
+
+# ${safePackName}
 
 ${partsSections}
 `;
@@ -98660,6 +98673,73 @@ var builtin_templates_default = [
         }
       ]
     ]
+  },
+  {
+    name: "Old Cornish Place Names",
+    type: "place",
+    items: [
+      "Boden",
+      "Bodigga",
+      "Bodmin",
+      "Bodmine",
+      "Bojorrow",
+      "Bonyalva",
+      "Botmenei",
+      "Botmenmei",
+      "Bucklawren",
+      "Caradon",
+      "Crantock",
+      "Dinurrin",
+      "Docco",
+      "Dunheved",
+      "Dunhevet",
+      "Eglosberrie",
+      "Fonton Morgeonec",
+      "Grugwith",
+      "Halligey",
+      "Halliggye",
+      "Lanalet",
+      "Landelech",
+      "Landulph",
+      "Langorou",
+      "Langorroc",
+      "Langorrou",
+      "Lannachebran",
+      "Lanow",
+      "Lanpiran",
+      "Lanwethinoc",
+      "Lenbruinn",
+      "Lesneage",
+      "Liscarret",
+      "Liskeard",
+      "Lyncenin",
+      "Mawgan",
+      "Penare",
+      "Pendavey",
+      "Pendrim",
+      "Penheale",
+      "Penwith",
+      "Pollhaescen",
+      "Rinsey",
+      "Roscarnon",
+      "Roseworthy",
+      "Skewes",
+      "Towan",
+      "Traboe",
+      "Treal",
+      "Tredower",
+      "Tregoose",
+      "Trelan",
+      "Trelowarren",
+      "Trembraze",
+      "Trenance",
+      "Trethewey",
+      "Trevallack",
+      "Treveador",
+      "Trewarnevas",
+      "Treworder",
+      "Truthall"
+    ]
   }
 ];
 
@@ -98710,7 +98790,16 @@ function examplePacks() {
         partUse: ["all", "sometimes", "all"],
         partGenerators: ["breakdown", "breakdown", "list"]
       })
-    }
+    },
+    ...BUILTIN_TEMPLATES.filter((t) => t.name !== victorian.name && t.name !== orc.name && t.type !== "people-compound").map((t) => {
+      var _a4, _b2;
+      const sectioned2 = t.sections ? (_a4 = parseNameSections(templateText(t))) != null ? _a4 : void 0 : void 0;
+      const names2 = t.sections ? t.sections.flatMap((s) => s.items) : (_b2 = t.items) != null ? _b2 : [];
+      return {
+        path: `${EXAMPLE_PACK_PREFIX}${t.name}`,
+        content: createNamesFileContent(t.name, names2, t.type === "place" ? "placePack" : "breakdownPack", { sectioned: sectioned2 })
+      };
+    })
   ];
 }
 var isExamplePackPath = (path) => !!path && path.startsWith(EXAMPLE_PACK_PREFIX);
@@ -101923,9 +102012,20 @@ var CompoundPartsEditor = class {
         wrapper.createEl("textarea", {
           cls: "nameforge-modal__textarea",
           attr: {
-            placeholder: `Paste name elements as CSV, one per line, or space-separated. Start a line with ## to add a title.
+            placeholder: `Paste name elements as CSV, one per line, or space-separated. Start a line with # to name the pack, and with ## to add a separator.
 
-${placeholderExample}`,
+${placeholderExample}
+
+---
+
+# pack name
+The name of the pack. Put it in any part box; it's used instead of the Pack Name box, which can be left empty. Without it, the Pack Name box (or YAML packName) names the pack.
+
+# Part N
+The heading nameForge writes above each part (# Part 1, # Part 2, # Part 3) in a saved pack. It's never read as the pack name.
+
+## pack separator
+The pack separator is used to divide a part into titles such as male, female or child.`,
             rows: "6"
           }
         })
@@ -101943,6 +102043,14 @@ ${placeholderExample}`,
       partUse: this.partUse.slice(0, this.count),
       partGenerators: this.generator === "combined" ? this.partGenerators.slice(0, this.count) : void 0
     };
+  }
+  /** The first `# Name` line across the part boxes in use. */
+  packName() {
+    for (const t of this.textareas.slice(0, this.count)) {
+      const name = packNameFromBody(t.value || "");
+      if (name) return name;
+    }
+    return void 0;
   }
   hasText(count) {
     return this.textareas.slice(0, count).some((t) => t.value.trim());
@@ -105549,7 +105657,7 @@ ${text}
     if (examples) {
       this.packDropdownMenuEl.createDiv({
         cls: "nameforge-modal__pack-dropdown-examples-note",
-        text: "These are built-in example packs. They're removed from this list once you create your own packs."
+        text: "These are built-in example packs. They're removed from this list once you create your own packs. Each example pack is also available as a template on the Create Pack page."
       });
     }
     if (packs.length === 0) {
@@ -107131,8 +107239,8 @@ var PreviousGenerationsModal = class extends import_obsidian14.Modal {
     }
   }
 };
-var NAME_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa";
-var PLACE_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim";
+var NAME_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa\n\n---\n\n# pack name\nThe name of the pack. It's used instead of the Pack Name box, which can be left empty. Without it, the Pack Name box (or YAML packName) names the pack.\n\n## pack separator\nThe pack separator is used to divide a name pack into various segments such as male, female, noble, saints, child, or other types of names.";
+var PLACE_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim\n\n---\n\n# pack name\nThe name of the pack. It's used instead of the Pack Name box, which can be left empty. Without it, the Pack Name box (or YAML packName) names the pack.\n\n## pack separator\nThe pack separator is used to divide a name pack into various segments such as towns, villages, ports, rivers, or other types of place names.";
 var NameForgeEditorModal = class extends import_obsidian14.Modal {
   constructor(app, parent, initialText, initialPackName) {
     super(app);
@@ -107617,14 +107725,18 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
       if (editor.hasText(parts.length) && !await confirmReplace(this.app, "Replace what's in the parts?")) return;
       editor.fill(parts.map((part, i) => {
         var _a4, _b2;
-        return (_b2 = (_a4 = entry.partTexts) == null ? void 0 : _a4[i]) != null ? _b2 : part.join("\n");
+        return `${i === 0 ? `# ${entry.name}
+
+` : ""}${(_b2 = (_a4 = entry.partTexts) == null ? void 0 : _a4[i]) != null ? _b2 : part.join("\n")}`;
       }));
       return;
     }
     const box = this.inputEl;
     if (!box) return;
     if (box.value.trim() && !await confirmReplace(this.app, "Replace what's in the box?")) return;
-    box.value = (_b = entry.text) != null ? _b : ((_a3 = entry.names) != null ? _a3 : []).join("\n");
+    box.value = `# ${entry.name}
+
+${(_b = entry.text) != null ? _b : ((_a3 = entry.names) != null ? _a3 : []).join("\n")}`;
     if (this.selectedPackType === "placePack" && entry.placeGenerator && entry.placeGenerator !== "compound") this.setPlaceGenerator(entry.placeGenerator);
   }
   /** The text box a pack type writes in; compound and mix have their own sections instead. */
@@ -107644,19 +107756,21 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
     await this.wizard.load();
   }
   async saveNames() {
-    var _a3, _b, _c;
+    var _a3, _b, _c, _d, _e;
     if (this.wizardMode) {
       if (this.wizard && await this.wizard.save()) this.close();
       return;
     }
-    const packName = ((_b = (_a3 = this.packNameInput) == null ? void 0 : _a3.value) == null ? void 0 : _b.trim()) || "nameForge";
+    const boxName = (_b = (_a3 = this.packNameInput) == null ? void 0 : _a3.value) == null ? void 0 : _b.trim();
     const templateOf = void 0;
     if (this.biomeMode) {
-      await this.saveBiome(packName);
+      await this.saveBiome(boxName || "nameForge");
       return;
     }
     const placeCompound = this.selectedPackType === "placePack" && this.placeGenerator === "compound";
     const compoundEditor = placeCompound ? this.placeCompound : this.selectedPackType === "compoundPack" ? this.peopleCompound : null;
+    const pastedName = this.selectedPackType === "mixPack" ? void 0 : compoundEditor ? compoundEditor.packName() : packNameFromBody((_d = (_c = this.inputEl) == null ? void 0 : _c.value) != null ? _d : "");
+    const packName = pastedName || boxName || "nameForge";
     if (compoundEditor) {
       const values = compoundEditor.values();
       const parts = values.parts;
@@ -107717,7 +107831,7 @@ ${(_c = (_b = this.inputEl) == null ? void 0 : _b.value) != null ? _c : ""}`, ba
       this.close();
       return;
     }
-    const namesText = ((_c = this.inputEl) == null ? void 0 : _c.value) || "";
+    const namesText = ((_e = this.inputEl) == null ? void 0 : _e.value) || "";
     if (!namesText.trim() && !templateOf) {
       this.parent.setStatus("No names to save. Enter at least one name.");
       return;
