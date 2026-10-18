@@ -250,3 +250,17 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `moneyFixed:scrip` | whole scrip and token names: Pit Token, Hop Token, Siege Piece… | x, t, e, c, h, v, fx | money and coins |
 | `moneyFixed:currency` | whole currency names, printed without a leading "the": Pound, Wrought Silver… | x, e, c, loan, fx | money and coins |
 | `moneyFixed:nickname` | whole nicknames: Bob, Quid, Owls, Sorrel… | x, t, e, c, v, fx | money and coins |
+| `seasonWord` | words for the year's seasons, each tagged `s` with the seasons it fits: Sowing, Hay, Harvest, Frost, Thaw, Rain, Flood… | x, t, c, s | calendars and festivals |
+| `workWord` | the farming-year subset of the season words: Ploughing, Lambing, Shearing, Reaping…; tagged `wk` and `s` | x, s | calendars and festivals |
+| `dayWork` | what a day is for: Market, Wash, Rest, Fast, Moot, Assembly… | x, t, c, e | calendars and festivals |
+| `dayElement` | the five elements of an East Asian week: Fire, Water, Wood, Metal, Earth | c | calendars and festivals |
+| `skyFigure` | people in the sky: Hunter, Weaver, Ploughman, Twins… | x, t | sky lore |
+| `skyObject` | things in the sky: Plough, Wain, Loom, Fishhook, Fire Drill… | x, c | sky lore |
+| `skyBodyPart` | parts of a star picture: Eye, Tail, Horn, Heart… | x, t | sky lore |
+| `skyQuality` | qualities of a light: Pale, Red, Slow, Swift, Bright… | x, t | sky lore |
+| `skyKin` | kin of the sky: Sister, Brother, Mother, Bride… | x, t | sky lore |
+| `skyRiver` | the Milky Way's road words: River, Road, Path, Way, Seam… | x, t | sky lore |
+| `skyHeaven` | what the Milky Way leads to: Heaven, the Sky, the Night, Souls… | x, t, c | sky lore |
+| `festNoun` | what a festival honours: Lanterns, Bonfires, Ancestors, Kites… | x, t | calendars and festivals |
+| `festBlessing` | what is blessed: the Boats, the Ploughs, the Herds… | x | calendars and festivals |
+| `extraDays` | words for the days outside the months: Empty, Nameless, Lost, Idle… | x, t | calendars and festivals |

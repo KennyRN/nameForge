@@ -1,0 +1,6385 @@
+{
+ "$comment": "Time and sky (docs/time-and-sky-brief.md): systems, the system table, season cycles, culture names, shapes, themes and safeguards. Read through src/timesky/engine.ts. Eras are strings: all, AN, AN-MD, MD+ (MD on), ST+ …; weights and counts are the brief's.",
+ "version": 1,
+ "sensitive": [
+  "polynesian",
+  "andean"
+ ],
+ "homeland": {
+  "polynesian": "tropical-islands",
+  "andean": "highland"
+ },
+ "kinds": [
+  {
+   "key": "month",
+   "module": "calendar",
+   "menu": "Months",
+   "plural": "months",
+   "description": "The months of the year"
+  },
+  {
+   "key": "day",
+   "module": "calendar",
+   "menu": "Days of the week",
+   "plural": "days of the week",
+   "description": "The days of a week or market cycle"
+  },
+  {
+   "key": "festival",
+   "module": "calendar",
+   "menu": "Festivals and holy days",
+   "plural": "festivals and holy days",
+   "description": "Feasts, fairs, fires and days of remembrance"
+  },
+  {
+   "key": "moon",
+   "module": "calendar",
+   "menu": "Full moons",
+   "plural": "full moons",
+   "description": "The names of each full moon of the year"
+  },
+  {
+   "key": "constellation",
+   "module": "sky",
+   "menu": "Constellations",
+   "plural": "constellations",
+   "description": "Star pictures and patterns"
+  },
+  {
+   "key": "sign",
+   "module": "sky",
+   "menu": "Star signs",
+   "plural": "star signs",
+   "description": "The signs of a zodiac or a day count"
+  },
+  {
+   "key": "light",
+   "module": "sky",
+   "menu": "Wanderers and lights",
+   "plural": "wanderers and lights",
+   "description": "Planets, moons, comets, the morning and evening stars and the Milky Way"
+  }
+ ],
+ "series": {
+  "month": {
+   "text": "as one calendar",
+   "line": "Calendar"
+  },
+  "day": {
+   "text": "as one week",
+   "line": "Week"
+  },
+  "festival": {
+   "text": "as one year",
+   "line": "Festivals"
+  },
+  "moon": {
+   "text": "as one year of moons",
+   "line": "Calendar"
+  },
+  "sign": {
+   "text": "as one zodiac",
+   "line": "Zodiac"
+  },
+  "light": {
+   "text": "as one sky",
+   "line": "Sky"
+  }
+ },
+ "leapShare": [
+  7,
+  19
+ ],
+ "realShare": 0.25,
+ "loanShare": 0.7,
+ "cap": 7,
+ "years": {
+  "julian-12": {
+   "source": "Julian and Gregorian calendars",
+   "months": 12
+  },
+  "romulus-10": {
+   "source": "The ten-month calendar of Romulus (Roman legend)",
+   "months": 10,
+   "extra": {
+    "count": null
+   }
+  },
+  "numa-12": {
+   "source": "Republican Roman calendar",
+   "months": 12,
+   "leap": {
+    "after": [
+     12
+    ]
+   }
+  },
+  "attic-12": {
+   "source": "Athenian festival calendar",
+   "months": 12,
+   "leap": {
+    "after": [
+     6
+    ]
+   }
+  },
+  "bede-12": {
+   "source": "Anglo-Saxon year, as Bede describes it",
+   "months": 12,
+   "leap": {
+    "after": [
+     7
+    ]
+   }
+  },
+  "coligny-12": {
+   "source": "Gaulish calendar of Coligny",
+   "months": 12,
+   "leap": {
+    "after": [
+     0,
+     6
+    ]
+   }
+  },
+  "icelandic-12": {
+   "source": "Old Icelandic calendar",
+   "months": 12,
+   "extra": {
+    "count": 4
+   },
+   "leapHidden": "an extra week"
+  },
+  "egyptian-civil": {
+   "source": "Egyptian civil calendar",
+   "months": 12,
+   "seasons": [
+    4,
+    4,
+    4
+   ],
+   "extra": {
+    "count": 5
+   }
+  },
+  "ethiopian-13": {
+   "source": "Ethiopian calendar",
+   "months": 13
+  },
+  "lunar-12": {
+   "source": "Twelve-month lunar year",
+   "months": 12
+  },
+  "persian-solar": {
+   "source": "Persian solar year",
+   "months": 12
+  },
+  "babylonian-12": {
+   "source": "Babylonian lunisolar year",
+   "months": 12,
+   "leap": {
+    "after": [
+     12,
+     6
+    ]
+   }
+  },
+  "chinese-lunisolar": {
+   "source": "Chinese lunisolar calendar",
+   "months": 12,
+   "leap": {
+    "uniform": true
+   }
+  },
+  "indian-lunisolar": {
+   "source": "Indian lunisolar calendar",
+   "months": 12,
+   "leap": {
+    "uniform": true
+   }
+  },
+  "lunar-12-13": {
+   "source": "Twelve lunar months, with a thirteenth in some years",
+   "months": 12,
+   "leap": {
+    "after": [
+     12
+    ]
+   }
+  },
+  "aztec-18": {
+   "source": "Aztec solar year of 365 days",
+   "months": 18,
+   "extra": {
+    "count": 5
+   }
+  },
+  "maya-haab": {
+   "source": "Maya solar year of 365 days",
+   "months": 18,
+   "extra": {
+    "count": 5
+   }
+  },
+  "fixed-13": {
+   "source": "International Fixed Calendar (proposed 1902)",
+   "months": 13,
+   "extra": {
+    "count": 1
+   }
+  },
+  "darian-24": {
+   "source": "Darian calendar for Mars (proposed 1985)",
+   "months": 24
+  }
+ },
+ "weeks": {
+  "week-7": {
+   "source": "Seven-day week",
+   "days": 7,
+   "planets": [
+    "Sun",
+    "Moon",
+    "Mars",
+    "Mercury",
+    "Jupiter",
+    "Venus",
+    "Saturn"
+   ]
+  },
+  "nundinal-8": {
+   "source": "Roman market week of eight days",
+   "days": 8,
+   "market": [
+    1
+   ]
+  },
+  "decade-10": {
+   "source": "Ten-day week",
+   "days": 10,
+   "rest": 10
+  },
+  "market-4": {
+   "source": "Four-day market week",
+   "days": 4,
+   "market": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  "rokuyo-6": {
+   "source": "Japanese six-day cycle",
+   "days": 6
+  },
+  "day-signs-20": {
+   "source": "Twenty day signs of the 260-day count",
+   "days": 20
+  },
+  "moon-nights-30": {
+   "source": "Nights of the moon",
+   "days": 30,
+   "full": 15
+  },
+  "soviet-5": {
+   "source": "Soviet continuous week (1929–1931)",
+   "days": 5
+  }
+ },
+ "festivals": {
+  "quarters-4": {
+   "source": "The four quarters of the year",
+   "count": 4,
+   "placed": "quarters"
+  },
+  "season-starts-4": {
+   "source": "Four festivals at the start of each season",
+   "count": 4,
+   "placed": "season-starts"
+  },
+  "seasons": {
+   "source": "One festival for each season of the land",
+   "count": "seasons",
+   "placed": "season-starts"
+  },
+  "monthly": {
+   "source": "One festival in each month",
+   "count": "months",
+   "placed": "months"
+  },
+  "sekku-5": {
+   "source": "Five seasonal festivals of Japan",
+   "count": 5,
+   "placed": "months",
+   "months": [
+    1,
+    3,
+    5,
+    7,
+    9
+   ]
+  },
+  "ritu-6": {
+   "source": "Six seasons of India",
+   "count": 6,
+   "placed": "months",
+   "months": [
+    1,
+    3,
+    5,
+    7,
+    9,
+    11
+   ]
+  },
+  "solar-terms-24": {
+   "source": "Twenty-four solar terms",
+   "count": 24,
+   "placed": "pairs"
+  },
+  "egyptian-3": {
+   "source": "Three seasons of the Egyptian year",
+   "count": 3,
+   "placed": "season-starts"
+  }
+ },
+ "skies": {
+  "zodiac-12": {
+   "source": "Babylonian and Hellenistic zodiac",
+   "count": 12
+  },
+  "animals-12": {
+   "source": "Twelve animals of the Chinese cycle",
+   "count": 12
+  },
+  "mansions-28": {
+   "source": "Twenty-eight lunar mansions",
+   "count": 28
+  },
+  "nakshatras-27": {
+   "source": "Twenty-seven lunar mansions of India",
+   "count": 27
+  },
+  "day-signs-20": {
+   "source": "Twenty day signs of the 260-day count",
+   "count": 20
+  },
+  "decans-36": {
+   "source": "Thirty-six Egyptian decans",
+   "count": 36
+  },
+  "classical-7": {
+   "source": "The seven classical lights",
+   "count": 7,
+   "order": [
+    "Saturn",
+    "Jupiter",
+    "Mars",
+    "Sun",
+    "Venus",
+    "Mercury",
+    "Moon"
+   ]
+  }
+ },
+ "cells": {
+  "months": {
+   "general": [
+    "lunar-12-13",
+    "lunar-12-13",
+    "julian-12",
+    "julian-12",
+    "julian-12 80 · fixed-13 20"
+   ],
+   "anglo-saxon": [
+    "bede-12",
+    "bede-12",
+    "julian-12",
+    "julian-12",
+    "julian-12"
+   ],
+   "norse": [
+    "icelandic-12",
+    "icelandic-12",
+    "icelandic-12",
+    "julian-12",
+    "julian-12"
+   ],
+   "celtic": [
+    "coligny-12",
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12"
+   ],
+   "norman-british": [
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12"
+   ],
+   "roman": [
+    "romulus-10 20 · numa-12 40 · julian-12 40",
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12"
+   ],
+   "greek-byzantine": [
+    "attic-12",
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12"
+   ],
+   "slavic": [
+    "lunar-12-13",
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12"
+   ],
+   "steppe": [
+    "chinese-lunisolar",
+    "chinese-lunisolar",
+    "chinese-lunisolar",
+    "chinese-lunisolar",
+    "julian-12"
+   ],
+   "arabic-persian": [
+    "babylonian-12",
+    "lunar-12 50 · persian-solar 50",
+    "lunar-12 50 · persian-solar 50",
+    "lunar-12 50 · persian-solar 50",
+    "persian-solar 50 · julian-12 50"
+   ],
+   "indian": [
+    "indian-lunisolar",
+    "indian-lunisolar",
+    "indian-lunisolar",
+    "indian-lunisolar",
+    "indian-lunisolar 50 · julian-12 50"
+   ],
+   "chinese": [
+    "chinese-lunisolar",
+    "chinese-lunisolar",
+    "chinese-lunisolar",
+    "chinese-lunisolar",
+    "julian-12"
+   ],
+   "japanese": [
+    "chinese-lunisolar",
+    "chinese-lunisolar",
+    "chinese-lunisolar",
+    "julian-12",
+    "julian-12"
+   ],
+   "korean": [
+    "chinese-lunisolar",
+    "chinese-lunisolar",
+    "chinese-lunisolar",
+    "chinese-lunisolar",
+    "julian-12"
+   ],
+   "egyptian": [
+    "egyptian-civil",
+    "egyptian-civil",
+    "egyptian-civil",
+    "julian-12",
+    "julian-12"
+   ],
+   "ethiopian": [
+    "ethiopian-13",
+    "ethiopian-13",
+    "ethiopian-13",
+    "ethiopian-13",
+    "ethiopian-13"
+   ],
+   "bantu": [
+    "lunar-12-13",
+    "lunar-12-13",
+    "lunar-12-13",
+    "lunar-12-13",
+    "julian-12"
+   ],
+   "west-african": [
+    "lunar-12-13",
+    "lunar-12-13",
+    "lunar-12-13",
+    "lunar-12-13",
+    "julian-12"
+   ],
+   "aztec": [
+    "aztec-18",
+    "aztec-18",
+    "aztec-18 50 · julian-12 50",
+    "julian-12",
+    "julian-12"
+   ],
+   "maya": [
+    "maya-haab",
+    "maya-haab",
+    "maya-haab 50 · julian-12 50",
+    "julian-12",
+    "julian-12"
+   ],
+   "polynesian": [
+    "lunar-12-13",
+    "lunar-12-13",
+    "lunar-12-13",
+    "lunar-12-13",
+    "julian-12"
+   ],
+   "andean": [
+    "lunar-12-13",
+    "lunar-12-13",
+    "julian-12",
+    "julian-12",
+    "julian-12"
+   ]
+  },
+  "monthsFuture": "julian-12 70 · fixed-13 30",
+  "monthsPlanetary": "julian-12 50 · fixed-13 20 · darian-24 30",
+  "days": {
+   "general": [
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "anglo-saxon": [
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "norse": [
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "norman-british": [
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "ethiopian": [
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "arabic-persian": [
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "indian": [
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "celtic": [
+    "-",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "greek-byzantine": [
+    "-",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "slavic": [
+    "-",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7 80 · soviet-5 20",
+    "week-7"
+   ],
+   "roman": [
+    "nundinal-8 50 · week-7 50",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "steppe": [
+    "-",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "chinese": [
+    "decade-10",
+    "decade-10",
+    "decade-10",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "japanese": [
+    "decade-10",
+    "rokuyo-6",
+    "rokuyo-6",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "korean": [
+    "decade-10",
+    "decade-10",
+    "decade-10",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "egyptian": [
+    "decade-10",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "bantu": [
+    "market-4",
+    "market-4",
+    "market-4",
+    "market-4 50 · week-7 50",
+    "week-7",
+    "week-7"
+   ],
+   "west-african": [
+    "market-4",
+    "market-4",
+    "market-4",
+    "market-4 50 · week-7 50",
+    "week-7",
+    "week-7"
+   ],
+   "aztec": [
+    "day-signs-20",
+    "day-signs-20",
+    "day-signs-20 50 · week-7 50",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "maya": [
+    "day-signs-20",
+    "day-signs-20",
+    "day-signs-20 50 · week-7 50",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "polynesian": [
+    "moon-nights-30",
+    "moon-nights-30",
+    "moon-nights-30",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "andean": [
+    "-",
+    "-",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ]
+  },
+  "festivals": {
+   "general": "quarters-4",
+   "anglo-saxon": "quarters-4",
+   "norse": "quarters-4",
+   "norman-british": "quarters-4",
+   "slavic": "quarters-4",
+   "steppe": "quarters-4",
+   "arabic-persian": "quarters-4",
+   "celtic": "season-starts-4",
+   "roman": "monthly",
+   "greek-byzantine": "monthly",
+   "indian": "ritu-6",
+   "chinese": "solar-terms-24",
+   "korean": "solar-terms-24",
+   "japanese": "sekku-5 50 · solar-terms-24 50",
+   "egyptian": "egyptian-3",
+   "aztec": "monthly",
+   "maya": "monthly",
+   "ethiopian": "seasons",
+   "bantu": "seasons",
+   "west-african": "seasons",
+   "polynesian": "seasons",
+   "andean": "seasons"
+  },
+  "festivalsFuture": "seasons",
+  "festivalsSpace": "quarters-4",
+  "signs": {
+   "general": [
+    "zodiac-12",
+    "zodiac-12"
+   ],
+   "norman-british": [
+    "zodiac-12",
+    "zodiac-12"
+   ],
+   "roman": [
+    "zodiac-12",
+    "zodiac-12"
+   ],
+   "greek-byzantine": [
+    "zodiac-12",
+    "zodiac-12"
+   ],
+   "anglo-saxon": [
+    "-",
+    "zodiac-12"
+   ],
+   "celtic": [
+    "-",
+    "zodiac-12"
+   ],
+   "norse": [
+    "-",
+    "zodiac-12"
+   ],
+   "slavic": [
+    "-",
+    "zodiac-12"
+   ],
+   "ethiopian": [
+    "-",
+    "zodiac-12"
+   ],
+   "arabic-persian": [
+    "zodiac-12 70 · mansions-28 30",
+    "zodiac-12 70 · mansions-28 30"
+   ],
+   "indian": [
+    "zodiac-12 60 · nakshatras-27 40",
+    "zodiac-12 60 · nakshatras-27 40"
+   ],
+   "chinese": [
+    "animals-12 70 · mansions-28 30",
+    "animals-12 70 · mansions-28 30"
+   ],
+   "japanese": [
+    "animals-12",
+    "animals-12"
+   ],
+   "korean": [
+    "animals-12",
+    "animals-12"
+   ],
+   "steppe": [
+    "animals-12",
+    "animals-12"
+   ],
+   "egyptian": [
+    "decans-36",
+    "zodiac-12"
+   ],
+   "aztec": [
+    "day-signs-20",
+    "day-signs-20"
+   ],
+   "maya": [
+    "day-signs-20",
+    "day-signs-20"
+   ],
+   "bantu": [
+    "-",
+    "-"
+   ],
+   "west-african": [
+    "-",
+    "-"
+   ],
+   "polynesian": [
+    "-",
+    "-"
+   ],
+   "andean": [
+    "-",
+    "-"
+   ]
+  },
+  "lights": "classical-7"
+ },
+ "seasonCycles": {
+  "temperate": "spring 3 · summer 3 · autumn 3 · winter 3",
+  "britain": "spring 3 · summer 3 · autumn 3 · winter 3",
+  "moorland": "spring 2 · summer 3 · storm 3 · winter 4",
+  "boreal": "thaw 2 · summer 4 · winter 6",
+  "cool-rainforest": "summer 4 · rain 4 · winter 4",
+  "mediterranean": "winter 4 · summer 5 · harvest 3",
+  "steppe": "spring 2 · summer 4 · winter 6",
+  "desert": "winter 4 · summer 6 · rain 2",
+  "savannah": "rain 5 · harvest 2 · drought 5",
+  "rainforest": "rain 7 · flood 5",
+  "monsoon": "rain 3 · monsoon 4 · flood 2 · harvest 3",
+  "tropical-islands": "rain 5 · storm 2 · harvest 5",
+  "highland": "thaw 2 · summer 3 · frost 2 · winter 5"
+ },
+ "homelandCycles": {
+  "egyptian": "flood 4 · winter 4 · harvest 4",
+  "aztec": "drought 6 · rain 6",
+  "maya": "drought 6 · rain 6",
+  "ethiopian": "rain 3 · harvest 3 · drought 6",
+  "andean": "rain 4 · harvest 3 · frost 5"
+ },
+ "seasons": {
+  "spring": {
+   "phrase": "spring",
+   "noun": "Spring"
+  },
+  "summer": {
+   "phrase": "summer",
+   "noun": "Summer"
+  },
+  "autumn": {
+   "phrase": "autumn",
+   "noun": "Autumn"
+  },
+  "winter": {
+   "phrase": "winter",
+   "noun": "Winter"
+  },
+  "thaw": {
+   "phrase": "the thaw",
+   "noun": "Thaw"
+  },
+  "rain": {
+   "phrase": "the rains",
+   "noun": "Rain"
+  },
+  "monsoon": {
+   "phrase": "the monsoon",
+   "noun": "Monsoon"
+  },
+  "flood": {
+   "phrase": "the flood",
+   "noun": "Flood"
+  },
+  "drought": {
+   "phrase": "the dry season",
+   "noun": "Dry"
+  },
+  "harvest": {
+   "phrase": "harvest",
+   "noun": "Harvest"
+  },
+  "storm": {
+   "phrase": "the storms",
+   "noun": "Storm"
+  },
+  "frost": {
+   "phrase": "the frosts",
+   "noun": "Frost"
+  }
+ },
+ "newYear": {
+  "general": "spring 0",
+  "anglo-saxon": "winter 1",
+  "norse": "summer 0",
+  "celtic": "winter 0",
+  "norman-british": "winter 1",
+  "roman": "winter 3",
+  "greek-byzantine": {
+   "AN": "summer 2",
+   "*": "summer 4"
+  },
+  "slavic": {
+   "AN": "spring 0",
+   "MD": "spring 0",
+   "*": "winter 1"
+  },
+  "steppe": "spring 0",
+  "arabic-persian": "winter 3",
+  "indian": "rain 0",
+  "chinese": "spring 0",
+  "japanese": "spring 0",
+  "korean": "spring 0",
+  "egyptian": "flood 0",
+  "ethiopian": "harvest 0",
+  "bantu": "rain 0",
+  "west-african": "harvest 0",
+  "aztec": "drought 3",
+  "maya": "drought 0",
+  "polynesian": "rain 0",
+  "andean": "rain 0"
+ },
+ "janShift": {
+  "slavic": {
+   "MD": 2
+  }
+ },
+ "seasonalMonths": {
+  "steppe": [
+   "chinese-lunisolar"
+  ],
+  "chinese": [
+   "chinese-lunisolar",
+   "julian-12"
+  ],
+  "korean": [
+   "chinese-lunisolar",
+   "julian-12"
+  ]
+ },
+ "cultureNames": {
+  "anglo-saxon": {
+   "month": [
+    {
+     "n": "After Yule",
+     "p": 1,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "Cake Month",
+     "p": 2,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "Hretha's Month",
+     "p": 3,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "Eostre's Month",
+     "p": 4,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "Three-Milkings Month",
+     "p": 5,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "Before Midsummer",
+     "p": 6,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "After Midsummer",
+     "p": 7,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "Third Midsummer",
+     "p": "leap",
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "Weed Month",
+     "p": 8,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "Holy Month",
+     "p": 9,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "Winter Full Moon",
+     "p": 10,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "Sacrifice Month",
+     "p": 11,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    },
+    {
+     "n": "Before Yule",
+     "p": 12,
+     "e": "AN-MD",
+     "sys": [
+      "bede-12"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Sun's Day",
+     "p": 1,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Moon's Day",
+     "p": 2,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Tiw's Day",
+     "p": 3,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Woden's Day",
+     "p": 4,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Thunor's Day",
+     "p": 5,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Frige's Day",
+     "p": 6,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Saturn's Day",
+     "p": 7,
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Mothers' Night",
+     "s": "winter"
+    },
+    {
+     "n": "Yule",
+     "s": "winter"
+    },
+    {
+     "n": "Eostre's Feast",
+     "s": "spring",
+     "e": "AN"
+    },
+    {
+     "n": "Midsummer",
+     "s": "summer"
+    },
+    {
+     "n": "Loaf Mass",
+     "s": "autumn",
+     "e": "MD+"
+    },
+    {
+     "n": "Winter Nights",
+     "s": "autumn"
+    }
+   ]
+  },
+  "norse": {
+   "month": [
+    {
+     "n": "Sun Month",
+     "p": 3,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Hay Month",
+     "p": 4,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Two-Month",
+     "p": 5,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Autumn Month",
+     "p": 6,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Slaughter Month",
+     "p": 7,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Yule Month",
+     "p": 8,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Suet Month",
+     "p": 9,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Lone Month",
+     "p": 12,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Extra Nights",
+     "p": "extra",
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Sun's Day",
+     "p": 1,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Moon's Day",
+     "p": 2,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Tyr's Day",
+     "p": 3,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Odin's Day",
+     "p": 4,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Thor's Day",
+     "p": 5,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Frigg's Day",
+     "p": 6,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Washing Day",
+     "p": 7,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Third Day",
+     "p": 3,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Midweek",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fifth Day",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fast Day",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Winter Nights",
+     "s": "autumn"
+    },
+    {
+     "n": "Yule",
+     "s": "winter"
+    },
+    {
+     "n": "Sacrifice of the Disir",
+     "s": "winter"
+    },
+    {
+     "n": "Thorri's Feast",
+     "s": "winter"
+    },
+    {
+     "n": "First Day of Summer",
+     "s": "summer"
+    },
+    {
+     "n": "Midsummer",
+     "s": "summer"
+    },
+    {
+     "n": "Assembly Days",
+     "s": "summer"
+    }
+   ]
+  },
+  "celtic": {
+   "month": [
+    {
+     "n": "Bright Fire",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Midsummer Month",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Summer's End",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Lugh's Assembly",
+     "p": 8,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Reaping Month",
+     "p": 9,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "End of Harvest",
+     "p": 10,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Slaughter Month",
+     "p": 11,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Before Yule",
+     "p": 12,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Lord's Day",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Moon's Day",
+     "p": 2,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Mars's Day",
+     "p": 3,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "First Fast",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Between the Fasts",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fast Day",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Saturn's Day",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Summer's End",
+     "s": "winter",
+     "loan": "Samhain"
+    },
+    {
+     "n": "Ewe's Milk",
+     "s": "spring",
+     "loan": "Imbolc"
+    },
+    {
+     "n": "Bright Fire",
+     "s": "summer",
+     "loan": "Beltane"
+    },
+    {
+     "n": "Lugh's Assembly",
+     "s": "autumn",
+     "loan": "Lughnasadh"
+    }
+   ]
+  },
+  "norman-british": {
+   "festival": [
+    {
+     "n": "Plough Monday",
+     "s": "winter",
+     "e": "MD+"
+    },
+    {
+     "n": "Candlemas",
+     "s": "winter",
+     "e": "MD+"
+    },
+    {
+     "n": "Lady Day",
+     "s": "spring",
+     "e": "MD+"
+    },
+    {
+     "n": "May Day",
+     "s": "spring",
+     "e": "MD+"
+    },
+    {
+     "n": "Midsummer Day",
+     "s": "summer",
+     "e": "MD+"
+    },
+    {
+     "n": "Lammas",
+     "s": "summer",
+     "e": "MD+"
+    },
+    {
+     "n": "Harvest Home",
+     "s": "autumn",
+     "e": "MD+"
+    },
+    {
+     "n": "Michaelmas",
+     "s": "autumn",
+     "e": "MD+"
+    },
+    {
+     "n": "Martinmas",
+     "s": "autumn",
+     "e": "MD+"
+    },
+    {
+     "n": "Hocktide",
+     "s": "spring",
+     "e": "MD+"
+    },
+    {
+     "n": "Shrovetide",
+     "s": "winter",
+     "e": "MD+"
+    },
+    {
+     "n": "Twelfth Night",
+     "s": "winter",
+     "e": "MD+"
+    },
+    {
+     "n": "Wakes Week",
+     "s": "summer",
+     "e": "ST+"
+    },
+    {
+     "n": "Bank Holiday",
+     "s": "summer",
+     "e": "ST+"
+    },
+    {
+     "n": "Bonfire Night",
+     "s": "autumn",
+     "e": "ST+"
+    }
+   ]
+  },
+  "roman": {
+   "month": [
+    {
+     "n": "Mars's Month",
+     "p": 1,
+     "e": "AN",
+     "sys": [
+      "romulus-10",
+      "numa-12",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Maia's Month",
+     "p": 3,
+     "e": "AN",
+     "sys": [
+      "romulus-10",
+      "numa-12",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Juno's Month",
+     "p": 4,
+     "e": "AN",
+     "sys": [
+      "romulus-10",
+      "numa-12",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Fifth Month",
+     "p": 5,
+     "e": "AN",
+     "sys": [
+      "romulus-10",
+      "numa-12",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Sixth Month",
+     "p": 6,
+     "e": "AN",
+     "sys": [
+      "romulus-10",
+      "numa-12",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Seventh Month",
+     "p": 7,
+     "e": "AN",
+     "sys": [
+      "romulus-10",
+      "numa-12",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Eighth Month",
+     "p": 8,
+     "e": "AN",
+     "sys": [
+      "romulus-10",
+      "numa-12",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Ninth Month",
+     "p": 9,
+     "e": "AN",
+     "sys": [
+      "romulus-10",
+      "numa-12",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Tenth Month",
+     "p": 10,
+     "e": "AN",
+     "sys": [
+      "romulus-10",
+      "numa-12",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Janus's Month",
+     "p": 11,
+     "e": "AN",
+     "sys": [
+      "numa-12",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Purification Month",
+     "p": 12,
+     "e": "AN",
+     "sys": [
+      "numa-12",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Wages Month",
+     "p": "leap",
+     "e": "AN",
+     "sys": [
+      "numa-12"
+     ]
+    },
+    {
+     "n": "the Winter Days",
+     "p": "extra",
+     "e": "AN",
+     "sys": [
+      "romulus-10"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Ninth Day",
+     "p": 1,
+     "sys": [
+      "nundinal-8"
+     ]
+    },
+    {
+     "n": "Sun's Day",
+     "p": 1,
+     "e": "AN",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Lord's Day",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Moon's Day",
+     "p": 2,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Mars's Day",
+     "p": 3,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Mercury's Day",
+     "p": 4,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Jupiter's Day",
+     "p": 5,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Venus's Day",
+     "p": 6,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Saturn's Day",
+     "p": 7,
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Saturn's Feast",
+     "s": "winter",
+     "e": "AN",
+     "loan": "Saturnalia"
+    },
+    {
+     "n": "Wolf Festival",
+     "s": "winter",
+     "e": "AN",
+     "loan": "Lupercalia"
+    },
+    {
+     "n": "Flower Games",
+     "s": "spring",
+     "e": "AN",
+     "loan": "Floralia"
+    },
+    {
+     "n": "Shepherds' Feast",
+     "s": "spring",
+     "e": "AN"
+    },
+    {
+     "n": "Rust Festival",
+     "s": "spring",
+     "e": "AN"
+    },
+    {
+     "n": "Mothers' Feast",
+     "s": "spring",
+     "e": "AN"
+    },
+    {
+     "n": "Vesta's Feast",
+     "s": "summer",
+     "e": "AN"
+    },
+    {
+     "n": "Wine Feast",
+     "s": "autumn",
+     "e": "AN",
+     "loan": "Vinalia"
+    },
+    {
+     "n": "Boundary Feast",
+     "s": "winter",
+     "e": "AN",
+     "loan": "Terminalia"
+    },
+    {
+     "n": "Oven Feast",
+     "s": "winter",
+     "e": "AN"
+    },
+    {
+     "n": "Harvest-Store Feast",
+     "s": "summer",
+     "e": "AN"
+    }
+   ]
+  },
+  "greek-byzantine": {
+   "month": [
+    {
+     "n": "Hundred-Ox Month",
+     "p": 1,
+     "e": "AN",
+     "sys": [
+      "attic-12"
+     ]
+    },
+    {
+     "n": "Neighbour-Moving Month",
+     "p": 2,
+     "e": "AN",
+     "sys": [
+      "attic-12"
+     ]
+    },
+    {
+     "n": "Running-to-Help Month",
+     "p": 3,
+     "e": "AN",
+     "sys": [
+      "attic-12"
+     ]
+    },
+    {
+     "n": "Bean-Boiling Month",
+     "p": 4,
+     "e": "AN",
+     "sys": [
+      "attic-12"
+     ]
+    },
+    {
+     "n": "Blustering Month",
+     "p": 5,
+     "e": "AN",
+     "sys": [
+      "attic-12"
+     ]
+    },
+    {
+     "n": "Poseidon's Month",
+     "p": 6,
+     "e": "AN",
+     "sys": [
+      "attic-12"
+     ]
+    },
+    {
+     "n": "Second Poseidon's Month",
+     "p": "leap",
+     "e": "AN",
+     "sys": [
+      "attic-12"
+     ]
+    },
+    {
+     "n": "Wedding Month",
+     "p": 7,
+     "e": "AN",
+     "sys": [
+      "attic-12"
+     ]
+    },
+    {
+     "n": "Flower Month",
+     "p": 8,
+     "e": "AN",
+     "sys": [
+      "attic-12"
+     ]
+    },
+    {
+     "n": "Deer-Hunt Month",
+     "p": 9,
+     "e": "AN",
+     "sys": [
+      "attic-12"
+     ]
+    },
+    {
+     "n": "First-Loaf Month",
+     "p": 11,
+     "e": "AN",
+     "sys": [
+      "attic-12"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Lord's Day",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Second Day",
+     "p": 2,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Third Day",
+     "p": 3,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fourth Day",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fifth Day",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Preparation Day",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Sabbath",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "All-City Festival",
+     "s": "summer",
+     "e": "AN",
+     "loan": "Panathenaia"
+    },
+    {
+     "n": "Flower Festival",
+     "s": "winter",
+     "e": "AN",
+     "loan": "Anthesteria"
+    },
+    {
+     "n": "Dionysus's Festival",
+     "s": "spring",
+     "e": "AN",
+     "loan": "Dionysia"
+    },
+    {
+     "n": "Bean Feast",
+     "s": "autumn",
+     "e": "AN"
+    },
+    {
+     "n": "Lawgiving Feast",
+     "s": "autumn",
+     "e": "AN",
+     "loan": "Thesmophoria"
+    },
+    {
+     "n": "First-Loaf Feast",
+     "s": "summer",
+     "e": "AN"
+    },
+    {
+     "n": "Threshing-Floor Feast",
+     "s": "winter",
+     "e": "AN"
+    }
+   ]
+  },
+  "slavic": {
+   "month": [
+    {
+     "n": "Cutting Month",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Ice Month",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Fierce Month",
+     "p": 2,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Birch Month",
+     "p": 3,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Blossom Month",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Oak Month",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Grass Month",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Red Month",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Lime Month",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Sickle Month",
+     "p": 8,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Heather Month",
+     "p": 9,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Yellowing Month",
+     "p": 10,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Leaf-Fall",
+     "p": 11,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    },
+    {
+     "n": "Clod Month",
+     "p": 12,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ],
+     "jan": true
+    }
+   ],
+   "day": [
+    {
+     "n": "Rest Day",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "After-Rest",
+     "p": 2,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Second Day",
+     "p": 3,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Midweek",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fourth Day",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fifth Day",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Sabbath",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Yellow Day",
+     "p": 1,
+     "e": "MO",
+     "sys": [
+      "soviet-5"
+     ]
+    },
+    {
+     "n": "Pink Day",
+     "p": 2,
+     "e": "MO",
+     "sys": [
+      "soviet-5"
+     ]
+    },
+    {
+     "n": "Red Day",
+     "p": 3,
+     "e": "MO",
+     "sys": [
+      "soviet-5"
+     ]
+    },
+    {
+     "n": "Purple Day",
+     "p": 4,
+     "e": "MO",
+     "sys": [
+      "soviet-5"
+     ]
+    },
+    {
+     "n": "Green Day",
+     "p": 5,
+     "e": "MO",
+     "sys": [
+      "soviet-5"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Butter Week",
+     "s": "winter"
+    },
+    {
+     "n": "Bathing Night",
+     "s": "summer",
+     "loan": "Kupala"
+    },
+    {
+     "n": "Forefathers' Night",
+     "s": "autumn"
+    },
+    {
+     "n": "Green Week",
+     "s": "spring"
+    },
+    {
+     "n": "Carol Night",
+     "s": "winter"
+    }
+   ]
+  },
+  "steppe": {
+   "month": [
+    {
+     "n": "White Month",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "White Month",
+     "s": "spring"
+    },
+    {
+     "n": "New Day",
+     "s": "spring"
+    },
+    {
+     "n": "Three Games",
+     "s": "summer"
+    },
+    {
+     "n": "Horse-Milk Feast",
+     "s": "summer"
+    }
+   ]
+  },
+  "arabic-persian": {
+   "day": [
+    {
+     "n": "Sabbath",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "One-Sabbath",
+     "p": 2,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Two-Sabbath",
+     "p": 3,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Three-Sabbath",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Four-Sabbath",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Five-Sabbath",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "New Day",
+     "s": "spring",
+     "loan": "Nowruz"
+    },
+    {
+     "n": "Longest Night",
+     "s": "winter"
+    },
+    {
+     "n": "Feast of Roses",
+     "s": "spring"
+    },
+    {
+     "n": "Water-Throwing Feast",
+     "s": "summer"
+    }
+   ]
+  },
+  "indian": {
+   "month": [
+    {
+     "n": "Extra Month",
+     "p": "leap",
+     "sys": [
+      "indian-lunisolar"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Kite Festival",
+     "s": "winter"
+    },
+    {
+     "n": "Monsoon Welcome",
+     "s": "monsoon"
+    },
+    {
+     "n": "Harvest of Rice",
+     "s": "harvest"
+    }
+   ]
+  },
+  "egyptian": {
+   "month": [
+    {
+     "n": "First Month of the Flood",
+     "p": 1,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Second Month of the Flood",
+     "p": 2,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Third Month of the Flood",
+     "p": 3,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Fourth Month of the Flood",
+     "p": 4,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "First Month of Sowing",
+     "p": 5,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Second Month of Sowing",
+     "p": 6,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Third Month of Sowing",
+     "p": 7,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Fourth Month of Sowing",
+     "p": 8,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "First Month of Harvest",
+     "p": 9,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Second Month of Harvest",
+     "p": 10,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Third Month of Harvest",
+     "p": 11,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Fourth Month of Harvest",
+     "p": 12,
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Thoth's Month",
+     "p": 1,
+     "e": "MD-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Hathor's Month",
+     "p": 3,
+     "e": "MD-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    },
+    {
+     "n": "Days upon the Year",
+     "p": "extra",
+     "e": "AN-EM",
+     "sys": [
+      "egyptian-civil"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Opening of the Year",
+     "s": "flood"
+    },
+    {
+     "n": "Feast of the Valley",
+     "s": "harvest"
+    },
+    {
+     "n": "Opet Festival",
+     "s": "flood",
+     "loan": "Opet"
+    },
+    {
+     "n": "Feast of Drunkenness",
+     "s": "flood"
+    },
+    {
+     "n": "Rising of the Dog Star",
+     "s": "flood"
+    }
+   ]
+  },
+  "ethiopian": {
+   "month": [
+    {
+     "n": "Added Month",
+     "p": 13,
+     "sys": [
+      "ethiopian-13"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "First Day",
+     "p": 1,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Second Day",
+     "p": 2,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Third Day",
+     "p": 3,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fourth Day",
+     "p": 4,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fifth Day",
+     "p": 5,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Preparation Day",
+     "p": 6,
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Sabbath",
+     "p": 7,
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Gift of Jewels",
+     "s": "harvest"
+    },
+    {
+     "n": "Bonfire of the Flowers",
+     "s": "harvest"
+    }
+   ]
+  },
+  "bantu": {
+   "month": [
+    {
+     "n": "Aloe Month",
+     "s": "drought",
+     "sys": [
+      "lunar-12-13"
+     ]
+    },
+    {
+     "n": "New-Grass Month",
+     "s": "drought",
+     "sys": [
+      "lunar-12-13"
+     ]
+    },
+    {
+     "n": "First-Ploughing Month",
+     "s": "rain",
+     "sys": [
+      "lunar-12-13"
+     ]
+    },
+    {
+     "n": "Budding Month",
+     "s": "rain",
+     "sys": [
+      "lunar-12-13"
+     ]
+    },
+    {
+     "n": "Overgrown Paths",
+     "s": "rain",
+     "sys": [
+      "lunar-12-13"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "First Fruits",
+     "s": "harvest"
+    },
+    {
+     "n": "Reed Festival",
+     "s": "rain"
+    },
+    {
+     "n": "Rain Calling",
+     "s": "drought"
+    }
+   ]
+  },
+  "west-african": {
+   "festival": [
+    {
+     "n": "New Yam Festival",
+     "s": "harvest"
+    },
+    {
+     "n": "Festival of the River",
+     "s": "rain"
+    },
+    {
+     "n": "Fishing Festival",
+     "s": "drought"
+    },
+    {
+     "n": "Masquerade",
+     "s": "drought"
+    }
+   ]
+  },
+  "chinese": {
+   "month": [
+    {
+     "n": "Principal Month",
+     "p": 1,
+     "e": "AN-ST",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Apricot Month",
+     "p": 2,
+     "e": "AN-ST",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Peach Month",
+     "p": 3,
+     "e": "AN-ST",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Pomegranate Month",
+     "p": 5,
+     "e": "AN-ST",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Lotus Month",
+     "p": 6,
+     "e": "AN-ST",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Osmanthus Month",
+     "p": 8,
+     "e": "AN-ST",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Chrysanthemum Month",
+     "p": 9,
+     "e": "AN-ST",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Sacrifice Month",
+     "p": 12,
+     "e": "AN-ST",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "First Month",
+     "p": 1,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Second Month",
+     "p": 2,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Third Month",
+     "p": 3,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Fourth Month",
+     "p": 4,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Fifth Month",
+     "p": 5,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Sixth Month",
+     "p": 6,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Seventh Month",
+     "p": 7,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Eighth Month",
+     "p": 8,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Ninth Month",
+     "p": 9,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Tenth Month",
+     "p": 10,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Eleventh Month",
+     "p": 11,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Twelfth Month",
+     "p": 12,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Leap {ordinal} Month",
+     "p": "leap",
+     "e": "AN-ST",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Sky Day",
+     "p": 1,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Day One",
+     "p": 2,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Day Two",
+     "p": 3,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Day Three",
+     "p": 4,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Day Four",
+     "p": 5,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Day Five",
+     "p": 6,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Day Six",
+     "p": 7,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Start of Spring",
+     "p": 1,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Rain Water",
+     "p": 2,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Waking of Insects",
+     "p": 3,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Spring Equinox",
+     "p": 4,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Clear and Bright",
+     "p": 5,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Grain Rain",
+     "p": 6,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Start of Summer",
+     "p": 7,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Grain Full",
+     "p": 8,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Grain in Ear",
+     "p": 9,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Summer Solstice",
+     "p": 10,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Lesser Heat",
+     "p": 11,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Greater Heat",
+     "p": 12,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Start of Autumn",
+     "p": 13,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "End of Heat",
+     "p": 14,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "White Dew",
+     "p": 15,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Autumn Equinox",
+     "p": 16,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Cold Dew",
+     "p": 17,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Frost's Descent",
+     "p": 18,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Start of Winter",
+     "p": 19,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Lesser Snow",
+     "p": 20,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Greater Snow",
+     "p": 21,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Winter Solstice",
+     "p": 22,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Lesser Cold",
+     "p": 23,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Greater Cold",
+     "p": 24,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Spring Festival",
+     "s": "spring"
+    },
+    {
+     "n": "Lantern Festival",
+     "s": "spring"
+    },
+    {
+     "n": "Dragon Boat Festival",
+     "s": "summer"
+    },
+    {
+     "n": "Double Seventh",
+     "s": "summer"
+    },
+    {
+     "n": "Mid-Autumn Festival",
+     "s": "autumn"
+    },
+    {
+     "n": "Double Ninth",
+     "s": "autumn"
+    },
+    {
+     "n": "Cold Food Day",
+     "s": "spring"
+    }
+   ]
+  },
+  "japanese": {
+   "month": [
+    {
+     "n": "Affection Month",
+     "p": 1,
+     "e": "AN-EM",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Extra-Clothes Month",
+     "p": 2,
+     "e": "AN-EM",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Growing Month",
+     "p": 3,
+     "e": "AN-EM",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Deutzia Month",
+     "p": 4,
+     "e": "AN-EM",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Planting Month",
+     "p": 5,
+     "e": "AN-EM",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Water Month",
+     "p": 6,
+     "e": "AN-EM",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Letter Month",
+     "p": 7,
+     "e": "AN-EM",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Leaf Month",
+     "p": 8,
+     "e": "AN-EM",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Long Month",
+     "p": 9,
+     "e": "AN-EM",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Frost Month",
+     "p": 11,
+     "e": "AN-EM",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "Teachers-Running Month",
+     "p": 12,
+     "e": "AN-EM",
+     "sys": [
+      "chinese-lunisolar"
+     ]
+    },
+    {
+     "n": "First Month",
+     "p": 1,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Second Month",
+     "p": 2,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Third Month",
+     "p": 3,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Fourth Month",
+     "p": 4,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Fifth Month",
+     "p": 5,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Sixth Month",
+     "p": 6,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Seventh Month",
+     "p": 7,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Eighth Month",
+     "p": 8,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Ninth Month",
+     "p": 9,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Tenth Month",
+     "p": 10,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Eleventh Month",
+     "p": 11,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Twelfth Month",
+     "p": 12,
+     "e": "ST+",
+     "sys": [
+      "julian-12"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "First Win",
+     "p": 1,
+     "sys": [
+      "rokuyo-6"
+     ]
+    },
+    {
+     "n": "Friend-Pulling",
+     "p": 2,
+     "sys": [
+      "rokuyo-6"
+     ]
+    },
+    {
+     "n": "First Loss",
+     "p": 3,
+     "sys": [
+      "rokuyo-6"
+     ]
+    },
+    {
+     "n": "Great Peace",
+     "p": 5,
+     "sys": [
+      "rokuyo-6"
+     ]
+    },
+    {
+     "n": "Red Mouth",
+     "p": 6,
+     "sys": [
+      "rokuyo-6"
+     ]
+    },
+    {
+     "n": "Sun Day",
+     "p": 1,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Moon Day",
+     "p": 2,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fire Day",
+     "p": 3,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Water Day",
+     "p": 4,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Wood Day",
+     "p": 5,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Metal Day",
+     "p": 6,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Earth Day",
+     "p": 7,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Seven Herbs Day",
+     "p": 1,
+     "cyc": "sekku-5"
+    },
+    {
+     "n": "Doll Festival",
+     "p": 2,
+     "cyc": "sekku-5"
+    },
+    {
+     "n": "Boys' Day",
+     "p": 3,
+     "cyc": "sekku-5"
+    },
+    {
+     "n": "Star Festival",
+     "p": 4,
+     "cyc": "sekku-5",
+     "loan": "Tanabata"
+    },
+    {
+     "n": "Chrysanthemum Festival",
+     "p": 5,
+     "cyc": "sekku-5"
+    },
+    {
+     "n": "Season's Division",
+     "s": "winter",
+     "loan": "Setsubun"
+    },
+    {
+     "n": "Blossom Viewing",
+     "s": "spring",
+     "loan": "Hanami"
+    },
+    {
+     "n": "Moon Viewing",
+     "s": "autumn"
+    },
+    {
+     "n": "Start of Spring",
+     "p": 1,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Rain Water",
+     "p": 2,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Waking of Insects",
+     "p": 3,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Spring Equinox",
+     "p": 4,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Clear and Bright",
+     "p": 5,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Grain Rain",
+     "p": 6,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Start of Summer",
+     "p": 7,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Grain Full",
+     "p": 8,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Grain in Ear",
+     "p": 9,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Summer Solstice",
+     "p": 10,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Lesser Heat",
+     "p": 11,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Greater Heat",
+     "p": 12,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Start of Autumn",
+     "p": 13,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "End of Heat",
+     "p": 14,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "White Dew",
+     "p": 15,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Autumn Equinox",
+     "p": 16,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Cold Dew",
+     "p": 17,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Frost's Descent",
+     "p": 18,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Start of Winter",
+     "p": 19,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Lesser Snow",
+     "p": 20,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Greater Snow",
+     "p": 21,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Winter Solstice",
+     "p": 22,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Lesser Cold",
+     "p": 23,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Greater Cold",
+     "p": 24,
+     "cyc": "solar-terms-24"
+    }
+   ]
+  },
+  "korean": {
+   "month": [
+    {
+     "n": "First Month",
+     "p": 1,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Second Month",
+     "p": 2,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Third Month",
+     "p": 3,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Fourth Month",
+     "p": 4,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Fifth Month",
+     "p": 5,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Sixth Month",
+     "p": 6,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Seventh Month",
+     "p": 7,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Eighth Month",
+     "p": 8,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Ninth Month",
+     "p": 9,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Tenth Month",
+     "p": 10,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Eleventh Month",
+     "p": 11,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Twelfth Month",
+     "p": 12,
+     "sys": [
+      "chinese-lunisolar",
+      "julian-12"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Sun Day",
+     "p": 1,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Moon Day",
+     "p": 2,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fire Day",
+     "p": 3,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Water Day",
+     "p": 4,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Wood Day",
+     "p": 5,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Metal Day",
+     "p": 6,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Earth Day",
+     "p": 7,
+     "e": "ST+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "New Year's Morning",
+     "s": "spring"
+    },
+    {
+     "n": "Great Full Moon",
+     "s": "spring"
+    },
+    {
+     "n": "Cold Food Day",
+     "s": "spring"
+    },
+    {
+     "n": "Double Fifth",
+     "s": "summer"
+    },
+    {
+     "n": "Autumn Eve",
+     "s": "autumn",
+     "loan": "Chuseok"
+    },
+    {
+     "n": "Winter Solstice Day",
+     "s": "winter"
+    },
+    {
+     "n": "Start of Spring",
+     "p": 1,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Rain Water",
+     "p": 2,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Waking of Insects",
+     "p": 3,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Spring Equinox",
+     "p": 4,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Clear and Bright",
+     "p": 5,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Grain Rain",
+     "p": 6,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Start of Summer",
+     "p": 7,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Grain Full",
+     "p": 8,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Grain in Ear",
+     "p": 9,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Summer Solstice",
+     "p": 10,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Lesser Heat",
+     "p": 11,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Greater Heat",
+     "p": 12,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Start of Autumn",
+     "p": 13,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "End of Heat",
+     "p": 14,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "White Dew",
+     "p": 15,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Autumn Equinox",
+     "p": 16,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Cold Dew",
+     "p": 17,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Frost's Descent",
+     "p": 18,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Start of Winter",
+     "p": 19,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Lesser Snow",
+     "p": 20,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Greater Snow",
+     "p": 21,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Winter Solstice",
+     "p": 22,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Lesser Cold",
+     "p": 23,
+     "cyc": "solar-terms-24"
+    },
+    {
+     "n": "Greater Cold",
+     "p": 24,
+     "cyc": "solar-terms-24"
+    }
+   ]
+  },
+  "aztec": {
+   "month": [
+    {
+     "n": "Ceasing of Water",
+     "p": 1,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Little Vigil",
+     "p": 3,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Great Vigil",
+     "p": 4,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Dryness",
+     "p": 5,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Eating of Maize and Beans",
+     "p": 6,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Little Feast of the Lords",
+     "p": 7,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Great Feast of the Lords",
+     "p": 8,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Offering of Flowers",
+     "p": 9,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Fall of the Fruit",
+     "p": 10,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Sweeping",
+     "p": 11,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Return of the Gods",
+     "p": 12,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Feast of the Mountains",
+     "p": 13,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Precious Feather",
+     "p": 14,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Raising of Banners",
+     "p": 15,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Falling of Water",
+     "p": 16,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Stretching",
+     "p": 17,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Growth",
+     "p": 18,
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    },
+    {
+     "n": "Empty Days",
+     "p": "extra",
+     "e": "AN-EM",
+     "sys": [
+      "aztec-18"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Ceasing of Water",
+     "p": 1,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Little Vigil",
+     "p": 3,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Great Vigil",
+     "p": 4,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Dryness",
+     "p": 5,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Eating of Maize and Beans",
+     "p": 6,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Little Feast of the Lords",
+     "p": 7,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Great Feast of the Lords",
+     "p": 8,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Offering of Flowers",
+     "p": 9,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Fall of the Fruit",
+     "p": 10,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Sweeping",
+     "p": 11,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Return of the Gods",
+     "p": 12,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Feast of the Mountains",
+     "p": 13,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Precious Feather",
+     "p": 14,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Raising of Banners",
+     "p": 15,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Falling of Water",
+     "p": 16,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Stretching",
+     "p": 17,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "Growth",
+     "p": 18,
+     "e": "AN-EM",
+     "cyc": "monthly"
+    },
+    {
+     "n": "New Fire",
+     "s": "drought"
+    }
+   ]
+  },
+  "maya": {
+   "month": [
+    {
+     "n": "Nameless Days",
+     "p": "extra",
+     "e": "AN-EM",
+     "sys": [
+      "maya-haab"
+     ]
+    }
+   ]
+  },
+  "polynesian": {
+   "day": [
+    {
+     "n": "Faint Thread",
+     "p": 1,
+     "sys": [
+      "moon-nights-30"
+     ]
+    },
+    {
+     "n": "Crescent",
+     "p": 2,
+     "sys": [
+      "moon-nights-30"
+     ]
+    },
+    {
+     "n": "Hidden",
+     "p": 7,
+     "sys": [
+      "moon-nights-30"
+     ]
+    },
+    {
+     "n": "Unfolding",
+     "p": 8,
+     "sys": [
+      "moon-nights-30"
+     ]
+    },
+    {
+     "n": "Fruit",
+     "p": 13,
+     "sys": [
+      "moon-nights-30"
+     ]
+    },
+    {
+     "n": "Star",
+     "p": 14,
+     "sys": [
+      "moon-nights-30"
+     ]
+    },
+    {
+     "n": "Full",
+     "p": 15,
+     "sys": [
+      "moon-nights-30"
+     ]
+    },
+    {
+     "n": "Dripping",
+     "p": 17,
+     "sys": [
+      "moon-nights-30"
+     ]
+    },
+    {
+     "n": "Overshadowed",
+     "p": 29,
+     "sys": [
+      "moon-nights-30"
+     ]
+    },
+    {
+     "n": "Cut Off",
+     "p": 30,
+     "sys": [
+      "moon-nights-30"
+     ]
+    }
+   ]
+  },
+  "andean": {
+   "month": [
+    {
+     "n": "Great Ripening",
+     "s": "rain",
+     "sys": [
+      "lunar-12-13",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Earth Ripening",
+     "s": "rain",
+     "sys": [
+      "lunar-12-13",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Maize Harvest",
+     "s": "harvest",
+     "sys": [
+      "lunar-12-13",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Harvest Month",
+     "s": "harvest",
+     "sys": [
+      "lunar-12-13",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Earth-Breaking",
+     "s": "frost",
+     "sys": [
+      "lunar-12-13",
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Water Month",
+     "s": "frost",
+     "sys": [
+      "lunar-12-13",
+      "julian-12"
+     ]
+    }
+   ]
+  }
+ },
+ "daySigns": {
+  "aztec": [
+   "Crocodile",
+   "Wind",
+   "House",
+   "Lizard",
+   "Serpent",
+   "Death",
+   "Deer",
+   "Rabbit",
+   "Water",
+   "Dog",
+   "Monkey",
+   "Grass",
+   "Reed",
+   "Jaguar",
+   "Eagle",
+   "Vulture",
+   "Movement",
+   "Flint",
+   "Rain",
+   "Flower"
+  ],
+  "maya": [
+   "Crocodile",
+   "Wind",
+   "Night",
+   "Seed",
+   "Serpent",
+   "Death",
+   "Deer",
+   "Star",
+   "Water",
+   "Dog",
+   "Monkey",
+   "Road",
+   "Reed",
+   "Jaguar",
+   "Eagle",
+   "Owl",
+   "Earth",
+   "Flint",
+   "Storm",
+   "Lord"
+  ]
+ },
+ "signNames": {
+  "zodiac-12": [
+   "the Ram",
+   "the Bull",
+   "the Twins",
+   "the Crab",
+   "the Lion",
+   "the Maiden",
+   "the Scales",
+   "the Scorpion",
+   "the Archer",
+   "the Sea-Goat",
+   "the Water-Bearer",
+   "the Fishes"
+  ],
+  "animals-12": {
+   "*": [
+    "Rat",
+    "Ox",
+    "Tiger",
+    "Rabbit",
+    "Dragon",
+    "Snake",
+    "Horse",
+    "Goat",
+    "Monkey",
+    "Rooster",
+    "Dog",
+    "Pig"
+   ],
+   "japanese": [
+    "Rat",
+    "Ox",
+    "Tiger",
+    "Rabbit",
+    "Dragon",
+    "Snake",
+    "Horse",
+    "Goat",
+    "Monkey",
+    "Rooster",
+    "Dog",
+    "Boar"
+   ],
+   "steppe": [
+    "Mouse",
+    "Ox",
+    "Tiger",
+    "Hare",
+    "Dragon",
+    "Snake",
+    "Horse",
+    "Sheep",
+    "Monkey",
+    "Hen",
+    "Dog",
+    "Pig"
+   ]
+  },
+  "mansions-28": {
+   "chinese": [
+    "Horn",
+    "Neck",
+    "Root",
+    "Room",
+    "Heart",
+    "Tail",
+    "Winnowing Basket",
+    "Dipper",
+    "Ox",
+    "Girl",
+    "Emptiness",
+    "Rooftop",
+    "Encampment",
+    "Wall",
+    "Legs",
+    "Bond",
+    "Stomach",
+    "Hairy Head",
+    "Net",
+    "Turtle Beak",
+    "Three Stars",
+    "Well",
+    "Ghost",
+    "Willow",
+    "Star",
+    "Extended Net",
+    "Wings",
+    "Chariot"
+   ],
+   "arabic-persian": [
+    "the Two Signs",
+    "the Little Belly",
+    "the Many Little Ones",
+    "the Follower",
+    "the White Spot",
+    "the Brand",
+    "the Forearm",
+    "the Gap",
+    "the Glance",
+    "the Forehead",
+    "the Mane",
+    "the Changer",
+    "the Barker",
+    "the Unarmed",
+    "the Covering",
+    "the Claws",
+    "the Crown",
+    "the Heart",
+    "the Sting",
+    "the Ostriches",
+    "the City",
+    "Luck of the Slaughterer",
+    "Luck of the Swallower",
+    "Luck of Lucks",
+    "Luck of the Tents",
+    "the First Spout",
+    "the Second Spout",
+    "Belly of the Fish"
+   ]
+  },
+  "day-signs-20": {
+   "aztec": [
+    "Crocodile",
+    "Wind",
+    "House",
+    "Lizard",
+    "Serpent",
+    "Death",
+    "Deer",
+    "Rabbit",
+    "Water",
+    "Dog",
+    "Monkey",
+    "Grass",
+    "Reed",
+    "Jaguar",
+    "Eagle",
+    "Vulture",
+    "Movement",
+    "Flint",
+    "Rain",
+    "Flower"
+   ],
+   "maya": [
+    "Crocodile",
+    "Wind",
+    "Night",
+    "Seed",
+    "Serpent",
+    "Death",
+    "Deer",
+    "Star",
+    "Water",
+    "Dog",
+    "Monkey",
+    "Road",
+    "Reed",
+    "Jaguar",
+    "Eagle",
+    "Owl",
+    "Earth",
+    "Flint",
+    "Storm",
+    "Lord"
+   ]
+  }
+ },
+ "constellations": {
+  "general": [
+   "the Great Bear",
+   "the Little Bear",
+   "the Plough",
+   "the Hunter",
+   "the Seven Sisters",
+   "the Swan",
+   "the Eagle",
+   "the Dragon",
+   "the Lyre",
+   "the Crown",
+   "the Cup",
+   "the Crow",
+   "the Arrow",
+   "the Dolphin",
+   "the Southern Cross"
+  ],
+  "norman-british": [
+   "the Great Bear",
+   "the Little Bear",
+   "the Plough",
+   "the Hunter",
+   "the Seven Sisters",
+   "the Swan",
+   "the Eagle",
+   "the Dragon",
+   "the Lyre",
+   "the Crown",
+   "the Cup",
+   "the Crow",
+   "the Arrow",
+   "the Dolphin",
+   "the Southern Cross"
+  ],
+  "anglo-saxon": [
+   "the Wain"
+  ],
+  "norse": [
+   "the Wain",
+   "Frigg's Distaff",
+   "Thiazi's Eyes",
+   "Aurvandil's Toe"
+  ],
+  "celtic": [
+   "the Court of Dôn",
+   "Arianrhod's Castle"
+  ],
+  "roman": [
+   "the Ram",
+   "the Bull",
+   "the Twins",
+   "the Crab",
+   "the Lion",
+   "the Maiden",
+   "the Scales",
+   "the Scorpion",
+   "the Archer",
+   "the Sea-Goat",
+   "the Water-Bearer",
+   "the Fishes",
+   "the Great Bear",
+   "the Little Bear",
+   "the Plough",
+   "the Hunter",
+   "the Seven Sisters",
+   "the Swan",
+   "the Eagle",
+   "the Dragon",
+   "the Lyre",
+   "the Crown",
+   "the Cup",
+   "the Crow",
+   "the Arrow",
+   "the Dolphin",
+   "the Southern Cross"
+  ],
+  "greek-byzantine": [
+   "the Ram",
+   "the Bull",
+   "the Twins",
+   "the Crab",
+   "the Lion",
+   "the Maiden",
+   "the Scales",
+   "the Scorpion",
+   "the Archer",
+   "the Sea-Goat",
+   "the Water-Bearer",
+   "the Fishes",
+   "the Great Bear",
+   "the Little Bear",
+   "the Plough",
+   "the Hunter",
+   "the Seven Sisters",
+   "the Swan",
+   "the Eagle",
+   "the Dragon",
+   "the Lyre",
+   "the Crown",
+   "the Cup",
+   "the Crow",
+   "the Arrow",
+   "the Dolphin",
+   "the Southern Cross"
+  ],
+  "slavic": [
+   "the Great Ladle",
+   "the Sieve"
+  ],
+  "steppe": [
+   "the Golden Stake",
+   "the Iron Stake",
+   "the Seven Robbers",
+   "the Two Horses"
+  ],
+  "arabic-persian": [
+   "the Daughters of the Bier",
+   "the Many Little Ones",
+   "the Follower"
+  ],
+  "chinese": [
+   "the Northern Dipper",
+   "the Weaving Girl",
+   "the Ox Herd",
+   "the Heavenly Market Enclosure",
+   "the Supreme Palace Enclosure"
+  ],
+  "egyptian": [
+   "the Bull's Foreleg",
+   "the Hippopotamus",
+   "the Crocodile"
+  ],
+  "bantu": [
+   "the Digging Stars",
+   "the Three Zebras"
+  ],
+  "aztec": [
+   "the Fire Drill",
+   "the Scorpion",
+   "the Ball Court"
+  ],
+  "maya": [
+   "the Turtle",
+   "the Scorpion"
+  ],
+  "polynesian": [
+   "the Fishhook",
+   "the Canoe",
+   "the Bird"
+  ],
+  "andean": [
+   "the Llama",
+   "the Toad",
+   "the Serpent",
+   "the Partridge",
+   "the Fox"
+  ]
+ },
+ "lights": {
+  "chinese": {
+   "planets": {
+    "1": "Earth Star",
+    "2": "Wood Star",
+    "3": "Fire Star",
+    "5": "Metal Star",
+    "6": "Water Star"
+   },
+   "comet": "Broom Star",
+   "nova": "Guest Star",
+   "milky": "River of Heaven"
+  },
+  "japanese": {
+   "planets": {
+    "1": "Earth Star",
+    "2": "Wood Star",
+    "3": "Fire Star",
+    "5": "Metal Star",
+    "6": "Water Star"
+   },
+   "comet": "Broom Star",
+   "nova": "Guest Star",
+   "milky": "Silver River"
+  },
+  "korean": {
+   "planets": {
+    "1": "Earth Star",
+    "2": "Wood Star",
+    "3": "Fire Star",
+    "5": "Metal Star",
+    "6": "Water Star"
+   },
+   "comet": "Broom Star",
+   "nova": "Guest Star",
+   "milky": "Silver River"
+  },
+  "greek-byzantine": {
+   "planets": {
+    "1": [
+     "the Shining"
+    ],
+    "2": [
+     "the Blazing"
+    ],
+    "3": [
+     "the Fiery"
+    ],
+    "5": [
+     "the Light-Bringer",
+     "the Evening Star"
+    ],
+    "6": [
+     "the Gleaming"
+    ]
+   }
+  },
+  "egyptian": {
+   "planets": {
+    "3": [
+     "Red Horus"
+    ]
+   },
+   "bare": [
+    "Red Horus"
+   ]
+  },
+  "maya": {
+   "planets": {
+    "5": [
+     "the Great Star"
+    ]
+   }
+  },
+  "aztec": {
+   "comet": "the Smoking Star"
+  },
+  "norse": {
+   "milky": "the Winter Way"
+  },
+  "steppe": {
+   "milky": "the Seam of the Sky"
+  },
+  "arabic-persian": {
+   "milky": "the Straw Road"
+  },
+  "andean": {
+   "milky": "the River"
+  },
+  "general": {
+   "planets": {
+    "5": [
+     "the Morning Star",
+     "the Evening Star"
+    ]
+   }
+  },
+  "anglo-saxon": {
+   "planets": {
+    "5": [
+     "the Morning Star",
+     "the Evening Star"
+    ]
+   }
+  },
+  "norman-british": {
+   "planets": {
+    "5": [
+     "the Morning Star",
+     "the Evening Star"
+    ]
+   }
+  },
+  "celtic": {
+   "planets": {
+    "5": [
+     "the Morning Star",
+     "the Evening Star"
+    ]
+   }
+  },
+  "roman": {
+   "planets": {
+    "5": [
+     "the Morning Star",
+     "the Evening Star"
+    ]
+   }
+  },
+  "slavic": {
+   "planets": {
+    "5": [
+     "the Morning Star",
+     "the Evening Star"
+    ]
+   }
+  }
+ },
+ "shapes": [
+  {
+   "k": "month",
+   "p": "@cn",
+   "w": 25,
+   "cn": true
+  },
+  {
+   "k": "month",
+   "p": "{seasonWord} Month",
+   "w": 25,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "k": "month",
+   "p": "Month of {seasonWord}",
+   "w": 6,
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "k": "month",
+   "p": "{season} Month",
+   "w": 4,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "k": "month",
+   "p": "{position} Month of {season}",
+   "w": 4,
+   "t": [
+    "plain"
+   ],
+   "cx": {
+    "chinese": 3,
+    "korean": 3,
+    "steppe": 3,
+    "egyptian": 3
+   }
+  },
+  {
+   "k": "month",
+   "p": "{seasonWord}",
+   "w": 6,
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "k": "month",
+   "p": [
+    "{crop}-Sowing",
+    "{crop} Harvest"
+   ],
+   "w": 5,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "k": "month",
+   "p": "{tree} Month",
+   "w": 4
+  },
+  {
+   "k": "month",
+   "p": [
+    "{wildAnimal} Month",
+    "{bird} Month"
+   ],
+   "w": 5
+  },
+  {
+   "k": "month",
+   "p": "{god:poss} Month",
+   "w": 6,
+   "t": [
+    "grand"
+   ],
+   "ns": true,
+   "sl": true
+  },
+  {
+   "k": "month",
+   "p": "{ordinal} Month",
+   "w": 4,
+   "t": [
+    "plain"
+   ],
+   "cx": {
+    "roman": 3,
+    "chinese": 3,
+    "korean": 3,
+    "japanese": 3
+   },
+   "sl": true
+  },
+  {
+   "k": "month",
+   "p": [
+    "Before {turning}",
+    "After {turning}"
+   ],
+   "w": 4,
+   "e": "AN-MD",
+   "c": [
+    "anglo-saxon",
+    "celtic",
+    "norse"
+   ],
+   "cx": {
+    "anglo-saxon": 3
+   },
+   "pairs": true
+  },
+  {
+   "k": "month",
+   "p": [
+    "Little {pairFeast}",
+    "Great {pairFeast}"
+   ],
+   "w": 4,
+   "e": "AN-EM",
+   "c": [
+    "aztec",
+    "maya"
+   ],
+   "cx": {
+    "aztec": 3
+   }
+  },
+  {
+   "k": "month",
+   "p": "Month of the {festival}",
+   "w": 4,
+   "e": "AN",
+   "c": [
+    "greek-byzantine",
+    "roman"
+   ],
+   "cx": {
+    "greek-byzantine": 3,
+    "roman": 3
+   },
+   "t": [
+    "grand"
+   ],
+   "sl": true
+  },
+  {
+   "k": "month",
+   "p": [
+    "Hungry Month",
+    "Lean Month",
+    "Dead Month"
+   ],
+   "w": 2,
+   "t": [
+    "grim"
+   ],
+   "sl": true
+  },
+  {
+   "k": "month",
+   "p": "{ordinal} Cycle",
+   "w": 20,
+   "sp": true
+  },
+  {
+   "k": "month",
+   "p": "{star} Month",
+   "w": 10,
+   "sp": true
+  },
+  {
+   "k": "month",
+   "p": "Month of {founder}",
+   "w": 5,
+   "sp": true
+  },
+  {
+   "k": "month",
+   "p": "{spaceLand} Month",
+   "w": 8,
+   "sp": true
+  },
+  {
+   "k": "month",
+   "p": [
+    "Witch Month",
+    "Dragon Month",
+    "Fair Folk Month"
+   ],
+   "w": 8,
+   "h": true,
+   "sl": true
+  },
+  {
+   "k": "leap",
+   "p": "@cn",
+   "w": 50,
+   "cn": true
+  },
+  {
+   "k": "leap",
+   "p": "Second {previous}",
+   "w": 20
+  },
+  {
+   "k": "leap",
+   "p": "Leap {previous}",
+   "w": 10
+  },
+  {
+   "k": "leap",
+   "p": [
+    "Extra Month",
+    "Added Month",
+    "Thirteenth Month"
+   ],
+   "w": 20
+  },
+  {
+   "k": "extra",
+   "p": "@cn",
+   "w": 50,
+   "cn": true
+  },
+  {
+   "k": "extra",
+   "p": "the {extraDays} Days",
+   "w": 30
+  },
+  {
+   "k": "extra",
+   "p": "{seasonWord} Days",
+   "w": 10
+  },
+  {
+   "k": "day",
+   "p": "@cn",
+   "w": 25,
+   "cn": true
+  },
+  {
+   "k": "day",
+   "p": "{dayWork} Day",
+   "w": 20,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "k": "day",
+   "p": "{god:poss} Day",
+   "w": 12,
+   "t": [
+    "grand"
+   ],
+   "ns": true
+  },
+  {
+   "k": "day",
+   "p": "{light} Day",
+   "w": 10
+  },
+  {
+   "k": "day",
+   "p": "{dayElement} Day",
+   "w": 10,
+   "c": [
+    "chinese",
+    "japanese",
+    "korean",
+    "steppe"
+   ]
+  },
+  {
+   "k": "day",
+   "p": "{ordinal} Day",
+   "w": 8,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "k": "day",
+   "p": "{goods} Market Day",
+   "w": 10,
+   "t": [
+    "plain"
+   ],
+   "c": [
+    "bantu",
+    "west-african",
+    "roman"
+   ],
+   "sys": [
+    "market-4",
+    "nundinal-8"
+   ]
+  },
+  {
+   "k": "day",
+   "p": "{town} Market Day",
+   "w": 6,
+   "t": [
+    "plain"
+   ],
+   "c": [
+    "bantu",
+    "west-african",
+    "roman"
+   ],
+   "sys": [
+    "market-4",
+    "nundinal-8"
+   ]
+  },
+  {
+   "k": "day",
+   "p": [
+    "{wildAnimal}",
+    "{bird}",
+    "{daySign}"
+   ],
+   "w": 15,
+   "c": [
+    "aztec",
+    "maya"
+   ]
+  },
+  {
+   "k": "day",
+   "p": "{number} {daySign}",
+   "w": 8,
+   "c": [
+    "aztec",
+    "maya"
+   ]
+  },
+  {
+   "k": "day",
+   "p": "{moonPhase}",
+   "w": 15,
+   "c": [
+    "polynesian"
+   ]
+  },
+  {
+   "k": "day",
+   "p": [
+    [
+     "Shift {ordinal}"
+    ],
+    [
+     "{ordinal} Sol"
+    ],
+    [
+     "Rest Cycle"
+    ],
+    [
+     "Port Day"
+    ],
+    [
+     "Maintenance Day",
+     [
+      "light"
+     ]
+    ],
+    [
+     "Ration Day",
+     [
+      "grim"
+     ]
+    ]
+   ],
+   "w": 20,
+   "e": "NF-IS"
+  },
+  {
+   "k": "day",
+   "p": "Gear Day",
+   "w": 2,
+   "h": true,
+   "e": "ST",
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "k": "festival",
+   "p": "@cn",
+   "w": 25,
+   "cn": true
+  },
+  {
+   "k": "festival",
+   "p": "Feast of {seasonWord}",
+   "w": 10
+  },
+  {
+   "k": "festival",
+   "p": "{seasonWord} Home",
+   "w": 3,
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "k": "festival",
+   "p": [
+    "{season} Fire",
+    "{seasonWord} Fires"
+   ],
+   "w": 5,
+   "e": "AN-EM"
+  },
+  {
+   "k": "festival",
+   "p": "Night of {festNoun}",
+   "w": 8,
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "k": "festival",
+   "p": "Day of the {festNoun}",
+   "w": 5
+  },
+  {
+   "k": "festival",
+   "p": "Festival of {festNoun}",
+   "w": 6
+  },
+  {
+   "k": "festival",
+   "p": "{crop} Festival",
+   "w": 6,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "k": "festival",
+   "p": [
+    "Feast of {god}",
+    "{god:poss} Day"
+   ],
+   "w": 8,
+   "t": [
+    "grand"
+   ],
+   "ns": true
+  },
+  {
+   "k": "festival",
+   "p": [
+    "Feast of {holy}",
+    "{holy:poss} Day",
+    "{holy:poss} Eve"
+   ],
+   "w": 8,
+   "e": "MD+",
+   "ch": true
+  },
+  {
+   "k": "festival",
+   "p": "Blessing of {festBlessing}",
+   "w": 4,
+   "cm": {
+    "christian": 1,
+    "other": 0.5
+   }
+  },
+  {
+   "k": "festival",
+   "p": "{kin}' Night",
+   "w": 3
+  },
+  {
+   "k": "festival",
+   "p": "Burning of the {thing}",
+   "w": 3,
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "k": "festival",
+   "p": "Running of the {livestock:pl}",
+   "w": 3,
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "k": "festival",
+   "p": "{figure:poss} Games",
+   "w": 3,
+   "e": "AN-EM",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "k": "festival",
+   "p": "{town} Fair",
+   "w": 6,
+   "e": "MD+",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "k": "festival",
+   "p": "{town} Wakes",
+   "w": 2,
+   "e": "ST",
+   "c": [
+    "norman-british",
+    "general"
+   ],
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "k": "festival",
+   "p": [
+    "Founders' Day",
+    "Charter Day",
+    "Landing Day"
+   ],
+   "w": 4,
+   "e": "EM+",
+   "t": [
+    "plain"
+   ],
+   "commem": true
+  },
+  {
+   "k": "festival",
+   "p": "{founder} Day",
+   "w": 4,
+   "e": "ST+",
+   "commem": true
+  },
+  {
+   "k": "festival",
+   "p": "{event} Day",
+   "w": 4,
+   "e": "ST+",
+   "commem": true
+  },
+  {
+   "k": "festival",
+   "p": "{realm} Day",
+   "w": 3,
+   "e": "ST+",
+   "t": [
+    "grand"
+   ],
+   "commem": true
+  },
+  {
+   "k": "festival",
+   "p": [
+    [
+     "Landfall Day"
+    ],
+    [
+     "Launch Day"
+    ],
+    [
+     "First Light"
+    ],
+    [
+     "Signal Day"
+    ],
+    [
+     "Long Dark",
+     [
+      "grim"
+     ]
+    ],
+    [
+     "Quarantine's End"
+    ]
+   ],
+   "w": 20,
+   "e": "NF-IS"
+  },
+  {
+   "k": "festival",
+   "p": [
+    "{star} Night",
+    "Perihelion Night"
+   ],
+   "w": 8,
+   "e": "NF-IS",
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "k": "festival",
+   "p": [
+    "Night of the Fair Folk",
+    "Night of the Wild Hunt",
+    "Night of Ghosts"
+   ],
+   "w": 8,
+   "h": true
+  },
+  {
+   "k": "festival",
+   "p": [
+    "Moon-Dark Eve",
+    "Eclipse Feast"
+   ],
+   "w": 4,
+   "h": true
+  },
+  {
+   "k": "festival",
+   "p": [
+    "Exhibition Day",
+    "Engine Day",
+    "Aether Night"
+   ],
+   "w": 6,
+   "h": true,
+   "e": "ST"
+  },
+  {
+   "k": "moon",
+   "p": "{seasonWord} Moon",
+   "w": 30
+  },
+  {
+   "k": "moon",
+   "p": [
+    "{wildAnimal} Moon",
+    "{bird} Moon"
+   ],
+   "w": 12
+  },
+  {
+   "k": "moon",
+   "p": [
+    "{tree} Moon",
+    "{crop} Moon"
+   ],
+   "w": 8
+  },
+  {
+   "k": "moon",
+   "p": "Moon of {seasonWord}",
+   "w": 6,
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "k": "moon",
+   "p": "{skyFigure:poss} Moon",
+   "w": 4
+  },
+  {
+   "k": "moon",
+   "p": "{colour} Moon",
+   "w": 4,
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "k": "moon",
+   "p": "{god:poss} Moon",
+   "w": 3,
+   "t": [
+    "grand"
+   ],
+   "ns": true
+  },
+  {
+   "k": "moon",
+   "p": [
+    "Dragon Moon",
+    "Witch Moon",
+    "Ghost Moon"
+   ],
+   "w": 6,
+   "h": true
+  },
+  {
+   "k": "moonleap",
+   "p": [
+    [
+     "Lone Moon"
+    ],
+    [
+     "Extra Moon"
+    ],
+    [
+     "Wandering Moon"
+    ],
+    [
+     "Spare Moon",
+     [
+      "light"
+     ]
+    ],
+    [
+     "Stolen Moon",
+     [
+      "strange"
+     ]
+    ],
+    [
+     "Blue Moon"
+    ]
+   ],
+   "w": 1
+  },
+  {
+   "k": "constellation",
+   "p": "@cn",
+   "w": 15,
+   "cn": true
+  },
+  {
+   "k": "constellation",
+   "p": [
+    "the {wildAnimal}",
+    "the {bird}",
+    "the {creature}"
+   ],
+   "w": 18
+  },
+  {
+   "k": "constellation",
+   "p": [
+    "the Great {beast}",
+    "the Little {beast}"
+   ],
+   "w": 8
+  },
+  {
+   "k": "constellation",
+   "p": "the {skyFigure}",
+   "w": 12
+  },
+  {
+   "k": "constellation",
+   "p": "the {skyObject}",
+   "w": 12,
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "k": "constellation",
+   "p": "the {skyFigure:poss} {skyObject}",
+   "w": 10,
+   "poss": true
+  },
+  {
+   "k": "constellation",
+   "p": "the {beast:poss} {skyBodyPart}",
+   "w": 6,
+   "poss": true
+  },
+  {
+   "k": "constellation",
+   "p": "the {numberWord} {group}",
+   "w": 6,
+   "numbered": true
+  },
+  {
+   "k": "constellation",
+   "p": "{god:poss} {skyObject}",
+   "w": 6,
+   "t": [
+    "grand"
+   ],
+   "ns": true,
+   "poss": true
+  },
+  {
+   "k": "constellation",
+   "p": "the {colour} {beast}",
+   "w": 4,
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "k": "constellation",
+   "p": "the {skyObject} of the {skyFigure}",
+   "w": 4,
+   "cx": {
+    "polynesian": 3
+   },
+   "all": true
+  },
+  {
+   "k": "constellation",
+   "p": [
+    "the Dragon's {skyBodyPart}",
+    "the Wyrm",
+    "the Unicorn",
+    "the Witch's {skyObject}",
+    "the Giant's {skyObject}"
+   ],
+   "w": 10,
+   "h": true,
+   "ns": true
+  },
+  {
+   "k": "constellation",
+   "p": [
+    "the Ark",
+    "the Lander",
+    "the Antenna",
+    "the Old Sun",
+    "the Home Star",
+    "the Probe"
+   ],
+   "w": 15,
+   "e": "NF-IS"
+  },
+  {
+   "k": "light",
+   "p": "@cn",
+   "w": 20,
+   "cn": true
+  },
+  {
+   "k": "light",
+   "p": "the {skyQuality} Wanderer",
+   "w": 15
+  },
+  {
+   "k": "light",
+   "p": "the {skyQuality} {skyKin}",
+   "w": 12
+  },
+  {
+   "k": "light",
+   "p": [
+    "{god:poss} Lamp",
+    "{god:poss} Star"
+   ],
+   "w": 6,
+   "t": [
+    "grand"
+   ],
+   "ns": true,
+   "god": true
+  },
+  {
+   "k": "light",
+   "p": [
+    "the Morning {herald}",
+    "the Evening {herald}"
+   ],
+   "w": 6
+  },
+  {
+   "k": "light",
+   "p": [
+    "the {skyQuality} Moon",
+    "the Little Moon",
+    "the {skyKin} Moon"
+   ],
+   "w": 6
+  },
+  {
+   "k": "light",
+   "p": "the {skyRiver} of {skyHeaven}",
+   "w": 10
+  },
+  {
+   "k": "light",
+   "p": "the {colour} {skyRiver}",
+   "w": 4
+  },
+  {
+   "k": "light",
+   "p": [
+    "the {colour} Comet",
+    "the {beast}-Tail Star"
+   ],
+   "w": 6,
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "k": "light",
+   "p": "the {skyQuality} Guest",
+   "w": 4,
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "k": "light",
+   "p": [
+    "the Day Eye",
+    "the Great Lamp",
+    "the Night Eye"
+   ],
+   "w": 3,
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "k": "light",
+   "p": [
+    [
+     "Old Sun",
+     [
+      "light"
+     ]
+    ],
+    [
+     "Home Star",
+     [
+      "light"
+     ]
+    ],
+    [
+     "the Bright Neighbour",
+     [
+      "light"
+     ]
+    ],
+    [
+     "the Gas Giant",
+     [
+      "light"
+     ]
+    ],
+    [
+     "the Ring World",
+     [
+      "light"
+     ]
+    ]
+   ],
+   "w": 15,
+   "e": "NF-IS"
+  }
+ ],
+ "themes": {
+  "month": [
+   [
+    "seasons",
+    40
+   ],
+   [
+    "work",
+    15
+   ],
+   [
+    "nature",
+    15
+   ],
+   [
+    "gods",
+    10
+   ],
+   [
+    "ordinal",
+    5
+   ],
+   [
+    "positions",
+    5
+   ],
+   [
+    "festivals",
+    10
+   ]
+  ],
+  "monthMult": {
+   "ordinal": {
+    "roman": 3,
+    "chinese": 3,
+    "korean": 3,
+    "japanese": 3
+   },
+   "positions": {
+    "chinese": 4,
+    "korean": 4,
+    "steppe": 4,
+    "egyptian": 4
+   },
+   "festivals": {
+    "greek-byzantine": 3,
+    "roman": 3
+   }
+  },
+  "day": [
+   [
+    "planets",
+    30
+   ],
+   [
+    "gods",
+    20
+   ],
+   [
+    "work",
+    25
+   ],
+   [
+    "ordinal",
+    15
+   ],
+   [
+    "elements",
+    10
+   ]
+  ],
+  "market": [
+   [
+    "towns",
+    40
+   ],
+   [
+    "goods",
+    40
+   ],
+   [
+    "ordinal",
+    20
+   ]
+  ],
+  "festival": [
+   [
+    "seasons",
+    40
+   ],
+   [
+    "gods",
+    20
+   ],
+   [
+    "work",
+    20
+   ],
+   [
+    "commemorations",
+    20
+   ]
+  ],
+  "moon": [
+   [
+    "seasons",
+    50
+   ],
+   [
+    "nature",
+    35
+   ],
+   [
+    "mixed",
+    15
+   ]
+  ],
+  "sign": [
+   [
+    "beasts",
+    40
+   ],
+   [
+    "figures",
+    30
+   ],
+   [
+    "objects",
+    30
+   ]
+  ],
+  "mansions": [
+   [
+    "objects",
+    50
+   ],
+   [
+    "bodyParts",
+    50
+   ]
+  ],
+  "light": [
+   [
+    "kin",
+    40
+   ],
+   [
+    "wanderers",
+    40
+   ],
+   [
+    "gods",
+    20
+   ]
+  ],
+  "mixedZodiac": 0.3,
+  "pairShare": 0.5
+ },
+ "lists": {
+  "turning": [
+   "Yule",
+   "Midsummer",
+   "Midwinter",
+   "the Thaw",
+   "the Rains",
+   "the Flood",
+   "the Harvest"
+  ],
+  "turningOf": {
+   "winter": [
+    "Yule",
+    "Midwinter"
+   ],
+   "summer": [
+    "Midsummer"
+   ],
+   "spring": [
+    "the Thaw"
+   ],
+   "autumn": [
+    "the Harvest"
+   ],
+   "thaw": [
+    "the Thaw"
+   ],
+   "rain": [
+    "the Rains"
+   ],
+   "monsoon": [
+    "the Rains"
+   ],
+   "flood": [
+    "the Flood"
+   ],
+   "harvest": [
+    "the Harvest"
+   ],
+   "drought": [
+    "Midsummer"
+   ],
+   "storm": [
+    "the Thaw"
+   ],
+   "frost": [
+    "Midwinter"
+   ]
+  },
+  "pairFeast": [
+   "Vigil",
+   "Feast of the Lords",
+   "Feast of the {skyFigure:pl}",
+   "Dance",
+   "Rains",
+   "Offering"
+  ],
+  "position": [
+   "First",
+   "Middle",
+   "Last"
+  ],
+  "daySign": [
+   "Reed",
+   "Flint",
+   "House",
+   "Wind",
+   "Rain",
+   "Flower",
+   "Movement",
+   "Water",
+   "Grass",
+   "Earth",
+   "Storm",
+   "Road",
+   "Seed",
+   "Star",
+   "Night",
+   "Death",
+   "Smoke",
+   "Mirror",
+   "Knife",
+   "Shell"
+  ],
+  "daySignTone": {
+   "Death": [
+    "grim"
+   ]
+  },
+  "moonPhase": [
+   "Thin Moon",
+   "Bow Moon",
+   "Rising Night",
+   "Half Night",
+   "Round Night",
+   "Bright Night",
+   "Fading Night",
+   "Dark Night",
+   "Last Light",
+   "Sleeping Moon"
+  ],
+  "moonWaxing": [
+   "Thin Moon",
+   "Bow Moon",
+   "Rising Night",
+   "Half Night",
+   "Bright Night"
+  ],
+  "moonFull": [
+   "Round Night",
+   "Full"
+  ],
+  "moonFading": [
+   "Fading Night",
+   "Dark Night",
+   "Last Light",
+   "Sleeping Moon"
+  ],
+  "kin": [
+   "Mothers",
+   "Fathers",
+   "Grandmothers",
+   "Ancestors",
+   "Sisters",
+   "Maidens",
+   "Shepherds",
+   "Fishers"
+  ],
+  "thing": [
+   "Old Year",
+   "Boats",
+   "Winter",
+   "Straw Man",
+   "Ploughs",
+   "Brooms"
+  ],
+  "group": [
+   "Brothers",
+   "Sisters",
+   "Kings",
+   "Dancers",
+   "Hunters",
+   "Maidens",
+   "Thieves",
+   "Old Men",
+   "Hounds",
+   "Geese"
+  ],
+  "numberWord": [
+   "Three",
+   "Five",
+   "Seven",
+   "Nine"
+  ],
+  "herald": [
+   "Star",
+   "Lamp",
+   "Herald",
+   "Lady",
+   "Watcher",
+   "Bringer"
+  ],
+  "weather": [
+   "Lesser",
+   "Greater",
+   "Cold",
+   "Warm",
+   "White",
+   "Clear"
+  ],
+  "lightQualities": {
+   "1": [
+    "Slow",
+    "Dim",
+    "Golden"
+   ],
+   "2": [
+    "Bright",
+    "Faithful"
+   ],
+   "3": [
+    "Red",
+    "Fierce",
+    "Restless"
+   ],
+   "5": [
+    "Bright",
+    "Silver"
+   ],
+   "6": [
+    "Swift",
+    "Hidden",
+    "Restless"
+   ]
+  }
+ },
+ "safeguards": {
+  "block": [
+   "January",
+   "February",
+   "March",
+   "April",
+   "May",
+   "June",
+   "July",
+   "August",
+   "September",
+   "October",
+   "November",
+   "December",
+   "Monday",
+   "Tuesday",
+   "Wednesday",
+   "Thursday",
+   "Friday",
+   "Saturday",
+   "Sunday",
+   "Aries",
+   "Taurus",
+   "Gemini",
+   "Cancer",
+   "Leo",
+   "Virgo",
+   "Libra",
+   "Scorpio",
+   "Sagittarius",
+   "Capricorn",
+   "Aquarius",
+   "Pisces",
+   "Mercury",
+   "Venus",
+   "Mars",
+   "Jupiter",
+   "Saturn",
+   "Uranus",
+   "Neptune",
+   "Pluto",
+   "the Sun",
+   "the Moon",
+   "the Milky Way",
+   "Orion",
+   "Orion's Belt",
+   "Cassiopeia",
+   "Andromeda",
+   "Perseus",
+   "Pegasus",
+   "Hercules",
+   "Cepheus",
+   "Draco",
+   "Argo",
+   "the Pleiades",
+   "Charles's Wain",
+   "Arthur's Wain",
+   "Christmas",
+   "Easter",
+   "Good Friday",
+   "Ash Wednesday",
+   "Pentecost",
+   "Whitsun",
+   "Epiphany",
+   "All Souls",
+   "Ramadan",
+   "Eid",
+   "Eid al-Fitr",
+   "Eid al-Adha",
+   "Mawlid",
+   "Ashura",
+   "Passover",
+   "Pesach",
+   "Yom Kippur",
+   "Rosh Hashanah",
+   "Hanukkah",
+   "Purim",
+   "Sukkot",
+   "Shavuot",
+   "Diwali",
+   "Deepavali",
+   "Holi",
+   "Navaratri",
+   "Durga Puja",
+   "Dussehra",
+   "Pongal",
+   "Onam",
+   "Raksha Bandhan",
+   "Makar Sankranti",
+   "Vaisakhi",
+   "Baisakhi",
+   "Vesak",
+   "Bodhi Day",
+   "Obon",
+   "Bon",
+   "Ghost Festival",
+   "Mehregan",
+   "Sadeh",
+   "Festival of Lights",
+   "Day of the Dead",
+   "Inti Raymi",
+   "Matariki",
+   "Makahiki",
+   "Puanga",
+   "Sun Dance",
+   "Umhlanga",
+   "Guy Fawkes Night",
+   "Burns Night",
+   "Bastille Day",
+   "Anzac Day",
+   "Australia Day",
+   "Canada Day",
+   "Juneteenth",
+   "Kwanzaa",
+   "Cinco de Mayo",
+   "Oktoberfest",
+   "Valentine's Day",
+   "Saint Patrick's Day",
+   "Subaru",
+   "Afteryule",
+   "Foreyule",
+   "Solmath",
+   "Rethe",
+   "Astron",
+   "Thrimidge",
+   "Forelithe",
+   "Afterlithe",
+   "Wedmath",
+   "Halimath",
+   "Winterfilth",
+   "Blotmath",
+   "Lithe",
+   "Sterday",
+   "Trewsday",
+   "Hevensday",
+   "Mersday",
+   "Highday",
+   "Sun's Dawn",
+   "First Seed",
+   "Rain's Hand",
+   "Second Seed",
+   "Mid Year",
+   "Sun's Height",
+   "Last Seed",
+   "Hearthfire",
+   "Frostfall",
+   "Sun's Dusk",
+   "Sundas",
+   "Morndas",
+   "Tirdas",
+   "Middas",
+   "Turdas",
+   "Fredas",
+   "Loredas",
+   "Hammer",
+   "Alturiak",
+   "Ches",
+   "Tarsakh",
+   "Mirtul",
+   "Kythorn",
+   "Flamerule",
+   "Eleasis",
+   "Eleint",
+   "Marpenoth",
+   "Uktar",
+   "Nightal",
+   "Greengrass",
+   "Highharvestide",
+   "Shieldmeet",
+   "Feast of the Moon",
+   "Fireseek",
+   "Coldeven",
+   "Growfest",
+   "Flocktime",
+   "Wealsun",
+   "Richfest",
+   "Goodmonth",
+   "Patchwall",
+   "Ready'reat",
+   "Sunsebb",
+   "Needfest",
+   "Hogswatch",
+   "Hogswatchnight",
+   "Octeday",
+   "Soul Cake Tuesday",
+   "Sektober",
+   "Juvember",
+   "Febtober",
+   "Spune",
+   "Grune",
+   "Offle",
+   "Sickle of the Valar",
+   "Swordsman of the Sky",
+   "the Netted Stars",
+   "the Ice Dragon",
+   "the Crone's Lantern",
+   "the Moonmaid",
+   "Stardate"
+  ],
+  "flag": [
+   "Midsummer",
+   "Midwinter",
+   "Yule",
+   "Harvest Moon",
+   "Hunter's Moon",
+   "Wolf Moon",
+   "Blue Moon",
+   "Harvest Home",
+   "May Day",
+   "Lammas",
+   "Michaelmas",
+   "Candlemas",
+   "Martinmas",
+   "Lady Day",
+   "Plough Monday",
+   "Hocktide",
+   "Shrovetide",
+   "Twelfth Night",
+   "Wakes Week",
+   "Bank Holiday",
+   "Bonfire Night",
+   "Hallowe'en",
+   "Hogmanay",
+   "Walpurgis Night",
+   "Thanksgiving",
+   "Mother's Day",
+   "Boxing Day",
+   "New Year's Day",
+   "Independence Day",
+   "Victory Day",
+   "Labour Day",
+   "Remembrance Day",
+   "Armistice Day",
+   "Mardi Gras",
+   "Carnival",
+   "Night of the Wild Hunt",
+   "Samhain",
+   "Beltane",
+   "Imbolc",
+   "Lughnasadh",
+   "Nowruz",
+   "Chuseok",
+   "Spring Festival",
+   "Mid-Autumn Festival",
+   "Lantern Festival",
+   "Dragon Boat Festival",
+   "the Morning Star",
+   "the Evening Star",
+   "the Ram",
+   "the Bull",
+   "the Twins",
+   "the Crab",
+   "the Lion",
+   "the Maiden",
+   "the Scales",
+   "the Scorpion",
+   "the Archer",
+   "the Sea-Goat",
+   "the Water-Bearer",
+   "the Fishes",
+   "the Great Bear",
+   "the Little Bear",
+   "the Plough",
+   "the Hunter",
+   "the Seven Sisters",
+   "the Swan",
+   "the Eagle",
+   "the Dragon",
+   "the Lyre",
+   "the Crown",
+   "the Cup",
+   "the Crow",
+   "the Arrow",
+   "the Dolphin",
+   "the Southern Cross",
+   "the Seven Sisters",
+   "the Three Kings",
+   "the Long Night",
+   "Sabbath"
+  ],
+  "flagListBlocks": false,
+  "banned": [
+   "Christ",
+   "Jesus",
+   "Allah",
+   "Muhammad",
+   "Krishna",
+   "Shiva",
+   "Vishnu",
+   "Rama",
+   "Lakshmi",
+   "Ganesh",
+   "Durga",
+   "Kali",
+   "Buddha",
+   "Bodhisattva",
+   "Guru",
+   "Nanak",
+   "Kami",
+   "Amaterasu",
+   "Inari",
+   "Ahura",
+   "Mazda",
+   "Olodumare",
+   "Orisha",
+   "Obatala",
+   "Ogun",
+   "Shango",
+   "Ifa",
+   "Yemoja",
+   "Oshun",
+   "Pele",
+   "Pachamama",
+   "Inti",
+   "Viracocha",
+   "Kanaloa",
+   "Tangaroa",
+   "Tengri"
+  ],
+  "bannedFromMoney": true,
+  "kindBlock": {
+   "month": [
+    "Morning Star",
+    "Evening Star"
+   ]
+  },
+  "zodiacSet": [
+   "the Warrior",
+   "the Mage",
+   "the Thief",
+   "the Lady",
+   "the Steed",
+   "the Lord",
+   "the Lover",
+   "the Shadow",
+   "the Tower",
+   "the Serpent",
+   "the Ritual",
+   "the Atronach",
+   "the Apprentice"
+  ],
+  "zodiacSetLimit": 4
+ }
+}

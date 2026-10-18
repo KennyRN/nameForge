@@ -50,6 +50,10 @@ export interface VocabEntry {
   fx?: string;
   /** Money brief §5: a fraction word's move along the tiers (1 lowers one step, -1 raises one). */
   ts?: number;
+  /** Time and sky brief §7: the seasons the entry fits (season keys; all when absent). Other modules ignore it. */
+  s?: string[];
+  /** Time and sky brief §7: the farming-year subset of the season words (the brief's `w: true`). */
+  wk?: boolean;
 }
 
 export type ValueTier = "h" | "m" | "l";
@@ -197,6 +201,9 @@ export interface VocabPackSection {
 
 /** Money brief §5: the pools that read `[loan]` and `(h)`, `(m)`, `(l)` in a pack line. */
 const isMoneyPool = (pool: string) => pool.startsWith("moneyFixed:") || MONEY_WORD_POOLS.includes(pool);
+/** Time and sky brief §7: the pools whose pack lines may carry season tags in round brackets. */
+const SEASON_POOLS = ["seasonWord", "workWord"];
+export const SEASON_KEYS = ["spring", "summer", "autumn", "winter", "thaw", "rain", "monsoon", "flood", "drought", "harvest", "storm", "frost"];
 const MONEY_WORD_POOLS = ["coinMetal", "coinWord", "coinEmblem", "coinFraction", "coinShapeWord", "earlyMoney", "goodsMoney", "paperWord", "tokenWord", "unitWord", "moneyNickname", "sfMoney"];
 
 /** §3.3: a pack line: `- word`, then ` ×n`, ` (tone, tone)` and (Inns brief §3) ` [theme]`, in any order.
@@ -209,6 +216,7 @@ function parseLine(text: string, pool = ""): VocabEntry | undefined {
   let th: string[] | undefined;
   let loan: string | undefined;
   let v: ValueTier[] | undefined;
+  let seasons: string[] | undefined;
   for (let i = 0; i < 3; i++) {
     const themes = rest.match(/\s*\[([^[\]]*)\]$/);
     if (themes && money && loan === undefined) {
@@ -232,6 +240,7 @@ function parseLine(text: string, pool = ""): VocabEntry | undefined {
       const words = tones[1].split(/[,\s]+/).map((s) => s.trim().toLowerCase());
       t = words.filter((s): s is GroupTone => (GROUP_TONES as string[]).includes(s));
       if (money) v = words.filter((s): s is ValueTier => (VALUE_TIERS as string[]).includes(s));
+      if (SEASON_POOLS.includes(pool)) seasons = words.filter((s) => SEASON_KEYS.includes(s));
       rest = rest.slice(0, tones.index).trim();
     }
   }
@@ -243,6 +252,7 @@ function parseLine(text: string, pool = ""): VocabEntry | undefined {
     ...(th && th.length > 0 ? { th } : {}),
     ...(v && v.length > 0 ? { v } : {}),
     ...(loan ? { loan } : {}),
+    ...(seasons && seasons.length > 0 ? { s: seasons } : {}),
   };
 }
 
