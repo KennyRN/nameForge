@@ -44,6 +44,10 @@ export type NameForgeSection =
   // Time and sky brief §1.1: after money and coins.
   | "calendarNames"
   | "skyNames"
+  // Named things brief §1.1: the named things group, after vehicles.
+  | "armsNames"
+  | "treasureNames"
+  | "bookNames"
   // Deities brief §1.1; the line-up brief moves it to the end of group names.
   | "deityNames"
   // Line-up brief §2.1: the deities engine's places, last in place names.
@@ -83,6 +87,9 @@ export const WATERS_SECTIONS: NameForgeSection[] = ["seasLakes", "coastsIslands"
 /** Ships brief §1.1: the two vessel modules, in order. */
 export const VESSEL_SECTIONS: NameForgeSection[] = ["ships", "spacecraft"];
 
+/** Named things brief §1.1: the three named things modules, in order. */
+export const THING_SECTIONS: NameForgeSection[] = ["armsNames", "treasureNames", "bookNames"];
+
 /** Bynames brief §1.1: the three bynames modules, in order. */
 export const BYNAME_SECTIONS: NameForgeSection[] = ["epithets", "familyNames", "titles"];
 
@@ -115,6 +122,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "deityNames",
   ...BYNAME_SECTIONS,
   ...VESSEL_SECTIONS,
+  ...THING_SECTIONS,
   "nameAgeing",
   "nameTakeover",
   "settlementKit",
@@ -126,7 +134,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
  * trigger then chooses between the group's modules. */
-export type SectionGroup = "placeNames" | "seasCoasts" | "groupNames" | "bynames" | "vehicles" | "advanced";
+export type SectionGroup = "placeNames" | "seasCoasts" | "groupNames" | "bynames" | "vehicles" | "namedThings" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames", "sacredPlaces"],
@@ -135,6 +143,8 @@ export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   bynames: BYNAME_SECTIONS,
   // Line-up brief §1: ships and spacecraft get a group of their own.
   vehicles: VESSEL_SECTIONS,
+  // Named things brief §1.1.
+  namedThings: THING_SECTIONS,
   advanced: ["nameAgeing", "nameTakeover", "settlementKit", "eventNames", "moneyNames", "calendarNames", "skyNames"],
 };
 
@@ -144,11 +154,12 @@ export const GROUP_LABELS: Record<SectionGroup, string> = {
   groupNames: "group names",
   bynames: "bynames and titles",
   vehicles: "vehicles",
+  namedThings: "named things",
   advanced: "advanced",
 };
 
 /** The switcher's line-up: modules and groups. */
-export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "seasCoasts", "groupNames", "bynames", "vehicles", "advanced"];
+export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "seasCoasts", "groupNames", "bynames", "vehicles", "namedThings", "advanced"];
 
 /** The group a module belongs to, if any. */
 export function sectionGroup(section: NameForgeSection): SectionGroup | undefined {
@@ -168,6 +179,9 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   moneyNames: "money and coins",
   calendarNames: "calendars and festivals",
   skyNames: "sky lore",
+  armsNames: "arms and armour",
+  treasureNames: "treasures and regalia",
+  bookNames: "books and writings",
   deityNames: "deities",
   sacredPlaces: "sacred places",
   riverNames: "river names",
@@ -233,6 +247,8 @@ export function historySection(packName: string): NameForgeSection {
   // Time and sky brief §1.1: "calendars and festivals · …" and "sky lore · …".
   if (starts(SECTION_LABELS.calendarNames)) return "calendarNames";
   if (starts(SECTION_LABELS.skyNames)) return "skyNames";
+  // Named things brief §1.1: "arms and armour · …", "treasures and regalia · …", "books and writings · …".
+  for (const section of THING_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   // Line-up brief §2.4: old "deities and sacred places" rows first, since they also start "deities".
   if (OLD_HISTORY_PREFIXES.deityNames.some(starts)) return packName.includes("· sacred places") ? "sacredPlaces" : "deityNames";
   // "deities · {era} · {culture}…" and "sacred places · {era} · {culture}…".

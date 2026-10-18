@@ -296,3 +296,103 @@ test("§16.5: the block list works on hyphens and spaces (Leg-Biter is Legbiter)
   assert.ok(!extra.some((n) => /^(Faithful|Joyous)$/.test(n.name)));
 });
 
+// ── §16.6 Sentence and presets ──────────────────────────────────────────────
+
+import { GROUP_LABELS, historySection, SECTION_GROUPS, SECTION_LABELS, SECTION_ORDER, SWITCHER_ORDER } from "../src/sections";
+import { chooseThings, DEFAULT_THING_STATE, switchThingModule, thingHistoryLabel, thingSentence, thingSentenceText, type ThingSentenceState } from "../src/things/sentence";
+import { isModulePresetContent, modulePresetContent, parseModulePreset } from "../src/presets";
+
+const text = (module: ThingModule, s: ThingSentenceState, packs = [] as { name: string; headings: string[] }[]) => thingSentenceText(thingSentence(module, s, packs));
+
+test("§16.6: the default sentences read as the brief gives them", () => {
+  assert.equal(text("arms", DEFAULT_THING_STATE), "Norman & British arms and armour of any kind of the medieval era, in a realistic world, of any tone, belonging to anyone, with placeholders for people and places, names only.");
+  assert.equal(text("treasure", DEFAULT_THING_STATE), "Norman & British treasures and regalia of any kind of the medieval era, in a realistic world, of any tone, belonging to anyone, with placeholders for people and places, names only.");
+  assert.equal(
+    text("book", { ...DEFAULT_THING_STATE, era: "EM", describe: true, people: "invented" }),
+    "Norman & British books and writings of any kind of the early modern era, in a realistic world, of any tone, by or about anyone, with invented people and places, with what they are.",
+  );
+  assert.match(text("arms", { ...DEFAULT_THING_STATE, kind: "sword", culture: "norse" }), /^Norse swords of the medieval era/);
+  assert.match(text("arms", { ...DEFAULT_THING_STATE, owner: "none" }), /belonging to no one,/);
+  assert.match(text("book", { ...DEFAULT_THING_STATE, owner: "pack", pack: "Saxon Men" }, [{ name: "Saxon Men", headings: ["Male", "Female"] }]), /by or about people from Saxon Men, its Male section, with/);
+});
+
+test("§16.6: namedThings sits in SWITCHER_ORDER between vehicles and advanced, with the three modules in order", () => {
+  const i = (SWITCHER_ORDER as string[]).indexOf("namedThings");
+  assert.equal(SWITCHER_ORDER[i - 1], "vehicles");
+  assert.equal(SWITCHER_ORDER[i + 1], "advanced");
+  assert.deepEqual(SECTION_GROUPS.namedThings, ["armsNames", "treasureNames", "bookNames"]);
+  assert.equal(GROUP_LABELS.namedThings, "named things");
+  assert.equal(SECTION_LABELS.armsNames, "arms and armour");
+  assert.equal(SECTION_ORDER.indexOf("armsNames"), SECTION_ORDER.indexOf("spacecraft") + 1);
+  assert.equal(SECTION_ORDER[SECTION_ORDER.indexOf("bookNames") + 1], "nameAgeing");
+  assert.equal(historySection("arms and armour · medieval · Norse"), "armsNames");
+  assert.equal(historySection("treasures and regalia · medieval · Norse · crowns and circlets"), "treasureNames");
+  assert.equal(historySection("books and writings · medieval · Norse · described"), "bookNames");
+});
+
+test("§16.6: resets as §2.4", () => {
+  let s: ThingSentenceState = { ...DEFAULT_THING_STATE, kind: "gun", era: "EM", fantastic: false, tone: "grim" };
+  assert.equal(chooseThings("arms", s, "era", "AN").kind, undefined);
+  s = { ...DEFAULT_THING_STATE, kind: "mirror", culture: "chinese", era: "MD" };
+  assert.equal(chooseThings("treasure", s, "culture", "norse").kind, undefined);
+  assert.equal(chooseThings("treasure", { ...s, kind: "mirror", culture: "norse", fantastic: true }, "fantastic", "off").kind, undefined);
+  assert.equal(chooseThings("treasure", { ...DEFAULT_THING_STATE, kind: "mirror", fantastic: true }, "culture", "norman-british").kind, "mirror");
+  // A module change resets the kind and keeps the rest.
+  const switched = switchThingModule({ ...DEFAULT_THING_STATE, kind: "sword", tone: "grand", describe: true, owner: "none", people: "invented" });
+  assert.deepEqual({ ...switched }, { ...DEFAULT_THING_STATE, kind: undefined, tone: "grand", describe: true, owner: "none", people: "invented" });
+  // Choosing a pack remembers the first.
+  assert.equal(chooseThings("arms", DEFAULT_THING_STATE, "owner", "pack", [{ name: "Saxon Men", headings: [] }]).pack, "Saxon Men");
+});
+
+test("§1.2: history labels", () => {
+  assert.equal(thingHistoryLabel("arms", { ...DEFAULT_THING_STATE, culture: "norse", kind: "sword", fantastic: true, tone: "grim", owner: "pack", describe: true }), "arms and armour · medieval · Norse · swords · fantastic · grim · owner: pack · described");
+  assert.equal(thingHistoryLabel("book", { ...DEFAULT_THING_STATE, era: "ST", fantastic: true, owner: "none" }), "books and writings · steam age · Norman & British · steampunk · owner: none");
+});
+
+test("§16.6: presets round-trip, including a missing owner pack", () => {
+  const note = `---
+type: module-preset
+module: arms-names
+packName: Danelaw blades
+culture: norse
+kind: sword
+era: MD
+fantastic: false
+tone: any
+people: invented
+owner: anyone
+describe: on
+---
+
+Norse swords of the medieval era, in a realistic world, of any tone, belonging to anyone, with invented people and places, with what they are.
+`;
+  assert.ok(isModulePresetContent(note));
+  const parsed = parseModulePreset(note, "x");
+  assert.deepEqual(parsed.problems, []);
+  const t = parsed.thing!;
+  assert.equal(t.thingModule, "arms");
+  assert.equal(t.kind, "sword");
+  assert.equal(t.owner, "anyone");
+  assert.equal(t.describe, true);
+  assert.deepEqual({ ...parseModulePreset(modulePresetContent(t), "x").thing!, description: "" }, { ...t, description: "" });
+  // The other two modules, an owner pack, and the fall-back for a kind the era doesn't offer.
+  for (const [module, name] of [["treasure", "treasure-names"], ["book", "book-names"]] as const) {
+    const n = parseModulePreset(note.replace("module: arms-names", `module: ${name}`).replace("kind: sword", "kind: any"), "x").thing!;
+    assert.equal(n.thingModule, module);
+  }
+  const pack = parseModulePreset(note.replace("owner: anyone", 'owner: "[[Saxon Men]]"').replace("describe: on", "describe: on\nownerSection: Male"), "x").thing!;
+  assert.equal(pack.owner, "Saxon Men");
+  assert.equal(pack.ownerSection, "Male");
+  const again = parseModulePreset(modulePresetContent(pack), "x").thing!;
+  assert.equal(again.owner, "Saxon Men");
+  assert.equal(again.ownerSection, "Male");
+  const odd = parseModulePreset(note.replace("culture: norse", "culture: aztec").replace("kind: sword", "kind: gun").replace("era: MD", "era: MD"), "x");
+  assert.equal(odd.thing?.kind, "any");
+  assert.ok(odd.problems.length > 0);
+  // A pack that is missing: the module runs with owner anyone and the engine falls back to placeholders with a notice.
+  const runs = gen({ module: "arms", owner: "pack", draw: () => null, packName: "Saxon Men", people: "placeholders", count: 12, seed: 4 });
+  assert.ok(runs.names.length === 12 && runs.notices.some((x) => x.includes("Saxon Men")));
+  assert.ok(runs.names.some((n) => n.name.includes("[hero]")));
+  const drawn = gen({ module: "arms", owner: "pack", draw: () => "Old Wulfric", people: "placeholders", count: 20, seed: 4, shape: "{hero:poss} {object}" }).names;
+  assert.ok(drawn.length > 0 && drawn.every((n) => n.name.startsWith("Old Wulfric's ")));
+});

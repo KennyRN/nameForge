@@ -23,6 +23,7 @@ import { BUILDING_KINDS, type BuildingKind } from "./buildings/engine";
 import { EVENT_KINDS, EVENT_SCALES, type EventKind, type EventScale } from "./events/engine";
 import { findMoneyCulture, MONEY_KINDS, MONEY_VALUES, MONEY_WORDS, type MoneyKind, type MoneySeries, type MoneyValue, type MoneyWords } from "./money/engine";
 import { normaliseMoney } from "./money/sentence";
+import { findThingCulture, findThingKind, thingKindsOffered, type ThingModule } from "./things/engine";
 import { findTimeCulture, findTimeKind, kindsOffered as timeKindsOffered, TIME_SKY, type TimeKind, type TimeModule, type TimeWords } from "./timesky/data";
 import { DEITY_KINDS, DEITY_DOMAINS, deityCulture, type DeityGender, type DeityKind, type DeityNames } from "./deities/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
@@ -81,7 +82,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; time?: TimePreset; deity?: DeityPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; time?: TimePreset; thing?: ThingPreset; deity?: DeityPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -112,6 +113,8 @@ export function parseModulePreset(
   if (values.module === MONEY_PRESET_MODULE) return parseMoneyPreset(values, body, fileName);
   // Time and sky brief §14: calendar and sky presets too.
   if (values.module === CALENDAR_PRESET_MODULE || values.module === SKY_PRESET_MODULE) return parseTimePreset(values, body, fileName);
+  // Named things brief §14: arms, treasure and book presets too.
+  if (THING_PRESET_MODULES.includes(values.module)) return parseThingPreset(values, body, fileName);
   // Deities brief §12: deity presets too.
   if (values.module === DEITY_PRESET_MODULE) return parseDeityPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
@@ -149,7 +152,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | MoneyPreset | TimePreset | DeityPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | MoneyPreset | TimePreset | ThingPreset | DeityPreset): string {
+  if ("thingModule" in preset) return thingPresetContent(preset);
   if ("timeModule" in preset) return timePresetContent(preset);
   if ("deityKind" in preset) return deityPresetContent(preset);
   if ("moneyKind" in preset) return moneyPresetContent(preset);
@@ -1481,6 +1485,95 @@ function timePresetContent(preset: TimePreset): string {
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
     `series: ${preset.series ? "on" : "off"}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Named things presets (Named things brief §14) ───────────────────────────
+
+export const THING_PRESET_MODULES = ["arms-names", "treasure-names", "book-names"];
+const THING_MODULE_OF: Record<string, ThingModule> = { "arms-names": "arms", "treasure-names": "treasure", "book-names": "book" };
+
+export interface ThingPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  thingModule: ThingModule;
+  culture: string;
+  /** "any" or a kind key (the note's `kind`). */
+  kind: string;
+  era: RouteEra;
+  fantastic: boolean;
+  tone: GroupToneChoice;
+  people: GroupPeople;
+  /** "anyone", "none", or the owner pack's name (written as a link). */
+  owner: string;
+  /** The owner pack's `##` heading, or "whole". */
+  ownerSection: string;
+  describe: boolean;
+}
+
+function parseThingPreset(values: Record<string, string>, body: string, fileName: string): { thing?: ThingPreset; problems: string[] } {
+  const problems: string[] = [];
+  const thingModule = THING_MODULE_OF[values.module];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const era = pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  const culture = pick("culture", "norman-british", (v) => !!findThingCulture(v));
+  const fantasticRaw = values.fantastic;
+  if (fantasticRaw && fantasticRaw !== "true" && fantasticRaw !== "false") problems.push(`Unknown fantastic “${fantasticRaw}”.`);
+  const fantastic = fantasticRaw === "true";
+  let kind = pick<string>("kind", "any", (v) => v === "any" || findThingKind(v)?.module === thingModule);
+  if (kind !== "any" && !thingKindsOffered(thingModule, culture, era, fantastic).some((k) => k.key === kind)) {
+    problems.push(`Kind “${kind}” isn't offered here.`);
+    kind = "any";
+  }
+  const describeRaw = pick<"on" | "off">("describe", "off", (v) => v === "on" || v === "off");
+  const owner = (values.owner ?? "").replace(/^\[\[(.+)\]\]$/, "$1") || "anyone";
+  return {
+    thing: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      thingModule,
+      culture,
+      kind,
+      era,
+      fantastic,
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      owner,
+      ownerSection: values.ownerSection || "",
+      describe: describeRaw === "on",
+    },
+    problems,
+  };
+}
+
+function thingPresetContent(preset: ThingPreset): string {
+  const pack = preset.owner !== "anyone" && preset.owner !== "none";
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${Object.keys(THING_MODULE_OF).find((k) => THING_MODULE_OF[k] === preset.thingModule)}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.kind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `owner: ${pack ? `"[[${preset.owner}]]"` : preset.owner}`,
+    ...(pack && preset.ownerSection ? [`ownerSection: ${preset.ownerSection}`] : []),
+    `describe: ${preset.describe ? "on" : "off"}`,
     "---",
     "",
     preset.description.trim(),
