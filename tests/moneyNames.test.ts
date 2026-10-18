@@ -814,3 +814,210 @@ test("§10.5: figures take a comma for thousands", () => {
   assert.equal(countText(648000), "648,000");
   assert.equal(countText(999), "999");
 });
+
+// ── §16.8 Sentence, sections and presets ────────────────────────────────────
+
+import { GROUP_LABELS, historySection, SECTION_GROUPS, SECTION_LABELS, SECTION_ORDER, SWITCHER_ORDER } from "../src/sections";
+import { isModulePresetContent, modulePresetContent, parseModulePreset } from "../src/presets";
+import {
+  chooseMoney,
+  DEFAULT_MONEY_STATE,
+  moneyHistoryLabel,
+  moneySentence,
+  moneySentenceText,
+  moneySeriesChoices,
+  normaliseMoney,
+  showsMoneySeries,
+  showsMoneyValue,
+  showsMoneyWords,
+} from "../src/money/sentence";
+
+const field = (state: Parameters<typeof moneySentence>[0], name: string) => moneySentence(state).find((s) => typeof s !== "string" && s.field === name) as Exclude<ReturnType<typeof moneySentence>[number], string> | undefined;
+
+test("§16.8: the default sentence's plain text", () => {
+  assert.equal(
+    moneySentenceText(moneySentence(DEFAULT_MONEY_STATE)),
+    "Norman & British money of any kind of the medieval era, in a realistic world, of any value, of any tone, with placeholders for people and places, each one separate.",
+  );
+});
+
+test("§16.8: Roman / Italian shows the words link after the value", () => {
+  assert.equal(
+    moneySentenceText(moneySentence({ ...DEFAULT_MONEY_STATE, culture: "roman" })),
+    "Roman / Italian money of any kind of the medieval era, in a realistic world, of any value, in translated names, of any tone, with placeholders for people and places, each one separate.",
+  );
+  const loans = chooseMoney({ ...DEFAULT_MONEY_STATE, culture: "roman" }, "words", "loanwords");
+  assert.equal(moneySentenceText(moneySentence(loans)).includes("with familiar loanwords"), true);
+});
+
+test("§2.2: the value, words and series links show only where they apply", () => {
+  const s = DEFAULT_MONEY_STATE;
+  assert.ok(!showsMoneyWords(s) && !showsMoneyWords({ ...s, culture: "american" }) && !showsMoneyWords({ ...s, culture: "general" }) && !showsMoneyWords({ ...s, culture: "anglo-saxon" }));
+  assert.ok(showsMoneyWords({ ...s, culture: "french" }));
+  assert.ok(showsMoneyValue(s) && !showsMoneyValue({ ...s, kind: "currency" }));
+  for (const kind of [undefined, "coin", "early", "goods"] as (MoneyKind | undefined)[]) assert.ok(showsMoneySeries({ ...s, kind }), String(kind));
+  for (const kind of ["paper", "scrip", "currency", "nickname"] as MoneyKind[]) assert.ok(!showsMoneySeries({ ...s, kind }), kind);
+  const currency = moneySentenceText(moneySentence({ ...s, era: "ST", kind: "currency" }));
+  assert.equal(currency, "Norman & British currencies of the steam age era, in a realistic world, of any tone, with placeholders for people and places.");
+});
+
+test("§2.2: the series link offers values only where a ladder exists", () => {
+  assert.deepEqual(moneySeriesChoices({ ...DEFAULT_MONEY_STATE, era: "ST" }), ["separate", "coinage", "values"]);
+  assert.deepEqual(moneySeriesChoices({ ...DEFAULT_MONEY_STATE, culture: "slavic", era: "AN" }), ["separate", "coinage"]);
+  const link = field({ ...DEFAULT_MONEY_STATE, era: "ST" }, "series")!;
+  assert.deepEqual(link.choices.map((c) => c.label), ["each one separate", "as one coinage", "as one coinage, with values"]);
+  assert.deepEqual(field({ ...DEFAULT_MONEY_STATE, culture: "ethiopian", era: "ST" }, "series")!.choices.map((c) => c.id), ["separate", "coinage"]);
+});
+
+test("§2.3: era or culture changes reset a kind not offered, and values step down to a coinage", () => {
+  let s = chooseMoney({ ...DEFAULT_MONEY_STATE, era: "EM" }, "kind", "paper");
+  assert.equal(s.kind, "paper");
+  s = chooseMoney(s, "era", "AN");
+  assert.equal(s.kind, undefined);
+  s = chooseMoney({ ...DEFAULT_MONEY_STATE, culture: "aztec", era: "EM" }, "kind", "coin");
+  assert.equal(s.kind, "coin");
+  s = chooseMoney(s, "era", "MD");
+  assert.equal(s.kind, undefined);
+  s = chooseMoney({ ...DEFAULT_MONEY_STATE, era: "ST" }, "series", "values");
+  assert.equal(s.series, "values");
+  s = chooseMoney(s, "culture", "ethiopian");
+  assert.equal(s.series, "coinage");
+  s = chooseMoney({ ...DEFAULT_MONEY_STATE, era: "ST" }, "series", "values");
+  s = chooseMoney(s, "era", "MD");
+  assert.equal(s.series, "values");
+  s = chooseMoney(chooseMoney({ ...DEFAULT_MONEY_STATE, culture: "slavic", era: "MD" }, "series", "values"), "era", "AN");
+  assert.equal(s.series, "coinage");
+});
+
+test("§2.3: a culture without loan forms resets words; a kind without series resets the series", () => {
+  let s = chooseMoney({ ...DEFAULT_MONEY_STATE, culture: "roman" }, "words", "loanwords");
+  assert.equal(s.words, "loanwords");
+  s = chooseMoney(s, "culture", "american");
+  assert.equal(s.words, "translated");
+  s = chooseMoney({ ...DEFAULT_MONEY_STATE, era: "ST" }, "series", "coinage");
+  assert.equal(s.series, "coinage");
+  s = chooseMoney(s, "kind", "nickname");
+  assert.equal(s.series, "separate");
+  s = chooseMoney({ ...DEFAULT_MONEY_STATE, era: "ST" }, "series", "values");
+  s = chooseMoney(s, "kind", "paper");
+  assert.equal(s.series, "separate");
+  s = chooseMoney({ ...DEFAULT_MONEY_STATE, era: "ST", kind: "coin" }, "series", "values");
+  s = chooseMoney(s, "kind", "goods");
+  assert.equal(s.series, "coinage");
+});
+
+test("§2.2: the kind link lists the kinds offered for the culture and era", () => {
+  const labels = (state: Parameters<typeof moneySentence>[0]) => field(state, "kind")!.choices.map((c) => c.label);
+  assert.deepEqual(labels({ ...DEFAULT_MONEY_STATE, culture: "french", era: "AN" }), ["Any", "Currencies", "Nicknames"]);
+  assert.deepEqual(labels({ ...DEFAULT_MONEY_STATE, era: "EM" }), ["Any", "Coins", "Early and shaped money", "Goods money", "Paper and credit", "Scrip and tokens", "Currencies", "Nicknames"]);
+  assert.ok(!labels({ ...DEFAULT_MONEY_STATE, culture: "aztec", era: "MD" }).includes("Coins"));
+  assert.equal(field(DEFAULT_MONEY_STATE, "kind")!.choices[1].title, "Struck and cast coins, from gold to copper");
+  const culture = field(DEFAULT_MONEY_STATE, "culture")!;
+  assert.equal(culture.choices.length, 24);
+  assert.equal(culture.choices.find((c) => c.id === "dutch")!.group, undefined);
+  assert.ok(culture.choices.some((c) => c.id === "american"));
+});
+
+test("§16.8: moneyNames is last in advanced; the label, icon section and order", () => {
+  assert.equal(SECTION_GROUPS.advanced.at(-1), "moneyNames");
+  assert.equal(SECTION_GROUPS.advanced.at(-2), "eventNames");
+  assert.equal(SECTION_LABELS.moneyNames, "money and coins");
+  assert.equal(SECTION_ORDER.at(-1), "moneyNames");
+  assert.equal(SECTION_ORDER.indexOf("moneyNames"), SECTION_ORDER.indexOf("eventNames") + 1);
+  assert.ok(GROUP_LABELS.advanced && (SWITCHER_ORDER as string[]).includes("advanced"));
+});
+
+test("§1.2: the history label, and routing", () => {
+  assert.equal(moneyHistoryLabel(DEFAULT_MONEY_STATE), "money and coins · medieval · Norman & British");
+  const label = moneyHistoryLabel({ ...DEFAULT_MONEY_STATE, culture: "roman", kind: "coin", era: "ST", value: "high", words: "loanwords", fantastic: true, tone: "grim", series: "values" });
+  assert.equal(label, "money and coins · steam age · Roman / Italian · coins · high · loanwords · steampunk · grim · one coinage with values");
+  assert.equal(moneyHistoryLabel({ ...DEFAULT_MONEY_STATE, kind: "goods", series: "coinage" }), "money and coins · medieval · Norman & British · goods money · one coinage");
+  assert.equal(moneyHistoryLabel({ ...DEFAULT_MONEY_STATE, kind: "currency", value: "high" }), "money and coins · medieval · Norman & British · currencies");
+  assert.equal(historySection(label), "moneyNames");
+  assert.equal(historySection("money and coins · Steam-age sterling"), "moneyNames");
+  assert.equal(historySection("events and eras · medieval · General"), "eventNames");
+});
+
+test("§14: the preset note, round trip, in the brief's order", () => {
+  const state = [["era", "ST"], ["series", "values"], ["people", "invented"]].reduce((s, [f, id]) => chooseMoney(s, f as never, id), DEFAULT_MONEY_STATE);
+  const content = modulePresetContent({
+    packName: "Steam-age sterling",
+    setting: "",
+    description: moneySentenceText(moneySentence(state)),
+    culture: state.culture,
+    moneyKind: state.kind ?? "any",
+    era: state.era,
+    fantastic: state.fantastic,
+    value: state.value,
+    words: state.words,
+    tone: state.tone,
+    people: state.people,
+    series: state.series,
+  });
+  assert.ok(isModulePresetContent(content));
+  assert.ok(content.startsWith(`---
+type: module-preset
+module: money-names
+packName: Steam-age sterling
+culture: norman-british
+kind: any
+era: ST
+fantastic: false
+value: any
+words: translated
+tone: any
+people: invented
+series: values
+---
+
+Norman & British money of any kind of the steam age era, in a realistic world, of any value, of any tone, with invented people and places, as one coinage, with values.`));
+  const { money, problems } = parseModulePreset(content, "x");
+  assert.deepEqual(problems, []);
+  assert.equal(money!.packName, "Steam-age sterling");
+  assert.equal(money!.series, "values");
+  assert.equal(money!.moneyKind, "any");
+  assert.equal(money!.era, "ST");
+  assert.equal(money!.people, "invented");
+  assert.equal(modulePresetContent(money!), content);
+});
+
+test("§14: a preset asking for values where no ladder exists runs as a coinage; unknown values are reported", () => {
+  const note = (extra: string) => `---\ntype: module-preset\nmodule: money-names\npackName: P\n${extra}\n---\n\nText.\n`;
+  const noLadder = parseModulePreset(note("culture: slavic\nera: AN\nseries: values"), "x");
+  assert.equal(noLadder.money!.series, "coinage");
+  assert.deepEqual(noLadder.problems, []);
+  const bad = parseModulePreset(note("culture: atlantis\nkind: bonds\nvalue: huge\nwords: pidgin\nseries: sometimes"), "x");
+  assert.equal(bad.problems.length, 5);
+  assert.equal(bad.money!.culture, "norman-british");
+  assert.equal(bad.money!.moneyKind, "any");
+  assert.equal(bad.money!.value, "any");
+  assert.equal(bad.money!.series, "separate");
+  const offered = parseModulePreset(note("culture: aztec\nera: MD\nkind: coin"), "x");
+  assert.equal(offered.money!.moneyKind, "any");
+  assert.ok(offered.problems.some((p) => p.includes("isn't offered")));
+  const words = parseModulePreset(note("culture: american\nwords: loanwords"), "x");
+  assert.equal(words.money!.words, "translated");
+  const defaults = parseModulePreset(note(""), "My coins");
+  assert.equal(defaults.money!.culture, "norman-british");
+  assert.equal(defaults.money!.era, "MD");
+  assert.equal(defaults.money!.series, "separate");
+  assert.equal(parseModulePreset(note("module: money-names"), "x").money!.packName, "P");
+});
+
+test("§14: the preset runs as the module runs", () => {
+  const content = `---\ntype: module-preset\nmodule: money-names\npackName: Sterling\nculture: norman-british\nkind: coin\nera: ST\nvalue: any\nwords: translated\ntone: any\npeople: invented\nseries: values\n---\n\nText.\n`;
+  const { money } = parseModulePreset(content, "x");
+  const state = normaliseMoney({ culture: money!.culture, kind: money!.moneyKind === "any" ? undefined : money!.moneyKind, era: money!.era, fantastic: money!.fantastic, value: money!.value, words: money!.words, tone: money!.tone, people: money!.people, series: money!.series });
+  const b = generateMoneyNames({ ...state, count: 8, seed: 3 });
+  assert.equal(b.ladder, "english-st");
+  assert.equal(b.names.length, 5);
+  assert.deepEqual(b.notices, ["Values: English pounds, shillings and pence (1817–1971)."]);
+});
+
+test("§14: other modules' presets are not read as money presets", () => {
+  const event = modulePresetContent({
+    packName: "E", setting: "", description: "x", culture: "norman-british", eventKind: "any", era: "MD", fantastic: false, scale: "realm", tone: "any", people: "placeholders", series: false,
+  });
+  assert.equal(parseModulePreset(event, "E").money, undefined);
+  assert.ok(parseModulePreset(event, "E").event);
+});

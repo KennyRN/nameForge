@@ -21,6 +21,8 @@ import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 import { INN_KINDS, INN_SETTINGS, type InnForm, type InnKind, type InnSetting } from "./inns/engine";
 import { BUILDING_KINDS, type BuildingKind } from "./buildings/engine";
 import { EVENT_KINDS, EVENT_SCALES, type EventKind, type EventScale } from "./events/engine";
+import { findMoneyCulture, MONEY_KINDS, MONEY_VALUES, MONEY_WORDS, type MoneyKind, type MoneySeries, type MoneyValue, type MoneyWords } from "./money/engine";
+import { normaliseMoney } from "./money/sentence";
 import { DEITY_KINDS, DEITY_DOMAINS, deityCulture, type DeityGender, type DeityKind, type DeityNames } from "./deities/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
@@ -78,7 +80,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; deity?: DeityPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; deity?: DeityPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -105,6 +107,8 @@ export function parseModulePreset(
   if (values.module === KIT_PRESET_MODULE) return parseKitPreset(values, body, fileName);
   // Events brief §12: event presets too.
   if (values.module === EVENT_PRESET_MODULE) return parseEventPreset(values, body, fileName);
+  // Money brief §14: money presets too.
+  if (values.module === MONEY_PRESET_MODULE) return parseMoneyPreset(values, body, fileName);
   // Deities brief §12: deity presets too.
   if (values.module === DEITY_PRESET_MODULE) return parseDeityPreset(values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
@@ -142,8 +146,9 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | DeityPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | MoneyPreset | DeityPreset): string {
   if ("deityKind" in preset) return deityPresetContent(preset);
+  if ("moneyKind" in preset) return moneyPresetContent(preset);
   if ("eventKind" in preset) return eventPresetContent(preset);
   if ("contents" in preset) return kitPresetContent(preset);
   if ("buildingKind" in preset) return buildingPresetContent(preset);
@@ -969,6 +974,86 @@ function eventPresetContent(preset: EventPreset): string {
     `era: ${preset.era}`,
     `fantastic: ${preset.fantastic}`,
     `scale: ${preset.scale}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Money presets (Money brief §14) ─────────────────────────────────────────
+
+export const MONEY_PRESET_MODULE = "money-names";
+
+export interface MoneyPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  culture: string;
+  /** "any" or a kind key (the note's `kind`). */
+  moneyKind: "any" | MoneyKind;
+  era: RouteEra;
+  fantastic: boolean;
+  value: MoneyValue;
+  words: MoneyWords;
+  tone: GroupToneChoice;
+  people: GroupPeople;
+  series: MoneySeries;
+}
+
+/** The note's `series` key: separate, coinage or values. A preset asking for values where no ladder exists runs as a coinage. */
+const MONEY_SERIES = ["separate", "coinage", "values"];
+
+function parseMoneyPreset(values: Record<string, string>, body: string, fileName: string): { money?: MoneyPreset; problems: string[] } {
+  const problems: string[] = [];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const era = pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  const culture = pick("culture", "norman-british", (v) => !!findMoneyCulture(v));
+  let kind = pick<"any" | MoneyKind>("kind", "any", (v) => v === "any" || MONEY_KINDS.some((k) => k.key === v));
+  const fantasticRaw = values.fantastic;
+  if (fantasticRaw && fantasticRaw !== "true" && fantasticRaw !== "false") problems.push(`Unknown fantastic “${fantasticRaw}”.`);
+  const draft = {
+    packName: values.packName || fileName,
+    setting: "",
+    description: body.trim(),
+    culture,
+    moneyKind: kind,
+    era,
+    fantastic: fantasticRaw === "true",
+    value: pick<MoneyValue>("value", "any", (v) => MONEY_VALUES.some((x) => x.key === v)),
+    words: pick<MoneyWords>("words", "translated", (v) => MONEY_WORDS.some((x) => x.key === v)),
+    tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+    people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+    series: pick<MoneySeries>("series", "separate", (v) => MONEY_SERIES.includes(v)),
+  };
+  // Resets as the sentence makes them: a kind the era doesn't offer, and a series the kind or ladders can't have.
+  const state = normaliseMoney({ ...draft, kind: draft.moneyKind === "any" ? undefined : draft.moneyKind });
+  if (draft.moneyKind !== "any" && state.kind === undefined) problems.push(`Kind “${draft.moneyKind}” isn't offered here.`);
+  kind = state.kind ?? "any";
+  return { money: { ...draft, moneyKind: kind, words: state.words, series: state.series }, problems };
+}
+
+function moneyPresetContent(preset: MoneyPreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${MONEY_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.moneyKind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `value: ${preset.value}`,
+    `words: ${preset.words}`,
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
     `series: ${preset.series}`,

@@ -39,6 +39,8 @@ export type NameForgeSection =
   | "settlementKit"
   // Events brief §1.1; the line-up brief moves it to the end of advanced.
   | "eventNames"
+  // Money brief §1.1: last in advanced, after events and eras.
+  | "moneyNames"
   // Deities brief §1.1; the line-up brief moves it to the end of group names.
   | "deityNames"
   // Line-up brief §2.1: the deities engine's places, last in place names.
@@ -114,6 +116,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "nameTakeover",
   "settlementKit",
   "eventNames",
+  "moneyNames",
 ];
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
@@ -127,7 +130,7 @@ export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   bynames: BYNAME_SECTIONS,
   // Line-up brief §1: ships and spacecraft get a group of their own.
   vehicles: VESSEL_SECTIONS,
-  advanced: ["nameAgeing", "nameTakeover", "settlementKit", "eventNames"],
+  advanced: ["nameAgeing", "nameTakeover", "settlementKit", "eventNames", "moneyNames"],
 };
 
 export const GROUP_LABELS: Record<SectionGroup, string> = {
@@ -157,6 +160,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   buildingNames: "buildings and landmarks",
   settlementKit: "settlement kit",
   eventNames: "events and eras",
+  moneyNames: "money and coins",
   deityNames: "deities",
   sacredPlaces: "sacred places",
   riverNames: "river names",
@@ -217,6 +221,8 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
   // Events brief §1.2: "events and eras · {era} · {culture}…".
   if (starts(SECTION_LABELS.eventNames)) return "eventNames";
+  // Money brief §1.2: "money and coins · {era} · {culture}…".
+  if (starts(SECTION_LABELS.moneyNames)) return "moneyNames";
   // Line-up brief §2.4: old "deities and sacred places" rows first, since they also start "deities".
   if (OLD_HISTORY_PREFIXES.deityNames.some(starts)) return packName.includes("· sacred places") ? "sacredPlaces" : "deityNames";
   // "deities · {era} · {culture}…" and "sacred places · {era} · {culture}…".
