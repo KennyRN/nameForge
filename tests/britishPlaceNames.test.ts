@@ -252,6 +252,8 @@ test("line-up: the modules in order, with their labels; river names live in plac
       "titles and honourifics",
       "ships and boats",
       "spacecraft and stations",
+      "aircraft and airships",
+      "land vehicles",
       "arms and armour",
       "treasures and regalia",
       "books and writings",

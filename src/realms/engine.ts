@@ -37,7 +37,7 @@ import {
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
 import { generateTribalNames } from "../tribes/engine";
-import { withDeityPlaceholders } from "../vessels/engine";
+import { registerRealmSource, withDeityPlaceholders } from "../vessels/engine";
 
 export { withDeityPlaceholders };
 import { WORLD_CULTURES } from "../world/engine";
@@ -768,6 +768,9 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
   return { names, seed, notices };
 }
+
+// Aircraft and land brief §7.5: the vessels engine names realms by their short forms (state coaches, airships) through this.
+registerRealmSource(({ culture, era, genre, seed }) => generateRealmNames({ culture, era, genre, namedFor: "anything", output: "short", people: "invented", count: 1, seed }).names[0]?.short);
 
 /** §11: a short form from the shape's template and the values drawn ("same": the plain name). */
 function renderShort(ctx: Ctx, template: string, plain: string): string {

@@ -77,6 +77,9 @@ export type NameForgeSection =
   // Ships brief §1.1: ships and boats, spacecraft and stations (in the advanced group).
   | "ships"
   | "spacecraft"
+  // Aircraft and land vehicles brief §1.1: after spacecraft and stations.
+  | "aircraft"
+  | "landVehicles"
   // Seas and coasts brief §1.1: the seas and coasts group, after place names.
   | "seasLakes"
   | "coastsIslands"
@@ -86,8 +89,8 @@ export type NameForgeSection =
 /** Seas and coasts brief §1.1: the four waters modules, in order. */
 export const WATERS_SECTIONS: NameForgeSection[] = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
 
-/** Ships brief §1.1: the two vessel modules, in order. */
-export const VESSEL_SECTIONS: NameForgeSection[] = ["ships", "spacecraft"];
+/** Ships brief §1.1: the vessel modules, in order (aircraft and land vehicles added by their brief). */
+export const VESSEL_SECTIONS: NameForgeSection[] = ["ships", "spacecraft", "aircraft", "landVehicles"];
 
 /** Named things brief §1.1: the three named things modules, in order. */
 export const THING_SECTIONS: NameForgeSection[] = ["armsNames", "treasureNames", "bookNames"];
@@ -206,6 +209,8 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   familyNames: "family names",
   ships: "ships and boats",
   spacecraft: "spacecraft and stations",
+  aircraft: "aircraft and airships",
+  landVehicles: "land vehicles",
   seasLakes: "seas and lakes",
   coastsIslands: "coasts and islands",
   seaCharts: "sea charts",

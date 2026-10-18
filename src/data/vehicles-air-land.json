@@ -1,0 +1,5540 @@
+{
+ "$comment": "Aircraft and land vehicles (docs/aircraft-and-land-vehicles-brief.md). Built from the brief; merged by module key with vessels.json at load.",
+ "modules": {
+  "aircraft": "aircraft and airships",
+  "landVehicles": "land vehicles"
+ },
+ "technology": {
+  "aircraft": [
+   {
+    "code": "A1",
+    "label": "balloons and kites"
+   },
+   {
+    "code": "A2",
+    "label": "airships"
+   },
+   {
+    "code": "A3",
+    "label": "pioneer and biplane"
+   },
+   {
+    "code": "A4",
+    "label": "piston age"
+   },
+   {
+    "code": "A5",
+    "label": "jet age"
+   },
+   {
+    "code": "A6",
+    "label": "modern and drones"
+   },
+   {
+    "code": "A7",
+    "label": "future"
+   },
+   {
+    "code": "AF",
+    "label": "sky ships",
+    "fantastic": true
+   }
+  ],
+  "landVehicles": [
+   {
+    "code": "L1",
+    "label": "animal-drawn"
+   },
+   {
+    "code": "L2",
+    "label": "steam"
+   },
+   {
+    "code": "L3",
+    "label": "early motor"
+   },
+   {
+    "code": "L4",
+    "label": "mid-century"
+   },
+   {
+    "code": "L5",
+    "label": "modern"
+   },
+   {
+    "code": "L6",
+    "label": "future"
+   },
+   {
+    "code": "LF",
+    "label": "war engines and wonders",
+    "fantastic": true
+   }
+  ]
+ },
+ "settings": {
+  "aircraft": {
+   "FL": [
+    "A1"
+   ],
+   "FH": [
+    "A1",
+    "AF"
+   ],
+   "MR": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6"
+   ],
+   "MF": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6",
+    "AF"
+   ],
+   "SF": [
+    "A6",
+    "A7"
+   ]
+  },
+  "landVehicles": {
+   "FL": [
+    "L1"
+   ],
+   "FH": [
+    "L1",
+    "LF"
+   ],
+   "MR": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5"
+   ],
+   "MF": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5",
+    "LF"
+   ],
+   "SF": [
+    "L5",
+    "L6"
+   ]
+  }
+ },
+ "spans": {
+  "general": {
+   "airSpan": "A1-A6",
+   "landSpan": "L1-L5"
+  },
+  "anglo-saxon": {
+   "airSpan": "",
+   "landSpan": "L1"
+  },
+  "norse": {
+   "airSpan": "",
+   "landSpan": "L1"
+  },
+  "celtic": {
+   "airSpan": "",
+   "landSpan": "L1"
+  },
+  "greek-byzantine": {
+   "airSpan": "",
+   "landSpan": "L1"
+  },
+  "steppe": {
+   "airSpan": "",
+   "landSpan": "L1"
+  },
+  "norman-british": {
+   "airSpan": "A1-A6",
+   "landSpan": "L1-L5"
+  },
+  "french": {
+   "airSpan": "A1-A6",
+   "landSpan": "L1-L5"
+  },
+  "american": {
+   "airSpan": "A1-A6",
+   "landSpan": "L1-L5"
+  },
+  "slavic": {
+   "airSpan": "A1-A6",
+   "landSpan": "L1-L5"
+  },
+  "roman": {
+   "airSpan": "A2-A6",
+   "landSpan": "L1-L5"
+  },
+  "dutch": {
+   "airSpan": "A3-A6",
+   "landSpan": "L1-L5"
+  },
+  "iberian": {
+   "airSpan": "A3-A6",
+   "landSpan": "L1-L5"
+  },
+  "japanese": {
+   "airSpan": "A3-A6",
+   "landSpan": "L1-L5"
+  },
+  "chinese": {
+   "airSpan": "A4-A6",
+   "landSpan": "L1-L5"
+  },
+  "indian": {
+   "airSpan": "A4-A6",
+   "landSpan": "L1-L5"
+  },
+  "ethiopian": {
+   "airSpan": "A4-A6",
+   "landSpan": "L1-L5"
+  },
+  "korean": {
+   "airSpan": "A5-A6",
+   "landSpan": "L1-L5"
+  },
+  "arabic-persian": {
+   "airSpan": "A5-A6",
+   "landSpan": "L1-L5"
+  },
+  "egyptian": {
+   "airSpan": "A5-A6",
+   "landSpan": "L1-L5"
+  },
+  "ottoman": {
+   "airSpan": "A3-A4",
+   "landSpan": "L1-L3"
+  },
+  "swahili-omani": {
+   "airSpan": "",
+   "landSpan": "L1"
+  },
+  "malay": {
+   "airSpan": "",
+   "landSpan": "L1-L4"
+  },
+  "bantu": {
+   "airSpan": "",
+   "landSpan": "L3-L5"
+  },
+  "west-african": {
+   "airSpan": "",
+   "landSpan": "L3-L5"
+  },
+  "arctic": {
+   "airSpan": "",
+   "landSpan": "L1"
+  },
+  "na-woodlands": {
+   "airSpan": "",
+   "landSpan": "L1"
+  },
+  "hawaiian": {
+   "airSpan": "",
+   "landSpan": ""
+  },
+  "maori": {
+   "airSpan": "",
+   "landSpan": ""
+  },
+  "w-polynesian": {
+   "airSpan": "",
+   "landSpan": ""
+  },
+  "nw-coast": {
+   "airSpan": "",
+   "landSpan": ""
+  },
+  "aztec": {
+   "airSpan": "",
+   "landSpan": ""
+  },
+  "maya": {
+   "airSpan": "",
+   "landSpan": ""
+  },
+  "andean": {
+   "airSpan": "",
+   "landSpan": ""
+  }
+ },
+ "techWords": {
+  "A1": {
+   "techAdj": [
+    {
+     "w": "Lofty"
+    },
+    {
+     "w": "Silken"
+    },
+    {
+     "w": "Rising"
+    },
+    {
+     "w": "Buoyant"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Balloon"
+    },
+    {
+     "w": "Basket"
+    },
+    {
+     "w": "Ascent"
+    },
+    {
+     "w": "Kite"
+    },
+    {
+     "w": "Updraft"
+    }
+   ]
+  },
+  "A2": {
+   "techAdj": [
+    {
+     "w": "Great"
+    },
+    {
+     "w": "Silver"
+    },
+    {
+     "w": "Stately"
+    },
+    {
+     "w": "Rigid"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Envelope"
+    },
+    {
+     "w": "Gondola"
+    },
+    {
+     "w": "Airship"
+    },
+    {
+     "w": "Mooring"
+    }
+   ]
+  },
+  "A3": {
+   "techAdj": [
+    {
+     "w": "Wooden"
+    },
+    {
+     "w": "Daring"
+    },
+    {
+     "w": "Flying"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Wing"
+    },
+    {
+     "w": "Propeller"
+    },
+    {
+     "w": "Strut"
+    },
+    {
+     "w": "Loop"
+    }
+   ]
+  },
+  "A4": {
+   "techAdj": [
+    {
+     "w": "Roaring"
+    },
+    {
+     "w": "Silver"
+    },
+    {
+     "w": "Twin-Engined"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Engine"
+    },
+    {
+     "w": "Prop"
+    },
+    {
+     "w": "Wing"
+    },
+    {
+     "w": "Clipper"
+    }
+   ]
+  },
+  "A5": {
+   "techAdj": [
+    {
+     "w": "Jet",
+     "x": 2
+    },
+    {
+     "w": "Swept"
+    },
+    {
+     "w": "Supersonic"
+    },
+    {
+     "w": "Silver"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Jet"
+    },
+    {
+     "w": "Contrail"
+    },
+    {
+     "w": "Turbine"
+    },
+    {
+     "w": "Thunder"
+    }
+   ]
+  },
+  "A6": {
+   "techAdj": [
+    {
+     "w": "Swift"
+    },
+    {
+     "w": "Global"
+    },
+    {
+     "w": "Silent"
+    },
+    {
+     "w": "Stealth"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Drone"
+    },
+    {
+     "w": "Wing"
+    },
+    {
+     "w": "Jet"
+    },
+    {
+     "w": "Rotor"
+    }
+   ]
+  },
+  "A7": {
+   "techAdj": [
+    {
+     "w": "Hover"
+    },
+    {
+     "w": "Ion"
+    },
+    {
+     "w": "Skyward"
+    },
+    {
+     "w": "Silent"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Skimmer"
+    },
+    {
+     "w": "Flyer"
+    },
+    {
+     "w": "Lifter"
+    },
+    {
+     "w": "Thruster"
+    }
+   ]
+  },
+  "AF": {
+   "techAdj": [
+    {
+     "w": "Sky",
+     "x": 2
+    },
+    {
+     "w": "Cloud"
+    },
+    {
+     "w": "Wind-Borne"
+    },
+    {
+     "w": "High"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Sky"
+    },
+    {
+     "w": "Cloud"
+    },
+    {
+     "w": "Gale"
+    },
+    {
+     "w": "Keel"
+    },
+    {
+     "w": "Zenith"
+    }
+   ]
+  },
+  "L1": {
+   "techAdj": [
+    {
+     "w": "Swift"
+    },
+    {
+     "w": "Painted"
+    },
+    {
+     "w": "Iron-Shod"
+    },
+    {
+     "w": "Creaking",
+     "t": [
+      "light"
+     ]
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Wheel"
+    },
+    {
+     "w": "Axle"
+    },
+    {
+     "w": "Whip"
+    },
+    {
+     "w": "Team"
+    },
+    {
+     "w": "Road"
+    }
+   ]
+  },
+  "L2": {
+   "techAdj": [
+    {
+     "w": "Iron",
+     "x": 2
+    },
+    {
+     "w": "Steam"
+    },
+    {
+     "w": "Brass"
+    },
+    {
+     "w": "Coal-Black"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Engine"
+    },
+    {
+     "w": "Boiler"
+    },
+    {
+     "w": "Piston"
+    },
+    {
+     "w": "Smoke"
+    },
+    {
+     "w": "Firebox"
+    }
+   ]
+  },
+  "L3": {
+   "techAdj": [
+    {
+     "w": "Motor"
+    },
+    {
+     "w": "Iron"
+    },
+    {
+     "w": "Rattling",
+     "t": [
+      "light"
+     ]
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Motor"
+    },
+    {
+     "w": "Engine"
+    },
+    {
+     "w": "Track"
+    },
+    {
+     "w": "Crank"
+    }
+   ]
+  },
+  "L4": {
+   "techAdj": [
+    {
+     "w": "Diesel"
+    },
+    {
+     "w": "Steel",
+     "x": 2
+    },
+    {
+     "w": "Streamlined"
+    },
+    {
+     "w": "Chrome"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Diesel"
+    },
+    {
+     "w": "Track"
+    },
+    {
+     "w": "Turret"
+    },
+    {
+     "w": "Express"
+    }
+   ]
+  },
+  "L5": {
+   "techAdj": [
+    {
+     "w": "Electric"
+    },
+    {
+     "w": "High-Speed"
+    },
+    {
+     "w": "Steel"
+    },
+    {
+     "w": "Swift"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Current"
+    },
+    {
+     "w": "Track"
+    },
+    {
+     "w": "Express"
+    },
+    {
+     "w": "Turbine"
+    }
+   ]
+  },
+  "L6": {
+   "techAdj": [
+    {
+     "w": "Hover"
+    },
+    {
+     "w": "Ion"
+    },
+    {
+     "w": "Silent"
+    },
+    {
+     "w": "Magnetic"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Maglev"
+    },
+    {
+     "w": "Crawler"
+    },
+    {
+     "w": "Walker"
+    },
+    {
+     "w": "Track"
+    }
+   ]
+  },
+  "LF": {
+   "techAdj": [
+    {
+     "w": "Iron",
+     "x": 2
+    },
+    {
+     "w": "Rune"
+    },
+    {
+     "w": "Stone"
+    },
+    {
+     "w": "Walking"
+    },
+    {
+     "w": "Brass"
+    }
+   ],
+   "techNoun": [
+    {
+     "w": "Engine"
+    },
+    {
+     "w": "Strider"
+    },
+    {
+     "w": "Juggernaut"
+    },
+    {
+     "w": "Colossus"
+    },
+    {
+     "w": "Golem"
+    }
+   ]
+  }
+ },
+ "functions": {
+  "aircraft": {
+   "any": "aircraft of any kind",
+   "list": [
+    {
+     "key": "war",
+     "menu": "Fighters and warplanes",
+     "plural": "fighters and warplanes",
+     "w": 20,
+     "description": "Fighters, war balloons and sky warships"
+    },
+    {
+     "key": "bomber",
+     "menu": "Bombers",
+     "plural": "bombers",
+     "w": 10,
+     "description": "Bombers and heavy warplanes",
+     "needs": [
+      "A3-A7",
+      "AF"
+     ]
+    },
+    {
+     "key": "airliner",
+     "menu": "Airliners",
+     "plural": "airliners",
+     "w": 15,
+     "description": "Passenger airships, flying boats and airliners",
+     "needs": [
+      "A2-A7",
+      "AF"
+     ]
+    },
+    {
+     "key": "transport",
+     "menu": "Transport and cargo",
+     "plural": "transport and cargo aircraft",
+     "w": 12,
+     "description": "Freighters, transports and sky traders",
+     "needs": [
+      "A2-A7",
+      "AF"
+     ]
+    },
+    {
+     "key": "explore",
+     "menu": "Survey and record-breaking",
+     "plural": "survey and record-breaking craft",
+     "w": 10,
+     "description": "Survey craft, expedition balloons and record-breakers"
+    },
+    {
+     "key": "private",
+     "menu": "Private and sport",
+     "plural": "private and sport craft",
+     "w": 10,
+     "description": "Private aircraft, sport balloons and sky yachts",
+     "noSensitive": true,
+     "afMenu": "Sky yachts",
+     "afPlural": "sky yachts"
+    },
+    {
+     "key": "working",
+     "menu": "Working aircraft",
+     "plural": "working aircraft",
+     "w": 10,
+     "description": "Bush planes, crop sprayers, air ambulances and fire-fighting aircraft",
+     "needs": [
+      "A3-A7",
+      "AF"
+     ]
+    },
+    {
+     "key": "state",
+     "menu": "State and ceremonial",
+     "plural": "state craft",
+     "w": 5,
+     "description": "State aircraft, flagships and royal sky barges",
+     "needs": [
+      "A2-A7",
+      "AF"
+     ]
+    },
+    {
+     "key": "raider",
+     "menu": "Raiders and smugglers",
+     "plural": "raiders and smugglers",
+     "w": 8,
+     "description": "Smugglers, rum-runners and sky pirates"
+    }
+   ]
+  },
+  "landVehicles": {
+   "any": "land vehicles of any kind",
+   "list": [
+    {
+     "key": "locomotive",
+     "menu": "Locomotives",
+     "plural": "locomotives",
+     "w": 20,
+     "description": "Steam, diesel and electric locomotives, and rune engines",
+     "needs": [
+      "L2-L6",
+      "LF"
+     ]
+    },
+    {
+     "key": "train",
+     "menu": "Named trains",
+     "plural": "named trains",
+     "w": 10,
+     "description": "Named services: expresses, mails and limiteds",
+     "needs": [
+      "L2-L6"
+     ],
+     "noTypes": true
+    },
+    {
+     "key": "war",
+     "menu": "War machines",
+     "plural": "war machines",
+     "w": 20,
+     "description": "Chariots, siege engines, war wagons, tanks and armour"
+    },
+    {
+     "key": "coach",
+     "menu": "Coaches and carriages",
+     "plural": "coaches and carriages",
+     "w": 15,
+     "description": "Mail and stage coaches, state coaches and carriages",
+     "needs": [
+      "L1-L3",
+      "LF"
+     ]
+    },
+    {
+     "key": "road",
+     "menu": "Road vehicles",
+     "plural": "road vehicles",
+     "w": 15,
+     "description": "Cars, lorries, buses and motorcycles",
+     "needs": [
+      "L3-L6"
+     ]
+    },
+    {
+     "key": "wagon",
+     "menu": "Wagons and caravans",
+     "plural": "wagons and caravans",
+     "w": 10,
+     "description": "Wagons, sledges, living vans and circus wagons",
+     "needs": [
+      "L1-L4",
+      "LF"
+     ]
+    },
+    {
+     "key": "working",
+     "menu": "Working engines",
+     "plural": "working engines",
+     "w": 10,
+     "description": "Traction engines, steamrollers, showmen's engines and tractors",
+     "needs": [
+      "L2-L6",
+      "LF"
+     ]
+    }
+   ]
+  }
+ },
+ "roles": [
+  "nose",
+  "call",
+  "classSet",
+  "speed",
+  "service",
+  "siege",
+  "fair"
+ ],
+ "roleWeights": {
+  "aircraft": {
+   "war": {
+    "virtue": 15,
+    "royal": 5,
+    "beast": 20,
+    "sky": 15,
+    "place": 5,
+    "person": 5,
+    "menace": 10,
+    "affection": 5,
+    "designation": 5,
+    "nose": 10,
+    "call": 5
+   },
+   "bomber": {
+    "virtue": 10,
+    "royal": 2,
+    "beast": 10,
+    "sky": 10,
+    "place": 10,
+    "person": 5,
+    "menace": 10,
+    "affection": 8,
+    "designation": 5,
+    "nose": 25,
+    "call": 10
+   },
+   "airliner": {
+    "virtue": 5,
+    "royal": 10,
+    "holy": 5,
+    "beast": 10,
+    "sky": 20,
+    "place": 30,
+    "person": 10,
+    "commerce": 10
+   },
+   "transport": {
+    "virtue": 5,
+    "royal": 2,
+    "holy": 2,
+    "beast": 5,
+    "sky": 10,
+    "place": 25,
+    "person": 5,
+    "commerce": 25,
+    "discovery": 5,
+    "affection": 5,
+    "designation": 10,
+    "nose": 2
+   },
+   "explore": {
+    "virtue": 10,
+    "beast": 5,
+    "sky": 15,
+    "place": 5,
+    "person": 20,
+    "poetic": 5,
+    "discovery": 35,
+    "designation": 5
+   },
+   "private": {
+    "virtue": 2,
+    "royal": 2,
+    "beast": 5,
+    "sky": 15,
+    "place": 5,
+    "person": 10,
+    "poetic": 5,
+    "commerce": 5,
+    "discovery": 5,
+    "affection": 20,
+    "leisure": 25,
+    "nose": 5
+   },
+   "working": {
+    "virtue": 5,
+    "holy": 5,
+    "beast": 5,
+    "sky": 10,
+    "place": 15,
+    "person": 10,
+    "commerce": 5,
+    "affection": 25,
+    "designation": 15,
+    "nose": 5
+   },
+   "state": {
+    "virtue": 10,
+    "royal": 25,
+    "holy": 10,
+    "beast": 5,
+    "sky": 15,
+    "place": 15,
+    "person": 15,
+    "poetic": 5
+   },
+   "raider": {
+    "virtue": 5,
+    "beast": 10,
+    "sky": 10,
+    "person": 5,
+    "commerce": 5,
+    "menace": 45,
+    "affection": 5,
+    "nose": 15
+   }
+  },
+  "landVehicles": {
+   "locomotive": {
+    "virtue": 10,
+    "royal": 10,
+    "holy": 5,
+    "beast": 5,
+    "sky": 5,
+    "place": 15,
+    "person": 15,
+    "affection": 5,
+    "designation": 5,
+    "classSet": 30
+   },
+   "train": {
+    "virtue": 5,
+    "royal": 5,
+    "sky": 10,
+    "place": 10,
+    "service": 70
+   },
+   "war": {
+    "virtue": 15,
+    "beast": 15,
+    "place": 10,
+    "person": 5,
+    "menace": 15,
+    "affection": 10,
+    "designation": 10,
+    "nose": 10,
+    "siege": 20
+   },
+   "coach": {
+    "virtue": 15,
+    "royal": 15,
+    "holy": 5,
+    "sky": 10,
+    "place": 10,
+    "speed": 45
+   },
+   "road": {
+    "virtue": 10,
+    "beast": 10,
+    "place": 15,
+    "person": 15,
+    "commerce": 10,
+    "affection": 30,
+    "leisure": 10
+   },
+   "wagon": {
+    "virtue": 10,
+    "beast": 5,
+    "place": 25,
+    "poetic": 10,
+    "affection": 30,
+    "fair": 20
+   },
+   "working": {
+    "virtue": 10,
+    "royal": 10,
+    "place": 15,
+    "person": 10,
+    "affection": 20,
+    "fair": 35
+   }
+  }
+ },
+ "roleRules": {
+  "aircraft": {
+   "zeroOutside": {
+    "call": [
+     "A4"
+    ]
+   },
+   "zeroAt": {
+    "AF": [
+     "nose",
+     "call",
+     "designation"
+    ]
+   },
+   "multAt": {
+    "AF": {
+     "poetic": 2
+    }
+   }
+  },
+  "landVehicles": {
+   "zeroOutside": {
+    "siege": [
+     "L1",
+     "LF"
+    ]
+   },
+   "zeroAt": {},
+   "zeroInFn": {
+    "nose": {
+     "war": [
+      "L1"
+     ]
+    }
+   }
+  }
+ },
+ "cultureRoles": {
+  "aircraft": {
+   "norman-british": {
+    "nose": 1.5,
+    "call": 2
+   },
+   "american": {
+    "nose": 3,
+    "place": 1.5
+   },
+   "slavic": {
+    "person": 2
+   },
+   "japanese": {
+    "nose": 0.3
+   },
+   "chinese": {
+    "nose": 0.3
+   },
+   "korean": {
+    "nose": 0.3
+   },
+   "celtic": {
+    "holy": 3
+   },
+   "dutch": {
+    "beast": 2
+   }
+  },
+  "landVehicles": {
+   "norman-british": {
+    "classSet": 3,
+    "speed": 3,
+    "fair": 3,
+    "service": 1.5
+   },
+   "american": {
+    "service": 2,
+    "nose": 2
+   },
+   "french": {
+    "service": 1.5
+   },
+   "slavic": {
+    "service": 1.5
+   },
+   "japanese": {
+    "classSet": 0.3,
+    "designation": 3,
+    "service": 1.5
+   },
+   "chinese": {
+    "classSet": 0.3,
+    "designation": 3,
+    "service": 1.5
+   },
+   "korean": {
+    "classSet": 0.3,
+    "designation": 3,
+    "service": 1.5
+   },
+   "indian": {
+    "service": 2
+   }
+  }
+ },
+ "sensitiveRoles": {
+  "aircraft": [
+   "nose",
+   "call"
+  ],
+  "landVehicles": [
+   "nose",
+   "fair",
+   "siege"
+  ]
+ },
+ "personLabels": {},
+ "lists": {
+  "manName": [
+   {
+    "w": "Edward",
+    "x": 2
+   },
+   {
+    "w": "Henry"
+   },
+   {
+    "w": "William"
+   },
+   {
+    "w": "George"
+   },
+   {
+    "w": "Richard"
+   },
+   {
+    "w": "Charles"
+   },
+   {
+    "w": "James"
+   },
+   {
+    "w": "John"
+   },
+   {
+    "w": "Arthur"
+   },
+   {
+    "w": "Alfred"
+   },
+   {
+    "w": "Harold"
+   },
+   {
+    "w": "Edgar"
+   },
+   {
+    "w": "Edmund"
+   },
+   {
+    "w": "Albert"
+   },
+   {
+    "w": "Robert"
+   },
+   {
+    "w": "Thomas"
+   },
+   {
+    "w": "Walter"
+   },
+   {
+    "w": "Hugh"
+   },
+   {
+    "w": "Ned"
+   },
+   {
+    "w": "Jack"
+   }
+  ],
+  "romanNumeral": [
+   {
+    "w": "I"
+   },
+   {
+    "w": "II"
+   },
+   {
+    "w": "III"
+   },
+   {
+    "w": "IV"
+   },
+   {
+    "w": "V"
+   },
+   {
+    "w": "VI"
+   },
+   {
+    "w": "VII"
+   },
+   {
+    "w": "VIII"
+   }
+  ],
+  "noseName": [
+   {
+    "w": "Lucky Lady"
+   },
+   {
+    "w": "Second Chance"
+   },
+   {
+    "w": "Homeward Bound"
+   },
+   {
+    "w": "Return Ticket"
+   },
+   {
+    "w": "Bad Penny"
+   },
+   {
+    "w": "Sack Time"
+   },
+   {
+    "w": "Ready Teddy"
+   },
+   {
+    "w": "Lady Luck"
+   },
+   {
+    "w": "Night Owl"
+   },
+   {
+    "w": "Wee Bonnie"
+   },
+   {
+    "w": "Sky Lark"
+   },
+   {
+    "w": "Old Reliable"
+   },
+   {
+    "w": "Sweet Pea"
+   },
+   {
+    "w": "Snake Eyes"
+   },
+   {
+    "w": "Sitting Pretty"
+   },
+   {
+    "w": "Miss Behave"
+   },
+   {
+    "w": "Dinah Might"
+   },
+   {
+    "w": "Home Sweet Home"
+   },
+   {
+    "w": "Last Laugh"
+   }
+  ],
+  "noseAdj": [
+   {
+    "w": "Lucky",
+    "x": 2
+   },
+   {
+    "w": "Sweet"
+   },
+   {
+    "w": "Wicked",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Lonesome"
+   },
+   {
+    "w": "Little"
+   },
+   {
+    "w": "Hot"
+   },
+   {
+    "w": "Iron"
+   },
+   {
+    "w": "Brazen"
+   },
+   {
+    "w": "Bonny"
+   }
+  ],
+  "noseNoun": [
+   {
+    "w": "Lady",
+    "x": 2
+   },
+   {
+    "w": "Lass"
+   },
+   {
+    "w": "Penny"
+   },
+   {
+    "w": "Ticket"
+   },
+   {
+    "w": "Angel"
+   },
+   {
+    "w": "Devil",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Duchess"
+   },
+   {
+    "w": "Ace"
+   },
+   {
+    "w": "Belle"
+   },
+   {
+    "w": "Jinx"
+   }
+  ],
+  "speedWord": [
+   {
+    "w": "Telegraph"
+   },
+   {
+    "w": "Tally-Ho"
+   },
+   {
+    "w": "Wonder"
+   },
+   {
+    "w": "Comet"
+   },
+   {
+    "w": "Highflyer"
+   },
+   {
+    "w": "Regulator"
+   },
+   {
+    "w": "Tantivy"
+   },
+   {
+    "w": "Lightning"
+   },
+   {
+    "w": "Magnet"
+   },
+   {
+    "w": "Courier"
+   },
+   {
+    "w": "Swiftsure"
+   },
+   {
+    "w": "Nimrod"
+   },
+   {
+    "w": "Phoenix"
+   },
+   {
+    "w": "Hope"
+   },
+   {
+    "w": "Independent"
+   },
+   {
+    "w": "Defiance"
+   },
+   {
+    "w": "Rapid"
+   }
+  ],
+  "metal": [
+   {
+    "w": "Gold"
+   },
+   {
+    "w": "Silver"
+   },
+   {
+    "w": "Glass"
+   },
+   {
+    "w": "Crystal"
+   }
+  ],
+  "raceA": [
+   {
+    "w": "Dancing"
+   },
+   {
+    "w": "Flying"
+   },
+   {
+    "w": "Royal"
+   },
+   {
+    "w": "Silver"
+   },
+   {
+    "w": "Golden"
+   },
+   {
+    "w": "Lucky"
+   },
+   {
+    "w": "Gallant"
+   },
+   {
+    "w": "Merry"
+   },
+   {
+    "w": "Blink"
+   }
+  ],
+  "raceB": [
+   {
+    "w": "Lad"
+   },
+   {
+    "w": "Bonnie"
+   },
+   {
+    "w": "Fox"
+   },
+   {
+    "w": "Dancer"
+   },
+   {
+    "w": "Prince"
+   },
+   {
+    "w": "Arrow"
+   },
+   {
+    "w": "Lancer"
+   },
+   {
+    "w": "Lass"
+   },
+   {
+    "w": "Rover"
+   },
+   {
+    "w": "Jester"
+   }
+  ],
+  "serviceObj": [
+   {
+    "w": "Arrow"
+   },
+   {
+    "w": "Train"
+   },
+   {
+    "w": "Star"
+   },
+   {
+    "w": "Ribbon"
+   },
+   {
+    "w": "Comet"
+   },
+   {
+    "w": "Bird"
+   }
+  ],
+  "limitedNoun": [
+   {
+    "w": "Capitals"
+   },
+   {
+    "w": "Overland"
+   },
+   {
+    "w": "Lakes"
+   },
+   {
+    "w": "Mountain"
+   },
+   {
+    "w": "Valley"
+   },
+   {
+    "w": "Plains"
+   }
+  ],
+  "natureWord": [
+   {
+    "w": "Light"
+   },
+   {
+    "w": "Hope"
+   },
+   {
+    "w": "Echo"
+   },
+   {
+    "w": "Swallow"
+   },
+   {
+    "w": "Pigeon"
+   },
+   {
+    "w": "Crane"
+   },
+   {
+    "w": "Cherry Blossom"
+   },
+   {
+    "w": "Morning Sun"
+   },
+   {
+    "w": "Lightning"
+   },
+   {
+    "w": "Wind"
+   },
+   {
+    "w": "Wave"
+   },
+   {
+    "w": "Falcon"
+   }
+  ],
+  "nightObj": [
+   {
+    "w": "Ferry"
+   },
+   {
+    "w": "Mail"
+   },
+   {
+    "w": "Express"
+   },
+   {
+    "w": "Owl",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Riviera"
+   }
+  ],
+  "trade": [
+   {
+    "w": "Weaver"
+   },
+   {
+    "w": "Brewer"
+   },
+   {
+    "w": "Potter"
+   },
+   {
+    "w": "Mason"
+   },
+   {
+    "w": "Smith"
+   },
+   {
+    "w": "Miller"
+   }
+  ],
+  "agentNoun": [
+   {
+    "w": "Pathfinder"
+   },
+   {
+    "w": "Pioneer"
+   },
+   {
+    "w": "Talisman"
+   },
+   {
+    "w": "Ranger"
+   },
+   {
+    "w": "Chief"
+   },
+   {
+    "w": "Voyager"
+   },
+   {
+    "w": "Pilgrim"
+   }
+  ],
+  "kin": [
+   {
+    "w": "Cousin"
+   },
+   {
+    "w": "Guest"
+   },
+   {
+    "w": "Brother"
+   },
+   {
+    "w": "Uncle"
+   },
+   {
+    "w": "Bride"
+   },
+   {
+    "w": "Stranger"
+   },
+   {
+    "w": "Neighbour"
+   }
+  ],
+  "wallWord": [
+   {
+    "w": "Walls"
+   },
+   {
+    "w": "Towers"
+   },
+   {
+    "w": "Gates"
+   },
+   {
+    "w": "Castles"
+   }
+  ],
+  "siegeAgent": [
+   {
+    "w": "Thunderer"
+   },
+   {
+    "w": "Wall-Eater"
+   },
+   {
+    "w": "Stone-Thrower"
+   },
+   {
+    "w": "Grinder"
+   },
+   {
+    "w": "Roarer"
+   },
+   {
+    "w": "Sorrow"
+   },
+   {
+    "w": "Answer"
+   }
+  ],
+  "siegeNoun": [
+   {
+    "w": "Stone"
+   },
+   {
+    "w": "Hammer"
+   },
+   {
+    "w": "Answer"
+   },
+   {
+    "w": "Gift"
+   },
+   {
+    "w": "Word"
+   }
+  ],
+  "tower": [
+   {
+    "w": "Tower"
+   },
+   {
+    "w": "Hill"
+   },
+   {
+    "w": "Keep"
+   },
+   {
+    "w": "Fortress"
+   }
+  ],
+  "fairWhole": [
+   {
+    "w": "Majestic"
+   },
+   {
+    "w": "Supreme"
+   },
+   {
+    "w": "The Busy Bee"
+   },
+   {
+    "w": "King of the Road"
+   },
+   {
+    "w": "Queen of the Fair"
+   },
+   {
+    "w": "Pride of the Road"
+   },
+   {
+    "w": "Old Timer"
+   },
+   {
+    "w": "Little Wonder"
+   },
+   {
+    "w": "Goliath"
+   },
+   {
+    "w": "Samson"
+   },
+   {
+    "w": "Hero"
+   },
+   {
+    "w": "Marvel"
+   }
+  ],
+  "fairPlace": [
+   {
+    "w": "Fair"
+   },
+   {
+    "w": "Road"
+   },
+   {
+    "w": "Show"
+   },
+   {
+    "w": "Ring"
+   },
+   {
+    "w": "Midway",
+    "only": [
+     "american"
+    ]
+   }
+  ],
+  "fairNoun": [
+   {
+    "w": "Pride"
+   },
+   {
+    "w": "Wonder"
+   },
+   {
+    "w": "Marvel"
+   },
+   {
+    "w": "Delight"
+   },
+   {
+    "w": "Glory"
+   }
+  ],
+  "fairAdj": [
+   {
+    "w": "Royal"
+   },
+   {
+    "w": "Golden"
+   },
+   {
+    "w": "Little"
+   },
+   {
+    "w": "Mighty"
+   },
+   {
+    "w": "Dazzling"
+   }
+  ],
+  "wagonWhole": [
+   {
+    "w": "Wanderer"
+   },
+   {
+    "w": "Rover"
+   },
+   {
+    "w": "Rambler"
+   },
+   {
+    "w": "Long Road"
+   },
+   {
+    "w": "Open Road"
+   },
+   {
+    "w": "Hearth on Wheels",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Journey's End"
+   },
+   {
+    "w": "Roadside Rest"
+   },
+   {
+    "w": "Far Meadow"
+   }
+  ],
+  "cloudNoun": [
+   {
+    "w": "Runner"
+   },
+   {
+    "w": "Splitter"
+   },
+   {
+    "w": "Dancer"
+   },
+   {
+    "w": "Rider"
+   },
+   {
+    "w": "Treader"
+   }
+  ],
+  "weatherWord": [
+   {
+    "w": "Cyclone"
+   },
+   {
+    "w": "Monsoon"
+   },
+   {
+    "w": "Squall"
+   },
+   {
+    "w": "Gale"
+   },
+   {
+    "w": "Blizzard"
+   },
+   {
+    "w": "Mistral"
+   },
+   {
+    "w": "Sirocco"
+   },
+   {
+    "w": "Thunderhead"
+   },
+   {
+    "w": "Downburst"
+   },
+   {
+    "w": "Hailstorm"
+   },
+   {
+    "w": "Waterspout"
+   },
+   {
+    "w": "Northerly"
+   },
+   {
+    "w": "Williwaw"
+   }
+  ],
+  "raptor": [
+   {
+    "w": "Kestrel"
+   },
+   {
+    "w": "Falcon"
+   },
+   {
+    "w": "Eagle"
+   },
+   {
+    "w": "Osprey"
+   },
+   {
+    "w": "Merlin"
+   },
+   {
+    "w": "Hobby"
+   },
+   {
+    "w": "Buzzard"
+   },
+   {
+    "w": "Kite"
+   },
+   {
+    "w": "Condor"
+   },
+   {
+    "w": "Goshawk"
+   },
+   {
+    "w": "Sparrowhawk"
+   },
+   {
+    "w": "Peregrine"
+   }
+  ],
+  "insect": [
+   {
+    "w": "Hornet"
+   },
+   {
+    "w": "Wasp"
+   },
+   {
+    "w": "Gnat"
+   },
+   {
+    "w": "Dragonfly"
+   },
+   {
+    "w": "Horsefly"
+   },
+   {
+    "w": "Cicada"
+   },
+   {
+    "w": "Mayfly"
+   },
+   {
+    "w": "Damselfly"
+   }
+  ],
+  "bigBird": [
+   {
+    "w": "Albatross"
+   },
+   {
+    "w": "Pelican"
+   },
+   {
+    "w": "Stork"
+   },
+   {
+    "w": "Heron"
+   },
+   {
+    "w": "Crane"
+   },
+   {
+    "w": "Swan"
+   },
+   {
+    "w": "Gull"
+   },
+   {
+    "w": "Petrel"
+   },
+   {
+    "w": "Cormorant"
+   }
+  ],
+  "smallBird": [
+   {
+    "w": "Swift"
+   },
+   {
+    "w": "Swallow"
+   },
+   {
+    "w": "Martin"
+   },
+   {
+    "w": "Lark"
+   },
+   {
+    "w": "Linnet"
+   },
+   {
+    "w": "Wren"
+   },
+   {
+    "w": "Finch"
+   },
+   {
+    "w": "Robin"
+   },
+   {
+    "w": "Moth"
+   }
+  ],
+  "workBeast": [
+   {
+    "w": "Otter"
+   },
+   {
+    "w": "Beaver"
+   },
+   {
+    "w": "Moose"
+   },
+   {
+    "w": "Caribou"
+   },
+   {
+    "w": "Musk Ox"
+   },
+   {
+    "w": "Marten"
+   },
+   {
+    "w": "Mink"
+   },
+   {
+    "w": "Bison"
+   },
+   {
+    "w": "Wolverine"
+   }
+  ],
+  "bigCat": [
+   {
+    "w": "Cheetah"
+   },
+   {
+    "w": "Ocelot"
+   },
+   {
+    "w": "Caracal"
+   },
+   {
+    "w": "Serval"
+   },
+   {
+    "w": "Margay"
+   },
+   {
+    "w": "Clouded Leopard"
+   },
+   {
+    "w": "Snow Leopard"
+   }
+  ],
+  "smallFierce": [
+   {
+    "w": "Stoat"
+   },
+   {
+    "w": "Weasel"
+   },
+   {
+    "w": "Badger"
+   },
+   {
+    "w": "Polecat"
+   },
+   {
+    "w": "Mongoose"
+   },
+   {
+    "w": "Marten"
+   }
+  ],
+  "horse": [
+   {
+    "w": "Stallion"
+   },
+   {
+    "w": "Courser"
+   },
+   {
+    "w": "Destrier"
+   },
+   {
+    "w": "Palomino"
+   },
+   {
+    "w": "Thoroughbred"
+   },
+   {
+    "w": "Filly",
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Hackney"
+   }
+  ],
+  "draughtBeast": [
+   {
+    "w": "Ox"
+   },
+   {
+    "w": "Bullock"
+   },
+   {
+    "w": "Mule"
+   },
+   {
+    "w": "Shire"
+   },
+   {
+    "w": "Carthorse"
+   },
+   {
+    "w": "Packhorse"
+   },
+   {
+    "w": "Elephant"
+   },
+   {
+    "w": "Yak"
+   },
+   {
+    "w": "Camel",
+    "only": [
+     "steppe",
+     "arabic-persian"
+    ],
+    "x": 2
+   }
+  ],
+  "catPrefix": [
+   {
+    "w": "Storm"
+   },
+   {
+    "w": "Iron"
+   },
+   {
+    "w": "Sky"
+   },
+   {
+    "w": "Sea"
+   },
+   {
+    "w": "Thunder"
+   },
+   {
+    "w": "Fire"
+   },
+   {
+    "w": "Night"
+   },
+   {
+    "w": "Sand"
+   },
+   {
+    "w": "Ice"
+   },
+   {
+    "w": "Wolf"
+   },
+   {
+    "w": "Ghost"
+   }
+  ],
+  "rank": [
+   {
+    "w": "Consul"
+   },
+   {
+    "w": "Ambassador"
+   },
+   {
+    "w": "Viceroy"
+   },
+   {
+    "w": "Envoy"
+   },
+   {
+    "w": "Senator"
+   },
+   {
+    "w": "Sovereign"
+   },
+   {
+    "w": "Monarch"
+   },
+   {
+    "w": "Marshal"
+   },
+   {
+    "w": "Vanguard"
+   },
+   {
+    "w": "Defender"
+   },
+   {
+    "w": "Champion"
+   },
+   {
+    "w": "Warden"
+   },
+   {
+    "w": "Ranger"
+   },
+   {
+    "w": "Courier"
+   },
+   {
+    "w": "Pathfinder"
+   },
+   {
+    "w": "Commander"
+   },
+   {
+    "w": "Captain"
+   },
+   {
+    "w": "Constable"
+   },
+   {
+    "w": "Castellan"
+   },
+   {
+    "w": "Chancellor"
+   },
+   {
+    "w": "Seneschal"
+   },
+   {
+    "w": "Steward"
+   },
+   {
+    "w": "Provost"
+   }
+  ],
+  "titan": [
+   {
+    "w": "Titan"
+   },
+   {
+    "w": "Atlas"
+   },
+   {
+    "w": "Colossus"
+   },
+   {
+    "w": "Goliath"
+   },
+   {
+    "w": "Samson"
+   },
+   {
+    "w": "Mammoth"
+   },
+   {
+    "w": "Giant"
+   },
+   {
+    "w": "Leviathan"
+   },
+   {
+    "w": "Behemoth"
+   },
+   {
+    "w": "Hercules"
+   }
+  ],
+  "spirit": [
+   {
+    "w": "Ghost"
+   },
+   {
+    "w": "Shadow"
+   },
+   {
+    "w": "Wraith"
+   },
+   {
+    "w": "Spectre"
+   },
+   {
+    "w": "Phantom"
+   },
+   {
+    "w": "Spirit"
+   },
+   {
+    "w": "Shade"
+   },
+   {
+    "w": "Seraph"
+   }
+  ],
+  "spiritMetal": [
+   {
+    "w": "Silver"
+   },
+   {
+    "w": "Golden"
+   },
+   {
+    "w": "Bronze"
+   },
+   {
+    "w": "Iron"
+   }
+  ],
+  "typeWeapon": [
+   {
+    "w": "Lance"
+   },
+   {
+    "w": "Javelin"
+   },
+   {
+    "w": "Arrow"
+   },
+   {
+    "w": "Dart"
+   },
+   {
+    "w": "Halberd"
+   },
+   {
+    "w": "Claymore"
+   },
+   {
+    "w": "Bolt"
+   },
+   {
+    "w": "Pike"
+   },
+   {
+    "w": "Glaive"
+   },
+   {
+    "w": "Partisan"
+   },
+   {
+    "w": "Falchion"
+   }
+  ],
+  "typeSky": [
+   {
+    "w": "Nova"
+   },
+   {
+    "w": "Aurora"
+   },
+   {
+    "w": "Zenith"
+   },
+   {
+    "w": "Orbit"
+   },
+   {
+    "w": "Polaris"
+   },
+   {
+    "w": "Starling"
+   },
+   {
+    "w": "Quasar"
+   },
+   {
+    "w": "Halo"
+   },
+   {
+    "w": "Solstice"
+   },
+   {
+    "w": "Equinox"
+   }
+  ],
+  "prettyWord": [
+   {
+    "w": "Charm"
+   },
+   {
+    "w": "Clover"
+   },
+   {
+    "w": "Bloom"
+   },
+   {
+    "w": "Cherry"
+   },
+   {
+    "w": "Merry"
+   },
+   {
+    "w": "Harmony"
+   },
+   {
+    "w": "Symphony"
+   },
+   {
+    "w": "Serene"
+   },
+   {
+    "w": "Breeze"
+   },
+   {
+    "w": "Melody"
+   },
+   {
+    "w": "Prima"
+   },
+   {
+    "w": "Joy"
+   },
+   {
+    "w": "Fortune"
+   },
+   {
+    "w": "Grace"
+   },
+   {
+    "w": "Daybreak"
+   },
+   {
+    "w": "Bonny"
+   }
+  ],
+  "greekLetter": [
+   {
+    "w": "Alpha"
+   },
+   {
+    "w": "Gamma"
+   },
+   {
+    "w": "Epsilon"
+   },
+   {
+    "w": "Zeta"
+   },
+   {
+    "w": "Theta"
+   },
+   {
+    "w": "Iota"
+   },
+   {
+    "w": "Kappa"
+   },
+   {
+    "w": "Sigma"
+   },
+   {
+    "w": "Omega"
+   }
+  ],
+  "classTheme": [
+   {
+    "w": "Castle"
+   },
+   {
+    "w": "Hall"
+   },
+   {
+    "w": "Grange"
+   },
+   {
+    "w": "Manor"
+   },
+   {
+    "w": "King"
+   },
+   {
+    "w": "Queen"
+   },
+   {
+    "w": "Saint"
+   },
+   {
+    "w": "Star"
+   },
+   {
+    "w": "School"
+   },
+   {
+    "w": "Regiment"
+   },
+   {
+    "w": "County"
+   },
+   {
+    "w": "Bird"
+   },
+   {
+    "w": "Racehorse"
+   },
+   {
+    "w": "Footballer"
+   },
+   {
+    "w": "Merchant"
+   },
+   {
+    "w": "Patriot"
+   },
+   {
+    "w": "Jubilee"
+   }
+  ],
+  "workWord": [
+   {
+    "w": "Tractor"
+   },
+   {
+    "w": "Roller"
+   },
+   {
+    "w": "Engine"
+   },
+   {
+    "w": "Steamer"
+   },
+   {
+    "w": "Digger"
+   },
+   {
+    "w": "Hauler"
+   },
+   {
+    "w": "Ploughman"
+   }
+  ],
+  "skyPrefix": [
+   {
+    "w": "Sky"
+   },
+   {
+    "w": "Cloud"
+   },
+   {
+    "w": "Storm"
+   },
+   {
+    "w": "Wind"
+   },
+   {
+    "w": "High"
+   },
+   {
+    "w": "Zenith"
+   }
+  ],
+  "skyShip": [
+   {
+    "w": "Galleon"
+   },
+   {
+    "w": "Clipper"
+   },
+   {
+    "w": "Frigate"
+   },
+   {
+    "w": "Barque"
+   },
+   {
+    "w": "Skiff"
+   },
+   {
+    "w": "Cutter"
+   },
+   {
+    "w": "Brig"
+   },
+   {
+    "w": "Sloop"
+   },
+   {
+    "w": "Carrack"
+   },
+   {
+    "w": "Ketch"
+   }
+  ],
+  "strato": [
+   {
+    "w": "cruiser"
+   },
+   {
+    "w": "liner"
+   },
+   {
+    "w": "master"
+   },
+   {
+    "w": "lifter"
+   },
+   {
+    "w": "jet"
+   }
+  ],
+  "skyPart": [
+   {
+    "w": "master"
+   },
+   {
+    "w": "liner"
+   },
+   {
+    "w": "train"
+   },
+   {
+    "w": "king"
+   },
+   {
+    "w": "lark"
+   }
+  ],
+  "landWord": [
+   {
+    "w": "Steppe"
+   },
+   {
+    "w": "Desert"
+   },
+   {
+    "w": "Plains"
+   },
+   {
+    "w": "Tundra"
+   },
+   {
+    "w": "Veld"
+   }
+  ],
+  "designationWord": []
+ },
+ "moduleLists": {
+  "aircraft": {
+   "seaAdj": [
+    {
+     "w": "Sky",
+     "x": 2
+    },
+    {
+     "w": "Cloud"
+    },
+    {
+     "w": "Wind"
+    },
+    {
+     "w": "Storm"
+    },
+    {
+     "w": "High"
+    },
+    {
+     "w": "Silver"
+    }
+   ],
+   "seaLand": [
+    {
+     "w": "Skies",
+     "x": 2
+    },
+    {
+     "w": "Clouds"
+    },
+    {
+     "w": "Winds"
+    },
+    {
+     "w": "Heights"
+    },
+    {
+     "w": "Air"
+    }
+   ],
+   "designationWord": [
+    {
+     "w": "Type",
+     "x": 2
+    },
+    {
+     "w": "Mark"
+    },
+    {
+     "w": "Series"
+    },
+    {
+     "w": "Model"
+    }
+   ],
+   "leisureName": [
+    {
+     "w": "Second Wind"
+    },
+    {
+     "w": "No Hurry"
+    },
+    {
+     "w": "One More Day"
+    },
+    {
+     "w": "Afternoon Off"
+    },
+    {
+     "w": "Well Earned"
+    },
+    {
+     "w": "Why Not"
+    },
+    {
+     "w": "Plan B"
+    },
+    {
+     "w": "Pension Pot"
+    },
+    {
+     "w": "Fair Weather"
+    },
+    {
+     "w": "Gone Fishing"
+    }
+   ]
+  },
+  "landVehicles": {
+   "seaAdj": [
+    {
+     "w": "Road",
+     "x": 2
+    },
+    {
+     "w": "Iron"
+    },
+    {
+     "w": "Steel",
+     "k": "L3-L6"
+    },
+    {
+     "w": "Steam",
+     "k": "L2"
+    },
+    {
+     "w": "Dust"
+    },
+    {
+     "w": "Rail",
+     "k": "L2-L6"
+    }
+   ],
+   "seaLand": [
+    {
+     "w": "Road",
+     "x": 2
+    },
+    {
+     "w": "Rails",
+     "k": "L2-L6"
+    },
+    {
+     "w": "Plains"
+    },
+    {
+     "w": "Hills"
+    },
+    {
+     "w": "North"
+    },
+    {
+     "w": "South"
+    },
+    {
+     "w": "East"
+    },
+    {
+     "w": "West"
+    },
+    {
+     "w": "Highlands"
+    }
+   ],
+   "designationWord": [
+    {
+     "w": "Type",
+     "x": 2
+    },
+    {
+     "w": "Class"
+    },
+    {
+     "w": "Mark"
+    }
+   ],
+   "leisureName": [
+    {
+     "w": "Second Wind"
+    },
+    {
+     "w": "No Hurry"
+    },
+    {
+     "w": "One More Day"
+    },
+    {
+     "w": "Afternoon Off"
+    },
+    {
+     "w": "Well Earned"
+    },
+    {
+     "w": "Why Not"
+    },
+    {
+     "w": "Plan B"
+    },
+    {
+     "w": "Pension Pot"
+    },
+    {
+     "w": "Fair Weather"
+    },
+    {
+     "w": "Gone Fishing"
+    }
+   ]
+  }
+ },
+ "listTones": {
+  "noseName": [
+   "light"
+  ],
+  "wagonWhole": [],
+  "fairWhole": []
+ },
+ "phonetic": [
+  "Able",
+  "Baker",
+  "Charlie",
+  "Dog",
+  "Easy",
+  "Fox",
+  "George",
+  "How",
+  "Item",
+  "Johnny",
+  "King",
+  "Love",
+  "Mike",
+  "Nan",
+  "Oboe",
+  "Peter",
+  "Queen",
+  "Roger",
+  "Sugar",
+  "Tare",
+  "Uncle",
+  "Victor",
+  "William",
+  "X-ray",
+  "Yoke",
+  "Zebra"
+ ],
+ "manNameCultures": [
+  "general",
+  "norman-british",
+  "american",
+  "celtic"
+ ],
+ "shapes": [
+  {
+   "role": "nose",
+   "p": "{noseName}",
+   "w": 30,
+   "mod": [
+    "aircraft",
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "nose",
+   "p": "Lucky {womanName}",
+   "w": 15,
+   "mod": [
+    "aircraft",
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "nose",
+   "p": "{town} Belle",
+   "w": 10,
+   "mod": [
+    "aircraft",
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "nose",
+   "p": "Miss {town}",
+   "w": 10,
+   "mod": [
+    "aircraft",
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "nose",
+   "p": "{womanName} of {town}",
+   "w": 10,
+   "mod": [
+    "aircraft",
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "nose",
+   "p": "{noseAdj} {noseNoun}",
+   "w": 15,
+   "mod": [
+    "aircraft",
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "nose",
+   "p": "Old {manName}",
+   "w": 5,
+   "mod": [
+    "aircraft",
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "nose",
+   "p": "{womanName}",
+   "w": 5,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "war"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "call",
+   "p": "{call}",
+   "w": 100,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "A4",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{town} Castle",
+   "w": 15,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "castle",
+   "cx": {
+    "norman-british": 2
+   }
+  },
+  {
+   "role": "classSet",
+   "p": "{town} Hall",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "hall",
+   "cult": [
+    "norman-british",
+    "general",
+    "american"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{town} Manor",
+   "w": 4,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "manor",
+   "cult": [
+    "norman-british",
+    "general"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{town} Grange",
+   "w": 4,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "manor",
+   "cult": [
+    "norman-british",
+    "general"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "King {manName}",
+   "w": 3,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "king",
+   "cult": [
+    "general",
+    "norman-british"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "King {manName} {romanNumeral}",
+   "w": 3,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "king",
+   "cult": [
+    "general",
+    "norman-british"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "Queen {womanName}",
+   "w": 4,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "queen",
+   "cult": [
+    "general",
+    "norman-british"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{holy}",
+   "w": 6,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "saint",
+   "holy": "saint"
+  },
+  {
+   "role": "classSet",
+   "p": "{skyAdj} Star",
+   "w": 3,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "star"
+  },
+  {
+   "role": "classSet",
+   "p": "{colour} Star",
+   "w": 3,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "star"
+  },
+  {
+   "role": "classSet",
+   "p": "{town}",
+   "w": 6,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "school",
+   "cult": [
+    "norman-british"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "The {town} Regiment",
+   "w": 2.666667,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "regiment",
+   "cult": [
+    "norman-british",
+    "general"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{town} Fusilier",
+   "w": 2.666667,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "regiment",
+   "cult": [
+    "norman-british",
+    "general"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "Royal {town} Rifleman",
+   "w": 2.666667,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "regiment",
+   "cult": [
+    "norman-british",
+    "general"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "County of {town}",
+   "w": 6,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "county",
+   "cult": [
+    "norman-british",
+    "american"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{bird}",
+   "w": 4,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "bird"
+  },
+  {
+   "role": "classSet",
+   "p": "Golden {bird}",
+   "w": 4,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "bird"
+  },
+  {
+   "role": "classSet",
+   "p": "{raceA} {raceB}",
+   "w": 6,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "racehorse",
+   "cult": [
+    "norman-british",
+    "american",
+    "general"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{town} United",
+   "w": 1,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "football",
+   "cult": [
+    "norman-british"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{town} Rovers",
+   "w": 1,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "football",
+   "cult": [
+    "norman-british"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{town} Wanderers",
+   "w": 1,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "football",
+   "cult": [
+    "norman-british"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{town} Athletic",
+   "w": 1,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "football",
+   "cult": [
+    "norman-british"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{colour} Funnel Line",
+   "w": 2,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "shipping",
+   "cult": [
+    "norman-british",
+    "dutch"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{town} Line",
+   "w": 2,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "shipping",
+   "cult": [
+    "norman-british",
+    "dutch"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "Sir {manName} {surname}",
+   "w": 2.666667,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "people",
+   "cult": [
+    "general",
+    "norman-british",
+    "american"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "Lord {surname}",
+   "w": 2.666667,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "people",
+   "cult": [
+    "general",
+    "norman-british",
+    "american"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "{manName} {surname}",
+   "w": 2.666667,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "people",
+   "cult": [
+    "general",
+    "norman-british",
+    "american"
+   ]
+  },
+  {
+   "role": "classSet",
+   "p": "General {surname}",
+   "w": 3.333333,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "earlyAmerican",
+   "cult": [
+    "american"
+   ],
+   "k": "L2"
+  },
+  {
+   "role": "classSet",
+   "p": "{town}",
+   "w": 3.333333,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "earlyAmerican",
+   "cult": [
+    "american"
+   ],
+   "k": "L2"
+  },
+  {
+   "role": "classSet",
+   "p": "{virtue}",
+   "w": 3.333333,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "earlyAmerican",
+   "cult": [
+    "american"
+   ],
+   "k": "L2"
+  },
+  {
+   "role": "classSet",
+   "p": "{star}",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "locomotive"
+   ],
+   "theme": "stars",
+   "k": "L6"
+  },
+  {
+   "role": "speed",
+   "p": "The {speedWord}",
+   "w": 40,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "coach"
+   ]
+  },
+  {
+   "role": "speed",
+   "p": "The {town} {speedWord}",
+   "w": 25,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "coach"
+   ]
+  },
+  {
+   "role": "speed",
+   "p": "The {compass} {speedWord}",
+   "w": 15,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "coach"
+   ]
+  },
+  {
+   "role": "speed",
+   "p": "The {colour} Rover",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "coach"
+   ]
+  },
+  {
+   "role": "speed",
+   "p": "The Royal {speedWord}",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "coach"
+   ]
+  },
+  {
+   "role": "royal",
+   "p": "The {metal} State Coach",
+   "w": 40,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "coach"
+   ],
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "royal",
+   "p": "The {realm} State Coach",
+   "w": 30,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "coach"
+   ],
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "royal",
+   "p": "The {colour} Coach",
+   "w": 30,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "coach"
+   ],
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "service",
+   "p": "The {town} Express",
+   "w": 7.5,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ]
+  },
+  {
+   "role": "service",
+   "p": "The {compass} Express",
+   "w": 7.5,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ]
+  },
+  {
+   "role": "service",
+   "p": "The {town} Flyer",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ]
+  },
+  {
+   "role": "service",
+   "p": "The {town} Mail",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ],
+   "cult": [
+    "indian"
+   ],
+   "cx": {
+    "indian": 3
+   }
+  },
+  {
+   "role": "service",
+   "p": "The {colour} {serviceObj}",
+   "w": 15,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ],
+   "cult": [
+    "slavic",
+    "french"
+   ],
+   "cx": {
+    "slavic": 3,
+    "french": 2
+   }
+  },
+  {
+   "role": "service",
+   "p": "The {town} Limited",
+   "w": 5,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ],
+   "cult": [
+    "american"
+   ],
+   "cx": {
+    "american": 3
+   }
+  },
+  {
+   "role": "service",
+   "p": "The {limitedNoun} Limited",
+   "w": 5,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ],
+   "cult": [
+    "american"
+   ],
+   "cx": {
+    "american": 3
+   }
+  },
+  {
+   "role": "service",
+   "p": "The {town} Pullman",
+   "w": 5,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ],
+   "cult": [
+    "norman-british",
+    "american"
+   ]
+  },
+  {
+   "role": "service",
+   "p": "The {town} Queen",
+   "w": 5,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ],
+   "cult": [
+    "indian"
+   ],
+   "cx": {
+    "indian": 3
+   }
+  },
+  {
+   "role": "service",
+   "p": "The {town} Riviera",
+   "w": 3,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ],
+   "cult": [
+    "norman-british",
+    "french"
+   ]
+  },
+  {
+   "role": "service",
+   "p": "The {natureWord}",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ],
+   "cult": [
+    "japanese",
+    "chinese",
+    "korean"
+   ],
+   "cx": {
+    "japanese": 4,
+    "chinese": 3,
+    "korean": 3
+   }
+  },
+  {
+   "role": "service",
+   "p": "The Night {nightObj}",
+   "w": 5,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ]
+  },
+  {
+   "role": "service",
+   "p": "The Master {trade}",
+   "w": 3,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ],
+   "cult": [
+    "norman-british"
+   ],
+   "cx": {
+    "norman-british": 2
+   }
+  },
+  {
+   "role": "service",
+   "p": "The {agentNoun}",
+   "w": 5,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ]
+  },
+  {
+   "role": "service",
+   "p": "The {town}–{town} Express",
+   "w": 5,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ]
+  },
+  {
+   "role": "service",
+   "p": "The {spaceLand} Express",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ],
+   "k": "L6"
+  },
+  {
+   "role": "service",
+   "p": "The {star} Maglev",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "train"
+   ],
+   "k": "L6"
+  },
+  {
+   "role": "siege",
+   "p": "War {beast}",
+   "w": 20,
+   "mod": [
+    "landVehicles"
+   ],
+   "t": [
+    "grim"
+   ]
+  },
+  {
+   "role": "siege",
+   "p": "Bad {kin}",
+   "w": 15,
+   "mod": [
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "siege",
+   "p": "Taker of {wallWord}",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "siege",
+   "p": "{town}-Breaker",
+   "w": 15,
+   "mod": [
+    "landVehicles"
+   ],
+   "t": [
+    "grim"
+   ]
+  },
+  {
+   "role": "siege",
+   "p": "The {siegeAgent}",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ]
+  },
+  {
+   "role": "siege",
+   "p": "{figure:poss} {siegeNoun}",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "t": [
+    "grim"
+   ]
+  },
+  {
+   "role": "siege",
+   "p": "The {colour} {siegeNoun}",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ]
+  },
+  {
+   "role": "siege",
+   "p": "{beast} Strider",
+   "w": 3.333333,
+   "mod": [
+    "landVehicles"
+   ],
+   "k": "LF",
+   "t": [
+    "strange"
+   ],
+   "atx": {
+    "LF": 2
+   }
+  },
+  {
+   "role": "siege",
+   "p": "The Walking {tower}",
+   "w": 3.333333,
+   "mod": [
+    "landVehicles"
+   ],
+   "k": "LF",
+   "t": [
+    "strange"
+   ],
+   "atx": {
+    "LF": 2
+   }
+  },
+  {
+   "role": "siege",
+   "p": "Iron {figure}",
+   "w": 3.333333,
+   "mod": [
+    "landVehicles"
+   ],
+   "k": "LF",
+   "t": [
+    "strange"
+   ],
+   "atx": {
+    "LF": 2
+   }
+  },
+  {
+   "role": "fair",
+   "p": "{fairWhole}",
+   "w": 30,
+   "mod": [
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "fair",
+   "p": "Queen of the {fairPlace}",
+   "w": 15,
+   "mod": [
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "fair",
+   "p": "{surname:poss} {fairNoun}",
+   "w": 20,
+   "mod": [
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "fair",
+   "p": "The {town} Wonder",
+   "w": 15,
+   "mod": [
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "fair",
+   "p": "{fairAdj} {fairNoun}",
+   "w": 20,
+   "mod": [
+    "landVehicles"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "affection",
+   "p": "{wagonWhole}",
+   "w": 15,
+   "mod": [
+    "landVehicles"
+   ],
+   "fn": [
+    "wagon"
+   ],
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "role": "place",
+   "p": "Clipper {town}",
+   "w": 8.333333,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "A4",
+   "cult": [
+    "american"
+   ],
+   "cx": {
+    "american": 3
+   }
+  },
+  {
+   "role": "place",
+   "p": "Clipper {virtue}",
+   "w": 8.333333,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "A4",
+   "cult": [
+    "american"
+   ],
+   "cx": {
+    "american": 3
+   }
+  },
+  {
+   "role": "place",
+   "p": "Clipper {sky}",
+   "w": 8.333333,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "A4",
+   "cult": [
+    "american"
+   ],
+   "cx": {
+    "american": 3
+   }
+  },
+  {
+   "role": "place",
+   "p": "Spirit of {town}",
+   "w": 15,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "A3-A7"
+  },
+  {
+   "role": "place",
+   "p": "City of {town}",
+   "w": 20,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "A2-A7"
+  },
+  {
+   "role": "place",
+   "p": "{realm}",
+   "w": 10,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "A2"
+  },
+  {
+   "role": "place",
+   "p": "Count {surname}",
+   "w": 5,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "A2"
+  },
+  {
+   "role": "place",
+   "p": "{ruler} of the Skies",
+   "w": 5,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "A2-A4"
+  },
+  {
+   "role": "place",
+   "p": "{colour} Mountain",
+   "w": 10,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "A4-A7",
+   "cult": [
+    "japanese"
+   ],
+   "cx": {
+    "japanese": 3
+   }
+  },
+  {
+   "role": "person",
+   "p": "{surname}",
+   "w": 20,
+   "mod": [
+    "aircraft"
+   ],
+   "cult": [
+    "slavic"
+   ],
+   "cx": {
+    "slavic": 2
+   }
+  },
+  {
+   "role": "beast",
+   "p": "{bird}",
+   "w": 10,
+   "mod": [
+    "aircraft"
+   ],
+   "fn": [
+    "airliner"
+   ],
+   "cult": [
+    "dutch"
+   ],
+   "cx": {
+    "dutch": 3
+   }
+  },
+  {
+   "role": "beast",
+   "p": "{beast} of the Clouds",
+   "w": 15,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "AF"
+  },
+  {
+   "role": "sky",
+   "p": "Cloud-{cloudNoun}",
+   "w": 15,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "AF"
+  },
+  {
+   "role": "virtue",
+   "p": "Sky {virtue}",
+   "w": 10,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "AF"
+  },
+  {
+   "role": "royal",
+   "p": "{royal} of the Upper Air",
+   "w": 10,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "AF",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "role": "place",
+   "p": "{town} in the Clouds",
+   "w": 5,
+   "mod": [
+    "aircraft"
+   ],
+   "k": "AF"
+  },
+  {
+   "role": "person",
+   "p": "Clan {wNoun}",
+   "w": 15,
+   "mod": [
+    "landVehicles"
+   ],
+   "k": "LF"
+  },
+  {
+   "role": "royal",
+   "p": "{wAdj} {figure}",
+   "w": 15,
+   "mod": [
+    "landVehicles"
+   ],
+   "k": "LF"
+  },
+  {
+   "role": "virtue",
+   "p": "Rune {wNoun}",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "k": "LF"
+  },
+  {
+   "role": "beast",
+   "p": "The {beast} Engine",
+   "w": 10,
+   "mod": [
+    "landVehicles"
+   ],
+   "k": "LF"
+  }
+ ],
+ "cultureAdds": [
+  {
+   "culture": "norman-british",
+   "module": "aircraft",
+   "fn": [
+    "war",
+    "bomber"
+   ],
+   "list": "virtue",
+   "words": [
+    {
+     "w": "Dauntless"
+    },
+    {
+     "w": "Defiant"
+    },
+    {
+     "w": "Vigilant"
+    },
+    {
+     "w": "Steadfast"
+    },
+    {
+     "w": "Gallant"
+    }
+   ]
+  }
+ ],
+ "types": {
+  "families": {
+   "weather": [
+    "{weatherWord}"
+   ],
+   "raptor": [
+    "{raptor}"
+   ],
+   "insect": [
+    "{insect}"
+   ],
+   "bigBird": [
+    "{bigBird}"
+   ],
+   "smallBird": [
+    "{smallBird}"
+   ],
+   "workBeast": [
+    "{workBeast}"
+   ],
+   "bigCat": [
+    "{bigCat}"
+   ],
+   "smallFierce": [
+    "{smallFierce}"
+   ],
+   "horse": [
+    "{horse}"
+   ],
+   "draughtBeast": [
+    "{draughtBeast}"
+   ],
+   "catCompound": [
+    "{catPrefix}cat"
+   ],
+   "town": [
+    "{town}"
+   ],
+   "exoticTown": [
+    "{exoticTown}"
+   ],
+   "rank": [
+    "{rank}"
+   ],
+   "titan": [
+    "{titan}"
+   ],
+   "spirit": [
+    "{spiritMetal} {spirit}",
+    "{colour} {spirit}"
+   ],
+   "weapon": [
+    "{typeWeapon}"
+   ],
+   "sky": [
+    {
+     "p": "{typeSky}",
+     "w": 90
+    },
+    {
+     "p": "Super {typeSky}",
+     "w": 10
+    }
+   ],
+   "airliner": [
+    "Strato{strato}",
+    "{typeSky}liner",
+    "Sky{skyPart}"
+   ],
+   "pretty": [
+    "{prettyWord}"
+   ],
+   "greek": [
+    "{greekLetter}"
+   ],
+   "general": [
+    "{surname}",
+    "General {surname}"
+   ],
+   "classTheme": [
+    "the {classTheme} class"
+   ],
+   "carriage": [
+    "{town}",
+    "{surname}"
+   ],
+   "wagonType": [
+    "{town} Wagon",
+    "{landWord} Schooner",
+    "{town} Van"
+   ],
+   "workType": [
+    "{titan}",
+    "{surname} {workWord}",
+    {
+     "p": "Little {colour} {surname}",
+     "t": [
+      "light"
+     ]
+    },
+    "{draughtBeast}"
+   ],
+   "skyShip": [
+    "{skyPrefix} {skyShip}"
+   ],
+   "engineType": [
+    "{wAdj} {wNoun}",
+    "{beast} Strider",
+    "Rune {wNoun}"
+   ],
+   "future": [
+    "{star}-class",
+    "{beast} Crawler",
+    "{spaceLand} Rover",
+    "Sky{weatherWord:lower}"
+   ],
+   "beastThe": [
+    "{beast}"
+   ]
+  },
+  "designation": {
+   "aircraft": {
+    "aa": "{AA}-{n23}",
+    "type": "Type {n100}",
+    "a": "{A}-{n}"
+   },
+   "landVehicles": {
+    "a": "{A}-{n}",
+    "type": "Type {n}",
+    "mark": {
+     "p": "Mark {romanNumeral}",
+     "k": "L3"
+    },
+    "class": {
+     "p": "Class {n}",
+     "fn": [
+      "locomotive"
+     ]
+    }
+   }
+  },
+  "weights": {
+   "aircraft": {
+    "war": {
+     "weather": 25,
+     "raptor": 20,
+     "insect": 10,
+     "catCompound": 10,
+     "horse": 5,
+     "rank": 5,
+     "weapon": 10,
+     "designation": 15
+    },
+    "bomber": {
+     "weather": 10,
+     "raptor": 5,
+     "insect": 5,
+     "town": 30,
+     "rank": 10,
+     "sky": 10,
+     "weapon": 5,
+     "designation": 20
+    },
+    "airliner": {
+     "bigBird": 10,
+     "town": 10,
+     "rank": 25,
+     "sky": 25,
+     "airliner": 30,
+     "designation": 10
+    },
+    "transport": {
+     "bigBird": 20,
+     "rank": 20,
+     "sky": 15,
+     "airliner": 10,
+     "designation": 25
+    },
+    "explore": {
+     "weather": 15,
+     "bigBird": 15,
+     "rank": 20,
+     "sky": 30,
+     "designation": 20
+    },
+    "private": {
+     "weather": 15,
+     "insect": 5,
+     "bigBird": 15,
+     "smallBird": 35,
+     "horse": 10,
+     "rank": 10,
+     "sky": 15,
+     "designation": 15
+    },
+    "working": {
+     "bigBird": 20,
+     "smallBird": 10,
+     "workBeast": 20,
+     "rank": 20,
+     "designation": 30
+    },
+    "state": {
+     "town": 15,
+     "rank": 40,
+     "sky": 30,
+     "airliner": 15
+    },
+    "raider": {
+     "weather": 20,
+     "raptor": 15,
+     "insect": 15,
+     "catCompound": 10,
+     "sky": 20,
+     "weapon": 20
+    }
+   },
+   "landVehicles": {
+    "locomotive": {
+     "classTheme": 60,
+     "designation": 30,
+     "rank": 10
+    },
+    "war": {
+     "designation": 20,
+     "rank": 25,
+     "bigCat": 15,
+     "smallFierce": 10,
+     "general": 15,
+     "weapon": 5
+    },
+    "coach": {
+     "rank": 10,
+     "carriage": 90
+    },
+    "road": {
+     "designation": 5,
+     "rank": 15,
+     "bigCat": 10,
+     "weapon": 5,
+     "town": 15,
+     "exoticTown": 10,
+     "spirit": 10,
+     "weather": 10,
+     "horse": 5,
+     "sky": 10,
+     "pretty": 5,
+     "greek": 5
+    },
+    "wagon": {
+     "wagonType": 100
+    },
+    "working": {
+     "designation": 10,
+     "titan": 30,
+     "workType": 60
+    }
+   }
+  },
+  "levelRules": {
+   "aircraft": {
+    "AF": {
+     "keep": [
+      "weather",
+      "raptor",
+      "bigBird",
+      "rank",
+      "sky"
+     ],
+     "add": {
+      "skyShip": 70
+     }
+    },
+    "A7": {
+     "add": {
+      "future": 40
+     }
+    }
+   },
+   "landVehicles": {
+    "LF": {
+     "add": {
+      "engineType": 70
+     }
+    },
+    "L6": {
+     "add": {
+      "future": 40
+     }
+    },
+    "L1:war": {
+     "replace": {
+      "beastThe": 60,
+      "weapon": 20,
+      "rank": 20
+     }
+    }
+   }
+  },
+  "leanings": {
+   "norman-british": {
+    "weather": 2,
+    "town": 2,
+    "rank": 2,
+    "spirit": 2,
+    "classTheme": 2
+   },
+   "american": {
+    "catCompound": 3,
+    "general": 3,
+    "horse": 2,
+    "airliner": 2,
+    "designation": 1.5
+   },
+   "slavic": {
+    "designation": 3,
+    "general": 0.5
+   },
+   "japanese": {
+    "designation": 3,
+    "pretty": 3,
+    "weather": 1.5
+   },
+   "chinese": {
+    "pretty": 3,
+    "designation": 2
+   },
+   "korean": {
+    "pretty": 3,
+    "designation": 2
+   },
+   "roman": {
+    "greek": 3,
+    "exoticTown": 0.5
+   },
+   "french": {
+    "general": 2,
+    "designation": 1.5
+   },
+   "steppe": {
+    "draughtBeast": 2,
+    "horse": 2
+   },
+   "arabic-persian": {
+    "draughtBeast": 2,
+    "horse": 2
+   }
+  },
+  "designationLean": {
+   "japanese": [
+    "type"
+   ]
+  },
+  "mark": {
+   "share": 0.15,
+   "numerals": [
+    "II",
+    "III",
+    "IV",
+    "V"
+   ],
+   "never": [
+    "designation",
+    "classTheme"
+   ]
+  },
+  "rankInitial": {
+   "culture": "norman-british",
+   "fn": "war",
+   "share": 0.5,
+   "letter": "C"
+  }
+ },
+ "codes": {
+  "aircraft": {
+   "civil": [
+    "airliner",
+    "transport",
+    "private",
+    "working",
+    "explore",
+    "state",
+    "raider"
+   ],
+   "military": [
+    "war",
+    "bomber"
+   ],
+   "rows": [
+    {
+     "cultures": [
+      "general",
+      "norman-british"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "G-{AAAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "general",
+      "norman-british"
+     ],
+     "kind": "military",
+     "k": "A3-A4",
+     "patterns": [
+      "{A}{dddd}"
+     ]
+    },
+    {
+     "cultures": [
+      "general",
+      "norman-british"
+     ],
+     "kind": "military",
+     "k": "A5-A7",
+     "patterns": [
+      "{AA}{ddd}"
+     ]
+    },
+    {
+     "cultures": [
+      "american"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "N{ddd}{AA}"
+     ]
+    },
+    {
+     "cultures": [
+      "american"
+     ],
+     "kind": "military",
+     "k": "A4",
+     "patterns": [
+      "{dd}-{ddddd}"
+     ]
+    },
+    {
+     "cultures": [
+      "american"
+     ],
+     "kind": "military",
+     "k": "A5-A7",
+     "patterns": [
+      "{dd}-{dddd}"
+     ]
+    },
+    {
+     "cultures": [
+      "french"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "F-{AAAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "dutch"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "PH-{AAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "roman"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "I-{AAAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "iberian"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "EC-{AAA}",
+      "CS-{AAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "slavic"
+     ],
+     "kind": "civil",
+     "k": "A6",
+     "patterns": [
+      "RA-{ddddd}"
+     ]
+    },
+    {
+     "cultures": [
+      "japanese"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "JA{dddd}"
+     ]
+    },
+    {
+     "cultures": [
+      "chinese"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "B-{dddd}"
+     ]
+    },
+    {
+     "cultures": [
+      "korean"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "HL{dddd}"
+     ]
+    },
+    {
+     "cultures": [
+      "indian"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "VT-{AAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "arabic-persian"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "EP-{AAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "egyptian"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "SU-{AAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "ethiopian"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "ET-{AAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "general",
+      "norman-british"
+     ],
+     "kind": "any",
+     "k": "A2",
+     "patterns": [
+      "R{dd}"
+     ]
+    },
+    {
+     "cultures": [
+      "american"
+     ],
+     "kind": "any",
+     "k": "A2",
+     "patterns": [
+      "ZR-{d}"
+     ]
+    }
+   ],
+   "sf": [
+    "{AA}-{dddd}"
+   ]
+  },
+  "landVehicles": {
+   "rows": [
+    {
+     "fn": [
+      "locomotive"
+     ],
+     "k": "L2",
+     "patterns": [
+      "No. {n999} "
+     ]
+    },
+    {
+     "fn": [
+      "locomotive"
+     ],
+     "k": "L3-L5",
+     "cultures": [
+      "norman-british",
+      "general"
+     ],
+     "patterns": [
+      "{dddd} "
+     ]
+    },
+    {
+     "fn": [
+      "locomotive"
+     ],
+     "k": "L3-L5",
+     "notCultures": [
+      "norman-british",
+      "general"
+     ],
+     "patterns": [
+      "No. {dddd} "
+     ]
+    },
+    {
+     "fn": [
+      "war"
+     ],
+     "k": "L3",
+     "patterns": [
+      "{L}{dd} "
+     ]
+    }
+   ]
+  },
+  "words": {
+   "aircraft": {
+    "off": "without codes",
+    "on": "with registrations"
+   },
+   "landVehicles": {
+    "off": "without numbers",
+    "on": "with numbers"
+   }
+  }
+ },
+ "shipOnlyShapes": [
+  "{god:poss} Canoe",
+  "{god:poss} Barque"
+ ],
+ "naming": {
+  "aircraft": {
+   "craft": "each craft",
+   "types": "types and models"
+  },
+  "landVehicles": {
+   "craft": "each vehicle",
+   "types": "types and models"
+  }
+ },
+ "styles": {
+  "heroic": {
+   "aircraft": "AF",
+   "landVehicles": "LF"
+  },
+  "elven": {
+   "aircraft": "AF",
+   "landVehicles": "LF"
+  },
+  "dwarven": {
+   "aircraft": "AF",
+   "landVehicles": [
+    "LF",
+    "L2"
+   ]
+  },
+  "dark": {
+   "aircraft": true,
+   "landVehicles": true
+  },
+  "fpirate": {
+   "aircraft": "AF"
+  },
+  "steampunk": {
+   "aircraft": true,
+   "landVehicles": true
+  },
+  "dieselpunk": {
+   "aircraft": true,
+   "landVehicles": true
+  },
+  "postapoc": {
+   "aircraft": true,
+   "landVehicles": true
+  },
+  "wasteland": {
+   "aircraft": true,
+   "landVehicles": true
+  },
+  "sfmilitary": {
+   "aircraft": true,
+   "landVehicles": true
+  },
+  "corporate": {
+   "aircraft": true,
+   "landVehicles": true
+  },
+  "colony": {
+   "aircraft": true,
+   "landVehicles": true
+  },
+  "ai": {
+   "aircraft": true,
+   "landVehicles": true
+  },
+  "alien": {
+   "aircraft": true,
+   "landVehicles": true
+  },
+  "outlaw": {
+   "aircraft": true,
+   "landVehicles": true
+  },
+  "sfexplore": {
+   "aircraft": true
+  }
+ },
+ "styleLabels": {
+  "aircraft": {
+   "fpirate": "sky pirate"
+  }
+ },
+ "safeguards": {
+  "block": [
+   "Memphis Belle",
+   "Enola Gay",
+   "Bockscar",
+   "Spirit of St. Louis",
+   "Spirit of St Louis",
+   "Winnie Mae",
+   "Glamorous Glennis",
+   "Sentimental Journey",
+   "Swoose",
+   "Lady Be Good",
+   "Lucky Strike",
+   "G for George",
+   "G-George",
+   "S for Sugar",
+   "S-Sugar",
+   "Air Force One",
+   "Spruce Goose",
+   "Hindenburg",
+   "Graf Zeppelin",
+   "Norge",
+   "Italia",
+   "R100",
+   "R101",
+   "Shenandoah",
+   "Akron",
+   "Macon",
+   "Los Angeles",
+   "Le Géant",
+   "Double Eagle",
+   "Breitling Orbiter",
+   "Kitty Hawk",
+   "Wright Flyer",
+   "Queen of the Skies",
+   "Clipper America",
+   "China Clipper",
+   "Yankee Clipper",
+   "Dixie Clipper",
+   "Spitfire",
+   "Seafire",
+   "Lancaster",
+   "Halifax",
+   "Stirling",
+   "Wellington",
+   "Blenheim",
+   "Lincoln",
+   "Vulcan",
+   "Tiger Moth",
+   "Gipsy Moth",
+   "Swordfish",
+   "Sunderland",
+   "Catalina",
+   "Dakota",
+   "Super Constellation",
+   "Stratocruiser",
+   "Stratoliner",
+   "Stratofortress",
+   "Kittyhawk",
+   "Airacobra",
+   "Flying Fortress",
+   "Superfortress",
+   "Mitchell",
+   "Globemaster",
+   "Starlifter",
+   "Shiden",
+   "Fishbed",
+   "Foxbat",
+   "Backfire",
+   "Gripen",
+   "Viggen",
+   "Draken",
+   "Rafale",
+   "Tucano",
+   "Twin Otter",
+   "Learjet",
+   "Concorde",
+   "Jumbo Jet",
+   "Dreamliner",
+   "Starliner",
+   "Skyhawk",
+   "Skymaster",
+   "Skyraider",
+   "Skyknight",
+   "Stratojet",
+   "Flying Scotsman",
+   "Mallard",
+   "Rocket",
+   "Puffing Billy",
+   "Locomotion",
+   "Tom Thumb",
+   "John Bull",
+   "Best Friend of Charleston",
+   "DeWitt Clinton",
+   "General",
+   "Texas",
+   "Fairy Queen",
+   "Evening Star",
+   "City of Truro",
+   "Caerphilly Castle",
+   "King George V",
+   "Sir Nigel Gresley",
+   "Duchess of Hamilton",
+   "Big Boy",
+   "Flying Hamburger",
+   "Orient Express",
+   "Simplon-Orient-Express",
+   "Train Bleu",
+   "Blue Train",
+   "Golden Arrow",
+   "Red Arrow",
+   "Royal Scot",
+   "Coronation Scot",
+   "Silver Jubilee",
+   "Cornish Riviera",
+   "Night Ferry",
+   "Master Cutler",
+   "Talisman",
+   "Elizabethan",
+   "Twentieth Century Limited",
+   "Broadway Limited",
+   "Golden State Limited",
+   "Prairie Limited",
+   "Super Chief",
+   "Empire Builder",
+   "California Zephyr",
+   "Rheingold",
+   "Frontier Mail",
+   "Deccan Queen",
+   "Palace on Wheels",
+   "Hikari",
+   "Nozomi",
+   "Kodama",
+   "Tsubame",
+   "Hato",
+   "Rossiya",
+   "Trans-Siberian",
+   "Ghan",
+   "Indian Pacific",
+   "Blue Funnel Line",
+   "Castle class",
+   "King class",
+   "War Wolf",
+   "Warwolf",
+   "Malvoisin",
+   "Bad Neighbour",
+   "Helepolis",
+   "Taker of Cities",
+   "Little Willie",
+   "Big Willie",
+   "Fray Bentos",
+   "Crème de Menthe",
+   "Dinnaken",
+   "Cobra King",
+   "King Tiger",
+   "Maus",
+   "Elefant",
+   "Ferdinand",
+   "Sherman",
+   "Pershing",
+   "Patton",
+   "Abrams",
+   "Bradley",
+   "Churchill",
+   "Cromwell",
+   "Saladin",
+   "Leclerc",
+   "Merkava",
+   "Arjun",
+   "Black Prince",
+   "Gold State Coach",
+   "Irish State Coach",
+   "Glass Coach",
+   "Scottish State Coach",
+   "Australian State Coach",
+   "Diamond Jubilee State Coach",
+   "Silver Ghost",
+   "Silver Shadow",
+   "Silver Wraith",
+   "Silver Spirit",
+   "Silver Seraph",
+   "Silver Dawn",
+   "Silver Spur",
+   "Silver Cloud",
+   "Cullinan",
+   "Black Shadow",
+   "Black Lightning",
+   "Model T",
+   "Tin Lizzie",
+   "Cortina",
+   "Bel Air",
+   "Camry",
+   "Celica",
+   "Fairlady",
+   "Cedric",
+   "Punto",
+   "Giulietta",
+   "Bonneville",
+   "Gold Star",
+   "Routemaster",
+   "Conestoga",
+   "Prairie Schooner",
+   "Golden Arrow",
+   "Spirit of America",
+   "Thrust2",
+   "Thrust SSC",
+   "Thunderbird 1",
+   "Thunderbird 2",
+   "Thunderbird 3",
+   "Thunderbird 4",
+   "Thunderbird 5",
+   "Airwolf",
+   "Blue Thunder",
+   "Firefox",
+   "Snowspeeder",
+   "X-wing",
+   "TIE Fighter",
+   "Batwing",
+   "Quinjet",
+   "Helicarrier",
+   "Nimbus Two Thousand",
+   "Firebolt",
+   "Flying Ford Anglia",
+   "Sandcrawler",
+   "AT-AT",
+   "AT-ST",
+   "Landmaster",
+   "Warthog",
+   "Mako",
+   "Hogwarts Express",
+   "Polar Express",
+   "Snowpiercer",
+   "Interceptor",
+   "War Rig",
+   "Doof Wagon",
+   "Gigahorse",
+   "Laputa",
+   "Highwind",
+   "Ragnarok",
+   "Chitty Chitty Bang Bang",
+   "Genevieve",
+   "General Lee",
+   "Herbie",
+   "KITT",
+   "Batmobile",
+   "Ecto-1",
+   "DeLorean",
+   "Mystery Machine",
+   "Bumblebee",
+   "Optimus Prime",
+   "Lightning McQueen",
+   "Christine",
+   "Eleanor",
+   "Thomas the Tank Engine",
+   "Deadwood Stage",
+   "Black Pearl",
+   "Flying Dutchman"
+  ],
+  "blockTypesOnly": [
+   "Hurricane",
+   "Typhoon",
+   "Tempest",
+   "Tornado",
+   "Lightning",
+   "Meteor",
+   "Vampire",
+   "Venom",
+   "Hunter",
+   "Harrier",
+   "Hawk",
+   "Mosquito",
+   "Victor",
+   "Valiant",
+   "Camel",
+   "Snipe",
+   "Moth",
+   "Comet",
+   "Constellation",
+   "Viscount",
+   "Britannia",
+   "Trident",
+   "Mustang",
+   "Thunderbolt",
+   "Corsair",
+   "Wildcat",
+   "Hellcat",
+   "Bearcat",
+   "Tomcat",
+   "Tigercat",
+   "Warhawk",
+   "Liberator",
+   "Marauder",
+   "Sabre",
+   "Phantom",
+   "Starfighter",
+   "Nighthawk",
+   "Blackbird",
+   "Galaxy",
+   "Hercules",
+   "Zero",
+   "Flanker",
+   "Fulcrum",
+   "Blackjack",
+   "Mirage",
+   "Otter",
+   "Beaver",
+   "Caribou",
+   "Buffalo",
+   "Cub",
+   "Jumbo",
+   "Skytrain",
+   "Tiger",
+   "Panther",
+   "Leopard",
+   "Puma",
+   "Grant",
+   "Lee",
+   "Stuart",
+   "Matilda",
+   "Valentine",
+   "Crusader",
+   "Cavalier",
+   "Centurion",
+   "Conqueror",
+   "Chieftain",
+   "Challenger",
+   "Scorpion",
+   "Scimitar",
+   "Saracen",
+   "Ferret",
+   "Warrior",
+   "Firefly",
+   "Onager",
+   "Mangonel",
+   "Mother",
+   "Deborah",
+   "Ghost",
+   "Wraith",
+   "Spectre",
+   "Beetle",
+   "Mini",
+   "Minor",
+   "Zephyr",
+   "Zodiac",
+   "Anglia",
+   "Prefect",
+   "Thunderbird",
+   "Corvette",
+   "Camaro",
+   "Impala",
+   "Fury",
+   "Charger",
+   "Viper",
+   "Cobra",
+   "Stingray",
+   "Corolla",
+   "Corona",
+   "Crown",
+   "Supra",
+   "Civic",
+   "Accord",
+   "Prelude",
+   "Sunny",
+   "Bluebird",
+   "Skyline",
+   "Panda",
+   "Lambda",
+   "Delta",
+   "Herald",
+   "Dolomite",
+   "Stag",
+   "Rapier",
+   "Alpine",
+   "Minx",
+   "Imp",
+   "Avenger",
+   "Viva",
+   "Astra",
+   "Cresta",
+   "Velox",
+   "Jaguar",
+   "Commando",
+   "Bullet",
+   "Atlantean",
+   "Olympian",
+   "Regent",
+   "Escort",
+   "Fiesta",
+   "Capri",
+   "Granada",
+   "Sierra",
+   "Gloria",
+   "Silvia",
+   "Eldorado",
+   "Seville",
+   "Babs"
+  ],
+  "flag": [
+   "Eagle",
+   "Falcon",
+   "Raptor",
+   "Hornet",
+   "Kestrel",
+   "Vanguard",
+   "Consul",
+   "Titan",
+   "Juggernaut",
+   "Walker",
+   "Goliath",
+   "Samson",
+   "Defiant",
+   "Dauntless",
+   "Intrepid",
+   "Spirit of Saltgate",
+   "King of the Road",
+   "Queen of the Fair"
+  ],
+  "flagListBlocks": false,
+  "bannedWords": [
+   "Apache",
+   "Comanche",
+   "Cheyenne",
+   "Kiowa",
+   "Lakota",
+   "Dakota",
+   "Sioux",
+   "Chinook",
+   "Mohawk",
+   "Iroquois",
+   "Shawnee",
+   "Seminole",
+   "Navajo",
+   "Navaho",
+   "Cherokee",
+   "Pawnee",
+   "Huron",
+   "Ute",
+   "Arapaho",
+   "Blackfoot",
+   "Mescalero",
+   "Hiawatha",
+   "Pontiac",
+   "Winnebago",
+   "Geronimo",
+   "Tomahawk",
+   "Zulu",
+   "Maori",
+   "Inuit",
+   "Eskimo",
+   "Gurkha",
+   "Gipsy"
+  ],
+  "bannedNames": [
+   "Black Hawk",
+   "Sitting Bull",
+   "Crazy Horse",
+   "Red Cloud"
+  ]
+ }
+}

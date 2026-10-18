@@ -320,6 +320,9 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   // Ships brief §1.1, with the supplied ship icon for ships and boats.
   ships: ICON_SHIPS,
   spacecraft: ICON_SPACECRAFT,
+  // Aircraft and land vehicles brief §1.1: Lucide plane and train-front.
+  aircraft: "plane",
+  landVehicles: "train-front",
   // Group brief §1.1: Lucide icons.
   mysticOrders: ICON_MYSTIC,
   martialOrders: ICON_MARTIAL,

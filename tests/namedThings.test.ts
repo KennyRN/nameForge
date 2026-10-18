@@ -323,7 +323,7 @@ test("§16.6: namedThings sits in SWITCHER_ORDER between vehicles and advanced, 
   assert.deepEqual(SECTION_GROUPS.namedThings, ["armsNames", "treasureNames", "bookNames"]);
   assert.equal(GROUP_LABELS.namedThings, "named things");
   assert.equal(SECTION_LABELS.armsNames, "arms and armour");
-  assert.equal(SECTION_ORDER.indexOf("armsNames"), SECTION_ORDER.indexOf("spacecraft") + 1);
+  assert.equal(SECTION_ORDER.indexOf("armsNames"), SECTION_ORDER.indexOf("landVehicles") + 1);
   assert.equal(SECTION_ORDER[SECTION_ORDER.indexOf("bookNames") + 1], "nameAgeing");
   assert.equal(historySection("arms and armour · medieval · Norse"), "armsNames");
   assert.equal(historySection("treasures and regalia · medieval · Norse · crowns and circlets"), "treasureNames");
