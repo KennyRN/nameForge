@@ -1,0 +1,4035 @@
+{
+ "$comment": "Named things (docs/named-things-brief.md): kinds, culture leanings, shapes, genre additions, describe words and safeguards. Read through src/things/engine.ts. Eras are strings: all, AN, AN-MD, MD+ (MD on), AN,EM … Weights are the brief's.",
+ "version": 1,
+ "modules": [
+  {
+   "key": "arms",
+   "section": "armsNames",
+   "label": "arms and armour",
+   "any": "arms and armour of any kind",
+   "ownerText": "belonging to",
+   "person": "hero",
+   "describeBy": "carried by",
+   "icon": "sword"
+  },
+  {
+   "key": "treasure",
+   "section": "treasureNames",
+   "label": "treasures and regalia",
+   "any": "treasures and regalia of any kind",
+   "ownerText": "belonging to",
+   "person": "ruler",
+   "describeBy": "held by",
+   "icon": "crown"
+  },
+  {
+   "key": "book",
+   "section": "bookNames",
+   "label": "books and writings",
+   "any": "books and writings of any kind",
+   "ownerText": "by or about",
+   "person": "author",
+   "describeBy": "by",
+   "icon": "book-open"
+  }
+ ],
+ "kinds": [
+  {
+   "module": "arms",
+   "key": "sword",
+   "menu": "Swords",
+   "plural": "swords",
+   "description": "Swords, sabres and blades",
+   "era": [
+    30,
+    30,
+    25,
+    15,
+    8,
+    10,
+    10
+   ]
+  },
+  {
+   "module": "arms",
+   "key": "axe",
+   "menu": "Axes",
+   "plural": "axes",
+   "description": "Axes, bills and halberds",
+   "era": [
+    12,
+    12,
+    6,
+    2,
+    1,
+    0,
+    0
+   ]
+  },
+  {
+   "module": "arms",
+   "key": "spear",
+   "menu": "Spears and polearms",
+   "plural": "spears and polearms",
+   "description": "Spears, lances and pikes",
+   "era": [
+    15,
+    12,
+    6,
+    1,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "module": "arms",
+   "key": "bow",
+   "menu": "Bows",
+   "plural": "bows",
+   "description": "Bows, crossbows and slings",
+   "era": [
+    10,
+    8,
+    4,
+    1,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "module": "arms",
+   "key": "mace",
+   "menu": "Hammers and maces",
+   "plural": "hammers and maces",
+   "description": "Hammers, maces, clubs and flails",
+   "era": [
+    6,
+    6,
+    3,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "module": "arms",
+   "key": "knife",
+   "menu": "Knives and daggers",
+   "plural": "knives and daggers",
+   "description": "Knives, daggers and dirks",
+   "era": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8
+   ]
+  },
+  {
+   "module": "arms",
+   "key": "shield",
+   "menu": "Shields",
+   "plural": "shields",
+   "description": "Shields, bucklers and targes",
+   "era": [
+    12,
+    10,
+    4,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "module": "arms",
+   "key": "armour",
+   "menu": "Helms and armour",
+   "plural": "helms and armour",
+   "description": "Helmets, mail, plate and suits",
+   "era": [
+    7,
+    10,
+    10,
+    3,
+    3,
+    12,
+    12
+   ]
+  },
+  {
+   "module": "arms",
+   "key": "gun",
+   "menu": "Guns",
+   "plural": "guns",
+   "description": "Muskets, rifles, pistols and sidearms",
+   "era": [
+    0,
+    0,
+    15,
+    30,
+    35,
+    45,
+    45
+   ]
+  },
+  {
+   "module": "arms",
+   "key": "cannon",
+   "menu": "Great guns",
+   "plural": "great guns",
+   "description": "Bombards, cannon and mortars",
+   "era": [
+    0,
+    4,
+    19,
+    40,
+    45,
+    25,
+    25
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "crown",
+   "menu": "Crowns and circlets",
+   "plural": "crowns and circlets",
+   "description": "Crowns, circlets, diadems and caps of state",
+   "era": [
+    15,
+    15,
+    15,
+    15,
+    12,
+    6,
+    6
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "ring",
+   "menu": "Rings",
+   "plural": "rings",
+   "description": "Rings and signets",
+   "era": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    8,
+    8
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "jewel",
+   "menu": "Gems and jewels",
+   "plural": "gems and jewels",
+   "description": "Named stones and jewels",
+   "era": [
+    5,
+    10,
+    12,
+    14,
+    14,
+    12,
+    12
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "torc",
+   "menu": "Torcs and brooches",
+   "plural": "torcs, necklaces and brooches",
+   "description": "Torcs, necklaces, collars and brooches",
+   "era": [
+    8,
+    8,
+    4,
+    4,
+    4,
+    2,
+    2
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "cup",
+   "menu": "Cups and cauldrons",
+   "plural": "cups, horns and cauldrons",
+   "description": "Cups, drinking horns, bowls and cauldrons",
+   "era": [
+    10,
+    10,
+    8,
+    6,
+    4,
+    4,
+    4
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "instrument",
+   "menu": "Harps and horns",
+   "plural": "harps, horns and drums",
+   "description": "Harps, horns, drums and gongs",
+   "era": [
+    6,
+    6,
+    6,
+    4,
+    4,
+    2,
+    2
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "sceptre",
+   "menu": "Sceptres and staves",
+   "plural": "sceptres, rods and staves",
+   "description": "Sceptres, rods, staves and orbs",
+   "era": [
+    6,
+    6,
+    6,
+    6,
+    4,
+    3,
+    3
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "banner",
+   "menu": "Banners and standards",
+   "plural": "banners and standards",
+   "description": "Banners, standards and flags",
+   "era": [
+    8,
+    8,
+    8,
+    8,
+    6,
+    10,
+    10
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "seat",
+   "menu": "Stones and thrones",
+   "plural": "stones and thrones",
+   "description": "Thrones, seats and crowning stones",
+   "era": [
+    5,
+    5,
+    5,
+    5,
+    3,
+    2,
+    2
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "bell",
+   "menu": "Bells",
+   "plural": "bells",
+   "description": "Bells and gongs",
+   "era": [
+    0,
+    6,
+    6,
+    6,
+    4,
+    2,
+    2
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "relic",
+   "menu": "Relics",
+   "plural": "relics",
+   "description": "Relics of holy people and ancestors",
+   "era": [
+    0,
+    6,
+    6,
+    2,
+    2,
+    1,
+    1
+   ]
+  },
+  {
+   "module": "treasure",
+   "key": "mirror",
+   "menu": "Mirrors and orbs",
+   "plural": "mirrors and orbs",
+   "description": "Mirrors, scrying glasses and orbs",
+   "era": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "module": "book",
+   "key": "chronicle",
+   "menu": "Chronicles and histories",
+   "plural": "chronicles and histories",
+   "description": "Annals, chronicles and histories",
+   "era": [
+    20,
+    20,
+    20,
+    15,
+    15,
+    10,
+    10
+   ]
+  },
+  {
+   "module": "book",
+   "key": "lay",
+   "menu": "Lays, sagas and songs",
+   "plural": "lays, sagas and songs",
+   "description": "Epics, lays, sagas, tales and ballads",
+   "era": [
+    20,
+    20,
+    15,
+    10,
+    10,
+    8,
+    8
+   ]
+  },
+  {
+   "module": "book",
+   "key": "law",
+   "menu": "Laws and records",
+   "plural": "laws, charters and records",
+   "description": "Law codes, charters, statutes, rolls and registers",
+   "era": [
+    15,
+    15,
+    15,
+    15,
+    15,
+    10,
+    10
+   ]
+  },
+  {
+   "module": "book",
+   "key": "holy",
+   "menu": "Holy books",
+   "plural": "holy books",
+   "description": "Scriptures of invented faiths, and Christian manuscripts in the Christian cultures",
+   "era": [
+    10,
+    10,
+    10,
+    8,
+    6,
+    6,
+    6
+   ]
+  },
+  {
+   "module": "book",
+   "key": "lore",
+   "menu": "Learning and lore",
+   "plural": "learning and lore",
+   "description": "Herbals, bestiaries, almanacs, maps, tables and treatises",
+   "era": [
+    8,
+    12,
+    15,
+    15,
+    12,
+    10,
+    10
+   ]
+  },
+  {
+   "module": "book",
+   "key": "grimoire",
+   "menu": "Grimoires",
+   "plural": "grimoires",
+   "description": "Books of magic",
+   "era": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "module": "book",
+   "key": "paper",
+   "menu": "Papers and periodicals",
+   "plural": "papers and periodicals",
+   "description": "Newspapers, gazettes and magazines",
+   "era": [
+    0,
+    0,
+    8,
+    25,
+    25,
+    15,
+    15
+   ]
+  },
+  {
+   "module": "book",
+   "key": "log",
+   "menu": "Logs and archives",
+   "plural": "logs and archives",
+   "description": "Ships' logs, mission records and archives",
+   "era": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    25,
+    25
+   ]
+  }
+ ],
+ "kindMult": [
+  {
+   "c": [
+    "norse",
+    "anglo-saxon"
+   ],
+   "k": {
+    "axe": 2
+   }
+  },
+  {
+   "c": [
+    "steppe",
+    "japanese",
+    "korean"
+   ],
+   "k": {
+    "bow": 2
+   }
+  },
+  {
+   "c": [
+    "norman-british",
+    "celtic"
+   ],
+   "k": {
+    "bow": 1.5
+   }
+  },
+  {
+   "c": [
+    "bantu",
+    "west-african",
+    "greek-byzantine"
+   ],
+   "k": {
+    "spear": 1.5
+   }
+  },
+  {
+   "c": [
+    "aztec",
+    "maya"
+   ],
+   "k": {
+    "sword": 0.5,
+    "spear": 1.5,
+    "mace": 2,
+    "shield": 1.5
+   }
+  },
+  {
+   "c": [
+    "aztec",
+    "maya"
+   ],
+   "e": "EM",
+   "k": {
+    "gun": 0.5,
+    "cannon": 0.5
+   }
+  },
+  {
+   "c": [
+    "bantu",
+    "west-african"
+   ],
+   "k": {
+    "shield": 1.5
+   }
+  },
+  {
+   "c": [
+    "bantu",
+    "west-african"
+   ],
+   "e": "EM",
+   "k": {
+    "gun": 0.5,
+    "cannon": 0.5
+   }
+  },
+  {
+   "ch": true,
+   "k": {
+    "relic": 2
+   }
+  },
+  {
+   "c": [
+    "steppe"
+   ],
+   "k": {
+    "banner": 2
+   }
+  },
+  {
+   "c": [
+    "bantu",
+    "west-african"
+   ],
+   "k": {
+    "seat": 2,
+    "instrument": 2
+   }
+  },
+  {
+   "c": [
+    "celtic"
+   ],
+   "k": {
+    "torc": 2,
+    "instrument": 1.5
+   }
+  },
+  {
+   "c": [
+    "celtic"
+   ],
+   "e": "AN",
+   "k": {
+    "chronicle": 0.3,
+    "law": 0.3
+   }
+  },
+  {
+   "c": [
+    "bantu",
+    "west-african"
+   ],
+   "e": "AN-MD",
+   "k": {
+    "chronicle": 0.5
+   }
+  }
+ ],
+ "kindSet": [
+  {
+   "k": "bell",
+   "c": [
+    "chinese",
+    "korean"
+   ],
+   "e": "AN",
+   "w": 5
+  },
+  {
+   "k": "mirror",
+   "c": [
+    "chinese",
+    "aztec",
+    "maya",
+    "egyptian"
+   ],
+   "w": 4
+  },
+  {
+   "k": "mirror",
+   "h": true,
+   "w": 6
+  },
+  {
+   "k": "grimoire",
+   "h": true,
+   "w": 10
+  },
+  {
+   "k": "paper",
+   "c": [
+    "chinese"
+   ],
+   "e": "MD",
+   "w": 4
+  }
+ ],
+ "families": [
+  "deed",
+  "agent",
+  "mood",
+  "kenning",
+  "beast",
+  "light",
+  "owner",
+  "maker",
+  "place",
+  "find",
+  "virtue",
+  "nickname",
+  "colour",
+  "luck",
+  "holy",
+  "god",
+  "title",
+  "plain"
+ ],
+ "leanings": {
+  "general": {},
+  "anglo-saxon": {
+   "agent": 2,
+   "kenning": 2,
+   "deed": 1.5,
+   "owner": 1.5,
+   "luck": 1.5
+  },
+  "norse": {
+   "deed": 3,
+   "kenning": 3,
+   "mood": 1.5,
+   "light": 0.3
+  },
+  "celtic": {
+   "agent": 2,
+   "colour": 2,
+   "light": 1.5,
+   "beast": 1.5,
+   "luck": 2
+  },
+  "norman-british": {
+   "mood": 2,
+   "virtue": 3,
+   "nickname": 3,
+   "find": 2,
+   "holy": 2,
+   "colour": 1.5,
+   "luck": 2
+  },
+  "roman": {
+   "virtue": 2,
+   "owner": 2,
+   "place": 1.5,
+   "mood": 1.5,
+   "god": 1.5
+  },
+  "greek-byzantine": {
+   "owner": 2,
+   "god": 2,
+   "place": 1.5,
+   "holy": 1.5
+  },
+  "slavic": {
+   "owner": 2,
+   "holy": 1.5,
+   "place": 1.5
+  },
+  "steppe": {
+   "beast": 2,
+   "colour": 3,
+   "owner": 1.5
+  },
+  "arabic-persian": {
+   "agent": 3,
+   "light": 3,
+   "mood": 1.5
+  },
+  "indian": {
+   "light": 3,
+   "beast": 1.5,
+   "virtue": 1.5,
+   "title": 2
+  },
+  "chinese": {
+   "maker": 3,
+   "beast": 2,
+   "place": 1.5,
+   "mood": 1.5,
+   "virtue": 1.5,
+   "title": 2
+  },
+  "japanese": {
+   "deed": 3,
+   "beast": 2,
+   "light": 1.5
+  },
+  "korean": {
+   "virtue": 2,
+   "place": 1.5,
+   "beast": 1.5,
+   "colour": 1.5,
+   "title": 1.5
+  },
+  "egyptian": {
+   "god": 3,
+   "owner": 2,
+   "beast": 1.5
+  },
+  "ethiopian": {
+   "holy": 2,
+   "owner": 1.5,
+   "light": 1.5
+  },
+  "bantu": {
+   "beast": 2,
+   "owner": 2,
+   "place": 1.5
+  },
+  "west-african": {
+   "owner": 2,
+   "beast": 2,
+   "mood": 1.5
+  },
+  "aztec": {
+   "beast": 3,
+   "god": 2,
+   "colour": 1.5
+  },
+  "maya": {
+   "beast": 2,
+   "god": 2,
+   "owner": 1.5
+  }
+ },
+ "surnames": [
+  "general",
+  "norman-british",
+  "celtic",
+  "slavic",
+  "greek-byzantine",
+  "arabic-persian",
+  "indian",
+  "chinese",
+  "japanese",
+  "korean"
+ ],
+ "nicknameOthers": 0.3,
+ "shapes": [
+  {
+   "m": "arms",
+   "fam": "deed",
+   "w": 14,
+   "p": [
+    "{deedTarget}-{deedVerb}"
+   ],
+   "k": [
+    "sword",
+    "axe",
+    "knife",
+    "mace",
+    "spear",
+    "cannon"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "arms",
+   "fam": "agent",
+   "w": 12,
+   "p": [
+    "the {thingAgent}"
+   ],
+   "k": "*",
+   "e": "all"
+  },
+  {
+   "m": "arms",
+   "fam": "mood",
+   "w": 10,
+   "p": [
+    "{thingMood}"
+   ],
+   "k": [
+    "sword",
+    "axe",
+    "spear",
+    "bow",
+    "knife",
+    "gun"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "arms",
+   "fam": "kenning",
+   "w": 8,
+   "p": [
+    "{kenningFirst}-{kenningSecond}"
+   ],
+   "k": [
+    "sword",
+    "axe",
+    "spear",
+    "shield",
+    "armour",
+    "bow",
+    "knife"
+   ],
+   "e": "AN-MD"
+  },
+  {
+   "m": "arms",
+   "fam": "kenning",
+   "w": 3,
+   "p": [
+    "{beast}-Feeder"
+   ],
+   "k": [
+    "sword",
+    "axe",
+    "spear"
+   ],
+   "e": "AN-MD",
+   "t": [
+    "grim"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "beast",
+   "w": 10,
+   "p": [
+    "{beast:poss} {thingBodyPart}"
+   ],
+   "k": "*",
+   "e": "all"
+  },
+  {
+   "m": "arms",
+   "fam": "beast",
+   "w": 4,
+   "p": [
+    "Little {beast}"
+   ],
+   "k": [
+    "sword",
+    "knife",
+    "bow",
+    "gun"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "arms",
+   "fam": "beast",
+   "w": 4,
+   "p": [
+    "the {colour} {beast}"
+   ],
+   "k": "*",
+   "e": "all"
+  },
+  {
+   "m": "arms",
+   "fam": "beast",
+   "w": 4,
+   "p": [
+    "{beast} {water}"
+   ],
+   "k": [
+    "sword"
+   ],
+   "e": "all",
+   "c": [
+    "chinese",
+    "korean",
+    "japanese"
+   ],
+   "cx": {
+    "chinese": 3,
+    "korean": 3,
+    "japanese": 3
+   },
+   "others": 0.3
+  },
+  {
+   "m": "arms",
+   "fam": "owner",
+   "w": 10,
+   "p": [
+    "{hero:poss} {object}"
+   ],
+   "k": "*",
+   "e": "all",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "deed",
+   "w": 4,
+   "p": [
+    "{baneTarget}-Bane"
+   ],
+   "k": [
+    "sword",
+    "axe",
+    "spear"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "arms",
+   "fam": "maker",
+   "w": 4,
+   "p": [
+    "{smith:poss} Work",
+    "the {smith} {object}"
+   ],
+   "k": [
+    "sword",
+    "knife",
+    "armour",
+    "gun"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "arms",
+   "fam": "virtue",
+   "w": 6,
+   "p": [
+    "{object} of {thingVirtue}"
+   ],
+   "k": [
+    "sword",
+    "axe",
+    "mace"
+   ],
+   "e": "all",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "light",
+   "w": 3,
+   "p": [
+    "{object} of Light",
+    "{object} of the Dawn"
+   ],
+   "k": [
+    "sword",
+    "spear"
+   ],
+   "e": "all",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "colour",
+   "w": 6,
+   "p": [
+    {
+     "p": "{colour}-Hilt",
+     "k": [
+      "sword",
+      "knife"
+     ]
+    },
+    {
+     "p": "{colour}-Haft",
+     "k": [
+      "axe",
+      "spear"
+     ]
+    },
+    {
+     "p": "{colour}-Rim",
+     "k": [
+      "shield"
+     ]
+    },
+    {
+     "p": "{colour}-Crest",
+     "k": [
+      "armour"
+     ]
+    }
+   ],
+   "k": "*",
+   "e": "all"
+  },
+  {
+   "m": "arms",
+   "fam": "nickname",
+   "w": 10,
+   "p": [
+    "{thingTemper} {thingGiven:f}"
+   ],
+   "k": [
+    "gun",
+    "cannon"
+   ],
+   "e": "EM+",
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "nickname",
+   "w": 8,
+   "p": [
+    "Long {thingGiven:m}",
+    "Old {thingGiven}",
+    "Big {thingGiven}"
+   ],
+   "k": [
+    "gun",
+    "cannon"
+   ],
+   "e": "EM+",
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "nickname",
+   "w": 4,
+   "p": [
+    "{town} {thingGiven:f}"
+   ],
+   "k": [
+    "cannon"
+   ],
+   "e": "MD-ST"
+  },
+  {
+   "m": "arms",
+   "fam": "nickname",
+   "w": 3,
+   "p": [
+    "{thingGiven} of {town}"
+   ],
+   "k": [
+    "cannon"
+   ],
+   "e": "MD-ST"
+  },
+  {
+   "m": "arms",
+   "fam": "place",
+   "w": 6,
+   "p": [
+    "the Great {town} {object}"
+   ],
+   "k": [
+    "cannon"
+   ],
+   "e": "MD-ST",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "find",
+   "w": 8,
+   "p": [
+    "the {town} {object}"
+   ],
+   "k": "*",
+   "e": "ST+",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "owner",
+   "w": 4,
+   "p": [
+    "the {figure:poss} {object}"
+   ],
+   "k": "*",
+   "e": "all",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "god",
+   "w": 4,
+   "p": [
+    "{god:poss} {object}"
+   ],
+   "k": "*",
+   "e": "AN-MD",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "holy",
+   "w": 3,
+   "p": [
+    "{holy:poss} {object}"
+   ],
+   "k": [
+    "sword",
+    "spear"
+   ],
+   "e": "MD-EM",
+   "ch": true
+  },
+  {
+   "m": "arms",
+   "fam": "plain",
+   "w": 6,
+   "p": [
+    "the {thingQuality} {object}"
+   ],
+   "k": "*",
+   "e": "all",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "title",
+   "w": 6,
+   "p": [
+    "Lord of the {fieldWord}"
+   ],
+   "k": [
+    "cannon"
+   ],
+   "e": "MD-ST",
+   "t": [
+    "grand"
+   ],
+   "c": [
+    "indian",
+    "arabic-persian"
+   ],
+   "cx": {
+    "indian": 3,
+    "arabic-persian": 3
+   },
+   "others": 0.3
+  },
+  {
+   "m": "arms",
+   "fam": "title",
+   "w": 10,
+   "p": [
+    "{quality2} Great General"
+   ],
+   "k": [
+    "cannon"
+   ],
+   "e": "MD-ST",
+   "t": [
+    "grand"
+   ],
+   "c": [
+    "chinese",
+    "korean"
+   ]
+  },
+  {
+   "m": "arms",
+   "fam": "beast",
+   "w": 4,
+   "p": [
+    "the {beast}"
+   ],
+   "k": [
+    "cannon",
+    "gun"
+   ],
+   "e": "EM-ST"
+  },
+  {
+   "m": "treasure",
+   "fam": "owner",
+   "w": 10,
+   "p": [
+    "{object} of {ruler}"
+   ],
+   "k": [
+    "crown",
+    "ring",
+    "jewel",
+    "torc",
+    "cup",
+    "instrument",
+    "sceptre",
+    "banner",
+    "seat",
+    "bell",
+    "mirror"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "owner",
+   "w": 8,
+   "p": [
+    "{ruler:poss} {object}"
+   ],
+   "k": [
+    "crown",
+    "ring",
+    "jewel",
+    "torc",
+    "cup",
+    "instrument",
+    "sceptre",
+    "banner",
+    "seat",
+    "bell",
+    "mirror"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "plain",
+   "w": 8,
+   "p": [
+    "the {metal} {object}"
+   ],
+   "k": [
+    "crown",
+    "ring",
+    "cup",
+    "sceptre",
+    "seat",
+    "torc",
+    "bell",
+    "mirror"
+   ],
+   "e": "all",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "treasure",
+   "fam": "place",
+   "w": 8,
+   "p": [
+    "the {metal} {object} of {realm}",
+    "the {metal} {object} of {town}"
+   ],
+   "k": [
+    "crown",
+    "sceptre",
+    "seat",
+    "ring"
+   ],
+   "e": "all",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "treasure",
+   "fam": "virtue",
+   "w": 6,
+   "p": [
+    "the {stateWord} {object}"
+   ],
+   "k": [
+    "crown",
+    "sceptre",
+    "seat",
+    "ring",
+    "banner"
+   ],
+   "e": "all",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "treasure",
+   "fam": "virtue",
+   "w": 6,
+   "p": [
+    "{object} of {thingVirtue}"
+   ],
+   "k": [
+    "sceptre",
+    "ring",
+    "seat"
+   ],
+   "e": "all",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "treasure",
+   "fam": "light",
+   "w": 12,
+   "p": [
+    "{lightPlace} of Light"
+   ],
+   "k": [
+    "jewel",
+    "crown",
+    "mirror"
+   ],
+   "e": "all",
+   "t": [
+    "grand"
+   ],
+   "kx": {
+    "jewel": 3
+   }
+  },
+  {
+   "m": "treasure",
+   "fam": "light",
+   "w": 6,
+   "p": [
+    "Star of the {compass}",
+    "Star of {realm}",
+    "Star of {town}"
+   ],
+   "k": [
+    "jewel"
+   ],
+   "e": "EM+"
+  },
+  {
+   "m": "treasure",
+   "fam": "owner",
+   "w": 6,
+   "p": [
+    "{ruler:poss} {object}",
+    "the {figure:poss} {object}"
+   ],
+   "k": [
+    "jewel"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "beast",
+   "w": 4,
+   "p": [
+    "the {colour} {beast}"
+   ],
+   "k": [
+    "jewel",
+    "ring",
+    "banner"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "beast",
+   "w": 5,
+   "p": [
+    "Eye of the {beast}",
+    "the {beast:poss} {thingBodyPart}"
+   ],
+   "k": [
+    "jewel",
+    "mirror"
+   ],
+   "e": "all",
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "m": "treasure",
+   "fam": "place",
+   "w": 6,
+   "p": [
+    "Moon of {town}",
+    "the {town} {object}"
+   ],
+   "k": [
+    "jewel"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "luck",
+   "w": 6,
+   "p": [
+    "the Luck of {house}"
+   ],
+   "k": [
+    "cup",
+    "ring",
+    "jewel",
+    "bell"
+   ],
+   "e": "MD+"
+  },
+  {
+   "m": "treasure",
+   "fam": "luck",
+   "w": 4,
+   "p": [
+    "Cauldron of {thingPlenty}"
+   ],
+   "k": [
+    "cup"
+   ],
+   "e": "AN-MD"
+  },
+  {
+   "m": "treasure",
+   "fam": "owner",
+   "w": 6,
+   "p": [
+    "Cup of {figure}",
+    "{ruler:poss} Horn"
+   ],
+   "k": [
+    "cup",
+    "instrument"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "mood",
+   "w": 6,
+   "p": [
+    "the {thingSound} {object}"
+   ],
+   "k": [
+    "instrument",
+    "bell"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "place",
+   "w": 4,
+   "p": [
+    "the {object} of {town}"
+   ],
+   "k": [
+    "instrument",
+    "bell",
+    "seat"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "beast",
+   "w": 6,
+   "p": [
+    "{beast} Throne",
+    "{thingFlower} Throne"
+   ],
+   "k": [
+    "seat"
+   ],
+   "e": "all",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "treasure",
+   "fam": "colour",
+   "w": 4,
+   "p": [
+    "the {colour} Seat",
+    "High Seat of {realm}"
+   ],
+   "k": [
+    "seat"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "virtue",
+   "w": 4,
+   "p": [
+    "Stone of {thingFate}"
+   ],
+   "k": [
+    "seat"
+   ],
+   "e": "AN-MD",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "treasure",
+   "fam": "nickname",
+   "w": 10,
+   "p": [
+    "Great {thingGiven}",
+    "Old {thingGiven}",
+    "{thingGiven} of {town}"
+   ],
+   "k": [
+    "bell"
+   ],
+   "e": "MD+"
+  },
+  {
+   "m": "treasure",
+   "fam": "owner",
+   "w": 4,
+   "p": [
+    {
+     "p": "the {figure} Bell"
+    },
+    {
+     "p": "the {holy} Bell",
+     "fam": "holy",
+     "ch": true
+    }
+   ],
+   "k": [
+    "bell"
+   ],
+   "e": "MD+"
+  },
+  {
+   "m": "treasure",
+   "fam": "beast",
+   "w": 8,
+   "p": [
+    "the {beast} Banner",
+    "the {colour} {beast}"
+   ],
+   "k": [
+    "banner"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "colour",
+   "w": 6,
+   "p": [
+    "the {colour} Flame",
+    "the {colour} Banner"
+   ],
+   "k": [
+    "banner"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "colour",
+   "w": 4,
+   "p": [
+    "the {numberWord} {colour} Banners"
+   ],
+   "k": [
+    "banner"
+   ],
+   "e": "AN-MD",
+   "t": [
+    "grand"
+   ],
+   "c": [
+    "steppe"
+   ],
+   "cx": {
+    "steppe": 3
+   }
+  },
+  {
+   "m": "treasure",
+   "fam": "holy",
+   "w": 4,
+   "p": [
+    "Banner of {holy}",
+    "{holy:poss} Banner"
+   ],
+   "k": [
+    "banner"
+   ],
+   "e": "MD-EM",
+   "ch": true
+  },
+  {
+   "m": "treasure",
+   "fam": "owner",
+   "w": 4,
+   "p": [
+    "the {figure:poss} Standard"
+   ],
+   "k": [
+    "banner"
+   ],
+   "e": "all",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "treasure",
+   "fam": "holy",
+   "w": 20,
+   "p": [
+    "the {relicPart} of {holy}",
+    "{holy:poss} {relicPart}"
+   ],
+   "k": [
+    "relic"
+   ],
+   "e": "MD+",
+   "ch": true
+  },
+  {
+   "m": "treasure",
+   "fam": "owner",
+   "w": 15,
+   "p": [
+    "the {relicPart} of {ruler}",
+    "Bones of the {figure}",
+    "{ruler:poss} {relicPart}"
+   ],
+   "k": [
+    "relic"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "colour",
+   "w": 5,
+   "p": [
+    "the {colour} {object}"
+   ],
+   "k": [
+    "crown",
+    "ring",
+    "jewel",
+    "torc",
+    "cup",
+    "instrument",
+    "sceptre",
+    "banner",
+    "seat",
+    "bell",
+    "mirror"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "treasure",
+   "fam": "find",
+   "w": 8,
+   "p": [
+    "the {town} {object}"
+   ],
+   "k": [
+    "crown",
+    "ring",
+    "jewel",
+    "torc",
+    "cup",
+    "instrument",
+    "sceptre",
+    "banner",
+    "seat",
+    "bell",
+    "mirror"
+   ],
+   "e": "ST+",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "treasure",
+   "fam": "god",
+   "w": 4,
+   "p": [
+    "{god:poss} {object}"
+   ],
+   "k": [
+    "crown",
+    "ring",
+    "jewel",
+    "torc",
+    "cup",
+    "instrument",
+    "sceptre",
+    "banner",
+    "seat",
+    "bell",
+    "mirror"
+   ],
+   "e": "AN-MD",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "treasure",
+   "fam": "light",
+   "w": 8,
+   "p": [
+    "Mirror of {domainMirror}"
+   ],
+   "k": [
+    "mirror"
+   ],
+   "e": "all",
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "m": "treasure",
+   "fam": "mood",
+   "w": 6,
+   "p": [
+    "the {thingQuality} Glass",
+    "Orb of {thingDomain}"
+   ],
+   "k": [
+    "mirror"
+   ],
+   "e": "all",
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 12,
+   "p": [
+    "Annals of {town}"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "all",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 4,
+   "p": [
+    "Annals of the {numberWord} {scholarGroup}"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "MD-EM",
+   "c": [
+    "celtic"
+   ],
+   "cx": {
+    "celtic": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 10,
+   "p": [
+    "Chronicle of {town}",
+    "the {town} Chronicle"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "all",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "colour",
+   "w": 8,
+   "p": [
+    "the {colour} Book of {town}"
+   ],
+   "k": [
+    "chronicle",
+    "law"
+   ],
+   "e": "MD+",
+   "c": [
+    "celtic",
+    "norman-british"
+   ],
+   "cx": {
+    "celtic": 3,
+    "norman-british": 2
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 6,
+   "p": [
+    "Book of {town}"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "MD+",
+   "c": [
+    "celtic"
+   ],
+   "cx": {
+    "celtic": 2
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 6,
+   "p": [
+    "History of the {numberWord} {realmWordPl}"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "MD+",
+   "c": [
+    "chinese",
+    "korean"
+   ],
+   "cx": {
+    "chinese": 3,
+    "korean": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 4,
+   "p": [
+    "Record of {oldThings}"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "AN-EM",
+   "c": [
+    "japanese",
+    "chinese"
+   ],
+   "cx": {
+    "japanese": 3,
+    "chinese": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 4,
+   "p": [
+    "Tale of {bygone}"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "MD",
+   "c": [
+    "slavic"
+   ],
+   "cx": {
+    "slavic": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 4,
+   "p": [
+    "Secret History of the {folk}"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "MD",
+   "c": [
+    "steppe"
+   ],
+   "cx": {
+    "steppe": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 4,
+   "p": [
+    "Book of Landtakings",
+    "Book of the {folk}"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "MD",
+   "c": [
+    "norse"
+   ],
+   "cx": {
+    "norse": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 4,
+   "p": [
+    "Book of the Kings of {realm}"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "AN-EM",
+   "t": [
+    "grand"
+   ],
+   "c": [
+    "arabic-persian"
+   ],
+   "cx": {
+    "arabic-persian": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 6,
+   "p": [
+    "{author:poss} History",
+    "History of {realm}"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "all",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 4,
+   "p": [
+    "the {dynasty} Annals"
+   ],
+   "k": [
+    "chronicle"
+   ],
+   "e": "all",
+   "c": [
+    "chinese",
+    "korean",
+    "japanese"
+   ],
+   "cx": {
+    "chinese": 3,
+    "korean": 3,
+    "japanese": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 6,
+   "p": [
+    "the {town} Codex",
+    "Codex {house}"
+   ],
+   "k": [
+    "chronicle",
+    "lore"
+   ],
+   "e": "EM+",
+   "c": [
+    "aztec",
+    "maya"
+   ],
+   "cx": {
+    "aztec": 3,
+    "maya": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "mood",
+   "w": 3,
+   "p": [
+    "{bookOpening}"
+   ],
+   "k": [
+    "chronicle",
+    "lay"
+   ],
+   "e": "AN-MD",
+   "t": [
+    "strange"
+   ],
+   "c": [
+    "norse"
+   ],
+   "cx": {
+    "norse": 2
+   }
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 10,
+   "p": [
+    "Lay of {hero}",
+    "Song of {hero}"
+   ],
+   "k": [
+    "lay"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 10,
+   "p": [
+    "{hero:poss} Saga",
+    "Saga of {hero}"
+   ],
+   "k": [
+    "lay"
+   ],
+   "e": "MD-EM",
+   "c": [
+    "norse"
+   ],
+   "cx": {
+    "norse": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 8,
+   "p": [
+    "Tale of {hero}",
+    "Deeds of {hero}"
+   ],
+   "k": [
+    "lay"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 4,
+   "p": [
+    "Lament for {town}"
+   ],
+   "k": [
+    "lay"
+   ],
+   "e": "AN-MD",
+   "t": [
+    "grim"
+   ],
+   "c": [
+    "arabic-persian",
+    "egyptian"
+   ],
+   "cx": {
+    "arabic-persian": 2,
+    "egyptian": 2
+   }
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 4,
+   "p": [
+    "the {hero} Cycle",
+    "the {numberWord} Branches"
+   ],
+   "k": [
+    "lay"
+   ],
+   "e": "MD",
+   "c": [
+    "celtic"
+   ],
+   "cx": {
+    "celtic": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 6,
+   "p": [
+    "Ballad of {hero}"
+   ],
+   "k": [
+    "lay"
+   ],
+   "e": "EM+",
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 3,
+   "p": [
+    "{hero}iad"
+   ],
+   "k": [
+    "lay"
+   ],
+   "e": "AN,EM",
+   "t": [
+    "grand"
+   ],
+   "c": [
+    "greek-byzantine",
+    "roman"
+   ],
+   "cx": {
+    "greek-byzantine": 2,
+    "roman": 2
+   }
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 4,
+   "p": [
+    "Wanderings of {hero}"
+   ],
+   "k": [
+    "lay"
+   ],
+   "e": "AN-MD",
+   "c": [
+    "greek-byzantine"
+   ],
+   "cx": {
+    "greek-byzantine": 2
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 5,
+   "p": [
+    "Tale of the {house}",
+    "Song of the {folk}"
+   ],
+   "k": [
+    "lay"
+   ],
+   "e": "all",
+   "c": [
+    "japanese"
+   ],
+   "cx": {
+    "japanese": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 12,
+   "p": [
+    "Laws of {ruler}",
+    "Code of {ruler}"
+   ],
+   "k": [
+    "law"
+   ],
+   "e": "all",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 6,
+   "p": [
+    "Dooms of {ruler}"
+   ],
+   "k": [
+    "law"
+   ],
+   "e": "AN-MD",
+   "c": [
+    "anglo-saxon"
+   ],
+   "cx": {
+    "anglo-saxon": 4
+   }
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 4,
+   "p": [
+    "the {dynasty} Code"
+   ],
+   "k": [
+    "law"
+   ],
+   "e": "all",
+   "c": [
+    "chinese",
+    "korean",
+    "japanese"
+   ],
+   "cx": {
+    "chinese": 3,
+    "korean": 3,
+    "japanese": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 3,
+   "p": [
+    "the {numberWord} Tables"
+   ],
+   "k": [
+    "law"
+   ],
+   "e": "AN",
+   "c": [
+    "roman"
+   ],
+   "cx": {
+    "roman": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 3,
+   "p": [
+    "the {numberWord}-Article {lawWord}"
+   ],
+   "k": [
+    "law"
+   ],
+   "e": "AN-MD",
+   "c": [
+    "japanese"
+   ],
+   "cx": {
+    "japanese": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 10,
+   "p": [
+    "Charter of {town}",
+    "the {town} Charter",
+    "the Great Charter of {town}"
+   ],
+   "k": [
+    "law"
+   ],
+   "e": "MD+"
+  },
+  {
+   "m": "book",
+   "fam": "colour",
+   "w": 3,
+   "p": [
+    "the {metal} Bull"
+   ],
+   "k": [
+    "law"
+   ],
+   "e": "MD-EM",
+   "t": [
+    "grand"
+   ],
+   "c": [
+    "roman",
+    "greek-byzantine",
+    "norman-british"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 3,
+   "p": [
+    "Justice of the {folk}"
+   ],
+   "k": [
+    "law"
+   ],
+   "e": "MD",
+   "c": [
+    "slavic"
+   ],
+   "cx": {
+    "slavic": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 8,
+   "p": [
+    "Customs of {town}",
+    "Assize of {town}",
+    "Statute of {town}",
+    "Provisions of {town}",
+    "Ordinances of {town}"
+   ],
+   "k": [
+    "law"
+   ],
+   "e": "MD-EM",
+   "t": [
+    "plain"
+   ],
+   "c": [
+    "norman-british"
+   ],
+   "cx": {
+    "norman-british": 2
+   }
+  },
+  {
+   "m": "book",
+   "fam": "colour",
+   "w": 4,
+   "p": [
+    "the {colour} Book of the {officeWord}",
+    "the {colour} Roll"
+   ],
+   "k": [
+    "law"
+   ],
+   "e": "MD-ST",
+   "c": [
+    "norman-british"
+   ],
+   "cx": {
+    "norman-british": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 4,
+   "p": [
+    "Edict of {ruler}"
+   ],
+   "k": [
+    "law"
+   ],
+   "e": "all",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "god",
+   "w": 10,
+   "p": [
+    "Book of {god}"
+   ],
+   "k": [
+    "holy"
+   ],
+   "e": "all",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "mood",
+   "w": 8,
+   "p": [
+    "Sayings of the {sageWord}"
+   ],
+   "k": [
+    "holy"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "book",
+   "fam": "mood",
+   "w": 6,
+   "p": [
+    "Hymns of {thingDomain}",
+    "Songs of the {domainSong}"
+   ],
+   "k": [
+    "holy"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 6,
+   "p": [
+    "the {numberWord} Scrolls"
+   ],
+   "k": [
+    "holy"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "book",
+   "fam": "mood",
+   "w": 4,
+   "p": [
+    "Testament of the {sageWord}"
+   ],
+   "k": [
+    "holy"
+   ],
+   "e": "all",
+   "nch": true
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 6,
+   "p": [
+    "Book of the {thingQuality} Way"
+   ],
+   "k": [
+    "holy"
+   ],
+   "e": "all",
+   "c": [
+    "chinese",
+    "japanese",
+    "korean"
+   ],
+   "cx": {
+    "chinese": 2,
+    "japanese": 2,
+    "korean": 2
+   }
+  },
+  {
+   "m": "book",
+   "fam": "holy",
+   "w": 15,
+   "p": [
+    "the {town} Psalter",
+    "the {town} Gospels",
+    "Book of Hours of {ruler}",
+    "{holy:poss} Gospels"
+   ],
+   "k": [
+    "holy"
+   ],
+   "e": "MD-EM",
+   "ch": true
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 6,
+   "p": [
+    {
+     "p": "the {author} Herbal",
+     "fam": "owner"
+    },
+    {
+     "p": "the {town} Herbal",
+     "fam": "place"
+    },
+    {
+     "p": "the {town} Bestiary",
+     "fam": "place"
+    }
+   ],
+   "k": [
+    "lore"
+   ],
+   "e": "MD+"
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 6,
+   "p": [
+    "{author:poss} Almanac"
+   ],
+   "k": [
+    "lore"
+   ],
+   "e": "EM+",
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "owner",
+   "w": 4,
+   "p": [
+    "the {ruler} Tables",
+    "Book of {ruler}"
+   ],
+   "k": [
+    "lore"
+   ],
+   "e": "MD-EM",
+   "c": [
+    "arabic-persian"
+   ],
+   "cx": {
+    "arabic-persian": 2
+   }
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 6,
+   "p": [
+    "the {town} World Map",
+    "the {folk} Atlas",
+    "{author:poss} Map"
+   ],
+   "k": [
+    "lore"
+   ],
+   "e": "MD+"
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 10,
+   "p": [
+    "Mirror of {bookSubject}",
+    "Treasury of {bookSubject}",
+    "Key to {bookSubject}",
+    "Canon of {bookSubject}",
+    {
+     "p": "Compendium of {bookSubject}",
+     "e": "EM+"
+    }
+   ],
+   "k": [
+    "lore"
+   ],
+   "e": "MD+"
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 4,
+   "p": [
+    "Garden of {bookSubject}"
+   ],
+   "k": [
+    "lore"
+   ],
+   "e": "MD+",
+   "c": [
+    "arabic-persian"
+   ],
+   "cx": {
+    "arabic-persian": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 4,
+   "p": [
+    "Classic of {bookSubject} and {bookSubject}"
+   ],
+   "k": [
+    "lore"
+   ],
+   "e": "AN-EM",
+   "c": [
+    "chinese",
+    "korean"
+   ],
+   "cx": {
+    "chinese": 3,
+    "korean": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 4,
+   "p": [
+    "{bookPlace} of {bookTreasure} and {bookPlace} of {bookTreasure}"
+   ],
+   "k": [
+    "lore",
+    "chronicle"
+   ],
+   "e": "MD-EM",
+   "t": [
+    "grand"
+   ],
+   "c": [
+    "arabic-persian"
+   ],
+   "cx": {
+    "arabic-persian": 3
+   }
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 3,
+   "p": [
+    "the {number} Golden Remedies"
+   ],
+   "k": [
+    "lore"
+   ],
+   "e": "MD-EM",
+   "c": [
+    "chinese"
+   ],
+   "cx": {
+    "chinese": 2
+   }
+  },
+  {
+   "m": "book",
+   "fam": "colour",
+   "w": 8,
+   "p": [
+    {
+     "p": "the {colour} Grimoire",
+     "fam": "colour"
+    },
+    {
+     "p": "{author:poss} Grimoire",
+     "fam": "owner"
+    }
+   ],
+   "k": [
+    "grimoire"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "book",
+   "fam": "mood",
+   "w": 14,
+   "p": [
+    "Book of {thingDomain}",
+    "Pages of {thingDomain}",
+    "Book of {bookSecret}"
+   ],
+   "k": [
+    "grimoire"
+   ],
+   "e": "all",
+   "t": [
+    "strange"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 6,
+   "p": [
+    "Key of the {sageWord}",
+    "Aim of the {sageWord}"
+   ],
+   "k": [
+    "grimoire"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 6,
+   "p": [
+    "Book of the {numberWord} Seals",
+    "the {thingQuality} Codex"
+   ],
+   "k": [
+    "grimoire"
+   ],
+   "e": "all"
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 30,
+   "p": [
+    "the {town} {object}"
+   ],
+   "k": [
+    "paper"
+   ],
+   "e": "EM+",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "plain",
+   "w": 8,
+   "p": [
+    "the {object}"
+   ],
+   "k": [
+    "paper"
+   ],
+   "e": "EM+"
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 8,
+   "p": [
+    "the {town} {object} and {object}"
+   ],
+   "k": [
+    "paper"
+   ],
+   "e": "ST+",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "plain",
+   "w": 8,
+   "p": [
+    "the Morning {object}",
+    "the Evening {object}",
+    "the {compass} {object}"
+   ],
+   "k": [
+    "paper"
+   ],
+   "e": "ST+"
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 6,
+   "p": [
+    "the {town} Weekly {object}"
+   ],
+   "k": [
+    "paper"
+   ],
+   "e": "ST+",
+   "t": [
+    "plain"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 3,
+   "p": [
+    "the {town} Gentlemen's {object}",
+    "the {town} Ladies' {object}"
+   ],
+   "k": [
+    "paper"
+   ],
+   "e": "EM-ST",
+   "t": [
+    "light"
+   ]
+  },
+  {
+   "m": "book",
+   "fam": "plain",
+   "w": 10,
+   "p": [
+    "the Capital Gazette",
+    "the Court Gazette"
+   ],
+   "k": [
+    "paper"
+   ],
+   "e": "MD-EM",
+   "c": [
+    "chinese",
+    "korean",
+    "japanese"
+   ],
+   "fixed": true
+  },
+  {
+   "m": "arms",
+   "fam": "place",
+   "w": 8,
+   "p": [
+    "{star} Lance",
+    "the {star} {object}"
+   ],
+   "k": [
+    "sword",
+    "gun",
+    "cannon"
+   ],
+   "e": "NF-IS"
+  },
+  {
+   "m": "arms",
+   "fam": "find",
+   "w": 6,
+   "p": [
+    "{town} Pattern {object}"
+   ],
+   "k": [
+    "armour",
+    "gun"
+   ],
+   "e": "NF-IS"
+  },
+  {
+   "m": "treasure",
+   "fam": "light",
+   "w": 10,
+   "p": [
+    "the {star} Stone",
+    "the Last {object} of {homeworld}"
+   ],
+   "k": [
+    "jewel",
+    "crown",
+    "ring",
+    "banner"
+   ],
+   "e": "NF-IS"
+  },
+  {
+   "m": "treasure",
+   "fam": "plain",
+   "w": 4,
+   "p": [
+    "Ark {object}"
+   ],
+   "k": "*",
+   "e": "NF-IS"
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 30,
+   "p": [
+    {
+     "p": "the {star} Logs",
+     "fam": "place"
+    },
+    {
+     "p": "the {star} Archive",
+     "fam": "place"
+    },
+    {
+     "p": "Mission Charter of {town}",
+     "fam": "place"
+    },
+    {
+     "p": "Founders' Manifest",
+     "fam": "plain"
+    },
+    {
+     "p": "the Long Log",
+     "fam": "plain"
+    },
+    {
+     "p": "Core Memory",
+     "fam": "plain"
+    }
+   ],
+   "k": [
+    "log"
+   ],
+   "e": "NF-IS"
+  },
+  {
+   "m": "book",
+   "fam": "place",
+   "w": 20,
+   "p": [
+    "the {star} {object}",
+    "{spaceLand} {object}"
+   ],
+   "k": [
+    "paper"
+   ],
+   "e": "NF-IS"
+  },
+  {
+   "m": "arms",
+   "fam": "plain",
+   "w": 10,
+   "p": [
+    "{element}-{edge}"
+   ],
+   "k": [
+    "sword",
+    "axe",
+    "spear",
+    "knife",
+    "bow"
+   ],
+   "e": "all",
+   "h": true
+  },
+  {
+   "m": "arms",
+   "fam": "deed",
+   "w": 6,
+   "p": [
+    "{fanTarget}-Bane"
+   ],
+   "k": "*",
+   "e": "all",
+   "h": true
+  },
+  {
+   "m": "treasure",
+   "fam": "mood",
+   "w": 10,
+   "p": [
+    {
+     "p": "Ring of {thingDomain}",
+     "k": [
+      "ring"
+     ]
+    },
+    {
+     "p": "Crown of {thingDomain}",
+     "k": [
+      "crown"
+     ]
+    },
+    {
+     "p": "the {thingDomain} Stone",
+     "k": [
+      "jewel"
+     ]
+    }
+   ],
+   "k": "*",
+   "e": "all",
+   "t": [
+    "strange"
+   ],
+   "h": true
+  },
+  {
+   "m": "treasure",
+   "fam": "mood",
+   "w": 8,
+   "p": [
+    {
+     "p": "Staff of {thingDomain}",
+     "k": [
+      "sceptre"
+     ]
+    },
+    {
+     "p": "Orb of {thingDomain}",
+     "k": [
+      "mirror"
+     ]
+    }
+   ],
+   "k": "*",
+   "e": "all",
+   "h": true
+  },
+  {
+   "m": "arms",
+   "fam": "plain",
+   "w": 4,
+   "p": [
+    "the Witch's {object}",
+    "the Giant's {object}"
+   ],
+   "k": [
+    "sword",
+    "axe",
+    "spear",
+    "bow",
+    "mace",
+    "knife",
+    "shield",
+    "armour",
+    "gun",
+    "cannon"
+   ],
+   "e": "all",
+   "t": [
+    "strange"
+   ],
+   "h": true
+  },
+  {
+   "m": "treasure",
+   "fam": "plain",
+   "w": 4,
+   "p": [
+    "the Witch's {object}",
+    "the Giant's {object}"
+   ],
+   "k": [
+    "crown",
+    "ring",
+    "jewel",
+    "torc",
+    "cup",
+    "instrument",
+    "sceptre",
+    "banner",
+    "seat",
+    "bell",
+    "mirror"
+   ],
+   "e": "all",
+   "t": [
+    "strange"
+   ],
+   "h": true
+  },
+  {
+   "m": "book",
+   "fam": "plain",
+   "w": 4,
+   "p": [
+    "the Witch's {object}",
+    "the Giant's {object}"
+   ],
+   "k": [
+    "chronicle",
+    "lay",
+    "law",
+    "holy",
+    "lore",
+    "grimoire"
+   ],
+   "e": "all",
+   "t": [
+    "strange"
+   ],
+   "h": true
+  },
+  {
+   "m": "arms",
+   "fam": "beast",
+   "w": 10,
+   "p": [
+    "the Brass {beast}",
+    "Aether {object}"
+   ],
+   "k": [
+    "gun",
+    "cannon",
+    "armour"
+   ],
+   "e": "ST",
+   "h": true
+  },
+  {
+   "m": "treasure",
+   "fam": "plain",
+   "w": 6,
+   "p": [
+    "the Clockwork {object}"
+   ],
+   "k": [
+    "crown",
+    "bell",
+    "mirror",
+    "instrument"
+   ],
+   "e": "ST",
+   "h": true
+  },
+  {
+   "m": "book",
+   "fam": "virtue",
+   "w": 10,
+   "p": [
+    "Transactions of the {town} {society}",
+    "Proceedings of the {town} {society}"
+   ],
+   "k": [
+    "lore",
+    "paper"
+   ],
+   "e": "ST",
+   "h": true
+  }
+ ],
+ "lists": {
+  "water": [
+   {
+    "w": "Spring"
+   },
+   {
+    "w": "Abyss"
+   },
+   {
+    "w": "Gorge"
+   },
+   {
+    "w": "Pool"
+   },
+   {
+    "w": "Peak"
+   },
+   {
+    "w": "Gate"
+   }
+  ],
+  "baneTarget": [
+   {
+    "w": "King"
+   },
+   {
+    "w": "Tyrant"
+   },
+   {
+    "w": "Raider"
+   }
+  ],
+  "fieldWord": [
+   {
+    "w": "Field",
+    "x": 2
+   },
+   {
+    "w": "Plain"
+   },
+   {
+    "w": "Walls"
+   },
+   {
+    "w": "Gate"
+   },
+   {
+    "w": "Battle"
+   }
+  ],
+  "quality2": [
+   {
+    "w": "Divine Might"
+   },
+   {
+    "w": "Thunder"
+   },
+   {
+    "w": "Victorious"
+   },
+   {
+    "w": "Ten Thousand Victories"
+   },
+   {
+    "w": "Peace-Bringing"
+   }
+  ],
+  "stateWord": [
+   {
+    "w": "Imperial"
+   },
+   {
+    "w": "State"
+   },
+   {
+    "w": "Great"
+   },
+   {
+    "w": "High"
+   },
+   {
+    "w": "Coronation"
+   },
+   {
+    "w": "Holy",
+    "c": [
+     "christian"
+    ]
+   }
+  ],
+  "relicPart": [
+   {
+    "w": "Hand",
+    "x": 2
+   },
+   {
+    "w": "Head"
+   },
+   {
+    "w": "Tooth"
+   },
+   {
+    "w": "Finger"
+   },
+   {
+    "w": "Arm"
+   },
+   {
+    "w": "Heart"
+   },
+   {
+    "w": "Bones"
+   },
+   {
+    "w": "Bell",
+    "c": [
+     "celtic"
+    ],
+    "x": 3
+   },
+   {
+    "w": "Staff"
+   },
+   {
+    "w": "Cloak"
+   },
+   {
+    "w": "Shrine"
+   }
+  ],
+  "domainMirror": [
+   {
+    "w": "Truth"
+   },
+   {
+    "w": "Souls",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Far Seeing"
+   },
+   {
+    "w": "the Moon"
+   },
+   {
+    "w": "Days to Come"
+   },
+   {
+    "w": "the Dead",
+    "t": [
+     "grim"
+    ]
+   }
+  ],
+  "realmWordPl": [
+   {
+    "w": "Kingdoms"
+   },
+   {
+    "w": "Realms"
+   },
+   {
+    "w": "States"
+   },
+   {
+    "w": "Houses"
+   }
+  ],
+  "oldThings": [
+   {
+    "w": "Former Days"
+   },
+   {
+    "w": "Old Things"
+   },
+   {
+    "w": "Bygone Ages"
+   },
+   {
+    "w": "the Elders"
+   }
+  ],
+  "bygone": [
+   {
+    "w": "the Old Years"
+   },
+   {
+    "w": "Former Times"
+   },
+   {
+    "w": "the First Princes"
+   }
+  ],
+  "lawWord": [
+   {
+    "w": "Code"
+   },
+   {
+    "w": "Law"
+   },
+   {
+    "w": "Rule"
+   }
+  ],
+  "domainSong": [
+   {
+    "w": "Dawn"
+   },
+   {
+    "w": "Harvest"
+   },
+   {
+    "w": "Long Night"
+   },
+   {
+    "w": "Rivers"
+   }
+  ],
+  "homeworld": [
+   {
+    "w": "Earth"
+   },
+   {
+    "w": "the Old World"
+   },
+   {
+    "w": "Home"
+   }
+  ],
+  "element": [
+   {
+    "w": "Frost"
+   },
+   {
+    "w": "Flame"
+   },
+   {
+    "w": "Storm"
+   },
+   {
+    "w": "Star"
+   },
+   {
+    "w": "Shadow"
+   },
+   {
+    "w": "Moon"
+   },
+   {
+    "w": "Sun"
+   },
+   {
+    "w": "Thunder"
+   }
+  ],
+  "edge": [
+   {
+    "w": "Edge"
+   },
+   {
+    "w": "Fang"
+   },
+   {
+    "w": "Heart"
+   },
+   {
+    "w": "Song"
+   },
+   {
+    "w": "Caller"
+   },
+   {
+    "w": "Drinker",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Kiss",
+    "t": [
+     "strange"
+    ]
+   }
+  ],
+  "society": [
+   {
+    "w": "Philosophical Society"
+   },
+   {
+    "w": "Aether Society"
+   },
+   {
+    "w": "Engine Club"
+   }
+  ]
+ },
+ "describe": {
+  "sword": "sword",
+  "axe": "axe",
+  "spear": "spear",
+  "bow": "bow",
+  "mace": "mace",
+  "knife": "knife",
+  "shield": "shield",
+  "armour": "helm",
+  "gun": "gun",
+  "cannon": "great gun",
+  "crown": "crown",
+  "ring": "ring",
+  "jewel": "jewel",
+  "torc": "brooch",
+  "cup": "cup",
+  "instrument": "horn",
+  "sceptre": "sceptre",
+  "banner": "banner",
+  "seat": "throne",
+  "bell": "bell",
+  "relic": "relic",
+  "mirror": "mirror",
+  "chronicle": "chronicle",
+  "lay": "poem",
+  "law": "law book",
+  "holy": "holy book",
+  "lore": "book of learning",
+  "grimoire": "book of magic",
+  "paper": "paper",
+  "log": "record"
+ },
+ "describeKinds": [
+  "chronicle",
+  "lay",
+  "lore",
+  "grimoire"
+ ],
+ "cap": 8,
+ "safeguards": {
+  "block": [
+   "Excalibur",
+   "Caliburn",
+   "Clarent",
+   "Durendal",
+   "Durandal",
+   "Joyeuse",
+   "Hauteclere",
+   "Almace",
+   "Précieuse",
+   "Curtana",
+   "Sword of Mercy",
+   "Tizona",
+   "Colada",
+   "Gram",
+   "Balmung",
+   "Hrunting",
+   "Naegling",
+   "Mimming",
+   "Skofnung",
+   "Tyrfing",
+   "Legbiter",
+   "Quernbiter",
+   "Footbiter",
+   "Battle-Ogress",
+   "Gungnir",
+   "Gáe Bulg",
+   "Gae Bulg",
+   "Areadbhar",
+   "Fragarach",
+   "Answerer",
+   "Claíomh Solais",
+   "Sword of Light",
+   "Dyrnwyn",
+   "White-Hilt",
+   "Caladbolg",
+   "Caledfwlch",
+   "Carnwennan",
+   "Rhongomyniad",
+   "Kusanagi",
+   "Grass-Cutter",
+   "Higekiri",
+   "Beard-Cutter",
+   "Hizamaru",
+   "Knee-Cutter",
+   "Kogarasu Maru",
+   "Little Crow",
+   "Onimaru",
+   "Mikazuki",
+   "Heshikiri",
+   "Dōjigiri",
+   "Honjō Masamune",
+   "Zulfiqar",
+   "Dhu'l-Fiqar",
+   "al-Battar",
+   "Gan Jiang",
+   "Mo Ye",
+   "Longquan",
+   "Dragon Spring",
+   "Taia",
+   "Zhanlu",
+   "Sword of State",
+   "Sword of Goliath",
+   "Holy Lance",
+   "Spear of Destiny",
+   "Lance of Longinus",
+   "Brown Bess",
+   "Old Betsy",
+   "Mons Meg",
+   "Mad Meg",
+   "Dulle Griet",
+   "Faule Mette",
+   "Pumhart von Steyr",
+   "Big Bertha",
+   "Fat Bertha",
+   "Long Tom",
+   "Tsar Cannon",
+   "Great Turkish Bombard",
+   "Basilica",
+   "Basilisk",
+   "Zamzama",
+   "Kim's Gun",
+   "Malik-e-Maidan",
+   "Lord of the Battlefield",
+   "Jaivana",
+   "Kunikuzushi",
+   "Province-Breaker",
+   "Paris Gun",
+   "Schwerer Gustav",
+   "Dora",
+   "Anzio Annie",
+   "Killdeer",
+   "Peacemaker",
+   "Widowmaker",
+   "Big Ben",
+   "Great Tom",
+   "Great Paul",
+   "Great John",
+   "Tom of Lincoln",
+   "Liberty Bell",
+   "Tsar Bell",
+   "Pummerin",
+   "Kaiserglocke",
+   "Bell of King Seongdeok",
+   "Emille Bell",
+   "Koh-i-Noor",
+   "Mountain of Light",
+   "Darya-ye Noor",
+   "Sea of Light",
+   "Hope Diamond",
+   "Cullinan",
+   "Star of Africa",
+   "Great Star of Africa",
+   "Lesser Star of Africa",
+   "Star of the South",
+   "Star of the East",
+   "Orlov",
+   "Black Orlov",
+   "Regent",
+   "Sancy",
+   "Great Mogul",
+   "Idol's Eye",
+   "Moon of Baroda",
+   "Nassak",
+   "Black Prince's Ruby",
+   "Timur Ruby",
+   "Eye of Brahma",
+   "Eye of the Tiger",
+   "Pigot",
+   "Florentine",
+   "Dresden Green",
+   "Tiffany Yellow",
+   "Heart of the Ocean",
+   "Star of India",
+   "Iron Crown",
+   "Iron Crown of Lombardy",
+   "Crown of Saint Edward",
+   "Saint Edward's Crown",
+   "Holy Crown",
+   "Crown of Saint Stephen",
+   "Imperial State Crown",
+   "Imperial Crown",
+   "Cap of Monomakh",
+   "Monomakh's Cap",
+   "Crown of the Andes",
+   "Crown of Charlemagne",
+   "White Crown",
+   "Red Crown",
+   "Double Crown",
+   "Rod of Equity",
+   "Sceptre with the Cross",
+   "Black Rod",
+   "Peacock Throne",
+   "Sun Throne",
+   "Chrysanthemum Throne",
+   "Lion Throne",
+   "Golden Stool",
+   "Stone of Scone",
+   "Stone of Destiny",
+   "Lia Fáil",
+   "Coronation Stone",
+   "Coronation Chair",
+   "Throne of Solomon",
+   "Holy Grail",
+   "Grail",
+   "Ardagh Chalice",
+   "Tara Brooch",
+   "Hunterston Brooch",
+   "Cup of Jamshid",
+   "Luck of Edenhall",
+   "Undry",
+   "Cauldron of the Dagda",
+   "Raven Banner",
+   "Oriflamme",
+   "Golden Flame",
+   "Dannebrog",
+   "Labarum",
+   "Nine White Banners",
+   "Banner of Saint Cuthbert",
+   "Gjallarhorn",
+   "Olifant",
+   "Draupnir",
+   "Brísingamen",
+   "Andvaranaut",
+   "Megingjörð",
+   "Mjölnir",
+   "Mjolnir",
+   "Aegis",
+   "Ancile",
+   "Prydwen",
+   "Sutton Hoo Helmet",
+   "Coppergate Helmet",
+   "Snettisham Torc",
+   "Staffordshire Hoard",
+   "Mildenhall Treasure",
+   "Lewis Chessmen",
+   "Anglo-Saxon Chronicle",
+   "Domesday Book",
+   "Doomsday Book",
+   "Great Survey",
+   "Magna Carta",
+   "Great Charter",
+   "Golden Bull",
+   "Twelve Tables",
+   "Grey Goose",
+   "Grágás",
+   "Russkaya Pravda",
+   "Rus' Justice",
+   "Tale of Bygone Years",
+   "Primary Chronicle",
+   "Secret History of the Mongols",
+   "Book of Settlements",
+   "Book of Icelanders",
+   "Heimskringla",
+   "Circle of the World",
+   "Record of Ancient Matters",
+   "Chronicles of Japan",
+   "History of the Three Kingdoms",
+   "Records of the Grand Historian",
+   "Book of Kings",
+   "Book of the Dead",
+   "Book of Coming Forth by Day",
+   "Popol Vuh",
+   "Book of the Council",
+   "Books of Chilam Balam",
+   "Books of the Jaguar Priest",
+   "Glory of the Kings",
+   "Kebra Nagast",
+   "Meadows of Gold",
+   "Meadows of Gold and Mines of Gems",
+   "Classic of Mountains and Seas",
+   "Book of the Way",
+   "Classic of Filial Piety",
+   "Canon of Medicine",
+   "Book of Healing",
+   "Thousand Golden Prescriptions",
+   "Book of Roger",
+   "Catalan Atlas",
+   "Mappa Mundi",
+   "Hereford Map",
+   "Black Book of Carmarthen",
+   "Red Book of Hergest",
+   "White Book of Rhydderch",
+   "Book of Taliesin",
+   "Book of Aneirin",
+   "Book of Leinster",
+   "Book of Kells",
+   "Book of Durrow",
+   "Lindisfarne Gospels",
+   "Book of the Dun Cow",
+   "Annals of the Four Masters",
+   "Annals of Ulster",
+   "Four Branches",
+   "Song of Roland",
+   "Lay of Hildebrand",
+   "Song of the Nibelungs",
+   "Lay of the Nibelungs",
+   "Cattle Raid of Cooley",
+   "Tale of Igor's Campaign",
+   "Lay of Igor's Campaign",
+   "Tale of the Heike",
+   "Tale of Genji",
+   "Iliad",
+   "Odyssey",
+   "Aeneid",
+   "Epic of Gilgamesh",
+   "Lament for Ur",
+   "Codex Mendoza",
+   "Florentine Codex",
+   "Voynich Manuscript",
+   "Red Book of the Exchequer",
+   "Black Book of the Exchequer",
+   "Book of the Seven Seals",
+   "Philosophical Transactions",
+   "Lunar Society",
+   "Key of Solomon",
+   "Lesser Key of Solomon",
+   "Picatrix",
+   "Aim of the Sage",
+   "Grand Grimoire",
+   "Book of Abramelin",
+   "Book of Shadows",
+   "Sixth and Seventh Books of Moses",
+   "The Times",
+   "Times",
+   "Daily Mail",
+   "Daily Telegraph",
+   "Daily Express",
+   "Guardian",
+   "Manchester Guardian",
+   "Observer",
+   "Spectator",
+   "Tatler",
+   "Rambler",
+   "Punch",
+   "Strand Magazine",
+   "Gentleman's Magazine",
+   "Morning Post",
+   "Morning Chronicle",
+   "Peking Gazette",
+   "New York Times",
+   "Washington Post",
+   "Pravda",
+   "Izvestia",
+   "Sting",
+   "Glamdring",
+   "Orcrist",
+   "Andúril",
+   "Anduril",
+   "Narsil",
+   "Herugrim",
+   "Gúthwinë",
+   "Longclaw",
+   "Ice",
+   "Oathkeeper",
+   "Widow's Wail",
+   "Lightbringer",
+   "Dawn",
+   "Heartsbane",
+   "Needle",
+   "Stormbringer",
+   "Mournblade",
+   "Frostmourne",
+   "Ashbringer",
+   "Master Sword",
+   "Buster Sword",
+   "Keyblade",
+   "Vorpal Sword",
+   "Holy Avenger",
+   "Flame Tongue",
+   "Flametongue",
+   "Frost Brand",
+   "Frostbrand",
+   "Sunsword",
+   "Blackrazor",
+   "Wave",
+   "Whelm",
+   "Dragonlance",
+   "Lightsaber",
+   "Sword of Shannara",
+   "Sword of Truth",
+   "Sword of Gryffindor",
+   "Elder Wand",
+   "Sorting Hat",
+   "Philosopher's Stone",
+   "Sorcerer's Stone",
+   "Arkenstone",
+   "Silmaril",
+   "Silmarils",
+   "Palantír",
+   "Palantir",
+   "Phial of Galadriel",
+   "One Ring",
+   "Ring of Gyges",
+   "Ring of Power",
+   "Rings of Power",
+   "Tesseract",
+   "Infinity Gauntlet",
+   "Stormbreaker",
+   "Necronomicon",
+   "Book of Eibon",
+   "Pnakotic Manuscripts",
+   "Red Book of Westmarch",
+   "Daily Planet",
+   "Daily Bugle",
+   "Daily Prophet",
+   "Quibbler",
+   "Octavo",
+   "Lens of Truth",
+   "Triforce",
+   "Soul Edge",
+   "Soul Calibur"
+  ],
+  "flag": [
+   "Wrath",
+   "Mercy",
+   "Joyous",
+   "Precious",
+   "Faithful",
+   "the Cleaver",
+   "the Thunderer",
+   "Great Bell",
+   "Great Gun",
+   "Sword of Justice",
+   "Sword of Honour",
+   "Crown of Light",
+   "Star of the North",
+   "Luck of the House",
+   "Book of Hours",
+   "the Gazette",
+   "the Herald",
+   "the Courier",
+   "the Clarion",
+   "the Mercury",
+   "Mirror of Princes",
+   "Cauldron of Plenty",
+   "Long Nell"
+  ],
+  "flagListBlocks": false,
+  "banned": [
+   "Bible",
+   "Quran",
+   "Koran",
+   "Torah",
+   "Talmud",
+   "Mishnah",
+   "Veda",
+   "Vedas",
+   "Upanishad",
+   "Gita",
+   "Purana",
+   "Sutra",
+   "Sutta",
+   "Tripitaka",
+   "Granth",
+   "Avesta",
+   "Hadith",
+   "Kojiki",
+   "Psalm",
+   "Psalms",
+   "Mormon"
+  ],
+  "bannedFromMoney": true,
+  "gunBrands": [
+   "Kalashnikov",
+   "Uzi",
+   "Glock",
+   "Colt",
+   "Winchester",
+   "Enfield",
+   "Martini",
+   "Henry",
+   "Gatling",
+   "Maxim",
+   "Bren",
+   "Sten",
+   "Mauser",
+   "Luger",
+   "Browning",
+   "Remington",
+   "Beretta",
+   "Thompson",
+   "Tommy",
+   "Bofors",
+   "Krupp",
+   "Armstrong",
+   "Whitworth",
+   "Springfield"
+  ]
+ }
+}

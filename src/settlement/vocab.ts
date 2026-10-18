@@ -54,6 +54,8 @@ export interface VocabEntry {
   s?: string[];
   /** Time and sky brief §7: the farming-year subset of the season words (the brief's `w: true`). */
   wk?: boolean;
+  /** Named things brief §5: the kinds the entry fits (kind keys; all kinds of the pool's module when absent). Other modules ignore it. */
+  k?: string[];
 }
 
 export type ValueTier = "h" | "m" | "l";
@@ -203,6 +205,9 @@ export interface VocabPackSection {
 const isMoneyPool = (pool: string) => pool.startsWith("moneyFixed:") || MONEY_WORD_POOLS.includes(pool);
 /** Time and sky brief §7: the pools whose pack lines may carry season tags in round brackets. */
 const SEASON_POOLS = ["seasonWord", "workWord"];
+/** Named things brief §5: the pools whose pack lines may carry kind tags in round brackets, and the kinds they name. */
+const THING_POOLS = ["thingObject", "deedTarget", "deedVerb", "thingAgent", "kenningSecond", "thingBodyPart"];
+export const THING_KINDS = ["sword", "axe", "spear", "bow", "mace", "knife", "shield", "armour", "gun", "cannon", "crown", "ring", "jewel", "torc", "cup", "instrument", "sceptre", "banner", "seat", "bell", "relic", "mirror", "chronicle", "lay", "law", "holy", "lore", "grimoire", "paper", "log"];
 export const SEASON_KEYS = ["spring", "summer", "autumn", "winter", "thaw", "rain", "monsoon", "flood", "drought", "harvest", "storm", "frost"];
 const MONEY_WORD_POOLS = ["coinMetal", "coinWord", "coinEmblem", "coinFraction", "coinShapeWord", "earlyMoney", "goodsMoney", "paperWord", "tokenWord", "unitWord", "moneyNickname", "sfMoney"];
 
@@ -217,6 +222,7 @@ function parseLine(text: string, pool = ""): VocabEntry | undefined {
   let loan: string | undefined;
   let v: ValueTier[] | undefined;
   let seasons: string[] | undefined;
+  let kinds: string[] | undefined;
   for (let i = 0; i < 3; i++) {
     const themes = rest.match(/\s*\[([^[\]]*)\]$/);
     if (themes && money && loan === undefined) {
@@ -241,6 +247,7 @@ function parseLine(text: string, pool = ""): VocabEntry | undefined {
       t = words.filter((s): s is GroupTone => (GROUP_TONES as string[]).includes(s));
       if (money) v = words.filter((s): s is ValueTier => (VALUE_TIERS as string[]).includes(s));
       if (SEASON_POOLS.includes(pool)) seasons = words.filter((s) => SEASON_KEYS.includes(s));
+      if (THING_POOLS.includes(pool)) kinds = words.filter((s) => THING_KINDS.includes(s));
       rest = rest.slice(0, tones.index).trim();
     }
   }
@@ -253,6 +260,7 @@ function parseLine(text: string, pool = ""): VocabEntry | undefined {
     ...(v && v.length > 0 ? { v } : {}),
     ...(loan ? { loan } : {}),
     ...(seasons && seasons.length > 0 ? { s: seasons } : {}),
+    ...(kinds && kinds.length > 0 ? { k: kinds } : {}),
   };
 }
 

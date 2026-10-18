@@ -264,3 +264,29 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `festNoun` | what a festival honours: Lanterns, Bonfires, Ancestors, Kites… | x, t | calendars and festivals |
 | `festBlessing` | what is blessed: the Boats, the Ploughs, the Herds… | x | calendars and festivals |
 | `extraDays` | words for the days outside the months: Empty, Nameless, Lost, Idle… | x, t | calendars and festivals |
+| `thingObject` | the object word of each kind: Sword, Blade, Crown, Annals, Gazette…; `k` gives the kind | x, e, c, h, t, k | arms and armour, treasures and regalia, books and writings |
+| `deedTarget` | what a blade cleaves: Leg, Helm, Bone, Oak…; fantastic targets Troll, Dragon, Wyrm | x, h, k, c | arms and armour |
+| `deedVerb` | Biter, Cutter, Splitter, Breaker…; `k` gives the kinds each fits | x, t, k | arms and armour |
+| `thingAgent` | what a thing does, as a name: Answerer, Thunderer, Watcher… | x, t, k | arms and armour |
+| `thingMood` | a temper as a name: Joyous, Wrath, Faithful… | x, t | arms and armour |
+| `kenningFirst` | the first half of a kenning: Battle, War, Storm, Raven… | x, t | arms and armour |
+| `kenningSecond` | the second half, by kind: Flame, Snake, Board, Boar… | x, k | arms and armour |
+| `thingBodyPart` | Tooth, Fang, Claw, Wing, Eye…; `k` gives the kinds | x, t, k | arms and armour, treasures and regalia |
+| `thingQuality` | Long, Black, Old, Broken, Lucky… | x, t | all three |
+| `thingVirtue` | Mercy, Justice, Honour, Oaths… | x, t | all three |
+| `lightPlace` | River, Lake, Crown, Eye, Moon, Star… (of Light) | x | treasures and regalia |
+| `thingSound` | Calling, Ringing, Roaring, Singing… | x, t | treasures and regalia |
+| `thingFate` | Kings, Fate, Oaths, Crowning… | x, t | treasures and regalia |
+| `thingPlenty` | Plenty, Rebirth, Wisdom, Feasting… | x, t | treasures and regalia |
+| `thingFlower` | Rose, Lily, Plum, Peony, Thistle… | x, c | treasures and regalia |
+| `thingGiven` | homely given names for guns and bells; `g` gives the gender | x, g | arms and armour, treasures and regalia |
+| `thingTemper` | Mad, Lazy, Fat, Brown, Old, Big, Long (men's names only) | x, t, g | arms and armour |
+| `thingDomain` | Storms, Fire, Frost, the Sea, Tides… | x, t | treasures and regalia, books and writings |
+| `scholarGroup` | Masters, Monks, Scholars, Clerks… | x | books and writings |
+| `bookSubject` | Princes, Kings, Herbs, Beasts, Ladies, Fools… | x, t | books and writings |
+| `bookPlace` | Meadows, Mines, Gardens, Rivers, Seas, Fountains | x | books and writings |
+| `bookTreasure` | Gold, Gems, Pearls, Silver, Coral, Musk, Amber | x | books and writings |
+| `bookOpening` | Hear Me, Long Ago, In the Old Days… | x, t | books and writings |
+| `sageWord` | Teacher, Sage, Master, Elder, Seer, Hermit, Pilgrim | x | books and writings |
+| `bookSecret` | Night, Ash, Bones, Stars, Keys, Names, Tides… | x, t | books and writings |
+| `officeWord` | Exchequer, Treasury, Admiralty, Chancery, Wardrobe… | x | books and writings |
