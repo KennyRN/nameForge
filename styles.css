@@ -382,7 +382,9 @@ body .nameforge-history-modal button.nameforge-history-modal__copy:focus-visible
 
 /* Interactive icon controls: no button chrome — only icon color changes on hover. */
 body .nameforge-modal button.nameforge-modal__icon-action,
-body .nameforge-modal .nameforge-modal__icon-action {
+body .nameforge-modal .nameforge-modal__icon-action,
+body .nameforge-editor-modal .nameforge-modal__controls button.nameforge-modal__icon-action,
+body .nameforge-editor-modal .nameforge-modal__controls .nameforge-modal__icon-action {
   appearance: none;
   -webkit-appearance: none;
   width: auto;
@@ -418,7 +420,11 @@ body .nameforge-modal .nameforge-modal__icon-action {
 body .nameforge-modal button.nameforge-modal__icon-action:hover,
 body .nameforge-modal button.nameforge-modal__icon-action:focus-visible,
 body .nameforge-modal .nameforge-modal__icon-action:hover,
-body .nameforge-modal .nameforge-modal__icon-action:focus-visible {
+body .nameforge-modal .nameforge-modal__icon-action:focus-visible,
+body .nameforge-editor-modal .nameforge-modal__controls button.nameforge-modal__icon-action:hover,
+body .nameforge-editor-modal .nameforge-modal__controls button.nameforge-modal__icon-action:focus-visible,
+body .nameforge-editor-modal .nameforge-modal__controls .nameforge-modal__icon-action:hover,
+body .nameforge-editor-modal .nameforge-modal__controls .nameforge-modal__icon-action:focus-visible {
   background: transparent;
   background-color: transparent;
   box-shadow: none;
@@ -428,7 +434,9 @@ body .nameforge-modal .nameforge-modal__icon-action:focus-visible {
 }
 
 body .nameforge-modal button.nameforge-modal__icon-action:active,
-body .nameforge-modal .nameforge-modal__icon-action:active {
+body .nameforge-modal .nameforge-modal__icon-action:active,
+body .nameforge-editor-modal .nameforge-modal__controls button.nameforge-modal__icon-action:active,
+body .nameforge-editor-modal .nameforge-modal__controls .nameforge-modal__icon-action:active {
   background: transparent;
   background-color: transparent;
   box-shadow: none;
@@ -439,14 +447,18 @@ body .nameforge-modal .nameforge-modal__icon-action:active {
 }
 
 body .nameforge-modal button.nameforge-modal__icon-action:disabled,
-body .nameforge-modal .nameforge-modal__icon-action:disabled {
+body .nameforge-modal .nameforge-modal__icon-action:disabled,
+body .nameforge-editor-modal .nameforge-modal__controls button.nameforge-modal__icon-action:disabled,
+body .nameforge-editor-modal .nameforge-modal__controls .nameforge-modal__icon-action:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   color: var(--text-muted);
 }
 
 body .nameforge-modal button.nameforge-modal__icon-action:disabled:hover,
-body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
+body .nameforge-modal .nameforge-modal__icon-action:disabled:hover,
+body .nameforge-editor-modal .nameforge-modal__controls button.nameforge-modal__icon-action:disabled:hover,
+body .nameforge-editor-modal .nameforge-modal__controls .nameforge-modal__icon-action:disabled:hover {
   color: var(--text-muted);
   cursor: not-allowed;
 }
@@ -1738,21 +1750,92 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   margin-left: 8px;
 }
 
-/* The Templates button: icon only, filled half way between the background and the buttons; its icon
-   takes the other buttons' colour. */
+/* The Templates button: icon only, otherwise like every other button in the pill. Disabled (Mix, the
+   place name wizard, Biome): a faded icon with no hover change, as the main modal's disabled icons. */
 .nameforge-modal__pack-type-toggle .nameforge-modal__templates-button {
   flex: 0 0 auto;
-  background-color: color-mix(in srgb, var(--background-primary) 50%, var(--background-secondary));
-  color: var(--text-muted);
 }
-/* Mix, the place name wizard and Biome: greyed out, the icon in the button's own colour. */
-.nameforge-modal__pack-type-toggle .nameforge-modal__templates-button:disabled {
-  color: color-mix(in srgb, var(--background-primary) 50%, var(--background-secondary));
+.nameforge-modal__pack-type-toggle .nameforge-modal__templates-button:disabled,
+.nameforge-modal__pack-type-toggle .nameforge-modal__templates-button:disabled:hover {
+  background-color: transparent;
+  opacity: 0.5;
   cursor: default;
 }
-.nameforge-modal__pack-type-toggle .nameforge-modal__templates-button.is-active {
-  background-color: var(--forge-accent);
-  color: var(--text-on-accent);
+
+/* Create Pack window: the text boxes take the results pane's look — secondary background, no border,
+   no focus ring. Covers the stage text boxes, the place box and the compound part boxes; the place
+   name wizard's pages and the dropdowns are left alone. */
+body .nameforge-editor-modal .nameforge-editor-modal__stage > textarea.nameforge-modal__textarea,
+body .nameforge-editor-modal .nameforge-editor-modal__stage > textarea.nameforge-modal__textarea:hover,
+body .nameforge-editor-modal .nameforge-editor-modal__stage > textarea.nameforge-modal__textarea:focus,
+body .nameforge-editor-modal .nameforge-editor-modal__stage > textarea.nameforge-modal__textarea:focus-visible,
+body .nameforge-editor-modal textarea.nameforge-editor-modal__place-box,
+body .nameforge-editor-modal textarea.nameforge-editor-modal__place-box:hover,
+body .nameforge-editor-modal textarea.nameforge-editor-modal__place-box:focus,
+body .nameforge-editor-modal textarea.nameforge-editor-modal__place-box:focus-visible,
+body .nameforge-editor-modal .nameforge-modal__part-box textarea.nameforge-modal__textarea,
+body .nameforge-editor-modal .nameforge-modal__part-box textarea.nameforge-modal__textarea:hover,
+body .nameforge-editor-modal .nameforge-modal__part-box textarea.nameforge-modal__textarea:focus,
+body .nameforge-editor-modal .nameforge-modal__part-box textarea.nameforge-modal__textarea:focus-visible {
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: none;
+  border-radius: var(--radius-m, 6px);
+  outline: none;
+  box-shadow: none;
+  background-color: var(--background-secondary);
+}
+
+/* The Pack Name box and the biome Phrase box: same look, their own heights, 10px side padding. */
+body .nameforge-editor-modal input.nameforge-modal__pack-name-input,
+body .nameforge-editor-modal input.nameforge-modal__pack-name-input:hover,
+body .nameforge-editor-modal input.nameforge-modal__pack-name-input:focus,
+body .nameforge-editor-modal input.nameforge-modal__pack-name-input:focus-visible,
+body .nameforge-editor-modal input.nameforge-editor-modal__phrase-input,
+body .nameforge-editor-modal input.nameforge-editor-modal__phrase-input:hover,
+body .nameforge-editor-modal input.nameforge-editor-modal__phrase-input:focus,
+body .nameforge-editor-modal input.nameforge-editor-modal__phrase-input:focus-visible {
+  padding-left: 10px;
+  padding-right: 10px;
+  border: none;
+  border-radius: var(--radius-m, 6px);
+  outline: none;
+  box-shadow: none;
+  background-color: var(--background-secondary);
+}
+
+/* The pack type pill is the main quantity bar's: no inset, buttons edge to edge with 4px between
+   (and between the two rows), square inside, only the four outer corners rounded. */
+.nameforge-editor-modal .nameforge-modal__pack-type-toggle {
+  --nf-pill-radius: var(--radius-m, 6px);
+  box-sizing: border-box;
+  padding: 0;
+  gap: 0 4px;
+  border-radius: var(--nf-pill-radius);
+}
+
+.nameforge-editor-modal .nameforge-modal__pack-type-toggle .nameforge-modal__toggle-break {
+  height: 4px;
+}
+
+.nameforge-editor-modal .nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button {
+  border-radius: 0;
+}
+
+.nameforge-editor-modal .nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button.is-pill-top-left {
+  border-top-left-radius: var(--nf-pill-radius);
+}
+
+.nameforge-editor-modal .nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button.is-pill-top-right {
+  border-top-right-radius: var(--nf-pill-radius);
+}
+
+.nameforge-editor-modal .nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button.is-pill-bottom-left {
+  border-bottom-left-radius: var(--nf-pill-radius);
+}
+
+.nameforge-editor-modal .nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button.is-pill-bottom-right {
+  border-bottom-right-radius: var(--nf-pill-radius);
 }
 
 /* The templates pane takes the right quarter of the stage; the current pane keeps the rest. */

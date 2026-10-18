@@ -6807,6 +6807,7 @@ class NameForgeEditorModal extends Modal {
       return button;
     };
     this.breakdownButton = addTypeButton("Breakdown", ICON_BREAKDOWN_PACK);
+    this.breakdownButton.addClass("is-pill-top-left");
     this.breakdownButton.addEventListener("click", () => {
       this.setPackType("breakdownPack");
     });
@@ -6822,12 +6823,14 @@ class NameForgeEditorModal extends Modal {
     });
 
     this.mixButton = addTypeButton("Mix", ICON_MIX_PACK);
+    this.mixButton.addClass("is-pill-top-right");
     this.mixButton.addEventListener("click", () => {
       this.setPackType("mixPack");
     });
     // Place, the place name wizard and Biome sit on a second line.
     typeToggle.createDiv({ cls: "nameforge-modal__toggle-break" });
     this.placeButton = addTypeButton("Place", ICON_PLACE_PACK);
+    this.placeButton.addClass("is-pill-bottom-left");
     this.placeButton.addEventListener("click", () => {
       this.setPackType("placePack");
     });
@@ -6852,7 +6855,7 @@ class NameForgeEditorModal extends Modal {
 
     // The templates pane: icon only, on and off, separate from the pack type.
     this.templatesButton = typeToggle.createEl("button", {
-      cls: "nameforge-modal__toggle-button nameforge-modal__toggle-button--spaced nameforge-modal__templates-button",
+      cls: "nameforge-modal__toggle-button nameforge-modal__toggle-button--spaced nameforge-modal__templates-button is-pill-bottom-right",
       attr: { type: "button", "aria-label": "Templates", "aria-pressed": "false" },
     });
     setIcon(this.templatesButton.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), ICON_SAVE_PRESET);
@@ -6868,7 +6871,7 @@ class NameForgeEditorModal extends Modal {
     this.biomeBaseSelect = biomeRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from" } });
     this.biomeBaseSelect.addEventListener("change", () => this.refillBiome());
     biomeRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Phrase" });
-    this.biomePhraseInput = biomeRow.createEl("input", { attr: { type: "text", "aria-label": "Phrase" } });
+    this.biomePhraseInput = biomeRow.createEl("input", { cls: "nameforge-editor-modal__phrase-input", attr: { type: "text", "aria-label": "Phrase" } });
     biomeRow.hide();
 
     // Fixed-height stage: the plain textarea, the compound section, and the mix

@@ -128789,6 +128789,7 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
       return button;
     };
     this.breakdownButton = addTypeButton("Breakdown", ICON_BREAKDOWN_PACK);
+    this.breakdownButton.addClass("is-pill-top-left");
     this.breakdownButton.addEventListener("click", () => {
       this.setPackType("breakdownPack");
     });
@@ -128801,11 +128802,13 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
       this.setPackType("compoundPack");
     });
     this.mixButton = addTypeButton("Mix", ICON_MIX_PACK);
+    this.mixButton.addClass("is-pill-top-right");
     this.mixButton.addEventListener("click", () => {
       this.setPackType("mixPack");
     });
     typeToggle.createDiv({ cls: "nameforge-modal__toggle-break" });
     this.placeButton = addTypeButton("Place", ICON_PLACE_PACK);
+    this.placeButton.addClass("is-pill-bottom-left");
     this.placeButton.addEventListener("click", () => {
       this.setPackType("placePack");
     });
@@ -128825,7 +128828,7 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
       void this.enterBiomeMode();
     });
     this.templatesButton = typeToggle.createEl("button", {
-      cls: "nameforge-modal__toggle-button nameforge-modal__toggle-button--spaced nameforge-modal__templates-button",
+      cls: "nameforge-modal__toggle-button nameforge-modal__toggle-button--spaced nameforge-modal__templates-button is-pill-bottom-right",
       attr: { type: "button", "aria-label": "Templates", "aria-pressed": "false" }
     });
     (0, import_obsidian14.setIcon)(this.templatesButton.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), ICON_SAVE_PRESET);
@@ -128838,7 +128841,7 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
     this.biomeBaseSelect = biomeRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from" } });
     this.biomeBaseSelect.addEventListener("change", () => this.refillBiome());
     biomeRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Phrase" });
-    this.biomePhraseInput = biomeRow.createEl("input", { attr: { type: "text", "aria-label": "Phrase" } });
+    this.biomePhraseInput = biomeRow.createEl("input", { cls: "nameforge-editor-modal__phrase-input", attr: { type: "text", "aria-label": "Phrase" } });
     biomeRow.hide();
     const stage = contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
     this.stageEl = stage;
