@@ -747,9 +747,23 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
   margin: 0;
   padding: 8px 10px;
   list-style: none;
+}
+
+/* The results pane and the plain boxes share one look: borderless, on the secondary background. */
+.nameforge-modal__results-list,
+body .nameforge-modal__plain-box,
+body .nameforge-modal__plain-box:hover,
+body .nameforge-modal__plain-box:focus,
+body .nameforge-modal__plain-box:focus-visible {
   border: none;
   border-radius: var(--radius-m, 6px);
   background-color: var(--background-secondary);
+  box-shadow: none;
+}
+
+body .nameforge-modal__plain-box {
+  padding: 8px 10px;
+  font-family: var(--font-interface);
 }
 
 .nameforge-modal__results-list li {

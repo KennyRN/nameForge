@@ -118607,19 +118607,26 @@ var PresetSaveModal = class extends import_obsidian7.Modal {
     this.contentEl.addClass("nameforge-editor-modal", "nameforge-preset-modal");
     const nameRow = this.contentEl.createDiv({ cls: "nameforge-modal__pack-name-row" });
     nameRow.createEl("label", { text: "Name" });
-    const name = nameRow.createEl("input", { cls: "nameforge-modal__pack-name-input", attr: { type: "text" } });
+    const name = nameRow.createEl("input", { cls: "nameforge-modal__pack-name-input nameforge-modal__plain-box", attr: { type: "text" } });
     name.value = this.name;
-    const description = this.contentEl.createEl("textarea", { cls: "nameforge-modal__textarea nameforge-preset-modal__description", attr: { rows: "4" } });
+    const description = this.contentEl.createEl("textarea", { cls: "nameforge-modal__textarea nameforge-modal__plain-box nameforge-preset-modal__description", attr: { rows: "4" } });
     description.value = this.description;
     const controls = this.contentEl.createDiv({ cls: "nameforge-modal__controls" });
-    const save = controls.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title: "Save preset" } });
+    const save = controls.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title: "Save preset", "aria-label": "Save preset" } });
     (0, import_obsidian7.setIcon)(save, ICON_SAVE);
-    save.addEventListener("click", () => {
+    const doSave = () => {
       void this.onSave(name.value.trim(), description.value.trim()).then((done) => {
         if (done) this.close();
       });
+    };
+    save.addEventListener("click", doSave);
+    name.addEventListener("keydown", (evt) => {
+      if (evt.key === "Enter") {
+        evt.preventDefault();
+        doSave();
+      }
     });
-    const cancel = controls.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title: "Cancel" } });
+    const cancel = controls.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title: "Cancel", "aria-label": "Cancel" } });
     (0, import_obsidian7.setIcon)(cancel, ICON_CANCEL);
     cancel.addEventListener("click", () => this.close());
     name.focus();
