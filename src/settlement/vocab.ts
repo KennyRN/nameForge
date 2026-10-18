@@ -42,7 +42,18 @@ export interface VocabEntry {
   g?: "m" | "f" | "n";
   /** Stellar brief §2.4: the space scales the entry is used at (all). */
   sc?: SpaceScale[];
+  /** Money brief §5: the value tiers the entry fits (h high, m middle, l low; all three). Other modules ignore it. */
+  v?: ValueTier[];
+  /** Money brief §7: the familiar English loanword for a culture's translated coin name (`Little Flower` → `Florin`). */
+  loan?: string;
+  /** Money brief §5: the fixed row of money shapes the entry belongs to; none is a culture's own name. */
+  fx?: string;
+  /** Money brief §5: a fraction word's move along the tiers (1 lowers one step, -1 raises one). */
+  ts?: number;
 }
+
+export type ValueTier = "h" | "m" | "l";
+export const VALUE_TIERS: ValueTier[] = ["h", "m", "l"];
 
 export interface VocabPool {
   entries: VocabEntry[];
@@ -53,6 +64,8 @@ export interface VocabPool {
 interface VocabData {
   eras: SettlementEra[];
   cultures: string[];
+  /** Money brief §3.2: cultures only the money module offers (they are in `cultures` so packs can tag them). */
+  moneyOnly?: string[];
   cultureGroups: Record<string, { cultures: string[]; from?: Record<string, SettlementEra> }>;
   regionTags: string[];
   regions: string[];
@@ -62,7 +75,12 @@ interface VocabData {
 
 export const SETTLEMENT_VOCAB = vocabData as unknown as VocabData;
 export const VOCAB_ERAS = SETTLEMENT_VOCAB.eras;
-export const VOCAB_CULTURES = SETTLEMENT_VOCAB.cultures;
+/** Money brief §3.2: the four cultures only money and coins offers; no other module's menu lists them. */
+export const MONEY_ONLY_CULTURES = SETTLEMENT_VOCAB.moneyOnly ?? [];
+/** The 22 cultures every settlement module offers. */
+export const VOCAB_CULTURES = SETTLEMENT_VOCAB.cultures.filter((c) => !MONEY_ONLY_CULTURES.includes(c));
+/** Every culture a vocabulary pack heading can name, the money-only ones too. */
+export const VOCAB_ALL_CULTURES = SETTLEMENT_VOCAB.cultures;
 export const VOCAB_CULTURE_GROUPS = Object.keys(SETTLEMENT_VOCAB.cultureGroups);
 export const VOCAB_REGION_TAGS = SETTLEMENT_VOCAB.regionTags;
 /** Streets brief §3.1: the place-shape region codes. */
@@ -177,15 +195,28 @@ export interface VocabPackSection {
   entries: VocabEntry[];
 }
 
-/** §3.3: a pack line: `- word`, then ` ×n`, ` (tone, tone)` and (Inns brief §3) ` [theme]`, in any order. */
-function parseLine(text: string): VocabEntry | undefined {
+/** Money brief §5: the pools that read `[loan]` and `(h)`, `(m)`, `(l)` in a pack line. */
+const isMoneyPool = (pool: string) => pool.startsWith("moneyFixed:") || MONEY_WORD_POOLS.includes(pool);
+const MONEY_WORD_POOLS = ["coinMetal", "coinWord", "coinEmblem", "coinFraction", "coinShapeWord", "earlyMoney", "goodsMoney", "paperWord", "tokenWord", "unitWord", "moneyNickname", "sfMoney"];
+
+/** §3.3: a pack line: `- word`, then ` ×n`, ` (tone, tone)` and (Inns brief §3) ` [theme]`, in any order.
+ * In the money pools (Money brief §5) the brackets hold a loan form and the round brackets may hold tiers. */
+function parseLine(text: string, pool = ""): VocabEntry | undefined {
+  const money = isMoneyPool(pool);
   let rest = text.trim();
   let x: number | undefined;
   let t: GroupTone[] | undefined;
   let th: string[] | undefined;
+  let loan: string | undefined;
+  let v: ValueTier[] | undefined;
   for (let i = 0; i < 3; i++) {
     const themes = rest.match(/\s*\[([^[\]]*)\]$/);
-    if (themes && th === undefined) {
+    if (themes && money && loan === undefined) {
+      loan = themes[1].trim();
+      rest = rest.slice(0, themes.index).trim();
+      continue;
+    }
+    if (themes && !money && th === undefined) {
       th = themes[1].split(/[,\s]+/).map((x) => x.trim().toLowerCase()).filter((x) => VOCAB_THEMES.includes(x));
       rest = rest.slice(0, themes.index).trim();
       continue;
@@ -198,15 +229,21 @@ function parseLine(text: string): VocabEntry | undefined {
     }
     const tones = rest.match(/\s*\(([^()]*)\)$/);
     if (tones && t === undefined) {
-      t = tones[1]
-        .split(/[,\s]+/)
-        .map((s) => s.trim().toLowerCase())
-        .filter((s): s is GroupTone => (GROUP_TONES as string[]).includes(s));
+      const words = tones[1].split(/[,\s]+/).map((s) => s.trim().toLowerCase());
+      t = words.filter((s): s is GroupTone => (GROUP_TONES as string[]).includes(s));
+      if (money) v = words.filter((s): s is ValueTier => (VALUE_TIERS as string[]).includes(s));
       rest = rest.slice(0, tones.index).trim();
     }
   }
   if (!rest) return undefined;
-  return { w: rest, ...(x !== undefined ? { x } : {}), ...(t && t.length > 0 ? { t } : {}), ...(th && th.length > 0 ? { th } : {}) };
+  return {
+    w: rest,
+    ...(x !== undefined ? { x } : {}),
+    ...(t && t.length > 0 ? { t } : {}),
+    ...(th && th.length > 0 ? { th } : {}),
+    ...(v && v.length > 0 ? { v } : {}),
+    ...(loan ? { loan } : {}),
+  };
 }
 
 /** §3.3: a pack's sections; an unknown pool or culture is reported and its section skipped. */
@@ -230,7 +267,7 @@ export function parseVocabularyPack(content: string, note: string): { sections: 
       let bad = false;
       for (const part of parts) {
         if ((VOCAB_ERAS as string[]).includes(part)) section.era = part as SettlementEra;
-        else if (VOCAB_CULTURES.includes(part)) section.culture = part;
+        else if (VOCAB_ALL_CULTURES.includes(part)) section.culture = part;
         else if (VOCAB_REGIONS.includes(part)) section.region = part;
         else {
           problems.push(`Unknown culture “${part}” in vocabulary pack “${note}”.`);
@@ -244,7 +281,7 @@ export function parseVocabularyPack(content: string, note: string): { sections: 
     }
     const bullet = line.match(/^[-*+]\s+(.+)$/);
     if (!bullet || !current) continue;
-    const entry = parseLine(bullet[1]);
+    const entry = parseLine(bullet[1], current.pool);
     if (entry) current.entries.push(entry);
   }
   return { sections, problems };
@@ -254,7 +291,7 @@ export function parseVocabularyPack(content: string, note: string): { sections: 
  * the safeguards block (banned words, and `blocked` when given) is dropped. */
 export function mergeVocabularyPacks(
   packs: readonly { name: string; content: string }[],
-  blocked: (word: string) => boolean = () => false,
+  blocked: (word: string, pool?: string) => boolean = () => false,
 ): { vocab: Vocabulary; notices: string[] } {
   const notices: string[] = [];
   if (packs.length === 0) return { vocab: BUILT_IN_VOCAB, notices };
@@ -265,7 +302,7 @@ export function mergeVocabularyPacks(
     notices.push(...problems);
     for (const s of sections) {
       for (const e of s.entries) {
-        if (hasBannedWord(e.w) || blocked(e.w)) continue;
+        if (hasBannedWord(e.w) || blocked(e.w, s.pool)) continue;
         pools[s.pool].entries.push({ ...e, ...(s.culture ? { c: [s.culture] } : {}), ...(s.era ? { e: [s.era] } : {}), ...(s.region ? { r: [s.region] } : {}) });
       }
     }

@@ -21,7 +21,7 @@ export async function readVocabularyPacks(notes: readonly VocabNote[]): Promise<
 }
 
 /** §3.3: the merged vocabulary for a folder's notes, with the packs' problems as notices. */
-export async function loadVocabulary(notes: readonly VocabNote[], blocked?: (word: string) => boolean): Promise<{ vocab: Vocabulary; notices: string[] }> {
+export async function loadVocabulary(notes: readonly VocabNote[], blocked?: (word: string, pool?: string) => boolean): Promise<{ vocab: Vocabulary; notices: string[] }> {
   return mergeVocabularyPacks(await readVocabularyPacks(notes), blocked);
 }
 

@@ -20,12 +20,18 @@ Every pool in `src/data/settlement-vocab.json`: what it holds, the tags its entr
 | `th` | themes: rural, urban, maritime, road, magical; the inn and building settings multiply them (other modules ignore them); pack lines add them as ` [maritime]` | none |
 | `g` | the gender a divine figure or kin word is for: m, f or n (neither); unmarked reads as n; read by deities and sacred places | n |
 | `fn` | the district functions a fixed district name serves (`any`: every function) | – |
+| `v` | value tiers the entry fits: `h` high (gold), `m` middle (silver), `l` low (copper and small change); read by money and coins only (pack lines add them in the round brackets, `(h, grim)`) | all three |
+| `loan` | the familiar English loanword for a translated coin name (`Little Flower` → `Florin`); money and coins only (pack lines add it in square brackets, `- Little Flower [Florin] (h)`) | – |
+| `fx` | the fixed row of money shapes an entry belongs to (`siege`, `sf-scrip`…); an entry without `fx` is a culture's own name | – |
+| `ts` | a fraction word's move along the tiers: 1 lowers one step (Half, Quarter, Third), -1 raises one (Double) | – |
 
 Vocabulary pack headings can narrow by culture, era and region in any order: `## alleyDialect · SLO`.
 
 A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the pool is tripled).
 
-**Groups.** `british`: anglo-saxon, celtic, norman-british. `christian`: anglo-saxon, celtic, norman-british, slavic, and greek-byzantine and roman from the medieval era on.
+**Groups.** `british`: anglo-saxon, celtic, norman-british. `christian`: anglo-saxon, celtic, norman-british, slavic, french, iberian, and greek-byzantine and roman from the medieval era on.
+
+**Money-only cultures.** `french`, `dutch`, `iberian` and `american` are listed in `cultures` and flagged in `moneyOnly`: vocabulary packs can tag them (`## moneyFixed:coin · french`), but no other module's culture menu offers them.
 
 ## Pools
 
@@ -225,3 +231,22 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `watersFixed:coasts` | whole coast and island names (empty: for packs) | – | coasts and islands |
 | `watersFixed:charts` | whole chart-feature names (empty: for packs) | – | sea charts |
 | `watersFixed:hyperspace` | whole hyperspace-feature names (empty: for packs) | – | hyperspace charts |
+| `coinMetal` | metals for coins: Gold, Silver, Copper…, with the fantastic and near-future metals; `v` gives the tier | x, e, c, h, v | money and coins |
+| `coinWord` | coin nouns: Penny, Crown, Noble, Mark…; `v` gives the tiers each fits | x, e, c, v | money and coins |
+| `coinEmblem` | what a coin bears: Lion, Rose, Cross, Dragon…, with the fantastic and steampunk emblems (the culture's animals from bynames join at ×1) | x, e, c, h | money and coins |
+| `coinFraction` | Half, Quarter, Double, Third; `ts` says which way they move the tier | x, e, ts | money and coins |
+| `coinShapeWord` | coin shapes: Round, Square, Oval, Ring, Cup | c, e | money and coins |
+| `earlyMoney` | the forms of early money: Ingot, Bar, Ring, Wire, Rod (the shapes pick which ones) | – | money and coins |
+| `goodsMoney` | goods money named whole: Cake of Salt, Salt Bar, Head of Cattle (the shapes pick which ones) | – | money and coins |
+| `paperWord` | Note, Bill, Bond, Certificate, Draft… | x, e | money and coins |
+| `tokenWord` | Token, Scrip, Check, Chit, Ticket, Credit | x, e | money and coins |
+| `unitWord` | the last word of a currency: Standard, Mark, Crown, Credit… | x, e | money and coins |
+| `moneyNickname` | everyday words for coins: Rounds, Bits, Chips, Shells, Beans… | x, c | money and coins |
+| `sfMoney` | Credit, Unit, Chit, Token… for near-future and interstellar money | x, e | money and coins |
+| `moneyFixed:coin` | whole coin names: the culture names (Little Flower, Groat…) and the fixed rows (fantastic, steampunk, near future, interstellar) | x, t, e, c, h, v, loan, fx | money and coins |
+| `moneyFixed:early` | whole early and shaped money names: Hacksilver, Spade, Silver Shoe… | x, e, c, v, loan, fx | money and coins |
+| `moneyFixed:goods` | whole goods money names: Cowrie, Cacao Bean, Tea Brick, Salt Bar… | x, t, e, c, h, v, loan, fx | money and coins |
+| `moneyFixed:paper` | whole paper and credit names: Flying Money, Tally, Bill of Exchange… | x, t, e, c, h, v, loan, fx | money and coins |
+| `moneyFixed:scrip` | whole scrip and token names: Pit Token, Hop Token, Siege Piece… | x, t, e, c, h, v, fx | money and coins |
+| `moneyFixed:currency` | whole currency names, printed without a leading "the": Pound, Wrought Silver… | x, e, c, loan, fx | money and coins |
+| `moneyFixed:nickname` | whole nicknames: Bob, Quid, Owls, Sorrel… | x, t, e, c, v, fx | money and coins |

@@ -9,6 +9,7 @@ import {
   poolEntries,
   SETTLEMENT_VOCAB,
   VOCAB_CULTURE_GROUPS,
+  VOCAB_ALL_CULTURES,
   VOCAB_CULTURES,
   VOCAB_ERAS,
   VOCAB_REGION_TAGS,
@@ -30,7 +31,7 @@ const entryOf = (vocab: Vocabulary, pool: string, w: VocabWhere, word: string) =
 // ── §15.1 Vocabulary ────────────────────────────────────────────────────────
 
 test("§15.1: every entry has w; tones, eras, cultures and region tags are valid; no stray characters", () => {
-  const cultureKeys = new Set([...VOCAB_CULTURES, ...VOCAB_CULTURE_GROUPS]);
+  const cultureKeys = new Set([...VOCAB_ALL_CULTURES, ...VOCAB_CULTURE_GROUPS]);
   const check = (pool: string, e: VocabEntry) => {
     assert.ok(typeof e.w === "string" && e.w.length > 0, `${pool}: entry without w`);
     assert.ok(!/[()§×?→]/.test(e.w), `${pool}: “${e.w}”`);
