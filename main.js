@@ -123296,7 +123296,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
       root.querySelectorAll(".nameforge-modal__pack-dropdown-trigger.is-hovered").forEach((el) => el.removeClass("is-hovered"));
     });
     const optionsList = root.createDiv({ cls: "nameforge-modal__options-list" });
-    const createPacksRow = optionsList.createDiv({ cls: "nameforge-modal__option-row" });
+    const createPacksRow = optionsList.createDiv({ cls: "nameforge-modal__option-row nameforge-modal__pack-row" });
     const sectionTrigger = createPacksRow.createSpan({
       cls: "nameforge-modal__icon-decoration nameforge-modal__icon-decoration--lg nameforge-modal__icon-decoration--clickable",
       attr: { role: "button", tabindex: "0", "aria-label": "change section", title: "change section", "aria-expanded": "false" }
@@ -123463,9 +123463,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
   toggleSectionMenu() {
     this.setSectionMenuOpen(!this.isSectionMenuOpen);
   }
-  /** Opens/closes the section switcher. While open, the results box gives up exactly the height
-   * the menu adds (measured, so gaps/margins in modal vs panel mode are included) via
-   * --nf-section-menu-height, so the modal itself doesn't grow. */
+  /** Opens/closes the section switcher. While open, the is-section-menu-open class hides every
+   * control between the pack row and the results (CSS only, so each control's own shown/hidden
+   * state is untouched and comes straight back on close). --nf-section-menu-height is the net
+   * change in the options list's height (measured, so gaps/margins in modal vs panel mode are
+   * included) and may be negative: the results pane shrinks when the menu is taller than the
+   * controls it replaces and grows when it's shorter, so the modal itself keeps its size. */
   setSectionMenuOpen(open) {
     var _a5, _b3, _c3, _d3, _e3;
     const menu = this.sectionMenuEl;
@@ -123479,9 +123482,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
       this.renderSectionMenu();
     }
     menu.toggle(open);
-    const added = open ? Math.max(0, ((_b3 = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _b3 : 0) - before) : 0;
-    (_c3 = this.rootEl) == null ? void 0 : _c3.style.setProperty("--nf-section-menu-height", `${added}px`);
-    (_d3 = this.rootEl) == null ? void 0 : _d3.toggleClass("is-section-menu-open", open);
+    (_b3 = this.rootEl) == null ? void 0 : _b3.toggleClass("is-section-menu-open", open);
+    const added = open ? ((_c3 = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _c3 : 0) - before : 0;
+    (_d3 = this.rootEl) == null ? void 0 : _d3.style.setProperty("--nf-section-menu-height", `${added}px`);
     (_e3 = this.sectionTriggerEl) == null ? void 0 : _e3.setAttribute("aria-expanded", String(open));
   }
   /** The section switcher, opened by clicking the binder icon — a port of titleForge's

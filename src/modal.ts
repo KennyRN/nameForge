@@ -920,7 +920,7 @@ export class NameForgeModal extends Modal {
 
     const optionsList = root.createDiv({ cls: "nameforge-modal__options-list" });
 
-    const createPacksRow = optionsList.createDiv({ cls: "nameforge-modal__option-row" });
+    const createPacksRow = optionsList.createDiv({ cls: "nameforge-modal__option-row nameforge-modal__pack-row" });
     // The binder icon doubles as the section switcher's trigger, as in titleForge.
     const sectionTrigger = createPacksRow.createSpan({
       cls: "nameforge-modal__icon-decoration nameforge-modal__icon-decoration--lg nameforge-modal__icon-decoration--clickable",
@@ -1122,9 +1122,12 @@ export class NameForgeModal extends Modal {
     this.setSectionMenuOpen(!this.isSectionMenuOpen);
   }
 
-  /** Opens/closes the section switcher. While open, the results box gives up exactly the height
-   * the menu adds (measured, so gaps/margins in modal vs panel mode are included) via
-   * --nf-section-menu-height, so the modal itself doesn't grow. */
+  /** Opens/closes the section switcher. While open, the is-section-menu-open class hides every
+   * control between the pack row and the results (CSS only, so each control's own shown/hidden
+   * state is untouched and comes straight back on close). --nf-section-menu-height is the net
+   * change in the options list's height (measured, so gaps/margins in modal vs panel mode are
+   * included) and may be negative: the results pane shrinks when the menu is taller than the
+   * controls it replaces and grows when it's shorter, so the modal itself keeps its size. */
   private setSectionMenuOpen(open: boolean) {
     const menu = this.sectionMenuEl;
     if (!menu) return;
@@ -1137,9 +1140,9 @@ export class NameForgeModal extends Modal {
       this.renderSectionMenu();
     }
     menu.toggle(open);
-    const added = open ? Math.max(0, (optionsList?.offsetHeight ?? 0) - before) : 0;
-    this.rootEl?.style.setProperty("--nf-section-menu-height", `${added}px`);
     this.rootEl?.toggleClass("is-section-menu-open", open);
+    const added = open ? (optionsList?.offsetHeight ?? 0) - before : 0;
+    this.rootEl?.style.setProperty("--nf-section-menu-height", `${added}px`);
     this.sectionTriggerEl?.setAttribute("aria-expanded", String(open));
   }
 

@@ -496,8 +496,16 @@ body .nameforge-modal .nameforge-modal__icon-action:disabled:hover {
   border-radius: var(--radius-m, 8px);
 }
 
-/* While the section menu is open the results box shrinks by the menu's own measured height
-   (setSectionMenuOpen), so the modal keeps its size rather than growing to fit the menu. */
+/* While the section menu is open everything between the pack row and the results is hidden by
+   class (not .hide()), so closing restores each control's own state. The selector's specificity
+   beats the controls' own display rules. */
+.nameforge-modal.is-section-menu-open .nameforge-modal__options-list > :not(.nameforge-modal__pack-row):not(.nameforge-modal__section-menu) {
+  display: none;
+}
+
+/* --nf-section-menu-height (setSectionMenuOpen) is the net change in the options list's height,
+   negative when the menu is shorter than the controls it hides, so the results box keeps its
+   bottom edge and the modal keeps its size. */
 .nameforge-modal.is-section-menu-open .nameforge-modal__results-list,
 .nameforge-modal.is-second-box-open .nameforge-modal__results-list {
   height: calc(var(--nf-results-height) - var(--nf-section-menu-height, 0px) - var(--nf-second-box-height, 0px));
