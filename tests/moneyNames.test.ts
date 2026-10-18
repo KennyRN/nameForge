@@ -455,3 +455,362 @@ test("§8.7: nicknames: plurals stay plural, the coin's emblem is named, and a g
   };
   assert.ok(share("grand") < share("any") * 0.5, `${share("grand")} ${share("any")}`);
 });
+
+// ── §16.6 Series ────────────────────────────────────────────────────────────
+
+import { readFileSync } from "node:fs";
+import { countText, findMoneyLadder, MONEY_LADDERS, moneyHasLadder, moneyLaddersFor, SERIES_KINDS } from "../src/money/engine";
+
+const TIER_ORDER = ["h", "m", "l"];
+
+test("§16.6: a coinage has 3 to 5 coins, tiers that never rise, and no emblem twice", () => {
+  const sizes = new Set<number>();
+  for (const [culture, era] of [["norman-british", "EM"], ["norman-british", "MD"], ["greek-byzantine", "AN"], ["chinese", "MD"], ["general", "ST"], ["norse", "AN"], ["iberian", "EM"]] as const) {
+    for (let seed = 1; seed <= 60; seed++) {
+      const b = generateMoneyNames({ culture, era, kind: "coin", series: "coinage", people: "invented", count: 8, seed });
+      assert.equal(b.notices.length, 0, `${culture} ${era} ${seed}: ${b.notices}`);
+      const coins = b.names;
+      assert.ok(coins.length >= 3 && coins.length <= 5, `${culture} ${era} ${seed}: ${coins.map((n) => n.text)}`);
+      sizes.add(coins.length);
+      const tiers = coins.map((n) => TIER_ORDER.indexOf(n.tier!));
+      assert.ok(tiers.every((t) => t >= 0), coins.map((n) => n.text).join(", "));
+      assert.deepEqual(tiers, [...tiers].sort(), `${culture} ${era} ${seed}: ${coins.map((n) => `${n.text} ${n.tier}`)}`);
+      assert.equal(coins[0].tier, "h");
+      assert.equal(coins[coins.length - 1].tier, "l");
+      const emblems = coins.flatMap((n) => n.words.filter((w) => w.pool === "coinEmblem").map((w) => w.word));
+      assert.equal(new Set(emblems).size, emblems.length, coins.map((n) => n.text).join(", "));
+      assert.equal(new Set(coins.map((n) => n.text.toLowerCase())).size, coins.length);
+    }
+  }
+  assert.deepEqual([...sizes].sort(), [3, 4, 5]);
+});
+
+test("§9: a coinage never has more coins than the batch allows", () => {
+  for (const count of [1, 2, 3, 4]) {
+    for (let seed = 1; seed <= 20; seed++) assert.ok(generateMoneyNames({ culture: "general", era: "EM", kind: "coin", series: "coinage", count, seed }).names.length <= count);
+  }
+});
+
+test("§16.6: the place theme draws one town for the whole coinage", () => {
+  let places = 0;
+  for (let seed = 1; seed <= 400 && places < 12; seed++) {
+    const b = generateMoneyNames({ culture: "norman-british", era: "MD", kind: "coin", series: "coinage", people: "invented", count: 8, seed });
+    if (b.theme !== "place") continue;
+    places++;
+    const towns = new Set(b.names.flatMap((n) => n.words.filter((w) => w.pool === "coinWord").map(() => n.text.split(" ")[0])));
+    // A step that took a real name has no town; every other step opens with the same one.
+    const generated = b.names.filter((n) => n.shape === "{town} {coinWord}");
+    assert.ok(generated.length >= 2, b.names.map((n) => n.text).join(", "));
+    assert.equal(new Set(generated.map((n) => n.text.replace(/ \S+$/, ""))).size, 1, b.names.map((n) => n.text).join(", "));
+    assert.ok(towns.size > 0);
+  }
+  assert.ok(places >= 12);
+});
+
+test("§9: a placeholder town reads [place] on every step", () => {
+  for (let seed = 1; seed <= 200; seed++) {
+    const b = generateMoneyNames({ culture: "norman-british", era: "MD", kind: "coin", series: "coinage", count: 8, seed });
+    if (b.theme === "place") {
+      assert.ok(b.names.some((n) => n.text.startsWith("[place] ")));
+      return;
+    }
+  }
+  assert.fail("no place theme in 200 seeds");
+});
+
+test("§16.6: kind Any, batch 8: a currency first, then the coins, a note or token (early modern on) and a nickname", () => {
+  for (const [culture, era] of [["norman-british", "ST"], ["norman-british", "EM"], ["general", "MO"], ["chinese", "EM"], ["roman", "EM"]] as const) {
+    for (let seed = 1; seed <= 40; seed++) {
+      const b = generateMoneyNames({ culture, era, series: "coinage", count: 8, seed });
+      const kinds = b.names.map((n) => n.kind);
+      assert.equal(kinds[0], "currency", `${culture} ${era} ${seed}: ${kinds}`);
+      assert.equal(kinds[kinds.length - 1], "nickname", `${culture} ${era} ${seed}: ${b.names.map((n) => n.text)}`);
+      const coins = kinds.filter((k) => k === "coin").length;
+      assert.ok(coins >= 3 && coins <= 5, `${kinds}`);
+      assert.deepEqual(kinds.slice(1, 1 + coins), Array(coins).fill("coin"));
+      assert.ok(["paper", "scrip"].includes(kinds[kinds.length - 2]), `${culture} ${era} ${seed}: ${kinds}`);
+      assert.ok(b.names.length <= 8);
+    }
+  }
+});
+
+test("§9: before the early modern era a kind-Any coinage has no note or token; under 6 names, no currency", () => {
+  for (let seed = 1; seed <= 30; seed++) {
+    const b = generateMoneyNames({ culture: "roman", era: "AN", series: "coinage", count: 8, seed });
+    assert.ok(!b.names.some((n) => n.kind === "paper" || n.kind === "scrip"));
+    assert.equal(b.names[0].kind, "currency");
+    assert.equal(b.names[b.names.length - 1].kind, "nickname");
+    assert.ok(!generateMoneyNames({ culture: "roman", era: "EM", series: "coinage", count: 5, seed }).names.some((n) => n.kind === "currency"));
+  }
+});
+
+test("§9: series is for Any, coins, early and goods money; other kinds stay each one separate", () => {
+  assert.deepEqual(SERIES_KINDS, [undefined, "coin", "early", "goods"]);
+  for (const kind of ["paper", "scrip", "currency", "nickname"] as MoneyKind[]) {
+    const a = generateMoneyNames({ culture: "norman-british", era: "ST", kind, series: "coinage", count: 6, seed: 3 });
+    const b = generateMoneyNames({ culture: "norman-british", era: "ST", kind, series: "separate", count: 6, seed: 3 });
+    assert.deepEqual(a.names, b.names, kind);
+  }
+});
+
+test("§9: early and goods money make a coinage from their own shapes", () => {
+  for (const [culture, era, kind] of [["norse", "AN", "early"], ["chinese", "MD", "early"], ["west-african", "EM", "goods"], ["aztec", "EM", "goods"]] as const) {
+    const b = generateMoneyNames({ culture, era, kind, series: "coinage", count: 8, seed: 4 });
+    assert.ok(b.names.length >= 2 && b.names.every((n) => n.kind === kind), `${culture}: ${b.names.map((n) => n.text)}`);
+  }
+});
+
+test("§9: the value choice is for separate names; a coinage spans every tier", () => {
+  const b = generateMoneyNames({ culture: "norman-british", era: "EM", kind: "coin", series: "coinage", value: "high", count: 8, seed: 9 });
+  assert.ok(b.names.some((n) => n.tier === "l"));
+});
+
+// ── §16.7 Values ────────────────────────────────────────────────────────────
+
+const BRIEF = readFileSync("docs/money-and-coins-brief.md", "utf8").split("\n");
+const section = BRIEF.slice(BRIEF.findIndex((l) => l.startsWith("### 10.2")), BRIEF.findIndex((l) => l.startsWith("### 10.3")));
+const BRIEF_ROWS = new Map<string, { source: string; parts: string[] }>();
+const BRIEF_V = new Map<string, number[]>();
+for (const l of section) {
+  const row = l.match(/^\| `([a-z0-9-]+)` \| (.+?) \| (.+) \|$/);
+  if (row && row[1] !== "Key") BRIEF_ROWS.set(row[1], { source: row[2].trim(), parts: row[3].split(" · ") });
+  const v = l.match(/^\| ([a-z0-9-]+) \| ([0-9, ]+) \|$/);
+  if (v) BRIEF_V.set(v[1], v[2].split(",").map((x) => Number(x)));
+}
+
+test("§16.7: the ladder table is the brief's: 42 ladders, their sources, step names, loans and v values", () => {
+  assert.equal(MONEY_LADDERS.length, 42);
+  assert.equal(BRIEF_ROWS.size, 42);
+  for (const l of MONEY_LADDERS) {
+    const row = BRIEF_ROWS.get(l.key)!;
+    assert.ok(row, l.key);
+    assert.equal(l.source, row.source, l.key);
+    assert.deepEqual(l.steps.map((s) => s.v), BRIEF_V.get(l.key), l.key);
+    assert.equal(l.steps.length, row.parts.length, l.key);
+    row.parts.forEach((part, i) => {
+      const m = part.match(/^([^[=(]+?)(?: \[([^\]]+)\])?(?: \([^)]*\))?(?: = .+)?$/)!;
+      assert.equal(l.steps[i].n, m[1].trim(), `${l.key} step ${i}`);
+      // A loan written on the step, or inline in the tail above ("100 Ounces [Ore]").
+      const above = i > 0 ? row.parts[i - 1].match(/ = [\d,]+ .+? \[([^\]]+)\]$/)?.[1] : undefined;
+      assert.equal(l.steps[i].loan, m[2] ?? above, `${l.key} step ${i}`);
+    });
+  }
+});
+
+test("§16.7: every ladder: v strictly decreasing, the lowest is 1, every printed value a whole number, tiers never rise", () => {
+  for (const l of MONEY_LADDERS) {
+    const v = l.steps.map((s) => s.v);
+    assert.equal(v[v.length - 1], 1, l.key);
+    for (let i = 0; i < v.length - 1; i++) {
+      assert.ok(v[i] > v[i + 1], `${l.key} step ${i}`);
+      // The unit is the next step down when it divides, else the largest lower one that does.
+      let j = i + 1;
+      while (v[i] % v[j] !== 0) j++;
+      assert.ok(Number.isInteger(v[i] / v[j]) && v[i] / v[j] >= 2, `${l.key} step ${i}`);
+    }
+    const t = l.steps.map((s) => TIER_ORDER.indexOf(s.tier));
+    assert.deepEqual(t, [...t].sort(), l.key);
+  }
+});
+
+/** The (culture, era) cell a ladder lives in, and a kind that serves it. */
+function cellOf(key: string): { culture: string; era: RouteEra } {
+  // The decimal ladder's own names appear before the near future; take its generated cell.
+  if (key === "decimal") return { culture: "general", era: "NF" };
+  for (const [culture, eras] of Object.entries(MONEY_DATA.ladderCells)) for (const [era, keys] of Object.entries(eras)) if (keys.includes(key)) return { culture, era: era as RouteEra };
+  throw new Error(`no cell for ${key}`);
+}
+
+test("§16.7: the printed values match the brief exactly when every step takes its real name", () => {
+  for (const l of MONEY_LADDERS) {
+    const row = BRIEF_ROWS.get(l.key)!;
+    // The brief's own text: "Name = n Plural".
+    const expected = row.parts.map((part) => {
+      const m = part.match(/^([^[=(]+?)(?: \[[^\]]+\])?(?: \([^)]*\))?(?: = ([\d,]+) (.+?)(?: \[[^\]]+\])?)?$/)!;
+      return m[2] ? `${m[1].trim()} (${m[2]} ${m[3]})` : m[1].trim();
+    });
+    const { culture, era } = cellOf(l.key);
+    const b = generateMoneyNames({ culture, era, series: "values", ladder: l.key, realShare: 1, words: "translated", count: 12, seed: 5 });
+    assert.equal(b.ladder, l.key);
+    const lines = b.names.filter((n) => n.step !== undefined).map((n) => n.text);
+    assert.deepEqual(lines, expected, l.key);
+    assert.equal(b.notices[0], `Values: ${l.source}.`);
+  }
+});
+
+test("§10.5: the example: Gold Lion (20 Silver Harts), with the ladder's source under the batch", () => {
+  const b = generateMoneyNames({ culture: "norman-british", era: "MD", series: "values", ladder: "english-md", realShare: 1, kind: "coin", count: 8, seed: 1 });
+  assert.deepEqual(
+    b.names.map((n) => n.text),
+    ["Noble (20 Groats)", "Groat (4 Pence)", "Penny (4 Farthings)", "Farthing"],
+  );
+  assert.deepEqual(b.notices, ["Values: Medieval English coinage (1351–1464)."]);
+});
+
+test("§10.5: a generated step's name is used in the value of the step above it", () => {
+  let checked = 0;
+  for (const l of MONEY_LADDERS) {
+    const { culture, era } = cellOf(l.key);
+    if (l.decimal) continue;
+    for (let seed = 1; seed <= 6; seed++) {
+      const b = generateMoneyNames({ culture, era, series: "values", ladder: l.key, realShare: 0, count: 12, seed });
+      const steps = b.names.filter((n) => n.step !== undefined);
+      assert.equal(steps.length, l.steps.length, `${l.key}: ${b.names.map((n) => n.text)}`);
+      steps.forEach((n, i) => {
+        assert.ok(!n.real, l.key);
+        if (i === steps.length - 1) return assert.equal(n.value, undefined);
+        let j = i + 1;
+        while (l.steps[i].v % l.steps[j].v !== 0) j++;
+        assert.equal(n.value, `${countText(l.steps[i].v / l.steps[j].v)} ${pluralName(steps[j].name)}`, `${l.key}: ${n.text}`);
+        assert.equal(n.text, `${n.name} (${n.value})`);
+        checked++;
+      });
+    }
+  }
+  assert.ok(checked > 200);
+});
+
+test("§10.4: a generated step takes the ladder's tier and metal", () => {
+  const seen = new Set<string>();
+  for (let seed = 1; seed <= 60; seed++) {
+    const b = generateMoneyNames({ culture: "norman-british", era: "ST", kind: "coin", series: "values", ladder: "english-st", realShare: 0, people: "invented", count: 8, seed });
+    const tiers = b.names.map((n) => n.tier);
+    assert.deepEqual(tiers, ["h", "m", "m", "l", "l"]);
+    b.names.forEach((n) => {
+      const metals = n.words.filter((w) => w.pool === "coinMetal").map((w) => w.word);
+      for (const m of metals) seen.add(m);
+      if (n.tier === "h" && metals.length > 0) assert.equal(metals[0], "Gold", n.text);
+      if (n.tier === "m" && metals.length > 0) assert.equal(metals[0], "Silver", n.text);
+    });
+  }
+  assert.ok(seen.has("Gold") && seen.has("Silver"));
+});
+
+test("§10.3: real names share is about 40% of a valued coinage's steps", () => {
+  let real = 0;
+  let total = 0;
+  for (let seed = 1; seed <= 300; seed++) {
+    const b = generateMoneyNames({ culture: "norman-british", era: "ST", kind: "coin", series: "values", ladder: "english-st", count: 8, seed });
+    for (const n of b.names) {
+      total++;
+      if (n.real) real++;
+    }
+  }
+  assert.ok(real / total > 0.34 && real / total < 0.46, String(real / total));
+});
+
+test("§10.3: loanwords print a ladder step's loan form 70% of the time", () => {
+  let loans = 0;
+  let eligible = 0;
+  for (let seed = 1; seed <= 400; seed++) {
+    const b = generateMoneyNames({ culture: "roman", era: "AN", kind: "coin", series: "values", ladder: "roman-augustan", realShare: 1, words: "loanwords", count: 8, seed });
+    // The lowest step, Quarter, has no loan form.
+    for (const n of b.names.filter((x) => x.step !== undefined && x.step < 4)) {
+      eligible++;
+      if (n.loan) loans++;
+      if (n.loan) assert.ok(["Aureus", "Denarius", "Sesterce", "As"].includes(n.name), n.name);
+    }
+  }
+  assert.ok(loans / eligible > 0.62 && loans / eligible < 0.78, String(loans / eligible));
+  // Translated names never show a loan.
+  const t = generateMoneyNames({ culture: "roman", era: "AN", kind: "coin", series: "values", ladder: "roman-augustan", realShare: 1, count: 8, seed: 2 });
+  assert.deepEqual(t.names.map((n) => n.name), ["Golden", "Ten-Piece", "Two-and-a-Half", "Unit", "Quarter"]);
+});
+
+test("§10.3: which ladder: the cell table, 50/50 where a cell holds two, and none where a dash stands", () => {
+  const cells = MONEY_DATA.ladderCells;
+  assert.deepEqual(cells["norman-british"].ST, ["english-st"]);
+  assert.deepEqual(cells["norman-british"].MO, ["english-st", "uk-decimal"]);
+  assert.deepEqual(cells.roman.AN, ["roman-augustan", "roman-late"]);
+  assert.deepEqual(cells.slavic.AN, []);
+  assert.deepEqual(cells.chinese.NF, ["decimal"]);
+  assert.deepEqual(cells.chinese.IS, ["decimal"]);
+  const picks = new Map<string, number>();
+  for (let seed = 1; seed <= 400; seed++) {
+    const key = generateMoneyNames({ culture: "norman-british", era: "MO", series: "values", count: 8, seed }).ladder!;
+    picks.set(key, (picks.get(key) ?? 0) + 1);
+  }
+  assert.ok((picks.get("english-st") ?? 0) > 150 && (picks.get("uk-decimal") ?? 0) > 150, JSON.stringify([...picks]));
+});
+
+test("§16.7: for every culture × era × kind cell marked – in the ladder table, 'with values' is not offered and runs as a coinage", () => {
+  let dashes = 0;
+  for (const c of MONEY_CULTURES) {
+    for (const era of ERAS) {
+      const cell = MONEY_DATA.ladderCells[c.key][era];
+      for (const kind of [undefined, "coin", "early", "goods"] as (MoneyKind | undefined)[]) {
+        const ladders = moneyLaddersFor(c.key, era, kind);
+        assert.equal(moneyHasLadder(c.key, era, kind), ladders.length > 0);
+        if (cell.length === 0) {
+          dashes++;
+          assert.equal(ladders.length, 0, `${c.key} ${era} ${kind}`);
+          const b = generateMoneyNames({ culture: c.key, era, kind, series: "values", count: 8, seed: 2 });
+          assert.equal(b.ladder, undefined);
+          assert.ok(!b.notices.some((n) => n.startsWith("Values:")), `${c.key} ${era} ${kind}`);
+        }
+      }
+    }
+  }
+  assert.ok(dashes > 20);
+});
+
+test("§10.3: the ladder serves its kinds: coin ladders Any and coins, goods ladders Any and goods, ingot ladders Any, coins and early", () => {
+  const serves = (key: string) => findMoneyLadder(key)!.serves;
+  assert.deepEqual(serves("english-st"), ["any", "coin"]);
+  for (const k of ["deben-kite", "irish-cattle", "icelandic-homespun", "cowrie-lagos", "aztec-cacao", "japanese-rice"]) assert.deepEqual(serves(k), ["any", "goods"], k);
+  for (const k of ["mesopotamian", "yuan-ingot"]) assert.deepEqual(serves(k), ["any", "coin", "early"], k);
+  assert.deepEqual(moneyLaddersFor("egyptian", "AN", "coin").map((l) => l.key), []);
+  assert.deepEqual(moneyLaddersFor("egyptian", "AN", "goods").map((l) => l.key), ["deben-kite"]);
+  assert.deepEqual(moneyLaddersFor("arabic-persian", "AN", "early").map((l) => l.key), ["mesopotamian"]);
+  assert.deepEqual(moneyLaddersFor("arabic-persian", "AN", "coin").map((l) => l.key), ["achaemenid", "mesopotamian"]);
+  assert.deepEqual(moneyLaddersFor("norman-british", "ST", "paper"), []);
+});
+
+test("§10.3: a goods ladder in a valued coinage uses goods shapes; an ingot ladder early shapes", () => {
+  const goods = generateMoneyNames({ culture: "west-african", era: "EM", kind: "goods", series: "values", realShare: 0, count: 8, seed: 3 });
+  assert.equal(goods.ladder, "cowrie-lagos");
+  assert.ok(goods.names.every((n) => n.kind === "goods"));
+  assert.deepEqual(goods.names.map((n) => n.tier), ["h", "m", "l", "l"]);
+  const ingots = generateMoneyNames({ culture: "steppe", era: "MD", kind: "early", series: "values", realShare: 0, count: 8, seed: 3 });
+  assert.equal(ingots.ladder, "yuan-ingot");
+  assert.ok(ingots.names.every((n) => n.kind === "early"));
+});
+
+test("§10.3: decimal ladders take the culture's own names, the near future and beyond generate them", () => {
+  const bantu = generateMoneyNames({ culture: "bantu", era: "MO", kind: "coin", series: "values", ladder: "decimal", realShare: 1, count: 8, seed: 1 });
+  assert.ok(["Mountain", "River"].some((u) => bantu.names[0].name === u) || bantu.names[0].name === "Shilling" || bantu.names[0].name === "Dawn" || bantu.names[0].name === "Rain", bantu.names[0].text);
+  const french = generateMoneyNames({ culture: "french", era: "MO", kind: "coin", series: "values", ladder: "decimal", realShare: 1, count: 8, seed: 1 });
+  assert.equal(french.names[2].name, "Hundredth");
+  const nf = generateMoneyNames({ culture: "general", era: "NF", kind: "coin", series: "values", ladder: "decimal", realShare: 1, count: 8, seed: 1 });
+  assert.deepEqual(nf.names.map((n) => n.text), ["Unit (10 Tenths)", "Tenth (10 Hundredths)", "Hundredth"]);
+});
+
+test("§10.1: no ratio is invented: every printed count comes from a ladder's v values", () => {
+  const allowed = new Set<number>();
+  for (const l of MONEY_LADDERS) for (let i = 0; i < l.steps.length - 1; i++) for (let j = i + 1; j < l.steps.length; j++) if (l.steps[i].v % l.steps[j].v === 0) allowed.add(l.steps[i].v / l.steps[j].v);
+  for (const c of MONEY_CULTURES) {
+    for (const era of ERAS) {
+      for (let seed = 1; seed <= 3; seed++) {
+        const b = generateMoneyNames({ culture: c.key, era, series: "values", count: 10, seed });
+        for (const n of b.names) {
+          if (n.value === undefined) continue;
+          const count = Number(n.value.split(" ")[0].replace(/,/g, ""));
+          assert.ok(allowed.has(count), `${c.key} ${era}: ${n.text}`);
+        }
+      }
+    }
+  }
+});
+
+test("§10.5: the source line is a notice, never a name", () => {
+  const b = generateMoneyNames({ culture: "norman-better" as never, era: "ST", series: "values", count: 8, seed: 1 });
+  assert.ok(!b.names.some((n) => n.text.startsWith("Values:")));
+  assert.equal(b.notices.filter((n) => n.startsWith("Values:")).length, 1);
+});
+
+test("§10.5: figures take a comma for thousands", () => {
+  assert.equal(countText(1000), "1,000");
+  assert.equal(countText(24000), "24,000");
+  assert.equal(countText(648000), "648,000");
+  assert.equal(countText(999), "999");
+});

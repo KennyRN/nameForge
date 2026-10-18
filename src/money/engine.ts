@@ -276,12 +276,22 @@ export interface MoneyName {
   loan?: boolean;
   /** §10.5: the step's value in the step below, in a valued coinage. */
   value?: string;
+  /** §10: the step's place in a valued coinage's ladder (0 is the highest). */
+  step?: number;
+  /** §10: a step that took its real name, and its plural where the ladder gives one. */
+  real?: boolean;
+  pl?: string;
 }
 
 export interface MoneyBatch {
   names: MoneyName[];
   seed: number;
+  /** The shortfall notice, and a valued coinage's source line (§10.5): neither is a name. */
   notices: string[];
+  /** The ladder a valued coinage used. */
+  ladder?: string;
+  /** The theme a coinage drew (§9). */
+  theme?: string;
 }
 
 // ── Drawing ─────────────────────────────────────────────────────────────────
@@ -317,6 +327,8 @@ interface Ctx {
   used?: Set<string>;
   emblemFilter?: (w: string) => boolean;
   coinWordFilter?: (w: string) => boolean;
+  /** §9: a fraction in a coinage lowers the coin above it (Half-Crown below Crown). */
+  lowerOnly?: boolean;
 }
 
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
@@ -519,7 +531,7 @@ function coinWord(ctx: Ctx): string | undefined {
 function fraction(ctx: Ctx): string | undefined {
   const coins = cachedPool(ctx, "coinWord");
   const e = pickWeighted(
-    drawable(ctx, "coinFraction", (f) => !ctx.want || coins.some(([c]) => tiersReaching(c.v, f.ts ?? 0, ctx.want!).length > 0)),
+    drawable(ctx, "coinFraction", (f) => (!ctx.lowerOnly || f.ts === 1) && (!ctx.want || coins.some(([c]) => tiersReaching(c.v, f.ts ?? 0, ctx.want!).length > 0))),
     ctx.rng,
   );
   if (!e) return undefined;
@@ -720,9 +732,304 @@ function plans(ctx: Ctx, kind: MoneyKind, only?: string): [MoneyShape, number][]
     .filter(([, w]) => w > 0);
 }
 
+// ── Ladders (§10.3) ─────────────────────────────────────────────────────────
+
+const LADDER_BY_KEY = new Map(MONEY_LADDERS.map((l) => [l.key, l]));
+export const findMoneyLadder = (key: string | undefined) => (key ? LADDER_BY_KEY.get(key) : undefined);
+
+/** §10.3: the kinds a coinage can be made for (the others are each one separate). */
+export const SERIES_KINDS: (MoneyKind | undefined)[] = [undefined, "coin", "early", "goods"];
+export const kindHasSeries = (kind: MoneyKind | undefined) => SERIES_KINDS.includes(kind);
+
+/** §10.3: the ladders the table offers for a culture, era and kind; none means "with values" is not offered. */
+export function moneyLaddersFor(culture: string, era: RouteEra, kind?: MoneyKind): MoneyLadder[] {
+  if (!kindHasSeries(kind)) return [];
+  const serve = kind ?? "any";
+  return (MONEY_DATA.ladderCells[culture]?.[era] ?? []).map((k) => LADDER_BY_KEY.get(k)!).filter((l) => l.serves.includes(serve as "any"));
+}
+export const moneyHasLadder = (culture: string, era: RouteEra, kind?: MoneyKind) => moneyLaddersFor(culture, era, kind).length > 0;
+
+/** §10.4: the shapes a ladder's generated steps draw from: goods ladders goods shapes, ingot ladders early shapes, the rest coins. */
+const ladderKind = (l: MoneyLadder): MoneyKind => (l.serves.includes("goods") ? "goods" : l.serves.includes("early") ? "early" : "coin");
+
+/** §10.5: figures with a comma for thousands. */
+export const countText = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 // ── Batches ─────────────────────────────────────────────────────────────────
 
-/** §6: a batch of unique money names. */
+interface Session {
+  rng: () => number;
+  options: MoneyOptions;
+  culture: MoneyCulture;
+  era: RouteEra;
+  count: number;
+  chosen?: MoneyKind;
+  want?: ValueTier;
+  tone: GroupToneChoice;
+  base: Ctx;
+  newCtx: (kind: MoneyKind, extra?: Partial<Ctx>) => Ctx;
+  acceptable: (text: string, kind: MoneyKind) => boolean;
+  build: (kind: MoneyKind) => MoneyName | undefined;
+  /** Names already used in the batch, lower case. */
+  seen: Set<string>;
+  /** The theme the coinage drew. */
+  theme?: string;
+}
+
+const animalEmblem = (culture: string) => {
+  const animals = new Set([...MONEY_DATA.lists.animalEmblems, ...cultureAnimals(culture)]);
+  return (w: string) => animals.has(w);
+};
+
+/** §9 themes → the coin shapes their steps use (all from §8.1). */
+const THEME_SHAPES: Record<string, string[]> = {
+  beasts: ["{metal} {emblem}", "{emblem} {coinWord}"],
+  emblems: ["{metal} {emblem}", "{emblem} {coinWord}"],
+  rulers: ["{figure:poss} {coinWord}", "{figure:poss} Gold", "{metal} {coinWord}"],
+  place: ["{town} {coinWord}"],
+  holy: ["{holy} {coinWord}", "{metal} {emblem}", "{emblem} {coinWord}"],
+  gods: ["{god:poss} {emblem}"],
+};
+const FRACTION_SHAPE = "{fraction}{coinWord}";
+
+/** §9: the theme a coinage draws: only those the culture and era can make. */
+function drawTheme(S: Session): string {
+  const ctx = S.newCtx("coin");
+  const christian = cultureAllowed(["christian"], S.culture.key, S.era);
+  const names = cachedPool(ctx, "moneyFixed:coin").some(([e]) => !e.fx);
+  const options = MONEY_DATA.series.themes.filter((t) => {
+    if (t.key === "holy") return christian;
+    if (t.key === "gods") return S.era === "AN" && (findVesselCulture(S.culture.key)?.gods?.list ?? []).length > 0 && THEME_SHAPES.gods.some((p) => ALL_SHAPES.some((s) => s.p === p && shapeWeight(ctx, s) > 0));
+    if (t.key === "rulers") return !S.culture.moneyOnly || (S.culture.figure ?? []).length > 0;
+    if (t.key === "names") return names;
+    return true;
+  });
+  return pickWeighted(options.map((t): [string, number] => [t.key, t.w]), S.rng)!;
+}
+
+interface Layout {
+  theme?: string;
+  town?: string;
+  used: Set<string>;
+  prev?: { coinWord?: string; tier?: ValueTier };
+  fractionUsed: boolean;
+}
+
+/** §9: one generated step at a tier (and a metal): the theme's shapes, a fraction directly below its coin, no word twice. */
+function generatedStep(S: Session, kind: MoneyKind, tier: ValueTier, lay: Layout, exactMetal?: string): MoneyName | undefined {
+  for (let attempt = 0; attempt < 40; attempt++) {
+    const extra: Partial<Ctx> = { want: tier, exactMetal, used: lay.used, town: lay.town, batchEmblems: S.base.batchEmblems };
+    const animal = animalEmblem(S.culture.key);
+    if (kind === "coin") {
+      if (lay.theme === "beasts") extra.emblemFilter = animal;
+      else if (lay.theme === "emblems") extra.emblemFilter = (w) => !animal(w);
+      else if (lay.theme === "holy") extra.emblemFilter = (w) => MONEY_DATA.lists.holyEmblems.includes(w);
+    }
+    // When a theme runs out of words (a culture with three coin words can't name five steps from them), the step falls back to beasts.
+    const relaxed = attempt >= 20;
+    if (relaxed && kind === "coin" && lay.theme) {
+      extra.emblemFilter = undefined;
+      extra.town = undefined;
+    }
+    const ctx = S.newCtx(kind, extra);
+    const theme = relaxed ? (kind === "coin" ? "beasts" : undefined) : lay.theme;
+    const wanted = kind === "coin" && theme && theme !== "names" ? THEME_SHAPES[theme] ?? [] : undefined;
+    const pool = ALL_SHAPES.filter((x) => x.kind === kind && (wanted ? wanted.includes(x.p) : theme === "names" ? x.p === "{fixed}" && !x.fx : true));
+    const shapes: [MoneyShape, number][] = pool.map((x): [MoneyShape, number] => [x, stepShapeWeight(ctx, x, exactMetal)]).filter(([, w]) => w > 0);
+    // A fraction lowers the coin of the step directly above it by one tier, once per coinage.
+    if (kind === "coin" && lay.theme !== "names" && !lay.fractionUsed && lay.prev?.coinWord && lay.prev.tier && shiftTier(lay.prev.tier, 1) === tier && !exactMetal) {
+      const f = ALL_SHAPES.find((x) => x.kind === "coin" && x.p === FRACTION_SHAPE)!;
+      const w = shapeWeight(ctx, f);
+      if (w > 0) shapes.push([f, w]);
+    }
+    const s = pickWeighted(shapes, S.rng);
+    if (!s) {
+      // Nothing in the theme fits this tier: this step goes to the fallback.
+      if (!relaxed && kind === "coin" && lay.theme) {
+        attempt = 19;
+        continue;
+      }
+      return undefined;
+    }
+    ctx.shape = s;
+    if (s.p === FRACTION_SHAPE) {
+      ctx.coinWordFilter = (w) => w === lay.prev!.coinWord;
+      ctx.lowerOnly = true;
+    }
+    const raw = renderPattern(ctx, s.p);
+    if (!raw) continue;
+    const text = moneyCapitals(raw);
+    if (!S.acceptable(text, kind) || S.seen.has(text.toLowerCase())) continue;
+    for (const w of ctx.log) {
+      if (w.pool === "coinEmblem") lay.used.add(`emblem:${w.word}`);
+      if (w.pool === "coinWord" && !ctx.shift) lay.used.add(`coin:${w.word}`);
+    }
+    if (s.p === FRACTION_SHAPE) lay.fractionUsed = true;
+    lay.prev = { coinWord: ctx.log.find((w) => w.pool === "coinWord")?.word, tier };
+    for (const e of ctx.emblems) if (kind === "coin" && !S.base.batchEmblems.includes(e)) S.base.batchEmblems.push(e);
+    const tones = new Set<GroupTone>([...(s.t ?? []), ...ctx.drawn]);
+    return { text, name: text, kind, shape: s.p, tones: GROUP_TONES.filter((t) => tones.has(t)), words: ctx.log, tier, ...(ctx.loan ? { loan: true } : {}) };
+  }
+  return undefined;
+}
+
+/** A step's shape weight: a valued ladder's metal rules out shapes that name another metal. */
+function stepShapeWeight(ctx: Ctx, s: MoneyShape, exactMetal?: string): number {
+  if (exactMetal && s.tier) {
+    const gold = /Gold/.test(s.p);
+    if (!((exactMetal === "Gold" && gold) || (exactMetal === "low" && !gold))) return 0;
+  }
+  return shapeWeight(ctx, s);
+}
+
+/** §9: a step that takes the culture's real name for its tier. */
+function realStep(S: Session, kind: MoneyKind, tier: ValueTier, lay: Layout): MoneyName | undefined {
+  const shape = ALL_SHAPES.find((x) => x.kind === kind && x.p === "{fixed}" && !x.fx);
+  if (!shape) return undefined;
+  for (let attempt = 0; attempt < 10; attempt++) {
+    const ctx = S.newCtx(kind, { want: tier, used: lay.used, town: lay.town });
+    ctx.shape = shape;
+    if (shapeWeight(ctx, shape) <= 0) return undefined;
+    const raw = renderPattern(ctx, shape.p);
+    if (!raw) continue;
+    const text = moneyCapitals(raw);
+    if (!S.acceptable(text, kind) || S.seen.has(text.toLowerCase())) continue;
+    return { text, name: text, kind, shape: shape.p, tones: [], words: ctx.log, tier, ...(ctx.loan ? { loan: true } : {}) };
+  }
+  return undefined;
+}
+
+/** §9 rule: "Double" above the coin it names, as a fraction below. Not drawn here: it needs the step below. */
+
+/** §9: the extras after the coins in a kind-Any coinage: one paper or scrip name (early modern on), then one nickname. */
+function coinageExtras(S: Session, room: number): MoneyName[] {
+  const out: MoneyName[] = [];
+  const take = (n: MoneyName | undefined) => {
+    if (!n || S.seen.has(n.text.toLowerCase())) return false;
+    S.seen.add(n.text.toLowerCase());
+    out.push(n);
+    return true;
+  };
+  if (room > 0 && ROUTE_ERAS.findIndex((e) => e.code === S.era) >= 2) {
+    const kinds = (["paper", "scrip"] as MoneyKind[]).map((k): [MoneyKind, number] => [k, moneyKindWeight(k, S.culture.key, S.era)]).filter(([, w]) => w > 0);
+    for (let i = 0; i < 6 && out.length === 0 && kinds.length > 0; i++) take(S.build(pickWeighted(kinds, S.rng)!));
+    if (out.length > 0) room--;
+  }
+  if (room > 0 && moneyKindWeight("nickname", S.culture.key, S.era) > 0) for (let i = 0; i < 6; i++) if (take(S.build("nickname"))) break;
+  return out;
+}
+
+/** §9, §10: one money system: the currency first, the coins from highest to lowest, then a note or token and a nickname. */
+function coinage(S: Session, ladder: MoneyLadder | undefined, notices: string[]): MoneyName[] {
+  const names: MoneyName[] = [];
+  let room = S.count;
+  const any = S.chosen === undefined;
+  const add = (n: MoneyName) => {
+    S.seen.add(n.text.toLowerCase());
+    names.push(n);
+  };
+  if (any && S.count >= MONEY_DATA.series.currencyFrom) {
+    const c = S.build("currency");
+    if (c && !S.seen.has(c.text.toLowerCase())) {
+      add(c);
+      room--;
+    }
+  }
+  const kind: MoneyKind = ladder ? ladderKind(ladder) : S.chosen ?? "coin";
+  const lay: Layout = { used: new Set(), fractionUsed: false };
+  const ctx0 = S.newCtx(kind);
+  if (kind === "coin") {
+    lay.theme = S.theme = drawTheme(S);
+    if (lay.theme === "place") lay.town = town(ctx0);
+  }
+  const steps = ladder
+    ? ladder.steps.slice(0, Math.max(0, room))
+    : (() => {
+        const n = Math.min(pickWeighted(MONEY_DATA.series.steps.map(([k, w]): [number, number] => [k, w]), S.rng)!, Math.max(0, room));
+        return MONEY_DATA.series.tiers[String(n)]?.map((tier) => ({ tier })) ?? [];
+      })();
+  const share = S.options.realShare ?? (ladder ? MONEY_DATA.series.realShareValues : MONEY_DATA.series.realShare);
+  const coins: MoneyName[] = [];
+  steps.forEach((step, i) => {
+    let n: MoneyName | undefined;
+    const lad = step as LadderStep;
+    if (ladder) {
+      if (S.rng() < share) n = ladderRealStep(S, ladder, lad, kind, lay);
+    } else if (S.rng() < share) n = realStep(S, kind, lad.tier, lay);
+    if (n) lay.prev = { tier: lad.tier };
+    n ??= generatedStep(S, kind, lad.tier, lay, ladder ? lad.metal : undefined);
+    if (!n) return;
+    if (ladder) n = { ...n, step: i };
+    for (const e of n.words) if (e.pool === "coinEmblem") lay.used.add(`emblem:${e.word}`);
+    S.seen.add(n.text.toLowerCase());
+    coins.push(n);
+  });
+  names.push(...coins);
+  room -= coins.length;
+  if (ladder) applyValues(ladder, coins);
+  if (any) names.push(...coinageExtras(S, room));
+  if (ladder) notices.unshift(`Values: ${ladder.source}.`);
+  return names;
+}
+
+/** §10.4: a ladder step's real name (its loan form 70% of the time with loanwords). Decimal ladders take the culture's own names. */
+function ladderRealStep(S: Session, ladder: MoneyLadder, step: LadderStep, kind: MoneyKind, lay: Layout): MoneyName | undefined {
+  let text = step.n;
+  let loan = false;
+  let pl = step.pl;
+  const words: { pool: string; word: string }[] = [];
+  if (ladder.decimal) {
+    const own = decimalName(S, ladder, step);
+    if (own) {
+      text = own.text;
+      loan = own.loan;
+      pl = undefined;
+      words.push(...own.words);
+    } else if (S.options.realShare !== 1) return undefined;
+  } else if (S.options.words === "loanwords" && step.loan && S.rng() < MONEY_DATA.loanShare) {
+    text = step.loan;
+    loan = true;
+    pl = undefined;
+  }
+  if (S.seen.has(text.toLowerCase())) return undefined;
+  return { text, name: text, kind, shape: "ladder", tones: [], words, tier: step.tier, real: true, ...(loan ? { loan: true } : {}), ...(pl ? { pl } : {}) };
+}
+
+/** §10.3: a decimal ladder's unit from the culture's currency or middle-tier coin name, its hundredth from a "Hundredth"-type name. */
+function decimalName(S: Session, ladder: MoneyLadder, step: LadderStep): { text: string; loan: boolean; words: { pool: string; word: string }[] } | undefined {
+  const index = ladder.steps.indexOf(step);
+  if (index === 1 || (S.era === "NF" || S.era === "IS")) return undefined;
+  const ctx = S.newCtx("coin");
+  const entries: VocabEntry[] = [];
+  const pools = index === 0 ? ["moneyFixed:currency", "moneyFixed:coin"] : ["moneyFixed:coin"];
+  for (const pool of pools) {
+    for (const [e] of cachedPool(ctx, pool)) {
+      if (e.fx || e.w.includes("{")) continue;
+      if (index === 0 ? pool === "moneyFixed:currency" || (e.v ?? []).includes("m") : e.w === "Hundredth") entries.push(e);
+    }
+  }
+  if (entries.length === 0) return undefined;
+  const e = pickOne(entries, S.rng);
+  const loan = S.options.words === "loanwords" && !!e.loan && S.rng() < MONEY_DATA.loanShare;
+  return { text: loan ? e.loan! : e.w, loan, words: [{ pool: "moneyFixed:coin", word: e.w }] };
+}
+
+/** §10.5: each step but the lowest gets its worth in the next step down when the ratio is whole, else in the largest lower step that divides it. */
+function applyValues(ladder: MoneyLadder, coins: MoneyName[]) {
+  const steps = ladder.steps;
+  coins.forEach((n) => {
+    const i = n.step!;
+    if (i >= steps.length - 1) return;
+    let j = i + 1;
+    while (steps[i].v % steps[j].v !== 0) j++;
+    const lower = coins.find((c) => c.step === j);
+    const unit = lower ? pluralName(lower.name, lower.pl) : pluralName(steps[j].n, steps[j].pl);
+    n.value = `${countText(steps[i].v / steps[j].v)} ${unit}`;
+    n.text = `${n.name} (${n.value})`;
+  });
+}
+
+/** §6: a batch of unique money names; a coinage when the series says so (§9, §10). */
 export function generateMoneyNames(options: MoneyOptions): MoneyBatch {
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
@@ -754,7 +1061,9 @@ export function generateMoneyNames(options: MoneyOptions): MoneyBatch {
     emblems: [],
     batchEmblems: [],
   };
-  const newCtx = (kind: MoneyKind, extra: Partial<Ctx> = {}): Ctx => ({ ...base, kind, want: kind === "currency" ? undefined : want, shift: 0, drawn: new Set(), log: [], emblems: [], ...extra });
+  // A coinage spans every tier, so the value choice only applies to separate names.
+  let activeWant = want;
+  const newCtx = (kind: MoneyKind, extra: Partial<Ctx> = {}): Ctx => ({ ...base, kind, want: kind === "currency" ? undefined : activeWant, shift: 0, drawn: new Set(), log: [], emblems: [], ...extra });
 
   const planCache = new Map<string, [MoneyShape, number][]>();
   const plansFor = (kind: MoneyKind): [MoneyShape, number][] => {
@@ -806,6 +1115,25 @@ export function generateMoneyNames(options: MoneyOptions): MoneyBatch {
   };
 
   const seen = new Set<string>();
+  const S: Session = { rng, options, culture, era, count, chosen, want, tone, base, newCtx, acceptable, build, seen };
+
+  // §9, §10: a coinage is one money system; "with values" needs a ladder, else it runs as a coinage.
+  let series: MoneySeries = options.series ?? "separate";
+  if (!kindHasSeries(chosen)) series = "separate";
+  let ladder: MoneyLadder | undefined;
+  if (series === "values") {
+    const candidates = moneyLaddersFor(culture.key, era, chosen);
+    ladder = findMoneyLadder(options.ladder) && candidates.some((l) => l.key === options.ladder) ? findMoneyLadder(options.ladder) : candidates.length > 0 ? pickOne(candidates, rng) : undefined;
+    if (!ladder) series = "coinage";
+  }
+  if (series !== "separate") {
+    activeWant = undefined;
+    planCache.clear();
+    const names = coinage(S, ladder, notices);
+    if (names.length === 0) notices.push("No money system could be made for this culture and era.");
+    return { names, seed, notices, ...(ladder ? { ladder: ladder.key } : {}), ...(S.theme ? { theme: S.theme } : {}) };
+  }
+
   const names: MoneyName[] = [];
   const add = (n: MoneyName | undefined): boolean => {
     if (!n || seen.has(n.text.toLowerCase())) return false;
