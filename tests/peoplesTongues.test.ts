@@ -123,6 +123,14 @@ test("§6.3: a figure, a possessive and a short head word go to the fallback", (
   assert.equal(peopleForms("Saint Aldhelm's", "er")?.people, "the folk of Saint Aldhelm's");
 });
 
+test("§6.3: a placeholder in a name can't be inflected: it goes to the fallback", () => {
+  const forms = peopleForms("Free State of [place]", "er")!;
+  assert.equal(forms.family, "fallback");
+  assert.equal(forms.people, "the folk of [place]");
+  assert.equal(forms.adjective, "[place]");
+  assert.equal(peopleForms("[dynasty]", "er")?.people, "the folk of [dynasty]");
+});
+
 test("§6.3: in the near future and interstellar eras a fallback people is sometimes the {name} colonists", () => {
   const forms = peopleForms("Kepler-452", "fallback", "general", { colonists: true }, "NF")!;
   assert.equal(forms.people, "the Kepler-452 colonists");
@@ -562,4 +570,67 @@ test("§13: the preset round trip, with names and the fall-backs", () => {
   // A name that needs quoting survives.
   const quoted = modulePresetContent({ ...preset, names: ["Port: Saltgate", "Saint Aldhelm's", "#7"] });
   assert.deepEqual(parseModulePreset(quoted, "x").peoples!.names, ["Port: Saltgate", "Saint Aldhelm's", "#7"]);
+});
+
+// ── §15.6 Realms link ───────────────────────────────────────────────────────
+
+import { BIOMES, BRITAIN, findBiome } from "../src/biomes";
+import { generateRealmNames, REALM_DATA } from "../src/realms/engine";
+import { chooseRealm, DEFAULT_REALM_STATE, realmSentence, realmSentenceText } from "../src/realms/sentence";
+import { realmRowsWithPeoples } from "../src/peoples/engine";
+
+const realmLimits = { biomes: [BRITAIN, ...BIOMES], findBiome: (id: string | undefined) => findBiome(id) };
+
+test("§10.1: the peoples link is the realms sentence's last link, off by default, and says nothing in the plain text while off", () => {
+  const segs = realmSentence(DEFAULT_REALM_STATE, realmLimits);
+  const last = segs[segs.length - 1] as { field: string; text: string; title: string; choices: { id: string }[]; current: string };
+  assert.equal(last.field, "peoples");
+  assert.equal(last.text, "without their peoples");
+  assert.equal(last.current, "off");
+  assert.equal(last.title, "Add each realm's people and adjective, from peoples and tongues.");
+  assert.deepEqual(last.choices.map((c) => c.id), ["off", "on"]);
+  assert.equal(segs.filter((s) => typeof s === "object").at(-1), last);
+  const on = chooseRealm(DEFAULT_REALM_STATE, "peoples", "on", realmLimits.findBiome);
+  assert.equal(on.peoples, true);
+  assert.match(realmSentenceText(realmSentence(on, realmLimits)), /with placeholders for people and places, with their peoples\.$/);
+  assert.match(realmSentenceText(realmSentence(DEFAULT_REALM_STATE, realmLimits)), /with placeholders for people and places\.$/);
+  assert.equal(chooseRealm(on, "peoples", "off", realmLimits.findBiome).peoples, false);
+});
+
+test("§10.2: realm names are the same with the link on or off, and every row ends – {people}, {adjective}", () => {
+  for (const [culture, era] of [["norse", "medieval"], ["general", "interstellar"], ["chinese", "ancient"], ["steppe", "modern"], ["roman", "earlyModern"]] as const) {
+    const options = { culture, era, namedFor: "anything" as const, output: "short" as const, people: "invented" as const, count: 12, seed: 99 };
+    const off = generateRealmNames(options);
+    const code = REALM_DATA.eras.find((e) => e.key === era)!.code;
+    const on = realmRowsWithPeoples(off.names, off.seed, { culture, era: code, tone: "any" });
+    // Drawing the peoples touches nothing on the realm stream.
+    assert.deepEqual(generateRealmNames(options).names.map((n) => n.text), off.names.map((n) => n.text));
+    assert.equal(on.length, off.names.length);
+    off.names.forEach((n, i) => {
+      assert.ok(on[i].startsWith(`${n.text} – `), on[i]);
+      assert.match(on[i], /^.+ – (the .+|.+), .+$/);
+    });
+    // The same seed gives the same peoples.
+    assert.deepEqual(realmRowsWithPeoples(off.names, off.seed, { culture, era: code, tone: "any" }), on);
+  }
+  const example = realmRowsWithPeoples([{ text: "Free State of Saltgate", short: "Saltgate" }], 5, { culture: "norman-british", era: "MD" })[0];
+  assert.match(example, /^Free State of Saltgate – the Saltgate(rs|men|ians|ites|folk|ish|s|ings)?.*, .+$/);
+});
+
+test("§10.2: realm presets round-trip with peoples on, and presets without the key run as off", () => {
+  const preset = {
+    packName: "Steppe khanates", setting: "", description: "Turkic & Mongol steppe-themed realms.", culture: "steppe", character: "any", era: "medieval",
+    genre: "fantasy" as const, fantastic: false, namedFor: "anything" as const, biome: "homeland", terrain: "any", tone: "any" as const, length: "plain" as const,
+    output: "both" as const, people: "invented" as const,
+  };
+  const on = parseModulePreset(modulePresetContent({ ...preset, peoples: true }), "x");
+  assert.deepEqual(on.realm, { ...preset, peoples: true });
+  assert.deepEqual(on.problems, []);
+  assert.match(modulePresetContent({ ...preset, peoples: true }), /\npeoples: on\n/);
+  const off = parseModulePreset(modulePresetContent(preset), "x");
+  assert.equal(off.realm!.peoples, undefined);
+  assert.match(modulePresetContent(preset), /\npeoples: off\n/);
+  const bare = modulePresetContent(preset).replace(/peoples: off\n/, "");
+  assert.equal(parseModulePreset(bare, "x").realm!.peoples, undefined);
+  assert.equal(parseModulePreset(modulePresetContent({ ...preset, peoples: true }).replace("peoples: on", "peoples: maybe"), "x").problems.length, 1);
 });

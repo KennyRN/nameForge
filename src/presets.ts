@@ -425,6 +425,8 @@ export interface RealmPreset {
   length: RealmLength;
   output: RealmOutput;
   people: GroupPeople;
+  /** Peoples and tongues brief §10.2: present only when on. */
+  peoples?: boolean;
 }
 
 function parseRealmPreset(values: Record<string, string>, body: string, fileName: string): { realm?: RealmPreset; problems: string[] } {
@@ -466,6 +468,8 @@ function parseRealmPreset(values: Record<string, string>, body: string, fileName
       length: pick<RealmLength>("length", "plain", (v) => ["plain", "ceremonial"].includes(v)),
       output: pick<RealmOutput>("output", "official", (v) => ["official", "short", "both"].includes(v)),
       people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      // §10.2: presets without the key run as off.
+      ...(pick<"on" | "off">("peoples", "off", (v) => v === "on" || v === "off") === "on" ? { peoples: true } : {}),
     },
     problems,
   };
@@ -491,6 +495,7 @@ function realmPresetContent(preset: RealmPreset): string {
     `length: ${preset.length}`,
     `output: ${preset.output}`,
     `people: ${preset.people}`,
+    `peoples: ${preset.peoples ? "on" : "off"}`,
     "---",
     "",
     preset.description.trim(),

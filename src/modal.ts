@@ -128,7 +128,7 @@ import {
 } from "./bynames/sentence";
 import { isBynameSafeguardPackContent } from "./bynames/safeguardPacks";
 import { generateRealmNames, REALM_CHARACTERS, REALM_CULTURES, REALM_DATA, realmHistoryLabel } from "./realms/engine";
-import { generatePeopleRows, parseTypedNames, PEOPLE_CULTURES, PEOPLES_DATA } from "./peoples/engine";
+import { generatePeopleRows, parseTypedNames, PEOPLE_CULTURES, PEOPLES_DATA, realmRowsWithPeoples } from "./peoples/engine";
 import { choosePeoples, DEFAULT_PEOPLE_STATE, normalisePeoples, peopleHistory, peopleSectionRequest, peopleSentence, peopleSentenceText, type PeopleSentenceState } from "./peoples/sentence";
 import { chooseRealm, DEFAULT_REALM_STATE, realmSentence, realmSentenceText, type RealmSentenceState } from "./realms/sentence";
 import { isRealmSafeguardPackContent } from "./realms/safeguardPacks";
@@ -2034,6 +2034,7 @@ export class NameForgeModal extends Modal {
       length: p.length,
       output: p.output,
       people: p.people,
+      ...(p.peoples ? { peoples: true } : {}),
     };
   }
 
@@ -2090,12 +2091,21 @@ export class NameForgeModal extends Modal {
       safeguards: guards.safeguards,
     });
     this.currentSeed = result.seed;
+    // Peoples and tongues brief §10: each realm's people and adjective, drawn on the second stream.
+    const texts = state.peoples
+      ? realmRowsWithPeoples(result.names, result.seed, {
+          culture: state.culture,
+          era: REALM_DATA.eras.find((e) => e.key === state.era)?.code,
+          tone: state.tone,
+          safeguards: (await this.loadSettlementSafeguards(PEOPLES_DATA.safeguards)).safeguards,
+        })
+      : result.names.map((n) => n.text);
     this.renderRecipeResults(
-      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" }) as GeneratedName),
+      result.names.map((n, i) => ({ text: texts[i], hasPlaceholder: n.text.includes("["), etymology: "" }) as GeneratedName),
       "none",
     );
     const character = REALM_CHARACTERS.find((c) => c.key === state.character)?.key;
-    const history = label ?? realmHistoryLabel(state.genre, state.fantastic, state.culture, state.era, character, state.tone);
+    const history = (label ?? realmHistoryLabel(state.genre, state.fantastic, state.culture, state.era, character, state.tone)) + (state.peoples ? " · with peoples" : "");
     await this.recordGenerationHistory(result.names.length, history);
     this.setStatus([...problems, ...result.notices, ...guards.notices].join(" "));
   }
@@ -2143,6 +2153,7 @@ export class NameForgeModal extends Modal {
         length: state.length,
         output: state.output,
         people: state.people,
+        peoples: !!state.peoples,
       });
       return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).realm);
     }).open();

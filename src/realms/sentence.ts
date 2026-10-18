@@ -23,6 +23,8 @@ export interface RealmSentenceState {
   length: RealmLength;
   output: RealmOutput;
   people: GroupPeople;
+  /** Peoples and tongues brief §10: each realm's people and adjective after its name; absent is off. */
+  peoples?: boolean;
 }
 
 export const DEFAULT_REALM_STATE: RealmSentenceState = {
@@ -38,7 +40,7 @@ export const DEFAULT_REALM_STATE: RealmSentenceState = {
   people: "placeholders",
 };
 
-export type RealmField = "culture" | "character" | "era" | "genre" | "fantastic" | "namedFor" | "biome" | "terrain" | "tone" | "length" | "output" | "people";
+export type RealmField = "culture" | "character" | "era" | "genre" | "fantastic" | "namedFor" | "biome" | "terrain" | "tone" | "length" | "output" | "people" | "peoples";
 
 export interface RealmChoice {
   id: string | undefined;
@@ -184,13 +186,26 @@ export function realmSentence(state: RealmSentenceState, limits: RealmSentenceLi
     choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
-  out.push(" people and places");
+  out.push(" people and places, ");
+  out.push({
+    field: "peoples",
+    text: state.peoples ? "with their peoples" : "without their peoples",
+    title: "Add each realm's people and adjective, from peoples and tongues.",
+    choices: [
+      { id: "off", label: "without their peoples" },
+      { id: "on", label: "with their peoples" },
+    ],
+    current: state.peoples ? "on" : "off",
+  });
   return out;
 }
 
-/** GN §2.6: the sentence as plain text. */
+/** GN §2.6: the sentence as plain text. The peoples link says nothing while it is off, so the plain text of a realm sentence is what it was before the link. */
 export function realmSentenceText(segments: RealmSegment[]): string {
-  const text = segments.map((s) => (typeof s === "string" ? s : s.text)).join("");
+  const last = segments[segments.length - 1];
+  const before = segments[segments.length - 2];
+  const shown = typeof last === "object" && last.field === "peoples" && last.current === "off" && typeof before === "string" ? [...segments.slice(0, -2), before.replace(/, $/, "")] : segments;
+  const text = shown.map((s) => (typeof s === "string" ? s : s.text)).join("");
   return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
 }
 
@@ -245,6 +260,9 @@ export function chooseRealm(state: RealmSentenceState, field: RealmField, id: st
       break;
     case "people":
       next.people = (id as GroupPeople) ?? "placeholders";
+      break;
+    case "peoples":
+      next.peoples = id === "on";
       break;
   }
   return next;

@@ -122,7 +122,7 @@ const endsWithForm = (text: string) => {
 
 export function normaliseName(raw: string): NameParts {
   const shown = raw.trim().replace(/\s+/g, " ");
-  let s = shown.replace(/\([^)]*\)|\[[^\]]*\]/g, "").replace(/\s+/g, " ").trim();
+  let s = shown.replace(/\([^)]*\)/g, "").replace(/\s+/g, " ").trim();
   let the = false;
   const stripThe = () => {
     const m = s.match(/^the\s+(.+)$/i);
@@ -377,6 +377,8 @@ function fallbackForms(parts: NameParts, choice: PeopleChoice): PeopleForms {
 /** §4 step 6: the name that goes to the fallback before any ending rule. */
 function needsFallback(parts: NameParts): boolean {
   if (/\d/.test(parts.bare)) return true;
+  // A placeholder ([place], [dynasty]) can't be inflected.
+  if (parts.bare.includes("[")) return true;
   if (/\w['’]s(\s|$)|s['’](\s|$)/.test(parts.bare)) return true;
   if (parts.head.replace(/[^\p{L}]/gu, "").length < 3) return true;
   return PEOPLES_DATA.landWords.includes(lower(parts.head));
@@ -694,4 +696,21 @@ export function peoplesHistoryLabel(era: string, culture: string, source: string
     ...(tone !== "any" ? [tone] : []),
     ...(withPeoples ? ["with peoples"] : []),
   ].join(" · ");
+}
+
+/**
+ * Peoples and tongues brief §10: each realm's row with its people and adjective after it, from the realm's
+ * short form, culture, era and tone. The peoples are drawn on the second stream, so the realm names
+ * (made before, on the first) are the same with the link on or off.
+ */
+export function realmRowsWithPeoples(
+  names: { text: string; short: string }[],
+  seed: number,
+  options: { culture?: string; era?: string; tone?: GroupToneChoice; safeguards?: GroupSafeguards },
+): string[] {
+  const draw = makePeopleDrawer({ ...options, giving: "peoples", rng: mulberry32(peopleStreamSeed(seed)) });
+  return names.map((n) => {
+    const row = draw(n.short);
+    return `${n.text} \u2013 ${row.people}, ${row.adjective}`;
+  });
 }
