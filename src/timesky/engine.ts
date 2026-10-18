@@ -316,12 +316,6 @@ function town(ctx: Ctx): string | undefined {
 const ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth", "Thirteenth"];
 export const ordinalWord = (n: number) => ORDINALS[n - 1] ?? ordinalText(n);
 
-/** The light names of the sky series feed {light}; set by the engine (M3). */
-let neutralLight: ((ctx: Ctx) => string | undefined) | undefined;
-export function setNeutralLight(fn: (ctx: Ctx) => string | undefined) {
-  neutralLight = fn;
-}
-
 function token(ctx: Ctx, name: string, mod?: string): string | undefined {
   const placeholders = ctx.mode === "placeholders";
   const pl = (w: string) => (mod === "pl" ? pluralName(w) : w);
@@ -454,7 +448,7 @@ function token(ctx: Ctx, name: string, mod?: string): string | undefined {
       return n?.text.replace(/^(Feast|Festival) of /, "").replace(/^the /, "") ?? undefined;
     }
     case "light": {
-      const n = neutralLight?.(ctx);
+      const n = neutralLightName(ctx);
       if (!n) return undefined;
       const text = n.replace(/^the /, "");
       const last = text.split(" ").pop() ?? "";
@@ -693,10 +687,6 @@ function kindSystems(ctx: Ctx, kind: TimeKind): string[] {
 }
 
 const SKY_CULTURE_NAMES = new Set<TimeKind>(["constellation", "sign", "light"]);
-let skyCultureNames: ((ctx: Ctx, kind: TimeKind) => TimeName | undefined) | undefined;
-export function setSkyCultureNames(fn: (ctx: Ctx, kind: TimeKind) => TimeName | undefined) {
-  skyCultureNames = fn;
-}
 
 function separateName(ctx: Ctx, kind: TimeKind, only?: string): TimeName | undefined {
   const systems = kindSystems(ctx, kind);
@@ -706,10 +696,8 @@ function separateName(ctx: Ctx, kind: TimeKind, only?: string): TimeName | undef
     const cnPlan = (PLANS[kind] ?? []).find((p) => p.shape.cn);
     const others = plansFor(c, kind, only ? (p) => p.p === only : undefined).reduce((n, [, w]) => n + w, 0);
     const cnW = !only && cnPlan ? (kind === "sign" ? 30 : cnPlan.w) : 0;
-    const signDraws = kind === "sign" ? signPlans(c) : undefined;
-    void signDraws;
-    if (cnW > 0 && skyCultureNames && c.rng() * (cnW + others) < cnW) {
-      const n = skyCultureNames(c, kind);
+    if (cnW > 0 && skyNamesFor(c, kind).length > 0 && c.rng() * (cnW + others) < cnW) {
+      const n = skyCultureName(c, kind);
       if (n) return n;
     }
     return kind === "sign" ? buildSign(c, only) : buildName(c, kind, undefined, only);
@@ -769,11 +757,14 @@ interface Line {
 }
 
 interface Series {
+  seed: number;
   ctx: Ctx;
   options: TimeSkyOptions;
   seen: Set<string>;
   notices: string[];
   realShare: number;
+  /** The neutral sky names a days planets theme read. */
+  sky?: string[];
 }
 
 const shuffle = <T>(items: T[], rng: () => number): T[] => {
@@ -1056,10 +1047,6 @@ function moonSeries(S: Series, lines: Line[], _ring: Slot[]): TimeName[] {
 const PLANET_SLOT: Record<string, number> = { Sun: 4, Moon: 7, Mars: 3, Mercury: 6, Jupiter: 2, Venus: 5, Saturn: 1 };
 const ELEMENT_OF: Record<string, string> = { Mars: "Fire", Mercury: "Water", Jupiter: "Wood", Venus: "Metal", Saturn: "Earth" };
 
-let skyLines: ((S: Series, neutral: boolean) => TimeName[] | undefined) | undefined;
-export function setSkyLines(fn: (S: Series, neutral: boolean) => TimeName[] | undefined) {
-  skyLines = fn;
-}
 export type { Series as TimeSeriesState };
 
 const kinPossessive = (name: string) => {
@@ -1121,7 +1108,7 @@ function daySeries(S: Series, systemKey: string): TimeName[] {
   theme = pickWeighted(themeOpts, ctx.rng) ?? "ordinal";
   let skyNames: string[] | undefined;
   const planetsFor = (slotList: number[]) => {
-    skyNames ??= skyLines?.(S, true)?.map((x) => x.text);
+    skyNames ??= (S.sky = lightSeries(neutralCtx(S), S, true).map((x) => x.text));
     if (!skyNames) return;
     for (const i of slotList) {
       if (lines[i]) continue;
@@ -1395,7 +1382,7 @@ export function generateTimeSkyNames(options: TimeSkyOptions): TimeBatch {
   };
   const series = !!options.series && seriesOffered(kind, culture, era, land);
   if (series) {
-    const S: Series = { ctx, options, seen: new Set(), notices, realShare: options.realShare ?? TIME_SKY.realShare };
+    const S: Series = { seed, ctx, options, seen: new Set(), notices, realShare: options.realShare ?? TIME_SKY.realShare };
     const batch = runSeries(S, kind, seed);
     return batch;
   }
@@ -1432,7 +1419,7 @@ function runSeries(S: Series, kind: TimeKind, seed: number): TimeBatch {
     const sys = drawSystem(ctx, weekSystems(ctx.culture, ctx.era))!;
     const names = daySeries(S, sys);
     line("day", TIME_SKY.weeks[sys].source);
-    return { names, seed, notices, system: sys };
+    return { names, seed, notices, system: sys, ...(S.sky ? { sky: S.sky } : {}) };
   }
   if (kind === "festival") {
     const cyc = drawSystem(ctx, festivalCycles(ctx.culture, ctx.era, ctx.land))!;
@@ -1440,12 +1427,241 @@ function runSeries(S: Series, kind: TimeKind, seed: number): TimeBatch {
     line("festival", TIME_SKY.festivals[cyc].source);
     return { names, seed, notices, system: cyc };
   }
-  const sky = skySeries?.(S, kind, seed);
-  if (sky) return sky;
+  if (kind === "light") {
+    const names = lightSeries(ctx, S, !!S.options.neutral);
+    line("light", TIME_SKY.skies["classical-7"].source);
+    return { names, seed, notices, system: "classical-7" };
+  }
+  if (kind === "sign") {
+    const sys = drawSystem(ctx, signSystems(ctx.culture, ctx.era))!;
+    const names = signSeries(S, sys);
+    line("sign", TIME_SKY.skies[sys].source);
+    return { names, seed, notices, system: sys };
+  }
   return { names: [], seed, notices: [...notices, "No series could be made for this culture and era."] };
 }
 
-let skySeries: ((S: Series, kind: TimeKind, seed: number) => TimeBatch | undefined) | undefined;
-export function setSkySeries(fn: (S: Series, kind: TimeKind, seed: number) => TimeBatch | undefined) {
-  skySeries = fn;
+// ── Sky lore (§8.10–§8.12, §9.6–§9.8, §10.6–§10.7) ──────────────────────────
+
+/** A culture's sign names in a system, as written; undefined where the names are generated only. */
+function signSystemNames(system: string, culture: string): string[] | undefined {
+  const names = TIME_SKY.signNames as Record<string, unknown>;
+  switch (system) {
+    case "zodiac-12":
+      return names["zodiac-12"] as string[];
+    case "animals-12": {
+      const t = names["animals-12"] as Record<string, string[]>;
+      return t[culture] ?? t["*"];
+    }
+    case "mansions-28":
+      return (names["mansions-28"] as Record<string, string[]>)[culture];
+    case "day-signs-20":
+      return TIME_SKY.daySigns[culture];
+  }
+  return undefined;
+}
+
+const bareSystem = (system: string) => system === "animals-12" || system === "day-signs-20";
+const signText = (system: string, name: string) => (bareSystem(system) || /^the /i.test(name) ? name : `the ${name}`);
+
+/** §8.10–§8.12: every culture name of a sky kind for the culture and era. */
+function skyNamesFor(ctx: Ctx, kind: TimeKind): string[] {
+  switch (kind) {
+    case "constellation":
+      return TIME_SKY.constellations[ctx.culture] ?? [];
+    case "sign":
+      return signSystems(ctx.culture, ctx.era).flatMap(([sys]) => (signSystemNames(sys, ctx.culture) ?? []).map((n) => signText(sys, n)));
+    case "light": {
+      const l = TIME_SKY.lights[ctx.culture];
+      if (!l) return [];
+      const all = [...Object.values(l.planets ?? {}).flat(), l.milky, l.comet, l.nova].filter((x): x is string => !!x);
+      return all.map((n) => (l.bare?.includes(n) || /^the /i.test(n) ? n : `the ${n}`));
+    }
+  }
+  return [];
+}
+
+function skyCultureName(ctx: Ctx, kind: TimeKind): TimeName | undefined {
+  const names = skyNamesFor(ctx, kind);
+  for (let i = 0; i < 20 && names.length > 0; i++) {
+    const text = pickOne(names, ctx.rng);
+    if (acceptable(ctx, text, kind, true)) return { text, kind, shape: "culture names", tones: [], words: [], real: true };
+  }
+  return undefined;
+}
+
+/** §10.7: the neutral light names for `{light} Day` in separate days: gods left out. */
+function neutralLightName(ctx: Ctx): string | undefined {
+  if (ctx.depth > 1) return undefined;
+  const c: Ctx = { ...ctx, kind: "light", depth: ctx.depth + 1, distinct: false, season: null, drawn: new Set(), log: [], fixed: {} };
+  const names = skyNamesFor(c, "light");
+  const others = plansFor(c, "light", (p) => !p.shape.god).reduce((n, [, w]) => n + w, 0);
+  if (names.length > 0 && c.rng() * (20 + others) < 20) return pickOne(names, c.rng);
+  return buildName(c, "light", (p) => !p.shape.god && !p.shape.cn)?.text;
+}
+
+/** The context a neutral sky series is drawn in: a fresh stream from the batch seed, so a days batch and a sky series of the same seed agree. */
+function neutralCtx(S: Series): Ctx {
+  return { ...S.ctx, kind: "light", rng: mulberry32(S.seed), season: null, distinct: false, used: new Set(), drawn: new Set(), log: [], fixed: {}, system: "classical-7" };
+}
+
+const LIGHT_SLOT_ORDER = TIME_SKY.skies["classical-7"].order!;
+
+/** §10.7: the seven lights, in the Chaldean order. */
+function lightSeries(base: Ctx, S: Series, neutral: boolean): TimeName[] {
+  const ctx: Ctx = { ...base, kind: "light", distinct: true, used: new Set(), season: null };
+  const gods = !neutral && !ctx.sensitive && ctx.mode === "invented";
+  const theme = pickWeighted(TIME_SKY.themes.light.map(([t, w]): [string, number] => [t, t === "gods" && !gods ? 0 : w]), ctx.rng)!;
+  const seen = new Set<string>();
+  const out: (TimeName | undefined)[] = Array.from({ length: 7 }, () => undefined);
+  const culture = TIME_SKY.lights[ctx.culture];
+  // Real names (capped at half of seven, rounded down).
+  const cap3 = Math.floor(7 / 2);
+  let real = 0;
+  for (const i of shuffle([0, 1, 2, 3, 4, 5, 6], ctx.rng)) {
+    if (real >= cap3) break;
+    const options = ([] as string[]).concat(culture?.planets?.[String(i + 1)] ?? []).map((n) => (culture?.bare?.includes(n) || /^the /i.test(n) ? n : `the ${n}`)).filter((t) => acceptable(ctx, t, "light", true) && !seen.has(t.toLowerCase()));
+    if (options.length === 0 || ctx.rng() >= S.realShare) continue;
+    const text = pickOne(options, ctx.rng);
+    seen.add(text.toLowerCase());
+    out[i] = { text, kind: "light", shape: "culture names", tones: [], words: [], real: true, slot: i + 1 };
+    real++;
+  }
+  const accept = (i: number, raw: string | undefined, shape: string, c: Ctx): boolean => {
+    if (!raw) return false;
+    const text = finish(c, "light", raw);
+    if (!acceptable(c, text, "light") || seen.has(text.toLowerCase())) return false;
+    seen.add(text.toLowerCase());
+    const tones = new Set<GroupTone>(c.drawn);
+    out[i] = { text, kind: "light", shape, tones: GROUP_TONES.filter((t) => tones.has(t)), words: c.log, slot: i + 1 };
+    return true;
+  };
+  const quality = (c: Ctx, slot: number) => {
+    const list = TIME_SKY.lists.lightQualities[String(slot)];
+    return list ? drawFrom(c, "quality", "skyQuality", plainList(list)) : token(c, "skyQuality");
+  };
+  for (let i = 0; i < 7; i++) {
+    if (out[i]) continue;
+    const slot = i + 1;
+    for (let attempt = 0; attempt < 40 && !out[i]; attempt++) {
+      const c: Ctx = { ...ctx, distinct: attempt < 20, drawn: new Set(), log: [] };
+      let raw: string | undefined;
+      let shape: string;
+      if (slot === 4 && theme !== "gods") {
+        raw = pickOne(["the Day Eye", "the Great Lamp"], c.rng);
+        shape = "the Day Eye";
+      } else if (slot === 4) {
+        raw = `${token(c, "god", "poss") ?? ""} Lamp`;
+        shape = "{god:poss} Lamp";
+      } else if (slot === 5) {
+        const herald = token(c, "herald");
+        raw = herald ? `the ${c.rng() < 0.5 ? "Morning" : "Evening"} ${herald}` : undefined;
+        shape = "the Morning {herald}";
+      } else if (slot === 7 && c.rng() < 0.5) {
+        raw = "the Night Eye";
+        shape = "the Night Eye";
+      } else if (slot === 7) {
+        const q = theme === "kin" ? token(c, "skyKin") : token(c, "skyQuality");
+        raw = q ? `the ${q} Moon` : undefined;
+        shape = theme === "kin" ? "the {skyKin} Moon" : "the {skyQuality} Moon";
+      } else if (theme === "gods") {
+        raw = `${token(c, "god", "poss") ?? ""} Star`;
+        shape = "{god:poss} Star";
+      } else if (theme === "kin") {
+        const q = quality(c, slot);
+        const k = token(c, "skyKin");
+        raw = q && k ? `the ${q} ${k}` : undefined;
+        shape = "the {skyQuality} {skyKin}";
+      } else {
+        const q = quality(c, slot);
+        raw = q ? `the ${q} Wanderer` : undefined;
+        shape = "the {skyQuality} Wanderer";
+      }
+      if (raw?.startsWith(" ") || raw?.startsWith("undefined")) raw = undefined;
+      if (accept(i, raw, shape, c) && attempt < 20) for (const k of c.used) ctx.used.add(k);
+    }
+    if (!out[i]) accept(i, `the ${ordinalWord(slot)} Light`, "the {ordinal} Light", { ...ctx, drawn: new Set(), log: [] });
+  }
+  return out.map((n, i) => ({ ...n!, slot: i + 1, tag: LIGHT_SLOT_ORDER[i] }));
+}
+
+/** §5.4: the zodiac sets of §13.1. */
+const breaksZodiacSet = (names: string[]) => names.filter((n) => TIME_SKY.safeguards.zodiacSet.some((z) => bare(z) === bare(n))).length >= TIME_SKY.safeguards.zodiacSetLimit;
+
+/** §10.6: a sign series: the signs of the system in its order. */
+function signSeries(S: Series, system: string): TimeName[] {
+  const ctx0: Ctx = { ...S.ctx, kind: "sign", system };
+  const count = TIME_SKY.skies[system].count;
+  const real = signSystemNames(system, ctx0.culture);
+  for (let redraw = 0; redraw < 20; redraw++) {
+    const ctx: Ctx = { ...ctx0, distinct: true, used: new Set(), drawn: new Set(), log: [], season: null };
+    const seen = new Set<string>();
+    const lines: (TimeName | undefined)[] = Array.from({ length: count }, () => undefined);
+    // Real names.
+    const cap2 = Math.floor(count / 2);
+    let realCount = 0;
+    for (const i of shuffle(Array.from({ length: count }, (_, k) => k), ctx.rng)) {
+      if (realCount >= cap2) break;
+      const base = real?.[i];
+      if (!base || ctx.rng() >= S.realShare) continue;
+      const text = signText(system, base);
+      if (!acceptable(ctx, text, "sign", true) || seen.has(text.toLowerCase())) continue;
+      seen.add(text.toLowerCase());
+      lines[i] = { text, kind: "sign", shape: "culture names", tones: [], words: [], real: true, slot: i + 1 };
+      realCount++;
+    }
+    // The theme.
+    let theme: string;
+    if (system === "animals-12") theme = "animals";
+    else if (system === "day-signs-20") theme = "daysigns";
+    else if (system === "mansions-28") theme = pickWeighted(TIME_SKY.themes.mansions, ctx.rng)!;
+    else {
+      theme = pickWeighted(TIME_SKY.themes.sign, ctx.rng)!;
+      if (system === "zodiac-12" && ctx.rng() < TIME_SKY.themes.mixedZodiac) theme = "mixed";
+    }
+    const flavour = [...new Set(cultureAnimals(ctx.culture))].filter((w) => !w.includes("{")).map((w) => biomeTitleCase(w));
+    const patternsFor = (): string[] => {
+      switch (theme) {
+        case "beasts": return ["the {beast}"];
+        case "figures": return ["the {skyFigure}"];
+        case "objects": return ["the {skyObject}"];
+        case "mixed": return ["the {beast}", "the {skyFigure}"];
+        case "bodyParts": return ["the {skyBodyPart}", "the {beast:poss} {skyBodyPart}"];
+        case "daysigns": return ["{wildAnimal}", "{bird}", "{daySign}"];
+      }
+      return [];
+    };
+    for (let i = 0; i < count; i++) {
+      if (lines[i]) continue;
+      for (let attempt = 0; attempt < 60 && !lines[i]; attempt++) {
+        const c: Ctx = { ...ctx, distinct: attempt < 30, drawn: new Set(), log: [] };
+        let raw: string | undefined;
+        let shape: string;
+        if (theme === "animals") {
+          const items: [string, number][] = [...biomeItems(c, "wildAnimal"), ...biomeItems(c, "livestock"), ...flavour.map((w): [string, number] => [w, 3])];
+          raw = drawFrom(c, "beast", "animals", items);
+          shape = "{beast}";
+        } else {
+          shape = pickOne(patternsFor(), c.rng);
+          raw = renderPattern(c, shape);
+        }
+        if (!raw) continue;
+        const text = bareSystem(system) ? timeCapitals(raw) : finish(c, "sign", raw);
+        if (!acceptable(c, text, "sign") || seen.has(text.toLowerCase())) continue;
+        seen.add(text.toLowerCase());
+        if (c.distinct) for (const k of c.used) ctx.used.add(k);
+        const tones = new Set<GroupTone>(c.drawn);
+        lines[i] = { text, kind: "sign", shape, tones: GROUP_TONES.filter((t) => tones.has(t)), words: c.log, slot: i + 1 };
+      }
+      if (!lines[i]) {
+        const text = timeCapitals(`${bareSystem(system) ? "" : "the "}${ordinalText(i + 1)} Sign`);
+        seen.add(text.toLowerCase());
+        lines[i] = { text, kind: "sign", shape: "{ordinal} Sign", tones: [], words: [], slot: i + 1 };
+      }
+    }
+    const final = lines.map((l) => l!);
+    if (system === "zodiac-12" || system === "nakshatras-27" || system === "decans-36") if (breaksZodiacSet(final.map((n) => n.text))) continue;
+    return final;
+  }
+  return [];
 }

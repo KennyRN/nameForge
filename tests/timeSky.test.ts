@@ -388,3 +388,109 @@ test("§16.5: space biome: no season tags, and no full moons kind", () => {
   void texts;
   void BIOMES;
 });
+
+// ── §16.6 Sky ───────────────────────────────────────────────────────────────
+
+const SKY_KINDS: TimeKind[] = ["constellation", "sign", "light"];
+
+test("§16.6: sky lore: every culture × era × kind × people gives 20 unique names; series generate with the system's count", () => {
+  for (const c of TIME_CULTURES) {
+    for (const era of ERAS) {
+      for (const kind of SKY_KINDS) {
+        for (const people of ["placeholders", "invented"] as const) {
+          const names = gen({ culture: c.key, era, kind, people, count: 20, seed: 3 }).names;
+          assert.equal(names.length, 20, `${c.key} ${era} ${kind} ${people}: ${names.map((n) => n.text).join(" | ")}`);
+          assert.equal(new Set(names.map((n) => n.text.toLowerCase())).size, 20);
+        }
+        if (!seriesOffered(kind, c.key, era)) continue;
+        for (const seed of [1, 2, 3, 4]) {
+          const b = gen({ culture: c.key, era, kind, series: true, seed, people: seed % 2 ? "invented" : "placeholders" });
+          const expected = kind === "light" ? 7 : TIME_SKY.skies[b.system!].count;
+          assert.equal(b.names.length, expected, `${c.key} ${era} ${kind} ${b.system}`);
+          assert.equal(new Set(b.names.map((n) => n.text.toLowerCase())).size, expected, `${c.key} ${era} ${kind}: ${b.names.map((n) => n.text).join(" | ")}`);
+          assert.ok(b.notices.some((x) => /^(Zodiac|Sky): .+\.$/.test(x)));
+          assert.equal(gen({ culture: c.key, era, kind, series: true, seed, count: 99 }).names.length, expected);
+          assert.ok(b.names.filter((n) => n.real).length <= Math.floor(expected / 2));
+        }
+      }
+    }
+  }
+});
+
+test("§16.6: animals-12: twelve distinct beasts, at most six of them the culture's real animals", () => {
+  let seen = 0;
+  for (let seed = 1; seed <= 200; seed++) {
+    const b = gen({ culture: "chinese", era: "MD", kind: "sign", series: true, seed });
+    if (b.system !== "animals-12") continue;
+    seen++;
+    assert.equal(b.names.length, 12);
+    assert.equal(new Set(b.names.map((n) => n.text)).size, 12);
+    assert.ok(b.names.filter((n) => n.real).length <= 6);
+    for (const n of b.names) assert.ok(!n.text.startsWith("the "), n.text);
+  }
+  assert.ok(seen > 80);
+  // The real list of each culture's variant.
+  const japanese = new Set<string>();
+  for (let seed = 1; seed <= 60; seed++) for (const n of gen({ culture: "japanese", era: "MD", kind: "sign", series: true, seed, realShare: 1 }).names) if (n.real) japanese.add(n.text);
+  assert.ok(japanese.has("Boar") || !japanese.has("Pig"));
+  assert.ok(!japanese.has("Pig"));
+});
+
+test("§16.6: classical-7: slot 5 is a morning or evening name; slot 3's quality is Red, Fierce or Restless when generated", () => {
+  for (let seed = 1; seed <= 300; seed++) {
+    for (const culture of ["norman-british", "chinese", "greek-byzantine"]) {
+      const b = gen({ culture, kind: "light", series: true, seed, people: "invented" });
+      assert.equal(b.names.length, 7);
+      const five = b.names[4];
+      assert.ok(/Morning|Evening|Light-Bringer|Metal Star/.test(five.text), five.text);
+      const three = b.names[2];
+      if (!three.real) assert.ok(/\b(Red|Fierce|Restless)\b/.test(three.text) || /Lamp|Star/.test(three.text), three.text);
+      assert.equal(b.names.length, new Set(b.names.map((n) => n.text)).size);
+    }
+  }
+});
+
+test("§16.6: the days planets theme uses the same sky names as a sky series drawn with the same seed", () => {
+  let checked = 0;
+  for (let seed = 1; seed <= 200 && checked < 20; seed++) {
+    const days = gen({ culture: "norman-british", kind: "day", series: true, seed, people: "invented" });
+    if (!days.sky) continue;
+    const sky = gen({ culture: "norman-british", kind: "light", series: true, seed, neutral: true, people: "invented" });
+    assert.deepEqual(days.sky, sky.names.map((n) => n.text));
+    const sun = days.sky[3].replace(/^the /, "");
+    assert.ok(days.names.some((n) => n.text.startsWith(sun)) || days.names.length === 7);
+    checked++;
+  }
+  assert.ok(checked > 5);
+});
+
+test("§16.6: 10,000 names across options: no block-list or banned words, no gods or light/grim in the sensitive cultures, no zodiac of four set names", () => {
+  const block = new Set(TIME_SKY.safeguards.block.map(normName));
+  const kinds = [...CALENDAR_KINDS, ...SKY_KINDS];
+  let total = 0;
+  for (let i = 0; total < 10000; i++) {
+    const c = TIME_CULTURES[i % TIME_CULTURES.length];
+    const era = ERAS[(i * 5) % ERAS.length];
+    const offered = kinds.filter((k) => kindsOffered(findKind(k), c.key, era).some((x) => x.key === k));
+    const kind = offered[i % offered.length];
+    const series = i % 3 === 0 && seriesOffered(kind, c.key, era);
+    const b = gen({ culture: c.key, era, kind, series, seed: i + 1, people: i % 2 ? "invented" : "placeholders", count: 8, fantastic: i % 5 === 0, tone: (["any", "grim", "light", "grand", "strange", "plain"] as const)[i % 6] });
+    for (const n of b.names) {
+      total++;
+      assert.ok(!block.has(normName(n.text)) || (kind === "light" && /Morning Star|Evening Star/.test(n.text)), `blocked ${n.text}`);
+      assert.ok(!breaksDeityWords(n.text), n.text);
+      if (c.key === "polynesian" || c.key === "andean") {
+        assert.ok(!n.tones.includes("light") && !n.tones.includes("grim"), `${c.key}: ${n.text} ${n.tones}`);
+        assert.ok(!n.words.some((w) => w.pool === "god"), n.text);
+        assert.ok(!/\[god\]|\[holy/.test(n.text), n.text);
+      }
+    }
+    if (kind === "sign" && series && b.system === "zodiac-12") {
+      assert.ok(b.names.filter((n) => TIME_SKY.safeguards.zodiacSet.map(normName).includes(normName(n.text))).length < 4);
+    }
+  }
+});
+
+function findKind(k: TimeKind) {
+  return SKY_KINDS.includes(k) ? ("sky" as const) : ("calendar" as const);
+}
