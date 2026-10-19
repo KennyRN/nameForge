@@ -222,7 +222,7 @@ export function generateKit(options: KitOptions): Kit {
   // 1. Context (§3).
   const context: SettlementContext = {
     ...buildContext(
-      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm, scale: isFuture(o.era) ? (o.position === "crossroads" ? "Sy" : "Pl") : undefined },
+      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", size: o.size, blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm, scale: isFuture(o.era) ? (o.position === "crossroads" ? "Sy" : "Pl") : undefined },
       mulberry32(subSeed(o.seed, STEPS.context)),
     ),
     effects: pos.effects,

@@ -2499,6 +2499,8 @@ var ICON_FOLDER = "nameforge-folder";
 var ICON_FOLDER_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-miterlimit="10" d="M11.993 10.307v6.874m-3.43-3.437h6.874" /><path stroke-linejoin="round" d="M21.25 9.883v7.698a3.083 3.083 0 0 1-3.083 3.083H5.833a3.083 3.083 0 0 1-3.083-3.083V6.419a3.083 3.083 0 0 1 3.083-3.083h3.084a3.08 3.08 0 0 1 2.57 1.377l.873 1.326a1.75 1.75 0 0 0 1.449.77h4.358a3.084 3.084 0 0 1 3.083 3.074" /></g></g>';
 var ICON_INFO = "nameforge-info";
 var ICON_INFO_SVG = '<g transform="scale(0.195313)"><path d="M0 0h512v512H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184s184-82.39 184-184S349.61 64 248 64Z" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M220 220h32v116" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M208 340h88" /><path fill="currentColor" d="M248 130a26 26 0 1 0 26 26a26 26 0 0 0-26-26" /></g>';
+var ICON_URBAN = "nameforge-urban";
+var ICON_URBAN_SVG = '<g transform="scale(2.08333)"><path d="M0 0h48v48H0z" fill="none" /><defs><mask id="nameforge-urban-mask"><g fill="none"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M4 42h40" /><rect width="8" height="16" x="8" y="26" fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4" rx="2" /><path stroke="#fff" stroke-linecap="square" stroke-linejoin="round" stroke-width="4" d="M12 34h1" /><rect width="24" height="38" x="16" y="4" fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4" rx="2" /><path fill="#fff" d="M22 10h4v4h-4zm8 0h4v4h-4zm-8 7h4v4h-4zm8 0h4v4h-4zm0 7h4v4h-4zm0 7h4v4h-4z" /></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#nameforge-urban-mask)" /></g>';
 var ICON_VEHICLES = "nameforge-vehicles";
 var ICON_VEHICLES_SVG = '<g transform="translate(0 10) scale(0.15625)"><path d="M0 0h640v512H0z" fill="none" /><path fill="currentColor" d="M171.3 96H224v96H111.3l30.4-75.9C146.5 104 158.2 96 171.3 96M272 192V96h81.2c9.7 0 18.9 4.4 25 12l67.2 84zm256.2 1l-100-125c-18.2-22.8-45.8-36-75-36H171.3C132 32 96.7 55.9 82.2 92.3L40.6 196.4C16.8 205.8 0 228.9 0 256v112c0 17.7 14.3 32 32 32h33.3c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80h130.7c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80h33.3c17.7 0 32-14.3 32-32v-48c0-65.2-48.8-119-111.8-127zm-93.5 175a48 48 0 1 1 90.5 32a48 48 0 1 1-90.5-32M160 336a48 48 0 1 1 0 96a48 48 0 1 1 0-96" /></g>';
 var ICON_SEAS_COASTS = "nameforge-seas-coasts";
@@ -2530,6 +2532,7 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_BUILDINGS, ICON_BUILDINGS_SVG);
   (0, import_obsidian4.addIcon)(ICON_INNS, ICON_INNS_SVG);
   (0, import_obsidian4.addIcon)(ICON_VEHICLES, ICON_VEHICLES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_URBAN, ICON_URBAN_SVG);
   (0, import_obsidian4.addIcon)(ICON_STREETS, ICON_STREETS_SVG);
   (0, import_obsidian4.addIcon)(ICON_ROUTES, ICON_ROUTES_SVG);
   (0, import_obsidian4.addIcon)(ICON_SEAS_COASTS, ICON_SEAS_COASTS_SVG);
@@ -19720,6 +19723,1235 @@ var place_shapes_default = {
   ]
 };
 
+// src/data/settlement-names.json
+var settlement_names_default = {
+  $comment: "Settlement names (urban brief \xA74\u2013\xA76). Size codes: h hamlet, v village, t town, c city, g great city. A generic, affix form, template or list word left out of this file is never drawn by the settlement names module; the source modules are untouched.",
+  version: 1,
+  sizes: [
+    {
+      key: "any",
+      label: "settlement"
+    },
+    {
+      key: "hamlet",
+      code: "h",
+      label: "hamlet"
+    },
+    {
+      key: "village",
+      code: "v",
+      label: "village"
+    },
+    {
+      key: "town",
+      code: "t",
+      label: "town"
+    },
+    {
+      key: "city",
+      code: "c",
+      label: "city"
+    },
+    {
+      key: "great",
+      code: "g",
+      label: "great city"
+    }
+  ],
+  fallbackOrder: [
+    "great",
+    "city",
+    "town",
+    "village",
+    "hamlet"
+  ],
+  generics: {
+    "enclosed-farmstead": "hvt",
+    "estate-manor-centre": "hvtc",
+    village: "hvtcg",
+    "early-homestead-or-village": "hvtcg",
+    "homestead-site": "hvt",
+    "norse-farm": "hv",
+    "enclosed-farm-garth": "hv",
+    "enclosed-settlement": "hvt",
+    "farm-township": "hvt",
+    "home-farm-of-an-estate": "h",
+    "land-holding-share-of-land": "hvt",
+    "folk-group-territory": "vtc",
+    "folk-group-homestead": "hvtc",
+    "dependent-or-secondary-settlement": "hv",
+    "outlying-place-dependent-site": "hv",
+    "outlying-grain-farm": "hv",
+    "specialised-farm": "hv",
+    "monastic-outlying-farm": "h",
+    "cattle-farm": "hv",
+    "cottars-settlement": "hv",
+    "settlement-by-a-roman-site": "vt",
+    house: "hv",
+    dwelling: "hvt",
+    "building-dwelling": "hv",
+    hall: "hv",
+    "house-plot": "hvt",
+    "small-enclosed-field-by-a-house": "h",
+    cottage: "hv",
+    "hut-temporary-shelter": "h",
+    "workshop-or-store-building": "h",
+    "summer-upland-dwelling": "h",
+    "permanent-or-winter-lowland-dwelling": "hv",
+    "shieling-summer-pasture-hut": "h",
+    "hut-at-summer-pasture": "h",
+    "salt-works": "hvt",
+    "salt-house": "hv",
+    mill: "hv",
+    kiln: "h",
+    "pit-quarry": "h",
+    "fish-weir": "h",
+    "trading-place": "vtcg",
+    market: "vtc",
+    "market-town-harbour": "vtcg",
+    "landing-place": "hvt",
+    haven: "vtc",
+    "british-church-community": "hvt",
+    church: "hvtc",
+    "minster-mother-church": "vtcg",
+    "saints-church-enclosure": "hv",
+    "hermitage-retreat": "h",
+    "island-of-irish-monks": "h",
+    chapel: "hv",
+    "holy-place": "hv",
+    "standing-cross": "hv",
+    "heathen-temple": "hv",
+    "shrine-idol": "h",
+    "sacred-grove": "hv",
+    "holy-spring": "hv",
+    "burial-mound": "hv",
+    cairn: "h",
+    "fortified-place-stronghold": "hvtcg",
+    "earthen-ringfort": "hvtc",
+    fort: "vtcg",
+    "roman-walled-town-or-fort": "vtcg",
+    castle: "hvtc",
+    "tower-house": "hv",
+    "fortified-farmhouse": "h",
+    "lookout-hill": "hv",
+    "ship-camp-fortified-anchorage": "vt",
+    "royal-or-lordly-court": "vtc",
+    "lords-hall": "hv",
+    "manor-house": "hv",
+    "welsh-administrative-manor": "hv",
+    "assembly-field": "hv",
+    "assembly-mound": "hv",
+    "speech-place": "h",
+    "meeting-place": "hv",
+    "bath-spa": "vtc",
+    "clear-stream": "hvt",
+    "sluggish-or-muddy-stream": "h",
+    "mountain-stream": "hv",
+    "stream-with-its-valley": "hv",
+    "river-source-spring-head": "hv",
+    "river-mouth": "hvtcg",
+    confluence: "hvtc",
+    "spring-well": "hvt",
+    "spring-with-roman-association": "hv",
+    pool: "hvtc",
+    "mere-shallow-lake": "hv",
+    marsh: "h",
+    fen: "h",
+    "brushwood-marsh-carr": "h",
+    "flood-prone-land-by-a-river": "hv",
+    island: "hvtc",
+    "dry-ground-in-wet-land": "hvt",
+    "land-in-a-river-bend": "hvt",
+    "water-meadow": "hv",
+    headland: "hvt",
+    "point-nose": "hvt",
+    promontory: "hv",
+    "sea-inlet-firth": "hv",
+    bay: "hvt",
+    "small-bay-creek": "hv",
+    cove: "h",
+    "strait-sound": "hv",
+    estuary: "hv",
+    "beach-strand": "hv",
+    "sand-dunes-sandy-shore": "hv",
+    "shingle-bank": "h",
+    "river-crossing": "hvtcg",
+    causeway: "hv",
+    bridge: "hvtcg",
+    ferry: "hv",
+    "paved-or-roman-road": "hvt",
+    "way-track": "hv",
+    lane: "h",
+    pass: "hv",
+    "gap-notch": "h",
+    "swing-gate": "h",
+    "isthmus-portage": "hv",
+    wood: "hv",
+    "single-species-wood": "hv",
+    "great-woodland": "h",
+    "royal-hunting-ground": "hv",
+    park: "hv",
+    grove: "hv",
+    "grove-small-wood": "h",
+    "grove-possibly-sacred": "h",
+    "strip-of-woodland-shaw": "h",
+    "wood-on-a-steep-slope": "h",
+    "wooded-hill": "hvt",
+    scrubland: "h",
+    thicket: "h",
+    "woodland-then-clearing": "hvtc",
+    "newly-cleared-land-assart": "hv",
+    "clearing-paddock": "hv",
+    "woodland-swine-pasture": "hvt",
+    "low-level-topped-hill": "hvtc",
+    hill: "hvt",
+    "heel-shaped-spur": "hv",
+    "flat-topped-ridge": "hv",
+    ridge: "hv",
+    "back-low-ridge": "h",
+    "edge-escarpment": "h",
+    "steep-slope-bank": "hv",
+    slope: "h",
+    "terrace-lynchet": "h",
+    knoll: "hv",
+    "rounded-hill-mound": "hv",
+    "summit-top": "hv",
+    "upper-end-head": "hvt",
+    "pointed-hill": "h",
+    tor: "h",
+    crag: "h",
+    stone: "hv",
+    "upland-moor": "h",
+    heath: "hv",
+    wold: "hv",
+    "long-valley": "hvt",
+    dale: "hvt",
+    "broad-valley": "hv",
+    "short-bowl-shaped-valley": "hvt",
+    "narrow-valley-glen": "hv",
+    "small-enclosed-side-valley": "h",
+    "steep-bank-ravine-side": "h",
+    "shallow-damp-valley": "h",
+    hollow: "hv",
+    "valley-bottom": "hv",
+    "valley-head": "h",
+    nook: "hv",
+    "corner-projecting-piece-of-land": "h",
+    "corner-angle": "h",
+    "bend-crook": "h",
+    "open-country": "hvtc",
+    "level-field": "hv",
+    "hay-meadow": "hv",
+    pasture: "h",
+    "arable-field": "h",
+    "arable-unit": "h",
+    furlong: "h",
+    "animal-fold": "h",
+    "hedged-enclosure": "h",
+    orchard: "h",
+    town: "hvtcg",
+    city: "tcg",
+    capital: "cg",
+    colony: "vtc",
+    "planned-village": "hv",
+    "trading-post": "hv",
+    mission: "hv",
+    "pastoral-station": "h",
+    "mining-camp": "hv",
+    junction: "hv",
+    crossing: "hv",
+    heights: "vt",
+    hope: "hv",
+    "garrison-camp": "hvt",
+    "frontier-post": "hv",
+    cantonment: "vt",
+    "civil-lines": "vt",
+    "administrative-station": "hvt",
+    creek: "hvt",
+    "plain-grassland": "hv",
+    oasis: "hvt",
+    "dry-riverbed": "hv",
+    "island-group": "hv",
+    reef: "h",
+    lagoon: "hv",
+    "local-settlement-word": "hvtcg",
+    "local-market-word": "vtc",
+    mosque: "hv",
+    "saints-tomb-or-shrine": "hvtc",
+    "religious-lodge": "hv",
+    station: "hvtc",
+    habitat: "vtcg",
+    "space-colony": "vtcg",
+    outpost: "hv",
+    port: "vtc",
+    "space-haven": "hvt",
+    anchorage: "hv",
+    yard: "hv",
+    dock: "hv",
+    base: "hvt",
+    camp: "hv",
+    relay: "h",
+    "space-beacon": "h",
+    observatory: "h",
+    gate: "vt"
+  },
+  spaceSiteGroups: {
+    groups: [
+      "planet-surface",
+      "planet-moons",
+      "planet-orbits",
+      "system-belts"
+    ],
+    sizes: "hv"
+  },
+  affixes: {
+    size: {
+      Great: "vt",
+      Little: "hv"
+    },
+    position: {
+      East: "hvt",
+      West: "hvt",
+      North: "hvt",
+      South: "hvt",
+      Upper: "hv",
+      Lower: "hv",
+      Inner: "hv"
+    },
+    age: {
+      Old: "hvt",
+      New: "hvtc"
+    },
+    function: {
+      Market: "vt",
+      Castle: "hv",
+      Church: "hv"
+    },
+    "owner-by-status": {
+      "*": "hvt"
+    },
+    "owner-by-family": {
+      "*": "hv"
+    },
+    dedication: {
+      "*": "hv"
+    },
+    location: {
+      "*": "hvtc"
+    },
+    city: {
+      City: "tcg"
+    }
+  },
+  world: {
+    "anglo-saxon": {
+      eras: {
+        "old-english": {
+          "{spec}+{gen}": "hvtcg",
+          "{animal}+Ford": "hvtc",
+          "{size} {spec}+{gen}": "hvt",
+          "{name:pos} {gen}": "hvt",
+          "Home of {name:pos} People": "hvtcg",
+          "{name:pos} People": "hvt",
+          "{god:pos} {holy}": "hvt",
+          "{spec}+{gen} upon {#river}": "vtcg",
+          "{colour} {water}": "hvt",
+          "{saint:pos} {church}": "hvtc"
+        },
+        modern: {
+          "{place}-on-Sea": "vt",
+          "{place} Junction": "hv",
+          "{place} Spa": "vt",
+          "{place} New Town": "tc",
+          "New {place}": "vtc",
+          "{place} Green": "hv",
+          "{place} Heath": "hv",
+          "{place} Vale": "hv",
+          "{place} Gardens": "v",
+          "{place} {surname}": "hv",
+          "Upper {place}": "hv",
+          "King's {place}": "vt",
+          "Port {surname}": "vtc",
+          "{surname} Park": "v",
+          "{resource}+{rgen}": "vtc",
+          "{resource}ville": "vt",
+          "{aspiration}": "hv",
+          "{place} Garden Village": "v"
+        },
+        interstellar: {
+          "{spec}+{@land}": "hvtcg",
+          "{size} {spec}+{@land}": "hvt",
+          "{name:pos} {@hab}": "hvtcg",
+          "{name:pos} {@land}": "hvt",
+          "New {place}": "vtcg",
+          "{place} {@hab}": "hvtcg",
+          "{saint:pos} {@hab}": "hvtcg",
+          "{god:pos} {@land}": "hv",
+          "Home of {name:pos} People": "vtcg"
+        }
+      },
+      lists: {
+        gen: {
+          Ford: "hvtcg",
+          Field: "hvtc",
+          Wood: "hv",
+          Well: "hvt",
+          Brook: "hvt",
+          Hill: "hvt",
+          Bridge: "vtcg",
+          Town: "hvtcg",
+          Farm: "hv",
+          Fort: "vtcg",
+          Mere: "hv",
+          Stone: "hv",
+          Dale: "hvt",
+          Bank: "hv",
+          Clearing: "hvt",
+          Island: "vt",
+          Hollow: "hv",
+          Meadow: "hv"
+        },
+        size: {
+          Great: "vt",
+          Little: "hv",
+          Upper: "hv",
+          Lower: "hv",
+          Nether: "hv",
+          Long: "hv",
+          East: "hvt",
+          West: "hvt",
+          North: "hvt",
+          South: "hvt",
+          Old: "hvt"
+        },
+        holy: {
+          Fort: "vt",
+          Barrow: "h",
+          Grove: "h",
+          Hill: "hv",
+          Field: "hv",
+          Clearing: "hv",
+          Ley: "hv"
+        },
+        church: {
+          Minster: "tcg",
+          Stone: "hv",
+          Church: "hvt",
+          Well: "hv"
+        }
+      }
+    },
+    norse: {
+      eras: {
+        viking: {
+          "{name:pos} {farm}": "hvtc",
+          "{god:pos} {holy}": "hv",
+          "{adj} {land}": "hvt",
+          "{animal} {land}": "hv",
+          "{tree} {land}": "hv",
+          "{animal}+{fuse}": "hv",
+          "{adj}+{fuse}": "hv",
+          "Assembly {meet}": "vt",
+          "{name:pos} {land}": "hv",
+          "{status} {farm}": "hvt"
+        },
+        interstellar: {
+          "{name:pos} {farm}": "hvtc",
+          "{adj} {@land}": "hvt",
+          "{god:pos} {@land}": "hv",
+          "{animal} {@land}": "hv",
+          "{god:pos} {holy}": "hv",
+          "{animal}+{@land}": "hv",
+          "{adj}+{@land}": "hv",
+          "Assembly {meet}": "vt",
+          "{status} {farm}": "hvt"
+        }
+      },
+      lists: {
+        farm: {
+          Farm: "hvtc",
+          Homestead: "hv",
+          Clearing: "hv",
+          Shieling: "h",
+          Steading: "hv",
+          Toft: "hvt",
+          Hold: "hvt",
+          Habitat: "vtc"
+        },
+        land: {
+          Bay: "vt",
+          Fjord: "hv",
+          Ness: "hv",
+          Dale: "hvt",
+          Island: "hv",
+          Holm: "hv",
+          Beck: "hv",
+          Strand: "hv",
+          Sound: "v",
+          Haven: "vtc",
+          Howe: "hv",
+          Ridge: "h"
+        },
+        fuse: {
+          Dale: "hvt",
+          Beck: "hv",
+          Ness: "hv",
+          Holm: "hv"
+        },
+        holy: {
+          Grove: "h",
+          Hill: "hv",
+          Field: "hv",
+          Island: "hv",
+          Spring: "hv",
+          Acre: "hv",
+          Temple: "v",
+          Stone: "hv"
+        }
+      }
+    },
+    celtic: {
+      eras: {
+        pagan: {
+          "Fort of {god}": "vtcg",
+          "{adj} Fort": "hvtc",
+          "Fort of the {animal:pl}": "hvt",
+          "{grove} of {god}": "hvt",
+          "Plain of {god}": "hvtc",
+          "{adj} Plain": "hvtc",
+          "{tree} Plain": "hv",
+          "Ford of the {animal:pl}": "hvt",
+          "Mouth of the {#river}": "vtc",
+          "Confluence of the {#river}": "vtcg",
+          "{animal} Hill": "hv"
+        },
+        saints: {
+          "Church of {saint}": "hvtc",
+          "Church of {saint} {prep} {feature}": "hv",
+          "Cell of {saint}": "hv",
+          "Mouth of the {#river}": "vtc",
+          "Fort of the {animal:pl}": "hvt",
+          "Fort of {person}": "vtcg",
+          "{adj} Fort": "hvt",
+          "Head of the {feature}": "hv",
+          "Headland of the {animal}": "hv",
+          "{adj} Headland": "hv",
+          "Valley of the {#river}": "hv",
+          "Valley of the {animal:pl}": "hv",
+          "{adj} Valley": "hv",
+          "Island of {saint}": "hv",
+          "Hill of the {animal:pl}": "hv",
+          "{tree} Wood": "h",
+          "Ford of the {animal:pl}": "hvt",
+          "Ford of {person}": "hvt",
+          "Meadow of the Sons of {person}": "h",
+          "{saint:pos} Well": "hv",
+          "{colour} Pool": "hvtc"
+        },
+        interstellar: {
+          "Church of {saint}": "hvtc",
+          "Fort of {god}": "vtcg",
+          "Mouth of the {@land}": "vtc",
+          "Head of the {@land}": "hv",
+          "Cell of {saint}": "hv",
+          "Fort of the {animal:pl}": "hvt",
+          "{adj} {@hab}": "hvtcg",
+          "{@land} of {god}": "hv",
+          "Church of {saint} {prep} {@land}": "hv",
+          "{@land} of the {animal:pl}": "hv"
+        }
+      },
+      lists: {
+        grove: {
+          Spring: "hvt",
+          Well: "hv"
+        },
+        feature: {
+          Pool: "hv",
+          Hollow: "hv",
+          "White Hazel": "h",
+          Ford: "hv",
+          Stream: "hv",
+          Valley: "hv",
+          Wood: "h",
+          Rock: "h",
+          Meadow: "hv",
+          Hill: "hv",
+          Grove: "h",
+          Strand: "hv"
+        }
+      }
+    },
+    roman: {
+      eras: {
+        imperial: {
+          "Shrine of {god}": "hvt",
+          "Harbour of {god}": "vtc",
+          "Forum of {person}": "vtc",
+          "Colony of {emperor}": "tcg",
+          "{emperor:pos} City of the {tribe}": "tcg",
+          "Market of the {tribe}": "vtc",
+          "Waters of {god}": "vt",
+          "Temple of {god}": "hv",
+          "Field of {god}": "hv",
+          "Bridge of {person}": "vt",
+          "Camp on the {#river}": "hvt",
+          "Mouth of the {#river}": "vtc",
+          "At the {ordinal} Milestone": "hv",
+          "At the {at}": "hv",
+          "The Three Taverns": "h",
+          "{emperor:pos} Peace": "tc",
+          "New City": "tcg",
+          "Victory City": "tc",
+          "{waters}": "vt",
+          "Colony of {emperor} at the Altar of {god}": "tc"
+        },
+        medieval: {
+          "Saint {saint}": "hvtc",
+          "Saint {saint} {where}": "hvt",
+          "Borough of Saint {saint}": "vtc",
+          "Borough of the Holy {holyname}": "vt",
+          "{adj} {town}": "hvtc",
+          "New {town}": "vtc",
+          "{town} of the {animal:pl}": "hv",
+          "{adj} {peak}": "hv",
+          "Tower of the {status}": "hv",
+          "Castle of the {status}": "hvt",
+          "{town} on the {#river}": "vt",
+          "Valley of the {#river}": "hv",
+          "{adj} Water": "hv"
+        },
+        interstellar: {
+          "Harbour of {god}": "vtc",
+          "Forum of {person}": "vtc",
+          "Colony of {emperor}": "tcg",
+          "At the {@ordinal} Point": "hv",
+          "Shrine of {god}": "hv",
+          "{emperor:pos} {@hab}": "hvtcg",
+          "Camp at the {@land}": "hvt",
+          "Mouth of the {@land}": "vtc",
+          "New {homeland}": "vtcg",
+          "Saint {saint}": "hvtc",
+          "{@land} of {person}": "hv"
+        }
+      },
+      lists: {
+        town: {
+          Village: "hv",
+          Castle: "hvt",
+          Borough: "vtc",
+          Town: "vtc",
+          Tower: "hv",
+          Hamlet: "h",
+          Rock: "hv"
+        }
+      }
+    },
+    chinese: {
+      eras: {
+        imperial: {
+          "{direction} Peace": "tc",
+          "{direction} Capital": "cg",
+          "{adv} {quality}": "tcg",
+          "{verb} the {far}": "tc",
+          "{slogan}": "tc",
+          "{side} of the {river}": "vtcg",
+          "{side} of the Lake": "vt",
+          "Sunny Bank of the {river}": "vt",
+          "Shady Side of Mount {mountain}": "hv",
+          "{quality} Prefecture": "tc",
+          "{quality} County": "vt",
+          "{material} Gate Pass": "hv",
+          "{beast} Gate": "hv",
+          "{beast} Hill": "hv",
+          "{beast} Pass": "hv"
+        },
+        modern: {
+          "{side} of the {river}": "vtcg",
+          "{side} of the Lake": "vt",
+          "Sunny Bank of the {river}": "vt",
+          "{side} of the {river} New Area": "tc",
+          "{direction} Capital": "cg",
+          "{adj} Island": "vtc",
+          "{adj} Harbour": "vtcg",
+          "{adj} Ford": "vtcg",
+          "{adj} Port": "vtc",
+          "Upon the {water}": "tcg",
+          "{beast} {feature}": "hv",
+          "{slot} {settle}": "hvt",
+          "{quality} {settle}": "hvt"
+        },
+        interstellar: {
+          "{side} of the {@land}": "vtcg",
+          "{adv} {quality}": "tcg",
+          "{verb} the {far}": "tc",
+          "{quality} {@hab}": "hvtcg",
+          "{direction} Peace": "tc",
+          "{direction} Capital": "cg",
+          "{beast} {@land}": "hv",
+          "{slot} {@hab}": "hvtcg",
+          "{material} Gate": "hv"
+        }
+      },
+      lists: {
+        settle: {
+          Village: "hv",
+          Commune: "hv",
+          Town: "vt",
+          Farm: "h",
+          District: "vtc"
+        }
+      }
+    },
+    egyptian: {
+      eras: {
+        pharaonic: {
+          "House of {lord}": "hvtcg",
+          "Estate of {god}": "hv",
+          "Temple of the Spirit of {god}": "tcg",
+          "Horizon of {god}": "cg",
+          "Mound of {god}": "hv",
+          "Seat of {god}": "vtc",
+          "Island of {god}": "hv",
+          "{god:pos} City": "tcg",
+          "Mansion of {pharaoh}": "vt",
+          "{pair} and {pair}": "tcg",
+          "The {colour} Walls": "tcg",
+          "Mound of the {sacred}": "hv",
+          "Field of the {sacred:pl}": "hv"
+        },
+        "graeco-roman": {
+          "City of {ggod}": "tc",
+          "Great City of {ggod}": "cg",
+          "City of the {sacred:pl}": "vtc",
+          "{founder:pos} City": "tcg",
+          "City of {founder}": "tcg",
+          "{harbour} Harbour": "vtc",
+          "{founder:pos} City of the Hunts": "vt",
+          "Oasis of {god}": "hv",
+          "Little City of {ggod}": "vt",
+          "Upper City of the {sacred:pl}": "vt"
+        },
+        interstellar: {
+          "House of {lord}": "hvtcg",
+          "Horizon of {god}": "cg",
+          "{god:pos} {@hab}": "hvtcg",
+          "Seat of {god}": "vtc",
+          "{@land} of {god}": "hv",
+          "Mansion of {pharaoh}": "vt",
+          "{pair} and {pair}": "tcg",
+          "The {colour} Walls": "tcg",
+          "{@land} of the {sacred:pl}": "hv"
+        }
+      },
+      lists: {}
+    },
+    aztec: {
+      eras: {
+        mexica: {
+          "Place of {animal:pl}": "hvtc",
+          "Place of the {animal:pl}": "hvt",
+          "Place of {plant:pl}": "hvtcg",
+          "{animal} Hill": "hvt",
+          "{plant} Hill": "hv",
+          "Near the {near}": "hvt",
+          "Where {plant:pl} Abound": "hv",
+          "On the {feature}": "hv",
+          "In the Navel of the {celestial}": "cg",
+          "Where the {animal} {verb}": "hv",
+          "Where {god} Was Born": "vt",
+          "Among the {plant:pl}": "hv"
+        },
+        colonial: {
+          "Saint {saint} of {native}": "vtc",
+          "Our Lady of {native}": "vtc",
+          "Royal Mines of Saint {saint}": "vt",
+          "Rich Town of the {holyname}": "tc",
+          "New {homeland}": "tc",
+          "Mission of Saint {saint}": "hv",
+          "City of the {holy2}": "tcg",
+          "Town of the {holyname}": "vt",
+          "Saint {saint} of the {animal:pl}": "hv"
+        },
+        interstellar: {
+          "Place of {animal:pl}": "hvtc",
+          "{animal} {@land}": "hv",
+          "Near the {near}": "hvt",
+          "On the {@land}": "hv",
+          "In the Navel of the {celestial}": "cg",
+          "{god:pos} {@land}": "hv",
+          "Place of {plant:pl}": "hvtcg",
+          "Where the {animal} {verb}": "hv",
+          "Where {plant:pl} Abound": "hv"
+        }
+      },
+      lists: {}
+    },
+    bantu: {
+      eras: {
+        kingdoms: {
+          "Place of the {#people}": "vtc",
+          "Royal Enclosure of {#ruler}": "tcg",
+          "{#ruler:pos} Town": "hvtc",
+          "Houses of {material}": "vtcg",
+          "Place of {event}": "hvt",
+          "Hill of the {animal:pl}": "hv",
+          "At the {feature}": "hvt",
+          "Where the {animal:pl} Drink": "hv",
+          "The {noun} That {verb}": "vt",
+          "{adj} Water": "hv"
+        },
+        interstellar: {
+          "Place of the {#people}": "vtc",
+          "Place of {event}": "hvt",
+          "Royal Enclosure of {#ruler}": "tcg",
+          "{#ruler:pos} {@hab}": "hvtcg",
+          "{@land} of the {animal:pl}": "hv",
+          "At the {@land}": "hvt",
+          "The {noun} That {verb}": "vt",
+          "{adj} {@land}": "hv"
+        }
+      },
+      lists: {
+        feature: {
+          River: "hvt",
+          Rock: "hv",
+          Hill: "hvt",
+          Bay: "hvt",
+          Pool: "hv",
+          Lake: "hv",
+          Ford: "hvt",
+          Spring: "hvt",
+          Gorge: "hv",
+          Waterfall: "hv",
+          Forest: "h"
+        }
+      }
+    },
+    slavic: {
+      eras: {
+        rus: {
+          "New {town}": "vtcg",
+          "{prince:pos}": "vtc",
+          "{prince:pos} Town": "vtcg",
+          "{material} Town": "hvt",
+          "{adj} Town": "hvtc",
+          "{prince:pos} beyond the {beyond}": "vt",
+          "Town on the {#river}": "vt",
+          "Mouth of the {#river}": "vt",
+          "{animal} Ford": "hv",
+          "Trinity Town": "vt",
+          "Holy Mountains": "hv",
+          "{animal} Hill": "hv"
+        },
+        imperial: {
+          "{monarch:pos} City": "tcg",
+          "{monarch:pos} Town": "vt",
+          "Glory of {monarch}": "tc",
+          "Saint {monarch:pos} City": "cg",
+          "Ruler of the {region}": "tc",
+          "Rule the {region}": "tc",
+          "Fortress of Saint {monarch}": "vt",
+          "{monarch:pos} Fort": "vt",
+          "Tsar's Town": "vtc",
+          "Empress's Village": "hv",
+          "New {homeland}": "vtc"
+        },
+        soviet: {
+          "Red Gift": "hv",
+          "{ideal} Town": "vt",
+          "{#hero:pos} Town": "vtc",
+          "{#hero:pos} City": "tcg",
+          "Young Communists' Town": "tc",
+          "{industry}": "vtc",
+          "{closed}-{num}": "vt",
+          "Red {red}": "hvt",
+          "Settlement of the {ideal} Collective Farm": "h",
+          "Hammer and Sickle": "hv",
+          "{ideal} Path": "hv"
+        },
+        interstellar: {
+          "New {town}": "vtcg",
+          "{ideal} {@hab}": "hvtcg",
+          "{prince:pos} {@hab}": "hvtcg",
+          "Glory of {monarch}": "tc",
+          "Ruler of the {region}": "tc",
+          "{#hero:pos} {@hab}": "hvtcg",
+          "{closed}-{num}": "vt",
+          "Red {red}": "hvt",
+          "{material} {@hab}": "hvtcg",
+          "Star Town": "vt",
+          "{animal} {@land}": "hv"
+        }
+      },
+      lists: {
+        town: {
+          Town: "vtcg",
+          Fort: "vtc",
+          Ford: "hv",
+          Hill: "hv",
+          Station: "hvtc",
+          Settlement: "hvt",
+          Habitat: "vtcg"
+        }
+      }
+    },
+    "arabic-persian": {
+      eras: {
+        arabic: {
+          "Abode of {abode}": "tcg",
+          "City of {abode}": "tcg",
+          "Mother of {mother}": "vt",
+          "Father of {father}": "vt",
+          "The {epithet}": "tcg",
+          "The {epithet} City": "tc",
+          "Gate of {gate}": "vt",
+          "Mountain of {person}": "vt",
+          "Palace of {person}": "vt",
+          "Camp of {person}": "vtc",
+          "The Camp": "vtc",
+          "Harbour of {person}": "vt",
+          "{day} Market": "hv",
+          "Valley of {valley}": "hvtc",
+          "The {adj} Island": "vt",
+          "The Islands": "tcg",
+          "Fortress of the {animal}": "hv",
+          "Eagle's Nest": "h",
+          "Fort of Victory": "vt"
+        },
+        persian: {
+          "{person:pos} Abode": "hvtc",
+          "{abode} Abode": "vtc",
+          "{king:pos} City": "tcg",
+          "Glory of {king}": "tc",
+          "Land of {plant:pl}": "hv",
+          "{plant} Garden": "hv",
+          "Green City": "tc",
+          "{num} {water}": "hv",
+          "Temple of {sacred}": "hv",
+          "Fire of {king}": "hv",
+          "{adj} Fortress": "hvt",
+          "Fortress of the {animal:pl}": "hv",
+          "{king:pos} Hunting Ground": "h"
+        },
+        interstellar: {
+          "Abode of {abode}": "tcg",
+          "Mother of {mother}": "vt",
+          "Gate of {gate}": "vt",
+          "Father of {father}": "vt",
+          "The {epithet}": "tcg",
+          "Harbour of {person}": "vt",
+          "{king:pos} City": "tcg",
+          "{plant} Garden": "hv",
+          "Camp of {person}": "vtc",
+          "{day} Market": "hv",
+          "{@land} of {valley}": "hv",
+          "Glory of {king}": "tc",
+          "{num} {water}": "hv"
+        }
+      },
+      lists: {}
+    },
+    indian: {
+      eras: {
+        ancient: {
+          "{god:pos} Plain": "hv",
+          "{god:pos} City": "tcg",
+          "City of {city}": "tcg",
+          "The {epithet}": "tcg",
+          "Confluence of the {#river}": "vtc",
+          "Place of Sacrifice": "hv",
+          "{plant} Forest": "hv",
+          "{sage:pos} Hermitage": "hv",
+          "Abode of {god}": "vt",
+          "{animal} City": "vt",
+          "Ford of the {#river}": "hvt"
+        },
+        modern: {
+          "{founder:pos} Abode": "vtcg",
+          "{raja:pos} City": "tcg",
+          "Abode of {abode}": "vt",
+          "Fort of {god}": "vt",
+          "{raja:pos} Fort": "vt",
+          "{market} Market": "hvt",
+          "{surname:pos} Market": "vt",
+          "{animal} City": "vt",
+          "New {place}": "tc",
+          "{place} {colony}": "vt",
+          "{god:pos} Town": "vt",
+          "{surname} Town": "vt"
+        },
+        interstellar: {
+          "{god:pos} City": "tcg",
+          "City of {city}": "tcg",
+          "The {epithet}": "tcg",
+          "Abode of {god}": "vt",
+          "{sage:pos} Hermitage": "hv",
+          "{founder:pos} Abode": "vtcg",
+          "{raja:pos} {@hab}": "hvtcg",
+          "{market} Market": "hvt",
+          "{god:pos} {@land}": "hv",
+          "{plant} Garden": "hv",
+          "{animal} City": "vt"
+        }
+      },
+      lists: {}
+    },
+    japanese: {
+      eras: {
+        samurai: {
+          "{adj} {feature}": "hvtcg",
+          "{mouth} Mouth": "hvtc",
+          "{good} {feature}": "hvt",
+          "{animal} {feature}": "hv",
+          "Below the Castle": "vt",
+          "{adj} {feature} Castle Town": "tc",
+          "New {lodging}": "hv",
+          "Capital of {virtue} and {virtue}": "cg",
+          "Before {kami:pos} Gate": "vt",
+          "{kami} {feature}": "hv",
+          "Island of Worship": "hv",
+          "{number} {animal:pl}": "hv",
+          "{number} {feature:pl}": "hv",
+          "Middle of the {feature}": "hv"
+        },
+        modern: {
+          "{adj} {feature}": "hvtcg",
+          "{mouth} Mouth": "hvtc",
+          "{animal} {feature}": "hv",
+          "{pretty} Hill": "vt",
+          "{place} New Town": "tc",
+          "{place} Station Front": "v",
+          "{place} {future}": "vt",
+          "New {place}": "vt",
+          "{kami} {feature}": "hv"
+        },
+        interstellar: {
+          "{adj} {@land}": "hvtcg",
+          "{good} {@land}": "hvt",
+          "{@land} Mouth": "hvtc",
+          "{animal} {@land}": "hv",
+          "Before {kami:pos} Gate": "vt",
+          "{pretty} {@hab}": "hvtcg",
+          "{kami} {@land}": "hv",
+          "{number} {@land:pl}": "hv",
+          "{@hab} Front": "v",
+          "Capital of {virtue} and {virtue}": "cg",
+          "Middle of the {@land}": "hv"
+        }
+      },
+      lists: {
+        feature: {
+          Hill: "hvt",
+          Island: "hvtcg",
+          Field: "hvtc",
+          Cape: "hvtc",
+          River: "hvt",
+          Bridge: "hvt",
+          Mountain: "hv",
+          Valley: "hvt",
+          Moor: "hv",
+          Shore: "hvt",
+          Bay: "hvt",
+          Pass: "hv",
+          Slope: "hvtcg",
+          Pond: "hv",
+          Well: "hvt",
+          Marsh: "hv",
+          Bank: "hv",
+          Ford: "hvt",
+          Paddy: "hvtc"
+        }
+      }
+    },
+    "west-african": {
+      eras: {
+        "sahel-and-forest": {
+          "Under the {tree} Tree": "hvt",
+          "{person:pos} Well": "hvtcg",
+          "Grove of {spirit}": "hv",
+          "Town of the {#people}": "vtc",
+          "Place of the {animal:pl}": "hvt",
+          "Where the River {bend}": "vt",
+          "{market} Market": "hvt",
+          "Beside the {feature}": "hv",
+          "Hill of {spirit}": "hv",
+          "{adj} {feature}": "hv",
+          "Among the {tree} Trees": "hv",
+          "{person:pos} Camp": "hvt",
+          "Mosque of {person}": "vt"
+        },
+        interstellar: {
+          "{animal} {@land}": "hv",
+          "{person:pos} {@land}": "hvt",
+          "Town of the {#people}": "vtc",
+          "Under the {tree} Tree": "hvt",
+          "Grove of {spirit}": "hv",
+          "Where the {@land} {bend}": "vt",
+          "{market} Market": "hvt",
+          "Beside the {@land}": "hv",
+          "{adj} {@land}": "hv",
+          "{@land} of {spirit}": "hv"
+        }
+      },
+      lists: {}
+    },
+    maya: {
+      eras: {
+        classic: {
+          "Big Water": "tc",
+          "Mouth of the Well of the {people}": "tcg",
+          "Well of the {people}": "vt",
+          "{colourdir} {feature}": "hvt",
+          "{holyword} {feature}": "vtc",
+          "{animal} Cave": "hv",
+          "Place of the {animal:pl}": "hvt",
+          "{number} Stones": "hv",
+          "Seat of {god}": "vtc",
+          "{number} {animal:pl}": "hv",
+          "Sky Place": "tc",
+          "Where the {animal} Rises": "hv"
+        },
+        interstellar: {
+          "{colourdir} {@land}": "hvt",
+          "Well of the {people}": "vt",
+          "{holyword} {@land}": "vtc",
+          "{animal} {@land}": "hv",
+          "Place of the {animal:pl}": "hvt",
+          "{number} Stones": "hv",
+          "Seat of {god}": "vtc",
+          "Big {@land}": "tc",
+          "{number} {@land:pl}": "hv",
+          "{god:pos} {@land}": "hv"
+        }
+      },
+      lists: {}
+    },
+    korean: {
+      eras: {
+        joseon: {
+          "{adj} {feature}": "hvtc",
+          "{jvirtue} District": "vtc",
+          "{animal} {feature}": "hv",
+          "South of the River": "vt",
+          "Water Source": "hv",
+          "{adj} Source": "hv",
+          "Temple of {buddhist}": "hv",
+          "{adj} Fortress": "vt",
+          "Fortress of {virtue}": "vt"
+        },
+        interstellar: {
+          "{adj} {@land}": "hvtc",
+          "{jvirtue} District": "vtc",
+          "{animal} {@land}": "hv",
+          "Temple of {buddhist}": "hv",
+          "Sunward of the {@land}": "vt",
+          "{@resource} Source": "hv",
+          "{adj} Fortress": "vt"
+        }
+      },
+      lists: {
+        feature: {
+          Hill: "hv",
+          Mountain: "hv",
+          Field: "hvt",
+          Island: "hvt",
+          River: "hvt",
+          Gate: "vt",
+          Valley: "hv",
+          Pass: "hv",
+          Bay: "hvt",
+          Spring: "hv",
+          Ridge: "hv",
+          Ford: "hvt",
+          Plain: "hvtc"
+        }
+      }
+    },
+    ethiopian: {
+      eras: {
+        "aksum-and-abyssinia": {
+          "Mount of {holy}": "hvtc",
+          "Mount of {saint}": "hvtc",
+          "Monastery of {saint}": "hv",
+          "Church of {saint} in the Rock": "h",
+          "New {new}": "vtcg",
+          "{adj} {feature}": "hvt",
+          "Royal Camp of {king}": "tc",
+          "{king:pos} Town": "vtc",
+          "{king:pos} Churches": "vt",
+          "Place of the {animal:pl}": "hv",
+          "Throne of {king}": "tc",
+          "Gate of {holy}": "vt"
+        },
+        interstellar: {
+          "Mount of {holy}": "hvtc",
+          "Mount of {saint}": "hvtc",
+          "{adj} {@land}": "hvt",
+          "Monastery of {saint}": "hv",
+          "Church of {saint} in the Rock": "h",
+          "New {new}": "vtcg",
+          "Royal Camp of {king}": "tc",
+          "{king:pos} {@hab}": "hvtcg",
+          "Throne of {king}": "tc",
+          "Gate of {holy}": "vt"
+        }
+      },
+      lists: {
+        feature: {
+          Spring: "hvt",
+          Water: "hvt",
+          Rock: "hv",
+          Gorge: "hv",
+          Pass: "hv",
+          Field: "hv",
+          Market: "hvt"
+        }
+      }
+    }
+  }
+};
+
+// src/settlement/data.ts
+var SETTLEMENT_DATA = settlement_names_default;
+var SETTLEMENT_SIZES = SETTLEMENT_DATA.sizes;
+var SIZE_FALLBACK_ORDER = SETTLEMENT_DATA.fallbackOrder;
+var sizeLabel = (size) => SETTLEMENT_SIZES.find((s) => s.key === size).label;
+function sizesToTry(size) {
+  if (size === "any") return ["any"];
+  return SIZE_FALLBACK_ORDER.slice(SIZE_FALLBACK_ORDER.indexOf(size));
+}
+function sizeAllows(codes, size) {
+  var _a5;
+  if (codes === void 0) return false;
+  if (size === "any") return true;
+  const code = (_a5 = SETTLEMENT_SIZES.find((s) => s.key === size)) == null ? void 0 : _a5.code;
+  return !!code && codes.includes(code);
+}
+var genericAllowed = (genericId, size) => sizeAllows(SETTLEMENT_DATA.generics[genericId], size);
+var spaceSiteAllowed = (groupId, size) => SETTLEMENT_DATA.spaceSiteGroups.groups.includes(groupId) && sizeAllows(SETTLEMENT_DATA.spaceSiteGroups.sizes, size);
+function affixFormAllowed(typeId, text, size) {
+  var _a5;
+  const forms = SETTLEMENT_DATA.affixes[typeId];
+  return !!forms && sizeAllows((_a5 = forms[text]) != null ? _a5 : forms["*"], size);
+}
+var worldTemplateAllowed = (cultureId, eraId, template, size) => {
+  var _a5, _b3;
+  return sizeAllows((_b3 = (_a5 = SETTLEMENT_DATA.world[cultureId]) == null ? void 0 : _a5.eras[eraId]) == null ? void 0 : _b3[template], size);
+};
+function entryWord(raw) {
+  const body = raw.endsWith("~") ? raw.slice(0, -1) : raw;
+  return body.split("|")[0];
+}
+function filterWorldList(cultureId, key2, entries, size) {
+  var _a5;
+  const words = (_a5 = SETTLEMENT_DATA.world[cultureId]) == null ? void 0 : _a5.lists[key2];
+  if (!words) return void 0;
+  const listed = entries.filter((e) => words[entryWord(e)] !== void 0);
+  const atSize = listed.filter((e) => sizeAllows(words[entryWord(e)], size));
+  return atSize.length > 0 ? atSize : listed;
+}
+
 // src/data/place-shape-regions.json
 var place_shape_regions_default = {
   $comment: "Regional weighting for place-name shapes. Data only: multiplies part 1 weights in place-shapes.json, keyed by its ids. Counties are for documentation and tooltips; landscapeShareSettlement is recorded but unused (no feature filter).",
@@ -23044,7 +24276,11 @@ var PlaceShapeGenerator = class {
     var _a5, _b3, _c3;
     this.excluded = new Set((_a5 = filters.excludedCategories) != null ? _a5 : []);
     let groups = filters.groupIds ? source.groups.filter((g) => filters.groupIds.includes(g.id)) : source.groups;
-    const feature = filters.feature && filters.feature !== "any" ? filters.feature : void 0;
+    const settlement = filters.settlement;
+    const feature = settlement ? "settlement" : filters.feature && filters.feature !== "any" ? filters.feature : void 0;
+    if (settlement) {
+      groups = groups.map((g) => ({ ...g, generics: g.generics.filter((x) => genericAllowed(x.id, settlement.size)) })).filter((g) => g.generics.length > 0);
+    }
     if (feature === "landscape") groups = groups.filter((g) => g.side === "landscape");
     else if (feature && feature !== "settlement") groups = groups.filter((g) => g.id === feature);
     if (this.excluded.size > 0) {
@@ -23072,8 +24308,8 @@ var PlaceShapeGenerator = class {
       }
     }
     const stackGroup = source.groups.find((g) => g.id === STACK_SOURCE_GROUP);
-    this.stackGenerics = ((_c3 = stackGroup == null ? void 0 : stackGroup.generics) != null ? _c3 : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id));
-    this.affixWeights = source.affixes.filter((a) => a.forms.length > 0).map((a) => {
+    this.stackGenerics = ((_c3 = stackGroup == null ? void 0 : stackGroup.generics) != null ? _c3 : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id) && (!settlement || genericAllowed(id, settlement.size)));
+    this.affixWeights = source.affixes.map((a) => settlement ? { ...a, forms: a.forms.filter((f) => affixFormAllowed(a.id, f.text, settlement.size)) } : a).filter((a) => a.forms.length > 0).map((a) => {
       var _a6, _b4;
       return [a, ((_a6 = regions.affixBaseline[a.id]) != null ? _a6 : 0) * ((_b4 = region == null ? void 0 : region.affixMultiplier[a.id]) != null ? _b4 : 1)];
     }).filter(([, w]) => w > 0);
@@ -23161,7 +24397,8 @@ function createGenerator(options, source) {
   return new PlaceShapeGenerator(source, region, {
     groupIds: options.groupIds,
     feature: options.feature,
-    excludedCategories: options.excludedCategories
+    excludedCategories: options.excludedCategories,
+    settlement: options.settlement
   }, PLACE_SHAPE_REGION_DATA, options.environment);
 }
 function generatePlaceShapesDetailed(options, source = PLACE_SHAPE_DATA) {
@@ -29553,7 +30790,9 @@ var ColonialShapeGenerator = class {
     ]);
     const inPart = (parts) => (parts != null ? parts : ["2", "2a"]).includes(part);
     const excluded = new Set((_a5 = options.excludedCategories) != null ? _a5 : []);
-    const feature = options.feature && options.feature !== "any" ? options.feature : void 0;
+    const settlement = options.settlement;
+    const feature = settlement ? "settlement" : options.feature && options.feature !== "any" ? options.feature : void 0;
+    const settlementGeneric = (groupId, id) => !settlement || genericAllowed(id, settlement.size) || !!this.space && spaceSiteAllowed(groupId, settlement.size);
     const eligibleByGroup = /* @__PURE__ */ new Map();
     for (const group of data.groups) {
       if (options.groupIds && !options.groupIds.includes(group.id)) continue;
@@ -29565,6 +30804,7 @@ var ColonialShapeGenerator = class {
         const id = genericIdOf(entry);
         if (typeof entry !== "string" && !inPart(entry.parts)) continue;
         if (this.space && !this.spaceGenericLive(group.id, id)) continue;
+        if (!settlementGeneric(group.id, id)) continue;
         const genericWeight = ((_b3 = this.profile.genericMultipliers[id]) != null ? _b3 : 1) * ((_d3 = (_c3 = options.environment) == null ? void 0 : _c3.generics[id]) != null ? _d3 : 1);
         if (genericWeight <= 0) continue;
         const categories = [...resolveColonialProfile(group, id, data)].filter(([c]) => inPart(categoryParts.get(c)) && !excluded.has(c)).map(([c, tier]) => [c, PLACE_SHAPE_WEIGHTS.tier[tier] * this.categoryMultiplier(c)]).filter(([, w]) => w > 0);
@@ -29583,7 +30823,7 @@ var ColonialShapeGenerator = class {
       };
     }
     const source = data.groups.find((g) => g.id === (this.space ? "space-settlement" : data.structures.stackedGeneric.sourceGroup));
-    this.stackSource = source.generics.filter((entry) => typeof entry === "string" || inPart(entry.parts)).filter((entry) => !this.space || this.spaceGenericLive(source.id, genericIdOf(entry))).map((entry) => {
+    this.stackSource = source.generics.filter((entry) => typeof entry === "string" || inPart(entry.parts)).filter((entry) => !this.space || this.spaceGenericLive(source.id, genericIdOf(entry))).filter((entry) => settlementGeneric(source.id, genericIdOf(entry))).map((entry) => {
       var _a6;
       return [genericIdOf(entry), (_a6 = this.profile.genericMultipliers[genericIdOf(entry)]) != null ? _a6 : 1];
     }).filter(([, w]) => w > 0);
@@ -29592,16 +30832,17 @@ var ColonialShapeGenerator = class {
       var _a6;
       return (!f.slotCategory || inPart((_a6 = categoryParts.get(f.slotCategory)) != null ? _a6 : [])) && spaceFits(f);
     };
+    const sizeFits = (typeId, f) => !settlement || affixFormAllowed(typeId, f.text, settlement.size);
     const types = [
       ...PLACE_SHAPE_DATA.affixes.map((a) => {
         var _a6;
         return {
           id: a.id,
-          forms: a.forms.filter(formFits),
+          forms: a.forms.filter((f) => formFits(f) && sizeFits(a.id, f)),
           weight: (_a6 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a6 : 0
         };
       }),
-      ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms.filter(spaceFits), weight: a.weight }))
+      ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms.filter((f) => spaceFits(f) && sizeFits(id, f)), weight: a.weight }))
     ];
     this.affixWeights = types.filter((t) => t.forms.length > 0).map((t) => {
       var _a6;
@@ -60379,8 +61620,9 @@ function generatePlaceNames(options) {
   }
 }
 function* generatePlaceNamesSteps(options) {
-  var _a5, _b3;
+  var _a5, _b3, _c3;
   const { recipe } = options;
+  const settlement = (_a5 = options.settlement) != null ? _a5 : recipe.shape.settlement ? { size: recipe.shape.settlement } : void 0;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const organic = recipe.shape.part === "organic";
   const region = organic ? resolveRegionSetting(recipe.shape.region) : void 0;
@@ -60392,7 +61634,7 @@ function* generatePlaceNamesSteps(options) {
   const rng = mulberry32((seed ^ FILL_SALT) >>> 0);
   const adaptation = options.adapt && !organic ? { adapt: options.adapt, seed, redrawRng: mulberry32((seed ^ REDRAW_SALT) >>> 0) } : void 0;
   const biomeSetting = recipe.shape.biome;
-  let biome = (_a5 = options.biome) != null ? _a5 : (biomeSetting == null ? void 0 : biomeSetting.startsWith("[[")) ? void 0 : findBiome(biomeSetting);
+  let biome = (_b3 = options.biome) != null ? _b3 : (biomeSetting == null ? void 0 : biomeSetting.startsWith("[[")) ? void 0 : findBiome(biomeSetting);
   if (!biome && (biomeSetting == null ? void 0 : biomeSetting.startsWith("[["))) {
     notices.push(`Biome pack \u201C${biomeSetting.slice(2, -2)}\u201D wasn't found; using ${organic ? "Britain" : "unknown country"}.`);
   }
@@ -60402,7 +61644,7 @@ function* generatePlaceNamesSteps(options) {
     biome = void 0;
   }
   const spaceScale = (biome == null ? void 0 : biome.space) ? biome.scale : void 0;
-  let terrain = (_b3 = recipe.shape.terrain) != null ? _b3 : "any";
+  let terrain = (_c3 = recipe.shape.terrain) != null ? _c3 : "any";
   if (terrain !== "any" && biome && !availableTerrains(biome).some((t) => t.id === terrain) && biome.customTerrains) {
     notices.push(`${biome.label} has no \u201C${terrain}\u201D terrain.`);
     terrain = "any";
@@ -60420,7 +61662,7 @@ function* generatePlaceNamesSteps(options) {
   let renderOne;
   let shapeCount;
   if (organic) {
-    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment });
+    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment, settlement });
     renderOne = (i) => renderer.render(shapes[i], rng);
     shapeCount = shapes.length;
   } else {
@@ -60433,6 +61675,7 @@ function* generatePlaceNamesSteps(options) {
       feature: recipe.shape.feature,
       excludedCategories,
       environment,
+      settlement,
       ...spaceScale ? { space: { scale: spaceScale, aliens: !!recipe.shape.aliens } } : {}
     });
     renderOne = (i) => renderer.renderColonial(shapes[i], rng);
@@ -60562,6 +61805,9 @@ function readRecipe(fm) {
     else if (terrain) problems.push(`Unknown terrain \u201C${terrain}\u201D.`);
     const aliens = bool(fm.shape.aliens);
     if (aliens !== void 0) shape.aliens = aliens;
+    const settlement = str(fm.shape.settlement);
+    if (settlement && SETTLEMENT_SIZES.some((s) => s.key === settlement)) shape.settlement = settlement;
+    else if (settlement) problems.push(`Unknown settlement size \u201C${settlement}\u201D.`);
     recipe.shape = shape;
   }
   if (isObject(fm.slots)) {
@@ -62545,7 +63791,18 @@ var WorldRenderer = class {
     this.culture = findCulture(options.culture);
     this.era = findEra(this.culture, options.era);
     this.interstellar = this.era.id === INTERSTELLAR_ERA;
-    this.lists = { ...this.culture.lists, ...(_a5 = this.era.lists) != null ? _a5 : {} };
+    this.allLists = { ...this.culture.lists, ...(_a5 = this.era.lists) != null ? _a5 : {} };
+    this.lists = { ...this.allLists };
+    this.templates = this.era.templates;
+    const settlement = options.settlement;
+    if (settlement) {
+      this.templates = this.era.templates.filter(([t]) => worldTemplateAllowed(this.culture.id, this.era.id, t, settlement.size));
+      if (this.templates.length === 0) throw new Error(`No eligible ${this.culture.label} ${this.era.label} templates at this size`);
+      for (const [key2, entries] of Object.entries(this.allLists)) {
+        const filtered2 = filterWorldList(this.culture.id, key2, entries, settlement.size);
+        if (filtered2) this.lists[key2] = filtered2;
+      }
+    }
     this.markov = { ...(_b3 = this.culture.markov) != null ? _b3 : {}, ...(_c3 = this.era.markov) != null ? _c3 : {} };
     if (this.interstellar && options.biome && !options.biome.space) this.notices.add("The Interstellar era is set in space.");
     if (!this.interstellar) this.buildSwaps();
@@ -62634,11 +63891,12 @@ var WorldRenderer = class {
     for (const swap of WORLD_DATA.biomeSwaps) {
       if (swap.culture !== this.culture.id || swap.era && swap.era !== this.era.id) continue;
       if (!chosen && !LAND_LISTS.has(swap.list)) continue;
-      const list = this.lists[swap.list];
+      const list = this.allLists[swap.list];
       if (!list) continue;
       const keep = new Set(swap.keep);
       const kept = list.filter((e) => keep.has(parseEntry(e).word));
-      this.swaps.set(swap.list, { swap, biome, kept, slotWeight: list.length - kept.length });
+      const allowed = new Set(this.lists[swap.list]);
+      this.swaps.set(swap.list, { swap, biome, kept: kept.filter((e) => allowed.has(e)), slotWeight: list.length - kept.length });
     }
   }
   /** One entry from a swapped list: a kept entry, or a word from the biome. */
@@ -62672,7 +63930,7 @@ var WorldRenderer = class {
     var _a5;
     this.space = this.interstellar ? this.drawSpace(rng) : void 0;
     const scale = (_a5 = this.space) == null ? void 0 : _a5.scale;
-    const template = pickWeighted4(this.era.templates, rng);
+    const template = pickWeighted4(this.templates, rng);
     const piece = this.render(template, rng, 0);
     const text = piece.text.charAt(0).toUpperCase() + piece.text.slice(1);
     return { text, etymology: piece.etym, template, ...scale ? { scale } : {} };
@@ -105435,7 +106693,7 @@ var STREET_FUNCTIONS = STREET_DATA.functions;
 var STREET_ANY = STREET_DATA.any;
 var SIZE_ORDER = ["village", "town", "city", "great"];
 var isFuture3 = (era) => era === "NF" || era === "IS";
-function sizeLabel(size, era) {
+function sizeLabel2(size, era) {
   var _a5;
   const s = (_a5 = STREET_SIZES.find((x) => x.key === size)) != null ? _a5 : STREET_SIZES[1];
   return isFuture3(era) ? s.sf : s.label;
@@ -105789,7 +107047,7 @@ function generateStreetNames(options) {
   const fns = functionsForSize(size);
   let chosenFn = kind === "districts" || !kind ? options.function : void 0;
   if (chosenFn && !fns.some((f) => f.key === chosenFn)) {
-    notices.push(`\u201C${(_f = (_e3 = STREET_FUNCTIONS.find((f) => f.key === chosenFn)) == null ? void 0 : _e3.menu) != null ? _f : chosenFn}\u201D districts aren't offered for a ${sizeLabel(size, era)}.`);
+    notices.push(`\u201C${(_f = (_e3 = STREET_FUNCTIONS.find((f) => f.key === chosenFn)) == null ? void 0 : _e3.menu) != null ? _f : chosenFn}\u201D districts aren't offered for a ${sizeLabel2(size, era)}.`);
     chosenFn = void 0;
   }
   const kindWeights = kindsForSize(size).map((k) => [k.key, k.size[size]]);
@@ -114156,6 +115414,225 @@ var settlement_kit_default = {
   dedupeTries: 20
 };
 
+// src/sections.ts
+var OLD_HISTORY_PREFIXES = {
+  explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
+  empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"],
+  // Companies brief §1: the trade family's label before "guilds, companies and trade".
+  tradeGuilds: ["guilds and trading houses", "guilds, companies and trade"],
+  // The titles label before the British spelling.
+  titles: ["titles and honorifics"],
+  // Line-up brief §2.4: the deities module before the split; place rows go to sacred places.
+  deityNames: ["deities and sacred places"]
+};
+var WATERS_SECTIONS = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
+var VESSEL_SECTIONS = ["ships", "spacecraft", "aircraft", "landVehicles"];
+var THING_SECTIONS = ["armsNames", "treasureNames", "bookNames"];
+var BYNAME_SECTIONS = ["epithets", "familyNames", "titles"];
+var GROUP_NAME_SECTIONS = [
+  "mysticOrders",
+  "martialOrders",
+  "underworldGroups",
+  "tradeGuilds",
+  "adventureCompanies",
+  "powerFactions",
+  "supernaturalCourts"
+];
+var GROUP_NAMES_ORDER = ["powerFactions", "realms", "peoplesTongues", "tribalNames", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts"];
+var URBAN_SECTIONS = ["settlementNames", "streetNames", "innNames", "buildingNames", "settlementKit"];
+var SECTION_ORDER = [
+  "markov",
+  "placeShapes",
+  "explorationPlaceShapes",
+  "empireExpansionPlaceShapes",
+  "routeNames",
+  "sacredPlaces",
+  ...URBAN_SECTIONS,
+  ...WATERS_SECTIONS,
+  ...GROUP_NAMES_ORDER,
+  "deityNames",
+  ...BYNAME_SECTIONS,
+  ...VESSEL_SECTIONS,
+  ...THING_SECTIONS,
+  "nameAgeing",
+  "nameTakeover",
+  "eventNames",
+  "moneyNames",
+  "calendarNames",
+  "skyNames"
+];
+var SECTION_GROUPS = {
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "sacredPlaces"],
+  // Urban brief §1.1: straight after place names.
+  urban: URBAN_SECTIONS,
+  seasCoasts: WATERS_SECTIONS,
+  groupNames: [...GROUP_NAMES_ORDER, "deityNames"],
+  bynames: BYNAME_SECTIONS,
+  // Line-up brief §1: ships and spacecraft get a group of their own.
+  vehicles: VESSEL_SECTIONS,
+  // Named things brief §1.1.
+  namedThings: THING_SECTIONS,
+  advanced: ["nameAgeing", "nameTakeover", "eventNames", "moneyNames", "calendarNames", "skyNames"]
+};
+var GROUP_LABELS = {
+  placeNames: "place names",
+  urban: "urban",
+  seasCoasts: "seas and coasts",
+  groupNames: "group names",
+  bynames: "bynames and titles",
+  vehicles: "vehicles",
+  namedThings: "named things",
+  advanced: "advanced"
+};
+var SWITCHER_ORDER = ["markov", "placeNames", "urban", "seasCoasts", "groupNames", "bynames", "vehicles", "namedThings", "advanced"];
+function sectionGroup(section) {
+  return Object.keys(SECTION_GROUPS).find((g) => SECTION_GROUPS[g].includes(section));
+}
+var SECTION_LABELS = {
+  markov: "markov generator",
+  placeShapes: "native place names",
+  settlementNames: "settlement names",
+  routeNames: "route names",
+  streetNames: "streets and districts",
+  innNames: "inns and taverns",
+  buildingNames: "buildings and landmarks",
+  settlementKit: "settlement kit",
+  eventNames: "events and eras",
+  moneyNames: "money and coins",
+  calendarNames: "calendars and festivals",
+  skyNames: "sky lore",
+  armsNames: "arms and armour",
+  treasureNames: "treasures and regalia",
+  bookNames: "books and writings",
+  deityNames: "deities",
+  sacredPlaces: "sacred places",
+  riverNames: "river names",
+  explorationPlaceShapes: "exploration into new lands",
+  empireExpansionPlaceShapes: "expansion into settled lands",
+  nameAgeing: "name ageing",
+  nameTakeover: "name takeover",
+  tribalNames: "tribes and kin groups",
+  realms: "realms and polities",
+  peoplesTongues: "peoples and tongues",
+  mysticOrders: "faiths and mystic orders",
+  martialOrders: "armies and martial orders",
+  underworldGroups: "thieves and the underworld",
+  tradeGuilds: "guilds, companies, and trade",
+  adventureCompanies: "adventurers and explorers",
+  powerFactions: "powers and factions",
+  supernaturalCourts: "supernatural courts and hosts",
+  epithets: "epithets and bynames",
+  titles: "titles and honourifics",
+  familyNames: "family names",
+  ships: "ships and boats",
+  spacecraft: "spacecraft and stations",
+  aircraft: "aircraft and airships",
+  landVehicles: "land vehicles",
+  seasLakes: "seas and lakes",
+  coastsIslands: "coasts and islands",
+  seaCharts: "sea charts",
+  hyperspaceCharts: "hyperspace charts"
+};
+var BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
+var RIVER_NAMES_HISTORY_NAME = "river names";
+var WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
+var SETTLEMENT_NAMES_HISTORY_NAME = "settlement names";
+var TRIBAL_NAMES_HISTORY_NAME = "tribes and kin groups";
+var OLD_TRIBAL_NAMES_HISTORY_NAME = "tribal names";
+function historySection(packName) {
+  const starts = (prefix) => packName.startsWith(prefix);
+  if (starts(RIVER_NAMES_HISTORY_NAME)) return "placeShapes";
+  if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
+  if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
+  if (starts(SECTION_LABELS.routeNames)) return "routeNames";
+  if (starts(SETTLEMENT_NAMES_HISTORY_NAME)) return "settlementNames";
+  if (starts(SECTION_LABELS.streetNames)) return "streetNames";
+  if (starts(SECTION_LABELS.innNames)) return "innNames";
+  if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
+  if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
+  if (starts(SECTION_LABELS.eventNames)) return "eventNames";
+  if (starts(SECTION_LABELS.moneyNames)) return "moneyNames";
+  if (starts(SECTION_LABELS.calendarNames)) return "calendarNames";
+  if (starts(SECTION_LABELS.skyNames)) return "skyNames";
+  for (const section of THING_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  if (OLD_HISTORY_PREFIXES.deityNames.some(starts)) return packName.includes("\xB7 sacred places") ? "sacredPlaces" : "deityNames";
+  if (starts(SECTION_LABELS.deityNames)) return "deityNames";
+  if (starts(SECTION_LABELS.sacredPlaces)) return "sacredPlaces";
+  if (starts(SECTION_LABELS.realms)) return "realms";
+  if (starts(SECTION_LABELS.peoplesTongues)) return "peoplesTongues";
+  for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  for (const section of WATERS_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  if (OLD_HISTORY_PREFIXES.tradeGuilds.some(starts)) return "tradeGuilds";
+  if (OLD_HISTORY_PREFIXES.titles.some(starts)) return "titles";
+  if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
+    return "explorationPlaceShapes";
+  }
+  if (starts(SECTION_LABELS.empireExpansionPlaceShapes) || OLD_HISTORY_PREFIXES.empireExpansionPlaceShapes.some(starts)) {
+    return "empireExpansionPlaceShapes";
+  }
+  if (starts(BRITISH_PLACE_NAMES_HISTORY_NAME) || starts(PLACE_SHAPES_HISTORY_NAME) || starts(GENERIC_PLACE_NAMES_HISTORY_NAME)) {
+    return "placeShapes";
+  }
+  return "markov";
+}
+
+// src/settlement/names.ts
+function cultureLabel(options) {
+  if (options.setting !== "native") return options.setting === "new-lands" ? "Exploration" : "Expansion";
+  return !options.culture || options.culture === "britain" ? "British" : findCulture(options.culture).label;
+}
+function generateAt(options, size) {
+  var _a5;
+  const { count, seed, faithfulness, strictness } = options;
+  const settlement = { size };
+  if (options.setting === "native" && options.culture && options.culture !== "britain") {
+    const result = generateWorldPlaceNames({
+      culture: options.culture,
+      era: options.era,
+      biome: (_a5 = options.customBiome) != null ? _a5 : findBiome(options.biome),
+      terrain: options.terrain,
+      count,
+      seed,
+      faithfulness,
+      strictness,
+      settlement
+    });
+    return {
+      names: result.names.map((n) => ({ text: n.text, hasPlaceholder: false, etymology: n.etymology })),
+      seed: result.seed,
+      notices: result.notices
+    };
+  }
+  const recipe = options.setting === "native" ? britishPlaceNamesRecipe(options.region, options.customBiome ? void 0 : options.biome, options.terrain) : colonialPlaceNamesRecipe(
+    options.setting === "new-lands" ? "new-land" : "established",
+    options.tradition,
+    options.context,
+    options.customBiome ? void 0 : options.biome,
+    options.terrain,
+    options.aliens
+  );
+  return generatePlaceNames({ recipe, biome: options.customBiome, slots: {}, count, seed, faithfulness, strictness, settlement });
+}
+function generateSettlementNames(options) {
+  let failure;
+  for (const size of sizesToTry(options.size)) {
+    try {
+      const result = generateAt(options, size);
+      const notices = [...result.notices];
+      if (size !== options.size) {
+        notices.unshift(`${cultureLabel(options)} names don't run to a ${sizeLabel(options.size)}; these are ${sizeLabel(size)} names.`);
+      }
+      return { ...result, notices, size };
+    } catch (e) {
+      if (!(e instanceof Error) || !e.message.startsWith("No eligible")) throw e;
+      failure = e;
+    }
+  }
+  throw failure;
+}
+
 // src/settlement/context.ts
 function vesselCultureFor(culture) {
   return culture === "polynesian" ? "hawaiian" : culture;
@@ -114179,6 +115656,20 @@ function defaultBlocked(name) {
   const n = routeNorm(name);
   return routeBlockSet().has(n) || GROUP_DATA.safeguards.block.some((b) => normForBlock(b) === normForBlock(name)) || breaksRouteWords(name) || hasBannedWord(name);
 }
+var settlementPools = /* @__PURE__ */ new Map();
+function settlementTownPool(culture, size, region) {
+  var _a5;
+  const source = ((_a5 = findRouteCulture(culture)) == null ? void 0 : _a5.sensitive) ? void 0 : townSource(culture);
+  if (!source) return [];
+  const code = source === "britain" && PLACE_SHAPE_REGIONS.some((r) => r.code === region) ? region : void 0;
+  const key2 = `${source}|${size}|${code != null ? code : ""}`;
+  let found = settlementPools.get(key2);
+  if (!found) {
+    found = generateSettlementNames({ setting: "native", culture: source, size, region: code, count: 300, seed: 1789 }).names.map((n) => n.text).filter((n) => !n.includes("["));
+    settlementPools.set(key2, found);
+  }
+  return found;
+}
 function twoWords(vocab, pool3, o, rng, extra = []) {
   const items = poolEntries(vocab, pool3, { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region }).map(([e, w]) => [e.w, w]);
   for (const e of extra) {
@@ -114195,15 +115686,17 @@ function twoWords(vocab, pool3, o, rng, extra = []) {
   return out;
 }
 function buildContext(o, rng) {
-  var _a5, _b3, _c3, _d3, _e3, _f;
+  var _a5, _b3, _c3, _d3, _e3, _f, _g;
   const vocab = (_a5 = o.vocab) != null ? _a5 : BUILT_IN_VOCAB;
   const setting = routeSetting(o.era, o.fantastic);
   const blocked2 = (_b3 = o.blocked) != null ? _b3 : defaultBlocked;
   const taken = [];
+  const pool3 = isFuture6(o.era) ? [] : settlementTownPool(o.culture, (_c3 = o.size) != null ? _c3 : "town", o.region);
+  const holyWords = holyNamesIn(o.culture);
   const place4 = () => {
     var _a6;
     for (let i = 0; i < 200; i++) {
-      const t2 = isFuture6(o.era) ? groupTown("SF", void 0, rng) : routePlace(o.culture, setting, rng);
+      const t2 = isFuture6(o.era) ? groupTown("SF", void 0, rng) : pool3.length > 0 ? ((n) => holyWords && holyWords.test(n) ? void 0 : n)(pool3[Math.floor(rng() * pool3.length)]) : routePlace(o.culture, setting, rng);
       if (t2 && !t2.includes("[") && !blocked2(t2) && !taken.some((x) => x.toLowerCase() === t2.toLowerCase())) {
         taken.push(t2);
         return t2;
@@ -114238,8 +115731,8 @@ function buildContext(o, rng) {
   const founder2 = o.people === "invented" && people2.length > 0 ? people2[Math.floor(rng() * people2.length)] : "[founder]";
   const holy = inCultureGroup("christian", o.culture, o.era) ? groupSaint(setting, rng) : null;
   const trades = CASTE5.has(o.culture) ? null : twoWords(vocab, "streetTrades", o, rng);
-  const goods = twoWords(vocab, "streetGoods", o, rng, (_e3 = (_d3 = (_c3 = vocab.pools.routeGoods) == null ? void 0 : _c3.cultureExtra) == null ? void 0 : _d3[o.culture]) != null ? _e3 : []);
-  const deity = deityCultureOffered(o.culture) && !(isChristianCulture(o.culture, o.era) && !o.fantastic) ? (_f = deityTitle({ culture: o.culture, era: o.era, fantastic: o.fantastic, tone: o.tone, rng, vocab })) != null ? _f : null : null;
+  const goods = twoWords(vocab, "streetGoods", o, rng, (_f = (_e3 = (_d3 = vocab.pools.routeGoods) == null ? void 0 : _d3.cultureExtra) == null ? void 0 : _e3[o.culture]) != null ? _f : []);
+  const deity = deityCultureOffered(o.culture) && !(isChristianCulture(o.culture, o.era) && !o.fantastic) ? (_g = deityTitle({ culture: o.culture, era: o.era, fantastic: o.fantastic, tone: o.tone, rng, vocab })) != null ? _g : null : null;
   return {
     town: town5,
     neighbours,
@@ -114318,7 +115811,7 @@ function resolveKitOptions(o) {
   };
 }
 function kitSummary(o, realm2) {
-  const size = sizeLabel(o.size, o.era);
+  const size = sizeLabel2(o.size, o.era);
   const p = KIT_POSITIONS.find((x) => x.key === o.position);
   const where2 = isFuture7(o.era) ? p.sfSummary : p.summary;
   const the = realm2 && !/^the /i.test(realm2) ? `the ${realm2}` : realm2;
@@ -114337,7 +115830,7 @@ function generateKit(options) {
   };
   const context = {
     ...buildContext(
-      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm, scale: isFuture7(o.era) ? o.position === "crossroads" ? "Sy" : "Pl" : void 0 },
+      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", size: o.size, blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm, scale: isFuture7(o.era) ? o.position === "crossroads" ? "Sy" : "Pl" : void 0 },
       mulberry32(subSeed(o.seed, STEPS.context))
     ),
     effects: pos.effects
@@ -117914,9 +119407,9 @@ function kitSentence(state) {
   out.push(" ");
   out.push({
     field: "size",
-    text: sizeLabel(state.size, state.era),
+    text: sizeLabel2(state.size, state.era),
     title: "How big the settlement is",
-    choices: KIT_SIZES.map((s) => ({ id: s, label: sizeLabel(s, state.era) })),
+    choices: KIT_SIZES.map((s) => ({ id: s, label: sizeLabel2(s, state.era) })),
     current: state.size
   });
   out.push(" of the ");
@@ -118035,7 +119528,7 @@ function chooseKit(state, field, id) {
 }
 function kitHistoryLabel(town5, state) {
   var _a5, _b3;
-  return ["settlement kit", town5, sizeLabel(state.size, state.era), routeEraLabel(state.era), (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General"].join(" \xB7 ");
+  return ["settlement kit", town5, sizeLabel2(state.size, state.era), routeEraLabel(state.era), (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General"].join(" \xB7 ");
 }
 
 // src/buildings/sentence.ts
@@ -118461,13 +119954,13 @@ function streetSentence(state) {
     });
     out.push(", ");
   }
-  const size = sizeLabel(state.size, state.era);
+  const size = sizeLabel2(state.size, state.era);
   out.push(`for ${article2(size)} `);
   out.push({
     field: "size",
     text: size,
     title: "How big the settlement is: decides which streets, squares and districts it has",
-    choices: STREET_SIZES.map((s) => ({ id: s.key, label: sizeLabel(s.key, state.era) })),
+    choices: STREET_SIZES.map((s) => ({ id: s.key, label: sizeLabel2(s.key, state.era) })),
     current: state.size
   });
   out.push(", ");
@@ -118564,7 +120057,7 @@ function streetHistoryLabel(state) {
     routeEraLabel(state.era),
     culture,
     ...kind ? [kind.plural] : [],
-    sizeLabel(state.size, state.era),
+    sizeLabel2(state.size, state.era),
     ...state.region && showsRegion(state) ? [regionPhrase(state.region)] : [],
     ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
     ...state.tone !== "any" ? [state.tone] : [],
@@ -122586,164 +124079,20 @@ function formatAgedName(trail, format) {
   return earlier.length > 0 ? `${name} (earlier ${earlier.join(", ")}; originally ${original})` : `${name} (originally ${original})`;
 }
 
-// src/sections.ts
-var OLD_HISTORY_PREFIXES = {
-  explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
-  empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"],
-  // Companies brief §1: the trade family's label before "guilds, companies and trade".
-  tradeGuilds: ["guilds and trading houses", "guilds, companies and trade"],
-  // The titles label before the British spelling.
-  titles: ["titles and honorifics"],
-  // Line-up brief §2.4: the deities module before the split; place rows go to sacred places.
-  deityNames: ["deities and sacred places"]
-};
-var WATERS_SECTIONS = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
-var VESSEL_SECTIONS = ["ships", "spacecraft", "aircraft", "landVehicles"];
-var THING_SECTIONS = ["armsNames", "treasureNames", "bookNames"];
-var BYNAME_SECTIONS = ["epithets", "familyNames", "titles"];
-var GROUP_NAME_SECTIONS = [
-  "mysticOrders",
-  "martialOrders",
-  "underworldGroups",
-  "tradeGuilds",
-  "adventureCompanies",
-  "powerFactions",
-  "supernaturalCourts"
+// src/settlement/sentence.ts
+var SETTLEMENT_SETTINGS = [
+  { id: "native", label: "native" },
+  { id: "new-lands", label: "in new lands" },
+  { id: "settled-lands", label: "in settled lands" }
 ];
-var GROUP_NAMES_ORDER = ["powerFactions", "realms", "peoplesTongues", "tribalNames", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts"];
-var SECTION_ORDER = [
-  "markov",
-  "placeShapes",
-  "explorationPlaceShapes",
-  "empireExpansionPlaceShapes",
-  "routeNames",
-  "streetNames",
-  "innNames",
-  "buildingNames",
-  "sacredPlaces",
-  ...WATERS_SECTIONS,
-  ...GROUP_NAMES_ORDER,
-  "deityNames",
-  ...BYNAME_SECTIONS,
-  ...VESSEL_SECTIONS,
-  ...THING_SECTIONS,
-  "nameAgeing",
-  "nameTakeover",
-  "settlementKit",
-  "eventNames",
-  "moneyNames",
-  "calendarNames",
-  "skyNames"
-];
-var SECTION_GROUPS = {
-  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames", "sacredPlaces"],
-  seasCoasts: WATERS_SECTIONS,
-  groupNames: [...GROUP_NAMES_ORDER, "deityNames"],
-  bynames: BYNAME_SECTIONS,
-  // Line-up brief §1: ships and spacecraft get a group of their own.
-  vehicles: VESSEL_SECTIONS,
-  // Named things brief §1.1.
-  namedThings: THING_SECTIONS,
-  advanced: ["nameAgeing", "nameTakeover", "settlementKit", "eventNames", "moneyNames", "calendarNames", "skyNames"]
-};
-var GROUP_LABELS = {
-  placeNames: "place names",
-  seasCoasts: "seas and coasts",
-  groupNames: "group names",
-  bynames: "bynames and titles",
-  vehicles: "vehicles",
-  namedThings: "named things",
-  advanced: "advanced"
-};
-var SWITCHER_ORDER = ["markov", "placeNames", "seasCoasts", "groupNames", "bynames", "vehicles", "namedThings", "advanced"];
-function sectionGroup(section) {
-  return Object.keys(SECTION_GROUPS).find((g) => SECTION_GROUPS[g].includes(section));
-}
-var SECTION_LABELS = {
-  markov: "markov generator",
-  placeShapes: "native place names",
-  routeNames: "route names",
-  streetNames: "streets and districts",
-  innNames: "inns and taverns",
-  buildingNames: "buildings and landmarks",
-  settlementKit: "settlement kit",
-  eventNames: "events and eras",
-  moneyNames: "money and coins",
-  calendarNames: "calendars and festivals",
-  skyNames: "sky lore",
-  armsNames: "arms and armour",
-  treasureNames: "treasures and regalia",
-  bookNames: "books and writings",
-  deityNames: "deities",
-  sacredPlaces: "sacred places",
-  riverNames: "river names",
-  explorationPlaceShapes: "exploration into new lands",
-  empireExpansionPlaceShapes: "expansion into settled lands",
-  nameAgeing: "name ageing",
-  nameTakeover: "name takeover",
-  tribalNames: "tribes and kin groups",
-  realms: "realms and polities",
-  peoplesTongues: "peoples and tongues",
-  mysticOrders: "faiths and mystic orders",
-  martialOrders: "armies and martial orders",
-  underworldGroups: "thieves and the underworld",
-  tradeGuilds: "guilds, companies, and trade",
-  adventureCompanies: "adventurers and explorers",
-  powerFactions: "powers and factions",
-  supernaturalCourts: "supernatural courts and hosts",
-  epithets: "epithets and bynames",
-  titles: "titles and honourifics",
-  familyNames: "family names",
-  ships: "ships and boats",
-  spacecraft: "spacecraft and stations",
-  aircraft: "aircraft and airships",
-  landVehicles: "land vehicles",
-  seasLakes: "seas and lakes",
-  coastsIslands: "coasts and islands",
-  seaCharts: "sea charts",
-  hyperspaceCharts: "hyperspace charts"
-};
-var BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
-var RIVER_NAMES_HISTORY_NAME = "river names";
-var WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
-var TRIBAL_NAMES_HISTORY_NAME = "tribes and kin groups";
-var OLD_TRIBAL_NAMES_HISTORY_NAME = "tribal names";
-function historySection(packName) {
-  const starts = (prefix) => packName.startsWith(prefix);
-  if (starts(RIVER_NAMES_HISTORY_NAME)) return "placeShapes";
-  if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
-  if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
-  if (starts(SECTION_LABELS.routeNames)) return "routeNames";
-  if (starts(SECTION_LABELS.streetNames)) return "streetNames";
-  if (starts(SECTION_LABELS.innNames)) return "innNames";
-  if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
-  if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
-  if (starts(SECTION_LABELS.eventNames)) return "eventNames";
-  if (starts(SECTION_LABELS.moneyNames)) return "moneyNames";
-  if (starts(SECTION_LABELS.calendarNames)) return "calendarNames";
-  if (starts(SECTION_LABELS.skyNames)) return "skyNames";
-  for (const section of THING_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
-  if (OLD_HISTORY_PREFIXES.deityNames.some(starts)) return packName.includes("\xB7 sacred places") ? "sacredPlaces" : "deityNames";
-  if (starts(SECTION_LABELS.deityNames)) return "deityNames";
-  if (starts(SECTION_LABELS.sacredPlaces)) return "sacredPlaces";
-  if (starts(SECTION_LABELS.realms)) return "realms";
-  if (starts(SECTION_LABELS.peoplesTongues)) return "peoplesTongues";
-  for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
-  for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
-  for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
-  for (const section of WATERS_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
-  if (OLD_HISTORY_PREFIXES.tradeGuilds.some(starts)) return "tradeGuilds";
-  if (OLD_HISTORY_PREFIXES.titles.some(starts)) return "titles";
-  if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
-    return "explorationPlaceShapes";
-  }
-  if (starts(SECTION_LABELS.empireExpansionPlaceShapes) || OLD_HISTORY_PREFIXES.empireExpansionPlaceShapes.some(starts)) {
-    return "empireExpansionPlaceShapes";
-  }
-  if (starts(BRITISH_PLACE_NAMES_HISTORY_NAME) || starts(PLACE_SHAPES_HISTORY_NAME) || starts(GENERIC_PLACE_NAMES_HISTORY_NAME)) {
-    return "placeShapes";
-  }
-  return "markov";
+var settingLabel = (setting) => SETTLEMENT_SETTINGS.find((s) => s.id === setting).label;
+var sizeChoices = () => SETTLEMENT_SIZES.map((s) => ({ id: s.key, label: s.label.charAt(0).toUpperCase() + s.label.slice(1) }));
+function settlementSentenceText(settings, custom = []) {
+  const first = sizeLabel(settings.size);
+  const lead = `${first.charAt(0).toUpperCase()}${first.slice(1)} names, ${settingLabel(settings.setting)}: `;
+  if (settings.setting === "native") return lead + wizardSentenceText("organic", settings, custom).replace(/^[^,]*? from /, "British from ");
+  const part = settings.setting === "new-lands" ? "new-land" : "established";
+  return lead + wizardSentenceText(part, settings, custom).replace(/, naming .*$/, "");
 }
 
 // src/modal.ts
@@ -122758,6 +124107,8 @@ var withRegion = (label, regionCode) => {
 var SECTION_ICONS = {
   markov: ICON_PACKS,
   placeShapes: ICON_NATIVE_PLACE_NAMES,
+  // Urban brief §1.3: settlement names wears the urban group icon.
+  settlementNames: ICON_URBAN,
   // Route names brief §1.1.
   routeNames: ICON_ROUTES,
   // Seas and coasts brief §1.2.
@@ -122818,6 +124169,7 @@ var SECTION_ICONS = {
 };
 var GROUP_ICONS = {
   placeNames: ICON_PLACE_SHAPES,
+  urban: ICON_URBAN,
   seasCoasts: ICON_SEAS_COASTS,
   groupNames: ICON_GROUP_NAMES,
   bynames: ICON_BYNAMES,
@@ -122827,6 +124179,8 @@ var GROUP_ICONS = {
   advanced: ICON_ADVANCED
 };
 var moduleLabel = (section) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
+var PLACE_LAND_KEYS = { britain: "britain", world: (id) => `world:${id}`, interstellar: "world:interstellar" };
+var SETTLEMENT_LAND_KEYS = { britain: "settlement:british", world: (id) => `settlement:world:${id}`, interstellar: "settlement:world:interstellar" };
 var PLACE_BRITAIN = "britain";
 var PLACE_BRITISH_RIVERS = "british-rivers";
 var SESSION_HINT = "\u2190 click here for specialist modules, or here for your name packs";
@@ -123134,7 +124488,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     /** Line-up brief §2.3: the sacred places module's own choices. */
     this.sacredPlaceState = { ...DEFAULT_SACRED_PLACE_STATE };
     /** Each switcher group's last-used module (session only). */
-    this.groupModule = { placeNames: "placeShapes", seasCoasts: "seasLakes", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
+    this.groupModule = { placeNames: "placeShapes", urban: "settlementNames", seasCoasts: "seasLakes", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
     /** Land brief §8.1: river names' peoples (session only). */
     this.riverPeoples = { mode: "tribal", tradition: "general" };
@@ -123158,6 +124512,19 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     /** Stellar brief §5.8: alien life under a space biome, per colonial part (session only). */
     this.colonialAliens = { "2": false, "2a": false };
     this.selectedContext = { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] };
+    /** Urban brief §3: settlement names' own choices; changing them never changes place names or the colonial modules. Session only. */
+    this.settlementState = {
+      size: "any",
+      setting: "native",
+      culture: "britain",
+      eras: {},
+      region: void 0,
+      tradition: { "2": void 0, "2a": void 0 },
+      context: { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] },
+      aliens: { "2": false, "2a": false }
+    };
+    /** The loaded recipe preset's shape, when it is a settlement names preset (it then opens in settlement names). */
+    this.settlementPreset = void 0;
     this.contextRowEl = null;
     this.quantityToggleEl = null;
     this.generatePillEl = null;
@@ -123539,10 +124906,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     (_e3 = this.packDropdownEl) == null ? void 0 : _e3.toggle(section === "markov");
     (_f = this.sectionSentenceEl) == null ? void 0 : _f.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_g = this.editRecipeButton) == null ? void 0 : _g.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_h = this.openPresetButton) == null ? void 0 : _h.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset"));
+    (_h = this.openPresetButton) == null ? void 0 : _h.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || this.currentPackType === "recipePack" && !!this.settlementPreset));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_i = this.createPacksButton) == null ? void 0 : _i.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
     (_j = this.createPacksButton) == null ? void 0 : _j.toggle(!colonialPart && !tribal);
     (_k = this.landButton) == null ? void 0 : _k.refresh();
     (_l = this.guideButton) == null ? void 0 : _l.toggle(!!colonialPart || section === "hyperspaceCharts");
@@ -123856,6 +125223,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     else if (section === "streetNames") this.renderStreetSentence(row);
     else if (section === "innNames") this.renderInnSentence(row);
     else if (section === "buildingNames") this.renderBuildingSentence(row);
+    else if (section === "settlementNames") this.renderSettlementSentence(row);
     else if (section === "settlementKit") this.renderKitSentence(row);
     else if (section === "eventNames") this.renderEventSentence(row);
     else if (section === "moneyNames") this.renderMoneySentence(row);
@@ -123986,7 +125354,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
       (_a5 = biome == null ? void 0 : biome.guide) != null ? _a5 : "Biome: the plants, wildlife, ground and seasons",
       async () => {
         const custom = [...await this.loadCustomBiomes()].sort((x, y) => x.label.localeCompare(y.label));
-        const space = part !== "organic" && key2.startsWith("colonial:") ? SPACE_BIOMES.map((b, i) => ({ id: b.id, label: b.phrase, title: b.guide, ...i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {} })) : [];
+        const space = part !== "organic" && key2.includes("colonial:") ? SPACE_BIOMES.map((b, i) => ({ id: b.id, label: b.phrase, title: b.guide, ...i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {} })) : [];
         return [
           { id: void 0, label: defaultPhrase },
           ...[...britainAsDefault ? [] : [BRITAIN], ...BIOMES, ...custom].map((b) => {
@@ -124010,7 +125378,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
    * "‹British river› names from ‹all of Britain›", "‹Chinese› place names from the ‹Imperial› era, set in…".
    */
   renderNativeSentence(row) {
-    var _a5, _b3;
+    var _a5;
     const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     const cultures = [
       { id: PLACE_BRITAIN, label: "British" },
@@ -124022,40 +125390,65 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
       this.worldCulture = id != null ? id : PLACE_BRITAIN;
       this.refreshRiverOptions();
     });
-    if (!this.placeIsWorld()) {
-      sentence2.appendText(this.placeIsRivers() ? " names from " : " place names from ");
-      const regions = [{ id: void 0, label: "all of Britain" }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: regionPhrase(r.code), title: r.counties }))];
-      this.sentenceLink(sentence2, regionPhrase(this.selectedRegion), "Region: weights the names towards it", () => regions, this.selectedRegion, (id) => this.selectedRegion = id);
-      if (this.placeIsRivers()) return;
-      sentence2.appendText(", set in ");
-      this.landClause(sentence2, "britain", BRITAIN.phrase, "organic", true);
+    if (this.placeIsRivers()) {
+      sentence2.appendText(" names from ");
+      this.regionLink(sentence2, this.selectedRegion, (id) => this.selectedRegion = id);
       return;
     }
-    sentence2.appendText(" place names");
-    const world = findCulture(this.worldCulture);
+    this.nativeClauses(sentence2, {
+      britain: this.placeIsBritain(),
+      cultureId: this.worldCulture,
+      eras: this.worldEras,
+      region: this.selectedRegion,
+      setRegion: (id) => this.selectedRegion = id,
+      words: " place names",
+      land: PLACE_LAND_KEYS
+    });
+  }
+  /** The region link: "‹all of Britain›", "‹the North›". */
+  regionLink(sentence2, region, set) {
+    const regions = [{ id: void 0, label: "all of Britain" }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: regionPhrase(r.code), title: r.counties }))];
+    this.sentenceLink(sentence2, regionPhrase(region), "Region: weights the names towards it", () => regions, region, set);
+  }
+  /**
+   * What follows the culture link, shared by native place names and settlement names (urban brief §3):
+   * British "from ‹region›, set in ‹land›"; a world culture "from the ‹era› era, set in ‹land›".
+   * `words` is " place names" for place names and nothing for settlement names.
+   */
+  nativeClauses(sentence2, o) {
+    var _a5;
+    if (o.britain) {
+      sentence2.appendText(`${o.words} from `);
+      this.regionLink(sentence2, o.region, o.setRegion);
+      sentence2.appendText(", set in ");
+      this.landClause(sentence2, o.land.britain, BRITAIN.phrase, "organic", true);
+      return;
+    }
+    sentence2.appendText(o.words);
+    const world = findCulture(o.cultureId);
     if (world.eras.length > 1) {
-      const era = findEra(world, this.worldEras[world.id]);
+      const era = findEra(world, o.eras[world.id]);
       sentence2.appendText(" from the ");
       this.sentenceLink(
         sentence2,
         era.label,
-        (_b3 = era.guide) != null ? _b3 : "Era",
+        (_a5 = era.guide) != null ? _a5 : "Era",
         () => world.eras.map((e) => ({ id: e.id, label: e.label, title: e.guide })),
         era.id,
         (id) => {
-          if (id) this.worldEras[world.id] = id;
+          if (id) o.eras[world.id] = id;
         }
       );
       sentence2.appendText(" era");
     }
-    const worldEra = findEra(world, this.worldEras[world.id]);
+    const worldEra = findEra(world, o.eras[world.id]);
     if (!eraUsesLand(world.id, worldEra.id)) return;
     sentence2.appendText(", set in ");
     if (worldEra.id === INTERSTELLAR_ERA) {
-      this.spaceClause(sentence2, "world:interstellar");
+      this.spaceClause(sentence2, o.land.interstellar);
       return;
     }
-    this.landClause(sentence2, `world:${world.id}`, "their homeland", "new-land", false);
+    this.landClause(sentence2, o.land.world(world.id), "their homeland", "new-land", false);
   }
   /**
    * Exploration and expansion, read like the wizard's sentences: "‹General explorers› in ‹wild and
@@ -124063,12 +125456,24 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
    * the locals› across…".
    */
   renderColonialSentence(row, part) {
-    var _a5, _b3, _c3, _d3;
     const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    this.colonialClauses(sentence2, part, {
+      tradition: this.selectedTradition[part],
+      setTradition: (id) => this.selectedTradition[part] = id,
+      context: this.selectedContext[part],
+      setContext: (id) => this.selectedContext[part] = id,
+      aliens: this.colonialAliens[part],
+      setAliens: (on) => this.colonialAliens[part] = on,
+      landKey: `colonial:${part}`
+    });
+  }
+  /** Exploration's and expansion's clauses, shared with settlement names (urban brief §3). */
+  colonialClauses(sentence2, part, o) {
+    var _a5, _b3, _c3, _d3;
     const phrase = part === "2" ? explorersPhrase : incomersPhrase;
     const tradition = COLONIAL_TRADITIONS.find((t) => {
       var _a6;
-      return t.id === ((_a6 = this.selectedTradition[part]) != null ? _a6 : "general");
+      return t.id === ((_a6 = o.tradition) != null ? _a6 : "general");
     });
     this.sentenceLink(
       sentence2,
@@ -124076,33 +125481,196 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
       tradition.guide,
       () => COLONIAL_TRADITIONS.filter((t) => isTraditionAvailable(t.id, part)).map((t) => ({ id: t.id, label: phrase(t.id, t.label), title: t.guide })),
       tradition.id,
-      (id) => this.selectedTradition[part] = id === "general" ? void 0 : id
+      (id) => o.setTradition(id === "general" ? void 0 : id)
     );
     sentence2.appendText(part === "2" ? " in " : " who are ");
-    const spaceBiome = (_a5 = findBiome(this.land(`colonial:${part}`).biome, this.customBiomes)) == null ? void 0 : _a5.space;
+    const spaceBiome = (_a5 = findBiome(this.land(o.landKey).biome, this.customBiomes)) == null ? void 0 : _a5.space;
     const contexts = contextPhrasesFor(part, !!spaceBiome).filter(([id]) => colonialContexts(part).some((c) => c.id === id));
-    const context = (_b3 = contexts.find(([id]) => id === this.selectedContext[part])) != null ? _b3 : contexts[0];
+    const context = (_b3 = contexts.find(([id]) => id === o.context)) != null ? _b3 : contexts[0];
     this.sentenceLink(
       sentence2,
       context[1],
       (_d3 = (_c3 = colonialContexts(part).find((c) => c.id === context[0])) == null ? void 0 : _c3.label) != null ? _d3 : "",
       () => contexts.map(([id, text]) => ({ id, label: text })),
       context[0],
-      (id) => this.selectedContext[part] = id
+      o.setContext
     );
     sentence2.appendText(" across ");
-    this.landClause(sentence2, `colonial:${part}`, UNKNOWN_COUNTRY, part === "2" ? "new-land" : "established", false);
+    this.landClause(sentence2, o.landKey, UNKNOWN_COUNTRY, part === "2" ? "new-land" : "established", false);
     if (spaceBiome) {
       sentence2.appendText(", with ");
       this.sentenceLink(
         sentence2,
-        ALIEN_CHOICES[this.colonialAliens[part] ? 1 : 0].label,
+        ALIEN_CHOICES[o.aliens ? 1 : 0].label,
         "Alien life: whether native-people and local-god slots name aliens, and half of native places become alien places",
         () => ALIEN_CHOICES.map((c) => ({ id: c.id, label: c.label })),
-        this.colonialAliens[part] ? "on" : "off",
-        (id) => this.colonialAliens[part] = id === "on"
+        o.aliens ? "on" : "off",
+        (id) => o.setAliens(id === "on")
       );
     }
+  }
+  /**
+   * Settlement names (urban brief §3): "‹Village› names, ‹in new lands›: ‹General explorers› in ‹wild and
+   * unsettled lands› across ‹any part› of ‹unknown country›". After the colon, the source module's own clauses.
+   */
+  renderSettlementSentence(row) {
+    var _a5, _b3;
+    const s = this.settlementState;
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    const size = (_a5 = sizeChoices().find((c) => c.id === s.size)) != null ? _a5 : sizeChoices()[0];
+    this.sentenceLink(
+      sentence2,
+      size.label,
+      "Size: steers the names towards a hamlet, village, town, city or great city",
+      () => sizeChoices().map((c) => ({ id: c.id, label: c.label })),
+      s.size,
+      (id) => s.size = id != null ? id : "any"
+    );
+    sentence2.appendText(" names, ");
+    this.sentenceLink(
+      sentence2,
+      settingLabel(s.setting),
+      "Setting: native place names, exploration into new lands, or expansion into settled lands",
+      () => SETTLEMENT_SETTINGS.map((c) => ({ id: c.id, label: c.label })),
+      s.setting,
+      (id) => s.setting = id != null ? id : "native"
+    );
+    sentence2.appendText(": ");
+    if (s.setting === "native") {
+      const cultures = [{ id: PLACE_BRITAIN, label: "British" }, ...WORLD_CULTURES.map((c) => ({ id: c.id, label: c.label, title: c.guide }))];
+      const culture = (_b3 = cultures.find((c) => c.id === s.culture)) != null ? _b3 : cultures[0];
+      this.sentenceLink(sentence2, culture.label, "Culture", () => cultures, s.culture, (id) => s.culture = id != null ? id : PLACE_BRITAIN);
+      this.nativeClauses(sentence2, {
+        britain: culture.id === PLACE_BRITAIN,
+        cultureId: s.culture,
+        eras: s.eras,
+        region: s.region,
+        setRegion: (id) => s.region = id,
+        words: "",
+        land: SETTLEMENT_LAND_KEYS
+      });
+      return;
+    }
+    const part = s.setting === "new-lands" ? "2" : "2a";
+    this.colonialClauses(sentence2, part, {
+      tradition: s.tradition[part],
+      setTradition: (id) => s.tradition[part] = id,
+      context: s.context[part],
+      setContext: (id) => s.context[part] = id,
+      aliens: s.aliens[part],
+      setAliens: (on) => s.aliens[part] = on,
+      landKey: `settlement:colonial:${part}`
+    });
+  }
+  /** Whether the settlement names setup can be saved as a preset: British, in new lands or in settled lands (urban brief §8). */
+  settlementPresetable() {
+    const s = this.settlementState;
+    return s.setting !== "native" || s.culture === PLACE_BRITAIN;
+  }
+  /**
+   * Urban brief §3, §8: settlement names, run through the source module's engine with the size.
+   * History: "settlement names · ‹size› · ‹the source module's label without its base name›".
+   */
+  async runSettlementNames() {
+    var _a5;
+    const s = this.settlementState;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
+    await this.loadCustomBiomes();
+    const base = { size: s.size, count: this.generationCount, seed: seedOverride, faithfulness: this.plugin.settings.faithfulness, strictness: this.plugin.settings.strictness };
+    let options;
+    let tail;
+    if (s.setting === "native" && s.culture === PLACE_BRITAIN) {
+      const land = this.land(SETTLEMENT_LAND_KEYS.britain);
+      const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
+      options = { ...base, setting: "native", culture: "britain", region: s.region, biome: (biome == null ? void 0 : biome.custom) ? void 0 : land.biome, customBiome: (biome == null ? void 0 : biome.custom) ? biome : void 0, terrain: land.terrain };
+      tail = withRegion("British", s.region) + landHistorySuffix(land, this.customBiomes);
+    } else if (s.setting === "native") {
+      const era = s.eras[s.culture];
+      const interstellar = findEra(findCulture(s.culture), era).id === INTERSTELLAR_ERA;
+      const key2 = interstellar ? SETTLEMENT_LAND_KEYS.interstellar : cultureUsesBiomes(s.culture) ? SETTLEMENT_LAND_KEYS.world(s.culture) : void 0;
+      const land = key2 ? this.land(key2) : DEFAULT_LAND;
+      options = { ...base, setting: "native", culture: s.culture, era, customBiome: findBiome(land.biome, this.customBiomes), terrain: land.terrain };
+      tail = worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, s.culture, era).slice(WORLD_PLACE_NAMES_HISTORY_NAME.length + 3) + landHistorySuffix(land, this.customBiomes);
+    } else {
+      const part = s.setting === "new-lands" ? "2" : "2a";
+      const land = this.land(`settlement:colonial:${part}`);
+      const found = findBiome(land.biome, this.customBiomes);
+      const custom = (found == null ? void 0 : found.custom) ? await this.readyBiome(found) : void 0;
+      const biome = custom ? void 0 : land.biome;
+      options = { ...base, setting: s.setting, tradition: s.tradition[part], context: s.context[part], biome, customBiome: custom, terrain: land.terrain, aliens: !!(found == null ? void 0 : found.space) && s.aliens[part] };
+      tail = colonialHistoryLabel(settingLabel(s.setting), part, s.tradition[part], s.context[part], custom ? void 0 : biome) + landHistorySuffix(land, this.customBiomes, !!custom) + ((found == null ? void 0 : found.space) && s.aliens[part] ? " \xB7 alien life" : "");
+    }
+    const result = this.tryLand(() => generateSettlementNames(options));
+    if (!result) return;
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(result.names, "module");
+    await this.recordGenerationHistory(result.names.length, `${SETTLEMENT_NAMES_HISTORY_NAME} \xB7 ${sizeLabel(result.size)} \xB7 ${tail}`);
+    this.setStatus(result.notices.join(" "));
+  }
+  /** Urban brief §8: a settlement names preset, saved as the source module's recipe with the size. */
+  async openSaveSettlementPreset() {
+    const s = this.settlementState;
+    if (!this.settlementPresetable()) return;
+    const custom = await this.loadCustomBiomes();
+    const colonialPart = s.setting === "native" ? void 0 : s.setting === "new-lands" ? "2" : "2a";
+    const land = this.land(colonialPart ? `settlement:colonial:${colonialPart}` : SETTLEMENT_LAND_KEYS.britain);
+    const found = findBiome(land.biome, custom);
+    const biome = found ? found.custom ? `[[${found.label}]]` : found.id : void 0;
+    const tradition = colonialPart ? s.tradition[colonialPart] : void 0;
+    const context = colonialPart ? s.context[colonialPart] : void 0;
+    const aliens = !!colonialPart && !!(found == null ? void 0 : found.space) && s.aliens[colonialPart];
+    const recipe = colonialPart ? colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, aliens) : britishPlaceNamesRecipe(s.region, biome, land.terrain);
+    recipe.shape.settlement = s.size;
+    const nameParts = colonialPart ? (() => {
+      var _a5;
+      const t = COLONIAL_TRADITIONS.find((x) => x.id === (tradition != null ? tradition : "general"));
+      return [settingLabel(s.setting), traditionLabel(colonialPart, t.id, t.label), (_a5 = colonialContexts(colonialPart).find((c) => c.id === context)) == null ? void 0 : _a5.label.toLowerCase()];
+    })() : ["British", regionPhrase(s.region), found ? biomeInline(found) : void 0];
+    const name = [sizeLabel(s.size), ...nameParts].filter(Boolean).join(" \xB7 ");
+    const description = settlementSentenceText({ size: s.size, setting: s.setting, region: s.region, tradition, context, biome, terrain: land.terrain, aliens }, custom);
+    new PresetSaveModal(this.app, name, `${description}.`, async (presetName, text) => {
+      if (!presetName) {
+        new import_obsidian14.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = `---
+${(0, import_obsidian14.stringifyYaml)(recipeToFrontmatter(recipe))}---
+
+${text}
+`;
+      return this.writePreset(presetName, content, (existing) => isRecipeContent(existing) && !parseRecipeContent(existing).recipe.template);
+    }).open();
+  }
+  /** Urban brief §8: loading a settlement names preset opens settlement names with its setting, size and choices. */
+  async openSettlementPreset(shape, from) {
+    var _a5, _b3, _c3;
+    const s = this.settlementState;
+    s.size = (_b3 = (_a5 = SETTLEMENT_SIZES.find((x) => x.key === shape.settlement)) == null ? void 0 : _a5.key) != null ? _b3 : "any";
+    let biome = shape.biome && shape.biome !== "unknown" ? shape.biome : void 0;
+    if (biome == null ? void 0 : biome.startsWith("[[")) {
+      const name = biome.slice(2, -2);
+      const target = this.app.metadataCache.getFirstLinkpathDest(name, from);
+      const found = (await this.loadCustomBiomes()).find((b) => {
+        var _a6;
+        return ((_a6 = b.custom) == null ? void 0 : _a6.path) === (target == null ? void 0 : target.path) || b.label === name;
+      });
+      biome = (_c3 = found == null ? void 0 : found.custom) == null ? void 0 : _c3.path;
+    }
+    const land = { biome, terrain: shape.terrain || "any" };
+    if (shape.part === "organic") {
+      s.setting = "native";
+      s.culture = PLACE_BRITAIN;
+      s.region = PLACE_SHAPE_REGIONS.some((r) => r.code === shape.region) ? shape.region : void 0;
+      this.landStates[SETTLEMENT_LAND_KEYS.britain] = land;
+    } else {
+      const part = shape.part === "new-land" ? "2" : "2a";
+      s.setting = part === "2" ? "new-lands" : "settled-lands";
+      s.tradition[part] = shape.tradition && shape.tradition !== "general" ? shape.tradition : void 0;
+      s.context[part] = shape.context || CONTEXT_PHRASES[part][0][0];
+      s.aliens[part] = !!shape.aliens;
+      this.landStates[`settlement:colonial:${part}`] = land;
+    }
+    this.switchSection("settlementNames");
   }
   /** Name ageing: "Age the name towards ‹target pack›". */
   renderAgeingSentence(row) {
@@ -124218,6 +125786,11 @@ ${n.origin}${also}${echo}` };
   }
   /** Presets brief §9: "Open in tribes and kin groups" applies the preset's choices for this session. */
   async openPresetInModule() {
+    var _a5;
+    if (this.currentPackType === "recipePack" && this.settlementPreset) {
+      await this.openSettlementPreset(this.settlementPreset, (_a5 = this.currentRecipePath) != null ? _a5 : "");
+      return;
+    }
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian14.TFile)) return;
     const { preset, group, byname, vessel, waters, realm: realm2, route: route3, street, inn, building, kit, event, money, time, thing, peoples, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
@@ -126364,12 +127937,16 @@ ${n.origin}${also}${echo}` };
     var _a5;
     const section = this.activeSection;
     (_a5 = this.savePresetButton) == null ? void 0 : _a5.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementNames" && this.settlementPresetable() || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
   async openSavePreset() {
     var _a5;
+    if (this.activeSection === "settlementNames") {
+      await this.openSaveSettlementPreset();
+      return;
+    }
     const groupFamily = familyForSection(this.activeSection);
     if (groupFamily) {
       this.openSaveGroupPreset(groupFamily);
@@ -127530,7 +129107,7 @@ ${text}
     this.setStatus(problems.join(" "));
   }
   async loadRecipePack(file) {
-    var _a5, _b3, _c3;
+    var _a5, _b3, _c3, _d3, _e3, _f;
     this.currentPackType = "recipePack";
     this.currentRecipePath = file.path;
     this.currentPresetPath = void 0;
@@ -127548,7 +129125,10 @@ ${text}
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
     this.updatePackDropdownTrigger(file.path, "recipePack");
-    const { problems } = parseRecipeContent(await this.app.vault.cachedRead(file));
+    const { problems, recipe } = parseRecipeContent(await this.app.vault.cachedRead(file));
+    this.settlementPreset = ((_d3 = recipe.shape) == null ? void 0 : _d3.settlement) ? recipe.shape : void 0;
+    (_e3 = this.openPresetButton) == null ? void 0 : _e3.toggle(this.activeSection === "markov" && !!this.settlementPreset);
+    if (this.settlementPreset) (_f = this.openPresetButton) == null ? void 0 : _f.setAttribute("title", `Open in ${SECTION_LABELS.settlementNames}`);
     this.setStatus(problems.join(" "));
   }
   async runRecipe() {
@@ -127843,6 +129423,10 @@ ${text}
   }
   async generateSelectedCount() {
     var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j;
+    if (this.activeSection === "settlementNames") {
+      await this.runSettlementNames();
+      return;
+    }
     if (this.activeSection === "placeShapes" && this.placeIsBritain()) {
       const seedOverride2 = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
       const land = this.land("britain");
@@ -127890,9 +129474,9 @@ ${text}
         result2.names.map((n) => ({ text: n.text, hasPlaceholder: n.hasPlaceholder, etymology: "" })),
         "none"
       );
-      const settingLabel = british ? "British" : RIVER_SETTINGS.find((s) => s.id === setting).label;
+      const settingLabel2 = british ? "British" : RIVER_SETTINGS.find((s) => s.id === setting).label;
       const peoples = this.riverPeoples.mode === "placeholder" ? " \xB7 peoples as placeholders" : "";
-      const label = `${RIVER_NAMES_HISTORY_NAME} \xB7 ${settingLabel}${biome ? ` \xB7 ${biomeInline(biome)}` : ""}${peoples}`;
+      const label = `${RIVER_NAMES_HISTORY_NAME} \xB7 ${settingLabel2}${biome ? ` \xB7 ${biomeInline(biome)}` : ""}${peoples}`;
       await this.recordGenerationHistory(result2.names.length, british ? withRegion(label, region) : label);
       this.setStatus((_c3 = result2.notice) != null ? _c3 : "");
       return;

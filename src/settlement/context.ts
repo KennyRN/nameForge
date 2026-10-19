@@ -15,6 +15,10 @@ import {
   pickWeighted,
 } from "../groups/engine";
 import { generateRealmNames, REALM_DATA, REALM_ERAS } from "../realms/engine";
+import { holyNamesIn, townSource } from "../bynames/engine";
+import { PLACE_SHAPE_REGIONS } from "../placeShapes";
+import { generateSettlementNames } from "./names";
+import type { SizeKey } from "./data";
 import { breaksRouteWords, findRouteCulture, personNames, routeBlockSet, routeNorm, routePlace, routeSetting, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, inCultureGroup, poolEntries, type Vocabulary } from "./vocab";
 import type { SpaceScale } from "../space/scale";
@@ -34,6 +38,8 @@ export interface ContextOptions {
   tone?: GroupToneChoice;
   /** §3: a village skips the realm half the time. */
   village?: boolean;
+  /** Urban brief §7: the kit's size, so the town and its neighbours are settlement names of that size (default a town). */
+  size?: Exclude<SizeKey, "any" | "hamlet">;
   /** The settlement's place-name block lists (every module's): a town matching one is redrawn. */
   blocked?: (name: string) => boolean;
   vocab?: Vocabulary;
@@ -78,6 +84,28 @@ function defaultBlocked(name: string): boolean {
   );
 }
 
+const settlementPools = new Map<string, string[]>();
+
+/**
+ * Urban brief §7: 300 settlement names at seed 1789 for the culture's town source (British or a world
+ * culture's first era), at the kit's size; cached by culture, size and region. Empty where the culture
+ * has no town source or is a sensitive one, which keep the old path.
+ */
+export function settlementTownPool(culture: string, size: Exclude<SizeKey, "any" | "hamlet">, region?: string): string[] {
+  const source = findRouteCulture(culture)?.sensitive ? undefined : townSource(culture);
+  if (!source) return [];
+  // British only, and only a place-shape region code; anything else is all of Britain.
+  const code = source === "britain" && PLACE_SHAPE_REGIONS.some((r) => r.code === region) ? region : undefined;
+  const key = `${source}|${size}|${code ?? ""}`;
+  let found = settlementPools.get(key);
+  if (!found) {
+    // The size's fallback notices are not shown in the kit.
+    found = generateSettlementNames({ setting: "native", culture: source, size, region: code, count: 300, seed: 1789 }).names.map((n) => n.text).filter((n) => !n.includes("["));
+    settlementPools.set(key, found);
+  }
+  return found;
+}
+
 /** §3: two different words from a pool for the culture and era. */
 function twoWords(vocab: Vocabulary, pool: string, o: ContextOptions, rng: () => number, extra: { w: string }[] = []): string[] {
   const items = poolEntries(vocab, pool, { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region }).map(([e, w]): [string, number] => [e.w, w]);
@@ -101,10 +129,17 @@ export function buildContext(o: ContextOptions, rng: () => number): SettlementCo
   const setting = routeSetting(o.era, o.fantastic);
   const blocked = o.blocked ?? defaultBlocked;
   const taken: string[] = [];
+  const pool = isFuture(o.era) ? [] : settlementTownPool(o.culture, o.size ?? "town", o.region);
+  const holyWords = holyNamesIn(o.culture);
   // §3: a real name even in placeholder mode; in NF–IS, a station or colony name (GN §8.4 SF row).
   const place = (): string => {
     for (let i = 0; i < 200; i++) {
-      const t = isFuture(o.era) ? groupTown("SF", undefined, rng) : routePlace(o.culture, setting, rng);
+      // Urban brief §7: settlement names where the culture has them; otherwise route names' invented places.
+      const t = isFuture(o.era)
+        ? groupTown("SF", undefined, rng)
+        : pool.length > 0
+          ? ((n) => (holyWords && holyWords.test(n) ? undefined : n))(pool[Math.floor(rng() * pool.length)])
+          : routePlace(o.culture, setting, rng);
       if (t && !t.includes("[") && !blocked(t) && !taken.some((x) => x.toLowerCase() === t.toLowerCase())) {
         taken.push(t);
         return t;
