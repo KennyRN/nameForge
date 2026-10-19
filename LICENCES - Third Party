@@ -18,6 +18,7 @@ Icons from the sets below are sourced via [Iconify](https://iconify.design) and 
 | Akar Icons             | Arturo Wibawa                   | MIT        | Retain notice         |
 | IconOven               | Appic Marketing                 | MIT        | Retain notice         |
 | Phosphor Icons         | Phosphor Icons                  | MIT        | Retain notice         |
+| Font Awesome Free      | Fonticons, Inc.                 | CC BY 4.0  | Credit and link       |
 | Pinhead Icons          | Quincy Morgan (Wayside Mapping) | CC0 1.0    | None (public domain)  |
 
 ---
@@ -518,6 +519,18 @@ of which appears once at the end of this section.
 	   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	   See the License for the specific language governing permissions and
 	   limitations under the License.
+
+---
+
+## Creative Commons Attribution icon set
+
+### Font Awesome Free (solid icons)
+- Author: Fonticons, Inc.
+- Source: https://fontawesome.com / https://github.com/FortAwesome/Font-Awesome
+- Licence: Creative Commons Attribution 4.0 International (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/
+- Copyright: Font Awesome Free by @fontawesome, https://fontawesome.com. Copyright Fonticons, Inc.
+- Changes: the icons were converted to inline SVG fragments, with the background rectangle removed where present, and scaled and repositioned to fit Obsidian's 100×100 icon box. Their shapes are unchanged.
+- Used for: the advanced cogs, recipe map, vehicles, sea charts anchor, spacecraft, monument, tavern tankard, guild scales and previous-generations icons, among others (see the comments in src/icons.ts).
 
 ---
 
