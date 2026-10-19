@@ -128403,6 +128403,7 @@ var settlement_kit_default = {
     squares: { village: 1, town: 2, city: 3, great: 4 },
     inns: { village: 1, town: 3, city: 5, great: 7 },
     buildings: { village: 3, town: 6, city: 9, great: 12 },
+    monuments: { village: 1, town: 2, city: 3, great: 4 },
     groups: { village: 1, town: 4, city: 7, great: 10 },
     ships: { village: 2, town: 3, city: 4, great: 6 },
     history: { village: 2, town: 3, city: 4, great: 5 },
@@ -128416,6 +128417,7 @@ var settlement_kit_default = {
     { key: "squares", title: "Squares and markets", step: 7 },
     { key: "inns", title: "Inns", step: 8 },
     { key: "buildings", title: "Buildings and landmarks", step: 4 },
+    { key: "monuments", title: "Monuments", step: 12 },
     { key: "groups", title: "Groups", step: 9 },
     { key: "neighbours", title: "Neighbouring settlements", step: 12 },
     { key: "history", title: "History", step: 11 },
@@ -128635,7 +128637,7 @@ function shipsModule(position, era) {
   return "ships";
 }
 var norm3 = (s) => s.toLowerCase().replace(/^the /, "").trim();
-var STEPS = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10, history: 11, neighbours: 12 };
+var STEPS = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10, history: 11, neighbours: 12, monuments: 12 };
 var LANDMARK_KINDS = ["defence", "crossing", "water"];
 var THROUGH_KINDS = ["road", "drove", "trade"];
 var subSeed = (seed, step, rerolls = 0) => step * KIT_DATA.seedStep + seed + rerolls * KIT_DATA.rerollStep >>> 0;
@@ -128665,7 +128667,7 @@ function kitSummary(o, realm2) {
   return `${/^[aeiou]/i.test(size) ? "an" : "a"} ${size}${where2 ? ` ${where2}` : ""}${the ? `, in ${the}` : ""}`;
 }
 function generateKit(options) {
-  var _a5, _b3, _c3, _d3, _e3, _f, _g;
+  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m;
   const o = resolveKitOptions(options);
   const rerolls = { ...(_a5 = options.rerolls) != null ? _a5 : {} };
   const notices = [];
@@ -128770,8 +128772,23 @@ function generateKit(options) {
   if (buildingsWanted > 0) {
     run("buildings", buildingsWanted, buildingRun);
     if (!kept.has("buildings")) patronSaint(sections.get("buildings"));
-    context.landmarks = kept.has("buildings") ? options.keep.landmarks : landmarksOf(sections.get("buildings").entries);
   }
+  const monumentInfo = /* @__PURE__ */ new Map();
+  for (const m of (_h = (_g = options.keep) == null ? void 0 : _g.monuments) != null ? _h : []) monumentInfo.set(m.text, { site: m.site, districtWorthy: m.districtWorthy });
+  const monumentsWanted = want("monuments");
+  if (monumentsWanted > 0) {
+    run("monuments", monumentsWanted, (seed, count) => {
+      const b = generateMonumentNames({ ...common, series: true, setting: pos.setting, count, seed, safeguards: g.monument, honourees: options.honourees });
+      for (const n of b.names) monumentInfo.set(n.text, { site: n.site, districtWorthy: n.districtWorthy });
+      return { names: b.names.map((n) => ({ text: n.text, kind: n.kind })), notices: b.notices };
+    });
+  }
+  const monumentEntries = (_j = (_i = sections.get("monuments")) == null ? void 0 : _i.entries) != null ? _j : [];
+  context.monuments = monumentEntries.map((e) => {
+    var _a6;
+    return { text: e.text, ...(_a6 = monumentInfo.get(e.text)) != null ? _a6 : { site: e.text.replace(/^the /, ""), districtWorthy: false } };
+  });
+  context.landmarks = [...landmarksOf((_l = (_k = sections.get("buildings")) == null ? void 0 : _k.entries) != null ? _l : []), ...monumentLandmarksOf(monumentEntries)];
   const street = (kind) => (seed, count) => generateStreetNames({ ...common, kind, size: o.size, series: true, count, seed, safeguards: g.street, routeSafeguards: g.route, landmarkSafeguards: g.building });
   if (want("districts") > 0) run("districts", want("districts"), street("districts"));
   if (want("streets") > 0) {
@@ -128811,7 +128828,7 @@ function generateKit(options) {
   const module2 = shipsModule(o.position, o.era);
   if (module2 && want("ships") > 0) {
     const vesselCulture = VESSEL_CULTURES.some((c) => c.key === context.vesselCulture) ? context.vesselCulture : "general";
-    const technology = (_g = KIT_DATA.vessels[module2][o.era]) != null ? _g : module2 === "ships" ? "T7" : "S3";
+    const technology = (_m = KIT_DATA.vessels[module2][o.era]) != null ? _m : module2 === "ships" ? "T7" : "S3";
     const fn = (isFuture8(o.era) && o.position === "crossroads" ? "any" : pos.ships) === "working" ? "working" : void 0;
     run("ships", want("ships"), (seed, count) => {
       const b = generateVesselNames({ module: module2, culture: vesselCulture, technology, function: fn, genre: groupGenreFor(o.era), fantastic: o.fantastic, tone: o.tone, people: o.people, count, seed, safeguards: g.vessel, context });
@@ -128897,11 +128914,15 @@ function generateKit(options) {
     sections.set("groups", { key: "groups", title: "Groups", entries, wanted });
   }
 }
+function monumentLandmarksOf(entries) {
+  return entries.map((e) => e.text.replace(/^the /, "")).filter((t) => t.split(" ").length <= 3);
+}
 function landmarksOf(entries) {
   return entries.filter((e) => LANDMARK_KINDS.includes(e.kind)).map((e) => e.text.replace(/^the /, "")).filter((t) => t.split(" ").length <= 3);
 }
 function rerollTargets(key2) {
   if (key2 === "roads" || key2 === "buildings") return [key2, "streets", "inns"];
+  if (key2 === "monuments") return [key2, "districts", "streets", "squares", "inns"];
   return [key2];
 }
 function rerollKit(kit, key2, options = {}) {
@@ -128909,10 +128930,12 @@ function rerollKit(kit, key2, options = {}) {
   const rerolls = { ...kit.rerolls };
   for (const k of rerollTargets(key2)) rerolls[k] = ((_a5 = rerolls[k]) != null ? _a5 : 0) + 1;
   const redo = rerollTargets(key2);
-  const keep = { sections: kit.sections.filter((s) => s.key !== "neighbours" && !redo.includes(s.key)), ruler: kit.ruler, throughRoute: kit.context.throughRoute, landmarks: kit.context.landmarks };
+  const keep = { sections: kit.sections.filter((s) => s.key !== "neighbours" && !redo.includes(s.key)), ruler: kit.ruler, throughRoute: kit.context.throughRoute, landmarks: kit.context.landmarks, monuments: kit.context.monuments };
   const next = generateKit({ ...kit.options, ...options, rerolls, keep });
   const others = rerollTargets(key2).filter((k) => k !== key2 && next.sections.some((s) => s.key === k));
-  const note2 = others.length > 0 ? `${others.map((k) => KIT_DATA.sections.find((s) => s.key === k).title.toLowerCase()).join(" and ").replace(/^./, (c) => c.toUpperCase())} were redone to match.` : void 0;
+  const names = others.map((k) => k === "squares" ? "squares" : KIT_DATA.sections.find((s) => s.key === k).title.toLowerCase());
+  const list = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names.join("");
+  const note2 = others.length > 0 ? `${list.replace(/^./, (c) => c.toUpperCase())} were redone to match.` : void 0;
   return { kit: next, note: note2 };
 }
 

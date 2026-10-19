@@ -1,0 +1,248 @@
+{
+ "kit norman-british town 1": {
+  "roads": [
+   "Cloth and Cattle Road",
+   "Cloth and Lead Road",
+   "Cloth and Corn Road"
+  ],
+  "groups": [
+   "Poor Friars of the Lamb",
+   "Proctors of the Straits",
+   "the Needlemakers' Guild",
+   "the Black Table"
+  ],
+  "history": [
+   "Founding of Old Court",
+   "Reign of the Strong Earl",
+   "Sir's Succession"
+  ]
+ },
+ "kit norman-british town 2": {
+  "roads": [
+   "Salt Way",
+   "Wool Way",
+   "Gold Way"
+  ],
+  "groups": [
+   "the Gate Order",
+   "the Bridge Homestead Watch",
+   "Honourable Company of Salters",
+   "the Ivory Table"
+  ],
+  "history": [
+   "Founding of Bridge Homestead",
+   "Age of Dawn",
+   "Flood of Oak Stream"
+  ]
+ },
+ "kit norman-british town 3": {
+  "roads": [
+   "Sacred Way to the Holy Well",
+   "Sacred Way to the Oracle",
+   "Calf Clearing Street"
+  ],
+  "groups": [
+   "Sisters of the Blessed Lantern",
+   "the Big Farmstead Watch",
+   "Guild of Tanners",
+   "Big Farmstead Conclave"
+  ],
+  "history": [
+   "Founding of Big Farmstead",
+   "Years of Frontier",
+   "War of the Two Queens"
+  ]
+ },
+ "kit norman-british village 1": {
+  "roads": [
+   "Cloth and Cattle Road",
+   "Cloth and Lead Road"
+  ],
+  "groups": [
+   "Poor Friars of the Lamb"
+  ],
+  "history": [
+   "Reign of the Strong Earl",
+   "Sir's Succession"
+  ]
+ },
+ "kit norman-british village 2": {
+  "roads": [
+   "Salt Way",
+   "Spice Way"
+  ],
+  "groups": [
+   "the Gate Order"
+  ],
+  "history": [
+   "Age of Dawn",
+   "Year of Drought"
+  ]
+ },
+ "kit norman-british village 3": {
+  "roads": [
+   "Sacred Way to the Holy Well",
+   "Honeyhouse Street"
+  ],
+  "groups": [
+   "Sisters of the Blessed Lantern"
+  ],
+  "history": [
+   "Years of Frontier",
+   "War of the Two Queens"
+  ]
+ },
+ "kit chinese city 1": {
+  "roads": [
+   "Merchants' Way",
+   "Saltmen's Way",
+   "Packmen's Way",
+   "Pedlars' Way"
+  ],
+  "groups": [
+   "Poor Friars of the Lamb",
+   "Proctors of the Narrows",
+   "the Painters' Guild",
+   "the Black Table",
+   "House [house]",
+   "the Sweeps",
+   "[commander]'s Oxen"
+  ],
+  "history": [
+   "Founding of Order Prefecture",
+   "Period of the Hundred Kingdoms",
+   "Eighth Time of Anarchy",
+   "Siege of Order Prefecture"
+  ]
+ },
+ "kit chinese city 2": {
+  "roads": [
+   "Salt Way",
+   "Lead Way",
+   "Milk Way",
+   "Silk Way"
+  ],
+  "groups": [
+   "the Gate Order",
+   "the Lasting Order Watch",
+   "Honourable Company of Salters",
+   "the Ivory Table",
+   "Jade Ocean Merchants",
+   "the Bell Alley Lads",
+   "Crown Bears"
+  ],
+  "history": [
+   "Founding of Lasting Order",
+   "Years of Dawn",
+   "Flood of Universal Peace",
+   "Year of Five Dukes"
+  ]
+ },
+ "kit chinese city 3": {
+  "roads": [
+   "Sacred Way to the Holy Well",
+   "Sacred Way to the Standing Stones",
+   "Sacred Way to the Oracle",
+   "Hold the East Road"
+  ],
+  "groups": [
+   "Sisters of the Blessed Lantern",
+   "the Subdue the South Watch",
+   "Guild of Vintners",
+   "Subdue the South Conclave",
+   "[surname] & [surname]",
+   "the Copper Sashes",
+   "45th Garrison"
+  ],
+  "history": [
+   "Founding of Subdue the South",
+   "Period of the Twelve Kingdoms",
+   "[people] War",
+   "Battle of the Field"
+  ]
+ },
+ "kit japanese great 1": {
+  "roads": [
+   "Spice and Horse Road",
+   "Spice and Cloth Road",
+   "Spice and Silk Road",
+   "Spice and Salt Road",
+   "Spice and Gold Road"
+  ],
+  "groups": [
+   "Poor Friars of the Lamb",
+   "Proctors of the Narrows",
+   "the Painters' Guild",
+   "the Black Table",
+   "House [house]",
+   "the Sweeps",
+   "[commander]'s Oxen",
+   "Ancient Company of Potters",
+   "Guild of Liberators",
+   "Society for Quiet Remembrance"
+  ],
+  "history": [
+   "Founding of Capital of Brightness and Tranquillity",
+   "Long Peace Era",
+   "Rising of the [people]",
+   "[people] War",
+   "Exodus"
+  ]
+ },
+ "kit japanese great 2": {
+  "roads": [
+   "Salt Way",
+   "Wool Way",
+   "Rice Way",
+   "Cloth Way",
+   "Amber Way"
+  ],
+  "groups": [
+   "the Gate Order",
+   "the Capital of Virtue and Prosperity Watch",
+   "Honourable Company of Salters",
+   "the Ivory Table",
+   "Jade Ocean Merchants",
+   "the Bell Alley Lads",
+   "Crown Bears",
+   "Worshipful Company of Shipwrights",
+   "Guild of Finders",
+   "the Six Chairs"
+  ],
+  "history": [
+   "Founding of Capital of Virtue and Prosperity",
+   "Iron Age",
+   "[people] War",
+   "Rising of the [people]",
+   "the Sundering"
+  ]
+ },
+ "kit japanese great 3": {
+  "roads": [
+   "Marsh Way",
+   "Fell Way",
+   "Downs Way",
+   "Hill Way",
+   "Fen Way"
+  ],
+  "groups": [
+   "Sisters of the Blessed Lantern",
+   "the Small Slope Watch",
+   "Guild of Vintners",
+   "Small Slope Conclave",
+   "[surname] & [surname]",
+   "the Copper Sashes",
+   "45th Garrison",
+   "Guild of Bellfounders",
+   "the Hunters' Pavilion",
+   "Society of the Second Glove"
+  ],
+  "history": [
+   "Founding of Small Slope",
+   "[dynasty] Period",
+   "Rising of the [people]",
+   "[people] War",
+   "Breaking of the Salt Wells"
+  ]
+ }
+}

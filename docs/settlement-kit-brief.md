@@ -455,3 +455,7 @@ Added by the events and eras brief (§10): a **History** section after Groups (c
 ## Deities back-link
 
 Added by the deities and sacred places brief (§10.4): the context gains `deity`, one invented deity title drawn last (so every other field is unchanged), null for christian cultures in a realistic world and for the sensitive cultures. The faith group's and the faith building's deity shapes use it.
+
+## Monuments back-link
+
+Added by the monuments and statues brief (§12): a **Monuments** section (1 village, 2 town, 3 city, 4 great; brief and full as for the other sections) is generated straight after Buildings and listed straight after "Buildings and landmarks", in contents "the whole settlement" and "its places only". It runs the monuments module as one town in the kit's setting with the context, on its own sub-seed (step 12), so every other section keeps its sub-seed; the kit shows names only (no "named after"). The context gains `monuments: { text, site, districtWorthy }[]`, and `landmarks` is now the buildings' defence, crossing and water entries plus the monuments, each of 3 words or fewer without "the"; inside a kit, streets, squares and districts take monument sites and landmarks only from the context. At a crossroads the position's `buildingKindX` loses `monument` and gains `monumentKindX: { cross: 1.5, stone: 1.5 }`. Rerolling Monuments redoes Monuments, Districts, Streets, Squares and Inns; rerolling Buildings still redoes Buildings, Streets and Inns.

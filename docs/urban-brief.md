@@ -18,7 +18,8 @@ Its modules, top to bottom:
 | 2 | streets and districts | `streetNames` | place names |
 | 3 | inns and taverns | `innNames` | place names |
 | 4 | buildings and landmarks | `buildingNames` | place names |
-| 5 | settlement kit | `settlementKit` | advanced |
+| 5 | monuments and statues | `monumentNames` (new, monuments brief) | – |
+| 6 | settlement kit | `settlementKit` | advanced |
 
 Streets, inns and buildings keep their current order relative to each other. The group opens on settlement names the first time; after that it remembers the last module used, as every group does.
 
@@ -192,3 +193,7 @@ Expect the kit's existing seeded tests to change their town names. Update those 
 ## Notes
 
 - **2026-10-19:** settlement names with one of five terrains (mountains, forest, wetland, plains, hills) now draws 60% of its names from the wild lands modules (`docs/wild-lands-brief.md` §10); every other terrain, and the settlement kit, are unchanged.
+
+## Monuments line-up note
+
+Added by the monuments and statues brief (§1.1): the urban group now has six modules, in order: settlement names · streets and districts · inns and taverns · buildings and landmarks · monuments and statues (`monumentNames`) · settlement kit. Monuments and statues takes the monument icon buildings and landmarks wore; buildings and landmarks wears a city gate.

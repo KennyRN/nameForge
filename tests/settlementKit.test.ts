@@ -8,6 +8,7 @@ import { generateRouteNames, ROUTE_CULTURES, ROUTE_ERAS, routeBlockSet, routeNor
 import { generateStreetNames, streetBlockSet } from "../src/streets/engine";
 import { generateInnNames, innBlockForms, innBlockSet } from "../src/inns/engine";
 import { buildingBlockSet, generateBuildingNames } from "../src/buildings/engine";
+import { generateMonumentNames, monumentBlockSet } from "../src/monuments/engine";
 import { generateGroupNames, GROUP_DATA, normForBlock } from "../src/groups/engine";
 import { generateBynames } from "../src/bynames/engine";
 import { generateVesselNames } from "../src/vessels/engine";
@@ -67,9 +68,9 @@ test("§13.1: holy only for christian cultures; trades null for indian and west-
 
 // ── §13.2 Engines with context ──────────────────────────────────────────────
 
-const DATA = ["route-names", "street-names", "inn-names", "building-names", "group-names", "bynames", "vessels"].map((f) => [f, JSON.parse(readFileSync(`src/data/${f}.json`, "utf8"))] as const);
+const DATA = ["route-names", "street-names", "inn-names", "building-names", "monument-names", "group-names", "bynames", "vessels"].map((f) => [f, JSON.parse(readFileSync(`src/data/${f}.json`, "utf8"))] as const);
 
-test("§13.2: every pattern with {town} in the seven engines is marked self or not", () => {
+test("§13.2: every pattern with {town} in the eight engines is marked self or not", () => {
   for (const [file, data] of DATA) assert.deepEqual(unmarkedTownPatterns(data), [], file);
 });
 
@@ -106,12 +107,13 @@ test("§13.2: with a context, self shapes name the settlement and the rest its n
         add("streets", generateStreetNames({ culture: "norman-british", era, people, count: 10, seed, context: ctx }).names);
         add("inns", generateInnNames({ culture: "norman-british", era, people, count: 10, seed, context: ctx }).names);
         add("buildings", generateBuildingNames({ culture: "norman-british", era, people, count: 10, seed, context: ctx }).names);
+        add("monuments", generateMonumentNames({ culture: "norman-british", era, people, count: 10, seed, context: ctx }).names);
       }
       for (const family of ["martial", "trade", "power", "underworld"]) add("groups", generateGroupNames({ family, tradition: ctx.tradition, people, count: 10, seed, context: ctx }).names);
       add("bynames", generateBynames({ module: "titles", culture: "norman-british", kind: "office", count: 10, seed, context: ctx }).names);
       add("vessels", generateVesselNames({ module: "ships", culture: "norman-british", people, count: 10, seed, context: ctx }).names);
     }
-    for (const label of ["routes", "inns", "buildings", "groups", "bynames"]) assert.ok(counts[label].self > 0, `${people} ${label}: no self shapes`);
+    for (const label of ["routes", "inns", "buildings", "monuments", "groups", "bynames"]) assert.ok(counts[label].self > 0, `${people} ${label}: no self shapes`);
     for (const label of ["routes", "streets"]) assert.ok(counts[label].other > 0, `${people} ${label}: no neighbours`);
   }
 });
@@ -140,7 +142,7 @@ test("§13.2: without a context, every engine's output matches the fixture exact
 
 // ── §13.3–§13.6 The kit ─────────────────────────────────────────────────────
 
-import { generateKit, KIT_DETAILS, KIT_SIZES, rerollKit, sectionCount, type Kit, type KitSectionKey } from "../src/settlement/kit";
+import { generateKit, KIT_DATA, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, rerollKit, rerollTargets, sectionCount, sectionsFor, type Kit, type KitSectionKey } from "../src/settlement/kit";
 import { kitMarkdown } from "../src/settlement/kitFormat";
 import { SETTLEMENT_VOCAB } from "../src/settlement/vocab";
 
@@ -152,7 +154,7 @@ test("§13.3: section counts follow §5.1 for every size × detail (a shortfall 
     for (const detail of KIT_DETAILS) {
       for (const seed of [1, 2]) {
         const kit = generateKit({ culture: "norman-british", size, detail, position: "coast", people: "invented", seed });
-        for (const key of ["roads", "districts", "streets", "squares", "inns", "buildings", "groups", "history", "ships"] as KitSectionKey[]) {
+        for (const key of ["roads", "districts", "streets", "squares", "inns", "buildings", "monuments", "groups", "history", "ships"] as KitSectionKey[]) {
           const wanted = sectionCount(key, size, detail, "coast");
           const got = texts(kit, key).length;
           const where = `${size} ${detail} ${key}: ${got} of ${wanted}`;
@@ -185,7 +187,7 @@ test("§13.3: a village has no districts; places only and people only; inland ha
 const BOTH = (kit: Kit, text: string) =>
   (!!kit.context.throughRoute && text === kit.context.throughRoute) || kit.context.landmarks.some((l) => text.replace(/^the /, "") === l || text === `the ${l} Inn`);
 
-test("§13.4: the road through town is in Roads (and Streets from 8); landmarks are buildings; the patron saint; no name twice", () => {
+test("§13.4: the road through town is in Roads (and Streets from 8); landmarks are buildings and monuments; the patron saint; no name twice", () => {
   for (let seed = 1; seed <= 25; seed++) {
     for (const culture of ["norman-british", "slavic", "japanese", "general"]) {
       const kit = generateKit({ culture, people: seed % 2 ? "invented" : "placeholders", position: seed % 3 ? "river" : "crossroads", seed });
@@ -194,7 +196,7 @@ test("§13.4: the road through town is in Roads (and Streets from 8); landmarks 
       assert.ok(through, where);
       assert.ok(section(kit, "roads")!.entries.some((e) => e.text === through && e.through), where);
       if (texts(kit, "streets").length >= 8) assert.ok(texts(kit, "streets").includes(through!), where);
-      const buildings = texts(kit, "buildings").map((t) => t.replace(/^the /, ""));
+      const buildings = [...texts(kit, "buildings"), ...texts(kit, "monuments")].map((t) => t.replace(/^the /, ""));
       for (const l of kit.context.landmarks) assert.ok(buildings.includes(l), where);
       if (culture === "norman-british" || culture === "slavic") assert.ok(texts(kit, "buildings").some((t) => t.includes(kit.context.holy!)), where);
       const all = kit.sections.flatMap((s) => s.entries.map((e) => e.text)).filter((t) => !BOTH(kit, t));
@@ -244,7 +246,7 @@ test("§13.6: rerolling Roads changes the road through town and redoes streets a
     assert.equal(note, "Streets and inns were redone to match.");
     assert.notEqual(next.context.throughRoute, kit.context.throughRoute, `${seed}`);
     assert.notDeepEqual(texts(next, "streets"), texts(kit, "streets"));
-    for (const key of ["districts", "squares", "buildings", "groups", "ships"] as KitSectionKey[]) assert.deepEqual(texts(next, key), texts(kit, key), `${seed} ${key}`);
+    for (const key of ["districts", "squares", "buildings", "monuments", "groups", "ships"] as KitSectionKey[]) assert.deepEqual(texts(next, key), texts(kit, key), `${seed} ${key}`);
     assert.equal(next.context.town, kit.context.town);
     assert.equal(next.ruler, kit.ruler);
   }
@@ -419,4 +421,123 @@ test("Events §10: rerolling History redoes only History", () => {
   assert.equal(note, undefined);
   assert.notDeepEqual(texts(next, "history"), texts(kit, "history"));
   for (const s of kit.sections) if (s.key !== "history") assert.deepEqual(texts(next, s.key), texts(kit, s.key), s.key);
+});
+
+// ── Monuments brief §12: the Monuments section ──────────────────────────────
+
+test("Monuments §12.1: counts 1, 2, 3, 4 by size (brief ×0.5, full ×1.5, rounded up); the section follows Buildings and not 'people only'", () => {
+  assert.deepEqual(KIT_SIZES.map((size) => sectionCount("monuments", size, "standard")), [1, 2, 3, 4]);
+  assert.deepEqual(KIT_SIZES.map((size) => sectionCount("monuments", size, "brief")), [1, 1, 2, 2]);
+  assert.deepEqual(KIT_SIZES.map((size) => sectionCount("monuments", size, "full")), [2, 3, 5, 6]);
+  assert.deepEqual(KIT_DATA.sections.filter((s) => ["buildings", "monuments", "groups"].includes(s.key)).map((s) => s.key), ["buildings", "monuments", "groups"]);
+  assert.equal(KIT_DATA.sections.find((s) => s.key === "monuments")!.title, "Monuments");
+  assert.ok(sectionsFor("whole", "inland", "MD").includes("monuments") && sectionsFor("places", "inland", "MD").includes("monuments"));
+  assert.ok(!sectionsFor("people", "inland", "MD").includes("monuments"));
+  for (const size of KIT_SIZES) {
+    const kit = generateKit({ culture: "norman-british", era: "ST", size, people: "invented", seed: 4 });
+    assert.equal(texts(kit, "monuments").length, sectionCount("monuments", size, "standard"), size);
+    const keys = kit.sections.map((s) => s.key);
+    assert.equal(keys[keys.indexOf("buildings") + 1], "monuments");
+    assert.ok(kitMarkdown(kit).includes("### Buildings and landmarks"));
+    const md = kitMarkdown(kit).split("\n").filter((l) => l.startsWith("### "));
+    assert.equal(md[md.indexOf("### Buildings and landmarks") + 1], "### Monuments");
+  }
+  assert.equal(generateKit({ culture: "norman-british", contents: "people", seed: 2 }).sections.some((s) => s.key === "monuments"), false);
+});
+
+test("Monuments §12.1: Monuments takes sub-seed step 12 and every other section keeps its sub-seed (Roads, Groups and History as before)", () => {
+  const before = JSON.parse(readFileSync("tests/fixtures/kit-before-monuments.json", "utf8")) as Record<string, { roads: string[]; groups: string[]; history: string[] }>;
+  let checked = 0;
+  for (const [culture, size] of [["norman-british", "town"], ["norman-british", "village"], ["chinese", "city"], ["japanese", "great"]] as const) {
+    for (const seed of [1, 2, 3]) {
+      const kit = generateKit({ culture, size, seed });
+      const saved = before[`kit ${culture} ${size} ${seed}`];
+      assert.deepEqual(texts(kit, "roads"), saved.roads, `${culture} ${size} ${seed} roads`);
+      assert.deepEqual(texts(kit, "groups"), saved.groups, `${culture} ${size} ${seed} groups`);
+      assert.deepEqual(texts(kit, "history"), saved.history, `${culture} ${size} ${seed} history`);
+      checked++;
+    }
+  }
+  assert.equal(checked, 12);
+});
+
+test("Monuments §12.2: a town kit has 2 monuments, as one town, passing the safeguards; its landmarks include them (3 words or fewer, without \"the\")", () => {
+  const block = monumentBlockSet();
+  for (let seed = 1; seed <= 25; seed++) {
+    const kit = generateKit({ culture: "norman-british", era: seed % 2 ? "ST" : "MD", size: "town", people: "invented", seed });
+    const monuments = texts(kit, "monuments");
+    assert.equal(monuments.length, 2, `${seed}: ${monuments.join(", ")}`);
+    assert.deepEqual(kit.context.monuments.map((m) => m.text), monuments);
+    for (const m of kit.context.monuments) {
+      assert.ok(m.site.length > 0 && typeof m.districtWorthy === "boolean");
+      assert.ok(!block.has(routeNorm(m.text).replace(/^the /, "")), m.text);
+      const bare = m.text.replace(/^the /, "");
+      if (bare.split(" ").length <= 3) assert.ok(kit.context.landmarks.includes(bare), `${seed}: ${bare}`);
+    }
+    for (const l of kit.context.landmarks) assert.ok(l.split(" ").length <= 3 && !/^the /.test(l), l);
+    const all = kit.sections.flatMap((s) => s.entries.map((e) => e.text)).filter((t) => !BOTH(kit, t));
+    const keys = all.map((t) => t.toLowerCase().replace(/^the /, ""));
+    assert.equal(new Set(keys).size, keys.length, kitMarkdown(kit));
+  }
+});
+
+test("Monuments §12.2: inside a kit, districts, streets and squares take monument sites only from the context", () => {
+  let used = 0;
+  for (let seed = 1; seed <= 40; seed++) {
+    const kit = generateKit({ culture: "norman-british", era: "ST", size: "city", people: "invented", seed });
+    const ctx = kit.context;
+    const sites = ctx.monuments.map((m) => m.site);
+    for (const [kind, shape] of [["streets", "{monumentSite} {sw}"], ["squares", "{monumentSite} {jw}"], ["districts", "{monumentSite}"], ["districts", "{monumentSite} {dw}"]] as const) {
+      for (const n of generateStreetNames({ culture: "norman-british", era: "ST", kind, size: "city", people: "invented", shape, count: 3, seed, context: ctx }).names) {
+        const site = n.words.find((w) => w.pool === "monumentSite")?.word;
+        assert.ok(site && sites.includes(site), `${n.text}: ${site} not in ${sites.join(", ")}`);
+        if (shape === "{monumentSite}") assert.ok(ctx.monuments.some((m) => m.site === site && m.districtWorthy), n.text);
+        used++;
+      }
+    }
+    // {landmark} is one of the settlement's own landmarks, monuments included.
+    for (const n of generateStreetNames({ culture: "norman-british", era: "ST", kind: "streets", people: "invented", shape: "{landmark} {sw}", count: 3, seed, context: ctx }).names) {
+      assert.ok(ctx.landmarks.some((l) => n.plain.startsWith(`${l} `)), n.text);
+    }
+  }
+  assert.ok(used > 50, `${used}`);
+});
+
+test("Monuments §12.3: Monuments redoes Monuments, Districts, Streets, Squares and Inns; Buildings still redoes Buildings, Streets and Inns", () => {
+  assert.deepEqual(rerollTargets("monuments"), ["monuments", "districts", "streets", "squares", "inns"]);
+  assert.deepEqual(rerollTargets("buildings"), ["buildings", "streets", "inns"]);
+  for (let seed = 1; seed <= 10; seed++) {
+    const kit = generateKit({ culture: "norman-british", era: "ST", size: "city", people: "invented", position: "river", seed });
+    const { kit: next, note } = rerollKit(kit, "monuments");
+    assert.equal(note, "Districts, streets, squares and inns were redone to match.");
+    assert.notDeepEqual(texts(next, "monuments"), texts(kit, "monuments"), `${seed}`);
+    for (const key of ["roads", "buildings", "groups", "history", "ships"] as KitSectionKey[]) assert.deepEqual(texts(next, key), texts(kit, key), `${seed} ${key}`);
+    assert.deepEqual(next.context.monuments.map((m) => m.text), texts(next, "monuments"));
+    assert.equal(next.context.town, kit.context.town);
+    const b = rerollKit(kit, "buildings");
+    assert.deepEqual(texts(b.kit, "monuments"), texts(kit, "monuments"), `${seed}`);
+    assert.deepEqual(texts(b.kit, "districts"), texts(kit, "districts"), `${seed}`);
+    assert.deepEqual(texts(b.kit, "squares"), texts(kit, "squares"), `${seed}`);
+    assert.deepEqual(b.kit.context.monuments, kit.context.monuments);
+    // The landmarks are the new buildings' plus the kept monuments'.
+    for (const m of kit.context.monuments) {
+      const bare = m.text.replace(/^the /, "");
+      if (bare.split(" ").length <= 3) assert.ok(b.kit.context.landmarks.includes(bare), bare);
+    }
+  }
+});
+
+test("Monuments §12.3: at a crossroads, crosses and standing stones are ×1.5; the kit's setting reaches the monuments", () => {
+  const eff = KIT_POSITIONS.find((p) => p.key === "crossroads")!.effects;
+  assert.deepEqual(eff.monumentKindX, { cross: 1.5, stone: 1.5 });
+  assert.deepEqual(eff.buildingKindX, { crossing: 1.5 });
+  assert.ok(!("monument" in (eff.buildingKindX ?? {})));
+  // The effect scales the kind weights the monuments engine draws from.
+  const at = (x?: Record<string, number>) => {
+    const ctx = { ...ctxFor("norman-british", "MD", "invented", 3), effects: x ? { monumentKindX: x } : undefined };
+    let n = 0;
+    for (let seed = 1; seed <= 120; seed++) n += generateMonumentNames({ culture: "norman-british", era: "MD", people: "invented", count: 6, seed, context: ctx }).names.filter((m) => m.kind === "cross" || m.kind === "stone").length;
+    return n;
+  };
+  assert.ok(at({ cross: 1.5, stone: 1.5 }) > at());
 });

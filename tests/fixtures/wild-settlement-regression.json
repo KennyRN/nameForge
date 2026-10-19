@@ -1344,6 +1344,10 @@
     "Saint Elfrida's Church"
    ],
    [
+    "[monarch]'s Memorial",
+    "[monarch]'s Arch"
+   ],
+   [
     "Poor Friars of the Lamb",
     "Proctors of the Straits",
     "the Needlemakers' Guild",
@@ -1374,8 +1378,8 @@
    ],
    [
     "Old Town",
-    "Lower Town",
-    "Barracks Precinct"
+    "Golden Tomb",
+    "Kiln End"
    ],
    [
     "High Street",
@@ -1403,6 +1407,10 @@
     "Bridge Homestead Gatehouse",
     "Bridge Homestead Forge",
     "Bridge Homestead Sanctuary"
+   ],
+   [
+    "Statue of [founder]",
+    "the Golden Tomb"
    ],
    [
     "the Gate Order",
@@ -1466,6 +1474,10 @@
     "Big Farmstead Kiln"
    ],
    [
+    "High Cross",
+    "Big Farmstead Arch"
+   ],
+   [
     "Sisters of the Blessed Lantern",
     "the Big Farmstead Watch",
     "Guild of Tanners",
@@ -1511,6 +1523,9 @@
     "New Lookout Fort"
    ],
    [
+    "the Giant"
+   ],
+   [
     "Poor Friars of the Lamb"
    ],
    [
@@ -1552,6 +1567,9 @@
     "Flax Farm Fort"
    ],
    [
+    "Tomb of [founder]"
+   ],
+   [
     "the Gate Order"
    ],
    [
@@ -1591,6 +1609,9 @@
     "Copper Bastion",
     "Little Warm Valley Cathedral",
     "Little Warm Valley Cistern"
+   ],
+   [
+    "Red Column"
    ],
    [
     "Sisters of the Blessed Lantern"
@@ -1642,7 +1663,7 @@
    [
     "Market Square",
     "Prince's Square",
-    "King's Square"
+    "[monarch] Green"
    ],
    [
     "Inn of Peace and Plenty",
@@ -1661,6 +1682,11 @@
     "Order Prefecture Library",
     "Violet Bridge",
     "Osprey Light"
+   ],
+   [
+    "[monarch]'s Memorial",
+    "Stone Leopards",
+    "the Leaning Column"
    ],
    [
     "Poor Friars of the Lamb",
@@ -1706,7 +1732,7 @@
    [
     "Long Street",
     "Queen's Row",
-    "Autumn Moon Tower Row",
+    "Broken Well Row",
     "Bridge Row",
     "Gardens Alley",
     "Staithe Lane",
@@ -1739,6 +1765,11 @@
     "the Broken Well",
     "[founder]'s Gaol",
     "the Burnt Forge"
+   ],
+   [
+    "[owner]'s Stone",
+    "Lasting Order Memorial",
+    "Statue of [monarch]"
    ],
    [
     "the Gate Order",
@@ -1778,8 +1809,8 @@
     "Inner City",
     "4th Ward",
     "Citadel End",
-    "Merchant Nations' Town",
-    "82nd Ward"
+    "Red Column",
+    "Outer City"
    ],
    [
     "Long Street",
@@ -1789,7 +1820,7 @@
     "Monastery Road",
     "King's Road",
     "Hall Way",
-    "Dragon Spring Street",
+    "Statue of [founder] Street",
     "Bakers Street",
     "Hold the East Road",
     "Vintners Street",
@@ -1817,6 +1848,11 @@
     "Dragon Spring",
     "Queen's Lock-Up",
     "Subdue the South School"
+   ],
+   [
+    "Red Column",
+    "Mound of King",
+    "Statue of [founder]"
    ],
    [
     "Sisters of the Blessed Lantern",
@@ -1864,6 +1900,7 @@
    ],
    [
     "Long Street",
+    "Stone Lamb Way",
     "Wharf Row",
     "Third Block",
     "Warehouse Street",
@@ -1873,18 +1910,17 @@
     "West Road",
     "Leather Lane",
     "Fifth Block",
-    "Silk Street",
     "Spice and Horse Road",
+    "Dyers' Court",
     "Shrine Lane",
     "East Row",
-    "Shrine Street",
-    "Sixth Block"
+    "Shrine Street"
    ],
    [
     "Market Square",
     "Prince's Square",
-    "Ford Place",
-    "Smithy Square"
+    "[monarch] Green",
+    "Eighth-Day Market"
    ],
    [
     "Golden Crane Inn",
@@ -1908,6 +1944,12 @@
     "Capital of Brightness and Tranquillity Gaol",
     "Capital of Brightness and Tranquillity Bastion",
     "Capital of Brightness and Tranquillity Toll House"
+   ],
+   [
+    "[monarch]'s Memorial",
+    "the Stone Lamb",
+    "Obelisk of [founder]",
+    "Column of [founder]"
    ],
    [
     "Poor Friars of the Lamb",
@@ -1960,7 +2002,7 @@
    [
     "Long Street",
     "Salt Row",
-    "Amber Crane Castle Row",
+    "Broken Well Row",
     "Bridge Row",
     "Lord's Lane",
     "Oracle Street",
@@ -1979,7 +2021,7 @@
     "Market Square",
     "Wool Market",
     "Rice Court",
-    "New Market"
+    "[owner]'s Stone Green"
    ],
    [
     "Capital of Virtue and Prosperity Inn",
@@ -2003,6 +2045,12 @@
     "Capital of Virtue and Prosperity School",
     "[founder]'s Customs House",
     "King's Hermitage"
+   ],
+   [
+    "[owner]'s Stone",
+    "Capital of Virtue and Prosperity Memorial",
+    "Statue of [monarch]",
+    "Capital of Virtue and Prosperity Mound"
    ],
    [
     "the Gate Order",
@@ -2047,10 +2095,10 @@
     "Castle Town",
     "Kiln End",
     "Coopers' End",
-    "Barracks Town",
-    "Hill Town",
+    "King's Arch",
     "Post Town",
-    "Palace Precinct"
+    "Temple Town",
+    "[monarch] Ward"
    ],
    [
     "Long Street",
@@ -2061,7 +2109,7 @@
     "Monastery Road",
     "Corn Road",
     "Hall Way",
-    "Dragon Spring Street",
+    "Long Obelisk Street",
     "Back Lane",
     "Cattle Row",
     "Well Lane",
@@ -2074,7 +2122,7 @@
     "Market Square",
     "Third-Day Market",
     "Monastery Court",
-    "Rice Hall"
+    "King's Arch Green"
    ],
    [
     "Maple Inn",
@@ -2098,6 +2146,12 @@
     "Palace of [dynasty]",
     "the Drowned Toll House",
     "Little Shrine"
+   ],
+   [
+    "Red Column",
+    "Tomb of [monarch]",
+    "King's Arch",
+    "the Long Obelisk"
    ],
    [
     "Sisters of the Blessed Lantern",

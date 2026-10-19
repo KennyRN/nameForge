@@ -5,6 +5,7 @@
 
 import kitData from "../data/settlement-kit.json";
 import { generateBuildingNames, type BuildingKind } from "../buildings/engine";
+import { generateMonumentNames } from "../monuments/engine";
 import { generateEventNames, type EventKind } from "../events/engine";
 import { generateBynames } from "../bynames/engine";
 import { GROUP_FAMILIES, generateGroupNames, groupSetting, type GroupPeople, type GroupSafeguards, type GroupToneChoice, typesInSetting } from "../groups/engine";
@@ -22,7 +23,7 @@ export type KitSize = StreetSize;
 export type KitPosition = "inland" | "river" | "coast" | "crossroads";
 export type KitContents = "whole" | "places" | "people";
 export type KitDetail = "brief" | "standard" | "full";
-export type KitSectionKey = "roads" | "districts" | "streets" | "squares" | "inns" | "buildings" | "groups" | "neighbours" | "history" | "ships";
+export type KitSectionKey = "roads" | "districts" | "streets" | "squares" | "inns" | "buildings" | "monuments" | "groups" | "neighbours" | "history" | "ships";
 
 interface PositionData {
   key: KitPosition;
@@ -105,7 +106,7 @@ export interface KitOptions {
   /** §6 step 4: tells the kit which place names a module's block lists hold (for the town). */
   blocked?: (name: string) => boolean;
   /** §8.4: sections kept as they are (a reroll redoes only the others), with the ruler, road and landmarks. */
-  keep?: { sections: KitSection[]; ruler: string | null; throughRoute: string | null; landmarks: string[] };
+  keep?: { sections: KitSection[]; ruler: string | null; throughRoute: string | null; landmarks: string[]; monuments?: SettlementContext["monuments"] };
 }
 
 export interface KitEntry {
@@ -178,8 +179,9 @@ export function shipsModule(position: KitPosition, era: RouteEra): VesselModule 
 // ── Generation (§6) ─────────────────────────────────────────────────────────
 
 const norm = (s: string) => s.toLowerCase().replace(/^the /, "").trim();
-// Events brief §10: History runs after Groups and before Ships, on a step of its own.
-const STEPS: Record<KitSectionKey | "context" | "ruler", number> = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10, history: 11, neighbours: 12 };
+// Events brief §10: History runs after Groups and before Ships, on a step of its own. Monuments brief §12.1: Monuments
+// takes step 12 (neighbours is drawn with the context and never seeds a step), so every other section keeps its sub-seed.
+const STEPS: Record<KitSectionKey | "context" | "ruler", number> = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10, history: 11, neighbours: 12, monuments: 12 };
 const LANDMARK_KINDS: BuildingKind[] = ["defence", "crossing", "water"];
 /** §3: the route kinds that run through a town. */
 const THROUGH_KINDS = ["road", "drove", "trade"];
@@ -330,15 +332,28 @@ export function generateKit(options: KitOptions): Kit {
     }
   }
 
-  // 4. Buildings, then the landmarks streets and inns may name.
+  // 4. Buildings, then Monuments (Monuments brief §12.1), then the landmarks streets and inns may name.
   const buildingRun = (seed: number, count: number) =>
     generateBuildingNames({ ...common, series: true, setting: pos.setting, count, seed, safeguards: g.building });
   const buildingsWanted = want("buildings");
   if (buildingsWanted > 0) {
     run("buildings", buildingsWanted, buildingRun);
     if (!kept.has("buildings")) patronSaint(sections.get("buildings")!);
-    context.landmarks = kept.has("buildings") ? options.keep!.landmarks : landmarksOf(sections.get("buildings")!.entries);
   }
+  // Monuments run as one town, in the kit's setting, with the context; the kit shows names only (no "named after").
+  const monumentInfo = new Map<string, { site: string; districtWorthy: boolean }>();
+  for (const m of options.keep?.monuments ?? []) monumentInfo.set(m.text, { site: m.site, districtWorthy: m.districtWorthy });
+  const monumentsWanted = want("monuments");
+  if (monumentsWanted > 0) {
+    run("monuments", monumentsWanted, (seed, count) => {
+      const b = generateMonumentNames({ ...common, series: true, setting: pos.setting, count, seed, safeguards: g.monument, honourees: options.honourees });
+      for (const n of b.names) monumentInfo.set(n.text, { site: n.site, districtWorthy: n.districtWorthy });
+      return { names: b.names.map((n) => ({ text: n.text, kind: n.kind })), notices: b.notices };
+    });
+  }
+  const monumentEntries = sections.get("monuments")?.entries ?? [];
+  context.monuments = monumentEntries.map((e) => ({ text: e.text, ...(monumentInfo.get(e.text) ?? { site: e.text.replace(/^the /, ""), districtWorthy: false }) }));
+  context.landmarks = [...landmarksOf(sections.get("buildings")?.entries ?? []), ...monumentLandmarksOf(monumentEntries)];
 
   // 5–7. Districts, streets, squares and markets: SD's kinds, as one town.
   const street = (kind: "districts" | "streets" | "squares") => (seed: number, count: number) =>
@@ -487,6 +502,11 @@ export function generateKit(options: KitOptions): Kit {
   }
 }
 
+/** Monuments brief §12.2: the monuments of 3 words or fewer, without "the". */
+export function monumentLandmarksOf(entries: KitEntry[]): string[] {
+  return entries.map((e) => e.text.replace(/^the /, "")).filter((t) => t.split(" ").length <= 3);
+}
+
 /** §3: the buildings' defences, crossings and water of 3 words or fewer, without "the". */
 export function landmarksOf(entries: KitEntry[]): string[] {
   return entries
@@ -500,6 +520,8 @@ export function landmarksOf(entries: KitEntry[]): string[] {
 /** §8.4: the sections a reroll redoes (Roads and Buildings also redo Streets and Inns). */
 export function rerollTargets(key: KitSectionKey): KitSectionKey[] {
   if (key === "roads" || key === "buildings") return [key, "streets", "inns"];
+  // Monuments brief §12.3: the monuments, and everything that takes their sites or names.
+  if (key === "monuments") return [key, "districts", "streets", "squares", "inns"];
   return [key];
 }
 
@@ -508,9 +530,12 @@ export function rerollKit(kit: Kit, key: KitSectionKey, options: Omit<KitOptions
   const rerolls = { ...kit.rerolls };
   for (const k of rerollTargets(key)) rerolls[k] = (rerolls[k] ?? 0) + 1;
   const redo = rerollTargets(key);
-  const keep = { sections: kit.sections.filter((s) => s.key !== "neighbours" && !redo.includes(s.key)), ruler: kit.ruler, throughRoute: kit.context.throughRoute, landmarks: kit.context.landmarks };
+  const keep = { sections: kit.sections.filter((s) => s.key !== "neighbours" && !redo.includes(s.key)), ruler: kit.ruler, throughRoute: kit.context.throughRoute, landmarks: kit.context.landmarks, monuments: kit.context.monuments };
   const next = generateKit({ ...kit.options, ...options, rerolls, keep });
   const others = rerollTargets(key).filter((k) => k !== key && next.sections.some((s) => s.key === k));
-  const note = others.length > 0 ? `${others.map((k) => KIT_DATA.sections.find((s) => s.key === k)!.title.toLowerCase()).join(" and ").replace(/^./, (c) => c.toUpperCase())} were redone to match.` : undefined;
+  // "Streets and inns", "districts, streets, squares and inns": short names, joined with commas and a final "and".
+  const names = others.map((k) => (k === "squares" ? "squares" : KIT_DATA.sections.find((s) => s.key === k)!.title.toLowerCase()));
+  const list = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names.join("");
+  const note = others.length > 0 ? `${list.replace(/^./, (c) => c.toUpperCase())} were redone to match.` : undefined;
   return { kit: next, note };
 }
