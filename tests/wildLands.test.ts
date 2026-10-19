@@ -100,7 +100,8 @@ test("pools: every pool of wilds-pools.json is in settlement-vocab.json, unchang
   const added = JSON.parse(readFileSync("tests/fixtures/wilds-pools.json", "utf8")).pools as Record<string, { entries: unknown[] }>;
   assert.equal(Object.keys(added).length, 51);
   for (const [name, pool] of Object.entries(added)) assert.deepEqual(pools[name].entries, pool.entries, name);
-  assert.equal(Object.keys(pools).length, 253 + 51);
+  // 253 earlier pools, the 51 wild pools, and monuments and statues' 27 (docs/monuments-and-statues-brief.md §4).
+  assert.equal(Object.keys(pools).length, 253 + 51 + 27);
   for (const name of ["direction", "directionAdj", "explorerMood", "folkUncanny", "devilFeature", "gateWord", "lakeQuality", "lakeCreature", "lakeFuse", "lakeShape", "stackGroup", "fordBeast", "mariaWord"]) assert.ok(pools[name], name);
 });
 

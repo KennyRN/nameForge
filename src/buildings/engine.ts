@@ -14,40 +14,30 @@ import {
   type GroupTone,
   type GroupToneChoice,
   GROUP_TONES,
-  groupListWords,
-  groupStarIn,
-  groupPlural,
-  groupPossessive,
-  groupSaint,
   pickWeighted,
   repeatsContent,
   toneFactor,
-  wordTones,
 } from "../groups/engine";
 import { breaksInnWords, INN_DATA, INN_SETTINGS, innCapitals, type InnSetting } from "../inns/engine";
 import { mulberry32 } from "../markov";
-import { DYNASTY_CULTURES } from "../realms/engine";
 import {
   BRITISH_CULTURES,
   countedWords,
   findRouteCulture,
-  godNames,
   personNames,
   ROUTE_ERAS,
-  routeFigure,
   routeNorm,
-  routePlace,
   routeSetting,
   type RouteCulture,
   type RouteEra,
 } from "../routes/engine";
-import { boostPool, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
+import { selfPatterns, type SettlementContext } from "../settlement/contextShared";
+import { type BaseCtx, commonToken, fillBatch, fromPool, pickOne, renderPattern as renderShared, shapeAllowed, town, vocabPool, type Renderer } from "./shared";
 import { deityHooks } from "../deities/hook";
 
 /** Deities brief §10.1: the christian cultures' temple weight, with fantastic on. */
 const DEITY_CHRISTIAN_WEIGHT = 3;
-import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
-import { STREET_DATA } from "../streets/engine";
+import { BUILT_IN_VOCAB, cultureAllowed, type Vocabulary } from "../settlement/vocab";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -152,208 +142,31 @@ export interface BuildingBatch {
 
 // ── Drawing ─────────────────────────────────────────────────────────────────
 
-interface Ctx {
-  rng: () => number;
-  culture: RouteCulture;
-  era: RouteEra;
-  setting: GroupSetting;
-  settingKey: InnSetting;
-  fantastic: boolean;
-  mode: GroupPeople;
-  tone: GroupToneChoice;
-  vocab: Vocabulary;
-  region?: string;
+interface Ctx extends BaseCtx {
   kind: BuildingKind;
-  themes: Record<string, number>;
-  /** §9: the series' town and founder. */
-  town?: string;
-  founder?: string;
   shape?: BuildingShape;
-  /** Settlement kit §4. */
-  context?: SettlementContext;
-  turn?: TownTurn;
-  drawn: Set<GroupTone>;
-  words: { pool: string; word: string }[];
-  uses: string[];
-}
-
-const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
-const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("light") || t.includes("grim"));
-const CASTE = new Set(["indian", "west-african"]);
-const SF_LISTS = new Set(["star", "greek"]);
-
-/** A shared pool's entries here (region, setting themes, tone; never light or grim for the sensitive cultures). */
-function vocabPool(ctx: Ctx, pool: string): [VocabEntry, number][] {
-  return boostPool(ctx.context, pool, poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes }))
-    .filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t)))
-    .map(([e, w]): [VocabEntry, number] => [e, w * toneFactor(e.t ?? [], ctx.tone)])
-    .filter(([, w]) => w > 0);
-}
-
-function fromPool(ctx: Ctx, pool: string, items: [VocabEntry, number][], use = false): string | undefined {
-  const e = pickWeighted(items, ctx.rng);
-  if (!e) return undefined;
-  for (const t of e.t ?? []) ctx.drawn.add(t);
-  ctx.words.push({ pool, word: e.w });
-  if (use) ctx.uses.push(`q:${e.w}`);
-  return e.w;
-}
-
-/** A group-names list word, tone-weighted (sci-fi lists in their space setting). */
-function gnWord(ctx: Ctx, list: string, use = false): string | undefined {
-  if (list === "star") {
-    const star = groupStarIn("any", ctx.mode, ctx.rng);
-    ctx.words.push({ pool: "star", word: star });
-    return star;
-  }
-  const items = groupListWords(list, SF_LISTS.has(list) ? "SF" : ctx.setting)
-    .filter(([w]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w))))
-    .map(([w, n]): [string, number] => [w, n * toneFactor(wordTones(list, w), ctx.tone)])
-    .filter(([, n]) => n > 0);
-  const w = pickWeighted(items, ctx.rng);
-  if (w === undefined) return undefined;
-  for (const t of wordTones(list, w)) ctx.drawn.add(t);
-  ctx.words.push({ pool: list, word: w });
-  if (use) ctx.uses.push(`q:${w}`);
-  return w;
 }
 
 /** §6: `{bw}`: the kind's building words, limited by the shape. */
 const bwItems = (ctx: Ctx) => vocabPool(ctx, `buildingWord:${ctx.kind}`).filter(([e]) => !ctx.shape?.bw || ctx.shape.bw.includes(e.w));
 
-/** §8.3: `{creature}`: GN beasts, birds and heraldic beasts. */
-function creature(ctx: Ctx): string | undefined {
-  const items = BUILDING_DATA.lists.creatureLists.flatMap((l) =>
-    groupListWords(l, ctx.setting)
-      .filter(([w]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(l, w))))
-      .map(([w, n]): [string, number] => [w, n * toneFactor(wordTones(l, w), ctx.tone)]),
-  );
-  const w = pickWeighted(items, ctx.rng);
-  if (w) {
-    ctx.words.push({ pool: "creature", word: w });
-    ctx.uses.push(`q:${w}`);
-  }
-  return w;
-}
-
-/** IT §6.2: `{owner}`: the culture's names or GN surnames. */
-const ownerNames = (ctx: Ctx) => [...personNames(ctx.culture.key), ...(STREET_DATA.surnameCultures.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : [])];
-
-function town(ctx: Ctx): string | undefined {
-  // Settlement kit §4: this place, or one of its neighbours.
-  const t = ctx.turn ? ctx.turn.next(ctx.rng) : ctx.town ?? (ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng));
-  if (t) ctx.uses.push(`town:${t}`);
-  return t;
-}
-
-function founder(ctx: Ctx): string | undefined {
-  ctx.uses.push("founder");
-  if (ctx.founder) return ctx.founder;
-  if (ctx.mode === "placeholders") return "[founder]";
-  const names = personNames(ctx.culture.key);
-  return names.length > 0 ? pickOne(names, ctx.rng) : undefined;
-}
-
 /** One token (§6); pool words with tokens of their own (Sir {surname}) are rendered in turn. */
 function token(ctx: Ctx, name: string): string | undefined {
-  const rng = ctx.rng;
-  const placeholders = ctx.mode === "placeholders";
   switch (name) {
     case "bw":
       return fromPool(ctx, `buildingWord:${ctx.kind}`, bwItems(ctx));
     case "fixed":
       return fromPool(ctx, `buildingFixed:${ctx.kind}`, vocabPool(ctx, `buildingFixed:${ctx.kind}`));
-    case "town":
-      return town(ctx);
-    case "founder":
-      return founder(ctx);
-    case "owner":
-    case "patron": {
-      if (placeholders) return `[${name}]`;
-      const names = name === "owner" ? ownerNames(ctx) : personNames(ctx.culture.key);
-      return names.length > 0 ? pickOne(names, rng) : undefined;
-    }
-    case "surname":
-      return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : gnWord(ctx, "surname");
-    case "dynasty":
-      return placeholders || !DYNASTY_CULTURES.includes(ctx.culture.key) ? "[dynasty]" : gnWord(ctx, "house");
-    case "holy": {
-      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng));
-      return ctx.context ? contextSaint(ctx.context, other, rng) : other();
-    }
-    case "deity": {
-      // Deities brief §10.1, §10.4: the settlement's deity, or an invented one; without its own "the".
-      const t = ctx.context ? ctx.context.deity ?? undefined : deityHooks()?.deityTitle({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng, vocab: ctx.vocab });
-      if (t) ctx.words.push({ pool: "deity", word: t });
-      return t?.replace(/^the /, "");
-    }
-    case "figure":
-      return routeFigure(ctx.culture.key, ctx.setting, rng);
-    case "god": {
-      const gods = godNames(ctx.culture.key);
-      return gods.length > 0 ? pickOne(gods, rng) : undefined;
-    }
-    case "creature":
-      return creature(ctx);
     case "buildingQual":
       return fromPool(ctx, name, vocabPool(ctx, name), true);
-    case "colour":
-      return gnWord(ctx, name, true);
-    case "number":
-    case "quality":
-    case "brandRoot":
-    case "star":
-    case "greek":
-    case "ordinalWord":
-      return gnWord(ctx, name);
-    case "ordinal":
-      return gnWord(ctx, "ordinalWord");
-    case "trade":
-      return fromPool(ctx, "streetTrades", vocabPool(ctx, "streetTrades"));
-    case "goods":
-      return fromPool(ctx, "streetGoods", vocabPool(ctx, "streetGoods"));
-    case "weekday":
-      return pickWeighted(STREET_DATA.lists.weekday, rng);
-    case "discovery":
     case "event":
-    case "headland":
-      return pickOne(BUILDING_DATA.lists[name], rng);
-    case "n":
-      return String(1 + Math.floor(rng() * 40));
+      return pickOne(BUILDING_DATA.lists.event, ctx.rng);
   }
-  const w = fromPool(ctx, name, vocabPool(ctx, name));
-  return w?.includes("{") ? renderPattern(ctx, w) : w;
+  return commonToken(RENDERER, ctx, name);
 }
 
-/** Renders a shape's pattern (possessives, plurals); undefined when a token has nothing to offer. */
-function renderPattern(ctx: Ctx, pattern: string): string | undefined {
-  const outer = ctx.turn;
-  if (ctx.context) ctx.turn = new TownTurn(ctx.context, BUILDING_SELF.has(pattern));
-  try {
-    return renderTokens(ctx, pattern);
-  } finally {
-    ctx.turn = outer;
-  }
-}
-
-function renderTokens(ctx: Ctx, pattern: string): string | undefined {
-  let failed = false;
-  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw: string) => {
-    if (failed) return "";
-    const [name, mod] = raw.split(":");
-    const piece = token(ctx, name);
-    if (!piece) {
-      failed = true;
-      return "";
-    }
-    if (mod === "poss") return groupPossessive(piece, name === "trade");
-    if (mod === "pl") return groupPlural(piece);
-    return piece;
-  });
-  if (failed) return undefined;
-  // §8.1: "the {buildingQual} {bw}" drops "the" before a possessive (King's Bridge).
-  return out.replace(/^the (\S+'s )/, "$1");
-}
+const RENDERER: Renderer<Ctx> = { token, self: BUILDING_SELF };
+const renderPattern = (ctx: Ctx, pattern: string) => renderShared(RENDERER, ctx, pattern);
 
 // ── Safeguards (§12) ────────────────────────────────────────────────────────
 
@@ -387,17 +200,8 @@ export function buildingWordBlocked(word: string, guards?: GroupSafeguards): boo
 /** A shape's weight here (0 when it can't be drawn). */
 function shapeWeight(ctx: Ctx, s: BuildingShape): number {
   const c = ctx.culture;
-  if (s.e && !s.e.includes(ctx.era)) return 0;
-  if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
-  if (s.h !== undefined && s.h !== ctx.fantastic) return 0;
-  if (c.sensitive && (s.h || LIGHT_OR_GRIM(s.t))) return 0;
+  if (!shapeAllowed(ctx, s)) return 0;
   if (s.kinds && !s.kinds.includes(ctx.kind)) return 0;
-  if (CASTE.has(c.key) && s.p.includes("{trade")) return 0;
-  if (ctx.mode === "invented" && !ctx.founder && s.p.includes("{founder") && personNames(c.key).length === 0) return 0;
-  if (ctx.mode === "invented" && s.p.includes("{patron") && personNames(c.key).length === 0) return 0;
-  if (ctx.mode === "invented" && s.p.includes("{owner") && ownerNames(ctx).length === 0) return 0;
-  if (s.p.includes("{god") && (godNames(c.key).length === 0 || !BUILDING_DATA.lists.godCultures.includes(c.key))) return 0;
-  if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
   if (s.p.includes("{bw}") && bwItems({ ...ctx, shape: s }).length === 0) return 0;
   // Deities brief §10.1: never for the sensitive cultures; christian cultures only with fantastic, at 3.
   if (s.deity) {
@@ -583,47 +387,16 @@ export function generateBuildingNames(options: BuildingOptions): BuildingBatch {
     return undefined;
   };
 
-  const seen = new Set<string>();
-  const names: BuildingName[] = [];
-  const add = (n: BuildingName | undefined): boolean => {
-    if (!n || seen.has(n.text.toLowerCase())) return false;
-    seen.add(n.text.toLowerCase());
-    names.push(n);
-    return true;
-  };
-  const drawKind = (): BuildingKind | undefined => (chosen ? (weights.some(([k]) => k === chosen) ? chosen : undefined) : pickWeighted(weights, rng));
-
-  if (series) {
-    const used = new Set<string>();
-    let founders = 0;
-    // §9: one of each kind offered before any repeats.
-    let round: [BuildingKind, number][] = [];
-    const nextKind = (): BuildingKind | undefined => {
-      if (chosen) return drawKind();
-      if (round.length === 0) round = [...weights];
-      const k = pickWeighted(round, rng);
-      return k;
-    };
-    for (let idle = 0; idle < 80 && names.length < count; ) {
-      const k = nextKind();
-      if (!k) break;
-      const n = build(k);
-      const fresh =
-        !!n && !n.uses.some((u) => u.startsWith("q:") && used.has(u)) && (!n.uses.includes("founder") || founders < BUILDING_DATA.series.founderUses);
-      if (fresh && add(n)) {
-        for (const u of n!.uses) used.add(u);
-        if (n!.uses.includes("founder")) founders++;
-        round = round.filter(([x]) => x !== k);
-        idle = 0;
-      } else idle++;
-    }
-  } else {
-    for (let attempt = 0; attempt < count * 50 && names.length < count; attempt++) {
-      const k = drawKind();
-      if (!k) break;
-      add(build(k));
-    }
-  }
+  const names = fillBatch<BuildingKind, BuildingName>({
+    rng,
+    count,
+    series,
+    chosen,
+    weights,
+    build,
+    founderUses: BUILDING_DATA.series.founderUses,
+    keyed: ["q:"],
+  });
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
   return { names, seed, notices };
 }

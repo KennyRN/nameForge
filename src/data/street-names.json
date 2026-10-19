@@ -296,6 +296,13 @@
     "routeFrom": 8,
     "landmarkOnceFrom": 8
   },
+  "monumentNeighbours": [
+    {"kind": "junction", "p": "{site} {jw}", "w": 30, "e": ["MD", "EM", "ST", "MO", "NF", "IS"]},
+    {"kind": "street", "p": "{site} {sw}", "w": 25},
+    {"kind": "district", "p": "{site}", "w": 20, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "worthy": true, "village": false},
+    {"kind": "district", "p": "{site} {dw}", "w": 10},
+    {"kind": "inn", "p": "the {site}", "w": 10, "e": ["MD", "EM", "ST", "MO"], "worthy": true}
+  ],
   "cap": 6,
   "safeguards": {
     "block": ["Wall Street", "Downing Street", "Whitehall", "Fleet Street", "Threadneedle Street", "Lombard Street", "Pall Mall", "Park Lane", "Oxford Street", "Regent Street", "Bond Street", "Carnaby Street", "Coronation Street", "Pudding Lane", "Cheapside", "Grub Street", "Bourbon Street", "Broadway", "Champs-Élysées", "Nevsky Prospect", "Unter den Linden", "Royal Mile", "Princes Street", "Grafton Street", "Sauchiehall Street", "Ginza", "Gion", "Pontochō", "Chandni Chowk", "Jongno", "Wangfujing", "The Shambles", "Coppergate", "Forbidden City", "Imperial City", "Kremlin", "Red Square", "Tiananmen", "Trafalgar Square", "Piccadilly Circus", "Times Square", "Grand Bazaar", "Medina of Fez", "Old City of Jerusalem", "Latin Quarter", "Jewish Quarter", "Armenian Quarter", "Christian Quarter", "Muslim Quarter", "Soho", "Montmartre", "Harlem", "Chinatown", "Little Italy", "Barrio", "Bowery", "Five Points", "Diagon Alley", "Knockturn Alley", "Privet Drive", "Spinner's End", "Baker Street 221B", "Ramsay Street", "Albert Square", "Wisteria Lane", "Sesame Street", "Hob's Lane", "The Shades", "Night City", "Midgar", "Flea Bottom", "Street of Steel", "Street of Silk", "Street of the Sisters", "Hill of Rhaenys"],

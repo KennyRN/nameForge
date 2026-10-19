@@ -42,12 +42,26 @@ import {
   type RouteEra,
 } from "../routes/engine";
 import { buildingName, type BuildingKind } from "../buildings/engine";
+import { breaksInnWords, hasChristianSign, INN_SETTINGS, innBlockForms, innBlockSet, innCapitals, type InnSetting } from "../inns/engine";
+import { monumentBlockSet } from "../monuments/engine";
 import { boostPool, contextLandmark, contextSaint, contextTown, type SettlementContext } from "../settlement/contextShared";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
 export type StreetKind = "streets" | "squares" | "districts";
+
+/** Monuments brief §9.1: a shape for a name taken from a monument's site. */
+export interface NeighbourShape {
+  kind: "junction" | "street" | "district" | "inn";
+  p: string;
+  w: number;
+  e?: RouteEra[];
+  /** Only for a district-worthy site. */
+  worthy?: boolean;
+  /** false: never in a village. */
+  village?: boolean;
+}
 export type StreetSize = "village" | "town" | "city" | "great";
 export type StreetDialect = "plain" | "variants" | "instead";
 
@@ -92,6 +106,8 @@ interface StreetData {
   surnameCultures: string[];
   dialect: { laneRegions: string[]; laneWords: string[]; laneShare: number; variantShare: number };
   series: { mainMarket: Record<string, string>; firstDistrict: Record<string, string>; scifiMainStreet: string; towns: number; routeFrom: number; landmarkOnceFrom: number };
+  /** Monuments brief §9.1: what is named after a monument. */
+  monumentNeighbours: NeighbourShape[];
   cap: number;
   safeguards: { block: string[]; flag: string[]; flagListBlocks: boolean; banned: string[]; religious: string[]; christian: string[] };
 }
@@ -794,4 +810,84 @@ export function generateStreetNames(options: StreetOptions): StreetBatch {
       }
     }
   }
+}
+
+// ── What's named after a monument (Monuments brief §9) ──────────────────────
+
+export interface NeighbourOptions {
+  culture?: string;
+  era?: RouteEra;
+  fantastic?: boolean;
+  region?: string;
+  setting?: InnSetting;
+  people?: GroupPeople;
+  /** No bare district in a village. */
+  village?: boolean;
+  rng: () => number;
+  /** The street, inn and monument safeguards the names pass. */
+  safeguards?: GroupSafeguards;
+  innSafeguards?: GroupSafeguards;
+  monumentSafeguards?: GroupSafeguards;
+  vocab?: Vocabulary;
+}
+
+const NEIGHBOUR_POOLS: Record<string, string> = { jw: "junctionWord", sw: "streetWord", dw: "districtWord" };
+
+/** §9: two nearby names of two different kinds for a monument's site (a junction, a street, a district
+ * or an inn), each passing the street safeguards, the inn ones for an inn, and the monument block list. */
+export function monumentNeighbours(site: string, districtWorthy: boolean, o: NeighbourOptions): string[] {
+  const culture = findRouteCulture(o.culture) ?? findRouteCulture("norman-british")!;
+  const era: RouteEra = ROUTE_ERAS.some((e) => e.code === o.era) ? o.era! : "MD";
+  const fantastic = !!o.fantastic;
+  const rng = o.rng;
+  const vocab = o.vocab ?? BUILT_IN_VOCAB;
+  const themes = INN_SETTINGS.find((s) => s.key === o.setting)?.themes ?? {};
+  const region = BRITISH_CULTURES.includes(culture.key) && o.region && o.region !== "all" ? o.region : undefined;
+  const block = streetBlockSet(o.safeguards);
+  const monumentBlock = monumentBlockSet(o.monumentSafeguards);
+  const innBlock = innBlockSet(o.innSafeguards);
+  const christian = cultureAllowed(["christian"], culture.key, era);
+  const eligible = STREET_DATA.monumentNeighbours.filter((s) => (!s.e || s.e.includes(era)) && (!s.worthy || districtWorthy) && !(s.village === false && o.village));
+
+  const word = (pool: string): string | undefined => {
+    const items = poolEntries(vocab, pool, { culture: culture.key, era, fantastic, region, themes }).filter(([e]) => !(culture.sensitive && LIGHT_OR_GRIM(e.t)));
+    return pickWeighted(items, rng)?.w;
+  };
+  const acceptable = (text: string, kind: NeighbourShape["kind"]): boolean => {
+    const counted = countedWords(text);
+    if (counted.length === 0 || counted.length > STREET_DATA.cap || repeatsContent(counted)) return false;
+    if (block.has(routeNorm(text)) || monumentBlock.has(routeNorm(text).replace(/^the /, "")) || breaksStreetWords(text)) return false;
+    if (isFuture(era) && hasSpaceBlock(text)) return false;
+    if (hasChristianWord(text) && !christian) return false;
+    if (kind === "inn" && (breaksInnWords(text) || innBlockForms(text).some((f) => innBlock.has(f)) || (hasChristianSign(text) && !christian))) return false;
+    return true;
+  };
+  const render = (s: NeighbourShape): string | undefined => {
+    let failed = false;
+    const raw = s.p.replace(/\{(\w+)\}/g, (_m, t: string) => {
+      if (t === "site") return site;
+      const w = NEIGHBOUR_POOLS[t] ? word(NEIGHBOUR_POOLS[t]) : undefined;
+      if (!w) failed = true;
+      return w ?? "";
+    });
+    return failed ? undefined : innCapitals(raw);
+  };
+
+  const out: string[] = [];
+  const kinds = new Set<string>();
+  for (let slot = 0; slot < 2; slot++) {
+    for (let i = 0; i < 20; i++) {
+      const shape = pickWeighted(
+        eligible.filter((s) => !kinds.has(s.kind)).map((s): [NeighbourShape, number] => [s, s.w]),
+        rng,
+      );
+      if (!shape) break;
+      const text = render(shape);
+      if (!text || !acceptable(text, shape.kind) || out.includes(text)) continue;
+      out.push(text);
+      kinds.add(shape.kind);
+      break;
+    }
+  }
+  return out;
 }

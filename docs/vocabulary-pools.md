@@ -138,6 +138,33 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `buildingFixed:maritime` | whole maritime names (empty: for packs); the `{fixed}` shape's weight is the sum of their x | x, t, e, c | buildings and landmarks |
 | `buildingQual` | building qualifiers: Old, Grey, King's | x, t | buildings and landmarks |
 | `follyOwner` | folly builders: Sir {surname}, Mad {surname} | x, t | buildings and landmarks |
+| `monumentWord:cross` | monument words for crosses: Cross, High Cross, Mercat Cross | x, e, c, r, rx, t | monuments and statues |
+| `monumentWord:column` | monument words for columns: Column, Pillar, Victory Column | x, e, t | monuments and statues |
+| `monumentWord:obelisk` | monument words for obelisks: Obelisk, Needle | x, e | monuments and statues |
+| `monumentWord:arch` | monument words for arches: Arch, Gateway, Triumphal Arch | x, e, c, t | monuments and statues |
+| `monumentWord:statue` | monument words for statues: Statue, Equestrian Statue, Colossus | x, e, t | monuments and statues |
+| `monumentWord:stone` | monument words for standing stones: Standing Stone, Rune Stone, Stele | x, e, c, t, rx | monuments and statues |
+| `monumentWord:tomb` | monument words for tombs and mounds: Barrow, Cairn, Mausoleum | x, e, c, rx | monuments and statues |
+| `monumentWord:memorial` | monument words for memorials: Memorial, Cenotaph, Clock Tower | x, e, c, t | monuments and statues |
+| `monumentWord:folly` | monument words for follies: Folly, Tower, Grotto | x, c | monuments and statues |
+| `monumentFixed:cross` | whole cross names: Market Cross, Mercat Cross; the `{fixed}` shape's weight is the sum of their x | x, t, e, c, r | monuments and statues |
+| `monumentFixed:column` | whole column names: the Monument; the `{fixed}` shape's weight is the sum of their x | x, e | monuments and statues |
+| `monumentFixed:statue` | whole statue names: the Fisherman, the Miner; the `{fixed}` shape's weight is the sum of their x | x, t, e, th | monuments and statues |
+| `monumentFixed:stone` | whole stone names: Long Stone, Hoar Stone; the `{fixed}` shape's weight is the sum of their x | x, t, e, c, rx | monuments and statues |
+| `monumentFixed:folly` | whole folly names: Sham Castle, the Pepperpot; the `{fixed}` shape's weight is the sum of their x | x, t, e, c | monuments and statues |
+| `monumentFixed:figure` | whole hill-figure names: the Long Man, Troy Town; the `{fixed}` shape's weight is the sum of their x | x, t | monuments and statues |
+| `monumentQual` | monument qualifiers: Old, Leaning, Weeping | x, t, e, c | monuments and statues |
+| `monumentEvent` | events monuments commemorate: Victory, Jubilee, Great Fire | x, t, e, th | monuments and statues |
+| `monumentFallen` | those a memorial remembers: Fallen, Drowned, Miners | x, t, e, th | monuments and statues |
+| `monumentVirtue` | virtues a garden temple is dedicated to: Concord, Friendship | x | monuments and statues |
+| `statueMaterial` | statue materials: Stone, Bronze, Marble | x, t, e | monuments and statues |
+| `stoneFolk` | what a stone circle is called: Maidens, Sisters, Pipers | x, t, e, c | monuments and statues |
+| `figureColour` | hill-figure colours: White, Red, Black | x, t | monuments and statues |
+| `figureBeast` | hill-figure beasts: Horse, Stag, Dragon | x | monuments and statues |
+| `junctionWord` | words for the junctions around a monument: Roundabout, Circus, Corner | x, e, th | monuments and statues; streets and districts |
+| `steampunkMonument` | steampunk monuments: Clockwork Colossus, Great Orrery | x, e, h | monuments and statues |
+| `sfMonumentWord` | sci-fi monument words: Monument, Stone, Marker | x | monuments and statues |
+| `sfRelic` | sci-fi relics: Old Lander, First Rover | x | monuments and statues |
 | `holyWellPrefix` | holy well names: Lady, Saint {holy} | x, c | buildings and landmarks |
 | `steampunkLandmark` | steampunk landmarks: Aether Spire, Clockwork Tower | e, h | buildings and landmarks |
 | `sciFiLandmark` | sci-fi landmarks: Arcology, Sky Elevator | e | buildings and landmarks |

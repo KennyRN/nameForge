@@ -1761,6 +1761,347 @@
     "buildingFixed:maritime": {
       "entries": []
     },
+    "monumentWord:cross": {
+      "entries": [
+        {"w": "Cross", "x": 5, "c": ["christian"]},
+        {"w": "High Cross", "x": 2, "e": ["MD", "EM"], "c": ["christian"]},
+        {"w": "Preaching Cross", "e": ["MD", "EM"], "c": ["british"]},
+        {"w": "Market Cross", "x": 2, "e": ["MD", "EM"], "c": ["british"]},
+        {"w": "Butter Cross", "e": ["EM"], "c": ["british"]},
+        {"w": "Mercat Cross", "x": 3, "c": ["british"], "r": ["SBL", "SLO", "SHH", "NSI"]},
+        {"w": "Wayside Cross", "c": ["christian"]},
+        {"w": "Wheel Cross", "c": ["british"], "rx": {"COR": 3}},
+        {"w": "Stump Cross", "t": ["plain"], "c": ["british"]},
+        {"w": "Churchyard Cross", "e": ["MD", "EM"], "c": ["christian"]},
+        {"w": "Memorial Cross", "e": ["ST", "MO"], "c": ["christian"]}
+      ]
+    },
+    "monumentWord:column": {
+      "entries": [
+        {"w": "Column", "x": 4},
+        {"w": "Pillar", "x": 2},
+        {"w": "Monument", "x": 2, "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Victory Column", "t": ["grand"], "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Memorial Column", "e": ["ST", "MO"]},
+        {"w": "Plinth", "t": ["plain"], "e": ["MO", "NF", "IS"]}
+      ]
+    },
+    "monumentWord:obelisk": {
+      "entries": [
+        {"w": "Obelisk", "x": 5},
+        {"w": "Needle", "x": 2},
+        {"w": "Memorial Spire", "e": ["ST", "MO"]}
+      ]
+    },
+    "monumentWord:arch": {
+      "entries": [
+        {"w": "Arch", "x": 4},
+        {"w": "Gateway", "x": 2},
+        {"w": "Triumphal Arch", "x": 3, "t": ["grand"], "e": ["AN"], "c": ["roman"]},
+        {"w": "Triumphal Arch", "t": ["grand"], "e": ["EM", "ST", "MO", "NF", "IS"], "c": ["!roman"]},
+        {"w": "Memorial Arch", "e": ["ST", "MO"]},
+        {"w": "Memorial Archway", "x": 3, "c": ["chinese", "korean"]},
+        {"w": "Victory Gate", "x": 2, "e": ["EM", "ST", "MO", "NF", "IS"], "c": ["indian", "arabic-persian"]}
+      ]
+    },
+    "monumentWord:statue": {
+      "entries": [
+        {"w": "Statue", "x": 5},
+        {"w": "Equestrian Statue", "x": 2, "t": ["grand"], "e": ["AN", "EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Bust", "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Colossus", "x": 2, "t": ["grand"], "e": ["AN"]},
+        {"w": "Colossus", "x": 0.3, "t": ["grand"], "e": ["MD", "EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Figure"}
+      ]
+    },
+    "monumentWord:stone": {
+      "entries": [
+        {"w": "Stone", "x": 5},
+        {"w": "Standing Stone", "x": 3, "e": ["AN", "MD"]},
+        {"w": "Stones", "x": 2, "e": ["AN", "MD"]},
+        {"w": "Stone Circle", "e": ["AN"]},
+        {"w": "Stone Row", "e": ["AN"], "c": ["british"]},
+        {"w": "Rune Stone", "x": 2, "e": ["MD"], "c": ["norse"]},
+        {"w": "Picture Stone", "e": ["AN", "MD"], "c": ["norse"]},
+        {"w": "Cross-Slab", "e": ["MD"], "c": ["celtic"]},
+        {"w": "Ogham Stone", "e": ["AN", "MD"], "c": ["celtic"]},
+        {"w": "Stele", "c": ["egyptian", "maya", "ethiopian", "chinese", "korean", "greek-byzantine"]},
+        {"w": "Boundary Stone", "t": ["plain"], "e": ["AN", "MD", "EM", "ST"]},
+        {"w": "Marker Stone", "t": ["plain"]},
+        {"w": "Hoar Stone", "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Logan Stone", "t": ["strange"], "c": ["british"], "rx": {"COR": 3}}
+      ]
+    },
+    "monumentWord:tomb": {
+      "entries": [
+        {"w": "Barrow", "x": 3, "e": ["AN", "MD"], "c": ["british", "norse", "general"]},
+        {"w": "Long Barrow", "e": ["AN"], "c": ["british"]},
+        {"w": "Cairn", "x": 2, "e": ["AN", "MD"]},
+        {"w": "Mound", "x": 2},
+        {"w": "Burial Mound", "x": 2, "c": ["chinese", "japanese", "korean", "slavic", "steppe"]},
+        {"w": "Tumulus", "e": ["EM", "ST"]},
+        {"w": "Howe", "c": ["norse"], "rx": {"NTH": 2, "NSI": 2}},
+        {"w": "Low", "c": ["anglo-saxon"], "rx": {"NTH": 2, "EMD": 2, "WMM": 2}},
+        {"w": "Grave", "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Quoit", "e": ["AN"], "c": ["british"], "rx": {"COR": 3}},
+        {"w": "Tomb", "x": 2},
+        {"w": "Mausoleum", "x": 2, "e": ["EM", "ST", "MO"]},
+        {"w": "Mausoleum", "x": 2, "e": ["AN"], "c": ["roman", "greek-byzantine", "egyptian"]},
+        {"w": "Pyramid", "e": ["AN"], "c": ["egyptian"]},
+        {"w": "Pyramid", "x": 0.5, "e": ["EM", "ST"], "c": ["british"]}
+      ]
+    },
+    "monumentWord:memorial": {
+      "entries": [
+        {"w": "Memorial", "x": 5},
+        {"w": "War Memorial", "x": 3, "e": ["MO"]},
+        {"w": "Cenotaph", "x": 2, "e": ["MO"]},
+        {"w": "Memorial Fountain", "e": ["ST", "MO"]},
+        {"w": "Drinking Fountain", "e": ["ST"]},
+        {"w": "Clock Tower", "x": 2, "e": ["ST", "MO"]},
+        {"w": "Jubilee Clock", "e": ["ST"], "c": ["british"]},
+        {"w": "Memorial Wall", "e": ["MO", "NF", "IS"]},
+        {"w": "Eternal Flame", "t": ["grand"], "e": ["MO", "NF", "IS"]}
+      ]
+    },
+    "monumentWord:folly": {
+      "entries": [
+        {"w": "Folly", "x": 5, "c": ["british", "general"]},
+        {"w": "Tower", "x": 3},
+        {"w": "Temple", "x": 2},
+        {"w": "Ruin"},
+        {"w": "Grotto"},
+        {"w": "Rotunda"},
+        {"w": "Prospect Tower"},
+        {"w": "Hermitage", "x": 0.5},
+        {"w": "Eyecatcher", "x": 0.5},
+        {"w": "Belvedere", "x": 0.5}
+      ]
+    },
+    "monumentFixed:cross": {
+      "entries": [
+        {"w": "Market Cross", "x": 5, "e": ["MD", "EM"], "c": ["british"]},
+        {"w": "High Cross", "x": 2, "e": ["MD", "EM"], "c": ["christian"]},
+        {"w": "Butter Cross", "e": ["EM"], "c": ["british"]},
+        {"w": "Mercat Cross", "x": 4, "c": ["british"], "r": ["SBL", "SLO", "SHH", "NSI"]},
+        {"w": "Weeping Cross", "t": ["strange"], "c": ["british"]},
+        {"w": "Stump Cross", "c": ["british"]},
+        {"w": "White Cross"},
+        {"w": "Queen's Cross", "t": ["grand"], "e": ["MD"], "c": ["british"]}
+      ]
+    },
+    "monumentFixed:column": {
+      "entries": [
+        {"w": "the Monument", "e": ["EM", "ST"]},
+        {"w": "Jubilee Column", "e": ["ST"]}
+      ]
+    },
+    "monumentFixed:statue": {
+      "entries": [
+        {"w": "the Fisherman", "t": ["light"], "th": ["maritime"]},
+        {"w": "the Miner", "e": ["ST", "MO"]},
+        {"w": "the Drover", "th": ["rural"]},
+        {"w": "the Soldier", "t": ["grim"], "e": ["MO"]},
+        {"w": "the Shepherd", "th": ["rural"]},
+        {"w": "the Watcher", "t": ["strange"]},
+        {"w": "the Weeping Woman", "t": ["grim"]},
+        {"w": "the Sentinel", "t": ["grand"]},
+        {"w": "the Old Man", "t": ["light"]}
+      ]
+    },
+    "monumentFixed:stone": {
+      "entries": [
+        {"w": "Standing Stone", "x": 3, "e": ["AN", "MD"]},
+        {"w": "Long Stone", "x": 2},
+        {"w": "Grey Stone"},
+        {"w": "Hoar Stone", "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Logan Stone", "t": ["strange"], "c": ["british"], "rx": {"COR": 3}},
+        {"w": "Boundary Stone", "t": ["plain"]},
+        {"w": "Wishing Stone", "t": ["strange"]},
+        {"w": "Oath Stone", "e": ["AN", "MD"]}
+      ]
+    },
+    "monumentFixed:folly": {
+      "entries": [
+        {"w": "Sham Castle", "t": ["light"], "e": ["EM", "ST"], "c": ["british"]},
+        {"w": "Sham Ruin", "e": ["EM", "ST"]},
+        {"w": "Sham Abbey", "t": ["light"], "e": ["EM", "ST"], "c": ["british"]},
+        {"w": "the Eyecatcher", "e": ["EM", "ST"]},
+        {"w": "the Pepperpot", "t": ["light"], "c": ["british"]},
+        {"w": "the Grotto"},
+        {"w": "Shell House", "t": ["light"]},
+        {"w": "the Hermitage"},
+        {"w": "Prospect Tower"}
+      ]
+    },
+    "monumentFixed:figure": {
+      "entries": [
+        {"w": "the Long Man", "x": 2},
+        {"w": "the Giant", "x": 2},
+        {"w": "the Old Man"},
+        {"w": "the Hill Man"},
+        {"w": "the Chalk Giant"},
+        {"w": "Troy Town", "x": 3},
+        {"w": "Mizmaze", "x": 2},
+        {"w": "Turf Maze", "x": 2},
+        {"w": "Walls of Troy"},
+        {"w": "Shepherd's Race", "t": ["light"]}
+      ]
+    },
+    "monumentQual": {
+      "entries": [
+        {"w": "Old", "x": 3},
+        {"w": "Great", "x": 2},
+        {"w": "High", "x": 2},
+        {"w": "White", "x": 2},
+        {"w": "Grey", "x": 2},
+        {"w": "Black"},
+        {"w": "Red"},
+        {"w": "Golden"},
+        {"w": "Marble"},
+        {"w": "Bronze", "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Iron", "e": ["ST", "MO", "NF", "IS"]},
+        {"w": "Long"},
+        {"w": "Tall"},
+        {"w": "Little"},
+        {"w": "King's"},
+        {"w": "Queen's"},
+        {"w": "Hoar", "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Broken", "t": ["grim"]},
+        {"w": "Fallen", "t": ["grim"]},
+        {"w": "Leaning", "t": ["light"]},
+        {"w": "Crooked", "t": ["light"]},
+        {"w": "Lonely", "t": ["strange"]},
+        {"w": "Weeping", "t": ["strange"]},
+        {"w": "Whispering", "t": ["strange"]}
+      ]
+    },
+    "monumentEvent": {
+      "entries": [
+        {"w": "Victory", "x": 3, "t": ["grand"]},
+        {"w": "Peace", "x": 2},
+        {"w": "Jubilee", "x": 2, "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Coronation", "t": ["grand"], "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Union", "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Deliverance", "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Liberty", "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Reform", "e": ["ST"]},
+        {"w": "Founding", "x": 2},
+        {"w": "Armistice", "e": ["MO"]},
+        {"w": "Flood", "t": ["grim"]},
+        {"w": "Great Fire", "t": ["grim"]},
+        {"w": "Plague", "t": ["grim"]},
+        {"w": "Famine", "t": ["grim"]},
+        {"w": "Siege", "t": ["grim"]},
+        {"w": "Storm", "t": ["grim"], "th": ["maritime"]},
+        {"w": "Lifeboat", "e": ["ST", "MO"], "th": ["maritime"]}
+      ]
+    },
+    "monumentFallen": {
+      "entries": [
+        {"w": "Fallen", "x": 3, "t": ["grim"]},
+        {"w": "Drowned", "t": ["grim"], "th": ["maritime"]},
+        {"w": "Lost", "t": ["strange"]},
+        {"w": "Miners", "e": ["ST", "MO"]},
+        {"w": "Fishermen", "th": ["maritime"]},
+        {"w": "Lifeboatmen", "e": ["ST", "MO"], "th": ["maritime"]},
+        {"w": "Volunteers", "e": ["ST", "MO"]}
+      ]
+    },
+    "monumentVirtue": {
+      "entries": [
+        {"w": "Concord", "x": 2},
+        {"w": "Friendship", "x": 2},
+        {"w": "Harmony"},
+        {"w": "Liberty"},
+        {"w": "Fame"},
+        {"w": "Victory"},
+        {"w": "Philosophy"},
+        {"w": "Piety"},
+        {"w": "Peace"},
+        {"w": "the Muses"}
+      ]
+    },
+    "statueMaterial": {
+      "entries": [
+        {"w": "Stone", "x": 3},
+        {"w": "Bronze", "x": 2, "e": ["AN", "EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Marble", "e": ["AN", "EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Iron", "e": ["ST", "MO", "NF", "IS"]},
+        {"w": "Golden", "t": ["grand"]},
+        {"w": "Brass", "t": ["light"], "e": ["ST", "MO", "NF", "IS"]}
+      ]
+    },
+    "stoneFolk": {
+      "entries": [
+        {"w": "Maidens", "x": 2, "t": ["strange"], "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Sisters", "x": 2, "t": ["strange"], "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Brothers", "t": ["strange"], "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Pipers", "t": ["strange"], "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Dancers", "t": ["strange"], "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Ladies", "t": ["strange"], "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Men", "t": ["strange"], "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Kings", "t": ["strange"], "e": ["AN", "MD"], "c": ["british"]},
+        {"w": "Sentinels", "t": ["strange"], "e": ["AN", "MD"], "c": ["british"]}
+      ]
+    },
+    "figureColour": {
+      "entries": [
+        {"w": "White", "x": 6},
+        {"w": "Red"},
+        {"w": "Black", "x": 0.5, "t": ["strange"]}
+      ]
+    },
+    "figureBeast": {
+      "entries": [
+        {"w": "Horse", "x": 6},
+        {"w": "Stag"},
+        {"w": "Lion"},
+        {"w": "Bull"},
+        {"w": "Hound"},
+        {"w": "Dragon", "x": 0.5}
+      ]
+    },
+    "junctionWord": {
+      "entries": [
+        {"w": "Cross", "x": 2, "e": ["MD", "EM"]},
+        {"w": "Corner", "x": 2, "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Place", "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Square", "x": 2, "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Green", "e": ["MD", "EM", "ST"], "th": ["rural"]},
+        {"w": "Circus", "x": 1.5, "e": ["ST", "MO"]},
+        {"w": "Junction", "e": ["ST", "MO", "NF"]},
+        {"w": "Roundabout", "x": 3, "e": ["MO", "NF"]},
+        {"w": "Plaza", "e": ["NF", "IS"]},
+        {"w": "Concourse", "e": ["NF", "IS"]}
+      ]
+    },
+    "steampunkMonument": {
+      "entries": [
+        {"w": "Clockwork Colossus", "x": 2, "e": ["ST"], "h": true},
+        {"w": "Brass Titan", "e": ["ST"], "h": true},
+        {"w": "Aether Obelisk", "e": ["ST"], "h": true},
+        {"w": "Great Orrery", "e": ["ST"], "h": true},
+        {"w": "Lightning Spire", "e": ["ST"], "h": true},
+        {"w": "Engine Memorial", "e": ["ST"], "h": true}
+      ]
+    },
+    "sfMonumentWord": {
+      "entries": [
+        {"w": "Monument", "x": 2},
+        {"w": "Stone"},
+        {"w": "Obelisk"},
+        {"w": "Marker"}
+      ]
+    },
+    "sfRelic": {
+      "entries": [
+        {"w": "Old Lander", "x": 2},
+        {"w": "First Rover"},
+        {"w": "Last Rocket"},
+        {"w": "Colony Bell"}
+      ]
+    },
     "warObject": {
       "entries": [
         {"w": "Salt Wells"},

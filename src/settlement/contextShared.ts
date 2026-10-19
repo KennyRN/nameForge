@@ -31,6 +31,7 @@ export interface SettlementContext {
 
 export interface ContextEffects {
   buildingKindX?: Record<string, number>;
+  monumentKindX?: Record<string, number>;
   componentX?: Record<string, number>;
   roadsideX?: number;
 }

@@ -92980,6 +92980,347 @@ var settlement_vocab_default = {
     "buildingFixed:maritime": {
       entries: []
     },
+    "monumentWord:cross": {
+      entries: [
+        { w: "Cross", x: 5, c: ["christian"] },
+        { w: "High Cross", x: 2, e: ["MD", "EM"], c: ["christian"] },
+        { w: "Preaching Cross", e: ["MD", "EM"], c: ["british"] },
+        { w: "Market Cross", x: 2, e: ["MD", "EM"], c: ["british"] },
+        { w: "Butter Cross", e: ["EM"], c: ["british"] },
+        { w: "Mercat Cross", x: 3, c: ["british"], r: ["SBL", "SLO", "SHH", "NSI"] },
+        { w: "Wayside Cross", c: ["christian"] },
+        { w: "Wheel Cross", c: ["british"], rx: { COR: 3 } },
+        { w: "Stump Cross", t: ["plain"], c: ["british"] },
+        { w: "Churchyard Cross", e: ["MD", "EM"], c: ["christian"] },
+        { w: "Memorial Cross", e: ["ST", "MO"], c: ["christian"] }
+      ]
+    },
+    "monumentWord:column": {
+      entries: [
+        { w: "Column", x: 4 },
+        { w: "Pillar", x: 2 },
+        { w: "Monument", x: 2, e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Victory Column", t: ["grand"], e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Memorial Column", e: ["ST", "MO"] },
+        { w: "Plinth", t: ["plain"], e: ["MO", "NF", "IS"] }
+      ]
+    },
+    "monumentWord:obelisk": {
+      entries: [
+        { w: "Obelisk", x: 5 },
+        { w: "Needle", x: 2 },
+        { w: "Memorial Spire", e: ["ST", "MO"] }
+      ]
+    },
+    "monumentWord:arch": {
+      entries: [
+        { w: "Arch", x: 4 },
+        { w: "Gateway", x: 2 },
+        { w: "Triumphal Arch", x: 3, t: ["grand"], e: ["AN"], c: ["roman"] },
+        { w: "Triumphal Arch", t: ["grand"], e: ["EM", "ST", "MO", "NF", "IS"], c: ["!roman"] },
+        { w: "Memorial Arch", e: ["ST", "MO"] },
+        { w: "Memorial Archway", x: 3, c: ["chinese", "korean"] },
+        { w: "Victory Gate", x: 2, e: ["EM", "ST", "MO", "NF", "IS"], c: ["indian", "arabic-persian"] }
+      ]
+    },
+    "monumentWord:statue": {
+      entries: [
+        { w: "Statue", x: 5 },
+        { w: "Equestrian Statue", x: 2, t: ["grand"], e: ["AN", "EM", "ST", "MO", "NF", "IS"] },
+        { w: "Bust", e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Colossus", x: 2, t: ["grand"], e: ["AN"] },
+        { w: "Colossus", x: 0.3, t: ["grand"], e: ["MD", "EM", "ST", "MO", "NF", "IS"] },
+        { w: "Figure" }
+      ]
+    },
+    "monumentWord:stone": {
+      entries: [
+        { w: "Stone", x: 5 },
+        { w: "Standing Stone", x: 3, e: ["AN", "MD"] },
+        { w: "Stones", x: 2, e: ["AN", "MD"] },
+        { w: "Stone Circle", e: ["AN"] },
+        { w: "Stone Row", e: ["AN"], c: ["british"] },
+        { w: "Rune Stone", x: 2, e: ["MD"], c: ["norse"] },
+        { w: "Picture Stone", e: ["AN", "MD"], c: ["norse"] },
+        { w: "Cross-Slab", e: ["MD"], c: ["celtic"] },
+        { w: "Ogham Stone", e: ["AN", "MD"], c: ["celtic"] },
+        { w: "Stele", c: ["egyptian", "maya", "ethiopian", "chinese", "korean", "greek-byzantine"] },
+        { w: "Boundary Stone", t: ["plain"], e: ["AN", "MD", "EM", "ST"] },
+        { w: "Marker Stone", t: ["plain"] },
+        { w: "Hoar Stone", e: ["AN", "MD"], c: ["british"] },
+        { w: "Logan Stone", t: ["strange"], c: ["british"], rx: { COR: 3 } }
+      ]
+    },
+    "monumentWord:tomb": {
+      entries: [
+        { w: "Barrow", x: 3, e: ["AN", "MD"], c: ["british", "norse", "general"] },
+        { w: "Long Barrow", e: ["AN"], c: ["british"] },
+        { w: "Cairn", x: 2, e: ["AN", "MD"] },
+        { w: "Mound", x: 2 },
+        { w: "Burial Mound", x: 2, c: ["chinese", "japanese", "korean", "slavic", "steppe"] },
+        { w: "Tumulus", e: ["EM", "ST"] },
+        { w: "Howe", c: ["norse"], rx: { NTH: 2, NSI: 2 } },
+        { w: "Low", c: ["anglo-saxon"], rx: { NTH: 2, EMD: 2, WMM: 2 } },
+        { w: "Grave", e: ["AN", "MD"], c: ["british"] },
+        { w: "Quoit", e: ["AN"], c: ["british"], rx: { COR: 3 } },
+        { w: "Tomb", x: 2 },
+        { w: "Mausoleum", x: 2, e: ["EM", "ST", "MO"] },
+        { w: "Mausoleum", x: 2, e: ["AN"], c: ["roman", "greek-byzantine", "egyptian"] },
+        { w: "Pyramid", e: ["AN"], c: ["egyptian"] },
+        { w: "Pyramid", x: 0.5, e: ["EM", "ST"], c: ["british"] }
+      ]
+    },
+    "monumentWord:memorial": {
+      entries: [
+        { w: "Memorial", x: 5 },
+        { w: "War Memorial", x: 3, e: ["MO"] },
+        { w: "Cenotaph", x: 2, e: ["MO"] },
+        { w: "Memorial Fountain", e: ["ST", "MO"] },
+        { w: "Drinking Fountain", e: ["ST"] },
+        { w: "Clock Tower", x: 2, e: ["ST", "MO"] },
+        { w: "Jubilee Clock", e: ["ST"], c: ["british"] },
+        { w: "Memorial Wall", e: ["MO", "NF", "IS"] },
+        { w: "Eternal Flame", t: ["grand"], e: ["MO", "NF", "IS"] }
+      ]
+    },
+    "monumentWord:folly": {
+      entries: [
+        { w: "Folly", x: 5, c: ["british", "general"] },
+        { w: "Tower", x: 3 },
+        { w: "Temple", x: 2 },
+        { w: "Ruin" },
+        { w: "Grotto" },
+        { w: "Rotunda" },
+        { w: "Prospect Tower" },
+        { w: "Hermitage", x: 0.5 },
+        { w: "Eyecatcher", x: 0.5 },
+        { w: "Belvedere", x: 0.5 }
+      ]
+    },
+    "monumentFixed:cross": {
+      entries: [
+        { w: "Market Cross", x: 5, e: ["MD", "EM"], c: ["british"] },
+        { w: "High Cross", x: 2, e: ["MD", "EM"], c: ["christian"] },
+        { w: "Butter Cross", e: ["EM"], c: ["british"] },
+        { w: "Mercat Cross", x: 4, c: ["british"], r: ["SBL", "SLO", "SHH", "NSI"] },
+        { w: "Weeping Cross", t: ["strange"], c: ["british"] },
+        { w: "Stump Cross", c: ["british"] },
+        { w: "White Cross" },
+        { w: "Queen's Cross", t: ["grand"], e: ["MD"], c: ["british"] }
+      ]
+    },
+    "monumentFixed:column": {
+      entries: [
+        { w: "the Monument", e: ["EM", "ST"] },
+        { w: "Jubilee Column", e: ["ST"] }
+      ]
+    },
+    "monumentFixed:statue": {
+      entries: [
+        { w: "the Fisherman", t: ["light"], th: ["maritime"] },
+        { w: "the Miner", e: ["ST", "MO"] },
+        { w: "the Drover", th: ["rural"] },
+        { w: "the Soldier", t: ["grim"], e: ["MO"] },
+        { w: "the Shepherd", th: ["rural"] },
+        { w: "the Watcher", t: ["strange"] },
+        { w: "the Weeping Woman", t: ["grim"] },
+        { w: "the Sentinel", t: ["grand"] },
+        { w: "the Old Man", t: ["light"] }
+      ]
+    },
+    "monumentFixed:stone": {
+      entries: [
+        { w: "Standing Stone", x: 3, e: ["AN", "MD"] },
+        { w: "Long Stone", x: 2 },
+        { w: "Grey Stone" },
+        { w: "Hoar Stone", e: ["AN", "MD"], c: ["british"] },
+        { w: "Logan Stone", t: ["strange"], c: ["british"], rx: { COR: 3 } },
+        { w: "Boundary Stone", t: ["plain"] },
+        { w: "Wishing Stone", t: ["strange"] },
+        { w: "Oath Stone", e: ["AN", "MD"] }
+      ]
+    },
+    "monumentFixed:folly": {
+      entries: [
+        { w: "Sham Castle", t: ["light"], e: ["EM", "ST"], c: ["british"] },
+        { w: "Sham Ruin", e: ["EM", "ST"] },
+        { w: "Sham Abbey", t: ["light"], e: ["EM", "ST"], c: ["british"] },
+        { w: "the Eyecatcher", e: ["EM", "ST"] },
+        { w: "the Pepperpot", t: ["light"], c: ["british"] },
+        { w: "the Grotto" },
+        { w: "Shell House", t: ["light"] },
+        { w: "the Hermitage" },
+        { w: "Prospect Tower" }
+      ]
+    },
+    "monumentFixed:figure": {
+      entries: [
+        { w: "the Long Man", x: 2 },
+        { w: "the Giant", x: 2 },
+        { w: "the Old Man" },
+        { w: "the Hill Man" },
+        { w: "the Chalk Giant" },
+        { w: "Troy Town", x: 3 },
+        { w: "Mizmaze", x: 2 },
+        { w: "Turf Maze", x: 2 },
+        { w: "Walls of Troy" },
+        { w: "Shepherd's Race", t: ["light"] }
+      ]
+    },
+    monumentQual: {
+      entries: [
+        { w: "Old", x: 3 },
+        { w: "Great", x: 2 },
+        { w: "High", x: 2 },
+        { w: "White", x: 2 },
+        { w: "Grey", x: 2 },
+        { w: "Black" },
+        { w: "Red" },
+        { w: "Golden" },
+        { w: "Marble" },
+        { w: "Bronze", e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Iron", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Long" },
+        { w: "Tall" },
+        { w: "Little" },
+        { w: "King's" },
+        { w: "Queen's" },
+        { w: "Hoar", e: ["AN", "MD"], c: ["british"] },
+        { w: "Broken", t: ["grim"] },
+        { w: "Fallen", t: ["grim"] },
+        { w: "Leaning", t: ["light"] },
+        { w: "Crooked", t: ["light"] },
+        { w: "Lonely", t: ["strange"] },
+        { w: "Weeping", t: ["strange"] },
+        { w: "Whispering", t: ["strange"] }
+      ]
+    },
+    monumentEvent: {
+      entries: [
+        { w: "Victory", x: 3, t: ["grand"] },
+        { w: "Peace", x: 2 },
+        { w: "Jubilee", x: 2, e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Coronation", t: ["grand"], e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Union", e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Deliverance", e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Liberty", e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Reform", e: ["ST"] },
+        { w: "Founding", x: 2 },
+        { w: "Armistice", e: ["MO"] },
+        { w: "Flood", t: ["grim"] },
+        { w: "Great Fire", t: ["grim"] },
+        { w: "Plague", t: ["grim"] },
+        { w: "Famine", t: ["grim"] },
+        { w: "Siege", t: ["grim"] },
+        { w: "Storm", t: ["grim"], th: ["maritime"] },
+        { w: "Lifeboat", e: ["ST", "MO"], th: ["maritime"] }
+      ]
+    },
+    monumentFallen: {
+      entries: [
+        { w: "Fallen", x: 3, t: ["grim"] },
+        { w: "Drowned", t: ["grim"], th: ["maritime"] },
+        { w: "Lost", t: ["strange"] },
+        { w: "Miners", e: ["ST", "MO"] },
+        { w: "Fishermen", th: ["maritime"] },
+        { w: "Lifeboatmen", e: ["ST", "MO"], th: ["maritime"] },
+        { w: "Volunteers", e: ["ST", "MO"] }
+      ]
+    },
+    monumentVirtue: {
+      entries: [
+        { w: "Concord", x: 2 },
+        { w: "Friendship", x: 2 },
+        { w: "Harmony" },
+        { w: "Liberty" },
+        { w: "Fame" },
+        { w: "Victory" },
+        { w: "Philosophy" },
+        { w: "Piety" },
+        { w: "Peace" },
+        { w: "the Muses" }
+      ]
+    },
+    statueMaterial: {
+      entries: [
+        { w: "Stone", x: 3 },
+        { w: "Bronze", x: 2, e: ["AN", "EM", "ST", "MO", "NF", "IS"] },
+        { w: "Marble", e: ["AN", "EM", "ST", "MO", "NF", "IS"] },
+        { w: "Iron", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Golden", t: ["grand"] },
+        { w: "Brass", t: ["light"], e: ["ST", "MO", "NF", "IS"] }
+      ]
+    },
+    stoneFolk: {
+      entries: [
+        { w: "Maidens", x: 2, t: ["strange"], e: ["AN", "MD"], c: ["british"] },
+        { w: "Sisters", x: 2, t: ["strange"], e: ["AN", "MD"], c: ["british"] },
+        { w: "Brothers", t: ["strange"], e: ["AN", "MD"], c: ["british"] },
+        { w: "Pipers", t: ["strange"], e: ["AN", "MD"], c: ["british"] },
+        { w: "Dancers", t: ["strange"], e: ["AN", "MD"], c: ["british"] },
+        { w: "Ladies", t: ["strange"], e: ["AN", "MD"], c: ["british"] },
+        { w: "Men", t: ["strange"], e: ["AN", "MD"], c: ["british"] },
+        { w: "Kings", t: ["strange"], e: ["AN", "MD"], c: ["british"] },
+        { w: "Sentinels", t: ["strange"], e: ["AN", "MD"], c: ["british"] }
+      ]
+    },
+    figureColour: {
+      entries: [
+        { w: "White", x: 6 },
+        { w: "Red" },
+        { w: "Black", x: 0.5, t: ["strange"] }
+      ]
+    },
+    figureBeast: {
+      entries: [
+        { w: "Horse", x: 6 },
+        { w: "Stag" },
+        { w: "Lion" },
+        { w: "Bull" },
+        { w: "Hound" },
+        { w: "Dragon", x: 0.5 }
+      ]
+    },
+    junctionWord: {
+      entries: [
+        { w: "Cross", x: 2, e: ["MD", "EM"] },
+        { w: "Corner", x: 2, e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Place", e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Square", x: 2, e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Green", e: ["MD", "EM", "ST"], th: ["rural"] },
+        { w: "Circus", x: 1.5, e: ["ST", "MO"] },
+        { w: "Junction", e: ["ST", "MO", "NF"] },
+        { w: "Roundabout", x: 3, e: ["MO", "NF"] },
+        { w: "Plaza", e: ["NF", "IS"] },
+        { w: "Concourse", e: ["NF", "IS"] }
+      ]
+    },
+    steampunkMonument: {
+      entries: [
+        { w: "Clockwork Colossus", x: 2, e: ["ST"], h: true },
+        { w: "Brass Titan", e: ["ST"], h: true },
+        { w: "Aether Obelisk", e: ["ST"], h: true },
+        { w: "Great Orrery", e: ["ST"], h: true },
+        { w: "Lightning Spire", e: ["ST"], h: true },
+        { w: "Engine Memorial", e: ["ST"], h: true }
+      ]
+    },
+    sfMonumentWord: {
+      entries: [
+        { w: "Monument", x: 2 },
+        { w: "Stone" },
+        { w: "Obelisk" },
+        { w: "Marker" }
+      ]
+    },
+    sfRelic: {
+      entries: [
+        { w: "Old Lander", x: 2 },
+        { w: "First Rover" },
+        { w: "Last Rocket" },
+        { w: "Colony Bell" }
+      ]
+    },
     warObject: {
       entries: [
         { w: "Salt Wells" },
@@ -118585,6 +118926,13 @@ var street_names_default = {
     routeFrom: 8,
     landmarkOnceFrom: 8
   },
+  monumentNeighbours: [
+    { kind: "junction", p: "{site} {jw}", w: 30, e: ["MD", "EM", "ST", "MO", "NF", "IS"] },
+    { kind: "street", p: "{site} {sw}", w: 25 },
+    { kind: "district", p: "{site}", w: 20, e: ["MD", "EM", "ST", "MO", "NF", "IS"], worthy: true, village: false },
+    { kind: "district", p: "{site} {dw}", w: 10 },
+    { kind: "inn", p: "the {site}", w: 10, e: ["MD", "EM", "ST", "MO"], worthy: true }
+  ],
   cap: 6,
   safeguards: {
     block: ["Wall Street", "Downing Street", "Whitehall", "Fleet Street", "Threadneedle Street", "Lombard Street", "Pall Mall", "Park Lane", "Oxford Street", "Regent Street", "Bond Street", "Carnaby Street", "Coronation Street", "Pudding Lane", "Cheapside", "Grub Street", "Bourbon Street", "Broadway", "Champs-\xC9lys\xE9es", "Nevsky Prospect", "Unter den Linden", "Royal Mile", "Princes Street", "Grafton Street", "Sauchiehall Street", "Ginza", "Gion", "Pontoch\u014D", "Chandni Chowk", "Jongno", "Wangfujing", "The Shambles", "Coppergate", "Forbidden City", "Imperial City", "Kremlin", "Red Square", "Tiananmen", "Trafalgar Square", "Piccadilly Circus", "Times Square", "Grand Bazaar", "Medina of Fez", "Old City of Jerusalem", "Latin Quarter", "Jewish Quarter", "Armenian Quarter", "Christian Quarter", "Muslim Quarter", "Soho", "Montmartre", "Harlem", "Chinatown", "Little Italy", "Barrio", "Bowery", "Five Points", "Diagon Alley", "Knockturn Alley", "Privet Drive", "Spinner's End", "Baker Street 221B", "Ramsay Street", "Albert Square", "Wisteria Lane", "Sesame Street", "Hob's Lane", "The Shades", "Night City", "Midgar", "Flea Bottom", "Street of Steel", "Street of Silk", "Street of the Sisters", "Hill of Rhaenys"],
@@ -118595,6 +118943,265 @@ var street_names_default = {
     christian: ["Church", "Chapel", "Abbey", "Minster", "Friar", "Priory", "Friary", "Bishop", "Abbot"]
   }
 };
+
+// src/data/monument-names.json
+var monument_names_default = {
+  $comment: "Monuments and statues (docs/monuments-and-statues-brief.md \xA75, \xA77, \xA713). Words come from settlement-vocab.json through src/settlement/vocab.ts; settings' text and themes are the inn settings'. Shapes: `s` is the site pattern (\xA78); `kinds` limits a shared or era shape, `kind` is a culture shape's kind.",
+  version: 1,
+  any: "monuments and statues of any kind",
+  kinds: [
+    { key: "cross", menu: "Crosses", plural: "crosses", description: "Market, preaching, high, wayside and memorial crosses", era: { AN: 0, MD: 15, EM: 12, ST: 6, MO: 3, NF: 1, IS: 1 } },
+    { key: "column", menu: "Columns and pillars", plural: "columns and pillars", description: "Victory and memorial columns, pillars and plinths", era: { AN: 8, MD: 4, EM: 8, ST: 15, MO: 10, NF: 6, IS: 6 } },
+    { key: "obelisk", menu: "Obelisks and needles", plural: "obelisks and needles", description: "Obelisks, needles and memorial spires", era: { AN: 6, MD: 1, EM: 4, ST: 12, MO: 8, NF: 4, IS: 4 } },
+    { key: "arch", menu: "Arches and gateways", plural: "arches and gateways", description: "Triumphal arches, memorial archways and ceremonial gates", era: { AN: 8, MD: 3, EM: 6, ST: 12, MO: 8, NF: 5, IS: 5 } },
+    { key: "statue", menu: "Statues and figures", plural: "statues", description: "Statues, equestrian figures, colossi and busts", era: { AN: 10, MD: 4, EM: 8, ST: 20, MO: 18, NF: 10, IS: 10 } },
+    { key: "stone", menu: "Standing stones and stelae", plural: "standing stones and stelae", description: "Standing stones, stone circles, rune stones, stelae and milestones", era: { AN: 20, MD: 10, EM: 4, ST: 3, MO: 1, NF: 2, IS: 2 } },
+    { key: "tomb", menu: "Tombs and mounds", plural: "tombs and mounds", description: "Barrows, cairns, mausolea and pyramids", era: { AN: 15, MD: 8, EM: 6, ST: 6, MO: 3, NF: 2, IS: 2 } },
+    { key: "memorial", menu: "Memorials and fountains", plural: "memorials", description: "War and disaster memorials, cenotaphs, memorial fountains and clock towers", era: { AN: 2, MD: 3, EM: 6, ST: 15, MO: 20, NF: 12, IS: 12 } },
+    { key: "folly", menu: "Follies and eyecatchers", plural: "follies", description: "Sham ruins, towers, garden temples and eyecatchers", era: { AN: 0, MD: 0, EM: 12, ST: 10, MO: 2, NF: 0, IS: 0 } },
+    { key: "figure", menu: "Hill figures and mazes", plural: "hill figures and mazes", description: "Chalk and turf figures, turf mazes", era: { AN: 6, MD: 4, EM: 3, ST: 4, MO: 1, NF: 0, IS: 0 } }
+  ],
+  settingX: { anywhere: {}, town: { column: 2, statue: 2, memorial: 2, arch: 1.5, obelisk: 1.5, cross: 1.5, stone: 0.3, tomb: 0.3, folly: 0.3, figure: 0 }, country: { stone: 2, tomb: 2, folly: 3, figure: 3, column: 0.5, statue: 0.5, obelisk: 0.5, memorial: 0.5, arch: 0.3 }, port: { memorial: 2, statue: 1.5, column: 1.5, tomb: 0.5, folly: 0.5, figure: 0 }, road: { cross: 3, stone: 2, tomb: 1.5, memorial: 1.5, figure: 1.5, arch: 0.5 } },
+  regionX: { stone: { COR: 3, SHH: 3, NSI: 3, WCY: 2, WAL: 2, NTH: 1.5, EAN: 0.5, SEA: 0.5 }, tomb: { NSI: 3, SHH: 2, COR: 1.5, WCY: 1.5 }, cross: { COR: 2, SLO: 1.5, SBL: 1.5 }, figure: { WCY: 3, SEA: 3, EAN: 0.5, EMD: 0.5, NTH: 0.5, WMM: 0.5, COR: 0.3, WAL: 0.3, SBL: 0.3, SLO: 0.2, SHH: 0.2, NSI: 0.2 } },
+  kindCultures: { cross: ["christian"], folly: ["british", "general"], figure: ["british", "general"] },
+  shared: [
+    { p: "{town} {mw}", w: 20, t: ["plain"], kinds: ["cross", "column", "obelisk", "arch", "statue", "stone", "tomb", "memorial", "folly"], self: true },
+    { p: "the {monumentQual} {mw}", w: 20, kinds: ["cross", "column", "obelisk", "arch", "statue", "stone", "tomb", "memorial", "folly"] },
+    { p: "{monumentQual} {mw}", w: 5, kinds: ["cross", "column", "obelisk", "arch", "statue", "stone", "tomb", "memorial", "folly"] },
+    { p: "{founder:poss} {mw}", w: 8, kinds: ["cross", "column", "obelisk", "arch", "statue", "stone", "tomb", "memorial", "folly"] },
+    { p: "{mw} of {founder}", w: 5, t: ["grand"], kinds: ["cross", "column", "obelisk", "arch", "statue", "stone", "tomb", "memorial", "folly"], s: "{founder}" },
+    { p: "{hero:poss} {mw}", w: 10, e: ["EM", "ST", "MO", "NF", "IS"], t: ["grand"], kinds: ["cross", "column", "obelisk", "arch", "statue", "stone", "tomb", "memorial", "folly"], s: "{hero}" },
+    { p: "{monarch:poss} {mw}", w: 8, e: ["MD", "EM", "ST", "MO", "NF", "IS"], t: ["grand"], kinds: ["cross", "column", "obelisk", "arch", "statue", "stone", "tomb", "memorial", "folly"], s: "{monarch}" },
+    { p: "{surname} {mw}", w: 6, e: ["EM", "ST", "MO", "NF", "IS"], c: ["british", "general"], t: ["plain"], kinds: ["cross", "column", "obelisk", "arch", "statue", "stone", "tomb", "memorial", "folly"] },
+    { p: "{creature} {mw}", w: 3, kinds: ["cross", "column", "obelisk", "arch", "statue", "stone", "tomb", "memorial", "folly"] }
+  ],
+  kindShapes: {
+    cross: [
+      { p: "{fixed}", w: 0 },
+      { p: "{holy:poss} Cross", w: 10, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"] },
+      { p: "{number} Crosses", w: 3, e: ["MD", "EM"], c: ["christian"], t: ["strange"] },
+      { p: "{event} Cross", w: 3, e: ["ST", "MO"], c: ["christian"] }
+    ],
+    column: [
+      { p: "{event} Column", w: 10, e: ["EM", "ST", "MO", "NF", "IS"] },
+      { p: "{battle} Column", w: 8, e: ["EM", "ST", "MO"], t: ["grand"], s: "{battle}" },
+      { p: "Column of {monarch}", w: 6, e: ["AN", "EM", "ST", "MO"], t: ["grand"], s: "{monarch}" },
+      { p: "{fixed}", w: 0 }
+    ],
+    obelisk: [
+      { p: "{event} Obelisk", w: 8, e: ["EM", "ST", "MO", "NF", "IS"] },
+      { p: "{battle} Obelisk", w: 5, e: ["EM", "ST", "MO"], t: ["grand"], s: "{battle}" },
+      { p: "{monarch:poss} Needle", w: 3, e: ["ST"], t: ["light"], s: "{monarch}" }
+    ],
+    arch: [
+      { p: "Arch of {monarch}", w: 10, e: ["AN", "EM", "ST", "MO", "NF", "IS"], t: ["grand"], s: "{monarch}" },
+      { p: "{event} Arch", w: 8, e: ["EM", "ST", "MO", "NF", "IS"] },
+      { p: "{battle} Arch", w: 4, e: ["EM", "ST", "MO"], t: ["grand"], s: "{battle}" }
+    ],
+    statue: [
+      { p: "Statue of {monarch}", w: 15, t: ["grand"], s: "{monarch}" },
+      { p: "Statue of {hero}", w: 15, e: ["EM", "ST", "MO", "NF", "IS"], s: "{hero}" },
+      { p: "Statue of {founder}", w: 10, s: "{founder}" },
+      { p: "Statue of {holy}", w: 6, e: ["MD", "EM", "ST", "MO", "NF", "IS"], c: ["christian"], s: "{holy}" },
+      { p: "the {material} {creature}", w: 10, s: "{material} {creature}" },
+      { p: "Equestrian Statue of {monarch}", w: 5, e: ["AN", "EM", "ST"], t: ["grand"], s: "{monarch}" },
+      { p: "Colossus of {figure}", w: 3, e: ["AN"], t: ["grand"] },
+      { p: "{fixed}", w: 0 }
+    ],
+    stone: [
+      { p: "{fixed}", w: 0 },
+      { p: "{number} Stones", w: 8, e: ["AN", "MD"], t: ["strange"] },
+      { p: "the {number} {stoneFolk}", w: 6, e: ["AN", "MD"], c: ["british"], t: ["strange"], s: "{number} {stoneFolk}" },
+      { p: "{owner:poss} Stone", w: 8, e: ["AN", "MD"] },
+      { p: "{creature} Stone", w: 5, e: ["AN", "MD"] },
+      { p: "{town} Milestone", w: 3, e: ["EM", "ST"], c: ["british"], t: ["plain"], sx: { road: 3 }, self: true },
+      { p: "{number} Mile Stone", w: 3, e: ["EM", "ST"], c: ["british"], t: ["plain"], sx: { road: 3 } }
+    ],
+    tomb: [
+      { p: "{owner:poss} {mw}", w: 10, e: ["AN", "MD"] },
+      { p: "Tomb of {founder}", w: 10, s: "{founder}" },
+      { p: "Tomb of {monarch}", w: 8, t: ["grand"], s: "{monarch}" },
+      { p: "{monarch:poss} Mausoleum", w: 5, e: ["EM", "ST", "MO"], t: ["grand"], s: "{monarch}" },
+      { p: "Giant's {mw}", w: 4, e: ["AN", "MD"], c: ["british"], t: ["strange"], mw: ["Grave", "Cairn", "Barrow", "Quoit"] },
+      { p: "{number} Barrows", w: 3, e: ["AN", "MD"], c: ["british"] }
+    ],
+    memorial: [
+      { p: "{event} Memorial", w: 15, e: ["ST", "MO", "NF", "IS"] },
+      { p: "{town} War Memorial", w: 10, e: ["MO"], t: ["plain"], self: true },
+      { p: "{town} Cenotaph", w: 5, e: ["MO"], t: ["grand"], self: true },
+      { p: "{benefactor} Memorial Fountain", w: 6, e: ["ST", "MO"], s: "{benefactor}" },
+      { p: "{benefactor} Memorial", w: 5, e: ["ST", "MO", "NF", "IS"], s: "{benefactor}" },
+      { p: "{event} Clock Tower", w: 6, e: ["ST", "MO"] },
+      { p: "{town} Clock Tower", w: 6, e: ["ST", "MO"], t: ["plain"], self: true },
+      { p: "Memorial to the {fallen}", w: 5, e: ["ST", "MO", "NF", "IS"], t: ["grim"], s: "{fallen}" },
+      { p: "{town} Lifeboat Memorial", w: 4, e: ["ST", "MO"], sx: { port: 5 }, self: true }
+    ],
+    folly: [
+      { p: "{follyOwner:poss} {mw}", w: 15, e: ["EM", "ST"], c: ["british", "general"], t: ["light"] },
+      { p: "{surname:poss} {mw}", w: 10, e: ["EM", "ST"], c: ["british", "general"], t: ["light"] },
+      { p: "Temple of {virtue}", w: 8, e: ["EM", "ST"], c: ["british", "general"], t: ["grand"] },
+      { p: "{fixed}", w: 0 }
+    ],
+    figure: [
+      { p: "the {figureColour} {figureBeast}", w: 25, c: ["british", "general"] },
+      { p: "{town} White Horse", w: 10, c: ["british", "general"], t: ["plain"], self: true },
+      { p: "{town} Giant", w: 5, c: ["british", "general"], t: ["strange"], self: true },
+      { p: "{town} Maze", w: 5, e: ["MD", "EM", "ST"], c: ["british", "general"], self: true },
+      { p: "{fixed}", w: 0 }
+    ]
+  },
+  cultureShapes: {
+    roman: [
+      { p: "Triumphal Arch of {monarch}", w: 15, e: ["AN", "MD", "EM"], kind: "arch" },
+      { p: "Column of {monarch}", w: 15, e: ["AN"], kind: "column" },
+      { p: "Equestrian Statue of {monarch}", w: 15, e: ["AN"], kind: "statue" },
+      { p: "Mausoleum of {monarch}", w: 15, e: ["AN"], kind: "tomb" },
+      { p: "Tomb of {founder}", w: 15, e: ["AN"], kind: "tomb", sx: { road: 3 } },
+      { p: "{ordinalWord} Milestone", w: 15, e: ["AN"], kind: "stone", sx: { road: 3 } }
+    ],
+    "greek-byzantine": [
+      { p: "Column of {monarch}", w: 15, e: ["AN", "MD"], kind: "column" },
+      { p: "the {creature} of {town}", w: 15, e: ["AN", "MD"], t: ["grand"], kind: "statue", self: false },
+      { p: "Stele of {founder}", w: 15, e: ["AN"], kind: "stone" }
+    ],
+    egyptian: [
+      { p: "Obelisk of {figure}", w: 15, e: ["AN"], kind: "obelisk" },
+      { p: "Needle of {god}", w: 15, e: ["AN"], kind: "obelisk" },
+      { p: "Colossus of {figure}", w: 15, e: ["AN"], kind: "statue" },
+      { p: "Avenue of {creature:pl}", w: 15, e: ["AN"], kind: "statue" },
+      { p: "Pyramid of {figure}", w: 15, e: ["AN"], kind: "tomb" },
+      { p: "Tomb of {figure}", w: 15, e: ["AN"], kind: "tomb" },
+      { p: "Stele of {figure}", w: 15, e: ["AN"], kind: "stone" }
+    ],
+    chinese: [
+      { p: "Memorial Gate of {founder}", w: 15, kind: "arch" },
+      { p: "Memorial Archway of {founder}", w: 15, kind: "arch" },
+      { p: "Archway of {eastVirtue}", w: 15, kind: "arch" },
+      { p: "Tortoise Stele of {founder}", w: 15, e: ["AN", "MD", "EM", "ST"], kind: "stone" },
+      { p: "Stone {creature:pl}", w: 15, e: ["AN", "MD", "EM"], kind: "statue" },
+      { p: "Mound of {figure}", w: 15, e: ["AN", "MD"], kind: "tomb" }
+    ],
+    japanese: [
+      { p: "Keyhole Mound of {founder}", w: 15, e: ["AN"], kind: "tomb" },
+      { p: "{town} Memorial Stone", w: 15, e: ["MD", "EM", "ST", "MO", "NF", "IS"], kind: "stone", self: false },
+      { p: "Monument to {hero}", w: 15, e: ["EM", "ST", "MO", "NF", "IS"], kind: "memorial" }
+    ],
+    korean: [
+      { p: "Tortoise Stele of {founder}", w: 15, e: ["AN", "MD", "EM", "ST"], kind: "stone" },
+      { p: "Red Gate of {founder}", w: 15, e: ["EM", "ST"], kind: "arch" },
+      { p: "Burial Mound of {founder}", w: 15, e: ["AN", "MD"], kind: "tomb" }
+    ],
+    indian: [
+      { p: "Pillar of {figure}", w: 15, e: ["AN", "MD"], kind: "column" },
+      { p: "Victory Pillar of {founder}", w: 15, e: ["AN", "MD"], kind: "column" },
+      { p: "{town} Gateway", w: 15, e: ["EM", "ST", "MO"], kind: "arch", self: false },
+      { p: "{event} Gate", w: 15, e: ["EM", "ST", "MO"], kind: "arch" },
+      { p: "Cenotaph Pavilion of {founder}", w: 15, e: ["MD", "EM", "ST"], kind: "tomb" }
+    ],
+    "arabic-persian": [
+      { p: "Tomb Tower of {founder}", w: 15, e: ["MD", "EM"], kind: "tomb" },
+      { p: "{event} Gate", w: 15, e: ["EM", "ST"], kind: "arch" },
+      { p: "Column of {figure}", w: 15, e: ["AN"], kind: "column" }
+    ],
+    norse: [
+      { p: "{owner:poss} Stone", w: 30, e: ["AN", "MD"], kind: "stone" },
+      { p: "Rune Stone of {town}", w: 15, e: ["AN", "MD"], kind: "stone", self: false },
+      { p: "{owner:poss} Stone Ship", w: 15, e: ["AN", "MD"], kind: "stone" },
+      { p: "{owner:poss} Mound", w: 15, e: ["AN", "MD"], kind: "tomb" }
+    ],
+    "anglo-saxon": [
+      { p: "{owner:poss} Cross", w: 15, e: ["MD"], kind: "cross" },
+      { p: "{owner:poss} Low", w: 15, e: ["AN", "MD"], kind: "tomb" },
+      { p: "{owner:poss} Barrow", w: 15, e: ["AN", "MD"], kind: "tomb" }
+    ],
+    celtic: [
+      { p: "{holy:poss} High Cross", w: 15, e: ["MD"], kind: "cross" },
+      { p: "Ogham Stone of {founder}", w: 15, e: ["AN", "MD"], kind: "stone" },
+      { p: "{owner:poss} Cairn", w: 15, e: ["AN", "MD"], kind: "tomb" }
+    ],
+    "norman-british": [
+      { p: "{monarch:poss} Cross", w: 15, e: ["MD"], t: ["grand"], kind: "cross" },
+      { p: "{town} Jubilee Clock", w: 15, e: ["ST"], kind: "memorial", self: true }
+    ],
+    slavic: [
+      { p: "Column of {monarch}", w: 15, e: ["EM", "ST"], kind: "column" },
+      { p: "Monument to {hero}", w: 15, e: ["ST", "MO"], kind: "memorial" },
+      { p: "{town} Wayside Cross", w: 15, e: ["MD", "EM", "ST"], kind: "cross", self: false },
+      { p: "Burial Mound of {founder}", w: 15, e: ["AN", "MD"], kind: "tomb" }
+    ],
+    steppe: [
+      { p: "Stone Man of {town}", w: 15, e: ["AN", "MD"], kind: "stone", self: false },
+      { p: "{creature} Stone", w: 15, e: ["AN", "MD"], kind: "stone" },
+      { p: "Mound of {figure}", w: 15, e: ["AN", "MD"], kind: "tomb" }
+    ],
+    ethiopian: [
+      { p: "{founder:poss} Stele", w: 15, e: ["AN", "MD"], kind: "stone" },
+      { p: "Great Stele of {town}", w: 15, e: ["AN", "MD"], kind: "stone", self: false },
+      { p: "Stone Throne of {founder}", w: 15, e: ["AN", "MD"], kind: "stone" },
+      { p: "Obelisk of {town}", w: 15, e: ["AN"], kind: "obelisk", self: false }
+    ],
+    bantu: [
+      { p: "{bird} Pillar", w: 15, e: ["AN", "MD"], kind: "column" },
+      { p: "Royal Grave of {founder}", w: 15, e: ["AN", "MD", "EM"], kind: "tomb" }
+    ],
+    "west-african": [
+      { p: "{town} Stone Circle", w: 15, e: ["AN", "MD"], kind: "stone", self: false },
+      { p: "Memorial Pillar of {founder}", w: 15, e: ["MD", "EM", "ST"], kind: "column" },
+      { p: "Grave Mound of {founder}", w: 15, e: ["AN", "MD"], kind: "tomb" }
+    ],
+    aztec: [
+      { p: "Stone of the {creature}", w: 15, e: ["AN", "MD"], kind: "stone" },
+      { p: "Stone of {number} {creature}", w: 15, e: ["AN", "MD"], kind: "stone" }
+    ],
+    maya: [
+      { p: "Stela {n}", w: 30, e: ["AN", "MD"], kind: "stone" },
+      { p: "Stela of {founder}", w: 15, e: ["AN", "MD"], kind: "stone" },
+      { p: "Great {creature} Stone", w: 15, e: ["AN", "MD"], kind: "stone" }
+    ]
+  },
+  eraShapes: [
+    { p: "{steampunkMonument}", w: 10, e: ["ST"], h: true, kinds: ["statue"] },
+    { p: "{town} {steampunkMonument}", w: 10, e: ["ST"], h: true, kinds: ["statue"], self: true },
+    { p: "{surname} {steampunkMonument}", w: 5, e: ["ST"], h: true, kinds: ["statue"] },
+    { p: "the Petrified {creature}", w: 5, e: ["AN", "MD", "EM"], t: ["strange"], h: true, kinds: ["statue"] },
+    { p: "the Sleeping Giant", w: 2, e: ["AN", "MD", "EM"], t: ["strange"], h: true, kinds: ["statue"] },
+    { p: "the Drowned King", w: 2, e: ["AN", "MD", "EM"], t: ["strange"], h: true, kinds: ["statue"] },
+    { p: "the Stone Knight", w: 2, e: ["AN", "MD", "EM"], t: ["strange"], h: true, kinds: ["statue"] },
+    { p: "the {quality} Obelisk", w: 5, e: ["AN", "MD", "EM"], t: ["strange"], h: true, kinds: ["obelisk"] },
+    { p: "{creature:poss} Cairn", w: 4, e: ["AN", "MD", "EM"], t: ["grim"], h: true, kinds: ["tomb"] },
+    { p: "Barrow of the {figure}", w: 4, e: ["AN", "MD", "EM"], t: ["grim"], h: true, kinds: ["tomb"] },
+    { p: "Statue of {deity}", w: 5, e: ["AN", "MD", "EM"], t: ["grand"], h: true, kinds: ["statue"], deity: true },
+    { p: "Colossus of {deity}", w: 2, e: ["AN", "MD", "EM"], t: ["grand"], h: true, kinds: ["statue"], deity: true }
+  ],
+  scifi: {
+    share: 0.5,
+    shapes: [
+      { p: "{discovery} Memorial", w: 10, kinds: ["memorial"] },
+      { p: "{town} Founders' Memorial", w: 8, kinds: ["memorial"], self: true },
+      { p: "Memorial to the {ordinalWord} Crew", w: 6, t: ["grim"], kinds: ["memorial"] },
+      { p: "the Wall of Names", w: 3, t: ["grim"], kinds: ["memorial"] },
+      { p: "the Eternal Beacon", w: 3, t: ["grand"], kinds: ["memorial"] },
+      { p: "First Landing {sfmw}", w: 8, kinds: ["stone"] },
+      { p: "{star} Monolith", w: 10, kinds: ["stone"] },
+      { p: "Monolith {greek}", w: 8, kinds: ["stone"] },
+      { p: "Statue of the Unknown Colonist", w: 3, kinds: ["statue"] },
+      { p: "the {sfRelic}", w: 4, t: ["light"], kinds: ["statue"] },
+      { p: "Plinth {n}", w: 4, t: ["plain"], kinds: ["column"] },
+      { p: "{discovery} Arch", w: 4, kinds: ["arch"] }
+    ]
+  },
+  sensitive: { noKinds: ["stone", "tomb", "figure"], noKindEras: { "arabic-persian": { statue: ["MD", "EM", "ST"] } } },
+  series: { founderUses: 3 },
+  cap: 7,
+  nearby: { count: 2 },
+  safeguards: { block: ["Nelson's Column", "Marble Arch", "Wellington Arch", "Admiralty Arch", "Cleopatra's Needle", "Eleanor Cross", "Charing Cross", "King's Cross", "Banbury Cross", "Seven Dials", "Monument to the Great Fire", "the Cenotaph", "Albert Memorial", "Prince Albert Memorial", "Victoria Memorial", "Wallace Monument", "Scott Monument", "Nelson's Monument", "Duke of York Column", "Grey's Monument", "Wellington Monument", "Penshaw Monument", "Stoodley Pike", "Hoad Monument", "Broadway Tower", "McCaig's Tower", "Mow Cop", "Angel of the North", "Stonehenge", "Avebury", "Callanish", "Ring of Brodgar", "Stones of Stenness", "Rollright Stones", "Castlerigg", "Men-an-Tol", "Merry Maidens", "Nine Ladies", "the Hurlers", "Long Meg", "Maeshowe", "Newgrange", "Wayland's Smithy", "West Kennet Long Barrow", "Silbury Hill", "Sutton Hoo", "Long Man of Wilmington", "Cerne Abbas Giant", "Uffington White Horse", "Westbury White Horse", "Glastonbury Tor", "Dunmore Pineapple", "Temple of British Worthies", "Temple of Ancient Virtue", "Bluestones", "Statue of Liberty", "Colossus of Rhodes", "Christ the Redeemer", "Arc de Triomphe", "Brandenburg Gate", "Trajan's Column", "Column of Marcus Aurelius", "Arch of Titus", "Arch of Constantine", "Arch of Septimius Severus", "Altar of Peace", "Mausoleum of Augustus", "Mausoleum of Hadrian", "Mausoleum at Halicarnassus", "Serpent Column", "Column of Constantine", "Lion of Chaeronea", "Lion of Amphipolis", "Colossi of Memnon", "Great Sphinx", "Sphinx", "Great Pyramid", "Pyramid of the Sun", "Pyramid of the Moon", "Luxor Obelisk", "Lateran Obelisk", "Obelisk of Axum", "Great Stele", "Washington Monument", "Lincoln Memorial", "Mount Rushmore", "Bronze Horseman", "Alexander Column", "Motherland Calls", "Iron Pillar", "Lion Capital", "Tower of Victory", "Victory Tower", "Qutb Minar", "India Gate", "Gateway of India", "Taj Mahal", "Tomb of Cyrus", "Terracotta Army", "Ming Tombs", "Spirit Way", "Great Buddha", "Moai", "Nazca Lines", "Sun Stone", "Stone of the Sun", "Stone of Tizoc", "Altar Q", "Rosetta Stone", "Jelling Stones", "Carnac Stones", "Victory Column", "Little Mermaid", "Atomium", "Statue of Unity", "Temple of the Winds", "Tower of the Winds", "Golden Milestone", "Argonath", "Pillars of the Kings", "Colossus of Braavos", "Titan of Braavos", "Ozymandias", "Stone of Erech", "Barrow-downs", "Iron Giant", "Hollow Knight"], flag: ["White Horse", "Long Man", "the Giant", "Market Cross", "High Cross", "Butter Cross", "Mercat Cross", "Weeping Cross", "White Cross", "Queen's Cross", "Hoar Stone", "Long Stone", "Standing Stone", "King Stone", "Nine Maidens", "Seven Sisters", "Troy Town", "Mizmaze", "Julian's Bower", "the Monument", "Folly", "Sham Castle", "the Pepperpot", "War Memorial", "Eternal Flame", "Jubilee Clock", "Clock Tower", "Tomb of the Unknown Soldier", "Steam Clock"], flagListBlocks: false, banned: ["Confederate", "Slaver", "Slave", "Swastika", "Lynching"], honourees: ["Nelson", "Wellington", "Napoleon", "Bonaparte", "Churchill", "Cromwell", "Lincoln", "Washington", "Jefferson", "Lenin", "Stalin", "Mao", "Hitler", "Mussolini", "Franco", "Garibaldi", "Bol\xEDvar", "Bolivar", "Queen Victoria", "Prince Albert", "Queen Elizabeth", "King Alfred", "King Arthur", "Boudicca", "Caesar", "Augustus", "Alexander", "Ashoka", "Genghis", "Peter the Great", "Kublai"] }
+};
+
+// src/monuments/engine.ts
+var MONUMENT_DATA = monument_names_default;
+var MONUMENT_SELF = selfPatterns(monument_names_default);
+var MONUMENT_KINDS = MONUMENT_DATA.kinds;
+var MONUMENT_ANY = MONUMENT_DATA.any;
 
 // src/streets/engine.ts
 var STREET_DATA = street_names_default;
@@ -118616,20 +119223,20 @@ var defaultStreetSafeguards = () => ({
   flag: STREET_DATA.safeguards.flag,
   flagListBlocks: STREET_DATA.safeguards.flagListBlocks
 });
-var pickOne10 = (items, rng) => items[Math.floor(rng() * items.length)];
+var pickOne11 = (items, rng) => items[Math.floor(rng() * items.length)];
 var LIGHT_OR_GRIM4 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var CASTE2 = /* @__PURE__ */ new Set(["indian", "west-african"]);
 var TRADE_TOKENS = /\{(trade|tradeSg)[}:]/;
 var POOL_OF2 = { sw: "streetWord", aw: "alleyWord", dw: "districtWord" };
 var SF_LISTS2 = /* @__PURE__ */ new Set(["star", "greek", "stationDirection"]);
 var where = (ctx, region = ctx.region) => ({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region });
-function vocabPool5(ctx, pool3, region = ctx.region) {
+function vocabPool6(ctx, pool3, region = ctx.region) {
   return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, where(ctx, region))).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM4(e.t))).map(([e, w]) => {
     var _a5;
     return [e, w * toneFactor((_a5 = e.t) != null ? _a5 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
 }
-function fromPool3(ctx, pool3, items) {
+function fromPool4(ctx, pool3, items) {
   var _a5;
   const e = pickWeighted5(items, ctx.rng);
   if (!e) return void 0;
@@ -118637,8 +119244,8 @@ function fromPool3(ctx, pool3, items) {
   ctx.words.push({ pool: pool3, word: e.w });
   return e.w;
 }
-var vocabWord2 = (ctx, pool3, keep) => fromPool3(ctx, pool3, vocabPool5(ctx, pool3).filter(([e]) => !keep || keep(e)));
-function gnWord5(ctx, list, keep) {
+var vocabWord2 = (ctx, pool3, keep) => fromPool4(ctx, pool3, vocabPool6(ctx, pool3).filter(([e]) => !keep || keep(e)));
+function gnWord6(ctx, list, keep) {
   if (list === "star") {
     const star = groupStarIn("any", ctx.mode, ctx.rng);
     ctx.words.push({ pool: "star", word: star });
@@ -118665,7 +119272,7 @@ function componentPools(ctx) {
   return Object.entries(weights).map(([p, w]) => {
     var _a6;
     return [p, w * ((_a6 = x == null ? void 0 : x[p]) != null ? _a6 : 1)];
-  }).filter(([p]) => vocabPool5(ctx, p).length > 0);
+  }).filter(([p]) => vocabPool6(ctx, p).length > 0);
 }
 function component(ctx) {
   const pool3 = pickWeighted5(componentPools(ctx), ctx.rng);
@@ -118675,24 +119282,24 @@ function component(ctx) {
 }
 function streetGoods(ctx) {
   var _a5, _b3, _c3;
-  const items = vocabPool5(ctx, "streetGoods");
+  const items = vocabPool6(ctx, "streetGoods");
   for (const e of (_c3 = (_b3 = (_a5 = ctx.vocab.pools.routeGoods) == null ? void 0 : _a5.cultureExtra) == null ? void 0 : _b3[ctx.culture.key]) != null ? _c3 : []) {
     const found = items.find(([x]) => x.w === e.w);
     if (found) found[1] *= 2;
     else items.push([e, 2]);
   }
-  const w = fromPool3(ctx, "streetGoods", items);
+  const w = fromPool4(ctx, "streetGoods", items);
   if (w) ctx.uses.push(`good:${w}`);
   return w;
 }
 function dialectWord(ctx, keep) {
   var _a5;
   const region = (_a5 = ctx.dialectRegion) != null ? _a5 : ctx.region;
-  const items = vocabPool5(ctx, "alleyDialect", region).filter(([e]) => !keep || keep(e.w)).map(([e, w]) => {
+  const items = vocabPool6(ctx, "alleyDialect", region).filter(([e]) => !keep || keep(e.w)).map(([e, w]) => {
     var _a6, _b3;
     return [e, region ? w : w * ((_b3 = (_a6 = e.r) == null ? void 0 : _a6.length) != null ? _b3 : 1)];
   });
-  return fromPool3(ctx, "alleyDialect", items);
+  return fromPool4(ctx, "alleyDialect", items);
 }
 function route(ctx) {
   const context = ctx.options.context;
@@ -118727,7 +119334,7 @@ function destination(ctx) {
     return t2;
   }
   if (ctx.mode === "placeholders") return "[place]";
-  const t = ctx.towns ? pickOne10(ctx.towns, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  const t = ctx.towns ? pickOne11(ctx.towns, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
   if (t) ctx.uses.push(`destination:${t}`);
   return t;
 }
@@ -118789,31 +119396,31 @@ function token11(ctx, name, alt, pattern) {
       if (ctx.options.context) return ctx.options.context.founder;
       if (placeholders) return "[founder]";
       const names = personNames(ctx.culture.key);
-      return names.length > 0 ? pickOne10(names, rng) : void 0;
+      return names.length > 0 ? pickOne11(names, rng) : void 0;
     }
     case "surname":
-      return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : gnWord5(ctx, "surname");
+      return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : gnWord6(ctx, "surname");
     case "god": {
       const gods = godNames(ctx.culture.key);
-      return gods.length > 0 ? pickOne10(gods, rng) : void 0;
+      return gods.length > 0 ? pickOne11(gods, rng) : void 0;
     }
     case "weekday":
       return pickWeighted5(STREET_DATA.lists.weekday, rng);
     case "hill":
-      return pickOne10(STREET_DATA.lists.hill, rng);
+      return pickOne11(STREET_DATA.lists.hill, rng);
     case "ordinal": {
       const choices = [];
       for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
       return ordinalText(pickWeighted5(choices, rng));
     }
     case "ordinalWord":
-      return gnWord5(ctx, "ordinalWord", pattern.includes("-Day") ? (w) => STREET_DATA.lists.dayOrdinals.includes(w) : void 0);
+      return gnWord6(ctx, "ordinalWord", pattern.includes("-Day") ? (w) => STREET_DATA.lists.dayOrdinals.includes(w) : void 0);
     case "n":
       return String(1 + Math.floor(rng() * 40));
     case "greek":
     case "star":
     case "stationDirection":
-      return gnWord5(ctx, name);
+      return gnWord6(ctx, name);
     case "landmark":
       return landmark(ctx);
     case "mainStreet": {
@@ -118844,7 +119451,7 @@ function token11(ctx, name, alt, pattern) {
   }
   return vocabWord2(ctx, (_b3 = POOL_OF2[name]) != null ? _b3 : name);
 }
-function renderPattern9(ctx, pattern) {
+function renderPattern10(ctx, pattern) {
   let failed = false;
   let hasDialect = false;
   const dialectParts = [];
@@ -118897,9 +119504,9 @@ function shapeWeight6(ctx, s) {
   if (ctx.mode === "invented" && s.p.includes("{founder}") && personNames(c.key).length === 0) return 0;
   if (s.p.includes("{god") && godNames(c.key).length === 0) return 0;
   if (s.p.includes("{holy:") && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
-  if (s.p === "{districtFixed}" && !vocabPool5(ctx, "districtFixed").some(([e]) => !e.fn || e.fn.includes("any") || !!ctx.fn && e.fn.includes(ctx.fn))) return 0;
+  if (s.p === "{districtFixed}" && !vocabPool6(ctx, "districtFixed").some(([e]) => !e.fn || e.fn.includes("any") || !!ctx.fn && e.fn.includes(ctx.fn))) return 0;
   const pool3 = (_a5 = s.p.match(/^\{(\w+)\}$/)) == null ? void 0 : _a5[1];
-  if (pool3 && ctx.vocab.pools[pool3] && vocabPool5(ctx, pool3).length === 0) return 0;
+  if (pool3 && ctx.vocab.pools[pool3] && vocabPool6(ctx, pool3).length === 0) return 0;
   let w = s.w * ((_c3 = (_b3 = s.cx) == null ? void 0 : _b3[c.key]) != null ? _c3 : 1) * toneFactor((_d3 = s.t) != null ? _d3 : [], ctx.tone);
   for (const g of (_e3 = s.g) != null ? _e3 : []) w *= (_g = (_f = STREET_DATA.sizeEffects[g]) == null ? void 0 : _f[ctx.size]) != null ? _g : 1;
   if (ctx.region && s.rx) w *= (_h = s.rx[ctx.region]) != null ? _h : 1;
@@ -118971,7 +119578,7 @@ function generateStreetNames(options) {
       var _a6;
       return (_a6 = e.r) != null ? _a6 : [];
     }))];
-    dialectRegion = regions.length > 0 ? pickOne10(regions, rng) : void 0;
+    dialectRegion = regions.length > 0 ? pickOne11(regions, rng) : void 0;
   }
   const newCtx3 = (fn) => {
     var _a6;
@@ -119000,7 +119607,7 @@ function generateStreetNames(options) {
   const patternOf = (s) => mode === "invented" && s.p.includes("{royal}") ? "{streetFigure} {sw}" : s.p;
   const render3 = (ctx, s) => {
     var _a6;
-    const out = renderPattern9(ctx, patternOf(s));
+    const out = renderPattern10(ctx, patternOf(s));
     if (!out) return void 0;
     const tones = /* @__PURE__ */ new Set([...(_a6 = s.t) != null ? _a6 : [], ...ctx.drawn]);
     return { ...out, shape: s, tones: GROUP_TONES.filter((t) => tones.has(t)), words: ctx.words, uses: ctx.uses, isRoute: ctx.isRoute };
@@ -119120,30 +119727,19 @@ function generateStreetNames(options) {
   }
 }
 
-// src/buildings/engine.ts
-var DEITY_CHRISTIAN_WEIGHT = 3;
-var BUILDING_DATA = building_names_default;
-var BUILDING_SELF = selfPatterns(building_names_default);
-var BUILDING_KINDS = BUILDING_DATA.kinds;
-var BUILDING_ANY = BUILDING_DATA.any;
-var isFuture4 = (era) => era === "NF" || era === "IS";
-var buildingKindsOffered = (era) => BUILDING_KINDS.filter((k) => k.era[era] > 0);
-var defaultBuildingSafeguards = () => ({
-  block: BUILDING_DATA.safeguards.block,
-  flag: BUILDING_DATA.safeguards.flag,
-  flagListBlocks: BUILDING_DATA.safeguards.flagListBlocks
-});
-var pickOne11 = (items, rng) => items[Math.floor(rng() * items.length)];
+// src/buildings/shared.ts
+var SHARED_LISTS = building_names_default.lists;
+var pickOne10 = (items, rng) => items[Math.floor(rng() * items.length)];
 var LIGHT_OR_GRIM5 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var CASTE3 = /* @__PURE__ */ new Set(["indian", "west-african"]);
 var SF_LISTS3 = /* @__PURE__ */ new Set(["star", "greek"]);
-function vocabPool6(ctx, pool3) {
+function vocabPool5(ctx, pool3) {
   return boostPool(ctx.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(e.t))).map(([e, w]) => {
     var _a5;
     return [e, w * toneFactor((_a5 = e.t) != null ? _a5 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
 }
-function fromPool4(ctx, pool3, items, use = false) {
+function fromPool3(ctx, pool3, items, use = false) {
   var _a5;
   const e = pickWeighted5(items, ctx.rng);
   if (!e) return void 0;
@@ -119152,7 +119748,7 @@ function fromPool4(ctx, pool3, items, use = false) {
   if (use) ctx.uses.push(`q:${e.w}`);
   return e.w;
 }
-function gnWord6(ctx, list, use = false) {
+function gnWord5(ctx, list, use = false) {
   if (list === "star") {
     const star = groupStarIn("any", ctx.mode, ctx.rng);
     ctx.words.push({ pool: "star", word: star });
@@ -119166,12 +119762,8 @@ function gnWord6(ctx, list, use = false) {
   if (use) ctx.uses.push(`q:${w}`);
   return w;
 }
-var bwItems = (ctx) => vocabPool6(ctx, `buildingWord:${ctx.kind}`).filter(([e]) => {
-  var _a5;
-  return !((_a5 = ctx.shape) == null ? void 0 : _a5.bw) || ctx.shape.bw.includes(e.w);
-});
 function creature2(ctx) {
-  const items = BUILDING_DATA.lists.creatureLists.flatMap(
+  const items = SHARED_LISTS.creatureLists.flatMap(
     (l) => groupListWords(l, ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(wordTones(l, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(l, w2), ctx.tone)])
   );
   const w = pickWeighted5(items, ctx.rng);
@@ -119193,17 +119785,13 @@ function founder(ctx) {
   if (ctx.founder) return ctx.founder;
   if (ctx.mode === "placeholders") return "[founder]";
   const names = personNames(ctx.culture.key);
-  return names.length > 0 ? pickOne11(names, ctx.rng) : void 0;
+  return names.length > 0 ? pickOne10(names, ctx.rng) : void 0;
 }
-function token12(ctx, name) {
+function commonToken(r, ctx, name) {
   var _a5, _b3;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
-    case "bw":
-      return fromPool4(ctx, `buildingWord:${ctx.kind}`, bwItems(ctx));
-    case "fixed":
-      return fromPool4(ctx, `buildingFixed:${ctx.kind}`, vocabPool6(ctx, `buildingFixed:${ctx.kind}`));
     case "town":
       return town3(ctx);
     case "founder":
@@ -119212,12 +119800,12 @@ function token12(ctx, name) {
     case "patron": {
       if (placeholders) return `[${name}]`;
       const names = name === "owner" ? ownerNames(ctx) : personNames(ctx.culture.key);
-      return names.length > 0 ? pickOne11(names, rng) : void 0;
+      return names.length > 0 ? pickOne10(names, rng) : void 0;
     }
     case "surname":
-      return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : gnWord6(ctx, "surname");
+      return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : gnWord5(ctx, "surname");
     case "dynasty":
-      return placeholders || !DYNASTY_CULTURES.includes(ctx.culture.key) ? "[dynasty]" : gnWord6(ctx, "house");
+      return placeholders || !DYNASTY_CULTURES.includes(ctx.culture.key) ? "[dynasty]" : gnWord5(ctx, "house");
     case "holy": {
       const other = () => placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
       return ctx.context ? contextSaint(ctx.context, other, rng) : other();
@@ -119231,58 +119819,56 @@ function token12(ctx, name) {
       return routeFigure(ctx.culture.key, ctx.setting, rng);
     case "god": {
       const gods = godNames(ctx.culture.key);
-      return gods.length > 0 ? pickOne11(gods, rng) : void 0;
+      return gods.length > 0 ? pickOne10(gods, rng) : void 0;
     }
     case "creature":
       return creature2(ctx);
-    case "buildingQual":
-      return fromPool4(ctx, name, vocabPool6(ctx, name), true);
     case "colour":
-      return gnWord6(ctx, name, true);
+      return gnWord5(ctx, name, true);
     case "number":
     case "quality":
     case "brandRoot":
     case "star":
     case "greek":
     case "ordinalWord":
-      return gnWord6(ctx, name);
+      return gnWord5(ctx, name);
     case "ordinal":
-      return gnWord6(ctx, "ordinalWord");
+      return gnWord5(ctx, "ordinalWord");
     case "trade":
-      return fromPool4(ctx, "streetTrades", vocabPool6(ctx, "streetTrades"));
+      return fromPool3(ctx, "streetTrades", vocabPool5(ctx, "streetTrades"));
     case "goods":
-      return fromPool4(ctx, "streetGoods", vocabPool6(ctx, "streetGoods"));
+      return fromPool3(ctx, "streetGoods", vocabPool5(ctx, "streetGoods"));
     case "weekday":
       return pickWeighted5(STREET_DATA.lists.weekday, rng);
     case "discovery":
-    case "event":
     case "headland":
-      return pickOne11(BUILDING_DATA.lists[name], rng);
+      return pickOne10(SHARED_LISTS[name], rng);
     case "n":
       return String(1 + Math.floor(rng() * 40));
   }
-  const w = fromPool4(ctx, name, vocabPool6(ctx, name));
-  return (w == null ? void 0 : w.includes("{")) ? renderPattern10(ctx, w) : w;
+  const w = fromPool3(ctx, name, vocabPool5(ctx, name));
+  return (w == null ? void 0 : w.includes("{")) ? renderPattern9(r, ctx, w) : w;
 }
-function renderPattern10(ctx, pattern) {
+function renderPattern9(r, ctx, pattern, values) {
   const outer = ctx.turn;
-  if (ctx.context) ctx.turn = new TownTurn(ctx.context, BUILDING_SELF.has(pattern));
+  if (ctx.context) ctx.turn = new TownTurn(ctx.context, r.self.has(pattern));
   try {
-    return renderTokens4(ctx, pattern);
+    return renderTokens4(r, ctx, pattern, values);
   } finally {
     ctx.turn = outer;
   }
 }
-function renderTokens4(ctx, pattern) {
+function renderTokens4(r, ctx, pattern, values) {
   let failed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
     if (failed) return "";
     const [name, mod] = raw.split(":");
-    const piece = token12(ctx, name);
+    const piece = r.token(ctx, name);
     if (!piece) {
       failed = true;
       return "";
     }
+    if (values && !(name in values)) values[name] = piece;
     if (mod === "poss") return groupPossessive(piece, name === "trade");
     if (mod === "pl") return groupPlural(piece);
     return piece;
@@ -119290,6 +119876,95 @@ function renderTokens4(ctx, pattern) {
   if (failed) return void 0;
   return out.replace(/^the (\S+'s )/, "$1");
 }
+function shapeAllowed(ctx, s) {
+  const c = ctx.culture;
+  if (s.e && !s.e.includes(ctx.era)) return false;
+  if (!cultureAllowed(s.c, c.key, ctx.era)) return false;
+  if (s.h !== void 0 && s.h !== ctx.fantastic) return false;
+  if (c.sensitive && (s.h || LIGHT_OR_GRIM5(s.t))) return false;
+  if (CASTE3.has(c.key) && s.p.includes("{trade")) return false;
+  if (ctx.mode === "invented" && !ctx.founder && s.p.includes("{founder") && personNames(c.key).length === 0) return false;
+  if (ctx.mode === "invented" && s.p.includes("{patron") && personNames(c.key).length === 0) return false;
+  if (ctx.mode === "invented" && s.p.includes("{owner") && ownerNames(ctx).length === 0) return false;
+  if (s.p.includes("{god") && (godNames(c.key).length === 0 || !SHARED_LISTS.godCultures.includes(c.key))) return false;
+  if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return false;
+  return true;
+}
+function fillBatch(o) {
+  const { rng, count, weights, chosen } = o;
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  const add2 = (n) => {
+    if (!n || seen.has(n.text.toLowerCase())) return false;
+    seen.add(n.text.toLowerCase());
+    names.push(n);
+    return true;
+  };
+  const drawKind = () => chosen ? weights.some(([k]) => k === chosen) ? chosen : void 0 : pickWeighted5(weights, rng);
+  if (o.series) {
+    const used = /* @__PURE__ */ new Set();
+    let founders = 0;
+    let round = [];
+    const nextKind = () => {
+      if (chosen) return drawKind();
+      if (round.length === 0) round = [...weights];
+      const k = pickWeighted5(round, rng);
+      return k;
+    };
+    for (let idle = 0; idle < 80 && names.length < count; ) {
+      const k = nextKind();
+      if (!k) break;
+      const n = o.build(k);
+      const fresh = !!n && !n.uses.some((u) => o.keyed.some((p) => u.startsWith(p)) && used.has(u)) && (!n.uses.includes("founder") || founders < o.founderUses);
+      if (fresh && add2(n)) {
+        for (const u of n.uses) used.add(u);
+        if (n.uses.includes("founder")) founders++;
+        round = round.filter(([x]) => x !== k);
+        idle = 0;
+      } else idle++;
+    }
+  } else {
+    for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+      const k = drawKind();
+      if (!k) break;
+      add2(o.build(k));
+    }
+  }
+  return names;
+}
+
+// src/buildings/engine.ts
+var DEITY_CHRISTIAN_WEIGHT = 3;
+var BUILDING_DATA = building_names_default;
+var BUILDING_SELF = selfPatterns(building_names_default);
+var BUILDING_KINDS = BUILDING_DATA.kinds;
+var BUILDING_ANY = BUILDING_DATA.any;
+var isFuture4 = (era) => era === "NF" || era === "IS";
+var buildingKindsOffered = (era) => BUILDING_KINDS.filter((k) => k.era[era] > 0);
+var defaultBuildingSafeguards = () => ({
+  block: BUILDING_DATA.safeguards.block,
+  flag: BUILDING_DATA.safeguards.flag,
+  flagListBlocks: BUILDING_DATA.safeguards.flagListBlocks
+});
+var bwItems = (ctx) => vocabPool5(ctx, `buildingWord:${ctx.kind}`).filter(([e]) => {
+  var _a5;
+  return !((_a5 = ctx.shape) == null ? void 0 : _a5.bw) || ctx.shape.bw.includes(e.w);
+});
+function token12(ctx, name) {
+  switch (name) {
+    case "bw":
+      return fromPool3(ctx, `buildingWord:${ctx.kind}`, bwItems(ctx));
+    case "fixed":
+      return fromPool3(ctx, `buildingFixed:${ctx.kind}`, vocabPool5(ctx, `buildingFixed:${ctx.kind}`));
+    case "buildingQual":
+      return fromPool3(ctx, name, vocabPool5(ctx, name), true);
+    case "event":
+      return pickOne10(BUILDING_DATA.lists.event, ctx.rng);
+  }
+  return commonToken(RENDERER, ctx, name);
+}
+var RENDERER = { token: token12, self: BUILDING_SELF };
+var renderPattern11 = (ctx, pattern) => renderPattern9(RENDERER, ctx, pattern);
 var wordRe12 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
 var BANNED11 = [...BUILDING_DATA.safeguards.banned, ...BUILDING_DATA.safeguards.religious].map(wordRe12);
 var CHRISTIAN2 = BUILDING_DATA.safeguards.christian.map(wordRe12);
@@ -119307,17 +119982,8 @@ function buildingWordBlocked(word, guards) {
 function shapeWeight7(ctx, s) {
   var _a5, _b3, _c3, _d3, _e3;
   const c = ctx.culture;
-  if (s.e && !s.e.includes(ctx.era)) return 0;
-  if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
-  if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
-  if (c.sensitive && (s.h || LIGHT_OR_GRIM5(s.t))) return 0;
+  if (!shapeAllowed(ctx, s)) return 0;
   if (s.kinds && !s.kinds.includes(ctx.kind)) return 0;
-  if (CASTE3.has(c.key) && s.p.includes("{trade")) return 0;
-  if (ctx.mode === "invented" && !ctx.founder && s.p.includes("{founder") && personNames(c.key).length === 0) return 0;
-  if (ctx.mode === "invented" && s.p.includes("{patron") && personNames(c.key).length === 0) return 0;
-  if (ctx.mode === "invented" && s.p.includes("{owner") && ownerNames(ctx).length === 0) return 0;
-  if (s.p.includes("{god") && (godNames(c.key).length === 0 || !BUILDING_DATA.lists.godCultures.includes(c.key))) return 0;
-  if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
   if (s.p.includes("{bw}") && bwItems({ ...ctx, shape: s }).length === 0) return 0;
   if (s.deity) {
     const hooks2 = deityHooks();
@@ -119326,9 +119992,9 @@ function shapeWeight7(ctx, s) {
     if (hooks2.isChristianCulture(c.key, ctx.era)) return ctx.fantastic && s.p.startsWith("Temple") ? DEITY_CHRISTIAN_WEIGHT * toneFactor((_a5 = s.t) != null ? _a5 : [], ctx.tone) : 0;
   }
   let w = s.w;
-  if (s.p === "{fixed}") w = vocabPool6(ctx, `buildingFixed:${ctx.kind}`).reduce((n, [, x]) => n + x, 0);
+  if (s.p === "{fixed}") w = vocabPool5(ctx, `buildingFixed:${ctx.kind}`).reduce((n, [, x]) => n + x, 0);
   const pool3 = (_b3 = s.p.match(/^(?:\{\w+\} )?\{(\w+Landmark)\}$/)) == null ? void 0 : _b3[1];
-  if (pool3 && vocabPool6(ctx, pool3).length === 0) return 0;
+  if (pool3 && vocabPool5(ctx, pool3).length === 0) return 0;
   return w * ((_d3 = (_c3 = s.sx) == null ? void 0 : _c3[ctx.settingKey]) != null ? _d3 : 1) * toneFactor((_e3 = s.t) != null ? _e3 : [], ctx.tone);
 }
 function live2(ctx, shapes, source, only) {
@@ -119428,7 +120094,7 @@ function generateBuildingNames(options) {
   if (series && options.context) base.town = options.context.town;
   else if (series) {
     base.town = town3(newCtx2(s, "defence"));
-    base.founder = s.mode === "placeholders" ? "[founder]" : personNames(culture.key).length > 0 ? pickOne11(personNames(culture.key), rng) : void 0;
+    base.founder = s.mode === "placeholders" ? "[founder]" : personNames(culture.key).length > 0 ? pickOne10(personNames(culture.key), rng) : void 0;
   }
   const acceptable7 = (text) => {
     const counted3 = countedWords2(text);
@@ -119447,7 +120113,7 @@ function generateBuildingNames(options) {
       const plan = choosePlan(ctx, options.shape);
       if (!plan) return void 0;
       ctx.shape = plan.shape;
-      const raw = renderPattern10(ctx, plan.shape.p);
+      const raw = renderPattern11(ctx, plan.shape.p);
       if (!raw) continue;
       const text = innCapitals(raw);
       if (!acceptable7(text)) continue;
@@ -119464,44 +120130,16 @@ function generateBuildingNames(options) {
     }
     return void 0;
   };
-  const seen = /* @__PURE__ */ new Set();
-  const names = [];
-  const add2 = (n) => {
-    if (!n || seen.has(n.text.toLowerCase())) return false;
-    seen.add(n.text.toLowerCase());
-    names.push(n);
-    return true;
-  };
-  const drawKind = () => chosen ? weights.some(([k]) => k === chosen) ? chosen : void 0 : pickWeighted5(weights, rng);
-  if (series) {
-    const used = /* @__PURE__ */ new Set();
-    let founders = 0;
-    let round = [];
-    const nextKind = () => {
-      if (chosen) return drawKind();
-      if (round.length === 0) round = [...weights];
-      const k = pickWeighted5(round, rng);
-      return k;
-    };
-    for (let idle = 0; idle < 80 && names.length < count; ) {
-      const k = nextKind();
-      if (!k) break;
-      const n = build(k);
-      const fresh = !!n && !n.uses.some((u) => u.startsWith("q:") && used.has(u)) && (!n.uses.includes("founder") || founders < BUILDING_DATA.series.founderUses);
-      if (fresh && add2(n)) {
-        for (const u of n.uses) used.add(u);
-        if (n.uses.includes("founder")) founders++;
-        round = round.filter(([x]) => x !== k);
-        idle = 0;
-      } else idle++;
-    }
-  } else {
-    for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
-      const k = drawKind();
-      if (!k) break;
-      add2(build(k));
-    }
-  }
+  const names = fillBatch({
+    rng,
+    count,
+    series,
+    chosen,
+    weights,
+    build,
+    founderUses: BUILDING_DATA.series.founderUses,
+    keyed: ["q:"]
+  });
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
   return { names, seed, notices };
 }
@@ -119731,7 +120369,7 @@ function pairTokens(ctx) {
   const b = one(pickWeighted5(kinds, ctx.rng), (w) => w !== a);
   return b ? [a, b] : void 0;
 }
-function renderPattern11(ctx, pattern) {
+function renderPattern12(ctx, pattern) {
   if (ctx.options.context) ctx.turn = new TownTurn(ctx.options.context, INN_SELF.has(pattern));
   let failed = false;
   let pair2;
@@ -119909,7 +120547,7 @@ function generateInnNames(options) {
       const ctx = newCtx3(kind);
       const plan = choosePlan2(ctx, anchor);
       if (!plan) return void 0;
-      const raw = renderPattern11(ctx, plan.shape.p);
+      const raw = renderPattern12(ctx, plan.shape.p);
       if (!raw) continue;
       const sign = innCapitals(raw);
       let text = sign;
@@ -120301,7 +120939,7 @@ function token14(ctx, name) {
   }
   return fromPool5(ctx, name);
 }
-function renderPattern12(ctx, pattern) {
+function renderPattern13(ctx, pattern) {
   if (ctx.context) ctx.turn = new TownTurn(ctx.context, EVENT_SELF.has(pattern));
   let failed = false;
   let colours = [];
@@ -120418,7 +121056,7 @@ function generateEventNames(options) {
       const s = pickWeighted5(plans3(ctx, kind, only != null ? only : options.shape), rng);
       if (!s) return void 0;
       ctx.shape = s;
-      let raw = renderPattern12(ctx, s.p);
+      let raw = renderPattern13(ctx, s.p);
       if (!raw) continue;
       if (scale === "local" && s.p === "{place} War" && rng() < EVENT_DATA.scaleRules.local.riotShare) raw = raw.replace(/ War$/, " Riot");
       const text = eventCapitals(raw);
@@ -129321,7 +129959,7 @@ function token15(ctx, name, mod) {
       return (_p = ctx.fixed.turning) != null ? _p : pickOne14(TIME_SKY.lists.turning, ctx.rng);
     case "pairFeast": {
       const raw = (_q = ctx.fixed.pairFeast) != null ? _q : pickOne14(TIME_SKY.lists.pairFeast, ctx.rng);
-      return raw.includes("{") ? renderPattern13(ctx, raw) : raw;
+      return raw.includes("{") ? renderPattern14(ctx, raw) : raw;
     }
     case "daySign": {
       const w = drawFrom(ctx, "daySign", "daySign", plainList(TIME_SKY.lists.daySign), (x) => {
@@ -129353,7 +129991,7 @@ function token15(ctx, name, mod) {
   }
   return void 0;
 }
-function renderPattern13(ctx, pattern) {
+function renderPattern14(ctx, pattern) {
   let failed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
     if (failed) return "";
@@ -129476,7 +130114,7 @@ function buildName(ctx, kind, filter, only) {
     const plans4 = plansFor2(ctx, kind, only ? (p) => p.p === only : filter);
     const plan = pickWeighted5(plans4, ctx.rng);
     if (!plan) return void 0;
-    const raw = renderPattern13(ctx, plan.p);
+    const raw = renderPattern14(ctx, plan.p);
     if (!raw) continue;
     const text = finish2(ctx, kind, raw);
     if (!acceptable6(ctx, text, kind)) continue;
@@ -129573,7 +130211,7 @@ function buildSign(ctx, only) {
     const plans4 = signPlans(ctx).filter(([p]) => !only || p.p === only);
     const plan = pickWeighted5(plans4, ctx.rng);
     if (!plan) return void 0;
-    const raw = renderPattern13(ctx, plan.p);
+    const raw = renderPattern14(ctx, plan.p);
     if (!raw) continue;
     const text = finish2(ctx, "sign", raw);
     if (!acceptable6(ctx, text, "sign")) continue;
@@ -129811,7 +130449,7 @@ function nameSpecial(S, line, systemKey, previous, allowReal) {
     }
     if (!choice) break;
     const c = { ...ctx, season: (_b3 = (_a5 = line.slot) == null ? void 0 : _a5.season) != null ? _b3 : null, previous, distinct: false, drawn: /* @__PURE__ */ new Set(), log: [], fixed: {} };
-    const raw = renderPattern13(c, choice);
+    const raw = renderPattern14(c, choice);
     if (!raw) continue;
     const text2 = timeCapitals(raw);
     if (acceptable6(ctx, text2, "month") && !S.seen.has(text2.toLowerCase())) {
@@ -130423,7 +131061,7 @@ function signSeries(S, system) {
           shape = "{beast}";
         } else {
           shape = pickOne14(patternsFor(), c.rng);
-          raw = renderPattern13(c, shape);
+          raw = renderPattern14(c, shape);
         }
         if (!raw) continue;
         const text = bareSystem(system) ? timeCapitals(raw) : finish2(c, "sign", raw);
