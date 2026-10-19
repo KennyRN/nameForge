@@ -20,3 +20,4 @@ export function normalizePath(path: string): string {
   const cleaned = path.replace(/[\\/]+/g, "/").replace(/^\/+|\/+$/g, "");
   return cleaned || "/";
 }
+export function addIcon(_id: string, _svg: string): void {}

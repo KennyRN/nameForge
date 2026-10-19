@@ -2480,7 +2480,9 @@ var ICON_DEITIES_SVG = '<g transform="scale(7.142857)"><path d="M0 0h14v14H0z" f
 var ICON_SETTLEMENT_KIT = "nameforge-settlement-kit";
 var ICON_SETTLEMENT_KIT_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M21 5.5h-7.5v5.75H19v8.25h-1.5v-6.75H11v6.75H9.5V4.36L6.25 2.085L3 4.36V19.5H1V21h22v-1.5h-2zm-3 4.25h-1.5v-2H18zM7 16H5.5v-2H7zm0-3.5H5.5v-2H7zM7 9H5.5V7H7zm8.75 7.5h-3V15h3z" /></g>';
 var ICON_BUILDINGS = "nameforge-buildings";
-var ICON_BUILDINGS_SVG = '<g transform="scale(0.15625)"><path d="M0 0h640v640H0z" fill="none" /><path fill="currentColor" d="M337 31c-9.4-9.4-24.6-9.4-33.9 0L223 111c-4.1 4.1-6.5 9.4-7 15.1L186.4 512H176c-17.7 0-32 14.3-32 32s14.3 32 32 32h288c17.7 0 32-14.3 32-32s-14.3-32-32-32h-10.4l-29.7-385.8c-.4-5.7-2.9-11.1-7-15.1zm-81 329c0-13.3 10.7-24 24-24h80c13.3 0 24 10.7 24 24s-10.7 24-24 24h-80c-13.3 0-24-10.7-24-24" /></g>';
+var ICON_BUILDINGS_SVG = '<g transform="scale(6.25)"><path d="M0 0h16v16H0z" fill="none" /><path fill="currentColor" d="M1.5 2a.499.499 0 1 0 0 1h12a.499.499 0 1 0 0-1zM2 4v9h-.5a.499.499 0 1 0 0 1h4a.499.499 0 1 0 0-1H5V8.5A2.5 2.5 0 0 1 7.5 6A2.5 2.5 0 0 1 10 8.5V13h-.5a.499.499 0 1 0 0 1h4a.499.499 0 1 0 0-1H13V4h-1v.5c0 .277-.22.5-.496.5h-.008A.497.497 0 0 1 11 4.5V4h-1v.5a.499.499 0 1 1-1 0V4H8v.5c0 .277-.22.5-.494.5h-.012A.496.496 0 0 1 7 4.5V4H6v.5c0 .277-.22.5-.496.5h-.008A.497.497 0 0 1 5 4.5V4H4v.5a.499.499 0 1 1-1 0V4zm1.5 6c.277 0 .5.223.5.5v1a.499.499 0 1 1-1 0v-1c0-.277.223-.5.5-.5m7.992 0h.016c.273 0 .492.223.492.5v1c0 .277-.22.5-.492.5h-.016a.495.495 0 0 1-.492-.5v-1c0-.277.22-.5.492-.5" /></g>';
+var ICON_MONUMENTS = "nameforge-monuments";
+var ICON_MONUMENTS_SVG = '<g transform="scale(0.15625)"><path d="M0 0h640v640H0z" fill="none" /><path fill="currentColor" d="M337 31c-9.4-9.4-24.6-9.4-33.9 0L223 111c-4.1 4.1-6.5 9.4-7 15.1L186.4 512H176c-17.7 0-32 14.3-32 32s14.3 32 32 32h288c17.7 0 32-14.3 32-32s-14.3-32-32-32h-10.4l-29.7-385.8c-.4-5.7-2.9-11.1-7-15.1zm-81 329c0-13.3 10.7-24 24-24h80c13.3 0 24 10.7 24 24s-10.7 24-24 24h-80c-13.3 0-24-10.7-24-24" /></g>';
 var ICON_INNS = "nameforge-inns";
 var ICON_INNS_SVG = '<g transform="translate(0 6) scale(0.0625)"><path d="M0 0h1600v1408H0z" fill="none" /><path fill="currentColor" d="M576 768V384H320v256q0 53 37.5 90.5T448 768zm1024 448v192H448v-192l128-192H448q-159 0-271.5-112.5T64 640V320L0 256l32-128h480L544 0h960l32 192l-64 32v800z" /></g>';
 var ICON_STREETS = "nameforge-streets";
@@ -2573,6 +2575,7 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_DEITIES, ICON_DEITIES_SVG);
   (0, import_obsidian4.addIcon)(ICON_SETTLEMENT_KIT, ICON_SETTLEMENT_KIT_SVG);
   (0, import_obsidian4.addIcon)(ICON_BUILDINGS, ICON_BUILDINGS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_MONUMENTS, ICON_MONUMENTS_SVG);
   (0, import_obsidian4.addIcon)(ICON_INNS, ICON_INNS_SVG);
   (0, import_obsidian4.addIcon)(ICON_VEHICLES, ICON_VEHICLES_SVG);
   (0, import_obsidian4.addIcon)(ICON_MOUNTAINS, ICON_MOUNTAINS_SVG);
@@ -2638,6 +2641,92 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_ADJUSTMENTS, ICON_ADJUSTMENTS_SVG);
   (0, import_obsidian4.addIcon)(ICON_PENCIL, ICON_PENCIL_SVG);
 }
+
+// src/sectionIcons.ts
+var SECTION_ICONS = {
+  markov: ICON_PACKS,
+  placeShapes: ICON_NATIVE_PLACE_NAMES,
+  // Wild lands brief §1.2: the biome icon for the group, one icon each for the modules.
+  mountainNames: ICON_MOUNTAINS,
+  forestNames: ICON_FORESTS,
+  desertNames: ICON_DESERTS,
+  moorNames: ICON_MOORS,
+  wetlandNames: ICON_WETLANDS,
+  grasslandNames: ICON_GRASSLANDS,
+  // Urban brief §1.3: settlement names wears the urban group icon.
+  settlementNames: ICON_URBAN,
+  // Route names brief §1.1.
+  routeNames: ICON_ROUTES,
+  // Seas and coasts brief §1.2.
+  seasLakes: ICON_SEAS_LAKES,
+  coastsIslands: ICON_COASTS_ISLANDS,
+  seaCharts: ICON_SEA_CHARTS,
+  hyperspaceCharts: ICON_HYPERSPACE_CHARTS,
+  // Streets brief §1.1.
+  streetNames: ICON_STREETS,
+  // Inns brief §1.1.
+  innNames: ICON_INNS,
+  // Buildings brief §1.1.
+  buildingNames: ICON_BUILDINGS,
+  // Monuments brief §1.2: the icon buildings and landmarks wore before the split.
+  monumentNames: ICON_MONUMENTS,
+  // Settlement kit §1.1.
+  settlementKit: ICON_SETTLEMENT_KIT,
+  // Events brief §1.1.
+  eventNames: ICON_HISTORY,
+  // Money brief §1.1: the custom icons.
+  moneyNames: ICON_COINS,
+  // Time and sky brief §1.1: custom icons.
+  calendarNames: ICON_CALENDAR_DAYS,
+  skyNames: ICON_MOON_STARS,
+  // Named things brief §1.1: custom icons.
+  armsNames: ICON_SWORD,
+  treasureNames: "crown",
+  bookNames: ICON_BOOK,
+  // Deities brief §1.1.
+  deityNames: ICON_DEITIES,
+  sacredPlaces: ICON_DEITIES,
+  riverNames: ICON_RIVER_NAMES,
+  explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
+  empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
+  nameAgeing: ICON_NAME_AGEING,
+  nameTakeover: ICON_NAME_TAKEOVER,
+  tribalNames: ICON_TRIBAL_NAMES,
+  // Realms brief §1.1.
+  realms: ICON_REALMS,
+  // Peoples and tongues brief §1.1: the custom icons.
+  peoplesTongues: ICON_LANGUAGES,
+  // Bynames brief §1.1: Lucide icons.
+  epithets: ICON_EPITHETS,
+  titles: "crown",
+  familyNames: ICON_FAMILY_NAMES,
+  // Ships brief §1.1, with the supplied ship icon for ships and boats.
+  ships: ICON_SHIPS,
+  spacecraft: ICON_SPACECRAFT,
+  // Aircraft and land vehicles brief §1.1: custom icons.
+  aircraft: ICON_JET_PLANE,
+  landVehicles: ICON_MONSTER_TRUCK,
+  // Group brief §1.1: Lucide icons.
+  mysticOrders: ICON_MYSTIC,
+  martialOrders: ICON_MARTIAL,
+  underworldGroups: ICON_UNDERWORLD,
+  tradeGuilds: ICON_TRADE,
+  adventureCompanies: ICON_ADVENTURERS,
+  powerFactions: "crown",
+  supernaturalCourts: "crown"
+};
+var GROUP_ICONS = {
+  placeNames: ICON_PLACE_SHAPES,
+  urban: ICON_URBAN,
+  seasCoasts: ICON_SEAS_COASTS,
+  wildLands: ICON_BIOME,
+  groupNames: ICON_GROUP_NAMES,
+  bynames: ICON_BYNAMES,
+  vehicles: ICON_VEHICLES,
+  // Named things brief §1.1: custom icons.
+  namedThings: ICON_GEM,
+  advanced: ICON_ADVANCED
+};
 
 // src/folderModal.ts
 var import_obsidian5 = require("obsidian");
@@ -115379,7 +115468,7 @@ var GROUP_NAME_SECTIONS = [
   "supernaturalCourts"
 ];
 var GROUP_NAMES_ORDER = ["powerFactions", "realms", "peoplesTongues", "tribalNames", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts"];
-var URBAN_SECTIONS = ["settlementNames", "streetNames", "innNames", "buildingNames", "settlementKit"];
+var URBAN_SECTIONS = ["settlementNames", "streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit"];
 var SECTION_ORDER = [
   "markov",
   "placeShapes",
@@ -115440,6 +115529,7 @@ var SECTION_LABELS = {
   streetNames: "streets and districts",
   innNames: "inns and taverns",
   buildingNames: "buildings and landmarks",
+  monumentNames: "monuments and statues",
   settlementKit: "settlement kit",
   eventNames: "events and eras",
   moneyNames: "money and coins",
@@ -115487,6 +115577,7 @@ var BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
 var RIVER_NAMES_HISTORY_NAME = "river names";
 var WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
 var SETTLEMENT_NAMES_HISTORY_NAME = "settlement names";
+var MONUMENT_NAMES_HISTORY_NAME = "monuments and statues";
 var TRIBAL_NAMES_HISTORY_NAME = "tribes and kin groups";
 var OLD_TRIBAL_NAMES_HISTORY_NAME = "tribal names";
 function historySection(packName) {
@@ -115499,6 +115590,7 @@ function historySection(packName) {
   if (starts(SECTION_LABELS.streetNames)) return "streetNames";
   if (starts(SECTION_LABELS.innNames)) return "innNames";
   if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
+  if (starts(MONUMENT_NAMES_HISTORY_NAME)) return "monumentNames";
   if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
   if (starts(SECTION_LABELS.eventNames)) return "eventNames";
   if (starts(SECTION_LABELS.moneyNames)) return "moneyNames";
@@ -119261,9 +119353,27 @@ var monumentHonourees = (extra = []) => extra.length === 0 ? builtInHonourees() 
 function breaksMonumentWords(text) {
   return breaksBuildingWords(text) || banned().some((re) => re.test(text));
 }
+function honoureesFromPack(content) {
+  const out = [];
+  let inSection = false;
+  for (const raw of content.split(/\r?\n/)) {
+    const line = raw.trim();
+    const heading = line.match(/^##\s+(.+?)\s*#*$/);
+    if (heading) {
+      inSection = heading[1].toLowerCase() === "honourees";
+      continue;
+    }
+    const bullet = line.match(/^[-*+]\s+(.+)$/);
+    if (bullet && inSection) out.push(...bullet[1].split(",").map((w) => w.trim()).filter(Boolean));
+  }
+  return out;
+}
 var bare3 = (text) => routeNorm(text).replace(/^the /, "");
 function monumentBlockSet(guards = defaultMonumentSafeguards()) {
   return new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(bare3));
+}
+function monumentWordBlocked(word, guards) {
+  return monumentBlockSet(guards).has(bare3(word)) || breaksMonumentWords(word);
 }
 function shapeWeight6(ctx, s) {
   var _a5, _b3, _c3, _d3;
@@ -128855,6 +128965,7 @@ function parseModulePreset(content, fileName) {
   if (values.module === STREET_PRESET_MODULE) return parseStreetPreset(values, body, fileName);
   if (values.module === INN_PRESET_MODULE) return parseInnPreset(values, body, fileName);
   if (values.module === BUILDING_PRESET_MODULE) return parseBuildingPreset(values, body, fileName);
+  if (values.module === MONUMENT_PRESET_MODULE) return parseMonumentPreset(values, body, fileName);
   if (values.module === KIT_PRESET_MODULE) return parseKitPreset(values, body, fileName);
   if (values.module === EVENT_PRESET_MODULE) return parseEventPreset(values, body, fileName);
   if (values.module === MONEY_PRESET_MODULE) return parseMoneyPreset(values, body, fileName);
@@ -128904,6 +129015,7 @@ function modulePresetContent(preset) {
   if ("moneyKind" in preset) return moneyPresetContent(preset);
   if ("eventKind" in preset) return eventPresetContent(preset);
   if ("contents" in preset) return kitPresetContent(preset);
+  if ("monumentKind" in preset) return monumentPresetContent(preset);
   if ("buildingKind" in preset) return buildingPresetContent(preset);
   if ("innKind" in preset) return innPresetContent(preset);
   if ("streetKind" in preset) return streetPresetContent(preset);
@@ -129408,6 +129520,69 @@ function buildingPresetContent(preset) {
     `setting: ${preset.buildingSetting}`,
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
+    `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
+var MONUMENT_PRESET_MODULE = "monument-names";
+function parseMonumentPreset(values, body, fileName) {
+  const problems = [];
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const flag = (key2) => {
+    const v = values[key2];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return false;
+  };
+  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  let kind = pick4("kind", "any", (v) => v === "any" || MONUMENT_KINDS.some((k) => k.key === v));
+  if (kind !== "any" && !(MONUMENT_KINDS.find((k) => k.key === kind).era[era] > 0)) {
+    problems.push(`Kind \u201C${kind}\u201D isn't offered in the ${routeEraLabel(era)} era.`);
+    kind = "any";
+  }
+  return {
+    monument: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      monumentKind: kind,
+      era,
+      fantastic: flag("fantastic"),
+      monumentSetting: pick4("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      nearby: flag("nearby"),
+      series: flag("series")
+    },
+    problems
+  };
+}
+function monumentPresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${MONUMENT_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `region: ${preset.region}`,
+    `kind: ${preset.monumentKind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `setting: ${preset.monumentSetting}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `nearby: ${preset.nearby}`,
     `series: ${preset.series}`,
     "---",
     "",
@@ -130132,7 +130307,188 @@ Names to allow, though they echo a real or well-known route.
 ## Allow
 
 Names to take off the flag list. Built-in block-list names can't be allowed.
+
+## Honourees
+
+Real people, or titles with names, that monuments and statues must never name (a statue of one, a street after one). Each one is added to the built-in list.
 `;
+
+// src/monuments/sentence.ts
+var DEFAULT_MONUMENT_STATE = {
+  culture: "norman-british",
+  era: "MD",
+  fantastic: false,
+  setting: "anywhere",
+  tone: "any",
+  people: "placeholders",
+  nearby: false,
+  series: false
+};
+var PEOPLE_TEXT9 = { placeholders: "placeholders for", invented: "invented" };
+var NEARBY_TEXT = { off: "on their own", on: "with what's named after them" };
+var SERIES_TEXT6 = { off: "each one separate", on: "as one town" };
+var settingText = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
+function monumentSentence(state) {
+  var _a5;
+  const out = [];
+  const culture = (_a5 = findRouteCulture(state.culture)) != null ? _a5 : ROUTE_CULTURES[0];
+  out.push({
+    field: "culture",
+    text: culture.label,
+    title: "Naming culture: whose customs the monuments follow",
+    choices: ROUTE_CULTURES.map((c, i) => {
+      var _a6;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a6 = ROUTE_CULTURES[i - 1]) == null ? void 0 : _a6.group) ? { group: c.group } : {} };
+    }),
+    current: culture.key
+  });
+  out.push(" ");
+  const offered = monumentKindsOffered(state.era);
+  const kind = offered.find((k) => k.key === state.kind);
+  out.push({
+    field: "kind",
+    text: kind ? kind.plural : MONUMENT_ANY,
+    title: kind ? kind.description : MONUMENT_ANY.charAt(0).toUpperCase() + MONUMENT_ANY.slice(1),
+    choices: [{ id: void 0, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
+    current: kind == null ? void 0 : kind.key
+  });
+  out.push(" of the ");
+  out.push({
+    field: "era",
+    text: routeEraLabel(state.era),
+    title: "The age: decides which kinds of monument exist",
+    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
+    current: state.era
+  });
+  out.push(" era, in a ");
+  const words = fantasticWords(state.era);
+  out.push({
+    field: "fantastic",
+    text: words[state.fantastic ? 1 : 0],
+    title: "Open magic and monsters; in the steam age, steampunk",
+    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
+    current: state.fantastic ? "on" : "off"
+  });
+  out.push(" world, ");
+  if (showsRegion(state)) {
+    out.push({
+      field: "region",
+      text: routeRegionText(state.region),
+      title: "Weights the names towards a region's customs",
+      choices: [
+        { id: void 0, label: routeRegionText(void 0) },
+        ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: routeRegionText(r.code), title: r.counties }))
+      ],
+      current: state.region
+    });
+    out.push(", ");
+  }
+  out.push({
+    field: "setting",
+    text: settingText(state.setting),
+    title: "Where the monuments stand: weights town, country, harbour or roadside kinds",
+    choices: INN_SETTINGS.map((s) => ({ id: s.key, label: s.text })),
+    current: state.setting
+  });
+  out.push(", ");
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
+  out.push(", with ");
+  out.push({
+    field: "people",
+    text: PEOPLE_TEXT9[state.people],
+    title: "Placeholders like [founder] and [hero], or invented names",
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT9[p] })),
+    current: state.people
+  });
+  out.push(" people and places, ");
+  out.push({
+    field: "nearby",
+    text: NEARBY_TEXT[state.nearby ? "on" : "off"],
+    title: "What's named after each monument: two nearby names, such as a roundabout, a street, a district or an inn",
+    choices: [
+      { id: "off", label: NEARBY_TEXT.off },
+      { id: "on", label: NEARBY_TEXT.on }
+    ],
+    current: state.nearby ? "on" : "off"
+  });
+  out.push(", ");
+  out.push({
+    field: "series",
+    text: SERIES_TEXT6[state.series ? "on" : "off"],
+    title: "One town's monuments: one of each kind, one town and one founder, no honouree or qualifier twice",
+    choices: [
+      { id: "off", label: SERIES_TEXT6.off },
+      { id: "on", label: SERIES_TEXT6.on }
+    ],
+    current: state.series ? "on" : "off"
+  });
+  return out;
+}
+function monumentSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function chooseMonument(state, field, id) {
+  const next = { ...state };
+  switch (field) {
+    case "culture":
+      next.culture = id != null ? id : DEFAULT_MONUMENT_STATE.culture;
+      break;
+    case "kind":
+      next.kind = id;
+      break;
+    case "era":
+      next.era = ROUTE_ERAS.some((e) => e.code === id) ? id : DEFAULT_MONUMENT_STATE.era;
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "region":
+      next.region = id;
+      break;
+    case "setting":
+      next.setting = INN_SETTINGS.some((s) => s.key === id) ? id : "anywhere";
+      break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "people":
+      next.people = id != null ? id : "placeholders";
+      break;
+    case "nearby":
+      next.nearby = id === "on";
+      break;
+    case "series":
+      next.series = id === "on";
+      break;
+  }
+  if (next.kind && !monumentKindsOffered(next.era).some((k) => k.key === next.kind)) next.kind = void 0;
+  if (!showsRegion(next)) next.region = void 0;
+  return next;
+}
+function monumentHistoryLabel(state) {
+  var _a5, _b3;
+  const culture = (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const kind = MONUMENT_KINDS.find((k) => k.key === state.kind);
+  return [
+    MONUMENT_NAMES_HISTORY_NAME,
+    routeEraLabel(state.era),
+    culture,
+    ...kind ? [kind.plural] : [],
+    ...state.setting !== "anywhere" ? [settingText(state.setting)] : [],
+    ...state.region && showsRegion(state) ? [regionPhrase(state.region)] : [],
+    ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
+    ...state.tone !== "any" ? [state.tone] : [],
+    ...state.series ? ["one town"] : [],
+    ...state.nearby ? ["named after"] : []
+  ].join(" \xB7 ");
+}
 
 // src/timesky/engine.ts
 var defaultTimeSafeguards = () => ({ block: TIME_SKY.safeguards.block, flag: TIME_SKY.safeguards.flag, flagListBlocks: TIME_SKY.safeguards.flagListBlocks });
@@ -131506,7 +131862,7 @@ var DEFAULT_CALENDAR_STATE = {
   series: false
 };
 var DEFAULT_SKY_STATE = { ...DEFAULT_CALENDAR_STATE, kind: "constellation" };
-var PEOPLE_TEXT9 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT10 = { placeholders: "placeholders for", invented: "invented" };
 var WORDS_TEXT = { translated: "in translated names", loanwords: "with familiar loanwords" };
 function timeHasLoans(culture) {
   var _a5, _b3;
@@ -131619,9 +131975,9 @@ function timeSentence(module2, state, limits) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT9[state.people],
+    text: PEOPLE_TEXT10[state.people],
     title: "Placeholders like [god], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT9[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT10[p] })),
     current: state.people
   });
   out.push(" gods and people, ");
@@ -131727,7 +132083,7 @@ var DEFAULT_DEITY_STATE = {
 };
 var GENDER_TEXT = { any: "of any gender", male: "male", female: "female", neither: "neither male nor female" };
 var NAMES_TEXT = { titles: "as titles only", placeholder: "with placeholder names", pack: "with names from" };
-var SERIES_TEXT6 = { off: "each one separate", on: "as one pantheon" };
+var SERIES_TEXT7 = { off: "each one separate", on: "as one pantheon" };
 var DEITIES_MODULE_KINDS = ["deity", "pantheon"];
 var showsPersonLinks = (state) => state.kind !== "place";
 function deitySentence(state, packs = []) {
@@ -131820,11 +132176,11 @@ function deitySentence(state, packs = []) {
   }
   out.push({
     field: "series",
-    text: SERIES_TEXT6[state.series ? "on" : "off"],
+    text: SERIES_TEXT7[state.series ? "on" : "off"],
     title: "A pantheon: one court name, then deities of different domains",
     choices: [
-      { id: "off", label: SERIES_TEXT6.off },
-      { id: "on", label: SERIES_TEXT6.on }
+      { id: "off", label: SERIES_TEXT7.off },
+      { id: "on", label: SERIES_TEXT7.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -131940,8 +132296,8 @@ var DEFAULT_EVENT_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT10 = { placeholders: "placeholders for", invented: "invented" };
-var SERIES_TEXT7 = { off: "each one separate", on: "as one history" };
+var PEOPLE_TEXT11 = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT8 = { off: "each one separate", on: "as one history" };
 var scaleText = (key2) => EVENT_SCALES.find((s) => s.key === key2).text;
 function eventSentence(state) {
   var _a5;
@@ -132003,19 +132359,19 @@ function eventSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT10[state.people],
+    text: PEOPLE_TEXT11[state.people],
     title: "Placeholders like [leader], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT10[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT11[p] })),
     current: state.people
   });
   out.push(" people and places, ");
   out.push({
     field: "series",
-    text: SERIES_TEXT7[state.series ? "on" : "off"],
+    text: SERIES_TEXT8[state.series ? "on" : "off"],
     title: "A short chronicle in order, with eras framing the events",
     choices: [
-      { id: "off", label: SERIES_TEXT7.off },
-      { id: "on", label: SERIES_TEXT7.on }
+      { id: "off", label: SERIES_TEXT8.off },
+      { id: "on", label: SERIES_TEXT8.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -132207,7 +132563,7 @@ var DEFAULT_KIT_STATE = {
   detail: "standard",
   people: "placeholders"
 };
-var PEOPLE_TEXT11 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT12 = { placeholders: "placeholders for", invented: "invented" };
 function kitSentence(state) {
   var _a5;
   const out = [];
@@ -132296,9 +132652,9 @@ function kitSentence(state) {
   out.push(" detail, with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT11[state.people],
+    text: PEOPLE_TEXT12[state.people],
     title: "Placeholders like [founder], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT11[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT12[p] })),
     current: state.people
   });
   out.push(" people and places");
@@ -132360,9 +132716,9 @@ var DEFAULT_BUILDING_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT12 = { placeholders: "placeholders for", invented: "invented" };
-var SERIES_TEXT8 = { off: "each one separate", on: "as one town" };
-var settingText = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
+var PEOPLE_TEXT13 = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT9 = { off: "each one separate", on: "as one town" };
+var settingText2 = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
 function buildingSentence(state) {
   var _a5;
   const out = [];
@@ -132420,7 +132776,7 @@ function buildingSentence(state) {
   }
   out.push({
     field: "setting",
-    text: settingText(state.setting),
+    text: settingText2(state.setting),
     title: "Where the buildings stand: weights civic, country, harbour or roadside kinds",
     choices: INN_SETTINGS.map((s) => ({ id: s.key, label: s.text })),
     current: state.setting
@@ -132436,19 +132792,19 @@ function buildingSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT12[state.people],
+    text: PEOPLE_TEXT13[state.people],
     title: "Placeholders like [founder], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT12[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT13[p] })),
     current: state.people
   });
   out.push(" people and places, ");
   out.push({
     field: "series",
-    text: SERIES_TEXT8[state.series ? "on" : "off"],
+    text: SERIES_TEXT9[state.series ? "on" : "off"],
     title: "One town's buildings: one of each kind, one town and one founder, no qualifier twice",
     choices: [
-      { id: "off", label: SERIES_TEXT8.off },
-      { id: "on", label: SERIES_TEXT8.on }
+      { id: "off", label: SERIES_TEXT9.off },
+      { id: "on", label: SERIES_TEXT9.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -132502,7 +132858,7 @@ function buildingHistoryLabel(state) {
     routeEraLabel(state.era),
     culture,
     ...kind ? [kind.plural] : [],
-    ...state.setting !== "anywhere" ? [settingText(state.setting)] : [],
+    ...state.setting !== "anywhere" ? [settingText2(state.setting)] : [],
     ...state.region && showsRegion(state) ? [regionPhrase(state.region)] : [],
     ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
     ...state.tone !== "any" ? [state.tone] : [],
@@ -132521,9 +132877,9 @@ var DEFAULT_INN_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT13 = { placeholders: "placeholders for", invented: "invented" };
-var SERIES_TEXT9 = { off: "each one separate", on: "as one town" };
-var settingText2 = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
+var PEOPLE_TEXT14 = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT10 = { off: "each one separate", on: "as one town" };
+var settingText3 = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
 var showsForm = (state) => hasSignTradition(state.culture);
 function innSentence(state) {
   var _a5;
@@ -132582,7 +132938,7 @@ function innSentence(state) {
   }
   out.push({
     field: "setting",
-    text: settingText2(state.setting),
+    text: settingText3(state.setting),
     title: "Where the house stands: weights country, town, harbour or roadside signs",
     choices: INN_SETTINGS.map((s) => ({ id: s.key, label: s.text })),
     current: state.setting
@@ -132608,19 +132964,19 @@ function innSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT13[state.people],
+    text: PEOPLE_TEXT14[state.people],
     title: "Placeholders like [owner], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT13[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT14[p] })),
     current: state.people
   });
   out.push(" people and places, ");
   out.push({
     field: "series",
-    text: SERIES_TEXT9[state.series ? "on" : "off"],
+    text: SERIES_TEXT10[state.series ? "on" : "off"],
     title: "One town's houses: no sign word twice, one roadside house and one landmark",
     choices: [
-      { id: "off", label: SERIES_TEXT9.off },
-      { id: "on", label: SERIES_TEXT9.on }
+      { id: "off", label: SERIES_TEXT10.off },
+      { id: "on", label: SERIES_TEXT10.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -132678,7 +133034,7 @@ function innHistoryLabel(state) {
     routeEraLabel(state.era),
     culture,
     ...kind ? [kind.plural] : [],
-    ...state.setting !== "anywhere" ? [settingText2(state.setting)] : [],
+    ...state.setting !== "anywhere" ? [settingText3(state.setting)] : [],
     ...state.region && showsRegion(state) ? [regionPhrase(state.region)] : [],
     ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
     ...state.tone !== "any" ? [state.tone] : [],
@@ -132697,8 +133053,8 @@ var DEFAULT_STREET_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT14 = { placeholders: "placeholders for", invented: "invented" };
-var SERIES_TEXT10 = { off: "each one separate", on: "as one town" };
+var PEOPLE_TEXT15 = { placeholders: "placeholders for", invented: "invented" };
+var SERIES_TEXT11 = { off: "each one separate", on: "as one town" };
 var DIALECT_TEXT = {
   plain: "with plain words only",
   variants: "with dialect words as variants",
@@ -132803,19 +133159,19 @@ function streetSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT14[state.people],
+    text: PEOPLE_TEXT15[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT14[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT15[p] })),
     current: state.people
   });
   out.push(" people and places, ");
   out.push({
     field: "series",
-    text: SERIES_TEXT10[state.series ? "on" : "off"],
+    text: SERIES_TEXT11[state.series ? "on" : "off"],
     title: "One town's streets: a main street first, then no repeats",
     choices: [
-      { id: "off", label: SERIES_TEXT10.off },
-      { id: "on", label: SERIES_TEXT10.on }
+      { id: "off", label: SERIES_TEXT11.off },
+      { id: "on", label: SERIES_TEXT11.on }
     ],
     current: state.series ? "on" : "off"
   });
@@ -136923,88 +137279,6 @@ var withRegion = (label, regionCode) => {
   const region = PLACE_SHAPE_REGIONS.find((r) => r.code === regionCode);
   return region ? `${label} \xB7 ${region.label}` : label;
 };
-var SECTION_ICONS = {
-  markov: ICON_PACKS,
-  placeShapes: ICON_NATIVE_PLACE_NAMES,
-  // Wild lands brief §1.2: the biome icon for the group, one icon each for the modules.
-  mountainNames: ICON_MOUNTAINS,
-  forestNames: ICON_FORESTS,
-  desertNames: ICON_DESERTS,
-  moorNames: ICON_MOORS,
-  wetlandNames: ICON_WETLANDS,
-  grasslandNames: ICON_GRASSLANDS,
-  // Urban brief §1.3: settlement names wears the urban group icon.
-  settlementNames: ICON_URBAN,
-  // Route names brief §1.1.
-  routeNames: ICON_ROUTES,
-  // Seas and coasts brief §1.2.
-  seasLakes: ICON_SEAS_LAKES,
-  coastsIslands: ICON_COASTS_ISLANDS,
-  seaCharts: ICON_SEA_CHARTS,
-  hyperspaceCharts: ICON_HYPERSPACE_CHARTS,
-  // Streets brief §1.1.
-  streetNames: ICON_STREETS,
-  // Inns brief §1.1.
-  innNames: ICON_INNS,
-  // Buildings brief §1.1.
-  buildingNames: ICON_BUILDINGS,
-  // Settlement kit §1.1.
-  settlementKit: ICON_SETTLEMENT_KIT,
-  // Events brief §1.1.
-  eventNames: ICON_HISTORY,
-  // Money brief §1.1: the custom icons.
-  moneyNames: ICON_COINS,
-  // Time and sky brief §1.1: custom icons.
-  calendarNames: ICON_CALENDAR_DAYS,
-  skyNames: ICON_MOON_STARS,
-  // Named things brief §1.1: custom icons.
-  armsNames: ICON_SWORD,
-  treasureNames: "crown",
-  bookNames: ICON_BOOK,
-  // Deities brief §1.1.
-  deityNames: ICON_DEITIES,
-  sacredPlaces: ICON_DEITIES,
-  riverNames: ICON_RIVER_NAMES,
-  explorationPlaceShapes: ICON_EXPLORATION_PLACE_SHAPES,
-  empireExpansionPlaceShapes: ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
-  nameAgeing: ICON_NAME_AGEING,
-  nameTakeover: ICON_NAME_TAKEOVER,
-  tribalNames: ICON_TRIBAL_NAMES,
-  // Realms brief §1.1.
-  realms: ICON_REALMS,
-  // Peoples and tongues brief §1.1: the custom icons.
-  peoplesTongues: ICON_LANGUAGES,
-  // Bynames brief §1.1: Lucide icons.
-  epithets: ICON_EPITHETS,
-  titles: "crown",
-  familyNames: ICON_FAMILY_NAMES,
-  // Ships brief §1.1, with the supplied ship icon for ships and boats.
-  ships: ICON_SHIPS,
-  spacecraft: ICON_SPACECRAFT,
-  // Aircraft and land vehicles brief §1.1: custom icons.
-  aircraft: ICON_JET_PLANE,
-  landVehicles: ICON_MONSTER_TRUCK,
-  // Group brief §1.1: Lucide icons.
-  mysticOrders: ICON_MYSTIC,
-  martialOrders: ICON_MARTIAL,
-  underworldGroups: ICON_UNDERWORLD,
-  tradeGuilds: ICON_TRADE,
-  adventureCompanies: ICON_ADVENTURERS,
-  powerFactions: "crown",
-  supernaturalCourts: "crown"
-};
-var GROUP_ICONS = {
-  placeNames: ICON_PLACE_SHAPES,
-  urban: ICON_URBAN,
-  seasCoasts: ICON_SEAS_COASTS,
-  wildLands: ICON_BIOME,
-  groupNames: ICON_GROUP_NAMES,
-  bynames: ICON_BYNAMES,
-  vehicles: ICON_VEHICLES,
-  // Named things brief §1.1: custom icons.
-  namedThings: ICON_GEM,
-  advanced: ICON_ADVANCED
-};
 var moduleLabel = (section) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
 var PLACE_LAND_KEYS = { britain: "britain", world: (id) => `world:${id}`, interstellar: "world:interstellar" };
 var SETTLEMENT_LAND_KEYS = { britain: "settlement:british", world: (id) => `settlement:world:${id}`, interstellar: "settlement:world:interstellar" };
@@ -137023,6 +137297,7 @@ function packTypeIconId(packType, subGenerator) {
   if (packType === "streetPreset") return ICON_STREETS;
   if (packType === "innPreset") return ICON_INNS;
   if (packType === "buildingPreset") return ICON_BUILDINGS;
+  if (packType === "monumentPreset") return ICON_MONUMENTS;
   if (packType === "kitPreset") return ICON_SETTLEMENT_KIT;
   if (packType === "eventPreset") return ICON_HISTORY;
   if (packType === "moneyPreset") return ICON_COINS;
@@ -137296,6 +137571,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     this.innState = { ...DEFAULT_INN_STATE };
     /** Buildings brief §2: the buildings sentence's choices, session only. */
     this.buildingState = { ...DEFAULT_BUILDING_STATE };
+    /** Monuments brief §2: the monuments sentence's choices, session only. */
+    this.monumentState = { ...DEFAULT_MONUMENT_STATE };
     /** Settlement kit §2: the kit sentence's choices, session only, and the kit on show. */
     this.kitState = { ...DEFAULT_KIT_STATE };
     this.currentKit = null;
@@ -137736,10 +138013,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     (_e3 = this.packDropdownEl) == null ? void 0 : _e3.toggle(section === "markov");
     (_f = this.sectionSentenceEl) == null ? void 0 : _f.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_g = this.editRecipeButton) == null ? void 0 : _g.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_h = this.openPresetButton) == null ? void 0 : _h.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || this.currentPackType === "recipePack" && !!this.settlementPreset));
+    (_h = this.openPresetButton) == null ? void 0 : _h.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "monumentPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || this.currentPackType === "recipePack" && !!this.settlementPreset));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_i = this.createPacksButton) == null ? void 0 : _i.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || WILDS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || WILDS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "monumentNames" || section === "settlementNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
     (_j = this.createPacksButton) == null ? void 0 : _j.toggle(!colonialPart && !tribal);
     (_k = this.landButton) == null ? void 0 : _k.refresh();
     (_l = this.guideButton) == null ? void 0 : _l.toggle(!!colonialPart || section === "hyperspaceCharts");
@@ -138054,6 +138331,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     else if (section === "streetNames") this.renderStreetSentence(row);
     else if (section === "innNames") this.renderInnSentence(row);
     else if (section === "buildingNames") this.renderBuildingSentence(row);
+    else if (section === "monumentNames") this.renderMonumentSentence(row);
     else if (section === "settlementNames") this.renderSettlementSentence(row);
     else if (section === "settlementKit") this.renderKitSentence(row);
     else if (section === "eventNames") this.renderEventSentence(row);
@@ -138624,7 +138902,7 @@ ${n.origin}${also}${echo}` };
     }
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian14.TFile)) return;
-    const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, kit, event, money, time, thing, peoples, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, monument, kit, event, money, time, thing, peoples, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
     if (peoples) {
       this.peopleState = this.peoplePresetState(peoples);
       this.skipPeopleFill = true;
@@ -138674,6 +138952,11 @@ ${n.origin}${also}${echo}` };
     if (building) {
       this.buildingState = this.buildingPresetState(building);
       this.switchSection("buildingNames");
+      return;
+    }
+    if (monument) {
+      this.monumentState = this.monumentPresetState(monument);
+      this.switchSection("monumentNames");
       return;
     }
     if (inn) {
@@ -139166,6 +139449,7 @@ ${n.origin}${also}${echo}` };
   async runInns(state = this.innState, label, problems = []) {
     var _a5;
     const seedOverride = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
+    const monumentGuards = await this.loadMonumentGuards();
     const guards = await this.loadSettlementSafeguards(INN_DATA.safeguards);
     const routeGuards = await this.loadSettlementSafeguards();
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, innWordBlocked);
@@ -139185,6 +139469,8 @@ ${n.origin}${also}${echo}` };
       safeguards: guards.safeguards,
       routeSafeguards: routeGuards.safeguards,
       landmarkSafeguards: (await this.loadSettlementSafeguards(BUILDING_DATA.safeguards)).safeguards,
+      monumentSafeguards: monumentGuards.safeguards,
+      honourees: monumentGuards.honourees,
       vocab: vocab.vocab
     });
     this.currentSeed = result.seed;
@@ -139905,15 +140191,17 @@ ${n.origin}${also}${echo}` };
     const street = await this.loadSettlementSafeguards(STREET_DATA.safeguards);
     const inn = await this.loadSettlementSafeguards(INN_DATA.safeguards);
     const building = await this.loadSettlementSafeguards(BUILDING_DATA.safeguards);
+    const monument = await this.loadMonumentGuards();
     const group = await this.loadGroupSafeguards();
     const byname = await this.loadBynameSafeguards();
     const vessel = await this.loadVesselSafeguards();
     const realm2 = await this.loadRealmSafeguards();
     const event = await this.loadSettlementSafeguards(EVENT_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(route3.safeguards, routeWordBlocked);
-    const all = [route3, street, inn, building, group, byname, vessel, realm2, event];
+    const all = [route3, street, inn, building, monument, group, byname, vessel, realm2, event];
     return {
-      safeguards: { route: route3.safeguards, street: street.safeguards, inn: inn.safeguards, building: building.safeguards, group: group.safeguards, byname: byname.safeguards, vessel: vessel.safeguards, realm: realm2.safeguards, event: event.safeguards },
+      safeguards: { route: route3.safeguards, street: street.safeguards, inn: inn.safeguards, building: building.safeguards, monument: monument.safeguards, group: group.safeguards, byname: byname.safeguards, vessel: vessel.safeguards, realm: realm2.safeguards, event: event.safeguards },
+      honourees: monument.honourees,
       vocab,
       notices: [...new Set(all.flatMap((x) => x.notices))]
     };
@@ -139923,7 +140211,7 @@ ${n.origin}${also}${echo}` };
     var _a5;
     const seedOverride = seed != null ? seed : this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
     const inputs = await this.kitInputs();
-    const kit = generateKit({ ...state, seed: seedOverride, safeguards: inputs.safeguards, vocab: inputs.vocab.vocab });
+    const kit = generateKit({ ...state, seed: seedOverride, safeguards: inputs.safeguards, honourees: inputs.honourees, vocab: inputs.vocab.vocab });
     this.currentSeed = kit.options.seed;
     this.currentKit = kit;
     this.renderKitResult(kit);
@@ -139935,7 +140223,7 @@ ${n.origin}${also}${echo}` };
   async rerollKitSection(key2) {
     if (!this.currentKit) return;
     const inputs = await this.kitInputs();
-    const { kit, note: note2 } = rerollKit(this.currentKit, key2, { safeguards: inputs.safeguards, vocab: inputs.vocab.vocab });
+    const { kit, note: note2 } = rerollKit(this.currentKit, key2, { safeguards: inputs.safeguards, honourees: inputs.honourees, vocab: inputs.vocab.vocab });
     this.currentKit = kit;
     this.renderKitResult(kit);
     this.setStatus([note2 != null ? note2 : "", ...kit.notices].filter((x) => x).join(" "));
@@ -140181,6 +140469,130 @@ ${n.origin}${also}${echo}` };
     }
     await this.runBuildings(this.buildingPresetState(building), `${SECTION_LABELS.buildingNames} \xB7 ${building.packName}`, problems);
   }
+  // ── Monuments and statues (Monuments brief) ──────────────────────────────
+  /** §13.6: the monument safeguard lists merged with every settlement safeguard pack, and the honourees the packs add. */
+  async loadMonumentGuards() {
+    const guards = await this.loadSettlementSafeguards(defaultMonumentSafeguards());
+    const honourees = [];
+    for (const file of this.namesFolderNotes()) {
+      const content = await this.app.vault.cachedRead(file);
+      if (isSettlementSafeguardPackContent(content)) honourees.push(...honoureesFromPack(content));
+    }
+    return { ...guards, honourees };
+  }
+  monumentPresetState(p) {
+    const base = {
+      culture: p.culture,
+      kind: p.monumentKind === "any" ? void 0 : p.monumentKind,
+      era: p.era,
+      fantastic: p.fantastic,
+      region: p.region === "all" ? void 0 : p.region,
+      setting: p.monumentSetting,
+      tone: p.tone,
+      people: p.people,
+      nearby: p.nearby,
+      series: p.series
+    };
+    return chooseMonument(base, "kind", base.kind);
+  }
+  /** §2: the sentence. */
+  renderMonumentSentence(row) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment2 of monumentSentence(this.monumentState)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(sentence2, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {
+        this.monumentState = chooseMonument(this.monumentState, segment2.field, id);
+      });
+    }
+  }
+  /** GN §14: the finished strings only; history "monuments and statues · {era} · {culture}…". With what's named
+   * after them on, each name is followed by a colon and its two nearby names. */
+  async runMonuments(state = this.monumentState, label, problems = []) {
+    var _a5;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
+    const guards = await this.loadMonumentGuards();
+    const streetGuards = await this.loadSettlementSafeguards(STREET_DATA.safeguards);
+    const innGuards = await this.loadSettlementSafeguards(INN_DATA.safeguards);
+    const vocab = await this.loadSettlementVocabulary(guards.safeguards, monumentWordBlocked);
+    const result = generateMonumentNames({
+      culture: state.culture,
+      kind: state.kind,
+      era: state.era,
+      fantastic: state.fantastic,
+      region: state.region,
+      setting: state.setting,
+      tone: state.tone,
+      people: state.people,
+      nearby: state.nearby,
+      series: state.series,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards,
+      honourees: guards.honourees,
+      streetSafeguards: streetGuards.safeguards,
+      innSafeguards: innGuards.safeguards,
+      vocab: vocab.vocab
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => {
+        const text = n.nearby.length > 0 ? `${n.text}: ${n.nearby.join(", ")}` : n.text;
+        return { text, hasPlaceholder: text.includes("["), etymology: "" };
+      }),
+      "none"
+    );
+    await this.recordGenerationHistory(result.names.length, label != null ? label : monumentHistoryLabel(state));
+    this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
+  }
+  /** §14.5: "{culture} · {kind or monuments and statues}", described by the sentence. */
+  openSaveMonumentPreset() {
+    var _a5, _b3;
+    const state = this.monumentState;
+    const culture = (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+    const kind = MONUMENT_KINDS.find((k) => k.key === state.kind);
+    const name = [culture, kind ? kind.menu : SECTION_LABELS.monumentNames].join(" \xB7 ");
+    const description = monumentSentenceText(monumentSentence(state));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a6, _b4;
+      if (!presetName) {
+        new import_obsidian14.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        culture: state.culture,
+        region: (_a6 = state.region) != null ? _a6 : "all",
+        monumentKind: (_b4 = state.kind) != null ? _b4 : "any",
+        era: state.era,
+        fantastic: state.fantastic,
+        monumentSetting: state.setting,
+        tone: state.tone,
+        people: state.people,
+        nearby: state.nearby,
+        series: state.series
+      });
+      return this.writePreset(presetName, content, (existing) => !!parseModulePreset(existing, presetName).monument);
+    }).open();
+  }
+  /** §14.5: a monument preset, run as the module runs; history "monuments and statues · {preset}". */
+  async runMonumentPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian14.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { monument, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!monument) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runMonuments(this.monumentPresetState(monument), `${SECTION_LABELS.monumentNames} \xB7 ${monument.packName}`, problems);
+  }
   // ── Streets and districts (Streets brief) ────────────────────────────────
   streetPresetState(p) {
     const base = {
@@ -140215,6 +140627,7 @@ ${n.origin}${also}${echo}` };
   async runStreets(state = this.streetState, label, problems = []) {
     var _a5;
     const seedOverride = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
+    const monumentGuards = await this.loadMonumentGuards();
     const guards = await this.loadSettlementSafeguards(STREET_DATA.safeguards);
     const routeGuards = await this.loadSettlementSafeguards();
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, streetWordBlocked);
@@ -140235,6 +140648,8 @@ ${n.origin}${also}${echo}` };
       safeguards: guards.safeguards,
       routeSafeguards: routeGuards.safeguards,
       landmarkSafeguards: (await this.loadSettlementSafeguards(BUILDING_DATA.safeguards)).safeguards,
+      monumentSafeguards: monumentGuards.safeguards,
+      honourees: monumentGuards.honourees,
       vocab: vocab.vocab
     });
     this.currentSeed = result.seed;
@@ -140893,7 +141308,7 @@ ${n.origin}${also}${echo}` };
     var _a5;
     const section = this.activeSection;
     (_a5 = this.savePresetButton) == null ? void 0 : _a5.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || WILDS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementNames" && this.settlementPresetable() || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || WILDS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "monumentNames" || section === "settlementNames" && this.settlementPresetable() || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -140946,6 +141361,10 @@ ${n.origin}${also}${echo}` };
     }
     if (this.activeSection === "buildingNames") {
       this.openSaveBuildingPreset();
+      return;
+    }
+    if (this.activeSection === "monumentNames") {
+      this.openSaveMonumentPreset();
       return;
     }
     if (this.activeSection === "settlementKit") {
@@ -141736,7 +142155,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "watersPreset" || packType === "wildsPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "kitPreset" || packType === "eventPreset" || packType === "moneyPreset" || packType === "calendarPreset" || packType === "skyPreset" || packType === "thingPreset" || packType === "peoplePreset" || packType === "deityPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "watersPreset" || packType === "wildsPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "monumentPreset" || packType === "kitPreset" || packType === "eventPreset" || packType === "moneyPreset" || packType === "calendarPreset" || packType === "skyPreset" || packType === "thingPreset" || packType === "peoplePreset" || packType === "deityPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -141896,6 +142315,7 @@ ${text}
           else if (parsed.street) packs.push({ path: child.path, packType: "streetPreset" });
           else if (parsed.inn) packs.push({ path: child.path, packType: "innPreset" });
           else if (parsed.building) packs.push({ path: child.path, packType: "buildingPreset" });
+          else if (parsed.monument) packs.push({ path: child.path, packType: "monumentPreset" });
           else if (parsed.kit) packs.push({ path: child.path, packType: "kitPreset" });
           else if (parsed.event) packs.push({ path: child.path, packType: "eventPreset" });
           else if (parsed.money) packs.push({ path: child.path, packType: "moneyPreset" });
@@ -142045,9 +142465,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x;
-    const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, kit, event, money, time, thing, peoples, deity, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = wilds ? "wildsPreset" : deity ? "deityPreset" : peoples ? "peoplePreset" : thing ? "thingPreset" : time ? time.timeModule === "sky" ? "skyPreset" : "calendarPreset" : money ? "moneyPreset" : event ? "eventPreset" : kit ? "kitPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm2 ? "realmPreset" : waters ? "watersPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
+    const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, monument, kit, event, money, time, thing, peoples, deity, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = wilds ? "wildsPreset" : deity ? "deityPreset" : peoples ? "peoplePreset" : thing ? "thingPreset" : time ? time.timeModule === "sky" ? "skyPreset" : "calendarPreset" : money ? "moneyPreset" : event ? "eventPreset" : kit ? "kitPreset" : monument ? "monumentPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm2 ? "realmPreset" : waters ? "watersPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -142058,9 +142478,9 @@ ${text}
     this.syncPillSpacing();
     (_b3 = this.editRecipeButton) == null ? void 0 : _b3.hide();
     (_c3 = this.openPresetButton) == null ? void 0 : _c3.toggle(this.activeSection === "markov");
-    const module2 = wilds ? SECTION_LABELS[wilds.wildsModule] : deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? (_d3 = THINGS_DATA.modules.find((m) => m.key === thing.thingModule)) == null ? void 0 : _d3.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_e3 = findFamily(group.family)) == null ? void 0 : _e3.label : SECTION_LABELS.tribalNames;
+    const module2 = wilds ? SECTION_LABELS[wilds.wildsModule] : deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? (_d3 = THINGS_DATA.modules.find((m) => m.key === thing.thingModule)) == null ? void 0 : _d3.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : monument ? SECTION_LABELS.monumentNames : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_e3 = findFamily(group.family)) == null ? void 0 : _e3.label : SECTION_LABELS.tribalNames;
     (_f = this.openPresetButton) == null ? void 0 : _f.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_x = (_w = (_v = (_u = (_t = (_s = (_r = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = wilds == null ? void 0 : wilds.packName) != null ? _g : preset == null ? void 0 : preset.packName) != null ? _h : group == null ? void 0 : group.packName) != null ? _i : byname == null ? void 0 : byname.packName) != null ? _j : vessel == null ? void 0 : vessel.packName) != null ? _k : waters == null ? void 0 : waters.packName) != null ? _l : realm2 == null ? void 0 : realm2.packName) != null ? _m : route3 == null ? void 0 : route3.packName) != null ? _n : street == null ? void 0 : street.packName) != null ? _o : inn == null ? void 0 : inn.packName) != null ? _p : building == null ? void 0 : building.packName) != null ? _q : kit == null ? void 0 : kit.packName) != null ? _r : event == null ? void 0 : event.packName) != null ? _s : money == null ? void 0 : money.packName) != null ? _t : time == null ? void 0 : time.packName) != null ? _u : thing == null ? void 0 : thing.packName) != null ? _v : peoples == null ? void 0 : peoples.packName) != null ? _w : deity == null ? void 0 : deity.packName) != null ? _x : file.basename;
+    this.plugin.settings.packName = (_y = (_x = (_w = (_v = (_u = (_t = (_s = (_r = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = wilds == null ? void 0 : wilds.packName) != null ? _g : preset == null ? void 0 : preset.packName) != null ? _h : group == null ? void 0 : group.packName) != null ? _i : byname == null ? void 0 : byname.packName) != null ? _j : vessel == null ? void 0 : vessel.packName) != null ? _k : waters == null ? void 0 : waters.packName) != null ? _l : realm2 == null ? void 0 : realm2.packName) != null ? _m : route3 == null ? void 0 : route3.packName) != null ? _n : street == null ? void 0 : street.packName) != null ? _o : inn == null ? void 0 : inn.packName) != null ? _p : building == null ? void 0 : building.packName) != null ? _q : monument == null ? void 0 : monument.packName) != null ? _r : kit == null ? void 0 : kit.packName) != null ? _s : event == null ? void 0 : event.packName) != null ? _t : money == null ? void 0 : money.packName) != null ? _u : time == null ? void 0 : time.packName) != null ? _v : thing == null ? void 0 : thing.packName) != null ? _w : peoples == null ? void 0 : peoples.packName) != null ? _x : deity == null ? void 0 : deity.packName) != null ? _y : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -142523,6 +142943,10 @@ ${text}
       await this.runInns();
       return;
     }
+    if (this.activeSection === "monumentNames") {
+      await this.runMonuments();
+      return;
+    }
     if (this.activeSection === "buildingNames") {
       await this.runBuildings();
       return;
@@ -142626,6 +143050,10 @@ ${text}
     }
     if (this.currentPackType === "innPreset") {
       await this.runInnPreset();
+      return;
+    }
+    if (this.currentPackType === "monumentPreset") {
+      await this.runMonumentPreset();
       return;
     }
     if (this.currentPackType === "buildingPreset") {

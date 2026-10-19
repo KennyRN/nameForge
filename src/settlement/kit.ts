@@ -76,6 +76,7 @@ export interface KitSafeguards {
   street?: GroupSafeguards;
   inn?: GroupSafeguards;
   building?: GroupSafeguards;
+  monument?: GroupSafeguards;
   group?: GroupSafeguards;
   byname?: GroupSafeguards;
   vessel?: GroupSafeguards;
@@ -98,6 +99,8 @@ export interface KitOptions {
   /** §8.4: how many times each section has been rerolled. */
   rerolls?: Partial<Record<KitSectionKey, number>>;
   safeguards?: KitSafeguards;
+  /** Monuments brief §13.3: honourees a safeguard pack adds. */
+  honourees?: string[];
   vocab?: Vocabulary;
   /** §6 step 4: tells the kit which place names a module's block lists hold (for the town). */
   blocked?: (name: string) => boolean;

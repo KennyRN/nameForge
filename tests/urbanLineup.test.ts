@@ -3,8 +3,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { GROUP_LABELS, SECTION_GROUPS, SWITCHER_ORDER } from "../src/sections";
 
-test("urban group lists exactly the five modules, in order", () => {
-  assert.deepEqual(SECTION_GROUPS.urban, ["settlementNames", "streetNames", "innNames", "buildingNames", "settlementKit"]);
+test("urban group lists exactly the six modules, in order (monuments and statues after buildings and landmarks)", () => {
+  assert.deepEqual(SECTION_GROUPS.urban, ["settlementNames", "streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit"]);
   assert.equal(GROUP_LABELS.urban, "urban");
 });
 

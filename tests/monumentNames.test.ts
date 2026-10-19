@@ -24,7 +24,12 @@ import { ROUTE_CULTURES, ROUTE_ERAS, routeNorm, type RouteEra } from "../src/rou
 import { mulberry32 } from "../src/markov";
 import monumentData from "../src/data/monument-names.json";
 import { BUILDING_DATA, BUILDING_KINDS } from "../src/buildings/engine";
-import { parseModulePreset } from "../src/presets";
+import { modulePresetContent, parseModulePreset, type MonumentPreset } from "../src/presets";
+import { readFileSync } from "node:fs";
+import { URBAN_SECTIONS, SECTION_GROUPS, SECTION_LABELS, SWITCHER_ORDER, historySection, MONUMENT_NAMES_HISTORY_NAME } from "../src/sections";
+import { GROUP_ICONS, SECTION_ICONS } from "../src/sectionIcons";
+import { ICON_BUILDINGS, ICON_BUILDINGS_SVG, ICON_MONUMENTS, ICON_MONUMENTS_SVG } from "../src/icons";
+import { chooseMonument, DEFAULT_MONUMENT_STATE, monumentHistoryLabel, monumentSentence, monumentSentenceText } from "../src/monuments/sentence";
 import { parseVocabularyPack } from "../src/settlement/vocab";
 
 /** Names from small batches (each batch holds a word once, so big batches skew shares). */
@@ -384,4 +389,85 @@ test("§10.5: a vocabulary pack heading for the retired monument pools is ignore
   assert.deepEqual(sections.map((s) => s.pool), ["monumentWord:cross"]);
   assert.equal(problems.length, 2);
   assert.ok(problems.every((p) => p === "Monument words now belong to monuments and statues: use monumentWord:‹kind› or monumentFixed:‹kind›."));
+});
+
+// ── §15.12 Line-up and icons ────────────────────────────────────────────────
+
+/** The path data of the one filled path in an Iconify SVG file. */
+const pathOf = (file: string) => readFileSync(`tests/fixtures/icons/${file}`, "utf8").match(/<path fill="currentColor" d="([^"]+)"/)![1];
+
+test("§15.12: the urban line-up is exactly six, monuments after buildings; labels and history rows find the section", () => {
+  assert.deepEqual(URBAN_SECTIONS, ["settlementNames", "streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit"]);
+  assert.deepEqual(SECTION_GROUPS.urban, URBAN_SECTIONS);
+  assert.equal(SECTION_LABELS.monumentNames, "monuments and statues");
+  assert.equal(MONUMENT_NAMES_HISTORY_NAME, "monuments and statues");
+  assert.ok(SWITCHER_ORDER.includes("urban"));
+  assert.equal(historySection("monuments and statues · medieval · Norman & British"), "monumentNames");
+  assert.equal(historySection("buildings and landmarks · medieval · Norman & British"), "buildingNames");
+  assert.equal(historySection("settlement kit · Old Court · town"), "settlementKit");
+});
+
+test("§15.12: monuments wears the old buildings icon unchanged; buildings wears the supplied city gate", () => {
+  assert.equal(ICON_MONUMENTS, "nameforge-monuments");
+  assert.equal(ICON_BUILDINGS, "nameforge-buildings");
+  assert.equal(SECTION_ICONS.monumentNames, ICON_MONUMENTS);
+  assert.equal(SECTION_ICONS.buildingNames, ICON_BUILDINGS);
+  assert.notEqual(ICON_MONUMENTS, ICON_BUILDINGS);
+  assert.equal(GROUP_ICONS.urban, SECTION_ICONS.settlementNames);
+  // The monuments SVG is Font Awesome's monument, scaled from its 640×640 box exactly as buildings' was.
+  assert.ok(ICON_MONUMENTS_SVG.startsWith('<g transform="scale(0.15625)"><path d="M0 0h640v640H0z" fill="none" />'));
+  assert.ok(ICON_MONUMENTS_SVG.includes(`d="${pathOf("fa7-solid--monument.svg")}"`));
+  // The buildings SVG is the supplied Röntgen city gate, scaled from its 16×16 box to Obsidian's 100×100.
+  assert.ok(ICON_BUILDINGS_SVG.startsWith('<g transform="scale(6.25)"><path d="M0 0h16v16H0z" fill="none" />'));
+  assert.ok(ICON_BUILDINGS_SVG.includes(`d="${pathOf("roentgen--city-gate.svg")}"`));
+  assert.ok(!ICON_BUILDINGS_SVG.includes(pathOf("fa7-solid--monument.svg")));
+  assert.ok(readFileSync("LICENCES - Third Party", "utf8").includes("### Röntgen"));
+});
+
+// ── §15.13 Sentence and presets ─────────────────────────────────────────────
+
+test("§15.13: the default sentence's plain text; kinds reset with the era; the region goes away from the British cultures", () => {
+  assert.equal(
+    monumentSentenceText(monumentSentence(DEFAULT_MONUMENT_STATE)),
+    "Norman & British monuments and statues of any kind of the medieval era, in a realistic world, across all of Britain, anywhere, of any tone, with placeholders for people and places, on their own, each one separate.",
+  );
+  const downland = [["era", "ST"], ["region", "WCY"], ["setting", "country"], ["people", "invented"], ["nearby", "on"], ["series", "on"]].reduce((st, [f, id]) => chooseMonument(st, f as never, id), DEFAULT_MONUMENT_STATE);
+  assert.equal(
+    monumentSentenceText(monumentSentence(downland)),
+    "Norman & British monuments and statues of any kind of the steam age era, in a realistic world, in the West Country, in the country, of any tone, with invented people and places, with what's named after them, as one town.",
+  );
+  assert.equal(monumentHistoryLabel(downland), "monuments and statues · steam age · Norman & British · in the country · the West Country · one town · named after");
+  // A kind the era doesn't offer resets to Any; a non-British culture loses its region.
+  assert.equal(chooseMonument({ ...DEFAULT_MONUMENT_STATE, kind: "cross", era: "MD" }, "era", "AN").kind, undefined);
+  assert.equal(chooseMonument({ ...DEFAULT_MONUMENT_STATE, region: "COR" }, "culture", "japanese").region, undefined);
+  // Every field offers the choices the brief lists.
+  const fields = monumentSentence(DEFAULT_MONUMENT_STATE).filter((x): x is Exclude<typeof x, string> => typeof x !== "string");
+  assert.deepEqual(fields.map((f) => f.field), ["culture", "kind", "era", "fantastic", "region", "setting", "tone", "people", "nearby", "series"]);
+  // The kind menu is Any, then the kinds the era offers (no follies in the medieval era), by menu label.
+  assert.deepEqual(fields.find((f) => f.field === "kind")!.choices.map((c) => c.label), ["Any", "Crosses", "Columns and pillars", "Obelisks and needles", "Arches and gateways", "Statues and figures", "Standing stones and stelae", "Tombs and mounds", "Memorials and fountains", "Hill figures and mazes"]);
+});
+
+test("§14.5: the Downland preset parses, a preset round-trips, and a kind the era lacks loads as Any with a problem line", () => {
+  const note = [
+    "---", "type: module-preset", "module: monument-names", "packName: Downland monuments", "culture: norman-british", "region: WCY", "kind: any", "era: ST",
+    "fantastic: false", "setting: country", "tone: any", "people: invented", "nearby: true", "series: true", "---", "",
+    "Norman & British monuments and statues of any kind of the steam age era, in a realistic world, in the West Country, in the country, of any tone, with invented people and places, with what's named after them, as one town.",
+  ].join("\n");
+  const parsed = parseModulePreset(note, "x");
+  assert.deepEqual(parsed.problems, []);
+  const preset: MonumentPreset = parsed.monument!;
+  assert.deepEqual({ ...preset, description: "" }, {
+    packName: "Downland monuments", setting: "", description: "", culture: "norman-british", region: "WCY", monumentKind: "any", era: "ST", fantastic: false,
+    monumentSetting: "country", tone: "any", people: "invented", nearby: true, series: true,
+  });
+  assert.deepEqual(parseModulePreset(modulePresetContent(preset), "x").monument, preset);
+  assert.ok(modulePresetContent(preset).includes("module: monument-names\n") && modulePresetContent(preset).includes("nearby: true\n"));
+  const bad = parseModulePreset(modulePresetContent({ ...preset, era: "AN", monumentKind: "cross" }), "x");
+  assert.equal(bad.monument?.monumentKind, "any");
+  assert.deepEqual(bad.problems, ["Kind “cross” isn't offered in the ancient era."]);
+  // Defaults: nearby off, kind any.
+  const bare = parseModulePreset("---\ntype: module-preset\nmodule: monument-names\n---\n\nx", "Bare").monument!;
+  assert.equal(bare.nearby, false);
+  assert.equal(bare.monumentKind, "any");
+  assert.equal(bare.packName, "Bare");
 });

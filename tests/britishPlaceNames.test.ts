@@ -233,6 +233,7 @@ test("line-up: the modules in order, with their labels; river names live in plac
       "streets and districts",
       "inns and taverns",
       "buildings and landmarks",
+      "monuments and statues",
       "settlement kit",
       "seas and lakes",
       "coasts and islands",

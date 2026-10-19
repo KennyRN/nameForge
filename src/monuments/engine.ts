@@ -274,6 +274,23 @@ export function breaksMonumentWords(text: string): boolean {
   return breaksBuildingWords(text) || banned().some((re) => re.test(text));
 }
 
+/** §13.6: the honourees a settlement safeguard pack adds: its "## Honourees" section's bullets. */
+export function honoureesFromPack(content: string): string[] {
+  const out: string[] = [];
+  let inSection = false;
+  for (const raw of content.split(/\r?\n/)) {
+    const line = raw.trim();
+    const heading = line.match(/^##\s+(.+?)\s*#*$/);
+    if (heading) {
+      inSection = heading[1].toLowerCase() === "honourees";
+      continue;
+    }
+    const bullet = line.match(/^[-*+]\s+(.+)$/);
+    if (bullet && inSection) out.push(...bullet[1].split(",").map((w) => w.trim()).filter(Boolean));
+  }
+  return out;
+}
+
 /** §13.1: names as the block list compares them, without a leading "the". */
 const bare = (text: string) => routeNorm(text).replace(/^the /, "");
 

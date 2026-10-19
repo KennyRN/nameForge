@@ -189,9 +189,14 @@ export const ICON_SETTLEMENT_KIT = "nameforge-settlement-kit";
 const ICON_SETTLEMENT_KIT_SVG =
   '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M21 5.5h-7.5v5.75H19v8.25h-1.5v-6.75H11v6.75H9.5V4.36L6.25 2.085L3 4.36V19.5H1V21h22v-1.5h-2zm-3 4.25h-1.5v-2H18zM7 16H5.5v-2H7zm0-3.5H5.5v-2H7zM7 9H5.5V7H7zm8.75 7.5h-3V15h3z" /></g>';
 
-/** Buildings and landmarks (Font Awesome monument). */
+/** Buildings and landmarks (Röntgen city gate, CC BY 4.0). Scaled for Obsidian's 100×100 viewBox from its 16×16 one. */
 export const ICON_BUILDINGS = "nameforge-buildings";
-const ICON_BUILDINGS_SVG =
+export const ICON_BUILDINGS_SVG =
+  '<g transform="scale(6.25)"><path d="M0 0h16v16H0z" fill="none" /><path fill="currentColor" d="M1.5 2a.499.499 0 1 0 0 1h12a.499.499 0 1 0 0-1zM2 4v9h-.5a.499.499 0 1 0 0 1h4a.499.499 0 1 0 0-1H5V8.5A2.5 2.5 0 0 1 7.5 6A2.5 2.5 0 0 1 10 8.5V13h-.5a.499.499 0 1 0 0 1h4a.499.499 0 1 0 0-1H13V4h-1v.5c0 .277-.22.5-.496.5h-.008A.497.497 0 0 1 11 4.5V4h-1v.5a.499.499 0 1 1-1 0V4H8v.5c0 .277-.22.5-.494.5h-.012A.496.496 0 0 1 7 4.5V4H6v.5c0 .277-.22.5-.496.5h-.008A.497.497 0 0 1 5 4.5V4H4v.5a.499.499 0 1 1-1 0V4zm1.5 6c.277 0 .5.223.5.5v1a.499.499 0 1 1-1 0v-1c0-.277.223-.5.5-.5m7.992 0h.016c.273 0 .492.223.492.5v1c0 .277-.22.5-.492.5h-.016a.495.495 0 0 1-.492-.5v-1c0-.277.22-.5.492-.5" /></g>';
+
+/** Monuments and statues (Font Awesome monument; buildings and landmarks wore it before the module split). */
+export const ICON_MONUMENTS = "nameforge-monuments";
+export const ICON_MONUMENTS_SVG =
   '<g transform="scale(0.15625)"><path d="M0 0h640v640H0z" fill="none" /><path fill="currentColor" d="M337 31c-9.4-9.4-24.6-9.4-33.9 0L223 111c-4.1 4.1-6.5 9.4-7 15.1L186.4 512H176c-17.7 0-32 14.3-32 32s14.3 32 32 32h288c17.7 0 32-14.3 32-32s-14.3-32-32-32h-10.4l-29.7-385.8c-.4-5.7-2.9-11.1-7-15.1zm-81 329c0-13.3 10.7-24 24-24h80c13.3 0 24 10.7 24 24s-10.7 24-24 24h-80c-13.3 0-24-10.7-24-24" /></g>';
 
 /** Inns and taverns (Font Awesome beer: a tankard), centred in the square box. */
@@ -396,6 +401,7 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_DEITIES, ICON_DEITIES_SVG);
   addIcon(ICON_SETTLEMENT_KIT, ICON_SETTLEMENT_KIT_SVG);
   addIcon(ICON_BUILDINGS, ICON_BUILDINGS_SVG);
+  addIcon(ICON_MONUMENTS, ICON_MONUMENTS_SVG);
   addIcon(ICON_INNS, ICON_INNS_SVG);
   addIcon(ICON_VEHICLES, ICON_VEHICLES_SVG);
   addIcon(ICON_MOUNTAINS, ICON_MOUNTAINS_SVG);

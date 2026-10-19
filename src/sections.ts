@@ -37,7 +37,9 @@ export type NameForgeSection =
   | "innNames"
   // Buildings brief §1.1; urban group, after inns and taverns.
   | "buildingNames"
-  // Settlement kit §1.1; the urban brief moves it to the end of the urban group, after buildings and landmarks.
+  // Monuments brief §1.1; urban group, after buildings and landmarks.
+  | "monumentNames"
+  // Settlement kit §1.1; the urban brief moves it to the end of the urban group, after monuments and statues.
   | "settlementKit"
   // Events brief §1.1; the line-up brief moves it to the end of advanced.
   | "eventNames"
@@ -124,8 +126,8 @@ export const GROUP_NAME_SECTIONS: NameForgeSection[] = [
 /** The group names group's line-up in the switcher and menus. */
 export const GROUP_NAMES_ORDER: NameForgeSection[] = ["powerFactions", "realms", "peoplesTongues", "tribalNames", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts"];
 
-/** Urban brief §1.1: the five urban modules, in order. */
-export const URBAN_SECTIONS: NameForgeSection[] = ["settlementNames", "streetNames", "innNames", "buildingNames", "settlementKit"];
+/** Urban brief §1.1, Monuments brief §1.1: the six urban modules, in order. */
+export const URBAN_SECTIONS: NameForgeSection[] = ["settlementNames", "streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit"];
 
 export const SECTION_ORDER: NameForgeSection[] = [
   "markov",
@@ -199,6 +201,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   streetNames: "streets and districts",
   innNames: "inns and taverns",
   buildingNames: "buildings and landmarks",
+  monumentNames: "monuments and statues",
   settlementKit: "settlement kit",
   eventNames: "events and eras",
   moneyNames: "money and coins",
@@ -249,6 +252,8 @@ export const RIVER_NAMES_HISTORY_NAME = "river names";
 export const WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
 /** Urban brief §2: "settlement names · {size} · {the source module's label without its base name}". */
 export const SETTLEMENT_NAMES_HISTORY_NAME = "settlement names";
+/** Monuments brief §1.1: "monuments and statues · {era} · {culture}…". */
+export const MONUMENT_NAMES_HISTORY_NAME = "monuments and statues";
 export const TRIBAL_NAMES_HISTORY_NAME = "tribes and kin groups";
 /** History rows from before the rename to tribes and kin groups. */
 export const OLD_TRIBAL_NAMES_HISTORY_NAME = "tribal names";
@@ -276,6 +281,8 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(SECTION_LABELS.innNames)) return "innNames";
   // Buildings brief §1.2: "buildings and landmarks · {era} · {culture}…".
   if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
+  // Monuments brief §1.1: "monuments and statues · {era} · {culture}…".
+  if (starts(MONUMENT_NAMES_HISTORY_NAME)) return "monumentNames";
   // Settlement kit §1.2: "settlement kit · {settlement name} · {size}…".
   if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
   // Events brief §1.2: "events and eras · {era} · {culture}…".

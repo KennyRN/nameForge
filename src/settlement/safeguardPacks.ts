@@ -25,4 +25,8 @@ Names to allow, though they echo a real or well-known route.
 ## Allow
 
 Names to take off the flag list. Built-in block-list names can't be allowed.
+
+## Honourees
+
+Real people, or titles with names, that monuments and statues must never name (a statue of one, a street after one). Each one is added to the built-in list.
 `;

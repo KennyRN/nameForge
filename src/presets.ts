@@ -20,6 +20,7 @@ import { findRouteCulture, findRouteKind, kindsOffered, ROUTE_ERAS, ROUTE_FTL, r
 import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 import { INN_KINDS, INN_SETTINGS, type InnForm, type InnKind, type InnSetting } from "./inns/engine";
 import { BUILDING_KINDS, type BuildingKind } from "./buildings/engine";
+import { MONUMENT_KINDS, type MonumentKind } from "./monuments/engine";
 import { EVENT_KINDS, EVENT_SCALES, type EventKind, type EventScale } from "./events/engine";
 import { findMoneyCulture, MONEY_KINDS, MONEY_VALUES, MONEY_WORDS, type MoneyKind, type MoneySeries, type MoneyValue, type MoneyWords } from "./money/engine";
 import { normaliseMoney } from "./money/sentence";
@@ -93,7 +94,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; wilds?: WildsPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; time?: TimePreset; thing?: ThingPreset; peoples?: PeoplePreset; deity?: DeityPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; wilds?: WildsPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; monument?: MonumentPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; time?: TimePreset; thing?: ThingPreset; peoples?: PeoplePreset; deity?: DeityPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -118,6 +119,8 @@ export function parseModulePreset(
   if (values.module === INN_PRESET_MODULE) return parseInnPreset(values, body, fileName);
   // Buildings brief §13: building presets too.
   if (values.module === BUILDING_PRESET_MODULE) return parseBuildingPreset(values, body, fileName);
+  // Monuments brief §14.5: monument presets too.
+  if (values.module === MONUMENT_PRESET_MODULE) return parseMonumentPreset(values, body, fileName);
   // Settlement kit §11: kit presets too.
   if (values.module === KIT_PRESET_MODULE) return parseKitPreset(values, body, fileName);
   // Events brief §12: event presets too.
@@ -167,7 +170,7 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | WildsPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | MoneyPreset | TimePreset | ThingPreset | PeoplePreset | DeityPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | WildsPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | MonumentPreset | KitPreset | EventPreset | MoneyPreset | TimePreset | ThingPreset | PeoplePreset | DeityPreset): string {
   if ("wildsModule" in preset) return wildsPresetContent(preset);
   if ("peopleSource" in preset) return peoplePresetContent(preset);
   if ("thingModule" in preset) return thingPresetContent(preset);
@@ -176,6 +179,7 @@ export function modulePresetContent(preset: TribalPreset | GroupPreset | BynameP
   if ("moneyKind" in preset) return moneyPresetContent(preset);
   if ("eventKind" in preset) return eventPresetContent(preset);
   if ("contents" in preset) return kitPresetContent(preset);
+  if ("monumentKind" in preset) return monumentPresetContent(preset);
   if ("buildingKind" in preset) return buildingPresetContent(preset);
   if ("innKind" in preset) return innPresetContent(preset);
   if ("streetKind" in preset) return streetPresetContent(preset);
@@ -855,6 +859,95 @@ function buildingPresetContent(preset: BuildingPreset): string {
     `setting: ${preset.buildingSetting}`,
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
+    `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Monument presets (Monuments and statues brief §14.5) ─────────────────────
+
+export const MONUMENT_PRESET_MODULE = "monument-names";
+
+export interface MonumentPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  culture: string;
+  /** "all" or a place-shape region code. */
+  region: string;
+  /** "any" or a kind key (the note's `kind`). */
+  monumentKind: "any" | MonumentKind;
+  era: RouteEra;
+  fantastic: boolean;
+  /** Where the monuments stand (the note's `setting`, as for inns). */
+  monumentSetting: InnSetting;
+  tone: GroupToneChoice;
+  people: GroupPeople;
+  /** Add what's named after each monument. */
+  nearby: boolean;
+  series: boolean;
+}
+
+function parseMonumentPreset(values: Record<string, string>, body: string, fileName: string): { monument?: MonumentPreset; problems: string[] } {
+  const problems: string[] = [];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const flag = (key: string): boolean => {
+    const v = values[key];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key} “${v}”.`);
+    return false;
+  };
+  const era = pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  let kind = pick<"any" | MonumentKind>("kind", "any", (v) => v === "any" || MONUMENT_KINDS.some((k) => k.key === v));
+  // A kind the era lacks loads as Any, with a problem line.
+  if (kind !== "any" && !(MONUMENT_KINDS.find((k) => k.key === kind)!.era[era] > 0)) {
+    problems.push(`Kind “${kind}” isn't offered in the ${routeEraLabel(era)} era.`);
+    kind = "any";
+  }
+  return {
+    monument: {
+      packName: values.packName || fileName,
+      setting: "",
+      description: body.trim(),
+      culture: pick("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      monumentKind: kind,
+      era,
+      fantastic: flag("fantastic"),
+      monumentSetting: pick<InnSetting>("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      nearby: flag("nearby"),
+      series: flag("series"),
+    },
+    problems,
+  };
+}
+
+function monumentPresetContent(preset: MonumentPreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${MONUMENT_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.culture}`,
+    `region: ${preset.region}`,
+    `kind: ${preset.monumentKind}`,
+    `era: ${preset.era}`,
+    `fantastic: ${preset.fantastic}`,
+    `setting: ${preset.monumentSetting}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `nearby: ${preset.nearby}`,
     `series: ${preset.series}`,
     "---",
     "",
