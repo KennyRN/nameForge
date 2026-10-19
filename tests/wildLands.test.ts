@@ -191,17 +191,27 @@ test("stems: across 5,000 invented names per module and every culture, a fill is
   }
 });
 
-test("stems: the Norse and Japanese stem pools hold at least 40 names and the British one at least 35, before any fallback", () => {
-  assert.ok(wildsStemPool("norse").length >= 40, `norse ${wildsStemPool("norse").length}`);
+test("stems: the all-Britain stem pool holds at least 80 names, Norse at least 150 and Japanese at least 40, before any fallback", () => {
+  assert.ok(wildsStemPool("norse").length >= 150, `norse ${wildsStemPool("norse").length}`);
   assert.ok(wildsStemPool("japanese").length >= 40, `japanese ${wildsStemPool("japanese").length}`);
-  assert.ok(wildsStemPool("britain").length >= 35, `britain ${wildsStemPool("britain").length}`);
+  assert.ok(wildsStemPool("britain").length >= 80, `britain ${wildsStemPool("britain").length}`);
   // Weights: one word ×3, two words ×1 (non-British only); three words, apostrophes and the generics never.
   assert.equal(stemWeight("Oxdale", true), 3);
   assert.equal(stemWeight("Wide Bridge", false), 1);
   assert.equal(stemWeight("Wide Bridge", true), 0);
+  assert.equal(stemWeight("Moots", true), 0);
+  assert.equal(stemWeight("Baths", true), 0);
   for (const bad of ["Badger Edge Hill", "Lord's Ford", "Fort", "Hills", "Moot", "Hartvillage", "Peacock City", "The Ford", "Wide hill", "Overlongname1", "Longestname"]) assert.equal(stemWeight(bad, false), 0, bad);
   // Greek & Byzantine, steppe, Polynesian and Andean have no stem source.
   for (const key of ["greek-byzantine", "steppe", "polynesian", "andean"]) assert.equal(stemSourceOf(WILDS_CULTURES.find((c) => c.key === key)!), undefined, key);
+});
+
+test("stems: no pool holds a duplicate, Moot, Moots, Bath, Baths or Isthmus", () => {
+  for (const [source, region] of [["britain", undefined], ["britain", "NTH"], ["norse", undefined], ["japanese", undefined], ["maya", undefined], ["korean", undefined], ["chinese", undefined]] as const) {
+    const names = wildsStemPool(source, region).map(([n]) => n.toLowerCase());
+    assert.equal(new Set(names).size, names.length, `${source} ${region ?? ""}: duplicates`);
+    assert.ok(!names.some((n) => /^(moots?|baths?|isthmus)$/.test(n)), `${source} ${region ?? ""}`);
+  }
 });
 
 test("stems: Roman has no usable stems so every fill is a biome animal or tree; Norse's are its own", () => {

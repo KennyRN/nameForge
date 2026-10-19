@@ -115389,7 +115389,7 @@ function stemWeight(name, british) {
     const l = w.toLowerCase();
     if (!capitalised(w) || letters(w) > 10) return 0;
     if (isStopWord(w) || l.endsWith("s") && STOP_WORDS.has(l.slice(0, -1))) return 0;
-    if (/(village|hamlet|homestead|headland|pasture)$/.test(l) || ["moot", "bath", "isthmus"].includes(l)) return 0;
+    if (/(village|hamlet|homestead|headland|pasture)$/.test(l) || ["moot", "bath", "isthmus"].some((x) => l === x || l === `${x}s`)) return 0;
     return 3;
   }
   if (words.length === 2 && !british) {
@@ -115403,7 +115403,7 @@ function wildsStemPool(source, region) {
   const key2 = `${source}|${region != null ? region : ""}`;
   let pool3 = STEM_POOLS.get(key2);
   if (!pool3) {
-    const names = generateSettlementNames({ setting: "native", culture: source, size: "village", count: 600, seed: 1789, region: source === "britain" ? region : void 0, wilds: false }).names.map((n) => n.text);
+    const names = generateSettlementNames({ setting: "native", culture: source, size: "village", count: 2e3, seed: 1789, region: source === "britain" ? region : void 0, wilds: false }).names.map((n) => n.text);
     const seen = /* @__PURE__ */ new Set();
     pool3 = [];
     for (const name of names) {

@@ -401,7 +401,7 @@ This applies to wild lands only. Route names, seas and coasts and every other mo
   - setting native
   - culture `townSource(culture)`
   - size village
-  - count 600
+  - count 2000
   - seed 1789
   - the region for British sources
   - `wilds: false`
@@ -410,13 +410,14 @@ This applies to wild lands only. Route names, seas and coasts and every other mo
   - it has no apostrophe
   - it isn't a stop word (below), or a stop word plus *s*
   - it doesn't end in *village*, *hamlet*, *homestead*, *headland* or *pasture*
-  - it isn't *Moot*, *Bath* or *Isthmus*
+  - it isn't *Moot*, *Bath* or *Isthmus*, or one of those plus *s*
 - Keep a **two-word name** only for non-British sources, and only if all of these are true:
   - both words are capitalised
   - it has no apostrophe
   - it doesn't begin with *The*
   - its second word isn't a stop word
 - Never keep a name of three words or more.
+- **Duplicates:** remove them, so each stem appears once.
 - **Weights:** one-word names ×3, two-word names ×1.
 
 **Stop words: feature generics.** Hill, Hills, Ridge, Edge, Island, Isle, Isles, Marsh, Marshes, Fen, Fens, Moor, Moors, Lake, Mere, Pool, Pond, Water, Waters, River, Brook, Beck, Burn, Dale, Valley, Vale, Wood, Woods, Forest, Heath, Down, Downs, Pass, Gap, Bank, Bay, Shore, Cape, Point, Head, Ness, Cliff, Cliffs, Crag, Rock, Rocks, Stone, Stones, Holm, Spring, Springs, Well, Wells, Mound, Knoll, Slope, Spur, Top, Moss, Mount, Mountain, Mountains, Peak, Glen, Combe, Fell, Tor, Gorge, Field, Fields, Meadow, Meadows, Plain, Plains, Common, Wash, Creek, Sands, Dune, Dunes, Oasis, Grove, Copse, Clearing, Glade, Lawn, Hollow, Cove, Sound, Bottom, Bottoms, Barrow, Cave, Caves, Fjord, Waterfall, Falls, Paddy, Mouth, Source.
@@ -436,7 +437,7 @@ This applies to wild lands only. Route names, seas and coasts and every other mo
 - Slavic
 - West African
 
-British, Norse, Japanese, Korean and Maya kept 40 or more.
+British, Norse, Japanese, Korean and Maya kept 40 or more. At count 2000, all of Britain gives about 107 stems. A count of 600 gave only 36, and the larger count doesn't change which cultures are thin.
 
 **No stem source.** Greek & Byzantine, steppe, Polynesian and Andean have no stem source. They keep their current `routePlace` draw, filtered by the same rules. A draw that fails goes to the biome fallback.
 
