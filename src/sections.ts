@@ -29,13 +29,15 @@ export type NameForgeSection =
   | "placeShapes"
   // Route names brief §1.1: in place names, after native place names.
   | "routeNames"
-  // Streets brief §1.1: after route names.
+  // Urban brief §1.1: the urban group's first module, settlement names.
+  | "settlementNames"
+  // Streets brief §1.1; the urban brief moves it to the urban group, after settlement names.
   | "streetNames"
-  // Inns brief §1.1: after streets and districts.
+  // Inns brief §1.1; urban group, after streets and districts.
   | "innNames"
-  // Buildings brief §1.1: after inns and taverns.
+  // Buildings brief §1.1; urban group, after inns and taverns.
   | "buildingNames"
-  // Settlement kit §1.1: after buildings and landmarks.
+  // Settlement kit §1.1; the urban brief moves it to the end of the urban group, after buildings and landmarks.
   | "settlementKit"
   // Events brief §1.1; the line-up brief moves it to the end of advanced.
   | "eventNames"
@@ -112,16 +114,17 @@ export const GROUP_NAME_SECTIONS: NameForgeSection[] = [
 /** The group names group's line-up in the switcher and menus. */
 export const GROUP_NAMES_ORDER: NameForgeSection[] = ["powerFactions", "realms", "peoplesTongues", "tribalNames", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts"];
 
+/** Urban brief §1.1: the five urban modules, in order. */
+export const URBAN_SECTIONS: NameForgeSection[] = ["settlementNames", "streetNames", "innNames", "buildingNames", "settlementKit"];
+
 export const SECTION_ORDER: NameForgeSection[] = [
   "markov",
   "placeShapes",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
   "routeNames",
-  "streetNames",
-  "innNames",
-  "buildingNames",
   "sacredPlaces",
+  ...URBAN_SECTIONS,
   ...WATERS_SECTIONS,
   ...GROUP_NAMES_ORDER,
   "deityNames",
@@ -130,7 +133,6 @@ export const SECTION_ORDER: NameForgeSection[] = [
   ...THING_SECTIONS,
   "nameAgeing",
   "nameTakeover",
-  "settlementKit",
   "eventNames",
   "moneyNames",
   "calendarNames",
@@ -139,10 +141,12 @@ export const SECTION_ORDER: NameForgeSection[] = [
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
  * trigger then chooses between the group's modules. */
-export type SectionGroup = "placeNames" | "seasCoasts" | "groupNames" | "bynames" | "vehicles" | "namedThings" | "advanced";
+export type SectionGroup = "placeNames" | "urban" | "seasCoasts" | "groupNames" | "bynames" | "vehicles" | "namedThings" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
-  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames", "buildingNames", "sacredPlaces"],
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "sacredPlaces"],
+  // Urban brief §1.1: straight after place names.
+  urban: URBAN_SECTIONS,
   seasCoasts: WATERS_SECTIONS,
   groupNames: [...GROUP_NAMES_ORDER, "deityNames"],
   bynames: BYNAME_SECTIONS,
@@ -150,11 +154,12 @@ export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   vehicles: VESSEL_SECTIONS,
   // Named things brief §1.1.
   namedThings: THING_SECTIONS,
-  advanced: ["nameAgeing", "nameTakeover", "settlementKit", "eventNames", "moneyNames", "calendarNames", "skyNames"],
+  advanced: ["nameAgeing", "nameTakeover", "eventNames", "moneyNames", "calendarNames", "skyNames"],
 };
 
 export const GROUP_LABELS: Record<SectionGroup, string> = {
   placeNames: "place names",
+  urban: "urban",
   seasCoasts: "seas and coasts",
   groupNames: "group names",
   bynames: "bynames and titles",
@@ -164,7 +169,7 @@ export const GROUP_LABELS: Record<SectionGroup, string> = {
 };
 
 /** The switcher's line-up: modules and groups. */
-export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "seasCoasts", "groupNames", "bynames", "vehicles", "namedThings", "advanced"];
+export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "urban", "seasCoasts", "groupNames", "bynames", "vehicles", "namedThings", "advanced"];
 
 /** The group a module belongs to, if any. */
 export function sectionGroup(section: NameForgeSection): SectionGroup | undefined {
@@ -175,6 +180,7 @@ export function sectionGroup(section: NameForgeSection): SectionGroup | undefine
 export const SECTION_LABELS: Record<NameForgeSection, string> = {
   markov: "markov generator",
   placeShapes: "native place names",
+  settlementNames: "settlement names",
   routeNames: "route names",
   streetNames: "streets and districts",
   innNames: "inns and taverns",

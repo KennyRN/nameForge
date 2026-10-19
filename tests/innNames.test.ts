@@ -213,8 +213,8 @@ test("§15.7: the form link is hidden for chinese; kinds reset with the era", ()
   assert.equal(chooseInn(bar, "era", "MD").kind, undefined);
 });
 
-test("§1: the module follows streets and districts; history label and section", () => {
-  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 6), ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "streetNames", "innNames"]);
+test("§1: the module follows streets and districts, in the urban group; history label and section", () => {
+  assert.deepEqual(SECTION_GROUPS.urban.slice(0, 3), ["settlementNames", "streetNames", "innNames"]);
   assert.equal(innHistoryLabel(DEFAULT_INN_STATE), "inns and taverns · medieval · Norman & British");
   const full: InnSentenceState = { ...DEFAULT_INN_STATE, era: "ST", kind: "club", setting: "road", region: "NTH", fantastic: true, tone: "grim", series: true };
   assert.equal(innHistoryLabel(full), "inns and taverns · steam age · Norman & British · clubs and hotels · by the road · the North · steampunk · grim · one town");

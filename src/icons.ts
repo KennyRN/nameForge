@@ -238,6 +238,11 @@ export const ICON_INFO = "nameforge-info";
 const ICON_INFO_SVG =
   '<g transform="scale(0.195313)"><path d="M0 0h512v512H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184s184-82.39 184-184S349.61 64 248 64Z" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M220 220h32v116" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M208 340h88" /><path fill="currentColor" d="M248 130a26 26 0 1 0 26 26a26 26 0 0 0-26-26" /></g>';
 
+// Icon Park twotone — city (Urban brief §1.3). Scaled for Obsidian's 100×100 viewBox from its 48×48 one. Also the settlement names module's icon.
+export const ICON_URBAN = "nameforge-urban";
+const ICON_URBAN_SVG =
+  '<g transform="scale(2.08333)"><path d="M0 0h48v48H0z" fill="none" /><defs><mask id="nameforge-urban-mask"><g fill="none"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M4 42h40" /><rect width="8" height="16" x="8" y="26" fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4" rx="2" /><path stroke="#fff" stroke-linecap="square" stroke-linejoin="round" stroke-width="4" d="M12 34h1" /><rect width="24" height="38" x="16" y="4" fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4" rx="2" /><path fill="#fff" d="M22 10h4v4h-4zm8 0h4v4h-4zm-8 7h4v4h-4zm8 0h4v4h-4zm0 7h4v4h-4zm0 7h4v4h-4z" /></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#nameforge-urban-mask)" /></g>';
+
 export const ICON_VEHICLES = "nameforge-vehicles";
 // Font Awesome 6 solid — car-side (CC BY 4.0). Fitted to Obsidian's 100×100 viewBox from its 640×512 one, centred vertically.
 const ICON_VEHICLES_SVG =
@@ -287,6 +292,7 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_BUILDINGS, ICON_BUILDINGS_SVG);
   addIcon(ICON_INNS, ICON_INNS_SVG);
   addIcon(ICON_VEHICLES, ICON_VEHICLES_SVG);
+  addIcon(ICON_URBAN, ICON_URBAN_SVG);
   addIcon(ICON_STREETS, ICON_STREETS_SVG);
   addIcon(ICON_ROUTES, ICON_ROUTES_SVG);
   addIcon(ICON_SEAS_COASTS, ICON_SEAS_COASTS_SVG);

@@ -321,8 +321,8 @@ test("§13.7: the default sentence's plain text; “An” before a vowel", () =>
   assert.ok(kitSentenceText(kitSentence(station)).includes(", on a station, "));
 });
 
-test("§1: the module sits in advanced; history label and section", () => {
-  assert.ok(SECTION_GROUPS.advanced.includes("settlementKit"));
+test("§1: the module closes the urban group; history label and section", () => {
+  assert.equal(SECTION_GROUPS.urban.at(-1), "settlementKit");
   const label = kitHistoryLabel("Fenwick", DEFAULT_KIT_STATE);
   assert.equal(label, "settlement kit · Fenwick · town · medieval · Norman & British");
   assert.equal(historySection(label), "settlementKit");

@@ -312,11 +312,11 @@ test("§10.4: the kit's faith group and buildings share one deity; none for chri
 // ── Line-up brief: the vehicles group and the deities / sacred places split ──
 
 test("line-up §1: the switcher; vehicles holds the vessel modules, which leave advanced", () => {
-  assert.deepEqual(SWITCHER_ORDER, ["markov", "placeNames", "seasCoasts", "groupNames", "bynames", "vehicles", "namedThings", "advanced"]);
+  assert.deepEqual(SWITCHER_ORDER, ["markov", "placeNames", "urban", "seasCoasts", "groupNames", "bynames", "vehicles", "namedThings", "advanced"]);
   assert.deepEqual(SECTION_GROUPS.vehicles, VESSEL_SECTIONS);
   assert.equal(GROUP_LABELS.vehicles, "vehicles");
   for (const v of VESSEL_SECTIONS) assert.ok(!SECTION_GROUPS.advanced.includes(v));
-  assert.deepEqual(SECTION_GROUPS.advanced, ["nameAgeing", "nameTakeover", "settlementKit", "eventNames", "moneyNames", "calendarNames", "skyNames"]);
+  assert.deepEqual(SECTION_GROUPS.advanced, ["nameAgeing", "nameTakeover", "eventNames", "moneyNames", "calendarNames", "skyNames"]);
 });
 
 test("line-up §2.2: the deities kind link has no sacred places; kind Any never yields a place, nor does a series", () => {

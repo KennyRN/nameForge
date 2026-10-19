@@ -41,6 +41,7 @@ import {
   ICON_SHIPS,
   ICON_HISTORY,
   ICON_VEHICLES,
+  ICON_URBAN,
   ICON_ROUTES,
   ICON_SEAS_COASTS,
   ICON_SEAS_LAKES,
@@ -274,6 +275,8 @@ const withRegion = (label: string, regionCode: string | undefined) => {
 const SECTION_ICONS: Record<NameForgeSection, string> = {
   markov: ICON_PACKS,
   placeShapes: ICON_NATIVE_PLACE_NAMES,
+  // Urban brief §1.3: settlement names wears the urban group icon.
+  settlementNames: ICON_URBAN,
   // Route names brief §1.1.
   routeNames: ICON_ROUTES,
   // Seas and coasts brief §1.2.
@@ -336,6 +339,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
 // Each switcher group's icon in the switcher menu; the trigger wears the open module's own icon.
 const GROUP_ICONS: Record<SectionGroup, string> = {
   placeNames: ICON_PLACE_SHAPES,
+  urban: ICON_URBAN,
   seasCoasts: ICON_SEAS_COASTS,
   groupNames: ICON_GROUP_NAMES,
   bynames: ICON_BYNAMES,
@@ -766,7 +770,7 @@ export class NameForgeModal extends Modal {
   /** Line-up brief §2.3: the sacred places module's own choices. */
   private sacredPlaceState: SacredPlaceSentenceState = { ...DEFAULT_SACRED_PLACE_STATE };
   /** Each switcher group's last-used module (session only). */
-  private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", seasCoasts: "seasLakes", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
+  private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", urban: "settlementNames", seasCoasts: "seasLakes", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
   private tribal: {
     tradition: string;
     register: TribalRegister;
