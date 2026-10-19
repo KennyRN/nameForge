@@ -767,23 +767,9 @@ body .nameforge-editor-modal .nameforge-modal__controls .nameforge-modal__icon-a
   margin: 0;
   padding: 8px 10px;
   list-style: none;
-}
-
-/* The results pane and the plain boxes share one look: borderless, on the secondary background. */
-.nameforge-modal__results-list,
-body .nameforge-modal__plain-box,
-body .nameforge-modal__plain-box:hover,
-body .nameforge-modal__plain-box:focus,
-body .nameforge-modal__plain-box:focus-visible {
   border: none;
   border-radius: var(--radius-m, 6px);
   background-color: var(--background-secondary);
-  box-shadow: none;
-}
-
-body .nameforge-modal__plain-box {
-  padding: 8px 10px;
-  font-family: var(--font-interface);
 }
 
 .nameforge-modal__results-list li {
@@ -1776,7 +1762,11 @@ body .nameforge-editor-modal textarea.nameforge-editor-modal__place-box:focus-vi
 body .nameforge-editor-modal .nameforge-modal__part-box textarea.nameforge-modal__textarea,
 body .nameforge-editor-modal .nameforge-modal__part-box textarea.nameforge-modal__textarea:hover,
 body .nameforge-editor-modal .nameforge-modal__part-box textarea.nameforge-modal__textarea:focus,
-body .nameforge-editor-modal .nameforge-modal__part-box textarea.nameforge-modal__textarea:focus-visible {
+body .nameforge-editor-modal .nameforge-modal__part-box textarea.nameforge-modal__textarea:focus-visible,
+body .nameforge-preset-modal textarea.nameforge-preset-modal__description,
+body .nameforge-preset-modal textarea.nameforge-preset-modal__description:hover,
+body .nameforge-preset-modal textarea.nameforge-preset-modal__description:focus,
+body .nameforge-preset-modal textarea.nameforge-preset-modal__description:focus-visible {
   box-sizing: border-box;
   padding: 8px 10px;
   border: none;
