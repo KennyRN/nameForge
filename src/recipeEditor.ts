@@ -11,7 +11,7 @@ import { tribalSlotConstraints } from "./tribes/slotFill";
 import { type TribalPreset, tribalPresetSlot } from "./presets";
 import { TRIBAL_TRADITIONS } from "./tribes/engine";
 import { ALIEN_CHOICES, biomeChoices, biomePhrase, explorersPhrase, featuresForBiome, incomersPhrase, spaceBiomeChoices, terrainPhrase } from "./colonialSentence";
-import { ICON_SAVE_PRESET, ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE } from "./icons";
+import { ICON_SAVE_PRESET, ICON_CANCEL, ICON_EMPIRE_EXPANSION_PLACE_SHAPES, ICON_INFO, ICON_EXPLORATION_PLACE_SHAPES, ICON_RECIPE, ICON_SAVE, ICON_HELP, ICON_RESET } from "./icons";
 import { createWordListFileContent, sanitizePackNameForFilename } from "./nameParser";
 import {
   applyWordsToSlots,
@@ -423,7 +423,7 @@ export class RecipeWizard {
       text: "What each slot draws from. Edit a list to give this recipe its own words; only the sections you change are saved, to the recipe's word list. ",
     });
     const help = intro.createSpan({ cls: "clickable-icon nameforge-editor-modal__help", attr: { role: "button", "aria-label": "How to write a word list" } });
-    setIcon(help, "circle-help");
+    setIcon(help, ICON_HELP);
     help.addEventListener("click", () => new WordListGuideModal(this.app).open());
     for (const { id, label } of this.shownSlots()) {
       const view = this.wordsView(id, label);
@@ -495,7 +495,7 @@ export class RecipeWizard {
         cls: "clickable-icon nameforge-recipe-editor__words-reset",
         attr: { type: "button", title: view.resetTo === "placeholder" ? "Back to the placeholder" : "Back to the built-in list" },
       });
-      setIcon(reset, "rotate-ccw");
+      setIcon(reset, ICON_RESET);
       reset.addEventListener("click", () => {
         textarea.value = view.baseline ?? "";
         this.wordsEdits.set(view.id, textarea.value);

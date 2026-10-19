@@ -59,9 +59,9 @@ const ICON_EMPIRE_EXPANSION_PLACE_SHAPES_SVG =
   '<g transform="scale(3.57143)"><path fill="currentColor" d="M13.11 2.293a1.5 1.5 0 0 1 1.78 0l9.497 7.005c1.124.83.598 2.578-.74 2.7H4.353c-1.338-.122-1.863-1.87-.74-2.7zM14 8.999a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3m5.5 4h2.499v6h-2.5zm-2 6v-6H15v6zM13 19v-6h-2.5v6zm-4.499 0v-6h-2.5v6zm-2.25 1a3.25 3.25 0 0 0-3.25 3.25v.5a.75.75 0 0 0 .75.751h20.497a.75.75 0 0 0 .75-.75v-.5a3.25 3.25 0 0 0-3.25-3.25z" /></g>';
 
 export const ICON_NAME_AGEING = "nameforge-name-ageing";
-// Akar Icons — calendar (MIT). Scaled for Obsidian's 100×100 viewBox.
+// Andrsrxn — calendar. Scaled for Obsidian's 100×100 viewBox.
 const ICON_NAME_AGEING_SVG =
-  '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="20" height="18" x="2" y="4" rx="4" /><path d="M8 2v4m8-4v4M2 10h20" /></g></g>';
+  '<g transform="scale(4.16667)"><g fill="none"><rect width="17.98" height="5.25" x="3.01" y="3.46" fill="currentColor" opacity=".2" rx="1" /><rect width="17.98" height="17.98" x="3.01" y="3.46" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" rx="3" /><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.69 1.76v3.4m8.68-3.4v3.4m4.2 3.54H3.83" /></g></g>';
 
 export const ICON_NAME_TAKEOVER = "nameforge-name-takeover";
 // Fluent UI System Icons — globe sync 24 regular (MIT). Scaled for Obsidian's 100×100 viewBox.
@@ -303,6 +303,76 @@ export const ICON_HYPERSPACE_CHARTS = "nameforge-hyperspace-charts";
 const ICON_HYPERSPACE_CHARTS_SVG =
   '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6.5q2.25-1.5 4.5 0t4.5 0t4.5 0t4.5 0M3 12q2.25-1.5 4.5 0t4.5 0m4.5 0q2.25-1.5 4.5 0M3 17.5q2.25-1.5 4.5 0m4.5 0q2.25-1.5 4.5 0t4.5 0" /></g>';
 
+export const ICON_GEM = "nameforge-gem";
+// Andrsrxn — gem. Scaled for Obsidian's 100×100 viewBox.
+const ICON_GEM_SVG =
+  '<g transform="scale(4.16667)"><g fill="none"><path fill="currentColor" d="m1.62 10.35l4.1-7.2c.14-.24.22-.37.33-.43c.12-.07.26-.07.54-.07h2.28c.57 0 .85 0 1 .18c.15.19.1.46-.02 1.02l-1.5 7.25l-.03.2l.04.2l1.23 5.82c.31 1.45.47 2.17.13 2.34c-.34.18-.84-.36-1.84-1.45l-6.13-6.7c-.24-.25-.36-.38-.37-.54s.07-.32.24-.62m20.78 0l-4.06-7.2c-.14-.24-.21-.37-.33-.43c-.12-.07-.26-.07-.54-.07h-2.23c-.57 0-.85 0-1 .18c-.15.19-.1.46.02 1.02l1.47 7.25l.03.2l-.03.2l-1.22 5.8c-.3 1.45-.46 2.18-.12 2.35c.34.18.84-.37 1.84-1.47l6.04-6.67c.23-.25.35-.38.37-.54c.01-.16-.07-.31-.24-.62" opacity=".2" /><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m3.25 7.14l.9-1.53C5 4.16 5.42 3.44 6.12 3.04c.69-.4 1.53-.4 3.2-.4h5.36c1.67 0 2.51 0 3.2.4S19 4.16 19.85 5.61l.9 1.53c1.08 1.85 1.63 2.78 1.52 3.76c-.1.99-.84 1.77-2.3 3.35l-3.56 3.86c-2.07 2.24-3.1 3.35-4.41 3.35s-2.34-1.11-4.4-3.35l-3.58-3.86c-1.45-1.58-2.18-2.36-2.29-3.35c-.1-.98.44-1.9 1.52-3.76" /><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m22.22 10.16l-6 1.41h-8.3l-5.94-1.41" /><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m10.02 2.65l-1.78 8.92l1.78 8.84M13.9 2.65l1.86 8.92l-1.86 8.84" /></g></g>';
+
+export const ICON_MONSTER_TRUCK = "nameforge-monster-truck";
+// Font Awesome 6 solid — truck-monster (CC BY 4.0). Scaled for Obsidian's 100×100 viewBox.
+const ICON_MONSTER_TRUCK_SVG =
+  '<g transform="translate(0 10) scale(0.15625)"><path fill="currentColor" d="M288 64v64h128l-48-64zm131.2-38.4L496 128h80c17.7 0 32 14.3 32 32v64c17.7 0 32 14.3 32 32s-14.3 32-32 32c-29.2-38.9-75.7-64-128-64s-98.8 25.1-128 64h-64c-29.2-38.9-75.7-64-128-64s-98.8 25.1-128 64c-17.7 0-32-14.3-32-32s14.3-32 32-32v-64c0-17.7 14.3-32 32-32h160V48c0-26.5 21.5-48 48-48h96c20.1 0 39.1 9.5 51.2 25.6M152 256h16c12.1 0 22.1 8.9 23.8 20.6c7.6 2.2 14.9 5.3 21.7 9c9.4-7 22.8-6.3 31.3 2.3l11.3 11.3c8.6 8.6 9.3 21.9 2.3 31.3c3.7 6.8 6.8 14.1 9 21.7C279 353.9 288 363.9 288 376v16c0 12.1-8.9 22.1-20.6 23.8c-2.2 7.6-5.3 14.9-9 21.7c7 9.4 6.3 22.8-2.3 31.3l-11.3 11.3c-8.6 8.6-21.9 9.3-31.3 2.2c-6.8 3.7-14.1 6.8-21.7 9c-1.7 11.8-11.7 20.7-23.8 20.7h-16c-12.1 0-22.1-8.9-23.8-20.6c-7.6-2.2-14.9-5.3-21.7-9c-9.4 7.1-22.8 6.3-31.3-2.2l-11.4-11.3c-8.6-8.6-9.3-21.9-2.3-31.3c-3.7-6.9-6.8-14.1-9-21.8C40.9 414.1 32 404.1 32 392v-16c0-12.1 8.9-22.1 20.6-23.8c2.2-7.6 5.3-14.9 9-21.8c-7-9.4-6.3-22.8 2.3-31.3l11.3-11.3c8.6-8.6 21.9-9.3 31.3-2.3c6.8-3.7 14.1-6.8 21.7-9c1.7-11.6 11.7-20.6 23.8-20.6zm8 176a48 48 0 1 0 0-96a48 48 0 1 0 0 96m288.2-155.4C449.9 265 459.9 256 472 256h16c12.1 0 22.1 8.9 23.8 20.6c7.6 2.2 14.9 5.3 21.8 9c9.4-7 22.8-6.3 31.3 2.3l11.3 11.3c8.6 8.6 9.3 21.9 2.2 31.3c3.7 6.8 6.8 14.1 9 21.7C599 353.9 608 363.9 608 376v16c0 12.1-8.9 22.1-20.6 23.8c-2.2 7.6-5.3 14.9-9 21.7c7 9.4 6.3 22.8-2.2 31.3l-11.3 11.3c-8.6 8.6-21.9 9.3-31.3 2.2c-6.9 3.7-14.1 6.8-21.8 9c-1.7 11.8-11.7 20.7-23.8 20.7h-16c-12.1 0-22.1-8.9-23.8-20.6c-7.6-2.2-14.9-5.3-21.7-9c-9.4 7.1-22.8 6.3-31.3-2.2l-11.3-11.3c-8.6-8.6-9.3-21.9-2.2-31.3c-3.7-6.9-6.8-14.1-9-21.8c-11.8-1.7-20.7-11.7-20.7-23.8v-16c0-12.1 8.9-22.1 20.6-23.8c2.2-7.6 5.3-14.9 9-21.8c-7-9.4-6.3-22.8 2.2-31.3l11.3-11.3c8.6-8.6 21.9-9.3 31.3-2.3c6.8-3.7 14.1-6.8 21.7-9zM528 384a48 48 0 1 0-96 0a48 48 0 1 0 96 0" /></g>';
+
+export const ICON_JET_PLANE = "nameforge-jet-plane";
+// Pinhead — jet-plane-front (CC0). Scaled for Obsidian's 100×100 viewBox.
+const ICON_JET_PLANE_SVG =
+  '<g transform="scale(6.66667)"><path fill="currentColor" d="M12.37 9.5a1.003 1.003 0 0 1-.87 1.5a1.003 1.003 0 0 1-.87-1.5h-.9c-.42.89-1.26 1.5-2.23 1.5s-1.81-.61-2.23-1.5h-.9A1.003 1.003 0 0 1 3.5 11a1.003 1.003 0 0 1-.87-1.5H.83L.04 7.96a.32.32 0 0 1 .13-.43q.075-.03.15-.03h.31c.13 0 .25.05.35.14l.88.86l3.16-.56C5.21 6.57 6.57 5.5 7.5 5.5s2.29 1.07 2.48 2.44l3.16.56l.88-.86c.1-.09.22-.14.35-.14h.31c.18 0 .32.14.32.31c0 .05-.02.1-.04.15l-.79 1.54zM7 5V3.5c0-.28.22-.5.5-.5s.5.22.5.5V5zm0 1.5l-1 1c.56.33 1.06.5 1.5.5s.94-.17 1.5-.5l-1-1z" /></g>';
+
+export const ICON_LANGUAGES = "nameforge-languages";
+// Vadivam — languages. Scaled for Obsidian's 100×100 viewBox.
+const ICON_LANGUAGES_SVG =
+  '<g transform="scale(4.16667)"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 4h6.5m0 0h3.714M8.5 4V2m3.714 2H15m-2.786 0c-.766 3.302-1.983 5.776-3.915 7.774m0 0C7.11 13.003 5.65 14.05 3.857 15M8.3 11.774C7.249 10.716 6.395 9.466 5.714 8M8.3 11.774c.86.866 1.851 1.604 2.987 2.226m9.426 3.938l-2.275-7.177c-.321-1.015-1.555-1.015-1.876 0l-2.275 7.177L13 22m1.287-4.062c2.24.6 4.15.61 6.426 0m0 0L22 22" /></g>';
+
+export const ICON_BOOK = "nameforge-book";
+// Andrsrxn — book-open. Scaled for Obsidian's 100×100 viewBox.
+const ICON_BOOK_SVG =
+  '<g transform="scale(4.16667)"><g fill="none"><path fill="currentColor" d="M17.13 3.44c2.04 0 3.43.4 4.25.73c.36.16.54.23.7.48c.18.25.18.5.18.99v12.13c0 1.26 0 1.9-.35 2.2s-1.03.2-2.4-.01a16 16 0 0 0-4.77 0c-1.36.2-2.05.3-2.4 0c-.34-.3-.34-.93-.34-2.19V5.64c0-.5 0-.74.17-.99s.35-.32.71-.48c.82-.33 2.2-.73 4.25-.73" opacity=".2" /><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.87 3.12c2.2 0 3.65.59 4.43 1.03c.28.16.43.24.56.48s.14.44.14.86v12.25c0 1.27 0 1.9-.37 2.2s-1.04.17-2.38-.1c-.77-.16-1.6-.28-2.38-.28s-1.6.12-2.38.27c-1.34.28-2.01.41-2.38.11s-.37-.93-.37-2.2V6.35c0-.82 0-1.24.34-1.74s.6-.62 1.14-.83a10 10 0 0 1 3.65-.66m10.26 0c2.2 0 3.64.59 4.42 1.03c.3.16.44.24.57.48c.14.23.14.44.14.86v12.25c0 1.27 0 1.9-.37 2.2s-1.04.17-2.38-.1c-.77-.16-1.61-.28-2.38-.28s-1.61.12-2.38.27c-1.34.28-2.01.41-2.38.11s-.37-.93-.37-2.2V6.35c0-.82 0-1.24.34-1.74s.6-.62 1.13-.83a10 10 0 0 1 3.66-.66" /></g></g>';
+
+export const ICON_SWORD = "nameforge-sword";
+// Jam Icons — sword-f. Scaled for Obsidian's 100×100 viewBox.
+const ICON_SWORD_SVG =
+  '<g transform="scale(4.16667) translate(2.5 2.5)"><path fill="currentColor" d="M9.646 14.096a1 1 0 1 1-1.414 1.414l-1.414-1.414l-2.828 2.829a1 1 0 0 1-1.415 1.414l-1.414-1.414a1 1 0 0 1 1.414-1.415l2.829-2.828l-1.414-1.414a1 1 0 0 1 1.414-1.414zm.708-.707L6.11 9.146L14.596.661l3.536.707l.707 3.536z" /></g>';
+
+export const ICON_MOON_STARS = "nameforge-moon-stars";
+// Bootstrap — moon-stars-fill. Scaled for Obsidian's 100×100 viewBox.
+const ICON_MOON_STARS_SVG =
+  '<g transform="scale(6.25)"><g fill="currentColor"><path d="M6 .278a.77.77 0 0 1 .08.858a7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316a.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71C0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278" /><path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" /></g></g>';
+
+export const ICON_CALENDAR_DAYS = "nameforge-calendar-days";
+// Andrsrxn — calendar-days. Scaled for Obsidian's 100×100 viewBox.
+const ICON_CALENDAR_DAYS_SVG =
+  '<g transform="scale(4.16667)"><g fill="none"><rect width="17.98" height="5.25" x="3.01" y="3.46" fill="currentColor" opacity=".2" rx="1" /><rect width="17.98" height="17.98" x="3.01" y="3.46" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" rx="3" /><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.69 1.76v3.4m8.68-3.4v3.4m4.2 3.54H3.83" /><path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.63 12.76a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0m0 4.24a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0m4.87-4.24a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0m0 4.24a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0m4.88-4.24a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0" /></g></g>';
+
+export const ICON_COINS = "nameforge-coins";
+// Iconoven — coins. Scaled for Obsidian's 100×100 viewBox.
+const ICON_COINS_SVG =
+  '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M9.25 5.75a6.5 6.5 0 1 1 9 9" /><circle cx="9.25" cy="14.75" r="6.5" /><circle cx="9.25" cy="14.75" r="3.25" /></g></g>';
+
+export const ICON_RESET = "nameforge-reset";
+// Font Awesome 7 — arrow-rotate-back solid (CC BY 4.0). Scaled for Obsidian's 100×100 viewBox.
+const ICON_RESET_SVG =
+  '<g transform="scale(0.15625)"><path fill="currentColor" d="M320 128c-56.8 0-107.9 24.7-143.1 64H224c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V96c0-17.7 14.3-32 32-32s32 14.3 32 32v54.7C174.9 97.6 243.5 64 320 64c141.4 0 256 114.6 256 256S461.4 576 320 576c-87 0-163.9-43.4-210.1-109.7c-10.1-14.5-6.6-34.4 7.9-44.6s34.4-6.6 44.6 7.9c34.8 49.8 92.4 82.3 157.6 82.3c106 0 192-86 192-192S426 128 320 128" /></g>';
+
+export const ICON_HELP = "nameforge-help";
+// CI — circle-help (CC BY 4.0). Scaled for Obsidian's 100×100 viewBox.
+const ICON_HELP_SVG =
+  '<g transform="scale(4.16667)"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.146 9.074a2.998 2.998 0 0 1 5.28-.838A3 3 0 0 1 12 13v1m0 7a9 9 0 1 1 0-18a9 9 0 0 1 0 18m.05-4v.1h-.1V17z" /></g>';
+
+export const ICON_LIST_TREE = "nameforge-list-tree";
+// Codicons — list-tree (CC BY 4.0). Scaled for Obsidian's 100×100 viewBox.
+const ICON_LIST_TREE_SVG =
+  '<g transform="scale(6.25)"><path fill="currentColor" d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1H6v2h7.5a.5.5 0 0 1 0 1H6v2h7.5a.5.5 0 0 1 0 1H6v2h7.5a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5V4H2.5a.5.5 0 0 1-.5-.5" /></g>';
+
+export const ICON_ADJUSTMENTS = "nameforge-adjustments";
+// Heroicons — adjustments-horizontal 20 solid (MIT). Scaled for Obsidian's 100×100 viewBox.
+const ICON_ADJUSTMENTS_SVG =
+  '<g transform="scale(5)"><path fill="currentColor" d="M10 3.75a2 2 0 1 0-4 0a2 2 0 0 0 4 0m7.25.75a.75.75 0 0 0 0-1.5h-5.5a.75.75 0 0 0 0 1.5zM5 3.75a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 .75.75M4.25 17a.75.75 0 0 0 0-1.5h-1.5a.75.75 0 0 0 0 1.5zm13 0a.75.75 0 0 0 0-1.5h-5.5a.75.75 0 0 0 0 1.5zM9 10a.75.75 0 0 1-.75.75h-5.5a.75.75 0 0 1 0-1.5h5.5A.75.75 0 0 1 9 10m8.25.75a.75.75 0 0 0 0-1.5h-1.5a.75.75 0 0 0 0 1.5zM14 10a2 2 0 1 0-4 0a2 2 0 0 0 4 0m-4 6.25a2 2 0 1 0-4 0a2 2 0 0 0 4 0" /></g>';
+
+export const ICON_PENCIL = "nameforge-pencil";
+// Andrsrxn — pencil. Scaled for Obsidian's 100×100 viewBox.
+const ICON_PENCIL_SVG =
+  '<g transform="scale(4.16667)"><g fill="none"><rect width="5.17" height="6.08" fill="currentColor" opacity=".2" rx="1" transform="rotate(135 7.642 8.558)scale(-1 1)" /><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m19.11 9.07l-4.16-4.16M6.27 21.24c.47-.14.71-.2.92-.33s.39-.3.74-.65L20.98 7.41a5 5 0 0 0 1.19-1.4a2 2 0 0 0 0-1.5A5 5 0 0 0 21 3.12a5 5 0 0 0-1.4-1.18a2 2 0 0 0-1.48 0c-.38.15-.72.49-1.4 1.17l-13 12.94c-.34.35-.52.53-.65.74c-.12.21-.2.45-.34.92l-.46 1.5c-.48 1.58-.73 2.37-.3 2.8c.42.42 1.2.18 2.79-.3z" /></g></g>';
+
 export function registerNameForgeIcons(): void {
   addIcon(ICON_MEEPLE, MEEPLE_SVG);
   addIcon(ICON_BYNAMES, ICON_BYNAMES_SVG);
@@ -370,4 +440,18 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_FOLDER, ICON_FOLDER_SVG);
   addIcon(ICON_RIVER_NAMES, ICON_RIVER_NAMES_SVG);
   addIcon(ICON_TRIBAL_NAMES, ICON_TRIBAL_NAMES_SVG);
+  addIcon(ICON_GEM, ICON_GEM_SVG);
+  addIcon(ICON_MONSTER_TRUCK, ICON_MONSTER_TRUCK_SVG);
+  addIcon(ICON_JET_PLANE, ICON_JET_PLANE_SVG);
+  addIcon(ICON_LANGUAGES, ICON_LANGUAGES_SVG);
+  addIcon(ICON_BOOK, ICON_BOOK_SVG);
+  addIcon(ICON_SWORD, ICON_SWORD_SVG);
+  addIcon(ICON_MOON_STARS, ICON_MOON_STARS_SVG);
+  addIcon(ICON_CALENDAR_DAYS, ICON_CALENDAR_DAYS_SVG);
+  addIcon(ICON_COINS, ICON_COINS_SVG);
+  addIcon(ICON_RESET, ICON_RESET_SVG);
+  addIcon(ICON_HELP, ICON_HELP_SVG);
+  addIcon(ICON_LIST_TREE, ICON_LIST_TREE_SVG);
+  addIcon(ICON_ADJUSTMENTS, ICON_ADJUSTMENTS_SVG);
+  addIcon(ICON_PENCIL, ICON_PENCIL_SVG);
 }

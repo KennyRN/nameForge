@@ -94,6 +94,18 @@ import {
   ICON_SEED_COPY,
   ICON_SEED_LOCK,
   ICON_TEXT_INSERT,
+  ICON_COINS,
+  ICON_CALENDAR_DAYS,
+  ICON_MOON_STARS,
+  ICON_SWORD,
+  ICON_BOOK,
+  ICON_LANGUAGES,
+  ICON_JET_PLANE,
+  ICON_MONSTER_TRUCK,
+  ICON_GEM,
+  ICON_PENCIL,
+  ICON_ADJUSTMENTS,
+  ICON_LIST_TREE,
 } from "./icons";
 import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
@@ -314,15 +326,15 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   settlementKit: ICON_SETTLEMENT_KIT,
   // Events brief §1.1.
   eventNames: ICON_HISTORY,
-  // Money brief §1.1: the Lucide coins icon.
-  moneyNames: "coins",
-  // Time and sky brief §1.1: Lucide calendar-days and moon-star.
-  calendarNames: "calendar-days",
-  skyNames: "moon-star",
-  // Named things brief §1.1: Lucide sword, crown and book-open.
-  armsNames: "sword",
+  // Money brief §1.1: the custom icons.
+  moneyNames: ICON_COINS,
+  // Time and sky brief §1.1: custom icons.
+  calendarNames: ICON_CALENDAR_DAYS,
+  skyNames: ICON_MOON_STARS,
+  // Named things brief §1.1: custom icons.
+  armsNames: ICON_SWORD,
   treasureNames: "crown",
-  bookNames: "book-open",
+  bookNames: ICON_BOOK,
   // Deities brief §1.1.
   deityNames: ICON_DEITIES,
   sacredPlaces: ICON_DEITIES,
@@ -334,8 +346,8 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   tribalNames: ICON_TRIBAL_NAMES,
   // Realms brief §1.1.
   realms: ICON_REALMS,
-  // Peoples and tongues brief §1.1: the Lucide languages icon.
-  peoplesTongues: "languages",
+  // Peoples and tongues brief §1.1: the custom icons.
+  peoplesTongues: ICON_LANGUAGES,
   // Bynames brief §1.1: Lucide icons.
   epithets: ICON_EPITHETS,
   titles: "crown",
@@ -343,9 +355,9 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   // Ships brief §1.1, with the supplied ship icon for ships and boats.
   ships: ICON_SHIPS,
   spacecraft: ICON_SPACECRAFT,
-  // Aircraft and land vehicles brief §1.1: Lucide plane and train-front.
-  aircraft: "plane",
-  landVehicles: "train-front",
+  // Aircraft and land vehicles brief §1.1: custom icons.
+  aircraft: ICON_JET_PLANE,
+  landVehicles: ICON_MONSTER_TRUCK,
   // Group brief §1.1: Lucide icons.
   mysticOrders: ICON_MYSTIC,
   martialOrders: ICON_MARTIAL,
@@ -365,8 +377,8 @@ const GROUP_ICONS: Record<SectionGroup, string> = {
   groupNames: ICON_GROUP_NAMES,
   bynames: ICON_BYNAMES,
   vehicles: ICON_VEHICLES,
-  // Named things brief §1.1: the Lucide gem.
-  namedThings: "gem",
+  // Named things brief §1.1: custom icons.
+  namedThings: ICON_GEM,
   advanced: ICON_ADVANCED,
 };
 
@@ -409,11 +421,11 @@ function packTypeIconId(packType: NamePackType, subGenerator?: CompoundGenerator
   if (packType === "buildingPreset") return ICON_BUILDINGS;
   if (packType === "kitPreset") return ICON_SETTLEMENT_KIT;
   if (packType === "eventPreset") return ICON_HISTORY;
-  if (packType === "moneyPreset") return "coins";
-  if (packType === "calendarPreset") return "calendar-days";
-  if (packType === "skyPreset") return "moon-star";
-  if (packType === "thingPreset") return "gem";
-  if (packType === "peoplePreset") return "languages";
+  if (packType === "moneyPreset") return ICON_COINS;
+  if (packType === "calendarPreset") return ICON_CALENDAR_DAYS;
+  if (packType === "skyPreset") return ICON_MOON_STARS;
+  if (packType === "thingPreset") return ICON_GEM;
+  if (packType === "peoplePreset") return ICON_LANGUAGES;
   if (packType === "deityPreset") return ICON_DEITIES;
   if (packType === "recipePack") {
     // Presets brief §2.2: recipe packs wear the wizard's pen-in-pin icon.
@@ -1052,7 +1064,7 @@ export class NameForgeModal extends Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Edit recipe" },
     });
-    setIcon(this.editRecipeButton, "pencil");
+    setIcon(this.editRecipeButton, ICON_PENCIL);
     this.editRecipeButton.addEventListener("click", () => void this.openRecipeEditor(this.currentRecipePath));
     this.editRecipeButton.hide();
     // Presets brief §9: open the loaded tribal preset in tribal names.
@@ -1060,7 +1072,7 @@ export class NameForgeModal extends Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Open in tribes and kin groups" },
     });
-    setIcon(this.openPresetButton, "sliders-horizontal");
+    setIcon(this.openPresetButton, ICON_ADJUSTMENTS);
     this.openPresetButton.addEventListener("click", () => void this.openPresetInModule());
     this.openPresetButton.hide();
     // Presets brief §8.1: save the module's current setup as a preset.
@@ -1098,7 +1110,7 @@ export class NameForgeModal extends Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Options" },
     });
-    setIcon(this.riverOptionsButton, "sliders-horizontal");
+    setIcon(this.riverOptionsButton, ICON_ADJUSTMENTS);
     this.riverOptionsButton.addEventListener("click", (evt) => this.openRiverOptions(evt));
     this.riverOptionsButton.hide();
 
@@ -5930,7 +5942,7 @@ export class NameForgeModal extends Modal {
       return b;
     };
     if (etymology !== "none") {
-      const etymologyButton = button("list-tree", "Etymology");
+      const etymologyButton = button(ICON_LIST_TREE, "Etymology");
       const updateEtymology = () => {
         etymologyButton.toggleClass("is-active", shown());
         etymologyButton.setAttribute("aria-pressed", String(shown()));
